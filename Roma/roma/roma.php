@@ -129,20 +129,20 @@ define( 'roma_pdflatex', 'pdflatex' );
 define( 'roma_schemaStylesheetDir', 'http://www.tei-c.org/Stylesheets' );
 
 // Defines the location of the template Directory
-define( 'roma_templateDir', '/usr/local/php/includes/roma/templates' );
+define( 'roma_templateDir', 'roma/templates' );
 
 // Defines the location of all internal Stylesheets
-define( 'roma_stylesheetDir', '/usr/local/php/includes/roma/stylesheets' );
+define( 'roma_stylesheetDir', 'roma/stylesheets' );
 
 // Defines a directory, where Roma can store temporary files
 // Note, that your webserver needs to have writing access to that directory
-define( 'roma_temporaryFilesDir', '/home/arno/tmp' );
+define( 'roma_temporaryFilesDir', '/tmp' );
 
 
 //#########################
 // different_stylesheets
 //
-define( 'roma_styleheet_docHtml', 'http://www.tei-c.org/Stylesheets/P5/html/teihtml.xsl' );
+define( 'roma_styleheet_docHtml', 'http://www.tei-c.org/Stylesheets/teihtml-teic-P5.xsl' );
 define( 'roma_styleheet_docPDF', 'http://www.tei-c.org/Stylesheets/P5/fo/tei.xsl' );
 define( 'roma_styleheet_docLatex', 'http://www.tei-c.org/Stylesheets/P5/latex/teilatex.xsl' );
 
