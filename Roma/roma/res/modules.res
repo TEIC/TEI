@@ -1,6 +1,6 @@
 [en]
-helpmessage=lalalalalalal help lalalalalal=asdasd
+helpmessage=Go, treat yourself, customize some modules
 headline=Modules
 
 [de]
-helpmessage=asdljasdklasjd
+helpmessage=Wovon man nicht sprechen kann, daruber muss mann schweigen

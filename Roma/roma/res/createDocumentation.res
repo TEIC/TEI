@@ -1,6 +1,6 @@
 [en]
-helpmessage=lalalalalalal help lalalalalal=asdasd
+helpmessage=You can choose to create reference documentation for your customization now
 headline=Documentation?
 
 [de]
-helpmessage=asdljasdklasjd
+helpmessage=Niemand kennt
