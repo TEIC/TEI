@@ -253,8 +253,15 @@ select="translate(.,'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/
     <tt><xsl:apply-templates/></tt>
 </xsl:template>
 
-<xsl:template match="tei:ident">
-   <strong><xsl:apply-templates/></strong>
+<xsl:template match="ident">
+  <xsl:choose>
+    <xsl:when test='@type'>
+      <span class="ident-{@type}"><xsl:apply-templates/></span>
+    </xsl:when>
+    <xsl:otherwise>
+      <strong><xsl:apply-templates/></strong>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template  match="tei:label">
