@@ -99,7 +99,7 @@ split:
 	(mkdir Split; cd Split; xmllint --noent   ../Source-driver.xml | xsltproc ../divsplit.xsl -)
 
 oddschema:
-	./Roma --nodtd --noxsd --nodoc --xsl=$S --schema=./Schema/ p5odds.odd .
+	./Roma --nodtd --noxsd --xsl=$S --schema=./Schema/ p5odds.odd .
 
 
 exampleschema:
@@ -137,7 +137,7 @@ exist: split
 	perl updateexist.pl datatypes.xml /db/TEI
 
 clean:
-	-rm -rf Guidelines Schema DTD dtd Split RomaResults *~
+	-rm -rf dist Guidelines Schema DTD dtd Split RomaResults *~
 	-rm Guidelines.xml core.rnc header.rnc tei.rnc \
 	dictionaries.rnc  linking.rnc  textstructure.rnc \
 	figures.rnc       tagdocs.rnc  \
@@ -158,3 +158,24 @@ clean:
 	textcrit.rnc \
 	transcr.rnc \
 	verse.rnc 
+
+release:
+	rm -rf dist
+	mkdir -p dist/tei-p5-source-`cat VERSION`
+	tar --exclude CVS -c -f - *.* Roma VERSION ChangeLog Source Makefile Tools \
+	| (cd dist/tei-p5-source-`cat VERSION`; tar xf - )
+	mkdir -p dist/tei-p5-schema-`cat VERSION`
+	tar --exclude CVS -c -f - Schema DTD \
+	| (cd dist/tei-p5-schema-`cat VERSION`; tar xf - )
+	mkdir -p dist/tei-p5-doc-`cat VERSION`
+	tar --exclude CVS -c -f - Guidelines \
+	| (cd dist/tei-p5-doc-`cat VERSION`; tar xf - )
+	mkdir -p dist/tei-p5-test-`cat VERSION`
+	tar --exclude CVS -c -f - Test \
+	| (cd dist/tei-p5-test-`cat VERSION`; tar xf - )
+	-rm `find dist -name "semantic.cache"`
+	-rm `find dist -name "*~"`
+	(cd dist; zip -r tei-p5-source-`cat ../VERSION`.zip tei-p5-source-`cat ../VERSION`)
+	(cd dist; zip -r tei-p5-doc-`cat ../VERSION`.zip tei-p5-doc-`cat ../VERSION`)
+	(cd dist; zip -r tei-p5-schema-`cat ../VERSION`.zip tei-p5-schema-`cat ../VERSION`)
+	(cd dist; zip -r tei-p5-test-`cat ../VERSION`.zip tei-p5-test-`cat ../VERSION`)

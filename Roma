@@ -1,4 +1,54 @@
 #!/bin/sh
+R=/usr/share/xml/tei
+T=$R/stylesheet
+S=$R/schema/relaxng/p5/
+debug=false
+dtd=true
+relax=true
+xsd=true
+doc=false
+while test $# -gt 0; do
+  case $1 in
+    --xsl=*)    T=`echo $1 | sed 's/.*=//'`;;
+    --doc)      doc=true;;
+    --nodtd)    dtd=false;;
+    --norelax)  relax=false;;
+    --noxsd)    xsd=false;;
+    --debug)    debug=true;;
+    --schema=*) SS=`echo $1 | sed 's/.*=//'`;;
+     *) break;;
+  esac
+  shift
+done
+ODD=$1
+
+N=`grep "<schemaSpec" $1 | head -1 | sed 's/.*ident=\"\([^\"]*\)\".*/\1/'`
+if test "x$1" = "x"; then
+    echo Usage: Roma schemaspec [output directory]
+    exit 1
+fi
+if test "x$2" = "x"; then
+    export RESULTS=RomaResults
+else
+    export RESULTS=$2
+fi
+H=`pwd`
+S=`cd $SS && /bin/pwd` || die "cannot change directory to $SS"
+
+makeRelax()
+{
+echo Process $ODD to create $N.\{rng,rnc,dtd\} in $Results
+echo 1. make Relax NG from ODD
+xsltproc  --stringparam verbose true --stringparam RNGDIR $RESULTS --stringparam schemaBaseURL $S/ $T/base/p5/odds/odd2relax.xsl $ODD
+cd $RESULTS
+xmllint --format $N.rng > $$.xml; mv $$.xml $N.rng
+echo 2. make Relax NG compact from XML
+trang $N.rng $N.rnc  || die " trang fails"
+echo 3. expand includes in Relax NG
+xsltproc -o $N.compiled.rng $T/base/p5/odds/expandincludes.xsl $N.rng 
+echo 4. convert expanded form to compact syntax
+trang $N.compiled.rng $N.compiled.rnc  || die " trang fails"
+}
 makeDTD()
 {
     echo 6. simplify schema before attempting DTD conversion
@@ -15,7 +65,7 @@ makeDTD()
 makeDOC() 
 {
     echo 8. make expanded documented ODD
-    xsltproc $T/base/p5/odds/subsetGuidelines.xsl $H/$1 | xmllint --format - > $N.doc.xml 
+    xsltproc $T/base/p5/odds/subsetGuidelines.xsl $H/$ODD | xmllint --format - > $N.doc.xml 
 }
 makeXSD()
 {
@@ -36,40 +86,6 @@ die()
     exit 1
 }
 
-R=/usr/share/xml/tei
-T=$R/stylesheet
-S=$R/schema/relaxng/p5/
-debug=false
-dtd=true
-relax=true
-xsd=true
-doc=true
-while test $# -gt 0; do
-  case $1 in
-    --xsl=*)    T=`echo $1 | sed 's/.*=//'`;;
-    --nodoc)    doc=false;;
-    --nodtd)    dtd=false;;
-    --norelax)  relax=false;;
-    --noxsd)    xsd=false;;
-    --debug)    debug=true;;
-    --schema=*) SS=`echo $1 | sed 's/.*=//'`;;
-     *) break;;
-  esac
-  shift
-done
-N=`grep "<schemaSpec" $1 | head -1 | sed 's/.*ident=\"\([^\"]*\)\".*/\1/'`
-if test "x$1" = "x"; then
-    echo Usage: Roma schemaspec [output directory]
-    exit 1
-fi
-if test "x$2" = "x"; then
-    export RESULTS=RomaResults
-else
-    export RESULTS=$2
-fi
-H=`pwd`
-S=`cd $SS && /bin/pwd` || die "cannot change directory to $SS"
-
 echo Roma starts
 echo ===============================
 echo Test for software: xmllint, xsltproc, trang and perl
@@ -82,17 +98,7 @@ test -d $T || die "tei dir $S does not exist"
 mkdir -p $RESULTS || die "cannot make directory $RESULTS"
 
 echo ===============================
-echo Process $1 to create $N.\{rng,rnc,dtd\} in $Results
-echo 1. make Relax NG from ODD
-xsltproc  --stringparam verbose true --stringparam RNGDIR $RESULTS --stringparam schemaBaseURL $S/ $T/base/p5/odds/odd2relax.xsl $1
-cd $RESULTS
-xmllint --format $N.rng > $$.xml; mv $$.xml $N.rng
-echo 2. make Relax NG compact from XML
-trang $N.rng $N.rnc  || die " trang fails"
-echo 3. expand includes in Relax NG
-xsltproc -o $N.compiled.rng $T/base/p5/odds/expandincludes.xsl $N.rng 
-echo 4. convert expanded form to compact syntax
-trang $N.compiled.rng $N.compiled.rnc  || die " trang fails"
+makeRelax
 $xsd && makeXSD
 $dtd && makeDTD
 $doc && makeDOC
