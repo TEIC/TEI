@@ -138,6 +138,36 @@ name="cssFile">http://www.tei-c.org/Stylesheets/teislides.css</xsl:param>
       <xsl:call-template name="generateTitle"/>
     </title>
     <xsl:call-template name="includeCSS"/>
+<script type="text/javascript">
+<xsl:comment>
+var isOp = navigator.userAgent.indexOf('Opera') > -1 ? 1 : 0;
+function keys(key) {
+	if (!key) {
+		key = event;
+		key.which = key.keyCode;
+	}
+ 	switch (key.which) {
+		case 10: // return
+		case 32: // spacebar
+		case 39: // rightkey
+		case 40: // downkey
+			document.location = "<xsl:value-of select="$next"/>.html";
+			break;
+		case 37: // leftkey
+		case 38: // upkey
+			document.location = "<xsl:value-of select="$prev"/>.html";
+			break;
+	}
+}
+function startup() {      
+	if (!isOp) {		
+		document.onkeyup = keys;
+	}
+}
+
+window.onload = startup;
+</xsl:comment>
+</script>
   </head>
   <body>
     <div class="slidetitle" style="font-size: 36pt;">
