@@ -26,12 +26,14 @@ rng:includes
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" 
   xmlns:f="http://axkit.org/NS/xsp/perform/v1" 
   xmlns:tei="http://www.tei-c.org/ns/1.0" 
-  xmlns:cc="http://web.resource.org/cc/"
-  xmlns:dc="http://purl.org/dc/elements/1.1/"
-  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-  exclude-result-prefixes="exsl rng a f tei s rdf dc cc" 
+    xmlns:cc="http://web.resource.org/cc/"
+      xmlns:dc="http://purl.org/dc/elements/1.1/"
+        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  exclude-result-prefixes="exsl rng a f tei s cc dc rdf" 
   xmlns:rng="http://relaxng.org/ns/structure/1.0" 
   version="1.0">
+
+<xsl:param name="namespace"/>
 
 <xsl:output indent="yes"/>
 
@@ -136,6 +138,11 @@ rng:includes
   <rng:grammar xmlns:xlink="http://www.w3.org/1999/xlink"
 	       xmlns:xsp="http://apache.org/xsp/core/v1"
 	       xmlns:xs="http://www.w3.org/2001/XInclude">
+    <xsl:if test="not($namespace='')">
+      <xsl:attribute name="ns">
+	<xsl:value-of select="ancestor::tei:schemaSpec/@namespace"/>
+      </xsl:attribute>
+    </xsl:if>
     <xsl:if test="not(@datatypeLibrary)">
       <xsl:attribute name="datatypeLibrary">
 	<xsl:text>http://www.w3.org/2001/XMLSchema-datatypes</xsl:text>

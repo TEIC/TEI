@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<!-- $Date: 
 Text Encoding Initiative Consortium XSLT stylesheet family
-$Date$, $Revision$, $Author$
+2001/10/01 $, $Revision$, $Author$
 
-XSL stylesheet to process TEI documents using ODD markup
+XSL stylesheet to format TEI XML documents using ODD markup
 
  
 ##LICENSE
---> 
+-->
 <xsl:stylesheet 
      xmlns:s="http://www.ascc.net/xml/schematron" 
      xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -82,20 +82,26 @@ XSL stylesheet to process TEI documents using ODD markup
     <xsl:call-template name="generateOutput">
       <xsl:with-param name="body">
 	<grammar
-	 ns="http://www.tei-c.org/ns/1.0"
 	 xmlns="http://relaxng.org/ns/structure/1.0"
 	 xmlns:t="http://www.thaiopensource.com/ns/annotations"
 	 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
 	 datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-	  
+	  <xsl:attribute name="ns">
+	    <xsl:choose>
+	      <xsl:when test="@namespace"><xsl:value-of select="@namespace"/></xsl:when>
+	      <xsl:otherwise>http://www.tei-c.org/ns/1.0</xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:attribute>	  
 	  <xsl:comment>
-	    <xsl:text>TEI P5 file generated </xsl:text>
+	    <xsl:text>Schema generated </xsl:text>
 	    <xsl:value-of  select="edate:date-time()"/>
 	    <xsl:text>&#010;</xsl:text>
-	    
+
 	    <xsl:call-template name="copyright"/>
+<!--
            <xsl:text>WARNING! Generated from a pre-release draft of TEI P5
 from 1st October 2004. This is NOT the final P5</xsl:text>
+-->
 	  </xsl:comment>
 	  <xsl:text>
 	    
@@ -108,23 +114,22 @@ from 1st October 2004. This is NOT the final P5</xsl:text>
 			       select="tei:macroSpec[@mode='add']"/>
   	  <xsl:apply-templates mode="tangle"
 			       select="tei:classSpec[@mode='add']"/>
-	  <rng:start>
 	    <xsl:choose>
 	      <xsl:when test="@start and contains(@start,' ')">
-		<rng:choice>
-		  <xsl:call-template name="startNames">
-		    <xsl:with-param name="toks" select="@start"/>
-		  </xsl:call-template>
-		</rng:choice>
+		<rng:start>
+		  <rng:choice>
+		    <xsl:call-template name="startNames">
+		      <xsl:with-param name="toks" select="@start"/>
+		    </xsl:call-template>
+		  </rng:choice>
+		</rng:start>
 	      </xsl:when>
 	      <xsl:when test="@start">
-		<rng:ref name="{@start}"/>
+		<rng:start>
+		  <rng:ref name="{@start}"/>
+		</rng:start>
 	      </xsl:when>
-	      <xsl:otherwise>
-		  <rng:ref name="TEI"/>
-	      </xsl:otherwise>
 	    </xsl:choose>
-	  </rng:start>	    
 	</grammar>
       </xsl:with-param>
     </xsl:call-template>
@@ -153,7 +158,6 @@ from 1st October 2004. This is NOT the final P5</xsl:text>
     <xsl:call-template name="generateOutput">
       <xsl:with-param name="body">
 	<grammar
-	 ns="http://www.tei-c.org/ns/1.0"
 	 xmlns="http://relaxng.org/ns/structure/1.0"
 	 xmlns:t="http://www.thaiopensource.com/ns/annotations"
 	 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
@@ -163,10 +167,10 @@ from 1st October 2004. This is NOT the final P5</xsl:text>
 	    
 	  </xsl:text> 
 	  <xsl:comment>
-	    <xsl:text>TEI P5 file generated </xsl:text>
+	    <xsl:text>Schema generated </xsl:text>
 	    <xsl:value-of  select="edate:date-time()"/>
 	    <xsl:text>&#010;</xsl:text>
-	    
+
 	    <xsl:call-template name="copyright"/>
 	  </xsl:comment>
 	  <xsl:text>
