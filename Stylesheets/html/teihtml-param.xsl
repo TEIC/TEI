@@ -39,12 +39,14 @@ XSL stylesheet to format TEI XML documents to FO or HTML
   <xsl:param name="htmlTitlePrefix"></xsl:param>
   <xsl:param name="inputName"/>
   <xsl:param name="layout">Simple</xsl:param><!-- Simple, CSS, Table, or Frames -->
+  <xsl:param name="contentStructure">body</xsl:param>
   <xsl:param name="linkPanel">true</xsl:param>
   <xsl:param name="linksWidth">15%</xsl:param>
   <xsl:param name="makeFrames"/>
   <xsl:param name="makePageTable"/>
   <xsl:param name="makingSlides"/>
   <xsl:param name="noframeWords">No Frames</xsl:param>
+  <xsl:param name="navbarFile"></xsl:param>
   <xsl:param name="numberParagraphs"></xsl:param>
   <xsl:param name="outputDir"/>
   <xsl:param name="outputEncoding">iso-8859-1</xsl:param>

@@ -120,11 +120,11 @@ $ID: requests a particular page
       
 <!-- we are making a composite layout and there is a TEI(2) element -->
       <xsl:when test="($pageLayout = 'CSS' or $pageLayout = 'Table')
-		      and tei:TEI">
+		      and (tei:TEI or tei:teiCorpus)">
 	<xsl:if test="$verbose='true'">
 	  <xsl:message>pageLayout <xsl:value-of select="$pageLayout"/></xsl:message>
 	</xsl:if>
-	<xsl:for-each select="tei:TEI">
+	<xsl:for-each select="tei:TEI|tei:teiCorpus">
 	  <xsl:call-template name="doPageTable">
 	    <xsl:with-param name="currentID" select="$ID"/>
 	  </xsl:call-template>

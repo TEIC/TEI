@@ -30,6 +30,10 @@
 	  </xsl:if>
 	</xsl:if>
       </xsl:when>
+      <xsl:when test="local-name(..)='front'">
+	<xsl:apply-templates select="."/>
+	<xsl:apply-templates select="../../tei:body" mode="paging"/>
+      </xsl:when>
       <xsl:otherwise>
 	<xsl:apply-templates select="."/>
 	<xsl:apply-templates select="following-sibling::tei:*[1]" mode="paging"/>
@@ -354,6 +358,9 @@
       </xsl:when>
       <xsl:when test="$currentID='' and $splitLevel=-1">
 	<xsl:apply-templates/>
+      </xsl:when>
+      <xsl:when test="self::teiCorpus.2">
+	<xsl:call-template name="corpusBody"/>
       </xsl:when>
       <xsl:when test="$currentID=''">
 	<!-- we need to locate the first interesting object in the file, ie
@@ -1054,45 +1061,74 @@
       </div>
       
       <!-- navigation bar -->
-      <xsl:call-template name="navbar"/>
-
-      <!-- breadcrumb trail -->
-      <div id="hdr2">
-	<a href="#rh-col" title="Go to main page content" class="skiplinks">Skip links</a>  <a class="hide">|</a>
-	<xsl:call-template name="crumbPath"/>
-	<a class="hide">|</a>
+      <xsl:if test="not($contentStructure='all' or @rend='all')">
+	<xsl:call-template name="navbar"/>
 	
-	<a class="bannerright" href="{$parentURL}" 
-	   title="Go to home page">	  
-	  <xsl:value-of select="$parentWords"/><xsl:text> home page</xsl:text>
-	</a>
-      </div>
-      <!-- right column -->
-      <div id="rh-col"><a name="rh-col"></a> 
-      <xsl:call-template name="mainFrame">
-	<xsl:with-param name="currentID" select="$currentID"/>
-      </xsl:call-template>
-      </div>
-      <!-- left hand column -->
-      <div id="lh-col"> 
-	
-	<xsl:call-template name="searchbox"/>
-	<xsl:call-template name="printLink"/>
-	<xsl:call-template name="leftHandFrame">
-	  <xsl:with-param name="currentID" select="$ID"/>
-	</xsl:call-template>
-	
-	<hr/>
-      </div>
+	<!-- breadcrumb trail -->
+	<div id="hdr2">
+	  <a href="#rh-col" title="Go to main page content" class="skiplinks">Skip links</a>  <a class="hide">|</a>
+	  <xsl:call-template name="crumbPath"/>
+	  <a class="hide">|</a>
+	  
+	  <a class="bannerright" href="{$parentURL}" 
+	     title="Go to home page">	  
+	    <xsl:value-of select="$parentWords"/><xsl:text> home page</xsl:text>
+	  </a>
+	</div>
+      </xsl:if>
+      <xsl:choose>
+	<xsl:when test="$contentStructure='body'">
+	  <!-- right column -->
+	  <div id="rh-col"><a name="rh-col"></a> 
+	  <xsl:call-template name="mainFrame">
+	    <xsl:with-param name="currentID" select="$currentID"/>
+	  </xsl:call-template>
+	  </div>
+	  <!-- left hand column -->
+	  <div id="lh-col"> 
+	    <xsl:call-template name="searchbox"/>
+	    <xsl:call-template name="printLink"/>
+	    <xsl:call-template name="leftHandFrame">
+	      <xsl:with-param name="currentID" select="$ID"/>
+	    </xsl:call-template>
+	    <hr/>
+	  </div>
+	</xsl:when>
+	<xsl:when test="$contentStructure='all' or @rend='all'">
+	  <div>
+	    <div id="col1"> 
+	      <xsl:call-template name="searchbox"/>
+	      <xsl:apply-templates select="descendant::tei:text/tei:front"/>
+	    </div>
+	    <div id="col2">
+	      <xsl:apply-templates select="descendant::tei:text/tei:body"/>
+	    </div>
+	    <div id="col3">
+	      <xsl:apply-templates select="descendant::tei:text/tei:back"/>
+	    </div>
+	  </div>
+	</xsl:when>
+      </xsl:choose>
     </body>
   </html>
 </xsl:template>
 
-<xsl:template name="navbar"/>
-<!--
-      <div id="hdr3">
-      </div>
-      -->
+<xsl:template name="navbar">
+  <xsl:if test="not($navbarFile='')">
+    <div id="hdr3">
+      <xsl:for-each select="document($navbarFile,document(''))">
+	<xsl:for-each select="list/item">
+	  <span class="navbar">
+	    <a href="{$URLPREFIX}{xref/@url}" class="navbar">
+	    <xsl:apply-templates select="xref/text()"/></a>
+	  </span>
+	  <xsl:if test="following-sibling::item"> | </xsl:if>
+	</xsl:for-each>
+      </xsl:for-each>
+    </div>
+  </xsl:if>
+</xsl:template> 
+
 
 <xsl:template name="printLink">
   <xsl:variable name="href">
