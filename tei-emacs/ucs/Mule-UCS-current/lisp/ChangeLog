@@ -1,0 +1,2693 @@
+2003-01-29  MIYASHITA Hisashi  <himi@li18nux.org>
+
+	* mule-uni.el (unicode-vs-mule-ucs-unicode-multichar-assoc): 
+	Use mucs-char-1-ucs-area-start instaed of
+	mucs-ccl-char-1-ucs-area-start.
+
+	* trans-util.el (mucs-char-1-ucs-area-start): New variable.
+	(char-1-elisp-representation): When x is in mucs-char-1-ucs-area,
+	return nil.
+
+	* mucs-ccl.el (mucs-ccl-char-1-ucs-area-start): Removed.  Use
+	mucs-char-1-ucs-area-start instead.  It is defined in trans-util.
+
+2003-01-19  ARISAWA Akihiro  <ari@mbf.sphere.ne.jp>
+
+	* utf.el (ccl-utf-7-decode): We must use cn macro
+	for any numbers over 0xFF.
+
+2003-01-15  ARISAWA Akihiro  <ari@mbf.sphere.ne.jp>
+
+	* mucs-ccl.el (mucs-ccl-check-eol-automatic-conversion): Use
+	`mucs-define-coding-system' instead of `make-coding-system'.
+	(mucs-ccl-write-char-1): If mule-ucs-unicode-multichar is not defined,
+	don't treat UCS-codepoint.
+	(mucs-ccl-read-char-1): Ditto.
+
+2003-01-17  Tatsuya Kinoshita  <tats@vega.ocn.ne.jp>
+
+	* utf.el (utf-16-le-ccl-encode): Bug fix, use
+	mucs-ccl-write-ex-le-2-octet instead of mucs-ccl-write-ex-be-2-octet.
+
+2003-01-15  MIYASHITA Hisashi  <himi@m17n.org>
+
+	* un-trbase.el (unicode-ignore-characters-assoc): New assoc
+	translation element.
+	(unicode-replacement-assoc): Ditto.
+	(unicode-not-found-to-replace-or-invalid-assoc): Removed.
+	Use the above two instead.
+	(unicode-basic-stream-translation-rule): Apply
+	unicode-ignore-characters-assoc first because
+	such characters are maybe transformed to
+	mule-ucs-unicode-multichar. 
+
+	* mucs-ccl.el (mucs-ccl-read-char-1): Bug fix, we must add
+	mucs-ccl-char-1-ucs-area-start in UCS-codepoint format of
+	char-1.
+
+2003-01-11  MIYASHITA Hisashi  <himi@m17n.org>
+
+	* mucs-ccl.el (mucs-ccl-write-char-1): Bug fix.  Each byte must be
+	take bitwise-and with 63 not 255.
+
+	* mucs.el (mucs-version): Set version to 0.85 (GINSHADAN)
+
+2003-01-11  MIYASHITA Hisashi  <himi@m17n.org>
+
+	* big5conv/big5type.el (big5-be-2-octet-dos): If the system has
+	eol-automatic-conversion facility, don't convert lf to
+	crlf even if dos is non-nil.
+	(mucs-ccl-char-1-write-big5-char): Ditto.
+
+	* utf.el (convert-unicode-lf-2-crlf): If the system has
+	eol-automatic-conversion facility, do nothing.
+	(mucs-ccl-utf-7-encode): If the system has eol-automatic-conversion
+	facility, don't convert lf to crlf even if dos is non-nil.
+
+	* mucs-ccl.el (mucs-ccl-facility-alist): Add
+	eol-automatic-conversion.
+	(mucs-ccl-check-eol-automatic-conversion): New function.
+	(mucs-ccl-write-char-1-dos): If the system has
+	eol-automatic-conversion facility, use the
+	result of (mucs-ccl-write-char-1) as-is.
+
+2003-01-11  MIYASHITA Hisashi  <himi@m17n.org>
+
+	* un-define.el (unicode-basic-translation-charset-order-list):
+	Add mule-ucs-unicode-multichar.
+
+	* mule-uni.el (mule-ucs-unicode-multichar): New charset.
+	Define it if not exist.
+	(unicode-vs-mule-ucs-unicode-multichar-assoc): New translation
+	rule.  Set it as unicode-assoc of mule-ucs-unicode-multichar.
+
+	* mucs-ccl.el: Add comment for char-1 representation.
+	(mucs-ccl-char-1-ucs-area-start): New constant variable.
+	(mucs-ccl-write-char-1): When r0 is larger than
+	mucs-ccl-char-1-ucs-area-start, write it as 4 
+	mule-ucs-unicode-multichar characters.
+	(mucs-ccl-read-char-1): When charset is mule-ucs-unicode-multichar,
+	set r0 in UCS format.
+
+	* un-data.el (unicode-character-replacement): New variable.
+
+2003-01-10  MIYASHITA Hisashi  <himi@m17n.org>
+
+	* mucs-ccl.el (mucs-ccl-write-char-1-dos): Use
+	char-1-ccl-representation instead of bare \r.
+	(mucs-ccl-generate-registration-program):
+	Bug fix.  We should return a list of S-expression not a single
+	S-expression.
+
+2002-11-04  Tatsuya Kinoshita  <tats@vega.ocn.ne.jp>
+
+	* utf.el (utf-8-ccl-decode): Don't read any numbers larger than 24bit.
+
+	* reldata/uethiopic.el: Typo fix for (provide 'uethiopic).
+	  (from Debian xemacs21-mulesupport_2002.05.22-3)
+
+2002-03-18  Ben Wing  <ben@xemacs.org>
+
+	* mucs.el (mucs-define-coding-system): Don't try to redefine
+	an already-existing coding system, to avoid errors with utf8 and such.
+	
+	* un-trbase.el:
+	* unidata.el ((featurep 'mule-ucs-unicode)):
+	* utf.el ((featurep 'mule-ucs-unicode)): Instead of (require
+	'unicode), which doesn't work because feature `unicode' already
+	exists in the Core, check for feature `mule-ucs-unicode', and if
+	not there, load unicode.el using load-library.
+		
+	* unicode.el (mule-ucs-unicode): `unicode' is already provided by
+	the XEmacs core.  provide something else -- `mule-ucs-unicode' --
+	as well, for checking in other files.
+
+2002-02-07  Stephen J. Turnbull  <stephen@xemacs.org>
+
+	* un-define.el (un-define-change-charset-order): Improve docstring.
+
+2002-02-06  Stephen J. Turnbull  <stephen@xemacs.org>
+
+	* un-define.el (un-define-change-charset-order): Autoload.  Improve
+	docstring.
+
+2002-07-24  Tatsuya Kinoshita  <tats@iris.ne.jp>
+
+	* un-trbase.el: Revive lao.
+	* un-define.el: Ditto.
+
+2002-07-24  Dave Love  <fx@gnu.org>
+
+	* reldata/ulao.el: New file.
+
+2002-07-19  Tatsuya Kinoshita  <tats@iris.ne.jp>
+
+	* un-trbase.el: Avoid lao.
+	* un-define.el: Ditto.
+
+	* un-define.el: `)' fix for coding-system-definition.  (Refer to
+	Debian mule-ucs.)
+
+2002-03-26  Dave Love  <fx@gnu.org>
+
+	* un-define.el (un-define-post-read-conversion-charsets-alist):
+	Conditionally include lao-post-read-conversion,
+	in-is13194-post-read-conversion.
+	(un-define-pre-write-conversion-charsets-alist): Conditionally
+	include in-is13194-pre-write-conversion, lao-pre-write-conversion.
+	(un-define): In Mule 5, don't do explicit non-unix eol variants.
+
+2001-11-10  Dave Love  <fx@gnu.org>
+
+	* un-define.el (unicode-basic-translation-charset-order-list): Add
+	lao.
+
+	* un-trbase.el (unicode-charset-library-alist): Add lao.
+
+2001-05-04  KAWABATA, Taichi  <batta@beige.ocn.ne.jp>
+
+	* reldata/u-cns-7.el: 
+	7-2C3A: mapping changed to U+2EF1.
+
+2001-05-01  MIYASHITA Hisashi  <himi@m17n.org>
+
+	* utf.el (utf-8-ccl-encode): Bug fix on a number literal.
+	(utf-16-le-ccl-encode): Bug fix.  Rewrite it for efficiency
+	as well.
+	(utf-16-be-ccl-encode): Likewese.
+	(ccl-utf-7-decode): Bug fix on the caliculation of a surrogate pair.
+
+2001-04-26  KAWABATA, Taichi  <batta@beige.ocn.ne.jp>
+
+	* reldata/u-cns-7.el:
+	7-2C3A: mapping changed to U+F907 to avoid conflict.
+
+2001-04-23  KAWABATA, Taichi  <batta@beige.ocn.ne.jp>
+
+	* reldata/u-cns-2.el: 
+	Add entry of 2-662B: U+7934.  Refer
+	http://anubis.dkuug.dk/JTC1/SC2/WG2/docs/n2271.pdf, but it is 
+	doubtful since some CNS fonts made with the old-style glyphs.
+	* reldata/u-cns-3.el: 
+	3-6168: mapped to U+7C6F (conflicts with 2-715C).
+	* reldata/u-cns-4.el: 
+	4-225B: mapped to U+5B90.
+	4-2625: mapped to U+219E7.
+	4-434E: mapped to U+6168 (conflicts with 1-5F35).
+	4-655F: mapped to U+9BFD (conflicts with 1-7822).
+	4-684F: U+4D56 is changed to U+2FA16.
+	4-694E: mapped to U+47CD.
+	* reldata/u-cns-5.el: 
+	5-6F54: U+2FA16 is changed to U+4D56.
+	5-756C: mapped to U+29572 (conflicts with 4-6B2E).
+	* reldata/u-cns-6.el
+	6-2130: mapped to U+3404.
+	6-5467: mapped to U+3DE2.
+	* reldata/u-cns-7.el
+	7-2C3A: mapped to U+9F9C (conflicts with 1-733F).
+
+2001-04-17  KAWABATA, Taichi  <batta@beige.ocn.ne.jp>
+
+	* reldata/u-cns-1.el: Kanxi Radical Character codepoints
+	  are changed as follows.
+	    1-2721: U+4E00 to U+2F00	1-282E: U+76EE to U+2F6C
+	    1-2722: U+4E28 to U+2F01	1-282F: U+77DB to U+2F6D
+	    1-2723: U+4E36 to U+2F02	1-2830: U+77E2 to U+2F6E
+	    1-2724: U+4E3F to U+2F03	1-2831: U+77F3 to U+2F6F
+	    1-2725: U+4E59 to U+2F04	1-2832: U+793A to U+2F70
+	    1-2726: U+4E85 to U+2F05	1-2833: U+79B8 to U+2F71
+	    1-2727: U+4E8C to U+2F06	1-2834: U+79BE to U+2F72
+				................
+				
+	    (refer to UnicodeData.txt distrubuted by Unicode Consortium
+	    for compatibility characters except 1-286F: U+9752 to U+2FAD)
+	    			................
+	
+	    1-2826: U+7528 to U+2F64	1-2933: U+9F20 to U+2FCF
+	    1-2827: U+7530 to U+2F65	1-2934: U+9F3B to U+2FD0
+	    1-2828: U+758B to U+2F66	1-2935: U+9F4A to U+2FD1
+	    1-2829: U+7592 to U+2F67	1-2936: U+9F52 to U+2FD2
+	    1-282A: U+7676 to U+2F68	1-2937: U+9F8D to U+2FD3
+	    1-282B: U+767D to U+2F69	1-2938: U+9F9C to U+2FD4
+	    1-282C: U+76AE to U+2F6A	1-2939: U+9FA0 to U+2FD5
+	    1-282D: U+76BF to U+2F6B	    
+	  Duplicates : 	
+	    1-2728: U+2F07 and U+4EA0	1-272F: U+2F0E and U+51AB
+	    1-2734: U+2F13 and U+52F9
+	
+2001-04-15  KAWABATA, Taichi  <batta@beige.ocn.ne.jp>
+
+	* reldata/u-cns-3.el: Add new entries.
+	  Changes of codepoint with old u-cns-3.el are:
+	    3-2144: U+04E08 to U+2000B	  3-3640: U+065E3 to U+2F8CB
+	    3-227B: U+0518D to U+2F815	  3-3675: U+06D34 to U+2F907
+	    3-2429: U+07070 to U+2F835	  3-3C3A: U+0681F to U+2F8E5
+	    3-2441: U+051B5 to U+2F81B	  3-3D3F: U+07524 to U+2F934
+	    3-2452: U+0514D to U+2F80E	  3-4043: U+05277 to U+2F823
+	    3-2753: U+05154 to U+2F80F	  3-416E: U+06942 to U+2F8E8
+	    3-275C: U+05211 to U+206EC	  3-446D: U+08DBC to U+2F9DB
+	    3-2A45: U+07A81 to U+2592E	  3-486A: U+07D63 to U+2F96C
+	    3-2C40: U+05C8D to U+2F87A	  3-5545: U+07235 to U+2F921
+	    3-2D35: U+067FA to U+2F8DF	  3-5863: U+08074 to U+265DF
+	    3-2D52: U+06C67 to U+2F8FE	  3-5A33: U+05B3E to U+2F86A
+	    3-3023: U+054F6 to U+2F841	  3-5A36: U+05BF3 to U+2F870
+	    3-3470: U+0578B to U+2F855	  3-5B26: U+08669 to U+2F9B6
+	    3-3628: U+062FC to U+2F8BA	  3-5B2D: U+08801 to U+2F9C1
+	  Missing Character: 3-6168.
+	* reldata/u-cns-4.el: Add new entries.
+	  Changes of codepoint with old u-cns-4.el are:
+	    4-2134: U+05C22 to U+2F875	  4-364C: U+052E4 to U+2F827
+	    4-2135: U+05C6E to U+2F878	  4-3676: U+05832 to U+2F856
+	    4-213F: U+04ECC to U+2F819	  4-395B: U+079BC to U+2573E
+	    4-225B: U+05B90 to none	  4-3A75: U+08688 to U+2F9B8
+	    4-2349: U+052B2 to U+2084D	  4-3C30: U+050E7 to U+2F80A
+	    4-235B: U+05448 to U+2F83E	  4-3F73: U+07DD0 to U+042E3
+	    4-2449: U+06740 to U+233C2	  4-404F: U+0865C to U+2F9B4
+	    4-246C: U+08288 to U+2634B	  4-427A: U+05C32 to U+21C09
+	    4-253D: U+04FAE to U+2F805	  4-4351: U+0618E to U+2F8AB
+	    4-2639: U+05E9F to U+221F7	  4-4932: U+05668 to U+20F96
+	    4-294A: U+06094 to U+2F8A3	  4-4A27: U+0649D to U+2F8C5
+	    4-2A25: U+06D77 to U+2F901	  4-4D33: U+08779 to U+2F9BB
+	    4-2D46: U+0654F to U+2F8C8	  4-5049: U+0657E to U+03AA8
+	    4-2D53: U+06857 to U+2346B	  4-534C: U+08860 to U+2F9C3
+	    4-2D5C: U+06885 to U+2F8E2	  4-565D: U+0701E to U+2F914
+	    4-2D65: U+06BBA to U+2F8F5	  4-606A: U+07CED to U+2619B
+	    4-2D70: U+06D41 to U+2F902	  4-652A: U+097E0 to U+2F9FA
+	    4-2E59: U+0781E to U+25458	  4-6D57: U+06C0E to U+03CB2
+	    4-323E: U+06717 to U+2F8D8
+	  Missing Characters are: 4-225B, 4-434E, 4-665F, 4-694E.
+	* reldata/u-cns-5.el: Add new entries.
+	  Changes of codepoint with old u-cns-5.el are:
+	    5-2872: U+05C2E to U+21BE6	  5-5975: U+098B4 to U+295DF
+	    5-327E: U+0688E to U+2F8E4	  5-7347: U+07C61 to U+22E85
+	    5-4B3B: U+09819 to U+29460	  5-7B7B: U+07228 to U+2F920
+	    5-513A: U+08CE3 to U+27DA0
+	  Duplicates : 	
+	    5-2148: U+233B3 and U+06729   5-7A38: U+04695 and U+2F9CB
+	    5-6F3A: U+2A0CC and U+09D8D
+	  (for duplicate characters, code point denoted first has higher
+	   priority.)
+	  Missing Character: 5-767C
+	* reldata/u-cns-6.el: Add new entries.
+	  Changes of codepoint with old u-cns-6.el are:
+	    6-2123: U+04E44 to U+03405	  6-3874: U+06D78 to U+2F904
+	    6-212D: U+0536B to U+20004	  6-392D: U+06D69 to U+2F903
+	    6-2131: U+04E38 to U+2F801	  6-3A2D: U+0771F to U+2F946
+	    6-2138: U+05203 to U+2F81E	  6-3A43: U+079EB to U+2F957
+	    6-2150: U+05185 to U+2F814	  6-3B3A: U+081F4 to U+26936
+	    6-2161: U+053CA to U+2F836	  6-3C3B: U+08D77 to U+2F9D7
+	    6-2246: U+05305 to U+2F829	  6-3E50: U+05A66 to U+2F866
+	    6-225B: U+053EB to U+2F839	  6-402B: U+06383 to U+2F8BC
+	    6-2352: U+05145 to U+2F80D	  6-4036: U+06368 to U+2F8BB
+	    6-2523: U+06B21 to U+2F8EF	  6-4058: U+0671B to U+2F8D9
+	    6-2552: U+0828B to U+2F990	  6-443B: U+08457 to U+2F99F
+	    6-264E: U+05438 to U+2F83D	  6-443C: U+083CC to U+2F9A2
+	    6-2667: U+0575A to U+21262	  6-443D: U+083DC to U+2F9A3
+	    6-2721: U+05BFF to U+2F872	  6-443E: U+083CA to U+2F9A1
+	    6-2736: U+05DE1 to U+2F881	  6-463E: U+09EBB to U+2FA15
+	    6-2743: U+05E94 to U+221ED	  6-4667: U+05272 to U+2F822
+	    6-275F: U+05FCD to U+2F89D	  6-4674: U+0535A to U+2F82E
+	    6-282E: U+06753 to U+2F8DC	  6-472A: U+05584 to U+2F845
+	    6-2927: U+0829D to U+2F991	  6-4731: U+055AB to U+2F848
+	    6-2928: U+082B1 to U+2F993	  6-4756: U+05962 to U+2F85F
+	    6-2B60: U+062E8 to U+2F8B6	  6-477B: U+05C60 to U+2F877
+	    6-2B63: U+062B1 to U+2F8B5	  6-482B: U+05D43 to U+2F87C
+	    6-2C5B: U+06CBF to U+2F8FC	  6-4837: U+05DFD to U+2F884
+	    6-2D45: U+076F4 to U+2F940	  6-483C: U+05E3D to U+2F886
+	    6-2D69: U+080B2 to U+2F982	  6-4978: U+06700 to U+2F8D4
+	    6-2E22: U+082BD to U+2F995	  6-4A65: U+06E2F to U+2F908
+	    6-2E23: U+082E6 to U+2F996	  6-4B56: U+07570 to U+2F938
+	    6-2E24: U+082E5 to U+2F998	  6-4D47: U+08157 to U+26720
+	    6-2F25: U+052C7 to U+2F825	  6-4D6E: U+083F7 to U+26C85
+	    6-2F38: U+05351 to U+2F82D	  6-5136: U+05606 to U+2F84C
+	    6-316D: U+05192 to U+2F8D2	  6-515E: U+05922 to U+2F85E
+	    6-3242: U+06D3E to U+2F900	  6-5240: U+05ECA to U+2F88E
+	    6-3248: U+070AD to U+2F91A	  6-5266: U+0614E to U+2F8A8
+	    6-3447: U+08650 to U+2F9B3	  6-533C: U+06691 to U+2F8CF
+	    6-3558: U+052C9 to U+2F826	  6-5444: U+06E7F to U+23EAF
+	    6-357E: U+05510 to U+2F842	  6-5B5B: U+05716 to U+2F84B
+	    6-3635: U+057CE to U+2F852	  6-5D4B: U+06577 to U+22FBE
+	    6-3836: U+066F8 to U+2F8CC	  6-5D68: U+069A3 to U+2F8E9
+	  Missing Characters are: 6-2130, 6-5467
+	* reldata/u-cns-7.el: Add new entries.
+	  Changes of codepoint with old u-cns-7.el are:
+	    7-2178: U+058C4 to U+21428	  7-312D: U+07CD2 to U+2F966
+	    7-232D: U+06469 to U+2F8C3	  7-3B38: U+08667 to U+2F9B5
+	    7-244F: U+06F6E to U+2F90F
+	  Missing Character: 7-2C3A
+	
+2001-04-13  MIYASHITA Hisashi  <himi@m17n.org>
+
+	* Mule-UCS 0.84 (KOUGETSUDAI) Release.
+
+	* README.Unicode: Add descriptions on encode-char and decode-char.
+	* README: Update the version.
+
+2001-04-13  MIYASHITA Hisashi  <himi@m17n.org>
+
+	* unidata.el (unidata-display-entry): When converted codepoint
+	is nil(i.e., fail to convert the char), set alist to nil and
+	show the failure message.
+
+	* unicode.el (ucs-representation-encoding-backend): New function.
+	Registered as an encoding backend.
+	(ucs-representation-decoding-backend): New function.
+	Registered as a decoding backend.
+	(ucs-to-char): Only call ucs-representation-decoding-backend directly.
+	(char-to-ucs): Only call ucs-representation-encoding-backend directly.
+
+	* mucs.el (mucs-version): Set version to 0.84 (KOUGETSUDAI):-X
+	(mucs-get-representation-encoding-backend): New function.
+	(mucs-get-representation-decoding-backend): Ditto.
+	(mucs-register-representation-encoding-backend): Ditto.
+	(mucs-register-representation-decoding-backend): Ditto.
+	(encode-char): Ditto.
+	(decode-char): Ditto.
+
+2001-04-01  MIYASHITA Hisashi  <himi@m17n.org>
+
+	* big5conv/big5conv.el (big5conv-emacs-char-1-vs-big5-assoc):
+	Fix defected character ranges.  Thanks for
+	Werner LEMBERG <wl@gnu.org>.
+
+2001-03-11  MIYASHITA Hisashi  <himi@m17n.org>
+
+	* mule-uni.el (mule-unicode-xxxx-range-alist):
+	Change the format.
+	(ucs-to-mule-unicode-xxxx): Change how to access
+	mule-unicode-xxxx-range-alist.
+	(mule-unicode-xxxx-to-ucs): Likewise.
+	(unicode-assoc): When constructing range translation
+	elements, use all elements from the third of the list
+	on each slot of mule-unicode-xxxx-range-alist.
+
+2001-03-07  MIYASHITA Hisashi  <himi@m17n.org>
+
+	* mucs-type.el (mucs-type-list): To quote function's symbol,
+	use `function'instead of `quote'.
+
+2001-03-02  MIYASHITA Hisashi  <himi@m17n.org>
+
+	* un-define.el (un-define-safe-charsets-for-coding-systems):
+	Excluede indian-1-column charset.
+
+2001-01-31  MIYASHITA Hisashi  <himi@m17n.org>
+
+	* un-define.el: Modify the copyright notice.
+	(un-define-post-read-conversion-charsets-alist):
+	Add the slot for tibetan if tibetan-post-read-conversion
+	exists.
+	(un-define-pre-write-conversion-charsets-alist): 
+	Add the slot for tibetan if tibetan-pre-write-canonicalize-for-unicode
+	exists.
+	(unicode-basic-translation-charset-order-list):
+	Add mule-unicode-2500-33ff, mule-unicode-e000-ffff, and tibetan
+	to `cand'.
+
+	* un-trbase.el: Modify the copyright notice.
+	(unicode-charset-library-alist):  Add slots for
+	mule-unicode-2500-33ff, mule-unicode-e000-ffff,
+	and tibetan.
+
+	* mule-uni.el: Modify the copyright notice.
+	(mule-unicode-xxxx-range-alist): New variable, which
+	replaces mule-unicode-0100-24ff-range.
+	(mule-unicode-0100-24ff-range): Removed.
+	(mule-unicode-2500-33ff): New charset.
+	(mule-unicode-e000-ffff): New charset.
+	(ucs-to-mule-unicode-xxxx): New function, which replaces
+	ucs-to-mule-unicode-0100-24ff.
+	(mule-unicode-xxxx-to-ucs): New function, which replaces
+	mule-unicode-0100-24ff-to-ucs.
+	(mule-unicode-0100-24ff-vs-unicode-assoc): Removed ostensibly.
+	Generate these assoc. translation rules from 
+	mule-unicode-xxxx-range-alist.
+
+	* mule-uni.el: Put mccl-font-encoder property to
+	mule-unicode-xxxx charsets.
+
+2001-01-27  Toru Tomabechi <Toru.Tomabechi@orient.unil.ch>
+
+	* reldata/utibetan.el: New file.
+
+2000-11-21  MIYASHITA Hisashi  <himi@m17n.org>
+
+	* Mule-UCS 0.83 (JISHOJI) Release.
+
+	* README: Add descriptions on XEmacs.
+
+	* README.Unicode: Likewise.
+
+	* big5conv/README: Modify the example of command line for XEmacs.
+
+2000-11-06  MIYASHITA Hisashi  <himi@m17n.org>
+
+	* un-define.el (un-define-pre-write-conversion):
+	In case `from' is string, we call find-charset-string instead of
+	find-charset-region.  Thanks to KIM Hyeong Cheol.
+
+2000-10-09  Miyashita Hisashi  <himi@m17n.org>
+
+	* tae.el (tae-generate-new-table-set): Now intern
+	new table set symbol, because Emacs21 byte-compiler
+	dose not make neat correspondences uninterned symbols in .elc.
+
+	* mule-uni.el: Cancel mule-unicode-setup.
+	Split the charset and category setup part.
+	And eval it only on Emacs, not on XEmacs.
+	(mule-unicode-0100-24ff-vs-unicode-assoc):
+	Initialize it when mule-unicode-0100-24ff has been
+	set up.
+
+	* un-define.el (unicode-basic-translation-charset-order-list):
+	Add latin-iso8859-14, 15 to the candidate list.
+
+	* un-trbase.el (unicode-charset-library-alist): Add latin-iso8859-14, 15
+	to this alist.
+
+2000-10-09  Dave Love  <fx@gnu.org>
+
+	* reldata/uiso8859-14.el, reldata/uiso8859-15.el: New file.
+
+2000-10-08  Miyashita Hisashi  <himi@m17n.org>
+
+	* big5conv/big5conv.el (big5conv-expand-alist): If C-style number
+	is used in alist, convert it before expand.
+	(big5conv-emacs-char-1-vs-big5-assoc): Don't use ?\x to
+	represent numbers, use C-style notation instead.
+
+	* big5conv/big5c-ucs.el : require un-data at byte-compiling
+	time.
+	(big5-conv-ucs-mac-external-translation): Don't use ?\x to
+	represent nubmers, use unicode-cr instead.
+
+	* reldata/u-cns-1.el (cns11643-1-vs-unicode-assoc):
+	In order to avoid using ?\x and #x notations, transformate each element
+	by transformate-list-structure.
+	* reldata/uviscii.el (viscii-lower-vs-unicode-assoc): Likewise.
+	(viscii-upper-vs-unicode-assoc): Likewise.
+	* reldata/utis620.el (thai-tis620-vs-unicode-assoc): Likewise.
+	* reldata/usupple.el (unicode-assoc-for-jisx0221): Likewise.
+	(unicode-assoc-for-jdk): Likewise.
+	(unicode-assoc-for-windows): Likewise.
+	(unicode-assoc-for-fullwidth-or-halfwidth-normalization): Likewise.
+	* reldata/usisheng.el (chinese-sisheng-vs-unicode-assoc): Likewise.
+	* reldata/uksc5601.el (ks-c-5601-1987-vs-unicode-assoc): Likewise.
+	* reldata/ujisx0212.el (jis-x-0212-vs-unicode-assoc): Likewise.
+	* reldata/ujisx0208.el (jis-x-0208-1990-vs-unicode-assoc): Likewise.
+	* reldata/ujisx0201.el (jis-x-0201-latin-vs-unicode-assoc): Likewise.
+	(jis-x-0201-katakana-vs-unicode-assoc): Likewise.
+	* reldata/uiso8859-2.el (iso-8859-2-vs-unicode-assoc): Likewise.
+	* reldata/uiso8859-3.el (iso-8859-3-vs-unicode-assoc): Likewise.
+	* reldata/uiso8859-4.el (iso-8859-4-vs-unicode-assoc): Likewise.
+	* reldata/uiso8859-5.el (iso-8859-5-vs-unicode-assoc): Likewise.
+	* reldata/uiso8859-6.el (iso-8859-6-vs-unicode-assoc): Likewise.
+	* reldata/uiso8859-7.el (iso-8859-7-vs-unicode-assoc): Likewise.
+	* reldata/uiso8859-8.el (iso-8859-8-vs-unicode-assoc): Likewise.
+	* reldata/uiso8859-9.el (iso-8859-9-vs-unicode-assoc): Likewise.
+	* reldata/uiscii.el (indian-is13194-vs-unicode-assoc): Likewise.
+	* reldata/uipa.el (ipa-vs-unicode-assoc): Likewise.
+	* reldata/ugb2312.el (gb2312-80-vs-unicode-assoc): Likewise.
+	* reldata/uethiopic.el (ethiopic-vs-unicode-assoc): Likewise.
+	* reldata/ubig5.el (chinese-big5-1-vs-unicode-assoc): Likewise.
+	(chinese-big5-2-vs-unicode-assoc): Likewise.
+	* reldata/u-cns-2.el (cns11643-2-vs-unicode-assoc): Likewise.
+	* reldata/u-cns-3.el (cns11643-3-vs-unicode-assoc): Likewise.
+	* reldata/u-cns-4.el (cns11643-4-vs-unicode-assoc): Likewise.
+	* reldata/u-cns-5.el (cns11643-5-vs-unicode-assoc): Likewise.
+	* reldata/u-cns-6.el (cns11643-6-vs-unicode-assoc): Likewise.
+	* reldata/u-cns-7.el (cns11643-7-vs-unicode-assoc): Likewise.
+
+	* mucs.el (funcall-if-possible): New macro.
+	(mucs-require-supplement): Bug fix.  Check if the value of load-file-name
+	is stringp, not load-file-name symbol itself.
+	(mucs-require-data): Bug fix.  In order to construct relative file name,
+	use file-relative-name, because expand-file-name construct an absolute file
+	name.
+
+	* tae.el (tae-compile-translation-element): Apply to-func to
+	all-key of a translation-element.
+
+	* trans-util.el (cn): Put it out from evel-when-compile form.
+	(transformate-list-structure): New function.
+
+	* un-define.el (unicode-basic-translation-charset-order-list):
+	Exclude nonexistent charasets to this list from the candidates.
+
+2000-10-04  Miyashita Hisashi  <himi@m17n.org>
+
+	* mule-uni.el: Put almost all of the code into mule-unicode-setup.
+	And don't call it on XEmacs.
+
+	* mccl-font.el (mccl-font-encoder): Remove unused
+	ccl-prog variable binding.
+
+2000-10-03  Miyashita Hisashi  <himi@m17n.org>
+
+	* mucs.el (xemacs-mule-p): New function.
+	(mucs-define-coding-system): Adapt it to XEmacs.
+	(mucs-version): Set version to 0.83 (JISHOJI).
+
+	* mucs-ccl.el (mucs-ccl-write-ex-be-2-octet):
+	use decimal literal.
+	(mucs-ccl-write-ex-le-2-octet): Likewise.
+	(mucs-ccl-write-char-1): Likewise
+	(mucs-ccl-read-char-1): Likewise.
+	(char-1): Use char-1-elisp-representation
+	and char-1-ccl-representation instead of writing
+	function directly.
+	(mucs-ccl-write-char-1-dos): Use \r instead of ?\x0d.
+
+	* utf.el (utf-8-ccl-encode): Use cn macro.  And describe
+	hexadecimal numbers by upcase letters.
+	(utf-16-ccl-surrogate-pair-p): Likewise.
+	(mucs-ccl-utf-16-check-signature-read): Likewise.
+	(utf-16-le-ccl-encode): Likewise.
+	(utf-16-le-ccl-decode): Likewise.
+	(utf-16-be-ccl-decode): Likewise.
+	(utf-16-be-ccl-encode): Likewise.
+	(ccl-utf-7-decode): Likewise.
+	(ccl-utf-7-base64-encode): Likewise.  Also, fix a bug on
+	the ccl expression to take bitwise-or with 0xDC000.
+
+	* txt-tbl.el (ccl-c-notated-string-to-number): Moved to trans-util.
+	(c-notated-string-to-number): Moved to trans-util.
+	(hex-string-to-number): Moved to trans-util.
+	(iso-2022-based-codepoint-to-char): Use cn macro.
+	(translate-unicode-cns-table-file): Likewise.
+
+	* un-data.el : To use cn macro, require trans-util at
+	byte-compiling time.
+	(unicode-byte-order-mark-lsb): Use cn macro.
+	(unicode-byte-order-mark-msb): Likewise.
+	(unicode-signature): Likewise.
+	(unicode-reverse-signature): Likewise.
+	(unicode-reverse-signature): Likewise.
+	(unicode-line-separator): Likewise.
+	(unicode-paragraph-separator): Likewise.
+	(unicode-ignore-characters): Likewise.
+	(utf-8-signature): Likewise.
+	(unicode-cr): Likewise.
+	(unicode-lf): Likewise.
+	(unicode-special-relation-alist): Use ?\n instead of ?\x0a.
+
+	* unidata.el: Require trans-util explicitly.
+	(unidata-values): Use cn macro to describe vector size.
+
+	* unicode.el (ucs-generic-elisp-representation):
+	New function.
+	(ucs-generic): Register it with ucs-generic-elisp-representation
+	as an elisp representation.
+
+	* un-trbase.el (mucs-unicode-default-encode-replacement):
+	Use cn macro.
+	(lf-vs-cr-assoc): Use \n instead of ?\x0a.
+	(lf-vs-unicode-line-separator-assoc): Use \r instead of ?\x0d.
+
+	* mule-uni.el (mule-unicode-0100-24ff-range): New variable.
+	(ucs-to-mule-unicode-0100-24ff): Use the above variable.
+	(mule-unicode-0100-24ff-to-ucs): Likewise.
+	(mule-unicode-0100-24ff-vs-unicode-assoc): Likewise.
+
+	* trans-util.el (string-to-number-with-radix):
+	New function, which is originated from hex-string-to-number@txt-tbl.el.
+	(hex-string-to-number): New function.
+	(octal-string-to-number): New function.
+	(ccl-c-notated-string-to-number): Define new CCL program,
+	which is moved from txt-tbl.el
+	(c-notated-string-to-number): If Emacs have no CCL facility,
+	Call string-to-number-with-radix.
+	(cn): New defmacro to define hexadecimal literal.
+	(make-char-internal-usable-p): New variable.
+	(charset-id-table): New variable.
+	(update-charset-id-table): New function.
+	(make-char-from-charset-id): New function.  This
+	eliminates bare call of make-char-internal.
+	(make-char-from-charset-id-codepoint): Call make-char-from-charset-id
+	instead of make-char-internal.
+	(trans-util-charp): New function.  It replaces direct calls of
+	either characterp or char-valid-p.
+	(char-1-elisp-representation): New function.
+	(char-1-ccl-representation): New function.
+
+	* mccl-font.el (mccl-font-check-conversion-type):
+	Bug fix.  Raise a signal with a list instead of
+	a bare object.
+
+2000-09-06  MIYASHITA Hisashi  <himi@m17n.org>
+
+	* Mule-UCS 0.82 (SOSUI) Release.
+
+	* un-define.el
+	(utf-16-le-no-signature-unix): Modify a documentation string.
+	(utf-16-le-no-signature-dos): Likewise.
+	(utf-16-le-no-signature-mac): Likewise.
+	(utf-16-le-no-signature): Likewise.
+	(utf-16-be-no-signature-unix): Likewise.
+	(utf-16-be-no-signature-dos): Likewise.
+	(utf-16-be-no-signature-mac): Likewise.
+	(utf-16-be-no-signature): Likewise.
+
+	* README.Unicode: Add descriptions on utf-16-*-no-signature-* coding systems.
+
+2000-09-05  MIYASHITA Hisashi  <himi@m17n.org>
+
+	* mucs.el (mucs-version): Set version to 0.82 (SOSUI).
+
+	* reldata/usupple.el (unicode-assoc-for-fullwidth-or-halfwidth-normalization):
+	New assoc translation element.
+	(unicode-translation-rule-for-fullwidth-or-halfwidth-normalization):
+	New translation.
+
+	* un-supple.el (un-supple-reconstruct-tr-def): Handle
+	unicode-translation-rule-for-fullwidth-or-halfwidth-normalization.
+	(unicode-translation-rule-for-fullwidth-or-halfwidth-normalization):
+	Embed this.
+
+	* un-define.el (utf-16-le-no-signature-unix-stream-encoder): New conversion.
+	(utf-16-le-no-signature-dos-stream-encoder): New conversion.
+	(utf-16-le-no-signature-mac-stream-encoder): New conversion.
+	(utf-16-le-no-signature-ul-stream-encoder): New conversion.
+	(utf-16-be-no-signature-unix-stream-encoder): New conversion.
+	(utf-16-be-no-signature-dos-stream-encoder): New conversion.
+	(utf-16-be-no-signature-mac-stream-encoder): New conversion.
+	(utf-16-be-no-signature-ul-stream-encoder): New conversion.
+	(utf-16-le-no-signature-unix): New coding system.
+	(utf-16-le-no-signature-dos): New coding system.
+	(utf-16-le-no-signature-mac): New coding system.
+	(utf-16-le-no-signature): New coding system.
+	(utf-16-be-no-signature-unix): New coding system.
+	(utf-16-be-no-signature-dos): New coding system.
+	(utf-16-be-no-signature-mac): New coding system.
+	(utf-16-be-no-signature): New coding system.
+
+	* tae.el (tae-generate-project-table-symbol): Handle
+	identity and lambda.
+	(tae-project-all-table): If val is identity, put mucs-ccl-nop-program
+	in a table.
+	(tae-tr-elem-not-inverse-p): New function for a new option, 'not-inverse.
+	(tae-tr-elem-inverse-p): New function to check whether the given tr-elem
+	should be inversed or not.
+	(tae-normalize-translation): When normalizeing an assoc translation element,
+	inverse contents beforehand for simplicity.
+	(tae-reduce-OR-translations):
+	Because assoc translation element has already normalized,
+	we don't have to handle decodep flag when comparing slots.
+	(tae-reduce-AND-translations): Likewise.
+	(tae-reduce-composite-translations): When decodep is non-nil,
+	reverse translations beforehand.  Other changes are also similar
+	to the above change.
+	(tae-compile-translation-element): When handling a range translation
+	element, use tae-tr-elem-inverse-p instead of directly using decodep flag.
+	Other changes are also similar to that of tae-reduce-OR-translations.
+
+	* mucs-ccl.el (mucs-ccl-nop-program): New function.
+
+2000-08-31  MIYASHITA Hisashi  <himi@m17n.org>
+
+	* tbl-mg.el (get-table-key): Removed.  tbl-mg have not had
+	any concreat meanings on tables.
+	(get-table-val): Removed.
+
+2000-08-30  MIYASHITA Hisashi  <himi@m17n.org>
+
+	* reldata/usupple.el: Don't set byte-compile-dynamic.
+
+2000-06-29  MIYASHITA Hisashi  <himi@m17n.org>
+
+	* reldata/usisheng.el (chinese-sisheng-vs-unicode-assoc):
+	Bug fix.  Add the entry for U+01F9(LATIN SMALL LETTER N WITH GRAVE).
+
+	* MULE-UCS 0.81 (MANTOUROUSAN) Release.
+
+	* unidata.el (unidata-show-entry-from-UCS):
+	Add a documentation string
+	(unidata-show-entry-from-char): likewise.
+
+	* README.Unicode: explain about new features of
+	un-supple.el and unidata.el.
+
+	* README: Add descriptions on Mule 4.1 patch.
+
+2000-06-22  MIYASHITA Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* un-define.el (unicode-font-encoder-charset-spec-alist):
+	If mccl-font-encoder is defined in a charset, use it.
+
+	* mule-uni.el (mule-unicode-0100-24ff):
+	Define a special font encoder for mule-unicode-0100-24ff.
+
+	* reldata/usupple.el: New module.
+
+	* un-supple.el: New module.
+
+	* un-trbase.el:
+	fix comments.
+
+	* tae.el (tae-get-translation-definition):
+	New function.
+
+	* mucs-ccl.el (mucs-ccl-generate-registration-program):
+	Call mucs-notify-embedment after ccl-program is embedded.
+
+	* mucs.el (mucs-version):
+	Set version to 0.81 (MANTOUROUSAN).
+
+2000-06-14  MIYASHITA Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* big5conv/README: Fix grammatical mistakes.
+
+	* tae.el (tae-get-tr-elem-option-alist):
+	If tr-elem is not a translation element, return nil explicitly.
+	(tae-reduce-AND-translations): In order to avoid manipulating
+	non translation	elements, treat `all' key in the operation part
+	of `assoc' translation element.
+	(tae-compile-AND-operation): Correct the table structures generated
+	by this function.  In short, nest 1 more level.
+
+	* unidata.el (unidata-read-until): Modify error message.
+
+	* mucs-type.el: Modify comments.
+
+2000-06-09  MIYASHITA Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* reldata/usisheng.el (chinese-sisheng-vs-unicode-assoc):
+	Bug fix.  Fix the entry, which had corresponded to U+0100(LATIN
+	CAPITAL	LETTER A WITH MACRON), to correspond to U+101(LATIN
+	SMALL LETTER A WITH MACRON).
+
+2000-06-03  MIYASHITA Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* MULE-UCS 0.80 (KITAYAMA) Release.
+
+	* README: Add my perspective about the fix of CCL interpretor
+	on Emacs 20.7 and Emacs 21.
+
+	* README.Unicode:
+	Add descriptions on post-read and pre-write conversions.
+
+2000-05-16  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* unidata.el: Modify comments.
+	(unidata-field-properties):
+	Extend each slot with print-method field, which supplements
+	informations on printing.
+	(unidata-read-until): Refer the second element as a spec
+	instead of accessing the cdr part.
+	(unidata-display-entry): Use print-method field if exists.
+
+2000-05-15  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* README: Remove the patch for Emacs 20.6, moved it to
+	the top directory.  And change the description on it.
+
+2000-05-12  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* README:
+	Modify "IMPORTANT NOTICE" and introduction.
+
+2000-05-11  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* un-define.el (un-define-post-read-conversion-charsets-alist):
+	Disabled the conversion on indian-is13194 charset.
+	(unicode-basic-translation-charset-order-list):
+	Add chinese-sisheng, vietnamese-viscii-lower, and
+	vietnamese-viscii-upper.
+
+	* mucs-ccl.el (mucs-ccl-temporal-coding-system-ccl-symbol): 
+	New variable.
+	(mucs-ccl-define-temporal-coding-system):
+	(mucs-convert-region):
+	(mucs-convert-string):
+	New functions.
+
+	* tae.el:
+	Fix comments.
+
+	* reldata/uviscii.el:
+	Completely remade.
+
+	* reldata/usisheng.el:
+	Place `?' before character literals.
+
+	* unidata.el:
+	New supplement module.
+
+2000-04-15  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* un-define.el: Make new property of charset symbols
+	`translation-rule-for-unicode' that indicates the corresponding
+	translation rule for Unicode.
+	(unicode-get-translation-rule-from-charset):
+	Use `translation-rule-for-unicode' property of the given charset.
+
+	* README.Unicode: Bug fix on charset names.
+
+2000-04-08  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* README.Unicode: Fix typo.
+
+	* README: Change the version of Mule-UCS
+	this manual corresponds.
+
+	* mucs.el (mucs-version):
+	Set version to 0.80 (KITAYAMA).
+
+	* tae.el (tae-generate-project-table-symbol):
+	When val is t, return tae-project-all-to-restore.
+	Fix the argument of `signal'.
+	(tae-generate-special-project-table-symbol): 
+	Fix the argument of `signal'.
+	(tae-project-all-table):
+	Use mucs-max-number instead of mucs-max-code.
+	(tae-force-project-to-lambda):
+	New function.
+	(tae-project-all-arith-to-lambda): 
+	Don't caliculate range values by itself, use
+	mucs-arithmetic-range-lower and mucs-arithmetic-range-upper
+	instead.
+	(tae-project-special-to-identity-table):
+	When register new code-conversion-map, also return sym.
+	(tae-project-all-specials-to-identity-table):
+	Likewise.
+	(tae-reduce-OR-translations):
+	Prepare for reducing range and assoc translation elements.
+	(tae-reduce-translation-internal):
+	Comment out a part of 'ct operation.
+	(tae-message-set-new-type):
+	Add a new argument `orig-type' in order to store the type
+	that is about to be changed.
+	(tae-message-get-new-type):
+	Adapt to the above change.
+	(tae-compile-translation-element):
+	When the CCL interpreter has valid map-multiple instruction,
+	use CCL call via map-multiple.
+	And adapt to the change of tae-message-set-new-type.
+	(tae-compile-OR-operation):
+	Use tae-message-get-new-type instead of directly accessing the
+	obtained message.
+	And fix the argument of `signal'.
+	(tae-compile-AND-operation):
+	Cause an error if the CCL interpreter does not have valid
+	map-multiple.
+	Make the map structure more efficient.
+	Use tae-message-get-new-type instead of directly accessing the
+	obtained message.
+	(tae-compile-composite-operation):
+	Likewise.
+	(tae-get-compiled-products-internal):
+	Disable 'ct operation.
+	(tae-compile-internal):
+	Adapt to the change of tae-message-set-new-type.
+	(tae-compile-retrieve-ccl-prog):
+	When the CCL interpreter has valid map-multiple instruction,
+	generate more efficient CCL code.
+
+	* mucs-ccl.el (mucs-ccl-facility-alist): New variable.
+	(mucs-ccl-check-map-multiple-function): 
+	(mucs-ccl-inspect-facility): 
+	(mucs-ccl-facility-error): 
+	New functions for checking CCL facilities.
+	(mucs-ccl-internal-state-reserve): 
+	Fix the argument of `signal'.
+	(mucs-convert):
+	Change defsubst to defun.
+	(mucs-ccl-register-ccl-program): 
+	(mucs-ccl-generate-registration-program): 
+	New functions.
+	(mucs-package-definition-end-hook):
+	Add mucs-ccl-generate-registration-program to this hook.
+	(mucs-ccl-add-program):
+	New function.
+
+	* mucs-type.el (mucs-type-get-option-alist): 
+	Fix the argument of `signal'.
+	(mucs-type-set-option-alist): Likewise.
+	(mucs-type-get-elisp-representation): Likewise.
+	(mucs-type-get-ccl-representation): Likewise.
+	(mucs-type-get-equal-op): Likewise.
+	(mucs-type-get-relative-op): Likewise.
+	(mucs-type-check-valid-serialization): Likewise.
+	(mucs-type-register-serialization): Likewise.
+	(mucs-type-register-conversion): Likewise.
+	(mucs-type-get-conversion): Likewise.
+	(mucs-type-serialization-list): Likewise.
+
+	* mucs.el (mucs-max-code):
+	Return the maximum code used by Mule-UCS instead of the
+	maximum	normal number, which is obtained by mucs-max-number.
+	(mucs-max-number):
+	New function, which adapts to the above change.
+	(mucs-arithmetic-range-lower): 
+	(mucs-arithmetic-range-upper):
+	New functions to indicate upper and lower codepoints of the
+	range that Mule-UCS treats as arithmetic usages.
+	(mucs-define-package):
+	Fix the argument of `signal'.
+	(mucs-unembedded-object-list):
+	Fix the accessing of elem.
+
+	* tbl-mg.el (table-set-nested-p):
+	Don't use cached flags whether the table-set is nested
+	because indirectly refered table-sets may have a nested
+	structure clandestinely.
+
+	* mucs.el:
+	* mucs-error.el:
+	* mucs-type.el:
+	* trans-util.el:
+	* txt-tbl.el:
+	* un-data.el:
+	* un-tools.el:
+	Replace `MULE-UCS' with `Mule-UCS' in comments, docstrings,
+	and so on.
+
+2000-03-30  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* un-define.el (unicode-font-encoder-charset-spec-alist):
+	Use mccl-font-converst-font-encoding and
+	mccl-font-flat-code-to-font-encoding instead of
+	their old versions.
+	(unicode-font-encoder):
+	Declare this conversion type as `font', and
+	use mccl-font-encoder instead of mucs-ccl-font-encoder.
+
+	* README.Unicode:
+	Unify notations on Mule-UCS-Unicode.
+
+	* mccl-font.el (mccl-font-current-charset): 
+	New variable.
+	(mccl-font-check-conversion-type):
+	New function.
+	(mccl-font-charset-alist):
+	Removed.
+	(mccl-font-flat-code-to-font-encoding):
+	Renamed from mucs-ccl-flat-code-to-font-encoding.
+	(mccl-font-convert-font-encoding-internal):
+	New function.
+	(mccl-font-convert-font-encoding):
+	Renamed from mucs-ccl-convert-font-encoding.
+	Check the current conversion by mccl-font-check-conversion-type.
+	(mucs-ccl-font-type-convert):
+	Removed.
+	(mccl-font-encoder):
+	Renamed from mucs-ccl-font-encoder.
+	Check the current conversion by mccl-font-check-conversion-type.
+	And set a mark to each spec per charset.
+	(mccl-font-modify-font-encoder):
+	New macro.
+
+	* tae.el (tae-compile):
+	Set tae-eneable-register-translation to nil when
+	mucs-current-package is nil.
+
+	* mucs.el (mucs-conversion-p): 
+	(mucs-conversion-get): 
+	(mucs-conversion-put):
+	New functions.
+	(mucs-define-conversion):
+	Add new convtype `font'.
+	To retrieve contents of mucs-conversion-program-prep,
+	use mucs-conversion-get instead of directly calling get
+	function.
+	(mucs-conversion-set-program-marker):
+	Use backquote to quote program.
+	(mucs-substitute-conversion-program):
+	Extract this part from mucs-modify-conversion.
+	(mucs-modify-conversion):
+	Use the above function.
+	(mucs-conversion-set-program-and-compiled-code):
+	Use mucs-conversion-put to put contents of
+	mucs-conversion-program-prep.
+
+	* mucs-error.el (mucs-conversion-type-mismatch-error):
+	New error symbol.
+	(mucs-unknown-type-error): 
+	(mucs-unknown-serialization-error): 
+	(mucs-no-serialization-method): 
+	(mucs-no-unserialization-method): 
+	(mucs-invalid-serialization-error): 
+	(mucs-type-mismatch-error): 
+	(mucs-type-cannot-convert):
+	Fix misspelling on `error-conditions'.
+
+	* mucs-ccl.el (mucs-ccl-make-elisp-preparation-from-myo):
+	When mucs-current-package is nil, we don't append registration
+	program for table-sets.
+	(mucs-ccl-setup-myo):
+	Extract this part from mucs-setup-conversion.
+	(mucs-setup-conversion):
+	Move `func' to mucs-ccl-setup-myo, and then use mucs-ccl-setup-myo
+	to setup main-ccl-myo and eof-ccl-myo.
+
+2000-03-21  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* un-define.el
+	(unicode-basic-translation-charset-order-list):
+	Add ethiopic and indian-is13194 charsets.
+	(un-define-safe-charsets-for-coding-systems):
+	New variable mainly for indian charsets.
+	(un-define-get-coding-system-alist):
+	Refer the above variable when setting safe-charsets.
+
+	* un-trbase.el (unicode-charset-library-alist):
+	Add new slots for indian-is13194, ethiopic, chinese-sisheng,
+	vietnamese-viscii-lower, and vietnamese-viscii-upper.
+
+	* txt-tbl.el (hex-string-to-number):
+	(iso-2022-based-codepoint-to-char):
+	(make-table-alist-region):
+	(make-table-alist-region-by-col):
+	New functions.
+	(make-table-region-unicode):
+	Removed.  Use make-table-alist-region-by-col instead.
+	(mucs-print-character-a-list):
+	When converting codepoint to char, call the given function.
+	(unicode-consortium-table-database):
+	New variable.
+	(translate-table-file-for-unicode-consortium):
+	(translate-table-file-generic):
+	New functions.
+	(translate-unicode-table-file):
+	Removed.  Use the above either of two functions instead.
+	(translate-unicode-cns-table-file):
+	Use make-table-alist-region-by-col instaed of
+	make-table-region-unicode.
+
+	* un-define.el:
+	Require mccl-font feature at byte-compiling time.
+	(un-define-enable-buffer-conversion): 
+	(un-define-post-read-conversion-charsets-alist): 
+	(un-define-pre-write-conversion-charsets-alist):
+	New variables that controls un-define-post-read-conversion
+	and un-define-pre-write-conversion.
+	(un-define-post-read-conversion): 
+	(un-define-pre-write-conversion):
+	New functions buffer conversion functions for
+	utf-* coding-systems.
+	(un-define-decode-template):
+	(un-define-encode-template):
+	Don't require unicode feature directly.
+	(un-define-get-coding-system-alist):
+	Append new slots for pre-write-conversion and
+	post-read-conversion.
+	(unicode-basic-translation-charset-order-list):
+	Give higher priority to thai-tis620 than mule-unicode-0100-24ff.
+
+	* unicode.el:
+	Don't require tae and mccl-font feature.
+	(mucs-unicode-default-decode-replacement): 
+	(mucs-unicode-default-encode-replacement): 
+	(unicode-not-found-to-replace-or-invalid-assoc): 
+	(unicode-not-found-to-invalid-assoc): 
+	(lf-vs-cr-assoc): 
+	(lf-vs-unicode-line-separator-assoc):
+	Moved to un-trbase.el.
+	(convert-unicode-lf-2-crlf): 
+	Moved to utf.el.
+
+	* un-trbase.el:
+	require tae feature.
+	(mucs-unicode-default-decode-replacement): 
+	(mucs-unicode-default-encode-replacement): 
+	(unicode-not-found-to-replace-or-invalid-assoc): 
+	(unicode-not-found-to-invalid-assoc): 
+	(lf-vs-cr-assoc): 
+	(lf-vs-unicode-line-separator-assoc):
+	Moved from unicode.el.
+
+	* utf.el:
+	require tae feature.
+	(convert-unicode-lf-2-crlf): 
+	Moved from unicode.el.
+
+	* reldata/utis620.el:
+	Correct keywords.
+
+	* reldata/uiscii.el: New translation element for
+	indian-is13194.
+
+	* reldata/usisheng.el: New translation element for
+	chinese-sisheng.
+
+	* reldata/uethiopic.el: New translation element for
+	ethiopic.
+
+	* reldata/uviscii.el: New translation element for
+	vietnamese-viscii-upper and vietnamese-viscii-lower.
+
+2000-03-16  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* MULE-UCS 0.74 (KAMIGAMO) Release.
+
+2000-03-15  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* mucs.el (mucs-version):
+	Set version to 0.74 (KAMIGAMO).
+
+	* un-define.el (unicode-basic-translation-charset-order-list):
+	Give low priority to mule-unicode-0100-24ff.
+
+2000-03-10  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* MULE-UCS 0.73 (ROKUONJI) Release.
+
+	* un-define.el (unicode-basic-translation-charset-order-list):
+	Add thai-tis620.
+
+	* un-trbase.el (unicode-charset-library-alist):
+	Add a new slot for thai-tis620.
+
+	* reldata/utis620.el:
+	New translation element for thai-tis620.
+
+2000-03-09  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* big5conv/README:
+	Because of change of implementation, rewrite almost all.
+
+	* mucs.el (mucs-version): 
+	Set version to 0.73 (ROKUONJI).
+
+	* un-define.el (category-list): If category-list have categories,
+	set set-language-environment-hook to program that configures
+	coding priorities.
+
+2000-03-08  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* big5conv/big5type.el (char-1-big5-1-first-code): 
+	(char-1-big5-2-first-code): 
+	(big5-same-row):
+	New variables for big5-char serialization.
+	(mucs-ccl-char-1-write-big5-char):
+	(mucs-ccl-char-1-read-big5-char):
+	New functions for big5-char serialization.
+	(big5-char):
+	(big5-char-dos):
+	New serializations of char-1.
+
+	* big5conv/big5c-ucs.el:
+	New Definition module for conversion of BIG5
+	via UCS representation.
+
+	* big5conv/big5c-cns.el:
+	Renamed from big5-cns.el.
+
+	* big5conv/big5-comp.el:
+	New module for byte-compilation.
+
+	* tbl-mg.el (generate-table-set-table-symbol):
+	Intern a generated table symbol in order to
+	keep the consistency through various modules.
+
+	* mccl-font.el (mucs-ccl-convert-font-encoding):
+	Modify the codepoint transformation method,
+	which corresponds to the below change on char-1.
+	(mucs-ccl-font-type-convert):
+	Use 'char-1 instead of char-packed-1.
+
+	* reldata/ubig5.el:
+	New translation element definition module for BIG5.
+
+	* un-trbase.el (unicode-charset-library-alist):
+	Add slots for mule-unicode-0100-24ff, chinese-big5-1,
+	and chinese-big5-2.
+	(require-unicode-charset-data):
+	If the package that corresponds to the given charset is nil,
+	do nothing.
+
+	* un-define.el (mule-uni):
+	Require mule-uni module.
+	(unicode-basic-translation-charset-order-list):
+	Add mule-unicode-0100-24ff, chinese-big5-1,
+	and chinese-big5-2.
+	(un-define-encode-template):
+	Use 'char-1 as the type of mucs-ccl-read.
+	(emacs-char-to-ucs-codepoint-conversion):
+	Use 'char-1 instead of 'char-packed-1.
+
+	* mule-uni.el:
+	New module.
+
+	* tae.el :
+	Change the comment on Translation rule syntax.
+	Add explanations on range translation element
+	and RANGE-A-LIST.
+	And remove `elisp' translation element.
+	(tae-project-all-arith-to-lambda):
+	New function.
+	(tae-project-all-arith-to-lambda):
+	Bug fix.  Add 1 to endpoint of a generated vector.
+	(tae-get-dependent-translations):
+	New function.
+	(tae-register-conversion):
+	Don't get directly dependent translations from
+	'tae-dependent-translations.
+	Call tae-get-dependent-translations instead.
+	(tae-tr-elem-elisp-p):
+	Removed.
+	(tae-tr-elem-range-p): 
+	New macro.
+	(tae-tr-elem-p): 
+	Remove `elisp' and Add `range' as translation element keyword.
+	(tae-get-tr-elem-range):
+	Commented out.
+	(tae-get-tr-elem-option-alist):
+	Deal with the case of `range' translation element,
+	and delete the part on `elisp' translation element.
+	(tae-set-tr-elem-option-alist):
+	Likewise.
+	(tae-normalize-translation):
+	Likewise.  But, it has no actual operation on `range'
+	translation element.
+	(tae-reduce-OR-translations):
+	Likewise.
+	(tae-message-set-arithmetic): 
+	(tae-message-arithmetic-p):
+	New functions.
+	(tae-compile-translation-element):
+	Compile `range' translation element.
+	In this case, set `arithmetic' key to the message
+	by the above function.
+	(tae-compile-OR-operation):
+	Deal with `arithmetic' key.
+	(tae-compile-AND-operation):
+	Disabled.
+	(tae-compile-composite-operation):
+	(tae-compile-composite-transparent-operation):
+	Rewrite almost all.  But disable these functions,
+	they will have lots of probrems.
+	(tae-compile-internal):
+	Skip `arithmetic' key in generated message.
+	(tae-compile-retrieve-ccl-prog):
+	Modify CCL program mainly for `range' translation element.
+
+	* txt-tbl.el: 
+	Change the copyright notice.
+	Modify the keywords.
+	(mucs-print-character-a-list):
+	Allow the case that charset is big5.
+	And if it is, decode given code points by decode-big5-char.
+
+	* trans-util.el:
+	Change the copyright notice.
+	Modify the keywords.
+	(char-codepoint): 
+	(make-char-from-charset-codepoint): 
+	(make-char-from-charset-id-codepoint):
+	Rearrange codepoints defined by char-1,
+	which corresponds to the below change on char-1.
+
+	* mucs.el:
+	Moved the fundamental data definition section after
+	package requirement functions.
+	(mucs-max-code):
+	(mucs-special-code):
+	Change the semantics of code range used by Mule-UCS.
+	(mucs-code-range-mask):
+	Removed.
+	(mucs-arithmetic-adjust):
+	New function.
+
+	* mucs-type.el (char-1):
+	Move the definition to mucs-ccl.el.
+
+	* mucs-ccl.el (mucs-ccl-write-char-packed-1):
+	(mucs-ccl-write-char-packed-1-dos):
+	(mucs-ccl-write-read-char-packed-1):
+	(char-packed-1):
+	Removed.  Use char-1 instead.
+	(char-1):
+	Moved from mucs-type.el.
+	And change the format of char-1.
+	I rearranged its codepoint in 96x96 plain.
+	(mucs-ccl-write-char-1): 
+	(mucs-ccl-read-char-1):
+	(mucs-ccl-write-char-1-dos): 
+	Likewise.
+
+2000-02-23  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* mucs-ccl.el :
+	To cease compiler warnnings,
+	require 'mucs at byte-compile time.
+
+2000-02-22  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* un-define.el (unicode-font-encoder-charset-spec-alist):
+	New variable.  This alist maintain font encoder per
+	charset, which will be passed to mucs-ccl-font-encoder.
+	(unicode-font-encoder):
+	Use the above variable.
+
+2000-02-22  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* MULE-UCS 0.72 (RYOANJI) Release.
+
+	* README: 
+	Append CCL bug fix patch and its explanations.
+
+	* README.Unicode:
+	Modify explanations on the module constitution.
+
+2000-02-21  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* tae.el: 
+	Change subtitle.
+	Remove `CCL' from Keywords.
+	(tae-enable-register-translation):
+	New variable.
+	(tae-generate-project-table-symbol): 
+	(tae-generate-special-project-table-symbol): 
+	New functions.
+	(tae-project-all-table): 
+	Replaces tae-project-all-translation-vector.
+	This function generate a table not a raw vector not to
+	generate duplicated table.
+	(tae-project-special-to-identity-table):
+	Likewise, replaces tae-project-special-to-identity.
+	(tae-project-all-specials-to-identity-table): 
+	Likewise, replaces tae-project-all-specials-to-identity.
+	(tae-project-all-to-special-table):
+	Likewise, replaces tae-project-all-to-special.
+	(tae-internal-translation-property):
+	Remove tae-table-set key.
+	Instead, create tae-table-set-for-encode and
+	tae-table-set-for-decode.
+	(tae-copy-declared-translation):
+	Corresponding to the above change, get table-sets from
+	tae-table-set-for-encode and tae-table-set-for-decode keys.
+	(tae-translation-add-table-set):
+	Change the format of an A-list of 
+	tae-table-set-for-encode and tae-table-set-for-decode keys.
+	(tae-translation-get-table-set):
+	Adapt to the above change.
+	(tae-initialize-translation):
+	Likewise.
+	(tae-retrieve-registered-translation-list):
+	removed.
+	(tae-register-translation):
+	It uses the common APIs defined by mucs.oel.
+	And also uses the extended cells of the registered slot.
+	(tae-registered-translation-rule-list): 
+	(tae-notify-embedment-product-list): 
+	(tae-embedment-required-product-list): 
+	New functions.
+	(tae-declare-translation):
+	Add a new optional argument, holdp.  If it is set,
+	don't call tae-initialize-translation.
+	(tae-compile-translation-element):
+	Call tae-project-all-table instead of
+	tae-project-all-translation-vector.
+	(tae-compile-AND-operation):
+	Call tae-project-all-table, tae-project-all-to-special-table,
+	and tae-project-special-to-identity-table instead of old
+	functions.
+	(tae-compile-composite-transparent-operation):
+	Likewise.
+	(tae-get-compiled-products):
+	Call tae-register-translation with a new
+	fashioned interface.
+	(tae-persistent-program-template):
+	New function.
+	(tae-generate-persistent-program):
+	As to tae-products-for-encode and tae-products-for-decode,
+	inspect whether each type of them should be embedded,
+	and then generate the program that append it to the existing key,
+	not replace the existing key.
+	(tae-compile-retrieve-ccl-prog):
+	Append new code for arithmetic transformation.
+	(tae-modify-translation):
+	Bind tae-enable-register-translation to nil.
+	(tae-embed-for-dynamic-modification):
+	New function.
+
+	* un-define.el:
+	Splitted.  Translation rule definition part is moved
+	into un-trbase.el.
+	And in the (eval-when-compile) form, require utf and
+	un-trbase modules.
+	(unicode-basic-translation-charset-order-list):
+	Renamed from un-define-basic-translation-charset-order-list.
+	(unicode-get-translation-rule-from-charset):
+	Renamed from un-define-get-translation-rule-from-charset.
+	(un-define-generate-basic-translation-rule):
+	From un-define-change-charset-order, extracted a part on
+	making a translation rule.
+	(un-define-change-charset-order):
+	See above.
+
+	* unicode.el:
+	Splitted.  UTF-* serialization part is moved into utf.el.
+
+	* utf.el:
+	New module.  This is based on a part of unicode.el,
+	which defines UTF-* serializations.
+
+	* un-trbase.el :
+	New module.  This is based on a part of un-define.el,
+	which defines translation rules.
+
+	* tbl-mg.el (table-set-table-p):
+	New function
+	(table-set-add-tables):
+	Removed.
+	(make-table-set-definition-from-symbol-list):
+	Disabled. 
+	(table-set-nested-p):
+	Judges from symbol-list, not from the definition.
+	(get-table-set-symbol-list-recursively):
+	Don't ignore invalid element.  It cause an error signal.
+	(generate-table-set-registration-program):
+	Bug fix.  On all table-sets, confirm each of them whether it
+	has been alread registered.
+	And also when table-reg-prog is empty, enclose table-set-reg-prog
+	with `progn' form.
+
+	* mucs.el:
+	Change subtitle.
+	(mucs-type):
+	Require.
+	(mucs-max-code):
+	Reserve 1 bit for other usages than normal code.
+	(mucs-code-range-mask):
+	New function.  It is for mask bit-pattern that covers
+	normal code range.
+	(mucs-embed-package-signature):
+	New macro.
+	(mucs-define-package):
+	Embed package signature at the end.
+	(mucs-import-package):
+	(mucs-get-current-registered-alist):
+	(mucs-set-current-registered-alist): 
+	(mucs-get-registered-kind-alist): 
+	(mucs-get-registered-slot): 
+	New functions.
+	(mucs-registered-p):
+	It becomes only an alias of mucs-get-registered-slot.
+	(mucs-embedded-p): 
+	(mucs-registered-object-list): 
+	(mucs-unembedded-object-list): 
+	(mucs-notify-embedment): 
+	New functions.
+	(mucs-register-object):
+	Almost completely rewritten.
+	Add a new argument, embed.
+	(mucs-unregister-object):
+	Almost completely rewritten.
+	
+2000-02-10  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* tbl-mg.el (make-table-set-definition-from-symbol-list):
+	Protect `current' from rebinding by `make-func', and
+	use append to concatinate generated list not to destruct
+	the symbol-list.
+	(get-table-set-symbol-list-recursively): 
+	Likewise.
+	(get-table-set-all-symbols-list):
+	Use append not to deconstruct `current'
+	given by get-table-set-symbol-list.
+
+	* tae.el (tae-initialize-translation):
+	Set internal properties to nil.
+	(tae-compile-composite-operation):
+	Bug fix.  Propergate type from translations.
+
+2000-02-05  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* README.Unicode:
+	Fix a bug.
+
+	* mucs.el (mucs-version): 
+	Set version to 0.72 (RYOANJI).
+
+	* tbl-mg.el (compile-codepoint-alist-to-vector):
+	(merge-codepoint-vector):
+	(generate-meta-table-registration-program):
+	Removed because these are needless even for test.
+
+	* tae.el (tae-project-special-to-identity):
+	(tae-project-all-specials-to-identity): 
+	(tae-project-all-to-special):
+	New functions.
+	(tae-get-message-from-translation):
+	New function.(mainly extracted from tae-compile-OR-operation.)
+	(tae-message-set-tables):
+	New function.
+	(tae-message-add-tables):
+	Removed.
+	(tae-compile-OR-operation): 
+	Rewritten maninly because of tae-get-message-from-translation.
+	(tae-compile-AND-operation): 
+	(tae-compile-composite-operation):
+	(tae-compile-composite-transparent-operation): 
+	Newly implemented functions.
+
+	* mucs.el (mucs-code-range-bits):
+	Set this to 27.
+	(mucs-code-range-specials):
+	New variable.
+	(mucs-max-code):
+	Exclude the area specified by mucs-code-range-specials.
+	(mucs-special-code):
+	New function.
+
+2000-02-02  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* MULE-UCS 0.71 (KITANOTENMANGU) Release.
+	
+	* README:
+	Add a little descriptions on README.Unicode.
+
+	* README.Unicode:
+	Add descriptions on font encoder.
+
+2000-02-01  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* big5conv/big5type.el (big5-be-2-octet[big5]):
+	(big5-be-2-octet-dos[big5]):
+	Change serialization definitions,
+	which corresponds to the change of serialization spec.
+
+	* mccl-font.el:
+	New module for font encoder.
+
+	* unicode.el:
+	require 'mccl-font.
+
+	* un-define.el (unicode-font-encoder):
+	New conversion.
+	(font-ccl-encoder-alist):
+	Add unicode-font-encoder.
+	(unicode-font-encoder):
+	Register unicode-font-encoder on Meadow.
+
+2000-01-28  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* README:
+	* README.Unicode:
+	* big5conv/README:
+	Correct the address of FSF.
+
+	* tbl-mg.el (define-table-set):
+	Don't reset reference-count if it has already been a table-set.
+
+2000-01-27  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* un-define.el (defvar):
+	Remove the specail treatment parts on utf-7.
+
+	* unicode.el :
+	(utf-8[ucs-generic]): 
+	(utf-8-dos[ucs-generic]): 
+	(utf-16-le[ucs-generic]): 
+	(utf-16-le-dos[ucs-generic]): 
+	(utf-16-be[ucs-generic]): 
+	(utf-16-be-dos[ucs-generic]): 
+	Change serialization definitions,
+	which corresponds to the change of
+	serialization spec.
+	(utf-7[ucs-generic]): 
+	(utf-7-dos[ucs-generic]): 
+	Likewise.  And register not only `unserialization'
+	also `serialization'.
+	(utf-7-safe[ucs-generic]): 
+	(utf-7-safe-dos[ucs-generic]): 
+	New serializations.
+	(mucs-ccl-utf-7-encode):
+	Don't call mucs-ccl-bind-program directly.
+	This function returns MUCS-CCL programs as is.
+	As a result, remove mucs-ccl-if-invalid-repeat
+	at the head.
+
+	* tbl-mg.el:
+	In comments, replace `MULE-UCS' with `Mule-UCS'
+
+	* mucs-ccl.el:
+	Change the subtitle.
+	(mucs-ccl-if): 
+	(mucs-ccl-if-invalid): 
+	(mucs-ccl-if-valid): 
+	(mucs-ccl-if-invalid-repeat): 
+	(mucs-ccl-read):
+	Make any forms given to these functions be
+	MUCS-CCL programs, not normal CCL programs.
+	(emacs-mule[char-1]): 
+	(emacs-mule[char-packed-1]): 
+	(emacs-mule-dos[char-1]): 
+	(emacs-mule-dos[char-packed-1]): 
+	Change serialization definitions,
+	which corresponds to the above changes.
+	(mucs-ccl-myo-append-safe):
+	New function.
+
+	* mucs-type.el (mucs-type-check-valid-serialization):
+	Disabled.
+
+	* mucs.el (mucs-version):
+	Set version to 0.71 (KITANOTENMANGU).
+
+2000-01-26  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* mucs-ccl.el:
+	Move MUCS-CCL library parts to the forward.
+
+2000-01-24  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* MULE-UCS 0.70 (TOJIIN) Release.
+
+	* unicode.el (insert-ucs-character): 
+	Add documentation strings.
+
+	* un-define.el (un-define-change-charset-order):
+	Add documentation strings.
+
+	* README.Unicode: 
+	* README:
+	Add descriptions on dynamic modification features.
+
+	* unicode.el (ucs-to-char): 
+	(char-to-ucs):
+	(insert-ucs-character):
+	Moved from un-define.el.
+
+	* un-define.el :
+	Not require trans-util in eval-when-compile form.
+	(ucs-to-char):
+	(char-to-ucs): 
+	(tae-modify-translation): 
+	(insert-ucs-character):
+	Autoload.
+	(un-define-get-translation-from-charset):
+	New function.
+	(unicode-basic-translation-rule):
+	Use the above function to construct this.
+	(ucs-to-char):
+	(char-to-ucs):
+	(insert-ucs-character):
+	moved to unicode.el.
+	(un-define-change-charset-order):
+	New function.
+
+	* tae.el :
+	(tae-embedded-name-obarry):
+	New variable.
+	(tae-generate-unique-symbol-for-embed):
+	Intern to the above variable when making symbol.
+	(tae-generate-translation-table-set-name):
+	Change naming convension.
+	(tae-generate-new-table-set):
+	When makeing symbol, don't intern to obarray.
+	(tae-generate-union-func-map):
+	Fix on get-table-set-symbol-list-recursively.
+	(tae-generate-func-to-func-map):
+	Don't use get-table-set-tables.
+
+	* tae.el :
+	Add some comments on tae-table-set.
+	(tae-message-set-table-set):
+	Removed.
+	(tae-translation-add-table-set):
+	Rewrite almost all.
+	Change the format of slot in tae-table-set.
+	(tae-translation-get-table-set):
+	Likewise.
+	(tae-initialize-translation):
+	Because of change on the format of slot in tae-table-set,
+	change the method to access it.
+	(tae-register-conversion):
+	Add the translation symbol to dependent conversions list.
+	(tae-generate-new-table-set):
+	Avoid to use symbols already used for table-set.
+	(tae-compile-OR-operation):
+	Change the method to operate table-set.
+	(tae-get-compiled-products):
+	Move created table-set into tae-table-set slot.
+	(tae-generate-persistent-program):
+	Add tae-table-set as a persistent item.
+	(tae-compile-internal): 
+	Change the method to operate table-set.
+	(tae-modify-translation):
+	Use recompiled data as to the translation
+	that is dependent of the conversion (not
+	the modified translation).
+	(tae-generate-registration-program):
+	Add tae-table-set to the persistent-item-list.
+
+2000-01-23  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* unicode.el (mucs-unicode-charset-translation-max-gap):
+	(mucs-ccl-unicode-translation-table-number):
+	(mucs-ccl-unicode-translation-table-number):
+	(mucs-unicode-default-encoding):
+	Removed.
+	(utf-16-le-ccl-encode): 
+	(utf-16-be-ccl-encode):
+	Bug fix.  Append `x' to indicate hex values.
+
+	* un-define.el (default-max-codepoint-table-gap):
+	Stop setting this variable.  In other words,
+	use default.
+	(unicode-basic-translation-rule):
+	Split this translation rule in terms of charsets.
+	Rewrite all codes on the registration.
+
+	* tbl-mg.el (generate-table-set-table-symbol):
+	Replace get-table-set-table-name.
+	(mucs-table-registered-p):
+	(mucs-add-table-registeration):
+	(mucs-delete-table-registeration):
+	Remove these functions, which is replaced by
+	Mule-UCS object registration manager defined in mucs.el.
+	(table-set-p):
+	checks table-set-symbol-list also.
+	(make-table-set-definition-from-symbol-list):
+	New function.
+	(get-table-set-definition):
+	Create table-set-definition from symbol-list
+	if it does not exist.
+	(define-table-set):
+	Call get-table-set-definition instead of accessing
+	p-list directly.
+	(table-set-nested-p): 
+	Likewise.
+	(get-table-set-symbol-list):
+	(get-table-set-symbol-list-recursively): 
+	Split get-table-set-symbol-list into these functions.
+	call generate-table-set-table-symbol instead of interning
+	new symbols.
+	(get-table-set-all-symbols-list):
+	New function.
+	(get-registration-required-tables):
+	Use new Mule-UCS object manager.
+	(generate-tables-registration-program):
+	Make table-set persistent.
+
+	* tae.el:
+	Modify comments on copyright notice.
+	(tae-generate-unique-symbol-for-embed):
+	New function.
+	(tae-current-compiling-translation):
+	New variable.
+	(tae-internal-translation-property):
+	Add new properties, 
+	tae-dependent-translations and tae-dependent-conversions.
+	(tae-translation-dynamic-p):
+	New function.
+	(tae-register-translation): 
+	(tae-retrieve-registered-translation-list): 
+	(tae-register-dependent-translation): 
+	(tae-register-conversion): 
+	New functions.
+	(tae-reduce-translation-internal):
+	(tae-reduce-translation):
+	Split the original version of tae-reduce-translation
+	into these function.
+	(tae-normalize-reduction-unit):
+	Call tae-reduce-translation-internal
+	instead of tae-reduce-translation.
+	(tae-get-compiled-products-internal):
+	Define by defun instead of defsubst.
+	Register a dependent translation.
+	(tae-get-compiled-products):
+	Use type argument instead of mucs-current-type.
+	Register given translation.
+	Not manage reduced translation rule in cache by itself,
+	and leave such jobs to tae-reduce-translation.
+	Remove a debugging line(which is inserted by mistake).
+	(tae-generate-persistent-program):
+	New function.
+	(tae-compile-retrieve-ccl-prog): 
+	New function.
+	(tae-compile-internal): 
+	(tae-compile):
+	Split the original version of tae-compile
+	into these function.
+	(tae-modify-translation):
+	New function.
+	(tae-generate-registration-program):
+	New function.
+	(mucs-package-definition-end-hook):
+	Add tae-generate-registration-program to this hook.
+
+	* mucs.el (mucs-version):
+	Set version to 0.70 (TOJIIN).
+	(mucs-current-type):
+	Fix doc string.
+	(mucs-package-definition-end-hook):
+	New hook.
+	(mucs-embed-program-with-hooks):
+	New macro.
+	(mucs-define-package):
+	Do away with mucs-registerd-tables and mucs-registered-ccls.
+	Instead, introduce mucs-registered-alist.
+	Call mucs-embed-program-with-hooks at the end.
+	(mucs-registered-p):
+	(mucs-register-object):
+	(mucs-unregister-object):
+	New functions
+	(mucs-current-conversion):
+	New variable.
+	(mucs-define-conversion):
+	Embed contents in mucs-conversion-program-prep,
+	not mucs-convversion-program into the slot of
+	mucs-conversion-program.
+	(mucs-conversion-set-program-marker):
+	(mucs-retrieve-marked-conversion-program): 
+	(mucs-modify-conversion): 
+	New function.
+	(mucs-conversion-set-program-and-compiled-code):
+	Put given program into the slot of
+	mucs-conversion-program-prep, not mucs-conversion-program.
+
+	* mucs-ccl.el (mucs-ccl-registered-p):
+	(mucs-ccl-add-registration):
+	(mucs-ccl-delete-registration):
+	Remove these functions, which is replaced by
+	Mule-UCS object registration manager defined in mucs.el.
+	(mucs-setup-conversion):
+	Bind mucs-current-conversion before setup.
+	Eval generated ccl-program before compiling it.
+	(mucs-refresh-conversion):
+	New function.
+
+	* README.Unicode:
+	Modify explainations on autodetection.
+
+	* README:
+	Modify explainations on CCL.
+
+	* big5conv/big5-cns.el:
+	correct the spelling in comments.
+
+	* reldata/u-cns-1.el:
+	* reldata/u-cns-2.el:
+	* reldata/u-cns-3.el:
+	* reldata/u-cns-4.el:
+	* reldata/u-cns-5.el:
+	* reldata/u-cns-6.el:
+	* reldata/u-cns-7.el:
+	* reldata/uascii.el:
+	* reldata/ugb2312.el:
+	* reldata/uipa.el:
+	* reldata/uiso8859-1.el:
+	* reldata/uiso8859-2.el:
+	* reldata/uiso8859-3.el:
+	* reldata/uiso8859-4.el:
+	* reldata/uiso8859-5.el:
+	* reldata/uiso8859-6.el:
+	* reldata/uiso8859-7.el:
+	* reldata/uiso8859-8.el:
+	* reldata/uiso8859-9.el:
+	* reldata/ujisx0201.el:
+	* reldata/ujisx0208.el:
+	* reldata/ujisx0212.el:
+	* reldata/uksc5601.el:
+	On each charset symbol,
+	put each symbol of variable of `assoc' translation rule
+	to 'unicode-assoc key instead of 'unicode key.
+	And mainly in comments, replace `MULE-UCS' with `Mule-UCS'
+
+1999-12-21  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* MULE-UCS 0.63 (HOUKYOUIN) Release.
+	
+	* README.Unicode:
+	* README:
+	Modify descriptions on UTF-7.
+
+	* unicode.el: 
+	* mucs-ccl.el: 
+	Remove comments on what I have done.
+
+	* mucs.el (mucs-version):
+	Set version to 0.63 (HOUKYOUIN).
+
+1999-12-13  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* un-define.el :
+	set default-max-codepoint-table-gap to 512.
+	(un-define-encode-template):
+	On utf-7-*, set translation rule for utf-7-direct characters to
+	utf-7-direct-or-optional-character-p-translation; on utf-7-safe-*,
+	set it to utf-7-direct-character-p-translation.
+	(utf-7-safe-unix-stream-encoder): 
+	(utf-7-safe-dos-stream-encoder): 
+	(utf-7-safe-mac-stream-encoder): 
+	New conversions.
+	(utf-7-unix): 
+	(utf-7-dos): 
+	(utf-7-mac): 
+	(utf-7):
+	Modify documentation strings.
+	(utf-7-safe-unix): 
+	(utf-7-safe-dos): 
+	(utf-7-safe-mac): 
+	(utf-7-safe):
+	New coding systems.
+
+1999-12-11  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* README.Unicode:
+	Modify slightly.
+	Add description on UTF-7.
+
+	* mucs-ccl.el (mucs-ccl-set-internal-state):
+	Return a block instead of a statement.
+	Write documentation strings.
+	(mucs-ccl-check-internal-state): 
+	Write documentation strings.
+	(mucs-ccl-write-char-packed-1-dos):
+	To adapt to the above change, splice the result of
+	mucs-ccl-set-internal-state.
+	(mucs-ccl-write-char-1-dos):
+	Likewise.
+
+	* unicode.el (ccl-utf-7-base64-encode): 
+	(ccl-utf-7-base64-encode-flush): 
+	(ccl-utf-7-decode): 
+	Likewise.
+
+1999-12-10  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* unicode.el (ucs4-be-ccl-encode):
+	(ucs4-le-ccl-encode):
+ 	Remove these variables.
+
+	* un-define.el (un-define-decode-template):
+	Require 'unicode instead of mucs.
+	(un-define-decode-template): 
+	Require 'unicode instead of mucs.  And give special treatment
+	to utf-7.
+	(utf-7-unix-stream-encoder): 
+	(utf-7-unix-stream-decoder): 
+	(utf-7-dos-stream-encoder): 
+	(utf-7-dos-stream-decoder): 
+	(utf-7-mac-stream-encoder): 
+	(utf-7-mac-stream-decoder): 
+	New conversions for utf-7.
+	(utf-7): 
+	(utf-7-unix): 
+	(utf-7-dos): 
+	(utf-7-mac):
+	New coding systems.
+
+	* unicode.el (utf-7-encode-buffer-magnification): 
+	(utf-7-decode-buffer-magnification):
+	New constant variables.
+	(utf-16-little-endian-p)
+	Remove this.  Instead, use mucs-ccl internal
+	state management functions.
+	(utf-16-ccl-decode): 
+	(mucs-ccl-utf-16-check-signature-read):
+	Rewrite with internal state management functions.
+	(utf-16-be-ccl-encode):
+	(utf-16-le-ccl-encode):
+	Bug fix.  Write LSB bytes by taking bitwise-and it with ?\xFF
+	instead of ?\x7F.  And rewrite hexadeciaml literals with capital
+	letters.
+	(utf-16-be-ccl-decode): 
+	(utf-16-le-ccl-decode): 
+	rewrite hexadeciaml litelal with capital letters.
+	(utf-7-direct-characters-assoc):
+	(utf-7-optional-direct-characters-assoc): 
+	(utf-7-shifted-character-assoc): 
+	(ccl-b64-encode-table): 
+	(ccl-b64-decode-table): 
+	New constant variables for utf-7.
+	(utf-7-direct-character-p-translation): 
+	(utf-7-direct-or-optional-character-p-translation): 
+	New translations for utf-7.
+	(utf-7-shifted-p):
+	New mucs-ccl internal state reserve for utf-7.
+	(ccl-utf-7-base64-encode):
+	(ccl-utf-7-base64-encode-flush): 
+	(mucs-ccl-utf-7-encode-eof): 
+	(mucs-ccl-utf-7-encode): 
+	(ccl-utf-7-decode): 
+	New functions for utf-7.
+	(utf-7[ucs-generic]):
+	New serialization for ucs-generic.
+
+	* mucs-ccl.el (mucs-ccl-if-invalid-repeat): 
+	embed ((repeat)) instead of ((loop)).
+	(mucs-ccl-read-ex-be-2-octet):
+	(mucs-ccl-read-ex-le-2-octet): 
+	Avoid to use r6.
+	(mucs-ccl-read-ex-be-4-octet): 
+	(mucs-ccl-read-ex-le-4-octet): 
+	(mucs-ccl-write-ex-be-4-octet): 
+	(mucs-ccl-write-ex-le-4-octet): 
+	Delete these.  I will recreate these if necessary.
+	(mucs-ccl-write-ex-be-2-octet): 
+	(mucs-ccl-write-ex-le-2-octet):
+	Avoid to use r6, and optimize these.
+	(mucs-ccl-internal-state-usage): 
+	New variable.
+	(mucs-ccl-internal-state-reserve): 
+	(mucs-ccl-check-internal-state):
+	(mucs-ccl-set-internal-state): 
+	New functions.
+	(mucs-ccl-previous-cr-p):
+	Remove this.  Instead, use mucs-ccl internal
+	state management functions.
+	(mucs-ccl-write-char-1-dos): 
+	(mucs-ccl-write-char-packed-1-dos):
+	Rewrite with internal state management functions.
+
+1999-12-04  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* MULE-UCS 0.62 (SHAKADO) Release.
+
+	* big5conv/README:
+	New file.
+
+	* big5conv/big5conv.el:
+	Add "RFC1922" as keywords.
+
+	* big5conv/big5-cns.el :
+	Set coding-category-big5 to big5-conv.
+
+	* big5conv/big5conv.el (big5type): 
+	Use mucs-require-supplement to load big5type.
+
+	* big5conv/big5-cns.el (require):
+	Use mucs-require-supplement to load big5conv.
+
+	* mucs.el (mucs-require-supplement):
+	New function.
+
+1999-12-03  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* README:
+	* README.Unicode: 
+	Bug fix.
+
+	* mucs.el (mucs-version):
+	Set version to 0.62 (SHAKADO).
+
+	* big5conv/big5type.el:
+	New module for type definition.
+
+	* big5conv/big5conv.el:
+	Moved type definition part to big5type.el
+
+	* big5conv/big5-cns.el:
+	New big5conv definition module for Mule-UCS 0.6x API,
+	which is renamed from big5-sample.el
+
+	* mucs-error.el (mucs-type-cannot-convert):
+	New error symbol.
+
+	* README.Unicode:
+	Notice on sample configuraion of .emacs.
+
+1999-11-17  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* tae.el (tae-compile-translation-element):
+	Use mucs-type-get-conversion-force, and skip checking
+	of return value.
+	(tae-reduce-composite-translations):
+	(tae-reduce-AND-translations): 
+	(tae-reduce-OR-translations): 
+	Use relative-op and equal-op.
+
+	* mucs-type.el (mucs-type-get-conversion-force):
+	New function.
+
+1999-11-15  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* un-define.el (un-define-get-coding-system-alist):
+	Check whether the given coding-category is valid on this Emacs.
+
+	* mucs.el (mucs-version):
+	Set version to 0.61 (TOGETSUKYO).
+
+	* tae.el:
+	Rewrite the title string a little.
+	(tae-project-all-translation-vector):
+	If val is 'invalid, set mucs-invalid-code instead of val.
+	(tae-message-append):
+	Bug fix as to the operation of non-merged key.
+	Rewrite almost all.
+	(tae-message-add-tables):
+	Renamed from tae-message-table-add.
+	(tae-message-set-table-set):
+	New function.
+	(tae-message-set-new-type):
+	Renamed from tae-message-new-type-set.
+	(tae-generate-new-table-set):
+	New function.
+	(tae-compile-translation-element):
+	Rename tae-message-new-type-set to tae-message-set-new-type.
+	(tae-compile-OR-operation):
+	Rewrite using nested table-sets.
+	(tae-get-compiled-products):
+	Generate a nested table-set from given tables.
+	(tae-compile):
+	Rename temporary variables.
+	Call get-table-set-symbol-list instead of
+	get-table-set-symbol-tables.
+	(tae-generate-union-func-map):
+	Call get-table-set-symbol-list instead of
+	get-table-set-symbol-tables.
+
+	* tbl-mg.el (table-set-internal-properties): 
+	Rename table-set-symbol-tables to table-set-symbol-list.
+	(table-set-p): 
+	(table-set-add-reference): 
+	(table-set-remove-reference):
+	(get-table-set-definition): 
+	Move to the head of the table-set definitions.
+	(table-set-p):
+	Check whether the given `table-set' is a symbol or not.
+	(table-set-definition-add-reference-to-table-set): 
+	New function.
+	(define-table-set):
+	Apply the definition to
+	table-set-definition-add-reference-to-table-set.
+	(table-set-add-tables):
+	New function.
+	(table-set-nested-p):
+	Rewrite in order to support nested table-sets.
+	(clear-table-set): 
+	Use table-set-symbol-list instead of table-set-symbol-tables.
+	And if nested table-set is found in the definition, call
+	table-set-remove-reference.
+	(get-table-set-symbol-list):
+	Renamed from get-table-set-symbol-tables.
+	And rewrite to support nested table-sets
+
+	* un-define.el (unicode-basic-translation-rule):
+	Remove unicode-not-found-assoc.
+	(unicode-basic-stream-translation-rule):
+	(unicode-basic-non-stream-translation-rule):
+	New translation rules.
+	(unicode-line-separator-translation-rule):
+	(unicode-mac-line-separator-translation-rule):
+	(utf-8-unix-stream-encoder):
+	(utf-8-unix-stream-decoder):
+	(utf-8-dos-stream-encoder):
+	(utf-8-dos-stream-decoder):
+	(utf-8-ws-unix-stream-encoder):
+	(utf-8-ws-unix-stream-decoder):
+	(utf-8-ws-dos-stream-encoder):
+	(utf-8-ws-dos-stream-decoder):
+	(utf-16-le-unix-stream-encoder):
+	(utf-16-le-unix-stream-decoder):
+	(utf-16-le-dos-stream-encoder):
+	(utf-16-le-dos-stream-decoder):
+	(utf-16-be-unix-stream-encoder):
+	(utf-16-be-unix-stream-decoder):
+	(utf-16-be-dos-stream-encoder):
+	(utf-16-be-dos-stream-decoder):
+	Use unicode-basic-stream-translation-rule
+	instead of unicode-basic-translation-rule.
+	(emacs-char-to-ucs-codepoint-conversion):
+	(ucs-codepoint-to-emacs-char-conversion):
+	Use unicode-basic-non-stream-translation-rule.
+
+	* mucs-error.el (mucs-type-mismatch-error):
+	(mucs-ccl-convert-error): 
+	New error symbols.
+
+	* mucs-ccl.el (mucs-convert):
+	(mucs-setup-conversion): 
+	Use signal instead of error.
+
+	* unicode.el (unicode-not-found-to-invalid-assoc):
+	New variable.
+	(unicode-not-found-to-replace-or-invalid-assoc):
+	Renamed from unicode-not-found-assoc.
+
+	* un-define.el:
+	fix some comments.
+
+	* README.Unicode:
+	* README: 
+	fix some errors.
+
+1999-11-12  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* mucs-ccl.el (mucs-setup-conversion):
+	Initialize mucs-current-type before comprising config-eof.
+	Check whether mucs-current-type matches with declared type
+	after each config comprisation.
+
+1999-11-10  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* mucs.el (mucs-define-coding-system):
+	Bug fix.  When this Mule version is less than 4.1,
+	set correct conversion symbols to
+	make-coding-system.
+
+	* un-define.el (ucs-to-char): 
+	(char-to-ucs): 
+	(insert-ucs-character):
+	New functions.
+	(emacs-char-to-ucs-codepoint-conversion): 
+	(ucs-codepoint-to-emacs-char-conversion):
+	New conversions for ucs-to-char and char-to-ucs.
+
+	* mucs.el (mucs-define-conversion):
+	For compile-environment, put mucs-conv-type.
+
+	* mucs-ccl.el (mucs-convert):
+	Define as defsubst.
+	Bug fix.  Set ccl-object not object, and pass
+	execute-vector that hasbeen translated by CCL
+	to elisp-representation-function.
+	And if the 1st element of execute-vector is equal to
+	mucs-invalid-code, return nil.
+	(mucs-setup-conversion):
+	Set mucs-current-type if the given conversion has a
+	conversion type.
+
+	* README: 
+	* README.Unicode:
+	Rewrite almost all.
+
+1999-11-09  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* mucs-ccl.el:
+	not require mucs and tbl-mg.
+	(mucs-convert):
+	New function.
+	(mucs-setup-conversion): 
+	New funciton.
+	(mucs-ccl-setup-ccl-program): 
+	Obsoleted by mucs-setup-conversion.
+
+	* mucs-type.el (mucs-define-type):
+	Set relative-op and equal-op to a slot of mucs-type-alist.
+	(mucs-type-get-elisp-representation): 
+	(mucs-type-get-ccl-representation):
+	Change access method as to mucs-type-alist.
+
+	* mucs-error.el:
+	Error difinition module for Mule-UCS.
+
+	* mucs-type.el:
+	Note on character representation(moved from mucs.el).
+	(mucs-type-p):
+	New function.
+	(mucs-type-get-option-alist):
+	(mucs-type-set-option-alist): 
+	(mucs-type-get-elisp-representation): 
+	(mucs-type-get-ccl-representation): 
+	(mucs-type-get-equal-op): 
+	(mucs-type-get-relative-op): 
+	(mucs-type-check-valid-serialization): 
+	(mucs-type-register-serialization): 
+	(mucs-type-register-serialization): 
+	(mucs-type-get-serialize-method): 
+	(mucs-type-register-conversion): 
+	(mucs-type-get-conversion): 
+	(mucs-type-serialization-list): 
+	Use (signal) instead of (error).
+
+	* mucs.el:
+	require mucs-error.
+	Add some comments on version name.
+	require mucs-ccl or any other conversion engine module.
+	(mucs-version):
+	Set version to 0.60 (SAGA).
+	(mule-parsed-version):
+	New variable.  This variable have parsed mule-version or nil(if this
+	Emacs have no mule facility).
+	(mule-version-satisfied-p):
+	Use the above variable.
+	(mucs-define-simple-coding-system):
+	Obsoleted by mucs-define-coding-system.
+	(mucs-define-coding-system): 
+	New function.
+	(mucs-define-conversion):
+	New function.
+	(mucs-conversion-definition-mag): 
+	(mucs-conversion-definition-main-prog): 
+	(mucs-conversion-definition-eof-prog): 
+	(mucs-conversion-get-conv-type): 
+	(mucs-conversion-set-program-and-compiled-code):
+	New functions for conversion engine.
+
+	* tae.el: 
+	* unicode.el:
+	Not require mucs-ccl directly.
+
+	* un-define.el:
+	New file for unicode configuration on Emacs.
+	It replaces un-sample.el.
+
+	* un-sample.el:
+	Replaced by un-define.el.
+	
+
+1999-08-30  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* mucs.el (mule-version-satisfied-p):
+	New function for checking mule-version.
+	(mucs-define-simple-coding-system):
+	If mule-version is under 4.1, call make-coding-system
+	without eol-type.
+
+1999-07-30  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* reldata/uipa.el (ipa-vs-unicode-assoc):
+	Bug fix: LATIN SMALL LETTER L and LATIN SMALL LETTER W.
+
+1999-07-28  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* unicode.el (utf-8-ccl-encode):
+	Bug fix:In 6 octet sequence, take bitwise-or between
+	leading bytes and 0xFC not 0xF8.
+
+1999-07-27  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* reldata/ujisx0201.el (jis-x-0201-latin-vs-unicode-assoc):
+	Remove
+	    (?\x20 . ?\x0020) ;; SPACE
+	element because jis-x-0201 have only 94 characters, thus
+	it does not have 0x20 as a codepoint.
+
+1999-07-25  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* mucs.el (mucs-version):
+	Set mucs-version to 0.52.
+
+	* big5conv/big5conv.el: 
+	* big5conv/big5-sample.el: 
+	New files.
+
+1999-07-24  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* un-sample.el
+	load tables by require-unicode-charset-data.
+	(un-sample-charset-order-list):
+	New variable.
+	(un-sample-coding-system-alist): 
+	New function for making a coding-system alist.
+
+	* mucs-type.el:
+	Add equal-op and relative-op argument in the comment.
+	(mucs-define-type):
+	Add equal-op and relative-op argument.
+
+	* unicode.el (unicode-not-found-assoc):
+	Use invalid symbol instead of mucs-invalid-code.
+	(require-unicode-charset-data):
+	Use expand-file-name to make a full path.
+
+	* reldata/uipa.el:
+	New file.
+
+1999-07-04  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* tbl-mg.el (make-constant-code-conversion-vector):
+	renamed from make-constant-translation-vector.
+	(make-slide-code-conversion-vector):
+	renamed from make-slide-translation-vector
+	(make-identity-code-conversion-vector): 
+	renamed from make-identity-translation-vector
+	(define-ccl-constant-translation-table):
+	Call make-constant-code-conversion-vector.
+	(define-ccl-slide-translation-table): 
+	Call make-slide-code-conversion-vector.
+	(define-ccl-identity-translation-table): 
+	Call make-identity-code-conversion-vector.
+
+	* tae.el
+	Write some comment on 'invalid element.
+	(tae-compile-translation-element):
+	Call make-code-convesion-tables instead of
+	make-translation-tables.
+	(tae-normalize-translation):
+	Chacks 'invalid slots instead of checking mucs-invalid-code.
+
+	* tbl-mg.el (make-code-conversion-tables):
+	Renamed from make-translation-tables.
+	And a element of alist can have 'invalid as its value.
+	
+
+1999-06-30  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* mucs.el (mucs-define-simple-coding-system):
+	Make new argument alist to set properties of a coding-system.
+
+1999-06-29  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* mucs.el (mucs-version):
+	Set mucs-version to 0.51.
+
+	* tae.el (tae-reduce-OR-translations):
+	Set all key to the resultant translation element.
+	A value of the all key is transcripted from the translation element
+	tr2.
+	(tae-reduce-composite-translations):
+	Bug fix: Correct the undefined variable cur-el to cur-el2
+	to set tr-new-all-key to the value of a slot of tr2.
+	(tae-normalize-translation):
+	skip a slot if translated value is 'all.
+	If a key of the slot is invalid, skip it instead of
+	truncating all slots after it.
+	(tae-compile):
+	Bug fix: preserve order of symbols in table-syms that
+	is generated from the table-set key of tae messages.
+
+	* reldata/uascii.el (us-ascii-vs-unicode-assoc):
+	Cover C0 Area(codepoint 0-0x1F).
+
+1999-06-19  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* MULE-UCS 0.50(YOKOU) Release.
+
+	* un-tools.el (unicode-set-auto-coding):
+	Dealing with specification change on set-auto-coding.
+	Set buffer contents to temporary variable string
+	and inspect later.
+
+	* un-sample.el
+	Create utf-8-ws-* coding systems.
+
+	* tae.el (tae-normalize-translation):
+	Remove any slots that have mucs-invalid-code as their key.
+
+	* un-sample.el (unicode-basic-translation-rule):
+	Add unicode-not-found-assoc.
+
+	* unicode.el (mucs-unicode-default-alist-symbol):
+	Remove this variable.
+	(mucs-unicode-default-encode-replacement):
+	Convert number description to uppercase.
+	(unicode-not-found-assoc):
+	New variable.
+
+	* mucs-ccl.el
+	(mucs-ccl-if-invalid): 
+	(mucs-ccl-if-valid): 
+	(mucs-ccl-if-invalid-repeat): 
+	New functions.
+	(mucs-ccl-write):
+	Write only if the current state is valid.
+
+	* mucs.el (mucs-invalid-code):
+	new variable.
+
+	* tae.el
+	(tae-get-tr-elem-all-key):
+	(tae-set-tr-elem-all-key): 
+	New function
+	(tae-reduce-OR-translations):
+	If tr1 have all key, skip reduction.
+	(tae-reduce-AND-translations):
+	If both tr1 and tr2 have all key, skip reduction,
+	and if tr2 have no all key, clear all key of tr1.
+	(tae-reduce-composite-translations):
+	Operate `all' key.
+	(tae-project-all-translation-vector):
+	New function.
+
+	* txt-tbl.el (mucs-print-character-a-list):
+	Use make-char-from-charset-codepoint instead of
+	make-char-from-codepoint.
+
+        ** The followings are change logs from 0.1.
+
+	* unicode.el: 
+	Replace string utf8 with utf-8, and utf16 with utf-16.
+	(ucs-generic):
+	New type for unicode.
+	utf-8, utf-8-dos, utf-16-le, utf-16-le-dos, utf-16-be, and utf-16-be-dos
+	are new serialization method for ucs-generic.
+	(utf-8-ccl-encode):
+	Bug fix: if r0 is not less than 0x200000, it generated
+	wrong code.
+	(mucs-charset-unicode-table-set-symbol):
+	(mucs-ccl-unicode-get-translation-table-symbol):
+	(mucs-ccl-translate-encode-simple-unicode):
+	(mucs-ccl-translate-decode-simple-unicode):
+	Remove these function.
+	They are all replaced with new TAE functions.
+	
+	* un-sample.el:
+	Rewrite almost all with TAE functions.
+	Make utf-8-* coding system not to generate
+	UTF-8 signature, and on utf-8 conding system,
+	line separator is LF not unicode line separator.
+
+	Make utf-8-ws-* coding system that generates
+	UTF-8 signature.
+
+	* un-data.el:
+	* un-tools.el:
+	Replace string utf8 with utf-8, and utf16 with utf-16.
+
+	* trans-util.el (char-codepoint):
+	Change from `defun' to `defsubst'.
+	(make-char-from-charset-codepoint):
+	Rename from make-char-from-codepoint.
+	(make-char-from-charset-id-codepoint):
+	New function.
+	This make char from charset-id and codepoint.
+	!!! This function use make-char-internal !!!.
+
+	* tbl-mg.el (get-table-set-table-name):
+	Make this not to accept decodep parameter
+	because table-set distinguishes whether
+	it is for decoding or encoding.
+	(define-table-set):
+	Initialize internal properties.
+	(table-set-nested-p):
+	(clear-table-set):
+	(table-set-add-reference): 
+	(table-set-remove-reference): 
+	(get-table-set-definition): 
+	(get-table-set-symbol-tables): 
+	(get-registration-required-tables): 
+	(generate-tables-registration-program): 
+	(generate-table-set-registration-program): 
+	New function.
+	(define-ccl-codepoint-translation-table):
+	(define-ccl-identity-translation-table): 
+	(define-ccl-slide-translation-table): 
+	(define-ccl-constant-translation-table): 
+	Use register-code-conversion-map instead of
+	register-ccl-translation-table.
+	(make-translation-tables):
+	Modify the specification.
+	This function always copies or reconstruct the given alist.
+	Reconstruction method is specified by `conv' argument
+	that must be elisp function.
+
+	(table-set-internal-properties): 
+	Define plist key list.
+	Write some comment on internal property of table-set.
+
+	* tae.el:
+	Reconstruct almost all of it.
+
+	* mucs.el
+	Write some comment on MULE-UCS character representation.
+	(mucs-version):
+	Set version 0.50.
+	(mucs-require-data):
+	New function to load data packages.
+	(mucs-current-type):
+	New variable to manage current type.
+	(mucs-define-simple-coding-system):
+	To embed elisp program, splice a car part of the result
+	from mucs-ccl-setup-ccl-program instead of embedding
+	the list element itself.
+
+	* mucs-ccl.el
+	Write some comment about MYO.
+	(mucs-type):
+	require 'mucs, 'mucs-type, and 'trans-util packages.
+	Write some comment about MULE-UCS CCL module.
+	(mucs-ccl-read): 
+	(mucs-ccl-write): 
+	New generic I/O functions
+	instead of (mucs-ccl-read-generic)
+	and (mucs-ccl-write-generic).
+	(mucs-ccl-write-char-packed-1): 
+	(mucs-ccl-read-char-packed-1): 
+	Define some generic types, char-1 and char-packed-1.
+	And register their serializations, emacs-mule
+	and emacs-mule-dos.
+	(mucs-ccl-myo-p): 
+	(mucs-ccl-check-myo): 
+	(mucs-ccl-empty-myo): 
+	(mucs-ccl-myo-from-ccl): 
+	(mucs-ccl-myo-append): 
+	(mucs-ccl-myo-add-elisp): 
+	(mucs-ccl-myo-get-elisp): 
+	(mucs-ccl-myo-set-elisp): 
+	(mucs-ccl-myo-add-ccl): 
+	(mucs-ccl-myo-get-ccl): 
+	(mucs-ccl-myo-set-ccl): 
+	(mucs-ccl-myo-add-table-set): 
+	(mucs-ccl-myo-get-table-set): 
+	(mucs-ccl-myo-set-table-set): 
+	New MYO manipulation functions.
+	(mucs-ccl-stream-form): 
+	(mucs-ccl-bind-program): 
+	(mucs-ccl-setup-ccl-program): 
+	Modify to use MYO.
+	(mucs-ccl-make-elisp-preparation-from-myo): 
+	New function to generate elisp for preparation from MYO.
+
+	* README.Unicode: 
+	* README:
+	Change about Emacs requirement.
+
+1999-03-02  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* tae.el:
+	Write comments about TAE's specifications.
+
+1998-08-20  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* unicode.el (utf8-ccl-encode):
+	Bug fix: set msb of utf8 last byte
+
+1998-05-09  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* unicode.el (unicode-charset-library-alist):
+	Append the correspond symbols to below tables.
+
+	* reldata/u-cns-7.el: 
+	* reldata/u-cns-6.el: 
+	* reldata/u-cns-5.el: 
+	* reldata/u-cns-4.el: 
+	* reldata/u-cns-3.el: 
+	* reldata/u-cns-2.el:
+	* reldata/u-cns-1.el:
+	New tables substitute for ucns11643.el.
+	Append "provide".
+
+1998-04-19  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* reldata/ujisx0212.el: 
+	* reldata/ujisx0208.el: 
+	* reldata/ujisx0201.el: 
+	* reldata/uiso8859-2.el: 
+	* reldata/uiso8859-3.el: 
+	* reldata/uiso8859-4.el: 
+	* reldata/uiso8859-5.el: 
+	* reldata/uiso8859-6.el: 
+	* reldata/uiso8859-7.el: 
+	* reldata/uiso8859-8.el: 
+	* reldata/uiso8859-9.el: 
+	* reldata/ugb2312.el: 
+	Change copyright notice.
+	Add description of these origin.
+
+1998-04-15  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* reldata/uksc5601.el:
+	Append KSC <-> UCS table made by
+	MORIOKA Tomohiko <morioka@jaist.ac.jp>.
+
+1998-03-27  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* MULE-UCS 0.01 (YUME:夢) Released.
+	

@@ -1,0 +1,389 @@
+--------------------------------------------------------------
+Unicode definition on Mule-UCS(Universal enCoding System)
+        API and configuration manual.
+
+        Written by MIYASHITA Hisashi (himi@m17n.org)
+
+	reviced on 2001/4/13.
+--------------------------------------------------------------
+
+o ... License
+
+  Mule-UCS is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2, or (at your option)
+any later version.
+
+  You should have received a copy of the GNU General Public License
+along with Mule-UCS; see the file COPYING.  If not, write to
+the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+Boston, MA 02111-1307, USA.
+
+o ... Introduction
+
+  Mule-UCS is NOT dependent on Unicode itself at all.
+This manual describes unicode definition in this package.
+
+  Mule-UCS realizes Unicode encoding/decoding by unicode.el,
+un-data.el, utf.el, un-trbase.el, mule-uni.el, and un-define.el.
+unicode.el is a main part and defines fundamental type on Unicode
+translation.  When it is required at run-time, it will be automatically
+loaded.  un-data.el, utf.el, and un-trbase.el define
+conversions and translations at byte-compiling time.
+Normally, they are not necessary at run-time.
+mule-uni.el defines private character set for Unicode, which is
+mainly for covering undefined characters on Mule.
+un-define.el controls default configuration and set up the run-time
+environment.  mule-uni.el and un-define.el are indispensable modules
+at run-time.  Mule-UCS embeds all information required at least for setup
+into un-define.elc except for charset definitions.
+Threfore, you only have to load it at the startup.
+un-define.elc automatically loads other modules if necessary.
+
+  Mule-UCS Unicode definition(Mule-UCS-Unicode hereafter) provides
+various coding-systems for external representaions and some APIs
+for other Emacs Lisp libraries.
+
+  Currently, un-tools.el is only for feeble autodetection on UTF-8/16.
+You don't need this module on Mule 4.1 or later.  This Mule feature
+have more powerful built-in autodetection on UTF-8/16.
+
+  After all, the minimum configuration of your .emacs, site-start.el, or
+any other start up configuration is only one line as below.
+---
+(require 'un-define)
+---
+
+o ... Notice to BITMAP-MULE on Emacs 20 users:
+
+Mule-UCS-Unicode defines three new charsets at the startup,
+which are mule-unicode-0100-24ff, mule-unicode-2500-33ff, and
+mule-unicode-e000-ffff.  These will be introduced also in Emacs 21.
+
+Because of these definitions, Emacs 20 consumes all unoccupied slots for
+2-dimension, 1-column charsets.  Hence, BITMAP-MULE cannot define
+its own private charset named `bitmap'.
+
+BITMAP-MULE version 8.4 or later, however, can displace the existance
+charset in case that it cannot keep `bitmap' charset.  If you'd
+like to use this feature, set bitmap-alterable-charset variable to
+tibetan-1-column or indian-1-column, and load bitmap.el(c)
+after loading un-define.elc, for example,
+
+---
+(require 'un-define)
+(setq bitmap-alterable-charset 'tibetan-1-column)
+(require 'bitmap)
+---
+
+For detail, please refer to the manual of BITMAP-MULE.
+
+o ... Instruction.
+
+(1) basic features.
+
+   o ... Configured coding systems
+
+       Coding systems defined by Mule-UCS-Unicode could be sorted to UTF-8, UTF-16,
+       and UTF-7 categories.  All of them follows `unicode-basic-translation-rule'
+       to translate between Emacs chars and UCS chars.
+         By default, pre-write-conversion and post-read-conversion is enabled on
+       these coding system conversions (mainly for Thai-TIS620).  For detail, refer
+       the `post-read and pre-write conversions' section.
+
+       The followings are individual explanations of each coding system. 
+
+	(A) ... UTF-8 category.
+
+           utf-8, utf-8-unix, utf-8-dos, utf-8-mac.
+
+        UTF-8 coding system.  These differ as to Line Terminator.
+        utf-8 means line terminator is undetermined on decoding
+	and is LF on encoding.
+	utf-8-unix means line terminator is LF.
+	utf-8-dos means line terminator is CR+LF.
+	utf-8-mac means line terminator is CR.
+
+	   utf-8-ws, utf-8-ws-unix, utf-8-ws-dos, utf-8-ws-mac.
+
+        These are basically identical to utf-8-* coding-systems,
+	but these encoder adds UTF-8 signature at the head.
+
+	(B) ... UTF-16 category.
+
+        One element of UTF-16 is 2 octets.  However, its byte-order is
+        not fixed.  Hence, we need 2 sorts of coding-systems, big endian
+	and little endian.
+        And all encoding format and syntax on UTF-16 is defined by The
+	Unicode Standard(#1).  To begin with, the term UTF-16 was introduced
+        by ISO/IEC 10646 amendment.  UTF-16 is implemented in order to have
+        compatibility with The Unicode Standard in encoding format.
+        Therefore, we have to follow The Unicode Standard when implementing
+        UTF-16.   As a result, the line terminator of utf-16-le and utf-16-be
+        is Unicode Line Separator(U+2028) instead of convensional forms:
+        LF, CRLF, and CR.  However, coding-systems of convensional forms are also
+	predefined.  Thus, you will not feel inconvinience on line terminator.
+        But you have to take consideration to autodetection on line terminator.
+
+
+           utf-16-le, utf-16-le-unix, utf-16-le-dos, utf-16-le-mac
+
+	UTF-16 coding system.  These byte-order is little endian.
+        utf-16-le means line terminator is undetermined on decoding
+	and is U+2028 on encoding.
+	utf-16-le-unix means line terminator is LF.
+	utf-16-le-dos means line terminator is CR+LF.
+	utf-16-le-mac means line terminator is CR.
+
+	   utf-16-le-no-signature, utf-16-le-no-signature-unix,
+	   utf-16-le-no-signature-dos, utf-16-le-no-signature-mac
+
+	same as utf-16-le-* but generate no Unicode signature(BOM).
+        
+           utf-16-be, utf-16-be-unix, utf-16-be-dos, utf-16-be-mac
+
+	UTF-16 coding system.  These byte-order is big endian.
+        Other features are identical to utf-16-le-*.
+
+	   utf-16-be-no-signature, utf-16-be-no-signature-unix,
+	   utf-16-be-no-signature-dos, utf-16-be-no-signature-mac
+
+	same as utf-16-be-* but generate no Unicode signature(BOM).
+
+	(C) ... UTF-7 category.
+
+	UTF-7 is a strange transformation format.
+	This is 7bit stream, and avoids to use unsafe characters on
+	RFC822 format.  For detail, please refer to RFC1642.
+	All utf-7 coding systems supported by Mule-UCS-Unicode
+	encode UTF-16 format.
+	In other words, they can encode all codepoints defined by
+	The Unicode Standard.
+
+	utf-7, utf-7-unix, utf-7-dos, utf-7-mac
+
+	UTF-7 coding system.  	
+        utf-7 means line terminator is undetermined on decoding
+	and is LF on encoding.
+	utf-7-unix means line terminator is LF.
+	utf-7-dos means line terminator is CR+LF.
+	utf-7-mac means line terminator is CR.
+	These coding systems encode Set O characters directly.
+
+	utf-7-safe, utf-7-safe-unix, utf-7-safe-dos, utf-7-safe-mac
+
+	These coding systems encode Set O characters
+	with shifted format.
+        Other features are identical to utf-7-*.
+
+   o ... post-read and pre-write conversions
+
+       post-read and pre-write conversion of Mule-UCS-Unicode coding-systems
+       are controled by the following variables.
+
+       - Variable: un-define-enable-buffer-conversion
+
+         non-nil means the coding-systems defined by Mule-UCS-Unicode
+	 converts buffer contents by calling post-read-conversion and
+	 pre-write-conversion functions.  By default, this variable is t.
+
+       - Variable: un-define-post-read-conversion-charsets-alist
+
+         This alist defines post-read conversion of coding-systems
+	 defined by Mule-UCS-Unicode.  Each slot looks like
+	 (CHARSET . FUNCTION).
+
+	 If read text have the specified charset, the corresponding
+	 function will is called as post-read conversion function,
+	 which must return return length of converted text.
+
+	 If applicable functions are more than one, these will be
+	 called in the order of the alist.  However, the same function
+	 is never called more than once during one conversion.
+
+       - Variable: un-define-pre-write-conversion-charsets-alist
+
+         This variable is the same as
+	 `un-define-post-read-conversion-charsets-alist'
+	 except that it is applied before writing.
+
+   o ... predefined Emacs Lisp functions.
+
+       Hereafeter, we use CHARACTER for data type.
+       Because characters are represented by numbers on Emacs,
+       CHARACTER is identical to NUMBER.  But on XEmacs, because
+       character is first-class object, CHARACTER is not identical
+       to NUMBER.   Therefore, we use CHARACTER to represent character
+       data type.
+
+       - Function: encode-char CHARACTER representation &optional restriction.
+
+	(Note that char-to-ucs is obsoleted by this function.)
+	   This function describes a character in a proper representation.
+	Mule-UCS-Unicode registers `ucs' representation for this function,
+	and it describes a character in a UCS codepoint.
+	For example, (encode-char ?A 'ucs) returns 65 as a UCS codepoint.
+
+	`restriction' is an optional argument for the future extension.
+	(It limits possible candidates of representations.
+	 When `restriction' is not specified, there is no limit on
+	 candidate representations, thus the system select one
+	 proper candidate arbitrarily.  This facility has not been
+	 implemented yet.)
+
+       - Function: decode-char representation object &optional restriction.
+  
+	(Note that ucs-to-char is obsoleted by this function.)
+	   This function convert the specified object to a character by
+	interpreting the object in view of the specified representation.
+	Mule-UCS-Unicode registers `ucs' representation for this function,
+	and it converts a UCS codepoint to a character.
+	For example, (decode-char 'ucs 65) returns A.
+
+	`restriction' is an optional argument for the future extension.
+	(It limits possible candidates of characters.
+	 When `restriction' is not specified, there is no limit on
+	 candidate characters, thus the system select one character
+	 arbitrarily.  This facility has not been implemented yet.)
+
+       - Command: insert-ucs-character NUMBER
+
+           Insert a character specified by UCS codepoint.
+       This command uses the above ucs-to-char function, and if it
+       successes to retrieve a character from the given UCS codepoint,
+       insert it to the current buffer.  If it fails, cause an error.
+       e.g.
+        If you want to insert U+4E00, do `M-x insert-ucs-character',
+	then input `?\x4E00'(without any quotations).
+
+   o ... Simple dynamic modification functions.
+
+	Mule-UCS have dynamic modification features.
+	Owing to it, predefined translations (but they must be declared as a
+	`dynamic translation' beforehand) can be modified dynamically at run-time.
+	By using this feature, Mule-UCS-Unicode provides a simple function to
+	change priority to convert between internal characters and UCS characters.
+	However, because of simplicity, this function supports a narrow range of
+	facility on dynamic modification features.
+	If you want to make the most of dynamic modification features,
+	call directly TAE APIs.
+
+	- Function: un-define-change-charset-order &optional LIST
+
+	Change conversion priority of charsets.
+	LIST must be a list of charsets ordered by priority.
+	If LIST is nil or omitted,
+	unicode-basic-translation-charset-order-list is used
+	as an order list.
+	By following this order, Mule-UCS-Unicode encodes
+	internal characters or decodes UCS characters.
+
+(2) advanced features.
+
+    o... Font encoder
+
+	Mule-UCS-Unicode supports the font encoder for Unicode.
+	By loading un-define.el, 'unicode-font-encoder is set up,
+	And it is associated to "iso10646" fonts when your Emacs uses
+	XLFD to set up font name.  (On the contrary, because Meadow
+	does not use XLFD directly to set up fontset, this association is
+	not used.)  Such associations are specified in font-ccl-encoder-alist,
+	but this variable is NOT effective on XEmacs.
+
+	Sample configurations for setting up Unicode encoding fonts in your fontset
+	are as below:
+---
+	(set-fontset-font "<FONTSET NAME>"
+		          '<CHARSET SYMBOL>
+		          "*-iso10646-*")
+---
+	<FONTSET NAME> is a fontset name, and "fontset-standard" is a
+	default fontset created at start up of Emacs.
+	<CHARSET SYMBOL> must be a symbol of the mule charset that is displayed
+	by a Unicode encoding font.
+	For example, the below configuration,
+---
+	(set-fontset-font "fontset-standard"
+		          'latin-iso8859-1
+		          "*-iso10646-*")
+	(set-fontset-font "fontset-standard"
+		          'cyrillic-iso8859-5
+		          "*-iso10646-*")
+---
+	set Unicode encoding fonts to "fontset-standard" to display
+	latin-iso8859-1 and cyrillic-iso8859-5 characters.
+
+	More simple and easy configuration is setting x-charset-registry
+	to charsets displayed by Unicode encoding fonts as below.
+---
+	(put-charset-property 'latin-iso8859-1 
+		              'x-charset-registry "iso10646")
+	(put-charset-property 'cyrillic-iso8859-5
+                              'x-charset-registry "iso10646")
+	(create-fontset-from-fontset-spec
+         "<YOUR FONTSET SPEC>")
+---
+	<YOUR FONTSET SPEC> specifies spec. of fonts by XLFD, e.g.
+	"*-fixed-medium-r-normal-*-16-*-*-*-*-*-fontset-standard"
+	if you use 16 dot fixed font.
+
+	On XEmacs, you should manually specify font encoder by
+	set-charset-ccl-program on each charset.
+	For example,
+---
+	(set-charset-ccl-program 'latin-iso8859-1 'unicode-font-encoder)
+---
+	Before you apply this setting, you have to set an appropriate
+	Unicode encoding font to latin-iso8859-1.
+
+----------
+
+	to be continued...
+
+
+(3) supplemental features.
+
+   o... Supplemental translations.
+
+	Mule-UCS-Unicode has supplemental translations for other conversions
+	than Unicode Consrotium's definition.  Currently, the translations
+	for JIS X 0221, JDK and Windows are prepared.
+	You can semi-automatically use this translation by the following
+	configuration.
+---
+(require 'un-supple)
+(un-supple-enable <SYMBOL>)
+---
+	Currently, candidates of <SYMBOL> are 'jisx0221, 'jdk, 'windows,
+	and nil.  nil disables the configuration for the supplemental
+	translations.
+
+	For example, the below configuration,
+---
+(require 'un-supple)
+(un-supple-enable 'windows)
+---
+	enables the translation rule for Windows.
+
+	This feature is realized by the dynamic modification to
+	unicode-basic-translation-rule, thus, if you have already
+	modified unicode-basic-translation-rule, this configuration
+	may not be able to work correctly.
+
+   o... UNIDATA parser
+
+	By loading unidata.elc, you can easily view UNIDATA of Unicode
+	Consortium.  A sample configuration is the followings.
+---
+(setq unidata-default-file-name "<The PATH of UnicodeData.txt>")
+(require 'unidata)
+---
+	After this configuration is enabled, you can use
+	M-x unidata-show-entry-from-UCS and M-x unidata-show-entry-from-char
+	to look up UNIDATA.
+	When you do M-x unidata-show-entry-from-UCS and input UCS codepoint,
+	you can view the corresponding UNIDATA entry to it, e.g.
+	by inputting "?\x100", you will view the entry on U+0100.
+	When you do M-x unidata-show-entry-from-char,
+	you can view the corresponding UNIDATA to the char located at
+	the current point under the current environment.
