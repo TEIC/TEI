@@ -20,10 +20,10 @@
 <xsl:variable name="oldname" select="name(.)"/>
 <xsl:variable name="newname">
   <xsl:for-each
-   select="document($TEINAMES)/i18n/element[@ident=$oldname]">
+   select="document($TEINAMES)/i18n">
     <xsl:choose>
-      <xsl:when test="@*[name(.)=$lang]">
-	<xsl:value-of select="@*[name(.)=$lang]"/>
+      <xsl:when test="element[@*[name(.)=$lang]=$oldname]">
+	<xsl:value-of select="element[@*[name(.)=$lang]]/@ident"/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:value-of select="$oldname"/>
@@ -40,13 +40,10 @@
 <xsl:variable name="oldname" select="name(.)"/>
 <xsl:variable name="newname">
   <xsl:for-each
-   select="document($TEINAMES)/i18n/attribute[@ident=$oldname]">
+   select="document($TEINAMES)/i18n">
     <xsl:choose>
-      <xsl:when test="not(@*)">
-	<xsl:value-of select="$oldname"/>
-      </xsl:when>
-      <xsl:when test="@*[name(.)=$lang]">
-	<xsl:value-of select="@*[name(.)=$lang]"/>
+      <xsl:when test="attribute[@*[name(.)=$lang]=$oldname]">
+	<xsl:value-of select="attribute[@*[name(.)=$lang]]/@ident"/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:value-of select="$oldname"/>

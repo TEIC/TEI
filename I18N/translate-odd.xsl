@@ -10,9 +10,10 @@
 <xsl:key name="TAGMODS" match="Tag|AttClass" use="Tagset"/>
 <xsl:key name="MODS" match="tei:module" use="@ident"/>
 <xsl:output method="xml" indent="yes"/>
-<xsl:param name="newlang">es</xsl:param>
-<xsl:param name="ODDROOT">/TEI/P5/</xsl:param>
+<xsl:param name="lang">es</xsl:param>
 <xsl:param name="verbose">true</xsl:param>
+<xsl:variable name="TEITAGS">http://www.tei-c.org.uk/tei-bin/files.pl?name=tags.xml</xsl:variable>
+<xsl:variable name="TEINAMES">http://www.tei-c.org.uk/tei-bin/files.pl?name=teinames.xml</xsl:variable>
 
 <xsl:template match="tei:*|rng:*">
   <xsl:copy>
@@ -128,7 +129,7 @@
   <xsl:message>Translations for <xsl:value-of select="$modname"/></xsl:message>
 
   <xsl:for-each
-   select="document(concat($ODDROOT,'Tools/tags.xml'))/Table">
+   select="document($TEITAGS)/Table">
     <xsl:for-each select="key('TAGMODS',$modname)">
       <xsl:variable name="thisthing" select="ident"/>
       <xsl:variable name="ename">	
@@ -142,10 +143,10 @@
 	    <xsl:message>  translation for <xsl:value-of
 	    select="$thisthing"/></xsl:message>
 	    <xsl:for-each
-	     select="document(concat($ODDROOT,'Tools/teinames.xml'))/i18n/element[@ident=$thisthing]">
-	      <xsl:if test="@*[name(.)=$newlang]">
+	     select="document($TEINAMES)/i18n/element[@ident=$thisthing]">
+	      <xsl:if test="@*[name(.)=$lang]">
 		<altIdent xmlns="http://www.tei-c.org/ns/1.0">
-		  <xsl:value-of select="@*[name(.)=$newlang]"/>
+		  <xsl:value-of select="@*[name(.)=$lang]"/>
 		</altIdent>
 	      </xsl:if>
 	    </xsl:for-each>
@@ -165,15 +166,15 @@
 	    <xsl:for-each select="Attributes/Att">
 	      <xsl:variable name="thisatt" select="@n"/>
 	      <xsl:for-each
-	       select="document(concat($ODDROOT,'Tools/teinames.xml'))/i18n/attribute[@ident=$thisatt]">
-		<xsl:if test="@*[name(.)=$newlang]">
+	       select="document($TEINAMES)/i18n/attribute[@ident=$thisatt]">
+		<xsl:if test="@*[name(.)=$lang]">
 
 		  <xsl:message>     translate attribute <xsl:value-of
-		  select="$thisatt"/> to  <xsl:value-of select="@*[name(.)=$newlang]"/></xsl:message>
+		  select="$thisatt"/> to  <xsl:value-of select="@*[name(.)=$lang]"/></xsl:message>
 		  <attDef ident="{$thisatt}" mode="change"
 		    xmlns="http://www.tei-c.org/ns/1.0">
 		    <altIdent xmlns="http://www.tei-c.org/ns/1.0">
-		      <xsl:value-of select="@*[name(.)=$newlang]"/>
+		      <xsl:value-of select="@*[name(.)=$lang]"/>
 		    </altIdent>
 		  </attDef>
 		</xsl:if>
