@@ -80,49 +80,19 @@ XSL stylesheet to format TEI XML documents to LaTeX
   <xsl:text>%ENDFIGMAP
 </xsl:text>
 </xsl:if>
-\documentclass{<xsl:value-of select="$docstyle"/>}
-\usepackage[twoside,<xsl:value-of select="$pagesetup"/>]{geometry}
-\usepackage{times}
-\usepackage{longtable}
-\usepackage{colortbl}
-\usepackage{ulem}
-\usepackage{fancyhdr}
-\usepackage{graphicx}
-\pagestyle{fancy} 
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{ucs}
-\RequirePackage{array}
-\makeatletter
-\gdef\arraybackslash{\let\\=\@arraycr}
-<xsl:text disable-output-escaping="yes">
-\newcolumntype{L}[1]{&gt;{\raggedright\arraybackslash}p{#1}}
-\newcolumntype{C}[1]{&gt;{\centering\arraybackslash}p{#1}}
-\newcolumntype{R}[1]{&gt;{\raggedleft\arraybackslash}p{#1}}
-\newcolumntype{P}[1]{&gt;{\arraybackslash}p{#1}}
-\definecolor{label}{gray}{0.75}
-\def\Panel#1#2#3#4{\multicolumn{#3}{>{\columncolor{#2}}#4}{#1}}
-</xsl:text>
-\usepackage[pdftitle={<xsl:call-template name="generateSimpleTitle"/>},
-pdfauthor={<xsl:call-template name="generateAuthor"/>},
-pdfcreator={Oxford University Computing Services}
-]{hyperref}
-\DeclareRobustCommand*{\xref}{\hyper@normalise\xref@}
-\def\xref@#1#2{\hyper@linkurl{#2}{#1}}
-\makeatother
-\def\TheFullDate{<xsl:call-template name="generateDate"/>}
-\def\TheDate{<xsl:call-template name="generateDate">
-<xsl:with-param name="showRev"/></xsl:call-template>}
+<xsl:call-template name="documentSetup">
+ <xsl:with-param name="docstyle"><xsl:value-of  select="$docstyle"/></xsl:with-param>
+ <xsl:with-param name="pagesetup"><xsl:value-of
+ select="$pagesetup"/></xsl:with-param>
+</xsl:call-template>
 \catcode`\_=12\relax
 <xsl:text disable-output-escaping="yes">\let\tabcellsep&amp;
 \catcode`\&amp;=12\relax
 </xsl:text>
-\title{<xsl:call-template name="generateTitle"/>}
-\author{<xsl:call-template name="generateAuthor"/>}
-\paperwidth211mm
-\paperheight297mm
 \hyperbaseurl{<xsl:value-of select="$baseURL"/>}
 \makeatletter
+\DeclareRobustCommand*{\xref}{\hyper@normalise\xref@}
+\def\xref@#1#2{\hyper@linkurl{#2}{#1}}
 \def\@pnumwidth{1.55em}
 \def\@tocrmarg {2.55em}
 \def\@dotsep{4.5}
@@ -798,6 +768,47 @@ pdfcreator={Oxford University Computing Services}
   <xsl:text>`</xsl:text>
   <xsl:apply-templates/>
   <xsl:text>'</xsl:text>
+</xsl:template>
+
+
+<xsl:template name="documentSetup">
+<xsl:param name="docstyle"/>
+<xsl:param name="pagesetup"/>
+\documentclass{<xsl:value-of select="$docstyle"/>}
+\usepackage[twoside,<xsl:value-of select="$pagesetup"/>]{geometry}
+\usepackage{times}
+\usepackage{longtable}
+\usepackage{colortbl}
+\usepackage{ulem}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\pagestyle{fancy} 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{ucs}
+\RequirePackage{array}
+\makeatletter
+\gdef\arraybackslash{\let\\=\@arraycr}
+<xsl:text disable-output-escaping="yes">
+\newcolumntype{L}[1]{&gt;{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{&gt;{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{&gt;{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{P}[1]{&gt;{\arraybackslash}p{#1}}
+\definecolor{label}{gray}{0.75}
+\def\Panel#1#2#3#4{\multicolumn{#3}{>{\columncolor{#2}}#4}{#1}}
+</xsl:text>
+\usepackage[pdftitle={<xsl:call-template name="generateSimpleTitle"/>},
+pdfauthor={<xsl:call-template name="generateAuthor"/>},
+pdfcreator={Oxford University Computing Services}
+]{hyperref}
+\makeatother
+\def\TheFullDate{<xsl:call-template name="generateDate"/>}
+\def\TheDate{<xsl:call-template name="generateDate">
+<xsl:with-param name="showRev"/></xsl:call-template>}
+\title{<xsl:call-template name="generateTitle"/>}
+\author{<xsl:call-template name="generateAuthor"/>}
+\paperwidth211mm
+\paperheight297mm
 </xsl:template>
 
 
