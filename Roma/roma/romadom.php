@@ -11,7 +11,7 @@ define( 'romadom_templateDir', 'roma/templates' );
  * This class is responsible for Romas customization file. 
  *
  * @author: Arno Mittelbach <arno@mittelbach-online.de>
- * @version: 0.9
+ * @version: 0.9 (CVS $Id$)
  * @access:  public
  * @package: roma
  */
@@ -1455,10 +1455,10 @@ class romaDom extends domDocument
     public function includeAttributeInElement( $szAttribute, $szClass, $szModule, $szElement )
       {
 	$this->getXPath( $oXPath );
+        $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);
 
 	if ( $szModule != '' && $szClass == '')
 	  {
-	    $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);
 	    $oModule = $oXPath->query( "//tei:schemaSpec/tei:moduleRef[@key='{$szModule}']" )->item(0);
 	    $oElementSpec = $oXPath->query(
 	  "//tei:schemaSpec/tei:elementSpec[@module='{$szModule}' and @ident='{$szElement}']" )->item(0);
@@ -1472,9 +1472,9 @@ class romaDom extends domDocument
 	      {
 		$theElementSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'elementSpec' );
 		$oElementSpec = $oSchema->appendChild( $theElementSpec );
-		$oElementSpec->setAttribute( 'ident', $szElement );
+		$oElementSpec->setAttribute( 'ident',  $szElement );
 		$oElementSpec->setAttribute( 'module', $szModule );
-		$oElementSpec->setAttribute( 'mode', 'change' );
+		$oElementSpec->setAttribute( 'mode',   'change' );
 	      }
 	    
 	    $oAttList = $oXPath->query(
@@ -1518,7 +1518,7 @@ class romaDom extends domDocument
 		$oClassSpec = $oSchema->appendChild( $theClassSpec );
 		$oClassSpec->setAttribute( 'ident', $szClass );
 		$oClassSpec->setAttribute( 'mode', 'change' );
-		$oClassSpec->setAttribute( 'module', 'szModule' );
+		$oClassSpec->setAttribute( 'module', $szModule );
 	      }
 
 	
