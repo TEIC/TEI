@@ -5,7 +5,7 @@ RCS: $Id$
 XSL stylesheet to format TEI XML documents to HTML or XSL FO
 
  Copyright 1999-2003 Text Encoding Initiative Consortium  
-#include LICENSE
+##LICENSE
 --> 
 <xsl:stylesheet
   xmlns:tei="http://www.tei-c.org/ns/1.0"
