@@ -2,6 +2,7 @@
 <xsl:stylesheet 
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:t="http://www.thaiopensource.com/ns/annotations" 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" 
   xmlns:edate="http://exslt.org/dates-and-times"
   xmlns:exsl="http://exslt.org/common"

@@ -481,11 +481,9 @@ Text Encoding Initiative Consortium XSLT stylesheet family
 		  <xsl:if test="@ns">
 		    <xsl:attribute name="ns"><xsl:value-of select="@ns"/></xsl:attribute>
 		  </xsl:if>
-		  <xs:annotation>
-		    <xs:documentation>
+		    <a:documentation>
 		      <xsl:value-of select="tei:desc"/>
-		    </xs:documentation>
-		  </xs:annotation>
+		    </a:documentation>
 		  <rng:ref name="{@ident}.content" />
 		  <rng:ref name="{@ident}.attributes" />
 		</rng:element>
@@ -592,11 +590,13 @@ in change mode and there is no attList -->
 	      <xsl:when test="ancestor::tei:elementSpec/@mode='change'">
 		<xsl:for-each select="tei:valList/tei:valItem">
 		  <rng:value ><xsl:value-of select="@ident"/></rng:value>
+		  <a:documentation><xsl:value-of select="tei:gloss"/></a:documentation>
 		</xsl:for-each>
 	      </xsl:when>
 	      <xsl:otherwise>
-		<xsl:for-each select="tei:valList/tei:valItem">
+		<xsl:for-each select="tei:valList/tei:valItem">  
 		  <rng:value ><xsl:value-of select="@ident"/></rng:value>
+		  <a:documentation><xsl:value-of select="tei:gloss"/></a:documentation>
 		</xsl:for-each>
 	      </xsl:otherwise>
 	    </xsl:choose>
@@ -1207,11 +1207,9 @@ in change mode and there is no attList -->
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <xs:annotation>
-      <xs:documentation>
+      <a:documentation>
 	<xsl:value-of select="tei:desc"/>
-      </xs:documentation>
-    </xs:annotation>
+      </a:documentation>
     <rng:ref
 	name="{ancestor::tei:attList/../@ident}.attributes.{$I}.content" />
   </rng:attribute>
@@ -1304,6 +1302,7 @@ in change mode and there is no attList -->
 	  <rng:choice >
 	    <xsl:for-each select="tei:valList/tei:valItem">
 	      <rng:value ><xsl:value-of select="@ident"/></rng:value>
+              <a:documentation><xsl:value-of select="tei:gloss"/></a:documentation>
 	    </xsl:for-each>
 	    <xsl:if test="@mode='add' and
 			  ancestor::tei:attList/../@mode='change'">
@@ -1320,7 +1319,8 @@ in change mode and there is no attList -->
 	      <xsl:for-each select="document($loc)/tei:TEI/*">
 		<xsl:for-each
 		    select=".//tei:attList/tei:attDef[@ident=$this]/tei:valList/tei:valItem">
-		  <rng:value ><xsl:value-of select="@ident"/></rng:value>
+		  <rng:value ><xsl:value-of  select="@ident"/></rng:value>
+		  <a:documentation><xsl:value-of select="tei:gloss"/></a:documentation>
 		</xsl:for-each>
 	      </xsl:for-each>
 	    </xsl:if>
@@ -1338,6 +1338,7 @@ in change mode and there is no attList -->
       <rng:choice >
 	<xsl:for-each select="tei:valList/tei:valItem">
 	  <rng:value ><xsl:value-of select="@ident"/></rng:value>
+	  <a:documentation><xsl:value-of select="tei:gloss"/></a:documentation>
 	</xsl:for-each>
       </rng:choice>
     </xsl:when>
@@ -1372,11 +1373,9 @@ in change mode and there is no attList -->
 	<xsl:value-of select="normalize-space(tei:defaultVal)"/>
       </xsl:attribute>
     </xsl:if>
-    <xs:annotation>
-      <xs:documentation>
+    <a:documentation>
 	<xsl:value-of select="tei:desc"/>
-      </xs:documentation>
-    </xs:annotation>
+    </a:documentation>
     <xsl:call-template name="attributeDatatype"/>
   </rng:attribute>
 </xsl:template>
@@ -1699,5 +1698,9 @@ in change mode and there is no attList -->
 <xsl:template match="s:*"/>
 
 <xsl:template match="tei:altIdent"/>
+
+<xsl:template match="a:*">
+  <xsl:copy-of select="."/>
+</xsl:template>
 
 </xsl:stylesheet>

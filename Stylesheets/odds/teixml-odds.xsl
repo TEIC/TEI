@@ -8,6 +8,7 @@ $Date$, $Revision$, $Author$
 <xsl:stylesheet 
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
   xmlns:tei="http://www.tei-c.org/ns/1.0"
   xmlns:teix="http://www.tei-c.org/ns/Examples"
   xmlns:local="http://www.pantor.com/ns/local"

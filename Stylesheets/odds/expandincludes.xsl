@@ -22,7 +22,8 @@ rng:includes
   xmlns:exsl="http://exslt.org/common"
   extension-element-prefixes="exsl"
   xmlns:xsp="http://apache.org/xsp/core/v1"
-  xmlns:xs="http://www.w3.org/2001/XInclude"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" 
   xmlns:f="http://axkit.org/NS/xsp/perform/v1" 
   xmlns:tei="http://www.tei-c.org/ns/1.0" 
@@ -122,6 +123,7 @@ rng:includes
 
 <!-- dull stuff, just copying -->
 
+
 <xsl:template match="*|@*|text()|comment()">
   <xsl:copy>
     <xsl:apply-templates select="*|@*|text()|comment()"/>
@@ -137,7 +139,8 @@ rng:includes
 <xsl:template match="rng:grammar">
   <rng:grammar xmlns:xlink="http://www.w3.org/1999/xlink"
 	       xmlns:xsp="http://apache.org/xsp/core/v1"
-	       xmlns:xs="http://www.w3.org/2001/XInclude">
+	       xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	       xmlns:xi="http://www.w3.org/2001/XInclude">
     <xsl:if test="not($namespace='')">
       <xsl:attribute name="ns">
 	<xsl:value-of select="ancestor::tei:schemaSpec/@namespace"/>
