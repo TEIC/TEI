@@ -34,16 +34,28 @@ schemas:
 	 (cd Schema; for i in *rng; do trang $$i `basename $$i .rng`.rnc;done)
 	xmllint --noent   Source-driver.xml | xsltproc extract-sch.xsl - > p5.sch
 
-html: 
-	-rm -rf Guidelines
-	-mkdir Guidelines 
+html-web: 
+	-rm -rf Guidelines-web
+	-mkdir Guidelines-web
 	xmllint --noent    Source-driver.xml | xsltproc \
-	-o Guidelines/index.html \
+	-o Guidelines-web/index.html \
 	--stringparam verbose true \
 	--stringparam displayMode rnc \
-	--stringparam ODDROOT `pwd`/ \
 	--stringparam outputDir . \
 	guidelines.xsl - 
+	-cp *.gif *.css Guidelines-web
+	(cd Guidelines-web; for i in *.html; do perl -i ../Tools/cleanrnc.pl $$i;done)
+
+html:
+	-rm -rf Guidelines
+	-mkdir Guidelines
+	xmllint --noent    Source-driver.xml | xsltproc \
+	-o Guidelines/index.html \
+	--stringparam cssFile tei-print.css \
+	--stringparam verbose true \
+	--stringparam displayMode rnc \
+	--stringparam outputDir . \
+	guidelines-print.xsl - 
 	(cd Guidelines; for i in *.html; do perl -i ../Tools/cleanrnc.pl $$i;done)
 	-cp *.gif *.css Guidelines
 

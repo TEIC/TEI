@@ -27,6 +27,13 @@
  </xsl:template>
 
 <xsl:template name="printLink"/>
+
+<!--  <xsl:variable name="printable">
+    <xsl:value-of select=""/>
+    <xsl:text>.html</xsl:text>
+  </xsl:variable>
+  <a href="{$printable}">printable version of this chapter</a>
+-->
   
 
 </xsl:stylesheet>
