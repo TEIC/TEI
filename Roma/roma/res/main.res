@@ -14,17 +14,17 @@ documentation=Documentation
 searchtei=Search TEI database
 [fr]
 helpmessage=
-title=generating validators for the TEI
-save=Sauve qui peut
-help=Aidez-moi
-customize=Customize
-new=Nouveau
-addelements=Add Elements
-changeclasses=Change Classes
+title=Production des validateurs TEI
+save=Enregistrer
+help=Aide
+customize=Personnaliser
+new=Nouvelle
+addelements=Ajouter des &eacute;l&eacute;ments
+changeclasses=Modifier les classes
 modules=Modules
-language=Language
-schema=Schema
+language=Langage
+schema=Sch&eacute;ma
 documentation=Documentation
-searchtei=Search TEI database
+searchtei=Rechercher base TEI
 
 [de]

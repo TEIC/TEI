@@ -9,11 +9,11 @@ form_attributes=Attributes
 form_changeAttributes=changeAttributes
 
 [fr]
-helpmessage=Modification des classements attributifs
-headline=Modification des classements attributifs
+helpmessage=Modification des classes attributives
+headline=Modification des classes attributives
 
-form_headline=Liste des classements attributifs
-form_className=Nom de classement
+form_headline=Liste des classes attributives
+form_className=Nom de classe
 form_description=Description
 form_attributes=Attributs
 form_changeAttributes=Modification des attributs

@@ -1,5 +1,5 @@
 [en]
-helpmessage=lalalalalalal help lalalalalal=asdasd
+helpmessage=This form allows you to create a new element or modify an existing one
 headline=Change Element
 
 form_headline=Defining a new element
@@ -10,13 +10,13 @@ form_contents=Contents
 form_description=Description
 
 [fr]
-helpmessage=Modification d'un &eacute;l&eacute;ment
-headline=Modification d'un &eacute;l&eacute;ment
+helpmessage=Modification ou cr&eacute;ation d'un &eacute;l&eacute;ment
+headline=D&eacute;finition d'un &eacute;l&eacute;ment 
 
 form_headline=Definition d'&eacute;l&eacute;ment en cours
 form_name=Nom
-form_modelClasses=Classements structurals
-form_attributeClasses=Classements attributifs
+form_modelClasses=Classes structurals
+form_attributeClasses=Classes attributives
 form_contents=Contenu
 form_description=Description
 

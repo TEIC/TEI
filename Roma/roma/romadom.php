@@ -294,13 +294,13 @@ class romaDom extends domDocument
                 default:
 		  if ( is_object( $oRNG ) )
 		    {
-		      $szContents = $oRNG->getAttribute( 'name' );
+		      $szContents = $oRNG->nodeValue;
+/* ->getAttribute( 'name' ); */
 		    }
                   break;
               }
           }
       }
-
     public function getAddedElementsFullContents( $szIdent, &$szContents )
       {
 	$this->getXPath( $oXPath );
@@ -2029,7 +2029,9 @@ class romaDom extends domDocument
 	$szID = md5( uniqid(rand(), true ) );
 	
 	$szInputFile = roma_temporaryFilesDir . '/' . $szID . '.tmp';    
+	$szTempFile = roma_temporaryFilesDir . '/' . $szID . 'tmp.xsd';    
 	$szOutputFile = roma_temporaryFilesDir . '/' . $szID . '.xsd';    
+
 	file_put_contents( $szInputFile , $oProc->transformToDoc( $oRNG )->SaveXML() );
 	
 
@@ -2037,7 +2039,12 @@ class romaDom extends domDocument
 	    $this->updateProgressBar( '70' );
 	
 	ob_start();
-	System( roma_trang . ' -I rng -O xsd -o disable-abstract-elements ' . $szInputFile . ' ' . $szOutputFile  . ' 2>&1');
+	System( roma_trang . 
+	' -I rng -O xsd -o disable-abstract-elements ' . 
+	$szInputFile . ' ' . $szOutputFile  . 
+	'; xsltproc -o ' . $szTempFile . ' ' .
+	roma_schemaStylesheetDir . '/base/p5/odds/manglexsd.xsl ' .
+	$szOutputFile . '; mv ' . $szTempFile . ' ' . $szOutputFile . ' 2>&1');
 	$szError = ob_get_clean();
 	ob_end_clean();
 

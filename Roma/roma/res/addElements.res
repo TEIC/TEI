@@ -15,8 +15,8 @@ headline=Cr&eacute;ion d'un &eacute;l&eacute;ment
 
 form_headline=Cr&eacute;ion d'un &eacute;l&eacute;ment en cours
 form_name=Nom
-form_modelClasses=Classements structurals
-form_attributeClasses=Classements attributifs
+form_modelClasses=Classes structurales
+form_attributeClasses=Classes attributives
 form_contents=Contenu
 form_description=Description
 

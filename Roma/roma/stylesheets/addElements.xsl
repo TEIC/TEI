@@ -480,6 +480,12 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
      <xsl:if test="$selectedMode='addElement'">
        <div class="HideItem">
 	 <select name="content" size="1">
+	   <option value="text">
+	     <xsl:if test="$elementContents='text'">
+	       <xsl:attribute name="selected">1</xsl:attribute>
+	     </xsl:if>
+	     Text
+	   </option>
 	   <option value="userContent">
 	     <xsl:if test="$elementContents='userContent'">
 	       <xsl:attribute name="selected">1</xsl:attribute>
@@ -491,12 +497,6 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
 	       <xsl:attribute name="selected">1</xsl:attribute>
 	     </xsl:if>
 	     Empty
-	   </option>
-	   <option value="text">
-	     <xsl:if test="$elementContents='text'">
-	       <xsl:attribute name="selected">1</xsl:attribute>
-	     </xsl:if>
-	     Text
 	   </option>
 	   <xsl:for-each select="/addElement/dataList/*">
 	     <option>
