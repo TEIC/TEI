@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet 
+ xmlns:rng="http://relaxng.org/ns/structure/1.0"
+  xmlns:tei="http://www.tei-c.org/ns/1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:exsl="http://exslt.org/common"
+  extension-element-prefixes="exsl"
+  exclude-result-prefixes="tei exsl" 
+  version="1.0">
+<xsl:output method="xml" indent="yes"/>
+<xsl:param name="newlang">es</xsl:param>
+<xsl:param name="ODDROOT">/TEI/P5/</xsl:param>
+<xsl:param name="verbose">true</xsl:param>
+
+<xsl:template match="comment()|text()|processing-instruction()">
+  <xsl:copy/>
+</xsl:template>
+
+<xsl:template match="tei:*">
+<xsl:variable name="oldname" select="name(.)"/>
+<xsl:variable name="newname">
+  <xsl:for-each
+   select="document(concat($ODDROOT,'Tools/teinames.xml'))/i18n/element[@ident=$oldname]">
+    <xsl:choose>
+      <xsl:when test="@*[name(.)=$newlang]">
+	<xsl:value-of select="@*[name(.)=$newlang]"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$oldname"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:for-each>
+</xsl:variable>
+<xsl:element name="{$newname}" xmlns="http://www.tei-c.org/ns/1.0">
+  <xsl:apply-templates select="@*|*|text()|comment()"/>
+</xsl:element>
+</xsl:template>
+
+<xsl:template match="@*">
+<xsl:variable name="oldname" select="name(.)"/>
+<xsl:variable name="newname">
+  <xsl:for-each
+   select="document(concat($ODDROOT,'Tools/teinames.xml'))/i18n/attribute[@ident=$oldname]">
+    <xsl:choose>
+      <xsl:when test="@*[name(.)=$newlang]">
+	<xsl:value-of select="@*[name(.)=$newlang]"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$oldname"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:for-each>
+</xsl:variable>
+<xsl:attribute name="{$newname}">
+  <xsl:value-of select="."/>
+</xsl:attribute>
+</xsl:template>
+
+</xsl:stylesheet>
