@@ -61,10 +61,6 @@ $Date$, $Revision$, $Author$
 <xsl:template name="copyrightStatement">Copyright TEI Consortium 2004</xsl:template>
 <xsl:variable name="top" select="/"/>
 
-<xsl:template name="logoPicture">
-<img src="jaco001d.gif" alt="" width="180" />
-</xsl:template>
-
 <xsl:template name="metaHook">
   <xsl:param name="title"/>
  <meta name="DC.Title" content="{$title}"/>
