@@ -127,18 +127,28 @@ Text Encoding Initiative Consortium XSLT stylesheet family
   <xsl:template match="tei:attDef[@mode='delete']" mode="tangle"/>
   
   <xsl:template match="tei:attDef" mode="tangle">
+    <xsl:variable name="I">
+      <xsl:choose>
+	<xsl:when test="starts-with(@ident,'xml:')">
+	  <xsl:value-of select="substring-after(@ident,'xml:')"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="@ident"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     <xsl:if test="not(@ident='xmlns')">
       <xsl:choose>
 	<xsl:when test="@mode='add'"/>
 	<xsl:when test="@usage='req'">
-	  <rng:ref name="{ancestor::tei:attList/../@ident}.attributes.{@ident}"/>
+	  <rng:ref name="{ancestor::tei:attList/../@ident}.attributes.{$I}"/>
 	</xsl:when>
 	<xsl:when test="ancestor::tei:classSpec">
-	  <rng:ref name="{ancestor::tei:attList/../@ident}.attributes.{@ident}"/>
+	  <rng:ref name="{ancestor::tei:attList/../@ident}.attributes.{$I}"/>
 	</xsl:when>
 	<xsl:otherwise>
 	  <rng:ref
-	      name="{ancestor::tei:attList/../@ident}.attributes.{@ident}"/>
+	      name="{ancestor::tei:attList/../@ident}.attributes.{$I}"/>
 	  <!-- when is this ever needed?	
 	       <rng:optional>
 	       </rng:optional>
@@ -171,14 +181,24 @@ Text Encoding Initiative Consortium XSLT stylesheet family
 	</xsl:if>
 	<xsl:for-each
 	    select="document($loc)//tei:attDef[not(@ident=current()//tei:attDef/@ident)]">
+	  <xsl:variable name="I">
+	    <xsl:choose>
+	      <xsl:when test="starts-with(@ident,'xml:')">
+		<xsl:value-of select="substring-after(@ident,'xml:')"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:value-of select="@ident"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:variable>
 	  <xsl:choose>
 	    <xsl:when test="@usage='req'">
-	      <rng:ref name="{ancestor::tei:elementSpec/@ident}.attributes.{@ident}"/>
+	      <rng:ref name="{ancestor::tei:elementSpec/@ident}.attributes.{$I}"/>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <rng:optional>
 		<rng:ref
-		    name="{ancestor::tei:elementSpec/@ident}.attributes.{@ident}"/>
+		    name="{ancestor::tei:elementSpec/@ident}.attributes.{$I}"/>
 	      </rng:optional>
 	    </xsl:otherwise>
 	  </xsl:choose>
@@ -1157,7 +1177,7 @@ in change mode and there is no attList -->
 	<xsl:value-of select="normalize-space(tei:altIdent)"/>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:value-of select="@ident"/>
+	    <xsl:value-of select="@ident"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
@@ -1167,8 +1187,18 @@ in change mode and there is no attList -->
 	<xsl:value-of select="normalize-space(tei:defaultVal)"/>
       </xsl:attribute>
     </xsl:if>
+    <xsl:variable name="I">
+      <xsl:choose>
+	<xsl:when test="starts-with(@ident,'xml:')">
+	  <xsl:value-of select="substring-after(@ident,'xml:')"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="@ident"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     <rng:ref
-	name="{ancestor::tei:attList/../@ident}.attributes.{@ident}.content" />
+	name="{ancestor::tei:attList/../@ident}.attributes.{$I}.content" />
   </rng:attribute>
 </xsl:template>
 
@@ -1205,7 +1235,18 @@ in change mode and there is no attList -->
 
 <xsl:template name="defineAnAttribute">
   <xsl:param name="Name"/>
-  <rng:define name="{$Name}.attributes.{@ident}" >
+    <xsl:variable name="I">
+      <xsl:choose>
+	<xsl:when test="starts-with(@ident,'xml:')">
+	  <xsl:value-of select="substring-after(@ident,'xml:')"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="@ident"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+  <rng:define name="{$Name}.attributes.{$I}" >
     <xsl:choose>
       <xsl:when test="@mode='delete'">
 	<rng:notAllowed />
@@ -1232,7 +1273,7 @@ in change mode and there is no attList -->
     <xsl:when test="@mode='delete'"/>
     <xsl:when test="@mode='change' and not(tei:datatype or tei:valList)"/>
     <xsl:otherwise>
-      <rng:define name="{$Name}.attributes.{@ident}.content" >
+      <rng:define name="{$Name}.attributes.{$I}.content" >
 	<xsl:call-template name="attributeDatatype"/>
       </rng:define>
     </xsl:otherwise>
@@ -1298,10 +1339,18 @@ in change mode and there is no attList -->
 	<xsl:value-of select="normalize-space(tei:altIdent)"/>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:value-of select="@ident"/>
+	<xsl:choose>
+	  <xsl:when test="starts-with(@ident,'xml:')">
+	    <xsl:value-of select="substring-after(@ident,'xml:')"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="@ident"/>
+	  </xsl:otherwise>
+	</xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
+  
   <rng:attribute name="{$name}" >
     <xsl:if test="tei:defaultVal">
       <xsl:attribute name="a:defaultValue">

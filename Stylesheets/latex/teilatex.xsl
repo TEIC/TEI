@@ -351,7 +351,12 @@ pdfcreator={Oxford University Computing Services}
 
 <xsl:template match="tei:emph">\textit{<xsl:apply-templates/>}</xsl:template>
 
+
 <xsl:template match="tei:figure">
+
+</xsl:template>
+
+<xsl:template match="tei:graphic">
   <xsl:choose>
     <xsl:when test="@rend='centre'">
       <xsl:text>\par\centerline{</xsl:text>
@@ -416,13 +421,17 @@ pdfcreator={Oxford University Computing Services}
 	<xsl:when test="@url">
 	  <xsl:value-of select="@url"/>
 	</xsl:when>
-	<xsl:when test="@entity">
-	  <xsl:value-of select="unparsed-entity-uri(@entity)"/>
+	<xsl:when test="parent::tei:figure/@url">
+	  <xsl:value-of select="parent::tei:figure/@url"/>
+	</xsl:when>
+	<xsl:when test="parent::tei:figure/@entity">
+	  <xsl:value-of select="unparsed-entity-uri(parent::tei:figure/@entity)"/>
 	</xsl:when>
       </xsl:choose>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:variable name="c"><xsl:number level="any"/></xsl:variable>
+      <xsl:variable name="c"><xsl:for-each select="parent::tei:figure">
+	<xsl:number level="any"/></xsl:for-each></xsl:variable>
       <xsl:text>FIG</xsl:text>
       <xsl:value-of select="$c+1000"/>
     </xsl:otherwise>
@@ -432,8 +441,8 @@ pdfcreator={Oxford University Computing Services}
     <xsl:when test="@rend='display'">
       <xsl:text>&#10;\caption{</xsl:text><xsl:value-of select="tei:head"/>
       <xsl:text>}</xsl:text>
-      <xsl:if test="@id|@xml:id">
-	\label{<xsl:value-of select="@id|@xml:id"/>}
+      <xsl:if test="parent::tei:figure/@id|parent::tei:figure/@xml:id">
+	\label{<xsl:value-of select="parent::tei:figure/@id|parent::tei:figure/@xml:id"/>}
       </xsl:if>
       <xsl:text>\end{figure}
       </xsl:text>
@@ -675,7 +684,20 @@ pdfcreator={Oxford University Computing Services}
 
 <xsl:template name="findFileName">
   <xsl:variable name="f">
-    <xsl:value-of select="@file|@url"/>
+    <xsl:choose>
+      <xsl:when test="@url">
+	<xsl:value-of select="@url"/>
+      </xsl:when>
+      <xsl:when test="@file">
+	<xsl:value-of select="@file"/>
+      </xsl:when>
+      <xsl:when test="@entity">
+	<xsl:value-of select="unparsed-entity-uri(@entity)"/>
+      </xsl:when>
+      <xsl:when test="tei:graphic">
+	<xsl:value-of select="tei:graphic/@url"/>
+      </xsl:when>
+    </xsl:choose>
   </xsl:variable>
 
   <xsl:choose>
