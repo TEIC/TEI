@@ -166,7 +166,6 @@ pdfcreator={Oxford University Computing Services}
 \def\l@subsubsection{\@dottedtocline{3}{3.8em}{3.2em}}
 \def\l@paragraph{\@dottedtocline{4}{7.0em}{4.1em}}
 \def\l@subparagraph{\@dottedtocline{5}{10em}{5em}}
-\renewcommand\ttdefault{lmtt}
 \fvset{frame=single,numberblanklines=false,xleftmargin=5mm,xrightmargin=5mm}
 \@ifundefined{c@section}{\newcounter{section}}{}
 <xsl:choose>
