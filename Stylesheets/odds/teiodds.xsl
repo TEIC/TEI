@@ -1487,7 +1487,6 @@ in change mode and there is no attList -->
 
 
 
-
 <xsl:template name="generateMembers">
   <xsl:variable name="this" select="@ident"/>
   <xsl:choose>
@@ -1513,19 +1512,24 @@ in change mode and there is no attList -->
       </xsl:for-each>
     </xsl:when>
     <xsl:otherwise>
+      <xsl:variable name="address">
+	<xsl:value-of select="$TEISERVER"/>
+	<xsl:text>classmembers.xq?class=</xsl:text>
+	<xsl:value-of select="@ident"/>
+      </xsl:variable>
       <xsl:if test="$verbose">
 	<xsl:message>Accessing TEISERVER: <xsl:value-of
-	select="concat($TEISERVER,'classmembers.xq?class=',@ident)"/></xsl:message>
+	select="$address"/></xsl:message>
       </xsl:if>
       <xsl:for-each
-	  select="document(concat($TEISERVER,'classmembers.xq?class=',@ident))/list/item">
-	  <xsl:if test="key('IDENTS',.)">
-	    <xsl:text>:  </xsl:text>
-	    <xsl:call-template name="showElement">
-	      <xsl:with-param name="name" select="."/>
-	      <xsl:with-param name="id"/>
-	      </xsl:call-template>:
-	</xsl:if>
+	  select="document($address)/list/item">
+	<xsl:call-template name="showElement">
+	  <xsl:with-param name="name" select="."/>
+	  <xsl:with-param name="id"/>
+	  </xsl:call-template>
+	  <xsl:if test="following::item">
+	    <xsl:text>: &#10;</xsl:text>
+	  </xsl:if>
       </xsl:for-each>
     </xsl:otherwise>
   </xsl:choose>
