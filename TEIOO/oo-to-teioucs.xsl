@@ -66,11 +66,11 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
 
   <xsl:variable name="document-title">
     <xsl:choose>
-      <xsl:when test="/office:document/office:meta/dc:title">
-        <xsl:value-of select="/office:document/office:meta/dc:title"/>
+      <xsl:when test="/office:document-content/office:meta/dc:title">
+        <xsl:value-of select="/office:document-content/office:meta/dc:title"/>
       </xsl:when>
-      <xsl:when test="/office:document/office:body/text:p[@text:style-name='Title']">
-        <xsl:value-of select="/office:document/office:body/text:p[@text:style-name='Title'][1]"/>
+      <xsl:when test="/office:document-content/office:body/text:p[@text:style-name='Title']">
+        <xsl:value-of select="/office:document-content/office:body/text:p[@text:style-name='Title'][1]"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:text>Untitled Document</xsl:text>
@@ -79,7 +79,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
   </xsl:variable>
 
   
-<xsl:template match="/office:document">
+<xsl:template match="/office:document-content">
 <!--http://www.tei-c.org/Lite/DTD/-->
 <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE TEI.2 SYSTEM &quot;http://www.oucs.ox.ac.uk/dtds/tei-oucs.dtd&quot; [
 	</xsl:text>
@@ -96,7 +96,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
       </xsl:if>
     </xsl:for-each>
     <xsl:text disable-output-escaping="yes">]&gt;</xsl:text>
-    <TEI.2 lang="{/office:document/office:meta/dc:language}">
+    <TEI.2 lang="{/office:document-content/office:meta/dc:language}">
       <xsl:call-template name="teiHeader"/>
       <text>
         <body>
@@ -427,13 +427,20 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
       <xsl:apply-templates/>
     </row>
 </xsl:template>
-  
+
+<xsl:template match="table:table-cell/text:h">
+  <xsl:apply-templates/>
+</xsl:template>
+
 <xsl:template match="table:table-cell">
   <cell>
       <xsl:if test="@table:number-columns-spanned &gt;'1'">
         <xsl:attribute name="cols">
           <xsl:value-of select="@table:number-columns-spanned"/>
         </xsl:attribute>
+      </xsl:if>
+      <xsl:if test="text:h">
+	<xsl:attribute name="role">label</xsl:attribute>
       </xsl:if>
       <xsl:apply-templates/>
   </cell>
@@ -827,13 +834,13 @@ These seem to have no obvious translation
             <xsl:value-of select="$document-title"/>
           </title>
           <author>
-<xsl:value-of select="/office:document/office:meta/meta:initial-creator"/>
+<xsl:value-of select="/office:document-content/office:meta/meta:initial-creator"/>
           </author>
         </titleStmt>
         <editionStmt>
           <edition>
             <date>
-<xsl:value-of select="/office:document/office:meta/meta:creation-date"/>
+<xsl:value-of select="/office:document-content/office:meta/meta:creation-date"/>
             </date>
           </edition>
         </editionStmt>
@@ -844,18 +851,18 @@ These seem to have no obvious translation
           </address>
         </publicationStmt>
         <sourceDesc>
-          <p><xsl:apply-templates select="/office:document/office:meta/meta:generator"/>Written by OpenOffice</p>
+          <p><xsl:apply-templates select="/office:document-content/office:meta/meta:generator"/>Written by OpenOffice</p>
         </sourceDesc>
       </fileDesc>
       <profileDesc>
          <langUsage default="NO">
-            <language id="{/office:document/office:meta/dc:language}">ISO <xsl:value-of select="/office:document/office:meta/dc:language"/></language>
+            <language id="{/office:document-content/office:meta/dc:language}">ISO <xsl:value-of select="/office:document-content/office:meta/dc:language"/></language>
          </langUsage>
-      <xsl:if test="/office:document/office:meta/meta:keywords">
+      <xsl:if test="/office:document-content/office:meta/meta:keywords">
         <textClass>
           <keywords>
             <list>
-              <xsl:for-each select="/office:document/office:meta/meta:keywords/meta:keyword">
+              <xsl:for-each select="/office:document-content/office:meta/meta:keywords/meta:keyword">
                 <item>
                   <xsl:value-of select="."/>
                 </item>
@@ -867,9 +874,9 @@ These seem to have no obvious translation
       </profileDesc>
       <revisionDesc>
         <change>
-          <date> <xsl:apply-templates select="/office:document/office:meta/dc:date"/></date>
+          <date> <xsl:apply-templates select="/office:document-content/office:meta/dc:date"/></date>
           <respStmt>
-            <name> <xsl:apply-templates select="/office:document/office:meta/dc:creator"/></name>
+            <name> <xsl:apply-templates select="/office:document-content/office:meta/dc:creator"/></name>
           </respStmt>
           <item>revision</item>
         </change>
