@@ -1,4 +1,4 @@
-release: clean p4 p5 other
+dist: clean p4 p5 other
 	(cd release; 	zip -r tei-xsl-`cat ../VERSION`.zip tei-xsl-`cat ../VERSION`)
 
 
