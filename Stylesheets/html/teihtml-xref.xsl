@@ -273,11 +273,19 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
     </xsl:choose>
   </xsl:variable>
   <a>
-    <xsl:if test="@n">
-      <xsl:attribute name="title">
-	<xsl:value-of select="@n"/>
-      </xsl:attribute>
-    </xsl:if>
+    <xsl:attribute name="title">
+      <xsl:choose>
+	<xsl:when test="@n">
+	  <xsl:value-of select="@n"/>
+	</xsl:when>
+	<xsl:when test="local-name(.)='div'">
+	  <xsl:value-of select="normalize-space(head)"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="normalize-space(.)"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
     <xsl:attribute name="class">
       <xsl:choose>
 	<xsl:when test="@rend"><xsl:value-of select="@rend"/></xsl:when>
@@ -319,8 +327,18 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
   <a>
     <xsl:attribute name="class">
       <xsl:choose>
-	<xsl:when test="@rend"><xsl:value-of select="@rend"/></xsl:when>
-	<xsl:otherwise><xsl:value-of select="$class"/></xsl:otherwise>
+	<xsl:when test="@rend">
+	  <xsl:value-of	select="@rend"/>
+	</xsl:when>
+	<xsl:when test="parent::tei:item/parent::tei:list[@rend]">
+	  <xsl:value-of	select="parent::tei:item/parent::tei:list/@rend"/>
+	</xsl:when>
+	<xsl:when test="parent::tei:item[@rend]">
+	  <xsl:value-of	select="parent::tei:item/@rend"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$class"/>
+	</xsl:otherwise>
       </xsl:choose>
     </xsl:attribute>
     <xsl:if test="@type">
@@ -352,11 +370,19 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 	<xsl:attribute name="target">_top</xsl:attribute>
       </xsl:when>
     </xsl:choose>
-    <xsl:if test="@n">
-      <xsl:attribute name="title">
-	<xsl:value-of select="@n"/>
-      </xsl:attribute> 
-    </xsl:if>
+    <xsl:attribute name="title">
+      <xsl:choose>
+	<xsl:when test="@n">
+	  <xsl:value-of select="@n"/>
+	</xsl:when>
+	<xsl:when test="local-name(.)='div'">
+	  <xsl:value-of select="normalize-space(head)"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="normalize-space(.)"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
     <xsl:call-template name="xrefHook"/>
     <xsl:choose>
       <xsl:when test="$ptr='true'">

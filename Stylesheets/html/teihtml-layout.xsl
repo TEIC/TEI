@@ -681,7 +681,7 @@
     <body class="pagetable">
       <xsl:call-template name="bodyHook"/>
       <xsl:call-template name="bodyJavaScriptHook"/>
-      <xsl:call-template name="pageTableHeader">
+      <xsl:call-template name="pageHeader">
 	<xsl:with-param name="mode">table</xsl:with-param>
       </xsl:call-template>
       <table>
@@ -985,7 +985,10 @@
     </p>
   </xsl:template>
 
-  <xsl:template name="pageTableHeader">
+  <xsl:template name="columnHeader">
+  </xsl:template>
+
+  <xsl:template name="pageHeader">
     <xsl:param name="mode"/>
     <xsl:choose>
       <xsl:when test="$mode='table'">
@@ -1056,25 +1059,24 @@
       <xsl:call-template name="bodyJavaScriptHook"/>
       
       <!-- header -->
-      <div id="hdr"><span class="tocontent"><a href="{$REQUEST}?style=text">Text only</a> |
-      <a href="#rh-col" title="Go to main page content" class="skiplinks">Skip links</a></span>
-      <xsl:call-template name="pageTableHeader"/>
+      <div id="hdr">
+	<xsl:call-template name="hdr"/>
       </div>
-      
-      <!-- navigation bar -->
-	<xsl:call-template name="navbar"/>
-	
+      <div id="accessibility">
+	<span class="tocontent">
+	  <a href="{$REQUEST}?style=text">Text only</a> | 
+	  <a  href="#rh-col" title="Go to main page content"
+	      class="skiplinks">Skip links</a>	
+	</span>
+      </div>
+
+      <div id="hdr2">
+	  <xsl:call-template name="hdr2"/>
+      </div>
+
       <xsl:if test="not($contentStructure='all' or @rend='all')">
-	<!-- breadcrumb trail -->
-	<div id="hdr2">
-	  <a href="#rh-col" title="Go to main page content" class="skiplinks">Skip links</a>  <a class="hide">|</a>
-	  <xsl:call-template name="crumbPath"/>
-	  <a class="hide">|</a>
-	  
-	  <a class="bannerright" href="{$parentURL}" 
-	     title="Go to home page">	  
-	    <xsl:value-of select="$parentWords"/><xsl:text> home page</xsl:text>
-	  </a>
+	<div id="hdr3">
+	  <xsl:call-template name="hdr3"/>
 	</div>
       </xsl:if>
       <xsl:choose>
@@ -1090,20 +1092,26 @@
 	  </div>
 	</xsl:when>
 	<xsl:when test="$contentStructure='body'">
-	  <!-- right column -->
-	  <div id="rh-col"><a name="rh-col"></a> 
-	  <xsl:call-template name="mainFrame">
-	    <xsl:with-param name="currentID" select="$currentID"/>
-	  </xsl:call-template>
+	  <div id="rh-col">
+	    <a name="rh-col"></a> 
+	    <div id="rh-col-top">
+	      <xsl:call-template name="rh-col-top"/>
+	    </div>
+	    <div id="rh-col-bottom">
+	      <xsl:call-template name="rh-col-bottom">
+		<xsl:with-param name="currentID" select="$currentID"/>
+	      </xsl:call-template>
+	    </div>
 	  </div>
-	  <!-- left hand column -->
 	  <div id="lh-col"> 
-	    <xsl:call-template name="searchbox"/>
-	    <xsl:call-template name="printLink"/>
-	    <xsl:call-template name="leftHandFrame">
-	      <xsl:with-param name="currentID" select="$ID"/>
-	    </xsl:call-template>
-	    <hr/>
+	    <div id="lh-col-top">
+	      <xsl:call-template name="lh-col-top"/>  
+	    </div>
+	    <div id="lh-col-bottom">
+	      <xsl:call-template name="lh-col-bottom">
+		<xsl:with-param name="currentID" select="$currentID"/>
+	      </xsl:call-template>  
+	    </div>
 	  </div>
 	</xsl:when>
       </xsl:choose>
@@ -1111,9 +1119,53 @@
   </html>
 </xsl:template>
 
+<xsl:template name="hdr">
+  <xsl:call-template name="pageHeader"/>
+</xsl:template>
+
+<xsl:template name="hdr2">
+  <!-- navigation bar -->
+  <xsl:call-template name="navbar"/>
+</xsl:template>
+
+<xsl:template name="hdr3">
+  <!-- breadcrumb trail -->
+  <a href="#rh-col" title="Go to main page content" class="skiplinks">Skip links</a>  <a class="hide">|</a>
+  <xsl:call-template name="crumbPath"/>
+  <a class="hide">|</a>
+  <a class="bannerright" href="{$parentURL}" 
+     title="Go to home page">	  
+    <xsl:value-of select="$parentWords"/><xsl:text> home page</xsl:text>
+  </a>
+</xsl:template>
+
+<xsl:template name="rh-col-top">  
+  <xsl:call-template name="columnHeader"/>
+</xsl:template>
+
+<xsl:template name="rh-col-bottom">  
+  <xsl:param name="currentID"/>
+  <xsl:call-template name="mainFrame">
+    <xsl:with-param name="currentID" select="$currentID"/>
+  </xsl:call-template>
+</xsl:template>
+
+<xsl:template name="lh-col-top">  
+  <xsl:call-template name="searchbox"/>
+  <xsl:call-template name="printLink"/>
+</xsl:template>
+
+<xsl:template name="lh-col-bottom">  
+  <xsl:param name="currentID"/>
+  <xsl:call-template name="leftHandFrame">
+    <xsl:with-param name="currentID" select="$currentID"/>
+  </xsl:call-template>
+  <hr/>
+</xsl:template>
+
+
 <xsl:template name="navbar">
   <xsl:if test="not($navbarFile='')">
-    <div id="hdr3">
       <xsl:for-each select="document($navbarFile,document(''))">
 	<xsl:for-each select="list/item">
 	  <span class="navbar">
@@ -1123,7 +1175,6 @@
 	  <xsl:if test="following-sibling::item"> | </xsl:if>
 	</xsl:for-each>
       </xsl:for-each>
-    </div>
   </xsl:if>
 </xsl:template> 
 
