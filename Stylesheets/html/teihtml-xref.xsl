@@ -220,7 +220,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 
 <xsl:template match="tei:note" mode="generateLink">
     <xsl:text>#Note</xsl:text>
-    <xsl:call-template name="noteID"/>
+    <xsl:call-template name="noteN"/>
 </xsl:template>
 
 

@@ -21,7 +21,6 @@
 	<xsl:if test="not(preceding-sibling::tei:*) or preceding-sibling::tei:titlePage">
 	  <h2><xsl:apply-templates select="." mode="xref"/></h2>
 	  <xsl:call-template name="doDivBody"/>
-	  <xsl:call-template name="printDivnotes"/>
 	  <xsl:if test="$bottomNavigationPanel='true'">
 	    <xsl:call-template name="xrefpanel">
 	      <xsl:with-param name="homepage" 
@@ -379,7 +378,6 @@
 	    <xsl:for-each select="key('IDS',$currentID)">  
 	      <h2><xsl:apply-templates select="." mode="xref"/></h2>
 	      <xsl:call-template name="doDivBody"/>
-	      <xsl:call-template name="printDivnotes"/>
 	      <xsl:if test="$bottomNavigationPanel='true'">
 		<xsl:call-template name="xrefpanel">
 		  <xsl:with-param name="homepage" 
@@ -403,6 +401,11 @@
 	</xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
+
+    <xsl:call-template name="partialFootNotes">
+      <xsl:with-param name="currentID" select="$currentID"/>
+    </xsl:call-template>
+
     <xsl:call-template name="stdfooter">
       <xsl:with-param name="date">
 	<xsl:call-template name="generateDate"/>
@@ -819,7 +822,7 @@
 	  <xsl:value-of select="$spacer"/>
 	  <a class="{$class}" target="_top">
 	    <xsl:attribute name="href">
-	      <xsl:value-of select="$path"/>
+	      <xsl:value-of select="$whole"/>/<xsl:value-of select="$path"/>
 	    </xsl:attribute>
 	    <xsl:value-of select="$path"/>
 	  </a>
@@ -875,11 +878,8 @@
 	  
 	  <xsl:call-template name="doDivBody"/>
 	  
-	  <xsl:if test="descendant::tei:note[@place='foot'] and $footnoteFile=''">
-	    <hr/>
-	    <p><b>Notes</b></p>
-	    <xsl:call-template name="printDivnotes"/>
-	  </xsl:if>
+	  <xsl:call-template name="printNotes"/>
+
 	  <xsl:if test="$bottomNavigationPanel='true'">
 	    <xsl:call-template name="xrefpanel">
 	      <xsl:with-param name="homepage" select="concat($BaseFile,$standardSuffix)"/>
@@ -916,6 +916,7 @@
       <xsl:call-template name="mainbody"/>
       
       <xsl:call-template name="printNotes"/>
+
       <xsl:call-template name="htmlFileBottom"/>
     </body>
     </html>

@@ -28,6 +28,16 @@
 	</xsl:choose>
       </xsl:when>
       
+
+      <xsl:when test="contains($REQUEST,'.ID=')">
+	<xsl:call-template name="get-basename">
+	  <xsl:with-param name="file">
+	    <xsl:value-of select="substring-before($REQUEST,'.ID=')"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>      
+
+      
       <xsl:when test="not($REQUEST='')">
 	<xsl:call-template name="get-basename">
 	  <xsl:with-param name="file">
@@ -35,7 +45,7 @@
 	  </xsl:with-param>
 	</xsl:call-template>
       </xsl:when>
-      
+
       <xsl:when test="contains($processor,'SAXON')">
 	<xsl:call-template name="get-basename">
 	  <xsl:with-param name="file">
@@ -595,6 +605,9 @@ $ID: requests a particular page
 	  <xsl:when test="$action='header'">
 	    <xsl:apply-templates select="." mode="xref"/>
 	  </xsl:when>
+	  <xsl:when test="$action='notes'">
+	    <xsl:call-template name="printNotes"/>
+	  </xsl:when>
 	  <xsl:when test="$action='toclist'">
 	    <xsl:call-template name="linkListContents">
 	      <xsl:with-param name="style" select="'toclist'"/>
@@ -607,7 +620,6 @@ $ID: requests a particular page
 			  or $pageLayout='CSS'">
 	    <h2><xsl:apply-templates select="." mode="xref"/></h2>
 	    <xsl:call-template name="doDivBody"/>
-	    <xsl:call-template name="printDivnotes"/>
 	    <xsl:if test="$bottomNavigationPanel='true'">
 	      <xsl:call-template name="xrefpanel">
 		<xsl:with-param name="homepage" 

@@ -497,7 +497,7 @@ by Nick Nicholas -->
   </xsl:choose>
 </xsl:template>
 
-<xsl:template match="tei:term|title">
+<xsl:template match="tei:term">
   <xsl:choose>
     <xsl:when test="@rend">
       <xsl:call-template name="rendering"/>

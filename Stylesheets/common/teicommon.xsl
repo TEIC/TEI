@@ -91,10 +91,10 @@ select="$numberSpacer"/></xsl:param>
 <xsl:param name="tableWords">Tables</xsl:param>
 <xsl:param name="tocWords">Contents</xsl:param>
 <xsl:param name="upWord">Up</xsl:param>
+<xsl:param name="noteHeading">Notes</xsl:param>
 <xsl:template name="contentsWord">Contents</xsl:template>
 <xsl:template name="contentsHeading">Sections in this document:</xsl:template>
 <xsl:template name="searchWords">Search</xsl:template>
-
 
 
 <xsl:template name="generateTitle">

@@ -30,7 +30,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
   </xsl:if>
   <xsl:apply-templates/>
   <xsl:if test="tei:head">
-    <p>
+    <p class="caption">
       <xsl:choose>
 	<xsl:when test="ancestor::tei:front and
 			$numberFrontFigures='true'">
@@ -122,36 +122,34 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
   </xsl:variable>
   <xsl:choose>
     <xsl:when test="$showFigures='true'">
-      <span>
+      <img src="{$graphicsPrefix}{$File}">
 	<xsl:if test="not($ID='')">
 	  <xsl:attribute name="name"><xsl:value-of select="$ID"/></xsl:attribute>
 	</xsl:if>
-	<img src="{$graphicsPrefix}{$File}">
-	  <xsl:if test="@rend">
-	      <xsl:attribute name="class"><xsl:value-of  select="@rend"/></xsl:attribute>
-	  </xsl:if>
-	  <xsl:if test="@width">
-	    <xsl:call-template name="setDimension">
-	      <xsl:with-param name="value">
-		<xsl:value-of select="@width"/>
-	      </xsl:with-param>
-	      <xsl:with-param name="name">width</xsl:with-param>
-	    </xsl:call-template>
-	  </xsl:if>
-	  <xsl:if test="@height">
-	    <xsl:call-template name="setDimension">
-	      <xsl:with-param name="value">
-		<xsl:value-of select="@height"/>
-	      </xsl:with-param>
-	      <xsl:with-param name="name">height</xsl:with-param>
-	    </xsl:call-template>
-	  </xsl:if>
-	  <xsl:attribute name="alt">
-	    <xsl:value-of select="$Alt"/>
-	  </xsl:attribute>
-	  <xsl:call-template name="imgHook"/>
+	<xsl:if test="@rend">
+	  <xsl:attribute name="class"><xsl:value-of  select="@rend"/></xsl:attribute>
+	</xsl:if>
+	<xsl:if test="@width">
+	  <xsl:call-template name="setDimension">
+	    <xsl:with-param name="value">
+	      <xsl:value-of select="@width"/>
+	    </xsl:with-param>
+	    <xsl:with-param name="name">width</xsl:with-param>
+	  </xsl:call-template>
+	</xsl:if>
+	<xsl:if test="@height">
+	  <xsl:call-template name="setDimension">
+	    <xsl:with-param name="value">
+	      <xsl:value-of select="@height"/>
+	    </xsl:with-param>
+	    <xsl:with-param name="name">height</xsl:with-param>
+	  </xsl:call-template>
+	</xsl:if>
+	<xsl:attribute name="alt">
+	  <xsl:value-of select="$Alt"/>
+	</xsl:attribute>
+	<xsl:call-template name="imgHook"/>
 	</img>
-      </span>
     </xsl:when>
     <xsl:otherwise>
       <hr/>
