@@ -9,7 +9,7 @@
   version="1.0">
 <xsl:key name="TAGMODS" match="Tag|Class|Attclass" use="Tagset"/>
 <xsl:key name="MODS" match="tei:module" use="@ident"/>
-<xsl:param name="ODDROOT">/TEI/P5/Source/</xsl:param>
+<xsl:param name="ODDROOT">http://www.tei-c.org.uk/P5/</xsl:param>
 <xsl:key name="LOCAL"
 	 match="tei:classSpec|tei:elementSpec|tei:macroSpec" use="@ident"/>
 <xsl:key name="LOCALATT"
@@ -74,10 +74,7 @@
 	      <xsl:with-param name="modname">header</xsl:with-param>
 	    </xsl:call-template>
 	    <xsl:call-template name="findNames">
-	      <xsl:with-param name="modname">teikeywords</xsl:with-param>
-	    </xsl:call-template>
-	    <xsl:call-template name="findNames">
-	      <xsl:with-param name="modname">teiclasses</xsl:with-param>
+	      <xsl:with-param name="modname">teideclarations</xsl:with-param>
 	    </xsl:call-template>
 	</xsl:when>
 	<xsl:when test="$test='general'">
@@ -113,10 +110,7 @@
 	  <xsl:with-param name="modname">header</xsl:with-param>
 	</xsl:call-template>
 	<xsl:call-template name="findNames">
-	  <xsl:with-param name="modname">teikeywords</xsl:with-param>
-	</xsl:call-template>
-	<xsl:call-template name="findNames">
-	  <xsl:with-param name="modname">teiclasses</xsl:with-param>
+	  <xsl:with-param name="modname">teideclarations</xsl:with-param>
 	</xsl:call-template>
       </xsl:when>
       <xsl:when test="@ident='general'">
