@@ -168,7 +168,7 @@ pdfcreator={Oxford University Computing Services}
 \def\l@subparagraph{\@dottedtocline{5}{10em}{5em}}
 \renewcommand\ttdefault{lmtt}
 \fvset{frame=single,numberblanklines=false,xleftmargin=5mm,xrightmargin=5mm}
-
+\@ifundefined{c@section}{\newcounter{section}}{}
 <xsl:choose>
   <xsl:when test="/tei:TEI/@rend='book'">
     \let\divI=\chapter
