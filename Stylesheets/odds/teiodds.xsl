@@ -475,7 +475,7 @@ Text Encoding Initiative Consortium XSLT stylesheet family
 	      <rng:define name="{@ident}.attributes" >
 		<xsl:choose>
 		  <xsl:when test="ancestor::tei:schemaSpec and not(ancestor::tei:schemaSpec/tei:moduleRef/@key='tei')"/>
-		  <xsl:when test="@ns and not(contains(@ns,'http://www.tei-c.org'))"/>
+		  <xsl:when test="@ns and not(contains(@ns,'http://www.tei-c.org/ns/1.0'))"/>
 		  <xsl:otherwise>
 		    <rng:ref name="tei.global.attributes" />
 		  </xsl:otherwise>
