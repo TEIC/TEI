@@ -178,36 +178,26 @@ pdfcreator={Oxford University Computing Services}
     \let\divV=\paragraph
   </xsl:when>
   <xsl:otherwise>
-\newif\if@mainmatter \@mainmattertrue
+\newif\if@mainmatter 
+\@mainmattertrue
 \def\frontmatter{%
   \setcounter{secnumdepth}{-1}
   \@mainmatterfalse
   \pagenumbering{roman}}
 \def\mainmatter{%
-<xsl:choose>
-  <xsl:when test="/tei:TEI/@rend='book'">
-  \cleardoublepage
-  \setcounter{chapter}{0}
-  </xsl:when>
-  <xsl:otherwise>
   \setcounter{section}{0}
-  </xsl:otherwise>
-</xsl:choose>
   \setcounter{secnumdepth}{4}
   \@mainmattertrue
   \pagenumbering{arabic}}
 \def\backmatter{%
-  <xsl:if test="/tei:TEI/@rend='book'">
-  \cleardoublepage
-  </xsl:if>
+  \clearpage
   \appendix
-  \@mainmatterfalse
-}
-  \let\divI=\section
-  \let\divII=\subsection
-  \let\divIII=\subsubsection
-  \let\divIV=\paragraph
-  \let\divV=\subparagraph
+  \@mainmatterfalse}
+\let\divI=\section
+\let\divII=\subsection
+\let\divIII=\subsubsection
+\let\divIV=\paragraph
+\let\divV=\subparagraph
   </xsl:otherwise>
 </xsl:choose>
 \makeatother

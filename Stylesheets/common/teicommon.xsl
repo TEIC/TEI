@@ -475,12 +475,13 @@ select="normalize-space(substring-before(substring-after($revauthor,'LastChanged
       </xsl:call-template>
     </xsl:when>
     <xsl:when test="@*">
-      <xsl:message terminate="yes">ERROR. pointer with no valid attribute on <xsl:value-of 
-      select="name(.)"/>
+      <xsl:if test="$verbose='true'">
+	<xsl:message>ERROR. pointer with no valid attribute on <xsl:value-of 
+	select="name(.)"/></xsl:message>
+      </xsl:if>
       <xsl:for-each select="@*">
-	<xsl:value-of select="name(.)"/>=<xsl:value-of select="."/>
+	[[markup error: <xsl:value-of select="name(.)"/>=<xsl:value-of select="."/>]]
       </xsl:for-each>
-      </xsl:message>
     </xsl:when>
   </xsl:choose>
 </xsl:template>
