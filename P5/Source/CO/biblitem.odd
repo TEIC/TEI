@@ -20,6 +20,7 @@ bibliographic subelements appear and in a specified order. </desc>
     <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:choice>
         <rng:ref name="tei.biblPart"/>
+	<rng:ref name="biblItem"/>
       </rng:choice>
     </rng:oneOrMore>
   </content>
@@ -34,8 +35,8 @@ bibliographic subelements appear and in a specified order. </desc>
 	<val>book, paperback</val>,
 	<val>video, VHS</val>,
 	<val>video, DVD</val>,
-	<val>audio, casettee</val>,
-	<val>audie, CD</val>.
+	<val>audio, casette</val>,
+	<val>audio, CD</val>.
       </valDesc>
     </attDef>
     <attDef ident="status" usage="opt">
@@ -59,7 +60,10 @@ bibliographic subelements appear and in a specified order. </desc>
       that of its &pbob;.</desc>
       <valList type="open">
 	<valItem ident="host">
-	  <gloss>WHAT DOES THIS MEAN?</gloss>
+	  <gloss>this bibliographic item has a host relationship to
+	  the item encoded in the &pbob;; e.g., this item as the
+	  magazine in which the article described by the &pbob;
+	  appeared.</gloss>
 	</valItem>
 	<valItem ident="original">
 	  <gloss>the item is original source</gloss>
@@ -87,25 +91,41 @@ bibliographic subelements appear and in a specified order. </desc>
   </attList>
   
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <biblStruct>
-        <monogr>
-          <author>Blain, Virginia</author>
-          <author>Clements, Patricia</author>
-          <author>Grundy, Isobel</author>
-          <title>The Feminist Companion to Literature in
-             English: women writers from the middle ages
-             to the present</title>
-          <edition>first edition</edition>
-          <imprint>
-            <publisher>Yale University Press</publisher>
-            <pubPlace>New Haven and London</pubPlace>
-            <date>1990</date>
-          </imprint>
-        </monogr>
-      </biblStruct>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <biblItem role="original">
+        <author>Blain, Virginia</author>
+        <author>Clements, Patricia</author>
+        <author>Grundy, Isobel</author>
+        <title>The Feminist Companion to Literature in
+           English: women writers from the middle ages
+           to the present</title>
+        <edition>first edition</edition>
+        <imprint>
+          <publisher>Yale University Press</publisher>
+          <pubPlace>New Haven and London</pubPlace>
+          <date value="1990">1990</date>
+        </imprint>
+      </biblItem>
     </egXML>
   </exemplum>
-  <remarks/>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <biblItem role="source">
+	<title>Changes in physical examination caused by use of spinal immobilization</title>
+	<author>March, Juan A. MD</author>
+	<author>Ausband, Stephen C. MD</author>
+	<author>Brown, Lawrence H. EMT-P</author>
+	<biblScope type="pages">421&ndash;424</biblScope>
+	<biblItem role="host">
+	  <title>Prehospital Emergency Care</title>
+	  <biblScope type="volume">6</biblScope>
+	  <biblScope issue="issue">4</biblScope>
+	  <date value="2002-10/12">October/December 2002</date>
+	  <publisher>Hanley &amp; Belfus</publisher>
+	  <editor>Menegazzi, James J. PhD</editor>
+	</biblItem>
+      </biblItem>
+    </egXML>
+  </exemplum>
+    <remarks/>
   <listRef>
     <ptr target="#COBITY"/>
     <ptr target="#HD3"/>
