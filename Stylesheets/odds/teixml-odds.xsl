@@ -661,7 +661,17 @@ $Date$, $Revision$, $Author$
     <xsl:message>   refdoc for <xsl:value-of select="name(.)"/> -  <xsl:value-of select="@ident"/> </xsl:message>
   </xsl:if>
     <tei:div>
-      <xsl:attribute name="id" namespace="http://www.w3.org/XML/1998/namespace"><xsl:value-of select="@ident"/></xsl:attribute>
+      <xsl:choose>
+	<xsl:when test="@xml:id">
+	  <xsl:copy-of select="@xml:id"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:attribute name="id"
+			 namespace="http://www.w3.org/XML/1998/namespace">
+	  <xsl:value-of select="@ident"/>
+	  </xsl:attribute>
+	</xsl:otherwise>
+      </xsl:choose>
       <tei:head>
 	<xsl:call-template name="identifyMe"/>
 	[<xsl:value-of select="substring-before(local-name(.),'Spec')"/>]
