@@ -1,0 +1,170 @@
+<TEI xmlns="http://www.tei-c.org/ns/1.0"
+ xmlns:rng="http://relaxng.org/ns/structure/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>TEI Lite</title>
+            <author>Lou Burnard</author>
+         </titleStmt>
+         <publicationStmt>
+	   <p>for TEI web site only</p>
+	 </publicationStmt>
+         <sourceDesc>
+            <p>derived from old DTD extension files for P4</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+<text>
+<body>
+<p>The Lite schema consists some new elements and a view of the
+TEI.</p>
+
+<p>First, here is the small set of new elements:
+<specGrp id="LITEADD">
+ <elementSpec ident="eg">
+  <classes>
+    <memberOf key="tei.data"/>
+    <memberOf key="tei.common"/>
+  </classes>
+  <content>
+    <rng:text/>
+  </content>
+ <desc>Example code</desc>
+</elementSpec>
+
+ <elementSpec ident="gi">
+  <classes><memberOf key="tei.data"/></classes>
+  <content>
+    <rng:text/>
+  </content>
+  <attList>
+    <attDef usage="opt" ident="tei">
+      <equiv/>
+      <datatype><rng:data type="boolean"/></datatype>
+      <default>yes</default>
+      <valList type="closed">
+        <valItem ident="yes">
+          <equiv/>
+          <gloss>this element is part of the TEI scheme.</gloss>
+        </valItem>
+        <valItem ident="no">
+          <equiv/>
+          <gloss>this element is not part of the TEI scheme.</gloss>
+        </valItem>
+      </valList>
+      <desc>indicates whether this element is part of the TEI encoding
+		scheme (i.e. defined in a TEI DTD fragment) or not.</desc>
+    </attDef>
+  </attList>
+  <desc>contains the name (generic identifier) of an element.</desc>
+  <exemplum>
+    <eg><![CDATA[
+An <gi tei="no">LI</gi> element is roughly analagous to an <gi>item</gi> element.
+    ]]></eg>
+  </exemplum>
+</elementSpec>
+
+ <elementSpec ident="ident">
+  <classes><memberOf key="tei.data"/></classes>
+  <content>
+    <rng:text/>
+  </content>
+</elementSpec>
+
+ <elementSpec ident="code">
+  <classes><memberOf key="tei.data"/></classes>
+  <content>
+    <rng:text/>
+  </content>
+</elementSpec>
+
+ <elementSpec ident="kw">
+  <classes><memberOf key="tei.data"/></classes>
+  <content>
+    <rng:text/>
+  </content>
+ </elementSpec>
+</specGrp>
+</p>
+
+<p>
+<module ident="tei" mode="change">
+  <elementSpec ident="analytic" mode="delete"/>
+  <elementSpec ident="broadcast" mode="delete"/>
+  <elementSpec ident="cb" mode="delete"/>
+  <elementSpec ident="correction" mode="delete"/>
+  <elementSpec ident="dateRange" mode="delete"/>
+  <elementSpec ident="distinct" mode="delete"/>
+  <elementSpec ident="equipment" mode="delete"/>
+  <elementSpec ident="expan" mode="delete"/>
+  <elementSpec ident="fsdDecl" mode="delete"/>
+  <elementSpec ident="headItem" mode="delete"/>
+  <elementSpec ident="headLabel" mode="delete"/>
+  <elementSpec ident="hyphenation" mode="delete"/>
+  <elementSpec ident="interpretation" mode="delete"/>
+  <elementSpec ident="measure" mode="delete"/>
+  <elementSpec ident="meeting" mode="delete"/>
+  <elementSpec ident="metDecl" mode="delete"/>
+  <elementSpec ident="monogr" mode="delete"/>
+  <elementSpec ident="normalization" mode="delete"/>
+  <elementSpec ident="num" mode="delete"/>
+  <elementSpec ident="postBox" mode="delete"/>
+  <elementSpec ident="postCode" mode="delete"/>
+  <elementSpec ident="quotation" mode="delete"/>
+  <elementSpec ident="quote" mode="delete"/>
+  <elementSpec ident="recording" mode="delete"/>
+  <elementSpec ident="recordingStmt" mode="delete"/>
+  <elementSpec ident="scriptStmt" mode="delete"/>
+  <elementSpec ident="segmentation" mode="delete"/>
+  <elementSpec ident="series" mode="delete"/>
+  <elementSpec ident="state" mode="delete"/>
+  <elementSpec ident="stdVals" mode="delete"/>
+  <elementSpec ident="step" mode="delete"/>
+  <elementSpec ident="street" mode="delete"/>
+  <elementSpec ident="symbol" mode="delete"/>
+  <elementSpec ident="teiCorpus" mode="delete"/>
+  <elementSpec ident="timeRange" mode="delete"/>
+  <elementSpec ident="variantEncoding" mode="delete"/>
+</module>
+
+<module ident="general" mode="change"/>
+
+<module ident="figures" mode="change"/>
+
+<module ident="linking" mode="change">
+  <elementSpec ident="alt" mode="delete"/>
+  <elementSpec ident="altGrp" mode="delete"/>
+  <elementSpec ident="join" mode="delete"/>
+  <elementSpec ident="joinGrp" mode="delete"/>
+  <elementSpec ident="link" mode="delete"/>
+  <elementSpec ident="linkGrp" mode="delete"/>
+  <elementSpec ident="timeline" mode="delete"/>
+  <elementSpec ident="when" mode="delete"/>
+</module>
+
+<module ident="analysis" mode="change">
+  <elementSpec ident="c" mode="delete"/>
+  <elementSpec ident="cl" mode="delete"/>
+  <elementSpec ident="m" mode="delete"/>
+  <elementSpec ident="phr" mode="delete"/>
+  <elementSpec ident="span" mode="delete"/>
+  <elementSpec ident="spanGrp" mode="delete"/>
+  <elementSpec ident="w" mode="delete"/>
+</module>
+</p>
+
+<p>Now for the wrapping schema, which imports 
+selected TEI modules. Some existing elements are redefined
+to be null.
+<schema ident="teilite">
+  <specGrpRef target="LITEADD"/>
+  <moduleRef key="tei"/>
+  <moduleRef key="general"/>
+  <moduleRef key="figures"/>
+  <moduleRef key="linking"/>
+  <moduleRef key="analysis"/>
+</schema>
+</p>
+</body>
+</text>
+</TEI>

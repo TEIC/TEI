@@ -1,0 +1,62 @@
+<TEI xmlns="http://www.tei-c.org/ns/1.0"
+ xmlns:rng="http://relaxng.org/ns/structure/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>TEI Silly Extension file</title>
+            <author>Sebastian Rahtz</author>
+         </titleStmt>
+         <publicationStmt>
+	   <p>for TEI web site only</p>
+	 </publicationStmt>
+         <sourceDesc>
+            <p>derived from old DTD extension files for P4</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+<text>
+<body>
+<p>
+<module ident="tei" mode="change">
+
+  <classSpec ident="tei.xPointer" mode="change" type="both">
+    <attList>
+      <attDef mode="change" ident="url">
+	<altIdent>href</altIdent>
+      </attDef>
+      <attDef mode="add" ident="extra">
+	<datatype><rng:text/></datatype>
+      </attDef>
+    </attList>
+  </classSpec>
+
+  <elementSpec ident="quotation" mode="replace">
+    <content>
+      <rng:empty/>
+    </content>
+  </elementSpec>
+
+  <elementSpec ident="quote" mode="change">
+    <altIdent>Quote</altIdent>
+  </elementSpec>
+
+
+</module>
+<module ident="linking" mode="change">
+  <elementSpec ident="xptr" mode="delete"/>
+</module>
+
+
+<module ident="general" mode="change"/>
+</p>
+<p>Now for the wrapping schema, which imports 
+selected TEI modules. 
+<schema ident="teisilly">
+  <moduleRef key="tei"/>
+  <moduleRef key="general"/>
+  <moduleRef key="linking"/>
+</schema>
+</p>
+</body>
+</text>
+</TEI>
