@@ -428,7 +428,7 @@ Text Encoding Initiative Consortium XSLT stylesheet family
   
   <xsl:template match="tei:desc"/>
   
-  
+ <xsl:template match="tei:desc" mode="tangle"/>
   
   <xsl:template match="tei:divGen[@type='classcat']">
     <xsl:apply-templates select="key('CLASSDOCS',1)" mode="weave">
@@ -656,7 +656,7 @@ in change mode and there is no attList -->
 	  select="$loc"/></xsl:message>
 	</xsl:if>
 	
-	<xsl:apply-templates select="document($loc)/tei:TEI/*" mode="processClassAtts">
+	<xsl:apply-templates select="document($loc)/tei:TEI/tei:classSpec" mode="processClassAtts">
 	  <xsl:with-param name="homeIdent"  select="$homeIdent"/>
 	</xsl:apply-templates>
       </xsl:otherwise>
@@ -1616,7 +1616,7 @@ in change mode and there is no attList -->
       <fo:inline><xsl:value-of select="$name"/></fo:inline>
     </xsl:when>
     <xsl:when test="$oddmode='tei'">
-      <tei:ref target="{$name}"><xsl:value-of select="$name"/></tei:ref>
+      <tei:ref target="#{$name}"><xsl:value-of select="$name"/></tei:ref>
     </xsl:when>
     <xsl:otherwise>
       <xsl:value-of select="$name"/>

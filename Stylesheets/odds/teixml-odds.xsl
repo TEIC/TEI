@@ -652,7 +652,7 @@ $Date$, $Revision$, $Author$
  <xsl:param name="id"/>
  <xsl:param name="name"/>
  <xsl:param name="text"/>
-    <tei:ref rend="{$class}" target="{$name}"><xsl:copy-of  select="$text"/></tei:ref>
+    <tei:ref rend="{$class}" target="#{$name}"><xsl:copy-of  select="$text"/></tei:ref>
 </xsl:template>
 
 <xsl:template name="refdoc">
