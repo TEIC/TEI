@@ -38,18 +38,46 @@ view of the TEI.
 <elementSpec ident="death" mode="add">
   <classes>
     <memberOf key="tei.demographic"/>
+    <memberOf key="tei.temporalExpr"/>
+  </classes>
+  <content>
+    <rng:ref name="macro.phraseSeq"/> 
+  </content>
+</elementSpec>
+ 
+<elementSpec module="header" ident="language" mode="change">
+  <attList>
+    <attDef ident="ident" usage="req" mode="change">
+      <datatype><rng:text/></datatype>
+    </attDef>
+  </attList>
+</elementSpec>
+
+<elementSpec ident="birth" module="corpus" mode="change">
+  <classes>
+    <memberOf key="tei.demographic"/>
   </classes>
   <content>
     <rng:ref name="macro.phraseSeq"/> 
   </content>
   <attList>
-  <attDef ident="date" usage="opt">
-    <equiv/>
-    <desc>specifies the date of birth in an ISO standard form (yyyy-mm-dd).</desc>
-    <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="date"/></datatype>
-      <valDesc>a date in ISO standard form, generally ISO 8601:2000 5.2.1.1 Complete representation, extended format (yyyy-mm-dd).</valDesc>
-      
-  </attDef>
+    <attDef ident="date" usage="opt" mode="delete"/>
+    <attDef ident="value" usage="opt" mode="add">
+	<equiv/>
+	<desc>supplies the value of a date or time in a standard form.</desc>
+      <datatype>
+	<rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	  <rng:data type="date"/>
+	  <rng:data type="gYear"/>
+	  <rng:data type="gMonth"/>
+	  <rng:data type="gDay"/>
+	  <rng:data type="gYearMonth"/>
+	  <rng:data type="gMonthDay"/>
+	  <rng:data type="time"/>
+	  <rng:data type="dateTime"/>
+	</rng:choice>
+      </datatype>
+    </attDef>
   </attList>
 </elementSpec>
  
@@ -61,10 +89,10 @@ view of the TEI.
   <rng:ref name="macro.phraseSeq"/> 
   </content>
   <attList>
-    <attDef ident="code">
+    <attDef ident="target">
       <datatype>
-	<rng:data type="IDREF"/>
-      </datatype>
+	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/>
+        </datatype>
     </attDef>
   </attList>
 
@@ -107,8 +135,8 @@ view of the TEI.
   <attList>
     <attDef ident="target">
       <datatype>
-	<rng:data type="IDREF"/>
-      </datatype>
+	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/>
+        </datatype>
     </attDef>
   </attList>
 </elementSpec>
@@ -166,7 +194,7 @@ view of the TEI.
   <attList>
     <attDef ident="target">
       <datatype>
-	<rng:data type="IDREF"/>
+	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/>
       </datatype>
     </attDef>
   </attList>
@@ -180,7 +208,7 @@ view of the TEI.
   <attList>
     <attDef ident="target">
       <datatype>
-	<rng:data type="IDREF"/>
+	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/>
       </datatype>
     </attDef>
   </attList>
@@ -246,7 +274,7 @@ view of the TEI.
   <attList>
     <attDef ident="target">
       <datatype>
-	<rng:data type="IDREF"/>
+	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/>
       </datatype>
     </attDef>
   </attList>
@@ -260,7 +288,7 @@ view of the TEI.
   <attList>
     <attDef ident="target">
       <datatype>
-	<rng:data type="IDREFS"/>
+	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/>
       </datatype>
     </attDef>
   </attList>
