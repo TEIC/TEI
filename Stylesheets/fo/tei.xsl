@@ -25,7 +25,7 @@ XSL stylesheet to format TEI XML documents to FO or HTML
 
 <!-- overrides -->
 
-<xsl:key name="IDS" match="tei::*[@id]" use="@id"/>
+<xsl:key name="IDS" match="tei:*[@id]" use="@id"/>
 
 <xsl:variable name="top" select="/"/>
 <xsl:variable name="tableSpecs">
