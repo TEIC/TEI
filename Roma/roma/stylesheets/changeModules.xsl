@@ -32,8 +32,8 @@ Description
       <tr><td class="headline" colspan="6"><xsl:value-of select="$res_form_headline"/> <xsl:value-of select="$module"/></td></tr>
       <tr class="header">
        <td></td>
-       <td><xsl:value-of select="$res_form_include"/></td>
-       <td><xsl:value-of select="$res_form_exclude"/></td>
+       <td><a href="javascript:includeAllElements()"><xsl:value-of select="$res_form_include"/></a></td>
+       <td><a href="javascript:excludeAllElements()"><xsl:value-of select="$res_form_exclude"/></a></td>
        <td><xsl:value-of select="$res_form_tagName"/></td>
        <td width="400"><xsl:value-of select="$res_form_description"/></td>
        <td width=""><xsl:value-of select="$res_form_attributes"/></td>

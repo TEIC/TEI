@@ -183,3 +183,35 @@ function addedAttributesPopup_Hide( )
 
 
 
+function excludeAllElements()
+  {
+    oInputs = document.getElementsByTagName("input");
+
+    if( oInputs )
+      {
+        for ( var i=0; i <= oInputs.length; i++ )
+	  {
+	    if ( oInputs[i].value == "exclude" )
+	      {
+	        oInputs[i].checked = "true";
+	      }
+          }
+      }
+  }
+
+
+function includeAllElements()
+  {
+    oInputs = document.getElementsByTagName("input");
+
+    if( oInputs )
+      {
+        for ( var i=0; i <= oInputs.length; i++ )
+	  {
+	    if ( oInputs[i].value == "include" )
+	      {
+	        oInputs[i].checked = "true";
+	      }
+          }
+      }
+  }
