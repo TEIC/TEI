@@ -26,16 +26,14 @@ rng:includes
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" 
   xmlns:f="http://axkit.org/NS/xsp/perform/v1" 
   xmlns:tei="http://www.tei-c.org/ns/1.0" 
-    xmlns:cc="http://web.resource.org/cc/"
-      xmlns:dc="http://purl.org/dc/elements/1.1/"
-        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:cc="http://web.resource.org/cc/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
   exclude-result-prefixes="exsl rng a f tei s cc dc rdf" 
   xmlns:rng="http://relaxng.org/ns/structure/1.0" 
   version="1.0">
 
 <xsl:param name="namespace"/>
-
-<xsl:key name="DEFS" match="rng:define" use="@name"/>
 
 <xsl:output indent="yes"/>
 
@@ -154,32 +152,4 @@ rng:includes
   </rng:grammar>
 </xsl:template>
 
-<!-- copy the xxx.content body into place -->
-<xsl:template match="rng:define[contains(@name,'.content')]" mode="stage2"/>
-
-
-<xsl:template match="rng:ref[contains(@name,'.content')]"
-	      mode="stage2">
-  <xsl:variable name="n" select="@name"/>
-  <xsl:for-each
-      select="ancestor::rng:define/following-sibling::rng:define[@name=$n]">
-    <xsl:apply-templates select="rng:*" mode="stage2"/>
-  </xsl:for-each>
-</xsl:template>
-
-<!--
-<xsl:template match="rng:ref[contains(@name,'.content')]" mode="stage2">
-<xsl:choose>
-  <xsl:when test="key('DEFS',@name)">
-    <xsl:for-each
-	select="key('DEFS',@name)">
-      <xsl:copy-of select="rng:*"/>
-    </xsl:for-each>
-  </xsl:when>
-  <xsl:otherwise>
-    <xsl:copy-of select="."/>
-  </xsl:otherwise>
-</xsl:choose>
-</xsl:template>
--->
 </xsl:stylesheet>

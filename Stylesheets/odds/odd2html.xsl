@@ -1,12 +1,8 @@
 <!-- 
 Text Encoding Initiative Consortium XSLT stylesheet family
 $Date$, $Revision$, $Author$
-
-XSL stylesheet to process TEI documents using ODD markup
-
- 
 ##LICENSE
---> 
+-->
 <xsl:stylesheet version="1.0"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:teix="http://www.tei-c.org/ns/Examples"
@@ -121,10 +117,10 @@ XSL stylesheet to process TEI documents using ODD markup
  <xsl:for-each select="//tei:index">
   <index c="{@level}" a="{@level1}" b="{@level2}">
      <file>
-       <xsl:apply-templates select="ancestor::tei:div1" mode="generateLink"/>
+       <xsl:apply-templates select="ancestor::tei:div1" mode="xrefheader"/>
      </file>
      <section>
-       <xsl:apply-templates select="(ancestor::tei:div1|ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4|ancestor::tei:div5)[last()]" mode="xref">
+       <xsl:apply-templates select="(ancestor::tei:div1|ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4|ancestor::tei:div5)[last()]" mode="header">
          <xsl:with-param name="minimal"></xsl:with-param>
        </xsl:apply-templates>
      </section>
@@ -137,10 +133,10 @@ XSL stylesheet to process TEI documents using ODD markup
    <xsl:if test="not(@rend='noindex')">
   <index c="{text()}" a="{text()}">
      <file>
-       <xsl:apply-templates select="ancestor::tei:div1" mode="generateLink"/>
+       <xsl:apply-templates select="ancestor::tei:div1" mode="xrefheader"/>
      </file>
      <section>
-       <xsl:apply-templates select="(ancestor::tei:div1|ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4|ancestor::tei:div5)[last()]" mode="xref">
+       <xsl:apply-templates select="(ancestor::tei:div1|ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4|ancestor::tei:div5)[last()]" mode="header">
          <xsl:with-param name="minimal"></xsl:with-param>
        </xsl:apply-templates>
      </section>
@@ -160,10 +156,10 @@ XSL stylesheet to process TEI documents using ODD markup
       <xsl:value-of select="."/><xsl:text>&gt;</xsl:text>
     </xsl:attribute>
      <file>
-       <xsl:apply-templates select="ancestor::tei:div1" mode="generateLink"/>
+       <xsl:apply-templates select="ancestor::tei:div1" mode="xrefheader"/>
      </file>
      <section>
-       <xsl:apply-templates select="(ancestor::tei:div1|ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4|ancestor::tei:div5)[last()]" mode="xref">
+       <xsl:apply-templates select="(ancestor::tei:div1|ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4|ancestor::tei:div5)[last()]" mode="header">
          <xsl:with-param name="minimal"></xsl:with-param>
        </xsl:apply-templates>
      </section>
@@ -430,7 +426,7 @@ XSL stylesheet to process TEI documents using ODD markup
    <xsl:for-each select="tei:text/tei:front">
     <xsl:for-each select=".//tei:div1">
        <xsl:variable name="pointer">
-          <xsl:apply-templates mode="generateLink" select="."/>
+          <xsl:apply-templates mode="xrefheader" select="."/>
        </xsl:variable>
        <p class="{$style}">
        <a class="{$style}" href="{$pointer}">
@@ -442,7 +438,7 @@ XSL stylesheet to process TEI documents using ODD markup
    <xsl:for-each select="tei:text/tei:body">
     <xsl:for-each select=".//tei:div1">
        <xsl:variable name="pointer">
-          <xsl:apply-templates mode="generateLink" select="."/>
+          <xsl:apply-templates mode="xrefheader" select="."/>
        </xsl:variable>
        <p class="{$style}">
        <a class="{$style}" href="{$pointer}">
@@ -454,7 +450,7 @@ XSL stylesheet to process TEI documents using ODD markup
     <hr/>
     <xsl:for-each select=".//tei:div1">
        <xsl:variable name="pointer">
-          <xsl:apply-templates mode="generateLink" select="."/>
+          <xsl:apply-templates mode="xrefheader" select="."/>
        </xsl:variable>
        <p class="{$style}">
        <a class="{$style}" href="{$pointer}">
@@ -484,7 +480,7 @@ XSL stylesheet to process TEI documents using ODD markup
   <p class="{$style}">
       <a class="{$style}">
         <xsl:attribute name="href">
-         <xsl:apply-templates mode="generateLink" select="."/>
+         <xsl:apply-templates mode="xrefheader" select="."/>
         </xsl:attribute>
        <xsl:call-template name="header"/>
       </a>
@@ -496,7 +492,7 @@ XSL stylesheet to process TEI documents using ODD markup
 <p class="{$style}">
  <a class="{$style}">
         <xsl:attribute name="href">
-         <xsl:apply-templates mode="generateLink" select="."/>
+         <xsl:apply-templates mode="xrefheader" select="."/>
         </xsl:attribute>
        <xsl:call-template name="header"/>
      </a></p>
@@ -505,7 +501,7 @@ XSL stylesheet to process TEI documents using ODD markup
    <xsl:for-each select="tei:div2|tei:div3|tei:div4|tei:div5">
       <p class="{$style}-sub"><a class="{$style}-sub">
         <xsl:attribute name="href">
-         <xsl:apply-templates mode="generateLink" select="."/>
+         <xsl:apply-templates mode="xrefheader" select="."/>
         </xsl:attribute>
         <xsl:call-template name="header"/>
       </a></p>
@@ -518,7 +514,7 @@ XSL stylesheet to process TEI documents using ODD markup
       <p class="{$style}">
       <a class="{$style}">
         <xsl:attribute name="href">
-         <xsl:apply-templates mode="generateLink" select="."/>
+         <xsl:apply-templates mode="xrefheader" select="."/>
         </xsl:attribute>
        <xsl:call-template name="header"/>
      </a></p>
@@ -528,7 +524,7 @@ XSL stylesheet to process TEI documents using ODD markup
       <p class="{$style}-this">
       <a class="{$style}-this">
         <xsl:attribute name="href">
-         <xsl:apply-templates mode="generateLink" select="."/>
+         <xsl:apply-templates mode="xrefheader" select="."/>
         </xsl:attribute>
        <xsl:call-template name="header"/>
      </a></p>
@@ -538,7 +534,7 @@ XSL stylesheet to process TEI documents using ODD markup
       <p class="{$style}">
       <a class="{$style}">
         <xsl:attribute name="href">
-         <xsl:apply-templates mode="generateLink" select="."/>
+         <xsl:apply-templates mode="xrefheader" select="."/>
         </xsl:attribute>
         <xsl:call-template name="header"/>
       </a></p>

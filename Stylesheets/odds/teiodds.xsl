@@ -3,10 +3,8 @@
 Text Encoding Initiative Consortium XSLT stylesheet family
 2001/10/01 $, $Revision$, $Author$
 
-XSL stylesheet to format TEI XML documents using ODD markup
-
- 
 ##LICENSE
+
 -->
 <xsl:stylesheet 
     xmlns:s="http://www.ascc.net/xml/schematron" 
@@ -1380,7 +1378,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
       <xsl:for-each select="key('CLASSMEMBERS',$this)">
         <xsl:text>: </xsl:text>
 	<xsl:call-template name="linkTogether">
-	  <xsl:with-param name="name" select="concat('ref-',@ident,'.html')"/>
+	  <xsl:with-param name="name" select="@ident"/>
 	  <xsl:with-param name="url" select="@id|@xml:id"/>
 	</xsl:call-template>
 	<xsl:if test="count(key('CLASSMEMBERS',@ident))&gt;0">
@@ -1486,8 +1484,11 @@ XSL stylesheet to format TEI XML documents using ODD markup
   <xsl:param name="name"/>
   <xsl:param name="url"/>
   <xsl:choose>
-    <xsl:when test="$oddmode='html'">
+    <xsl:when test="$oddmode='html' and starts-with($url,'http:')">
       <a href="{$url}"><xsl:value-of select="$name"/></a>
+    </xsl:when>
+    <xsl:when test="$oddmode='html'">
+      <a href="{concat('ref-',$url,'.html')}"><xsl:value-of select="$name"/></a>
     </xsl:when>
     <xsl:when test="$oddmode='pdf'">
       <fo:inline><xsl:value-of select="$name"/></fo:inline>

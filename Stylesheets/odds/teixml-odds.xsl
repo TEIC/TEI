@@ -3,12 +3,8 @@
 Text Encoding Initiative Consortium XSLT stylesheet family
 $Date$, $Revision$, $Author$
 
-XSL stylesheet to process TEI documents using ODD markup
-
-
 ##LICENSE
 -->
-
 <xsl:stylesheet 
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -50,12 +46,9 @@ XSL stylesheet to process TEI documents using ODD markup
 
 <xsl:template  match="tei:specGrpRef">
 &#171; <tei:emph>include
-<tei:ref target="{@target}">
-  <xsl:for-each select="key('IDS',@target)">
-    <xsl:call-template name="compositeNumber"/>
-  </xsl:for-each>
-</tei:ref>
-</tei:emph>
+<tei:ref target="{@target}"><xsl:for-each select="key('IDS',@target)">
+   <xsl:call-template name="compositeNumber"/>
+</xsl:for-each></tei:ref></tei:emph>
 <xsl:text> &#187; </xsl:text>
 </xsl:template>
 
