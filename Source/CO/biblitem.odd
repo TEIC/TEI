@@ -18,7 +18,9 @@ See the file COPYING for details.
     <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:choice>
 	<rng:ref name="tei.biblPart"/>
-	<rng:ref name="title"/>      <!-- <title> is not part of biblPart as it is in hqphrase -->
+	<rng:ref name="title"/> <!-- not part of biblPart as it is in hqphrase -->
+	<rng:ref name="date"/>
+	<rng:ref name="dateRange"/>
 	<rng:ref name="biblItem"/>
       </rng:choice>
     </rng:oneOrMore>
@@ -27,7 +29,9 @@ See the file COPYING for details.
     <attDef ident="form" usage="opt">
       <equiv/>
       <desc>indicates the physical form of the object of this bibliographic entry.</desc>
-      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="token"/></datatype>
+      <datatype>
+	<rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="token"/>
+      </datatype>
       <valList type="open">
 	<valItem ident="book.hardcover">
 	  <equiv/>
