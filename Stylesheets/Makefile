@@ -1,5 +1,3 @@
-VERSION=4.2.3
-
 all: clean p4 p5 other
 
 
@@ -11,7 +9,7 @@ p4:
 	-mkdir -p dist/p4/latex
 	-mkdir -p dist/p4/slides
 	for i in odds/*xsl fo/*.xsl html/*xsl common/*xsl latex/*xsl slides/*xsl; do \
-	echo do $$i;perl toP4.pl --date="`date`" --version=$(VERSION) < $$i > dist/p4/$$i; \
+	echo do $$i;perl toP4.pl --date="`date`" --version=`cat VERSION` < $$i > dist/p4/$$i; \
 	done
 
 p5:
@@ -22,7 +20,7 @@ p5:
 	-mkdir -p dist/p5/common
 	-mkdir -p dist/p5/latex
 	for i in odds/*xsl fo/*.xsl html/*xsl common/*xsl latex/*xsl slides/*xsl; do \
-	perl toP5.pl --date="`date`" --version=$(VERSION) < $$i > dist/p5/$$i; \
+	perl toP5.pl --date="`date`" --version=`cat VERSION` < $$i > dist/p5/$$i; \
 	done
 
 other: param stylebear
