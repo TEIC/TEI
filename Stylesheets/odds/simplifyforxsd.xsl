@@ -32,8 +32,8 @@ XSL stylesheet to process TEI documents using ODD markup
 </xsl:template>
 
 <!-- copy the xxx.content body into place -->
-<xsl:template match="rng:define[contains(@name,'.content')]" mode="stage2"/>
-<xsl:template match="rng:ref[contains(@name,'.content')]" mode="stage2">
+<xsl:template match="rng:define[contains(@name,'.content')]"/>
+<xsl:template match="rng:ref[contains(@name,'.content')]">
 <xsl:choose>
   <xsl:when test="key('DEFS',@name)">
     <xsl:for-each
