@@ -47,5 +47,26 @@ class falseContentsException extends Exception
       }
   }
 
+class elementExistsException extends Exception
+  {
+    private $m_szOldValue;
+
+    function __construct( $szOldValue ) 
+      {
+	parent::__construct();
+
+	$this->m_szOldValue = $szOldValue;
+      }
+
+    function addError( $szName, $szLocation )
+      { 
+	$oError = new error();
+	$oError->setName( $szName );
+	$oError->setLocation( $szLocation );
+	$oError->setOldValue( $this->m_szOldValue );
+	$oError->addError();
+      }
+  }
+
 
 </script>

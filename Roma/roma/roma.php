@@ -204,6 +204,7 @@ define( 'roma_message_attributeNameError', 'Attribute names have to be alphanume
 define( 'roma_message_attributeAdded', 'The attribute was added' );
 define( 'roma_message_changedElement', 'Successfully changed Element' );
 define( 'roma_message_elementContentError', 'Content has to be valid XML.' );
+define( 'roma_message_elementExistsError', 'Element already exists' );
 
 //#########################
 // Other stuff
@@ -492,6 +493,23 @@ class roma
 		  $oNotam = new notam();
 		  $oNotam->setHeadline( 'Create new element' );
 		  $oNotam->setMessage( roma_message_elementNameError );
+		  $oNotam->setStatus( notam_status_error );
+		  $oNotam->addNotam();
+
+		  $this->redirectBrowserHeader( 'mode=' . roma_mode_addElements );
+		}
+	      catch( elementExistsException $e )
+		{
+		  $e->addError( 'addElement', 'name' );
+
+		  $_SESSION[ 'addElements' ][ 'ERROR' ][ 'classes' ] = $aszClasses;
+		  $_SESSION[ 'addElements' ][ 'ERROR' ][ 'content' ] = $_REQUEST[ 'content' ];
+		  $_SESSION[ 'addElements' ][ 'ERROR' ][ 'description' ] = $_REQUEST[ 'description' ];
+
+		  //notam
+		  $oNotam = new notam();
+		  $oNotam->setHeadline( 'Create new element' );
+		  $oNotam->setMessage( roma_message_elementExistsError );
 		  $oNotam->setStatus( notam_status_error );
 		  $oNotam->addNotam();
 

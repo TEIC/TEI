@@ -825,6 +825,15 @@ class romaDom extends domDocument
 	    throw new falseTagnameException( '', $aszConfig[ 'name' ] );
 	  }
 
+	//check if name already exists
+	$oTmpDom = new domDocument();
+	if ( @$oTmpDom->loadXML( join( '', file( 'http://' . roma_exist_server . ':8080/exist/tei/element.xq?name=' . $aszConfig[ 'name' ] ) ) ) )
+	  {
+	    throw new elementExistsException( $aszConfig[ 'name' ] );
+	  }
+	     
+
+
 
 	$this->getXPath( $oXPath );
         $oSchema = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p/tei:schema[@ident='mytei']" )->item(0);
