@@ -63,7 +63,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 <xsl:param name="institution">Text Encoding Initiative</xsl:param>
 <xsl:param name="linksWidth">20%</xsl:param>
 <xsl:param name="parentURL"></xsl:param>
-<xsl:param name="parentWords"></xsl:param>
+<xsl:param name="parentWords">TEI</xsl:param>
 <xsl:param name="searchURL">http://search.ox.ac.uk/web/related/natproj/tei</xsl:param>
 <xsl:param name="searchWords">Search this site</xsl:param>
 <xsl:param name="showTitleAuthor">1</xsl:param>
