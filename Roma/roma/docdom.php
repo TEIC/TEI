@@ -142,7 +142,7 @@ class docDom extends domDocument
 		  {
 		    $szAttribute = $oAtt->getElementsByTagname( 'name' )->item(0)->nodeValue;
 
-		    $oAttDef = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:module[@ident='{$szModule}']/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='{$szAttribute}']" )->item(0);
+		    $oAttDef = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:moduleRef[@key='{$szModule}']/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='{$szAttribute}']" )->item(0);
 
 		    if ( is_object( $oAttDef ) )
 		      {
