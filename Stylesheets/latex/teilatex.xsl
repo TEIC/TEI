@@ -491,7 +491,7 @@ pdfcreator={Oxford University Computing Services}
 <xsl:template match="tei:label"/>
 
 <xsl:template match="tei:lb">
-\newline
+<xsl:text>\newline </xsl:text>
 </xsl:template>
 
 <xsl:template match="tei:list">
