@@ -65,7 +65,7 @@ XSL stylesheet to format TEI XML documents to LaTeX
 </xsl:text>
 </xsl:if>
   <xsl:for-each select="//tei:figure">
-    <xsl:variable name="c"><xsl:number level="any"/></xsl:variable>
+    <xsl:variable name="c"><xsl:number level="any"  count="tei:figure[tei:head]"/></xsl:variable>
     <xsl:text>%FIGMAP </xsl:text>
     <xsl:call-template name="findFileName"/>
     <xsl:text> FIG</xsl:text>
@@ -498,7 +498,7 @@ pdfcreator={Oxford University Computing Services}
     </xsl:when>
     <xsl:otherwise>
       <xsl:variable name="c"><xsl:for-each select="ancestor-or-self::tei:figure">
-	<xsl:number level="any"/></xsl:for-each></xsl:variable>
+	<xsl:number level="any" count="tei:figure[tei:head]"/></xsl:for-each></xsl:variable>
       <xsl:text>FIG</xsl:text>
       <xsl:value-of select="$c+1000"/>
     </xsl:otherwise>
@@ -986,6 +986,10 @@ select="//tei:xref[@type='cite'] | //tei:xptr[@type='cite'] | //tei:ref[@type='c
       <xsl:text>}</xsl:text>
     </xsl:otherwise>
   </xsl:choose>
+</xsl:template>
+
+<xsl:template match="processing-instruction()[name(.)='tex']">
+  <xsl:value-of select="."/>
 </xsl:template>
 
 </xsl:stylesheet>

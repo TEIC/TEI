@@ -257,22 +257,32 @@ select="normalize-space(substring-before(substring-after($revauthor,'LastChanged
 </xsl:template>
 
 <xsl:template match="tei:figure" mode="xref">
-<xsl:choose>
-  <xsl:when test="$numberFigures='true'">
-    <xsl:if test="not($figureWord='')">
-      <xsl:value-of select="$figureWord"/>
-      <xsl:text> </xsl:text>
-    </xsl:if>
-    <xsl:number level="any"/>
-    <xsl:if test="tei:head">
-      <xsl:text>, </xsl:text>
-      <xsl:apply-templates select="tei:head"/>
-    </xsl:if>
-</xsl:when>
-<xsl:otherwise>
-  <xsl:text>this figure</xsl:text>
-</xsl:otherwise>
-</xsl:choose>
+  <xsl:choose>
+    <xsl:when test="$numberFigures='true'">
+      <xsl:if test="not($figureWord='')">
+	<xsl:value-of select="$figureWord"/>
+	<xsl:text> </xsl:text>
+      </xsl:if>
+      <xsl:choose>
+	<xsl:when test="ancestor::tei:front">
+	  <xsl:number level="any"   count="tei:figure[tei:head]" from="tei:front"/>
+	</xsl:when>
+	<xsl:when test="ancestor::tei:back">
+	  <xsl:number level="any"  count="tei:figure[tei:head]" from="tei:back"/>
+	</xsl:when>
+	<xsl:when test="ancestor::tei:body" >
+	  <xsl:number level="any"   count="tei:figure[tei:head]" from="tei:body"/>
+	</xsl:when>
+      </xsl:choose>
+      <xsl:if test="tei:head">
+	<xsl:text>, </xsl:text>
+	<xsl:apply-templates select="tei:head" mode="plain"/>
+      </xsl:if>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:text>this figure</xsl:text>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template match="tei:biblStruct" mode="xref">
