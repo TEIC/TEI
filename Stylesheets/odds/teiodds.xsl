@@ -1380,7 +1380,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
       <xsl:for-each select="key('CLASSMEMBERS',$this)">
         <xsl:text>: </xsl:text>
 	<xsl:call-template name="linkTogether">
-	  <xsl:with-param name="name" select="@ident"/>
+	  <xsl:with-param name="name" select="concat('ref-',@ident,'.html')"/>
 	  <xsl:with-param name="url" select="@id"/>
 	</xsl:call-template>
 	<xsl:if test="count(key('CLASSMEMBERS',@ident))&gt;0">
@@ -1487,7 +1487,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
   <xsl:param name="url"/>
   <xsl:choose>
     <xsl:when test="$oddmode='html'">
-      <a href="ref-{$url}.html"><xsl:value-of select="$name"/></a>
+      <a href="{$url}"><xsl:value-of select="$name"/></a>
     </xsl:when>
     <xsl:when test="$oddmode='pdf'">
       <fo:inline><xsl:value-of select="$name"/></fo:inline>

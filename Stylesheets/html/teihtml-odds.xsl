@@ -190,8 +190,8 @@ XSL HTML stylesheet to format TEI XML documents
 	    <xsl:if test="not(generate-id(.)=generate-id(key('IDENTS',$Key)[1]))">          <xsl:text> |  </xsl:text>
 	    </xsl:if>
 	    <xsl:call-template name="linkTogether">
-	      <xsl:with-param name="name" select="@ident"/>
-	      <xsl:with-param name="url" select="concat('ref-',@id,'.html')"/>
+	      <xsl:with-param name="name" select="concat('ref-',@ident,'.html')"/>
+	      <xsl:with-param name="url" select="@id"/>
 	    </xsl:call-template>
 	  </xsl:for-each>
 	</xsl:when>
