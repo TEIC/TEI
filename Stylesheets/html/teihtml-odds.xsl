@@ -344,8 +344,18 @@ Copyright 1999-2003 Sebastian Rahtz / Text Encoding Initiative Consortium
 	    <xsl:for-each select="estr:tokenize($atts)">
 	      <xsl:variable name="TOKEN" select="."/>
 	      <xsl:for-each  select="$HERE/tei:attList//tei:attDef[@ident=$TOKEN]">
+		<xsl:variable name="aname">
+		  <xsl:choose>
+		    <xsl:when test="tei:altIdent">
+		      <xsl:value-of select="tei:altIdent"/>
+		    </xsl:when>
+		    <xsl:otherwise>
+		      <xsl:value-of select="@ident"/>
+		    </xsl:otherwise>
+		  </xsl:choose>
+		</xsl:variable>
 		<tr>
-		  <td valign="top"><b><xsl:value-of select="$name"/></b></td>
+		  <td valign="top"><b><xsl:value-of select="$aname"/></b></td>
 		  <td colspan="2"><xsl:apply-templates select="tei:desc" mode="show"/></td>
 		</tr>
 	      </xsl:for-each>

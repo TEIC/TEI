@@ -29,6 +29,7 @@ Copyright 1999-2003 Sebastian Rahtz / Text Encoding Initiative Consortium
 
     sebastian.rahtz-services.oxford.ac.uk--> 
 <xsl:stylesheet 
+  xmlns:s="http://www.ascc.net/xml/schematron" 
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
   xmlns:teix="http://www.tei-c.org/ns/Examples"
@@ -38,7 +39,7 @@ Copyright 1999-2003 Sebastian Rahtz / Text Encoding Initiative Consortium
   xmlns:edate="http://exslt.org/dates-and-times"
   xmlns:exsl="http://exslt.org/common"
   xmlns:estr="http://exslt.org/strings"
-  exclude-result-prefixes="exsl estr edate teix fo a tei" 
+  exclude-result-prefixes="exsl estr edate teix fo a tei s" 
   extension-element-prefixes="edate exsl estr"
   version="1.0">
 <xsl:include href="RngToRnc.xsl"/>
@@ -933,7 +934,7 @@ select="$ident"/>] to  class [<xsl:value-of select="@ident"/>]</xsl:message>
     </xsl:when>
   </xsl:choose>
   <xsl:text>&lt;</xsl:text>
-  <xsl:value-of select="name(.)"/>
+  <xsl:value-of select="local-name(.)"/>
   <xsl:for-each select="@*">
     <xsl:text> </xsl:text>
   <xsl:value-of select="name(.)"/>="<xsl:value-of select="."/>"</xsl:for-each>
@@ -965,7 +966,7 @@ select="$ident"/>] to  class [<xsl:value-of select="@ident"/>]</xsl:message>
       </xsl:when>
       </xsl:choose>
       <xsl:text>&lt;/</xsl:text>
-      <xsl:value-of select="name(.)"/>
+      <xsl:value-of select="local-name(.)"/>
       <xsl:text>&gt;</xsl:text>
     </xsl:when>    
     <xsl:otherwise>
@@ -1536,5 +1537,7 @@ along with this file; if not, write to the
 </xsl:template>
 
 <xsl:template name="inhnamespace"/>
+
+<xsl:template match="s:*"/>
 
 </xsl:stylesheet>
