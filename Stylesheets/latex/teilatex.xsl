@@ -84,7 +84,7 @@ XSL stylesheet to format TEI XML documents to LaTeX
 \usepackage{fancyvrb}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
-\usepackage{tipa}
+\IfFileExists{tipa.sty}{\usepackage{tipa}}{}
 \DeclareTextSymbol{\textpi}{OML}{25}
 \pagestyle{fancy} 
 \usepackage[utf8]{inputenc}
@@ -166,10 +166,54 @@ pdfcreator={Oxford University Computing Services}
 \def\l@subsubsection{\@dottedtocline{3}{3.8em}{3.2em}}
 \def\l@paragraph{\@dottedtocline{4}{7.0em}{4.1em}}
 \def\l@subparagraph{\@dottedtocline{5}{10em}{5em}}
-\makeatother
-
 \renewcommand\ttdefault{lmtt}
 \fvset{frame=single,numberblanklines=false,xleftmargin=5mm,xrightmargin=5mm}
+
+<xsl:choose>
+  <xsl:when test="/tei:TEI/@rend='book'">
+    \let\divI=\chapter
+    \let\divII=\section
+    \let\divIII=\subsection
+    \let\divIV=\subsubsection
+    \let\divV=\paragraph
+  </xsl:when>
+  <xsl:otherwise>
+\newif\if@mainmatter \@mainmattertrue
+\newcommand\frontmatter{%
+  \clearpage
+  \setcounter{secnumdepth}{-1}
+  \@mainmatterfalse
+  \pagenumbering{roman}}
+\newcommand\mainmatter{%
+  \clearpage
+<xsl:choose>
+  <xsl:when test="/tei:TEI/@rend='book'">
+  \setcounter{chapter}{0}
+  </xsl:when>
+  <xsl:otherwise>
+  \setcounter{section}{0}
+  </xsl:otherwise>
+</xsl:choose>
+  \setcounter{secnumdepth}{4}
+  \@mainmattertrue
+  \pagenumbering{arabic}}
+\newcommand\backmatter{%
+  \if@openright
+    \cleardoublepage
+  \else
+    \clearpage
+  \fi
+  \appendix
+  \@mainmatterfalse
+}
+  \let\divI=\section
+  \let\divII=\subsection
+  \let\divIII=\subsubsection
+  \let\divIV=\paragraph
+  \let\divV=\subparagraph
+  </xsl:otherwise>
+</xsl:choose>
+\makeatother
 
 <xsl:call-template name="preambleHook"/>
 \begin{document}
@@ -239,34 +283,47 @@ pdfcreator={Oxford University Computing Services}
 </xsl:template>
 
 
-<xsl:template match="tei:body">
-<xsl:apply-templates/>
-</xsl:template>
-
-<xsl:template match="tei:body/tei:div/tei:div/tei:div/tei:div/tei:div/tei:head">
-\paragraph<xsl:call-template name="sectionhead"/>
+<xsl:template match="tei:div0/tei:head">
+\divI<xsl:call-template name="sectionhead"/>
 <xsl:call-template name="labelme"/>
 </xsl:template>
 
-<xsl:template match="tei:body/tei:div/tei:div/tei:div/tei:div/tei:head">
-\subsubsection<xsl:call-template name="sectionhead"/>
+<xsl:template match="tei:div1/tei:head">
+\divII<xsl:call-template name="sectionhead"/>
 <xsl:call-template name="labelme"/>
 </xsl:template>
 
-<xsl:template match="tei:body/tei:div/tei:div/tei:div/tei:head">
-\subsection<xsl:call-template name="sectionhead"/>
+<xsl:template match="tei:div2/tei:head">
+  \divIII<xsl:call-template name="sectionhead"/>
 <xsl:call-template name="labelme"/>
 </xsl:template>
 
-<xsl:template match="tei:body/tei:div/tei:div/tei:head">
-  \section<xsl:call-template name="sectionhead"/>
+<xsl:template match="tei:div3/tei:head">
+\divIV<xsl:call-template name="sectionhead"/>
 <xsl:call-template name="labelme"/>
 </xsl:template>
 
-<xsl:template match="tei:body/tei:div/tei:head">
-\chapter<xsl:call-template name="sectionhead"/>
+<xsl:template match="tei:div4/tei:head">
+\divV<xsl:call-template name="sectionhead"/>
 <xsl:call-template name="labelme"/>
 </xsl:template>
+
+<xsl:template match="tei:div/tei:head">
+<xsl:variable name="depth">
+  <xsl:value-of select="count(ancestor::div)"/>
+</xsl:variable>
+<xsl:text>&#10;\div</xsl:text>
+<xsl:choose>
+  <xsl:when test="$depth=1">I</xsl:when>
+  <xsl:when test="$depth=2">II</xsl:when>
+  <xsl:when test="$depth=3">III</xsl:when>
+  <xsl:when test="$depth=4">IV</xsl:when>
+  <xsl:when test="$depth=5">V</xsl:when>
+</xsl:choose>
+<xsl:call-template name="sectionhead"/>
+<xsl:call-template name="labelme"/>
+</xsl:template>
+
 
 <xsl:template match="tei:cell">
   <xsl:if test="preceding-sibling::tei:cell">\tabcellsep </xsl:if>
@@ -305,26 +362,6 @@ pdfcreator={Oxford University Computing Services}
 </xsl:template>
 
 <xsl:template match="tei:code">\texttt{<xsl:apply-templates/>}</xsl:template>
-
-<xsl:template match="tei:div0/tei:head">
-\chapter<xsl:call-template name="sectionhead"/>
-<xsl:call-template name="labelme"/>
-</xsl:template>
-
-<xsl:template match="tei:div1/tei:head">
-\section<xsl:call-template name="sectionhead"/>
-<xsl:call-template name="labelme"/>
-</xsl:template>
-
-<xsl:template match="tei:div2/tei:head">
-  \subsection<xsl:call-template name="sectionhead"/>
-<xsl:call-template name="labelme"/>
-</xsl:template>
-
-<xsl:template match="tei:div3/tei:head">
-\subsubsection<xsl:call-template name="sectionhead"/>
-<xsl:call-template name="labelme"/>
-</xsl:template>
 
 <xsl:template match="tei:divGen[@type='toc']">
 \tableofcontents
@@ -380,16 +417,31 @@ pdfcreator={Oxford University Computing Services}
 <xsl:template match="tei:emph">\textit{<xsl:apply-templates/>}</xsl:template>
 
 
+<xsl:template match="tei:figDesc"/>
+
+<xsl:template match="tei:figure/tei:head"/>
+
 <xsl:template match="tei:figure">
-  <xsl:apply-templates/>
+  <xsl:choose>
+    <xsl:when test="@url">
+      <xsl:call-template name="makePic"/>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:apply-templates/>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template match="tei:graphic">
+      <xsl:call-template name="makePic"/>
+</xsl:template>
+
+<xsl:template name="makePic">
   <xsl:choose>
     <xsl:when test="@rend='centre'">
       <xsl:text>\par\centerline{</xsl:text>
     </xsl:when>
-    <xsl:when test="@rend='display'">
+    <xsl:when test="@rend='display' or tei:head or ../tei:figure/tei:head">
       <xsl:text>\begin{figure}[htbp]
       </xsl:text>
     </xsl:when>
@@ -458,7 +510,7 @@ pdfcreator={Oxford University Computing Services}
       </xsl:choose>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:variable name="c"><xsl:for-each select="parent::tei:figure">
+      <xsl:variable name="c"><xsl:for-each select="ancestor-or-self::tei:figure">
 	<xsl:number level="any"/></xsl:for-each></xsl:variable>
       <xsl:text>FIG</xsl:text>
       <xsl:value-of select="$c+1000"/>
@@ -466,8 +518,8 @@ pdfcreator={Oxford University Computing Services}
   </xsl:choose>
   <xsl:text>}</xsl:text>
   <xsl:choose>
-    <xsl:when test="@rend='display'">
-      <xsl:text>&#10;\caption{</xsl:text><xsl:value-of select="tei:head"/>
+    <xsl:when test="@rend='display' or tei:head or parent::tei:figure/tei:head">
+      <xsl:text>&#10;\caption{</xsl:text><xsl:value-of select="tei:head|parent::tei:figure/tei:head"/>
       <xsl:text>}</xsl:text>
       <xsl:if test="parent::tei:figure/@id|parent::tei:figure/@xml:id">
 	\label{<xsl:value-of select="parent::tei:figure/@id|parent::tei:figure/@xml:id"/>}
@@ -487,8 +539,19 @@ pdfcreator={Oxford University Computing Services}
   <xsl:text>\textit{</xsl:text><xsl:apply-templates/><xsl:text>}</xsl:text>
 </xsl:template>
 
-<xsl:template match="tei:front/tei:div/tei:head">
-\section*{<xsl:apply-templates />}
+<xsl:template match="tei:front">
+ \frontmatter
+  <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="tei:back">
+ \backmatter
+  <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="tei:body">
+ \mainmatter
+  <xsl:apply-templates/>
 </xsl:template>
 
 <xsl:template match="tei:gi">\texttt{&lt;<xsl:apply-templates/>&gt;}</xsl:template>

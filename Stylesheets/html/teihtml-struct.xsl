@@ -850,22 +850,21 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
     <xsl:value-of select="local-name(.)"/>
   </xsl:variable>
   
+  <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:front">
+    <xsl:if test="tei:div|tei:div0|tei:div1"><hr/></xsl:if>
+    <xsl:for-each select="tei:div|tei:div0|tei:div1">
+      <xsl:if test="tei:head">
+	<xsl:variable name="pointer">
+	  <xsl:apply-templates mode="generateLink" select="."/>
+	</xsl:variable>
+	<p class="{$style}"><a class="{$style}" href="{$pointer}">
+	<xsl:call-template name="header"/></a></p>
+	<xsl:text>&#10;</xsl:text>
+      </xsl:if>
+    </xsl:for-each>
+  </xsl:for-each>
   <xsl:choose>
     <xsl:when test="$thisname='TEI' or $thisname='TEI.2' or $thisname=''">
-      <xsl:for-each select=".//tei:text">
-	<xsl:for-each select="tei:front">
-	  <xsl:if test="tei:div|tei:div0|tei:div1"><hr/></xsl:if>
-	  <xsl:for-each select="tei:div|tei:div0|tei:div1">
-	    <xsl:if test="tei:head">
-	      <xsl:variable name="pointer">
-		<xsl:apply-templates mode="generateLink" select="."/>
-	      </xsl:variable>
-	      <p class="{$style}"><a class="{$style}" href="{$pointer}">
-	      <xsl:call-template name="header"/></a></p>
-	      <xsl:text>&#10;</xsl:text>
-	    </xsl:if>
-	  </xsl:for-each>
-	</xsl:for-each>
 	<xsl:for-each select="tei:body">
 	  <xsl:if test="tei:div|tei:div0|tei:div1"><hr/></xsl:if>
 	  <xsl:for-each select="tei:div|tei:div0|tei:div1">
@@ -880,20 +879,6 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 	    </xsl:if>
 	  </xsl:for-each>
 	</xsl:for-each>
-	<xsl:for-each select="tei:back">
-	  <xsl:for-each select="tei:div|tei:div0|tei:div1">
-	    <xsl:if test="tei:div|tei:div0|tei:div1"><hr/></xsl:if>
-	    <xsl:if test="tei:head">
-	      <xsl:variable name="pointer">
-		<xsl:apply-templates mode="generateLink" select="."/>
-	      </xsl:variable>
-	      <p class="{$style}"><a class="{$style}" href="{$pointer}">
-	      <xsl:call-template name="header"/></a></p>
-	      <xsl:text>&#10;</xsl:text>
-	    </xsl:if>
-	  </xsl:for-each>
-	</xsl:for-each>
-      </xsl:for-each>
     </xsl:when>
     <xsl:otherwise>
       <xsl:text>&#10;</xsl:text><hr/>
@@ -949,6 +934,19 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 	</xsl:for-each>
     </xsl:otherwise>
   </xsl:choose>
+  <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:back">
+    <xsl:for-each select="tei:div|tei:div0|tei:div1">
+	    <xsl:if test="tei:div|tei:div0|tei:div1"><hr/></xsl:if>
+	    <xsl:if test="tei:head">
+	      <xsl:variable name="pointer">
+		<xsl:apply-templates mode="generateLink" select="."/>
+	      </xsl:variable>
+	      <p class="{$style}"><a class="{$style}" href="{$pointer}">
+	      <xsl:call-template name="header"/></a></p>
+	      <xsl:text>&#10;</xsl:text>
+	    </xsl:if>
+	  </xsl:for-each>
+  </xsl:for-each>
 </xsl:template>
 
 <xsl:template name="stdfooterFrame">
