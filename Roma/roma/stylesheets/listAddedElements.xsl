@@ -23,8 +23,8 @@ Description
 	  <tr><td colspan="7" class="spacer"><a href="?mode=addElements"><xsl:value-of select="$res_form_add"/></a></td></tr>
 	  <tr class="header">
 	    <td><xsl:value-of select="$res_form_changeElement"/></td>
-	    <td><xsl:value-of select="$res_form_include"/></td>
-	    <td><xsl:value-of select="$res_form_exclude"/></td>
+	    <td><a href="javascript:includeAllAttributes()"><xsl:value-of select="$res_form_include"/></a></td>
+	    <td><a href="javascript:excludeAllAttributes()"><xsl:value-of select="$res_form_exclude"/></a></td>
 	    <td><xsl:value-of select="$res_form_tagName"/></td>
 	    <td width="400"><xsl:value-of select="$res_form_description"/></td>
 	    <td width=""><xsl:value-of select="$res_form_attributes"/></td>
