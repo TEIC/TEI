@@ -24,7 +24,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 <xsl:param name="verbose"></xsl:param>
 <xsl:param name="oddmode">html</xsl:param>
 <xsl:variable name="TEITAGS">http://www.tei-c.org.uk/tei-bin/files.pl?name=tags.xml</xsl:variable>
-<xsl:param name="ODDROOT">http://www.tei-c.org/P5/Odds/</xsl:param>
+<xsl:param name="ODDROOT">http://www.tei-c.org.uk/P5/</xsl:param>
 <xsl:param name="schemaBaseURL">http://www.tei-c.org/P5/Schema/</xsl:param>
  <xsl:key  name="CLASSMEMBERS" match="tei:elementSpec|tei:classSpec" use="tei:classes/tei:memberOf/@key"/>
  <xsl:key name="TAGS" match="Tag|Pattern|Class" use="ident"/>
