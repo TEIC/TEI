@@ -6,7 +6,7 @@ $Date$, $Revision$, $Author$
 <xsl:stylesheet version="1.0"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:teix="http://www.tei-c.org/ns/Examples"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
   xmlns:estr="http://exslt.org/strings"
   xmlns:pantor="http://www.pantor.com/ns/local"
@@ -368,7 +368,7 @@ $Date$, $Revision$, $Author$
     <xsl:value-of select="$headingNumberSuffix"/>
     <xsl:choose>
       <xsl:when test="not($toc='')">
-        <xsl:call-template name="makeLink">
+        <xsl:call-template name="makeInternalLink">
           <xsl:with-param name="class">toc</xsl:with-param>
           <xsl:with-param name="url"><xsl:value-of select="$toc"/></xsl:with-param>
           <xsl:with-param name="text">
@@ -528,61 +528,27 @@ $Date$, $Revision$, $Author$
 <xsl:variable name="headingNumberSuffix"><xsl:text> </xsl:text></xsl:variable>
 
 <xsl:template name="maintoc"> 
- <xsl:param name="force"/>
-
-<xsl:call-template name="outputChunk">
-  <xsl:with-param name="ident">fulltoc</xsl:with-param>
- <xsl:with-param name="content">
-    <html> 
-      <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (8)</xsl:comment>
-      <head>
-      <title>TEI P5: Table of contents</title>
-      <xsl:call-template name="headHook"/>
-      <xsl:if test="not($cssFile = '')">
-           <link rel="stylesheet" type="text/tei:css" href="{$cssFile}"/>
-      </xsl:if>
-      <xsl:call-template name="javaScript"/>
-      </head>
-
-
-      <body>
-       <xsl:call-template name="bodyHook"/>
-       <xsl:call-template name="bodyJavaScriptHook"/>
-       <a name="TOP"/>
-       <div  class="teidiv">
-        <xsl:call-template name="stdheader">
-          <xsl:with-param name="title">Full Table of Contens</xsl:with-param>
-        </xsl:call-template>
-         <h2>Detailed table of contents</h2>
-
-  <p><a class="toc" href="index.html">Back to start</a></p>
-  <hr/>
-   <xsl:for-each select="ancestor-or-self::tei.2/tei:text/tei:front">
+  <xsl:param name="force"/>
+   <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:front">
     <xsl:apply-templates 
       select=".//tei:div1" mode="maketoc">
      <xsl:with-param name="forcedepth" select="$force"/>
     </xsl:apply-templates>
    </xsl:for-each>
 
-   <xsl:for-each select="ancestor-or-self::tei.2/tei:text/tei:body">
+   <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:body">
     <xsl:apply-templates 
       select=".//tei:div1" mode="maketoc">
      <xsl:with-param name="forcedepth" select="$force"/>
     </xsl:apply-templates>
    </xsl:for-each>
 
-   <xsl:for-each select="ancestor-or-self::tei.2/tei:text/tei:back">
+   <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:back">
     <xsl:apply-templates 
       select=".//tei:div1" mode="maketoc">
      <xsl:with-param name="forcedepth" select="$force"/>
    </xsl:apply-templates>
    </xsl:for-each>
- </div>
-</body>
-</html>
-</xsl:with-param>
-</xsl:call-template>
-
 </xsl:template>
 
 <xsl:template name="processFootnotes">
