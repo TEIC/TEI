@@ -602,4 +602,12 @@ by Nick Nicholas -->
   <code class="undone">[End rendering]</code>
 </xsl:template>
 
+<xsl:template match="tei:title">
+  <i><xsl:apply-templates/></i>
+</xsl:template>
+
+<xsl:template match="tei:title[@level='a']">
+  <xsl:text>&#8216;</xsl:text><xsl:apply-templates/><xsl:text>&#8217;</xsl:text>
+</xsl:template>
+
 </xsl:stylesheet>

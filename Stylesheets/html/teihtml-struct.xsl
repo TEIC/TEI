@@ -278,7 +278,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
     <xsl:apply-templates/>
   </xsl:template>
 
-<xsl:template match="tei:title">
+<xsl:template match="tei:titleStmt/tei:title">
   <xsl:if test="preceding-sibling::tei:title"><br/></xsl:if>
   <xsl:apply-templates/>
 </xsl:template>

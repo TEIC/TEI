@@ -9,8 +9,10 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 --> 
 <xsl:stylesheet
   xmlns:tei="http://www.tei-c.org/ns/1.0"
-  exclude-result-prefixes="tei"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+    xmlns:exsl="http://exslt.org/common"
+    extension-element-prefixes="exsl"
+    exclude-result-prefixes="tei exsl"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 <xsl:param name="overrideMasterFile"></xsl:param>
 <!-- cross-referencing -->
