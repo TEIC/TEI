@@ -157,6 +157,17 @@ rng:includes
 <!-- copy the xxx.content body into place -->
 <xsl:template match="rng:define[contains(@name,'.content')]" mode="stage2"/>
 
+
+<xsl:template match="rng:ref[contains(@name,'.content')]"
+	      mode="stage2">
+  <xsl:variable name="n" select="@name"/>
+  <xsl:for-each
+      select="ancestor::rng:define/following-sibling::rng:define[@name=$n]">
+    <xsl:apply-templates select="rng:*" mode="stage2"/>
+  </xsl:for-each>
+</xsl:template>
+
+<!--
 <xsl:template match="rng:ref[contains(@name,'.content')]" mode="stage2">
 <xsl:choose>
   <xsl:when test="key('DEFS',@name)">
@@ -170,5 +181,5 @@ rng:includes
   </xsl:otherwise>
 </xsl:choose>
 </xsl:template>
-
+-->
 </xsl:stylesheet>
