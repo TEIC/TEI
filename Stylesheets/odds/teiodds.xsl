@@ -67,7 +67,7 @@ created on <xsl:value-of select="edate:date-time()"/>.
 
 
 
-<xsl:template match="rng:*" mode="literal">
+<xsl:template match="*" mode="literal">
   <xsl:text>
   </xsl:text>
   <xsl:for-each select="ancestor::rng:*">
