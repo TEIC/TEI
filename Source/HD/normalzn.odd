@@ -4,15 +4,16 @@ Licensed under the GNU General Public License.
 
 See the file COPYING for details.
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="NORMALZN" usage="opt" ident="normalization">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+  module="header" xml:id="NORMALZN" usage="opt" ident="normalization">
 <equiv/>
 <gloss/>
 <desc>indicates the extent of normalization or regularization of the
 original source carried out in converting it to electronic form.</desc>
-  
-  
   <classes>
     <memberOf key="tei.declarable"/>
+    <memberOf key="tei.policy"/>
   </classes>
   <content>
     <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
@@ -24,12 +25,16 @@ original source carried out in converting it to electronic form.</desc>
 	<equiv/>
 	<desc>indicates the authority for any normalization carried out.
     </desc>
-      
-      
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <datatype><rng:text /></datatype>
       <valDesc>Should really be a bibliographic reference of some kind
    </valDesc>
-      
+    </attDef>
+    <attDef ident="uri" usage="opt">
+	<equiv/>
+	<desc>indicates the location of the authority used for any normalization carried out.
+    </desc>
+      <datatype>    <rng:data type="anyURI"/></datatype>
+      <valDesc>any kind of URI, such as an HTML page reference</valDesc>
     </attDef>
     <attDef ident="method" usage="opt">
 	<equiv/>
