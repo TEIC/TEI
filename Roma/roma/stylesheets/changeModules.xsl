@@ -49,6 +49,7 @@ Description
 
   <xsl:template name="listElements">
     <xsl:for-each select="//list/elementList/teiElement">
+      <xsl:sort select="elementName"/>
       <xsl:variable name="currentElement"><xsl:value-of
       select="elementName"/></xsl:variable>
       <tr>

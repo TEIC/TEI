@@ -323,7 +323,7 @@ class romaDom extends domDocument
 	$this->getXPath( $oXPath );
 	$aoElements = $oXPath->query(
 	"//tei:schemaSpec/tei:elementSpec[@mode='change'
-	and @module='$szModule']/tei:altIdent" );
+	and @module='{$szModule}']/tei:altIdent" );
 
 	foreach( $aoElements as $oElement )
 	  {
@@ -351,7 +351,7 @@ class romaDom extends domDocument
 	$this->getXPath( $oXPath );
 	$oElement = $oXPath->query(
       "//tei:schemaSpec/tei:elementSpec[@module='$szModule'
-      and @mode='change' and @ident='$szElement']/tei:altIdent" )->item(0);
+      and @mode='change' and @ident='{$szElement}']/tei:altIdent" )->item(0);
 
 	$szElementNew = ( is_object ( $oElement ) ) ? $oElement->nodeValue : $szElement;
       }
@@ -529,14 +529,14 @@ class romaDom extends domDocument
 
 	    $oAttList = $oXPath->query(
 	  "//tei:schemaSpec/tei:elementSpec[@mode='change' and
-	  @ident='$szElement' and @module='$szModule']/tei:attList" )->item(0);
+	  @ident='{$szElement}' and @module='{$szModule}']/tei:attList" )->item(0);
 	  }
 	elseif( $szClass == '' )
 	  {
 	    $oAttDom->appendChild( new domElement( 'Element' ) );
 	    $oElement = $oAttDom->documentElement;
 
-	    $oAttList = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='$szElement']/tei:attList" )->item(0);
+	    $oAttList = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$szElement}']/tei:attList" )->item(0);
 	    $errResult = true;
 	  }
 	else
@@ -1288,7 +1288,7 @@ class romaDom extends domDocument
 		    $theElementSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'elementSpec' );
 		    $oElementSpec = $oSchema->appendChild(  $theElementSpec );
 		    $oElementSpec->setAttribute( 'ident', $aszConfig['element' ] );
-		    $oElementSpec->setAttribute( 'module', $szModule);
+		    $oElementSpec->setAttribute( 'module',  $aszConfig['module'] );
 		  }
 		$oElementSpec->setAttribute( 'mode', 'change' );
 	    
@@ -1491,7 +1491,7 @@ class romaDom extends domDocument
 		$oAttList = $oElementSpec->appendChild( $theAttList );
 	      }
 	    
-	    $oAttDef = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='$szAttribute']" )->item(0);
+	    $oAttDef = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='{$szAttribute}']" )->item(0);
 	  }
 	elseif ( $szModule == '' && $szClass == '' )
 	  {
@@ -1535,7 +1535,7 @@ class romaDom extends domDocument
 		$oAttList = $oClassSpec->appendChild( $theAttList );
 	      }
 	    
-	    $oAttDef = $oXPath->query( "//tei:schemaSpec/tei:classSpec[@ident='{$szClass}']/tei:attList/tei:attDef[@ident='$szAttribute']" )->item(0);
+	    $oAttDef = $oXPath->query( "//tei:schemaSpec/tei:classSpec[@ident='{$szClass}']/tei:attList/tei:attDef[@ident='{$szAttribute}']" )->item(0);
 	  }
 
 
@@ -1583,7 +1583,7 @@ class romaDom extends domDocument
 		$oAttList = $oElementSpec->appendChild( $theAttList );
 	      }
 	    
-	    $oAttDef = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='$szAttribute']" )->item(0);
+	    $oAttDef = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='{$szAttribute}']" )->item(0);
 	  }
 	elseif ( $szModule == '' && $szClass == '' )
 	  {
@@ -1627,7 +1627,7 @@ class romaDom extends domDocument
 		$oAttList = $oClassSpec->appendChild( $theAttList );
 	      }
 	    
-	    $oAttDef = $oXPath->query( "//tei:schemaSpec/tei:classSpec[@ident='{$szClass}']/tei:attList/tei:attDef[@ident='$szAttribute']" )->item(0);
+	    $oAttDef = $oXPath->query( "//tei:schemaSpec/tei:classSpec[@ident='{$szClass}']/tei:attList/tei:attDef[@ident='{$szAttribute}']" )->item(0);
 	  }
 
 	if ( ! is_object( $oAttDef ) )
@@ -1666,7 +1666,7 @@ class romaDom extends domDocument
 		    $theElementSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'elementSpec' );
 		    $oElementSpec = $oSchema->appendChild( $theElementSpec );
 		    $oElementSpec->setAttribute( 'ident', $szElement  );
-		    $oElementSpec->setAttribute( 'module', $szModuke );
+		    $oElementSpec->setAttribute( 'module', $szModule );
 		    $oElementSpec->setAttribute( 'mode', 'change' );
 		  }
 		
