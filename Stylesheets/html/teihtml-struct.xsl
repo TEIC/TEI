@@ -17,10 +17,6 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
     <xsl:variable name="depth">
       <xsl:apply-templates select="." mode="depth"/>
     </xsl:variable>
-<!--
-	<xsl:message>div <xsl:value-of select="@id"/>: <xsl:value-of
-	select="$depth"/></xsl:message>
--->
     <!-- depending on depth and splitting level, 
 	 we may do one of two things: -->
     <xsl:choose>

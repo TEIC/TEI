@@ -30,6 +30,8 @@ if (/^##LICENSE/) {
 }
 else
 { 
+     s/\@id\|\@xml:id/\@xml:id/g;
+     s/\@xml:id\|\@id/\@xml:id/g;
      print;
 }
 }
