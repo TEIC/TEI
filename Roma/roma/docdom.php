@@ -99,6 +99,8 @@ class docDom extends domDocument
 	    $this->m_oRomaDom->getIncludedElementsInModule( $szModule, $aszElements );
 	    foreach ( $aszElements as $szElement )
 	      {
+		$nElements++;
+
 		$oElementDom = new domDocument();
 		$oElementDom->loadXML( join( '', file( 'http://' . roma_exist_server . ':8080/exist/tei/copytag.xq?name=' . $szElement ) ) );
 		$oSpec = $oElementDom->getElementsByTagname( 'elementSpec' )->item(0);
@@ -145,38 +147,147 @@ class docDom extends domDocument
 			
 			$oAttDef->setAttribute( 'mode',  $szMode );
 
-			$oAttDef->insertBefore( $oAttDef->firstChild, $oAtt->getElementsByTagname( 'altName' )->item(0)->nodeValue );
+			$szAltName = $oAtt->getElementsByTagname( 'altName' )->item(0)->nodeValue;
+			if ( $szAltName != $szAttribute && $szAltName != '')
+			  {
+			    $oAttDef->insertBefore( new domElement( 'altIdent', $szAltName ), $oAttDef->firstChild );
+			  }
+			
+			//get Definition
+			$this->m_oRomaDom->getAttributeDefinition( $szAttribute, $szElement, $szModule, '', $oDef );
+			$oNewDatatype = $oDef->getElementsByTagname( 'datatype' )->item(0);
+
+			//remove old Datatype
+			$oDatatype = $oAttDef->getElementsByTagname( 'datatype' )->item(0);
+			if ( ! is_object ( $oDatatype ) )
+			  {
+			    $theDatatype = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'datatype' );
+			    $oDatatype = $oAttDef->appendChild( $theDatatype );
+			  }
+			else
+			  {
+			    if ( $oDatatype->hasChildNodes() )
+			      $oDatatype->removeChild( $oDatatype->firstChild );
+			  }
+
+			switch( $oNewDatatype->nodeValue )
+			  {
+			  case 'text':
+			    $oRNG = $this->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:' . $oNewDatatype->nodeValue );
+			    $oDatatype->appendChild( $oRNG );
+			    break;
+			  default:
+			    if( substr( $oNewDatatype->nodeValue, 0, 9 ) == 'datatype.' )
+			      {
+				$oRNG = $this->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:ref' );
+				$oRef = $oDatatype->appendChild( $oRNG );
+				$oRef->setAttribute( 'name', $oNewDatatype->nodeValue );
+			      }
+			    else
+			      {
+				$oRNG = $this->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:data' );
+				$oRef = $oDatatype->appendChild( $oRNG );
+				$oRef->setAttribute( 'type', $oNewDatatype->nodeValue );
+			      }
+			    break;
+			  }
+
+			//desc
+			$oDesc = $oAttDef->getElementsByTagname( 'desc' )->item(0);
+			$oDesc->removeChild( $oDesc->firstChild );
+			$oDesc->appendChild( new domText( $oAtt->getElementsByTagname( 'desc' )->item(0)->nodeValue ) );
+
+			//defaultval
+			$oNewDefault = $oAtt->getElementsByTagname( 'default' )->item(0);
+			$oDefault = $oAttDef->getElementsByTagname( 'defaultVal' )->item(0);
+			if ( is_object( $oDefault ) )
+			  {
+			    $oDefault->removeChild( $oDefault->firstChild );
+			  }
+			else
+			  {
+			    $theDefault = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'defaultVal' );
+			    $oDefault = $oAttDef->appendChild( $theDefault );
+			  }
+			$oDefault->appendChild( new domText( $oNewDefault->nodeValue ) );
+		      }
+		    else //new attribute
+		      {
+			$theAttDef = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'attDef' );
+			$oAttDef = $oAttList->appendChild( $theAttDef );
+			
+			$oAttDef->setAttribute( 'ident', $szAttribute );
+			$oAttDef->setAttribute( 'mode', 'add' );
+
+			$oAttDef->appendChild( new domElement( 'defaultVal', $oAtt->getElementsByTagname( 'default' )->item(0)->nodeValue, 'http://www.tei-c.org/ns/1.0' ) );
+
+			$this->m_oRomaDom->getAttributeDefinition( $szAttribute, $szElement, $szModule, '', $oDef );
+			$oNewDatatype = $oDef->getElementsByTagname( 'datatype' )->item(0);
+
+			$theDatatype = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'datatype' );
+			$oDatatype = $oAttDef->appendChild( $theDatatype );
+
+			switch( $oNewDatatype->nodeValue )
+			  {
+			  case 'text':
+			    $oRNG = $this->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:' . $oNewDatatype->nodeValue );
+			    $oDatatype->appendChild( $oRNG );
+			    break;
+			  default:
+			    if( substr( $oNewDatatype->nodeValue, 0, 9 ) == 'datatype.' )
+			      {
+				$oRNG = $this->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:ref' );
+				$oRef = $oDatatype->appendChild( $oRNG );
+				$oRef->setAttribute( 'name', $oNewDatatype->nodeValue );
+			      }
+			    else
+			      {
+				$oRNG = $this->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:data' );
+				$oRef = $oDatatype->appendChild( $oRNG );
+				$oRef->setAttribute( 'type', $oNewDatatype->nodeValue );
+			      }
+			    break;
+			  }
+
+			$oAttDef->appendChild( new domElement( 'desc', $oAtt->getElementsByTagname( 'desc' )->item(0)->nodeValue, 'http://www.tei-c.org/ns/1.0' ) );
 		      }
 		  }
+		
+		if ( $nElements == 5 )
+		  {
+		    $nElements = 0;
+		    if ( $this->bBar )
+		      $this->m_oRomaDom->updateProgressBar( 1, true, 50 );
+		  }
 	      }
-
-	    if ( $this->bBar )
-	      $this->m_oRomaDom->updateProgressBar( 6, true, 40 );
 	  }
-	echo $this->SaveHTML();
 
 	//new Elements
 	if ( $this->m_oRomaDom->getAddedElements( $oElementsDom ) === false )
 	  {
 	    foreach( $oElementsDom->documentElement->childNodes as $oElement )
 	      {
-		$oElementSpec = $oBody->appendChild( new domElement( 'elementSpec' ) );
+		$theElementSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'elementSpec' );
+		$oElementSpec = $oBody->appendChild( $theElementSpec );
 		$szElement = $oElement->getElementsByTagname( 'elementName' )->item(0)->nodeValue;
 		$oElementSpec->setAttribute( 'ident', $szElement );
 		$oElementSpec->setAttribute( 'mode', 'add' );
 
-		$oClasses = $oElementSpec->appendChild( new domElement( 'classes' ) );
-		$oContent = $oElementSpec->appendChild( new domElement( 'content' ) );
+		$theClasses = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'classes' );
+		$oClasses = $oElementSpec->appendChild( $theClasses );
+		$theContent = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'content' );
+		$oContent = $oElementSpec->appendChild( $theContent );
 
 		$this->m_oRomaDom->getAddedElementsClasses( $szElement, $aszClasses );
 		foreach( $aszClasses as $szClass )
 		  {
-		    $oMember = $oClasses->appendChild( new domElement( 'memberOf' ) );
+		    $theMemberOf = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'memberOf' );
+		    $oMember = $oClasses->appendChild( $theMemberOf );
 		    $oMember->setAttribute( 'key', $szClass );
 		  }
 
 		$this->m_oRomaDom->getAddedElementsDescription( $szElement, $szDesc );
-		$oElementSpec->appendChild( new domElement( 'desc', $szDesc ) );
+		$oElementSpec->appendChild( new domElement( 'desc', $szDesc, 'http://www.tei-c.org/ns/1.0' ) );
 
 		$this->m_oRomaDom->getAddedElementsContents( $szElement, $szContents );
 		switch( $szContents )
@@ -192,10 +303,56 @@ class docDom extends domDocument
 		    $oRef->setAttribute( 'name', $szContents );
 		    break;
 		  }
-	      }
 
-	    if ( $this->bBar )
-	      $this->m_oRomaDom->updateProgressBar( 2, true, 50 );
+		$this->m_oRomaDom->getAttributeDomByElementInModule( $szElement, $szModule, '', $oAttDom );
+		//delete attributes
+
+		$theDefault = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'attList' );
+		$oAttList = $oElementSpec->appendChild( $theDefault );
+
+		foreach( $oAttDom->documentElement->childNodes as $oAtt )
+		  {
+		    $szAttribute = $oAtt->getElementsByTagname( 'name' )->item(0)->nodeValue;
+
+		    $theAttDef = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'attDef' );
+		    $oAttDef = $oAttList->appendChild( $theAttDef );
+		    
+		    $oAttDef->setAttribute( 'ident', $szAttribute );
+		    $oAttDef->setAttribute( 'mode', 'add' );
+		    
+		    $oAttDef->appendChild( new domElement( 'defaultVal', $oAtt->getElementsByTagname( 'default' )->item(0)->nodeValue, 'http://www.tei-c.org/ns/1.0' ) );
+		    
+		    $this->m_oRomaDom->getAttributeDefinition( $szAttribute, $szElement, $szModule, '', $oDef );
+		    $oNewDatatype = $oDef->getElementsByTagname( 'datatype' )->item(0);
+		    
+		    $theDatatype = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'datatype' );
+		    $oDatatype = $oAttDef->appendChild( $theDatatype );
+		    
+		    switch( $oNewDatatype->nodeValue )
+		      {
+		      case 'text':
+			$oRNG = $this->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:' . $oNewDatatype->nodeValue );
+			$oDatatype->appendChild( $oRNG );
+			break;
+		      default:
+			if( substr( $oNewDatatype->nodeValue, 0, 9 ) == 'datatype.' )
+			  {
+			    $oRNG = $this->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:ref' );
+			    $oRef = $oDatatype->appendChild( $oRNG );
+			    $oRef->setAttribute( 'name', $oNewDatatype->nodeValue );
+			  }
+			else
+			  {
+			    $oRNG = $this->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:data' );
+			    $oRef = $oDatatype->appendChild( $oRNG );
+			    $oRef->setAttribute( 'type', $oNewDatatype->nodeValue );
+			  }
+			break;
+		      }
+
+		    $oAttDef->appendChild( new domElement( 'desc', $oAtt->getElementsByTagname( 'desc' )->item(0)->nodeValue, 'http://www.tei-c.org/ns/1.0' ) );
+		  }
+	      }
 	  } 
       }
 
@@ -223,12 +380,28 @@ class docDom extends domDocument
     // --- Create some Output
     // #####################################################################
 
+    public function outputPlain( &$szPlain )
+      {
+	$oTidy = new tidy();
+	$aszOptions = array( 'indent' => true,
+			     'indent-spaces' => 4,
+			     'wrap' => 72,
+			     'input-xml' => true,
+			     'output-xml' => true
+			     );
+	$oTidy->parseString( $this->SaveXML(), $aszOptions );
+
+	$oTidy->cleanRepair();
+	$szPlain = $oTidy->value;
+      }
+
+
     public function outputTeiLite( &$szTeiLite )
       {
 	$this->getTeiLiteDom( $oTeiLiteDom );
 	if ( $this->bBar )
 	    $this->m_oRomaDom->updateProgressBar( '70' );
-
+	
 	$oTidy = new tidy();
 	$aszOptions = array( 'indent' => true,
 			     'indent-spaces' => 4,
@@ -241,7 +414,8 @@ class docDom extends domDocument
 	    $this->m_oRomaDom->updateProgressBar( '80' );
 
 	$oTidy->cleanRepair();
-	$szTeiLite = $oTidy;
+	$szTeiLite = $oTidy->value;
+
 	if ( $this->bBar )
 	    $this->m_oRomaDom->updateProgressBar( '100' );
       }

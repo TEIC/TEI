@@ -142,7 +142,7 @@ define( 'roma_temporaryFilesDir', '/tmp' );
 //#########################
 // different_stylesheets
 //
-define( 'roma_styleheet_docHtml', 'http://www.tei-c.org/Stylesheets/teihtml-teic-P5.xsl' );
+define( 'roma_styleheet_docHtml', 'http://www.tei-c.org/Stylesheets/P5/html/teihtml.xsl' );
 define( 'roma_styleheet_docPDF', 'http://www.tei-c.org/Stylesheets/P5/fo/tei.xsl' );
 define( 'roma_styleheet_docLatex', 'http://www.tei-c.org/Stylesheets/P5/latex/teilatex.xsl' );
 
@@ -970,6 +970,7 @@ class roma
       {
 	$this->outputDownloadHeaders();
 	header( "Content-Disposition: attachment;  filename=" . $_REQUEST[ 'file' ] );
+	
 	$szOutput = $_SESSION[ 'download' ];
       }
 
@@ -1092,6 +1093,10 @@ class roma
 	    $szError = $oDomDoc->outputTeiLite( $szDoc );
 	    $szEnding = 'xml';
 	    break;
+	  case 'plain':
+	    $szError = $oDomDoc->outputPlain( $szDoc );
+	    $szEnding = 'xml';
+	    break;
 	  case 'html':
 	  default:
 	    $szError = $oDomDoc->outputHTML( $szDoc );
@@ -1104,7 +1109,6 @@ class roma
 	    $this->redirectBrowserMeta( "http://" . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'PHP_SELF' ] . '?mode=' . roma_mode_downloadFile . '&file=myteiDoc.' . $szEnding );	    
 
 	    $_SESSION[ 'download' ] = $szDoc;
-
 	  }
       }
 

@@ -611,7 +611,7 @@ class romaDom extends domDocument
 		if ( is_object( $oAttDat ) )
 		  {
 		    $oDataType = $oAtt->appendChild( new domElement( 'datatype' ) );
-		    
+
 		    if ( $oAttDat->firstChild->nodeName == 'rng:text' )
 		      {
 			$oDataType->appendChild( new domText( 'text' ) );
