@@ -343,11 +343,6 @@ pdfcreator={Oxford University Computing Services}
 </xsl:template>
 
 <xsl:template match="tei:docAuthor">
-<xsl:if test="preceding-sibling::tei:docAuthor">, </xsl:if>
- <xsl:apply-templates/>
-</xsl:template>
-
-<xsl:template match="tei:docAuthor">
 \author{<xsl:apply-templates/>}
 </xsl:template>
 

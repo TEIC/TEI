@@ -383,10 +383,6 @@ select="translate(.,'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/
 </xsl:template>
 
 
-<xsl:template match="tei:l">
-      <xsl:apply-templates/><br/>
-</xsl:template>
-
 <xsl:template match="tei:lb">
  <br/>
 </xsl:template>
