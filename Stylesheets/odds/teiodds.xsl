@@ -69,7 +69,7 @@ created on <xsl:value-of select="edate:date-time()"/>.
 
 <xsl:template match="*" mode="literal">
   <xsl:text>
-  </xsl:text>
+</xsl:text>
   <xsl:for-each select="ancestor::rng:*">
     <xsl:text> </xsl:text>
   </xsl:for-each>
@@ -84,7 +84,7 @@ created on <xsl:value-of select="edate:date-time()"/>.
       <xsl:apply-templates mode="literal"/>
       <xsl:if test="node()[last()]/self::rng:*"> 
 	<xsl:text>
-	</xsl:text>
+</xsl:text>
       </xsl:if>
       <xsl:for-each select="ancestor::rng:*">
 	<xsl:text> </xsl:text>
@@ -97,7 +97,7 @@ created on <xsl:value-of select="edate:date-time()"/>.
       <xsl:text>/&gt;</xsl:text>
       <xsl:if test="node()[last()]/self::rng:*"> 
 	<xsl:text>
-	</xsl:text>
+</xsl:text>
       </xsl:if>
     </xsl:otherwise>
   </xsl:choose>
