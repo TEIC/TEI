@@ -11,6 +11,19 @@ form_tagName=Tag name
 form_description=Description
 form_delete=Delete
 
+[fr]
+helpmessage=Ajoutons des attributs
+headline=Attributs suppl&eacute;mentaires
+
+form_headline=Liste des attributs
+form_add=Ajouter des attributs
+form_changeAttribute=Changer un attribut
+form_include=Inclure
+form_exclude=Exclure
+form_tagName=Nom de balise
+form_description=Description
+form_delete=Supprimer
+
 [de]
 helpmessage=asdljasdklasjd
 

@@ -9,6 +9,17 @@ form_attributeClasses=Attribute classes
 form_contents=Contents
 form_description=Description
 
+[fr]
+helpmessage=Cr&eacute;ion d'un &eacute;l&eacute;ment
+headline=Cr&eacute;ion d'un &eacute;l&eacute;ment
+
+form_headline=Cr&eacute;ion d'un &eacute;l&eacute;ment en cours
+form_name=Nom
+form_modelClasses=Classements structurals
+form_attributeClasses=Classements attributifs
+form_contents=Contenu
+form_description=Description
+
 [de]
 helpmessage=asdljasdklasjd
 headline=Ein neues Element hinzuf&uuml;gen

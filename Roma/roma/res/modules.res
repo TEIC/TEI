@@ -1,3 +1,4 @@
+
 [en]
 helpmessage=Go, treat yourself, customize some modules
 headline=Modules
@@ -12,6 +13,19 @@ form_remove=remove
 
 selectedModules_headline=List of selected Modules
 
+[fr]
+helpmessage=Allons y, personnalisons quelques modules!
+headline=Modules
+
+form_headline=Liste des modules TEI
+form_moduleName=Titre du module
+form_description=Description br&egrave;ve
+form_change=Modification
+form_changed=modifi&eacute;
+form_add=ajouter
+form_remove=supprimer
+
+selectedModules_headline=Liste des Modules selectionn&eacute;s
 
 [de]
 helpmessage=Wovon man nicht sprechen kann, daruber muss mann schweigen

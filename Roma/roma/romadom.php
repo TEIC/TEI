@@ -2107,7 +2107,7 @@ class romaDom extends domDocument
 	    $this->updateProgressBar( '80' );
 	
 	ob_start();
-	System( roma_trang . ' -I rng -O dtd ' . $szInputFile . ' ' . $szOutputFile  . '; perl -p -i -e "s/ns1://g" ' . $szOutputFile . ' 2>&1 ');
+	System( roma_trang . ' -I rng -O dtd ' . $szInputFile . ' ' . $szOutputFile  . '; perl -p -i -e "s/ns1://g;s/xmlns:ns1/xmlns/g" ' . $szOutputFile . ' 2>&1 ');
 	$szError = ob_get_clean();
 	ob_end_clean();
 
