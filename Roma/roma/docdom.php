@@ -96,7 +96,7 @@ class docDom extends domDocument
 
 	foreach ( $aszModules as $szModule )
 	  {
-            $theMod = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'module' );
+            $theMod = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'moduleSpec' );
 	    $oModule = $oBody->appendChild( $theMod );
 	    $oModule->setAttribute( 'ident', $szModule );
 	    echo "<p>Module: ". $szModule. "<br>";
@@ -278,7 +278,7 @@ class docDom extends domDocument
 	  {
 	    $this->m_oRomaDom->getAttributeClassChanges( $szClass, $oDom );
 
-	    $szModule = $oDom->getElementsByTagname( 'module' )->item(0)->nodeValue;
+	    $szModule = $oDom->getElementsByTagname( 'moduleSpec' )->item(0)->nodeValue;
 	    $oXPath = new domxpath( $this );
 	    $oXPath->registerNamespace( 'tei', 'http://www.tei-c.org/ns/1.0' );
 	    
@@ -415,7 +415,7 @@ class docDom extends domDocument
       {
 	//create the teiLite
         $oXSL = new domDocument();
- 	$oXSL->load( roma_schemaStylesheetDir . '/' . 'teixml-odds.xsl'  );
+ 	$oXSL->load( roma_schemaStylesheetDir . '/' . 'teic/teixml-odds.xsl'  );
 
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );

@@ -128,7 +128,7 @@ define( 'roma_pdflatex', 'pdflatex' );
 // Directories
 //
 // Defines the location of all external Stylesheets (odd2relax.xsl .. )
-define( 'roma_schemaStylesheetDir', 'http://localhost/TEIStylesheets' );
+define( 'roma_schemaStylesheetDir', 'http://localhost/stylesheet' );
 
 // Defines the location of the template Directory
 define( 'roma_templateDir', 'roma/templates' );
@@ -145,10 +145,10 @@ define( 'roma_ressource_path', 'roma/res' );
 //#########################
 // different_stylesheets
 //
-define( 'roma_styleheet_docHtml', 'http://localhost/TEIStylesheets/teihtml-teic-P5.xsl' );
-define( 'roma_styleheet_docPDF', 'http://localhost/TEIStylesheets/P5/fo/tei.xsl' );
-define( 'roma_styleheet_docLatex', 'http://localhost/TEIStylesheets/P5/latex/teilatex.xsl' );
-define( 'roma_customization_validator', 'http://localhost/TEI/P5/Schema/p5odds.rng' );
+define( 'roma_styleheet_docHtml', 'http://localhost/stylesheet/teic/teihtml-teic-P5.xsl' );
+define( 'roma_styleheet_docPDF', 'http://localhost/stylesheet/oxford/p5/fo/tei.xsl' );
+define( 'roma_styleheet_docLatex', 'http://localhost/stylesheet/oxford/p5/latex/teilatex.xsl' );
+define( 'roma_customization_validator', 'http://localhost/schema/relaxng/p5/p5odds.rng' );
 
 define( 'roma_exist_server', 'localhost:8080' );
 
