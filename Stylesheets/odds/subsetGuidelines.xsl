@@ -22,7 +22,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
 <xsl:import href="teiodds.xsl"/>
 
 <xsl:param
-    name="TEISERVER">http://tei.oucs.ox.ac.uk:8080/exist/TEI/Roma/xquery/</xsl:param>
+    name="TEISERVER">http://tei.oucs.ox.ac.uk/TEI/Roma/xquery/</xsl:param>
 
 <xsl:key name="MODS" match="tei:moduleSpec" use="@ident"/>
 <xsl:key name="SPECS" match="tei:specGrp" use="@id|@xml:id"/>

@@ -22,7 +22,7 @@ Text Encoding Initiative Consortium XSLT stylesheet family
     extension-element-prefixes="edate exsl estr"
     version="1.0">
   <xsl:include href="RngToRnc.xsl"/>
-  <xsl:param name="TEISERVER">http://tei.oucs.ox.ac.uk:8080/exist/TEI/Roma/xquery/</xsl:param>
+  <xsl:param name="TEISERVER">http://tei.oucs.ox.ac.uk/TEI/Roma/xquery/</xsl:param>
   <xsl:param name="verbose"></xsl:param>
   <xsl:param name="schemaBaseURL">http://www.tei-c.org/P5/Schema/</xsl:param>
   
