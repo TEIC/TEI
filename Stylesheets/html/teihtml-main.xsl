@@ -74,6 +74,7 @@
   <xsl:param name="standardSuffix">
     <xsl:choose>
       <xsl:when test="$rawXML='true'">.xml</xsl:when>
+      <xsl:when test="tei:teiCorpus">.html</xsl:when>
       <xsl:when test="$STDOUT='true'"/>
       <xsl:otherwise>.html</xsl:otherwise>
     </xsl:choose>
@@ -115,7 +116,6 @@
       </xsl:message>
     </xsl:if>
     
-    
     <xsl:choose> 
 <!-- there are various choices of how to proceed, driven by
 
@@ -132,7 +132,7 @@ $ID: requests a particular page
       <xsl:when test="($pageLayout = 'CSS' or $pageLayout = 'Table')
 		      and (tei:TEI or tei:teiCorpus)">
 	<xsl:if test="$verbose='true'">
-	  <xsl:message>pageLayout <xsl:value-of select="$pageLayout"/></xsl:message>
+	  <xsl:message>case 1: pageLayout <xsl:value-of select="$pageLayout"/></xsl:message>
 	</xsl:if>
 	<xsl:for-each select="tei:TEI|tei:teiCorpus">
 	  <xsl:call-template name="doPageTable">
@@ -149,7 +149,7 @@ $ID: requests a particular page
 <!-- we are making a frame-based system -->
       <xsl:when test="$pageLayout='Frames'">
 	<xsl:if test="$verbose='true'">
-	  <xsl:message>pageLayout <xsl:value-of select="$pageLayout"/></xsl:message>
+	  <xsl:message>case 2: pageLayout <xsl:value-of select="$pageLayout"/></xsl:message>
 	</xsl:if>
 	<xsl:call-template name="doFrames"/>
       </xsl:when>
@@ -157,7 +157,7 @@ $ID: requests a particular page
 <!-- we have been asked for a particular section of the document -->
       <xsl:when test="not($ID='')">    
 	<xsl:if test="$verbose='true'">
-	  <xsl:message>ID <xsl:value-of select="$ID"/>, pageLayout <xsl:value-of 
+	  <xsl:message>case 3: ID <xsl:value-of select="$ID"/>, pageLayout <xsl:value-of 
               select="$pageLayout"/></xsl:message>
 	</xsl:if>
 
@@ -188,7 +188,7 @@ $ID: requests a particular page
 <!-- we want HTML to just splurge out-->      
       <xsl:when test="$STDOUT='true'">
 	<xsl:if test="$verbose='true'">
-	  <xsl:message>write to stdout, pageLayout <xsl:value-of select="$pageLayout"/></xsl:message>
+	  <xsl:message>case 4: write to stdout, pageLayout <xsl:value-of select="$pageLayout"/></xsl:message>
 	</xsl:if>
 	<xsl:apply-templates/>
       </xsl:when>
@@ -196,7 +196,7 @@ $ID: requests a particular page
       <!-- we want the document split up into separate files -->
       <xsl:when test="tei:TEI or tei:teiCorpus and $splitLevel&gt;-1">
 	<xsl:if test="$verbose='true'">
-	  <xsl:message>split output, <xsl:value-of
+	  <xsl:message>case 5: split output, <xsl:value-of
 	  select="$splitLevel"/> pageLayout <xsl:value-of select="$pageLayout"/></xsl:message>
 	</xsl:if>
 	<xsl:apply-templates mode="split"/>
@@ -205,7 +205,7 @@ $ID: requests a particular page
       <!-- we want the whole document, in an output file -->
       <xsl:otherwise>
 	<xsl:if test="$verbose='true'">
-	  <xsl:message>one document, pageLayout <xsl:value-of select="$pageLayout"/></xsl:message>
+	  <xsl:message>case 6: one document, pageLayout <xsl:value-of select="$pageLayout"/></xsl:message>
 	</xsl:if>
 
 	<xsl:choose>
