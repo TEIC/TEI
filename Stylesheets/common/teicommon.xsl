@@ -394,7 +394,7 @@ select="normalize-space(substring-before(substring-after($revauthor,'LastChanged
 </xsl:template>
 
 <!-- cross-referencing -->
-<xsl:template name="makeLink">
+<xsl:template name="makeTEILink">
 <xsl:param name="ptr"/><!-- is this a ptr or a ref? -->
 <xsl:choose>
   <!-- If there is a target attribute starting with #, it is always a local reference -->
@@ -472,13 +472,13 @@ select="normalize-space(substring-before(substring-after($revauthor,'LastChanged
 </xsl:template>
 
 <xsl:template match="tei:ref|tei:xref">
-  <xsl:call-template name="makeLink">
+  <xsl:call-template name="makeTEILink">
     <xsl:with-param name="ptr">false</xsl:with-param>
   </xsl:call-template>
 </xsl:template>
 
 <xsl:template match="tei:ptr|tei:xptr">
-  <xsl:call-template name="makeLink">
+  <xsl:call-template name="makeTEILink">
     <xsl:with-param name="ptr">true</xsl:with-param>
   </xsl:call-template>
 </xsl:template>

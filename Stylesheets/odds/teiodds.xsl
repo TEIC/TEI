@@ -471,60 +471,16 @@ Text Encoding Initiative Consortium XSLT stylesheet family
 	      <xsl:if test="tei:content or not(@mode='change')">
 		<xsl:call-template name="defineContent"/>
 	      </xsl:if>
-	      
-	      <rng:define name="{@ident}.attributes" >
-		<xsl:choose>
-		  <xsl:when test="ancestor::tei:schemaSpec and not(ancestor::tei:schemaSpec/tei:moduleRef/@key='tei')"/>
-		  <xsl:when test="@ns and not(contains(@ns,'http://www.tei-c.org/ns/1.0'))"/>
-		  <xsl:otherwise>
-		    <rng:ref name="tei.global.attributes" />
-		  </xsl:otherwise>
-		</xsl:choose>
-		  <xsl:if test="tei:attList//tei:attDef or not(@mode='change')">
-		    <xsl:choose>
-		    <xsl:when test="tei:classes or not(@mode='change')">
-		      <xsl:apply-templates
-			  select="tei:classes/tei:memberOf"
-			  mode="processClassAtts">
-			<xsl:with-param name="homeIdent" select="@ident"/>
-		      </xsl:apply-templates>
-		    </xsl:when>
-		    <xsl:otherwise>
-		      <xsl:variable name="loc">
-			<xsl:value-of select="$TEISERVER"/>
-			<xsl:text>copytag.xq?name=</xsl:text>
-			<xsl:value-of select="@ident"/>
-		      </xsl:variable>
-		      <xsl:if test="$verbose">
-			<xsl:message>Accessing TEISERVER: <xsl:value-of
-			select="$loc"/></xsl:message>
-		      </xsl:if>
-		      
-		      <xsl:variable name="homeIdent" select="@ident"/>
-		      <xsl:for-each select="document($loc)/tei:TEI/*">
-			<xsl:apply-templates
-			    select=".//tei:classes/tei:memberOf"
-			    mode="processClassAtts">
-			  <xsl:with-param name="homeIdent" select="$homeIdent"/>
-			</xsl:apply-templates>
-		      </xsl:for-each>
-		    </xsl:otherwise>
-		  </xsl:choose>
-		  <xsl:apply-templates select="tei:attList" mode="tangle"/>
-		  <xsl:if test="not(@ns) or contains(@ns,'http://www.tei-c.org')">
-		    <rng:optional >
-		      <rng:attribute name="TEIform" a:defaultValue="{@ident}" >
-			<rng:text />
-		      </rng:attribute>
-		    </rng:optional>
-		  </xsl:if>
-		  <xsl:if test="@mode='change'">
-		    <xsl:call-template name="makeRelaxAttributes"/>
-		  </xsl:if>
-		</xsl:if>
-		<rng:empty/>
-	      </rng:define>
-	      
+<!-- we do not make a defintion for the attributes pattern if we are
+in change mode and there is no attList -->	      
+	      <xsl:choose>
+		<xsl:when test="@mode='change' and not(tei:attList)">
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:call-template name="doDefineAttributePattern"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+
 	      <xsl:if test="not(@mode='change')">
 		<xsl:call-template name="defineRelaxAttributes"/>
 	      </xsl:if>
@@ -538,7 +494,65 @@ Text Encoding Initiative Consortium XSLT stylesheet family
     </xsl:call-template>
   </xsl:template>
   
-  
+  <xsl:template name="doDefineAttributePattern">
+    <rng:define name="{@ident}.attributes" >
+      <xsl:choose>
+	<xsl:when test="ancestor::tei:schemaSpec and not(ancestor::tei:schemaSpec/tei:moduleRef/@key='tei')"/>
+	<xsl:when test="@ns and not(contains(@ns,'http://www.tei-c.org'))"/>
+	<xsl:otherwise>
+	  <rng:ref name="tei.global.attributes" />
+	</xsl:otherwise>
+      </xsl:choose>
+      
+      <xsl:if test="tei:attList//tei:attDef or not(@mode='change')">
+	<xsl:choose>
+	  <xsl:when test="tei:classes or not(@mode='change')">
+	    <xsl:apply-templates
+		select="tei:classes/tei:memberOf"
+		mode="processClassAtts">
+	      <xsl:with-param name="homeIdent" select="@ident"/>
+	    </xsl:apply-templates>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:variable name="loc">
+	      <xsl:value-of select="$TEISERVER"/>
+	      <xsl:text>copytag.xq?name=</xsl:text>
+	      <xsl:value-of select="@ident"/>
+	    </xsl:variable>
+	    <xsl:if test="$verbose">
+	      <xsl:message>Accessing TEISERVER: <xsl:value-of
+	      select="$loc"/></xsl:message>
+	    </xsl:if>
+	    
+	    <xsl:variable name="homeIdent" select="@ident"/>
+	    <xsl:for-each select="document($loc)/tei:TEI/*">
+	      <xsl:apply-templates
+		  select=".//tei:classes/tei:memberOf"
+		  mode="processClassAtts">
+		<xsl:with-param name="homeIdent" select="$homeIdent"/>
+	      </xsl:apply-templates>
+	    </xsl:for-each>
+	  </xsl:otherwise>
+	</xsl:choose>
+	<xsl:apply-templates select="tei:attList" mode="tangle"/>
+	<xsl:if test="not(@ns) or contains(@ns,'http://www.tei-c.org')">
+	  <rng:optional >
+	    <rng:attribute name="TEIform" a:defaultValue="{@ident}" >
+	      <rng:text />
+	    </rng:attribute>
+	  </rng:optional>
+	</xsl:if>
+	<xsl:if test="@mode='change'">
+	  <xsl:call-template name="makeRelaxAttributes"/>
+	</xsl:if>
+      </xsl:if>
+      <!-- place holder to make sure something gets into the
+	   pattern -->
+      <rng:empty/>
+      
+    </rng:define>
+  </xsl:template>
+
   <xsl:template name="defineContent">
     <rng:define name="{@ident}.content" >
       <xsl:choose>
