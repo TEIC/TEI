@@ -28,7 +28,7 @@ XSL stylesheet to format TEI XML documents to LaTeX
 <xsl:param name="REQUEST"></xsl:param>
 <xsl:param name="standardScale">1</xsl:param>
 <xsl:output method="text" encoding="utf8"/>
-<xsl:param name="pagesetup">a4paper,lmargin=1in,rmargin=1in,tmargin=0.75in,bmargin=0.75in</xsl:param>
+<xsl:param name="pagesetup">a4paper,lmargin=1in,rmargin=1in,tmargin=0.25in,bmargin=0.75in</xsl:param>
 
 <xsl:key name="IDS" match="tei:*[@id]" use="@id"/>
 
@@ -80,19 +80,50 @@ XSL stylesheet to format TEI XML documents to LaTeX
   <xsl:text>%ENDFIGMAP
 </xsl:text>
 </xsl:if>
-<xsl:call-template name="documentSetup">
- <xsl:with-param name="docstyle"><xsl:value-of  select="$docstyle"/></xsl:with-param>
- <xsl:with-param name="pagesetup"><xsl:value-of
- select="$pagesetup"/></xsl:with-param>
-</xsl:call-template>
+\documentclass{<xsl:value-of select="$docstyle"/>}
+\usepackage[twoside,<xsl:value-of select="$pagesetup"/>]{geometry}
+\usepackage{times}
+\usepackage{longtable}
+\usepackage{colortbl}
+\usepackage{ulem}
+\usepackage{fancyvrb}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\pagestyle{fancy} 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{ucs}
+\RequirePackage{array}
+\makeatletter
+\gdef\arraybackslash{\let\\=\@arraycr}
+<xsl:text disable-output-escaping="yes">
+\newcolumntype{L}[1]{&gt;{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{&gt;{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{&gt;{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{P}[1]{&gt;{\arraybackslash}p{#1}}
+\definecolor{label}{gray}{0.75}
+\def\Panel#1#2#3#4{\multicolumn{#3}{>{\columncolor{#2}}#4}{#1}}
+</xsl:text>
+\usepackage[pdftitle={<xsl:call-template name="generateSimpleTitle"/>},
+pdfauthor={<xsl:call-template name="generateAuthor"/>},
+pdfcreator={Oxford University Computing Services}
+]{hyperref}
+\DeclareRobustCommand*{\xref}{\hyper@normalise\xref@}
+\def\xref@#1#2{\hyper@linkurl{#2}{#1}}
+\makeatother
+\def\TheFullDate{<xsl:call-template name="generateDate"/>}
+\def\TheDate{<xsl:call-template name="generateDate">
+<xsl:with-param name="showRev"/></xsl:call-template>}
 \catcode`\_=12\relax
 <xsl:text disable-output-escaping="yes">\let\tabcellsep&amp;
 \catcode`\&amp;=12\relax
 </xsl:text>
+\title{<xsl:call-template name="generateTitle"/>}
+\author{<xsl:call-template name="generateAuthor"/>}
+\paperwidth211mm
+\paperheight297mm
 \hyperbaseurl{<xsl:value-of select="$baseURL"/>}
 \makeatletter
-\DeclareRobustCommand*{\xref}{\hyper@normalise\xref@}
-\def\xref@#1#2{\hyper@linkurl{#2}{#1}}
 \def\@pnumwidth{1.55em}
 \def\@tocrmarg {2.55em}
 \def\@dotsep{4.5}
@@ -155,8 +186,16 @@ XSL stylesheet to format TEI XML documents to LaTeX
 <xsl:if test="not($docstyle='letter')">
 \renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
 </xsl:if>
-
-<xsl:call-template name="headersAndFooters"/>
+\fancyhf{} 
+\fancyhead[LE]{\bfseries\leftmark} 
+\fancyhead[RO]{\bfseries\rightmark} 
+\fancyfoot[RO]{\TheFullDate}
+\fancyfoot[CO]{\thepage}
+\fancyfoot[LO]{<xsl:value-of select="$REQUEST"/>}
+\fancyfoot[LE]{\TheFullDate}
+\fancyfoot[CE]{\thepage}
+\fancyfoot[RE]{<xsl:value-of select="$REQUEST"/>}
+\fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}
 <xsl:call-template name="begindocumentHook"/>
 <xsl:apply-templates select="tei:text"/>
 \end{document}
@@ -214,23 +253,19 @@ XSL stylesheet to format TEI XML documents to LaTeX
   </xsl:if>
 <xsl:choose>
  <xsl:when test="@type='gloss'">
-   \begin{description}
-<xsl:apply-templates mode="gloss" select="tei:item"/>
+   \begin{description}<xsl:apply-templates mode="gloss" select="tei:item"/>
    \end{description}
  </xsl:when>
  <xsl:when test="@type='unordered'">
-   \begin{itemize}
-     <xsl:apply-templates/>
+   \begin{itemize}<xsl:apply-templates/>
    \end{itemize}
  </xsl:when>
  <xsl:when test="@type='ordered'">
-   \begin{enumerate}
-     <xsl:apply-templates/>
+   \begin{enumerate}<xsl:apply-templates/>
     \end{enumerate}
  </xsl:when>
  <xsl:otherwise>
-   \begin{itemize}
-     <xsl:apply-templates/>
+   \begin{itemize}<xsl:apply-templates/>
    \end{itemize}
  </xsl:otherwise>
 </xsl:choose>
@@ -262,11 +297,11 @@ XSL stylesheet to format TEI XML documents to LaTeX
 <xsl:template match="tei:ref">
   <xsl:choose>
     <xsl:when test="key('IDS',@target)">
-      <xsl:text>\href{</xsl:text>
-      <xsl:value-of select="unparsed-entity-uri(@target)"/>
-      <xsl:text>}{</xsl:text>
+      <xsl:text>\hyperlink{</xsl:text>
+      <xsl:value-of select="@target"/>
+      <xsl:text>}{\textit{</xsl:text>
    <xsl:apply-templates/>
-   <xsl:text>}</xsl:text>
+   <xsl:text>}}</xsl:text>
     </xsl:when>
     <xsl:otherwise>
       <xsl:text>&#x00AB;</xsl:text>
@@ -279,14 +314,14 @@ XSL stylesheet to format TEI XML documents to LaTeX
 <xsl:template match="tei:ptr">
   <xsl:choose>
     <xsl:when test="key('IDS',@target)">
-      <xsl:text>\href{</xsl:text>
+      <xsl:text>\hyperlink{</xsl:text>
       <xsl:value-of select="@target"/>
-      <xsl:text>}{</xsl:text>
+      <xsl:text>}{\textit{</xsl:text>
       <xsl:variable name="where">
 	<xsl:apply-templates mode="header" select="key('IDS',@target)"/>
       </xsl:variable>
       <xsl:value-of select="$where"/>   
-      <xsl:text>}</xsl:text>
+      <xsl:text>}}</xsl:text>
     </xsl:when>
     <xsl:otherwise>
       <xsl:text>&#x00AB;</xsl:text>
@@ -323,39 +358,58 @@ XSL stylesheet to format TEI XML documents to LaTeX
 </xsl:template>
 
 <xsl:template match="tei:body/tei:div/tei:head">
-\section{<xsl:apply-templates />}
+\chapter{<xsl:apply-templates />}
+<xsl:call-template name="labelme"/>
 </xsl:template>
 
 <xsl:template match="tei:body/tei:div/tei:div/tei:head">
-  \subsection{<xsl:apply-templates />}
+  \section{<xsl:apply-templates />}
+<xsl:call-template name="labelme"/>
 </xsl:template>
 
 <xsl:template match="tei:body/tei:div/tei:div/tei:div/tei:head">
-\subsubsection{<xsl:apply-templates />}
+\subsection{<xsl:apply-templates />}
+<xsl:call-template name="labelme"/>
 </xsl:template>
 
 <xsl:template match="tei:body/tei:div/tei:div/tei:div/tei:div/tei:head">
-\paragraph{<xsl:apply-templates />}
+\subsubsection{<xsl:apply-templates />}
+<xsl:call-template name="labelme"/>
 </xsl:template>
 
 <xsl:template match="tei:body/tei:div/tei:div/tei:div/tei:div/tei:div/tei:head">
-\subparagraph{<xsl:apply-templates />}
+\paragraph{<xsl:apply-templates />}
+<xsl:call-template name="labelme"/>
 </xsl:template>
 
 <xsl:template match="tei:div0/tei:head">
 \chapter{<xsl:apply-templates />}
+<xsl:call-template name="labelme"/>
 </xsl:template>
 
 <xsl:template match="tei:div1/tei:head">
 \section{<xsl:apply-templates />}
+<xsl:call-template name="labelme"/>
 </xsl:template>
 
 <xsl:template match="tei:div2/tei:head">
   \subsection{<xsl:apply-templates />}
+<xsl:call-template name="labelme"/>
 </xsl:template>
 
 <xsl:template match="tei:div3/tei:head">
 \subsubsection{<xsl:apply-templates />}
+<xsl:call-template name="labelme"/>
+</xsl:template>
+
+<xsl:template name="labelme">
+ <xsl:if test="../@id">\hypertarget{<xsl:value-of select="../@id"/>}{}</xsl:if>
+</xsl:template>
+
+<xsl:template match="tei:anchor">
+ <xsl:text>\hypertarget{</xsl:text>
+ <xsl:value-of select="@id"/>
+  <xsl:text>}{}</xsl:text>
 </xsl:template>
 
 <xsl:template match="tei:soCalled">
@@ -363,6 +417,10 @@ XSL stylesheet to format TEI XML documents to LaTeX
 </xsl:template>
 
 <xsl:template match="tei:foreign">
+  <xsl:text>\emph{</xsl:text><xsl:apply-templates/><xsl:text>}</xsl:text>
+</xsl:template>
+
+<xsl:template match="tei:mentioned">
   <xsl:text>\emph{</xsl:text><xsl:apply-templates/><xsl:text>}</xsl:text>
 </xsl:template>
 
@@ -521,13 +579,13 @@ XSL stylesheet to format TEI XML documents to LaTeX
 </xsl:template>
 
 <xsl:template match="tei:title[@level='s']">
-  <xsl:text>\emph{</xsl:text>
+  <xsl:text>\textit{</xsl:text>
    <xsl:apply-templates/>
   <xsl:text>}</xsl:text>
 </xsl:template>
 
 <xsl:template match="tei:title[@level='m']">
-  <xsl:text>\emph{</xsl:text>
+  <xsl:text>\textit{</xsl:text>
    <xsl:apply-templates/>
   <xsl:text>}</xsl:text>
 </xsl:template>
@@ -770,59 +828,10 @@ XSL stylesheet to format TEI XML documents to LaTeX
   <xsl:text>'</xsl:text>
 </xsl:template>
 
-
-<xsl:template name="documentSetup">
-<xsl:param name="docstyle"/>
-<xsl:param name="pagesetup"/>
-\documentclass{<xsl:value-of select="$docstyle"/>}
-\usepackage[twoside,<xsl:value-of select="$pagesetup"/>]{geometry}
-\usepackage{times}
-\usepackage{longtable}
-\usepackage{colortbl}
-\usepackage{ulem}
-\usepackage{fancyhdr}
-\usepackage{graphicx}
-\pagestyle{fancy} 
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{ucs}
-\RequirePackage{array}
-\makeatletter
-\gdef\arraybackslash{\let\\=\@arraycr}
-<xsl:text disable-output-escaping="yes">
-\newcolumntype{L}[1]{&gt;{\raggedright\arraybackslash}p{#1}}
-\newcolumntype{C}[1]{&gt;{\centering\arraybackslash}p{#1}}
-\newcolumntype{R}[1]{&gt;{\raggedleft\arraybackslash}p{#1}}
-\newcolumntype{P}[1]{&gt;{\arraybackslash}p{#1}}
-\definecolor{label}{gray}{0.75}
-\def\Panel#1#2#3#4{\multicolumn{#3}{>{\columncolor{#2}}#4}{#1}}
-</xsl:text>
-\usepackage[pdftitle={<xsl:call-template name="generateSimpleTitle"/>},
-pdfauthor={<xsl:call-template name="generateAuthor"/>},
-pdfcreator={Oxford University Computing Services}
-]{hyperref}
-\makeatother
-\def\TheFullDate{<xsl:call-template name="generateDate"/>}
-\def\TheDate{<xsl:call-template name="generateDate">
-<xsl:with-param name="showRev"/></xsl:call-template>}
-\title{<xsl:call-template name="generateTitle"/>}
-\author{<xsl:call-template name="generateAuthor"/>}
-\paperwidth211mm
-\paperheight297mm
-</xsl:template>
-
-
-<xsl:template name="headersAndFooters">
-\fancyhf{} 
-\fancyhead[LE]{\bfseries\leftmark} 
-\fancyhead[RO]{\bfseries\rightmark} 
-\fancyfoot[RO]{\TheFullDate}
-\fancyfoot[CO]{\thepage}
-\fancyfoot[LO]{<xsl:value-of select="$REQUEST"/>}
-\fancyfoot[LE]{\TheFullDate}
-\fancyfoot[CE]{\thepage}
-\fancyfoot[RE]{<xsl:value-of select="$REQUEST"/>}
-\fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}
+<xsl:template match="tei:note[@place='foot']">
+  <xsl:text>\footnote{</xsl:text>
+  <xsl:apply-templates/>
+  <xsl:text>}</xsl:text>
 </xsl:template>
 
 

@@ -64,7 +64,7 @@ rng:includes
   </rng:div>
 </xsl:template>
 
-<xsl:template match="rng:define" mode="stage2">
+<xsl:template match="rng:define[not(@combine='choice')]" mode="stage2">
   <!-- can be overriden -->
   <!-- find if there is an overriding definition:
        two dimensional recursion - by ancestor::incelim,
