@@ -1445,7 +1445,10 @@ in change mode and there is no attList -->
   <xsl:variable name="name" select="@ident"/>
   <xsl:for-each select="tei:attList//tei:attDef[not(@mode='delete')]">
     <xsl:if test="not(@ident='xmlns')">
-      <xsl:call-template name="makeAnAttribute"/>
+      <!--      
+	   <xsl:call-template name="makeAnAttribute"/>
+      -->
+      <rng:ref name="{$name}.attributes.{@ident}"/>
     </xsl:if>
   </xsl:for-each>
 </xsl:template>
