@@ -45,7 +45,7 @@ html:
 	--stringparam outputDir . \
 	${S}/base/p5/odds/odd2html.xsl - 
 	(cd Guidelines; for i in *.html; do perl -i ../Tools/cleanrnc.pl $$i;done)
-	-cp ../web/P4X/*gif ../web/P4X/*css Guidelines
+	-cp *.gif *.css Guidelines
 
 xml:
 	xmllint --noent   Source-driver.xml | perl Tools/cleanrnc.pl | \
