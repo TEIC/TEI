@@ -1,0 +1,386 @@
+<?xml version="1.0"?>
+
+<TEI.2>
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>XSL stylesheets for TEI XML</title>
+        <author>Sebastian Rahtz</author>
+      </titleStmt>
+      <publicationStmt>
+        <p> </p>
+      </publicationStmt>
+      <sourceDesc>
+        <p></p>
+      </sourceDesc>
+    </fileDesc>
+    <profileDesc>
+    </profileDesc>
+    <revisionDesc>
+      <list>
+         <item><date>January 27th  2003 </date><name>Sebastian
+         Rahtz</name>version 3.1</item>
+         <item><date>November 17th  2003 </date><name>Sebastian
+         Rahtz</name>version 3.0</item>
+         <item><date>September 17th  2003 </date><name>Sebastian
+         Rahtz</name>version 2.1</item>
+         <item><date>June 6th  2003 </date><name>Sebastian
+         Rahtz</name>version 2.0</item>
+         <item><date>May 8th  2003 </date><name>Sebastian
+         Rahtz</name>version 1.5</item>
+         <item><date>April 14th 2003 </date><name>Sebastian
+	Rahtz</name>version 1.4</item>
+         <item><date>December 4th 2002 </date><name>Sebastian
+         Rahtz</name>version 1.3</item>
+         <item><date>October 3rd 2002 </date><name>Sebastian
+         Rahtz</name>version 1.2</item>
+         <item><date>Sept 14th 2002 </date><name>Sebastian
+         Rahtz</name>version 1.1</item>
+         <item><date>August 11th 2002 </date><name>Sebastian
+         Rahtz</name>Start versioning family and update documentation</item>
+         <item><date>May 18th 2002 </date><name>Sebastian
+         Rahtz</name>Many changes to stylesheets </item>
+         <item><date>October 27th 2001</date><name>Sebastian
+         Rahtz</name>Many changes to stylesheets and stylebear </item>
+         <item><date>July 7th 2001</date><name>Sebastian
+         Rahtz</name>Rough edges in stylesheets </item>
+         <item><date>March 29th 2001</date><name>Sebastian
+         Rahtz</name>Work and changes resulting from P4 Guidelines formatting
+</item>
+         <item><date>March 9th 2001</date><name>Sebastian
+         Rahtz</name>
+revised chunking, and other cleanups. rendering from Nick Nicholas </item>
+         <item><date>January 22nd 2001</date><name>Sebastian Rahtz</name>cleaned again         </item>
+         <item><date>November 19th 2000</date><name>Sebastian Rahtz</name>changed note about stylebear, cleaned again         </item>
+         <item><date>October 8th 2000</date><name>Sebastian Rahtz</name>added note about stylebear, cleaned again         </item>
+         <item><date>June 23rd 2000</date><name>Sebastian Rahtz</name>Cleaning         </item>
+         <item><date>May 26th 2000</date><name>Sebastian Rahtz</name>More 
+parameterization          </item>
+         <item><date>May 6th 2000</date><name>Sebastian Rahtz</name>More 
+parameterization          </item>
+         <item><date>March 2nd 2000</date><name>Sebastian Rahtz</name>Additions to parameterization          </item>
+         <item><date>December 9th 1999</date><name>Sebastian Rahtz</name>First draft
+          </item>
+      </list>
+    </revisionDesc>
+  </teiHeader>
+  <text>
+<front>
+  <docTitle>
+   <titlePart type="main">XSL stylesheets for TEI XML</titlePart>
+  </docTitle>
+  <docAuthor>Sebastian Rahtz</docAuthor>
+</front>
+<body>
+<div><head>Introduction</head>
+<p>
+This is a set of XSLT specifications to transform TEI XML
+documents to HTML, and to XSL Formatting Objects. 
+It concentrates on TEI Lite, but adding support 
+for other modules is fairly easy, and I am working my way through the
+TEI as applications come along. In the main, the setup has been
+used on `new' documents, ie reports and web pages that I have
+authored from scratch, rather than traditional TEI-encoded
+existing material.
+</p>
+<p>This is release 3.1. There is a <xref url="ChangeLog">change log</xref>
+file available.</p>
+<p>
+The stylesheets have been tested at various times with the Microsoft,
+XT, Saxon, jd, libxslt, Xalan, Sablotron and Oracle XSLT processors;
+but at present the only ones which are known to work fully are Saxon
+and libxslt. The Microsoft processor can be used, but does not support
+multiple file output, which means that you cannot use the `split'
+feature of the stylesheets to make multiple HTML files from one XML
+file. There are ways to achieve the same effect, if you know what you
+are doing with some Javascript, as demonstrated in the
+<ident>teihtml-pagetable.xsl</ident> file. </p>
+
+<p>If you have not yet installed an XSLT processor, it is probably
+sensible to pick Mike Kay's Saxon (from <xptr
+url="http://saxon.sourceforge.net"/>) or Daniel Veillard's libxslt
+(from <xptr url="http://www.xmlsoft.org"/>), as they seem to be the
+best implementations of the specification.</p>
+
+<p>It is up to the user to find out how to run the XSLT processor! This
+may be from within a Java program, on the command-line, or
+inside a web server.</p>
+<p>
+I will be very glad to discuss details of these stylesheets
+with anyone. Contact me (Sebastian Rahtz) as
+<xref url="mailto:sebastian.rahtz@oucs.ox.ac.uk">sebastian.rahtz@oucs.ox.ac.uk</xref>
+</p>
+</div>
+<div><head>Producing HTML</head>
+<p>
+The set of XSL styles for making HTML of files is as follows:
+<table rend="rules">
+<row><cell>TEI P5</cell><cell>TEI P4</cell><cell></cell></row>
+<row>
+<cell><xref url="P5/html/teihtml.xsl">teihtml.xsl</xref></cell><cell><xref url="P4/html/teihtml.xsl">teihtml.xsl</xref></cell>
+<cell> Wrapper for other modules</cell></row>
+<row>
+<cell><xref url="P5/html/teihtml-param.xsl">teihtml-param.xsl</xref></cell><cell><xref url="P4/html/teihtml-param.xsl">teihtml-param.xsl</xref></cell>
+<cell>    Parameterization</cell></row>
+<row>
+<cell><xref url="P5/html/teihtml-main.xsl">teihtml-main.xsl</xref></cell><cell><xref url="P4/html/teihtml-main.xsl">teihtml-main.xsl</xref></cell>
+<cell>     Basic TEI structure</cell></row>
+<row>
+<cell><xref url="P5/html/teihtml-front.xsl">teihtml-front.xsl</xref></cell><cell><xref url="P4/html/teihtml-front.xsl">teihtml-front.xsl</xref></cell>
+<cell>    Front matter</cell></row>
+<row>
+<cell><xref url="P5/html/teihtml-struct.xsl">teihtml-struct.xsl</xref></cell><cell><xref url="P4/html/teihtml-struct.xsl">teihtml-struct.xsl</xref></cell>
+<cell>   Divisions</cell></row>
+<row>
+<cell><xref url="P5/html/teihtml-figures.xsl">teihtml-figures.xsl</xref></cell><cell><xref url="P4/html/teihtml-figures.xsl">teihtml-figures.xsl</xref></cell>
+<cell>  Figures</cell></row>
+<row>
+<cell><xref url="P5/html/teihtml-misc.xsl">teihtml-misc.xsl</xref></cell><cell><xref url="P4/html/teihtml-misc.xsl">teihtml-misc.xsl</xref></cell>
+<cell>     Paragraph-level elements</cell></row>
+<row>
+<cell><xref url="P4/html/teihtml-tables.xsl">teihtml-tables.xsl</xref></cell><cell><xref url="P4/html/teihtml-tables.xsl">teihtml-tables.xsl</xref></cell>
+<cell>   Tables</cell></row>
+<row>
+<cell><xref url="P4/html/teihtml-xref.xsl">teihtml-xref.xsl</xref></cell><cell><xref url="P4/html/teihtml-xref.xsl">teihtml-xref.xsl</xref></cell>
+<cell>     Cross-referencing</cell></row>
+<row>
+<cell><xref url="P4/html/teihtml-lists.xsl">teihtml-lists.xsl</xref></cell><cell><xref url="P4/html/teihtml-lists.xsl">teihtml-lists.xsl</xref></cell>
+<cell>    Lists</cell></row>
+<row>
+<cell><xref url="P4/html/teihtml-drama.xsl">teihtml-drama.xsl</xref></cell><cell><xref url="P4/html/teihtml-drama.xsl">teihtml-drama.xsl</xref></cell>
+<cell>    Plays</cell></row>
+<row>
+<cell><xref url="P4/html/teihtml-frames.xsl">teihtml-frames.xsl</xref></cell><cell><xref url="P4/html/teihtml-frames.xsl">teihtml-frames.xsl</xref></cell>
+<cell>    Making frames</cell></row>
+<row>
+<cell><xref url="P4/html/teihtml-pagetable.xsl">teihtml-pagetable.xsl</xref></cell><cell><xref url="P4/html/teihtml-pagetable.xsl">teihtml-pagetable.xsl</xref></cell>
+<cell>    Making table-formatted pages</cell></row>
+<row>
+<cell><xref url="P4/html/teihtml-slides.xsl">teihtml-slides.xsl</xref></cell><cell><xref url="P4/html/teihtml-slides.xsl">teihtml-slides.xsl</xref></cell>
+<cell>   (Special version for making slides)</cell></row>
+</table>
+
+Or zipped-up in  <xptr url="P4/teixsl-html.zip"/> (for TEI P4) or
+<xptr url="P5/teixsl-html.zip"/> (for TEI P5) for convenient download.
+</p>
+</div>
+
+<div><head>Making HTML: usage</head>
+<p>
+You can simply refer to the specification
+<code>P5/html/teihtml.xsl</code> directly 
+      with your XSL processor, or install it locally on your own
+      server.
+ For more flexibility, you may prefer to
+reference the specifications 
+	    from an XSL wrapper of your own. The minimal specification 
+	    would look like this:
+<eg>
+<![CDATA[
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+
+<xsl:import href="P4/html/teihtml.xsl"/>
+
+</xsl:stylesheet>
+]]>
+</eg>
+We will see shortly how we can customize the result by adding to this
+      wrapper file.
+The default result will be a single HTML file. You 
+can also configure it to produce multiple output files, one per top-level
+<gi>div</gi>, <gi>div0</gi>, or <gi>div1</gi>. 
+The top-level file will be called, by default,
+      <code>index.html</code>.
+</p>
+<p><hi>Important Note:</hi> If you use Saxon or libxslt processors,
+you will get nothing on standard output by default, as they use the
+     EXSLT extensions to XSLT to generate the top-level file by
+     name. For other processors, the top-level file will come out on
+     standard output or wherever the processors writes by default.</p>
+
+</div>
+<div><head>Making HTML: customization</head>
+<p>
+The TEI HTML stylesheets are designed to be customized, and I will
+      gladly add more parameterization in future. There are currently
+      about over 60 things you can set to change the output, described
+      below. They are either XSLT variables, or named templates, so
+      you need to understand a little of XSL syntax. If you know
+a  bit more, you can override any of the templates in the style files, 
+but then you are on your own.
+</p>
+<p>There is a web form at <xptr
+url="http://www.tei-c.org.uk/tei-bin/stylebear"/> which will
+construct a nice XSL file for you, with all the variables configured.
+</p><p>
+There follows a list of all the things you can override in an .xsl
+file which imports  <code>teihtml.xsl</code> or
+      <code>teihtml-slides.xsl</code>. Where the variable is boolean
+	  (ie can be `true' or `false'), it works by assuming `true'
+	  if there is <hi>any</hi> value. Make the variable empty to
+	      assert `false'.
+<xptr url="param.xml" type="interpret"/>
+</p>
+<p>How does this work in practice? Here is a real wrapper style sheet, 
+	  customized for formatting a TEI document:
+<eg>
+<![CDATA[
+<xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version="1.0">
+
+<xsl:import href="P4/html/teihtml.xsl"/>
+
+<xsl:param name="masterFile">teiu5</xsl:param>
+<xsl:param name="cssFile">P5/html/tei.css</xsl:param>
+<xsl:param name="alignNavigationPanel">center</xsl:param>
+<xsl:param name="topNavigationPanel"></xsl:param>
+<xsl:param name="bottomNavigationPanel">true</xsl:param>
+<xsl:param name="institution">Text Encoding Initiative: TEI Lite</xsl:param>
+<xsl:param name="homeURL">http://www.tei-c.org.uk/</xsl:param>
+<xsl:param name="homeWords">TEI at Oxford</xsl:param>
+<xsl:param name="parentURL">http://www.tei-c.org/</xsl:param>
+<xsl:param name="parentWords">TEI Consortium</xsl:param>
+<xsl:param name="feedbackURL">http://www.tei-c.org.uk/Lite/</xsl:param>
+<xsl:param name="feedbackWords">TEI Lite</xsl:param>
+<xsl:param name="searchURL"></xsl:param>
+<xsl:param name="searchWords"></xsl:param>
+<xsl:template name="logoPicture">
+<img src="jaco001d.gif" alt="" width="180" />
+</xsl:template>
+<xsl:param name="useIDs"></xsl:param>
+<xsl:template name="copyrightStatement"> Copyright TEI 1995
+</xsl:template>
+</xsl:stylesheet>
+]]>
+</eg>
+You can see the results at <xptr url="/Lite/teiu5.html"/>, the TEI Lite
+	  specification.
+</p>
+</div>
+
+<div><head>The CSS file</head>
+<p>The following table lists all the CSS `class' attributes used in 
+HTML output; you can change all of these in the associated .css file:
+<table>
+<row><cell>box</cell><cell>Paragraph of type `box'</cell></row>
+<row><cell>department</cell><cell>Name of department in main page title</cell></row>
+<row><cell>epigraph</cell><cell><gi>div</gi> containing an
+		<gi>epigraph</gi></cell></row>
+<row><cell>framelogo</cell><cell>Link to logo file</cell></row>
+<row><cell>framemenu</cell><cell>Body of frame containing menu</cell></row>
+<row><cell>framemenudepartment</cell><cell>Department name in menu frame</cell></row>
+<row><cell>framemenuinstitution</cell><cell>Institutional name in menu frame</cell></row>
+<row><cell>framemenutitle</cell><cell>Document title in menu frame</cell></row>
+<row><cell>frametoc</cell><cell>Text in menu frame</cell></row>
+<row><cell>header</cell><cell>Table containing header</cell></row>
+<row><cell>footer</cell><cell><gi>div</gi> containing header</cell></row>
+<row><cell>institution</cell><cell>Name of institution in main page title</cell></row>
+<row><cell>leftlinks</cell><cell>Style of table when extra link column is used</cell></row>
+<row><cell>maintitle</cell><cell>Document title in main page title</cell></row>
+<row><cell>navlink</cell><cell>Next, Previous, and Up links
+	      </cell></row>
+<row><cell>notelink</cell><cell>Link to a note </cell></row>
+<row><cell>ptr</cell><cell>Link generated from TEI <gi>ptr</gi></cell></row>
+<row><cell>ref</cell><cell>Link generated from TEI <gi>ref</gi></cell></row>
+<row><cell>rightlinks</cell><cell>Style of table when extra link column is used</cell></row>
+<row><cell>subtoc</cell><cell>Class of HTML `div' for per-section table of contents</cell></row>
+<row><cell>subtochead</cell><cell>Heading of per-section table of contents</cell></row>
+<row><cell>teidiv</cell><cell>Wrapper around each section contents</cell></row>
+<row><cell>toc</cell><cell>List and items in table of contents</cell></row>
+<row><cell>xref</cell><cell>Link generated from TEI <gi>xref</gi></cell></row>
+<row><cell>xptr</cell><cell>Link generated from TEI <gi>xptr</gi></cell></row>
+</table>
+</p>
+</div>
+
+
+<div><head>PDF output</head>
+<p>These style sheets were developed for use with PassiveTeX (<xptr
+url="../Software/passivetex/"/>),
+a system using XSL formatting objects to render XML to PDF via
+	  LaTeX. As an example of its use, see
+<xref url="../Software/passivetex/test/teiu5.pdf">teiu5.pdf</xref>, 
+the TEI Lite guidelines. </p>
+<p>The XSL files are as follows:
+<table rend="rules">
+<row><cell>TEI P5</cell><cell>TEI P4</cell><cell></cell></row>
+<row>
+<cell><xptr url="P5/fo/tei.xsl"/></cell><cell><xptr url="P4/fo/tei.xsl"/></cell>
+<cell>Main wrapper file</cell>
+</row>
+<row>
+<cell><xptr url="P5/fo/tei-bib.xsl"/></cell><cell><xptr url="P4/fo/tei-bib.xsl"/></cell>
+<cell>Bibliographical items</cell>
+</row>
+<row>
+<cell><xptr url="P5/fo/tei-drama.xsl"/></cell><cell><xptr url="P4/fo/tei-drama.xsl"/></cell>
+<cell>Drama elements</cell>
+</row>
+<row>
+<cell><xptr url="P5/fo/tei-figure.xsl"/></cell><cell><xptr url="P4/fo/tei-figure.xsl"/></cell>
+<cell>Figures</cell>
+</row>
+<row>
+<cell><xptr url="P5/fo/tei-front.xsl"/></cell><cell><xptr url="P4/fo/tei-front.xsl"/></cell>
+<cell>Front matter</cell>
+</row>
+<row>
+<cell><xptr url="P5/fo/tei-lib.xsl"/></cell><cell><xptr url="P4/fo/tei-lib.xsl"/></cell>
+<cell>Library of useful routines</cell>
+</row>
+<row>
+<cell><xptr url="P5/fo/tei-lists.xsl"/></cell><cell><xptr url="P4/fo/tei-lists.xsl"/></cell>
+<cell>Lists</cell>
+</row>
+<row>
+<cell><xptr url="P5/fo/tei-markers.xsl"/></cell><cell><xptr url="P4/fo/tei-markers.xsl"/></cell>
+<cell>Markers</cell>
+</row>
+<row>
+<cell><xptr url="P5/fo/tei-math.xsl"/></cell><cell><xptr url="P4/fo/tei-math.xsl"/></cell>
+<cell>MathML</cell>
+</row>
+<row>
+<cell><xptr url="P5/fo/tei-notes.xsl"/></cell><cell><xptr url="P4/fo/tei-notes.xsl"/></cell>
+<cell>Note elements</cell>
+</row>
+<row>
+<cell><xptr url="P5/fo/tei-para.xsl"/></cell><cell><xptr url="P4/fo/tei-para.xsl"/></cell>
+<cell>Paragraph-level handling</cell>
+</row>
+<row>
+<cell><xptr url="P5/fo/tei-param.xsl"/></cell><cell><xptr url="P4/fo/tei-param.xsl"/></cell>
+<cell>Customization layer</cell>
+</row>
+<row>
+<cell><xptr url="P5/fo/tei-poetry.xsl"/></cell><cell><xptr url="P4/fo/tei-poetry.xsl"/></cell>
+<cell>Poetry tags</cell>
+</row>
+<row>
+<cell><xptr url="P5/fo/tei-special.xsl"/></cell><cell><xptr url="P4/fo/tei-special.xsl"/></cell>
+<cell>Odds and sodds</cell>
+</row>
+<row>
+<cell><xptr url="P5/fo/tei-struct.xsl"/></cell><cell><xptr url="P4/fo/tei-struct.xsl"/></cell>
+<cell>Main <gi>div</gi> structure</cell>
+</row>
+<row>
+<cell><xptr url="P5/fo/tei-table.xsl"/></cell><cell><xptr url="P4/fo/tei-table.xsl"/></cell>
+<cell>Tables</cell>
+</row>
+<row>
+<cell><xptr url="P4/fo/tei-xref.xsl"/></cell><cell><xptr url="P4/fo/tei-xref.xsl"/></cell>
+<cell>Cross-references</cell><cell>Cross-references</cell>
+</row>
+</table>
+Or zipped-up in  <xptr url="P4/teixsl-fo.zip"/>  (TEI P4)
+<xptr url="P5/teixsl-fo.zip"/>  (TEI P5)
+for convenient download.
+</p>
+</div>
+
+</body>
+<back>
+</back>
+</text>
+</TEI.2>
+
