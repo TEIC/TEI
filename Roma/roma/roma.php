@@ -205,6 +205,7 @@ define( 'roma_message_attributeAdded', 'The attribute was added' );
 define( 'roma_message_changedElement', 'Successfully changed Element' );
 define( 'roma_message_elementContentError', 'Content has to be valid XML.' );
 define( 'roma_message_elementExistsError', 'Element already exists' );
+define( 'roma_message_attributeExistsError', 'Attribute already exists' );
 
 //#########################
 // Other stuff
@@ -407,6 +408,19 @@ class roma
 		  $oNotam = new notam();
 		  $oNotam->setHeadline( 'Add Attribute' );
 		  $oNotam->setMessage( roma_message_attributeNameError );
+		  $oNotam->setStatus( notam_status_error );
+		  $oNotam->addNotam();
+		  
+		  $this->redirectBrowserHeader( 'mode=' . roma_mode_processAddAttribute . '&module=' . $_REQUEST[ 'module' ] . '&element=' . $_REQUEST[ 'element' ] . '&class=' . $_REQUEST[ 'class' ]);
+		}
+	      catch( attributeExistsException $e )
+		{
+		  $e->addError( 'addAttribute', 'name' );
+		  
+		  //notam
+		  $oNotam = new notam();
+		  $oNotam->setHeadline( 'Add Attribute' );
+		  $oNotam->setMessage( roma_message_attributeExistsError );
 		  $oNotam->setStatus( notam_status_error );
 		  $oNotam->addNotam();
 		  

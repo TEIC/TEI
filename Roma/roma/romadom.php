@@ -1221,6 +1221,27 @@ class romaDom extends domDocument
 	    $errResult = true;
 	    throw new falseTagnameException( '', $aszConfig[ 'name' ] );
 	  }
+	//check if name already exists
+	$oTmpDom = new domDocument();
+	$oTmpDom->loadXML( join( '', file( 'http://' . roma_exist_server . ':8080/exist/tei/classattsbyelem.xq?name=' . $aszConfig[ 'element' ] ) ) );
+	$oNames = $oTmpDom->getElementsByTagname( 'name' );
+
+	foreach( $oNames as $oName )
+	  {
+	    if ( $oName->nodeValue == $aszConfig[ 'name' ] )
+	      throw new attributeExistsException( $aszConfig[ 'name' ] );	      
+	  }
+
+	$oTmpDom = new domDocument();
+	$oTmpDom->loadXML( join( '', file( 'http://' . roma_exist_server . ':8080/exist/tei/attsbyelem.xq?name=' . $aszConfig[ 'element' ] ) ) );
+	$oNames = $oTmpDom->getElementsByTagname( 'name' );
+
+	foreach( $oNames as $oName )
+	  {
+	    if ( $oName->nodeValue == $aszConfig[ 'name' ] )
+	      throw new attributeExistsException( $aszConfig[ 'name' ] );	      
+	  }
+	
 
 	if ( ! $errResult )
 	  {
@@ -1679,7 +1700,7 @@ class romaDom extends domDocument
 	  }
 	else
 	  {
-	    $_SESSION[ 'addAttribute_ERROR' ] = roma_message_attributeNameError;	
+	    throw new falseTagnameException( $szOldName, $szNewName );
 	    $errResult = true;
 	  }
 
