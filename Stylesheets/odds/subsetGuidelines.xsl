@@ -59,7 +59,7 @@ XSL stylesheet to process TEI documents using ODD markup
 <xsl:template match="tei:schemaSpec">
 	  <xsl:apply-templates select="tei:specGrp"/>
   	  <xsl:apply-templates select="tei:moduleRef"/>
-  	  <xsl:apply-templates select="tei:elementSpec[@mode='add']"/>
+  	  <xsl:apply-templates select="tei:*[@mode='add']"/>
 </xsl:template>
 
 
@@ -117,6 +117,11 @@ XSL stylesheet to process TEI documents using ODD markup
 </xsl:template>
 
 <xsl:template match="@mode"/>
+
+<xsl:template match="tei:elementSpec|tei:classSpec|tei:patternSpec"
+	      mode="add">
+  <xsl:copy-of select="."/>
+</xsl:template>
 
 <xsl:template match="tei:elementSpec|tei:classSpec|tei:patternSpec" mode="change">
   <xsl:variable name="me" select="@ident"/>
@@ -196,6 +201,14 @@ XSL stylesheet to process TEI documents using ODD markup
 </xsl:template>
 
 <xsl:template match="eg:*">
+<xsl:copy-of select="."/>
+</xsl:template>
+
+<xsl:template match="rng:*">
+<xsl:copy-of select="."/>
+</xsl:template>
+
+<xsl:template match="rng:*" mode="copy">
 <xsl:copy-of select="."/>
 </xsl:template>
 

@@ -475,9 +475,13 @@ XSL stylesheet to format TEI XML documents using ODD markup
 	      </xsl:if>
 	      
 	      <rng:define name="{@ident}.attributes" >
-		  <xsl:if test="not(@ns and not(contains(@ns,'http://www.tei-c.org')))">
+		<xsl:choose>
+		  <xsl:when test="ancestor::tei:schemaSpec and not(ancestor::tei:schemaSpec/tei:moduleRef/@key='tei')"/>
+		  <xsl:when test="@ns and not(contains(@ns,'http://www.tei-c.org'))"/>
+		  <xsl:otherwise>
 		    <rng:ref name="tei.global.attributes" />
-		  </xsl:if>
+		  </xsl:otherwise>
+		</xsl:choose>
 		  <xsl:if test="tei:attList//tei:attDef or not(@mode='change')">
 		    <xsl:choose>
 		    <xsl:when test="tei:classes or not(@mode='change')">
@@ -508,8 +512,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
 		      </xsl:for-each>
 		    </xsl:otherwise>
 		  </xsl:choose>
-		  <xsl:apply-templates select="tei:attList"
-				       mode="tangle"/>
+		  <xsl:apply-templates select="tei:attList" mode="tangle"/>
 		  <xsl:if test="not(@ns) or contains(@ns,'http://www.tei-c.org')">
 		    <rng:optional >
 		      <rng:attribute name="TEIform" a:defaultValue="{@ident}" >
@@ -633,7 +636,9 @@ XSL stylesheet to format TEI XML documents using ODD markup
 	</xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
-	<rng:ref name="{@ident}.attributes" />
+	<xsl:if test=".//tei:attList">
+	  <rng:ref name="{@ident}.attributes" />
+	</xsl:if>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

@@ -15,19 +15,23 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 
 <xsl:template match="tei:table[@rend='simple']">
   <table>
+ <xsl:if test="@rend">
+     <xsl:attribute name="class"><xsl:value-of
+     select="@rend"/></xsl:attribute>
+   </xsl:if>
  <xsl:for-each select="@*">
-  <xsl:if test="name(.)='summary'
-or name(.) = 'width'
-or name(.) = 'border'
-or name(.) = 'frame'
-or name(.) = 'rules'
-or name(.) = 'cellspacing'
-or name(.) = 'cellpadding'">
-    <xsl:copy-of select="."/>
- </xsl:if>
+   <xsl:if test="name(.)='summary'
+		 or name(.) = 'width'
+		 or name(.) = 'border'
+		 or name(.) = 'frame'
+		 or name(.) = 'rules'
+		 or name(.) = 'cellspacing'
+		 or name(.) = 'cellpadding'">
+     <xsl:copy-of select="."/>
+   </xsl:if>
  </xsl:for-each>
  <xsl:call-template name="makeAnchor"/>
-<xsl:apply-templates/></table>
+  <xsl:apply-templates/></table>
 </xsl:template>
 
 <xsl:template match='tei:table'>
@@ -46,6 +50,10 @@ or name(.) = 'cellpadding'">
    <p><xsl:apply-templates select="." mode="header"/></p>
  </xsl:if>
  <table>
+   <xsl:if test="@rend">
+     <xsl:attribute name="class"><xsl:value-of
+     select="@rend"/></xsl:attribute>
+   </xsl:if>
  <xsl:if test="@rend='frame' or @rend='rules'">
   <xsl:attribute name="rules">all</xsl:attribute>
   <xsl:attribute name="border">1</xsl:attribute>
