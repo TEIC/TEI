@@ -46,7 +46,17 @@
 	</xsl:call-template>
       </xsl:when>
 
-      <xsl:when test="contains($processor,'SAXON')">
+      <xsl:when test="contains($processor,'SAXON 8')">
+	<xsl:call-template name="get-basename">
+	  <xsl:with-param name="file">
+	    <xsl:value-of 
+		xmlns:saxon="http://saxon.sf.net/"  
+		select="substring-after(saxon:system-id(),':')"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
+
+      <xsl:when test="contains($processor,'SAXON 6')">
 	<xsl:call-template name="get-basename">
 	  <xsl:with-param name="file">
 	    <xsl:value-of 
