@@ -1,0 +1,114 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="BIBLITEM" usage="opt" ident="biblItem">
+<equiv/>
+<gloss>structured bibliographic citation</gloss>
+<desc>contains a structured bibliographic citation, in which only
+bibliographic subelements appear and in a specified order. </desc>
+  
+  
+  <classes>
+    <memberOf key="tei.bibl"/>
+    <memberOf key="tei.declarable"/>
+    <memberOf key="tei.typed"/>
+  </classes>
+  <content>
+    <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:ref name="tei.biblPart"/>
+      </rng:choice>
+    </rng:oneOrMore>
+  </content>
+  <attList>
+    <attDef ident="form" usage="opt">
+      <equiv/>
+      <desc>indicates the physical form of the object object of this bibliographic entry.</desc>
+      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="token"/></datatype>
+      <valDesc>
+	Recommended values include:
+	<val>book, hardcover</val>,
+	<val>book, paperback</val>,
+	<val>video, VHS</val>,
+	<val>video, DVD</val>,
+	<val>audio, casettee</val>,
+	<val>audie, CD</val>.
+      </valDesc>
+    </attDef>
+    <attDef ident="status" usage="opt">
+      <equiv/>
+      <desc>indicates the publication status of the object of this bibliographic entry.</desc>
+      <valList type="open">
+	<valItem ident="manuscript">
+	  <gloss>the item is a manuscript</gloss>
+	</valItem>
+	<valItem ident="forthcoming">
+	  <gloss>the item is being published, but has not been released yet</gloss>
+	</valItem>
+	<valItem ident="inPrint">
+	  <gloss>the itme is currently being published</gloss>
+	</valItem>
+      </valList>
+    </attDef>
+    <attDef ident="role" usage="opt">
+      <equiv/>
+      <desc>indicates the relationship of this bibliographic entry to
+      that of its &pbob;.</desc>
+      <valList type="open">
+	<valItem ident="host">
+	  <gloss>WHAT DOES THIS MEAN?</gloss>
+	</valItem>
+	<valItem ident="original">
+	  <gloss>the item is original source</gloss>
+	</valItem>
+	<valItem ident="workReviewed">
+	  <gloss>this bibliographic item was reviewed in the ancestor work</gloss>
+	</valItem>
+	<valItem ident="edition">
+	  <gloss>indicates that this entry contains separate
+	  information for a particular edition of the &pbob;</gloss>
+	</valItem>
+	<valItem ident="basedOn">
+	  <gloss>indicates that the &pbob; is the base work from which this one was
+	  derived</gloss>
+	</valItem>
+	<valItem ident="referencedBy">
+	  <gloss>indicates that the element is a reference for the work in question</gloss>
+	</valItem>
+	<valItem ident="copyOf">
+	  <gloss>indicates that this entry is for a facsimile of that
+	  which is referred to by the &pbob;</gloss>
+	</valItem>
+      </valList>
+    </attDef>
+  </attList>
+  
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <biblStruct>
+        <monogr>
+          <author>Blain, Virginia</author>
+          <author>Clements, Patricia</author>
+          <author>Grundy, Isobel</author>
+          <title>The Feminist Companion to Literature in
+             English: women writers from the middle ages
+             to the present</title>
+          <edition>first edition</edition>
+          <imprint>
+            <publisher>Yale University Press</publisher>
+            <pubPlace>New Haven and London</pubPlace>
+            <date>1990</date>
+          </imprint>
+        </monogr>
+      </biblStruct>
+    </egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#COBITY"/>
+    <ptr target="#HD3"/>
+    <ptr target="#CCAS2"/>
+  </listRef>
+</elementSpec>
