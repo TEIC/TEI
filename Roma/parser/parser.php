@@ -9,6 +9,8 @@
 // --- REQUIRES
 // ######################################################################
 
+require_once( 'ressource/ressource.php' );
+
 // ######################################################################
 // --- CONSTANTS
 // ######################################################################
@@ -56,6 +58,68 @@ class parser
 	 return $errResult;
        }
 
+    public function addReplacementArray( $aszReplacement )
+      {
+	if ( is_array( $aszReplacement ) ) 
+	  {
+	    foreach ( $aszReplacement as $key => $value )
+	      {
+		$this->addReplacement( $key , $value );
+	      }
+	  }
+      }  
+
+     // ######################################################################
+     // --- Commands
+     // ######################################################################
+
+    private function executeCommand( $szCommand, $szTask, $szSubstring, &$szParsed, &$nNewPos )
+      {
+	switch ( $szCommand )
+	  {
+	    case 'if':
+  	      $this->executeIf( $szTask, $szSubstring, $szParsed, $nNewPos );
+	      break;    
+	    case 'res':
+	      $this->executeRes( $szTask, $szParsed );
+ 	      break;
+	  }
+      }
+    
+    private function executeRes( $szTask, &$szParsed )
+      {
+	list( $szPath, $szLang, $szString ) = explode( '|', $szTask );
+
+	//reading ressource File
+	$oRessource = new ressource( $szPath );
+	$oRessource->getString( $szLang, $szString, $szParsed );
+      }
+   
+
+    private function executeIf( $szIf, $szSubstring, &$szParsed, &$nNewPos )
+      {
+	$szParsed = '';
+
+	//get Endif
+	$nPos = strpos( $szSubstring, '{endif}' );
+	if ( ! $nPos )
+	  {
+	    throw new Exception();
+	  }
+	
+	if ( strstr( $szIf, '=' ) != '' )
+	  {
+	    list( $szRep, $szString ) = explode( '=', $szIf );
+	    if ( $this->m_aszReplacement[ $szRep ] == $szString )
+	      {
+		$oParser = new parser();
+		$oParser->addReplacementArray( $this->m_aszReplacement );
+		$oParser->parse( substr( $szSubstring, 0, $nPos ), $szParsed );
+	      }
+	    $nNewPos += $nPos;
+	  }
+      }
+
      // ######################################################################
      // --- Parse
      // ######################################################################
@@ -84,6 +148,7 @@ class parser
 	       {
 		 $szParsed .= substr( $szTemplate, $nParsedPos, $nPos - $nParsedPos );
 		 $nParsedPos = $nPos + 1;
+		 
 		 $nPos = strpos( $szTemplate, '}', $nParsedPos );
 		 if ( $nPos === false )
 		   {
@@ -92,25 +157,30 @@ class parser
 		   }
 		 else
 		   {
-		     $szParsed .= $this->m_aszReplacement[ substr( $szTemplate, $nParsedPos, $nPos - $nParsedPos ) ];
+		     $szReplacement = substr( $szTemplate, $nParsedPos, $nPos - $nParsedPos );
+
+		     //replace Variables
+		     preg_match_all( '/\$\[([^\]]*)\]/', $szReplacement, $aMatches );
+		     for ( $i = 0; $i < count( $aMatches[ 0 ] ); $i++ )
+		       {
+			 $szReplacement = preg_replace( '/\$\[' .$aMatches[ 1 ][ $i ] . '\]/', $this->m_aszReplacement[ $aMatches[1][$i] ], $szReplacement );
+		       }
+
+
+		     list( $szCommand, $szTask ) = explode( ':', $szReplacement );
+		     if ( $szCommand != '' && $szTask != '' )
+		       {
+			 $this->executeCommand( $szCommand, $szTask, substr( $szTemplate, $nPos + 1), $szPreParsed, $nPos );
+			 $szParsed .= $szPreParsed;
+		       }
+		     else
+		       {
+			 $szParsed .= $this->m_aszReplacement[ $szReplacement ];
+		       }
 		     $nParsedPos = $nPos + 1;
 		   }
 	       }
 	   }
-	 
-	 return $errResult;
-       }
-
-
-     public function ParseOld( $szTemplate, &$szParsed )
-       {
-	 $errResult = false;
-
-	 while( preg_match( '/{([^}]*)}/', $szTemplate, $aMatches ) )
-           {
-             $szTemplate = preg_replace( '/' . $aMatches[0] . '/', $this->m_aszReplacement[ $aMatches[1] ], $szTemplate );
-           }
-	 $szParsed = $szTemplate;
 	 
 	 return $errResult;
        }

@@ -16,8 +16,6 @@ Description
 
   <xsl:template match="/">
    <p class="roma">
-   <xsl:call-template name="topLinks"/>
-    <h1>Modules</h1>
     <table cellspacing="30">
      <tr>
       <td>
@@ -48,22 +46,6 @@ Description
     </table>
     <br/><br/>
    </p>
-  </xsl:template>
-
-  <xsl:template name="topLinks">
-   <table class="topLinks">
-    <tr>
-     <td class="selected"><a href="?mode=main">Change Modules</a></td>
-     <td><a href="?mode=listAddedElements">Add Elements</a></td>
-     <td><a href="?mode=changeClasses">Change Classes</a></td>
-     <td><a href="?mode=customizeLanguage">Customize language</a></td>
-     <td><a href="?mode=createSchema">Create Schema</a></td>
-     <td><a href="?mode=createDocumentation">Create Documentation</a></td>
-     <td><a href="?mode=saveCustomization">Save Customization</a></td>
-     <td class="newCustomization" rowspan="3"><a
-     href="?mode=newCustomization">Create new Customization</a></td>
-    </tr>
-   </table>
   </xsl:template>
 
 

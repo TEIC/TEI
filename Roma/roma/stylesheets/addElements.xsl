@@ -23,28 +23,12 @@ Description
 <xsl:param name="selectedMode">addElement</xsl:param>
 <xsl:param name="headline">Add new elements</xsl:param>
 <xsl:param name="elementChangedName"/>
-<xsl:param name="contentERROR"/>
 <xsl:param name="module"/>
-<xsl:param name="ERRORS"/>
 <xsl:param name="changeNameERROR"/>
 
 
   <xsl:template match="/">
    <p class="roma">
-    <xsl:call-template name="topLinks"/>
-    <h1><xsl:value-of select="$headline"/></h1>
-    <xsl:if test="not($MESSAGE='')">
-     <p class="success">
-      <xsl:value-of select="$MESSAGE"/>
-     </p>
-    </xsl:if>
-    <xsl:if test="not($ERRORS='')">
-     <xsl:if test="not($contentERROR='')"><p
-      class="error"><xsl:value-of select="$contentERROR"/></p></xsl:if>
-     <xsl:if test="not($changeNameERROR='')"><p
-      class="error"><xsl:value-of
-      select="$changeNameERROR"/></p></xsl:if>
-    </xsl:if>
     
     <xsl:if test="$selectedMode='addElement'">
       <a href="?mode=listAddedElements">go back to list</a><br/>
@@ -191,36 +175,6 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
      </div>
     </xsl:for-each>
 
-  </xsl:template>
-
-
-  
-
-
-
-  <xsl:template name="topLinks">
-   <table class="topLinks">
-    <tr>
-     <td>
-       <xsl:if test="$selectedMode='changeElement'">
-        <xsl:attribute name="class">selected</xsl:attribute>
-       </xsl:if>
-       <a href="?mode=main">Change Modules</a>
-     </td>
-     <td>
-       <xsl:if test="$selectedMode='addElement'">
-        <xsl:attribute name="class">selected</xsl:attribute>
-       </xsl:if>
-      <a href="?mode=listAddedElements">Add Elements</a>
-     </td>
-     <td><a href="?mode=changeClasses">Change Classes</a></td>
-     <td><a href="?mode=customizeLanguage">Customize language</a></td>
-     <td><a href="?mode=createSchema">Create Schema</a></td>
-     <td><a href="?mode=createDocumentation">Create Documentation</a></td>
-     <td><a href="?mode=saveCustomization">Save Customization</a></td>
-     <td class="newCustomization"><a href="?mode=newCustomization">Create new Customization</a></td>
-    </tr>
-   </table>
   </xsl:template>
 
   <xsl:template name="modelClassList">

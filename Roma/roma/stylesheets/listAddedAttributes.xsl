@@ -16,23 +16,10 @@ Description
 <xsl:param name="element"/>
 <xsl:param name="module"/>
 <xsl:param name="class"/>
-<xsl:param name="MESSAGE"/>
-<xsl:param name="ERRORS"/>
 
 
   <xsl:template match="/">
     <p class="roma">
-      <xsl:call-template name="topLinks"/>
-      <h1>Added Attributes </h1>
-      <xsl:if test="not($MESSAGE='')">
-	<p class="success">
-	  <xsl:value-of select="$MESSAGE"/>
-	</p>
-      </xsl:if>
-      <xsl:if test="not($ERRORS='')">
-	<p class="error"><xsl:value-of
-	select="$ERRORS"/></p>
-      </xsl:if>
       <form method="POST">
 	<xsl:attribute
 	name="action">?mode=changeListAddedAttributes</xsl:attribute>
@@ -71,36 +58,6 @@ name="href">?mode=addAttribute&amp;module=<xsl:value-of
     </p>
   </xsl:template>
   
-  <xsl:template name="topLinks">
-    <table class="topLinks">
-      <tr>
-	<td>
-	  <xsl:if test="not($module='') and $class=''">
-	    <xsl:attribute name="class">selected</xsl:attribute>
-	  </xsl:if>
-	  <a href="?mode=main">Change Modules</a>
-	</td>
-	<td>
-	  <xsl:if test="$module='' and $class=''">
-	    <xsl:attribute name="class">selected</xsl:attribute>
-	  </xsl:if>
-	  <a href="?mode=listAddedElements">Add Elements</a>
-	</td>
-	<td>
-	  <xsl:if test="not($class='')">
-	    <xsl:attribute name="class">selected</xsl:attribute>
-	  </xsl:if>
-	  <a href="?mode=changeClasses">Change Classes</a>
-	</td>
-	<td><a href="?mode=customizeLanguage">Customize language</a></td>
-	<td><a href="?mode=createSchema">Create Schema</a></td>
-	<td><a href="?mode=createDocumentation">Create Documentation</a></td>
-	<td><a href="?mode=saveCustomization">Save Customization</a></td>
-	<td class="newCustomization"><a href="?mode=newCustomization">Create new Customization</a></td>
-      </tr>
-    </table>
-  </xsl:template>
-
   <xsl:template name="generateList">
     <xsl:for-each select="//Element/att">
       <tr>

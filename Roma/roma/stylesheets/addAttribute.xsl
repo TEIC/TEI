@@ -24,8 +24,6 @@ Description
   
   <xsl:template match="/">
     <p class="roma">
-      <xsl:call-template name="topLinks"/>
-      <h1>Add some Attributes</h1>
       <a>
 	<xsl:attribute
 	 name="href">?mode=listAddedAttributes&amp;element=<xsl:value-of
@@ -137,38 +135,6 @@ Description
 	 </form>
     </p>
   </xsl:template>
-
-  <xsl:template name="topLinks">
-    <table class="topLinks">
-      <tr>
-	<td>
-	  <xsl:if test="not($module='') and $class=''">
-	    <xsl:attribute name="class">selected</xsl:attribute>
-	  </xsl:if>
-	  <a href="?mode=main">Change Modules</a>
-	</td>
-	<td>	
-	  <xsl:if test="($module='') and $class=''">
-	    <xsl:attribute name="class">selected</xsl:attribute>
-	  </xsl:if>
-	  <a href="?mode=listAddedElements">Add Elements</a>
-	</td>
-	<td>
-	  <xsl:if test="not($class='')">
-	    <xsl:attribute name="class">selected</xsl:attribute>
-	  </xsl:if>
-	  <a href="?mode=changeClasses">Change Classes</a>
-	</td>
-	<td><a href="?mode=customizeLanguage">Customize language</a></td>
-	<td><a href="?mode=createSchema">Create Schema</a></td>
-	<td><a href="?mode=createDocumentation">Create Documentation</a></td>
-	<td><a href="?mode=saveCustomization">Save
-	Customization</a></td>
-	<td class="newCustomization"><a href="?mode=newCustomization">Create new Customization</a></td>
-      </tr>
-    </table>
-  </xsl:template>
-  
   
   <xsl:template name="contentTypes">
     <div class="HideItem">

@@ -249,7 +249,6 @@ class roma
 		$this->m_oRomaDom = new romaDom( $_SESSION[ 'romaDom' ] ); 
               break;
           }
-
       }
 
     // #####################################################################
@@ -266,6 +265,17 @@ class roma
      */
     public function run()
       {
+	//Check for Help
+	if ( $_REQUEST[ 'help' ] == 'switch' )
+	  {
+	    $_SESSION[ 'help' ] = ( $_SESSION[ 'help' ] == 'on' ) ? 'off' : 'on';
+	    $this->redirectBrowserHeader( $_SESSION[ 'lastQuery' ] );
+	  }
+	else
+	  {
+	    $_SESSION[ 'lastQuery' ] = $_SERVER[ 'QUERY_STRING' ];
+	  }
+	
         switch( $_REQUEST[ 'mode' ] )
           {
  	    case roma_mode_downloadFile:
@@ -498,6 +508,7 @@ class roma
 	notamHandler::outputHTML( $szHTML );
 	notamHandler::deleteNotams();
 	$oParser->addReplacement( 'notams', nl2br( $szHTML ) );
+	$oParser->addReplacement( 'help', $_SESSION[ 'help' ] );
       }
 
     private function addErrorsDom( &$oDom, $aoErrors )
@@ -580,6 +591,8 @@ class roma
 
 	$this->applyStylesheet( $oListDom, 'modules.xsl', $oNewDom );
 
+	$oParser->addReplacement( 'mode', 'modules' );
+	$oParser->addReplacement( 'view', 'main' );
 	$oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
         $oParser->Parse( $szTemplate, $szOutput );
 
@@ -609,6 +622,8 @@ class roma
 	$aszParam =  array( 'module' => $_REQUEST[ 'module' ] ) ;
 	$this->applyStylesheet( $oListDom, 'changeModules.xsl', $oNewDom, $aszParam);
 
+	$oParser->addReplacement( 'mode', 'changeModule' );
+	$oParser->addReplacement( 'view', 'main' );
 	$oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
         $oParser->Parse( $szTemplate, $szOutput );
 
@@ -683,6 +698,8 @@ class roma
 
 	$this->applyStylesheet( $oListDom, 'addElements.xsl', $oNewDom, $aszParam  );
 
+	$oParser->addReplacement( 'mode', 'addElements' );
+	$oParser->addReplacement( 'view', 'listElements' );
 	$oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
         $oParser->Parse( $szTemplate, $szOutput );
 
@@ -703,6 +720,8 @@ class roma
 
 	$oSchemaParser->Parse( $szSchemTem, $szSchema );
 	
+	$oParser->addReplacement( 'mode', 'createSchema' );
+	$oParser->addReplacement( 'view', 'createSchema' );
 	$oParser->addReplacement( 'template', $szSchema );
 	$oParser->Parse( $szTemplate, $szOutput );
 
@@ -723,6 +742,8 @@ class roma
 	$oLanguageParser = new parser();
 	$oLanguageParser->Parse( $szLangTem, $szLanguage );
 
+	$oParser->addReplacement( 'mode', 'customizeLanguage' );
+	$oParser->addReplacement( 'view', 'customizeLanguage' );
 	$oParser->addReplacement( 'template', $szLanguage );
         $oParser->Parse( $szTemplate, $szOutput );
 
@@ -791,6 +812,7 @@ class roma
 
 	$this->applyStylesheet( $oListDom, 'addElements.xsl', $oNewDom, $aszParam  );
 
+	$oParser->addReplacement( 'view', 'main' );
 	$oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
         $oParser->Parse( $szTemplate, $szOutput );
 
@@ -850,6 +872,20 @@ class roma
 
 	$this->applyStylesheet( $oListDom, 'addAttribute.xsl', $oNewDom, $aszParam );
 
+	if ( $_REQUEST[ 'class' ] != '' )
+	  {
+	    $oParser->addReplacement( 'view', 'changeClasses' );
+	  }
+	elseif( $_REQUEST[ 'module' ] != '' )
+	  {
+	    $oParser->addReplacement( 'view', 'main' );
+	  }
+	else
+	  {
+	    $oParser->addReplacement( 'view', 'listElements' );
+	  }
+
+	$oParser->addReplacement( 'mode', 'addAttributes' );
 	$oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
         $oParser->Parse( $szTemplate, $szOutput );
 
@@ -871,6 +907,8 @@ class roma
 	    
 	    $this->applyStylesheet( $oElementsDom, 'listAddedElements.xsl', $oNewDom, $aszParam );
 
+	    $oParser->addReplacement( 'mode', 'listElements' );
+	    $oParser->addReplacement( 'view', 'listElements' );
 	    $oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
 	    $oParser->Parse( $szTemplate, $szOutput );
 	  }
@@ -912,6 +950,20 @@ class roma
 
 	    $this->applyStylesheet( $oAtts, 'listAddedAttributes.xsl', $oNewDom, $aszParam );
 
+
+	    if ( $_REQUEST[ 'class' ] != '' )
+	      {
+		$oParser->addReplacement( 'view', 'changeClasses' );
+	      }
+	    elseif( $_REQUEST[ 'module' ] != '' )
+	      {
+		$oParser->addReplacement( 'view', 'main' );
+	      }
+	    else
+	      {
+		$oParser->addReplacement( 'view', 'listElements' );
+	      }
+	    $oParser->addReplacement( 'mode', 'listAttributes' );
 	    $oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
 	    $oParser->Parse( $szTemplate, $szOutput );
 	  }
@@ -936,6 +988,8 @@ class roma
 
 	$this->applyStylesheet( $oListDom, 'changeClasses.xsl', $oNewDom, array( 'class' => $_REQUEST[ 'class' ], 'module' => $_REQUEST[ 'module' ] ) );
 
+	$oParser->addReplacement( 'mode', 'changeClasses' );
+	$oParser->addReplacement( 'view', 'changeClasses' );
 	$oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
         $oParser->Parse( $szTemplate, $szOutput );
 
@@ -954,6 +1008,8 @@ class roma
 	$oDocParser = new parser();
 	$oDocParser->Parse( $szDocTem, $szDoc );
 
+	$oParser->addReplacement( 'mode', 'createDocumentation' );
+	$oParser->addReplacement( 'view', 'createDocumentation' );
 	$oParser->addReplacement( 'template', $szDoc );
         $oParser->Parse( $szTemplate, $szOutput );
 
