@@ -994,9 +994,9 @@ select="$ident"/>] to  class [<xsl:value-of select="@ident"/>]</xsl:message>
     </xsl:choose>
   </xsl:variable>
   <rng:attribute name="{$name}">
-    <xsl:if test="tei:default">
+    <xsl:if test="tei:defaultVal">
       <xsl:attribute name="a:defaultValue">
-	<xsl:value-of select="normalize-space(tei:default)"/>
+	<xsl:value-of select="normalize-space(tei:defaultVal)"/>
       </xsl:attribute>
     </xsl:if>
     <rng:ref name="{ancestor::tei:attList/../@ident}.attributes.{@ident}.content"/>

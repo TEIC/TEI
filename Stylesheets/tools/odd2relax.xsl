@@ -216,7 +216,7 @@ select="$filename"/>-decl</xsl:message>
 
 <xsl:template match="processing-instruction()" mode="tangle"/>
 
-<xsl:template match="tei:default"/>
+<xsl:template match="tei:defaultVal"/>
 
 
 
