@@ -12,7 +12,6 @@
 <xsl:key name="MODS" match="tei:module" use="@ident"/>
 <xsl:output method="xml" indent="yes"/>
 <xsl:param name="lang">es</xsl:param>
-<xsl:param name="verbose">true</xsl:param>
 <xsl:key name="ELEMENTS" match="element" use="@ident"/>
 <xsl:key name="ATTRIBUTES" match="attribute" use="@ident"/>
 <xsl:param name="TEITAGS">http://www.tei-c.org.uk/tei-bin/files.pl?name=tags.xml</xsl:param>
@@ -123,8 +122,6 @@
   <xsl:param name="modname"/>
   <xsl:variable name="HERE" select="."/>
 
-  <xsl:message>Translations for <xsl:value-of select="$modname"/></xsl:message>
-
   <xsl:for-each
    select="document($TEITAGS)/Table">
     <xsl:for-each select="key('TAGMODS',$modname)">
@@ -137,8 +134,6 @@
 	    </xsl:if>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <xsl:message>  translation for <xsl:value-of
-	    select="$thisthing"/></xsl:message>
 	    <xsl:for-each  select="document($TEINAMES)">
 	      <xsl:for-each select="key('ELEMENTS',$thisthing)">
 		<xsl:if test="equiv[@lang=$lang]">

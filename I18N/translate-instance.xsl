@@ -9,7 +9,6 @@
  version="1.0">
 <xsl:output method="xml" indent="yes"/>
 <xsl:param name="lang">es</xsl:param>
-<xsl:param name="verbose">false</xsl:param>
 <xsl:key name="ELEMENTS" match="element" use="@ident"/>
 <xsl:key name="ATTRIBUTES" match="attribute" use="@ident"/>
 <xsl:param name="TEINAMES">http://www.tei-c.org.uk/tei-bin/files.pl?name=teinames.xml</xsl:param>
