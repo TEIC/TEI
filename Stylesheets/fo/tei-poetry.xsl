@@ -14,7 +14,7 @@ $Date$, $Revision$, $Author$
 
 XSL FO stylesheet to format TEI XML documents 
 
-#include LICENSE
+##LICENSE
 -->
 
 <xsl:stylesheet

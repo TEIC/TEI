@@ -2,7 +2,7 @@
 
 XSL FO stylesheet to formatt TEI XML documents 
 
-#include LICENSE
+##LICENSE
 -->
 <xsl:stylesheet
   xmlns:tei="http://www.tei-c.org/ns/1.0"
@@ -145,12 +145,12 @@ XSL FO stylesheet to formatt TEI XML documents
 
        <xsl:apply-templates/>
 
-       <xsl:if test="//tei:note[@place='end']">
+       <xsl:if test=".//tei:note[@place='end']">
       <fo:block>
       <xsl:call-template name="setupDiv2"/>
       <xsl:text>Notes</xsl:text>
      </fo:block>
-           <xsl:apply-templates select="//tei:note[@place='end']" mode="endnote"/>
+           <xsl:apply-templates select=".//tei:note[@place='end']" mode="endnote"/>
       </xsl:if>
        </fo:flow>
       </fo:page-sequence>
@@ -162,12 +162,12 @@ XSL FO stylesheet to formatt TEI XML documents
 
        <xsl:apply-templates/>
 
-       <xsl:if test="//tei:note[@place='end']">
+       <xsl:if test=".//tei:note[@place='end']">
       <fo:block>
       <xsl:call-template name="setupDiv2"/>
       <xsl:text>Notes</xsl:text>
      </fo:block>
-           <xsl:apply-templates select="//tei:note[@place='end']" mode="endnote"/>
+           <xsl:apply-templates select=".//tei:note[@place='end']" mode="endnote"/>
       </xsl:if>
 </xsl:template>
 
@@ -583,12 +583,12 @@ XSL FO stylesheet to formatt TEI XML documents
       </xsl:call-template>
      <xsl:apply-templates select="tei:body"/>
      <xsl:apply-templates select="tei:back"/>
-     <xsl:if test=".//tei:note[@place='end']">
+     <xsl:if test="..//tei:note[@place='end']">
       <fo:block>
       <xsl:call-template name="setupDiv2"/>
       <xsl:text>Notes</xsl:text>
       </fo:block>
-      <xsl:apply-templates select="//tei:note[@place='end']" mode="endnote"/>
+      <xsl:apply-templates select=".//tei:note[@place='end']" mode="endnote"/>
      </xsl:if>
     </fo:flow>
  </fo:page-sequence>
