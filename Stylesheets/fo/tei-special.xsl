@@ -112,8 +112,7 @@ XSL FO stylesheet to format TEI XML documents
         </xsl:attribute>
        </xsl:if>
        <xsl:if test="parent::tei:exemplum">
-         <xsl:text>
-</xsl:text>
+         <xsl:text>&#10;</xsl:text>
        </xsl:if>
       <xsl:value-of select="translate(.,' ','&#160;')"/>
     </fo:block>

@@ -58,7 +58,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
         <xsl:choose>
           <xsl:when test="count(key('IDS',$currentID))&gt;0">
              <xsl:for-each select="key('IDS',$currentID)">  
-                <xsl:apply-templates select="." mode="header"/>
+                <xsl:apply-templates select="." mode="xref"/>
              </xsl:for-each>
           </xsl:when>
           <xsl:otherwise>
@@ -134,7 +134,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
      </xsl:when>
      <xsl:when test="starts-with(name(),'div')">
       <xsl:if test="not(preceding-sibling::tei:*) or preceding-sibling::tei:titlePage">
-           <h2><xsl:apply-templates select="." mode="header"/></h2>
+           <h2><xsl:apply-templates select="." mode="xref"/></h2>
            <xsl:call-template name="doDivBody"/>
            <xsl:call-template name="printDivnotes"/>
                 <xsl:if test="$bottomNavigationPanel='true'">
@@ -217,7 +217,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
         <xsl:choose>
           <xsl:when test="count(key('IDS',$currentID))&gt;0">
              <xsl:for-each select="key('IDS',$currentID)">  
-                <h2><xsl:apply-templates select="." mode="header"/></h2>
+                <h2><xsl:apply-templates select="." mode="xref"/></h2>
                 <xsl:call-template name="doDivBody"/>
 		<xsl:call-template name="printDivnotes"/>
                 <xsl:if test="$bottomNavigationPanel='true'">

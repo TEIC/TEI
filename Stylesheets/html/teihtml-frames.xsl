@@ -68,8 +68,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
  <base target="framemain"/>
  </head>
  <body class="framemenu">
- <xsl:call-template name="logoFramePicture"/><br/><xsl:text>
-</xsl:text>
+ <xsl:call-template name="logoFramePicture"/><br/><xsl:text>&#10;</xsl:text>
  <xsl:call-template name="linkListContents">
       <xsl:with-param name="style" select="'frametoc'"/>
  </xsl:call-template>
@@ -222,12 +221,11 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
     <xsl:for-each select="tei:div|tei:div0|tei:div1">
       <xsl:if test="tei:head">
        <xsl:variable name="pointer">
-          <xsl:apply-templates mode="xrefheader" select="."/>
+          <xsl:apply-templates mode="generateLink" select="."/>
        </xsl:variable>
        <p class="{$style}"><a class="{$style}" href="{$pointer}">
        <xsl:call-template name="header"/></a></p>
-       <xsl:text>
-</xsl:text>
+       <xsl:text>&#10;</xsl:text>
 </xsl:if>
     </xsl:for-each>
    </xsl:for-each>
@@ -236,12 +234,11 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
     <xsl:for-each select="tei:div|tei:div0|tei:div1">
       <xsl:if test="tei:head">
        <xsl:variable name="pointer">
-          <xsl:apply-templates mode="xrefheader" select="."/>
+          <xsl:apply-templates mode="generateLink" select="."/>
        </xsl:variable>
        <p class="{$style}"><a class="{$style}" href="{$pointer}">
          <xsl:call-template name="header"/></a>
-       </p><xsl:text>
-</xsl:text>
+       </p><xsl:text>&#10;</xsl:text>
         
       </xsl:if>
     </xsl:for-each>
@@ -251,29 +248,26 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
     <xsl:if test="tei:div|tei:div0|tei:div1"><hr/></xsl:if>
       <xsl:if test="tei:head">
        <xsl:variable name="pointer">
-          <xsl:apply-templates mode="xrefheader" select="."/>
+          <xsl:apply-templates mode="generateLink" select="."/>
        </xsl:variable>
        <p class="{$style}"><a class="{$style}" href="{$pointer}">
        <xsl:call-template name="header"/></a></p>
-       <xsl:text>
-</xsl:text>
+       <xsl:text>&#10;</xsl:text>
 </xsl:if>
     </xsl:for-each>
    </xsl:for-each>
   </xsl:for-each>
  </xsl:when>
  <xsl:otherwise>
-    <xsl:text>
-</xsl:text><hr/>
+    <xsl:text>&#10;</xsl:text><hr/>
  <xsl:for-each select="ancestor::tei:div|ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4|ancestor::tei:div5">
    <xsl:if test="tei:head">
    <p class="{$style}"><a class="{$style}">
         <xsl:attribute name="href">
-         <xsl:apply-templates mode="xrefheader" select="."/>
+         <xsl:apply-templates mode="generateLink" select="."/>
         </xsl:attribute>
        <xsl:call-template name="header"/>
-     </a></p><xsl:text>
-</xsl:text><hr/>
+     </a></p><xsl:text>&#10;</xsl:text><hr/>
 </xsl:if>
  </xsl:for-each>
 <!-- preceding divisions -->
@@ -281,31 +275,28 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
    <xsl:if test="tei:head">
       <p class="{$style}"><a class="{$style}">
         <xsl:attribute name="href">
-         <xsl:apply-templates mode="xrefheader" select="."/>
+         <xsl:apply-templates mode="generateLink" select="."/>
         </xsl:attribute>
        <xsl:call-template name="header"/>
-     </a></p><xsl:text>
-</xsl:text>
+     </a></p><xsl:text>&#10;</xsl:text>
    </xsl:if>
    </xsl:for-each>
 
 <!-- current division -->
       <p class="{$style}"><a class="{$style}-this">
         <xsl:attribute name="href">
-         <xsl:apply-templates mode="xrefheader" select="."/>
+         <xsl:apply-templates mode="generateLink" select="."/>
         </xsl:attribute>
        <xsl:call-template name="header"/>
-     </a></p><xsl:text>
-</xsl:text>
+     </a></p><xsl:text>&#10;</xsl:text>
 <!-- ... and any children it has -->
    <xsl:for-each select="tei:div|tei:div2|tei:div3|tei:div4|tei:div5">
       <p class="{$style}-sub"><a class="{$style}-sub">
         <xsl:attribute name="href">
-         <xsl:apply-templates mode="xrefheader" select="."/>
+         <xsl:apply-templates mode="generateLink" select="."/>
         </xsl:attribute>
         <xsl:call-template name="header"/>
-       </a></p><xsl:text>
-</xsl:text>
+       </a></p><xsl:text>&#10;</xsl:text>
    </xsl:for-each>
 
 <!-- following divisions -->
@@ -313,11 +304,10 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
    <xsl:if test="tei:head">
       <p class="{$style}"><a class="{$style}">
         <xsl:attribute name="href">
-         <xsl:apply-templates mode="xrefheader" select="."/>
+         <xsl:apply-templates mode="generateLink" select="."/>
         </xsl:attribute>
         <xsl:call-template name="header"/>
-      </a></p><xsl:text>
-</xsl:text>
+      </a></p><xsl:text>&#10;</xsl:text>
    </xsl:if>
    </xsl:for-each>
  </xsl:otherwise>
@@ -358,10 +348,8 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 href="{$searchURL}"><xsl:call-template name="searchWords"/></a> 
 </xsl:if>
 <xsl:if test="$feedbackURL">
-  <br/><xsl:text>
-</xsl:text>
-  <br/><xsl:text>
-</xsl:text>
+  <br/><xsl:text>&#10;</xsl:text>
+  <br/><xsl:text>&#10;</xsl:text>
 <a class="{$style}" target="_top" 
 href="{$feedbackURL}"><xsl:call-template name="feedbackWords"/></a> 
 </xsl:if>

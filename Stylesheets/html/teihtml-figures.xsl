@@ -29,6 +29,12 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
       <xsl:value-of select="$graphicsSuffix"/>
    </xsl:if>
   </xsl:when>
+  <xsl:when test="@target">
+   <xsl:value-of select="@url"/>
+   <xsl:if test="not(contains(@url,'.'))">
+      <xsl:value-of select="$graphicsSuffix"/>
+   </xsl:if>
+  </xsl:when>
   <xsl:otherwise>
     <xsl:variable name="entity">
       <xsl:value-of select="unparsed-entity-uri(@entity)"/>

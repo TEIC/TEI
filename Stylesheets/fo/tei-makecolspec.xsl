@@ -81,8 +81,7 @@ select="exsl:node-set($tableSpecs)/Info/TableSpec[$no=@id]/fo:table-column">
    <fo:table-column column-number="{@col}" fotex:column-align="L" column-width="{$len div $total * 100}%" />
   </xsl:if>
 </xsl:for-each>
-   <xsl:text>
-</xsl:text>
+   <xsl:text>&#10;</xsl:text>
 </xsl:template>
 
 <xsl:template name="generateTableID">

@@ -50,9 +50,12 @@ XSL stylesheet to process TEI documents using ODD markup
 
 <xsl:template  match="tei:specGrpRef">
 &#171; <tei:emph>include
-<tei:ref target="{@target}"><xsl:for-each select="key('IDS',@target)">
-   <xsl:call-template name="compositeNumber"/>
-</xsl:for-each></tei:ref></tei:emph>
+<tei:ref target="{@target}">
+  <xsl:for-each select="key('IDS',@target)">
+    <xsl:call-template name="compositeNumber"/>
+  </xsl:for-each>
+</tei:ref>
+</tei:emph>
 <xsl:text> &#187; </xsl:text>
 </xsl:template>
 

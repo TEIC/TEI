@@ -347,14 +347,14 @@ XSL FO stylesheet to formatt TEI XML documents
 <!-- headings when cross-referenced -->
 
 <xsl:template mode="xref" match="tei:text">
-      <xsl:choose>
-       <xsl:when test="@n">
-         <xsl:value-of select="@n"/>
-       </xsl:when>
-       <xsl:otherwise>
-         <xsl:number/>
-       </xsl:otherwise>
-       </xsl:choose>
+  <xsl:choose>
+    <xsl:when test="@n">
+      <xsl:value-of select="@n"/>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:number/>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template mode="xref" match="tei:div">

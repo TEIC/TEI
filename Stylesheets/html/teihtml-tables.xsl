@@ -47,7 +47,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
  </xsl:choose>
  </xsl:attribute>
  <xsl:if test="tei:head">
-   <p><xsl:apply-templates select="." mode="header"/></p>
+   <p><xsl:apply-templates select="." mode="xref"/></p>
  </xsl:if>
  <table>
    <xsl:if test="@rend">

@@ -305,7 +305,7 @@ splitLevel: <xsl:value-of select="$splitLevel"/>
    <xsl:for-each select="tei:text/tei:front">
     <xsl:for-each select=".//tei:div1">
        <xsl:variable name="pointer">
-          <xsl:apply-templates mode="xrefheader" select="."/>
+          <xsl:apply-templates mode="generateLink" select="."/>
        </xsl:variable>
        <p class="{$style}">
        <a class="{$style}" href="{$pointer}">
@@ -317,7 +317,7 @@ splitLevel: <xsl:value-of select="$splitLevel"/>
    <xsl:for-each select="tei:text/tei:body">
     <xsl:for-each select=".//tei:div1">
        <xsl:variable name="pointer">
-          <xsl:apply-templates mode="xrefheader" select="."/>
+          <xsl:apply-templates mode="generateLink" select="."/>
        </xsl:variable>
        <p class="{$style}">
        <a class="{$style}" href="{$pointer}">
@@ -329,7 +329,7 @@ splitLevel: <xsl:value-of select="$splitLevel"/>
     <hr/>
     <xsl:for-each select=".//tei:div1">
        <xsl:variable name="pointer">
-          <xsl:apply-templates mode="xrefheader" select="."/>
+          <xsl:apply-templates mode="generateLink" select="."/>
        </xsl:variable>
        <p class="{$style}">
        <a class="{$style}" href="{$pointer}">
@@ -359,7 +359,7 @@ splitLevel: <xsl:value-of select="$splitLevel"/>
   <p class="{$style}">
       <a class="{$style}">
         <xsl:attribute name="href">
-         <xsl:apply-templates mode="xrefheader" select="."/>
+         <xsl:apply-templates mode="generateLink" select="."/>
         </xsl:attribute>
        <xsl:call-template name="header"/>
       </a>
@@ -371,7 +371,7 @@ splitLevel: <xsl:value-of select="$splitLevel"/>
 <p class="{$style}">
  <a class="{$style}">
         <xsl:attribute name="href">
-         <xsl:apply-templates mode="xrefheader" select="."/>
+         <xsl:apply-templates mode="generateLink" select="."/>
         </xsl:attribute>
        <xsl:call-template name="header"/>
      </a></p>
@@ -380,7 +380,7 @@ splitLevel: <xsl:value-of select="$splitLevel"/>
    <xsl:for-each select="tei:div2|tei:div3|tei:div4|tei:div5">
       <p class="{$style}-sub"><a class="{$style}-sub">
         <xsl:attribute name="href">
-         <xsl:apply-templates mode="xrefheader" select="."/>
+         <xsl:apply-templates mode="generateLink" select="."/>
         </xsl:attribute>
         <xsl:call-template name="header"/>
       </a></p>
@@ -393,7 +393,7 @@ splitLevel: <xsl:value-of select="$splitLevel"/>
       <p class="{$style}">
       <a class="{$style}">
         <xsl:attribute name="href">
-         <xsl:apply-templates mode="xrefheader" select="."/>
+         <xsl:apply-templates mode="generateLink" select="."/>
         </xsl:attribute>
        <xsl:call-template name="header"/>
      </a></p>
@@ -403,7 +403,7 @@ splitLevel: <xsl:value-of select="$splitLevel"/>
       <p class="{$style}-this">
       <a class="{$style}-this">
         <xsl:attribute name="href">
-         <xsl:apply-templates mode="xrefheader" select="."/>
+         <xsl:apply-templates mode="generateLink" select="."/>
         </xsl:attribute>
        <xsl:call-template name="header"/>
      </a></p>
@@ -413,7 +413,7 @@ splitLevel: <xsl:value-of select="$splitLevel"/>
       <p class="{$style}">
       <a class="{$style}">
         <xsl:attribute name="href">
-         <xsl:apply-templates mode="xrefheader" select="."/>
+         <xsl:apply-templates mode="generateLink" select="."/>
         </xsl:attribute>
         <xsl:call-template name="header"/>
       </a></p>
@@ -510,10 +510,10 @@ splitLevel: <xsl:value-of select="$splitLevel"/>
  <xsl:for-each select="//tei:index">
   <index c="{@level}" a="{@level1}" b="{@level2}">
      <file>
-       <xsl:apply-templates select="ancestor::tei:div1" mode="xrefheader"/>
+       <xsl:apply-templates select="ancestor::tei:div1" mode="generateLink"/>
      </file>
      <section>
-       <xsl:apply-templates select="(ancestor::tei:div1|ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4|ancestor::tei:div5)[last()]" mode="header">
+       <xsl:apply-templates select="(ancestor::tei:div1|ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4|ancestor::tei:div5)[last()]" mode="xref">
          <xsl:with-param name="minimal"></xsl:with-param>
        </xsl:apply-templates>
      </section>
@@ -527,10 +527,10 @@ splitLevel: <xsl:value-of select="$splitLevel"/>
    <xsl:if test="not(@rend='noindex')">
   <index c="{text()}" a="{text()}">
      <file>
-       <xsl:apply-templates select="ancestor::tei:div1" mode="xrefheader"/>
+       <xsl:apply-templates select="ancestor::tei:div1" mode="generateLink"/>
      </file>
      <section>
-       <xsl:apply-templates select="(ancestor::tei:div1|ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4|ancestor::tei:div5)[last()]" mode="header">
+       <xsl:apply-templates select="(ancestor::tei:div1|ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4|ancestor::tei:div5)[last()]" mode="xref">
          <xsl:with-param name="minimal"></xsl:with-param>
        </xsl:apply-templates>
      </section>
@@ -550,10 +550,10 @@ splitLevel: <xsl:value-of select="$splitLevel"/>
       <xsl:value-of select="."/><xsl:text>&gt;</xsl:text>
     </xsl:attribute>
      <file>
-       <xsl:apply-templates select="ancestor::tei:div1" mode="xrefheader"/>
+       <xsl:apply-templates select="ancestor::tei:div1" mode="generateLink"/>
      </file>
      <section>
-       <xsl:apply-templates select="(ancestor::tei:div1|ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4|ancestor::tei:div5)[last()]" mode="header">
+       <xsl:apply-templates select="(ancestor::tei:div1|ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4|ancestor::tei:div5)[last()]" mode="xref">
          <xsl:with-param name="minimal"></xsl:with-param>
        </xsl:apply-templates>
      </section>

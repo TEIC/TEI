@@ -9,12 +9,12 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 #include LICENSE
 --> 
 <xsl:stylesheet
-  xmlns:tei="http://www.tei-c.org/ns/1.0"
- xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  extension-element-prefixes="edate"
-  exclude-result-prefixes="edate" 
-  xmlns:edate="http://exslt.org/dates-and-times"
-  version="1.0">
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    extension-element-prefixes="edate"
+    exclude-result-prefixes="edate" 
+    xmlns:edate="http://exslt.org/dates-and-times"
+    version="1.0">
 
 <xsl:param name="teiP4Compat">false</xsl:param>
 
@@ -219,20 +219,20 @@ select="normalize-space(substring-before(substring-after($revauthor,'LastChanged
  </xsl:choose>
 </xsl:template>
 
-<xsl:template match="tei:note" mode="header">
+<xsl:template match="tei:note" mode="xref">
    <xsl:number level="any"/>
 </xsl:template>
 
-<xsl:template match="tei:anchor|tei:p" mode="header">
+<xsl:template match="tei:anchor|tei:p" mode="xref">
   <xsl:text>here</xsl:text>
 </xsl:template>
 
-<xsl:template match="tei:TEI" mode="header"> 
+<xsl:template match="tei:TEI" mode="xref"> 
   <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
 </xsl:template>
 
 
-<xsl:template match="tei:table" mode="header">
+<xsl:template match="tei:table" mode="xref">
 <xsl:choose>
   <xsl:when test="$numberTables='true'">
     <xsl:value-of select="tei:tableWord"/>
@@ -249,11 +249,13 @@ select="normalize-space(substring-before(substring-after($revauthor,'LastChanged
 </xsl:choose>
 </xsl:template>
 
-<xsl:template match="tei:figure" mode="header">
+<xsl:template match="tei:figure" mode="xref">
 <xsl:choose>
   <xsl:when test="$numberFigures='true'">
-    <xsl:value-of select="tei:figureWord"/>
-    <xsl:text> </xsl:text>
+    <xsl:if test="not($figureWord='')">
+      <xsl:value-of select="$figureWord"/>
+      <xsl:text> </xsl:text>
+    </xsl:if>
     <xsl:number level="any"/>
     <xsl:if test="tei:head">
       <xsl:text>, </xsl:text>
@@ -266,32 +268,32 @@ select="normalize-space(substring-before(substring-after($revauthor,'LastChanged
 </xsl:choose>
 </xsl:template>
 
-<xsl:template match="tei:biblStruct" mode="header">
+<xsl:template match="tei:biblStruct" mode="xref">
  <xsl:choose>
-		<xsl:when test="descendant::tei:author">
-			<xsl:apply-templates select="descendant::tei:author[position()=1]" mode="first"/>
-		</xsl:when>
-		<xsl:otherwise>
-			<xsl:apply-templates select="descendant::tei:editor[position()=1]" mode="first"/>
-		</xsl:otherwise>
-	</xsl:choose>
-	<xsl:choose>
-		<xsl:when test="descendant::tei:title[@type='short']">
-			<xsl:apply-templates select="descendant::tei:title[@type='short']"/>
-		</xsl:when>
-		<xsl:otherwise>
-			<xsl:apply-templates select="descendant::tei:title[@type='main'][1]"/>
-		</xsl:otherwise>
-	</xsl:choose>
+   <xsl:when test="descendant::tei:author">
+     <xsl:apply-templates select="descendant::tei:author[position()=1]" mode="first"/>
+   </xsl:when>
+   <xsl:otherwise>
+     <xsl:apply-templates select="descendant::tei:editor[position()=1]" mode="first"/>
+   </xsl:otherwise>
+ </xsl:choose>
+ <xsl:choose>
+   <xsl:when test="descendant::tei:title[@type='short']">
+     <xsl:apply-templates select="descendant::tei:title[@type='short']"/>
+   </xsl:when>
+   <xsl:otherwise>
+     <xsl:apply-templates select="descendant::tei:title[@type='main'][1]"/>
+   </xsl:otherwise>
+ </xsl:choose>
 </xsl:template>
 
 
-<xsl:template match="tei:bibl" mode="header">
-<xsl:text>[</xsl:text><xsl:number/><xsl:text>]</xsl:text>
+<xsl:template match="tei:bibl" mode="xref">
+  <xsl:text>[</xsl:text><xsl:number/><xsl:text>]</xsl:text>
 </xsl:template>
 
 
-<xsl:template match="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6" mode="header"> 
+<xsl:template match="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6" mode="xref"> 
   <xsl:param name="minimal"/>
   <xsl:call-template name="header">
     <xsl:with-param name="minimal" select="$minimalCrossRef"/>
@@ -355,22 +357,22 @@ select="normalize-space(substring-before(substring-after($revauthor,'LastChanged
 	<xsl:value-of select="@n"/>
       </xsl:when>
       <xsl:when test="not($toc='')">
-	  <xsl:call-template name="makeHyperLink">     
-	    <xsl:with-param name="url">
+	  <xsl:call-template name="makeInternalLink">     
+	    <xsl:with-param name="dest">
 	      <xsl:value-of select="$toc"/>
 	    </xsl:with-param>
 	    <xsl:with-param name="class">
 	      <xsl:value-of select="$class_toc"/>
 	    </xsl:with-param>
 	    <xsl:with-param name="body">
-	  <xsl:choose>
-	    <xsl:when test="$autoHead='true'">
-	      <xsl:call-template name="autoMakeHead"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:apply-templates mode="plain" select="tei:head"/>
-	    </xsl:otherwise>
-	  </xsl:choose>
+	      <xsl:choose>
+		<xsl:when test="$autoHead='true'">
+		  <xsl:call-template name="autoMakeHead"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:apply-templates mode="plain" select="tei:head"/>
+		</xsl:otherwise>
+	      </xsl:choose>
 	    </xsl:with-param>
 	  </xsl:call-template>
       </xsl:when>
@@ -390,5 +392,97 @@ select="normalize-space(substring-before(substring-after($revauthor,'LastChanged
     <xsl:otherwise>Heading</xsl:otherwise>
   </xsl:choose>
 </xsl:template>
+
+<!-- cross-referencing -->
+<xsl:template name="makeLink">
+<xsl:param name="ptr"/><!-- is this a ptr or a ref? -->
+<xsl:choose>
+  <!-- If there is a target attribute starting with #, it is always a local reference -->
+  <xsl:when test="@target and starts-with(@target,'#')">
+    <xsl:call-template name="makeInternalLink">
+      <xsl:with-param name="ptr" select="$ptr"/>
+      <xsl:with-param name="dest">
+	<xsl:call-template name="generateEndLink">
+	  <xsl:with-param name="where">
+	    <xsl:value-of select="substring-after(@target,'#')"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:when>
+<!-- if we are doing TEI P4, all targets are local -->
+  <xsl:when test="@target and $teiP4Compat='true'">
+    <xsl:call-template name="makeInternalLink">
+      <xsl:with-param name="ptr" select="$ptr"/>
+      <xsl:with-param name="dest">
+	<xsl:call-template name="generateEndLink">
+	  <xsl:with-param name="where">
+	    <xsl:value-of select="@target"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:when>
+<!-- other uses of target means it is external -->
+  <xsl:when test="@target">
+    <xsl:call-template name="makeExternalLink">
+      <xsl:with-param name="ptr" select="$ptr"/>
+      <xsl:with-param name="dest">
+	<xsl:value-of select="@target"/>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:when>
+  <!-- If there is a url attribute starting with #, it is a local
+       reference -->
+  <xsl:when test="@url and starts-with(@url,'#')">
+    <xsl:call-template name="makeInternalLink">
+      <xsl:with-param name="ptr" select="$ptr"/>
+      <xsl:with-param name="dest">
+	<xsl:call-template name="generateEndLink">
+	  <xsl:with-param name="where">
+	    <xsl:value-of select="@target"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:when>
+  <!-- otherwise it is an external URL -->
+  <xsl:when test="@url">
+    <xsl:call-template name="makeExternalLink">
+      <xsl:with-param name="ptr" select="$ptr"/>
+      <xsl:with-param name="dest">
+	<xsl:value-of select="@url"/>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:when>
+<!-- A doc attribute means an external reference -->
+    <xsl:when test="@doc">
+      <xsl:call-template name="makeExternalLink">
+	<xsl:with-param name="ptr" select="$ptr"/>
+	<xsl:with-param name="dest">
+	    <xsl:value-of select="unparsed-entity-uri(@doc)"/>
+	</xsl:with-param>
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:message terminate="yes">ERROR. pointer with no valid attribute on <xsl:value-of 
+      select="name(.)"/></xsl:message>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+<xsl:template match="tei:ref|tei:xref">
+  <xsl:call-template name="makeLink">
+    <xsl:with-param name="ptr">false</xsl:with-param>
+  </xsl:call-template>
+</xsl:template>
+
+<xsl:template match="tei:ptr|tei:xptr">
+  <xsl:call-template name="makeLink">
+    <xsl:with-param name="ptr">true</xsl:with-param>
+  </xsl:call-template>
+</xsl:template>
+
+
 
 </xsl:stylesheet>

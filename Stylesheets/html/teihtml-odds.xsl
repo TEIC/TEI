@@ -49,14 +49,17 @@ XSL HTML stylesheet to format TEI XML documents
    </xsl:if>
  </xsl:template>
  
- <xsl:template  match="tei:specGrpRef">
- &#171; <em>include
- <a href="#{@target}"><xsl:for-each select="key('IDS',@target)">
-    <xsl:call-template name="compositeNumber"/>
- </xsl:for-each></a></em>
+<xsl:template  match="tei:specGrpRef">
+   &#171; <em>include
+   <a href="#{@target}">
+     <xsl:for-each select="key('IDS',@target)">
+       <xsl:call-template name="compositeNumber"/>
+     </xsl:for-each>
+   </a>
+ </em>
  <xsl:text> &#187; </xsl:text>
- </xsl:template>
-
+</xsl:template>
+ 
 <xsl:template match="tei:attDef" mode="summary">
   <xsl:variable name="name">
     <xsl:choose>
@@ -415,35 +418,35 @@ XSL HTML stylesheet to format TEI XML documents
 </xsl:template>
 
 <xsl:template match="tei:macroSpec/tei:content" mode="weave">
-      <tr><td valign='top'><i>Declaration</i></td><td colspan='2'>
-      <xsl:call-template name="bitOut">
-	<xsl:with-param name="grammar">true</xsl:with-param>
-	<xsl:with-param name="content">
-	  <Wrapper>
-	    <xsl:variable name="entCont">
-	      <Stuff>
-		<xsl:apply-templates select="rng:*"/>
-	      </Stuff>
-	    </xsl:variable>
-	    <xsl:variable name="entCount">
-	      <xsl:for-each select="exsl:node-set($entCont)/Stuff">
-		<xsl:value-of select="count(*)"/>
-	      </xsl:for-each>
-	    </xsl:variable>
-	    <xsl:choose>
-	      <xsl:when test='.="TEI.singleBase"'/>
-	      <xsl:otherwise>
-		<rng:define name="{../@ident}">
-		  <xsl:if test="starts-with(.,'component')">
-		    <xsl:attribute name="combine">choice</xsl:attribute>
-		  </xsl:if>
-		      <xsl:copy-of select="rng:*"/>
-		</rng:define>
-	      </xsl:otherwise>
-	    </xsl:choose>
-	  </Wrapper>
-      </xsl:with-param></xsl:call-template>
-      </td></tr>    
+  <tr><td valign='top'><i>Declaration</i></td><td colspan='2'>
+  <xsl:call-template name="bitOut">
+    <xsl:with-param name="grammar">true</xsl:with-param>
+    <xsl:with-param name="content">
+      <Wrapper>
+	<xsl:variable name="entCont">
+	  <Stuff>
+	    <xsl:apply-templates select="rng:*"/>
+	  </Stuff>
+	</xsl:variable>
+	<xsl:variable name="entCount">
+	  <xsl:for-each select="exsl:node-set($entCont)/Stuff">
+	    <xsl:value-of select="count(*)"/>
+	  </xsl:for-each>
+	</xsl:variable>
+	<xsl:choose>
+	  <xsl:when test='.="TEI.singleBase"'/>
+	  <xsl:otherwise>
+	    <rng:define name="{../@ident}">
+	      <xsl:if test="starts-with(.,'component')">
+		<xsl:attribute name="combine">choice</xsl:attribute>
+	      </xsl:if>
+	      <xsl:copy-of select="rng:*"/>
+	    </rng:define>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </Wrapper>
+  </xsl:with-param></xsl:call-template>
+  </td></tr>    
 </xsl:template>
 
 <xsl:template match="tei:moduleSpec">
@@ -451,42 +454,19 @@ XSL HTML stylesheet to format TEI XML documents
 <p>Module <xsl:value-of select="@ident"/>: <xsl:apply-templates select="tei:desc"/></p>
 </xsl:template>
 
-<xsl:template match="tei:ptr" mode="useme">
-  <xsl:if test="count(preceding-sibling::tei:ptr)&gt;0">; </xsl:if>
-  <xsl:variable name="xx">
-    <xsl:apply-templates mode="header" select="key('IDS',@target)">
-      <xsl:with-param name="minimal" select="$minimalCrossRef"/>
-    </xsl:apply-templates>
-  </xsl:variable>
-  <a class="ptr">
-    <xsl:attribute name="href">
-      <xsl:apply-templates mode="xrefheader" select="key('IDS',@target)"/>
-    </xsl:attribute>
-    <xsl:value-of select="normalize-space($xx)"/>
-  </a>
-</xsl:template>
 
 <xsl:template match="tei:ptr">
   <xsl:choose>
     <xsl:when test="parent::tei:listRef">
       <xsl:if test="count(preceding-sibling::tei:ptr)=0">
 	<tr><td valign="top"><i>See further</i></td><td colspan="2">
-	<xsl:apply-templates select="." mode="useme"/>
+	<xsl:if test="count(preceding-sibling::tei:ptr)&gt;0">; </xsl:if>
+	<xsl:apply-imports/>
 	</td></tr>
       </xsl:if>
     </xsl:when>
     <xsl:otherwise>
-      <a class="ptr">
-	<xsl:attribute name="href">
-	  <xsl:apply-templates mode="xrefheader" select="key('IDS',@target)"/>
-	</xsl:attribute>
-	<xsl:variable name="xx">
-	  <xsl:apply-templates mode="header" select="key('IDS',@target)">
-	    <xsl:with-param name="minimal" select="$minimalCrossRef"/>
-	  </xsl:apply-templates>
-	</xsl:variable>
-	<xsl:value-of select="normalize-space($xx)"/>
-      </a>
+      <xsl:apply-imports/>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
@@ -601,49 +581,48 @@ XSL HTML stylesheet to format TEI XML documents
 -->
    <xsl:if test="$class/@type='atts'">
      <xsl:call-template name="bitOut">
- <xsl:with-param name="grammar">true</xsl:with-param>
+       <xsl:with-param name="grammar">true</xsl:with-param>
        <xsl:with-param name="content">
-<Wrapper>
-	 <rng:ref name="{$class/@ident}.attributes"/>
-</Wrapper>
+	 <Wrapper>
+	   <rng:ref name="{$class/@ident}.attributes"/>
+	 </Wrapper>
        </xsl:with-param>
      </xsl:call-template>
    </xsl:if>
    <xsl:call-template name="attclasses">
      <xsl:with-param name="classes">
-         <xsl:value-of select="substring-after($classes,' ') "/>
+       <xsl:value-of select="substring-after($classes,' ') "/>
      </xsl:with-param>
    </xsl:call-template>
  </xsl:if>
 </xsl:template>
-
 
 <xsl:template name="bitOut">
 <xsl:param name="grammar"/>
 <xsl:param name="content"/>
 <xsl:param  name="element">pre</xsl:param> 
 <xsl:element name="{$element}">
- <xsl:attribute name="class">eg</xsl:attribute>
-<xsl:choose>
-<xsl:when test="$displayMode='rng'">
-  <xsl:apply-templates select="exsl:node-set($content)/Wrapper/*" 
-		       mode="verbatim"/>
-</xsl:when>
-<xsl:when test="$displayMode='rnc'">
-  <xsl:call-template name="make-body-from-r-t-f">
-    <xsl:with-param name="schema">
+  <xsl:attribute name="class">eg</xsl:attribute>
+  <xsl:choose>
+    <xsl:when test="$displayMode='rng'">
+      <xsl:apply-templates select="exsl:node-set($content)/Wrapper/*" 
+			   mode="verbatim"/>
+    </xsl:when>
+    <xsl:when test="$displayMode='rnc'">
+      <xsl:call-template name="make-body-from-r-t-f">
+	<xsl:with-param name="schema">
+	  <xsl:for-each  select="exsl:node-set($content)/Wrapper">
+	    <xsl:call-template name="make-compact-schema"/>
+	  </xsl:for-each>
+	</xsl:with-param>
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:otherwise>
       <xsl:for-each  select="exsl:node-set($content)/Wrapper">
-	<xsl:call-template name="make-compact-schema"/>
+	<xsl:apply-templates mode="literal"/>
       </xsl:for-each>
-    </xsl:with-param>
-  </xsl:call-template>
-</xsl:when>
-<xsl:otherwise>
-  <xsl:for-each  select="exsl:node-set($content)/Wrapper">
-    <xsl:apply-templates mode="literal"/>
-  </xsl:for-each>
-</xsl:otherwise>
-</xsl:choose>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:element>
 </xsl:template>
 
@@ -820,22 +799,21 @@ XSL HTML stylesheet to format TEI XML documents
   <xsl:param name="text"/>
   <xsl:param name="startnewline">false</xsl:param>
   <xsl:param name="autowrap">true</xsl:param>
-     <pre class="eg">
-        <xsl:if test="$startnewline='true'">
-         <xsl:text>
-</xsl:text>
-       </xsl:if>
-       <xsl:choose>
-         <xsl:when test="$autowrap='false'">
-           <xsl:value-of select="."/>
-         </xsl:when>
-       <xsl:otherwise>           
-       <xsl:variable name="lines" select="estr:tokenize($text,'&#10;')"/>
-           <xsl:apply-templates select="$lines[1]" 
-                mode="normalline"/>
-     </xsl:otherwise>
-   </xsl:choose>
- </pre>
+  <pre class="eg">t
+    <xsl:if test="$startnewline='true'">
+      <xsl:text>&#10;</xsl:text>
+    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="$autowrap='false'">
+	<xsl:value-of select="."/>
+      </xsl:when>
+      <xsl:otherwise>           
+	<xsl:variable name="lines" select="estr:tokenize($text,'&#10;')"/>
+	<xsl:apply-templates select="$lines[1]" 
+			     mode="normalline"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </pre>
 </xsl:template>
 
 

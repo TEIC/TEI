@@ -58,7 +58,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
  <xsl:for-each select="tei:TEI">
  <li>
     <a> <xsl:attribute name="href">
-     <xsl:apply-templates mode="xrefheader" select="."/>
+     <xsl:apply-templates mode="generateLink" select="."/>
      </xsl:attribute>
      <xsl:call-template name="header">
      <xsl:with-param name="minimal"/>

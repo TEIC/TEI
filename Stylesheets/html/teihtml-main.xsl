@@ -616,7 +616,7 @@ on <xsl:call-template name="whatsTheDate"/>
     <xsl:otherwise>
       <xsl:choose>
         <xsl:when test="$action='header'">
-              <xsl:apply-templates select="." mode="header"/>
+              <xsl:apply-templates select="." mode="xref"/>
         </xsl:when>
         <xsl:when test="$action='toclist'">
          <xsl:call-template name="linkListContents">
@@ -627,7 +627,7 @@ on <xsl:call-template name="whatsTheDate"/>
           <xsl:call-template name="writeDiv"/>
         </xsl:when>
         <xsl:when test="name()='div' and $makePageTable='true'">
-          <h2><xsl:apply-templates select="." mode="header"/></h2>
+          <h2><xsl:apply-templates select="." mode="xref"/></h2>
           <xsl:call-template name="doDivBody"/>
           <xsl:call-template name="printDivnotes"/>
                 <xsl:if test="$bottomNavigationPanel='true'">
@@ -654,7 +654,7 @@ on <xsl:call-template name="whatsTheDate"/>
 	      </xsl:with-param>
 	    </xsl:call-template>
 	    
-	    <h2><xsl:apply-templates select="." mode="header"/></h2>
+	    <h2><xsl:apply-templates select="." mode="xref"/></h2>
 	    <xsl:apply-templates/>
 	    
 	    <xsl:call-template name="printNotes"/>
@@ -674,13 +674,12 @@ on <xsl:call-template name="whatsTheDate"/>
  <table  cellspacing="7">
   <thead><tr><th nowrap="nowrap"/><th/></tr></thead>
   <xsl:for-each select="//tei:body/tei:div">
-<xsl:text>
-</xsl:text> 
+<xsl:text>&#10;</xsl:text> 
    <tr class="summaryline">
     <td class="summarycell" valign="top" align="right">
     <b><a class="nolink" target="_top">
     <xsl:attribute name="href">
-            <xsl:apply-templates mode="xrefheader" select="."/>
+            <xsl:apply-templates mode="generateLink" select="."/>
     </xsl:attribute>
     <xsl:value-of select="tei:head"/></a></b>
     </td>
@@ -717,8 +716,7 @@ on <xsl:call-template name="whatsTheDate"/>
 
 <xsl:template name="javaScript">
   <xsl:if test="$rawIE='true'">
-  <xsl:text>
-</xsl:text>
+  <xsl:text>&#10;</xsl:text>
  <script language="javascript">
    <xsl:comment>
 <![CDATA[

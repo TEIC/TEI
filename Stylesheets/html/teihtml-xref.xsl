@@ -62,7 +62,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
  or needs a parent HTML name prepended -->
 
 
-<xsl:template match="tei:TEI" mode="xrefheader">
+<xsl:template match="tei:TEI" mode="generateLink">
   <xsl:variable name="BaseFile">
     <xsl:value-of select="$masterFile"/>
     <xsl:call-template name="addCorpusID"/>
@@ -70,7 +70,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
   <xsl:value-of select="concat($BaseFile,$standardSuffix)"/>
 </xsl:template>
 
-<xsl:template match="*" mode="xrefheader">
+<xsl:template match="*" mode="generateLink">
   <xsl:variable name="ident">
     <xsl:apply-templates select="." mode="ident"/>
   </xsl:variable>
@@ -212,42 +212,25 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
   </xsl:choose>
 </xsl:template>
 
-<xsl:template match="tei:ref">
-  <xsl:call-template name="makeHyperLink">     
-    <xsl:with-param name="url">
-      <xsl:apply-templates mode="xrefheader" select="key('IDS',@target)"/>
-    </xsl:with-param>
-    <xsl:with-param name="class">
-     <xsl:choose>
-      <xsl:when test="@rend"><xsl:value-of select="@rend"/></xsl:when>
-      <xsl:otherwise><xsl:value-of select="$class_ref"/></xsl:otherwise>     
-      </xsl:choose>
-    </xsl:with-param>
-    <xsl:with-param name="body">
-      <xsl:apply-templates/>
-    </xsl:with-param>
-  </xsl:call-template>
-</xsl:template>
-
 <xsl:template match="tei:anchor">
    <a name="{@id|@xml:id}"/>
 </xsl:template>
 
-<xsl:template match="tei:note" mode="xrefheader">
+<xsl:template match="tei:note" mode="generateLink">
     <xsl:text>#Note</xsl:text>
     <xsl:call-template name="noteID"/>
 </xsl:template>
 
 
 <xsl:template match="tei:label|tei:figure|tei:table|tei:item|tei:p|tei:bibl|tei:anchor|tei:cell|tei:lg|tei:list|tei:sp" 
-  mode="xrefheader">
+  mode="generateLink">
   <xsl:variable name="ident">
    <xsl:apply-templates select="." mode="ident"/>
   </xsl:variable>
  <xsl:variable name="file">
  <xsl:apply-templates 
    select="ancestor::tei:*[starts-with(name(),'div')][1]"  
-   mode="xrefheader"/>
+   mode="generateLink"/>
  </xsl:variable>
  <xsl:choose>
   <xsl:when test="starts-with($file,'#')">
@@ -264,134 +247,122 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
  </xsl:choose>
 </xsl:template>
 
-<xsl:template match="tei:ptr">
-  <xsl:call-template name="makeHyperLink">     
-    <xsl:with-param name="url">
-      <xsl:apply-templates mode="xrefheader" select="key('IDS',@target)"/>
-    </xsl:with-param>
-    <xsl:with-param name="class">
-     <xsl:choose>
-      <xsl:when test="@rend"><xsl:value-of select="@rend"/></xsl:when>
-      <xsl:otherwise><xsl:value-of select="$class_ptr"/></xsl:otherwise>     
-     </xsl:choose>
-    </xsl:with-param>
-<xsl:with-param name="body">
- <xsl:variable name="xx">
-  <xsl:apply-templates mode="header" select="key('IDS',@target)">
-    <xsl:with-param name="minimal" select="$minimalCrossRef"/>
- </xsl:apply-templates>
- </xsl:variable>
- <xsl:value-of select="normalize-space($xx)"/>
-</xsl:with-param>
-  </xsl:call-template>
-</xsl:template>
-
-<xsl:template match="tei:xref">
- <xsl:variable name="url">
-    <xsl:call-template name="lookupURL"/>
- </xsl:variable>
-  <xsl:call-template name="makeHyperLink">     
-    <xsl:with-param name="url"><xsl:value-of select="$url"/></xsl:with-param>
-    <xsl:with-param name="class">
-     <xsl:choose>
-      <xsl:when test="@rend"><xsl:value-of select="@rend"/></xsl:when>
-      <xsl:otherwise><xsl:value-of select="$class_quicklink"/></xsl:otherwise>     
-     </xsl:choose>
-    </xsl:with-param>
-<xsl:with-param name="body">
- <xsl:apply-templates/>
-</xsl:with-param>
-  </xsl:call-template>
-</xsl:template>
-
-<xsl:template match="tei:xptr">
-  <xsl:variable name="url">
-    <xsl:call-template name="lookupURL"/>
-  </xsl:variable>
-  <xsl:variable name="URL">
-    <xsl:choose>
-     <xsl:when test="starts-with($url,'mailto:')">
-     <xsl:value-of select="substring-after($url,'mailto:')"/>
-     </xsl:when>
-     <xsl:when test="starts-with($url,'file:')">
-      <xsl:value-of select="substring-after($url,'file:')"/>
-     </xsl:when>
-     <xsl:otherwise>
-     <xsl:value-of select="$url"/>
-     </xsl:otherwise>
-     </xsl:choose>
-    </xsl:variable>
-  <xsl:call-template name="makeHyperLink">     
-   <xsl:with-param name="url"><xsl:value-of select="$url"/></xsl:with-param>
-   <xsl:with-param name="class">
-    <xsl:choose>
-     <xsl:when test="@rend"><xsl:value-of select="@rend"/></xsl:when>
-     <xsl:otherwise><xsl:value-of select="$class_quicklink"/></xsl:otherwise>
-    </xsl:choose>
-  </xsl:with-param>
-<xsl:with-param name="body">
-  <xsl:element name="{$fontURL}">
-    <xsl:value-of select="$URL"/>
-   </xsl:element>
-</xsl:with-param>
-  </xsl:call-template>
-</xsl:template>
-
-<xsl:template name="lookupURL">
-  <xsl:choose>
-    <xsl:when test="@url"><xsl:value-of select="@url"/></xsl:when>
-    <xsl:otherwise>
-      <xsl:value-of select="unparsed-entity-uri(@doc)"/>
-      <xsl:choose>
-        <xsl:when test="contains(@from,'id (')">
-          <xsl:text>#</xsl:text>
-           <xsl:value-of select="substring(@from,5,string-length(normalize-space(@from))-1)"/>
-        </xsl:when>
-      </xsl:choose>
-    </xsl:otherwise>
-  </xsl:choose>
-</xsl:template>
 
 <xsl:template name="makeAnchor">
   <xsl:if test="@id|@xml:id"><a name="{@id|@xml:id}"/></xsl:if>  
 </xsl:template>
 
-<xsl:template name="makeHyperLink">    
-  <xsl:param name="url"/>
-  <xsl:param name="class"/>
+<xsl:template name="makeInternalLink">
+  <xsl:param name="ptr"/>
+  <xsl:param name="dest"/>
   <xsl:param name="body"/>
-  <a><xsl:attribute name="href">
-    <xsl:value-of select="$url"/>
-  </xsl:attribute>
-  <xsl:attribute name="class">
-    <xsl:value-of select="$class"/>
-  </xsl:attribute>
-  <xsl:choose>
-   <xsl:when test="@rend='noframe'">
-     <xsl:attribute name="target">_top</xsl:attribute>
-   </xsl:when>
-   <xsl:when test="@rend='new'">
-     <xsl:attribute name="target">_blank</xsl:attribute>
-   </xsl:when>
-   <xsl:when test="contains($url,'://') or starts-with($url,'.') or starts-with($url,'/')">
-     <xsl:attribute name="target">_top</xsl:attribute>
-   </xsl:when>
-   <xsl:when test="substring($url,string-length($url),1)='/'">
-     <xsl:attribute name="target">_top</xsl:attribute>
-   </xsl:when>
-   <xsl:when test="$splitLevel=-1">
-     <xsl:attribute name="target">_top</xsl:attribute>
-   </xsl:when>
-  </xsl:choose>
-  <!-- link title from "n" attribute -->
-  <xsl:if test="@n">
-    <xsl:attribute name="title">
-     <xsl:value-of select="@n"/>
-    </xsl:attribute> 
-  </xsl:if>
-   <!-- deal with extra attributes -->
-  <xsl:call-template name="xrefHook"/>
-    <xsl:copy-of select="$body"/>
+  <xsl:param name="class">link_<xsl:value-of
+  select="name(.)"/></xsl:param>
+<xsl:message>here: <xsl:value-of select="name(.)"/>: <xsl:value-of select="$dest"/></xsl:message>
+
+  <a>
+    <xsl:attribute name="class">
+      <xsl:choose>
+	<xsl:when test="@rend"><xsl:value-of select="@rend"/></xsl:when>
+	<xsl:otherwise><xsl:value-of select="$class"/></xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
+    <xsl:attribute name="href">
+      <xsl:choose>
+	<xsl:when test="starts-with($dest,'#') or contains($dest,'.html')">
+	  <xsl:value-of select="$dest"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:apply-templates select="key('IDS',$dest)"
+			       mode="generateLink"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
+    <xsl:choose>
+      <xsl:when test="not($body='')">
+	<xsl:value-of select="$body"/>
+      </xsl:when>
+      <xsl:when test="$ptr='true'">
+	<xsl:apply-templates mode="xref" select="key('IDS',$dest)">
+	  <xsl:with-param name="minimal" select="$minimalCrossRef"/>
+	</xsl:apply-templates>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
   </a>
 </xsl:template>
+
+<xsl:template name="makeExternalLink">
+  <xsl:param name="ptr"/>
+  <xsl:param name="dest"/>
+  <xsl:param name="class">link_<xsl:value-of select="name(.)"/></xsl:param>
+  <a>
+    <xsl:attribute name="class">
+      <xsl:choose>
+	<xsl:when test="@rend"><xsl:value-of select="@rend"/></xsl:when>
+	<xsl:otherwise><xsl:value-of select="$class"/></xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
+    <xsl:attribute name="href">
+      <xsl:value-of select="$dest"/>
+      <xsl:if test="contains(@from,'id (')">
+	<xsl:text>#</xsl:text>
+	<xsl:value-of select="substring(@from,5,string-length(normalize-space(@from))-1)"/>
+      </xsl:if>
+    </xsl:attribute>
+    <xsl:choose>
+      <xsl:when test="@rend='noframe'">
+	<xsl:attribute name="target">_top</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="@rend='new'">
+	<xsl:attribute name="target">_blank</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="contains($dest,'://') or starts-with($dest,'.') or starts-with($dest,'/')">
+	<xsl:attribute name="target">_top</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="substring($dest,string-length($dest),1)='/'">
+	<xsl:attribute name="target">_top</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="$splitLevel=-1">
+	<xsl:attribute name="target">_top</xsl:attribute>
+      </xsl:when>
+    </xsl:choose>
+    <xsl:if test="@n">
+      <xsl:attribute name="title">
+	<xsl:value-of select="@n"/>
+      </xsl:attribute> 
+    </xsl:if>
+    <xsl:call-template name="xrefHook"/>
+    <xsl:choose>
+      <xsl:when test="$ptr='true'">
+	<xsl:element name="{$fontURL}">
+	<xsl:choose>
+	  <xsl:when test="starts-with($dest,'mailto:')">
+	    <xsl:value-of select="substring-after($dest,'mailto:')"/>
+	  </xsl:when>
+	  <xsl:when test="starts-with($dest,'file:')">
+	    <xsl:value-of select="substring-after($dest,'file:')"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="$dest"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+	</xsl:element>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </a>
+</xsl:template>
+
+<xsl:template name="generateEndLink">
+  <xsl:param name="where"/>
+<xsl:message>find link end for <xsl:value-of select="$where"/>,<xsl:value-of select="name(key('IDS',$where))"/></xsl:message>
+
+  <xsl:apply-templates select="key('IDS',$where)" mode="generateLink"/>
+</xsl:template>
+
 </xsl:stylesheet>

@@ -210,6 +210,7 @@ XSL FO stylesheet to format TEI XML documents
 
 <xsl:template name="showXrefURL">
   <xsl:param name="dest"/>
+  <xsl:value-of select="$dest"/>
 </xsl:template>
 
 <!-- alternate

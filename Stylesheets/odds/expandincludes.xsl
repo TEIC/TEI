@@ -35,6 +35,8 @@ rng:includes
 
 <xsl:param name="namespace"/>
 
+<xsl:key name="DEFS" match="rng:define" use="@name"/>
+
 <xsl:output indent="yes"/>
 
 <xsl:template match="/">
@@ -152,5 +154,21 @@ rng:includes
   </rng:grammar>
 </xsl:template>
 
+<!-- copy the xxx.content body into place -->
+<xsl:template match="rng:define[contains(@name,'.content')]" mode="stage2"/>
+
+<xsl:template match="rng:ref[contains(@name,'.content')]" mode="stage2">
+<xsl:choose>
+  <xsl:when test="key('DEFS',@name)">
+    <xsl:for-each
+	select="key('DEFS',@name)">
+      <xsl:copy-of select="rng:*"/>
+    </xsl:for-each>
+  </xsl:when>
+  <xsl:otherwise>
+    <xsl:copy-of select="."/>
+  </xsl:otherwise>
+</xsl:choose>
+</xsl:template>
 
 </xsl:stylesheet>

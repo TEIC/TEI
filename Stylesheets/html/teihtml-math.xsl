@@ -29,7 +29,7 @@ XSL HTML stylesheet to format TEI XML documents
  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:formula" mode="header"/>
+<xsl:template match="tei:formula" mode="xref"/>
 
 <xsl:template match="tei:formula" mode="xref">
  <xsl:number/>

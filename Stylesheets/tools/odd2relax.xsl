@@ -164,11 +164,9 @@ select="$filename"/>-decl</xsl:message>
 
 
 <xsl:template match="tei:commDecl" mode="tangle">
-  <xsl:text>
-</xsl:text>
+  <xsl:text>&#10;</xsl:text>
 <xsl:comment><xsl:apply-templates/></xsl:comment>
-  <xsl:text>
-</xsl:text>
+  <xsl:text>&#10;</xsl:text>
 </xsl:template>
 
 
@@ -186,8 +184,7 @@ select="$filename"/>-decl</xsl:message>
   <xsl:param name="filename"/>
   <xsl:message>     .. patterndoc [msection] <xsl:value-of select="@id|@xml:id"/></xsl:message>
   <xsl:if test="preceding-sibling::tei:macroSpec">
-    <xsl:text>
-</xsl:text>
+    <xsl:text>&#10;</xsl:text>
   </xsl:if>
   <xsl:apply-templates select="." mode="tangle">
     <xsl:with-param name="msection" select="parent::tei:msection/@keywords"/>
@@ -217,8 +214,6 @@ select="$filename"/>-decl</xsl:message>
 <xsl:template match="processing-instruction()" mode="tangle"/>
 
 <xsl:template match="tei:defaultVal"/>
-
-
 
 <xsl:template match="rng:ref">
   <xsl:if test="not(@name='TEI...end')">

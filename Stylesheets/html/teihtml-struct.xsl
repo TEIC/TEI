@@ -136,49 +136,49 @@ select="$depth"/></xsl:message>
 <!-- anything with a head can go in the TOC -->
 
 <xsl:template match="tei:*" mode="maketoc">
- <xsl:param name="forcedepth"/>
-<xsl:if test="tei:head or $autoHead='true'">
- <xsl:variable name="Depth">
- <xsl:choose>
-  <xsl:when test="not($forcedepth='')">
-     <xsl:value-of select="$forcedepth"/>
-  </xsl:when>
-  <xsl:otherwise>
-     <xsl:value-of select="$tocDepth"/>
-  </xsl:otherwise>
- </xsl:choose>
- </xsl:variable>
- <xsl:variable name="thislevel">
-  <xsl:choose>
-  <xsl:when test="name(.) = 'div'">
-    <xsl:value-of select="count(ancestor::tei:div)"/>
-  </xsl:when>
-  <xsl:when test="starts-with(name(.),'div')">
-   <xsl:choose>
-    <xsl:when test="ancestor-or-self::tei:div0">
-      <xsl:value-of select="substring-after(name(.),'div')"/>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:value-of select="substring-after(name(.),'div') - 1"/>
-    </xsl:otherwise>
-   </xsl:choose>
- </xsl:when>
- <xsl:otherwise>99</xsl:otherwise>
- </xsl:choose>
- </xsl:variable>
- <xsl:variable name="pointer">
-      <xsl:apply-templates mode="xrefheader" select="."/>
- </xsl:variable>
- <li class="toc">
-       <xsl:call-template name="header">
-           <xsl:with-param name="toc" select="$pointer"/>
-           <xsl:with-param name="minimal"></xsl:with-param>
+  <xsl:param name="forcedepth"/>
+  <xsl:if test="tei:head or $autoHead='true'">
+    <xsl:variable name="Depth">
+      <xsl:choose>
+	<xsl:when test="not($forcedepth='')">
+	  <xsl:value-of select="$forcedepth"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$tocDepth"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="thislevel">
+      <xsl:choose>
+	<xsl:when test="name(.) = 'div'">
+	  <xsl:value-of select="count(ancestor::tei:div)"/>
+	</xsl:when>
+	<xsl:when test="starts-with(name(.),'div')">
+	  <xsl:choose>
+	    <xsl:when test="ancestor-or-self::tei:div0">
+	      <xsl:value-of select="substring-after(name(.),'div')"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:value-of select="substring-after(name(.),'div') - 1"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:when>
+	<xsl:otherwise>99</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="pointer">
+      <xsl:apply-templates mode="generateLink" select="."/>
+    </xsl:variable>
+    <li class="toc">
+      <xsl:call-template name="header">
+	<xsl:with-param name="toc" select="$pointer"/>
+	<xsl:with-param name="minimal"></xsl:with-param>
       </xsl:call-template>
       <xsl:if test="$thislevel &lt; $Depth">
-          <xsl:call-template name="continuedToc"/>
+	<xsl:call-template name="continuedToc"/>
       </xsl:if>
- </li>
-</xsl:if>
+    </li>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template name="continuedToc">
@@ -356,43 +356,44 @@ select="$depth"/></xsl:message>
 
 
 <xsl:template name="subtoc">
- <xsl:if test="child::tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-  <xsl:variable name="parent">
-   <xsl:choose>
-   <xsl:when test="ancestor::tei:div">
-     <xsl:apply-templates select="ancestor::tei:div[last()]" mode="ident"/>
-   </xsl:when>
-   <xsl:otherwise>
-     <xsl:apply-templates select="." mode="ident"/>
-   </xsl:otherwise>
-   </xsl:choose>
-  </xsl:variable>
-  <xsl:variable name="depth">
-   <xsl:apply-templates select="." mode="depth"/>
- </xsl:variable>
-     <p><span class="subtochead"><xsl:value-of select="$tocWords"/></span></p>
-     <div class="subtoc">
+  <xsl:if test="child::tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+    <xsl:variable name="parent">
+      <xsl:choose>
+	<xsl:when test="ancestor::tei:div">
+	  <xsl:apply-templates select="ancestor::tei:div[last()]" mode="ident"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:apply-templates select="." mode="ident"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="depth">
+      <xsl:apply-templates select="." mode="depth"/>
+    </xsl:variable>
+    <p><span class="subtochead"><xsl:value-of select="$tocWords"/></span></p>
+    <div class="subtoc">
       <ul class="subtoc">
-      <xsl:for-each select="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-       <xsl:variable name="innerdent">
-         <xsl:apply-templates select="." mode="xrefheader"/>
-      </xsl:variable>
-      <li class="subtoc">
-   <xsl:call-template name="makeHyperLink">     
-    <xsl:with-param name="url">
-      <xsl:value-of select="$innerdent"/>
-    </xsl:with-param>
-    <xsl:with-param name="class">
-       <xsl:value-of select="$class_subtoc"/>
-    </xsl:with-param>
-    <xsl:with-param name="body">
-    <xsl:call-template name="header"/>
-    </xsl:with-param>
-   </xsl:call-template>
-     </li>
-     </xsl:for-each>
-    </ul></div>
-  </xsl:if>
+	<xsl:for-each select="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+	  <xsl:variable name="innerdent">
+	    <xsl:apply-templates select="." mode="generateLink"/>
+	  </xsl:variable>
+	  <li class="subtoc">
+	    <xsl:call-template name="makeInternalLink">     
+	      <xsl:with-param name="dest">
+		<xsl:value-of select="$innerdent"/>
+	      </xsl:with-param>
+	      <xsl:with-param name="class">
+		<xsl:value-of select="$class_subtoc"/>
+	      </xsl:with-param>
+	      <xsl:with-param name="body">
+		<xsl:call-template name="header"/>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	  </li>
+	</xsl:for-each>
+      </ul>
+    </div>
+ </xsl:if>
 </xsl:template> 
 
 <xsl:template name="maintoc"> 
@@ -567,7 +568,7 @@ select="$depth"/></xsl:message>
       <xsl:otherwise>
        <xsl:attribute name="href">
            <xsl:value-of select="$linkPrefix"/>
-        <xsl:apply-templates mode="xrefheader" select="$up"/>
+        <xsl:apply-templates mode="generateLink" select="$up"/>
        </xsl:attribute>
        <xsl:for-each select="$up">
         <xsl:call-template name="header">
@@ -587,7 +588,7 @@ select="$depth"/></xsl:message>
     <xsl:value-of select="$previousWord"/>: </i> 
     <a  class="navlink"> <xsl:attribute name="href">
            <xsl:value-of select="$linkPrefix"/>
-     <xsl:apply-templates mode="xrefheader" select="$previous"/>
+     <xsl:apply-templates mode="generateLink" select="$previous"/>
      </xsl:attribute>
      <xsl:for-each select="$previous">
        <xsl:call-template name="header">
@@ -605,7 +606,7 @@ select="$depth"/></xsl:message>
      <xsl:value-of select="$nextWord"/>: </i> <a  class="navlink">
        <xsl:attribute name="href">
            <xsl:value-of select="$linkPrefix"/>
-      <xsl:apply-templates mode="xrefheader" select="$next"/>
+      <xsl:apply-templates mode="generateLink" select="$next"/>
      </xsl:attribute>
      <xsl:for-each select="$next">
        <xsl:call-template name="header">
@@ -621,7 +622,7 @@ select="$depth"/></xsl:message>
 </xsl:template> 
 
 <xsl:template name="generateDivheading">
-      <xsl:apply-templates select="." mode="header"/>
+      <xsl:apply-templates select="." mode="xref"/>
 </xsl:template> 
 
 <xsl:template name="startHook"/>
