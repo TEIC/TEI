@@ -228,7 +228,10 @@ pdfcreator={Oxford University Computing Services}
 </xsl:template>
 
 <xsl:template match="tei:listBibl/tei:bibl">
-\bibitem {<xsl:value-of select="@id|@xml:id"/>}
+\bibitem {<xsl:choose><xsl:when test="@id|@xml:id">
+<xsl:value-of select="@id|@xml:id"/></xsl:when>
+<xsl:otherwise>bibitem-<xsl:number/></xsl:otherwise>
+</xsl:choose>}
 <xsl:apply-templates/>
 <xsl:text>&#10;</xsl:text>
 </xsl:template>
@@ -331,6 +334,12 @@ pdfcreator={Oxford University Computing Services}
 \end{thebibliography}  
 </xsl:template>
 
+<xsl:template match="tei:listBibl">
+\begin{thebibliography}{1}
+  <xsl:apply-templates/>
+\end{thebibliography}  
+</xsl:template>
+
 <xsl:template match="tei:docAuthor">
 <xsl:if test="preceding-sibling::tei:docAuthor">, </xsl:if>
  <xsl:apply-templates/>
@@ -353,7 +362,7 @@ pdfcreator={Oxford University Computing Services}
 
 
 <xsl:template match="tei:figure">
-
+  <xsl:apply-templates/>
 </xsl:template>
 
 <xsl:template match="tei:graphic">
@@ -675,9 +684,13 @@ pdfcreator={Oxford University Computing Services}
  \item[<xsl:apply-templates mode="print" select="preceding-sibling::tei:*[1]"/>]
  <xsl:apply-templates/>
 </xsl:template>
+
 <xsl:template name="begindocumentHook"/>
+
 <xsl:template name="bibliography">
-  <xsl:apply-templates select="//tei:xref[@type='cite'] | //tei:xptr[@type='cite']" mode="biblio"/>
+  <xsl:apply-templates 
+select="//tei:xref[@type='cite'] | //tei:xptr[@type='cite'] | //tei:ref[@type='cite'] | //tei:ptr[@type='cite']"
+		       mode="biblio"/>
 </xsl:template>
 
 <xsl:template name="extradefHook"/>
@@ -777,9 +790,7 @@ pdfcreator={Oxford University Computing Services}
 	  <xsl:value-of select="$body"/>
 	</xsl:when>
 	<xsl:when test="$ptr='true'">
-	  <xsl:apply-templates mode="xref" select="key('IDS',$dest)">
-	    <xsl:with-param name="minimal" select="$minimalCrossRef"/>
-	  </xsl:apply-templates>
+	  <xsl:value-of select="$dest"/>
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:apply-templates/>

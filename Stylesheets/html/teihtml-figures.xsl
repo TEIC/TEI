@@ -1,3 +1,4 @@
+
 <!-- 
 Text Encoding Initiative Consortium XSLT stylesheet family
 $Date$, $Revision$, $Author$
@@ -18,7 +19,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
     <xsl:call-template name="showGraphic">
       <xsl:with-param name="ID">
 	<xsl:if test="@id|@xml:id">
-	  <xsl:value-of select="{@id|@xml:id}"/>
+	  <xsl:value-of select="@id|@xml:id"/>
 	</xsl:if>
       </xsl:with-param>
     </xsl:call-template>
@@ -37,7 +38,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
   <xsl:call-template name="showGraphic">
       <xsl:with-param name="ID">
 	<xsl:if test="../@id|./@xml:id">
-	  <xsl:value-of select="{../@id|../@xml:id}"/>
+	  <xsl:value-of select="../@id|../@xml:id"/>
 	</xsl:if>
       </xsl:with-param>
     </xsl:call-template>
