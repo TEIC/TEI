@@ -44,11 +44,13 @@ XSL stylesheet to process TEI documents using ODD markup
 </xsl:template>
 
 <xsl:template match="rng:define">
-  <xsl:if test="key('Refs',@name)">
-    <xsl:copy>
-      <xsl:apply-templates select="*|@*|text()|comment()"/>
-    </xsl:copy>
-  </xsl:if>
+  <xsl:choose>
+    <xsl:when test="key('Refs',@name)">
+      <xsl:copy>
+	<xsl:apply-templates select="*|@*|text()|comment()"/>
+      </xsl:copy>
+    </xsl:when>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template match="rng:oneOrMore/rng:notAllowed">
@@ -64,7 +66,12 @@ XSL stylesheet to process TEI documents using ODD markup
 </xsl:template>
 
 <xsl:template match="rng:choice[count(rng:*)=0]"><rng:notAllowed/></xsl:template>
-<xsl:template match="rng:define[count(rng:*)=0]"/>
+<xsl:template match="rng:define[count(rng:*)=0]">
+  <xsl:copy>
+    <xsl:copy-of select="@*"/>
+    <rng:notAllowed/>
+  </xsl:copy>
+</xsl:template>
 <xsl:template match="rng:group[count(rng:*)=0]"/>
 <xsl:template match="rng:define/rng:group[count(rng:*)=0]"><rng:notAllowed/></xsl:template>
 <xsl:template match="rng:optional[count(rng:*)=0]"/>
