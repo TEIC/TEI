@@ -7,34 +7,41 @@
   extension-element-prefixes="exsl"
   exclude-result-prefixes="tei exsl" 
   version="1.0">
-<xsl:output method="xml" indent="yes"/>
+<xsl:output method="xml" indent="no"/>
 <xsl:param name="lang">es</xsl:param>
-<xsl:param name="ODDROOT">http://www.tei-c.org.uk/P5/</xsl:param>
-<xsl:key name="ELEMENTS" match="element"
-	 use="concat(concat(equiv/@lang,':'),equiv/@value)"/>
-<xsl:key name="ATTRIBUTES" match="attribute" use="concat(concat(equiv/@lang,':'),equiv/@value)"/>
+<xsl:key name="ELEMENTS" 
+	 match="element/equiv"
+	 use="concat(@lang,':',@value)"/>
+<xsl:key name="ATTRIBUTES" 
+	 match="attribute/equiv" 
+	 use="concat(@lang,':',@value)"/>
 <xsl:param name="verbose">true</xsl:param>
-<xsl:variable name="TEINAMES">http://www.tei-c.org.uk/tei-bin/files.pl?name=teinames.xml</xsl:variable>
+<xsl:param name="TEISERVER">http://localhost:8080/exist/TEI/Roma/xquery/i18n.xq</xsl:param>
+
 <xsl:template match="comment()|text()|processing-instruction()">
   <xsl:copy/>
 </xsl:template>
 
 <xsl:template match="tei:*">
-  <xsl:variable name="oldname" select="name(.)"/>
+  <xsl:variable name="oldname"><xsl:value-of select="local-name()"/></xsl:variable>
+  <xsl:variable name="search">
+    <xsl:value-of select="$lang"/>:<xsl:value-of select="local-name()"/>
+  </xsl:variable>
   <xsl:variable name="newname">
-    <xsl:for-each
-     select="document($TEINAMES)/i18n">
-      <xsl:value-of select="key('ELEMENTS',concat(concat($lang,':'),$oldname))/@ident"/>
+    <xsl:for-each select="document($TEISERVER)/i18n">
+      <xsl:value-of select="key('ELEMENTS',$search)/parent::element/@ident"/>
     </xsl:for-each>
   </xsl:variable>
   <xsl:choose>
     <xsl:when test="$newname=''">
-      <xsl:element name="{$oldname}" xmlns="http://www.tei-c.org/ns/1.0">
+      <xsl:element name="{$oldname}"
+		   xmlns="http://www.tei-c.org/ns/1.0">
 	<xsl:apply-templates select="@*|*|text()|comment()"/>
       </xsl:element>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:element name="{$newname}" xmlns="http://www.tei-c.org/ns/1.0">
+      <xsl:element name="{$newname}"
+		   xmlns="http://www.tei-c.org/ns/1.0">
 	<xsl:apply-templates select="@*|*|text()|comment()"/>
       </xsl:element>
     </xsl:otherwise>
@@ -43,10 +50,13 @@
 
 <xsl:template match="@*">
   <xsl:variable name="oldname" select="name(.)"/>
+  <xsl:variable name="search">
+    <xsl:value-of select="$lang"/>:<xsl:value-of select="name()"/>
+  </xsl:variable>
   <xsl:variable name="newname">
     <xsl:for-each
-     select="document($TEINAMES)/i18n">
-      <xsl:value-of select="key('ATTRIBUTES',concat(concat($lang,':'),$oldname))/@ident"/>
+     select="document($TEISERVER)/i18n">
+      <xsl:value-of select="key('ATTRIBUTES',$search)/parent::attribute/@ident"/>
     </xsl:for-each>
   </xsl:variable>
   <xsl:choose>

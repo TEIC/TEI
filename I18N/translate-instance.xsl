@@ -11,7 +11,7 @@
 <xsl:param name="lang">es</xsl:param>
 <xsl:key name="ELEMENTS" match="element" use="@ident"/>
 <xsl:key name="ATTRIBUTES" match="attribute" use="@ident"/>
-<xsl:param name="TEINAMES">http://www.tei-c.org.uk/tei-bin/files.pl?name=teinames.xml</xsl:param>
+<xsl:param name="TEISERVER">http://localhost:8080/exist/TEI/Roma/xquery/i18n.xq</xsl:param>
 
 <xsl:template match="comment()|text()|processing-instruction()">
   <xsl:copy/>
@@ -20,15 +20,14 @@
 <xsl:template match="/">
   <xsl:if test="$verbose='true'">
     <xsl:message>Translating to language [<xsl:value-of select="$lang"/>]</xsl:message>
-    <xsl:message>Using dictionary [<xsl:value-of select="$TEINAMES"/>]</xsl:message>
   </xsl:if>
   <xsl:apply-templates/>
 </xsl:template>
 
-<xsl:template match="tei:*">
+s<xsl:template match="tei:*">
 <xsl:variable name="oldname" select="name(.)"/>
 <xsl:variable name="newname">
-  <xsl:for-each select="document($TEINAMES)/i18n">
+  <xsl:for-each select="document($TEISERVER)">
     <xsl:choose>
       <xsl:when test="key('ELEMENTS',$oldname)">
 	<xsl:for-each select="key('ELEMENTS',$oldname)">
@@ -61,7 +60,7 @@
 <xsl:template match="@*">
 <xsl:variable name="oldname" select="name(.)"/>
 <xsl:variable name="newname">
-  <xsl:for-each select="document($TEINAMES)/i18n">
+  <xsl:for-each select="document($TEISERVER)">
     <xsl:choose>
       <xsl:when test="key('ATTRIBUTES',$oldname)">
 	<xsl:for-each select="key('ATTRIBUTES',$oldname)">
