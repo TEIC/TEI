@@ -492,25 +492,25 @@ select="translate(.,'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/
 </xsl:template>
 
 <xsl:template match="tei:mentioned">
-	<xsl:choose>
-		<xsl:when test="@rend">
-			<xsl:call-template name="rendering"/>
-		</xsl:when>
-		<xsl:otherwise>
-			<xsl:apply-templates/>
-		</xsl:otherwise>
-	</xsl:choose>
+  <xsl:choose>
+    <xsl:when test="@rend">
+      <xsl:call-template name="rendering"/>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:apply-templates/>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template match="tei:term|title">
-	<xsl:choose>
-		<xsl:when test="@rend">
-			<xsl:call-template name="rendering"/>
-		</xsl:when>
-		<xsl:otherwise>
-			<em><xsl:apply-templates/></em>
-		</xsl:otherwise>
-	</xsl:choose>
+  <xsl:choose>
+    <xsl:when test="@rend">
+      <xsl:call-template name="rendering"/>
+    </xsl:when>
+    <xsl:otherwise>
+      <em><xsl:apply-templates/></em>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 
@@ -593,17 +593,18 @@ select="$rend"/>]</code>
      </xsl:call-template>
    <code class="undone">[End rendering]</code>
  </xsl:template>
+
 <xsl:template name="unknownRendInline">
  <xsl:param name="rend"/>
  <xsl:param name="rest"/>
-   <xsl:message>Unknown rend attribute <xsl:value-of
-select="$rend"/></xsl:message>
-   <code class="undone">[Unknown rendering: <xsl:value-of
-select="$rend"/>]</code>
-     <xsl:call-template name="applyRend">
-      <xsl:with-param name="parms" select="$rest"/>
-     </xsl:call-template>
-   <code class="undone">[End rendering]</code>
- </xsl:template>
+ <xsl:message>Unknown rend attribute <xsl:value-of
+ select="$rend"/></xsl:message>
+ <code class="undone">[Unknown rendering: <xsl:value-of
+ select="$rend"/>]</code>
+ <xsl:call-template name="applyRend">
+   <xsl:with-param name="parms" select="$rest"/>
+ </xsl:call-template>
+ <code class="undone">[End rendering]</code>
+</xsl:template>
 
 </xsl:stylesheet>

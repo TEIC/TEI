@@ -169,6 +169,10 @@ pdfcreator={Oxford University Computing Services}
 \def\l@paragraph{\@dottedtocline{4}{7.0em}{4.1em}}
 \def\l@subparagraph{\@dottedtocline{5}{10em}{5em}}
 \makeatother
+
+\renewcommand\ttdefault{lmtt}
+\fvset{frame=single,numberblanklines=false,xleftmargin=5mm,xrightmargin=5mm}
+
 <xsl:call-template name="preambleHook"/>
 \begin{document}
 \thispagestyle{plain}
@@ -354,8 +358,30 @@ pdfcreator={Oxford University Computing Services}
 </xsl:template>
 
 
-<xsl:template match="tei:eg">
-\begin{quote}\ttfamily\color{black}\obeylines <xsl:apply-templates/> \end{quote}
+<xsl:template match="tei:eg|tei:q[@rend='eg']">
+<xsl:choose>
+<xsl:when test="@n">
+\begin{Verbatim}[numbers=left,label={<xsl:value-of select="@n"/>}]
+<xsl:apply-templates mode="eg"/>
+\end{Verbatim}
+</xsl:when>
+<xsl:otherwise>
+\begin{Verbatim}[frame=single,fillcolor=\color{yellow}]
+<xsl:apply-templates mode="eg"/>
+\end{Verbatim}
+</xsl:otherwise>
+</xsl:choose>
+</xsl:template>
+
+<xsl:template match="text()" mode="eg">
+  <xsl:choose>
+    <xsl:when test="starts-with(.,'&#10;')">
+      <xsl:value-of select="substring-after(.,'&#10;')"/>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:value-of select="."/>
+</xsl:otherwise>
+</xsl:choose>
 </xsl:template>
 
 <xsl:template match="tei:emph">\textit{<xsl:apply-templates/>}</xsl:template>

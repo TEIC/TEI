@@ -38,17 +38,35 @@ XSL HTML stylesheet to format TEI XML documents
 
 <xsl:param name="displayMode">rnc</xsl:param>
 
-<xsl:template match="tei:classSpec|tei:elementSpec|tei:macroSpec">
+<xsl:template match="tei:elementSpec">
    <xsl:if test="parent::tei:specGrp">
-   <p><tt>&lt;<xsl:value-of select="name(.)"/>&gt;</tt>
-<!--      <xsl:text>: </xsl:text><b><xsl:value-of select="@ident"/></b>:-->
+   <dt>Element: <xsl:value-of select="@ident"/></dt>
+   <dd>
      <xsl:apply-templates select="." mode="tangle"/>
-  </p>
+     </dd>
+   </xsl:if>
+ </xsl:template>
+ 
+<xsl:template match="tei:classSpec">
+   <xsl:if test="parent::tei:specGrp">
+   <dt>Class: <xsl:value-of select="@ident"/></dt>
+   <dd>
+     <xsl:apply-templates select="." mode="tangle"/>
+     </dd>
+   </xsl:if>
+ </xsl:template>
+ 
+
+<xsl:template match="tei:classSpec">
+   <xsl:if test="parent::tei:specGrp">
+   <dt>Class: <xsl:value-of select="@ident"/></dt>
+   <dd>
+     <xsl:apply-templates select="." mode="tangle"/>
+     </dd>
    </xsl:if>
  </xsl:template>
  
 <xsl:template  match="tei:specGrpRef">
-   &#171; <em>include
      <xsl:variable name="W">
        <xsl:choose>
 	 <xsl:when test="starts-with(@target,'#')">
@@ -59,15 +77,55 @@ XSL HTML stylesheet to format TEI XML documents
 	 </xsl:otherwise>
        </xsl:choose>
      </xsl:variable>
-     <a href="#{$W}">
-       <xsl:for-each select="key('IDS',$W)">
-	 <xsl:call-template name="compositeNumber"/>
-       </xsl:for-each>
-     </a>
- </em>
- <xsl:text> &#187; </xsl:text>
+<xsl:choose>
+  <xsl:when test="parent::tei:specGrp">
+    <dt/>
+    <dd><a href="#{$W}">&#171; <i>include    
+    <xsl:for-each select="key('IDS',$W)">
+      <xsl:number level="any"/>
+      <xsl:if test="@n">
+	<xsl:text>: </xsl:text><xsl:value-of select="@n"/>
+      </xsl:if>
+    </xsl:for-each>
+  </i>
+</a>
+<xsl:text> &#187; </xsl:text>
+    </dd>
+  </xsl:when>
+  <xsl:otherwise>
+    <p><a href="#{$W}">&#171; <i>include    
+    <xsl:for-each select="key('IDS',$W)">
+      <xsl:number level="any"/>
+      <xsl:if test="@n">
+	<xsl:text>: </xsl:text><xsl:value-of select="@n"/>
+      </xsl:if>
+    </xsl:for-each>
+  </i>
+</a>
+<xsl:text> &#187; </xsl:text>
+    </p>
+  </xsl:otherwise>
+</xsl:choose>
 </xsl:template>
  
+<xsl:template match="tei:specGrp">
+
+  <p><b>Specification group <xsl:number level="any"/>
+  <xsl:if test="@n">
+    <xsl:text>: </xsl:text><xsl:value-of select="@n"/>
+  </xsl:if>
+  </b>
+    <a name="{@xml:id}"/>
+  </p>
+  <dl>
+    <xsl:apply-templates/>
+  </dl>
+</xsl:template>
+
+<xsl:template match="tei:specGrp/tei:p">
+  <dt/><dd><xsl:apply-templates/></dd>
+</xsl:template>
+
 <xsl:template match="tei:attDef" mode="summary">
   <xsl:variable name="name">
     <xsl:choose>
@@ -460,7 +518,39 @@ XSL HTML stylesheet to format TEI XML documents
 
 <xsl:template match="tei:moduleSpec">
 <hr/>
-<p>Module <xsl:value-of select="@ident"/>: <xsl:apply-templates select="tei:desc"/></p>
+<p><strong>Module </strong><em><xsl:value-of select="@ident"/></em>:
+<xsl:apply-templates select="tei:desc"  mode="show"/>
+<ul>
+<li>Elements defined:
+<xsl:for-each select="key('ElementModule',@ident)">
+  <xsl:call-template name="linkTogether">
+    <xsl:with-param name="url" select="@id|@xml:id"/>
+    <xsl:with-param name="name" select="@ident"/>
+  </xsl:call-template>
+  <xsl:text> </xsl:text>
+</xsl:for-each>
+</li>
+<li>Classes defined:
+<xsl:for-each select="key('ClassModule',@ident)">
+  <xsl:call-template name="linkTogether">
+    <xsl:with-param name="url" select="@id|@xml:id"/>
+    <xsl:with-param name="name" select="@ident"/>
+  </xsl:call-template>
+  <xsl:text> </xsl:text>
+</xsl:for-each>
+</li>
+<li>Macros defined:
+<xsl:for-each select="key('MacroModule',@ident)">
+  <xsl:call-template name="linkTogether">
+    <xsl:with-param name="url" select="@id|@xml:id"/>
+    <xsl:with-param name="name" select="@ident"/>
+  </xsl:call-template>
+  <xsl:text> </xsl:text>
+</xsl:for-each>
+</li>
+</ul>
+<hr/>
+</p>
 </xsl:template>
 
 

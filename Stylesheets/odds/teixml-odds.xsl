@@ -35,13 +35,34 @@ $Date$, $Revision$, $Author$
 
 <xsl:param name="displayMode">rng</xsl:param>
 
-<xsl:template match="tei:classSpec|tei:elementSpec|tei:macroSpec">
-  <xsl:if test="parent::tei:specGrp">
-    <tei:hi><xsl:value-of select="@ident"/></tei:hi>:
-    <xsl:apply-templates select="." mode="tangle"/>
-  </xsl:if>
-</xsl:template>
+<xsl:template match="tei:elementSpec">
+   <xsl:if test="parent::tei:specGrp">
+   <tei:label>Element: <xsl:value-of select="@ident"/></tei:label>
+   <tei:item>
+     <xsl:apply-templates select="." mode="tangle"/>
+     </tei:item>
+   </xsl:if>
+ </xsl:template>
+ 
+<xsl:template match="tei:classSpec">
+   <xsl:if test="parent::tei:specGrp">
+   <tei:label>Class: <xsl:value-of select="@ident"/></tei:label>
+   <tei:item>
+     <xsl:apply-templates select="." mode="tangle"/>
+     </tei:item>
+   </xsl:if>
+ </xsl:template>
+ 
 
+<xsl:template match="tei:macroSpec">
+   <xsl:if test="parent::tei:specGrp">
+   <tei:label>Macro: <xsl:value-of select="@ident"/></tei:label>
+   <tei:item>
+     <xsl:apply-templates select="." mode="tangle"/>
+     </tei:item>
+   </xsl:if>
+ </xsl:template>
+ 
 <xsl:template  match="tei:specGrpRef">
   <xsl:variable name="W">
     <xsl:choose>
@@ -53,17 +74,48 @@ $Date$, $Revision$, $Author$
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
-&#171; <tei:emph>include
-<tei:ref target="#{$W}"><xsl:for-each select="key('IDS',$W)">
-   <xsl:call-template name="compositeNumber"/>
-</xsl:for-each></tei:ref></tei:emph>
-<xsl:text> &#187; </xsl:text>
+<xsl:choose>
+  <xsl:when test="parent::tei:specGrp">
+    <label/><item>&#171; <tei:emph>include
+  <tei:ref target="#{$W}"><xsl:for-each select="key('IDS',$W)">
+    <xsl:number level="any"/>
+    <xsl:if test="@n">
+      <xsl:text>: </xsl:text><xsl:value-of select="@n"/>
+    </xsl:if>
+  </xsl:for-each></tei:ref></tei:emph>
+  <xsl:text> &#187; </xsl:text></item>
+  </xsl:when>
+  <xsl:when test="parent::tei:p">
+    &#171; <tei:emph>include
+    <tei:ref target="#{$W}"><xsl:for-each select="key('IDS',$W)">
+      <xsl:number level="any"/>
+      <xsl:if test="@n">
+	<xsl:text>: </xsl:text><xsl:value-of select="@n"/>
+      </xsl:if>
+    </xsl:for-each></tei:ref></tei:emph>
+    <xsl:text> &#187; </xsl:text>
+  </xsl:when>
+  <xsl:otherwise>
+    <tei:p>&#171; <tei:emph>include
+    <tei:ref target="#{$W}"><xsl:for-each select="key('IDS',$W)">
+      <xsl:number level="any"/>
+      <xsl:if test="@n">
+	<xsl:text>: </xsl:text><xsl:value-of select="@n"/>
+      </xsl:if>
+    </xsl:for-each></tei:ref></tei:emph>
+    <xsl:text> &#187; </xsl:text></tei:p>
+  </xsl:otherwise>
+</xsl:choose>
 </xsl:template>
 
 <xsl:template match="rng:*|tei:*|@*|processing-instruction()|tei:author|tei:title">
  <xsl:copy>
   <xsl:apply-templates select="tei:*|rng:*|@*|processing-instruction()|comment()|text()"/>
  </xsl:copy>
+</xsl:template>
+
+<xsl:template match="tei:specGrp/tei:p">
+  <tei:label/><tei:item><xsl:apply-templates/></tei:item>
 </xsl:template>
 
 <xsl:template match="tei:altIdent"/>
@@ -204,9 +256,9 @@ $Date$, $Revision$, $Author$
 <xsl:template match="tei:desc" mode="weave"/>
 
 <xsl:template match="tei:div0|tei:div1|tei:div2|tei:div3|tei:div4">
-<tei:div>
-  <xsl:apply-templates select="tei:*|rng:*|@*|processing-instruction()|comment()|text()"/>
-</tei:div>
+  <tei:div>
+    <xsl:apply-templates select="tei:*|rng:*|@*|processing-instruction()|comment()|text()"/>
+  </tei:div>
 </xsl:template>
 
 <xsl:template match="tei:elementSpec" mode="weavebody">
@@ -333,9 +385,38 @@ $Date$, $Revision$, $Author$
 </xsl:template>
 
 <xsl:template match="tei:moduleSpec">
-    <tei:p>Module <xsl:call-template name="identifyMe"/>:
-        <xsl:apply-templates select="tei:desc"/>
-    </tei:p>
+Module <tei:emph><xsl:value-of select="@ident"/></tei:emph>:
+<xsl:apply-templates select="tei:desc"  mode="show"/>
+<tei:list>
+<tei:item>Elements defined:
+<xsl:for-each select="key('ElementModule',@ident)">
+  <xsl:call-template name="linkTogether">
+    <xsl:with-param name="url" select="@id|@xml:id"/>
+    <xsl:with-param name="name" select="@ident"/>
+  </xsl:call-template>
+  <xsl:text> </xsl:text>
+</xsl:for-each>
+</tei:item>
+<tei:item>Classes defined:
+<xsl:for-each select="key('ClassModule',@ident)">
+  <xsl:call-template name="linkTogether">
+    <xsl:with-param name="url" select="@id|@xml:id"/>
+    <xsl:with-param name="name" select="@ident"/>
+  </xsl:call-template>
+  <xsl:text> </xsl:text>
+</xsl:for-each>
+</tei:item>
+<tei:item>Macros defined:
+<xsl:for-each select="key('MacroModule',@ident)">
+  <xsl:call-template name="linkTogether">
+    <xsl:with-param name="url" select="@id|@xml:id"/>
+    <xsl:with-param name="name" select="@ident"/>
+  </xsl:call-template>
+  <xsl:text> </xsl:text>
+</xsl:for-each>
+</tei:item>
+</tei:list>
+
 </xsl:template>
 
 <xsl:template match="tei:p">
@@ -441,7 +522,7 @@ $Date$, $Revision$, $Author$
 <xsl:param name="grammar"/>
 <xsl:param name="content"/>
 <xsl:param  name="element">eg</xsl:param> 
-<tei:eg>
+<tei:q rend="eg">
 <xsl:choose>
 <xsl:when test="$displayMode='rng'">
   <xsl:for-each  select="exsl:node-set($content)/Wrapper">
@@ -463,7 +544,7 @@ $Date$, $Revision$, $Author$
   </xsl:for-each>
 </xsl:otherwise>
 </xsl:choose>
-</tei:eg>
+</tei:q>
 </xsl:template>
 
 <xsl:template name="displayAttList">
@@ -538,11 +619,11 @@ $Date$, $Revision$, $Author$
 <xsl:template name="logoFramePicture"/>
 
 <xsl:template match="tei:specGrp">
-  <tei:anchor>
+  <tei:list type="gloss">
     <xsl:copy-of select="@id|@xml:id"/>
-  </tei:anchor>
-  [<xsl:call-template name="compositeNumber"/>]
-  <xsl:apply-templates/>
+    <tei:head>Specification group <xsl:number level="any"/></tei:head>
+    <xsl:apply-templates/>
+  </tei:list>
 </xsl:template>
 
 <xsl:template name="makeAnchor">
@@ -563,8 +644,7 @@ $Date$, $Revision$, $Author$
     <xsl:message>   refdoc for <xsl:value-of select="name(.)"/> -  <xsl:value-of select="@ident"/> </xsl:message>
   </xsl:if>
     <tei:div>
-	<xsl:attribute name="id"><xsl:value-of
-	select="@ident"/></xsl:attribute>
+      <xsl:attribute name="id" namespace="http://www.w3.org/XML/1998/namespace"><xsl:value-of select="@ident"/></xsl:attribute>
       <tei:head>
 	<xsl:call-template name="identifyMe"/>
 	[<xsl:value-of select="substring-before(local-name(.),'Spec')"/>]
