@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  
+  <!-- =========================== Components ================================ -->
+  
+  <map:components>
+    <map:generators default="file">
+      <map:generator name="xquery" logger="sitemap.generator.xquery"
+		     src="org.exist.cocoon.XQueryGenerator"/>
+    </map:generators>
+    <map:readers default="resource"/>
+    <map:serializers default="html"/>
+    <map:selectors default="browser"/>
+    <map:matchers default="wildcard"/>
+    <map:transformers default="xslt">
+    </map:transformers>
+  </map:components>
+  
+  <!-- =========================== Pipelines
+       ================================= -->
+  
+  <map:pipelines>		
+    <map:pipeline>	
+
+      <map:match pattern="xquery/**">
+           <map:mount check-reload="yes"
+           uri-prefix="xquery"   
+	   src="file:///usr/share/tei-roma/xquery/sitemap.xmap"/>
+      </map:match>
+
+      <map:match pattern="**.xml">
+	<map:generate src="{1}.xml"/>
+	<map:transform type="xinclude"/>
+	<map:transform src="http://localhost/stylesheet/teic/teihtml-teic.xsl"/>
+	<map:serialize encoding="UTF-8" type="html"/>
+      </map:match>
+
+      <map:match pattern="**.html">
+       <map:read src="{1}.html" mime-type="text/html"/>
+      </map:match>
+
+      <map:match pattern="**/">
+	<map:generate src="{1}/index.xml"/>
+	<map:transform src="http://localhost/stylesheet/teic/teihtml-teic.xsl"/>
+	<map:serialize encoding="UTF-8" type="html"/>
+      </map:match>
+
+    </map:pipeline>
+  </map:pipelines>	
+  
+</map:sitemap>

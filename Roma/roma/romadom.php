@@ -194,7 +194,7 @@ class romaDom extends domDocument
     public function getIncludedElementsInModule( $szModule, &$aszElements )
       {
 	$oListDom = new domDocument();
-	$oListDom->loadXML( join( '', file( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/elemsbymod.xq?module=' . $szModule ) ) );
+	$oListDom->loadXML( join( '', file( roma_exist_server . '/xquery/elemsbymod.xq?module=' . $szModule ) ) );
 	$aoElements = $oListDom->getElementsByTagname( 'elementName' );
 	$this->getExcludedElementsInModule( $szModule, $aszExcluded );
 
@@ -381,7 +381,7 @@ class romaDom extends domDocument
 	else
 	  {
 	    $oElementDom = new domDocument();
-	    $oElementDom->loadXML( join( '', file( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/element.xq?name=' . $szElement ) ) );
+	    $oElementDom->loadXML( join( '', file( roma_exist_server . '/xquery/element.xq?name=' . $szElement ) ) );
 	    
 	    $oXPath = new domxpath( $oElementDom );
 	    $aoClasses = $oXPath->query( "/Element/elementClasses/class" );
@@ -413,7 +413,7 @@ class romaDom extends domDocument
     public function getDescriptionByElementName( $szElement, &$szDesc )
       {
 	$oElementDom = new domDocument();
-	$oElementDom->loadXML( join( '', file( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/element.xq?name=' . $szElement ) ) );
+	$oElementDom->loadXML( join( '', file( roma_exist_server . '/xquery/element.xq?name=' . $szElement ) ) );
 	
 	$oXPath = new domxpath( $oElementDom );
 	$oDesc = $oXPath->query( "/Element/elementDesc" )->item(0);
@@ -440,7 +440,7 @@ class romaDom extends domDocument
 	else
 	  {
 	    $oElementDom = new domDocument();
-	    $oElementDom->loadXML( join( '', file( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/element.xq?name=' . $szElement ) ) );
+	    $oElementDom->loadXML( join( '', file( roma_exist_server . '/xquery/element.xq?name=' . $szElement ) ) );
 	    
 	    $oXPath = new domxpath( $oElementDom );
 	    $oXPath->registerNamespace( 'rng', 'http://relaxng.org/ns/structure/1.0' );
@@ -475,7 +475,7 @@ class romaDom extends domDocument
 	else
 	  {
 	    $oElementDom = new domDocument();
-	    $oElementDom->loadXML( join( '', file( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/element.xq?name=' . $szElement ) ) );
+	    $oElementDom->loadXML( join( '', file( roma_exist_server . '/xquery/element.xq?name=' . $szElement ) ) );
 	    
 	    $oXPath = new domxpath( $oElementDom );
 	    $oXPath->registerNamespace( 'rng', 'http://relaxng.org/ns/structure/1.0' );
@@ -500,7 +500,7 @@ class romaDom extends domDocument
 	$aszAttributes = array();
 
 	$oAttributesDom = new domDocument();
-	$oAttributesDom->loadXML( join( '', file( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/attsbyelem.xq?name=' . $szElement ) ) );
+	$oAttributesDom->loadXML( join( '', file( roma_exist_server . '/xquery/attsbyelem.xq?name=' . $szElement ) ) );
 	
 	$oElement = $oAttributesDom->documentElement;
 	foreach( $oElement->childNodes as $oChild )
@@ -518,7 +518,7 @@ class romaDom extends domDocument
 
 	if ( $szModule != '' && $szClass == '')
 	  {
-	    @$oAttDom->loadXML( join( '', file( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/attsbyelem.xq?name=' . $szElement ) ) );
+	    @$oAttDom->loadXML( join( '', file( roma_exist_server . '/xquery/attsbyelem.xq?name=' . $szElement ) ) );
 	    $oElement = $oAttDom->documentElement;
 		
 	    if ( is_object( $oElement ) )
@@ -551,7 +551,7 @@ class romaDom extends domDocument
 	    $oElement = $oAttDom->documentElement;
 
 	    $oAttClassDom = new domDocument;
-	    $oAttClassDom->loadXML( join( '', file( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/attclassbyname.xq?class=' . $szClass ) ) );
+	    $oAttClassDom->loadXML( join( '', file( roma_exist_server . '/xquery/attclassbyname.xq?class=' . $szClass ) ) );
 	    $oRoot = $oAttClassDom->documentElement;
 	    $oAttributes = $oAttClassDom->getElementsByTagName( 'attributes' )->item(0);
 
@@ -882,7 +882,7 @@ class romaDom extends domDocument
 
 	//check if name already exists
 	$oTmpDom = new domDocument();
-	if ( @$oTmpDom->loadXML( join( '', file( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/element.xq?name=' . $aszConfig[ 'name' ] ) ) ) )
+	if ( @$oTmpDom->loadXML( join( '', file( roma_exist_server . '/xquery/element.xq?name=' . $aszConfig[ 'name' ] ) ) ) )
 	  {
 	    throw new elementExistsException( $aszConfig[ 'name' ] );
 	  }
@@ -1263,7 +1263,7 @@ class romaDom extends domDocument
 	$this->getXPath( $oXPath );
         $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);
 	$oTmpDom = new domDocument();
-	$oTmpDom->loadXML( join( '', file( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/classattsbyelem.xq?name=' . $aszConfig[ 'element' ] ) ) );
+	$oTmpDom->loadXML( join( '', file( roma_exist_server . '/xquery/classattsbyelem.xq?name=' . $aszConfig[ 'element' ] ) ) );
 	$oNames = $oTmpDom->getElementsByTagname( 'name' );
 
 	foreach( $oNames as $oName )

@@ -118,7 +118,7 @@ class docDom extends domDocument
 
 		$oElementDom = new domDocument();
 		echo $szElement . " ";
-		$oElementDom->loadXML( join( '', file( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/copytag.xq?name=' . $szElement ) ) );
+		$oElementDom->loadXML( join( '', file( roma_exist_server . '/xquery/copytag.xq?name=' . $szElement ) ) );
 		$oSpec = $oElementDom->getElementsByTagname( 'elementSpec' )->item(0);
 		
 		$oSpec = $this->importNode( $oSpec, true );
