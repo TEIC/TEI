@@ -2021,8 +2021,13 @@ class romaDom extends domDocument
 	$oXSL = new domDocument();
 	$oXSL->load( roma_schemaStylesheetDir . '/base/p5/odds/expandincludes.xsl' );
 	
+	$oXSL2 = new domDocument();
+	$oXSL2->load( roma_schemaStylesheetDir . '/base/p5/odds/simplifyforxsd.xsl' );
+
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
+	$oProc2 = new XsltProcessor();
+	$oProc2->importStylesheet( $oXSL2 );
 	$oProc->setParameter( null, 'RNGDIR', '-' );
 
 	//Save File
@@ -2032,19 +2037,21 @@ class romaDom extends domDocument
 	$szTempFile = roma_temporaryFilesDir . '/' . $szID . 'tmp.xsd';    
 	$szOutputFile = roma_temporaryFilesDir . '/' . $szID . '.xsd';    
 
-	file_put_contents( $szInputFile , $oProc->transformToDoc( $oRNG )->SaveXML() );
+	file_put_contents( $szInputFile , 
+	     $oProc2->transformToDoc( $oProc->transformToDoc( $oRNG ))->SaveXML() 
+	     );
 	
 
 	if ( $bBar )
 	    $this->updateProgressBar( '70' );
 	
 	ob_start();
-	System( roma_trang . 
+	System( '(' .roma_trang . 
 	' -I rng -O xsd -o disable-abstract-elements ' . 
 	$szInputFile . ' ' . $szOutputFile  . 
-	'; xsltproc -o ' . $szTempFile . ' ' .
+	'&& xsltproc -o ' . $szTempFile . ' ' .
 	roma_schemaStylesheetDir . '/base/p5/odds/manglexsd.xsl ' .
-	$szOutputFile . '; mv ' . $szTempFile . ' ' . $szOutputFile . ' 2>&1');
+	$szOutputFile . ' && mv ' . $szTempFile . ' ' . $szOutputFile . ' ) 2>&1');
 	$szError = ob_get_clean();
 	ob_end_clean();
 
@@ -2087,7 +2094,7 @@ class romaDom extends domDocument
 	$oXSL2->load( roma_schemaStylesheetDir . '/base/p5/odds/nomorechoice.xsl' );
 
 	$oXSL3 = new domDocument();
-	$oXSL3->load( roma_schemaStylesheetDir . '/base/p5/odds/simplify.xsl' );
+	$oXSL3->load( roma_schemaStylesheetDir . '/base/p5/odds/simplifyfordtd.xsl' );
 
 	if ( $bBar )
 	    $this->updateProgressBar( '70' );
@@ -2114,7 +2121,9 @@ class romaDom extends domDocument
 	    $this->updateProgressBar( '80' );
 	
 	ob_start();
-	System( roma_trang . ' -I rng -O dtd ' . $szInputFile . ' ' . $szOutputFile  . '; perl -p -i -e "s/ns1://g;s/xmlns:ns1/xmlns/g" ' . $szOutputFile . ' 2>&1 ');
+	System( '(' . roma_trang . ' -I rng -O dtd ' . $szInputFile . ' '
+	. $szOutputFile  . ' && perl -p -i -e "s/ns1://g;s/xmlns:ns1/xmlns/g" ' . 
+        $szOutputFile . ' ) 2>&1 ');
 	$szError = ob_get_clean();
 	ob_end_clean();
 
