@@ -1656,7 +1656,7 @@ select="$F"/></xsl:message>
   <xsl:otherwise>
     <xsl:call-template name="linkTogether">
      <xsl:with-param name="name" select="@name"/>
-     <xsl:with-param name="url" select="concat('ref-',$F,'.html')"/>
+     <xsl:with-param name="url" select="$F"/>
     </xsl:call-template>
   </xsl:otherwise>
 </xsl:choose>
