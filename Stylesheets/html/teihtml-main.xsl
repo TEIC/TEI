@@ -758,7 +758,7 @@ $ID: requests a particular page
   <xsl:template name="addLangAtt">
     <xsl:variable name="supplied">
       <xsl:choose>
-	<xsl:when test="ancestor-or-self::tei:*[@xm:lang]">
+	<xsl:when test="ancestor-or-self::tei:*[@xml:lang]">
 	  <xsl:value-of
 	    select="ancestor-or-self::tei:*[@xml:lang][1]/@xml:lang"/>
 	</xsl:when>
