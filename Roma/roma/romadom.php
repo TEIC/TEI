@@ -1200,7 +1200,7 @@ class romaDom extends domDocument
 	$this->getXPath( $oXPath );
         $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);
 	$oModule = $oXPath->query( "//tei:schemaSpec/tei:moduleRef[@key='{$szModule}']" )->item(0);
-	$oElementSpec = $oXPath->query("//tei:schemaSpec/tei:elementSpec[='{$szModule}' and @ident='{$szElement}']" )->item(0);
+	$oElementSpec = $oXPath->query("//tei:schemaSpec/tei:elementSpec[@module='{$szModule}' and @ident='{$szElement}']" )->item(0);
 	if ( ! is_object( $oModule ) ) 
 	  {
 	    $this->addModule( $szModule, false );
@@ -1217,7 +1217,7 @@ class romaDom extends domDocument
 
 	//check weather there are any classes yet
 	$oClasses = $oXPath->query(
-	"//tei:schemaSpec/tei:elementSpec[='{$szModule}' and @ident='{$szElement}']/tei:classes" )->item(0);
+	"//tei:schemaSpec/tei:elementSpec[@module='{$szModule}' and @ident='{$szElement}']/tei:classes" )->item(0);
 	
 	if ( is_object( $oClasses ) )
 	  {
@@ -1461,7 +1461,7 @@ class romaDom extends domDocument
 	    $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);
 	    $oModule = $oXPath->query( "//tei:schemaSpec/tei:moduleRef[@key='{$szModule}']" )->item(0);
 	    $oElementSpec = $oXPath->query(
-	  "//tei:schemaSpec/tei:elementSpec[='{$szModule}' and @ident='{$szElement}']" )->item(0);
+	  "//tei:schemaSpec/tei:elementSpec[@module='{$szModule}' and @ident='{$szElement}']" )->item(0);
 	    
 	    if ( ! is_object( $oModule ) ) 
 	      {
@@ -1478,7 +1478,7 @@ class romaDom extends domDocument
 	      }
 	    
 	    $oAttList = $oXPath->query(
-	    "//tei:schemaSpec/tei:elementSpec[='{$szModule}' and @ident='{$szElement}']/tei:attList" )->item(0);
+	    "//tei:schemaSpec/tei:elementSpec[@module='{$szModule}' and @ident='{$szElement}']/tei:attList" )->item(0);
 	    
 	    if (! is_object( $oAttList ) )
 	      {
