@@ -946,7 +946,7 @@ class romaDom extends domDocument
 	      }
             $theDesc = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'desc' );
             $oDesc = $oElementSpec->appendChild( $theDesc );
-	    $oDesc->appendChild( new domText( $aszConfig[ 'description' ] ) );
+	    $oDesc->appendChild( new domText( stripslashes( $aszConfig[ 'description' ] ) ) );
           }
       }
 
@@ -1085,7 +1085,7 @@ class romaDom extends domDocument
 	    
 	    $theDesc = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'desc' );
 	    $oDesc = $oElementSpec->appendChild( $theDesc );
-	    $oDesc->appendChild( new domText( $szDescription ) );
+	    $oDesc->appendChild( new domText( stripslashes($szDescription) ) );
 	  }
       }
 
@@ -1404,7 +1404,7 @@ class romaDom extends domDocument
 	      }
 	    $theDesc = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'desc' );
 	    $oDesc = $oAttDef->appendChild( $theDesc );
-	    $oDesc->appendChild( new domText( $aszConfig[ 'description' ] ) );
+	    $oDesc->appendChild( new domText( stripslashes($aszConfig[ 'description' ]) ) );
 	  }
 	return $errResult;
 
@@ -1759,7 +1759,7 @@ class romaDom extends domDocument
 	$oP = $oXPath->query( "/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:p" )->item(0);
 	if ( $oP->hasChildNodes() )
 	  $oP->removeChild( $oP->firstChild );
-	$oP->appendChild( new domText ( $szDescription ) );
+	$oP->appendChild( new domText ( stripslashes($szDescription) ) );
       }
 
     public function setCustomizationAuthor( $szAuthor )
