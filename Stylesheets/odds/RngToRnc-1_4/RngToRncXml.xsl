@@ -241,25 +241,7 @@
 	</xsl:call-template>
       </xsl:if>
 
-      <declaration size="9">namespace</declaration>
-      <sp size="1"/>
-      <prefix size="3">inh</prefix>
-      <t size="3"> = </t>
-      <keyword size="7">inherit</keyword>
-      <nl size="1"/>
-
-      <xsl:for-each select="//@ns">
-	<xsl:if test="not ($retain-prefixes and key ('ns', string (.))) and 
-	  (not ($has-default-ns) or string (.) != $default-ns) and
-	  not ($has-local and . = '')">
-	  <xsl:call-template name="make-ns-declaration">
-	    <xsl:with-param name="prefix">
-	      <xsl:call-template name="get-prefix"/>
-	    </xsl:with-param>
-	    <xsl:with-param name="uri" select="."/>
-	  </xsl:call-template>
-	</xsl:if>
-      </xsl:for-each>
+      <xsl:call-template name="inhnamespace"/>
 
       <xsl:choose>
 	<xsl:when test="$retain-prefixes">
@@ -1505,5 +1487,27 @@
     <nl size="1"/>
     <xsl:call-template name="make-string-literal"/>
   </xsl:template>
+
+
+ <xsl:template name="inhnamespace">
+      <declaration size="9">namespace</declaration>
+      <sp size="1"/>
+      <prefix size="3">inh</prefix>
+      <t size="3"> = </t>
+      <keyword size="7">inherit</keyword>
+      <nl size="1"/>
+      <xsl:for-each select="//@ns">
+	<xsl:if test="not ($retain-prefixes and key ('ns', string (.))) and 
+	  (not ($has-default-ns) or string (.) != $default-ns) and
+	  not ($has-local and . = '')">
+	  <xsl:call-template name="make-ns-declaration">
+	    <xsl:with-param name="prefix">
+	      <xsl:call-template name="get-prefix"/>
+	    </xsl:with-param>
+	    <xsl:with-param name="uri" select="."/>
+	  </xsl:call-template>
+	</xsl:if>
+      </xsl:for-each>
+ </xsl:template>
 
 </xsl:transform>

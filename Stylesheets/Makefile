@@ -1,4 +1,4 @@
-VERSION=3.1
+VERSION=3.2
 
 all: p4 p5 zip
 
