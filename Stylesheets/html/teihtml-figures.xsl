@@ -15,6 +15,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
   version="1.0">
 
 <xsl:template match="tei:figDesc"/>
+<xsl:template match="tei:figure/tei:head"/>
 
 <xsl:template match="tei:figure">
   <xsl:if test="@url|@entity">
@@ -26,15 +27,29 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
       </xsl:with-param>
     </xsl:call-template>
   </xsl:if>
-  <xsl:apply-templates select="tei:p"/>
+  <xsl:apply-templates/>
   <xsl:if test="tei:head">
     <p>
-      <xsl:if test="$numberFigures='true'" >
-	<xsl:value-of select="$figureWord"/>
-	<xsl:text> </xsl:text>
-	<xsl:number level="any"/>.<xsl:text> </xsl:text>
-      </xsl:if>
-      <xsl:apply-templates select="tei:head"/>
+      <xsl:choose>
+	<xsl:when test="ancestor::tei:front and
+			$numberFrontFigures='true'">
+	  <xsl:value-of select="$figureWord"/>
+	  <xsl:text> </xsl:text>
+	  <xsl:number level="any"  from="tei:front"/>.<xsl:text> </xsl:text>
+	</xsl:when>
+	<xsl:when test="ancestor::tei:back and
+			$numberBackFigures='true'">
+	  <xsl:value-of select="$figureWord"/>
+	  <xsl:text> </xsl:text>
+	  <xsl:number level="any" from="tei:back"/>.<xsl:text> </xsl:text>
+	</xsl:when>
+	<xsl:when test="ancestor::tei:body and $numberFigures='true'" >
+	  <xsl:value-of select="$figureWord"/>
+	  <xsl:text> </xsl:text>
+	  <xsl:number level="any"  from="tei:body"/>.<xsl:text> </xsl:text>
+	</xsl:when>
+      </xsl:choose>
+      <xsl:apply-templates select="tei:head" mode="plain"/>
     </p>
   </xsl:if>
 </xsl:template>

@@ -41,7 +41,11 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 <xsl:param name="headingNumberSuffix">.<xsl:value-of 
 select="$numberSpacer"/></xsl:param>
 <xsl:param name="numberFigures">true</xsl:param>
+<xsl:param name="numberFrontFigures">false</xsl:param>
+<xsl:param name="numberBackFigures">false</xsl:param>
 <xsl:param name="numberTables">true</xsl:param>
+<xsl:param name="numberFrontTables">true</xsl:param>
+<xsl:param name="numberBackTables">true</xsl:param>
 <xsl:param name="numberHeadings">true</xsl:param>
 <xsl:param name="numberHeadingsDepth">9</xsl:param>
 <xsl:param name="prenumberedHeadings"></xsl:param>
