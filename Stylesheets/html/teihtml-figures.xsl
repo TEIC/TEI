@@ -37,7 +37,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 <xsl:template match="tei:graphic">
   <xsl:call-template name="showGraphic">
       <xsl:with-param name="ID">
-	<xsl:if test="../@id|./@xml:id">
+	<xsl:if test="../@id|../@xml:id">
 	  <xsl:value-of select="../@id|../@xml:id"/>
 	</xsl:if>
       </xsl:with-param>

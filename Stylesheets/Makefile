@@ -1,4 +1,4 @@
-VERSION=3.12
+VERSION=4.0
 
 all: p4 p5 other
 

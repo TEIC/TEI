@@ -108,11 +108,6 @@ $Date$, $Revision$, $Author$
 </xsl:template>
 
 <xsl:template match="tei:divGen[@type='index']">
-     <h2>Index</h2>
-</xsl:template>
-
-
-<xsl:template match="tei:divGen[@type='index']">
 <xsl:variable name="Index">
 <Indexterms>
  <xsl:for-each select="//tei:index">
@@ -121,7 +116,7 @@ $Date$, $Revision$, $Author$
        <xsl:apply-templates select="ancestor::tei:div1" mode="generateLink"/>
      </file>
      <section>
-       <xsl:apply-templates select="(ancestor::tei:div1|ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4|ancestor::tei:div5)[last()]" mode="header">
+       <xsl:apply-templates select="(ancestor::tei:div1|ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4|ancestor::tei:div5)[last()]" mode="ident">
          <xsl:with-param name="minimal"></xsl:with-param>
        </xsl:apply-templates>
      </section>
@@ -137,7 +132,7 @@ $Date$, $Revision$, $Author$
        <xsl:apply-templates select="ancestor::tei:div1" mode="generateLink"/>
      </file>
      <section>
-       <xsl:apply-templates select="(ancestor::tei:div1|ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4|ancestor::tei:div5)[last()]" mode="header">
+       <xsl:apply-templates select="(ancestor::tei:div1|ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4|ancestor::tei:div5)[last()]" mode="ident">
          <xsl:with-param name="minimal"></xsl:with-param>
        </xsl:apply-templates>
      </section>
