@@ -3,16 +3,18 @@ R=/usr/share/xml/tei
 T=$R/stylesheet
 S=$R/schema/relaxng/p5/
 simple=false
+debug=false
 while test $# -gt 0; do
   case $1 in
     --xsl=*)    T=`echo $1 | sed 's/.*=//'`;;
     --simple)   simple=true;;
-    --schema=*) S=`echo $1 | sed 's/.*=//'`;;
+    --debug)    debug=true;;
+    --schema=*) SS=`echo $1 | sed 's/.*=//'`;;
      *) break;;
   esac
   shift
 done
-N=`grep "<schemaSpec ident" $1 | sed 's/.*ident=\"\([^\"]*\)\".*/\1/'`
+N=`grep "<schemaSpec" $1 | head -1 | sed 's/.*ident=\"\([^\"]*\)\".*/\1/'`
 if test "x$1" = "x"; then
     echo Usage: Roma schemaspec [output directory]
     exit 1
@@ -23,32 +25,48 @@ else
     export RESULTS=$2
 fi
 H=`pwd`
+S=`cd $SS && /bin/pwd` || die "cannot change directory to $SS"
+
 echo Roma starts
+echo ===============================
+echo Test for software: xmllint, xsltproc, trang and perl
+which xmllint || die "you do not have xmllint"
+which xsltproc || die "you do not have xsltproc"
+which trang || die "you do not have trang"
+which perl || die "you do not have perl"
+test -d $S || die "schema dir $S does not exist"
+test -d $T || die "tei dir $S does not exist"
+mkdir -p $RESULTS || die "cannot make directory $RESULTS"
+
+echo ===============================
 echo Process $1 to create $N.\{rng,rnc,dtd\} in $Results
-mkdir -p $RESULTS
 echo 1. make Relax NG from ODD
-xsltproc  --stringparam verbose true --stringparam RNGDIR $RESULTS --stringparam schemaBaseURL $S $T/base/p5/odds/odd2relax.xsl $1
+xsltproc  --stringparam verbose true --stringparam RNGDIR $RESULTS --stringparam schemaBaseURL $S/ $T/base/p5/odds/odd2relax.xsl $1
 cd $RESULTS
-xmllint --format $N.rng > x; mv x $N.rng
+xmllint --format $N.rng > $$.xml; mv $$.xml $N.rng
 echo 2. make Relax NG compact from XML
-trang $N.rng $N.rnc
+trang $N.rng $N.rnc  || die " trang fails"
 echo 3. expand includes in Relax NG
 xsltproc -o $N.compiled.rng $T/base/p5/odds/expandincludes.xsl $N.rng 
 echo 4. convert expanded form to compact syntax
-trang $N.compiled.rng $N.compiled.rnc
-$simple && exit 
+trang $N.compiled.rng $N.compiled.rnc  || die " trang fails"
 echo 5. simplify expanded form, convert to XSD and then mangle XSD
-xsltproc -o $N.temp.rng $T/base/p5/odds/simplifyforxsd.xsl $N.compiled.rng 
-trang  -o disable-abstract-elements $N.temp.rng $N.compiled.xsd && rm $N.temp.rng
+xsltproc -o $N.temp1.rng $T/base/p5/odds/simplifyforxsd.xsl $N.compiled.rng 
+trang  -o disable-abstract-elements $N.temp1.rng $N.compiled.xsd || die " trang fails"
+$debug || rm $N.temp1.rng  
 xsltproc -o $N.xsd $T/base/p5/odds/manglexsd.xsl $N.compiled.xsd
-rm $N.compiled.xsd
+$debug || rm $N.compiled.xsd
+$simple && exit 
 echo 6. simplify schema before attempting DTD conversion
 xsltproc $T/base/p5/odds/nomorechoice.xsl $N.compiled.rng | \
 xsltproc $T/base/p5/odds/simplifyfordtd.xsl - | \
 xsltproc $T/base/p5/odds/simplifyfordtd.xsl - | \
 xsltproc -o $N.temp2.rng $T/base/p5/odds/simplifyfordtd.xsl - 
 echo 7. convert simplified form to DTD
-trang $N.temp2.rng $N.dtd && rm $N.temp2.rng
+trang $N.temp2.rng $N.dtd || die " trang fails"
+$debug || rm $N.temp2.rng 
 perl -p -i -e 's/ns1://;s/xmlns:ns1/xmlns/' $N.dtd
 echo 8. make expanded documented ODD
 xsltproc $T/base/p5/odds/subsetGuidelines.xsl $H/$1 | xmllint --format - > $N.doc.xml 
+echo ===============================
+echo Roma ends
