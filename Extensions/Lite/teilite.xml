@@ -87,71 +87,11 @@ An <gi tei="false">LI</gi> element is roughly analagous to an <gi>item</gi> elem
 </specGrp>
 </p>
 
-<p>
-<module ident="tei" mode="change">
-  <elementSpec ident="analytic" mode="delete"/>
-  <elementSpec ident="broadcast" mode="delete"/>
-  <elementSpec ident="cb" mode="delete"/>
-  <elementSpec ident="correction" mode="delete"/>
-  <elementSpec ident="dateRange" mode="delete"/>
-  <elementSpec ident="distinct" mode="delete"/>
-  <elementSpec ident="equipment" mode="delete"/>
-  <elementSpec ident="expan" mode="delete"/>
-  <elementSpec ident="fsdDecl" mode="delete"/>
-  <elementSpec ident="headItem" mode="delete"/>
-  <elementSpec ident="headLabel" mode="delete"/>
-  <elementSpec ident="hyphenation" mode="delete"/>
-  <elementSpec ident="interpretation" mode="delete"/>
-  <elementSpec ident="measure" mode="delete"/>
-  <elementSpec ident="meeting" mode="delete"/>
-  <elementSpec ident="metDecl" mode="delete"/>
-  <elementSpec ident="monogr" mode="delete"/>
-  <elementSpec ident="normalization" mode="delete"/>
-  <elementSpec ident="num" mode="delete"/>
-  <elementSpec ident="postBox" mode="delete"/>
-  <elementSpec ident="postCode" mode="delete"/>
-  <elementSpec ident="quotation" mode="delete"/>
-  <elementSpec ident="quote" mode="delete"/>
-  <elementSpec ident="recording" mode="delete"/>
-  <elementSpec ident="recordingStmt" mode="delete"/>
-  <elementSpec ident="scriptStmt" mode="delete"/>
-  <elementSpec ident="segmentation" mode="delete"/>
-  <elementSpec ident="series" mode="delete"/>
-  <elementSpec ident="state" mode="delete"/>
-  <elementSpec ident="stdVals" mode="delete"/>
-  <elementSpec ident="step" mode="delete"/>
-  <elementSpec ident="street" mode="delete"/>
-  <elementSpec ident="teiCorpus" mode="delete"/>
-  <elementSpec ident="timeRange" mode="delete"/>
-  <elementSpec ident="variantEncoding" mode="delete"/>
-</module>
-
-<module ident="linking" mode="change">
-  <elementSpec ident="alt" mode="delete"/>
-  <elementSpec ident="altGrp" mode="delete"/>
-  <elementSpec ident="join" mode="delete"/>
-  <elementSpec ident="joinGrp" mode="delete"/>
-  <elementSpec ident="link" mode="delete"/>
-  <elementSpec ident="linkGrp" mode="delete"/>
-  <elementSpec ident="timeline" mode="delete"/>
-  <elementSpec ident="when" mode="delete"/>
-</module>
-
-<module ident="analysis" mode="change">
-  <elementSpec ident="c" mode="delete"/>
-  <elementSpec ident="cl" mode="delete"/>
-  <elementSpec ident="m" mode="delete"/>
-  <elementSpec ident="phr" mode="delete"/>
-  <elementSpec ident="span" mode="delete"/>
-  <elementSpec ident="spanGrp" mode="delete"/>
-  <elementSpec ident="w" mode="delete"/>
-</module>
-</p>
 
 <p>Now for the wrapping schema, which imports 
 selected TEI modules. Some existing elements are redefined
 to be null.
-<schema ident="teilite">
+<schemaSpec ident="teilite">
   <specGrpRef target="LITEADD"/>
   <moduleRef key="tei"/>
   <moduleRef key="core"/>
@@ -160,7 +100,58 @@ to be null.
   <moduleRef key="figures"/>
   <moduleRef key="linking"/>
   <moduleRef key="analysis"/>
-</schema>
+<elementSpec ident="alt" mode="delete" module="linking"  />
+<elementSpec ident="altGrp" mode="delete" module="linking"  />
+<elementSpec ident="analytic" mode="delete" module="core"  />
+<elementSpec ident="broadcast" mode="delete" module="header"  />
+<elementSpec ident="c" mode="delete" module="analysis"  />
+<elementSpec ident="cb" mode="delete" module="core"  />
+<elementSpec ident="cl" mode="delete" module="analysis"  />
+<elementSpec ident="correction" mode="delete" module="header"  />
+<elementSpec ident="dateRange" mode="delete" module="core"  />
+<elementSpec ident="distinct" mode="delete" module="core"  />
+<elementSpec ident="equipment" mode="delete" module="header"  />
+<elementSpec ident="expan" mode="delete" module="core"  />
+<elementSpec ident="fsdDecl" mode="delete" module="header"  />
+<elementSpec ident="headItem" mode="delete" module="core"  />
+<elementSpec ident="headLabel" mode="delete" module="core"  />
+<elementSpec ident="hyphenation" mode="delete" module="header"  />
+<elementSpec ident="interpretation" mode="delete" module="header"  />
+<elementSpec ident="join" mode="delete" module="linking"  />
+<elementSpec ident="joinGrp" mode="delete" module="linking"  />
+<elementSpec ident="link" mode="delete" module="linking"  />
+<elementSpec ident="linkGrp" mode="delete" module="linking"  />
+<elementSpec ident="m" mode="delete" module="analysis"  />
+<elementSpec ident="measure" mode="delete" module="core"  />
+<elementSpec ident="meeting" mode="delete" module="core"  />
+<elementSpec ident="metDecl" mode="delete" module="header"  />
+<elementSpec ident="monogr" mode="delete" module="core"  />
+<elementSpec ident="normalization" mode="delete" module="header"  />
+<elementSpec ident="num" mode="delete" module="core"  />
+<elementSpec ident="phr" mode="delete" module="analysis"  />
+<elementSpec ident="postBox" mode="delete" module="core"  />
+<elementSpec ident="postCode" mode="delete" module="core"  />
+<elementSpec ident="quotation" mode="delete" module="header"  />
+<elementSpec ident="quote" mode="delete" module="core"  />
+<elementSpec ident="recording" mode="delete" module="header"  />
+<elementSpec ident="recordingStmt" mode="delete" module="header"  />
+<elementSpec ident="scriptStmt" mode="delete" module="header"  />
+<elementSpec ident="segmentation" mode="delete" module="header"  />
+<elementSpec ident="series" mode="delete" module="core"  />
+<elementSpec ident="span" mode="delete" module="analysis"  />
+<elementSpec ident="spanGrp" mode="delete" module="analysis"  />
+<elementSpec ident="state" mode="delete" module="header"  />
+<elementSpec ident="stdVals" mode="delete" module="header"  />
+<elementSpec ident="step" mode="delete" module="header"  />
+<elementSpec ident="street" mode="delete" module="core"  />
+<elementSpec ident="teiCorpus" mode="delete" module="core"  />
+<elementSpec ident="timeRange" mode="delete" module="core"  />
+<elementSpec ident="timeline" mode="delete" module="linking"  />
+<elementSpec ident="variantEncoding" mode="delete" module="header"  />
+<elementSpec ident="w" mode="delete" module="analysis"  />
+<elementSpec ident="when" mode="delete" module="linking"  />
+
+</schemaSpec>
 </p>
 </body>
 </text>
