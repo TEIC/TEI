@@ -7,11 +7,11 @@ See the file COPYING for details.
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="msdescription" xml:id="MSITEM" ident="msItem">
 <equiv/>
 <gloss/>
-<desc xml:id="msitem.desc">describes an individual work or item within the intellectual 
+<desc >describes an individual work or item within the intellectual 
 content of a manuscript or manuscript part. </desc>
-  
-  
-  <classes/>
+  <classes>
+    <memberOf key="tei.msItemPart"/>
+  </classes>
   <content>
 <!--<!ELEMENT msItem  - -   (locus?, (author|respStmt|title
      |rubric|incipit|explicit|colophon|decoNote|langUsage|listBibl
@@ -24,7 +24,10 @@ content of a manuscript or manuscript part. </desc>
 <rng:oneOrMore>
 <rng:ref name="tei.paragraph"/>
 </rng:oneOrMore>
-
+<rng:oneOrMore>
+<rng:ref name="tei.msItemPart"/>
+</rng:oneOrMore>
+<!--
 <rng:group>
     <rng:zeroOrMore>
 <rng:ref name="author"/>
@@ -42,9 +45,8 @@ content of a manuscript or manuscript part. </desc>
 <rng:ref name="colophon"/>
     </rng:zeroOrMore>    <rng:zeroOrMore>
 <rng:ref name="decoNote"/>
-    </rng:zeroOrMore>    <rng:zeroOrMore>
-<rng:ref name="langUsage"/>
-    </rng:zeroOrMore>    <rng:zeroOrMore>
+    </rng:zeroOrMore>   
+<rng:zeroOrMore>
 <rng:ref name="listBibl"/>
     </rng:zeroOrMore>    <rng:zeroOrMore>
 <rng:ref name="q"/>
@@ -59,8 +61,7 @@ content of a manuscript or manuscript part. </desc>
     </rng:optional>    <rng:zeroOrMore>
 <rng:ref name="msItem"/>
 </rng:zeroOrMore>
-
-</rng:group>
+</rng:group>-->
 </rng:choice></rng:group>  </content>
   <attList>
     <attDef ident="class">
@@ -68,30 +69,19 @@ content of a manuscript or manuscript part. </desc>
 	<gloss/>
 	<desc>identifies the text types or classifications applicable to this
 item</desc>
-      
-      
-      
       <datatype><rng:ref name="datatype.uriList"/></datatype>
-      
       <valDesc>One or more codes, each of which is used as the identifier for
 a text classification element supplied in the TEI Header <gi>textClass</gi>
 element.</valDesc>
-      
-      
     </attDef>
     <attDef ident="defective">
 	<equiv/>
 	<gloss/>
 	<desc>indicates whether the item being described 
 is defective, i.e. incomplete.</desc>
-      
-      
-      
       <datatype><rng:ref name="datatype.UBoolean"/></datatype>
       <defaultVal>false</defaultVal>
       <valDesc>Yes, No, Unknown, or Unspecified</valDesc>
-      
-      
     </attDef>
   </attList>
   
