@@ -150,6 +150,8 @@ define( 'roma_customization_validator', 'http://www.tei-c.org/P5/Schema/p5odds.r
 define( 'roma_exist_server', 'spqr.oucs.ox.ac.uk' );
 
 
+define( 'roma_validate_schema', false );
+
 
 //#########################
 // The different Modes
@@ -754,17 +756,24 @@ class roma
 
 	$oSchemaParser->addReplacement( 'output', $_REQUEST[ 'output' ] );
 	//validate file
-	set_error_handler( array($this, 'schemaValidatorErrorHandler' ) );
-	if ( $this->m_oRomaDom->relaxNGValidate( roma_customization_validator ) )
+	if ( roma_validate_schema )
 	  {
-	    $oSchemaParser->addReplacement( 'validated', 'true' );
+	    set_error_handler( array($this, 'schemaValidatorErrorHandler' ) );
+	    if ( $this->m_oRomaDom->relaxNGValidate( roma_customization_validator ) )
+	      {
+		$oSchemaParser->addReplacement( 'validated', 'true' );
+	      }
+	    else
+	      {
+		$oSchemaParser->addReplacement( 'validated', 'false' );
+		$oSchemaParser->addReplacement( 'validatorMessages', join( '<br>', $this->m_aszErrors ) );
+	      }
+	    restore_error_handler();
 	  }
 	else
 	  {
-	    $oSchemaParser->addReplacement( 'validated', 'false' );
-	    $oSchemaParser->addReplacement( 'validatorMessages', join( '<br>', $this->m_aszErrors ) );
+	    $oSchemaParser->addReplacement( 'validated', 'true' );
 	  }
-	restore_error_handler();
 
 	$oSchemaParser->Parse( $szSchemTem, $szSchema );
 	
