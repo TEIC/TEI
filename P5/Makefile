@@ -9,7 +9,7 @@ default: dtds schemas html
 
 convert: dtds schemas
 
-dtds: 
+dtds: check
 	-mkdir DTD
 	-rm DTD/*
 	# generate the DTDs
@@ -23,7 +23,7 @@ dtds:
 	perl -p -i -e 's/\)\*\(/\)\*,\(/' DTD/textstructure.dtd
 	(cd DTD; ln -s tei.dtd tei2.dtd)
 
-schemas:
+schemas:check
 	-mkdir Schema
 	-rm Schema/*
 	# generate the relaxNG schemas
@@ -39,7 +39,7 @@ schemas:
 	 (cd Schema; for i in *rng; do trang $$i `basename $$i .rng`.rnc;done)
 	xmllint --noent   Source-driver.xml | xsltproc extract-sch.xsl - > p5.sch
 
-html-web: 
+html-web: check
 	-rm -rf Guidelines-web
 	-mkdir Guidelines-web
 	xmllint --noent    Source-driver.xml | xsltproc \
@@ -51,7 +51,7 @@ html-web:
 	-cp *.gif *.css Guidelines-web
 	(cd Guidelines-web; for i in *.html; do perl -i ../Tools/cleanrnc.pl $$i;done)
 
-html:
+html:check
 	-rm -rf Guidelines
 	-mkdir Guidelines
 	xmllint --noent    Source-driver.xml | xsltproc \
@@ -64,13 +64,15 @@ html:
 	(cd Guidelines; for i in *.html; do perl -i ../Tools/cleanrnc.pl $$i;done)
 	-cp *.gif *.css Guidelines
 
-xml:
+xml:check
 	xmllint --noent   Source-driver.xml | perl Tools/cleanrnc.pl | \
 	xsltproc  -o Guidelines.xml \
 	--stringparam displayMode rnc  \
 	${XSL}/base/p5/odds/teixml-odds.xsl -
 
 pdf: xml
+	echo Checking you have a running pdfLaTeX before trying to make PDF...
+	which pdflatex || exit 1
 	xsltproc ${XSL}/teic/teilatex-teic-P5.xsl Guidelines.xml \
 	> Guidelines.tex
 	TEXINPUTS=/TEI/Talks/texconfig: pdflatex Guidelines
@@ -79,7 +81,7 @@ pdf: xml
 validate: oddschema exampleschema valid
 
 valid: jing_version=$(wordlist 1,3,$(shell jing))
-valid: 
+valid: check
 	@echo --------- jing
 	@echo ${jing_version}
 #	We have discovered that jing reports 3-letter language codes
@@ -211,3 +213,16 @@ install: schemas dtds html
 	cp -p DTD/* ${PREFIX}/schema/dtd/p5
 	mkdir -p ${PREFIX}/P5
 	cp -p Guidelines/* ${PREFIX}/P5
+
+check:
+	echo Checking you have a running XML tools and Perl before trying to run transform...
+	@echo -n xsltproc: 
+	@which xsltproc || exit 1
+	@echo -n Perl: 
+	@which perl || exit 1
+	@echo -n xmllint: 
+	@which xmllint || exit 1
+	@echo -n trang: 
+	@which trang || exit 1
+	@echo -n jing: 
+	@which jing || exit 1
