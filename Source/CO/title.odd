@@ -7,12 +7,11 @@ See the file COPYING for details.
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="TITLE" usage="opt" ident="title">
 <equiv/>
 <gloss/>
-<desc>contains the title of a work, whether article, book, journal, or
-series, including any alternative titles or subtitles.</desc>
-  
-  
+<desc>contains the full title of a work of any kind<!--, whether article, book, journal, or
+series, including any alternative titles or subtitles-->.</desc>
   <classes>
     <memberOf key="tei.hqphrase"/>
+    <memberOf key="tei.msItemPart"/>
   </classes>
   <content>
     <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
@@ -20,20 +19,17 @@ series, including any alternative titles or subtitles.</desc>
   <attList>
     <attDef ident="level" usage="rwa">
 	<equiv/>
-	<desc>indicates whether this is the title of an article, book, journal,
+	<desc>indicates the bibliographic level for a title, that is,
+	whether it identifies  an article, book, journal,
 series, or unpublished material.</desc>
-      
-      
       <valList type="closed">
         <valItem ident="a">
-          
           <equiv/>
           <gloss>analytic title (article, poem, or other item published as
           part of a larger item)
     </gloss>
         </valItem>
         <valItem ident="m">
-          
           <equiv/>
           <gloss>monographic title (book, collection, or other item published
           as a distinct item, including single volumes of multi-volume
@@ -69,42 +65,36 @@ series, or unpublished material.</desc>
 <q>a</q>; if it appears directly enclosed within a <gi>monogr</gi>
 element, <att>level</att> must be <q>m</q>, <q>j</q>, or <q>u</q>;
 when <gi>title</gi> is directly enclosed by <gi>series</gi>,
-<att>level</att> must be <q>s</q>.</p>
+<att>level</att> must be <q>s</q>. If it appears within a
+	<gi>msItem</gi>, this attribute should not be supplied.</p>
       </remarks>
     </attDef>
     <attDef ident="type" usage="opt">
 	<equiv/>
 	<desc>classifies the title according to some convenient typology.</desc>
-      
-      
       <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
       <valList type="open">
         <valItem ident="main">
-          
           <equiv/>
           <gloss>main title
     </gloss>
         </valItem>
         <valItem ident="subordinate">
-          
           <equiv/>
           <gloss>subtitle, title of part
     </gloss>
         </valItem>
         <valItem ident="parallel">
-          
           <equiv/>
           <gloss>alternate title, often in another language,
                            by which the work is also known
     </gloss>
         </valItem>
         <valItem ident="abbreviated">
-          
           <equiv/>
           <gloss>abbreviated form of title</gloss>
         </valItem>
       </valList>
-      
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>

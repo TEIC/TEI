@@ -347,7 +347,7 @@ parts of the description, as appropriate.</p>
 
 <p>The <gi>locus</gi> element is used to specify the location in the
 manuscript occupied by the element within which it appears. If, for
-example, it is used as the first component of a <gi>msItem</gi>
+example, it is used as the first component of a <gi>msItem</gi> or <gi>msItemStruct</gi>
 element, or of any of the more specific elements appearing within one
 (see further section <ptr target="#msco"/> below) then it is understood
 to specify the location of that item within the manuscript being
@@ -843,12 +843,13 @@ Kreuzzugs (bebildert)</head>
 <p>The <gi>msContents</gi> element is used to describe the
 intellectual content of a manuscript or manuscript part. It comprises
 either a series of informal prose paragraphs or a series of more
-structured <gi>msItem</gi> elements, each of which provides a more
+structured <gi>msItem</gi> or <gi>msItemStruct</gi> elements, each of which provides a more
 detailed description of a single item contained within the manuscript.
 
 <specList>
 <specDesc key="msContents"/>
 <specDesc key="msItem"/>
+<specDesc key="msItemStruct"/>
 </specList>
 </p>
 <p>In the simplest case, only a brief description may be provided, as
@@ -900,16 +901,19 @@ mutilation throughout</note>
 <p>Any combination of the elements described in this section may be
 used to record information about individual items within the
 intellectual content of a manuscript or manuscript part. Each
-discrete item should be encoded within a distinct <gi>msItem</gi>
+discrete item should be encoded within a distinct <gi>msItem</gi> or <gi>msItemStruct</gi>
 element, and may be classified using the <att>class</att>
-attribute. 
+attribute. </p>
 
-</p>
+<p>In the <gi>msItem</gi> element, the order and number of child
+elements is not constrained. Any element may be given in any order,
+and repeated as often as necessary. In the <gi>msItemStruct</gi>
+element, the elements must be supplied in a specific order, if
+present, and only some of them may be repeated. In neither case may  any untagged running
+text be included. </p>
 
-<p>The <gi>msItem</gi> element may not contain any untagged running
-text. Instead, it contains the following elements,
-which must be supplied  in the following order:
-
+<p>These are the possible component elements of a
+<gi>msItemStruct</gi>. 
 <specList>
 <!-- specDesc key="author" atts="attested accepted"/-->
 <specDesc key="author"/>
@@ -917,7 +921,9 @@ which must be supplied  in the following order:
 <specDesc key="title"/><!--supplies a title of some kind used for the item (standard TEI element) -->
 <specDesc key="rubric" atts="type"/>
 <specDesc key="incipit" atts="type defective"/>
+<specDesc key="msItemStruct"/>
 <specDesc key="explicit" atts="type defective"/>
+<specDesc key="finalRubric"/>
 <specDesc key="colophon"/>
 <specDesc key="decoNote"/><!--; see further -->
 <specDesc key="listBibl"/><!--contains a list of related bibliographic descriptions (standard TEI element)-->
@@ -926,13 +932,13 @@ which must be supplied  in the following order:
 <specDesc key="filiation"/>
 <specDesc key="note"/><!--contains a note or other comment relating to the item (standard TEI element)-->
 <specDesc key="textLang"/>
-<specDesc key="msItem"/>
 </specList></p>
 
 <p>All the above elements may be repeated as often as appropriate
-within a single <gi>msItem</gi>,
+within a single <gi>msItemStruct</gi>,
 with the exception of <gi>rubric</gi>, <gi>incipit</gi>, and
-<gi>explicit</gi>, each of which can appear only once.</p>
+<gi>explicit</gi>, each of which can appear only once. If supplied,
+they must be given in the order specified above.</p>
 
 <p>The <gi>title</gi> element should be used to supply a regularized
 form of the item's title, quite distinct from any rubric or incipit
@@ -1163,7 +1169,7 @@ allemand et latin</textLang>
 &explicit.odd;
 
 
-
+&finalrubric.odd;
 
 &incipit.odd;
 
@@ -1176,6 +1182,7 @@ allemand et latin</textLang>
 
 
 &msitem.odd;
+&msitemstruct.odd;
 
 
 
