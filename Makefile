@@ -73,6 +73,7 @@ xml:check
 pdf: xml
 	echo Checking you have a running pdfLaTeX before trying to make PDF...
 	which pdflatex || exit 1
+	test -d /TEI/Talks/texconfig || exit 1
 	xsltproc ${XSL}/teic/teilatex-teic-P5.xsl Guidelines.xml \
 	> Guidelines.tex
 	TEXINPUTS=/TEI/Talks/texconfig: pdflatex Guidelines
