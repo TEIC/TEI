@@ -63,15 +63,15 @@ XSL stylesheet to format TEI XML documents using ODD markup
 </xsl:template>
 
 <xsl:template name="CAT">
-  <tei:div1 id="REFCLA">
+  <tei:div1 xml:id="REFCLA">
     <tei:head>Class catalogue</tei:head>
     <tei:divGen type="classcat"/>
   </tei:div1>
-  <tei:div1 id="REFENT">
+  <tei:div1 xml:id="REFENT">
     <tei:head>Macro catalogue</tei:head>
     <tei:divGen type="macrocat"/>
   </tei:div1>
-  <tei:div1 id="REFTAG">
+  <tei:div1 xml:id="REFTAG">
     <tei:head>Element catalogue</tei:head>
     <tei:divGen type="tagcat"/>
   </tei:div1>
