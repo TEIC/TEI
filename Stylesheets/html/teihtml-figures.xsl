@@ -19,7 +19,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 <xsl:param name="dpi">96</xsl:param>
 
 <xsl:template match="tei:figure">
-  <xsl:if test="@url|@entity">
+  <xsl:if test="@file|@url|@entity">
     <xsl:call-template name="showGraphic">
       <xsl:with-param name="ID">
 	<xsl:if test="@id|@xml:id">
@@ -75,6 +75,12 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
       <xsl:when test="@url">
 	<xsl:value-of select="@url"/>
 	<xsl:if test="not(contains(@url,'.'))">
+	  <xsl:value-of select="$graphicsSuffix"/>
+	</xsl:if>
+      </xsl:when>
+      <xsl:when test="@file">
+	<xsl:value-of select="@file"/>
+	<xsl:if test="not(contains(@file,'.'))">
 	  <xsl:value-of select="$graphicsSuffix"/>
 	</xsl:if>
       </xsl:when>
