@@ -36,8 +36,8 @@ $Date$, $Revision$, $Author$
 <xsl:param name="displayMode">rng</xsl:param>
 
 
-<xsl:template match="tei:moduleRef">
-  <tei:ref  target="#{@key}"/>
+<xsl:template match="tei:val">
+  <tei:hi rend="val">  <xsl:apply-templates/></tei:hi>
 </xsl:template>
 
 <xsl:template match="tei:elementSpec">
