@@ -675,10 +675,14 @@
       </xsl:call-template>
       <table>
 	<tr>
+	  <td colspan="2">
+	    <xsl:call-template name="crumbPath"/>
+	  </td>
+	</tr>
+	<tr>
 	  <td align="left" valign="top" rowspan="2" width="{$linksWidth}"
 	      class="linktext">
 	    <xsl:call-template name="searchbox"/>
-	    <xsl:call-template name="crumbPath"/>
 	    <xsl:call-template name="leftHandFrame">
 	      <xsl:with-param name="currentID" select="$ID"/>
 	    </xsl:call-template>
