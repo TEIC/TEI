@@ -166,7 +166,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
  </head>
  <body>
  <xsl:call-template name="bodyHook"/>
- <xsl:call-template name="bodyJavaScript"/>
+ <xsl:call-template name="bodyJavaScriptHook"/>
  <xsl:call-template name="stdheader">
   <xsl:with-param name="title">
    <xsl:text>Notes for </xsl:text>
@@ -198,4 +198,23 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 <xsl:template name="processFootnotes">
   <xsl:apply-templates select="tei:text//tei:note[@place='foot']" mode="printnotes"/>
 </xsl:template>
+
+  <xsl:template match="tei:note[@type='action']">
+    <div align="right">
+      <b>Action <xsl:number level="any" count="tei:note[@type='action']"/></b>:
+      <i><xsl:apply-templates/></i>
+    </div>
+  </xsl:template>
+  
+  <xsl:template match="tei:divGen[@type='actions']">
+    <h3>Actions arising</h3>
+    <dl>
+      <xsl:for-each select="/tei:TEI/tei:text//tei:note[@type='action']">
+	<dt><b><xsl:number level="any" count="tei:note[@type='action']"/></b></dt>
+	<dd><xsl:apply-templates/></dd>      
+      </xsl:for-each>
+    </dl>
+  </xsl:template>
+  
+
 </xsl:stylesheet>

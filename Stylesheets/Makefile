@@ -43,4 +43,6 @@ test: p4 p5
 	cd Test; make 
 
 clean:
+	-rm `find . -name semantic.cache`
+	-rm `find . -name "*~" `
 	-rm -rf release

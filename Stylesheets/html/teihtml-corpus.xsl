@@ -24,9 +24,9 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
  <title><xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title/text()"/></title>
  <xsl:call-template name="includeCSS"/>
  </head>
- <body>
+ <body class="simple">
  <xsl:call-template name="bodyHook"/>
- <xsl:call-template name="bodyJavaScript"/>
+ <xsl:call-template name="bodyJavaScriptHook"/>
  <xsl:call-template name="stdheader">
   <xsl:with-param name="title">
    <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>

@@ -163,18 +163,14 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
     <xsl:if test="@n">
       <xsl:attribute name="value"><xsl:value-of select="@n"/></xsl:attribute>
     </xsl:if>
-    <a>
-      <xsl:attribute name="name">
-	<xsl:choose>
-	  <xsl:when test="@id|@xml:id">
-	    <xsl:value-of select="@id|@xml:id"/>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:value-of select="generate-id()"/>
-	  </xsl:otherwise>
-	</xsl:choose>
-      </xsl:attribute>
-    </a>
+    <xsl:choose>
+      <xsl:when test="@id|@xml:id">
+	<a name="{@id|@xml:id}"/>
+      </xsl:when>
+      <xsl:when test="$generateParagraphIDs='true'">
+	<a name="{generate-id()}"/>
+      </xsl:when>
+    </xsl:choose>
     <xsl:apply-templates/>
   </li>
 </xsl:template>
@@ -201,4 +197,11 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
   </xsl:choose>
 </xsl:template>
 
+<xsl:template match="tei:list" mode="inpara">
+    <p><xsl:apply-templates select="preceding-sibling::node()"/></p>
+    <xsl:apply-templates select="."/>
+    <p><xsl:apply-templates select="following-sibling::node()"/></p>
+  </xsl:template>
+  
+  
 </xsl:stylesheet>

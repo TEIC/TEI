@@ -61,7 +61,6 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 <xsl:param name="homeURL">http://www.tei-c.org/</xsl:param>
 <xsl:param name="homeWords">TEI Home</xsl:param>
 <xsl:param name="institution">Text Encoding Initiative</xsl:param>
-<xsl:param name="leftLinks">true</xsl:param>
 <xsl:param name="linksWidth">20%</xsl:param>
 <xsl:param name="parentURL"></xsl:param>
 <xsl:param name="parentWords"></xsl:param>
@@ -72,8 +71,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 <xsl:param name="topNavigationPanel"></xsl:param>
 <xsl:param name="numberHeadings">true</xsl:param>
 <xsl:template name="copyrightStatement">Copyright TEI Consortium 2004</xsl:template>
-<xsl:template name="logoPicture">
-<img src="/Pictures/jaco001d.gif" alt="" width="180" />
+<xsl:template name="logoPicture"><img src="/Pictures/jaco001d.gif" alt="" width="180" />
 </xsl:template>
 
 

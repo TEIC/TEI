@@ -48,7 +48,7 @@ XSL FO stylesheet to format TEI XML documents
         </xsl:attribute>
       </xsl:if>
 	<fo:inline font-weight="bold">
-<xsl:apply-templates select="tei:titlePart"/></fo:inline>
+	<xsl:apply-templates select="tei:titlePart"/></fo:inline>
     </fo:block>
 </xsl:template>
 

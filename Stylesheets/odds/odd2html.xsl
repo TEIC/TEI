@@ -41,16 +41,13 @@ $Date$, $Revision$, $Author$
 <xsl:param name="homeWords">TEI Home</xsl:param>
 <xsl:param name="indent-width" select="3"/>
 <xsl:param name="institution">Text Encoding Initiative</xsl:param>
-<xsl:param name="leftLinks">true</xsl:param>
 <xsl:param name="line-width" select="80"/>
-<xsl:param name="linksWidth">20%</xsl:param>
 <xsl:param name="numberBackHeadings">A.1</xsl:param>
 <xsl:param name="numberFrontHeadings"></xsl:param>
 <xsl:param name="numberHeadings">1.1.</xsl:param>
 <xsl:param name="oddmode">html</xsl:param>
 <xsl:param name="outputDir">Guidelines</xsl:param>
-<xsl:param name="parentURL"></xsl:param>
-<xsl:param name="parentWords"></xsl:param>
+<xsl:param name="pageLayout">CSS</xsl:param>
 <xsl:param name="searchURL">http://search.ox.ac.uk/web/related/natproj/tei</xsl:param>
 <xsl:param name="searchWords">Search this site</xsl:param>
 <xsl:param name="showTitleAuthor">1</xsl:param>
@@ -65,7 +62,7 @@ $Date$, $Revision$, $Author$
 <xsl:variable name="top" select="/"/>
 
 <xsl:template name="logoPicture">
-<img src="/Pictures/jaco001d.gif" alt="" width="180" />
+<img src="jaco001d.gif" alt="" width="180" />
 </xsl:template>
 
 <xsl:template name="metaHook">
@@ -77,14 +74,9 @@ $Date$, $Revision$, $Author$
 </xsl:template>
 
 <xsl:template name="bodyHook">
-  <xsl:attribute name="background">/Pictures/background.gif</xsl:attribute>
+  <xsl:attribute name="background">background.gif</xsl:attribute>
 </xsl:template>
 
-
-<xsl:template match="/">
-  <xsl:apply-templates select="tei:TEI"/>
-  <xsl:call-template name="printNotes"/>
-</xsl:template>
 
 <xsl:template match="processing-instruction()">
 <!--
@@ -361,14 +353,6 @@ $Date$, $Revision$, $Author$
 </xsl:choose>
 </xsl:template>
 
-<xsl:template name="generateSubTitle">
-<h3 class="subtitle">
-   <xsl:value-of 
-        select="ancestor-or-self::TEI/teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
-</h3>
-</xsl:template>
-
-
 <xsl:template name="header">
  <xsl:param name="minimal"/>
  <xsl:param name="toc"/>
@@ -400,69 +384,65 @@ $Date$, $Revision$, $Author$
 
 </xsl:template>
 
-<xsl:template name="linkList">
-  <xsl:param name="style" select="'toc-left'"/>
+<xsl:template name="linkListContents">
   <xsl:variable name="thisname">
     <xsl:value-of select="local-name()"/>
   </xsl:variable>
-  <table class="leftlinks">
-    <tr>
-      <td width="15%" valign="top">
-	<xsl:choose>
-	  <xsl:when test="$thisname='TEI'">
-	    <xsl:for-each select="tei:text/tei:front">
-	      <xsl:for-each select=".//tei:div1">
-		<xsl:variable name="pointer">
-		  <xsl:apply-templates mode="generateLink" select="."/>
-		</xsl:variable>
-		<p class="{$style}">
-		  <a class="{$style}" href="{$pointer}">
-		  <xsl:call-template name="header"/></a>
-		</p>
-	      </xsl:for-each>
-	      <hr/>
-	    </xsl:for-each>
-	    <xsl:for-each select="tei:text/tei:body">
-	      <xsl:for-each select=".//tei:div1">
-		<xsl:variable name="pointer">
-		  <xsl:apply-templates mode="generateLink" select="."/>
-		</xsl:variable>
-		<p class="{$style}">
-		  <a class="{$style}" href="{$pointer}">
-		  <xsl:call-template name="header"/></a>
-		</p>
-	      </xsl:for-each>
-	    </xsl:for-each>
-	    <xsl:for-each select="tei:text/tei:back">
-	      <hr/>
-	      <xsl:for-each select=".//tei:div1">
-		<xsl:variable name="pointer">
-		  <xsl:apply-templates mode="generateLink" select="."/>
-		</xsl:variable>
-		<p class="{$style}">
-		  <a class="{$style}" href="{$pointer}">
-		  <xsl:call-template name="header"/></a>
-		</p>
-	      </xsl:for-each>
-	    </xsl:for-each>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <!-- root -->
-	    <xsl:variable name="BaseFile">
-	      <xsl:value-of select="$masterFile"/>
-	      <xsl:if test="ancestor::teiCorpus">
-		<xsl:text>-</xsl:text>
-		<xsl:choose>
-		  <xsl:when test="@id|@xml:id"><xsl:value-of select="@id|@xml:id"/></xsl:when> 
-		  <xsl:otherwise><xsl:number/></xsl:otherwise>
-		</xsl:choose>
-	      </xsl:if>
+    <xsl:choose>
+      <xsl:when test="$thisname='TEI'">
+	<xsl:for-each select="tei:text/tei:front">
+	  <xsl:for-each select=".//tei:div1">
+	    <xsl:variable name="pointer">
+	      <xsl:apply-templates mode="generateLink" select="."/>
 	    </xsl:variable>
 	    <p class="{$style}">
-	      <a class="{$style}" href="{$BaseFile}.html">
-	      <xsl:value-of select="$homeLabel"/></a>
+	      <a class="{$style}" href="{$pointer}">
+	      <xsl:call-template name="header"/></a>
 	    </p>
-	    <hr/>
+	  </xsl:for-each>
+	  <hr/>
+	</xsl:for-each>
+	<xsl:for-each select="tei:text/tei:body">
+	  <xsl:for-each select=".//tei:div1">
+	    <xsl:variable name="pointer">
+	      <xsl:apply-templates mode="generateLink" select="."/>
+	    </xsl:variable>
+	    <p class="{$style}">
+	      <a class="{$style}" href="{$pointer}">
+	      <xsl:call-template name="header"/></a>
+	    </p>
+	  </xsl:for-each>
+	</xsl:for-each>
+	<xsl:for-each select="tei:text/tei:back">
+	  <hr/>
+	  <xsl:for-each select=".//tei:div1">
+	    <xsl:variable name="pointer">
+	      <xsl:apply-templates mode="generateLink" select="."/>
+	    </xsl:variable>
+	    <p class="{$style}">
+	      <a class="{$style}" href="{$pointer}">
+	      <xsl:call-template name="header"/></a>
+	    </p>
+	  </xsl:for-each>
+	</xsl:for-each>
+      </xsl:when>
+      <xsl:otherwise>
+	<!-- root -->
+	<xsl:variable name="BaseFile">
+	  <xsl:value-of select="$masterFile"/>
+	  <xsl:if test="ancestor::teiCorpus">
+	    <xsl:text>-</xsl:text>
+	    <xsl:choose>
+	      <xsl:when test="@id|@xml:id"><xsl:value-of select="@id|@xml:id"/></xsl:when> 
+	      <xsl:otherwise><xsl:number/></xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:if>
+	</xsl:variable>
+	<p class="{$style}">
+	  <a class="{$style}" href="{$BaseFile}.html">
+	  <xsl:value-of select="$homeLabel"/></a>
+	</p>
+	<hr/>
 	    <xsl:for-each select="ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4|ancestor::tei:div5">
 	      <p class="{$style}">
 		<a class="{$style}">
@@ -528,10 +508,6 @@ $Date$, $Revision$, $Author$
 	    </xsl:for-each>
 	  </xsl:otherwise>
 	</xsl:choose>
-      </td>
-      <td width="85%" valign="top"><xsl:apply-templates/></td>
-    </tr>
-  </table>
 </xsl:template>
 
 <!-- this overrides the standard template, to allow for
@@ -558,7 +534,7 @@ $Date$, $Revision$, $Author$
   <xsl:with-param name="ident">fulltoc</xsl:with-param>
  <xsl:with-param name="content">
     <html> 
-      <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT</xsl:comment>
+      <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (8)</xsl:comment>
       <head>
       <title>TEI P5: Table of contents</title>
       <xsl:call-template name="headHook"/>
@@ -571,7 +547,7 @@ $Date$, $Revision$, $Author$
 
       <body>
        <xsl:call-template name="bodyHook"/>
-       <xsl:call-template name="bodyJavaScript"/>
+       <xsl:call-template name="bodyJavaScriptHook"/>
        <a name="TOP"/>
        <div  class="teidiv">
         <xsl:call-template name="stdheader">

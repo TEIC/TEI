@@ -988,6 +988,7 @@ in change mode and there is no attList -->
 <xsl:template match="tei:title">
   <xsl:choose>
     <xsl:when test="parent::tei:titleStmt">
+      <xsl:if test="preceding-sibling::tei:title"><br/></xsl:if>
       <xsl:apply-templates/>
     </xsl:when>
     <xsl:when test="@level='A'">

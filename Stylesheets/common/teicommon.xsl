@@ -22,14 +22,14 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 </xsl:param>
 
 <!-- common parameters -->
-<xsl:param name="baseURL">http://www.oucs.ox.ac.uk</xsl:param>
+<xsl:param name="baseURL">http://www.tei-c.org</xsl:param>
 <xsl:param name="homeLabel">Home</xsl:param>
-<xsl:param name="homeURL">http://www.oucs.ox.ac.uk/</xsl:param>
-<xsl:param name="homeWords">OUCS</xsl:param>
+<xsl:param name="homeURL">http://www.tei-c.org/</xsl:param>
+<xsl:param name="homeWords">TEI</xsl:param>
 <xsl:param name="department"/>
-<xsl:param name="parentURL">http://www.ox.ac.uk/</xsl:param>
-<xsl:param name="parentWords">Oxford University</xsl:param>
-<xsl:param name="searchURL">http://search.ox.ac.uk/web/acserv/infotech/oucs</xsl:param>
+<xsl:param name="parentURL">http://www.tei-c.org/</xsl:param>
+<xsl:param name="parentWords">My Parent Institution</xsl:param>
+<xsl:param name="searchURL">http://www.google.com</xsl:param>
 <xsl:param name="institution">My Institution</xsl:param>
 <xsl:template name="feedbackWords">Feedback</xsl:template>
 <xsl:param name="class_toc">toc</xsl:param>
@@ -207,7 +207,7 @@ select="normalize-space(substring-before(substring-after($revauthor,'LastChanged
 </xsl:template>
 
 <xsl:template match="tei:title" mode="htmlheader">
-	<xsl:apply-templates/>
+  <xsl:apply-templates/>
 </xsl:template>
 
 <xsl:template name="whatsTheDate">

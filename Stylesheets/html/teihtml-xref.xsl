@@ -271,6 +271,11 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
     </xsl:choose>
   </xsl:variable>
   <a>
+    <xsl:if test="@n">
+      <xsl:attribute name="title">
+	<xsl:value-of select="@n"/>
+      </xsl:attribute>
+    </xsl:if>
     <xsl:attribute name="class">
       <xsl:choose>
 	<xsl:when test="@rend"><xsl:value-of select="@rend"/></xsl:when>

@@ -99,39 +99,48 @@
     <xsl:choose> 
 <!-- there are various choices of how to proceed, driven by
 
-$pageLayout: simple, makeCssColumns, makePageTable, frames
+$pageLayout: Simple, CSS, Table, Frames
 
 $STDOUT: true or false
 
 $splitLevel: -1 to 3
 
+$ID: requests a particular page
 -->
       
 <!-- we are making a composite layout and there is a TEI(2) element -->
-      <xsl:when test="$makePageTable = 'true' and tei:TEI">
+      <xsl:when test="($pageLayout = 'CSS' or $pageLayout = 'Table')
+		      and tei:TEI">
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>pageLayout <xsl:value-of select="$pageLayout"/></xsl:message>
+	</xsl:if>
 	<xsl:for-each select="tei:TEI">
 	  <xsl:call-template name="doPageTable">
 	    <xsl:with-param name="currentID" select="$ID"/>
 	  </xsl:call-template>
 	</xsl:for-each>
-	<xsl:if test="not($STDOUT='true')">
-	  <xsl:for-each select="tei:TEI/tei:text">
-	    <xsl:for-each select="tei:front|tei:body|tei:back">
-	      <xsl:for-each select="tei:div|tei:div1">
-		<xsl:variable name="currentID">
-		  <xsl:apply-templates select="." mode="ident"/>
-		</xsl:variable>
-		<xsl:call-template name="doPageTable">
-		  <xsl:with-param name="currentID" select="$currentID"/>
-		</xsl:call-template>
-	      </xsl:for-each>
-	    </xsl:for-each>
-	  </xsl:for-each>
-	</xsl:if>      
+	  <xsl:if test="not($STDOUT='true')">
+	    <xsl:call-template name="doDivs"/>
+	  </xsl:if>
+      </xsl:when>
+
+      
+      
+<!-- we are making a frame-based system -->
+      <xsl:when test="$pageLayout='Frames'">
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>pageLayout <xsl:value-of select="$pageLayout"/></xsl:message>
+	</xsl:if>
+	<xsl:call-template name="doFrames"/>
       </xsl:when>
       
 <!-- we have been asked for a particular section of the document -->
       <xsl:when test="not($ID='')">    
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>ID <xsl:value-of select="$ID"/>, pageLayout <xsl:value-of 
+              select="$pageLayout"/></xsl:message>
+	</xsl:if>
+
 	<xsl:choose>
 	  <xsl:when test="$ID='frametoc___'">
 	    <xsl:call-template name="writeFrameToc"/>
@@ -145,7 +154,7 @@ $splitLevel: -1 to 3
 	    </xsl:for-each>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <!-- the passed iD is a pseudo-XPath expression
+	    <!-- the passed ID is a pseudo-XPath expression
 		 which starts below TEI/text.
 		 The real XPath syntax is changed to avoid problems
 	    -->
@@ -155,37 +164,64 @@ $splitLevel: -1 to 3
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:when>
-      
-<!-- we are producing a simple stream of all the document -->
-      <xsl:when test="$masterFile='' or $STDOUT='true'">
-	<xsl:apply-templates/>
+
+<!-- we want HTML to just splurge out-->      
+      <xsl:when test="$STDOUT='true'">
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>write to stdout, pageLayout <xsl:value-of select="$pageLayout"/></xsl:message>
+	</xsl:if>
+
+	    <xsl:apply-templates/>
       </xsl:when>
-      
-      
+
 <!-- we want the document split up into separate files -->
-      <xsl:when test="tei:TEI or tei:teiCorpus">
+      <xsl:when test="tei:TEI or tei:teiCorpus and $splitLevel&gt;-1">
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>split output, <xsl:value-of
+	  select="$splitLevel"/> pageLayout <xsl:value-of select="$pageLayout"/></xsl:message>
+	</xsl:if>
+
 	<xsl:apply-templates mode="split"/>
-      </xsl:when>
-      
-<!-- we are making a frame-based system -->
-      <xsl:when test="$makeFrames='true'">
-	<xsl:call-template name="doFrames"/>
       </xsl:when>
       
 <!-- we want the whole document, in an output file -->
       <xsl:otherwise>
-	<xsl:call-template name="outputChunk">
-	  <xsl:with-param name="ident">
-	    <xsl:value-of select="$masterFile"/>
-	  </xsl:with-param>
-	  <xsl:with-param name="content">
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>one document, pageLayout <xsl:value-of select="$pageLayout"/></xsl:message>
+	</xsl:if>
+
+	<xsl:choose>
+	  <xsl:when test="$masterFile='' or $STDOUT='true'">
 	    <xsl:apply-templates/>
-	  </xsl:with-param>
-	</xsl:call-template>
-      </xsl:otherwise>
-      
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:call-template name="outputChunk">
+	      <xsl:with-param name="ident">
+		<xsl:value-of select="$masterFile"/>
+	      </xsl:with-param>
+	      <xsl:with-param name="content">
+		<xsl:apply-templates/>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:otherwise>      
     </xsl:choose>
-    
+  </xsl:template>
+
+  <xsl:template name="doDivs">
+    <xsl:for-each select="tei:TEI/tei:text">
+      <xsl:for-each select="tei:front|tei:body|tei:back">
+	<xsl:for-each select="tei:div|tei:div1|tei:div0">
+	  <xsl:variable name="currentID">
+	    <xsl:apply-templates select="." mode="ident"/>
+	  </xsl:variable>
+	  <xsl:call-template name="doPageTable">
+	    <xsl:with-param name="currentID" select="$currentID"/>
+	  </xsl:call-template>
+	</xsl:for-each>
+      </xsl:for-each>
+    </xsl:for-each>
   </xsl:template>
   
   <!-- *****************************************-->
@@ -199,7 +235,7 @@ $splitLevel: -1 to 3
     </xsl:if>
     <html><xsl:call-template name="addLangAtt"/> 
     <xsl:comment>THIS FILE IS GENERATED FROM AN XML MASTER. 
-    DO NOT EDIT</xsl:comment>
+    DO NOT EDIT (5)</xsl:comment>
     <head>
       <xsl:variable name="pagetitle">
 	<xsl:call-template name="generateTitle"/>
@@ -212,9 +248,9 @@ $splitLevel: -1 to 3
       </xsl:call-template>
       <xsl:call-template name="javaScript"/>
     </head>
-    <body>
+    <body class="simple">
       <xsl:call-template name="bodyHook"/>
-      <xsl:call-template name="bodyJavaScript"/>
+      <xsl:call-template name="bodyJavaScriptHook"/>
       <a name="TOP"/>
       <xsl:call-template name="stdheader">
 	<xsl:with-param name="title">
@@ -222,23 +258,8 @@ $splitLevel: -1 to 3
 	</xsl:with-param>
       </xsl:call-template>
       <xsl:call-template name="startHook"/>
-      <xsl:choose>
-	<xsl:when test="$leftLinks">
-	  <xsl:call-template name="linkList">
-	    <xsl:with-param name="side" select="'left'"/>
-	    <xsl:with-param name="simple" select="'true'"/>
-	  </xsl:call-template>
-	</xsl:when>
-	<xsl:when test="$rightLinks">
-	  <xsl:call-template name="linkList">
-	    <xsl:with-param name="side" select="'right'"/>
-	    <xsl:with-param name="simple" select="'true'"/>
-	  </xsl:call-template>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:call-template name="simpleBody"/>
-	</xsl:otherwise>
-      </xsl:choose>
+
+      <xsl:call-template name="simpleBody"/>
       
       <xsl:call-template name="stdfooter">
 	<xsl:with-param name="date">
@@ -275,7 +296,7 @@ $splitLevel: -1 to 3
 	<xsl:value-of select="$BaseFile"/>
       </xsl:with-param>
       <xsl:with-param name="content">
-	<xsl:call-template name="writeMain"/>
+	<xsl:call-template name="pageLayoutSimple"/>
       </xsl:with-param>
     </xsl:call-template>
     <xsl:if test="$verbose='true'">
@@ -303,7 +324,7 @@ $splitLevel: -1 to 3
   
   <xsl:template name="htmlFileTop">
     <xsl:comment>THIS FILE IS GENERATED FROM AN XML MASTER. 
-    DO NOT EDIT ME</xsl:comment>
+    DO NOT EDIT (6)</xsl:comment>
     <xsl:variable name="pagetitle">
       <xsl:call-template name="generateTitle"/>
     </xsl:variable>
@@ -321,26 +342,6 @@ $splitLevel: -1 to 3
     </head>
   </xsl:template>
   
-  <xsl:template name="writeMain">
-    <html><xsl:call-template name="addLangAtt"/> 
-    <xsl:call-template name="htmlFileTop"/>
-    <body>
-      <xsl:call-template name="bodyHook"/>
-      <xsl:call-template name="bodyJavaScript"/>
-      <a name="TOP"/>
-      <xsl:call-template name="stdheader">
-	<xsl:with-param name="title">
-	  <xsl:call-template name="generateTitle"/>
-	</xsl:with-param>
-      </xsl:call-template>
-      
-      <xsl:call-template name="mainbody"/>
-      
-      <xsl:call-template name="printNotes"/>
-      <xsl:call-template name="htmlFileBottom"/>
-    </body>
-    </html>
-  </xsl:template>
   <!-- *****************************************-->
   
   <xsl:template name="mainbody">
@@ -405,19 +406,7 @@ $splitLevel: -1 to 3
   <xsl:template name="stdheader">
     <xsl:param name="title" select="'(no title)'"/>
     <xsl:choose>
-      <xsl:when test="$makeFrames='true'">
-	<h2 class="maintitle"><xsl:call-template name="generateTitle"/></h2>
-	<h1 class="maintitle"><xsl:value-of select="$title"/></h1>
-	<xsl:if test="$showTitleAuthor='true'">
-	  <xsl:if test="$verbose='true'">
-	    <xsl:message>displaying author and date</xsl:message>
-	  </xsl:if>
-	  <xsl:call-template name="generateAuthorList"/>
-	  <xsl:text> </xsl:text>
-	  <xsl:call-template name="generateDate"/>
-	</xsl:if>
-      </xsl:when>
-      <xsl:otherwise>
+      <xsl:when test="$pageLayout='Simple'">
 	<table class="header" width="100%">
 	  <tr><td rowspan="3"><xsl:call-template name="logoPicture"/></td>
 	  <td align="left">
@@ -430,7 +419,7 @@ $splitLevel: -1 to 3
 	    </tr>
 	  </xsl:if>
 	  <tr><td align="left">
-	    <xsl:call-template name="generateSubTitle"/>
+	    <h2 class="subtitle"><xsl:call-template name="generateSubTitle"/></h2>
 	    <h1 class="maintitle"><xsl:value-of select="$title"/></h1>
 	  </td></tr>
 	  <xsl:if test="$showTitleAuthor='true'">
@@ -444,6 +433,18 @@ $splitLevel: -1 to 3
 	    </td></tr>
 	  </xsl:if>
 	</table>
+      </xsl:when>
+      <xsl:otherwise>
+	<h2 class="maintitle"><xsl:call-template name="generateTitle"/></h2>
+	<h1 class="maintitle"><xsl:value-of select="$title"/></h1>
+	<xsl:if test="$showTitleAuthor='true'">
+	  <xsl:if test="$verbose='true'">
+	    <xsl:message>displaying author and date</xsl:message>
+	  </xsl:if>
+	  <xsl:call-template name="generateAuthorList"/>
+	  <xsl:text> </xsl:text>
+	  <xsl:call-template name="generateDate"/>
+	</xsl:if>
       </xsl:otherwise>
     </xsl:choose>
     <hr/>
@@ -474,7 +475,7 @@ $splitLevel: -1 to 3
       </div>
       <hr/>
     </xsl:if>
-    <xsl:call-template name="preAddress"/>
+    <xsl:call-template name="preAddressHook"/>
     <address>
       <xsl:value-of select="$date"/>
       <xsl:if test="not($author='')">
@@ -524,16 +525,6 @@ $splitLevel: -1 to 3
       <xsl:apply-templates select="." mode="ident"/>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="$leftLinks">
-	<xsl:call-template name="linkList">
-	  <xsl:with-param name="side" select="'left'"/>
-	</xsl:call-template>
-      </xsl:when>
-      <xsl:when test="$rightLinks">
-	<xsl:call-template name="linkList">
-	  <xsl:with-param name="side" select="'right'"/>
-	</xsl:call-template>
-      </xsl:when>
       <xsl:when test="parent::tei:div/@rend='multicol'">
 	<td valign="top">
 	  <xsl:if test="not($Head = '')">
@@ -608,13 +599,14 @@ $splitLevel: -1 to 3
 	  </xsl:when>
 	  <xsl:when test="$action='toclist'">
 	    <xsl:call-template name="linkListContents">
-	      <xsl:with-param name="style" select="'frametoc'"/>
+	      <xsl:with-param name="style" select="'toclist'"/>
 	    </xsl:call-template>
 	  </xsl:when>
 	  <xsl:when test="local-name()='div' and $makeFrames='true'">
 	    <xsl:call-template name="writeDiv"/>
 	  </xsl:when>
-	  <xsl:when test="local-name()='div' and $makePageTable='true'">
+	  <xsl:when test="local-name()='div' and $pageLayout='Table'
+			  or $pageLayout='CSS'">
 	    <h2><xsl:apply-templates select="." mode="xref"/></h2>
 	    <xsl:call-template name="doDivBody"/>
 	    <xsl:call-template name="printDivnotes"/>
@@ -634,7 +626,7 @@ $splitLevel: -1 to 3
 	    <xsl:call-template name="htmlFileTop"/>
 	    <body>
 	      <xsl:call-template name="bodyHook"/>
-	      <xsl:call-template name="bodyJavaScript"/>
+	      <xsl:call-template name="bodyJavaScriptHook"/>
 	      <a name="TOP"/>
 	      <xsl:call-template name="stdheader">
 		<xsl:with-param name="title">
@@ -760,78 +752,38 @@ $splitLevel: -1 to 3
   </xsl:template>
 
 
-  <xsl:template name="writeDiv">
-    <xsl:variable name="BaseFile">
-      <xsl:value-of select="$masterFile"/>
-      <xsl:call-template name="addCorpusID"/>
+  
+  <xsl:template name="endFooter"/>
+  
+  <xsl:template name="startHeader"/>
+  
+  <xsl:template name="addLangAtt">
+    <xsl:variable name="supplied">
+      <xsl:value-of select="ancestor-or-self::tei:*[@lang|@xml:lang][1]/@lang|@xml:lang"/>
     </xsl:variable>
-    <html> <xsl:call-template name="addLangAtt"/>
-    <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT</xsl:comment>
-    <head>
-      <xsl:variable name="pagetitle">
-	<xsl:call-template name="generateDivtitle"/>
-      </xsl:variable>
-      <title><xsl:value-of select="$pagetitle"/></title>
-      <xsl:call-template name="headHook"/>
-      <xsl:call-template name="includeCSS"/>
-      <xsl:call-template name="metaHook">
-	<xsl:with-param name="title" select="$pagetitle"/>
-      </xsl:call-template>
-      <xsl:call-template name="javaScript"/>
-    </head>
-    <body>
-      <xsl:call-template name="bodyHook"/>
-      <xsl:call-template name="bodyJavaScript"/>
-      <a name="TOP"/>
-      <div  class="teidiv">
-	<xsl:call-template name="stdheader">
-	  <xsl:with-param name="title">
-	    <xsl:call-template name="generateDivheading"/>
-	  </xsl:with-param>
-	</xsl:call-template>
-	
-	<xsl:if test="$topNavigationPanel='true'">
-	  <xsl:call-template name="xrefpanel">
-	    <xsl:with-param name="homepage" 
-			    select="concat($BaseFile,$standardSuffix)"/>
-	    <xsl:with-param name="mode" 
-			    select="local-name(.)"/>
-	  </xsl:call-template>
-	</xsl:if>
-	<xsl:if test="$subTocDepth &gt;= 0">
-	  <xsl:call-template name="subtoc"/>
-	</xsl:if>
-	
-	<xsl:call-template name="startHook"/>
-	
-	<xsl:call-template name="doDivBody"/>
-	
-	<xsl:if test="descendant::tei:note[@place='foot'] and $footnoteFile=''">
-	  <hr/>
-	  <p><b>Notes</b></p>
-	  <xsl:call-template name="printDivnotes"/>
-	</xsl:if>
-	<xsl:if test="$bottomNavigationPanel='true'">
-	  <xsl:call-template name="xrefpanel">
-	    <xsl:with-param name="homepage" select="concat($BaseFile,$standardSuffix)"/>
-	    <xsl:with-param name="mode" select="local-name(.)"/>
-	  </xsl:call-template>
-	</xsl:if>
-	
-	<xsl:call-template name="stdfooter">
-	  <xsl:with-param name="date">
-	    <xsl:call-template name="generateDate"/>
-	  </xsl:with-param>
-	  <xsl:with-param name="author">
-	    <xsl:call-template name="generateAuthorList"/>
-	  </xsl:with-param>
-	</xsl:call-template>
-	
-      </div>
-    </body>
-    </html>
+    <xsl:attribute name="lang">
+      <xsl:choose>
+	<xsl:when test="$supplied">
+	  <xsl:text>en</xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$supplied"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
   </xsl:template>
   
-
+  <xsl:template name="addCorpusID">
+    <xsl:if test="ancestor-or-self::tei:teiCorpus">
+      <xsl:for-each select="ancestor-or-self::tei:TEI">
+	<xsl:text>-</xsl:text>
+	<xsl:choose>
+	  <xsl:when test="@id|@xml:id"><xsl:value-of select="@id|@xml:id"/></xsl:when> 
+	  <xsl:otherwise><xsl:number/></xsl:otherwise>
+	</xsl:choose>
+      </xsl:for-each>
+    </xsl:if>
+  </xsl:template>
+  
   
 </xsl:stylesheet>

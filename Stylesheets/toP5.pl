@@ -26,7 +26,7 @@ if (/^##LICENSE/) {
 
     The author may be contacted via the e-mail address
 
-    sebastian.rahtz@computing-services.oxford.ac.uk";
+    sebastian.rahtz\@computing-services.oxford.ac.uk";
 }
 else
 { 

@@ -340,26 +340,26 @@ color="{$giColor}" font-family="{$typewriterFont}">
 </xsl:template>
 
 <xsl:template match="tei:title">
-<xsl:choose>
-<xsl:when test="@level='a'">
+  <xsl:choose>
+    <xsl:when test="@level='a'">
       <xsl:text>&#8216;</xsl:text><xsl:apply-templates/><xsl:text>&#8217;</xsl:text>
-</xsl:when>
-<xsl:when test="@level='m'">
-    <fo:inline font-style="italic">
-      <xsl:apply-templates/>
-    </fo:inline>
-</xsl:when>
-<xsl:when test="@level='s'">
-    <fo:inline font-style="italic">
-      <xsl:apply-templates/>
-    </fo:inline>
-</xsl:when>
-<xsl:otherwise>
-    <fo:inline font-style="italic">
-      <xsl:apply-templates/>
-    </fo:inline>
-</xsl:otherwise>
-</xsl:choose>
+    </xsl:when>
+    <xsl:when test="@level='m'">
+      <fo:inline font-style="italic">
+	<xsl:apply-templates/>
+      </fo:inline>
+    </xsl:when>
+    <xsl:when test="@level='s'">
+      <fo:inline font-style="italic">
+	<xsl:apply-templates/>
+      </fo:inline>
+    </xsl:when>
+    <xsl:otherwise>
+      <fo:inline font-style="italic">
+	<xsl:apply-templates/>
+      </fo:inline>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template match="tei:unclear">
