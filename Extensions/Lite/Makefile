@@ -7,5 +7,5 @@ test:
 	jing  Schema/teilite.rng testlite.xml
 
 html:
-	xsltproc ../subsetGuidelines.xsl lampext.xml | xsltproc http://www.tei-c.org/Stylesheets/odd2html.xsl -
+	xsltproc ../subsetGuidelines.xsl teilite.xml | xsltproc http://www.tei-c.org/Stylesheets/odd2html.xsl -
 
