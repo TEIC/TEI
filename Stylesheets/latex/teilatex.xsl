@@ -424,12 +424,12 @@ pdfcreator={Oxford University Computing Services}
 
 <xsl:template name="makePic">
   <xsl:choose>
-    <xsl:when test="@rend='centre'">
-      <xsl:text>\par\centerline{</xsl:text>
-    </xsl:when>
-    <xsl:when test="@rend='display' or tei:head or ../tei:figure/tei:head">
+    <xsl:when test="@rend='display' or tei:head or parent::tei:figure/tei:head">
       <xsl:text>\begin{figure}[htbp]
       </xsl:text>
+    </xsl:when>
+    <xsl:when test="@rend='centre'">
+      <xsl:text>\par\centerline{</xsl:text>
     </xsl:when>
     <xsl:otherwise>
       \noindent

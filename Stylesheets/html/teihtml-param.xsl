@@ -13,6 +13,7 @@ XSL stylesheet to format TEI XML documents to FO or HTML
   <xsl:param name="ID"></xsl:param>
   <xsl:param name="REQUEST"/>
   <xsl:param name="STDOUT">true</xsl:param>
+  <xsl:param name="URLPREFIX"></xsl:param>
   <xsl:param name="alignNavigationPanel">right</xsl:param>
   <xsl:param name="autoToc">true</xsl:param>
   <xsl:param name="bottomNavigationPanel">true</xsl:param>
