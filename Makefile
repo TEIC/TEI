@@ -1,4 +1,6 @@
+TEISERVER=http://tei.oucs.ox.ac.uk/TEI/Roma/xquery/
 S=/usr/share/xml/tei/stylesheet
+
 
 .PHONY: convert dtds schemas html validate valid test split oddschema exampleschema fascicule exist clean dist
 
@@ -132,6 +134,7 @@ fascicule:
 	cat fasc-head.xml `find Source -name $(CHAP).odd` fasc-tail.xml > FASC-$(CHAP).xml
 	xmllint --noent    FASC-$(CHAP).xml | xsltproc \
 	-o FASC-$(CHAP)-Guidelines/index.html \
+	--stringparam TEISERVER $(TEISERVER) \
 	--stringparam verbose true \
 	--stringparam displayMode rnc \
 	--stringparam outputDir . \
@@ -139,8 +142,8 @@ fascicule:
 	(cd FASC-$(CHAP)-Guidelines; for i in *.html; do perl -i ../Tools/cleanrnc.pl $$i;done)
 	-jing p5odds.rng FASC-$(CHAP).xml 
 	xsltproc -o FASC-$(CHAP)-lite.xml  \
+	--stringparam TEISERVER $(TEISERVER) \
 	--stringparam displayMode rnc \
-	--stringparam ODDROOT `pwd`/ \
 	${S}/base/p5/odds/teixml-odds.xsl FASC-$(CHAP).xml 
 	perl Tools/cleanrnc.pl FASC-$(CHAP)-lite.xml | \
 	xsltproc  \
