@@ -1244,6 +1244,12 @@ class romaDom extends domDocument
 	    $errResult = true;
 	    throw new falseTagnameException( '', $aszConfig[ 'name' ] );
 	  }
+	  // are we an element or a class
+	if ( $aszConfig[ 'class' ] == '' )
+	 {	$current=$aszConfig[ 'element' ] ;}
+	else
+	 {	$current=$aszConfig[ 'class' ] ; }
+
 	//check if name already exists
 	$this->getXPath( $oXPath );
         $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);
@@ -1256,17 +1262,6 @@ class romaDom extends domDocument
 	    if ( $oName->nodeValue == $aszConfig[ 'name' ] )
 	      throw new attributeExistsException( $aszConfig[ 'name' ] );	      
 	  }
-
-	$oTmpDom = new domDocument();
-	$oTmpDom->loadXML( join( '', file( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/attsbyelem.xq?name=' . $aszConfig[ 'element' ] ) ) );
-	$oNames = $oTmpDom->getElementsByTagname( 'name' );
-
-	foreach( $oNames as $oName )
-	  {
-	    if ( $oName->nodeValue == $aszConfig[ 'name' ] )
-	      throw new attributeExistsException( $aszConfig[ 'name' ] );	      
-	  }
-	
 
 	if ( ! $errResult )
 	  {
@@ -1333,7 +1328,7 @@ class romaDom extends domDocument
 		    $oClassSpec = $oSchema->appendChild( $theClassSpec );
 		    $oClassSpec->setAttribute( 'ident', $aszConfig[ 'class' ] );
 		    $oClassSpec->setAttribute( 'mode', 'change' );
-		    $oClassSpec->setAttribute( 'module', $szModule );
+		    $oClassSpec->setAttribute( 'module', $aszConfig[ 'module' ]  );
 		  }
 		
 		
