@@ -1,4 +1,12 @@
 #!/bin/sh
+die()
+{
+    echo; echo
+    echo "ERROR: $@."
+    echo "This was a fatal error."
+    exit 1
+}
+
 R=/usr/share/xml/tei
 T=$R/stylesheet
 S=$R/schema/relaxng/p5/
@@ -53,9 +61,9 @@ trang $N.compiled.rng $N.compiled.rnc  || die " trang fails"
 echo 5. simplify expanded form, convert to XSD and then mangle XSD
 xsltproc -o $N.temp1.rng $T/base/p5/odds/simplifyforxsd.xsl $N.compiled.rng 
 trang  -o disable-abstract-elements $N.temp1.rng $N.xsd || die " trang fails"
-xsltproc -o $N.new.xsd $T/base/p5/odds/manglexsd.xsl $N.xsd
-cp $N.new.xsd $N.xsd
-$debug || rm $N.new.xsd
+cp $N.xsd $N.temp.xsd
+xsltproc -o $N.xsd $T/base/p5/odds/manglexsd.xsl $N.temp.xsd
+$debug || rm $N.temp.xsd
 $debug || rm $N.temp1.rng  
 test -f xml.xsd && perl -p -i -e 's/<xs:import.*//' xml.xsd
 echo 6. simplify schema before attempting DTD conversion
