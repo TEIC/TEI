@@ -795,11 +795,11 @@ select="//tei:xref[@type='cite'] | //tei:xptr[@type='cite'] | //tei:ref[@type='c
 <xsl:template name="generateSimpleTitle">
  <xsl:choose>
     <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle">
-         <xsl:value-of select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle"/>
+         <xsl:value-of select="normalize-space(ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle)"/>
  </xsl:when>
 <xsl:otherwise>
 <xsl:value-of
- select="ancestor-or-self::tei:TEI/teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
+ select="normalize-space(ancestor-or-self::tei:TEI/teiHeader/tei:fileDesc/tei:titleStmt/tei:title)"/>
 </xsl:otherwise>
 </xsl:choose>
 </xsl:template>
