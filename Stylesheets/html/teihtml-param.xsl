@@ -9,6 +9,7 @@ XSL stylesheet to format TEI XML documents to FO or HTML
 <xsl:stylesheet
   xmlns:tei="http://www.tei-c.org/ns/1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+   <xsl:param name="STDOUT">true</xsl:param>
    <xsl:param name="urlChunkPrefix">?ID=</xsl:param>
    <xsl:param name="REQUEST"/>
    <xsl:param name="ID"></xsl:param>

@@ -19,15 +19,6 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
    <xsl:value-of select="system-property('xsl:vendor')"/>
 </xsl:param>
 
-<xsl:param name="STDOUT">
-  <xsl:choose>
-    <xsl:when test="contains($processor,'Microsoft')">
-      <xsl:text>true</xsl:text>
-    </xsl:when>
-    <xsl:otherwise>false</xsl:otherwise>    
-  </xsl:choose>
-</xsl:param>
-
 <xsl:variable name="masterFile">
  <xsl:choose>
 
