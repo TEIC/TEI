@@ -5,9 +5,8 @@ $Date$, $Revision$, $Author$
 
 XSL stylesheet to format TEI XML documents to HTML or XSL FO
 
- 
 ##LICENSE
---> 
+    --> 
 <xsl:stylesheet 
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -667,6 +666,11 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 <xsl:element name="{$element}">
  <xsl:attribute name="class">eg</xsl:attribute>
 <xsl:choose>
+<xsl:when test="$displayMode='rng'">
+    <xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text>
+    <xsl:copy-of select="exsl:node-set($content)/Wrapper/*"/>
+    <xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
+</xsl:when>
 <xsl:when test="$displayMode='rnc'">
 <xsl:call-template name="make-body-from-r-t-f">
   <xsl:with-param name="schema">

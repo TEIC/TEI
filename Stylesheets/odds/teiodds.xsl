@@ -6,7 +6,7 @@ $Date$, $Revision$, $Author$
 XSL stylesheet to format TEI XML documents to HTML or XSL FO
 
 ##LICENSE
-    --> 
+-->
 <xsl:stylesheet 
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -1228,6 +1228,9 @@ along with this file; if not, write to the
      <xsl:if test="count(key('CLASSMEMBERS',@ident))&gt;0">
        [<xsl:for-each select="key('CLASSMEMBERS',@ident)">
        <xsl:choose>
+	 <xsl:when test="$oddmode='tei'">
+	   <tei:ptr target="{@ident}"/>
+	 </xsl:when>
 	 <xsl:when test="$oddmode='html'">
 	   <a href="ref-{@id}.html">
 	     <xsl:value-of select="@ident"/>
@@ -1235,9 +1238,6 @@ along with this file; if not, write to the
 	 </xsl:when>
 	 <xsl:when test="$oddmode='pdf'">
 	   <fo:inline font-style="italic"><xsl:value-of select="@id"/></fo:inline>
-	 </xsl:when>
-	 <xsl:when test="$oddmode='tei'">
-	   <emph><xsl:value-of select="@id"/></emph>
 	 </xsl:when>
 	 <xsl:otherwise>
 	   <xsl:value-of select="@id"/>
@@ -1313,29 +1313,10 @@ along with this file; if not, write to the
 
 
 <xsl:template name="makeTagsetInfo">
-   <xsl:variable name="File">
-    <xsl:choose>
-     <xsl:when test="parent::tei:elementSpec">
-       <xsl:apply-templates select=".." mode="findfile"/>
-     </xsl:when>
-    <xsl:when test="parent::tei:macroSpec">
-     <xsl:apply-templates select=".." mode="findfile"/>
-  </xsl:when>
-  <xsl:when test="parent::tei:classSpec">
-     <xsl:apply-templates select=".." mode="findfile"/>
-  </xsl:when>
-  <xsl:when test="ancestor::tei:module/@ident">
-    <xsl:value-of select="ancestor::tei:module/@ident"/>
-  </xsl:when>
-  <xsl:otherwise>
-    <xsl:apply-templates select=".." mode="findfile"/>
- </xsl:otherwise>
-</xsl:choose>
-</xsl:variable>
+   <xsl:value-of select="@module"/>
 <xsl:if test="$verbose='true'">
-<xsl:message>  tagset <xsl:value-of select="../@id"/>: <xsl:value-of select="$File"/></xsl:message>
+<xsl:message>  tagset <xsl:value-of select="@id"/>: <xsl:value-of select="../@module"/></xsl:message>
 </xsl:if>
-  [<xsl:value-of select="$File"/>]
 </xsl:template>
 
 
@@ -1354,19 +1335,9 @@ along with this file; if not, write to the
     </xsl:if>
     </xsl:comment>
   </xsl:if>
-  <xsl:message>
-    <xsl:text>    [specGrp</xsl:text>
-    <xsl:if test="@id">
-      <xsl:text> </xsl:text>
-      <xsl:value-of select="@id"/> 
-    </xsl:if>
-    <xsl:text> in </xsl:text>
-    <xsl:value-of select="$filename"/> 
-  </xsl:message>
   <xsl:apply-templates mode="tangle">
     <xsl:with-param name="filename" select="$filename"/>
   </xsl:apply-templates>
-  <xsl:message>    ] end of <xsl:value-of select="@id"/></xsl:message>
   <xsl:if test="@id">
     <xsl:comment> end of [<xsl:value-of select="@id"/>]  <xsl:value-of select="$secnum"/>    
     </xsl:comment>
