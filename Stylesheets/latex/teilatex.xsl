@@ -179,15 +179,14 @@ pdfcreator={Oxford University Computing Services}
   </xsl:when>
   <xsl:otherwise>
 \newif\if@mainmatter \@mainmattertrue
-\newcommand\frontmatter{%
-  \clearpage
+\def\frontmatter{%
   \setcounter{secnumdepth}{-1}
   \@mainmatterfalse
   \pagenumbering{roman}}
-\newcommand\mainmatter{%
-  \clearpage
+\def\mainmatter{%
 <xsl:choose>
   <xsl:when test="/tei:TEI/@rend='book'">
+  \cleardoublepage
   \setcounter{chapter}{0}
   </xsl:when>
   <xsl:otherwise>
@@ -197,12 +196,10 @@ pdfcreator={Oxford University Computing Services}
   \setcounter{secnumdepth}{4}
   \@mainmattertrue
   \pagenumbering{arabic}}
-\newcommand\backmatter{%
-  \if@openright
-    \cleardoublepage
-  \else
-    \clearpage
-  \fi
+\def\backmatter{%
+  <xsl:if test="/tei:TEI/@rend='book'">
+  \cleardoublepage
+  </xsl:if>
   \appendix
   \@mainmatterfalse
 }

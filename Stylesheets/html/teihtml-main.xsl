@@ -170,21 +170,19 @@ $ID: requests a particular page
 	<xsl:if test="$verbose='true'">
 	  <xsl:message>write to stdout, pageLayout <xsl:value-of select="$pageLayout"/></xsl:message>
 	</xsl:if>
-
-	    <xsl:apply-templates/>
+	<xsl:apply-templates/>
       </xsl:when>
 
-<!-- we want the document split up into separate files -->
+      <!-- we want the document split up into separate files -->
       <xsl:when test="tei:TEI or tei:teiCorpus and $splitLevel&gt;-1">
 	<xsl:if test="$verbose='true'">
 	  <xsl:message>split output, <xsl:value-of
 	  select="$splitLevel"/> pageLayout <xsl:value-of select="$pageLayout"/></xsl:message>
 	</xsl:if>
-
 	<xsl:apply-templates mode="split"/>
       </xsl:when>
       
-<!-- we want the whole document, in an output file -->
+      <!-- we want the whole document, in an output file -->
       <xsl:otherwise>
 	<xsl:if test="$verbose='true'">
 	  <xsl:message>one document, pageLayout <xsl:value-of select="$pageLayout"/></xsl:message>
