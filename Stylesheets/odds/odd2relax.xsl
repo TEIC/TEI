@@ -129,6 +129,12 @@ from 1st October 2004. This is NOT the final P5</xsl:text>
 		  <rng:ref name="{@start}"/>
 		</rng:start>
 	      </xsl:when>
+	                   <xsl:otherwise>
+	                     <rng:start>
+	                       <rng:ref name="TEI"/>
+	                     </rng:start>
+	                  </xsl:otherwise>
+
 	    </xsl:choose>
 	</grammar>
       </xsl:with-param>

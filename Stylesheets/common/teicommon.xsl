@@ -32,6 +32,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 
 <!-- numbering -->
 <!-- fill in these with a valid number format (eg A.1) if needed-->
+<xsl:param name="useHeaderFrontMatter"/>
 <xsl:param name="numberSpacer"><xsl:text> </xsl:text></xsl:param><!--&#160;-->
 <xsl:param name="headingNumberSuffix">.<xsl:value-of 
 select="$numberSpacer"/></xsl:param>

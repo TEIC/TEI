@@ -32,7 +32,7 @@ XSL stylesheet to process TEI documents using ODD markup
   <xsl:key name="IDS"     match="tei:*[@id]"           use="@id"/>
   <xsl:key name="DTDREFS" match="tei:specGrpRef"           use="@target"/>
   <xsl:key name="PATTERNS" match="tei:macroSpec" use="@ident"/>
-  <xsl:key name="PATTERNDOCS" match="tei:macroSpec" use='1'/>
+  <xsl:key name="MACRODOCS" match="tei:macroSpec" use='1'/>
   <xsl:key name="CLASSDOCS" match="tei:classSpec" use='1'/>
   <xsl:key name="TAGDOCS" match="tei:elementSpec" use='1'/>
   <xsl:key name="CHUNKS" match="tei:specGrpRef" use="@target"/>
@@ -152,11 +152,11 @@ XSL stylesheet to process TEI documents using ODD markup
   
   <xsl:apply-templates mode="weave"/>
   
-  <tei:p>    <tei:emph>Member of classes: </tei:emph>
+  <tei:p>    <tei:emph>Member of classes</tei:emph>
   <xsl:call-template name="generateClassParents"/>
   </tei:p>
   
-  <tei:p><tei:emph>Members: </tei:emph>
+  <tei:p><tei:emph>Members</tei:emph>
   <xsl:call-template name="generateMembers"/>
   </tei:p>
   
@@ -167,25 +167,24 @@ XSL stylesheet to process TEI documents using ODD markup
 
 <xsl:template match="tei:classes"  mode="weave">
   <xsl:if test="tei:memberOf">
-    <tei:p><tei:emph>Classes: </tei:emph>
+    <tei:p><tei:emph>Classes</tei:emph>
       <xsl:for-each select="tei:memberOf">
 	<xsl:choose>
 	  <xsl:when test="key('IDENTS',@key)">
 	    <xsl:variable name="Key"><xsl:value-of select="@key"/></xsl:variable>
 	    <xsl:for-each select="key('IDENTS',@key)">
-	      <xsl:if test="not(generate-id(.)=generate-id(key('IDENTS',$Key)[1]))">          <xsl:text> |  </xsl:text>
-	      </xsl:if>
+	      <xsl:text>: </xsl:text>
 	      <xsl:call-template name="linkTogether">
-		<xsl:with-param name="inner" select="@ident"/>
-		<xsl:with-param name="origid" select="@id"/>
+		<xsl:with-param name="name" select="@ident"/>
+		<xsl:with-param name="url" select="@id"/>
 	      </xsl:call-template>
 	    </xsl:for-each>
 	  </xsl:when>
 	  <xsl:otherwise>
+	    <xsl:text>: </xsl:text>
 	    <xsl:value-of select="@key"/>
 	  </xsl:otherwise>
 	</xsl:choose>
-	<xsl:text> </xsl:text>      
       </xsl:for-each>
     </tei:p>
   </xsl:if>
@@ -462,11 +461,13 @@ XSL stylesheet to process TEI documents using ODD markup
 <xsl:template name="bitOut">
 <xsl:param name="grammar"/>
 <xsl:param name="content"/>
-<xsl:param  name="element">pre</xsl:param> 
+<xsl:param  name="element">eg</xsl:param> 
 <tei:eg>
 <xsl:choose>
 <xsl:when test="$displayMode='rng'">
-    <xsl:apply-templates select="exsl:node-set($content)/Wrapper/*" mode="literal"/>
+  <xsl:for-each  select="exsl:node-set($content)/Wrapper">
+    <xsl:apply-templates mode="verbatim"/>
+  </xsl:for-each>
 </xsl:when>
 <xsl:when test="$displayMode='rnc'">
 <xsl:call-template name="make-body-from-r-t-f">
@@ -478,9 +479,9 @@ XSL stylesheet to process TEI documents using ODD markup
 </xsl:call-template>
 </xsl:when>
 <xsl:otherwise>
-    <xsl:for-each  select="exsl:node-set($content)/Wrapper">
-      <xsl:apply-templates mode="literal"/>
-    </xsl:for-each>
+  <xsl:for-each  select="exsl:node-set($content)/Wrapper">
+    <xsl:apply-templates mode="verbatim"/>
+  </xsl:for-each>
 </xsl:otherwise>
 </xsl:choose>
 </tei:eg>
@@ -571,9 +572,10 @@ XSL stylesheet to process TEI documents using ODD markup
 
 <xsl:template name="makeLink">
  <xsl:param name="class"/>
- <xsl:param name="url"/>
+ <xsl:param name="id"/>
+ <xsl:param name="name"/>
  <xsl:param name="text"/>
-    <tei:xref rend="{$class}" url="{$url}"><xsl:copy-of  select="$text"/></tei:xref>
+    <tei:ref rend="{$class}" target="{$name}"><xsl:copy-of  select="$text"/></tei:ref>
 </xsl:template>
 
 <xsl:template name="refdoc">
@@ -582,10 +584,8 @@ XSL stylesheet to process TEI documents using ODD markup
     <xsl:message>   refdoc for <xsl:value-of select="name(.)"/> -  <xsl:value-of select="@ident"/> </xsl:message>
   </xsl:if>
     <tei:div>
-      <xsl:if test="@id">
 	<xsl:attribute name="id"><xsl:value-of
-	select="@id"/></xsl:attribute>
-      </xsl:if>
+	select="@ident"/></xsl:attribute>
       <tei:head>
 	<xsl:call-template name="identifyMe"/>
 	[<xsl:value-of select="substring-before(local-name(.),'Spec')"/>]

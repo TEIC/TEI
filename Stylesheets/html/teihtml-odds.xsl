@@ -1,33 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<!-- $Date: 
 Text Encoding Initiative Consortium XSLT stylesheet family
-$Date$, $Revision$, $Author$
+2001/10/01 $, $Revision$, $Author$
 
-XSL stylesheet to format TEI XML documents to HTML or XSL FO
+XSL HTML stylesheet to format TEI XML documents 
 
-Copyright 1999-2003 Sebastian Rahtz / Text Encoding Initiative Consortium
-                                              
-    This is an XSLT stylesheet for transforming TEI (version P5) XML documents
-
-    Version 3.2. Date Fri Jul 30 12:15:00 BST 2004
-                                  
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
-                                                                                
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-                                                                                
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-                                                                                
-    The author may be contacted via the e-mail address
-
-    sebastian.rahtz-services.oxford.ac.uk    --> 
+ 
+##LICENSE
+-->
 <xsl:stylesheet 
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -63,7 +43,7 @@ Copyright 1999-2003 Sebastian Rahtz / Text Encoding Initiative Consortium
 <xsl:template match="tei:classSpec|tei:elementSpec|tei:macroSpec">
    <xsl:if test="parent::tei:specGrp">
    <p><tt>&lt;<xsl:value-of select="name(.)"/>&gt;</tt>
-      <xsl:text>: </xsl:text><b><xsl:value-of select="@ident"/></b>:
+<!--      <xsl:text>: </xsl:text><b><xsl:value-of select="@ident"/></b>:-->
      <xsl:apply-templates select="." mode="tangle"/>
   </p>
    </xsl:if>
@@ -180,6 +160,7 @@ Copyright 1999-2003 Sebastian Rahtz / Text Encoding Initiative Consortium
     <td colspan="2"><xsl:apply-templates select="tei:desc" mode="show"/></td>
   </tr>
   <xsl:apply-templates mode="weave"/>
+<!--
   <tr>
     <td valign="top"><i>Member of classes</i></td>
     <td colspan="2">
@@ -187,6 +168,7 @@ Copyright 1999-2003 Sebastian Rahtz / Text Encoding Initiative Consortium
       &#160;
     </td>
   </tr>
+-->
   <tr>
     <td valign="top"><i>Members</i></td>
     <td colspan="2">
@@ -208,13 +190,18 @@ Copyright 1999-2003 Sebastian Rahtz / Text Encoding Initiative Consortium
 	    <xsl:if test="not(generate-id(.)=generate-id(key('IDENTS',$Key)[1]))">          <xsl:text> |  </xsl:text>
 	    </xsl:if>
 	    <xsl:call-template name="linkTogether">
-	      <xsl:with-param name="inner" select="@ident"/>
-	      <xsl:with-param name="origid" select="@id"/>
+	      <xsl:with-param name="name" select="@ident"/>
+	      <xsl:with-param name="url" select="concat('ref-',@id,'.html')"/>
 	    </xsl:call-template>
 	  </xsl:for-each>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:value-of select="@key"/>
+	    <xsl:call-template name="linkTogether">
+	      <xsl:with-param name="url">
+	      <xsl:value-of select="$TEISERVER"/>tag.xq?name=<xsl:value-of select="@key"/>
+	      </xsl:with-param>
+	      <xsl:with-param name="name" select="@key"/>
+	    </xsl:call-template>
 	</xsl:otherwise>
       </xsl:choose>
       <xsl:text> </xsl:text>
@@ -539,6 +526,13 @@ Copyright 1999-2003 Sebastian Rahtz / Text Encoding Initiative Consortium
   </tr>
 </xsl:template>
 
+<xsl:template match="tei:attDef/tei:remarks">
+  <tr>
+    <td></td><td><xsl:apply-templates/></td>
+  </tr>
+</xsl:template>
+
+
 
 
 <xsl:template match="tei:valList" mode="contents">
@@ -727,9 +721,10 @@ Copyright 1999-2003 Sebastian Rahtz / Text Encoding Initiative Consortium
 
 <xsl:template name="makeLink">
  <xsl:param name="class"/>
- <xsl:param name="url"/>
+ <xsl:param name="id"/>
+ <xsl:param name="name"/>
  <xsl:param name="text"/>
-    <a class="{$class}" href="{$url}"><xsl:copy-of  select="$text"/></a>
+    <a class="{$class}" href="ref-{$id}.html"><xsl:copy-of  select="$text"/></a>
 </xsl:template>
 
 <xsl:template name="refdoc">

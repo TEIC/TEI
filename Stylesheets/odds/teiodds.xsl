@@ -36,7 +36,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
   <xsl:key name="TAGIDENTS"     match="Table/*[ident]"           use="ident"/>
   <xsl:key name="IDS"     match="tei:*[@id]"  use="@id"/>
   <xsl:key name="PATTERNS" match="tei:macroSpec" use="@ident"/>
-  <xsl:key name="PATTERNDOCS" match="tei:macroSpec" use='1'/>
+  <xsl:key name="MACRODOCS" match="tei:macroSpec" use='1'/>
   <xsl:key name="CLASSDOCS" match="tei:classSpec" use='1'/>
   <xsl:key name="TAGDOCS" match="tei:elementSpec" use='1'/>
   <xsl:key name="CHUNKS" match="tei:specGrpRef" use="@target"/>
@@ -403,8 +403,8 @@ XSL stylesheet to format TEI XML documents using ODD markup
   
   
   
-  <xsl:template match="tei:divGen[@type='patterncat']">
-    <xsl:apply-templates select="key('PATTERNDOCS',1)"  mode="weave">
+  <xsl:template match="tei:divGen[@type='macrocat']">
+    <xsl:apply-templates select="key('MACRODOCS',1)"  mode="weave">
       <xsl:sort select="@ident"/>
     </xsl:apply-templates>
   </xsl:template>
@@ -984,7 +984,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
 </xsl:template>
 
 
-<xsl:template match="teix:*|rng:*" mode="verbatim">
+<xsl:template match="teix:*|rng:*|tei:*" mode="verbatim">
   <xsl:choose>
     <xsl:when test="preceding-sibling::node()[1]/self::*">
       <xsl:text>&#10;</xsl:text>
@@ -1343,22 +1343,17 @@ XSL stylesheet to format TEI XML documents using ODD markup
 
 <xsl:template name="generateClassParents">
   <xsl:choose>
-    <xsl:when test="not(tei:classes)">(none)   </xsl:when>
+    <xsl:when test="not(tei:classes)"> (none)   </xsl:when>
     <xsl:otherwise>
       <xsl:for-each select="tei:classes/tei:memberOf">
 	<xsl:choose>
 	  <xsl:when test="key('IDENTS',@key)">
-	    <xsl:variable name="Key">
-	      <xsl:value-of select="@key"/>
-	    </xsl:variable>
 	    <xsl:for-each select="key('IDENTS',@key)">
-	      <xsl:if test="not(generate-id(.)=generate-id(key('IDENTS',$Key)[1]))">
-		<xsl:text> |  </xsl:text>
-	      </xsl:if>
+	      <xsl:text>: </xsl:text>
 	      <xsl:call-template name="makeLink">
-		<xsl:with-param
-		    name="class">classlink</xsl:with-param>
-		<xsl:with-param name="url">ref-<xsl:value-of select="@id"/>.html</xsl:with-param>
+		<xsl:with-param name="class">classlink</xsl:with-param>
+		<xsl:with-param name="id"><xsl:value-of	select="@id"/></xsl:with-param>
+		<xsl:with-param name="name"><xsl:value-of select="@ident"/></xsl:with-param>
 		<xsl:with-param name="text">
 		  <xsl:value-of select="@ident"/>
 		</xsl:with-param>
@@ -1366,10 +1361,10 @@ XSL stylesheet to format TEI XML documents using ODD markup
 	    </xsl:for-each>
 	  </xsl:when>
 	  <xsl:otherwise>
+	    <xsl:text>: </xsl:text>
 	    <xsl:value-of select="@key"/>
 	  </xsl:otherwise>
 	</xsl:choose>
-	<xsl:if test="following-sibling::tei:memberOf"><xsl:text>, </xsl:text></xsl:if>
       </xsl:for-each>
     </xsl:otherwise>
   </xsl:choose>
@@ -1383,16 +1378,22 @@ XSL stylesheet to format TEI XML documents using ODD markup
   <xsl:choose>
     <xsl:when test="key('CLASSMEMBERS',$this)">
       <xsl:for-each select="key('CLASSMEMBERS',$this)">
+        <xsl:text>: </xsl:text>
 	<xsl:call-template name="linkTogether">
-	  <xsl:with-param name="inner" select="@ident"/>
-	  <xsl:with-param name="origid" select="concat('ref-',@id,'.html')"/>
+	  <xsl:with-param name="name" select="@ident"/>
+	  <xsl:with-param name="url" select="@id"/>
 	</xsl:call-template>
 	<xsl:if test="count(key('CLASSMEMBERS',@ident))&gt;0">
-	  [<xsl:for-each select="key('CLASSMEMBERS',@ident)">
-	  <xsl:call-template name="showElement">
-	    <xsl:with-param name="name" select="@ident"/>
-	    <xsl:with-param name="id" select="@id"/>
-	    </xsl:call-template></xsl:for-each>]
+	  <xsl:text>  [</xsl:text>
+	  <xsl:variable name="Key" select="@ident"/>
+	  <xsl:for-each select="key('CLASSMEMBERS',@ident)">
+	      <xsl:text>: </xsl:text>
+	      <xsl:call-template name="showElement">
+		<xsl:with-param name="name" select="@ident"/>
+		<xsl:with-param name="id" select="@id"/>
+	      </xsl:call-template>
+	  </xsl:for-each>
+	    <xsl:text>] </xsl:text>
 	</xsl:if>
       </xsl:for-each>
     </xsl:when>
@@ -1401,13 +1402,15 @@ XSL stylesheet to format TEI XML documents using ODD markup
 	<xsl:message>Accessing TEISERVER: <xsl:value-of
 	select="concat($TEISERVER,'classmembers.xq?class=',@ident)"/></xsl:message>
       </xsl:if>
-      
       <xsl:for-each
 	  select="document(concat($TEISERVER,'classmembers.xq?class=',@ident))/list/item">
-	<xsl:call-template name="showElement">
-	  <xsl:with-param name="name" select="."/>
-	  <xsl:with-param name="id"/>
-	</xsl:call-template>
+	  <xsl:if test="key('IDENTS',.)">
+	    <xsl:text>:  </xsl:text>
+	    <xsl:call-template name="showElement">
+	      <xsl:with-param name="name" select="."/>
+	      <xsl:with-param name="id"/>
+	      </xsl:call-template>:
+	</xsl:if>
       </xsl:for-each>
     </xsl:otherwise>
   </xsl:choose>
@@ -1419,7 +1422,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
   <xsl:param name="name"/>
   <xsl:choose>
     <xsl:when test="$oddmode='tei'">
-      <tei:ptr target="{$name}"/>
+      <tei:ref target="{$name}"><xsl:value-of select="$name"/></tei:ref>
     </xsl:when>
     <xsl:when test="$oddmode='html'">
       <xsl:choose>
@@ -1442,7 +1445,6 @@ XSL stylesheet to format TEI XML documents using ODD markup
       <xsl:value-of select="$name"/>
     </xsl:otherwise>
   </xsl:choose>
-  <xsl:text> </xsl:text>
 </xsl:template>
 
 
@@ -1485,13 +1487,13 @@ XSL stylesheet to format TEI XML documents using ODD markup
   <xsl:param name="url"/>
   <xsl:choose>
     <xsl:when test="$oddmode='html'">
-      <a href="{$url}"><xsl:value-of select="$name"/></a>
+      <a href="ref-{$url}.html"><xsl:value-of select="$name"/></a>
     </xsl:when>
     <xsl:when test="$oddmode='pdf'">
       <fo:inline><xsl:value-of select="$name"/></fo:inline>
     </xsl:when>
     <xsl:when test="$oddmode='tei'">
-      <xsl:value-of select="$name"/>
+      <tei:ref target="{$name}"><xsl:value-of select="$name"/></tei:ref>
     </xsl:when>
     <xsl:otherwise>
       <xsl:value-of select="$name"/>
