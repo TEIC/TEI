@@ -6,9 +6,9 @@ See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="BIBLITEM" usage="opt" ident="biblItem">
   <equiv/>
-  <gloss>structured bibliographic citation</gloss>
-  <desc>contains a structured bibliographic citation, in which only
-  bibliographic subelements appear and in a specified order. </desc>
+  <gloss>bibliographic citation</gloss>
+  <desc>contains a bibliographic citation in which only bibliographic
+  subelements appear.</desc>
   <classes>
     <memberOf key="tei.bibl"/>
     <memberOf key="tei.declarable"/>
@@ -18,6 +18,7 @@ See the file COPYING for details.
     <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:choice>
 	<rng:ref name="tei.biblPart"/>
+	<rng:ref name="title"/>      <!-- <title> is not part of biblPart as it is in hqphrase -->
 	<rng:ref name="biblItem"/>
       </rng:choice>
     </rng:oneOrMore>
@@ -106,13 +107,13 @@ See the file COPYING for details.
   </attList>
   
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <biblItem role="original">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <biblItem>
         <author>Blain, Virginia</author>
         <author>Clements, Patricia</author>
         <author>Grundy, Isobel</author>
-        <title>The Feminist Companion to Literature in
-           English: women writers from the middle ages
-           to the present</title>
+        <title level="m">The Feminist Companion to Literature in English</title>
+	<title level="m" type="subordinate">Women Writers from the
+	  Middle Ages to the Present</title>
         <edition>first edition</edition>
         <imprint>
           <publisher>Yale University Press</publisher>
@@ -123,14 +124,15 @@ See the file COPYING for details.
     </egXML>
   </exemplum>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <biblItem role="source">
-	<title>Changes in physical examination caused by use of spinal immobilization</title>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <biblItem>
+	<title level="a">Changes in physical examination caused by use
+	  of spinal immobilization</title>
 	<author>March, Juan A. MD</author>
 	<author>Ausband, Stephen C. MD</author>
 	<author>Brown, Lawrence H. EMT-P</author>
 	<biblScope type="pages">421&ndash;424</biblScope>
 	<biblItem role="host">
-	  <title>Prehospital Emergency Care</title>
+	  <title level="j">Prehospital Emergency Care</title>
 	  <biblScope type="volume">6</biblScope>
 	  <biblScope issue="issue">4</biblScope>
 	  <date value="2002-10/12">October/December 2002</date>
