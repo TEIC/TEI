@@ -26,8 +26,8 @@
       <xsl:when test="key('ELEMENTS',$oldname)">
 	<xsl:for-each select="key('ELEMENTS',$oldname)">
 	  <xsl:choose>
-	    <xsl:when test="@*[name(.)=$lang]">
-	      <xsl:value-of select="@*[name(.)=$lang]"/>
+	    <xsl:when test="equiv[@lang=$lang]">
+	      <xsl:value-of select="equiv[@lang=$lang]/@value"/>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:value-of select="$oldname"/>
@@ -41,6 +41,7 @@
     </xsl:choose>
   </xsl:for-each>
 </xsl:variable>
+
 <xsl:element name="{$newname}" xmlns="http://www.tei-c.org/ns/1.0">
   <xsl:apply-templates select="@*|*|text()|comment()"/>
 </xsl:element>
@@ -54,11 +55,8 @@
       <xsl:when test="key('ATTRIBUTES',$oldname)">
 	<xsl:for-each select="key('ATTRIBUTES',$oldname)">
 	  <xsl:choose>
-	    <xsl:when test="not(name(.)='attribute')">
-	      <xsl:value-of select="$oldname"/>
-	    </xsl:when>
-	    <xsl:when test="@*[name(.)=$lang]">
-	      <xsl:value-of select="@*[name(.)=$lang]"/>
+	    <xsl:when test="equiv[@lang=$lang]">
+	      <xsl:value-of select="equiv[@lang=$lang]/@value"/>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:value-of select="$oldname"/>

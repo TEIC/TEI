@@ -12,6 +12,8 @@
 <xsl:output method="xml" indent="yes"/>
 <xsl:param name="lang">es</xsl:param>
 <xsl:param name="verbose">true</xsl:param>
+<xsl:key name="ELEMENTS" match="element" use="@ident"/>
+<xsl:key name="ATTRIBUTES" match="attribute" use="@ident"/>
 <xsl:variable name="TEITAGS">http://www.tei-c.org.uk/tei-bin/files.pl?name=tags.xml</xsl:variable>
 <xsl:variable name="TEINAMES">http://www.tei-c.org.uk/tei-bin/files.pl?name=teinames.xml</xsl:variable>
 
@@ -142,13 +144,14 @@
 	  <xsl:otherwise>
 	    <xsl:message>  translation for <xsl:value-of
 	    select="$thisthing"/></xsl:message>
-	    <xsl:for-each
-	     select="document($TEINAMES)/i18n/element[@ident=$thisthing]">
-	      <xsl:if test="@*[name(.)=$lang]">
-		<altIdent xmlns="http://www.tei-c.org/ns/1.0">
-		  <xsl:value-of select="@*[name(.)=$lang]"/>
-		</altIdent>
-	      </xsl:if>
+	    <xsl:for-each  select="document($TEINAMES)">
+	      <xsl:for-each select="key('ELEMENTS',$thisthing)">
+		<xsl:if test="equiv[@lang=$lang]">
+		  <altIdent xmlns="http://www.tei-c.org/ns/1.0">
+		  <xsl:value-of select="equiv[@lang=$lang]/@value"/>
+		  </altIdent>
+		</xsl:if>
+	      </xsl:for-each>
 	    </xsl:for-each>
 	  </xsl:otherwise>
 	</xsl:choose>
@@ -165,19 +168,14 @@
 	  <attList xmlns="http://www.tei-c.org/ns/1.0">
 	    <xsl:for-each select="Attributes/Att">
 	      <xsl:variable name="thisatt" select="@n"/>
-	      <xsl:for-each
-	       select="document($TEINAMES)/i18n/attribute[@ident=$thisatt]">
-		<xsl:if test="@*[name(.)=$lang]">
-
-		  <xsl:message>     translate attribute <xsl:value-of
-		  select="$thisatt"/> to  <xsl:value-of select="@*[name(.)=$lang]"/></xsl:message>
-		  <attDef ident="{$thisatt}" mode="change"
-		    xmlns="http://www.tei-c.org/ns/1.0">
+	      <xsl:for-each  select="document($TEINAMES)">
+		<xsl:for-each select="key('ATTRIBUTES',$thisatt)">
+		  <xsl:if test="equiv[@lang=$lang]">
 		    <altIdent xmlns="http://www.tei-c.org/ns/1.0">
-		      <xsl:value-of select="@*[name(.)=$lang]"/>
+		      <xsl:value-of select="equiv[@lang=$lang]/@value"/>
 		    </altIdent>
-		  </attDef>
-		</xsl:if>
+		  </xsl:if>
+		</xsl:for-each>
 	      </xsl:for-each>
 	    </xsl:for-each>
 	  </attList>
