@@ -16,6 +16,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 
 <xsl:template match="tei:figDesc"/>
 <xsl:template match="tei:figure/tei:head"/>
+<xsl:param name="dpi">96</xsl:param>
 
 <xsl:template match="tei:figure">
   <xsl:if test="@url|@entity">
@@ -118,25 +119,24 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 	  <xsl:attribute name="name"><xsl:value-of select="$ID"/></xsl:attribute>
 	</xsl:if>
 	<img src="{$graphicsPrefix}{$File}">
-	  <xsl:choose>
-	    <xsl:when test="not(@rend='')">
-	      <xsl:attribute name="class"><xsl:value-of select="@rend"/></xsl:attribute>
-	    </xsl:when>
-	    <xsl:when test="@rend = 'simple'">
-	      <xsl:attribute name="border">0</xsl:attribute>
-	    </xsl:when>
-	    <xsl:when test="@rend='inline'">
-	      <xsl:attribute name="border">0</xsl:attribute>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:attribute name="border">0</xsl:attribute>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	  <xsl:if test="@width&gt;0 and not(contains(@width,'in'))">
-	    <xsl:attribute name="width"><xsl:value-of select="@width"/></xsl:attribute>
+	  <xsl:if test="@rend">
+	      <xsl:attribute name="class"><xsl:value-of  select="@rend"/></xsl:attribute>
 	  </xsl:if>
-	  <xsl:if test="@height&gt;0 and not(contains(@height,'in'))">
-	    <xsl:attribute name="height"><xsl:value-of select="@height"/></xsl:attribute>
+	  <xsl:if test="@width">
+	    <xsl:call-template name="setDimension">
+	      <xsl:with-param name="value">
+		<xsl:value-of select="@width"/>
+	      </xsl:with-param>
+	      <xsl:with-param name="name">width</xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:if>
+	  <xsl:if test="@height">
+	    <xsl:call-template name="setDimension">
+	      <xsl:with-param name="value">
+		<xsl:value-of select="@height"/>
+	      </xsl:with-param>
+	      <xsl:with-param name="name">height</xsl:with-param>
+	    </xsl:call-template>
 	  </xsl:if>
 	  <xsl:attribute name="alt">
 	    <xsl:value-of select="$Alt"/>
@@ -154,14 +154,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 	<xsl:number level="any" count="tei:figure[tei:head]"/>
       </xsl:for-each>
       file <xsl:value-of select="$File"/>
-      <xsl:choose>
-	<xsl:when test="tei:figDesc">
-	[<xsl:apply-templates select="tei:figDesc//text()"/>]
-	</xsl:when>
-	<xsl:when test="parent::tei:figure/tei:figDesc">
-	  [<xsl:apply-templates select="parent::tei:figure/tei:figDesc//text()"/>]
-	</xsl:when>
-      </xsl:choose>
+      [<xsl:value-of select="$Alt"/>]
       </p>
       <hr/>
     </xsl:otherwise>
@@ -170,5 +163,34 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 
 <xsl:template name="imgHook"/>
 
+<xsl:template name="setDimension">
+  <xsl:param name="name"/>
+  <xsl:param name="value"/>
+  <xsl:variable name="calcvalue">
+    <xsl:choose>
+      <xsl:when test="contains($value,'in')">
+	<xsl:value-of select="round($dpi * substring-before($value,'in'))"/>
+      </xsl:when>
+      <xsl:when test="contains($value,'pt')">
+	<xsl:value-of select="round($dpi * (substring-before($value,'pt') div 72))"/>
+      </xsl:when>
+      <xsl:when test="contains($value,'cm')">
+	<xsl:value-of select="round($dpi * (
+			      substring-before($value,'cm') div 2.54 ))"/>
+      </xsl:when>
+      <xsl:when test="contains($value,'px')">
+	<xsl:value-of select="substring-before($value,'px')"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$value"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+  <xsl:if test="$calcvalue&gt;0">
+    <xsl:attribute name="{$name}">
+      <xsl:value-of  select="$calcvalue"/>
+    </xsl:attribute>
+  </xsl:if>
+</xsl:template>
 
 </xsl:stylesheet>

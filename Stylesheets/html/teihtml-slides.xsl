@@ -40,7 +40,9 @@ Copyright 1999-2003 Sebastian Rahtz / Text Encoding Initiative Consortium
 	    doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>
 <xsl:param
 name="cssFile">http://www.tei-c.org/Stylesheets/teislides.css</xsl:param>
-<xsl:param name="logoFile">osswatchlogo.png</xsl:param>
+<xsl:param name="logoFile">logo.png</xsl:param>
+<xsl:param name="logoWidth">60</xsl:param>
+<xsl:param name="logoHeight">60</xsl:param>
 
 <xsl:param name="numberHeadings"></xsl:param>
 <xsl:param name="splitLevel">0</xsl:param>
@@ -85,14 +87,6 @@ name="cssFile">http://www.tei-c.org/Stylesheets/teislides.css</xsl:param>
        <div class="docDate"><xsl:apply-templates/></div>
 </xsl:template>
 
-<xsl:template match="tei:p">
- <p><xsl:apply-templates/></p>
-</xsl:template>
-
-<xsl:template match="/">
-  <xsl:apply-templates select="tei:TEI"/>
-</xsl:template>
-
 <xsl:template match="/tei:TEI">
 <xsl:param name="slidenum">
   <xsl:value-of select="$masterFile"/>0</xsl:param>
@@ -107,25 +101,35 @@ name="cssFile">http://www.tei-c.org/Stylesheets/teislides.css</xsl:param>
   <xsl:apply-templates select="tei:text/tei:body/tei:div"/>
 </xsl:template>
 
-<!-- xref to previous and last slides -->
 <xsl:template name="xrefpanel">
   <b><xsl:number/></b><xsl:text> </xsl:text>
   <xsl:variable name="first"><xsl:value-of select="$masterFile"/>0</xsl:variable>
-  <a class="bottombar"  accesskey="f" href="{concat($first,'.html')}">First</a>
   <xsl:if test="preceding-sibling::tei:div">
     <xsl:variable name="prev">
       <xsl:apply-templates select="preceding-sibling::tei:div[1]" mode="genid"/>
     </xsl:variable>
-    <a class="bottombar" accesskey="p" href="{concat($prev,'.html')}"> | Previous</a>
+    <a class="xreflink" accesskey="p" href="{concat($prev,'.html')}"> 
+    <span class="button">&#171;</span>
+    </a>
   </xsl:if>
+
+  <xsl:text>  </xsl:text>
+  <a class="xreflink"  accesskey="f"
+     href="{concat($first,'.html')}"> 
+    <span class="button">^</span>
+  </a>
+  
   <xsl:if test="following-sibling::tei:div">
     <xsl:variable name="next">
       <xsl:apply-templates select="following-sibling::tei:div[1]" mode="genid"/>
     </xsl:variable>
-    <a class="bottombar" accesskey="n" href="{concat($next,'.html')}">| Next</a>
+    <xsl:text>  </xsl:text>
+    <a class="xreflink" accesskey="n"
+       href="{concat($next,'.html')}">
+      <span class="button">&#187;</span> 
+    </a>
   </xsl:if>
 </xsl:template>
-
 
 <xsl:template name="mainslide">
   <html><xsl:call-template name="addLangAtt"/> 
@@ -150,7 +154,7 @@ name="cssFile">http://www.tei-c.org/Stylesheets/teislides.css</xsl:param>
       </ul>
     </div>
     <div class="slidebottom">
-      <img src="{$logoFile}" width="198" height="70" alt="logo"/>
+      <img src="{$logoFile}" width="{$logoWidth}" height="${logoHeight}" alt="logo"/>
       <xsl:text> </xsl:text>
       <xsl:variable name="next"><xsl:value-of select="$masterFile"/>1</xsl:variable>
       <a accesskey="n" href="{concat($next,'.html')}">Start</a>
@@ -205,10 +209,14 @@ name="cssFile">http://www.tei-c.org/Stylesheets/teislides.css</xsl:param>
     <xsl:apply-templates/>
   </div>
   <div class="slidebottom">
-    <img src="{$logoFile}" width="198" height="70" alt="logo"/>
-    <xsl:text> </xsl:text>
-    <xsl:call-template name="generateTitle"/>
+    <xsl:call-template name="slideBottom"/>
   </div>
+</xsl:template>
+
+<xsl:template name="slideBottom">
+  <img src="{$logoFile}" width="{$logoWidth}" height="{$logoHeight}" alt="logo"/>
+  <xsl:text> </xsl:text>
+  <xsl:call-template name="generateTitle"/>
 </xsl:template>
 
 </xsl:stylesheet>

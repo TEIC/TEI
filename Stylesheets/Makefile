@@ -40,7 +40,7 @@ stylebear:
 	xsltproc paramform.xsl param.xml > stylebear
 
 test: p4 p5
-	cd Test; make
+	cd Test; make 
 
 clean:
 	-rm -rf release
