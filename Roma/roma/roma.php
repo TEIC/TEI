@@ -1320,7 +1320,7 @@ class roma
 	if ( $szError == '' )
 	  {
 	    $this->m_oRomaDom->getCustomizationFilename( $szFilename );
-	    $szFilename = ( $szFilename ) ? $szFilename : 'mytei';
+	    $szFilename = ( ( $szFilename ) ? $szFilename : 'mytei' ) . '_doc';
 
 	    $this->redirectBrowserMeta( "http://" . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'PHP_SELF' ] . '?mode=' . roma_mode_downloadFile . '&file=' . $szFilename . '.' . $szEnding );	    
 
