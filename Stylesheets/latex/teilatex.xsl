@@ -28,7 +28,7 @@ XSL stylesheet to format TEI XML documents to LaTeX
 <xsl:param name="REQUEST"></xsl:param>
 <xsl:param name="standardScale">1</xsl:param>
 <xsl:output method="text" encoding="utf8"/>
-<xsl:param name="pagesetup">a4paper,lmargin=1in,rmargin=1in,tmargin=0.25in,bmargin=0.75in</xsl:param>
+<xsl:param name="pagesetup">a4paper,lmargin=1in,rmargin=1in,tmargin=0.75in,bmargin=0.75in</xsl:param>
 
 <xsl:key name="IDS" match="tei:*[@id]" use="@id"/>
 
