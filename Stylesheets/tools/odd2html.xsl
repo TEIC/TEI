@@ -1,6 +1,6 @@
 <xsl:stylesheet version="1.0"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  xmlns:teix="http://www.tei-c.org/ns/Examples/"
+  xmlns:teix="http://www.tei-c.org/ns/Examples"
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
   xmlns:estr="http://exslt.org/strings"
   xmlns:pantor="http://www.pantor.com/ns/local"

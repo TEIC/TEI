@@ -12,7 +12,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
   xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:teix="http://www.tei-c.org/ns/Examples/"
+  xmlns:teix="http://www.tei-c.org/ns/Examples"
   xmlns:local="http://www.pantor.com/ns/local"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:fo="http://www.w3.org/1999/XSL/Format"

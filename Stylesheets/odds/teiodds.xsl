@@ -11,7 +11,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 <xsl:stylesheet 
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  xmlns:teix="http://www.tei-c.org/ns/Examples/"
+  xmlns:teix="http://www.tei-c.org/ns/Examples"
   xmlns:tei="http://www.tei-c.org/ns/1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:fo="http://www.w3.org/1999/XSL/Format"
@@ -680,7 +680,7 @@ select="$ident"/>] to  class [<xsl:value-of select="@ident"/>]</xsl:message>
       <xsl:when test="$filename='tei' and @key='teikeywords'">
 	<xsl:value-of select="@key"/><xsl:text>.rng</xsl:text>
       </xsl:when>
-      <xsl:when test="$filename='tei' and @key='teiclasses'">
+      <xsl:when test="$filename='tei' and @key='teideclarations'">
 	<xsl:value-of select="@key"/><xsl:text>.rng</xsl:text>
       </xsl:when>
       <xsl:when test="$filename='tei' and @key='header'">
