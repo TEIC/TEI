@@ -9,6 +9,7 @@ Text Encoding Initiative Consortium XSLT stylesheet family
 <xsl:stylesheet 
     xmlns:s="http://www.ascc.net/xml/schematron" 
     xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
     xmlns:rng="http://relaxng.org/ns/structure/1.0"
     xmlns:teix="http://www.tei-c.org/ns/Examples"
     xmlns:tei="http://www.tei-c.org/ns/1.0"
@@ -480,6 +481,11 @@ Text Encoding Initiative Consortium XSLT stylesheet family
 		  <xsl:if test="@ns">
 		    <xsl:attribute name="ns"><xsl:value-of select="@ns"/></xsl:attribute>
 		  </xsl:if>
+		  <xs:annotation>
+		    <xs:documentation>
+		      <xsl:value-of select="tei:desc"/>
+		    </xs:documentation>
+		  </xs:annotation>
 		  <rng:ref name="{@ident}.content" />
 		  <rng:ref name="{@ident}.attributes" />
 		</rng:element>
@@ -1201,6 +1207,11 @@ in change mode and there is no attList -->
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
+    <xs:annotation>
+      <xs:documentation>
+	<xsl:value-of select="tei:desc"/>
+      </xs:documentation>
+    </xs:annotation>
     <rng:ref
 	name="{ancestor::tei:attList/../@ident}.attributes.{$I}.content" />
   </rng:attribute>
@@ -1361,6 +1372,11 @@ in change mode and there is no attList -->
 	<xsl:value-of select="normalize-space(tei:defaultVal)"/>
       </xsl:attribute>
     </xsl:if>
+    <xs:annotation>
+      <xs:documentation>
+	<xsl:value-of select="tei:desc"/>
+      </xs:documentation>
+    </xs:annotation>
     <xsl:call-template name="attributeDatatype"/>
   </rng:attribute>
 </xsl:template>
