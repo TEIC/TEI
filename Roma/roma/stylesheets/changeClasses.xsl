@@ -15,6 +15,7 @@ Description
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:param name="module"/>
 <xsl:param name="class"/>
+<xsl:param name="host"/>
 
   <xsl:template match="/">
     <p class="roma">
@@ -36,7 +37,7 @@ Description
   <xsl:template name="generateList">
     <xsl:for-each select="//attClassList/attClass">
       <tr>
-	<td><xsl:value-of select="className"/></td>
+	<td><a><xsl:attribute name="href">http://<xsl:value-of select="$host"/>:8080/exist/tei/class.xq?name=<xsl:value-of select="className"/></xsl:attribute><xsl:value-of select="className"/></a></td>
 	<td width="580"><xsl:value-of select="classDesc"/></td>
 	<td>
 	  <a><xsl:attribute name="href">?class=<xsl:value-of

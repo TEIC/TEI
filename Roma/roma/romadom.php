@@ -281,7 +281,10 @@ class romaDom extends domDocument
                   $szContents = 'text';
                   break;
                 default:
-                  $szContents = $oRNG->getAttribute( 'name' );
+		  if ( is_object( $oRNG ) )
+		    {
+		      $szContents = $oRNG->getAttribute( 'name' );
+		    }
                   break;
               }
           }

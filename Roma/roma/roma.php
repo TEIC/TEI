@@ -467,18 +467,27 @@ class roma
 		$oNotam->setMessage( 'New element ' . $_REQUEST[ 'name' ] . ' successfully created' );
 		$oNotam->setStatus( notam_status_success );
 		$oNotam->addNotam();
+
+		$this->redirectBrowserHeader( 'mode=' . roma_mode_listAddedElements );
 	      }
 	      catch( falseTagnameException $e )
 		{
 		  $e->addError( 'addElement', 'name' );
+
+		  $_SESSION[ 'addElements' ][ 'ERROR' ][ 'classes' ] = $aszClasses;
+		  $_SESSION[ 'addElements' ][ 'ERROR' ][ 'content' ] = $_REQUEST[ 'content' ];
+		  $_SESSION[ 'addElements' ][ 'ERROR' ][ 'description' ] = $_REQUEST[ 'description' ];
+
 		  //notam
 		  $oNotam = new notam();
 		  $oNotam->setHeadline( 'Create new element' );
 		  $oNotam->setMessage( roma_message_elementNameError );
 		  $oNotam->setStatus( notam_status_error );
 		  $oNotam->addNotam();
+
+		  $this->redirectBrowserHeader( 'mode=' . roma_mode_addElements );
 		}
-	      $this->redirectBrowserHeader( 'mode=' . roma_mode_listAddedElements );
+
               break;
             case roma_mode_moduleChanged:
 	      $this->moduleChanged();
@@ -516,7 +525,7 @@ class roma
 	//check for notams
 	notamHandler::outputHTML( $szHTML );
 	notamHandler::deleteNotams();
-	$oParser->addReplacement( 'notams', nl2br( $szHTML ) );
+	$oParser->addReplacement( 'notams', $szHTML );
 	$oParser->addReplacement( 'help', $_SESSION[ 'help' ] );
       }
 
@@ -698,12 +707,20 @@ class roma
             $this->m_oRomaDom->getAddedElementsDescription( $_REQUEST[ 'element' ], $szDesc );
             //get Elements description
             $this->m_oRomaDom->getAddedElementsContents( $_REQUEST[ 'element' ], $szContents );
-
-            $aszParam[ 'elementName' ] = $_REQUEST[ 'element' ];
-            $aszParam[ 'elementDesc' ] = $szDesc;
-            $aszParam[ 'elementClasses' ] = join( ';', $aszClasses );
-            $aszParam[ 'elementContents' ] = $szContents;
           }
+	
+	if( is_array( $_SESSION[ 'addElements' ][ 'ERROR' ] ) )
+	  {
+	    $aszClasses = $_SESSION[ 'addElements' ][ 'ERROR' ][ 'classes' ];
+	    $szDesc = $_SESSION[ 'addElements' ][ 'ERROR' ][ 'description' ];
+	    $szContents = $_SESSION[ 'addElements' ][ 'ERROR' ][ 'content' ];
+	    unset( $_SESSION[ 'addElements' ] );
+	  }
+
+	$aszParam[ 'elementName' ] = $_REQUEST[ 'element' ];
+	$aszParam[ 'elementDesc' ] = $szDesc;
+	$aszParam[ 'elementClasses' ] = join( ';', $aszClasses );
+	$aszParam[ 'elementContents' ] = $szContents;
 
 	$this->applyStylesheet( $oListDom, 'addElements.xsl', $oNewDom, $aszParam  );
 
@@ -726,7 +743,7 @@ class roma
 	$this->getParser( $oParser );
 	
 	$oSchemaParser = new parser();
-
+	$oSchemaParser->addReplacement( 'output', $_REQUEST[ 'output' ] );
 	$oSchemaParser->Parse( $szSchemTem, $szSchema );
 	
 	$oParser->addReplacement( 'mode', 'createSchema' );
@@ -995,7 +1012,7 @@ class roma
 	$oListDom = new domDocument();
 	$oListDom->loadXML( join ( '', file( 'http://' . roma_exist_server . ':8080/exist/tei/attclasses.xq' ) ) );
 
-	$this->applyStylesheet( $oListDom, 'changeClasses.xsl', $oNewDom, array( 'class' => $_REQUEST[ 'class' ], 'module' => $_REQUEST[ 'module' ] ) );
+	$this->applyStylesheet( $oListDom, 'changeClasses.xsl', $oNewDom, array( 'host' => $_SERVER[ 'HTTP_HOST' ], 'class' => $_REQUEST[ 'class' ], 'module' => $_REQUEST[ 'module' ] ) );
 
 	$oParser->addReplacement( 'mode', 'changeClasses' );
 	$oParser->addReplacement( 'view', 'changeClasses' );
@@ -1014,7 +1031,9 @@ class roma
         $szDocTem = join( '', file(  roma_templateDir . '/createDocumentation.tem' ) );
 	$this->getParser( $oParser );
 
+
 	$oDocParser = new parser();
+	$oDocParser->addReplacement( 'format', $_REQUEST[ 'format' ] );
 	$oDocParser->Parse( $szDocTem, $szDoc );
 
 	$oParser->addReplacement( 'mode', 'createDocumentation' );
