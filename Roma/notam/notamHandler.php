@@ -13,7 +13,7 @@
 // --- CONSTANTS
 // ######################################################################
 
-define( 'notam_stylesheetDir', '/usr/local/php/includes/notam/stylesheets' );
+define( 'notam_stylesheetDir', 'notam/stylesheets' );
 define( 'notam_stylesheet_notam2html', 'notam2html.xsl' );
 
 

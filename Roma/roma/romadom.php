@@ -5,7 +5,7 @@
 //
 // ######################################################################
 
-define( 'romadom_templateDir', '/usr/local/php/includes/roma/templates' );
+define( 'romadom_templateDir', 'roma/templates' );
 
 /**
  * This class is responsible for Romas customization file. 
