@@ -1421,7 +1421,7 @@ select="$ident"/>] to  class [<xsl:value-of select="@ident"/>]</xsl:message>
     <xsl:value-of select="@key"/>
   </xsl:variable>
   <xsl:variable name="atts">
-    <xsl:value-of select="normalize-space(@atts)"/>
+    <xsl:value-of select="concat(' ',normalize-space(@atts),' ')"/>
   </xsl:variable>
   <xsl:choose>
     <xsl:when test="$name=''">
