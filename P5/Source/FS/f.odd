@@ -1,0 +1,61 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" xml:id="F" usage="rwa" ident="f">
+<equiv/>
+<gloss>Feature</gloss>
+<desc>represents a <term>feature value specification</term>, that
+  is, the association of a name with a value of any of several different types.</desc>
+  
+  
+  <content>
+      <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+          <ref name="tei.featureVal"/>
+      </zeroOrMore>
+  </content>
+<!-- need to express constraint that if there is no content then the
+fVal attribute must be non-null -->
+
+  <attList>
+    <attDef ident="name" usage="req">
+	<equiv/>
+	<desc>provides a name for the feature.</desc>
+      
+      
+      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="NMTOKEN"/></datatype>
+      <valDesc>A name token.</valDesc>
+      
+    </attDef>
+    <attDef ident="fVal" usage="opt">
+	<equiv/>
+	<desc>references any element which can be used to represent the
+  value of a feature.</desc>
+      
+      
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
+      <valDesc>the  identifier of an element representing
+a  feature value</valDesc>
+      
+      <remarks>
+        <p>If this attribute is supplied as well as content, the value referenced is to be unified with  that contained.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <f name="gender">
+        <symbol value="feminine"/>
+      </f>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>If the element is empty then a value must be supplied for the 
+<att>fVal</att> attribute.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#FSBI" type="div3"/>
+  </listRef>
+</elementSpec>

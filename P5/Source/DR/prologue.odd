@@ -1,0 +1,65 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="drama" xml:id="PROLOGUE" usage="mwa" ident="prologue">
+<equiv/>
+<gloss/>
+<desc>contains the prologue to a drama,  typically spoken by an actor out of
+character, possibly in association with a particular performance or venue.</desc>
+  
+  
+  <classes>
+    <memberOf key="tei.dramafront"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="tei.divtop"/>
+          <rng:ref name="tei.Incl"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+      <rng:oneOrMore>
+<?teidtd (?>
+        <rng:ref name="macro.component"/>
+<?teidtd )?>
+        <rng:zeroOrMore>
+          <rng:ref name="tei.Incl"/>
+        </rng:zeroOrMore>
+      </rng:oneOrMore>
+      <rng:zeroOrMore>
+<?teidtd (?>
+        <rng:ref name="tei.divbot"/>
+<?teidtd )?>
+        <rng:zeroOrMore>
+          <rng:ref name="tei.Incl"/>
+        </rng:zeroOrMore>
+      </rng:zeroOrMore>
+    </rng:group>
+  </content>
+  
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <prologue>
+        <sp>
+          <l>Wits, like physicians never can agree,</l>
+          <l>When of a different society.</l>
+
+          <l>New plays are stuffed with wits, and with deboches,</l>
+          <l>That crowd and sweat like cits in May-Day coaches.</l>
+        </sp>
+        <trailer>Written by a person of quality</trailer>
+      </prologue>
+    </egXML>
+<!-- A. Behn: The Rover (1697) -->
+  </exemplum>
+  <remarks>
+    <p/>
+  </remarks>
+  <listRef>
+    <ptr target="#DRPRO" type="div3"/>
+    <ptr target="#DRFAB" type="div3"/>
+  </listRef>
+</elementSpec>

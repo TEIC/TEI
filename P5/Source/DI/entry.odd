@@ -1,0 +1,39 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" xml:id="ENTRY" usage="mwa" ident="entry">
+<equiv/>
+<gloss/>
+<desc>contains a reasonably well-structured dictionary entry.</desc>
+    
+    
+    <classes>
+        <memberOf key="tei.entries"/>
+        <memberOf key="tei.comp.dictionaries"/>
+    </classes>
+    <content>
+        <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+            <rng:choice>
+                <rng:ref name="hom"/>
+                <rng:ref name="sense"/>
+                <rng:ref name="tei.dictionaryTopLevel"/>
+                <rng:ref name="tei.Incl"/>
+            </rng:choice>
+        </rng:oneOrMore>
+    </content>
+    
+    <remarks>
+        <p>Like all elements, <gi>entry</gi> inherits an <att>xml:id</att> attribute from the class
+            <term>global</term>. No restrictions are placed on the method used to construct
+            <att>xml:id</att>s; one convenient method is to use the orthographic form of the headword,
+            appending a disambiguating number where necessary. Identification codes are sometimes
+            included on machine-readable tapes of dictionaries for in-house use. </p>
+    </remarks>
+    <listRef>
+        <ptr target="#DIBO" type="div2"/>
+        <ptr target="#DIEN" type="div2"/>
+    </listRef>
+</elementSpec>

@@ -1,0 +1,57 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="LANGUAGE" usage="rec" ident="language">
+  <equiv/>
+  <gloss/>
+  <desc>characterizes a single language or sublanguage used within a
+  text.</desc>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+  </content>
+  <attList>
+
+    <attDef ident="ident" usage="req">
+      <equiv/>
+      <desc>Supplies a language code from <ref
+      target="http://www.ietf.org/rfc/rfc3066.txt">RFC 3066</ref> (or
+      its successor) used as the identifier by which this element is
+      referenced by the global <att>xml:lang</att> attribute.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Language"/></datatype>
+    </attDef>
+ 
+    <attDef ident="usage" usage="opt">
+      <equiv/>
+      <desc>specifies the approximate percentage (by volume) of the
+      text which uses this language.
+      </desc>
+      <datatype>
+	<rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="nonNegativeInteger">
+	  <rng:param name="maxInclusive">100</rng:param>
+	</rng:data>
+      </datatype>
+      <valDesc>a whole number between 0 and 100</valDesc>
+    </attDef>
+
+  </attList>
+  
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <langUsage xml:lang="en-US">
+        <language ident="en-US"     usage="75">modern American English</language>
+        <language ident="i-az-Arab" usage="20">Azerbaijani in Arabic script</language>
+	<language ident="x-lap"     usage="05">Pig Latin</language>
+      </langUsage>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">Particularly for sublanguages, an informal
+    prose characterization should be supplied as content for the
+    element.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#HD41"/>
+  </listRef>
+</elementSpec>

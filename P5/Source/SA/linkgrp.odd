@@ -1,0 +1,46 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" xml:id="LINKGRP" usage="opt" ident="linkGrp">
+<equiv/>
+<gloss/>
+<desc>defines a collection of associations or hypertextual links.</desc>
+  
+  
+  <classes>
+    <memberOf key="tei.pointerGroup"/>
+    <memberOf key="tei.metadata"/>
+  </classes>
+  <content>
+    <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:ref name="link"/>
+        <rng:ref name="ptr"/>
+      </rng:choice>
+    </rng:oneOrMore>
+  </content>
+  
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <linkGrp type="translation">
+        <link targets="#S1 #z1"/>
+        <link targets="#S2 #z2"/>
+
+        <link targets="#S99 #z99" type="paraphrase"/>
+      </linkGrp>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">May contain one or more <gi>link</gi> elements only,
+optionally with interspersed pointer elements.</p>
+    <p>A web or link group is an administrative convenience, which
+should be used to collect a set of links together for any
+purpose, not simply to supply a default value for the <att>type</att>
+attribute.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#SAPT"/>
+  </listRef>
+</elementSpec>
