@@ -302,22 +302,40 @@ pdfcreator={Oxford University Computing Services}
 </xsl:template>
 
 <xsl:template match="tei:ref">
- <xsl:text>\href{</xsl:text>
- <xsl:value-of select="unparsed-entity-uri(@target)"/>
- <xsl:text>}{</xsl:text>
+  <xsl:choose>
+    <xsl:when test="key('IDS',@target)">
+      <xsl:text>\href{</xsl:text>
+      <xsl:value-of select="unparsed-entity-uri(@target)"/>
+      <xsl:text>}{</xsl:text>
    <xsl:apply-templates/>
- <xsl:text>}</xsl:text>
+   <xsl:text>}</xsl:text>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:text>&#x00AB;</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>&#x00BB;</xsl:text>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template match="tei:ptr">
- <xsl:text>\href{</xsl:text>
- <xsl:value-of select="@target"/>
- <xsl:text>}{</xsl:text>
- <xsl:variable name="where">
-   <xsl:apply-templates mode="header" select="key('IDS',@target)"/>
- </xsl:variable>
-<xsl:value-of select="$where"/>   
- <xsl:text>}</xsl:text>
+  <xsl:choose>
+    <xsl:when test="key('IDS',@target)">
+      <xsl:text>\href{</xsl:text>
+      <xsl:value-of select="@target"/>
+      <xsl:text>}{</xsl:text>
+      <xsl:variable name="where">
+	<xsl:apply-templates mode="header" select="key('IDS',@target)"/>
+      </xsl:variable>
+      <xsl:value-of select="$where"/>   
+      <xsl:text>}</xsl:text>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:text>&#x00AB;</xsl:text>
+      <xsl:value-of select="@target"/>
+      <xsl:text>&#x00BB;</xsl:text>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template match="tei:xref">
