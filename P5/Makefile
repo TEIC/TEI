@@ -1,4 +1,4 @@
-TEISERVER=http://tei.oucs.ox.ac.uk/TEI/Roma/xquery/
+TEISERVER=http://www.tei-c.org.uk/Query/
 S=/usr/share/xml/tei/stylesheet
 
 
