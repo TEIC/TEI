@@ -157,6 +157,9 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 
 <xsl:template match="tei:item">
  <li>
+  <xsl:if test="@rend">
+    <xsl:attribute name="class"><xsl:value-of select="@rend"/></xsl:attribute>
+  </xsl:if>
  <a>
  <xsl:attribute name="name">
      <xsl:choose>
