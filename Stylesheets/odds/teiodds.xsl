@@ -428,7 +428,6 @@ created on <xsl:value-of select="edate:date-time()"/>.
     <xsl:with-param name="grammar"></xsl:with-param>
     <xsl:with-param name="content">
       <Wrapper>
-	<xsl:variable name="thisGi" select="@ident"/>
 	<xsl:if test="not(starts-with(@ident,'%'))">
 	  <xsl:text>
 	  </xsl:text>
@@ -1122,7 +1121,7 @@ select="$ident"/>] to  class [<xsl:value-of select="@ident"/>]</xsl:message>
   </xsl:variable>
   <xsl:choose>
     <xsl:when test="tei:content/rng:notAllowed">
-      <rng:define name="{$thisGi}"><rng:notAllowed/></rng:define>
+      <rng:define name="{@ident}"><rng:notAllowed/></rng:define>
     </xsl:when>
     <xsl:otherwise>
       <rng:define  name="{@ident}">
