@@ -36,6 +36,8 @@ class romaDom extends domDocument
         $oTemp = new domDocument();
 	$oTEI = $oTemp->createElementNS( 'http://www.tei-c.org/ns/1.0', 'TEI' );
 	$oTemp->appendChild( $oTEI );
+	$oTEI->setAttribute( 'lang', 'en' );
+	$oTEI->setAttribute( 'n', 'myTeiCustomization' );
 
 	$oTeiHeader = $oTEI->appendChild( new domElement( 'teiHeader' ) );
 

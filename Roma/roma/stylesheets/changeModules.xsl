@@ -29,14 +29,14 @@ Description
       ?mode=moduleChanged&amp;module=<xsl:value-of select="$module"/>
      </xsl:attribute>
      <table>
-      <tr><td class="headline" colspan="6">List of elements in module: <xsl:value-of select="$module"/></td></tr>
+      <tr><td class="headline" colspan="6"><xsl:value-of select="$res_form_headline"/> <xsl:value-of select="$module"/></td></tr>
       <tr class="header">
        <td></td>
-       <td>Include</td>
-       <td>Exclude</td>
-       <td>Tag Name</td>
-       <td width="400">Description</td>
-       <td width="">Attributes</td>
+       <td><xsl:value-of select="$res_form_include"/></td>
+       <td><xsl:value-of select="$res_form_exclude"/></td>
+       <td><xsl:value-of select="$res_form_tagName"/></td>
+       <td width="400"><xsl:value-of select="$res_form_description"/></td>
+       <td width=""><xsl:value-of select="$res_form_attributes"/></td>
       </tr>
       <xsl:call-template name="listElements"/>
       <tr><td class="button" colspan="6"><input type="submit"/></td></tr>
@@ -96,8 +96,8 @@ Description
 	  <a>
 	    <xsl:attribute name="href">?element=<xsl:value-of
 	    select="$currentElement"/>&amp;module=<xsl:value-of
-	    select="$module"/>&amp;mode=listAddedAttributes</xsl:attribute>change
-	    Attributes
+	    select="$module"/>&amp;mode=listAddedAttributes</xsl:attribute>
+	    <xsl:value-of select="$res_form_changeAttributes"/>
 	  </a>
 	</td>
       </tr>

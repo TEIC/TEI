@@ -93,6 +93,8 @@ require_once( 'notam/notamHandler.php' );
 //Exceptions
 require_once( 'roma/exception.php' );
 
+//Ressources
+require_once( 'ressource/ressource.php' );
 
 // ######################################################################
 // --- CONSTANTS
@@ -138,6 +140,7 @@ define( 'roma_stylesheetDir', 'roma/stylesheets' );
 // Note, that your webserver needs to have writing access to that directory
 define( 'roma_temporaryFilesDir', '/tmp' );
 
+define( 'roma_ressource_path', 'roma/res' );
 
 //#########################
 // different_stylesheets
@@ -227,7 +230,9 @@ class roma
     /**
      * This member variable holds the current Customization
      */     
-    var $m_oRomaDom;
+    private $m_oRomaDom;
+    
+    private $m_szLanguage;
 
     /**
      * The Constructor adds the mandatory modules
@@ -256,6 +261,9 @@ class roma
 		$this->m_oRomaDom = new romaDom( $_SESSION[ 'romaDom' ] ); 
               break;
           }
+
+	//set Language
+	$this->m_oRomaDom->getCustomizationLanguage( $this->m_szLanguage );
       }
 
     // #####################################################################
@@ -288,9 +296,6 @@ class roma
 	    case roma_mode_processCustomizeCustomization:
 	      $this->customizedCustomization();
 	      $this->redirectBrowserHeader( 'mode=' . roma_mode_customizeCustomization );
-	      break;
- 	    case roma_mode_customizeCustomization:
-	      $this->processCustomizeCustomization( $szOutput );
 	      break;
  	    case roma_mode_downloadFile:
 	      $this->downloadFile( $szOutput );
@@ -507,9 +512,12 @@ class roma
 	      $this->redirectBrowserHeader( 'mode=' . roma_mode_main );
 	      break;
             case roma_mode_main:
-            default;
               $this->processMain( $szOutput );
-              break;
+	      break;
+  	    case roma_mode_customizeCustomization:
+	    default;
+	      $this->processCustomizeCustomization( $szOutput );
+	      break;
           }
 
 	// The current customization is saved inside the session
@@ -532,8 +540,8 @@ class roma
 	notamHandler::deleteNotams();
 	$oParser->addReplacement( 'notams', $szHTML );
 	$oParser->addReplacement( 'help', $_SESSION[ 'help' ] );
-	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
-	$oParser->addReplacement( 'lang', $szLanguage );
+
+	$oParser->addReplacement( 'lang', $this->m_szLanguage );
       }
 
     private function addErrorsDom( &$oDom, $aoErrors )
@@ -614,7 +622,7 @@ class roma
 
 	$this->createChangeInListDom( $oListDom, array ( $oModules, $oChanged ) );
 
-	$this->applyStylesheet( $oListDom, 'modules.xsl', $oNewDom );
+	$this->applyStylesheet( $oListDom, 'modules.xsl', $oNewDom, array(), 'modules' );
 
 	$oParser->addReplacement( 'mode', 'modules' );
 	$oParser->addReplacement( 'view', 'main' );
@@ -645,7 +653,7 @@ class roma
 	$this->createChangeInListDom( $oListDom, array ( $oChanged, $oExcludedElements ) );
 
 	$aszParam =  array( 'module' => $_REQUEST[ 'module' ] ) ;
-	$this->applyStylesheet( $oListDom, 'changeModules.xsl', $oNewDom, $aszParam);
+	$this->applyStylesheet( $oListDom, 'changeModules.xsl', $oNewDom, $aszParam , 'changeModule');
 
 	$oParser->addReplacement( 'mode', 'changeModule' );
 	$oParser->addReplacement( 'view', 'main' );
@@ -730,7 +738,7 @@ class roma
 	  $aszParam[ 'elementClasses' ] = join( ';', $aszClasses );
 	$aszParam[ 'elementContents' ] = $szContents;
 
-	$this->applyStylesheet( $oListDom, 'addElements.xsl', $oNewDom, $aszParam  );
+	$this->applyStylesheet( $oListDom, 'addElements.xsl', $oNewDom, $aszParam, 'addElements'  );
 
 	$oParser->addReplacement( 'mode', 'addElements' );
 	$oParser->addReplacement( 'view', 'listElements' );
@@ -872,8 +880,9 @@ class roma
 	$aszParam[ 'elementChangedName' ] = $szChangedName;
 	$aszParam[ 'module' ] = $_REQUEST[ 'module' ];
 
-	$this->applyStylesheet( $oListDom, 'addElements.xsl', $oNewDom, $aszParam  );
+	$this->applyStylesheet( $oListDom, 'addElements.xsl', $oNewDom, $aszParam, 'changeElement'  );
 
+	$oParser->addReplacement( 'mode', 'changeElement' );
 	$oParser->addReplacement( 'view', 'main' );
 	$oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
         $oParser->Parse( $szTemplate, $szOutput );
@@ -932,7 +941,7 @@ class roma
 	$this->addErrorsDom( $oListDom, $aoErrors );
 
 
-	$this->applyStylesheet( $oListDom, 'addAttribute.xsl', $oNewDom, $aszParam );
+	$this->applyStylesheet( $oListDom, 'addAttribute.xsl', $oNewDom, $aszParam, 'addAttributes' );
 
 	if ( $_REQUEST[ 'class' ] != '' )
 	  {
@@ -967,7 +976,7 @@ class roma
 	    $szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
 	    $this->getParser( $oParser );
 	    
-	    $this->applyStylesheet( $oElementsDom, 'listAddedElements.xsl', $oNewDom, $aszParam );
+	    $this->applyStylesheet( $oElementsDom, 'listAddedElements.xsl', $oNewDom, array(), 'listElements' );
 
 	    $oParser->addReplacement( 'mode', 'listElements' );
 	    $oParser->addReplacement( 'view', 'listElements' );
@@ -1010,7 +1019,7 @@ class roma
 		$_SESSION[ 'addAttribute_ERROR' ] = ''; 
 	      }
 
-	    $this->applyStylesheet( $oAtts, 'listAddedAttributes.xsl', $oNewDom, $aszParam );
+	    $this->applyStylesheet( $oAtts, 'listAddedAttributes.xsl', $oNewDom, $aszParam, 'listAttributes' );
 
 
 	    if ( $_REQUEST[ 'class' ] != '' )
@@ -1048,7 +1057,7 @@ class roma
 	$oListDom = new domDocument();
 	$oListDom->loadXML( join ( '', file( 'http://' . roma_exist_server . ':8080/exist/tei/attclasses.xq' ) ) );
 
-	$this->applyStylesheet( $oListDom, 'changeClasses.xsl', $oNewDom, array( 'host' => $_SERVER[ 'HTTP_HOST' ], 'class' => $_REQUEST[ 'class' ], 'module' => $_REQUEST[ 'module' ] ) );
+	$this->applyStylesheet( $oListDom, 'changeClasses.xsl', $oNewDom, array( 'host' => $_SERVER[ 'HTTP_HOST' ], 'class' => $_REQUEST[ 'class' ], 'module' => $_REQUEST[ 'module' ] ), 'changeClasses' );
 
 	$oParser->addReplacement( 'mode', 'changeClasses' );
 	$oParser->addReplacement( 'view', 'changeClasses' );
@@ -1293,7 +1302,7 @@ class roma
      * creates an XSLT-Processor. Then the XSLT-Processor is fed with the paramters specified
      * and finally the stylesheet is parsed, returning the output to the third parameter.
      */
-    private function applyStylesheet( $oDom, $szStylesheet, &$oNewDom, $aszParams = array() )
+    private function applyStylesheet( $oDom, $szStylesheet, &$oNewDom, $aszParams = array(), $szRessource = '' )
       {
         $oXSL = new domDocument();
  	$oXSL->loadXML( join( '', file(  roma_stylesheetDir . '/' . $szStylesheet ) ) );
@@ -1301,6 +1310,14 @@ class roma
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
 	
+	if ( $szRessource != '' )
+	  {
+	    //reading ressource File
+	    $oRessource = new ressource( roma_ressource_path . '/' . $szRessource );
+	    $oRessource->getStringArray( $this->m_szLanguage, $aszRessources );
+	    $aszParams = array_merge( $aszParams, $aszRessources );
+	  }
+
         if ( is_array( $aszParams ) )
           {
   	    foreach( $aszParams as $key => $value )

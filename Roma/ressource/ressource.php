@@ -61,4 +61,19 @@ class ressource
 	if ( $szReturn == '' )
  	  $szReturn = $this->m_aszRessource[ 'en' ][ $szString ];
       }
+
+    public function getStringArray( $szLang, &$aszArray )
+      {
+	$aszArray = array();
+
+	$aszTempArray = $this->m_aszRessource[ $szLang ];
+		 
+	if ( is_array( $aszTempArray ) )
+	  {
+	    foreach( $aszTempArray as $key => $value )
+	      {
+		$aszArray[ 'res_' . $key ] = $value;
+	      }
+	  }
+      }
   }

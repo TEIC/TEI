@@ -54,14 +54,14 @@ Description
 	     select="$added"/></xsl:if></xsl:attribute>
 	   </input>
 	   <table>
-	     <tr><td class="headline" colspan="4">Add a new attribute</td></tr>
+	     <tr><td class="headline" colspan="4"><xsl:value-of select="$res_form_headline"/></td></tr>
 	     <xsl:if test="$type='change'">
 	       <tr>
 		 <td class="formlabel">
 		   <input type="hidden" name="name">
 		     <xsl:attribute name="value"><xsl:value-of
 		     select="//currentAttribute/attDef/attName"/></xsl:attribute>
-		 </input>Attribute name</td>
+		 </input><xsl:value-of select="$res_form_name"/></td>
 		 <td class="formfield"><xsl:value-of select="//currentAttribute/attDef/attName"/></td>
 	       </tr>
 	     </xsl:if>
@@ -71,7 +71,7 @@ Description
 		  test="//errorList/error/location[text()='name']">
 		   <xsl:attribute name="class">error</xsl:attribute>
 		 </xsl:if>
-		 <td class="formlabel">Attribute name</td>
+		 <td class="formlabel"><xsl:value-of select="$res_form_headline"/></td>
 		 <td class="formfield">
 		   <input type="text" size="53" name="name">
 		     <xsl:if test="//errorList/error/location[text()='name']">
@@ -82,7 +82,7 @@ Description
 	       </tr>
 	     </xsl:if>
 	     <tr>
-	       <td class="formlabel">Is it optional?</td>
+	       <td class="formlabel"><xsl:value-of select="$res_form_optional"/></td>
 	       <td class="formfield">
 		 <input class="radio" type="radio" name="optional" value="true">
 		   <xsl:if
@@ -106,11 +106,11 @@ Description
 	       </td>
 	     </tr>
 	     <tr>
-	       <td class="formlabel">Contents</td>
+	       <td class="formlabel"><xsl:value-of select="$res_form_contents"/></td>
 	       <td class="formfield"><xsl:call-template name="contentTypes"/></td>
 	     </tr>
 	     <tr>
-	       <td class="formlabel">Default Value</td>
+	       <td class="formlabel"><xsl:value-of select="$res_form_defaultValue"/></td>
 	       <td class="formfield">
 		 <input type="text" name="defaultValue" size="53">
 		   <xsl:if test="//currentAttribute">
@@ -122,7 +122,7 @@ Description
 	       </td>
 	     </tr>
 	     <tr>
-	       <td class="formlabeltop">Description</td>
+	       <td class="formlabeltop"><xsl:value-of select="$res_form_description"/></td>
 	       <td class="formfield">
 		 <textarea name="description" rows="5"
 		 cols="45"><xsl:value-of select="//currentAttribute/attDef/desc"/></textarea>

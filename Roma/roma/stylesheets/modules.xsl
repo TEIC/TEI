@@ -21,12 +21,12 @@ Description
       <td>
        <form>
         <table>
-         <tr><td class="headline" colspan="4">List of Modules</td></tr>
+         <tr><td class="headline" colspan="4"><xsl:value-of select="$res_form_headline"/></td></tr>
          <tr class="header">
           <td></td>
-          <td>Module name</td>
-          <td>A short description</td>
-          <td>Changes</td>
+          <td><xsl:value-of select="$res_form_moduleName"/></td>
+          <td><xsl:value-of select="$res_form_description"/></td>
+          <td><xsl:value-of select="$res_form_changes"/></td>
          </tr>
          <xsl:call-template name="processListModules"/>
         </table>
@@ -36,7 +36,7 @@ Description
        <form>
        <table>
         <tr>
-         <td class="headline" colspan="2">List of selected Modules</td>
+         <td class="headline" colspan="2"><xsl:value-of select="$res_selectedModules_headline"/></td>
 	</tr>
 	<xsl:call-template name="processSelectedModules"/>
        </table>
@@ -55,7 +55,7 @@ Description
        <td>
 	 <a>
 	   <xsl:attribute name="href">?module=<xsl:value-of select="$thisModule"/>&amp;mode=removeModule</xsl:attribute>
-	   remove
+	   <xsl:value-of select="$res_form_remove"/>
 	 </a>
        </td>
        <td>
@@ -81,7 +81,7 @@ Description
        <td>
 	 <a>
 	   <xsl:attribute name="href">?module=<xsl:value-of select="moduleName"/>&amp;mode=addModule</xsl:attribute>
-	   add
+	   <xsl:value-of select="$res_form_add"/>
 	 </a>
        </td>
        <td>
@@ -92,7 +92,7 @@ Description
        </td>
        <td><xsl:value-of select="moduleDesc"/></td>
        <td>
-	 <xsl:if test="//changes/changedModules/module[text()=$currentModule]">changed</xsl:if>
+	 <xsl:if test="//changes/changedModules/module[text()=$currentModule]"><xsl:value-of select="$res_form_changed"/></xsl:if>
        </td>
      </tr>
    </xsl:for-each>

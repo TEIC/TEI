@@ -33,23 +33,23 @@ Description
 	  <xsl:attribute name="value"><xsl:value-of select="$class"/></xsl:attribute>
 	</input>
 	<table>
-	  <tr><td class="headline" colspan="6">List of attributes</td></tr>
+	  <tr><td class="headline" colspan="6"><xsl:value-of select="$res_form_headline"/></td></tr>
 	  <tr>
 	    <td colspan="6" class="spacer">
 	      <a>
 	      <xsl:attribute
 name="href">?mode=addAttribute&amp;module=<xsl:value-of
 		select="$module"/>&amp;class=<xsl:value-of select="$class"/>&amp;element=<xsl:value-of select="$element"/>&amp;added=true</xsl:attribute>
-	      Add new Attribute</a>
+	      <xsl:value-of select="$res_form_add"/></a>
 	    </td>
 	  </tr>
 	  <tr class="header">
-	    <td>Change Attribute</td>
-	    <td>Include</td>
-	    <td>Exclude</td>
-	    <td>Tag Name</td>
-	    <td width="400">Description</td>
-	    <td width="">Delete</td>
+	    <td><xsl:value-of select="$res_form_changeAttribute"/></td>
+	    <td><xsl:value-of select="$res_form_include"/></td>
+	    <td><xsl:value-of select="$res_form_exclude"/></td>
+	    <td><xsl:value-of select="$res_form_tagName"/></td>
+	    <td width="400"><xsl:value-of select="$res_form_description"/></td>
+	    <td width=""><xsl:value-of select="$res_form_delete"/></td>
 	  </tr>
 	  <xsl:call-template name="generateList"/>
 	  <tr><td class="button" colspan="6"><input type="submit"/></td></tr>
@@ -113,7 +113,7 @@ select="name"/>&amp;class=<xsl:value-of select="$class"/>&amp;element=<xsl:value
 	       select="$element"/>&amp;module=<xsl:value-of
 	      select="$module"/>&amp;class=<xsl:value-of
 select="$class"/>&amp;attribute=<xsl:value-of select="name"/></xsl:attribute>
-	      delete
+	      <xsl:value-of select="$res_form_delete"/>
 	    </a>
 	  </xsl:if>
 	</td>

@@ -19,17 +19,16 @@ Description
       <form method="POST">
 	<xsl:attribute name="action">?mode=changeListAddedElements</xsl:attribute>
 	<table>
-	  <tr><td class="headline" colspan="7">List of added
-	  elements</td></tr>
-	  <tr><td colspan="7" class="spacer"><a href="?mode=addElements">Add new Element</a></td></tr>
+	  <tr><td class="headline" colspan="7"><xsl:value-of select="$res_form_headline"/></td></tr>
+	  <tr><td colspan="7" class="spacer"><a href="?mode=addElements"><xsl:value-of select="$res_form_add"/></a></td></tr>
 	  <tr class="header">
-	    <td>Change Element</td>
-	    <td>Include</td>
-	    <td>Exclude</td>
-	    <td>Tag Name</td>
-	    <td width="400">Description</td>
-	    <td width="">Attributes</td>
-	    <td width="">Delete</td>
+	    <td><xsl:value-of select="$res_form_changeElement"/></td>
+	    <td><xsl:value-of select="$res_form_include"/></td>
+	    <td><xsl:value-of select="$res_form_exclude"/></td>
+	    <td><xsl:value-of select="$res_form_tagName"/></td>
+	    <td width="400"><xsl:value-of select="$res_form_description"/></td>
+	    <td width=""><xsl:value-of select="$res_form_attributes"/></td>
+	    <td width=""><xsl:value-of select="$res_form_delete"/></td>
 	  </tr>
 	  <xsl:call-template name="generateList"/>
 	  <tr><td class="button" colspan="7"><input type="submit"/></td></tr>
@@ -72,7 +71,7 @@ Description
 	  <a>
 	    <xsl:attribute
 	     name="href">?mode=listAddedAttributes&amp;element=<xsl:value-of select="elementName"/>&amp;added=true</xsl:attribute>
-	    change Attributes
+	    <xsl:value-of select="$res_form_changeAttributes"/>
 	  </a>
 	</td>
 	<td>
@@ -80,7 +79,7 @@ Description
 	      <xsl:attribute
 	       name="href">?mode=deleteAddedElement&amp;element=<xsl:value-of
 	       select="elementName"/></xsl:attribute>
-	      delete
+	      <xsl:value-of select="$res_form_delete"/>
 	    </a>
 	</td>
       </tr>

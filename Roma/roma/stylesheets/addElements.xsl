@@ -21,7 +21,6 @@ Description
 <xsl:param name="MESSAGE"/>
 <xsl:param name="host"/>
 <xsl:param name="selectedMode">addElement</xsl:param>
-<xsl:param name="headline">Add new elements</xsl:param>
 <xsl:param name="elementChangedName"/>
 <xsl:param name="module"/>
 <xsl:param name="changeNameERROR"/>
@@ -51,13 +50,13 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
      </xsl:if>
      <table>
       <tr>
-       <td class="headline" colspan="2">Defining a new element</td>
+       <td class="headline" colspan="2"><xsl:value-of select="$res_form_headline"/></td>
       </tr>
       <tr>
 	<xsl:if test="//errorList/error/location[text()='name']">
 	  <xsl:attribute name="class">error</xsl:attribute>
 	</xsl:if>
-       <td class="formlabel">Name</td>
+       <td class="formlabel"><xsl:value-of select="$res_form_name"/></td>
        <td class="formfield">
 	 <xsl:if test="not($selectedMode='changeElement')">
 	   <xsl:if test="not($elementName='')">
@@ -113,7 +112,7 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
        </tr>
       </xsl:if>
       <tr>
-        <td class="formlabeltop">Model Classes</td>
+        <td class="formlabeltop"><xsl:value-of select="$res_form_modelClasses"/></td>
         <td>
          <table class="noBorder">
           <tr>
@@ -123,7 +122,7 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
         </td>
       </tr>
       <tr>
-        <td class="formlabeltop">Attribute Classes</td>
+        <td class="formlabeltop"><xsl:value-of select="$res_form_attributeClasses"/></td>
         <td>
          <table class="noBorder">
           <tr>
@@ -136,13 +135,13 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
 	<xsl:if test="//errorList/error/location[node()='contents']">
 	  <xsl:attribute name="class">error</xsl:attribute>
 	</xsl:if>
-        <td class="formlabeltop">Contents</td>
+        <td class="formlabeltop"><xsl:value-of select="$res_form_contents"/></td>
         <td>
          <xsl:call-template name="contentTypes"/>
         </td>
       </tr>
       <tr>
-        <td class="formlabeltop">Description</td>
+        <td class="formlabeltop"><xsl:value-of select="$res_form_description"/></td>
         <td>
            <textarea rows="5" cols="40" name="description">
             <xsl:if test="not($elementDesc='')"><xsl:value-of select="$elementDesc"/></xsl:if>
