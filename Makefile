@@ -1,6 +1,7 @@
 TEISERVER=http://www.tei-c.org.uk/Query/
-S=/usr/share/xml/tei/stylesheet
-
+PREFIX=/usr/local/tei
+XSL=http://www.tei-c.org/stylesheet
+# for local use, try /usr/share/xml/tei/stylesheet
 
 .PHONY: convert dtds schemas html validate valid test split oddschema exampleschema fascicule exist clean dist
 
@@ -12,7 +13,7 @@ dtds:
 	-mkdir DTD
 	-rm DTD/*
 	# generate the DTDs
-	xmllint --noent   Source-driver.xml | xsltproc ${S}/base/p5/odds/odd2dtd.xsl -
+	xmllint --noent   Source-driver.xml | xsltproc ${XSL}/base/p5/odds/odd2dtd.xsl -
 	for i in DTD/* ; do perl -i Tools/cleandtd.pl $$i; done	
 	# I cannot be bothered to see why these don't work,
 	# just hack them by hand.
@@ -26,7 +27,7 @@ schemas:
 	-mkdir Schema
 	-rm Schema/*
 	# generate the relaxNG schemas
-	xmllint --noent   Source-driver.xml | xsltproc -stringparam verbose true ${S}/base/p5/odds/odd2relax.xsl -
+	xmllint --noent   Source-driver.xml | xsltproc -stringparam verbose true ${XSL}/base/p5/odds/odd2relax.xsl -
 	# do the indentation better 
 	for i in Schema/* ; \
 	do echo clean $$i; \
@@ -67,10 +68,10 @@ xml:
 	xmllint --noent   Source-driver.xml | perl Tools/cleanrnc.pl | \
 	xsltproc  -o Guidelines.xml \
 	--stringparam displayMode rnc  \
-	${S}/base/p5/odds/teixml-odds.xsl -
+	${XSL}/base/p5/odds/teixml-odds.xsl -
 
 pdf: xml
-	xsltproc ${S}/teic/teilatex-teic-P5.xsl Guidelines.xml \
+	xsltproc ${XSL}/teic/teilatex-teic-P5.xsl Guidelines.xml \
 	> Guidelines.tex
 	TEXINPUTS=/TEI/Talks/texconfig: pdflatex Guidelines
 	TEXINPUTS=/TEI/Talks/texconfig: pdflatex Guidelines
@@ -138,16 +139,16 @@ fascicule:
 	--stringparam verbose true \
 	--stringparam displayMode rnc \
 	--stringparam outputDir . \
-	${S}/base/p5/odds/odd2html.xsl - 
+	${XSL}/base/p5/odds/odd2html.xsl - 
 	(cd FASC-$(CHAP)-Guidelines; for i in *.html; do perl -i ../Tools/cleanrnc.pl $$i;done)
 	-jing p5odds.rng FASC-$(CHAP).xml 
 	xsltproc -o FASC-$(CHAP)-lite.xml  \
 	--stringparam TEISERVER $(TEISERVER) \
 	--stringparam displayMode rnc \
-	${S}/base/p5/odds/teixml-odds.xsl FASC-$(CHAP).xml 
+	${XSL}/base/p5/odds/teixml-odds.xsl FASC-$(CHAP).xml 
 	perl Tools/cleanrnc.pl FASC-$(CHAP)-lite.xml | \
 	xsltproc  \
-	 ${S}/teic/teilatex-teic-P5.xsl - > FASC-$(CHAP).tex
+	 ${XSL}/teic/teilatex-teic-P5.xsl - > FASC-$(CHAP).tex
 	TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-$(CHAP) 
 	TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-$(CHAP) 
 
@@ -201,3 +202,12 @@ dist:
 	(cd release; zip -r tei-p5-doc-`cat ../VERSION`.zip tei-p5-doc-`cat ../VERSION`)
 	(cd release; zip -r tei-p5-schema-`cat ../VERSION`.zip tei-p5-schema-`cat ../VERSION`)
 	(cd release; zip -r tei-p5-test-`cat ../VERSION`.zip tei-p5-test-`cat ../VERSION`)
+
+install: schemas dtds html
+	echo Making release in ${PREFIX}
+	mkdir -p ${PREFIX}/schema/relaxng/p5
+	cp -p Schema/* ${PREFIX}/schema/relaxng/p5
+	mkdir -p ${PREFIX}/schema/dtd/p5
+	cp -p DTD/* ${PREFIX}/schema/dtd/p5
+	mkdir -p ${PREFIX}/P5
+	cp -p Guidelines/* ${PREFIX}/P5
