@@ -154,16 +154,18 @@
 </xsl:template>
 
 <xsl:template match="tei:*|rng:*" mode="change">
-  <xsl:copy>
-    <xsl:apply-templates select="@*|*|text()|comment()" mode="change"/>
-  </xsl:copy>
+  <xsl:if test="not(@mode='delete')">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|*|text()|comment()" mode="change"/>
+    </xsl:copy>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template match="@*|comment()|text()" mode="change">
   <xsl:copy/>
 </xsl:template>
 
-<xsl:template match="tei:elementSpec|tei:classSpec|tei:patternSpec"
+<xsl:template match="tei:elementSpec|tei:classSpec|tei:patternSpec|tei:attDef"
 	      mode="change">
   <xsl:variable name="me" select="@ident"/>
   <xsl:copy>
