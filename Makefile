@@ -79,11 +79,6 @@ valid: jing_version=$(wordlist 1,3,$(shell jing))
 valid: 
 	@echo --------- jing
 	@echo ${jing_version}
-	-jing -t p5odds.rng Source-driver.xml 
-	@echo --------- xx/rnv
-	-xmllint --noent  Source-driver.xml > Source.xml
-	-rnv -v p5odds.rnc Source.xml && rm Source.xml
-	@echo --------- nrl
 #	We have discovered that jing reports 3-letter language codes
 #	from ISO 639-2 as illegal values of xml:lang= even though
 #	they are perfectly valid per RFC 3066. We have submitted a
@@ -91,6 +86,12 @@ valid:
 #	with grep -v. Note that we discard *all* such messages, even
 #	though fewer than 500 of the 17,576 possible combinations
 #	(i.e. < 3%) are valid codes.
+	-jing -t p5odds.rng Source-driver.xml \
+	 | grep -v ": error: Illegal xml:lang value \"[A-Za-z][A-Za-z][A-Za-z]\"\.$$"
+	@echo --------- xx/rnv
+	-xmllint --noent  Source-driver.xml > Source.xml
+	-rnv -v p5odds.rnc Source.xml && rm Source.xml
+	@echo --------- nrl
 #	In addition to erroneously reporting xml:lang= 3-letter
 #	values, jing seems to report an "unfinished element" every
 #	time a required child element from another namespace occurs
