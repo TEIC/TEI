@@ -396,10 +396,10 @@ processed using: <xsl:value-of select="system-property('xsl:vendor')"/>
       <xsl:call-template name="aCrumb">
 	<xsl:with-param name="crumbBody">
 	  <xsl:choose>
-	    <xsl:when test="$rest='index.xsp'">
+	    <xsl:when test="$rest='index.xsp' and $ID=''">
 	      <xsl:value-of select="$current"/>
 	    </xsl:when>
-	    <xsl:when test="$rest='index.xml'">
+	    <xsl:when test="$rest='index.xml' and $ID=''">
 	      <xsl:value-of select="$current"/>
 	    </xsl:when>
 	    <xsl:otherwise>
