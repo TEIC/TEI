@@ -549,7 +549,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
  </xsl:choose>
 </xsl:template>
 
-<xsl:template match="teix:xmleg">
+<xsl:template match="teix:egXML">
 <pre>
   <xsl:apply-templates/>
 </pre>
