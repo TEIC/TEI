@@ -1,7 +1,60 @@
 #!/bin/sh
-R=/usr/share/xml/tei
-T=$R/stylesheet
-S=$R/schema/relaxng/p5/
+makeRelax()
+{
+echo Process $ODD to create $N.\{rng,rnc,dtd\} in $Results
+echo 1. make Relax NG from ODD
+xsltproc --stringparam TEISERVER $TEISERVER  --stringparam verbose true --stringparam RNGDIR $RESULTS --stringparam schemaBaseURL $S/ $TEIDIR/base/p5/odds/odd2relax.xsl $ODD
+cd $RESULTS
+xmllint --format $N.rng > $$.xml; mv $$.xml $N.rng
+echo 2. make Relax NG compact from XML
+trang $N.rng $N.rnc  || die " trang fails"
+echo 3. expand includes in Relax NG
+xsltproc -o $N.compiled.rng $TEIDIR/base/p5/odds/expandincludes.xsl $N.rng 
+echo 4. convert expanded form to compact syntax
+trang $N.compiled.rng $N.compiled.rnc  || die " trang fails"
+}
+makeDTD()
+{
+    echo 6. simplify schema before attempting DTD conversion
+    xsltproc $TEIDIR/base/p5/odds/nomorechoice.xsl $N.compiled.rng | \
+    xsltproc $TEIDIR/base/p5/odds/simplifyfordtd.xsl - | \
+    xsltproc $TEIDIR/base/p5/odds/simplifyfordtd.xsl - | \
+    xsltproc -o $N.temp2.rng $TEIDIR/base/p5/odds/simplifyfordtd.xsl - 
+    echo 7. convert simplified form to DTD
+    trang $N.temp2.rng $N.dtd || die " trang fails"
+    $debug || rm $N.temp2.rng 
+    perl -p -i -e 's/ns1://;s/xmlns:ns1/xmlns/' $N.dtd
+
+}
+makeDOC() 
+{
+    echo 8. make expanded documented ODD
+    xsltproc --stringparam TEISERVER $TEISERVER $TEIDIR/base/p5/odds/subsetGuidelines.xsl $H/$ODD | xmllint --format - > $N.doc.xml 
+}
+
+makeXSD()
+{
+    echo 5. simplify expanded form, convert to XSD and then mangle XSD
+    xsltproc -o $N.temp1.rng $TEIDIR/base/p5/odds/simplifyforxsd.xsl $N.compiled.rng 
+    trang  -o disable-abstract-elements $N.temp1.rng $N.xsd || die " trang fails"
+    cp $N.xsd $N.temp.xsd
+    xsltproc -o $N.xsd $TEIDIR/base/p5/odds/manglexsd.xsl $N.temp.xsd
+    $debug || rm $N.temp.xsd
+    $debug || rm $N.temp1.rng  
+    test -f xml.xsd && perl -p -i -e 's/<xs:import.*//' xml.xsd
+}
+die()
+{
+    echo; echo
+    echo "ERROR: $@."
+    echo "This was a fatal error."
+    exit 1
+}
+
+export R=/usr/share/xml/tei
+export TEISERVER=http://tei.oucs.ox.ac.uk:8080/exist/TEI/Roma/xquery/
+export TEIDIR=$R/stylesheet
+export S=$R/schema/relaxng/p5/
 debug=false
 dtd=true
 relax=true
@@ -9,13 +62,15 @@ xsd=true
 doc=false
 while test $# -gt 0; do
   case $1 in
-    --xsl=*)    T=`echo $1 | sed 's/.*=//'`;;
+    --xsl=*)    export TEIDIR=`echo $1 | sed 's/.*=//'`;;
     --doc)      doc=true;;
+    --teiserver=*) export TEISERVER=`echo $1 | sed 's/.*=//'`;;
     --nodtd)    dtd=false;;
     --norelax)  relax=false;;
     --noxsd)    xsd=false;;
     --debug)    debug=true;;
-    --schema=*) SS=`echo $1 | sed 's/.*=//'`;;
+    --schema=*) tempS=`echo $1 | sed 's/.*=//'`;export S=`cd $tempS && /bin/pwd` || die "cannot change directory to $tempS"
+;;
      *) break;;
   esac
   shift
@@ -33,58 +88,6 @@ else
     export RESULTS=$2
 fi
 H=`pwd`
-S=`cd $SS && /bin/pwd` || die "cannot change directory to $SS"
-
-makeRelax()
-{
-echo Process $ODD to create $N.\{rng,rnc,dtd\} in $Results
-echo 1. make Relax NG from ODD
-xsltproc  --stringparam verbose true --stringparam RNGDIR $RESULTS --stringparam schemaBaseURL $S/ $T/base/p5/odds/odd2relax.xsl $ODD
-cd $RESULTS
-xmllint --format $N.rng > $$.xml; mv $$.xml $N.rng
-echo 2. make Relax NG compact from XML
-trang $N.rng $N.rnc  || die " trang fails"
-echo 3. expand includes in Relax NG
-xsltproc -o $N.compiled.rng $T/base/p5/odds/expandincludes.xsl $N.rng 
-echo 4. convert expanded form to compact syntax
-trang $N.compiled.rng $N.compiled.rnc  || die " trang fails"
-}
-makeDTD()
-{
-    echo 6. simplify schema before attempting DTD conversion
-    xsltproc $T/base/p5/odds/nomorechoice.xsl $N.compiled.rng | \
-    xsltproc $T/base/p5/odds/simplifyfordtd.xsl - | \
-    xsltproc $T/base/p5/odds/simplifyfordtd.xsl - | \
-    xsltproc -o $N.temp2.rng $T/base/p5/odds/simplifyfordtd.xsl - 
-    echo 7. convert simplified form to DTD
-    trang $N.temp2.rng $N.dtd || die " trang fails"
-    $debug || rm $N.temp2.rng 
-    perl -p -i -e 's/ns1://;s/xmlns:ns1/xmlns/' $N.dtd
-
-}
-makeDOC() 
-{
-    echo 8. make expanded documented ODD
-    xsltproc $T/base/p5/odds/subsetGuidelines.xsl $H/$ODD | xmllint --format - > $N.doc.xml 
-}
-makeXSD()
-{
-    echo 5. simplify expanded form, convert to XSD and then mangle XSD
-    xsltproc -o $N.temp1.rng $T/base/p5/odds/simplifyforxsd.xsl $N.compiled.rng 
-    trang  -o disable-abstract-elements $N.temp1.rng $N.xsd || die " trang fails"
-    cp $N.xsd $N.temp.xsd
-    xsltproc -o $N.xsd $T/base/p5/odds/manglexsd.xsl $N.temp.xsd
-    $debug || rm $N.temp.xsd
-    $debug || rm $N.temp1.rng  
-    test -f xml.xsd && perl -p -i -e 's/<xs:import.*//' xml.xsd
-}
-die()
-{
-    echo; echo
-    echo "ERROR: $@."
-    echo "This was a fatal error."
-    exit 1
-}
 
 echo Roma starts
 echo ===============================
@@ -93,8 +96,11 @@ which xmllint || die "you do not have xmllint"
 which xsltproc || die "you do not have xsltproc"
 which trang || die "you do not have trang"
 which perl || die "you do not have perl"
+echo Schema dir: $S
+echo TEI tree: $TEIDIR
+echo Results to: $RESULTS
 test -d $S || die "schema dir $S does not exist"
-test -d $T || die "tei dir $S does not exist"
+test -d $TEIDIR || die "tei dir $S does not exist"
 mkdir -p $RESULTS || die "cannot make directory $RESULTS"
 
 echo ===============================
@@ -104,3 +110,4 @@ $dtd && makeDTD
 $doc && makeDOC
 echo ===============================
 echo Roma ends
+
