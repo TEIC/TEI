@@ -67,42 +67,29 @@
     </a>  
   </xsl:template> 
   
-  <xsl:template name="aCrumb">
-    <xsl:param name="crumbBody"/>
-    <xsl:value-of select="$spacer"/>
-    <xsl:copy-of select="$crumbBody"/>
-  </xsl:template>
-  
-  
   <xsl:template name="crumbPath">
-    <a target="_top" class="breadcrumb" href="{$homeURL}">
-      <xsl:value-of select="$homeLabel"/>
-    </a>
+    <ul class="breadcrumb">
+    <li>
+      <a target="_top" class="breadcrumb" href="{$homeURL}">
+	<xsl:value-of select="$homeLabel"/>
+      </a>
+    </li>
     <xsl:call-template name="walkTree">
       <xsl:with-param name="path">
 	<xsl:value-of select="substring-after($REQUEST,'/')"/> 
       </xsl:with-param>
       <xsl:with-param name="class">breadcrumb</xsl:with-param>
     </xsl:call-template>
+    </ul>
   </xsl:template>
-  
-<!-- making the breadcrumb trail into a list
-     <xsl:template name="crumbPath">
-     <ul>
-     <li><a target="_top" class="breadcrumb" href="{$homeURL}">
-     <xsl:value-of select="$homeLabel"/>
-     </a>
-     </li>
-     <xsl:call-template name="walkTree">
-     <xsl:with-param name="path">
-     <xsl:value-of select="substring-after($REQUEST,'/')"/> 
-     </xsl:with-param>
-     <xsl:with-param name="class">breadcrumb</xsl:with-param>
-     </xsl:call-template>
-     </ul>
-     </xsl:template>
--->
 
+  <xsl:template name="aCrumb">
+    <xsl:param name="crumbBody"/>
+    <li>
+      <xsl:copy-of select="$crumbBody"/>
+    </li>
+  </xsl:template>
+    
   <xsl:template name="doDivBody">
     <xsl:param name="Type"/>
     <xsl:call-template name="startDivHook"/>
@@ -827,13 +814,16 @@
       </xsl:when>
       <xsl:otherwise>
 	<xsl:if test="not($path='index.xsp' or $path='index.xml')">
-	  <xsl:value-of select="$spacer"/>
-	  <a class="{$class}" target="_top">
-	    <xsl:attribute name="href">
-	      <xsl:value-of select="$whole"/>/<xsl:value-of select="$path"/>
-	    </xsl:attribute>
-	    <xsl:value-of select="$path"/>
-	  </a>
+	  <xsl:call-template name="aCrumb">
+	    <xsl:with-param name="crumbBody">
+	      <a class="{$class}" target="_top">
+		<xsl:attribute name="href">
+		  <xsl:value-of select="$whole"/>/<xsl:value-of select="$path"/>
+		</xsl:attribute>
+		<xsl:value-of select="$path"/>
+	      </a>
+	    </xsl:with-param>
+	  </xsl:call-template>
 	</xsl:if>
       </xsl:otherwise>
     </xsl:choose>
