@@ -20,7 +20,7 @@ TESTFILES= \
 all: test-schema test-dtd
 
 schemas:
-	for i in $(TESTFILES); do ../Roma --schema=../Schema/ $$i.odd .; done
+	for i in $(TESTFILES); do ../Roma --doc --schema=../Schema/ $$i.odd .; done
 
 test-schema: test-rnv test-jing test-xmllint
 
