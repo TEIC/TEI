@@ -142,7 +142,7 @@ define( 'roma_temporaryFilesDir', '/tmp' );
 //#########################
 // different_stylesheets
 //
-define( 'roma_styleheet_docHtml', 'http://www.tei-c.org/Stylesheets/teihtml-teic-c-P5.xsl' );
+define( 'roma_styleheet_docHtml', 'http://www.tei-c.org/Stylesheets/teihtml-teic-P5.xsl' );
 define( 'roma_styleheet_docPDF', 'http://www.tei-c.org/Stylesheets/P5/fo/tei.xsl' );
 define( 'roma_styleheet_docLatex', 'http://www.tei-c.org/Stylesheets/P5/latex/teilatex.xsl' );
 
