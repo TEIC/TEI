@@ -407,34 +407,34 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 
     <xsl:choose>
       <xsl:when test="preceding-sibling::tei:TEI">
-	<xsl:apply-templates mode="generateNextLink"
+	<xsl:apply-templates mode="generatePreviousLink"
 			     select="preceding-sibling::tei:TEI[1]"/>
       </xsl:when>
       <xsl:when test="preceding-sibling::tei:div">
-	<xsl:apply-templates mode="generateNextLink"
+	<xsl:apply-templates mode="generatePreviousLink"
 			     select="preceding-sibling::tei:div[1]"/>
       </xsl:when>
       <xsl:when
 	  test="parent::tei:body/preceding-sibling::tei:back/tei:div">
-	<xsl:apply-templates mode="generateNextLink"
+	<xsl:apply-templates mode="generatePreviousLink"
 			     select="parent::tei:body/preceding-sibling::tei:back/tei:div[1]"/>
       </xsl:when>
       <xsl:when
 	  test="parent::tei:front/preceding-sibling::tei:body/tei:div">
-	<xsl:apply-templates mode="generateNextLink"
+	<xsl:apply-templates mode="generatePreviousLink"
 			     select="parent::tei:front/preceding-sibling::tei:body/tei:div[1]"/>
       </xsl:when>
       <xsl:when test="$myName='div0' and preceding-sibling::tei:div0">
-	<xsl:apply-templates mode="generateNextLink" select="preceding-sibling::tei:div0[1]"/>
+	<xsl:apply-templates mode="generatePreviousLink" select="preceding-sibling::tei:div0[1]"/>
       </xsl:when>
       <xsl:when test="$myName='div1' and preceding-sibling::tei:div1">
-	<xsl:apply-templates mode="generateNextLink" select="preceding-sibling::tei:div1[1]"/>
+	<xsl:apply-templates mode="generatePreviousLink" select="preceding-sibling::tei:div1[1]"/>
       </xsl:when>
       <xsl:when test="$myName='div2' and preceding-sibling::tei:div2">
-	<xsl:apply-templates mode="generateNextLink" select="preceding-sibling::tei:div2[1]"/>
+	<xsl:apply-templates mode="generatePreviousLink" select="preceding-sibling::tei:div2[1]"/>
       </xsl:when>
       <xsl:when test="$myName='div3' and preceding-sibling::tei:div3">
-	<xsl:apply-templates mode="generateNextLink" select="preceding-sibling::tei:div3[1]"/> 
+	<xsl:apply-templates mode="generatePreviousLink" select="preceding-sibling::tei:div3[1]"/> 
       </xsl:when>
     </xsl:choose>
     
@@ -482,7 +482,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 
   <xsl:template match="tei:*" mode="generateNextLink">
     <i><xsl:text> </xsl:text>
-    <xsl:value-of select="$previousWord"/>: </i> 
+    <xsl:value-of select="$nextWord"/>: </i> 
     <a  class="navlink">
       <xsl:attribute name="href">
 	<xsl:apply-templates select="." mode="generateLink"/>
@@ -495,7 +495,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
   
   <xsl:template match="tei:*" mode="generatePreviousLink">
     <i><xsl:text> </xsl:text>
-    <xsl:value-of select="$nextWord"/>: </i> 
+    <xsl:value-of select="$previousWord"/>: </i> 
     <a  class="navlink">
       <xsl:attribute name="href">
 	<xsl:apply-templates select="." mode="generateLink"/>
