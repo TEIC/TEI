@@ -214,10 +214,10 @@ encoding attribute
  (progn
    (setenv "PATH" (concat teiemacsdir "\\bin;" (getenv "PATH")))
    (setenv "SGML_CATALOG_FILES" 
-   (concat teisgmldir "\\sgml\\catalog;" teiemacsdir "xml\\catalog;"))
+   (concat teixmldir "\\schema\\dtd\catalog;" teiemacsdir "xml\\catalog;"))
   )
  (setenv "SGML_CATALOG_FILES" 
-   (concat teisgmldir "/sgml/catalog;" teiemacsdir "xml/catalog;"))
+   (concat teixmldir "/schema/dtd/catalog;" teiemacsdir "xml/catalog;"))
 )
 
 ;; table editing
@@ -400,8 +400,8 @@ encoding attribute
 (defvar tei-menu-definition
   (list "TEI"
 	(list "Insert skeleton TEI files"
-     ["TEI (P4)"  (tei-file-skeleton "/skeletons/p5/tei.xml" ) t]
-     ["TEI (P5)"  (tei-file-skeleton "/skeletons/p4/tei.xml" ) t]
+     ["TEI (P4)"  (tei-file-skeleton "/skeletons/p4/tei.xml" ) t]
+     ["TEI (P5)"  (tei-file-skeleton "/skeletons/p5/tei.xml" ) t]
      ["TEI OUCS (P4)"  (tei-file-skeleton "/skeletons/p4/tei-oucs.xml" ) t]
      ["TEI OUCS (P5)"  (tei-file-skeleton "/skeletons/p5/tei-oucs.xml" ) t]
 	      )
@@ -443,8 +443,6 @@ encoding attribute
 (setq sgml-set-face t)
 
 ;; directory and file locations relative to tei-emacs home
-(setq teisgmldir (concat teixmldir "/dtd/p4"))
-(setq teixmldir  (concat teixmldir "/dtd/p4"))
 
 (defun sgml-html-mode ()
 "This version of html mode is just a wrapper around sgml mode."
@@ -461,7 +459,7 @@ sgml-minimize-attributes     'max
 sgml-omittag                 t
 sgml-shorttag                t
 )
-(setq sgml-declaration (concat teisgmldir "/html/html4.dcl"))
+(setq sgml-declaration (concat teixmldir "schema/dtd/p4/html4.dcl"))
 )
 
 (setq-default sgml-indent-data t)
@@ -484,19 +482,19 @@ sgml-shorttag                  nil
  (concat 
 "<?xml version=\"1.0\"?>
 <!DOCTYPE TEI.2 PUBLIC \"-//TEI Consortium//DTD TEI P4//EN\"
-\"" teixmldir  "/dtd/p4/tei2.dtd\" [ 
+\"" teixmldir  "/schema/dtd/p4/tei2.dtd\" [ 
 <!ENTITY % TEI.prose 'INCLUDE'>
 <!ENTITY % TEI.linking 'INCLUDE'>
 <!ENTITY % TEI.figures 'INCLUDE'>
 <!ENTITY % TEI.analysis 'INCLUDE'>
 <!ENTITY % TEI.XML 'INCLUDE'>
-<!ENTITY % ISOlat1 SYSTEM \"" teixmldir "/dtd/p4/iso-lat1.ent\"> 
+<!ENTITY % ISOlat1 SYSTEM \"" teixmldir "/schema/dtd/p4/iso-lat1.ent\"> 
 %ISOlat1; 
-<!ENTITY % ISOlat2 SYSTEM \"" teixmldir "/dtd/p4/iso-lat2.ent\"> 
+<!ENTITY % ISOlat2 SYSTEM \"" teixmldir "/schema/dtd/p4/iso-lat2.ent\"> 
 %ISOlat2; 
-<!ENTITY % ISOnum  SYSTEM \"" teixmldir "/dtd/p4/iso-num.ent\"> 
+<!ENTITY % ISOnum  SYSTEM \"" teixmldir "/schema/dtd/p4/iso-num.ent\"> 
 %ISOnum;
-<!ENTITY % ISOpub  SYSTEM \"" teixmldir "/dtd/p4/iso-pub.ent\"> 
+<!ENTITY % ISOpub  SYSTEM \"" teixmldir "/schema/dtd/p4/iso-pub.ent\"> 
 %ISOpub; 
 ]>"))
 
@@ -523,7 +521,7 @@ sgml-shorttag                  nil
 "<?xml version=\"1.0\"?> 
 <?xml-stylesheet type=\"text/css\" href=\"teixlite.css\"?>
 <!DOCTYPE TEI.2 PUBLIC \"-//TEI//DTD TEI Lite XML ver. 1//EN\"
-\"" teixmldir "/dtd/teixlite.dtd\" []>"))
+\"" teixmldir "/schema/dtd/p4/teixlite.dtd\" []>"))
 
 ( "(SGML) TEI Lite"
 "<!DOCTYPE TEI.2 PUBLIC \"-//TEI//DTD TEI Lite 1.6//EN\">")
@@ -531,33 +529,26 @@ sgml-shorttag                  nil
 ))
 
 
-;; ecat support
+;(setq sgml-catalog-files (list 
+;   (concat teisgmldir  "/catalog")
+;   (concat teixmldir  "/catalog")
+;))
 
-(setq sgml-ecat-files    (list 
-   (concat teisgmldir "/ecatalog")
-   (concat teixmldir "/ecatalog")
-))
+(setq sgml-xml-declaration (concat teixmldir "schema/dtd/p4/xml.dcl"))
 
-(setq sgml-catalog-files (list 
-   (concat teisgmldir  "/catalog")
-   (concat teixmldir  "/catalog")
-))
-
-(setq sgml-xml-declaration (concat teixmldir "/xml.dcl"))
-
-(setq sgml-tei-declaration (concat teisgmldir "/dtd/teisgml.dec"))
+(setq sgml-tei-declaration (concat teixmlir "/schema/dtd/p4/teisgml.dec"))
 
 (setq sgml-validate-command   
  (list
- (concat "nsgmls -s -c "  teisgmldir "/catalog " sgml-tei-declaration " %b")
- (concat "nsgmls -s -c "  teisgmldir "/catalog \"%s\" %b")
+ (concat "nsgmls -s -c "  teixmldir "/schema/dtd/catalog " sgml-tei-declaration " %b")
+ (concat "nsgmls -s -c "  teixmldir "/schema/dtd/catalog \"%s\" %b")
 )
 )
 
 (setq sgml-xml-validate-command  
 (list
  "xmllint --noout --valid %b"
- (concat "nsgmls -s -wxml -c " teixmldir "/catalog %b")
+ (concat "nsgmls -s -wxml -c " teixmldir "/schema/dtd/catalog %b")
  "rxp -V  -s  %b"))
 
 ;; XSLT process package

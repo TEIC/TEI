@@ -105,9 +105,6 @@
         (delete-backward-char 1)
     ))
 
-;; CUA mode
-(load "cua")
-
 ;; XML material
 
 (load "xmlsgml-setup")
