@@ -17,6 +17,7 @@ Description
 <xsl:param name="elementDesc"/>
 <xsl:param name="elementClasses"/>
 <xsl:param name="elementContents"/>
+<xsl:param name="elementFullContents"/>
 <xsl:param name="elementsModule"/>
 <xsl:param name="MESSAGE"/>
 <xsl:param name="host"/>
@@ -137,7 +138,9 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
 	</xsl:if>
         <td class="formlabeltop"><xsl:value-of disable-output-escaping="yes" select="$res_form_contents"/></td>
         <td>
-         <xsl:call-template name="contentTypes"/>
+         <xsl:call-template name="contentTypes"/><br/>
+	 <textarea name="userContents" rows="5" cols="40"><xsl:if
+test="not($elementFullContents='')"><xsl:value-of select="$elementFullContents"/></xsl:if><xsl:if test="$elementFullContents=''">&lt;content&gt;&lt;/content&gt;</xsl:if></textarea>
         </td>
       </tr>
       <tr>
@@ -466,6 +469,12 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
      <xsl:if test="$selectedMode='addElement'">
        <div class="HideItem">
 	 <select name="content" size="1">
+	   <option value="userContent">
+	     <xsl:if test="$elementContents='userContent'">
+	       <xsl:attribute name="selected">1</xsl:attribute>
+	     </xsl:if>
+	     User content
+	   </option>
 	   <option value="empty">
 	     <xsl:if test="$elementContents='empty'">
 	       <xsl:attribute name="selected">1</xsl:attribute>

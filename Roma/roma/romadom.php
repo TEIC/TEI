@@ -296,6 +296,14 @@ class romaDom extends domDocument
           }
       }
 
+    public function getAddedElementsFullContents( $szIdent, &$szContents )
+      {
+	$this->getXPath( $oXPath );
+        $oContent = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p/tei:schema[@ident='mytei']/tei:elementSpec[@ident='$szIdent']/tei:content" )->item(0);
+	$szContents = $this->SaveXML( $oContent );
+      }
+
+
     public function getAddedElementsClasses( $szIdent, &$aszClasses )
       {
         $aszClasses = array();
@@ -889,9 +897,6 @@ class romaDom extends domDocument
 	    throw new elementExistsException( $aszConfig[ 'name' ] );
 	  }
 	     
-
-
-
 	$this->getXPath( $oXPath );
         $oSchema = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p/tei:schema[@ident='mytei']" )->item(0);
 
@@ -928,22 +933,41 @@ class romaDom extends domDocument
 	      {
 		$oElementSpec->removeChild( $oContent );
 	      }
-            $theContent = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'content' );
-            $oContent = $oElementSpec->appendChild( $theContent );
-	 
-            switch( $aszConfig[ 'content' ] )
-              {
-                case 'empty':
-                case 'text':
-                  $oRNG = $this->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:' . $aszConfig[ 'content' ] );
-                  $oContent->appendChild( $oRNG );
-                  break; 
-                default:
-                  $oRNG = $this->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:ref' );
-                  $oRef = $oContent->appendChild( $oRNG );
-	          $oRef->setAttribute( 'name', $aszConfig[ 'content' ] );
-                  break;
-              }
+	    if( $aszConfig[ 'content' ] == 'userContent' )
+	      {
+		$oConDom = new domDocument();
+		if( @$oConDom->LoadXML( $aszConfig[ 'userContent' ] ) )
+		  {
+		    $oRoot = $oConDom->documentElement;
+		    
+		    $oRoot = $this->importNode( $oRoot, true );
+		    $oElementSpec->appendChild( $oRoot );
+		  }
+		else
+		  {
+		    throw new falseContentsException( $aszConfig[ 'userContent' ] );
+		    $errResult = true;
+		  }
+	      }
+	    else
+	      {
+		$theContent = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'content' );
+		$oContent = $oElementSpec->appendChild( $theContent );
+		
+		switch( $aszConfig[ 'content' ] )
+		  {
+		  case 'empty':
+		  case 'text':
+		    $oRNG = $this->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:' . $aszConfig[ 'content' ] );
+		    $oContent->appendChild( $oRNG );
+		    break; 
+		  default:
+		    $oRNG = $this->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:ref' );
+		    $oRef = $oContent->appendChild( $oRNG );
+		    $oRef->setAttribute( 'name', $aszConfig[ 'content' ] );
+		    break;
+		  }
+	      }
 
 	    $oDesc = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p/tei:schema[@ident='mytei']/tei:elementSpec[@ident='{$aszConfig[ 'name' ]}']/tei:desc" )->item(0);
 
@@ -1359,7 +1383,8 @@ class romaDom extends domDocument
 	      }
 	    $theContent = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'datatype' );
 	    $oContent = $oAttDef->appendChild( $theContent );
-
+	    
+	    
 	    switch ( $aszConfig[ 'content' ] )
 	      {
 	      case 'text':
@@ -1381,7 +1406,7 @@ class romaDom extends domDocument
 		  }
 		break;
 	      }
-	    
+	      	    
 	    //default
 	    $oDefault = $oAttDef->getElementsByTagname( 'default' )->item(0);
 	    if ( is_object( $oDefault ) )

@@ -482,6 +482,7 @@ class roma
 	      $aszConfig = array( 'name' => $_REQUEST[ 'name' ],
 				  'added' => $_REQUEST[ 'added' ],
 				  'content' => $_REQUEST[ 'content' ],
+				  'userContent' => $_REQUEST[ 'userContents' ],
 				  'classes' => $aszClasses,
 				  'description' => $_REQUEST[ 'description' ]);
 	      try {
@@ -755,6 +756,7 @@ class roma
             $this->m_oRomaDom->getAddedElementsDescription( $_REQUEST[ 'element' ], $szDesc );
             //get Elements description
             $this->m_oRomaDom->getAddedElementsContents( $_REQUEST[ 'element' ], $szContents );
+            $this->m_oRomaDom->getAddedElementsFullContents( $_REQUEST[ 'element' ], $szFullContents );
           }
 	
 	if( is_array( $_SESSION[ 'addElements' ][ 'ERROR' ] ) )
@@ -770,6 +772,7 @@ class roma
 	if (is_array( $aszClasses) )
 	  $aszParam[ 'elementClasses' ] = join( ';', $aszClasses );
 	$aszParam[ 'elementContents' ] = $szContents;
+	$aszParam[ 'elementFullContents' ] = $szFullContents;
 
 	$this->applyStylesheet( $oListDom, 'addElements.xsl', $oNewDom, $aszParam, 'addElements'  );
 
