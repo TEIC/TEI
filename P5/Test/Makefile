@@ -17,12 +17,13 @@ TESTFILES= \
 	testall 
 
 
-all: test-schema test-dtd
+all: test-schema test-dtd test-xsd
 
 schemas:
 	for i in $(TESTFILES); do ../Roma --doc --schema=../Schema/ $$i.odd .; done
 
-test-schema: test-rnv test-jing test-xmllint
+test-schema: test-rnv test-jing 
+#test-xmllint
 
 test-jing:
 	echo JING...
