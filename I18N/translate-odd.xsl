@@ -9,7 +9,7 @@
   version="1.0">
   <xsl:output method="xml" indent="yes"/>
 <xsl:key name="TAGMODS" match="Tag|AttClass" use="Tagset"/>
-<xsl:key name="MODS" match="tei:module" use="@ident"/>
+<xsl:key name="MODS" match="tei:moduleRef" use="@key"/>
 <xsl:output method="xml" indent="yes"/>
 <xsl:param name="lang">es</xsl:param>
 <xsl:key name="ELEMENTS" match="element" use="@ident"/>
@@ -37,13 +37,13 @@
   <xsl:for-each select="tei:moduleRef">
     <xsl:variable name="test" select="@key"/>
     <xsl:if test="not(key('MODS',$test))">
-	  <module  xmlns="http://www.tei-c.org/ns/1.0" mode="change" ident="{$test}">
+	  <moduleRef  xmlns="http://www.tei-c.org/ns/1.0" mode="change" ident="{$test}">
 	  <xsl:call-template name="findTranslateNames">
 	    <xsl:with-param name="modname">
 	      <xsl:value-of select="$test"/>
 	    </xsl:with-param>
 	  </xsl:call-template>
-	  </module>
+	  </moduleRef>
     </xsl:if>
   </xsl:for-each>
   <xsl:copy>
@@ -51,12 +51,12 @@
   </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:module[@mode='change']">
+<xsl:template match="tei:moduleRef">
   <xsl:copy>
     <xsl:apply-templates select="@*|*|text()|comment()"/>
 	<xsl:call-template name="findTranslateNames">
 	  <xsl:with-param name="modname">
-	    <xsl:value-of select="@ident"/>
+	    <xsl:value-of select="@key"/>
 	  </xsl:with-param>
 	</xsl:call-template>
   </xsl:copy>
