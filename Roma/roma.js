@@ -1,0 +1,185 @@
+var romaDivPrefix = 'descDiv_';
+var romaSpanPrefix = 'descSpan_';
+
+function descriptionPopup_Show( szId )
+  {
+    xPos = 0;
+    yPos = 0;
+
+    oSpan = document.getElementById( romaSpanPrefix + szId );
+
+    if ( oSpan )
+      {
+        yPos = oSpan.offsetHeight;
+
+        oTemp = oSpan;
+        while( oTemp != null )
+          {
+            xPos += oTemp.offsetLeft;
+            yPos += oTemp.offsetTop;
+            oTemp = oTemp.offsetParent;
+          }
+      }
+
+    oDiv = document.getElementById( romaDivPrefix + szId );
+
+    if ( oDiv )
+      {
+        oDiv.style.left = xPos;
+        oDiv.style.top = yPos;
+        oDiv.style.visibility = 'visible';
+      }
+
+    oOtherDiv = document.getElementById( "HideItem" );
+
+    if ( oOtherDiv )
+      {
+        oOtherDiv.style.visibility = 'hidden';
+      }
+  }
+
+function descriptionPopup_Hide( szId )
+  {
+    xPos = 0;
+    yPos = 0;
+ 
+    oDiv = document.getElementById( romaDivPrefix + szId );
+
+    if ( oDiv )
+      {
+        oDiv.style.left = xPos;
+        oDiv.style.top = yPos;
+        oDiv.style.visibility = 'hidden';
+      }
+
+    oOtherDiv = document.getElementById( "HideItem" );
+
+    if ( oOtherDiv )
+      {
+        oOtherDiv.style.visibility = 'visible';
+      }
+  }
+
+
+
+function addedElementsPopup_Show( )
+  {
+    xPos = 0;
+    yPos = 0;
+
+    oSpan = document.getElementById( "addedElementsSpan" );
+
+    if ( oSpan )
+      {
+        yPos = oSpan.offsetHeight;
+
+        oTemp = oSpan;
+        while( oTemp != null )
+          {
+            xPos += oTemp.offsetLeft;
+            yPos += oTemp.offsetTop;
+            oTemp = oTemp.offsetParent;
+          }
+      }
+
+    oDiv = document.getElementById( "addedElementsDiv" );
+
+    if ( oDiv )
+      {
+        oDiv.style.left = xPos;
+        oDiv.style.top = yPos;
+        oDiv.style.visibility = 'visible';
+      }
+
+    oOtherDiv = document.getElementById( "HideItem" );
+
+    if ( oOtherDiv )
+      {
+        oOtherDiv.style.visibility = 'hidden';
+      }
+  }
+
+function addedElementsPopup_Hide( )
+  {
+    xPos = 0;
+    yPos = 0;
+ 
+    oDiv = document.getElementById( "addedElementsDiv" );
+
+    if ( oDiv )
+      {
+        oDiv.style.left = xPos;
+        oDiv.style.top = yPos;
+        oDiv.style.visibility = 'hidden';
+      }
+
+    oOtherDiv = document.getElementById( "HideItem" );
+
+    if ( oOtherDiv )
+      {
+        oOtherDiv.style.visibility = 'visible';
+      }
+  }
+
+
+function addedAttributesPopup_Show( )
+  {
+    xPos = 0;
+    yPos = 0;
+
+    oSpan = document.getElementById( "addedAttributesSpan" );
+
+    if ( oSpan )
+      {
+        yPos = oSpan.offsetHeight;
+
+        oTemp = oSpan;
+        while( oTemp != null )
+          {
+            xPos += oTemp.offsetLeft;
+            yPos += oTemp.offsetTop;
+            oTemp = oTemp.offsetParent;
+          }
+      }
+
+    oDiv = document.getElementById( "addedAttributesDiv" );
+
+    if ( oDiv )
+      {
+        oDiv.style.left = xPos;
+        oDiv.style.top = yPos;
+        oDiv.style.visibility = 'visible';
+      }
+
+    oOtherDiv = document.getElementById( "HideItem" );
+
+    if ( oOtherDiv )
+      {
+        oOtherDiv.style.visibility = 'hidden';
+      }
+  }
+
+function addedAttributesPopup_Hide( )
+  {
+    xPos = 0;
+    yPos = 0;
+ 
+    oDiv = document.getElementById( "addedAttributesDiv" );
+
+    if ( oDiv )
+      {
+        oDiv.style.left = xPos;
+        oDiv.style.top = yPos;
+        oDiv.style.visibility = 'hidden';
+      }
+
+    oOtherDiv = document.getElementById( "HideItem" );
+
+    if ( oOtherDiv )
+      {
+        oOtherDiv.style.visibility = 'visible';
+      }
+  }
+
+
+
