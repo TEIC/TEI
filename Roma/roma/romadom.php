@@ -824,7 +824,7 @@ class romaDom extends domDocument
     public function getCustomizationLanguage( &$szLanguage )
       {
 	$this->getXPath( $oXPath );
-	$szLanguage = $oXPath->query( "/tei:TEI/@lang" )->item(0)->nodeValue;
+	$szLanguage = $oXPath->query( "/tei:TEI/@xml:lang" )->item(0)->nodeValue;
       }
 
     public function getCustomizationDescription( &$szDesc )
