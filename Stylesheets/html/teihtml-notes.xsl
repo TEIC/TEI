@@ -98,28 +98,28 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 
 
 <xsl:template name="printNotes">
-<xsl:choose>
-<xsl:when test="not($footnoteFile='')">
-<xsl:variable name="BaseFile">
-  <xsl:value-of select="$masterFile"/>
-  <xsl:call-template name="addCorpusID"/>
-</xsl:variable>
-
-  <xsl:call-template name="outputChunk">
-  <xsl:with-param name="ident">
-    <xsl:value-of select="concat($BaseFile,'-notes')"/>
-  </xsl:with-param>
-  <xsl:with-param name="content">
-    <xsl:call-template name="writeNotes"/>
-  </xsl:with-param>
-  </xsl:call-template>
-</xsl:when>
-
-<xsl:otherwise>
-  <xsl:apply-templates select="tei:text//tei:note[@place='foot']" mode="printnotes"/>
-</xsl:otherwise>
-
-</xsl:choose>
+  <xsl:choose>
+    <xsl:when test="not($footnoteFile='')">
+      <xsl:variable name="BaseFile">
+	<xsl:value-of select="$masterFile"/>
+	<xsl:call-template name="addCorpusID"/>
+      </xsl:variable>
+      
+      <xsl:call-template name="outputChunk">
+	<xsl:with-param name="ident">
+	  <xsl:value-of select="concat($BaseFile,'-notes')"/>
+	</xsl:with-param>
+	<xsl:with-param name="content">
+	  <xsl:call-template name="writeNotes"/>
+	</xsl:with-param>
+      </xsl:call-template>
+    </xsl:when>
+    
+    <xsl:otherwise>
+      <xsl:apply-templates select="tei:text//tei:note[@place='foot']" mode="printnotes"/>
+    </xsl:otherwise>
+    
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template name="printDivnotes">

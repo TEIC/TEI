@@ -83,6 +83,7 @@ $Date$, $Revision$, $Author$
 
 <xsl:template match="/">
   <xsl:apply-templates select="tei:TEI"/>
+  <xsl:call-template name="printNotes"/>
 </xsl:template>
 
 <xsl:template match="processing-instruction()">

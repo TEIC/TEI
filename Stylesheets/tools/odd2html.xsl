@@ -159,16 +159,16 @@ splitLevel: <xsl:value-of select="$splitLevel"/>
 </xsl:template>
 
 <xsl:template match="tei:note" mode="printnotes">
- <xsl:param name="root"/>
-<xsl:if test="not(ancestor::bibl)">
-<xsl:variable name="identifier">
-    <xsl:number level="any"/>
-</xsl:variable>
-<p>
- <a name="{concat('Note',$identifier)}"><xsl:value-of select="$identifier"/>. </a>
- <xsl:apply-templates/>
-</p>
-</xsl:if>
+  <xsl:param name="root"/>
+  <xsl:if test="not(ancestor::bibl)">
+    <xsl:variable name="identifier">
+      <xsl:number level="any"/>
+    </xsl:variable>
+    <p>
+      <a name="{concat('Note',$identifier)}"><xsl:value-of select="$identifier"/>. </a>
+      <xsl:apply-templates/>
+    </p>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template name="bodyHook">

@@ -40,6 +40,10 @@ $Date$, $Revision$, $Author$
   <tei:hi rend="val">  <xsl:apply-templates/></tei:hi>
 </xsl:template>
 
+<xsl:template match="tei:moduleRef">
+  <tei:ref target="#{@key}"/>
+</xsl:template>
+
 <xsl:template match="tei:elementSpec">
    <xsl:if test="parent::tei:specGrp">
    <tei:label>Element: <xsl:value-of select="@ident"/></tei:label>
