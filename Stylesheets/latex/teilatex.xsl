@@ -237,15 +237,11 @@ pdfcreator={Oxford University Computing Services}
 </xsl:template>
 
 <xsl:template match="tei:eg">
-\begin{quote}\ttfamily\color{black}\obeylines
-<xsl:apply-templates/>
-\end{quote}
+\begin{quote}\ttfamily\color{black}\obeylines <xsl:apply-templates/> \end{quote}
 </xsl:template>
 
 <xsl:template match="tei:q[@rend='eg']">
-\begin{quote}\ttfamily\color{black}\obeylines
-<xsl:apply-templates/>
-\end{quote}
+\begin{quote}\ttfamily\color{black}\obeylines <xsl:apply-templates/> \end{quote}
 </xsl:template>
 
 <xsl:template match="tei:list/tei:head"/>
