@@ -1,0 +1,210 @@
+<TEI xmlns="http://www.tei-c.org/ns/1.0"
+ xmlns:rng="http://relaxng.org/ns/structure/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>The Lampeter TEI Extensions</title>
+            <author>Lou Burnard</author>
+         </titleStmt>
+         <publicationStmt>
+	   <p>for TEI web site only</p>
+	 </publicationStmt>
+         <sourceDesc>
+            <p>derived from old DTD extension files for P4</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+<text>
+<body>
+<p>The Lampeter TEI schema consists some new elements and a view of the
+TEI.</p>
+
+<p>First, here is the small set of new elements:
+<specGrp id="LAMPADD">
+ <elementSpec ident="it">
+  <classes><memberOf key="tei.phrase"/></classes>
+  <content>
+    <rng:ref name="macro.phraseSeq"/>
+  </content>
+ <desc></desc>
+</elementSpec>
+ <elementSpec ident="sc">
+  <classes><memberOf key="tei.phrase"/></classes>
+  <content>
+    <rng:ref name="macro.phraseSeq"/>
+  </content>
+ <desc></desc>
+</elementSpec>
+ <elementSpec ident="su">
+  <classes><memberOf key="tei.phrase"/></classes>
+  <content>
+    <rng:ref name="macro.phraseSeq"/>
+  </content>
+ <desc></desc>
+</elementSpec>
+ <elementSpec ident="bo">
+  <classes><memberOf key="tei.phrase"/></classes>
+  <content>
+    <rng:ref name="macro.phraseSeq"/>
+  </content>
+ <desc></desc>
+</elementSpec>
+ <elementSpec ident="po">
+  <classes><memberOf key="tei.phrase"/></classes>
+  <content>
+    <rng:ref name="macro.phraseSeq"/>
+  </content>
+ <desc></desc>
+</elementSpec>
+ <elementSpec ident="go">
+  <classes><memberOf key="tei.phrase"/></classes>
+  <content>
+    <rng:ref name="macro.phraseSeq"/>
+  </content>
+ <desc></desc>
+</elementSpec>
+ <elementSpec ident="ro">
+  <classes><memberOf key="tei.phrase"/></classes>
+  <content>
+    <rng:ref name="macro.phraseSeq"/>
+  </content>
+ <desc></desc>
+</elementSpec>
+<!--biblPart-->
+ <elementSpec ident="printer">
+  <classes>
+    <memberOf key="tei.biblPart"/>
+  </classes>
+  <content>
+    <rng:ref name="macro.phraseSeq"/>
+  </content>
+  <desc></desc>
+</elementSpec>
+ <elementSpec ident="pubFormat">
+  <classes>
+    <memberOf key="tei.biblPart"/>
+  </classes>
+  <content>
+    <rng:ref name="macro.phraseSeq"/>
+  </content>
+  <desc></desc>
+</elementSpec>
+ <elementSpec ident="bookSeller">
+  <classes>
+    <memberOf key="tei.biblPart"/>
+  </classes>
+  <content>
+    <rng:ref name="macro.phraseSeq"/>
+  </content>
+  <desc></desc>
+</elementSpec>
+<!-- demographic -->
+ <elementSpec ident="biogNote">
+  <classes>
+    <memberOf key="tei.demographic"/>
+  </classes>
+  <content>
+    <rng:ref name="macro.phraseSeq"/>
+  </content>
+  <desc></desc>
+</elementSpec>
+ <elementSpec ident="socecstatusPat">
+  <classes>
+    <memberOf key="tei.demographic"/>
+  </classes>
+  <content>
+    <rng:ref name="macro.phraseSeq"/>
+  </content>
+  <desc></desc>
+</elementSpec>
+</specGrp>
+</p>
+
+<p>Now for the wrapping schema, which imports the new Lampeter module,
+and  selected TEI modules. Some existing elements are redefined
+to be null.</p>
+<p>
+<module ident="tei" mode="change">
+  <elementSpec ident="analytic" mode="delete"/>
+  <elementSpec ident="biblStruct" mode="delete"/>
+  <elementSpec ident="cb" mode="delete"/>
+  <elementSpec ident="divGen" mode="delete"/>
+  <elementSpec ident="expan" mode="delete"/>
+  <elementSpec ident="index" mode="delete"/>
+  <elementSpec ident="measure" mode="delete"/>
+  <elementSpec ident="meeting" mode="delete"/>
+  <elementSpec ident="monogr" mode="delete"/>
+  <elementSpec ident="num" mode="delete"/>
+  <elementSpec ident="postBox" mode="delete"/>
+  <elementSpec ident="postCode" mode="delete"/>
+  <elementSpec ident="soCalled" mode="delete"/>
+  <elementSpec ident="street" mode="delete"/>
+  <elementSpec ident="time" mode="delete"/>
+  <elementSpec ident="timeRange" mode="delete"/>
+  <elementSpec ident="state" mode="delete"/>
+  <elementSpec ident="step" mode="delete"/>
+  <elementSpec ident="variantEncoding" mode="delete"/>
+  <elementSpec ident="equipment" mode="delete"/>
+  <elementSpec ident="recording" mode="delete"/>
+  <elementSpec ident="recordingStmt" mode="delete"/>
+  <elementSpec ident="scriptStmt" mode="delete"/>
+  <elementSpec ident="broadcast" mode="delete"/>
+</module>
+<module ident="figures" mode="change">
+  <elementSpec ident="formula" mode="delete"/>
+</module>
+<module ident="transcr" mode="change">
+  <elementSpec ident="restore" mode="delete"/>
+  <elementSpec ident="space" mode="delete"/>
+  <elementSpec ident="addSpan" mode="delete"/>
+  <elementSpec ident="damage" mode="delete"/>
+  <elementSpec ident="delSpan" mode="delete"/>
+  <elementSpec ident="hand" mode="delete"/>
+  <elementSpec ident="handList" mode="delete"/>
+  <elementSpec ident="handShift" mode="delete"/>
+  <elementSpec ident="supplied" mode="delete"/>
+</module>
+<module ident="corpus" mode="change">
+  <elementSpec ident="preparedness" mode="delete"/>
+  <elementSpec ident="purpose" mode="delete"/>
+  <elementSpec ident="settingDesc" mode="delete"/>
+  <elementSpec ident="textDesc" mode="delete"/>
+  <elementSpec ident="activity" mode="delete"/>
+  <elementSpec ident="locale" mode="delete"/>
+  <elementSpec ident="relation" mode="delete"/>
+  <elementSpec ident="setting" mode="delete"/>
+  <elementSpec ident="firstLang" mode="delete"/>
+  <elementSpec ident="interaction" mode="delete"/>
+  <elementSpec ident="langKnown" mode="delete"/>
+  <elementSpec ident="personGrp" mode="delete"/>
+  <elementSpec ident="factuality" mode="delete"/>
+  <elementSpec ident="channel" mode="delete"/>
+  <elementSpec ident="constitution" mode="delete"/>
+  <elementSpec ident="derivation" mode="delete"/>
+  <elementSpec ident="domain" mode="delete"/>
+</module>
+<module ident="general" mode="change">
+  <elementSpec ident="div0" mode="delete"/>
+  <elementSpec ident="div4" mode="delete"/>
+  <elementSpec ident="div5" mode="delete"/>
+  <elementSpec ident="div6" mode="delete"/>
+  <elementSpec ident="div7" mode="delete"/>
+</module>
+</p>
+<p>
+<schema ident="lamptei">
+<specGrpRef target="LAMPADD"/>
+<moduleRef key="tei"/>
+<moduleRef key="general"/>
+<moduleRef key="figures"/>
+<moduleRef key="linking"/>
+<moduleRef key="corpus"/>
+<moduleRef key="namesdates"/>
+<moduleRef key="transcr"/>
+
+</schema>
+
+</p>
+</body>
+</text>
+</TEI>
