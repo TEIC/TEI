@@ -119,8 +119,10 @@ class docDom extends domDocument
 		$this->m_oRomaDom->getContentsByElementNameInModuleDom( $szElement, $szModule, $oNewContents );
 		$oContent = $oSpec->getElementsByTagname( 'content' )->item(0);
 		$oNewContent = $this->importNode( $oNewContents->documentElement, true );
+		//Content has to come after classes
+		$oNext = $oContent->nextSibling;
 		$oSpec->removeChild( $oContent );
-		$oSpec->insertBefore( $oNewContent, $oSpec->getElementsByTagname( 'attList' )->item(0) );
+		$oSpec->insertBefore( $oNewContent, $oNext );
 
 		$this->m_oRomaDom->getDescriptionByElementNameInModule( $szElement, $szModule, $szNewDesc );
 		$oSpec->getElementsByTagname( 'desc' )->item(0)->removeChild( $oSpec->getElementsByTagname( 'desc' )->item(0)->firstChild );

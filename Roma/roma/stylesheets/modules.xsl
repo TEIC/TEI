@@ -60,7 +60,8 @@ Description
      <td><a href="?mode=createSchema">Create Schema</a></td>
      <td><a href="?mode=createDocumentation">Create Documentation</a></td>
      <td><a href="?mode=saveCustomization">Save Customization</a></td>
-     <td class="newCustomization"><a href="?mode=newCustomization">Create new Customization</a></td>
+     <td class="newCustomization" rowspan="3"><a
+     href="?mode=newCustomization">Create new Customization</a></td>a
     </tr>
    </table>
   </xsl:template>
