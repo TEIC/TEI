@@ -1,5 +1,7 @@
 S=/usr/share/xml/tei/stylesheet
 
+.PHONY: convert dtds schemas html validate valid test split oddschema exampleschema fascicule exist clean dist
+
 default: dtds schemas html
 
 convert: dtds schemas
@@ -71,8 +73,17 @@ pdf: xml
 	TEXINPUTS=/TEI/Talks/texconfig: pdflatex Guidelines
 	TEXINPUTS=/TEI/Talks/texconfig: pdflatex Guidelines
 
-validate: oddschema exampleschema
-	echo JING version: `jing `
+validate: oddschema exampleschema valid
+
+valid: jing_version=$(wordlist 1,3,$(shell jing))
+valid: 
+	@echo --------- jing
+	@echo ${jing_version}
+	-jing -t p5odds.rng Source-driver.xml 
+	@echo --------- xx/rnv
+	-xmllint --noent  Source-driver.xml > Source.xml
+	-rnv -v p5odds.rnc Source.xml && rm Source.xml
+	@echo --------- nrl
 #	We have discovered that jing reports 3-letter language codes
 #	from ISO 639-2 as illegal values of xml:lang= even though
 #	they are perfectly valid per RFC 3066. We have submitted a
@@ -80,11 +91,6 @@ validate: oddschema exampleschema
 #	with grep -v. Note that we discard *all* such messages, even
 #	though fewer than 500 of the 17,576 possible combinations
 #	(i.e. < 3%) are valid codes.
-	-jing -t p5odds.rng Source-driver.xml 
-	echo xx/rnv
-	-xmllint --noent  Source-driver.xml > Source.xml
-	-rnv -v p5odds.rnc Source.xml && rm Source.xml
-	echo NRL
 #	In addition to erroneously reporting xml:lang= 3-letter
 #	values, jing seems to report an "unfinished element" every
 #	time a required child element from another namespace occurs
@@ -98,9 +104,10 @@ validate: oddschema exampleschema
 	-jing p5nrl.xml Source-driver.xml \
 	 | grep -v ": error: Illegal xml:lang value \"[A-Za-z][A-Za-z][A-Za-z]\"\.$$" \
 	 | grep -v ': error: unfinished element$$'
-	echo XSLT validator
+	@echo --------- XSLT validator
 	xsltproc validator.xsl Source-driver.xml >& tmp && sed 's/TEI...\/text...\/body...\///' tmp && rm tmp
-	echo xmllint version: ` xmllint --version`
+	@echo --------- xmllint
+	@xmllint --version
 	-xmllint  --relaxng p5odds.rng --noent --noout Source-driver.xml
 
 test:
