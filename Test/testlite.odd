@@ -1,6 +1,7 @@
 <TEI xml:lang="en"  xmlns="http://www.tei-c.org/ns/1.0"
  xmlns:rng="http://relaxng.org/ns/structure/1.0">
    <teiHeader>
+
       <fileDesc>
          <titleStmt>
             <title>TEI Lite</title>
@@ -22,6 +23,7 @@ TEI.</p>
 <p>First, here is the small set of new elements:
 <specGrp id="LITEADD">
  <elementSpec ident="eg">
+ <desc>Example code</desc>
   <classes>
     <memberOf key="tei.data"/>
     <memberOf key="tei.common"/>
@@ -29,17 +31,19 @@ TEI.</p>
   <content>
     <rng:text/>
   </content>
- <desc>Example code</desc>
 </elementSpec>
 
  <elementSpec ident="gi">
   <classes><memberOf key="tei.data"/></classes>
+  <desc>contains the name (generic identifier) of an element.</desc>
   <content>
     <rng:text/>
   </content>
   <attList>
     <attDef usage="opt" ident="tei">
       <equiv/>
+      <desc>indicates whether this element is part of the TEI encoding
+		scheme (i.e. defined in a TEI DTD fragment) or not.</desc>
       <datatype><rng:data type="boolean"/></datatype>
       <defaultVal>true</defaultVal>
       <valList type="closed">
@@ -52,11 +56,8 @@ TEI.</p>
           <gloss>this element is not part of the TEI scheme.</gloss>
         </valItem>
       </valList>
-      <desc>indicates whether this element is part of the TEI encoding
-		scheme (i.e. defined in a TEI DTD fragment) or not.</desc>
     </attDef>
   </attList>
-  <desc>contains the name (generic identifier) of an element.</desc>
   <exemplum>
     <eg><![CDATA[
 An <gi tei="false">LI</gi> element is roughly analagous to an <gi>item</gi> element.
