@@ -37,34 +37,6 @@
   <xsl:for-each select="tei:moduleRef">
     <xsl:variable name="test" select="@key"/>
     <xsl:if test="not(key('MODS',$test))">
-      <xsl:choose>
-	<xsl:when test="$test='tei'">
-	  <module  xmlns="http://www.tei-c.org/ns/1.0" mode="change" ident="tei">
-	    <xsl:call-template name="findTranslateNames">
-	      <xsl:with-param name="modname">core</xsl:with-param>
-	    </xsl:call-template>
-	    <xsl:call-template name="findTranslateNames">
-	      <xsl:with-param name="modname">header</xsl:with-param>
-	    </xsl:call-template>
-	    <xsl:call-template name="findTranslateNames">
-	      <xsl:with-param name="modname">teideclarations</xsl:with-param>
-	    </xsl:call-template>
-	  </module>
-	</xsl:when>
-	<xsl:when test="$test='general'">
-	  <module  xmlns="http://www.tei-c.org/ns/1.0" mode="change" ident="general">
-	    <xsl:call-template name="findTranslateNames">
-	      <xsl:with-param name="modname">structure</xsl:with-param>
-	    </xsl:call-template>
-	    <xsl:call-template name="findTranslateNames">
-	      <xsl:with-param name="modname">frontmatter</xsl:with-param>
-	    </xsl:call-template>
-	    <xsl:call-template name="findTranslateNames">
-	      <xsl:with-param name="modname">backmatter</xsl:with-param>
-	    </xsl:call-template>
-	  </module>
-	</xsl:when>
-	<xsl:otherwise>
 	  <module  xmlns="http://www.tei-c.org/ns/1.0" mode="change" ident="{$test}">
 	  <xsl:call-template name="findTranslateNames">
 	    <xsl:with-param name="modname">
@@ -72,8 +44,6 @@
 	    </xsl:with-param>
 	  </xsl:call-template>
 	  </module>
-	</xsl:otherwise>
-      </xsl:choose>
     </xsl:if>
   </xsl:for-each>
   <xsl:copy>
@@ -84,37 +54,11 @@
 <xsl:template match="tei:module[@mode='change']">
   <xsl:copy>
     <xsl:apply-templates select="@*|*|text()|comment()"/>
-    <xsl:choose>
-      <xsl:when test="@ident='tei'">
-	<xsl:call-template name="findTranslateNames">
-	  <xsl:with-param name="modname">core</xsl:with-param>
-	</xsl:call-template>
-	<xsl:call-template name="findTranslateNames">
-	  <xsl:with-param name="modname">header</xsl:with-param>
-	</xsl:call-template>
-	<xsl:call-template name="findTranslateNames">
-	  <xsl:with-param name="modname">teideclarations</xsl:with-param>
-	</xsl:call-template>
-      </xsl:when>
-      <xsl:when test="@ident='general'">
-	<xsl:call-template name="findTranslateNames">
-	  <xsl:with-param name="modname">structure</xsl:with-param>
-	</xsl:call-template>
-	<xsl:call-template name="findTranslateNames">
-	  <xsl:with-param name="modname">frontmatter</xsl:with-param>
-	</xsl:call-template>
-	<xsl:call-template name="findTranslateNames">
-	  <xsl:with-param name="modname">backmatter</xsl:with-param>
-	</xsl:call-template>
-      </xsl:when>
-      <xsl:otherwise>
 	<xsl:call-template name="findTranslateNames">
 	  <xsl:with-param name="modname">
 	    <xsl:value-of select="@ident"/>
 	  </xsl:with-param>
 	</xsl:call-template>
-      </xsl:otherwise>
-    </xsl:choose>
   </xsl:copy>
 </xsl:template>
 
@@ -137,7 +81,7 @@
 	    <xsl:for-each  select="document($TEINAMES)">
 	      <xsl:for-each select="key('ELEMENTS',$thisthing)">
 		<xsl:if test="equiv[@lang=$lang]">
-		  <altIdent xmlns="http://www.tei-c.org/ns/1.0">
+		  <altIdent type="lang" xmlns="http://www.tei-c.org/ns/1.0">
 		  <xsl:value-of select="equiv[@lang=$lang]/@value"/>
 		  </altIdent>
 		</xsl:if>
@@ -162,7 +106,7 @@
 		<xsl:for-each select="key('ATTRIBUTES',$thisatt)">
 		  <xsl:if test="equiv[@lang=$lang]">
 		    <attDef mode="change" xmlns="http://www.tei-c.org/ns/1.0" ident="{$thisatt}"> 
-		      <altIdent xmlns="http://www.tei-c.org/ns/1.0">
+		      <altIdent type="lang" xmlns="http://www.tei-c.org/ns/1.0">
 			<xsl:value-of select="equiv[@lang=$lang]/@value"/>
 		      </altIdent>
 		    </attDef>
