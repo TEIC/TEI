@@ -5,12 +5,10 @@ Licensed under the GNU General Public License.
 See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="BIBLITEM" usage="opt" ident="biblItem">
-<equiv/>
-<gloss>structured bibliographic citation</gloss>
-<desc>contains a structured bibliographic citation, in which only
-bibliographic subelements appear and in a specified order. </desc>
-  
-  
+  <equiv/>
+  <gloss>structured bibliographic citation</gloss>
+  <desc>contains a structured bibliographic citation, in which only
+  bibliographic subelements appear and in a specified order. </desc>
   <classes>
     <memberOf key="tei.bibl"/>
     <memberOf key="tei.declarable"/>
@@ -19,7 +17,7 @@ bibliographic subelements appear and in a specified order. </desc>
   <content>
     <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:choice>
-        <rng:ref name="tei.biblPart"/>
+	<rng:ref name="tei.biblPart"/>
 	<rng:ref name="biblItem"/>
       </rng:choice>
     </rng:oneOrMore>
@@ -27,17 +25,34 @@ bibliographic subelements appear and in a specified order. </desc>
   <attList>
     <attDef ident="form" usage="opt">
       <equiv/>
-      <desc>indicates the physical form of the object object of this bibliographic entry.</desc>
+      <desc>indicates the physical form of the object of this bibliographic entry.</desc>
       <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="token"/></datatype>
-      <valDesc>
-	Recommended values include:
-	<val>book, hardcover</val>,
-	<val>book, paperback</val>,
-	<val>video, VHS</val>,
-	<val>video, DVD</val>,
-	<val>audio, casette</val>,
-	<val>audio, CD</val>.
-      </valDesc>
+      <valList type="open">
+	<valItem ident="book.hardcover">
+	  <equiv/>
+	  <gloss></gloss>
+	</valItem>
+	<valItem ident="book.paperback">
+	  <equiv/>
+	  <gloss></gloss>
+	</valItem>
+	<valItem ident="video.VHS">
+	  <equiv/>
+	  <gloss></gloss>
+	</valItem>
+	<valItem ident="video.DVD">
+	  <equiv/>
+	  <gloss></gloss>
+	</valItem>
+	<valItem ident="audio.casette">
+	  <equiv/>
+	  <gloss></gloss>
+	</valItem>
+	<valItem ident="audio.CD">
+	  <equiv/>
+	  <gloss></gloss>
+	</valItem>
+      </valList>
     </attDef>
     <attDef ident="status" usage="opt">
       <equiv/>
@@ -61,7 +76,7 @@ bibliographic subelements appear and in a specified order. </desc>
       <valList type="open">
 	<valItem ident="host">
 	  <gloss>this bibliographic item has a host relationship to
-	  the item encoded in the &pbob;; e.g., this item as the
+	  the item encoded in the &pbob;; e.g., this item is the
 	  magazine in which the article described by the &pbob;
 	  appeared.</gloss>
 	</valItem>
