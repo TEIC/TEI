@@ -99,11 +99,11 @@ split:
 	(mkdir Split; cd Split; xmllint --noent   ../Source-driver.xml | xsltproc ../divsplit.xsl -)
 
 oddschema:
-	./Roma --simple --xsl=$S --schema=./Schema/ p5odds.odd .
+	./Roma --nodtd --noxsd --nodoc --xsl=$S --schema=./Schema/ p5odds.odd .
 
 
 exampleschema:
-	./Roma --simple --xsl=$S --schema=./Schema/ p5odds-ex.odd . && \
+	./Roma  --nodtd --noxsd --nodoc --xsl=$S --schema=./Schema/ p5odds-ex.odd . && \
 	 mv p5examples.compiled.rng p5examples.rng && \
 	 mv p5examples.compiled.rnc p5examples.rnc && \
 	 perl -p -i -e 's/org\/ns\/1.0/org\/ns\/Examples/' p5examples.rnc && \

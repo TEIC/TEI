@@ -37,8 +37,10 @@ test-xmllint:
 	for i in $(TESTFILES); do xmllint --dropdtd --noout --relaxng $$i.rng $$i.xml; done
 
 test-xsd:
+	echo JING
+	-for i in $(TESTFILES); do echo $$i: ; jing $$i.xsd $$i.xml; done
 	echo XSDVALID....
-	for i in $(TESTFILES); do echo $$i: ; xsdvalid -s $$i.xsd $$i.xml; done
+	-for i in $(TESTFILES); do echo $$i: ; xsdvalid -s $$i.xsd $$i.xml; done
 
 test-dtd:
 	echo XMLLINT DTD ....
