@@ -9,7 +9,7 @@ p4:
 	-mkdir -p web/P4/common
 	-mkdir -p web/P4/latex
 	-mkdir -p web/P4/slides
-	for i in fo/*.xsl html/*xsl common/*xsl latex/*xsl slides/*xsl; do \
+	for i in odd/*xsl fo/*.xsl html/*xsl common/*xsl latex/*xsl slides/*xsl; do \
 	perl toP4.pl --date="`date`" --version=$(VERSION) < $$i > web/P4/$$i; \
 	done
 
@@ -19,7 +19,7 @@ p5:
 	-mkdir -p web/P5/html
 	-mkdir -p web/P5/common
 	-mkdir -p web/P5/latex
-	for i in fo/*.xsl html/*xsl common/*xsl latex/*xsl slides/*xsl; do \
+	for i in odd/*xsl fo/*.xsl html/*xsl common/*xsl latex/*xsl slides/*xsl; do \
 	perl toP5.pl --date="`date`" --version=$(VERSION) < $$i > web/P5/$$i; \
 	done
 
