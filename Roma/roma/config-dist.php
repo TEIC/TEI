@@ -18,7 +18,7 @@ define( 'roma_pdflatex', 'pdflatex' );
 //#########################
 
 define( 'roma_temporaryFilesDir', '/tmp' );
-define( 'roma_schemaDir', 'http://localhost/schema' );
+define( 'roma_schemaDir', 'http://localhost/schema/relaxng/p5/' );
 define( 'roma_StylesheetDir', 'http://localhost/stylesheet' );
 
 define( 'roma_localStylesheetDir', 'roma/stylesheets' );

@@ -607,7 +607,7 @@ class roma
         $szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
 	$this->getParser( $oParser );
 
-	$this->getListDom( roma_xquery_server . '/modules.xq', $oListDom );
+	$this->getListDom( roma_xquery_server . 'modules.xq', $oListDom );
 
 	// build param list
 	$this->m_oRomaDom->getSelectedModulesDom( $oModules );
@@ -635,7 +635,7 @@ class roma
         $szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
 	$this->getParser( $oParser );
 
-	$this->getListDom( roma_xquery_server . '/elemsbymod.xq?module=' . $_REQUEST[ 'module' ], $oListDom );
+	$this->getListDom( roma_xquery_server . 'elemsbymod.xq?module=' . $_REQUEST[ 'module' ], $oListDom );
 	notamHandler::getError( 'moduleChanged', $aoErrors );
 	notamHandler::deleteError( 'moduleChanged' );
 	$this->addErrorsDom( $oListDom, $aoErrors );
@@ -666,19 +666,19 @@ class roma
 	$this->getParser( $oParser );
 
 	$oModelClassDom = new domDocument();
-	$oModelClassDom->loadXML( join( '', file( roma_xquery_server . '/classes.xq' ) ) );
+	$oModelClassDom->loadXML( join( '', file( roma_xquery_server . 'classes.xq' ) ) );
 	$oRootClass = $oModelClassDom->documentElement;
 
 	$oAttributeDom = new domDocument();
-	$oAttributeDom->loadXML( join( '', file( roma_xquery_server . '/attclasses.xq' ) ) );
+	$oAttributeDom->loadXML( join( '', file( roma_xquery_server . 'attclasses.xq' ) ) );
 	$oRootAtt = $oAttributeDom->documentElement;
 
 	$oDatatypeDom = new domDocument();
-	$oDatatypeDom->loadXML( join( '', file( roma_xquery_server . '/datatypes.xq' ) ) ) ;
+	$oDatatypeDom->loadXML( join( '', file( roma_xquery_server . 'datatypes.xq' ) ) ) ;
 	$oRootDat = $oDatatypeDom->documentElement;
 
 	$oMacroDom = new domDocument();
-	$oMacroDom->loadXML( join( '', file( roma_xquery_server . '/macros.xq' ) ) );
+	$oMacroDom->loadXML( join( '', file( roma_xquery_server . 'macros.xq' ) ) );
 	$oRootMac = $oMacroDom->documentElement;
 
         //Get created Elements
@@ -826,19 +826,19 @@ class roma
 	$this->getParser( $oParser );
  
 	$oModelClassDom = new domDocument();
-	$oModelClassDom->loadXML( join( '', file( roma_xquery_server . '/classes.xq' ) ) );
+	$oModelClassDom->loadXML( join( '', file( roma_xquery_server . 'classes.xq' ) ) );
 	$oRootClass = $oModelClassDom->documentElement;
 
 	$oAttributeDom = new domDocument();
-	$oAttributeDom->loadXML( join( '', file( roma_xquery_server . '/attclasses.xq' ) ) );
+	$oAttributeDom->loadXML( join( '', file( roma_xquery_server . 'attclasses.xq' ) ) );
 	$oRootAtt = $oAttributeDom->documentElement;
 
 	$oDatatypeDom = new domDocument();
-	$oDatatypeDom->loadXML( join( '', file(  roma_xquery_server . '/datatypes.xq' ) ) ) ;
+	$oDatatypeDom->loadXML( join( '', file(  roma_xquery_server . 'datatypes.xq' ) ) ) ;
 	$oRootDat = $oDatatypeDom->documentElement;
 
 	$oMacroDom = new domDocument();
-	$oMacroDom->loadXML( join( '', file( roma_xquery_server . '/macros.xq' ) ) );
+	$oMacroDom->loadXML( join( '', file( roma_xquery_server . 'macros.xq' ) ) );
 	$oRootMac = $oMacroDom->documentElement;
 
 	$oListDom = new domDocument();
@@ -898,11 +898,11 @@ class roma
 	$oAddAttribute = $oListDom->appendChild ( new domElement( 'addAttribute' ) );
 	
 	$oDatatypeDom = new domDocument();
-	$oDatatypeDom->loadXML( join( '', file( roma_xquery_server . '/datatypes.xq' ) ) ) ;
+	$oDatatypeDom->loadXML( join( '', file( roma_xquery_server . 'datatypes.xq' ) ) ) ;
 	$oRootDat = $oDatatypeDom->documentElement;
 
 	$oWCDom = new domDocument();
-	$oWCDom->loadXML( join( '', file( roma_xquery_server . '/w3cdatatypes.xq' ) ) ) ;
+	$oWCDom->loadXML( join( '', file( roma_xquery_server . 'w3cdatatypes.xq' ) ) ) ;
 	$oRootW3cDat = $oWCDom->documentElement;
 
 	$oRootDat = $oListDom->importNode( $oRootDat, true );
@@ -1050,7 +1050,7 @@ class roma
 	$this->getParser( $oParser );
 
 	$oListDom = new domDocument();
-	$oListDom->loadXML( join ( '', file( roma_xquery_server . '/attclasses.xq' ) ) );
+	$oListDom->loadXML( join ( '', file( roma_xquery_server . 'attclasses.xq' ) ) );
 
 	$this->applyStylesheet( $oListDom, 'changeClasses.xsl', $oNewDom, array( 'host' => $_SERVER[ 'HTTP_HOST' ], 'class' => $_REQUEST[ 'class' ], 'module' => $_REQUEST[ 'module' ] ), 'changeClasses' );
 
