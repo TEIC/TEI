@@ -712,6 +712,24 @@ class romaDom extends domDocument
 	$oClass->appendChild( $oAttList );
       }
 
+
+    public function getCustomizationTitle( &$szTitle )
+      {
+	$this->getXPath( $oXPath );
+	$szTitle = $oXPath->query( "/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title" )->item(0)->nodeValue;
+      }
+
+    public function getCustomizationAuthor( &$szAuthor )
+      {
+	$this->getXPath( $oXPath );
+	$szAuthor = $oXPath->query( "/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author" )->item(0)->nodeValue;
+      }
+
+    public function getCustomizationDescription( &$szDesc )
+      {
+	$this->getXPath( $oXPath );
+	$szDesc = $oXPath->query( "/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:p" )->item(0)->nodeValue;
+      }
     
 
     // #####################################################################
@@ -1617,6 +1635,33 @@ class romaDom extends domDocument
 	return $errResult;
       }
 
+
+    public function setCustomizationTitle( $szTitle )
+      {
+	$this->getXPath( $oXPath );
+	$oTitle = $oXPath->query( "/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title" )->item(0);
+	if ( $oTitle->hasChildNodes() )
+	  $oTitle->removeChild( $oTitle->firstChild );
+	$oTitle->appendChild( new domText ( $szTitle ) );
+      }
+
+    public function setCustomizationDescription( $szDescription )
+      {
+	$this->getXPath( $oXPath );
+	$oP = $oXPath->query( "/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:p" )->item(0);
+	if ( $oP->hasChildNodes() )
+	  $oP->removeChild( $oP->firstChild );
+	$oP->appendChild( new domText ( $szDescription ) );
+      }
+
+    public function setCustomizationAuthor( $szAuthor )
+      {
+	$this->getXPath( $oXPath );
+	$oAuthor = $oXPath->query( "/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author" )->item(0);
+	if ( $oAuthor->hasChildNodes() )
+	  $oAuthor->removeChild( $oAuthor->firstChild );
+	$oAuthor->appendChild( new domText ( $szAuthor ) );
+      }
 
     // #####################################################################
     // --- Little Helpers

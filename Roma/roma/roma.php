@@ -180,6 +180,8 @@ define( 'roma_mode_changeListAddedElements', 'changeListAddedElements' );
 define( 'roma_mode_createDocumentation', 'createDocumentation' );
 define( 'roma_mode_generateDoc', 'generateDoc' );
 define( 'roma_mode_downloadFile', 'download' );
+define( 'roma_mode_customizeCustomization', 'customizeCustomization' );
+define( 'roma_mode_processCustomizeCustomization', 'processCustomizeCustomization' );
 
 
 //#########################
@@ -278,6 +280,13 @@ class roma
 	
         switch( $_REQUEST[ 'mode' ] )
           {
+	    case roma_mode_processCustomizeCustomization:
+	      $this->customizedCustomization();
+	      $this->redirectBrowserHeader( 'mode=' . roma_mode_customizeCustomization );
+	      break;
+ 	    case roma_mode_customizeCustomization:
+	      $this->processCustomizeCustomization( $szOutput );
+	      break;
  	    case roma_mode_downloadFile:
 	      $this->downloadFile( $szOutput );
 	      break;
@@ -1017,6 +1026,32 @@ class roma
 	  $this->appendOutput( $szOutput );
       }
 
+    private function processCustomizeCustomization( &$szOutput )
+      {
+	$szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
+	$szSchemTem = join( '', file(  roma_templateDir . '/customizeCustomization.tem' ) );
+	$this->getParser( $oParser );
+	
+	$oSchemaParser = new parser();
+
+	$this->m_oRomaDom->getCustomizationTitle( $szTitle );
+	$this->m_oRomaDom->getCustomizationAuthor( $szAuthor );
+	$this->m_oRomaDom->getCustomizationDescription( $szDesc );
+
+	$oSchemaParser->AddReplacement( 'title', $szTitle );
+	$oSchemaParser->AddReplacement( 'author', $szAuthor );
+	$oSchemaParser->AddReplacement( 'description', $szDesc );
+	$oSchemaParser->Parse( $szSchemTem, $szSchema );
+	
+	$oParser->addReplacement( 'mode', 'customizeCustomization' );
+	$oParser->addReplacement( 'view', 'customizeCustomization' );
+	$oParser->addReplacement( 'template', $szSchema );
+	$oParser->Parse( $szTemplate, $szOutput );
+
+	$this->appendOutput( $szOutput );
+      }
+
+
     // #####################################################################
     // --- Giving the User something to Save
     // #####################################################################
@@ -1402,6 +1437,14 @@ class roma
 	    $oNotam->setStatus( notam_status_success );
 	    $oNotam->addNotam();
 	  }
+      }
+
+
+    private function customizedCustomization()
+      {
+	$this->m_oRomaDom->setCustomizationTitle( $_REQUEST[ 'title' ] );
+	$this->m_oRomaDom->setCustomizationAuthor( $_REQUEST[ 'author' ] );
+	$this->m_oRomaDom->setCustomizationDescription( $_REQUEST[ 'description' ] );
       }
 
 

@@ -44,7 +44,6 @@ Description
       </td>
       </tr>
     </table>
-    <br/><br/>
    </p>
   </xsl:template>
 

@@ -156,7 +156,7 @@ class notamHandler extends domDocument
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
 
-	$szHTML = $oProc->transformToDoc( $oNotamHandler )->saveXML();
+	$szHTML = chop( $oProc->transformToDoc( $oNotamHandler )->saveHTML() );
       }
 
   }
