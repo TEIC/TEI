@@ -131,6 +131,7 @@ created on <xsl:value-of select="edate:date-time()"/>.
 <xsl:template match="tei:attDef" mode="tangle">
   <xsl:if test="not(@ident='xmlns')">
     <xsl:choose>
+      <xsl:when test="@mode='add'"/>
       <xsl:when test="@usage='req'">
 	<rng:ref name="{ancestor::tei:attList/../@ident}.attributes.{@ident}"/>
       </xsl:when>
@@ -166,7 +167,11 @@ created on <xsl:value-of select="edate:date-time()"/>.
 	<xsl:text>copytag.xq?name=</xsl:text>
 	<xsl:value-of select="parent::tei:elementSpec/@ident"/>
       </xsl:variable>
-      <xsl:for-each
+      <xsl:if test="$verbose">
+	<xsl:message>Accessing TEISERVER: <xsl:value-of
+	select="$loc"/></xsl:message>
+      </xsl:if>
+	<xsl:for-each
 	  select="document($loc)//tei:attDef[not(@ident=current()//tei:attDef/@ident)]">
 	<xsl:choose>
 	  <xsl:when test="@usage='req'">
@@ -469,7 +474,7 @@ created on <xsl:value-of select="edate:date-time()"/>.
 		    <xsl:apply-templates
 		     select="tei:classes/tei:memberOf"
 		     mode="processClassAtts">
-		      <xsl:with-param name="home" select="."/>
+		      <xsl:with-param name="homeIdent" select="@ident"/>
 		    </xsl:apply-templates>
 		  </xsl:when>
 		  <xsl:otherwise>
@@ -478,12 +483,17 @@ created on <xsl:value-of select="edate:date-time()"/>.
 		      <xsl:text>copytag.xq?name=</xsl:text>
 		      <xsl:value-of select="@ident"/>
 		    </xsl:variable>
-		    <xsl:variable name="home" select="."/>
+      <xsl:if test="$verbose">
+	<xsl:message>Accessing TEISERVER: <xsl:value-of
+	select="$loc"/></xsl:message>
+      </xsl:if>
+
+		    <xsl:variable name="homeIdent" select="@ident"/>
 		    <xsl:for-each select="document($loc)/tei:TEI/*">
 		      <xsl:apply-templates
 		       select=".//tei:classes/tei:memberOf"
 		       mode="processClassAtts">
-			<xsl:with-param name="home" select="$home"/>
+			<xsl:with-param name="homeIdent" select="$homeIdent"/>
 		      </xsl:apply-templates>
 		    </xsl:for-each>
 		  </xsl:otherwise>
@@ -545,12 +555,12 @@ created on <xsl:value-of select="edate:date-time()"/>.
 </xsl:template>
 
 <xsl:template match="tei:memberOf" mode="processClassAtts">
-  <xsl:param name="home"/>
+  <xsl:param name="homeIdent"/>
   <xsl:choose>
     <xsl:when  test="key('IDENTS',@key)">
       <xsl:for-each select="key('IDENTS',@key)[1]">
 	<xsl:apply-templates  select="." mode="processClassAtts">
-	  <xsl:with-param name="home"  select="$home"/>
+	  <xsl:with-param name="homeIdent"  select="$homeIdent"/>
 	</xsl:apply-templates>
       </xsl:for-each>
     </xsl:when>
@@ -564,21 +574,26 @@ select="@key"/></xsl:message>
 	<xsl:text>copytag.xq?name=</xsl:text>
 	<xsl:value-of select="@key"/>
       </xsl:variable>
+      <xsl:if test="$verbose">
+	<xsl:message>Accessing TEISERVER: <xsl:value-of
+	select="$loc"/></xsl:message>
+      </xsl:if>
+
       <xsl:apply-templates select="document($loc)/tei:TEI/*" mode="processClassAtts">
-	<xsl:with-param name="home"  select="$home"/>
+	<xsl:with-param name="homeIdent"  select="$homeIdent"/>
       </xsl:apply-templates>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
 
 <xsl:template match="tei:classSpec" mode="processClassAtts">
-  <xsl:param name="home"/>
+  <xsl:param name="homeIdent"/>
   <xsl:choose>
-    <xsl:when test=".//tei:attDef/@ident=$home//tei:attDef/@ident">
+    <xsl:when test=".//tei:attDef[@ident=$homeIdent]">
       <xsl:if test="$verbose='true'">
       <xsl:message>copy of attributes from <xsl:value-of
       select="@ident"/> because of <xsl:value-of
-      select="$home//tei:attDef/@ident"/></xsl:message>
+      select="$homeIdent"/></xsl:message>
       </xsl:if>
       <xsl:for-each select=".//tei:attList">
 	<xsl:choose>
@@ -586,7 +601,7 @@ select="@key"/></xsl:message>
 	    <rng:optional >
 	      <rng:choice >
 		<xsl:for-each select="./tei:attDef">
-		  <xsl:if test="not(@ident='xmlns') and not(@ident=$home//tei:attDef/@ident)">
+		  <xsl:if test="not(@ident='xmlns') and not(@ident=$homeIdent)">
 		    <xsl:call-template name="makeAnAttribute"/>
 		  </xsl:if>
 		</xsl:for-each>
@@ -595,7 +610,7 @@ select="@key"/></xsl:message>
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <xsl:for-each select="./tei:attDef">
-	      <xsl:if test="not(@ident='xmlns')  and not(@ident=$home//tei:attDef/@ident)">
+	      <xsl:if test="not(@ident='xmlns')  and not(@ident=$homeIdent)">
 		<xsl:call-template name="makeAnAttribute"/>
 	      </xsl:if>
 	    </xsl:for-each>
@@ -745,6 +760,11 @@ select="@key"/></xsl:message>
 	<xsl:text>copytag.xq?name=</xsl:text>
 	<xsl:value-of select="@key"/>
       </xsl:variable>
+      <xsl:if test="$verbose">
+	<xsl:message>Accessing TEISERVER: <xsl:value-of
+	select="$loc"/></xsl:message>
+      </xsl:if>
+
       <xsl:apply-templates select="document($loc)/tei:TEI/*" mode="tagatts"/>
     </xsl:otherwise>
   </xsl:choose>
@@ -1214,6 +1234,11 @@ along with this file; if not, write to the
 		<xsl:text>copytag.xq?name=</xsl:text>
 		<xsl:value-of select="ancestor::tei:attList/../@ident"/>
 	      </xsl:variable>
+      <xsl:if test="$verbose">
+	<xsl:message>Accessing TEISERVER: <xsl:value-of
+	select="$loc"/></xsl:message>
+      </xsl:if>
+
 	      <xsl:for-each select="document($loc)/tei:TEI/*">
 		<xsl:for-each
 			 select=".//tei:attList/tei:attDef[@ident=$this]/tei:valList/tei:valItem">
@@ -1361,6 +1386,11 @@ along with this file; if not, write to the
        </xsl:for-each>
      </xsl:when>
      <xsl:otherwise>
+      <xsl:if test="$verbose">
+	<xsl:message>Accessing TEISERVER: <xsl:value-of
+	select="concat($TEISERVER,'classmembers.xq?class=',@ident)"/></xsl:message>
+      </xsl:if>
+
        <xsl:for-each
 	   select="document(concat($TEISERVER,'classmembers.xq?class=',@ident))/list/item">
 	   <xsl:call-template name="showElement">
@@ -1517,6 +1547,11 @@ along with this file; if not, write to the
 	<xsl:text>copytag.xq?name=</xsl:text>
 	<xsl:value-of select="$name"/>
       </xsl:variable>
+      <xsl:if test="$verbose">
+	<xsl:message>Accessing TEISERVER: <xsl:value-of
+	select="$loc"/></xsl:message>
+      </xsl:if>
+
       <xsl:apply-templates select="document($loc)/tei:*" mode="show">
 	<xsl:with-param name="atts" select="$atts"/>
       </xsl:apply-templates>

@@ -305,6 +305,7 @@
 
       <xsl:call-template name="inhnamespace"/>
 
+<!--
       <xsl:choose>
 	<xsl:when test="$retain-prefixes">
 	  <xsl:for-each select="//*">
@@ -348,7 +349,7 @@
 	</xsl:when>
 
 	<xsl:otherwise>
-	  <xsl:for-each select="//rng:element | //rng:attribute">
+	  <xsl:for-each select=".//rng:element | .//rng:attribute">
 	    <xsl:if test="@name [contains (., ':')]">
 	      <xsl:variable name="pfx" select="substring-before (@name, ':')"/>
 	      <xsl:if test="count (key ('prefix', $pfx)[1] | @name) = 1">
@@ -419,7 +420,7 @@
 	  <nl size="1"/>
 	</xsl:if>
       </xsl:for-each>
-
+-->
       <nl size="1"/>
 
       <!-- Pattern -->
