@@ -1,0 +1,411 @@
+2003-01-18  KAWABATA, Taichi  <batta@beige.ocn.ne.jp>
+
+	* ujisx0213.el: mapping errors have been fixed.
+	1-3-29 is changed from U+FE45 to U+FE46
+	1-3-30 is changed from U+FE46 to U+FE45
+
+2003-01-17  MIYASHITA Hisashi  <himi@m17n.org>
+
+	* x0213-sjis.el (mucs-ccl-char-2-write-shift-jisx0213-char):
+	Remove trash, "q".
+
+2003-01-15  MIYASHITA Hisashi  <himi@m17n.org>
+
+	* x0213-sjis.el (mucs-ccl-char-2-write-shift-jisx0213-char): If
+	 the system has eol-automatic-conversion facility, don't convert
+	 lf to crlf even if dos is non-nil.
+	 (mucs-ccl-char-2-write-shift-jisx0213-char): Likewise.
+
+2003-01-11  KAWABATA, Taichi  <batta@beige.ocn.ne.jp>
+
+	* ujisx0213.el: mapping with UCS has been updated.
+	1-1-17 is changed from U+203E to U+FFE3
+	1-1-29 is changed from U+2015 to U+2014
+	1-1-79 is changed from U+00A5 to U+FFE5
+	1-2-54 is changed from U+2985 to U+FF5F
+	1-2-55 is changed from U+2986 to U+FF60
+	1-12-93 is changed from U+2053 to U+2051
+	1-86-4 is changed from U+FA45 to U+69EA
+	1-86-73 is changed from U+FA46 to U+FA45
+	1-86-87 is changed from U+FA47 to U+FA46
+	1-87-5 is changed from U+FA48 to U+FA47
+	1-87-53 is changed from U+FA49 to U+FA48
+	1-88-5 is changed from U+FA4B to U+FA4A
+	1-89-7 is changed from U+FA4C to U+FA4B
+	1-89-19 is changed from U+FA4D to U+FA4C
+	1-89-20 is changed from U+FA4E to U+FA4D
+	1-89-23 is changed from U+FA4F to U+FA4E
+	1-89-24 is changed from U+FA50 to U+FA4F
+	1-89-25 is changed from U+FA51 to U+FA50
+	1-89-27 is changed from U+FA52 to U+FA51
+	1-89-31 is changed from U+FA53 to U+FA52
+	1-89-32 is changed from U+FA54 to U+FA53
+	1-89-45 is changed from U+FA55 to U+FA54
+	1-89-49 is changed from U+FA56 to U+FA55
+	1-89-68 is changed from U+FA57 to U+FA56
+	1-90-14 is changed from U+FA58 to U+FA57
+	1-90-19 is changed from U+FA5A to U+FA59
+	1-90-26 is changed from U+FA5B to U+FA5A
+	1-90-36 is changed from U+FA5C to U+FA5B
+	1-90-56 is changed from U+FA5D to U+FA5C
+	1-91-7 is changed from U+FA60 to U+FA5F
+	1-91-79 is changed from U+FA61 to U+FA60
+	1-91-89 is changed from U+FA62 to U+FA61
+	1-92-15 is changed from U+FA63 to U+FA62
+	1-92-16 is changed from U+FA64 to U+FA63
+	1-92-24 is changed from U+FA65 to U+FA64
+	1-92-29 is changed from U+FA66 to U+FA65
+	1-92-57 is changed from U+FA68 to U+FA67
+	1-93-67 is changed from U+FA69 to U+FA68
+	1-93-86 is changed from U+FA6A to U+FA69
+	1-93-91 is changed from U+FA6B to U+FA6A
+	2-80-9 is changed from U+FA4A to U+FA49
+	2-84-48 is changed from U+FA59 to U+FA58
+	2-85-84 is changed from U+FA5E to U+FA5D
+	2-85-85 is changed from U+FA5F to U+FA5E
+	2-89-73 is changed from U+FA67 to U+FA66
+	2-93-27 is changed from U+9B1C to U+9B1D
+
+	Note: Incompatibility with JIS X 0213 new standard.
+	o All mappings which conflict to ASCII are re-mapped to FULLWIDTH
+	  codepoints.
+	o All mappings which conflict to JIS X 0201 are re-mapped to
+	  FULLWIDTH codepoints.
+
+	Note: Possible incompatibilities with other JIS X 0213 software.
+	1-1-17: Some may map it to U+203E
+	1-1-79: Some may map it to U+00A5
+	1-3-26: Some may map it to U+2299 (not compatible with 0213).
+	2-93-27: Some may map it to U+9B1C (may be right, but official
+	table says it should be mapped to U+9B1D and these two can be
+	explicitly unified under JIS standards.)  
+	Combining characters are still not supported.
+
+2002-07-19  Tatsuya Kinoshita  <tats@iris.ne.jp>
+
+	* x0213-csys.el: Use eval-when-compile for (require 'cl).  (Refer
+	to [emacs-w3m:03635], http://emacs-w3m.namazu.org/ml/msg03630.html,
+	written by Katsumi Yamaoka <yamaoka@jpl.org>.)
+
+	* x0213-cdef.el: Put `x-charset-registry' property of
+	japanese-jisx0213-1 and japanese-jisx0213-2.  (Refer to Debian
+	mule-ucs.)
+
+2001-04-15  KAWABATA, Taichi  <batta@beige.ocn.ne.jp>
+
+	* ujisx0213.el: Add new entries for ISO 10646 PDAM and Unicode
+	3.1.  Among 363 Undefined Kanjis, 1 is moved to basic CJK Unified
+	Ideograph Area (U+9B2D), 60 are moved to CJK Compatibility
+	Ideograph area, and 302 are moved to Extension B area.  
+	
+	Note that 2-94-5 is mapped to U+29FD7, for compatibility with
+	CNS7-2B74.  cf. http://anubis.dkuug.dk/JTC1/SC2/WG2/docs/n2334.pdf
+
+2000-11-21  MIYASHITA Hisashi  <himi@m17n.org>
+
+	* x0213-csys.el (x0213-csys): Define shift_jisx0213
+	coding-system-alias on each eol type.
+
+2000-06-16  MIYASHITA Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* x0213-csys.el ("Japanese"):
+	In coding-priority, remove duplicated coding-systems
+	in terms of coding-category.
+
+2000-06-14  MIYASHITA Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* x0213-csys.el ("Japanese"): 
+	Append utf-8, utf-16-le, and utf-16-be to coding-priority.
+	However, if the candidate coding-system symbol is not really
+	a coding-system, exclude it from the coding priority.
+
+2000-06-03  MIYASHITA Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* x0213-font.el (shift-jisx0213-font-encoder):
+	On Meadow, regist this encoder for Shift_JISX0213 fonts.
+
+	* readme.txt: Add description on font configuration for Meadow.
+
+2000-04-15  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* x0213-udef.el:
+	Put `translation-rule-for-unicode' property of japanese-jisx0213-1
+	and japanese-jisx0213-2.
+
+2000-03-21  KAWABATA, Taichi <batta@beige.ocn.ne.jp>
+
+	* readme.txt:
+	Append descriptions on JIS X 0213 dictionaries.
+
+2000-03-16  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* readme.txt:
+	Add comments on x0213-sjis.el and remove the notice on
+	japanese-shift-jisx0213	coding-system.
+
+	* x0213-csys.el (jisx0213-shift-jis-template):
+	Bug fix.  If macp is enable and read is emacs-mule,
+	convert LF to CR, and read is NOT emacs-mule, convert
+	CR to LF.
+	(shift-jisx0213-mac-stream-encoder):
+	(shift-jisx0213-mac-stream-decoder):
+	Use emacs-mule instead of emacs-mule-dos for serialization
+	or unserialization method.
+
+	* x0213-mime.el (coding-system-for-mime-charset-iso-2022-jp-3):
+	Set the default value to iso-2022-jp-3-strict.
+
+	* ujisx0213.el:
+	Enable U+6677(Plain 1 row 85 cell 32).
+
+2000-03-15  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* x0213-mime.el 
+	(mime-charset-iso-2022-jp-3-compatible-p):
+	Replaced with the below variable.
+	(coding-system-for-mime-charset-iso-2022-jp-3):
+	New variable that specifies a coding system used by
+	MIME charset `ISO-2022-JP-3'.
+	(setup-iso-2022-jp-3-mcharset-environment):
+	Use the above variable when setting
+	mime-charset-coding-system-alist.
+	(x0213-mime):
+	Provide x0213-mime feature instead of x0213-sup.
+
+	* x0213-csys.el (x0213-sjis):
+	Require this at byte-compile time.
+	Now needless to require x0213-font.
+	(ccl-decode-sjisx0213):
+	(ccl-encode-sjisx0213):
+	Removed.
+	(japanese-shift-jisx0213):
+	Don't directly call make-coding-system in order to
+	create japanese-shift-jisx0213.  Use Mule-UCS facility instead.
+	(jisx0213-shift-jis-plain-2-odd-decode-map):
+	(jisx0213-shift-jis-plain-2-even-decode-map):
+	New code conversion map.  It is evaled also at byte-compile time.
+	(shift-jisx0213-coding-system-alist):
+	New variable.
+	(jisx0213-shift-jis-template):
+	New function.  This function is used only at byte-compile time.
+	(x0213-csys):
+	New Mule-UCS package.
+	(shift-jisx0213-unix-stream-encoder):
+	(shift-jisx0213-unix-stream-decoder):
+	(shift-jisx0213-dos-stream-encoder):
+	(shift-jisx0213-dos-stream-decoder):
+	(shift-jisx0213-mac-stream-encoder):
+	(shift-jisx0213-mac-stream-decoder):
+	New conversions for Shift-JISX0213.
+	(japanese-shift-jisx0213-unix):
+	(japanese-shift-jisx0213-dos):
+	(japanese-shift-jisx0213-mac):
+	(japanese-shift-jisx0213):
+	Coding system definitions for Shift-JISX0213.
+	And set alias-coding-systems property for these.
+	(shift_jisx0213):
+	Alias of japanese-shift-jisx0213.
+	("Japanese"):
+	Set 'coding-priority and coding-system property of
+	Japanese language info. to japanese-shift-jisx0213
+	nstead of japanese-shift-jis.
+
+	* x0213-mime.el:
+	Renamed x0213-sup.el to x0213-mime.el.
+
+	* jisx0213.el (x0213-mime):
+	corresponds to the above change.
+
+	* x0213-comp.el (compile-file-list-1st):
+	Likewise.
+
+	* x0213-udef.el:
+	Remove byte-compile-dynamic option.
+
+	* x0213-font.el (ccl-encode-shiftjis-font):
+	Reconstruct this by using en-sjis and
+	jisx0213-shift-jis-plain-2-encode-table.
+
+	* x0213-sjis.el:
+	New module for Shift-JIS encoding or decoding.
+
+2000-03-13  KAWABATA, Taichi <batta@beige.ocn.ne.jp>
+
+	* readme.txt:
+	Rewrite on coding system description.
+
+	* x0213-csys.el
+	(make-jisx0208-to-0213-translation-pair)
+	(make-jisx0208-to-0213-translation-pairs)
+	(make-jisx0213-to-0208-translation-pairs): New functions
+	(jisx0208-to-jisx0213-restricted): New translation table which
+	translates non-ISO-2022-JP-3 conformant JIS X 0208 to JIS X 0213.
+	(iso-2022-jp-3-strict): New coding-system based on newly
+	introduced translation table.
+
+2000-03-13  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* x0213-sup.el (setup-iso-2022-jp-3-mcharset-environment):
+	Bug fix.  Use coding-system-p to check 'iso-2022-jp-3-compatible.
+
+2000-03-10  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* readme.txt:
+	Add notice on iso-2022-jp-3-compatible coding systems
+	written by Kawabata-san.
+
+	* readme.txt:
+	Add notice on japanese-shift-jisx0213.
+
+	* x0213-csys.el ("Japanese"):
+	Because japanese-shift-jisx0213 is incomplete,
+	set 'coding-priority to japanese-shift-jis instead of
+	japanese-shift-jisx0213.
+
+	* x0213-sup.el (setup-iso-2022-jp-3-mcharset-environment):
+	When Emacs cannot find iso-2022-jp-3-compatible,
+	output a warning message, and set iso-2022-jp-3 as a
+	coding system for `iso-2022-jp-3' mime charset.
+
+	* readme.txt:
+	Append descriptions on ShiftJIS font by Kawabata-san.
+
+	* x0213-comp.el (compile-file-list-1st):
+	Add x0213-sup.el.
+
+	* jisx0213.el (x0213-sup):
+	Require x0213-sup.
+
+	* x0213-sup.el:
+	New module for supplement configurations, e.g., internet
+	message configuration for APEL, FLIM, and SEMI.
+
+2000-03-09  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* x0213-csys.el (ccl-decode-sjisx0213):
+	Optimized a little.
+
+2000-03-09  KAWABATA, Taichi  <batta@beige.ocn.ne.jp>
+
+	* x0213-csys.el
+	(iso-2022-jp-3):This coding system converts all JIS X 0208
+	characters to JIS X 0213 before encoding.
+	(iso-2022-jp-3-compatible):This coding system converts all JIS X
+	0213 characters to JIS X 0208 if possible before encoding.  This
+	coding system is backward-compatible with iso-2022-jp.
+	(set-language-info):replace iso-2022-jp-3 to
+	iso-2022-jp-3-compatible in coding-priority of Japanese.
+
+2000-03-08  KAWABATA, Taichi  <batta@beige.ocn.ne.jp>
+
+	* x0213-csys.el
+	Modify iso-2022-jp-3 coding-system definition so that it produces
+	iso-2022-jp compatible text if the text only uses JIS X 0208
+	characters.
+
+2000-03-07  KAWABATA, Taichi  <batta@beige.ocn.ne.jp>
+
+	* x0213-cdef.el
+	Modify language-info-alist to reflect the definition of new
+	charsets.
+	* x0213-csys.el
+	Modify language-info-alist to reflect the definition of new
+	coding-systems.
+
+2000-02-29  KAWABATA, Taichi  <batta@beige.ocn.ne.jp>
+
+	* x0213-font.el:
+	Change default 16-dot font registry of JIS X0213 2nd plane to 
+	"*jisx0213.2000-2".
+	* x0213-util.el:
+	(jisx0208-to-jisx0213):fixed bugs of no repetition.
+	(jisx0213-to-jisx0208):likewise
+	* ujisx0213.el:
+	reflect newest conversion table.
+
+2000-02-24  KAWABATA, Taichi  <batta@beige.ocn.ne.jp>
+
+	* readme.txt: Append the URIs of JIS X 0213 BDF fonts.
+
+2000-02-23  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* x0213-cdef.el (japanese-jisx0213-1):
+	Use 151 as charset-id.
+
+	* x0213-csys.el (make-list-of-range):
+	Renamed from range, which is originally made by Kawabata-san.
+	(jisx0213-to-jisx0208/0212):
+	Adapted to the above change.
+
+2000-02-23  KAWABATA, Taichi  <batta@beige.ocn.ne.jp>
+
+	* x0213-csys.el:
+	(jisx0208/0212-to-jisx0213): new translation-table.
+	(jisx0213-to-jisx0208/0212): rewrite of jisx0213-to-jisx0208.
+	(iso-2022-jp-3):
+	(euc-jisx0213):
+	jisx0212 characters will be converted to the same codepoint of
+	jisx0213-2 before encoding, and vice versa after decoding.
+
+	* x0213-util.el:
+	(jisx0213-to-jisx0208): use new translation-table
+	jisx0213-to-jisx0208/0212.
+
+	* x0213-char.el:
+	Remove tentative character name braces ("[...]") so that
+	sort-char-by-charname works properly.
+
+	* egg-sim-jisx0213.el:
+	(egg-sim-jisx0213-menu):
+	Fixed bug of inputting JIS X 0213 2nd plane.
+	Diacritical latin characters are sorted before listed for input.
+
+2000-02-22  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* ujisx0213.el:
+	Split jis-x-0213-2000-vs-unicode-assoc into
+	jis-x-0213-1-2000-vs-unicode-assoc and
+	jis-x-0213-2-2000-vs-unicode-assoc.
+
+	* x0213-csys.el:
+	require 'x0213-font.
+
+	* x0213-char.el:
+	New module.
+
+	* x0213-comp.el (compile-file-list-1st):
+	Add x0213-char.el.
+	
+	* egg-sim-jisx0213.el:
+	Require x0213-util.el instead of jisx0213-util.el.
+	Also require x0213-char.el.
+
+	* readme.txt:
+	Bug fix on compilation.  And change explanations on font setup.
+	(Thanks KAWABATA-san.)
+
+	* x0213-font.el:
+	Only when window-system is valid, set up fontset
+	for JIS X 0213.
+
+	* x0213-comp.el (compile-file-list-1st):
+	uncomment the filename of x0213-csys.el.
+	And byte-compile x0213-font.el earlier than x0213-csys.el
+	and x0213-util.el.
+
+2000-02-21  Miyashita Hisashi  <himi@bird.scphys.kyoto-u.ac.jp>
+
+	* x0213-util.el: 
+	* x0213-udef.el: 
+	* x0213-font.el: 
+	* x0213-csys.el: 
+	* x0213-comp.el: 
+	* x0213-cdef.el: 
+	* ujisx0213.el: 
+	* readme.txt: 
+	* jisx0213.el: 
+	* egg-sim-jisx0213.el:
+	New modules for JIS X 0213 support.
+	
+	
+

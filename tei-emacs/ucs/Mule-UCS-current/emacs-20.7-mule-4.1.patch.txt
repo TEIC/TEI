@@ -1,0 +1,2474 @@
+// 2001/08/29: 2nd release, includes fix (1), (2), (3) and (a).
+// 2000/06/16: 1st release, includes fix (1).
+
+This is unofficial patch for Emacs 20.7 (with MULE 4.0) to upgrade Emacs
+20.7 (with MULE 4.1).  In this context, MULE stands for "Multilingal
+Environment", not "MULtilingal enhancement to GNU Emacs".
+
+Note that this patch also contains several fixes below;
+
+(1) A fix for CCL interpretor (some problem on MapMultiple instraction).
+    Patch from Miyashita Hisashi who also known as "himi".  The original
+    patch can be found in Mule-UCS 0.80.
+
+(2) A fix for building problem under Windows.  Patch from KOSEKI
+    Yoshinori (in meadow-users-jp)
+
+(3) A fix for the problem of invalid post-read-conversion with
+    decode-coding-string(). Patch from Miyashita Hisashi (in mule-ja)
+
+(a) Define a new target (bytecomp) to easy building.  Patch from Katsumi
+    Yamaoka (in mule-ja)
+
+This patch is provided by the author "as is" and any express or implied
+warranties are disclaimed.
+
+How to apply:
+	% tar xzvf emacs-20.7.tar.gz
+	% tar xzvf leim-20.7.tar.gz
+	% cd emacs-20.7
+        % patch -p1 < somewhere/emacs-20.7-mule-4.1.patch
+	% sh configure
+	% make
+	% make install
+
+-- 
+Satoshi Yatagawa <yatagawa@cc.teu.ac.jp>
+diff -ur emacs-20.7/lisp/international/ccl.el emacs-20.7-mule-4.1/lisp/international/ccl.el
+--- emacs-20.7/lisp/international/ccl.el	Sat May 20 20:57:06 2000
++++ emacs-20.7-mule-4.1/lisp/international/ccl.el	Thu Aug 30 09:32:54 2001
+@@ -249,6 +249,13 @@
+     (aset ccl-program-vector ccl-current-ic data)
+     (setq ccl-current-ic (1+ ccl-current-ic))))
+ 
++;; Embed pair of SYMBOL and PROP where (get SYMBOL PROP) should give
++;; proper index number for SYMBOL.  PROP should be
++;; `translation-table-id', `code-conversion-map-id', or
++;; `ccl-program-idx'.
++(defun ccl-embed-symbol (symbol prop)
++  (ccl-embed-data (cons symbol prop)))
++
+ ;; Embed string STR of length LEN in `ccl-program-vector' at
+ ;; `ccl-current-ic'.
+ (defun ccl-embed-string (len str)
+@@ -312,18 +319,6 @@
+ (defun ccl-increment-ic (inc)
+   (setq ccl-current-ic (+ ccl-current-ic inc)))
+ 
+-;;;###autoload
+-(defun ccl-program-p (obj)
+-  "T if OBJECT is a valid CCL compiled code."
+-  (and (vectorp obj)
+-       (let ((i 0) (len (length obj)) (flag t))
+-	 (if (> len 1)
+-	     (progn
+-	       (while (and flag (< i len))
+-		 (setq flag (integerp (aref obj i)))
+-		 (setq i (1+ i)))
+-	       flag)))))
+-
+ ;; If non-nil, index of the start of the current loop.
+ (defvar ccl-loop-head nil)
+ ;; If non-nil, list of absolute addresses of the breaking points of
+@@ -842,11 +837,8 @@
+       (error "CCL: Invalid number of arguments: %s" cmd))
+   (if (not (symbolp (nth 1 cmd)))
+       (error "CCL: Subroutine should be a symbol: %s" cmd))
+-  (let* ((name (nth 1 cmd))
+-	 (idx (get name 'ccl-program-idx)))
+-    (if (not idx)
+-	(error "CCL: Unknown subroutine name: %s" name))
+-    (ccl-embed-code 'call 0 idx))
++  (ccl-embed-code 'call 1 0)
++  (ccl-embed-symbol (nth 1 cmd) 'ccl-program-idx)
+   nil)
+ 
+ ;; Compile END statement.
+@@ -892,7 +884,7 @@
+ 	       (error "CCL: Invalid translation table %s in %s" Rrr cmd))
+ 	   (ccl-embed-extended-command 'translate-character-const-tbl
+ 				       rrr RRR 0)
+-	   (ccl-embed-data Rrr))
++	   (ccl-embed-symbol Rrr 'translation-table-id))
+ 	  (t
+ 	   (ccl-check-register Rrr cmd)
+ 	   (ccl-embed-extended-command 'translate-character rrr RRR Rrr))))
+@@ -939,7 +931,7 @@
+     (ccl-embed-extended-command 'map-single rrr RRR 0)
+     (cond ((symbolp map)
+ 	   (if (get map 'code-conversion-map)
+-	       (ccl-embed-data map)
++	       (ccl-embed-symbol map 'code-conversion-map-id)
+ 	     (error "CCL: Invalid map: %s" map)))
+ 	  (t
+ 	   (error "CCL: Invalid type of arguments: %s" cmd))))
+@@ -960,7 +952,7 @@
+       (setq map (car args))
+       (cond ((symbolp map)
+ 	     (if (get map 'code-conversion-map)
+-		 (ccl-embed-data map)
++		 (ccl-embed-symbol map 'code-conversion-map-id)
+ 	       (error "CCL: Invalid map: %s" map)))
+ 	    ((numberp map)
+ 	     (ccl-embed-data map))
+@@ -1295,8 +1287,12 @@
+ (defmacro declare-ccl-program (name &optional vector)
+   "Declare NAME as a name of CCL program.
+ 
+-To compile a CCL program which calls another CCL program not yet
+-defined, it must be declared as a CCL program in advance.
++This macro exists for backward compatibility.  In the old version of
++Emacs, to compile a CCL program which calls another CCL program not
++yet defined, it must be declared as a CCL program in advance.  But,
++now CCL program names are resolved not at compile time but before
++execution.
++
+ Optional arg VECTOR is a compiled CCL code of the CCL program."
+   `(put ',name 'ccl-program-idx (register-ccl-program ',name ,vector)))
+ 
+@@ -1313,20 +1309,16 @@
+ ;;;###autoload
+ (defmacro check-ccl-program (ccl-program &optional name)
+   "Check validity of CCL-PROGRAM.
+-If CCL-PROGRAM is a symbol denoting a valid CCL program, return
++If CCL-PROGRAM is a symbol denoting a CCL program, return
+ CCL-PROGRAM, else return nil.
+ If CCL-PROGRAM is a vector and optional arg NAME (symbol) is supplied,
+ register CCL-PROGRAM by name NAME, and return NAME."
+-  `(let ((result ,ccl-program))
+-     (cond ((symbolp ,ccl-program)
+-	    (or (numberp (get ,ccl-program 'ccl-program-idx))
+-		(setq result nil)))
+-	   ((vectorp ,ccl-program)
+-	    (setq result ,name)
+-	    (register-ccl-program result ,ccl-program))
+-	   (t
+-	    (setq result nil)))
+-     result))
++  `(if (ccl-program-p ,ccl-program)
++       (if (vectorp ,ccl-program)
++	   (progn
++	     (register-ccl-program ,name ,ccl-program)
++	     ,name)
++	 ,ccl-program)))
+ 
+ ;;;###autoload
+ (defun ccl-execute-with-args (ccl-prog &rest args)
+diff -ur emacs-20.7/lisp/international/mule-cmds.el emacs-20.7-mule-4.1/lisp/international/mule-cmds.el
+--- emacs-20.7/lisp/international/mule-cmds.el	Thu Dec  2 16:42:38 1999
++++ emacs-20.7-mule-4.1/lisp/international/mule-cmds.el	Thu Aug 30 09:32:54 2001
+@@ -1191,16 +1191,22 @@
+ 	coding-category-raw-text	'raw-text
+ 	coding-category-sjis		'japanese-shift-jis
+ 	coding-category-big5		'chinese-big5
++	coding-category-utf-8           nil
++	coding-category-utf-16-be       nil
++	coding-category-utf-16-le       nil
+ 	coding-category-ccl		nil
+ 	coding-category-binary		'no-conversion)
+ 
+   (set-coding-priority
+-   '(coding-category-iso-8-1
++   '(coding-category-utf-16-be
++     coding-category-utf-16-le
++     coding-category-iso-8-1
+      coding-category-iso-8-2
+      coding-category-iso-7-tight
+      coding-category-iso-7
+      coding-category-iso-7-else
+      coding-category-iso-8-else
++     coding-category-utf-8
+      coding-category-emacs-mule 
+      coding-category-raw-text
+      coding-category-sjis
+diff -ur emacs-20.7/lisp/international/mule-conf.el emacs-20.7-mule-4.1/lisp/international/mule-conf.el
+--- emacs-20.7/lisp/international/mule-conf.el	Fri Jun  4 08:27:31 1999
++++ emacs-20.7-mule-4.1/lisp/international/mule-conf.el	Thu Aug 30 09:32:54 2001
+@@ -351,17 +351,23 @@
+       coding-category-iso-7-else	'iso-2022-7bit-lock
+       coding-category-iso-8-else	'iso-2022-8bit-ss2
+       coding-category-ccl		nil
++      coding-category-utf-8             nil
++      coding-category-utf-16-be         nil
++      coding-category-utf-16-le         nil
+       coding-category-big5		'chinese-big5
+       coding-category-raw-text		'raw-text
+       coding-category-binary		'no-conversion)
+ 
+ (set-coding-priority
+- '(coding-category-iso-8-1
++ '(coding-category-utf-16-be
++   coding-category-utf-16-le
++   coding-category-iso-8-1
+    coding-category-iso-8-2
+    coding-category-iso-7-tight
+    coding-category-iso-7
+    coding-category-iso-7-else
+    coding-category-iso-8-else
++   coding-category-utf-8
+    coding-category-emacs-mule
+    coding-category-raw-text
+    coding-category-sjis 
+diff -ur emacs-20.7/lisp/international/mule.el emacs-20.7-mule-4.1/lisp/international/mule.el
+--- emacs-20.7/lisp/international/mule.el	Thu Dec  2 20:25:27 1999
++++ emacs-20.7-mule-4.1/lisp/international/mule.el	Thu Aug 30 09:32:54 2001
+@@ -24,10 +24,10 @@
+ 
+ ;;; Code:
+ 
+-(defconst mule-version "4.0 (HANANOEN)" "\
++(defconst mule-version "4.1 (AOI)" "\
+ Version number and name of this version of MULE (multilingual environment).")
+ 
+-(defconst mule-version-date "1998.7.1" "\
++(defconst mule-version-date "1999.7.30" "\
+ Distribution date of this version of MULE (multilingual environment).")
+ 
+ (defun load-with-code-conversion (fullname file &optional noerror nomessage)
+@@ -306,8 +306,9 @@
+ ;; o coding-category
+ ;;
+ ;; The value is a coding category the coding system belongs to.  The
+-;; function `make-coding-system' and `define-coding-system-alias' sets
+-;; this value automatically.
++;; function `make-coding-system' sets this value automatically 
++;; unless PROPERTIES(the argument) have any `coding-category' slots.
++;; `define-coding-system-alias' only inherits this value.
+ ;;
+ ;; o alias-coding-systems
+ ;;
+@@ -522,7 +523,10 @@
+     subsidiaries))
+ 
+ (defun make-coding-system (coding-system type mnemonic doc-string
+-					 &optional flags properties)
++					 &optional
++					 flags
++					 properties
++					 eol-type)
+   "Define a new coding system CODING-SYSTEM (symbol).
+ Remaining arguments are TYPE, MNEMONIC, DOC-STRING, FLAGS (optional), 
+ and PROPERTIES (optional) which construct a coding-spec of CODING-SYSTEM
+@@ -583,6 +587,21 @@
+ also sets properties `coding-category' and `alias-coding-systems'
+ automatically.
+ 
++EOL-TYPE specifies an EOL type of the coding-system in
++one of the following formats: 
++1. symbol
++     The candidates are unix(UNIX(LF) type EOL),
++     dos(DOS(CRLF) type EOL) , or mac(MAC(CR) type EOL)
++     currently.
++2. vector of coding-systems. (The length must be 3.)
++     The EOL type is undecided. When this coding-system is selected,
++     an EOL type is selected among the specified coding-systems.
++     The first one is for UNIX type EOL, the second one is
++     for DOS type EOL, and the third one is for MAC type EOL.
++3. number
++     0, 1, and 2 means UNIX, DOS, and MAC type EOL respectively,
++     any other numbers are forbidden.
++
+ Kludgy features for backward compatibility:
+ 
+ 1. If TYPE is 4 and car or cdr of FLAGS is a vector, the vector is
+@@ -695,18 +714,37 @@
+ 	  (while l
+ 	    (plist-put plist (car (car l)) (cdr (car l)))
+ 	    (setq l (cdr l)))))
++      (setq coding-category (plist-get plist 'coding-category))
+       (aset coding-spec coding-spec-plist-idx plist))
+     (put coding-system 'coding-system coding-spec)
+     (put coding-category 'coding-systems
+ 	 (cons coding-system (get coding-category 'coding-systems))))
+ 
+-  ;; Next, set a value of `eol-type' property.  The value is a vector
+-  ;; of subsidiary coding systems, each corresponds to a coding system
++  ;; Next, set a value of `eol-type' property.
++  (if (and (not eol-type)
++	   (or (<= type 3) (= type 5)))
++  ;; If the argument eol-type is not specified, set a vector
++  ;; of subsidiary coding systems,
++  ;; each corresponds to a coding system
+   ;; for the detected end-of-line format.
+-  (put coding-system 'eol-type
+-       (if (or (<= type 3) (= type 5))
+-	   (make-subsidiary-coding-system coding-system)
+-	 0))
++      (setq eol-type (make-subsidiary-coding-system coding-system)))
++  (setq eol-type
++	(cond ((eq eol-type 'unix)
++	       0)
++	      ((eq eol-type 'dos)
++	       1)
++	      ((eq eol-type 'mac)
++	       2)
++	      ((or (null eol-type)
++		   (and (vectorp eol-type)
++			(= (length eol-type) 3))
++		   (and (numberp eol-type)
++			(and (>= eol-type 0)
++			     (<= eol-type 2))))
++	       eol-type)
++	      (t
++	       (error "Invalid EOL-TYPE spec:%S" eol-type))))
++  (put coding-system 'eol-type eol-type)
+ 
+   ;; At last, register CODING-SYSTEM in `coding-system-list' and
+   ;; `coding-system-alist'.
+diff -ur emacs-20.7/lisp/international/titdic-cnv.el emacs-20.7-mule-4.1/lisp/international/titdic-cnv.el
+--- emacs-20.7/lisp/international/titdic-cnv.el	Tue Apr 14 10:04:19 1998
++++ emacs-20.7-mule-4.1/lisp/international/titdic-cnv.el	Thu Aug 30 09:32:54 2001
+@@ -335,7 +335,7 @@
+     (set-buffer-file-coding-system 'iso-2022-7bit)
+     (let ((standard-output (current-buffer)))
+       (with-temp-buffer
+-	(let ((coding-system-for-read 'no-conversion))
++	(let ((coding-system-for-read 'raw-text))
+ 	  (insert-file-contents (expand-file-name filename)))
+ 	(set-buffer-multibyte t)
+ 	
+diff -ur emacs-20.7/lisp/loaddefs.el emacs-20.7-mule-4.1/lisp/loaddefs.el
+--- emacs-20.7/lisp/loaddefs.el	Thu Jul 15 01:41:03 1999
++++ emacs-20.7-mule-4.1/lisp/loaddefs.el	Thu Aug 30 09:32:54 2001
+@@ -2100,13 +2100,10 @@
+ ;;;***
+ 
+ ;;;### (autoloads (ccl-execute-with-args check-ccl-program define-ccl-program
+-;;;;;;  declare-ccl-program ccl-dump ccl-compile ccl-program-p) "ccl"
+-;;;;;;  "international/ccl.el" (13993 12532))
++;;;;;;  declare-ccl-program ccl-dump ccl-compile) "ccl" "international/ccl.el"
++;;;;;;  (14236 17288))
+ ;;; Generated autoloads from international/ccl.el
+ 
+-(autoload (quote ccl-program-p) "ccl" "\
+-T if OBJECT is a valid CCL compiled code." nil nil)
+-
+ (autoload (quote ccl-compile) "ccl" "\
+ Return a compiled code of CCL-PROGRAM as a vector of integer." nil nil)
+ 
+@@ -2116,8 +2113,12 @@
+ (autoload (quote declare-ccl-program) "ccl" "\
+ Declare NAME as a name of CCL program.
+ 
+-To compile a CCL program which calls another CCL program not yet
+-defined, it must be declared as a CCL program in advance.
++This macro exists for backward compatibility.  In the old version of
++Emacs, to compile a CCL program which calls another CCL program not
++yet defined, it must be declared as a CCL program in advance.  But,
++now CCL program names are resolved not at compile time but before
++execution.
++
+ Optional arg VECTOR is a compiled CCL code of the CCL program." nil (quote macro))
+ 
+ (autoload (quote define-ccl-program) "ccl" "\
+@@ -2127,7 +2128,7 @@
+ 
+ (autoload (quote check-ccl-program) "ccl" "\
+ Check validity of CCL-PROGRAM.
+-If CCL-PROGRAM is a symbol denoting a valid CCL program, return
++If CCL-PROGRAM is a symbol denoting a CCL program, return
+ CCL-PROGRAM, else return nil.
+ If CCL-PROGRAM is a vector and optional arg NAME (symbol) is supplied,
+ register CCL-PROGRAM by name NAME, and return NAME." nil (quote macro))
+diff -ur emacs-20.7/lisp/loadup.el emacs-20.7-mule-4.1/lisp/loadup.el
+--- emacs-20.7/lisp/loadup.el	Mon May 10 20:42:12 1999
++++ emacs-20.7-mule-4.1/lisp/loadup.el	Thu Aug 30 09:32:54 2001
+@@ -285,6 +285,8 @@
+ ;; Avoid error if user loads some more libraries now.
+ (setq purify-flag nil)
+ 
++(setq toggle-debug-on-error t)
++
+ ;; For machines with CANNOT_DUMP defined in config.h,
+ ;; this file must be loaded each time Emacs is run.
+ ;; So run the startup code now.  First, remove `-l loadup' from args.
+diff -ur emacs-20.7/src/Makefile.in emacs-20.7-mule-4.1/src/Makefile.in
+--- emacs-20.7/src/Makefile.in	Mon Apr 26 14:19:42 1999
++++ emacs-20.7-mule-4.1/src/Makefile.in	Thu Aug 30 09:34:15 2001
+@@ -804,7 +804,14 @@
+ #define OBJECTS_MACHINE
+ #endif
+ 
+-all: emacs OTHER_FILES
++all: emacs bytecomp OTHER_FILES
++
++bytecomp: emacs
++	./emacs -batch -q -f batch-byte-compile \
++	${lispsource}ange-ftp.el ${lispsource}international/ccl.el \
++	${lispsource}international/mule-cmds.el \
++	${lispsource}international/mule.el \
++	${lispsource}international/titdic-cnv.el
+ 
+ emacs: temacs ${etc}DOC ${lisp}
+ #ifdef CANNOT_DUMP
+diff -ur emacs-20.7/src/callproc.c emacs-20.7-mule-4.1/src/callproc.c
+--- emacs-20.7/src/callproc.c	Wed May 24 22:58:24 2000
++++ emacs-20.7-mule-4.1/src/callproc.c	Thu Aug 30 09:32:54 2001
+@@ -358,6 +358,7 @@
+ 
+   display = nargs >= 4 ? args[3] : Qnil;
+ 
++  infile = ENCODE_FILE (infile);
+   filefd = open (XSTRING (infile)->data, O_RDONLY, 0);
+   if (filefd < 0)
+     {
+@@ -482,6 +483,7 @@
+     else if (STRINGP (error_file))
+       {
+ #ifdef DOS_NT
++	error_file = ENCODE_FILE (error_file);
+ 	fd_error = open (XSTRING (error_file)->data,
+ 			 O_WRONLY | O_TRUNC | O_CREAT | O_TEXT,
+ 			 S_IREAD | S_IWRITE);
+diff -ur emacs-20.7/src/ccl.c emacs-20.7-mule-4.1/src/ccl.c
+--- emacs-20.7/src/ccl.c	Sat Feb 26 19:11:31 2000
++++ emacs-20.7-mule-4.1/src/ccl.c	Thu Aug 30 09:32:54 2001
+@@ -19,16 +19,14 @@
+ the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ Boston, MA 02111-1307, USA.  */
+ 
+-#include <stdio.h>
+-
+ #ifdef emacs
+-
+ #include <config.h>
+-
+-#ifdef STDC_HEADERS
+-#include <stdlib.h>
+ #endif
+ 
++#include <stdio.h>
++
++#ifdef emacs
++
+ #include "lisp.h"
+ #include "charset.h"
+ #include "ccl.h"
+@@ -59,7 +57,11 @@
+    is an index for Vccl_protram_table. */
+ Lisp_Object Qccl_program_idx;
+ 
+-/* Vector of CCL program names vs corresponding program data.  */
++/* Table of registered CCL programs.  Each element is a vector of
++   NAME, CCL_PROG, and RESOLVEDP where NAME (symbol) is the name of
++   the program, CCL_PROG (vector) is the compiled code of the program,
++   RESOLVEDP (t or nil) is the flag to tell if symbols in CCL_PROG is
++   already resolved to index numbers or not.  */
+ Lisp_Object Vccl_program_table;
+ 
+ /* CCL (Code Conversion Language) is a simple language which has
+@@ -291,10 +293,15 @@
+ 					*/
+ 
+ #define CCL_Call		0x13 /* Call the CCL program whose ID is
+-					(CC..C).
+-					1:CCCCCCCCCCCCCCCCCCCC000XXXXX
+-					------------------------------
+-					call (CC..C)
++					CC..C or cc..c.
++					1:CCCCCCCCCCCCCCCCCCCCFFFXXXXX
++					[2:00000000cccccccccccccccccccc]
++					------------------------------
++					if (FFF)
++					  call (cc..c)
++					  IC++;
++					else
++					  call (CC..C)
+ 					*/
+ 
+ #define CCL_WriteConstString	0x14 /* Write a constant or a string:
+@@ -530,7 +537,10 @@
+    At first, VAL0 is set to reg[rrr], and it is translated by the
+    first map to VAL1.  Then, VAL1 is translated by the next map to
+    VAL2.  This mapping is iterated until the last map is used.  The
+-   result of the mapping is the last value of VAL?.
++   result of the mapping is the last value of VAL?.  When the mapping
++   process reached to the end of the map set, it moves to the next
++   map set.  If the next does not exit, the mapping process terminates,
++   and regard the last value as a result.
+ 
+    But, when VALm is mapped to VALn and VALn is not a number, the
+    mapping proceed as below:
+@@ -541,8 +551,12 @@
+    In VALn is t, VALm is reverted to reg[rrr] and the mapping of VALm
+    proceed to the next map.
+ 
+-   If VALn is lambda, the whole mapping process terminates, and VALm
+-   is the result of this mapping.
++   If VALn is lambda, move to the next map set like reaching to the
++   end of the current map set.
++
++   If VALn is a symbol, call the CCL program refered by it.
++   Then, use reg[rrr] as a mapped value except for -1, -2 and -3.
++   Such special values are regarded as nil, t, and lambda respectively.
+ 
+    Each map is a Lisp vector of the following format (a) or (b):
+ 	(a)......[STARTPOINT VAL1 VAL2 ...]
+@@ -570,7 +584,7 @@
+ 					 N:SEPARATOR_z (< 0)
+ 				      */
+ 
+-#define MAX_MAP_SET_LEVEL 20
++#define MAX_MAP_SET_LEVEL 30
+ 
+ typedef struct
+ {
+@@ -581,19 +595,44 @@
+ static tr_stack mapping_stack[MAX_MAP_SET_LEVEL];
+ static tr_stack *mapping_stack_pointer;
+ 
+-#define PUSH_MAPPING_STACK(restlen, orig)                 \
+-{                                                           \
+-  mapping_stack_pointer->rest_length = (restlen);         \
+-  mapping_stack_pointer->orig_val = (orig);               \
+-  mapping_stack_pointer++;                                \
+-}
++/* If this variable is non-zero, it indicates the stack_idx
++   of immediately called by CCL_MapMultiple. */
++static int stack_idx_of_map_multiple = 0;
++
++#define PUSH_MAPPING_STACK(restlen, orig)		\
++  do {							\
++    mapping_stack_pointer->rest_length = (restlen);	\
++    mapping_stack_pointer->orig_val = (orig);		\
++    mapping_stack_pointer++;				\
++  } while (0)
+ 
+-#define POP_MAPPING_STACK(restlen, orig)                  \
+-{                                                           \
+-  mapping_stack_pointer--;                                \
+-  (restlen) = mapping_stack_pointer->rest_length;         \
+-  (orig) = mapping_stack_pointer->orig_val;               \
+-}                                                           \
++#define POP_MAPPING_STACK(restlen, orig)		\
++  do {							\
++    mapping_stack_pointer--;				\
++    (restlen) = mapping_stack_pointer->rest_length;	\
++    (orig) = mapping_stack_pointer->orig_val;		\
++  } while (0)
++
++#define CCL_CALL_FOR_MAP_INSTRUCTION(symbol, ret_ic)		\
++  do {								\
++    struct ccl_program called_ccl;				\
++    if (stack_idx >= 256					\
++	|| (setup_ccl_program (&called_ccl, (symbol)) != 0))	\
++      {								\
++	if (stack_idx > 0)					\
++	  {							\
++	    ccl_prog = ccl_prog_stack_struct[0].ccl_prog;	\
++	    ic = ccl_prog_stack_struct[0].ic;			\
++	  }							\
++	CCL_INVALID_CMD;					\
++      }								\
++    ccl_prog_stack_struct[stack_idx].ccl_prog = ccl_prog;	\
++    ccl_prog_stack_struct[stack_idx].ic = (ret_ic);		\
++    stack_idx++;						\
++    ccl_prog = called_ccl.prog;					\
++    ic = CCL_HEADER_MAIN;					\
++    goto ccl_repeat;						\
++  } while (0)
+ 
+ #define CCL_MapSingle		0x12 /* Map by single code conversion map
+ 					1:ExtendedCOMMNDXXXRRRrrrXXXXX
+@@ -780,6 +819,9 @@
+   if (ccl->buf_magnification ==0) /* We can't produce any bytes.  */
+     dst = NULL;
+ 
++  /* Set mapping stack pointer. */
++  mapping_stack_pointer = mapping_stack;
++
+ #ifdef CCL_DEBUG
+   ccl_backtrace_idx = 0;
+ #endif
+@@ -950,16 +992,27 @@
+ 	  jump_address = ic;
+ 	  goto ccl_set_expr;
+ 
+-	case CCL_Call:		/* CCCCCCCCCCCCCCCCCCCC000XXXXX */
++	case CCL_Call:		/* 1:CCCCCCCCCCCCCCCCCCCCFFFXXXXX */
+ 	  {
+ 	    Lisp_Object slot;
++	    int prog_id;
++
++	    /* If FFF is nonzero, the CCL program ID is in the
++               following code.  */
++	    if (rrr)
++	      {
++		prog_id = XINT (ccl_prog[ic]);
++		ic++;
++	      }
++	    else
++	      prog_id = field1;
+ 
+ 	    if (stack_idx >= 256
+-		|| field1 < 0
+-		|| field1 >= XVECTOR (Vccl_program_table)->size
+-		|| (slot = XVECTOR (Vccl_program_table)->contents[field1],
+-		    !CONSP (slot))
+-		|| !VECTORP (XCONS (slot)->cdr))
++		|| prog_id < 0
++		|| prog_id >= XVECTOR (Vccl_program_table)->size
++		|| (slot = XVECTOR (Vccl_program_table)->contents[prog_id],
++		    !VECTORP (slot))
++		|| !VECTORP (XVECTOR (slot)->contents[1]))
+ 	      {
+ 		if (stack_idx > 0)
+ 		  {
+@@ -972,7 +1025,7 @@
+ 	    ccl_prog_stack_struct[stack_idx].ccl_prog = ccl_prog;
+ 	    ccl_prog_stack_struct[stack_idx].ic = ic;
+ 	    stack_idx++;
+-	    ccl_prog = XVECTOR (XCONS (slot)->cdr)->contents;
++	    ccl_prog = XVECTOR (XVECTOR (slot)->contents[1])->contents;
+ 	    ic = CCL_HEADER_MAIN;
+ 	  }
+ 	  break;
+@@ -1134,46 +1187,6 @@
+ 		  }
+ 	      
+ 		i = *src++;
+-		if (i == LEADING_CODE_COMPOSITION)
+-		  {
+-		    if (src >= src_end)
+-		      goto ccl_read_multibyte_character_suspend;
+-		    if (*src == 0xFF)
+-		      {
+-			ccl->private_state = COMPOSING_WITH_RULE_HEAD;
+-			src++;
+-		      }
+-		    else
+-		      ccl->private_state = COMPOSING_NO_RULE_HEAD;
+-
+-		    continue;
+-		  }
+-		if (ccl->private_state != COMPOSING_NO)
+-		  {
+-		    /* composite character */
+-		    if (i < 0xA0)
+-		      ccl->private_state = COMPOSING_NO;
+-		    else
+-		      {
+-			if (COMPOSING_WITH_RULE_RULE == ccl->private_state)
+-			  {
+-			    ccl->private_state = COMPOSING_WITH_RULE_HEAD;
+-			    continue;
+-			  }
+-			else if (COMPOSING_WITH_RULE_HEAD == ccl->private_state)
+-			  ccl->private_state = COMPOSING_WITH_RULE_RULE;
+-
+-			if (i == 0xA0)
+-			  {
+-			    if (src >= src_end)
+-			      goto ccl_read_multibyte_character_suspend;
+-			    i = *src++ & 0x7F;
+-			  }
+-			else
+-			  i -= 0x20;
+-		      }
+-		  }
+-
+ 		if (i < 0x80)
+ 		  {
+ 		    /* ASCII */
+@@ -1240,8 +1253,6 @@
+ 	      i = reg[RRR]; /* charset */
+ 	      if (i == CHARSET_ASCII)
+ 		i = reg[rrr] & 0xFF;
+-	      else if (i == CHARSET_COMPOSITION)
+-		i = MAKE_COMPOSITE_CHAR (reg[rrr]);
+ 	      else if (CHARSET_DIMENSION (i) == 1)
+ 		i = ((i - 0x70) << 7) | (reg[rrr] & 0x7F);
+ 	      else if (i < MIN_CHARSET_PRIVATE_DIMENSION2)
+@@ -1254,13 +1265,7 @@
+ 	      break;
+ 
+ 	    case CCL_TranslateCharacter:
+-	      i = reg[RRR]; /* charset */
+-	      if (i == CHARSET_COMPOSITION)
+-		{
+-		  reg[RRR] = -1;
+-		  break;
+-		}
+-	      CCL_MAKE_CHAR (i, reg[rrr], i);
++	      CCL_MAKE_CHAR (reg[RRR], reg[rrr], i);
+ 	      op = translate_char (GET_TRANSLATION_TABLE (reg[Rrr]),
+ 				   i, -1, 0, 0);
+ 	      SPLIT_CHAR (op, reg[RRR], i, j);
+@@ -1273,13 +1278,7 @@
+ 	    case CCL_TranslateCharacterConstTbl:
+ 	      op = XINT (ccl_prog[ic]); /* table */
+ 	      ic++;
+-	      i = reg[RRR]; /* charset */
+-	      if (i == CHARSET_COMPOSITION)
+-		{
+-		  reg[RRR] = -1;
+-		  break;
+-		}
+-	      CCL_MAKE_CHAR (i, reg[rrr], i);
++	      CCL_MAKE_CHAR (reg[RRR], reg[rrr], i);
+ 	      op = translate_char (GET_TRANSLATION_TABLE (op), i, -1, 0, 0);
+ 	      SPLIT_CHAR (op, reg[RRR], i, j);
+ 	      if (j != -1)
+@@ -1319,7 +1318,7 @@
+ 
+ 		    /* Check map varidity.  */
+ 		    if (!CONSP (map)) continue;
+-		    map = XCONS(map)->cdr;
++		    map = XCDR (map);
+ 		    if (!VECTORP (map)) continue;
+ 		    size = XVECTOR (map)->size;
+ 		    if (size <= 1) continue;
+@@ -1363,14 +1362,18 @@
+ 		      }
+ 		    else if (CONSP (content))
+ 		      {
+-			attrib = XCONS (content)->car;
+-			value = XCONS (content)->cdr;
++			attrib = XCAR (content);
++			value = XCDR (content);
+ 			if (!NUMBERP (attrib) || !NUMBERP (value))
+ 			  continue;
+ 			reg[RRR] = i;
+ 			reg[rrr] = XUINT (value);
+ 			break;
+ 		      }
++		    else if (SYMBOLP (content))
++		      CCL_CALL_FOR_MAP_INSTRUCTION (content, fin_ic);
++		    else
++		      CCL_INVALID_CMD;
+ 		  }
+ 		if (i == j)
+ 		  reg[RRR] = -1;
+@@ -1383,10 +1386,27 @@
+ 		Lisp_Object map, content, attrib, value;
+ 		int point, size, map_vector_size;
+ 		int map_set_rest_length, fin_ic;
++		int current_ic = this_ic;
++
++		/* inhibit recursive call on MapMultiple. */
++		if (stack_idx_of_map_multiple > 0)
++		  {
++		    if (stack_idx_of_map_multiple <= stack_idx)
++		      {
++			stack_idx_of_map_multiple = 0;
++			mapping_stack_pointer = mapping_stack;
++			CCL_INVALID_CMD;
++		      }
++		  }
++		else
++		  mapping_stack_pointer = mapping_stack;
++		stack_idx_of_map_multiple = 0;
+ 
+ 		map_set_rest_length =
+ 		  XINT (ccl_prog[ic++]); /* number of maps and separators. */
+ 		fin_ic = ic + map_set_rest_length;
++		op = reg[rrr];
++
+ 		if ((map_set_rest_length > reg[RRR]) && (reg[RRR] >= 0))
+ 		  {
+ 		    ic += reg[RRR];
+@@ -1397,101 +1417,165 @@
+ 		  {
+ 		    ic = fin_ic;
+ 		    reg[RRR] = -1;
++		    mapping_stack_pointer = mapping_stack;
+ 		    break;
+ 		  }
+-		mapping_stack_pointer = mapping_stack;
+-		op = reg[rrr];
+-		PUSH_MAPPING_STACK (0, op);
+-		reg[RRR] = -1;
+-		map_vector_size = XVECTOR (Vcode_conversion_map_vector)->size;
+-		for (;map_set_rest_length > 0;i++, map_set_rest_length--)
+-		  {
+-		    point = XINT(ccl_prog[ic++]);
+-		    if (point < 0)
+-		      {
+-			point = -point;
+-			if (mapping_stack_pointer
+-			    >= &mapping_stack[MAX_MAP_SET_LEVEL])
+-			  {
+-			    CCL_INVALID_CMD;
+-			  }
+-			PUSH_MAPPING_STACK (map_set_rest_length - point,
+-					    reg[rrr]);
+-			map_set_rest_length = point + 1;
+-			reg[rrr] = op;
+-			continue;
+-		      }
+-
+-		    if (point >= map_vector_size) continue;
+-		    map = (XVECTOR (Vcode_conversion_map_vector)
+-			   ->contents[point]);
+-
+-		    /* Check map varidity.  */
+-		    if (!CONSP (map)) continue;
+-		    map = XCONS (map)->cdr;
+-		    if (!VECTORP (map)) continue;
+-		    size = XVECTOR (map)->size;
+-		    if (size <= 1) continue;
+-
+-		    content = XVECTOR (map)->contents[0];
+ 
+-		    /* check map type,
+-		       [STARTPOINT VAL1 VAL2 ...] or
+-		       [t ELEMENT STARTPOINT ENDPOINT]  */
+-		    if (NUMBERP (content))
+-		      {
+-			point = XUINT (content);
+-			point = op - point + 1;
+-			if (!((point >= 1) && (point < size))) continue;
+-			content = XVECTOR (map)->contents[point];
+-		      }
+-		    else if (EQ (content, Qt))
+-		      {
+-			if (size != 4) continue;
+-			if ((op >= XUINT (XVECTOR (map)->contents[2])) &&
+-			    (op < XUINT (XVECTOR (map)->contents[3])))
+-			  content = XVECTOR (map)->contents[1];
+-			else
+-			  continue;
+-		      }
+-		    else 
+-		      continue;
++		if (mapping_stack_pointer <= (mapping_stack + 1))
++		  {
++		    /* Set up initial state. */
++		    mapping_stack_pointer = mapping_stack;
++		    PUSH_MAPPING_STACK (0, op);
++		    reg[RRR] = -1;
++		  }
++		else
++		  {
++		    /* Recover after calling other ccl program. */
++		    int orig_op;
+ 
+-		    if (NILP (content))
+-		      continue;
+-		    else if (NUMBERP (content))
++		    POP_MAPPING_STACK (map_set_rest_length, orig_op);
++		    POP_MAPPING_STACK (map_set_rest_length, reg[rrr]);
++		    switch (op)
+ 		      {
+-			op = XINT (content);
+-			reg[RRR] = i;
+-			i += map_set_rest_length;
+-			POP_MAPPING_STACK (map_set_rest_length, reg[rrr]);
+-		      }
+-		    else if (CONSP (content))
+-		      {
+-			attrib = XCONS (content)->car;
+-			value = XCONS (content)->cdr;
+-			if (!NUMBERP (attrib) || !NUMBERP (value))
+-			  continue;
+-			reg[RRR] = i;
+-			op = XUINT (value);
+-			i += map_set_rest_length;
+-			POP_MAPPING_STACK (map_set_rest_length, reg[rrr]);
+-		      }
+-		    else if (EQ (content, Qt))
+-		      {
+-			reg[RRR] = i;
++		      case -1:
++			/* Regard it as Qnil. */
++			op = orig_op;
++			i++;
++			ic++;
++			map_set_rest_length--;
++			break;
++		      case -2:
++			/* Regard it as Qt. */
+ 			op = reg[rrr];
++			i++;
++			ic++;
++			map_set_rest_length--;
++			break;
++		      case -3:
++			/* Regard it as Qlambda. */
++			op = orig_op;
++			i += map_set_rest_length;
++			ic += map_set_rest_length;
++			map_set_rest_length = 0;
++			break;
++		      default:
++			/* Regard it as normal mapping. */
+ 			i += map_set_rest_length;
++			ic += map_set_rest_length;
+ 			POP_MAPPING_STACK (map_set_rest_length, reg[rrr]);
+-		      }
+-		    else if (EQ (content, Qlambda))
+-		      {
+-			reg[RRR] = i;
+ 			break;
+ 		      }
+-		    else
+-		      CCL_INVALID_CMD;
+ 		  }
++		map_vector_size = XVECTOR (Vcode_conversion_map_vector)->size;
++		
++		do {
++		  for (;map_set_rest_length > 0;i++, ic++, map_set_rest_length--)
++		    {
++		      point = XINT(ccl_prog[ic]);
++		      if (point < 0)
++			{
++			  /* +1 is for including separator. */
++			  point = -point + 1;
++			  if (mapping_stack_pointer
++			      >= &mapping_stack[MAX_MAP_SET_LEVEL])
++			    CCL_INVALID_CMD;
++			  PUSH_MAPPING_STACK (map_set_rest_length - point,
++					      reg[rrr]);
++			  map_set_rest_length = point;
++			  reg[rrr] = op;
++			  continue;
++			}
++
++		      if (point >= map_vector_size) continue;
++		      map = (XVECTOR (Vcode_conversion_map_vector)
++			     ->contents[point]);
++
++		      /* Check map varidity.  */
++		      if (!CONSP (map)) continue;
++		      map = XCDR (map);
++		      if (!VECTORP (map)) continue;
++		      size = XVECTOR (map)->size;
++		      if (size <= 1) continue;
++
++		      content = XVECTOR (map)->contents[0];
++
++		      /* check map type,
++			 [STARTPOINT VAL1 VAL2 ...] or
++			 [t ELEMENT STARTPOINT ENDPOINT]  */
++		      if (NUMBERP (content))
++			{
++			  point = XUINT (content);
++			  point = op - point + 1;
++			  if (!((point >= 1) && (point < size))) continue;
++			  content = XVECTOR (map)->contents[point];
++			}
++		      else if (EQ (content, Qt))
++			{
++			  if (size != 4) continue;
++			  if ((op >= XUINT (XVECTOR (map)->contents[2])) &&
++			      (op < XUINT (XVECTOR (map)->contents[3])))
++			    content = XVECTOR (map)->contents[1];
++			  else
++			    continue;
++			}
++		      else 
++			continue;
++
++		      if (NILP (content))
++			continue;
++
++		      reg[RRR] = i;
++		      if (NUMBERP (content))
++			{
++			  op = XINT (content);
++			  i += map_set_rest_length - 1;
++			  ic += map_set_rest_length - 1;
++			  POP_MAPPING_STACK (map_set_rest_length, reg[rrr]);
++			  map_set_rest_length++;
++			}
++		      else if (CONSP (content))
++			{
++			  attrib = XCAR (content);
++			  value = XCDR (content);
++			  if (!NUMBERP (attrib) || !NUMBERP (value))
++			    continue;
++			  op = XUINT (value);
++			  i += map_set_rest_length - 1;
++			  ic += map_set_rest_length - 1;
++			  POP_MAPPING_STACK (map_set_rest_length, reg[rrr]);
++			  map_set_rest_length++;
++			}
++		      else if (EQ (content, Qt))
++			{
++			  op = reg[rrr];
++			}
++		      else if (EQ (content, Qlambda))
++			{
++			  i += map_set_rest_length;
++			  ic += map_set_rest_length;
++			  break;
++			}
++		      else if (SYMBOLP (content))
++			{
++			  if (mapping_stack_pointer
++			      >= &mapping_stack[MAX_MAP_SET_LEVEL])
++			    CCL_INVALID_CMD;
++			  PUSH_MAPPING_STACK (map_set_rest_length, reg[rrr]);
++			  PUSH_MAPPING_STACK (map_set_rest_length, op);
++			  stack_idx_of_map_multiple = stack_idx + 1;
++			  CCL_CALL_FOR_MAP_INSTRUCTION (content, current_ic);
++			}
++		      else
++			CCL_INVALID_CMD;
++		    }
++		  if (mapping_stack_pointer <= (mapping_stack + 1))
++		    break;
++		  POP_MAPPING_STACK (map_set_rest_length, reg[rrr]);
++		  i += map_set_rest_length;
++		  ic += map_set_rest_length;
++		  POP_MAPPING_STACK (map_set_rest_length, reg[rrr]);
++		} while (1);
++
+ 		ic = fin_ic;
+ 	      }
+ 	      reg[rrr] = op;
+@@ -1514,7 +1598,7 @@
+ 		    reg[RRR] = -1;
+ 		    break;
+ 		  }
+-		map = XCONS(map)->cdr;
++		map = XCDR (map);
+ 		if (!VECTORP (map))
+ 		  {
+ 		    reg[RRR] = -1;
+@@ -1538,13 +1622,15 @@
+ 		    else if (EQ (content, Qt));
+ 		    else if (CONSP (content))
+ 		      {
+-			attrib = XCONS (content)->car;
+-			value = XCONS (content)->cdr;
++			attrib = XCAR (content);
++			value = XCDR (content);
+ 			if (!NUMBERP (attrib) || !NUMBERP (value))
+ 			  continue;
+ 			reg[rrr] = XUINT(value);
+ 			break;
+ 		      }
++		    else if (SYMBOLP (content))
++		      CCL_CALL_FOR_MAP_INSTRUCTION (content, ic);
+ 		    else
+ 		      reg[RRR] = -1;
+ 		  }
+@@ -1631,20 +1717,141 @@
+   return (dst ? dst - destination : 0);
+ }
+ 
++/* Resolve symbols in the specified CCL code (Lisp vector).  This
++   function converts symbols of code conversion maps and character
++   translation tables embeded in the CCL code into their ID numbers.
++
++   The return value is a vector (CCL itself or a new vector in which
++   all symbols are resolved), Qt if resolving of some symbol failed,
++   or nil if CCL contains invalid data.  */
++
++Lisp_Object
++resolve_symbol_ccl_program (ccl)
++     Lisp_Object ccl;
++{
++  int i, veclen, unresolved = 0;
++  Lisp_Object result, contents, val;
++
++  result = ccl;
++  veclen = XVECTOR (result)->size;
++
++  for (i = 0; i < veclen; i++)
++    {
++      contents = XVECTOR (result)->contents[i];
++      if (INTEGERP (contents))
++	continue;
++      else if (CONSP (contents)
++	       && SYMBOLP (XCAR (contents))
++	       && SYMBOLP (XCDR (contents)))
++	{
++	  /* This is the new style for embedding symbols.  The form is
++	     (SYMBOL . PROPERTY).  (get SYMBOL PROPERTY) should give
++	     an index number.  */
++
++	  if (EQ (result, ccl))
++	    result =  Fcopy_sequence (ccl);
++
++	  val = Fget (XCAR (contents), XCDR (contents));
++	  if (NATNUMP (val))
++	    XVECTOR (result)->contents[i] = val;
++	  else
++	    unresolved = 1;
++	  continue;
++	}
++      else if (SYMBOLP (contents))
++	{
++	  /* This is the old style for embedding symbols.  This style
++             may lead to a bug if, for instance, a translation table
++             and a code conversion map have the same name.  */
++	  if (EQ (result, ccl))
++	    result = Fcopy_sequence (ccl);
++
++	  val = Fget (contents, Qtranslation_table_id);
++	  if (NATNUMP (val))
++	    XVECTOR (result)->contents[i] = val;
++	  else
++	    {
++	      val = Fget (contents, Qcode_conversion_map_id);
++	      if (NATNUMP (val))
++		XVECTOR (result)->contents[i] = val;
++	      else
++		{
++		  val = Fget (contents, Qccl_program_idx);
++		  if (NATNUMP (val))
++		    XVECTOR (result)->contents[i] = val;
++		  else
++		    unresolved = 1;
++		}
++	    }
++	  continue;
++	}
++      return Qnil;
++    }
++
++  return (unresolved ? Qt : result);
++}
++
++/* Return the compiled code (vector) of CCL program CCL_PROG.
++   CCL_PROG is a name (symbol) of the program or already compiled
++   code.  If necessary, resolve symbols in the compiled code to index
++   numbers.  If we failed to get the compiled code or to resolve
++   symbols, return Qnil.  */
++
++static Lisp_Object
++ccl_get_compiled_code (ccl_prog)
++     Lisp_Object ccl_prog;
++{
++  Lisp_Object val, slot;
++
++  if (VECTORP (ccl_prog))
++    {
++      val = resolve_symbol_ccl_program (ccl_prog);
++      return (VECTORP (val) ? val : Qnil);
++    }
++  if (!SYMBOLP (ccl_prog))
++    return Qnil;
++
++  val = Fget (ccl_prog, Qccl_program_idx);
++  if (! NATNUMP (val)
++      || XINT (val) >= XVECTOR (Vccl_program_table)->size)
++    return Qnil;
++  slot = XVECTOR (Vccl_program_table)->contents[XINT (val)];
++  if (! VECTORP (slot)
++      || XVECTOR (slot)->size != 3
++      || ! VECTORP (XVECTOR (slot)->contents[1]))
++    return Qnil;
++  if (NILP (XVECTOR (slot)->contents[2]))
++    {
++      val = resolve_symbol_ccl_program (XVECTOR (slot)->contents[1]);
++      if (! VECTORP (val))
++	return Qnil;
++      XVECTOR (slot)->contents[1] = val;
++      XVECTOR (slot)->contents[2] = Qt;
++    }
++  return XVECTOR (slot)->contents[1];
++}
++
+ /* Setup fields of the structure pointed by CCL appropriately for the
+-   execution of compiled CCL code in VEC (vector of integer).
+-   If VEC is nil, we skip setting ups based on VEC.  */
+-void
+-setup_ccl_program (ccl, vec)
++   execution of CCL program CCL_PROG.  CCL_PROG is the name (symbol)
++   of the CCL program or the already compiled code (vector).
++   Return 0 if we succeed this setup, else return -1.
++
++   If CCL_PROG is nil, we just reset the structure pointed by CCL.  */
++int
++setup_ccl_program (ccl, ccl_prog)
+      struct ccl_program *ccl;
+-     Lisp_Object vec;
++     Lisp_Object ccl_prog;
+ {
+   int i;
+ 
+-  if (VECTORP (vec))
++  if (! NILP (ccl_prog))
+     {
+-      struct Lisp_Vector *vp = XVECTOR (vec);
++      struct Lisp_Vector *vp;
+ 
++      ccl_prog = ccl_get_compiled_code (ccl_prog);
++      if (! VECTORP (ccl_prog))
++	return -1;
++      vp = XVECTOR (ccl_prog);
+       ccl->size = vp->size;
+       ccl->prog = vp->contents;
+       ccl->eof_ic = XINT (vp->contents[CCL_HEADER_EOF]);
+@@ -1657,64 +1864,38 @@
+   ccl->private_state = 0;
+   ccl->status = 0;
+   ccl->stack_idx = 0;
++  return 0;
+ }
+ 
+-/* Resolve symbols in the specified CCL code (Lisp vector).  This
+-   function converts symbols of code conversion maps and character
+-   translation tables embeded in the CCL code into their ID numbers.  */
++#ifdef emacs
+ 
+-Lisp_Object
+-resolve_symbol_ccl_program (ccl)
+-     Lisp_Object ccl;
++DEFUN ("ccl-program-p", Fccl_program_p, Sccl_program_p, 1, 1, 0,
++  "Return t if OBJECT is a CCL program name or a compiled CCL program code.")
++  (object)
++     Lisp_Object object;
+ {
+-  int i, veclen;
+-  Lisp_Object result, contents, prop;
+-
+-  result = ccl;
+-  veclen = XVECTOR (result)->size;
++  Lisp_Object val;
+ 
+-  /* Set CCL program's table ID */
+-  for (i = 0; i < veclen; i++)
++  if (VECTORP (object))
+     {
+-      contents = XVECTOR (result)->contents[i];
+-      if (SYMBOLP (contents))
+-	{
+-	  if (EQ(result, ccl))
+-	    result = Fcopy_sequence (ccl);
+-
+-	  prop = Fget (contents, Qtranslation_table_id);
+-	  if (NUMBERP (prop))
+-	    {
+-	      XVECTOR (result)->contents[i] = prop;
+-	      continue;
+-	    }
+-	  prop = Fget (contents, Qcode_conversion_map_id);
+-	  if (NUMBERP (prop))
+-	    {
+-	      XVECTOR (result)->contents[i] = prop;
+-	      continue;
+-	    }
+-	  prop = Fget (contents, Qccl_program_idx);
+-	  if (NUMBERP (prop))
+-	    {
+-	      XVECTOR (result)->contents[i] = prop;
+-	      continue;
+-	    }
+-	}
++      val = resolve_symbol_ccl_program (object);
++      return (VECTORP (val) ? Qt : Qnil);
+     }
++  if (!SYMBOLP (object))
++    return Qnil;
+ 
+-  return result;
++  val = Fget (object, Qccl_program_idx);
++  return ((! NATNUMP (val)
++	   || XINT (val) >= XVECTOR (Vccl_program_table)->size)
++	  ? Qnil : Qt);
+ }
+ 
+-
+-#ifdef emacs
+-
+ DEFUN ("ccl-execute", Fccl_execute, Sccl_execute, 2, 2, 0,
+   "Execute CCL-PROGRAM with registers initialized by REGISTERS.\n\
+ \n\
+-CCL-PROGRAM is a symbol registered by register-ccl-program,\n\
++CCL-PROGRAM is a CCL program name (symbol)\n\
+ or a compiled code generated by `ccl-compile' (for backward compatibility,\n\
+-in this case, the execution is slower).\n\
++in this case, the overhead of the execution is bigger than the former case).\n\
+ No I/O commands should appear in CCL-PROGRAM.\n\
+ \n\
+ REGISTERS is a vector of [R0 R1 ... R7] where RN is an initial value\n\
+@@ -1727,27 +1908,14 @@
+ {
+   struct ccl_program ccl;
+   int i;
+-  Lisp_Object ccl_id;
+ 
+-  if ((SYMBOLP (ccl_prog)) &&
+-      (!NILP (ccl_id = Fget (ccl_prog, Qccl_program_idx))))
+-    {
+-      ccl_prog = XVECTOR (Vccl_program_table)->contents[XUINT (ccl_id)];
+-      CHECK_LIST (ccl_prog, 0);
+-      ccl_prog = XCONS (ccl_prog)->cdr;
+-      CHECK_VECTOR (ccl_prog, 1);
+-    }
+-  else
+-    {
+-      CHECK_VECTOR (ccl_prog, 1);
+-      ccl_prog = resolve_symbol_ccl_program (ccl_prog);
+-    }
++  if (setup_ccl_program (&ccl, ccl_prog) < 0)
++    error ("Invalid CCL program");
+ 
+-  CHECK_VECTOR (reg, 2);
++  CHECK_VECTOR (reg, 1);
+   if (XVECTOR (reg)->size != 8)
+-    error ("Invalid length of vector REGISTERS");
++    error ("Length of vector REGISTERS is not 9");
+ 
+-  setup_ccl_program (&ccl, ccl_prog);
+   for (i = 0; i < 8; i++)
+     ccl.reg[i] = (INTEGERP (XVECTOR (reg)->contents[i])
+ 		  ? XINT (XVECTOR (reg)->contents[i])
+@@ -1795,30 +1963,18 @@
+   int i, produced;
+   int outbufsize;
+   char *outbuf;
+-  struct gcpro gcpro1, gcpro2, gcpro3;
+-  Lisp_Object ccl_id;
++  struct gcpro gcpro1, gcpro2;
+ 
+-  if ((SYMBOLP (ccl_prog)) &&
+-      (!NILP (ccl_id = Fget (ccl_prog, Qccl_program_idx))))
+-    {
+-      ccl_prog = XVECTOR (Vccl_program_table)->contents[XUINT (ccl_id)];
+-      CHECK_LIST (ccl_prog, 0);
+-      ccl_prog = XCONS (ccl_prog)->cdr;
+-      CHECK_VECTOR (ccl_prog, 1);
+-    }
+-  else
+-    {
+-      CHECK_VECTOR (ccl_prog, 1);
+-      ccl_prog = resolve_symbol_ccl_program (ccl_prog);
+-    }
++  if (setup_ccl_program (&ccl, ccl_prog) < 0)
++    error ("Invalid CCL program");
+ 
+   CHECK_VECTOR (status, 1);
+   if (XVECTOR (status)->size != 9)
+-    error ("Invalid length of vector STATUS");
++    error ("Length of vector STATUS is not 9");
+   CHECK_STRING (str, 2);
+-  GCPRO3 (ccl_prog, status, str);
+ 
+-  setup_ccl_program (&ccl, ccl_prog);
++  GCPRO2 (status, str);
++
+   for (i = 0; i < 8; i++)
+     {
+       if (NILP (XVECTOR (status)->contents[i]))
+@@ -1860,50 +2016,73 @@
+ 
+ DEFUN ("register-ccl-program", Fregister_ccl_program, Sregister_ccl_program,
+        2, 2, 0,
+-  "Register CCL program PROGRAM of NAME in `ccl-program-table'.\n\
+-PROGRAM should be a compiled code of CCL program, or nil.\n\
++  "Register CCL program CCL_PROG as NAME in `ccl-program-table'.\n\
++CCL_PROG should be a compiled CCL program (vector), or nil.\n\
++If it is nil, just reserve NAME as a CCL program name.\n\
+ Return index number of the registered CCL program.")
+   (name, ccl_prog)
+      Lisp_Object name, ccl_prog;
+ {
+   int len = XVECTOR (Vccl_program_table)->size;
+-  int i;
++  int idx;
++  Lisp_Object resolved;
+ 
+   CHECK_SYMBOL (name, 0);
++  resolved = Qnil;
+   if (!NILP (ccl_prog))
+     {
+       CHECK_VECTOR (ccl_prog, 1);
+-      ccl_prog = resolve_symbol_ccl_program (ccl_prog);
++      resolved = resolve_symbol_ccl_program (ccl_prog);
++      if (! NILP (resolved))
++	{
++	  ccl_prog = resolved;
++	  resolved = Qt;
++	}
+     }
+-  
+-  for (i = 0; i < len; i++)
++
++  for (idx = 0; idx < len; idx++)
+     {
+-      Lisp_Object slot = XVECTOR (Vccl_program_table)->contents[i];
++      Lisp_Object slot;
+ 
+-      if (!CONSP (slot))
++      slot = XVECTOR (Vccl_program_table)->contents[idx];
++      if (!VECTORP (slot))
++	/* This is the first unsed slot.  Register NAME here.  */
+ 	break;
+ 
+-      if (EQ (name, XCONS (slot)->car))
++      if (EQ (name, XVECTOR (slot)->contents[0]))
+ 	{
+-	  XCONS (slot)->cdr = ccl_prog;
+-	  return make_number (i);
++	  /* Update this slot.  */
++	  XVECTOR (slot)->contents[1] = ccl_prog;
++	  XVECTOR (slot)->contents[2] = resolved;
++	  return make_number (idx);
+ 	}
+     }
+ 
+-  if (i == len)
++  if (idx == len)
+     {
+-      Lisp_Object new_table = Fmake_vector (make_number (len * 2), Qnil);
++      /* Extend the table.  */
++      Lisp_Object new_table;
+       int j;
+ 
++      new_table = Fmake_vector (make_number (len * 2), Qnil);
+       for (j = 0; j < len; j++)
+ 	XVECTOR (new_table)->contents[j]
+ 	  = XVECTOR (Vccl_program_table)->contents[j];
+       Vccl_program_table = new_table;
+     }
+ 
+-  XVECTOR (Vccl_program_table)->contents[i] = Fcons (name, ccl_prog);
+-  Fput (name, Qccl_program_idx, make_number (i));
+-  return make_number (i);
++  {
++    Lisp_Object elt;
++
++    elt = Fmake_vector (make_number (3), Qnil);
++    XVECTOR (elt)->contents[0] = name;
++    XVECTOR (elt)->contents[1] = ccl_prog;
++    XVECTOR (elt)->contents[2] = resolved;
++    XVECTOR (Vccl_program_table)->contents[idx] = elt;
++  }
++
++  Fput (name, Qccl_program_idx, make_number (idx));
++  return make_number (idx);
+ }
+ 
+ /* Register code conversion map.
+@@ -1937,10 +2116,10 @@
+       if (!CONSP (slot))
+ 	break;
+ 
+-      if (EQ (symbol, XCONS (slot)->car))
++      if (EQ (symbol, XCAR (slot)))
+ 	{
+ 	  index = make_number (i);
+-	  XCONS (slot)->cdr = map;
++	  XCDR (slot) = map;
+ 	  Fput (symbol, Qcode_conversion_map, map);
+ 	  Fput (symbol, Qcode_conversion_map_id, index);
+ 	  return index;
+@@ -2001,6 +2180,7 @@
+ If the font is single-byte font, the register R2 is not used.");
+   Vfont_ccl_encoder_alist = Qnil;
+ 
++  defsubr (&Sccl_program_p);
+   defsubr (&Sccl_execute);
+   defsubr (&Sccl_execute_on_string);
+   defsubr (&Sregister_ccl_program);
+diff -ur emacs-20.7/src/ccl.h emacs-20.7-mule-4.1/src/ccl.h
+--- emacs-20.7/src/ccl.h	Tue May  4 14:40:13 1999
++++ emacs-20.7-mule-4.1/src/ccl.h	Thu Aug 30 09:32:54 2001
+@@ -68,8 +68,11 @@
+ extern Lisp_Object Vfont_ccl_encoder_alist;
+ 
+ /* Setup fields of the structure pointed by CCL appropriately for the
+-   execution of compiled CCL code in VEC (vector of integer).  */
+-extern void setup_ccl_program P_ ((struct ccl_program *, Lisp_Object));
++   execution of ccl program CCL_PROG (symbol or vector).  */
++extern int setup_ccl_program P_ ((struct ccl_program *, Lisp_Object));
++
++/* Resolve symbols in the specified CCL code (Lisp vector).  */
++extern Lisp_Object resolve_symbol_ccl_program P_ ((Lisp_Object));
+ 
+ extern int ccl_driver P_ ((struct ccl_program *, unsigned char *,
+ 			   unsigned char *, int, int, int *));
+diff -ur emacs-20.7/src/charset.c emacs-20.7-mule-4.1/src/charset.c
+--- emacs-20.7/src/charset.c	Mon Sep 20 09:43:02 1999
++++ emacs-20.7-mule-4.1/src/charset.c	Thu Aug 30 09:32:54 2001
+@@ -956,21 +956,41 @@
+   (charset, code1, code2)
+      Lisp_Object charset, code1, code2;
+ {
++  int charset_id, c1, c2, chars;
+   CHECK_NUMBER (charset, 0);
++  charset_id = XINT (charset);
++  if (!CHARSET_DEFINED_P (charset_id))
++  error ("Invalid charset ID: %d", XINT (charset));
+ 
+   if (NILP (code1))
+-    XSETFASTINT (code1, 0);
++    c1 = 0;
+   else
+-    CHECK_NUMBER (code1, 1);
++    {
++      CHECK_NUMBER (code1, 1);
++      c1 = XINT (code1);
++    }
+   if (NILP (code2))
+-    XSETFASTINT (code2, 0);
++    c2 = 0;
+   else
+-    CHECK_NUMBER (code2, 2);
++    {
++      CHECK_NUMBER (code2, 2);
++      c2 = XINT (code2);
++    }
++  if (CHARSET_DIMENSION (charset_id) == 1
++      && c2 != 0)
++    error ("Dimension of charset ID %d is 1", charset_id);
+ 
+-  if (!CHARSET_DEFINED_P (XINT (charset)))
+-    error ("Invalid charset: %d", XINT (charset));
+-
+-  return make_number (MAKE_CHAR (XINT (charset), XINT (code1), XINT (code2)));
++  if (c1 < 0 || c1 > 0xFF || c2 < 0 || c2 > 0xFF
++      || c1 == 0 && c2 != 0
++      || (charset_id != CHARSET_ASCII
++        && (CHARSET_CHARS (charset_id) == 94
++            ? (c1 > 0 && c1 < 0x21 || c1 > 0x7E && c1 < 0xA1 || c1 > 0xFE
++               || c2 > 0 && c2 < 0x21 || c2 > 0x7E && c2 < 0xA1 || c2 > 0xFE)
++            : (c1 > 0 && c1 < 0x20 || c1 > 0x7F && c1 < 0xA0
++               || c2 > 0 && c2 < 0x20 || c2 > 0x7F && c2 < 0xA0))))
++    error ("Invalid code points: %d %d", c1, c2);
++  
++  return make_number (MAKE_CHAR (charset_id, c1, c2));
+ }
+ 
+ DEFUN ("split-char", Fsplit_char, Ssplit_char, 1, 1, 0,
+diff -ur emacs-20.7/src/charset.h emacs-20.7-mule-4.1/src/charset.h
+--- emacs-20.7/src/charset.h	Thu Sep 16 20:20:35 1999
++++ emacs-20.7-mule-4.1/src/charset.h	Thu Aug 30 09:32:54 2001
+@@ -762,6 +762,10 @@
+   /* Multi-byte form of the composite character.  */
+   unsigned char *data;
+ 
++  /* 1 if all information (GLYPH, CMP_RULE, and COL_OFFSET) has
++     already been filled.  */
++  int filled_p;
++
+   /* Length of glyph codes.  */
+   int glyph_len;
+ 
+diff -ur emacs-20.7/src/coding.c emacs-20.7-mule-4.1/src/coding.c
+--- emacs-20.7/src/coding.c	Fri May 12 00:08:46 2000
++++ emacs-20.7-mule-4.1/src/coding.c	Thu Aug 30 09:32:54 2001
+@@ -379,6 +379,9 @@
+   "coding-category-iso-8-else",
+   "coding-category-ccl",
+   "coding-category-big5",
++  "coding-category-utf-8",
++  "coding-category-utf-16-be",
++  "coding-category-utf-16-le",
+   "coding-category-raw-text",
+   "coding-category-binary"
+ };
+@@ -411,6 +414,12 @@
+ /* Default coding systems used for process I/O.  */
+ Lisp_Object Vdefault_process_coding_system;
+ 
++/* Global flag to tell if we can not call post-read-conversion and
++   pre-write-conversion.  This is set to 1 temporarily while we are
++   executing post-read-conversion or pre-write-conversion to avoid
++   infinite recursive call.  After the call, this is reset to 0.  */
++static int inhibit_pre_post_conversion;
++
+ 
+ /*** 2. Emacs internal format (emacs-mule) handlers ***/
+ 
+@@ -905,43 +914,45 @@
+    that we are decoding ill formed text, and what we can do is just to
+    read C1 as is.  */
+ 
+-#define DECODE_ISO_CHARACTER(charset, c1)				\
+-  do {									\
+-    int c_alt, charset_alt = (charset);					\
+-    if (COMPOSING_HEAD_P (coding->composing))				\
+-      {									\
+-	*dst++ = LEADING_CODE_COMPOSITION;				\
+-	if (COMPOSING_WITH_RULE_P (coding->composing))			\
+-	  /* To tell composition rules are embeded.  */			\
+-	  *dst++ = 0xFF;						\
+-	coding->composing += 2;						\
+-      }									\
+-    if (charset_alt >= 0)						\
+-      {									\
+-	if (CHARSET_DIMENSION (charset_alt) == 2)			\
+-	  {								\
+-	    ONE_MORE_BYTE (c2);						\
+-	    if (iso_code_class[(c2) & 0x7F] != ISO_0x20_or_0x7F		\
+-		&& iso_code_class[(c2) & 0x7F] != ISO_graphic_plane_0)	\
+-	      {								\
+-		src--;							\
+-		charset_alt = CHARSET_ASCII;				\
+-	      }								\
+-	  }								\
+-	if (!NILP (translation_table)					\
+-	    && ((c_alt = translate_char (translation_table,		\
+-					 -1, charset_alt, c1, c2)) >= 0)) \
+-	  SPLIT_CHAR (c_alt, charset_alt, c1, c2);			\
+-      }									\
+-    if (charset_alt == CHARSET_ASCII || charset_alt < 0)		\
+-      DECODE_CHARACTER_ASCII (c1);					\
+-    else if (CHARSET_DIMENSION (charset_alt) == 1)			\
+-      DECODE_CHARACTER_DIMENSION1 (charset_alt, c1);			\
+-    else								\
+-      DECODE_CHARACTER_DIMENSION2 (charset_alt, c1, c2);		\
+-    if (COMPOSING_WITH_RULE_P (coding->composing))			\
+-      /* To tell a composition rule follows.  */			\
+-      coding->composing = COMPOSING_WITH_RULE_RULE;			\
++#define DECODE_ISO_CHARACTER(charset, c1)				 \
++  do {									 \
++    int c_alt, charset_alt = (charset);					 \
++    if (COMPOSING_HEAD_P (coding->composing))				 \
++      {									 \
++	*dst++ = LEADING_CODE_COMPOSITION;				 \
++	if (COMPOSING_WITH_RULE_P (coding->composing))			 \
++	  /* To tell composition rules are embeded.  */			 \
++	  *dst++ = 0xFF;						 \
++	coding->composing += 2;						 \
++      }									 \
++    if (charset_alt >= 0)						 \
++      {									 \
++	if (CHARSET_DIMENSION (charset_alt) == 2)			 \
++	  {								 \
++	    ONE_MORE_BYTE (c2);						 \
++	    if (iso_code_class[(c2) & 0x7F] != ISO_graphic_plane_0	 \
++		&& (CHARSET_CHARS (charset_alt) == 94			 \
++		    || iso_code_class[(c2) & 0x7F] != ISO_0x20_or_0x7F)) \
++	      {								 \
++		src--;							 \
++		charset_alt = CHARSET_ASCII;				 \
++	      }								 \
++	  }								 \
++	if (!NILP (translation_table)					 \
++	    && ((c_alt = translate_char (translation_table,		 \
++					 -1, charset_alt, c1, c2))	 \
++		>= 0))							 \
++	  SPLIT_CHAR (c_alt, charset_alt, c1, c2);			 \
++      }									 \
++    if (charset_alt == CHARSET_ASCII || charset_alt < 0)		 \
++      DECODE_CHARACTER_ASCII (c1);					 \
++    else if (CHARSET_DIMENSION (charset_alt) == 1)			 \
++      DECODE_CHARACTER_DIMENSION1 (charset_alt, c1);			 \
++    else								 \
++      DECODE_CHARACTER_DIMENSION2 (charset_alt, c1, c2);		 \
++    if (COMPOSING_WITH_RULE_P (coding->composing))			 \
++      /* To tell a composition rule follows.  */			 \
++      coding->composing = COMPOSING_WITH_RULE_RULE;			 \
+   } while (0)
+ 
+ /* Set designation state into CODING.  */
+@@ -2240,6 +2251,108 @@
+   return CODING_CATEGORY_MASK_BIG5;
+ }
+ 
++/* See the above "GENERAL NOTES on `detect_coding_XXX ()' functions".
++   Check if a text is encoded in UTF-8.  If it is, return
++   CODING_CATEGORY_MASK_UTF_8, else return 0.  */
++
++#define UTF_8_1_OCTET_P(c)         ((c) < 0x80)
++#define UTF_8_EXTRA_OCTET_P(c)     (((c) & 0xC0) == 0x80)
++#define UTF_8_2_OCTET_LEADING_P(c) (((c) & 0xE0) == 0xC0)
++#define UTF_8_3_OCTET_LEADING_P(c) (((c) & 0xF0) == 0xE0)
++#define UTF_8_4_OCTET_LEADING_P(c) (((c) & 0xF8) == 0xF0)
++#define UTF_8_5_OCTET_LEADING_P(c) (((c) & 0xFC) == 0xF8)
++#define UTF_8_6_OCTET_LEADING_P(c) (((c) & 0xFE) == 0xFC)
++
++int
++detect_coding_utf_8 (src, src_end)
++     unsigned char *src, *src_end;
++{
++  unsigned char c;
++  int seq_maybe_bytes;
++
++  /* check wheter the first octet is extra one or not. */
++  if (src >= src_end)
++    return CODING_CATEGORY_MASK_UTF_8;
++  c = *src;
++  if (UTF_8_EXTRA_OCTET_P (c))
++    {
++      /* skip extra octets */
++      for (seq_maybe_bytes = 5;;seq_maybe_bytes--)
++	{
++	  if (seq_maybe_bytes < 0)
++	    return 0;
++	  src++;
++	  if (src >= src_end)
++	    return CODING_CATEGORY_MASK_UTF_8;
++	  c = *src;
++	  if (!UTF_8_EXTRA_OCTET_P (c)) break;
++	}
++    }
++
++  seq_maybe_bytes = 0;
++
++  while (src < src_end)
++    {
++      c = *src++;
++      if (UTF_8_1_OCTET_P(c))
++	continue;
++      else if (UTF_8_2_OCTET_LEADING_P (c))
++	seq_maybe_bytes = 1;
++      else if (UTF_8_3_OCTET_LEADING_P (c))
++	seq_maybe_bytes = 2;
++      else if (UTF_8_4_OCTET_LEADING_P (c))
++	seq_maybe_bytes = 3;
++      else if (UTF_8_5_OCTET_LEADING_P (c))
++	seq_maybe_bytes = 4;
++      else if (UTF_8_6_OCTET_LEADING_P (c))
++	seq_maybe_bytes = 5;
++      else
++	return 0;
++
++      do {
++	if (src >= src_end)
++	  return CODING_CATEGORY_MASK_UTF_8;
++
++	c = *src++;
++	if (!UTF_8_EXTRA_OCTET_P (c))
++	  return 0;
++	seq_maybe_bytes--;
++      }while (seq_maybe_bytes > 0);
++    }
++
++  return CODING_CATEGORY_MASK_UTF_8;
++}
++
++/* See the above "GENERAL NOTES on `detect_coding_XXX ()' functions".
++   Check if a text is encoded in UTF-16 Big Endian(endian == 1)
++   or Little Endian(otherwise).
++   If it is, return CODING_CATEGORY_MASK_UTF_16_BE or 
++   CODING_CATEGORY_MASK_UTF_16_LE, else return 0.  */
++
++#define UTF_16_INVALID_P(val)	\
++  (((val) == 0xFFFE)		\
++   || ((val) == 0xFFFF))
++
++#define UTF_16_HIGH_SURROGATE_P(val) \
++  (((val) & 0xD800) == 0xD800)
++
++#define UTF_16_LOW_SURROGATE_P(val) \
++  (((val) & 0xDC00) == 0xDC00)
++
++int
++detect_coding_utf_16 (src, src_end)
++     unsigned char *src, *src_end;
++{
++  if ((src + 1) >= src_end) return 0;
++
++  if ((src[0] == 0xFF) && (src[1] == 0xFE))
++    return CODING_CATEGORY_MASK_UTF_16_LE;
++  else if ((src[0] == 0xFE) && (src[1] == 0xFF))
++    return CODING_CATEGORY_MASK_UTF_16_BE;
++
++  return 0;
++}
++
+ /* See the above "GENERAL NOTES on `decode_coding_XXX ()' functions".
+    If SJIS_P is 1, decode SJIS text, else decode BIG5 test.  */
+ 
+@@ -2941,8 +3054,11 @@
+      `post-read-conversion', `pre-write-conversion',
+      `translation-table-for-decode', `translation-table-for-encode'.  */
+   plist = XVECTOR (coding_spec)->contents[3];
+-  coding->post_read_conversion = Fplist_get (plist, Qpost_read_conversion);
+-  coding->pre_write_conversion = Fplist_get (plist, Qpre_write_conversion);
++  if (! inhibit_pre_post_conversion)
++    {
++      coding->post_read_conversion = Fplist_get (plist, Qpost_read_conversion);
++      coding->pre_write_conversion = Fplist_get (plist, Qpre_write_conversion);
++    }
+   val = Fplist_get (plist, Qtranslation_table_for_decode);
+   if (SYMBOLP (val))
+     val = Fget (val, Qtranslation_table_for_decode);
+@@ -3165,22 +3281,12 @@
+       coding->common_flags
+ 	|= CODING_REQUIRE_DECODING_MASK | CODING_REQUIRE_ENCODING_MASK;
+       {
+-	Lisp_Object val;
+-	Lisp_Object decoder, encoder;
+-
+ 	val = XVECTOR (coding_spec)->contents[4];
+-	if (CONSP  (val)
+-	    && SYMBOLP (XCONS (val)->car)
+-	    && !NILP (decoder = Fget (XCONS (val)->car, Qccl_program_idx))
+-	    && !NILP (decoder = Fcdr (Faref (Vccl_program_table, decoder)))
+-	    && SYMBOLP (XCONS (val)->cdr)
+-	    && !NILP (encoder = Fget (XCONS (val)->cdr, Qccl_program_idx))
+-	    && !NILP (encoder = Fcdr (Faref (Vccl_program_table, encoder))))
+-	  {
+-	    setup_ccl_program (&(coding->spec.ccl.decoder), decoder);
+-	    setup_ccl_program (&(coding->spec.ccl.encoder), encoder);
+-	  }
+-	else
++	if (! CONSP (val)
++	    || setup_ccl_program (&(coding->spec.ccl.decoder),
++				  XCONS (val)->car) < 0
++	    || setup_ccl_program (&(coding->spec.ccl.encoder),
++				  XCONS (val)->cdr) < 0)
+ 	  goto label_invalid_coding_system;
+ 
+ 	bzero (coding->spec.ccl.valid_codes, 256);
+@@ -3325,6 +3431,26 @@
+ 	as BIG5.  Assigned the coding-system (Lisp symbol)
+ 	`cn-big5' by default.
+ 
++   o coding-category-utf-8
++
++   	The category for a coding system which has the same code range
++	as UTF-8(cf. RFC2279).  Assigned the coding-system (Lisp symbol)
++	`utf-8' by default.
++
++   o coding-category-utf-16-be
++
++   	The category for a coding system in which a text has an Unicode
++	signature(cf. Unicode Standard) in the order of BIG endian at
++	the head.
++	Assigned the coding-system (Lisp symbol) `utf-16-be' by default.
++
++   o coding-category-utf-16-le
++
++   	The category for a coding system in which a text has an Unicode
++	signature(cf. Unicode Standard) in the order of LITTLE endian at
++	the head.
++	Assigned the coding-system (Lisp symbol) `utf-16-le' by default.
++
+    o coding-category-ccl
+ 
+ 	The category for a coding system of which encoder/decoder is
+@@ -3364,8 +3490,8 @@
+ {
+   register unsigned char c;
+   unsigned char *src = source, *src_end = source + src_bytes;
+-  unsigned int mask;
+-  int i;
++  unsigned int mask, examined_mask, test_mask;
++  int i, idx;
+ 
+   /* At first, skip all ASCII characters and control characters except
+      for three ISO2022 specific control characters.  */
+@@ -3400,7 +3526,21 @@
+ 	  goto label_loop_detect_coding;
+ 	}
+       if (priorities)
+-	goto label_return_highest_only;
++	{
++	  /* return the highest priority-bit set mask only */
++	  for (i = 0; i < CODING_CATEGORY_IDX_MAX; i++)
++	    {
++	      /* skip nil coding-system */
++	      idx = 0;
++	      for (test_mask = priorities[i];(test_mask > 1);idx++, test_mask >>= 1);
++	      if (NILP (XSYMBOL (XVECTOR (Vcoding_category_table)
++				 ->contents[idx])->value))
++		continue;
++	      if (mask & priorities[i])
++		return priorities[i];
++	    }
++	  return CODING_CATEGORY_MASK_RAW_TEXT;
++	}
+     }
+   else
+     {
+@@ -3410,7 +3550,10 @@
+ 	{
+ 	  /* C is the first byte of SJIS character code,
+ 	     or a leading-code of Emacs' internal format (emacs-mule).  */
+-	  try = CODING_CATEGORY_MASK_SJIS | CODING_CATEGORY_MASK_EMACS_MULE;
++	  try = (CODING_CATEGORY_MASK_SJIS
++		  | CODING_CATEGORY_MASK_EMACS_MULE
++		  | CODING_CATEGORY_MASK_UTF_16_BE
++		  | CODING_CATEGORY_MASK_UTF_16_LE);
+ 
+ 	  /* Or, if C is a special latin extra code,
+ 	     or is an ISO2022 specific control code of C1 (SS2 or SS3), 
+@@ -3435,7 +3578,10 @@
+ 	try = (CODING_CATEGORY_MASK_ISO_8_ELSE
+ 		| CODING_CATEGORY_MASK_ISO_8BIT
+ 		| CODING_CATEGORY_MASK_SJIS
+-		| CODING_CATEGORY_MASK_BIG5);
++		| CODING_CATEGORY_MASK_BIG5
++	        | CODING_CATEGORY_MASK_UTF_8
++	        | CODING_CATEGORY_MASK_UTF_16_BE
++	        | CODING_CATEGORY_MASK_UTF_16_LE);
+ 
+       /* Or, we may have to consider the possibility of CCL.  */
+       if (coding_system_table[CODING_CATEGORY_IDX_CCL]
+@@ -3444,26 +3590,70 @@
+ 	try |= CODING_CATEGORY_MASK_CCL;
+ 
+       mask = 0;
++      examined_mask = 0;
+       if (priorities)
+ 	{
+ 	  for (i = 0; i < CODING_CATEGORY_IDX_MAX; i++)
+ 	    {
+-	      if (priorities[i] & try & CODING_CATEGORY_MASK_ISO)
+-		mask = detect_coding_iso2022 (src, src_end);
+-	      else if (priorities[i] & try & CODING_CATEGORY_MASK_SJIS)
+-		mask = detect_coding_sjis (src, src_end);
+-	      else if (priorities[i] & try & CODING_CATEGORY_MASK_BIG5)
+-		mask = detect_coding_big5 (src, src_end);      
+-	      else if (priorities[i] & try & CODING_CATEGORY_MASK_EMACS_MULE)
+-		mask = detect_coding_emacs_mule (src, src_end);      
+-	      else if (priorities[i] & try & CODING_CATEGORY_MASK_CCL)
+-		mask = detect_coding_ccl (src, src_end);
++	      /* skip nil coding-system */
++	      idx = 0;
++	      for (test_mask = priorities[i];(test_mask > 1);idx++, test_mask >>= 1);
++	      if (NILP (XSYMBOL (XVECTOR (Vcoding_category_table)
++				 ->contents[idx])->value))
++		continue;
++
++	      if (!(examined_mask & CODING_CATEGORY_MASK_ISO)
++		  && (priorities[i] & try & CODING_CATEGORY_MASK_ISO))
++		{
++		  mask |= detect_coding_iso2022 (src, src_end);
++		  examined_mask |= CODING_CATEGORY_MASK_ISO;
++		}
++	      else if (!(examined_mask & CODING_CATEGORY_MASK_SJIS)
++		       && (priorities[i] & try & CODING_CATEGORY_MASK_SJIS))
++		{
++		  mask |= detect_coding_sjis (src, src_end);
++		  examined_mask = CODING_CATEGORY_MASK_SJIS;
++		}
++	      else if (!(examined_mask & CODING_CATEGORY_MASK_UTF_8)
++		       && (priorities[i] & try & CODING_CATEGORY_MASK_UTF_8))
++		{
++		  mask |= detect_coding_utf_8 (src, src_end);
++		  examined_mask = CODING_CATEGORY_MASK_UTF_8;
++		}
++	      else if (!(examined_mask & CODING_CATEGORY_MASK_UTF_16_BE_LE)
++		       && (priorities[i] & try & CODING_CATEGORY_MASK_UTF_16_BE_LE))
++		{
++		  mask |= detect_coding_utf_16 (src, src_end);
++		  examined_mask = CODING_CATEGORY_MASK_UTF_16_BE_LE;
++		}
++	      else if (!(examined_mask & CODING_CATEGORY_MASK_BIG5)
++		       && (priorities[i] & try & CODING_CATEGORY_MASK_BIG5))
++		{
++		  mask |= detect_coding_big5 (src, src_end);
++		  examined_mask = CODING_CATEGORY_MASK_BIG5;
++		}
++	      else if (!(examined_mask & CODING_CATEGORY_MASK_EMACS_MULE)
++		       && (priorities[i] & try & CODING_CATEGORY_MASK_EMACS_MULE))
++		{
++		  mask |= detect_coding_emacs_mule (src, src_end);      
++		  examined_mask = CODING_CATEGORY_MASK_EMACS_MULE;
++		}
++	      else if (!(examined_mask & CODING_CATEGORY_MASK_CCL)
++		       && (priorities[i] & try & CODING_CATEGORY_MASK_CCL))
++		{
++		  mask |= detect_coding_ccl (src, src_end);
++		  examined_mask = CODING_CATEGORY_MASK_CCL;
++		}
+ 	      else if (priorities[i] & CODING_CATEGORY_MASK_RAW_TEXT)
+-		mask = CODING_CATEGORY_MASK_RAW_TEXT;
++		{
++		  return CODING_CATEGORY_MASK_RAW_TEXT;
++		}
+ 	      else if (priorities[i] & CODING_CATEGORY_MASK_BINARY)
+-		mask = CODING_CATEGORY_MASK_BINARY;
+-	      if (mask)
+-		goto label_return_highest_only;
++		{
++		  return CODING_CATEGORY_MASK_BINARY;
++		}
++	      if (mask & priorities[i])
++		return priorities[i];
+ 	    }
+ 	  return CODING_CATEGORY_MASK_RAW_TEXT;
+ 	}
+@@ -3479,14 +3669,6 @@
+ 	mask |= detect_coding_ccl (src, src_end);
+     }
+   return (mask | CODING_CATEGORY_MASK_RAW_TEXT | CODING_CATEGORY_MASK_BINARY);
+-
+- label_return_highest_only:
+-  for (i = 0; i < CODING_CATEGORY_IDX_MAX; i++)
+-    {
+-      if (mask & priorities[i])
+-	return priorities[i];
+-    }
+-  return CODING_CATEGORY_MASK_RAW_TEXT;
+ }
+ 
+ /* Detect how a text of length SRC_BYTES pointed by SRC is encoded.
+@@ -3582,6 +3764,75 @@
+   return eol_type;
+ }
+ 
++/* Work like detect_eol_type(), but detect eol in 2-octet
++   big-endian/little-endian format. */
++
++static int
++detect_eol_type_in_2_octet_form (source, src_bytes, skip, big_endian_p)
++     unsigned char *source;
++     int src_bytes, *skip;
++{
++  unsigned char *src = source, *src_end = src + src_bytes;
++  unsigned int c1, c2;
++  int total = 0;		/* How many end-of-lines are found so far.  */
++  int eol_type = CODING_EOL_UNDECIDED;
++  int this_eol_type;
++  int msb, lsb;
++
++  if (big_endian_p)
++    msb = 0, lsb = 1;
++  else
++    msb = 1, lsb = 0;
++
++  *skip = 0;
++
++  while ((src + 1) < src_end && total < MAX_EOL_CHECK_COUNT)
++    {
++      c1 = (src[msb] << 8) | (src[lsb]);
++      src += 2;
++
++      if (c1 == '\n' || c1 == '\r')
++	{
++	  if (*skip == 0)
++	    *skip = src - 2 - source;
++	  total++;
++	  if (c1 == '\n')
++	    {
++	      this_eol_type = CODING_EOL_LF;
++	    }
++	  else
++	    {
++	      if ((src + 1) >= src_end)
++		{
++		  this_eol_type = CODING_EOL_CR;
++		}
++	      else
++		{
++		  c2 = (src[msb] << 8) | (src[lsb]);
++		  if (c2 == '\n')
++		    this_eol_type = CODING_EOL_CRLF, src += 2;
++		  else
++		    this_eol_type = CODING_EOL_CR;
++		}
++	    }
++
++	  if (eol_type == CODING_EOL_UNDECIDED)
++	    /* This is the first end-of-line.  */
++	    eol_type = this_eol_type;
++	  else if (eol_type != this_eol_type)
++	    {
++	      /* The found type is different from what found before.  */
++	      eol_type = CODING_EOL_INCONSISTENT;
++	      break;
++	    }
++	}
++    }
++
++  if (*skip == 0)
++    *skip = src_end - source;
++  return eol_type;
++}
++
+ /* Detect how end-of-line of a text of length SRC_BYTES pointed by SRC
+    is encoded.  If it detects an appropriate format of end-of-line, it
+    sets the information in *CODING.  */
+@@ -3594,7 +3845,20 @@
+ {
+   Lisp_Object val;
+   int skip;
+-  int eol_type = detect_eol_type (src, src_bytes, &skip);
++  int eol_type;
++
++  switch (coding->category_idx)
++    {
++    case CODING_CATEGORY_IDX_UTF_16_BE:
++      eol_type = detect_eol_type_in_2_octet_form (src, src_bytes, &skip, 1);
++      break;
++    case CODING_CATEGORY_IDX_UTF_16_LE:
++      eol_type = detect_eol_type_in_2_octet_form (src, src_bytes, &skip, 0);
++      break;
++    default:
++      eol_type = detect_eol_type (src, src_bytes, &skip);
++      break;
++    }
+ 
+   if (coding->heading_ascii > skip)
+     coding->heading_ascii = skip;
+@@ -4231,6 +4495,14 @@
+       }									\
+   } while (0)
+ 
++static Lisp_Object
++code_convert_region_unwind (dummy)
++     Lisp_Object dummy;
++{
++  inhibit_pre_post_conversion = 0;
++  return Qnil;
++}
++
+ /* Decode (if ENCODEP is zero) or encode (if ENCODEP is nonzero) the
+    text from FROM to TO (byte positions are FROM_BYTE and TO_BYTE) by
+    coding system CODING, and return the status code of code conversion
+@@ -4355,9 +4627,16 @@
+          new buffer.  */
+       struct buffer *prev = current_buffer;
+       Lisp_Object new;
++      int count = specpdl_ptr - specpdl;
+ 
++      record_unwind_protect (code_convert_region_unwind, Qnil);
++      inhibit_pre_post_conversion = 1;
+       call2 (coding->pre_write_conversion,
+ 	     make_number (from), make_number (to));
++      inhibit_pre_post_conversion = 0;
++      /* Discard the unwind protect.  */
++      specpdl_ptr--;
++
+       if (current_buffer != prev)
+ 	{
+ 	  len = ZV - BEGV;
+@@ -4636,11 +4915,17 @@
+   if (! encodep && ! NILP (coding->post_read_conversion))
+     {
+       Lisp_Object val;
++      int count = specpdl_ptr - specpdl;
+ 
+       if (from != PT)
+ 	TEMP_SET_PT_BOTH (from, from_byte);
+       prev_Z = Z;
++      record_unwind_protect (code_convert_region_unwind, Qnil);
++      inhibit_pre_post_conversion = 1;
+       val = call1 (coding->post_read_conversion, make_number (inserted));
++      inhibit_pre_post_conversion = 0;
++      /* Discard the unwind protect.  */
++      specpdl_ptr--;
+       CHECK_NUMBER (val, 0);
+       inserted += Z - prev_Z;
+     }
+@@ -4681,36 +4966,37 @@
+   int result;
+ 
+   saved_coding_symbol = Qnil;
+-  if (encodep && !NILP (coding->pre_write_conversion)
+-      || !encodep && !NILP (coding->post_read_conversion))
++  if ((encodep && !NILP (coding->pre_write_conversion)
++       || !encodep && !NILP (coding->post_read_conversion)))
+     {
+       /* Since we have to call Lisp functions which assume target text
+          is in a buffer, after setting a temporary buffer, call
+          code_convert_region.  */
+       int count = specpdl_ptr - specpdl;
+       struct buffer *prev = current_buffer;
++      int multibyte = STRING_MULTIBYTE (str);
+ 
+       record_unwind_protect (Fset_buffer, Fcurrent_buffer ());
++      record_unwind_protect (code_convert_region_unwind, Qnil);
++      inhibit_pre_post_conversion = 1;
+       GCPRO1 (str);
+       temp_output_buffer_setup (" *code-converting-work*");
+       UNGCPRO;
+       set_buffer_internal (XBUFFER (Vstandard_output));
+-      if (encodep)
+-	insert_from_string (str, 0, 0, to, to_byte, 0);
+-      else
+-	{
+-	  /* We must insert the contents of STR as is without
+-             unibyte<->multibyte conversion.  */
+-	  current_buffer->enable_multibyte_characters = Qnil;
+-	  insert_from_string (str, 0, 0, to_byte, to_byte, 0);
+-	  current_buffer->enable_multibyte_characters = Qt;
+-	}
++      /* We must insert the contents of STR as is without
++	 unibyte<->multibyte conversion.  For that, we adjust the
++	 multibyteness of the working buffer to that of STR.  */
++      Ferase_buffer ();		/* for safety */
++      current_buffer->enable_multibyte_characters = multibyte ? Qt : Qnil;
++      insert_from_string (str, 0, 0, to, to_byte, 0);
++      Fset_buffer_multibyte (Qt);
++      UNGCPRO;
++      inhibit_pre_post_conversion = 0;
+       code_convert_region (BEGV, BEGV_BYTE, ZV, ZV_BYTE, coding, encodep, 1);
+-      if (encodep)
+-	/* We must return the buffer contents as unibyte string.  */
+-	current_buffer->enable_multibyte_characters = Qnil;
++      /* Make a unibyte string if we are encoding, otherwise make a
++         multibyte string.  */
++      Fset_buffer_multibyte (encodep ? Qnil : Qt);
+       str = make_buffer_string (BEGV, ZV, 0);
+-      set_buffer_internal (prev);
+       return unbind_to (count, str);
+     }
+ 
+@@ -4890,13 +5176,24 @@
+   val = Qnil;
+   for (tmp = Vcoding_category_list; !NILP (tmp); tmp = XCONS (tmp)->cdr)
+     {
+-      int idx
+-	= XFASTINT (Fget (XCONS (tmp)->car, Qcoding_category_index));
+-      if (coding_mask & (1 << idx))
++      int idx;
++      Lisp_Object category_sym, category_val, category_index;
++
++      category_sym = XCONS (tmp)->car;
++      category_val = Fsymbol_value (category_sym);
++      if (!NILP (category_val))
+ 	{
+-	  val = Fcons (Fsymbol_value (XCONS (tmp)->car), val);
+-	  if (highest)
+-	    break;
++	  category_index = Fget (category_sym, Qcoding_category_index);
++	  if (NUMBERP (category_index))
++	    {
++	      idx = XFASTINT (category_index);
++	      if (coding_mask & (1 << idx))
++		{
++		  val = Fcons (category_val, val);
++		  if (highest)
++		    break;
++		}
++	    }
+ 	}
+     }
+   if (!highest)
+@@ -5373,17 +5670,13 @@
+ DEFUN ("update-coding-systems-internal",  Fupdate_coding_systems_internal,
+        Supdate_coding_systems_internal, 0, 0, 0,
+   "Update internal database for ISO2022 and CCL based coding systems.\n\
+-When values of the following coding categories are changed, you must\n\
+-call this function:\n\
+-  coding-category-iso-7, coding-category-iso-7-tight,\n\
+-  coding-category-iso-8-1, coding-category-iso-8-2,\n\
+-  coding-category-iso-7-else, coding-category-iso-8-else,\n\
+-  coding-category-ccl")
++When values of any coding categories are changed, you must\n\
++call this function")
+   ()
+ {
+   int i;
+ 
+-  for (i = CODING_CATEGORY_IDX_ISO_7; i <= CODING_CATEGORY_IDX_CCL; i++)
++  for (i = CODING_CATEGORY_IDX_EMACS_MULE; i < CODING_CATEGORY_IDX_MAX; i++)
+     {
+       Lisp_Object val;
+ 
+@@ -5505,6 +5798,8 @@
+ #else
+   system_eol_type = CODING_EOL_LF;
+ #endif
++
++  inhibit_pre_post_conversion = 0;
+ }
+ 
+ #ifdef emacs
+diff -ur emacs-20.7/src/coding.h emacs-20.7-mule-4.1/src/coding.h
+--- emacs-20.7/src/coding.h	Wed Feb 23 23:08:09 2000
++++ emacs-20.7-mule-4.1/src/coding.h	Thu Aug 30 09:32:54 2001
+@@ -423,9 +423,12 @@
+ #define CODING_CATEGORY_IDX_ISO_8_ELSE	7
+ #define CODING_CATEGORY_IDX_CCL		8
+ #define CODING_CATEGORY_IDX_BIG5	9
+-#define CODING_CATEGORY_IDX_RAW_TEXT	10
+-#define CODING_CATEGORY_IDX_BINARY	11
+-#define CODING_CATEGORY_IDX_MAX		12
++#define CODING_CATEGORY_IDX_UTF_8       10
++#define CODING_CATEGORY_IDX_UTF_16_BE   11
++#define CODING_CATEGORY_IDX_UTF_16_LE   12
++#define CODING_CATEGORY_IDX_RAW_TEXT	13
++#define CODING_CATEGORY_IDX_BINARY	14
++#define CODING_CATEGORY_IDX_MAX		15
+ 
+ /* Definitions of flag bits returned by the function
+    detect_coding_mask ().  */
+@@ -439,6 +442,9 @@
+ #define CODING_CATEGORY_MASK_ISO_8_ELSE	(1 << CODING_CATEGORY_IDX_ISO_8_ELSE)
+ #define CODING_CATEGORY_MASK_CCL	(1 << CODING_CATEGORY_IDX_CCL)
+ #define CODING_CATEGORY_MASK_BIG5	(1 << CODING_CATEGORY_IDX_BIG5)
++#define CODING_CATEGORY_MASK_UTF_8      (1 << CODING_CATEGORY_IDX_UTF_8)
++#define CODING_CATEGORY_MASK_UTF_16_BE  (1 << CODING_CATEGORY_IDX_UTF_16_BE)
++#define CODING_CATEGORY_MASK_UTF_16_LE  (1 << CODING_CATEGORY_IDX_UTF_16_LE)
+ #define CODING_CATEGORY_MASK_RAW_TEXT	(1 << CODING_CATEGORY_IDX_RAW_TEXT)
+ #define CODING_CATEGORY_MASK_BINARY	(1 << CODING_CATEGORY_IDX_BINARY)
+ 
+@@ -454,7 +460,10 @@
+    | CODING_CATEGORY_MASK_ISO_7_ELSE	\
+    | CODING_CATEGORY_MASK_ISO_8_ELSE	\
+    | CODING_CATEGORY_MASK_CCL		\
+-   | CODING_CATEGORY_MASK_BIG5)
++   | CODING_CATEGORY_MASK_BIG5		\
++   | CODING_CATEGORY_MASK_UTF_8		\
++   | CODING_CATEGORY_MASK_UTF_16_BE	\
++   | CODING_CATEGORY_MASK_UTF_16_LE)
+ 
+ #define CODING_CATEGORY_MASK_ISO_7BIT \
+   (CODING_CATEGORY_MASK_ISO_7 | CODING_CATEGORY_MASK_ISO_7_TIGHT)
+@@ -469,6 +478,9 @@
+   (  CODING_CATEGORY_MASK_ISO_7BIT	\
+    | CODING_CATEGORY_MASK_ISO_SHIFT	\
+    | CODING_CATEGORY_MASK_ISO_8BIT)
++
++#define CODING_CATEGORY_MASK_UTF_16_BE_LE \
++   (CODING_CATEGORY_MASK_UTF_16_BE | CODING_CATEGORY_MASK_UTF_16_LE)
+ 
+ /* Macros to decode or encode a character of JISX0208 in SJIS.  S1 and
+    S2 are the 1st and 2nd position-codes of JISX0208 in SJIS coding
+diff -ur emacs-20.7/src/keyboard.c emacs-20.7-mule-4.1/src/keyboard.c
+--- emacs-20.7/src/keyboard.c	Sat May 20 23:20:07 2000
++++ emacs-20.7-mule-4.1/src/keyboard.c	Thu Aug 30 09:32:54 2001
+@@ -654,7 +654,8 @@
+ 
+       if (INTEGERP (c))
+ 	{
+-	  if (ptr - current_kboard->echobuf > ECHOBUFSIZE - 30)
++	  if (ptr - current_kboard->echobuf
++	      > ECHOBUFSIZE - KEY_DESCRIPTION_SIZE)
+ 	    return;
+ 
+ 	  ptr = push_key_description (XINT (c), ptr);
+diff -ur emacs-20.7/src/keymap.c emacs-20.7-mule-4.1/src/keymap.c
+--- emacs-20.7/src/keymap.c	Sun Oct 10 10:47:12 1999
++++ emacs-20.7-mule-4.1/src/keymap.c	Thu Aug 30 09:32:54 2001
+@@ -1938,7 +1938,7 @@
+ 	}
+       else
+ 	{
+-	  char tem[30];
++	  char tem[KEY_DESCRIPTION_SIZE];
+ 
+ 	  *push_key_description (XUINT (key), tem) = 0;
+ 	  return build_string (tem);
+@@ -2409,7 +2409,7 @@
+       for (c = 0; c < translate_len; c++)
+ 	if (translate[c] != c)
+ 	  {
+-	    char buf[30];
++	    char buf[KEY_DESCRIPTION_SIZE];
+ 	    char *bufend;
+ 
+ 	    if (alternate_heading)
+diff -ur emacs-20.7/src/lisp.h emacs-20.7-mule-4.1/src/lisp.h
+--- emacs-20.7/src/lisp.h	Mon Jan  4 01:31:23 1999
++++ emacs-20.7-mule-4.1/src/lisp.h	Thu Aug 30 09:32:54 2001
+@@ -935,6 +935,16 @@
+    itself.  */
+ #define CHARACTERBITS 19
+ 
++/* The maximum byte size consumed by push_key_description.
++   All callers should assure that at least this size of memory is
++   allocated at the place pointed by the second argument.
++
++   Thers are 6 modifiers, each consumes 2 chars.
++   The octal form of a character code consumes
++   (1 + CHARACTERBITS / 3 + 1) chars (including backslash at the head).
++   We need one more byte for string terminator `\0'.  */
++#define KEY_DESCRIPTION_SIZE ((2 * 6) + 1 + (CHARACTERBITS / 3) + 1 + 1)
++
+ #ifdef USE_X_TOOLKIT
+ #ifdef NO_UNION_TYPE
+ /* Use this for turning a (void *) into a Lisp_Object, as when the
+diff -ur emacs-20.7/src/lread.c emacs-20.7-mule-4.1/src/lread.c
+--- emacs-20.7/src/lread.c	Thu Oct 14 11:48:29 1999
++++ emacs-20.7-mule-4.1/src/lread.c	Thu Aug 30 09:32:54 2001
+@@ -36,6 +36,7 @@
+ #include "keyboard.h"
+ #include "termhooks.h"
+ #endif
++#include "coding.h"
+ 
+ #ifdef lint
+ #include <sys/inode.h>
+@@ -888,6 +889,7 @@
+ 	    continue;
+ 	}
+ 
++      filename = ENCODE_FILE (filename);
+       /* Calculate maximum size of any filename made from
+ 	 this path element/specified file name and any possible suffix.  */
+       want_size = strlen (suffix) + STRING_BYTES (XSTRING (filename)) + 1;
+diff -ur emacs-20.7/src/minibuf.c emacs-20.7-mule-4.1/src/minibuf.c
+--- emacs-20.7/src/minibuf.c	Fri Oct  1 10:56:33 1999
++++ emacs-20.7-mule-4.1/src/minibuf.c	Thu Aug 30 09:32:54 2001
+@@ -1782,14 +1782,15 @@
+   /* Now find first word-break in the stuff found by completion.
+      i gets index in string of where to stop completing.  */
+   {
+-    int len, c;
++    int len, c, total_bytes;
+     int bytes = STRING_BYTES (XSTRING (completion));
+     completion_string = XSTRING (completion)->data;
+-    for (; i_byte < STRING_BYTES (XSTRING (completion)); i_byte += len, i++)
++    total_bytes = STRING_BYTES (XSTRING (completion));
++    for (; i_byte < total_bytes ; i_byte += len, i++)
+       {
+ 	c = STRING_CHAR_AND_LENGTH (completion_string + i_byte,
+-				    bytes - i_byte,
+-				    len);
++				    total_bytes - i_byte,
++  				    len);
+ 	if (SYNTAX (c) != Sword)
+ 	  {
+ 	    i_byte += len;
+diff -ur emacs-20.7/src/xfns.c emacs-20.7-mule-4.1/src/xfns.c
+--- emacs-20.7/src/xfns.c	Thu Jul  1 09:09:39 1999
++++ emacs-20.7-mule-4.1/src/xfns.c	Thu Aug 30 09:32:54 2001
+@@ -5462,6 +5462,7 @@
+   query_font_func = x_query_font;
+   set_frame_fontset_func = x_set_font;
+   check_window_system_func = check_x;
++  find_ccl_program_func = x_find_ccl_program;
+ }
+ 
+ #endif /* HAVE_X_WINDOWS */
+diff -ur emacs-20.7/src/xterm.c emacs-20.7-mule-4.1/src/xterm.c
+--- emacs-20.7/src/xterm.c	Mon Aug  2 09:16:43 1999
++++ emacs-20.7-mule-4.1/src/xterm.c	Thu Aug 30 09:32:54 2001
+@@ -6954,45 +6954,33 @@
+   return NULL;
+ }
+ 
+-/* Find a CCL program for a font specified by FONTP, and set the memer
++/* Find a CCL program for a font specified by FONTP, and set the member
+  `encoder' of the structure.  */
+ 
+ void
+ x_find_ccl_program (fontp)
+      struct font_info *fontp;
+ {
+-  extern Lisp_Object Vfont_ccl_encoder_alist, Vccl_program_table;
+-  extern Lisp_Object Qccl_program_idx;
+-  extern Lisp_Object resolve_symbol_ccl_program ();
+-  Lisp_Object list, elt, ccl_prog, ccl_id;
++  Lisp_Object list, elt;
+ 
+-  for (list = Vfont_ccl_encoder_alist; CONSP (list); list = XCONS (list)->cdr)
++  for (list = Vfont_ccl_encoder_alist; CONSP (list); list = XCDR (list))
+     {
+-      elt = XCONS (list)->car;
++      elt = XCAR (list);
+       if (CONSP (elt)
+-	  && STRINGP (XCONS (elt)->car)
+-	  && (fast_c_string_match_ignore_case (XCONS (elt)->car, fontp->name)
++	  && STRINGP (XCAR (elt))
++	  && (fast_c_string_match_ignore_case (XCAR (elt), fontp->name)
+ 	      >= 0))
+-	{
+-	  if (SYMBOLP (XCONS (elt)->cdr) &&
+-	      (!NILP (ccl_id = Fget (XCONS (elt)->cdr, Qccl_program_idx))))
+-	    {
+-	      ccl_prog = XVECTOR (Vccl_program_table)->contents[XUINT (ccl_id)];
+-	      if (!CONSP (ccl_prog)) continue;
+-	      ccl_prog = XCONS (ccl_prog)->cdr;
+-	    }
+-	  else
+-	    {
+-	      ccl_prog = XCONS (elt)->cdr;
+-	      if (!VECTORP (ccl_prog)) continue;
+-	    }
+-	    
+-	  fontp->font_encoder
+-	    = (struct ccl_program *) xmalloc (sizeof (struct ccl_program));
+-	  setup_ccl_program (fontp->font_encoder,
+-			     resolve_symbol_ccl_program (ccl_prog));
+-	  break;
+-	}
++	break;
++    }
++  if (! NILP (list))
++    {
++      struct ccl_program *ccl
++	= (struct ccl_program *) xmalloc (sizeof (struct ccl_program));
++
++      if (setup_ccl_program (ccl, XCDR (elt)) < 0)
++	xfree (ccl);
++      else
++	fontp->font_encoder = ccl;
+     }
+ }
+ 
