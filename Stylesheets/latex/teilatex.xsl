@@ -185,16 +185,8 @@ pdfcreator={Oxford University Computing Services}
 <xsl:if test="not($docstyle='letter')">
 \renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
 </xsl:if>
-\fancyhf{} 
-\fancyhead[LE]{\bfseries\leftmark} 
-\fancyhead[RO]{\bfseries\rightmark} 
-\fancyfoot[RO]{\TheFullDate}
-\fancyfoot[CO]{\thepage}
-\fancyfoot[LO]{<xsl:value-of select="$REQUEST"/>}
-\fancyfoot[LE]{\TheFullDate}
-\fancyfoot[CE]{\thepage}
-\fancyfoot[RE]{<xsl:value-of select="$REQUEST"/>}
-\fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}
+
+<xsl:call-template name="headersAndFooters"/>
 <xsl:call-template name="begindocumentHook"/>
 <xsl:apply-templates select="tei:text"/>
 \end{document}
@@ -806,6 +798,20 @@ pdfcreator={Oxford University Computing Services}
   <xsl:text>`</xsl:text>
   <xsl:apply-templates/>
   <xsl:text>'</xsl:text>
+</xsl:template>
+
+
+<xsl:template name="headersAndFooters">
+\fancyhf{} 
+\fancyhead[LE]{\bfseries\leftmark} 
+\fancyhead[RO]{\bfseries\rightmark} 
+\fancyfoot[RO]{\TheFullDate}
+\fancyfoot[CO]{\thepage}
+\fancyfoot[LO]{<xsl:value-of select="$REQUEST"/>}
+\fancyfoot[LE]{\TheFullDate}
+\fancyfoot[CE]{\thepage}
+\fancyfoot[RE]{<xsl:value-of select="$REQUEST"/>}
+\fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}
 </xsl:template>
 
 
