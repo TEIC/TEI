@@ -1,4 +1,4 @@
-FILES=ChangeLog g sitemap.xmap index.html Makefile notam parser progressbar ressource roma roma.css roma.js startroma.php teilogo.jpg VERSION xquery 
+FILES=ChangeLog g sitemap-dist.xmap index.html Makefile notam parser progressbar ressource roma roma.css roma.js startroma.php teilogo.jpg VERSION xquery 
 
 dist: 
 	rm -rf release
