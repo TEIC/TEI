@@ -24,23 +24,28 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 <xsl:param name="verbose"></xsl:param>
 <xsl:param name="oddmode">html</xsl:param>
 <xsl:variable name="TEITAGS">http://www.tei-c.org.uk/tei-bin/files.pl?name=tags.xml</xsl:variable>
-<xsl:param name="ODDROOT">http://www.tei-c.org.uk/P5/</xsl:param>
 <xsl:param name="schemaBaseURL">http://www.tei-c.org/P5/Schema/</xsl:param>
+<xsl:param name="ODDROOT">http://www.tei-c.org.uk/P5/</xsl:param>
+
  <xsl:key  name="CLASSMEMBERS" match="tei:elementSpec|tei:classSpec" use="tei:classes/tei:memberOf/@key"/>
  <xsl:key name="TAGS" match="Tag|Pattern|Class" use="ident"/>
- <xsl:key name="FILES"   match="tei:module[@ident]|tei:schema[@ident]"  use="@ident"/>
  <xsl:key name="IDENTS"   match="tei:elementSpec|tei:classSpec|tei:macroSpec"   use="@ident"/>
  <xsl:key name="NAMES"   match="tei:module"   use="@ident"/>
  <xsl:key name="TAGIDS"     match="*[@id]"           use="@id"/>
  <xsl:key name="TAGIDENTS"     match="Table/*[ident]"           use="ident"/>
  <xsl:key name="IDS"     match="tei:*[@id]"  use="@id"/>
- <xsl:key name="PATTERNDOCS" match="tei:macroSpec" use='1'/>
  <xsl:key name="PATTERNS" match="tei:macroSpec" use="@ident"/>
+ <xsl:key name="PATTERNDOCS" match="tei:macroSpec" use='1'/>
  <xsl:key name="CLASSDOCS" match="tei:classSpec" use='1'/>
  <xsl:key name="TAGDOCS" match="tei:elementSpec" use='1'/>
  <xsl:key name="CHUNKS" match="tei:specGrpRef" use="@target"/>
  <xsl:key name='NameToID' match="tei:*" use="@ident"/>
- <!-- build a lookup table of class names and their members -->
+ <xsl:key name="ElementModule" match="tei:elementSpec" use="@module"/>
+ <xsl:key name="ClassModule"   match="tei:classSpec" use="@module"/>
+ <xsl:key name="MacroModule"   match="tei:macroSpec" use="@module"/>
+ <xsl:key name="DeclModules"   match="tei:module[@type='decls']"	 use="@ident"/>
+ <xsl:key name="AllModules"   match="tei:module[not(@type='decls')]" use="1"/>
+ <xsl:key name="DefClasses"   match="tei:classSpec[@predeclare='true']" use="1"/>
 
  <!-- lookup table of element contents, and templates to access the result -->
  <xsl:key name="ELEMENTPARENTS" match="Contains" use="."/>
@@ -154,32 +159,6 @@ created on <xsl:value-of select="edate:date-time()"/>.
 
 <xsl:template match="tei:author">
   <xsl:apply-templates/>,
-</xsl:template>
-
-
-
-<xsl:template match="tei:claDecl" mode="tangle">
-  <xsl:if test="$verbose='true'">
-    <xsl:message>  .. claDecl <xsl:value-of
-    select="@target"/>,<xsl:value-of select="@type"/>  </xsl:message>
-  </xsl:if>
-  <xsl:if test="$verbose='true'">
-    <xsl:message>        .. so visit  classSpec <xsl:value-of
-    select="key('IDS',@target)/@ident"/></xsl:message>
-  </xsl:if>
-  
-  <xsl:choose>
-    <xsl:when test="@type='model'">    
-      <xsl:apply-templates select="key('IDS',@target)" mode="processModel"/>
-    </xsl:when>
-    <xsl:when test="@type='default'">    
-      <xsl:apply-templates select="key('IDS',@target)" mode="processDefaultAtts"/>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:message terminate="yes"> claDecl for <xsl:value-of
-      select="@target"/>,<xsl:value-of select="@type"/> is invalid</xsl:message>
-    </xsl:otherwise>
-  </xsl:choose>
 </xsl:template>
 
 
@@ -317,7 +296,6 @@ created on <xsl:value-of select="edate:date-time()"/>.
 <xsl:template match="tei:classSpec/tei:content">
 <xsl:message>????SCHEMA CONTENT OF CLASS DOC <xsl:value-of select="@id"/></xsl:message>
 </xsl:template>
-
 
 
 <xsl:template match="tei:classSpec[@mode='change']" mode="tangle">
@@ -541,7 +519,7 @@ created on <xsl:value-of select="edate:date-time()"/>.
 		  </xsl:if>
 		  <xsl:choose>
 		    <xsl:when test="starts-with(@ident,'type')"><xsl:copy-of select="exsl:node-set($entCont)/BLAH/rng:*"/></xsl:when>
-		    <xsl:when test="$entCount=0"><rng:empty/></xsl:when>
+		    <xsl:when test="$entCount=0"><rng:notAllowed/></xsl:when>
 		    <xsl:when test="$entCount=1"><xsl:copy-of select="exsl:node-set($entCont)/BLAH/rng:*"/></xsl:when>
 		    <xsl:when test="tei:content/rng:text|tei:content/rng:ref">
 		      <rng:choice>
@@ -671,31 +649,7 @@ select="$ident"/>] to  class [<xsl:value-of select="@ident"/>]</xsl:message>
   <xsl:param name="filename"/>
   <xsl:variable name="schema">
     <xsl:choose>
-      <xsl:when test="$filename='declarefs'"/>
-      <xsl:when test="$filename='sharedheader'"/>
-      <xsl:when test="$filename='mixed'"/>
-      <xsl:when test="$filename='teideclarations' and @key='teikeywords'">
-	<xsl:value-of select="@key"/><xsl:text>.rng</xsl:text>
-      </xsl:when>
-      <xsl:when test="$filename='tei' and @key='teideclarations'">
-	<xsl:value-of select="@key"/><xsl:text>.rng</xsl:text>
-      </xsl:when>
-      <xsl:when test="$filename='tei' and @key='teiclasses'">
-	<xsl:value-of select="@key"/><xsl:text>.rng</xsl:text>
-      </xsl:when>
-      <xsl:when test="$filename='tei' and @key='header'">
-	<xsl:value-of select="@key"/><xsl:text>.rng</xsl:text>
-      </xsl:when>
-      <xsl:when test="$filename='tei' and @key='core'">
-	<xsl:value-of select="@key"/><xsl:text>.rng</xsl:text>
-      </xsl:when>
-      <xsl:when test="$filename='general' and @key='structure'">
-	<xsl:value-of select="@key"/><xsl:text>.rng</xsl:text>
-      </xsl:when>
-      <xsl:when test="$filename='structure' and @key='frontmatter'">
-	<xsl:value-of select="@key"/><xsl:text>.rng</xsl:text>
-      </xsl:when>
-      <xsl:when test="$filename='structure' and @key='backmatter'">
+      <xsl:when test="key('AllModules',@key)">
 	<xsl:value-of select="@key"/><xsl:text>.rng</xsl:text>
       </xsl:when>
       <xsl:when test="@url">
@@ -1022,26 +976,35 @@ select="$ident"/>] to  class [<xsl:value-of select="@ident"/>]</xsl:message>
 
 
 <xsl:template name="copyright">
-  <xsl:comment>
- Text Encoding Initiative Consortium:
- Guidelines for Electronic Text Encoding and Interchange.
- 
- TEI P5
- 
- Copyright (c) 2005 TEI Consortium. Permission to copy in any form
- is granted, provided this notice is included in all copies.
- These materials may not be altered; modifications to these schemata should
- be performed only as specified by the Guidelines, for example in the
- chapter entitled 'Modifications of the TEI'
- These materials are subject to revision by the TEI Consortium. Current versions
- are available from the Consortium website at http://www.tei-c.org
- 
- TEI P5 Relax NG Schema generated 
- <xsl:value-of select="edate:date-time()"/>
- by teiodds.xsl
- 
- </xsl:comment>
+<xsl:choose>
+    <xsl:when test="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability">
+   <xsl:apply-templates 
+    select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability"/>
+     </xsl:when>
+     <xsl:otherwise>
+Copyright 2004 TEI Consortium.
+
+This is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 2 of the
+License, or (at your option) any later version.
+
+This material is distributed in the hope that it will be
+useful, but WITHOUT ANY WARRANTY; without even the implied
+warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this file; if not, write to the
+  Free Software Foundation, Inc.,
+  59 Temple Place, Suite 330,
+  Boston, MA  02111-1307,
+  USA
+     </xsl:otherwise>
+   </xsl:choose>
+
 </xsl:template>
+
 <xsl:template name="defineAnAttribute">
 
   <rng:define name="{ancestor::tei:attList/../@ident}.attributes.{@ident}">
@@ -1372,8 +1335,6 @@ select="$ident"/>] to  class [<xsl:value-of select="@ident"/>]</xsl:message>
 <xsl:if test="$verbose='true'">
 <xsl:message>  tagset <xsl:value-of select="../@id"/>: <xsl:value-of select="$File"/></xsl:message>
 </xsl:if>
-<xsl:value-of
- select="key('PUBLICIDS',$File)/parent::tei:macroSpec/tei:gloss"/>
   [<xsl:value-of select="$File"/>]
 </xsl:template>
 
