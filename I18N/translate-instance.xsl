@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet 
  xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:exsl="http://exslt.org/common"
-  extension-element-prefixes="exsl"
-  exclude-result-prefixes="tei exsl" 
-  version="1.0">
+ xmlns:tei="http://www.tei-c.org/ns/1.0"
+ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+ xmlns:exsl="http://exslt.org/common"
+ extension-element-prefixes="exsl"
+ exclude-result-prefixes="tei exsl" 
+ version="1.0">
 <xsl:output method="xml" indent="yes"/>
 <xsl:param name="lang">es</xsl:param>
-<xsl:param name="ODDROOT">/TEI/P5/</xsl:param>
 <xsl:param name="verbose">true</xsl:param>
+<xsl:key name="ELEMENTS" match="element" use="@ident"/>
+<xsl:key name="ATTRIBUTES" match="attribute" use="@ident"/>
 <xsl:variable name="TEINAMES">http://www.tei-c.org.uk/tei-bin/files.pl?name=teinames.xml</xsl:variable>
+
 <xsl:template match="comment()|text()|processing-instruction()">
   <xsl:copy/>
 </xsl:template>
@@ -19,11 +21,19 @@
 <xsl:template match="tei:*">
 <xsl:variable name="oldname" select="name(.)"/>
 <xsl:variable name="newname">
-  <xsl:for-each
-   select="document($TEINAMES)/i18n/element[@ident=$oldname]">
+  <xsl:for-each select="document($TEINAMES)/i18n">
     <xsl:choose>
-      <xsl:when test="@*[name(.)=$lang]">
-	<xsl:value-of select="@*[name(.)=$lang]"/>
+      <xsl:when test="key('ELEMENTS',$oldname)">
+	<xsl:for-each select="key('ELEMENTS',$oldname)">
+	  <xsl:choose>
+	    <xsl:when test="@*[name(.)=$lang]">
+	      <xsl:value-of select="@*[name(.)=$lang]"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:value-of select="$oldname"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:value-of select="$oldname"/>
@@ -39,14 +49,22 @@
 <xsl:template match="@*">
 <xsl:variable name="oldname" select="name(.)"/>
 <xsl:variable name="newname">
-  <xsl:for-each
-   select="document($TEINAMES)/i18n/attribute[@ident=$oldname]">
+  <xsl:for-each select="document($TEINAMES)/i18n">
     <xsl:choose>
-      <xsl:when test="not(@*)">
-	<xsl:value-of select="$oldname"/>
-      </xsl:when>
-      <xsl:when test="@*[name(.)=$lang]">
-	<xsl:value-of select="@*[name(.)=$lang]"/>
+      <xsl:when test="key('ATTRIBUTES',$oldname)">
+	<xsl:for-each select="key('ATTRIBUTES',$oldname)">
+	  <xsl:choose>
+	    <xsl:when test="not(name(.)='attribute')">
+	      <xsl:value-of select="$oldname"/>
+	    </xsl:when>
+	    <xsl:when test="@*[name(.)=$lang]">
+	      <xsl:value-of select="@*[name(.)=$lang]"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:value-of select="$oldname"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:value-of select="$oldname"/>

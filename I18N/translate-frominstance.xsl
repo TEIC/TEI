@@ -22,8 +22,8 @@
   <xsl:for-each
    select="document($TEINAMES)/i18n">
     <xsl:choose>
-      <xsl:when test="element[@*[name(.)=$lang]=$oldname]">
-	<xsl:value-of select="element[@*[name(.)=$lang]]/@ident"/>
+      <xsl:when test="element[@*[name(.)=$lang and .=$oldname]]">
+	<xsl:value-of select="element[@*[name(.)=$lang and .=$oldname]]/@ident"/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:value-of select="$oldname"/>
@@ -42,8 +42,8 @@
   <xsl:for-each
    select="document($TEINAMES)/i18n">
     <xsl:choose>
-      <xsl:when test="attribute[@*[name(.)=$lang]=$oldname]">
-	<xsl:value-of select="attribute[@*[name(.)=$lang]]/@ident"/>
+      <xsl:when test="attribute[@*[name(.)=$lang and .=$oldname]]">
+	<xsl:value-of select="attribute[@*[name(.)=$lang  and .=$oldname]]/@ident"/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:value-of select="$oldname"/>
