@@ -8,11 +8,11 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 ##LICENSE
 --> 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:fotex="http://www.tug.org/tei:fotex"
-  xmlns:exsl="http://exslt.org/tei:common"
+  xmlns:fotex="http://www.tug.org/fotex"
+  xmlns:exsl="http://exslt.org/common"
   exclude-result-prefixes="saxon exsl" 
   extension-element-prefixes="saxon exsl fotex"
-  xmlns:saxon="http://icl.com/tei:saxon"
+  xmlns:saxon="http://icl.com/saxon"
   xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 version="1.0">
 

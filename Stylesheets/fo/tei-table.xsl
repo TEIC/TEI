@@ -9,8 +9,8 @@ XSL FO stylesheet to format TEI XML documents
 
 <xsl:stylesheet
   xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:fotex="http://www.tug.org/tei:fotex"
-  xmlns:exsl="http://exslt.org/tei:common"
+  xmlns:fotex="http://www.tug.org/fotex"
+  xmlns:exsl="http://exslt.org/common"
   exclude-result-prefixes="exsl"
   extension-element-prefixes="exsl"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"

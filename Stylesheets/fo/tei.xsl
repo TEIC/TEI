@@ -9,7 +9,7 @@ XSL stylesheet to format TEI XML documents to FO or HTML
 
 <xsl:stylesheet
   xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:fotex="http://www.tug.org/tei:fotex"
+  xmlns:fotex="http://www.tug.org/fotex"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
   xmlns:fo="http://www.w3.org/1999/XSL/Format">
 
@@ -25,7 +25,7 @@ XSL stylesheet to format TEI XML documents to FO or HTML
 
 <!-- overrides -->
 
-<xsl:key name="IDS" match="tei:*[@id]" use="@id"/>
+<xsl:key name="IDS" match="tei::*[@id]" use="@id"/>
 
 <xsl:variable name="top" select="/"/>
 <xsl:variable name="tableSpecs">
