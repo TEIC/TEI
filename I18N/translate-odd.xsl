@@ -171,7 +171,7 @@
 	      <xsl:for-each  select="document($TEINAMES)">
 		<xsl:for-each select="key('ATTRIBUTES',$thisatt)">
 		  <xsl:if test="equiv[@lang=$lang]">
-		    <attDef  xmlns="http://www.tei-c.org/ns/1.0" ident="{$thisatt}"> 
+		    <attDef mode="change" xmlns="http://www.tei-c.org/ns/1.0" ident="{$thisatt}"> 
 		      <altIdent xmlns="http://www.tei-c.org/ns/1.0">
 			<xsl:value-of select="equiv[@lang=$lang]/@value"/>
 		      </altIdent>
