@@ -138,9 +138,9 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
 	</xsl:if>
         <td class="formlabeltop"><xsl:value-of disable-output-escaping="yes" select="$res_form_contents"/></td>
         <td>
-         <xsl:call-template name="contentTypes"/><br/>
+         <xsl:call-template name="contentTypes"/><xsl:if test="$selectedMode='addElement'"><br/>
 	 <textarea name="userContents" rows="5" cols="40"><xsl:if
-test="not($elementFullContents='')"><xsl:value-of select="$elementFullContents"/></xsl:if><xsl:if test="$elementFullContents=''">&lt;content&gt;&lt;/content&gt;</xsl:if></textarea>
+test="not($elementFullContents='')"><xsl:value-of select="$elementFullContents"/></xsl:if><xsl:if test="$elementFullContents=''">&lt;content&gt;&lt;/content&gt;</xsl:if></textarea></xsl:if>
         </td>
       </tr>
       <tr>

@@ -1180,7 +1180,10 @@ class roma
     private function saveCustomization( &$szOutput )
       {
 	$this->outputDownloadHeaders();
-	header( "Content-Disposition: attachment;  filename=myTeiCustomization.xml" );
+	$this->m_oRomaDom->getCustomizationFilename( $szFilename );
+	$szFilename = ( $szFilename ) ? $szFilename : 'mytei';
+
+	header( "Content-Disposition: attachment;  filename={$szFilename}.xml" );
 
 	//tidy up output
 	$oTidy = new tidy();
@@ -1235,12 +1238,7 @@ class roma
 	
 	if ( $szSchema != '' )
 	  {
-	    //notam
-	    $oNotam = new notam();
-	    $oNotam->setHeadline( 'MESSAGES' );
-	    $oNotam->setMessage( $szError );
-	    $oNotam->setStatus( notam_status_error );
-	    $oNotam->addNotam();
+	    echo '<pre>' . $szError . '</pre>';
 
 	    $this->m_oRomaDom->getCustomizationFilename( $szFilename );
 	    $szFilename = ( $szFilename ) ? $szFilename : 'mytei';
@@ -1321,7 +1319,10 @@ class roma
 
 	if ( $szError == '' )
 	  {
-	    $this->redirectBrowserMeta( "http://" . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'PHP_SELF' ] . '?mode=' . roma_mode_downloadFile . '&file=myteiDoc.' . $szEnding );	    
+	    $this->m_oRomaDom->getCustomizationFilename( $szFilename );
+	    $szFilename = ( $szFilename ) ? $szFilename : 'mytei';
+
+	    $this->redirectBrowserMeta( "http://" . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'PHP_SELF' ] . '?mode=' . roma_mode_downloadFile . '&file=' . $szFilename . '.' . $szEnding );	    
 
 	    $_SESSION[ 'download' ] = $szDoc;
 	  }
@@ -1588,6 +1589,7 @@ class roma
 
     function schemaValidatorErrorHandler($errno, $errmsg, $filename, $linenum, $vars) 
     {
+      echo $errmsg . '<br>';
       $this->m_aszErrors[] = $errmsg;
     }
 
