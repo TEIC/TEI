@@ -24,7 +24,7 @@ XSL stylesheet to process TEI documents using ODD markup
 <xsl:param name="lang">es</xsl:param>
 <xsl:key name="ELEMENTS" match="element" use="@ident"/>
 <xsl:key name="ATTRIBUTES" match="attribute" use="@ident"/>
-<xsl:param name="TEISERVER">http://localhost:8080/exist/TEI/Roma/xquery/</xsl:param>
+<xsl:param name="TEISERVER">http://tei.oucs.ox.ac.uk:8080/exist/TEI/Roma/xquery/</xsl:param>
 <xsl:template match="tei:*|rng:*">
   <xsl:copy>
     <xsl:apply-templates select="@*|*|text()|comment()"/>
