@@ -1046,6 +1046,8 @@
       <xsl:call-template name="bodyHook"/>
       <xsl:call-template name="bodyJavaScriptHook"/>
       
+      <!-- navigation bar -->
+	<xsl:call-template name="navbar"/>
       <!-- header -->
       <div id="hdr"><span class="tocontent"><a href="{$REQUEST}?style=text">Text only</a> |
       <a href="#rh-col" title="Go to main page content" class="skiplinks">Skip links</a></span>
@@ -1083,6 +1085,12 @@
     </body>
   </html>
 </xsl:template>
+
+<xsl:template name="navbar"/>
+<!--
+      <div id="hdr3">
+      </div>
+      -->
 
 <xsl:template name="printLink">
   <xsl:variable name="href">
