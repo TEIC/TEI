@@ -16,10 +16,13 @@
    </teiHeader>
 <text>
 <body>
-<p>
-<module ident="tei" mode="change">
-
-  <classSpec ident="tei.xPointer" mode="change" type="both">
+<p>The wrapping schema, which imports 
+selected TEI modules. 
+<schemaSpec ident="teisilly">
+  <moduleRef key="tei"/>
+  <moduleRef key="general"/>
+  <moduleRef key="linking"/>
+  <classSpec module="tei" ident="tei.xPointer" mode="change" type="both">
     <attList>
       <attDef mode="change" ident="url">
 	<altIdent>href</altIdent>
@@ -30,32 +33,19 @@
     </attList>
   </classSpec>
 
-  <elementSpec ident="quotation" mode="replace">
+  <elementSpec module="tei" ident="quotation" mode="replace">
     <content>
       <rng:empty/>
     </content>
   </elementSpec>
 
-  <elementSpec ident="quote" mode="change">
+  <elementSpec module="tei" ident="quote" mode="change">
     <altIdent>Quote</altIdent>
   </elementSpec>
 
 
-</module>
-<module ident="linking" mode="change">
-  <elementSpec ident="xptr" mode="delete"/>
-</module>
-
-
-<module ident="general" mode="change"/>
-</p>
-<p>Now for the wrapping schema, which imports 
-selected TEI modules. 
-<schema ident="teisilly">
-  <moduleRef key="tei"/>
-  <moduleRef key="general"/>
-  <moduleRef key="linking"/>
-</schema>
+  <elementSpec module="linking" ident="xptr" mode="delete"/>
+</schemaSpec>
 </p>
 </body>
 </text>
