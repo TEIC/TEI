@@ -5,9 +5,8 @@ $Date$, $Revision$, $Author$
 
 XSL stylesheet to format TEI XML documents to HTML or XSL FO
 
- 
 ##LICENSE
---> 
+    --> 
 <xsl:stylesheet 
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -40,7 +39,6 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
  <xsl:key name="CLASSDOCS" match="tei:classSpec" use='1'/>
  <xsl:key name="TAGDOCS" match="tei:elementSpec" use='1'/>
  <xsl:key name="CHUNKS" match="tei:specGrpRef" use="@target"/>
- <xsl:key name='PUBLICIDS' match="publicID" use="@file"/>
  <xsl:key name='NameToID' match="tei:*" use="@ident"/>
  <!-- build a lookup table of class names and their members -->
 
@@ -677,10 +675,13 @@ select="$ident"/>] to  class [<xsl:value-of select="@ident"/>]</xsl:message>
       <xsl:when test="$filename='declarefs'"/>
       <xsl:when test="$filename='sharedheader'"/>
       <xsl:when test="$filename='mixed'"/>
-      <xsl:when test="$filename='tei' and @key='teikeywords'">
+      <xsl:when test="$filename='teideclarations' and @key='teikeywords'">
 	<xsl:value-of select="@key"/><xsl:text>.rng</xsl:text>
       </xsl:when>
       <xsl:when test="$filename='tei' and @key='teideclarations'">
+	<xsl:value-of select="@key"/><xsl:text>.rng</xsl:text>
+      </xsl:when>
+      <xsl:when test="$filename='tei' and @key='teiclasses'">
 	<xsl:value-of select="@key"/><xsl:text>.rng</xsl:text>
       </xsl:when>
       <xsl:when test="$filename='tei' and @key='header'">
