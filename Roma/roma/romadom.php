@@ -38,7 +38,7 @@ class romaDom extends domDocument
         $oTemp = new domDocument();
 	$oTEI = $oTemp->createElementNS( 'http://www.tei-c.org/ns/1.0', 'TEI' );
 	$oTemp->appendChild( $oTEI );
-	$oTEI->setAttribute( 'xml:lang', 'en' );
+	$oTEI->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'lang', 'en' );
 
 	$oTeiHeader = $oTEI->appendChild( new domElement( 'teiHeader' ) );
 
@@ -1834,15 +1834,15 @@ class romaDom extends domDocument
     public function setCustomizationFilename( $szFilename )
       {
 	$this->getXPath( $oXPath );
-	$oTEI = $oXPath->query( "/tei:TEI" )->item(0);
-	$oTEI->setAttribute( 'n', $szFilename );
+	$oTEI = $oXPath->query( "///tei:schemaSpec[1]" )->item(0);
+	$oTEI->setAttribute( 'ident', $szFilename );
       }
 
     public function setCustomizationLanguage( $szLanguage )
       {
 	$this->getXPath( $oXPath );
 	$oTEI = $oXPath->query( "/tei:TEI" )->item(0);
-	$oTEI->setAttribute( 'lang', $szLanguage );
+	$oTEI->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'lang', $szLanguage );
       }
 
 
