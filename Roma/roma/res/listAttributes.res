@@ -13,3 +13,12 @@ form_delete=Delete
 
 [de]
 helpmessage=asdljasdklasjd
+
+form_headline=Liste der Attribute
+form_add=Ein neues Attribut hinzufügen
+form_change=Attribut bearbeiten
+form_include=einbinden
+form_exclude=ausnehmen
+form_tagName=Name des Tags
+form_description=Beschreibung
+form_delete=Löschen

@@ -19,7 +19,7 @@ headline=Hinzugef&uuml;gte Elemente
 
 form_headline=Liste der hinzugef&uuml;gten Elemente
 form_add=Ein neues Element hinzuf&uuml;gen
-form_changeElement=Element $auml;ndern
+form_changeElement=Element bearbeiten
 form_include=einbinden
 form_exclude=ausnehmen
 form_tagName=Name des Tags
