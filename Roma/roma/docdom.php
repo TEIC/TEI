@@ -347,47 +347,52 @@ class docDom extends domDocument
 		$theDefault = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'attList' );
 		$oAttList = $oElementSpec->appendChild( $theDefault );
 
-		foreach( $oAttDom->documentElement->childNodes as $oAtt )
+		$oAttRoot = $oAttDom->documentElement;
+		
+		if ( is_object( $oAttRoot ) )
 		  {
-		    $szAttribute = $oAtt->getElementsByTagname( 'name' )->item(0)->nodeValue;
-
-		    $theAttDef = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'attDef' );
-		    $oAttDef = $oAttList->appendChild( $theAttDef );
-		    
-		    $oAttDef->setAttribute( 'ident', $szAttribute );
-		    $oAttDef->setAttribute( 'mode', 'add' );
-		    
-		    $oAttDef->appendChild( new domElement( 'defaultVal', $oAtt->getElementsByTagname( 'default' )->item(0)->nodeValue, 'http://www.tei-c.org/ns/1.0' ) );
-		    
-		    $this->m_oRomaDom->getAttributeDefinition( $szAttribute, $szElement, $szModule, '', $oDef );
-		    $oNewDatatype = $oDef->getElementsByTagname( 'datatype' )->item(0);
-		    
-		    $theDatatype = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'datatype' );
-		    $oDatatype = $oAttDef->appendChild( $theDatatype );
-		    
-		    switch( $oNewDatatype->nodeValue )
+		    foreach( $oAttRoot->childNodes as $oAtt )
 		      {
-		      case 'text':
-			$oRNG = $this->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:' . $oNewDatatype->nodeValue );
-			$oDatatype->appendChild( $oRNG );
-			break;
-		      default:
-			if( substr( $oNewDatatype->nodeValue, 0, 9 ) == 'datatype.' )
+			$szAttribute = $oAtt->getElementsByTagname( 'name' )->item(0)->nodeValue;
+			
+			$theAttDef = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'attDef' );
+			$oAttDef = $oAttList->appendChild( $theAttDef );
+			
+			$oAttDef->setAttribute( 'ident', $szAttribute );
+			$oAttDef->setAttribute( 'mode', 'add' );
+			
+			$oAttDef->appendChild( new domElement( 'defaultVal', $oAtt->getElementsByTagname( 'default' )->item(0)->nodeValue, 'http://www.tei-c.org/ns/1.0' ) );
+			
+			$this->m_oRomaDom->getAttributeDefinition( $szAttribute, $szElement, $szModule, '', $oDef );
+			$oNewDatatype = $oDef->getElementsByTagname( 'datatype' )->item(0);
+			
+			$theDatatype = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'datatype' );
+			$oDatatype = $oAttDef->appendChild( $theDatatype );
+			
+			switch( $oNewDatatype->nodeValue )
 			  {
-			    $oRNG = $this->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:ref' );
-			    $oRef = $oDatatype->appendChild( $oRNG );
-			    $oRef->setAttribute( 'name', $oNewDatatype->nodeValue );
+			  case 'text':
+			    $oRNG = $this->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:' . $oNewDatatype->nodeValue );
+			    $oDatatype->appendChild( $oRNG );
+			    break;
+			  default:
+			    if( substr( $oNewDatatype->nodeValue, 0, 9 ) == 'datatype.' )
+			      {
+				$oRNG = $this->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:ref' );
+				$oRef = $oDatatype->appendChild( $oRNG );
+				$oRef->setAttribute( 'name', $oNewDatatype->nodeValue );
+			      }
+			    else
+			      {
+				$oRNG = $this->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:data' );
+				$oRef = $oDatatype->appendChild( $oRNG );
+				$oRef->setAttribute( 'type', $oNewDatatype->nodeValue );
+			      }
+			    break;
 			  }
-			else
-			  {
-			    $oRNG = $this->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:data' );
-			    $oRef = $oDatatype->appendChild( $oRNG );
-			    $oRef->setAttribute( 'type', $oNewDatatype->nodeValue );
-			  }
-			break;
-		      }
-
+			
 		    $oAttDef->appendChild( new domElement( 'desc', $oAtt->getElementsByTagname( 'desc' )->item(0)->nodeValue, 'http://www.tei-c.org/ns/1.0' ) );
+		      }
 		  }
 	      }
 	  } 

@@ -493,10 +493,17 @@ class romaDom extends domDocument
 
 	if ( $szModule != '' && $szClass == '')
 	  {
-	    $oAttDom->loadXML( join( '', file( 'http://' . roma_exist_server . ':8080/exist/tei/attsbyelem.xq?name=' . $szElement ) ) );
+	    @$oAttDom->loadXML( join( '', file( 'http://' . roma_exist_server . ':8080/exist/tei/attsbyelem.xq?name=' . $szElement ) ) );
 	    $oElement = $oAttDom->documentElement;
-	    
-	    if ( ! is_object( $oElement->getElementsByTagname( 'att' )->item(0) ) )
+		
+	    if ( is_object( $oElement ) )
+	      {
+		if ( ! is_object( $oElement->getElementsByTagname( 'att' )->item(0) ) )
+		  {
+		    $errResult = true;
+		  }
+	      }
+	    else
 	      {
 		$errResult = true;
 	      }
