@@ -17,9 +17,9 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
     version="1.0">
 
 <xsl:param name="teiP4Compat">false</xsl:param>
-<xsl:variable name="processor">
+<xsl:param name="processor">
    <xsl:value-of select="system-property('xsl:vendor')"/>
-</xsl:variable>
+</xsl:param>
 
 <!-- common parameters -->
 <xsl:param name="baseURL">http://www.oucs.ox.ac.uk</xsl:param>

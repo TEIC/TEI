@@ -29,24 +29,6 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
     </xsl:if>
     <xsl:value-of select="concat($ident,'.html')"/>
  </xsl:when>
- <xsl:when test="contains($processor,'SAXON 6')">
-   <xsl:variable name="baseName">
-    <xsl:value-of 
-       xmlns:saxon="http://icl.com/saxon"  
-       select="substring-after(saxon:system-id(),':')"/>
-   </xsl:variable>
-   <xsl:variable name="base">
-   <xsl:call-template name="get-basename">
-     <xsl:with-param name="file">
-      <xsl:value-of select="$baseName"/>
-    </xsl:with-param>
-   </xsl:call-template>
- </xsl:variable>
- <xsl:value-of 
-       xmlns:saxon="http://icl.com/saxon"  
-   select="substring-before($baseName,concat($base,'.xml'))"/>
-    <xsl:value-of select="concat($ident,'.html')"/>
-  </xsl:when>
   <xsl:otherwise>
     <xsl:value-of select="concat($ident,'.html')"/>
   </xsl:otherwise>
@@ -68,21 +50,10 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
 </xsl:if>
     </xsl:when>
-  <xsl:when test="element-available('xsl:document')">
-    <xsl:if test="$verbose='true'">
-    <xsl:message>Opening <xsl:value-of select="$outName"/> with xsl:document</xsl:message></xsl:if>
-    <xsl:document encoding="{$outputEncoding}" 
-		  method="html" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN" href="{$outName}">
-      <xsl:copy-of select="$content"/>
-    </xsl:document> 
-    <xsl:if test="$verbose='true'">
-      <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
-    </xsl:if>
-  </xsl:when>
   <xsl:when test="contains($processor,'SAXON 6')">
     <xsl:if test="$verbose='true'"><xsl:message>Opening <xsl:value-of select="$outName"/> with Saxon 6</xsl:message></xsl:if>
     <saxon:output encoding="{$outputEncoding}" 
-		  method="html" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN" file="{$outName}" href="{$outName}">
+		  method="html" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN" href="{$outName}">
       <xsl:copy-of select="$content"/>
     </saxon:output> 
     <xsl:if test="$verbose='true'">
@@ -92,7 +63,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
   <xsl:when test="contains($processor,'SAXON 5')">
     <xsl:if test="$verbose='true'"><xsl:message>Opening <xsl:value-of select="$outName"/> with Saxon 5</xsl:message></xsl:if>
     <saxon:output encoding="{$outputEncoding}" 
-		  method="html" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN" file="{$outName}" href="{$outName}">
+		  method="html" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN" href="{$outName}">
       <xsl:copy-of select="$content"/>
     </saxon:output> 
     <xsl:if test="$verbose='true'">
