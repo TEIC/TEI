@@ -35,6 +35,11 @@ $Date$, $Revision$, $Author$
 
 <xsl:param name="displayMode">rng</xsl:param>
 
+
+<xsl:template match="tei:moduleRef">
+  <tei:ref  target="#{@key}"/>
+</xsl:template>
+
 <xsl:template match="tei:elementSpec">
    <xsl:if test="parent::tei:specGrp">
    <tei:label>Element: <xsl:value-of select="@ident"/></tei:label>
@@ -385,44 +390,51 @@ $Date$, $Revision$, $Author$
 </xsl:template>
 
 <xsl:template match="tei:moduleSpec">
-Module <tei:emph><xsl:value-of select="@ident"/></tei:emph>:
-<xsl:apply-templates select="tei:desc"  mode="show"/>
-<tei:list>
-<tei:item>Elements defined:
-<xsl:for-each select="key('ElementModule',@ident)">
+  <xsl:choose>
+    <xsl:when test="parent::tei:p">
+      Module <tei:emph><xsl:value-of select="@ident"/></tei:emph>:
+      <xsl:apply-templates select="tei:desc"  mode="show"/>
+    </xsl:when>
+    <xsl:otherwise>
+      <tei:p>Module <tei:emph><xsl:value-of select="@ident"/></tei:emph>:
+      <xsl:apply-templates select="tei:desc"  mode="show"/></tei:p>
+    </xsl:otherwise>
+  </xsl:choose>
+  <tei:list>
+    <tei:item>Elements defined:
+    <xsl:for-each select="key('ElementModule',@ident)">
+      <xsl:call-template name="linkTogether">
+    <xsl:with-param name="url" select="@id|@xml:id"/>
+    <xsl:with-param name="name" select="@ident"/>
+      </xsl:call-template>
+      <xsl:text> </xsl:text>
+    </xsl:for-each>
+    </tei:item>
+    <tei:item>Classes defined:
+    <xsl:for-each select="key('ClassModule',@ident)">
   <xsl:call-template name="linkTogether">
     <xsl:with-param name="url" select="@id|@xml:id"/>
     <xsl:with-param name="name" select="@ident"/>
   </xsl:call-template>
   <xsl:text> </xsl:text>
-</xsl:for-each>
-</tei:item>
-<tei:item>Classes defined:
-<xsl:for-each select="key('ClassModule',@ident)">
-  <xsl:call-template name="linkTogether">
-    <xsl:with-param name="url" select="@id|@xml:id"/>
-    <xsl:with-param name="name" select="@ident"/>
-  </xsl:call-template>
-  <xsl:text> </xsl:text>
-</xsl:for-each>
-</tei:item>
-<tei:item>Macros defined:
-<xsl:for-each select="key('MacroModule',@ident)">
-  <xsl:call-template name="linkTogether">
-    <xsl:with-param name="url" select="@id|@xml:id"/>
-    <xsl:with-param name="name" select="@ident"/>
-  </xsl:call-template>
-  <xsl:text> </xsl:text>
-</xsl:for-each>
-</tei:item>
-</tei:list>
-
+    </xsl:for-each>
+    </tei:item>
+    <tei:item>Macros defined:
+    <xsl:for-each select="key('MacroModule',@ident)">
+      <xsl:call-template name="linkTogether">
+	<xsl:with-param name="url" select="@id|@xml:id"/>
+	<xsl:with-param name="name" select="@ident"/>
+      </xsl:call-template>
+      <xsl:text> </xsl:text>
+    </xsl:for-each>
+    </tei:item>
+  </tei:list>
 </xsl:template>
 
 <xsl:template match="tei:p">
-<tei:p>
-<xsl:apply-templates/>
-</tei:p>
+  <tei:p>
+    <xsl:apply-templates/>
+  </tei:p>
 </xsl:template>
 
 <xsl:template match="tei:remarks" mode="weave">
