@@ -73,7 +73,7 @@ or name(.) = 'cellpadding'">
     <xsl:value-of select="substring-after(@rend,'class:')"/>
  </xsl:attribute>
 </xsl:if>
-<xsl:if test="not(@role = 'data') and not(@role='')">
+<xsl:if test="@role">
  <xsl:attribute name="class"><xsl:value-of select="@role"/></xsl:attribute>
 </xsl:if>
  <xsl:apply-templates/>
@@ -82,47 +82,47 @@ or name(.) = 'cellpadding'">
 
 <xsl:template match='tei:cell'>
  <td valign="top">
- <xsl:for-each select="@*">
-<xsl:choose>
-  <xsl:when test="name(.) = 'width'
-or name(.) = 'border'
-or name(.) = 'cellspacing'
-or name(.) = 'cellpadding'">
-    <xsl:copy-of select="."/>
-  </xsl:when>
-<xsl:when test="name(.)='rend' and starts-with(@rend,'width:')">
- <xsl:attribute name="width">
-    <xsl:value-of select="substring-after(@rend,'width:')"/>
- </xsl:attribute>
-</xsl:when>
-<xsl:when test="name(.)='rend' and starts-with(@rend,'class:')">
- <xsl:attribute name="class">
-    <xsl:value-of select="substring-after(@rend,'class:')"/>
- </xsl:attribute>
-</xsl:when>
-<xsl:when test="name(.)='rend'">
- <xsl:attribute name="bgcolor"><xsl:value-of select="@rend"/></xsl:attribute>
-</xsl:when>
-<xsl:when test="name(.)='cols'">
- <xsl:attribute name="colspan"><xsl:value-of select="@cols"/></xsl:attribute>
-</xsl:when>
-<xsl:when test="name(.)='rows'">
- <xsl:attribute name="rowspan"><xsl:value-of select="@rows"/></xsl:attribute>
-</xsl:when>
-<xsl:when test="name(.)='align'">
-   <xsl:attribute name="align"><xsl:value-of select="@align"/></xsl:attribute>
-  </xsl:when>
-</xsl:choose>
- </xsl:for-each>
-<xsl:if test="not(@align) and not($cellAlign='left')">
-   <xsl:attribute name="align"><xsl:value-of select="$cellAlign"/></xsl:attribute>
-</xsl:if>
-
-<xsl:if test="not(@role = 'data') and not(@role='')">
- <xsl:attribute name="class"><xsl:value-of select="@role"/></xsl:attribute>
-</xsl:if>
+   <xsl:for-each select="@*">
+     <xsl:choose>
+       <xsl:when test="name(.) = 'width'
+		       or name(.) = 'border'
+		       or name(.) = 'cellspacing'
+		       or name(.) = 'cellpadding'">
+	 <xsl:copy-of select="."/>
+       </xsl:when>
+       <xsl:when test="name(.)='rend' and starts-with(.,'width:')">
+	 <xsl:attribute name="width">
+	   <xsl:value-of select="substring-after(.,'width:')"/>
+	 </xsl:attribute>
+       </xsl:when>
+       <xsl:when test="name(.)='rend' and starts-with(.,'class:')">
+	 <xsl:attribute name="class">
+	   <xsl:value-of select="substring-after(.,'class:')"/>
+	 </xsl:attribute>
+       </xsl:when>
+       <xsl:when test="name(.)='rend'">
+	 <xsl:attribute name="bgcolor"><xsl:value-of select="."/></xsl:attribute>
+       </xsl:when>
+       <xsl:when test="name(.)='cols'">
+	 <xsl:attribute name="colspan"><xsl:value-of select="."/></xsl:attribute>
+       </xsl:when>
+       <xsl:when test="name(.)='rows'">
+	 <xsl:attribute name="rowspan"><xsl:value-of select="."/></xsl:attribute>
+       </xsl:when>
+       <xsl:when test="name(.)='align'">
+	 <xsl:attribute name="align"><xsl:value-of select="."/></xsl:attribute>
+       </xsl:when>
+     </xsl:choose>
+   </xsl:for-each>
+   <xsl:if test="not(@align) and not($cellAlign='left')">
+     <xsl:attribute name="align"><xsl:value-of select="$cellAlign"/></xsl:attribute>
+   </xsl:if>
+   
+   <xsl:if test="@role">
+     <xsl:attribute name="class"><xsl:value-of select="@role"/></xsl:attribute>
+   </xsl:if>
    <xsl:if test="@id"><a name="{@id}"/></xsl:if>
- <xsl:apply-templates/>
+   <xsl:apply-templates/>
  </td>
 </xsl:template>
 
