@@ -1241,7 +1241,7 @@ class roma
 	    echo '<pre>' . $szError . '</pre>';
 
 	    $this->m_oRomaDom->getCustomizationFilename( $szFilename );
-	    $szFilename = ( $szFilename ) ? $szFilename : 'mytei';
+	    $szFilename = ( $szFilename ) ? $szFilename : 'myTei';
 	    $this->redirectBrowserMeta( "http://" . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'PHP_SELF' ] . '?mode=' . roma_mode_downloadFile . '&file=' . $szFilename . '.' . $_REQUEST[ 'output' ] . '&nextpage=' .  roma_mode_createSchema );	    
 
 	    $_SESSION[ 'download' ] = $szSchema;

@@ -62,9 +62,8 @@ class romaDom extends domDocument
 	$oBody = $oText->appendChild( new domElement( 'body' ) );
 	$oP = $oBody->appendChild( new domElement( 'p' ) );
 
-	$oSchema = $oP->appendChild( new domElement( 'schema' ) );
-	$oSchema->setAttribute( 'ident', 'myTeiCustomization' );
-
+	$oSchema = $oP->appendChild( new domElement( 'schemaSpec' ) );
+	$oSchema->setAttribute( 'ident', 'myTei' );
 
 	$this->loadXML( $oTemp->SaveXML() );
       }
@@ -94,7 +93,7 @@ class romaDom extends domDocument
     public function getSelectedModules( &$aszModules )
       {
 	$this->getXPath( $oXPath );
-        $aoModules = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef/@key" );
+        $aoModules = $oXPath->query( "//tei:schemaSpec/tei:moduleRef/@key" );
 
 	$aszModules = array();
 	foreach( $aoModules as $oModule )
@@ -125,8 +124,7 @@ class romaDom extends domDocument
     public function getChangedModules( &$aszModules )
       {
 	$this->getXPath( $oXPath );
-        $aoModules = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[child::tei:elementSpec]/@key" );
-
+        $aoModules = $oXPath->query("//tei:schemaSpec/tei:elementSpec[@mode='change']/@module");
 	$aszModules = array();
 	foreach( $aoModules as $oModule )
 	  {
@@ -157,7 +155,8 @@ class romaDom extends domDocument
     public function getExcludedElementsInModule( $szModule, &$aszElements )
       {
 	$this->getXPath( $oXPath );
-        $aoElements = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='$szModule']/tei:elementSpec[@mode='delete']/@ident" );
+        $aoElements = $oXPath->query(
+    "//tei:schemaSpec/tei:elementSpec[@mode='delete' and @module='$szModule']/@ident" );
 	
 	$aszElements = array();
 	foreach( $aoElements as $oElement )
@@ -230,7 +229,7 @@ class romaDom extends domDocument
         $oRoot = $oElementDom->appendChild( new domElement( 'addedElements' ) );
 
 	$this->getXPath( $oXPath );
-        $aoElements = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:schema/tei:elementSpec" );
+        $aoElements = $oXPath->query( "//tei:schemaSpec/tei:elementSpec" );
 
 	if ( ! is_object( $aoElements->item(0) ) )
 	  {
@@ -262,7 +261,7 @@ class romaDom extends domDocument
     public function getAddedElementsDescription( $szIdent, &$szDescription )
       {
 	$this->getXPath( $oXPath );
-        $oDesc = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:schema/tei:elementSpec[@ident='$szIdent']/tei:desc" )->item(0);
+        $oDesc = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='$szIdent']/tei:desc" )->item(0);
 
         if ( is_object( $oDesc ) )
           {
@@ -273,7 +272,7 @@ class romaDom extends domDocument
     public function getAddedElementsContents( $szIdent, &$szContents )
       {
 	$this->getXPath( $oXPath );
-        $oContent = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:schema/tei:elementSpec[@ident='$szIdent']/tei:content" )->item(0);
+        $oContent = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='$szIdent']/tei:content" )->item(0);
 
         if ( is_object( $oContent ) )
           {
@@ -299,7 +298,7 @@ class romaDom extends domDocument
     public function getAddedElementsFullContents( $szIdent, &$szContents )
       {
 	$this->getXPath( $oXPath );
-        $oContent = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p/tei:schema/tei:elementSpec[@ident='$szIdent']/tei:content" )->item(0);
+        $oContent = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='$szIdent']/tei:content" )->item(0);
 	$szContents = $this->SaveXML( $oContent );
       }
 
@@ -309,7 +308,7 @@ class romaDom extends domDocument
         $aszClasses = array();
 
 	$this->getXPath( $oXPath );
-        $aoClasses = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p/tei:schema/tei:elementSpec[@ident='$szIdent']/tei:classes/tei:memberOf/@key" );
+        $aoClasses = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='$szIdent']/tei:classes/tei:memberOf/@key" );
    
         foreach( $aoClasses as $oClass )
           {
@@ -322,7 +321,9 @@ class romaDom extends domDocument
 	$aszElements = array();
 
 	$this->getXPath( $oXPath );
-	$aoElements = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p/tei:moduleRef[@key='$szModule']/tei:elementSpec[@mode='change']/tei:altIdent" );
+	$aoElements = $oXPath->query(
+	"//tei:schemaSpec/tei:elementSpec[@mode='change'
+	and @module='$szModule']/tei:altIdent" );
 
 	foreach( $aoElements as $oElement )
 	  {
@@ -348,7 +349,9 @@ class romaDom extends domDocument
     public function getElementsChangedNameInModule( $szModule, $szElement, &$szElementNew )
       {
 	$this->getXPath( $oXPath );
-	$oElement = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p/tei:moduleRef[@key='$szModule']/tei:elementSpec[@mode='change' and @ident='$szElement']/tei:altIdent" )->item(0);
+	$oElement = $oXPath->query(
+      "//tei:schemaSpec/tei:elementSpec[@module='$szModule'
+      and @mode='change' and @ident='$szElement']/tei:altIdent" )->item(0);
 
 	$szElementNew = ( is_object ( $oElement ) ) ? $oElement->nodeValue : $szElement;
       }
@@ -358,7 +361,9 @@ class romaDom extends domDocument
         $aszClasses = array();
 
 	$this->getXPath( $oXPath );
-	$oClasses = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p/tei:moduleRef[@key='$szModule']/tei:elementSpec[@mode='change' and @ident='$szElement']/tei:classes" )->item(0);
+	$oClasses = $oXPath->query(
+	"//tei:schemaSpec/tei:elementSpec[@module='$szModule'
+	and @mode='change' and @ident='$szElement']/tei:classes" )->item(0);
 
 	if ( is_object( $oClasses ) )
 	  {
@@ -385,7 +390,9 @@ class romaDom extends domDocument
     public function getDescriptionByElementNameInModule( $szElement, $szModule, &$szDesc )
       {
 	$this->getXPath( $oXPath );
-	$oDesc = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p/tei:moduleRef[@key='{$szModule}']/tei:elementSpec[@mode='change' and @ident='$szElement']/tei:desc" )->item(0);
+	$oDesc = $oXPath->query(
+      "//tei:schemaSpec/tei:elementSpec[@module='$szModule'
+      and @mode='change' and @ident='$szElement']/tei:desc" )->item(0);
 
         if ( is_object( $oDesc ) ) 
           {
@@ -414,7 +421,9 @@ class romaDom extends domDocument
     public function getContentsByElementNameInModuleDom( $szElement, $szModule, &$oContents )
       {
 	$this->getXPath( $oXPath );
-	$oContent = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p/tei:moduleRef[@key='{$szModule}']/tei:elementSpec[@mode='change' and @ident='$szElement']/tei:content" )->item(0);
+	$oContent = $oXPath->query(
+      "//tei:schemaSpec/tei:elementSpec[@module='$szModule'
+      and @mode='change' and @ident='$szElement']/tei:content" )->item(0);
 
         if ( is_object( $oContent ) ) 
           {
@@ -446,7 +455,9 @@ class romaDom extends domDocument
     public function getContentsByElementNameInModule( $szElement, $szModule, &$szContents )
       {
 	$this->getXPath( $oXPath );
-	$oContent = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p/tei:moduleRef[@key='{$szModule}']/tei:elementSpec[@mode='change' and @ident='$szElement']/tei:content" )->item(0);
+	$oContent = $oXPath->query(
+      "//tei:schemaSpec/tei:elementSpec[@module='$szModule'
+      and @mode='change' and @ident='$szElement']/tei:content" )->item(0);
 
         if ( is_object( $oContent ) ) 
           {
@@ -516,14 +527,16 @@ class romaDom extends domDocument
 		$errResult = true;
 	      }
 
-	    $oAttList = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p/tei:moduleRef[@key='{$szModule}']/tei:elementSpec[@mode='change' and @ident='$szElement']/tei:attList" )->item(0);
+	    $oAttList = $oXPath->query(
+	  "//tei:schemaSpec/tei:elementSpec[@mode='change' and
+	  @ident='$szElement' and @module='$szModule']/tei:attList" )->item(0);
 	  }
 	elseif( $szClass == '' )
 	  {
 	    $oAttDom->appendChild( new domElement( 'Element' ) );
 	    $oElement = $oAttDom->documentElement;
 
-	    $oAttList = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p/tei:schema/tei:elementSpec[@ident='$szElement']/tei:attList" )->item(0);
+	    $oAttList = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='$szElement']/tei:attList" )->item(0);
 	    $errResult = true;
 	  }
 	else
@@ -541,7 +554,8 @@ class romaDom extends domDocument
 		$oNode = $oAttDom->importNode( $oChild, true );
 		$oElement->appendChild( $oNode );
 	      }
-	    $oAttList = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p/tei:moduleRef[@key='{$szModule}']/tei:classSpec[@mode='change' and @ident='$szClass']/tei:attList" )->item(0);
+	    $oAttList = $oXPath->query("//tei:schemaSpec/tei:classSpec[@module='$szModule'
+	      and @mode='change' and @ident='$szClass']/tei:attList" )->item(0);
 	  }
 
 	if ( is_object( $oAttList ) )
@@ -642,13 +656,13 @@ class romaDom extends domDocument
 		      }
 	       	    elseif( $oAttDat->firstChild->nodeName == 'rng:data' )
 		      {
-			$theNode = $oAttDom->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:data' );
+			$theNode = $oAttDom->createElementNS( 'http://relaxng.org/ns/structure/1.0', 'rng:data' );
 			$oNode = $oDataType->appendChild( $theNode );
 			$oNode->setAttribute( 'type', $oAttDat->firstChild->getAttribute( 'type' ) );
 		      }
 		    else
 		      { 
-			$theNode = $oAttDom->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:ref' );
+			$theNode = $oAttDom->createElementNS( 'http://relaxng.org/ns/structure/1.0', 'rng:ref' );
 			$oNode = $oDataType->appendChild( $theNode );
 			$oNode->setAttribute( 'name', $oAttDat->firstChild->getAttribute( 'name' ) );
 		      }
@@ -719,7 +733,7 @@ class romaDom extends domDocument
 
 	if ( $szModule != '' && $szClass == '' )
 	  {
-	    $oValList = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p/tei:moduleRef[@key='{$szModule}']/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='{$szAttribute}']/tei:valList" )->item(0);
+	    $oValList = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$szElement}' and @module='$szModule']/tei:attList/tei:attDef[@ident='{$szAttribute}']/tei:valList" )->item(0);
 
 	    if ( is_object( $oValList ) )
 	      {
@@ -731,7 +745,7 @@ class romaDom extends domDocument
 	  }
 	elseif( $szClass == '' )
 	  {
-	    $oValList = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p/tei:schema/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='{$szAttribute}']/tei:valList" )->item(0);
+	    $oValList = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='{$szAttribute}']/tei:valList" )->item(0);
 
 	    if ( is_object( $oValList ) )
 	      {
@@ -741,7 +755,7 @@ class romaDom extends domDocument
 	  }
 	else
 	  {
-	    $oValList = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p/tei:moduleRef[@key='{$szModule}']/tei:classSpec[@ident='{$szClass}']/tei:attList/tei:attDef[@ident='{$szAttribute}']/tei:valList" )->item(0);
+	    $oValList = $oXPath->query("//tei:schemaSpec/tei:classSpec[@module='$szModule' and @ident='{$szClass}']/tei:attList/tei:attDef[@ident='{$szAttribute}']/tei:valList" )->item(0);
 
 	    if ( is_object( $oValList ) )
 	      {
@@ -757,7 +771,7 @@ class romaDom extends domDocument
     public function getChangedAttributeClasses( &$aszClasses )
       {
 	$this->getXPath( $oXPath );
-        $aoClasses = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[child::tei:classSpec]/tei:classSpec/@key" );
+        $aoClasses = $oXPath->query( "//tei:schemaSpec/tei:classSpec/@key" );
 
 	$aszClasses = array();
 	foreach( $aoClasses as $oClass )
@@ -773,10 +787,10 @@ class romaDom extends domDocument
 	$oClass->setAttribute( 'ident', $szClass );
 
 	$this->getXPath( $oXPath );
-        $szModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[child::tei:classSpec[@ident='{$szClass}']]/@key" )->item(0)->nodeValue;
+        $szModule = $oXPath->query( "//tei:schemaSpec/tei:classSpec[@ident='{$szClass}']]/@key" )->item(0)->nodeValue;
 
 	$oClass->appendChild( new domElement( 'module', $szModule ) );
-	$oAttList = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[child::tei:classSpec[@key='{$szClass}']]/tei:classSpec/tei:attList" )->item(0);
+	$oAttList = $oXPath->query( "//tei:schemaSpec/tei:classSpec[@key='{$szClass}']/tei:attList" )->item(0);
 
 	$oAttList = $oDom->importNode( $oAttList, true );
 	$oClass->appendChild( $oAttList );
@@ -798,7 +812,7 @@ class romaDom extends domDocument
     public function getCustomizationFilename( &$szFilename )
       {
 	$this->getXPath( $oXPath );
-	$szFilename = $oXPath->query( "/tei:TEI//tei:schema[1]/@ident" )->item(0)->nodeValue;
+	$szFilename = $oXPath->query( "//tei:schemaSpec/@ident" )->item(0)->nodeValue;
       }
 
     public function getCustomizationLanguage( &$szLanguage )
@@ -824,12 +838,10 @@ class romaDom extends domDocument
 
 	$this->getXPath( $oXPath );
 
-        $oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='$szModule']" )->item(0);
-        $oModuleRef = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:schema/tei:moduleRef[@key='$szModule']" )->item(0);
-        
+        $oModuleRef = $oXPath->query( "//tei:schemaSpec/tei:moduleRef[@key='$szModule']" )->item(0);        
         if (! is_object( $oModuleRef ) )
           {
-            $oSchema = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:schema" )->item(0);
+            $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);
 	    if ( is_object( $oSchema ) )
               {
                 $theModRef = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'moduleRef' );
@@ -847,8 +859,8 @@ class romaDom extends domDocument
 
 	$this->getXPath( $oXPath );
 
-        $oModuleRef = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:schema/tei:moduleRef[@key='$szModule']" )->item(0);
-        $oSchema = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:schema" )->item(0);
+        $oModuleRef = $oXPath->query( "//tei:schemaSpec/tei:moduleRef[@key='$szModule']" )->item(0);
+        $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);
         $oSchema->removeChild( $oModuleRef );
 
 	return $errResult;
@@ -870,12 +882,12 @@ class romaDom extends domDocument
 	  }
 	     
 	$this->getXPath( $oXPath );
-        $oSchema = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:schema" )->item(0);
+        $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);
 
         if ( is_object( $oSchema ) )
           {
             //check whether element already exists
-            $oElementSpec = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:schema/tei:elementSpec[@ident='" . $aszConfig[ 'name' ] . "']" )->item(0);
+            $oElementSpec = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='" . $aszConfig[ 'name' ] . "']" )->item(0);
 
 	    if ( ! is_object( $oElementSpec ) )
 	      {
@@ -930,18 +942,18 @@ class romaDom extends domDocument
 		  {
 		  case 'empty':
 		  case 'text':
-		    $oRNG = $this->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:' . $aszConfig[ 'content' ] );
+		    $oRNG = $this->createElementNS( 'http://relaxng.org/ns/structure/1.0', 'rng:' . $aszConfig[ 'content' ] );
 		    $oContent->appendChild( $oRNG );
 		    break; 
 		  default:
-		    $oRNG = $this->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:ref' );
+		    $oRNG = $this->createElementNS( 'http://relaxng.org/ns/structure/1.0', 'rng:ref' );
 		    $oRef = $oContent->appendChild( $oRNG );
 		    $oRef->setAttribute( 'name', $aszConfig[ 'content' ] );
 		    break;
 		  }
 	      }
 
-	    $oDesc = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:schema/tei:elementSpec[@ident='{$aszConfig[ 'name' ]}']/tei:desc" )->item(0);
+	    $oDesc = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$aszConfig[ 'name' ]}']/tei:desc" )->item(0);
 
 	    if ( is_object( $oDesc ) )
 	      {
@@ -956,8 +968,10 @@ class romaDom extends domDocument
     public function removeElementFromModule( $szElement, $szModule )
       {
 	$this->getXPath( $oXPath );
-        $oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='$szModule']" )->item(0);
-	$oElementSpec = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='$szModule']/tei:elementSpec[@ident='$szElement']" )->item(0);
+        $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);
+        $oModule = $oXPath->query( "//tei:schemaSpec//tei:moduleRef[@key='$szModule']" )->item(0);
+	$oElementSpec = $oXPath->query(
+      "//tei:schemaSpec/tei:elementSpec[@module='$szModule' and @ident='$szElement']" )->item(0);
 	
         if ( ! is_object( $oModule ) ) 
 	  {
@@ -967,7 +981,8 @@ class romaDom extends domDocument
 	if (! is_object( $oElementSpec ) )
 	  {
 	    $theElementSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'elementSpec' );
- 	    $oElementSpec = $oModule->appendChild( $theElementSpec );
+ 	    $oElementSpec = $oSchema->appendChild( $theElementSpec );
+	    $oElementSpec->setAttribute( 'module', $szModule );
 	    $oElementSpec->setAttribute( 'ident', $szElement );
 	    $oElementSpec->setAttribute( 'mode', 'delete' );
 	  }
@@ -986,8 +1001,9 @@ class romaDom extends domDocument
     public function includeElementInModule( $szElement, $szModule )
       {
 	$this->getXPath( $oXPath );
-        $oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='$szModule']" )->item(0);
-	$oElementSpec = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='$szModule']/tei:elementSpec[@ident='$szElement']" )->item(0);
+        $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);
+        $oModule = $oXPath->query( "//tei:schemaSpec/tei:moduleRef[@key='$szModule']" )->item(0);
+	$oElementSpec = $oXPath->query("//tei:schemaSpec/tei:elementSpec[@module='$szModule' and @ident='$szElement']" )->item(0);
 
         if ( ! is_object( $oModule ) ) 
 	  {
@@ -996,7 +1012,7 @@ class romaDom extends domDocument
 	
 	if ( is_object( $oElementSpec ) )
 	  {
-	    $oModule->removeChild( $oElementSpec );
+	    $oSchema->removeChild( $oElementSpec );
 	  }
       }
 
@@ -1007,19 +1023,20 @@ class romaDom extends domDocument
 	if ( preg_match( '/^[\w\d]+$/', $szNewName ) )
 	  {
 	    $this->getXPath( $oXPath );
-            $oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='$szModule']" )->item(0);
-	    $oElementSpec = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='$szModule']/tei:elementSpec[@ident='$szOldName']" )->item(0);
+            $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);
+            $oModule = $oXPath->query( "//tei:schemaSpec/tei:moduleRef[@key='$szModule']" )->item(0);
+	    $oElementSpec = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='$szOldName']" )->item(0);
 	
             if ( ! is_object( $oModule ) ) 
 	      {
                 $this->addModule( $szModule, false );
-                $oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='$szModule']" )->item(0);
               }
 
   	    if (! is_object( $oElementSpec ) )
  	      {
                 $theElementSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'elementSpec' );
- 	        $oElementSpec = $oModule->appendChild( $theElementSpec );
+ 	        $oElementSpec = $oSchema->appendChild( $theElementSpec );
+	        $oElementSpec->setAttribute( 'module', $szModule );
 	        $oElementSpec->setAttribute( 'ident', $szOldName );
 	        $oElementSpec->setAttribute( 'mode', 'change' );
 		
@@ -1031,7 +1048,7 @@ class romaDom extends domDocument
   	      {
 	        $oElementSpec->setAttribute( 'mode', 'change' );
 
-		$oAltIdent = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='$szModule']/tei:elementSpec[@ident='$szOldName']/tei:altIdent" )->item(0);
+		$oAltIdent = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='$szOldName']/tei:altIdent" )->item(0);
 		
 		if ( is_object( $oAltIdent ) )
 		  {
@@ -1055,20 +1072,21 @@ class romaDom extends domDocument
     public function changeElementDescInModule( $szName, $szModule, $szDescription )
       {
 	$this->getXPath( $oXPath );
-	$oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='$szModule']" )->item(0);
-	$oElementSpec = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='$szModule']/tei:elementSpec[@ident='$szName']" )->item(0);
+        $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);
+	$oModule = $oXPath->query( "//tei:schemaSpec/tei:moduleRef[@key='$szModule']" )->item(0);
+	$oElementSpec = $oXPath->query("//tei:schemaSpec/tei:elementSpec[@ident='$szName']" )->item(0);
 	
 	if ( ! is_object( $oModule ) ) 
 	  {
 	    $this->addModule( $szModule, false );
-	    $oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='$szModule']" )->item(0);
 	  }
 	
 	if (! is_object( $oElementSpec ) )
 	  {
 	    $theElementSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'elementSpec' );
-	    $oElementSpec = $oModule->appendChild( $theElementSpec );
+	    $oElementSpec = $oSchema->appendChild( $theElementSpec );
 	    $oElementSpec->setAttribute( 'ident', $szName );
+	    $oElementSpec->setAttribute( 'module', $szModule );
 	    $oElementSpec->setAttribute( 'mode', 'change' );
 	    
 	    $theDesc = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'desc' );
@@ -1079,7 +1097,8 @@ class romaDom extends domDocument
 	  {
 	    $oElementSpec->setAttribute( 'mode', 'change' );
 
-	    $oDesc = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='$szModule']/tei:elementSpec[@ident='$szName']/tei:desc" )->item(0);
+	    $oDesc = $oXPath->query(
+	    "//tei:schemaSpec/tei:elementSpec[@ident='$szName']/tei:desc" )->item(0);
 
 	    if ( is_object( $oDesc ) )
 	      {
@@ -1099,20 +1118,20 @@ class romaDom extends domDocument
 	$szContents = preg_replace( '%\\\\"%', '"', $szContents );
 
 	$this->getXPath( $oXPath );
-	$oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='$szModule']" )->item(0);
-	$oElementSpec = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='$szModule']/tei:elementSpec[@ident='$szElement']" )->item(0);
-	$oContent = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='$szModule']/tei:elementSpec[@ident='$szElement']/tei:content" )->item(0);
+        $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);
+	$oModule = $oXPath->query( "//tei:schemaSpec/tei:moduleRef[@key='$szModule']" )->item(0);
+	$oElementSpec = $oXPath->query("//tei:schemaSpec/tei:elementSpec[@ident='$szElement']" )->item(0);
+	$oContent = $oXPath->query("//tei:schemaSpec/tei:elementSpec[@ident='$szElement']/tei:content" )->item(0);
 	if ( ! is_object( $oModule ) ) 
 	  {
 	    $this->addModule( $szModule, false );
-	    $oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='$szModule']" )->item(0);
-	  }
-
+	    }	    
 	if (! is_object( $oElementSpec ) )
 	  {
        	    $theElementSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'elementSpec' );
-	    $oElementSpec = $oModule->appendChild( $theElementSpec );
+	    $oElementSpec = $oSchema->appendChild( $theElementSpec );
 	    $oElementSpec->setAttribute( 'ident', $szElement );
+	    $oElementSpec->setAttribute( 'module', $szModule );
 	    $oElementSpec->setAttribute( 'mode', 'change' );
 	  }
 
@@ -1145,7 +1164,7 @@ class romaDom extends domDocument
     private function clearLanguageCustomization()
       {
 	$this->getXPath( $oXPath );
-	$oElements = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef/descendant::*[@type='lang']" );
+	$oElements = $oXPath->query( "//tei:schemaSpec/descendant::*[@type='lang']" );
 	foreach( $oElements as $oElement )
 	  { 
 	    $oParent = $oElement->parentNode;
@@ -1179,25 +1198,26 @@ class romaDom extends domDocument
     public function replaceElementsClassesInModule( $szElement, $szModule, $aszClasses )
       {
 	$this->getXPath( $oXPath );
-
-	$oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']" )->item(0);
-	$oElementSpec = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']/tei:elementSpec[@ident='{$szElement}']" )->item(0);
+        $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);
+	$oModule = $oXPath->query( "//tei:schemaSpec/tei:moduleRef[@key='{$szModule}']" )->item(0);
+	$oElementSpec = $oXPath->query("//tei:schemaSpec/tei:elementSpec[='{$szModule}' and @ident='{$szElement}']" )->item(0);
 	if ( ! is_object( $oModule ) ) 
 	  {
 	    $this->addModule( $szModule, false );
-	    $oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']" )->item(0);
 	  }
 
 	if (! is_object( $oElementSpec ) )
 	  {
        	    $theElementSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'elementSpec' );
-	    $oElementSpec = $oModule->appendChild( $theElementSpec );
+	    $oElementSpec = $oSchema->appendChild( $theElementSpec );
 	    $oElementSpec->setAttribute( 'ident', $szElement );
+	    $oElementSpec->setAttribute( 'module', $szModule );
 	    $oElementSpec->setAttribute( 'mode', 'change' );
 	  }
 
 	//check weather there are any classes yet
-	$oClasses = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']/tei:elementSpec[@ident='{$szElement}']/tei:classes" )->item(0);
+	$oClasses = $oXPath->query(
+	"//tei:schemaSpec/tei:elementSpec[='{$szModule}' and @ident='{$szElement}']/tei:classes" )->item(0);
 	
 	if ( is_object( $oClasses ) )
 	  {
@@ -1225,6 +1245,7 @@ class romaDom extends domDocument
 	    throw new falseTagnameException( '', $aszConfig[ 'name' ] );
 	  }
 	//check if name already exists
+        $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);
 	$oTmpDom = new domDocument();
 	$oTmpDom->loadXML( join( '', file( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/classattsbyelem.xq?name=' . $aszConfig[ 'element' ] ) ) );
 	$oNames = $oTmpDom->getElementsByTagname( 'name' );
@@ -1252,25 +1273,25 @@ class romaDom extends domDocument
 
 	    if ( $aszConfig[ 'module' ] != '' && $aszConfig[ 'class' ] == '' )
 	      {
-		$oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$aszConfig[ 'module' ]}']" )->item(0);
+		$oModule = $oXPath->query( "//tei:schemaSpec/tei:moduleRef[@key='{$aszConfig[ 'module' ]}']" )->item(0);
 
-		$oElementSpec = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$aszConfig[ 'module' ]}']/tei:elementSpec[@ident='{$aszConfig[ 'element' ]}']" )->item(0);
+		$oElementSpec = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$aszConfig[ 'element' ]}']" )->item(0);
 
 		if ( ! is_object( $oModule ) ) 
 		  {
 		    $this->addModule( $aszConfig[ 'module' ], false );
-		    $oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$aszConfig[ 'module' ]}']" )->item(0);
 		  }
 		
 		if (! is_object( $oElementSpec ) )
 		  {
 		    $theElementSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'elementSpec' );
-		    $oElementSpec = $oModule->appendChild( $theElementSpec );
-		    $oElementSpec->setAttribute( 'ident', $aszConfig[ 'element' ] );
+		    $oElementSpec = $oSchema->appendChild(  $theElementSpec );
+		    $oElementSpec->setAttribute( 'ident', $aszConfig['element' ] );
+		    $oElementSpec->setAttribute( 'module', $szModule);
 		  }
 		$oElementSpec->setAttribute( 'mode', 'change' );
 	    
-		$oAttList = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$aszConfig[ 'module' ]}']/tei:elementSpec[@ident='{$aszConfig[ 'element' ]}']/tei:attList" )->item(0);
+		$oAttList = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$aszConfig[ 'element' ]}']/tei:attList" )->item(0);
 	    
 		if (! is_object( $oAttList ) )
 		  {
@@ -1278,13 +1299,13 @@ class romaDom extends domDocument
 		    $oAttList = $oElementSpec->appendChild( $theAttList );
 		  }
 
-		$oAttDef = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$aszConfig[ 'module' ]}']/tei:elementSpec[@ident='{$aszConfig[ 'element' ]}']/tei:attList/tei:attDef[@ident='{$aszConfig[ 'name' ]}']" )->item(0);
+		$oAttDef = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$aszConfig[ 'element' ]}']/tei:attList/tei:attDef[@ident='{$aszConfig[ 'name' ]}']" )->item(0);
 	      }
 	    elseif( $aszConfig[ 'class' ] == '' )
 	      {
-		$oElementSpec = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:schema/tei:elementSpec[@ident='" . $aszConfig[ 'element' ] . "']" )->item(0);
+		$oElementSpec = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='" . $aszConfig[ 'element' ] . "']" )->item(0);
 
-		$oAttList = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:schema/tei:elementSpec[@ident='{$aszConfig[ 'element' ]}']/tei:attList" )->item(0);
+		$oAttList = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$aszConfig[ 'element' ]}']/tei:attList" )->item(0);
 	    
 		if (! is_object( $oAttList ) )
 		  {
@@ -1292,30 +1313,30 @@ class romaDom extends domDocument
 		    $oAttList = $oElementSpec->appendChild( $theAttList );
 		  }
 
-		$oAttDef = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:schema/tei:elementSpec[@ident='{$aszConfig[ 'element' ]}']/tei:attList/tei:attDef[@ident='{$aszConfig[ 'name' ]}']" )->item(0);
+		$oAttDef = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$aszConfig[ 'element' ]}']/tei:attList/tei:attDef[@ident='{$aszConfig[ 'name' ]}']" )->item(0);
 
 	      }
 	    else
 	      {
-		$oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$aszConfig[ 'module' ]}']" )->item(0);
-		$oClassSpec = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$aszConfig[ 'module' ]}']/tei:classSpec[@ident='{$aszConfig[ 'class' ]}']" )->item(0);
+		$oModule = $oXPath->query( "//tei:schemaSpec/tei:moduleRef[@key='{$aszConfig[ 'module' ]}']" )->item(0);
+		$oClassSpec = $oXPath->query( "//tei:schemaSpec/tei:classSpec[@ident='{$aszConfig[ 'class' ]}']" )->item(0);
 		
 		if ( ! is_object( $oModule ) ) 
 		  {
 		    $this->addModule( $aszConfig[ 'module' ], false );
-		    $oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$aszConfig[ 'module' ]}']" )->item(0);
 		  }
 		
 		if (! is_object( $oClassSpec ) )
 		  {
 		    $theClassSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'classSpec' );
-		    $oClassSpec = $oModule->appendChild( $theClassSpec );
+		    $oClassSpec = $oSchema->appendChild( $theClassSpec );
 		    $oClassSpec->setAttribute( 'ident', $aszConfig[ 'class' ] );
 		    $oClassSpec->setAttribute( 'mode', 'change' );
+		    $oClassSpec->setAttribute( 'module', $szModule );
 		  }
 		
 		
-		$oAttList = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$aszConfig[ 'module' ]}']/tei:classSpec[@ident='{$aszConfig[ 'class' ]}']/tei:attList" )->item(0);
+		$oAttList = $oXPath->query( "//tei:schemaSpec/tei:classSpec[@ident='{$aszConfig[ 'class' ]}']/tei:attList" )->item(0);
 		
 		if (! is_object( $oAttList ) )
 		  {
@@ -1323,7 +1344,7 @@ class romaDom extends domDocument
 		    $oAttList = $oClassSpec->appendChild( $theAttList );
 		  }
 
-		$oAttDef = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$aszConfig[ 'module' ]}']/tei:classSpec[@ident='{$aszConfig[ 'class' ]}']/tei:attList/tei:attDef[@ident='{$aszConfig[ 'name' ]}']" )->item(0);
+		$oAttDef = $oXPath->query( "//tei:schemaSpec/tei:classSpec[@ident='{$aszConfig[ 'class' ]}']/tei:attList/tei:attDef[@ident='{$aszConfig[ 'name' ]}']" )->item(0);
 	      }
 
 	    //attdef
@@ -1360,19 +1381,19 @@ class romaDom extends domDocument
 	    switch ( $aszConfig[ 'content' ] )
 	      {
 	      case 'text':
-		$oRNG = $this->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:' . $aszConfig[ 'content' ] );
+		$oRNG = $this->createElementNS( 'http://relaxng.org/ns/structure/1.0', 'rng:' . $aszConfig[ 'content' ] );
 		$oContent->appendChild( $oRNG );
 		break; 
 	      default:
 		if( substr( $aszConfig[ 'content' ], 0, 9 ) == 'datatype.' )
 		  {
-		    $oRNG = $this->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:ref' );
+		    $oRNG = $this->createElementNS( 'http://relaxng.org/ns/structure/1.0', 'rng:ref' );
 		    $oRef = $oContent->appendChild( $oRNG );
 		    $oRef->setAttribute( 'name', $aszConfig[ 'content' ] );
 		  }
 		else
 		  {
-		    $oRNG = $this->createElementNS( 'http://www.relaxng/ns/structure/1.0', 'rng:data' );
+		    $oRNG = $this->createElementNS( 'http://relaxng.org/ns/structure/1.0', 'rng:data' );
 		    $oRef = $oContent->appendChild( $oRNG );
 		    $oRef->setAttribute( 'type', $aszConfig[ 'content' ] );
 		  }
@@ -1441,24 +1462,27 @@ class romaDom extends domDocument
 
 	if ( $szModule != '' && $szClass == '')
 	  {
-	    $oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']" )->item(0);
-	    $oElementSpec = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']/tei:elementSpec[@ident='{$szElement}']" )->item(0);
+	    $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);
+	    $oModule = $oXPath->query( "//tei:schemaSpec/tei:moduleRef[@key='{$szModule}']" )->item(0);
+	    $oElementSpec = $oXPath->query(
+	  "//tei:schemaSpec/tei:elementSpec[='{$szModule}' and @ident='{$szElement}']" )->item(0);
 	    
 	    if ( ! is_object( $oModule ) ) 
 	      {
 		$this->addModule( $szModule, false );
-		$oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']" )->item(0);
 	      }
 	    
 	    if (! is_object( $oElementSpec ) )
 	      {
 		$theElementSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'elementSpec' );
-		$oElementSpec = $oModule->appendChild( $theElementSpec );
+		$oElementSpec = $oSchema->appendChild( $theElementSpec );
 		$oElementSpec->setAttribute( 'ident', $szElement );
+		$oElementSpec->setAttribute( 'module', $szModule );
 		$oElementSpec->setAttribute( 'mode', 'change' );
 	      }
 	    
-	    $oAttList = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']/tei:elementSpec[@ident='{$szElement}']/tei:attList" )->item(0);
+	    $oAttList = $oXPath->query(
+	    "//tei:schemaSpec/tei:elementSpec[='{$szModule}' and @ident='{$szElement}']/tei:attList" )->item(0);
 	    
 	    if (! is_object( $oAttList ) )
 	      {
@@ -1466,13 +1490,13 @@ class romaDom extends domDocument
 		$oAttList = $oElementSpec->appendChild( $theAttList );
 	      }
 	    
-	    $oAttDef = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='$szAttribute']" )->item(0);
+	    $oAttDef = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='$szAttribute']" )->item(0);
 	  }
 	elseif ( $szModule == '' && $szClass == '' )
 	  {
-	    $oElementSpec = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:schema/tei:elementSpec[@ident='" . $szElement . "']" )->item(0);
+	    $oElementSpec = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$szElement}']" )->item(0);
 	    
-	    $oAttList = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:schema/tei:elementSpec[@ident='{$szElement}']/tei:attList" )->item(0);
+	    $oAttList = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$szElement}']/tei:attList" )->item(0);
 	    
 	    if (! is_object( $oAttList ) )
 	      {
@@ -1480,29 +1504,29 @@ class romaDom extends domDocument
 		$oAttList = $oElementSpec->appendChild( $theAttList );
 	      }
 	    
-	    $oAttDef = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:schema/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='{$szAttribute}']" )->item(0);
+	    $oAttDef = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='{$szAttribute}']" )->item(0);
 	  }
 	else
 	  {
-	    $oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']" )->item(0);
-	    $oClassSpec = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']/tei:classSpec[@ident='{$szClass}']" )->item(0);
+	    $oModule = $oXPath->query( "//tei:schemaSpec/tei:moduleRef[@key='{$szModule}']" )->item(0);
+	    $oClassSpec = $oXPath->query( "//tei:schemaSpec/tei:classSpec[@ident='{$szClass}']" )->item(0);
 	    
 	    if ( ! is_object( $oModule ) ) 
 	      {
 		$this->addModule( $szModule, false );
-		$oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']" )->item(0);
 	      }
 	    
 	    if (! is_object( $oClassSpec ) )
 	      {
 		$theClassSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'classSpec' );
-		$oClassSpec = $oModule->appendChild( $theClassSpec );
+		$oClassSpec = $oSchema->appendChild( $theClassSpec );
 		$oClassSpec->setAttribute( 'ident', $szClass );
 		$oClassSpec->setAttribute( 'mode', 'change' );
+		$oClassSpec->setAttribute( 'module', 'szModule' );
 	      }
 
 	
-	    $oAttList = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']/tei:classSpec[@ident='{$szClass}']/tei:attList" )->item(0);
+	    $oAttList = $oXPath->query( "//tei:schemaSpec/tei:classSpec[@ident='{$szClass}']/tei:attList" )->item(0);
 	    
 	    if (! is_object( $oAttList ) )
 	      {
@@ -1510,7 +1534,7 @@ class romaDom extends domDocument
 		$oAttList = $oClassSpec->appendChild( $theAttList );
 	      }
 	    
-	    $oAttDef = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']/tei:classSpec[@ident='{$szClass}']/tei:attList/tei:attDef[@ident='$szAttribute']" )->item(0);
+	    $oAttDef = $oXPath->query( "//tei:schemaSpec/tei:classSpec[@ident='{$szClass}']/tei:attList/tei:attDef[@ident='$szAttribute']" )->item(0);
 	  }
 
 
@@ -1530,27 +1554,27 @@ class romaDom extends domDocument
     public function excludeAttributeInElement( $szAttribute, $szClass, $szModule, $szElement )
       {
 	$this->getXPath( $oXPath );
+        $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);
 
 	if ( $szModule != '' && $szClass == '' )
 	  {
-	    $oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']" )->item(0);
-	    $oElementSpec = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']/tei:elementSpec[@ident='{$szElement}']" )->item(0);
+	    $oModule = $oXPath->query( "//tei:schemaSpec/tei:moduleRef[@key='{$szModule}']" )->item(0);
+	    $oElementSpec = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$szElement}']" )->item(0);
 	    
 	    if ( ! is_object( $oModule ) ) 
 	      {
 		$this->addModule( $szModule, false );
-		$oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']" )->item(0);
 	      }
 	    
 	    if (! is_object( $oElementSpec ) )
 	      {
 		$theElementSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'elementSpec' );
-		$oElementSpec = $oModule->appendChild( $theElementSpec );
+		$oElementSpec = $oSchema->appendChild( $theElementSpec );
 		$oElementSpec->setAttribute( 'ident', $szElement );
 		$oElementSpec->setAttribute( 'mode', 'change' );
 	      }
 	
-	    $oAttList = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']/tei:elementSpec[@ident='{$szElement}']/tei:attList" )->item(0);
+	    $oAttList = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$szElement}']/tei:attList" )->item(0);
 	    
 	    if (! is_object( $oAttList ) )
 	      {
@@ -1558,13 +1582,13 @@ class romaDom extends domDocument
 		$oAttList = $oElementSpec->appendChild( $theAttList );
 	      }
 	    
-	    $oAttDef = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='$szAttribute']" )->item(0);
+	    $oAttDef = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='$szAttribute']" )->item(0);
 	  }
 	elseif ( $szModule == '' && $szClass == '' )
 	  {
-	    $oElementSpec = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:schema/tei:elementSpec[@ident='" . $szElement . "']" )->item(0);
+	    $oElementSpec = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='" . $szElement . "']" )->item(0);
 	    
-	    $oAttList = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:schema/tei:elementSpec[@ident='{$szElement}']/tei:attList" )->item(0);
+	    $oAttList = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$szElement}']/tei:attList" )->item(0);
 	    
 	    if (! is_object( $oAttList ) )
 	      {
@@ -1572,29 +1596,29 @@ class romaDom extends domDocument
 		$oAttList = $oElementSpec->appendChild( $theAttList );
 	      }
 	    
-	    $oAttDef = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:schema/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='{$szAttribute}']" )->item(0);
+	    $oAttDef = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='{$szAttribute}']" )->item(0);
 	  }
 	else
 	  {
-	    $oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']" )->item(0);
-	    $oClassSpec = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']/tei:classSpec[@ident='{$szClass}']" )->item(0);
+	    $oModule = $oXPath->query( "//tei:schemaSpec/tei:moduleRef[@key='{$szModule}']" )->item(0);
+	    $oClassSpec = $oXPath->query( "//tei:schemaSpec/tei:classSpec[@ident='{$szClass}']" )->item(0);
 	    
 	    if ( ! is_object( $oModule ) ) 
 	      {
 		$this->addModule( $szModule, false );
-		$oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']" )->item(0);
 	      }
 	    
 	    if (! is_object( $oClassSpec ) )
 	      {
 		$theClassSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'classSpec' );
-		$oClassSpec = $oModule->appendChild( $theClassSpec );
+		$oClassSpec = $oSchema->appendChild( $theClassSpec );
 		$oClassSpec->setAttribute( 'ident', $szClass );
+		$oClassSpec->setAttribute( 'module', $szModule );
 		$oClassSpec->setAttribute( 'mode', 'change' );
 	      }
 
 	
-	    $oAttList = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']/tei:classSpec[@ident='{$szClass}']/tei:attList" )->item(0);
+	    $oAttList = $oXPath->query( "//tei:schemaSpec/tei:classSpec[@ident='{$szClass}']/tei:attList" )->item(0);
 	    
 	    if (! is_object( $oAttList ) )
 	      {
@@ -1602,7 +1626,7 @@ class romaDom extends domDocument
 		$oAttList = $oClassSpec->appendChild( $theAttList );
 	      }
 	    
-	    $oAttDef = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']/tei:classSpec[@ident='{$szClass}']/tei:attList/tei:attDef[@ident='$szAttribute']" )->item(0);
+	    $oAttDef = $oXPath->query( "//tei:schemaSpec/tei:classSpec[@ident='{$szClass}']/tei:attList/tei:attDef[@ident='$szAttribute']" )->item(0);
 	  }
 
 	if ( ! is_object( $oAttDef ) )
@@ -1623,27 +1647,29 @@ class romaDom extends domDocument
 	if ( preg_match( '/^[\w\d]+$/', $szNewName ) )
 	  {
 	    $this->getXPath( $oXPath );
-	    
+	    $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);	    
 	    if ( $szModule != '' && $szClass == '' )
 	      {
-		$oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']" )->item(0);
-		$oElementSpec = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']/tei:elementSpec[@ident='{$szElement}']" )->item(0);
+		$oSchema = $oXPath->query("//tei:schemaSpec")->item(0);
+		$oModuleRef = $oXPath->query( "//tei:schemaSpec/tei:moduleRef[@key='{$szModule}']" )->item(0);
+		$oElementSpec = $oXPath->query(
+	      "//tei:schemaSpec/tei:elementSpec[@module='{$szModule}' and @ident='{$szElement}']" )->item(0);
 	    
-		if ( ! is_object( $oModule ) ) 
+		if ( ! is_object( $oModuleRef ) ) 
 		  {
 		    $this->addModule( $szModule, false );
-		    $oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']" )->item(0);
 		  }
 		
 		if (! is_object( $oElementSpec ) )
 		  {
 		    $theElementSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'elementSpec' );
-		    $oElementSpec = $oModule->appendChild( $theElementSpec );
-		    $oElementSpec->setAttribute( 'ident', $szElement );
+		    $oElementSpec = $oSchema->appendChild( $theElementSpec );
+		    $oElementSpec->setAttribute( 'ident', $szElement  );
+		    $oElementSpec->setAttribute( 'module', $szModuke );
 		    $oElementSpec->setAttribute( 'mode', 'change' );
 		  }
 		
-		$oAttList = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']/tei:elementSpec[@ident='{$szElement}']/tei:attList" )->item(0);
+		$oAttList = $oXPath->query("//tei:schemaSpec/tei:elementSpec[@module='{$szModule}' and @ident='{$szElement}']/tei:attList" )->item(0);
 	    
 		if (! is_object( $oAttList ) )
 		  {
@@ -1651,29 +1677,30 @@ class romaDom extends domDocument
 		    $oAttList = $oElementSpec->appendChild( $theAttList );
 		  }
 		
-		$oAttDef = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='$szOldName']" )->item(0);
+		$oAttDef = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='$szOldName']" )->item(0);
 	      }
 	    elseif ( $szClass != '' )
 	      {
-		$oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']" )->item(0);
-		$oClassSpec = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']/tei:classSpec[@ident='{$szClass}']" )->item(0);
+		$oModule = $oXPath->query( "//tei:schemaSpec/tei:moduleRef[@key='{$szModule}']" )->item(0);
+		$oClassSpec = $oXPath->query( "//tei:schemaSpec/tei:classSpec[@ident='{$szClass}']" )->item(0);
 		
 		if ( ! is_object( $oModule ) ) 
 		  {
 		    $this->addModule( $szModule, false );
-		    $oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']" )->item(0);
 		  }
 		
 		if (! is_object( $oClassSpec ) )
 		  {
 		    $theClassSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'classSpec' );
-		    $oClassSpec = $oModule->appendChild( $theClassSpec );
+		    $oClassSpec = $oSchema->appendChild( $theClassSpec );
 		    $oClassSpec->setAttribute( 'ident', $szClass );
+		    $oClassSpec->setAttribute( 'module', $szModule );
 		    $oClassSpec->setAttribute( 'mode', 'change' );
 		  }
 		
 		
-		$oAttList = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']/tei:classSpec[@ident='{$szClass}']/tei:attList" )->item(0);
+		$oAttList = $oXPath->query(
+		"//tei:schemaSpec/tei:classSpec[@module='{$szModule}' and @ident='{$szClass}']/tei:attList" )->item(0);
 		
 		if (! is_object( $oAttList ) )
 		  {
@@ -1681,7 +1708,8 @@ class romaDom extends domDocument
 		    $oAttList = $oClassSpec->appendChild( $theAttList );
 		  }
 		
-		$oAttDef = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']/tei:classSpec[@ident='{$szClass}']/tei:attList/tei:attDef[@ident='$szOldName']" )->item(0);
+		$oAttDef = $oXPath->query(
+	      "//tei:schemaSpec/tei:classSpec[@module='{$szModule}' and @ident='{$szClass}']/tei:attList/tei:attDef[@ident='$szOldName']" )->item(0);
 	      }
 	    
 	    if ( ! is_object( $oAttDef ) )
@@ -1717,15 +1745,17 @@ class romaDom extends domDocument
 
 	if ( $szModule != '' && $szClass == '' )
 	  {
-	    $oAttDef = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='{$szAttribute}']" )->item(0);
+	    $oAttDef = $oXPath->query(
+	  "//tei:schemaSpec/tei:elementSpec[@module='{$szModule}' and @ident='{$szElement}']/tei:attList/tei:attDef[@ident='{$szAttribute}']" )->item(0);
 	  }
 	elseif( $szClass == '' )
 	  {
-	    $oAttDef = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:schema/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='{$szAttribute}']" )->item(0);
+	    $oAttDef = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='{$szAttribute}']" )->item(0);
 	  }
 	else
 	  {
-	    $oAttDef = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']/tei:classSpec[@ident='{$szClass}']/tei:attList/tei:attDef[@ident='{$szAttribute}']" )->item(0);
+	    $oAttDef = $oXPath->query(
+	  "//tei:schemaSpec/tei:classSpec[@module='{$szModule}' and @ident='{$szClass}']/tei:attList/tei:attDef[@ident='{$szAttribute}']" )->item(0);
 	  }
 
 	$oAttDef->parentNode->removeChild( $oAttDef );
@@ -1736,7 +1766,7 @@ class romaDom extends domDocument
       {
 	$this->getXPath( $oXPath );
 	
-	$oElementSpec = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:schema/tei:elementSpec[@ident='{$szElement}']" )->item(0);
+	$oElementSpec = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$szElement}']" )->item(0);
 
 	$oElementSpec->setAttribute( 'mode', 'change' );
       }
@@ -1745,7 +1775,7 @@ class romaDom extends domDocument
       {
 	$this->getXPath( $oXPath );
 	
-	$oElementSpec = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:schema/tei:elementSpec[@ident='{$szElement}']" )->item(0);
+	$oElementSpec = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$szElement}']" )->item(0);
 
 	$oElementSpec->setAttribute( 'mode', 'delete' );
       }
@@ -1755,7 +1785,7 @@ class romaDom extends domDocument
 	$errResult = false;
 
 	$this->getXPath( $oXPath );
-	$oElementSpec = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:schema/tei:elementSpec[@ident='{$szElement}']" )->item(0);
+	$oElementSpec = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$szElement}']" )->item(0);
 	if ( is_object( $oElementSpec ) )
 	  {
 	    $oElementSpec->parentNode->removeChild( $oElementSpec );
