@@ -52,11 +52,12 @@ echo 4. convert expanded form to compact syntax
 trang $N.compiled.rng $N.compiled.rnc  || die " trang fails"
 echo 5. simplify expanded form, convert to XSD and then mangle XSD
 xsltproc -o $N.temp1.rng $T/base/p5/odds/simplifyforxsd.xsl $N.compiled.rng 
-trang  -o disable-abstract-elements $N.temp1.rng $N.compiled.xsd || die " trang fails"
+trang  -o disable-abstract-elements $N.temp1.rng $N.xsd || die " trang fails"
+xsltproc -o $N.new.xsd $T/base/p5/odds/manglexsd.xsl $N.xsd
+cp $N.new.xsd $N.xsd
+$debug || rm $N.new.xsd
 $debug || rm $N.temp1.rng  
-xsltproc -o $N.xsd $T/base/p5/odds/manglexsd.xsl $N.compiled.xsd
-$debug || rm $N.compiled.xsd
-$simple && exit 
+test -f xml.xsd && perl -p -i -e 's/<xs:import.*//' xml.xsd
 echo 6. simplify schema before attempting DTD conversion
 xsltproc $T/base/p5/odds/nomorechoice.xsl $N.compiled.rng | \
 xsltproc $T/base/p5/odds/simplifyfordtd.xsl - | \
@@ -66,6 +67,7 @@ echo 7. convert simplified form to DTD
 trang $N.temp2.rng $N.dtd || die " trang fails"
 $debug || rm $N.temp2.rng 
 perl -p -i -e 's/ns1://;s/xmlns:ns1/xmlns/' $N.dtd
+$simple && exit 
 echo 8. make expanded documented ODD
 xsltproc $T/base/p5/odds/subsetGuidelines.xsl $H/$1 | xmllint --format - > $N.doc.xml 
 echo ===============================
