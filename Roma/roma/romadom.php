@@ -1893,7 +1893,7 @@ class romaDom extends domDocument
 	    $this->updateProgressBar( '90' );
 
 	if ( file_exists( $szOutputFile ) )
-	  {
+	  { 
 	    $szXSD = join( '', file( $szOutputFile ) );
 	    unlink( $szOutputFile );
 	  }

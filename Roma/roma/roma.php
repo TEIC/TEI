@@ -1205,7 +1205,7 @@ class roma
 	    $szError = $this->m_oRomaDom->createSchemaRNC( $szSchema, true );
 	    break;
 	  case 'xsd':
-	    $szError = $this->m_oRomaDom->createSchemaXSD( $szSchemas, true );
+	    $szError = $this->m_oRomaDom->createSchemaXSD( $szSchema, true );
 	    break;
 	  case 'dtd':
 	    $szError = $this->m_oRomaDom->createSchemaDTD( $szSchema, true );
