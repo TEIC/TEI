@@ -36,7 +36,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
       <xsl:for-each select="tei:docAuthor">
 	<xsl:if test="preceding-sibling::tei:docAuthor"> 
 	  <xsl:choose>
-	    <xsl:when test="not(following-sibling::tei:docAuthor">
+	    <xsl:when test="not(following-sibling::tei:docAuthor)">
 	      <xsl:text> and </xsl:text>
 	    </xsl:when>
 	    <xsl:otherwise>
