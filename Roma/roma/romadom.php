@@ -838,30 +838,6 @@ class romaDom extends domDocument
               }
           }
 
-	if (! is_object( $oModule ) )
-	  {
-            $oP = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p" )->item(0);
-            $theMod = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'module' );
-            $oModule = $oP->appendChild( $theMod );
-
-            if ( $bInclude )
-              {
-                $oModule->setAttribute( 'mode', 'change' );
-              }
-            else
-              {
-                $oModule->setAttribute( 'mode', 'delete' );
-              }
-	    $oModule->setAttribute( 'ident', $szModule );
-          }
-	else
-          {
-	    if ( $bInclude )
-              {
-                $oModule->setAttribute( 'mode', 'change' );
-              }
-          }
-
 	return $errResult;
       }
 
