@@ -24,6 +24,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 <xsl:include href="RngToRnc.xsl"/>
 <xsl:param name="verbose"></xsl:param>
 <xsl:param name="oddmode">html</xsl:param>
+<xsl:variable name="TEITAGS">http://www.tei-c.org.uk/tei-bin/files.pl?name=tags.xml</xsl:variable>
 <xsl:param name="ODDROOT">http://www.tei-c.org/P5/Odds/</xsl:param>
 <xsl:param name="schemaBaseURL">http://www.tei-c.org/P5/Schema/</xsl:param>
  <xsl:key  name="CLASSMEMBERS" match="tei:elementSpec|tei:classSpec" use="tei:classes/tei:memberOf/@key"/>
@@ -1125,6 +1126,9 @@ select="$ident"/>] to  class [<xsl:value-of select="@ident"/>]</xsl:message>
     <xsl:otherwise>
       <rng:define  name="{@ident}">
 	<rng:element  name="{$name}">
+	  <xsl:if test="@ns">
+	    <xsl:attribute name="ns"><xsl:value-of select="@ns"/></xsl:attribute>
+	  </xsl:if>
 	  <rng:ref name="{@ident}.content"/>
 	</rng:element>
       </rng:define>
@@ -1183,7 +1187,7 @@ select="$ident"/>] to  class [<xsl:value-of select="@ident"/>]</xsl:message>
   <xsl:param name="ident"/>
   <xsl:variable name="result">
     <xsl:for-each
-     select="document(concat($ODDROOT,'Tools/tags.xml'))/Table">
+     select="document($TEITAGS)/Table">
       <xsl:value-of select="key('TAGIDENTS',$ident)/@filelocation"/>
     </xsl:for-each>
   </xsl:variable>
