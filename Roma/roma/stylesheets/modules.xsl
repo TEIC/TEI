@@ -21,12 +21,12 @@ Description
       <td>
        <form>
         <table>
-         <tr><td class="headline" colspan="4"><xsl:value-of select="$res_form_headline"/></td></tr>
+         <tr><td class="headline" colspan="4"><xsl:value-of disable-output-escaping="yes" select="$res_form_headline"/></td></tr>
          <tr class="header">
           <td></td>
-          <td><xsl:value-of select="$res_form_moduleName"/></td>
-          <td><xsl:value-of select="$res_form_description"/></td>
-          <td><xsl:value-of select="$res_form_changes"/></td>
+          <td><xsl:value-of  disable-output-escaping="yes" select="$res_form_moduleName"/></td>
+          <td><xsl:value-of  disable-output-escaping="yes" select="$res_form_description"/></td>
+          <td><xsl:value-of  disable-output-escaping="yes" select="$res_form_changes"/></td>
          </tr>
          <xsl:call-template name="processListModules"/>
         </table>
@@ -36,7 +36,9 @@ Description
        <form>
        <table>
         <tr>
-         <td class="headline" colspan="2"><xsl:value-of select="$res_selectedModules_headline"/></td>
+         <td class="headline" colspan="2"><xsl:value-of
+	 disable-output-escaping="yes"
+select="$res_selectedModules_headline"/></td>
 	</tr>
 	<xsl:call-template name="processSelectedModules"/>
        </table>
@@ -55,7 +57,7 @@ Description
        <td>
 	 <a>
 	   <xsl:attribute name="href">?module=<xsl:value-of select="$thisModule"/>&amp;mode=removeModule</xsl:attribute>
-	   <xsl:value-of select="$res_form_remove"/>
+	   <xsl:value-of  disable-output-escaping="yes" select="$res_form_remove"/>
 	 </a>
        </td>
        <td>
@@ -81,7 +83,7 @@ Description
        <td>
 	 <a>
 	   <xsl:attribute name="href">?module=<xsl:value-of select="moduleName"/>&amp;mode=addModule</xsl:attribute>
-	   <xsl:value-of select="$res_form_add"/>
+	   <xsl:value-of  disable-output-escaping="yes" select="$res_form_add"/>
 	 </a>
        </td>
        <td>
