@@ -66,6 +66,7 @@ XSL stylesheet to process TEI documents using ODD markup
 <xsl:template match="rng:choice[count(rng:*)=0]"><rng:notAllowed/></xsl:template>
 <xsl:template match="rng:define[count(rng:*)=0]"/>
 <xsl:template match="rng:group[count(rng:*)=0]"/>
+<xsl:template match="rng:optional[count(rng:*)=0]"/>
 <xsl:template match="rng:zeroOrMore[count(rng:*)=0]"/>
 <xsl:template match="rng:oneOrMore[count(rng:*)=0]"/>
 <xsl:template match="rng:oneOrMore[count(rng:*)=1 and rng:notAllowed]"/>
