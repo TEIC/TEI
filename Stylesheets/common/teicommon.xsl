@@ -8,7 +8,6 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
  
 #include LICENSE
 --> 
-
 <xsl:stylesheet
   xmlns:tei="http://www.tei-c.org/ns/1.0"
  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -89,13 +88,13 @@ select="$numberSpacer"/></xsl:param>
 
 <xsl:template name="generateTitle">
  <xsl:choose>
-   <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//docTitle">
+   <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle">
      <xsl:apply-templates 
-       select="ancestor-or-self::tei:TEI/tei:text/tei:front//docTitle"/>
+       select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle"/>
      </xsl:when>
    <xsl:otherwise>
     <xsl:apply-templates 
-      select="ancestor-or-self::tei:TEI/teiHeader/tei:fileDesc/tei:titleStmt/tei:title"
+      select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"
       mode="htmlheader"/>
    </xsl:otherwise>
 </xsl:choose>
@@ -106,20 +105,20 @@ select="$numberSpacer"/></xsl:param>
   <xsl:param name="showRev">true</xsl:param>
 <xsl:variable name="realdate">
  <xsl:choose>
-   <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//docDate">
+   <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docDate">
   <xsl:apply-templates 
-    select="ancestor-or-self::tei:TEI/tei:text/tei:front//docDate" 
+    select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docDate" 
     mode="date"/>
   </xsl:when>
-  <xsl:when test="ancestor-or-self::tei:TEI/teiHeader/tei:fileDesc/tei:editionStmt/descendant::tei:date">
-  <xsl:apply-templates select="ancestor-or-self::tei:TEI/teiHeader/tei:fileDesc/tei:editionStmt/descendant::tei:date[1]"/>
+  <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/descendant::tei:date">
+  <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/descendant::tei:date[1]"/>
     </xsl:when>
   </xsl:choose>
 </xsl:variable>
 
 <xsl:variable name="revdate">
 <xsl:apply-templates 
- select="ancestor-or-self::tei:TEI/teiHeader/tei:revisionDesc/descendant::tei:date[1]"/>
+ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/descendant::tei:date[1]"/>
 </xsl:variable>
 <xsl:value-of select="$dateWord"/><xsl:text> </xsl:text>
 <xsl:if test="not($realdate = '')">
@@ -150,14 +149,14 @@ select="$numberSpacer"/></xsl:param>
 
 <xsl:template name="generateAuthor">
  <xsl:choose>
-   <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//docAuthor">
-     <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:text/tei:front//docAuthor[1]"  mode="author"/>
+   <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor">
+     <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor[1]"  mode="author"/>
   </xsl:when>
-  <xsl:when test="ancestor-or-self::tei:TEI/teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
-  <xsl:apply-templates select="ancestor-or-self::tei:TEI/teiHeader/tei:fileDesc/tei:titleStmt/tei:author"/>
+  <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
+  <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author"/>
     </xsl:when>
-    <xsl:when test="ancestor-or-self::tei:TEI/tei:text/tei:front//docAuthor">
-      <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:text/tei:front//docAuthor[1]" mode="author"/>
+    <xsl:when test="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor">
+      <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor[1]" mode="author"/>
   </xsl:when>
   </xsl:choose>
 </xsl:template>

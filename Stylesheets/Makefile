@@ -1,48 +1,49 @@
-VERSION=3.3
+VERSION=3.4
 
-all: p4 p5 zip
+all: p4 p5 other
 
 
 p4:
-	-mkdir -p web/P4/odds
-	-mkdir -p web/P4/fo
-	-mkdir -p web/P4/html
-	-mkdir -p web/P4/common
-	-mkdir -p web/P4/latex
-	-mkdir -p web/P4/slides
+	-mkdir -p dist/p4/odds
+	-mkdir -p dist/p4/fo
+	-mkdir -p dist/p4/html
+	-mkdir -p dist/p4/common
+	-mkdir -p dist/p4/latex
+	-mkdir -p dist/p4/slides
 	for i in odds/*xsl fo/*.xsl html/*xsl common/*xsl latex/*xsl slides/*xsl; do \
-	perl toP4.pl --date="`date`" --version=$(VERSION) < $$i > web/P4/$$i; \
+	perl toP4.pl --date="`date`" --version=$(VERSION) < $$i > dist/p4/$$i; \
 	done
 
 p5:
-	-mkdir -p web/P5/odds
-	-mkdir -p web/P5/fo
-	-mkdir -p web/P5/slides
-	-mkdir -p web/P5/html
-	-mkdir -p web/P5/common
-	-mkdir -p web/P5/latex
+	-mkdir -p dist/p5/odds
+	-mkdir -p dist/p5/fo
+	-mkdir -p dist/p5/slides
+	-mkdir -p dist/p5/html
+	-mkdir -p dist/p5/common
+	-mkdir -p dist/p5/latex
 	for i in odds/*xsl fo/*.xsl html/*xsl common/*xsl latex/*xsl slides/*xsl; do \
-	perl toP5.pl --date="`date`" --version=$(VERSION) < $$i > web/P5/$$i; \
+	perl toP5.pl --date="`date`" --version=$(VERSION) < $$i > dist/p5/$$i; \
 	done
 
-zip:
-	chmod -R u+w web
-	-cp ChangeLog teixsl.* web
-	(cd web/P4; zip -r teixsl-fo   fo common ../ChangeLog    ../teixsl.html ../teixsl.xml)
-	(cd web/P4; zip -r teixsl-html html common ../ChangeLog ../teixsl.html ../teixsl.xml)
-	(cd web/P4; zip -r teixsl-latex latex common ../ChangeLog ../teixsl.html ../teixsl.xml)
-	(cd web/P5; zip -r teixsl-fo   fo common ../ChangeLog    ../teixsl.html ../teixsl.xml)
-	(cd web/P5; zip -r teixsl-html html common ../ChangeLog ../teixsl.html ../teixsl.xml)
-	(cd web/P5; zip -r teixsl-latex latex common ../ChangeLog ../teixsl.html ../teixsl.xml)
+other: param stylebear
+	-mkdir -p dist/doc
+	-cp ChangeLog param* LICENSE teixsl.* dist/doc
+	-cp *.css dist
 
-install:
-	(cd web;  tar cf - .) | (cd ../web/Stylesheets; tar xf - )
+zip:
+	chmod -R u+w dist
+	(cd dist/p4; zip -r teixsl-fo   fo common ../ChangeLog    ../teixsl.html ../teixsl.xml)
+	(cd dist/p4; zip -r teixsl-html html common ../ChangeLog ../teixsl.html ../teixsl.xml)
+	(cd dist/p4; zip -r teixsl-latex latex common ../ChangeLog ../teixsl.html ../teixsl.xml)
+	(cd dist/p5; zip -r teixsl-fo   fo common ../ChangeLog    ../teixsl.html ../teixsl.xml)
+	(cd dist/p5; zip -r teixsl-html html common ../ChangeLog ../teixsl.html ../teixsl.xml)
+	(cd dist/p5; zip -r teixsl-latex latex common ../ChangeLog ../teixsl.html ../teixsl.xml)
 
 param:
-	saxon param.xml param.xsl | grep -v masterFile > teihtml-param.xsl
+	xsltproc param.xsl param.xml  | grep -v masterFile > teihtml-param.xsl
 
 stylebear:
-	saxon param.xml paramform.xsl > stylebear
+	xsltproc paramform.xsl param.xml > stylebear
 
 clean:
-	-rm -rf web
+	-rm -rf dist

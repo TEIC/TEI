@@ -1,33 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<!-- $Date: 
 Text Encoding Initiative Consortium XSLT stylesheet family
-$Date$, $Revision$, $Author$
+2001/10/01 $, $Revision$, $Author$
 
-XSL stylesheet to process TEI ODD documents 
+XSL stylesheet to format TEI XML documents using ODD markup
 
-Copyright 1999-2003 Sebastian Rahtz / Text Encoding Initiative Consortium
-                                              
-    This is an XSLT stylesheet for transforming TEI (version P5) XML documents
-
-    Version 3.2. Date Fri Jul 30 12:14:53 BST 2004
-                                  
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
-                                                                                
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-                                                                                
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-                                                                                
-    The author may be contacted via the e-mail address
-
-    sebastian.rahtz-services.oxford.ac.uk--> 
+ 
+##LICENSE
+-->
 <xsl:stylesheet 
   xmlns:s="http://www.ascc.net/xml/schematron" 
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
@@ -47,7 +27,6 @@ Copyright 1999-2003 Sebastian Rahtz / Text Encoding Initiative Consortium
 <xsl:param name="verbose"></xsl:param>
 <xsl:param name="oddmode">html</xsl:param>
 <xsl:param name="schemaBaseURL">http://www.tei-c.org/P5/Schema/</xsl:param>
-<xsl:param name="ODDROOT">http://www.tei-c.org.uk/P5/</xsl:param>
 
  <xsl:key  name="CLASSMEMBERS" match="tei:elementSpec|tei:classSpec" use="tei:classes/tei:memberOf/@key"/>
  <xsl:key name="TAGS" match="Tag|Pattern|Class" use="ident"/>
@@ -147,20 +126,30 @@ created on <xsl:value-of select="edate:date-time()"/>.
 </xsl:template>
 
 
-
+<xsl:template match="tei:attDef[@mode='delete']" mode="tangle"/>
 
 <xsl:template match="tei:attDef" mode="tangle">
-  <xsl:if test="not(@ident='xmlns')">
-    <rng:ref name="{ancestor::tei:attList/../@ident}.attributes.{@ident}"
-	 />
+  <xsl:if test="not(@ident='xmlns') and not(@mode='add')">
+    <xsl:choose>
+      <xsl:when test="@usage='req'">
+	<rng:ref name="{ancestor::tei:attList/../@ident}.attributes.{@ident}"/>
+      </xsl:when>
+      <xsl:when test="ancestor::tei:classSpec">
+	<rng:ref name="{ancestor::tei:attList/../@ident}.attributes.{@ident}"/>
+      </xsl:when>
+      <xsl:otherwise>
+	  <rng:ref
+	      name="{ancestor::tei:attList/../@ident}.attributes.{@ident}"/>
+<!-- when is this ever needed?	
+        <rng:optional>
+	</rng:optional>
+-->
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:if>
 </xsl:template>
 
-
-
 <xsl:template match="tei:attDef[@mode='change']" mode="tangle"/>
-
-
 
 <xsl:template match="tei:attList" mode="tangle">
   <xsl:choose>
@@ -170,6 +159,28 @@ created on <xsl:value-of select="edate:date-time()"/>.
 	  <xsl:apply-templates select="tei:*" mode="tangle"/>
 	</rng:choice>
       </rng:optional>
+    </xsl:when>
+    <xsl:when test="parent::tei:elementSpec[@mode='change']">
+      <xsl:variable name="loc">
+	<xsl:value-of select="$TEISERVER"/>
+	<xsl:text>copytag.xq?name=</xsl:text>
+	<xsl:value-of select="parent::tei:elementSpec/@ident"/>
+      </xsl:variable>
+      <xsl:for-each
+	  select="document($loc)//tei:attDef[not(@ident=current()//tei:attDef/@ident)]">
+	<xsl:choose>
+	  <xsl:when test="@usage='req'">
+	    <rng:ref name="{ancestor::tei:elementSpec/@ident}.attributes.{@ident}"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <rng:optional>
+	      <rng:ref
+		  name="{ancestor::tei:elementSpec/@ident}.attributes.{@ident}"/>
+	    </rng:optional>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:for-each>
+      <xsl:apply-templates select="tei:*" mode="tangle"/>
     </xsl:when>
     <xsl:otherwise>
       <xsl:apply-templates select="tei:*" mode="tangle"/>
@@ -295,7 +306,6 @@ created on <xsl:value-of select="edate:date-time()"/>.
 <xsl:template match="tei:classSpec/@ident"/>
 
 
-
 <xsl:template match="tei:classSpec/tei:attList" mode="tangleadd">
   <xsl:for-each select="tei:attDef[@mode='add']">
     <xsl:call-template name="defineAnAttribute">
@@ -305,19 +315,18 @@ created on <xsl:value-of select="edate:date-time()"/>.
 </xsl:template>
 
 
-
-<xsl:template match="tei:classSpec/tei:content">
-<xsl:message>????SCHEMA CONTENT OF CLASS DOC <xsl:value-of select="@id"/></xsl:message>
-</xsl:template>
-
-
 <xsl:template match="tei:classSpec[@mode='change']" mode="tangle">
-    <xsl:if test="tei:attList/tei:attDef[@mode='add']">
-      <rng:define name="{@ident}.attributes" combine="choice" >
-	<xsl:apply-templates mode="tangle"/>
-      </rng:define>
-    </xsl:if>
-    <xsl:call-template name="defineRelaxAttributes"/>
+  <xsl:if test="tei:content">
+    <rng:define name="{@ident}" combine="choice">
+      <xsl:apply-templates select="tei:content/*"/>
+    </rng:define>
+  </xsl:if>
+  <xsl:if test="tei:attList/tei:attDef[@mode='add']">
+    <rng:define name="{@ident}.attributes" combine="choice" >
+      <xsl:apply-templates mode="tangle"/>
+    </rng:define>
+  </xsl:if>
+  <xsl:call-template name="defineRelaxAttributes"/>
 </xsl:template>
 
 
@@ -791,8 +800,9 @@ select="$ident"/>] to  class [<xsl:value-of select="@ident"/>]</xsl:message>
       <Wrapper>
 	<xsl:choose>
 	  <xsl:when test="@url">
-	    <rng:include href="@url" />
-	    <xsl:apply-templates mode="tangle"/>
+	    <rng:include href="{@url}" >
+	      <xsl:apply-templates/>
+	    </rng:include>
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <rng:include href="{$schemaBaseURL}{$This}.rng" >
@@ -1285,26 +1295,13 @@ along with this file; if not, write to the
 
 <xsl:template name="makeRelaxAttributes">
 <xsl:variable name="name" select="@ident"/>
-  <xsl:for-each select="tei:attList//tei:attDef">
+  <xsl:for-each select="tei:attList//tei:attDef[not(@mode='delete')]">
     <xsl:if test="not(@ident='xmlns')">
       <xsl:call-template name="makeAnAttribute"/>
     </xsl:if>
   </xsl:for-each>
 </xsl:template>
 
-
-
-<xsl:template name="generateChildren">
-<xsl:param name="what"/>
-   <xsl:for-each select="document('dtdcat.xml')">
-    <xsl:for-each select="key('ELEMENTS',$what)/Contains">
-      <xsl:if test="not(. = preceding-sibling::Contains)">        
-        <xsl:value-of select="."/>
-        <xsl:text> </xsl:text>
-      </xsl:if>
-    </xsl:for-each>      
-   </xsl:for-each>
-</xsl:template>
 
 
 
@@ -1315,22 +1312,22 @@ along with this file; if not, write to the
   <xsl:for-each select="tei:classes/tei:memberOf">
       <xsl:choose>
 	<xsl:when test="key('IDENTS',@key)">
-	<xsl:variable name="Key">
-		<xsl:value-of select="@key"/>
-	</xsl:variable>
-	<xsl:for-each select="key('IDENTS',@key)">
-	  <xsl:if test="not(generate-id(.)=generate-id(key('IDENTS',$Key)[1]))">
-	  <xsl:text> |  </xsl:text>
-	  </xsl:if>
-	  <xsl:call-template name="makeLink">
-	    <xsl:with-param
-	    name="class">classlink</xsl:with-param>
-	    <xsl:with-param name="url">ref-<xsl:value-of select="@id"/>.html</xsl:with-param>
-	    <xsl:with-param name="text">
-	    <xsl:value-of select="@ident"/>
-	    </xsl:with-param>
-	  </xsl:call-template>
-	</xsl:for-each>
+	  <xsl:variable name="Key">
+	    <xsl:value-of select="@key"/>
+	  </xsl:variable>
+	  <xsl:for-each select="key('IDENTS',@key)">
+	    <xsl:if test="not(generate-id(.)=generate-id(key('IDENTS',$Key)[1]))">
+	      <xsl:text> |  </xsl:text>
+	    </xsl:if>
+	    <xsl:call-template name="makeLink">
+	      <xsl:with-param
+		  name="class">classlink</xsl:with-param>
+	      <xsl:with-param name="url">ref-<xsl:value-of select="@id"/>.html</xsl:with-param>
+	      <xsl:with-param name="text">
+		<xsl:value-of select="@ident"/>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:for-each>
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:value-of select="@key"/>
@@ -1347,34 +1344,64 @@ along with this file; if not, write to the
 
 <xsl:template name="generateMembers">
    <xsl:variable name="this" select="@ident"/>
-   <xsl:for-each select="key('CLASSMEMBERS',$this)">
-     <xsl:call-template name="linkTogether">
-       <xsl:with-param name="inner" select="@ident"/>
-       <xsl:with-param name="origid" select="@id"/>
-     </xsl:call-template>
-     <xsl:if test="count(key('CLASSMEMBERS',@ident))&gt;0">
-       [<xsl:for-each select="key('CLASSMEMBERS',@ident)">
-       <xsl:choose>
-	 <xsl:when test="$oddmode='tei'">
-	   <tei:ptr target="{@ident}"/>
-	 </xsl:when>
-	 <xsl:when test="$oddmode='html'">
-	   <a href="ref-{@id}.html">
-	     <xsl:value-of select="@ident"/>
-	   </a>
-	 </xsl:when>
-	 <xsl:when test="$oddmode='pdf'">
-	   <fo:inline font-style="italic"><xsl:value-of select="@id"/></fo:inline>
-	 </xsl:when>
-	 <xsl:otherwise>
-	   <xsl:value-of select="@id"/>
-	 </xsl:otherwise>
-       </xsl:choose>
-       <xsl:text> </xsl:text>
-       </xsl:for-each>]
-     </xsl:if>
+   <xsl:choose>
+     <xsl:when test="key('CLASSMEMBERS',$this)">
+       <xsl:for-each select="key('CLASSMEMBERS',$this)">
+	 <xsl:call-template name="linkTogether">
+	   <xsl:with-param name="inner" select="@ident"/>
+	   <xsl:with-param name="origid" select="concat('ref-',@id,'.html')"/>
+	 </xsl:call-template>
+	 <xsl:if test="count(key('CLASSMEMBERS',@ident))&gt;0">
+	   [<xsl:for-each select="key('CLASSMEMBERS',@ident)">
+	   <xsl:call-template name="showElement">
+	     <xsl:with-param name="name" select="@ident"/>
+	     <xsl:with-param name="id" select="@id"/>
+	   </xsl:call-template></xsl:for-each>]
+	 </xsl:if>
+       </xsl:for-each>
+     </xsl:when>
+     <xsl:otherwise>
+       <xsl:for-each
+	   select="document(concat($TEISERVER,'classmembers.xq?class=',@ident))/list/item">
+	   <xsl:call-template name="showElement">
+	     <xsl:with-param name="name" select="."/>
+	     <xsl:with-param name="id"/>
+	   </xsl:call-template>
+       </xsl:for-each>
+     </xsl:otherwise>
+   </xsl:choose>
+
+</xsl:template>
+
+<xsl:template name="showElement">
+  <xsl:param name="id"/>
+  <xsl:param name="name"/>
+  <xsl:choose>
+    <xsl:when test="$oddmode='tei'">
+      <tei:ptr target="{$name}"/>
+    </xsl:when>
+    <xsl:when test="$oddmode='html'">
+      <xsl:choose>
+	<xsl:when test="not($id='')">
+	  <a href="ref-{$id}.html">
+	    <xsl:value-of select="$name"/>
+	  </a>
+	</xsl:when>
+	<xsl:otherwise>
+	  <a href="{concat($TEISERVER,'tag.xq?name=',$name)}">
+	    <xsl:value-of select="$name"/>
+	  </a>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:when>
+    <xsl:when test="$oddmode='pdf'">
+      <fo:inline font-style="italic"><xsl:value-of select="$name"/></fo:inline>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:value-of select="$name"/>
+    </xsl:otherwise>
+  </xsl:choose>
   <xsl:text> </xsl:text>
-   </xsl:for-each>
 </xsl:template>
 
 
@@ -1413,20 +1440,20 @@ along with this file; if not, write to the
 
 
 <xsl:template name="linkTogether">
-<xsl:param name="inner"/>
-<xsl:param name="origid"/>
+<xsl:param name="name"/>
+<xsl:param name="url"/>
   <xsl:choose>
     <xsl:when test="$oddmode='html'">
-      <a href="ref-{$origid}.html"><xsl:value-of select="$inner"/></a>
+      <a href="{$url}"><xsl:value-of select="$name"/></a>
     </xsl:when>
     <xsl:when test="$oddmode='pdf'">
-     <fo:inline><xsl:value-of select="$inner"/></fo:inline>
+     <fo:inline><xsl:value-of select="$name"/></fo:inline>
     </xsl:when>
     <xsl:when test="$oddmode='tei'">
-      <xsl:value-of select="$inner"/>
+      <xsl:value-of select="$name"/>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:value-of select="$inner"/>
+      <xsl:value-of select="$name"/>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
@@ -1539,5 +1566,7 @@ along with this file; if not, write to the
 <xsl:template name="inhnamespace"/>
 
 <xsl:template match="s:*"/>
+
+<xsl:template match="tei:altIdent"/>
 
 </xsl:stylesheet>

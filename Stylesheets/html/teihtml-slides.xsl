@@ -4,8 +4,29 @@ $Date$, $Revision$, $Author$
 
 XSL stylesheet to format TEI XML documents to HTML or XSL FO
 
-##LICENSE
---> 
+Copyright 1999-2003 Sebastian Rahtz / Text Encoding Initiative Consortium
+                                              
+    This is an XSLT stylesheet for transforming TEI (version P5) XML documents
+
+    Version 3.2. Date Fri Jul 30 12:15:01 BST 2004
+                                  
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+                                                                                
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+                                                                                
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+                                                                                
+    The author may be contacted via the e-mail address
+
+    sebastian.rahtz-services.oxford.ac.uk--> 
 
 <xsl:stylesheet 
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
@@ -124,7 +145,7 @@ name="cssFile">http://www.tei-c.org/Stylesheets/teislides.css</xsl:param>
       <ul class="slidetoc">
 	<xsl:for-each select="tei:text/tei:body/tei:div">
 	  <xsl:variable name="n"><xsl:value-of select="$masterFile"/><xsl:number/></xsl:variable>
-	  <li class="slidetoc"> <a href="{$n}.html"><xsl:value-of select="head"/></a></li>
+	  <li class="slidetoc"> <a href="{$n}.html"><xsl:value-of select="tei:head"/></a></li>
 	</xsl:for-each>
       </ul>
     </div>
@@ -162,7 +183,7 @@ name="cssFile">http://www.tei-c.org/Stylesheets/teislides.css</xsl:param>
 <xsl:template name="slideout">
 	 <html><xsl:call-template name="addLangAtt"/> 
 	 <head>
-         <title><xsl:value-of select="head"/></title>
+         <title><xsl:value-of select="tei:head"/></title>
          <xsl:call-template name="includeCSS"/>
 	 </head>
 	 <body>

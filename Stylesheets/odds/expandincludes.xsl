@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Text Encoding Initiative Consortium XSLT stylesheet family
+$Date$, $Revision$, $Author$
+
+XSL stylesheet to process TEI documents using ODD markup
+
+ 
+##LICENSE
+--> 
 <!-- separate bits by David Tolpin, combined by Sebastian Rahtz January 2004 
 
 

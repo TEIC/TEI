@@ -1,4 +1,13 @@
 <?xml version="1.0"?>
+<!-- 
+Text Encoding Initiative Consortium XSLT stylesheet family
+$Date$, $Revision$, $Author$
+
+XSL stylesheet to process TEI documents using ODD markup
+
+ 
+##LICENSE
+--> 
 <!-- $Id$ -->
 
 <xsl:transform
