@@ -54,6 +54,9 @@ class docDom extends domDocument
     </fileDesc>
   </teiHeader>
   <text>
+    <front>
+      <divGen type="toc"/>
+    </front>
     <body>
       <div0>
         <head>ODD SUBSET</head>
@@ -520,10 +523,14 @@ class docDom extends domDocument
 	$szCurrentDir = getcwd();
 	chdir( roma_temporaryFilesDir );
 	exec( roma_pdflatex . ' -interaction=nonstopmode ' . $szInputFile );
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '90' );
+
+	exec( roma_pdflatex . ' -interaction=nonstopmode ' . $szInputFile );
 	chdir( $szCurrentDir );
 
 	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '90' );
+	  $this->m_oRomaDom->updateProgressBar( '95' );
 	
 	$szPdf = join( '', file( $szOutputFile ) );
 	
@@ -607,10 +614,14 @@ class docDom extends domDocument
 	$szCurrentDir = getcwd();
 	chdir( roma_temporaryFilesDir );
 	exec( roma_latex . ' -interaction=nonstopmode ' . $szInputFile );
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '90' );
+
+	exec( roma_latex . ' -interaction=nonstopmode ' . $szInputFile );
 	chdir( $szCurrentDir );
 
 	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '90' );
+	  $this->m_oRomaDom->updateProgressBar( '95' );
 	
 	$szDVI = join( '', file( $szOutputFile ) );
 	
