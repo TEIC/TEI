@@ -145,8 +145,11 @@ define( 'roma_temporaryFilesDir', '/tmp' );
 define( 'roma_styleheet_docHtml', 'http://www.tei-c.org/Stylesheets/teihtml-teic-P5.xsl' );
 define( 'roma_styleheet_docPDF', 'http://www.tei-c.org/Stylesheets/P5/fo/tei.xsl' );
 define( 'roma_styleheet_docLatex', 'http://www.tei-c.org/Stylesheets/P5/latex/teilatex.xsl' );
+define( 'roma_customization_validator', 'http://www.tei-c.org/P5/Schema/p5odds.rng' );
 
 define( 'roma_exist_server', 'spqr.oucs.ox.ac.uk' );
+
+
 
 //#########################
 // The different Modes
@@ -719,7 +722,8 @@ class roma
 
 	$aszParam[ 'elementName' ] = $_REQUEST[ 'element' ];
 	$aszParam[ 'elementDesc' ] = $szDesc;
-	$aszParam[ 'elementClasses' ] = join( ';', $aszClasses );
+	if (is_array( $aszClasses) )
+	  $aszParam[ 'elementClasses' ] = join( ';', $aszClasses );
 	$aszParam[ 'elementContents' ] = $szContents;
 
 	$this->applyStylesheet( $oListDom, 'addElements.xsl', $oNewDom, $aszParam  );
@@ -744,12 +748,26 @@ class roma
 	
 	$oSchemaParser = new parser();
 	$oSchemaParser->addReplacement( 'output', $_REQUEST[ 'output' ] );
+	//validate file
+	set_error_handler( array($this, 'schemaValidatorErrorHandler' ) );
+	if ( $this->m_oRomaDom->relaxNGValidate( roma_customization_validator ) )
+	  {
+	    $oSchemaParser->addReplacement( 'validated', 'true' );
+	  }
+	else
+	  {
+	    $oSchemaParser->addReplacement( 'validated', 'false' );
+	    $oSchemaParser->addReplacement( 'validatorMessages', join( '<br>', $this->m_aszErrors ) );
+	  }
+	restore_error_handler();
+
 	$oSchemaParser->Parse( $szSchemTem, $szSchema );
 	
 	$oParser->addReplacement( 'mode', 'createSchema' );
 	$oParser->addReplacement( 'view', 'createSchema' );
 	$oParser->addReplacement( 'template', $szSchema );
 	$oParser->Parse( $szTemplate, $szOutput );
+
 
 	if ( $_REQUEST[ 'task' ] != 'create' )
 	  $this->appendOutput( $szOutput );
@@ -1466,5 +1484,14 @@ class roma
 	$this->m_oRomaDom->setCustomizationDescription( $_REQUEST[ 'description' ] );
       }
 
+
+    // #########################################################################
+    // --- get Error messages
+    // #########################################################################
+
+    function schemaValidatorErrorHandler($errno, $errmsg, $filename, $linenum, $vars) 
+    {
+      $this->m_aszErrors[] = $errmsg;
+    }
 
 }
