@@ -68,8 +68,7 @@ validate: oddschema exampleschema
 #	with grep -v. Note that we discard *all* such messages, even
 #	though fewer than 500 of the 17,576 possible combinations
 #	(i.e. < 3%) are valid codes.
-	-jing -t p5odds.rng Source-driver.xml \
-	 | grep -v ": error: Illegal xml:lang value \"[A-Za-z][A-Za-z][A-Za-z]\"\.$$"
+	-jing -t p5odds.rng Source-driver.xml 
 	echo xx/rnv
 	-xmllint --noent  Source-driver.xml > Source.xml
 	-rnv -v p5odds.rnc Source.xml && rm Source.xml
@@ -137,7 +136,7 @@ exist: split
 	perl updateexist.pl datatypes.xml /db/TEI
 
 clean:
-	-rm -rf dist Guidelines Schema DTD dtd Split RomaResults *~
+	-rm -rf release Guidelines Schema DTD dtd Split RomaResults *~
 	-rm Guidelines.xml core.rnc header.rnc tei.rnc \
 	dictionaries.rnc  linking.rnc  textstructure.rnc \
 	figures.rnc       tagdocs.rnc  \
@@ -159,23 +158,23 @@ clean:
 	transcr.rnc \
 	verse.rnc 
 
-release:
-	rm -rf dist
-	mkdir -p dist/tei-p5-source-`cat VERSION`
+dist:
+	rm -rf release
+	mkdir -p release/tei-p5-source-`cat VERSION`
 	tar --exclude CVS -c -f - *.* Roma VERSION ChangeLog Source Makefile Tools \
-	| (cd dist/tei-p5-source-`cat VERSION`; tar xf - )
-	mkdir -p dist/tei-p5-schema-`cat VERSION`
+	| (cd release/tei-p5-source-`cat VERSION`; tar xf - )
+	mkdir -p release/tei-p5-schema-`cat VERSION`
 	tar --exclude CVS -c -f - Schema DTD \
-	| (cd dist/tei-p5-schema-`cat VERSION`; tar xf - )
-	mkdir -p dist/tei-p5-doc-`cat VERSION`
+	| (cd release/tei-p5-schema-`cat VERSION`; tar xf - )
+	mkdir -p release/tei-p5-doc-`cat VERSION`
 	tar --exclude CVS -c -f - Guidelines \
-	| (cd dist/tei-p5-doc-`cat VERSION`; tar xf - )
-	mkdir -p dist/tei-p5-test-`cat VERSION`
+	| (cd release/tei-p5-doc-`cat VERSION`; tar xf - )
+	mkdir -p release/tei-p5-test-`cat VERSION`
 	tar --exclude CVS -c -f - Test \
-	| (cd dist/tei-p5-test-`cat VERSION`; tar xf - )
-	-rm `find dist -name "semantic.cache"`
-	-rm `find dist -name "*~"`
-	(cd dist; zip -r tei-p5-source-`cat ../VERSION`.zip tei-p5-source-`cat ../VERSION`)
-	(cd dist; zip -r tei-p5-doc-`cat ../VERSION`.zip tei-p5-doc-`cat ../VERSION`)
-	(cd dist; zip -r tei-p5-schema-`cat ../VERSION`.zip tei-p5-schema-`cat ../VERSION`)
-	(cd dist; zip -r tei-p5-test-`cat ../VERSION`.zip tei-p5-test-`cat ../VERSION`)
+	| (cd release/tei-p5-test-`cat VERSION`; tar xf - )
+	-rm `find release -name "semantic.cache"`
+	-rm `find release -name "*~"`
+	(cd release; zip -r tei-p5-source-`cat ../VERSION`.zip tei-p5-source-`cat ../VERSION`)
+	(cd release; zip -r tei-p5-doc-`cat ../VERSION`.zip tei-p5-doc-`cat ../VERSION`)
+	(cd release; zip -r tei-p5-schema-`cat ../VERSION`.zip tei-p5-schema-`cat ../VERSION`)
+	(cd release; zip -r tei-p5-test-`cat ../VERSION`.zip tei-p5-test-`cat ../VERSION`)
