@@ -1,6 +1,6 @@
 default:
 	-rm Schema/*
-	/TEI/P5/Roma cem.odd .
+	/TEI/Sourceforge/P5/Roma cem.odd .
 
 test:
 	xmllint --noent /TEI/Projects/ProtestantCemetery/cem.xml | xmllint --noout --relaxng teicem.rng - 
