@@ -23,11 +23,11 @@ XSL stylesheet to format TEI XML documents to FO or HTML
   <xsl:param name="class_subtoc">subtoc</xsl:param>
   <xsl:param name="class_xptr">xptr</xsl:param>
   <xsl:param name="class_xref">xref</xsl:param>
-  <xsl:param name="cssFile">/stylesheets/tei-oucs.css</xsl:param>
+  <xsl:param name="cssFile">http://www.tei-c.org/tei.css</xsl:param>
   <xsl:param name="cssSecondaryFile"></xsl:param>
   <xsl:param name="css_override"></xsl:param>
   <xsl:param name="divOffset">2</xsl:param>
-  <xsl:param name="downPicture">http://www.oucs.ox.ac.uk/images/down.gif</xsl:param>
+  <xsl:param name="downPicture">http://www.tei-c.org/images/down.gif</xsl:param>
   <xsl:param name="feedbackURL">mailto:feedback</xsl:param>
   <xsl:param name="fontURL">span</xsl:param>
   <xsl:param name="footnoteFile"/>
@@ -94,7 +94,7 @@ XSL stylesheet to format TEI XML documents to FO or HTML
   
   <xsl:template name="logoFramePicture">
     <a class="framelogo" target="_top" href="http://www.ox.ac.uk">
-      <img src="http://www.oucs.ox.ac.uk/images/newcrest902.gif"
+      <img src="http://www.tei-c.org/images/newcrest902.gif"
 	   vspace="5" width="90" height="107" border="0"
 	   alt="University Of Oxford"/></a>
   </xsl:template>
