@@ -2116,7 +2116,7 @@ class romaDom extends domDocument
 	$szInputFile = roma_temporaryFilesDir . '/' . $szID . '.tmp';    
 	$szOutputFile = roma_temporaryFilesDir . '/' . $szID . '.dtd';    
 	file_put_contents( $szInputFile ,
-	$oProc3->transformToDoc( $oProc3->transformToDoc( $oProc3->transformToDoc( $oProc2->transformToDoc( $oProc->transformToDoc( $oRNG ) ))))->SaveXML() );
+	$oProc3->transformToDoc($oProc3->transformToDoc($oProc3->transformToDoc($oProc3->transformToDoc( $oProc3->transformToDoc( $oProc3->transformToDoc( $oProc2->transformToDoc( $oProc->transformToDoc( $oRNG ) )))))))->SaveXML() );
 
 	if ( $bBar )
 	    $this->updateProgressBar( '80' );
