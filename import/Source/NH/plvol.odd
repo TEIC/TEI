@@ -1,0 +1,41 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="concurrent-decl" xml:id="PLVOL" usage="opt" ident="vol">
+<equiv/>
+<gloss>volume</gloss>
+<desc>marks the individual volumes of a reference edition.</desc>
+  
+  
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+        <rng:ref name="page"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  
+  <exemplum>
+    <eg><![CDATA[<(La)vol  n="2"><!-- text of edition La, volume 2 -->
+ <(La)page n="32"> <!-- text of edition La, vol. 2, page 32 --></(La)page>
+ <(La)page n="33"> <!-- text of edition La, vol. 2, page 33 --></(La)page>
+ <(La)page n="34"> <!-- text of edition La, vol. 2, page 34 --></(La)page>
+ <(La)page n="35"> <!-- text of edition La, vol. 2, page 35 --></(La)page>
+</(La)vol>]]></eg>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">May contain character data and <gi>page</gi> elements.</p>
+    <p>The <gi>vol</gi> may be used if the reference edition has
+more than one volume; otherwise it need not be used.  Any data contained
+within a <gi>vol</gi> element but not within a <gi>page</gi> element is
+assumed not to appear in the edition from which the reference scheme
+derives.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#NHRS" type="div3"/>
+  </listRef>
+</elementSpec>

@@ -1,0 +1,934 @@
+<!-- Copyright TEI Consortium. 
+Licensed under the GPL. 
+See the file COPYING for details.
+-->
+<div1 xmlns="http://www.tei-c.org/ns/1.0" type="Chapter" id="CH" n="4"><head>Languages and Character Sets</head>
+
+<note place="divtop">Since the first publication of this chapter, many
+of its recommendations have been rendered obsolete or obsolescent by
+the development of ISO/IEC 10646 and the adoption of Unicode as the
+underlying character set for all XML documents. The chapter has 
+undergone considerable revision to reflect these changes, but further
+substantial change is likely in the next release of these
+Guidelines.</note>
+
+<p>Computer systems vary greatly in the sets of characters they make
+available for use in electronic documents; this variety enables users
+with widely different needs to find computer systems suitable to their
+purposes, but it also complicates the interchange of documents among
+systems; hence the need for a chapter on this topic in these Guidelines.
+ </p>
+
+<p>In the absence of any generally agreed universal character set,
+creators of electronic documents have constantly faced such problems as:
+
+<list type="ordered">
+<item>selecting which character set to use in creating, processing, or
+storing the electronic text</item>
+<item>preparing documents for interchange so that the characters
+within them are not corrupted in transit</item>
+<item>encoding characters which are not provided by the character
+set available on the computer system in use at one or other end of the
+interchange</item>
+<item>indicating shifts from one character set to another, e.g. from
+the Latin alphabet to Greek and back, or to a special symbol character
+set and back</item></list>
+</p>
+
+<p>Over the last two decades of the twentieth century, it became
+increasingly clear that a unified character set, able to accomodate
+all languages and scripts used in the world, would be not only
+desirable, but also feasible.  With the formation of the Unicode
+Consortium and the development of the Unicode Standard, later
+synchronized with the work of the International Organization for
+Standardization (ISO) which lead to the definition of ISO 10646, it
+became possible to speak of a <term>universal character set</term>,
+and thus to solve all of the problems listed above for the vast
+majority of users. </p>
+
+<p>With the availability of a Universal Character Set, users no longer
+need to select different character sets for different languages or
+applications; when documents are prepared for interchange, the usage
+of the universal character set ensures that characters will not be
+corrupted in transit, and that the same characters will be available
+at either end of the interchange; and lastly, there is no need to
+shift between different character sets within a single document.</p>
+
+<p>For some of the materials which users of these Guidelines are
+likely to want to process (notably, ancient texts using little-known
+writing systems) the simplest ways of using the Universal Character
+Set may not be applicable. Nevertheless, it provides a more reliable
+and comprehensive mechanism for processing materials using such
+writing systems than any hitherto available.</p>
+
+<p>In this chapter we first describe informally the model of character
+encoding which underlies modern computing systems. We next describe
+how present-day encoding systems can benefit from the advent of
+Unicode, particularly in the XML context, and make recommendations for
+its use by the TEI community. We also discuss issues relating to
+continued use of SGML legacy data.
+</p>
+
+
+<div2><head>A simple character encoding model</head>
+
+<div3><head>Some definitions</head>
+
+<p>The term <term>character</term> has several meanings which it is
+necessary to keep distinct for a proper understanding of the issues
+which arise in representing texts in digital form. At the risk of
+insulting the intelligence of the expert reader, we will attempt to
+disentangle some of those meanings here.<note place="foot">This informal
+introduction is derived partly from an excellent tutorial on
+character code issues written by Jukka Korpela,  available from
+<xptr doc="jkorpela"/>, 
+which includes a useful list of pointers to other introductory tutorial
+material. Definitive information on the topics discussed here is
+available from the Unicode Consortium's website at <xptr doc="Unicode"/>. </note></p> 
+
+<p>We use the term <term>abstract character</term> to refer to the
+atomic component of some writing system, independent of how it is
+realized in some written form, and also of how it is stored in some
+digital form. For example, we might use the letter A to stand for the
+same abstract character (capital letter roman A), whatever font is
+used to render it, and whatever pattern of bits is used to represent
+it in digital storage. A character is an inherently abstract notion:
+it corresponds with <soCalled>the smallest unit that carries semantic
+value</soCalled> within some writing system. </p> 
+
+<p>A given computer system will usually be configured to support a
+fixed number of abstract characters, which we call its <term>character
+repertoire</term>.</p>
+
+<p>We use the term <term>glyph</term> to refer to the particular
+written form used for an abstract character when it is rendered on
+screen or paper, and the term <term>font</term> for a particular set
+of glyphs. The same character may be represented by many different
+glyphs; less obviously, the same glyph, may in certain circumstances
+correspond with different abstract characters, or be used with
+different interpretations, as when, for example, the Greek capital
+letter omega is also used to represent the unit of electrical
+resistance (ohm).  </p>
+
+<p>When dealing with historical material, it may be a matter of some
+debate as to whether some glyph should be regarded as a variant of the
+same abstract character or as a different character.  For example, in
+early printed texts the lowercase roman letter S may appear in an
+elongated form. Should this be treated as a distinct abstract
+character (itself with variant glyphs) or simply as a variant glyph
+for the abstract character represented also by the non-elongated form?
+Some relevant questions to ask are:
+<list>
+<item>Does the elongated form of the s ever contrast with the non-elongated
+form in the same document with a different meaning? If so, it should be
+handled as a separate character.</item>
+<item>Could the two forms be interchanged without affecting the
+meaning of a document? If so, they should be regarded as variant glyphs.</item>
+<item>Does one of the forms appear in a predictable context (for example
+only in a particular position in a word)? If so,
+it might be a variant glyph, rather than a distinct character.</item>
+</list>
+</p>
+
+<p>Because historical materials are often fragmentary and idiosyncratic
+in their appearance, the decision as to whether a sign is a character
+or variant may be a matter of debate. It is also a decision which
+changes over time: it might be argued, for example, that the letters U
+and V, which are now regarded as distinct, were at one time variant
+glyphs for the same abstract character in the Latin writing
+system. However such issues are handled, they should be carried
+through consistently and adequately documented.
+
+
+
+</p>
+
+<p>We use the term <term>coded character set</term> (strictly) to mean
+the set of numeric values associated with a given character repertoire
+when it is represented in digital form.  For example, in some
+character code, the abstract character A might be represented by the
+number 31, B by the number 32, and so on. Each of these mappings (from
+abstract character to number) is sometimes called a <term>code
+point</term>. A number of other phrases are sometimes used in place of
+<soCalled>coded character set</soCalled>, including <term>character
+code</term> or <term>character set</term>, and the same phrase is also
+often used as a synonym for both font and repertoire, as we have
+defined them here.  Our usage follows common practice within both ISO
+and W3C.<note place="foot">The terminology used is summarized in
+ISO/IEC 2022 (1994)</note> </p>
+
+<p>Note also that a given abstract character may be represented by
+   more than one code point, or by a sequence of code points. For
+   example, the single abstract character &#xE4; corresponds with code
+   point 244 in the Universal Character Set, but also with the
+   sequence of code points 31 and 104, which stand for the letter a and
+   the diaresis symbol respectively.<note place="foot">Abstract
+   characters such as the diaresis or umlaut symbol, which are combined with
+   others to form new characters are technically known as
+   <term>composing</term> or <term>combining</term> characters.</note> </p>
+
+<p>Finally, we use the term <term>encoded character</term> to mean
+simply the numerical value associated with that abstract character in
+a given coded character set.<note place="foot">The
+way that a numerical value is actually represented as a sequence of
+bits in computer storage may vary: for example, the number 31 might be
+represented using 16 or 32 or even 64 bits, with different
+left-to-right ordering, or with different byte-groupings,  on different
+hardware.</note>  </p>
+
+<p>The character encoding (i.e. the representation used for its
+   encoded characters) applicable to an XML document is stated in its
+   encoding declaration (<ptr target="SG181"/>) and is UTF8 or UTF16
+   by default. These Guidelines do not recommend usage of other
+   character encodings for XML documents.  The encoding applicable to an SGML document is defined
+   (along with other matters) in the SGML declaration prefixed to it
+   and is almost entirely arbitrary.</p>
+
+</div3><div3><head>Characters and glyphs</head>
+
+<p>Both the Unicode standard and ISO/IEC 10646 give 
+fundamentally similar definitions for the terms <term>character</term> and
+<term>glyph</term> along the lines we have informally introduced
+above. The ISO definitions are as follows: <list type="gloss">
+<label>character</label><item>A member
+of a set of elements used for the organisation,
+control, or representation of data. (ISO/IEC
+10646-1: 1993, 31)</item>
+
+<label>glyph</label><item>A recognizable abstract graphic symbol which
+is independent of any specific design. (ISO/IEC
+9541-1: 1991, 3.5)</item>
+</list></p>
+
+<p>Here are the Unicode definitions: <list type="gloss"><label>character</label> <item>(1) The smallest component
+of written language that has semantic value; refers to the abstract
+meaning and/or shape, rather than a specific shape (see also <term>glyph</term>),
+though in code tables some form of visual representation is essential
+for the reader's understanding. (2) Synonym for abstract
+character. (See Definition D3 in Section 3.3, <title>Characters and
+Coded Representations</title>) (3) The basic unit of encoding for the
+Unicode character encoding. (4) The English name for the ideographic
+written elements of Chinese origin. </item>
+<label>glyph</label> <item>(1) An abstract form that represents one or
+more glyph images. (2) A synonym for glyph image. In displaying
+Unicode character data, one or more glyphs may be selected to depict a
+particular character. These glyphs are selected by a rendering engine
+during composition and layout processing.  (See also <term>character</term>.)
+</item> <label>glyph image</label> <item>The actual, concrete image of
+a glyph representation having been rasterized or otherwise imaged onto
+some display surface.  </item> </list> Although representative glyphs
+do appear in Unicode character tables as an aid to the reader, it is
+important to note that these are not normative; the Unicode Standard
+defines characters, as defined above, and not glyphs.</p>
+
+<p>These may be compared with the following related, partially
+overlapping definitions, used in the field of linguistic theory (See for
+example <bibl>R. R. K. Hartmann and F.C. Stork:
+<title>Dictionary of language and
+linguistics</title>, Applied Science Publishers
+Ltd., London,  1976)</bibl><list type="gloss">
+<label>grapheme</label><item>A minimally distinctive
+unit of a particular writing system. The different
+variants, e.g., the cursive and printed shapes of
+letters M, m, cursivated m, M, etc. in an alphabetic
+writings system are all allographs of the grapheme
+/m/.</item>
+<label>allograph</label><item> One of a
+group of variants of a grapheme or written sign in a
+particular writing system. It usually refers to
+different shapes of letters and punctuation marks,
+e.g., lower case, capital, cursive, printed,
+strokes.</item>
+</list> 
+
+While <soCalled>glyph</soCalled> and <soCalled>allograph</soCalled>
+seem almost synonymous, it should be noted that
+<soCalled>grapheme</soCalled> is defined with reference to a
+particular writing system, whereas an <soCalled>abstract
+character</soCalled> is defined independently of any specific writing
+system.  </p>
+
+
+<p>The distinction between characters and glyphs is crucial in
+preparing an encoded text. Users of such texts expect systems to
+recognize different glyphs as representing the same character when
+(for example) performing text retrieval or text searching; at the same
+time, they expect characters to be rendered using appropriate
+glyphs. When encoding a pre-existing text, the encoder must therefore
+determine whether a particular letter or symbol is a character or a
+glyphic variant of one.  A coherent model of the relationship between
+characters and glyphs has been developed within the Unicode Consortium
+and the ISO working group SC2<note place="foot">See <title>ISO/IEC
+15285:1998 Information technology &#x2014; An operational model for
+characters and glyphs</title>.  </note> and will form the base for
+much future standards work.</p>
+
+<p>The model makes explicit the distinction between two different
+properties of the components of written language:<list type="simple">
+<item>their content, i.e. its meaning and phonetic value (represented
+by a character)</item>
+<item>their graphical appearance (represented by a glyph)</item> </list></p> 
+
+<p>When searching for information, a system generally operates on the
+content aspects of characters, usually with little attention paid to their appearance
+of characters.  A layout or formatting procedure on the other hand,
+has little to do with the content, but needs to be concerned with the
+exact appearance of characters.  Of course, many operations require
+attention to both kinds of feature (hyphenation for example), but in
+general the kind of text encoding described in these Guidelines tends
+to focus on content rather than appearance (see further <ptr target="COHQ"/>).  </p> 
+
+<p>When the purpose of an encoding is to represent information about which glyphs
+were used in some instance of the document being treated, one might choose
+to do so at either or both of two levels: <list type="simple"> <item>on the level of character encoding, e.g. with
+appropriate Unicode code points.</item> <item>on the markup level,
+with appropriate elements and/or attributes.</item> </list> 
+It should be noted that using <soCalled>appropriate Unicode code points</soCalled> to
+represent glyph information requires that such choices be documented in
+the TEI Header or WSD. Such documentation does not guarantee proper
+display of the desired glyph but at least makes the intention of the
+encoder discoverable.</p>
+
+<p>At present, neither the Unicode Standard nor these Guidelines offer
+detailed specifications for the encoding of glyph variations.  Some
+discussion of related matters is given in <ptr target="PH"/>, and the
+writing system declaration (<ptr target="WD"/>) offers some features
+for the definition of variant glyphs, but further work is needed in
+both these areas before detailed recommendations can be made.  </p>
+
+
+</div3>
+
+<div3 id="CHIN"><head>Characters and their encoding</head>
+
+<p>Over the years, many different ways of encoding abstract characters
+have been proposed by national standard bodies and vendors of
+information processing systems, often derived from the sometimes
+limited character repertoires available on specific kinds of
+hardware.<note place="foot">For a historical survey, see 
+Charles E. Mackenzie <title>Coded character sets: history and
+development</title> (Addison-Wesley, 1980); see also Tom Jennings' 
+<title>Annotated history of character codes</title> at <xptr doc="Jennings"/>.
+</note>
+</p>
+
+
+<p>Because of this variety, at the time these Guidelines were first published (1994) 
+no single character set could plausibly be recommended for use in TEI-encoded
+documents.  It was felt at that time that users would have to use
+whatever character sets were available to them, subject
+to the character set restrictions imposed by the SGML declaration.
+For texts subject to
+<soCalled>blind</soCalled> interchange (that is, interchange between
+parties who do not or cannot make explicit agreements over the character
+set to be used in interchange), users would have to rely on a small
+subset of the available character repertoires which could be reliably
+transported across networks.<note place="foot">
+This subset comprised only the following characters taken from
+the international reference version (IRV) of ISO
+646
+<egXML xmlns="http://www.tei-c.org/ns/Examples">a b c d e f g h i j k l m n o p q r s t u v w x y z
+A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+0 1 2 3 4 5 6 7 8 9
+" % &amp; ' ( ) * + , - . / : ; &lt; = &gt; ? _</egXML>
+The 1994 edition of these Guidelines recommended that (for interchange
+purposes) other characters should be represented with entity
+references, or with transliterations, documented in an accompanying
+Writing System Declaration.  </note>
+At that time, also, the character encoding used by an SGML document
+could be redefined by the SGML declaration: this was necessary, since
+it would otherwise have been impossible to interchange SGML documents
+using different encodings.  </p>
+
+<p>With the advent of XML, and the definition of Unicode, the job of
+those wishing to encode arbitrary character repertoires becomes very
+much simpler. The Unicode standard<note place="foot" anchored="true">This section gives only a very short overview of those
+parts of the Unicode standard relevant to the current discussion.  For
+further and more precise information, the reader should consult the
+<xref doc="Unicode">Unicode Consortium website</xref> or the
+book <title>The Unicode Standard Version 3.0</title>.  This was the
+current major edition available in print at the time of writing, and
+is used in references. Two minor revisions have been made to this,
+which are documented at the web site of the Unicode Consortium; the
+version number of the online edition is 3.1.1.</note> defines the
+Universal Character Set. Its primary goal is to provide an unambiguous
+encoding for the content of plain text, ultimately covering all
+languages.  Currently in its third major version, Unicode provides
+coverage for most of the world's writing systems. It also
+contains additional characters for interoperability with older
+character encodings, and characters with control-like functions
+included primarily for reasons of providing unambiguous interpretation
+of plain text. Unicode provides specifications for use of all of these
+characters.</p>
+
+<p>Users of these Guidelines are strongly recommended to make
+themselves familiar with the general principles of Unicode, as spelled
+out in <title>The Unicode Standard Version
+3.0</title>, Chapter 2.  Additionally, there is an excellent document
+co-published by the World Wide Web Consortium and the Unicode
+Consortium, <title>Unicode in XML and other Markup
+Languages</title>.<note place="foot" anchored="true">Written by Martin D&#xFC;rst and Asmus Freytag, this
+document is available from <xptr doc="tr20"/> .</note>
+which gives some general considerations, and specific usage
+suggestions.</p>
+
+<p>We have stated several times above (<ptr target="SG-cer"/>) that
+all XML documents use the same character encoding: this is the Universal Character
+Set defined by ISO/IEC 10646, which is effectively the same as 
+the character encoding defined by the Unicode consortium.<note place="foot">The character encoding
+standards defined by the ISO as <soCalled>ISO/IEC
+10646-1:2000</soCalled> and the Unicode Consortium as the
+<soCalled>Unicode Standard</soCalled> are identical for most practical
+purposes: in all instances where we refer to either of the two
+standards below, the other is also meant to be included.</note>
+Strictly speaking, these are both character encodings and 
+character repertoires, since each of them defines both a set of abstract
+characters and the code points corresponding with them. </p>
+
+<p>It should be stressed again that Unicode represents <soCalled>abstract characters</soCalled>
+independent of specific glyph forms: the glyph examples
+given in Unicode code charts are not normative, being chosen simply to
+indicate which character is intended.  There is no guarantee
+that a given character encoded with a given Unicode
+codepoint will be rendered in a similar way on different
+computer systems, because information about which glyph from
+which glyph collection is to be used is simply not encoded, and
+is therefore not available for any rendering process.
+</p>
+
+<p>Although it may be tempting to specify a glyph guided by its particular
+appearance in a font, users should be aware that font repertoires
+may vary; what one system displays may not necessarily appear the same
+to someone using a different font. Hence, just relying on character
+encoding and the font may not be sufficient and a comment in the WSD or
+TEI header should be included, specifying the exact nature of the intended
+glyph.
+</p>
+
+
+
+
+
+<p>The code space for Unicode characters allows for around one
+million characters.  These characters are organized as 17
+<soCalled>planes</soCalled>, each of which holds up to 65&#x2008;536
+codepoints.  Only the first of these planes, the <soCalled>Basic
+Multilingual Plane</soCalled> (BMP) can be addressed (or represented)
+using a single 16 bit integer; for all other planes two 16 bit
+integers are required. Unicode 3.1 has assigned codepoints beyond the
+BMP for the first time, but most characters can be addressed using
+just the BMP. </p>
+
+</div3>
+<div3><head>Character semantics</head>
+
+<p>In addition to the Universal Character Set itself, the Unicode
+Consortium maintains a database of additional character semantics.
+This includes names for each character codepoint and normative
+properties for it.  This database is an important reference in
+determining which Unicode codepoint to use to encode a certain
+character. In addition to the printed documentation and lists made
+available by the Unicode consortium, it may also be accessed by a
+number of search systems over the web (e.g. <xptr doc="letters"/>). Examples of character
+properties included in the database include <term>case</term>,
+<term>numeric value</term>, <term>directionality</term>, and its
+status as a <soCalled>compatibility character</soCalled>.<note place="foot">A <term>compatability character</term> is a character
+included for compatibility with existing standards, even though it can
+be represented by other characters or combinations of characters
+already encoded in the Unicode Standard. See <title>Unicode in XML and
+other Markup Languages </title>, Section 4 for additional
+information.</note></p>
+
+<p>The existence of compatability and composed characters means that,
+with the best will in the world, there will still remain a number of
+characters that have more than one encoding in Unicode.  In addition
+to characters composed from a base character and some diacritical
+marks, Unicode also contains quite a number of <soCalled>precomposed
+characters</soCalled>. Most of these were already encoded in earlier
+standards that served as sources for Unicode; in principle, no
+further precomposed characters are to be added.  A sequence of a
+base character and one or more diacritical marks is supposed to be
+equivalent to the corresponding precomposed character; yet both are
+present. In the same way, different allographic forms of the same
+underlying ideograph may sometimes be regarded as distinct Unicode
+characters.  </p>
+
+<p>It is important to treat such variation
+in a consistent and normalized way. Where, for a particular project,
+these multiple character representations are regarded as equivalent, data integrity
+requires that the project standardize on one form and document its
+decision.  The Unicode Consortium provides four standard
+normalization forms, <note place="foot">See Unicode Technical Report 15
+at <xptr doc="tr15"/>.</note> of which the Normalization Form C (NFC)
+seems to be most appropriate for
+text encoding projects.  The World Wide
+Web Consortium has produced a document entitled <title>Character Model
+for the World Wide Web 1.0</title>, <note place="foot">Available at
+<xptr doc="charmod"/>: see section 4.2 Definitions for W3C Text
+Normalization.</note> which among other things outlines some
+principles of normalization.  In general, normalization to the
+shortest possible Unicode encoding is recommended. </p>
+</div3>
+<div3>
+<head>Characters from the Private Usage Area</head>
+
+<p>Although Unicode has already assigned more than 94&#x2008;000 characters
+    to unique codepoints, there is always the possibility that
+    characters needed are not defined in Unicode.
+    Some of these may be presentation forms or alternate writing
+    styles of East Asian characters that do not qualify to be included
+    in Unicode.  For such characters, Unicode provides a
+    <soCalled>Private Usage Area</soCalled>, which is reserved for use
+    by vendors, private groups, and individuals.  There are 6400
+    codepoints in this area in the BMP and 131&#x2008;068 in other
+    planes.</p>
+
+<p>By definition, the codepoints in this range are of use only
+    internally. Their use in TEI documents intended for interchange is
+    therefore <emph>strongly discouraged</emph>.  Where encoders need
+    to interchange non-Unicode characters, they should do so by other
+    mechanisms, for example by named character entity references,
+    supported by appropriate documentation, for example in a WSD. </p>
+
+<p>For local processing, on the other hand, use of characters from
+this area might prove convenient, since, if the corresponding font
+resources are available, users can see the characters more
+easily on their screens and analytical software might not be able to
+process entity references in the same way as characters.  In any case,
+before preparing a TEI document for interchange, all occurrences of
+characters from the Private Usage Area should be removed.</p>
+
+<p>As a concrete example, supposing that we wished to render the
+elongated s (or any other glyph variant) in a distinct way in our
+local processing environment, we might conveniently assign some
+codepoint from the PUA for this purpose (say, U+E000). This would then
+make it possible to create a font that displays the desired character
+at this codepoint.  However, since this assignment would only be valid
+on the local site, any texts containing such codepoints would not be
+suitable for interchange until they have been re-encoded, for example
+by substituting a character entity reference (such as
+<code>&amp;long-s;</code>) for each occurrence of U+E000. When
+received at some other site, the character entity reference could
+again be resolved to a code point from the PUA.  If (as is possible)
+the receiving site has already assigned some other use for the
+codepoint U+E000, it can simply choose some other hitherto unused
+codepoint (say, U+E080) to represent the same variant glyph.  (On
+character entity references, see <ptr target="CH-decl"/> below).</p>
+
+
+</div3>
+</div2>
+
+
+<div2 id="CHLON"><head>Entry and display of characters</head>
+
+<p>So far we have largely been concerned with the advantages of using
+a single character encoding for the storage and representation of
+data. At the time of writing (2002), Unicode-aware
+software is becoming increasingly common, as the ideas of Unicode
+find ready acceptance in the networked world. Nevertheless, there will
+continue for some time to be a need for guidance on how to input and
+display Unicode data using non-Unicode-aware systems, just as there will
+always need to be a way of entering and displaying non-Unicode
+characters. The methods developed to cope with the pre-Unicode world
+of multiple character sets can helpfully be re-applied to address
+these problems.</p>
+
+<div3 id="CH-decl"><head>Character input and entity references</head>
+<p>Data characters can be included in an XML document directly, by
+typing them in from a keyboard, or indirectly by representing them by
+means of entity references. When characters are typed in directly, the software
+used can be configured in a variety of ways to simplify the task of
+entering characters not immediately visible on the keyboard (for
+example, by using special keyboard shortcuts,
+<term>escape sequences</term>, onscreen virtual keyboards, etc.);
+these are not described in any detail here, as they are so
+environment-dependent. For example, if  the character  &#xC4;
+is not directly available from the 
+keyboard, and if one is using a machine running Windows, one might enter it
+by  holding down the ALT key and typing the digits 0196 on the
+numeric keyboard. Alternatively, on a system such as Gnu
+Emacs, one might define a sequence of keystrokes such as <code>A"</code>
+to have the same effect.</p>
+
+<p>When characters are represented using <term>entity
+references</term> (described in more detail in section <ptr target="SG17"/>), the reference may be given as a numeric entity
+reference, using either decimal or hexadecimal notation, or it may be
+given as a standardized name. For example, the character &#xC4; might be
+represented by any of the three following entity references
+<code>&amp;#196; &amp;#x00C4; &amp;Auml;</code>. The first two
+represent the character required by means of its code point value (196
+in decimal, C4 in hexadecimal) in the Unicode character code: they are
+thus entirely self-sufficient, and can be processed directly by any
+Unicode-aware system; they are not however as attractive for human
+beings, who generally find names more memorable than numbers. In the
+third case above, the name <code>Auml</code> is taken from a
+widely-used <term>entity set</term> called ISO Latin 1. An entity set is simply a list of
+entity declarations in which parts of some character repertoire are
+defined as entities with memorable names or mnemonics, with values
+taken from an appropriate character encoding. For example, the XML version of the iso-lat1 entity set includes the
+following declaration <code>&lt;!ENTITY Auml "&amp;#x00C4;"&gt;</code>. 
+<note place="foot">The most
+widely used such entity set is to be found in Annex D to ISO 8879; it
+is also reproduced or summarized in most SGML textbooks, notably
+<bibl>Charles F. Goldfarb, <title>The SGML Handbook</title>
+(Oxford:  Clarendon Press, 1990)</bibl>.  Entity sets appropriate for
+use with both SGML and XML are available from the TEI website.
+</note></p>
+
+<p>If entering the following text, 
+<q rend="display">Trotz dieser langen Tradition 
+ sekund&#xE4;ranalytischer
+ Ans&#xE4;tze wird man die Bilanz tats&#xE4;chlich
+ durchgef&#xFC;hrter sekund&#xE4;ranalytischer Arbeiten
+ aber in wesentlichen Punkten als unbefriedigend
+ empfinden m&#xFC;ssen.</q>
+in a system which does not allow for direct representation of  a-umlaut or u-umlaut, one
+could transcribe this sentence thus:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">Trotz dieser langen Tradition sekund&amp;auml;ranalytischer
+ Ans&amp;auml;tze wird man die Bilanz tats&amp;auml;chlich
+ durchgef&amp;uuml;hrter sekund&amp;auml;ranalytischer Arbeiten
+ aber in wesentlichen Punkten als unbefriedigend
+ empfinden m&amp;uuml;ssen.</egXML>
+<!-- Manfred Thaller, Vor&uuml;berlegungen ..., in           -->
+	<!-- Datenbanken und Datenverwaltungssysteme als Werkzeuge   -->
+	<!-- historischer Forschung, p. 9.                           -->
+ </p>
+<p>Before an entity can be referred to, it must be declared.  Standard
+public entity names can be declared en masse, by including within the
+DTD subset of the document a reference to the standard public
+entity which declares them.  The German document quoted above, for
+example, might have the following lines, or their equivalent, in its
+DTD subset:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">&lt;!ENTITY % ISOLat1 PUBLIC 
+      "-//TEI//ENTITIES Unicode values for ISO 8879 Added Latin 1//EN"
+      "http://www.tei-c.org/XML_Entities/iso-lat1.ent"&gt;
+ %ISOLat1;</egXML>
+ </p>
+<p>Such mechanisms are obviously unnecessary for the treatment of
+characters such as a-umlaut or u-umlaut which are readily available in
+Unicode. However, they may also be used for the representation of
+other characters which are not yet standardized but which an encoder
+wishes to distinguish. Such characters can be represented within a
+document by any arbitrary entity name, which the encoder can then
+associate with different expansions depending on the software system
+or application involved. </p>
+<p>For example, in transcribing a manuscript, it might be desirable to distinguish
+among three distinct forms of the letter <mentioned>r</mentioned>. In the
+transcript, each of these forms will be encoded by an entity
+reference, for example: <code>&amp;r1;</code>, <code>&amp;r2;</code>, and
+<code>&amp;r3;</code>.  Entity declarations must then be
+provided within the DTD subset of the document to define these
+entities and specify a substitute string.
+</p>
+<p>One possible set of declarations would be as follows:
+ 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">&lt;!ENTITY r  'r[1]'&gt;
+&lt;!-- most common form of 'r'  --&gt;
+ &lt;!ENTITY r2 'r[2]'&gt;
+&lt;!-- secondary form of 'r'    --&gt;
+ &lt;!ENTITY r3 'r[3]'&gt;
+&lt;!-- third form of 'r'        --&gt;</egXML>
+ 
+The expansions shown above will simply flag each occurrence with a
+number in brackets to indicate which form of <mentioned>r</mentioned>
+appears in the manuscript.
+ </p>
+<p>More realistically, we may be able to associate each of the variant
+forms found with some predefined Unicode character. For example,
+assuming that r1 represents an r with a dot above it, r2 represents an
+r with a tail, and r3 represents an r with a fish-hook, we could
+simply use the appropriate Unicode values as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">&lt;!ENTITY r1  '&amp;#x1e59;'&gt;    &lt;!-- r with dot above  --&gt;
+ &lt;!ENTITY r2 '&amp;#x027d;'&gt;     &lt;!-- r with tail       --&gt;
+ &lt;!ENTITY r3 '&amp;#x027e;'&gt;     &lt;!-- r with fish-hook  --&gt;</egXML>
+
+<!-- killed IBM Proprinter stuff: that was then, this is now (LB, feb
+2002) -->
+	<!-- for verisimilitude, changed &#0;&#04;r and &#0;&#6;r to  -->
+	<!-- specific codes of the IBM ProPrinter (for old time's     -->
+	<!-- sake; I used to work with them).  113 is 'q',            -->
+	<!-- assumption is that designer has placed variants of R     -->
+	<!-- adjacent in downloaded set, for no particular reason.    -->
+	<!-- -msm                                                     -->
+	<!--
+Here the replacement strings for each entity contain <term>character
+references</term>, for example <code lang="sgml" type="frag">&amp;amp;#27;</code>,
+indicating the decimal value (or <term>code point</term>) of the
+character to be generated by the processor.  The assumption is
+that the sequence of bytes generated will drive a printer to produce a
+distinctive form of the letter.  Such printer instructions are of
+their nature highly machine- and software-dependent; confining them
+to a single place (the entity declarations) makes
+it easier to adapt such device-specific information to new environments.
+--> 
+Obviously, this will only have the desired effect if a font containing
+the required glyphs is available when the document is rendered. If
+rendering the glyphs requires some special processing action,
+it may be preferable to use a processing instruction (<ptr target="SG-pi"/>) as  the replacement value for the entity, as in the
+following example:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">&lt;!ENTITY r2  '&lt;?tex \specialR?&gt;'&gt;
+     &lt;!-- when processing with TeX, use the \specialR command --&gt;
+</egXML>
+If, on the other hand, the three kinds of r are being distinguished
+     for some other kind of reason, perhaps to count their relative
+     frequencies, with no particular concern as to how they are
+     rendered, it might be preferable to convey the distinction by
+     tagging them explicitly. In such a case, the replacement text for
+     the three entities might look like the following:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">&lt;!ENTITY r  '&lt;c type="1"&gt;r&lt;/c&gt;'&gt;
+&lt;!-- most common form of 'r'  --&gt;
+ &lt;!ENTITY r2 '&lt;c type="2"&gt;r&lt;/c&gt;'&gt;
+&lt;!-- secondary form of 'r'    --&gt;
+ &lt;!ENTITY r3 '&lt;c type="3"&gt;r&lt;/c&gt;'&gt;
+&lt;!-- third form of 'r'        --&gt;</egXML>
+
+</p>
+<p>Finally, if the intention is for all three forms to be treated
+alike, we might supply declarations like the following:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">&lt;!ENTITY r  'r'&gt;
+&lt;!-- most common form of 'r'  --&gt;
+ &lt;!ENTITY r2 'r'&gt;
+&lt;!-- secondary form of 'r'    --&gt;
+ &lt;!ENTITY r3 'r'&gt;
+&lt;!-- third form of 'r'        --&gt;</egXML>
+ </p>
+<!--
+<p>And finally, to ensure that the output uses the same entity
+references for these characters as does the input, one could use
+the following declarations.
+-->
+	<!-- < eg >                                                  -->
+	<!-- < ![ CDATA [                                            -->
+	<!-- < !ENTITY amp '&' >                                     -->
+	<!-- < !ENTITY r  '&amp;r;'  >  < ! - most common form of 'r' - > -->
+	<!-- < !ENTITY r2 '&amp;r2;' >  < ! - secondary form of 'r'   - > -->
+	<!-- < !ENTITY r3 '&amp;r3;' >  < ! - third form of 'r'       - > -->
+	<!-- ]] >                                                     -->
+	<!--  < /eg >                                                 -->
+	<!-- Example above abandoned in favor of next one.  Not all   -->
+	<!-- processors handle the entity end the same one; the       -->
+	<!--
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY r  CDATA '&r;' >
+ <!ENTITY r2 CDATA '&r2;'>
+ <!ENTITY r3 CDATA '&r3;'>
+       ]]></egXML>
+ </p>
+-->
+	<!-- no can do! -->
+<p>When locally defined entities are used for the representation of
+characters in the text, for example to record presentational variants as
+in this example,  a writing system declaration (<ptr target="WD"/>) should be used to
+document their meaning.
+ </p>
+</div3><div3><head>Transliteration schemes</head>
+<p>For lengthy transcriptions in scripts not supported by the document
+    character set,
+entity references may prove unwieldy.  In such cases, it is also
+possible to <term>transliterate</term> the material. In a
+transliteration scheme, glyphs properly associated with one abstract
+character are systematically redefined with another: for example, a
+glyph which <soCalled>looks like</soCalled> an A (but is not in fact
+an A) might be transliterated as one. To avoid information loss, a
+<term>reversible</term> transliteration scheme (i.e. one in which it
+is possible to reconstruct the original writing from the
+transliteration) should be preferred.  <note place="foot">Many
+reversible transliteration schemes were defined in pre-Unicode days,
+see for example <bibl><title>ALA-LC Romanization Tables:
+Transliteration Schemes for Non-Roman Scripts</title>, approved by the
+Library of Congress and the American Library Association, tables
+compiled and edited by Randall K. Barry (Washington: Library of
+Congress, 1991).</bibl></note> </p>
+
+<p>For example, using the Beta code transcription developed for
+ancient Greek by the Thesaurus Lingu&#xE6; Gr&#xE6;c&#xE6;,<note place="foot"><bibl>Thesaurus Lingu&#xE6; Gr&#xE6;c&#xE6;, <title>Beta
+Manual</title> (Irvine: TLG, [1988]).</bibl> See also
+<bibl>Luci Berkowitz and Karl A.  Squitier,
+<title>Thesaurus Lingu&#xE6; Gr&#xE6;c&#xE6; Canon of Greek Authors
+and Works</title> 2nd edition (Oxford: Oxford University Press,
+1986).</bibl></note> one would transcribe the start of the
+<title>Iliad</title> of Homer thus:
+ 
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><l>*MH=NIN A)/EIDE QEA\ *PHLHI+A/DEW *)AXILH=OS
+ OU)LOME/NHN, H(\ MURI/' *)AXAIOI=S A)/LGE' E)/QHKE,</l></egXML>
+<!-- Homer, Iliad, I.1-2, from OCP file demo4.txt. -->
+	<!-- stripped line number. -->
+ </p>
+<p>In an XML context, there is no particular reason to
+ use a transliteration scheme, other than
+ convenience of text preparation or the handling of legacy systems. If used, the transliteration scheme
+ should be documented using a Writing System Declaration (<ptr target="WD"/>). However, texts encoded using transliteration
+ schemes are inherently non-standard, and the use of such schemes is
+ thus deprecated except where circumstances permit no alternative. 
+ </p></div3>
+</div2>
+
+<div2 type="bar" id="CHSH"><head>Code shifting</head>
+
+<p>Linguists use the term <term>code shifting</term> for the practice,
+common in many languages, of switching from one human language (such
+as French) to another (such as Kreol) within the speech of a single
+speaker. Many written documents also contain material from more than
+one language: loan words, quotations from foreign languages, etc.
+Since languages use a variety of <term>writing systems</term>, which
+in turn use a variety of <term>character repertoires</term>, shifts in
+language frequently go hand in hand with shifts in character
+repertoire and writing system.  With the use of Unicode, a change in
+writing system or human language will not generally require any
+change in character encoding system; nevertheless, since language
+change is frequently of importance in meaningful processing of a
+document, the encoding scheme defined here provides a global attribute
+<att>lang</att> to make it possible to mark language shifts
+explicitly.  </p>
+
+<p>Some languages use more than one writing system.  For example, some
+Slavic languages may be written either in the Latin or in the Cyrillic
+alphabet; some Turkic languages in Cyrillic, Latin, or Arabic script.
+In such cases, each writing system must be treated separately, as a
+separate <soCalled>language</soCalled>.  Each distinct value of the
+<att>lang</att> attribute, therefore, represents both a single natural
+language and a single writing system.<note place="foot">When SGML is in
+use, the <att>lang</att> attribute also implies a particular coded
+character set (as defined by the associated WSD); in the XML context
+however, no change in character encoding is implied by a change in the
+<att>lang</att> value.</note> </p>
+
+<p>Each value used for the <att>lang</att> attribute corresponds with
+the identifier of a <gi>language</gi> element defined in the
+<gi>langUsage</gi> element of the header of the TEI document concerned
+(see <ptr target="HD41"/>). This <gi>language</gi> element may
+additionally reference a writing system declaration, using its
+<att>wsd</att> attribute.  The values may be taken from the two- or
+three-letter standard language codes defined by ISO-639:1988 or ISO
+639-2:1998 respectively<note place="foot"><title>Codes for the
+Representation of Names of Languages-Part 2: Alpha-3 Code</title>,
+([Geneva]: International Organization for Standardization, 1998). The
+list of language codes is also available from the the Library of
+Congress, which is the registration authority for ISO 639-2: see <xptr doc="langCodes"/>.</note> or, if there is no applicable language code
+in the ISO 639 family of standards, from other appropriate lists of
+language identifiers.<note place="foot">The SIL Ethnologue database at
+<xptr doc="ethnolog"/> is a recommended alternative list of language
+identifiers.</note></p>
+<p>Like any global attribute, the <att>lang</att> attribute may be used
+on any element in the document.  To mark a technical term, for
+example, as being in a particular language, one may simply specify the
+appropriate language on the <gi>term</gi> element
+(for which see <ptr target="COHQU"/>):
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><p lang="en"> ...
+But then only will there be good ground of hope for the
+further advance of knowledge, when there shall be received
+and gathered together into natural history a variety of
+experiments, which are of no use in themselves, but simply
+serve to discover causes and axioms, which I call
+<term lang="la">Experimenta lucifera</term>, experiments of
+<term>light</term>, to distinguish them from those which I
+call <term lang="la">fructifera</term>, experiments of
+<term>fruit</term>.</p>
+<p>Now experiments of this kind have one admirable
+property and condition:  they never miss or fail. ...</p></egXML>
+<!-- Bacon, New Organon, XCIX, p. 361 of pocket ed. -->
+	<!-- need snappier example. -->
+ </p>
+<p>When more than one writing system is used for the same
+human language in a given document, it may be convenient to supply more than one
+<gi>language</gi> element, each of which will have an identifier
+derived from ISO 639, extended by an appropriate suffix.
+For example, a text containing material in Old Bulgarian, some parts of which use
+Cyrillic script, while other parts use Glagolitic script, might define
+a <gi>langUsage</gi> element like the following:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><langUsage>
+<language id="OBG-CYR">Old Bulgarian, written in Cyrillic script.</language>
+<language id="OBG-GLA">Old Bulgarian, written in Glagolitic script.</language>
+
+</langUsage>
+</egXML>
+With these declarations in force, the language and writing system
+appropriate to any section of the text may be marked explicitly:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div lang="OBG-GLA">
+<head lang="OBG-CYR">....</head>
+<p>...</p>
+
+</div>
+</egXML>
+Note that the language applicable to any element is inherited from its
+parent by default: in the above example, therefore, each element
+within the <gi>div</gi> element not specifying otherwise is assumed to
+be written in Old Bulgarian using Glagolitic script. The <gi>p</gi>
+element shown above thus uses Glagolitic, while the <gi>head</gi>
+element uses Cyrillic.</p>
+
+<p>Note that in general glyph distinctions are not specified by these
+Guidelines; if the glyphs to be used for a given encoded character are
+not available, application software may choose to display the material
+in an appropriate transliteration, as entity references,
+or in some other way.  </p>
+
+<p>If a formal writing system declaration is supplied it will be
+specified by the <att>wsd</att> attribute on the <gi>language</gi>
+element concerned (see further <ptr target="CHWS"/>).</p>
+
+<p>Any XML document may use an additional attribute
+<att>xml:lang</att>, the value of which is the identifier of a
+language from ISO 639 or registered with IANA. According to the XML
+Recommendation, the scope of this attribute is <q>considered to apply
+to all attributes and contents of the element where it is specified,
+unless overriden with an instance of xml:lang on another element
+within that content.</q> (XML Recommendation, 2.12). Since the TEI DTD
+defines a great number of <code>CDATA</code> attributes with predeclared content in
+English, <att>xml:lang</att> cannot be used by TEI documents as
+intended in the XML recommendation.  The current version of these
+Guidelines does not recommend use of the <att>xml:lang</att> attribute
+as a means of indicating language shifts; the TEI global
+<att>lang</att> attribute should instead be used for this purpose. This
+recommendation will be reviewed at the next revision of these
+Guidelines.</p>
+
+</div2>
+
+<div2 type="bar" id="CHWS"><head>The Writing System Declaration</head>
+<p>A Writing System Declaration (WSD) may be used to supply formal
+documentation for any language and writing system used in a
+document additional to that implied by its encoded form. It 
+is particularly useful for documentation of non-standard encodings or
+transliterations. A WSD specifies:
+<list type="simple">
+<item>a formal name for the writing system and language
+</item>
+<item>a specification for the meaning of each character available
+in the writing system</item></list>
+The  characters available in a writing system may be specified in the
+WSD for that writing system in one or more of the following ways:
+<list type="simple">
+<item>by reference to an international, national, or TEI-registered coded
+character set or entity set</item>
+<item>by reference to such a standard followed by formal declaration of
+all exceptions</item>
+<item>by providing a formal declaration for each character used</item></list>
+Individual characters within a WSD are formally declared, where
+necessary, by providing the following information:
+<list type="simple">
+<item>the unique code used to represent the character</item>
+<item>special properties such as whether the character is a diacritic
+mark or not</item>
+<item>brief textual description of the character</item>
+<item>standard or local entity name used for the character in
+interchange</item>
+<item>other standard identifiers for the character, if available, such
+as its code in the <soCalled>Universal Character Set</soCalled> of ISO
+10646 or Unicode
+</item>
+<item>optionally, some specification of a suitable graphic rendition for
+the character in a suitable notation (e.g. graphic image, Metafont
+program, etc.)</item></list>
+ </p>
+<p>The writing system declaration is one of a set of
+<term>auxiliary</term> documents which provide documentation relevant to
+the processing of TEI texts.  Auxiliary documents are themselves SGML or XML
+documents, for which document type declarations are provided.  The DTD
+for the Writing System Declaration is discussed in detail in chapter <ptr target="WD" type="div1"/>.
+Example Writing System Declarations may be obtained as described
+in chapter <ptr target="XW" type="div1"/>.
+</p>
+</div2> 
+</div1>

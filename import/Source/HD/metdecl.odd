@@ -1,0 +1,106 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="METDECL" usage="rec" ident="metDecl">
+  <equiv/>
+  <gloss/>
+  <desc>documents the notation employed to represent a metrical
+  pattern when this is specified as the value of a <att>met</att>,
+  <att>real</att>, or <att>rhyme</att> attribute on any structural
+  element of a metrical text (e.g. <gi>lg</gi>, <gi>l</gi>, or
+  <gi>seg</gi>).</desc>
+  <classes>
+    <memberOf key="tei.encoding"/>
+    <memberOf key="tei.declarable"/>
+  </classes>
+  <content>
+    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+<?teidtd (?>
+      <rng:ref name="macro.componentSeq"/>
+<?teidtd )?>
+<?teidtd (?>
+      <rng:oneOrMore>
+        <rng:ref name="metSym"/>
+      </rng:oneOrMore>
+<?teidtd )?>
+    </rng:choice>
+  </content>
+  <attList>
+
+    <attDef ident="type" usage="mwa">
+      <equiv/>
+      <desc>indicates whether the notation conveys the abstract
+      metrical form, its actual prosodic realization, or the rhyme
+      scheme, or some combination thereof.</desc>
+      <datatype>
+	<rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	  <rng:oneOrMore>
+	    <rng:choice>
+	      <rng:value>met</rng:value>
+	      <rng:value>real</rng:value>
+	      <rng:value>rhyme</rng:value>
+	    </rng:choice>
+	  </rng:oneOrMore>
+	</rng:list>
+      </datatype>
+      <defaultVal>met real</defaultVal>
+      <valDesc>One or more of the three attribute names
+      <att>met</att>, <att>real</att>, or <att>rhyme</att>, separated
+      by whitespace.</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+      <remarks>
+        <p>By default, the <gi>metDecl</gi> element documents the
+        notation used for metrical pattern and realization. It may
+        also be used to document the notation used for rhyme scheme
+        information; if not otherwise documented, the rhyme scheme
+        notation defaults to the traditional <q>abab</q> notation.</p>
+      </remarks>
+    </attDef>
+
+    <attDef ident="pattern" usage="opt">
+	<equiv/>
+	<desc>specifies a regular expression defining any value that
+	is legal for this notation.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Regexp"/></datatype>
+      <valDesc>the value must be a valid regular expression per the
+      World Wide Web Consortium's <title>XML Schema Part 2: Datatypes
+      Second Edition</title>, <ref
+      target="http://www.w3.org/TR/xmlschema-2/#regexs">Appendix
+      F</ref></valDesc>
+      <remarks/>
+    </attDef>
+
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <metDecl xml:id="ip" pattern="((+-|-+)-+-+-+-+/)">
+        <metSym value="+">stressed syllable</metSym>
+        <metSym value="-">unstressed syllable</metSym>
+        <metSym value="/">metrical line boundary</metSym>
+      </metDecl>
+    </egXML>
+    <p>This example is intended for the far more restricted case
+    typified by the Shakespearean iambic pentameter. Only metrical
+    patterns containing exactly ten syllables, alternately stressed
+    and unstressed, (except for the first two which may be in either
+    order) to each metrical line can be expressed using this
+    notation.</p>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">contains either a sequence of <gi>metSym</gi>
+    elements or paragraphs. If one <gi>metSym</gi> is defined, then
+    all the codes appearing within the <att>pattern</att> attribute
+    should be documented, if the latter is specified.</p>
+    <p>The encoder may choose whether to define the notation formally
+    or informally. However, the two methods may not be mixed.</p>
+    <p>Only usable within the header if the verse base is enabled.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#HDMN"/>
+    <ptr target="#VEME"/>
+  </listRef>
+</elementSpec>

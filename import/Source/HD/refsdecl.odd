@@ -1,0 +1,63 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="REFSDECL" usage="opt" ident="refsDecl">
+  <equiv/>
+  <gloss>references declaration</gloss>
+  <desc>specifies how canonical references are constructed for this
+  text.</desc>
+  <classes>
+    <memberOf key="tei.encoding"/>
+    <memberOf key="tei.declarable"/>
+  </classes>
+  <content>
+    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:oneOrMore>
+        <rng:ref name="p"/>
+      </rng:oneOrMore>
+      <rng:oneOrMore>
+        <rng:ref name="fragmentPattern"/>
+      </rng:oneOrMore>
+      <rng:oneOrMore>
+        <rng:ref name="state"/>
+      </rng:oneOrMore>
+    </rng:choice>
+  </content>
+  <attList>
+    <attDef ident="doctype" usage="opt">
+      <equiv/>
+      <desc>identifies the <term>document type</term> within which
+      this reference declaration is used.</desc>
+      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="NCName"/></datatype>
+      <defaultVal>TEI</defaultVal>
+      <valDesc>must be the name of a document type</valDesc>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <refsDecl>
+        <fragmentPattern re="([A-Za-z0-9]+) ([0-9]+):([0-9]+)"
+	                 pat="#xpath(//body/div[@n='$1']/div[$2]/div3[$3])"/>
+      </refsDecl></egXML>
+    <p>This example is a formal representation for the referencing
+    scheme described informally in the following example.</p>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <refsDecl>
+        <p>References are made up by concatenating the value for the
+        <att>n</att> attribute on the highest level <gi>div</gi>
+        element, followed by a space, followed by the sequential
+        number of the next level <gi>div</gi> followed by a colon
+        follwed by the sequential number of the next (and lowest)
+        level <gi>div</gi>.</p>
+      </refsDecl></egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#HD54M"/>
+    <ptr target="#HD5"/>
+    <ptr target="#HD54"/>
+  </listRef>
+</elementSpec>

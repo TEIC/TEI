@@ -1,0 +1,76 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="LISTBIBL" usage="opt" ident="listBibl">
+<equiv/>
+<gloss>citation list</gloss>
+<desc>contains a list of bibliographic citations of any kind. </desc>
+  
+  
+  <classes>
+    <memberOf key="tei.lists"/>
+    <memberOf key="tei.declarable"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:ref name="tei.Incl"/>
+      </rng:zeroOrMore>
+      <rng:optional>
+        <rng:ref name="head"/>
+        <rng:zeroOrMore>
+          <rng:ref name="tei.Incl"/>
+        </rng:zeroOrMore>
+      </rng:optional>
+      <rng:group>
+        <rng:ref name="tei.bibl"/>
+      </rng:group>
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="tei.bibl"/>
+          <rng:ref name="tei.Incl"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+      <rng:optional>
+<?teidtd (?>
+        <rng:ref name="tei.divbot"/>
+<?teidtd )?>
+        <rng:zeroOrMore>
+          <rng:ref name="tei.Incl"/>
+        </rng:zeroOrMore>
+      </rng:optional>
+    </rng:group>
+  </content>
+  
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <listBibl>
+        <head>Works consulted</head>
+        <bibl>Blain, Clements and Grundy: Feminist Companion to
+       Literature in English (Yale, 1990)
+ </bibl>
+        <biblStruct>
+          <analytic>
+            <title>The Interesting story of the Children in the Wood</title>
+          </analytic>
+          <monogr>
+            <title>The Penny Histories</title>
+            <author>Victor E Neuberg</author>
+            <imprint>
+              <publisher>OUP</publisher>
+              <date>1968</date>
+            </imprint>
+          </monogr>
+        </biblStruct>
+      </listBibl>
+    </egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#COBITY"/>
+    <ptr target="#HD3"/>
+    <ptr target="#CCAS2"/>
+  </listRef>
+</elementSpec>

@@ -1,0 +1,49 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="verse" xml:id="LG2" usage="opt" ident="lg2">
+<equiv/>
+<gloss>line group</gloss>
+<desc>contains a second-level (i.e. second largest) group of verse lines
+functioning as a formal unit e.g. a stanza, refrain, verse paragraph,
+etc.</desc>
+  
+  
+  <classes>
+    <memberOf key="tei.comp.verse"/>
+    <memberOf key="tei.divn"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:ref name="tei.Incl"/>
+      </rng:zeroOrMore>
+      <rng:optional>
+        <rng:ref name="head"/>
+        <rng:zeroOrMore>
+          <rng:ref name="tei.Incl"/>
+        </rng:zeroOrMore>
+      </rng:optional>
+      <rng:oneOrMore>
+        <rng:choice>
+          <rng:ref name="l"/>
+          <rng:ref name="lg3"/>
+        </rng:choice>
+        <rng:zeroOrMore>
+          <rng:ref name="tei.Incl"/>
+        </rng:zeroOrMore>
+      </rng:oneOrMore>
+    </rng:group>
+  </content>
+  
+  <remarks>
+    <p rend="dataDesc">contains verse lines or nested line groups only, possibly
+prefixed by a heading.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#VEST"/>
+  </listRef>
+</elementSpec>

@@ -1,0 +1,131 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="GAP" usage="opt" ident="gap">
+<equiv/>
+<gloss>omitted material</gloss>
+<desc>indicates a point where material has been omitted in a
+transcription, whether for editorial reasons described in the TEI
+header, as part of sampling practice, or because the material is
+illegible or inaudible.</desc>
+  
+  
+  <classes>
+    <memberOf key="tei.editIncl"/>
+  </classes>
+  <content>
+    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+  </content>
+  <attList>
+    <attDef ident="desc" usage="opt">
+	<equiv/>
+	<desc>gives a description of the omitted text.</desc>
+      
+      
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>a prose description of the material omitted.</valDesc>
+      
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+    <attDef ident="reason" usage="opt">
+	<equiv/>
+	<desc>gives the reason for omission.  Sample values include
+<mentioned>sampling</mentioned>, <mentioned>illegible</mentioned>, <mentioned>inaudible</mentioned>,
+<mentioned>irrelevant</mentioned>, <mentioned>cancelled</mentioned>, <mentioned>cancelled and illegible</mentioned>.</desc>
+      
+      
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>any short indication of the reason for the omission.</valDesc>
+      
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+    <attDef ident="resp" usage="opt">
+	<equiv/>
+	<desc>indicates the editor, transcriber or encoder responsible for
+the decision not to provide any transcription of the text and hence
+the application of the <gi>gap</gi> tag.</desc>
+      
+      
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
+      <valDesc>must be one of the identifiers declared in the document
+header, associated with a person asserted as responsible for some
+aspect of the text's creation, transcription, editing, or encoding
+(see chapter <ptr target="#CE"/>).</valDesc>
+      
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+    <attDef ident="hand" usage="opt">
+	<equiv/>
+	<desc>in the case of text omitted from the transcription because of
+deliberate deletion by an identifiable hand, signifies the hand which
+made the deletion.</desc>
+      
+      
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
+      <valDesc>must be one of the hand identifiers declared in the document
+header (see section <ptr target="#PHDH"/>).</valDesc>
+      
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+    <attDef ident="agent" usage="opt">
+	<equiv/>
+	<desc>In the case of text omitted from the transcription because of
+damage or other phenomenon  resulting from an identifiable cause,
+signifies the causative agent.</desc>
+      
+      
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>any prose description of the agency of damage.</valDesc>
+      
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+    <attDef ident="extent" usage="opt">
+	<equiv/>
+	<desc>indicates approximately how much text has been omitted from the
+transcription, in letters, minims, inches, or any appropriate unit,
+either because of editorial policy or because a deletion, damage, or
+other cause has rendered transcription impossible.</desc>
+      
+      
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>any string of characters</valDesc>
+      
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+      <remarks>
+        <p>It is possible, but not always necessary, to provide
+measurements precise to the millimeter or even to the printer's
+point. The degree of precision attempted will vary with the purpose
+of the encoding and the nature of the material.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+  </exemplum>
+  <remarks>
+    <p>The <gi>gap</gi>,  <gi>unclear</gi>, and <gi>del</gi> core 
+tag elements may be closely allied in use with the <gi>damage</gi>
+and <gi>supplied</gi> elements, available when using the additional
+tagset for transcription of primary sources.  See section <ptr target="#PHCOMB"/> for discussion of which element is appropriate for
+which circumstance.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#COEDADD" type="div1"/>
+  </listRef>
+</elementSpec>

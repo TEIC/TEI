@@ -1,0 +1,119 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="transcr" xml:id="HANDSHFT" usage="rec" ident="handShift">
+<equiv/>
+<gloss/>
+<desc>marks the beginning of a sequence of text written in a new
+hand, or of a change in the scribe, writing style, ink or character
+of the document hand.</desc>
+  
+  
+  <classes>
+    <memberOf key="tei.profile"/>
+    <memberOf key="tei.phrase"/>
+  </classes>
+  <content>
+    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+  </content>
+  <attList>
+    <attDef ident="new" usage="req">
+	<equiv/>
+	<desc>identifies the new hand.</desc>
+      
+      
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
+      <valDesc>must be one of the hand identifiers declared in the document
+header (see section <ptr target="#PHDH"/>).</valDesc>
+      
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+    <attDef ident="old" usage="req">
+	<equiv/>
+	<desc>identifies the old hand.</desc>
+      
+      
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
+      <valDesc>must be one of the hand identifiers declared in the document
+header (see section <ptr target="#PHDH"/>).</valDesc>
+      
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+    <attDef ident="style" usage="opt">
+	<equiv/>
+	<desc>indicates recognized
+writing styles.</desc>
+      
+      
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>Any
+descriptive name such as <mentioned>secretary</mentioned>,
+<mentioned>copperplate</mentioned>, <mentioned>Chancery</mentioned>, <mentioned>Italian</mentioned>, etc.</valDesc>
+      
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+    <attDef ident="ink" usage="opt">
+	<equiv/>
+	<desc>describes tint or type
+of ink, e.g. <mentioned>brown</mentioned>.  May also be used to indicate the writing medium, e.g. <mentioned>pencil</mentioned>,</desc>
+      
+      
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+    <attDef ident="character" usage="opt">
+	<equiv/>
+	<desc>describes other characteristics of the hand,
+particularly those related to the quality of the writing.</desc>
+      
+      
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc><mentioned>shaky</mentioned>, <mentioned>thick</mentioned>, <mentioned>regular</mentioned></valDesc>
+      
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+    <attDef ident="resp" usage="rec">
+	<equiv/>
+	<desc>signifies the editor or transcriber responsible for identifying
+the change of hand.</desc>
+      
+      
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
+      <valDesc>must be one of the identifiers declared in the document
+header, associated with a person asserted as responsible for some
+aspect of the text's creation, transcription, editing, or encoding
+(see chapter <ptr target="#CE"/>).</valDesc>
+      
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+  </attList>
+  
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+  </exemplum>
+  <remarks>
+    <p>The <gi>handShift</gi> element may be used either to
+denote a shift in the document hand (as from one scribe to another,
+on one writing style to another).  Or, it may indicate a shift within
+a document hand, as a change of writing style, character or ink</p>
+  </remarks>
+  <listRef>
+    <ptr target="#PHDH"/>
+  </listRef>
+</elementSpec>
