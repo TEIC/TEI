@@ -20,9 +20,9 @@ form_author=Author name
 form_description=Description
 [de]
 helpmessage=asdljasdklasjd
-headline=Verfeinern sie ihr persn&ouml;liches TEI
+headline=Verfeinern sie ihr pers&ouml;liches TEI
 
-form_headline=Verfeinern sie ihr persn&ouml;liches TEI
+form_headline=Verfeinern sie ihr pers&ouml;liches TEI
 form_title=Titel
 form_filename=Dateiname
 form_language=Sprache
