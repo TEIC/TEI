@@ -161,7 +161,7 @@ clean:
 dist:
 	rm -rf release
 	mkdir -p release/tei-p5-source-`cat VERSION`
-	tar --exclude CVS -c -f - *.* Roma VERSION ChangeLog Source Makefile Tools \
+	tar --exclude CVS -c -f - *.* VERSION Roma ChangeLog Source Makefile Tools \
 	| (cd release/tei-p5-source-`cat VERSION`; tar xf - )
 	mkdir -p release/tei-p5-schema-`cat VERSION`
 	tar --exclude CVS -c -f - Schema DTD \
