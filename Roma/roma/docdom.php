@@ -29,15 +29,15 @@ class docDom extends domDocument
 	if ( $this->bBar )
 	  {
 	    $this->m_oRomaDom->loadProgressBar();
-	    $this->m_oRomaDom->updateProgressBar( '5' );
+	    $this->m_oRomaDom->updateProgressBar( '1' );
 	  }
 
 	$this->constructDocument();
 	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '10' );
+	  $this->m_oRomaDom->updateProgressBar( '2' );
 	$this->parseCustomization();
 	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '50' );
+	  $this->m_oRomaDom->updateProgressBar( '60' );
       }
 
     private function constructDocument()
@@ -60,6 +60,7 @@ class docDom extends domDocument
         <div1 id="REFCLA">
           <head>Class catalogue</head>
           <divGen type="classcat"/>
+          <p/>
         </div1>
         <div1 id="REFENT">
           <head>Pattern catalogue</head>
@@ -253,14 +254,48 @@ class docDom extends domDocument
 		      }
 		  }
 		
-		if ( $nElements == 5 )
+		if ( $nElements == 3 )
 		  {
 		    $nElements = 0;
 		    if ( $this->bBar )
-		      $this->m_oRomaDom->updateProgressBar( 1, true, 50 );
+		      $this->m_oRomaDom->updateProgressBar( 1, true, 60 );
 		  }
 	      }
 	  }
+
+	//parse classes
+	$this->m_oRomaDom->getChangedAttributeClasses( $aszClasses );
+
+	foreach( $aszClasses as $szClass )
+	  {
+	    $this->m_oRomaDom->getAttributeClassChanges( $szClass, $oDom );
+
+	    $szModule = $oDom->getElementsByTagname( 'module' )->item(0)->nodeValue;
+	    $oXPath = new domxpath( $this );
+	    $oXPath->registerNamespace( 'tei', 'http://www.tei-c.org/ns/1.0' );
+	    
+	    $oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body[@ident='{$szModule}']" )->item(0);
+	    if ( ! is_object( $oModule ) )
+	      {
+		$theMod = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'module' );
+		$oBody = $this->getElementsByTagname( 'body' )->item(0);
+		$oModule = $oBody->appendChild( $theMod );
+		$oModule->setAttribute( 'ident', $szModule );
+	      }
+
+	    $oModule->setAttribute( 'mode', 'change' );
+	    
+	    $theClassSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'classSpec' );
+	    $oClassSpec = $oModule->appendChild( $theClassSpec );
+	    $oClassSpec->setAttribute( 'ident', $szClass );
+	    
+	    $oAttList = $this->importNode( $oDom->getElementsByTagname( 'attList' )->item(0), true );
+	    $oClassSpec->appendChild( $oAttList );	    
+	  }
+
+	if ( $this->bBar )
+	    $this->m_oRomaDom->updateProgressBar( '3', true, 60 );
+
 
 	//new Elements
 	if ( $this->m_oRomaDom->getAddedElements( $oElementsDom ) === false )
@@ -393,6 +428,8 @@ class docDom extends domDocument
 
 	$oTidy->cleanRepair();
 	$szPlain = $oTidy->value;
+	if ( $this->bBar )
+	    $this->m_oRomaDom->updateProgressBar( '100' );
       }
 
 

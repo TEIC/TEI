@@ -683,6 +683,37 @@ class romaDom extends domDocument
 	  }
       }
 
+
+    public function getChangedAttributeClasses( &$aszClasses )
+      {
+	$this->getXPath( $oXPath );
+        $aoClasses = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p/tei:module[child::tei:classSpec]/tei:classSpec/@ident" );
+
+	$aszClasses = array();
+	foreach( $aoClasses as $oClass )
+	  {
+	    $aszClasses[] = $oClass->nodeValue;
+          }
+      }
+
+     public function getAttributeClassChanges( $szClass, &$oDom )
+      {
+	$oDom = new domDocument();
+	$oClass = $oDom->appendChild( new domElement( 'class' ) );
+	$oClass->setAttribute( 'ident', $szClass );
+
+	$this->getXPath( $oXPath );
+        $szModule = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p/tei:module[child::tei:classSpec[@ident='{$szClass}']]/@ident" )->item(0)->nodeValue;
+
+	$oClass->appendChild( new domElement( 'module', $szModule ) );
+	$oAttList = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p/tei:module[child::tei:classSpec[@ident='{$szClass}']]/tei:classSpec/tei:attList" )->item(0);
+
+	$oAttList = $oDom->importNode( $oAttList, true );
+	$oClass->appendChild( $oAttList );
+      }
+
+    
+
     // #####################################################################
     // --- Change the Customization
     // #####################################################################
