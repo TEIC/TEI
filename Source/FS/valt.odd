@@ -1,4 +1,8 @@
-<!--Copyright 2004 TEI Consortium. 
+<!--Copyright 2004 TEI Consortium  
+  
+  
+  
+. 
 
 Licensed under the GNU General Public License. 
 
@@ -9,20 +13,16 @@ See the file COPYING for details.
 <gloss>Value alternation</gloss>
 <desc>represents the value part of a feature-value specification
   which contains a set of values, only one of which can be valid.</desc>
-  
-  
   <classes>
-    <memberOf key="tei.singleVal"/> <!-- was complexVal (wrongly) -->
+    <memberOf key="tei.singleVal"/> 
   </classes>
   <content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-<!--      <rng:choice>-->
-      <rng:ref name="tei.featureVal"/>
-<!--      </rng:choice> -->
+      <rng:group>
+	<rng:ref name="tei.featureVal"/>
+      </rng:group>
       <rng:oneOrMore>
-<!--        <rng:choice> -->
-      <rng:ref name="tei.featureVal"/>
-<!--        </rng:choice> -->
+	<rng:ref name="tei.featureVal"/>
       </rng:oneOrMore>
     </rng:group>
   </content>
@@ -31,12 +31,12 @@ See the file COPYING for details.
   
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="gender">
-<vAlt>
-   <symbol value="masculine"/>
-   <symbol value="neuter"/>
-   <symbol value="feminine"/>
-</vAlt>
-</f>
+      <vAlt>
+	<symbol value="masculine"/>
+	<symbol value="neuter"/>
+	<symbol value="feminine"/>
+      </vAlt>
+    </f>
     </egXML>
   </exemplum>
   <listRef>
