@@ -22,6 +22,9 @@ require_once( 'ressource/ressource.php' );
  * looks for the specified replacements inside every Tag ({TAG}). 
  * If it matches something. It replaces it.
  *
+ * Parser now supports IF and RES statements
+ * You can now have variables in Parserstatements
+ * 
  *
  * @author: Arno Mittelbach <arno@mittelbach-online.de>
  * @version: 0.1
