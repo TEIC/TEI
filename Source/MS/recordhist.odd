@@ -4,21 +4,24 @@ Licensed under the GNU General Public License.
 
 See the file COPYING for details.
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="RECORDHIST" ident="recordHist">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+  module="msdescription" xml:id="RECORDHIST" ident="recordHist">
 <equiv/>
 <gloss/>
 <desc xml:id="rechist.desc">provides information about the source and
 revision status of the parent manuscript description itself. </desc>
-  
-  
   <classes/>
   <content>
 <!--<!ELEMENT recordHist  - -  (source, change*)>-->
-<rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+<rng:choice>
+<rng:oneOrMore><rng:ref name="tei.paragraph"/></rng:oneOrMore>
+
+<rng:group >
 <rng:ref name="source"/>
 <rng:zeroOrMore><rng:ref name="change"/></rng:zeroOrMore>
 </rng:group>
-
+</rng:choice>
   </content>
   <attList/>
   
