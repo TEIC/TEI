@@ -21,6 +21,8 @@ class romaDom extends domDocument
       {
 	parent::__construct();
 
+	$this->preserveWhiteSpace = false;
+
 	if ( $szXML == '' )
 	  {
  	    $this->constructDocument();
@@ -244,11 +246,13 @@ class romaDom extends domDocument
 	    $oInclude = $oElem->appendChild( new domElement( 'include' ) );
 	    $oInclude->appendChild( new domText( $oElement->getAttribute( 'mode' ) ) );
 	      
-	    
 	    foreach( $oElement->childNodes as $oChild )
 	      {
-		$oElemDesc = $oElem->appendChild( new domElement( $oChild->nodeName ) );
-		$oElemDesc->appendChild( new domText( $oChild->nodeValue ) );
+		if ( $oChild->nodeType == XML_ELEMENT_NODE )
+		  {
+		    $oElemDesc = $oElem->appendChild( new domElement( $oChild->nodeName ) );
+		    $oElemDesc->appendChild( new domText( $oChild->nodeValue ) );
+		  }
 	      }
           }
 
