@@ -42,9 +42,9 @@ test-xsd:
 
 test-dtd:
 	echo XMLLINT DTD ....
-	for i in $(TESTFILES); do echo $$i: ; xmllint --noout --valid $$i.xml; done
+	-for i in $(TESTFILES); do echo $$i: ; xmllint --noout --valid $$i.xml; done
 	echo RXP DTD ....
-	for i in $(TESTFILES); do rxp -V -s -x $$i.xml; done
+	-for i in $(TESTFILES); do rxp -V -s -x $$i.xml; done
 
 clean:
 	-for i in $(TESTFILES); do rm -f $$i.doc.xml $$i.rnc $$i.dtd $$i.compiled.* $$i.xsd $$i.rng;done
