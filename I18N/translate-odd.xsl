@@ -7,6 +7,7 @@
   extension-element-prefixes="exsl"
   exclude-result-prefixes="tei exsl" 
   version="1.0">
+  <xsl:output method="xml" indent="yes"/>
 <xsl:key name="TAGMODS" match="Tag|AttClass" use="Tagset"/>
 <xsl:key name="MODS" match="tei:module" use="@ident"/>
 <xsl:output method="xml" indent="yes"/>
