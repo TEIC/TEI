@@ -33,7 +33,7 @@
       <xsl:when test="key('ELEMENTS',$oldname)">
 	<xsl:for-each select="key('ELEMENTS',$oldname)">
 	  <xsl:choose>
-	    <xsl:when test="equiv[@lang=$lang]">
+	    <xsl:when test="equiv[@lang=$lang][not(@value='')]">
 	      <xsl:value-of select="equiv[@lang=$lang]/@value"/>
 	    </xsl:when>
 	    <xsl:otherwise>
@@ -66,7 +66,7 @@
       <xsl:when test="key('ATTRIBUTES',$oldname)">
 	<xsl:for-each select="key('ATTRIBUTES',$oldname)">
 	  <xsl:choose>
-	    <xsl:when test="equiv[@lang=$lang]">
+	    <xsl:when test="equiv[@lang=$lang][not(@value='')]">
 	      <xsl:value-of select="equiv[@lang=$lang]/@value"/>
 	    </xsl:when>
 	    <xsl:otherwise>
