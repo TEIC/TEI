@@ -48,10 +48,7 @@
 	      <xsl:with-param name="modname">header</xsl:with-param>
 	    </xsl:call-template>
 	    <xsl:call-template name="findTranslateNames">
-	      <xsl:with-param name="modname">teikeywords</xsl:with-param>
-	    </xsl:call-template>
-	    <xsl:call-template name="findTranslateNames">
-	      <xsl:with-param name="modname">teiclasses</xsl:with-param>
+	      <xsl:with-param name="modname">teideclarations</xsl:with-param>
 	    </xsl:call-template>
 	  </module>
 	</xsl:when>
@@ -97,10 +94,7 @@
 	  <xsl:with-param name="modname">header</xsl:with-param>
 	</xsl:call-template>
 	<xsl:call-template name="findTranslateNames">
-	  <xsl:with-param name="modname">teikeywords</xsl:with-param>
-	</xsl:call-template>
-	<xsl:call-template name="findTranslateNames">
-	  <xsl:with-param name="modname">teiclasses</xsl:with-param>
+	  <xsl:with-param name="modname">teideclarations</xsl:with-param>
 	</xsl:call-template>
       </xsl:when>
       <xsl:when test="@ident='general'">

@@ -9,7 +9,7 @@
   version="1.0">
 <xsl:output method="xml" indent="yes"/>
 <xsl:param name="lang">es</xsl:param>
-<xsl:param name="ODDROOT">/TEI/P5/</xsl:param>
+<xsl:param name="ODDROOT">http://www.tei-c.org.uk/P5/</xsl:param>
 <xsl:key name="ELEMENTS" match="element"
 	 use="concat(concat(equiv/@lang,':'),equiv/@value)"/>
 <xsl:key name="ATTRIBUTES" match="attribute" use="concat(concat(equiv/@lang,':'),equiv/@value)"/>
