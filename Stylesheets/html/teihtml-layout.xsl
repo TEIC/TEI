@@ -1062,9 +1062,9 @@
       </div>
       
       <!-- navigation bar -->
-      <xsl:if test="not($contentStructure='all' or @rend='all')">
 	<xsl:call-template name="navbar"/>
 	
+      <xsl:if test="not($contentStructure='all' or @rend='all')">
 	<!-- breadcrumb trail -->
 	<div id="hdr2">
 	  <a href="#rh-col" title="Go to main page content" class="skiplinks">Skip links</a>  <a class="hide">|</a>
