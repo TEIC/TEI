@@ -423,6 +423,18 @@ processed using: <xsl:value-of select="system-property('xsl:vendor')"/>
        </xsl:with-param>
     </xsl:call-template>
     </xsl:when>
+    <xsl:otherwise>
+      <xsl:if test="not($path='index.xsp' or $path='index.xml')">
+	<xsl:value-of select="$spacer"/>
+	<a class="{$class}" target="_top">
+	  <xsl:attribute name="href">
+	    <xsl:value-of select="$path"/>
+	  </xsl:attribute>
+          <xsl:value-of select="$path"/>
+	</a>
+      </xsl:if>
+    </xsl:otherwise>
+
   </xsl:choose>
 </xsl:template>
 
