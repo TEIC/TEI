@@ -12,6 +12,8 @@
 <xsl:param name="ODDROOT">/TEI/P5/Source/</xsl:param>
 <xsl:key name="LOCAL"
 	 match="tei:classSpec|tei:elementSpec|tei:macroSpec" use="@ident"/>
+<xsl:key name="LOCALATT"
+	 match="tei:attDef" use="concat(../../@ident,'::',@ident)"/>
 <xsl:output method="xml" indent="yes"/>
 <xsl:param name="verbose">true</xsl:param>
 <xsl:variable name="TEITAGS">http://www.tei-c.org.uk/tei-bin/files.pl?name=tags.xml</xsl:variable>
@@ -153,32 +155,6 @@
   </xsl:for-each>
 </xsl:template>
 
-<xsl:template match="tei:*|rng:*" mode="change">
-  <xsl:if test="not(@mode='delete')">
-    <xsl:copy>
-      <xsl:apply-templates select="@*|*|text()|comment()" mode="change"/>
-    </xsl:copy>
-  </xsl:if>
-</xsl:template>
-
-<xsl:template match="@*|comment()|text()" mode="change">
-  <xsl:copy/>
-</xsl:template>
-
-<xsl:template match="tei:elementSpec|tei:classSpec|tei:patternSpec|tei:attDef"
-	      mode="change">
-  <xsl:variable name="me" select="@ident"/>
-  <xsl:copy>
-    <xsl:apply-templates select="@*" mode="change"/>
-    <xsl:for-each select="$MAIN">
-      <xsl:for-each select="key('LOCAL',$me)">
-	<xsl:copy-of select="tei:altIdent"/>
-      </xsl:for-each>
-    </xsl:for-each>
-    <xsl:apply-templates select="*|text()|comment()" mode="change"/>
-  </xsl:copy>
-</xsl:template>
-
 <xsl:template name="processThing">
   <xsl:variable name="file" select="@filelocation"/>
   <xsl:variable name="me" select="ident"/>
@@ -193,7 +169,6 @@
 	<xsl:choose>
 	  <xsl:when test="@mode='delete'"/>
 	  <xsl:when test="@mode='change'">
-	    <xsl:message> try to change <xsl:value-of select="$me"/></xsl:message>
 	    <xsl:for-each select="document(concat($ODDROOT,$file))">
 	      <xsl:apply-templates mode="change"/>
 	    </xsl:for-each>
@@ -216,10 +191,79 @@
   </xsl:for-each>
 </xsl:template>
 
-
 <xsl:template match="@mode"/>
 
 <xsl:template match="@*">
   <xsl:copy/>
 </xsl:template>
+
+<xsl:template match="tei:*|rng:*" mode="change">
+  <xsl:if test="not(@mode='delete')">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|*|text()|comment()" mode="change"/>
+    </xsl:copy>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template match="@*|comment()|text()" mode="change">
+  <xsl:copy/>
+</xsl:template>
+
+<xsl:template match="tei:elementSpec|tei:classSpec|tei:patternSpec" mode="change">
+  <xsl:variable name="me" select="@ident"/>
+  <xsl:copy>
+    <xsl:apply-templates select="@*" mode="change"/>
+    <xsl:for-each select="$MAIN">
+  <xsl:message> .... change <xsl:value-of select="$me"/> </xsl:message>
+      <xsl:for-each select="key('LOCAL',$me)">
+	<xsl:choose>
+	  <xsl:when test="@mode='delete'"/>
+	  <xsl:when test="@mode='replace'">
+	    <xsl:copy-of select="."/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:copy-of select="tei:altIdent"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:for-each>
+    </xsl:for-each>
+    <xsl:apply-templates select="tei:*|text()|comment()" mode="change"/>
+  </xsl:copy>
+</xsl:template>
+
+<xsl:template match="tei:attDef"      mode="change">
+  <xsl:variable name="me" select="concat(../../@ident,'::',@ident)"/>
+  <xsl:copy>
+    <xsl:apply-templates select="@*" mode="change"/>
+    <xsl:for-each select="$MAIN">
+      <xsl:for-each select="key('LOCALATT',$me)">
+  <xsl:message> .... change <xsl:value-of select="$me"/> </xsl:message>
+	<xsl:choose>
+	  <xsl:when test="@mode='delete'"/>
+	  <xsl:when test="@mode='replace'">
+	    <xsl:copy-of select="."/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:copy-of select="tei:altIdent"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:for-each>
+    </xsl:for-each>
+    <xsl:apply-templates select="tei:*|text()|comment()" mode="change"/>
+  </xsl:copy>
+</xsl:template>
+
+<xsl:template match="tei:attList"  mode="change">
+  <xsl:variable name="me" select="../@ident"/>
+  <xsl:copy>
+    <xsl:apply-templates select="@*" mode="change"/>
+    <xsl:for-each select="$MAIN">
+      <xsl:for-each select="key('LOCAL',$me)/tei:attList">
+	<xsl:copy-of select="tei:attDef[@mode='add']"/>
+      </xsl:for-each>
+    </xsl:for-each>
+    <xsl:apply-templates select="*|text()|comment()" mode="change"/>
+  </xsl:copy>
+</xsl:template>
+
 </xsl:stylesheet>
