@@ -61,7 +61,7 @@ Description
      <td><a href="?mode=createDocumentation">Create Documentation</a></td>
      <td><a href="?mode=saveCustomization">Save Customization</a></td>
      <td class="newCustomization" rowspan="3"><a
-     href="?mode=newCustomization">Create new Customization</a></td>a
+     href="?mode=newCustomization">Create new Customization</a></td>
     </tr>
    </table>
   </xsl:template>
