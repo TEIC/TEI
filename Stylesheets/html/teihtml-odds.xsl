@@ -188,7 +188,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
   </xsl:if>
 </xsl:template>
 
-<xsl:template match="tei:default">
+<xsl:template match="tei:defaultVal">
  <tr><td></td><td valign="top" colspan='2'><i>Default: </i>
  <xsl:apply-templates/>
  </td></tr>
