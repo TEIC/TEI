@@ -306,6 +306,7 @@ select="normalize-space(substring-before(substring-after($revauthor,'LastChanged
 <xsl:template name="header">
   <xsl:param name="minimal"/>
   <xsl:param name="toc"/>
+
   <xsl:variable name="depth">
     <xsl:apply-templates select="." mode="depth"/>
   </xsl:variable>

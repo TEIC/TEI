@@ -83,7 +83,7 @@ XSL stylesheet to format TEI XML documents to FO or HTML
    <xsl:template name="singleFileLabel">For Printing</xsl:template>
 
    <xsl:template name="searchbox"/>
-   <xsl:param name="rawIE"/>
+   <xsl:param name="rawXML"/>
 <!--
    <xsl:template match="tei:divGen[@type='tsmnews']">
       <hr/>

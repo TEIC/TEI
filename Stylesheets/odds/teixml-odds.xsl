@@ -17,7 +17,7 @@ $Date$, $Revision$, $Author$
   xmlns:edate="http://exslt.org/dates-and-times"
   xmlns:exsl="http://exslt.org/common"
   xmlns:estr="http://exslt.org/strings"
-  exclude-result-prefixes="exsl estr edate fo a tei rng local teix" 
+  exclude-result-prefixes="exsl estr edate fo a tei rng local teix xs" 
   extension-element-prefixes="edate exsl estr"
   version="1.0">
 

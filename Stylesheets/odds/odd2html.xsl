@@ -14,7 +14,7 @@ $Date$, $Revision$, $Author$
   xmlns:tei="http://www.tei-c.org/ns/1.0"
   xmlns:edate="http://exslt.org/dates-and-times"
   extension-element-prefixes="exsl estr edate"
-  exclude-result-prefixes="exsl rng edate estr tei a pantor teix" 
+  exclude-result-prefixes="exsl rng edate estr tei a pantor teix xs" 
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 
@@ -205,11 +205,6 @@ $Date$, $Revision$, $Author$
    <b><xsl:apply-templates/></b>
   </p>
 </xsl:template>
-
-<xsl:template match="tei:figdesc">
-<p><i><small>[<xsl:apply-templates/>]</small></i></p>
-</xsl:template>
-
 
 <xsl:template match="tei:note" mode="printnotes">
  <xsl:param name="root"/>

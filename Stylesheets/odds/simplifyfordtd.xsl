@@ -18,7 +18,7 @@ XSL stylesheet to process TEI documents using ODD markup
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" 
   xmlns:f="http://axkit.org/NS/xsp/perform/v1" 
   xmlns:tei="http://www.tei-c.org/ns/1.0" 
-  exclude-result-prefixes="exsl rng a f tei s" 
+  exclude-result-prefixes="exsl rng a f tei s xs" 
   xmlns:rng="http://relaxng.org/ns/structure/1.0" 
   version="1.0">
 

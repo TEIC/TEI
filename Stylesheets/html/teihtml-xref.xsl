@@ -91,7 +91,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
     <xsl:text>#</xsl:text>
   </xsl:variable>
   <xsl:choose>
-    <xsl:when test="$rawIE='true' and $depth &lt;= $splitLevel">
+    <xsl:when test="$rawXML='true' and $depth &lt;= $splitLevel">
       <xsl:text>JavaScript:void(gotoSection('','</xsl:text>
       <xsl:value-of select="$ident"/>
       <xsl:text>'));</xsl:text>
@@ -124,7 +124,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 	<xsl:call-template name="locateParentdiv"/>
       </xsl:variable>
       <xsl:choose>
-	<xsl:when test="$rawIE='true'">
+	<xsl:when test="$rawXML='true'">
 	  <xsl:text>JavaScript:void(gotoSection("</xsl:text>
 	  <xsl:value-of select="$ident"/>
 	  <xsl:text>","</xsl:text>
@@ -133,7 +133,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 	</xsl:when>
 	<xsl:when test="$STDOUT='true'">
 	  <xsl:value-of select="$masterFile"/>
-	  <xsl:text>.ID=</xsl:text>
+	  <xsl:value-of select="$urlChunkPrefix"/>
 	  <xsl:value-of select="$parent"/>
 	  <xsl:value-of select="concat($standardSuffix,'#')"/>
 	  <xsl:value-of select="$ident"/>
@@ -259,7 +259,6 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
   <xsl:param name="body"/>
   <xsl:param name="class">link_<xsl:value-of
   select="local-name(.)"/></xsl:param>
-<!--      <xsl:message>here: <xsl:value-of select="name(.)"/>: <xsl:value-of select="$dest"/></xsl:message>-->
   <xsl:variable name="W">
     <xsl:choose>
       <xsl:when test="$target"><xsl:value-of select="$target"/></xsl:when>
@@ -280,7 +279,8 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
     </xsl:attribute>
     <xsl:attribute name="href">
       <xsl:choose>
-	<xsl:when test="starts-with($dest,'#') or contains($dest,'.html')">
+	<xsl:when test="starts-with($dest,'#') or
+			contains($dest,'.html') or contains($dest,'ID=')">
 	  <xsl:value-of select="$dest"/>
 	</xsl:when>
 	<xsl:otherwise>
@@ -324,7 +324,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
       </xsl:if>
     </xsl:attribute>
     <xsl:choose>
-      <xsl:when test="@rend='noframe'">
+      <xsl:when test="@rend='noframe' or $splitLevel=-1 or substring(@url,string-length(@url),1)='/'">
 	<xsl:attribute name="target">_top</xsl:attribute>
       </xsl:when>
       <xsl:when test="@rend='new'">

@@ -30,7 +30,7 @@ rng:includes
   xmlns:cc="http://web.resource.org/cc/"
   xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-  exclude-result-prefixes="exsl rng a f tei s cc dc rdf" 
+  exclude-result-prefixes="exsl rng a f tei s cc dc rdf xs" 
   xmlns:rng="http://relaxng.org/ns/structure/1.0" 
   version="1.0">
 

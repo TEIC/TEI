@@ -13,13 +13,14 @@ XSL stylesheet to format TEI XML documents using ODD markup
      xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
      xmlns:tei="http://www.tei-c.org/ns/1.0"
      xmlns:estr="http://exslt.org/strings"
+     xmlns:xs="http://www.w3.org/2001/XMLSchema" 
      xmlns:t="http://www.thaiopensource.com/ns/annotations"
      xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
      xmlns:edate="http://exslt.org/dates-and-times"
      xmlns:exsl="http://exslt.org/common"
      xmlns:rng="http://relaxng.org/ns/structure/1.0"
      extension-element-prefixes="exsl estr edate"
-     exclude-result-prefixes="exsl edate estr tei t a rng s" 
+     exclude-result-prefixes="exsl edate estr tei t a rng s xs" 
      version="1.0">
 
 

@@ -18,7 +18,7 @@ Text Encoding Initiative Consortium XSLT stylesheet family
     xmlns:edate="http://exslt.org/dates-and-times"
     xmlns:exsl="http://exslt.org/common"
     xmlns:estr="http://exslt.org/strings"
-    exclude-result-prefixes="exsl estr edate teix fo a tei s" 
+    exclude-result-prefixes="exsl estr edate teix fo a tei s xs" 
     extension-element-prefixes="edate exsl estr"
     version="1.0">
   <xsl:include href="RngToRnc.xsl"/>
@@ -129,6 +129,7 @@ Text Encoding Initiative Consortium XSLT stylesheet family
     <xsl:variable name="I">
       <xsl:choose>
 	<xsl:when test="starts-with(@ident,'xml:')">
+	  <xsl:text>xml</xsl:text>
 	  <xsl:value-of select="substring-after(@ident,'xml:')"/>
 	</xsl:when>
 	<xsl:otherwise>
@@ -180,34 +181,38 @@ Text Encoding Initiative Consortium XSLT stylesheet family
 	</xsl:if>
 	<xsl:for-each
 	    select="document($loc)//tei:attDef[not(@ident=current()//tei:attDef/@ident)]">
-	  <xsl:variable name="I">
+	  <xsl:if test="not(@ident='xmlns')">
+	    <xsl:variable name="I">
+	      <xsl:choose>
+		<xsl:when test="starts-with(@ident,'xml:')">
+		  <xsl:text>xml</xsl:text>
+		  <xsl:value-of select="substring-after(@ident,'xml:')"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of select="@ident"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:variable>
 	    <xsl:choose>
-	      <xsl:when test="starts-with(@ident,'xml:')">
-		<xsl:value-of select="substring-after(@ident,'xml:')"/>
+	      <xsl:when test="@usage='req'">
+		<rng:ref name="{ancestor::tei:elementSpec/@ident}.attributes.{$I}"/>
 	      </xsl:when>
 	      <xsl:otherwise>
-		<xsl:value-of select="@ident"/>
+		<rng:optional>
+		  <rng:ref
+		      name="{ancestor::tei:elementSpec/@ident}.attributes.{$I}"/>
+		</rng:optional>
 	      </xsl:otherwise>
 	    </xsl:choose>
-	  </xsl:variable>
-	  <xsl:choose>
-	    <xsl:when test="@usage='req'">
-	      <rng:ref name="{ancestor::tei:elementSpec/@ident}.attributes.{$I}"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <rng:optional>
-		<rng:ref
-		    name="{ancestor::tei:elementSpec/@ident}.attributes.{$I}"/>
-	      </rng:optional>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:for-each>
-	<xsl:apply-templates select="tei:*" mode="tangle"/>
+	  </xsl:if>
+	  </xsl:for-each>
+	  <xsl:apply-templates select="tei:*" mode="tangle"/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:apply-templates select="tei:*" mode="tangle"/>
       </xsl:otherwise>
     </xsl:choose>
+    
   </xsl:template>
   
   
@@ -359,30 +364,22 @@ Text Encoding Initiative Consortium XSLT stylesheet family
     <xsl:call-template name="defineRelaxAttributes"/>
   </xsl:template>
   
-  
-  
-  <xsl:template match="tei:classSpec[@mode='replace']/tei:attList" mode="tangle">
-    <rng:define name="{../@ident}.attributes" combine="choice" >
-      <xsl:choose>
-	<xsl:when test="@org='choice'">
-	  <rng:optional >
-	    <rng:choice >
-	      <xsl:apply-templates select="tei:*" mode="tangle"/>
-	    </rng:choice>
-	  </rng:optional>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:apply-templates select="tei:*" mode="tangle"/>
-	</xsl:otherwise>
-      </xsl:choose>
-    </rng:define>
-    <xsl:for-each select="..">
-      <xsl:call-template name="defineRelaxAttributes"/>
-    </xsl:for-each>
+
+  <xsl:template match="tei:classSpec[@mode='replace']" mode="tangle">
+    <xsl:if test="$verbose='true'">
+      <xsl:message>      .. process (replace mode) classSpec <xsl:value-of
+      select="@ident"/> (type <xsl:value-of select="@type"/>)
+      </xsl:message>
+    </xsl:if>
+      <rng:define name="{@ident}.attributes">
+	<xsl:for-each select="tei:attList/tei:attDef">
+	  <rng:ref name="{ancestor::tei:classSpec/@ident}.attributes.{@ident}"/>
+	</xsl:for-each>
+      </rng:define>
+    <xsl:call-template name="defineRelaxAttributes"/>
   </xsl:template>
   
-  
-  
+
   <xsl:template match="tei:classSpec|tei:elementSpec|tei:macroSpec"
 		mode="weave">     
     <xsl:call-template name="refdoc"/>
@@ -1200,6 +1197,7 @@ in change mode and there is no attList -->
     <xsl:variable name="I">
       <xsl:choose>
 	<xsl:when test="starts-with(@ident,'xml:')">
+	  <xsl:text>xml</xsl:text>
 	  <xsl:value-of select="substring-after(@ident,'xml:')"/>
 	</xsl:when>
 	<xsl:otherwise>
@@ -1251,6 +1249,7 @@ in change mode and there is no attList -->
     <xsl:variable name="I">
       <xsl:choose>
 	<xsl:when test="starts-with(@ident,'xml:')">
+	  <xsl:text>xml</xsl:text>
 	  <xsl:value-of select="substring-after(@ident,'xml:')"/>
 	</xsl:when>
 	<xsl:otherwise>
@@ -1357,6 +1356,7 @@ in change mode and there is no attList -->
       <xsl:otherwise>
 	<xsl:choose>
 	  <xsl:when test="starts-with(@ident,'xml:')">
+	    <xsl:text>xml</xsl:text>
 	    <xsl:value-of select="substring-after(@ident,'xml:')"/>
 	  </xsl:when>
 	  <xsl:otherwise>

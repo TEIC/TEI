@@ -31,7 +31,6 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 <xsl:include href="teihtml-corpus.xsl"/>
 <xsl:include href="teihtml-drama.xsl"/>
 <xsl:include href="teihtml-figures.xsl"/>
-<xsl:include href="teihtml-frames.xsl"/>
 <xsl:include href="teihtml-front.xsl"/>
 <xsl:include href="teihtml-lists.xsl"/>
 <xsl:include href="teihtml-main.xsl"/>

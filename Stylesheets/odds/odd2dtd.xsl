@@ -9,7 +9,7 @@
   xmlns:tei="http://www.tei-c.org/ns/1.0"
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
   xmlns:fo="http://www.w3.org/1999/XSL/Format"
-  exclude-result-prefixes="a t tei fo exsl rng edate" 
+  exclude-result-prefixes="a t tei fo exsl rng edate xs" 
   extension-element-prefixes="exsl edate rng"
   version="1.0">
  
