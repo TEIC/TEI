@@ -160,6 +160,9 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
     <xsl:if test="@rend">
       <xsl:attribute name="class"><xsl:value-of select="@rend"/></xsl:attribute>
     </xsl:if>
+    <xsl:if test="@n">
+      <xsl:attribute name="value"><xsl:value-of select="@n"/></xsl:attribute>
+    </xsl:if>
     <a>
       <xsl:attribute name="name">
 	<xsl:choose>
