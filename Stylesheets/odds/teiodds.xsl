@@ -357,7 +357,18 @@ Text Encoding Initiative Consortium XSLT stylesheet family
     <xsl:if test="tei:attList/tei:attDef[@mode='add']">
       <rng:define name="{@ident}.attributes" combine="choice" >
 	<xsl:for-each select="tei:attList/tei:attDef[@mode='add']">
-	  <rng:ref name="{ancestor::tei:classSpec/@ident}.attributes.{@ident}"/>
+	  <xsl:variable name="I">
+	    <xsl:choose>
+	      <xsl:when test="starts-with(@ident,'xml:')">
+		<xsl:text>xml</xsl:text>
+		<xsl:value-of select="substring-after(@ident,'xml:')"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:value-of select="@ident"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:variable>
+	  <rng:ref name="{ancestor::tei:classSpec/@ident}.attributes.{$I}"/>
 	</xsl:for-each>
       </rng:define>
     </xsl:if>
@@ -373,7 +384,18 @@ Text Encoding Initiative Consortium XSLT stylesheet family
     </xsl:if>
       <rng:define name="{@ident}.attributes">
 	<xsl:for-each select="tei:attList/tei:attDef">
-	  <rng:ref name="{ancestor::tei:classSpec/@ident}.attributes.{@ident}"/>
+	  <xsl:variable name="I">
+	    <xsl:choose>
+	      <xsl:when test="starts-with(@ident,'xml:')">
+		<xsl:text>xml</xsl:text>
+		<xsl:value-of select="substring-after(@ident,'xml:')"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:value-of select="@ident"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:variable>
+	  <rng:ref name="{ancestor::tei:classSpec/@ident}.attributes.{$I}"/>
 	</xsl:for-each>
       </rng:define>
     <xsl:call-template name="defineRelaxAttributes"/>
@@ -897,12 +919,15 @@ in change mode and there is no attList -->
 		  <xsl:otherwise>http://www.tei-c.org/ns/1.0</xsl:otherwise>
 		</xsl:choose>
 	      </xsl:attribute>
-	      <xsl:for-each
-				   select="../tei:*[@module=$This and
-					   not(@mode='add')]">
+	      <xsl:for-each  select="../tei:*[@module=$This and not(@mode='add')]">
 		<xsl:apply-templates mode="tangle" select="."/>
 	      </xsl:for-each>
 	    </rng:include>
+	    <xsl:for-each  select="../tei:*[@module=$This and not(@mode='add')]//tei:attDef[@mode='add']">
+	      <xsl:call-template name="defineAnAttribute">
+		<xsl:with-param name="Name" select="../../@ident"/>
+	      </xsl:call-template>
+	    </xsl:for-each>
 	  </xsl:otherwise>
 	</xsl:choose>
       </Wrapper>
@@ -1258,38 +1283,38 @@ in change mode and there is no attList -->
       </xsl:choose>
     </xsl:variable>
 
-  <rng:define name="{$Name}.attributes.{$I}" >
-    <xsl:choose>
-      <xsl:when test="@mode='delete'">
-	<rng:notAllowed />
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:choose>
-	  <xsl:when test="@usage='req'">
-	    <xsl:call-template name="attributeBody"/>
-	  </xsl:when>
-	  <xsl:when test="parent::tei:attList[@org='choice']">
-	    <xsl:call-template name="attributeBody"/>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <rng:optional >
+    <rng:define name="{$Name}.attributes.{$I}" >
+      <xsl:choose>
+	<xsl:when test="@mode='delete'">
+	  <rng:notAllowed />
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:choose>
+	    <xsl:when test="@usage='req'">
 	      <xsl:call-template name="attributeBody"/>
-	    </rng:optional>
-	  </xsl:otherwise>
-	</xsl:choose>
+	    </xsl:when>
+	    <xsl:when test="parent::tei:attList[@org='choice']">
+	      <xsl:call-template name="attributeBody"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <rng:optional >
+		<xsl:call-template name="attributeBody"/>
+	      </rng:optional>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:otherwise>
+      </xsl:choose>	
+    </rng:define>
+    
+    <xsl:choose>
+      <xsl:when test="@mode='delete'"/>
+      <xsl:when test="@mode='change' and not(tei:datatype or tei:valList)"/>
+      <xsl:otherwise>
+	<rng:define name="{$Name}.attributes.{$I}.content" >
+	  <xsl:call-template name="attributeDatatype"/>
+	</rng:define>
       </xsl:otherwise>
-    </xsl:choose>	
-  </rng:define>
-  
-  <xsl:choose>
-    <xsl:when test="@mode='delete'"/>
-    <xsl:when test="@mode='change' and not(tei:datatype or tei:valList)"/>
-    <xsl:otherwise>
-      <rng:define name="{$Name}.attributes.{$I}.content" >
-	<xsl:call-template name="attributeDatatype"/>
-      </rng:define>
-    </xsl:otherwise>
-  </xsl:choose>
+    </xsl:choose>
 </xsl:template>
 
 <xsl:template name="attributeDatatype">
@@ -1400,11 +1425,19 @@ in change mode and there is no attList -->
 <xsl:template name="defineRelaxAttributes">
   <xsl:variable name="name" select="@ident"/>
   <xsl:for-each select="tei:attList//tei:attDef">
-    <xsl:if test="not(@ident='xmlns')">
-      <xsl:call-template name="defineAnAttribute">
-	<xsl:with-param name="Name" select="$name"/>
-      </xsl:call-template>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="@ident='xmlns'"/>
+      <xsl:when test="@mode='add' and ../../@mode='replace'">
+      </xsl:when>
+      <xsl:when test="@mode='add' and ../../@mode='change'">
+      </xsl:when>
+      <xsl:otherwise>
+
+	<xsl:call-template name="defineAnAttribute">
+	  <xsl:with-param name="Name" select="$name"/>
+	</xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:for-each>
 </xsl:template>
 

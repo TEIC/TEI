@@ -324,11 +324,11 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
       </xsl:if>
     </xsl:attribute>
     <xsl:choose>
-      <xsl:when test="@rend='noframe' or $splitLevel=-1 or substring(@url,string-length(@url),1)='/'">
-	<xsl:attribute name="target">_top</xsl:attribute>
-      </xsl:when>
       <xsl:when test="@rend='new'">
 	<xsl:attribute name="target">_blank</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="@rend='noframe' or $splitLevel=-1 or substring(@url,string-length(@url),1)='/'">
+	<xsl:attribute name="target">_top</xsl:attribute>
       </xsl:when>
       <xsl:when test="contains($dest,'://') or starts-with($dest,'.') or starts-with($dest,'/')">
 	<xsl:attribute name="target">_top</xsl:attribute>
