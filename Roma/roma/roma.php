@@ -1215,11 +1215,18 @@ class roma
 	    break;
 	  }
 	
-	if ( $szError == '' )
+	if ( $szSchema != '' )
 	  {
+	    //notam
+	    $oNotam = new notam();
+	    $oNotam->setHeadline( 'MESSAGES' );
+	    $oNotam->setMessage( $szError );
+	    $oNotam->setStatus( notam_status_error );
+	    $oNotam->addNotam();
+
 	    $this->m_oRomaDom->getCustomizationFilename( $szFilename );
 	    $szFilename = ( $szFilename ) ? $szFilename : 'mytei';
-	    $this->redirectBrowserMeta( "http://" . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'PHP_SELF' ] . '?mode=' . roma_mode_downloadFile . '&file=' . $szFilename . '.' . $_REQUEST[ 'output' ] );	    
+	    $this->redirectBrowserMeta( "http://" . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'PHP_SELF' ] . '?mode=' . roma_mode_downloadFile . '&file=' . $szFilename . '.' . $_REQUEST[ 'output' ] . '&nextpage=' .  roma_mode_createSchema );	    
 
 	    $_SESSION[ 'download' ] = $szSchema;
 	  }
@@ -1227,8 +1234,15 @@ class roma
 	  {
 	    //notam
 	    $oNotam = new notam();
-	    $oNotam->setHeadline( 'ERROR' );
+	    $oNotam->setHeadline( 'MESSAGES' );
 	    $oNotam->setMessage( $szError );
+	    $oNotam->setStatus( notam_status_error );
+	    $oNotam->addNotam();
+
+	    //notam
+	    $oNotam = new notam();
+	    $oNotam->setHeadline( 'Schema' );
+	    $oNotam->setMessage( 'Could not create schema.' );
 	    $oNotam->setStatus( notam_status_error );
 	    $oNotam->addNotam();
 	    
