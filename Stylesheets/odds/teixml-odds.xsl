@@ -76,14 +76,14 @@ $Date$, $Revision$, $Author$
   </xsl:variable>
 <xsl:choose>
   <xsl:when test="parent::tei:specGrp">
-    <label/><item>&#171; <tei:emph>include
+    <tei:label/><tei:item>&#171; <tei:emph>include
   <tei:ref target="#{$W}"><xsl:for-each select="key('IDS',$W)">
     <xsl:number level="any"/>
     <xsl:if test="@n">
       <xsl:text>: </xsl:text><xsl:value-of select="@n"/>
     </xsl:if>
   </xsl:for-each></tei:ref></tei:emph>
-  <xsl:text> &#187; </xsl:text></item>
+  <xsl:text> &#187; </xsl:text></tei:item>
   </xsl:when>
   <xsl:when test="parent::tei:p">
     &#171; <tei:emph>include
