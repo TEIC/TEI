@@ -677,7 +677,7 @@ class roma
         $szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
 	$this->getParser( $oParser );
 
-	$this->getListDom( 'http://' . roma_exist_server . '/xquery/elemsbymod.xq?module=' . $_REQUEST[ 'module' ], $oListDom );
+	$this->getListDom( roma_exist_server . '/xquery/elemsbymod.xq?module=' . $_REQUEST[ 'module' ], $oListDom );
 	notamHandler::getError( 'moduleChanged', $aoErrors );
 	notamHandler::deleteError( 'moduleChanged' );
 	$this->addErrorsDom( $oListDom, $aoErrors );
