@@ -536,7 +536,7 @@ sgml-shorttag                  nil
 
 (setq sgml-xml-declaration (concat teixmldir "schema/dtd/p4/xml.dcl"))
 
-(setq sgml-tei-declaration (concat teixmlir "/schema/dtd/p4/teisgml.dec"))
+(setq sgml-tei-declaration (concat teixmldir "/schema/dtd/p4/teisgml.dec"))
 
 (setq sgml-validate-command   
  (list
