@@ -5,7 +5,7 @@ Text Encoding Initiative Consortium XSLT stylesheet family
 XSL HTML stylesheet to format TEI XML documents 
 
  
-#include LICENSE
+##LICENSE
 -->
 
 <xsl:stylesheet

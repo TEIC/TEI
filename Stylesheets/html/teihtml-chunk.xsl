@@ -6,7 +6,7 @@ $Date$, $Revision$, $Author$
 XSL stylesheet to format TEI XML documents to HTML or XSL FO
 
  
-#include LICENSE
+##LICENSE
 --> 
 <xsl:stylesheet
   xmlns:tei="http://www.tei-c.org/ns/1.0"
