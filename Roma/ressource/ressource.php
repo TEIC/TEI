@@ -57,6 +57,8 @@ class ressource
 
     public function getString( $szLang, $szString, &$szReturn )
       {
-	$szReturn = $this->m_aszRessource[ $szLang ][ $szString ];	
+	$szReturn = $this->m_aszRessource[ $szLang ][ $szString ];
+	if ( $szReturn == '' )
+ 	  $szReturn = $this->m_aszRessource[ 'en' ][ $szString ];
       }
   }

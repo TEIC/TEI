@@ -530,6 +530,8 @@ class roma
 	notamHandler::deleteNotams();
 	$oParser->addReplacement( 'notams', $szHTML );
 	$oParser->addReplacement( 'help', $_SESSION[ 'help' ] );
+	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
+	$oParser->addReplacement( 'lang', $szLanguage );
       }
 
     private function addErrorsDom( &$oDom, $aoErrors )
@@ -747,6 +749,9 @@ class roma
 	$this->getParser( $oParser );
 	
 	$oSchemaParser = new parser();
+	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
+	$oSchemaParser->addReplacement( 'lang', $szLanguage );
+
 	$oSchemaParser->addReplacement( 'output', $_REQUEST[ 'output' ] );
 	//validate file
 	set_error_handler( array($this, 'schemaValidatorErrorHandler' ) );
@@ -783,7 +788,11 @@ class roma
         $szLangTem = join( '', file(  roma_templateDir . '/customizeLanguage.tem' ) );
 	$this->getParser( $oParser );
 
+	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
+
 	$oLanguageParser = new parser();
+	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
+	$oLanguageParser->addReplacement( 'lang', $szLanguage );
 	$oLanguageParser->Parse( $szLangTem, $szLanguage );
 
 	$oParser->addReplacement( 'mode', 'customizeLanguage' );
@@ -1051,6 +1060,8 @@ class roma
 
 
 	$oDocParser = new parser();
+	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
+	$oDocParser->addReplacement( 'lang', $szLanguage );
 	$oDocParser->addReplacement( 'format', $_REQUEST[ 'format' ] );
 	$oDocParser->Parse( $szDocTem, $szDoc );
 
@@ -1073,13 +1084,19 @@ class roma
 
 	$this->m_oRomaDom->getCustomizationTitle( $szTitle );
 	$this->m_oRomaDom->getCustomizationAuthor( $szAuthor );
+	$this->m_oRomaDom->getCustomizationFilename( $szFilename );
+	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
 	$this->m_oRomaDom->getCustomizationDescription( $szDesc );
 
+	$oSchemaParser->addReplacement( 'lang', $szLanguage );
 	$oSchemaParser->AddReplacement( 'title', $szTitle );
 	$oSchemaParser->AddReplacement( 'author', $szAuthor );
+	$oSchemaParser->AddReplacement( 'filename', $szFilename );
+	$oSchemaParser->AddReplacement( 'language', $szLanguage );
 	$oSchemaParser->AddReplacement( 'description', $szDesc );
 	$oSchemaParser->Parse( $szSchemTem, $szSchema );
 	
+	$oParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'mode', 'customizeCustomization' );
 	$oParser->addReplacement( 'view', 'customizeCustomization' );
 	$oParser->addReplacement( 'template', $szSchema );
@@ -1164,7 +1181,9 @@ class roma
 	
 	if ( $szError == '' )
 	  {
-	    $this->redirectBrowserMeta( "http://" . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'PHP_SELF' ] . '?mode=' . roma_mode_downloadFile . '&file=mytei.' . $_REQUEST[ 'output' ] );	    
+	    $this->m_oRomaDom->getCustomizationFilename( $szFilename );
+	    $szFilename = ( $szFilename ) ? $szFilename : 'mytei';
+	    $this->redirectBrowserMeta( "http://" . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'PHP_SELF' ] . '?mode=' . roma_mode_downloadFile . '&file=' . $szFilename . '.' . $_REQUEST[ 'output' ] );	    
 
 	    $_SESSION[ 'download' ] = $szSchema;
 	  }
@@ -1480,6 +1499,8 @@ class roma
     private function customizedCustomization()
       {
 	$this->m_oRomaDom->setCustomizationTitle( $_REQUEST[ 'title' ] );
+	$this->m_oRomaDom->setCustomizationFilename( $_REQUEST[ 'filename' ] );
+	$this->m_oRomaDom->setCustomizationLanguage( $_REQUEST[ 'lang' ] );
 	$this->m_oRomaDom->setCustomizationAuthor( $_REQUEST[ 'author' ] );
 	$this->m_oRomaDom->setCustomizationDescription( $_REQUEST[ 'description' ] );
       }

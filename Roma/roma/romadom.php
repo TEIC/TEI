@@ -728,6 +728,18 @@ class romaDom extends domDocument
 	$szAuthor = $oXPath->query( "/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author" )->item(0)->nodeValue;
       }
 
+    public function getCustomizationFilename( &$szFilename )
+      {
+	$this->getXPath( $oXPath );
+	$szFilename = $oXPath->query( "/tei:TEI/@n" )->item(0)->nodeValue;
+      }
+
+    public function getCustomizationLanguage( &$szLanguage )
+      {
+	$this->getXPath( $oXPath );
+	$szLanguage = $oXPath->query( "/tei:TEI/@lang" )->item(0)->nodeValue;
+      }
+
     public function getCustomizationDescription( &$szDesc )
       {
 	$this->getXPath( $oXPath );
@@ -1665,6 +1677,21 @@ class romaDom extends domDocument
 	  $oAuthor->removeChild( $oAuthor->firstChild );
 	$oAuthor->appendChild( new domText ( $szAuthor ) );
       }
+
+    public function setCustomizationFilename( $szFilename )
+      {
+	$this->getXPath( $oXPath );
+	$oTEI = $oXPath->query( "/tei:TEI" )->item(0);
+	$oTEI->setAttribute( 'n', $szFilename );
+      }
+
+    public function setCustomizationLanguage( $szLanguage )
+      {
+	$this->getXPath( $oXPath );
+	$oTEI = $oXPath->query( "/tei:TEI" )->item(0);
+	$oTEI->setAttribute( 'lang', $szLanguage );
+      }
+
 
     // #####################################################################
     // --- Little Helpers
