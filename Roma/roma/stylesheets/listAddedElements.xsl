@@ -19,16 +19,18 @@ Description
       <form method="POST">
 	<xsl:attribute name="action">?mode=changeListAddedElements</xsl:attribute>
 	<table>
-	  <tr><td class="headline" colspan="7"><xsl:value-of select="$res_form_headline"/></td></tr>
-	  <tr><td colspan="7" class="spacer"><a href="?mode=addElements"><xsl:value-of select="$res_form_add"/></a></td></tr>
+	  <tr><td class="headline" colspan="7"><xsl:value-of
+	  disable-output-escaping="yes" select="$res_form_headline"/></td></tr>
+	  <tr><td colspan="7" class="spacer"><a
+	  href="?mode=addElements"><xsl:value-of disable-output-escaping="yes" select="$res_form_add"/></a></td></tr>
 	  <tr class="header">
 	    <td><xsl:value-of select="$res_form_changeElement"/></td>
-	    <td><a href="javascript:includeAllAttributes()"><xsl:value-of select="$res_form_include"/></a></td>
-	    <td><a href="javascript:excludeAllAttributes()"><xsl:value-of select="$res_form_exclude"/></a></td>
-	    <td><xsl:value-of select="$res_form_tagName"/></td>
-	    <td width="400"><xsl:value-of select="$res_form_description"/></td>
-	    <td width=""><xsl:value-of select="$res_form_attributes"/></td>
-	    <td width=""><xsl:value-of select="$res_form_delete"/></td>
+	    <td><a href="javascript:includeAllAttributes()"><xsl:value-of disable-output-escaping="yes" select="$res_form_include"/></a></td>
+	    <td><a href="javascript:excludeAllAttributes()"><xsl:value-of disable-output-escaping="yes" select="$res_form_exclude"/></a></td>
+	    <td><xsl:value-of disable-output-escaping="yes" select="$res_form_tagName"/></td>
+	    <td width="400"><xsl:value-of disable-output-escaping="yes" select="$res_form_description"/></td>
+	    <td width=""><xsl:value-of disable-output-escaping="yes" select="$res_form_attributes"/></td>
+	    <td width=""><xsl:value-of disable-output-escaping="yes" select="$res_form_delete"/></td>
 	  </tr>
 	  <xsl:call-template name="generateList"/>
 	  <tr><td class="button" colspan="7"><input type="submit"/></td></tr>
@@ -71,7 +73,7 @@ Description
 	  <a>
 	    <xsl:attribute
 	     name="href">?mode=listAddedAttributes&amp;element=<xsl:value-of select="elementName"/>&amp;added=true</xsl:attribute>
-	    <xsl:value-of select="$res_form_changeAttributes"/>
+	    <xsl:value-of disable-output-escaping="yes" select="$res_form_changeAttributes"/>
 	  </a>
 	</td>
 	<td>
@@ -79,7 +81,7 @@ Description
 	      <xsl:attribute
 	       name="href">?mode=deleteAddedElement&amp;element=<xsl:value-of
 	       select="elementName"/></xsl:attribute>
-	      <xsl:value-of select="$res_form_delete"/>
+	      <xsl:value-of disable-output-escaping="yes" select="$res_form_delete"/>
 	    </a>
 	</td>
       </tr>

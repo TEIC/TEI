@@ -50,13 +50,13 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
      </xsl:if>
      <table>
       <tr>
-       <td class="headline" colspan="2"><xsl:value-of select="$res_form_headline"/></td>
+       <td class="headline" colspan="2"><xsl:value-of disable-output-escaping="yes" select="$res_form_headline"/></td>
       </tr>
       <tr>
 	<xsl:if test="//errorList/error/location[text()='name']">
 	  <xsl:attribute name="class">error</xsl:attribute>
 	</xsl:if>
-       <td class="formlabel"><xsl:value-of select="$res_form_name"/></td>
+       <td class="formlabel"><xsl:value-of disable-output-escaping="yes" select="$res_form_name"/></td>
        <td class="formfield">
 	 <xsl:if test="not($selectedMode='changeElement')">
 	   <xsl:if test="not($elementName='')">
@@ -112,7 +112,7 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
        </tr>
       </xsl:if>
       <tr>
-        <td class="formlabeltop"><xsl:value-of select="$res_form_modelClasses"/></td>
+        <td class="formlabeltop"><xsl:value-of disable-output-escaping="yes" select="$res_form_modelClasses"/></td>
         <td>
          <table class="noBorder">
           <tr>
@@ -122,7 +122,7 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
         </td>
       </tr>
       <tr>
-        <td class="formlabeltop"><xsl:value-of select="$res_form_attributeClasses"/></td>
+        <td class="formlabeltop"><xsl:value-of disable-output-escaping="yes" select="$res_form_attributeClasses"/></td>
         <td>
          <table class="noBorder">
           <tr>
@@ -135,13 +135,13 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
 	<xsl:if test="//errorList/error/location[node()='contents']">
 	  <xsl:attribute name="class">error</xsl:attribute>
 	</xsl:if>
-        <td class="formlabeltop"><xsl:value-of select="$res_form_contents"/></td>
+        <td class="formlabeltop"><xsl:value-of disable-output-escaping="yes" select="$res_form_contents"/></td>
         <td>
          <xsl:call-template name="contentTypes"/>
         </td>
       </tr>
       <tr>
-        <td class="formlabeltop"><xsl:value-of select="$res_form_description"/></td>
+        <td class="formlabeltop"><xsl:value-of disable-output-escaping="yes" select="$res_form_description"/></td>
         <td>
            <textarea rows="5" cols="40" name="description">
             <xsl:if test="not($elementDesc='')"><xsl:value-of select="$elementDesc"/></xsl:if>

@@ -21,11 +21,11 @@ Description
     <p class="roma">
       <form method="POST">
 	<table>
-	  <tr><td class="headline" colspan="7"><xsl:value-of select="$res_form_headline"/></td></tr>
+	  <tr><td class="headline" colspan="7"><xsl:value-of disable-output-escaping="yes" select="$res_form_headline"/></td></tr>
 	  <tr class="header">
-	    <td><xsl:value-of select="$res_form_className"/></td>
-	    <td width="580"><xsl:value-of select="$res_form_description"/></td>
-	    <td width=""><xsl:value-of select="$res_form_attributes"/></td>
+	    <td><xsl:value-of disable-output-escaping="yes" select="$res_form_className"/></td>
+	    <td width="580"><xsl:value-of disable-output-escaping="yes" select="$res_form_description"/></td>
+	    <td width=""><xsl:value-of disable-output-escaping="yes" select="$res_form_attributes"/></td>
 	  </tr>
 	  <xsl:call-template name="generateList"/>
 	</table>
@@ -40,7 +40,7 @@ Description
 	<td width="580"><xsl:value-of select="classDesc"/></td>
 	<td>
 	  <a><xsl:attribute name="href">?class=<xsl:value-of
-	select="className"/>&amp;mode=listAddedAttributes&amp;module=<xsl:value-of select="module"/></xsl:attribute><xsl:value-of select="$res_form_changeAttributes"/>
+	select="className"/>&amp;mode=listAddedAttributes&amp;module=<xsl:value-of select="module"/></xsl:attribute><xsl:value-of disable-output-escaping="yes" select="$res_form_changeAttributes"/>
 	  </a>
 	</td>
       </tr>
