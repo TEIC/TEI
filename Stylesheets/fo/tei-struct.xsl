@@ -583,13 +583,6 @@ XSL FO stylesheet to formatt TEI XML documents
       </xsl:call-template>
      <xsl:apply-templates select="tei:body"/>
      <xsl:apply-templates select="tei:back"/>
-     <xsl:if test="..//tei:note[@place='end']">
-      <fo:block>
-      <xsl:call-template name="setupDiv2"/>
-      <xsl:text>Notes</xsl:text>
-      </fo:block>
-      <xsl:apply-templates select=".//tei:note[@place='end']" mode="endnote"/>
-     </xsl:if>
     </fo:flow>
  </fo:page-sequence>
 </xsl:template>

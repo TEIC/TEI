@@ -74,4 +74,8 @@
   </xsl:for-each>
 </xsl:template>
 
+<xsl:template match="rng:data[@type='token']">
+      <rng:text/>
+</xsl:template>
+
 </xsl:transform>
