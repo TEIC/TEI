@@ -297,7 +297,7 @@ pdfcreator={Oxford University Computing Services}
 
 <xsl:template match="tei:div/tei:head">
 <xsl:variable name="depth">
-  <xsl:value-of select="count(ancestor::div)"/>
+  <xsl:value-of select="count(ancestor::tei:div)"/>
 </xsl:variable>
 <xsl:text>&#10;\div</xsl:text>
 <xsl:choose>
