@@ -43,7 +43,7 @@ html:
 	--stringparam displayMode rnc \
 	--stringparam ODDROOT `pwd`/ \
 	--stringparam outputDir . \
-	${S}/base/p5/odds/odd2html.xsl - 
+	guidelines.xsl - 
 	(cd Guidelines; for i in *.html; do perl -i ../Tools/cleanrnc.pl $$i;done)
 	-cp *.gif *.css Guidelines
 
