@@ -101,12 +101,18 @@ select="$numberSpacer"/></xsl:param>
  <xsl:choose>
    <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle">
      <xsl:apply-templates 
-       select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle"/>
+	 select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle"/>
+   </xsl:when>
+   <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle">
+     <xsl:apply-templates 
+       select="ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle"/>
      </xsl:when>
    <xsl:otherwise>
-    <xsl:apply-templates 
-      select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"
-      mode="htmlheader"/>
+     <xsl:for-each
+	 select="ancestor-or-self::tei:TEI|ancestor-or-self::tei:teiCorpus">
+       <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"
+			    mode="htmlheader"/>
+     </xsl:for-each>
    </xsl:otherwise>
 </xsl:choose>
 </xsl:template>

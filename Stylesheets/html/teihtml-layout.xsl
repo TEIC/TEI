@@ -32,7 +32,7 @@
       </xsl:when>
       <xsl:when test="local-name(..)='front'">
 	<xsl:apply-templates select="."/>
-	<xsl:apply-templates select="../../tei:body" mode="paging"/>
+	<xsl:apply-templates select="../../tei:body/tei:*[1]" mode="paging"/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:apply-templates select="."/>
@@ -40,6 +40,7 @@
       </xsl:otherwise>    
     </xsl:choose>
   </xsl:template>
+
   <xsl:template match="tei:*" mode="generateNextLink">
     <i><xsl:text> </xsl:text>
     <xsl:value-of select="$nextWord"/>: </i> 
@@ -1077,6 +1078,17 @@
 	</div>
       </xsl:if>
       <xsl:choose>
+	<xsl:when test="$contentStructure='all' or @rend='all'">
+	  <div>
+	    <div id="lh-col"> 
+	      <xsl:call-template name="searchbox"/>
+	      <xsl:apply-templates select="descendant::tei:text/tei:front"/>
+	    </div>
+	    <div id="rh-col">
+	      <xsl:apply-templates select="descendant::tei:text/tei:body"/>
+	    </div>
+	  </div>
+	</xsl:when>
 	<xsl:when test="$contentStructure='body'">
 	  <!-- right column -->
 	  <div id="rh-col"><a name="rh-col"></a> 
@@ -1092,20 +1104,6 @@
 	      <xsl:with-param name="currentID" select="$ID"/>
 	    </xsl:call-template>
 	    <hr/>
-	  </div>
-	</xsl:when>
-	<xsl:when test="$contentStructure='all' or @rend='all'">
-	  <div>
-	    <div id="col1"> 
-	      <xsl:call-template name="searchbox"/>
-	      <xsl:apply-templates select="descendant::tei:text/tei:front"/>
-	    </div>
-	    <div id="col2">
-	      <xsl:apply-templates select="descendant::tei:text/tei:body"/>
-	    </div>
-	    <div id="col3">
-	      <xsl:apply-templates select="descendant::tei:text/tei:back"/>
-	    </div>
 	  </div>
 	</xsl:when>
       </xsl:choose>
