@@ -45,8 +45,11 @@ XSL FO stylesheet to format TEI XML documents
       </fo:inline>
      <fo:footnote-body>
        <fo:block end-indent="0pt"
-               start-indent="0pt"
-             text-indent="{$parIndent}" font-size="{$footnoteSize}">
+		 start-indent="0pt"
+		 text-align="start" 
+		 font-style="normal"
+		 text-indent="{$parIndent}" 
+		 font-size="{$footnoteSize}">
          <fo:inline font-size="{$footnotenumSize}"
                vertical-align="super">
           <xsl:value-of select="$FootID"/>

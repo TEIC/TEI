@@ -38,6 +38,9 @@ XSL FO stylesheet to format TEI XML documents
         <xsl:when test="ancestor::tei:text/@id">
          <xsl:value-of select="translate(ancestor::tei:text/@id,'_','-')"/>
        </xsl:when>
+        <xsl:when test="ancestor::tei:text/@xml:id">
+         <xsl:value-of select="translate(ancestor::tei:text/@xml:id,'_','-')"/>
+       </xsl:when>
        <xsl:otherwise>
           <xsl:value-of select="generate-id()"/>
        </xsl:otherwise>

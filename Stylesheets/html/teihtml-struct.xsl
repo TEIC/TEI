@@ -242,8 +242,8 @@ select="$depth"/></xsl:message>
       </xsl:when>
     </xsl:choose>
       <xsl:choose>
-        <xsl:when test="@id">
-          <a name="{@id}"/>
+        <xsl:when test="@id|@xml:id">
+          <a name="{@id|@xml:id}"/>
         </xsl:when>
         <xsl:when test="$generateParagraphIDs='true'">
          <a name="{generate-id()}"/>
@@ -750,7 +750,7 @@ select="$depth"/></xsl:message>
    <xsl:for-each select="ancestor-or-self::tei:TEI">
     <xsl:text>-</xsl:text>
      <xsl:choose>
-      <xsl:when test="@id"><xsl:value-of select="@id"/></xsl:when> 
+      <xsl:when test="@id|@xml:id"><xsl:value-of select="@id|@xml:id"/></xsl:when> 
       <xsl:otherwise><xsl:number/></xsl:otherwise>
      </xsl:choose>
    </xsl:for-each>

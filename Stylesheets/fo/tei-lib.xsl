@@ -100,6 +100,9 @@ XSL FO stylesheet to format TEI XML documents
 
 <xsl:template name="idLabel">
    <xsl:choose>
+       <xsl:when test="@xml:id">
+         <xsl:value-of select="translate(@xml:id,'_','-')"/>
+       </xsl:when>
        <xsl:when test="@id">
          <xsl:value-of select="translate(@id,'_','-')"/>
        </xsl:when>

@@ -76,21 +76,29 @@ XSL FO stylesheet to format TEI XML documents
  </fo:table-and-caption>
 </xsl:template>
 
+
 <xsl:template name="blockTable">
  <fo:table  text-align="{$tableAlign}"
 	     font-size="{$tableSize}">
    <xsl:call-template name="addID"/>
    <xsl:call-template name="deriveColSpecs"/>
+   <xsl:apply-templates select="tei:row[@role='header']"/>
    <fo:table-body text-indent="0pt">
-     <xsl:for-each select="tei:row">
-       <xsl:text>
-</xsl:text>
+     <xsl:for-each select="row[not(@role='header')]">
+           <xsl:text>&#10;</xsl:text>
        <fo:table-row>
          <xsl:apply-templates select="tei:cell"/>
        </fo:table-row>
       </xsl:for-each>
    </fo:table-body>
  </fo:table>
+</xsl:template>
+
+<xsl:template match="tei:row[@role='header']">
+  <xsl:text>&#10;</xsl:text>
+  <fo:table-header>
+    <xsl:apply-templates select="cell"/>
+  </fo:table-header>
 </xsl:template>
 
 <xsl:template match="tei:cell">
@@ -108,7 +116,7 @@ XSL FO stylesheet to format TEI XML documents
   <xsl:call-template name="cellProperties"/>
  <fo:block>
   <xsl:choose>
-   <xsl:when test="@role='label' or parent::tei:row[@role='label']">
+   <xsl:when test="@role='label' or parent::tei:row[@role='label' or parent::tei:row[@role='header']]">
      <xsl:attribute name="font-weight">bold</xsl:attribute>
    </xsl:when>
   </xsl:choose>
@@ -118,7 +126,8 @@ XSL FO stylesheet to format TEI XML documents
 </xsl:template>
 
 <xsl:template name="cellProperties" >
-  <xsl:if test="@role='hi' or @role='label' or parent::tei:row/@role='label'">
+  <xsl:if test="@role='hi' or @role='label' or
+		parent::tei:row/@role='label'  or parent::tei:row/@role='header'">
     <xsl:attribute name="background-color">silver</xsl:attribute>
   </xsl:if>
   <xsl:choose>

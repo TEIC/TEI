@@ -97,13 +97,16 @@ simple, bullets, ordered, gloss, unordered
 <fo:list-item>
   <xsl:if test="not(parent::tei:note[@place='foot'])">
     <xsl:attribute name="space-before.optimum">
-        <xsl:value-of select="$listItemsep"/>
+      <xsl:value-of select="$listItemsep"/>
     </xsl:attribute>
   </xsl:if>
   <fo:list-item-label>
-<xsl:if test="@id">
-<xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
-</xsl:if>
+    <xsl:if test="@id">
+      <xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
+    </xsl:if>
+    <xsl:if test="@xml:id">
+      <xsl:attribute name="id"><xsl:value-of select="@xml:id"/></xsl:attribute>
+    </xsl:if>
     <fo:block>
       <xsl:attribute name="margin-right">2.5pt</xsl:attribute>
       <xsl:choose>

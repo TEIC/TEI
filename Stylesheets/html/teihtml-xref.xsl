@@ -22,10 +22,10 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
  <xsl:call-template name="addCorpusID"/>
 </xsl:variable>
   <xsl:choose>
-  <xsl:when test="@id">
+  <xsl:when test="@id|@xml:id">
     <xsl:choose>
      <xsl:when test="$useIDs">
-       <xsl:value-of select="@id"/>
+       <xsl:value-of select="@id|@xml:id"/>
      </xsl:when>
      <xsl:otherwise>
       <xsl:value-of select="$BaseFile"/>-<xsl:value-of select="name(.)"/>-<xsl:value-of select="generate-id()"/>
@@ -230,7 +230,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 </xsl:template>
 
 <xsl:template match="tei:anchor">
-   <a name="{@id}"/>
+   <a name="{@id|@xml:id}"/>
 </xsl:template>
 
 <xsl:template match="tei:note" mode="xrefheader">
@@ -353,7 +353,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 </xsl:template>
 
 <xsl:template name="makeAnchor">
-  <xsl:if test="@id"><a name="{@id}"/></xsl:if>  
+  <xsl:if test="@id|@xml:id"><a name="{@id|@xml:id}"/></xsl:if>  
 </xsl:template>
 
 <xsl:template name="makeHyperLink">    

@@ -73,4 +73,14 @@ XSL FO stylesheet to format TEI XML documents
 </fo:basic-link>
 </xsl:template>
 
+<xsl:template name="makeHyperLink">    
+  <xsl:param name="url"/>
+  <xsl:param name="class"/>
+  <xsl:param name="body"/>
+ <fo:basic-link>
+   <xsl:call-template name="linkStyle"/>
+  <xsl:attribute name="internal-destination"><xsl:value-of select="$url"/></xsl:attribute>
+      <xsl:value-of select="$body"/>
+ </fo:basic-link>
+</xsl:template>
 </xsl:stylesheet>

@@ -10,6 +10,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:fotex="http://www.tug.org/fotex"
   xmlns:exsl="http://exslt.org/common"
+  xmlns:tei="http://www.tei-c.org/ns/1.0"
   exclude-result-prefixes="saxon exsl" 
   extension-element-prefixes="saxon exsl fotex"
   xmlns:saxon="http://icl.com/saxon"
@@ -86,6 +87,9 @@ select="exsl:node-set($tableSpecs)/Info/TableSpec[$no=@id]/fo:table-column">
 
 <xsl:template name="generateTableID">
 <xsl:choose>
+ <xsl:when test="@xml:id">
+   <xsl:value-of select="@xml:id"/>
+ </xsl:when>
  <xsl:when test="@id">
    <xsl:value-of select="@id"/>
  </xsl:when>

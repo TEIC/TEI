@@ -29,6 +29,9 @@ XSL FO stylesheet to format TEI XML documents
 
 <xsl:template match="tei:formula">
   <fo:wrapper>
+   <xsl:if test="@xml:id">
+    <xsl:attribute name="id"><xsl:value-of select="@xml:id"/></xsl:attribute>
+   </xsl:if>
    <xsl:if test="@id">
     <xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
    </xsl:if>

@@ -17,20 +17,20 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 <xsl:template match="tei:sp">
 <dl>
  <dt>
-   <xsl:if test="@id"><a name="{@id}"/></xsl:if>
+   <xsl:if test="@id|@xml:id"><a name="{@id|@xml:id}"/></xsl:if>
    <xsl:apply-templates select="tei:speaker"/>
  </dt>
-<dd><xsl:apply-templates select="tei:p | l | lg | seg | ab | stage"/></dd>
+<dd><xsl:apply-templates select="tei:p | tei:l | tei:lg | tei:seg | tei:ab | tei:stage"/></dd>
 </dl>
 </xsl:template>
 
 <!-- paragraphs inside speeches do very little-->
- <xsl:template match="tei:sp/p">
+ <xsl:template match="tei:sp/tei:p">
     <xsl:apply-templates/>
 </xsl:template>
 
 
-<xsl:template match="tei:p/stage">
+<xsl:template match="tei:p/tei:stage">
 <em><xsl:apply-templates/></em>
 </xsl:template>
 

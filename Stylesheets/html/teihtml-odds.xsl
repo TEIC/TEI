@@ -28,7 +28,7 @@ XSL HTML stylesheet to format TEI XML documents
  <xsl:include href="../common/teicommon.xsl"/>
 
   <xsl:key name="FILES"   match="tei:moduleSpec[@ident]"   use="@ident"/>
-  <xsl:key name="IDS"     match="tei:*[@id]"           use="@id"/>
+  <xsl:key name="IDS"     match="tei:*[@id|@xml:id]"           use="@id|@xml:id"/>
   <xsl:key name="DTDREFS" match="tei:specGrpRef"           use="@target"/>
   <xsl:key name="PATTERNS" match="tei:macroSpec" use="@ident"/>
   <xsl:key name="PATTERNDOCS" match="tei:macroSpec" use='1'/>
@@ -191,7 +191,7 @@ XSL HTML stylesheet to format TEI XML documents
 	    </xsl:if>
 	    <xsl:call-template name="linkTogether">
 	      <xsl:with-param name="name" select="concat('ref-',@ident,'.html')"/>
-	      <xsl:with-param name="url" select="@id"/>
+	      <xsl:with-param name="url" select="@id|@xml:id"/>
 	    </xsl:call-template>
 	  </xsl:for-each>
 	</xsl:when>
@@ -320,7 +320,7 @@ XSL HTML stylesheet to format TEI XML documents
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
-  <b>&lt;<a href="ref-{@id}.html"><xsl:value-of select="$name"/></a>&gt; </b>
+  <b>&lt;<a href="ref-{@id|@xml:id}.html"><xsl:value-of select="$name"/></a>&gt; </b>
   <xsl:value-of select="tei:desc"/>
   <xsl:choose>
     <xsl:when test="tei:attList//tei:attDef">
@@ -730,7 +730,7 @@ XSL HTML stylesheet to format TEI XML documents
 <xsl:template name="refdoc">
   <xsl:if test="$verbose='true'">
     <xsl:message>   refdoc for <xsl:value-of 
-    select="name(.)"/> - <xsl:value-of select="@id"/> </xsl:message>
+    select="name(.)"/> - <xsl:value-of select="@id|@xml:id"/> </xsl:message>
   </xsl:if>
   <xsl:variable name="objectname">
     <xsl:choose>
@@ -755,20 +755,20 @@ XSL HTML stylesheet to format TEI XML documents
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
-  [<a href="ref-{@id}.html"><xsl:value-of select="$name"/></a>]
+  [<a href="ref-{@id|@xml:id}.html"><xsl:value-of select="$name"/></a>]
   <xsl:variable name="BaseFile">
     <xsl:value-of select="$masterFile"/>
     <xsl:if test="ancestor::tei:teiCorpus">
       <xsl:text>-</xsl:text>
       <xsl:choose>
-	<xsl:when test="@id"><xsl:value-of select="@id"/></xsl:when> 
+	<xsl:when test="@id|@xml:id"><xsl:value-of select="@id|@xml:id"/></xsl:when> 
 	<xsl:otherwise><xsl:number/></xsl:otherwise>
       </xsl:choose>
     </xsl:if>
   </xsl:variable>
   <xsl:call-template name="outputChunk">
     <xsl:with-param name="ident">
-      <xsl:text>ref-</xsl:text><xsl:value-of select="@id"/>
+      <xsl:text>ref-</xsl:text><xsl:value-of select="@id|@xml:id"/>
     </xsl:with-param>
     <xsl:with-param name="content">
       <html>
@@ -787,7 +787,7 @@ XSL HTML stylesheet to format TEI XML documents
 		<xsl:value-of select="$name"/>
 	      </xsl:with-param>
 	    </xsl:call-template>
-	    <p><a name="{@id}"></a>
+	    <p><a name="{@id|@xml:id}"></a>
 	    <table border='1'>
 	      <xsl:apply-templates select="." mode="weavebody"/>
 	    </table></p>

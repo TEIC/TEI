@@ -265,8 +265,8 @@ select="translate(.,'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/
 </xsl:template>
 
 <xsl:template  match="tei:label">
-  <xsl:if test="@id">
-    <a name="{@id}"/>
+  <xsl:if test="@id|@xml:id">
+    <a name="{@id|@xml:id}"/>
   </xsl:if>
   <xsl:apply-templates/>
 </xsl:template>

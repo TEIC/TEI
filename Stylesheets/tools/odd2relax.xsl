@@ -184,7 +184,7 @@ select="$filename"/>-decl</xsl:message>
 
 <xsl:template match="tei:macroSpec" mode="msectiondtd">
   <xsl:param name="filename"/>
-  <xsl:message>     .. patterndoc [msection] <xsl:value-of select="@id"/></xsl:message>
+  <xsl:message>     .. patterndoc [msection] <xsl:value-of select="@id|@xml:id"/></xsl:message>
   <xsl:if test="preceding-sibling::tei:macroSpec">
     <xsl:text>
 </xsl:text>

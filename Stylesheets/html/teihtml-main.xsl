@@ -87,7 +87,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 </xsl:template>
 
 <!-- processors must support `key' -->
-<xsl:key name="IDS" match="tei:*[@id]" use="@id"/>
+<xsl:key name="IDS" match="tei:*[@id|@xml:id]" use="@id|@xml:id"/>
 
 
 <xsl:template match="/">

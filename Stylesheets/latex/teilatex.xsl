@@ -30,7 +30,7 @@ XSL stylesheet to format TEI XML documents to LaTeX
 <xsl:output method="text" encoding="utf8"/>
 <xsl:param name="pagesetup">a4paper,lmargin=1in,rmargin=1in,tmargin=0.25in,bmargin=0.75in</xsl:param>
 
-<xsl:key name="IDS" match="tei:*[@id]" use="@id"/>
+<xsl:key name="IDS" match="tei:*[@id|@xml:id]" use="@id|@xml:id"/>
 
 <xsl:strip-space elements="*"/>
 
@@ -415,12 +415,12 @@ pdfcreator={Oxford University Computing Services}
 </xsl:template>
 
 <xsl:template name="labelme">
- <xsl:if test="../@id">\hypertarget{<xsl:value-of select="../@id"/>}{}</xsl:if>
+ <xsl:if test="../@id|../@xml:id">\hypertarget{<xsl:value-of select="../@id|../@xml:id"/>}{}</xsl:if>
 </xsl:template>
 
 <xsl:template match="tei:anchor">
  <xsl:text>\hypertarget{</xsl:text>
- <xsl:value-of select="@id"/>
+ <xsl:value-of select="@id|@xml:id"/>
   <xsl:text>}{}</xsl:text>
 </xsl:template>
 
@@ -447,7 +447,7 @@ pdfcreator={Oxford University Computing Services}
 </xsl:template>
 
 <xsl:template match="tei:bibl">
-\bibitem {<xsl:value-of select="@id"/>}
+\bibitem {<xsl:value-of select="@id|@xml:id"/>}
 <xsl:apply-templates/>
 <xsl:text>
 </xsl:text>
@@ -460,7 +460,7 @@ pdfcreator={Oxford University Computing Services}
 
 <xsl:template match="tei:table">
 \par  
-<xsl:if test="@id">\label{<xsl:value-of select="@id"/>}</xsl:if>
+<xsl:if test="@id|@xml:id">\label{<xsl:value-of select="@id|@xml:id"/>}</xsl:if>
 <xsl:choose>
 <xsl:when test="ancestor::tei:table">
 \begin{tabular}
@@ -528,7 +528,7 @@ pdfcreator={Oxford University Computing Services}
 <xsl:template match="tei:table[@type='display']">
   \begin{table*}
   \caption{<xsl:apply-templates select="tei:head" mode="ok"/>}
-  <xsl:if test="@id">\label{<xsl:value-of select="@id"/>}</xsl:if>
+  <xsl:if test="@id|@xml:id">\label{<xsl:value-of select="@id|@xml:id"/>}</xsl:if>
   \begin{small}
   \begin{center}
   \begin{tabular}
@@ -615,7 +615,7 @@ pdfcreator={Oxford University Computing Services}
 
 <xsl:template match="tei:table" mode="xref">
 <xsl:text>the table on p. \pageref{</xsl:text>
-<xsl:value-of select="@id"/>
+<xsl:value-of select="@id|@xml:id"/>
 <xsl:text>}</xsl:text>
 </xsl:template>
 

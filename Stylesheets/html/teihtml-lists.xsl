@@ -153,25 +153,27 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
     </xsl:choose>
 </xsl:template>
 
-<xsl:template match="tei:list/label"/>
+<xsl:template match="tei:list/tei:label"/>
 
 <xsl:template match="tei:item">
- <li>
-  <xsl:if test="@rend">
-    <xsl:attribute name="class"><xsl:value-of select="@rend"/></xsl:attribute>
-  </xsl:if>
- <a>
- <xsl:attribute name="name">
-     <xsl:choose>
-     <xsl:when test="@id">
-       <xsl:value-of select="@id"/>
-     </xsl:when>
-     <xsl:otherwise>
-      <xsl:value-of select="generate-id()"/>
-     </xsl:otherwise>
-    </xsl:choose>
-  </xsl:attribute></a>
-<xsl:apply-templates/></li>
+  <li>
+    <xsl:if test="@rend">
+      <xsl:attribute name="class"><xsl:value-of select="@rend"/></xsl:attribute>
+    </xsl:if>
+    <a>
+      <xsl:attribute name="name">
+	<xsl:choose>
+	  <xsl:when test="@id|@xml:id">
+	    <xsl:value-of select="@id|@xml:id"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="generate-id()"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:attribute>
+    </a>
+    <xsl:apply-templates/>
+  </li>
 </xsl:template>
 
 <xsl:template match="tei:item" mode="runin">
@@ -185,15 +187,15 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 </xsl:template>
 
 <xsl:template match="tei:label" mode="print">
-<xsl:if test="@id"><a name="{@id}"/></xsl:if>
-<xsl:choose>
-	<xsl:when test="@rend">
-		<xsl:call-template name="rendering"/>
-	</xsl:when>
-	<xsl:otherwise>
-		<xsl:apply-templates/>
-	</xsl:otherwise>
-</xsl:choose>
+  <xsl:if test="@id|@xml:id"><a name="{@id|@xml:id}"/></xsl:if>
+  <xsl:choose>
+    <xsl:when test="@rend">
+      <xsl:call-template name="rendering"/>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:apply-templates/>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 </xsl:stylesheet>

@@ -470,7 +470,7 @@ XSL stylesheet to process TEI documents using ODD markup
    <xsl:if test="ancestor::teiCorpus">
     <xsl:text>-</xsl:text>
      <xsl:choose>
-      <xsl:when test="@id"><xsl:value-of select="@id"/></xsl:when> 
+      <xsl:when test="@id|@xml:id"><xsl:value-of select="@id|@xml:id"/></xsl:when> 
       <xsl:otherwise><xsl:number/></xsl:otherwise>
      </xsl:choose>
    </xsl:if>

@@ -32,9 +32,9 @@ XSL stylesheet to format TEI XML documents using ODD markup
   <xsl:key  name="CLASSMEMBERS" match="tei:elementSpec|tei:classSpec" use="tei:classes/tei:memberOf/@key"/>
   <xsl:key name="TAGS" match="Tag|Pattern|Class" use="ident"/>
   <xsl:key name="IDENTS"   match="tei:elementSpec|tei:classSpec|tei:macroSpec"   use="@ident"/>
-  <xsl:key name="TAGIDS"     match="*[@id]"           use="@id"/>
+  <xsl:key name="TAGIDS"     match="*[@id|@xml:id]"           use="@id|@xml:id"/>
   <xsl:key name="TAGIDENTS"     match="Table/*[ident]"           use="ident"/>
-  <xsl:key name="IDS"     match="tei:*[@id]"  use="@id"/>
+  <xsl:key name="IDS"     match="tei:*[@id|@xml:id]"  use="@id|@xml:id"/>
   <xsl:key name="PATTERNS" match="tei:macroSpec" use="@ident"/>
   <xsl:key name="MACRODOCS" match="tei:macroSpec" use='1'/>
   <xsl:key name="CLASSDOCS" match="tei:classSpec" use='1'/>
@@ -50,7 +50,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
   
   <!-- lookup table of element contents, and templates to access the result -->
   <xsl:key name="ELEMENTPARENTS" match="Contains" use="."/>
-  <xsl:key name="ELEMENTS" match="Element" use="@id"/>
+  <xsl:key name="ELEMENTS" match="Element" use="@id|@xml:id"/>
   <xsl:param name="wrapLength">65</xsl:param>
   
   
@@ -435,7 +435,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
     <xsl:if test="$verbose='true'">
       <xsl:message> elementSpec <xsl:value-of
       select="@ident"/>
-      <xsl:if test="@id">: <xsl:value-of select="@id"/></xsl:if>
+      <xsl:if test="@id|@xml:id">: <xsl:value-of select="@id|@xml:id"/></xsl:if>
       <xsl:if test="@mode"> (mode <xsl:value-of select="@mode"/>)</xsl:if>
       </xsl:message>
     </xsl:if>
@@ -1352,7 +1352,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
 	      <xsl:text>: </xsl:text>
 	      <xsl:call-template name="makeLink">
 		<xsl:with-param name="class">classlink</xsl:with-param>
-		<xsl:with-param name="id"><xsl:value-of	select="@id"/></xsl:with-param>
+		<xsl:with-param name="id"><xsl:value-of	select="@id|@xml:id"/></xsl:with-param>
 		<xsl:with-param name="name"><xsl:value-of select="@ident"/></xsl:with-param>
 		<xsl:with-param name="text">
 		  <xsl:value-of select="@ident"/>
@@ -1381,7 +1381,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
         <xsl:text>: </xsl:text>
 	<xsl:call-template name="linkTogether">
 	  <xsl:with-param name="name" select="concat('ref-',@ident,'.html')"/>
-	  <xsl:with-param name="url" select="@id"/>
+	  <xsl:with-param name="url" select="@id|@xml:id"/>
 	</xsl:call-template>
 	<xsl:if test="count(key('CLASSMEMBERS',@ident))&gt;0">
 	  <xsl:text>  [</xsl:text>
@@ -1390,7 +1390,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
 	      <xsl:text>: </xsl:text>
 	      <xsl:call-template name="showElement">
 		<xsl:with-param name="name" select="@ident"/>
-		<xsl:with-param name="id" select="@id"/>
+		<xsl:with-param name="id" select="@id|@xml:id"/>
 	      </xsl:call-template>
 	  </xsl:for-each>
 	    <xsl:text>] </xsl:text>
@@ -1455,7 +1455,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
     <mums>
       <xsl:for-each select="document('dtdcat.xml')">
 	<xsl:for-each select="key('ELEMENTPARENTS',$what)">
-	  <mum><xsl:value-of select="../@id"/></mum>
+	  <mum><xsl:value-of select="../@id|../@xml:id"/></mum>
 	</xsl:for-each>
       </xsl:for-each>
     </mums>
@@ -1506,7 +1506,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
 <xsl:template name="makeTagsetInfo">
   <xsl:value-of select="@module"/>
   <xsl:if test="$verbose='true'">
-    <xsl:message>  tagset <xsl:value-of select="@id"/>: <xsl:value-of select="../@module"/></xsl:message>
+    <xsl:message>  tagset <xsl:value-of select="@id|@xml:id"/>: <xsl:value-of select="../@module"/></xsl:message>
   </xsl:if>
 </xsl:template>
 
@@ -1517,8 +1517,8 @@ XSL stylesheet to format TEI XML documents using ODD markup
   <xsl:variable name="secnum">
     <xsl:call-template name="sectionNumber"/>
   </xsl:variable>
-  <xsl:if test="@id">
-    <xsl:comment>[<xsl:value-of select="@id"/>] <xsl:value-of
+  <xsl:if test="@id|@xml:id">
+    <xsl:comment>[<xsl:value-of select="@id|@xml:id"/>] <xsl:value-of
     select="$secnum"/>
     <xsl:if test="@n">
       <xsl:text>: </xsl:text>
@@ -1529,8 +1529,8 @@ XSL stylesheet to format TEI XML documents using ODD markup
   <xsl:apply-templates mode="tangle">
     <xsl:with-param name="filename" select="$filename"/>
   </xsl:apply-templates>
-  <xsl:if test="@id">
-    <xsl:comment> end of [<xsl:value-of select="@id"/>]  <xsl:value-of select="$secnum"/>    
+  <xsl:if test="@id|@xml:id">
+    <xsl:comment> end of [<xsl:value-of select="@id|@xml:id"/>]  <xsl:value-of select="$secnum"/>    
     </xsl:comment>
   </xsl:if>
 </xsl:template>

@@ -33,8 +33,8 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 
 <xsl:template name="noteID">
   <xsl:choose>
-   <xsl:when test="@id">
-    <xsl:value-of select="@id"/>
+   <xsl:when test="@id|@xml:id">
+    <xsl:value-of select="@id|@xml:id"/>
    </xsl:when>
    <xsl:when test="@n">
     <xsl:value-of select="@n"/>

@@ -15,7 +15,7 @@ Peter Boot <pboot@attglobal.net>
   version="1.0">
 
 <xsl:template match="tei:biblStruct">
-	<a name="{@id}"></a>
+	<a name="{@id|@xml:id}"></a>
 	<xsl:choose>
 		<xsl:when test="@copyOf">
 			<a class="biblink" href="{concat('#',substring(@copyOf,5,2))}">Zie <xsl:value-of select="substring(@copyOf,5,2)"/></a>

@@ -222,7 +222,7 @@ splitLevel: <xsl:value-of select="$splitLevel"/>
 
 
 <xsl:template match="tei:div0">
-<xsl:message>Process section <xsl:value-of select="@id"/></xsl:message>
+<xsl:message>Process section <xsl:value-of select="@id|@xml:id"/></xsl:message>
     <xsl:apply-templates/>
 </xsl:template>
 
@@ -345,7 +345,7 @@ splitLevel: <xsl:value-of select="$splitLevel"/>
    <xsl:if test="ancestor::teiCorpus">
     <xsl:text>-</xsl:text>
      <xsl:choose>
-      <xsl:when test="@id"><xsl:value-of select="@id"/></xsl:when> 
+      <xsl:when test="@id|@xml:id"><xsl:value-of select="@id|@xml:id"/></xsl:when> 
       <xsl:otherwise><xsl:number/></xsl:otherwise>
      </xsl:choose>
    </xsl:if>

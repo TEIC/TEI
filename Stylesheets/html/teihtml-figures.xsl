@@ -45,14 +45,14 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
   </xsl:choose>
  </xsl:variable>
 
-<xsl:if test="@id">
-     <a name="{@id}"/>
+<xsl:if test="@id|@xml:id">
+     <a name="{@id|@xml:id}"/>
 </xsl:if>
 <xsl:choose>
   <xsl:when test="$showFigures='true'">
     <span>
-    <xsl:if test="@id">
-      <xsl:attribute name="name"><xsl:value-of select="@id"/></xsl:attribute>
+    <xsl:if test="@id|@xml:id">
+      <xsl:attribute name="name"><xsl:value-of select="@id|@xml:id"/></xsl:attribute>
     </xsl:if>
    <xsl:if test="string-length(@rend) &gt;0">
     <xsl:attribute name="class"><xsl:value-of select="@rend"/></xsl:attribute>

@@ -29,7 +29,7 @@ XSL stylesheet to process TEI documents using ODD markup
  <xsl:include href="teiodds.xsl"/>
  <xsl:include href="../common/teicommon.xsl"/>
   <xsl:key name="FILES"   match="tei:moduleSpec[@ident]"   use="@ident"/>
-  <xsl:key name="IDS"     match="tei:*[@id]"           use="@id"/>
+  <xsl:key name="IDS"     match="tei:*[@id|@xml:id]"           use="@id|@xml:id"/>
   <xsl:key name="DTDREFS" match="tei:specGrpRef"           use="@target"/>
   <xsl:key name="PATTERNS" match="tei:macroSpec" use="@ident"/>
   <xsl:key name="MACRODOCS" match="tei:macroSpec" use='1'/>
@@ -176,7 +176,7 @@ XSL stylesheet to process TEI documents using ODD markup
 	      <xsl:text>: </xsl:text>
 	      <xsl:call-template name="linkTogether">
 		<xsl:with-param name="name" select="@ident"/>
-		<xsl:with-param name="url" select="@id"/>
+		<xsl:with-param name="url" select="@id|@xml:id"/>
 	      </xsl:call-template>
 	    </xsl:for-each>
 	  </xsl:when>
@@ -560,7 +560,7 @@ XSL stylesheet to process TEI documents using ODD markup
 
 <xsl:template match="tei:specGrp">
   <tei:anchor>
-    <xsl:copy-of select="@id"/>
+    <xsl:copy-of select="@id|@xml:id"/>
   </tei:anchor>
   [<xsl:call-template name="compositeNumber"/>]
   <xsl:apply-templates/>

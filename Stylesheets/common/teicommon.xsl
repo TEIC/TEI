@@ -29,6 +29,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 <xsl:param name="searchURL">http://search.ox.ac.uk/web/acserv/infotech/oucs</xsl:param>
 <xsl:param name="institution">My Institution</xsl:param>
 <xsl:template name="feedbackWords">Feedback</xsl:template>
+<xsl:param name="class_toc">toc</xsl:param>
 
 <!-- numbering -->
 <!-- fill in these with a valid number format (eg A.1) if needed-->

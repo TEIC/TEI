@@ -25,7 +25,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
     name="TEISERVER">http://localhost:8080/exist/TEI/Roma/xquery/</xsl:param>
 
 <xsl:key name="MODS" match="tei:moduleSpec" use="@ident"/>
-<xsl:key name="SPECS" match="tei:specGrp" use="@id"/>
+<xsl:key name="SPECS" match="tei:specGrp" use="@id|@xml:id"/>
 <xsl:key name="LOCAL"
 	 match="tei:classSpec|tei:elementSpec|tei:macroSpec" use="@ident"/>
 <xsl:key name="LOCALATT"

@@ -94,7 +94,6 @@ XSL stylesheet to format TEI XML documents to FO or HTML
    <xsl:param name="preQuote">&#x2018;</xsl:param>
    <xsl:param name="postQuote">&#x2019;</xsl:param>
 
-   <xsl:param name="class_toc">toc</xsl:param>
    <xsl:param name="class_subtoc">subtoc</xsl:param>
    <xsl:param name="class_quicklink">quicklink</xsl:param>
    <xsl:param name="class_ptr">ptr</xsl:param>
