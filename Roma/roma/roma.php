@@ -128,7 +128,7 @@ define( 'roma_pdflatex', 'pdflatex' );
 // Directories
 //
 // Defines the location of all external Stylesheets (odd2relax.xsl .. )
-define( 'roma_schemaStylesheetDir', 'http://www.tei-c.org.uk/Stylesheets' );
+define( 'roma_schemaStylesheetDir', 'http://localhost/TEI/Stylesheets' );
 
 // Defines the location of the template Directory
 define( 'roma_templateDir', 'roma/templates' );
@@ -145,12 +145,12 @@ define( 'roma_ressource_path', 'roma/res' );
 //#########################
 // different_stylesheets
 //
-define( 'roma_styleheet_docHtml', 'http://www.tei-c.org.uk/Stylesheets/teihtml-teic-P5.xsl' );
-define( 'roma_styleheet_docPDF', 'http://www.tei-c.org.uk/Stylesheets/P5/fo/tei.xsl' );
-define( 'roma_styleheet_docLatex', 'http://www.tei-c.org.uk/Stylesheets/P5/latex/teilatex.xsl' );
-define( 'roma_customization_validator', 'http://www.tei-c.org/P5/Schema/p5odds.rng' );
+define( 'roma_styleheet_docHtml', 'http://localhost/TEI/Stylesheets/teihtml-teic-P5.xsl' );
+define( 'roma_styleheet_docPDF', 'http://localhost/TEI/Stylesheets/P5/fo/tei.xsl' );
+define( 'roma_styleheet_docLatex', 'http://localhost/TEI/Stylesheets/P5/latex/teilatex.xsl' );
+define( 'roma_customization_validator', 'http://localhost/TEI/P5/Schema/p5odds.rng' );
 
-define( 'roma_exist_server', 'spqr.oucs.ox.ac.uk' );
+define( 'roma_exist_server', 'localhost:8080' );
 
 
 define( 'roma_validate_schema', false );
@@ -648,7 +648,7 @@ class roma
         $szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
 	$this->getParser( $oParser );
 
-	$this->getListDom( 'http://' . roma_exist_server . ':8080/exist/tei/modules.xq', $oListDom );
+	$this->getListDom( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/modules.xq', $oListDom );
 
 	// build param list
 	$this->m_oRomaDom->getSelectedModulesDom( $oModules );
@@ -676,7 +676,7 @@ class roma
         $szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
 	$this->getParser( $oParser );
 
-	$this->getListDom( 'http://' . roma_exist_server . ':8080/exist/tei/elemsbymod.xq?module=' . $_REQUEST[ 'module' ], $oListDom );
+	$this->getListDom( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/elemsbymod.xq?module=' . $_REQUEST[ 'module' ], $oListDom );
 	notamHandler::getError( 'moduleChanged', $aoErrors );
 	notamHandler::deleteError( 'moduleChanged' );
 	$this->addErrorsDom( $oListDom, $aoErrors );
@@ -707,19 +707,19 @@ class roma
 	$this->getParser( $oParser );
 
 	$oModelClassDom = new domDocument();
-	$oModelClassDom->loadXML( join( '', file( 'http://' . roma_exist_server . ':8080/exist/tei/classes.xq' ) ) );
+	$oModelClassDom->loadXML( join( '', file( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/classes.xq' ) ) );
 	$oRootClass = $oModelClassDom->documentElement;
 
 	$oAttributeDom = new domDocument();
-	$oAttributeDom->loadXML( join( '', file( 'http://' . roma_exist_server . ':8080/exist/tei/attclasses.xq' ) ) );
+	$oAttributeDom->loadXML( join( '', file( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/attclasses.xq' ) ) );
 	$oRootAtt = $oAttributeDom->documentElement;
 
 	$oDatatypeDom = new domDocument();
-	$oDatatypeDom->loadXML( join( '', file( 'http://' . roma_exist_server . ':8080/exist/tei/datatypes.xq' ) ) ) ;
+	$oDatatypeDom->loadXML( join( '', file( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/datatypes.xq' ) ) ) ;
 	$oRootDat = $oDatatypeDom->documentElement;
 
 	$oMacroDom = new domDocument();
-	$oMacroDom->loadXML( join( '', file( 'http://' . roma_exist_server . ':8080/exist/tei/macros.xq' ) ) );
+	$oMacroDom->loadXML( join( '', file( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/macros.xq' ) ) );
 	$oRootMac = $oMacroDom->documentElement;
 
         //Get created Elements
@@ -867,19 +867,19 @@ class roma
 	$this->getParser( $oParser );
  
 	$oModelClassDom = new domDocument();
-	$oModelClassDom->loadXML( join( '', file( 'http://' . roma_exist_server . ':8080/exist/tei/classes.xq' ) ) );
+	$oModelClassDom->loadXML( join( '', file( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/classes.xq' ) ) );
 	$oRootClass = $oModelClassDom->documentElement;
 
 	$oAttributeDom = new domDocument();
-	$oAttributeDom->loadXML( join( '', file( 'http://' . roma_exist_server . ':8080/exist/tei/attclasses.xq' ) ) );
+	$oAttributeDom->loadXML( join( '', file( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/attclasses.xq' ) ) );
 	$oRootAtt = $oAttributeDom->documentElement;
 
 	$oDatatypeDom = new domDocument();
-	$oDatatypeDom->loadXML( join( '', file( 'http://' . roma_exist_server . ':8080/exist/tei/datatypes.xq' ) ) ) ;
+	$oDatatypeDom->loadXML( join( '', file( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/datatypes.xq' ) ) ) ;
 	$oRootDat = $oDatatypeDom->documentElement;
 
 	$oMacroDom = new domDocument();
-	$oMacroDom->loadXML( join( '', file( 'http://' . roma_exist_server . ':8080/exist/tei/macros.xq' ) ) );
+	$oMacroDom->loadXML( join( '', file( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/macros.xq' ) ) );
 	$oRootMac = $oMacroDom->documentElement;
 
 	$oListDom = new domDocument();
@@ -939,11 +939,11 @@ class roma
 	$oAddAttribute = $oListDom->appendChild ( new domElement( 'addAttribute' ) );
 	
 	$oDatatypeDom = new domDocument();
-	$oDatatypeDom->loadXML( join( '', file( 'http://' . roma_exist_server . ':8080/exist/tei/datatypes.xq' ) ) ) ;
+	$oDatatypeDom->loadXML( join( '', file( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/datatypes.xq' ) ) ) ;
 	$oRootDat = $oDatatypeDom->documentElement;
 
 	$oWCDom = new domDocument();
-	$oWCDom->loadXML( join( '', file( 'http://' . roma_exist_server . ':8080/exist/tei/w3cdatatypes.xq' ) ) ) ;
+	$oWCDom->loadXML( join( '', file( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/w3cdatatypes.xq' ) ) ) ;
 	$oRootW3cDat = $oWCDom->documentElement;
 
 	$oRootDat = $oListDom->importNode( $oRootDat, true );
@@ -1091,7 +1091,7 @@ class roma
 	$this->getParser( $oParser );
 
 	$oListDom = new domDocument();
-	$oListDom->loadXML( join ( '', file( 'http://' . roma_exist_server . ':8080/exist/tei/attclasses.xq' ) ) );
+	$oListDom->loadXML( join ( '', file( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/attclasses.xq' ) ) );
 
 	$this->applyStylesheet( $oListDom, 'changeClasses.xsl', $oNewDom, array( 'host' => $_SERVER[ 'HTTP_HOST' ], 'class' => $_REQUEST[ 'class' ], 'module' => $_REQUEST[ 'module' ] ), 'changeClasses' );
 

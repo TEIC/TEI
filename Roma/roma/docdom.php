@@ -99,14 +99,15 @@ class docDom extends domDocument
             $theMod = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'module' );
 	    $oModule = $oBody->appendChild( $theMod );
 	    $oModule->setAttribute( 'ident', $szModule );
-	    
+	    echo "<p>Module: ". $szModule. "<br>";
 	    $this->m_oRomaDom->getIncludedElementsInModule( $szModule, $aszElements );
 	    foreach ( $aszElements as $szElement )
 	      {
 		$nElements++;
 
 		$oElementDom = new domDocument();
-		$oElementDom->loadXML( join( '', file( 'http://' . roma_exist_server . ':8080/exist/tei/copytag.xq?name=' . $szElement ) ) );
+		echo $szElement . " ";
+		$oElementDom->loadXML( join( '', file( 'http://' . roma_exist_server . '/exist/TEI/Roma/xquery/copytag.xq?name=' . $szElement ) ) );
 		$oSpec = $oElementDom->getElementsByTagname( 'elementSpec' )->item(0);
 		
 		$oSpec = $this->importNode( $oSpec, true );
@@ -142,7 +143,7 @@ class docDom extends domDocument
 		  {
 		    $szAttribute = $oAtt->getElementsByTagname( 'name' )->item(0)->nodeValue;
 
-		    $oAttDef = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:moduleRef[@key='{$szModule}']/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='{$szAttribute}']" )->item(0);
+		    $oAttDef = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@key='{$szModule}']/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='{$szAttribute}']" )->item(0);
 
 		    if ( is_object( $oAttDef ) )
 		      {
@@ -279,17 +280,16 @@ class docDom extends domDocument
 	    $oXPath = new domxpath( $this );
 	    $oXPath->registerNamespace( 'tei', 'http://www.tei-c.org/ns/1.0' );
 	    
-	    $oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body[@ident='{$szModule}']" )->item(0);
+	    $oModule = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:moduleRef[@ident='{$szModule}']" )->item(0);
 	    if ( ! is_object( $oModule ) )
 	      {
-		$theMod = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'module' );
+		$theMod = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'moduleRef' );
 		$oBody = $this->getElementsByTagname( 'body' )->item(0);
 		$oModule = $oBody->appendChild( $theMod );
 		$oModule->setAttribute( 'ident', $szModule );
 	      }
 
-	    $oModule->setAttribute( 'mode', 'change' );
-	    
+    
 	    $theClassSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'classSpec' );
 	    $oClassSpec = $oModule->appendChild( $theClassSpec );
 	    $oClassSpec->setAttribute( 'ident', $szClass );
@@ -429,7 +429,7 @@ class docDom extends domDocument
       {
 	$oTidy = new tidy();
 	$aszOptions = array( 'indent' => true,
-			     'indent-spaces' => 4,
+			     'indent-spaces' => 1,
 			     'wrap' => 72,
 			     'input-xml' => true,
 			     'output-xml' => true
@@ -450,9 +450,7 @@ class docDom extends domDocument
 	    $this->m_oRomaDom->updateProgressBar( '70' );
 	
 	$oTidy = new tidy();
-	$aszOptions = array( 'indent' => true,
-			     'indent-spaces' => 4,
-			     'wrap' => 72,
+	$aszOptions = array( 'indent' => false,
 			     'input-xml' => true,
 			     'output-xml' => true
 			     );
