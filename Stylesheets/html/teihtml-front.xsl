@@ -31,24 +31,26 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
         <xsl:value-of select="normalize-space(tei:docTitle)"/>
       </span>
     </p>
-    <p>
-      <xsl:text>by </xsl:text>
-      <xsl:for-each select="tei:docAuthor">
-	<xsl:if test="preceding-sibling::tei:docAuthor"> 
-	  <xsl:choose>
-	    <xsl:when test="not(following-sibling::tei:docAuthor)">
-	      <xsl:text> and </xsl:text>
-	    </xsl:when>
-	    <xsl:otherwise>
-	       <xsl:text>, </xsl:text>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:if>
-	<span class="docAuthor">
-	  <xsl:apply-templates select="." mode="print"/>
-	</span>
-      </xsl:for-each>
-    </p>
+    <xsl:if test="tei:docAuthor">
+      <p>
+	<xsl:text>by </xsl:text>
+	<xsl:for-each select="tei:docAuthor">
+	  <xsl:if test="preceding-sibling::tei:docAuthor"> 
+	    <xsl:choose>
+	      <xsl:when test="not(following-sibling::tei:docAuthor)">
+		<xsl:text> and </xsl:text>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:text>, </xsl:text>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:if>
+	  <span class="docAuthor">
+	    <xsl:apply-templates select="." mode="print"/>
+	  </span>
+	</xsl:for-each>
+      </p>
+    </xsl:if>
     <xsl:if test="tei:docDate">
       <p class="docDate">
 	<xsl:text>on </xsl:text>
