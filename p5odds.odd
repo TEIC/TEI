@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0"
+ xmlns:rng="http://relaxng.org/ns/structure/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>TEI with ODD elements</title>
+            <author>Sebastian Rahtz</author>
+         </titleStmt>
+         <publicationStmt>
+	   <p> </p>
+	 </publicationStmt>
+         <sourceDesc>
+            <p>authored from scratch</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+<text>
+<body>
+  <p>
+    <schemaSpec ident="p5odds" start="TEI elementSpec classSpec macroSpec div1 div2">
+      <moduleRef url="mathml2-main.rng"/>
+      <moduleRef url="relaxng.rng"/>
+      <moduleRef key="header"/>
+      <moduleRef key="core"/>
+      <moduleRef key="tei"/>
+      <moduleRef key="textstructure"/>
+      <moduleRef key="tagdocs"/>
+      <moduleRef key="dictionaries"/>
+      <moduleRef key="linking"/>
+      <moduleRef key="figures"/>
+      <macroSpec module="figures" type="pe" ident="datatype.Formula">
+	<content>
+	  <rng:ref name="mathml.math"/>
+	</content>
+      </macroSpec>
+      <macroSpec ident="schemapattern" mode="change" module="tagdocs">
+	<content>
+	  <choice xmlns="http://relaxng.org/ns/structure/1.0">
+	    <text/>
+	    <oneOrMore>
+	      <ref name="pattern"/>
+	    </oneOrMore>
+	  </choice>
+	  <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+	    <ref name="anySchematron"/>
+	  </zeroOrMore>
+	</content>
+      </macroSpec>
+      
+      <macroSpec ident="egXML.content" module="tagdocs" mode="change">
+	<content>
+	  <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+	    <choice>
+	      <text/>
+	      <ref name="anyTEI"/>
+	      <ref name="mathml.math"/>
+	    </choice>
+	  </oneOrMore>
+	</content>
+      </macroSpec>
+      
+      <macroSpec ident="anySchematron" mode="add">
+	<content>
+	  <element  xmlns="http://relaxng.org/ns/structure/1.0">
+	    <nsName ns="http://www.ascc.net/xml/schematron"/>
+	    <zeroOrMore>
+	      <choice>
+		<attribute>
+		  <anyName/>
+		</attribute>
+		<ref name="anySchematron"/>
+		<text/>
+	      </choice>
+	    </zeroOrMore>
+	  </element>
+	</content>
+      </macroSpec>
+      
+      <macroSpec ident="anyTEI" mode="add">
+	<content>
+	  <element  xmlns="http://relaxng.org/ns/structure/1.0">
+	    <nsName ns="http://www.tei-c.org/ns/Examples"/>
+	    <zeroOrMore>
+	      <choice>
+		<attribute>
+		  <anyName/>
+		</attribute>
+		<text/>
+		<ref name="anyTEI"/>
+		<ref name="schemapattern"/>
+		<rng:ref name="mathml.math"/>
+	      </choice>
+	    </zeroOrMore>
+	  </element>
+	</content>
+      </macroSpec>
+    </schemaSpec>
+  </p>
+</body>
+</text>
+</TEI>
+
+
+

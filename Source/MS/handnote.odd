@@ -1,0 +1,108 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="msdescription" xml:id="HANDNOTE" ident="handNote">
+<equiv/>
+<gloss>note on hand</gloss>
+<desc>describes a particular style
+or hand distinguished within a manuscript.</desc>
+  
+  
+  <content>
+<!--<!ELEMENT    handDesc - -  (p+ |(overview?, palaeography?, orthography?, morphology?)>-->
+
+<!-- rng:choice -->
+
+    <rng:oneOrMore>
+      <rng:ref name="tei.paragraph"/>
+    </rng:oneOrMore>
+<!--
+<rng:group>
+    <rng:optional>
+      <rng:ref name="summary"/>
+    </rng:optional>
+    <rng:optional>
+      <rng:ref name="palaeography"/>
+    </rng:optional>
+    <rng:optional>
+      <rng:ref name="orthography"/>
+    </rng:optional>
+    <rng:optional>
+      <rng:ref name="morphology"/>
+    </rng:optional>
+</rng:group>  
+
+</rng:choice-->
+</content>
+  <attList>
+    <attDef ident="scribe">
+	<equiv/>
+	<gloss/>
+	<desc>gives a standard name or other identifier for the scribe
+believed to be responsible for this hand.</desc>
+      
+      
+      <datatype>
+          <rng:ref name="datatype.Key"/></datatype>
+      <valDesc>Any name</valDesc>
+         </attDef>
+    <attDef ident="script">
+	<equiv/>
+	<gloss/>
+	<desc>characterizes the particular script or writing style used by
+this hand, for example <mentioned>secretary</mentioned>, <mentioned>copperplate</mentioned>, <mentioned>Chancery</mentioned>, <mentioned>Italian</mentioned>, etc..</desc>
+      
+      
+      <datatype><rng:ref name="datatype.Key"/></datatype>
+      <valDesc>'</valDesc>
+      
+    </attDef>
+    <attDef ident="medium">
+	<equiv/>
+	<gloss/>
+	<desc>describes the tint or type of ink, e.g. <mentioned>brown</mentioned>, or other
+writing medium, e.g. <mentioned>pencil</mentioned>,</desc>
+      
+      
+      <datatype><rng:ref name="datatype.Key"/></datatype>
+      
+    </attDef>
+    <attDef ident="scope">
+	<equiv/>
+	<gloss/>
+	<desc>specifies how widely this  hand is used in the manuscript.</desc>
+      
+      
+      <!-- datatype>(sole|major|minor)</datatype-->
+      <datatype><rng:ref name="datatype.Key"/></datatype>
+      <valList type="closed">
+        <valItem ident="sole">
+          <equiv/>
+          <gloss>only this hand is used throughout the manuscript</gloss>
+        </valItem>
+        <valItem ident="major">
+          <equiv/>
+          <gloss>this hand is used through most of the manuscript</gloss>
+        </valItem>
+        <valItem ident="minor">
+          <equiv/>
+          <gloss>this hand is used occasionally in the manuscript</gloss>
+        </valItem>
+      </valList>
+      
+    </attDef>
+  </attList>
+  
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><handNote scope="sole"><p>Written in insular phase II half-uncial
+with interlinear Old English gloss in an Anglo-Saxon 
+pointed minuscule.</p></handNote>
+</egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#msph2"/>
+  </listRef>
+</elementSpec>

@@ -1,0 +1,70 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="corpus" xml:id="OCCUPAT" usage="opt" ident="occupation">
+<equiv/>
+<gloss/>
+<desc>contains an informal description of a person's trade,
+profession or occupation.</desc>
+  
+  
+  <classes>
+    <memberOf key="tei.demographic"/>
+  </classes>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+  </content>
+  <attList>
+    <attDef ident="scheme" usage="opt">
+	<equiv/>
+	<desc>identifies the classification system or taxonomy in use by supplying
+the identifier of a <gi>taxonomy</gi> element elsewhere in the header.</desc>
+      
+      
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
+      <valDesc>must identify a <gi>taxonomy</gi> element</valDesc>
+      
+    </attDef>
+    <attDef ident="code" usage="opt">
+	<equiv/>
+	<desc>identifies an occupation code defined within the
+classification system or taxonomy defined by the <att>scheme</att>
+attribute.</desc>
+      
+      
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
+      <valDesc>Must identify a <gi>category</gi> element</valDesc>
+      
+    </attDef>
+  </attList>
+  
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <occupation>accountant</occupation>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <occupation scheme="#rg" code="#acc">accountant</occupation>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <occupation scheme="#rg" code="#acc">accountant 
+with specialist knowledge of oil industry
+</occupation>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>The content of this element may be used as an alternative
+to the more formal specification made possible by its attributes; it
+may also be used to supplement the formal specification with commentary
+or clarification.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#CCAHPA"/>
+  </listRef>
+</elementSpec>
