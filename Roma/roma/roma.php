@@ -372,6 +372,7 @@ class roma
 				   'class' => $_REQUEST[ 'class' ],
 				   'module' => $_REQUEST[ 'module' ],
 				   'element' => $_REQUEST[ 'element' ],
+				   'valList' => $_REQUEST[ 'valList' ],
 				   'added' => $_REQUEST[ 'added' ],
 				   'optional' => $_REQUEST[ 'optional' ],
 				   'content' => $_REQUEST[ 'content' ],

@@ -122,6 +122,18 @@ Description
 	       </td>
 	     </tr>
 	     <tr>
+	       <td class="formlabel"><xsl:value-of select="$res_form_valList"/></td>
+	       <td class="formfield">
+		 <input type="text" name="valList" size="53">
+		   <xsl:if test="//currentAttribute">
+		     <xsl:attribute name="value">
+		       <xsl:value-of select="//currentAttribute/attDef/valList"/>
+		     </xsl:attribute>
+		   </xsl:if>
+		 </input>
+	       </td>
+	     </tr>
+	     <tr>
 	       <td class="formlabeltop"><xsl:value-of select="$res_form_description"/></td>
 	       <td class="formfield">
 		 <textarea name="description" rows="5"

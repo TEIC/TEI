@@ -686,6 +686,52 @@ class romaDom extends domDocument
 		break;		      
 	      }
 	  }
+
+	$this->getAttributeValList( $szAttribute, $szElement, $szModule, $szClass, $aszList );
+	$szValList = join( ',', $aszList );
+	$oRoot->appendChild( new domElement( 'valList', $szValList ) );
+
+      }
+
+    public function getAttributeValList( $szAttribute, $szElement, $szModule, $szClass, &$aszList )
+      {
+	$aszList = array();
+	$this->getXPath( $oXPath );
+
+	if ( $szModule != '' && $szClass == '' )
+	  {
+	    $oValList = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p/tei:module[@ident='{$szModule}']/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='{$szAttribute}']/tei:valList" )->item(0);
+
+	    if ( is_object( $oValList ) )
+	      {
+		foreach( $oValList->childNodes as $oChild )
+		  {
+		    $aszList[] = $oChild->getAttribute( 'ident' );
+		  }
+	      }
+	  }
+	elseif( $szClass == '' )
+	  {
+	    $oValList = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p/tei:schema[@ident='mytei']/tei:elementSpec[@ident='{$szElement}']/tei:attList/tei:attDef[@ident='{$szAttribute}']/tei:valList" )->item(0);
+
+	    if ( is_object( $oValList ) )
+	      {
+		echo 'lala2';
+	      }
+	    
+	  }
+	else
+	  {
+	    $oValList = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p/tei:module[@ident='{$szModule}']/tei:classSpec[@ident='{$szClass}']/tei:attList/tei:attDef[@ident='{$szAttribute}']/tei:valList" )->item(0);
+
+	    if ( is_object( $oValList ) )
+	      {
+		echo 'lala3';
+	      }
+	    
+	    
+
+	  }
       }
 
 
@@ -1313,6 +1359,38 @@ class romaDom extends domDocument
 	    $theDefault = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'default' );
 	    $oDefault = $oAttDef->appendChild( $theDefault );
 	    $oDefault->appendChild( new domText( $aszConfig[ 'defaultValue' ] ) );
+
+	    //valList
+	    $oValList = $oAttDef->getElementsByTagname( 'valList' )->item(0);
+	    if ( is_object( $oValList ) )
+	      {
+		$oAttDef->removeChild( $oValList );
+	      }
+	    $theValList = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'valList' );
+	    $oValList = $oAttDef->appendChild( $theValList );
+	    if ( $aszConfig[ 'content' ] == 'datatype.Choice' )
+	      {
+		$oValList->setAttribute( 'type', 'closed' );
+	      }
+	    else
+	      {
+		$oValList->setAttribute( 'type', 'open' );
+	      }
+
+	    $aszValList = explode( ',', $aszConfig[ 'valList' ] );
+	    if ( is_array( $aszValList ) )
+	      {
+		foreach( $aszValList as $szValue )
+		  {
+		    chop( $szValue );
+		    if ( $szValue != '' )
+		      {
+			$theValItem = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'valItem' );
+			$oValItem = $oValList->appendChild( $theValItem );
+			$oValItem->setAttribute( 'ident', $szValue );
+		      }
+		  }
+	      }
 
 	    //desc
 	    $oDesc = $oAttDef->getElementsByTagname( 'desc' )->item(0);
