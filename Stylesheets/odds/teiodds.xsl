@@ -139,7 +139,7 @@ Text Encoding Initiative Consortium XSLT stylesheet family
     </xsl:variable>
     <xsl:if test="not(@ident='xmlns')">
       <xsl:choose>
-	<xsl:when test="@mode='add'"/>
+	<xsl:when test="@mode='add' and not (ancestor::tei:elementSpec[@mode='add'])"/>
 	<xsl:when test="@usage='req'">
 	  <rng:ref name="{ancestor::tei:attList/../@ident}.attributes.{$I}"/>
 	</xsl:when>

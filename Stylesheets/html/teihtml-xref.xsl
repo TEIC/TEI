@@ -323,6 +323,11 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 	<xsl:otherwise><xsl:value-of select="$class"/></xsl:otherwise>
       </xsl:choose>
     </xsl:attribute>
+    <xsl:if test="@type">
+      <xsl:attribute name="type">
+	<xsl:value-of select="@type"/>
+      </xsl:attribute>
+    </xsl:if>
     <xsl:attribute name="href">
       <xsl:value-of select="$dest"/>
       <xsl:if test="contains(@from,'id (')">

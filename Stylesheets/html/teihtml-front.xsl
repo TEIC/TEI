@@ -24,13 +24,38 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 </xsl:template>
 
 <xsl:template match="tei:titlePage">
-  <hr/>
-  <table>
-    <tr><td><b><xsl:apply-templates mode="print" select="tei:docTitle"/></b></td></tr>
-    <tr><td><i><xsl:apply-templates mode="print" select="tei:docAuthor"/></i></td></tr>
-    <tr><td><xsl:apply-templates mode="print" select="tei:docDate"/></td></tr>
-  </table>
-  <hr/>
+    <hr/>
+    <p>
+      <!-- first, the complete <docTitle> in bold -->
+      <span class="docTitle">
+        <xsl:value-of select="normalize-space(tei:docTitle)"/>
+      </span>
+    </p>
+    <p>
+      <xsl:text>by </xsl:text>
+      <xsl:for-each select="tei:docAuthor">
+	<xsl:if test="preceding-sibling::tei:docAuthor"> 
+	  <xsl:choose>
+	    <xsl:when test="not(following-sibling::tei:docAuthor">
+	      <xsl:text> and </xsl:text>
+	    </xsl:when>
+	    <xsl:otherwise>
+	       <xsl:text>, </xsl:text>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:if>
+	<span class="docAuthor">
+	  <xsl:apply-templates select="." mode="print"/>
+	</span>
+      </xsl:for-each>
+    </p>
+    <xsl:if test="tei:docDate">
+      <p class="docDate">
+	<xsl:text>on </xsl:text>
+	<xsl:apply-templates mode="print" select="tei:docDate"/>
+      </p>
+    </xsl:if>
+    <hr/>
 </xsl:template>
 
 <xsl:template match="tei:body|tei:back" mode="split">
