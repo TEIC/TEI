@@ -20,7 +20,6 @@ $Date$, $Revision$, $Author$
 <xsl:import href="../html/teihtml.xsl"/>
 <xsl:import href="../html/teihtml-odds.xsl"/>
 <xsl:output method="html"/>
-<xsl:param name="teiP4Compat">false</xsl:param>
 <xsl:key name="NameToID" match="tei:*" use="@ident"/>
 
 <xsl:param name="BITS">Bits</xsl:param>

@@ -411,16 +411,16 @@ $Date$, $Revision$, $Author$
     <xsl:with-param name="url" select="@id|@xml:id"/>
     <xsl:with-param name="name" select="@ident"/>
       </xsl:call-template>
-      <xsl:text> </xsl:text>
+      <xsl:text>: </xsl:text>
     </xsl:for-each>
     </tei:item>
     <tei:item>Classes defined:
     <xsl:for-each select="key('ClassModule',@ident)">
-  <xsl:call-template name="linkTogether">
-    <xsl:with-param name="url" select="@id|@xml:id"/>
-    <xsl:with-param name="name" select="@ident"/>
-  </xsl:call-template>
-  <xsl:text> </xsl:text>
+      <xsl:call-template name="linkTogether">
+	<xsl:with-param name="url" select="@id|@xml:id"/>
+	<xsl:with-param name="name" select="@ident"/>
+      </xsl:call-template>
+      <xsl:text>: </xsl:text>
     </xsl:for-each>
     </tei:item>
     <tei:item>Macros defined:
@@ -429,7 +429,7 @@ $Date$, $Revision$, $Author$
 	<xsl:with-param name="url" select="@id|@xml:id"/>
 	<xsl:with-param name="name" select="@ident"/>
       </xsl:call-template>
-      <xsl:text> </xsl:text>
+      <xsl:text>: </xsl:text>
     </xsl:for-each>
     </tei:item>
   </tei:list>
@@ -443,7 +443,7 @@ $Date$, $Revision$, $Author$
 
 <xsl:template match="tei:remarks" mode="weave">
     <xsl:apply-templates/>
-    </xsl:template>
+</xsl:template>
 
 <xsl:template match="tei:remarks">
   <xsl:if test="*//text()">

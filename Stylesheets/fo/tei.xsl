@@ -72,8 +72,5 @@ XSL stylesheet to format TEI XML documents to FO or HTML
 <xsl:include href="tei-math.xsl"/>
 <xsl:include href="tei-makecolspec.xsl"/>
 
-<xsl:variable name="processor">
-   <xsl:value-of select="system-property('xsl:vendor')"/>
-</xsl:variable>
 
 </xsl:stylesheet>

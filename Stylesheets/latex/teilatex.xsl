@@ -21,10 +21,6 @@ XSL stylesheet to format TEI XML documents to LaTeX
 <xsl:param name="latexLogoFile2"/>
 <xsl:param name="latexLogoFile3"/>
 <xsl:param name="useHeaderFrontMatter"/>
-<xsl:param name="dateWord"></xsl:param>
-<xsl:param name="authorWord">Author:</xsl:param>
-<xsl:param name="revisedWord">revised</xsl:param>
-<xsl:param name="dateWord"></xsl:param>
 <xsl:param name="REQUEST"></xsl:param>
 <xsl:param name="standardScale">1</xsl:param>
 <xsl:output method="text" encoding="utf8"/>
@@ -88,6 +84,8 @@ XSL stylesheet to format TEI XML documents to LaTeX
 \usepackage{fancyvrb}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
+\usepackage{tipa}
+\DeclareTextSymbol{\textpi}{OML}{25}
 \pagestyle{fancy} 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}

@@ -15,9 +15,6 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
   version="1.0">
 
-<xsl:param name="processor">
-   <xsl:value-of select="system-property('xsl:vendor')"/>
-</xsl:param>
 
 <xsl:variable name="masterFile">
  <xsl:choose>
