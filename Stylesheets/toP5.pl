@@ -4,7 +4,7 @@ $opt_date="";
 $result = GetOptions ("version=s", "date=s", );
 while (<>) {
 if (/^##LICENSE/) {
-    print "Copyright 1999-2003 Sebastian Rahtz / Text Encoding Initiative Consortium
+    print "Copyright 1999-2004 Sebastian Rahtz / Text Encoding Initiative Consortium
                                               
     This is an XSLT stylesheet for transforming TEI (version P5) XML documents
 
