@@ -10,13 +10,12 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 --> 
 <xsl:stylesheet
   xmlns:tei="http://www.tei-c.org/ns/1.0"
- 
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:saxon="http://icl.com/saxon"
-    xmlns:exsl="http://exslt.org/common"
-    exclude-result-prefixes="saxon exsl" 
-    extension-element-prefixes="exsl saxon"
-    version="1.1">
+  version="1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:saxon="http://icl.com/saxon"
+  xmlns:exsl="http://exslt.org/common"
+  exclude-result-prefixes="saxon exsl" 
+  extension-element-prefixes="exsl saxon">
 
 <xsl:template name="outputChunk">
  <xsl:param name="ident"/>
@@ -70,56 +69,56 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 </xsl:if>
     </xsl:when>
   <xsl:when test="element-available('xsl:document')">
-  <xsl:if test="$verbose='true'">
-<xsl:message>Opening <xsl:value-of select="$outName"/> with xsl:document</xsl:message></xsl:if>
-      <xsl:document encoding="{$outputEncoding}" 
-               method="html" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN" href="{$outName}">
-        <xsl:copy-of select="$content"/>
-      </xsl:document> 
-<xsl:if test="$verbose='true'">
-<xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
-</xsl:if>
-    </xsl:when>
+    <xsl:if test="$verbose='true'">
+    <xsl:message>Opening <xsl:value-of select="$outName"/> with xsl:document</xsl:message></xsl:if>
+    <xsl:document encoding="{$outputEncoding}" 
+		  method="html" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN" href="{$outName}">
+      <xsl:copy-of select="$content"/>
+    </xsl:document> 
+    <xsl:if test="$verbose='true'">
+      <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
+    </xsl:if>
+  </xsl:when>
   <xsl:when test="contains($processor,'SAXON 6')">
-  <xsl:if test="$verbose='true'"><xsl:message>Opening <xsl:value-of select="$outName"/> with Saxon 6</xsl:message></xsl:if>
-      <saxon:output encoding="{$outputEncoding}" 
-               method="html" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN" file="{$outName}" href="{$outName}">
-        <xsl:copy-of select="$content"/>
-      </saxon:output> 
-<xsl:if test="$verbose='true'">
-<xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
-</xsl:if>
+    <xsl:if test="$verbose='true'"><xsl:message>Opening <xsl:value-of select="$outName"/> with Saxon 6</xsl:message></xsl:if>
+    <saxon:output encoding="{$outputEncoding}" 
+		  method="html" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN" file="{$outName}" href="{$outName}">
+      <xsl:copy-of select="$content"/>
+    </saxon:output> 
+    <xsl:if test="$verbose='true'">
+      <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
+    </xsl:if>
   </xsl:when>
   <xsl:when test="contains($processor,'SAXON 5')">
-  <xsl:if test="$verbose='true'"><xsl:message>Opening <xsl:value-of select="$outName"/> with Saxon 5</xsl:message></xsl:if>
-      <saxon:output encoding="{$outputEncoding}" 
-               method="html" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN" file="{$outName}" href="{$outName}">
-        <xsl:copy-of select="$content"/>
-      </saxon:output> 
-<xsl:if test="$verbose='true'">
-<xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
-</xsl:if>
+    <xsl:if test="$verbose='true'"><xsl:message>Opening <xsl:value-of select="$outName"/> with Saxon 5</xsl:message></xsl:if>
+    <saxon:output encoding="{$outputEncoding}" 
+		  method="html" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN" file="{$outName}" href="{$outName}">
+      <xsl:copy-of select="$content"/>
+    </saxon:output> 
+    <xsl:if test="$verbose='true'">
+      <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
+    </xsl:if>
   </xsl:when>
   <xsl:when test="contains($processor,'Apache')">
-  <xsl:if test="$verbose='true'"><xsl:message>Opening <xsl:value-of select="$outName"/>  with Xalan</xsl:message></xsl:if>
-      <xalan:write 
-        xsl:extension-element-prefixes="xalan"
-        xmlns:xalan="org.apache.xalan.xslt.extensions.Redirect"
-        file="{$outName}">
-        <xsl:copy-of select="$content"/>
-      </xalan:write>
-<xsl:if test="$verbose='true'">
-<xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
-</xsl:if>
+    <xsl:if test="$verbose='true'"><xsl:message>Opening <xsl:value-of select="$outName"/>  with Xalan</xsl:message></xsl:if>
+    <xalan:write 
+	xsl:extension-element-prefixes="xalan"
+	xmlns:xalan="org.apache.xalan.xslt.extensions.Redirect"
+	file="{$outName}">
+      <xsl:copy-of select="$content"/>
+    </xalan:write>
+    <xsl:if test="$verbose='true'">
+      <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
+    </xsl:if>
   </xsl:when>
   <xsl:otherwise>
-      <xsl:if test="$verbose='true'">
+    <xsl:if test="$verbose='true'">
       <xsl:message>Creation of <xsl:value-of select="$outName"/> not possible with <xsl:value-of select="$processor"/></xsl:message>
-      </xsl:if>
+    </xsl:if>
     <xsl:copy-of select="$content"/>
   </xsl:otherwise>
   </xsl:choose>
-
+  
 </xsl:template>
 
 </xsl:stylesheet>
