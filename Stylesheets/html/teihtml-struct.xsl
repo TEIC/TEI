@@ -364,8 +364,8 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
       </xsl:choose>
       
       <xsl:if test="not(ancestor-or-self::tei:TEI[@rend='nomenu'])">
-	  <xsl:call-template name="nextLink"/>
 	  <xsl:call-template name="previousLink"/>
+	  <xsl:call-template name="nextLink"/>
       </xsl:if>
     </p>
   </xsl:template>

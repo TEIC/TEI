@@ -35,18 +35,18 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 			$numberFrontFigures='true'">
 	  <xsl:value-of select="$figureWord"/>
 	  <xsl:text> </xsl:text>
-	  <xsl:number level="any"  from="tei:front"/>.<xsl:text> </xsl:text>
+	  <xsl:number level="any"   count="tei:figure[tei:head]" from="tei:front"/>.<xsl:text> </xsl:text>
 	</xsl:when>
 	<xsl:when test="ancestor::tei:back and
 			$numberBackFigures='true'">
 	  <xsl:value-of select="$figureWord"/>
 	  <xsl:text> </xsl:text>
-	  <xsl:number level="any" from="tei:back"/>.<xsl:text> </xsl:text>
+	  <xsl:number level="any"  count="tei:figure[tei:head]" from="tei:back"/>.<xsl:text> </xsl:text>
 	</xsl:when>
 	<xsl:when test="ancestor::tei:body and $numberFigures='true'" >
 	  <xsl:value-of select="$figureWord"/>
 	  <xsl:text> </xsl:text>
-	  <xsl:number level="any"  from="tei:body"/>.<xsl:text> </xsl:text>
+	  <xsl:number level="any"   count="tei:figure[tei:head]" from="tei:body"/>.<xsl:text> </xsl:text>
 	</xsl:when>
       </xsl:choose>
       <xsl:apply-templates select="tei:head" mode="plain"/>
@@ -117,13 +117,21 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 	<xsl:if test="not($ID='')">
 	  <xsl:attribute name="name"><xsl:value-of select="$ID"/></xsl:attribute>
 	</xsl:if>
-	<xsl:if test="string-length(@rend) &gt;0">
-	  <xsl:attribute name="class"><xsl:value-of select="@rend"/></xsl:attribute>
-	</xsl:if>
 	<img src="{$graphicsPrefix}{$File}">
-	  <xsl:if test="@rend='inline'">
-	    <xsl:attribute name="border">0</xsl:attribute>
-	  </xsl:if>
+	  <xsl:choose>
+	    <xsl:when test="not(@rend='')">
+	      <xsl:attribute name="class"><xsl:value-of select="@rend"/></xsl:attribute>
+	    </xsl:when>
+	    <xsl:when test="@rend = 'simple'">
+	      <xsl:attribute name="border">0</xsl:attribute>
+	    </xsl:when>
+	    <xsl:when test="@rend='inline'">
+	      <xsl:attribute name="border">0</xsl:attribute>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:attribute name="border">0</xsl:attribute>
+	    </xsl:otherwise>
+	  </xsl:choose>
 	  <xsl:if test="@width&gt;0 and not(contains(@width,'in'))">
 	    <xsl:attribute name="width"><xsl:value-of select="@width"/></xsl:attribute>
 	  </xsl:if>
@@ -143,7 +151,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
       <xsl:text> </xsl:text>
       <xsl:for-each
 	  select="self::tei:figure|parent::tei:figure">
-	<xsl:number level="any"/>
+	<xsl:number level="any" count="tei:figure[tei:head]"/>
       </xsl:for-each>
       file <xsl:value-of select="$File"/>
       <xsl:choose>
