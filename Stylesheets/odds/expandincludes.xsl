@@ -26,7 +26,10 @@ rng:includes
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" 
   xmlns:f="http://axkit.org/NS/xsp/perform/v1" 
   xmlns:tei="http://www.tei-c.org/ns/1.0" 
-  exclude-result-prefixes="exsl rng a f tei s" 
+  xmlns:cc="http://web.resource.org/cc/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  exclude-result-prefixes="exsl rng a f tei s rdf dc cc" 
   xmlns:rng="http://relaxng.org/ns/structure/1.0" 
   version="1.0">
 

@@ -700,7 +700,8 @@ select="@key"/></xsl:message>
 	    <xsl:with-param name="content">
 	      <Wrapper>
 		<rng:define name="{@ident}" >
-		  <xsl:if test="starts-with(@ident,'macro.component')">
+		  <xsl:if test="starts-with(@ident,'macro.component')
+				or @combine='true'">
 		    <xsl:attribute name="combine">choice</xsl:attribute>
 		  </xsl:if>
 		  <xsl:choose>
