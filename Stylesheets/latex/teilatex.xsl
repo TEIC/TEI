@@ -206,6 +206,7 @@ pdfcreator={Oxford University Computing Services}
  <xsl:text disable-output-escaping="yes">
 \catcode`\$=12\relax
 \catcode`\^=12\relax
+\catcode`\~=12\relax
 \catcode`\#=12\relax
 \catcode`\%=12\relax
 </xsl:text>
