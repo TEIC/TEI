@@ -4,7 +4,6 @@ declare namespace rng="http://relaxng.org/ns/structure/1.0";
 {
 let $module := request:request-parameter("module", "")
 for $c in collection("/db/TEI")//tei:elementSpec[@module=$module]
-order by $c/@ident
 return
 <teiElement>
   <elementName>{data($c/@ident)}</elementName>

@@ -229,7 +229,7 @@ class romaDom extends domDocument
         $oRoot = $oElementDom->appendChild( new domElement( 'addedElements' ) );
 
 	$this->getXPath( $oXPath );
-        $aoElements = $oXPath->query( "//tei:schemaSpec/tei:elementSpec" );
+        $aoElements = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@mode='add']" );
 
 	if ( ! is_object( $aoElements->item(0) ) )
 	  {
@@ -1183,7 +1183,7 @@ class romaDom extends domDocument
 	      $this->clearLanguageCustomization();
 	      
               $oXSL = new domDocument();
-              $oXSL->load( roma_schemaStylesheetDir . '/teic/translate-odd.xsl' );
+              $oXSL->load( roma_schemaStylesheetDir . '/base/p5/odds/translate-odd.xsl' );
 	    
               $oProc = new XsltProcessor();
               $oProc->importStylesheet( $oXSL );
@@ -1849,7 +1849,7 @@ class romaDom extends domDocument
     protected function getSchemaRNGDom( &$oRNG )
       {
 	$oXSL = new domDocument();
-	$oXSL->load( roma_schemaStylesheetDir . '/teic/odd2relax.xsl' );
+	$oXSL->load( roma_schemaStylesheetDir . '/base/p5/odds/odd2relax.xsl' );
 	// set schemaBaseURL to right place
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
@@ -1907,7 +1907,7 @@ class romaDom extends domDocument
 
 	
 	$oXSL = new domDocument();
-	$oXSL->load( roma_schemaStylesheetDir . '/oxford/p5/odds/expandincludes.xsl' );
+	$oXSL->load( roma_schemaStylesheetDir . '/base/p5/odds/expandincludes.xsl' );
 
 	if ( $bBar )
 	    $this->updateProgressBar( '60' );
@@ -1956,7 +1956,7 @@ class romaDom extends domDocument
 	    $this->updateProgressBar( '50' );
 
 	$oXSL = new domDocument();
-	$oXSL->load( roma_schemaStylesheetDir . '/oxford/p5/odds/expandincludes.xsl' );
+	$oXSL->load( roma_schemaStylesheetDir . '/base/p5/odds/expandincludes.xsl' );
 	
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
@@ -2006,7 +2006,7 @@ class romaDom extends domDocument
 	    $this->updateProgressBar( '50' );
 
 	$oXSL = new domDocument();
-	$oXSL->load( roma_schemaStylesheetDir . '/oxford/p5/odds/expandincludes.xsl' );
+	$oXSL->load( roma_schemaStylesheetDir . '/base/p5/odds/expandincludes.xsl' );
 	
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
@@ -2058,16 +2058,16 @@ class romaDom extends domDocument
 
 
 	$oXSL = new domDocument();
-	$oXSL->load( roma_schemaStylesheetDir . '/oxford/p5/odds/expandincludes.xsl' );
+	$oXSL->load( roma_schemaStylesheetDir . '/base/p5/odds/expandincludes.xsl' );
 
 	if ( $bBar )
 	    $this->updateProgressBar( '60' );
 
 	$oXSL2 = new domDocument();
-	$oXSL2->load( roma_schemaStylesheetDir . '/oxford/p5/odds/nomorechoice.xsl' );
+	$oXSL2->load( roma_schemaStylesheetDir . '/base/p5/odds/nomorechoice.xsl' );
 
 	$oXSL3 = new domDocument();
-	$oXSL3->load( roma_schemaStylesheetDir . '/oxford/p5/odds/simplify.xsl' );
+	$oXSL3->load( roma_schemaStylesheetDir . '/base/p5/odds/simplify.xsl' );
 
 	if ( $bBar )
 	    $this->updateProgressBar( '70' );

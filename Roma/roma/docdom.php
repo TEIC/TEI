@@ -415,7 +415,7 @@ class docDom extends domDocument
       {
 	//create the teiLite
         $oXSL = new domDocument();
- 	$oXSL->load( roma_schemaStylesheetDir . '/' . 'teic/teixml-odds.xsl'  );
+ 	$oXSL->load( roma_schemaStylesheetDir . '/' . 'base/p5/odds/teixml-odds.xsl'  );
 
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );

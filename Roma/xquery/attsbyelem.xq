@@ -13,7 +13,6 @@ return
     {$a/@usage}
     {data($a/@ident)}</name>
     <default>{data($a/tei:defaultVal)}</default>
-    <valList>{$a/tei:valList/@type}{$a/tei:valList/*}</valList>
     <datatype>{$a/tei:datatype/*}</datatype>
     <desc>{data($a/tei:desc)}</desc>
 </att>

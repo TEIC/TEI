@@ -146,8 +146,8 @@ define( 'roma_ressource_path', 'roma/res' );
 // different_stylesheets
 //
 define( 'roma_styleheet_docHtml', 'http://localhost/stylesheet/teic/teihtml-teic-P5.xsl' );
-define( 'roma_styleheet_docPDF', 'http://localhost/stylesheet/oxford/p5/fo/tei.xsl' );
-define( 'roma_styleheet_docLatex', 'http://localhost/stylesheet/oxford/p5/latex/teilatex.xsl' );
+define( 'roma_styleheet_docPDF', 'http://localhost/stylesheet/base/p5/fo/tei.xsl' );
+define( 'roma_styleheet_docLatex', 'http://localhost/stylesheet/base/p5/latex/teilatex.xsl' );
 define( 'roma_customization_validator', 'http://localhost/schema/relaxng/p5/p5odds.rng' );
 
 define( 'roma_exist_server', 'localhost:8080' );

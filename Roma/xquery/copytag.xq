@@ -6,7 +6,7 @@ declare namespace html="http://www.w3.org/1999/xhtml";
      xmlns:xi="http://www.w3.org/2001/XInclude"> 
 {
 let $name := request:request-parameter("name", "")
-for $c in collection("/db/TEI")//tei:elementSpec[@ident=$name]|tei:classSpec[@ident=$name]|tei:macroSpec[@ident=$name]
+for $c in collection("/db/TEI")//(tei:elementSpec|tei:classSpec|tei:macroSpec)[@ident=$name]
 return $c
 }
 </TEI> 
