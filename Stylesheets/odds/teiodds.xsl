@@ -973,9 +973,9 @@ in change mode and there is no attList -->
 
 
 <xsl:template match="comment()" mode="verbatim">
-  <xsl:text>&lt;!--</xsl:text>
+  <xsl:text>&#10;&lt;!--</xsl:text>
   <xsl:value-of select="."/>
-  <xsl:text>--&gt;</xsl:text>
+  <xsl:text>--&gt;&#10;</xsl:text>
 </xsl:template>
 
 <xsl:template name="wraptext">
