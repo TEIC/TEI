@@ -129,7 +129,7 @@ created on <xsl:value-of select="edate:date-time()"/>.
 <xsl:template match="tei:attDef[@mode='delete']" mode="tangle"/>
 
 <xsl:template match="tei:attDef" mode="tangle">
-  <xsl:if test="not(@ident='xmlns') and not(@mode='add')">
+  <xsl:if test="not(@ident='xmlns')">
     <xsl:choose>
       <xsl:when test="@usage='req'">
 	<rng:ref name="{ancestor::tei:attList/../@ident}.attributes.{@ident}"/>
