@@ -1,0 +1,55 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" xml:id="PERSNAME" usage="opt" ident="persName">
+<equiv/>
+<gloss>personal name</gloss>
+<desc>contains a proper noun or proper-noun phrase referring to
+a person, possibly including any or all of the person's forenames,
+surnames, honorifics, added names, etc.</desc>
+  
+  
+  <classes>
+    <memberOf key="tei.demographic"/>
+    <memberOf key="tei.names"/>
+    <memberOf key="tei.data"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+        <rng:ref name="tei.personPart"/>
+        <rng:ref name="tei.phrase"/>
+        <rng:ref name="tei.Incl"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <attList>
+    <attDef ident="type" usage="mwa">
+	<equiv/>
+	<desc>describes the personal name more fully using an open-ended
+list  of words or phrases which help to indicate the function, e.g.
+<q>married name</q>, <q>maiden name</q>,
+<q>pen name</q>, <q>religious name</q>, etc.</desc>
+      
+      
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>Any string of characters.</valDesc>
+      
+    </attDef>
+  </attList>
+  
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <persName><foreName>Edward</foreName><foreName>George</foreName><surname type="linked">Bulwer-Lytton</surname>,
+   <roleName>Baron Lytton of
+      <placeName>Knebworth</placeName></roleName></persName>
+    </egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#NDPER"/>
+  </listRef>
+</elementSpec>

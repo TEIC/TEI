@@ -1,0 +1,47 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="CUSTEVENT" ident="custEvent">
+<equiv/>
+<gloss/>
+<desc xml:id="custevent.desc">describes a single event during the custodial history of a manuscript.</desc>
+  
+  
+  <classes>
+    <memberOf key="tei.datable"/>
+  </classes>
+  <content>
+<!--<!ELEMENT custEvent  - -  (p+)>-->
+    <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:ref name="tei.paragraph"/>
+    </rng:oneOrMore>
+  </content>
+  <attList>
+    <attDef ident="type">
+	<equiv/>
+	<gloss/>
+	<desc>specifies the type of event, for example conservation, photography, exhibition, etc.</desc>
+      
+      
+      
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Key"/></datatype>
+      
+      <valDesc>any convenient typology may be used</valDesc>
+      
+      
+    </attDef>
+  </attList>
+  
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0"><![CDATA[<custEvent type="photography">
+<date>12 Dec 1964</date>
+<p>Photographed by David Cooper</p>
+</custEvent>]]></egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#msadch"/>
+  </listRef>
+</elementSpec>

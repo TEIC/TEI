@@ -1,0 +1,83 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="NORMALZN" usage="opt" ident="normalization">
+<equiv/>
+<gloss/>
+<desc>indicates the extent of normalization or regularization of the
+original source carried out in converting it to electronic form.</desc>
+  
+  
+  <classes>
+    <memberOf key="tei.declarable"/>
+  </classes>
+  <content>
+    <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:ref name="tei.paragraph"/>
+    </rng:oneOrMore>
+  </content>
+  <attList>
+    <attDef ident="source" usage="opt">
+	<equiv/>
+	<desc>indicates the authority for any normalization carried out.
+    </desc>
+      
+      
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>Should really be a bibliographic reference of some kind
+   </valDesc>
+      
+    </attDef>
+    <attDef ident="method" usage="opt">
+	<equiv/>
+	<desc>indicates the method adopted to indicate normalizations within
+         the text.
+   </desc>
+      
+      
+      <defaultVal>silent</defaultVal>
+      <valList type="closed">
+        <valItem ident="silent">
+          
+          <equiv/>
+          <gloss>normalization made silently
+  </gloss>
+        </valItem>
+        <valItem ident="tags">
+          
+          <equiv/>
+          <gloss>normalization represented using editorial tags
+   </gloss>
+        </valItem>
+      </valList>
+      
+    </attDef>
+  </attList>
+  
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <editorialDecl>
+        <normalization source="WWP" method="tags">
+          <p>The use of both upper- and lower-case i, j, u, v, and vv has
+      been normalized to modern 20th century typographical practices
+      using the <seg type="ident" subtype="gi">orig</seg> element and
+      its <seg type="ident" subtype="att ">reg</seg> attribute. ... </p>
+
+        </normalization>
+        <normalization source="WWP" method="silent">
+          <p>Spacing between words and following punctuation has been
+      regularized to zero spaces; spacing between words has been
+      regularized to one space.</p>
+        </normalization>
+
+      </editorialDecl>
+    </egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#HD53"/>
+    <ptr target="#CCAS2"/>
+  </listRef>
+</elementSpec>

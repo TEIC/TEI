@@ -1,0 +1,94 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" xml:id="PRON" usage="rec" ident="pron">
+<equiv/>
+<gloss>pronunciation</gloss>
+<desc>contains the pronunciation(s) of the word.</desc>
+    
+    
+    <classes>
+        <memberOf key="tei.dictionaryParts"/>
+        <memberOf key="tei.formInfo"/>
+        <memberOf key="tei.dictionaries"/>
+    </classes>
+    <content>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
+    </content>
+    <attList>
+        <attDef ident="extent" usage="opt">
+	<equiv/>
+	<desc>indicates whether the pronunciation is for whole word or part. </desc>
+            
+            <datatype>
+                <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+            </datatype>
+            <defaultVal>full</defaultVal>
+            <valList type="open">
+                <valItem ident="full">
+                    <equiv/>
+                    <gloss>full form</gloss>
+                </valItem>
+                <valItem ident="pref">
+                    <equiv/>
+                    <gloss>prefix</gloss>
+                </valItem>
+                <valItem ident="suff">
+                    <equiv/>
+                    <gloss>suffix</gloss>
+                </valItem>
+                <valItem ident="part">
+                    <equiv/>
+                    <gloss>partial</gloss>
+                </valItem>
+            </valList>
+            
+            <exemplum>
+                <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+            </exemplum>
+            <remarks>
+                <p>
+                    <!-- [Merge this and similar attributes into a class <term>partials</term>? -Ed.] -->
+                </p>
+            </remarks>
+        </attDef>
+        <attDef ident="notation" usage="rwa">
+	<equiv/>
+	<desc>indicates what notation is used for the pronunciation, if more than one occurs in
+                the machine-readable dictionary. </desc>
+            
+            <datatype>
+                <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Code"/>
+            </datatype>
+            <valDesc>Sample values: IPA, Murray, ... </valDesc>
+            
+            <exemplum>
+                <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+            </exemplum>
+            <remarks>
+                <p/>
+            </remarks>
+        </attDef>
+    </attList>
+    
+    <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <entry>
+                <form>
+                    <orth>obverse</orth>
+                    <pron>&amp;ACCENT&#xE4;b-&amp;accentv&#x259;rs</pron>, <pron extent="prefix">&#xE4;b-&amp;ACCENT</pron>, <pron extent="prefix">&#x259;b-&amp;ACCENT</pron>
+                </form>
+                <gramGrp>
+                    <pos>n</pos>
+                </gramGrp>
+            </entry>
+        </egXML>
+    </exemplum>
+    <remarks/>
+    <listRef>
+        <ptr target="#DITPFO" type="div2"/>
+    </listRef>
+</elementSpec>

@@ -1,0 +1,65 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="iso-fs" xml:id="NUMERIC" usage="rwa" ident="numeric">
+<equiv/>
+<gloss>Numeric value</gloss>
+<desc>represents the value part of a feature-value specification
+  which contains a numeric value or range.</desc>
+  
+  
+  <classes>
+    <memberOf key="tei.singleVal"/>
+  </classes>
+  <content>
+    <rng:empty/>
+  </content>
+  <attList>
+    <attDef ident="value" usage="req">
+	<equiv/>
+	<desc>supplies a lower  bound for the numeric value represented,
+      and also (if  <ident>max</ident> is not supplied) its upper bound.</desc>
+      
+      <datatype><rng:data type="decimal"/></datatype>
+      <valDesc>A real number or integer.</valDesc>
+      
+    </attDef>
+    <attDef ident="max" usage="opt">
+	<equiv/>
+	<desc>supplies an upper bound for the numeric value represented.</desc>
+      
+      <datatype><rng:data type="decimal"/></datatype>
+      <valDesc>A real number or integer.</valDesc>
+      
+    </attDef>
+    <attDef ident="trunc" usage="opt">
+	<equiv/>
+	<desc>specifies whether the value represented should be
+	  truncated to give an integer value.</desc>
+      
+      <datatype><rng:data type="boolean"/></datatype>
+          
+    </attDef>
+  </attList>
+  
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <numeric value="42"/>
+    </egXML>
+<p>This represents the numeric value 42.</p>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <numeric value="42.45" max="50" trunc="true"/>
+    </egXML>
+<p>This represents any of the nine possible integer values between 42 and 50
+  inclusive. If the <ident>trunc</ident> attribute had the value NO,
+  this example would represent any of the infinite number of numeric values between 42.45 and
+  50.0</p></exemplum>
+<remarks><p>It is an error to supply the <ident>max</ident> attribute
+in the absence of a value for the <ident>value</ident> attribute.</p>
+</remarks> <listRef>
+    <ptr target="#FSSY" type="div3"/>
+  </listRef>
+</elementSpec>

@@ -1,0 +1,55 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" xml:id="TIMESTRU" usage="opt" ident="timeStruct">
+<equiv/>
+<gloss/>
+<desc>contains an internally structured representation for a time of day.</desc>
+  
+  
+  <classes>
+    <memberOf key="tei.data"/>
+    <memberOf key="tei.temporalExpr"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+        <rng:ref name="tei.temporalExpr"/>
+        <rng:ref name="tei.Incl"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <attList>
+    <attDef ident="zone" usage="rwa">
+	<equiv/>
+	<desc>indicates time zone or place name wherever this is necessary to
+		evaluate a temporal expression.</desc>
+      
+      
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>contains a word or phrase such as
+		<mentioned>GMT</mentioned> or <mentioned>Eastern Standard
+		  Time</mentioned> defining a time zone.</valDesc>
+      
+    </attDef>
+  </attList>
+  
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <timeStruct value="16:15:00">
+        <hour>four</hour>
+        <minute>fifteen</minute>
+      </timeStruct>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">May contain temporal components and character data
+	only.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#CONADA" type="div3"/>
+  </listRef>
+</elementSpec>

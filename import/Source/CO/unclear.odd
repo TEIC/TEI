@@ -1,0 +1,110 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="UNCLEAR" usage="opt" ident="unclear">
+<equiv/>
+<gloss/>
+<desc>contains a word, phrase, or passage which cannot be transcribed
+with certainty because it is illegible or inaudible in the source.</desc>
+  <classes>
+    <memberOf key="tei.edit"/>
+    <memberOf key="tei.chooseable"/>
+  </classes>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
+  </content>
+  <attList>
+    <attDef ident="reason" usage="opt">
+	<equiv/>
+	<desc>indicates why the material is hard to transcribe.</desc>
+      
+      
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>any phrase describing the difficulty, e.g. <mentioned>faded</mentioned>,
+<mentioned>ambient noise</mentioned>, <mentioned>passing truck</mentioned>, <mentioned>ill formed</mentioned>,
+<mentioned>eccentric ductus</mentioned>.</valDesc>
+      
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+    <attDef ident="resp" usage="opt">
+	<equiv/>
+	<desc>indicates the individual responsible for the transcription of
+the word, phrase, or passage contained with the <gi>unclear</gi>
+element.</desc>
+      
+      
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Key"/></datatype>
+      <valDesc>must be one of the identifiers declared in the document
+header, associated with a person asserted as responsible for some
+aspect of the text's creation, transcription, editing, or encoding
+(see chapter <ptr target="#CE"/>).</valDesc>
+      
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+    <attDef ident="cert" usage="rec">
+	<equiv/>
+	<desc>signifies the degree of certainty ascribed to the transcription
+of the text contained within the <gi>unclear</gi> element.</desc>
+      
+      
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+    <attDef ident="hand" usage="opt">
+	<equiv/>
+	<desc>Where the difficulty in transcription arises from action
+(partial deletion, etc.) assignable to an identifiable hand, signifies
+the hand responsible for the action.</desc>
+      
+      
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
+      <valDesc>must be one of the hand identifiers declared in the document
+header (see section <ptr target="#PHDH"/>).</valDesc>
+      
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+    <attDef ident="agent" usage="opt">
+	<equiv/>
+	<desc>Where the difficulty in transcription arises from an
+identifiable cause, signifies the causative agent.</desc>
+      
+      
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>any prose description of the agent.</valDesc>
+      
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+  </attList>
+  
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+  </exemplum>
+  <remarks>
+    <p>The same element is used for all cases of uncertainty in
+the transcription of element content, whether for written or spoken
+material.  For other aspects of certainty, uncertainty, and
+reliability of tagging and transcription, see chapter <ptr target="#CE"/>.</p>
+    <p>The <gi>damage</gi>, <gi>gap</gi>, <gi>del</gi>, <gi>unclear</gi>
+and <gi>supplied</gi> elements may be closely allied in use.  See
+section <ptr target="#PHCOMB"/> for discussion of which element is
+appropriate for which circumstance.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#PHDA"/>
+    <ptr target="#COEDADD"/>
+  </listRef>
+</elementSpec>

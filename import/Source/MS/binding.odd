@@ -1,0 +1,74 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="BINDING" ident="binding">
+<equiv/>
+<gloss/>
+<desc xml:id="binding.desc">contains a description of one binding, i.e. type of covering, boards, etc. applied to a manuscript</desc>
+  
+  
+  <classes>
+    <memberOf key="tei.datable"/>
+  </classes>
+  <content>
+<!--<!ELEMENT binding  - -  (p|decoNote)+>-->
+<rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+<rng:choice>
+<rng:ref name="tei.paragraph"/>
+<rng:ref name="decoNote"/>
+</rng:choice>
+</rng:oneOrMore>
+
+  </content>
+  <attList>
+    <attDef ident="contemporary">
+	<equiv/>
+	<gloss/>
+	<desc>specifies whether or not the binding is contemporary with the majority of its contents</desc>
+      
+      
+      
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.UBoolean"/></datatype>
+      <valList>
+        <valItem ident="yes">
+          <equiv/>
+          <gloss>the binding is contemporaneous with its contents</gloss>
+        </valItem>
+        <valItem ident="no">
+          <equiv/>
+          <gloss>the binding is not contemporaneous with its contents</gloss>
+        </valItem>
+        <valItem ident="unknown">
+          <equiv/>
+          <gloss>the date of either binding or manuscript is unknown</gloss>
+        </valItem>
+      </valList>
+      
+      
+    </attDef>
+  </attList>
+  
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0"><![CDATA[<binding contemporary="yes">
+<p>Contemporary blind stamped leather over wooden 
+boards with evidence of a fore edge clasp closing 
+to the back cover.</p>
+</binding>]]></egXML>
+  </exemplum><exemplum>    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0"><![CDATA[<bindingDesc>
+<binding contemporary="no">
+<p>Quarter bound by the Phillipps' binder, Bretherton, 
+with his sticker on the front pastedown.</p>
+</binding>
+<binding contemporary="no">
+<p>Rebound by an unknown 19th c. company; edges cropped and
+gilt.
+</binding>
+</bindingDesc>]]></egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#msph4"/>
+  </listRef>
+</elementSpec>

@@ -1,0 +1,149 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="nets" xml:id="NODE" usage="rwa" ident="node">
+<equiv/>
+<gloss/>
+<desc>encodes a node, a possibly labeled point in a graph.</desc>
+  
+  
+  <content>
+    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+  </content>
+  <attList>
+    <attDef ident="label" usage="opt">
+	<equiv/>
+	<desc>gives a label for a node.</desc>
+      
+      
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>A character string.</valDesc>
+      
+    </attDef>
+    <attDef ident="label2" usage="opt">
+	<equiv/>
+	<desc>gives a second label for a node.</desc>
+      
+      
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>A character string.</valDesc>
+      
+      <remarks>
+        <p>Use this attribute together with the <att>label</att>
+attribute if a transducer is being encoded whose actions are
+associated with nodes rather than with arcs.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="value" usage="opt">
+	<equiv/>
+	<desc>provides the value of a node, which is a feature structure or
+other analytic element.</desc>
+      
+      
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
+      <valDesc>A valid identifier.</valDesc>
+      
+    </attDef>
+    <attDef ident="type" usage="opt">
+	<equiv/>
+	<desc>provides a type for a node.</desc>
+      
+      
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valList type="semi">
+        <valItem ident="initial">
+          
+          <equiv/>
+          <gloss>initial node in a transition network</gloss>
+        </valItem>
+        <valItem ident="final">
+          
+          <equiv/>
+          <gloss>final node in a transition network</gloss>
+        </valItem>
+      </valList>
+      
+    </attDef>
+    <attDef ident="adjTo" usage="rwa">
+	<equiv/>
+	<desc>gives the identifiers of the nodes which are adjacent to the current node.</desc>
+      
+      
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/></datatype>
+      <valDesc>A list of identifiers.</valDesc>
+      
+    </attDef>
+    <attDef ident="adjFrom" usage="rwa">
+	<equiv/>
+	<desc>gives the identifiers of the nodes which are adjacent from the current
+node.</desc>
+      
+      
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/></datatype>
+      <valDesc>A list of identifiers.</valDesc>
+      
+    </attDef>
+    <attDef ident="adj" usage="rwa">
+	<equiv/>
+	<desc>gives the identifiers of the nodes which are both adjacent to and
+adjacent from the current node.</desc>
+      
+      
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/></datatype>
+      <valDesc>A list of identifiers.</valDesc>
+      
+      <remarks>
+        <p>Use this attribute instead of the <att>adjTo</att> and
+<att>adjFrom</att> attributes when the graph is undirected and vice
+versa if the graph is directed.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="inDegree" usage="opt">
+	<equiv/>
+	<desc>gives the in degree of the node, the number of nodes which
+are adjacent from the given node.</desc>
+      
+      
+      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="nonNegativeInteger"/></datatype>
+      <valDesc>A non-negative integer.</valDesc>
+      
+    </attDef>
+    <attDef ident="outDegree" usage="opt">
+	<equiv/>
+	<desc>gives the out degree of the node, the number of nodes which
+are adjacent to the given node.</desc>
+      
+      
+      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="nonNegativeInteger"/></datatype>
+      <valDesc>A non-negative integer.</valDesc>
+      
+    </attDef>
+    <attDef ident="degree" usage="opt">
+	<equiv/>
+	<desc>gives the degree of the node, the number of arcs with which
+the node is incident.</desc>
+      
+      
+      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="nonNegativeInteger"/></datatype>
+      <valDesc>A non-negative integer.</valDesc>
+      
+      <remarks>
+        <p>Use this attribute instead of the <att>inDegree</att> and
+<att>outDegree</att> attributes when the graph is undirected and vice
+versa if the graph is directed.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <node xml:id="t6" label="6" type="final" inDegree="2" outDegree="0"/>
+    </egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#GDGR" type="div1"/>
+  </listRef>
+</elementSpec>

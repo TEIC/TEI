@@ -1,0 +1,133 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="MILEST" usage="opt" ident="milestone">
+<equiv/>
+<gloss/>
+<desc>marks the boundary between sections of a text, as indicated by
+changes in a standard reference system.</desc>
+  
+  
+  <classes>
+    <memberOf key="tei.refsys"/>
+  </classes>
+  <content>
+    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+  </content>
+  <attList>
+    <attDef ident="ed" usage="rec">
+	<equiv/>
+	<desc>indicates which edition or version the milestone applies to.</desc>
+      
+      
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>Any string of characters; usually a siglum conventionally used
+for the edition.</valDesc>
+      
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+    <attDef ident="unit" usage="req">
+	<equiv/>
+	<desc>indicates what kind of section is changing at this milestone.</desc>
+      
+      
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valList type="semi">
+        <valItem ident="page">
+          
+          <equiv/>
+          <gloss>page breaks in the reference edition.</gloss>
+        </valItem>
+        <valItem ident="column">
+          
+          <equiv/>
+          <gloss>column breaks.</gloss>
+        </valItem>
+        <valItem ident="line">
+          
+          <equiv/>
+          <gloss>line breaks.</gloss>
+        </valItem>
+        <valItem ident="book">
+          
+          <equiv/>
+          <gloss>any units termed book,
+liber, etc.</gloss>
+        </valItem>
+        <valItem ident="poem">
+          
+          <equiv/>
+          <gloss>individual poems in a collection.</gloss>
+        </valItem>
+        <valItem ident="canto">
+          
+          <equiv/>
+          <gloss>cantos or other major sections of a poem.</gloss>
+        </valItem>
+        <valItem ident="stanza">
+          
+          <equiv/>
+          <gloss>stanzas within a poem, book, or canto.</gloss>
+        </valItem>
+        <valItem ident="act">
+          
+          <equiv/>
+          <gloss>acts within a play.</gloss>
+        </valItem>
+        <valItem ident="scene">
+          
+          <equiv/>
+          <gloss>scenes within a play or act.</gloss>
+        </valItem>
+        <valItem ident="section">
+          
+          <equiv/>
+          <gloss>sections of any kind.</gloss>
+        </valItem>
+        <valItem ident="absent">
+          
+          <equiv/>
+          <gloss>passages not present in the reference edition.</gloss>
+        </valItem>
+      </valList>
+      
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+      <remarks>
+        <p>If the milestone marks the beginning of a piece of text not
+present in the reference edition, the special value <term>absent</term>
+may be used as the value of <att>unit</att>.  The normal interpretation
+is that the reference edition does not contain the text which follows,
+until the next <gi>milestone</gi> tag for the edition in question is
+encountered.</p>
+        <p>In addition to the values suggested, other terms may be appropriate
+(e.g. <term>Stephanus</term> for the Stephanus numbers in Plato).</p>
+      </remarks>
+    </attDef>
+  </attList>
+  
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><milestone n="23" ed="La" unit="Dreissiger"/><![CDATA[
+ ...
+ ]]><milestone n="24" ed="AV" unit="verse"/><![CDATA[
+ ...]]></egXML>
+  </exemplum>
+  <remarks>
+    <p>For this element, the global <att>n</att> attribute indicates the new number or other value for the unit which changes
+at this milestone. The special value <mentioned>unnumbered</mentioned> should be used in
+passages which fall outside the normal numbering scheme (e.g. chapter
+heads, poem numbers or titles, or speaker attributions in verse
+drama).</p>
+    <p>Milestones for page and column should precede
+milestones for line numbers. </p>
+  </remarks>
+  <listRef>
+    <ptr target="#CORS5" type="div3"/>
+  </listRef>
+</elementSpec>

@@ -1,0 +1,36 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="gaiji" xml:id="CHARDESC" ident="charDesc">
+<equiv/>
+<gloss>character description</gloss>
+<desc>provides descriptive information about characters or
+glyphs. </desc>
+
+
+<classes>
+ <memberOf key="tei.encoding"/>
+</classes>
+<content>
+<!--(desc?, (char|glyph)+)-->
+<rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:optional>
+        <rng:ref name="desc"/>
+      </rng:optional>
+      <rng:oneOrMore>
+      <rng:choice>
+        <rng:ref name="char"/>
+        <rng:ref name="glyph"/>
+      </rng:choice>
+      </rng:oneOrMore>
+</rng:group>
+</content>
+  <attList/>
+
+<exemplum>
+ <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+</exemplum>
+</elementSpec>

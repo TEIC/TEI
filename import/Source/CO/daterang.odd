@@ -1,0 +1,106 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="DATERANG" usage="opt" ident="dateRange">
+<equiv/>
+<gloss>date range</gloss>
+<desc>contains two dates or another phrase delimiting a time period.</desc>
+  <classes>
+    <memberOf key="tei.data"/>
+    <memberOf key="tei.date"/>
+  </classes>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+  </content>
+  <attList>
+    <attDef ident="calendar" usage="opt">
+	<equiv/>
+	<desc>indicates the system or calendar to which the date belongs.</desc>
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>Recommended values include:
+<term>Gregorian</term>,
+<term>Julian</term>,
+<term>Roman</term>,
+<term>Mosaic</term>,
+<term>Revolutionary</term>,
+<term>Islamic</term>.</valDesc>
+    </attDef>
+    <attDef ident="from" usage="opt">
+	<equiv/>
+	<desc>indicates the starting point of the period in standard form.</desc>
+      <datatype>
+	<rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	  <rng:data type="date"/>
+	  <rng:data type="gYear"/>
+	  <rng:data type="gMonth"/>
+	  <rng:data type="gDay"/>
+	  <rng:data type="gYearMonth"/>
+	  <rng:data type="gMonthDay"/>
+	  <rng:data type="time"/>
+	  <rng:data type="dateTime"/>
+	</rng:choice>
+      </datatype>
+      <valDesc>Any string representing a date in standard format per
+      ISO 8601:2000 5.2.1.1 through 5.2.1.3, extended format</valDesc>
+    </attDef>
+    <attDef ident="to" usage="opt">
+	<equiv/>
+	<desc>indicates the ending point of the period in standard form.</desc>
+
+      <datatype>
+	<rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	  <rng:data type="date"/>
+	  <rng:data type="gYear"/>
+	  <rng:data type="gMonth"/>
+	  <rng:data type="gDay"/>
+	  <rng:data type="gYearMonth"/>
+	  <rng:data type="gMonthDay"/>
+	  <rng:data type="time"/>
+	  <rng:data type="dateTime"/>
+	</rng:choice>
+      </datatype>
+      <valDesc>Any string representing a date in standard format per
+      ISO 8601:2000 5.2.1.1 through 5.2.1.3, extended format</valDesc>
+    </attDef>
+    <attDef ident="exact" usage="opt">
+	<equiv/>
+	<desc>indicates the precision to be attached to either or both dates
+specified.</desc>
+      <valList type="closed">
+        <valItem ident="to">
+          <equiv/>
+          <gloss>the to date is exact</gloss>
+        </valItem>
+        <valItem ident="from">
+          <equiv/>
+          <gloss>the from date is exact</gloss>
+        </valItem>
+        <valItem ident="both">
+          <equiv/>
+          <gloss>both dates are exact</gloss>
+        </valItem>
+        <valItem ident="none">
+          <equiv/>
+          <gloss>both dates are approximate or unspecified</gloss>
+        </valItem>
+      </valList>
+      <remarks>
+<p>Date values must be supplied  in one
+	of the date formats recognized by the W3C <title>XML Schema
+	Part 2: Datatypes</title> specification. </p>
+      </remarks>
+    </attDef>
+  </attList>
+  
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">He edited (<dateRange from="1846" to="1848">1846&ndash;48</dateRange>)
+the first collection of Hungarian folk poetry.</egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#CONADA" type="div3"/>
+  </listRef>
+</elementSpec>
