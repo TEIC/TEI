@@ -1,46 +1,46 @@
-#!/bin/sh
+#!/bin/bash
+
 makeRelax()
 {
-echo Process $ODD to create $N.\{rng,rnc,dtd\} in $Results
-echo 1. make Relax NG from ODD
-xsltproc --stringparam TEISERVER $TEISERVER  --stringparam verbose true --stringparam RNGDIR $RESULTS --stringparam schemaBaseURL $S/ $TEIDIR/base/p5/odds/odd2relax.xsl $ODD
-cd $RESULTS
-xmllint --format $N.rng > $$.xml; mv $$.xml $N.rng
-echo 2. make Relax NG compact from XML
-trang $N.rng $N.rnc  || die " trang fails"
-echo 3. expand includes in Relax NG
-xsltproc -o $N.compiled.rng $TEIDIR/base/p5/odds/expandincludes.xsl $N.rng 
-echo 4. convert expanded form to compact syntax
-trang $N.compiled.rng $N.compiled.rnc  || die " trang fails"
+    echo "1. make Relax NG from ODD"
+    xsltproc --stringparam TEISERVER $TEISERVER  \
+             --stringparam verbose true          \
+             --stringparam RNGDIR $RESULTS       \
+             --stringparam schemaBaseURL $S/ $TEIDIR/base/p5/odds/odd2relax.xsl $ODD
+    cd $RESULTS
+    xmllint --format $N.rng > $$.xml; mv $$.xml $N.rng
+    echo "2. make Relax NG compact from XML"
+    trang $N.rng $N.rnc  || die " trang fails"
+    echo "3. expand includes in Relax NG"
+    xsltproc -o $N.compiled.rng $TEIDIR/base/p5/odds/expandincludes.xsl $N.rng 
+    echo "4. convert expanded form to compact syntax"
+    trang $N.compiled.rng $N.compiled.rnc  || die " trang fails"
 }
+
 makeDTD()
 {
-    echo 6. simplify schema before attempting DTD conversion
-    xsltproc $TEIDIR/base/p5/odds/nomorechoice.xsl $N.compiled.rng | \
-    xsltproc $TEIDIR/base/p5/odds/simplifyfordtd.xsl - | \
-    xsltproc $TEIDIR/base/p5/odds/simplifyfordtd.xsl - | \
-    xsltproc $TEIDIR/base/p5/odds/simplifyfordtd.xsl - | \
-    xsltproc $TEIDIR/base/p5/odds/simplifyfordtd.xsl - | \
-    xsltproc $TEIDIR/base/p5/odds/simplifyfordtd.xsl - | \
-    xsltproc $TEIDIR/base/p5/odds/simplifyfordtd.xsl - | \
-    xsltproc $TEIDIR/base/p5/odds/simplifyfordtd.xsl - | \
-    xsltproc $TEIDIR/base/p5/odds/simplifyfordtd.xsl - | \
-    xsltproc -o $N.temp2.rng $TEIDIR/base/p5/odds/simplifyfordtd.xsl - 
-    echo 7. convert simplified form to DTD
+    echo "6. simplify schema before attempting DTD conversion"
+    xsltproc   $TEIDIR/base/p5/odds/nomorechoice.xsl $N.compiled.rng \
+    | xsltproc $TEIDIR/base/p5/odds/simplifyfordtd.xsl -             \
+    | xsltproc $TEIDIR/base/p5/odds/simplifyfordtd.xsl -             \
+    | xsltproc -o $N.temp2.rng $TEIDIR/base/p5/odds/simplifyfordtd.xsl - 
+    echo "7. convert simplified form to DTD"
     trang $N.temp2.rng $N.dtd || die " trang fails"
     $debug || rm $N.temp2.rng 
     perl -p -i -e 's/ns1://;s/xmlns:ns1/xmlns/' $N.dtd
 
 }
+
 makeDOC() 
 {
-    echo 8. make expanded documented ODD
-    xsltproc --stringparam TEISERVER $TEISERVER $TEIDIR/base/p5/odds/subsetGuidelines.xsl $H/$ODD | xmllint --format - > $N.doc.xml 
+    echo "8. make expanded documented ODD"
+    xsltproc --stringparam TEISERVER $TEISERVER $TEIDIR/base/p5/odds/subsetGuidelines.xsl $H/$ODD \
+    | xmllint --format - > $N.doc.xml 
 }
 
 makeXSD()
 {
-    echo 5. simplify expanded form, convert to XSD and then mangle XSD
+    echo "5. simplify expanded form, convert to XSD and then mangle XSD"
     xsltproc -o $N.temp1.rng $TEIDIR/base/p5/odds/simplifyforxsd.xsl $N.compiled.rng 
     trang  -o disable-abstract-elements $N.temp1.rng $N.xsd || die " trang fails"
     cp $N.xsd $N.temp.xsd
@@ -49,18 +49,43 @@ makeXSD()
     $debug || rm $N.temp1.rng  
     test -f xml.xsd && perl -p -i -e 's/<xs:import.*//' xml.xsd
 }
+
 die()
 {
     echo; echo
     echo "ERROR: $@."
-    echo "This was a fatal error."
+    D=`date "+%Y-%m-%d %H:%M:%S.%N"`
+    echo "This was a fatal error. $D"
     exit 1
 }
 
-export R=/usr/share/xml/tei
-export TEISERVER=http://tei.oucs.ox.ac.uk/TEI/Roma/xquery/
-export TEIDIR=$R/stylesheet
-export S=$R/schema/relaxng/p5/
+usageMsg()
+{
+echo "Roma -- reads in a TEI ODD file that specifies a schema, and tangles it"
+echo "into RelaxNG schema, DTD, and W3C XML Schema, and can weave it into an"
+echo "expanded, self-documented single ODD file. Note that only the first"
+echo "<schemaSpec> encountered in the input ODD file is processed; all others"
+echo "are ignored."
+echo "  Usage: Roma [options] schemaspec [output_directory]"
+echo "  options, shown with defaults:"
+echo "  --xsl=$TEIDIR"
+echo "  --teiserver=$TEISERVER"
+echo "  --schema=$S"
+echo "  options, binary switches:"
+echo "  --doc         # create expanded documented ODD"
+echo "  --nodtd       # suppress DTD creation"
+echo "  --norelax     # suppress RelaxNG creation"
+echo "  --noxsd       # suppress W3C XML Schema creation"
+echo "  --debug       # leave temporary files, etc."
+exit 1
+}
+
+# --------- main routine starts here --------- #
+MYPATH=${0%/*}
+R=/usr/share/xml/tei
+TEISERVER=http://tei.oucs.ox.ac.uk/TEI/Roma/xquery/
+TEIDIR=$R/stylesheet
+S=$R/schema/relaxng/p5/
 debug=false
 dtd=true
 relax=true
@@ -68,52 +93,48 @@ xsd=true
 doc=false
 while test $# -gt 0; do
   case $1 in
-    --xsl=*)    export TEIDIR=`echo $1 | sed 's/.*=//'`;;
+    --xsl=*)    TEIDIR=`echo $1 | sed 's/.*=//'`;;
     --doc)      doc=true;;
-    --teiserver=*) export TEISERVER=`echo $1 | sed 's/.*=//'`;;
+    --teiserver=*) TEISERVER=`echo $1 | sed 's/.*=//'`;;
     --nodtd)    dtd=false;;
     --norelax)  relax=false;;
     --noxsd)    xsd=false;;
     --debug)    debug=true;;
-    --schema=*) tempS=`echo $1 | sed 's/.*=//'`;export S=`cd $tempS && /bin/pwd` || die "cannot change directory to $tempS"
-;;
-     *) break;;
+    --help)     usageMsg;;
+    --schema=*) tempS=`echo $1 | sed 's/.*=//'`;S=`cd $tempS && /bin/pwd` || die "cannot change directory to $tempS" ;;
+     *) if test "$1" = "${1#--}" ; then 
+	   break
+	else
+	   echo "WARNING: Unrecognized option '$1' ignored"
+	   echo "For usage syntax issue $0 --help"
+	fi ;;
   esac
   shift
 done
-ODD=$1
-
-N=`grep "<schemaSpec" $1 | head -1 | sed 's/.*ident=\"\([^\"]*\)\".*/\1/'`
-if test "x$1" = "x"; then
-    echo Usage: Roma schemaspec [output directory]
-    exit 1
-fi
-if test "x$2" = "x"; then
-    export RESULTS=RomaResults
-else
-    export RESULTS=$2
-fi
+ODD=${1:?"no schemaspec (i.e., ODD file) supplied; for usage syntax issue $0 --help"}
+N=$(xsltproc $MYPATH/extract-schemaSpec-ident.xsl $1 | head -1)
+N=${N:?"Unable to ascertain ident= of <schemaSpec>"}
+RESULTS=${2:-RomaResults}
 H=`pwd`
-
-echo Roma starts
-echo ===============================
-echo Test for software: xmllint, xsltproc, trang and perl
+D=`date "+%Y-%m-%d %H:%M:%S.%N"`
+echo "========= $D Roma starts, info:"
+echo "Test for software: xmllint, xsltproc, trang, and perl"
 which xmllint || die "you do not have xmllint"
 which xsltproc || die "you do not have xsltproc"
 which trang || die "you do not have trang"
 which perl || die "you do not have perl"
-echo Schema dir: $S
-echo TEI tree: $TEIDIR
-echo Results to: $RESULTS
+echo "Schema dir: $S"
+echo "TEI tree: $TEIDIR"
+echo "Results to: $RESULTS"
 test -d $S || die "schema dir $S does not exist"
-test -d $TEIDIR || die "tei dir $S does not exist"
+test -d $TEIDIR || die "tei dir $TEIDIR does not exist"
 mkdir -p $RESULTS || die "cannot make directory $RESULTS"
-
-echo ===============================
+D=`date "+%Y-%m-%d %H:%M:%S.%N"`
+echo "Process $ODD to create $N{.dtd|.xsd|.doc.xml|[compiled].rng|.rnc} in $RESULTS"
+echo "========= $D Roma starts, execution:"
 makeRelax
 $xsd && makeXSD
 $dtd && makeDTD
 $doc && makeDOC
-echo ===============================
-echo Roma ends
-
+D=`date "+%Y-%m-%d %H:%M:%S.%N"`
+echo "========= $D Roma ends"
