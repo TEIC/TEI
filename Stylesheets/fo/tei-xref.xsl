@@ -14,16 +14,28 @@ XSL FO stylesheet to format TEI XML documents
 
 <xsl:template name="makeInternalLink">
   <xsl:param name="ptr"/>
+  <xsl:param name="target"/>
   <xsl:param name="dest"/>
   <xsl:param name="body"/>
-  <fo:basic-link internal-destination="{$dest}">
+  <xsl:variable name="W">
+    <xsl:choose>
+      <xsl:when test="$target"><xsl:value-of select="$target"/></xsl:when>
+      <xsl:when test="contains($dest,'#')">
+	<xsl:value-of select="substring-after($dest,'#')"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$dest"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+  <fo:basic-link internal-destination="{$W}">
     <xsl:call-template name="linkStyle"/>
     <xsl:choose>
       <xsl:when test="not($body='')">
 	<xsl:value-of select="$body"/>
       </xsl:when>
       <xsl:when test="$ptr='true'">
-	<xsl:apply-templates mode="xref" select="key('IDS',$dest)">
+	<xsl:apply-templates mode="xref" select="key('IDS',$W)">
 	  <xsl:with-param name="minimal" select="$minimalCrossRef"/>
 	</xsl:apply-templates>
       </xsl:when>

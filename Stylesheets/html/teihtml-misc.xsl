@@ -433,7 +433,18 @@ select="translate(.,'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/
 
 <!-- copyOf handling -->
 <xsl:template match="tei:l[@copyOf]|lg[@copyOf]">
- <xsl:apply-templates select="key('IDS',@copyOf)" mode="Copying"/>
+     <xsl:variable name="W">
+       <xsl:choose>
+	 <xsl:when test="starts-with(@copyof,'#')">
+	   <xsl:value-of select="substring-after(@copyof,'#')"/>
+	 </xsl:when>
+	 <xsl:otherwise>
+	   <xsl:value-of select="@copyof"/>
+	 </xsl:otherwise>
+       </xsl:choose>
+     </xsl:variable>
+
+ <xsl:apply-templates select="key('IDS',$W)" mode="Copying"/>
 </xsl:template>
 
 <xsl:template match="tei:lg" mode="Copying">
@@ -509,7 +520,7 @@ select="translate(.,'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/
 			<xsl:call-template name="rendering"/>
 		</xsl:when>
 		<xsl:otherwise>
-        <xsl:text>`</xsl:text><xsl:apply-templates/><xsl:text>'</xsl:text>
+		  <xsl:text>&#8216;</xsl:text><xsl:apply-templates/><xsl:text>&#8217;</xsl:text>
 		</xsl:otherwise>
 	</xsl:choose>
 </xsl:template>

@@ -202,10 +202,22 @@ select="$filename"/>-decl</xsl:message>
 
 <xsl:template match="tei:specGrpRef" mode="tangle">
   <xsl:param name="filename"/>
-
-<xsl:message>spec grp ref to <xsl:value-of select="@target"/></xsl:message>
-  <xsl:apply-templates select="key('IDS',@target)" mode="ok">
-      <xsl:with-param name="filename" select="$filename"/>
+  <xsl:variable name="W">
+    <xsl:choose>
+      <xsl:when test="starts-with(@target,'#')">
+	<xsl:value-of select="substring-after(@target,'#')"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="@target"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+  <xsl:if test="$verbose='true'">
+    <xsl:message>spec grp ref to <xsl:value-of
+    select="@target"/></xsl:message>
+  </xsl:if>
+  <xsl:apply-templates select="key('IDS',$W)" mode="ok">
+    <xsl:with-param name="filename" select="$filename"/>
   </xsl:apply-templates>
 </xsl:template>
 

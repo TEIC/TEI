@@ -1623,21 +1623,23 @@
 
 <xsl:template match="ref" mode="flatten">
   <xsl:variable name="me">
-  <xsl:choose>
+   <xsl:choose>
     <xsl:when test="contains(@name,'.attributes')">
-      <xsl:value-of select="substring-before(@name,'.attributes')"/>
+     <xsl:value-of select="substring-before(@name,'.attributes')"/>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:value-of select="@name"/>
+     <xsl:value-of select="@name"/>
     </xsl:otherwise>
-  </xsl:choose>
-</xsl:variable>
+   </xsl:choose>
+  </xsl:variable>
   <xsl:variable name="F">
    <xsl:for-each select="$top">
-    <xsl:value-of select="key('NameToID',$me)/@id"/>
+    <xsl:for-each select="key('NameToID',$me)">
+     <xsl:value-of select="@id|@xml:id"/>
+    </xsl:for-each>
    </xsl:for-each>
   </xsl:variable>
-<!--
+  <!--
   <xsl:message>FROM <xsl:value-of select="@name"/> to <xsl:value-of select="$me"/> to <xsl:value-of
 select="$F"/></xsl:message>
 -->

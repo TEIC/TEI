@@ -26,12 +26,10 @@ $Date$, $Revision$, $Author$
  <xsl:include href="../common/teicommon.xsl"/>
   <xsl:key name="FILES"   match="tei:moduleSpec[@ident]"   use="@ident"/>
   <xsl:key name="IDS"     match="tei:*[@id|@xml:id]"           use="@id|@xml:id"/>
-  <xsl:key name="DTDREFS" match="tei:specGrpRef"           use="@target"/>
   <xsl:key name="PATTERNS" match="tei:macroSpec" use="@ident"/>
   <xsl:key name="MACRODOCS" match="tei:macroSpec" use='1'/>
   <xsl:key name="CLASSDOCS" match="tei:classSpec" use='1'/>
   <xsl:key name="TAGDOCS" match="tei:elementSpec" use='1'/>
-  <xsl:key name="CHUNKS" match="tei:specGrpRef" use="@target"/>
   <xsl:variable name="uc">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
   <xsl:variable name="lc">abcdefghijklmnopqrstuvwxyz</xsl:variable>
 
@@ -45,8 +43,18 @@ $Date$, $Revision$, $Author$
 </xsl:template>
 
 <xsl:template  match="tei:specGrpRef">
+  <xsl:variable name="W">
+    <xsl:choose>
+      <xsl:when test="starts-with(@target,'#')">
+	<xsl:value-of select="substring-after(@target,'#')"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="@target"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
 &#171; <tei:emph>include
-<tei:ref target="{@target}"><xsl:for-each select="key('IDS',@target)">
+<tei:ref target="#{$W}"><xsl:for-each select="key('IDS',$W)">
    <xsl:call-template name="compositeNumber"/>
 </xsl:for-each></tei:ref></tei:emph>
 <xsl:text> &#187; </xsl:text>
@@ -428,31 +436,6 @@ $Date$, $Revision$, $Author$
 </xsl:template>
 
 
-<xsl:template name="attclasses">
- <xsl:param name="classes"/>
- <xsl:if test="not($classes='') and not($classes=' ')">
-   <xsl:variable name="class" select="key('IDS',substring-before($classes,' '))"/>
-   <!--
-     <xsl:message>     look up <xsl:value-of select="$class/@type"/>, <xsl:value-of select="$class/@ident"/>   </xsl:message>
-   -->
-   <xsl:if test="$class/@type='atts'">
-     <xsl:call-template name="bitOut">
-       <xsl:with-param name="grammar">true</xsl:with-param>
-       <xsl:with-param name="content">
-	 <Wrapper>
-	   <rng:ref name="{$class/@ident}.attributes"/>
-	 </Wrapper>
-       </xsl:with-param>
-     </xsl:call-template>
-   </xsl:if>
-   <xsl:call-template name="attclasses">
-     <xsl:with-param name="classes">
-       <xsl:value-of select="substring-after($classes,' ') "/>
-     </xsl:with-param>
-   </xsl:call-template>
- </xsl:if>
-</xsl:template>
-
 
 <xsl:template name="bitOut">
 <xsl:param name="grammar"/>
@@ -632,6 +615,53 @@ $Date$, $Revision$, $Author$
       </xsl:otherwise>
     </xsl:choose>
   </tei:eg>
+</xsl:template>
+
+<xsl:template name="makeInternalLink">
+  <xsl:param name="ptr"/>
+  <xsl:param name="target"/>
+  <xsl:param name="dest"/>
+  <xsl:param name="body"/>
+  <xsl:variable name="W">
+    <xsl:choose>
+      <xsl:when test="$target"><xsl:value-of select="$target"/></xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$dest"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+
+  <xsl:choose>
+    <xsl:when test="not($body='')">
+      <tei:ref target="#{$W}"><xsl:value-of select="$body"/></tei:ref>
+    </xsl:when>
+    <xsl:when test="$ptr='true'">
+      <tei:ptr target="#{$W}"/>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:apply-templates/>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+<xsl:template name="makeExternalLink">
+  <xsl:param name="ptr"/>
+  <xsl:param name="dest"/>
+  <xsl:choose>
+    <xsl:when test="$ptr='true'">
+      <tei:ptr  target="{$dest}"/>
+    </xsl:when>
+    <xsl:otherwise>
+      <tei:ref  target="{$dest}">
+	<xsl:apply-templates/>
+      </tei:ref>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+<xsl:template name="generateEndLink">
+  <xsl:param name="where"/>
+  <xsl:apply-templates select="$where"/>
 </xsl:template>
 
 </xsl:stylesheet>

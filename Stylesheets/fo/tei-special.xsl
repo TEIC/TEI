@@ -329,7 +329,7 @@ color="{$giColor}" font-family="{$typewriterFont}">
 </xsl:template>
 
 <xsl:template match="tei:soCalled">
- <xsl:text>`</xsl:text><xsl:apply-templates/><xsl:text>'</xsl:text>
+ <xsl:text>&#8216;</xsl:text><xsl:apply-templates/><xsl:text>&#8217;</xsl:text>
 </xsl:template>
 
 
@@ -342,7 +342,7 @@ color="{$giColor}" font-family="{$typewriterFont}">
 <xsl:template match="tei:title">
 <xsl:choose>
 <xsl:when test="@level='a'">
-      <xsl:text>`</xsl:text><xsl:apply-templates/><xsl:text>'</xsl:text>
+      <xsl:text>&#8216;</xsl:text><xsl:apply-templates/><xsl:text>&#8217;</xsl:text>
 </xsl:when>
 <xsl:when test="@level='m'">
     <fo:inline font-style="italic">

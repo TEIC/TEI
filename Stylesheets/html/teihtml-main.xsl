@@ -467,41 +467,43 @@ the "key" function
 <hr/>
 <xsl:if test="$linkPanel='true' and not($makeFrames='true')">
  <div class="footer">
-<a class="{$style}" target="_top" 
-href="{$parentURL}"><xsl:value-of select="$parentWords"/></a>
-| <a  class="{$style}" target="_top" 
-href="{$homeURL}"><xsl:value-of select="$homeWords"/></a> 
+<xsl:if test="not($parentURL='')">
+  <a class="{$style}" target="_top" 
+     href="{$parentURL}"><xsl:value-of select="$parentWords"/></a> |
+</xsl:if>
+<a  class="{$style}" target="_top" 
+    href="{$homeURL}"><xsl:value-of select="$homeWords"/></a> 
 <xsl:if test="$searchURL">
-| <a class="{$style}" target="_top" 
-href="{$searchURL}"><xsl:call-template name="searchWords"/></a> 
+  | <a class="{$style}" target="_top" 
+  href="{$searchURL}"><xsl:call-template name="searchWords"/></a> 
 </xsl:if>
 <xsl:if test="$searchURL">
-| <a  class="{$style}" target="_top"
-href="{$feedbackURL}"><xsl:call-template name="feedbackWords"/></a> 
+  | <a  class="{$style}" target="_top"
+  href="{$feedbackURL}"><xsl:call-template name="feedbackWords"/></a> 
 </xsl:if>
  </div>
  <hr/>
 </xsl:if>
 <xsl:call-template name="preAddress"/>
 <address>
- <xsl:value-of select="$date"/>
- <xsl:if test="not($author='')">
+  <xsl:value-of select="$date"/>
+  <xsl:if test="not($author='')">
     <xsl:value-of select="$author"/>
- </xsl:if>.
- <br/>
- <xsl:call-template name="copyrightStatement"/>
- <xsl:comment><xsl:text>
-Generated </xsl:text>
- <xsl:if test="not($masterFile='index')">
-   <xsl:text>from </xsl:text>
-   <xsl:value-of select="$masterFile"/>
-</xsl:if>
-<xsl:text> using an XSLT version </xsl:text>
-<xsl:value-of select="system-property('xsl:version')"/> stylesheet
-based on <xsl:value-of select="$teixslHome"/>teihtml.xsl
-processed using <xsl:value-of select="system-property('xsl:vendor')"/>
-on <xsl:call-template name="whatsTheDate"/>
-</xsl:comment>
+    </xsl:if>.
+    <br/>
+    <xsl:call-template name="copyrightStatement"/>
+    <xsl:comment><xsl:text>
+      Generated </xsl:text>
+      <xsl:if test="not($masterFile='index')">
+	<xsl:text>from </xsl:text>
+	<xsl:value-of select="$masterFile"/>
+      </xsl:if>
+      <xsl:text> using an XSLT version </xsl:text>
+      <xsl:value-of select="system-property('xsl:version')"/> stylesheet
+      based on <xsl:value-of select="$teixslHome"/>teihtml.xsl
+      processed using <xsl:value-of select="system-property('xsl:vendor')"/>
+      on <xsl:call-template name="whatsTheDate"/>
+    </xsl:comment>
 </address>
 </xsl:template>
 
@@ -509,73 +511,73 @@ on <xsl:call-template name="whatsTheDate"/>
 
 
 <xsl:template name="topNavigation">
-<xsl:if test="ancestor::teiCorpus">
-<p align="{$alignNavigationPanel}">
-  <xsl:call-template name="nextLink">
-   <xsl:with-param name="next" select="following-sibling::tei:TEI[1]"/>
-  </xsl:call-template>
-
-  <xsl:call-template name="previousLink">
-   <xsl:with-param name="previous" select="preceding-sibling::tei:TEI[1]"/>
-  </xsl:call-template>
-
-  <xsl:call-template name="upLink">
-        <xsl:with-param name="h" select="concat($masterFile,$standardSuffix)"/>
-        <xsl:with-param name="u">
-          <xsl:call-template name="contentsWord"/>
-        </xsl:with-param>
-  </xsl:call-template>
-</p>
-</xsl:if>
+  <xsl:if test="ancestor::teiCorpus">
+    <p align="{$alignNavigationPanel}">
+      <xsl:call-template name="nextLink">
+	<xsl:with-param name="next" select="following-sibling::tei:TEI[1]"/>
+      </xsl:call-template>
+      
+      <xsl:call-template name="previousLink">
+	<xsl:with-param name="previous" select="preceding-sibling::tei:TEI[1]"/>
+      </xsl:call-template>
+      
+      <xsl:call-template name="upLink">
+	<xsl:with-param name="h" select="concat($masterFile,$standardSuffix)"/>
+	<xsl:with-param name="u">
+	  <xsl:call-template name="contentsWord"/>
+	</xsl:with-param>
+      </xsl:call-template>
+    </p>
+  </xsl:if>
 </xsl:template>
 
 
 <xsl:template name="doBody">
-<xsl:param name="Head"/>
-<xsl:variable name="ident">
-   <xsl:apply-templates select="." mode="ident"/>
-</xsl:variable>
- <xsl:choose>
-  <xsl:when test="$leftLinks">
-    <xsl:call-template name="linkList">
-         <xsl:with-param name="side" select="'left'"/>
-    </xsl:call-template>
-  </xsl:when>
-  <xsl:when test="$rightLinks">
-    <xsl:call-template name="linkList">
-         <xsl:with-param name="side" select="'right'"/>
-    </xsl:call-template>
-  </xsl:when>
-  <xsl:when test="parent::tei:div/@rend='multicol'">
-     <td valign="top">
+  <xsl:param name="Head"/>
+  <xsl:variable name="ident">
+    <xsl:apply-templates select="." mode="ident"/>
+  </xsl:variable>
+  <xsl:choose>
+    <xsl:when test="$leftLinks">
+      <xsl:call-template name="linkList">
+	<xsl:with-param name="side" select="'left'"/>
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:when test="$rightLinks">
+      <xsl:call-template name="linkList">
+	<xsl:with-param name="side" select="'right'"/>
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:when test="parent::tei:div/@rend='multicol'">
+      <td valign="top">
+	<xsl:if test="not($Head = '')">
+	  <xsl:element name="h{$Head + $divOffset}">
+	    <a name="{$ident}"></a><xsl:call-template name="header"/>
+	  </xsl:element>
+	</xsl:if>
+	<xsl:apply-templates  select="tei:text/tei:body"/>
+      </td>
+    </xsl:when>
+    <xsl:when test="@rend='multicol'">
+      <table>
+	<tr>
+	  <xsl:apply-templates select="tei:text/tei:body"/>
+	</tr>
+      </table>
+    </xsl:when>
+    <xsl:otherwise>
       <xsl:if test="not($Head = '')">
-       <xsl:element name="h{$Head + $divOffset}">
-        <a name="{$ident}"></a><xsl:call-template name="header"/>
-       </xsl:element>
+	<xsl:element name="h{$Head + $divOffset}">
+	  <a name="{$ident}"></a><xsl:call-template name="header"/>
+	</xsl:element>
       </xsl:if>
-      <xsl:apply-templates  select="tei:text/tei:body"/>
-     </td>
-  </xsl:when>
-  <xsl:when test="@rend='multicol'">
-   <table>
-   <tr>
-     <xsl:apply-templates select="tei:text/tei:body"/>
-   </tr>
-   </table>
-  </xsl:when>
-  <xsl:otherwise>
-      <xsl:if test="not($Head = '')">
-       <xsl:element name="h{$Head + $divOffset}">
-        <a name="{$ident}"></a><xsl:call-template name="header"/>
-       </xsl:element>
-      </xsl:if>
-   <xsl:apply-templates select="tei:text/tei:body"/>
-  </xsl:otherwise>
- </xsl:choose>
+      <xsl:apply-templates select="tei:text/tei:body"/>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template match="processing-instruction()[name()='xmltex']" >
-   <xsl:value-of select="."/>
+  <xsl:value-of select="."/>
 </xsl:template>
 
 <!-- This nice bit of code is from Jeni Tennison -->

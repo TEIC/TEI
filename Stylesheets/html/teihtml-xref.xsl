@@ -253,13 +253,24 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 </xsl:template>
 
 <xsl:template name="makeInternalLink">
+  <xsl:param name="target"/>
   <xsl:param name="ptr"/>
   <xsl:param name="dest"/>
   <xsl:param name="body"/>
   <xsl:param name="class">link_<xsl:value-of
   select="name(.)"/></xsl:param>
-<xsl:message>here: <xsl:value-of select="name(.)"/>: <xsl:value-of select="$dest"/></xsl:message>
-
+<!--      <xsl:message>here: <xsl:value-of select="name(.)"/>: <xsl:value-of select="$dest"/></xsl:message>-->
+  <xsl:variable name="W">
+    <xsl:choose>
+      <xsl:when test="$target"><xsl:value-of select="$target"/></xsl:when>
+      <xsl:when test="contains($dest,'#')">
+	<xsl:value-of select="substring-after($dest,'#')"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$dest"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
   <a>
     <xsl:attribute name="class">
       <xsl:choose>
@@ -273,7 +284,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 	  <xsl:value-of select="$dest"/>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:apply-templates select="key('IDS',$dest)"
+	  <xsl:apply-templates select="key('IDS',$W)"
 			       mode="generateLink"/>
 	</xsl:otherwise>
       </xsl:choose>
@@ -283,7 +294,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 	<xsl:value-of select="$body"/>
       </xsl:when>
       <xsl:when test="$ptr='true'">
-	<xsl:apply-templates mode="xref" select="key('IDS',$dest)">
+	<xsl:apply-templates mode="xref" select="key('IDS',$W)">
 	  <xsl:with-param name="minimal" select="$minimalCrossRef"/>
 	</xsl:apply-templates>
       </xsl:when>
@@ -360,8 +371,9 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 
 <xsl:template name="generateEndLink">
   <xsl:param name="where"/>
+<!--
 <xsl:message>find link end for <xsl:value-of select="$where"/>,<xsl:value-of select="name(key('IDS',$where))"/></xsl:message>
-
+-->
   <xsl:apply-templates select="key('IDS',$where)" mode="generateLink"/>
 </xsl:template>
 

@@ -29,12 +29,10 @@ XSL HTML stylesheet to format TEI XML documents
 
   <xsl:key name="FILES"   match="tei:moduleSpec[@ident]"   use="@ident"/>
   <xsl:key name="IDS"     match="tei:*[@id|@xml:id]"           use="@id|@xml:id"/>
-  <xsl:key name="DTDREFS" match="tei:specGrpRef"           use="@target"/>
   <xsl:key name="PATTERNS" match="tei:macroSpec" use="@ident"/>
   <xsl:key name="PATTERNDOCS" match="tei:macroSpec" use='1'/>
   <xsl:key name="CLASSDOCS" match="tei:classSpec" use='1'/>
   <xsl:key name="TAGDOCS" match="tei:elementSpec" use='1'/>
-  <xsl:key name="CHUNKS" match="tei:specGrpRef" use="@target"/>
   <xsl:variable name="uc">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
   <xsl:variable name="lc">abcdefghijklmnopqrstuvwxyz</xsl:variable>
 
@@ -51,11 +49,21 @@ XSL HTML stylesheet to format TEI XML documents
  
 <xsl:template  match="tei:specGrpRef">
    &#171; <em>include
-   <a href="#{@target}">
-     <xsl:for-each select="key('IDS',@target)">
-       <xsl:call-template name="compositeNumber"/>
-     </xsl:for-each>
-   </a>
+     <xsl:variable name="W">
+       <xsl:choose>
+	 <xsl:when test="starts-with(@target,'#')">
+	   <xsl:value-of select="substring-after(@target,'#')"/>
+	 </xsl:when>
+	 <xsl:otherwise>
+	   <xsl:value-of select="@target"/>
+	 </xsl:otherwise>
+       </xsl:choose>
+     </xsl:variable>
+     <a href="#{$W}">
+       <xsl:for-each select="key('IDS',$W)">
+	 <xsl:call-template name="compositeNumber"/>
+       </xsl:for-each>
+     </a>
  </em>
  <xsl:text> &#187; </xsl:text>
 </xsl:template>
@@ -190,20 +198,21 @@ XSL HTML stylesheet to format TEI XML documents
 	<xsl:when test="key('IDENTS',@key)">
 	<xsl:variable name="Key"><xsl:value-of select="@key"/></xsl:variable>
 	  <xsl:for-each select="key('IDENTS',@key)">
-	    <xsl:if test="not(generate-id(.)=generate-id(key('IDENTS',$Key)[1]))">          <xsl:text> |  </xsl:text>
+	    <xsl:if test="not(generate-id(.)=generate-id(key('IDENTS',$Key)[1]))">
+	      <xsl:text> |  </xsl:text>
 	    </xsl:if>
 	    <xsl:call-template name="linkTogether">
-	      <xsl:with-param name="name" select="concat('ref-',@ident,'.html')"/>
 	      <xsl:with-param name="url" select="@id|@xml:id"/>
+	      <xsl:with-param name="name" select="@ident"/>
 	    </xsl:call-template>
 	  </xsl:for-each>
 	</xsl:when>
 	<xsl:otherwise>
 	    <xsl:call-template name="linkTogether">
+	      <xsl:with-param name="name" select="@key"/>
 	      <xsl:with-param name="url">
 	      <xsl:value-of select="$TEISERVER"/>tag.xq?name=<xsl:value-of select="@key"/>
 	      </xsl:with-param>
-	      <xsl:with-param name="name" select="@key"/>
 	    </xsl:call-template>
 	</xsl:otherwise>
       </xsl:choose>
@@ -571,32 +580,6 @@ XSL HTML stylesheet to format TEI XML documents
  </td></tr>
 </xsl:template>
 
-
-<xsl:template name="attclasses">
- <xsl:param name="classes"/>
- <xsl:if test="not($classes='') and not($classes=' ')">
-   <xsl:variable name="class" select="key('IDS',substring-before($classes,' '))"/>
-   <!--
-   <xsl:message>     look up <xsl:value-of select="$class/@type"/>, <xsl:value-of select="$class/@ident"/>   </xsl:message>
--->
-   <xsl:if test="$class/@type='atts'">
-     <xsl:call-template name="bitOut">
-       <xsl:with-param name="grammar">true</xsl:with-param>
-       <xsl:with-param name="content">
-	 <Wrapper>
-	   <rng:ref name="{$class/@ident}.attributes"/>
-	 </Wrapper>
-       </xsl:with-param>
-     </xsl:call-template>
-   </xsl:if>
-   <xsl:call-template name="attclasses">
-     <xsl:with-param name="classes">
-       <xsl:value-of select="substring-after($classes,' ') "/>
-     </xsl:with-param>
-   </xsl:call-template>
- </xsl:if>
-</xsl:template>
-
 <xsl:template name="bitOut">
 <xsl:param name="grammar"/>
 <xsl:param name="content"/>
@@ -695,7 +678,12 @@ XSL HTML stylesheet to format TEI XML documents
 
 <xsl:template name="makeAnchor">
  <xsl:param name="name"/>
-    <a  name="{$name}"/>
+ <xsl:choose>
+   <xsl:when test="$name">
+     <a  name="{$name}"/>
+   </xsl:when>
+   <xsl:when test="@id|@xml:id"><a name="{@id|@xml:id}"/></xsl:when>
+ </xsl:choose>
 </xsl:template>
 
 <xsl:template name="makeLink">
@@ -799,7 +787,7 @@ XSL HTML stylesheet to format TEI XML documents
   <xsl:param name="text"/>
   <xsl:param name="startnewline">false</xsl:param>
   <xsl:param name="autowrap">true</xsl:param>
-  <pre class="eg">t
+  <pre class="eg">
     <xsl:if test="$startnewline='true'">
       <xsl:text>&#10;</xsl:text>
     </xsl:if>

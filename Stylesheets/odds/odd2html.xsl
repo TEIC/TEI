@@ -19,6 +19,7 @@ $Date$, $Revision$, $Author$
 
 <xsl:import href="../html/teihtml.xsl"/>
 <xsl:import href="../html/teihtml-odds.xsl"/>
+<xsl:output method="html"/>
 <xsl:param name="teiP4Compat">false</xsl:param>
 <xsl:key name="NameToID" match="tei:*" use="@ident"/>
 
@@ -117,7 +118,7 @@ $Date$, $Revision$, $Author$
  <xsl:for-each select="//tei:index">
   <index c="{@level}" a="{@level1}" b="{@level2}">
      <file>
-       <xsl:apply-templates select="ancestor::tei:div1" mode="xrefheader"/>
+       <xsl:apply-templates select="ancestor::tei:div1" mode="generateLink"/>
      </file>
      <section>
        <xsl:apply-templates select="(ancestor::tei:div1|ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4|ancestor::tei:div5)[last()]" mode="header">
@@ -133,7 +134,7 @@ $Date$, $Revision$, $Author$
    <xsl:if test="not(@rend='noindex')">
   <index c="{text()}" a="{text()}">
      <file>
-       <xsl:apply-templates select="ancestor::tei:div1" mode="xrefheader"/>
+       <xsl:apply-templates select="ancestor::tei:div1" mode="generateLink"/>
      </file>
      <section>
        <xsl:apply-templates select="(ancestor::tei:div1|ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4|ancestor::tei:div5)[last()]" mode="header">
@@ -156,7 +157,7 @@ $Date$, $Revision$, $Author$
       <xsl:value-of select="."/><xsl:text>&gt;</xsl:text>
     </xsl:attribute>
      <file>
-       <xsl:apply-templates select="ancestor::tei:div1" mode="xrefheader"/>
+       <xsl:apply-templates select="ancestor::tei:div1" mode="generateLink"/>
      </file>
      <section>
        <xsl:apply-templates select="(ancestor::tei:div1|ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4|ancestor::tei:div5)[last()]" mode="header">
@@ -256,12 +257,6 @@ $Date$, $Revision$, $Author$
 
 <xsl:template match="tei:revisionDesc//date">
   <xsl:apply-templates/>
-</xsl:template>
-
-<xsl:template match="tei:soCalled">
- <xsl:text>`</xsl:text>
- <xsl:apply-templates/>
- <xsl:text>'</xsl:text>
 </xsl:template>
 
 <xsl:template match="tei:term">
@@ -426,7 +421,7 @@ $Date$, $Revision$, $Author$
    <xsl:for-each select="tei:text/tei:front">
     <xsl:for-each select=".//tei:div1">
        <xsl:variable name="pointer">
-          <xsl:apply-templates mode="xrefheader" select="."/>
+          <xsl:apply-templates mode="generateLink" select="."/>
        </xsl:variable>
        <p class="{$style}">
        <a class="{$style}" href="{$pointer}">
@@ -438,7 +433,7 @@ $Date$, $Revision$, $Author$
    <xsl:for-each select="tei:text/tei:body">
     <xsl:for-each select=".//tei:div1">
        <xsl:variable name="pointer">
-          <xsl:apply-templates mode="xrefheader" select="."/>
+          <xsl:apply-templates mode="generateLink" select="."/>
        </xsl:variable>
        <p class="{$style}">
        <a class="{$style}" href="{$pointer}">
@@ -450,7 +445,7 @@ $Date$, $Revision$, $Author$
     <hr/>
     <xsl:for-each select=".//tei:div1">
        <xsl:variable name="pointer">
-          <xsl:apply-templates mode="xrefheader" select="."/>
+          <xsl:apply-templates mode="generateLink" select="."/>
        </xsl:variable>
        <p class="{$style}">
        <a class="{$style}" href="{$pointer}">
@@ -480,7 +475,7 @@ $Date$, $Revision$, $Author$
   <p class="{$style}">
       <a class="{$style}">
         <xsl:attribute name="href">
-         <xsl:apply-templates mode="xrefheader" select="."/>
+         <xsl:apply-templates mode="generateLink" select="."/>
         </xsl:attribute>
        <xsl:call-template name="header"/>
       </a>
@@ -492,7 +487,7 @@ $Date$, $Revision$, $Author$
 <p class="{$style}">
  <a class="{$style}">
         <xsl:attribute name="href">
-         <xsl:apply-templates mode="xrefheader" select="."/>
+         <xsl:apply-templates mode="generateLink" select="."/>
         </xsl:attribute>
        <xsl:call-template name="header"/>
      </a></p>
@@ -501,7 +496,7 @@ $Date$, $Revision$, $Author$
    <xsl:for-each select="tei:div2|tei:div3|tei:div4|tei:div5">
       <p class="{$style}-sub"><a class="{$style}-sub">
         <xsl:attribute name="href">
-         <xsl:apply-templates mode="xrefheader" select="."/>
+         <xsl:apply-templates mode="generateLink" select="."/>
         </xsl:attribute>
         <xsl:call-template name="header"/>
       </a></p>
@@ -514,7 +509,7 @@ $Date$, $Revision$, $Author$
       <p class="{$style}">
       <a class="{$style}">
         <xsl:attribute name="href">
-         <xsl:apply-templates mode="xrefheader" select="."/>
+         <xsl:apply-templates mode="generateLink" select="."/>
         </xsl:attribute>
        <xsl:call-template name="header"/>
      </a></p>
@@ -524,7 +519,7 @@ $Date$, $Revision$, $Author$
       <p class="{$style}-this">
       <a class="{$style}-this">
         <xsl:attribute name="href">
-         <xsl:apply-templates mode="xrefheader" select="."/>
+         <xsl:apply-templates mode="generateLink" select="."/>
         </xsl:attribute>
        <xsl:call-template name="header"/>
      </a></p>
@@ -534,7 +529,7 @@ $Date$, $Revision$, $Author$
       <p class="{$style}">
       <a class="{$style}">
         <xsl:attribute name="href">
-         <xsl:apply-templates mode="xrefheader" select="."/>
+         <xsl:apply-templates mode="generateLink" select="."/>
         </xsl:attribute>
         <xsl:call-template name="header"/>
       </a></p>

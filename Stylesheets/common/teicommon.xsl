@@ -400,6 +400,7 @@ select="normalize-space(substring-before(substring-after($revauthor,'LastChanged
   <!-- If there is a target attribute starting with #, it is always a local reference -->
   <xsl:when test="@target and starts-with(@target,'#')">
     <xsl:call-template name="makeInternalLink">
+      <xsl:with-param name="target" select="substring-after(@target,'#')"/>
       <xsl:with-param name="ptr" select="$ptr"/>
       <xsl:with-param name="dest">
 	<xsl:call-template name="generateEndLink">
@@ -413,6 +414,7 @@ select="normalize-space(substring-before(substring-after($revauthor,'LastChanged
 <!-- if we are doing TEI P4, all targets are local -->
   <xsl:when test="@target and $teiP4Compat='true'">
     <xsl:call-template name="makeInternalLink">
+      <xsl:with-param name="target" select="@target"/>
       <xsl:with-param name="ptr" select="$ptr"/>
       <xsl:with-param name="dest">
 	<xsl:call-template name="generateEndLink">
@@ -436,11 +438,12 @@ select="normalize-space(substring-before(substring-after($revauthor,'LastChanged
        reference -->
   <xsl:when test="@url and starts-with(@url,'#')">
     <xsl:call-template name="makeInternalLink">
+      <xsl:with-param name="target" select="substring-after(@url,'#')"/>
       <xsl:with-param name="ptr" select="$ptr"/>
       <xsl:with-param name="dest">
 	<xsl:call-template name="generateEndLink">
 	  <xsl:with-param name="where">
-	    <xsl:value-of select="@target"/>
+	    <xsl:value-of select="substring-after(@url,'#')"/>
 	  </xsl:with-param>
 	</xsl:call-template>
       </xsl:with-param>
@@ -464,10 +467,14 @@ select="normalize-space(substring-before(substring-after($revauthor,'LastChanged
 	</xsl:with-param>
       </xsl:call-template>
     </xsl:when>
-    <xsl:otherwise>
+    <xsl:when test="@*">
       <xsl:message terminate="yes">ERROR. pointer with no valid attribute on <xsl:value-of 
-      select="name(.)"/></xsl:message>
-    </xsl:otherwise>
+      select="name(.)"/>
+      <xsl:for-each select="@*">
+	<xsl:value-of select="name(.)"/>=<xsl:value-of select="."/>
+      </xsl:for-each>
+      </xsl:message>
+    </xsl:when>
   </xsl:choose>
 </xsl:template>
 

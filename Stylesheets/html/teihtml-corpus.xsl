@@ -70,9 +70,19 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 </xsl:template>
 
 <xsl:template match="tei:catRef">
+  <xsl:variable name="W">
+    <xsl:choose>
+      <xsl:when test="starts-with(@target,'#')">
+	<xsl:value-of select="substring-after(@target,'#')"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="@target"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
   <xsl:if test="preceding-sibling::tei:catRef"><xsl:text> </xsl:text></xsl:if>
   <em><xsl:value-of select="@scheme"/></em>:
-  <xsl:apply-templates select="key('IDS',@target)/catDesc"/>
+  <xsl:apply-templates select="key('IDS',$W)/catDesc"/>
 </xsl:template>
 
 </xsl:stylesheet>

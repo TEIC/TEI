@@ -37,7 +37,6 @@ Text Encoding Initiative Consortium XSLT stylesheet family
   <xsl:key name="MACRODOCS" match="tei:macroSpec" use='1'/>
   <xsl:key name="CLASSDOCS" match="tei:classSpec" use='1'/>
   <xsl:key name="TAGDOCS" match="tei:elementSpec" use='1'/>
-  <xsl:key name="CHUNKS" match="tei:specGrpRef" use="@target"/>
   <xsl:key name='NameToID' match="tei:*" use="@ident"/>
   <xsl:key name="ElementModule" match="tei:elementSpec" use="@module"/>
   <xsl:key name="ClassModule"   match="tei:classSpec" use="@module"/>
@@ -498,7 +497,7 @@ in change mode and there is no attList -->
     <rng:define name="{@ident}.attributes" >
       <xsl:choose>
 	<xsl:when test="ancestor::tei:schemaSpec and not(ancestor::tei:schemaSpec/tei:moduleRef/@key='tei')"/>
-	<xsl:when test="@ns and not(contains(@ns,'http://www.tei-c.org'))"/>
+	<xsl:when test="@ns and not(contains(@ns,'http://www.tei-c.org/ns/1.0'))"/>
 	<xsl:otherwise>
 	  <rng:ref name="tei.global.attributes" />
 	</xsl:otherwise>
@@ -1434,12 +1433,12 @@ in change mode and there is no attList -->
   <xsl:param name="name"/>
   <xsl:choose>
     <xsl:when test="$oddmode='tei'">
-      <tei:ref target="{$name}"><xsl:value-of select="$name"/></tei:ref>
+      <tei:ref target="#{$name}"><xsl:value-of select="$name"/></tei:ref>
     </xsl:when>
     <xsl:when test="$oddmode='html'">
       <xsl:choose>
 	<xsl:when test="not($id='')">
-	  <a href="ref-{$id}.html">
+	  <a class="link_element" href="ref-{$id}.html">
 	    <xsl:value-of select="$name"/>
 	  </a>
 	</xsl:when>
@@ -1502,7 +1501,7 @@ in change mode and there is no attList -->
       <a href="{$url}"><xsl:value-of select="$name"/></a>
     </xsl:when>
     <xsl:when test="$oddmode='html'">
-      <a href="{concat('ref-',$url,'.html')}"><xsl:value-of select="$name"/></a>
+      <a class="link_odd" href="{concat('ref-',$url,'.html')}"><xsl:value-of select="$name"/></a>
     </xsl:when>
     <xsl:when test="$oddmode='pdf'">
       <fo:inline><xsl:value-of select="$name"/></fo:inline>

@@ -553,7 +553,7 @@ pdfcreator={Oxford University Computing Services}
 </xsl:template>
 
 <xsl:template match="tei:soCalled">
-  <xsl:text>`</xsl:text><xsl:apply-templates/><xsl:text>'</xsl:text>
+ <xsl:text>&#8216;</xsl:text><xsl:apply-templates/><xsl:text>&#8217;</xsl:text>
 </xsl:template>
 
 <xsl:template match="tei:table" mode="xref">
@@ -724,6 +724,7 @@ pdfcreator={Oxford University Computing Services}
 </xsl:template>
 
 <xsl:template name="makeInternalLink">
+  <xsl:param name="target"/>
   <xsl:param name="ptr"/>
   <xsl:param name="dest"/>
   <xsl:param name="body"/>

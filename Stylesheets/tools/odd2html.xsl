@@ -206,16 +206,6 @@ splitLevel: <xsl:value-of select="$splitLevel"/>
   <xsl:apply-templates/>
 </xsl:template>
 
-<xsl:template match="tei:soCalled">
- <xsl:text>`</xsl:text>
- <xsl:apply-templates/>
- <xsl:text>'</xsl:text>
-</xsl:template>
-
-
-
-
-
 <xsl:template match="tei:divGen[@type='index']">
      <h2>Index</h2>
 </xsl:template>
