@@ -694,9 +694,8 @@ pdfcreator={Oxford University Computing Services}
          <xsl:value-of select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle"/>
  </xsl:when>
 <xsl:otherwise>
-<xsl:apply-templates
- select="ancestor-or-self::tei:TEI/teiHeader/tei:fileDesc/tei:titleStmt/tei:title"
- mode="htmlheader"/>
+<xsl:value-of
+ select="ancestor-or-self::tei:TEI/teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
 </xsl:otherwise>
 </xsl:choose>
 </xsl:template>
