@@ -61,7 +61,10 @@ XSL FO stylesheet to format TEI XML documents
     <xsl:apply-templates select="tei:head"/>
   </fo:block>
  </xsl:if>
- <fo:list-block   margin-right="{$listRightMargin}">
+ <fo:list-block   margin-right="{$listRightMargin}"
+		  provisional-distance-between-starts="10mm"
+		  provisional-label-separation="2mm"
+		  >
   <xsl:call-template name="setListIndents"/>
   <xsl:choose>
    <xsl:when test="@type='gloss'">
@@ -100,7 +103,7 @@ simple, bullets, ordered, gloss, unordered
       <xsl:value-of select="$listItemsep"/>
     </xsl:attribute>
   </xsl:if>
-  <fo:list-item-label>
+  <fo:list-item-label  end-indent="label-end()">
     <xsl:if test="@id">
       <xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
     </xsl:if>
@@ -135,9 +138,22 @@ simple, bullets, ordered, gloss, unordered
          </xsl:otherwise>
          </xsl:choose>
         </xsl:when>
+        <xsl:when test="../@type='numbered'"> <!-- numbered support added rbl 26.3.2005 -->
+          <xsl:attribute name="text-align">end</xsl:attribute>
+          <xsl:number/>
+	  <xsl:text>.</xsl:text>
+        </xsl:when>
+        <xsl:when test="../@type='ordered'"> <!-- numbered support added rbl 26.3.2005 -->
+          <xsl:attribute name="text-align">end</xsl:attribute>
+          <xsl:number/>
+	  <xsl:text>.</xsl:text>
+        </xsl:when>
         <xsl:otherwise>
-           <xsl:attribute name="text-align">center</xsl:attribute>
+           <xsl:attribute name="text-align">end</xsl:attribute>
           <xsl:choose>
+            <xsl:when test="$listdepth=0">
+              <xsl:value-of select="$bulletOne"/>
+            </xsl:when>
             <xsl:when test="$listdepth=1">
               <xsl:value-of select="$bulletOne"/>
             </xsl:when>
@@ -155,7 +171,7 @@ simple, bullets, ordered, gloss, unordered
      </xsl:choose>
    </fo:block>
  </fo:list-item-label>
- <fo:list-item-body>
+ <fo:list-item-body  start-indent="body-start()">
    <xsl:choose>
    <xsl:when test="tei:p">
      <xsl:apply-templates/>
