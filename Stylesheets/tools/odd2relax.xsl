@@ -56,12 +56,30 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
     <xsl:apply-templates select=".//tei:module" />
 </xsl:template>
 
+<xsl:template name="generateOutput">
+<xsl:param name="body"/>
+<xsl:choose>
+  <xsl:when test="$RNGDIR='' or $RNGDIR='-'">
+      <xsl:copy-of select="$body"/>
+  </xsl:when>
+  <xsl:otherwise>
+    <xsl:if test="$verbose='true'">
+    <xsl:message>   File [<xsl:value-of select="@ident"/>]      </xsl:message>
+    </xsl:if>
+    <exsl:document method="xml" indent="yes"
+		   href="{$RNGDIR}/{@ident}.rng">
+      <xsl:copy-of select="$body"/>
+    </exsl:document>
+  </xsl:otherwise>
+</xsl:choose>
+</xsl:template>
+
 <xsl:template match="tei:module|tei:schema" >
   <xsl:if test="@ident and not(@mode='change' or @mode='replace' or @mode='delete')">
     <xsl:variable name="Master" select="."/>
     <xsl:variable name="filename" select="@ident"/>
-    <xsl:message>   File [<xsl:value-of select="$filename"/>] </xsl:message>
-    <exsl:document method="xml" indent="yes" href="{$RNGDIR}/{$filename}.rng">
+    <xsl:call-template name="generateOutput">
+      <xsl:with-param name="body">
       <grammar
        ns="http://www.tei-c.org/ns/1.0"
        xmlns="http://relaxng.org/ns/structure/1.0"
@@ -111,7 +129,10 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 	<!-- bits flagged as part of NAME-decls modules are included in
 	     the module for schema purposes, and the -decls ones are ignored -->
 	<xsl:for-each select="exsl:node-set($Master)">
-<xsl:message>    Look for <xsl:value-of select="$filename"/>-decl</xsl:message>
+    <xsl:if test="$verbose='true'">
+<xsl:message>    Look for <xsl:value-of
+select="$filename"/>-decl</xsl:message>
+    </xsl:if>
 	  <xsl:for-each
 	   select="key('FILES',concat($filename,'-decl'))">
 <xsl:message>Found <xsl:value-of select="$filename"/>-decl</xsl:message>
@@ -125,7 +146,8 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 	</xsl:apply-templates>
 	
       </grammar>
-    </exsl:document>
+      </xsl:with-param>
+    </xsl:call-template>
   </xsl:if>
 </xsl:template>
 

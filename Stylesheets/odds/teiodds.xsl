@@ -24,7 +24,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 <xsl:include href="RngToRnc.xsl"/>
 <xsl:param name="verbose"></xsl:param>
 <xsl:param name="oddmode">html</xsl:param>
-<xsl:param name="ODDROOT">http://www.tei-c.org/P5/Odds</xsl:param>
+<xsl:param name="ODDROOT">http://www.tei-c.org/P5/Odds/</xsl:param>
 <xsl:param name="schemaBaseURL">http://www.tei-c.org/P5/Schema/</xsl:param>
  <xsl:key  name="CLASSMEMBERS" match="tei:elementSpec|tei:classSpec" use="tei:classes/tei:memberOf/@key"/>
  <xsl:key name="TAGS" match="Tag|Pattern|Class" use="ident"/>
@@ -603,11 +603,31 @@ created on <xsl:value-of select="edate:date-time()"/>.
   <xsl:variable name="ident">
     <xsl:value-of select="ancestor::tei:elementSpec/@ident|ancestor::tei:classSpec/@ident"/>
   </xsl:variable>
-   <xsl:for-each select="key('IDENTS',@key)[1]">
+ <xsl:choose>
+  <xsl:when  test="key('IDENTS',@key)">
+  <xsl:for-each select="key('IDENTS',@key)[1]">
      <xsl:apply-templates  select="." mode="tagatts"/>
    </xsl:for-each>
+  </xsl:when>
+  <xsl:otherwise>
+    <xsl:variable name="filename">
+      <xsl:call-template name="findOddFile">
+	<xsl:with-param name="ident"><xsl:value-of select="@key"/></xsl:with-param>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$filename=''">
+	<xsl:message>ERROR: CANNOT OPEN A FILE FOR <xsl:value-of select="@key"/></xsl:message>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:for-each select="document($filename)">
+	  <xsl:apply-templates  select="." mode="tagatts"/>
+	</xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
-
 
 
 <xsl:template match="tei:memberOf" mode="tangleModel">
