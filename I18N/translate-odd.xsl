@@ -11,12 +11,11 @@
 <xsl:key name="TAGMODS" match="Tag|AttClass" use="Tagset"/>
 <xsl:key name="MODS" match="tei:moduleRef" use="@key"/>
 <xsl:output method="xml" indent="yes"/>
+<xsl:param name="verbose"></xsl:param>
 <xsl:param name="lang">es</xsl:param>
 <xsl:key name="ELEMENTS" match="element" use="@ident"/>
 <xsl:key name="ATTRIBUTES" match="attribute" use="@ident"/>
-<xsl:param name="TEITAGS">http://www.tei-c.org.uk/tei-bin/files.pl?name=tags.xml</xsl:param>
-<xsl:param name="TEINAMES">http://www.tei-c.org.uk/tei-bin/files.pl?name=teinames.xml</xsl:param>
-
+<xsl:param name="TEISERVER">http://localhost:8080/exist/TEI/Roma/xquery/</xsl:param>
 <xsl:template match="tei:*|rng:*">
   <xsl:copy>
     <xsl:apply-templates select="@*|*|text()|comment()"/>
@@ -65,22 +64,31 @@
 <xsl:template name="findTranslateNames">
   <xsl:param name="modname"/>
   <xsl:variable name="HERE" select="."/>
-
-  <xsl:for-each
-   select="document($TEITAGS)/Table">
-    <xsl:for-each select="key('TAGMODS',$modname)">
-      <xsl:variable name="thisthing" select="ident"/>
+  <xsl:variable name="loc">
+    <xsl:value-of select="$TEISERVER"/>
+    <xsl:text>objectsbymod.xq?module=</xsl:text>
+    <xsl:value-of select="$modname"/>
+  </xsl:variable>
+  <xsl:variable name="i18n">
+    <xsl:value-of select="$TEISERVER"/>
+    <xsl:text>i18n.xq</xsl:text>
+  </xsl:variable>
+  <xsl:for-each select="document($loc)/List/Object">
+      <xsl:variable name="thisthing" select="Name"/>
       <xsl:variable name="ename">	
 	<xsl:choose>
-	  <xsl:when test="$HERE/tei:elementSpec[@ident=$thisthing]">
+	  <xsl:when test="$HERE/tei:*[@ident=$thisthing]">
 	    <xsl:if
 	     test="$HERE/tei:elementSpec[@ident=$thisthing]/tei:attList">
 	    </xsl:if>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <xsl:for-each  select="document($TEINAMES)">
+	    <xsl:for-each  select="document($i18n)">
 	      <xsl:for-each select="key('ELEMENTS',$thisthing)">
 		<xsl:if test="equiv[@lang=$lang]">
+		  <xsl:if test="$verbose='true'">
+		  <xsl:message> ... <xsl:value-of select="equiv[@lang=$lang]/@value"/></xsl:message>
+		  </xsl:if>
 		  <altIdent type="lang" xmlns="http://www.tei-c.org/ns/1.0">
 		  <xsl:value-of select="equiv[@lang=$lang]/@value"/>
 		  </altIdent>
@@ -92,7 +100,7 @@
       </xsl:variable>
       <xsl:variable name="aname">
 	<xsl:choose>
-	  <xsl:when test="$HERE/tei:elementSpec[@ident=$thisthing]">
+	  <xsl:when test="$HERE/tei:*[@ident=$thisthing]">
 	    <xsl:if
 	     test="$HERE/tei:elementSpec[@ident=$thisthing]/tei:attList">
 	    </xsl:if>
@@ -100,9 +108,9 @@
 	  <xsl:otherwise>
 	<xsl:if test="Attributes">
 	  <attList xmlns="http://www.tei-c.org/ns/1.0">
-	    <xsl:for-each select="Attributes/Att">
-	      <xsl:variable name="thisatt" select="@n"/>
-	      <xsl:for-each  select="document($TEINAMES)">
+	    <xsl:for-each select="Attributes/attribute">
+	      <xsl:variable name="thisatt" select="."/>
+	      <xsl:for-each  select="document($i18n)">
 		<xsl:for-each select="key('ATTRIBUTES',$thisatt)">
 		  <xsl:if test="equiv[@lang=$lang]">
 		    <attDef mode="change" xmlns="http://www.tei-c.org/ns/1.0" ident="{$thisatt}"> 
@@ -121,6 +129,9 @@
       </xsl:variable>
       <xsl:if test="string-length($aname)&gt;0 or
 	      string-length($ename)&gt;0">
+		  <xsl:if test="$verbose='true'">
+<xsl:message><xsl:value-of select="$modname"/>: <xsl:value-of select="$thisthing"/></xsl:message>
+</xsl:if>
 	<xsl:choose>
 	  <xsl:when test="starts-with($thisthing,'tei.')">
 	    <classSpec ident="{$thisthing}" mode="change" xmlns="http://www.tei-c.org/ns/1.0">
@@ -136,12 +147,7 @@
 	</xsl:choose>
       </xsl:if>
     </xsl:for-each>
-  </xsl:for-each>
 </xsl:template>
 
-
-<xsl:template name="findAttributes">
-
-</xsl:template>
 
 </xsl:stylesheet>

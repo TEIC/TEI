@@ -50,6 +50,7 @@ Probleme: &lt;argument>
 	  <xsl:copy-of select="equiv"/>
 	</xsl:for-each>
       </xsl:for-each>
+      <desc><xsl:value-of select="tei:desc"/></desc>
     </element>
   </xsl:for-each>
   <xsl:for-each select=".//tei:attDef">
@@ -63,6 +64,7 @@ Probleme: &lt;argument>
 	      <xsl:copy-of select="equiv"/>
 	    </xsl:for-each>
 	  </xsl:for-each>
+	  <desc><xsl:value-of select="tei:desc"/></desc>
 	</attribute>
       </xsl:if>
     </xsl:if>
