@@ -22,9 +22,9 @@ Text Encoding Initiative Consortium XSLT stylesheet family
     extension-element-prefixes="edate exsl estr"
     version="1.0">
   <xsl:include href="RngToRnc.xsl"/>
-  <xsl:param name="TEISERVER">http://localhost/TEI/Roma/xquery/</xsl:param>
+  <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
   <xsl:param name="verbose"></xsl:param>
-  <xsl:param name="schemaBaseURL">http://www.tei-c.org/P5/Schema/</xsl:param>
+  <xsl:param name="schemaBaseURL">http://localhost/schema/relaxng/p5/</xsl:param>
   
   <xsl:key  name="CLASSMEMBERS" match="tei:elementSpec|tei:classSpec" use="tei:classes/tei:memberOf/@key"/>
   <xsl:key name="TAGS" match="Tag|Pattern|Class" use="ident"/>
@@ -948,18 +948,6 @@ in change mode and there is no attList -->
   </xsl:call-template>
 </xsl:template>
 
-
-
-<xsl:template match="tei:p/@ident">
-  <xsl:call-template name="makeAnchor">
-    <xsl:with-param name="name">GDX-<xsl:number level="any"/></xsl:with-param>
-  </xsl:call-template>
-  <xsl:call-template name="ttembolden">
-    <xsl:with-param name="text">
-      <xsl:apply-templates/>
-    </xsl:with-param>
-  </xsl:call-template>
-</xsl:template>
 
 <xsl:template match="tei:remarks" mode="tangle"/>
 
