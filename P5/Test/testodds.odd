@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:lang="en"  xmlns="http://www.tei-c.org/ns/1.0"
+ xmlns:rng="http://relaxng.org/ns/structure/1.0"
+ n="testodd">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>TEI with ODD elements</title>
+            <author>Sebastian Rahtz</author>
+         </titleStmt>
+         <publicationStmt>
+	   <p> </p>
+	 </publicationStmt>
+         <sourceDesc>
+            <p>authored from scratch</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+<text>
+<body>
+  <p>
+    <schemaSpec ident="testodds" start="TEI">
+      <moduleRef key="header"/>
+      <moduleRef key="core"/>
+      <moduleRef key="tei"/>
+      <moduleRef key="textstructure"/>
+      <moduleRef key="tagdocs"/>
+      <moduleRef key="dictionaries"/>
+      <moduleRef key="linking"/>
+
+    <macroSpec ident="egXML.content" module="tagdocs" mode="change">
+      <content>
+      <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+        <choice>
+          <text/>
+          <ref name="anyTEI"/>
+        </choice>
+      </oneOrMore>
+      </content>
+    </macroSpec>
+
+  <macroSpec ident="anyTEI" mode="add">
+    <content>
+      <element  xmlns="http://relaxng.org/ns/structure/1.0">
+	<nsName ns="http://www.tei-c.org/ns/Examples"/>
+	<zeroOrMore>
+	  <choice>
+	    <attribute>
+	      <anyName/>
+	    </attribute>
+	    <text/>
+	    <ref name="anyTEI"/>
+	    <ref name="schemapattern"/>
+	  </choice>
+	</zeroOrMore>
+      </element>
+    </content>
+  </macroSpec>
+    </schemaSpec>
+  </p>
+</body>
+</text>
+</TEI>
+
+
+

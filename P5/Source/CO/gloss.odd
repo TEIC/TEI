@@ -1,0 +1,63 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="GLOSS" usage="rwa" ident="gloss">
+  <equiv/>
+  <gloss/>
+  <desc>identifies a phrase or word used to provide a gloss or
+  definition for some other word or phrase.</desc>
+  <classes>
+    <memberOf key="tei.hqphrase"/>
+    <memberOf key="tei.declaring"/>
+  </classes>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+  </content>
+  <attList org="choice">
+
+    <attDef ident="target" usage="opt">
+      <equiv/>
+      <desc>identifies the associated <gi>term</gi> element by an
+      absolute or relative URI reference</desc>
+      <datatype>
+	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/>
+      </datatype>
+      <valDesc>should be a valid URI reference that resolves to a
+      <gi>term</gi> element</valDesc>
+    </attDef>
+
+    <attDef ident="cref" usage="opt">
+      <equiv/>
+      <desc>identifies the associated <gi>term</gi> element using a canonical
+      reference from a scheme defined in a <gi>refsDecl</gi> element
+      in the TEI header</desc>
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>the result of applying the algorithm for the resolution
+      of canonical references (described in section <ptr
+      target="#SACR"/>) should be a valid URI reference that resolves
+      to a <gi>term</gi> element</valDesc>
+      <remarks>
+	<p>The <gi>refsDecl</gi> to use may be indicated with the
+	<att>decls</att> attribute.</p>
+      </remarks>
+    </attDef>
+
+  </attList>
+  
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">We may define <term xml:id="tdpv" rend="sc">discoursal point of view</term>
+as <gloss target="tdpv">the relationship, expressed through discourse
+structure, between the implied author or some other addresser,
+and the fiction.</gloss></egXML>
+  </exemplum>
+  <remarks>
+    <p>The <att>target</att> and <att>cref</att> attributes are
+    mutually exclusive.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#COHQU"/>
+  </listRef>
+</elementSpec>

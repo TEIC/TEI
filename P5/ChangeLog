@@ -1,0 +1,605 @@
+2004-10-01  Sebastian Rahtz  <rahtz@spqr-ibm>
+	* odd2relax.xsl and teiodds.xsl: bug fixes here and there to cater
+	for below
+	* teicommon.xsl: some un-namespaced remnants corrected
+	* classSpec.odd: allow for a <content> child, to contain a
+   	   starting declaration (defaults to <notAllowed/>)
+        * schemaspec.odd: add attribute "start" to generate Relax NG start
+	   statements (can be NMTOKENS, for multiple choices). modules
+	   do not now generate a start at all.
+	* figure.odd: make url and doc attributes of figure be a choice, not allowed together
+	* moduleref.odd:  make url and key attributes be a choice, not
+	  allowed together. also allow children (if using @url)
+	* orig.odd/reg.odd: put in correct classes for <choice>
+	
+2004-06-01  Sebastian Rahtz  <rahtz@computing-services.oxford.ac.uk>
+
+	Change 43901 submitted.
+	* Source/ST/st.odd: dftana and dftlink not needed; done by
+	"predeclare" attribute on all classes which are needed up front.
+
+	* remove all remaining <claDecl> elements, in favour of
+	predeclaration
+
+	* juggle order of macros to make them appear in right order
+
+	* cbcomp should be in "tei" module not "core"
+
+2004-05-31  Sebastian Rahtz  <rahtz@spqr-dell.oucs.ox.ac.uk>
+
+	* Tools/dtdGen.xsl: considerably simplify processing model:
+	visit every module in turn, and process the elements, classes and
+	macros which occur it it. Unless it has a type value of "core", in
+	which case it gets special treatment. At that point, declare a
+	marked section for every module, set to IGNORE. This means that
+	all modules must be explicitly requested.
+
+	* Source/PR/pr.odd (fragment): omit "prose" module entirely, as it
+	does nothing
+
+	* Source/ST/inherit.odd: kill this one. not used any more.
+	
+	* Source/TD/msection.odd: kill the whole concept.
+	
+	* Source/ST/st.odd: 
+	  - entirely kill marked sections for XML/SGML omissability. embed
+	    that in XSLT DTD generator directly.
+	  - kill marked sections guarding modules. Will now be generated.
+	  - kill mixno.odd. Everything is mixed now.
+
+2004-05-30  Sebastian Rahtz  <rahtz@spqr-dell.oucs.ox.ac.uk>
+	CHANGE 43890 committed
+
+	* all .odd files: change copyright notice
+
+	* all *Spec: add "module" attribute showing their rightful home
+	 (implemented in P5transform.xsl/transformbody.xsl)
+
+	* unusedSource/*: move over to here any .odd files which
+	 cease to be used.
+
+	CHANGE 43889 committed
+	
+	* Source-driver.xml: add copyright statement
+
+	CHANGE 43888 committed
+
+	* Source/TD/identify.odd: add "module" attribute to specify
+	  which module an object is defined it
+
+	* Source/DI/di.odd, VE/ve.odd, PR/pr.odd: remove guard section
+	around module for TEI.singleBase. It won't be needed.
+	
+	* Source/DS/ds.odd: backmatter and frontmatter no longer separate
+	modules, subsumed into new module "textstructure" (was old "structure")
+
+	* Source/ST/st.odd: we don't talk about "DTD fragments" any more,
+	we try to use the more neutral word "modules".
+	 - rename "structure" to "textstructure"
+	 - start hacking transitional text about P3->P4
+	 - remove discussion of independent modules
+	 - remove modules "mixed" and "general"
+	
+2004-05-06  Sebastian Rahtz  <rahtz@computing-services.oxford.ac.uk>
+
+	* <xmleg>  to <egXML>, and ditto <eg>
+	* no more publicID (construct from @n)
+	* namespace for examples loses trailing /
+	Yes, lots of XSL stylesheet changes as a result
+
+2004-05-04  Lou <lou@janus.oucs.ox.ac.uk>
+	Namechanges required by the integration of FS
+	in TD:   string-> stringVal
+	         default -> defaultVal
+	in HD:   symbol -> metSym
+	Did a global sweep through odds to change the first two, but only
+	looked in HD and VE for the third.
+
+
+2004-04-23  Sebastian Rahtz  <rahtz@computing-services.oxford.ac.uk>
+
+	* teiodds.xsl: change the way attributes are generate. instead of
+	X.attributes pattern, insert for each attribute Y a reference to
+	X.attributes.Y. Define this later to be pattern Y, definining
+	attribute "name of Y", with reference to
+	X.attributes.Y.content. This allows us to rename and override attributes.
+
+2004-04-21  Sebastian Rahtz  <rahtz@spqr-dell.oucs.ox.ac.uk>
+
+	* teiodds.xsl: if an <attDef> has a <valList type="closed">,
+	always generate and refer to a x.attributes.y.values pattern,
+	even of the datatype is not Code. This makes all closed values
+	lists parameterizable.
+
+2004-04-18  Sebastian Rahtz  <rahtz@spqr-dell.oucs.ox.ac.uk>
+
+	* in order to get extensions working properly, a series of naming
+	changes
+	 a) <schema> and <module> join the tei.identifiable class, and so
+	 use @ident instead of @name
+	 b) <xmlName> is illegal, replaced by <altIdent>
+	 c) drop @overrides and @inherits from moduleRef and set its
+	 content model to be <empty/>
+	 d) td.odd declared two modules called tagdocs, one should have
+	 been tagdocs-desc. tsk tsk
+
+	 e) corresponding changes in ODD-processing stylesheets
+
+2004-04-09  Lou Burnard  <lou@computing-services.oxford.ac.uk>
+
+	Integrate msdescription module into existing ST/st.odd as quickest
+	way of getting DTD validation. It now behaves just like any other
+	additional tagset: keyword is "TEI.msdescription". Moved all ODDs
+	into P5/Source/MS although they are still nominally under charge of
+	workgroup. 
+	
+
+2004-03-28  Sebastian Rahtz  <rahtz@spqr-dell.oucs.ox.ac.uk>
+
+	* implement the big revision following face to face META meeting,
+	documented in Activities/META/mem03.xml
+
+2004-03-16  Lou Burnard  <lou@computing-services.oxford.ac.uk>
+	    
+
+          1. revised Source-Driver.xml so that distinct files had distinct
+	       entity names (e.g. the 7 varieties of macro.component in different
+	          bases became macro.xx.component where xx is the base name)
+
+	  2. removed id from mixno.pat 
+
+	  3. revised transformP5 script to just do copy, moving things to
+		     newSource directory in the right place. Included
+		     unholy hack to  deal with mixno
+          4. Tried to validate regenerated newsource with following results
+
+/home/lou/TEI/P5/newSource/ST/prcomp.pat:1:119: error: ID "PRCOMP" has already been defined
+/home/lou/TEI/P5/newSource/ST/prcomp.pat:1:119: error: first occurrence of ID "PRCOMP"
+/home/lou/TEI/P5/newSource/ST/cbcomp.pat:1:119: error: ID "CBCOMP" has already been defined
+/home/lou/TEI/P5/newSource/ST/cbcomp.pat:1:119: error: first occurrence of ID "CBCOMP"
+/home/lou/TEI/P5/newSource/ST/clana.cla:1:70: error: ID "CLANA" has already been defined
+/home/lou/TEI/P5/newSource/ST/clana.cla:1:70: error: first occurrence of ID "CLANA"
+/home/lou/TEI/P5/newSource/ST/teigis.pat:1:119: error: ID "TEIGIS" has already been defined
+/home/lou/TEI/P5/newSource/ST/teigis.pat:1:119: error: first occurrence of ID "TEIGIS"
+/home/lou/TEI/P5/newSource/ST/teigis.pat:1:119: error: ID "TEIGIS" has already been defined
+/home/lou/TEI/P5/newSource/ST/teigis.pat:1:119: error: first occurrence of ID "TEIGIS"
+
+
+	5. TEIGIS is multiply defined because it's embedded by 3 different
+          modules (ST, FD, SH). Change the latter two to use a moduleref,
+          added new module to ST which defines the pattern/entity teigis2.ent.
+
+        6. CLANA got missed during last nights pass through the driver. Fixed
+           Source-driver.xml and st.odd.
+
+        7. CBCOMP is referenced twice from st.odd, once for the general and
+            once for the mixed base. Dunno what to do about that.
+
+        8. PRCOMP is referenced twice from st.odd, once within a msection to
+           define macro.component for the prose base; once at the end of the
+           singlebase section as "the default". Comment out the second
+           reference , since the rule is that you must supply a base.
+
+2004-03-15  Sebastian Rahtz  <rahtz@computing-services.oxford.ac.uk>
+
+	* more restructuring:
+
+	1. adList target=FOO  -> adList key=tei.foo
+	2. tagDesc target=FOO  -> tagDesc key=tei.foo
+	3. all datatypes  which are pointers to standard XSD datatypes
+	changed to direct <rng:data>
+	
+	* many many changes to XSLT to cope with classse changes
+	
+2004-03-11  Sebastian Rahtz  <rahtz@computing-services.oxford.ac.uk>
+
+	* restructure ODDs to remove use of IDs where possible:
+	
+	  1. change <datatype target="datatype.foo"> to
+	      <datatype><rng:ref name="datatype.foo"/></datatype>
+	  2. change <classes names="A B C"> to
+	      <classes>
+	         <memberOf key="tei.a"/>
+	          etc
+	      </classes>
+	  3. change entity names in Source-driver to be the ident, not the ID
+
+2004-03-08  Sebastian Rahtz  <rahtz@computing-services.oxford.ac.uk>
+
+	* rearrange output structure so that everything is in
+	subdirectories named after the id of the relevant <div1>. this
+	breaks up the monolithic set of tag files into their modules
+
+	* throw away all comments except those that seem related to <eg>
+	or <xmleg>
+
+2004-03-01  Sebastian Rahtz  <rahtz@computing-services.oxford.ac.uk>
+
+	* the big naming change.
+	   class.FOO              --> tei.FOO
+	   attributes.class.FOO   --> tei.FOO.attributes
+	   content.FOO            --> FOO.content
+	   attributes.FOO         --> FOO.attributes
+	   values.class.FOO.BAR   --> tei.FOO.attributes.BAR.values
+
+	 with the result that all public patterns start with "tei.",
+	 and go from general->specific consistently. 
+
+	 This affects lots of XSL files, moTags/* files, scripts
+
+2004-02-29  Sebastian Rahtz  <rahtz@computing-services.oxford.ac.uk>
+
+	* P4/p2st*: move TEI.2 and teiCorpus to core, to leave
+	            "tei" module free of any definitions
+	
+	* relaxGen.xsl: put initial declarations into core;
+	             leave "tei" as the start and some module loading
+
+	* dtdGen.xsl: fix module processing with change from @file to @name
+
+2004-02-27  Sebastian Rahtz  <rahtz@computing-services.oxford.ac.uk>
+
+	* revise the way we do extensions in ODDs
+	   - <schema> and <module> both have "name" attribute instead of
+	   "file"
+	   - moduleRef can refer to a module by any of
+	     * URL
+	     * target attribute to ID
+	     * body of the element refers to a @name of a <module>
+	   - moduleRef has an override attribute which points to a <chunk>
+	   containing tagdocs which override this module
+	   - <schema> can have <chunkRef> children which performs
+	   direct definition of tags (instead of via module)
+	   - <classes> have <classRef> children instead of <class>
+	   - kill <tagRename>
+	   - many changes to XSL to make all this work
+	   - <chunk> can occur anywhere, and has no direct effect on schema generation
+
+2004-02-23  Sebastian Rahtz  <rahtz@computing-services.oxford.ac.uk>
+
+	* P4/catref.tag: "scheme" attribute had type "req" instead of
+	"opt". changed.
+
+	* allow for writing TEI extensions in odds
+	     - add <schema> element like <module>
+	     - allow for "url" attribute of <moduleRef>
+	     - add <tagRename> element
+	     - allow <moduleRef> to have children (ie <tagDoc>s)
+	     - support <class> children of <classes> instead of "names"
+	     attribute
+	
+	 fix relaxGen.xsl accordingly
+	
+
+2004-01-26  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* cleanup.xsl: if <dataDesc> has something other than guff in it,
+	add that to the <remarks> as a first <p rend="dataDesc">
+
+	* prep5top5.xsl: kill all comments in ODDs. preserve them in old
+	P4 instead...
+
+	* moTags/tei2.tag: changed "teiversion" to "version"
+	
+	* (several files): changed <xmleg> to <xmlEg> for camel-case reasons
+
+2004-01-22  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* relaxGen.xsl: redo public attribute class stubs; fix
+	nomorechoices.xsl to not put <choice> around singleton <empty>
+
+	* P4/placpart.cla (type): remove <attList>, as this is a model
+	type, and so cannot have attributes
+
+2004-01-19  Sebastian Rahtz  <rahtz@spqr-dell.oucs.ox.ac.uk>
+
+	* odd2shared.xsl: suppress all but first occurence of each
+	<patternDoc> to avoid the moras of mixed bases and so on.
+
+	* change default for classes from <empty/> to <notAllowed/>
+	in order to make auto DTD generation work.
+
+2004-01-18  Sebastian Rahtz  <rahtz@spqr-dell.oucs.ox.ac.uk>
+
+	* P4/paragraph.cla: new class for elements which
+	just need <p> in the content model. viz
+	<avail>, <correctn>, <equipmen>, <hyphen>, <interptn>, <normalzn>,
+	<projdesc>, <quotn>, <sampdecl>, <segmentn>, <stdvals>
+
+
+	* P4/categorize.cla: new class for elements which can appear
+	inside <catDesc>. Affected element: <textDesc>. Needed because the
+	latter does not appear until corpora is loaded.
+
+	* P4/segment.cla: new class for segmenting elements 
+	called "segment". Members so far: <ab> and <seg>. Affects
+	content models of <m>, <sp>, <w>. Needed because these latter
+	are in the core, but ab and seg only appear in linking.
+
+2004-01-09  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* P4/profile.cla: add new class for elements allowed in
+	  <profileDesc>;  Affected tags: handList handShift langUsage particDesc
+	  settingDesc textClass
+
+	* P4/encoding.cla: add new class for elements allowed in
+	<encodingDesc>. Affected tags: projectDesc samplingDecl
+	editorialDecl tagsDecl refsDecl classDecl metDecl fsdDecl
+	variantEncoding
+
+	* P4/header.cla: add new class for elements allowed in <teiHeader>.
+	Affected tags: encodingDesc profileDesc
+
+2003-12-08  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* P4/p2te.odd: completely kill the terminology chapter and
+	associated elements and classes: admin.tag
+	clterm.cl compterm.cla descrip.tag dftdict.cla ofig.tag othform.tag
+	termentf.tag termentn.tag termincl.cla termmisc.cla
+
+	* prep5top5.xsl: <claDecl> is replaced by inline <classDoc> (as
+	entity) unless it is the second or subsequent
+	definition. Reference chapters are given as body a <divGen> to
+	generate the reference lists.
+
+	* P4/p2stec.odd (nouns): sorry, but i hate dummy.dtd. Put in examples by
+	hand and stop being clever.
+
+	* P4/p2ditp.odd (dictionaries): sorry, guys, don't declare NOTE
+	twice, please.
+
+	* P4/p2stec.odd (nouns): sorry, dummy file cannot hold duplicates
+	of existing things, it makes a mess.
+
+	* prep5top5.xsl: rewrite whole document, replacing each
+	<tagDecl> and <patternDecl> with corresponding <tagDoc> and
+	<patternDoc> (as entities). remove tagDecl and patternDecl from system.
+
+2003-11-26  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* odd2shared.xsl: if an attribute has a datatype of "Code", the
+	value will be a pattern called "values.GI.ATTNAME", which is
+	initially defined as "text". This can be overridden in a wrapper schema.
+
+	* added datatypes for Certainty, Key and Codes; changed 60-70
+	attributes to use them. they all expand to "CDATA" at present
+
+2003-11-25  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* relaxGen.xsl: do not include "general" in main tei.rng;
+	this means that alll wrapper schemas must include tei.rng and
+	general.rng
+
+	* listBibl.tag: in place of "trailer", use "divbot" class, to
+	avoid dependency
+
+	* add class.teiText and class.teiHeader, and change content model
+	of TEI accordingly.
+
+2003-11-24  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* Makefile (dtds): manually change (%schemapattern;)+ to
+	schemapattern in tagdocs.dtd, as ANY cannot be qualified
+
+	* P4/dieg.tag: changed name of this <eg> to <dicteg>, to avoid
+	overlap. TO BE SORTED OUT!
+
+	* rename elementContent to schemaContent, and use it in patternDoc
+	as well as tagDoc. lots of resulting changes in XSLT scripts.
+
+	* add pattern for "schemapattern"; this defaults to ANY, but
+	p5odds.xsl redefines it as "anything from RelaxNG"
+
+2003-11-22  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* relaxGen.xsl: when creating output modules, do not produce those
+	with type "decls"; instead, include the contents of that module at
+	the front of the module with the corresponding name with "-decl"
+	stripped off.
+
+	* relaxGen.xsl:  Put a fixed list of overrides of special defines
+
+	* relaxGen.xsl/oddtransform.xsl: do not construct class contents
+	at time of first definition, but extend the class at the relevant
+	point when the module is loaded.
+	
+	* P4/p2stec.odd (file): add ODDPHR and ODDREF to low-level classes
+
+	* P4/prxml.ent: make TEI.XML "INCLUDE" by default, not "IGNORE"
+
+2003-11-20  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* P4/figure.tag: added url, width, height, scale attributes
+
+	* P4/xpointer.cla: added url attribute
+	
+	* P5/moTags: clean up and add tag/class docs until they match what
+	is actually found in P5.
+
+	* Renamed peRef to moduleRef _passim_. added target attribute
+	pointing to id of <module>
+
+	* Removed all old <entDoc> elements which describe modules, and
+	moved the <publicID> into the <module>. This means that <module>
+	is the only place which references a filename. 
+
+	* Wholesale renaming of file references to remove the "tei2xxx" pattern
+	in favour of real names. 
+
+2003-11-10  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* Rename some patterns in P4/*:
+	       component -> macro.component
+	       component.plus -> macro.componentPlus
+	       component.seq -> macro.componentSeq
+	       paraContent -> macro.paraContent
+	       phrase.seq -> macro.phraseSeq
+	       phrase -> macro.phrasegroup
+	       seq -> macro.seq
+	       specialPara -> macro.specialPara
+	
+	* use <module> in place of <chunk file=>
+
+2003-11-09  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* insertcontentmodels.xsl: get rid of @contin in dtdFrag
+	(for each dtdFrag, find people who have it as @contin, and make a
+	dtdRef to them)
+	
+	Change tagDecl, classDecl, patternDecl etc to have normal @target
+	attribute instead of classDoc, tagDoc, patternDoc
+	
+	* clean.xsl etc: rename "a." to "attributes.", and insert "class."
+	in front of _all_ classes; so "a.global" is now
+	"attributes.class.global" 
+	
+	* relaxGen.xsl: zap whole concept of x.***** in schemas
+
+2003-11-07  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* odd2html.xsl: turn each fragment of RNG into compact syntax
+	using RngToRnc XSLT instead of external trang processor; this
+	allows <ref> elements to be made into hyperlinks.
+
+2003-11-05  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* insertcontentmodel.xsl: take each <eg> and put the contents
+	into an <xmleg> element if it looks like being well-formed.
+	<xmleg> and contents are in namespace
+	http://www.tei-c.org/ns/Examples
+
+	* odd2html.xsl: allow for xmleg, maybe correctly
+
+	* P4/* clean up some illformed <eg> contents, in preparation
+	for making them be proper XML in their own namespace.
+	
+	* change <gloss> for file patterns.
+
+2003-11-04  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* (Lou) created or found tagdocs for extra or new ODD elements
+	* Makefile and odd2html.xsl (etc) fixed to be able to make fascicules
+
+2003-11-02  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* get rid of <part> in classDoc.
+	 
+	* major rename: "m." to "class." passim, and embed it in <ident>
+
+2003-10-28  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* p2refs.odd, oddFiles.dtd: zap entName, tdeg; add patterndoc;
+
+	* p2refs.odd, oddFiles.dtd, p2wd.odd: kill all of WSD
+	which means all the following files are dead:
+	basewsd.tag
+	directn.tag
+	exceptns.tag
+	script.tag
+	teiwsd.tag
+	wsdccs.tag
+	wsdchar.tag
+	wsdchars.tag
+	wsddesc.tag
+	wsdents.tag
+	wsdfig.tag
+	wsdform.tag
+	wsdglob.cla
+	wsdlang.tag
+	wsdnote.tag
+	wsdxfig.tag
+
+	* P4/p2td.odd: took out top-level material which makes it a
+	separate DTD
+
+2003-10-19  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* most of the xsl files affected, and some P4 sources.
+	 Name changing (see MEW05):
+	 <dataDesc> demoted to a comment; should be scanned
+	 and interesting parts put into <remarks>
+	 change <gi>, <attName>, <entName>, <class> to <ident>
+	 change <name> to <gloss> in <entDoc>, <classDoc>, <tagDoc>, <attDef>
+	 wrapper of <elementContent> around content RelaxNG in tagdocs and
+	      classdocs
+	 change name of <dtdRef> and <dtdFrag> to <chunkRef> and <chunk>
+         disallow <rs> as alternative to <gloss> in tagdocs
+         zap empty <attList> from <classDoc>
+         zap empty <classes> from <classDoc>
+         <entDoc>, <entDecl> - renamed to <patternDoc>, <patternDecl>
+	 In <valList>, change from <val><desc> pair to <valitem>, containing
+         a standard <ident>, <equiv>, <glosss>
+
+2003-10-10  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* P4/*: change names of entities which load files so that they do
+          not conflict with element names. 
+
+	* relaxGen.xsl: model classes are populated initially only by
+          other model classes, not by any elements. Make some evil
+          elements have default empty models so that they can be used anywhere
+
+	* relaxGen.xsl: move to organic scheme whereby each element
+          interleaves itself into its model class. no more INCLUDE/IGNORE,
+	  we just include the schema file if we want to use it. Use proper
+	  filenames.
+	
+	* p5odds.rng, tei-oucs.rng, test0.rng: make conform to organic schema 
+
+2003-10-09  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* P4/*: change all typeXXXXX to datatype.Xxxxxx
+
+2003-10-08  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* rework odd2html and all associated stylesheets to
+	generate HTML from namespaced TEI
+
+2003-07-13  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* add a new part to gram.patch, which cleans up the multiple
+	component definitions. I don't know how to do this properly at
+	present. 
+	* remove TEI.* guard from inner <choice> elements
+
+2003-07-06  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* rework dtdGen.xsl, relaxGen.xsl, odd2shared.xsl to put all TEI
+	elements in TEI namespace. add necessary things in Makefile
+	to clean up rng/dtd files
+	
+	* redo all example XML and RNG wrappers to use TEI namespace
+
+	* get rid of <string> elements containing IGNORE, INCLUDE and 
+	CDATA in favour of rng elements (in insertcontents.xsl)
+
+	* add new type for entDoc "epe" for when it is providing
+	attributes
+
+	* clean up dtdGen until it works again. now RNG and DTD generation
+	both work.
+	
+2003-05-21  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* redo the file names. where before we had file=foo and
+	file=foo.ent, the latter is now file=fooent, so that we have a
+	single rule about file suffixes and lookups
+
+2003-05-19  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* redo the <string> elements which have public IDs in, replace
+	with <publicID file="...">...</publicID>
+	   
+
+2003-05-18  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* relaxGen.xsl: find default for attributes, work to new schema
+	* p5odds.rng: adapted to new markup
+	* typecleanup.xsl:  content of attDef is valid rng:attribute
+   	  (possibly surrounded by rng:optional). zapped <datatype>,
+	  but preserve attList/attDef. Leave <default> in TEI
+	  namespace, as putting it in RNG makes the validation fall over.
+	* P4/* rename TEI.2 to TEI
+	       rename teiCorpus.2 to teiCorpus
+	       zapped parents/children/attldecl from TD
+

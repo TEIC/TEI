@@ -1,0 +1,96 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" predeclare="true" module="linking-decl" xml:id="CLLINK" type="atts" ident="tei.linking">
+<desc>defines a set of attributes for hypertext and other linking,
+which are enabled for all elements when the additional tag set for
+linking is selected.</desc>
+  <attList>
+
+    <attDef ident="corresp" usage="opt">
+      <equiv/>
+      <desc>points to elements that correspond to the current
+      element in some way.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/></datatype>
+      <valDesc>one or more URIs, separated by white space.</valDesc>
+      <remarks/>
+    </attDef>
+
+    <attDef ident="synch" usage="opt">
+      <equiv/>
+      <desc>points to elements that are synchronous with the current
+      element.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/></datatype>
+      <valDesc>one or more URIs, separated by white space.</valDesc>      
+      <remarks/>
+    </attDef>
+
+    <attDef ident="sameAs" usage="opt">
+      <equiv/>
+      <desc>points to an element that is the same as the current
+      element.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
+      <valDesc>a URI.</valDesc>
+    </attDef>
+      
+    <attDef ident="copyOf" usage="opt">
+	<equiv/>
+	<desc>points to an element of which the current element is a
+	copy.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
+      <valDesc>a URI.</valDesc>
+      <remarks>
+        <p>Any content of the current element should be ignored. Its
+	true content is that of the element being pointed at.</p>
+      </remarks>
+    </attDef>
+
+    <attDef ident="next" usage="opt">
+      <equiv/>
+      <desc>points to the next element of a virtual aggregate of which
+      the current element is part.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
+      <valDesc>a URI.</valDesc>
+    </attDef>
+
+    <attDef ident="prev" usage="opt">
+      <equiv/>
+      <desc>points to the previous element of a virtual aggregate of
+      which the current element is part.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
+      <valDesc>a URI.</valDesc>
+    </attDef>
+
+    <attDef ident="exclude" usage="opt">
+      <equiv/>
+      <desc>points to elements that are in exclusive alternation
+      with the current element.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/></datatype>
+      <valDesc>one or more URIs, separated by white space.</valDesc>
+    </attDef>
+
+    <attDef ident="select" usage="opt">
+      <equiv/>
+      <desc>selects one or more alternants; if one alternant is
+      selected, the ambiguity or uncertainty is marked as resolved. If
+      more than one alternant is selected, the degree of ambiguity or
+      uncertainty is marked as reduced by the number of alternants not
+      selected.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/></datatype>
+      <valDesc>one or more URIs, separated by white space.</valDesc>
+      <remarks>
+	<p>This attribute should be placed on an element which is
+	superordinate to all of the alternants from which the
+	selection is being made.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  
+  <listRef>
+    <ptr target="#SA"/>
+  </listRef>
+
+</classSpec>

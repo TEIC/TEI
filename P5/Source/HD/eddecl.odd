@@ -1,0 +1,60 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="EDDECL" usage="opt" ident="editorialDecl">
+<equiv/>
+<gloss>editorial practice declaration</gloss>
+<desc>provides details of editorial principles and practices applied
+during the encoding of a text.</desc>
+  <classes>
+    <memberOf key="tei.encoding"/>
+    <memberOf key="tei.declarable"/>
+  </classes>
+  <content>
+    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:oneOrMore>
+        <rng:ref name="p"/>
+      </rng:oneOrMore>
+      <rng:group>
+        <rng:oneOrMore>
+          <rng:choice>
+            <rng:ref name="correction"/>
+            <rng:ref name="normalization"/>
+            <rng:ref name="quotation"/>
+            <rng:ref name="hyphenation"/>
+            <rng:ref name="interpretation"/>
+            <rng:ref name="segmentation"/>
+            <rng:ref name="stdVals"/>
+          </rng:choice>
+        </rng:oneOrMore>
+        <rng:zeroOrMore>
+          <rng:ref name="p"/>
+        </rng:zeroOrMore>
+      </rng:group>
+    </rng:choice>
+  </content>
+  
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <editorialDecl>
+        <normalization source="W9">
+          <p>All words converted to Modern American spelling using
+ Websters 9th Collegiate dictionary
+  </p>
+        </normalization>
+        <quotation marks="all" form="std">
+          <p>All opening quotation marks converted to &#x201C; all closing
+ quotation marks converted to &amp;cdq;.</p>
+        </quotation>
+      </editorialDecl>
+    </egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#HD53"/>
+    <ptr target="#HD5"/>
+    <ptr target="#CCAS2"/>
+  </listRef>
+</elementSpec>

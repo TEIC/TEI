@@ -1,0 +1,59 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" predeclare="true" module="linking-decl" xml:id="POINTER" type="atts" ident="tei.pointer">
+  <desc>defines a set of attributes used by all elements which point
+  to other elements by means of one or more URI references.</desc>
+  <attList>
+
+    <attDef ident="type" usage="opt">
+      <equiv/>
+      <desc>categorizes the pointer in some respect, using any
+      convenient set of categories.</desc>
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>The type should indicate the intended function of the
+      pointer, or the rhetorical relationship between its source and
+      target.</valDesc>
+    </attDef>
+
+    <attDef ident="evaluate" usage="opt">
+      <equiv/>
+      <desc>specifies the intended meaning when the target of a
+      pointer is itself a pointer.</desc>
+      <valList type="closed">
+	<valItem ident="all">
+	  <equiv/>
+	  <gloss>if the element pointed to is itself a pointer, then
+	  the target of that pointer will be taken, and so on, until
+	  an element is found which is not a pointer.</gloss>
+        </valItem>
+        <valItem ident="one">
+          <equiv/>
+	  <gloss>if the element pointed to is itself a pointer, then
+	  its target (whether a pointer or not) is taken as the target
+	  of this pointer.</gloss>
+        </valItem>
+        <valItem ident="none">
+          <equiv/>
+	  <gloss>no further evaluation of targets is carried out
+	  beyond that needed to find the element specified in the
+	  pointer's target.</gloss>
+        </valItem>
+      </valList>
+      <remarks>
+        <p>If no value is given, the application program is
+          responsible for deciding (possibly on the basis of user
+          input) how far to trace a chain of pointers.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <remarks>
+    <p/>
+  </remarks>
+  <listRef>
+    <ptr target="#COXR"/>
+  </listRef>
+</classSpec>

@@ -1,0 +1,96 @@
+<!-- Copyright TEI Consortium. 
+Licensed under the GPL. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" id="PERSON" ident="person">
+  <equiv/>
+  <gloss/>
+  <classes/>
+  <content>
+<!-- (p+ | (persName*, birth?, death?, 
+                               (occupation|residence|bibl)* ))-->
+<rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:oneOrMore>
+      <rng:ref name="tei.paragraph"/>
+    </rng:oneOrMore>
+<rng:group>
+    <rng:zeroOrMore>
+      <rng:ref name="persName"/>
+    </rng:zeroOrMore>
+    <rng:optional>
+      <rng:ref name="birth"/>
+    </rng:optional>
+    <rng:optional>
+      <rng:ref name="death"/>
+    </rng:optional>
+    <rng:zeroOrMore>
+    <rng:choice>
+     <rng:ref name="occupation"/>
+     <rng:ref name="residence"/>
+     <rng:ref name="bibl"/>
+    </rng:choice>
+   </rng:zeroOrMore>
+</rng:group>
+</rng:choice>
+  </content>
+  <attList>
+    <attDef ident="role">
+      
+      <equiv/>
+      <gloss/>
+      
+      <valDesc>a set of keywords to be defined</valDesc>
+      <desc>specifies the chief role of the person (e.g. as author, scribe, owner etc.)</desc>
+      
+    </attDef>
+    <attDef ident="sex">
+      
+      <equiv/>
+      <gloss/>
+      <defaultVal>m</defaultVal>
+      <valList>
+        <valItem ident="m">
+          
+          <equiv/>
+          <gloss>male</gloss>
+        </valItem>
+        <valItem ident="f">
+          
+          <equiv/>
+          <gloss>female</gloss>
+        </valItem>
+        <valItem ident="u">
+          
+          <equiv/>
+          <gloss>unknown or inapplicable</gloss>
+        </valItem>
+      </valList>
+      <desc>specifies the sex of the person.</desc>
+      
+    </attDef>
+    <attDef ident="age">
+      
+      <equiv/>
+      <gloss/>
+      
+      <valDesc>suggested values are to be supplied</valDesc>
+      <desc>specifies the age group to which the participant belongs.</desc>
+      
+    </attDef>
+  </attList>
+  <desc id="person.desc">provides structured biographical and other information
+about any person referenced in a manuscript description. </desc>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+  &lt;person id="HOCC01" sex="m" role="scribe"&gt;
+  &lt;p&gt;Robert Hoccleve, born c.1368 in London, died in 
+  Southwick c. 1450. Poet and tragedian, he lived in
+  Chester, and was for many years a  Clerk, in the
+  office of the Privy Seal&lt;/p&gt;
+  &lt;/person&gt;
+</egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="msnames"/>
+  </listRef>
+</elementSpec>

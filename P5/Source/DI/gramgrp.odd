@@ -1,0 +1,52 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" xml:id="GRAMGRP" usage="rec" ident="gramGrp">
+<equiv/>
+<gloss>grammatical information group</gloss>
+<desc>groups morpho-syntactic information about a lexical item, e.g. pos, gen, number, case, or
+        itype (inflectional class).</desc>
+    
+    
+    <classes>
+        <memberOf key="tei.dictionaryTopLevel"/>
+        <memberOf key="tei.dictionaryParts"/>
+        <memberOf key="tei.gramInfo"/>
+        <memberOf key="tei.dictionaries"/>
+    </classes>
+    <content>
+        <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+            <rng:choice>
+                <rng:text/>
+                <rng:ref name="tei.phrase"/>
+                <rng:ref name="tei.inter"/>
+                <rng:ref name="tei.gramInfo"/>
+                <rng:ref name="tei.Incl"/>
+            </rng:choice>
+        </rng:zeroOrMore>
+    </content>
+    
+    <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <entry>
+                <form>
+                    <orth>luire</orth>
+                </form>
+                <gramGrp>
+                    <pos>verb</pos>
+                    <subc>intransitive</subc>
+                </gramGrp>
+            </entry>
+        </egXML>
+    </exemplum>
+    <remarks>
+        <p rend="dataDesc">[Obviously wrong!] May contain character data mixed with any other
+            elements defined in the dictionary tag set.</p>
+    </remarks>
+    <listRef>
+        <ptr target="#DITPGR" type="div2"/>
+    </listRef>
+</elementSpec>

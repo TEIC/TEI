@@ -1,0 +1,110 @@
+<!--Copyright 2004 TEI Consortium. 
+
+Licensed under the GNU General Public License. 
+
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="RECORDIN" usage="opt" ident="recording">
+<equiv/>
+<gloss>recording event</gloss>
+<desc>details of an audio or video recording event
+used as the source of a spoken text, either directly or from
+a public broadcast. </desc>
+  
+  
+  <classes>
+    <memberOf key="tei.declarable"/>
+  </classes>
+  <content>
+    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:oneOrMore>
+        <rng:ref name="p"/>
+      </rng:oneOrMore>
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="respStmt"/>
+          <rng:ref name="equipment"/>
+          <rng:ref name="broadcast"/>
+          <rng:ref name="date"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+    </rng:choice>
+  </content>
+  <attList>
+    <attDef ident="type" usage="opt">
+	<equiv/>
+	<desc>the kind of recording.</desc>
+      
+      
+      <defaultVal>audio</defaultVal>
+      <valList type="closed">
+        <valItem ident="audio">
+          
+          <equiv/>
+          <gloss>audio recording
+            </gloss>
+        </valItem>
+        <valItem ident="video">
+          
+          <equiv/>
+          <gloss>audio and video recording
+   </gloss>
+        </valItem>
+      </valList>
+      
+    </attDef>
+    <attDef ident="dur" usage="opt">
+	<equiv/>
+	<desc>the original duration of the recording. </desc>
+      
+      
+      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="duration"/></datatype>
+      <valDesc>Include the units, e.g. 30M.
+    </valDesc>
+      
+    </attDef>
+  </attList>
+  
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <recording type="audio" dur="P30M">
+        <equipment>
+          <p>Recorded on a Sony TR444 walkman by unknown participants; remastered 
+	  to digital tape at <placeName>Borehamwood Studios</placeName> by
+	  <orgName>Transcription Services Inc</orgName>.</p>
+        </equipment>
+      </recording>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <recording type="audio" dur="P10M">
+        <equipment>
+          <p>Recorded from FM Radio to digital tape</p>
+        </equipment>
+        <broadcast>
+          <bibl>
+            <title>Interview on foreign policy</title>
+            <author>BBC Radio 5</author>
+            <respStmt>
+              <resp>interviewer</resp>
+              <name>Robin Day</name>
+            </respStmt>
+            <respStmt>
+              <resp>interviewee</resp>
+              <name>Margaret Thatcher</name>
+            </respStmt>
+            <series>
+              <title>The World Tonight</title>
+            </series>
+            <note>First broadcast on
+        <date value="1989-11-27">27 Nov 89</date></note>
+          </bibl>
+        </broadcast>
+      </recording>
+    </egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#HD32"/>
+    <ptr target="#CCAS2"/>
+  </listRef>
+</elementSpec>
