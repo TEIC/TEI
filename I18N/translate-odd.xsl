@@ -14,8 +14,8 @@
 <xsl:param name="verbose">true</xsl:param>
 <xsl:key name="ELEMENTS" match="element" use="@ident"/>
 <xsl:key name="ATTRIBUTES" match="attribute" use="@ident"/>
-<xsl:variable name="TEITAGS">http://www.tei-c.org.uk/tei-bin/files.pl?name=tags.xml</xsl:variable>
-<xsl:variable name="TEINAMES">http://www.tei-c.org.uk/tei-bin/files.pl?name=teinames.xml</xsl:variable>
+<xsl:param name="TEITAGS">http://www.tei-c.org.uk/tei-bin/files.pl?name=tags.xml</xsl:param>
+<xsl:param name="TEINAMES">http://www.tei-c.org.uk/tei-bin/files.pl?name=teinames.xml</xsl:param>
 
 <xsl:template match="tei:*|rng:*">
   <xsl:copy>
@@ -171,9 +171,11 @@
 	      <xsl:for-each  select="document($TEINAMES)">
 		<xsl:for-each select="key('ATTRIBUTES',$thisatt)">
 		  <xsl:if test="equiv[@lang=$lang]">
-		    <altIdent xmlns="http://www.tei-c.org/ns/1.0">
-		      <xsl:value-of select="equiv[@lang=$lang]/@value"/>
-		    </altIdent>
+		    <attDef  xmlns="http://www.tei-c.org/ns/1.0" ident="{$thisatt}"> 
+		      <altIdent xmlns="http://www.tei-c.org/ns/1.0">
+			<xsl:value-of select="equiv[@lang=$lang]/@value"/>
+		      </altIdent>
+		    </attDef>
 		  </xsl:if>
 		</xsl:for-each>
 	      </xsl:for-each>

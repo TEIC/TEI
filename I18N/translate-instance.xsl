@@ -9,13 +9,21 @@
  version="1.0">
 <xsl:output method="xml" indent="yes"/>
 <xsl:param name="lang">es</xsl:param>
-<xsl:param name="verbose">true</xsl:param>
+<xsl:param name="verbose">false</xsl:param>
 <xsl:key name="ELEMENTS" match="element" use="@ident"/>
 <xsl:key name="ATTRIBUTES" match="attribute" use="@ident"/>
-<xsl:variable name="TEINAMES">http://www.tei-c.org.uk/tei-bin/files.pl?name=teinames.xml</xsl:variable>
+<xsl:param name="TEINAMES">http://www.tei-c.org.uk/tei-bin/files.pl?name=teinames.xml</xsl:param>
 
 <xsl:template match="comment()|text()|processing-instruction()">
   <xsl:copy/>
+</xsl:template>
+
+<xsl:template match="/">
+  <xsl:if test="$verbose='true'">
+    <xsl:message>Translating to language [<xsl:value-of select="$lang"/>]</xsl:message>
+    <xsl:message>Using dictionary [<xsl:value-of select="$TEINAMES"/>]</xsl:message>
+  </xsl:if>
+  <xsl:apply-templates/>
 </xsl:template>
 
 <xsl:template match="tei:*">
@@ -41,7 +49,11 @@
     </xsl:choose>
   </xsl:for-each>
 </xsl:variable>
-
+<!--
+  <xsl:if test="$verbose='true'">
+    <xsl:message> :<xsl:value-of select="$oldname"/> to <xsl:value-of select="$newname"/></xsl:message>
+  </xsl:if>
+-->
 <xsl:element name="{$newname}" xmlns="http://www.tei-c.org/ns/1.0">
   <xsl:apply-templates select="@*|*|text()|comment()"/>
 </xsl:element>
