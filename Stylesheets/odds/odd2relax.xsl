@@ -24,7 +24,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
 
 
 <xsl:import href="teiodds.xsl"/>
-
+<xsl:param name="teiP4Compat">false</xsl:param>
 <xsl:param name="verbose"></xsl:param>
 <xsl:param name="RNGDIR">Schema</xsl:param>
 <xsl:variable name="appendixWords"/>

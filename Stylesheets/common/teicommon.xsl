@@ -16,6 +16,8 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
   xmlns:edate="http://exslt.org/dates-and-times"
   version="1.0">
 
+<xsl:param name="teiP4Compat">false</xsl:param>
+
 <!-- common parameters -->
 <xsl:param name="baseURL">http://www.oucs.ox.ac.uk</xsl:param>
 <xsl:param name="homeLabel">Home</xsl:param>

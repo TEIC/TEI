@@ -50,6 +50,18 @@ XSL stylesheet to process TEI documents using ODD markup
   </xsl:if>
 </xsl:template>
 
+<xsl:template match="rng:oneOrMore/rng:notAllowed">
+  <xsl:if test="not(following-sibling::*)">
+    <xsl:copy/>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template match="rng:zeroOrMore/rng:notAllowed">
+  <xsl:if test="not(following-sibling::*)">
+    <xsl:copy/>
+  </xsl:if>
+</xsl:template>
+
 <xsl:template match="rng:choice[count(rng:*)=0]"><rng:notAllowed/></xsl:template>
 <xsl:template match="rng:define[count(rng:*)=0]"/>
 <xsl:template match="rng:group[count(rng:*)=0]"/>

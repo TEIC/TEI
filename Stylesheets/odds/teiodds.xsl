@@ -23,6 +23,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
     extension-element-prefixes="edate exsl estr"
     version="1.0">
   <xsl:include href="RngToRnc.xsl"/>
+  <xsl:param name="teiP4Compat">false</xsl:param>
   <xsl:param name="TEISERVER">http://localhost:8080/exist/TEI/Roma/xquery/</xsl:param>
   <xsl:param name="verbose"></xsl:param>
   <xsl:param name="oddmode">html</xsl:param>
@@ -294,7 +295,8 @@ XSL stylesheet to format TEI XML documents using ODD markup
     <xsl:param name="type"/>
     <xsl:if test="$verbose='true'">
       <xsl:message>      .. process classSpec <xsl:value-of
-      select="@ident"/> (type <xsl:value-of select="@type"/>)    </xsl:message>
+      select="@ident"/> (type <xsl:value-of select="@type"/>)
+      </xsl:message>
     </xsl:if>
     <xsl:apply-templates select="." mode="processModel"/>
     <xsl:apply-templates select="." mode="processAtts"/>
@@ -321,6 +323,11 @@ XSL stylesheet to format TEI XML documents using ODD markup
   
   
   <xsl:template match="tei:classSpec[@mode='change']" mode="tangle">
+    <xsl:if test="$verbose='true'">
+      <xsl:message>      .. process (change mode) classSpec <xsl:value-of
+      select="@ident"/> (type <xsl:value-of select="@type"/>)
+      </xsl:message>
+    </xsl:if>
     <xsl:if test="tei:content">
       <rng:define name="{@ident}" combine="choice">
 	<xsl:apply-templates select="tei:content/*"/>
@@ -328,7 +335,9 @@ XSL stylesheet to format TEI XML documents using ODD markup
     </xsl:if>
     <xsl:if test="tei:attList/tei:attDef[@mode='add']">
       <rng:define name="{@ident}.attributes" combine="choice" >
-	<xsl:apply-templates mode="tangle"/>
+	<xsl:for-each select="tei:attList/tei:attDef[@mode='add']">
+	  <rng:ref name="{ancestor::tei:classSpec/@ident}.attributes.{@ident}"/>
+	</xsl:for-each>
       </rng:define>
     </xsl:if>
     <xsl:call-template name="defineRelaxAttributes"/>
@@ -824,7 +833,8 @@ XSL stylesheet to format TEI XML documents using ODD markup
 <xsl:template match="tei:moduleRef" mode="tangle" >
   <xsl:variable name="This" select="@key"/>
   <xsl:if test="$verbose='true'">
-    <xsl:message>      .... import module [<xsl:value-of select="@key"/><xsl:value-of select="@url"/>] </xsl:message>
+    <xsl:message>      .... import module [<xsl:value-of
+    select="$This"/>] <xsl:value-of select="@url"/>] </xsl:message>
   </xsl:if>
   <xsl:call-template name="bitOut">
     <xsl:with-param name="grammar">true</xsl:with-param>
@@ -844,8 +854,11 @@ XSL stylesheet to format TEI XML documents using ODD markup
 		  <xsl:otherwise>http://www.tei-c.org/ns/1.0</xsl:otherwise>
 		</xsl:choose>
 	      </xsl:attribute>
-	      <xsl:apply-templates mode="tangle"
-				   select="../tei:*[@module=$This and not(@mode='add')]"/>
+	      <xsl:for-each
+				   select="../tei:*[@module=$This and
+					   not(@mode='add')]">
+		<xsl:apply-templates mode="tangle" select="."/>
+	      </xsl:for-each>
 	    </rng:include>
 	  </xsl:otherwise>
 	</xsl:choose>
@@ -1170,33 +1183,8 @@ XSL stylesheet to format TEI XML documents using ODD markup
 </xsl:template>
 
 <xsl:template name="copyright">
-  <xsl:choose>
-    <xsl:when test="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability">
-      <xsl:apply-templates 
-	  select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability"/>
-    </xsl:when>
-    <xsl:otherwise>
-      Copyright 2004 TEI Consortium.
-      
-      This is free software; you can redistribute it and/or
-      modify it under the terms of the GNU General Public License as
-      published by the Free Software Foundation; either version 2 of the
-      License, or (at your option) any later version.
-      
-      This material is distributed in the hope that it will be
-      useful, but WITHOUT ANY WARRANTY; without even the implied
-      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-      PURPOSE. See the GNU General Public License for more details.
-      
-      You should have received a copy of the GNU General Public License
-      along with this file; if not, write to the
-      Free Software Foundation, Inc.,
-      59 Temple Place, Suite 330,
-      Boston, MA  02111-1307,
-      USA
-    </xsl:otherwise>
-  </xsl:choose>
-  
+  <xsl:apply-templates 
+      select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability"/>
 </xsl:template>
 
 <xsl:template name="defineAnAttribute">

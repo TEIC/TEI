@@ -23,7 +23,7 @@ XSL stylesheet to process TEI documents using ODD markup
 
 <xsl:import href="../html/teihtml.xsl"/>
 <xsl:import href="../html/teihtml-odds.xsl"/>
-
+<xsl:param name="teiP4Compat">false</xsl:param>
 <xsl:key name="NameToID" match="tei:*" use="@ident"/>
 
 <xsl:param name="BITS">Bits</xsl:param>
