@@ -59,9 +59,10 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
   <xsl:call-template name="showGraphic">
       <xsl:with-param name="ID">
 	<xsl:for-each select="..">
-	<xsl:if test="@id|@xml:id">
-	  <xsl:value-of select="@id|@xml:id"/>
-	</xsl:if>
+	  <xsl:if test="@id|@xml:id">
+	    <xsl:value-of select="@id|@xml:id"/>
+	  </xsl:if>
+	  </xsl:for-each>
       </xsl:with-param>
     </xsl:call-template>
 </xsl:template>
