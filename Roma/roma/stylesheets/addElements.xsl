@@ -136,16 +136,27 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
 	<xsl:if test="//errorList/error/location[node()='contents']">
 	  <xsl:attribute name="class">error</xsl:attribute>
 	</xsl:if>
-        <td class="formlabeltop"><xsl:value-of disable-output-escaping="yes" select="$res_form_contents"/></td>
-        <td>
-         <xsl:call-template name="contentTypes"/><xsl:if test="$selectedMode='addElement'"><br/>
-	 <textarea name="userContents" rows="5" cols="40"><xsl:if
-test="not($elementFullContents='')"><xsl:value-of select="$elementFullContents"/></xsl:if><xsl:if test="$elementFullContents=''">&lt;content&gt;&lt;/content&gt;</xsl:if></textarea></xsl:if>
-        </td>
+	<td class="formlabeltop"><xsl:value-of disable-output-escaping="yes" select="$res_form_contents"/></td>
+	<td>
+	  <xsl:call-template name="contentTypes"/>
+	  <xsl:if test="$selectedMode='addElement'"><br/>
+	  <textarea name="contentmodel" rows="5" cols="50">
+	    <xsl:choose>
+	      <xsl:when test="$elementFullContents=''">
+		<xsl:text>&lt;content xmlns:rng="http://relaxng.org/ns/structure/1.0"&gt;
+&lt;/content&gt;</xsl:text>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:value-of select="$elementFullContents"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </textarea>
+	 </xsl:if>
+	</td>
       </tr>
       <tr>
-        <td class="formlabeltop"><xsl:value-of disable-output-escaping="yes" select="$res_form_description"/></td>
-        <td>
+	<td class="formlabeltop"><xsl:value-of disable-output-escaping="yes" select="$res_form_description"/></td>
+	<td>
            <textarea rows="5" cols="40" name="description">
             <xsl:if test="not($elementDesc='')"><xsl:value-of select="$elementDesc"/></xsl:if>
            </textarea>
@@ -199,7 +210,7 @@ test="not($elementFullContents='')"><xsl:value-of select="$elementFullContents"/
 	       <xsl:attribute name="onMouseover">descriptionPopup_Show( 'modelClass_<xsl:value-of select="className"/>' )</xsl:attribute>
 	       <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'modelClass_<xsl:value-of select="className"/>' )</xsl:attribute>
                 <a>
-                 <xsl:attribute name="href">http://<xsl:value-of select="$host"/>:8080/exist/TEI/Roma/xquery/class.xq?name=<xsl:value-of select="className"/></xsl:attribute>
+                 <xsl:attribute name="href">http://<xsl:value-of select="$host"/>/TEI/Roma/xquery/class.xq?name=<xsl:value-of select="className"/></xsl:attribute>
 	         <xsl:attribute name="target">_blank</xsl:attribute>
                  <xsl:value-of select="className"/>
                 </a>
@@ -220,7 +231,7 @@ test="not($elementFullContents='')"><xsl:value-of select="$elementFullContents"/
 	       <xsl:attribute name="onMouseover">descriptionPopup_Show( 'modelClass_<xsl:value-of select="following-sibling::modelClass[1]/className"/>' )</xsl:attribute>
 	       <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'modelClass_<xsl:value-of select="following-sibling::modelClass[1]/className"/>' )</xsl:attribute>
                 <a>
-                 <xsl:attribute name="href">http://<xsl:value-of select="$host"/>:8080/exist/TEI/Roma/xquery/class.xq?name=<xsl:value-of select="following-sibling::modelClass[1]/className"/></xsl:attribute>
+                 <xsl:attribute name="href">http://<xsl:value-of select="$host"/>/TEI/Roma/xquery/class.xq?name=<xsl:value-of select="following-sibling::modelClass[1]/className"/></xsl:attribute>
 	         <xsl:attribute name="target">_blank</xsl:attribute>
                  <xsl:value-of select="following-sibling::modelClass[1]/className"/>
                 </a>
@@ -241,7 +252,7 @@ test="not($elementFullContents='')"><xsl:value-of select="$elementFullContents"/
 	       <xsl:attribute name="onMouseover">descriptionPopup_Show( 'modelClass_<xsl:value-of select="following-sibling::modelClass[2]/className"/>' )</xsl:attribute>
 	       <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'modelClass_<xsl:value-of select="following-sibling::modelClass[2]/className"/>' )</xsl:attribute>
                 <a>
-                 <xsl:attribute name="href">http://<xsl:value-of select="$host"/>:8080/exist/TEI/Roma/xquery/class.xq?name=<xsl:value-of select="following-sibling::modelClass[2]/className"/></xsl:attribute>
+                 <xsl:attribute name="href">http://<xsl:value-of select="$host"/>/TEI/Roma/xquery/class.xq?name=<xsl:value-of select="following-sibling::modelClass[2]/className"/></xsl:attribute>
 	         <xsl:attribute name="target">_blank</xsl:attribute>
                  <xsl:value-of select="following-sibling::modelClass[2]/className"/>
                 </a>
@@ -261,7 +272,7 @@ test="not($elementFullContents='')"><xsl:value-of select="$elementFullContents"/
 	       <xsl:attribute name="onMouseover">descriptionPopup_Show( 'modelClass_<xsl:value-of select="following-sibling::modelClass[3]/className"/>' )</xsl:attribute>
 	       <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'modelClass_<xsl:value-of select="following-sibling::modelClass[3]/className"/>' )</xsl:attribute>
                 <a>
-                 <xsl:attribute name="href">http://<xsl:value-of select="$host"/>:8080/exist/TEI/Roma/xquery/class.xq?name=<xsl:value-of select="following-sibling::modelClass[3]/className"/></xsl:attribute>
+                 <xsl:attribute name="href">http://<xsl:value-of select="$host"/>/TEI/Roma/xquery/class.xq?name=<xsl:value-of select="following-sibling::modelClass[3]/className"/></xsl:attribute>
 	         <xsl:attribute name="target">_blank</xsl:attribute>
                  <xsl:value-of select="following-sibling::modelClass[3]/className"/>
                 </a>
@@ -281,7 +292,7 @@ test="not($elementFullContents='')"><xsl:value-of select="$elementFullContents"/
 	       <xsl:attribute name="onMouseover">descriptionPopup_Show( 'modelClass_<xsl:value-of select="following-sibling::modelClass[4]/className"/>' )</xsl:attribute>
 	       <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'modelClass_<xsl:value-of select="following-sibling::modelClass[4]/className"/>' )</xsl:attribute>
                 <a>
-                 <xsl:attribute name="href">http://<xsl:value-of select="$host"/>:8080/exist/TEI/Roma/xquery/class.xq?name=<xsl:value-of select="following-sibling::modelClass[4]/className"/></xsl:attribute>
+                 <xsl:attribute name="href">http://<xsl:value-of select="$host"/>/TEI/Roma/xquery/class.xq?name=<xsl:value-of select="following-sibling::modelClass[4]/className"/></xsl:attribute>
                  <xsl:value-of select="following-sibling::modelClass[4]/className"/>
                 </a>
               </span>
@@ -303,7 +314,7 @@ test="not($elementFullContents='')"><xsl:value-of select="$elementFullContents"/
 	       <xsl:attribute name="onMouseover">descriptionPopup_Show( 'modelClass_<xsl:value-of select="following-sibling::modelClass[5]/className"/>' )</xsl:attribute>
 	       <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'modelClass_<xsl:value-of select="following-sibling::modelClass[5]/className"/>' )</xsl:attribute>
                 <a>
-                 <xsl:attribute name="href">http://<xsl:value-of select="$host"/>:8080/exist/TEI/Roma/xquery/class.xq?name=<xsl:value-of select="following-sibling::modelClass[5]/className"/></xsl:attribute>
+                 <xsl:attribute name="href">http://<xsl:value-of select="$host"/>/TEI/Roma/xquery/class.xq?name=<xsl:value-of select="following-sibling::modelClass[5]/className"/></xsl:attribute>
 	         <xsl:attribute name="target">_blank</xsl:attribute>
                  <xsl:value-of select="following-sibling::modelClass[5]/className"/>
                 </a>
@@ -326,7 +337,7 @@ test="not($elementFullContents='')"><xsl:value-of select="$elementFullContents"/
 		 <xsl:attribute name="onMouseover">descriptionPopup_Show( 'modelClass_<xsl:value-of select="following-sibling::modelClass[6]/className"/>' )</xsl:attribute>
 		 <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'modelClass_<xsl:value-of select="following-sibling::modelClass[6]/className"/>' )</xsl:attribute>
 		 <a>
-		   <xsl:attribute name="href">http://<xsl:value-of select="$host"/>:8080/exist/TEI/Roma/xquery/class.xq?name=<xsl:value-of select="following-sibling::modelClass[6]/className"/></xsl:attribute>
+		   <xsl:attribute name="href">http://<xsl:value-of select="$host"/>/TEI/Roma/xquery/class.xq?name=<xsl:value-of select="following-sibling::modelClass[6]/className"/></xsl:attribute>
 		   <xsl:attribute name="target">_blank</xsl:attribute>
 		   <xsl:value-of select="following-sibling::modelClass[6]/className"/>
 		 </a>
@@ -349,7 +360,7 @@ test="not($elementFullContents='')"><xsl:value-of select="$elementFullContents"/
 		 <xsl:attribute name="onMouseover">descriptionPopup_Show( 'modelClass_<xsl:value-of select="following-sibling::modelClass[7]/className"/>' )</xsl:attribute>
 		 <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'modelClass_<xsl:value-of select="following-sibling::modelClass[7]/className"/>' )</xsl:attribute>
 		 <a>
-		   <xsl:attribute name="href">http://<xsl:value-of select="$host"/>:8080/exist/TEI/Roma/xquery/class.xq?name=<xsl:value-of select="following-sibling::modelClass[7]/className"/></xsl:attribute>
+		   <xsl:attribute name="href">http://<xsl:value-of select="$host"/>/TEI/Roma/xquery/class.xq?name=<xsl:value-of select="following-sibling::modelClass[7]/className"/></xsl:attribute>
 		   <xsl:attribute name="target">_blank</xsl:attribute>
 		   <xsl:value-of select="following-sibling::modelClass[7]/className"/>
 		 </a>
@@ -383,7 +394,7 @@ test="not($elementFullContents='')"><xsl:value-of select="$elementFullContents"/
 	       <xsl:attribute name="onMouseover">descriptionPopup_Show( 'attClass_<xsl:value-of select="className"/>' )</xsl:attribute>
 	       <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'attClass_<xsl:value-of select="className"/>' )</xsl:attribute>
                 <a>
-                 <xsl:attribute name="href">http://<xsl:value-of select="$host"/>:8080/exist/TEI/Roma/xquery/class.xq?name=<xsl:value-of select="className"/></xsl:attribute>
+                 <xsl:attribute name="href">http://<xsl:value-of select="$host"/>/TEI/Roma/xquery/class.xq?name=<xsl:value-of select="className"/></xsl:attribute>
 	         <xsl:attribute name="target">_blank</xsl:attribute>
                  <xsl:value-of select="className"/>
                 </a>
@@ -404,7 +415,7 @@ test="not($elementFullContents='')"><xsl:value-of select="$elementFullContents"/
 		 <xsl:attribute name="onMouseover">descriptionPopup_Show( 'attClass_<xsl:value-of select="following-sibling::attClass[1]/className"/>' )</xsl:attribute>
 		 <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'attClass_<xsl:value-of select="following-sibling::attClass[1]/className"/>' )</xsl:attribute>
 		 <a>
-		   <xsl:attribute name="href">http://<xsl:value-of select="$host"/>:8080/exist/TEI/Roma/xquery/class.xq?name=<xsl:value-of select="following-sibling::attClass[1]/className"/></xsl:attribute>
+		   <xsl:attribute name="href">http://<xsl:value-of select="$host"/>/TEI/Roma/xquery/class.xq?name=<xsl:value-of select="following-sibling::attClass[1]/className"/></xsl:attribute>
 		   <xsl:attribute name="target">_blank</xsl:attribute>
 		   <xsl:value-of select="following-sibling::attClass[1]/className"/>
 		 </a>
@@ -426,7 +437,7 @@ test="not($elementFullContents='')"><xsl:value-of select="$elementFullContents"/
 		 <xsl:attribute name="onMouseover">descriptionPopup_Show( 'attClass_<xsl:value-of select="following-sibling::attClass[2]/className"/>' )</xsl:attribute>
 		 <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'attClass_<xsl:value-of select="following-sibling::attClass[2]/className"/>' )</xsl:attribute>
 		 <a>
-		   <xsl:attribute name="href">http://<xsl:value-of select="$host"/>:8080/exist/TEI/Roma/xquery/class.xq?name=<xsl:value-of select="following-sibling::attClass[2]/className"/></xsl:attribute>
+		   <xsl:attribute name="href">http://<xsl:value-of select="$host"/>/TEI/Roma/xquery/class.xq?name=<xsl:value-of select="following-sibling::attClass[2]/className"/></xsl:attribute>
 		   <xsl:attribute name="target">_blank</xsl:attribute>
 		   <xsl:value-of select="following-sibling::attClass[2]/className"/>
 		 </a>
@@ -450,7 +461,7 @@ test="not($elementFullContents='')"><xsl:value-of select="$elementFullContents"/
 		       <xsl:attribute name="onMouseover">descriptionPopup_Show( 'attClass_<xsl:value-of select="following-sibling::attClass[3]/className"/>' )</xsl:attribute>
 		       <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'attClass_<xsl:value-of select="following-sibling::attClass[3]/className"/>' )</xsl:attribute>
 		       <a>
-			 <xsl:attribute name="href">http://<xsl:value-of select="$host"/>:8080/exist/TEI/Roma/xquery/class.xq?name=<xsl:value-of select="following-sibling::attClass[3]/className"/></xsl:attribute>
+			 <xsl:attribute name="href">http://<xsl:value-of select="$host"/>/TEI/Roma/xquery/class.xq?name=<xsl:value-of select="following-sibling::attClass[3]/className"/></xsl:attribute>
 			 <xsl:attribute name="target">_blank</xsl:attribute>
 			 <xsl:value-of select="following-sibling::attClass[3]/className"/>
 		       </a>

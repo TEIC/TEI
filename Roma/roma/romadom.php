@@ -90,6 +90,12 @@ class romaDom extends domDocument
     /**
      * returns a numbered array with all those modules the user selected
      */
+    public function getHeader( &$aszHeader )
+      {
+	$this->getXPath( $oXPath );
+        $aszHeader = $oXPath->query( "//tei:teiHeader" );
+      }
+
     public function getSelectedModules( &$aszModules )
       {
 	$this->getXPath( $oXPath );
@@ -913,14 +919,16 @@ class romaDom extends domDocument
               }
 
 	    $oContent = $oElementSpec->getElementsByTagname( 'content' )->item(0);
+            $szDesc=$aszConfig[ 'description' ];
 	    if ( is_object( $oContent ) )
 	      {
 		$oElementSpec->removeChild( $oContent );
 	      }
 	    if( $aszConfig[ 'content' ] == 'userContent' )
 	      {
+                $szContents=stripslashes($aszConfig[ 'contentmodel' ]);
 		$oConDom = new domDocument();
-		if( @$oConDom->LoadXML( $aszConfig[ 'userContent' ] ) )
+		if( $oConDom->loadXML( $szContents ) )
 		  {
 		    $oRoot = $oConDom->documentElement;
 		    
@@ -929,7 +937,7 @@ class romaDom extends domDocument
 		  }
 		else
 		  {
-		    throw new falseContentsException( $aszConfig[ 'userContent' ] );
+		    throw new falseContentsException( $aszConfig[ 'contentmodel' ] );
 		    $errResult = true;
 		  }
 	      }
@@ -1145,7 +1153,7 @@ class romaDom extends domDocument
 	
 	//Load Content
 	$oConDom = new domDocument();
-	if( @$oConDom->LoadXML( $szContents ) )
+	if( $oConDom->loadXML( $szContents ) )
 	  {
 	    $oRoot = $oConDom->documentElement;
 	    
@@ -1840,6 +1848,16 @@ class romaDom extends domDocument
     // #####################################################################
     // --- Little Helpers
     // #####################################################################
+
+    protected function getSubsetDocDom( &$oDoc )
+      {
+	$oXSL = new domDocument();
+	$oXSL->load( roma_schemaStylesheetDir . '/base/p5/odds/subsetGuidelines.xsl' );
+	$oProc = new XsltProcessor();
+	$oProc->importStylesheet( $oXSL );
+
+	$oDoc = $oProc->transformToDoc( $this );
+      } 
 
     protected function getSchemaRNGDom( &$oRNG )
       {

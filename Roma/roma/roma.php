@@ -481,8 +481,9 @@ class roma
 		}
 	      $aszConfig = array( 'name' => $_REQUEST[ 'name' ],
 				  'added' => $_REQUEST[ 'added' ],
+				  'contentmodel' => $_REQUEST[ 'contentmodel' ],
 				  'content' => $_REQUEST[ 'content' ],
-				  'userContent' => $_REQUEST[ 'userContents' ],
+				  'userContent' => $_REQUEST['userContent'],
 				  'classes' => $aszClasses,
 				  'description' => $_REQUEST[ 'description' ]);
 	      try {
