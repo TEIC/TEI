@@ -189,7 +189,7 @@ function excludeAllElements()
 
     if( oInputs )
       {
-        for ( var i=0; i <= oInputs.length; i++ )
+        for ( var i=0; i < oInputs.length; i++ )
 	  {
 	    if ( oInputs[i].value == "exclude" )
 	      {
@@ -206,9 +206,44 @@ function includeAllElements()
 
     if( oInputs )
       {
-        for ( var i=0; i <= oInputs.length; i++ )
+        for ( var i=0; i < oInputs.length; i++ )
 	  {
 	    if ( oInputs[i].value == "include" )
+	      {
+	        oInputs[i].checked = "true";
+	      }
+          }
+      }
+  }
+
+
+
+function excludeAllAttributes()
+  {
+    oInputs = document.getElementsByTagName("input");
+
+    if( oInputs )
+      {
+        for ( var i=0; i < oInputs.length; i++ )
+	  {
+	    if ( oInputs[i].value == "no" )
+	      {
+	        oInputs[i].checked = "true";
+	      }
+          }
+      }
+  }
+
+
+function includeAllAttributes()
+  {
+    oInputs = document.getElementsByTagName("input");
+
+    if( oInputs )
+      {
+        for ( var i=0; i < oInputs.length; i++ )
+	  {
+	    if ( oInputs[i].value == "yes" )
 	      {
 	        oInputs[i].checked = "true";
 	      }
