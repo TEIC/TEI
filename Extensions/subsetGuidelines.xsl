@@ -9,6 +9,7 @@
   version="1.0">
 <xsl:key name="TAGMODS" match="Tag|Class|Attclass" use="Tagset"/>
 <xsl:key name="MODS" match="tei:module" use="@ident"/>
+<xsl:key name="SPECS" match="tei:specGrp" use="@id"/>
 <xsl:param name="ODDROOT">http://www.tei-c.org.uk/P5/</xsl:param>
 <xsl:key name="LOCAL"
 	 match="tei:classSpec|tei:elementSpec|tei:macroSpec" use="@ident"/>
@@ -62,6 +63,13 @@
 </xsl:template>
 
 <xsl:template match="tei:schema">
+ <module ident="-anonymous-"  xmlns="http://www.tei-c.org/ns/1.0">
+  <xsl:for-each select="tei:specGrpRef">
+    <xsl:for-each select="key('SPECS',@target)">
+      <xsl:copy-of select="*"/>
+    </xsl:for-each>
+  </xsl:for-each>
+ </module>
   <xsl:for-each select="tei:moduleRef">
     <xsl:variable name="test" select="@key"/>
     <xsl:if test="not(key('MODS',$test))">
@@ -163,7 +171,7 @@
 	<xsl:choose>
 	  <xsl:when test="@mode='delete'"/>
 	  <xsl:when test="@mode='change'">
-	    <xsl:for-each select="document(concat($ODDROOT,$file))">
+	    <xsl:for-each select="document(concat($ODDROOT,'Source/',$file))">
 	      <xsl:apply-templates mode="change"/>
 	    </xsl:for-each>
 	  </xsl:when>
@@ -177,7 +185,7 @@
       </xsl:for-each>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:for-each select="document(concat($ODDROOT,$file))">
+      <xsl:for-each select="document(concat($ODDROOT,'Source/',$file))">
 	<xsl:copy-of select="."/>
       </xsl:for-each>
     </xsl:otherwise>
