@@ -10,9 +10,10 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 
 <xsl:stylesheet
   xmlns:tei="http://www.tei-c.org/ns/1.0"
- 
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
   version="1.0"  >
+
+<xsl:param name="spacer">&gt;</xsl:param>
 
 <xsl:template name="doFrames">
 
@@ -384,7 +385,6 @@ processed using: <xsl:value-of select="system-property('xsl:vendor')"/>
   <xsl:param name="path"/>
   <xsl:param name="class"/>
   <xsl:param name="whole" select="''"/>
-  <xsl:param name="spacer" select="' &gt;'"/>
   <xsl:choose>
     <xsl:when test="contains($path,'/')">
       <xsl:variable name="current">
@@ -393,24 +393,27 @@ processed using: <xsl:value-of select="system-property('xsl:vendor')"/>
       <xsl:variable name="rest">
         <xsl:value-of select="substring-after($path,'/')"/>            
       </xsl:variable>
-     <xsl:value-of select="$spacer"/>
-      <xsl:choose>
-	<xsl:when test="$rest='index.xsp'">
-	  <xsl:value-of select="$current"/>
-	</xsl:when>
-	<xsl:when test="$rest='index.xml'">
-	  <xsl:value-of select="$current"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <a class="{$class}" target="_top">
-	    <xsl:attribute name="href">
-	      <xsl:value-of select="$whole"/>/<xsl:value-of select="$current"/>
-	      <xsl:text>/</xsl:text>
-	    </xsl:attribute>
-	    <xsl:value-of select="$current"/>
-	  </a>
-	</xsl:otherwise>
-      </xsl:choose>
+      <xsl:call-template name="aCrumb">
+	<xsl:with-param name="crumbBody">
+	  <xsl:choose>
+	    <xsl:when test="$rest='index.xsp'">
+	      <xsl:value-of select="$current"/>
+	    </xsl:when>
+	    <xsl:when test="$rest='index.xml'">
+	      <xsl:value-of select="$current"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <a class="{$class}" target="_top">
+		<xsl:attribute name="href">
+		  <xsl:value-of select="$whole"/>/<xsl:value-of select="$current"/>
+		  <xsl:text>/</xsl:text>
+		</xsl:attribute>
+		<xsl:value-of select="$current"/>
+	      </a>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:with-param>
+      </xsl:call-template>
     <xsl:call-template name="walkTree"> 
       <xsl:with-param name="class"><xsl:value-of select="$class"/></xsl:with-param>
       <xsl:with-param name="path" select="$rest"/>
@@ -433,6 +436,14 @@ processed using: <xsl:value-of select="system-property('xsl:vendor')"/>
        <xsl:value-of select="substring-after($REQUEST,'/')"/> 
     </xsl:with-param>
  </xsl:call-template>
+</xsl:template>
+
+
+
+<xsl:template name="aCrumb">
+  <xsl:param name="crumbBody"/>
+  <xsl:value-of select="$spacer"/>
+  <xsl:copy-of select="$crumbBody"/>
 </xsl:template>
 
 </xsl:stylesheet>

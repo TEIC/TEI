@@ -358,48 +358,59 @@ pdfcreator={Oxford University Computing Services}
 </xsl:template>
 
 <xsl:template match="tei:body/tei:div/tei:head">
-\chapter{<xsl:apply-templates />}
+\chapter<xsl:call-template name="sectionhead"/>
 <xsl:call-template name="labelme"/>
 </xsl:template>
 
 <xsl:template match="tei:body/tei:div/tei:div/tei:head">
-  \section{<xsl:apply-templates />}
+  \section<xsl:call-template name="sectionhead"/>
 <xsl:call-template name="labelme"/>
 </xsl:template>
 
 <xsl:template match="tei:body/tei:div/tei:div/tei:div/tei:head">
-\subsection{<xsl:apply-templates />}
+\subsection<xsl:call-template name="sectionhead"/>
 <xsl:call-template name="labelme"/>
 </xsl:template>
 
 <xsl:template match="tei:body/tei:div/tei:div/tei:div/tei:div/tei:head">
-\subsubsection{<xsl:apply-templates />}
+\subsubsection<xsl:call-template name="sectionhead"/>
 <xsl:call-template name="labelme"/>
 </xsl:template>
 
 <xsl:template match="tei:body/tei:div/tei:div/tei:div/tei:div/tei:div/tei:head">
-\paragraph{<xsl:apply-templates />}
+\paragraph<xsl:call-template name="sectionhead"/>
 <xsl:call-template name="labelme"/>
 </xsl:template>
 
 <xsl:template match="tei:div0/tei:head">
-\chapter{<xsl:apply-templates />}
+\chapter<xsl:call-template name="sectionhead"/>
 <xsl:call-template name="labelme"/>
 </xsl:template>
 
 <xsl:template match="tei:div1/tei:head">
-\section{<xsl:apply-templates />}
+\section<xsl:call-template name="sectionhead"/>
 <xsl:call-template name="labelme"/>
 </xsl:template>
 
 <xsl:template match="tei:div2/tei:head">
-  \subsection{<xsl:apply-templates />}
+  \subsection<xsl:call-template name="sectionhead"/>
 <xsl:call-template name="labelme"/>
 </xsl:template>
 
 <xsl:template match="tei:div3/tei:head">
-\subsubsection{<xsl:apply-templates />}
+\subsubsection<xsl:call-template name="sectionhead"/>
 <xsl:call-template name="labelme"/>
+</xsl:template>
+
+<xsl:template name="sectionhead">
+  <xsl:if test="tei:note">
+<xsl:text>[</xsl:text>
+<xsl:apply-templates select="text()"/>
+<xsl:text>]</xsl:text>
+  </xsl:if>
+<xsl:text>{</xsl:text>
+<xsl:apply-templates/>
+<xsl:text>}</xsl:text>
 </xsl:template>
 
 <xsl:template name="labelme">
