@@ -590,7 +590,7 @@ class romaDom extends domDocument
 		    $oAttDesc->appendChild( new domText( $oDesc->nodeValue ) );
 		    
 		    $oDefault = $oChild->getElementsByTagName( 'default' )->item(0);
-		    $oAttDef = $oAtt->appendChild( new domElement( 'default' ) );
+		    $oAttDef = $oAtt->appendChild( new domElement( 'defaultVal' ) );
 		    $oAttDef->appendChild( new domText( $oDefault->nodeValue ) );
 		  }
 		else
@@ -624,7 +624,7 @@ class romaDom extends domDocument
 		      }
 		    
 		    
-		    $oChildDefault = $oChild->getElementsByTagName( 'default' )->item(0);
+		    $oChildDefault = $oChild->getElementsByTagName( 'defaultVal' )->item(0);
 		    $oDefault = $oAtt->getElementsByTagName( 'default' )->item(0);
 		    if ( is_object( $oDefault ) && is_object( $oChildDefault ) && $oDefault->nodeValue != $oChildDefault->nodeValue )
 		      { 
@@ -903,6 +903,16 @@ class romaDom extends domDocument
 		$oElementSpec->setAttribute( 'mode', ( ( $aszConfig[ 'added' ] == 'true' ) ? 'add' : 'change' ) );
 	      }
 
+	    $oDesc = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$aszConfig[ 'name' ]}']/tei:desc" )->item(0);
+
+	    if ( is_object( $oDesc ) )
+	      {
+		$oElementSpec->removeChild( $oDesc );
+	      }
+            $theDesc = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'desc' );
+            $oDesc = $oElementSpec->appendChild( $theDesc );
+	    $oDesc->appendChild( new domText( stripslashes( $aszConfig[ 'description' ] ) ) );
+
 	    $oClasses = $oElementSpec->getElementsByTagname( 'classes' )->item(0);
 	    if ( is_object( $oClasses ) )
 	      {
@@ -961,15 +971,6 @@ class romaDom extends domDocument
 		  }
 	      }
 
-	    $oDesc = $oXPath->query( "//tei:schemaSpec/tei:elementSpec[@ident='{$aszConfig[ 'name' ]}']/tei:desc" )->item(0);
-
-	    if ( is_object( $oDesc ) )
-	      {
-		$oElementSpec->removeChild( $oDesc );
-	      }
-            $theDesc = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'desc' );
-            $oDesc = $oElementSpec->appendChild( $theDesc );
-	    $oDesc->appendChild( new domText( stripslashes( $aszConfig[ 'description' ] ) ) );
           }
       }
 
