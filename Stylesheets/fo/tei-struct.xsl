@@ -256,7 +256,7 @@ XSL FO stylesheet to formatt TEI XML documents
 <xsl:template match="tei:div0|tei:div1|tei:div2|tei:div3|tei:div4">
    <xsl:call-template name="NumberedHeading">
     <xsl:with-param name="level">
-     <xsl:value-of select="substring-after(name(),'div')"/>
+     <xsl:value-of select="substring-after(local-name(),'div')"/>
     </xsl:with-param>
    </xsl:call-template>
   <xsl:apply-templates/>
@@ -366,7 +366,7 @@ XSL FO stylesheet to formatt TEI XML documents
 
 <xsl:template mode="xref" match="tei:div1|tei:div2|tei:div3|tei:div4">
    <xsl:call-template name="xheading">
-    <xsl:with-param name="level"><xsl:value-of select="name()"/></xsl:with-param>
+    <xsl:with-param name="level"><xsl:value-of select="local-name()"/></xsl:with-param>
    </xsl:call-template>
 </xsl:template>
 
@@ -391,7 +391,7 @@ XSL FO stylesheet to formatt TEI XML documents
 <xsl:template mode="toc" match="tei:div0|tei:div1|tei:div2|tei:div3|tei:div4">
    <xsl:call-template name="tocheading">
     <xsl:with-param name="level">
-        <xsl:value-of select="substring-after(name(),'div')"/></xsl:with-param>
+        <xsl:value-of select="substring-after(local-name(),'div')"/></xsl:with-param>
    </xsl:call-template>
 </xsl:template>
 
@@ -461,7 +461,7 @@ XSL FO stylesheet to formatt TEI XML documents
 
 <!-- unqualified <head> -->
 <xsl:template match="tei:head">
- <xsl:variable name="parent" select="name(..)"/>
+ <xsl:variable name="parent" select="local-name(..)"/>
  <xsl:if test="not(starts-with($parent,'div'))">
   <xsl:apply-templates/>
  </xsl:if>

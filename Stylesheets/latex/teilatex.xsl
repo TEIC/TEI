@@ -24,7 +24,7 @@ XSL stylesheet to format TEI XML documents to LaTeX
 <xsl:param name="REQUEST"></xsl:param>
 <xsl:param name="standardScale">1</xsl:param>
 <xsl:output method="text" encoding="utf8"/>
-<xsl:param name="pagesetup">a4paper,lmargin=1in,rmargin=1in,tmargin=0.25in,bmargin=0.75in</xsl:param>
+<xsl:param name="pagesetup">twoside,a4paper,lmargin=1in,rmargin=1in,tmargin=0.25in,bmargin=0.75in</xsl:param>
 
 <xsl:key name="IDS" match="tei:*[@id|@xml:id]" use="@id|@xml:id"/>
 
@@ -76,7 +76,7 @@ XSL stylesheet to format TEI XML documents to LaTeX
 </xsl:text>
 </xsl:if>
 \documentclass{<xsl:value-of select="$docstyle"/>}
-\usepackage[twoside,<xsl:value-of select="$pagesetup"/>]{geometry}
+\usepackage[<xsl:value-of select="$pagesetup"/>]{geometry}
 \usepackage{times}
 \usepackage{longtable}
 \usepackage{colortbl}

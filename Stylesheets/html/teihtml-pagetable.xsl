@@ -132,7 +132,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
      <xsl:when test="self::tei:divGen">
        <xsl:apply-templates select="."/>
      </xsl:when>
-     <xsl:when test="starts-with(name(),'div')">
+     <xsl:when test="starts-with(local-name(),'div')">
       <xsl:if test="not(preceding-sibling::tei:*) or preceding-sibling::tei:titlePage">
            <h2><xsl:apply-templates select="." mode="xref"/></h2>
            <xsl:call-template name="doDivBody"/>
@@ -141,7 +141,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
                  <xsl:call-template name="xrefpanel">
                   <xsl:with-param name="homepage" 
                    select="concat($masterFile,$standardSuffix)"/>
-                  <xsl:with-param name="mode" select="name(.)"/>
+                  <xsl:with-param name="mode" select="local-name(.)"/>
                  </xsl:call-template>
                 </xsl:if>
       </xsl:if>
@@ -224,7 +224,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
                  <xsl:call-template name="xrefpanel">
                   <xsl:with-param name="homepage" 
                    select="concat($masterFile,$standardSuffix)"/>
-                  <xsl:with-param name="mode" select="name(.)"/>
+                  <xsl:with-param name="mode" select="local-name(.)"/>
                  </xsl:call-template>
                 </xsl:if>
              </xsl:for-each>

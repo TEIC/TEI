@@ -622,10 +622,10 @@ the "key" function
            <xsl:with-param name="style" select="'frametoc'"/>
          </xsl:call-template>
         </xsl:when>
-        <xsl:when test="name()='div' and $makeFrames='true'">
+        <xsl:when test="local-name()='div' and $makeFrames='true'">
           <xsl:call-template name="writeDiv"/>
         </xsl:when>
-        <xsl:when test="name()='div' and $makePageTable='true'">
+        <xsl:when test="local-name()='div' and $makePageTable='true'">
           <h2><xsl:apply-templates select="." mode="xref"/></h2>
           <xsl:call-template name="doDivBody"/>
           <xsl:call-template name="printDivnotes"/>
@@ -633,7 +633,7 @@ the "key" function
                  <xsl:call-template name="xrefpanel">
                   <xsl:with-param name="homepage" 
                    select="concat($masterFile,$standardSuffix)"/>
-                  <xsl:with-param name="mode" select="name(.)"/>
+                  <xsl:with-param name="mode" select="local-name(.)"/>
                  </xsl:call-template>
                 </xsl:if>
         </xsl:when>

@@ -70,10 +70,10 @@ Text Encoding Initiative Consortium XSLT stylesheet family
       <xsl:text> </xsl:text>
     </xsl:for-each>
     <xsl:text>&lt;</xsl:text>
-    <xsl:value-of select="name(.)"/>
+    <xsl:value-of select="local-name(.)"/>
     <xsl:for-each select="@*">
       <xsl:text> </xsl:text>
-    <xsl:value-of select="name(.)"/>="<xsl:value-of select="."/>"</xsl:for-each>
+    <xsl:value-of select="local-name(.)"/>="<xsl:value-of select="."/>"</xsl:for-each>
     <xsl:choose>
       <xsl:when test="child::node()">
 	<xsl:text>&gt;</xsl:text>
@@ -86,7 +86,7 @@ Text Encoding Initiative Consortium XSLT stylesheet family
 	  <xsl:text> </xsl:text>
 	</xsl:for-each>
 	<xsl:text>&lt;/</xsl:text>
-	<xsl:value-of select="name(.)"/>
+	<xsl:value-of select="local-name(.)"/>
 	<xsl:text>&gt;</xsl:text>
       </xsl:when>    
       <xsl:otherwise>
@@ -1038,7 +1038,7 @@ in change mode and there is no attList -->
   <xsl:value-of select="local-name(.)"/>
   <xsl:for-each select="@*">
     <xsl:text> </xsl:text>
-  <xsl:value-of select="name(.)"/>="<xsl:value-of select="."/>"</xsl:for-each>
+  <xsl:value-of select="local-name(.)"/>="<xsl:value-of select="."/>"</xsl:for-each>
   <xsl:choose>
     <xsl:when test="child::node()">
       <xsl:text>&gt;</xsl:text>

@@ -1,4 +1,4 @@
-VERSION=3.11
+VERSION=3.12
 
 all: p4 p5 other
 
@@ -44,6 +44,9 @@ param:
 
 stylebear:
 	xsltproc paramform.xsl param.xml > stylebear
+
+test:
+	echo run tests
 
 clean:
 	-rm -rf dist

@@ -224,7 +224,7 @@ select="translate(.,'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/
    </xsl:when>
   <xsl:otherwise>
   <xsl:choose>
-   <xsl:when test="name(.)='p'">
+   <xsl:when test="local-name(.)='p'">
     <xsl:call-template name="unknownRendBlock">
       <xsl:with-param name="rest" select="$rest"/>
       <xsl:with-param name="rend" select="$rend"/>

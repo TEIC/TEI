@@ -310,8 +310,7 @@ select="normalize-space(substring-before(substring-after($revauthor,'LastChanged
     <xsl:apply-templates select="." mode="depth"/>
   </xsl:variable>
   <xsl:choose>
-    <xsl:when test="name(.) = 'tei:TEI'">
-    </xsl:when>
+    <xsl:when test="local-name(.) = 'TEI'"/>
     <xsl:when test="$depth &gt; $numberHeadingsDepth">
     </xsl:when>
     <xsl:when test="ancestor::tei:back">
@@ -353,7 +352,7 @@ select="normalize-space(substring-before(substring-after($revauthor,'LastChanged
   </xsl:choose>
   <xsl:if test="$minimal=''">
     <xsl:choose>
-      <xsl:when test="name(.) = 'tei:TEI'">
+      <xsl:when test="local-name(.) = 'TEI'">
 	<xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
       </xsl:when>
       <xsl:when test="not(tei:head) and @n">

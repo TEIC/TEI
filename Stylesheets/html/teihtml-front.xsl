@@ -33,10 +33,10 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
   <hr/>
 </xsl:template>
 
-<xsl:template match="tei:body|back" mode="split">
+<xsl:template match="tei:body|tei:back" mode="split">
   <xsl:for-each select="*">
    <xsl:choose>
-    <xsl:when test="starts-with(name(.),'div')">
+    <xsl:when test="starts-with(local-name(.),'div')">
        <xsl:apply-templates select="." mode="split"/>
     </xsl:when>
     <xsl:otherwise>

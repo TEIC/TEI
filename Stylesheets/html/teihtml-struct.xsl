@@ -137,6 +137,9 @@ select="$depth"/></xsl:message>
 
 <xsl:template match="tei:*" mode="maketoc">
   <xsl:param name="forcedepth"/>
+  <xsl:variable name="myName">
+    <xsl:value-of select="local-name(.)"/>
+  </xsl:variable>
   <xsl:if test="tei:head or $autoHead='true'">
     <xsl:variable name="Depth">
       <xsl:choose>
@@ -150,16 +153,16 @@ select="$depth"/></xsl:message>
     </xsl:variable>
     <xsl:variable name="thislevel">
       <xsl:choose>
-	<xsl:when test="name(.) = 'div'">
+	<xsl:when test="$myName = 'div'">
 	  <xsl:value-of select="count(ancestor::tei:div)"/>
 	</xsl:when>
-	<xsl:when test="starts-with(name(.),'div')">
+	<xsl:when test="starts-with($myName,'div')">
 	  <xsl:choose>
 	    <xsl:when test="ancestor-or-self::tei:div0">
-	      <xsl:value-of select="substring-after(name(.),'div')"/>
+	      <xsl:value-of select="substring-after($myName,'div')"/>
 	    </xsl:when>
 	    <xsl:otherwise>
-	      <xsl:value-of select="substring-after(name(.),'div') - 1"/>
+	      <xsl:value-of select="substring-after($myName,'div') - 1"/>
 	    </xsl:otherwise>
 	  </xsl:choose>
 	</xsl:when>
@@ -191,16 +194,16 @@ select="$depth"/></xsl:message>
 
 <xsl:template match="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6" mode="depth">
   <xsl:choose>
-  <xsl:when test="name(.) = 'div'">
+  <xsl:when test="local-name(.) = 'div'">
     <xsl:value-of select="count(ancestor::tei:div)"/>
   </xsl:when>
   <xsl:otherwise>
    <xsl:choose>
     <xsl:when test="ancestor-or-self::tei:div0">
-      <xsl:value-of select="substring-after(name(.),'div')"/>
+      <xsl:value-of select="substring-after(local-name(.),'div')"/>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:value-of select="substring-after(name(.),'div') - 1"/>
+      <xsl:value-of select="substring-after(local-name(.),'div') - 1"/>
     </xsl:otherwise>
    </xsl:choose>
   </xsl:otherwise>
@@ -211,7 +214,7 @@ select="$depth"/></xsl:message>
 
 <!-- headings etc -->
 <xsl:template match="tei:head">
- <xsl:variable name="parent" select="name(..)"/>
+ <xsl:variable name="parent" select="local-name(..)"/>
  <xsl:if test="not(starts-with($parent,'div'))">
    <xsl:apply-templates/>
  </xsl:if>
@@ -317,7 +320,7 @@ select="$depth"/></xsl:message>
           <xsl:with-param name="homepage" 
               select="concat($BaseFile,$standardSuffix)"/>
           <xsl:with-param name="mode" 
-              select="name(.)"/>
+              select="local-name(.)"/>
 	 </xsl:call-template>
         </xsl:if>
         <xsl:if test="$subTocDepth &gt;= 0">
@@ -336,7 +339,7 @@ select="$depth"/></xsl:message>
         <xsl:if test="$bottomNavigationPanel='true'">
          <xsl:call-template name="xrefpanel">
           <xsl:with-param name="homepage" select="concat($BaseFile,$standardSuffix)"/>
-          <xsl:with-param name="mode" select="name(.)"/>
+          <xsl:with-param name="mode" select="local-name(.)"/>
 	 </xsl:call-template>
         </xsl:if>
 
@@ -442,111 +445,115 @@ select="$depth"/></xsl:message>
 <xsl:param name="homepage"/>
 <xsl:param name="mode"/>
 
-<p align="{$alignNavigationPanel}">
+<xsl:variable name="myName">
+  <xsl:value-of select="local-name(.)"/>
+</xsl:variable>
 
-   <xsl:variable name="Parent">
-     <xsl:call-template name="locateParent"/>
-     <xsl:value-of select="$standardSuffix"/>
-   </xsl:variable>
-   <xsl:choose>
+<p align="{$alignNavigationPanel}">
+  
+  <xsl:variable name="Parent">
+    <xsl:call-template name="locateParent"/>
+    <xsl:value-of select="$standardSuffix"/>
+  </xsl:variable>
+  <xsl:choose>
     <xsl:when test="$Parent = $standardSuffix">
       <xsl:call-template name="upLink">
-        <xsl:with-param name="up" select="$homepage"/>
-        <xsl:with-param name="title">
-          <xsl:call-template name="contentsWord"/>
-        </xsl:with-param>
+	<xsl:with-param name="up" select="$homepage"/>
+	<xsl:with-param name="title">
+	  <xsl:call-template name="contentsWord"/>
+	</xsl:with-param>
       </xsl:call-template>
     </xsl:when>
     <xsl:otherwise>
-        <xsl:call-template name="generateUpLink"/>
+      <xsl:call-template name="generateUpLink"/>
     </xsl:otherwise>
-   </xsl:choose>
-
-<xsl:choose>
- <xsl:when test="ancestor-or-self::tei:TEI[@rend='nomenu']">
+  </xsl:choose>
+  
+  <xsl:choose>
+    <xsl:when test="ancestor-or-self::tei:TEI[@rend='nomenu']">
       <xsl:call-template name="upLink">
-        <xsl:with-param name="up" select="$homepage"/>
-        <xsl:with-param name="title">
-          <xsl:call-template name="contentsWord"/>
-        </xsl:with-param>
+	<xsl:with-param name="up" select="$homepage"/>
+	<xsl:with-param name="title">
+	  <xsl:call-template name="contentsWord"/>
+	</xsl:with-param>
       </xsl:call-template>
- </xsl:when>
- <xsl:when test="$mode = 'div' and preceding-sibling::tei:div">
-  <xsl:call-template name="previousLink">
-    <xsl:with-param name="previous"  select="preceding-sibling::tei:div[1]"/>
-  </xsl:call-template>
- </xsl:when>
- <xsl:when test="$mode = 'div' and parent::tei:body/preceding-sibling::tei:front/tei:div">
-  <xsl:call-template name="previousLink">
-    <xsl:with-param name="previous"  select="parent::tei:body/preceding-sibling::tei:front/tei:div[tei:head][last()]"/>
-  </xsl:call-template>
- </xsl:when>
- <xsl:when test="$mode = 'div' and parent::tei:back/preceding-sibling::tei:body/tei:div">
-  <xsl:call-template name="previousLink">
-    <xsl:with-param name="previous"  select="parent::tei:back/preceding-sibling::tei:body/tei:div[last()]"/>
-  </xsl:call-template>
- </xsl:when>
- <xsl:otherwise>
-  <xsl:choose>
-    <xsl:when test="name(.)='div0'">
-      <xsl:call-template name="previousLink">
-      <xsl:with-param name="previous" select="preceding-sibling::tei:div0[1]"/>
-     </xsl:call-template>
     </xsl:when>
-    <xsl:when test="name(.)='div1'">
+    <xsl:when test="$mode = 'div' and preceding-sibling::tei:div">
       <xsl:call-template name="previousLink">
-      <xsl:with-param name="previous" select="preceding-sibling::tei:div1[1]"/>
-     </xsl:call-template>
+	<xsl:with-param name="previous"  select="preceding-sibling::tei:div[1]"/>
+      </xsl:call-template>
     </xsl:when>
-    <xsl:when test="name(.)='div2'">
+    <xsl:when test="$mode = 'div' and parent::tei:body/preceding-sibling::tei:front/tei:div">
       <xsl:call-template name="previousLink">
-      <xsl:with-param name="previous" select="preceding-sibling::tei:div2[1]"/>
-     </xsl:call-template>
+	<xsl:with-param name="previous"  select="parent::tei:body/preceding-sibling::tei:front/tei:div[tei:head][last()]"/>
+      </xsl:call-template>
     </xsl:when>
-    <xsl:when test="name(.)='div3'">
+    <xsl:when test="$mode = 'div' and parent::tei:back/preceding-sibling::tei:body/tei:div">
       <xsl:call-template name="previousLink">
-      <xsl:with-param name="previous" select="preceding-sibling::tei:div3[1]"/> 
-     </xsl:call-template>
-   </xsl:when>
+	<xsl:with-param name="previous"  select="parent::tei:back/preceding-sibling::tei:body/tei:div[last()]"/>
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:choose>
+	<xsl:when test="$myName='div0'">
+	  <xsl:call-template name="previousLink">
+	    <xsl:with-param name="previous" select="preceding-sibling::tei:div0[1]"/>
+	  </xsl:call-template>
+	</xsl:when>
+	<xsl:when test="$myName='div1'">
+	  <xsl:call-template name="previousLink">
+	    <xsl:with-param name="previous" select="preceding-sibling::tei:div1[1]"/>
+	  </xsl:call-template>
+	</xsl:when>
+	<xsl:when test="$myName='div2'">
+	  <xsl:call-template name="previousLink">
+	    <xsl:with-param name="previous" select="preceding-sibling::tei:div2[1]"/>
+	  </xsl:call-template>
+	</xsl:when>
+	<xsl:when test="$myName='div3'">
+	  <xsl:call-template name="previousLink">
+	    <xsl:with-param name="previous" select="preceding-sibling::tei:div3[1]"/> 
+	  </xsl:call-template>
+	</xsl:when>
+      </xsl:choose>
+    </xsl:otherwise>
   </xsl:choose>
- </xsl:otherwise>
-</xsl:choose>
-
-<xsl:choose>
- <xsl:when test="ancestor-or-self::tei:TEI[@rend='nomenu']">
- </xsl:when>
- <xsl:when test="$mode = 'div'">
-  <xsl:call-template name="nextLink">
-   <xsl:with-param name="next" 
-     select="(following-sibling::tei:div[tei:head][1]|parent::tei:body/following-sibling::tei:back/tei:div[1]|parent::tei:front/following-sibling::tei:body/tei:div[1])[1]"/>
-  </xsl:call-template>
- </xsl:when>
- <xsl:otherwise>
+  
   <xsl:choose>
-    <xsl:when test="name(.)='div0'">
-      <xsl:call-template name="nextLink">
-      <xsl:with-param name="next" select="following-sibling::tei:div0[1]"/>
-     </xsl:call-template>
+    <xsl:when test="ancestor-or-self::tei:TEI[@rend='nomenu']">
     </xsl:when>
-    <xsl:when test="name(.)='div1'">
+    <xsl:when test="$mode = 'div'">
       <xsl:call-template name="nextLink">
-      <xsl:with-param name="next" select="following-sibling::tei:div1[1]"/>
-     </xsl:call-template>
+	<xsl:with-param name="next" 
+			select="(following-sibling::tei:div[tei:head][1]|parent::tei:body/following-sibling::tei:back/tei:div[1]|parent::tei:front/following-sibling::tei:body/tei:div[1])[1]"/>
+      </xsl:call-template>
     </xsl:when>
-    <xsl:when test="name(.)='div2'">
-      <xsl:call-template name="nextLink">
-      <xsl:with-param name="next" select="following-sibling::tei:div2[1]"/>
-     </xsl:call-template>
-    </xsl:when>
-    <xsl:when test="name(.)='div3'">
-      <xsl:call-template name="nextLink">
-      <xsl:with-param name="next" select="following-sibling::tei:div3[1]"/> 
-     </xsl:call-template>
-   </xsl:when>
+    <xsl:otherwise>
+      <xsl:choose>
+	<xsl:when test="$myName='div0'">
+	  <xsl:call-template name="nextLink">
+	    <xsl:with-param name="next" select="following-sibling::tei:div0[1]"/>
+	  </xsl:call-template>
+	</xsl:when>
+	<xsl:when test="$myName='div1'">
+	  <xsl:call-template name="nextLink">
+	    <xsl:with-param name="next" select="following-sibling::tei:div1[1]"/>
+	  </xsl:call-template>
+	</xsl:when>
+	<xsl:when test="$myName='div2'">
+	  <xsl:call-template name="nextLink">
+	    <xsl:with-param name="next" select="following-sibling::tei:div2[1]"/>
+	  </xsl:call-template>
+	</xsl:when>
+	<xsl:when test="$myName='div3'">
+	  <xsl:call-template name="nextLink">
+	    <xsl:with-param name="next" select="following-sibling::tei:div3[1]"/> 
+	  </xsl:call-template>
+	</xsl:when>
+      </xsl:choose>
+    </xsl:otherwise>
   </xsl:choose>
- </xsl:otherwise>
-</xsl:choose>
-
+  
 </p>
 </xsl:template>
 
@@ -655,7 +662,7 @@ select="$depth"/></xsl:message>
      </td>
   </xsl:when>
   <xsl:when test="@rend='multicol'">
-     <xsl:apply-templates select="*[not(name(.)='div')]"/>
+     <xsl:apply-templates select="*[not(local-name(.)='div')]"/>
    <table>
    <tr>
      <xsl:apply-templates select="tei:div"/>
@@ -675,64 +682,68 @@ select="$depth"/></xsl:message>
 
 
 <xsl:template name="generateUpLink">
-<xsl:variable name="BaseFile">
-  <xsl:value-of select="$masterFile"/>
-  <xsl:call-template name="addCorpusID"/>
-</xsl:variable>
-<xsl:choose>
- <xsl:when test="name(.) = 'div'">
-  <xsl:call-template name="upLink">
-    <xsl:with-param name="up" select="ancestor::tei:div[last()]"/>
-  </xsl:call-template>
- </xsl:when>
- <xsl:otherwise>
+  <xsl:variable name="myName">
+    <xsl:value-of select="local-name(.)"/>
+  </xsl:variable>
+  
+  <xsl:variable name="BaseFile">
+    <xsl:value-of select="$masterFile"/>
+    <xsl:call-template name="addCorpusID"/>
+  </xsl:variable>
   <xsl:choose>
-    <xsl:when test="name(.)='div0'">
+    <xsl:when test="$myName = 'div'">
       <xsl:call-template name="upLink">
-        <xsl:with-param name="up" select="concat($BaseFile,$standardSuffix)"/>
-        <xsl:with-param name="title" select="$homeLabel"/>
+	<xsl:with-param name="up" select="ancestor::tei:div[last()]"/>
       </xsl:call-template>
-    </xsl:when>
-    <xsl:when test="name(.)='div1'">
-      <xsl:call-template name="upLink">
-        <xsl:with-param name="up" select="concat($BaseFile,$standardSuffix)"/>
-        <xsl:with-param name="title" select="$homeLabel"/>
-      </xsl:call-template>
-    </xsl:when>
-    <xsl:when test="name(.)='div2'">
-      <xsl:call-template name="upLink">
-       <xsl:with-param name="up" select="ancestor::tei:div1"/>
-      </xsl:call-template>
-    </xsl:when>
-    <xsl:when test="name(.)='div3'">
-     <xsl:call-template name="upLink">
-      <xsl:with-param name="up" select="ancestor::tei:div2"/>
-     </xsl:call-template>
-    </xsl:when>
-    <xsl:when test="name(.)='div4'">
-      <xsl:call-template name="upLink">
-       <xsl:with-param name="up" select="ancestor::tei:div3"/>
-      </xsl:call-template>
-    </xsl:when>
-    <xsl:when test="name(.)='div5'">
-     <xsl:call-template name="upLink">
-      <xsl:with-param name="up" select="ancestor::tei:div4"/>
-     </xsl:call-template>
     </xsl:when>
     <xsl:otherwise>
-     <xsl:call-template name="upLink">
-      <xsl:with-param name="up" select="(ancestor::tei:div1|ancestor::tei:div)[1]"/>
-     </xsl:call-template>
+      <xsl:choose>
+	<xsl:when test="$myName='div0'">
+	  <xsl:call-template name="upLink">
+	    <xsl:with-param name="up" select="concat($BaseFile,$standardSuffix)"/>
+	    <xsl:with-param name="title" select="$homeLabel"/>
+	  </xsl:call-template>
+	</xsl:when>
+	<xsl:when test="$myName='div1'">
+	  <xsl:call-template name="upLink">
+	    <xsl:with-param name="up" select="concat($BaseFile,$standardSuffix)"/>
+	    <xsl:with-param name="title" select="$homeLabel"/>
+	  </xsl:call-template>
+	</xsl:when>
+	<xsl:when test="$myName='div2'">
+	  <xsl:call-template name="upLink">
+	    <xsl:with-param name="up" select="ancestor::tei:div1"/>
+	  </xsl:call-template>
+	</xsl:when>
+	<xsl:when test="$myName='div3'">
+	  <xsl:call-template name="upLink">
+	    <xsl:with-param name="up" select="ancestor::tei:div2"/>
+	  </xsl:call-template>
+	</xsl:when>
+	<xsl:when test="$myName='div4'">
+	  <xsl:call-template name="upLink">
+	    <xsl:with-param name="up" select="ancestor::tei:div3"/>
+	  </xsl:call-template>
+	</xsl:when>
+	<xsl:when test="$myName='div5'">
+	  <xsl:call-template name="upLink">
+	    <xsl:with-param name="up" select="ancestor::tei:div4"/>
+	  </xsl:call-template>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:call-template name="upLink">
+	    <xsl:with-param name="up" select="(ancestor::tei:div1|ancestor::tei:div)[1]"/>
+	  </xsl:call-template>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:otherwise>
   </xsl:choose>
- </xsl:otherwise>
-</xsl:choose>
 </xsl:template>
 
 
 <xsl:template name="addLangAtt">
   <xsl:variable name="supplied">
-    <xsl:value-of select="ancestor-or-self::tei:*[@lang][1]/@lang"/>
+    <xsl:value-of select="ancestor-or-self::tei:*[@lang|@xml:lang][1]/@lang|@xml:lang"/>
   </xsl:variable>
   <xsl:attribute name="lang">
     <xsl:choose>

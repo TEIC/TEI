@@ -96,7 +96,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
     the first grandchild of <text > -->
     <xsl:for-each select="descendant::tei:text/tei:*[1]/tei:*[1]">
       <xsl:choose>
-        <xsl:when test="starts-with(name(),'div')">
+        <xsl:when test="starts-with(local-name(),'div')">
             <xsl:apply-templates select="." mode="ident"/>
         </xsl:when>
         <xsl:otherwise>
@@ -209,12 +209,12 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
   </xsl:variable>
 
 <xsl:variable name="thisname">
-      <xsl:value-of select="name()"/>
+      <xsl:value-of select="local-name()"/>
 </xsl:variable>
 
 
 <xsl:choose>
- <xsl:when test="$thisname='tei:TEI' or $thisname=''">
+ <xsl:when test="$thisname='TEI' or $thisname=''">
 <xsl:for-each select=".//tei:text">
    <xsl:for-each select="tei:front">
     <xsl:if test="tei:div|tei:div0|tei:div1"><hr/></xsl:if>
@@ -271,7 +271,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 </xsl:if>
  </xsl:for-each>
 <!-- preceding divisions -->
-   <xsl:for-each select="preceding-sibling::tei:*[name()=$thisname]">
+   <xsl:for-each select="preceding-sibling::tei:*[local-name()=$thisname]">
    <xsl:if test="tei:head">
       <p class="{$style}"><a class="{$style}">
         <xsl:attribute name="href">
@@ -300,7 +300,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
    </xsl:for-each>
 
 <!-- following divisions -->
-   <xsl:for-each select="following-sibling::tei:*[name()=$thisname]">
+   <xsl:for-each select="following-sibling::tei:*[local-name()=$thisname]">
    <xsl:if test="tei:head">
       <p class="{$style}"><a class="{$style}">
         <xsl:attribute name="href">

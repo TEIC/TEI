@@ -28,14 +28,14 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
        <xsl:value-of select="@id|@xml:id"/>
      </xsl:when>
      <xsl:otherwise>
-      <xsl:value-of select="$BaseFile"/>-<xsl:value-of select="name(.)"/>-<xsl:value-of select="generate-id()"/>
+      <xsl:value-of select="$BaseFile"/>-<xsl:value-of select="local-name(.)"/>-<xsl:value-of select="generate-id()"/>
      </xsl:otherwise>
     </xsl:choose>
   </xsl:when>
   <xsl:when test="self::tei:div and not(ancestor::tei:div)"> 
   <xsl:variable name="xpath">
        <xsl:for-each select="ancestor-or-self::tei:*">
-    <xsl:value-of select="name()" />
+    <xsl:value-of select="local-name()" />
     <xsl:text />.<xsl:number />
     <xsl:if test="position() != last()">_</xsl:if>
   </xsl:for-each>
@@ -44,16 +44,16 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
   </xsl:when>
   <xsl:when test="self::tei:divGen"> 
   <xsl:variable name="xpath">
-       <xsl:for-each select="ancestor-or-self::tei:*">
-    <xsl:value-of select="name()" />
-    <xsl:text />.<xsl:number />
-    <xsl:if test="position() != last()">_</xsl:if>
-  </xsl:for-each>
+    <xsl:for-each select="ancestor-or-self::tei:*">
+      <xsl:value-of select="local-name()" />
+      <xsl:text />.<xsl:number />
+      <xsl:if test="position() != last()">_</xsl:if>
+    </xsl:for-each>
   </xsl:variable>
   <xsl:value-of select="substring-after($xpath,'TEI_.1_text.1_')"/>
   </xsl:when>
   <xsl:otherwise>
-   <xsl:value-of select="$BaseFile"/>-<xsl:value-of select="name(.)"/>-<xsl:value-of select="generate-id()"/>
+    <xsl:value-of select="$BaseFile"/>-<xsl:value-of select="name(.)"/>-<xsl:value-of select="generate-id()"/>
   </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
@@ -229,7 +229,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
   </xsl:variable>
  <xsl:variable name="file">
  <xsl:apply-templates 
-   select="ancestor::tei:*[starts-with(name(),'div')][1]"  
+   select="ancestor::tei:*[starts-with(local-name(),'div')][1]"  
    mode="generateLink"/>
  </xsl:variable>
  <xsl:choose>
@@ -258,7 +258,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
   <xsl:param name="dest"/>
   <xsl:param name="body"/>
   <xsl:param name="class">link_<xsl:value-of
-  select="name(.)"/></xsl:param>
+  select="local-name(.)"/></xsl:param>
 <!--      <xsl:message>here: <xsl:value-of select="name(.)"/>: <xsl:value-of select="$dest"/></xsl:message>-->
   <xsl:variable name="W">
     <xsl:choose>
@@ -308,7 +308,7 @@ XSL stylesheet to format TEI XML documents to HTML or XSL FO
 <xsl:template name="makeExternalLink">
   <xsl:param name="ptr"/>
   <xsl:param name="dest"/>
-  <xsl:param name="class">link_<xsl:value-of select="name(.)"/></xsl:param>
+  <xsl:param name="class">link_<xsl:value-of select="local-name(.)"/></xsl:param>
   <a>
     <xsl:attribute name="class">
       <xsl:choose>
