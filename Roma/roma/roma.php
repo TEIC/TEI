@@ -77,6 +77,8 @@
 
 // The parser is used to do some simple replacements for which
 // XSLT would have been much to powerful
+require_once( 'config.php' );
+
 require_once( 'parser/parser.php' );
 
 // Romadom extends the domDocument class. It is used to hold the
@@ -107,50 +109,6 @@ require_once( 'ressource/ressource.php' );
 // is, that they do not have the same value
 define( 'roma_startupOption_new', 'new' );
 define( 'roma_startupOption_old', 'old' );
-
-//#########################
-// Programm calls
-//
-// Defines how to call trang
-define( 'roma_trang', 'trang' );
-
-// Defines how to call fop
-define( 'roma_fop', 'fop' );
-
-// Defines how to call latex
-define( 'roma_latex', 'latex' );
-
-// Defines how to call pdflatex
-define( 'roma_pdflatex', 'pdflatex' );
-
-
-//#########################
-// Directories
-//
-// Defines the location of all external Stylesheets (odd2relax.xsl .. )
-define( 'roma_schemaStylesheetDir', 'http://localhost/stylesheet' );
-
-// Defines the location of the template Directory
-define( 'roma_templateDir', 'roma/templates' );
-
-// Defines the location of all internal Stylesheets
-define( 'roma_stylesheetDir', 'roma/stylesheets' );
-
-// Defines a directory, where Roma can store temporary files
-// Note, that your webserver needs to have writing access to that directory
-define( 'roma_temporaryFilesDir', '/tmp' );
-
-define( 'roma_ressource_path', 'roma/res' );
-
-//#########################
-// different_stylesheets
-//
-define( 'roma_styleheet_docHtml', 'http://localhost/stylesheet/teic/teihtml-teic-P5.xsl' );
-define( 'roma_styleheet_docPDF', 'http://localhost/stylesheet/base/p5/fo/tei.xsl' );
-define( 'roma_styleheet_docLatex', 'http://localhost/stylesheet/base/p5/latex/teilatex.xsl' );
-define( 'roma_customization_validator', 'http://localhost/schema/relaxng/p5/p5odds.rng' );
-
-define( 'roma_exist_server', 'http://localhost:8080/cocoon/Roma' );
 
 
 define( 'roma_validate_schema', false );
@@ -649,7 +607,7 @@ class roma
         $szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
 	$this->getParser( $oParser );
 
-	$this->getListDom( roma_exist_server . '/xquery/modules.xq', $oListDom );
+	$this->getListDom( roma_xquery_server . '/modules.xq', $oListDom );
 
 	// build param list
 	$this->m_oRomaDom->getSelectedModulesDom( $oModules );
@@ -677,7 +635,7 @@ class roma
         $szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
 	$this->getParser( $oParser );
 
-	$this->getListDom( roma_exist_server . '/xquery/elemsbymod.xq?module=' . $_REQUEST[ 'module' ], $oListDom );
+	$this->getListDom( roma_xquery_server . '/elemsbymod.xq?module=' . $_REQUEST[ 'module' ], $oListDom );
 	notamHandler::getError( 'moduleChanged', $aoErrors );
 	notamHandler::deleteError( 'moduleChanged' );
 	$this->addErrorsDom( $oListDom, $aoErrors );
@@ -708,19 +666,19 @@ class roma
 	$this->getParser( $oParser );
 
 	$oModelClassDom = new domDocument();
-	$oModelClassDom->loadXML( join( '', file( roma_exist_server . '/xquery/classes.xq' ) ) );
+	$oModelClassDom->loadXML( join( '', file( roma_xquery_server . '/classes.xq' ) ) );
 	$oRootClass = $oModelClassDom->documentElement;
 
 	$oAttributeDom = new domDocument();
-	$oAttributeDom->loadXML( join( '', file( roma_exist_server . '/xquery/attclasses.xq' ) ) );
+	$oAttributeDom->loadXML( join( '', file( roma_xquery_server . '/attclasses.xq' ) ) );
 	$oRootAtt = $oAttributeDom->documentElement;
 
 	$oDatatypeDom = new domDocument();
-	$oDatatypeDom->loadXML( join( '', file( roma_exist_server . '/xquery/datatypes.xq' ) ) ) ;
+	$oDatatypeDom->loadXML( join( '', file( roma_xquery_server . '/datatypes.xq' ) ) ) ;
 	$oRootDat = $oDatatypeDom->documentElement;
 
 	$oMacroDom = new domDocument();
-	$oMacroDom->loadXML( join( '', file( roma_exist_server . '/xquery/macros.xq' ) ) );
+	$oMacroDom->loadXML( join( '', file( roma_xquery_server . '/macros.xq' ) ) );
 	$oRootMac = $oMacroDom->documentElement;
 
         //Get created Elements
@@ -868,19 +826,19 @@ class roma
 	$this->getParser( $oParser );
  
 	$oModelClassDom = new domDocument();
-	$oModelClassDom->loadXML( join( '', file( roma_exist_server . '/xquery/classes.xq' ) ) );
+	$oModelClassDom->loadXML( join( '', file( roma_xquery_server . '/classes.xq' ) ) );
 	$oRootClass = $oModelClassDom->documentElement;
 
 	$oAttributeDom = new domDocument();
-	$oAttributeDom->loadXML( join( '', file( roma_exist_server . '/xquery/attclasses.xq' ) ) );
+	$oAttributeDom->loadXML( join( '', file( roma_xquery_server . '/attclasses.xq' ) ) );
 	$oRootAtt = $oAttributeDom->documentElement;
 
 	$oDatatypeDom = new domDocument();
-	$oDatatypeDom->loadXML( join( '', file(  roma_exist_server . '/xquery/datatypes.xq' ) ) ) ;
+	$oDatatypeDom->loadXML( join( '', file(  roma_xquery_server . '/datatypes.xq' ) ) ) ;
 	$oRootDat = $oDatatypeDom->documentElement;
 
 	$oMacroDom = new domDocument();
-	$oMacroDom->loadXML( join( '', file( roma_exist_server . '/xquery/macros.xq' ) ) );
+	$oMacroDom->loadXML( join( '', file( roma_xquery_server . '/macros.xq' ) ) );
 	$oRootMac = $oMacroDom->documentElement;
 
 	$oListDom = new domDocument();
@@ -940,11 +898,11 @@ class roma
 	$oAddAttribute = $oListDom->appendChild ( new domElement( 'addAttribute' ) );
 	
 	$oDatatypeDom = new domDocument();
-	$oDatatypeDom->loadXML( join( '', file( roma_exist_server . '/xquery/datatypes.xq' ) ) ) ;
+	$oDatatypeDom->loadXML( join( '', file( roma_xquery_server . '/datatypes.xq' ) ) ) ;
 	$oRootDat = $oDatatypeDom->documentElement;
 
 	$oWCDom = new domDocument();
-	$oWCDom->loadXML( join( '', file( roma_exist_server . '/xquery/w3cdatatypes.xq' ) ) ) ;
+	$oWCDom->loadXML( join( '', file( roma_xquery_server . '/w3cdatatypes.xq' ) ) ) ;
 	$oRootW3cDat = $oWCDom->documentElement;
 
 	$oRootDat = $oListDom->importNode( $oRootDat, true );
@@ -1092,7 +1050,7 @@ class roma
 	$this->getParser( $oParser );
 
 	$oListDom = new domDocument();
-	$oListDom->loadXML( join ( '', file( roma_exist_server . '/xquery/attclasses.xq' ) ) );
+	$oListDom->loadXML( join ( '', file( roma_xquery_server . '/attclasses.xq' ) ) );
 
 	$this->applyStylesheet( $oListDom, 'changeClasses.xsl', $oNewDom, array( 'host' => $_SERVER[ 'HTTP_HOST' ], 'class' => $_REQUEST[ 'class' ], 'module' => $_REQUEST[ 'module' ] ), 'changeClasses' );
 
@@ -1350,14 +1308,14 @@ class roma
      * this function gets a domDocument object a stylesheet name a parameter where to
      * put the new domDocument object in and an associative array with paramters for
      * the xslt processor.
-     * It then loads the stylesheet which has to be inside the 'roma_stylesheetDir' and
+     * It then loads the stylesheet which has to be inside the 'roma_localStylesheetDir' and
      * creates an XSLT-Processor. Then the XSLT-Processor is fed with the paramters specified
      * and finally the stylesheet is parsed, returning the output to the third parameter.
      */
     private function applyStylesheet( $oDom, $szStylesheet, &$oNewDom, $aszParams = array(), $szRessource = '' )
       {
         $oXSL = new domDocument();
- 	$oXSL->loadXML( join( '', file(  roma_stylesheetDir . '/' . $szStylesheet ) ) );
+ 	$oXSL->loadXML( join( '', file(  roma_localStylesheetDir . '/' . $szStylesheet ) ) );
 
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );

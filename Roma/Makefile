@@ -6,4 +6,9 @@ dist:
 	tar --exclude=CVS -c -f - $(FILES) | (cd release/tei-roma-`cat VERSION`; tar xf -)
 	(cd release; zip -r tei-roma-`cat ../VERSION`.zip tei-roma-`cat ../VERSION`)
 
+clean:
+	rm -rf release
+	find . -name "*~" | xargs rm
+	find . -name semantic.cache | xargs rm
+
 

@@ -32,7 +32,7 @@ class docDom extends domDocument
 	  }
 	//create the XSLT to expand the modules
         $oXSL = new domDocument();
- 	$oXSL->load( roma_schemaStylesheetDir . '/' . 'base/p5/odds/subsetGuidelines.xsl'  );
+ 	$oXSL->load( roma_StylesheetDir . '/' . 'base/p5/odds/subsetGuidelines.xsl'  );
 
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
@@ -118,7 +118,7 @@ class docDom extends domDocument
 
 		$oElementDom = new domDocument();
 		echo $szElement . " ";
-		$oElementDom->loadXML( join( '', file( roma_exist_server . '/xquery/copytag.xq?name=' . $szElement ) ) );
+		$oElementDom->loadXML( join( '', file( roma_xquery_server . '/copytag.xq?name=' . $szElement ) ) );
 		$oSpec = $oElementDom->getElementsByTagname( 'elementSpec' )->item(0);
 		
 		$oSpec = $this->importNode( $oSpec, true );
@@ -424,7 +424,7 @@ class docDom extends domDocument
       {
 	//create the teiLite
         $oXSL = new domDocument();
- 	$oXSL->load( roma_schemaStylesheetDir . '/' . 'base/p5/odds/teixml-odds.xsl'  );
+ 	$oXSL->load( roma_StylesheetDir . '/' . 'base/p5/odds/teixml-odds.xsl'  );
 
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
