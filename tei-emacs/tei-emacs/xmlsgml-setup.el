@@ -220,9 +220,6 @@ encoding attribute
    (concat teixmldir "/schema/dtd/catalog;" teiemacsdir "xml/catalog;"))
 )
 
-;; table editing
-;(require 'table)
-;;(add-hook 'text-mode-hook 'table-recognize)
 
 ;; XSL mode
 (autoload 'xsl-mode "xslide" "Major mode for XSL stylesheets." t)
