@@ -23,6 +23,8 @@ makeDTD()
     xsltproc   $TEIDIR/base/p5/odds/nomorechoice.xsl $N.compiled.rng \
     | xsltproc $TEIDIR/base/p5/odds/simplifyfordtd.xsl -             \
     | xsltproc $TEIDIR/base/p5/odds/simplifyfordtd.xsl -             \
+    | xsltproc $TEIDIR/base/p5/odds/simplifyfordtd.xsl -             \
+    | xsltproc $TEIDIR/base/p5/odds/simplifyfordtd.xsl -             \
     | xsltproc -o $N.temp2.rng $TEIDIR/base/p5/odds/simplifyfordtd.xsl - 
     echo "7. convert simplified form to DTD"
     trang $N.temp2.rng $N.dtd || die " trang fails"
@@ -132,7 +134,7 @@ mkdir -p $RESULTS || die "cannot make directory $RESULTS"
 D=`date "+%Y-%m-%d %H:%M:%S.%N"`
 echo "Process $ODD to create $N{.dtd|.xsd|.doc.xml|[compiled].rng|.rnc} in $RESULTS"
 echo "========= $D Roma starts, execution:"
-makeRelax
+$relax && makeRelax
 $xsd && makeXSD
 $dtd && makeDTD
 $doc && makeDOC
