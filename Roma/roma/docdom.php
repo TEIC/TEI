@@ -472,7 +472,7 @@ class docDom extends domDocument
 	if ( $this->bBar )
 	  $this->m_oRomaDom->updateProgressBar( '85' );
 	
-	$szLatex = $oProc->transformToDoc( $oTeiLiteDom )->SaveHTML();
+	$szLatex = $oProc->transformToXML( $oTeiLiteDom );
 	
 	if ( $this->bBar )
 	  $this->m_oRomaDom->updateProgressBar( '100' );
@@ -494,7 +494,7 @@ class docDom extends domDocument
 	if ( $this->bBar )
 	  $this->m_oRomaDom->updateProgressBar( '75' );
 
-	$oTmpDom = $oProc->transformToDoc( $oTeiLiteDom );
+	$szTmp = $oProc->transformToXML( $oTeiLiteDom );
 	
 	if ( $this->bBar )
 	  $this->m_oRomaDom->updateProgressBar( '80' );
@@ -505,7 +505,7 @@ class docDom extends domDocument
 	$szInputFile = roma_temporaryFilesDir . '/' . $szID . '.tex';    
 	$szOutputFile = roma_temporaryFilesDir . '/' . $szID . '.pdf';    
 	
-	file_put_contents( $szInputFile , $oTmpDom->SaveHTML() );
+	file_put_contents( $szInputFile , $szTmp );
 
 	if ( $this->bBar )
 	  $this->m_oRomaDom->updateProgressBar( '85' );
@@ -581,7 +581,7 @@ class docDom extends domDocument
 	
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
-	$oTmpDom = $oProc->transformToDoc( $oTeiLiteDom );
+	$szTmp = $oProc->transformToXML( $oTeiLiteDom );
 
 	if ( $this->bBar )
 	  $this->m_oRomaDom->updateProgressBar( '70' );
@@ -592,7 +592,7 @@ class docDom extends domDocument
 	$szInputFile = roma_temporaryFilesDir . '/' . $szID . '.tex';    
 	$szOutputFile = roma_temporaryFilesDir . '/' . $szID . '.dvi';    
 	
-	file_put_contents( $szInputFile , $oTmpDom->SaveHTML() );
+	file_put_contents( $szInputFile , $szTmp );
 
 	if ( $this->bBar )
 	  $this->m_oRomaDom->updateProgressBar( '80' );
