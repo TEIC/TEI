@@ -367,11 +367,19 @@ $Date$, $Revision$, $Author$
  <xsl:if test="not($minimal)">
     <xsl:value-of select="$headingNumberSuffix"/>
     <xsl:choose>
+      <xsl:when test="contains(name(.),'Spec')">
+	<xsl:call-template name="makeLink">
+	  <xsl:with-param name="class">toc</xsl:with-param>
+	  <xsl:with-param name="id">
+	    <xsl:value-of select="@id|@xml:id"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
       <xsl:when test="not($toc='')">
         <xsl:call-template name="makeInternalLink">
           <xsl:with-param name="class">toc</xsl:with-param>
-          <xsl:with-param name="url"><xsl:value-of select="$toc"/></xsl:with-param>
-          <xsl:with-param name="text">
+          <xsl:with-param name="dest"><xsl:value-of select="$toc"/></xsl:with-param>
+          <xsl:with-param name="body">
             <xsl:apply-templates mode="plain" select="tei:head"/>
           </xsl:with-param>
         </xsl:call-template>
