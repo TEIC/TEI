@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TEI xml:lang="en"  xmlns="http://www.tei-c.org/ns/1.0"
- xmlns:rng="http://relaxng.org/ns/structure/1.0"
- n="testodd">
+ xmlns:rng="http://relaxng.org/ns/structure/1.0">
    <teiHeader>
       <fileDesc>
          <titleStmt>
@@ -19,26 +18,27 @@
 <text>
 <body>
   <p>
-    <schemaSpec ident="testodds" start="TEI">
-      <moduleRef key="header"/>
-      <moduleRef key="core"/>
-      <moduleRef key="tei"/>
-      <moduleRef key="textstructure"/>
-      <moduleRef key="tagdocs"/>
-      <moduleRef key="dictionaries"/>
-      <moduleRef key="linking"/>
-
-    <macroSpec ident="egXML.content" module="tagdocs" mode="change">
-      <content>
+<schemaSpec ident="testodds" start="TEI">
+  <moduleRef key="header"/>
+  <moduleRef key="core"/>
+  <moduleRef key="tei"/>
+  <moduleRef key="textstructure"/>
+  <moduleRef key="tagdocs"/>
+  <moduleRef key="dictionaries"/>
+  <moduleRef key="linking"/>
+  
+  <elementSpec module="tagdocs" ns="http://www.tei-c.org/ns/Examples" usage="mwa" ident="egXML"
+	       mode="change">
+    <content>
       <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-        <choice>
-          <text/>
-          <ref name="anyTEI"/>
-        </choice>
+	<choice>
+	  <text/>
+	  <ref name="anyTEI"/>
+	</choice>
       </oneOrMore>
-      </content>
-    </macroSpec>
-
+    </content>
+  </elementSpec>
+  
   <macroSpec ident="anyTEI" mode="add">
     <content>
       <element  xmlns="http://relaxng.org/ns/structure/1.0">
@@ -47,9 +47,9 @@
 	  <choice>
 	    <attribute>
 	      <anyName>
-	      <rng:except>
-		<rng:name>xml:id</rng:name>
-	      </rng:except>
+		<rng:except>
+		  <rng:name>xml:id</rng:name>
+		</rng:except>
 	      </anyName>
 	    </attribute>
 	    <text/>
@@ -60,7 +60,7 @@
       </element>
     </content>
   </macroSpec>
-    </schemaSpec>
+</schemaSpec>
   </p>
 </body>
 </text>

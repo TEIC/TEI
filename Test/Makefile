@@ -1,3 +1,5 @@
+XSL=/usr/share/xml/tei/stylesheet/base
+TEISERVER=http://www.tei-c.org.uk/Query/
 #testdocbook 
 TESTFILES= \
 	testchinese \
@@ -21,7 +23,7 @@ TESTSPECIALFILES= \
 all: test-schema test-dtd test-xsd
 
 schemas:
-	for i in $(TESTFILES) $(TESTSPECIALFILES); do ../Roma --doc --schema=../Schema/ $$i.odd .; done
+	for i in $(TESTFILES) $(TESTSPECIALFILES); do ../Roma --xsl=$(XSL) --teiserver=$(TEISERVER) --doc $$i.odd .; done
 
 test-schema: test-rnv test-jing 
 #test-xmllint

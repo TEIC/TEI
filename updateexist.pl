@@ -22,7 +22,7 @@ sub loadFile {
 
 die("Usage: $0 file_or_directory target_collection\n") unless @ARGV == 2;
 
-my $service = SOAP::Lite->service("http://localhost:8080/exist/services/Admin?WSDL");
+my $service = SOAP::Lite->service("http://localhost:8080/cocoon/services/Admin?WSDL");
 
 $session = $service->connect("admin", "");
 
