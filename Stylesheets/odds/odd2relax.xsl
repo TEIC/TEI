@@ -25,6 +25,9 @@ XSL stylesheet to format TEI XML documents using ODD markup
 
 
 <xsl:import href="teiodds.xsl"/>
+
+<xsl:output encoding="utf-8" method="xml" indent="yes"/>
+
 <xsl:param name="verbose"></xsl:param>
 <xsl:param name="RNGDIR">Schema</xsl:param>
 <xsl:variable name="appendixWords"/>
@@ -37,10 +40,9 @@ XSL stylesheet to format TEI XML documents using ODD markup
 <xsl:template name="italicize"/>
 <xsl:template name="makeAnchor"/>
 <xsl:template name="makeLink"/>
-<xsl:output method="xml" indent="yes"/>
 
-  <xsl:variable name="oddmode">dtd</xsl:variable>       
-  <xsl:variable name="filesuffix"></xsl:variable>
+<xsl:variable name="oddmode">dtd</xsl:variable>       
+<xsl:variable name="filesuffix"></xsl:variable>
 <!-- get list of output files -->
 <xsl:variable name="linkColor"/>
 
@@ -48,7 +50,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
 
 <xsl:template match="tei:moduleSpec[@type='decls']" />
 
-<xsl:template match="/tei:TEI">
+<xsl:template match="/">
 <xsl:choose>
   <xsl:when test=".//tei:schemaSpec">
     <xsl:apply-templates select=".//tei:schemaSpec" />
@@ -79,6 +81,10 @@ XSL stylesheet to format TEI XML documents using ODD markup
 
 <xsl:template match="tei:schemaSpec" >
     <xsl:variable name="filename" select="@ident"/>
+    <xsl:if test="$verbose='true'">
+    <xsl:message>   process schemaSpec [<xsl:value-of select="@ident"/>]      </xsl:message>
+    </xsl:if>
+
     <xsl:call-template name="generateOutput">
       <xsl:with-param name="body">
 	<grammar
@@ -103,39 +109,36 @@ XSL stylesheet to format TEI XML documents using ODD markup
 from 1st October 2004. This is NOT the final P5</xsl:text>
 -->
 	  </xsl:comment>
-	  <xsl:text>
+	  <xsl:text>&#10;</xsl:text>
+	  <xsl:call-template name="predeclarations"/>
+  	  <xsl:apply-templates mode="tangle"
+			       select="tei:specGrpRef"/>
+  	  <xsl:apply-templates mode="tangle"
+			       select="tei:moduleRef"/>
+  	  <xsl:apply-templates mode="tangle"
+			       select="tei:elementSpec|tei:macroSpec|tei:classSpec"/>
+	  <xsl:choose>
+	    <xsl:when test="@start and contains(@start,' ')">
+	      <rng:start>
+		<rng:choice>
+		  <xsl:call-template name="startNames">
+		    <xsl:with-param name="toks" select="@start"/>
+		  </xsl:call-template>
+		</rng:choice>
+	      </rng:start>
+	    </xsl:when>
+	    <xsl:when test="@start">
+	      <rng:start>
+		<rng:ref name="{@start}"/>
+	      </rng:start>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <rng:start>
+		<rng:ref name="TEI"/>
+	      </rng:start>
+	    </xsl:otherwise>
 	    
-	  </xsl:text>
-	  <xsl:apply-templates mode="tangle" select="tei:specGrpRef"/>
-  	  <xsl:apply-templates mode="tangle" select="tei:moduleRef"/>
-  	  <xsl:apply-templates mode="tangle"
-			       select="tei:elementSpec[@mode='add']"/>
-  	  <xsl:apply-templates mode="tangle"
-			       select="tei:macroSpec[@mode='add']"/>
-  	  <xsl:apply-templates mode="tangle"
-			       select="tei:classSpec[@mode='add']"/>
-	    <xsl:choose>
-	      <xsl:when test="@start and contains(@start,' ')">
-		<rng:start>
-		  <rng:choice>
-		    <xsl:call-template name="startNames">
-		      <xsl:with-param name="toks" select="@start"/>
-		    </xsl:call-template>
-		  </rng:choice>
-		</rng:start>
-	      </xsl:when>
-	      <xsl:when test="@start">
-		<rng:start>
-		  <rng:ref name="{@start}"/>
-		</rng:start>
-	      </xsl:when>
-	      <xsl:otherwise>
-		<rng:start>
-		  <rng:ref name="TEI"/>
-		</rng:start>
-	      </xsl:otherwise>
-
-	    </xsl:choose>
+	  </xsl:choose>
 	</grammar>
       </xsl:with-param>
     </xsl:call-template>
@@ -159,108 +162,155 @@ from 1st October 2004. This is NOT the final P5</xsl:text>
 </xsl:template>
 
 <xsl:template match="tei:moduleSpec" >
-  <xsl:if test="@ident and not(@mode='change' or @mode='replace' or @mode='delete')">
-    <xsl:variable name="filename" select="@ident"/>
-    <xsl:call-template name="generateOutput">
-      <xsl:with-param name="body">
-	<grammar
-	 xmlns="http://relaxng.org/ns/structure/1.0"
-	 xmlns:t="http://www.thaiopensource.com/ns/annotations"
-	 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-	 datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-	  
-	  <xsl:text>
-	    
-	  </xsl:text> 
-	  <xsl:comment>
-	    <xsl:text>Schema generated </xsl:text>
-	    <xsl:value-of  select="edate:date-time()"/>
-	    <xsl:text>&#010;</xsl:text>
-
-	    <xsl:call-template name="copyright"/>
-	  </xsl:comment>
-	  <xsl:text>
-	    
-	  </xsl:text>
-	  
-	  <xsl:if test="$filename='core'">
-	    <rng:define name="IGNORE">
-	      <rng:notAllowed/>
-	    </rng:define>
-	    <rng:define name="INCLUDE">
-	      <rng:empty/>
-	    </rng:define>
-	    <xsl:comment>Weird special cases</xsl:comment>
-	    <rng:define name="TEI...end"><rng:notAllowed/></rng:define>
-	    <rng:define name="mix.dictionaries" combine="choice"><rng:choice><rng:notAllowed/></rng:choice></rng:define>
-	    <rng:define name="mix.drama" combine="choice"><rng:choice><rng:notAllowed/></rng:choice></rng:define>
-	    <rng:define name="mix.spoken" combine="choice"><rng:choice><rng:notAllowed/></rng:choice></rng:define>
-	    <rng:define name="mix.verse"
-			combine="choice"><rng:choice><rng:notAllowed/></rng:choice></rng:define>
-	    <rng:define name="tei.comp.dictionaries" combine="choice"><rng:choice><rng:notAllowed/></rng:choice></rng:define>
-	    <rng:define name="tei.comp.spoken" combine="choice"><rng:choice><rng:notAllowed/></rng:choice></rng:define>
-	    <rng:define name="tei.comp.verse" combine="choice"><rng:choice><rng:notAllowed/></rng:choice></rng:define>
-	    <rng:define name="tei.comp.terminology"><rng:choice><rng:notAllowed/></rng:choice></rng:define>
-	    <rng:define name="mix.terminology" combine="choice"><rng:choice><rng:notAllowed/></rng:choice></rng:define>
-	    <rng:define name="mix.seg"  combine="choice">
-	      <rng:choice>
-		<rng:notAllowed/>
-	      </rng:choice>
-	    </rng:define>
-	  </xsl:if>
-	  <xsl:if test="@type='core'">
-	    <xsl:comment>0. predeclared classes</xsl:comment>
-	    <xsl:for-each select="key('DefClasses',1)">
-	      <xsl:choose>
-		<xsl:when test="@type='model'">    
-		  <xsl:apply-templates select="." mode="processModel"/>
-		</xsl:when>
-		<xsl:when test="@type='atts'">    
-		  <xsl:apply-templates select="." mode="processDefaultAtts"/>
-		</xsl:when>
-		<xsl:when test="@type='default'">    
-		  <xsl:apply-templates select="." mode="processDefaultAtts"/>
-		</xsl:when>
-		<xsl:when test="@type='both'">    
-		  <xsl:apply-templates select="." mode="processDefaultAtts"/>
-		</xsl:when>
-	      </xsl:choose>
-	    </xsl:for-each>
-	  </xsl:if>
-	  
-	  <xsl:variable name="decl">
-	    <xsl:value-of select="@ident"/>
-	    <xsl:text>-decl</xsl:text>
-	  </xsl:variable>
-	  <xsl:if test="$verbose='true'">
-	    <xsl:message>    Include contents of <xsl:value-of select="$decl"/></xsl:message>
-	  </xsl:if>
-	  <xsl:for-each select="key('DeclModules',$decl)">
-	    <xsl:apply-templates select="key('ClassModule',$decl)"  mode="tangle"/>
-	    
-	    <xsl:apply-templates select="key('ElementModule',$decl)"  mode="tangle">      
-	      <xsl:sort select="@ident"/>
-	    </xsl:apply-templates>
-	    
-	    <xsl:apply-templates select="key('MacroModule',$decl)"
-				 mode="tangle"/>
-	    
-	  </xsl:for-each>
-	  <xsl:comment>1. classes</xsl:comment>
-	  <xsl:apply-templates select="key('ClassModule',@ident)"  mode="tangle"/>
-	  
-	  <xsl:comment>2. elements</xsl:comment>
-	  <xsl:apply-templates select="key('ElementModule',@ident)"  mode="tangle">      
-	    <xsl:sort select="@ident"/>
-	  </xsl:apply-templates>
-	  <xsl:comment>3. macros</xsl:comment>
-	  <xsl:apply-templates select="key('MacroModule',@ident)"
-			       mode="tangle"/>
-	  
-	</grammar>
-      </xsl:with-param>
-    </xsl:call-template>
+  <xsl:if test="@ident and not(@mode='change' or @mode='replace' or
+		@mode='delete')">
+    <xsl:choose>
+      <xsl:when test="parent::tei:schemaSpec">
+	<xsl:call-template name="moduleSpec-body"/>	  
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:call-template name="generateOutput">
+	  <xsl:with-param name="body">
+	    <grammar
+		xmlns="http://relaxng.org/ns/structure/1.0"
+		xmlns:t="http://www.thaiopensource.com/ns/annotations"
+		xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+		datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+	      <xsl:text>&#10;</xsl:text> 
+	      <xsl:comment>
+		<xsl:text>Schema generated </xsl:text>
+		<xsl:value-of  select="edate:date-time()"/>
+		<xsl:text>&#010;</xsl:text>
+		<xsl:call-template name="copyright"/>
+	      </xsl:comment>
+	      <xsl:text>&#10;</xsl:text>
+	      <xsl:call-template name="moduleSpec-body"/>	  
+	    </grammar>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:if>
+</xsl:template>
+
+<xsl:template name="moduleSpec-body">	  
+  <xsl:variable name="filename" select="@ident"/>
+  <xsl:if test="$filename='core'">
+    <xsl:call-template name="predeclarations"/>
+  </xsl:if>
+  <xsl:if test="@type='core'">
+    <xsl:call-template name="predeclare-classes"/>
+
+  </xsl:if>
+  
+  <xsl:variable name="decl">
+    <xsl:value-of select="@ident"/>
+    <xsl:text>-decl</xsl:text>
+  </xsl:variable>
+  <xsl:for-each select="key('DeclModules',$decl)">
+    <xsl:if test="$verbose='true'">
+      <xsl:message>    Include contents of <xsl:value-of select="$decl"/></xsl:message>
+    </xsl:if>
+    <xsl:comment>Definitions from module <xsl:value-of
+    select="$decl"/></xsl:comment>
+  <xsl:comment>1. classes</xsl:comment>
+    <xsl:apply-templates select="key('ClassModule',$decl)"  mode="tangle"/>
+  <xsl:comment>2. elements</xsl:comment>    
+    <xsl:apply-templates select="key('ElementModule',$decl)"  mode="tangle">      
+      <xsl:sort select="@ident"/>
+    </xsl:apply-templates>
+    <xsl:comment>3. macros</xsl:comment>
+    <xsl:apply-templates select="key('MacroModule',$decl)" mode="tangle"/>
+
+  </xsl:for-each>    
+
+<xsl:comment>Definitions from module <xsl:value-of select="@ident"/></xsl:comment>
+  <xsl:comment>1. classes</xsl:comment>
+  <xsl:apply-templates select="key('ClassModule',@ident)"  mode="tangle"/>
+  <xsl:comment>2. elements</xsl:comment>
+  <xsl:apply-templates select="key('ElementModule',@ident)"  mode="tangle">      
+    <xsl:sort select="@ident"/>
+  </xsl:apply-templates>
+  <xsl:comment>3. macros</xsl:comment>
+  <xsl:apply-templates select="key('MacroModule',@ident)"  mode="tangle"/>
+  
+</xsl:template>
+
+<xsl:template name="predeclare-classes">
+    <xsl:comment>0. predeclared classes</xsl:comment>
+    <xsl:for-each select="key('DefClasses',1)">
+      <xsl:choose>
+	<xsl:when test="@type='model'">    
+	  <xsl:apply-templates select="." mode="processModel"/>
+	</xsl:when>
+	<xsl:when test="@type='both'">    
+	  <xsl:apply-templates select="." mode="processModel"/>
+	</xsl:when>
+      </xsl:choose>
+    </xsl:for-each>
+</xsl:template>
+
+<xsl:template name="predeclarations">
+  <rng:define name="IGNORE">
+    <rng:notAllowed/>
+  </rng:define>
+  <rng:define name="INCLUDE">
+    <rng:empty/>
+  </rng:define>
+  <xsl:comment>Weird special cases</xsl:comment>
+  <rng:define name="TEI...end">
+    <rng:notAllowed/>
+  </rng:define>
+  <xsl:call-template name="preDefine">
+    <xsl:with-param name="name">mix.dictionaries</xsl:with-param>
+  </xsl:call-template>
+  
+  <xsl:call-template name="preDefine">
+    <xsl:with-param name="name">mix.drama</xsl:with-param>
+  </xsl:call-template>
+  
+  <xsl:call-template name="preDefine">
+    <xsl:with-param name="name">mix.spoken</xsl:with-param>
+  </xsl:call-template>
+  
+  <xsl:call-template name="preDefine">
+    <xsl:with-param name="name">mix.verse</xsl:with-param>
+  </xsl:call-template>
+  
+  <xsl:call-template name="preDefine">
+    <xsl:with-param name="name">tei.comp.dictionaries</xsl:with-param>
+  </xsl:call-template>
+  
+  <xsl:call-template name="preDefine">
+    <xsl:with-param name="name">tei.comp.spoken</xsl:with-param>
+  </xsl:call-template>
+  
+  <xsl:call-template name="preDefine">
+    <xsl:with-param name="name">tei.comp.verse</xsl:with-param>
+  </xsl:call-template>
+  
+</xsl:template>
+
+<xsl:template name="preDefine">
+ <xsl:param name="name"/>
+ <xsl:choose>
+   <xsl:when test="$Method='byreference'">
+     <rng:define name="{$name}" combine="choice">
+       <rng:choice>
+	 <rng:notAllowed/>
+       </rng:choice>
+     </rng:define>
+   </xsl:when>
+   <xsl:otherwise>
+     <xsl:if test="not(key('IDENTS',$name))">
+       <rng:define name="{$name}">
+	 <rng:choice>
+	   <rng:notAllowed/>
+	 </rng:choice>
+       </rng:define>
+     </xsl:if>
+   </xsl:otherwise>
+ </xsl:choose>
 </xsl:template>
 
 
