@@ -33,7 +33,7 @@ Description
 	    <td width=""><xsl:value-of disable-output-escaping="yes" select="$res_form_delete"/></td>
 	  </tr>
 	  <xsl:call-template name="generateList"/>
-	  <tr><td class="button" colspan="7"><input type="submit"/></td></tr>
+	  <tr><td class="button"><input class="submit" type="submit"/></td></tr>
 	</table>
       </form>
     </p>

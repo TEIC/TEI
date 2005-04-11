@@ -192,7 +192,7 @@ class romaDom extends domDocument
     public function getIncludedElementsInModule( $szModule, &$aszElements )
       {
 	$oListDom = new domDocument();
-	$oListDom->loadXML( join( '', file( roma_xquery_server . 'elemsbymod.xq?module=' . $szModule ) ) );
+	$oListDom->loadXML( join( '', file( roma_xquery_server . '/elemsbymod.xq?module=' . $szModule ) ) );
 	$aoElements = $oListDom->getElementsByTagname( 'elementName' );
 	$this->getExcludedElementsInModule( $szModule, $aszExcluded );
 
@@ -379,7 +379,7 @@ class romaDom extends domDocument
 	else
 	  {
 	    $oElementDom = new domDocument();
-	    $oElementDom->loadXML( join( '', file( roma_xquery_server . 'element.xq?name=' . $szElement ) ) );
+	    $oElementDom->loadXML( join( '', file( roma_xquery_server . '/element.xq?name=' . $szElement ) ) );
 	    
 	    $oXPath = new domxpath( $oElementDom );
 	    $aoClasses = $oXPath->query( "/Element/elementClasses/class" );
@@ -411,7 +411,7 @@ class romaDom extends domDocument
     public function getDescriptionByElementName( $szElement, &$szDesc )
       {
 	$oElementDom = new domDocument();
-	$oElementDom->loadXML( join( '', file( roma_xquery_server . 'element.xq?name=' . $szElement ) ) );
+	$oElementDom->loadXML( join( '', file( roma_xquery_server . '/element.xq?name=' . $szElement ) ) );
 	
 	$oXPath = new domxpath( $oElementDom );
 	$oDesc = $oXPath->query( "/Element/elementDesc" )->item(0);
@@ -438,7 +438,7 @@ class romaDom extends domDocument
 	else
 	  {
 	    $oElementDom = new domDocument();
-	    $oElementDom->loadXML( join( '', file( roma_xquery_server . 'element.xq?name=' . $szElement ) ) );
+	    $oElementDom->loadXML( join( '', file( roma_xquery_server . '/element.xq?name=' . $szElement ) ) );
 	    
 	    $oXPath = new domxpath( $oElementDom );
 	    $oXPath->registerNamespace( 'rng', 'http://relaxng.org/ns/structure/1.0' );
@@ -473,7 +473,7 @@ class romaDom extends domDocument
 	else
 	  {
 	    $oElementDom = new domDocument();
-	    $oElementDom->loadXML( join( '', file( roma_xquery_server . 'element.xq?name=' . $szElement ) ) );
+	    $oElementDom->loadXML( join( '', file( roma_xquery_server . '/element.xq?name=' . $szElement ) ) );
 	    
 	    $oXPath = new domxpath( $oElementDom );
 	    $oXPath->registerNamespace( 'rng', 'http://relaxng.org/ns/structure/1.0' );
@@ -498,7 +498,7 @@ class romaDom extends domDocument
 	$aszAttributes = array();
 
 	$oAttributesDom = new domDocument();
-	$oAttributesDom->loadXML( join( '', file( roma_xquery_server . 'attsbyelem.xq?name=' . $szElement ) ) );
+	$oAttributesDom->loadXML( join( '', file( roma_xquery_server . '/attsbyelem.xq?name=' . $szElement ) ) );
 	
 	$oElement = $oAttributesDom->documentElement;
 	foreach( $oElement->childNodes as $oChild )
@@ -516,7 +516,7 @@ class romaDom extends domDocument
 
 	if ( $szModule != '' && $szClass == '')
 	  {
-	    @$oAttDom->loadXML( join( '', file( roma_xquery_server . 'attsbyelem.xq?name=' . $szElement ) ) );
+	    @$oAttDom->loadXML( join( '', file( roma_xquery_server . '/attsbyelem.xq?name=' . $szElement ) ) );
 	    $oElement = $oAttDom->documentElement;
 		
 	    if ( is_object( $oElement ) )
@@ -549,7 +549,7 @@ class romaDom extends domDocument
 	    $oElement = $oAttDom->documentElement;
 
 	    $oAttClassDom = new domDocument;
-	    $oAttClassDom->loadXML( join( '', file( roma_xquery_server . 'attclassbyname.xq?class=' . $szClass ) ) );
+	    $oAttClassDom->loadXML( join( '', file( roma_xquery_server . '/attclassbyname.xq?class=' . $szClass ) ) );
 	    $oRoot = $oAttClassDom->documentElement;
 	    $oAttributes = $oAttClassDom->getElementsByTagName( 'attributes' )->item(0);
 
@@ -880,7 +880,7 @@ class romaDom extends domDocument
 
 	//check if name already exists
 	$oTmpDom = new domDocument();
-	if ( @$oTmpDom->loadXML( join( '', file( roma_xquery_server . 'element.xq?name=' . $aszConfig[ 'name' ] ) ) ) )
+	if ( @$oTmpDom->loadXML( join( '', file( roma_xquery_server . '/element.xq?name=' . $aszConfig[ 'name' ] ) ) ) )
 	  {
 	    throw new elementExistsException( $aszConfig[ 'name' ] );
 	  }
@@ -1261,7 +1261,7 @@ class romaDom extends domDocument
 	$this->getXPath( $oXPath );
         $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);
 	$oTmpDom = new domDocument();
-	$oTmpDom->loadXML( join( '', file( roma_xquery_server . 'classattsbyelem.xq?name=' . $aszConfig[ 'element' ] ) ) );
+	$oTmpDom->loadXML( join( '', file( roma_xquery_server . '/classattsbyelem.xq?name=' . $aszConfig[ 'element' ] ) ) );
 	$oNames = $oTmpDom->getElementsByTagname( 'name' );
 
 	foreach( $oNames as $oName )
@@ -1862,13 +1862,16 @@ class romaDom extends domDocument
       {
 	$oXSL = new domDocument();
 	$oXSL->load( roma_StylesheetDir . '/base/p5/odds/odd2relax.xsl' );
-	// set schemaBaseURL to right place
+	$oXSL2 = new domDocument();
+	$oXSL2->load( roma_StylesheetDir . '/base/p5/odds/odd2odd.xsl' );
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
+	$oProc2 = new XsltProcessor();
+	$oProc2->importStylesheet( $oXSL2 );
 	$oProc->setParameter( null, 'RNGDIR', '-' );
-	$oProc->setParameter( null, 'schemaBaseURL', roma_schemaDir );
+	$oProc->setParameter( null, 'Method', 'byvalue' );
 
-	$oRNG = $oProc->transformToDoc( $this );
+	$oRNG = $oProc->transformToDoc( $oProc2->transformToDoc ($this ));
       } 
 
     public function loadProgressBar()
@@ -1906,39 +1909,6 @@ class romaDom extends domDocument
     // --- Creating some Schema
     // #####################################################################
 
-    public function createSchemaCompiledRNG( &$szRNG, $bBar = false )
-      {
-	if ( $bBar )
-	  {
-	    $this->loadProgressBar();
-	    $this->updateProgressBar( '30' );
-	  }
-	$this->getSchemaRNGDom( $oRNG );
-	if ( $bBar )
-	    $this->updateProgressBar( '50' );
-
-	
-	$oXSL = new domDocument();
-	$oXSL->load( roma_StylesheetDir . '/base/p5/odds/expandincludes.xsl' );
-
-	if ( $bBar )
-	    $this->updateProgressBar( '60' );
-	
-	$oProc = new XsltProcessor();
-	$oProc->importStylesheet( $oXSL );
-	$oProc->setParameter( null, 'RNGDIR', '-' );
-
-	$oCompRNG = $oProc->transformToDoc( $oRNG );
-
-	if ( $bBar )
-	    $this->updateProgressBar( '80' );
-	    
-	$szRNG = $oCompRNG->SaveXML();
-
-	if ( $bBar )
-	    $this->updateProgressBar( '100' );
-      }
-
     public function createSchemaRNG( &$szRNG, $bBar = false )
       {
 	if ( $bBar )
@@ -1949,8 +1919,17 @@ class romaDom extends domDocument
 	$this->getSchemaRNGDom( $oRNG );
 	if ( $bBar )
 	    $this->updateProgressBar( '80' );
+	$oTidy = new tidy();
+	$aszOptions = array( 'indent' => true,
+			     'indent-spaces' => 1,
+			     'wrap' => 72,
+			     'input-xml' => true,
+			     'output-xml' => true
+			     );
+	$oTidy->parseString( $oRNG->SaveXML(), $aszOptions );
 
-	$szRNG = $oRNG->SaveXML();
+	$oTidy->cleanRepair();
+	$szRNG = $oTidy->value;
 
 	if ( $bBar )
 	    $this->updateProgressBar( '100' );
@@ -1967,19 +1946,12 @@ class romaDom extends domDocument
 	if ( $bBar )
 	    $this->updateProgressBar( '50' );
 
-	$oXSL = new domDocument();
-	$oXSL->load( roma_StylesheetDir . '/base/p5/odds/expandincludes.xsl' );
-	
-	$oProc = new XsltProcessor();
-	$oProc->importStylesheet( $oXSL );
-	$oProc->setParameter( null, 'RNGDIR', '-' );
-	
 	//Save File
 	$szID = md5( uniqid(rand(), true ) );
 	
 	$szInputFile = roma_temporaryFilesDir . '/' . $szID . '.tmp';    
 	$szOutputFile = roma_temporaryFilesDir . '/' . $szID . '.rnc';    
-	file_put_contents( $szInputFile , $oProc->transformToDoc( $oRNG )->SaveXML() );
+	file_put_contents( $szInputFile , $oRNG ->SaveXML() );
 
 	if ( $bBar )
 	    $this->updateProgressBar( '70' );
@@ -2017,40 +1989,22 @@ class romaDom extends domDocument
 	if ( $bBar )
 	    $this->updateProgressBar( '50' );
 
-	$oXSL = new domDocument();
-	$oXSL->load( roma_StylesheetDir . '/base/p5/odds/expandincludes.xsl' );
-	
-	$oXSL2 = new domDocument();
-	$oXSL2->load( roma_StylesheetDir . '/base/p5/odds/simplifyforxsd.xsl' );
-
-	$oProc = new XsltProcessor();
-	$oProc->importStylesheet( $oXSL );
-	$oProc2 = new XsltProcessor();
-	$oProc2->importStylesheet( $oXSL2 );
-	$oProc->setParameter( null, 'RNGDIR', '-' );
-
 	//Save File
 	$szID = md5( uniqid(rand(), true ) );
 	
 	$szInputFile = roma_temporaryFilesDir . '/' . $szID . '.tmp';    
-	$szTempFile = roma_temporaryFilesDir . '/' . $szID . 'tmp.xsd';    
 	$szOutputFile = roma_temporaryFilesDir . '/' . $szID . '.xsd';    
 
-	file_put_contents( $szInputFile , 
-	     $oProc2->transformToDoc( $oProc->transformToDoc( $oRNG ))->SaveXML() 
-	     );
+	file_put_contents( $szInputFile ,$oRNG ->SaveXML());
 	
 
 	if ( $bBar )
 	    $this->updateProgressBar( '70' );
 	
 	ob_start();
-	System( '(' .roma_trang . 
+	System( roma_trang . 
 	' -I rng -O xsd -o disable-abstract-elements ' . 
-	$szInputFile . ' ' . $szOutputFile  . 
-	'&& xsltproc -o ' . $szTempFile . ' ' .
-	roma_StylesheetDir . '/base/p5/odds/manglexsd.xsl ' .
-	$szOutputFile . ' && mv ' . $szTempFile . ' ' . $szOutputFile . ' ) 2>&1');
+	$szInputFile . ' ' . $szOutputFile  . ' 2>&1');
 	$szError = ob_get_clean();
 	ob_end_clean();
 
@@ -2083,45 +2037,19 @@ class romaDom extends domDocument
 	    $this->updateProgressBar( '50' );
 
 
-	$oXSL = new domDocument();
-	$oXSL->load( roma_StylesheetDir . '/base/p5/odds/expandincludes.xsl' );
-
-	if ( $bBar )
-	    $this->updateProgressBar( '60' );
-
-	$oXSL2 = new domDocument();
-	$oXSL2->load( roma_StylesheetDir . '/base/p5/odds/nomorechoice.xsl' );
-
-	$oXSL3 = new domDocument();
-	$oXSL3->load( roma_StylesheetDir . '/base/p5/odds/simplifyfordtd.xsl' );
-
-	if ( $bBar )
-	    $this->updateProgressBar( '70' );
-	
-	$oProc = new XsltProcessor();
-	$oProc->importStylesheet( $oXSL );
-	$oProc->setParameter( null, 'RNGDIR', '-' );
-	
-	$oProc2 = new XsltProcessor();
-	$oProc2->importStylesheet( $oXSL2 );
-	$oProc2->setParameter( null, 'RNGDIR', '-' );
-	
-	$oProc3 = new XsltProcessor();
-	$oProc3->importStylesheet( $oXSL3 );
 	//Save File
 	$szID = md5( uniqid(rand(), true ) );
 	
 	$szInputFile = roma_temporaryFilesDir . '/' . $szID . '.tmp';    
 	$szOutputFile = roma_temporaryFilesDir . '/' . $szID . '.dtd';    
-	file_put_contents( $szInputFile ,
-	$oProc3->transformToDoc($oProc3->transformToDoc($oProc3->transformToDoc($oProc3->transformToDoc( $oProc3->transformToDoc( $oProc3->transformToDoc( $oProc2->transformToDoc( $oProc->transformToDoc( $oRNG ) )))))))->SaveXML() );
+	file_put_contents( $szInputFile ,$oRNG->SaveXML() );
 
 	if ( $bBar )
 	    $this->updateProgressBar( '80' );
 	
 	ob_start();
 	System( '(' . roma_trang . ' -I rng -O dtd ' . $szInputFile . ' '
-	. $szOutputFile  . ' && perl -p -i -e "s/ns1://g;s/xmlns:ns1/xmlns/g" ' . 
+	. $szOutputFile  . ' && perl -p -i -e "s/ns1://g;s/xmlns:ns1/xmlns/g;s/xml:id CDATA/xml:id ID/" ' . 
         $szOutputFile . ' ) 2>&1 ');
 	$szError = ob_get_clean();
 	ob_end_clean();
