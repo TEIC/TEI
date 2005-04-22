@@ -31,12 +31,15 @@ schemas:check
 	# do the indentation better 
 	for i in Schema/* ; \
 	do echo clean $$i; \
-	 xmllint --format $$i \
-	   | sed -e '/^ *$$/d' \
-	   > x.tmp ; \
-	   mv x.tmp $$i;\
-	 done
-	 (cd Schema; for i in *rng; do trang $$i `basename $$i .rng`.rnc;done)
+	   xmllint --format $$i \
+	     | sed -e '/^ *$$/d' \
+	     > x.tmp ; \
+	     mv x.tmp $$i;\
+	   done
+	# convert RelaxNG XML syntax to compact syntax with trang
+	(cd Schema; for i in *rng; do trang $$i `basename $$i .rng`.rnc;done)
+	# improve the positioning of blank lines in the RelaxNG compact syntax output for human readability
+	(for i in Schema/*.rnc; do t=`basename $$i .rnc`.tmp; mv $$i $$t; fix_rnc_whitespace.perl < $$t > $$i; rm $$t; done)
 	xmllint --noent   Source-driver.xml | xsltproc extract-sch.xsl - > p5.sch
 
 html-web: check
