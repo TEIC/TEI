@@ -2644,7 +2644,7 @@ downloaded from http://www.tristramshandyweb.it/home.htm on 12 sep 04</note>
 <p>The <gi>graphic</gi> element is a phrase level  element and may thus be used
 anywhere where textual content is permitted, within but not between
 paragraphs or headings. In the following example, the encoder has
-decided to treat a specific printers ornament  as a heading:
+decided to treat a specific printer's ornament as a heading:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><head><graphic url="http://www.iath.virginia.edu/gants/Ornaments/Heads/hp-ral02.gif"/></head>
 </egXML>. </p>
 <p>Floating graphics should be represented using the <gi>figure</gi>
@@ -3723,22 +3723,27 @@ author of a Government report will usually be the agency which produced
 it.
  </p>
 <p>For anyone else with responsibility for the work, the
-<gi>respStmt</gi> element should be used.  The nature of the
-responsibility is indicated by means of a <gi>resp</gi> element, and the
-person, organization etc. responsible by a <gi>name</gi> element.  At
-least one of each of these should be given within the <gi>respStmt</gi>
-element, followed optionally by any number of either. (This constraint
-is required for TEI conformance, but is not enforced by the current
-SGML or XML DTD). Examples of
-secondary responsibility of this kind include the roles of illustrator,
-translator, editor, annotator.  The <gi>respStmt</gi> element may also
-be used for editors, if it is desired to record the specific terms in
-which their role is described.
- </p>
+<gi>respStmt</gi> element should be used. The nature of the
+responsibility is indicated by means of a <gi>resp</gi> element, and
+the person, organization, etc. responsible by a <gi>name</gi>,
+<gi>persName</gi>, or <gi>orgName</gi> element. Strings such as
+<q>unknwon</q> may be encoded using the <gi>rs</gi> element.
+<!-- I'm mildly unahppy with this <rs>unknown</rs>, as it's not really a noun, is it? -sb -->
+At least one of the four naming elements (<gi>name</gi>,
+<gi>persName</gi>, <gi>orgName</gi>, or <gi>rs</gi> &mdash; at present
+the TEI schema files also permit <gi>geogName</gi> and
+<gi>placeName</gi>, but these should not be used) and one
+<gi>resp</gi> element should be given within the <gi>respStmt</gi>
+element, followed optionally by any number of any of them.</p>
+<p>Examples of
+secondary responsibility of this kind include the roles of
+illustrator, translator, encoder, and annotator. The <gi>respStmt</gi>
+element may also be used for editors, if it is desired to record the
+specific terms in which their role is described.</p>
 <p>Examples of <gi>author</gi> and <gi>editor</gi> may be found in
 sections <ptr target="#COBITY"/>, and <ptr target="#COBICOL"/>; wherever
 <gi>author</gi> and <gi>editor</gi> may occur, the <gi>respStmt</gi>
-element may also occur.  When one of these elements precedes or
+element may also occur. When one of these elements precedes or
 immediately follows a title, it applies to that title; when it follows
 an <gi>edition</gi> element or occurs within an edition statement, it
 applies to the edition in question.
