@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet
+ xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+ xmlns:tei="http://www.tei-c.org/ns/1.0" 
+ xmlns:edate="http://exslt.org/dates-and-times" 
+ xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+ extension-element-prefixes="edate" 
+ exclude-result-prefixes="xd tei edate" 
+ version="1.0">
+  <xd:doc type="stylesheet">
+    <xd:short>
+    TEI stylesheet dealing  with elements from the figures module.
+      </xd:short>
+    <xd:detail>
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+   
+   
+      </xd:detail>
+    <xd:author>Sebastian Rahtz sebastian.rahtz@oucs.ox.ac.uk</xd:author>
+    <xd:cvsId>$Id$</xd:cvsId>
+    <xd:copyright>2005, TEI Consortium</xd:copyright>
+  </xd:doc>
+  <xd:doc>
+    <xd:short>Process elements  tei:figure</xd:short>
+    <xd:detail>&#160;</xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:figure" mode="xref">
+  <xsl:choose>
+    <xsl:when test="$numberFigures='true'">
+      <xsl:if test="not($figureWord='')">
+	<xsl:value-of select="$figureWord"/>
+	<xsl:text> </xsl:text>
+      </xsl:if>
+      <xsl:choose>
+	<xsl:when test="ancestor::tei:front">
+	  <xsl:number level="any" count="tei:figure[tei:head]" from="tei:front"/>
+	</xsl:when>
+	<xsl:when test="ancestor::tei:back">
+	  <xsl:number level="any" count="tei:figure[tei:head]" from="tei:back"/>
+	</xsl:when>
+	<xsl:when test="ancestor::tei:body">
+	  <xsl:number level="any" count="tei:figure[tei:head]" from="tei:body"/>
+	</xsl:when>
+      </xsl:choose>
+      <xsl:if test="tei:head">
+	<xsl:text>, </xsl:text>
+	<xsl:apply-templates select="tei:head" mode="plain"/>
+      </xsl:if>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:text>this figure</xsl:text>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+  <xd:doc>
+    <xd:short>Process elements  tei:table</xd:short>
+    <xd:detail>&#160;</xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:table" mode="xref">
+    <xsl:choose>
+      <xsl:when test="$numberTables='true'">
+	<xsl:value-of select="$tableWord"/>
+	<xsl:text> </xsl:text>
+	<xsl:number level="any"/>
+	<xsl:if test="tei:head">
+	  <xsl:text>. </xsl:text>
+	  <xsl:apply-templates select="tei:head"/>
+	</xsl:if>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text>this table</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+</xsl:template>
+
+<xd:doc>
+    <xd:short>[latex] Analyze attributes of graphics inclusion</xd:short>
+    <xd:detail>&#160;</xd:detail>
+  </xd:doc>
+  <xsl:template name="graphicsAttributes">
+    <xsl:param name="mode">fo</xsl:param>
+  <xsl:if test="@width">
+    <xsl:variable name="w">
+      <xsl:choose>
+	<xsl:when test="contains(@width,'pt')"><xsl:value-of select="@width"/></xsl:when>
+	<xsl:when test="contains(@width,'in')"><xsl:value-of select="@width"/></xsl:when>
+	<xsl:when test="contains(@width,'cm')"><xsl:value-of select="@width"/></xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="@width"/><xsl:text>pt</xsl:text>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$mode='fo'">
+	<xsl:attribute name="content-width"><xsl:value-of
+	select="$w"/></xsl:attribute>
+      </xsl:when>
+      <xsl:when test="$mode='latex'">
+	<xsl:text>width=</xsl:text><xsl:value-of
+	select="$w"/><xsl:text>,</xsl:text>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:if>
+  <xsl:if test="@height">
+    <xsl:variable name="h">
+      <xsl:choose>
+	<xsl:when test="contains(@height,'pt')"><xsl:value-of select="@height"/></xsl:when>
+	<xsl:when test="contains(@height,'in')"><xsl:value-of select="@height"/></xsl:when>
+	<xsl:when test="contains(@height,'cm')"><xsl:value-of select="@height"/></xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="@height"/><xsl:text>pt</xsl:text>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$mode='fo'">
+	<xsl:attribute name="content-height"><xsl:value-of
+	select="$h"/></xsl:attribute>
+      </xsl:when>
+      <xsl:when test="$mode='latex'">
+	<xsl:text>height=</xsl:text><xsl:value-of
+	select="$h"/><xsl:text>,</xsl:text>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:if>
+    <xsl:variable name="s">
+  <xsl:choose>
+    <xsl:when test="@scale and contains(@scale,'%')">
+      <xsl:value-of select="substring-before(@scale,'%') div 100"/>
+    </xsl:when>
+    <xsl:when test="@scale">
+      <xsl:value-of select="@scale"/>
+    </xsl:when>
+    <xsl:when test="not(@width) and not(@height) and not($standardScale=1)">
+      <xsl:value-of select="$standardScale"/>
+    </xsl:when>
+  </xsl:choose>
+    </xsl:variable>
+    <xsl:if test="not($s='')">
+    <xsl:choose>
+      <xsl:when test="$mode='fo'">
+	<xsl:attribute name="scale"><xsl:value-of
+	select="$s"/></xsl:attribute>
+      </xsl:when>
+      <xsl:when test="$mode='latex'">
+	<xsl:text>scale=</xsl:text><xsl:value-of
+	select="$s"/><xsl:text>,</xsl:text>
+      </xsl:when>
+    </xsl:choose>
+    </xsl:if>
+  </xsl:template>
+
+
+</xsl:stylesheet>

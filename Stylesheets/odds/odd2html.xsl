@@ -1,25 +1,52 @@
-<!-- 
-Text Encoding Initiative Consortium XSLT stylesheet family
-$Date$, $Revision$, $Author$
-##LICENSE
--->
+<?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="1.0"
-  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  xmlns:teix="http://www.tei-c.org/ns/Examples"
-  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-  xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  xmlns:estr="http://exslt.org/strings"
-  xmlns:pantor="http://www.pantor.com/ns/local"
-  xmlns:exsl="http://exslt.org/common"
-  xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:edate="http://exslt.org/dates-and-times"
-  extension-element-prefixes="exsl estr edate"
-  exclude-result-prefixes="exsl rng edate estr tei a pantor teix xs" 
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+    xmlns:teix="http://www.tei-c.org/ns/Examples"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns:rng="http://relaxng.org/ns/structure/1.0"
+    xmlns:estr="http://exslt.org/strings"
+    xmlns:pantor="http://www.pantor.com/ns/local"
+    xmlns:exsl="http://exslt.org/common"
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:edate="http://exslt.org/dates-and-times"
+    extension-element-prefixes="exsl estr edate"
+    exclude-result-prefixes="exsl rng edate estr tei a pantor teix xs xd" 
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 
-<xsl:import href="../html/teihtml.xsl"/>
-<xsl:import href="../html/teihtml-odds.xsl"/>
+<xsl:import href="teiodds.xsl"/>
+<xsl:import href="../base/p5/html/tei.xsl"/>
+<xsl:import href="../base/p5/html/tagdocs.xsl"/>
+<xsl:import href="RngToRnc.xsl"/>
+
+<xd:doc type="stylesheet">
+    <xd:short>
+    TEI stylesheet for making HTML from ODD
+      </xd:short>
+    <xd:detail>
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+   
+   
+      </xd:detail>
+    <xd:author>Sebastian Rahtz sebastian.rahtz@oucs.ox.ac.uk</xd:author>
+    <xd:cvsId>$Id$</xd:cvsId>
+    <xd:copyright>2005, TEI Consortium</xd:copyright>
+  </xd:doc>
+
 <xsl:output method="html"/>
 <xsl:key name="NameToID" match="tei:*" use="@ident"/>
 
@@ -106,7 +133,7 @@ $Date$, $Revision$, $Author$
      </file>
      <section>
        <xsl:apply-templates select="(ancestor::tei:div1|ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4|ancestor::tei:div5)[last()]" mode="ident">
-         <xsl:with-param name="minimal"></xsl:with-param>
+         <xsl:with-param name="minimal">false</xsl:with-param>
        </xsl:apply-templates>
      </section>
      <loc>
@@ -122,7 +149,7 @@ $Date$, $Revision$, $Author$
      </file>
      <section>
        <xsl:apply-templates select="(ancestor::tei:div1|ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4|ancestor::tei:div5)[last()]" mode="ident">
-         <xsl:with-param name="minimal"></xsl:with-param>
+         <xsl:with-param name="minimal">false</xsl:with-param>
        </xsl:apply-templates>
      </section>
      <loc>
@@ -279,7 +306,7 @@ $Date$, $Revision$, $Author$
      </xsl:when>
      <xsl:when test="not($numberHeadings ='')">
        <xsl:choose>
-       <xsl:when test="$prenumberedHeadings">
+       <xsl:when test="$prenumberedHeadings='true'">
        		<xsl:value-of select="@n"/>
        </xsl:when>
        <xsl:otherwise>
@@ -297,7 +324,7 @@ $Date$, $Revision$, $Author$
           <xsl:number level="any" from="tei:back" format="{$numberBackHeadings}"/>
           <!--          <xsl:text>.</xsl:text>-->
         </xsl:for-each>
-        <xsl:number format="{$numberHeadings}" from="tei:div1"
+        <xsl:number format="{$numberBodyHeadings}" from="tei:div1"
          level="multiple" count="tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"/>
           <xsl:value-of select="$numbersuffix"/>
      </xsl:if>
@@ -313,9 +340,9 @@ $Date$, $Revision$, $Author$
          <xsl:value-of select="$numbersuffix"/>
       </xsl:if>
    </xsl:when>
-   <xsl:when test="not($numberHeadings ='')">
+   <xsl:when test="$numberHeadings ='true'">
        <xsl:choose>
-       <xsl:when test="$prenumberedHeadings">
+       <xsl:when test="$prenumberedHeadings='true'">
        		<xsl:value-of select="@n"/>
    </xsl:when>
    <xsl:otherwise>
@@ -350,7 +377,7 @@ $Date$, $Revision$, $Author$
 </xsl:template>
 
 <xsl:template name="header">
- <xsl:param name="minimal"/>
+ <xsl:param name="minimal">false</xsl:param>
  <xsl:param name="toc"/>
  <xsl:variable name="depth">
      <xsl:apply-templates select="." mode="depth"/>
@@ -367,7 +394,7 @@ $Date$, $Revision$, $Author$
 	<xsl:call-template name="makeLink">
 	  <xsl:with-param name="class">toc</xsl:with-param>
 	  <xsl:with-param name="id">
-	    <xsl:value-of select="@id|@xml:id"/>
+	    <xsl:value-of select="@xml:id"/>
 	  </xsl:with-param>
 	</xsl:call-template>
       </xsl:when>
@@ -437,7 +464,7 @@ $Date$, $Revision$, $Author$
 	  <xsl:if test="ancestor::teiCorpus">
 	    <xsl:text>-</xsl:text>
 	    <xsl:choose>
-	      <xsl:when test="@id|@xml:id"><xsl:value-of select="@id|@xml:id"/></xsl:when> 
+	      <xsl:when test="@xml:id"><xsl:value-of select="@xml:id"/></xsl:when> 
 	      <xsl:otherwise><xsl:number/></xsl:otherwise>
 	    </xsl:choose>
 	  </xsl:if>

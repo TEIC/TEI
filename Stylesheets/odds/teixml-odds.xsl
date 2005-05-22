@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-Text Encoding Initiative Consortium XSLT stylesheet family
-$Date$, $Revision$, $Author$
-
-##LICENSE
--->
 <xsl:stylesheet 
+    xmlns:xd="http://www.pnp-software.com/XSLTdoc"
     xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
     xmlns:rng="http://relaxng.org/ns/structure/1.0"
     xmlns:xs="http://www.w3.org/2001/XMLSchema" 
@@ -17,32 +12,72 @@ $Date$, $Revision$, $Author$
     xmlns:edate="http://exslt.org/dates-and-times"
     xmlns:exsl="http://exslt.org/common"
     xmlns:estr="http://exslt.org/strings"
-    exclude-result-prefixes="exsl estr edate fo a tei rng local teix xs" 
+    exclude-result-prefixes="exsl estr edate fo a xd tei rng local teix xs" 
     extension-element-prefixes="edate exsl estr"
     version="1.0">
-  
-  
   <xsl:import href="teiodds.xsl"/>
-  <xsl:import href="../common/teicommon.xsl"/>
+  <xsl:import href="../base/p5/common/tei.xsl"/>
+<xd:doc type="stylesheet">
+    <xd:short>
+    TEI stylesheet for making TEI Lite XML from ODD
+      </xd:short>
+    <xd:detail>
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+   
+   
+      </xd:detail>
+    <xd:author>Sebastian Rahtz sebastian.rahtz@oucs.ox.ac.uk</xd:author>
+    <xd:cvsId>$Id$</xd:cvsId>
+    <xd:copyright>2005, TEI Consortium</xd:copyright>
+  </xd:doc>
+  
+  
   <xsl:param name="oddmode">tei</xsl:param>
   <xsl:key name="FILES"   match="tei:moduleSpec[@ident]"   use="@ident"/>
-  <xsl:key name="IDS"     match="tei:*[@id|@xml:id]"           use="@id|@xml:id"/>
-  <xsl:key name="PATTERNS" match="tei:macroSpec" use="@ident"/>
-  <xsl:key name="MACRODOCS" match="tei:macroSpec" use='1'/>
-  <xsl:key name="CLASSDOCS" match="tei:classSpec" use='1'/>
-  <xsl:key name="TAGDOCS" match="tei:elementSpec" use='1'/>
   <xsl:variable name="uc">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
   <xsl:variable name="lc">abcdefghijklmnopqrstuvwxyz</xsl:variable>
   
   <xsl:param name="displayMode">rng</xsl:param>
   
+
+
+  <xsl:template match="tei:tag">
+    <tei:code>
+      <xsl:text>&lt;</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>&gt;</xsl:text>
+    </tei:code>
+  </xsl:template>
   
+
+  <xsl:template match="tei:att">
+    <tei:hi rend="att">  
+      <xsl:apply-templates/>
+    </tei:hi>
+  </xsl:template>
+  
+
   <xsl:template match="tei:val">
-    <tei:hi rend="val">  <xsl:apply-templates/></tei:hi>
+    <tei:hi rend="val">  
+      <xsl:apply-templates/>
+    </tei:hi>
   </xsl:template>
   
   <xsl:template match="tei:moduleRef">
-    <tei:ref target="#{@key}"/>
+    <tei:ptr target="#{@key}"/>
   </xsl:template>
   
   <xsl:template match="tei:elementSpec">
@@ -246,7 +281,7 @@ $Date$, $Revision$, $Author$
 	      <xsl:text>: </xsl:text>
 	      <xsl:call-template name="linkTogether">
 		<xsl:with-param name="name" select="@ident"/>
-		<xsl:with-param name="url" select="@id|@xml:id"/>
+		<xsl:with-param name="url" select="@xml:id"/>
 	      </xsl:call-template>
 	    </xsl:for-each>
 	  </xsl:when>
@@ -413,7 +448,7 @@ $Date$, $Revision$, $Author$
       <tei:item>Elements defined:
       <xsl:for-each select="key('ElementModule',@ident)">
 	<xsl:call-template name="linkTogether">
-	  <xsl:with-param name="url" select="@id|@xml:id"/>
+	  <xsl:with-param name="url" select="@xml:id"/>
 	  <xsl:with-param name="name" select="@ident"/>
 	</xsl:call-template>
 	<xsl:text>: </xsl:text>
@@ -422,7 +457,7 @@ $Date$, $Revision$, $Author$
       <tei:item>Classes defined:
       <xsl:for-each select="key('ClassModule',@ident)">
 	<xsl:call-template name="linkTogether">
-	  <xsl:with-param name="url" select="@id|@xml:id"/>
+	  <xsl:with-param name="url" select="@xml:id"/>
 	  <xsl:with-param name="name" select="@ident"/>
 	</xsl:call-template>
 	<xsl:text>: </xsl:text>
@@ -431,7 +466,7 @@ $Date$, $Revision$, $Author$
       <tei:item>Macros defined:
       <xsl:for-each select="key('MacroModule',@ident)">
 	<xsl:call-template name="linkTogether">
-	  <xsl:with-param name="url" select="@id|@xml:id"/>
+	  <xsl:with-param name="url" select="@xml:id"/>
 	  <xsl:with-param name="name" select="@ident"/>
 	</xsl:call-template>
 	<xsl:text>: </xsl:text>
@@ -638,7 +673,7 @@ $Date$, $Revision$, $Author$
   
   <xsl:template match="tei:specGrp">
     <tei:list type="gloss">
-      <xsl:copy-of select="@id|@xml:id"/>
+      <xsl:copy-of select="@xml:id"/>
       <tei:head>Specification group <xsl:number level="any"/></tei:head>
       <xsl:apply-templates/>
     </tei:list>

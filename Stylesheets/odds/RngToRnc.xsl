@@ -71,10 +71,9 @@
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:exsl="http://exslt.org/common"
-  xmlns:local="http://www.pantor.com/ns/local"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   extension-element-prefixes="exsl"
-  exclude-result-prefixes="rng local a" 
+  exclude-result-prefixes="rng a" 
 >
 
 <xsl:param name="top"/>
@@ -1290,7 +1289,7 @@
     </xsl:if>
   </xsl:template>
 
-  <local:keywords xmlns="">
+  <local:keywords xmlns:local="http://www.pantor.com/ns/local" xmlns="">
     <kw>attribute</kw>
     <kw>default</kw>
     <kw>datatypes</kw>
@@ -1312,7 +1311,9 @@
     <kw>token</kw>
   </local:keywords>
 
-  <xsl:variable name="keywords" select="document ('')/*/local:keywords/*"/>
+  <xsl:variable 
+  xmlns:local="http://www.pantor.com/ns/local" 
+  name="keywords" select="document ('')/*/local:keywords/*"/>
 
   <xsl:template name="quote-keyword">
     <xsl:param name="name"/>
@@ -1635,7 +1636,7 @@
   <xsl:variable name="F">
    <xsl:for-each select="$top">
     <xsl:for-each select="key('NameToID',$me)">
-     <xsl:value-of select="@id|@xml:id"/>
+     <xsl:value-of select="@xml:id"/>
     </xsl:for-each>
    </xsl:for-each>
   </xsl:variable>

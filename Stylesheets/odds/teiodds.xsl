@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Date: 
-Text Encoding Initiative Consortium XSLT stylesheet family
-2001/10/01 $, $Revision$, $Author$
-
-##LICENSE
-
--->
 <xsl:stylesheet 
+    xmlns:xd="http://www.pnp-software.com/XSLTdoc"
     xmlns:s="http://www.ascc.net/xml/schematron" 
     xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
     xmlns:xs="http://www.w3.org/2001/XMLSchema" 
@@ -18,9 +12,37 @@ Text Encoding Initiative Consortium XSLT stylesheet family
     xmlns:edate="http://exslt.org/dates-and-times"
     xmlns:exsl="http://exslt.org/common"
     xmlns:estr="http://exslt.org/strings"
-    exclude-result-prefixes="exsl estr edate teix fo a tei s xs" 
+    exclude-result-prefixes="exsl estr rng edate teix fo a tei s xd xs" 
     extension-element-prefixes="edate exsl estr"
     version="1.0">
+
+<xd:doc type="stylesheet">
+    <xd:short>
+      TEI stylesheet for processing TEI ODD markup
+      </xd:short>
+    <xd:detail>
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+   
+   
+      </xd:detail>
+    <xd:author>Sebastian Rahtz sebastian.rahtz@oucs.ox.ac.uk</xd:author>
+    <xd:cvsId>$Id$</xd:cvsId>
+    <xd:copyright>2005, TEI Consortium</xd:copyright>
+  </xd:doc>
+
   <xsl:include href="RngToRnc.xsl"/>
 
   <xsl:output encoding="utf-8" method="xml" indent="yes"/>
@@ -29,27 +51,36 @@ Text Encoding Initiative Consortium XSLT stylesheet family
   <xsl:param name="verbose"></xsl:param>
   <xsl:param name="schemaBaseURL">http://localhost/schema/relaxng/p5/</xsl:param>
   
-  <xsl:key  name="CLASSMEMBERS" match="tei:elementSpec|tei:classSpec" use="tei:classes/tei:memberOf/@key"/>
+  <xsl:key name="MACROS"   match="tei:macroSpec" use="@ident"/>
+  <xsl:key name="ELEMENTS" match="tei:elementSpec" use="@ident"/>
+  <xsl:key name="CLASSES"  match="tei:classSpec" use="@ident"/>
+  <xsl:key name="RNGREFS" match="rng:ref" use="@name"/>
+  <xsl:key name="CLASSMEMBERS" match="tei:elementSpec|tei:classSpec" use="tei:classes/tei:memberOf/@key"/>
   <xsl:key name="IDENTS"   match="tei:elementSpec|tei:classSpec|tei:macroSpec"   use="@ident"/>
-  <xsl:key name="IDS"     match="tei:*[@xml:id]" use="@xml:id"/>
-  <xsl:key name="PATTERNS" match="tei:macroSpec" use="@ident"/>
+  <xsl:key name="IDS"      match="tei:*[@xml:id]" use="@xml:id"/>
   <xsl:key name="MACRODOCS" match="tei:macroSpec" use='1'/>
   <xsl:key name="CLASSDOCS" match="tei:classSpec" use='1'/>
-  <xsl:key name="TAGDOCS" match="tei:elementSpec" use='1'/>
+  <xsl:key name="ELEMENTDOCS" match="tei:elementSpec" use='1'/>
   <xsl:key name='NameToID' match="tei:*" use="@ident"/>
   <xsl:key name="ElementModule" match="tei:elementSpec" use="@module"/>
   <xsl:key name="ClassModule"   match="tei:classSpec" use="@module"/>
   <xsl:key name="MacroModule"   match="tei:macroSpec" use="@module"/>
   <xsl:key name="DeclModules"   match="tei:moduleSpec[@type='decls']"	 use="@ident"/>
-  <xsl:key name="AllModules"   match="tei:moduleSpec[not(@type='decls')]" use="1"/>
-  <xsl:key name="DefClasses"   match="tei:classSpec[@predeclare='true']" use="1"/>
+  <xsl:key name="AllModules"    match="tei:moduleSpec[not(@type='decls')]" use="1"/>
+  <xsl:key name="DefClasses"    match="tei:classSpec[@predeclare='true']" use="1"/>
   
+  <xsl:variable name="parameterize">
+    <xsl:choose>
+      <xsl:when test="//tei:schemaSpec">false</xsl:when>
+      <xsl:otherwise>true</xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+
   <!-- lookup table of element contents, and templates to access the result -->
   <xsl:key name="ELEMENTPARENTS" match="Contains" use="."/>
   <xsl:param name="wrapLength">65</xsl:param>
 
-  <xsl:param name="Method">byreference</xsl:param>
-  
+  <xsl:param name="lookupDatabase">true</xsl:param>  
   <xsl:template match="processing-instruction()">
     <xsl:if test="name(.) = 'odds'">
       <xsl:choose>
@@ -108,11 +139,25 @@ Text Encoding Initiative Consortium XSLT stylesheet family
     </xsl:copy>
   </xsl:template>
   
+  <xsl:template match="rng:zeroOrMore">
+    <xsl:choose>
+      <xsl:when test="count(rng:*)=1 and rng:zeroOrMore">
+	<xsl:apply-templates select="rng:*|tei:*|text()|comment()"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:copy>
+	  <xsl:copy-of select="@*"/>
+	  <xsl:apply-templates select="rng:*|tei:*|text()|comment()"/>
+	</xsl:copy>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
  
   <xsl:template match="tei:*" mode="tangle"/>
   
   <xsl:template match="tei:attRef" mode="tangle">
-    <rng:ref name="{@class}.attribute.{@key}"/>
+    <ref name="{@class}.attribute.{@key}" xmlns="http://relaxng.org/ns/structure/1.0"/>
   </xsl:template>
 
   <xsl:template match="tei:attDef" mode="tangle">
@@ -127,9 +172,9 @@ Text Encoding Initiative Consortium XSLT stylesheet family
 	</xsl:when>
 
 	<xsl:when test="ancestor::tei:classSpec">
-	  <rng:define name="{$element}.attribute.{translate(@ident,':','')}">
+	  <define name="{$element}.attribute.{translate(@ident,':','')}" xmlns="http://relaxng.org/ns/structure/1.0">
 	    <xsl:call-template name="makeAnAttribute"/>
-	  </rng:define>
+	  </define>
 	</xsl:when>
       </xsl:choose>
     </xsl:if>
@@ -171,21 +216,29 @@ Text Encoding Initiative Consortium XSLT stylesheet family
     </xsl:if>
     <xsl:apply-templates select="." mode="processModel"/>
     <xsl:if test="@type='atts' or @type='both'">
-      <rng:define name="{@ident}.attributes">
-	<xsl:choose>
-	  <xsl:when test="tei:attList//tei:attDef">
-	    <xsl:for-each select="tei:attList//tei:attDef">
-	      <rng:ref name="{$c}.attribute.{translate(@ident,':','')}"/>
-	    </xsl:for-each>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <rng:notAllowed/>
-	  </xsl:otherwise>
-	</xsl:choose>
-      </rng:define>
-	<xsl:apply-templates select="tei:attList" mode="tangle">
-	  <xsl:with-param name="element" select="@ident"/>
-	</xsl:apply-templates>
+      <xsl:call-template name="bitOut">
+	<xsl:with-param name="grammar">true</xsl:with-param>
+	<xsl:with-param name="content">
+	  <Wrapper>
+	    <define name="{@ident}.attributes" xmlns="http://relaxng.org/ns/structure/1.0">
+	      <xsl:choose>
+		<xsl:when test="tei:attList//tei:attDef">
+		  <xsl:for-each select="tei:attList//tei:attDef">
+		    <ref xmlns="http://relaxng.org/ns/structure/1.0"
+			name="{$c}.attribute.{translate(@ident,':','')}"/>
+		  </xsl:for-each>
+		</xsl:when>
+		<xsl:otherwise>
+		  <notAllowed  xmlns="http://relaxng.org/ns/structure/1.0"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </define>
+	    <xsl:apply-templates select="tei:attList" mode="tangle">
+	      <xsl:with-param name="element" select="@ident"/>
+	    </xsl:apply-templates>
+	  </Wrapper>
+	</xsl:with-param>
+      </xsl:call-template>
     </xsl:if>
   </xsl:template>
   
@@ -204,31 +257,31 @@ Text Encoding Initiative Consortium XSLT stylesheet family
       <xsl:with-param name="content">
 	<Wrapper>
 	  <xsl:choose>
-	  <xsl:when test="$Method='byreference'">
-	    <rng:define name="{$thisClass}">
-		<rng:notAllowed/>
-	    </rng:define>
-	    <xsl:apply-templates select="tei:classes/tei:memberOf"
-				 mode="tangleModel"/>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:if test="@type='both' or @type='model'">
-	      <rng:define name="{$thisClass}">
-		<rng:choice>
-		  <xsl:choose>
-		    <xsl:when test="count(key('CLASSMEMBERS',$thisClass))&gt;0">
-		      <xsl:for-each select="key('CLASSMEMBERS',$thisClass)">
-			<rng:ref name="{@ident}"/>
-		      </xsl:for-each>
-		    </xsl:when>
-		    <xsl:otherwise>
-		      <rng:notAllowed />
-		    </xsl:otherwise>
-		  </xsl:choose>
-		</rng:choice>
-	      </rng:define>
+	    <xsl:when test="$parameterize='true'">
+	      <define name="{$thisClass}" xmlns="http://relaxng.org/ns/structure/1.0">
+		<notAllowed  xmlns="http://relaxng.org/ns/structure/1.0"/>
+	      </define>
+	      <xsl:apply-templates select="tei:classes/tei:memberOf"
+				   mode="tangleModel"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:if test="@type='both' or @type='model'">
+		<define name="{$thisClass}" xmlns="http://relaxng.org/ns/structure/1.0">
+		  <rng:choice>
+		    <xsl:choose>
+		      <xsl:when test="count(key('CLASSMEMBERS',$thisClass))&gt;0">
+			<xsl:for-each select="key('CLASSMEMBERS',$thisClass)">
+			  <ref name="{@ident}" xmlns="http://relaxng.org/ns/structure/1.0"/>
+			</xsl:for-each>
+		      </xsl:when>
+		      <xsl:otherwise>
+			<notAllowed   xmlns="http://relaxng.org/ns/structure/1.0"/>
+		      </xsl:otherwise>
+		    </xsl:choose>
+		  </rng:choice>
+		</define>
 	    </xsl:if>
-	  </xsl:otherwise>
+	    </xsl:otherwise>
 	  </xsl:choose>
 	</Wrapper>
       </xsl:with-param>
@@ -289,7 +342,7 @@ Text Encoding Initiative Consortium XSLT stylesheet family
   
   
   <xsl:template match="tei:divGen[@type='tagcat']">
-    <xsl:apply-templates select="key('TAGDOCS',1)"  mode="weave">
+    <xsl:apply-templates select="key('ELEMENTDOCS',1)"  mode="weave">
       <xsl:sort select="@ident"/>
     </xsl:apply-templates>
   </xsl:template>
@@ -322,31 +375,38 @@ Text Encoding Initiative Consortium XSLT stylesheet family
 	    </xsl:choose>
 	  </xsl:variable>
 	  <xsl:choose>
-	    <xsl:when test="tei:content/rng:notAllowed">
-	      <rng:define name="{@ident}" >
-		<rng:notAllowed />
-	      </rng:define>
+	    <xsl:when test="tei:content/notAllowed">
+	      <define name="{@ident}" xmlns="http://relaxng.org/ns/structure/1.0">
+		<notAllowed xmlns="http://relaxng.org/ns/structure/1.0"/>
+	      </define>
 	    </xsl:when>
 	    <xsl:otherwise>
-	      <rng:define  name="{@ident}" >
-		<rng:element  name="{$name}" >
+	      <define  name="{@ident}"  xmlns="http://relaxng.org/ns/structure/1.0">
+		<element  name="{$name}" xmlns="http://relaxng.org/ns/structure/1.0">
 		  <xsl:if test="@ns">
 		    <xsl:attribute name="ns"><xsl:value-of select="@ns"/></xsl:attribute>
 		  </xsl:if>
 		  <xsl:if test="not($oddmode='tei')">
 		    <a:documentation>
-		      <xsl:value-of select="tei:desc"/>
+		      <xsl:choose>
+			<xsl:when test="not(tei:desc='')">
+			  <xsl:value-of select="tei:desc"/>
+			</xsl:when>
+			<xsl:when test="not(tei:gloss='')">
+			  <xsl:value-of select="tei:gloss"/>
+			</xsl:when>
+		      </xsl:choose>
 		    </a:documentation>
 		  </xsl:if>
-		  <rng:ref name="{@ident}.content" />
-		  <rng:ref name="{@ident}.attributes" />
-		</rng:element>
-	      </rng:define>
+		  <ref name="{@ident}.content"  xmlns="http://relaxng.org/ns/structure/1.0"/>
+		  <ref name="{@ident}.attributes"  xmlns="http://relaxng.org/ns/structure/1.0"/>
+		</element>
+	      </define>
 	      <xsl:call-template name="defineContent"/>
 
 	      <xsl:call-template name="defineAttributes"/>
 
-	      <xsl:if test="$Method='byreference'">
+	      <xsl:if test="$parameterize='true'">
 		<xsl:apply-templates select="tei:classes/tei:memberOf"
 				     mode="tangleModel"/>
 	      </xsl:if>
@@ -360,12 +420,12 @@ Text Encoding Initiative Consortium XSLT stylesheet family
   <xsl:template name="defineAttributes">
     <xsl:variable name="name" select="@ident"/>
     
-    <rng:define name="{@ident}.attributes" >
-      <xsl:if test="$Method='byreference'">
+    <define name="{@ident}.attributes"  xmlns="http://relaxng.org/ns/structure/1.0">
+      <xsl:if test="$parameterize='true'">
 	<xsl:for-each select="tei:classes/tei:memberOf">
-	  <xsl:for-each select="key('IDENTS',@key)">
+	  <xsl:for-each select="key('CLASSES',@key)">
 	    <xsl:if test="@type='atts' or @type='both'">
-	      <rng:ref name="{@ident}.attributes"/>
+	      <ref name="{@ident}.attributes" xmlns="http://relaxng.org/ns/structure/1.0"/>
 	    </xsl:if>
 	  </xsl:for-each>
 	</xsl:for-each>
@@ -380,7 +440,7 @@ Text Encoding Initiative Consortium XSLT stylesheet family
 	<xsl:when test="not(@ns) or contains(@ns,'http://www.tei-c.org')">
 	  <rng:optional >
 	    <rng:attribute name="TEIform" a:defaultValue="{@ident}" >
-	      <rng:text />
+	      <text  xmlns="http://relaxng.org/ns/structure/1.0"/>
 	    </rng:attribute>
 	  </rng:optional>
 	</xsl:when>
@@ -390,11 +450,11 @@ Text Encoding Initiative Consortium XSLT stylesheet family
 	  <rng:empty/>
 	</xsl:otherwise>
       </xsl:choose>
-    </rng:define>
+    </define>
   </xsl:template>
 
   <xsl:template name="defineContent">
-    <rng:define name="{@ident}.content" >
+    <define name="{@ident}.content"  xmlns="http://relaxng.org/ns/structure/1.0">
       <xsl:choose>
 	<xsl:when test="tei:valList[@type='closed']">
 	  <rng:choice >
@@ -402,7 +462,14 @@ Text Encoding Initiative Consortium XSLT stylesheet family
 	      <rng:value ><xsl:value-of select="@ident"/></rng:value>
 	      <xsl:if test="not($oddmode='tei')">
 		<a:documentation>
-		  <xsl:value-of select="tei:gloss"/>
+		  <xsl:choose>
+		    <xsl:when test="not(tei:desc='')">
+		      <xsl:value-of select="tei:desc"/>
+		    </xsl:when>
+		    <xsl:when test="not(tei:gloss='')">
+		      <xsl:value-of select="tei:gloss"/>
+		    </xsl:when>
+		  </xsl:choose>
 		</a:documentation>
 	      </xsl:if>
 	    </xsl:for-each>
@@ -415,7 +482,7 @@ Text Encoding Initiative Consortium XSLT stylesheet family
 	  <rng:empty />
 	</xsl:otherwise>
       </xsl:choose>
-    </rng:define>
+    </define>
   </xsl:template>
   
   <xsl:template match="tei:elementSpec/@ident"/>
@@ -438,7 +505,7 @@ Text Encoding Initiative Consortium XSLT stylesheet family
     <xsl:param name="msection"/>
     <xsl:param name="filename"/>
     <xsl:choose>
-      <xsl:when test="generate-id()=generate-id(key('PATTERNS',@ident)[last()])">
+      <xsl:when test="generate-id()=generate-id(key('MACROS',@ident)[last()])">
 	<xsl:variable name="entCont">
 	  <BLAH>
 	    <xsl:choose>
@@ -480,8 +547,8 @@ Text Encoding Initiative Consortium XSLT stylesheet family
 	    <xsl:with-param name="grammar">true</xsl:with-param>
 	    <xsl:with-param name="content">
 	      <Wrapper>
-		<rng:define name="{@ident}" >
-		  <xsl:if test="$Method='byreference'">
+		<define name="{@ident}"  xmlns="http://relaxng.org/ns/structure/1.0">
+		  <xsl:if test="$parameterize='true'">
 		    <xsl:if test="starts-with(@ident,'macro.component')
 				  or @combine='true'">
 		      <xsl:attribute name="combine">choice</xsl:attribute>
@@ -493,7 +560,7 @@ Text Encoding Initiative Consortium XSLT stylesheet family
 		    </xsl:when>
 		    <xsl:when test="$entCount=0">
 		      <rng:choice>
-			<rng:notAllowed />
+			<notAllowed   xmlns="http://relaxng.org/ns/structure/1.0"/>
 		      </rng:choice>
 		    </xsl:when>
 		    <xsl:when test="$entCount=1">
@@ -501,14 +568,15 @@ Text Encoding Initiative Consortium XSLT stylesheet family
 		    </xsl:when>
 		    <xsl:when test="tei:content/rng:text|tei:content/rng:ref">
 		      <rng:choice >
-			<xsl:copy-of select="exsl:node-set($entCont)/BLAH/rng:*"/>
+			<xsl:copy-of
+			    select="exsl:node-set($entCont)/BLAH/rng:*"/>
 		      </rng:choice>
 		    </xsl:when>
 		    <xsl:otherwise>
 		      <xsl:copy-of select="exsl:node-set($entCont)/BLAH/rng:*"/>
 		    </xsl:otherwise>
 		  </xsl:choose>
-		</rng:define>
+		</define>
 	      </Wrapper>
 	    </xsl:with-param>
 	  </xsl:call-template>
@@ -533,9 +601,9 @@ Text Encoding Initiative Consortium XSLT stylesheet family
   <xsl:variable name="owner">
     <xsl:value-of select="ancestor::tei:elementSpec/@ident|ancestor::tei:classSpec/@ident"/>
   </xsl:variable>
-  <rng:define name="{@key}" combine="choice" >
-    <rng:ref name="{$owner}" />
-  </rng:define>
+  <define name="{@key}" combine="choice"  xmlns="http://relaxng.org/ns/structure/1.0">
+    <ref name="{$owner}" xmlns="http://relaxng.org/ns/structure/1.0"/>
+  </define>
 </xsl:template>
 
 <xsl:template match="tei:mentioned">
@@ -548,18 +616,32 @@ Text Encoding Initiative Consortium XSLT stylesheet family
   <xsl:variable name="This" select="@key"/>
   <xsl:if test="$verbose='true'">
     <xsl:message>      .... import module [<xsl:value-of
-    select="$This"/>] <xsl:value-of select="@url"/>] </xsl:message>
+    select="$This"/> <xsl:value-of select="@url"/>] </xsl:message>
   </xsl:if>
   <xsl:call-template name="bitOut">
     <xsl:with-param name="grammar">true</xsl:with-param>
     <xsl:with-param name="content">
       <Wrapper>
 	<xsl:choose>
-	  <xsl:when test="@url">
-	    <rng:include href="{@url}" />
+	  <xsl:when test="@url and $parameterize='true'">
+	    <include href="{@url}"
+		     xmlns="http://relaxng.org/ns/structure/1.0">
+	      <xsl:copy-of select="tei:content/*"/>
+	    </include>
+	  </xsl:when>
+	  <xsl:when test="@url and $parameterize='false'">
+	    <xsl:comment>Start of import of <xsl:value-of select="@url"/></xsl:comment>
+	    <rng:div>
+	      <xsl:for-each select="document(@url)/rng:grammar">
+		<xsl:copy-of select="@*"/>
+		<xsl:copy-of select="*"/>
+	      </xsl:for-each>
+	      <xsl:copy-of select="tei:content/*"/>
+	    </rng:div>
+	    <xsl:comment>End of import of <xsl:value-of select="@url"/></xsl:comment>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <rng:include href="{$schemaBaseURL}{$This}.rng" >
+	    <include href="{$schemaBaseURL}{$This}.rng" xmlns="http://relaxng.org/ns/structure/1.0">
 	      <xsl:attribute name="ns">
 		<xsl:choose>
 		  <xsl:when test="ancestor::tei:schemaSpec/@namespace">
@@ -571,7 +653,7 @@ Text Encoding Initiative Consortium XSLT stylesheet family
 	      <xsl:for-each  select="../tei:*[@module=$This and not(@mode='add')]">
 		<xsl:apply-templates mode="tangle" select="."/>
 	      </xsl:for-each>
-	    </rng:include>
+	    </include>
 	  </xsl:otherwise>
 	</xsl:choose>
       </Wrapper>
@@ -855,39 +937,57 @@ Text Encoding Initiative Consortium XSLT stylesheet family
     <xsl:when test="tei:datatype[rng:ref/@name='datatype.Code']">
       <xsl:choose>
 	<xsl:when test="tei:valList[@type='closed']">
-	  <rng:choice>
+	  <choice xmlns="http://relaxng.org/ns/structure/1.0">
 	    <xsl:for-each select="tei:valList/tei:valItem">
-	      <rng:value ><xsl:value-of select="@ident"/></rng:value>
+	      <value  xmlns="http://relaxng.org/ns/structure/1.0">
+		<xsl:value-of select="@ident"/>
+	      </value>
 	      <xsl:if test="not($oddmode='tei')">
 		<a:documentation>
-		  <xsl:value-of select="tei:gloss"/>
+		  <xsl:choose>
+		    <xsl:when test="not(tei:desc='')">
+		      <xsl:value-of select="tei:desc"/>
+		    </xsl:when>
+		    <xsl:when test="not(tei:gloss='')">
+		      <xsl:value-of select="tei:gloss"/>
+		    </xsl:when>
+		  </xsl:choose>
 		</a:documentation>
 	      </xsl:if>
 	    </xsl:for-each>
-	  </rng:choice>
+	  </choice>
 	</xsl:when>
 	<xsl:otherwise>
-	  <rng:text />
+	  <text  xmlns="http://relaxng.org/ns/structure/1.0"/>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:when>
     <xsl:when test="tei:datatype/rng:*">
-      <xsl:copy-of select="tei:datatype/rng:*"/>
+      <xsl:apply-templates select="tei:datatype/rng:*" mode="forceRNG"/>
     </xsl:when>
     <xsl:when test="tei:valList[@type='closed']">
-      <rng:choice >
+      <choice xmlns="http://relaxng.org/ns/structure/1.0">
 	<xsl:for-each select="tei:valList/tei:valItem">
-	  <rng:value ><xsl:value-of select="@ident"/></rng:value>
+	  <value xmlns="http://relaxng.org/ns/structure/1.0">
+	    <xsl:value-of select="@ident"/>
+	  </value>
 	  <xsl:if test="not($oddmode='tei')">
 	    <a:documentation>
-	      <xsl:value-of  select="tei:gloss"/>
+	      <xsl:choose>
+		<xsl:when test="not(tei:desc='')">
+		  <xsl:value-of select="tei:desc"/>
+		</xsl:when>
+		<xsl:when test="not(tei:gloss='')">
+		  <xsl:value-of select="tei:gloss"/>
+		</xsl:when>
+	      </xsl:choose>
 	    </a:documentation>
 	  </xsl:if>
 	</xsl:for-each>
-      </rng:choice>
+      </choice>
     </xsl:when>
     <xsl:otherwise>
-      <rng:text />
+      <text xmlns="http://relaxng.org/ns/structure/1.0"/>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
@@ -912,7 +1012,14 @@ Text Encoding Initiative Consortium XSLT stylesheet family
     </xsl:if>
     <xsl:if test="not($oddmode='tei')">
       <a:documentation>
-	<xsl:value-of select="tei:desc"/>
+	<xsl:choose>
+	  <xsl:when test="not(tei:desc='')">
+	    <xsl:value-of select="tei:desc"/>
+	  </xsl:when>
+	  <xsl:when test="not(tei:gloss='')">
+	    <xsl:value-of select="tei:gloss"/>
+	  </xsl:when>
+	</xsl:choose>
       </a:documentation>
     </xsl:if>
     <xsl:call-template name="attributeDatatype"/>
@@ -942,12 +1049,12 @@ Text Encoding Initiative Consortium XSLT stylesheet family
     <xsl:otherwise>
       <xsl:for-each select="tei:classes/tei:memberOf">
 	<xsl:choose>
-	  <xsl:when test="key('IDENTS',@key)">
-	    <xsl:for-each select="key('IDENTS',@key)">
+	  <xsl:when test="key('CLASSS',@key)">
+	    <xsl:for-each select="key('CLASSES',@key)">
 	      <xsl:text>: </xsl:text>
 	      <xsl:call-template name="makeLink">
 		<xsl:with-param name="class">classlink</xsl:with-param>
-		<xsl:with-param name="id"><xsl:value-of	select="@id|@xml:id"/></xsl:with-param>
+		<xsl:with-param name="id"><xsl:value-of	select="@xml:id"/></xsl:with-param>
 		<xsl:with-param name="name"><xsl:value-of select="@ident"/></xsl:with-param>
 		<xsl:with-param name="text">
 		  <xsl:value-of select="@ident"/>
@@ -975,7 +1082,7 @@ Text Encoding Initiative Consortium XSLT stylesheet family
         <xsl:text>: </xsl:text>
 	<xsl:call-template name="linkTogether">
 	  <xsl:with-param name="name" select="@ident"/>
-	  <xsl:with-param name="url" select="@id|@xml:id"/>
+	  <xsl:with-param name="url" select="@xml:id"/>
 	</xsl:call-template>
 	<xsl:if test="count(key('CLASSMEMBERS',@ident))&gt;0">
 	  <xsl:text>  [</xsl:text>
@@ -984,13 +1091,14 @@ Text Encoding Initiative Consortium XSLT stylesheet family
 	      <xsl:text>: </xsl:text>
 	      <xsl:call-template name="showElement">
 		<xsl:with-param name="name" select="@ident"/>
-		<xsl:with-param name="id" select="@id|@xml:id"/>
+		<xsl:with-param name="id" select="@xml:id"/>
 	      </xsl:call-template>
 	  </xsl:for-each>
 	    <xsl:text>] </xsl:text>
 	</xsl:if>
       </xsl:for-each>
     </xsl:when>
+    <xsl:when test="$lookupDatabase='false'"/>
     <xsl:otherwise>
       <xsl:variable name="address">
 	<xsl:value-of select="$TEISERVER"/>
@@ -1108,7 +1216,7 @@ Text Encoding Initiative Consortium XSLT stylesheet family
 <xsl:template name="makeTagsetInfo">
   <xsl:value-of select="@module"/>
   <xsl:if test="$verbose='true'">
-    <xsl:message>  tagset <xsl:value-of select="@id|@xml:id"/>: <xsl:value-of select="../@module"/></xsl:message>
+    <xsl:message>  tagset <xsl:value-of select="@xml:id"/>: <xsl:value-of select="@module"/></xsl:message>
   </xsl:if>
 </xsl:template>
 
@@ -1119,8 +1227,8 @@ Text Encoding Initiative Consortium XSLT stylesheet family
   <xsl:variable name="secnum">
     <xsl:call-template name="sectionNumber"/>
   </xsl:variable>
-  <xsl:if test="@id|@xml:id">
-    <xsl:comment>[<xsl:value-of select="@id|@xml:id"/>] <xsl:value-of
+  <xsl:if test="@xml:id">
+    <xsl:comment>[<xsl:value-of select="@xml:id"/>] <xsl:value-of
     select="$secnum"/>
     <xsl:if test="@n">
       <xsl:text>: </xsl:text>
@@ -1130,8 +1238,8 @@ Text Encoding Initiative Consortium XSLT stylesheet family
   </xsl:if>
   <xsl:apply-templates mode="tangle"/>
 
-  <xsl:if test="@id|@xml:id">
-    <xsl:comment> end of [<xsl:value-of select="@id|@xml:id"/>]  <xsl:value-of select="$secnum"/>    
+  <xsl:if test="@xml:id">
+    <xsl:comment> end of [<xsl:value-of select="@xml:id"/>]  <xsl:value-of select="$secnum"/>    
     </xsl:comment>
   </xsl:if>
 </xsl:template>
@@ -1214,5 +1322,32 @@ Text Encoding Initiative Consortium XSLT stylesheet family
   <xsl:copy-of select="."/>
 </xsl:template>
 
+<xsl:template match="tei:classSpec" mode="processDefaultAtts">
+    <xsl:if test="$verbose='true'">
+      <xsl:message>    .. default attribute settings for <xsl:value-of
+      select="@ident"/></xsl:message>
+    </xsl:if>
+    <xsl:call-template name="bitOut">
+      <xsl:with-param name="grammar">true</xsl:with-param>
+      <xsl:with-param name="content">
+	<Wrapper>
+	  <rng:define name="{@ident}.attributes" combine="choice" >
+	    <rng:empty />
+	  </rng:define>
+	</Wrapper>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+<!-- Force an output element in the RNG namespace. 
+I don't see why this is necessary, but xsltproc gets
+it wrong otherwise. I suspect a bug there somewhere.
+-->
+<xsl:template match="*" mode="forceRNG">
+  <xsl:element name="{local-name(.)}" xmlns="http://relaxng.org/ns/structure/1.0">
+    <xsl:copy-of select="@*"/>
+    <xsl:apply-templates mode="forceRNG"/>
+  </xsl:element>
+</xsl:template>
 
 </xsl:stylesheet>

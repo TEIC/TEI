@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Date: 
-Text Encoding Initiative Consortium XSLT stylesheet family
-2001/10/01 $, $Revision$, $Author$
-
-XSL stylesheet to format TEI XML documents using ODD markup
-
- 
-##LICENSE
--->
 <xsl:stylesheet 
+     xmlns:xd="http://www.pnp-software.com/XSLTdoc"
      xmlns:s="http://www.ascc.net/xml/schematron" 
      xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
      xmlns:tei="http://www.tei-c.org/ns/1.0"
@@ -20,11 +12,38 @@ XSL stylesheet to format TEI XML documents using ODD markup
      xmlns:exsl="http://exslt.org/common"
      xmlns:rng="http://relaxng.org/ns/structure/1.0"
      extension-element-prefixes="exsl estr edate"
-     exclude-result-prefixes="exsl edate estr tei t a rng s xs" 
+     exclude-result-prefixes="exsl edate estr tei t a rng s xd xs" 
      version="1.0">
 
 
 <xsl:import href="teiodds.xsl"/>
+
+<xd:doc type="stylesheet">
+    <xd:short>
+    TEI stylesheet for making Relax NG schema from ODD
+      </xd:short>
+    <xd:detail>
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+   
+   
+      </xd:detail>
+    <xd:author>Sebastian Rahtz sebastian.rahtz@oucs.ox.ac.uk</xd:author>
+    <xd:cvsId>$Id$</xd:cvsId>
+    <xd:copyright>2005, TEI Consortium</xd:copyright>
+  </xd:doc>
 
 <xsl:output encoding="utf-8" method="xml" indent="yes"/>
 
@@ -88,6 +107,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
     <xsl:call-template name="generateOutput">
       <xsl:with-param name="body">
 	<grammar
+	 xmlns:teix="http://www.tei-c.org/ns/Examples"
 	 xmlns="http://relaxng.org/ns/structure/1.0"
 	 xmlns:t="http://www.thaiopensource.com/ns/annotations"
 	 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
@@ -118,6 +138,7 @@ from 1st October 2004. This is NOT the final P5</xsl:text>
   	  <xsl:apply-templates mode="tangle"
 			       select="tei:elementSpec|tei:macroSpec|tei:classSpec"/>
 	  <xsl:choose>
+	    <xsl:when test="@start=''"/>
 	    <xsl:when test="@start and contains(@start,' ')">
 	      <rng:start>
 		<rng:choice>
@@ -149,13 +170,13 @@ from 1st October 2004. This is NOT the final P5</xsl:text>
   <xsl:if test="not($toks='')">
     <xsl:choose>
       <xsl:when test="contains($toks,' ')">
-	<rng:ref name="{substring-before($toks, ' ')}"/>
+	<ref name="{substring-before($toks, ' ')}" xmlns="http://relaxng.org/ns/structure/1.0"/>
 	<xsl:call-template name="startNames">
 	  <xsl:with-param name="toks" select="substring-after($toks, ' ')"/>
 	</xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-	<rng:ref name="{$toks}"/>
+	<ref name="{$toks}" xmlns="http://relaxng.org/ns/structure/1.0"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:if>
@@ -200,7 +221,6 @@ from 1st October 2004. This is NOT the final P5</xsl:text>
   </xsl:if>
   <xsl:if test="@type='core'">
     <xsl:call-template name="predeclare-classes"/>
-
   </xsl:if>
   
   <xsl:variable name="decl">
@@ -214,7 +234,7 @@ from 1st October 2004. This is NOT the final P5</xsl:text>
     <xsl:comment>Definitions from module <xsl:value-of
     select="$decl"/></xsl:comment>
   <xsl:comment>1. classes</xsl:comment>
-    <xsl:apply-templates select="key('ClassModule',$decl)"  mode="tangle"/>
+  <xsl:apply-templates select="key('ClassModule',$decl)"  mode="tangle"/>
   <xsl:comment>2. elements</xsl:comment>    
     <xsl:apply-templates select="key('ElementModule',$decl)"  mode="tangle">      
       <xsl:sort select="@ident"/>
@@ -226,7 +246,12 @@ from 1st October 2004. This is NOT the final P5</xsl:text>
 
 <xsl:comment>Definitions from module <xsl:value-of select="@ident"/></xsl:comment>
   <xsl:comment>1. classes</xsl:comment>
-  <xsl:apply-templates select="key('ClassModule',@ident)"  mode="tangle"/>
+  <xsl:for-each select="key('ClassModule',@ident)">
+    <xsl:if test="not(@module='core' and @predeclare='true')">
+      <xsl:apply-templates  select="." mode="tangle"/>
+    </xsl:if>
+  </xsl:for-each>
+
   <xsl:comment>2. elements</xsl:comment>
   <xsl:apply-templates select="key('ElementModule',@ident)"  mode="tangle">      
     <xsl:sort select="@ident"/>
@@ -243,8 +268,15 @@ from 1st October 2004. This is NOT the final P5</xsl:text>
 	<xsl:when test="@type='model'">    
 	  <xsl:apply-templates select="." mode="processModel"/>
 	</xsl:when>
+	<xsl:when test="@type='atts'">    
+	  <xsl:apply-templates select="." mode="processDefaultAtts"/>
+	</xsl:when>
+	<xsl:when test="@type='default'">    
+	  <xsl:apply-templates select="." mode="processDefaultAtts"/>
+	</xsl:when>
 	<xsl:when test="@type='both'">    
 	  <xsl:apply-templates select="." mode="processModel"/>
+	  <xsl:apply-templates select="." mode="processDefaultAtts"/>
 	</xsl:when>
       </xsl:choose>
     </xsl:for-each>
@@ -294,7 +326,7 @@ from 1st October 2004. This is NOT the final P5</xsl:text>
 <xsl:template name="preDefine">
  <xsl:param name="name"/>
  <xsl:choose>
-   <xsl:when test="$Method='byreference'">
+   <xsl:when test="$parameterize='true'">
      <rng:define name="{$name}" combine="choice">
        <rng:choice>
 	 <rng:notAllowed/>
@@ -320,19 +352,22 @@ from 1st October 2004. This is NOT the final P5</xsl:text>
   <xsl:message>spec grp ref to <xsl:value-of
     select="@target"/></xsl:message>
   </xsl:if>
-  <xsl:variable name="W">
-    <xsl:choose>
-      <xsl:when test="starts-with(@target,'#')">
-	<xsl:value-of select="substring-after(@target,'#')"/>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:value-of select="@target"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-  <xsl:apply-templates select="key('IDS',$W)" mode="ok">
-    <xsl:with-param name="filename" select="$filename"/>
-  </xsl:apply-templates>
+  <xsl:choose>
+    <xsl:when test="starts-with(@target,'#')">
+      <xsl:for-each select="key('IDS',substring-after(@target,'#'))">
+	<xsl:apply-templates select="key('IDS',@target)" mode="ok">
+	  <xsl:with-param name="filename" select="$filename"/>
+	</xsl:apply-templates>
+      </xsl:for-each>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:for-each select="document(@target)/tei:specGrp">
+	<xsl:apply-templates select="." mode="ok">
+	  <xsl:with-param name="filename" select="$filename"/>
+	</xsl:apply-templates>
+      </xsl:for-each>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template name="bitOut">

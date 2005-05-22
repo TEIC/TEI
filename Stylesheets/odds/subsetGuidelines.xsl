@@ -18,12 +18,12 @@ XSL stylesheet to format TEI XML documents using ODD markup
   extension-element-prefixes="exsl estr"
   exclude-result-prefixes="tei exsl estr" 
   version="1.0">
-<xsl:import href="../common/teicommon.xsl"/>
+<xsl:import href="../base/p5/common/tei.xsl"/>
 <xsl:import href="teiodds.xsl"/>
 
 <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
 <xsl:key name="MODS" match="tei:moduleSpec" use="@ident"/>
-<xsl:key name="SPECS" match="tei:specGrp" use="@id|@xml:id"/>
+<xsl:key name="SPECS" match="tei:specGrp" use="@xml:id"/>
 <xsl:key name="LOCAL"
 	 match="tei:classSpec|tei:elementSpec|tei:macroSpec" use="@ident"/>
 <xsl:key name="LOCALATT"

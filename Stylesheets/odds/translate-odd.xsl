@@ -19,7 +19,7 @@ XSL stylesheet to process TEI documents using ODD markup
   <xsl:output method="xml" indent="yes"/>
 <xsl:key name="TAGMODS" match="Tag|AttClass" use="Tagset"/>
 <xsl:key name="MODS" match="tei:moduleRef" use="@key"/>
-<xsl:output method="xml" indent="yes"/>
+<xsl:output method="xml" indent="yes" encoding="utf-8"/>
 <xsl:param name="verbose"></xsl:param>
 <xsl:param name="lang">es</xsl:param>
 <xsl:key name="ELEMENTS" match="element" use="@ident"/>
@@ -78,9 +78,9 @@ XSL stylesheet to process TEI documents using ODD markup
 	  <xsl:otherwise>
 	    <xsl:for-each  select="document($i18n)">
 	      <xsl:for-each select="key('ELEMENTS',$thisthing)">
-		<xsl:if test="equiv[xml:lang=$lang][not(@value='')]">
+		<xsl:if test="equiv[@xml:lang=$lang][not(@value='')]">
 		  <xsl:if test="$verbose='true'">
-		    <xsl:message> ... <xsl:value-of select="equiv[xml:lang=$lang]/@value"/></xsl:message>
+		    <xsl:message> ... <xsl:value-of select="equiv[@xml:lang=$lang]/@value"/></xsl:message>
 		  </xsl:if>
 		  <altIdent type="lang" xmlns="http://www.tei-c.org/ns/1.0">
 		    <xsl:value-of select="equiv[@xml:lang=$lang]/@value"/>

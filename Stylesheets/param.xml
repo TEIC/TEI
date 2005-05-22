@@ -5,7 +5,7 @@
   <teiHeader>
     <fileDesc>
       <titleStmt>
-        <title>XSL TEI HTML stylesheet parameterization</title>
+        <title>Customization Handbook</title>
         <author>Sebastian Rahtz</author>
       </titleStmt>
       <publicationStmt>
@@ -29,716 +29,178 @@
   </teiHeader>
   <text>
 <body>
-<!-- ********************** -->
+
 <div>
  <head>Introduction</head>
-<p>This web page will let you create an XSLT stylesheet
-to process your TEI documents. The stylesheet will import
-a generalized set of TEI XSLT specifications, and then tailor
-various bits of it depending on the answers you give below.</p>
-<p>You need to start off by specifying where you store your
-copies of the general TEI XSLT stylesheets. 
-This can be expressed as a local directory specification, or a URL:
-<var name="teixslHome" type="text" method="param">
-   <default>http://www.oucs.ox.ac.uk/stylesheets/</default>
-   <description>Location of master files</description>
-</var>
-</p>
+
+<p>This section describes how to produce a customization of the TEI
+stylesheets. It describes all the parameters which you can set, the
+templates which are designed to be changed, and the empty templates
+provided into which you can add your own code.</p>
+
+<p> There are 13 areas for customization. In most cases there are
+parameters and templates which are specific to one of the three
+output methods (HTML, FO and LaTeX), and those which are common to all
+three.</p>
+
 </div>
 
 
-<div>
- <head>Structuring the output</head>
-<p>Now we need to establish the name of the output file(s); if
-you ask for multiple output files, this name will be used to create 
-unique filenames for each section. Even if you do not want your output
-split up, the name is still used for output. Do <emph>not</emph> put a
-<code>.html</code> suffix on the end. If you leave this variable
-<emph>blank</emph>, results will go to wherever your XSLT
-processor writes by default (usually standard output).
-<var name="masterFile" type="text" method="param">
-   <default>index</default>
-   <description>Output file</description>
-</var>
-As an alternative, you can pass the name of the input XML file to
-the processor using a top-level parameter:
-<var name="inputName" type="text" method="param">
-   <default></default>
-   <description>Input filename</description>
-</var>
-If no <ident>masterFile</ident> is specified, but the
-<ident>inputName</ident> <emph>is</emph> provided, then the output file(s)
-will be named after the input file.
-</p>
+<div><head>Making HTML: example</head>
 <p>
-You can also pass the name of the directory where the output is to be placed
- using a top-level parameter:
-<var name="outputDir" type="text" method="param">
-   <default></default>
-   <description>Output directory</description>
-</var>
-</p>
+You can simply refer to the specification <code>p5/html/tei.xsl</code>
+directly with your XSL processor, or install it locally on your own
+server.  For more flexibility, you may prefer to reference the
+specifications from an XSL wrapper of your own. The minimal
+specification would look like this:
+<eg>
+<![CDATA[
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
-<p>Next, do you want a single output file, or a separate one for each
-section of the document? If you want separate files, set this to 0 or greater.
-0 is the top level if  you used unnumbered <gi>div</gi> elements. 
--1 means no splitting at all.
-<var name="splitLevel" type="number" method="param">
-   <default>-1</default>
-  <description>Splitting level</description>
-</var>
-You can also decide to have a different splitting policy for front and
-	  back matter:
-<var name="splitBackmatter" type="boolean" method="param">
-   <default>true</default>
-  <description>Split back matter</description>
-</var>
-<var name="splitFrontmatter" type="boolean" method="param">
-   <default>true</default>
-  <description>Split front matter</description>
-</var>
-</p>
-<p>Do you want a link back up to the top after the end of each
-	  division?
-<var name="sectionTopLink" type="boolean" method="param">
-   <default></default>
-  <description>Put link to top after each section</description>
-</var>
-</p>
+<xsl:import href="p5/html/tei.xsl"/>
 
-<p>Lastly, it is often nice if, when making separate files, their names
-correspond to the ID attribute of the <gi>div</gi>. Alternatively, you
-	  can let the system choose names.
- <var name="useIDs"  type="boolean" method="param">
-    <default>true</default>
-  <description>Use ID attributes to name files</description>
-</var>
-</p>
-<p>A special mode is available for making slides. Tick this
-	  if you want to invoke that mode.
-<var name="makingSlides" type="boolean" method="param">
-   <default></default>
-  <description>Make slides</description>
-</var>
+</xsl:stylesheet>
+]]>
+</eg>
+You can customize the result by adding to this wrapper file (see
+previous section).  The normal result will be a single stream of HTML
+which you can save in a file. You can also configure it to produce
+multiple output files, one per top-level <gi>div</gi>, <gi>div0</gi>,
+or <gi>div1</gi>.
 </p>
 
 </div>
 
-<!-- ********************** -->
-<div>
- <head>Table of contents generation</head>
-<p>You probably want tables of contents built for your document, using
-the <gi>div</gi> structure. However, if you have used a <gi>divGen
-	  type="toc"</gi> explicitly, that will also create a table of
-	contents, so you can suppress the automatic one.
-<var name="autoToc" type="boolean" method="param">
-  <default>true</default>
-  <description>Create table of contents</description>
-</var>
-When a table of contents is  created, you choose how many levels of
-	  headings it will show:
-<var name="tocDepth"  type="number" method="param">
-  <default>5</default>
-  <description>Table of contents depth</description>
-</var>
-You can also have a mini table of contents at the start of each
-	  section. The default is only to construct a mini TOC for the
-	  top level.
-<var name="subTocDepth"  type="number" method="param">
-    <default>-1</default>
-  <description>Level of division for mini TOC</description>
-</var>
-</p>
-<p>Finally, you can choose whether or not the front and backmatter appear
-in the table of contents:
-<var name="tocFront" type="boolean" method="param">
- <default>true</default>
- <description>Whether TOC shows front matter</description>
-</var>
-<var name="tocBack" type="boolean" method="param">
- <default>true</default>
- <description>Whether TOC shows back matter</description>
-</var>
-</p>
+<div id="output">
+ <head>Output</head>
+<p>You can set a name for the output file(s); if you ask for multiple
+output files, this name will be used to create unique filenames for
+each section. By default, results will go to wherever your XSLT
+processor normally writes (usually standard output).  If you opt to
+have files created, you can specify the name of the directory where
+the output is to be placed.</p>
+
+<p>If you are making HTML, do you want a single output page, or a
+separate one for each section of the document?   You
+can decide to have a different splitting policy for front and
+back matter.  </p>
+
 </div>
 
-<!-- ********************** -->
-<div>
- <head>Standard page features</head>
-<p>The default behaviour of the system is to construct each HTML page
-in a standard way, with per-page navigation bars top and
-bottom, and a standard set of navigation links underneath. 
-The top of the page is a table with a logo on the
-left spanning the rows, a row containing the name of the institution, an
-(optional) row containing a `department' name, and a row containing
-the page title. You can either redefine the named templates
-<ident>stdheader</ident> and <ident>stdfooter</ident>,
-or change any or all of the following variables:
-<list>
-<item>
-<var name="logoPicture" type="text" method="template">
-   <default><![CDATA[<a target="_top" href="http://www.ox.ac.uk/"><img border="0" width="78" height="94"
-    src="http://www.oucs.ox.ac.uk/images/ncrest.gif"
-    alt="Oxford University"/></a>]]></default>
-  <description>The HTML which will be placed in the top left corner of
-    the page to make a logo </description>
-</var></item>
 
-<item>
-<var name="cssFile" type="url" method="param">
-   <default>/stylesheets/tei-oucs.css</default>
-  <description>The CSS file which is to be used</description>
-</var>
-
-</item>
-
-<item>
-<var name="feedbackURL" type="url" method="param">
-   <default>mailto:feedback</default>
-  <description>An email address for feedback</description>
-</var>
-
-</item>
-
-<item>
-<var name="feedbackWords" type="text" method="template">
-  <default>Feedback</default>
-  <description>The label for feedback link</description>
-</var>
-
-</item>
-
-<item>
-<var name="homeURL" type="url" method="param">
-   <default>http://www.oucs.ox.ac.uk/</default>
-  <description>Site's home page</description>
-</var>
-
-</item>
-
-<item>
-<var name="homeLabel" type="text" method="param">
-   <default>Home</default>
-  <description>Label for link to Home page</description>
-</var>
-</item>
-
-<item>
-<var name="noframeWords" type="text" method="param">
-   <default>No Frames</default>
-  <description>Words to use on a page indicating that frames cannot be
-  used</description>
-</var>
-</item>
-
-<item>
-<var name="homeWords" type="text" method="param">
-   <default>OUCS</default>
-  <description>Label of site home page</description>
-</var>
-</item>
-
-<item>
-<var name="institution" type="text" method="param">
-   <default>Oxford University Computing Services</default>
-  <description>The institution</description>
-</var>
-</item>
-
-<item>
-<var name="department" type="text" method="param">
-   <default></default>
-  <description>The department</description>
-</var>
-
-</item>
-
-<item>
-<var name="parentURL" type="url" method="param">
-   <default>http://www.ox.ac.uk/</default>
-  <description>Parent institutional home page</description>
-</var></item>
-
-<item>
-<var name="parentWords" type="text" method="param">
-   <default>Oxford University</default>
-  <description>Label of parent institutional home page</description>
-</var></item>
-
-<item>
-<var name="searchURL" type="url" method="param">
-   <default>http://wwwsearch.ox.ac.uk/cgi-bin/oxunit?oucs</default>
-  <description>Link to search page</description>
-</var>
-</item>
-
-<item>
-
-<var name="searchWords" type="text" method="template">
-   <default>Search</default>
-  <description>Label of search button</description>
-</var>
-</item>
-
-<item>
-
-<var name="topNavigationPanel"  type="boolean" method="param">
-   <default>true</default>
-  <description>Make a navigation panel at the top of the page</description>
-</var>
-</item>
-
-<item>
-
-<var name="bottomNavigationPanel"  type="boolean" method="param">
-   <default>true</default>
-  <description>Make a navigation panel at the bottom of the page</description>
-</var>
-</item>
-
-<item>
-
-<var name="alignNavigationPanel" type="text" method="param">
-   <default>right</default>
-  <description>Alignment of navigation panels</description>
-</var>
-</item>
-
-<item>
-
-<var name="linkPanel"  type="boolean" method="param">
-    <default>true</default>
-  <description>Make a panel of standard links at the bottom of the page</description>
-</var>
-</item>
-
-<item>
-<var name="copyrightStatement" type="text" method="template">
-   <default><![CDATA[<a 
-href="/documentation/copyright.html">&#169;</a> Oxford 
-University Computing Services.]]></default>
-  <description>Copyright statement</description>
-</var>
-</item>
-</list>
-</p>
-</div>
-
-<div>
- <head>Frames and other navigation aids</head>
+<div id="layout">
+<head>Layout</head>
 <p>There are three ways to provide a constant navigation aid. You can
 either make the whole page into a table, where the first column has a table
 of contents, or you can make an HTML frameset, or you can just have 
 a table of links on the left or right</p>
-<p>If you want the full page table, set the variable
-<var name="makePageTable" type="boolean" method="param">
-   <default></default>
-  <description>Whether to make each page a full-scale
-table, with the first  column  containing links etc</description>
-</var>
-    </p>
-
-<p>If you want the simpler table, set one of the two following variables:
-<list type="ordered">
-<item>
-<var name="leftLinks" type="boolean" method="param">
-   <default></default>
-  <description>Whether to make each page a table, with the first
-  column  being a set of standard links</description>
-</var>
-</item>
-<item>
-<var name="rightLinks" type="boolean" method="param">
-   <default></default>
-  <description>Whether to make each page a table, with the last
-  column  being a set of standard links</description>
-</var>
-</item>
-</list>
-In either case the width of the links column is set with
-<var name="linksWidth" type="number" method="param">
-   <default>15%</default>
-  <description>Width of links column</description>
-</var>
-</p>
-<p>If you want a frameset, use a top-level parameter:
-<var name="makeFrames" type="boolean" method="param">
-   <default></default>
-  <description>Whether to construct a frames 
-  version of the document</description>
-</var>
-If this is set to `true', a frame on the left-hand side will contain a
-table of contents for the document. The width of the frames is set by
-<var name="frameCols" type="text" method="param">
-   <default>200,*</default>
-  <description>Width of frames</description>
-</var>
-You can define an alternate URL to which non-frames browsers will
-be directed:
-<var name="frameAlternateURL" type="text" method="param">
-   <default></default>
-  <description>alternate URL for <gi>noframes</gi></description>
-</var>If this is not set, the normal name will be used. In addition,
-  you need to specify an alternate logo for the `menu' frame
-<var name="logoFramePicture" method="template">
-<default><![CDATA[<a class="framelogo" target="_top" href="http://www.ox.ac.uk">
-     <img src="http://www.oucs.ox.ac.uk/images/ncrest.gif"
-     vspace="5" width="90" height="107" border="0"
-  alt="University Of Oxford"/></a>]]></default>
- <description>Logo for menu frame</description>
-</var>
-</p>
-<p>Links from frames present special problems, as we have to choose
+<p>Hypertext links present special problems, as we have to choose
 whether they should start a new window, occupy all of the current
 window, or stay within the frame. These stylesheets implement the
 following rules:
 <list type="ordered">
 <item>Any <gi>ref</gi> or <gi>ptr</gi> link stays within the frame</item>
-<item>Any link containing `://' uses the whole browser window</item>
-<item>Any link starting `.' uses the whole browser window</item>
+<item>Any link containing <q>://</q> uses the whole browser window</item>
+<item>Any link starting <q>.</q> uses the whole browser window</item>
 <item>If the stylesheet sets no splitting of the document,
 any <gi>xref</gi> or <gi>xptr</gi> link  uses the whole browser
 window</item>
 <item>If a <gi>xref</gi> or <gi>xptr</gi> link has a
-<ident>rend</ident> attribute value of `noframe', the whole browser
+<ident>rend</ident> attribute value of <q>noframe</q>, the whole browser
 window is used</item>
 <item>If a <gi>xref</gi> or <gi>xptr</gi> link has a
-<ident>rend</ident> attribute value of `new', a new browser window
+<ident>rend</ident> attribute value of <q>new</q>, a new browser window
 is started</item>
 </list>
 </p>
-<p>Lastly, you can add a reminder link at the end of every top-level
-section, which points back to the top of the document:
-<var name="sectionUpLink" type="boolean" method="param">
-   <default></default>
-  <description>Add link after each section to the top of the document</description>
-</var>
-What that link consists of is determined by a named template:
-<var name="topLink" type="text" method="template">
-   <default><![CDATA[<p>[<a href="#TOP">Back to top</a>]</p>]]></default>
-  <description>Link to top of document</description>
-</var>
-The stylesheets always make an anchor called `TOP' at the start of the
-document. 
-     </p>
+</div>
+
+<div id="links">
+<head>Standard page features</head>
+<p>The default behaviour of the system is to construct each HTML page
+with per-page navigation bars top and bottom, and a standard set of
+navigation links underneath. </p>
 </div>
 
 
-<div>
- <head>Choosing words</head>
+<div id="headings">
+ <head>Headings</head>
+<p>Headings for sections can be customized in various ways.</p>
+</div>
+
+<div id="numbering">
+<head>Numbering</head>
+<p>Section headings, figures, tables and notes can be numbered
+automatically.  We can set the numbering of front matter and back
+matter separately. If you prefer to supply your own numbering, using
+the <code>n</code> attribute, you can choose this over automatic
+numbering.</p>
+
+<p>Normally, heading numbers are followed by <q>. </q>, but you can vary
+this. This would let you use eg fixed spaces.</p>
+</div>
+
+
+<div id="toc">
+<head>Table of contents generation</head>
+<p>You probably want tables of contents built for your document, using
+the <gi>div</gi> structure. However, if you have used a <gi>divGen
+type="toc"</gi> explicitly, that will also create a table of contents,
+so you can suppress the automatic one.  When a table of contents is
+created, you choose how many levels of headings it will show.
+You can choose whether or not the front and backmatter appear
+in the table of contents.</p>
+</div>
+
+
+
+<div id="i18n">
+<head>Internationalization</head>
 <p>At various places, the system has to create text. You can choose
-the words it uses (eg translate them to another language):
-<list>
-<item><var name="appendixWords" type="text" method="param">
-   <default>Appendix</default>
-  <description>The word for appendix</description>
-</var></item>
-
-<item><var name="tocWords" type="text" method="param">
-   <default>Contents</default>
-  <description>Title of a table of contents</description>
-</var></item>
-
-<item><var name="upWord" type="text" method="param">
-   <default>Up</default>
-  <description>How to label an up link</description>
-</var></item>
-
-<item><var name="nextWord" type="text" method="param">
-   <default>Next</default>
-  <description>How to label a `next' link</description>
-</var></item>
-
-<item><var name="previousWord" type="text" method="param">
-   <default>Previous</default>
-  <description>How to label a `previous' link</description>
-</var></item>
-
-<item><var name="contentsWord" type="text" method="template">
-   <default>Contents</default>
-  <description>How to label a `contents' link</description>
-</var>
-</item>
-
-<item><var name="dateWord" type="text" method="param">
-   <default>Date:</default>
-  <description>How to label the date</description>
-</var></item>
-
-<item><var name="authorWord" type="text" method="param">
-   <default>Author:</default>
-  <description>How to label the author</description>
-</var></item>
-</list>
-</p>
+the words it uses (eg translate them to another language).</p>
 </div>
 
-<!-- ********************** -->
-<div>
- <head>Style</head>
-<p>When we turn a TEI  <gi>div</gi> into HTML, we have to decide
-what  <gi>h*</gi> tags to use. The number you give is
-added to the depth of the <gi>div</gi> nesting, and used to
-	  make 
-<gi>h1</gi>,
-<gi>h2</gi>, <gi>h3</gi> etc. 
-So a <gi>div0</gi> maps to <gi>h2</gi> with the default
-offset value of 2.
-<var name="divOffset" type="number" method="param">
- <default>2</default>
- <description>The mapping between <gi>div</gi> and <gi>h*</gi></description>
-</var>
-</p>
 
-<p>Section headings can be numbered.
-If this variable is set to be empty,
-no numbering is done; if set to `true', numbering is arabic;
-otherwise the numbering is determined by
-using the value for the `format' attribute of <gi>xsl:number</gi>
-<var name="numberHeadings" type="text" method="param">
-   <default>true</default>
-  <description>Number headings</description>
-</var>
-Similarly, we can set the numbering of front matter
-<var name="numberFrontHeadings" type="text" method="param">
-   <default></default>
-  <description>Number headings in front matter</description>
-</var>
-and back matter
-<var name="numberBackHeadings" type="text" method="param">
-   <default>true</default>
-  <description>Number headings in back matter</description>
-</var>
-</p>
-<p>If you prefer to supply your own numbering, using the
-	  <code>n</code>
-attribute, you can choose this over automatic numbering:
-<var name="prenumberedHeadings" type="boolean" method="param">
-   <default></default>
-  <description>Use supplied numbering in n attribute</description>
-</var>
-</p>
-<p>Normally, heading numbers are followed by `. ', but you can
-vary this: 
-<var name="headingNumberSuffix" type="text" method="param">
-<default>.<![CDATA[<xsl:value-of select="$numberSpacer"/>]]></default><description>Suffix for section numbers</description>
-</var>. To let you use eg fixed spaces, you could
-redefine the variable:
-<var name="numberSpacer" type="text" method="param">
-<default><![CDATA[<xsl:text> </xsl:text>]]> </default><description>Suffix for section numbers</description>
-</var>
-</p>
-<p>If want to suppress section numbering below a certain depth:
-<var name="numberHeadingsDepth"  type="text" method="param">
-    <default>9</default>
-  <description>lowest depth at which sections are numbered</description>
-</var></p>
-<p>You can also choose
-<list>
-<item>What font to use for URLs:
-<var name="fontURL"  type="text" method="param">
-    <default>span</default>
-  <description>Font used for URLs</description>
-</var></item>
-
-
-<item>How to align tables:
-<var name="tableAlign" type="text" method="param">
-   <default>left</default>
-  <description>Table alignment</description>
-</var></item>
-
-<item>How to align cells in tables:
-<var name="cellAlign" type="text" method="param">
-   <default>left</default>
-  <description>Table cell alignment</description>
-</var></item>
-
-
-<item>Whether titles, dates and authors are shown:
-<var name="showTitleAuthor" type="boolean" method="param">
-   <default></default>
-  <description>Show titles, dates and authors</description>
-</var></item>
-
-<item>Whether footnotes should be put in a separate file:
-<var name="footnoteFile" type="boolean" method="param">
- <default></default>
- <description>Make footnote file</description>
-</var></item>
-
-<item>Whether headings of objects 
-   are included in cross-references:
-<var name="minimalCrossRef" type="boolean" method="param">
- <default></default>
- <description>Include headings in cross-refs</description>
-</var></item>
-</list>
-</p>
+<div id="CSS">
+ <head>CSS</head>
+<p>Setting up material for the CSS file to accompany HTML output.</p>
 </div>
 
-<!-- ********************** -->
-<div>
- <head>Graphics</head>
+<div id="tables">
+ <head>Tables</head>
+<p>Default behaviour of table elements.</p>
+</div>
+
+<div id="figures">
+ <head>Figures and graphics</head>
 <p>Sometimes you need to prefix the names of all graphics files with 
-a directory name or a URL:
-<var name="graphicsPrefix" type="text" method="param">
- <default></default>
- <description>Graphics file prefix</description>
-</var>
-or provide a default suffix
-<var name="graphicsSuffix" type="text" method="param">
- <default>.jpg</default>
- <description>Graphics file suffix</description>
-</var>
+a directory name or a URL, or provide a default suffix.
 You can also tell <gi>figure</gi> elements whether or not to
-produce anything
-<var name="showFigures" type="boolean" method="param">
-   <default>true</default>
-  <description>Show figures</description>
-</var>
+produce anything.</p>
+
+</div>
+<div id="style">
+<head>Style</head>
+<p>You can choose lots of features which affect the font, size, etc
+<list>
+<item>What font to use for URLs.</item>
+<item>Whether titles, dates and authors are shown.</item>
+<item>Whether headings of objects are included in cross-references.</item>
+</list>
 </p>
 </div>
 
-<div>
+<div id="hook">
 <head>Hooks</head>
 <p>A set of templates which are empty by default; they can be used
-to add code at strategic points. The content must be valid XSLT.
-<list>
-<item>Actions taken just after the HTML <gi>body</gi>:
-<var name="bodyHook" type="text" method="template">
- <default></default>
- <description>Hook at start of body</description>
-</var>
-</item>
-
-<item>Place to insert some JavaScript funtions at the start of
-the <gi>body</gi> just after the last hook:
-<var name="bodyJavaScript" type="text" method="template">
- <default></default>
- <description>Hook to specify JScript functions</description>
-</var>
-</item>
-
-<item>Place to insert some code (eg <gi>meta</gi> tags) which
-will appear in the <gi>head</gi>:
-<var name="headHook" type="text" method="template">
- <default></default>
- <description>Hook to add code to the HTML head</description>
-</var>
-</item>
-
-<item>Insertion of a form to link to a search function:
-<var name="searchbox" type="text" method="template">
- <default></default>
- <description>Hook to add code to the HTML head</description>
-</var>
-</item>
-     </list>
-    </p></div>
+to add code at strategic points. The content must be valid XSLT.</p>
+</div>
 
 
-<div>
+<div id="misc">
 <head>Miscellaneous and advanced</head>
 <p>Finally, some miscellaneous or advanced features which you probably won't
-use much.
-<list>
-<item>Some projects use multiple values in <code>rend</code>
-attributes. These are handled, but the separator character must
-be specified
-<var name="rendSeparator" type="text" method="template">
- <default>;</default>
- <description>Separator for multi-valued rend attributes</description>
-</var>
-</item>
-
-<item>Whether chatty messages are produced; note that this is a
-parameter which you can change on the command line:
-<var name="verbose" type="boolean" method="param">
- <default></default>
- <description>Be verbose</description>
-</var>
-</item>
-
-<item>An image file used to space out slides (not used in normal mode):
-<var name="downPicture" type="url" method="param">
-   <default>http://www.oucs.ox.ac.uk/images/down.gif</default>
-  <description>Slide spacing image</description>
-</var>
-</item>
-
-<item>Whether title, author and date is taken from the <gi>teiHeader</gi>, 
-      or is looked for in the front matter
-<var name="useHeaderFrontMatter" type="boolean" method="param">
- <default></default>
- <description>Take front matter from <gi>teiHeader</gi></description>
-</var>
-</item>
-
-<item>Which encoding is to be used for output
-<var name="outputEncoding" type="text" method="param">
- <default>iso-8859-1</default>
- <description>Output encoding</description>
-</var>
-</item>
-
-<item>The full URL of the XML file being processed; this would
-       normally be set by the processor calling the stylesheet.
-<var name="REQUEST" type="text" method="param">
- <default></default>
- <description>URL of current file</description>
-</var>
-</item>
-
-<item>The ID of a <emph>subset</emph> of the document which should be
-delivered. This needs some specialized work by the application calling
-the XSLT processor.
-<var name="ID" type="text" method="param">
- <default></default>
- <description>Document ID subset</description>
-</var>
-</item>
-
-<item>If we know the processor can process XML directly, we
-ay need variations on the stylesheet.
-<var name="rawIE" type="boolean" method="param">
- <default></default>
- <description>Whether delivering raw XML to IE 5/6</description>
-</var>
-</item>
-
-<item>How exactly is section numbering done?
-<var name="numberBodyDiv" type="text" method="template">
- <default><![CDATA[<xsl:param name="minimal"/>
-     <xsl:if test="not($numberHeadings='')">
-         <xsl:number level="multiple"
-                     count="div|div0|div1|div2|div3|div4|div5|div6"/>
-     </xsl:if>]]></default>
- <description>How to number body divisions</description>
-</var>
-<var name="numberFrontDiv" type="text" method="template">
- <default><![CDATA[<xsl:param name="minimal"/>
-     <xsl:if test="not($numberFrontHeadings='')">
-         <xsl:number level="multiple" 
-                     count="div|div0|div1|div2|div3|div4|div5|div6"/>
-<xsl:if test="not($minimal)"><xsl:value-of select="$numberSpacer"/></xsl:if>
-      </xsl:if>]]></default>
- <description>How to number front matter divisions</description>
-</var>
-<var name="numberBackDiv" type="text" method="template">
- <default><![CDATA[<xsl:param name="minimal"/>
-     <xsl:if test="not($numberBackHeadings='')">
-        <xsl:number format="A.1.1.1.1.1" 
-         level="multiple" count="div|div0|div1|div2|div3|div4|div5|div6"/>
-      <xsl:if test="not($minimal)"><xsl:value-of select="$numberSpacer"/>
-</xsl:if>
-    </xsl:if>]]></default>
- <description>How to number back matter divisions</description>
-</var>
-
-      </item>
-</list>
-</p>
+use much.</p>
 </div>
 </body>
 </text>
