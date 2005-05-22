@@ -1,6 +1,9 @@
-default:
-	-rm Schema/*
-	/TEI/Sourceforge/P5/Roma cem.odd .
+PREFIX=/usr
+XSL=/usr/share/xml/tei/stylesheet
+TEISERVER=http://localhost/Query/
+
+schema:
+	roma --xsl=${XSL} --teiserver=${TEISERVER} cem.odd .
 
 test:
 	xmllint --noent /TEI/Projects/ProtestantCemetery/cem.xml | xmllint --noout --relaxng teicem.rng - 
@@ -14,7 +17,7 @@ test3:
 	jing -c teicem.compiled.rnc cemall.xml
 
 clean:
-	-rm *.rng *.rnc *.xsd *.dtd *.doc.xml *~
+	-rm *.rng *.rnc *.xsd *.dtd *.doc.xml *~ cemall.xml
 
 
 

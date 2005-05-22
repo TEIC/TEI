@@ -1,11 +1,24 @@
+PREFIX=/usr
+XSL=/usr/share/xml/tei/stylesheet
+TEISERVER=http://localhost/Query/
+
 schema:
-	xsltproc -stringparam verbose true /usr/share/xml/tei/stylesheet/base/p5/odds/odd2relax.xsl teilite.xml
-	(cd Schema; for i in *rng; do xmllint --format $$i > x; mv x $$i;done)
-	(cd Schema; for i in *rng; do trang $$i `basename $$i .rng`.rnc;done)
+	roma --xsl=${XSL} --teiserver=${TEISERVER} --doc teilite.xml .
 
-test:
-	jing  Schema/teilite.rng testlite.xml
+doc: schema
+	xsltproc --stringparam lookupDatabase false --stringparam cssFile /usr/share/xml/tei/stylesheet/teic/teic.css ${XSL}/odds/odd2html.xsl teilite.doc.xml 
 
-html:
-	xsltproc http://localhost/stylesheets/teic/subsetGuidelines.xsl teilite.xml | xsltproc http://localhost/TEI/Stylesheets/odd2html.xsl -
+install: clean doc
+	mkdir -p ${PREFIX}/share/xml/tei/schema/relaxng/p5
+	mkdir -p ${PREFIX}/share/xml/tei/schema/dtd/p5
+	mkdir -p ${PREFIX}/share/xml/tei/schema/xsd/p5
+	mv teilite.rnc teilite.rng ${PREFIX}/share/xml/tei/schema/relaxng/p5
+	mv teilite.dtd ${PREFIX}/share/xml/tei/schema/dtd/p5
+	mv teilite.xsd xml.xsd ${PREFIX}/share/xml/tei/schema/xsd/p5
+	mkdir -p ${PREFIX}/share/doc/tei/Lite
+	mv Guidelines teilite.doc.xml ${PREFIX}/share/doc/tei/Lite
+
+clean:
+	-rm -rf teilite.rnc teilite.xsd teilite.rng teilite.dtd teilite.doc.xml xml.xsd Guidelines *~
+
 
