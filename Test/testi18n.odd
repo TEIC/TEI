@@ -1,3 +1,993 @@
+<<<<<<< testi18n.odd
+<?xml version="1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="en">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>TEI Lite</title>
+        <author>Lou Burnard</author>
+      </titleStmt>
+      <publicationStmt>
+        <p>for TEI web site only</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>derived from old DTD extension files for P4</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <p>The Lite schema consists some new elements and a view of the
+TEI.</p>
+      <p>First, here is the small set of new elements:
+<specGrp xml:id="LITEADD"><elementSpec ident="eg"><desc>Example code</desc><classes><memberOf key="tei.data"/><memberOf key="tei.common"/></classes><content><rng:text/></content></elementSpec><elementSpec ident="gi"><desc>contains the name (generic identifier) of an element.</desc><classes><memberOf key="tei.data"/></classes><content><rng:text/></content><attList><attDef usage="opt" ident="tei"><equiv/><desc>indicates whether this element is part of the TEI encoding
+		scheme (i.e. defined in a TEI DTD fragment) or not.</desc><datatype><rng:data type="boolean"/></datatype><defaultVal>true</defaultVal><valList type="closed"><valItem ident="true"><equiv/><gloss>this element is part of the TEI scheme.</gloss></valItem><valItem ident="false"><equiv/><gloss>this element is not part of the TEI scheme.</gloss></valItem></valList></attDef></attList><exemplum><eg>
+An &lt;gi tei="false"&gt;LI&lt;/gi&gt; element is roughly analagous to an &lt;gi&gt;item&lt;/gi&gt; element.
+    </eg></exemplum></elementSpec><elementSpec ident="ident"><classes><memberOf key="tei.data"/><memberOf key="tei.typed"/></classes><content><rng:text/></content></elementSpec><elementSpec ident="code"><classes><memberOf key="tei.data"/></classes><content><rng:text/></content></elementSpec><elementSpec ident="kw"><classes><memberOf key="tei.data"/></classes><content><rng:text/></content></elementSpec></specGrp>
+</p>
+      <p>Now for the wrapping schema, which imports 
+selected TEI modules. Some existing elements are redefined
+to be null.
+
+<schemaSpec ident="testi18n" start="TEI">
+<specGrpRef target="#LITEADD"/>
+<moduleRef key="tei"/>
+<moduleRef key="core"/>
+<moduleRef key="header"/>
+<moduleRef key="textstructure"/>
+<moduleRef key="figures"/>
+<moduleRef key="linking"/>
+<moduleRef key="analysis"/>
+<elementSpec ident="alt" mode="delete" module="linking"/>
+<elementSpec ident="altGrp" mode="delete" module="linking"/>
+<elementSpec ident="analytic" mode="delete" module="core"/>
+<elementSpec ident="broadcast" mode="delete" module="header"/>
+<elementSpec ident="c" mode="delete" module="analysis"/>
+<elementSpec ident="cb" mode="delete" module="core"/>
+<elementSpec ident="cl" mode="delete" module="analysis"/>
+<!--elementSpec ident="correction" mode="delete" module="header"  /-->
+<elementSpec ident="dateRange" mode="delete" module="core"/>
+<elementSpec ident="distinct" mode="delete" module="core"/>
+<elementSpec ident="equipment" mode="delete" module="header"/>
+<elementSpec ident="expan" mode="delete" module="core"/>
+<elementSpec ident="fsdDecl" mode="delete" module="header"/>
+<elementSpec ident="headItem" mode="delete" module="core"/>
+<elementSpec ident="headLabel" mode="delete" module="core"/>
+<elementSpec ident="hyphenation" mode="delete" module="header"/>
+<elementSpec ident="interpretation" mode="delete" module="header"/>
+<elementSpec ident="join" mode="delete" module="linking"/>
+<elementSpec ident="joinGrp" mode="delete" module="linking"/>
+<elementSpec ident="link" mode="delete" module="linking"/>
+<elementSpec ident="linkGrp" mode="delete" module="linking"/>
+<elementSpec ident="m" mode="delete" module="analysis"/>
+<elementSpec ident="measure" mode="delete" module="core"/>
+<elementSpec ident="meeting" mode="delete" module="core"/>
+<elementSpec ident="metDecl" mode="delete" module="header"/>
+<elementSpec ident="monogr" mode="delete" module="core"/>
+<elementSpec ident="normalization" mode="delete" module="header"/>
+<elementSpec ident="num" mode="delete" module="core"/>
+<elementSpec ident="phr" mode="delete" module="analysis"/>
+<elementSpec ident="postBox" mode="delete" module="core"/>
+<elementSpec ident="postCode" mode="delete" module="core"/>
+<elementSpec ident="quotation" mode="delete" module="header"/>
+<elementSpec ident="quote" mode="delete" module="core"/>
+<elementSpec ident="recording" mode="delete" module="header"/>
+<elementSpec ident="recordingStmt" mode="delete" module="header"/>
+<elementSpec ident="scriptStmt" mode="delete" module="header"/>
+<elementSpec ident="segmentation" mode="delete" module="header"/>
+<elementSpec ident="series" mode="delete" module="core"/>
+<elementSpec ident="span" mode="delete" module="analysis"/>
+<elementSpec ident="spanGrp" mode="delete" module="analysis"/>
+<elementSpec ident="state" mode="delete" module="header"/>
+<elementSpec ident="stdVals" mode="delete" module="header"/>
+<elementSpec ident="street" mode="delete" module="core"/>
+<elementSpec ident="teiCorpus" mode="delete" module="core"/>
+<elementSpec ident="timeRange" mode="delete" module="core"/>
+<elementSpec ident="timeline" mode="delete" module="linking"/>
+<elementSpec ident="variantEncoding" mode="delete" module="header"/>
+<elementSpec ident="w" mode="delete" module="analysis"/>
+<elementSpec ident="when" mode="delete" module="linking"/>
+<classSpec ident="tei.global" module="tei" mode="change">
+<attList>
+<attDef mode="change" ident="n">
+<altIdent type="lang">n
+</altIdent>
+</attDef>
+</attList>
+</classSpec>
+<classSpec ident="tei.typed" module="tei" mode="change">
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+</attList>
+</classSpec>
+<classSpec ident="tei.interpret" module="tei" mode="change">
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+</attList>
+</classSpec>
+<classSpec ident="tei.divn" module="tei" mode="change">
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+<attDef mode="change" ident="org">
+<altIdent type="lang">Organisation
+</altIdent>
+</attDef>
+</attList>
+</classSpec>
+<classSpec ident="tei.seg" module="tei" mode="change">
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+<attDef mode="change" ident="function">
+<altIdent type="lang">Funktion
+</altIdent>
+</attDef>
+</attList>
+</classSpec>
+<elementSpec ident="p" module="core" mode="change">
+<altIdent type="lang">p
+</altIdent>
+</elementSpec>
+<elementSpec ident="foreign" module="core" mode="change">
+<altIdent type="lang">fremd
+</altIdent>
+</elementSpec>
+<elementSpec ident="emph" module="core" mode="change">
+<altIdent type="lang">Betonung
+</altIdent>
+</elementSpec>
+<elementSpec ident="hi" module="core" mode="change">
+<altIdent type="lang">hh
+</altIdent>
+</elementSpec>
+<elementSpec ident="distinct" module="core" mode="change">
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="q" module="core" mode="change">
+<altIdent type="lang">z
+</altIdent>
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+<attDef mode="change" ident="who">
+<altIdent type="lang">wer
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="cit" module="core" mode="change">
+<altIdent type="lang">ZitatKompl
+</altIdent>
+</elementSpec>
+<elementSpec ident="mentioned" module="core" mode="change">
+<altIdent type="lang">erw&#xE4;hnt
+</altIdent>
+</elementSpec>
+<elementSpec ident="soCalled" module="core" mode="change">
+<altIdent type="lang">sogenannt
+</altIdent>
+</elementSpec>
+<elementSpec ident="gloss" module="core" mode="change">
+<altIdent type="lang">Glosse
+</altIdent>
+<attList/>
+</elementSpec>
+<elementSpec ident="term" module="core" mode="change">
+<altIdent type="lang">Fachausdruck
+</altIdent>
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="corr" module="core" mode="change">
+<altIdent type="lang">Korr
+</altIdent>
+<attList/>
+</elementSpec>
+<elementSpec ident="reg" module="core" mode="change">
+<altIdent type="lang">norm
+</altIdent>
+<attList/>
+</elementSpec>
+<elementSpec ident="orig" module="core" mode="change">
+<altIdent type="lang">Original
+</altIdent>
+</elementSpec>
+<elementSpec ident="gap" module="core" mode="change">
+<attList>
+<attDef mode="change" ident="reason">
+<altIdent type="lang">Begr&#xFC;ndung
+</altIdent>
+</attDef>
+<attDef mode="change" ident="hand">
+<altIdent type="lang">Hand
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="add" module="core" mode="change">
+<altIdent type="lang">Erg&#xE4;nzung
+</altIdent>
+<attList>
+<attDef mode="change" ident="hand">
+<altIdent type="lang">Hand
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="del" module="core" mode="change">
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+<attDef mode="change" ident="status">
+<altIdent type="lang">Status
+</altIdent>
+</attDef>
+<attDef mode="change" ident="hand">
+<altIdent type="lang">Hand
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="unclear" module="core" mode="change">
+<altIdent type="lang">unklar
+</altIdent>
+<attList>
+<attDef mode="change" ident="reason">
+<altIdent type="lang">Begr&#xFC;ndung
+</altIdent>
+</attDef>
+<attDef mode="change" ident="hand">
+<altIdent type="lang">Hand
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="name" module="core" mode="change">
+<altIdent type="lang">Name
+</altIdent>
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="rs" module="core" mode="change">
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="address" module="core" mode="change">
+<altIdent type="lang">Adresse
+</altIdent>
+</elementSpec>
+<elementSpec ident="addrLine" module="core" mode="change">
+<altIdent type="lang">AdressZeile
+</altIdent>
+</elementSpec>
+<elementSpec ident="num" module="core" mode="change">
+<altIdent type="lang">Nummer
+</altIdent>
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+<attDef mode="change" ident="value">
+<altIdent type="lang">Wert
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="measure" module="core" mode="change">
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="date" module="core" mode="change">
+<altIdent type="lang">Datum
+</altIdent>
+<attList>
+<attDef mode="change" ident="calendar">
+<altIdent type="lang">Kalendar
+</altIdent>
+</attDef>
+<attDef mode="change" ident="value">
+<altIdent type="lang">Wert
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="dateRange" module="core" mode="change">
+<attList>
+<attDef mode="change" ident="calendar">
+<altIdent type="lang">Kalendar
+</altIdent>
+</attDef>
+<attDef mode="change" ident="from">
+<altIdent type="lang">von
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="time" module="core" mode="change">
+<altIdent type="lang">Zeit
+</altIdent>
+<attList>
+<attDef mode="change" ident="value">
+<altIdent type="lang">Wert
+</altIdent>
+</attDef>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="timeRange" module="core" mode="change">
+<attList>
+<attDef mode="change" ident="from">
+<altIdent type="lang">von
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="abbr" module="core" mode="change">
+<altIdent type="lang">Abk&#xFC;rzung
+</altIdent>
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="ptr" module="core" mode="change">
+<altIdent type="lang">Zeiger
+</altIdent>
+<attList/>
+</elementSpec>
+<elementSpec ident="ref" module="core" mode="change">
+<altIdent type="lang">Verweis
+</altIdent>
+<attList/>
+</elementSpec>
+<elementSpec ident="list" module="core" mode="change">
+<altIdent type="lang">Liste
+</altIdent>
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="item" module="core" mode="change">
+<altIdent type="lang">Punkt
+</altIdent>
+</elementSpec>
+<elementSpec ident="label" module="core" mode="change">
+<altIdent type="lang">Beschriftung
+</altIdent>
+</elementSpec>
+<elementSpec ident="head" module="core" mode="change">
+<altIdent type="lang">Kopf
+</altIdent>
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="note" module="core" mode="change">
+<altIdent type="lang">Vermerk
+</altIdent>
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="index" module="core" mode="change">
+<altIdent type="lang">Index
+</altIdent>
+<attList>
+<attDef mode="change" ident="index">
+<altIdent type="lang">Index
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="divGen" module="core" mode="change">
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="graphic" module="core" mode="change">
+<attList>
+<attDef mode="change" ident="width">
+<altIdent type="lang">Breite
+</altIdent>
+</attDef>
+<attDef mode="change" ident="height">
+<altIdent type="lang">H&#xF6;he
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="milestone" module="core" mode="change">
+<altIdent type="lang">MeilenStein
+</altIdent>
+<attList>
+<attDef mode="change" ident="unit">
+<altIdent type="lang">Einheit
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="pb" module="core" mode="change">
+<altIdent type="lang">su
+</altIdent>
+<attList/>
+</elementSpec>
+<elementSpec ident="lb" module="core" mode="change">
+<altIdent type="lang">zu
+</altIdent>
+<attList/>
+</elementSpec>
+<elementSpec ident="bibl" module="core" mode="change">
+<altIdent type="lang">Bibl
+</altIdent>
+</elementSpec>
+<elementSpec ident="biblItem" module="core" mode="change">
+<attList>
+<attDef mode="change" ident="status">
+<altIdent type="lang">Status
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="biblFull" module="core" mode="change">
+<altIdent type="lang">BiblKompl
+</altIdent>
+</elementSpec>
+<elementSpec ident="listBibl" module="core" mode="change">
+<altIdent type="lang">ListeBibl
+</altIdent>
+</elementSpec>
+<elementSpec ident="author" module="core" mode="change">
+<altIdent type="lang">Autor
+</altIdent>
+</elementSpec>
+<elementSpec ident="editor" module="core" mode="change">
+<altIdent type="lang">Redakteur
+</altIdent>
+<attList/>
+</elementSpec>
+<elementSpec ident="respStmt" module="core" mode="change">
+<altIdent type="lang">VerantInfo
+</altIdent>
+</elementSpec>
+<elementSpec ident="title" module="core" mode="change">
+<altIdent type="lang">Titel
+</altIdent>
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="imprint" module="core" mode="change">
+<altIdent type="lang">Impressum
+</altIdent>
+</elementSpec>
+<elementSpec ident="publisher" module="core" mode="change">
+<altIdent type="lang">Verlag
+</altIdent>
+</elementSpec>
+<elementSpec ident="biblScope" module="core" mode="change">
+<altIdent type="lang">BiblUmfang
+</altIdent>
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="pubPlace" module="core" mode="change">
+<altIdent type="lang">Ver&#xF6;ffentlichungsOrt
+</altIdent>
+</elementSpec>
+<elementSpec ident="l" module="core" mode="change">
+<altIdent type="lang">Vers
+</altIdent>
+<attList/>
+</elementSpec>
+<elementSpec ident="lg" module="core" mode="change">
+<altIdent type="lang">VersGruppe
+</altIdent>
+</elementSpec>
+<elementSpec ident="sp" module="core" mode="change">
+<altIdent type="lang">Dialog
+</altIdent>
+<attList>
+<attDef mode="change" ident="who">
+<altIdent type="lang">wer
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="speaker" module="core" mode="change">
+<altIdent type="lang">Sprecher
+</altIdent>
+</elementSpec>
+<elementSpec ident="stage" module="core" mode="change">
+<altIdent type="lang">B&#xFC;hne
+</altIdent>
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="teiHeader" module="header" mode="change">
+<altIdent type="lang">TeiKopf
+</altIdent>
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+<attDef mode="change" ident="status">
+<altIdent type="lang">Status
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="fileDesc" module="header" mode="change">
+<altIdent type="lang">FileBeschr
+</altIdent>
+</elementSpec>
+<elementSpec ident="titleStmt" module="header" mode="change">
+<altIdent type="lang">TitelInfo
+</altIdent>
+</elementSpec>
+<elementSpec ident="sponsor" module="header" mode="change">
+<altIdent type="lang">Sponsor
+</altIdent>
+</elementSpec>
+<elementSpec ident="funder" module="header" mode="change">
+<altIdent type="lang">Finazierung
+</altIdent>
+</elementSpec>
+<elementSpec ident="editionStmt" module="header" mode="change">
+<altIdent type="lang">AusgabeInfo
+</altIdent>
+</elementSpec>
+<elementSpec ident="edition" module="header" mode="change">
+<altIdent type="lang">Ausgabe
+</altIdent>
+</elementSpec>
+<elementSpec ident="extent" module="header" mode="change">
+<altIdent type="lang">Gr&#xF6;&#xDF;e
+</altIdent>
+</elementSpec>
+<elementSpec ident="publicationStmt" module="header" mode="change">
+<altIdent type="lang">Ver&#xF6;ffentlichungsInfo
+</altIdent>
+</elementSpec>
+<elementSpec ident="distributor" module="header" mode="change">
+<altIdent type="lang">Verteiler
+</altIdent>
+</elementSpec>
+<elementSpec ident="authority" module="header" mode="change">
+<altIdent type="lang">Autorit&#xE4;t
+</altIdent>
+</elementSpec>
+<elementSpec ident="idno" module="header" mode="change">
+<altIdent type="lang">IdNum
+</altIdent>
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="availability" module="header" mode="change">
+<altIdent type="lang">Erh&#xE4;ltlichkeit
+</altIdent>
+<attList>
+<attDef mode="change" ident="status">
+<altIdent type="lang">Status
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="seriesStmt" module="header" mode="change">
+<altIdent type="lang">SerionInfo
+</altIdent>
+</elementSpec>
+<elementSpec ident="notesStmt" module="header" mode="change">
+<altIdent type="lang">VermerksGruppe
+</altIdent>
+</elementSpec>
+<elementSpec ident="sourceDesc" module="header" mode="change">
+<altIdent type="lang">QuellenBeschr
+</altIdent>
+</elementSpec>
+<elementSpec ident="recording" module="header" mode="change">
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="encodingDesc" module="header" mode="change">
+<altIdent type="lang">KodierBeschr
+</altIdent>
+</elementSpec>
+<elementSpec ident="projectDesc" module="header" mode="change">
+<altIdent type="lang">ProjektBeschr
+</altIdent>
+</elementSpec>
+<elementSpec ident="editorialDecl" module="header" mode="change">
+<altIdent type="lang">RedaktionsErkl
+</altIdent>
+</elementSpec>
+<elementSpec ident="correction" module="header" mode="change">
+<attList>
+<attDef mode="change" ident="status">
+<altIdent type="lang">Status
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="tagsDecl" module="header" mode="change">
+<altIdent type="lang">TagBeschr
+</altIdent>
+</elementSpec>
+<elementSpec ident="tagUsage" module="header" mode="change">
+<altIdent type="lang">TagBenutzung
+</altIdent>
+<attList/>
+</elementSpec>
+<elementSpec ident="rendition" module="header" mode="change">
+<altIdent type="lang">Formatierung
+</altIdent>
+</elementSpec>
+<elementSpec ident="refsDecl" module="header" mode="change">
+<altIdent type="lang">VerweisErkl
+</altIdent>
+<attList/>
+</elementSpec>
+<elementSpec ident="state" module="header" mode="change">
+<attList>
+<attDef mode="change" ident="unit">
+<altIdent type="lang">Einheit
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="category" module="header" mode="change">
+<altIdent type="lang">Kategorie
+</altIdent>
+</elementSpec>
+<elementSpec ident="catDesc" module="header" mode="change">
+<altIdent type="lang">KategorieBeschr
+</altIdent>
+</elementSpec>
+<elementSpec ident="fsdDecl" module="header" mode="change">
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="metDecl" module="header" mode="change">
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="metSym" module="header" mode="change">
+<attList>
+<attDef mode="change" ident="value">
+<altIdent type="lang">Wert
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="profileDesc" module="header" mode="change">
+<altIdent type="lang">ProfilBeschr
+</altIdent>
+</elementSpec>
+<elementSpec ident="langUsage" module="header" mode="change">
+<altIdent type="lang">BenutzteSprachen
+</altIdent>
+</elementSpec>
+<elementSpec ident="language" module="header" mode="change">
+<altIdent type="lang">Sprache
+</altIdent>
+<attList>
+<attDef mode="change" ident="ident">
+<altIdent type="lang">ident
+</altIdent>
+</attDef>
+<attDef mode="change" ident="usage">
+<altIdent type="lang">Benutzung
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="textClass" module="header" mode="change">
+<altIdent type="lang">TextKlasse
+</altIdent>
+</elementSpec>
+<elementSpec ident="keywords" module="header" mode="change">
+<altIdent type="lang">Schl&#xFC;sselW&#xF6;rter
+</altIdent>
+<attList/>
+</elementSpec>
+<elementSpec ident="revisionDesc" module="header" mode="change">
+<altIdent type="lang">&#xC4;nderungsBeschr
+</altIdent>
+</elementSpec>
+<elementSpec ident="change" module="header" mode="change">
+<altIdent type="lang">&#xC4;nderung
+</altIdent>
+</elementSpec>
+<elementSpec ident="text" module="textstructure" mode="change">
+<altIdent type="lang">Text
+</altIdent>
+</elementSpec>
+<elementSpec ident="body" module="textstructure" mode="change">
+<altIdent type="lang">K&#xF6;rper
+</altIdent>
+</elementSpec>
+<elementSpec ident="group" module="textstructure" mode="change">
+<altIdent type="lang">Gruppe
+</altIdent>
+</elementSpec>
+<elementSpec ident="trailer" module="textstructure" mode="change">
+<altIdent type="lang">Ende
+</altIdent>
+</elementSpec>
+<elementSpec ident="byline" module="textstructure" mode="change">
+<altIdent type="lang">VonZeile
+</altIdent>
+</elementSpec>
+<elementSpec ident="epigraph" module="textstructure" mode="change">
+<altIdent type="lang">Epigraph
+</altIdent>
+</elementSpec>
+<elementSpec ident="opener" module="textstructure" mode="change">
+<altIdent type="lang">Er&#xF6;ffnung
+</altIdent>
+</elementSpec>
+<elementSpec ident="closer" module="textstructure" mode="change">
+<altIdent type="lang">Abschluss
+</altIdent>
+</elementSpec>
+<elementSpec ident="salute" module="textstructure" mode="change">
+<altIdent type="lang">Gru&#xDF;
+</altIdent>
+</elementSpec>
+<elementSpec ident="signed" module="textstructure" mode="change">
+<altIdent type="lang">gezeichnet
+</altIdent>
+</elementSpec>
+<elementSpec ident="titlePage" module="textstructure" mode="change">
+<altIdent type="lang">TitelSeite
+</altIdent>
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="docTitle" module="textstructure" mode="change">
+<altIdent type="lang">DokTitel
+</altIdent>
+</elementSpec>
+<elementSpec ident="titlePart" module="textstructure" mode="change">
+<altIdent type="lang">TeilTitel
+</altIdent>
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="docAuthor" module="textstructure" mode="change">
+<altIdent type="lang">DokAutor
+</altIdent>
+</elementSpec>
+<elementSpec ident="docEdition" module="textstructure" mode="change">
+<altIdent type="lang">DokAusgabe
+</altIdent>
+</elementSpec>
+<elementSpec ident="docImprint" module="textstructure" mode="change">
+<altIdent type="lang">DokImpressum
+</altIdent>
+</elementSpec>
+<elementSpec ident="docDate" module="textstructure" mode="change">
+<altIdent type="lang">DokDatum
+</altIdent>
+<attList>
+<attDef mode="change" ident="value">
+<altIdent type="lang">Wert
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="front" module="textstructure" mode="change">
+<altIdent type="lang">Vorspann
+</altIdent>
+</elementSpec>
+<elementSpec ident="back" module="textstructure" mode="change">
+<altIdent type="lang">Nachspann
+</altIdent>
+</elementSpec>
+<elementSpec ident="table" module="figures" mode="change">
+<altIdent type="lang">Tabelle
+</altIdent>
+<attList>
+<attDef mode="change" ident="rows">
+<altIdent type="lang">Zeilen
+</altIdent>
+</attDef>
+<attDef mode="change" ident="cols">
+<altIdent type="lang">Spalten
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="row" module="figures" mode="change">
+<altIdent type="lang">Reihe
+</altIdent>
+<attList/>
+</elementSpec>
+<elementSpec ident="cell" module="figures" mode="change">
+<attList>
+<attDef mode="change" ident="rows">
+<altIdent type="lang">Zeilen
+</altIdent>
+</attDef>
+<attDef mode="change" ident="cols">
+<altIdent type="lang">Spalten
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="formula" module="figures" mode="change">
+<altIdent type="lang">Formel
+</altIdent>
+<attList/>
+</elementSpec>
+<elementSpec ident="figure" module="figures" mode="change">
+<altIdent type="lang">Abbildung
+</altIdent>
+</elementSpec>
+<elementSpec ident="figDesc" module="figures" mode="change">
+<altIdent type="lang">Bildbeschreibung
+</altIdent>
+</elementSpec>
+<elementSpec ident="anchor" module="linking" mode="change">
+<altIdent type="lang">Anker
+</altIdent>
+</elementSpec>
+<elementSpec ident="when" module="linking" mode="change">
+<attList>
+<attDef mode="change" ident="unit">
+<altIdent type="lang">Einheit
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="timeline" module="linking" mode="change">
+<attList>
+<attDef mode="change" ident="unit">
+<altIdent type="lang">Einheit
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<classSpec ident="tei.linking" module="linking" mode="change">
+<attList>
+<attDef mode="change" ident="next">
+<altIdent type="lang">n&#xE4;chstes
+</altIdent>
+</attDef>
+<attDef mode="change" ident="prev">
+<altIdent type="lang">letztes
+</altIdent>
+</attDef>
+</attList>
+</classSpec>
+<classSpec ident="tei.pointer" module="linking" mode="change">
+<attList>
+<attDef mode="change" ident="type">
+<altIdent type="lang">Typ
+</altIdent>
+</attDef>
+</attList>
+</classSpec>
+<elementSpec ident="span" module="analysis" mode="change">
+<attList>
+<attDef mode="change" ident="value">
+<altIdent type="lang">Wert
+</altIdent>
+</attDef>
+<attDef mode="change" ident="from">
+<altIdent type="lang">von
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="interp" module="analysis" mode="change">
+<altIdent type="lang">Interp
+</altIdent>
+<attList>
+<attDef mode="change" ident="value">
+<altIdent type="lang">Wert
+</altIdent>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="interpGrp" module="analysis" mode="change">
+<altIdent type="lang">InterpGruppe
+</altIdent>
+</elementSpec>
+</schemaSpec>
+
+</p>
+    
+=======
 <?xml version="1.0"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="en">
   <teiHeader>
@@ -986,6 +1976,7 @@ to be null.
 
 </p>
     
+>>>>>>> 1.2
 </body>
   
 </text>
