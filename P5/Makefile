@@ -1,7 +1,8 @@
 TEISERVER=http://www.tei-c.org.uk/Query/
-PREFIX=/usr/local/tei
-XSL=http://www.tei-c.org/stylesheet/base
+PREFIX=/usr
+XSL=http://www.tei-c.org/stylesheet
 # for local use, try /usr/share/xml/tei/stylesheet
+ROMAOPTS=
 
 .PHONY: convert dtds schemas html validate valid test split oddschema exampleschema fascicule exist clean dist
 
@@ -13,7 +14,8 @@ dtds: check
 	-mkdir DTD
 	-rm DTD/*
 	# generate the DTDs
-	xmllint --noent   Source-driver.xml | xsltproc ${XSL}/p5/odds/odd2dtd.xsl -
+	xmllint --noent   Source-driver.xml | \
+	xsltproc --stringparam outputDir DTD ${XSL}/odds/odd2dtd.xsl -
 	for i in DTD/* ; do perl -i Tools/cleandtd.pl $$i; done	
 	# I cannot be bothered to see why these don't work,
 	# just hack them by hand.
@@ -27,7 +29,7 @@ schemas:check
 	-mkdir Schema
 	-rm Schema/*
 	# generate the relaxNG schemas
-	xmllint --noent   Source-driver.xml | xsltproc -stringparam verbose true ${XSL}/p5/odds/odd2relax.xsl -
+	xmllint --noent   Source-driver.xml | xsltproc -stringparam verbose true ${XSL}/odds/odd2relax.xsl -
 	# do the indentation better 
 	for i in Schema/* ; \
 	do echo clean $$i; \
@@ -47,7 +49,6 @@ html-web: check
 	-mkdir Guidelines-web
 	xmllint --noent    Source-driver.xml | xsltproc \
 	-o Guidelines-web/index.html \
-	--stringparam verbose true \
 	--stringparam displayMode rnc \
 	--stringparam outputDir . \
 	guidelines.xsl - 
@@ -57,24 +58,25 @@ html-web: check
 html:check
 	-rm -rf Guidelines
 	-mkdir Guidelines
+	(perl -p -e "s+http://www.tei-c.org/stylesheet+${XSL}+" guidelines-print.xsl > tmp$$$$.xsl; \
 	xmllint --noent    Source-driver.xml | xsltproc \
 	-o Guidelines/index.html \
 	--stringparam cssFile tei-print.css \
-	--stringparam verbose true \
 	--stringparam displayMode rnc \
 	--stringparam outputDir . \
-	guidelines-print.xsl - 
+	tmp$$$$.xsl - && rm tmp$$$$.xsl)
 	(cd Guidelines; for i in *.html; do perl -i ../Tools/cleanrnc.pl $$i;done)
 	-cp *.gif *.css Guidelines
 
-xml:check
+xml: check
 	xmllint --noent   Source-driver.xml | perl Tools/cleanrnc.pl | \
 	xsltproc  -o Guidelines.xml \
 	--stringparam displayMode rnc  \
-	${XSL}/p5/odds/teixml-odds.xsl -
+	${XSL}/odds/teixml-odds.xsl -
+	@echo Success. Created Guidelines.xml
 
 pdf: xml
-	echo Checking you have a running pdfLaTeX before trying to make PDF...
+	@echo Checking you have a running pdfLaTeX before trying to make PDF...
 	which pdflatex || exit 1
 	test -d /TEI/Talks/texconfig || exit 1
 	xsltproc ${XSL}/../teic/teilatex-teic-P5.xsl Guidelines.xml \
@@ -127,11 +129,11 @@ split:
 	(mkdir Split; cd Split; xmllint --noent   ../Source-driver.xml | xsltproc ../divsplit.xsl -)
 
 oddschema:
-	./Roma --nodtd --noxsd --xsl=$(XSL) --teiserver=$(TEISERVER) --schema=./Schema/ p5odds.odd .
+	roma $(ROMAOPTS) --nodtd --noxsd --xsl=$(XSL)/ --teiserver=$(TEISERVER) p5odds.odd .
 
 
 exampleschema:
-	./Roma  --nodtd --noxsd --xsl=$(XSL) --teiserver=$(TEISERVER) --schema=./Schema/ p5odds-ex.odd . && \
+	roma  --nodtd --noxsd --xsl=$(XSL)/ --teiserver=$(TEISERVER) p5odds-ex.odd . && \
 	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rnc && \
 	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rng
 
@@ -143,13 +145,13 @@ fascicule:
 	--stringparam verbose true \
 	--stringparam displayMode rnc \
 	--stringparam outputDir . \
-	${XSL}/p5/odds/odd2html.xsl - 
+	${XSL}/odds/odd2html.xsl - 
 	(cd FASC-$(CHAP)-Guidelines; for i in *.html; do perl -i ../Tools/cleanrnc.pl $$i;done)
 	-jing p5odds.rng FASC-$(CHAP).xml 
 	xsltproc -o FASC-$(CHAP)-lite.xml  \
 	--stringparam TEISERVER $(TEISERVER) \
 	--stringparam displayMode rnc \
-	${XSL}/p5/odds/teixml-odds.xsl FASC-$(CHAP).xml 
+	${XSL}/odds/teixml-odds.xsl FASC-$(CHAP).xml 
 	perl Tools/cleanrnc.pl FASC-$(CHAP)-lite.xml | \
 	xsltproc  \
 	 ${XSL}/../teic/teilatex-teic-P5.xsl - > FASC-$(CHAP).tex
@@ -162,6 +164,92 @@ exist: split
 	perl updateexist.pl Split /db/TEI
 	perl updateexist.pl teinames.xml /db/TEI
 	perl updateexist.pl datatypes.xml /db/TEI
+
+dist:clean dist-source dist-schema dist-doc dist-test dist-database
+
+dist-source: 
+	rm -rf release/tei-p5/source
+	mkdir -p release/tei-p5-source/share/tei
+	tar -c -f - --exclude "*~" ---exclude CVS *.* VERSION ChangeLog Source Makefile Tools  \
+	| (cd release/tei-p5-source/share/tei; tar xf - )
+	(cd release; 	\
+	ln -s tei-p5-source tei-p5-source-`cat ../VERSION` ; \
+	zip -r tei-p5-source-`cat ../VERSION`.zip tei-p5-source-`cat ../VERSION` )
+
+dist-schema: schemas dtds
+	rm -rf release/tei-p5-schema
+	mkdir -p release/tei-p5-schema/share/xml/tei/schema/dtd/p5
+	mkdir -p release/tei-p5-schema/share/xml/tei/schema/relaxng/p5
+	(cd DTD; tar --exclude CVS -c -f - .) \
+	| (cd release/tei-p5-schema/share/xml/tei/schema/dtd/p5; tar xf - )
+	(cd Schema; tar --exclude CVS -c -f - .) \
+	| (cd release/tei-p5-schema/share/xml/tei/schema/relaxng/p5; tar xf - )
+	(cd release; 	\
+	ln -s tei-p5-schema tei-p5-schema-`cat ../VERSION` ; \
+	zip -r tei-p5-schema-`cat ../VERSION`.zip tei-p5-schema-`cat ../VERSION` )
+
+dist-doc:  html
+	rm -rf release/tei-p5-doc
+	mkdir -p release/tei-p5-doc/share/doc/tei/P5
+	tar --exclude CVS -c -f - Guidelines \
+	| (cd release/tei-p5-doc/share/doc/tei/P5; tar xf - )
+	(cd release; 	\
+	ln -s tei-p5-doc tei-p5-doc-`cat ../VERSION` ; \
+	zip -r tei-p5-doc-`cat ../VERSION`.zip tei-p5-doc-`cat ../VERSION` )
+
+dist-test: 
+	rm -rf release/tei-p5-test
+	mkdir -p release/tei-p5-test/share/tei
+	(cd Test; make clean)
+	tar --exclude "*~" --exclude CVS -c -f - Test \
+	| (cd release/tei-p5-test/share/tei; tar xf - )
+	(cd release; 	\
+	ln -s tei-p5-test tei-p5-test-`cat ../VERSION` ; \
+	zip -r tei-p5-test-`cat ../VERSION`.zip tei-p5-test-`cat ../VERSION` )
+
+dist-database: 
+	rm -rf release/tei-p5-database
+	mkdir -p release/tei-p5-database/share/doc/tei/web
+	tar --exclude CVS -c -f - Query \
+	| (cd release/tei-p5-database/share/doc/tei/web; tar xf - )
+	(cd release; 	\
+	ln -s tei-p5-database tei-p5-database-`cat ../VERSION` ; \
+	zip -r tei-p5-database-`cat ../VERSION`.zip tei-p5-database-`cat ../VERSION` )
+
+install-schema: dist-schema
+	echo Making schema release in ${PREFIX}
+	(cd release/tei-p5-schema; tar cf - .) | (cd ${PREFIX}; tar xf - )
+
+install-doc: dist-doc
+	echo Making documentation release in ${PREFIX}
+	(cd release/tei-p5-doc; tar cf - .) | (cd ${PREFIX}; tar xf - )
+
+install-source: dist-source
+	echo Making source release in ${PREFIX}
+	(cd release/tei-p5-source; tar cf - .) | (cd ${PREFIX}; tar xf - )
+
+install-test: dist-test
+	echo Making testfiles release in ${PREFIX}
+	(cd release/tei-p5-test; tar cf - .) | (cd ${PREFIX}; tar xf - )
+
+install-database: dist-database
+	echo Making testfiles release in ${PREFIX}
+	(cd release/tei-p5-database; tar cf - .) | (cd ${PREFIX}; tar xf - )
+
+install: clean install-schema install-doc install-test install-source install-database
+
+check:
+	@echo Checking you have a running XML tools and Perl before trying to run transform...
+	@echo -n xsltproc: 
+	@which xsltproc || exit 1
+	@echo -n Perl: 
+	@which perl || exit 1
+	@echo -n xmllint: 
+	@which xmllint || exit 1
+	@echo -n trang: 
+	@which trang || exit 1
+	@echo -n jing: 
+	@which jing || exit 1
 
 clean:
 	-rm -rf release Guidelines Schema DTD dtd Split RomaResults *~
@@ -184,47 +272,12 @@ clean:
 	spoken.rnc \
 	textcrit.rnc \
 	transcr.rnc \
-	verse.rnc 
+	verse.rnc \
+	mathml*rnc  \
+	p5examples.rng \
+	p5odds.rng \
+	*.xsd \
+	p5.sch
+	find . -name "semantic.cache" | xargs rm -f
+	(cd Test; make clean)
 
-dist:
-	rm -rf release
-	mkdir -p release/tei-p5-source-`cat VERSION`
-	tar --exclude CVS -c -f - *.* VERSION Roma ChangeLog Source Makefile Tools \
-	| (cd release/tei-p5-source-`cat VERSION`; tar xf - )
-	mkdir -p release/tei-p5-schema-`cat VERSION`
-	tar --exclude CVS -c -f - Schema DTD \
-	| (cd release/tei-p5-schema-`cat VERSION`; tar xf - )
-	mkdir -p release/tei-p5-doc-`cat VERSION`
-	tar --exclude CVS -c -f - Guidelines \
-	| (cd release/tei-p5-doc-`cat VERSION`; tar xf - )
-	mkdir -p release/tei-p5-test-`cat VERSION`
-	tar --exclude CVS -c -f - Test \
-	| (cd release/tei-p5-test-`cat VERSION`; tar xf - )
-	-rm `find release -name "semantic.cache"`
-	-rm `find release -name "*~"`
-	(cd release; zip -r tei-p5-source-`cat ../VERSION`.zip tei-p5-source-`cat ../VERSION`)
-	(cd release; zip -r tei-p5-doc-`cat ../VERSION`.zip tei-p5-doc-`cat ../VERSION`)
-	(cd release; zip -r tei-p5-schema-`cat ../VERSION`.zip tei-p5-schema-`cat ../VERSION`)
-	(cd release; zip -r tei-p5-test-`cat ../VERSION`.zip tei-p5-test-`cat ../VERSION`)
-
-install: schemas dtds html
-	echo Making release in ${PREFIX}
-	mkdir -p ${PREFIX}/schema/relaxng/p5
-	cp -p Schema/* ${PREFIX}/schema/relaxng/p5
-	mkdir -p ${PREFIX}/schema/dtd/p5
-	cp -p DTD/* ${PREFIX}/schema/dtd/p5
-	mkdir -p ${PREFIX}/P5
-	cp -p Guidelines/* ${PREFIX}/P5
-
-check:
-	echo Checking you have a running XML tools and Perl before trying to run transform...
-	@echo -n xsltproc: 
-	@which xsltproc || exit 1
-	@echo -n Perl: 
-	@which perl || exit 1
-	@echo -n xmllint: 
-	@which xmllint || exit 1
-	@echo -n trang: 
-	@which trang || exit 1
-	@echo -n jing: 
-	@which jing || exit 1
