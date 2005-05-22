@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TEI xml:lang="en"  xmlns="http://www.tei-c.org/ns/1.0"
  xmlns:rng="http://relaxng.org/ns/structure/1.0"
- n="testsvg">
+ n="testdocbook5">
    <teiHeader>
       <fileDesc>
          <titleStmt>
-            <title>TEI with SVG and MathML</title>
+            <title>TEI with docbook setup</title>
             <author>Sebastian Rahtz</author>
          </titleStmt>
          <publicationStmt>
@@ -19,29 +19,24 @@
 <text>
 <body>
   <p>
-    <schemaSpec ident="testsvg" start="TEI">
-      <moduleRef url="svg-main.rng"/>
+    <schemaSpec ident="testdocbook5" start="">
       <moduleRef key="header"/>
       <moduleRef key="core"/>
       <moduleRef key="tei"/>
       <moduleRef key="textstructure"/>
-      <moduleRef key="linking"/>
-      <moduleRef key="figures"/>
-      <elementSpec module="figures" ident="figure" mode="change">
+      <moduleRef url="docbook.rng">
 	<content>
-	  <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-	    <rng:choice>
-	      <rng:ref name="tei.Incl"/>
-	      <rng:ref name="figure"/>
-	      <rng:ref name="figDesc"/>
-	      <rng:ref name="graphic"/>
-	      <rng:ref name="head"/>
-	      <rng:ref name="p"/>
-	      <rng:ref name="svg.svg"/>
-	    </rng:choice>
-	  </rng:zeroOrMore>
+	  <rng:define name="docbook.text" combine="choice">
+	    <rng:ref name="tei.data"/>
+	  </rng:define>
+	  <rng:define name="tei.hqphrase" combine="choice">
+	    <rng:ref name="gui.inlines"/>
+	  </rng:define>
+	  <rng:start combine="choice">
+	    <rng:ref name="TEI"/>
+	  </rng:start>
 	</content>
-      </elementSpec>
+      </moduleRef>
     </schemaSpec>
   </p>
 </body>

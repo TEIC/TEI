@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:lang="en"  xmlns="http://www.tei-c.org/ns/1.0"
+ xmlns:rng="http://relaxng.org/ns/structure/1.0"
+ n="testdocbook4">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>TEI with docbook setup</title>
+            <author>Sebastian Rahtz</author>
+         </titleStmt>
+         <publicationStmt>
+	   <p> </p>
+	 </publicationStmt>
+         <sourceDesc>
+            <p>authored from scratch</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+<text>
+<body>
+  <p>
+    <schemaSpec ident="testdocbook4" start="">
+      <moduleRef key="header"/>
+      <moduleRef key="core"/>
+      <moduleRef key="tei"/>
+      <moduleRef key="figures"/>
+      <moduleRef key="textstructure"/>
+    <elementSpec module="figures" ident="formula" mode="change">
+      <attList>
+	<attDef ident="type" mode="add">
+	<desc>what sort of formula is this?</desc>
+	<datatype><rng:text/></datatype>
+	</attDef>
+	<attDef ident="notation" mode="change">
+	<desc>what notation is used to describe the math</desc>
+	<datatype><rng:text/></datatype>
+	</attDef>
+      </attList>
+    </elementSpec>
+    <macroSpec module="figures" type="pe" ident="datatype.Formula" mode="change">
+      <content>
+	<rng:ref name="mathml.math"/>
+      </content>
+    </macroSpec>
+    <elementSpec ident="code" mode="add">
+      <classes><memberOf key="tei.data"/></classes>
+      <content>
+	<rng:text/>
+      </content>
+    </elementSpec>
+    <moduleRef url="mathml2-main.rng"/>
+    <moduleRef url="docbook.rng">
+      <content>
+	<rng:define name="tei.teiHeader" combine="choice">
+	  <rng:ref name="article.info"/>
+	</rng:define>
+	<rng:start combine="choice">
+	  <rng:ref name="TEI"/>
+	</rng:start>
+      </content>
+    </moduleRef>
+    <elementSpec ident="teiHeader" module="header" mode="delete"/>
+    </schemaSpec>
+  </p>
+</body>
+</text>
+</TEI>
+
+
+
