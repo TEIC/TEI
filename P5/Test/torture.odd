@@ -1,0 +1,275 @@
+<TEI xml:lang="en"  xmlns="http://www.tei-c.org/ns/1.0"
+ xmlns:rng="http://relaxng.org/ns/structure/1.0">
+   <teiHeader>
+
+      <fileDesc>
+         <titleStmt>
+            <title>TEI ODD Torture Test</title>
+            <author>Sebastian Rahtz</author>
+         </titleStmt>
+         <publicationStmt>
+	   <p>for TEI web site only</p>
+	 </publicationStmt>
+         <sourceDesc>
+            <p>derived from old DTD extension files for P4</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+<text>
+<body>
+<p>The Torture schema consists some new elements and a view of the
+TEI. It is a bit like TEI Lite.</p>
+
+<p>First, here is the small set of new elements:
+<specGrp xml:id="LITEADD">
+ <elementSpec ident="eg">
+ <desc>Example code</desc>
+  <classes>
+    <memberOf key="tei.data"/>
+    <memberOf key="tei.common"/>
+  </classes>
+  <content>
+    <rng:text/>
+  </content>
+</elementSpec>
+
+ <elementSpec ident="gi">
+  <desc>contains the name (generic identifier) of an element.</desc>
+  <classes><memberOf key="tei.data"/></classes>
+  <content>
+    <rng:text/>
+  </content>
+  <attList>
+    <attDef usage="opt" ident="tei">
+      <equiv/>
+      <desc>indicates whether this element is part of the TEI encoding
+		scheme (i.e. defined in a TEI DTD fragment) or not.</desc>
+      <datatype><rng:data type="boolean"/></datatype>
+      <defaultVal>true</defaultVal>
+      <valList type="closed">
+        <valItem ident="true">
+          <equiv/>
+          <gloss>this element is part of the TEI scheme.</gloss>
+        </valItem>
+        <valItem ident="false">
+          <equiv/>
+          <gloss>this element is not part of the TEI scheme.</gloss>
+        </valItem>
+      </valList>
+    </attDef>
+  </attList>
+  <exemplum>
+    <eg><![CDATA[
+An <gi tei="false">LI</gi> element is roughly analagous to an <gi>item</gi> element.
+    ]]></eg>
+  </exemplum>
+</elementSpec>
+
+ <elementSpec ident="ident">
+  <classes><memberOf key="tei.data"/>
+    <memberOf key="tei.typed"/>
+  </classes>
+  <content>
+    <rng:text/>
+  </content>
+</elementSpec>
+
+ <elementSpec ident="code">
+  <classes><memberOf key="tei.data"/></classes>
+  <content>
+    <rng:text/>
+  </content>
+</elementSpec>
+
+ <elementSpec ident="kw">
+  <classes><memberOf key="tei.data"/></classes>
+  <content>
+    <rng:text/>
+  </content>
+ </elementSpec>
+</specGrp>
+</p>
+
+
+<p>Now for the wrapping schema, which imports 
+selected TEI modules. Some existing elements are redefined
+to be null.
+<schemaSpec ident="torture" start="TEI">
+  <specGrpRef target="#LITEADD"/>
+  <moduleRef url="mathml2-main.rng"/>
+  <moduleRef key="tei"/>
+  <moduleRef key="core"/>
+  <moduleRef key="header"/>
+  <moduleRef key="textstructure"/>
+  <moduleRef key="figures"/>
+  <moduleRef key="linking"/>
+  <moduleRef key="analysis"/>
+<elementSpec ident="alt" mode="delete" module="linking"  />
+<elementSpec ident="altGrp" mode="delete" module="linking"  />
+<elementSpec ident="analytic" mode="delete" module="core"  />
+<elementSpec ident="broadcast" mode="delete" module="header"  />
+<elementSpec ident="c" mode="delete" module="analysis"  />
+<elementSpec ident="cb" mode="delete" module="core"  />
+<elementSpec ident="cl" mode="delete" module="analysis"  />
+<elementSpec ident="dateRange" mode="delete" module="core"  />
+<elementSpec ident="distinct" mode="delete" module="core"  />
+<elementSpec ident="equipment" mode="delete" module="header"  />
+<elementSpec ident="expan" mode="delete" module="core"  />
+<elementSpec ident="fsdDecl" mode="delete" module="header"  />
+<elementSpec ident="headItem" mode="delete" module="core"  />
+<elementSpec ident="headLabel" mode="delete" module="core"  />
+<elementSpec ident="hyphenation" mode="delete" module="header"  />
+<elementSpec ident="interpretation" mode="delete" module="header"  />
+<elementSpec ident="join" mode="delete" module="linking"  />
+<elementSpec ident="joinGrp" mode="delete" module="linking"  />
+<elementSpec ident="link" mode="delete" module="linking"  />
+<elementSpec ident="linkGrp" mode="delete" module="linking"  />
+<elementSpec ident="m" mode="delete" module="analysis"  />
+<elementSpec ident="measure" mode="delete" module="core"  />
+<elementSpec ident="meeting" mode="delete" module="core"  />
+<elementSpec ident="metDecl" mode="delete" module="header"  />
+<elementSpec ident="monogr" mode="delete" module="core"  />
+<elementSpec ident="normalization" mode="delete" module="header"  />
+<elementSpec ident="num" mode="delete" module="core"  />
+<elementSpec ident="phr" mode="delete" module="analysis"  />
+<elementSpec ident="postBox" mode="delete" module="core"  />
+<elementSpec ident="postCode" mode="delete" module="core"  />
+<elementSpec ident="quotation" mode="delete" module="header"  />
+<elementSpec ident="quote" mode="delete" module="core"  />
+<elementSpec ident="recording" mode="delete" module="header"  />
+<elementSpec ident="recordingStmt" mode="delete" module="header"  />
+<elementSpec ident="scriptStmt" mode="delete" module="header"  />
+<elementSpec ident="segmentation" mode="delete" module="header"  />
+<elementSpec ident="series" mode="delete" module="core"  />
+<elementSpec ident="span" mode="delete" module="analysis"  />
+<elementSpec ident="spanGrp" mode="delete" module="analysis"  />
+<elementSpec ident="state" mode="delete" module="header"  />
+<elementSpec ident="stdVals" mode="delete" module="header"  />
+<elementSpec ident="street" mode="delete" module="core"  />
+<elementSpec ident="teiCorpus" mode="delete" module="core"  />
+<elementSpec ident="timeRange" mode="delete" module="core"  />
+<elementSpec ident="timeline" mode="delete" module="linking"  />
+<elementSpec ident="variantEncoding" mode="delete" module="header"  />
+<elementSpec ident="w" mode="delete" module="analysis"  />
+<elementSpec ident="when" mode="delete" module="linking"  />
+
+<elementSpec module="core" xml:id="DESC" usage="req" ident="desc" mode="replace">
+<equiv/>
+<gloss>description</gloss>
+<desc>contains a brief description of the purpose and application for
+an element, attribute, or attribute value.</desc>
+  
+  
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
+  </content>
+  
+</elementSpec>
+
+
+<classSpec module="tei" type="atts" ident="tei.global" mode="change">
+  <classes>
+    <memberOf key="tei.linking"/>
+  </classes>
+  
+  <attList>
+    <attDef ident="xml:id" mode="delete"/>
+    <attDef ident="id" mode="add">
+      <datatype><rng:text/></datatype>
+    </attDef>
+  </attList>
+</classSpec>
+
+<elementSpec ident="div0" mode="change">
+  <altIdent>chapter</altIdent>
+</elementSpec>
+
+<elementSpec ident="div" mode="change">
+  <desc>Used for any old form of division</desc>
+  <attList>
+    <attDef ident="class" mode="add">
+      <datatype>
+	<rng:text/>
+      </datatype>
+    </attDef>
+    <attDef ident="rend" mode="delete"/>
+    <attDef ident="type" mode="change" usage="req">
+      <valList type="closed">
+	<valItem ident="preface"/>
+	<valItem ident="toc"/>
+      </valList>
+    </attDef>
+  </attList>
+</elementSpec>
+
+<elementSpec ident="l" mode="change">
+  <attList>
+    <attDef ident="part" mode="change">
+      <defaultVal>first</defaultVal>
+      <valList>
+	<valItem ident="first" mode="add"/>
+	<valItem ident="second"  mode="add"/>
+      </valList>
+    </attDef>
+  </attList>
+</elementSpec>
+
+<elementSpec ident="table" module="figures" mode="change">
+  <attList>
+    <attDef mode="add" ident="align"><datatype><rng:text/></datatype></attDef>
+    <attDef mode="add" ident="summary"><datatype><rng:text/></datatype></attDef>
+    <attDef mode="add" ident="width"><datatype><rng:text/></datatype></attDef>
+    <attDef mode="add" ident="border"><datatype><rng:text/></datatype></attDef>
+    <attDef mode="add" ident="frame"><datatype><rng:text/></datatype></attDef>
+    <attDef mode="add" ident="rules"><datatype><rng:text/></datatype></attDef>
+    <attDef mode="add" ident="cellspacing"><datatype><rng:text/></datatype></attDef>
+    <attDef mode="add" ident="cellpadding"><datatype><rng:text/></datatype></attDef>
+  </attList>
+</elementSpec>
+
+<elementSpec ident="cell" module="figures" mode="change">
+  <attList>
+    <attDef mode="add" ident="align"><datatype><rng:text/></datatype></attDef>
+  </attList>
+</elementSpec>
+
+<elementSpec module="textstructure" ident="front" mode="change">
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+	<rng:ref name="tei.fmchunk"/>
+      </rng:zeroOrMore>
+      <rng:zeroOrMore>
+	<rng:ref name="titlePage"/>
+      </rng:zeroOrMore>
+      <rng:zeroOrMore>
+	<rng:ref name="macro.component"/>
+      </rng:zeroOrMore>
+      <rng:zeroOrMore>
+	<rng:ref name="div"/>
+      </rng:zeroOrMore>
+    </rng:group>
+  </content>
+</elementSpec>
+
+<elementSpec ident="list" module="core" mode="change">
+  <content>
+    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:oneOrMore>
+	<rng:ref name="item"/>
+      </rng:oneOrMore>
+      <rng:oneOrMore>
+	<rng:group>
+	  <rng:ref name="label"/>
+	  <rng:ref name="item"/>
+	</rng:group>
+      </rng:oneOrMore>
+    </rng:choice>
+  </content>
+</elementSpec>
+
+</schemaSpec>
+</p>
+</body>
+</text>
+</TEI>
