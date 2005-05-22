@@ -15,7 +15,7 @@
 <xsl:param name="lang">es</xsl:param>
 <xsl:key name="ELEMENTS" match="element" use="@ident"/>
 <xsl:key name="ATTRIBUTES" match="attribute" use="@ident"/>
-<xsl:param name="TEISERVER">http://localhost:8080/exist/TEI/Roma/xquery/</xsl:param>
+<xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
 <xsl:template match="tei:*|rng:*">
   <xsl:copy>
     <xsl:apply-templates select="@*|*|text()|comment()"/>
@@ -69,12 +69,12 @@
 	  <xsl:otherwise>
 	    <xsl:for-each  select="document($i18n)">
 	      <xsl:for-each select="key('ELEMENTS',$thisthing)">
-		<xsl:if test="equiv[@lang=$lang][not(@value='')]">
+		<xsl:if test="equiv[@xml:lang=$lang][not(@value='')]">
 		  <xsl:if test="$verbose='true'">
-		    <xsl:message> ... <xsl:value-of select="equiv[@lang=$lang]/@value"/></xsl:message>
+		    <xsl:message> ... <xsl:value-of select="equiv[@xml:lang=$lang]/@value"/></xsl:message>
 		  </xsl:if>
 		  <altIdent type="lang" xmlns="http://www.tei-c.org/ns/1.0">
-		    <xsl:value-of select="equiv[@lang=$lang]/@value"/>
+		    <xsl:value-of select="normalize-space(equiv[@xml:lang=$lang]/@value)"/>
 		  </altIdent>
 		</xsl:if>
 	      </xsl:for-each>
@@ -96,10 +96,10 @@
 		  <xsl:variable name="thisatt" select="."/>
 		  <xsl:for-each  select="document($i18n)">
 		    <xsl:for-each select="key('ATTRIBUTES',$thisatt)">
-		      <xsl:if test="equiv[@lang=$lang][not(@value='')]">
+		      <xsl:if test="equiv[@xml:lang=$lang][not(@value='')]">
 			<attDef mode="change" xmlns="http://www.tei-c.org/ns/1.0" ident="{$thisatt}"> 
 			  <altIdent type="lang" xmlns="http://www.tei-c.org/ns/1.0">
-			    <xsl:value-of select="equiv[@lang=$lang]/@value"/>
+			    <xsl:value-of select="normalize-space(equiv[@xml:lang=$lang]/@value)"/>
 			  </altIdent>
 			</attDef>
 		      </xsl:if>

@@ -11,12 +11,12 @@
 <xsl:param name="lang">es</xsl:param>
 <xsl:key name="ELEMENTS" 
 	 match="element/equiv"
-	 use="concat(@lang,':',@value)"/>
+	 use="concat(@xml:lang,':',@value)"/>
 <xsl:key name="ATTRIBUTES" 
 	 match="attribute/equiv" 
-	 use="concat(@lang,':',@value)"/>
+	 use="concat(@xml:lang,':',@value)"/>
 <xsl:param name="verbose">true</xsl:param>
-<xsl:param name="TEISERVER">http://localhost:8080/exist/TEI/Roma/xquery/i18n.xq</xsl:param>
+<xsl:param name="TEISERVER">http://localhost/Query/i18n.xq</xsl:param>
 
 <xsl:template match="comment()|text()|processing-instruction()">
   <xsl:copy/>
