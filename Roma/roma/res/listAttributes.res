@@ -1,5 +1,5 @@
 [en]
-helpmessage=lalalalalalal help lalalalalal=asdasd
+helpmessage=These are the attributes defined for this class or element. 
 headline=Added Attributes
 
 form_headline=List of attributes

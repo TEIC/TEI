@@ -84,10 +84,6 @@ require_once( 'parser/parser.php' );
 // Customization file.
 require_once( 'roma/romadom.php' );
 
-// docdom extends the domDocument class. It is used to create the
-// Documentation file.
-require_once( 'roma/docdom.php' );
-
 // Handles Notams
 require_once( 'notam/notamHandler.php' );
 
@@ -864,12 +860,13 @@ class roma
 	$this->addErrorsDom( $oListDom, $aoErrors );
 
         // Tell the stylesheet something about the Element
-        $aszParam = array( 'host' => $_SERVER[ 'HTTP_HOST' ], 'selectedMode' => 'changeElement', 'headline' => roma_message_headline_changeElement );
+        $aszParam = array( 'selectedMode' => 'changeElement', 'headline' => roma_message_headline_changeElement );
 
         $aszParam[ 'elementName' ] = $_REQUEST[ 'element' ];
         $aszParam[ 'elementClasses' ] = join( ';', $aszClasses );  
         $aszParam[ 'elementContent' ] = $szContent;
         $aszParam[ 'elementDesc' ] = $szDesc;
+	$aszParam[ 'host' ] = roma_xquery_server;
         $aszParam[ 'elementsModule' ] = $_REQUEST[ 'module' ];
 	$aszParam[ 'elementChangedName' ] = $szChangedName;
 	$aszParam[ 'module' ] = $_REQUEST[ 'module' ];
@@ -1051,7 +1048,7 @@ class roma
 	$oListDom = new domDocument();
 	$oListDom->loadXML( join ( '', file( roma_xquery_server . '/attclasses.xq' ) ) );
 
-	$this->applyStylesheet( $oListDom, 'changeClasses.xsl', $oNewDom, array( 'host' => $_SERVER[ 'HTTP_HOST' ], 'class' => $_REQUEST[ 'class' ], 'module' => $_REQUEST[ 'module' ] ), 'changeClasses' );
+	$this->applyStylesheet( $oListDom, 'changeClasses.xsl',	$oNewDom, array( 'host' => roma_xquery_server, 'class' => $_REQUEST[ 'class' ], 'module' => $_REQUEST[ 'module' ] ), 'changeClasses' );
 
 	$oParser->addReplacement( 'mode', 'changeClasses' );
 	$oParser->addReplacement( 'view', 'changeClasses' );
@@ -1234,39 +1231,38 @@ class roma
 	flush();
 
 	// get docDom
-	$oDomDoc = new docDom( $this->m_oRomaDom, true );
+//	$oDomDoc = new docDom( $this->m_oRomaDom, true );
 	$szEnding = '';
-
 
 	switch( $_REQUEST[ 'format' ] )
 	  {
 	  case 'dvi':
-	    $szError = $oDomDoc->outputDVI( $szDoc );
+	    $szError = $this->m_oRomaDom->outputDVI( $szDoc );
 	    $szEnding = 'dvi';
 	    break;
 	  case 'pdfLatex':
-	    $szError = $oDomDoc->outputPdfLatex( $szDoc );
+	    $szError = $this->m_oRomaDom->outputPdfLatex( $szDoc );
 	    $szEnding = 'pdf';
 	    break;
 	  case 'latex':
-	    $szError = $oDomDoc->outputLatex( $szDoc );
+	    $szError = $this->m_oRomaDom->outputLatex( $szDoc );
 	    $szEnding = 'tex';
 	    break;
 	  case 'pdf':
-	    $szError = $oDomDoc->outputPDF( $szDoc );
+	    $szError = $this->m_oRomaDom->outputPDF( $szDoc );
 	    $szEnding = 'pdf';
 	    break;
 	  case 'teiLite':
-	    $szError = $oDomDoc->outputTeiLite( $szDoc );
+	    $szError = $this->m_oRomaDom->outputTeiLite( $szDoc, true );
 	    $szEnding = 'xml';
 	    break;
 	  case 'plain':
-	    $szError = $oDomDoc->outputPlain( $szDoc );
+	    $szError = $this->m_oRomaDom->outputPlain( $szDoc );
 	    $szEnding = 'xml';
 	    break;
 	  case 'html':
 	  default:
-	    $szError = $oDomDoc->outputHTML( $szDoc );
+	    $szError = $this->m_oRomaDom->outputHTML( $szDoc );
 	    $szEnding = 'html';
 	    break;	    
 	  }

@@ -1,5 +1,5 @@
 [en]
-helpmessage=lalalalalalal help lalalalalal=asdasd
+helpmessage=Each attribute must be added separately. Take care in working out the datatype.
 headline=Add some attributes
 
 form_headline=Add a new attribute

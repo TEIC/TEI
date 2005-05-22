@@ -54,10 +54,14 @@ class romaDom extends domDocument
 
 	$oSourceDesc = $oFileDesc->appendChild( new domElement( 'sourceDesc' ) );
 	$oP = $oSourceDesc->appendChild( new domElement( 'p' ) );
-	$oP->appendChild( new domText( 'created on ' . date( "l dS of F Y h:i:s A" ) . ' by the form at http://www.tei-c.org.uk/Roma' ) );
+	$oP->appendChild( new domText( 'created on ' . date( "l dS of F Y h:i:s A" ) . ' by the form at http://www.tei-c.org.uk/Roma/' ) );
 
 	$oText = $oTEI->appendChild( new domElement( 'text' ) );
 	$oBody = $oText->appendChild( new domElement( 'body' ) );
+
+	$oDivgen = $oBody->appendChild( new domElement( 'divGen' ) );
+	$oDivgen->setAttribute( 'type', 'toc' );
+
 	$oP = $oBody->appendChild( new domElement( 'p' ) );
 
 	$oSchema = $oP->appendChild( new domElement( 'schemaSpec' ) );
@@ -1190,7 +1194,7 @@ class romaDom extends domDocument
 	      $this->clearLanguageCustomization();
 	      
               $oXSL = new domDocument();
-              $oXSL->load( roma_StylesheetDir . '/base/p5/odds/translate-odd.xsl' );
+              $oXSL->load( roma_StylesheetDir . '/odds/translate-odd.xsl' );
 	    
               $oProc = new XsltProcessor();
               $oProc->importStylesheet( $oXSL );
@@ -1848,30 +1852,25 @@ class romaDom extends domDocument
     // --- Little Helpers
     // #####################################################################
 
-    protected function getSubsetDocDom( &$oDoc )
+    protected function getDocDom( &$oDOC )
       {
 	$oXSL = new domDocument();
-	$oXSL->load( roma_StylesheetDir . '/base/p5/odds/subsetGuidelines.xsl' );
+	$oXSL->load( roma_StylesheetDir . '/odds/odd2odd.xsl' );
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
-
-	$oDoc = $oProc->transformToDoc( $this );
+	$oDOC = $oProc->transformToDoc( $this );
       } 
 
     protected function getSchemaRNGDom( &$oRNG )
       {
-	$oXSL = new domDocument();
-	$oXSL->load( roma_StylesheetDir . '/base/p5/odds/odd2relax.xsl' );
-	$oXSL2 = new domDocument();
-	$oXSL2->load( roma_StylesheetDir . '/base/p5/odds/odd2odd.xsl' );
+	$this->getDocDom( $oDOC );
+        $oXSL = new domDocument();
+ 	$oXSL->load( roma_StylesheetDir . '/' . 'odds/odd2relax.xsl'  );
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
-	$oProc2 = new XsltProcessor();
-	$oProc2->importStylesheet( $oXSL2 );
+	$oProc->setParameter( null, 'displayMode', 'rnc' );
 	$oProc->setParameter( null, 'RNGDIR', '-' );
-	$oProc->setParameter( null, 'Method', 'byvalue' );
-
-	$oRNG = $oProc->transformToDoc( $oProc2->transformToDoc ($this ));
+	$oRNG = $oProc->transformToDoc( $oDOC );
       } 
 
     public function loadProgressBar()
@@ -1903,6 +1902,260 @@ class romaDom extends domDocument
 	flush();
 
 	$nLast = $nPercentage;
+      }
+
+    // #####################################################################
+    // --- Creating some documentation versions
+    // #####################################################################
+    public function getTeiLiteDom( &$oTeiLite )
+      {
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '55' );
+	$this->getDocDom( $oDOC );
+        $oXSL = new domDocument();
+ 	$oXSL->load( roma_StylesheetDir . '/' . 'odds/teixml-odds.xsl'  );
+
+	$oProc = new XsltProcessor();
+	$oProc->importStylesheet( $oXSL );
+	$oProc->setParameter( null, 'displayMode', 'rnc' );
+	
+	$oTeiLite = $oProc->transformToDoc( $oDOC );
+      }
+
+    public function outputPlain( &$szDoc, $bBar = false )
+      {
+	if ( $bBar )
+	  {
+	    $this->loadProgressBar();
+	    $this->updateProgressBar( '30' );
+	  }
+	$this->getDocDom( $oDOC );
+	if ( $bBar )
+	    $this->updateProgressBar( '80' );
+	$oTidy = new tidy();
+	$aszOptions = array( 'indent' => true,
+			     'indent-spaces' => 1,
+			     'wrap' => 72,
+			     'input-xml' => true,
+			     'output-xml' => true
+			     );
+	$oTidy->parseString( $oDOC->SaveXML(), $aszOptions );
+
+	$oTidy->cleanRepair();
+	$szDoc = $oTidy->value;
+
+	if ( $bBar )
+	    $this->updateProgressBar( '100' );
+      }
+
+
+    public function outputTeiLite( &$szTeiLite )
+      {
+	$this->getTeiLiteDom( $oTeiLiteDom );
+	if ( $this->bBar )
+	    $this->m_oRomaDom->updateProgressBar( '70' );
+	
+	$oTidy = new tidy();
+	$aszOptions = array( 'indent' => false,
+			     'input-xml' => true,
+			     'output-xml' => true
+			     );
+	$oTidy->parseString( $oTeiLiteDom->SaveXML(), $aszOptions );
+	if ( $this->bBar )
+	    $this->m_oRomaDom->updateProgressBar( '80' );
+
+	$oTidy->cleanRepair();
+	$szTeiLite = $oTidy->value;
+
+	if ( $this->bBar )
+	    $this->m_oRomaDom->updateProgressBar( '100' );
+      }
+
+    public function outputLatex( &$szLatex )
+      {
+	$this->getTeiLiteDom( $oTeiLiteDom );
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '70' );
+
+	$oXSL = new domDocument();
+	$oXSL->load( roma_stylesheet_docLatex );
+	
+	$oProc = new XsltProcessor();
+	$oProc->importStylesheet( $oXSL );
+	
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '85' );
+	
+	$szLatex = $oProc->transformToXML( $oTeiLiteDom );
+	
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '100' );
+      }
+
+    public function outputPdfLatex( &$szPdf )
+      {
+	$this->getTeiLiteDom( $oTeiLiteDom );
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '70' );
+
+	
+	$oXSL = new domDocument();
+	$oXSL->load( roma_stylesheet_docLatex );
+	
+	$oProc = new XsltProcessor();
+	$oProc->importStylesheet( $oXSL );
+
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '75' );
+
+	$szTmp = $oProc->transformToXML( $oTeiLiteDom );
+	
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '80' );
+
+	//Save File
+	$szID = md5( uniqid(rand(), true ) );
+	
+	$szInputFile = roma_temporaryFilesDir . '/' . $szID . '.tex';    
+	$szOutputFile = roma_temporaryFilesDir . '/' . $szID . '.pdf';    
+	
+	file_put_contents( $szInputFile , $szTmp );
+
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '85' );
+	
+	$szCurrentDir = getcwd();
+	chdir( roma_temporaryFilesDir );
+	exec( roma_pdflatex . ' -interaction=nonstopmode ' . $szInputFile );
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '90' );
+
+	exec( roma_pdflatex . ' -interaction=nonstopmode ' . $szInputFile );
+	chdir( $szCurrentDir );
+
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '95' );
+	
+	$szPdf = join( '', file( $szOutputFile ) );
+	
+	unlink( $szInputFile );
+	unlink( $szOutputFile );
+
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '100' );
+      }
+
+    public function outputPDF( &$szPdf )
+      {
+	$this->getTeiLiteDom( $oTeiLiteDom );
+
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '60' );
+
+	$oXSL = new domDocument();
+	$oXSL->load( roma_stylesheet_docPDF );
+	
+	$oProc = new XsltProcessor();
+	$oProc->importStylesheet( $oXSL );
+	$oTmpDom = $oProc->transformToDoc( $oTeiLiteDom );
+
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '70' );
+	
+	//Save File
+	$szID = md5( uniqid(rand(), true ) );
+	
+	$szInputFile = roma_temporaryFilesDir . '/' . $szID . '.fo';    
+	$szOutputFile = roma_temporaryFilesDir . '/' . $szID . '.pdf';    
+	
+	file_put_contents( $szInputFile , $oTmpDom->SaveXML() );
+
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '80' );
+
+	exec( roma_fop . ' ' . $szInputFile . ' ' . $szOutputFile );
+
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '90' );
+
+	$szPdf = join( '', file( $szOutputFile ) );
+	
+	unlink( $szInputFile );
+	unlink( $szOutputFile );
+
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '100' );
+      }
+
+    public function outputDVI ( &$szDVI )
+      {
+	$this->getTeiLiteDom( $oTeiLiteDom );
+
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '60' );
+
+	$oXSL = new domDocument();
+	$oXSL->load( roma_stylesheet_docLatex );
+	
+	$oProc = new XsltProcessor();
+	$oProc->importStylesheet( $oXSL );
+	$szTmp = $oProc->transformToXML( $oTeiLiteDom );
+
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '70' );
+	
+	//Save File
+	$szID = md5( uniqid(rand(), true ) );
+	
+	$szInputFile = roma_temporaryFilesDir . '/' . $szID . '.tex';    
+	$szOutputFile = roma_temporaryFilesDir . '/' . $szID . '.dvi';    
+	
+	file_put_contents( $szInputFile , $szTmp );
+
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '80' );
+
+	$szCurrentDir = getcwd();
+	chdir( roma_temporaryFilesDir );
+	exec( roma_latex . ' -interaction=nonstopmode ' . $szInputFile );
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '90' );
+
+	exec( roma_latex . ' -interaction=nonstopmode ' . $szInputFile );
+	chdir( $szCurrentDir );
+
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '95' );
+	
+	$szDVI = join( '', file( $szOutputFile ) );
+	
+	unlink( $szInputFile );
+	unlink( $szOutputFile );
+
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '100' );
+      }
+
+    public function outputHTML ( &$szHTML )
+      {
+	$this->getTeiLiteDom( $oTeiLiteDom );
+
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '70' );
+
+	$oXSL = new domDocument();
+	$oXSL->load( roma_stylesheet_docHtml );
+	
+	$oProc = new XsltProcessor();
+	$oProc->importStylesheet( $oXSL );
+
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '80' );
+
+	$szHTML = $oProc->transformToDoc( $oTeiLiteDom )->SaveHTML();
+
+	if ( $this->bBar )
+	  $this->m_oRomaDom->updateProgressBar( '100' );
       }
 
     // #####################################################################
@@ -2032,41 +2285,17 @@ class romaDom extends domDocument
 	    $this->loadProgressBar();
 	    $this->updateProgressBar( '30' );
 	  }
-	$this->getSchemaRNGDom( $oRNG );
+	$this->getDocDom( $oDOC );
+        $oXSL = new domDocument();
+ 	$oXSL->load( roma_StylesheetDir . '/' . 'odds/odd2dtd.xsl'  );
+	$oProc = new XsltProcessor();
+	$oProc->importStylesheet( $oXSL );
+	$oProc->setParameter( null, 'outputDir', '-' );
 	if ( $bBar )
-	    $this->updateProgressBar( '50' );
-
-
-	//Save File
-	$szID = md5( uniqid(rand(), true ) );
-	
-	$szInputFile = roma_temporaryFilesDir . '/' . $szID . '.tmp';    
-	$szOutputFile = roma_temporaryFilesDir . '/' . $szID . '.dtd';    
-	file_put_contents( $szInputFile ,$oRNG->SaveXML() );
-
-	if ( $bBar )
-	    $this->updateProgressBar( '80' );
-	
-	ob_start();
-	System( '(' . roma_trang . ' -I rng -O dtd ' . $szInputFile . ' '
-	. $szOutputFile  . ' && perl -p -i -e "s/ns1://g;s/xmlns:ns1/xmlns/g;s/xml:id CDATA/xml:id ID/" ' . 
-        $szOutputFile . ' ) 2>&1 ');
-	$szError = ob_get_clean();
-	ob_end_clean();
-
-	if ( $bBar )
-	    $this->updateProgressBar( '90' );
-	
-	if ( file_exists( $szOutputFile ) )
-	  {
-	    $szDTD = join( '', file( $szOutputFile ) );
-	    unlink( $szOutputFile );
-	  }	
-       	unlink( $szInputFile );
-
+	    $this->updateProgressBar( '70' );
+	$szDTD = $oProc->transformToXML( $oDOC );
 	if ( $bBar )
 	    $this->updateProgressBar( '100' );
-
 	return $szError;
       }
 

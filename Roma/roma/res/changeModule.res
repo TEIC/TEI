@@ -1,5 +1,5 @@
 [en]
-helpmessage=lalalalalalal help lalalalalal=asdasd
+helpmessage=Select which elements belonging to this module you want to include. Click on the heading "Exclude" to exclude them all, or in "Include" to re-include them all
 headline=Change module
 
 form_headline=List of elements in module:

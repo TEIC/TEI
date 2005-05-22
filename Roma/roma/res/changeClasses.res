@@ -1,5 +1,5 @@
 [en]
-helpmessage=lalalalalalal help lalalalalal=asdasd
+helpmessage=Select a TEI class which you want to change. Click on its name to see documentation
 headline=Change attribute classes
 
 form_headline=List of attribute classes

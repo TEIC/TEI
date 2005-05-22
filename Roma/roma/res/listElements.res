@@ -1,5 +1,5 @@
 [en]
-helpmessage=lalalalalalal help lalalalalal=asdasd
+helpmessage=These are the elements you have defined for your schema.
 headline=Added Elements
 
 form_headline=List of added elements

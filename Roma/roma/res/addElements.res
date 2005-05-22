@@ -1,5 +1,5 @@
 [en]
-helpmessage=lalalalalalal help lalalalalal=asdasd
+helpmessage=When you submit this form, you will have a chance to add attributes.
 headline=Add Element
 
 form_headline=Defining a new element

@@ -1,5 +1,5 @@
 [en]
-helpmessage=lalalalalalal help lalalalalal=asdasd
+helpmessage=You can choose whether to make a schema in Relax, W3C or DTD
 headline=Time to give you a schema
 
 form_headline=Creating a schema

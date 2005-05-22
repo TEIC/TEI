@@ -1,6 +1,6 @@
 
 [en]
-helpmessage=Go, treat yourself, customize some modules
+helpmessage=Click on add to put the module into your schema, or click on the module name to customize its contents
 headline=Modules
 
 form_headline=List of TEI Modules

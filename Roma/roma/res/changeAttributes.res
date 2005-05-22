@@ -1,5 +1,5 @@
 [en]
-helpmessage=lalalalalalal help lalalalalal=asdasd
+helpmessage=You can delete attributes, or change their datatype.
 headline=Change some attributes
 
 form_headline=Change an attribute

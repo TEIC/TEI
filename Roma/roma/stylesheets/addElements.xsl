@@ -20,7 +20,7 @@ Description
 <xsl:param name="elementFullContents"/>
 <xsl:param name="elementsModule"/>
 <xsl:param name="MESSAGE"/>
-<xsl:param name="host">http://localhost:8080/cocoon/Roma</xsl:param>
+<xsl:param name="host">http://localhost:8080/cocoon/Query/</xsl:param>
 <xsl:param name="selectedMode">addElement</xsl:param>
 <xsl:param name="elementChangedName"/>
 <xsl:param name="module"/>
@@ -115,21 +115,13 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
       <tr>
         <td class="formlabeltop"><xsl:value-of disable-output-escaping="yes" select="$res_form_modelClasses"/></td>
         <td>
-         <table class="noBorder">
-          <tr>
            <xsl:call-template name="modelClassList"/>
-          </tr>
-         </table>
         </td>
       </tr>
       <tr>
         <td class="formlabeltop"><xsl:value-of disable-output-escaping="yes" select="$res_form_attributeClasses"/></td>
         <td>
-         <table class="noBorder">
-          <tr>
            <xsl:call-template name="attClassList"/>
-          </tr>
-         </table>
          </td>
       </tr>
       <tr>
@@ -174,7 +166,6 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
 
 
   <xsl:template name="generateDivs">
-<!-- generate divs -->
     <xsl:for-each select="/addElement/modelClassList/*">  
      <div class="descriptionPopup">
       <xsl:attribute name="id">descDiv_modelClass_<xsl:value-of select="className"/></xsl:attribute>
@@ -190,290 +181,121 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
 
   </xsl:template>
 
-  <xsl:template name="modelClassList">
-          <xsl:for-each select="/addElement/modelClassList/*">
-          <xsl:if test="((position() mod 9)=0) or position()=1">
-            <td>
-             <table class="modelClasses">
-              <tr>
-               <td>
-             <input class="checkbox" type="checkbox">
-              <xsl:attribute name="name">class|<xsl:value-of select="className"/></xsl:attribute>
-              <xsl:attribute name="value"><xsl:value-of select="className"/></xsl:attribute>
-              <xsl:variable name="currentClass"><xsl:value-of select="className"/></xsl:variable>
-              <xsl:if test="contains( $elementClasses, $currentClass )">
-                <xsl:attribute name="checked">1</xsl:attribute>
-              </xsl:if>
-             </input>
-              <span>
-               <xsl:attribute name="id">descSpan_modelClass_<xsl:value-of select="className"/></xsl:attribute>
-	       <xsl:attribute name="onMouseover">descriptionPopup_Show( 'modelClass_<xsl:value-of select="className"/>' )</xsl:attribute>
-	       <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'modelClass_<xsl:value-of select="className"/>' )</xsl:attribute>
-                <a>
-                 <xsl:attribute name="href"><xsl:value-of select="$host"/>/Query/class.xq?name=<xsl:value-of select="className"/></xsl:attribute>
-	         <xsl:attribute name="target">_blank</xsl:attribute>
-                 <xsl:value-of select="className"/>
-                </a>
-              </span>
-             </td></tr><tr><td>
-	     <xsl:if
-	      test="not(string(following-sibling::modelClass[1]/className)='')">
-	       <input class="checkbox" type="checkbox">
-              <xsl:attribute name="name">class|<xsl:value-of select="following-sibling::modelClass[1]/className"/></xsl:attribute>
-              <xsl:attribute name="value"><xsl:value-of select="following-sibling::modelClass[1]/className"/></xsl:attribute>
-              <xsl:variable name="currentClass"><xsl:value-of select="following-sibling::modelClass[1]/className"/></xsl:variable>
-              <xsl:if test="contains( $elementClasses, $currentClass )">
-                <xsl:attribute name="checked">1</xsl:attribute>
-              </xsl:if>
-             </input>
-              <span>
-               <xsl:attribute name="id">descSpan_modelClass_<xsl:value-of select="following-sibling::modelClass[1]/className"/></xsl:attribute>
-	       <xsl:attribute name="onMouseover">descriptionPopup_Show( 'modelClass_<xsl:value-of select="following-sibling::modelClass[1]/className"/>' )</xsl:attribute>
-	       <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'modelClass_<xsl:value-of select="following-sibling::modelClass[1]/className"/>' )</xsl:attribute>
-                <a>
-                 <xsl:attribute name="href"><xsl:value-of select="$host"/>/Query/class.xq?name=<xsl:value-of select="following-sibling::modelClass[1]/className"/></xsl:attribute>
-	         <xsl:attribute name="target">_blank</xsl:attribute>
-                 <xsl:value-of select="following-sibling::modelClass[1]/className"/>
-                </a>
-              </span></xsl:if>
-	      </td></tr><tr><td>
-	      <xsl:if
-	       test="not(string(following-sibling::modelClass[2]/className)='')">
-		<input class="checkbox" type="checkbox">
-              <xsl:attribute name="name">class|<xsl:value-of select="following-sibling::modelClass[2]/className"/></xsl:attribute>
-              <xsl:attribute name="value"><xsl:value-of select="following-sibling::modelClass[2]/className"/></xsl:attribute>
-              <xsl:variable name="currentClass"><xsl:value-of select="following-sibling::modelClass[2]/className"/></xsl:variable>
-              <xsl:if test="contains( $elementClasses, $currentClass )">
-                <xsl:attribute name="checked">1</xsl:attribute>
-              </xsl:if>
-             </input>
-              <span>
-               <xsl:attribute name="id">descSpan_modelClass_<xsl:value-of select="following-sibling::modelClass[2]/className"/></xsl:attribute>
-	       <xsl:attribute name="onMouseover">descriptionPopup_Show( 'modelClass_<xsl:value-of select="following-sibling::modelClass[2]/className"/>' )</xsl:attribute>
-	       <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'modelClass_<xsl:value-of select="following-sibling::modelClass[2]/className"/>' )</xsl:attribute>
-                <a>
-                 <xsl:attribute name="href"><xsl:value-of select="$host"/>/Query/class.xq?name=<xsl:value-of select="following-sibling::modelClass[2]/className"/></xsl:attribute>
-	         <xsl:attribute name="target">_blank</xsl:attribute>
-                 <xsl:value-of select="following-sibling::modelClass[2]/className"/>
-                </a>
-              </span></xsl:if></td></tr><tr><td>
-	      <xsl:if
-	       test="not(string(following-sibling::modelClass[3]/className)='')">
-             <input class="checkbox" type="checkbox">
-              <xsl:attribute name="name">class|<xsl:value-of select="following-sibling::modelClass[3]/className"/></xsl:attribute>
-              <xsl:attribute name="value"><xsl:value-of select="following-sibling::modelClass[3]/className"/></xsl:attribute>
-              <xsl:variable name="currentClass"><xsl:value-of select="following-sibling::modelClass[3]/className"/></xsl:variable>
-              <xsl:if test="contains( $elementClasses, $currentClass )">
-                <xsl:attribute name="checked">1</xsl:attribute>
-              </xsl:if>
-             </input>
-              <span>
-               <xsl:attribute name="id">descSpan_modelClass_<xsl:value-of select="following-sibling::modelClass[3]/className"/></xsl:attribute>
-	       <xsl:attribute name="onMouseover">descriptionPopup_Show( 'modelClass_<xsl:value-of select="following-sibling::modelClass[3]/className"/>' )</xsl:attribute>
-	       <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'modelClass_<xsl:value-of select="following-sibling::modelClass[3]/className"/>' )</xsl:attribute>
-                <a>
-                 <xsl:attribute name="href"><xsl:value-of select="$host"/>/Query/class.xq?name=<xsl:value-of select="following-sibling::modelClass[3]/className"/></xsl:attribute>
-	         <xsl:attribute name="target">_blank</xsl:attribute>
-                 <xsl:value-of select="following-sibling::modelClass[3]/className"/>
-                </a>
-              </span></xsl:if></td></tr><tr><td>
-	      <xsl:if
-	       test="not(string(following-sibling::modelClass[4]/className)='')">
-             <input class="checkbox" type="checkbox">
-              <xsl:attribute name="name">class|<xsl:value-of select="following-sibling::modelClass[4]/className"/></xsl:attribute>
-              <xsl:attribute name="value"><xsl:value-of select="following-sibling::modelClass[4]/className"/></xsl:attribute>
-              <xsl:variable name="currentClass"><xsl:value-of select="following-sibling::modelClass[4]/className"/></xsl:variable>
-              <xsl:if test="contains( $elementClasses, $currentClass )">
-                <xsl:attribute name="checked">1</xsl:attribute>
-              </xsl:if>
-             </input>
-              <span>
-               <xsl:attribute name="id">descSpan_modelClass_<xsl:value-of select="following-sibling::modelClass[4]/className"/></xsl:attribute>
-	       <xsl:attribute name="onMouseover">descriptionPopup_Show( 'modelClass_<xsl:value-of select="following-sibling::modelClass[4]/className"/>' )</xsl:attribute>
-	       <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'modelClass_<xsl:value-of select="following-sibling::modelClass[4]/className"/>' )</xsl:attribute>
-                <a>
-                 <xsl:attribute name="href"><xsl:value-of select="$host"/>/Query/class.xq?name=<xsl:value-of select="following-sibling::modelClass[4]/className"/></xsl:attribute>
-                 <xsl:value-of select="following-sibling::modelClass[4]/className"/>
-                </a>
-              </span>
-	      </xsl:if>
-	      </td></tr>
-             <tr><td>
-	     <xsl:if
-	      test="not(string(following-sibling::modelClass[6]/className)='')">
-	       <input class="checkbox" type="checkbox">
-              <xsl:attribute name="name">class|<xsl:value-of select="following-sibling::modelClass[5]/className"/></xsl:attribute>
-              <xsl:attribute name="value"><xsl:value-of select="following-sibling::modelClass[5]/className"/></xsl:attribute>
-              <xsl:variable name="currentClass"><xsl:value-of select="following-sibling::modelClass[5]/className"/></xsl:variable>
-              <xsl:if test="contains( $elementClasses, $currentClass )">
-                <xsl:attribute name="checked">1</xsl:attribute>
-              </xsl:if>
-             </input>
-              <span>
-               <xsl:attribute name="id">descSpan_modelClass_<xsl:value-of select="following-sibling::modelClass[5]/className"/></xsl:attribute>
-	       <xsl:attribute name="onMouseover">descriptionPopup_Show( 'modelClass_<xsl:value-of select="following-sibling::modelClass[5]/className"/>' )</xsl:attribute>
-	       <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'modelClass_<xsl:value-of select="following-sibling::modelClass[5]/className"/>' )</xsl:attribute>
-                <a>
-                 <xsl:attribute name="href"><xsl:value-of select="$host"/>/Query/class.xq?name=<xsl:value-of select="following-sibling::modelClass[5]/className"/></xsl:attribute>
-	         <xsl:attribute name="target">_blank</xsl:attribute>
-                 <xsl:value-of select="following-sibling::modelClass[5]/className"/>
-                </a>
-              </span>
-	     </xsl:if>
-               </td></tr>
-             <tr><td>
-	     <xsl:if
-	      test="not(string(following-sibling::modelClass[6]/className)='')">
-	       <input class="checkbox" type="checkbox">
-		 <xsl:attribute name="name">class|<xsl:value-of select="following-sibling::modelClass[6]/className"/></xsl:attribute>
-		 <xsl:attribute name="value"><xsl:value-of select="following-sibling::modelClass[6]/className"/></xsl:attribute>
-		 <xsl:variable name="currentClass"><xsl:value-of select="following-sibling::modelClass[6]/className"/></xsl:variable>
-		 <xsl:if test="contains( $elementClasses, $currentClass )">
-		   <xsl:attribute name="checked">1</xsl:attribute>
-		 </xsl:if>
-	       </input>
-	       <span>	
-		 <xsl:attribute name="id">descSpan_modelClass_<xsl:value-of select="following-sibling::modelClass[6]/className"/></xsl:attribute>
-		 <xsl:attribute name="onMouseover">descriptionPopup_Show( 'modelClass_<xsl:value-of select="following-sibling::modelClass[6]/className"/>' )</xsl:attribute>
-		 <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'modelClass_<xsl:value-of select="following-sibling::modelClass[6]/className"/>' )</xsl:attribute>
-		 <a>
-		   <xsl:attribute name="href"><xsl:value-of select="$host"/>/Query/class.xq?name=<xsl:value-of select="following-sibling::modelClass[6]/className"/></xsl:attribute>
-		   <xsl:attribute name="target">_blank</xsl:attribute>
-		   <xsl:value-of select="following-sibling::modelClass[6]/className"/>
-		 </a>
-	       </span>
-	     </xsl:if>
-               </td></tr>
-             <tr><td>
-	     <xsl:if
-	      test="not(string(following-sibling::modelClass[7]/className)='')">
-	       <input class="checkbox" type="checkbox">
-		 <xsl:attribute name="name">class|<xsl:value-of select="following-sibling::modelClass[7]/className"/></xsl:attribute>
-		 <xsl:attribute name="value"><xsl:value-of select="following-sibling::modelClass[7]/className"/></xsl:attribute>
-		 <xsl:variable name="currentClass"><xsl:value-of select="following-sibling::modelClass[7]/className"/></xsl:variable>
-		 <xsl:if test="contains( $elementClasses, $currentClass )">
-		   <xsl:attribute name="checked">1</xsl:attribute>
-		 </xsl:if>
-	       </input>
-	       <span>
-		 <xsl:attribute name="id">descSpan_modelClass_<xsl:value-of select="following-sibling::modelClass[7]/className"/></xsl:attribute>
-		 <xsl:attribute name="onMouseover">descriptionPopup_Show( 'modelClass_<xsl:value-of select="following-sibling::modelClass[7]/className"/>' )</xsl:attribute>
-		 <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'modelClass_<xsl:value-of select="following-sibling::modelClass[7]/className"/>' )</xsl:attribute>
-		 <a>
-		   <xsl:attribute name="href"><xsl:value-of select="$host"/>/Query/class.xq?name=<xsl:value-of select="following-sibling::modelClass[7]/className"/></xsl:attribute>
-		   <xsl:attribute name="target">_blank</xsl:attribute>
-		   <xsl:value-of select="following-sibling::modelClass[7]/className"/>
-		 </a>
-	       </span>
-	     </xsl:if>
-	       </td></tr>
-             </table>
-            </td>
-           </xsl:if>
-          </xsl:for-each>
-  </xsl:template>
+<xsl:template name="modelClassList">
+  <xsl:for-each select="/addElement/modelClassList">
+  <table class="modelClasses">
+    <xsl:call-template name="makeRow">
+      <xsl:with-param name="M">1</xsl:with-param>
+    </xsl:call-template>
+    <xsl:call-template name="makeRow">
+      <xsl:with-param name="M">2</xsl:with-param>
+    </xsl:call-template>
+    <xsl:call-template name="makeRow">
+      <xsl:with-param name="M">3</xsl:with-param>
+    </xsl:call-template>
+    <xsl:call-template name="makeRow">
+      <xsl:with-param name="M">4</xsl:with-param>
+    </xsl:call-template>
+    <xsl:call-template name="makeRow">
+      <xsl:with-param name="M">5</xsl:with-param>
+    </xsl:call-template>
+    <xsl:call-template name="makeRow">
+      <xsl:with-param name="M">6</xsl:with-param>
+    </xsl:call-template>
+    <xsl:call-template name="makeRow">
+      <xsl:with-param name="M">7</xsl:with-param>
+    </xsl:call-template>
+    <xsl:call-template name="makeRow">
+      <xsl:with-param name="M">0</xsl:with-param>
+    </xsl:call-template>
+  </table>
+  </xsl:for-each>
+</xsl:template>
+
+<xsl:template name="makeRow">
+  <xsl:param name="M"/>
+  <tr>
+    <xsl:for-each select="modelClass[position() mod 8 = $M]">
+      <xsl:call-template name="makeCell"/>
+    </xsl:for-each>
+  </tr>
+</xsl:template>
 
 
-  <xsl:template name="attClassList">
-       <xsl:for-each select="/addElement/attClassList/*">
-        <xsl:if test="((position() mod 5)=0) or position()=1">
-             <td>
-             <table class="attClasses">
-              <tr>
-               <td>
-             <input class="checkbox" type="checkbox">
-              <xsl:attribute name="name">class|<xsl:value-of select="className"/></xsl:attribute>
-              <xsl:attribute name="value"><xsl:value-of select="className"/></xsl:attribute>
-              <xsl:variable name="currentClass"><xsl:value-of select="className"/></xsl:variable>
-              <xsl:if test="contains( $elementClasses, $currentClass )">
-                <xsl:attribute name="checked">1</xsl:attribute>
-              </xsl:if>
-             </input>
-              <span>
-               <xsl:attribute name="id">descSpan_attClass_<xsl:value-of select="className"/></xsl:attribute>
-	       <xsl:attribute name="onMouseover">descriptionPopup_Show( 'attClass_<xsl:value-of select="className"/>' )</xsl:attribute>
-	       <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'attClass_<xsl:value-of select="className"/>' )</xsl:attribute>
-                <a>
-                 <xsl:attribute name="href"><xsl:value-of select="$host"/>/Query/class.xq?name=<xsl:value-of select="className"/></xsl:attribute>
-	         <xsl:attribute name="target">_blank</xsl:attribute>
-                 <xsl:value-of select="className"/>
-                </a>
-              </span>
-             </td></tr><tr><td>
-	     <xsl:if
-	      test="not(string(following-sibling::attClass[1]/className)='')">
-	       <input class="checkbox" type="checkbox">
-		 <xsl:attribute name="name">class|<xsl:value-of select="following-sibling::attClass[1]/className"/></xsl:attribute>
-		 <xsl:attribute name="value"><xsl:value-of select="following-sibling::attClass[1]/className"/></xsl:attribute>
-		 <xsl:variable name="currentClass"><xsl:value-of select="following-sibling::attClass[1]/className"/></xsl:variable>
-		 <xsl:if test="contains( $elementClasses, $currentClass )">
-		   <xsl:attribute name="checked">1</xsl:attribute>
-		 </xsl:if>
-	       </input>
-	       <span>
-		 <xsl:attribute name="id">descSpan_attClass_<xsl:value-of select="following-sibling::attClass[1]/className"/></xsl:attribute>
-		 <xsl:attribute name="onMouseover">descriptionPopup_Show( 'attClass_<xsl:value-of select="following-sibling::attClass[1]/className"/>' )</xsl:attribute>
-		 <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'attClass_<xsl:value-of select="following-sibling::attClass[1]/className"/>' )</xsl:attribute>
-		 <a>
-		   <xsl:attribute name="href"><xsl:value-of select="$host"/>/Query/class.xq?name=<xsl:value-of select="following-sibling::attClass[1]/className"/></xsl:attribute>
-		   <xsl:attribute name="target">_blank</xsl:attribute>
-		   <xsl:value-of select="following-sibling::attClass[1]/className"/>
-		 </a>
-	       </span>
-	     </xsl:if>
-             </td></tr><tr><td>
-	     <xsl:if
-	      test="not(string(following-sibling::attClass[2]/className)='')">
-	       <input class="checkbox" type="checkbox">
-		 <xsl:attribute name="name">class|<xsl:value-of select="following-sibling::attClass[2]/className"/></xsl:attribute>
-		 <xsl:attribute name="value"><xsl:value-of select="following-sibling::attClass[2]/className"/></xsl:attribute>
-		 <xsl:variable name="currentClass"><xsl:value-of select="following-sibling::attClass[2]/className"/></xsl:variable>
-		 <xsl:if test="contains( $elementClasses, $currentClass )">
-		   <xsl:attribute name="checked">1</xsl:attribute>
-		 </xsl:if>
-	       </input>
-	       <span>
-		 <xsl:attribute name="id">descSpan_attClass_<xsl:value-of select="following-sibling::attClass[2]/className"/></xsl:attribute>
-		 <xsl:attribute name="onMouseover">descriptionPopup_Show( 'attClass_<xsl:value-of select="following-sibling::attClass[2]/className"/>' )</xsl:attribute>
-		 <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'attClass_<xsl:value-of select="following-sibling::attClass[2]/className"/>' )</xsl:attribute>
-		 <a>
-		   <xsl:attribute name="href"><xsl:value-of select="$host"/>/Query/class.xq?name=<xsl:value-of select="following-sibling::attClass[2]/className"/></xsl:attribute>
-		   <xsl:attribute name="target">_blank</xsl:attribute>
-		   <xsl:value-of select="following-sibling::attClass[2]/className"/>
-		 </a>
-	       </span>
-	     </xsl:if>
-	     </td></tr>
-	       <tr>
-		 <td>
-		   <xsl:if
-		    test="not(string(following-sibling::attClass[3]/className)='')">
-		     <input class="checkbox" type="checkbox">
-		       <xsl:attribute name="name">class|<xsl:value-of select="following-sibling::attClass[3]/className"/></xsl:attribute>
-		       <xsl:attribute name="value"><xsl:value-of select="following-sibling::attClass[3]/className"/></xsl:attribute>
-		       <xsl:variable name="currentClass"><xsl:value-of select="following-sibling::attClass[3]/className"/></xsl:variable>
-		       <xsl:if test="contains( $elementClasses, $currentClass )">
-			 <xsl:attribute name="checked">1</xsl:attribute>
-		       </xsl:if>
-		     </input>
-		     <span>
-		       <xsl:attribute name="id">descSpan_attClass_<xsl:value-of select="following-sibling::attClass[3]/className"/></xsl:attribute>
-		       <xsl:attribute name="onMouseover">descriptionPopup_Show( 'attClass_<xsl:value-of select="following-sibling::attClass[3]/className"/>' )</xsl:attribute>
-		       <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'attClass_<xsl:value-of select="following-sibling::attClass[3]/className"/>' )</xsl:attribute>
-		       <a>
-			 <xsl:attribute name="href"><xsl:value-of select="$host"/>/Query/class.xq?name=<xsl:value-of select="following-sibling::attClass[3]/className"/></xsl:attribute>
-			 <xsl:attribute name="target">_blank</xsl:attribute>
-			 <xsl:value-of select="following-sibling::attClass[3]/className"/>
-		       </a>
-		     </span>
-		   </xsl:if>
-		 </td>
-	       </tr>
-             </table>
-            </td>
-           </xsl:if>
-          </xsl:for-each>
-  </xsl:template>
+<xsl:template name="makeCell">
+  <td>
+    <input class="checkbox" type="checkbox">
+      <xsl:attribute name="name">class|<xsl:value-of select="className"/></xsl:attribute>
+      <xsl:attribute name="value"><xsl:value-of select="className"/></xsl:attribute>
+      <xsl:variable name="currentClass"><xsl:value-of select="className"/></xsl:variable>
+      <xsl:if test="contains( $elementClasses, $currentClass )">
+	<xsl:attribute name="checked">1</xsl:attribute>
+      </xsl:if>
+    </input>
+    <span>
+      <xsl:attribute name="id">descSpan_modelClass_<xsl:value-of select="className"/></xsl:attribute>
+      <xsl:attribute name="onMouseover">descriptionPopup_Show( 'modelClass_<xsl:value-of select="className"/>' )</xsl:attribute>
+      <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'modelClass_<xsl:value-of select="className"/>' )</xsl:attribute>
+      <a>
+	<xsl:attribute name="href"><xsl:value-of select="$host"/>/class.xq?name=<xsl:value-of select="className"/></xsl:attribute>
+	<xsl:attribute name="target">_blank</xsl:attribute>
+	<xsl:value-of select="className"/>
+      </a>
+    </span>
+  </td>
+</xsl:template>
+
+
+<xsl:template name="attClassList">
+  <xsl:for-each select="/addElement/attClassList">
+    <table class="attClasses">
+    <xsl:call-template name="makeAttRow">
+      <xsl:with-param name="M">1</xsl:with-param>
+    </xsl:call-template>
+    <xsl:call-template name="makeAttRow">
+      <xsl:with-param name="M">2</xsl:with-param>
+    </xsl:call-template>
+    <xsl:call-template name="makeAttRow">
+      <xsl:with-param name="M">3</xsl:with-param>
+    </xsl:call-template>
+    <xsl:call-template name="makeAttRow">
+      <xsl:with-param name="M">0</xsl:with-param>
+    </xsl:call-template>
+    </table>
+  </xsl:for-each>
+</xsl:template>
+
+<xsl:template name="makeAttRow">
+  <xsl:param name="M"/>
+  <tr>
+    <xsl:for-each select="attClass[position() mod 4 = $M]">
+      <xsl:call-template name="makeCell"/>
+    </xsl:for-each>
+  </tr>
+</xsl:template>
+
+<xsl:template name="makeAttCell">
+  <td>
+    <input class="checkbox" type="checkbox">
+      <xsl:attribute name="name">class|<xsl:value-of select="className"/></xsl:attribute>
+      <xsl:attribute name="value"><xsl:value-of select="className"/></xsl:attribute>
+      <xsl:variable name="currentClass"><xsl:value-of select="className"/></xsl:variable>
+      <xsl:if test="contains( $elementClasses, $currentClass )">
+	<xsl:attribute name="checked">1</xsl:attribute>
+      </xsl:if>
+    </input>
+    <span>
+      <xsl:attribute name="id">descSpan_attClass_<xsl:value-of select="className"/></xsl:attribute>
+      <xsl:attribute name="onMouseover">descriptionPopup_Show( 'attClass_<xsl:value-of select="className"/>' )</xsl:attribute>
+      <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'attClass_<xsl:value-of select="className"/>' )</xsl:attribute>
+      <a>
+	<xsl:attribute name="href"><xsl:value-of select="$host"/>/Query/class.xq?name=<xsl:value-of select="className"/></xsl:attribute>
+	<xsl:attribute name="target">_blank</xsl:attribute>
+	<xsl:value-of select="className"/>
+      </a>
+    </span>
+  </td>
+</xsl:template>
 
 
   <xsl:template name="contentTypes">
