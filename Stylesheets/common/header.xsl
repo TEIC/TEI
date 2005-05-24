@@ -83,7 +83,7 @@
   <xsl:text> </xsl:text>
   <xsl:value-of select="$realauthor"/>
 </xsl:if>
-<xsl:if test="not($revauthor = '') and not(normalize-space($revauthor)='$Author$')">
+<xsl:if test="not($revauthor = '') and not(normalize-space($revauthor)=concat('$Author', '$'))">
  (<xsl:value-of select="$revisedWord"/><xsl:text> </xsl:text>
  <xsl:choose>
   <xsl:when test="starts-with($revauthor,'$Author')"> <!-- it's RCS/CVS -->
@@ -127,7 +127,7 @@
 </xsl:if>
 
 
-<xsl:if test="$showRev='true' and not($revdate = '') and not ($revdate='$Date$')">
+<xsl:if test="$showRev='true' and not($revdate = '') and not ($revdate=concat('$Date',$'))">
   (<xsl:value-of select="$revisedWord"/><xsl:text> </xsl:text>
   <xsl:choose>
   <xsl:when test="starts-with($revdate,'$Date')"> <!-- it's RCS -->
