@@ -19,13 +19,14 @@
     <body>
       <p>
 	<schemaSpec ident="p5examples" start="egXML">
+	  <moduleRef key="tei"/>
+	  <moduleRef key="core"/>
 	  <moduleRef url="mathml2-main.rng"/>
 	  <moduleRef url="relaxng.rng"/>
 	  <moduleRef key="analysis"/>
 	  <moduleRef key="certainty"/>
-	  <moduleRef key="core"/>
 	  <moduleRef key="corpus"/>
-	      <moduleRef key="declarefs"/> 
+	  <moduleRef key="declarefs"/> 
 	  <moduleRef key="dictionaries"/>
 	  <moduleRef key="drama"/>
 	  <moduleRef key="figures"/>
@@ -38,7 +39,6 @@
 	  <moduleRef key="nets"/>
 	  <moduleRef key="spoken"/>
 	  <moduleRef key="tagdocs"/>
-	  <moduleRef key="tei"/>
 	  <moduleRef key="textcrit"/>
 	  <moduleRef key="textstructure"/>
 	  <moduleRef key="transcr"/>
@@ -52,11 +52,38 @@
 	      </rng:choice>
 	    </content>
 	  </macroSpec>
-	  <macroSpec ident="schemapattern" mode="change" module="tagdocs">
+
+	  <macroSpec ident="anySchematron" mode="add">
 	    <content>
-	      <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-		<ref name="pattern"/>
-	      </oneOrMore>
+	      <element xmlns="http://relaxng.org/ns/structure/1.0">
+		<nsName ns="http://www.ascc.net/xml/schematron"/>
+		<zeroOrMore>
+		  <choice>
+		    <attribute>
+		      <anyName/>
+		    </attribute>
+		    <ref name="anySchematron"/>
+		    <text/>
+		  </choice>
+		</zeroOrMore>
+	      </element>
+	    </content>
+	  </macroSpec>
+
+	  <macroSpec ident="schemapattern" mode="change"
+		     module="tagdocs">
+	    <content>
+	      <group xmlns="http://relaxng.org/ns/structure/1.0">
+		<choice>
+		  <text/>
+		  <oneOrMore>
+		    <ref name="pattern"/>
+		  </oneOrMore>
+		</choice>
+		<zeroOrMore>
+		  <ref name="anySchematron"/>
+		</zeroOrMore>
+	      </group>
 	    </content>
 	  </macroSpec>
 	  <classSpec mode="change" xmlns="http://www.tei-c.org/ns/1.0" module="tei" xml:id="GLOBAL" type="atts" ident="tei.global">
@@ -468,6 +495,7 @@
 		    <ref name="writing"/>
 		    <ref name="att"/>
 		    <ref name="attDef"/>
+		    <ref name="attRef"/>
 		    <ref name="attList"/>
 		    <ref name="classSpec"/>
 		    <ref name="classes"/>

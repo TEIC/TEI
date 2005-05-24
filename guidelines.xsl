@@ -4,7 +4,7 @@
     version="1.0"
     xmlns:html="http://www.w3.org/1999/xhtml">
   
-<xsl:import href="/usr/share/xml/tei/stylesheet/base/p5/odds/odd2html.xsl"/>
+<xsl:import href="/usr/share/xml/tei/stylesheet/odds/odd2html.xsl"/>
   
 <xsl:param name="cssFile">teic.css</xsl:param>
 <xsl:param name="parentWords">Text Encoding Initiative Consortium</xsl:param>
