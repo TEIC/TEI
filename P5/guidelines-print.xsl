@@ -4,7 +4,7 @@
     version="1.0"
     xmlns:html="http://www.w3.org/1999/xhtml">
   
-<xsl:import href="http://www.tei-c.org/stylesheet/base/p5/odds/odd2html.xsl"/>
+<xsl:import href="http://www.tei-c.org/stylesheet/odds/odd2html.xsl"/>
   
 <xsl:param name="autoToc">true</xsl:param>
 <xsl:param name="pageLayout">Simple</xsl:param>
