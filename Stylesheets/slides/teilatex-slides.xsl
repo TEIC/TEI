@@ -54,6 +54,11 @@ select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:authority"/>
 
 <xsl:template match="tei:div0">
   \section{<xsl:for-each select="tei:head"><xsl:apply-templates/></xsl:for-each>}
+  \begin{frame} 
+  \frametitle{<xsl:for-each
+  select="tei:head"><xsl:apply-templates/></xsl:for-each>}
+  {\Huge…}
+  \end{frame}
   <xsl:apply-templates/>
 </xsl:template>
 
