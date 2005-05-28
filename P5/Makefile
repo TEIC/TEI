@@ -1,6 +1,7 @@
 TEISERVER=http://www.tei-c.org.uk/Query/
 PREFIX=/usr
 XSL=http://www.tei-c.org/stylesheet
+XSL="/TEI/sourceForge/Stylesheets"
 # for local use, try /usr/share/xml/tei/stylesheet
 ROMAOPTS=
 
