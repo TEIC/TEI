@@ -122,7 +122,7 @@
     </xsl:choose>
   </xsl:variable>
   <xsl:if test="not($next='')">
-    <a class="xreflink" accesskey="p" href="{concat($next,'.html')}"> 
+    <a class="xreflink" accesskey="n" href="{concat($next,'.html')}"> 
       <span class="button">&#187;</span>
     </a>
   </xsl:if>
