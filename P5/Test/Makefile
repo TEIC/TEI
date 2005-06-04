@@ -1,12 +1,7 @@
-<<<<<<< Makefile
-XSL=/usr/share/xml/tei/stylesheet
-TEISERVER=http://localhost/Query/
-ROMAFLAGS=
-=======
 XSL=/usr/share/xml/tei/stylesheet/base
 TEISERVER=http://www.tei-c.org.uk/Query/
-#testdocbook 
->>>>>>> 1.9
+ROMAFLAGS=
+
 TESTFILES= \
 	testchinese \
 	testcorpus \
@@ -37,11 +32,7 @@ TESTSPECIALFILES= \
 all: test-schema test-dtd test-xsd
 
 schemas:
-<<<<<<< Makefile
 	for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do roma $(ROMAFLAGS) --xsl=$(XSL) --teiserver=$(TEISERVER) --doc $$i.odd .; done
-=======
-	for i in $(TESTFILES) $(TESTSPECIALFILES); do ../Roma --xsl=$(XSL) --teiserver=$(TEISERVER) --doc $$i.odd .; done
->>>>>>> 1.9
 
 test-schema: test-rnv test-jing 
 #test-xmllint
