@@ -124,7 +124,7 @@
             <xsl:value-of select="$masterFile"/>
             <xsl:value-of select="$urlChunkPrefix"/>
             <xsl:value-of select="$parent"/>
-            <xsl:value-of select="concat($standardSuffix,'#')"/>
+            <xsl:text>#</xsl:text>
             <xsl:value-of select="$ident"/>
           </xsl:when>
           <xsl:otherwise>
