@@ -1,8 +1,8 @@
 TEISERVER=http://www.tei-c.org.uk/Query/
 PREFIX=/usr
-XSL=http://www.tei-c.org/stylesheet
-# alternativly, if you have installed the Debian packages:
-#XSL=/usr/share/xml/tei/stylesheet
+XSL=/usr/share/xml/tei/stylesheet
+# alternativly, if you have not installed the Debian packages, uncomment the next line:
+# XSL=http://www.tei-c.org/stylesheet
 ROMAOPTS=
 
 .PHONY: convert dtds schemas html validate valid test split oddschema exampleschema fascicule exist clean dist
@@ -166,7 +166,7 @@ exist: split
 	perl updateexist.pl teinames.xml /db/TEI
 	perl updateexist.pl datatypes.xml /db/TEI
 
-dist:clean dist-source dist-schema dist-doc dist-test dist-database
+dist: dist-source dist-schema dist-doc dist-test dist-database
 
 dist-source: 
 	rm -rf release/tei-p5/source
