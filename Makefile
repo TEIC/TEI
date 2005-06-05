@@ -1,8 +1,8 @@
 TEISERVER=http://www.tei-c.org.uk/Query/
 PREFIX=/usr
 XSL=http://www.tei-c.org/stylesheet
-XSL="/TEI/sourceForge/Stylesheets"
-XSL="/usr/share/xml/tei/stylesheet"
+# alternativly, if you have installed the Debian packages:
+#XSL=/usr/share/xml/tei/stylesheet
 ROMAOPTS=
 
 .PHONY: convert dtds schemas html validate valid test split oddschema exampleschema fascicule exist clean dist
