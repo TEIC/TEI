@@ -159,13 +159,6 @@ fascicule:
 	TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-$(CHAP) 
 	TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-$(CHAP) 
 
-exist: split
-	perl rmcol.pl /db/TEI
-	perl addcol.pl /db/TEI
-	perl updateexist.pl Split /db/TEI
-	perl updateexist.pl teinames.xml /db/TEI
-	perl updateexist.pl datatypes.xml /db/TEI
-
 dist: dist-source dist-schema dist-doc dist-test dist-database
 
 dist-source: 
