@@ -127,7 +127,7 @@
 </xsl:if>
 
 
-<xsl:if test="$showRev='true' and not($revdate = '') and not ($revdate=concat('$Date',$'))">
+<xsl:if test="$showRev='true' and not($revdate = '') and not ($revdate=concat('$Date','$'))">
   (<xsl:value-of select="$revisedWord"/><xsl:text> </xsl:text>
   <xsl:choose>
   <xsl:when test="starts-with($revdate,'$Date')"> <!-- it's RCS -->
