@@ -1,4 +1,4 @@
-TEISERVER=http://www.tei-c.org.uk/Query/
+TEISERVER=http://tei.oucs.ox.ac.uk/Query/
 PREFIX=/usr
 XSL=/usr/share/xml/tei/stylesheet
 # alternativly, if you have not installed the Debian packages, uncomment the next line:
