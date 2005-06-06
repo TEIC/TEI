@@ -62,6 +62,7 @@ html:check
 	(perl -p -e "s+http://www.tei-c.org/stylesheet+${XSL}+" guidelines-print.xsl > tmp$$$$.xsl; \
 	xmllint --noent    Source-driver.xml | xsltproc \
 	-o Guidelines/index.html \
+	--stringparam TEISERVER $(TEISERVER) \
 	--stringparam cssFile tei-print.css \
 	--stringparam displayMode rnc \
 	--stringparam outputDir . \
