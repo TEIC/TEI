@@ -388,14 +388,14 @@
 		  </xsl:if>
 		  <xsl:if test="not($oddmode='tei')">
 		    <a:documentation>
-		      <xsl:choose>
-			<xsl:when test="not(tei:desc='')">
-			  <xsl:value-of select="tei:desc"/>
-			</xsl:when>
-			<xsl:when test="not(tei:gloss='')">
-			  <xsl:value-of select="tei:gloss"/>
-			</xsl:when>
-		      </xsl:choose>
+		      <xsl:if test="not(tei:gloss='')">
+			<xsl:text>(</xsl:text>
+			<xsl:value-of select="tei:gloss"/>
+			<xsl:text>) </xsl:text>
+		      </xsl:if>
+		      <xsl:if test="not(tei:desc='')">
+			<xsl:value-of select="tei:desc"/>
+		      </xsl:if>
 		    </a:documentation>
 		  </xsl:if>
 		  <ref name="{@ident}.content"  xmlns="http://relaxng.org/ns/structure/1.0"/>
@@ -462,14 +462,14 @@
 	      <rng:value ><xsl:value-of select="@ident"/></rng:value>
 	      <xsl:if test="not($oddmode='tei')">
 		<a:documentation>
-		  <xsl:choose>
-		    <xsl:when test="not(tei:desc='')">
-		      <xsl:value-of select="tei:desc"/>
-		    </xsl:when>
-		    <xsl:when test="not(tei:gloss='')">
-		      <xsl:value-of select="tei:gloss"/>
-		    </xsl:when>
-		  </xsl:choose>
+		  <xsl:if test="not(tei:gloss='')">
+		    <xsl:text>(</xsl:text>
+		    <xsl:value-of select="tei:gloss"/>
+		    <xsl:text>) </xsl:text>
+		  </xsl:if>
+		  <xsl:if test="not(tei:desc='')">
+		    <xsl:value-of select="tei:desc"/>
+		  </xsl:if>
 		</a:documentation>
 	      </xsl:if>
 	    </xsl:for-each>
@@ -944,14 +944,14 @@
 	      </value>
 	      <xsl:if test="not($oddmode='tei')">
 		<a:documentation>
-		  <xsl:choose>
-		    <xsl:when test="not(tei:desc='')">
-		      <xsl:value-of select="tei:desc"/>
-		    </xsl:when>
-		    <xsl:when test="not(tei:gloss='')">
-		      <xsl:value-of select="tei:gloss"/>
-		    </xsl:when>
-		  </xsl:choose>
+		  <xsl:if test="not(tei:gloss='')">
+		    <xsl:text>(</xsl:text>
+		    <xsl:value-of select="tei:gloss"/>
+		    <xsl:text>) </xsl:text>
+		  </xsl:if>
+		  <xsl:if test="not(tei:desc='')">
+		    <xsl:value-of select="tei:desc"/>
+		  </xsl:if>
 		</a:documentation>
 	      </xsl:if>
 	    </xsl:for-each>
@@ -973,14 +973,14 @@
 	  </value>
 	  <xsl:if test="not($oddmode='tei')">
 	    <a:documentation>
-	      <xsl:choose>
-		<xsl:when test="not(tei:desc='')">
-		  <xsl:value-of select="tei:desc"/>
-		</xsl:when>
-		<xsl:when test="not(tei:gloss='')">
-		  <xsl:value-of select="tei:gloss"/>
-		</xsl:when>
-	      </xsl:choose>
+	      <xsl:if test="not(tei:gloss='')">
+		<xsl:text>(</xsl:text>
+		<xsl:value-of select="tei:gloss"/>
+		<xsl:text>) </xsl:text>
+	      </xsl:if>
+	      <xsl:if test="not(tei:desc='')">
+		<xsl:value-of select="tei:desc"/>
+	      </xsl:if>
 	    </a:documentation>
 	  </xsl:if>
 	</xsl:for-each>
@@ -1012,14 +1012,14 @@
     </xsl:if>
     <xsl:if test="not($oddmode='tei')">
       <a:documentation>
-	<xsl:choose>
-	  <xsl:when test="not(tei:desc='')">
-	    <xsl:value-of select="tei:desc"/>
-	  </xsl:when>
-	  <xsl:when test="not(tei:gloss='')">
-	    <xsl:value-of select="tei:gloss"/>
-	  </xsl:when>
-	</xsl:choose>
+	<xsl:if test="not(tei:gloss='')">
+	  <xsl:text>(</xsl:text>
+	  <xsl:value-of select="tei:gloss"/>
+	  <xsl:text>) </xsl:text>
+	</xsl:if>
+	<xsl:if test="not(tei:desc='')">
+	  <xsl:value-of select="tei:desc"/>
+	</xsl:if>
       </a:documentation>
     </xsl:if>
     <xsl:call-template name="attributeDatatype"/>

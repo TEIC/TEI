@@ -802,14 +802,14 @@ So, at the first, process the second; at the second, do nothing.
     </xsl:choose>
   </xsl:variable>
   <xsl:text>&#10;&lt;!--doc:</xsl:text>
-  <xsl:choose>
-    <xsl:when test="not(tei:desc='')">
-      <xsl:value-of select="tei:desc"/>
-    </xsl:when>
-    <xsl:when test="not(tei:gloss='')">
-      <xsl:value-of select="tei:gloss"/>
-    </xsl:when>
-  </xsl:choose>
+  <xsl:if test="not(tei:gloss='')">
+    <xsl:text>(</xsl:text>
+    <xsl:value-of select="tei:gloss"/>
+    <xsl:text>) </xsl:text>
+  </xsl:if>
+  <xsl:if test="not(tei:desc='')">
+    <xsl:value-of select="tei:desc"/>
+  </xsl:if>
   <xsl:text> --&gt;&#10;&lt;!ELEMENT </xsl:text>
   <xsl:value-of select="$ename"/>
   <xsl:if test="$parameterize='true'">
