@@ -129,7 +129,7 @@ test:
 split:
 	(mkdir Split; cd Split; xmllint --noent   ../Source-driver.xml | xsltproc ../divsplit.xsl -)
 
-oddschema:
+oddschema: 
 	roma $(ROMAOPTS) --nodtd --noxsd --xsl=$(XSL)/ --teiserver=$(TEISERVER) p5odds.odd .
 
 
@@ -159,7 +159,7 @@ fascicule:
 	TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-$(CHAP) 
 	TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-$(CHAP) 
 
-dist: dist-source dist-schema dist-doc dist-test dist-database
+dist: clean dist-source dist-schema dist-doc dist-test dist-database
 
 dist-source: 
 	rm -rf release/tei-p5/source
@@ -227,7 +227,7 @@ install-test: dist-test
 	(cd release/tei-p5-test; tar cf - .) | (cd ${PREFIX}; tar xf - )
 
 install-database: dist-database
-	echo Making testfiles release in ${PREFIX}
+	echo Making database release in ${PREFIX}
 	(cd release/tei-p5-database; tar cf - .) | (cd ${PREFIX}; tar xf - )
 
 install: clean install-schema install-doc install-test install-source install-database
