@@ -34,8 +34,8 @@ install: release
 
 dist:  release
 	(cd release; 	\
-	ln -s tei-xsl tei-xsl-`cat ../VERSION` ; \
-	zip -r tei-xsl-`cat ../VERSION`.zip tei-xsl-`cat ../VERSION` )
+	ln -s tei-roma tei-roma-`cat ../VERSION` ; \
+	zip -r tei-roma-`cat ../VERSION`.zip tei-roma-`cat ../VERSION` )
 
 release: clean
 	mkdir -p release/tei-roma
