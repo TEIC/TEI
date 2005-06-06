@@ -1858,6 +1858,8 @@ class romaDom extends domDocument
 	$oXSL->load( roma_StylesheetDir . '/odds/odd2odd.xsl' );
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
+	$oProc->setParameter( null, 'TEISERVER', roma_xquery_server );
+
 	$oDOC = $oProc->transformToDoc( $this );
       } 
 
