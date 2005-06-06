@@ -1,0 +1,67 @@
+.TH ROMA 1 "9th May 2005" "TEI .."
+.SH NAME
+roma \- compile a TEI ODD specification into schemas and dtd
+.SH SYNOPSIS
+.B roma
+.RI [ options ]
+.I oddfile
+.I outputdir
+.\"=====================================================================
+.SH DESCRIPTION
+This manual page is not meant to be exhaustive.  There
+is some more information in the help files for the web version
+of Roma, and plenty of
+background data about ODDs in the TEI Guidelines.
+.PP
+.B roma
+is used to generate XML RelaxNG or W3C schemas and DTDs 
+from the the ODD source in
+.IR oddfile
+and (optionally) some documentation to go with them.
+.\"=====================================================================
+.SH OPTIONS
+.B roma
+accepts the following options:
+.TP
+.BI --xsl \ URL
+location of TEI XSLT stylesheets, defaulting to /usr/share/xml/tei/stylesheet
+.rb
+.TP
+.BI --teiserver \ URL
+location of TEI eXist database server, defaulting to http://tei.oucs.ox.ac.uk/Query/
+.rb
+.TP
+.BI --doc         
+create expanded documented ODD
+.rb
+.TP
+.BI --nodtd       
+suppress DTD creation
+.rb
+.TP
+.BI --norelax     
+suppress RelaxNG creation
+.rb
+.TP
+.BI --noxsd       
+suppress W3C XML Schema creation
+.rb
+.TP
+.BI --debug       
+leave temporary files, etc.
+.rb
+.\"=====================================================================
+.SH BUGS
+If the ODD specification is internally inconsistent (eg some element has
+been deleted on which another element depends), then you may get
+a Relax NG schema which is apparently OK, but which cannot be
+translated into W3C schema. Because the conversions to DTD and Relax
+are maintained separately, some constructs may cause one to fail but
+not the other.
+.pp
+No attempt is made to trap error messages from 
+.I trang
+which is used to make W3C schemas.
+.\"=====================================================================
+.SH "SEE ALSO"
+.BR trang (1)
