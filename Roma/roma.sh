@@ -13,7 +13,7 @@ makeODD()
     echo "1. expand and simplify ODD "
     xsltproc -o $N.compiled.odd \
     --stringparam TEISERVER $TEISERVER  \
-    $TEIDIR/odds/odd2odd.xsl $ODD 
+    $TEIXSLDIR/odds/odd2odd.xsl $ODD 
 }
 
 makeRelax() 
@@ -21,7 +21,7 @@ makeRelax()
     echo "2. make Relax NG from compiled ODD"
     xsltproc  \
              --stringparam RNGDIR $RESULTS       \
-             $TEIDIR/odds/odd2relax.xsl $N.compiled.odd
+             $TEIXSLDIR/odds/odd2relax.xsl $N.compiled.odd
     (cd $RESULTS; \
     echo "3. make Relax NG compact from XML"; \
     trang $N.rng $N.rnc  || die " trang conversion to RNC fails"; \
@@ -42,13 +42,13 @@ makeDTD()
     echo "5. make DTD from compiled ODD"
     xsltproc  \
              --stringparam outputDir $RESULTS       \
-             $TEIDIR/odds/odd2dtd.xsl $N.compiled.odd
+             $TEIXSLDIR/odds/odd2dtd.xsl $N.compiled.odd
 }
 
 makeDOC() 
 {
     echo "6. make expanded documented ODD"
-    xsltproc --stringparam TEISERVER $TEISERVER $TEIDIR/odds/subsetGuidelines.xsl $ODD \
+    xsltproc --stringparam TEISERVER $TEISERVER $TEIXSLDIR/odds/subsetGuidelines.xsl $ODD \
     | xmllint --format - > $N.doc.xml 
 }
 
@@ -70,7 +70,7 @@ echo "<schemaSpec> encountered in the input ODD file is processed; all others"
 echo "are ignored."
 echo "  Usage: roma [options] schemaspec [output_directory]"
 echo "  options, shown with defaults:"
-echo "  --xsl=$TEIDIR"
+echo "  --xsl=$TEIXSLDIR"
 echo "  --teiserver=$TEISERVER"
 echo "  --localsource=$LOCALSOURCE # local copy of P5 sources
 echo "  options, binary switches:"
@@ -84,7 +84,7 @@ exit 1
 
 # --------- main routine starts here --------- #
 TEISERVER=http://tei.oucs.ox.ac.uk/Query/
-TEIDIR=/usr/share/xml/tei/stylesheet
+TEIXSLDIR=/usr/share/xml/tei/stylesheet
 LOCALSOURCE=
 debug=false
 dtd=true
@@ -93,7 +93,7 @@ xsd=true
 doc=false
 while test $# -gt 0; do
   case $1 in
-    --xsl=*)    TEIDIR=`echo $1 | sed 's/.*=//'`;;
+    --xsl=*)    TEIXSLDIR=`echo $1 | sed 's/.*=//'`;;
     --doc)      doc=true;;
     --teiserver=*) TEISERVER=`echo $1 | sed 's/.*=//'`;;
     --localsource=*) LOCALSOURCE=`echo $1 | sed 's/.*=//'`;;
@@ -123,11 +123,11 @@ which trang || die "you do not have trang"
 which perl || die "you do not have perl"
 test -f $ODD || die "file $ODD does not exist"
 echo "TEI database server: $TEISERVER"
-echo "TEI stylesheet tree: $TEIDIR"
-test -d $TEIDIR/odds || \
-     GET -e -d $TEIDIR/odds/odd2odd.xsl > /dev/null || \
-     die "stylesheet location $TEIDIR is not accessible"
-N=$(xsltproc $TEIDIR/odds/extract-schemaSpec-ident.xsl $1 | head -1)
+echo "TEI stylesheet tree: $TEIXSLDIR"
+test -d $TEIXSLDIR/odds || \
+     GET -e -d $TEIXSLDIR/odds/odd2odd.xsl > /dev/null || \
+     die "stylesheet location $TEIXSLDIR is not accessible"
+N=$(xsltproc $TEIXSLDIR/odds/extract-schemaSpec-ident.xsl $1 | head -1)
 N=${N:?"Unable to ascertain ident= of <schemaSpec>"}
 echo "Results to: $RESULTS"
 mkdir -p $RESULTS || die "cannot make directory $RESULTS"
