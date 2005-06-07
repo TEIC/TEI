@@ -157,8 +157,7 @@ return "";
  <html:input type="textbox" name="outputFile" value="myTei.xsl"/></p>
 
    <xsl:for-each select="TEI.2/text/body/div[@id]">
-     <div>
-       <head><xsl:value-of select="head"/></head>
+       <p><hi><xsl:number/>: <xsl:value-of select="head"/></hi></p>
        <p><xref url="customize.xml.ID={@id}">Details of this section</xref></p>
        <table>
 	 <xsl:call-template name="list">
@@ -170,7 +169,6 @@ return "";
 	       name="File">html/tei-param.xsl</xsl:with-param>
 	 </xsl:call-template>
        </table>
-     </div>
    </xsl:for-each>
    <div><head>Time to work!</head>
    <list>
