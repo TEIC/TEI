@@ -170,12 +170,12 @@ return "";
 	 </xsl:call-template>
        </table>
    </xsl:for-each>
-   <div><head>Time to work!</head>
+
+<p><hi>Time to work!</hi></p>
    <list>
      <item><html:input value="Submit" type="submit"/></item>
      <item><html:input value="Reset" type="reset"/></item>
    </list>
-   </div>
 </html:form>
 </body>
 </text>
