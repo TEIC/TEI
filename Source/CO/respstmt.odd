@@ -5,32 +5,49 @@ Licensed under the GNU General Public License.
 See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="RESPSTMT" usage="rwa" ident="respStmt">
-<equiv/>
-<gloss>statement of responsibility</gloss>
-<desc>supplies a statement of responsibility for someone responsible for
-the intellectual content of a text, edition, recording, or series, where
-the specialized elements for authors, editors, etc. do
-not suffice or do not apply.</desc>
-  
-  
+  <equiv/>
+  <gloss>statement of responsibility</gloss>
+  <desc>supplies a statement of responsibility for someone responsible
+  for the intellectual content of a text, edition, recording, or
+  series, where the specialized elements for authors, editors, etc. do
+  not suffice or do not apply.</desc>
   <classes>
     <memberOf key="tei.biblPart"/>
     <memberOf key="tei.msItemPart"/>
   </classes>
-  <content>
-    <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:zeroOrMore>
+      <rng:ref name="tei.Incl"/>
+    </rng:zeroOrMore>
+    <rng:interleave>
+      <rng:ref name="tei.naming"/>
+      <rng:ref name="resp"/>
+      <rng:zeroOrMore>
+	<rng:ref name="tei.Incl"/>
+      </rng:zeroOrMore>
+    </rng:interleave>
+    <rng:zeroOrMore>
       <rng:choice>
-        <rng:ref name="resp"/>
-        <rng:ref name="name"/>
-        <rng:ref name="tei.Incl"/>
+	<rng:ref name="tei.naming"/>
+	<rng:ref name="tei.Incl"/>
+	<rng:ref name="resp"/>
       </rng:choice>
-    </rng:oneOrMore>
+    </rng:zeroOrMore>
+    <!-- 
+    <s:pattern name="not_in_respStmt"  xmlns:s="http://www.ascc.net/xml/schematron">
+      <s:rule context="tei:respStmt">
+	<s:report test="./tei:geogName or ./tei:placeName">
+	  The &lt;geogName> and &lt;placeName> elements are not permitted inside &lt;respStmt>.
+	</s:report>
+      </s:rule>
+    </s:pattern>
+      -->
   </content>
   
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">      <respStmt>
         <resp>transcribed from original ms</resp>
-        <name>Claus Huitfeldt</name>
+        <persName>Claus Huitfeldt</persName>
       </respStmt>
     </egXML>
   </exemplum>
