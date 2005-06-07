@@ -138,7 +138,7 @@ Display figures.
 
 <xd:doc class="hook">
     <xd:short>[html] Hook where HTML can be inserted when creating an
-    &lt;&gt; element</xd:short>
+    &lt;a&gt; element</xd:short>
     <xd:detail> </xd:detail>
 </xd:doc>
 <xsl:template name="xrefHook"/>
@@ -423,7 +423,7 @@ Show a title and author at start of document
 <xd:doc type="boolean" class="misc">
 Be talkative while working.
 </xd:doc>
-<xsl:param name="verbose"/>
+<xsl:param name="verbose">false</xsl:param>
 
 <xd:doc type="boolean" class="numbering">
 Automatically number paragraphs.
