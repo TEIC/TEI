@@ -421,12 +421,6 @@ Show a title and author at start of document
 <xsl:param name="showTitleAuthor">false</xsl:param>
 
 <xd:doc type="boolean" class="misc">
-Title, author and date is taken from the &lt;teiHeader&gt;
-     rather than looked for in the front matter
-</xd:doc>
-<xsl:param name="useHeaderFrontMatter">false</xsl:param>
-
-<xd:doc type="boolean" class="misc">
 Be talkative while working.
 </xd:doc>
 <xsl:param name="verbose"/>

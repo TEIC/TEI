@@ -96,8 +96,8 @@ $D =~ s/^[\n\r]//;
 if ($Passed ne $D) {
 # print "&lt;!--\n\DIFFERENCE in $key:|$Passed|$D|--&gt;\n";
  print qq(&lt;xsl:$Type{$key} name="$key">);
- print "\n$Passed";
- print "\n&lt;/xsl:$Type{$key}>\n";
+ print "$Passed";
+ print "&lt;/xsl:$Type{$key}>\n";
 }
 }
 print "&lt;/xsl:stylesheet>\n";

@@ -228,7 +228,8 @@ Process elements according to assumptions of TEI P4
 <xsl:param name="teiP4Compat">false</xsl:param>
 
 <xd:doc type="boolean" class="misc">
-Display title, author and date from teiHeader
+Title, author and date is taken from the &lt;teiHeader&gt;
+     rather than looked for in the front matter
 </xd:doc>
 <xsl:param name="useHeaderFrontMatter">false</xsl:param>
 
