@@ -44,7 +44,8 @@ release: param doc
 	cp *.css release/tei-xsl
 	tar cf - slides/*.xsl slides/*.css odds/*.xsl | (cd release/tei-xsl; tar xf - )
 	mkdir -p release/tei-xsl/doc
-	cp -r doc/xsltdoc doc/*.css doc/*.png release/tei-xsl/doc
+	cp -r doc/xsltdoc doc/*.png release/tei-xsl/doc
+	cp doc/*.css release/tei-xsl/doc/xsltdoc
 	cp ChangeLog style.xml customize.xml LICENSE release/tei-xsl/doc
 	cp teixsl.xml release/tei-xsl/doc/index.xml
 
