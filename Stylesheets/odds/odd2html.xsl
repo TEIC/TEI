@@ -51,7 +51,7 @@
 <xsl:key name="NameToID" match="tei:*" use="@ident"/>
 
 <xsl:param name="BITS">Bits</xsl:param>
-<xsl:param name="STDOUT"></xsl:param>
+<xsl:param name="STDOUT">false</xsl:param>
 <xsl:param name="TAG"/>
 <xsl:param name="alignNavigationPanel">left</xsl:param>
 <xsl:param name="authorWord"></xsl:param>
@@ -71,7 +71,7 @@
 <xsl:param name="line-width" select="80"/>
 <xsl:param name="numberBackHeadings">A.1</xsl:param>
 <xsl:param name="numberFrontHeadings"></xsl:param>
-<xsl:param name="numberHeadings">1.1.</xsl:param>
+<xsl:param name="numberBodyHeadings">1.1.</xsl:param>
 <xsl:param name="oddmode">html</xsl:param>
 <xsl:param name="outputDir">Guidelines</xsl:param>
 <xsl:param name="pageLayout">CSS</xsl:param>
@@ -85,7 +85,7 @@
 <xsl:param name="tocDepth">3</xsl:param>
 <xsl:param name="topNavigationPanel"></xsl:param>
 <xsl:param name="verbose">false</xsl:param>
-<xsl:template name="copyrightStatement">Copyright TEI Consortium 2004</xsl:template>
+<xsl:template name="copyrightStatement">Copyright TEI Consortium 2005</xsl:template>
 <xsl:variable name="top" select="/"/>
 
 <xsl:template name="metaHook">
@@ -304,13 +304,13 @@
         <xsl:value-of select="$numbersuffix"/>
        </xsl:if>
      </xsl:when>
-     <xsl:when test="not($numberHeadings ='')">
+     <xsl:when test="$numberHeadings ='true'">
        <xsl:choose>
        <xsl:when test="$prenumberedHeadings='true'">
        		<xsl:value-of select="@n"/>
        </xsl:when>
        <xsl:otherwise>
- 	 <xsl:number format="1" from="tei:body" level="any"/>
+ 	 <xsl:number format="{$numberBodyHeadings}" from="tei:body" level="any"/>
         <xsl:value-of select="$numbersuffix"/>
        </xsl:otherwise>
        </xsl:choose>
@@ -348,7 +348,7 @@
    <xsl:otherwise>
        <xsl:variable name="pre">
         <xsl:for-each select="ancestor::tei:div1">
-          <xsl:number level="any" from="tei:body" format="{$numberHeadings}"/>
+          <xsl:number level="any" from="tei:body" format="{$numberBodyHeadings}"/>
         </xsl:for-each>
        </xsl:variable>
        <xsl:variable name="post">
@@ -382,12 +382,12 @@
  <xsl:variable name="depth">
      <xsl:apply-templates select="." mode="depth"/>
  </xsl:variable>
- <xsl:if test="not($depth &gt; $numberHeadingsDepth)">
+ <xsl:if test="$numberHeadingsDepth &gt;= $depth">
    <xsl:call-template name="calculateNumber">
        <xsl:with-param name="numbersuffix" select="$headingNumberSuffix"/>
      </xsl:call-template>
  </xsl:if>
- <xsl:if test="not($minimal)">
+ <xsl:if test="$minimal='false'">
     <xsl:value-of select="$headingNumberSuffix"/>
     <xsl:choose>
       <xsl:when test="contains(name(.),'Spec')">
