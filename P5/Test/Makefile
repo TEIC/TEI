@@ -1,5 +1,5 @@
-XSL=/usr/share/xml/tei/stylesheet/base
-TEISERVER=http://www.tei-c.org.uk/Query/
+XSL=/usr/share/xml/tei/stylesheet/
+TEISERVER=http://tei.oucs.ox.ac.uk/Query/
 ROMAFLAGS=
 
 TESTFILES= \
