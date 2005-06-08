@@ -4,7 +4,7 @@
     version="1.0"
     xmlns:html="http://www.w3.org/1999/xhtml">
   
-<xsl:import href="http://www.tei-c.org/stylesheet/odds/odd2html.xsl"/>
+<xsl:import href="/usr/share/xml/tei/stylesheet/odds/odd2html.xsl"/>
   
 <xsl:param name="autoToc">true</xsl:param>
 <xsl:param name="pageLayout">Simple</xsl:param>
@@ -53,7 +53,7 @@
 <xsl:template name="printLink"/>
 
 <xsl:template name="header">
- <xsl:param name="minimal"/>
+ <xsl:param name="minimal">false</xsl:param>
  <xsl:param name="toc"/>
  <xsl:variable name="TOC">
     <xsl:apply-templates select="." mode="generateLink"/>
@@ -61,12 +61,12 @@
  <xsl:variable name="depth">
    <xsl:apply-templates select="." mode="depth"/>
  </xsl:variable>
- <xsl:if test="not($depth &gt; $numberHeadingsDepth)">
+ <xsl:if test="$numberHeadingsDepth &gt;= $depth">
    <xsl:call-template name="calculateNumber">
      <xsl:with-param name="numbersuffix" select="$headingNumberSuffix"/>
    </xsl:call-template>
  </xsl:if>
- <xsl:if test="not($minimal)">
+ <xsl:if test="$minimal='false'">
    <xsl:value-of select="$headingNumberSuffix"/>
    <xsl:choose>
      <xsl:when test="not($TOC='')">
@@ -83,6 +83,7 @@
      </xsl:otherwise>
    </xsl:choose>
  </xsl:if> 
+
 </xsl:template>
 
   <xsl:template name="nextLink">
