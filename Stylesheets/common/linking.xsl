@@ -128,7 +128,7 @@
   <xsl:choose>
     <xsl:when test="local-name(.) = 'TEI'"/>
     <xsl:when test="local-name(.) = 'TEI.2'"/>
-    <xsl:when test="$depath &gt; $numberHeadingsDepth">
+    <xsl:when test="$depth &gt; $numberHeadingsDepth">
     </xsl:when>
     <xsl:when test="ancestor::tei:back">
       <xsl:if test="not($numberBackHeadings='')">
