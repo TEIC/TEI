@@ -29,6 +29,8 @@ TESTSPECIALFILES= \
 	testodds \
 	testmathml 
 
+default: schemas test-schema test-dtd test-xsd
+
 all: test-schema test-dtd test-xsd
 
 schemas:
