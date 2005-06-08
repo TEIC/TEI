@@ -43,6 +43,7 @@
   <xsl:param name="verbose"></xsl:param>
   <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
   <xsl:param name="verbose"></xsl:param>
+  <xsl:param name="localSource"/>
   
   <xsl:key name="IDS"     match="tei:*[@xml:id]"  use="@xml:id"/>
 
@@ -84,10 +85,10 @@
 
   <xsl:variable name="ODD" select="/"/>
 
-  <xsl:variable name="ATTCLASSDOC">
+  <xsl:param name="ATTCLASSDOC">
     <xsl:value-of select="$TEISERVER"/>
     <xsl:text>classspecs.xq</xsl:text>
-  </xsl:variable>
+  </xsl:param>
 
   <xsl:variable name="ATTCLASSES" select="document($ATTCLASSDOC)/List"/>
   

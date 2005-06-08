@@ -1926,7 +1926,7 @@ $ID: requests a particular page
     <address><xsl:value-of select="$date"/><xsl:if test="not($author='')"><xsl:value-of select="$author"/></xsl:if>.
 	<br/><xsl:call-template name="copyrightStatement"/><xsl:comment><xsl:text>
 	  Generated </xsl:text><xsl:if test="not($masterFile='index')"><xsl:text>from </xsl:text><xsl:value-of select="$masterFile"/></xsl:if><xsl:text> using an XSLT version </xsl:text><xsl:value-of select="system-property('xsl:version')"/> stylesheet
-	  based on <xsl:value-of select="$teixslHome"/>teihtml.xsl
+	  based on <xsl:value-of select="$teixslHome"/>tei.xsl
 	  processed using <xsl:value-of select="system-property('xsl:vendor')"/>
 	  on <xsl:call-template name="whatsTheDate"/></xsl:comment></address>
   </xsl:template>
@@ -1980,7 +1980,7 @@ $ID: requests a particular page
     <address>
       <xsl:comment><xsl:text>
 	Generated using an XSLT version </xsl:text><xsl:value-of select="system-property('xsl:version')"/> stylesheet
-	based on <xsl:value-of select="$teixslHome"/>teihtml.xsl
+	based on <xsl:value-of select="$teixslHome"/>tei.xsl
 	processed using: <xsl:value-of select="system-property('xsl:vendor')"/><!-- <xsl:call-template name="whatsTheDate"/> --></xsl:comment>
     </address>
   </xsl:template>
