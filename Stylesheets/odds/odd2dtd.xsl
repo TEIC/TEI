@@ -295,6 +295,12 @@ End of macro declarations
   </xsl:call-template>
 </xsl:template>
 
+<xsl:template match="rng:interleave">
+  <xsl:call-template name="content">
+    <xsl:with-param name="sep" select="','"/>
+  </xsl:call-template>
+</xsl:template>
+
 <xsl:template name="content">
   <xsl:param name="sep"/>
   <xsl:variable name="parent" select="local-name(..)"/>
@@ -436,6 +442,10 @@ End of macro declarations
 	  <xsl:value-of select="$sep"/>
       </xsl:when>
       <xsl:when test="$F='group'">
+	  <xsl:apply-templates select="."/>
+	  <xsl:value-of select="$sep"/>
+      </xsl:when>
+      <xsl:when test="$F='interleave'">
 	  <xsl:apply-templates select="."/>
 	  <xsl:value-of select="$sep"/>
       </xsl:when>
