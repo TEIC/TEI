@@ -18,14 +18,11 @@ bibliographic subelements appear and in a specified order. </desc>
   <content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:zeroOrMore>
-        <rng:ref name="tei.Incl"/>
+	<rng:choice>
+	  <rng:ref name="tei.Incl"/>
+	  <rng:ref name="analytic"/>
+	</rng:choice>
       </rng:zeroOrMore>
-      <rng:optional>
-        <rng:ref name="analytic"/>
-        <rng:zeroOrMore>
-          <rng:ref name="tei.Incl"/>
-        </rng:zeroOrMore>
-      </rng:optional>
       <rng:oneOrMore>
         <rng:group>
           <rng:ref name="monogr"/>
