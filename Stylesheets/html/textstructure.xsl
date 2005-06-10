@@ -12,7 +12,9 @@
     xmlns:teix="http://www.tei-c.org/ns/Examples" 
     xmlns:html="http://www.w3.org/1999/xhtml" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-    extension-element-prefixes="exsl estr edate" 
+    xmlns:saxon7="http://saxon.sf.net/" 
+    xmlns:saxon6="http://icl.com/saxon" 
+    extension-element-prefixes="exsl estr edate saxon7 saxon6" 
     exclude-result-prefixes="exsl estr edate a fo local rng tei teix xd" 
     version="1.0">
 
@@ -37,7 +39,7 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
    
-   
+xs   
       </xd:detail>
     <xd:author>Sebastian Rahtz sebastian.rahtz@oucs.ox.ac.uk</xd:author>
     <xd:cvsId>$Id$</xd:cvsId>
@@ -1541,13 +1543,13 @@ $ID: requests a particular page
           <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
         </xsl:if>
       </xsl:when>
-      <xsl:when test="contains($processor,'SAXON 8')">
+      <xsl:when test="contains($processor,'SAXON 7')">
         <xsl:if test="$verbose='true'">
           <xsl:message>Opening <xsl:value-of select="$outName"/> with Saxon 8</xsl:message>
         </xsl:if>
-        <saxon:output xmlns:saxon="http://saxon.sf.net" encoding="{$outputEncoding}" method="html" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN" href="{$outName}">
+        <saxon7:output encoding="{$outputEncoding}" method="html" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN" href="{$outName}">
           <xsl:copy-of select="$content"/>
-        </saxon:output>
+	</saxon7:output>
         <xsl:if test="$verbose='true'">
           <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
         </xsl:if>
@@ -1556,9 +1558,9 @@ $ID: requests a particular page
         <xsl:if test="$verbose='true'">
           <xsl:message>Opening <xsl:value-of select="$outName"/> with Saxon 6</xsl:message>
         </xsl:if>
-        <saxon:output xmlns:saxon="http://icl.com/saxon" encoding="{$outputEncoding}" method="html" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN" href="{$outName}">
+        <saxon6:output encoding="{$outputEncoding}" method="html" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN" file="{$outName}">
           <xsl:copy-of select="$content"/>
-        </saxon:output>
+        </saxon6:output>
         <xsl:if test="$verbose='true'">
           <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
         </xsl:if>
@@ -1567,9 +1569,9 @@ $ID: requests a particular page
         <xsl:if test="$verbose='true'">
           <xsl:message>Opening <xsl:value-of select="$outName"/> with Saxon 5</xsl:message>
         </xsl:if>
-        <saxon:output xmlns:saxon="http://icl.com/saxon" encoding="{$outputEncoding}" method="html" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN" href="{$outName}">
+        <saxon6:output xmlns:saxon="http://icl.com/saxon" encoding="{$outputEncoding}" method="html" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN" file="{$outName}">
           <xsl:copy-of select="$content"/>
-        </saxon:output>
+        </saxon6:output>
         <xsl:if test="$verbose='true'">
           <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
         </xsl:if>

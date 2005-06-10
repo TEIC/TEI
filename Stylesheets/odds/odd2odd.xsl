@@ -168,17 +168,23 @@ because of the order of declarations
   done
 -->
 <xsl:variable name="M">
-  <xsl:value-of select="$TEISERVER"/>
-  <xsl:text>allbymod.xq?module=</xsl:text>
-  <xsl:value-of select="@key"/>
+  <xsl:choose>
+    <xsl:when test="not($LOCALSOURCE='')">
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:value-of select="$TEISERVER"/>
+      <xsl:text>allbymod.xq?module=</xsl:text>
+      <xsl:value-of select="@key"/>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:variable>
 
 <xsl:if test="$verbose='true'">
   <xsl:message>Phase 1: expand moduleRef <xsl:value-of
   select="@key"/>, read <xsl:value-of select="$M"/></xsl:message>
 </xsl:if>
-  <xsl:for-each select="document($M)/List">
-    <xsl:for-each select="tei:*">
+  <xsl:for-each select="document($M)">
+    <xsl:for-each select=".//tei:elementSpec|tei:classSpec|tei:macroSpec">
       <xsl:variable name="Current" select="."/>
       <xsl:variable name="I" select="@ident"/>
       <xsl:variable name="N" select="local-name(.)"/>
