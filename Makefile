@@ -171,7 +171,7 @@ dist-source:
 	ln -s tei-p5-source tei-p5-source-`cat ../VERSION` ; \
 	zip -r tei-p5-source-`cat ../VERSION`.zip tei-p5-source-`cat ../VERSION` )
 
-dist-schema: schemas dtds
+dist-schema: schemas dtds oddschema
 	rm -rf release/tei-p5-schema
 	mkdir -p release/tei-p5-schema/share/xml/tei/schema/dtd/p5
 	mkdir -p release/tei-p5-schema/share/xml/tei/schema/relaxng/p5
@@ -179,6 +179,7 @@ dist-schema: schemas dtds
 	| (cd release/tei-p5-schema/share/xml/tei/schema/dtd/p5; tar xf - )
 	(cd Schema; tar --exclude CVS -c -f - .) \
 	| (cd release/tei-p5-schema/share/xml/tei/schema/relaxng/p5; tar xf - )
+	cp p5odds.rng p5odds.rnc release/tei-p5-schema/share/xml/tei/schema/relaxng/p5
 	(cd release; 	\
 	ln -s tei-p5-schema tei-p5-schema-`cat ../VERSION` ; \
 	zip -r tei-p5-schema-`cat ../VERSION`.zip tei-p5-schema-`cat ../VERSION` )
