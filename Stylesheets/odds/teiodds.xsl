@@ -47,10 +47,13 @@
 
   <xsl:output encoding="utf-8" method="xml" indent="yes"/>
 
+  <xsl:param name="localsource"/>
+
   <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
   <xsl:param name="verbose"></xsl:param>
   <xsl:param name="schemaBaseURL">http://localhost/schema/relaxng/p5/</xsl:param>
   
+  <xsl:key name="LOCALIDENTS"   match="tei:*"   use="@ident"/>
   <xsl:key name="MACROS"   match="tei:macroSpec" use="@ident"/>
   <xsl:key name="ELEMENTS" match="tei:elementSpec" use="@ident"/>
   <xsl:key name="CLASSES"  match="tei:classSpec" use="@ident"/>
@@ -388,14 +391,8 @@
 		  </xsl:if>
 		  <xsl:if test="not($oddmode='tei')">
 		    <a:documentation>
-		      <xsl:if test="not(tei:gloss='')">
-			<xsl:text>(</xsl:text>
-			<xsl:value-of select="tei:gloss"/>
-			<xsl:text>) </xsl:text>
-		      </xsl:if>
-		      <xsl:if test="not(tei:desc='')">
-			<xsl:value-of select="tei:desc"/>
-		      </xsl:if>
+		      <xsl:apply-templates select="tei:gloss" mode="doc"/>
+		      <xsl:apply-templates select="tei:desc" mode="doc"/>
 		    </a:documentation>
 		  </xsl:if>
 		  <ref name="{@ident}.content"  xmlns="http://relaxng.org/ns/structure/1.0"/>
@@ -454,32 +451,41 @@
   </xsl:template>
 
   <xsl:template name="defineContent">
-    <define name="{@ident}.content"  xmlns="http://relaxng.org/ns/structure/1.0">
+    <xsl:variable name="Contents">
+      <BLAH>
+	<xsl:choose>
+	  <xsl:when test="tei:valList[@type='closed']">
+	    <rng:choice >
+	      <xsl:for-each select="tei:valList/tei:valItem">  
+		<rng:value ><xsl:value-of select="@ident"/></rng:value>
+		<xsl:if test="not($oddmode='tei')">
+		  <a:documentation>
+		    <xsl:apply-templates select="tei:gloss" mode="doc"/>
+		    <xsl:apply-templates select="tei:desc" mode="doc"/>
+		  </a:documentation>
+		</xsl:if>
+	      </xsl:for-each>
+	    </rng:choice>
+	  </xsl:when>
+	  <xsl:when test="tei:content">
+	    <xsl:apply-templates select="tei:content/*"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <rng:empty />
+	  </xsl:otherwise>
+	</xsl:choose>
+      </BLAH>
+    </xsl:variable>
+    
+    <define name="{@ident}.content" xmlns="http://relaxng.org/ns/structure/1.0">
       <xsl:choose>
-	<xsl:when test="tei:valList[@type='closed']">
-	  <rng:choice >
-	    <xsl:for-each select="tei:valList/tei:valItem">  
-	      <rng:value ><xsl:value-of select="@ident"/></rng:value>
-	      <xsl:if test="not($oddmode='tei')">
-		<a:documentation>
-		  <xsl:if test="not(tei:gloss='')">
-		    <xsl:text>(</xsl:text>
-		    <xsl:value-of select="tei:gloss"/>
-		    <xsl:text>) </xsl:text>
-		  </xsl:if>
-		  <xsl:if test="not(tei:desc='')">
-		    <xsl:value-of select="tei:desc"/>
-		  </xsl:if>
-		</a:documentation>
-	      </xsl:if>
-	    </xsl:for-each>
-	  </rng:choice>
-	</xsl:when>
-	<xsl:when test="tei:content">
-	  <xsl:apply-templates select="tei:content/*"/>
+	<xsl:when test="count(exsl:node-set($Contents)/BLAH/*)=0">
+	  <rng:empty/>
 	</xsl:when>
 	<xsl:otherwise>
-	  <rng:empty />
+	  <xsl:for-each select="exsl:node-set($Contents)/BLAH">
+	    <xsl:copy-of select="*"/>
+	  </xsl:for-each>
 	</xsl:otherwise>
       </xsl:choose>
     </define>
@@ -488,7 +494,7 @@
   <xsl:template match="tei:elementSpec/@ident"/>
   
   <xsl:template match="tei:gloss" mode="show">
-    <xsl:if test="text()">
+    <xsl:if test="not(.='')">
       (<xsl:apply-templates/>)
     </xsl:if>
   </xsl:template>
@@ -944,14 +950,8 @@
 	      </value>
 	      <xsl:if test="not($oddmode='tei')">
 		<a:documentation>
-		  <xsl:if test="not(tei:gloss='')">
-		    <xsl:text>(</xsl:text>
-		    <xsl:value-of select="tei:gloss"/>
-		    <xsl:text>) </xsl:text>
-		  </xsl:if>
-		  <xsl:if test="not(tei:desc='')">
-		    <xsl:value-of select="tei:desc"/>
-		  </xsl:if>
+		  <xsl:apply-templates select="tei:gloss" mode="doc"/>
+		  <xsl:apply-templates select="tei:desc" mode="doc"/>
 		</a:documentation>
 	      </xsl:if>
 	    </xsl:for-each>
@@ -973,14 +973,8 @@
 	  </value>
 	  <xsl:if test="not($oddmode='tei')">
 	    <a:documentation>
-	      <xsl:if test="not(tei:gloss='')">
-		<xsl:text>(</xsl:text>
-		<xsl:value-of select="tei:gloss"/>
-		<xsl:text>) </xsl:text>
-	      </xsl:if>
-	      <xsl:if test="not(tei:desc='')">
-		<xsl:value-of select="tei:desc"/>
-	      </xsl:if>
+	      <xsl:apply-templates select="tei:gloss" mode="doc"/>
+	      <xsl:apply-templates select="tei:desc" mode="doc"/>
 	    </a:documentation>
 	  </xsl:if>
 	</xsl:for-each>
@@ -1012,14 +1006,8 @@
     </xsl:if>
     <xsl:if test="not($oddmode='tei')">
       <a:documentation>
-	<xsl:if test="not(tei:gloss='')">
-	  <xsl:text>(</xsl:text>
-	  <xsl:value-of select="tei:gloss"/>
-	  <xsl:text>) </xsl:text>
-	</xsl:if>
-	<xsl:if test="not(tei:desc='')">
-	  <xsl:value-of select="tei:desc"/>
-	</xsl:if>
+	<xsl:apply-templates select="tei:gloss" mode="doc"/>
+	<xsl:apply-templates select="tei:desc" mode="doc"/>
       </a:documentation>
     </xsl:if>
     <xsl:call-template name="attributeDatatype"/>
@@ -1098,7 +1086,19 @@
 	</xsl:if>
       </xsl:for-each>
     </xsl:when>
-    <xsl:when test="$lookupDatabase='false'"/>
+    <xsl:when test="not($localsource='')">
+      <xsl:for-each select="document($localsource)/tei:TEI">
+	<xsl:for-each select="tei:elementSpec[tei:classes/tei:memberOf[@key=$this]]">
+	  <xsl:call-template name="showElement">
+	    <xsl:with-param name="name" select="@ident"/>
+	    <xsl:with-param name="id" select="@xml:id"/>
+	  </xsl:call-template>
+	  <xsl:if test="following::item">
+	    <xsl:text>: &#10;</xsl:text>
+	  </xsl:if>
+	</xsl:for-each>
+      </xsl:for-each>
+    </xsl:when>
     <xsl:otherwise>
       <xsl:variable name="address">
 	<xsl:value-of select="$TEISERVER"/>
@@ -1263,6 +1263,13 @@
 	<xsl:with-param name="atts" select="$atts"/>
       </xsl:apply-templates>
     </xsl:when>
+    <xsl:when test="not($localsource='')">
+      <xsl:for-each select="document($localsource)/tei:TEI">
+	<xsl:apply-templates select="tei:*[@ident=$name]" mode="show">
+	  <xsl:with-param name="atts" select="$atts"/>
+	</xsl:apply-templates>
+      </xsl:for-each>
+    </xsl:when>
     <xsl:otherwise>
       <xsl:variable name="loc">
 	<xsl:value-of select="$TEISERVER"/>
@@ -1348,6 +1355,16 @@ it wrong otherwise. I suspect a bug there somewhere.
     <xsl:copy-of select="@*"/>
     <xsl:apply-templates mode="forceRNG"/>
   </xsl:element>
+</xsl:template>
+
+<xsl:template match="tei:gloss" mode="doc">
+    <xsl:text>(</xsl:text>
+    <xsl:value-of select="."/>
+    <xsl:text>) </xsl:text>
+</xsl:template>
+
+<xsl:template match="tei:desc" mode="doc">
+    <xsl:value-of select="."/>
 </xsl:template>
 
 </xsl:stylesheet>

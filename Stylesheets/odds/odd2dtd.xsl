@@ -52,6 +52,7 @@
   <xsl:param name="numberHeadingsDepth">  </xsl:param>
   <xsl:param name="oddmode">dtd</xsl:param>       
   <xsl:param name="prenumberedHeadings">  </xsl:param>
+
   <xsl:key name="Modules"   match="tei:moduleSpec" use="1"/>
 
 <xsl:template match="/">
@@ -701,6 +702,18 @@ End of macro declarations
 
 <xsl:template match="tei:gloss|tei:remarks|tei:desc"/>
 
+<xsl:template match="tei:gloss" mode="doc">
+    <xsl:text>(</xsl:text>
+    <xsl:value-of select="."/>
+    <xsl:text>) </xsl:text>
+</xsl:template>
+
+<xsl:template match="tei:desc" mode="doc">
+    <xsl:value-of select="."/>
+</xsl:template>
+
+<xsl:template match="tei:gloss|tei:remarks|tei:desc"/>
+
 <xsl:template match="tei:macroSpec" mode="tangle">
  <xsl:if test="$verbose='true'">
    <xsl:message>     .... macroSpec <xsl:value-of
@@ -812,22 +825,28 @@ So, at the first, process the second; at the second, do nothing.
     </xsl:choose>
   </xsl:variable>
   <xsl:text>&#10;&lt;!--doc:</xsl:text>
-  <xsl:if test="not(tei:gloss='')">
-    <xsl:text>(</xsl:text>
-    <xsl:value-of select="tei:gloss"/>
-    <xsl:text>) </xsl:text>
-  </xsl:if>
-  <xsl:if test="not(tei:desc='')">
-    <xsl:value-of select="tei:desc"/>
-  </xsl:if>
+  <xsl:apply-templates select="tei:gloss" mode="doc"/>
+  <xsl:apply-templates select="tei:desc" mode="doc"/>
   <xsl:text> --&gt;&#10;&lt;!ELEMENT </xsl:text>
   <xsl:value-of select="$ename"/>
   <xsl:if test="$parameterize='true'">
     <xsl:text> %om.RR;</xsl:text>
   </xsl:if>
   <xsl:text> </xsl:text>
-  <xsl:apply-templates select="tei:content/rng:*" />
-  <xsl:text>&gt;</xsl:text>
+    <xsl:variable name="Contents">
+      <BLAH>
+	<xsl:apply-templates select="tei:content/rng:*" />
+      </BLAH>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$Contents=''">
+	<xsl:text> EMPTY</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$Contents"/>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:text>&gt;</xsl:text>
   <xsl:text>&#10;&lt;!ATTLIST </xsl:text>
   <xsl:value-of select="$ename"/>
   <xsl:if test="$parameterize='true'">
@@ -1147,25 +1166,35 @@ So, at the first, process the second; at the second, do nothing.
   <xsl:variable name="ident">
     <xsl:value-of select="ancestor::tei:elementSpec/@ident|ancestor::tei:classSpec/@ident"/>
   </xsl:variable>
+  <xsl:variable name="K" select="@key"/>
   <xsl:choose>
-    <xsl:when  test="key('IDENTS',@key)">
+    <xsl:when  test="key('IDENTS',$K)">
       <xsl:for-each select="key('IDENTS',@key)[1]">
 	<xsl:apply-templates  select="." mode="tagatts"/>
       </xsl:for-each>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:variable name="loc">
-	<xsl:value-of select="$TEISERVER"/>
-	<xsl:text>copytag.xq?name=</xsl:text>
-	<xsl:value-of select="@key"/>
-      </xsl:variable>
-      <xsl:if test="$verbose">
-	<xsl:if test="$verbose='true'">
-	  <xsl:message>Accessing TEISERVER: <xsl:value-of
-	select="$loc"/></xsl:message>
-	</xsl:if>
-      </xsl:if>
-      <xsl:apply-templates select="document($loc)/tei:TEI/*" mode="tagatts"/>
+      <xsl:choose>
+	<xsl:when test="not($localsource='')">
+	  <xsl:for-each select="document($localsource)/tei:TEI">
+	    <xsl:apply-templates select="key('LOCALIDENTS',$K)"  mode="tagatts"/>
+	  </xsl:for-each>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:variable name="Remote">
+	    <xsl:value-of select="$TEISERVER"/>
+	    <xsl:text>copytag.xq?name=</xsl:text>
+	    <xsl:value-of select="$K"/>
+	  </xsl:variable>
+	  <xsl:if test="$verbose">
+	    <xsl:if test="$verbose='true'">
+	      <xsl:message>Accessing TEISERVER: <xsl:value-of
+	      select="$Remote"/></xsl:message>
+	    </xsl:if>
+	  </xsl:if>
+	  <xsl:apply-templates select="document($Remote)/tei:TEI/*"  mode="tagatts"/>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
