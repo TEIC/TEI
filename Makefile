@@ -3,7 +3,7 @@ PREFIX=/usr
 XSL=/usr/share/xml/tei/stylesheet
 # alternativly, if you have not installed the Debian packages, uncomment the next line:
 # XSL=http://www.tei-c.org/stylesheet
-ROMAOPTS=
+ROMAOPTS=--localsource=Source-driver.xml
 
 .PHONY: convert dtds schemas html validate valid test split oddschema exampleschema fascicule exist clean dist
 
