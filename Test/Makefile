@@ -1,6 +1,6 @@
 XSL=/usr/share/xml/tei/stylesheet/
 TEISERVER=http://tei.oucs.ox.ac.uk/Query/
-ROMAFLAGS=
+ROMAOPTS="--localsource=Source-driver.xml"
 
 TESTFILES= \
 	testchinese \
@@ -34,7 +34,7 @@ default: schemas test-schema test-dtd test-xsd
 all: test-schema test-dtd test-xsd
 
 schemas:
-	for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do roma $(ROMAFLAGS) --xsl=$(XSL) --teiserver=$(TEISERVER) --doc $$i.odd .; done
+	for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do roma $(ROMAOPTS) --xsl=$(XSL) --teiserver=$(TEISERVER) --doc $$i.odd .; done
 
 test-schema: test-rnv test-jing 
 #test-xmllint
