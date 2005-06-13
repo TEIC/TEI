@@ -125,14 +125,14 @@
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="parent::tei:specGrp">
-	<tei:label/><tei:item>&#171; <tei:emph>include
+	<tei:label/><tei:item><tei:emph>specification group
 	<tei:ref target="#{$W}"><xsl:for-each select="key('IDS',$W)">
 	  <xsl:number level="any"/>
 	  <xsl:if test="@n">
 	    <xsl:text>: </xsl:text><xsl:value-of select="@n"/>
 	  </xsl:if>
-	</xsl:for-each></tei:ref></tei:emph>
-	<xsl:text> &#187; </xsl:text></tei:item>
+	</xsl:for-each></tei:ref> appears here</tei:emph>
+	</tei:item>
       </xsl:when>
       <xsl:when test="parent::tei:p">
 	&#171; <tei:emph>include
@@ -672,9 +672,10 @@
   <xsl:template name="logoFramePicture"/>
   
   <xsl:template match="tei:specGrp">
+    The following declarations constitute specification group
+    <xsl:number level="any"/>:
     <tei:list type="gloss">
       <xsl:copy-of select="@xml:id"/>
-      <tei:head>Specification group <xsl:number level="any"/></tei:head>
       <xsl:apply-templates/>
     </tei:list>
   </xsl:template>

@@ -1558,18 +1558,7 @@ $ID: requests a particular page
         <xsl:if test="$verbose='true'">
           <xsl:message>Opening <xsl:value-of select="$outName"/> with Saxon 6</xsl:message>
         </xsl:if>
-        <saxon6:output encoding="{$outputEncoding}" method="html" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN" file="{$outName}">
-          <xsl:copy-of select="$content"/>
-        </saxon6:output>
-        <xsl:if test="$verbose='true'">
-          <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
-        </xsl:if>
-      </xsl:when>
-      <xsl:when test="contains($processor,'SAXON 5')">
-        <xsl:if test="$verbose='true'">
-          <xsl:message>Opening <xsl:value-of select="$outName"/> with Saxon 5</xsl:message>
-        </xsl:if>
-        <saxon6:output xmlns:saxon="http://icl.com/saxon" encoding="{$outputEncoding}" method="html" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN" file="{$outName}">
+        <saxon6:output encoding="{$outputEncoding}" method="html" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN" href="{$outName}">
           <xsl:copy-of select="$content"/>
         </saxon6:output>
         <xsl:if test="$verbose='true'">
@@ -2464,7 +2453,7 @@ $ID: requests a particular page
     <p align="{$alignNavigationPanel}">
       <xsl:variable name="Parent">
         <xsl:call-template name="locateParent"/>
-        <xsl:value-of select="$standardSuffix"/>
+	<xsl:value-of select="$standardSuffix"/>
       </xsl:variable>
       <xsl:choose>
         <xsl:when test="$Parent = $standardSuffix">

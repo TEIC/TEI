@@ -310,7 +310,15 @@
        		<xsl:value-of select="@n"/>
        </xsl:when>
        <xsl:otherwise>
- 	 <xsl:number format="{$numberBodyHeadings}" from="tei:body" level="any"/>
+	 <xsl:choose>
+	   <xsl:when test="@n">
+	     <xsl:value-of select="@n"/>
+	   </xsl:when>
+	   <xsl:otherwise>
+	   <xsl:number format="{$numberBodyHeadings}" from="tei:body"
+		       level="any"/>
+	   </xsl:otherwise>
+	 </xsl:choose>
         <xsl:value-of select="$numbersuffix"/>
        </xsl:otherwise>
        </xsl:choose>

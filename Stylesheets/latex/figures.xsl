@@ -248,8 +248,11 @@
       </xsl:choose>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:variable name="c"><xsl:for-each select="ancestor-or-self::tei:figure">
-	<xsl:number level="any" count="tei:figure[tei:head]"/></xsl:for-each></xsl:variable>
+      <xsl:variable name="c">
+	<xsl:for-each select="ancestor-or-self::tei:figure[1]">
+	  <xsl:number level="any"/>
+	</xsl:for-each>
+      </xsl:variable>
       <xsl:text>FIG</xsl:text>
       <xsl:value-of select="$c+1000"/>
     </xsl:otherwise>

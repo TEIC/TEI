@@ -65,7 +65,7 @@
 </xsl:text>
 </xsl:if>
 <xsl:for-each select="//tei:figure">
-  <xsl:variable name="c"><xsl:number level="any" count="tei:figure[tei:head]"/></xsl:variable>
+  <xsl:variable name="c"><xsl:number level="any"/></xsl:variable>
   <xsl:text>%FIGMAP </xsl:text>
   <xsl:variable name="f">
     <xsl:choose>

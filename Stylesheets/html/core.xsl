@@ -1203,10 +1203,10 @@
     </pre>
   </xsl:template>
   <xd:doc>
-    <xd:short>Process elements  tei:quote[@rend='display']</xd:short>
+    <xd:short>Process elements  tei:quote</xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
-  <xsl:template match="tei:quote[@rend='display']">
+  <xsl:template match="tei:quote">
     <blockquote>
       <xsl:apply-templates/>
       <xsl:if test="following-sibling::tei:bibl">
