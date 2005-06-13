@@ -4,6 +4,7 @@ XSL=/usr/share/xml/tei/stylesheet
 # alternativly, if you have not installed the Debian packages, uncomment the next line:
 # XSL=http://www.tei-c.org/stylesheet
 ROMAOPTS="--localsource=Source-driver.xml"
+LOCALSOURCE=Source-driver.xml
 
 .PHONY: convert dtds schemas html validate valid test split oddschema exampleschema fascicule exist clean dist
 
@@ -56,7 +57,7 @@ html-web: check
 	-cp *.gif *.css Guidelines-web
 	(cd Guidelines-web; for i in *.html; do perl -i ../Tools/cleanrnc.pl $$i;done)
 
-html:check
+html:check subset
 	-rm -rf Guidelines
 	-mkdir Guidelines
 	(perl -p -e "s+http://www.tei-c.org/stylesheet+${XSL}+" guidelines-print.xsl > tmp$$$$.xsl; \
@@ -70,7 +71,7 @@ html:check
 	(cd Guidelines; for i in *.html; do perl -i ../Tools/cleanrnc.pl $$i;done)
 	-cp *.gif *.css Guidelines
 
-xml: check
+xml: check subset
 	xmllint --noent   Source-driver.xml | perl Tools/cleanrnc.pl | \
 	xsltproc  -o Guidelines.xml \
 	--stringparam displayMode rnc  \
@@ -139,24 +140,45 @@ exampleschema:
 	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rnc && \
 	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rng
 
-fascicule:
+subset:
+	@echo '<xsl:stylesheet version="1.0"' > subset.xsl
+	@echo '  xmlns:tei="http://www.tei-c.org/ns/1.0"' >> subset.xsl
+	@echo '  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">' >> subset.xsl
+	@echo '  <xsl:template match="/">' >> subset.xsl
+	@echo '    <tei:TEI>' >> subset.xsl
+	@echo '<xsl:copy-of select=".//tei:elementSpec"/>' >> subset.xsl
+	@echo '      <xsl:copy-of select=".//tei:macroSpec"/>' >> subset.xsl
+	@echo '      <xsl:copy-of select=".//tei:classSpec"/>' >> subset.xsl
+	@echo '      <xsl:copy-of select=".//tei:moduleSpec"/>' >> subset.xsl
+	@echo '    </tei:TEI>' >> subset.xsl
+	@echo '</xsl:template>' >> subset.xsl
+	@echo '</xsl:stylesheet>' >> subset.xsl
+	xsltproc -o p5subset.xml subset.xsl $(LOCALSOURCE) || die "failed to extract subset from $(LOCALSOURCE) "
+	rm subset.xsl
+
+fascicule: subset
 	cat fasc-head.xml `find Source -name $(CHAP).odd` fasc-tail.xml > FASC-$(CHAP).xml
-	xmllint --noent    FASC-$(CHAP).xml | xsltproc \
+	export H=`pwd`; xmllint --noent    FASC-$(CHAP).xml | xsltproc \
 	-o FASC-$(CHAP)-Guidelines/index.html \
+	--stringparam localsource $$H/p5subset.xml \
 	--stringparam TEISERVER $(TEISERVER) \
+	--stringparam cssFile tei.css \
 	--stringparam verbose true \
 	--stringparam displayMode rnc \
 	--stringparam outputDir . \
-	${XSL}/odds/odd2html.xsl - 
+	guidelines.xsl -
 	(cd FASC-$(CHAP)-Guidelines; for i in *.html; do perl -i ../Tools/cleanrnc.pl $$i;done)
+	-cp *.gif *.css FASC-$(CHAP)-Guidelines
 	-jing p5odds.rng FASC-$(CHAP).xml 
+	export H=`pwd`; \
 	xsltproc -o FASC-$(CHAP)-lite.xml  \
+	--stringparam localsource $$H/p5subset.xml \
 	--stringparam TEISERVER $(TEISERVER) \
 	--stringparam displayMode rnc \
-	${XSL}/odds/teixml-odds.xsl FASC-$(CHAP).xml 
+	$(XSL)/odds/teixml-odds.xsl FASC-$(CHAP).xml 
 	perl Tools/cleanrnc.pl FASC-$(CHAP)-lite.xml | \
 	xsltproc  \
-	 ${XSL}/../teic/teilatex-teic-P5.xsl - > FASC-$(CHAP).tex
+	 ${XSL}/teic/teilatex-teic-P5.xsl - > FASC-$(CHAP).tex
 	TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-$(CHAP) 
 	TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-$(CHAP) 
 
@@ -213,23 +235,23 @@ dist-database:
 	zip -r tei-p5-database-`cat ../VERSION`.zip tei-p5-database-`cat ../VERSION` )
 
 install-schema: dist-schema
-	echo Making schema release in ${PREFIX}
+	@echo Making schema release in ${PREFIX}
 	(cd release/tei-p5-schema; tar cf - .) | (cd ${PREFIX}; tar xf - )
 
 install-doc: dist-doc
-	echo Making documentation release in ${PREFIX}
+	@echo Making documentation release in ${PREFIX}
 	(cd release/tei-p5-doc; tar cf - .) | (cd ${PREFIX}; tar xf - )
 
 install-source: dist-source
-	echo Making source release in ${PREFIX}
+	@echo Making source release in ${PREFIX}
 	(cd release/tei-p5-source; tar cf - .) | (cd ${PREFIX}; tar xf - )
 
 install-test: dist-test
-	echo Making testfiles release in ${PREFIX}
+	@echo Making testfiles release in ${PREFIX}
 	(cd release/tei-p5-test; tar cf - .) | (cd ${PREFIX}; tar xf - )
 
 install-database: dist-database
-	echo Making database release in ${PREFIX}
+	@echo Making database release in ${PREFIX}
 	(cd release/tei-p5-database; tar cf - .) | (cd ${PREFIX}; tar xf - )
 
 install: clean install-schema install-doc install-test install-source install-database
@@ -250,6 +272,7 @@ check:
 clean:
 	-rm -rf release Guidelines Schema DTD dtd Split RomaResults *~
 	-rm Guidelines.xml core.rnc header.rnc tei.rnc \
+	p5subset.xml \
 	dictionaries.rnc  linking.rnc  textstructure.rnc \
 	figures.rnc       tagdocs.rnc  \
 	analysis.rnc \
