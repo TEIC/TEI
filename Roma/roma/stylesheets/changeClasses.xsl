@@ -15,7 +15,7 @@ Description
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:param name="module"/>
 <xsl:param name="class"/>
-<xsl:param name="host">http://localhost:8080/cocoon/Query/</xsl:param>
+<xsl:param name="host">http://localhost:8080/cocoon/Query</xsl:param>
 
   <xsl:template match="/">
     <p class="roma">

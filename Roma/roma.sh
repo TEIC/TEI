@@ -13,6 +13,7 @@ makeODD()
     echo "1. expand and simplify ODD "
     xsltproc -o $N.compiled.odd \
     --stringparam TEISERVER $TEISERVER  \
+    --stringparam localsource "$LOCAL"  \
     $TEIXSLDIR/odds/odd2odd.xsl $ODD 
 }
 
@@ -34,7 +35,7 @@ makeXSD()
     echo "4. make XSD from Relax NG"
     (cd $RESULTS; \
     trang  -o disable-abstract-elements $N.rng $N.xsd || die " trang fails";\
-    test -f xml.xsd && perl -p -i -e 's/<xs:import.*//' xml.xsd)
+    test -f xml.xsd && perl -p -i -e 's+\"xml.xsd\"+\"http://www.w3.org/2004/10/xml.xsd\"+' $N.xsd)
 }
 
 makeDTD()
@@ -86,6 +87,7 @@ exit 1
 TEISERVER=http://tei.oucs.ox.ac.uk/Query/
 TEIXSLDIR=/usr/share/xml/tei/stylesheet
 LOCALSOURCE=
+LOCAL=
 debug=false
 dtd=true
 relax=true
@@ -134,10 +136,35 @@ mkdir -p $RESULTS || die "cannot make directory $RESULTS"
 D=`date "+%Y-%m-%d %H:%M:%S.%N"`
 echo "Process $ODD to create $N{.dtd|.xsd|.doc.xml|.rng|.rnc} in $RESULTS"
 echo "========= $D Roma starts, execution:"
+if test "x$LOCALSOURCE" = "x"
+then
+    echo using $TEISERVER to access TEI database
+else
+    echo using $LOCALSOURCE to gather information about TEI 
+cat > subset.xsl <<EOF
+<xsl:stylesheet version="1.0"
+  xmlns:tei="http://www.tei-c.org/ns/1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <xsl:template match="/">
+    <tei:TEI>
+      <xsl:copy-of select=".//tei:elementSpec"/>
+      <xsl:copy-of select=".//tei:macroSpec"/>
+      <xsl:copy-of select=".//tei:classSpec"/>
+      <xsl:copy-of select=".//tei:moduleSpec"/>
+    </tei:TEI>
+</xsl:template>
+</xsl:stylesheet>
+EOF
+xsltproc -o tei$$.xml subset.xsl $LOCALSOURCE || die "failed to extract subset from $LOCALSOURCE "
+LOCAL=$H/tei$$.xml
+fi
+
 makeODD
 $relax && makeRelax
 $relax && $xsd && makeXSD
 $dtd && makeDTD
 $debug || rm  $N.compiled.odd
+test -f subset.xsl && rm subset.xsl
+test -f tei$$.xml && rm tei$$.xml
 D=`date "+%Y-%m-%d %H:%M:%S.%N"`
 echo "========= $D Roma ends"

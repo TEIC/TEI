@@ -726,6 +726,7 @@ class roma
 	if (is_array( $aszClasses) )
 	  $aszParam[ 'elementClasses' ] = join( ';', $aszClasses );
 	$aszParam[ 'elementContents' ] = $szContents;
+	$aszParam[ 'host' ] = roma_xquery_server;
 	$aszParam[ 'elementFullContents' ] = $szFullContents;
 
 	$this->applyStylesheet( $oListDom, 'addElements.xsl', $oNewDom, $aszParam, 'addElements'  );

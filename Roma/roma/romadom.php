@@ -827,6 +827,7 @@ class romaDom extends domDocument
       {
 	$this->getXPath( $oXPath );
 	$szLanguage = $oXPath->query( "/tei:TEI/@xml:lang" )->item(0)->nodeValue;
+        if ($szLanguage=='') { $szLanguage='en'; }
       }
 
     public function getCustomizationDescription( &$szDesc )
@@ -2259,7 +2260,9 @@ class romaDom extends domDocument
 	ob_start();
 	System( roma_trang . 
 	' -I rng -O xsd -o disable-abstract-elements ' . 
-	$szInputFile . ' ' . $szOutputFile  . ' 2>&1');
+	$szInputFile . ' ' . $szOutputFile  . ' 2>&1;' .
+	'perl -p -i -e	"s+\"xml.xsd\"+\"http://www.w3.org/2004/10/xml.xsd\"+" ' .
+        $szOutputFile);
 	$szError = ob_get_clean();
 	ob_end_clean();
 

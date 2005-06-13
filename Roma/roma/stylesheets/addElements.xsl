@@ -20,7 +20,7 @@ Description
 <xsl:param name="elementFullContents"/>
 <xsl:param name="elementsModule"/>
 <xsl:param name="MESSAGE"/>
-<xsl:param name="host">http://localhost:8080/cocoon/Query/</xsl:param>
+<xsl:param name="host">http://localhost:8080/cocoon/Query</xsl:param>
 <xsl:param name="selectedMode">addElement</xsl:param>
 <xsl:param name="elementChangedName"/>
 <xsl:param name="module"/>
@@ -289,7 +289,7 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
       <xsl:attribute name="onMouseover">descriptionPopup_Show( 'attClass_<xsl:value-of select="className"/>' )</xsl:attribute>
       <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'attClass_<xsl:value-of select="className"/>' )</xsl:attribute>
       <a>
-	<xsl:attribute name="href"><xsl:value-of select="$host"/>/Query/class.xq?name=<xsl:value-of select="className"/></xsl:attribute>
+	<xsl:attribute name="href"><xsl:value-of select="$host"/>/class.xq?name=<xsl:value-of select="className"/></xsl:attribute>
 	<xsl:attribute name="target">_blank</xsl:attribute>
 	<xsl:value-of select="className"/>
       </a>
