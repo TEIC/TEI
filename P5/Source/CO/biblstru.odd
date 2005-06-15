@@ -9,8 +9,6 @@ See the file COPYING for details.
 <gloss>structured bibliographic citation</gloss>
 <desc>contains a structured bibliographic citation, in which only
 bibliographic subelements appear and in a specified order. </desc>
-  
-  
   <classes>
     <memberOf key="tei.bibl"/>
     <memberOf key="tei.declarable"/>
@@ -18,39 +16,18 @@ bibliographic subelements appear and in a specified order. </desc>
   <content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:zeroOrMore>
-	<rng:choice>
-	  <rng:ref name="tei.Incl"/>
-	  <rng:ref name="analytic"/>
-	</rng:choice>
+	 <rng:ref name="analytic"/>
       </rng:zeroOrMore>
       <rng:oneOrMore>
-        <rng:group>
-          <rng:ref name="monogr"/>
-          <rng:zeroOrMore>
-            <rng:ref name="tei.Incl"/>
-          </rng:zeroOrMore>
-        </rng:group>
+        <rng:ref name="monogr"/>
         <rng:zeroOrMore>
           <rng:ref name="series"/>
-          <rng:zeroOrMore>
-            <rng:ref name="tei.Incl"/>
-          </rng:zeroOrMore>
-        </rng:zeroOrMore>
+         </rng:zeroOrMore>
       </rng:oneOrMore>
       <rng:zeroOrMore>
         <rng:choice>
-          <rng:group>
             <rng:ref name="note"/>
-            <rng:zeroOrMore>
-              <rng:ref name="tei.Incl"/>
-            </rng:zeroOrMore>
-          </rng:group>
-          <rng:group>
             <rng:ref name="idno"/>
-            <rng:zeroOrMore>
-              <rng:ref name="tei.Incl"/>
-            </rng:zeroOrMore>
-          </rng:group>
         </rng:choice>
       </rng:zeroOrMore>
     </rng:group>
