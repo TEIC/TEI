@@ -506,7 +506,7 @@ Suffix for generated output files.
     <xsl:choose>
       <xsl:when test="$rawXML='true'">.xml</xsl:when>
       <xsl:when test="tei:teiCorpus">.html</xsl:when>
-      <xsl:when test="$STDOUT='true'">.xml</xsl:when>
+      <xsl:when test="$STDOUT='true'"></xsl:when>
       <xsl:otherwise>.html</xsl:otherwise>
     </xsl:choose>
 </xsl:param>

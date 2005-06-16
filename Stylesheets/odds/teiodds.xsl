@@ -1037,7 +1037,7 @@
     <xsl:otherwise>
       <xsl:for-each select="tei:classes/tei:memberOf">
 	<xsl:choose>
-	  <xsl:when test="key('CLASSS',@key)">
+	  <xsl:when test="key('CLASSES',@key)">
 	    <xsl:for-each select="key('CLASSES',@key)">
 	      <xsl:text>: </xsl:text>
 	      <xsl:call-template name="makeLink">

@@ -618,7 +618,9 @@ End of macro declarations
       <xsl:call-template name="topLevel"/>
     </xsl:when>
     <xsl:otherwise>
+      <xsl:if test="parent::tei:content">(</xsl:if>
       <xsl:call-template name="refbody"/>
+      <xsl:if test="parent::tei:content">)</xsl:if>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>

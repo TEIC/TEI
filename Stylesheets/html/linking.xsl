@@ -58,11 +58,18 @@
       </xsl:when>
       <xsl:when test="starts-with(local-name(.),'div')">
         <xsl:variable name="xpath">
-          <xsl:for-each select="ancestor-or-self::tei:*"><xsl:value-of select="local-name()"/><xsl:text/>.<xsl:number/><xsl:if test="position() != last()">_</xsl:if></xsl:for-each>
-        </xsl:variable>
+	  <xsl:for-each select="ancestor-or-self::tei:*">
+	    <xsl:value-of select="local-name()"/>
+	    <xsl:text/>.<xsl:number/>
+	    <xsl:if test="position() != last()">_</xsl:if>
+	  </xsl:for-each>
+	</xsl:variable>
         <xsl:value-of select="substring-after($xpath,'TEI.1_text.1_')"/>
       </xsl:when>
-      <xsl:otherwise><xsl:value-of select="$BaseFile"/>-<xsl:value-of select="local-name(.)"/>-<xsl:value-of select="generate-id()"/></xsl:otherwise>
+      <xsl:otherwise>
+	<xsl:value-of select="$BaseFile"/>-<xsl:value-of
+      select="local-name(.)"/>-<xsl:value-of select="generate-id()"/>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   <xd:doc>
@@ -87,6 +94,7 @@
       </xsl:when>
       <xsl:when test="$STDOUT='true' and $depth &lt;= $splitLevel">
         <xsl:value-of select="$masterFile"/>
+        <xsl:value-of select="$standardSuffix"/>
         <xsl:value-of select="$urlChunkPrefix"/>
         <xsl:value-of select="$ident"/>
       </xsl:when>
