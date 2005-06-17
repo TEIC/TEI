@@ -1587,7 +1587,7 @@ $ID: requests a particular page
 
   <xd:doc>
     <xd:short>[html] Make a new page using CSS layout </xd:short>
-    <xd:param name="currentID">currentID</xd:param>
+    <xd:param name="currentID">current ID</xd:param>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template name="pageLayoutCSS">
@@ -1667,32 +1667,45 @@ $ID: requests a particular page
             </div>
           </xsl:when>
           <xsl:when test="$contentStructure='body'">
-            <div id="rh-col">
-              <a name="rh-col"/>
-              <div id="rh-col-top">
-                <xsl:call-template name="rh-col-top"/>
-              </div>
-              <div id="rh-col-bottom">
-                <xsl:call-template name="rh-col-bottom">
-                  <xsl:with-param name="currentID" select="$currentID"/>
-                </xsl:call-template>
-              </div>
-            </div>
-            <div id="lh-col">
-              <div id="lh-col-top">
-                <xsl:call-template name="lh-col-top"/>
-              </div>
-              <div id="lh-col-bottom">
-                <xsl:call-template name="lh-col-bottom">
-                  <xsl:with-param name="currentID" select="$currentID"/>
-                </xsl:call-template>
-              </div>
-            </div>
+	    <xsl:call-template name="bodyLayout">
+	      <xsl:with-param name="currentID" select="$currentID"/>
+	    </xsl:call-template>
           </xsl:when>
         </xsl:choose>
       </body>
     </html>
   </xsl:template>
+
+
+  <xd:doc>
+    <xd:short>[html] arrangment of page as HTML divs </xd:short>
+    <xd:param name="currentID">currentID</xd:param>
+    <xd:detail>&#160;</xd:detail>
+  </xd:doc>
+<xsl:template name="bodyLayout">
+  <xsl:param name="currentID"/>
+  <div id="rh-col">
+    <a name="rh-col"/>
+    <div id="rh-col-top">
+      <xsl:call-template name="rh-col-top"/>
+    </div>
+    <div id="rh-col-bottom">
+      <xsl:call-template name="rh-col-bottom">
+	<xsl:with-param name="currentID" select="$currentID"/>
+      </xsl:call-template>
+    </div>
+  </div>
+  <div id="lh-col">
+    <div id="lh-col-top">
+      <xsl:call-template name="lh-col-top"/>
+    </div>
+    <div id="lh-col-bottom">
+      <xsl:call-template name="lh-col-bottom">
+	<xsl:with-param name="currentID" select="$currentID"/>
+      </xsl:call-template>
+    </div>
+  </div>
+</xsl:template>
 
   <xd:doc>
     <xd:short>[html] Generate a page using simple layout </xd:short>
