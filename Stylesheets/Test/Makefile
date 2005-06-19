@@ -26,4 +26,4 @@ default:
 	-xalan -PARAM verbose true -IN testp4.xml -XSL ../release/tei-xsl/base/p4/latex/tei.xsl > /dev/null
 
 clean:
-	-rm test.tex test.fo test.html index.html
+	-rm test.tex test.fo *.html

@@ -58,7 +58,7 @@ test: p4 p5
 clean:
 	-rm `find . -name semantic.cache`
 	-rm `find . -name "*~" `
-	-rm stylebear style.xml customize.xml
+	-rm stylebear style.xml customize.xml teixsl.html
 	-rm -rf release
 	-rm -rf doc/xsltdoc
 	(cd Test; make clean)
