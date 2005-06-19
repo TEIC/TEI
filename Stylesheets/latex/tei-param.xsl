@@ -74,6 +74,7 @@ Use real name of graphics files rather than pointers
 \usepackage{fancyvrb}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
+\usepackage{endnotes}
 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
 \IfFileExists{tipa.sty}{\usepackage{tipa}}{}
 \pagestyle{fancy} 
@@ -90,7 +91,9 @@ characters. The normal characters remain active for LaTeX commands.
 </xd:detail>
 </xd:doc>
 <xsl:template name="latexSetup">
-\usepackage[utf8x]{inputenc}
+\IfFileExists{utf8x.def}%
+ {\usepackage[utf8x]{inputenc}}%
+ {\usepackage[utf8]{inputenc}}
 \usepackage[T1]{fontenc}
 \usepackage[]{ucs}
 \usepackage{relsize}
@@ -111,7 +114,9 @@ characters. The normal characters remain active for LaTeX commands.
 \newcolumntype{C}[1]{&gt;{\centering\arraybackslash}p{#1}}
 \newcolumntype{R}[1]{&gt;{\raggedleft\arraybackslash}p{#1}}
 \newcolumntype{P}[1]{&gt;{\arraybackslash}p{#1}}
-\RequirePackage{xcolor}
+\IfFileExists{xcolor.sty}%
+  {\RequirePackage{xcolor}}%
+  {\RequirePackage{color}}
 \definecolor{label}{gray}{0.75}
 </xsl:text>
 \DeclareRobustCommand*{\xref}{\hyper@normalise\xref@}
