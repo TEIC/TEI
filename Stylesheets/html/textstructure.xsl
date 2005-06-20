@@ -1536,7 +1536,11 @@ $ID: requests a particular page
         <xsl:if test="$verbose='true'">
           <xsl:message>Opening <xsl:value-of select="$outName"/> with exsl:document</xsl:message>
         </xsl:if>
-        <exsl:document encoding="{$outputEncoding}" method="html" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN" href="{$outName}">
+        <exsl:document encoding="{$outputEncoding}" 
+		       method="{$outputMethod}" 
+		       doctype-public="{$doctypePublic}" 
+		       doctype-system="{$doctypeSystem}" 
+		       href="{$outName}">
           <xsl:copy-of select="$content"/>
         </exsl:document>
         <xsl:if test="$verbose='true'">
@@ -1547,7 +1551,10 @@ $ID: requests a particular page
         <xsl:if test="$verbose='true'">
           <xsl:message>Opening <xsl:value-of select="$outName"/> with Saxon 8</xsl:message>
         </xsl:if>
-        <saxon7:output encoding="{$outputEncoding}" method="html" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN" href="{$outName}">
+        <saxon7:output encoding="{$outputEncoding}" 		       method="{$outputMethod}" 
+		       doctype-public="{$doctypePublic}" 
+		       doctype-system="{$doctypeSystem}" 
+		       href="{$outName}">
           <xsl:copy-of select="$content"/>
 	</saxon7:output>
         <xsl:if test="$verbose='true'">
@@ -1558,7 +1565,11 @@ $ID: requests a particular page
         <xsl:if test="$verbose='true'">
           <xsl:message>Opening <xsl:value-of select="$outName"/> with Saxon 6</xsl:message>
         </xsl:if>
-        <saxon6:output encoding="{$outputEncoding}" method="html" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN" href="{$outName}">
+        <saxon6:output encoding="{$outputEncoding}" 
+		       method="{$outputMethod}" 
+		       doctype-public="{$doctypePublic}" 
+		       doctype-system="{$doctypeSystem}" 
+		       href="{$outName}">
           <xsl:copy-of select="$content"/>
         </saxon6:output>
         <xsl:if test="$verbose='true'">

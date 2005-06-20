@@ -770,11 +770,9 @@
         </p>
       </xsl:when>
       <xsl:when test="@type='gloss'">
-        <p>
           <dl>
             <xsl:apply-templates mode="gloss" select="tei:item"/>
           </dl>
-        </p>
       </xsl:when>
       <xsl:when test="@type='glosstable' or @type='vallist'">
         <table>

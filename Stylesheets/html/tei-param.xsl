@@ -456,6 +456,21 @@ Encoding of output file(s).
 <xsl:param name="outputEncoding">iso-8859-1</xsl:param>
 
 <xd:doc type="string" class="output">
+Output method for output file(s).
+</xd:doc>
+<xsl:param name="outputMethod">html</xsl:param>
+
+<xd:doc type="string" class="output">
+Public Doctype of output file(s).
+</xd:doc>
+<xsl:param name="doctypePublic">-//W3C//DTD HTML 4.0 Transitional//EN</xsl:param>
+
+<xd:doc type="string" class="output">
+System Doctype of output file(s).
+</xd:doc>
+<xsl:param name="doctypeSystem">http://www.w3.org/TR/html4/loose.dtd</xsl:param>
+
+<xd:doc type="string" class="output">
 <xd:short>The style of HTML (Simple, CSS or Table) which creates the layout for generated pages.</xd:short>
 <xd:detail>The choice is between
 <dl>

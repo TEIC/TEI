@@ -617,6 +617,9 @@ End of macro declarations
     <xsl:when test="parent::tei:content/parent::tei:macroSpec">
       <xsl:call-template name="topLevel"/>
     </xsl:when>
+    <xsl:when test="key('MACROS',@name)">
+      <xsl:call-template name="refbody"/>
+    </xsl:when>
     <xsl:otherwise>
       <xsl:if test="parent::tei:content">(</xsl:if>
       <xsl:call-template name="refbody"/>
