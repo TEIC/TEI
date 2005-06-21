@@ -1253,19 +1253,32 @@ $ID: requests a particular page
         </xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:for-each select="tei:text/tei:body/tei:div[@type='sidebar']">
-      <xsl:for-each select="tei:list">
-        <xsl:for-each select=".//tei:xref">
+  </xsl:template>
+
+  <xd:doc>
+    <xd:short>[html] bypass sidebar lists in normal mode</xd:short>
+    <xd:detail>&#160;</xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:list[@type='sidebar']"/>
+
+
+  <xd:doc>
+    <xd:short>[html] Summary links in left-hand column</xd:short>
+    <xd:detail>&#160;</xd:detail>
+  </xd:doc>
+  <xsl:template name="makeSidebar">
+    <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:body/tei:list[@type='sidebar']">
+        <xsl:for-each select=".//tei:xref|.//tei:ref">
           <p class="sidebar">
             <a href="{@url}" class="toclist">
               <xsl:apply-templates/>
             </a>
           </p>
         </xsl:for-each>
-      </xsl:for-each>
       <hr/>
     </xsl:for-each>
   </xsl:template>
+
   <xd:doc>
     <xd:short>[html] Summary table of contents in left-hand column</xd:short>
     <xd:param name="style">style</xd:param>
@@ -1479,7 +1492,7 @@ $ID: requests a particular page
       <xsl:value-of select="local-name(.)"/>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="preceding-sibling::tei:TEI">
+      <xsl:when test="following-sibling::tei:TEI">
         <xsl:apply-templates mode="generateNextLink" select="following-sibling::tei:TEI[1]"/>
       </xsl:when>
       <xsl:when test="following-sibling::tei:div">
