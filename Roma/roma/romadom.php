@@ -1868,7 +1868,7 @@ class romaDom extends domDocument
       {
 	$this->getDocDom( $oDOC );
         $oXSL = new domDocument();
- 	$oXSL->load( roma_StylesheetDir . '/' . 'odds/odd2relax.xsl'  );
+ 	$oXSL->load( roma_StylesheetDir . '/odds/odd2relax.xsl'  );
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
 	$oProc->setParameter( null, 'displayMode', 'rnc' );
@@ -1916,7 +1916,7 @@ class romaDom extends domDocument
 	  $this->m_oRomaDom->updateProgressBar( '55' );
 	$this->getDocDom( $oDOC );
         $oXSL = new domDocument();
- 	$oXSL->load( roma_StylesheetDir . '/' . 'odds/teixml-odds.xsl'  );
+ 	$oXSL->load( roma_StylesheetDir . '/odds/teixml-odds.xsl'  );
 
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
@@ -1981,7 +1981,7 @@ class romaDom extends domDocument
 	  $this->m_oRomaDom->updateProgressBar( '70' );
 
 	$oXSL = new domDocument();
-	$oXSL->load( roma_stylesheet_docLatex );
+	$oXSL->load( roma_StylesheetDir . '/base/p5/latex/tei.xsl'  );
 	
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
@@ -2003,7 +2003,7 @@ class romaDom extends domDocument
 
 	
 	$oXSL = new domDocument();
-	$oXSL->load( roma_stylesheet_docLatex );
+	$oXSL->load( roma_StylesheetDir . '/base/p5/latex/tei.xsl'  );
 	
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
@@ -2056,7 +2056,7 @@ class romaDom extends domDocument
 	  $this->m_oRomaDom->updateProgressBar( '60' );
 
 	$oXSL = new domDocument();
-	$oXSL->load( roma_stylesheet_docPDF );
+	$oXSL->load( roma_StylesheetDir . '/base/p5/fo/tei.xsl' );
 	
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
@@ -2098,7 +2098,7 @@ class romaDom extends domDocument
 	  $this->m_oRomaDom->updateProgressBar( '60' );
 
 	$oXSL = new domDocument();
-	$oXSL->load( roma_stylesheet_docLatex );
+	$oXSL->load( roma_StylesheetDir . '/base/p5/latex/tei.xsl');
 	
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
@@ -2147,7 +2147,7 @@ class romaDom extends domDocument
 	  $this->m_oRomaDom->updateProgressBar( '70' );
 
 	$oXSL = new domDocument();
-	$oXSL->load( roma_stylesheet_docHtml );
+	$oXSL->load( roma_StylesheetDir . '/teic/teihtml-teic-P5.xsl' );
 	
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
@@ -2292,7 +2292,7 @@ class romaDom extends domDocument
 	  }
 	$this->getDocDom( $oDOC );
         $oXSL = new domDocument();
- 	$oXSL->load( roma_StylesheetDir . '/' . 'odds/odd2dtd.xsl'  );
+ 	$oXSL->load( roma_StylesheetDir . '/odds/odd2dtd.xsl'  );
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
 	$oProc->setParameter( null, 'outputDir', '-' );
