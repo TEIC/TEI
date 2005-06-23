@@ -677,24 +677,23 @@
     <xsl:param name="filename"/>
         <hr/>
     
-      <h1>Macros</h1>
-      <xsl:apply-templates mode="weave" select="tei:macroSpec">
-	<xsl:sort select="@ident"/>
-      </xsl:apply-templates>
-    
-    
-    
       <h1>Classes</h1>
       <xsl:apply-templates mode="weave" select="tei:classSpec">
-	<xsl:sort select="@ident"/>
+	<xsl:sort select="tei:altIdent|@ident"/>
       </xsl:apply-templates>
     
     
     
       <h1>Elements</h1>
       <xsl:apply-templates mode="weave" select="tei:elementSpec">
-	<xsl:sort select="@ident"/>
+	<xsl:sort select="tei:altIdent|@ident"/>
       </xsl:apply-templates>
+
+      <h1>Macros</h1>
+      <xsl:apply-templates mode="weave" select="tei:macroSpec">
+	<xsl:sort select="tei:altIdent|@ident"/>
+      </xsl:apply-templates>
+    
       <hr/>
   </xsl:template>
 
@@ -702,18 +701,51 @@
     <xsl:for-each select="..//tei:schemaSpec">
       <hr/>
       <xsl:for-each select="tei:classSpec">
+	<xsl:sort select="tei:altIdent"/>
 	<xsl:sort select="@ident"/>
-	<p class="toclist0"><a class="toclist" href="#{@ident}"><xsl:value-of select="@ident"/></a></p>
+	<p class="toclist0"><a class="toclist" href="#{@ident}">
+	<xsl:choose>
+	  <xsl:when test="tei:altIdent">
+	    <xsl:value-of select="tei:altIdent"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="@ident"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </a>
+	</p>
       </xsl:for-each>
       <hr/>
       <xsl:for-each select="tei:elementSpec"> 
+	<xsl:sort select="tei:altIdent"/>
 	<xsl:sort select="@ident"/>
-	<p class="toclist0"><a class="toclist" href="#{@ident}"><xsl:value-of select="@ident"/></a></p>
+	<p class="toclist0"><a class="toclist" href="#{@ident}">
+	<xsl:choose>
+	  <xsl:when test="tei:altIdent">
+	    <xsl:value-of select="tei:altIdent"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="@ident"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </a>
+	</p>
       </xsl:for-each>
       <hr/>
       <xsl:for-each select="tei:macroSpec">
+	<xsl:sort select="tei:altIdent"/>
 	<xsl:sort select="@ident"/>
-	<p class="toclist0"><a class="toclist" href="#{@ident}"><xsl:value-of select="@ident"/></a></p>
+	<p class="toclist0"><a class="toclist" href="#{@ident}">
+	<xsl:choose>
+	  <xsl:when test="tei:altIdent">
+	    <xsl:value-of select="tei:altIdent"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="@ident"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </a>
+	</p>
       </xsl:for-each>
     </xsl:for-each>
   </xsl:template>

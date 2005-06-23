@@ -806,15 +806,9 @@
     <xsl:param name="filename"/>
 
     <tei:div>
-      <tei:head>Macros</tei:head>
-      <xsl:apply-templates mode="weave" select="tei:macroSpec">
-	<xsl:sort select="@ident"/>
-      </xsl:apply-templates>
-    </tei:div>
-    
-    <tei:div>
       <tei:head>Classes</tei:head>
       <xsl:apply-templates mode="weave" select="tei:classSpec">
+	<xsl:sort select="tei:altIdent"/>
 	<xsl:sort select="@ident"/>
       </xsl:apply-templates>
     </tei:div>
@@ -822,9 +816,19 @@
     <tei:div>
       <tei:head>Elements</tei:head>
       <xsl:apply-templates mode="weave" select="tei:elementSpec">
+	<xsl:sort select="tei:altIdent"/>
 	<xsl:sort select="@ident"/>
       </xsl:apply-templates>
     </tei:div>
+
+    <tei:div>
+      <tei:head>Macros</tei:head>
+      <xsl:apply-templates mode="weave" select="tei:macroSpec">
+	    <xsl:sort select="tei:altIdent"/>
+	    <xsl:sort select="@ident"/>
+      </xsl:apply-templates>
+    </tei:div>
+    
   </xsl:template>
 
   <xsl:template match="tei:schemaSpec">
