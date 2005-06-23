@@ -11,23 +11,36 @@
 makeODD() 
 {
     echo "1. expand and simplify ODD "
-    xsltproc -o $N.compiled.odd \
-    --stringparam TEISERVER $TEISERVER  \
-    --stringparam localsource "$LOCAL"  \
-    $TEIXSLDIR/odds/odd2odd.xsl $ODD 
+    if test "x$lang" = "x"
+    then
+	xsltproc -o $N.compiled.odd \
+	    --stringparam TEISERVER $TEISERVER  \
+	    --stringparam localsource "$LOCAL"  \
+	    $TEIXSLDIR/odds/odd2odd.xsl $ODD 
+    else
+	echo  [translated to language $lang]
+	xsltproc \
+	    --stringparam TEISERVER $TEISERVER  \
+	    --stringparam localsource "$LOCAL"  \
+	    $TEIXSLDIR/odds/odd2odd.xsl $ODD  | \
+	xsltproc -o $N.compiled.odd \
+	    --stringparam TEISERVER $TEISERVER  \
+	    --stringparam lang $lang  \
+	    --stringparam verbose true  \
+	    $TEIXSLDIR/odds/translate-odd.xsl - 
+    fi
 }
 
 makeRelax() 
 {
     echo "2. make Relax NG from compiled ODD"
-    xsltproc  \
+    xsltproc $XSLOPTS  \
              --stringparam RNGDIR $RESULTS       \
              $TEIXSLDIR/odds/odd2relax.xsl $N.compiled.odd
     (cd $RESULTS; \
     echo "3. make Relax NG compact from XML"; \
     trang $N.rng $N.rnc  || die " trang conversion to RNC fails"; \
     xmllint --format $N.rng > $$.xml; mv $$.xml $N.rng )
-    $doc && makeDOC
  }
 
 makeXSD()
@@ -41,17 +54,41 @@ makeXSD()
 makeDTD()
 {
     echo "5. make DTD from compiled ODD"
-    xsltproc  \
+    xsltproc  $XSLOPTS \
              --stringparam outputDir $RESULTS       \
              $TEIXSLDIR/odds/odd2dtd.xsl $N.compiled.odd
 }
 
-makeDOC() 
+makeHTMLDOC() 
+{
+    echo "8. make HTML documentation"
+    xsltproc $XSLOPTS     \
+	-o $N.doc.html \
+	--stringparam STDOUT true \
+	--stringparam splitLevel -1 \
+	$TEIXSLDIR/odds/odd2html.xsl $N.compiled.odd
+    echo created $N.doc.html 
+}
+
+makePDFDOC() 
+{
+    echo "7. make PDF documentation"
+    xsltproc $XSLOPTS     \
+	-o $N.doc.tex \
+	$TEIXSLDIR/base/p5/latex/tei.xsl $N.doc.xml
+    pdflatex $N.doc.tex
+    echo created $N.doc.pdf and $N.doc.tex 
+}
+
+makeXMLDOC() 
 {
     echo "6. make expanded documented ODD"
-    xsltproc --stringparam TEISERVER $TEISERVER $TEIXSLDIR/odds/subsetGuidelines.xsl $ODD \
-    | xmllint --format - > $N.doc.xml 
+    xsltproc $XSLOPTS     \
+	-o $N.doc.xml \
+	$TEIXSLDIR/odds/odd2lite.xsl $N.compiled.odd 
+    echo created $N.doc.xml 
 }
+
 
 die()
 {
@@ -75,7 +112,10 @@ echo "  --xsl=$TEIXSLDIR"
 echo "  --teiserver=$TEISERVER"
 echo "  --localsource=$LOCALSOURCE # local copy of P5 sources
 echo "  options, binary switches:"
-echo "  --doc         # create expanded documented ODD"
+echo "  --doc         # create expanded documented ODD (TEI Lite XML)"
+echo "  --lang=LANG  # translate to LANG (es, de, fr)"
+echo "  --dochtml     # create HTML version of doc"
+echo "  --docpdf      # create PDF version of doc"
 echo "  --nodtd       # suppress DTD creation"
 echo "  --norelax     # suppress RelaxNG creation"
 echo "  --noxsd       # suppress W3C XML Schema creation"
@@ -88,15 +128,21 @@ TEISERVER=http://tei.oucs.ox.ac.uk/Query/
 TEIXSLDIR=/usr/share/xml/tei/stylesheet
 LOCALSOURCE=
 LOCAL=
+lang=
 debug=false
 dtd=true
 relax=true
 xsd=true
 doc=false
+docpdf=false
+dochtml=false
 while test $# -gt 0; do
   case $1 in
     --xsl=*)    TEIXSLDIR=`echo $1 | sed 's/.*=//'`;;
+    --lang=*)   lang=`echo $1 | sed 's/.*=//'`;;
     --doc)      doc=true;;
+    --dochtml)  dochtml=true;;
+    --docpdf)   docpdf=true;;
     --teiserver=*) TEISERVER=`echo $1 | sed 's/.*=//'`;;
     --localsource=*) LOCALSOURCE=`echo $1 | sed 's/.*=//'`;;
     --nodtd)    dtd=false;;
@@ -124,7 +170,6 @@ which xsltproc || die "you do not have xsltproc"
 which trang || die "you do not have trang"
 which perl || die "you do not have perl"
 test -f $ODD || die "file $ODD does not exist"
-echo "TEI database server: $TEISERVER"
 echo "TEI stylesheet tree: $TEIXSLDIR"
 test -d $TEIXSLDIR/odds || \
      GET -e -d $TEIXSLDIR/odds/odd2odd.xsl > /dev/null || \
@@ -136,6 +181,12 @@ mkdir -p $RESULTS || die "cannot make directory $RESULTS"
 D=`date "+%Y-%m-%d %H:%M:%S.%N"`
 echo "Process $ODD to create $N{.dtd|.xsd|.doc.xml|.rng|.rnc} in $RESULTS"
 echo "========= $D Roma starts, execution:"
+if $debug
+then
+    XSLOPTS=" --stringparam verbose true"
+else
+    XSLOPTS=""
+fi
 if test "x$LOCALSOURCE" = "x"
 then
     echo using $TEISERVER to access TEI database
@@ -155,7 +206,7 @@ cat > subset.xsl <<EOF
 </xsl:template>
 </xsl:stylesheet>
 EOF
-xsltproc -o tei$$.xml subset.xsl $LOCALSOURCE || die "failed to extract subset from $LOCALSOURCE "
+xsltproc -o tei$$.xml $XSLOPTS subset.xsl $LOCALSOURCE || die "failed to extract subset from $LOCALSOURCE "
 LOCAL=$H/tei$$.xml
 fi
 
@@ -163,6 +214,17 @@ makeODD
 $relax && makeRelax
 $relax && $xsd && makeXSD
 $dtd && makeDTD
+$dochtml && doc=true
+$docpdf && doc=true
+if $doc
+then 
+    makeXMLDOC
+    if $docpdf
+    then
+	makePDFDOC
+    fi
+fi
+$dochtml && makeHTMLDOC
 $debug || rm  $N.compiled.odd
 test -f subset.xsl && rm subset.xsl
 test -f tei$$.xml && rm tei$$.xml

@@ -62,10 +62,9 @@ class romaDom extends domDocument
 	$oDivgen = $oBody->appendChild( new domElement( 'divGen' ) );
 	$oDivgen->setAttribute( 'type', 'toc' );
 
-	$oP = $oBody->appendChild( new domElement( 'p' ) );
-
-	$oSchema = $oP->appendChild( new domElement( 'schemaSpec' ) );
+	$oSchema = $oBody->appendChild( new domElement( 'schemaSpec' ) );
 	$oSchema->setAttribute( 'ident', 'myTei' );
+	$oSchema->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'lang', 'en' );
 
 	$this->loadXML( $oTemp->SaveXML() );
       }
@@ -196,7 +195,7 @@ class romaDom extends domDocument
     public function getIncludedElementsInModule( $szModule, &$aszElements )
       {
 	$oListDom = new domDocument();
-	$oListDom->loadXML( join( '', file( roma_xquery_server . '/elemsbymod.xq?module=' . $szModule ) ) );
+	$oListDom->loadXML( join( '', file( roma_xquery_server . 'elemsbymod.xq?module=' . $szModule ) ) );
 	$aoElements = $oListDom->getElementsByTagname( 'elementName' );
 	$this->getExcludedElementsInModule( $szModule, $aszExcluded );
 
@@ -383,7 +382,7 @@ class romaDom extends domDocument
 	else
 	  {
 	    $oElementDom = new domDocument();
-	    $oElementDom->loadXML( join( '', file( roma_xquery_server . '/element.xq?name=' . $szElement ) ) );
+	    $oElementDom->loadXML( join( '', file( roma_xquery_server . 'element.xq?name=' . $szElement ) ) );
 	    
 	    $oXPath = new domxpath( $oElementDom );
 	    $aoClasses = $oXPath->query( "/Element/elementClasses/class" );
@@ -415,7 +414,7 @@ class romaDom extends domDocument
     public function getDescriptionByElementName( $szElement, &$szDesc )
       {
 	$oElementDom = new domDocument();
-	$oElementDom->loadXML( join( '', file( roma_xquery_server . '/element.xq?name=' . $szElement ) ) );
+	$oElementDom->loadXML( join( '', file( roma_xquery_server . 'element.xq?name=' . $szElement ) ) );
 	
 	$oXPath = new domxpath( $oElementDom );
 	$oDesc = $oXPath->query( "/Element/elementDesc" )->item(0);
@@ -442,7 +441,7 @@ class romaDom extends domDocument
 	else
 	  {
 	    $oElementDom = new domDocument();
-	    $oElementDom->loadXML( join( '', file( roma_xquery_server . '/element.xq?name=' . $szElement ) ) );
+	    $oElementDom->loadXML( join( '', file( roma_xquery_server . 'element.xq?name=' . $szElement ) ) );
 	    
 	    $oXPath = new domxpath( $oElementDom );
 	    $oXPath->registerNamespace( 'rng', 'http://relaxng.org/ns/structure/1.0' );
@@ -477,7 +476,7 @@ class romaDom extends domDocument
 	else
 	  {
 	    $oElementDom = new domDocument();
-	    $oElementDom->loadXML( join( '', file( roma_xquery_server . '/element.xq?name=' . $szElement ) ) );
+	    $oElementDom->loadXML( join( '', file( roma_xquery_server . 'element.xq?name=' . $szElement ) ) );
 	    
 	    $oXPath = new domxpath( $oElementDom );
 	    $oXPath->registerNamespace( 'rng', 'http://relaxng.org/ns/structure/1.0' );
@@ -502,7 +501,7 @@ class romaDom extends domDocument
 	$aszAttributes = array();
 
 	$oAttributesDom = new domDocument();
-	$oAttributesDom->loadXML( join( '', file( roma_xquery_server . '/attsbyelem.xq?name=' . $szElement ) ) );
+	$oAttributesDom->loadXML( join( '', file( roma_xquery_server . 'attsbyelem.xq?name=' . $szElement ) ) );
 	
 	$oElement = $oAttributesDom->documentElement;
 	foreach( $oElement->childNodes as $oChild )
@@ -520,7 +519,7 @@ class romaDom extends domDocument
 
 	if ( $szModule != '' && $szClass == '')
 	  {
-	    @$oAttDom->loadXML( join( '', file( roma_xquery_server . '/attsbyelem.xq?name=' . $szElement ) ) );
+	    @$oAttDom->loadXML( join( '', file( roma_xquery_server . 'attsbyelem.xq?name=' . $szElement ) ) );
 	    $oElement = $oAttDom->documentElement;
 		
 	    if ( is_object( $oElement ) )
@@ -553,7 +552,7 @@ class romaDom extends domDocument
 	    $oElement = $oAttDom->documentElement;
 
 	    $oAttClassDom = new domDocument;
-	    $oAttClassDom->loadXML( join( '', file( roma_xquery_server . '/attclassbyname.xq?class=' . $szClass ) ) );
+	    $oAttClassDom->loadXML( join( '', file( roma_xquery_server . 'attclassbyname.xq?class=' . $szClass ) ) );
 	    $oRoot = $oAttClassDom->documentElement;
 	    $oAttributes = $oAttClassDom->getElementsByTagName( 'attributes' )->item(0);
 
@@ -830,6 +829,13 @@ class romaDom extends domDocument
         if ($szLanguage=='') { $szLanguage='en'; }
       }
 
+    public function getOddLanguage( &$szOddLanguage )
+      {
+	$this->getXPath( $oXPath );
+	$szOddLanguage = $oXPath->query( "/tei:TEI//tei:schemaSpec/@xml:lang" )->item(0)->nodeValue;
+        if ($szOddLanguage=='') { $szOddLanguage='en'; }
+      }
+
     public function getCustomizationDescription( &$szDesc )
       {
 	$this->getXPath( $oXPath );
@@ -885,7 +891,7 @@ class romaDom extends domDocument
 
 	//check if name already exists
 	$oTmpDom = new domDocument();
-	if ( @$oTmpDom->loadXML( join( '', file( roma_xquery_server . '/element.xq?name=' . $aszConfig[ 'name' ] ) ) ) )
+	if ( @$oTmpDom->loadXML( join( '', file( roma_xquery_server . 'element.xq?name=' . $aszConfig[ 'name' ] ) ) ) )
 	  {
 	    throw new elementExistsException( $aszConfig[ 'name' ] );
 	  }
@@ -1173,39 +1179,6 @@ class romaDom extends domDocument
 	return $errResult;
       }
 
-    private function clearLanguageCustomization()
-      {
-	$this->getXPath( $oXPath );
-	$oElements = $oXPath->query( "//tei:schemaSpec/descendant::*[@type='lang']" );
-	foreach( $oElements as $oElement )
-	  { 
-	    $oParent = $oElement->parentNode;
-	    $oParent->removeChild( $oElement );
-	  }
-      }
-
-    public function customizeLanguage( $szLanguage )
-      {
-        switch ( $szLanguage )
-	  {
-	    case  'clear':
-	      $this->clearLanguageCustomization();
- 	      break;
-	    default:
-	      $this->clearLanguageCustomization();
-	      
-              $oXSL = new domDocument();
-              $oXSL->load( roma_StylesheetDir . '/odds/translate-odd.xsl' );
-	    
-              $oProc = new XsltProcessor();
-              $oProc->importStylesheet( $oXSL );
-              $oProc->setParameter( null, 'lang', $szLanguage );
-
-              $oTmpDom = $oProc->transformToDoc( $this );
-  	      $this->loadXML( $oTmpDom->SaveXML() );
-	    break;
-          }
-      }
  
     public function replaceElementsClassesInModule( $szElement, $szModule, $aszClasses )
       {
@@ -1266,7 +1239,7 @@ class romaDom extends domDocument
 	$this->getXPath( $oXPath );
         $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);
 	$oTmpDom = new domDocument();
-	$oTmpDom->loadXML( join( '', file( roma_xquery_server . '/classattsbyelem.xq?name=' . $aszConfig[ 'element' ] ) ) );
+	$oTmpDom->loadXML( join( '', file( roma_xquery_server . 'classattsbyelem.xq?name=' . $aszConfig[ 'element' ] ) ) );
 	$oNames = $oTmpDom->getElementsByTagname( 'name' );
 
 	foreach( $oNames as $oName )
@@ -1848,6 +1821,13 @@ class romaDom extends domDocument
 	$oTEI->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'lang', $szLanguage );
       }
 
+    public function setOddLanguage( $szOddLanguage )
+      {
+	$this->getXPath( $oXPath );
+	$oTEI = $oXPath->query( "/tei:TEI//tei:schemaSpec" )->item(0);
+	$oTEI->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'lang', $szOddLanguage );
+      }
+
 
     // #####################################################################
     // --- Little Helpers
@@ -1859,10 +1839,22 @@ class romaDom extends domDocument
 	$oXSL->load( roma_StylesheetDir . '/odds/odd2odd.xsl' );
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
-	$oProc->setParameter( null, 'TEISERVER', roma_xquery_server );
-
-	$oDOC = $oProc->transformToDoc( $this );
-      } 
+	$oProc->setParameter( null, 'TEISERVER', roma_xquery_server);
+	$this->getOddLanguage( $szOddLanguage );
+        if (szOddLanguage=='en') 
+     	  { 
+	  $oDOC = $oProc->transformToDoc( $this ); }
+	else
+	   {
+              $oXSL2 = new domDocument();
+              $oXSL2->load( roma_StylesheetDir . '/odds/translate-odd.xsl' );
+              $oProc2 = new XsltProcessor();
+              $oProc2->setParameter( null, 'TEISERVER', roma_xquery_server);
+              $oProc2->setParameter( null, 'lang', $szOddLanguage );
+              $oProc2->importStylesheet( $oXSL2 );
+              $oDOC = $oProc2->transformToDoc($oProc->transformToDoc($this )); 
+	 }
+      }
 
     protected function getSchemaRNGDom( &$oRNG )
       {
@@ -1913,10 +1905,10 @@ class romaDom extends domDocument
     public function getTeiLiteDom( &$oTeiLite )
       {
 	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '55' );
+        $this->m_oRomaDom->updateProgressBar( '55' );
 	$this->getDocDom( $oDOC );
         $oXSL = new domDocument();
- 	$oXSL->load( roma_StylesheetDir . '/odds/teixml-odds.xsl'  );
+ 	$oXSL->load( roma_StylesheetDir . '/odds/odd2lite.xsl'  );
 
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
@@ -2141,21 +2133,22 @@ class romaDom extends domDocument
 
     public function outputHTML ( &$szHTML )
       {
-	$this->getTeiLiteDom( $oTeiLiteDom );
-
+	$this->getDocDom( $oDOC );
 	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '70' );
+	  $this->m_oRomaDom->updateProgressBar( '55' );
+        $oXSL = new domDocument();
+ 	$oXSL->load( roma_StylesheetDir . '/odds/odd2html.xsl'  );
 
-	$oXSL = new domDocument();
-	$oXSL->load( roma_StylesheetDir . '/teic/teihtml-teic-P5.xsl' );
-	
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
+	$oProc->setParameter( null, 'displayMode', 'rnc' );
+	$oProc->setParameter( null, 'STDOUT', 'true' );
+	$oProc->setParameter( null, 'splitLevel', '-1' );
 
 	if ( $this->bBar )
 	  $this->m_oRomaDom->updateProgressBar( '80' );
 
-	$szHTML = $oProc->transformToDoc( $oTeiLiteDom )->SaveHTML();
+	$szHTML = $oProc->transformToDoc( $oDOC )->SaveHTML();
 
 	if ( $this->bBar )
 	  $this->m_oRomaDom->updateProgressBar( '100' );
