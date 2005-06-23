@@ -22,6 +22,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
 <xsl:import href="teiodds.xsl"/>
 
 <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
+<xsl:param name="localsource"/>
 <xsl:key name="MODS" match="tei:moduleSpec" use="@ident"/>
 <xsl:key name="SPECS" match="tei:specGrp" use="@xml:id"/>
 <xsl:key name="LOCAL"
@@ -99,15 +100,32 @@ XSL stylesheet to format TEI XML documents using ODD markup
 
 <xsl:template name="findNames">
   <xsl:param name="modname"/>
-  <xsl:variable name="HERE" select="."/>
-  <xsl:variable name="loc">
-    <xsl:value-of select="$TEISERVER"/>
-    <xsl:text>allbymod.xq?module=</xsl:text>
-    <xsl:value-of select="$modname"/>
-  </xsl:variable>
-  <xsl:for-each select="document($loc)/List/*">
-      <xsl:call-template name="processThing"/>
-  </xsl:for-each>
+  <xsl:variable name="KD" select="concat($modname,'-decl')"/>
+  <xsl:choose>
+    <xsl:when test="not($localsource='')">
+      <xsl:variable name="Local">
+	<List>
+	  <xsl:for-each select="document($localsource)/tei:TEI">
+	    <xsl:copy-of select="tei:*[@module=$modname]"/>
+	    <xsl:copy-of select="tei:*[@module=$KD]"/>
+	  </xsl:for-each>
+	</List>
+      </xsl:variable>
+      <xsl:for-each select="exsl:node-set($Local)/List">
+	<xsl:call-template name="processThing"/>
+      </xsl:for-each>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:variable name="Remote">
+	<xsl:value-of select="$TEISERVER"/>
+	<xsl:text>allbymod.xq?module=</xsl:text>
+	<xsl:value-of select="$modname"/>
+      </xsl:variable>
+      <xsl:for-each select="document($Remote)/List">
+	<xsl:call-template name="processThing"/>
+      </xsl:for-each>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template name="processThing">

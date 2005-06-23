@@ -50,7 +50,7 @@
   <xsl:variable name="uc">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
   <xsl:variable name="lc">abcdefghijklmnopqrstuvwxyz</xsl:variable>
   
-  <xsl:param name="displayMode">rng</xsl:param>
+  <xsl:param name="displayMode">rnc</xsl:param>
   
 
 
@@ -62,6 +62,13 @@
     </tei:code>
   </xsl:template>
   
+  <xsl:template match="tei:attRef">
+   <tei:label> 
+     <tei:ref target="#{@class}"><xsl:value-of
+     select="@class"/>.attribute.<xsl:value-of
+     select="@key"/></tei:ref></tei:label>
+     <tei:item></tei:item>
+  </xsl:template>
 
   <xsl:template match="tei:att">
     <tei:hi rend="att">  
@@ -281,7 +288,6 @@
 	      <xsl:text>: </xsl:text>
 	      <xsl:call-template name="linkTogether">
 		<xsl:with-param name="name" select="@ident"/>
-		<xsl:with-param name="url" select="@xml:id"/>
 	      </xsl:call-template>
 	    </xsl:for-each>
 	  </xsl:when>
@@ -448,7 +454,6 @@
       <tei:item>Elements defined:
       <xsl:for-each select="key('ElementModule',@ident)">
 	<xsl:call-template name="linkTogether">
-	  <xsl:with-param name="url" select="@xml:id"/>
 	  <xsl:with-param name="name" select="@ident"/>
 	</xsl:call-template>
 	<xsl:text>: </xsl:text>
@@ -457,7 +462,6 @@
       <tei:item>Classes defined:
       <xsl:for-each select="key('ClassModule',@ident)">
 	<xsl:call-template name="linkTogether">
-	  <xsl:with-param name="url" select="@xml:id"/>
 	  <xsl:with-param name="name" select="@ident"/>
 	</xsl:call-template>
 	<xsl:text>: </xsl:text>
@@ -466,7 +470,6 @@
       <tei:item>Macros defined:
       <xsl:for-each select="key('MacroModule',@ident)">
 	<xsl:call-template name="linkTogether">
-	  <xsl:with-param name="url" select="@xml:id"/>
 	  <xsl:with-param name="name" select="@ident"/>
 	</xsl:call-template>
 	<xsl:text>: </xsl:text>
@@ -492,10 +495,6 @@
     </xsl:if>
   </xsl:template>
   
-  
-  <xsl:template match="tei:schemaSpec">
-    <xsl:call-template name="processSchemaFragment"/>
-  </xsl:template>
   
   <xsl:template match="tei:specDesc">
     <tei:item>  
@@ -703,8 +702,10 @@
 	<xsl:value-of select="@ident"/>
       </xsl:attribute>
       <tei:head>
+	<xsl:value-of
+	    select="substring-before(local-name(.),'Spec')"/>
+	<xsl:text> </xsl:text>
 	<xsl:call-template name="identifyMe"/>
-	[<xsl:value-of select="substring-before(local-name(.),'Spec')"/>]
       </tei:head>
       <tei:p><tei:emph>Description: </tei:emph>
       <xsl:apply-templates select="tei:desc" mode="show"/></tei:p>
@@ -803,7 +804,7 @@
   
   <xsl:template name="processSchemaFragment">
     <xsl:param name="filename"/>
-    
+
     <tei:div>
       <tei:head>Macros</tei:head>
       <xsl:apply-templates mode="weave" select="tei:macroSpec">
@@ -824,6 +825,10 @@
 	<xsl:sort select="@ident"/>
       </xsl:apply-templates>
     </tei:div>
+  </xsl:template>
+
+  <xsl:template match="tei:schemaSpec">
+    <xsl:call-template name="processSchemaFragment"/>
   </xsl:template>
   
   

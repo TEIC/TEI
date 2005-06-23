@@ -295,7 +295,6 @@
                     <xsl:text> |  </xsl:text>
                   </xsl:if>
                   <xsl:call-template name="linkTogether">
-                    <xsl:with-param name="url" select="@xml:id"/>
                     <xsl:with-param name="name" select="@ident"/>
                   </xsl:call-template>
                 </xsl:for-each>
@@ -303,7 +302,6 @@
               <xsl:otherwise>
                 <xsl:call-template name="linkTogether">
                   <xsl:with-param name="name" select="@key"/>
-                  <xsl:with-param name="url"><xsl:value-of select="$TEISERVER"/>tag.xq?name=<xsl:value-of select="@key"/></xsl:with-param>
                 </xsl:call-template>
               </xsl:otherwise>
             </xsl:choose>
@@ -440,14 +438,16 @@
           <xsl:with-param name="content">
             <Wrapper>
               <rng:element name="{$name}">
-                <rng:ref name="tei.global.attributes"/>
-                <xsl:for-each select="../tei:classes/tei:memberOf">
-                  <xsl:for-each select="key('IDENTS',@key)">
-                    <xsl:if test="tei:attList">
-                      <rng:ref name="{@ident}.attributes"/>
-                    </xsl:if>
-                  </xsl:for-each>
-                </xsl:for-each>
+		<xsl:if test="not(ancestor::tei:schemaSpec)">
+		  <rng:ref name="tei.global.attributes"/>
+		  <xsl:for-each select="../tei:classes/tei:memberOf">
+		    <xsl:for-each select="key('IDENTS',@key)">
+		      <xsl:if test="tei:attList">
+			<rng:ref name="{@ident}.attributes"/>
+		      </xsl:if>
+		    </xsl:for-each>
+		  </xsl:for-each>
+		</xsl:if>
                 <xsl:apply-templates select="../tei:attList" mode="tangle"/>
                 <xsl:copy-of select="rng:*"/>
               </rng:element>
@@ -475,7 +475,24 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <b>&lt;<a href="ref-{@xml:id}.html"><xsl:value-of select="$name"/></a>&gt; </b>
+    <b>&lt;
+    <a class="{$class}">
+      <xsl:attribute name="href">
+	<xsl:choose>
+	  <xsl:when test="$splitLevel=-1">
+	    <xsl:text>#</xsl:text>
+	    <xsl:value-of select="$name"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:text>ref-</xsl:text>
+	    <xsl:value-of select="$name"/>
+	    <xsl:text>.html</xsl:text>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:attribute>
+      <xsl:copy-of select="$text"/>
+    </a>
+    </b>
     <xsl:value-of select="tei:desc"/>
     <xsl:choose>
       <xsl:when test="tei:attList//tei:attDef">
@@ -656,20 +673,42 @@
   <xsl:template match="tei:moduleSpec">
     <hr/>
     <p><strong>Module </strong><em><xsl:value-of select="@ident"/></em>:
-<xsl:apply-templates select="tei:desc" mode="show"/><ul><li>Elements defined:
-<xsl:for-each select="key('ElementModule',@ident)"><xsl:call-template name="linkTogether"><xsl:with-param name="url" select="@xml:id"/><xsl:with-param name="name" select="@ident"/></xsl:call-template><xsl:text> </xsl:text></xsl:for-each>
-</li><li>Classes defined:
-<xsl:for-each select="key('ClassModule',@ident)"><xsl:call-template name="linkTogether"><xsl:with-param name="url" select="@xml:id"/><xsl:with-param name="name" select="@ident"/></xsl:call-template><xsl:text> </xsl:text></xsl:for-each>
-</li><li>Macros defined:
-<xsl:for-each select="key('MacroModule',@ident)"><xsl:call-template name="linkTogether"><xsl:with-param name="url" select="@xml:id"/><xsl:with-param name="name" select="@ident"/></xsl:call-template><xsl:text> </xsl:text></xsl:for-each>
-</li></ul><hr/></p>
+    <xsl:apply-templates select="tei:desc" mode="show"/>
+    <ul>
+      <li>Elements defined:
+      <xsl:for-each select="key('ElementModule',@ident)">
+	<xsl:call-template name="linkTogether">
+	  <xsl:with-param name="name" select="@ident"/>
+	</xsl:call-template>
+	<xsl:text> </xsl:text>
+      </xsl:for-each>
+      </li>
+      <li>Classes defined:
+      <xsl:for-each select="key('ClassModule',@ident)">
+	<xsl:call-template name="linkTogether">
+	  <xsl:with-param name="name" select="@ident"/>
+	</xsl:call-template>
+	<xsl:text> </xsl:text>
+      </xsl:for-each>
+      </li>
+      <li>Macros defined:
+      <xsl:for-each select="key('MacroModule',@ident)">
+	<xsl:call-template name="linkTogether">
+	  <xsl:with-param name="name" select="@ident"/>
+	</xsl:call-template>
+	<xsl:text> </xsl:text>
+      </xsl:for-each>
+      </li>
+    </ul>
+    <hr/>
+    </p>
   </xsl:template>
   
 <xd:doc>
     <xd:short>Process elements  tei:ptr</xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
-  <xsl:template match="tei:ptr">
+  <xsl:template match="tei:ptr" mode="weave">
     <xsl:choose>
       <xsl:when test="parent::tei:listRef">
         <xsl:if test="count(preceding-sibling::tei:ptr)=0">
@@ -708,16 +747,6 @@
   </xsl:template>
   
 <xd:doc>
-    <xd:short>Process elements  tei:schema</xd:short>
-    <xd:detail>&#160;</xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:schema">
-    <hr/>
-    <xsl:call-template name="processSchemaFragment"/>
-    <hr/>
-  </xsl:template>
-  
-<xd:doc>
     <xd:short>Process elements  tei:specDesc</xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
@@ -736,7 +765,7 @@
       <b>Specification group <xsl:number level="any"/>
   <xsl:if test="@n"><xsl:text>: </xsl:text><xsl:value-of select="@n"/></xsl:if>
   </b>
-      <a name="{@xml:id}"/>
+      <a name="{@ident}"/>
     </p>
     <dl>
       <xsl:apply-templates/>
@@ -1041,21 +1070,33 @@
   </xd:doc>
   <xsl:template name="makeLink">
     <xsl:param name="class"/>
-    <xsl:param name="id"/>
     <xsl:param name="name"/>
     <xsl:param name="text"/>
-    <a class="{$class}" href="ref-{$id}.html">
+    <a class="{$class}">
+      <xsl:attribute name="href">
+	<xsl:choose>
+	  <xsl:when test="$splitLevel=-1">
+	    <xsl:text>#</xsl:text>
+	    <xsl:value-of select="$name"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:text>ref-</xsl:text>
+	    <xsl:value-of select="$name"/>
+	    <xsl:text>.html</xsl:text>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:attribute>
       <xsl:copy-of select="$text"/>
     </a>
   </xsl:template>
   
 <xd:doc>
-    <xd:short>[html] </xd:short>
+    <xd:short>[html] Document an element, macro, or class</xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template name="refdoc">
   <xsl:if test="$verbose='true'">
-    <xsl:message>   refdoc for <xsl:value-of select="name(.)"/> -  <xsl:value-of select="@xml:id"/>     </xsl:message>
+    <xsl:message>   refdoc for <xsl:value-of select="name(.)"/> -  <xsl:value-of select="@ident"/>     </xsl:message>
   </xsl:if>
   <xsl:variable name="objectname">
     <xsl:choose>
@@ -1079,13 +1120,21 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
-  [<a href="ref-{@xml:id}.html">
-    <xsl:value-of select="$name"/></a>]
-    <xsl:variable name="BaseFile">
-      <xsl:value-of select="$masterFile"/>
-      <xsl:if test="ancestor::tei:teiCorpus">
-	<xsl:text>-
-	</xsl:text>
+  <xsl:choose>
+    <xsl:when test="$splitLevel=-1">
+	<h2><a name="{@ident}"/><xsl:value-of select="$name"/></h2>
+         <table class="wovenodd" border="1">
+	  <xsl:apply-templates select="." mode="weavebody"/>
+	</table>
+
+    </xsl:when>
+    <xsl:otherwise>
+      [<a href="ref-{@ident}.html">
+      <xsl:value-of select="$name"/></a>]
+      <xsl:variable name="BaseFile">
+	<xsl:value-of select="$masterFile"/>
+	<xsl:if test="ancestor::tei:teiCorpus">
+	<xsl:text>-</xsl:text>
 	<xsl:choose>
 	  <xsl:when test="@xml:id">
 	    <xsl:value-of select="@xml:id"/>
@@ -1094,52 +1143,46 @@
 	    <xsl:number/>
 	  </xsl:otherwise>
 	</xsl:choose>
-      </xsl:if>
-    </xsl:variable>
-    <xsl:call-template name="outputChunk">
-      <xsl:with-param name="ident">
-	<xsl:text>ref-</xsl:text>
-	<xsl:value-of select="@xml:id"/>
-      </xsl:with-param>
-      <xsl:with-param name="content">
-	<html>
-	  <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (7) </xsl:comment>
-	  <head>
-	    <title>
+	</xsl:if>
+      </xsl:variable>
+      <xsl:call-template name="outputChunk">
+	<xsl:with-param name="ident">
+	  <xsl:text>ref-</xsl:text>
+	  <xsl:value-of select="@ident"/>
+	</xsl:with-param>
+	<xsl:with-param name="content">
+	  <html>
+	    <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (7) </xsl:comment>
+	    <head>
+	      <title>
 	      <xsl:value-of select="$name"/>
-	    </title>
-	    <xsl:if test="not($cssFile = '')">
-	      <link rel="stylesheet" type="text/css" href="{$cssFile}"/>
-	    </xsl:if>
-	  </head>
-	  <body>
-	    <xsl:call-template name="bodyHook"/>
-	    <a name="TOP"/>
-	    <div class="teidiv">
-	      <xsl:call-template name="stdheader">
-		<xsl:with-param name="title">
-		  <xsl:value-of select="$name"/>
-		</xsl:with-param>
-	      </xsl:call-template>
+	      </title>
+	      <xsl:if test="not($cssFile = '')">
+		<link rel="stylesheet" type="text/css" href="{$cssFile}"/>
+	      </xsl:if>
+	    </head>
+	    <body>
+	      <xsl:call-template name="bodyHook"/>
+	      <a name="TOP"/>
+	      <div id="hdr">
+		<xsl:call-template name="stdheader">
+		  <xsl:with-param name="title">
+		    <xsl:value-of select="$name"/>
+		  </xsl:with-param>
+		</xsl:call-template>
+	      </div>
 	      <p>
-		<a name="{@xml:id}"/>
+		<a name="{@ident}"/>
 		<table class="wovenodd" border="1">
 		  <xsl:apply-templates select="." mode="weavebody"/>
 		</table>
 	      </p>
-	      <p class="wovenodd" align="{$alignNavigationPanel}">
-		<a class="navigation" href="REFCLA.html">Classes
-		</a> |
-		<a class="navigation" href="REFENT.html">Macros
-		</a> |
-		<a class="navigation" href="REFTAG.html">Elements
-		</a>
-	      </p>
-	    </div>
-	  </body>
-	</html>
-      </xsl:with-param>
-    </xsl:call-template>
+	    </body>
+	  </html>
+	</xsl:with-param>
+      </xsl:call-template>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
   
 <xd:doc>

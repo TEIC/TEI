@@ -398,4 +398,61 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+<xsl:template match="tei:bob">
+  <img>
+    <xsl:attribute name="src">
+      <xsl:text>data:</xsl:text>
+      <xsl:value-of select="@mimetype"/>
+      <xsl:text>;base64,</xsl:text>
+      <xsl:copy-of select="text()"/>
+    </xsl:attribute>
+    <xsl:if test="@width">
+      <xsl:call-template name="setDimension">
+	<xsl:with-param name="value">
+	  <xsl:value-of select="@width"/>
+	</xsl:with-param>
+	<xsl:with-param name="name">width</xsl:with-param>
+      </xsl:call-template>
+    </xsl:if>
+    <xsl:if test="@height">
+      <xsl:call-template name="setDimension">
+	<xsl:with-param name="value">
+	  <xsl:value-of select="@height"/>
+	</xsl:with-param>
+	<xsl:with-param name="name">height</xsl:with-param>
+      </xsl:call-template>
+    </xsl:if>
+  </img>
+<!-- also alt -->
+
+<!-- this is what we'll need for IE:
+<style type="text/css">
+   img {behavior: expression(fixBase64(this));}
+  </style>
+  <script type="text/javascript">
+  	// a regular expression to test for Base64 data
+	var BASE64_DATA = /^data:.*;base64/i;
+	// path to the PHP module that will decode the encoded data
+	var base64Path = "/my/base64.php";
+	function fixBase64(img) {
+		// stop the CSS expression from being endlessly evaluated
+		img.runtimeStyle.behavior = "none";
+		// check the image src
+		if (BASE64_DATA.test(img.src)) {
+		// pass the data to the PHP routine
+		img.src = base64Path + "?" + img.src.slice(5);
+		}
+	};
+  </script>
+  Dean Edwards http://dean.edwards.name/weblog/2005/06/base64-sexy/
+<?php
+$data = split(";", $_SERVER["REDIRECT_QUERY_STRING"]);
+$type = $data[0];
+$data = split(",", $data[1]);
+header("Content-type: ".$type);
+echo base64_decode($data[1]);
+?>
+-->
+</xsl:template>
 </xsl:stylesheet>

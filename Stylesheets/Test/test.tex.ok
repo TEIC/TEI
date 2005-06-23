@@ -2,7 +2,9 @@
 \documentclass[11pt]{article}
 \makeatletter
 
-\usepackage[utf8x]{inputenc}
+\IfFileExists{utf8x.def}%
+ {\usepackage[utf8x]{inputenc}}%
+ {\usepackage[utf8]{inputenc}}
 \usepackage[T1]{fontenc}
 \usepackage[]{ucs}
 \usepackage{relsize}
@@ -23,12 +25,11 @@
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
 \newcolumntype{P}[1]{>{\arraybackslash}p{#1}}
-\RequirePackage{xcolor}
+\IfFileExists{xcolor.sty}%
+  {\RequirePackage{xcolor}}%
+  {\RequirePackage{color}}
 \definecolor{label}{gray}{0.75}
-\def\Panel#1#2#3#4{\multicolumn{#3}{>{\columncolor{#2}}#4}{#1}}
 
-\usepackage[pdftitle={},
-pdfauthor={Dickens, Charles, 1812-1870}]{hyperref}
 \DeclareRobustCommand*{\xref}{\hyper@normalise\xref@}
 \def\xref@#1#2{\hyper@linkurl{#2}{#1}}
 \def\Div[#1]#2{\section*{#2}}
@@ -42,6 +43,8 @@ pdfauthor={Dickens, Charles, 1812-1870}]{hyperref}
 \usepackage{fancyvrb}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
+\usepackage{endnotes}
+\def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
 \IfFileExists{tipa.sty}{\usepackage{tipa}}{}
 \pagestyle{fancy} 
 
@@ -128,6 +131,9 @@ pdfauthor={Dickens, Charles, 1812-1870}]{hyperref}
     \endlist}
 
 \def\tableofcontents{\section*{\contentsname}\@starttoc{toc}}
+\usepackage[pdftitle={A Christmas Carol},
+ pdfauthor={Dickens, Charles, 1812-1870}]{hyperref}
+\hyperbaseurl{http://www.tei-c.org}
 
 \@ifundefined{chapter}{%
     \def\DivI{\section}
@@ -158,7 +164,6 @@ pdfauthor={Dickens, Charles, 1812-1870}]{hyperref}
 \def\TheDate{Date }
 \title{A Christmas Carol}
 \author{Dickens, Charles, 1812-1870}
-\hyperbaseurl{http://www.tei-c.org}
 \begin{document}
 
 \makeatletter

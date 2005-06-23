@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="1.0"
+    xmlns:html="http://www.w3.org/1999/xhtml" 
     xmlns:xd="http://www.pnp-software.com/XSLTdoc"
     xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
     xmlns:teix="http://www.tei-c.org/ns/Examples"
@@ -11,7 +12,7 @@
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:edate="http://exslt.org/dates-and-times"
     extension-element-prefixes="exsl estr edate"
-    exclude-result-prefixes="exsl rng edate estr tei a pantor teix xs xd" 
+    exclude-result-prefixes="exsl rng edate estr tei html a pantor teix xs xd" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 
@@ -57,9 +58,9 @@
 <xsl:param name="authorWord"></xsl:param>
 <xsl:param name="autoToc">false</xsl:param>
 <xsl:param name="bottomNavigationPanel">true</xsl:param>
-<xsl:param name="cssFile">tei.css</xsl:param>
+<xsl:param name="cssFile">http://www.tei-c.org/stylesheet/tei.css</xsl:param>
 <xsl:param name="dateWord"></xsl:param>
-<xsl:param name="displayMode">rng</xsl:param>
+<xsl:param name="displayMode">rnc</xsl:param>
 <xsl:param name="feedbackURL">http://www.tei-c.org/Consortium/TEI-contact.html</xsl:param>
 <xsl:param name="feedbackWords">Contact</xsl:param>
 <xsl:param name="footnoteFile">true</xsl:param>
@@ -401,8 +402,8 @@
       <xsl:when test="contains(name(.),'Spec')">
 	<xsl:call-template name="makeLink">
 	  <xsl:with-param name="class">toc</xsl:with-param>
-	  <xsl:with-param name="id">
-	    <xsl:value-of select="@xml:id"/>
+	  <xsl:with-param name="name">
+	    <xsl:value-of select="@ident"/>
 	  </xsl:with-param>
 	</xsl:call-template>
       </xsl:when>
@@ -424,6 +425,7 @@
 </xsl:template>
 
 <xsl:template name="linkListContents">
+<xsl:param name="style"/>
   <xsl:variable name="thisname">
     <xsl:value-of select="local-name()"/>
   </xsl:variable>
@@ -547,6 +549,9 @@
 	    </xsl:for-each>
 	  </xsl:otherwise>
 	</xsl:choose>
+	<xsl:if test="$splitLevel=-1">
+	  <xsl:call-template name="listSpecs"/>
+	</xsl:if>
 </xsl:template>
 
 <!-- this overrides the standard template, to allow for
@@ -668,6 +673,49 @@
 </xsl:template>
 
 
+  <xsl:template name="processSchemaFragment">
+    <xsl:param name="filename"/>
+        <hr/>
+    
+      <h1>Macros</h1>
+      <xsl:apply-templates mode="weave" select="tei:macroSpec">
+	<xsl:sort select="@ident"/>
+      </xsl:apply-templates>
+    
+    
+    
+      <h1>Classes</h1>
+      <xsl:apply-templates mode="weave" select="tei:classSpec">
+	<xsl:sort select="@ident"/>
+      </xsl:apply-templates>
+    
+    
+    
+      <h1>Elements</h1>
+      <xsl:apply-templates mode="weave" select="tei:elementSpec">
+	<xsl:sort select="@ident"/>
+      </xsl:apply-templates>
+      <hr/>
+  </xsl:template>
 
+  <xsl:template name="listSpecs">
+    <xsl:for-each select="..//tei:schemaSpec">
+      <hr/>
+      <xsl:for-each select="tei:classSpec">
+	<xsl:sort select="@ident"/>
+	<p class="toclist0"><a class="toclist" href="#{@ident}"><xsl:value-of select="@ident"/></a></p>
+      </xsl:for-each>
+      <hr/>
+      <xsl:for-each select="tei:elementSpec"> 
+	<xsl:sort select="@ident"/>
+	<p class="toclist0"><a class="toclist" href="#{@ident}"><xsl:value-of select="@ident"/></a></p>
+      </xsl:for-each>
+      <hr/>
+      <xsl:for-each select="tei:macroSpec">
+	<xsl:sort select="@ident"/>
+	<p class="toclist0"><a class="toclist" href="#{@ident}"><xsl:value-of select="@ident"/></a></p>
+      </xsl:for-each>
+    </xsl:for-each>
+  </xsl:template>
 </xsl:stylesheet>
 

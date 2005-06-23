@@ -407,7 +407,7 @@
   
 
 <xd:doc>
-    <xd:short>[html] </xd:short>
+    <xd:short>[html] create an internal link</xd:short>
     <xd:param name="target">target</xd:param>
     <xd:param name="ptr">ptr</xd:param>
     <xd:param name="dest">dest</xd:param>
@@ -420,7 +420,8 @@
     <xsl:param name="ptr"/>
     <xsl:param name="dest"/>
     <xsl:param name="body"/>
-    <xsl:param name="class">link_<xsl:value-of select="local-name(.)"/></xsl:param>
+    <xsl:param name="class">link_<xsl:value-of
+    select="local-name(.)"/></xsl:param>
     <xsl:variable name="W">
       <xsl:choose>
         <xsl:when test="$target">
@@ -462,7 +463,7 @@
       </xsl:attribute>
       <xsl:attribute name="href">
         <xsl:choose>
-          <xsl:when test="starts-with($dest,'#') or    contains($dest,'.html') or contains($dest,'ID=')">
+          <xsl:when test="starts-with($dest,'#') or  contains($dest,'.html') or contains($dest,'ID=')">
             <xsl:value-of select="$dest"/>
           </xsl:when>
           <xsl:otherwise>

@@ -1628,41 +1628,35 @@
     <xsl:when test="contains(@name,'.attributes')">
      <xsl:value-of select="substring-before(@name,'.attributes')"/>
     </xsl:when>
+    <xsl:when test="contains(@name,'.attribute.')">
+     <xsl:value-of select="substring-before(@name,'.attribute.')"/>
+    </xsl:when>
     <xsl:otherwise>
      <xsl:value-of select="@name"/>
     </xsl:otherwise>
    </xsl:choose>
   </xsl:variable>
-  <xsl:variable name="F">
-   <xsl:for-each select="$top">
-    <xsl:for-each select="key('NameToID',$me)">
-     <xsl:value-of select="@xml:id"/>
-    </xsl:for-each>
-   </xsl:for-each>
-  </xsl:variable>
-  <!--
-  <xsl:message>FROM <xsl:value-of select="@name"/> to <xsl:value-of select="$me"/> to <xsl:value-of
-select="$F"/></xsl:message>
+
+<!--
+<xsl:message>FROM <xsl:value-of select="@name"/> to <xsl:value-of
+    select="$me"/>, <xsl:for-each select="$top"><xsl:value-of -->
+<!--select="count(key('IDENTS',$me))"/></xsl:for-each></xsl:message>
 -->
-<xsl:choose>
-  <xsl:when test="contains(@name,'.attributes')">
-    <xsl:value-of select="@name"/>
-  </xsl:when>
-  <xsl:when test="$F=''">
-    <xsl:call-template name="linkTogether">
-      <xsl:with-param name="url">
-      <xsl:value-of select="$TEISERVER"/>tag.xq?name=<xsl:value-of select="$me"/>
-     </xsl:with-param>
-     <xsl:with-param name="name"><xsl:value-of select="@name"/></xsl:with-param>
-    </xsl:call-template>
-  </xsl:when>
-  <xsl:otherwise>
-    <xsl:call-template name="linkTogether">
-     <xsl:with-param name="name" select="@name"/>
-     <xsl:with-param name="url" select="$F"/>
-    </xsl:call-template>
-  </xsl:otherwise>
-</xsl:choose>
+<xsl:variable name="n" select="@name"/>
+
+<xsl:for-each select="$top">
+   <xsl:choose>
+    <xsl:when test="contains($n,'.attributes')">
+     <xsl:value-of select="$n"/>
+    </xsl:when>
+    <xsl:otherwise>
+     <xsl:call-template name="linkTogether">
+      <xsl:with-param name="name"><xsl:value-of select="$me"/></xsl:with-param>
+      <xsl:with-param name="reftext"><xsl:value-of select="$n"/></xsl:with-param>
+     </xsl:call-template>
+    </xsl:otherwise>
+   </xsl:choose>
+  </xsl:for-each>
 </xsl:template>
 
 <xsl:template name="linkIt">

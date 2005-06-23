@@ -48,7 +48,7 @@
   <xsl:output encoding="utf-8" method="xml" indent="yes"/>
 
   <xsl:param name="localsource"/>
-
+  <xsl:param name="lookupDatabase">false</xsl:param>
   <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
   <xsl:param name="verbose"></xsl:param>
   <xsl:param name="schemaBaseURL">http://localhost/schema/relaxng/p5/</xsl:param>
@@ -83,7 +83,6 @@
   <xsl:key name="ELEMENTPARENTS" match="Contains" use="."/>
   <xsl:param name="wrapLength">65</xsl:param>
 
-  <xsl:param name="lookupDatabase">true</xsl:param>  
   <xsl:template match="processing-instruction()">
     <xsl:if test="name(.) = 'odds'">
       <xsl:choose>
@@ -300,8 +299,7 @@
   <xsl:template match="tei:classSpec/@ident"/>
   
   
-  <xsl:template match="tei:classSpec|tei:elementSpec|tei:macroSpec"
-		mode="weave">     
+  <xsl:template match="tei:classSpec|tei:elementSpec|tei:macroSpec" mode="weave">     
     <xsl:call-template name="refdoc"/>
   </xsl:template>
   
@@ -1042,7 +1040,6 @@
 	      <xsl:text>: </xsl:text>
 	      <xsl:call-template name="makeLink">
 		<xsl:with-param name="class">classlink</xsl:with-param>
-		<xsl:with-param name="id"><xsl:value-of	select="@xml:id"/></xsl:with-param>
 		<xsl:with-param name="name"><xsl:value-of select="@ident"/></xsl:with-param>
 		<xsl:with-param name="text">
 		  <xsl:value-of select="@ident"/>
@@ -1070,7 +1067,6 @@
         <xsl:text>: </xsl:text>
 	<xsl:call-template name="linkTogether">
 	  <xsl:with-param name="name" select="@ident"/>
-	  <xsl:with-param name="url" select="@xml:id"/>
 	</xsl:call-template>
 	<xsl:if test="count(key('CLASSMEMBERS',@ident))&gt;0">
 	  <xsl:text>  [</xsl:text>
@@ -1079,53 +1075,52 @@
 	      <xsl:text>: </xsl:text>
 	      <xsl:call-template name="showElement">
 		<xsl:with-param name="name" select="@ident"/>
-		<xsl:with-param name="id" select="@xml:id"/>
 	      </xsl:call-template>
 	  </xsl:for-each>
 	    <xsl:text>] </xsl:text>
 	</xsl:if>
       </xsl:for-each>
     </xsl:when>
-    <xsl:when test="not($localsource='')">
-      <xsl:for-each select="document($localsource)/tei:TEI">
-	<xsl:for-each select="tei:elementSpec[tei:classes/tei:memberOf[@key=$this]]">
-	  <xsl:call-template name="showElement">
-	    <xsl:with-param name="name" select="@ident"/>
-	    <xsl:with-param name="id" select="@xml:id"/>
-	  </xsl:call-template>
-	  <xsl:if test="following::item">
-	    <xsl:text>: &#10;</xsl:text>
+    <xsl:when test="$lookupDatabase='true'">
+      <xsl:choose>
+	<xsl:when test="not($localsource='')">
+	  <xsl:for-each select="document($localsource)/tei:TEI">
+	    <xsl:for-each select="tei:elementSpec[tei:classes/tei:memberOf[@key=$this]]">
+	      <xsl:call-template name="showElement">
+		<xsl:with-param name="name" select="@ident"/>
+	      </xsl:call-template>
+	      <xsl:if test="following::item">
+		<xsl:text>: &#10;</xsl:text>
+	      </xsl:if>
+	    </xsl:for-each>
+	  </xsl:for-each>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:variable name="address">
+	    <xsl:value-of select="$TEISERVER"/>
+	    <xsl:text>classmembers.xq?class=</xsl:text>
+	    <xsl:value-of select="@ident"/>
+	  </xsl:variable>
+	  <xsl:if test="$verbose">
+	    <xsl:message>Accessing TEISERVER: <xsl:value-of
+	    select="$address"/></xsl:message>
 	  </xsl:if>
-	</xsl:for-each>
-      </xsl:for-each>
+	  <xsl:for-each
+	      select="document($address)/list/item">
+	    <xsl:call-template name="showElement">
+	      <xsl:with-param name="name" select="."/>
+	    </xsl:call-template>
+	    <xsl:if test="following::item">
+	      <xsl:text>: &#10;</xsl:text>
+	    </xsl:if>
+	  </xsl:for-each>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:when>
-    <xsl:otherwise>
-      <xsl:variable name="address">
-	<xsl:value-of select="$TEISERVER"/>
-	<xsl:text>classmembers.xq?class=</xsl:text>
-	<xsl:value-of select="@ident"/>
-      </xsl:variable>
-      <xsl:if test="$verbose">
-	<xsl:message>Accessing TEISERVER: <xsl:value-of
-	select="$address"/></xsl:message>
-      </xsl:if>
-      <xsl:for-each
-	  select="document($address)/list/item">
-	<xsl:call-template name="showElement">
-	  <xsl:with-param name="name" select="."/>
-	  <xsl:with-param name="id"/>
-	  </xsl:call-template>
-	  <xsl:if test="following::item">
-	    <xsl:text>: &#10;</xsl:text>
-	  </xsl:if>
-      </xsl:for-each>
-    </xsl:otherwise>
   </xsl:choose>
-  
 </xsl:template>
 
 <xsl:template name="showElement">
-  <xsl:param name="id"/>
   <xsl:param name="name"/>
   <xsl:choose>
     <xsl:when test="$oddmode='tei'">
@@ -1133,8 +1128,13 @@
     </xsl:when>
     <xsl:when test="$oddmode='html'">
       <xsl:choose>
-	<xsl:when test="not($id='')">
-	  <a class="link_element" href="ref-{$id}.html">
+	<xsl:when test="key('IDENTS',$name) and $splitLevel=-1">
+	  <a class="link_element" href="#{$name}">
+	    <xsl:value-of select="$name"/>
+	  </a>
+	</xsl:when>
+	<xsl:when test="key('IDENTS',$name)">
+	  <a class="link_element" href="ref-{$name}.html">
 	    <xsl:value-of select="$name"/>
 	  </a>
 	</xsl:when>
@@ -1191,22 +1191,37 @@
 
 <xsl:template name="linkTogether">
   <xsl:param name="name"/>
-  <xsl:param name="url"/>
+  <xsl:param name="reftext"/>
+  <xsl:variable name="link">
+    <xsl:choose>
+      <xsl:when test="$reftext=''"><xsl:value-of select="$name"/></xsl:when>
+      <xsl:otherwise><xsl:value-of select="$reftext"/></xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
   <xsl:choose>
-    <xsl:when test="$oddmode='html' and starts-with($url,'http:')">
-      <a href="{$url}"><xsl:value-of select="$name"/></a>
+    <xsl:when test="not(key('IDENTS',$name))">
+      <a>
+	<xsl:attribute name="href">
+	  <xsl:value-of select="$TEISERVER"/>tag.xq?name=<xsl:value-of
+	  select="$name"/>
+	</xsl:attribute>
+	<xsl:value-of select="$link"/>
+      </a>
+    </xsl:when>
+    <xsl:when test="$oddmode='html' and $splitLevel=-1">
+      <a class="link_odd" href="#{$name}"><xsl:value-of select="$link"/></a>
     </xsl:when>
     <xsl:when test="$oddmode='html'">
-      <a class="link_odd" href="{concat('ref-',$url,'.html')}"><xsl:value-of select="$name"/></a>
+      <a class="link_odd" href="{concat('ref-',$name,'.html')}"><xsl:value-of select="$link"/></a>
     </xsl:when>
     <xsl:when test="$oddmode='pdf'">
-      <fo:inline><xsl:value-of select="$name"/></fo:inline>
+      <fo:inline><xsl:value-of select="$link"/></fo:inline>
     </xsl:when>
     <xsl:when test="$oddmode='tei'">
-      <tei:ref target="#{$name}"><xsl:value-of select="$name"/></tei:ref>
+      <tei:ref target="#{$name}"><xsl:value-of select="$link"/></tei:ref>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:value-of select="$name"/>
+      <xsl:value-of select="$link"/>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
@@ -1366,5 +1381,14 @@ it wrong otherwise. I suspect a bug there somewhere.
 <xsl:template match="tei:desc" mode="doc">
     <xsl:value-of select="."/>
 </xsl:template>
+
+<xd:doc>
+    <xd:short>Process elements  tei:schemaSpec</xd:short>
+    <xd:detail>&#160;</xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:schemaSpec">
+    <xsl:call-template name="processSchemaFragment"/>
+  </xsl:template>
+  
 
 </xsl:stylesheet>
