@@ -69,5 +69,6 @@ test-dtd-rxp:
 clean:
 	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do rm -f $$i.doc.xml $$i.rnc $$i.dtd $$i.compiled.* $$i.xsd $$i.rng;done
 	-rm -rf LOG *~ *.xsd *.rnc Schema RomaResults DTD
+	-rm -rf *.doc.*
 
 
