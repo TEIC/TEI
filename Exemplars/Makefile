@@ -1,4 +1,4 @@
-ROMAOPTS= --dochtml  --localsource=../P5/Source-driver.xml
+ROMAOPTS= --dochtml  --localsource=../Source-driver.xml
 
 schemas:
 	for i in *.odd; do roma $(ROMAOPTS) $$i .; done
