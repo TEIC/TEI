@@ -2,7 +2,9 @@
     xmlns:tei="http://www.tei-c.org/ns/1.0"    
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     version="1.0"
-    xmlns:html="http://www.w3.org/1999/xhtml">
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    exclude-result-prefixes="html" 
+>
   
 <xsl:import href="/usr/share/xml/tei/stylesheet/odds/odd2html.xsl"/>
   
