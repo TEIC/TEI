@@ -763,7 +763,7 @@
       <p><b>Specification group <xsl:number level="any"/>
       <xsl:if test="@n"><xsl:text>: </xsl:text><xsl:value-of select="@n"/></xsl:if>
     </b>
-    <a name="{@ident}"/>
+    <a name="{@xml:id}"/>
       </p>
       <dl>
 	<xsl:apply-templates/>
