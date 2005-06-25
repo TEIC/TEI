@@ -475,8 +475,7 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <b>&lt;
-    <a class="{$class}">
+    <b>&lt;<a>
       <xsl:attribute name="href">
 	<xsl:choose>
 	  <xsl:when test="$splitLevel=-1">
@@ -490,9 +489,8 @@
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:attribute>
-      <xsl:copy-of select="$text"/>
-    </a>
-    </b>
+      <xsl:value-of select="$name"/>
+    </a>&gt;</b>
     <xsl:value-of select="tei:desc"/>
     <xsl:choose>
       <xsl:when test="tei:attList//tei:attDef">
@@ -1061,7 +1059,7 @@
   </xsl:template>
   
 <xd:doc>
-    <xd:short>[html] </xd:short>
+    <xd:short>[html] make a link</xd:short>
     <xd:param name="class">class</xd:param>
     <xd:param name="id">id</xd:param>
     <xd:param name="name">name</xd:param>
