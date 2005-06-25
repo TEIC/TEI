@@ -1646,6 +1646,9 @@
 
 <xsl:for-each select="$top">
    <xsl:choose>
+    <xsl:when test="contains($n,'.content')">
+     <xsl:value-of select="$n"/>
+    </xsl:when>
     <xsl:when test="contains($n,'.attributes')">
      <xsl:value-of select="$n"/>
     </xsl:when>

@@ -490,7 +490,7 @@
 	</xsl:choose>
       </xsl:attribute>
       <xsl:value-of select="$name"/>
-    </a>&gt;</b>
+    </a>&gt; </b>
     <xsl:value-of select="tei:desc"/>
     <xsl:choose>
       <xsl:when test="tei:attList//tei:attDef">
@@ -759,15 +759,16 @@
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:specGrp">
-    <p>
-      <b>Specification group <xsl:number level="any"/>
-  <xsl:if test="@n"><xsl:text>: </xsl:text><xsl:value-of select="@n"/></xsl:if>
-  </b>
-      <a name="{@ident}"/>
-    </p>
-    <dl>
-      <xsl:apply-templates/>
-    </dl>
+    <div class="specgrp">
+      <p><b>Specification group <xsl:number level="any"/>
+      <xsl:if test="@n"><xsl:text>: </xsl:text><xsl:value-of select="@n"/></xsl:if>
+    </b>
+    <a name="{@ident}"/>
+      </p>
+      <dl>
+	<xsl:apply-templates/>
+      </dl>
+    </div>
   </xsl:template>
   
 <xd:doc>
