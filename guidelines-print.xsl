@@ -2,6 +2,7 @@
     xmlns:tei="http://www.tei-c.org/ns/1.0"    
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     version="1.0"
+    exclude-result-prefixes="html" 
     xmlns:html="http://www.w3.org/1999/xhtml">
   
 <xsl:import href="/usr/share/xml/tei/stylesheet/odds/odd2html.xsl"/>
@@ -69,7 +70,7 @@
  <xsl:if test="$minimal='false'">
    <xsl:value-of select="$headingNumberSuffix"/>
    <xsl:choose>
-     <xsl:when test="not($TOC='')">
+     <xsl:when test="not($toc='')">
        <xsl:call-template name="makeInternalLink">
           <xsl:with-param name="class">toc</xsl:with-param>
 	  <xsl:with-param name="dest"><xsl:value-of select="$TOC"/></xsl:with-param>
