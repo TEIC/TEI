@@ -1,6 +1,6 @@
 XSL=/usr/share/xml/tei/stylesheet/
 TEISERVER=http://tei.oucs.ox.ac.uk/Query/
-ROMAOPTS="--doc --localsource=../Source-driver.xml"
+ROMAOPTS=--doc --localsource=../Source-driver.xml
 
 TESTFILES= \
 	testchinese \
