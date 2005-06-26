@@ -703,31 +703,6 @@
   </xsl:template>
   
 <xd:doc>
-    <xd:short>Process elements  tei:ptr</xd:short>
-    <xd:detail>&#160;</xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:ptr" mode="weave">
-    <xsl:choose>
-      <xsl:when test="parent::tei:listRef">
-        <xsl:if test="count(preceding-sibling::tei:ptr)=0">
-          <tr>
-            <td valign="top">
-              <i>See further</i>
-            </td>
-            <td colspan="2">
-              <xsl:if test="count(preceding-sibling::tei:ptr)&gt;0">; </xsl:if>
-              <xsl:apply-imports/>
-            </td>
-          </tr>
-        </xsl:if>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:apply-imports/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  
-<xd:doc>
     <xd:short>Process elements  tei:remarks</xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>

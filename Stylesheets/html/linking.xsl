@@ -315,7 +315,7 @@
   
 
 <xd:doc>
-    <xd:short>[html] </xd:short>
+    <xd:short>[html] create external link</xd:short>
     <xd:param name="ptr">ptr</xd:param>
     <xd:param name="dest">dest</xd:param>
     <xd:param name="class">class</xd:param>
