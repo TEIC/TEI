@@ -397,11 +397,18 @@ encoding attribute
 (defvar tei-menu-definition
   (list "TEI"
 	(list "Insert skeleton TEI files"
-     ["TEI (P4)"  (tei-file-skeleton "/skeletons/p4/tei.xml" ) t]
-     ["TEI (P5)"  (tei-file-skeleton "/skeletons/p5/tei.xml" ) t]
-     ["TEI OUCS (P4)"  (tei-file-skeleton "/skeletons/p4/tei-oucs.xml" ) t]
-     ["TEI OUCS (P5)"  (tei-file-skeleton "/skeletons/p5/tei-oucs.xml" ) t]
-	      )
+["TEI all modules" (tei-file-skeleton "/skeletons/p5/tei_all.xml" "/schema/relaxng/p5/tei_all.rnc") t ]
+["TEI corpus" (tei-file-skeleton "/skeletons/p5/tei_corpus.xml" "/schema/relaxng/p5/tei_corpus.rnc") t ]
+["TEI dictionary" (tei-file-skeleton "/skeletons/p5/tei_dictionaries.xml" "/schema/relaxng/p5/tei_dictionaries.rnc") t ]
+["TEI drama" (tei-file-skeleton "/skeletons/p5/tei_drama.xml" "/schema/relaxng/p5/tei_drama.rnc") t ]
+["TEI + MathML" (tei-file-skeleton "/skeletons/p5/tei_mathml.xml" "/schema/relaxng/p5/tei_mathml.rnc") t ]
+["TEI minimal" (tei-file-skeleton "/skeletons/p5/tei_minimal.xml" "/schema/relaxng/p5/tei_minimal.rnc") t ]
+["TEI ODD" (tei-file-skeleton "/skeletons/p5/tei_odds.xml" "/schema/relaxng/p5/p5odds.rnc") t ]
+["TEI + SVG" (tei-file-skeleton "/skeletons/p5/tei_svg.xml" "/schema/relaxng/p5/tei_svg.rnc") t ]
+
+["TEI Lite (P4)"  (tei-file-skeleton "/skeletons/p4/tei.xml" "/schema/relaxng/p4/teixlite.rnc" ) t]
+["TEI for OUCS" (tei-file-skeleton "/skeletons/p5/tei_oucs.xml" "/schema/relaxng/p5/tei_oucs.rnc") t ]	      
+)
    ["Run XSLT or XML validator on file"	xmlrun t]
    ["Open this XML file in web browser"	(browse-url (concat "file:///" (buffer-file-name))) t]
 )
@@ -410,7 +417,7 @@ encoding attribute
 (add-hook 'nxml-mode-hook 'turn-on-auto-fill)
 (add-hook 'nxml-mode-hook 'bind-nxml-mode-keys)
 
-(defun tei-file-skeleton (skel)
+(defun tei-file-skeleton (skel schema)
  "insert skeleton file for TEI"
 (interactive)
 (goto-char (point-max))
@@ -420,6 +427,8 @@ encoding attribute
 (search-backward  "</body>")
 (insert "\n")
 (backward-char 1)
+(rng-set-schema-file-1 (concat teixmldir schema))
+(rng-save-schema-location-1 t)
 (rng-validate-mode)
 (rng-validate-mode)
 )
