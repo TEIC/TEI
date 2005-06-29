@@ -1253,6 +1253,7 @@ $ID: requests a particular page
         </xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
+    <xsl:call-template name="makeSidebar"/>
   </xsl:template>
 
   <xd:doc>

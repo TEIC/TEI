@@ -139,7 +139,7 @@ return "";
 <html:form
  encoding="iso-8859-1"
  enctype="multipart/form-data"
- action="http://localhost/cgi-bin/stylebear"
+ action="http://www.tei-c.org.uk/tei-bin/stylebear"
  method="post"
  id="stylebear">
 <p>Make stylesheet for: 
