@@ -114,7 +114,7 @@
 	 datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
 	  <xsl:attribute name="ns">
 	    <xsl:choose>
-	      <xsl:when test="@namespace"><xsl:value-of select="@namespace"/></xsl:when>
+	      <xsl:when test="@ns"><xsl:value-of select="@ns"/></xsl:when>
 	      <xsl:otherwise>http://www.tei-c.org/ns/1.0</xsl:otherwise>
 	    </xsl:choose>
 	  </xsl:attribute>	  

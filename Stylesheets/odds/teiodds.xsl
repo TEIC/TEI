@@ -648,8 +648,8 @@
 	    <include href="{$schemaBaseURL}{$This}.rng" xmlns="http://relaxng.org/ns/structure/1.0">
 	      <xsl:attribute name="ns">
 		<xsl:choose>
-		  <xsl:when test="ancestor::tei:schemaSpec/@namespace">
-		    <xsl:value-of select="ancestor::tei:schemaSpec/@namespace"/>
+		  <xsl:when test="ancestor::tei:schemaSpec/@ns">
+		    <xsl:value-of select="ancestor::tei:schemaSpec/@ns"/>
 		  </xsl:when>
 		  <xsl:otherwise>http://www.tei-c.org/ns/1.0</xsl:otherwise>
 		</xsl:choose>
