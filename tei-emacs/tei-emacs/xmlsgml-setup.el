@@ -401,10 +401,9 @@ encoding attribute
 ["TEI corpus" (tei-file-skeleton "/skeletons/p5/tei_corpus.xml" "/schema/relaxng/p5/tei_corpus.rnc") t ]
 ["TEI dictionary" (tei-file-skeleton "/skeletons/p5/tei_dictionaries.xml" "/schema/relaxng/p5/tei_dictionaries.rnc") t ]
 ["TEI drama" (tei-file-skeleton "/skeletons/p5/tei_drama.xml" "/schema/relaxng/p5/tei_drama.rnc") t ]
-["TEI + MathML" (tei-file-skeleton "/skeletons/p5/tei_mathml.xml" "/schema/relaxng/p5/tei_mathml.rnc") t ]
+["TEI manuscripts" (tei-file-skeleton "/skeletons/p5/tei_ms.xml" "/schema/relaxng/p5/tei_ms.rnc") t ]
 ["TEI minimal" (tei-file-skeleton "/skeletons/p5/tei_minimal.xml" "/schema/relaxng/p5/tei_minimal.rnc") t ]
 ["TEI ODD" (tei-file-skeleton "/skeletons/p5/tei_odds.xml" "/schema/relaxng/p5/p5odds.rnc") t ]
-["TEI + SVG" (tei-file-skeleton "/skeletons/p5/tei_svg.xml" "/schema/relaxng/p5/tei_svg.rnc") t ]
 
 ["TEI Lite (P4)"  (tei-file-skeleton "/skeletons/p4/tei.xml" "/schema/relaxng/p4/teixlite.rnc" ) t]
 ["TEI for OUCS" (tei-file-skeleton "/skeletons/p5/tei_oucs.xml" "/schema/relaxng/p5/tei_oucs.rnc") t ]	      
