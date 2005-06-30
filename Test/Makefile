@@ -17,12 +17,13 @@ TESTFILES= \
 	tripReport \
 	testall 
 
-#TESTDOCBOOKFILES= \
-	#testdocbook1 \
-	#testdocbook2 \
-	#testdocbook3 \
-	#testdocbook4 \
-	#testdocbook5 
+TESTDOCBOOKFILES= 
+
+#testdocbook1 \
+#testdocbook2 \
+#testdocbook3 \
+#testdocbook4 \
+#testdocbook5 
 
 TESTSPECIALFILES= \
 	testsvg  \
@@ -56,6 +57,9 @@ test-xsd:
 	-for i in $(TESTFILES) ;do echo $$i: ; jing $$i.xsd $$i.xml; done
 	echo XSDVALID....
 	-for i in $(TESTFILES) ;do echo $$i: ; xsdvalid -s $$i.xsd $$i.xml; done
+
+test-xerces:
+	-for i in $(TESTFILES) ;do echo $$i: ; java -cp ~/jar/xercesSamples.jar jaxp.SourceValidator -HS -VA -GA -a $$i.xsd -i $$i.xml; done
 
 test-dtd:
 	echo XMLLINT DTD ....
