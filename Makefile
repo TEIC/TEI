@@ -201,7 +201,6 @@ dist-schema: schemas dtds oddschema
 	| (cd release/tei-p5-schema/share/xml/tei/schema/dtd/p5; tar xf - )
 	(cd Schema; tar --exclude CVS -c -f - .) \
 	| (cd release/tei-p5-schema/share/xml/tei/schema/relaxng/p5; tar xf - )
-	cp p5odds.rng p5odds.rnc release/tei-p5-schema/share/xml/tei/schema/relaxng/p5
 	(cd release; 	\
 	ln -s tei-p5-schema tei-p5-schema-`cat ../VERSION` ; \
 	zip -r tei-p5-schema-`cat ../VERSION`.zip tei-p5-schema-`cat ../VERSION` )
