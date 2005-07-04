@@ -4,17 +4,20 @@ Licensed under the GNU General Public License.
 
 See the file COPYING for details.
 -->
-<macroSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" xml:id="PEPHRASE" type="pe" ident="macro.phrasegroup">
-<desc>defines a phrase as character data or any phrase-level element.</desc>
+<macroSpec xmlns="http://www.tei-c.org/ns/1.0" 
+  xmlns:rng="http://relaxng.org/ns/structure/1.0" 
+  module="tei" xml:id="PEPHRASE" type="pe" ident="macro.phrasegroup">
+<desc>defines the possible components of  phrase-level elements.</desc>
   <content>
-    <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+    <rng:zeroOrMore>
+    <rng:choice>
+     <rng:text />
     <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.phrase"/>
     <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.Incl"/>
+    </rng:choice></rng:zeroOrMore>
   </content>
-  
-  <remarks>
-    <p>This entity is used in the declaration of
-<term>macro.phraseSeq</term>.</p>
+    <remarks>
+    <p>This macro is used in the declaration of <term>macro.phraseSeq</term>.</p>
   </remarks>
   <listRef>
     <ptr target="#STEC"/>
