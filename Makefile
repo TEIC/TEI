@@ -121,9 +121,9 @@ valid: check
 	 | grep -v ': error: unfinished element$$'
 	@echo --------- XSLT validator
 	xsltproc validator.xsl Source-driver.xml >& tmp && sed 's/TEI...\/text...\/body...\///' tmp && rm tmp
-	@echo --------- xmllint
-	@xmllint --version
-	-xmllint  --relaxng p5odds.rng --noent --noout Source-driver.xml
+	@echo --------- xmllint RELAXNG TEST REMOVED
+#	@xmllint --version
+#	-xmllint  --relaxng p5odds.rng --noent --noout Source-driver.xml
 
 test:
 	(cd Test; make)
