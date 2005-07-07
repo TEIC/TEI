@@ -42,26 +42,20 @@ case of spans, or indirectly, in the case of interpretations.</p>
 <p>Finally section <ptr target="#AILA"/> revisits the topic of linguistic
 analysis, and illustrates how these interpretative mechanisms may be
 used to associate simple linguistic analysis with text segments.</p>
-<p>The following DTD fragments show the overall organization of the
+<p>The following schema fragments show the overall organization of the
 class of analytic elements discussed in the remainder of this chapter.
-File <term>analysis.ent</term> defines the additional global attribute
-made available by this tag set.
- 
+When the analysis module is selected for inclusion in a TEI schema,
+an additional attributes becomes globally available, and some additional
+elements are declared. These declarations are effected by the
+following modules:
 <moduleSpec xml:id="DAIENT" type="decls" ident="analysis-decl"><altIdent type="FPI">Modifications to TEI class system for analysis</altIdent><desc>Modifications to TEI class system for analysis</desc></moduleSpec><!--publicID:  -//TEI P5//ENTITIES Element Classes for Simple Analysis//EN-->
-
 <specGrpRef target="#DAIGA"/>
- 
-
-	</p>
-<p>File <term>analysis.dtd</term> contains declarations for elements
-used to represent simple analyses or interpretations of portions of a
-text.
- 
 <moduleSpec xml:id="DAI" ident="analysis"><altIdent type="FPI">Simple analytic mechanisms</altIdent><desc>Simple analytic mechanisms</desc></moduleSpec><!--publicID:  -//TEI P5//ELEMENTS Additional Element Set for Simple Analysis//EN-->
-
 <specGrpRef target="#DAISP"/>
 <specGrpRef target="#DAILC"/></p>
-<p>This tag set is selected as described in <ptr target="#STIN"/>; in a
+<p>Selection and combination of modules is performed as described in
+<ptr target="#STIN"/>.
+<!-- ; in a
 document which uses the markup described in this chapter, the document
 type declaration should contain the following declaration of the entity
 <term>TEI.analysis</term>, or an equivalent one:
@@ -78,13 +72,7 @@ base tag set for prose might look like this:
     <!ENTITY % TEI.linking  'INCLUDE' >
     <!ENTITY % TEI.analysis 'INCLUDE' >
  ]>]]></eg>
-</p>
-<!-- Revisions:                                               -->
-	<!-- 5 Jan 98 : LB : fixed typo in eg -->
-	<!-- 93-11-26 : MSM :  minor improviements\                   -->
-	<!-- 93-11-23 : MSM : fix sgml syntax slips                   -->
-	<!-- 93-11-23 : MSM : revise (substantially)                  -->
-	<!-- 93-07-05 : DTL : Make file.                              -->
+--></p>
 <div2 type="subsection" xml:id="AILC"><head>Linguistic Segment Categories</head>
 <p>In this section we introduce specialized <term>linguistic segment
 category</term> elements which may be used to represent the segmentation of
@@ -115,8 +103,8 @@ and elsewhere as <term>s-units</term>, or <term>sentences</term>.
     1954, I began serving a sentence in state prison for
     possession of marijuana.</s>
 </p></egXML>
-<!-- Eldridge Cleaver, Soul on Ice (first para of first    -->
-	<!-- letter from prison)                   -->
+<note type="cit"><bibl>Eldridge Cleaver <title>Soul on Ice</title> (first para of first  
+letter from prison)</bibl></note>
 
 The <gi>s</gi> may be thought of as  providing an abbreviated version of
 the tag <tag>seg type='s-unit'</tag>, with the important additional
@@ -153,8 +141,7 @@ as in the following example:
     <cl>but all agreed <cl>it was come into Holland again.</cl> </cl>
   </s>
 </p></egXML>
-<!-- Defoe, Journal of the Plague Year -->
-</p>
+<note type="cit"><bibl>Defoe, <title>Journal of the Plague Year</title></bibl></note></p>
 <p>Clauses may be further divided into <gi>phr</gi> elements in the same
 way. A text may be segmented directly into clauses, or into
 phrases, with no need to include segmentation at a higher level as well.
@@ -175,7 +162,7 @@ with the <att>part</att> attribute:
   <l><cl part="F">As black as a tar barrel;</cl></l>
   <l><cl part="I">Which frightened both the heroes so,</cl></l>
   <l><cl part="F"><cl>They quite forgot their quarrel.</cl></cl></l></div></egXML>
-<!-- Lewis Carroll, Through the Looking Glass, ch4 -->
+<note type="cit"><bibl>Lewis Carroll, <title>Through the Looking Glass</title>, ch4</bibl></note>
  
 Another approach is to use the <att>next</att> and <att>prev</att>
 attributes defined in the additional tag set for linking (chapter <ptr target="#SA"/>):
@@ -216,11 +203,6 @@ post-modifier:
 <p>Segmentation into clauses and phrases can, of course, be combined.
 Such detailed encodings as the following may require careful
 formatting if they are to be easily readable however.
-<!--
-  to read,  the segmentation
-tags can begin new lines, and be indented according to their degree of
-nesting, thus:
---> 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>
   <s>
     <cl type="finite declarative" function="independent"> 
@@ -589,7 +571,7 @@ an example of the <gi>span</gi> element.
   unimportance of humanity.</s>
 
 </p></egXML>
-<!-- Doris Lessing, Martha Quest, 1952, p52-53  -->
+<note type="cit"><bibl>Doris Lessing, <title>Martha Quest</title>, 1952, p52-53</bibl></note>
  </p>
 <p>The <gi>span</gi> element may, as in this example, be placed in the
 text near the textual span it is associated with, or it may be placed
@@ -727,23 +709,23 @@ element can then be associated with the <gi>interp</gi> element using the
 
 </p>
 
-<interp xml:id="MOMENT" resp="DTL" value="the moment"/></egXML>
+<interp xml:id="MOMENT" resp="DTL">the moment</interp></egXML>
  </p>
 <p>The second example above can be recoded using <gi>interp</gi> and
 <gi>interpGrp</gi> tags in a similar manner.  The interpretation
 itself can be expressed in an <gi>interpGrp</gi> element, which would
 replace the <gi>spanGrp</gi> in the example shown above:
  
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><interpGrp resp="TMA" type="structural unit">
- <interp xml:id="INTRO" value="introduction"/>
- <interp xml:id="CONFLICT" value="conflict"/>
- <interp xml:id="CLIMAX" value="climax"/>
- <interp xml:id="REVENGE" value="revenge"/>
- <interp xml:id="RECONCIL" value="reconciliation"/>
- <interp xml:id="AFTERM" value="aftermath"/>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><interpGrp resp="TMA" type="structuralUnit">
+        <interp xml:id="INTRO">introduction</interp>
+        <interp xml:id="CONFLICT">conflict</interp>
+        <interp xml:id="CLIMAX">climax</interp>
+        <interp xml:id="REVENGE">revenge</interp>
+        <interp xml:id="RECONCIL">reconciliation</interp>
+        <interp xml:id="AFTERM">aftermath</interp>
 </interpGrp></egXML>
  </p>
-<p>This <gi>interpGrp</gi> element would be linked to the text either
+<p>Any of these <gi>interp</gi> elements may be linked to the text either
 by means of the <att>ana</att> attribute, or by means of <gi>link</gi>
 elements.  Using the <att>ana</att> attribute (on <gi>seg</gi> elements
 introduced specifically for this purpose), the text would be encoded as
@@ -756,14 +738,14 @@ follows:
 <s xml:id="SS3">Borghild, Sigmund's wife, had a brother ... </s>
 </seg>
 <s xml:id="SS4A" ana="#CONFLICT">But Sinfiotli ... wooed the same woman</s>
-<s xml:id="SS4B" ana="#CLIMAX">and Sinfiotli killed him over it.</s>
-<seg xml:id="SS5-SS17" ana="#REVENGE">
+<s xml:id="SS4B" ana="#I3">and Sinfiotli killed him over it.</s>
+<seg xml:id="SS5-SS17" ana="#CLIMAX">
 <s xml:id="SS5">And when he came home, ... she was obliged to accept it.</s>
 <s xml:id="SS6">At the funeral feast Borghild was serving beer.</s>
 
 <s xml:id="SS17">Sinfiotli drank it off and at once fell dead.</s>
 </seg></p>
-<anchor xml:id="NNIL1" ana="#RECONCIL"/>
+<anchor xml:id="NIL1" ana="#RECONCIL"/>
 <p xml:id="PP2">Sigmund carried him a long way in his arms ... </p>
 <p xml:id="PP3">King Sigmund lived a long time in Denmark ... </p>
 <p xml:id="PP4">Sigmund and all his sons were tall ... </p>
@@ -800,61 +782,10 @@ whereas the the use of <gi>span</gi> elements does not.
 <gi>interp</gi> and <gi>interpGrp</gi> elements are:
  
 <specGrp xml:id="DAISP" n="Spans">
-
-
 &span.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
 &spangrp.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
 &interp.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
 &interpgp.odd;
-
-
-
-
-
-
-
-
-
-
 </specGrp>
 </p>
 </div2>
@@ -937,7 +868,7 @@ token.  For our example sentence, we might conveniently represent
 these codes using entity references:<note place="foot">We have
 replaced the Claws code <code type="frag">$</code> for the
 <mentioned>'s</mentioned> morpheme by <code type="frag">GEN</code>, as
-in the tag set used by the British National Corpus <!--(see <ptr target="#F"SIL"/>)-->, and the code <code type="frag">.</code> for the
+in the tag set used by the British National Corpus, and the code <code type="frag">.</code> for the
 final full stop by <code type="frag">PUN</code>.</note>
  
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><s>The&amp;AT; victim&amp;NN1;'s&amp;GEN; friends&amp;NN2; told&amp;VVD; police&amp;NN2;
@@ -1012,10 +943,9 @@ same as their identifiers.  That is, we provide an <gi>interpGrp</gi>
 element as follows:
  
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><interpGrp type="word classes">
-   <interp xml:id="at" value="AT"/>
-   <interp xml:id="nn1" value="NN1"/>
-   <interp xml:id="gen" value="GEN"/>
-   
+   <interp xml:id="at">article</interp>
+   <interp xml:id="nn1">noun sing</interp>
+   <interp xml:id="gen">genitive</interp>
 </interpGrp></egXML>
 </p>
 <p>Although common practice, this (or any similar) method of relating
@@ -1154,7 +1084,8 @@ transaction in a spoken text.
    <span value="purchase" from="#u5"/>
    <span value="purchase closure" from="#u6"/>
 </spanGrp></egXML>
-<!-- R. Hasan, Language, context, and text... OUP1989, p 59 -->
+<note type="cit"><bibl>R. Hasan <title>Language, context, and
+text</title>... OUP 1989, p 59</bibl></note>
  
 For further discussion of the <gi>u</gi> (utterance) element and other
 elements recommended for transcriptions of spoken language,
