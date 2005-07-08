@@ -5,7 +5,7 @@
   exclude-result-prefixes="tei xd" 
   version="1.0"  >
 
-<xsl:import href="../base/p5/html/tei.xsl"/>
+<xsl:import href="../html/tei.xsl"/>
 
 <xd:doc type="stylesheet">
     <xd:short>

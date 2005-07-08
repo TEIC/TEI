@@ -18,7 +18,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
   extension-element-prefixes="exsl estr"
   exclude-result-prefixes="tei exsl estr" 
   version="1.0">
-<xsl:import href="../base/p5/common/tei.xsl"/>
+<xsl:import href="../common/tei.xsl"/>
 <xsl:import href="teiodds.xsl"/>
 
 <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>

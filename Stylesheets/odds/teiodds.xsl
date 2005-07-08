@@ -51,7 +51,7 @@
   <xsl:param name="lookupDatabase">false</xsl:param>
   <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
   <xsl:param name="verbose"></xsl:param>
-  <xsl:param name="schemaBaseURL">http://localhost/schema/relaxng/p5/</xsl:param>
+  <xsl:param name="schemaBaseURL">http://localhost/schema/relaxng/</xsl:param>
   
   <xsl:key name="LOCALIDENTS"   match="tei:*"   use="@ident"/>
   <xsl:key name="MACROS"   match="tei:macroSpec" use="@ident"/>

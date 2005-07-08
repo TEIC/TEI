@@ -10,7 +10,7 @@ XSL FO stylesheet to format TEI XML documents
 	xmlns:tei="http://www.tei-c.org/ns/1.0" 
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
-<xsl:import href="../base/p5/latex/tei.xsl"/>
+<xsl:import href="../latex/tei.xsl"/>
 
 <xsl:output method="text"/>
 <xsl:variable name="docClass">beamer</xsl:variable>

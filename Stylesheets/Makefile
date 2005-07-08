@@ -17,32 +17,19 @@ dist: clean p4 p5 release
 
 
 p4:
-	-mkdir -p release/tei-xsl/odds
-	-mkdir -p release/tei-xsl/base/p4/fo
-	-mkdir -p release/tei-xsl/base/p4/html
-	-mkdir -p release/tei-xsl/base/p4/common
-	-mkdir -p release/tei-xsl/base/p4/latex
-	-mkdir -p release/tei-xsl/slides
-	for i in fo/*.xsl html/*xsl common/*xsl latex/*xsl ; do \
-	echo do $$i;perl toP4.pl < $$i > release/tei-xsl/base/p4/$$i; \
+	for i in slides fo html common latex ; do \
+	mkdir -p release/tei-xsl/p4/$$i; \
+	for j in $$i/*.xsl; do perl toP4.pl < $$j > release/tei-xsl/p4/$$j;done; \
 	done
 
 p5:
-	-mkdir -p release/tei-xsl/base/p5/fo
-	-mkdir -p release/tei-xsl/base/p5/html
-	-mkdir -p release/tei-xsl/base/p5/common
-	-mkdir -p release/tei-xsl/base/p5/latex
-	for i in  fo/*.xsl html/*xsl common/*xsl latex/*xsl ; do \
-	cp $$i release/tei-xsl/base/p5/$$i; \
+	for i in  odds slides fo html common latex ; do \
+	mkdir -p release/tei-xsl/p5/$$i; cp $$i/*.xsl release/tei-xsl/p5/$$i; \
 	done
 
-param: p4 p5
-	xsltproc -o customize.xml param.xsl param.xml
-	xsltproc -o style.xml paramform.xsl param.xml 
 
-release: param doc
+release: doc p4 p5
 	cp *.css release/tei-xsl
-	tar cf - slides/*.xsl slides/*.css odds/*.xsl | (cd release/tei-xsl; tar xf - )
 	mkdir -p release/tei-xsl/doc
 	cp -r doc/xsltdoc doc/*.png release/tei-xsl/doc
 	cp doc/*.css release/tei-xsl/doc/xsltdoc
@@ -51,9 +38,11 @@ release: param doc
 
 doc:
 	(cd doc; saxon configdoc.xsl xsltdoc.xsl)
+	xsltproc -o customize.xml param.xsl param.xml
+	xsltproc -o style.xml paramform.xsl param.xml 
 
 test: p4 p5
-	cd Test; make 
+	(cd Test; make )
 
 clean:
 	-rm `find . -name semantic.cache`
@@ -63,12 +52,17 @@ clean:
 	-rm -rf doc/xsltdoc
 	(cd Test; make clean)
 
-install: release
+installp4: p4
+	mkdir -p ${PREFIX}/share/xml/teip4/stylesheet
+	(cd release/tei-xsl/p4; tar cf - .) | \
+	(cd ${PREFIX}/share/xml/teip4/stylesheet; tar xf -)
+
+installp5: release
 	mkdir -p ${PREFIX}/share/xml/tei/stylesheet
-	(cd release/tei-xsl; tar cf - base slides odds *.css) | \
+	(cd release/tei-xsl/p5; tar cf - .) | \
 	(cd ${PREFIX}/share/xml/tei/stylesheet; tar xf -)
-	mkdir -p ${PREFIX}/share/doc/tei-xsl
-	(cd release/tei-xsl/doc; tar cf - .) | (cd ${PREFIX}/share/doc/tei-xsl; tar xf -)
+	mkdir -p ${PREFIX}/share/doc/tei-p5-xsl
+	(cd release/tei-xsl/doc; tar cf - .) | (cd ${PREFIX}/share/doc/tei-p5-xsl; tar xf -)
 	mkdir -p ${PREFIX}/lib/cgi-bin
 	cp stylebear ${PREFIX}/lib/cgi-bin/stylebear
 	chmod 755 ${PREFIX}/lib/cgi-bin/stylebear

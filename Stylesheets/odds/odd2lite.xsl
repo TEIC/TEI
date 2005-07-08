@@ -16,7 +16,7 @@
     extension-element-prefixes="edate exsl estr"
     version="1.0">
   <xsl:import href="teiodds.xsl"/>
-  <xsl:import href="../base/p5/common/tei.xsl"/>
+  <xsl:import href="../common/tei.xsl"/>
 <xd:doc type="stylesheet">
     <xd:short>
     TEI stylesheet for making TEI Lite XML from ODD

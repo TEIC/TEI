@@ -17,8 +17,8 @@
 
 
 <xsl:import href="teiodds.xsl"/>
-<xsl:import href="../base/p5/html/tei.xsl"/>
-<xsl:import href="../base/p5/html/tagdocs.xsl"/>
+<xsl:import href="../html/tei.xsl"/>
+<xsl:import href="../html/tagdocs.xsl"/>
 <xsl:import href="RngToRnc.xsl"/>
 
 <xd:doc type="stylesheet">
