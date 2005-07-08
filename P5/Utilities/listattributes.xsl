@@ -14,7 +14,7 @@
      version="1.0">
 
 
-<xsl:import href="/usr/share/xml/tei/stylesheet/base/p5/odds/teiodds.xsl"/>
+<xsl:import href="/usr/share/xml/tei/stylesheet/odds/teiodds.xsl"/>
 
 <xsl:key  name="ATTS" match="tei:elementSpec//tei:attDef"  use="@ident"/>
 

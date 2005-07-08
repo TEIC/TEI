@@ -161,7 +161,7 @@ fascicule: subset
 	cat fasc-head.xml `find Source -name $(CHAP).odd` fasc-tail.xml > FASC-$(CHAP).xml
 	export H=`pwd`; xmllint --noent    FASC-$(CHAP).xml | xsltproc \
 	-o FASC-$(CHAP)-Guidelines/index.html \
-	--stringparam localsource $$H/p5subset.xml \
+	--stringparam localsource $$Hsubset.xml \
 	--stringparam TEISERVER $(TEISERVER) \
 	--stringparam cssFile tei.css \
 	--stringparam verbose true \
@@ -173,7 +173,7 @@ fascicule: subset
 	-jing p5odds.rng FASC-$(CHAP).xml 
 	export H=`pwd`; \
 	xsltproc -o FASC-$(CHAP)-lite.xml  \
-	--stringparam localsource $$H/p5subset.xml \
+	--stringparam localsource $$Hsubset.xml \
 	--stringparam TEISERVER $(TEISERVER) \
 	--stringparam displayMode rnc \
 	$(XSL)/odds/teixml-odds.xsl FASC-$(CHAP).xml 
@@ -183,34 +183,34 @@ fascicule: subset
 	TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-$(CHAP) 
 	TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-$(CHAP) 
 
-dist: clean dist-source dist-schema dist-doc dist-test dist-database
+dist: clean dist-source dist-schema dist-doc dist-test dist-database dist-exemplars
 
 dist-source: 
-	rm -rf release/tei-p5/source
-	mkdir -p release/tei-p5-source/share/tei
+	rm -rf release/tei-p5-source
+	mkdir -p release/tei-p5-source/share/xml/tei/odd
 	tar -c -f - --exclude "*~" --exclude CVS *.* VERSION ChangeLog Source Makefile Tools  \
-	| (cd release/tei-p5-source/share/tei; tar xf - )
+	| (cd release/tei-p5-source/share/xml/tei/odd; tar xf - )
 	(cd release; 	\
 	ln -s tei-p5-source tei-p5-source-`cat ../VERSION` ; \
 	zip -r tei-p5-source-`cat ../VERSION`.zip tei-p5-source-`cat ../VERSION` )
 
 dist-schema: schemas dtds oddschema
 	rm -rf release/tei-p5-schema
-	mkdir -p release/tei-p5-schema/share/xml/tei/schema/dtd/p5
-	mkdir -p release/tei-p5-schema/share/xml/tei/schema/relaxng/p5
+	mkdir -p release/tei-p5-schema/share/xml/tei/schema/dtd
+	mkdir -p release/tei-p5-schema/share/xml/tei/schema/relaxng
 	(cd DTD; tar --exclude CVS -c -f - .) \
-	| (cd release/tei-p5-schema/share/xml/tei/schema/dtd/p5; tar xf - )
+	| (cd release/tei-p5-schema/share/xml/tei/schema/dtd; tar xf - )
 	(cd Schema; tar --exclude CVS -c -f - .) \
-	| (cd release/tei-p5-schema/share/xml/tei/schema/relaxng/p5; tar xf - )
+	| (cd release/tei-p5-schema/share/xml/tei/schema/relaxng; tar xf - )
 	(cd release; 	\
 	ln -s tei-p5-schema tei-p5-schema-`cat ../VERSION` ; \
 	zip -r tei-p5-schema-`cat ../VERSION`.zip tei-p5-schema-`cat ../VERSION` )
 
 dist-doc:  html
 	rm -rf release/tei-p5-doc
-	mkdir -p release/tei-p5-doc/share/doc/tei/html/base/p5
+	mkdir -p release/tei-p5-doc/share/doc/tei/html
 	(cd Guidelines; tar --exclude CVS -c -f - . ) \
-	| (cd release/tei-p5-doc/share/doc/tei/html/base/p5; tar xf - )
+	| (cd release/tei-p5-doc/share/doc/tei/html; tar xf - )
 	(cd release; 	\
 	ln -s tei-p5-doc tei-p5-doc-`cat ../VERSION` ; \
 	zip -r tei-p5-doc-`cat ../VERSION`.zip tei-p5-doc-`cat ../VERSION` )
@@ -225,11 +225,14 @@ dist-test:
 	ln -s tei-p5-test tei-p5-test-`cat ../VERSION` ; \
 	zip -r tei-p5-test-`cat ../VERSION`.zip tei-p5-test-`cat ../VERSION` )
 
+dist-exemplars: 
+	(cd Exemplars; make dist)
+
 dist-database: 
 	rm -rf release/tei-p5-database
-	mkdir -p release/tei-p5-database/share/doc/tei/web
-	tar --exclude CVS -c -f - Query \
-	| (cd release/tei-p5-database/share/doc/tei/web; tar xf - )
+	mkdir -p release/tei-p5-database/share/xml/tei/xquery
+	(cd Query; tar --exclude CVS -c -f - . ) \
+	| (cd release/tei-p5-database/share/xml/tei/xquery; tar xf - )
 	(cd release; 	\
 	ln -s tei-p5-database tei-p5-database-`cat ../VERSION` ; \
 	zip -r tei-p5-database-`cat ../VERSION`.zip tei-p5-database-`cat ../VERSION` )
@@ -250,11 +253,16 @@ install-test: dist-test
 	@echo Making testfiles release in ${PREFIX}
 	(cd release/tei-p5-test; tar cf - .) | (cd ${PREFIX}; tar xf - )
 
+install-exemplars: dist-exemplars
+	@echo Making exemplars release in ${PREFIX}
+	(cd release/tei-p5-exemplars; tar cf - share) | \
+	(cd ${PREFIX}; tar xf -)
+
 install-database: dist-database
 	@echo Making database release in ${PREFIX}
 	(cd release/tei-p5-database; tar cf - .) | (cd ${PREFIX}; tar xf - )
 
-install: clean install-schema install-doc install-test install-source install-database
+install: clean install-schema install-doc install-test install-exemplars install-source install-database
 
 check:
 	@echo Checking you have a running XML tools and Perl before trying to run transform...
@@ -270,7 +278,7 @@ check:
 	@which jing || exit 1
 
 clean:
-	-rm -rf release Guidelines Schema DTD dtd Split RomaResults *~
+	-rm -rf release Guidelines Guidelines-web Schema DTD dtd Split RomaResults *~
 	-rm Guidelines.xml core.rnc header.rnc tei.rnc \
 	p5subset.xml \
 	dictionaries.rnc  linking.rnc  textstructure.rnc \
@@ -299,4 +307,6 @@ clean:
 	p5.sch
 	find . -name "semantic.cache" | xargs rm -f
 	(cd Test; make clean)
+	(cd Exemplars; make clean)
+	rm -rf FASC-*
 
