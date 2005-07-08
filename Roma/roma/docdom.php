@@ -32,7 +32,7 @@ class docDom extends domDocument
 	  }
 	//create the XSLT to expand the modules
         $oXSL = new domDocument();
- 	$oXSL->load( roma_StylesheetDir . '/' . 'base/p5/odds/subsetGuidelines.xsl'  );
+ 	$oXSL->load( roma_StylesheetDir . '/odds/subsetGuidelines.xsl'  );
 
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
@@ -424,7 +424,7 @@ class docDom extends domDocument
       {
 	//create the teiLite
         $oXSL = new domDocument();
- 	$oXSL->load( roma_StylesheetDir . '/' . 'base/p5/odds/teixml-odds.xsl'  );
+ 	$oXSL->load( roma_StylesheetDir . '/odds/teixml-odds.xsl'  );
 
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );

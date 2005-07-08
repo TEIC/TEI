@@ -1973,7 +1973,7 @@ class romaDom extends domDocument
 	  $this->m_oRomaDom->updateProgressBar( '70' );
 
 	$oXSL = new domDocument();
-	$oXSL->load( roma_StylesheetDir . '/base/p5/latex/tei.xsl'  );
+	$oXSL->load( roma_StylesheetDir . '/latex/tei.xsl'  );
 	
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
@@ -1995,7 +1995,7 @@ class romaDom extends domDocument
 
 	
 	$oXSL = new domDocument();
-	$oXSL->load( roma_StylesheetDir . '/base/p5/latex/tei.xsl'  );
+	$oXSL->load( roma_StylesheetDir . '/latex/tei.xsl'  );
 	
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
@@ -2048,7 +2048,7 @@ class romaDom extends domDocument
 	  $this->m_oRomaDom->updateProgressBar( '60' );
 
 	$oXSL = new domDocument();
-	$oXSL->load( roma_StylesheetDir . '/base/p5/fo/tei.xsl' );
+	$oXSL->load( roma_StylesheetDir . '/fo/tei.xsl' );
 	
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
@@ -2090,7 +2090,7 @@ class romaDom extends domDocument
 	  $this->m_oRomaDom->updateProgressBar( '60' );
 
 	$oXSL = new domDocument();
-	$oXSL->load( roma_StylesheetDir . '/base/p5/latex/tei.xsl');
+	$oXSL->load( roma_StylesheetDir . '/latex/tei.xsl');
 	
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );

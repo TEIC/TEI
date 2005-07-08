@@ -75,7 +75,7 @@ makePDFDOC()
     echo "7. make PDF documentation"
     xsltproc $XSLOPTS     \
 	-o $N.doc.tex \
-	$TEIXSLDIR/base/p5/latex/tei.xsl $N.doc.xml
+	$TEIXSLDIR/latex/tei.xsl $N.doc.xml
     pdflatex $N.doc.tex
     echo created $N.doc.pdf and $N.doc.tex 
 }
