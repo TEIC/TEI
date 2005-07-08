@@ -14,7 +14,7 @@
      version="1.0">
 
 
-<xsl:import href="/usr/share/xml/tei/stylesheet/base/p5/odds/teiodds.xsl"/>
+<xsl:import href="/usr/share/xml/tei/stylesheet/odds/teiodds.xsl"/>
 
 <xsl:key  name="REFS" match="tei:elementSpec|tei:macroSpec"
 	  use="tei:content//rng:ref/@name"/>
