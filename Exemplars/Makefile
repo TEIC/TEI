@@ -8,7 +8,7 @@ schemas:
 	-rm p5odds.dtd p5examples.dtd
 
 
-dist:
+dist: schemas
 	rm -rf tei[0-9]*.xml ../release/tei-p5-exemplars
 	mkdir -p ../release/tei-p5-exemplars/share/xml/tei/custom/schema/relaxng
 	mkdir -p ../release/tei-p5-exemplars/share/xml/tei/custom/schema/dtd
