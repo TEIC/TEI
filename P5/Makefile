@@ -19,7 +19,7 @@ dtds: check
 	# generate the DTDs
 	xmllint --noent   Source-driver.xml | \
 	xsltproc --stringparam outputDir DTD ${XSL}/odds/odd2dtd.xsl -
-	for i in DTD/* ; do perl -i Tools/cleandtd.pl $$i; done	
+	for i in DTD/* ; do perl -i tools/cleandtd.pl $$i; done	
 	# I cannot be bothered to see why these don't work,
 	# just hack them by hand.
 	perl -p -i -e 's/,\|/\|/' DTD/core.dtd
@@ -44,7 +44,7 @@ schemas:check
 	# convert RelaxNG XML syntax to compact syntax with trang
 	(cd Schema; for i in *rng; do trang $$i `basename $$i .rng`.rnc;done)
 	# improve the positioning of blank lines in the RelaxNG compact syntax output for human readability
-	(for i in Schema/*.rnc; do t=`basename $$i .rnc`.tmp; mv $$i $$t; ./Tools/fix_rnc_whitespace.perl < $$t > $$i; rm $$t; done)
+	(for i in Schema/*.rnc; do t=`basename $$i .rnc`.tmp; mv $$i $$t; ./tools/fix_rnc_whitespace.perl < $$t > $$i; rm $$t; done)
 	xmllint --noent   Source-driver.xml | xsltproc extract-sch.xsl - > p5.sch
 
 html-web: check
@@ -56,7 +56,7 @@ html-web: check
 	--stringparam outputDir . \
 	guidelines.xsl - 
 	-cp *.gif *.css Guidelines-web
-	(cd Guidelines-web; for i in *.html; do perl -i ../Tools/cleanrnc.pl $$i;done)
+	(cd Guidelines-web; for i in *.html; do perl -i ../tools/cleanrnc.pl $$i;done)
 
 html:check subset
 	-rm -rf Guidelines
@@ -69,11 +69,11 @@ html:check subset
 	--stringparam displayMode rnc \
 	--stringparam outputDir . \
 	tmp$$$$.xsl - && rm tmp$$$$.xsl)
-	(cd Guidelines; for i in *.html; do perl -i ../Tools/cleanrnc.pl $$i;done)
+	(cd Guidelines; for i in *.html; do perl -i ../tools/cleanrnc.pl $$i;done)
 	-cp *.gif *.css Guidelines
 
 xml: check subset
-	xmllint --noent   Source-driver.xml | perl Tools/cleanrnc.pl | \
+	xmllint --noent   Source-driver.xml | perl tools/cleanrnc.pl | \
 	xsltproc  -o Guidelines.xml \
 	--stringparam displayMode rnc  \
 	${XSL}/odds/teixml-odds.xsl -
@@ -168,7 +168,7 @@ fascicule: subset
 	--stringparam displayMode rnc \
 	--stringparam outputDir . \
 	guidelines.xsl -
-	(cd FASC-$(CHAP)-Guidelines; for i in *.html; do perl -i ../Tools/cleanrnc.pl $$i;done)
+	(cd FASC-$(CHAP)-Guidelines; for i in *.html; do perl -i ../tools/cleanrnc.pl $$i;done)
 	-cp *.gif *.css FASC-$(CHAP)-Guidelines
 	-jing p5odds.rng FASC-$(CHAP).xml 
 	export H=`pwd`; \
@@ -177,7 +177,7 @@ fascicule: subset
 	--stringparam TEISERVER $(TEISERVER) \
 	--stringparam displayMode rnc \
 	$(XSL)/odds/teixml-odds.xsl FASC-$(CHAP).xml 
-	perl Tools/cleanrnc.pl FASC-$(CHAP)-lite.xml | \
+	perl tools/cleanrnc.pl FASC-$(CHAP)-lite.xml | \
 	xsltproc  \
 	 ${XSL}/teic/teilatex-teic-P5.xsl - > FASC-$(CHAP).tex
 	TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-$(CHAP) 
@@ -188,7 +188,7 @@ dist: clean dist-source dist-schema dist-doc dist-test dist-database dist-exempl
 dist-source: 
 	rm -rf release/tei-p5-source
 	mkdir -p release/tei-p5-source/share/xml/tei/odd
-	tar -c -f - --exclude "*~" --exclude CVS *.* VERSION ChangeLog Source Makefile Tools  \
+	tar -c -f - --exclude "*~" --exclude CVS *.* VERSION ChangeLog Source Makefile tools  \
 	| (cd release/tei-p5-source/share/xml/tei/odd; tar xf - )
 	(cd release; 	\
 	ln -s tei-p5-source tei-p5-source-`cat ../VERSION` ; \
