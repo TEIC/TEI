@@ -208,9 +208,9 @@ dist-schema: schemas dtds oddschema
 
 dist-doc:  html
 	rm -rf release/tei-p5-doc
-	mkdir -p release/tei-p5-doc/share/doc/tei/html
+	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc/html
 	(cd Guidelines; tar --exclude CVS -c -f - . ) \
-	| (cd release/tei-p5-doc/share/doc/tei/html; tar xf - )
+	| (cd release/tei-p5-doc/share/doc/tei-p5-doc/html; tar xf - )
 	(cd release; 	\
 	ln -s tei-p5-doc tei-p5-doc-`cat ../VERSION` ; \
 	zip -r tei-p5-doc-`cat ../VERSION`.zip tei-p5-doc-`cat ../VERSION` )
