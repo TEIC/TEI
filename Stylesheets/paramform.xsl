@@ -7,7 +7,7 @@
      xmlns:XSL="http://www.w3.org/1999/XSL/Transform" 
      version="1.0">
 
-<xsl:import href="release/tei-xsl/p4/html/tei.xsl"/>
+<xsl:import href="/usr/share/xml/teip4/stylesheet/html/tei.xsl"/>
 
 <xd:doc type="stylesheet">
     <xd:short>
