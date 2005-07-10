@@ -29,7 +29,8 @@ p5:
 
 
 release: doc p4 p5
-	cp *.css release/tei-xsl
+	cp *.css release/tei-xsl/p4
+	cp *.css release/tei-xsl/p5
 	mkdir -p release/tei-xsl/doc
 	cp -r doc/xsltdoc doc/*.png release/tei-xsl/doc
 	cp doc/*.css release/tei-xsl/doc/xsltdoc
