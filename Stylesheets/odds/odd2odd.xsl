@@ -172,8 +172,16 @@ because of the order of declarations
       <xsl:variable name="Local">
 	<List>
 	  <xsl:for-each select="document($localsource)/tei:TEI">
-	    <xsl:copy-of select="tei:*[@module=$K]"/>
-	    <xsl:copy-of select="tei:*[@module=$KD]"/>
+	    <xsl:for-each select="tei:*[@module=$K]">
+	      <xsl:element name="{local-name()}" xmlns="http://www.tei-c.org/ns/1.0">
+		<xsl:copy-of select="@*|*"/>
+	      </xsl:element>
+	    </xsl:for-each>
+	    <xsl:for-each select="tei:*[@module=$KD]">
+	      <xsl:element name="{local-name()}" xmlns="http://www.tei-c.org/ns/1.0">
+		<xsl:copy-of select="@*|*"/>
+	      </xsl:element>
+	    </xsl:for-each>
 	  </xsl:for-each>
 	</List>
       </xsl:variable>
@@ -195,27 +203,26 @@ because of the order of declarations
 </xsl:template>
 
 <xsl:template name="phase1a">
-  <xsl:for-each select="tei:elementSpec|tei:classSpec|tei:macroSpec">
-
-      <xsl:variable name="Current" select="."/>
-      <xsl:variable name="I" select="@ident"/>
-      <xsl:variable name="N" select="local-name(.)"/>
-      <xsl:for-each select="$ODD">
-	<xsl:choose>
-	  <xsl:when test="key('DELETE',$I)">
-	    <xsl:if test="$verbose='true'">
-	      <xsl:message>  Phase 3: remove <xsl:value-of
-	      select="$I"/></xsl:message>
-	    </xsl:if>
-	    <!--
-		<xsl:element name="{$N}" xmlns="http://www.tei-c.org/ns/1.0">
-		<xsl:attribute name="ident"><xsl:value-of select="$I"/></xsl:attribute>
-		<xsl:attribute name="mode">delete</xsl:attribute>
-		</xsl:element>
-	    -->
-	  </xsl:when>
-	  <xsl:when test="key('REPLACE',$I)">
-	    <xsl:if test="$verbose='true'">
+  <xsl:for-each select="*">
+    <xsl:variable name="Current" select="."/>
+    <xsl:variable name="I" select="@ident"/>
+    <xsl:variable name="N" select="local-name(.)"/>
+    <xsl:for-each select="$ODD">
+      <xsl:choose>
+	<xsl:when test="key('DELETE',$I)">
+	  <xsl:if test="$verbose='true'">
+	    <xsl:message>  Phase 3: remove <xsl:value-of
+	    select="$I"/></xsl:message>
+	  </xsl:if>
+	  <!--
+	      <xsl:element name="{$N}" xmlns="http://www.tei-c.org/ns/1.0">
+	      <xsl:attribute name="ident"><xsl:value-of select="$I"/></xsl:attribute>
+	      <xsl:attribute name="mode">delete</xsl:attribute>
+	      </xsl:element>
+	  -->
+	</xsl:when>
+	<xsl:when test="key('REPLACE',$I)">
+	  <xsl:if test="$verbose='true'">
 	      <xsl:message>  Phase 3: replace <xsl:value-of
 	      select="$I"/></xsl:message>
 	    </xsl:if>
@@ -232,8 +239,8 @@ because of the order of declarations
 	    <xsl:apply-templates select="$Current" mode="copy"/>
 	  </xsl:otherwise>
 	  </xsl:choose>
-	</xsl:for-each>
       </xsl:for-each>
+  </xsl:for-each>
 </xsl:template>
 
 <xsl:template match="@*|processing-instruction()|comment()|text()" mode="change">
