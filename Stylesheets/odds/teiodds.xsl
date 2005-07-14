@@ -433,11 +433,11 @@
       
       <xsl:choose>
 	<xsl:when test="not(@ns) or contains(@ns,'http://www.tei-c.org')">
-	  <rng:optional >
-	    <rng:attribute name="TEIform" a:defaultValue="{@ident}" >
-	      <text  xmlns="http://relaxng.org/ns/structure/1.0"/>
-	    </rng:attribute>
-	  </rng:optional>
+	  <optional xmlns="http://relaxng.org/ns/structure/1.0">
+	    <attribute name="TEIform" a:defaultValue="{@ident}" xmlns="http://relaxng.org/ns/structure/1.0">
+	      <text xmlns="http://relaxng.org/ns/structure/1.0"/>
+	    </attribute>
+	  </optional>
 	</xsl:when>
 	<xsl:otherwise>
 	  <!-- place holder to make sure something gets into the
@@ -466,7 +466,7 @@
 	    </rng:choice>
 	  </xsl:when>
 	  <xsl:when test="tei:content">
-	    <xsl:copy-of select="tei:content/*"/>
+	    <xsl:apply-templates select="tei:content/*"/>
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <rng:empty />

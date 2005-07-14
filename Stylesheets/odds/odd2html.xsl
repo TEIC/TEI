@@ -787,5 +787,26 @@
   </xsl:template>
   
 
+  <xsl:template match="rng:*">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:apply-templates select="rng:*|tei:*|text()|comment()"/>
+    </xsl:copy>
+  </xsl:template>
+  
+  <xsl:template match="rng:zeroOrMore">
+    <xsl:choose>
+      <xsl:when test="count(rng:*)=1 and rng:zeroOrMore">
+	<xsl:apply-templates select="rng:*|tei:*|text()|comment()"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:copy>
+	  <xsl:copy-of select="@*"/>
+	  <xsl:apply-templates select="rng:*|tei:*|text()|comment()"/>
+	</xsl:copy>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
 </xsl:stylesheet>
 
