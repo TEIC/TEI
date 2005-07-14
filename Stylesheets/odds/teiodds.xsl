@@ -466,7 +466,7 @@
 	    </rng:choice>
 	  </xsl:when>
 	  <xsl:when test="tei:content">
-	    <xsl:apply-templates select="tei:content/*"/>
+	    <xsl:copy-of select="tei:content/*"/>
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <rng:empty />
