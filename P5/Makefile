@@ -200,6 +200,7 @@ dist-schema: schemas dtds oddschema
 	mkdir -p release/tei-p5-schema/share/xml/tei/schema/relaxng
 	(cd DTD; tar --exclude CVS -c -f - .) \
 	| (cd release/tei-p5-schema/share/xml/tei/schema/dtd; tar xf - )
+	cp catalog.p5 release/tei-p5-schema/share/xml/tei/schema/catalog.xml
 	(cd Schema; tar --exclude CVS -c -f - .) \
 	| (cd release/tei-p5-schema/share/xml/tei/schema/relaxng; tar xf - )
 	(cd release; 	\

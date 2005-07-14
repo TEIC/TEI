@@ -25,6 +25,7 @@ dist: schemas
 	cp *.rnc *.rng *.mod ../release/tei-p5-exemplars/share/xml/tei/custom/schema/relaxng
 	cp *.doc.html ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/html
 	cp *.doc.xml  ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/xml
+	cp ../catalog.p5.custom ../release/tei-p5-exemplars/share/xml/tei/custom/schema/catalog.xml
 	(cd ../release; 	\
 	ln -s tei-p5-exemplars tei-p5-exemplars-`cat ../VERSION` ; \
 	zip -r tei-p5-exemplars-`cat ../VERSION`.zip tei-p5-exemplars-`cat ../VERSION` )
