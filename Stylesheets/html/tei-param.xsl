@@ -191,8 +191,10 @@ Make a separate file for footnotes
     <xd:detail> </xd:detail>
   </xd:doc>
 <xsl:template name="hdr">
-    <xsl:call-template name="pageHeader"/>
-  </xsl:template>
+  <xsl:call-template name="pageHeader">
+    <xsl:with-param name="mode"></xsl:with-param>
+  </xsl:call-template>
+</xsl:template>
 
 <xd:doc class="layout">
     <xd:short>[html] Navigation bar </xd:short>
@@ -308,7 +310,7 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</xd:detail>
     <xd:detail> </xd:detail>
   </xd:doc>
 <xsl:template name="pageHeader">
-<xsl:param name="mode"/>
+  <xsl:param name="mode"/>
     <xsl:choose>
       <xsl:when test="$mode='table'">
         <table width="100%" border="0">

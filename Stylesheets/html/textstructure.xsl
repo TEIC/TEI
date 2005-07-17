@@ -2275,8 +2275,8 @@ $ID: requests a particular page
         <xsl:call-template name="nextLink"/>
         <xsl:call-template name="previousLink"/>
         <xsl:call-template name="upLink">
-          <xsl:with-param name="h" select="concat($masterFile,$standardSuffix)"/>
-          <xsl:with-param name="u">
+          <xsl:with-param name="up" select="concat($masterFile,$standardSuffix)"/>
+          <xsl:with-param name="title">
             <xsl:call-template name="contentsWord"/>
           </xsl:with-param>
         </xsl:call-template>
@@ -2285,8 +2285,8 @@ $ID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:param name="up">up</xd:param>
-    <xd:param name="title">title</xd:param>
+    <xd:param name="up">the link to which "Up" goes</xd:param>
+    <xd:param name="title">the text of the link</xd:param>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template name="upLink">
