@@ -89,6 +89,7 @@
 <xd:doc>
     <xd:short>[latex] Analyze attributes of graphics inclusion</xd:short>
     <xd:detail>&#160;</xd:detail>
+    <xd:param name="mode">Type of output (fo, html, latex) being created</xd:param>
   </xd:doc>
   <xsl:template name="graphicsAttributes">
     <xsl:param name="mode">fo</xsl:param>

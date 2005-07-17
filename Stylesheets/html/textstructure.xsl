@@ -934,9 +934,7 @@ $ID: requests a particular page
         <xsl:call-template name="writeFrameToc"/>
       </xsl:when>
       <xsl:when test="$STDOUT='true'">
-        <xsl:call-template name="pageLayoutSimple">
-          <xsl:with-param name="base" select="$BaseFile"/>
-        </xsl:call-template>
+        <xsl:call-template name="pageLayoutSimple"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="outputChunk">
@@ -952,9 +950,7 @@ $ID: requests a particular page
             <xsl:value-of select="concat($BaseFile,'-frames')"/>
           </xsl:with-param>
           <xsl:with-param name="content">
-            <xsl:call-template name="pageLayoutSimple">
-              <xsl:with-param name="base" select="$BaseFile"/>
-            </xsl:call-template>
+            <xsl:call-template name="pageLayoutSimple"/>
           </xsl:with-param>
         </xsl:call-template>
         <xsl:apply-templates select="tei:TEI" mode="split"/>
@@ -2158,8 +2154,10 @@ $ID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>[html] Make a TOC section </xd:short>
-    <xd:param name="style">style</xd:param>
-    <xd:param name="id">id</xd:param>
+    <xd:param name="style">CSS style to use</xd:param>
+    <xd:param name="id">ID to link to</xd:param>
+    <xd:param name="force">whether to force a TOC entry even if other
+    rules would normally prevent it</xd:param>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template name="tocSection">
@@ -2358,7 +2356,6 @@ $ID: requests a particular page
             <xsl:value-of select="$class"/>
           </xsl:with-param>
           <xsl:with-param name="path" select="$rest"/>
-          <xsl:with-param name="spacer" select="$spacer"/>
           <xsl:with-param name="whole"><xsl:value-of select="$whole"/>/<xsl:value-of select="$current"/></xsl:with-param>
         </xsl:call-template>
       </xsl:when>

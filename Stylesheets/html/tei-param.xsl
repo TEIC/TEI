@@ -260,10 +260,12 @@ Width of left-hand column when $pageLayout is "Table"
 
 <xd:doc class="layout">
     <xd:short>[html] Making elements in HTML &lt;head&gt;</xd:short>
+    <xd:param name="title">The text used to create the DC.Title field
+    in the HTML header</xd:param>
     <xd:detail> </xd:detail>
   </xd:doc>
 <xsl:template name="metaHTML">
-<xsl:param name="title"/>
+  <xsl:param name="title"/>
     <meta name="author">
       <xsl:attribute name="content">
 	<xsl:call-template name="generateAuthor"/>
@@ -489,11 +491,6 @@ System Doctype of output file(s).
 Pass through input essentially unchanged
 </xd:doc>
 <xsl:param name="rawXML">false</xsl:param>
-
-<xd:doc type="string" class="output">
-Spacing character between items in a breadcrumb trail.
-</xd:doc>
-<xsl:param name="spacer">»</xsl:param>
 
 <xd:doc type="boolean" class="output">
 Break back matter into separate HTML pages (if splitting enabled).

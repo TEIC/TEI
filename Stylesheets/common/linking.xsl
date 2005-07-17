@@ -78,7 +78,8 @@
 </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6</xd:short>
-    <xd:param name="minimal">minimal</xd:param>
+    <xd:param name="minimal">whether to make a link with just numbers
+    or with text too</xd:param>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6" mode="xref"> 
@@ -133,9 +134,7 @@
     <xsl:when test="ancestor::tei:back">
       <xsl:if test="not($numberBackHeadings='')">
 	<xsl:value-of select="$appendixWords"/><xsl:text> </xsl:text>
-	<xsl:call-template name="numberBackDiv">
-	  <xsl:with-param name="minimal" select="$minimal"/>
-	</xsl:call-template>
+	<xsl:call-template name="numberBackDiv"/>
 	<xsl:if test="$minimal='false'">
 	  <xsl:value-of select="$numberSpacer"/>
 	</xsl:if>
@@ -143,9 +142,7 @@
     </xsl:when>
     <xsl:when test="ancestor::tei:front">
       <xsl:if test="not($numberFrontHeadings='')">
-	<xsl:call-template name="numberFrontDiv">
-	  <xsl:with-param name="minimal" select="$minimal"/>
-	</xsl:call-template>
+	<xsl:call-template name="numberFrontDiv"/>
 	<xsl:if test="$minimal='false'">
 	  <xsl:value-of select="$numberSpacer"/>
 	</xsl:if>
@@ -157,9 +154,7 @@
 	  <xsl:value-of select="@n"/>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:call-template name="numberBodyDiv">
-	    <xsl:with-param name="minimal" select="$minimal"/>
-	  </xsl:call-template>
+	  <xsl:call-template name="numberBodyDiv"/>
 	</xsl:otherwise>
       </xsl:choose>
       <xsl:if test="$minimal='false'">
@@ -210,7 +205,6 @@
     <xd:short>[common] Making a heading for something, and making sure
     it has contents</xd:short>
     <xd:param name="minimal">false</xd:param>
-    <xd:param name="toc">toc</xd:param>
     <xd:detail>This is a wrapper around the "header" template which
     ensures that some text is returned; if all else fails, the element
     name of used.</xd:detail>
