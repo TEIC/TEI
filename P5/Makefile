@@ -56,6 +56,7 @@ html-web: check
 	--stringparam outputDir . \
 	guidelines.xsl - 
 	-cp *.gif *.css Guidelines-web
+	-cp Source/*/*.png Guidelines
 	(cd Guidelines-web; for i in *.html; do perl -i ../tools/cleanrnc.pl $$i;done)
 
 html:check subset
@@ -69,8 +70,9 @@ html:check subset
 	--stringparam displayMode rnc \
 	--stringparam outputDir . \
 	tmp$$$$.xsl - && rm tmp$$$$.xsl)
-	(cd Guidelines; for i in *.html; do perl -i ../tools/cleanrnc.pl $$i;done)
 	-cp *.gif *.css Guidelines
+	-cp Source/*/*.png Guidelines
+	(cd Guidelines; for i in *.html; do perl -i ../tools/cleanrnc.pl $$i;done)
 
 xml: check subset
 	xmllint --noent   Source-driver.xml | perl tools/cleanrnc.pl | \
