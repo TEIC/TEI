@@ -295,7 +295,9 @@ because of the order of declarations
 	  <xsl:with-param name="K" select="@key"/>
 	</xsl:call-template>
       </xsl:for-each>
-      <xsl:copy-of select="tei:attList/tei:*"/>
+      <xsl:copy-of select="tei:attList/tei:attDef[not(@mode)]"/>
+      <xsl:copy-of select="tei:attList/tei:attRef"/>
+      <xsl:copy-of select="tei:attList/tei:attList"/>
     </tei:attList>
     <xsl:copy-of select="tei:exemplum"/>
     <xsl:copy-of select="tei:remarks"/>
@@ -730,7 +732,7 @@ so that is only put back in if there is some content
 		<xsl:with-param name="element" select="$I"/>
 		<xsl:with-param name="class" select="$K"/>
 		<xsl:with-param name="att" select="@ident"/>
-		<xsl:with-param name="Newl" select="."/>
+		<xsl:with-param name="original" select="$CURRENTCLASS"/>
 	      </xsl:call-template>
 	    </xsl:for-each>
 	  </xsl:when>
@@ -743,6 +745,7 @@ so that is only put back in if there is some content
 		  <xsl:with-param name="element" select="$I"/>
 		  <xsl:with-param name="class" select="$K"/>
 		  <xsl:with-param name="att" select="@ident"/>
+		  <xsl:with-param name="original" select="$CURRENTCLASS"/>
 		</xsl:call-template>
 	      </xsl:for-each>
 	    </xsl:for-each>
@@ -752,6 +755,7 @@ so that is only put back in if there is some content
 		  <xsl:with-param name="element" select="$I"/>
 		  <xsl:with-param name="class" select="$K"/>
 		  <xsl:with-param name="att" select="@ident"/>
+		  <xsl:with-param name="original" select="$CURRENTCLASS"/>
 		</xsl:call-template>
 	      </xsl:for-each>
 	    </xsl:for-each>
@@ -764,6 +768,7 @@ so that is only put back in if there is some content
 		  <xsl:with-param name="element" select="$I"/>
 		  <xsl:with-param name="class" select="$K"/>
 		  <xsl:with-param name="att" select="@ident"/>
+		  <xsl:with-param name="original" select="$CURRENTCLASS"/>
 		</xsl:call-template>
 	      </xsl:for-each>
 	    </xsl:for-each>
@@ -789,6 +794,7 @@ so that is only put back in if there is some content
   <xsl:param name="element"/>
   <xsl:param name="class"/>
   <xsl:param name="att"/>
+  <xsl:param name="original"/>
   <xsl:variable name="orig" select="."/>
   <xsl:variable name="A" select="@ident"/>
   <xsl:variable name="lookingAt">
@@ -806,7 +812,33 @@ so that is only put back in if there is some content
 	</xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-	<tei:attRef class="{$class}" key="{translate($att,':','')}"/>
+	<xsl:for-each select="$original">
+	  <xsl:choose>
+	    <xsl:when test="key('DELETEATT',$lookingAt)"/>
+	    <xsl:when test="key('REPLACEATT',$lookingAt)">
+	      <xsl:comment>element replacement of class attribute named <xsl:value-of 
+		  select="$att"/></xsl:comment>
+	      <xsl:for-each select="key('REPLACEATT',$lookingAt)">
+		<tei:attDef name="{$att}">
+		  <xsl:copy-of select="@usage"/>
+		  <xsl:copy-of select="tei:*"/>
+		</tei:attDef>
+	      </xsl:for-each>
+	    </xsl:when>
+	    <xsl:when test="key('CHANGEATT',$lookingAt)">
+	      <xsl:comment>element override of class attribute named <xsl:value-of 
+		  select="$att"/></xsl:comment>
+	      <xsl:call-template name="mergeAttribute">
+		<xsl:with-param name="New" select="key('CHANGEATT',$lookingAt)"/>
+		<xsl:with-param name="Old" select="$orig"/>
+	      </xsl:call-template>
+	    </xsl:when>
+	    <xsl:otherwise>
+		<tei:attRef class="{$class}"
+			    key="{translate($att,':','')}"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:for-each>
@@ -927,10 +959,10 @@ so that is only put back in if there is some content
       <xsl:choose>
 	<xsl:when test="tei:valDesc">
 	  <xsl:copy-of select="tei:valDesc"/>
-	</xsl:when>
-	<xsl:when test="$Old/tei:valDesc">
-	  <xsl:copy-of select="$Old/tei:valDesc"/>
-	</xsl:when>
+	  </xsl:when>
+	  <xsl:when test="$Old/tei:valDesc">
+	    <xsl:copy-of select="$Old/tei:valDesc"/>
+	  </xsl:when>
       </xsl:choose>
       <xsl:choose>
 	<xsl:when test="tei:valList[@mode='add' or @mode='replace']">
