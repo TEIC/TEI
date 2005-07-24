@@ -154,9 +154,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:sp</xd:short>
-    <xd:detail>
-      <xsl:text>&#10;\par&#10;</xsl:text> elaborated by Nick  Nicholas &lt;nicholas@uci.edu&gt;, March 2001 
-    </xd:detail>
+    <xd:detail></xd:detail>
   </xd:doc>
   <xsl:template match="tei:sp">
     \begin{description}

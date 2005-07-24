@@ -1036,7 +1036,7 @@
       <xsl:variable name="parent">
         <xsl:call-template name="locateParentdiv"/>
       </xsl:variable>
-      <xsl:if test="$verbose">
+      <xsl:if test="$verbose='true'">
         <xsl:message>Note <xsl:value-of select="$identifier"/> with parent <xsl:value-of select="$parent"/></xsl:message>
       </xsl:if>
       <div class="note">
@@ -1566,10 +1566,12 @@ by Nick Nicholas </p>
       <xsl:with-param name="value" select="concat(@rend,$rendSeparator)"/>
     </xsl:call-template>
   </xsl:template>
+
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:param name="rend">rend</xd:param>
-    <xd:param name="rest">rest</xd:param>
+    <xd:param name="value">the current segment of the value of the
+    rend attribute</xd:param>
+    <xd:param name="rest">the remainder of the attribute</xd:param>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template name="renderingInner">
