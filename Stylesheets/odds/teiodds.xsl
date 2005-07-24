@@ -960,9 +960,6 @@
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:when>
-    <xsl:when test="tei:datatype/rng:*">
-      <xsl:apply-templates select="tei:datatype/rng:*" mode="forceRNG"/>
-    </xsl:when>
     <xsl:when test="tei:valList[@type='closed']">
       <choice xmlns="http://relaxng.org/ns/structure/1.0">
 	<xsl:for-each select="tei:valList/tei:valItem">
@@ -977,6 +974,9 @@
 	  </xsl:if>
 	</xsl:for-each>
       </choice>
+    </xsl:when>
+    <xsl:when test="tei:datatype/rng:*">
+      <xsl:apply-templates select="tei:datatype/rng:*" mode="forceRNG"/>
     </xsl:when>
     <xsl:otherwise>
       <text xmlns="http://relaxng.org/ns/structure/1.0"/>
