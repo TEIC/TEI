@@ -840,7 +840,17 @@ So, at the first, process the second; at the second, do nothing.
   <xsl:text> </xsl:text>
     <xsl:variable name="Contents">
       <BLAH>
-	<xsl:apply-templates select="tei:content/rng:*" />
+	<xsl:choose>
+	  <xsl:when test="tei:content/tei:valList[@type='closed']">
+	    <xsl:text> (#PCDATA)</xsl:text>
+	  </xsl:when>
+	  <xsl:when test="tei:content">
+	    <xsl:apply-templates select="tei:content/*"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:text></xsl:text>
+	  </xsl:otherwise>
+	</xsl:choose>
       </BLAH>
     </xsl:variable>
     <xsl:choose>
