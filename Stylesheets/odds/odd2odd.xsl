@@ -44,10 +44,8 @@
   <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
   <xsl:param name="localsource"/>
   
-  <xsl:key name="IDS"     match="tei:*[@xml:id]"  use="@xml:id"/>
-
-  <xsl:key name="IDENTS"   match="List/tei:classSpec"   use="@ident"/>
-  <xsl:key name="IDENTS"   match="tei:TEI/tei:classSpec[(@type='atts' or @type='both') and not(@ident='tei.TEIform')]"   use="@ident"/>
+  <xsl:key name="IDS" match="tei:*[@xml:id]"  use="@xml:id"/>
+  <xsl:key name="IDENTS"  match="tei:classSpec[(@type='atts' or @type='both') and not(@ident='tei.TEIform')]"   use="@ident"/>
 
   <xsl:key name="DELETEATT" match="tei:attDef[@mode='delete']"
 	   use="concat(../../@ident,'_',@ident)"/>
@@ -1056,22 +1054,71 @@ so that is only put back in if there is some content
 </xsl:template>
 
 <xsl:template match="tei:specGrp">
-<tei:list>
-  <xsl:for-each select="tei:*">
-  <tei:item>Specification for <xsl:value-of
-  select="substring-before(name(.),'Spec')"/>
-  <xsl:text> </xsl:text>
-  <tei:ref target="#{@ident}">
+<xsl:choose>
+  <xsl:when test="ancestor::tei:schemaSpec">
+    <tei:list>
+      <xsl:for-each select="tei:*">
+	<tei:item>Specification for <xsl:value-of
+	select="substring-before(name(.),'Spec')"/>
+	<xsl:text> </xsl:text>
+	<tei:ref target="#{@ident}">
     <tei:ident><xsl:value-of select="@ident"/></tei:ident>
-  </tei:ref>
-  </tei:item>
-  </xsl:for-each>
-</tei:list>
+	</tei:ref>
+	</tei:item>
+      </xsl:for-each>
+    </tei:list>
+  </xsl:when>
+  <xsl:otherwise>
+    <xsl:copy>
+      <xsl:apply-templates/>
+    </xsl:copy>
+  </xsl:otherwise>
+</xsl:choose>
 </xsl:template>
 
 <xsl:template match="tei:specGrpRef"/>
 
-<xsl:template match="tei:elementSpec|tei:macroSpec|tei:classSpec"/>
+<xsl:template match="tei:macroSpec|tei:classSpec">
+  <xsl:if test="not(ancestor::tei:schemaSpec)">
+    <xsl:copy-of select="."/>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template match="tei:attDef[@mode]"/>
+
+<xsl:template match="tei:elementSpec">
+  <xsl:if test="not(ancestor::tei:schemaSpec)">
+    <xsl:variable name="I">
+      <xsl:value-of select="@ident"/>
+    </xsl:variable>
+    <xsl:copy>
+      <xsl:apply-templates select="@*" mode="copy"/>
+      <xsl:copy-of select="tei:altIdent"/>
+      <xsl:copy-of select="tei:equiv"/>
+      <xsl:copy-of select="tei:gloss"/>
+      <xsl:copy-of select="tei:desc"/>
+      <xsl:copy-of select="tei:classes"/>
+      <xsl:apply-templates select="tei:content" mode="copy"/>
+      <tei:attList>
+	<xsl:call-template name="classAttributesSimple">
+	  <xsl:with-param name="I" select="@ident"/>
+	  <xsl:with-param name="K" select="'tei.global'"/>
+	</xsl:call-template>
+	<xsl:for-each select="tei:classes/tei:memberOf"> 
+	  <xsl:message>Look at class 	  <xsl:value-of select="@key"/></xsl:message>
+	  <xsl:call-template name="classAttributesSimple">
+	    <xsl:with-param name="I" select="$I"/>
+	    <xsl:with-param name="K" select="@key"/>
+	  </xsl:call-template>
+	</xsl:for-each>
+	<xsl:apply-templates select="tei:attList"/>
+      </tei:attList>
+      <xsl:copy-of select="tei:exemplum"/>
+      <xsl:copy-of select="tei:remarks"/>
+      <xsl:copy-of select="tei:listRef"/>
+  </xsl:copy>
+  </xsl:if>
+</xsl:template>
 
 <xsl:template match="tei:moduleRef[@url]">
 <p>Include external module <xsl:value-of select="@url"/>.</p>  
@@ -1093,5 +1140,34 @@ and expanded.</p>
   </xsl:copy>
 </xsl:template>
 
+<xsl:template name="classAttributesSimple">
+  <xsl:param name="I"/>
+  <xsl:param name="K"/>
+  <xsl:for-each select="key('IDENTS',$K)">    
+    <xsl:variable name="CURRENTCLASS" select="."/>
+    <xsl:for-each select="tei:attList/tei:attDef">
+<!--
+<xsl:message>looking at <xsl:value-of select="$I"/> + <xsl:value-of
+select="$K"/> + <xsl:value-of select="@ident"/></xsl:message>
+-->
+      <xsl:call-template name="mergeClassAttribute">
+	<xsl:with-param name="element" select="$I"/>
+	<xsl:with-param name="class" select="$K"/>
+	<xsl:with-param name="att" select="@ident"/>
+	<xsl:with-param name="original" select="$CURRENTCLASS"/>
+      </xsl:call-template>
+    </xsl:for-each>
+  </xsl:for-each>
+  <xsl:if test="tei:classes/tei:memberOf">
+    <xsl:for-each select="tei:classes/tei:memberOf">
+      <xsl:variable name="K" select="@key"/>
+      <xsl:call-template name="classAttributesSimple">
+	<xsl:with-param name="I" select="$I"/>
+	<xsl:with-param name="K" select="$K"/>
+      </xsl:call-template>
+    </xsl:for-each>
+  </xsl:if>
+
+</xsl:template>
 
 </xsl:stylesheet>
