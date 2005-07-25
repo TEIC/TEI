@@ -452,9 +452,9 @@
     <xsl:variable name="Contents">
       <BLAH>
 	<xsl:choose>
-	  <xsl:when test="tei:valList[@type='closed']">
+	  <xsl:when test="tei:content/tei:valList[@type='closed']">
 	    <rng:choice >
-	      <xsl:for-each select="tei:valList/tei:valItem">  
+	      <xsl:for-each select="tei:content/tei:valList/tei:valItem">  
 		<rng:value ><xsl:value-of select="@ident"/></rng:value>
 		<xsl:if test="not($oddmode='tei')">
 		  <a:documentation>
