@@ -32,7 +32,9 @@ schemas:check
 	-mkdir Schema
 	-rm Schema/*
 	# generate the relaxNG schemas
-	xmllint --noent   Source-driver.xml | xsltproc -stringparam verbose true ${XSL}/odds/odd2relax.xsl -
+	xmllint --noent   Source-driver.xml | \
+	xsltproc ${XSL}/odds/odd2odd.xsl - | \
+	xsltproc -stringparam verbose true ${XSL}/odds/odd2relax.xsl -
 	# do the indentation better 
 	for i in Schema/* ; \
 	do echo clean $$i; \
@@ -65,7 +67,7 @@ html:check subset
 	(perl -p -e "s+http://www.tei-c.org/stylesheet+${XSL}+" guidelines-print.xsl > tmp$$$$.xsl; \
 	xmllint --noent    Source-driver.xml | xsltproc \
 	-o Guidelines/index.html \
-	--stringparam TEISERVER $(TEISERVER) \
+	--stringparam localsource `pwd`/p5subset.xml \
 	--stringparam cssFile tei-print.css \
 	--stringparam displayMode rnc \
 	--stringparam outputDir . \
@@ -78,14 +80,14 @@ xml: check subset
 	xmllint --noent   Source-driver.xml | perl tools/cleanrnc.pl | \
 	xsltproc  -o Guidelines.xml \
 	--stringparam displayMode rnc  \
-	${XSL}/odds/teixml-odds.xsl -
+	${XSL}/odds/odd2lite.xsl -
 	@echo Success. Created Guidelines.xml
 
 pdf: xml
 	@echo Checking you have a running pdfLaTeX before trying to make PDF...
 	which pdflatex || exit 1
 	test -d /TEI/Talks/texconfig || exit 1
-	xsltproc ${XSL}/../teic/teilatex-teic-P5.xsl Guidelines.xml \
+	xsltproc ${XSL}/../teic/teilatex-teic.xsl Guidelines.xml \
 	> Guidelines.tex
 	TEXINPUTS=/TEI/Talks/texconfig: pdflatex Guidelines
 	TEXINPUTS=/TEI/Talks/texconfig: pdflatex Guidelines
@@ -163,8 +165,7 @@ fascicule: subset
 	cat fasc-head.xml `find Source -name $(CHAP).odd` fasc-tail.xml > FASC-$(CHAP).xml
 	export H=`pwd`; xmllint --noent    FASC-$(CHAP).xml | xsltproc \
 	-o FASC-$(CHAP)-Guidelines/index.html \
-	--stringparam localsource $$Hsubset.xml \
-	--stringparam TEISERVER $(TEISERVER) \
+	--stringparam localsource `pwd`/p5subset.xml \
 	--stringparam cssFile tei.css \
 	--stringparam verbose true \
 	--stringparam displayMode rnc \
@@ -175,13 +176,12 @@ fascicule: subset
 	-jing p5odds.rng FASC-$(CHAP).xml 
 	export H=`pwd`; \
 	xsltproc -o FASC-$(CHAP)-lite.xml  \
-	--stringparam localsource $$Hsubset.xml \
-	--stringparam TEISERVER $(TEISERVER) \
+	--stringparam localsource `pwd`/p5subset.xml \
 	--stringparam displayMode rnc \
-	$(XSL)/odds/teixml-odds.xsl FASC-$(CHAP).xml 
+	$(XSL)/odds/odd2lite.xsl FASC-$(CHAP).xml 
 	perl tools/cleanrnc.pl FASC-$(CHAP)-lite.xml | \
 	xsltproc  \
-	 ${XSL}/teic/teilatex-teic-P5.xsl - > FASC-$(CHAP).tex
+	 ${XSL}/teic/teilatex-teic.xsl - > FASC-$(CHAP).tex
 	TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-$(CHAP) 
 	TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-$(CHAP) 
 
