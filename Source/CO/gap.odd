@@ -4,27 +4,27 @@ Licensed under the GNU General Public License.
 
 See the file COPYING for details.
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="GAP" usage="opt" ident="gap">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+             module="core" xml:id="GAP" usage="opt" ident="gap">
 <equiv/>
 <gloss>omitted material</gloss>
 <desc>indicates a point where material has been omitted in a
 transcription, whether for editorial reasons described in the TEI
 header, as part of sampling practice, or because the material is
 illegible or inaudible.</desc>
-  
-  
   <classes>
     <memberOf key="tei.editIncl"/>
   </classes>
   <content>
-    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+<rng:optional>
+<rng:ref name="desc"/>
+</rng:optional>
   </content>
   <attList>
-    <attDef ident="desc" usage="opt">
+<!--    <attDef ident="desc" usage="opt">
 	<equiv/>
 	<desc>gives a description of the omitted text.</desc>
-      
-      
       <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
       <valDesc>a prose description of the material omitted.</valDesc>
       
@@ -32,16 +32,13 @@ illegible or inaudible.</desc>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
     </attDef>
-    <attDef ident="reason" usage="opt">
+-->    <attDef ident="reason" usage="opt">
 	<equiv/>
 	<desc>gives the reason for omission.  Sample values include
 <mentioned>sampling</mentioned>, <mentioned>illegible</mentioned>, <mentioned>inaudible</mentioned>,
 <mentioned>irrelevant</mentioned>, <mentioned>cancelled</mentioned>, <mentioned>cancelled and illegible</mentioned>.</desc>
-      
-      
       <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
       <valDesc>any short indication of the reason for the omission.</valDesc>
-      
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
@@ -51,14 +48,11 @@ illegible or inaudible.</desc>
 	<desc>indicates the editor, transcriber or encoder responsible for
 the decision not to provide any transcription of the text and hence
 the application of the <gi>gap</gi> tag.</desc>
-      
-      
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
       <valDesc>must be one of the identifiers declared in the document
 header, associated with a person asserted as responsible for some
 aspect of the text's creation, transcription, editing, or encoding
 (see chapter <ptr target="#CE"/>).</valDesc>
-      
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
@@ -68,12 +62,9 @@ aspect of the text's creation, transcription, editing, or encoding
 	<desc>in the case of text omitted from the transcription because of
 deliberate deletion by an identifiable hand, signifies the hand which
 made the deletion.</desc>
-      
-      
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
       <valDesc>must be one of the hand identifiers declared in the document
 header (see section <ptr target="#PHDH"/>).</valDesc>
-      
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
@@ -83,11 +74,8 @@ header (see section <ptr target="#PHDH"/>).</valDesc>
 	<desc>In the case of text omitted from the transcription because of
 damage or other phenomenon  resulting from an identifiable cause,
 signifies the causative agent.</desc>
-      
-      
       <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
       <valDesc>any prose description of the agency of damage.</valDesc>
-      
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
@@ -98,11 +86,8 @@ signifies the causative agent.</desc>
 transcription, in letters, minims, inches, or any appropriate unit,
 either because of editorial policy or because a deletion, damage, or
 other cause has rendered transcription impossible.</desc>
-      
-      
       <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
       <valDesc>any string of characters</valDesc>
-      
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
