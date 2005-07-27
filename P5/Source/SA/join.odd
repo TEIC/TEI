@@ -4,19 +4,21 @@ Licensed under the GNU General Public License.
 
 See the file COPYING for details.
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" xml:id="JOIN" usage="opt" ident="join">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" 
+  xmlns:rng="http://relaxng.org/ns/structure/1.0"
+  module="linking" xml:id="JOIN" usage="opt" ident="join">
 <equiv/>
 <gloss/>
 <desc>identifies a possibly fragmented segment of text, by pointing
 at the possibly discontiguous elements which compose it.</desc>
-  
-  
   <classes>
     <memberOf key="tei.pointer"/>
     <memberOf key="tei.metadata"/>
   </classes>
   <content>
-    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+    <rng:optional>
+     <rng:ref name="desc" />
+    </rng:optional>
   </content>
   <attList>
     <attDef ident="targets" usage="req">
@@ -24,63 +26,49 @@ at the possibly discontiguous elements which compose it.</desc>
 	<desc>specifies the identifiers of the elements or passages
        to be joined into a virtual
        element.</desc>
-      
-      
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/></datatype>
       <valDesc>one or more
        valid identifiers, separated by white space.</valDesc>
-      
     </attDef>
     <attDef ident="result" usage="opt">
 	<equiv/>
 	<desc>specifies the name of an element
 which this aggregation
 may be understood to represent.</desc>
-      
-      
       <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
       <valDesc>The generic identifier of an element in the current DTD.</valDesc>
-      
     </attDef>
-    <attDef ident="desc" usage="opt">
+<!--    <attDef ident="desc" usage="opt">
 	<equiv/>
 	<desc>a brief phrase describing the virtual element created by the join.</desc>
-      
-      
       <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
       <valDesc>any string of characters.</valDesc>
-      
       <remarks>
         <p>The <att>desc</att> attribute may be used to give a
 brief description of the virtual element, if its content or function
 are not obvious.</p>
       </remarks>
-    </attDef>
+    </attDef>-->
     <attDef ident="scope" usage="rec">
 	<equiv/>
 	<desc>indicates whether the targets to be joined include the
 entire element indicated (the entire subtree including its root),
 or just the children of the target (the branches of the subtree).</desc>
-      
-      
       <defaultVal>root</defaultVal>
       <valList type="closed">
         <valItem ident="root">
-          
           <equiv/>
           <gloss>the rooted subtrees indicated by the targets
 attribute are joined, each subtree become a child of the virtual
 element created by the join</gloss>
         </valItem>
         <valItem ident="branches">
-          
           <equiv/>
           <gloss>the children of the subtrees indicated by the
 targets attribute become the children of the virtual element
 (i.e. the roots of the subtrees are discarded)</gloss>
         </valItem>
       </valList>
-      
       <remarks>
         <p>In this example, the text contains a list of authors of
 articles in a journal; the <gi>join</gi> element is used to
@@ -89,7 +77,6 @@ Heidelberg.</p>
       </remarks>
     </attDef>
   </attList>
-  
   <exemplum>
     <p>The following example is discussed in section <ptr target="#SAAG"/>:</p>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><sp who="#frog_hughie">
@@ -115,7 +102,7 @@ Heidelberg.</p>
     <l xml:id="frog_l3">It's a new pond.</l>
     </q>
   </p>
-  <join targets="#frog_l1 #frog_l2 #frog_l3" result="lg" desc="haiku" scope="root"/>
+  <join targets="#frog_l1 #frog_l2 #frog_l3" result="lg" scope="root"/>
 </sp>
 </egXML>
 <!-- a famous haiku by Bashoo, in an eccentric translation -->
@@ -140,7 +127,12 @@ list:</p>
   <list xml:id="LP1"><item><s>I done gone</s></item><item><s>I done went</s></item></list> whereas Negro Non-Standard basilect has both these and
   <list xml:id="LP2"><item><s>I done go</s></item></list>.</p><p>White Southern dialect also has
   <list xml:id="LP3"><item><s>I've done gone</s></item><item><s>I've done went</s></item></list> which, when they occur in Negro dialect, should probably 
-   be considered as borrowings from other varieties of English.</p><join result="list" xml:id="LST1" targets="#LP1 #LP2 #LP3" scope="branches" desc="Sample sentences in Southern speech"/></egXML>
+   be considered as borrowings from other varieties of
+   English.</p>
+<join result="list" xml:id="LST1" targets="#LP1 #LP2 #LP3" 
+   scope="branches">
+ <desc>Sample sentences in Southern speech</desc>
+</join></egXML>
   </exemplum>
   <remarks/>
   <listRef>
