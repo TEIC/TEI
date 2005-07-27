@@ -2274,7 +2274,8 @@ come from Heidelberg:
    <item xml:id="a_ms">Samiec, Monika </item>
    <item xml:id="a_ss">Schierholz, Stefan </item>
 </list>
-<join targets="#a_ch #a_bp #a_ss" result="list"/></egXML></p>
+<join targets="#a_ch #a_bp #a_ss" result="list">
+<desc>Authors from Heidelberg</desc></join></egXML></p>
 <p>The following example shows how <gi>join</gi> can be used to
 reconstruct a text cited in fragments presented out of order. The poem
 being remembered (an unusual translation of a well known poem by Basho)
@@ -2303,7 +2304,7 @@ runs <q>When the old pond / gets a new frog, / it's a new pond.</q></p>
     <l xml:id="frog-l3">It's a new pond.</l>
     </q>
   </p>
-  <join targets="#frog-l1 #frog-l2 #frog-l3" result="lg" desc="haiku" scope="root"/>
+  <join targets="#frog-l1 #frog-l2 #frog-l3" result="lg" scope="root"/>
 </sp>
 </egXML>
 
@@ -2371,11 +2372,14 @@ spoken by each voice:
 represent the complete speech attributed to each voice:
  
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><joinGrp result="q">
-   <join targets="#zuiq1 #zuiq2 #zuiq4 #zuiq7" desc="what Zui-Gan said"/>
-   <join targets="#zuiq3 #zuiq5 #zuiq6" desc="what Master said"/>
+   <join targets="#zuiq1 #zuiq2 #zuiq4 #zuiq7">
+    <desc>what Zui-Gan said</desc></join>
+   <join targets="#zuiq3 #zuiq5 #zuiq6"> 
+     <desc>what Master said</desc></join>
 </joinGrp></egXML></p>
-<p>Note the use of the <att>desc</att> attribute to supply a
-descriptive name to distinguish the two virtual <gi>q</gi> elements
+<p>Note the use of the <gi>desc</gi> child element within the two
+<gi>join</gi>s making up the <gi>q</gi> element here. These enable us
+to  document the speakers of the two virtual <gi>q</gi> elements
 represented by the <gi>join</gi> elements; this is necessary because the
 current proposals do not allow for any way of specifying the attributes
 to be associated with a virtual element, and hence we cannot specify a
@@ -2407,8 +2411,10 @@ or <ptr target="#SATS"/>. The <att>xml:id</att> attributes of
       <ptr xml:id="rzuiq7" target="./#xpath(//div0[2]/div1[6]/p[6]/q[1])"/>
       
       <joinGrp evaluate="one" result="q">
-        <join targets="#rzuiq1 #rzuiq2 #rzuiq4 #rzuiq7" desc="what Zui-Gan said"/>
-        <join targets="#rzuiq3 #rzuiq5 #rzuiq6"         desc="what Master said"/>
+        <join targets="#rzuiq1 #rzuiq2 #rzuiq4 #rzuiq7">
+         <desc>what Zui-Gan said</desc></join>
+        <join targets="#rzuiq3 #rzuiq5 #rzuiq6">
+          <desc>what Master said</desc></join>
       </joinGrp>
     </ab>
   </body>
