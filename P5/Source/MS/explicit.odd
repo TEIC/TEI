@@ -7,24 +7,23 @@ See the file COPYING for details.
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="EXPLICIT" ident="explicit">
 <equiv/>
 <gloss/>
-<desc xml:id="explicit.desc">contains the text of the <term>explicit</term>, that is, the closing words of a text or a section of a text, possibly followed by one or more final rubrics or colophons.
+<desc xml:id="explicit.desc">contains the text of any <term>explicit</term> attached 
+to a particular manuscript item, that is, the closing words of a text or a section of
+a text, sometimes used as a kind of title,  possibly followed by one or more rubrics or colophons.
   </desc>
-  
   <classes>
     <memberOf key="tei.msItemPart"/>
   </classes>
-  
   <content>
-<!--<!ELEMENT explicit  - -  ( %phrase.seq;)>-->
     <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
   </content>
   <attList>
     <attDef ident="defective">
 	<equiv/>
 	<gloss/>
-	<desc>indicates whether the explicit as given is defective, i.e. the final words of the text as preserved, as opposed to what the closing words would have been had the text of the work been whole.</desc>
+	<desc>indicates whether the explicit as given is defective, i.e. incomplete.</desc>
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.UBoolean"/></datatype>
-      <valDesc>true, false, unknown, or unspecified</valDesc>
+      <valDesc>Yes, No, Unknown, or Unspecified</valDesc>
     </attDef>
     <attDef ident="type">
 	<equiv/>
@@ -32,21 +31,17 @@ See the file COPYING for details.
 	<desc>specifies the type of explicit, e.g. whether it is a formal closing for the
 work.</desc>
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Key"/></datatype>
-      
       <valDesc>A typology has yet to be defined</valDesc>
     </attDef>
   </attList>
-  
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0"><![CDATA[<explicit>sed libera nos a malo.</explicit>
-<rubric>Hic explicit oratio qui dicitur dominica.</rubric>
-
+<rubric>Hic explicit oratio qui
+dicitur dominica.</rubric>
 <explicit type="defective">ex materia quasi et forma sibi 
-proporti<gap></explicit>
-
+proporti<gap/></explicit>
 <explicit type="reverse">saued be shulle that doome of day the at 
 </explicit>
-
 ]]></egXML>
   </exemplum>
   <listRef>
