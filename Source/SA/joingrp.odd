@@ -4,7 +4,9 @@ Licensed under the GNU General Public License.
 
 See the file COPYING for details.
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" xml:id="JOINGRP" usage="opt" ident="joinGrp">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+            module="linking" xml:id="JOINGRP" usage="opt" ident="joinGrp">
   <equiv/>
   <gloss>join group</gloss>
   <desc>groups a collection of join elements and possibly
@@ -14,15 +16,17 @@ See the file COPYING for details.
     <memberOf key="tei.metadata"/>
   </classes>
   <content>
-    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:optional>
+       <rng:ref name="desc"/>
+    </rng:optional>
+    <rng:oneOrMore>
       <rng:choice>
         <rng:ref name="join"/>
         <rng:ref name="ptr"/>
       </rng:choice>
-    </rng:zeroOrMore>
+    </rng:oneOrMore>
   </content>
   <attList>
-
     <attDef ident="result" usage="opt">
       <equiv/>
       <desc>describes the result of the joins gathered in this collection.</desc>
@@ -30,7 +34,7 @@ See the file COPYING for details.
       <valDesc>supplies the default value for the <att>result</att> on
       each <gi>join</gi> included within the group.</valDesc>
     </attDef>
-
+<!--
     <attDef ident="desc" usage="opt">
       <equiv/>
       <desc>a brief phrase describing the virtual elements created by
@@ -44,7 +48,7 @@ See the file COPYING for details.
 	obvious.</p>
       </remarks>
     </attDef>
-
+-->
   </attList>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">      <joinGrp domains="#zuitxt #zuitxt #zuitxt" result="q">
