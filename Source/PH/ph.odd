@@ -482,11 +482,14 @@ insertions, be they authorial or scribal. In the autograph manuscript
 of Max Beerbohm's <title>The Golden Drugget</title>,<note place="foot">In
   Pierpont Morgan MA 3391 (Klinkenborg 123).</note>
 the author's addition of "do ever" may be recorded as follows, with the
-<att>hand</att> attribute indicating that the addition was Beerbohm's:
+<att>hand</att> attribute indicating that the addition was Beerbohm's
+by referencing a <gi>hand</gi> element defined elsewhere in the document:
  
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Some things are best at first sight. Others &#x2014; and
-here is one of them &#x2014; <add hand="mb">do ever</add>
-improve by recognition</egXML>
+here is one of them &#x2014; <add hand="#mb">do ever</add>
+improve by recognition ....
+<hand xml:id="mb" scribe="Max Beerbohm holograph"/>
+</egXML>
  
 Similarly, the <gi>del</gi> element indicating material deleted may be
 used to signify manuscript deletions. In the autograph manuscript of D.
@@ -497,8 +500,12 @@ Morgan MA 1892, (Klinkenborg 129).</note>, the author's deletion of
 the <att>rend</att> attribute indicates that the deletion was by
 strike-through:
  
-<egXML xmlns="http://www.tei-c.org/ns/Examples">For I hate this <del rend="strikethrough" hand="dhl">my</del> body,
-which is so dear to me</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">For I hate this <del rend="strikethrough" hand="#dhl">my</del> body,
+which is so dear to me
+...
+<hand xml:id="dhl" type="holograph"/>
+</egXML>
+
  
 If deletions are classified systematically, the <att>type</att>
 attribute should normally
@@ -656,8 +663,8 @@ This substitution could be registered using the second method outlined
 above, using the <gi>del</gi> and <gi>add</gi> elements in sequence to
 reflect the fact that text was first deleted then other text inserted:
  
-<egXML xmlns="http://www.tei-c.org/ns/Examples">How it <del type="overstrike" hand="dhl">galls</del>
-<add place="supralinear" hand="dhl">dogs</add>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">How it <del type="overstrike" hand="#dhl">galls</del>
+<add place="supralinear" hand="#dhl">dogs</add>
 me, what a galling shadow</egXML>
  
 This substitution could be registered using the third method outlined
@@ -669,8 +676,8 @@ the <att>hand</att> attribute is moved from the inner <gi>del</gi> and
  
 <egXML xmlns="http://www.tei-c.org/ns/Examples">How it
   <app>
-    <rdg hand="dhl"> <del type="overstrike"> galls</del> </rdg>
-    <rdg hand="dhl"> <add place="supralinear"> dogs</add> </rdg>
+    <rdg hand="#dhl"> <del type="overstrike"> galls</del> </rdg>
+    <rdg hand="#dhl"> <add place="supralinear"> dogs</add> </rdg>
   </app>
 me, what a galling shadow</egXML>
  
@@ -709,8 +716,8 @@ the exact sequence of readings may also be declared by use of the
  
 <egXML xmlns="http://www.tei-c.org/ns/Examples">How it
   <app>
-    <rdg varSeq="1" hand="dhl"> <del>galls</del> </rdg>
-    <rdg varSeq="2" hand="dhl"> <add>dogs</add> </rdg>
+    <rdg varSeq="1" hand="#dhl"> <del>galls</del> </rdg>
+    <rdg varSeq="2" hand="#dhl"> <add>dogs</add> </rdg>
   </app>
 me, what a galling shadow</egXML>
  
@@ -799,7 +806,7 @@ then restored by writing <q>stet</q> in the margin.  This may be
 encoded:
  
 <egXML xmlns="http://www.tei-c.org/ns/Examples">For I hate this
-<restore hand="dhl" desc="marginal &#34;stet&#34;"><del>my</del></restore>
+<restore hand="#dhl" desc="marginal &#34;stet&#34;"><del>my</del></restore>
 body</egXML></p>
 
 <p>The <gi>restore</gi> element is defined as follows:
@@ -808,24 +815,7 @@ body</egXML></p>
 
 
 &restore.odd;
-
-
-
-
-
-
-
-
-
-
 </specGrp>
- 
-
-	
-	
-	
-	
-	
 	</p></div3>
 <div3 type="subsection" xml:id="PHOM"><head>Text Omitted from or Supplied in the Transcription</head>
 <p>Where text is not transcribed, whether because of damage to the
@@ -844,12 +834,12 @@ the Beerbohm manuscript of <title>The Golden Drugget</title> cited
 above, for example, the author has erased several passages by inking
 them over completely:
  
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Others <gap reason="cancelled" hand="mb" extent="10cm"/>&#x2014;and
+<egXML xmlns="http://www.tei-c.org/ns/Examples">Others <gap reason="cancelled" hand="#mb" extent="10cm"/>&#x2014;and
 here is one of them...</egXML></p>
 <p>In an autograph letter of Sydney Smith in the Pierpont Morgan
 library,<note place="foot">In Klinkenborg 11</note> three words in the signature are quite illegible:
  
-<egXML xmlns="http://www.tei-c.org/ns/Examples">I am dr Sr yr <gap reason="illegible" hand="ss" extent="3 words"/>Sydney Smith</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">I am dr Sr yr <gap reason="illegible"  extent="3 words"/>Sydney Smith</egXML>
  
 It is possible, but not always necessary, to provide measurements
 precise to the millimeter or even to the printer's point.  The degree of
@@ -920,10 +910,11 @@ elements are used in the TEI header (in the <gi>profileDesc</gi>
 element) to define each unique hand or scribe distinguished by the
 encoder in the document.  One such element must appear within the header
 for each hand distinguished in the text, and each such element should
-bear a distinct identifier as the value of its global <att>xml:id</att> attribute.<note place="foot">In earlier version of these Guidelines an attribute
+bear a distinct identifier as the value of its global
+<att>xml:id</att> attribute.<!-- note place="foot">In earlier version of these Guidelines an attribute
 <ident>hand</ident> was used on the <gi>hand</gi> element to carry
 the same information as the existing <att>xml:id</att> attribute. The <att>hand</att> attribute is
-retained in the current version of these Guidelines only for backwards compatibility and will be removed at the next release.</note>
+retained in the current version of these Guidelines only for backwards compatibility and will be removed at the next release.</note-->
 Each location where a change
 of hands occurs may then be marked in the text by the empty
 <gi>handShift</gi> element, which specifies the hand concerned by
@@ -981,7 +972,7 @@ may be once more introduced and Established in this
 Parish according to the Rules and Ceremonies of the
 Church of England and as under a good Consciencious
 and sober Curate there would and ought to be
-<handShift new="h2" old="h1" resp="das"/>
+<handShift new="#h2" old="#h1" resp="das"/>
 and for that purpose the parishioners pray</egXML></p>
 
 <p>In this example<note place="foot">From folio 52 recto of the Holkham
@@ -990,7 +981,7 @@ a change of ink within the one hand.  This is indicated by a new value
 for the <att>ink</att> attribute on the <gi>handShift</gi> element:
  
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><l>When wolde the cat dwelle in his ynne</l>
-<handShift new="h2" old="h1" ink="black"/>
+<handShift new="#h2" old="#h1" ink="black"/>
 <l>And if the cattes skynne be slyk and gaye</l></egXML></p>
 <p>These elements are declared as follows:
  
@@ -1048,7 +1039,7 @@ separately:
  
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><add
 						    place="supralinear" resp="#FB" hand="#WJ">But</add>
-<choice><sic>One</sic><corr resp="FB">one</corr></choice> must have lived ...</egXML>
+<choice><sic>One</sic><corr resp="#FB">one</corr></choice> must have lived ...</egXML>
  
 As in this example, <att>hand</att> should be reserved for indicating
 the hand of any form of marking&#x2014;here, addition but also deletion,
@@ -1479,7 +1470,7 @@ deletion by strike-through of <mentioned>my</mentioned> in the autograph of
 <title>Eloi, Eloi, lama sabachthani</title> is noted:
  
 <egXML xmlns="http://www.tei-c.org/ns/Examples">For I hate this
-<del rend="strikethrough" hand="dhl">my</del> body,
+<del rend="strikethrough" hand="#dhl">my</del> body,
 which is so dear to me</egXML></p>
 <p>There will be instances, however, where a scholar wishes only to
 register the occurrence of lines in the text, without making any
