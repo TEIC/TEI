@@ -4,37 +4,33 @@ Licensed under the GNU General Public License.
 
 See the file COPYING for details.
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="analysis" xml:id="SPAN" usage="opt" ident="span">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+             module="analysis" xml:id="SPAN" usage="opt" ident="span">
 <equiv/>
 <gloss>span</gloss>
 <desc>associates an interpretative annotation directly with a span of
 text.</desc>
-  
-  
   <classes>
     <memberOf key="tei.interpret"/>
     <memberOf key="tei.metadata"/>
   </classes>
   <content>
-    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
   </content>
   <attList>
-    <attDef ident="value" usage="req">
+<!--    <attDef ident="value" usage="req">
 	<equiv/>
 	<desc>identifies the specific phenomenon being annotated.</desc>
-      
-      
       <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
       <valDesc>Any string of characters.</valDesc>
-      
     </attDef>
+-->
     <attDef ident="from" usage="req">
 	<equiv/>
 	<desc>specifies the beginning of the passage being annotated; if not
 accompanied by a <att>to</att> attribute, then specifies the entire
 passage.</desc>
-      
-      
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
       <valDesc>The identifier of the element which occurs at the beginning of the
 passage.</valDesc>
@@ -44,7 +40,6 @@ passage.</valDesc>
 	<equiv/>
 	<desc>specifies the end of the passage being annotated.</desc>
       
-      
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
       <valDesc>The identifier of the element which occurs at the end of the passage.</valDesc>
       
@@ -52,7 +47,7 @@ passage.</valDesc>
   </attList>
   
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <span resp="TMA" type="structural unit" value="aftermath" from="#p2" to="#p4"/>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <span resp="TMA" type="structure" from="#p2" to="#p4">aftermath</span>
     </egXML>
   </exemplum>
   <remarks/>
