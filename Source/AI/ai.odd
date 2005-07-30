@@ -389,26 +389,29 @@ on which see chapter <ptr target="#FS"/>.
 <div2 type="subsection" xml:id="AISP"><head>Spans and Interpretations</head>
 <p>The simplest mechanisms for attaching analytic notes in some
 structured vocabulary to particular passages of text are provided by the
-empty <gi>span</gi> and <gi>interp</gi> elements, and their associated
+<gi>span</gi> and <gi>interp</gi> elements, and their associated
 grouping elements <gi>spanGrp</gi> and <gi>interpGrp</gi>.
  
-<specList><specDesc key="span" atts="value from to"/><specDesc key="spanGrp"/><specDesc key="interp" /><specDesc key="interpGrp"/></specList>
+<specList><specDesc key="span" /><specDesc key="spanGrp"/><specDesc key="interp" /><specDesc key="interpGrp"/></specList>
  </p>
 <p>These elements are all members of the class <ident type="class">interpret</ident>, and thus share the following attributes:
 
 <specList><specDesc key="tei.interpret" atts="resp type inst"/></specList>
 </p>
-<p>The <att>type</att> and <att>value</att> attributes of the
-<gi>span</gi> and <gi>interp</gi> elements may be used to associate an
-interpretive name, type, and
-value with a specific stretch (or <term>span</term>) of
-text.  In the case of the <gi>span</gi> element, the span of text being
+<p>The <att>type</att>  attribute of the
+<gi>span</gi> and <gi>interp</gi> elements may be used to indicate
+that the annotations are of specific types, for example thematic or
+structural. The annotation itself is supplied as the content of the
+<gi>span</gi> or <gi>interp</gi> element. 
+In the case of the <gi>span</gi> element, the span of text being
 annotated is indicated by values of the <att>from</att> and
 <att>to</att> attributes, the value of each being a pointer.  If
 the optional <att>to</att> attribute is omitted, the span consists just
 of the element pointed at by the obligatory <att>from</att> attribute.
 In the case of <gi>interp</gi> (see below), the span is indicated by a
-pointer from a <gi>link</gi> element or some similar mechanism.  Here is
+pointer from a <gi>link</gi> element or some similar mechanism.  The
+<att>resp</att> attribute indicates the annotator responsible for this annotation.
+Here is
 an example of the <gi>span</gi> element.
  
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p xml:id="MaQp1s2p114">
@@ -432,7 +435,7 @@ an example of the <gi>span</gi> element.
   forwards and out, the whole process stopped; and <emph rend="italic">that</emph> was <soCalled rend="dquo">the
   moment</soCalled> which it was impossible to remember
   afterwards.</s>
-<span resp="DTL" value="the moment" from="#MaQp1s2p114s3" to="#MaQp1s2p114s5"/>
+<span resp="DTL" from="#MaQp1s2p114s3" to="#MaQp1s2p114s5">the moment</span>
 <s xml:id="MaQp1s2p114s6">For during that space of time (which was
   timeless) she understood quite finally her smallness, the
   unimportance of humanity.</s>
@@ -441,18 +444,23 @@ an example of the <gi>span</gi> element.
 <note type="cit"><bibl>Doris Lessing, <title>Martha Quest</title>, 1952, p52-53</bibl></note>
  </p>
 <p>The <gi>span</gi> element may, as in this example, be placed in the
-text near the textual span it is associated with, or it may be placed
-outside the text enclosed within a <gi>spanGrp</gi> element as follows.
+text near the textual span it is associated with. Alternatively, it  may be placed
+elsewhere in the same or a different document. Where several
+<gi>span</gi> or <gi>interp</gi> elements share the same attributes,
+for example having the same responsibility or type, it may be
+convenient to group them within a <gi>spanGrp</gi> element as follows:
  
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><spanGrp resp="DTL">
-  <span value="the moment" from="#MaQp1s2p114s3" to="#MaQp1s2p114s5"/>
+  <span from="#MaQp1s2p114s3" to="#MaQp1s2p114s5">the moment</span>
+  <!-- other spans identified by DTL here -->
 </spanGrp></egXML>
- 
-As may be seen, the <att>type</att> attribute may be omitted in order to
-associate a span of text simply with a descriptive name.
+
+<!-- As may be seen, the <att>type</att> attribute may be omitted in order to
+associate a span of text simply with a descriptive name.-->
  </p>
-<p>Spans may also be used to represent the structural divisions assigned
-to the narrative by an interpreter.  Consider the following narrative:
+<p>Spans may also be used to represent structural divisions within 
+a narrative, particularly when these do not coincide with the
+structure implied by the element structure. Consider the following narrative:
  
 <q rend="display">
 <p>Sigmund, the son of Volsung, was a king in Frankish country.
@@ -518,31 +526,25 @@ look like this:
 <p xml:id="P3">King Sigmund lived a long time in Denmark ... </p>
 <p xml:id="P4">Sigmund and all his sons were tall ... </p>
 
-<span resp="TMA" type="structural unit" value="introduction" from="#S1" to="#S3"/>
-<span resp="TMA" type="structural unit" value="conflict" from="#S4a"/>
-<span resp="TMA" type="structural unit" value="climax" from="#S4b"/>
-<span resp="TMA" type="structural unit" value="revenge" from="#S5" to="#S17"/>
-<span resp="TMA" type="structural unit" value="reconciliation" from="#EOS17"/>
-<span resp="TMA" type="structural unit" value="aftermath" from="#P2" to="#P4"/></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><spanGrp resp="TMA" type="narrative-structure">
+ <span from="#S1" to="#S3">introduction</span>
+ <span from="#S4a">conflict</span>
+ <span from="#S4b">climax</span>
+ <span from="#S5" to="#S17">revenge</span>
+ <span from="#EOS17">reconciliation</span>
+ <span from="#P2" to="#P4">aftermath</span>
+</spanGrp></egXML>
 
-Note the use of an empty <gi>anchor</gi> element to provide a target for
+<p>Note the use of an empty <gi>anchor</gi> element to provide a target for
 the <soCalled>reconciliation</soCalled> unit which is normally part of
 the narrative pattern but which is not realized in the text shown.
  </p>
-<p>If groups of <gi>span</gi> elements with the same <att>resp</att> or
+<!--<p>If groups of <gi>span</gi> elements with the same <att>resp</att> or
 <att>type</att> are used, as in this example, they may be grouped
 together inside a <gi>spanGrp</gi> element, with the values of the
 common attribute(s) inherited from the higher element, as follows.
- 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><spanGrp resp="TMA" type="structural unit">
- <span value="introduction" from="#S1" to="#S3"/>
- <span value="conflict" from="#S4a"/>
- <span value="climax" from="#S4b"/>
- <span value="revenge" from="#S5" to="#S17"/>
- <span value="reconciliation" from="#EOS17"/>
- <span value="aftermath" from="#P2" to="#P4"/>
-</spanGrp></egXML>
- </p>
+ -->
+
 <p>The same analysis may be expressed with the <gi>interp</gi> element
 instead of the <gi>span</gi> element; this element provide attributes
 for recording an interpretive category and its value, as well as the
@@ -708,13 +710,8 @@ pp. 15&#x2013;32.</bibl>
 This sentence and its analysis are reproduced by kind permission of the
 University of Lancaster's Unit for Computer Research on the English
 Language.
- 
-</note>
- 
-
-	
- 
-<q rend="display">The victim's friends told police that Kruger drove
+ </note>
+ <q rend="display">The victim's friends told police that Kruger drove
 into the quarry and never surfaced.</q> </p> <p>Our discussion focuses
 on the way that this sentence might be analysed using the Claws system
 developed at the University of Lancaster, but exactly the same
@@ -945,11 +942,11 @@ transaction in a spoken text.
 <u xml:id="u5" who="#p1">Two dollars</u>
 <u xml:id="u6" who="#p1">Sixty, eighty, two dollars. Thank you.</u>
 <spanGrp type="transactions">
-   <span value="sale request" from="#u1"/>
-   <span value="sale compliance" from="#u2" to="#u3"/>
-   <span value="sale" from="#u4"/>
-   <span value="purchase" from="#u5"/>
-   <span value="purchase closure" from="#u6"/>
+   <span from="#u1">sale request</span>
+   <span from="#u2" to="#u3">sale compliance</span>
+   <span from="#u4">sale</span>
+   <span from="#u5">purchase</span>
+   <span from="#u6">purchase closure</span>
 </spanGrp></egXML>
 <note type="cit"><bibl>R. Hasan <title>Language, context, and
 text</title>... OUP 1989, p 59</bibl></note>
