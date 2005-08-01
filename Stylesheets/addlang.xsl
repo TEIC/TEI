@@ -17,6 +17,9 @@
   <xsl:copy/>
 </xsl:template>
 
+<xsl:template match="text">
+  <xsl:if test="string-length(.)&gt;0"><xsl:copy-of select="."/></xsl:if>
+</xsl:template>
 <xsl:template match="*" >
   <xsl:copy>
     <xsl:apply-templates
