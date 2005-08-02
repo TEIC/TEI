@@ -866,7 +866,7 @@
       </xsl:when>
       <xsl:when test="ancestor::tei:back">
         <xsl:if test="not($numberBackHeadings='')">
-          <xsl:value-of select="$appendixWords"/>
+          <xsl:call-template name="i18n"><xsl:with-param name="word">appendixWords</xsl:with-param></xsl:call-template>
           <xsl:text> </xsl:text>
           <xsl:number format="{$numberBackHeadings}" level="multiple" from="text" count="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4"/>
           <xsl:value-of select="$numbersuffix"/>
@@ -1122,7 +1122,7 @@
   <xsl:template name="mainTOC">
     <fo:block>
       <xsl:call-template name="setupDiv1"/>
-      <xsl:value-of select="contentsWord"/>
+      <xsl:call-template name="i18n"><xsl:with-param name="word">ontentsWord</xsl:with-param></xsl:call-template>
     </fo:block>
     <xsl:choose>
       <xsl:when test="ancestor::tei:text/tei:group">

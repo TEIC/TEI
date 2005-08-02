@@ -1055,14 +1055,16 @@ so that is only put back in if there is some content
 
 <xsl:template match="tei:specGrp">
 <xsl:choose>
-  <xsl:when test="ancestor::tei:schemaSpec">
+  <xsl:when test="//tei:schemaSpec">
     <tei:list>
       <xsl:for-each select="tei:*">
 	<tei:item>Specification for <xsl:value-of
 	select="substring-before(name(.),'Spec')"/>
 	<xsl:text> </xsl:text>
 	<tei:ref target="#{@ident}">
-    <tei:ident><xsl:value-of select="@ident"/></tei:ident>
+	  <tei:ident>
+	    <xsl:value-of select="@ident"/>
+	  </tei:ident>
 	</tei:ref>
 	</tei:item>
       </xsl:for-each>
@@ -1087,7 +1089,7 @@ so that is only put back in if there is some content
 <xsl:template match="tei:attDef[@mode]"/>
 
 <xsl:template match="tei:elementSpec">
-  <xsl:if test="not(ancestor::tei:schemaSpec)">
+  <xsl:if test="not(//tei:schemaSpec)">
     <xsl:variable name="I">
       <xsl:value-of select="@ident"/>
     </xsl:variable>
@@ -1100,18 +1102,22 @@ so that is only put back in if there is some content
       <xsl:copy-of select="tei:classes"/>
       <xsl:apply-templates select="tei:content" mode="copy"/>
       <tei:attList>
+	<xsl:comment>1.</xsl:comment>
 	<xsl:call-template name="classAttributesSimple">
-	  <xsl:with-param name="I" select="@ident"/>
+	  <xsl:with-param name="I" select="$I"/>
 	  <xsl:with-param name="K" select="'tei.global'"/>
 	</xsl:call-template>
+	<xsl:comment>2.</xsl:comment>
 	<xsl:for-each select="tei:classes/tei:memberOf"> 
-	  <xsl:message>Look at class 	  <xsl:value-of select="@key"/></xsl:message>
+	<xsl:comment>3: <xsl:value-of select="@key"/></xsl:comment>
 	  <xsl:call-template name="classAttributesSimple">
 	    <xsl:with-param name="I" select="$I"/>
 	    <xsl:with-param name="K" select="@key"/>
 	  </xsl:call-template>
 	</xsl:for-each>
+	<xsl:comment>4.</xsl:comment>
 	<xsl:apply-templates select="tei:attList"/>
+	<xsl:comment>5.</xsl:comment>
       </tei:attList>
       <xsl:copy-of select="tei:exemplum"/>
       <xsl:copy-of select="tei:remarks"/>
@@ -1143,13 +1149,12 @@ and expanded.</p>
 <xsl:template name="classAttributesSimple">
   <xsl:param name="I"/>
   <xsl:param name="K"/>
+  <xsl:comment>START on <xsl:value-of select="$K"/></xsl:comment>
   <xsl:for-each select="key('IDENTS',$K)">    
     <xsl:variable name="CURRENTCLASS" select="."/>
     <xsl:for-each select="tei:attList/tei:attDef">
-<!--
-<xsl:message>looking at <xsl:value-of select="$I"/> + <xsl:value-of
-select="$K"/> + <xsl:value-of select="@ident"/></xsl:message>
--->
+<xsl:comment>looking at <xsl:value-of select="$I"/> + <xsl:value-of
+select="$K"/> + <xsl:value-of select="@ident"/></xsl:comment>
       <xsl:call-template name="mergeClassAttribute">
 	<xsl:with-param name="element" select="$I"/>
 	<xsl:with-param name="class" select="$K"/>
@@ -1157,7 +1162,6 @@ select="$K"/> + <xsl:value-of select="@ident"/></xsl:message>
 	<xsl:with-param name="original" select="$CURRENTCLASS"/>
       </xsl:call-template>
     </xsl:for-each>
-  </xsl:for-each>
   <xsl:if test="tei:classes/tei:memberOf">
     <xsl:for-each select="tei:classes/tei:memberOf">
       <xsl:variable name="K" select="@key"/>
@@ -1167,7 +1171,8 @@ select="$K"/> + <xsl:value-of select="@ident"/></xsl:message>
       </xsl:call-template>
     </xsl:for-each>
   </xsl:if>
-
+  </xsl:for-each>
+  <xsl:comment>FINISH <xsl:value-of select="$K"/></xsl:comment>
 </xsl:template>
 
 </xsl:stylesheet>

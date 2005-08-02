@@ -555,6 +555,9 @@ End of macro declarations
 
 <xsl:template match="rng:data">
   <xsl:choose>
+    <xsl:when test="parent::tei:content">
+      <xsl:text> (#PCDATA)</xsl:text>              
+    </xsl:when>
     <xsl:when test="@type='ID'"> ID </xsl:when>
     <xsl:when test="@type='IDREF'"> IDREF </xsl:when>
     <xsl:when test="@type='IDREFS'"> IDREFS </xsl:when>
@@ -575,6 +578,7 @@ End of macro declarations
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
+
 
 <xsl:template match="tei:macroSpec[@type='dt']/tei:content/rng:text">
   <xsl:text> CDATA</xsl:text>              

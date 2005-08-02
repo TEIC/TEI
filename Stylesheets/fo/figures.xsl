@@ -122,7 +122,7 @@
       </fo:block>
       <fo:block>
         <xsl:call-template name="figureCaptionstyle"/>
-        <xsl:value-of select="$figureWord"/>
+        <xsl:call-template name="i18n"><xsl:with-param name="word">figureWord</xsl:with-param></xsl:call-template>
         <xsl:call-template name="calculateFigureNumber"/>
         <xsl:text>. </xsl:text>
         <xsl:apply-templates select="tei:head"/>
@@ -166,7 +166,7 @@
   </xd:doc>
   <xsl:template match="tei:figure" mode="xref">
     <xsl:if test="$showFloatLabel">
-      <xsl:value-of select="$figureWord"/>
+      <xsl:call-template name="i18n"><xsl:with-param name="word">figureWord</xsl:with-param></xsl:call-template>
       <xsl:text> </xsl:text>
     </xsl:if>
     <xsl:call-template name="calculateFigureNumber"/>
@@ -262,7 +262,7 @@
   </xd:doc>
   <xsl:template match="tei:table" mode="xref">
     <xsl:if test="$showFloatLabel">
-      <xsl:value-of select="$tableWord"/>
+      <xsl:call-template name="i18n"><xsl:with-param name="word">tableWord</xsl:with-param></xsl:call-template>
       <xsl:text> </xsl:text>
     </xsl:if>
     <xsl:if test="$showFloatHead='true' and tei:head">
@@ -295,7 +295,7 @@
             <xsl:call-template name="tableCaptionstyle"/>
             <xsl:call-template name="addID"/>
             <xsl:if test="$makeTableCaption='true'">
-              <xsl:value-of select="$tableWord"/>
+              <xsl:call-template name="i18n"><xsl:with-param name="word">tableWord</xsl:with-param></xsl:call-template>
 	      <xsl:text> </xsl:text>
               <xsl:call-template name="calculateTableNumber"/>
               <xsl:text>. </xsl:text>
@@ -456,7 +456,7 @@
       <xsl:call-template name="addID"/>
       <fo:table-caption>
         <fo:block text-align="{$tableCaptionAlign}" space-after="{$spaceBelowCaption}">
-          <xsl:value-of select="$tableWord"/>
+          <xsl:call-template name="i18n"><xsl:with-param name="word">tableWord</xsl:with-param></xsl:call-template>
           <xsl:call-template name="calculateTableNumber"/>
           <xsl:text>. </xsl:text>
           <xsl:apply-templates select="tei:head"/>

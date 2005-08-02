@@ -1404,27 +1404,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xd:doc>
-    <xd:short>[html] </xd:short>
-    <xd:detail>
-      <p> change log </p>
-    </xd:detail>
-  </xd:doc>
-  <xsl:template name="changes">
-    <center>
-      <table width="95%" border="1" cols="2" cellspacing="0">
-        <tr>
-          <td width="15%">
-            <xsl:text>Date</xsl:text>
-          </td>
-          <td width="85%">
-            <xsl:text>Action</xsl:text>
-          </td>
-        </tr>
-        <xsl:apply-templates select="ancestor::tei:TEI/teiHeader/revisionDesc/change"/>
-      </table>
-    </center>
-  </xsl:template>
+
   <xd:doc>
     <xd:short>[html] </xd:short>
     <xd:detail>&#160;</xd:detail>
@@ -1865,21 +1845,7 @@ by Nick Nicholas </p>
           </div>
           <xsl:apply-templates select="descendant::tei:note[@place]" mode="printnotes"/>
         </div>
-        <xsl:call-template name="stdfooter">
-          <xsl:with-param name="date">
-            <xsl:choose>
-              <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc//tei:date[1]">
-                <xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc//tei:date[1]"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:value-of select="ancestor-or-self::tei:TEI//tei:front//tei:docDate"/>
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:with-param>
-          <xsl:with-param name="author">
-            <xsl:apply-templates select="ancestor-or-self::tei:TEI//tei:front//tei:docAuthor" mode="author"/>
-          </xsl:with-param>
-        </xsl:call-template>
+        <xsl:call-template name="stdfooter"/>
       </body>
     </html>
   </xsl:template>

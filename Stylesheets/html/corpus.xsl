@@ -96,19 +96,7 @@
           </xsl:with-param>
         </xsl:call-template>
         <xsl:call-template name="corpusBody"/>
-        <xsl:call-template name="stdfooter">
-          <xsl:with-param name="date">
-            <xsl:choose>
-              <xsl:when test="tei:teiHeader/tei:revisionDesc//tei:date[1]">
-                <xsl:value-of select="tei:teiHeader/tei:revisionDesc//tei:date[1]"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:text>(undated)</xsl:text>
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:with-param>
-          <xsl:with-param name="author"/>
-        </xsl:call-template>
+        <xsl:call-template name="stdfooter"/>
       </body>
     </html>
   </xsl:template>

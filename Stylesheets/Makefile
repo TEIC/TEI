@@ -29,6 +29,8 @@ p5:
 
 
 release: doc p4 p5
+	cp i18n.xml release/tei-xsl/p4
+	cp i18n.xml release/tei-xsl/p5
 	cp *.css release/tei-xsl/p4
 	cp *.css release/tei-xsl/p5
 	mkdir -p release/tei-xsl/doc
@@ -52,6 +54,8 @@ clean:
 	-rm -rf release
 	-rm -rf doc/xsltdoc
 	(cd Test; make clean)
+
+install: installp4 installp5
 
 installp4: p4
 	mkdir -p ${PREFIX}/share/xml/teip4/stylesheet

@@ -49,7 +49,7 @@
 
 <xsl:param name="verbose"></xsl:param>
 <xsl:param name="RNGDIR">Schema</xsl:param>
-<xsl:variable name="appendixWords"/>
+<xsl:param name="appendixWords"/>
 <xsl:variable name="headingNumberSuffix"/>
 <xsl:variable name="numberBackHeadings"/>
 <xsl:variable name="numberFrontHeadings"/>

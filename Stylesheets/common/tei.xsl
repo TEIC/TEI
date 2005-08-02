@@ -44,6 +44,9 @@
   <xsl:include href="linking.xsl"/>
   <xsl:include href="figures.xsl"/>
 
+<xsl:key name="KEYS" use="key" match="entry"/>
+<xsl:param name="lang">en</xsl:param>
+
 <xd:doc type="string">
 Uppercase letters.
 </xd:doc>
@@ -86,5 +89,64 @@ Name of XSLT processor.
     </xsl:choose>
   </xsl:template>
 
+  <xd:doc>
+    <xd:short>[common] give language-specific version of a word of phrase</xd:short>
+    <xd:param name="word">the word(s) to translate</xd:param>
+    <xd:detail>&#160;</xd:detail>
+  </xd:doc>
+<xsl:template name="i18n">
+  <xsl:param name="word"/>
+<xsl:choose>
+<xsl:when test="$word='appendixWords' and not($appendixWords='')">
+  <xsl:value-of select="$appendixWords"/>
+</xsl:when>
+<xsl:when test="$word='authorWord' and not($authorWord='')">
+  <xsl:value-of select="$authorWord"/>
+</xsl:when>
+<xsl:when test="$word='biblioWords' and not($biblioWords='')">
+  <xsl:value-of select="$biblioWords"/>
+</xsl:when>
+<xsl:when test="$word='dateWord' and not($dateWord='')">
+  <xsl:value-of select="$dateWord"/>
+</xsl:when>
+<xsl:when test="$word='figureWord' and not($figureWord='')">
+  <xsl:value-of select="$figureWord"/>
+</xsl:when>
+<xsl:when test="$word='figureWords' and not($figureWords='')">
+  <xsl:value-of select="$figureWords"/>
+</xsl:when>
+<xsl:when test="$word='nextWord' and not($nextWord='')">
+  <xsl:value-of select="$nextWord"/>
+</xsl:when>
+<xsl:when test="$word='noteHeading' and not($noteHeading='')">
+  <xsl:value-of select="$noteHeading"/>
+</xsl:when>
+<xsl:when test="$word='previousWord' and not($previousWord='')">
+  <xsl:value-of select="$previousWord"/>
+</xsl:when>
+<xsl:when test="$word='revisedWord' and not($revisedWord='')">
+  <xsl:value-of select="$revisedWord"/>
+</xsl:when>
+<xsl:when test="$word='tableWord' and not($tableWord='')">
+  <xsl:value-of select="$tableWord"/>
+</xsl:when>
+<xsl:when test="$word='tableWords' and not($tableWords='')">
+  <xsl:value-of select="$tableWords"/>
+</xsl:when>
+<xsl:when test="$word='tocWords' and not($tocWords='')">
+  <xsl:value-of select="$tocWords"/>
+</xsl:when>
+<xsl:when test="$word='upWord' and not($upWord='')">
+  <xsl:value-of select="$upWord"/>
+</xsl:when>
+<xsl:otherwise>
+  <xsl:for-each select="document('../i18n.xml',document(''))">
+    <xsl:for-each select="key('KEYS',normalize-space($word))">
+     <xsl:value-of select="text[@xml:lang=$lang]"/>
+    </xsl:for-each>
+  </xsl:for-each>
+</xsl:otherwise>
+</xsl:choose>
+</xsl:template>
   
 </xsl:stylesheet>

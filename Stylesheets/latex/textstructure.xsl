@@ -125,9 +125,15 @@
     \def\DivVStar[#1]#2{\paragraph*{#2}}
 }
 \makeatother
-\def\TheFullDate{<xsl:call-template name="generateDate"/>}
-\def\TheDate{<xsl:call-template name="generateDate">
-<xsl:with-param name="showRev"/></xsl:call-template>}
+\def\TheFullDate{<xsl:call-template name="generateDate"/>
+<xsl:variable name="revdate">
+  <xsl:call-template name="generateRevDate"/>
+</xsl:variable>
+<xsl:if test="not($revdate='')">
+  (<xsl:call-template name="i18n"><xsl:with-param name="word">revisedWord</xsl:with-param></xsl:call-template>: 
+  <xsl:value-of select="$revdate"/>)
+</xsl:if>}
+\def\TheDate{<xsl:call-template name="generateDate"></xsl:call-template>}
 \title{<xsl:call-template name="generateTitle"/>}
 \author{<xsl:call-template name="generateAuthor"/>}
 \begin{document}

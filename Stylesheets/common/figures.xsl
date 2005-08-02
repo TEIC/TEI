@@ -41,7 +41,7 @@
   <xsl:choose>
     <xsl:when test="$numberFigures='true'">
       <xsl:if test="not($figureWord='')">
-	<xsl:value-of select="$figureWord"/>
+	<xsl:call-template name="i18n"><xsl:with-param name="word">figureWord</xsl:with-param></xsl:call-template>
 	<xsl:text> </xsl:text>
       </xsl:if>
       <xsl:choose>
@@ -72,7 +72,7 @@
   <xsl:template match="tei:table" mode="xref">
     <xsl:choose>
       <xsl:when test="$numberTables='true'">
-	<xsl:value-of select="$tableWord"/>
+	<xsl:call-template name="i18n"><xsl:with-param name="word">tableWord</xsl:with-param></xsl:call-template>
 	<xsl:text> </xsl:text>
 	<xsl:number level="any"/>
 	<xsl:if test="tei:head">

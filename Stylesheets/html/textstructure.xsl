@@ -212,7 +212,8 @@ $ID: requests a particular page
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:*" mode="generateNextLink">
-    <i><xsl:text> </xsl:text><xsl:value-of select="$nextWord"/>: </i>
+    <i><xsl:text> </xsl:text><xsl:call-template
+    name="i18n"><xsl:with-param name="word">nextWord</xsl:with-param></xsl:call-template>: </i>
     <a class="navigation">
       <xsl:attribute name="href">
         <xsl:apply-templates select="." mode="generateLink"/>
@@ -227,7 +228,8 @@ $ID: requests a particular page
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:*" mode="generatePreviousLink">
-    <i><xsl:text> </xsl:text><xsl:value-of select="$previousWord"/>: </i>
+    <i><xsl:text> </xsl:text><xsl:call-template
+    name="i18n"><xsl:with-param name="word">previousWord</xsl:with-param></xsl:call-template>: </i>
     <a class="navigation">
       <xsl:attribute name="href">
         <xsl:apply-templates select="." mode="generateLink"/>
@@ -372,14 +374,7 @@ $ID: requests a particular page
         </xsl:call-template>
         <xsl:call-template name="startHook"/>
         <xsl:call-template name="simpleBody"/>
-        <xsl:call-template name="stdfooter">
-          <xsl:with-param name="date">
-            <xsl:call-template name="generateDate"/>
-          </xsl:with-param>
-          <xsl:with-param name="author">
-            <xsl:call-template name="generateAuthorList"/>
-          </xsl:with-param>
-        </xsl:call-template>
+        <xsl:call-template name="stdfooter"/>
       </body>
     </html>
     <xsl:if test="$verbose='true'">
@@ -490,7 +485,7 @@ $ID: requests a particular page
   </xd:doc>
   <xsl:template match="tei:divGen[@type='toc']">
     <h2>
-      <xsl:value-of select="$tocWords"/>
+      <xsl:call-template name="i18n"><xsl:with-param name="word">tocWords</xsl:with-param></xsl:call-template>
     </h2>
     <xsl:call-template name="maintoc"/>
   </xsl:template>
@@ -1001,11 +996,6 @@ $ID: requests a particular page
     <xd:short>[html] </xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
-  <xsl:template name="endFooter"/>
-  <xd:doc>
-    <xd:short>[html] </xd:short>
-    <xd:detail>&#160;</xd:detail>
-  </xd:doc>
   <xsl:template name="generateDivheading">
     <xsl:apply-templates select="." mode="xref"/>
   </xsl:template>
@@ -1090,14 +1080,7 @@ $ID: requests a particular page
   </xd:doc>
   <xsl:template name="htmlFileBottom">
     <xsl:call-template name="topNavigation"/>
-    <xsl:call-template name="stdfooter">
-      <xsl:with-param name="date">
-        <xsl:call-template name="generateDate"/>
-      </xsl:with-param>
-      <xsl:with-param name="author">
-        <xsl:call-template name="generateAuthorList"/>
-      </xsl:with-param>
-    </xsl:call-template>
+    <xsl:call-template name="stdfooter"/>
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
@@ -1399,14 +1382,7 @@ $ID: requests a particular page
 	<xsl:with-param name="currentID" select="$currentID"/>
       </xsl:call-template>
     </xsl:if>
-    <xsl:call-template name="stdfooter">
-      <xsl:with-param name="date">
-        <xsl:call-template name="generateDate"/>
-      </xsl:with-param>
-      <xsl:with-param name="author">
-        <xsl:call-template name="generateAuthorList"/>
-      </xsl:with-param>
-    </xsl:call-template>
+    <xsl:call-template name="stdfooter"/>
   </xsl:template>
 
 
@@ -1421,7 +1397,7 @@ $ID: requests a particular page
     <xsl:apply-templates select="tei:text/tei:front"/>
     <xsl:if test="$autoToc='true' and (descendant::tei:div or descendant::tei:div0 or descendant::tei:div1) and not(descendant::tei:divGen[@type='toc'])">
       <h2>
-        <xsl:value-of select="$tocWords"/>
+        <xsl:call-template name="i18n"><xsl:with-param name="word">tocWords</xsl:with-param></xsl:call-template>
       </h2>
       <xsl:call-template name="maintoc"/>
     </xsl:if>
@@ -1897,7 +1873,7 @@ $ID: requests a particular page
     <xsl:apply-templates select="tei:text/tei:front"/>
     <xsl:if test="$autoToc='true' and (descendant::tei:div or descendant::tei:div0 or descendant::tei:div1) and not(descendant::tei:divGen[@type='toc'])">
       <h2>
-        <xsl:value-of select="$tocWords"/>
+        <xsl:call-template name="i18n"><xsl:with-param name="word">tocWords</xsl:with-param></xsl:call-template>
       </h2>
       <xsl:call-template name="maintoc"/>
     </xsl:if>
@@ -1914,26 +1890,25 @@ $ID: requests a particular page
     <xsl:apply-templates select="tei:text/tei:back"/>
     <xsl:call-template name="printNotes"/>
   </xsl:template>
+
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail>&#160;</xd:detail>
-  </xd:doc>
-  <xsl:template name="startHeader"/>
-  <xd:doc>
-    <xd:short>[html] </xd:short>
-    <xd:param name="date">date</xd:param>
-    <xd:param name="author">author</xd:param>
-    <xd:param name="style">style</xd:param>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template name="stdfooter">
-    <xsl:param name="date"/>
-    <xsl:param name="author"/>
     <xsl:param name="style" select="'plain'"/>
+    <xsl:variable name="date">      
+      <xsl:call-template name="generateDate"/>
+    </xsl:variable>
+    <xsl:variable name="author">      
+      <xsl:call-template name="generateAuthor"/>
+    </xsl:variable>
     <hr/>
     <xsl:if test="$linkPanel='true'">
       <div class="footer">
-        <xsl:if test="not($parentURL='')"><a class="{$style}" target="_top" href="{$parentURL}"><xsl:value-of select="$parentWords"/></a> |
+        <xsl:if test="not($parentURL='')">
+	  <a class="{$style}"  target="_top"  href="{$parentURL}">
+	  <xsl:value-of select="$parentWords"/></a> |
 	</xsl:if>
         <a class="{$style}" target="_top" href="{$homeURL}">
           <xsl:value-of select="$homeWords"/>
@@ -1948,23 +1923,29 @@ $ID: requests a particular page
       <hr/>
     </xsl:if>
     <xsl:call-template name="preAddressHook"/>
-    <address><xsl:value-of select="$date"/><xsl:if test="not($author='')"><xsl:value-of select="$author"/></xsl:if>.
-	<br/><xsl:call-template name="copyrightStatement"/><xsl:comment><xsl:text>
+    <address>
+      <xsl:if test="not($author='')">
+	<xsl:text> </xsl:text>
+	<xsl:value-of select="$author"/>.
+      </xsl:if>
+      <xsl:call-template name="i18n"><xsl:with-param name="word">dateWord</xsl:with-param></xsl:call-template>
+      <xsl:text>: </xsl:text>
+      <xsl:value-of select="$date"/>
+      <br/>
+      <xsl:call-template name="copyrightStatement"/>
+      <xsl:comment><xsl:text>
 	  Generated </xsl:text><xsl:if test="not($masterFile='index')"><xsl:text>from </xsl:text><xsl:value-of select="$masterFile"/></xsl:if><xsl:text> using an XSLT version </xsl:text><xsl:value-of select="system-property('xsl:version')"/> stylesheet
 	  based on <xsl:value-of select="$teixslHome"/>tei.xsl
 	  processed using <xsl:value-of select="system-property('xsl:vendor')"/>
 	  on <xsl:call-template name="whatsTheDate"/></xsl:comment></address>
   </xsl:template>
+
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:param name="date">date</xd:param>
-    <xd:param name="author">author</xd:param>
     <xd:param name="style">CSS style</xd:param>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template name="stdfooterFrame">
-    <xsl:param name="date"/>
-    <xsl:param name="author"/>
     <xsl:param name="style" select="'plain'"/>
     <hr/>
     <xsl:variable name="BaseFile">
@@ -1990,11 +1971,9 @@ $ID: requests a particular page
         </xsl:if>
         <xsl:if test="$feedbackURL">
           <br/>
-          <xsl:text>
-</xsl:text>
+          <xsl:text>&#10;</xsl:text>
           <br/>
-          <xsl:text>
-</xsl:text>
+          <xsl:text>&#10;</xsl:text>
           <a class="{$style}" target="_top" href="{$feedbackURL}">
             <xsl:call-template name="feedbackWords"/>
           </a>
@@ -2006,9 +1985,12 @@ $ID: requests a particular page
       <xsl:comment><xsl:text>
 	Generated using an XSLT version </xsl:text><xsl:value-of select="system-property('xsl:version')"/> stylesheet
 	based on <xsl:value-of select="$teixslHome"/>tei.xsl
-	processed using: <xsl:value-of select="system-property('xsl:vendor')"/><!-- <xsl:call-template name="whatsTheDate"/> --></xsl:comment>
+	processed using: <xsl:value-of
+	select="system-property('xsl:vendor')"/>
+      </xsl:comment>
     </address>
   </xsl:template>
+
   <xd:doc>
     <xd:short>[html] </xd:short>
     <xd:param name="title">title</xd:param>
@@ -2079,7 +2061,7 @@ $ID: requests a particular page
       </xsl:variable>
       <p>
         <span class="subtochead">
-          <xsl:value-of select="$tocWords"/>
+          <xsl:call-template name="i18n"><xsl:with-param name="word">tocWords</xsl:with-param></xsl:call-template>
         </span>
       </p>
       <div class="subtoc">
@@ -2291,7 +2273,8 @@ $ID: requests a particular page
     <xsl:param name="up"/>
     <xsl:param name="title"/>
     <xsl:if test="$up">
-      <i><xsl:text> </xsl:text><xsl:value-of select="$upWord"/>: </i>
+      <i><xsl:text> </xsl:text><xsl:call-template
+      name="i18n"><xsl:with-param name="word">upWord</xsl:with-param></xsl:call-template>: </i>
       <a class="navigation">
         <xsl:choose>
           <xsl:when test="$title">
@@ -2428,14 +2411,7 @@ $ID: requests a particular page
               <xsl:with-param name="mode" select="local-name(.)"/>
             </xsl:call-template>
           </xsl:if>
-          <xsl:call-template name="stdfooter">
-            <xsl:with-param name="date">
-              <xsl:call-template name="generateDate"/>
-            </xsl:with-param>
-            <xsl:with-param name="author">
-              <xsl:call-template name="generateAuthorList"/>
-            </xsl:with-param>
-          </xsl:call-template>
+          <xsl:call-template name="stdfooter"/>
         </div>
       </body>
     </html>
@@ -2464,15 +2440,7 @@ $ID: requests a particular page
         <xsl:call-template name="linkListContents">
           <xsl:with-param name="style" select="'toclist'"/>
         </xsl:call-template>
-        <xsl:call-template name="stdfooterFrame">
-          <xsl:with-param name="date">
-            <xsl:call-template name="generateDate"/>
-          </xsl:with-param>
-          <xsl:with-param name="author">
-            <xsl:call-template name="generateAuthorList"/>
-          </xsl:with-param>
-          <xsl:with-param name="style" select="'framestdlink'"/>
-        </xsl:call-template>
+        <xsl:call-template name="stdfooterFrame"/>
       </body>
     </html>
   </xsl:template>

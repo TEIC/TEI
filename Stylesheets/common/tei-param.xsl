@@ -83,99 +83,121 @@ Character to put after number of section header
     <xsl:text> </xsl:text>
 </xsl:param>
 
-<xd:doc type="string" class="i18n">
-The word for "Appendix"
+<xd:doc type="string" class="localisation">
+The language to use when generating text (use ISO 2-letter codes)
 </xd:doc>
-<xsl:param name="appendixWords">Appendix</xsl:param>
+<xsl:param name="lang">en</xsl:param>
 
-<xd:doc type="string" class="i18n">
-The word for "Author"
+<xd:doc type="string" class="localisation">
+The word for "Appendix"; by default uses language-specific lookup table.
 </xd:doc>
-<xsl:param name="authorWord">Author</xsl:param>
+<xsl:param name="appendixWords"></xsl:param>
 
-<xd:doc type="string" class="i18n">
-The word for "Bibliography"
+<xd:doc type="string" class="localisation">
+The word for "Author"; by default uses language-specific lookup table.
 </xd:doc>
-<xsl:param name="biblioWords">Bibliography</xsl:param>
+<xsl:param name="authorWord"></xsl:param>
 
-<xd:doc class="i18n">
+<xd:doc type="string" class="localisation">
+The word for "Bibliography"; by default uses language-specific lookup table.
+</xd:doc>
+<xsl:param name="biblioWords"></xsl:param>
+
+<xd:doc class="localisation">
     <xd:short>[common] Prefix text before an auto-generated table of contents </xd:short>
     <xd:detail> </xd:detail>
 </xd:doc>
-<xsl:template name="contentsHeading">Sections in this document:</xsl:template>
+<xsl:template name="contentsHeading">
+<xsl:call-template name ="i18n">
+  <xsl:with-param name="word">contentsHeading</xsl:with-param>
+</xsl:call-template>
+</xsl:template>
 
-<xd:doc class="i18n">
-    <xd:short>[common] Title for "Contents"</xd:short>
+<xd:doc class="localisation">
+    <xd:short>[common] Title for "Contents"; by default uses language-specific lookup table.</xd:short>
     <xd:detail> </xd:detail>
 </xd:doc>
-<xsl:template name="contentsWord">Contents</xsl:template>
+<xsl:template name="contentsWord">
+<xsl:call-template name ="i18n">
+  <xsl:with-param name="word">contentsWord</xsl:with-param>
+</xsl:call-template>
+</xsl:template>
 
-<xd:doc type="string" class="i18n">
-The word for "Date"
+<xd:doc type="string" class="localisation">
+The word for "Date"; by default uses language-specific lookup table.
 </xd:doc>
-<xsl:param name="dateWord">Date</xsl:param>
+<xsl:param name="dateWord"></xsl:param>
 
-<xd:doc class="i18n">
+<xd:doc class="localisation">
     <xd:short>[common] Title for "Feedback"</xd:short>
     <xd:detail> </xd:detail>
 </xd:doc>
-<xsl:template name="feedbackWords">Feedback</xsl:template>
+<xsl:template name="feedbackWords">
+<xsl:call-template name ="i18n">
+  <xsl:with-param name="word">feedbackWords</xsl:with-param>
+</xsl:call-template>
+</xsl:template>
 
-<xd:doc type="string" class="i18n">
-The word for "Figure"
+<xd:doc type="string" class="localisation">
+The word for "Figure"; by default uses language-specific lookup table.
 </xd:doc>
-<xsl:param name="figureWord">Figure</xsl:param>
+<xsl:param name="figureWord"></xsl:param>
 
-<xd:doc type="string" class="i18n">
-The word for "Figures"
+<xd:doc type="string" class="localisation">
+The word for "Figures"; by default uses language-specific lookup table.
 </xd:doc>
-<xsl:param name="figureWords">Figures</xsl:param>
+<xsl:param name="figureWords"></xsl:param>
 
-<xd:doc type="string" class="i18n">
-The word for "Next"
+<xd:doc type="string" class="localisation">
+The word for "Next"; by default uses language-specific lookup table.
 </xd:doc>
-<xsl:param name="nextWord">Next</xsl:param>
+<xsl:param name="nextWord"></xsl:param>
 
-<xd:doc type="string" class="i18n">
-The word for "Notes"
+<xd:doc type="string" class="localisation">
+The word for "Notes"; by default uses language-specific lookup table.
 </xd:doc>
-<xsl:param name="noteHeading">Notes</xsl:param>
+<xsl:param name="noteHeading">
+</xsl:param>
 
-<xd:doc type="string" class="i18n">
-The word for "Previous"
+<xd:doc type="string" class="localisation">
+The word for "Previous"; by default uses language-specific lookup table.
 </xd:doc>
-<xsl:param name="previousWord">Previous</xsl:param>
+<xsl:param name="previousWord"></xsl:param>
 
-<xd:doc type="string" class="i18n">
-The word for "revised"
+<xd:doc type="string" class="localisation">
+The word for "revised"; by default uses language-specific lookup table.
 </xd:doc>
-<xsl:param name="revisedWord">revised</xsl:param>
+<xsl:param name="revisedWord"></xsl:param>
 
-<xd:doc class="i18n">
-    <xd:short>[common] Title for "Search" </xd:short>
+<xd:doc class="localisation">
+    <xd:short>[common] Title for "Search"; by default uses language-specific lookup table. </xd:short>
     <xd:detail> </xd:detail>
 </xd:doc>
-<xsl:template name="searchWords">Search</xsl:template>
+<xsl:template name="searchWords">
+<xsl:call-template name ="i18n">
+  <xsl:with-param name="word">searchWords</xsl:with-param>
+</xsl:call-template>
+</xsl:template>
 
-<xd:doc type="string" class="i18n">
-The word for "Table"
+<xd:doc type="string" class="localisation">
+The word for "Table"; by default uses language-specific lookup table.
 </xd:doc>
-<xsl:param name="tableWord">Table</xsl:param>
+<xsl:param name="tableWord"></xsl:param>
 
-<xd:doc type="string" class="i18n">
-The word for "Tables"
+<xd:doc type="string" class="localisation">
+The word for "Tables"; by default uses language-specific lookup table.
 </xd:doc>
-<xsl:param name="tableWords">Tables</xsl:param>
+<xsl:param name="tableWords"></xsl:param>
 
-<xd:doc type="string" class="i18n">
-The word for "Contents"
+<xd:doc type="string" class="localisation">
+The word for "Contents"; by default uses language-specific lookup table.
 </xd:doc>
-<xsl:param name="tocWords">Contents</xsl:param>
+<xsl:param name="tocWords"></xsl:param>
 
-<xd:doc type="string" class="i18n">
-The word for "Up"
+<xd:doc type="string" class="localisation">
+The word for "Up"; by default uses language-specific lookup table.
 </xd:doc>
-<xsl:param name="upWord">Up</xsl:param>
+<xsl:param name="upWord"></xsl:param>
 
 <xd:doc type="string" class="links">
 Name of department within institution

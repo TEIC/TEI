@@ -1129,7 +1129,7 @@
   <xsl:template name="listBiblSetup">
     <xsl:call-template name="setupDiv0"/>
     <xsl:call-template name="addID"/>
-    <xsl:value-of select="$biblioWords"/>
+    <xsl:call-template name="i18n"><xsl:with-param name="word">biblioWords</xsl:with-param></xsl:call-template>
   </xsl:template>
   
 <xd:doc>

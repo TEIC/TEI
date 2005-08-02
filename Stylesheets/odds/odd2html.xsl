@@ -294,7 +294,8 @@
     <xsl:choose>
      <xsl:when test="ancestor::tei:back">
        <xsl:if test="not($numberBackHeadings='')">
-        <xsl:value-of select="$appendixWords"/><xsl:text> </xsl:text>
+        <xsl:call-template name="i18n"><xsl:with-param name="word">appendixWords</xsl:with-param></xsl:call-template>
+	<xsl:text> </xsl:text>
         <xsl:number format="{$numberBackHeadings}" from="tei:back" level="any"/>
         <xsl:value-of select="$numbersuffix"/>
        </xsl:if>
@@ -328,7 +329,8 @@
   </xsl:when>
   <xsl:when test="ancestor::tei:back">
      <xsl:if test="not($numberBackHeadings='')">
-        <xsl:value-of select="$appendixWords"/><xsl:text> </xsl:text>
+        <xsl:call-template name="i18n"><xsl:with-param name="word">appendixWords</xsl:with-param></xsl:call-template>
+	<xsl:text> </xsl:text>
         <xsl:for-each select="ancestor::tei:div1">
           <xsl:number level="any" from="tei:back" format="{$numberBackHeadings}"/>
           <!--          <xsl:text>.</xsl:text>-->

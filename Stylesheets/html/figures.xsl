@@ -147,9 +147,28 @@
     <xsl:if test="tei:head">
       <p class="caption">
         <xsl:choose>
-          <xsl:when test="ancestor::tei:front and    $numberFrontFigures='true'"><xsl:value-of select="$figureWord"/><xsl:text> </xsl:text><xsl:number level="any" count="tei:figure[tei:head]" from="tei:front"/>.<xsl:text> </xsl:text></xsl:when>
-          <xsl:when test="ancestor::tei:back and    $numberBackFigures='true'"><xsl:value-of select="$figureWord"/><xsl:text> </xsl:text><xsl:number level="any" count="tei:figure[tei:head]" from="tei:back"/>.<xsl:text> </xsl:text></xsl:when>
-          <xsl:when test="ancestor::tei:body and $numberFigures='true'"><xsl:value-of select="$figureWord"/><xsl:text> </xsl:text><xsl:number level="any" count="tei:figure[tei:head]" from="tei:body"/>.<xsl:text> </xsl:text></xsl:when>
+	  <xsl:when test="ancestor::tei:front and
+			  $numberFrontFigures='true'">
+	    <xsl:call-template name="i18n"><xsl:with-param name="word">figureWord</xsl:with-param></xsl:call-template>
+	    <xsl:text> </xsl:text>
+	    <xsl:number level="any" count="tei:figure[tei:head]"
+			from="tei:front"/>
+	  <xsl:text>. </xsl:text>
+	  </xsl:when>
+	  <xsl:when test="ancestor::tei:back and
+			  $numberBackFigures='true'">
+	    <xsl:call-template name="i18n"><xsl:with-param name="word">figureWord</xsl:with-param></xsl:call-template>
+	    <xsl:text> </xsl:text>
+	    <xsl:number level="any" count="tei:figure[tei:head]"   from="tei:back"/>
+	    <xsl:text>. </xsl:text>
+	  </xsl:when>
+	  <xsl:when test="ancestor::tei:body and
+			  $numberFigures='true'">
+	    <xsl:call-template name="i18n"><xsl:with-param name="word">figureWord</xsl:with-param></xsl:call-template>
+	    <xsl:text> </xsl:text>
+	    <xsl:number level="any" count="tei:figure[tei:head]"   from="tei:body"/>
+	    <xsl:text>. </xsl:text>
+	  </xsl:when>
         </xsl:choose>
         <xsl:apply-templates select="tei:head" mode="plain"/>
       </p>
@@ -390,10 +409,15 @@
       </xsl:when>
       <xsl:otherwise>
         <hr/>
-        <p><xsl:value-of select="$figureWord"/><xsl:text> </xsl:text><xsl:for-each select="self::tei:figure|parent::tei:figure"><xsl:number level="any" count="tei:figure[tei:head]"/></xsl:for-each>
-      file <xsl:value-of select="$File"/>
-      [<xsl:value-of select="$Alt"/>]
-      </p>
+        <p>
+	  <xsl:call-template name="i18n"><xsl:with-param name="word">figureWord</xsl:with-param></xsl:call-template>
+	<xsl:text> </xsl:text>
+	<xsl:for-each select="self::tei:figure|parent::tei:figure">
+	<xsl:number level="any" count="tei:figure[tei:head]"/>
+	</xsl:for-each>
+	file <xsl:value-of select="$File"/>
+	[<xsl:value-of select="$Alt"/>]
+	</p>
         <hr/>
       </xsl:otherwise>
     </xsl:choose>

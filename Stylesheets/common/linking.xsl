@@ -133,7 +133,10 @@
     </xsl:when>
     <xsl:when test="ancestor::tei:back">
       <xsl:if test="not($numberBackHeadings='')">
-	<xsl:value-of select="$appendixWords"/><xsl:text> </xsl:text>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param
+		 name="word">appendixWords</xsl:with-param></xsl:call-template>
+	<xsl:text> </xsl:text>
 	<xsl:call-template name="numberBackDiv"/>
 	<xsl:if test="$minimal='false'">
 	  <xsl:value-of select="$numberSpacer"/>

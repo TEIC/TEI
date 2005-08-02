@@ -42,130 +42,174 @@
   <xsl:template match="tei:title" mode="htmlheader">
   <xsl:apply-templates/>
 </xsl:template>
+
   <xd:doc>
-    <xd:short>[common] </xd:short>
+    <xd:short>[common] Find a plausible main author name</xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template name="generateAuthor">
- <xsl:choose>
-   <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor">
-     <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor[1]" mode="author"/>
-  </xsl:when>
-  <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
-  <xsl:for-each
-      select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
-    <xsl:apply-templates/>
     <xsl:choose>
-      <xsl:when test="count(following-sibling::tei:author)=1"> and </xsl:when>
-      <xsl:when test="following-sibling::tei:author">, </xsl:when>
+      <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor">
+	<xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor[1]" mode="author"/>
+      </xsl:when>
+      <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
+	<xsl:for-each
+	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
+	  <xsl:apply-templates/>
+	  <xsl:choose>
+	    <xsl:when test="count(following-sibling::tei:author)=1"> and </xsl:when>
+	    <xsl:when test="following-sibling::tei:author">, </xsl:when>
+	  </xsl:choose>
+	</xsl:for-each>
+      </xsl:when>
+      <xsl:when
+	  test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/respStmt[tei:resp='author']">
+	<xsl:apply-templates 
+	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/respStmt[tei:resp='author'][1]/tei:name"/>
+      </xsl:when>
+      <xsl:when test="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor">
+	<xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor[1]" mode="author"/>
+      </xsl:when>
     </xsl:choose>
-  </xsl:for-each>
-  </xsl:when>
-    <xsl:when test="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor">
-      <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor[1]" mode="author"/>
-  </xsl:when>
-  </xsl:choose>
-</xsl:template>
+  </xsl:template>
+
+  <xd:doc>
+    <xd:short>[common] Find a plausible name of person responsible for
+    current revision</xd:short>
+    <xd:detail>&#160;</xd:detail>
+  </xd:doc>
+  <xsl:template name="generateRevAuthor">
+    <xsl:variable name="who">
+      <xsl:choose>
+	<xsl:when
+	    test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/@vcwho">
+	  <xsl:apply-templates 
+	      select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/@vcwho"/>
+	</xsl:when>
+	<xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change[1]/tei:respStmt/tei:name">
+	  <xsl:value-of
+	      select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change[1]/tei:respStmt/tei:name/text()"/>
+	</xsl:when>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="normalize-space($who)=concat('$Author', '$')"/>
+      <xsl:when test="starts-with($who,'$Author')"><!-- it's RCS -->
+	  <xsl:value-of select="normalize-space(substring-before(substring-after($who,'Author'),'$'))"/>
+      </xsl:when>
+      <xsl:when test="starts-with($who,'$LastChangedBy')"> <!-- it's Subversion -->
+	<xsl:value-of select="normalize-space(substring-before(substring-after($who,'LastChangedBy:'),'$'))"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$who"/>    
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <xd:doc>
     <xd:short>[common] </xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template name="generateAuthorList">
-<xsl:variable name="realauthor">
-  <xsl:call-template name="generateAuthor"/>
-</xsl:variable>
-<xsl:variable name="revauthor">
-<xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change[1]/tei:respStmt/tei:name/text()"/>
-</xsl:variable>
-<xsl:if test="not($realauthor = '')">
-  <xsl:text> </xsl:text>
-  <xsl:value-of select="$authorWord"/>
-  <xsl:text> </xsl:text>
-  <xsl:value-of select="$realauthor"/>
-</xsl:if>
-<xsl:if test="not($revauthor = '') and not(normalize-space($revauthor)=concat('$Author', '$'))">
- (<xsl:value-of select="$revisedWord"/><xsl:text> </xsl:text>
- <xsl:choose>
-  <xsl:when test="starts-with($revauthor,'$Author')"> <!-- it's RCS/CVS -->
-    <xsl:value-of select="normalize-space(substring-before(substring-after($revauthor,'Author'),'$'))"/>
-  </xsl:when>
-  <xsl:when test="starts-with($revauthor,'$LastChangedBy')"> <!-- it's Subversion -->
-    <xsl:value-of select="normalize-space(substring-before(substring-after($revauthor,'LastChangedBy:'),'$'))"/>
-  </xsl:when>
-  <xsl:otherwise>
-   <xsl:value-of select="$revauthor"/>    
-  </xsl:otherwise>
- </xsl:choose>
- <xsl:text>)</xsl:text>
-</xsl:if>
+    <xsl:variable name="realauthor">
+      <xsl:call-template name="generateAuthor"/>
+    </xsl:variable>
+    <xsl:variable name="revauthor">
+      <xsl:call-template name="generateRevAuthor"/>
+    </xsl:variable>
+    <xsl:if test="not($realauthor = '')">
+      <xsl:text> </xsl:text>
+      <xsl:call-template name="i18n"><xsl:with-param name="word">authorWord</xsl:with-param></xsl:call-template>
+      <xsl:text> </xsl:text>
+      <xsl:value-of select="$realauthor"/>
+    </xsl:if>
+    <xsl:if test="not($revauthor = '')">
+      (<xsl:call-template name="i18n"><xsl:with-param name="word">revisedWord</xsl:with-param></xsl:call-template>
+      <xsl:text> </xsl:text>
+      <xsl:value-of select="$revauthor"/>
+      <xsl:text>)</xsl:text>
+    </xsl:if>
+  </xsl:template>
 
-</xsl:template>
+
   <xd:doc>
-    <xd:short>[common] </xd:short>
-    <xd:param name="showRev">whether to show revision date</xd:param>
+    <xd:short>[common] Work out the last revision date of the document </xd:short>
+    <xd:detail>&#160;</xd:detail>
+  </xd:doc>
+  <xsl:template name="generateRevDate">
+    <xsl:variable name="when">
+    <xsl:choose>
+      <xsl:when
+	  test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/@vcdate">
+	<xsl:apply-templates 
+	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/@vcdateq"/>
+      </xsl:when>
+      <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/descendant::tei:date">
+	<xsl:value-of
+	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/descendant::tei:date[1]"/>
+      </xsl:when>
+    </xsl:choose>
+    </xsl:variable>
+      <xsl:choose>
+	<xsl:when test="starts-with($when,'$Date')"> <!-- it's RCS -->
+	  <xsl:value-of select="substring($when,16,2)"/>
+	  <xsl:text>/</xsl:text>
+	  <xsl:value-of select="substring($when,13,2)"/>
+	  <xsl:text>/</xsl:text>
+	  <xsl:value-of select="substring($when,8,4)"/> 
+	</xsl:when>
+	<xsl:when test="starts-with($when,'$LastChangedDate')"> <!-- it's Subversion-->
+	  <xsl:value-of select="substring-before(substring-after($when,'('),')')"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$when"/>    
+	</xsl:otherwise>
+      </xsl:choose>
+  </xsl:template>
+
+  <xd:doc>
+    <xd:short>[common] Work out the publish date of the document </xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template name="generateDate">
-  <xsl:param name="showRev">true</xsl:param>
-<xsl:variable name="realdate">
- <xsl:choose>
-   <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docDate">
-  <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docDate" mode="date"/>
-  </xsl:when>
-  <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/descendant::tei:date">
-  <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/descendant::tei:date[1]"/>
-    </xsl:when>
-  </xsl:choose>
-</xsl:variable>
+      <xsl:choose>
+	<xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docDate">
+	  <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docDate" mode="date"/>
+	</xsl:when>
+	<xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:date">
+	  <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:date"/>
+	</xsl:when>
+	<xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/descendant::tei:date">
+	  <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/descendant::tei:date[1]"/>
+	</xsl:when>
+	<xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
+	  <xsl:apply-templates
+	      select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
+	  </xsl:apply-templates>
+	</xsl:when>
+      </xsl:choose>
+  </xsl:template>
 
-<xsl:variable name="revdate">
-<xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/descendant::tei:date[1]"/>
-</xsl:variable>
-<xsl:value-of select="$dateWord"/><xsl:text> </xsl:text>
-<xsl:if test="not($realdate = '')">
-  <xsl:value-of select="$realdate"/>
-</xsl:if>
-
-
-<xsl:if test="$showRev='true' and not($revdate = '') and not ($revdate=concat('$Date','$'))">
-  (<xsl:value-of select="$revisedWord"/><xsl:text> </xsl:text>
-  <xsl:choose>
-  <xsl:when test="starts-with($revdate,'$Date')"> <!-- it's RCS -->
-    <xsl:value-of select="substring($revdate,16,2)"/>
-    <xsl:text>/</xsl:text>
-    <xsl:value-of select="substring($revdate,13,2)"/>
-    <xsl:text>/</xsl:text>
-    <xsl:value-of select="substring($revdate,8,4)"/> 
-  </xsl:when>
-  <xsl:when test="starts-with($revdate,'$LastChangedDate')"> <!-- it's SVN -->
-    <xsl:value-of select="substring-before(substring-after($revdate,'('),')')"/>
-  </xsl:when>
-  <xsl:otherwise>
-   <xsl:value-of select="$revdate"/>    
-  </xsl:otherwise>
- </xsl:choose>
- <xsl:text>) </xsl:text></xsl:if>
-
-</xsl:template>
   <xd:doc>
     <xd:short>[common] </xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template name="generateTitle">
- <xsl:choose>
-   <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle">
-     <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle"/>
-   </xsl:when>
-   <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle">
-     <xsl:apply-templates select="ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle"/>
-     </xsl:when>
-   <xsl:otherwise>
-     <xsl:for-each select="ancestor-or-self::tei:TEI|ancestor-or-self::tei:teiCorpus">
-       <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title" mode="htmlheader"/>
-     </xsl:for-each>
-   </xsl:otherwise>
-</xsl:choose>
-</xsl:template>
+    <xsl:choose>
+      <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle">
+	<xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle"/>
+      </xsl:when>
+      <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle">
+	<xsl:apply-templates select="ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:for-each select="ancestor-or-self::tei:TEI|ancestor-or-self::tei:teiCorpus">
+	  <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title" mode="htmlheader"/>
+	</xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <xd:doc>
     <xd:short>[common] </xd:short>
     <xd:detail>&#160;</xd:detail>
