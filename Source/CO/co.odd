@@ -1134,6 +1134,7 @@ was a <hi rend="italic">daughter</hi>.</egXML>
 	<!-- italics there, so we leave it undisambiguated.  (msm)    -->
 </p></div3></div2>
 <div2 type="section" xml:id="COED"><head>Simple Editorial Changes</head>
+
 <p>As in editing a printed text, so in encoding a text in electronic
 form, it may be necessary to accommodate editorial comment on the text
 and to render account of any changes made to the text in preparing it.
@@ -1153,17 +1154,35 @@ of large or heterogenous spans of text, the mechanisms described in
 chapter <ptr target="#SA"/> should be used. To encode multiple
 witnesses of a particular text, a similar mechanism designed
 specifically for critical editions is described in chapter <ptr target="#TC"/>.</p>
-<p>Most of the elements discussed here (<gi>sic</gi>, <gi>corr</gi>,
+
+<p>For most of the elements discussed here, some encoders may wish to
+indicate both a <term>responsibility</term>, that is, a code
+indicating the person or agency responsible for making the editorial
+intervention in question, and also am indication of the degree of
+<term>certainty</term> which the encoder wishes to associate with the
+intervention. Because these requirements are common to many of the
+elements discussed in this section, they are provided by an attribute
+class, called <ident type="class">intervention</ident>. All  members of this
+class carry the following optional attributes:
+<specList><specDesc key="tei.intervention"/></specList> 
+</p>
+
+<p>Many of the elements discussed here (specifically <gi>sic</gi>, <gi>corr</gi>,
 <gi>reg</gi>, <gi>orig</gi>, <gi>unclear</gi>, <gi>add</gi>, and
-<gi>del</gi>) can be used both to simply indicate that the text
-encoded as the element's content is of the particular editorial
-interest indicated, or, when wrapped with the <gi>choice</gi> element,
-can be used to record simultaneously a text in its
+<gi>del</gi>) can be used in two ways. Their primary purpose is to indicate that the text
+encoded as the element's content represents an editorial intervention
+(or non-intervention) of a specific kind. However, pairs or other
+meaningful groupings of such elements can also be supplied,  wrapped
+withing a special purpose  <gi>choice</gi> element,
+in order to represent  simultaneously a text in its
 <soCalled>original</soCalled> uncorrected and unaltered form, and also
 one or more <soCalled>edited</soCalled> forms. Such grouped elements
-enable software to move automatically from one
-<soCalled>view</soCalled> of the text to another.</p>
-<p>The <gi>choice</gi> element indicates that its child elements should
+enable software to switch automatically between one
+<soCalled>view</soCalled> of a text and another, so that (for example)
+a style-sheet may be set to display either the text in its original
+form or with editorial interventions of particular kinds.</p>
+
+<!--<p>The <gi>choice</gi> element indicates that its child elements should
 be considered as mutually exclusive or in parallel, depending on the
 processing goals. That is, the elements described here are intended to
 be used when multiple variations or views of a single piece of source
@@ -1171,7 +1190,7 @@ text (say, the original erroneous version and the corrected version)
 are to be recorded. One common, but certainly not the only, processing
 model for such an element is that a style-sheet would select one and
 only one of the children of <gi>choice</gi> for display, printing, or
-other processing.</p>
+other processing.</p>-->
 
 <p>Three categories of editorial intervention are discussed in this
 section:
@@ -1183,7 +1202,7 @@ non-standard, or eccentric forms</item>
 omissions</item></list></p>
 <p>A more extended treatment of the use of these tags in
 transcriptional and editorial work is given in chapter <ptr target="#PH"/>.</p>
-<div3 type="subsection" xml:id="COEDCOR"><head>Correction of Apparent Errors</head>
+<div3 type="subsection" xml:id="COEDCOR"><head>Apparent Errors</head>
 <p>When the copy text is manifestly faulty, an encoder or transcriber
 may elect simply to correct it without comment. For scholarly
 purposes, it will often be more generally useful to record both the
@@ -1223,20 +1242,27 @@ wrapped in a <gi>choice</gi>:
  
 <egXML xmlns="http://www.tei-c.org/ns/Examples">… marginal comments which indicate that the
   <choice>
-    <corr resp="msm">dates</corr>
+    <corr resp="#msm">dates</corr>
     <sic>date's</sic>
-  </choice><![CDATA[ mentioned in the main body of the text are incorrect.]]></egXML>The <gi>sic</gi> and <gi>corr</gi> elements can appear in either order.</p><p>The <att>cert</att> attribute on the
-<gi>corr</gi> element permits a statement of the degree of editorial
-confidence in a particular correction. For example, using a
+  </choice><![CDATA[ mentioned in the main body of the text are
+  incorrect.]]></egXML>The <gi>sic</gi> and <gi>corr</gi> elements can
+  appear in either order.</p><p>Note in this example the use of the <att>resp</att>
+  attribute, inherited from <ident type="class">intervention</ident>
+  class, to indicate the person responsible for correction. The same
+  class makes available a  <att>cert</att> attribute,which may be used
+  to indicate the degree of editorial
+confidence in a particular correction, as in the following example:
+<!-- For example, using a
 confidence scale of one to ten, an editor may indicate the
 conjectural status of a correction by assigning a value to this
 attribute of less than ten. In the following instance, some
-uncertainty is expressed concerning a commonly-accepted emendation:
+uncertainty is expressed concerning a commonly-accepted emendation:-->
  
-<egXML xmlns="http://www.tei-c.org/ns/Examples">An <choice><corr cert="8">Autumn</corr><sic>Antony</sic></choice><![CDATA[ it was,
+<egXML xmlns="http://www.tei-c.org/ns/Examples">An <choice><corr cert="high">Autumn</corr><sic>Antony</sic></choice><![CDATA[ it was,
 That grew the more by reaping]]></egXML>
 <!-- Antony and Cleopatra, Act 5, scene 2 -->
-See further the discussion in section <ptr target="#PHCC"/>.</p><p>Where the correction takes the form of adding text, the encoder
+See further the discussion in section <ptr target="#PHCC"/>.</p>
+<p>Where the correction takes the form of adding text, the encoder
 must choose whether to use the <gi>corr</gi> (or <gi>sic</gi>) tag,
 the <gi>add</gi> tag (see section <ptr target="#COEDADD"/> below), or
 the more detailed facilities provided by the additional tag set for
@@ -1266,10 +1292,7 @@ source description should be used (see section <ptr target="#PHCC"/>).</item>
  
 <specGrp xml:id="DCOEDC" n="Editorial tags for correction">
 &sic.odd;
-
-
 &corr.odd;
-
 &choice.odd;
 </specGrp>
 </p></div3><div3 type="subsection" xml:id="COEDREG"><head>Regularization and Normalization</head>
@@ -1311,7 +1334,7 @@ xmlns="http://www.tei-c.org/ns/Examples"><p>...how godly a
 <reg>deed</reg> it is to <reg>overthrow</reg> so wicked a race the
 world may judge: for my part I <reg>think</reg>
 there <reg>cannot</reg> be a greater
-<reg>sacrifice</reg> to God.</p></egXML></p><p>More usefully, the encoder may elect to record both old and new
+<reg>sacrifice</reg> to God.</p></egXML></p><p>Alternatively, the encoder may elect to record both old and new
 spellings, so that (for example) the same electronic text may serve as
 the basis of an old- or new-spelling edition:
  
@@ -1332,10 +1355,11 @@ there <choice><orig>canot</orig><reg>cannot</reg></choice> be a greater
 	<!-- *ibid*, 37-39, for Essex to Privy Council, Sept. 29,     -->
 	<!-- 1573.  Barkley to Burghley, May 14, 1574, S.P. 63/46,    -->
 	<!-- no. 15, P.R.O."                                          -->
- </p><p>The <att>resp</att> attribute should be used to specify the agency
-responsible for the regularization. This may be an identifiable
+
+ </p><p>As elsewhere, the <att>resp</att> attribute should be used to specify the agency
+responsible for the regularization. <!--This may be an identifiable
 individual, for example an editor, or a descriptive phrase such as
-<mentioned>copyist</mentioned>. For example, in the first stanza of the Old
+<mentioned>copyist</mentioned>. --> For example, in the first stanza of the Old
 Norse poem <title>Gr&#xF3;galdr</title>, the manuscript form
 <mentioned>dura</mentioned> is usually regularized in modern editions to
 <mentioned>dyra</mentioned> <gloss>doors</gloss>. The manuscript's <q>vek ek
@@ -1350,8 +1374,6 @@ regularization in two ways, as follows:
  
 <specGrp xml:id="DCOEDR" n="Editorial tags for regularization">
 &reg.odd;
-
-
 &orig.odd;
 </specGrp>
 </p></div3><div3 type="subsection" xml:id="COEDADD"><head>Additions, Deletions, and Omissions</head>
@@ -1362,8 +1384,8 @@ editorial practices:
 <specList>
   <specDesc key="gap" atts="reason extent"/>
   <specDesc key="unclear" atts="reason"/>
-  <specDesc key="add" atts="place hand cert"/>
-  <specDesc key="del" atts="type status hand cert"/>
+  <specDesc key="add" atts="place hand"/>
+  <specDesc key="del" atts="type status hand"/>
   <specDesc key="choice"/>
 </specList></p><p>Encoders may choose to omit parts of the copy text for reasons
 ranging from illegibility of the source or impossibility of transcribing
@@ -1402,7 +1424,9 @@ where words or phrases have been added or deleted in the copy text.
 They are not appropriate where longer passages have been added or
 deleted, which span several elements; for these, the elements
 <gi>addSpan</gi> and <gi>delSpan</gi>, or other mechanisms described in
-chapter <ptr target="#PH"/> must be used.</p><p>Additions to a text may be recorded for a number of reasons.
+chapter <ptr target="#PH"/> must be used.</p>
+
+<p>Additions to a text may be recorded for a number of reasons.
 Sometimes they are marked in a distinctive way in the source text, for
 example by brackets or insertion above the line (<term rend="noindex">supralinear</term> insertion),<index><indexTerm>additions</indexTerm><index><indexTerm>supralinear</indexTerm></index></index><index><indexTerm>insertions</indexTerm><index><indexTerm>supralinear</indexTerm></index></index><index><indexTerm>supralinear insertions</indexTerm></index> as in
 the following example, taken from a 19th century manuscript:
@@ -1424,7 +1448,7 @@ transcribing a partially inaudible or illegible source. Its
 person responsible for the conjectured reading.</p><p>For example:
  
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><l>And where the sandy mountain Fenwick scald</l>
-<l><unclear reason="ink blot" resp="LB">The</unclear> sea between
+<l><unclear reason="ink blot" resp="#LB">The</unclear> sea between
 yet hence his pray'r prevail'd</l></egXML>
 <!-- Marvell, Horatian ode, ms pages from Bod MS Eng Poet d.49 -->
 or from a spoken text:
@@ -1441,19 +1465,22 @@ various possible readings can be simultaneously encoded using the
 confidence about the variant readings.
 <!--Need better, preferably believable if not real, example:-->
 The following fictitious
-example is illustriative, although in this case it is easy to verify
+example is illustrative, although in this case it is easy to verify
 the correct reading from other witnesses.
 <egXML xmlns="http://www.tei-c.org/ns/Examples">His senses were all
 alert, his breath was suspended, his blood had stilled its tides as if
 to assist the silence. Who—what had <choice>
-  <unclear cert="0.4">woken</unclear>
-  <unclear cert="0.1">waken</unclear>
-  <unclear cert="0.5">waked</unclear>
+  <unclear cert="high">woken</unclear>
+  <unclear cert="low">waken</unclear>
+  <unclear cert="medium">waked</unclear>
 </choice><![CDATA[ him, and where was it?]]></egXML>
 <note type="cit" resp="sb">Ambrose Bierce, <title>The Boarded
 Window</title>; p. 370 of my wife's 1927 First Modern Library edition
-of <title>In the Midst of Life</title>.</note></p><p>Where the material affected is entirely illegible or inaudible, the
-<gi>gap</gi> element discussed above should be used in preference.</p><p>The <gi>del</gi> element is used to mark material which is deleted in
+of <title>In the Midst of Life</title>.</note></p>
+<p>Where the material affected is entirely illegible or inaudible, the
+<gi>gap</gi> element discussed above should be used in preference.</p>
+
+<p>The <gi>del</gi> element is used to mark material which is deleted in
 the source but which can still be read with some degree of confidence,
 as opposed to material which has been omitted by the encoder or
 transcriber either because it is entirely illegible or for some other
@@ -1467,7 +1494,9 @@ humorous purposes:
 <l>Norway! My soul resides in your watery
 <del type="overstrike">fiords fyords fiiords</del></l>
 <l>Inlets.</l></egXML> 
-<!-- S. Townsend: The growing pains of Adrian Mole (1984) p.43 --></p><p>The <att>type</att> attribute may be used to distinguish different
+<note type="cit"> S. Townsend: The growing pains of Adrian Mole (1984)
+p.43 </note>
+</p><p>The <att>type</att> attribute may be used to distinguish different
 methods of deletion in manuscript or typescript material, as in this
 line from the typescript of Eliot's <title>Waste Land</title>:
  
@@ -1484,7 +1513,8 @@ splendour of Corinthian white and gold</l></egXML>
 <!-- the preceding example had del and add wrapped in a choice: that's
 definite nonsense, but it;s not clear what the combining element
 should be LB 14 dec 04 -->
- </p><p>The <gi>del</gi> element should not be used where the deletion is
+ </p>
+<p>The <gi>del</gi> element should not be used where the deletion is
 such that material cannot be read with confidence, or read at all, or
 where the material has been omitted by the transcriber or editor for
 some other reason. Where the material cannot be read with confidence
@@ -1523,26 +1553,16 @@ and hence the deletion of text. Neither the <gi>del</gi> nor
  </p><p>For any detailed transcription of a manuscript or typescript with
 more than trivial amounts of alteration, the reader should consult
 chapter <ptr target="#TC"/>, and chapter <ptr target="#PH"/>.</p><p>These elements are formally defined as follows:
- 
 <specGrp xml:id="DCOEDA" n="Other editorial tags">
 &gap.odd;
-
-
 &add.odd;
-
-
 &del.odd;
-
-
 &unclear.odd;
 </specGrp>
 </p></div3></div2>
-<!-- Keep this comment at the end of the file
-     Local variables:
-     mode: nxml
-     End:
--->
+
 <div2 type="section" xml:id="CONA"><head>Names, Numbers, Dates, Abbreviations, and Addresses</head>
+
 <p>This section describes a number of  textual features which it is
 often convenient to distinguish from their surrounding text.  Names,
 dates, and numbers are likely to be of particular importance to  the
@@ -1850,20 +1870,14 @@ attribute to indicate a database key value, as in the following example:
 
 &measure.odd;
 </specGrp>
- 	
-	
-	
-	
-	
  </p></div3>
 <div3 type="subsection" xml:id="CONADA"><head>Dates and Times</head>
 <p>Dates and times, like numbers, can appear in widely varying
 culture- and language-dependent forms, and can pose similar problems
 in automatic language processing.  The following elements are provided
 to identify them:
- 	
- 
-<specList><specDesc key="date" atts="calendar value"/><specDesc key="time" atts="value"/><specDesc key="dateRange" atts="calendar from to exact"/><specDesc key="timeRange" atts="from to exact"/></specList>
+ <specList>
+<specDesc key="date" atts="calendar value"/><specDesc key="time" atts="value"/><specDesc key="dateRange" atts="calendar from to exact"/><specDesc key="timeRange" atts="from to exact"/></specList>
  </p>
 <p>Dates can occur virtually anywhere in a text, but in some contexts
 (e.g. bibliographic citations) their encoding is recommended or
@@ -1929,7 +1943,15 @@ century</dateRange>, and <title>Hervarar
 saga</title> dates from <date value="1300">around 1300</date>.</p></egXML>
 <!-- T. M. Andersson, A Preface to the Nibelungenlied         -->
 	<!-- (Stanford:  Stanford University Press, 1987) p. 4        -->
-</p><p>These elements are formally defined as follows:
+</p>
+
+<p>The <att>calendar</att> attribute may be used to specify a date in
+any calendar system; if the <att>value</att> attribute is also supplied,
+it should specify the equivalent date in the Gregorian calendar. </p>
+
+<!-- example needed -->
+
+<p>These elements are formally defined as follows:
  
 <specGrp xml:id="DCODA" n="Dates and times">
 &date.odd;
