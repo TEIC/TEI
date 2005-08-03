@@ -27,17 +27,6 @@ of distinctions they wish to draw in their transcriptions.  Speech
 regarded as a purely acoustic phenomenon may well require different
 methods from those outlined here, as may speech regarded solely as a
 process of social interaction.
- 
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
 </p>
 
 <p>This chapter begins with a discussion of some of the problems
@@ -80,49 +69,15 @@ in the file <ident type="file">spoken.ent</ident> using the
 following parameter entities:
  
 <moduleSpec xml:id="DTSCLA" type="decls" ident="spoken-decl"><altIdent type="FPI">Class declarations for Transcribed Speech</altIdent><desc>Class declarations for Transcribed Speech</desc></moduleSpec><!--publicID:  -//TEI P5//ENTITIES Element Classes for Transcriptions of Speech//EN-->
-
-
-
-
 &compspok.odd;
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
 &tsmix.odd;
-
-
-
-
-
-
-
-
-
-
-
-
  
 The elements of the base tag set for transcribed speech are declared in
 the file <ident type="file">spoken.dtd</ident>, which is organized as
 follows:
  
 <moduleSpec xml:id="DTS" ident="spoken"><altIdent type="FPI">Base tag set for Transcribed Speech</altIdent><desc>Transcribed Speech</desc></moduleSpec><!--publicID:  -//TEI P5//ELEMENTS Base Element Set for Transcriptions of Speech//EN-->
-
-
 <specGrpRef target="#DTSCOMP"/>
-
 </p> 
 
 
@@ -216,19 +171,16 @@ Deviation from these assumptions may be specified (for example, the
 <code type="value">compos</code> to specify that the components of the
 text are discrete) but is not recommended.
  </p>
+
 <p>Within a <gi>text</gi> it may be necessary to identify subdivisions
 of various kinds, if only for convenience of handling.  The neutral
 <gi>div</gi> element discussed in section <ptr target="#DSDIV"/> is
 recommended for this purpose.  It may be found useful also for
 representing subdivisions relating to discourse structure, speech act
-theory, transactional analysis, etc., provided that these divisions are
-hierarchically well-behaved.
-	
-	
-Where they are not,
-as is often the case, the mechanisms discussed in chapters <ptr target="#SA"/>
- and <ptr target="#NH"/>
- may be used. 
+theory, transactional analysis, etc., provided that these divisions
+are hierarchically well-behaved.  Where they are not, as is often the
+case, the mechanisms discussed in chapters <ptr target="#SA"/> and
+<ptr target="#NH"/> may be used.
 
  
  </p>
@@ -340,7 +292,13 @@ according to these Guidelines:
  
 <specList><specDesc key="u"/><specDesc key="pause"/><specDesc key="vocal"/><specDesc key="kinesic"/><specDesc key="event"/><specDesc key="writing"/><specDesc key="shift"/></specList>
  </p>
-<p>Each of these is further discussed and specified below in sections <ptr target="#TSBAUT"/>
+<p>These elements are all members of the <ident
+type="class">tei.ascribed</ident> class, from which they inherit the
+<att>who</att> attribute:
+<specList><specDesc atts="who"/></specList>
+</p>
+
+<p>Each of these elements is further discussed and specified below in sections <ptr target="#TSBAUT"/>
  to <ptr target="#TSBAWR"/>.
  </p>
 <p>We can show the relationship between four of these constituents of
@@ -420,7 +378,7 @@ surrounding elements within a given division or text by means of the
 <p>Each distinct <term>utterance</term> in a spoken text is represented
 by a <gi>u</gi> element, described as follows:
  
-<specList><specDesc key="u" atts="who trans"/>
+<specList><specDesc key="u" atts="trans"/>
 </specList>
  </p>
 <p>Use of the <att>who</att> attribute to associate the utterance with a
@@ -491,7 +449,7 @@ below, or the <gi>event</gi> element described in section <ptr target="#TSBAVO"/
 <p>The <gi>pause</gi> empty element is used to indicate a perceived
 pause, either between or within utterances.
  
-<specList><specDesc key="pause" atts="who"/></specList>
+<specList><specDesc key="pause" /></specList>
  
 A pause contained by an utterance applies to the speaker of that
 utterance.  A pause between utterances applies to all speakers.  The
@@ -518,7 +476,7 @@ utterances.
 non-transcribed semi-lexical or non-lexical phenomena either between or
 within utterances.
  
-<specList><specDesc key="vocal" atts="who desc iterated"/><specDesc key="kinesic" atts="who desc iterated"/><specDesc key="event" atts="who desc iterated"/></specList>
+<specList><specDesc key="vocal" atts="desc iterated"/><specDesc key="kinesic" atts="who desc iterated"/><specDesc key="event" atts="desc iterated"/></specList>
  </p>
 <p>The <att>who</att> attribute should be used to specify the person or
 group responsible for a vocal, kinesic or event which is contained
@@ -589,7 +547,7 @@ participant shows written text to another.  The <gi>writing</gi> element
 may be used to distinguish such written elements from the spoken text in
 which they are embedded.
  
-<specList><specDesc key="writing" atts="who gradual type"/></specList>
+<specList><specDesc key="writing" atts="gradual type"/></specList>
  
 <!-- example needed -->
  
