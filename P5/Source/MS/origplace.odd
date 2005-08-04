@@ -18,8 +18,56 @@ place of origin for a manuscript or manuscript part. </desc>
 <!--<!ELEMENT origPlace  - -  (#PCDATA)>-->
 <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
   </content>
-  <attList/>
-  
+  <attList>
+    <attDef ident="placeAttrib" usage="opt">
+	<equiv/>
+	<desc>indicates whether the attribution in question is definite,
+	feasible, or has been assigned by the cataloguer.</desc>
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valList type="closed">
+        <valItem ident="dated">
+          <equiv/>
+          <gloss>the item is explicitly placed.</gloss>
+        </valItem>
+        <valItem ident="datable">
+          <equiv/>
+          <gloss>it is possible to place the item explicitly.</gloss>
+        </valItem>
+        <valItem ident="unknown">
+          <equiv/>
+          <gloss>the attribute has been made by the cataloguer on other
+	  grounds. </gloss>
+        </valItem>
+</valList>
+      
+      <remarks>
+        <p/>
+      </remarks>
+    </attDef>
+    <attDef ident="evidence" usage="opt">
+	<equiv/>
+	<desc>indicates the nature of the evidence supporting the reliability or
+  accuracy of the attribution.</desc>
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valList type="open">
+        <valItem ident="internal">
+          <equiv/>
+          <gloss>there is internal evidence to support the attribution.</gloss>
+        </valItem>
+        <valItem ident="external">
+          <equiv/>
+          <gloss>there is internal evidence to support the attribution.</gloss>
+        </valItem>
+        <valItem ident="attributed">
+          <equiv/>
+          <gloss>the attribution has been made by the cataloguer or scholar.</gloss>
+        </valItem>
+</valList>
+      <remarks>
+        <p/>
+      </remarks>
+    </attDef>
+  </attList>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0"><![CDATA[<origPlace>Birmingham</origPlace>]]></egXML>
   </exemplum>
