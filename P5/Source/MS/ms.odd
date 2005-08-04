@@ -7,7 +7,6 @@ See the file COPYING for details.
 
 $Date$
 $Author$
-
 -->
 
 <div1 xmlns="http://www.tei-c.org/ns/1.0" xml:id="MS">
@@ -54,21 +53,16 @@ differing degrees.</p>
 <head>The manuscript description element</head>
 
 <p>The <gi>msDescription</gi> element will normally appear within the
-<gi>sourceDescription</gi> element of the header of a TEI conformant
+<gi>sourceDesc</gi> element of the header of a TEI conformant
 document, where the document being encoded is a digital representation
 of some manuscript original, whether as a transcription, as a
 collection of digital images, or as some combination of the
 two. However, in cases where the document being encoded is essentially a
 collection of manuscript descriptions, the <gi>msDescription</gi>
-element may be used in the same way as the bibliographic elements (for
-example, <gi>bibl</gi> <gi>biblStruct</gi>) making up the TEI element
+element may be used in the same way as the bibliographic elements (<gi>bibl</gi> <gi>biblStruct</gi>, and <gi>biblItem</gi>) making up the TEI element
 class <ident>tei.bibl</ident>. These typically appear within the
-<gi>listBibl</gi> element.</p>
-<!-- what does this mean exactly? That if your document is a catalogue you would wrap all your documents in a listBibl? If so, if doesn't work-->
-
-<p>The <gi>msDescription</gi> element carries some special purpose
-attributes, listed below, which categorise the item described in
-various ways. 
+<gi>listBibl</gi> element.
+<!-- what does this mean exactly? That if your document is a catalogue you would wrap all your documents in a listBibl? If so, if doesn't work. Also, what is the status of biblStruct, and shouldn't one also be able to use msDescription in witList? -->
 
 <specList>
 <specDesc key="msDescription"/>
@@ -89,69 +83,95 @@ remainder of this chapter.
 </specList></p>
 
 <p>The first of these components, <gi>msIdentifier</gi>, is the only
-one which is mandatory; it is described in more detail in <ptr target="#msid"/>
-below. It is followed optionally by one or more <gi>head</gi>
-elements, each holding a brief
-heading (see <ptr target="#msdo"/>), and then either one or more
-paragraphs, marked up as a series of <gi>p</gi> elements, or one or
-more of the specialized elements <gi>msContents</gi> (<ptr target="#msco"/>), <gi>physDesc</gi> (<ptr target="#msph"/>),
-<gi>history</gi> (<ptr target="#mshy"/>), and <gi>additional</gi> (<ptr target="#msad"/>). Finally, in the case of a composite manuscript, a full 
-description may also contain one or more <gi>msPart</gi>
-elements (<ptr target="#mspt"/>).</p>
+one which is mandatory; it is described in more detail in <ptr
+target="#msid"/> below. It is followed optionally by one or more
+<gi>head</gi> elements, each holding a brief heading (see <ptr
+target="#msdo"/>), and then either one or more paragraphs, marked up
+as a series of <gi>p</gi> elements, or one or more of the specialized
+elements <gi>msContents</gi> (<ptr target="#msco"/>),
+<gi>physDesc</gi> (<ptr target="#msph"/>), <gi>history</gi> (<ptr
+target="#mshy"/>), and <gi>additional</gi> (<ptr target="#msad"/>).
+These elements are all optional, but if used they must appear in the
+order given here.  Finally, in the case of a composite manuscript, a
+full description may also contain one or more <gi>msPart</gi> elements
+(<ptr target="#mspt"/>).</p>
 
 
 <p>Here is a very simple example of a complete manuscript description, using no additional elements apart from the mandatory <gi>msIdentifier</gi>:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<msDescription status="uni">
+<msDescription>
 <msIdentifier>
 <settlement>Oxford</settlement>
 <repository>Bodleian Library</repository>
 <idno>MS. Rawlinson poet. 149</idno>
 </msIdentifier>
-<p>Geoffrey Chaucer, The Canterbury Tales. 1450-1475, Pembrokeshire (Wales).</p>
+<p>Geoffrey Chaucer, The Canterbury Tales. Written in the third 
+quarter of the 15th century in Pembrokeshire (Wales). Mutilated 
+at beginning and end; contains A431-I1092 in the Riverside edition 
+numbering.</p>
+<p>Parchment. 136 folios: 280 x 190 mm. Twenty-three quires of 
+eight, of which only nine are not defective, and a final (defective) 
+quire of six. Margined and ruled with crayon through fol. 51v, 
+thereafter in drypoint. Single columns of 38-74 lines per page.</p>
+<p>Four hands, varying between cursive anglicana (the first hand) 
+and mixed secretary (the fourth hand). Hand 4 is responsible for 
+around two-thirds of the manuscript, from fol. 45 to the end; 
+hand 3 writes only three lines and a few words on fol. 38r; 
+the other two hands divide the remainder of the manuscript, 
+to fol. 45, between them.</p>
 </msDescription>
 </egXML></p>
 
 <p>Here is the same description, using some of the manuscript-specific phrase-level elements described below, but still fairly simple:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<msDescription status="uni">
+<msDescription>
 <msIdentifier>
 <settlement>Oxford</settlement>
 <repository>Bodleian Library</repository>
 <idno>MS. Rawlinson poet. 149</idno>
 </msIdentifier>
-<p>Geoffrey Chaucer, <title>The Canterbury Tales</title>.
-<origDate notBefore="1450" notAfter="1475">1450-1475</origDate>,
-<origPlace>Pembrokeshire (Wales)</origPlace>.</p>
-</msDescription>
+<p>Geoffrey Chaucer, <title>The Canterbury Tales</title>. Written 
+in <origDate notBefore="1475" notAfter="1500">the third quarter of 
+the 15th century</origDate> in <origPlace>Pembrokeshire, Wales</origPlace>. 
+Mutilated at beginning and end; contains A431-I1092 in the Riverside 
+edition numbering.</p>
+<p><material type="perg">Parchment</material>; 136 folios: 
+<dimensions><height>280</height><width>190</width></dimensions>. 
+Twenty-three quires of eight, of which only nine are not defective, 
+and a final (defective) quire of six. Margined and ruled with crayon 
+through fol. 51v, thereafter in drypoint. Single columns of 38-74 
+lines per page.</p>
+<p>Four hands, varying between <term type="script">cursive anglicana</term> 
+(the first hand) and <term type="script">mixed secretary</term> (the fourth 
+hand). Hand 4 is responsible for around two-thirds of the manuscript, from 
+fol. 45 to the end; hand 3 writes only three lines and a few words on fol. 
+38r; the other two hands divide the remainder of the manuscript, to fol. 45, 
+between them.</p>
+</msDescription> 
 </egXML></p>
 
-<!-- do we need/want this (what follows) here ? -->
-<p>And finally, a more ambitious description for the same manuscript, using many, but by no means all, of the elements described in the following sections.
+<p>And finally, a more structured description of the same manuscript, using many, but by no means all, of the elements described in the following sections. Note that some slight reordering of the material has been necessary.
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<msDescription status="uni">
+<msDescription>
 <msIdentifier>
 <settlement>Oxford</settlement>
 <repository>Bodleian Library</repository>
 <idno>MS. Rawlinson poet. 149</idno>
 </msIdentifier>
 <msContents>
-<msItem>
+<msItem defective="true">
 <author>Geoffrey Chaucer</author>
-<title>The Canterbury Tales</title>
-<rubric>The Tales of Canterbury</rubric>
-<note>Mutilated at beginning and end; contains A431-I1092 
-in the Riverside edition numbering.</note>
-<textLang>Middle English</textLang>
+<title type="uniform">The Canterbury Tales</title>
+<note>Mutilated at beginning and end; contains A431-I1092 in the 
+Riverside edition numbering.</note>
 </msItem>
 </msContents>
 <physDesc>
 <objectDesc form="codex">
-<supportDesc>
-<support><p>Parchment</p></support>
-<extent>136 folios:
-<dimensions><height>28</height><width>19</width></dimensions>
-</extent>
+<supportDesc material="perg">
+<support><p>Parchment.</p></support>
+<extent>136 folios: <dimensions><height>280</height>
+<width>190</width></dimensions></extent>
 <collation>
 <p>Twenty-three quires of eight, of which only nine are not defective, 
 and a final (defective) quire of six.</p>
@@ -159,47 +179,25 @@ and a final (defective) quire of six.</p>
 </supportDesc>
 <layoutDesc>
 <layout columns="1" ruledLines="38-74">
-<p>Margined and ruled with crayon through fol. 51v, thereafter in drypoint.
- Single columns of 38-74 lines per page.</p>
+<p>Margined and ruled with crayon through fol. 51v, thereafter in drypoint. 
+Single columns of 38-74 lines per page.</p>
 </layout>
 </layoutDesc>
 </objectDesc>
 <handDesc hands="4">
-<p>Four hands, varying between cursive anglicana (the first hand) and mixed
-secretary (the fourth hand). Hand 4 is responsible for around
-two-thirds of the manuscript, from fol. 45 to the end; hand 3 writes
-only three lines and a few words on fol. 38r; the other two hands divide the
-remainder of the manuscript, up to fol. 45, between them.</p></handDesc>
-<additions><p>There is a fifteenth-century note in the margin of fol. 114v.</p>
-</additions>
+<p>Four hands, varying between <term type="script">cursive anglicana</term> 
+(the first hand) and <term type="script">mixed secretary</term> (the fourth 
+hand). Hand 4 is responsible for around two-thirds of the manuscript, from 
+fol. 45 to the end; hand 3 writes only three lines and a few words on fol. 38r; 
+the other two hands divide the remainder of the manuscript, up to fol. 45, 
+between them.</p></handDesc>
 </physDesc>
 <history>
 <origin>
-<p>Written in the <origDate notBefore="1450" notAfter="1475">third quarter of the 15th century</origDate> in <origPlace>Pembrokeshire (Wales)</origPlace>.</p>
+<p>Written in <origDate notBefore="1450" notAfter="1475">the third quarter of 
+the 15th century</origDate> in <origPlace>Pembrokeshire, Wales</origPlace>.</p>
 </origin>
-<provenance><p>On fol. 91r there is a smudged copy of a bill or document
-with the names of people and places in Wales (Pembrokeshire, Bangor) 
-and the date 1607.</p></provenance>
-<acquisition>
-<p>Left to the Bodleian by Richard Rawlinson in 1755.</p>
-</acquisition>
 </history>
-<additional>
-<adminInfo>
-<recordHist>
-<source><p>This description is derived from that made by Daniel W. Mosser
-for the Canterbury Tales Project.</p></source>
-</recordHist>
-</adminInfo>
-<surrogates>
-<p>A rotograph copy of the manuscript was made for John Manly in the 1920s,
-and a copy of this rotograph is available in microfilm as part of the
-Manly/Rickert collection from the University of Chicago Library. The
-manuscript has been microfilmed more recently by the Bodleian. Digital
-images derived from this microfilm have been published on the CDROMs
-prepared by the Canterbury Tales Project.</p>
-</surrogates>
-</additional>
 </msDescription>
 </egXML></p>
 
@@ -211,6 +209,7 @@ follows:
 </specGrp>
 </p>
 </div2>
+
 <div2 type="d2" xml:id="msphrase">
 <head>Phrase-level elements</head>
 
@@ -241,25 +240,62 @@ module in one's schema.</p>
 
 <div3 xml:id="msdates" type="d3">
 <head>Origination</head>
+
+<p>The following elements may be used to provide information about the
+origins of any aspect of a manuscript:
+
+<specList><specDesc key="origDate"/>
+<specDesc key="origPlace" atts="placeAttrib evidence"/>
+</specList></p>
+
 <p>The <gi>origDate</gi> and <gi>origPlace</gi> elements are
 specialized forms of the existing <gi>date</gi> and <gi>name</gi>
-elements, used to indicate specifically the date and place of origin
-of a manuscript or manuscript part. They can also be used to identify the place or date of origin of any aspect of the manuscript, such as its decoration or binding, which may not be of the same date as the manuscript itself. The <gi>origDate</gi> element is a member of the
-<ident>datable</ident> class, and may thus also carry the following attributes:
+elements respectively, used to indicate specifically the date and
+place of origin of a manuscript or manuscript part. Such information
+would normally be encoded within the <gi>history</gi> element,
+discussed in section <ptr target="#mshy"/>. <gi>origDate</gi> and
+<gi>origPlace</gi> can also be used to identify the place or date of
+origin of any aspect of the manuscript, such as its decoration or
+binding, when these are not of the same date as the manuscript
+itself. The <gi>origDate</gi> element is a member of the
+<ident>datable</ident> class, and may thus also carry the following
+attributes:
+
 <specList><specDesc key="tei.datable"/></specList></p>
 
-<p>As a specialisation of the <gi>name</gi> element, the <gi>origPlace</gi> element has a <att>reg</att> attribute which can be used to supply a regularized form of the place name. Alternatively, the <att>key</att> attribute can be used to provide an identifying code or key for the name.</p>
-
-<p>Detailed information about the history of a manuscript should be encoded within the <gi>history</gi> element, discussed in section <ptr target="#mshy"/>.</p>
+<p>As a specialization of the <gi>name</gi> element, the
+<gi>origPlace</gi> element has a <att>reg</att> attribute which can be
+used to supply a regularized form of the place name. Alternatively,
+the <att>key</att> attribute can be used to provide an identifying
+code or key for the name. <!--In addition, <gi>origPlace</gi> has three
+attributes analogous to those available on <gi>origDate</gi>, to
+indicate how a manuscript's place of origin has been ascertained, on
+what basis and with what level of certainty.
+-->
+<!-- <specList><specDesc key="tei.placeable"/></specList> (placeAttrib, with possible values localized, localizable and unknown, evidence with the values internal, external and attributed, and certainty, with values high, medium, low)-->
+<!-- should be done by membership in intervention class -->
+</p>
 </div3>
 
 <div3 xml:id="msmat" type="d3">
 <head>Material</head>
 
-<p>The <gi>material</gi> element can be used to tag any specific term used for the material of which a manuscript (or binding, seal etc.) is composed, wherever the term occurs, as in the following example:
+<p>The <gi>material</gi> element can be used to tag any specific term
+used for the material of which a manuscript (or binding, seal, etc.)
+is composed.
+<specList>
+<specDesc key="material" atts="type"/>
+</specList></p>
+
+<p>The element may appear wherever a term regarded as significant by
+the encoder occurs, as in the following example:
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<binding><p>Brown <material>calfskin</material>, previously with two clasps.</p></binding>
+<binding>
+<p>Brown <material>calfskin</material>, previously with two clasps.</p>
+</binding>
 </egXML>
+<!-- shouldn't there be a specDesc for material? --><!-- there is now -->
 </p>
 
 </div3>
@@ -272,20 +308,16 @@ of a manuscript or manuscript part. They can also be used to identify the place 
 <specDesc key="dimensions" atts="type"/>
 </specList></p>
 
-<p>The <gi>dimensions</gi> element will normally occur within the element describing the particular feature or aspect of a manuscript whose dimensions are being given; thus the size of the leaves would be specified within the <gi>support</gi> or <gi>extent</gi> element (part of the <gi>physDesc</gi> element discussed in <ptr target="#msph1"/>), while the dimensions of other specific parts of a manuscript, such as accompanying materials, binding, etc., would be given in other parts of the description, as appropriate.</p>
-<!--
-<p>Where an institution-wide convention has been established regarding the units of measure used, the order in which measurements are to be supplied, and so on, this element may contain a simple formula such as the following:
+<p>The <gi>dimensions</gi> element will normally occur within the
+element describing the particular feature or aspect of a manuscript
+whose dimensions are being given; thus the size of the leaves would be
+specified within the <gi>support</gi> or <gi>extent</gi> element (part
+of the <gi>physDesc</gi> element discussed in <ptr target="#msph1"/>),
+while the dimensions of other specific parts of a manuscript, such as
+accompanying materials, binding, etc., would be given in other parts
+of the description, as appropriate.</p>
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<dimensions>12 x 10 x 3</dimensions>
-</egXML>
-
-For portability, however, and where conventions differ, it may be
-preferable to specify the units used, and it may also be useful to
-specify exactly the dimension along which a measurement has been
-made. For these reasons, the-->
-<p>The following three elements are available
-within the <gi>dimensions</gi> element :
+<p>The following three elements are available within the <gi>dimensions</gi> element:
 
 <specList>
 <specDesc key="height"/>
@@ -306,11 +338,11 @@ example, in the following case the leaf size and ruled space of
 the leaves of the manuscript are specified:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<dimensions type="leaves">
+<dimensions type="leaves" units="mm">
  <height scope="range">157-160</height>
  <width>105</width>
 </dimensions>
-<dimensions type="ruled">
+<dimensions type="ruled" units="mm">
  <height scope="most">90</height>
  <width scope="most">48</width>
 </dimensions>
@@ -337,11 +369,14 @@ element, or of any of the more specific elements appearing within one
 to specify the location of that item within the manuscript being
 described.</p>
 
-<p>A <gi>locus</gi> element can be used to identify any reference to one or more
-folios within a manuscript, wherever such a reference is appropriate. Locations are conventionally specified as a sequence of folio
-or page numbers, but may also be a discontinuous list, or a combination of the
-two. This specification should be given as the content of the
-<gi>locus</gi> element, using the conventions appropriate to the individual scholar or holding institution, as in the following example:
+<p>A <gi>locus</gi> element can be used to identify any reference to
+one or more folios within a manuscript, wherever such a reference is
+appropriate. Locations are conventionally specified as a sequence of
+folio or page numbers, but may also be a discontinuous list, or a
+combination of the two. This specification should be given as the
+content of the <gi>locus</gi> element, using the conventions
+appropriate to the individual scholar or holding institution, as in
+the following example:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <msItem n="1"><locus>ff. 1-24r</locus>
@@ -368,34 +403,41 @@ location indicated, or images of it, as in the following example:
 <decoDesc>
 <p>Most of the main body of the book (up to <locus targets="#txt182">fol. 
 182v</locus>) was painted and decorated in one style, having links in 
-style and iconography with the school of Ma&#xEE;tre Fran&#xE7;ois, 
-although several of the miniatures in this section have been damaged and 
-overpainted at a later date (e.g. the figure of Christ on <locus 
-targets="http://www.images.fr#F33R">fol. 33r</locus>; the face of the 
+style and iconography with the school of Ma&#xEE;tre Fran&#xE7;ois, although 
+several of the miniatures in this section have been damaged and 
+overpainted at a later date (e.g. the figure of Christ on 
+<locus targets="http://www.images.fr#F33R">fol. 33r</locus>; the face of the 
 Shepherdess on <locus targets="http://www.images.fr#F59V">fol. 59v</locus>, 
 etc.).</p>
 </decoDesc>
 </egXML>
-The identifier <ident>txt182</ident> in this example is assumed to reference the section
-of the manuscript <q>up to fol. 182v</q> which has been transcribed elsewhere in
-the current document; the references <ident>http://www.images.fr#F33R</ident> and <ident>http://www.images.fr#F59V</ident>
-link to images of the relevant pages, held presumably in an image archive.</p>
+The identifier <ident>txt182</ident> in this example is assumed to
+reference the section of the manuscript <q>up to fol. 182v</q> which
+has been transcribed elsewhere in the current document; the references
+<ident>http://www.images.fr#F33R</ident> and
+<ident>http://www.images.fr#F59V</ident> link to images of the
+relevant pages, held presumably in an image archive.</p>
 
-<!-- removed reference to more than one foliation, which lacked an example -->
-
+<!-- removed reference to more than one foliation, which lacked an example; should one be found it might be nice to add it. -->
 </div3>
 
 <div3 xml:id="msnames">
 <head>Names of persons, places, and organizations</head>
 
-<p>The standard TEI <gi>name</gi> element has attributes
+<!--<p>The standard TEI <gi>name</gi> element has an attribute
 <att>type</att>, to indicate the type of name (e.g. personal name, place-name
 etc.), <att>reg</att>, to provide a regularized form of the name, and <att>key</att>, to provide an identifying code or key for it. 
-
+-->
+<p>The standard TEI element <gi>name</gi> may be used to identify
+names of any kind occurring within a description:
 <specList>
 <specDesc key="name" atts="type"/>
-<!--  reg and  key are not available on name -->
-</specList></p>
+</specList>
+As further discussed in <ptr target="#CONARS"/>, this element is a member of
+the TEI class <ident type="class">tei.names</ident>, from which it
+inherits the attributes <att>reg</att> and <att>key</att>:
+<specList><specDesc key="tei.names"/></specList>
+</p>
 
 <p>Here are some examples of the use of the <gi>name</gi> element:
 
@@ -410,7 +452,7 @@ etc.), <att>reg</att>, to provide a regularized form of the name, and <att>key</
 </egXML></p>
 
 <p>Note that the <gi>name</gi> element is defined as providing
-information about a <emph>name</emph>, not the person, place or organization to which that name refers. In the last example above, the <att>key</att> attribute is used to
+information about a <emph>name</emph>, not the person, place, or organization to which that name refers. In the last example above, the <att>key</att> attribute is used to
 associate the name with a more detailed description of the person
 named, provided elsewhere using the standard TEI element <gi>person</gi>.
 
@@ -418,13 +460,12 @@ named, provided elsewhere using the standard TEI element <gi>person</gi>.
 <specDesc key="person"/>
 </specList>
 
-In order for this second Hoccleve example to be valid, a <gi>person</gi>
-element must be provided which has the value
+In order for this second Hoccleve example to be valid, a
+<gi>person</gi> element must be provided which has the value
 <code>HOCCL1</code> for its <att>xml:id</att> attribute; the same
-value will be used as the <att>key</att> attribute of every
-reference to Hoccleve in the document (however
-spelled), but there will only be one <gi>person</gi> element with this
-identifier.</p>
+value will be used as the <att>key</att> attribute of every reference
+to Hoccleve in the document (however spelled), but there will only be
+one <gi>person</gi> element with this identifier.</p>
 
 <p>All the <gi>person</gi> elements referenced by a particular
 document set should be collected together within a <gi>listPerson</gi>
@@ -478,28 +519,34 @@ in a later hand, for quire 13 (f. 89), "6", in a later hand, for quire
 
 <div3 xml:id="mshera">
 <head>Heraldry</head>
-<p>Descriptions of heraldic arms, supporters, devices, and mottos may appear at various points in the description of Western European early modern and medieval manuscripts, usually in the context of ownership information, binding descriptions, or detailed accounts of illustrations. If a description contains a detailed account of the heraldic
-components of a manuscript independently considered, this can appear as 
-a distinct paragraph within the appropriate section of the
+
+<p>Descriptions of heraldic arms, supporters, devices, and mottos may
+appear at various points in the description of Western European early
+modern and medieval manuscripts, usually in the context of ownership
+information, binding descriptions, or detailed accounts of
+illustrations. If a description contains a detailed account of the
+heraldic components of a manuscript independently considered, this can
+appear as a distinct paragraph within the appropriate section of the
 physical description. Frequently, however, heraldic descriptions will
-be cited as short phrases within other parts of the record. The phrase level
-element <gi>heraldry</gi> is provided to allow such phrases to be marked for further subsequent analysis, as in the following examples:
+be cited as short phrases within other parts of the record. The phrase
+level element <gi>heraldry</gi> is provided to allow such phrases to
+be marked for further subsequent analysis, as in the following
+examples:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <p>Ownership stamp (xvii cent.) on i recto with the arms <heraldry>A bull 
 passant within a bordure bezanty, in chief a crescent for difference</heraldry> 
 [Cole], crest, and the legend <q>Cole Deum</q>.</p>
 
-<p><heraldry>Les armes de Jean Rolin.</heraldry></p>
-
-<p>A c. 8r fregio su due lati, <heraldry>stemma e imprese medicee</heraldry> racchiudono l'inizio dell'epistolario di Paolino.</p>
+<p>A c. 8r fregio su due lati, <heraldry>stemma e imprese medicee</heraldry> 
+racchiudono l'inizio dell'epistolario di Paolino.</p>
 </egXML></p>
 </div3>
 
 <div3>
 <head>Formal definitions</head>
 
-<p>The additional phrase level elements are formally defined as follows:
+<p>The additional phrase-level elements are formally defined as follows:
 
 <specGrp xml:id="xphrase.def">
 &catchwords.odd;
@@ -521,14 +568,29 @@ passant within a bordure bezanty, in chief a crescent for difference</heraldry>
 
 <div2 xml:id="msid">
 <head>The manuscript identifier</head>
-<p>The <gi>msIdentifier</gi> element is intended to provide an unambiguous means of uniquely identifying a particular manuscript, and comprises information about its holding institution and the call number, shelfmark or other identifier used to indicate its location within that institution.
+
+<p>The <gi>msIdentifier</gi> element is intended to provide an
+unambiguous means of uniquely identifying a particular manuscript, and
+comprises information about its holding institution, the call number,
+shelfmark, or other identifier used to indicate its location within
+that institution, and optionally any other name by which the
+manuscript may commonly be known.
+
 <specList>
 <specDesc key="msIdentifier"/>
 </specList></p>
 
-<p>A manuscript's actual physical location may occasionally be different from its place of ownership; at Cambridge University, for example, manuscripts owned by various colleges are kept in the central University Library. It is the ownership of the manuscript which should be specified in the manuscript identifier, while additional or more precise information on the physical location of the manuscript can be given within the <gi>adminInfo</gi> element, discussed in section <ptr target="#msadad"/> below.</p>
+<p>A manuscript's actual physical location may occasionally be
+different from its place of ownership; at Cambridge University, for
+example, manuscripts owned by various colleges are kept in the central
+University Library. It is the ownership of the manuscript which should
+be specified in the manuscript identifier, while additional or more
+precise information on the physical location of the manuscript can be
+given within the <gi>adminInfo</gi> element, discussed in section <ptr
+target="#msadad"/> below.</p>
 
-<p>The following elements are available within <gi>msIdentifier</gi> to identify the holding institution:
+<p>The following elements are available within <gi>msIdentifier</gi>
+to identify the holding institution:
 
 <specList>
 <specDesc key="country"/>
@@ -544,7 +606,8 @@ passant within a bordure bezanty, in chief a crescent for difference</heraldry>
 sugar</soCalled> enables the model for <gi>msIdentifier</gi> to be
 constrained rather more tightly than would otherwise be
 possible. Specifically, only one of each of the elements listed above
-may appear within the <gi>msIdentifier</gi> and they must, if present, appear in the order given.</p>
+may appear within the <gi>msIdentifier</gi> and they must, if present,
+appear in the order given.</p>
 
 <p>These elements are all also members of the standard TEI attribute class
 <ident>names</ident>, which means that they can all bear attributes such
@@ -553,7 +616,7 @@ to specify a database or similar unique key for it, as further documented
 in the description of this class.</p>
 
 <p>The following elements are used within <gi>msIdentifier</gi> to
-provide different ways of identifying the manuscript:
+provide different ways of identifying the manuscript within its holding institution:
 
 <specList>
 <specDesc key="collection"/>
@@ -570,14 +633,21 @@ additionally be supplied as a distinct subcomponent of the
 <gi>msIdentifier</gi>, for example a collection name,
 it must be decided whether or not to include this information
 in both locations. For example,
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <collection>fr.</collection><idno>2810</idno>
 </egXML>
-may be considered as gratuitous, extraneous markup by cataloguers at the Biblioth&#xE8;que nationale de France, where the concept of
+may be considered as gratuitous or extraneous markup by cataloguers at the Biblioth&#xE8;que nationale de France, where the concept of
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <idno>fr. 2810</idno>
 </egXML>
-as a unit may be felt to better determine the identity of the manuscript in question. Other examples are the Rawlinson collection in the Bodleian Library, or the Ellesmere collection in the Huntington Library, where separate tagging of <mentioned>Rawlinson</mentioned> and <mentioned>Ellesmere</mentioned> as collections would lead users to incorrect forms of citation; in the latter case correct markup would be:
+as a unit may be felt to better determine the identity of the
+manuscript in question. Other examples are the Rawlinson collection in
+the Bodleian Library, or the Ellesmere collection in the Huntington
+Library, where separate tagging of <mentioned>Rawlinson</mentioned>
+and <mentioned>Ellesmere</mentioned> as collections would lead users
+to incorrect forms of citation; in the latter case correct markup
+would be:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <msIdentifier>
 <country>USA</country>
@@ -606,7 +676,7 @@ useful:
 </msIdentifier>
 </egXML></p>
 
-<p>In the previous two examples, <gi>altName</gi> was used to provide
+<p>In the previous two examples, <gi>altName</gi> has been used to provide
 a common name, other than the shelfmark, by which a manuscript is
 known. Any number of these elements may be used to supply
 alternative names used for the manuscript, as in the following
@@ -621,13 +691,19 @@ example:
 <altName xml:lang="is">Fr&#xED;ssb&#xF3;k</altName>
 </msIdentifier>
 </egXML>
-
-Here the globally available <att>xml:lang</att> attribute has been used to specify the language of the alternative names. This is a standard TEI facility, which may be found useful in certain environments (for example, when compiling a
-single catalogue from a variety of originally different sources), but which may safely be ignored in others.</p>
+Here the globally available <att>xml:lang</att> attribute has been
+used to specify the language of the alternative names. <!--This is a
+standard TEI facility, which may be found useful in certain
+environments (for example, when compiling a single catalogue from a
+variety of originally different sources), but which may safely be
+ignored in others. --><!-- is this second sentence necessary? --></p>
 
 <p>In very rare cases a repository may only have one manuscript (or
-only one of any significance), which will have no call number as such but will be
-known by a particular name or names. In such circumstances one may have no choice but to leave the <gi>idno</gi> element empty, and provide the name or names by which the manuscript is known using <gi>altName</gi>, as in the following example:
+only one of any significance), which will have no call number as such
+but will be known by a particular name or names. In such circumstances
+one may have no choice but to leave the <gi>idno</gi> element empty,
+and provide the name or names by which the manuscript is known using
+<gi>altName</gi>, as in the following example:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <msIdentifier>
@@ -641,12 +717,16 @@ known by a particular name or names. In such circumstances one may have no choic
 </egXML></p>
 
 <p>Where manuscripts have moved from one institution to another, or
-even within the same institution, they may have identifiers additional to the ones currently used, such as former shelfmarks, which are sometimes retained even after they have been officially superseded. In such cases it may be useful to supply an alternative
-identifier, with a detailed structure similar to that of the
-<gi>msIdentifier</gi> itself. The following
-example shows a manuscript which had shelfmark <code>II-M-5</code> in
-the collection of the Duque de Osuna, but which now has the shelfmark
-<code>MS 10237</code> in the National Library in Madrid:
+even within the same institution, they may have identifiers additional
+to the ones currently used, such as former shelfmarks, which are
+sometimes retained even after they have been officially superseded. In
+such cases it may be useful to supply an alternative identifier, with
+a detailed structure similar to that of the <gi>msIdentifier</gi>
+itself. The following example shows a manuscript which had shelfmark
+<code>II-M-5</code> in the collection of the Duque de Osuna, but which
+now has the shelfmark <code>MS 10237</code> in the National Library in
+Madrid:
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <msIdentifier>
 <settlement>Madrid</settlement>
@@ -728,17 +808,30 @@ glossa</mentioned>, <mentioned>126. Isidori Originum libri
 octo</mentioned>, <mentioned>Biblia Hieronimi, 2o fo. opus
 est</mentioned>); information on date and place of writing will
 sometimes also be included. The standard TEI element <gi>head</gi>
-element can be used to provide a brief description of this kind, supplying
-in one place a minimum of essential
-information, such as might be displayed or printed as the heading of a full description, such as the following:
+element can be used to provide a brief description of this kind.
+
+<specList>
+<specDesc key="head"/>
+</specList>
+
+In this way the cataloguer or scholar can supply in one place a
+minimum of essential information, such as might be displayed or
+printed as the heading of a full description, such as the following:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <head>Marsilius de Inghen, Abbreviata phisicorum Aristotelis; Italy, 1463.</head>
 </egXML>
 
-Any phrase-level elements, such as <gi>title</gi>, <gi>name</gi>, 
-<gi>date</gi>, or the specialized elements <gi>origPlace</gi> and <gi>origDate</gi>, can also be used within a <gi>head</gi> element, but it should be remembered that the <gi>head</gi> element is intended principally for that purpose, viz. to contain a heading, and more structured information concerning the contents, form, or history of the manuscript should be given within the specialized elements described below, <gi>msContents</gi>, <gi>physDesc</gi>, <gi>history</gi>, etc.</p>
-<!-- removed section on multiple heads -->
+Any phrase-level elements, such as <gi>title</gi>, <gi>name</gi>,
+<gi>date</gi>, or the specialized elements <gi>origPlace</gi> and
+<gi>origDate</gi>, can also be used within a <gi>head</gi> element,
+but it should be remembered that the <gi>head</gi> element is intended
+principally for that purpose, viz. to contain a heading, and more
+structured information concerning the contents, physical form, or
+history of the manuscript should be given within the specialized
+elements described below, <gi>msContents</gi>, <gi>physDesc</gi>,
+<gi>history</gi>, etc.</p>
+
 </div2>
 
 <div2 xml:id="msco">
@@ -746,7 +839,13 @@ Any phrase-level elements, such as <gi>title</gi>, <gi>name</gi>,
 
 <p>The <gi>msContents</gi> element is used to describe the
 intellectual content of a manuscript or manuscript part. It comprises
-<emph>either</emph> a series of informal prose paragraphs <emph>or</emph> a series of <gi>msItem</gi> or <gi>msItemStruct</gi> elements, each of which provides a more detailed description of a single item contained within the manuscript. These may be prefaced, if desired, by a <gi>summary</gi> element, which is especially useful where one wishes to provide an overview of a manuscrpt's contents and describe only some of the items in detail.
+<emph>either</emph> a series of informal prose paragraphs
+<emph>or</emph> a series of <gi>msItem</gi> or <gi>msItemStruct</gi>
+elements, each of which provides a more detailed description of a
+single item contained within the manuscript. These may be prefaced, if
+desired, by a <gi>summary</gi> element, which is especially useful
+where one wishes to provide an overview of a manuscrpt's contents and
+describe only some of the items in detail.
 
 <specList>
 <specDesc key="msContents"/>
@@ -774,7 +873,10 @@ nombres hebreos.</p>
 
 <p>This description may of course be expanded to include any of the
 TEI elements generally available within a <gi>p</gi> element, such as
-<gi>title</gi>, <gi>bibl</gi>, or <gi>list</gi>. More usually, however, each individual work within a manuscript will be given its own description, using the <gi>msItem</gi> or <gi>msItemStruct</gi> element described in the next section, as in the following example:
+<gi>title</gi>, <gi>bibl</gi>, or <gi>list</gi>. More usually,
+however, each individual work within a manuscript will be given its
+own description, using the <gi>msItem</gi> or <gi>msItemStruct</gi>
+element described in the next section, as in the following example:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <msContents>
@@ -803,7 +905,7 @@ mutilation throughout</note>
 </egXML></p>
 
 <div3 xml:id="mscoit"><head>The <gi>msItem</gi> and <gi>msItemStruct</gi> elements</head>
-
+<!-- I'm for killing off msItemStruct, personally -->
 <p>Each discrete item in a manuscript of manuscript part can be described within a distinct <gi>msItem</gi> or <gi>msItemStruct</gi> element, and may be classified using the <att>class</att> attribute.</p>
 
 <p>These are the possible component elements of <gi>msItem</gi> and <gi>msItemStruct</gi>.
@@ -827,11 +929,33 @@ mutilation throughout</note>
 <specDesc key="textLang"/>
 </specList></p>
 
-<p>The difference between <gi>msItem</gi> and <gi>msItemStruct</gi> is that in the former, the order and number of child elements is not constrained; any element, in other words, may be given in any order,
-and repeated as often as necessary. In the latter, however, the subelements, if used, must be given in the order specified above; they may be repeated, with the exception of <gi>rubric</gi>, <gi>incipit</gi>, and <gi>explicit</gi>, each of which can appear only once. In neither <gi>msItem</gi> nor <gi>msItemStruct</gi> may any untagged running text be included (although <gi>msItem</gi> may, as an alternative to more structured mark-up, contain one or more <gi>p</gi> elements, into which ordinary prose can be put). <gi>msItem</gi> and <gi>msItemStruct</gi> elements may also nest, where a number of separate items in a manuscript are grouped under a single title or rubric, as is the case, for example, with a work like <mentioned>The Canterbury Tales</mentioned>.</p>
+<p>The difference between <gi>msItem</gi> and <gi>msItemStruct</gi> is
+that in the former, the order and number of child elements is not
+constrained; any element, in other words, may be given in any order,
+and repeated as often as necessary. In the latter, however, the
+subelements, if used, must be given in the order specified above; they
+may be repeated, with the exception of <gi>rubric</gi>,
+<gi>incipit</gi>, and <gi>explicit</gi>, each of which can appear only
+once. In neither <gi>msItem</gi> nor <gi>msItemStruct</gi> may any
+untagged running text be included (although <gi>msItem</gi> may, as an
+alternative to more structured mark-up, contain one or more <gi>p</gi>
+elements, into which ordinary prose can be put). <gi>msItem</gi> and
+<gi>msItemStruct</gi> elements may also nest, where a number of
+separate items in a manuscript are grouped under a single title or
+rubric, as is the case, for example, with a work like <mentioned>The
+Canterbury Tales</mentioned>.</p>
 
-<p>A <att>defective</att> attribute is available on <gi>msContents</gi>, <gi>msItem</gi>, and <gi>msItemStruct</gi>, and on the specialized elements for <gi>incipit</gi> and <gi>explicit</gi>, with possible values of <code>true</code>, <code>false</code>,
-<code>unknown</code>, or <code>unspecified</code>. This can be used for example for collections of fragments, where each fragment is given as a separate <gi>msItem</gi> and the first and last words of each transcribed as defective incipits and explicits, as in the following example, a manuscript containing four fragments of a single work:
+<p>A <att>defective</att> attribute is available on
+<gi>msContents</gi>, <gi>msItem</gi>, and <gi>msItemStruct</gi>, and
+on the specialized elements for <gi>incipit</gi> and
+<gi>explicit</gi>, with possible values of <code>true</code>,
+<code>false</code>, <code>unknown</code>, or
+<code>unspecified</code>. This can be used for example for collections
+of fragments, where each fragment is given as a separate
+<gi>msItem</gi> and the first and last words of each transcribed as
+defective incipits and explicits, as in the following example, a
+manuscript containing four fragments of a single work:
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <msContents>
 <msItem defective="true"><locus from="1r" to="9v">1r-9v</locus>
@@ -852,9 +976,17 @@ yf<expan>ir</expan> danmork</explicit>
 <head>Authors and titles</head>
 
 <p>The <gi>title</gi> element should be used to supply a regularized
-form of the item's title, as distinct from any rubric quoted from the manuscript. If the item concerned has a standardized distinctive
-title, e.g. <mentioned>Roman de la Rose</mentioned>, then this should be the
-form given as content of the <gi>title</gi> element, with the value of the <att>type</att> attribute given as <code>uniform</code>. If no uniform title exists for an item, or none has been yet identified, or if one wishes to provide a general designation of the contents, then a <soCalled>supplied</soCalled> title can be given, e.g. <mentioned>missal</mentioned>, in which case the <att>type</att> attribute on the <gi>title</gi> should be given the value <code>supplied</code>.</p> 
+form of the item's title, as distinct from any rubric quoted from the
+manuscript. If the item concerned has a standardized distinctive
+title, e.g. <mentioned>Roman de la Rose</mentioned>, then this should
+be the form given as content of the <gi>title</gi> element, with the
+value of the <att>type</att> attribute given as
+<code>uniform</code>. If no uniform title exists for an item, or none
+has been yet identified, or if one wishes to provide a general
+designation of the contents, then a <soCalled>supplied</soCalled>
+title can be given, e.g. <mentioned>missal</mentioned>, in which case
+the <att>type</att> attribute on the <gi>title</gi> should be given
+the value <code>supplied</code>.</p>
 
 <p>The <gi>author</gi> element, if used, should generally
 contain the normalized form of an author's name, irrespective of how
@@ -866,6 +998,8 @@ normalized form of the name on its <att>reg</att>
 attribute. Alternatively, the normalized form of the name may be
 supplied as the value of a <att>reg</att> attribute on the 
 <gi>author</gi> element.</p>
+
+<!-- an example would be nice here -->
 
 <p>Note that the <att>key</att> attribute can also be used, as on
 names in general, to specify the identifier of a <gi>person</gi>
@@ -895,8 +1029,17 @@ Note that such attributions of authorship, both correct and incorrect, are frequ
 
 <div3><head>Rubrics, incipits, explicits, and other quotations from the text</head>
 
-<p>It is customary in a manuscript decription to record the opening and closing words of a text as well as any headings or colophons it might have, and the specialised elements <gi>rubric</gi>, <gi>incipit</gi>, <gi>explicit</gi>, <gi>finalRubric</gi>, and <gi>colophon</gi> are available within <gi>msItem</gi> for doing so, along with the more general <gi>q</gi>, for recording other bits of the text not covered by these elements. Each of these elements has the same substructure,
-containing a mixture of phrase-level elements and plain text. A <gi>locus</gi> element can be included within each, in order to specify the location of the component, as in the following example:
+<p>It is customary in a manuscript decription to record the opening
+and closing words of a text as well as any headings or colophons it
+might have, and the specialised elements <gi>rubric</gi>,
+<gi>incipit</gi>, <gi>explicit</gi>, <gi>finalRubric</gi>, and
+<gi>colophon</gi> are available within <gi>msItem</gi> for doing so,
+along with the more general <gi>q</gi>, for recording other bits of
+the text not covered by these elements. Each of these elements has the
+same substructure, containing a mixture of phrase-level elements and
+plain text. A <gi>locus</gi> element can be included within each, in
+order to specify the location of the component, as in the following
+example:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <msContents>
@@ -927,7 +1070,23 @@ h<expan>on</expan>o<expan>m</expan> annan til rei&#xFE;<expan>ar</expan></explic
 Note here also the use of the <att>defective</att> attribute on <gi>incipit</gi> and <gi>explicit</gi> to indicate that the text begins and ends defectively.
 </p>
 
-<!-- The <att>xml:lang</att> attribute for <gi>colophon</gi>, <gi>explicit</gi>, <gi>incipit</gi>, <gi>q</gi>, and <gi>rubric</gi> may always be used to identify the language of the text quoted, if this is different from the default language specified by the <att>langKey</att> attribute on <gi>textLang</gi>. -->
+<p>The <att>xml:lang</att> attribute for <gi>colophon</gi>, <gi>explicit</gi>, <gi>incipit</gi>, <gi>q</gi>, and <gi>rubric</gi> may always be used to identify the language of the text quoted, if this is different from the default language specified by the <att>langKey</att> attribute on <gi>textLang</gi>.</p>
+</div3>
+
+<!-- I thought it might be nice to have something on filiation -->
+<div3 type="d3" xml:id="msfil">
+<head>Filiation</head>
+<p>The <gi>filiation</gi> element can be used to provide information on the relationship between the manuscript and other surviving manuscripts of the same text, either specifically or in a general way, as in the following example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<msItem>
+  <locus>118rb</locus>
+  <incipit>Ecce morior cum nichil horum ... <note>[Dn 13, 43]</note>. Verba ista dixit Susanna de illis</incipit>
+  <explicit>ut bonum comune conservatur.</explicit>
+  <bibl>Schneyer 3, 436 (Johannes Contractus OFM)</bibl>
+  <filiation>weitere &#x00DC;berl. Uppsala C 181, 35r.</filiation>
+</msItem>
+</egXML>
+</p>
 </div3>
 
 
@@ -969,7 +1128,7 @@ shown here:
 </div3>
 
 <div3 xml:id="mslangs">
-<head>Languages and scripts</head>
+<head>Languages and writing systems</head>
 
 <p>The <gi>textLang</gi> element should be used to provide
 information about the languages used within a manuscript item. It may take
@@ -997,9 +1156,13 @@ description.
 <language ident="OCS">Old Church Slavonic, written in Cyrillic script.</language>
 <!-- other languages used or referenced in the manuscript description -->
 </langUsage>
-</egXML></p>
+</egXML>
 
-<p>A manuscript item will often contain material in more than one language. The 
+<!-- here I would like to add the these two attributes are also available on msContents -->
+
+</p>
+
+<p>A manuscript item will sometimes contain material in more than one language. The 
 <att>langKey</att> attribute should be used only for the chief language. 
 Other languages used may be specified using the <att>otherLangs</att>
 attribute as in the following example:
@@ -1044,8 +1207,7 @@ some Latin material, might
 have a <gi>textLang</gi> element like the following:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<textLang xml:lang="fr" langKey="#de" otherLangs="#la">
-allemand et latin</textLang>
+<textLang xml:lang="fr" langKey="#de" otherLangs="#la">allemand et latin</textLang>
 </egXML></p>
 
 </div3>
@@ -1070,15 +1232,17 @@ allemand et latin</textLang>
 <div2 xml:id="msph">
 <head>Physical description</head>
 
-<p>Under the general heading <soCalled>physical description</soCalled> we subsume a large number of different aspects generally
-regarded as useful in the description of a given manuscript. These
-include aspects of the form, support, extent, and quire structure of
-the manuscript object (<ptr target="#msph1"/>); aspects of the writing,
-such as the way it is laid out on the page, the styles of writing and
-any musical notation employed (<ptr target="#msph2"/>); discussion of
-decorative features of the manuscript, of any paratextual features
-such as pagination, and of any annotations or marginalia (<ptr target="#msph3"/>);
-discussion of its binding and state of repair (<ptr target="#msph4"/>).</p>
+<p>Under the general heading <soCalled>physical description</soCalled>
+we subsume a large number of different aspects generally regarded as
+useful in the description of a given manuscript. These include aspects
+of the form, support, extent, and quire structure of the manuscript
+object (<ptr target="#msph1"/>); aspects of the writing, such as the
+way it is laid out on the page, the styles of writing and any musical
+notation employed (<ptr target="#msph2"/>); discussion of decorative
+features of the manuscript, of any paratextual features such as
+pagination, and of any annotations or marginalia (<ptr
+target="#msph3"/>); discussion of its binding and state of repair
+(<ptr target="#msph4"/>).</p>
 
 <p>Most manuscript descriptions touch on several of these categories
 of information though few include them all, and not all distinguish
@@ -1089,24 +1253,28 @@ sentence. The encoder must then decide whether to rewrite the
 description using the structure proposed here, or to retain the
 existing prose, marked up simply as a series of <gi>p</gi> elements,
 directly within the <gi>physDesc</gi> element.</p>
+
 <p>The <gi>physDesc</gi> element may thus be used in either of two
 distinct ways: it may contain a series of paragraphs addressing topics
 listed above and similar ones; or it may act as a container for any
 choice of the more specialized elements described in the remainder of
 this section, each of which itself contains a series of paragraphs,
-and may also have more specific attributes. Note that the two ways should, and indeed may, <emph>not</emph> be combined within the same description.</p>
+and may also have more specific attributes. Note that the two ways
+should, and indeed may, <emph>not</emph> be combined within the same
+description.</p>
 
 <div3 xml:id="msph1">
 <head>Object description</head>
 
-<p>The <gi>objectDesc</gi> element is used to group together those parts
-of the physical description which relate specifically to the text-bearing object, its format,
-constitution, layout, etc. The <att>form</att> attribute is used to
-indicate the specific type of writing vehicle being described, for example, as
-a codex, roll, tablet, etc. It has two parts: a description of the
-<term>support</term>, i.e. the physical carrier on which the
-text is inscribed; and a description of the <term>layout</term>, i.e. the way text is organized
-on the carrier.</p>
+<p>The <gi>objectDesc</gi> element is used to group together those
+parts of the physical description which relate specifically to the
+text-bearing object, its format, constitution, layout, etc. The
+<att>form</att> attribute is used to indicate the specific type of
+writing vehicle being described, for example, as a codex, roll,
+tablet, etc. It has two parts: a description of the
+<term>support</term>, i.e. the physical carrier on which the text is
+inscribed; and a description of the <term>layout</term>, i.e. the way
+text is organized on the carrier.</p>
 
 <p>Taking these in turn, the description of the support is tagged
 using the following elements, each of which is discussed in more
@@ -1148,11 +1316,12 @@ following subsections.</p>
 
 <p>The <gi>support</gi> element groups together information about the
 physical carrier. Typically, for western manuscripts, this will entail
-discussion of the material (parchment, paper, or a combination of the two) written on. For
-paper, a discussion of any watermarks present may also be useful. 
-If this discussion makes reference to standard catalogues of
-such items, these may be tagged using the standard <gi>ref</gi> element
-as in the following example:
+discussion of the material (parchment, paper, or a combination of the
+two) written on. For paper, a discussion of any watermarks present may
+also be useful.  If this discussion makes reference to standard
+catalogues of such items, these may be tagged using the standard
+<gi>ref</gi> element as in the following example:
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <support><p>
 <material>Paper</material> with watermark: <watermark>anchor in a circle 
@@ -1180,29 +1349,50 @@ element, as in the following example, or left as plain prose.
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <extent>ii + 321 leaves 
 <dimensions units="cm">
-<height>5</height>
-<width>3</width>
+<height>35</height>
+<width>27</width>
 </dimensions>
 </extent>
 </egXML></p>
+
+<!-- use of measure here? i.e. something like:
+<p>The standard TEI <gi>measure</gi> element, which has a <att>type</att> attribute to indicate the thing being measureed, can be used within <gi>extent</gi>, as in the following example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<extent>
+  <measure type="leaves">10 Bl.</measure>
+  <measure type="dimensions">37 x 29 cm</measure>
+</extent>
+</egXML></p>
+-->
+
 
 </div4>
 
 <div4>
 <head>Collation</head>
 
-<p>The <gi>collation</gi> element should be used to provide a description of a book's current and original structure, that is, the arrangement of its leaves and quires. This information may be conveyed using informal prose, or any appropriate
-notational convention. Although no specific notation is defined here, provision is made for the tagging of such with the
-standard TEI <gi>formula</gi> element: 
+<p>The <gi>collation</gi> element should be used to provide a
+description of a book's current and original structure, that is, the
+arrangement of its leaves and quires. This information may be conveyed
+using informal prose, or any appropriate notational
+convention. Although no specific notation is defined here, provision
+is made for the tagging of such with the standard TEI <gi>formula</gi>
+element:
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <collation><p><formula>1-3:8, 4:6, 5-13:8</formula></p></collation>
 
 <collation>
-<p>There are now four gatherings, the first, second and fourth originally consisting of eight leaves, the third of seven. A fifth gathering thought to have followed has left no trace.
+<p>There are now four gatherings, the first, second and fourth originally consisting of 
+eight leaves, the third of seven. A fifth gathering thought to have followed has left no trace.
 <list>
-<item>Gathering I consists of 7 leaves, a first leaf, originally conjoint with <locus>fol. 7</locus>, having been cut away leaving only a narrow strip along the gutter; the others, <locus>fols 1</locus> and <locus>6</locus>, <locus>2</locus> and <locus>5</locus>, and <locus>3</locus> and <locus>4</locus>, are bifolia.</item>
+<item>Gathering I consists of 7 leaves, a first leaf, originally conjoint with <locus>fol. 7</locus>, 
+having been cut away leaving only a narrow strip along the gutter; the others, <locus>fols 1</locus> 
+and <locus>6</locus>, <locus>2</locus> and <locus>5</locus>, and <locus>3</locus> and <locus>4</locus>, 
+are bifolia.</item>
 <item>Gathering II consists of 8 leaves, 4 bifolia.</item>
-<item>Gathering III consists of 7 leaves; <locus>fols 16</locus> and <locus>22</locus> are conjoint, the others singletons.</item>
+<item>Gathering III consists of 7 leaves; <locus>fols 16</locus> and <locus>22</locus> are conjoint, 
+the others singletons.</item>
 <item>Gathering IV consists of 2 leaves, a bifolium.</item>
 </list></p>
 </collation>
@@ -1220,7 +1410,10 @@ text) 7-8.8 9.10, 11.2 (through f. 82) 12-14.8 15.8(-7)</formula>
 <div4 xml:id="msphfo">
 <head>Foliation</head>
 
-<p>The <gi>foliation</gi> element may be used to indicate the scheme, medium or location of folio, page, column, or line numbers written in the manuscript, frequently including a statement about when and, if known, by whom, the numbering was done.
+<p>The <gi>foliation</gi> element may be used to indicate the scheme,
+medium or location of folio, page, column, or line numbers written in
+the manuscript, frequently including a statement about when and, if
+known, by whom, the numbering was done.
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <foliation><p>Neuere Foliierung, die auch das Vorsatzblatt mitgez&#xE4;hlt hat.</p></foliation>
@@ -1246,7 +1439,11 @@ appropriately described as a part of its custodial history (see <ptr target="#ms
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <condition><p>The manuscript shows signs of damage from water and mould on its outermost leaves.</p></condition>
 
-<condition><p>Despite tears on many of the leaves the codex is reasonably well preserved. The top and the bottom of f. 1 is damaged, and only a thin slip is left of the original second leaf (now foliated as 1bis). The lower margin of f. 92 has been cut away. There is a lacuna of one leaf between ff. 193 and 194. The manuscript ends defectively (there are approximately six leaves missing).</p></condition>
+<condition><p>Despite tears on many of the leaves the codex is reasonably well preserved. 
+The top and the bottom of f. 1 is damaged, and only a thin slip is left of the original second 
+leaf (now foliated as 1bis). The lower margin of f. 92 has been cut away. There is a lacuna of 
+one leaf between ff. 193 and 194. The manuscript ends defectively (there are approximately six 
+leaves missing).</p></condition>
 </egXML></p>
 </div4>
 
@@ -1266,15 +1463,16 @@ own <gi>layout</gi> element.
 <specDesc key="layout"/>
 </specList></p>
 
-<p>Where the <gi>layout</gi> element is used, the layout will often
-be sufficiently regular for the attributes on this element to convey
-all that is necessary; more usually however a more detailed treatment
-will be required. The attributes are provided as a convenient shorthand for commonly occurring cases, and should not be used except where
-the layout is regular. The value <code>NA</code> (not-applicable)
-should be used for cases where the layout is either very irregular, or
-where it cannot be characterized simply in terms of lines and columns,
-for example, where blocks of commentary and text are arranged in a
-regular but complex pattern on each page</p>
+<p>Where the <gi>layout</gi> element is used, the layout will often be
+sufficiently regular for the attributes on this element to convey all
+that is necessary; more usually however a more detailed treatment will
+be required. The attributes are provided as a convenient shorthand for
+commonly occurring cases, and should not be used except where the
+layout is regular. The value <code>NA</code> (not-applicable) should
+be used for cases where the layout is either very irregular, or where
+it cannot be characterized simply in terms of lines and columns, for
+example, where blocks of commentary and text are arranged in a regular
+but complex pattern on each page</p>
 
 <p>The following examples indicate the range of possibilities:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -1310,7 +1508,6 @@ and 50 ruled lines.</p>
 </egXML></p>
 
 </div4>
-
 </div3>
 
 <div3 xml:id="msph2">
@@ -1394,12 +1591,15 @@ appropriate <gi>handNote</gi> element in the description.
 <div4 xml:id="msph3">
 <head>Decoration</head>
 
-<p>It can be difficult to draw a clear distinction between aspects of a manuscript which are purely physical and
-those which form part of its intellectual content. This is
-particularly true of illuminations and other forms of decoration in a manuscript. We propose the following elements for the purpose of delimiting discussion of these aspects within a manuscript description, and for
-convenience locate them all within the physical description, despite
-the fact that the illustrative features of a manuscript will in many cases also be
-seen as constitutiing part of its intellectual content.</p>
+<p>It can be difficult to draw a clear distinction between aspects of
+a manuscript which are purely physical and those which form part of
+its intellectual content. This is particularly true of illuminations
+and other forms of decoration in a manuscript. We propose the
+following elements for the purpose of delimiting discussion of these
+aspects within a manuscript description, and for convenience locate
+them all within the physical description, despite the fact that the
+illustrative features of a manuscript will in many cases also be seen
+as constitutiing part of its intellectual content.</p>
 
 <p>The <gi>decoDesc</gi> element may contain simply one or more
 paragraphs summarizing the overall nature of the decorative features
@@ -1418,10 +1618,10 @@ the pericopes and major prayers.</p>
 </egXML>
 
 Alternatively, it may contain a series of more specific typed
-<gi>decoNote</gi> elements, each summarizing a particular aspect of
-the decoration present, for example the use of miniatures, initials
-(historiated or otherwise), borders, diagrams, etc., as in the
-following example:
+<gi>decoNote</gi> elements, each summarizing a particular aspect or
+individual instance of the decoration present, for example the use of
+miniatures, initials (historiated or otherwise), borders, diagrams,
+etc., as in the following example:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <decoDesc>
@@ -1471,13 +1671,15 @@ Shepherds</term>, one with <term>bagpipes</term></item>
 </decoNote>
 </decoDesc>
 </egXML></p>
-<!-- decoNote can also be used for a particular instance of illumination - ought this to be mentioned? -->
 </div4>
 
 <div4 xml:id="msphmu">
 <head>Musical notation</head>
 
-<p>Where a manuscript contains music, the <gi>musicNotation</gi> element may be used to describe the form of notation employed, as in the following example:
+<p>Where a manuscript contains music, the <gi>musicNotation</gi>
+element may be used to describe the form of notation employed, as in
+the following example:
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <musicNotation>
 <p>Square notation on 4-line red staves.</p>
@@ -1491,8 +1693,13 @@ Shepherds</term>, one with <term>bagpipes</term></item>
 
 <div4 xml:id="msph4">
 <head>Additions and marginalia</head>
-<p>The <gi>additions</gi> element can be used to list or describe any additions to the manuscript, such as marginalia, scribblings, doodles, etc., which are considered to be of interest or importance. Such topics may also be discussed or
-referenced elsewhere in a description, for example in the <gi>history</gi> element, in cases where the marginalia provide evidence of ownership.
+
+<p>The <gi>additions</gi> element can be used to list or describe any
+additions to the manuscript, such as marginalia, scribblings, doodles,
+etc., which are considered to be of interest or importance. Such
+topics may also be discussed or referenced elsewhere in a description,
+for example in the <gi>history</gi> element, in cases where the
+marginalia provide evidence of ownership.
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <additions><p>Doodles on most leaves, possibly by children, and often quite amusing.</p></additions>
@@ -1510,14 +1717,26 @@ and has them drizzle down the margin.</p>
 </additions>
 
 <additions>
-<p>Spaces for initials and chapter headings were left by the scribe but not filled in. A later, probably fifteenth-century, hand has added initials and chapter headings in greenish-coloured ink on fols <locus>8r</locus>, <locus>8v</locus>, <locus>9r</locus>, <locus>10r</locus> and <locus>11r</locus>. Although a few of these chapter headings are now rather difficult to read, most can be made out, e.g. fol. <locus>8rb</locus> <q xml:lang="is">floti ast<expan>ri</expan>d<expan>ar</expan></q>; fol. <locus>9rb</locus> <q xml:lang="is">v<expan>m</expan> olaf conung</q>, and fol. <locus>10ra</locus> <q xml:lang="is">Gipti<expan>n</expan>g ol<expan>a</expan>fs k<expan>onun</expan>gs</q>.</p>
+<p>Spaces for initials and chapter headings were left by the scribe but not filled in. 
+A later, probably fifteenth-century, hand has added initials and chapter headings in 
+greenish-coloured ink on fols <locus>8r</locus>, <locus>8v</locus>, <locus>9r</locus>, 
+<locus>10r</locus> and <locus>11r</locus>. Although a few of these chapter headings are 
+now rather difficult to read, most can be made out, e.g. fol. <locus>8rb</locus> 
+<q xml:lang="is">floti ast<expan>ri</expan>d<expan>ar</expan></q>; fol. <locus>9rb</locus> 
+<q xml:lang="is">v<expan>m</expan> olaf conung</q>, and fol. <locus>10ra</locus> 
+<q xml:lang="is">Gipti<expan>n</expan>g ol<expan>a</expan>fs k<expan>onun</expan>gs</q>.</p>
 <p>The manuscript contains the following marginalia:
 <list>
-<item>Fol. <locus>4v</locus>, left margin: <q xml:lang="is">hialmadr <expan>ok</expan> <lb/>brynjadr</q>, in a fifteenth-cenury hand, imitating an addition made to the text by the scribe at this point.</item>
-<item>Fol. <locus>5r</locus>, lower margin: <q xml:lang="is">&#xFE;<expan>e</expan>tta &#xFE;iki m<expan>er</expan> v<expan>er</expan>a gott blek en<expan>n</expan>da kan<expan>n</expan> ek icki betr sia</q>, in a fifteenth-century hand, probably the same as that on the previous page.</item>
-<item>Fol. <locus>9v</locus>, bottom margin: <q xml:lang="is">&#xFE;essa bok uilda eg <sic>g&#xE6;t</sic> l&#xE6;rt med <lb/>an Gud gefe myer Gott ad <lb/>l&#xE6;ra</q>; seventeenth-century hand.</item>
+<item>Fol. <locus>4v</locus>, left margin: <q xml:lang="is">hialmadr <expan>ok</expan> <lb/>brynjadr</q>, 
+in a fifteenth-cenury hand, imitating an addition made to the text by the scribe at this point.</item>
+<item>Fol. <locus>5r</locus>, lower margin: <q xml:lang="is">&#xFE;<expan>e</expan>tta &#xFE;iki 
+m<expan>er</expan> v<expan>er</expan>a gott blek en<expan>n</expan>da kan<expan>n</expan> ek icki 
+betr sia</q>, in a fifteenth-century hand, probably the same as that on the previous page.</item>
+<item>Fol. <locus>9v</locus>, bottom margin: <q xml:lang="is">&#xFE;essa bok uilda eg <sic>g&#xE6;t</sic> 
+l&#xE6;rt med <lb/>an Gud gefe myer Gott ad <lb/>l&#xE6;ra</q>; seventeenth-century hand.</item>
 </list></p>
-<p>There are in addition a number of illegible scribbles in a later hand (or hands) on fols <locus>2r</locus>, <locus>3r</locus>, <locus>5v</locus> and <locus>19r</locus>.</p>
+<p>There are in addition a number of illegible scribbles in a later hand (or hands) on fols 
+<locus>2r</locus>, <locus>3r</locus>, <locus>5v</locus> and <locus>19r</locus>.</p>
 </additions>
 </egXML></p>
 </div4>
@@ -1578,7 +1797,12 @@ of the Agnus Dei.</p></decoNote>
 
 <div4>
 <head>Seals</head>
-<p>The <gi>sealDesc</gi> element supplies information about the seal(s) attached to documents to guarantee their integrity, or to show authentication of the issuer or consent of the participants. It may contain one or more paragraphs summarizing the overall nature of the seals, or may contain one or more <gi>seal</gi> elements.
+
+<p>The <gi>sealDesc</gi> element supplies information about the
+seal(s) attached to documents to guarantee their integrity, or to show
+authentication of the issuer or consent of the participants. It may
+contain one or more paragraphs summarizing the overall nature of the
+seals, or may contain one or more <gi>seal</gi> elements.
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <sealDesc>
@@ -1598,9 +1822,17 @@ Parchment tag on which is written: <q>Woldorp Iohanne G</q>.</p>
 
 <div4 xml:id="msadac">
 <head>Accompanying material</head>
-<p>The circumstance may arise where material not originally part of a manuscript is bound into or otherwise kept with a manuscript. In some cases this material would best be treated in a separate <gi>msPart</gi> element (see <ptr target="#mspt"/> below).
-There are, however, cases where the additional matter is not self-evidently a distinct manuscript: it might, for example, be a set of
-notes by a later scholar, or a file of correspondence relating to the manuscript. The <gi>accMat</gi> element is provided as a holder for this kind of information.
+
+<p>The circumstance may arise where material not originally part of a
+manuscript is bound into or otherwise kept with a manuscript. In some
+cases this material would best be treated in a separate
+<gi>msPart</gi> element (see <ptr target="#mspt"/> below).  There are,
+however, cases where the additional matter is not self-evidently a
+distinct manuscript: it might, for example, be a set of notes by a
+later scholar, or a file of correspondence relating to the
+manuscript. The <gi>accMat</gi> element is provided as a holder for
+this kind of information.
+
 <specList>
 <specDesc key="accMat" atts="type"/>
 </specList></p>
@@ -1676,14 +1908,15 @@ following optional attributes:
 <specList><specDesc key="tei.datable" atts="notBefore notAfter evidence">
  </specDesc></specList></p>
 
-<p>Information about the origins of the manuscript, its place and date of writing, should be given as one or more paragraphs contained by a single <gi>origin</gi>
-element; following this, any available information on distinct stages in
-the history of the manuscript before its acquisition by its current
-holding institution should be included as paragraphs within one or more
-<gi>provenance</gi> elements. Finally, any information
-specific to the means by which the manuscript was acquired by its
-present owners should be given as paragraphs within the
-<gi>acquisition</gi> element.</p>
+<p>Information about the origins of the manuscript, its place and date
+of writing, should be given as one or more paragraphs contained by a
+single <gi>origin</gi> element; following this, any available
+information on distinct stages in the history of the manuscript before
+its acquisition by its current holding institution should be included
+as paragraphs within one or more <gi>provenance</gi>
+elements. Finally, any information specific to the means by which the
+manuscript was acquired by its present owners should be given as
+paragraphs within the <gi>acquisition</gi> element.</p>
 
 <p>Here is a fairly simple example of the use of this element:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -1758,9 +1991,9 @@ the order in which elements are supplied should be as specified above.</p>
 <p>The <gi>additional</gi> element is formally defined as follows:
 
 <specGrp xml:id="additional.def">
-
 &additional.odd;
 </specGrp></p>
+
 <div3 xml:id="msadad">
 <head>Administrative information</head>
 
@@ -1772,9 +2005,8 @@ of the following specialized elements:
 
 <specList>
 <specDesc key="recordHist"/>
-<specDesc key="custodialHist"/>
 <specDesc key="availability"/>
-<specDesc key="remarks"/>
+<specDesc key="custodialHist"/>
 </specList></p>
 
 <div4 xml:id="msrh" type="d4">
@@ -1885,11 +2117,12 @@ it should therefore not be used or lent out until it has been conserved.</p>
 
 <p>The <gi>custodialHist</gi> record is used to describe the custodial
 history of a manuscript, recording any significant events noted during
-the period that it has been located within its holding 
-institution. It may contain either a series of paragraphs tagged with
-the standard TEI <gi>p</gi> element, or a series of <gi>custEvent</gi> elements, each describing a distinct incident or event, further specified by a <att>type</att>
-attribute, and carrying dating information by virtue of its membership
-in the <ident>datable</ident> class, as noted above.
+the period that it has been located within its holding institution. It
+may contain either a series of paragraphs tagged with the standard TEI
+<gi>p</gi> element, or a series of <gi>custEvent</gi> elements, each
+describing a distinct incident or event, further specified by a
+<att>type</att> attribute, and carrying dating information by virtue
+of its membership in the <ident>datable</ident> class, as noted above.
 
 <specList>
 <specDesc key="custEvent" atts="type"/>
@@ -1907,7 +2140,6 @@ Konserveringsv&#xE6;rksted.</p></custEvent>
 </custodialHist>
 </egXML></p>
 </div4>
-<!-- got rid of remarks -->
 
 <div4>
 <head>Formal definitions</head>
@@ -1922,7 +2154,6 @@ are formally defined as follows:
 <!-- add &change.odd? -->
 &custodialhist.odd;
 &custevent.odd;
-<!--&remarks.odd;-->
 </specGrp>
 </p>
 </div4>
@@ -1983,15 +2214,23 @@ the process by which a digital or photographic image was made.</p>
 <div2 xml:id="mspt">
 <head>Manuscript parts</head>
 
-<p>The <gi>msPart</gi> element may be used in cases where what were originally physically separate manuscripts or parts of manuscripts have been bound together and/or share the same call number.
+<p>The <gi>msPart</gi> element may be used in cases where what were
+originally physically separate manuscripts or parts of manuscripts
+have been bound together and/or share the same call number.
 <specList>
 <specDesc key="msPart"/>
 </specList></p>
 
-<p>Since each component of such a composite manuscript will in all likelihood have its own content,
-physical description, history, and so on, the structure of <gi>msPart</gi> is in the main identical to that of <gi>msDescription</gi>, allowing one to retain the top level of identity (<gi>msIdentifier</gi>), but to branch out thereafter into as many parts, or even subparts, as necessary. If the parts of a composite manuscript have
-their own identifiers, they should be tagged using the <gi>idno</gi>
-element, rather than the <gi>msIdentifier</gi> element, as in the following example:
+<p>Since each component of such a composite manuscript will in all
+likelihood have its own content, physical description, history, and so
+on, the structure of <gi>msPart</gi> is in the main identical to that
+of <gi>msDescription</gi>, allowing one to retain the top level of
+identity (<gi>msIdentifier</gi>), but to branch out thereafter into as
+many parts, or even subparts, as necessary. If the parts of a
+composite manuscript have their own identifiers, they should be tagged
+using the <gi>idno</gi> element, rather than the <gi>msIdentifier</gi>
+element, as in the following example:
+
 <!-- don't understand why these need to to wrapped in <altIdentifier> -->
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
