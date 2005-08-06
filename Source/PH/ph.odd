@@ -914,7 +914,8 @@ of hands occurs may then be marked in the text by the empty
 <gi>handShift</gi> element, which specifies the hand concerned by
 giving the same identifier.
 <specList>
-<specDesc key="hand" atts="scribe style ink character first resp"/><specDesc key="handList"/><specDesc key="handShift" atts="new old style ink character resp"/></specList>
+<specDesc key="hand" /><specDesc key="handList"/>
+<specDesc key="handShift" /></specList>
 </p><p>The attributes <att>old</att> and <att>new</att> on the
 <gi>handShift</gi> element refer to the order of the text in the
 transcription:  <q>old</q> is the material before the
@@ -922,12 +923,13 @@ transcription:  <q>old</q> is the material before the
 ordinarily, but not necessarily, be the order in which the material was
 originally written.  Neither attribute is required but both are
 recommended where there is a new hand, as opposed to a new writing style
-in the one hand.  The <att>character</att> attribute will be most often
+in the one hand.  The <att>writing</att> attribute will be most often
 used to encode descriptive shifts which the transcriber perceives within
 a manuscript and which may or may not be associated with or denote
 changes in scribe or content.  The particular values encoded will depend
-upon the needs of the transcriber.  Where many values are to be encoded,
-feature structures provide an alternative means of encoding these.</p>
+upon the needs of the transcriber. Where many values are to be encoded,
+feature structures provide an alternative means of encoding these. <!-- might be better to allow for
+nested desc?-->  </p>
 <p>A single hand may employ different writing styles and inks within a
 document, or may change character.  For example, the writing style might
 shift from <q>anglicana</q> to <q>secretary</q>, or the ink from blue to
@@ -949,8 +951,8 @@ document hands are declared in the header:
    <profileDesc>
     
     <handList>
-      <hand xml:id="h1" style="copperplate" ink="brown" character="regular" first="true" resp="das"/>
-      <hand xml:id="h2" style="print" ink="brown" character="unschooled" resp="das"/>
+      <hand xml:id="h1" style="copperplate" ink="brown" writing="regular" first="true" resp="das"/>
+      <hand xml:id="h2" style="print" ink="brown" writing="unschooled" resp="das"/>
     </handList>
     
   </profileDesc>
@@ -978,47 +980,9 @@ for the <att>ink</att> attribute on the <gi>handShift</gi> element:
 <p>These elements are declared as follows:
  
 <specGrp xml:id="DPHHD" n="Hand Shifts">
-
-
 &hand.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
 &handshft.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
 &handlist.odd;
-
-
-
-
-
-
-
-
-
-
 </specGrp></p></div3>
 <div3 type="subsection" xml:id="PHHR"><head>Hand, Responsibility, and Certainty Attributes</head>
 <p>The <att>hand</att> and <att>resp</att> attributes have similar, but
@@ -1253,15 +1217,6 @@ contained within it.</p>
 
 &damage.odd;
 
-
-
-
-
-
-
-
-
-
 </specGrp>
  
 The <gi>unclear</gi> element is defined in section <ptr target="#COED"/>.</p></div3>
@@ -1312,7 +1267,7 @@ the <gi>damage</gi> element (for damage).  Text within the damaged area
 which can be read with perfect confidence needs no further tagging.
 Text within the damaged area which can not be read with perfect
 confidence may be surrounded with the <gi>unclear</gi> element.  Places
-within the damaged area where the text has been rendered completedly
+within the damaged area where the text has been rendered completely
 illegible and no text is supplied by the editor may be marked with
 the <gi>gap</gi> element. For each element, one may use appropriate
 attribute values to indicate the cause and type of deletion or damage
@@ -1509,13 +1464,6 @@ this:
 <specGrp xml:id="DTCHD" n="Headers and footers">
 
 &fw.odd;
-
-
-
-
-
-
-
 
 
 
