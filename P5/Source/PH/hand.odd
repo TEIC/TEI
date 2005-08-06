@@ -32,9 +32,7 @@ alternative (and possibly non-unique) name.</p>
     </attDef>-->
     <attDef ident="scribe" usage="opt">
 	<equiv/>
-	<desc>gives the name of,
-or other identifier for, the
-scribe.</desc>
+	<desc>gives the name of,or other identifier for, the scribe.</desc>
       <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
       <valDesc>Any name, such as <mentioned>tremulous
  hand</mentioned>, <mentioned>Hand B</mentioned>, <mentioned>Hoccleve,
@@ -58,7 +56,6 @@ scribe.</desc>
 	<desc>indicates dominant language of hand.</desc>
       <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
       <valDesc><mentioned>Latin</mentioned>, <mentioned>English</mentioned></valDesc>
-      
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
@@ -67,23 +64,24 @@ scribe.</desc>
 	<equiv/>
 	<desc>describes tint or type
 of ink, e.g. <mentioned>brown</mentioned>.  May also be used to indicate the writing medium, e.g. <mentioned>pencil</mentioned>,</desc>
-      
-      
       <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
-      
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
     </attDef>
-    <attDef ident="character" usage="opt">
+    <attDef ident="writing" usage="opt">
 	<equiv/>
 	<desc>describes other characteristics of the hand,
 particularly those related to the quality of the writing.</desc>
-      
-      
       <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
-      <valDesc><mentioned>shaky</mentioned>, <mentioned>thick</mentioned>, <mentioned>regular</mentioned></valDesc>
-      
+<valList type="open">
+<valItem ident="shaky"><gloss>handwriting is shaky</gloss>
+</valItem>
+<valItem ident="thick"><gloss>strokes are unusually thick</gloss>
+</valItem>
+<valItem ident="regular"><gloss>writing is regular</gloss>
+</valItem>
+</valList>
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
@@ -92,11 +90,8 @@ particularly those related to the quality of the writing.</desc>
 	<equiv/>
 	<desc>indicates whether or
 not this is the first or main scribe of the document.</desc>
-      
-      
       <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="boolean"/></datatype>
-      <valDesc><mentioned>YES</mentioned>, <mentioned>NO</mentioned></valDesc>
-      
+      <valDesc><mentioned>true</mentioned> or <mentioned>false</mentioned></valDesc>
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
@@ -105,14 +100,11 @@ not this is the first or main scribe of the document.</desc>
 	<equiv/>
 	<desc>indicates the editor or transcriber responsible for identifying
 the hand.</desc>
-      
-      
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Key"/></datatype>
       <valDesc>must be one of the identifiers declared in the document
 header, associated with a person asserted as responsible for some
 aspect of the text's creation, transcription, editing, or encoding
 (see chapter <ptr target="#CE"/>).</valDesc>
-      
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
