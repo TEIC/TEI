@@ -231,6 +231,9 @@
   </xd:doc>
   <xsl:template name="makePic">
   <xsl:if test="@xml:id">\hypertarget{<xsl:value-of select="@xml:id"/>}{}</xsl:if>
+  <xsl:if test="@rend='centre'">
+    <xsl:text>\centerline{</xsl:text>
+  </xsl:if>
   <xsl:text>\includegraphics[</xsl:text>
   <xsl:call-template name="graphicsAttributes">
     <xsl:with-param name="mode">latex</xsl:with-param>
@@ -258,6 +261,9 @@
     </xsl:otherwise>
   </xsl:choose>
   <xsl:text>}</xsl:text>
+  <xsl:if test="@rend='centre'">
+    <xsl:text>}</xsl:text>
+  </xsl:if>
 </xsl:template>
 
 
