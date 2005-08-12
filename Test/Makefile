@@ -43,10 +43,12 @@ test-schema: test-rnv test-jing
 test-jing:
 	echo JING...
 	for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do echo $$i: ; jing -t $$i.rng $$i.xml; done
+	jing -t testfrag.rnc testlite.xml
 
 test-rnv:
 	echo RNV....
 	for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do echo $$i: ; xx -P $$i.xml | rnv $$i.rnc ; done
+	rnv testfrag.rnc testlite.xml
 
 test-xmllint:
 	echo XMLLINT....
