@@ -73,8 +73,8 @@ test-dtd-rxp:
 	-for i in $(TESTFILES); do rxp -V -s -x $$i.xml; done
 
 clean:
-	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do rm -f $$i.doc.xml $$i.rnc $$i.dtd $$i.compiled.* $$i.xsd $$i.rng;done
-	-rm -rf LOG *~ *.xsd *.rnc Schema RomaResults DTD
+	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do rm -f $$i.doc.xml $$i.rnc $$i.dtd $$i.compiled.* $$i.xsd $$i.rnc $$i.rng;done
+	-rm -rf LOG *~ *.xsd Schema RomaResults DTD
 	-rm -rf *.doc.*
 
 
