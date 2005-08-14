@@ -30,7 +30,7 @@ TESTSPECIALFILES= \
 	testodds \
 	testmathml 
 
-default: schemas test-schema test-dtd test-xsd
+default: schemas test-schema test-dtd test-dtd-xmllint test-xsd
 
 all: test-schema test-dtd test-xsd
 
@@ -68,9 +68,9 @@ test-dtd:
 	-for i in $(TESTFILES); do echo $$i: ; xmllint --dropdtd $$i.xml | xmllint --noout --dtdvalid $$i.dtd -; done
 
 
-test-dtd-rxp:
+test-dtd-xmllint:
 	echo RXP DTD ....
-	-for i in $(TESTFILES); do rxp -V -s -x $$i.xml; done
+	-for i in $(TESTFILES); do xmllint --noout --valid $$i.xml; done
 
 clean:
 	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do rm -f $$i.doc.xml $$i.rnc $$i.dtd $$i.compiled.* $$i.xsd $$i.rnc $$i.rng;done

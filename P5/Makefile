@@ -5,7 +5,7 @@ XSL=/usr/share/xml/tei/stylesheet
 # XSL=http://www.tei-c.org/stylesheet
 ROMAOPTS="--localsource=Source-driver.xml"
 LOCALSOURCE=Source-driver.xml
-
+LANGUAGE=en
 
 .PHONY: convert dtds schemas html validate valid test split oddschema exampleschema fascicule exist clean dist
 
@@ -70,6 +70,7 @@ html:check subset
 	--stringparam cssFile tei-print.css \
 	--stringparam displayMode rnc \
 	--stringparam outputDir . \
+	--stringparam lang ${LANGUAGE} \
 	tmp$$$$.xsl - && rm tmp$$$$.xsl)
 	-cp *.gif *.css Guidelines
 	-cp Source/*/*.png Guidelines
@@ -86,7 +87,7 @@ pdf: xml
 	@echo Checking you have a running pdfLaTeX before trying to make PDF...
 	which pdflatex || exit 1
 	test -d /TEI/Talks/texconfig || exit 1
-	xsltproc ${XSL}/../teic/teilatex-teic.xsl Guidelines.xml \
+	xsltproc ${XSL}/teic/teilatex-teic.xsl Guidelines.xml \
 	> Guidelines.tex
 	TEXINPUTS=/TEI/Talks/texconfig: pdflatex Guidelines
 	TEXINPUTS=/TEI/Talks/texconfig: pdflatex Guidelines
