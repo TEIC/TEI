@@ -52,6 +52,7 @@
   
   <xsl:param name="displayMode">rnc</xsl:param>
   
+  <xsl:variable name="top" select="/"/>
 
 
   <xsl:template match="tei:tag">
@@ -189,12 +190,18 @@
     <tei:item>
       <xsl:apply-templates select="tei:desc" mode="show"/>
       <xsl:apply-templates select="tei:valList"/>
+      <xsl:apply-templates select="tei:exemplum"/>
     </tei:item>
   </xsl:template>
   
   <xsl:template match="tei:attDef/tei:datatype">
     <tei:label>
-      <tei:emph>Datatype:</tei:emph>
+      <tei:emph>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Datatype</xsl:with-param>
+	</xsl:call-template>
+	<xsl:text>:</xsl:text>
+      </tei:emph>
     </tei:label>
     <tei:item>
       <xsl:call-template name="Literal"/>
@@ -202,7 +209,13 @@
   </xsl:template>
   
   <xsl:template match="tei:attDef/tei:exemplum">
-    <tei:label><tei:emph>Example: </tei:emph></tei:label>
+    <tei:label>
+      <tei:emph>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Example</xsl:with-param>
+	</xsl:call-template>
+      </tei:emph>
+    </tei:label>
     <tei:item>
       <xsl:call-template name="verbatim">
 	<xsl:with-param name="text">
@@ -247,10 +260,16 @@
   
   
   <xsl:template match="tei:attList" mode="weave">
-    <tei:p><tei:emph>Attributes: </tei:emph>
-    <xsl:call-template name="displayAttList">
+    <tei:p>
+      <tei:emph>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Attributes</xsl:with-param>
+	</xsl:call-template>
+	<xsl:text>: </xsl:text>
+      </tei:emph>
+      <xsl:call-template name="displayAttList">
       <xsl:with-param name="mode">all</xsl:with-param>
-    </xsl:call-template>
+      </xsl:call-template>
     </tei:p>
   </xsl:template>
   
@@ -264,12 +283,22 @@
     
     <xsl:apply-templates mode="weave"/>
     
-    <tei:p>    <tei:emph>Member of classes</tei:emph>
-    <xsl:call-template name="generateClassParents"/>
+    <tei:p>
+      <tei:emph>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Class</xsl:with-param>
+	</xsl:call-template>
+      </tei:emph>
+      <xsl:call-template name="generateClassParents"/>
     </tei:p>
     
-    <tei:p><tei:emph>Members</tei:emph>
-    <xsl:call-template name="generateMembers"/>
+    <tei:p>
+      <tei:emph>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Members</xsl:with-param>
+	</xsl:call-template>
+      </tei:emph>
+      <xsl:call-template name="generateMembers"/>
     </tei:p>
     
     <xsl:call-template name="HTMLmakeTagsetInfo"/>
@@ -279,7 +308,12 @@
   
   <xsl:template match="tei:classes"  mode="weave">
     <xsl:if test="tei:memberOf">
-      <tei:p><tei:emph>Classes</tei:emph>
+      <tei:p>
+	<tei:emph>
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Class</xsl:with-param>
+	  </xsl:call-template>
+	</tei:emph>
       <xsl:for-each select="tei:memberOf">
 	<xsl:choose>
 	  <xsl:when test="key('IDENTS',@key)">
@@ -302,7 +336,13 @@
   </xsl:template>
   
   <xsl:template match="tei:defaultVal">
-    <tei:label><tei:emph>Default: </tei:emph></tei:label>
+    <tei:label>
+      <tei:emph>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Default</xsl:with-param>
+	</xsl:call-template>
+      </tei:emph>
+     </tei:label>
     <tei:item>
       <xsl:apply-templates/>
     </tei:item>
@@ -318,17 +358,26 @@
   
   <xsl:template match="tei:elementSpec" mode="weavebody">
     <xsl:if test="not(tei:attList)">
-      <tei:p><tei:emph>Attributes: </tei:emph>
+      <tei:p>
+	<tei:emph>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Attributes</xsl:with-param>
+	</xsl:call-template>
+      </tei:emph>
       <xsl:choose>
 	<xsl:when test="count(../tei:classes/tei:memberOf)&gt;0">
-	  <xsl:text>Global attributes 
-	  and those inherited from </xsl:text>
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Global attributes and those inherited from</xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:text> </xsl:text>
 	  <xsl:for-each select="..">
 	    <xsl:call-template name="generateClassParents"/>
 	  </xsl:for-each>
 	</xsl:when>
 	<xsl:otherwise>
-	  Global attributes only
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Global attributes only</xsl:with-param>
+	  </xsl:call-template>
 	</xsl:otherwise>
       </xsl:choose>
       </tei:p>
@@ -338,32 +387,43 @@
   </xsl:template>
   
   <xsl:template match="tei:elementSpec/tei:content" mode="weave">
-    <tei:p><tei:emph>Declaration: </tei:emph>
-    <xsl:call-template name="bitOut">
-      <xsl:with-param name="grammar"></xsl:with-param>
-      <xsl:with-param name="content">
-	<Wrapper>
-	  <rng:element name="{../@ident}">
-	    <rng:ref name="tei.global.attributes"/>
-	    <xsl:for-each select="../tei:classes/tei:memberOf">
-	      <xsl:for-each select="key('IDENTS',@key)">
-		<xsl:if test="tei:attList">
-		  <rng:ref name="{@ident}.attributes"/>
-		</xsl:if>
-	      </xsl:for-each>
-	    </xsl:for-each>
-	    <xsl:apply-templates
-		select="../tei:attList" mode="tangle"/>
-	    <xsl:copy-of select="rng:*"/>
-	  </rng:element>
-	</Wrapper>
-      </xsl:with-param>
-    </xsl:call-template>
+    <tei:p>
+      <tei:emph>	
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Declaration</xsl:with-param>
+	</xsl:call-template>
+      </tei:emph>
+      <xsl:call-template name="bitOut">
+	<xsl:with-param name="grammar"></xsl:with-param>
+	<xsl:with-param name="content">
+	    <Wrapper>
+	      <rng:element name="{../@ident}">
+		<rng:ref name="tei.global.attributes"/>
+		<xsl:for-each select="../tei:classes/tei:memberOf">
+		  <xsl:for-each select="key('IDENTS',@key)">
+		    <xsl:if test="tei:attList">
+		      <rng:ref name="{@ident}.attributes"/>
+		    </xsl:if>
+		  </xsl:for-each>
+		</xsl:for-each>
+		<xsl:apply-templates
+		    select="../tei:attList" mode="tangle"/>
+		<xsl:copy-of select="rng:*"/>
+	      </rng:element>
+	    </Wrapper>
+	</xsl:with-param>
+      </xsl:call-template>
     </tei:p>
-  </xsl:template>
+    </xsl:template>
   
   <xsl:template match="tei:elementSpec/tei:exemplum" mode="weave">
-    <tei:p><tei:emph>Example: </tei:emph></tei:p>
+    <tei:p>
+    <tei:emph>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Example</xsl:with-param>
+	</xsl:call-template>
+    </tei:emph>
+    </tei:p>
     <xsl:apply-templates/>
   </xsl:template>
   
@@ -372,42 +432,69 @@
     <tei:hi>&lt;<xsl:call-template name="identifyMe"/>&gt; </tei:hi>
     <xsl:value-of select="tei:desc"/>
     <xsl:choose>
-      <xsl:when test="tei:attList//tei:attDef">
-	<xsl:choose>
-	  <xsl:when test="not($atts='  ')">
-	    Selected attributes: <tei:list type="gloss">
-	    <xsl:for-each select="tei:attList//tei:attDef">
-	      <xsl:if test="contains($atts,concat(' ',@ident,' '))">
-		<tei:label>
-		  <xsl:call-template name="identifyMe"/>
-		</tei:label>
-		<tei:item>
-		  <xsl:apply-templates select="tei:desc" mode="show"/>
-		</tei:item>
-	      </xsl:if>
-	    </xsl:for-each>
-	  </tei:list>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:apply-templates select="tei:attList" mode="summary"/>
-	  </xsl:otherwise>
-	</xsl:choose>
-      </xsl:when>
-      <xsl:otherwise>
-	<tei:list>
-	  <tei:item>
-	    No attributes other than those globally
-	    available (see definition for tei.global.attributes)
-	  </tei:item>
+      <xsl:when test="not($atts='')">
+	<tei:list type="gloss">
+	  <xsl:variable name="HERE" select="."/>
+	  <xsl:for-each select="estr:tokenize(concat(' ',$atts,' '))">
+	    <xsl:variable name="TOKEN" select="."/>
+	    <xsl:choose>
+	      <xsl:when test="$HERE/tei:attList//tei:attDef[@ident=$TOKEN]">
+		<xsl:for-each
+		    select="$HERE/tei:attList//tei:attDef[@ident=$TOKEN]">
+		  <xsl:call-template name="showAnAttribute"/>
+		</xsl:for-each>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:for-each select="$HERE/tei:classes/tei:memberOf">
+		  <xsl:for-each select="key('IDENTS',@key)/tei:attList//tei:attDef[@ident=$TOKEN]">
+		    <xsl:call-template name="showAnAttribute"/>
+		  </xsl:for-each>
+		</xsl:for-each>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:for-each>
 	</tei:list>
-      </xsl:otherwise>
+      </xsl:when>
+      <xsl:when test="tei:attList//tei:attDef">
+	<tei:list type="gloss">
+	  <xsl:apply-templates select="tei:attList" mode="summary"/>
+	</tei:list>
+	<xsl:if test="tei:classes/tei:memberOf">
+	  <xsl:call-template name="showAttClasses"/>
+	</xsl:if>
+      </xsl:when>
+      <xsl:when test="tei:classes/tei:memberOf">
+	<xsl:call-template name="showAttClasses"/>
+      </xsl:when>
     </xsl:choose>
+  </xsl:template>
+  
+  <xsl:template name="showAnAttribute">
+    <tei:label>
+      <xsl:choose>
+	<xsl:when test="tei:altIdent">
+	  <xsl:value-of select="tei:altIdent"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="@ident"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </tei:label>
+    <tei:item>
+      <xsl:apply-templates select="tei:desc" mode="show"/>
+    </tei:item>
   </xsl:template>
   
   <xsl:template match="tei:equiv"/>
   
   <xsl:template match="tei:exemplum">
-    <tei:p><tei:emph>Example: </tei:emph></tei:p>
+    <tei:p>
+      <tei:emph>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Example</xsl:with-param>
+	</xsl:call-template>
+      </tei:emph>
+    </tei:p>
     <xsl:apply-templates/>
   </xsl:template>
   
@@ -422,7 +509,12 @@
   </xsl:template>
   
   <xsl:template match="tei:macroSpec/tei:content" mode="weave">
-    <tei:p><tei:emph>Declaration: </tei:emph>
+    <tei:p>
+      <tei:emph>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Declaration</xsl:with-param>
+	</xsl:call-template>
+      </tei:emph>
     <xsl:call-template name="bitOut">
       <xsl:with-param name="grammar">true</xsl:with-param>
       <xsl:with-param name="content">
@@ -442,16 +534,29 @@
   <xsl:template match="tei:moduleSpec">
     <xsl:choose>
       <xsl:when test="parent::tei:p">
-	Module <tei:emph><xsl:value-of select="@ident"/></tei:emph>:
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Module</xsl:with-param>
+	</xsl:call-template>
+	<xsl:text> </xsl:text>
+	<tei:emph><xsl:value-of select="@ident"/></tei:emph>:
 	<xsl:apply-templates select="tei:desc"  mode="show"/>
       </xsl:when>
       <xsl:otherwise>
-	<tei:p>Module <tei:emph><xsl:value-of select="@ident"/></tei:emph>:
+	<tei:p>
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Module</xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:text> </xsl:text>
+	  <tei:emph><xsl:value-of select="@ident"/></tei:emph>:
 	<xsl:apply-templates select="tei:desc"  mode="show"/></tei:p>
       </xsl:otherwise>
     </xsl:choose>
     <tei:list>
-      <tei:item>Elements defined:
+      <tei:item>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Elements defined</xsl:with-param>
+	</xsl:call-template>
+	<xsl:text>: </xsl:text>
       <xsl:for-each select="key('ElementModule',@ident)">
 	<xsl:call-template name="linkTogether">
 	  <xsl:with-param name="name" select="@ident"/>
@@ -459,7 +564,11 @@
 	<xsl:text>: </xsl:text>
       </xsl:for-each>
       </tei:item>
-      <tei:item>Classes defined:
+      <tei:item>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Classes defined</xsl:with-param>
+	</xsl:call-template>
+	<xsl:text>: </xsl:text>
       <xsl:for-each select="key('ClassModule',@ident)">
 	<xsl:call-template name="linkTogether">
 	  <xsl:with-param name="name" select="@ident"/>
@@ -467,7 +576,11 @@
 	<xsl:text>: </xsl:text>
       </xsl:for-each>
       </tei:item>
-      <tei:item>Macros defined:
+      <tei:item>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Macros defined</xsl:with-param>
+	</xsl:call-template>
+	<xsl:text>: </xsl:text>
       <xsl:for-each select="key('MacroModule',@ident)">
 	<xsl:call-template name="linkTogether">
 	  <xsl:with-param name="name" select="@ident"/>
@@ -490,7 +603,12 @@
   
   <xsl:template match="tei:remarks">
     <xsl:if test="*//text()">
-      <tei:label>Notes: </tei:label>
+      <tei:label>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Notes</xsl:with-param>
+	</xsl:call-template>
+	<xsl:text>: </xsl:text>
+      </tei:label>
       <tei:item><xsl:apply-templates/></tei:item>
     </xsl:if>
   </xsl:template>
@@ -511,7 +629,11 @@
   
   
   <xsl:template match="tei:valDesc">
-    <tei:label><tei:emph>Values: </tei:emph></tei:label>
+    <tei:label><tei:emph>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Values</xsl:with-param>
+	</xsl:call-template>
+    </tei:emph></tei:label>
     <tei:item>
       <xsl:apply-templates/>
     </tei:item>
@@ -521,10 +643,30 @@
   
   <xsl:template match="tei:valList" mode="contents">
     <xsl:choose>
-      <xsl:when test="@type='semi'"> Suggested values include:</xsl:when>
-      <xsl:when test="@type='open'"> Sample values include:</xsl:when>
-      <xsl:when test="@type='closed'"> Legal values are:</xsl:when>
-      <xsl:otherwise> Values are:</xsl:otherwise>
+      <xsl:when test="@type='semi'"> 
+      <xsl:call-template name="i18n">
+	<xsl:with-param name="word">Suggested values	include</xsl:with-param>
+      </xsl:call-template>
+      <xsl:text>:</xsl:text>
+      </xsl:when>
+      <xsl:when test="@type='open'"> 
+      <xsl:call-template name="i18n">
+	<xsl:with-param name="word">Sample values include</xsl:with-param>
+      </xsl:call-template>
+      <xsl:text>:</xsl:text>
+      </xsl:when>
+      <xsl:when test="@type='closed'"> 
+      <xsl:call-template name="i18n">
+	<xsl:with-param name="word">Legal values are</xsl:with-param>
+      </xsl:call-template>
+      <xsl:text>:</xsl:text>
+      </xsl:when>
+      <xsl:otherwise> 
+      <xsl:call-template name="i18n">
+	<xsl:with-param name="word">Values are</xsl:with-param>
+      </xsl:call-template>
+      <xsl:text>:</xsl:text>
+      </xsl:otherwise>
     </xsl:choose>
     <tei:list type="gloss">
       <xsl:for-each select="tei:valItem">
@@ -545,8 +687,11 @@
     <xsl:call-template name="verbatim">
       <xsl:with-param name="label">
 	<xsl:if test="not(parent::tei:exemplum)">
-	  <xsl:text>Example </xsl:text>
-	  <xsl:call-template name="compositeNumber"/>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Example</xsl:with-param>
+	</xsl:call-template>
+	<xsl:text> </xsl:text>
+	<xsl:call-template name="compositeNumber"/>
 	</xsl:if>
       </xsl:with-param>
       <xsl:with-param name="text">
@@ -556,8 +701,14 @@
   </xsl:template>
   
   <xsl:template name="HTMLmakeTagsetInfo">
-    <tei:p><tei:emph>Module: </tei:emph>
-    <xsl:call-template name="makeTagsetInfo"/>
+    <tei:p>
+      <tei:emph>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Module</xsl:with-param>
+	</xsl:call-template>
+	</tei:emph>
+	<xsl:text>: </xsl:text>
+	<xsl:call-template name="makeTagsetInfo"/>
     </tei:p>
   </xsl:template>
   
@@ -605,8 +756,10 @@
       <xsl:when test=".//tei:attDef">
 	<xsl:choose>
 	  <xsl:when test="count(../tei:classes/tei:memberOf)&gt;0">
-	    <xsl:text>(In addition to global attributes 
-	    and those inherited from </xsl:text>
+	    <xsl:text> (</xsl:text>
+	      <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">In addition to global attributes and those inherited from</xsl:with-param></xsl:call-template>
+	      <xsl:text> </xsl:text>
 	    <xsl:for-each select="..">
 	      <xsl:call-template name="generateClassParents"/>
 	    </xsl:for-each>
@@ -630,14 +783,18 @@
       <xsl:otherwise>
 	<xsl:choose>
 	  <xsl:when test="count(../tei:classes/tei:memberOf)&gt;0">
-	    <xsl:text>Global attributes 
-	    and those inherited from </xsl:text>
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">Global attributes and those inherited from</xsl:with-param>
+	    </xsl:call-template>
+	    <xsl:text> </xsl:text>
 	    <xsl:for-each select="..">
 	      <xsl:call-template name="generateClassParents"/>
 	    </xsl:for-each>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    Global attributes only
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">Global attributes only</xsl:with-param>
+	    </xsl:call-template>
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:otherwise>
@@ -707,8 +864,7 @@
 	<xsl:text> </xsl:text>
 	<xsl:call-template name="identifyMe"/>
       </tei:head>
-      <tei:p><tei:emph>Description: </tei:emph>
-      <xsl:apply-templates select="tei:desc" mode="show"/></tei:p>
+      <tei:p><xsl:apply-templates select="tei:desc" mode="show"/></tei:p>
       <xsl:apply-templates select="." mode="weavebody"/>
     </tei:div>
   </xsl:template>
@@ -806,7 +962,11 @@
     <xsl:param name="filename"/>
 
     <tei:div>
-      <tei:head>Classes</tei:head>
+      <tei:head>
+      <xsl:call-template name="i18n">
+	<xsl:with-param name="word">Classes defined</xsl:with-param>
+      </xsl:call-template>
+      </tei:head>
       <xsl:apply-templates mode="weave" select="tei:classSpec">
 	<xsl:sort select="tei:altIdent"/>
 	<xsl:sort select="@ident"/>
@@ -814,7 +974,11 @@
     </tei:div>
     
     <tei:div>
-      <tei:head>Elements</tei:head>
+      <tei:head>
+      <xsl:call-template name="i18n">
+	<xsl:with-param name="word">Elements defined</xsl:with-param>
+      </xsl:call-template>
+      </tei:head>
       <xsl:apply-templates mode="weave" select="tei:elementSpec">
 	<xsl:sort select="tei:altIdent"/>
 	<xsl:sort select="@ident"/>
@@ -822,7 +986,11 @@
     </tei:div>
 
     <tei:div>
-      <tei:head>Macros</tei:head>
+      <tei:head>
+      <xsl:call-template name="i18n">
+	<xsl:with-param name="word">Macros defined</xsl:with-param>
+      </xsl:call-template>
+      </tei:head>
       <xsl:apply-templates mode="weave" select="tei:macroSpec">
 	    <xsl:sort select="tei:altIdent"/>
 	    <xsl:sort select="@ident"/>

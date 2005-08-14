@@ -256,6 +256,7 @@ from 1st October 2004. This is NOT the final P5</xsl:text>
   <xsl:apply-templates select="key('ElementModule',@ident)"  mode="tangle">      
     <xsl:sort select="@ident"/>
   </xsl:apply-templates>
+
   <xsl:comment>3. macros</xsl:comment>
   <xsl:apply-templates select="key('MacroModule',@ident)"  mode="tangle"/>
   
@@ -266,7 +267,9 @@ from 1st October 2004. This is NOT the final P5</xsl:text>
     <xsl:for-each select="key('DefClasses',1)">
       <xsl:choose>
 	<xsl:when test="@type='model'">    
-	  <xsl:apply-templates select="." mode="processModel"/>
+	  <xsl:apply-templates select="." mode="processModel">
+	    <xsl:with-param name="declare">true</xsl:with-param>
+	  </xsl:apply-templates>
 	</xsl:when>
 	<xsl:when test="@type='atts'">    
 	  <xsl:apply-templates select="." mode="processDefaultAtts"/>
@@ -275,7 +278,9 @@ from 1st October 2004. This is NOT the final P5</xsl:text>
 	  <xsl:apply-templates select="." mode="processDefaultAtts"/>
 	</xsl:when>
 	<xsl:when test="@type='both'">    
-	  <xsl:apply-templates select="." mode="processModel"/>
+	  <xsl:apply-templates select="." mode="processModel">
+	    <xsl:with-param name="declare">true</xsl:with-param>
+	  </xsl:apply-templates>
 	  <xsl:apply-templates select="." mode="processDefaultAtts"/>
 	</xsl:when>
       </xsl:choose>

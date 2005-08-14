@@ -216,7 +216,14 @@
       <xsl:message> classSpec <xsl:value-of
       select="@ident"/> (type <xsl:value-of select="@type"/>)</xsl:message>
     </xsl:if>
-    <xsl:apply-templates select="." mode="processModel"/>
+    <xsl:apply-templates select="." mode="processModel">
+      <xsl:with-param name="declare">
+      <xsl:choose>
+	<xsl:when test="@module='tei'">true</xsl:when>
+	<xsl:otherwise>false</xsl:otherwise>
+      </xsl:choose>
+      </xsl:with-param>
+    </xsl:apply-templates>
     <xsl:if test="@type='atts' or @type='both'">
       <xsl:call-template name="bitOut">
 	<xsl:with-param name="grammar">true</xsl:with-param>
@@ -247,6 +254,7 @@
 
  
   <xsl:template match="tei:classSpec" mode="processModel">
+    <xsl:param name="declare">false</xsl:param>
     <xsl:if test="$verbose='true'">
       <xsl:message>      .... model class <xsl:value-of  select="@ident"/></xsl:message>
     </xsl:if>
@@ -260,9 +268,11 @@
 	<Wrapper>
 	  <xsl:choose>
 	    <xsl:when test="$parameterize='true'">
-	      <define name="{$thisClass}" xmlns="http://relaxng.org/ns/structure/1.0">
-		<notAllowed  xmlns="http://relaxng.org/ns/structure/1.0"/>
-	      </define>
+	      <xsl:if test="$declare='true'">
+		<define name="{$thisClass}" xmlns="http://relaxng.org/ns/structure/1.0">
+		  <notAllowed xmlns="http://relaxng.org/ns/structure/1.0"/>
+		</define>
+	      </xsl:if>
 	      <xsl:apply-templates select="tei:classes/tei:memberOf"
 				   mode="tangleModel"/>
 	    </xsl:when>
@@ -417,6 +427,7 @@
     
     <define name="{@ident}.attributes"  xmlns="http://relaxng.org/ns/structure/1.0">
       <xsl:if test="$parameterize='true'">
+	<rng:ref name="tei.global.attributes"/>
 	<xsl:for-each select="tei:classes/tei:memberOf">
 	  <xsl:for-each select="key('CLASSES',@key)">
 	    <xsl:if test="@type='atts' or @type='both'">
@@ -1057,14 +1068,45 @@
   </xsl:choose>
 </xsl:template>
 
-
+<xsl:template name="showAttClasses">
+  <xsl:variable name="clatts">
+    <xsl:for-each select="tei:classes/tei:memberOf">
+      <xsl:choose>
+	<xsl:when test="key('CLASSES',@key)">
+	  <xsl:for-each select="key('CLASSES',@key)">
+	    <xsl:if test="@type='both' or @type='atts'">
+	      <xsl:call-template name="makeLink">
+		<xsl:with-param name="class">classlink</xsl:with-param>
+		<xsl:with-param name="name"><xsl:value-of select="@ident"/></xsl:with-param>
+		<xsl:with-param name="text">
+		  <xsl:value-of select="@ident"/>
+		</xsl:with-param>
+	      </xsl:call-template>
+	      <xsl:text> </xsl:text>
+	    </xsl:if>
+	  </xsl:for-each>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="@key"/>
+	  <xsl:text> </xsl:text>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:variable>
+  <xsl:if test="not($clatts='')">
+    <xsl:text> [</xsl:text>
+    <xsl:copy-of select="$clatts"/>
+    <xsl:text>] </xsl:text>
+  </xsl:if>
+</xsl:template>
 
 <xsl:template name="generateMembers">
   <xsl:variable name="this" select="@ident"/>
   <xsl:choose>
     <xsl:when test="key('CLASSMEMBERS',$this)">
       <xsl:for-each select="key('CLASSMEMBERS',$this)">
-        <xsl:text>: </xsl:text>
+	<xsl:sort select="@ident"/>
+        <xsl:text> </xsl:text>
 	<xsl:call-template name="linkTogether">
 	  <xsl:with-param name="name" select="@ident"/>
 	</xsl:call-template>
@@ -1072,10 +1114,11 @@
 	  <xsl:text>  [</xsl:text>
 	  <xsl:variable name="Key" select="@ident"/>
 	  <xsl:for-each select="key('CLASSMEMBERS',@ident)">
-	      <xsl:text>: </xsl:text>
-	      <xsl:call-template name="showElement">
-		<xsl:with-param name="name" select="@ident"/>
-	      </xsl:call-template>
+	    <xsl:sort select="@ident"/>
+	    <xsl:text> </xsl:text>
+	    <xsl:call-template name="showElement">
+	      <xsl:with-param name="name" select="@ident"/>
+	    </xsl:call-template>
 	  </xsl:for-each>
 	    <xsl:text>] </xsl:text>
 	</xsl:if>
@@ -1267,7 +1310,7 @@
     <xsl:value-of select="@key"/>
   </xsl:variable>
   <xsl:variable name="atts">
-    <xsl:value-of select="concat(' ',normalize-space(@atts),' ')"/>
+    <xsl:value-of select="normalize-space(@atts)"/>
   </xsl:variable>
   <xsl:choose>
     <xsl:when test="$name=''">

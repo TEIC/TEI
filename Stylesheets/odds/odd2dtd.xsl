@@ -95,7 +95,9 @@
       <xsl:apply-templates select="." mode="processAtts"/>
     </xsl:when>
     <xsl:when test="@type='model'">    
-      <xsl:apply-templates select="." mode="processModel"/>
+      <xsl:apply-templates select="." mode="processModel">
+	    <xsl:with-param name="declare">false</xsl:with-param>
+      </xsl:apply-templates>
     </xsl:when>
     <xsl:when test="@type='default'">    
       <xsl:apply-templates select="." mode="processDefaultAtts"/>
@@ -178,7 +180,9 @@ End of macro declarations
       <xsl:apply-templates select="." mode="processAtts"/>
     </xsl:when>
     <xsl:when test="@type='model'">    
-      <xsl:apply-templates select="." mode="processModel"/>
+      <xsl:apply-templates select="." mode="processModel">
+	    <xsl:with-param name="declare">false</xsl:with-param>
+      </xsl:apply-templates>
     </xsl:when>
     <xsl:when test="@type='default'">    
       <xsl:apply-templates select="." mode="processDefaultAtts"/>
@@ -1005,6 +1009,7 @@ So, at the first, process the second; at the second, do nothing.
 
 
 <xsl:template match="tei:classSpec" mode="processModel">
+  <xsl:param name="declare">false</xsl:param>
   <xsl:call-template name="classModel"/>
 </xsl:template>
 

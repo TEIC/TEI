@@ -761,9 +761,7 @@
       <xsl:when test="parent::tei:listRef">
         <xsl:if test="count(preceding-sibling::tei:ptr)=0">
           <tr>
-            <td valign="top">
-              <i>See further</i>
-            </td>
+            <td valign="top"></td>
             <td colspan="2">
               <xsl:if test="count(preceding-sibling::tei:ptr)&gt;0">;
 	      </xsl:if>

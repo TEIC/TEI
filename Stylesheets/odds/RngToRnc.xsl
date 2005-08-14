@@ -1639,8 +1639,8 @@
 
 <!--
 <xsl:message>FROM <xsl:value-of select="@name"/> to <xsl:value-of
-    select="$me"/>, <xsl:for-each select="$top"><xsl:value-of -->
-<!--select="count(key('IDENTS',$me))"/></xsl:for-each></xsl:message>
+    select="$me"/>, <xsl:for-each select="$top"><xsl:value-of 
+select="count(key('IDENTS',$me))"/></xsl:for-each></xsl:message>
 -->
 <xsl:variable name="n" select="@name"/>
 
