@@ -141,9 +141,14 @@ Name of XSLT processor.
 </xsl:when>
 <xsl:otherwise>
   <xsl:for-each select="document('../i18n.xml',document(''))">
-    <xsl:for-each select="key('KEYS',normalize-space($word))">
-     <xsl:value-of select="text[@xml:lang=$lang]"/>
-    </xsl:for-each>
+    <xsl:choose>
+    <xsl:when test="key('KEYS',normalize-space($word))/text[@xml:lang=$lang]">
+	<xsl:value-of select="key('KEYS',normalize-space($word))/text[@xml:lang=$lang]"/>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:value-of select="$word"/>
+    </xsl:otherwise>
+    </xsl:choose>
   </xsl:for-each>
 </xsl:otherwise>
 </xsl:choose>

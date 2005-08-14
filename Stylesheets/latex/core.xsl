@@ -462,14 +462,7 @@
 \end{quote}
 </xsl:template>
   
-<xd:doc>
-    <xd:short>Process elements  tei:q[@rend='eg']</xd:short>
-    <xd:detail>&#160;</xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:q[@rend='eg']">
-\begin{quote}\ttfamily\color{black}\obeylines <xsl:apply-templates/> \end{quote}
-</xsl:template>
-  
+ 
 <xd:doc>
     <xd:short>Process elements  tei:soCalled</xd:short>
     <xd:detail>&#160;</xd:detail>

@@ -104,30 +104,41 @@
     <tr>
       <td/>
       <td>
-        <i>
-	
-	<xsl:call-template name="i18n"><xsl:with-param name="word">Status</xsl:with-param></xsl:call-template>:</i>
-        <xsl:choose>
-          <xsl:when test="@usage='mwa'">
-	    <xsl:call-template name="i18n"><xsl:with-param name="word">Mandatory when applicable</xsl:with-param></xsl:call-template>
+	<i>
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Status</xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:text>: </xsl:text>
+	</i>
+	<xsl:choose>
+	  <xsl:when test="@usage='mwa'">
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">Mandatory when applicable</xsl:with-param>
+	    </xsl:call-template>
 	  </xsl:when>
-          <xsl:when test="@usage='opt'">
-	    <xsl:call-template name="i18n"><xsl:with-param name="word">Optional</xsl:with-param></xsl:call-template>
+	  <xsl:when test="@usage='opt'">
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">Optional</xsl:with-param>
+	    </xsl:call-template>
 	  </xsl:when>
-          <xsl:when test="@usage='rec'">
-	    <xsl:call-template name="i18n"><xsl:with-param name="word">Recommended</xsl:with-param></xsl:call-template> 
-	    </xsl:when>
-          <xsl:when test="@usage='req'">
-            <hi>
-	      <xsl:call-template name="i18n"><xsl:with-param name="word">Required</xsl:with-param></xsl:call-template>
+	  <xsl:when test="@usage='rec'">
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">Recommended</xsl:with-param>
+	    </xsl:call-template> 
+	  </xsl:when>
+	  <xsl:when test="@usage='req'">
+	    <hi>
+	      <xsl:call-template name="i18n">
+		<xsl:with-param name="word">Required</xsl:with-param>
+	      </xsl:call-template>
 	    </hi>
-          </xsl:when>
-          <xsl:when test="@usage='rwa'">
+	  </xsl:when>
+	  <xsl:when test="@usage='rwa'">
 	    <xsl:call-template  name="i18n">
 	      <xsl:with-param name="word">Required when applicable</xsl:with-param>
 	    </xsl:call-template>
 	  </xsl:when>
-        </xsl:choose>
+	</xsl:choose>
       </td>
     </tr>
     <xsl:apply-templates/>
@@ -142,7 +153,11 @@
       <td/>
       <td colspan="2" valign="top">
         <i>
-	<xsl:call-template name="i18n"><xsl:with-param name="word">Datatype</xsl:with-param></xsl:call-template>:</i>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Datatype</xsl:with-param>
+	</xsl:call-template>
+	<xsl:text>: </xsl:text>
+	</i>
         <xsl:call-template name="bitOut">
           <xsl:with-param name="grammar"/>
           <xsl:with-param name="content">
@@ -157,15 +172,19 @@
   </xsl:template>
   
 <xd:doc>
-    <xd:short>Process elements  tei:attDef/tei:eg</xd:short>
+    <xd:short>Process elements  tei:attDef/tei:exemplum</xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
-  <xsl:template match="tei:attDef/tei:eg">
+  <xsl:template match="tei:attDef/tei:exemplum">
     <tr>
       <td/>
       <td valign="top" colspan="2">
         <i>
-	<xsl:call-template name="i18n"><xsl:with-param name="word">Example</xsl:with-param></xsl:call-template>: </i>
+	<xsl:call-template name="i18n">
+	<xsl:with-param name="word">Example</xsl:with-param>
+	</xsl:call-template>
+	<xsl:text>: </xsl:text>
+	</i>
         <xsl:call-template name="verbatim">
           <xsl:with-param name="text">
             <xsl:apply-templates/>
@@ -206,7 +225,11 @@
     <tr>
       <td valign="top">
         <i>
-	<xsl:call-template name="i18n"><xsl:with-param name="word">Attributes</xsl:with-param></xsl:call-template> </i>
+	<xsl:call-template name="i18n">
+	<xsl:with-param name="word">Attributes</xsl:with-param>
+	</xsl:call-template> 
+	</i>
+	<xsl:text> </xsl:text>
       </td>
       <td>
         <xsl:call-template name="displayAttList">
@@ -282,7 +305,9 @@
     <tr>
       <td valign="top">
         <i>
-	<xsl:call-template name="i18n"><xsl:with-param name="word">Members</xsl:with-param></xsl:call-template></i>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Members</xsl:with-param>
+	</xsl:call-template></i>
       </td>
       <td colspan="2">
         <xsl:call-template name="generateMembers"/>
@@ -375,7 +400,11 @@
   <xsl:template match="tei:elementSpec">
     <xsl:if test="parent::tei:specGrp">
       <dt>
-      <xsl:call-template name="i18n"><xsl:with-param name="word">Element</xsl:with-param></xsl:call-template> <xsl:value-of select="@ident"/></dt>
+      <xsl:call-template name="i18n">
+	<xsl:with-param name="word">Element</xsl:with-param>
+      </xsl:call-template> 
+      <xsl:text> </xsl:text>
+      <xsl:value-of select="@ident"/></dt>
       <dd>
         <xsl:apply-templates select="." mode="tangle"/>
       </dd>
@@ -417,9 +446,11 @@
         </td>
         <td>
           <xsl:choose>
-            <xsl:when test="count(../tei:classes/tei:memberOf)&gt;0">
-              <xsl:text>Global attributes 
-	  and those inherited from </xsl:text>
+            <xsl:when test="count(tei:classes/tei:memberOf)&gt;0">
+	      <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">Global attributes and those  inherited from</xsl:with-param>
+	      </xsl:call-template>
+              <xsl:text> </xsl:text>
               <xsl:for-each select="..">
                 <xsl:call-template name="generateClassParents"/>
               </xsl:for-each>
@@ -484,7 +515,7 @@
   
 <xd:doc>
     <xd:short>Process elements  tei:elementSpec|tei:classSpec</xd:short>
-    <xd:param name="atts">atts</xd:param>
+    <xd:param name="atts">attributes we have been asked to display</xd:param>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:elementSpec|tei:classSpec" mode="show">
@@ -517,57 +548,68 @@
     </a>&gt; </b>
     <xsl:value-of select="tei:desc"/>
     <xsl:choose>
-      <xsl:when test="tei:attList//tei:attDef">
-        <xsl:choose>
-          <xsl:when test="not($atts='')">
-            <table class="attList">
-              <xsl:variable name="HERE" select="."/>
-              <xsl:for-each select="estr:tokenize($atts)">
-                <xsl:variable name="TOKEN" select="."/>
-                <xsl:for-each select="$HERE/tei:attList//tei:attDef[@ident=$TOKEN]">
-                  <xsl:variable name="aname">
-                    <xsl:choose>
-                      <xsl:when test="tei:altIdent">
-                        <xsl:value-of select="tei:altIdent"/>
-                      </xsl:when>
-                      <xsl:otherwise>
-                        <xsl:value-of select="@ident"/>
-                      </xsl:otherwise>
-                    </xsl:choose>
-                  </xsl:variable>
-                  <tr>
-                    <td valign="top">
-                      <b>
-                        <xsl:value-of select="$aname"/>
-                      </b>
-                    </td>
-                    <td colspan="2">
-                      <xsl:apply-templates select="tei:desc" mode="show"/>
-                    </td>
-                  </tr>
-                </xsl:for-each>
-              </xsl:for-each>
-            </table>
-          </xsl:when>
-          <xsl:otherwise>
-            <table class="attList">
-              <xsl:apply-templates select="tei:attList" mode="summary"/>
-            </table>
-          </xsl:otherwise>
-        </xsl:choose>
+      <xsl:when test="not($atts='')">
+	<table class="attList">
+	  <xsl:variable name="HERE" select="."/>
+	  <xsl:for-each select="estr:tokenize(concat(' ',$atts,' '))">
+	    <xsl:variable name="TOKEN" select="."/>
+	    <xsl:choose>
+	      <xsl:when test="$HERE/tei:attList//tei:attDef[@ident=$TOKEN]">
+		<xsl:for-each
+		    select="$HERE/tei:attList//tei:attDef[@ident=$TOKEN]">
+		  <xsl:call-template name="showAnAttribute"/>
+		</xsl:for-each>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:for-each select="$HERE/tei:classes/tei:memberOf">
+		  <xsl:for-each select="key('IDENTS',@key)/tei:attList//tei:attDef[@ident=$TOKEN]">
+		    <xsl:call-template name="showAnAttribute"/>
+		  </xsl:for-each>
+		</xsl:for-each>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:for-each>
+	</table>
       </xsl:when>
-      <xsl:otherwise>
-        <table class="attList">
-          <tr>
-            <td valign="top" colspan="2">
-	  No attributes other than those globally
-	  available (see definition for tei.global.attributes)</td>
-          </tr>
-        </table>
-      </xsl:otherwise>
+      <xsl:when test="tei:attList//tei:attDef">
+	<table class="attList">
+	  <xsl:apply-templates select="tei:attList" mode="summary"/>
+	</table>
+	<xsl:if test="tei:classes/tei:memberOf">
+	  <xsl:call-template name="showAttClasses"/>
+	</xsl:if>
+      </xsl:when>
+      <xsl:when test="tei:classes/tei:memberOf">
+	<xsl:call-template name="showAttClasses"/>
+      </xsl:when>
     </xsl:choose>
   </xsl:template>
   
+
+<xd:doc>
+    <xd:short>Display of an attribute</xd:short>
+    <xd:detail>&#160;</xd:detail>
+  </xd:doc>
+<xsl:template name="showAnAttribute">
+  <tr>
+    <td valign="top">
+      <b>
+	<xsl:choose>
+	  <xsl:when test="tei:altIdent">
+	    <xsl:value-of select="tei:altIdent"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="@ident"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </b>
+    </td>
+    <td colspan="2">
+      <xsl:apply-templates select="tei:desc" mode="show"/>
+    </td>
+  </tr>
+</xsl:template>
+
 <xd:doc>
     <xd:short>Process elements  tei:exemplum</xd:short>
     <xd:detail>&#160;</xd:detail>
@@ -576,7 +618,10 @@
     <tr>
       <td valign="top">
         <i>
-	  <xsl:call-template name="i18n"><xsl:with-param name="word">Example</xsl:with-param></xsl:call-template></i>
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Example</xsl:with-param>
+	  </xsl:call-template>
+	</i>
       </td>
       <td colspan="2">
         <xsl:apply-templates/>
@@ -696,40 +741,51 @@
   </xd:doc>
   <xsl:template match="tei:moduleSpec">
     <hr/>
-    <p><strong>
-      <xsl:call-template name="i18n"><xsl:with-param name="word">Module</xsl:with-param></xsl:call-template></strong>
-    <em><xsl:value-of select="@ident"/></em>:
-    <xsl:apply-templates select="tei:desc" mode="show"/>
-    <ul>
-      <li>
-	<xsl:call-template name="i18n"><xsl:with-param name="word">Elements defined</xsl:with-param></xsl:call-template>:
-      <xsl:for-each select="key('ElementModule',@ident)">
-	<xsl:call-template name="linkTogether">
-	  <xsl:with-param name="name" select="@ident"/>
+    <p>
+      <strong>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Module</xsl:with-param>
 	</xsl:call-template>
-	<xsl:text> </xsl:text>
-      </xsl:for-each>
+      </strong>
+      <xsl:text> </xsl:text>
+      <em><xsl:value-of select="@ident"/></em>:
+      <xsl:apply-templates select="tei:desc" mode="show"/>
+      <ul>
+	<li>
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Elements defined</xsl:with-param>
+	  </xsl:call-template>:
+	  <xsl:for-each select="key('ElementModule',@ident)">
+	    <xsl:call-template name="linkTogether">
+	      <xsl:with-param name="name" select="@ident"/>
+	    </xsl:call-template>
+	    <xsl:text> </xsl:text>
+	  </xsl:for-each>
+	</li>
+	<li>
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Classes defined</xsl:with-param>
+	    </xsl:call-template>:
+	  <xsl:for-each select="key('ClassModule',@ident)">
+	    <xsl:call-template name="linkTogether">
+	      <xsl:with-param name="name" select="@ident"/>
+	    </xsl:call-template>
+	    <xsl:text> </xsl:text>
+	  </xsl:for-each>
       </li>
       <li>
-	<xsl:call-template name="i18n"><xsl:with-param name="word">Classes defined</xsl:with-param></xsl:call-template>:
-      <xsl:for-each select="key('ClassModule',@ident)">
-	<xsl:call-template name="linkTogether">
-	  <xsl:with-param name="name" select="@ident"/>
-	</xsl:call-template>
-	<xsl:text> </xsl:text>
-      </xsl:for-each>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Macros defined</xsl:with-param>
+	  </xsl:call-template>:
+	  <xsl:for-each select="key('MacroModule',@ident)">
+	  <xsl:call-template name="linkTogether">
+	    <xsl:with-param name="name" select="@ident"/>
+	  </xsl:call-template>
+	  <xsl:text> </xsl:text>
+	</xsl:for-each>
       </li>
-      <li>
-	<xsl:call-template name="i18n"><xsl:with-param name="word">Macros defined</xsl:with-param></xsl:call-template>:
-      <xsl:for-each select="key('MacroModule',@ident)">
-	<xsl:call-template name="linkTogether">
-	  <xsl:with-param name="name" select="@ident"/>
-	</xsl:call-template>
-	<xsl:text> </xsl:text>
-      </xsl:for-each>
-      </li>
-    </ul>
-    <hr/>
+      </ul>
+      <hr/>
     </p>
   </xsl:template>
   
@@ -798,8 +854,8 @@
       <xsl:when test="parent::tei:specGrp">
         <dt/>
         <dd>
+	  <xsl:text>« </xsl:text>
           <a href="{@target}">
-	    <xsl:text>« </xsl:text>
 	    <i>
 	      <xsl:call-template name="i18n"><xsl:with-param name="word">include</xsl:with-param></xsl:call-template> 
 	      <xsl:text> </xsl:text>
@@ -866,8 +922,13 @@
     <tr>
       <td/>
       <td>
-        <i><xsl:call-template name="i18n"><xsl:with-param name="word">Values</xsl:with-param></xsl:call-template>: </i>
-        <xsl:apply-templates/>
+        <i>
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Values</xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:text>: </xsl:text>
+	</i>
+	<xsl:apply-templates/>
       </td>
     </tr>
   </xsl:template>
