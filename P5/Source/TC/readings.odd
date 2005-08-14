@@ -9,14 +9,12 @@ See the file COPYING for details.
   <attList>
     <attDef ident="wit" usage="mwa">
 	<equiv/>
-	<desc>contains a list of one or more sigla indicating the witnesses
+	<desc>contains a list of one or more pointers indicating the witnesses
 which attest to a given reading.</desc>
-      
-      
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Key"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/></datatype>
       <valDesc>A space-delimited series of sigla; each sigil should correspond
 to a witness or witness group and occur as the value of the
-<att>sigil</att> attribute on a <gi>witness</gi> element elsewhere in the
+<att>xml:id</att> attribute on a <gi>witness</gi> element elsewhere in the
 document.</valDesc>
       
       <remarks>
@@ -26,54 +24,46 @@ witness, this attribute may be consistently omitted.</p>
 gathering variant readings in the transcription of an individual
 witness and within an apparatus gathering readings from different
 witnesses.</p>
-        <p>In local encoding schemes, the value of the <att>wit</att>
+<!--        <p>In local encoding schemes, the value of the <att>wit</att>
 attribute can be enforced as IDREFS, such that only witnesses
 referred to in a <gi>witList</gi> element may occur as witnesses to a
 reading.
- 
- </p>
+ </p>-->
+<p>Additional descriptions or alternative versions of the sigla referenced may be
+supplied as the content of a child <gi>wit</gi> element.</p>
       </remarks>
     </attDef>
     <attDef ident="type" usage="opt">
 	<equiv/>
 	<desc>classifies the reading according to some useful typology.</desc>
-      
-      
       <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
       <valList type="open">
         <valItem ident="substantive">
-          
           <equiv/>
           <gloss>the reading offers a substantive variant.</gloss>
         </valItem>
         <valItem ident="orthographic">
-          
           <equiv/>
           <gloss>the reading differs only orthographically, not in substance,
-from
-other readings.</gloss>
+from other readings.</gloss>
         </valItem>
       </valList>
-      
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
     </attDef>
     <attDef ident="cause" usage="opt">
 	<equiv/>
-	<desc>classifies the reading as original or non-original, according to
-some typology of possible origins.</desc>
-      
-      
+	<desc>classifies the cause for the variant reading, according to
+any appropriate typology of possible origins.</desc>
       <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
-      <valDesc>any word or phrase describing the cause: e.g.
-<mentioned>homeoteleuton</mentioned>,
-<mentioned>homeoarchy</mentioned>,
-<mentioned>paleographic confusion</mentioned>,
-<mentioned>haplography</mentioned>,
-<mentioned>dittography</mentioned>,
-<mentioned>false emendation</mentioned>.</valDesc>
-      
+      <valList type="open">
+<valItem ident="homeoteleuton"></valItem>
+<valItem ident="homeoarchy"></valItem>
+<valItem ident="paleographic-confusion"></valItem>
+<valItem ident="haplography"></valItem>
+<valItem ident="dittography"></valItem>
+<valItem ident="false-emendation"></valItem></valList>
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
@@ -125,8 +115,6 @@ different witnesses.</p>
 	<equiv/>
 	<desc>signifies the hand responsible for a particular reading in the
 witness.</desc>
-      
-      
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
       <valDesc>must be one of the hand identifiers declared in the document
 header (see section <ptr target="#PHDH"/>).</valDesc>
@@ -143,7 +131,6 @@ different witnesses.
       </remarks>
     </attDef>
   </attList>
-  
   <remarks>
     <p>This element class defines attributes inherited by
 <gi>rdg</gi>, <gi>lem</gi>, and <gi>rdgGrp</gi>.</p>
