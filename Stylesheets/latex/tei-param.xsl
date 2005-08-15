@@ -61,6 +61,11 @@ using XeTeX or similar.
 </xd:doc>
 <xsl:param name="reencode">true</xsl:param>
 
+<xd:doc type="string" class="userpackage">
+The name of a LaTeX style package which should be loaded
+</xd:doc>
+<xsl:param name="userpackage"></xsl:param>
+
 <xd:doc type="boolean" class="output">
 Use real name of graphics files rather than pointers
 </xd:doc>
@@ -74,7 +79,6 @@ Use real name of graphics files rather than pointers
 <xsl:template name="latexPackages">
 <xsl:text>
 \usepackage[twoside,a4paper,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in]{geometry}
-\usepackage{times}
 \usepackage{longtable}
 \usepackage{colortbl}
 \usepackage{ulem}
@@ -83,8 +87,18 @@ Use real name of graphics files rather than pointers
 \usepackage{graphicx}
 \usepackage{endnotes}
 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
+</xsl:text>
+<xsl:if test="$reencode='true'">
+<xsl:text>
 \IfFileExists{tipa.sty}{\usepackage{tipa}}{}
-\pagestyle{fancy} 
+\usepackage{times}
+</xsl:text>
+</xsl:if>
+<xsl:if test="not($userpackage='')">
+  \usepackage{<xsl:value-of select="$userpackage"/>}
+</xsl:if>
+<xsl:text>
+  \pagestyle{fancy} 
 </xsl:text>
 </xsl:template>
 
