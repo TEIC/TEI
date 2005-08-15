@@ -55,6 +55,13 @@ URL root where referenced documents are located
 <xsl:param name="baseURL">http://www.tei-c.org</xsl:param>
 
 <xd:doc type="boolean" class="output">
+Whether or not to load LaTeX packages which attempt to
+process the UTF-8 characters. Set to "false" if you are
+using XeTeX or similar.
+</xd:doc>
+<xsl:param name="reencode">true</xsl:param>
+
+<xd:doc type="boolean" class="output">
 Use real name of graphics files rather than pointers
 </xd:doc>
 <xsl:param name="realFigures">true</xsl:param>
@@ -88,14 +95,19 @@ really tinker with unless you really understand  why and how. Note
 that we need to set up a mapping here for Unicode 8421, 10100 and
 10100 to glyphs for backslash and the two curly brackets, to provide literal
 characters. The normal characters remain active for LaTeX commands.
+Note that if $reencode is set to false, no input or output encoding
+packages are loaded, since it is assumed you are using a TeX variant
+capable of dealing with UTF-8 directly.
 </xd:detail>
 </xd:doc>
 <xsl:template name="latexSetup">
+<xsl:if test="$reencode='true'">
 \IfFileExists{utf8x.def}%
  {\usepackage[utf8x]{inputenc}}%
  {\usepackage[utf8]{inputenc}}
 \usepackage[T1]{fontenc}
 \usepackage[]{ucs}
+</xsl:if>
 \usepackage{relsize}
 \uc@dclc{8421}{default}{\textbackslash }
 \uc@dclc{10100}{default}{\{}
