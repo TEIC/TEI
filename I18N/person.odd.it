@@ -1,0 +1,84 @@
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="corpus"
+xml:id="PERSON" usage="opt"
+	ident="person">
+	<equiv/>
+	<gloss/>
+	<desc>descrive un singolo partecipante in una interazione
+linguistica. </desc>
+	<content>
+		<rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+			<rng:oneOrMore>
+				<rng:ref name="p"/>
+			</rng:oneOrMore>
+			<rng:zeroOrMore>
+				<rng:ref name="tei.demographic"/>
+			</rng:zeroOrMore>
+		</rng:choice>
+	</content>
+	<attList>
+		<attDef ident="role" usage="opt">
+			<equiv/>
+			<desc>specifica il ruolo di questo partecipante nel
+gruppo.</desc>
+			<datatype>
+				<rng:ref
+xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Code"/>
+			</datatype>
+			<valDesc>un insieme di parole chiave da
+definire</valDesc>
+		</attDef>
+		<attDef ident="sex" usage="opt">
+			<equiv/>
+			<desc>specifica il sesso del partecipante.</desc>
+			<datatype>
+				<rng:ref
+xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Sex"/>
+			</datatype>
+			<valList type="closed">
+				<valItem ident="m">
+					<equiv/>
+					<gloss>maschio</gloss>
+				</valItem>
+				<valItem ident="f">
+					<equiv/>
+					<gloss>femmina</gloss>
+				</valItem>
+				<valItem ident="u">
+					<equiv/>
+					<gloss>sconosciuto o non
+applicabile</gloss>
+				</valItem>
+			</valList>
+		</attDef>
+		<attDef ident="age" usage="opt">
+			<equiv/>
+			<desc>specifica la fascia di età alla quale
+appartiene il partecipante.</desc>
+			<datatype>
+				<rng:ref
+xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Code"/>
+			</datatype>
+			<valDesc>i valori suggeriti devono ancora essere
+forniti</valDesc>
+		</attDef>
+	</attList>
+	<exemplum>
+		<egXML xmlns="http://www.tei-c.org/ns/Examples">
+			<person sex="f" age="42">
+				<p>Female informant, well-educated, born in
+Shropshire UK, 12 Jan 1950, of unknown
+					occupation. Speaks French fluently.
+Socio-Economic status B2.</p>
+			</person>
+		</egXML>
+	</exemplum>
+	<remarks>
+		<p rend="dataDesc">Può contenere una descrizione in testo
+libero articolata in paragrafi, o una
+			sequenza di elementi demografici in qualsiasi
+combinazione.</p>
+	</remarks>
+	<listRef>
+		<ptr target="#CCAHPA"/>
+	</listRef>
+</elementSpec> 

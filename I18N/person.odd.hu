@@ -1,0 +1,72 @@
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="corpus" 
+xml:id="PERSON" usage="opt" ident="person">
+ <equiv/>
+ <gloss/>
+ <desc>egy nyelvi interakció egyik résztvevõjét írja le</desc>
+   <content>
+     <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+       <rng:oneOrMore>
+         <rng:ref name="p"/>
+       </rng:oneOrMore>
+       <rng:zeroOrMore>
+         <rng:ref name="tei.demographic"/>
+       </rng:zeroOrMore>
+     </rng:choice>
+   </content>
+   <attList>
+     <attDef ident="role" usage="opt">
+      <equiv/>
+      <desc>meghatározza a résztvevõ csoporton belüli szerepét</desc>
+      <datatype><rng:ref 
+xmlns:rng="http://relaxng.org/ns/structure/1.0" 
+name="datatype.Code"/></datatype>
+      <valDesc>kulcsszavakat kell meghatározni</valDesc>
+     </attDef>
+     <attDef ident="sex" usage="opt">
+      <equiv/>
+      <desc>meghatározza a résztvevõ nemét</desc>
+      <datatype><rng:ref 
+xmlns:rng="http://relaxng.org/ns/structure/1.0" 
+name="datatype.Sex"/></datatype>
+       <valList type="closed">
+         <valItem ident="m">
+           <equiv/>
+           <gloss>hímnemũ/férfi</gloss>
+         </valItem>
+         <valItem ident="f">
+           <equiv/>
+           <gloss>nõnemũ/nõ</gloss>
+         </valItem>
+         <valItem ident="u">
+           <equiv/>
+           <gloss>ismeretlen vagy nem alkalmazható</gloss>
+         </valItem>
+       </valList>
+     </attDef>
+     <attDef ident="age" usage="opt">
+      <equiv/>
+      <desc>meghatározza a résztvevõ a korcsoportját</desc>
+      <datatype><rng:ref 
+xmlns:rng="http://relaxng.org/ns/structure/1.0" 
+name="datatype.Code"/></datatype>
+      <valDesc>javasolt értékeket kell megadni</valDesc>
+     </attDef>
+   </attList>
+     <exemplum>
+     <egXML xmlns="http://www.tei-c.org/ns/Examples">
+       <person sex="f" age="42">
+         <p>Jól képzett, 1950. január 12-én, a nagy-britanniai Shropshire-
+ben született, ismeretlen foglalkozású nõi adatközlõ. Folyékonyan 
+beszél franciául. Társadalmi-gazdasági státusza: B2.</p>
+       </person>
+     </egXML>
+   </exemplum>
+   <remarks>
+     <p rend="dataDesc">Tartalma lehet bekezdésekre tagolt szöveges 
+leírás vagy bármilyen demografikus adatsor, illetve ezek tetszõleges 
+kombinációja.</p>
+   </remarks>
+   <listRef>
+     <ptr target="#CCAHPA"/>
+   </listRef>
+ </elementSpec>

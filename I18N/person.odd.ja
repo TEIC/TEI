@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="corpus"
+xml:id="PERSON" usage="opt" ident="person">
+<equiv/>
+<gloss/>
+<desc>言語活動の関係者(1件1名)</desc>
+<content>
+  <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:oneOrMore>
+  <rng:ref name="p"/>
+  </rng:oneOrMore>
+  <rng:zeroOrMore>
+    <rng:ref name="tei.demographic"/>
+  </rng:zeroOrMore>
+ </rng:choice>
+</content>
+<attList>
+  <attDef ident="role" usage="opt">
+    <equiv/>
+    <desc>当該関係者の言語活動における役割</desc>
+    <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+name="datatype.Code"/></datatype>
+    <valDesc>定義済みキーワード</valDesc>
+  </attDef>
+  <attDef ident="sex" usage="opt">
+    <equiv/>
+    <desc>関係者の性別</desc>
+    <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+name="datatype.Sex"/></datatype>
+    <valList type="closed">
+      <valItem ident="m">
+        <equiv/>
+        <gloss>男性</gloss>
+      </valItem>
+      <valItem ident="f">
+        <equiv/>
+        <gloss>女性</gloss>
+      </valItem>
+      <valItem ident="u">
+        <equiv/>
+        <gloss>不明または不適切</gloss>
+      </valItem>
+    </valList>
+  </attDef>
+  <attDef ident="age" usage="opt">
+    <equiv/>
+    <desc>当該関係者の年齢層</desc>
+    <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+name="datatype.Code"/></datatype>
+    <valDesc>推定年齢</valDesc>  
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <person sex="f" age="42">
+        <p>Female informant, well-educated, born in Shropshire
+         UK, 12 Jan 1950, of unknown occupation.
+         Speaks French fluently. Socio-Economic status B2.</p>
+      </person>
+      <person sex="f" age="42" xml:lang="ja">
+        <p>女性、教養あり、1950年1月12日英国シュロプシア生まれ、
+           職業不明、フランス語を流暢に話す、社会経済状態：中
+        </p>
+      </person>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">
+    段落単位の記述、または人口統計学のデータが混在して含まれる
+    </p>
+  </remarks>
+  <listRef>
+    <ptr target="#CCAHPA"/>
+  </listRef>
+</elementSpec>
+
+
+
+

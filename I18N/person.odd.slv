@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="corpus" xml:id="PERSON" usage="opt" ident="person">
+    <equiv/>
+    <gloss/>
+    <desc>določa posamičnega udeleženca v jezikovni interakciji.</desc>
+    <content>
+        <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+            <rng:oneOrMore>
+                <rng:ref name="p"/>
+            </rng:oneOrMore>
+            <rng:zeroOrMore>
+                <rng:ref name="tei.demographic"/>
+            </rng:zeroOrMore>
+        </rng:choice>
+    </content>
+    <attList>
+        <attDef ident="role" usage="opt">
+            <equiv/>
+            <desc>določa vlogo tega udeleženca v skupini.</desc>
+            <datatype>
+                <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Code"/>
+            </datatype>
+            <valDesc>seznam ključnih besed, ki jih je potrebno določiti</valDesc>
+        </attDef>
+        <attDef ident="sex" usage="opt">
+            <equiv/>
+            <desc>določa spol udeleženca.</desc>
+            <datatype>
+                <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Sex"/>
+            </datatype>
+            <valList type="closed">
+                <valItem ident="m">
+                    <equiv/>
+                    <gloss>moški</gloss>
+                </valItem>
+                <valItem ident="f">
+                    <equiv/>
+                    <gloss>ženski</gloss>
+                </valItem>
+                <valItem ident="u">
+                    <equiv/>
+                    <gloss>neznan ali neustrezen</gloss>
+                </valItem>
+            </valList>
+        </attDef>
+        <attDef ident="age" usage="opt">
+            <equiv/>
+            <desc>določa starostno skupino udeleženca.</desc>
+            <datatype>
+                <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Code"/>
+            </datatype>
+            <valDesc>zagotoviti je potrebno še naslednje predlagane vrednosti</valDesc>
+        </attDef>
+    </attList>
+    <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <person sex="f" age="42">
+                <p>Obveščevalka ženskega spola, z visoko izobrazbo, rojena v Shropshiru, 
+                    Velika Britanija, 12. jan. 1950, naloga neznana. Tekoče govori francosko. Socio-ekonomski status B2.</p>
+            </person>
+        </egXML>
+    </exemplum>
+    <remarks>
+        <p rend="dataDesc">Vsebuje lahko prozni opis, razčlenjen v odstavke, 
+        ali poljubno sosledje demografskih elementov v poljubni kombinaciji.</p>
+    </remarks>
+    <listRef>
+        <ptr target="#CCAHPA"/>
+    </listRef>
+</elementSpec>
