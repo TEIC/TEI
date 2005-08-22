@@ -819,9 +819,9 @@ the TEI-specific <gi>valList</gi> element described below), or by
 definition of an explicit pattern, using the TEI-specific
 <gi>macroSpec</gi> element.</p>
 </div4>
-<div4><head>Value specification</head>
 
-<p>The <gi>valDesc</gi> element may be used to specify additional
+<div4><head>Value specification</head>
+<p>The <gi>valDesc</gi> element may be used to specify 
 constraints on data content in an informal way: for example
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><valDesc>must point to another <gi>align</gi>
     element logically preceding this
@@ -831,9 +831,15 @@ headings.</valDesc>
 <valDesc>A bookseller's surname,
  taken from the list in <title>Pollard and Redgrave</title></valDesc></egXML>
 </p>
-
-<p>Alternatively, if a list of suggested or required values can be constructed, it
-should be supplied using the <gi>valList</gi> element, as in the
+<p>As noted above, the <gi>datatype</gi> element also constrains the
+possible values for an attribute. The <gi>valDesc</gi> can be used to
+specify further constraints. For example, to specify that an attribute
+<ident>age</ident> can take positive integer values less than 100, the
+datatype <ident>tei.numeric</ident> might be used in combination with
+a <gi>valDesc</gi> such as <q>values must be positive integers less
+than 100</q>. </p>
+<p>More usually, however, where constraints on values are explicitly
+enumerated, the <gi>valList</gi> element is used, as in the
 following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><valList type="closed">
   <valItem ident="req"><gloss>required</gloss></valItem>
@@ -844,7 +850,12 @@ following example:
  </valList>
 </egXML>
 Since this value list specifies that it is of type <val>closed</val>,
-only the values enumerated and glossed above are legal.
+only the values enumerated and glossed above are legal, and an ODD
+processor will typically enforce these constraints in the schema
+fragment generated. </p>
+<p>The <gi>valList</gi> element is also used to provide illustrative examples
+for the values permitted and their significance, or to gloss the
+meaning of values implied by an attribute's datatype.
 </p>
 
 </div4>
