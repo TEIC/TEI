@@ -1045,21 +1045,21 @@ elements in the same timeline, in addition to the sequencing implied by
 its position within it.</p>
 <p>For example:
  
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><timeline unit="dsec" origin="#TS-P1">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><timeline unit="s" origin="#TS-P1">
    <when xml:id="TS-P1" absolute="12:20:01"/>
-   <when xml:id="TS-P2" interval="45" since="#TS-P1"/>
+   <when xml:id="TS-P2" interval="4.5" since="#TS-P1"/>
    <when xml:id="TS-P6"/>
-   <when xml:id="TS-P3" interval="15" since="#TS-P6"/>
+   <when xml:id="TS-P3" interval="1.5" since="#TS-P6"/>
 </timeline></egXML>
  
 This timeline represents four points in time, named TS-P1, TS-P2, TS-P6, and TS-P3
 (as with all attributes named <att>xml:id</att> in the TEI scheme, the
 names must be unique within the document but have no other
 significance).  TS-P1 is located absolutely, at 12:20:01:01 BST.  TS-P2 is 4.5
-seconds (i.e. 45 deci-seconds) later than TS-P2 (i.e. at 12:20:46).  TS-P6 is
+seconds later than TS-P2 (i.e. at 12:20:46).  TS-P6 is
 at some unspecified time later than TS-P2 and previous to TS-P3 (this is
 implied by its position within the timeline, as no attribute values have
-been specified for it).  The fourth point, TS-P3, is 1.5 seconds (15 dsec)
+been specified for it).  The fourth point, TS-P3, is 1.5 seconds 
 later than TS-P6.</p>
 
 <p>One or more such timelines may be specified within a spoken text, to
@@ -1095,11 +1095,11 @@ occurs at point TS-P6A, which is synchronous with point TS-P6 on the timeline.</
 <p>The synchronization represented by the preceding examples could
 equally well be represented as follows:
  
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><timeline origin="#ts-p1" unit="dsec">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><timeline origin="#ts-p1" unit="s">
   <when xml:id="ts-p1" absolute="12:20:01"/>
-  <when synch="#ts-u1" xml:id="ts-p2" interval="45" since="#ts-p1"/>
+  <when synch="#ts-u1" xml:id="ts-p2" interval="4.5" since="#ts-p1"/>
   <when synch="#ts-x1" xml:id="ts-p6"/>
-  <when synch="#ts-u1" xml:id="ts-p3" interval="15" since="#ts-p6"/>
+  <when synch="#ts-u1" xml:id="ts-p3" interval="1.5" since="#ts-p6"/>
 </timeline>
 
 <u xml:id="ts-u1">This is my <anchor xml:id="ts-x1"/> turn</u></egXML>
@@ -1110,11 +1110,11 @@ to mean that the utterance spans at least those two points.</p>
 <p>Finally, a <gi>linkGrp</gi> may be used as an alternative to the
 <att>synch</att> attribute:
  
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><timeline origin="#TS-p1" unit="dsec">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><timeline origin="#TS-p1" unit="s">
   <when xml:id="TS-p1" absolute="12:20:01"/>
-  <when xml:id="TS-p2" interval="45" since="#TS-p1"/>
+  <when xml:id="TS-p2" interval="4.5" since="#TS-p1"/>
   <when xml:id="TS-p6"/>
-  <when xml:id="TS-p3" interval="15" since="#TS-p6"/>
+  <when xml:id="TS-p3" interval="1.5" since="#TS-p6"/>
 </timeline>
 <u xml:id="TS-u1">
   <anchor xml:id="TS-u1start"/>
