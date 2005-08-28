@@ -47,7 +47,7 @@ $Author$
     target="#SACS"/>);<note place="foot">We use the term alignment as a
     special case of the more general notion of correspondence. Using A
     as a short form for <q>an element with its attribute <att>xml:id</att>
-    set to the value <code>A</code></q>, and suppose elements A1, A2,
+    set to the value <val>A</val></q>, and suppose elements A1, A2,
     and A3 occur in that order and form one group, while elements B1,
     B2, and B3 occur in that order and form another group. Then a
     relation in which A1 corresponds to B1, A2 corresponds to B2, and
@@ -142,9 +142,8 @@ $Author$
  
       <egXML xmlns="http://www.tei-c.org/ns/Examples"><ptr xml:id="sa-p1" target="#sa-p2"/><ptr xml:id="sa-p2" target="#sa-p1"/></egXML>
  
-      <code type="value">sa-p1</code> points to <code
-      type="value">sa-p2</code>, and <code type="value">sa-p2</code>
-      points to <code type="value">sa-p1</code>. This is logically
+      <val>sa-p1</val> points to <val>sa-p2</val>, and <val>sa-p2</val>
+      points to <val>sa-p1</val>. This is logically
       equivalent to the more compact encoding:
  
       <egXML xmlns="http://www.tei-c.org/ns/Examples"><link targets="#sa-p1 #sa-p2"/></egXML></p>
@@ -227,10 +226,10 @@ $Author$
       <!-- Pope, Dunciad (1729) III.284 -->
  
       The <gi>note</gi> element has been given an arbitrary identifier
-      (<code type="value">note3.284</code>) to enable it to be specified
+      (<val>note3.284</val>) to enable it to be specified
       as the target of the pointer element. Because there is nothing
       in the text to signal the existence of the annotation, the
-      <att>rend</att> attribute has been given the value <code type="value">unmarked</code>.</p>
+      <att>rend</att> attribute has been given the value <val>unmarked</val>.</p>
       <p>Secondly, the <att>target</att> attribute of the
       <gi>note</gi> element can be used to point at its associated
       text, provided that an <att>xml:id</att> attribute has been
@@ -420,8 +419,8 @@ To avoid having
       </egXML></p>
       <p>Note that there must be a single parent element for each
       <soCalled>domain</soCalled>; if some notes are contained by a
-      section with identifier <code type="value">dunnotes</code>, and
-      others by a section with identifier <code type="value">dunimits</code>, an intermediate pointer must be
+      section with identifier <val>dunnotes</val>, and
+      others by a section with identifier <val>dunimits</val>, an intermediate pointer must be
       provided (as described in section <ptr target="#SAPTIP"/>) within
       the <gi>linkGrp</gi> and its identifier used instead.</p>
       <p>Next, the <att>targFunc</att> attribute can be used to
@@ -496,7 +495,7 @@ To avoid having
       <p>The <att>evaluate="all"</att> attribute value is used on the
       <gi>link</gi> element to specify that any pointer encountered as
       a target of that element is itself evaluated. If
-      <att>evaluate</att> had the value <code type="value">none</code>, the link target would be the pointer
+      <att>evaluate</att> had the value <val>none</val>, the link target would be the pointer
       itself, rather than the objects it points to.</p>
       <p>Where a <gi>linkGrp</gi> element is used to group a
       collection of <gi>link</gi> elements, any intermediate pointer
@@ -622,7 +621,7 @@ target="http://www.copyright.gov/title17/92chap1.html#107"/> and
 converted from HTML to TEI encoding.</note>
 
 This method of pointing, by refering to the <att>xml:id</att> of the
-target element as a bare name only (e.g., <code>#there</code>) is
+target element as a bare name only (e.g., <val>#there</val>) is
 recommended in a variety of situations by these Guidelines.</p>
     </div3>
 
@@ -1756,7 +1755,7 @@ itself in some external entity we will call <ident rend="noindex"
 type="ge">com98</ident> (for further discussion of the handling of
 external images and graphics, see section <ptr target="#FTGRA"/>). We
 further assume that we can address portions of this image as a
-two-dimensional co-ordinate space. The <code type="teikw">SPACE</code>
+two-dimensional co-ordinate space. The <ident type="teikw">SPACE</ident>
 location method of the <gi>ptr</gi> element (discussed in section <ptr
 target="#COXR"/> above) can now be used to point to the whole picture
 and to two portions of it, one containing the picture of a student and
@@ -1973,7 +1972,7 @@ which specifies a particular time, or indirectly by means of the
 the <att>since</att> is used, then the <att>interval</att> and
 <att>unit</att> attributes should also be used to indicate the amount of
 time that has elapsed since the time specified by the element pointed to
-by the <att>since</att> attribute; the value <code type="val">-1</code>
+by the <att>since</att> attribute; the value <val>-1</val>
 can be given to indicate that the interval is unknown.</p>
 <p>If the <gi>when</gi> elements are uniformly spaced in time, then the
 <att>interval</att> and <att>unit</att> values need be given once in the
@@ -2206,7 +2205,7 @@ identified below as qs3 and qs4 as a single (but discontinuous) whole:
 </p>
 
 <p>Using the <att>prev</att> and <att>next</att> attributes, we can
-link the s-units with identifiers <code type="val">s1</code> and <code type="val">s2</code>, either singly or doubly as follows:
+link the s-units with identifiers <val>s1</val> and <val>s2</val>, either singly or doubly as follows:
  
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><s xml:id="QS3" next="#QS4"><emph>But</emph>,</s>
 <s xml:id="QS4">he never stops stirring it!</s>
@@ -2225,7 +2224,7 @@ attribute value to specify that the link is to be understood as joining
 its targets into a single aggregate.</p>
 
 <p>The <gi>join</gi> element is equivalent to a <gi>link</gi> element of
-type <code type="val">join</code>.
+type <val>join</val>.
  
 <!-- LB added following, possibly contentious, clarification -->
  
@@ -2256,7 +2255,7 @@ contextually legal.
 <specList><specDesc key="join" atts="result targets"/><specDesc key="joinGrp" atts="result"/></specList>
  
 To conclude the above example, we now use a <gi>join</gi> element to
-represent the virtual sentence formed by the aggregation of <code type="val">s1</code> and <code type="val">s2</code>:
+represent the virtual sentence formed by the aggregation of <val>s1</val> and <val>s2</val>:
  
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><join targets="#qs3 #qs4" result="s"/></egXML>
  
@@ -2320,7 +2319,7 @@ their target elements are to be found, in the same way as for
 represented by its contents are legal. Thus if we had created many
 <tag>join</tag> tags of the sort just described, we could group them
 together, and require that their components are all contained by an
-element with the identifier <code type="val">MFKFhungry</code> as
+element with the identifier <val>MFKFhungry</val> as
 follows:
  
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><joinGrp domains="#mfkfhungry #mfkfhungry" result="s">
@@ -2420,7 +2419,7 @@ or <ptr target="#SATS"/>. The <att>xml:id</att> attributes of
   </body>
 </text></egXML></p>
 <p> The extended pointer with identifier
-<code type="val">rzuiq2</code> (for example) may be read as <q>the first
+<val>rzuiq2</val> (for example) may be read as <q>the first
 <gi>q</gi> in the first <gi>p</gi>, inside the sixth <gi>div1</gi>
 within the second <gi>div0</gi> element of the current document.</q></p>
 <p>As mentioned above, there is no need for the <gi>join</gi> and
@@ -2626,7 +2625,7 @@ alternant containing <mentioned>sun</mentioned> and the <att>exclude</att>
 attribute on the remaining alternant. Alternatively, the encoder could
 preserve the fact that there was uncertainty in the original
 transcription by retaining the alternants, and assigning the
-<code>we.fun</code> value to the <att>select</att> attribute value on the <tag>div</tag> tag that
+<val>we.fun</val> value to the <att>select</att> attribute value on the <tag>div</tag> tag that
 encompasses the alternants, as in:
  
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div select="#we.fun2" type="interview">
@@ -2771,7 +2770,7 @@ perhaps within a <tag>linkGrp</tag>. </note>
 <p>Now we define the specialized linking element <gi>alt</gi>, making
 it a member of the pointer class of elements, and assigning it a
 <att>excl</att> (for <mentioned>mutually exclusive</mentioned>)
-attribute, which can have either of the values <code type="value">Y</code> or <code type="value">N</code>. Then the
+attribute, which can have either of the values <val>Y</val> or <val>N</val>. Then the
 following equivalence holds:
  
 <eg><![CDATA[<alt mode="excl"/> = <link type="exclusive alternation"/>]]></eg></p>
@@ -2864,7 +2863,7 @@ better encoded without an <tag>alt</tag> tag.</p>
 <p>If it is desired, <gi>alt</gi> elements may be grouped together in an
 <gi>altGrp</gi> element, and attribute values shared by the individual
 <gi>alt</gi> elements may be identified on the <gi>altGrp</gi> element. The
-<att>targFunc</att> attribute defaults to the value <code type="value">'first.alternant next.alternant'</code>. Thus, specifying
+<att>targFunc</att> attribute defaults to the value <val>'first.alternant next.alternant'</val>. Thus, specifying
 the value <code>2</code> for the <att>extendTarg</att> attribute   permits the alternants to be
 extended indefinitely.</p>
 <p>To illustrate, consider again the example of a transcribed utterance,
