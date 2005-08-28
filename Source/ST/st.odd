@@ -138,7 +138,7 @@ Thus, assuming a module named <ident rend="noindex" type="class">xxx</ident>, th
 encountered:
  
 <list type="gloss"><label>TEI.xxx </label>
-<item>used to enable or disable module <ident rend="noindex">xxx</ident>; must have the value <code type="kw">INCLUDE</code> (module is enabled) or, by default, <code type="kw">IGNORE</code> (module not enabled).
+<item>used to enable or disable module <ident rend="noindex">xxx</ident>; must have the value <val>INCLUDE</val> (module is enabled) or, by default, <val>IGNORE</val> (module not enabled).
  </item><label>TEI.xxx.ent </label>
 <item>refers to a system file containing any
 parameter entity declarations unique to module <ident rend="noindex" type="class">xxx</ident>.
@@ -212,7 +212,7 @@ These bases require the encoder to specify which of the other bases are
 to be combined.
 </p>
 <p>The encoder selects a base module by declaring the appropriate
-parameter entity with the replacement text <code type="kw">INCLUDE</code>.
+parameter entity with the replacement text <val>INCLUDE</val>
 To invoke the base module for prose, for example, the encoder must
 ensure that the DTD subset in the document contains the declaration:
  
@@ -267,7 +267,7 @@ element classes enabled by that module.  The parameter entities for
 these files have the same name as the enabling parameter entity for the
 base, with the suffixes <mentioned>ent</mentioned> and <mentioned>dtd</mentioned>
 respectively:  the verse base, for example, is enabled by declaring the
-parameter entity <ident type="pe">TEI.verse</ident> as <code type="kw">INCLUDE</code>; this in turn enables declarations of <ident type="pe">verse-decl</ident> and <ident type="pe">verse</ident>
+parameter entity <ident type="pe">TEI.verse</ident> as <val>INCLUDE</val>; this in turn enables declarations of <ident type="pe">verse-decl</ident> and <ident type="pe">verse</ident>
 as the system files <ident type="file">verse.ent</ident> and
 <ident type="file">verse.dtd</ident>.  For further details, see
 section <ptr target="#STOV"/>. </p>
@@ -297,7 +297,7 @@ corresponds to a chapter in part IV of this document.  In any TEI
 encoding, any or all of these additional modules may be made available,
 as they are all compatible with each other and with every base module.
 They are invoked in the same way as base modules, by defining the
-appropriate parameter entity as <code type="kw">INCLUDE</code>; the
+appropriate parameter entity as <val>INCLUDE</val>; the
 relevant parameter entities, and the files containing the additional tag
 sets, are these:
  <!-- filenames are all wrong LB 20 aug 05 -->
@@ -369,7 +369,7 @@ these files have the same name as the enabling parameter entity for the
 module, with the suffixes <mentioned>ent</mentioned> and <mentioned>dtd</mentioned>
 respectively:  the additional module for linking, segmentation, and
 alignment, for example, is enabled by declaring the parameter entity
-<ident type="pe">TEI.linking</ident> as <code type="kw">INCLUDE</code>;
+<ident type="pe">TEI.linking</ident> as <val>INCLUDE</val>;
 this in turn
 enables declarations of <ident type="pe">linking-decl</ident> and
 <ident type="pe">linking</ident> as the system files
@@ -791,7 +791,7 @@ attribute may be used to indicate the standard TEI element
 corresponding to the modified element.  For example, if a local
 modification of a DTD renamed the <gi>div1</gi> element as <gi>chapter</gi> and also modified its formal declarations (e.g. to
 change its content model), then the <att>TEIform</att> attribute on the
-modified element should be given the default value <code type="val">div1</code>, in order to indicate that the local <gi>chapter</gi> element is a modification of the standard TEI
+modified element should be given the default value <val>div1</val>, in order to indicate that the local <gi>chapter</gi> element is a modification of the standard TEI
 <gi>div1</gi>.
  </p>
 <p>When new elements are introduced, they may be identified as
@@ -800,7 +800,7 @@ appropriate default value for <att>TEIform</att>.  For example, if a
 local element called <gi>quatrain</gi> were introduced, as a
 specialized variant of the <gi>lg</gi> (line group) element which must
 contain exactly four lines, then its declaration might give its
-<att>TEIform</att> as <code type="val">lg</code>, to signify that a
+<att>TEIform</att> as <val>lg</val>, to signify that a
 quatrain is a particular type of line group, thus:
  
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ELEMENT quatrain (l, l, l, l)            >
@@ -853,7 +853,7 @@ necessarily of a rather technical and specialized nature.</p>
 parameter entities, so that local modifications can take precedence
 over default declarations;</item>
 <item>declares TEI-specific keywords used in other declarations and
-declares default values of <code type="kw">IGNORE</code> for all the
+declares default values of <val>IGNORE</val> for all the
 parameter entities used to select base and additional modules (see
 section <ptr target="#STPEKW"/>);</item>
 <item>declares parameter entities for TEI generic identifiers (by
@@ -871,7 +871,7 @@ the core modules, the base module, and the additional modules.</item></list></p>
 
 <p>Each parameter entity associated with a module controls several
 marked sections in the main DTD file <ident type="file">tei2.dtd</ident>.  If the entity has been declared in the
-DTD subset with the text <code type="kw">INCLUDE</code>, then the
+DTD subset with the text <val>INCLUDE</val>, then the
 marked sections it controls will be parsed; otherwise, they will be
 ignored.  The marked sections controlled by each entity:
  
@@ -1268,7 +1268,7 @@ Its content-model entity is defined thus:
 <!ENTITY % tei.bibl '%x.bibl; bibl | biblFull | biblStruct' >]]></egXML>
  
 With the default value of the x-dot entity, this is the same as defining
-<ident type="pe">tei.bibl</ident> with the replacement text <code type="frag">bibl | biblFull | biblStruct</code>.  If an encoder wishes
+<ident type="pe">tei.bibl</ident> with the replacement text <code>bibl | biblFull | biblStruct</code>.  If an encoder wishes
 to add a new bibliographic element called <gi>my.bib</gi>, it can
 be added to the <ident type="class">bibl</ident> class by redefining the
 x-dot entity thus:
@@ -1276,7 +1276,7 @@ x-dot entity thus:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % x.bibl 'my.bib |' >]]></egXML>
  
 This changes the replacement text of <ident type="pe">tei.bibl</ident> from
-its default value to <code type="frag">my.bib | bibl | biblFull |
+its default value to <code>my.bib | bibl | biblFull |
 biblStruct</code>.  If more than one element is to be added to a class,
 the x-dot entity for the class should be redefined as a list of the new
 generic identifiers, each one <emph>(including the last)</emph> followed
@@ -1806,9 +1806,9 @@ parameter entities in the TEI DTDs.
 <p>The parameter entities used to specify which base tag
 set and which additional modules are to be used in a given document
 are listed in section <ptr target="#STBA"/>.  Their default definition is
-always <code>IGNORE</code>:  the encoder selects the TEI base and additional
+always <val>IGNORE</val>:  the encoder selects the TEI base and additional
 modules by declaring the appropriate parameter entities with the
-entity text <code>INCLUDE</code>.
+entity text <val>INCLUDE</val>.
 </p>
 <p>The DTD and entity files are listed in section <ptr target="#STBA"/>; if
 the standard TEI entities are modified to point at locally developed DTD
@@ -1829,20 +1829,20 @@ extensions to the TEI module; see section <ptr target="#STOVLO"/></item><label><
 entity declarations for names of TEI elements; see section <ptr target="#STPEGI"/></item><label><ident type="pe">TEI.keywords</ident></label>
 <item>identifies a file containing parameter
 entity declarations for TEI keywords, including the default
-declaration (<code>IGNORE</code>) of the marked-section keyword for
+declaration (<val>IGNORE</val>) of the marked-section keyword for
 each module; see section <ptr target="#STPEKW"/></item><label><ident type="pe">teiclasses</ident> </label>
 <item>identifies a file
 containing definitions of parameter entities used in content models; see
 section <ptr target="#STECOV"/></item><label><ident type="pe">TEI.singleBase.1</ident> </label>
 <item>defined as
-<code type="frag">INCLUDE</code>
-(for normal bases) or <code type="frag">IGNORE</code> (for mixed and general base);
+<val>INCLUDE</val>
+(for normal bases) or <val>IGNORE</val> (for mixed and general base);
 used to prevent multiple definitions of the default text
 structure.</item>
 <label>TEI.XML</label>
 <item>indicates whether the target DTD is to be expressed in SGML or
-XML. By default, this parameter entity has the value <code>IGNORE</code>; the
-user should set it to <code>INCLUDE</code> in order to generate an XML DTD; see
+XML. By default, this parameter entity has the value <val>IGNORE</val>; the
+user should set it to <val>INCLUDE</val> in order to generate an XML DTD; see
 <ptr target="#STXML"/>.</item>
 </list>
  </p>
@@ -1853,8 +1853,8 @@ either to make the elements illegal in a document or to allow the
 element to be redefined, as further described in chapter <ptr target="#MD"/>.</p>
 <p>Parameter entities used for this purpose have exactly the same name
 as the generic identifier of the element concerned.  The default
-definition for these parameter entities is <code>INCLUDE</code> but they may
-be changed to <code>IGNORE</code> in order to exclude the standard element and
+definition for these parameter entities is <val>INCLUDE</val> but they may
+be changed to <val>IGNORE</val> in order to exclude the standard element and
 attribute definition list declarations from the DTD.
  </p>
 <p>The declarations for the element <gi>p</gi>, for example, are
@@ -1958,7 +1958,7 @@ expands to <q>CDATA</q>.
  </p>
 <p>The keywords controlling the selection of base and additional tag
 sets (described in section <ptr target="#STBA"/>) all have the default
-value <code>IGNORE</code>; the user can override this by a local declaration,
+value <val>IGNORE</val>; the user can override this by a local declaration,
 as described in section <ptr target="#STIN"/>.
  </p>
 </div3>

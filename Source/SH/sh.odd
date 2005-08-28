@@ -212,7 +212,7 @@ dollar sign.</p>
 <div3 xml:id="SHFD"><head>MARC Fields for the File Description</head>
 
 <p>Note that there is no provision for the <soCalled>Main
-Entry</soCalled> (or USMARC <code type="frag">1XX</code> fields) in the TEI
+Entry</soCalled> (or USMARC <ident type="field">1XX</ident> fields) in the TEI
 header. The main entry should be constructed, using appropriate name
 authority control, by the cataloguer from information derived from the
 header that indicates who is primarily responsible for the
@@ -222,16 +222,16 @@ before the main entry is constructed.
 
 <list type="gloss">
 <label><gi>titleStmt</gi></label><item> corresponds to title and statement of
-responsibility fields in MARC, typically <code type="frag">240</code> (for uniform
-title) and <code type="frag">245</code> (for title proper).</item>
-<label><gi>title</gi></label><item> <code type="frag">240 $a</code> (for uniform titles) or
-<code type="frag">245 $a</code> fields. Put any subtitles in <code type="frag">24X $b</code>.
-Insert the constant, <q>[computer file]</q> in the <code type="frag">24X $h gmd</code>
-subfield.  Put any alternate titles in <code type="frag">246 $a.</code></item>
-<label><gi>author</gi></label><item><code type="frag">100 $a, $b, $c, $q</code>.  The form of the name will typically need to be checked by a cataloguer who will be consulting name authority files.</item>
+responsibility fields in MARC, typically <ident type="field">240</ident> (for uniform
+title) and <ident type="field">245</ident> (for title proper).</item>
+<label><gi>title</gi></label><item> <ident type="field">240 $a</ident> (for uniform titles) or
+<ident type="field">245 $a</ident> fields. Put any subtitles in <ident type="field">24X $b</ident>.
+Insert the constant, <q>[computer file]</q> in the <ident type="field">24X $h gmd</ident>
+subfield.  Put any alternate titles in <ident type="field">246 $a.</ident></item>
+<label><gi>author</gi></label><item><ident type="field">100 $a, $b, $c, $q</ident>.  The form of the name will typically need to be checked by a cataloguer who will be consulting name authority files.</item>
 </list></p>
 <p>The elements <gi>sponsor</gi>, 
-<gi>funder</gi>, and <gi>principal</gi> all belong in the <code type="frag">245 $c</code> subfield:
+<gi>funder</gi>, and <gi>principal</gi> all belong in the <ident type="field">245 $c</ident> subfield:
 statement of responsibility, as in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><titleStmt>
    <title>Two stories by Edgar Allen Poe: electronic
@@ -254,8 +254,8 @@ Also, our local practice maps funding information to MARC 536 field, ex.:
 -->
 </p>
 <p>The  <gi>edition</gi> and <gi>name</gi> (within responsibility
-statement) elements correspond with MARC fields <code type="frag">250
-$a</code> and <code type="frag">250 $b</code> respectively, as in the
+statement) elements correspond with MARC fields <ident type="field">250
+$a</ident> and <ident type="field">250 $b</ident> respectively, as in the
 following example:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><editionStmt>
@@ -288,16 +288,16 @@ In our local practice, catalogers record information about this particular elect
 </p>
 <p>The <gi>extent</gi> element is analogous to the
 <soCalled>Physical Description</soCalled> MARC field.  Fields
-<code type="frag">256</code> or <code type="frag">3XX</code> are
+<ident type="field">256</ident> or <ident type="field">3XX</ident> are
 appropriate, depending on local practice. 
 
-The children of the <gi>publicationStmt</gi> element may be put in MARC <code type="frag">260</code>.  The 
-<gi>pubPlace</gi> element corresponds with field <code type="frag">260
-$a</code>; the 
+The children of the <gi>publicationStmt</gi> element may be put in MARC <ident type="field">260</ident>.  The 
+<gi>pubPlace</gi> element corresponds with field <ident type="field">260
+$a</ident>; the 
 <gi>publisher</gi>, <gi>distributor</gi>, or <gi>authority</gi>
-elements correspond with the MARC field <code type="frag">260 $b</code>; while the <gi>date</gi> element in
+elements correspond with the MARC field <ident type="field">260 $b</ident>; while the <gi>date</gi> element in
 this context
-corresponds with the <code type="frag">260 $c</code>, as in the following example:
+corresponds with the <ident type="field">260 $c</ident>, as in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><publicationStmt>
    <publisher>Columbia University Press</publisher>
    <pubPlace>New York</pubPlace>
@@ -308,10 +308,10 @@ This may be tagged in MARC as:
 <p>Local practice will determine appropriate MARC fields for
 <gi>address</gi>, <gi>idno</gi>, and <gi>availability</gi>.
 Restrictions on access should normally be placed in the
-<code type="frag">506</code> field, while the place where an item may be ordered
-will be located in a local notes (<code type="frag">590</code>) field.  If local
+<ident type="field">506</ident> field, while the place where an item may be ordered
+will be located in a local notes (<ident type="field">590</ident>) field.  If local
 practice warrants it, the address of the publisher should be indicated
-in the <code type="frag">260</code> field.
+in the <ident type="field">260</ident> field.
 <!-- Natasha: If URL is used, it usually corresponds to MARC 856. -->
 <!-- jawalsh: Natasha, I agree we may want to mention 856, but is there a tag in TEI that is regularly used in this self-referential manner?  That is, is there a TEI element encoders use to include the URL for the TEI document (or for a transformed HTML or other version of the document?)-->
 <!-- LB: this is a FAQ. The most obvious candidate imo would be an idno
@@ -319,26 +319,26 @@ in the <code type="frag">260</code> field.
      propose a specific new element if you think this would be better  -->
 </p>
 <p>The series <gi>title</gi> and the <gi>idno</gi> should be placed in
-the appropriate <code type="frag">490</code> fields (series untraced), if series
+the appropriate <ident type="field">490</ident> fields (series untraced), if series
 authority checking needs to be done.  Further, because the TEI elements do
 not differentiate between name, conference, or title series, there is
-no simple mechanical method for determining which MARC tag (<code type="frag">410,
-411,</code> etc.)  should be used.  Safe practice would be to load any
-series statements into <code type="frag">490</code> fields, and then to conduct
+no simple mechanical method for determining which MARC tag (<ident type="field">410,
+411,</ident> etc.)  should be used.  Safe practice would be to load any
+series statements into <ident type="field">490</ident> fields, and then to conduct
 authority work on those fields.
 </p>
 <p>The <gi>notesStmt</gi> element is  usually reserved for general note
-(<code type="frag">5XX</code>) fields.</p>
+(<ident type="field">5XX</ident>) fields.</p>
 <p>The <gi>sourceDesc</gi> can be mapped to be a <soCalled>source of
-data</soCalled> note (<code type="frag">537</code> in RLIN MDF format) with the
+data</soCalled> note (<ident type="field">537</ident> in RLIN MDF format) with the
 print constant <q>Transcribed from:</q> at the beginning of the note. <!-- Natash: It corresponds to MARC 534; jawalsh: What is "it"? The whole <sourceDesc>?-->
-The <gi>biblStruct</gi> itself can be mapped onto a <code type="frag">581</code>
+The <gi>biblStruct</gi> itself can be mapped onto a <ident type="field">581</ident>
 field (note on primary publication) using the ISBD format to separate
 each data element.</p>
 <p>The <gi>scriptStmt</gi>, <gi>recordingStmt</gi>,
 <gi>recording</gi>, <gi>equipment</gi>, and <gi>broadcast</gi>
 elements do not easily map to existing MARC fields, and should be
-put into a local notes field (<code type="frag">590</code>) treating the TEI element
+put into a local notes field (<ident type="field">590</ident>) treating the TEI element
 introducing each component as a print constant at the head of the
 field in order to facilitate future local processing and retrieval.
 
@@ -408,7 +408,7 @@ or sources from which it was derived. The <gi>projectDesc</gi>,
 elements provide details of decisions and rationales used about the
 process and purposes of the project, how text was sampled, principles
 of editorial practice, and how canonical references are constructed.
-The <code type="frag">567</code> field (notes on methodology) appears to be the
+The <ident type="field">567</ident> field (notes on methodology) appears to be the
 most appropriate for this sort of information, though this field is
 normally intended for methodologies characterizing the social
 sciences. Practically, it would be wise to transcribe the
@@ -467,7 +467,7 @@ location for many of the elements that make up the profile description. One opti
 to load the profile description into a
 MARC record for archival and possibly retrieval purposes, then the
 contents of the profile description may be mapped into a locally-defined
-notes field (<code type="frag">59X</code>) with its TEI tagging intact, as in the examples
+notes field (<ident type="field">59X</ident>) with its TEI tagging intact, as in the examples
 above.
 <!-- jawalsh:  I think we can do better than the above paragraph.  I've started to revise it, but the suggestion in P4 that there it's not really possible to provide mapping guidance for the whole of the profile desciption is untrue.  There are things in there that can be cleanly mapped to MARC. -->
 
@@ -513,7 +513,7 @@ no MARC fields that deal specifically with changes of this sort.  This
 information might be best included in a <soCalled>codebook</soCalled>,
 rather than a MARC record. As before, the simplest way of approaching
 this problem is to include the material with its TEI tagging intact as a
-locally-defined note (<code type="frag">59X</code>) in order to support future
+locally-defined note (<ident type="field">59X</ident>) in order to support future
 local processing.<!-- Natasha: I think our catalogers record the local notes in MARC 9XX. We really have to check that.--></p></div3></div2>
 <div2 xml:id="SHDC"><head>Header Elements and their Relationship to Dublin Core</head>
 <p><![CDATA[
