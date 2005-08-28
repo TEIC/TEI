@@ -7,10 +7,9 @@ See the file COPYING for details.
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="MILEST" usage="opt" ident="milestone">
 <equiv/>
 <gloss/>
-<desc>marks the boundary between sections of a text, as indicated by
-changes in a standard reference system.</desc>
-  
-  
+<desc>marks a boundary point separating  any kind of section of a text, as indicated by
+changes in a standard reference system, where the section is not
+represented by a structural element.</desc>
   <classes>
     <memberOf key="tei.refsys"/>
   </classes>
@@ -20,77 +19,61 @@ changes in a standard reference system.</desc>
   <attList>
     <attDef ident="ed" usage="rec">
 	<equiv/>
-	<desc>indicates which edition or version the milestone applies to.</desc>
-      
-      
+	<desc>indicates the edition or version to which the milestone applies.</desc>
       <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
       <valDesc>Any string of characters; usually a siglum conventionally used
 for the edition.</valDesc>
-      
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
     </attDef>
     <attDef ident="unit" usage="req">
 	<equiv/>
-	<desc>indicates what kind of section is changing at this milestone.</desc>
-      
-      
+	<desc>provides a conventional name for the kind of section changing at this milestone.</desc>
       <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
       <valList type="semi">
         <valItem ident="page">
-          
           <equiv/>
-          <gloss>page breaks in the reference edition.</gloss>
+          <gloss>physical page breaks (synonymous with the <gi>pb</gi>
+	  element).</gloss>
         </valItem>
         <valItem ident="column">
-          
           <equiv/>
           <gloss>column breaks.</gloss>
         </valItem>
         <valItem ident="line">
-          
           <equiv/>
-          <gloss>line breaks.</gloss>
+          <gloss>line breaks (synonymous with the <gi>lb</gi> element).</gloss>
         </valItem>
         <valItem ident="book">
-          
           <equiv/>
-          <gloss>any units termed book,
-liber, etc.</gloss>
+          <gloss>any units termed book, liber, etc.</gloss>
         </valItem>
         <valItem ident="poem">
-          
           <equiv/>
           <gloss>individual poems in a collection.</gloss>
         </valItem>
         <valItem ident="canto">
-          
           <equiv/>
           <gloss>cantos or other major sections of a poem.</gloss>
         </valItem>
         <valItem ident="stanza">
-          
           <equiv/>
           <gloss>stanzas within a poem, book, or canto.</gloss>
         </valItem>
         <valItem ident="act">
-          
           <equiv/>
           <gloss>acts within a play.</gloss>
         </valItem>
         <valItem ident="scene">
-          
           <equiv/>
           <gloss>scenes within a play or act.</gloss>
         </valItem>
         <valItem ident="section">
-          
           <equiv/>
           <gloss>sections of any kind.</gloss>
         </valItem>
         <valItem ident="absent">
-          
           <equiv/>
           <gloss>passages not present in the reference edition.</gloss>
         </valItem>
@@ -124,8 +107,9 @@ at this milestone. The special value <mentioned>unnumbered</mentioned> should be
 passages which fall outside the normal numbering scheme (e.g. chapter
 heads, poem numbers or titles, or speaker attributions in verse
 drama).</p>
-    <p>Milestones for page and column should precede
-milestones for line numbers. </p>
+<p>The order in which milestone elements are given at a given point is not normally
+significant.<!--Milestones for page and column should precede
+milestones for line numbers. --></p>
   </remarks>
   <listRef>
     <ptr target="#CORS5" type="div3"/>
