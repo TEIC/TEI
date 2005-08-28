@@ -212,7 +212,7 @@ of the chapter.</p>
 <p>The simplest way to modify the supplied tag sets is to suppress one
 or more of the supplied elements.  In the modifiable version of the
 DTDs, every element declaration is enclosed by a marked section.  The
-marked section is governed by one of the keywords <code type="kw">IGNORE</code> or <code type="kw">INCLUDE</code>, which is
+marked section is governed by one of the keywords <val>IGNORE</val> or <val>INCLUDE</val>, which is
 provided indirectly using a parameter entity. This parameter entity
 has the same name as the generic identifier of the element.  Thus, the
 declaration for the paragraph element, <gi>p</gi>, occurs within a
@@ -225,20 +225,20 @@ marked section <soCalled>guarded</soCalled> by the parameter entity
 ]]></eg>
  
 The declaration given for these <term>guard entities</term> in the
-modifiable version is <code type="kw">INCLUDE</code> in all cases.  The
+modifiable version is <val>INCLUDE</val> in all cases.  The
 construct above is interpreted thus: the first of the three lines is
 the opening of a marked section; when the parser encounters the
-section and sees the keyword <code type="kw">INCLUDE</code> as its guard (more
+section and sees the keyword <val>INCLUDE</val> as its guard (more
 precisely, sees a parameter entity the value of which is the keyword
-<code type="kw">INCLUDE</code>), the content of the marked section is parsed;
+<val>INCLUDE</val>), the content of the marked section is parsed;
 the second line of the three is the content of the marked section; and
 the third line of the three is the closing of a marked section.  If
-the guard is changed to <code type="kw">IGNORE</code>, the parser will
+the guard is changed to <val>IGNORE</val>, the parser will
 ignore the content of the marked section.</p>
 <p>Thus, to delete the declaration of a generic identifier and thus
 suppress the element entirely, the entity that provides the guard on the
 marked section wherein the element declaration appears must simply be
-set to <code type="kw">IGNORE</code>.  For example, if the <gi>note</gi>
+set to <val>IGNORE</val>.  For example, if the <gi>note</gi>
 element is not to be used in a particular application, the line
  
 <eg><![CDATA[<!ENTITY % note 'IGNORE'>]]></eg>
@@ -382,7 +382,7 @@ Its content-model entity is defined thus:
  
 With the default value of the x-dot entity, this is the same as
 defining <ident type="class">tei.bibl</ident> with the replacement text
-<code xml:lang="x-sgml" type="frag">bibl | biblFull | biblStruct</code>.</p>
+<code>bibl | biblFull | biblStruct</code>.</p>
 <p>An encoder can add an element to the class by providing a new
 declaration for the x-dot entity.  For example, to add a new element
 called <gi>my.bib</gi>, this definition would be used:
@@ -394,7 +394,7 @@ the vertical bar character (for alternation).  The definition would be
 inserted at the appropriate place in the file associated with the
 entity <ident type="pe">extensions-decl</ident>.  This changes the
 replacement text of <ident type="pe">tei.bibl</ident> from its default
-value to <code type="frag">my.bib | bibl | biblFull |
+value to <code>my.bib | bibl | biblFull |
 biblStruct</code>.  If more than one element is to be added to a
 class, the x-dot entity for the class should be redefined as a list of
 the new generic identifiers, each one (<emph>including the
@@ -483,7 +483,7 @@ recommended.
 The appropriate parameter entity specifications should be entered
 after each comment in this file.  The order of the comments
 corresponds to the order of the discussion in this chapter (roughly,
-from simple to complex).  Setting the appropriate entity to <code type="kw">IGNORE</code> for each revised element is done in the last
+from simple to complex).  Setting the appropriate entity to <val>IGNORE</val> for each revised element is done in the last
 section of the file.</p> <p>The file associated with the entity <ident type="pe">extensions</ident> should contain the DTD fragments
 for new and changed element definitions.  The following structure is
 recommended.
@@ -579,7 +579,7 @@ this declaration with that in the reference section for this class):
 <p>In addition, this entity file contains declarations for a number of
 commonly used character entity sets (see further chapter <ptr target="#CH"/>) and graphic notations (see further section <ptr target="#FTGRA"/>). Different sets will be declared, depending on
 whether the parameter entity <ident type="pe">TEI.XML</ident> is
-specified as <code>INCLUDE</code> or <code>IGNORE</code>. The XML
+specified as <val>INCLUDE</val> or <val>IGNORE</val>. The XML
 version of TEI Lite supplies Unicode definitions for these character
 entities; the SGML version supplies SDATA declarations. </p> 
 
@@ -590,8 +590,8 @@ set declarations included for XML:
    "iso-lat1.ent">]]></eg>
 </p>
 <p>This declaration associates the parameter entity <ident type="pe">ISOlat1</ident> with a public entity defined by the TEI with
-the formal identifier <code>"-//TEI//ENTITIES Unicode values for ISO
-8879 Added Latin 1//EN</code>. The user may specify the actual
+the formal identifier <ident>"-//TEI//ENTITIES Unicode values for ISO
+8879 Added Latin 1//EN</ident>. The user may specify the actual
 location of this entity in a number of ways: the default is to seek a
 file with the name <ident>iso-lat1.ent</ident>.  This may be
 over-ridden by supplying an alternative location for the entity set,
@@ -609,7 +609,7 @@ above declaration for an XML DTD might be
 <p>SGML versions for the same entity sets are also available. These have a different
 formal public identifier, but the same default system identifier: thus, if the
 parameter entity <ident type="pe">TEI.XML</ident> has the value
-<code>IGNORE</code>, the declaration for <ident type="pe">ISOlat1</ident> will be as follows: 
+<val>IGNORE</val>, the declaration for <ident type="pe">ISOlat1</ident> will be as follows: 
 <eg><![CDATA[<!ENTITY % ISOlat1 
     PUBLIC "ISO 8879-1986//ENTITIES Added Latin 1//EN"
    "iso-lat1.ent">]]></eg>
