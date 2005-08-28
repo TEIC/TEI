@@ -25,23 +25,18 @@ original source carried out in converting it to electronic form.</desc>
 	<equiv/>
 	<desc>indicates the authority for any normalization carried out.
     </desc>
-      <datatype><rng:text /></datatype>
-      <valDesc>Should really be a bibliographic reference of some kind
+      <datatype><rng:data type="anyURI"/></datatype>
+      <valDesc>Points to a bibliographic
+      description or other resource documenting the principles
+      underlying the normalization which has been applied.
    </valDesc>
     </attDef>
-    <attDef ident="uri" usage="opt">
-	<equiv/>
-	<desc>indicates the location of the authority used for any normalization carried out.
-    </desc>
-      <datatype>    <rng:data type="anyURI"/></datatype>
-      <valDesc>any kind of URI, such as an HTML page reference</valDesc>
-    </attDef>
+
     <attDef ident="method" usage="opt">
 	<equiv/>
 	<desc>indicates the method adopted to indicate normalizations within
          the text.
    </desc>
-      
       
       <defaultVal>silent</defaultVal>
       <valList type="closed">
@@ -64,18 +59,22 @@ original source carried out in converting it to electronic form.</desc>
   
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">      <editorialDecl>
-        <normalization source="WWP" method="tags">
-          <p>The use of both upper- and lower-case i, j, u, v, and vv has
-      been normalized to modern 20th century typographical practices
-      using the <seg type="ident" subtype="gi">orig</seg> element and
-      its <seg type="ident" subtype="att ">reg</seg> attribute. ... </p>
-
+        <normalization method="tags">
+          <p>Where  both upper- and lower-case i, j, u, v, and vv have
+      been normalized, to modern 20th century typographical practice, 
+      the <gi>choice</gi> element  has been used to enclose
+      <gi>orig</gi> and <gi>reg</gi> elements giving the original and
+      new values respectively. ... </p>
         </normalization>
-        <normalization source="WWP" method="silent">
+        <normalization method="silent">
           <p>Spacing between words and following punctuation has been
       regularized to zero spaces; spacing between words has been
       regularized to one space.</p>
         </normalization>
+  <normalization source="http://www.dict.sztaki.hu/webster">
+    <p>Spelling  converted throughout to Modern American usage, based on
+      Websters 9th Collegiate dictionary.</p>
+  </normalization>
 
       </editorialDecl>
     </egXML>
