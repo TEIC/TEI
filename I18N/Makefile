@@ -16,7 +16,7 @@ clean:
 	-rm -rf Schema Guidelines
 
 demo:
-	echo "<html><body><h1>Sample TEI internationalisation</h1>" > demo.html
+	echo "<html>\n<head><title>Sample TEI internationalisation</title></head>\n<body><h1>Sample TEI internationalisation</h1>" > demo.html
 	echo "<table rules=\"all\" border=\"1\">" >> demo.html
 	for j in `grep "<text xml:lang=" ../Stylesheets/i18n.xml | sed 's/.*text xml:lang=\"\([^\"]*\)\".*/\1/' | sort -u `; \
 	do \

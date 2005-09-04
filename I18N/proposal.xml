@@ -3,11 +3,11 @@
    <teiHeader>
      <fileDesc>
        <titleStmt>
-	 <title>TEI Internationalisation proposal</title>
+	 <title>TEI Internationalization proposal</title>
 	 <author>Veronika Lux and Sebastian Rahtz</author>
        </titleStmt>
        <editionStmt>
-       <edition><date>21st July 2005</date></edition></editionStmt>
+       <edition><date>September 2005</date></edition></editionStmt>
        <publicationStmt>
             <authority>The Text Encoding Initiative</authority>
 	 <p>TEI Web</p>      
@@ -19,6 +19,14 @@
      <profileDesc>
      </profileDesc>
      <revisionDesc>
+     <change>
+     <date>August 2, 2005</date>
+     <respStmt>
+     <name>Julia Flanders</name>
+     </respStmt>
+     <item>Revised and expanded.
+     </item>
+     </change>
        <change>
 	 <date>$Date$.</date>
 	 <respStmt>
@@ -32,45 +40,63 @@
 <body>
 <div>
 <head>Summary</head>
-<p>The Text Encoding Initiative Guidelines have been adopted by
-projects and institutions in
-many countries and used for encoding texts in dozens of languages.
-However, the complex encoding of texts at which the TEI excels
-needs a close understanding of the 522 available elements, and
-non-English speakers are at a considerable disadvantage. 
-Mistakes in using the TEI may come from misunderstanding the
-explanations in English. The TEI needs to be made more accessible.</p>
+<p>The Text Encoding Initiative Guidelines 
+(<xptr url="http://www.tei-c.org/"/>)
+have been widely adopted by
+projects and institutions in many countries in Europe, North America,
+and Asia, and are used for encoding texts in dozens of languages. The
+TEI community is broadly international and multilingual, and its
+geographical reach increases every year. However, the complex encoding
+of texts at which the TEI excels requires a close understanding of the
+522 available elements, and non-English speakers are at a considerable
+disadvantage in learning and using the Guidelines. The TEI needs to be
+made more accessible to the international community it seeks to
+serve.</p>
 
-<p>This proposal aims:
+<p>Ideally, the Guidelines themselves and the TEI tag set would be
+translated into as many languages as there are user
+communities. However, translation on this scale is well beyond the
+resources not only of the TEI but also of most funding bodies. A more
+realistic approach, which we propose here, is to develop an
+infrastructure for translation, through which individual language
+communities may easily produce versions of the essential portions of
+the Guidelines into other languages. The TEI Guidelines are written in
+a modular way that makes this infrastructure straightforward to
+develop. With comparatively modest initial funding, we can produce the
+necessary framework and sponsor the translation of five initial
+high-priority languages, drawing on existing efforts already under way
+in the TEI community. Funding of this proposal will enable us to
+coordinate these efforts and bring them to prompt and consistent
+completion.
+
+ </p>
+
+<p>This proposal provides a rationale for the approach to
+internationalization on which this work would be based, and describes
+the technical infrastructure we propose to develop, to maintain the
+internationalized versions of the TEI material and integrate them with
+existing tools. It also provides an initial workplan of languages to
+be addressed. The TEI requests a grant of £10,000, for a project to
+produce the following:
+
 <list type="ordered">
-  <item>to describe the type of internationalisation work which will be of
-  maximum benefit to as many people as possible, assuming that
-  translating the entire TEI Guidelines into many languages is not
-  feasible.</item>
-  <item>to describe the technical infrastructure by which
-  internationalisation of the TEI material will be maintained and
-  integrated into existing tools</item>
-  <item>to lay out an initial workplan of languages to be addressed</item>
+<item>a working architecture for internationalization of the TEI</item>
+<item>an interface for translators to use in creating translated versions of components of the TEI Guidelines</item>
+<item>translations of the TEI documentation into five languages which the TEI considers to be the highest priority</item>
+<item>a framework for coordinating further translation efforts</item>
 </list>
 </p>
 
- 
-<p>From a research point of view, it will be interesting
-to compare the TEI tailored documentation system with both
-memory-based translation systems (eg. Trados) and with multilingual
-document authoring systems (eg. MDA developped at Xerox Research
-Center).</p>
-
-<p>The TEI requests a grant of £10000, which it will use to deliver
-materials to facilitate use of the TEI in five languages.</p>
 </div>
 
 <div>
 <head>Approach to translation</head>
-<p>What do the TEI Guidelines consist of which can be translated?
-There are three areas:
+<p>The TEI Guidelines contain four distinct areas of information
+which can be translated. Each can be treated separately:
+
 <list type="ordered">
-  <item>The detailed descriptive prose of the Guidelines chapters</item>
+  <item>The detailed descriptive prose of the Guidelines chapters and
+  TEI Lite documentation.</item>
  <item>The element, attribute
   names and suggested attribute values which are put into DTDs and
   schemas. Thus instead of <gi>addrLine</gi>, the TEI user might
@@ -88,12 +114,38 @@ There are three areas:
   compuesto de una cabecera TEI (TEI header) y un cuerpo de texto
   (text), aislado o como parte de un elemento corpusTei
   (teiCorpus)</q></item>
+  <item>The examples of usage for each
+  element. <q>Internationalization</q> of these could take 
+  the form of simple translation, but in practice
+  <emph>localisation</emph> would be considerably more useful. 
+  </item>
 </list>
+
+It may be useful to distinguish between what we might call
+<q>traditional</q> or documentary approaches to translation, which
+focus on translating the descriptive prose of the Guidelines <emph>as
+a document</emph>, and <q>formal</q> approaches which focus instead on
+translating the individual components (examples, element and attribute
+names, technical descriptions) in a way that enables these components
+to be used within the formal structures of the TEI as a technical
+standard. While the first approach may be very useful, the results are
+more difficult to maintain over the long term and are also more
+difficult to produce, since they cannot be accomplished in discrete
+chunks. The latter approach is the one we propose here, since it is
+more easily maintainable (only the affected elements need to be
+updated when changes are made to the Guidelines) and can be more
+easily undertaken in a distributed fashion by collaborative groups.
 </p>
 
-<p>There have already been six translations of the TEI Lite
-documentation into other languages. This has not covered translation
-of the element names or technical reference documentation.</p>
+<p>Some translation work has already been undertaken:
+
+<list type="unordered">
+<item>There have already been six <q>traditional</q>translations of
+the TEI Lite (<xptr url="http://www.tei-c.org/Lite/"/>) documentation
+into other languages. These have not covered translation of the
+element names or technical reference documentation. They are in wide
+use, however, and have created a need for more extensive translations
+of the Guidelines themselves.</item>
 
 <p>The French <emph>Groupe d'experts n° 8</emph> within CN 357
 (<emph>Commission de normalisation «Modélisation, production et accès
@@ -105,127 +157,288 @@ they have worked in a <q>traditional way</q> on some chapters of the
 P4 and P5 versions.  Dissemination of the result (French version of
 these chapter) is very limited.</p>
 
-<p>Some work has also been undertaken on translating element and
-attribute names; Alejandro Bia and Arno Mittelbach have prepared
-translation sets of Catalan, Spanish, and German. This work is
-integrated into the Roma (<xptr
-target="http://www.tei-c.org.uk/Roma/"/>) application, allowing users
+<item>Some <q>formal</q>work has also been undertaken on translating
+element and attribute names; Alejandro Bia and Arno Mittelbach have
+prepared translation sets for Catalan, Spanish, and German. This work
+is integrated into the Roma (<xptr
+url="http://www.tei-c.org.uk/Roma/"/>) application, allowing users
 to create tailored schemas in one of the supported languages. However,
-it is not necessarily the most effective way to proceed; this is
-because many of the element names are in an abbreviated form of
-English (eg <gi>respStmt</gi>) which are not easy to translate
-sensibly, and because the abbreviated names are relatively easy to
-recognize for people used to reading Latin script. Using
-<gi>infoResp</gi> instead of <gi>respStmt</gi> is not as helpful as
-translating <q> supplies a statement of responsibility for someone
-responsible for the intellectual content of a text, edition,
-recording, or series, where the specialized elements for authors,
-editors, etc. do not suffice or do not apply.</q>
+while this work is useful, it is not by itself the most effective way
+to proceed. For example, many of the element names are in an
+abbreviated form of English (eg <gi>respStmt</gi>) which are not easy
+to translate sensibly, and because the abbreviated names are
+relatively easy to recognize for people used to reading Latin
+script. Furthermore, unless the reference descriptions are also
+translated, the element names by themselves do not give a clear idea
+of what the element is for. Using <gi>infoResp</gi> instead of
+<gi>respStmt</gi> is not as helpful as translating the description
+<q>supplies a statement of responsibility for someone responsible for
+the intellectual content of a text, edition, recording, or series,
+where the specialized elements for authors, editors, etc. do not
+suffice or do not apply.</q>
+</item>
+</list>
 </p>
-
 
 <p>Study of the work described aboves suggests that translating the
 reference descriptions, followed by translation of element names, is
-likely to be the most effective way to promote the TEI in non-English
-speaking communities.
+likely to be the most effective way to promote the TEI and support its
+use in non-English-speaking communities. Translation or localisation
+of examples would be an important further step for some communities.
 </p>
 
 
-<p>The TEI documentation is built by assembling units stored in a database
-(the source of the TEI Guidelines): translation will be done at the
-level of these units. This allows
-<list>
-<item> Optimization of the translation. The idea would be to work as
-in a translation memory, storing units and their translation. Only
-modifed units would be translated again.</item>
-<item> More advanced localisation of the documentation: users could
-get a documentation with crucial technical parts (eg. definitions) in
-French if they want to. </item>
-</list>
-<ptr target="example"/> shows the current display of reference
-documentation. The labels in the left-hand column will appear in
-translated form, as will the description text. 
-<figure url="example.png" id="example" scale="0.5">
+<p>The TEI Guidelines are constructed in a way that lends
+itself to this approach. The documentation is built by assembling
+units stored in a database (which constitutes the source of the TEI
+Guidelines). Translation can thus be done at the level of these
+units. This allows for several advantages. The most important of these
+is the optimization of the translation and its ongoing
+maintenance. Individual information units (element names,
+documentation segments, etc.) are stored togther with their
+translations. When a unit is updated, its translations can be updated
+as well. New units and new translations can be added as needed. The
+approach also allows for more advanced localisation of the
+documentation: users can get documentation with crucial technical
+parts (eg. definitions) in any available language, or in multiple
+languages.  <ptr target="example-en"/> shows an example of the current display of
+reference documentation. The labels in the left-hand column can
+appear in translated form, as will the description text. <ptr
+target="example-ja"/> shows a full-scale translation into Japanese,
+while <ptr target="example-es"/> shows the same thing in Spanish.
+<figure url="example-en.png" id="example-en" scale="0.5">
 <head>Example of reference documentation</head>
 </figure>
+<figure url="example-ja.png" id="example-ja" scale="0.5">
+<head>Example of reference documentation in Japanese</head>
+</figure>
+<figure url="example-es.png" id="example-es" scale="0.5">
+<head>Example of reference documentation in Spanish</head>
+</figure>
 </p>
-<p>It should be noted that the examples are hard to translate, as they
-require cultural as well as linguistic localisation. Quotations from
-Dickens or Beowulf would like need adapting for a Chinese readership, for
-example. This work is beyond the scope of the current proposal.
+
+<p>It should be noted that the examples pose special problems for
+translation, as they require cultural as well as linguistic
+localisation. Translating the examples themselves is difficult not
+only from a practical viewpoint, but also because the significance of
+the example as an illustration of a particular encoding issue may not
+translate well. A quotation from Dickens or Beowulf would need to be
+adapted for a Chinese readership, for example, in order to make the
+point it illustrates clear. Thus
+<eg><![CDATA[<lg>
+   <l>Sire Thopas was a doghty swayn;</l>
+   <l>White was his face as payndemayn,</l>
+   <l>His lippes rede as rose;</l>
+   <l>His rode is lyk scarlet in grayn,</l>
+   <l>And I yow telle in good certayn,</l>
+   <l>He hadde a semely nose.</l>
+</lg>]]></eg> 
+is probably not a very familiar example of verse for users in
+China. In the Chinese version of the TEI Guidelines, a suitable
+Chinese poem would be more helpful.  In some cases it may be
+sufficient to translate the element names and leave the quotation
+itself in the original language. Best of all would be to find
+substitute examples in the target language, but that is
+labor-intensive and raises issues concerning whether the same
+principle is being illustrated in each case. Translating examples is
+beyond the scope of the current proposal, but it may be possible to
+offer translated element names as an intermediary step.
 </p>
 
 </div>
 
 <div>
-<head>Language coverage</head>
-<p>We do not believe that it is sensible to simply pay a professional
-translator to convert the words, even had we funds enough; the
-descriptive texts are often short and need genuine experience in text
-encoding to translate well. Each translation set will also need to be
-validated by other TEI users in the relevant language community. We
-therefore propose to invite collaborating institutions to work with us
-on each language.</p>
+<head>Organization and Language Coverage</head>
 
-<p>The collaborator will supervise the creation of the
-translations as they see fit, and will be offered a maximum of £2000
-to assist the process (it could be used for paying graduate students,
-for example). The results will then be undergo a check by a second
-collaborator; and finally undergo a sanity check by the TEI editors
-before final acceptance.</p>
+<p>Because the TEI Guidelines document a complex and well-established
+set of methods, we feel that any translation effort needs to work
+closely with the community of TEI practitioners in the target
+language. We do not believe that it is sensible to simply pay a
+professional translator to convert the words, even if we had
+sufficient funds; the descriptive texts are often short and need
+genuine experience in text encoding to translate well. Each
+translation set will also need to be validated by other TEI users in
+the relevant language community. In addition, with so many languages
+potentially needing attention, it is important to make any available
+funds go as far as possible, by using them to mobilize and coordinate
+existing volunteer efforts. Within the TEI community there are a large
+number of groups with translation expertise who are willing to
+collaborate with the TEI in this effort. These include the following:
 
-<p>The choice of languages to cover will be driven mainly by the
-amount of collaboration we can identify. We expect to cover French,
-Spanish and German immediately, and we wish to offer at least one of
-the CJK languages. Beyond that, we might expect to find collaborators
-for  Portuguese (European or Brasilian), and Italian; and possibly Arabic. </p>
+<table>
+<row><cell>Chinese</cell>
+<cell>Marcus Bingenheimer</cell>
+<cell>Chung-hwa Institute of Buddhist Studies, Taipei</cell>
+</row>
+
+<row><cell>French</cell>
+<cell>Veronika Lux</cell>
+<cell>University of Nancy</cell>
+</row>
+
+<row><cell>German</cell>
+<cell>Werner Wegstein</cell>
+<cell>Wuerzburg University</cell>
+</row>
+
+<row><cell>Hindi</cell>
+<cell>Paul Richards </cell>
+<cell>UGS (The PLM Company)</cell>
+</row>
+
+<row><cell>Italian</cell>
+<cell>Fabio Ciotti</cell>
+<cell>University of Roma</cell>
+</row>
+
+<row>
+<cell>Japanese</cell>
+<cell>Ohya Kazushi                            </cell>
+<cell>Tsurumi University, Yokohama</cell>
+</row>
+
+<row><cell>Polish</cell>
+<cell>Radoslaw Moszczynski</cell>
+<cell>Warsaw University</cell>
+</row>
+
+<row><cell>Romanian</cell>
+<cell>Dan Matei</cell>
+<cell>CIMEC - Institutul de Memorie Culturala, Bucharest</cell>
+</row>
+
+<row><cell>Slovenian</cell>
+<cell>Toma&#382; Erjavec,Matija Ogrin            </cell>
+<cell>Jozef Stefan Institute, Ljubljana</cell>
+</row>
+
+<row><cell>Spanish</cell>
+<cell>Manuel Sánchez</cell>
+<cell>Miguel de Cervantes Digital Library</cell>
+</row>
+
+<row><cell>Tibetan</cell>
+<cell>Linda Patrik, Tensin Namdak</cell>
+<cell>www.nitartha.org</cell>
+</row>
+</table>
+</p>
+
+<p>We therefore propose to invite collaborating institutions to work
+with us on each language. For an initial set of languages, a budget of £2000 will be
+allocated which the collaborator may distribute as it sees fit, given
+local circumstances and available labor. The funding may be used to
+pay graduate students, or to pay a supervisor to organize volunteer
+translators and check their work, or to pay a single translator. In
+all cases, the funding serves not as full payment for a translation,
+but as support which makes it possible for local efforts to be
+completed successfully, and supervised so that they are
+consistent. The collaborators will supervise the creation of the
+translations. The initial translation will then undergo a check by a
+second collaborator. The final results will undergo a check by the TEI
+editors before final acceptance. All of the work will be done through
+a web interface to a central data repository (see below), so that
+translators can see the intermediate results of their work, and so
+that the TEI editors and Council can monitor progress and check
+results as they emerge.</p>
+
+<p>Our initial choice of languages is based on the TEI Council's
+assessment of the most urgent areas of need, and on the level of
+available collaborative support. From among the initial proposals we
+received, we have chosen as the first five for support under this
+grant the following languages and collaborators:
+
+<list type="gloss">
+<item><label>French:</label> Nancy</item>
+<item><label>Spanish:</label> Cervantes Digital Library</item>
+<item><label>German:</label> University of Würzburg</item>
+<item><label>Chinese:</label> Chung-hwa Institute of Buddhist Studies, Taipei</item>
+<item><label>Japanese:</label> Tsurumi University</item>
+</list>
+
+The cost of the French translation will be met from existing
+resources at Nancy, so in practice only four languages will
+be directly funded, allowing us to also fund the infrastructure work.
+ </p>
 
 </div>
 
 
 <div>
 <head>Translation infrastructure</head>
-<p>The TEI I18N Project will need to develop workflow and
-infrastructure to create and deliver its outputs. This will
-be in three parts:
+
+<p>In some ways, the translation infrastructure funded by this grant
+is the most important long-term result of the project, since it will
+provide a framework for further translation efforts which can be
+conducted on a volunteer basis, and also for future grants to support
+translation into specific languages. The infrastructure will provide
+for workflow management and support for the work of translation. Its
+development includes three components:
 <list type="ordered">
-<item> A user-friendly environment to allow translators to
-easily get the text units to translate and to put their translation in
-the database. Translators
-will not have to dowload P5 from Sourceforge, find the elements to
-translate and send their translation by mail.
-It is essential that, if translation is
-performed on elementary documentation units, a readable 
-document in e.g. French can be produced by assembling
-these units, so that translators see the result of their ongoing work
-concretely. Just putting translations in a database is not seen as a motivating goal!</item>
-<item>Make the necessary technical developments to Roma so that it
-permits more advanced documentation localisation. For example, the user
-may be permitted to generate the following (where <q>descriptions</q> means
-the contents of <gi>gloss</gi> and <gi>desc</gi>):
-<list>
-<item>canonical (English names, descriptions in English)</item>
-<item>local descriptions (English names, descriptions in chosen
+
+<item>Develop a user-friendly environment through which translators
+can get access to the individual text units for translation, and
+upload translated text units. This environment will take the form of a
+web interface to the underlying data repository in which the TEI
+documentation is stored. The interface will include features to allow
+for review of translated material, and viewing of the translations in
+their context, so that translators can see the ongoing results of
+their work. This will also enable language communities to begin
+testing and commenting on the translations as soon as they are begun,
+rather than awaiting a compilation process once everything is
+complete.</item>
+
+<item>Make the necessary technical developments to Roma (the tool
+which compiles the TEI source data to produce specific schemas and
+documentation) so that it permits more advanced and flexible
+localizations of the TEI documentation. For example, the user may be
+permitted to generate any of the following combinations (where
+<q>names</q> means tag and attribute names and attribute values, and
+<q>descriptions</q> means the contents of the <gi>gloss</gi> and
+<gi>desc</gi> elements in the TEI source):
+<list type="unordered">
+<item><label>canonical:</label> English names, descriptions in English</item>
+<item><label>local descriptions:</label> English names, descriptions in chosen
 language) </item>
-<item>local names (names designed to make sense to a speaker of the
-chosen language, descriptions in English)</item>
-<item>localized (both names and descriptions in chosen
-language)</item>
+<item><label>local names:</label> names designed to make sense to a speaker of the chosen language, descriptions in English</item>
+<item><label>fully localized:</label> both names and descriptions in chosen
+language</item>
 </list>
 </item>
-<item>Enhancing the delivery infrastructure (XSLT stylesheets to make
-HTML and PDF output) so that string constants are available in the
-chosen language as well as the text. Thus reference document for an
-attribute may talk about <q>Obligatoriu dacă se potriveşte</q> for
+<item>Enhance the delivery infrastructure for TEI (XSLT stylesheets to
+make HTML and PDF output) so that string constants are available in
+the chosen language as well as the text. String constants are
+recurring phrases with specific technical meanings which can easily be
+translated and then substituted as necessary without regard for the
+context where they appear. Thus the reference document for an
+attribute might read <q>Obligatoriu dacă se potriveşte</q> for
 Rumanians instead of <q>Mandatory when applicable</q>.</item>
 </list>
 </p>
+
+<p>The infrastructure work will be undertaken by the Research
+Technologies Service at Oxford University Computing Services.</p>
 </div>
 
 
 <div>
-<head>Deliverables</head>
-<p>This project will deliver, over a period of 6 months:
+<head>Work Plan and Deliverables</head>
+
+<p>The groundwork for this project has already been begun, with
+translation experiments as described and a call for participants. If
+funding is awarded, we could complete the work described on the
+following schedule:
+
+<list>
+<item><label>January 2006:</label> Begin work on web interface for translation workflow. Collaborators convene translation teams.</item>
+<item><label>March 2006:</label> Web interface for workflow is ready for use. Translation teams begin translation process.</item>
+<item><label>August 2006: </label> Materials are substantially complete, and review process has begun.</item>
+<item><label>October 2006:</label> Revisions to TEI delivery infrastructure and to Roma. All materials have been reviewed locally and are ready for final review by TEI Council and editors. Demonstration of system at TEI members meeting.</item>
+<item><label>December 2006:</label> Project is completed.</item>
+</list>
+</p>
+
+<p>The deliverables for the project are:
 <list type="ordered">
 <item>A web-based interface for submitting translations.</item>
 <item>For a minimum of five languages, a translation of each element
