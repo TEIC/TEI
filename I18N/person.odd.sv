@@ -1,4 +1,4 @@
-�<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="corpus"
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="corpus"
 xml:id="PERSON" usage="opt" ident="person">
 <equiv/>
 <gloss/>
