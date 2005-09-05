@@ -91,7 +91,7 @@
   <xsl:template match="tei:elementSpec">
     <xsl:choose>
       <xsl:when test="parent::tei:specGrp">
-	<tei:label>Element: <xsl:value-of select="@ident"/></tei:label>
+	<tei:label><xsl:value-of select="@ident"/></tei:label>
 	<tei:item>
 	  <xsl:apply-templates select="." mode="tangle"/>
 	</tei:item>
@@ -103,7 +103,7 @@
   
   <xsl:template match="tei:classSpec">
     <xsl:if test="parent::tei:specGrp">
-      <tei:label>Class: <xsl:value-of select="@ident"/></tei:label>
+      <tei:label><xsl:value-of select="@ident"/></tei:label>
       <tei:item>
 	<xsl:apply-templates select="." mode="tangle"/>
       </tei:item>
@@ -113,7 +113,7 @@
   
   <xsl:template match="tei:macroSpec">
     <xsl:if test="parent::tei:specGrp">
-      <tei:label>Macro: <xsl:value-of select="@ident"/></tei:label>
+      <tei:label><xsl:value-of select="@ident"/></tei:label>
       <tei:item>
 	<xsl:apply-templates select="." mode="tangle"/>
       </tei:item>
@@ -766,7 +766,9 @@
 	    <xsl:text>)</xsl:text>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    (In addition to global attributes)        
+	    (<xsl:call-template name="i18n">
+	      <xsl:with-param name="word">In addition to global attributes</xsl:with-param>
+	      </xsl:call-template>)
 	  </xsl:otherwise>
 	</xsl:choose>
 	<tei:list type="gloss">
@@ -859,8 +861,10 @@
 	<xsl:value-of select="@ident"/>
       </xsl:attribute>
       <tei:head>
+	<tei:gi>
 	<xsl:value-of
-	    select="substring-before(local-name(.),'Spec')"/>
+	    select="local-name(.)"/>
+	</tei:gi>
 	<xsl:text> </xsl:text>
 	<xsl:call-template name="identifyMe"/>
       </tei:head>
