@@ -21,7 +21,7 @@ XSL FO stylesheet to format TEI XML documents
 \usepackage{longtable}
 \usepackage{colortbl}
 \usetheme{<xsl:value-of select="$beamerClass"/>}
-\usepackage{lucidabr}
+\usepackage{times}
 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
 \setbeamercovered{transparent}
 \let\mainmatter\relax
@@ -33,7 +33,8 @@ select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition/tei:date
 \institute{<xsl:value-of
 select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:authority"/>}
 <xsl:if test="not($latexLogo='')">
-\logo{\colorbox{white}{\includegraphics[width=0.5in]{<xsl:value-of select="$latexLogo"/>}}}
+\pgfdeclareimage[height=.5cm]{logo}{FIG0}
+\logo{\pgfuseimage{logo}}
 </xsl:if>
 </xsl:template>
 
