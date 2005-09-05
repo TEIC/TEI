@@ -12,7 +12,7 @@ XSL FO stylesheet to format TEI XML documents
 
 <xsl:import href="../latex/tei.xsl"/>
 
-<xsl:output method="text"/>
+<xsl:output method="text" encoding="utf-8"/>
 <xsl:variable name="docClass">beamer</xsl:variable>
 <xsl:param name="classParameters"></xsl:param>
 <xsl:param name="beamerClass">PaloAlto</xsl:param>
