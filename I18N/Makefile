@@ -1,3 +1,4 @@
+Warning: No xauth data; using fake authentication data for X11 forwarding.
 S=/usr/share/xml/tei/stylesheet
 lang=es
 
@@ -16,22 +17,24 @@ clean:
 	-rm -rf Schema Guidelines
 
 demo:
-	echo "<html>\n<head><title>Sample TEI internationalisation</title></head>\n<body><h1>Sample TEI internationalisation</h1>" > demo.html
-	echo "<table rules=\"all\" border=\"1\">" >> demo.html
+	cp demohead.xml demo.xml
+	echo "<table rend=\"rules\">" >> demo.xml
 	for j in `grep "<text xml:lang=" ../Stylesheets/i18n.xml | sed 's/.*text xml:lang=\"\([^\"]*\)\".*/\1/' | sort -u `; \
 	do \
-	echo "<tr>" >> demo.html; \
+	echo "<row>" >> demo.xml; \
 	for i in person.odd.*; \
 	do \
 	 X=`echo $$i | sed 's/person.odd.//'`; \
 	 echo do $$X and $$j; \
-	 xsltproc --stringparam lang $$j testi18n.xsl $$i > person-$$X-$$j.html; \
-	echo "<td>"  >> demo.html; \
-	test $$X = $$j && echo "<b>"  >> demo.html; \
-	echo "<a href=\"person-$$X-$$j.html\">$$X / $$j </a>" >> demo.html; \
-	test $$X = $$j && echo "</b>"  >> demo.html; \
-	echo "</td>"  >> demo.html; \
+	 xsltproc --stringparam lang $$j testi18n-to-xml.xsl $$i > person-$$X-$$j.xml; \
+	 perl -p -i -e "s/ILANG/$$j/;s/LANG/$$X/" person-$$X-$$j.xml; \
+	echo "<cell>"  >> demo.xml; \
+	test $$X = $$j && echo "<hi>"  >> demo.xml; \
+	echo "<xref url=\"person-$$X-$$j.xml\">$$X / $$j </xref>" >> demo.xml; \
+	test $$X = $$j && echo "</hi>"  >> demo.xml; \
+	echo "</cell>"  >> demo.xml; \
 	done; \
-	echo "</tr>" >> demo.html; \
+	echo "</row>" >> demo.xml; \
 	done	
-	echo "</table></body><html>" >> demo.html
+	echo "</table></body></text></TEI>" >> demo.xml
+
