@@ -75,6 +75,13 @@ Display figures.
 <xsl:template name="bodyHook"/>
 
 <xd:doc class="hook">
+    <xd:short>[html] Hook where HTML can be inserted just before the
+    &lt;body&gt; ends.</xd:short>
+    <xd:detail>This can be used to add a page-wide footer block.</xd:detail>
+</xd:doc>
+<xsl:template name="bodyEndHook"/>
+
+<xd:doc class="hook">
     <xd:short>[html] Hook where Javascript calls can be inserted  just after &lt;body&gt;</xd:short>
     <xd:detail> </xd:detail>
 </xd:doc>
