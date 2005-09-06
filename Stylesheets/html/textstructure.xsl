@@ -1276,33 +1276,30 @@ $ID: requests a particular page
     <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text">
 <!-- front matter -->
       <xsl:for-each select="tei:front">
-	<xsl:if test="tei:div|tei:div0|tei:div1">
-	  <hr/>
-	</xsl:if>
+	<div class="tocFront">
         <xsl:call-template name="tocSection">
           <xsl:with-param name="id" select="$thisOne"/>
           <xsl:with-param name="style" select="$style"/>
         </xsl:call-template>
+	</div>
       </xsl:for-each>
 <!-- body matter -->
       <xsl:for-each select="tei:body">
-	<xsl:if test="tei:div|tei:div0|tei:div1">
-	  <hr/>
-	</xsl:if>
+	<div class="tocBody">
         <xsl:call-template name="tocSection">
           <xsl:with-param name="id" select="$thisOne"/>
           <xsl:with-param name="style" select="$style"/>
         </xsl:call-template>
+	</div>
       </xsl:for-each>
 <!-- back matter -->
       <xsl:for-each select="tei:back">
-	<xsl:if test="tei:div|tei:div0|tei:div1">
-	  <hr/>
-	</xsl:if>
+	<div class="tocBack">
         <xsl:call-template name="tocSection">
           <xsl:with-param name="id" select="$thisOne"/>
           <xsl:with-param name="style" select="$style"/>
         </xsl:call-template>
+	</div>
       </xsl:for-each>
     </xsl:for-each>
   </xsl:template>
@@ -1669,6 +1666,7 @@ $ID: requests a particular page
 	    </xsl:call-template>
           </xsl:when>
         </xsl:choose>
+        <xsl:call-template name="bodyEndHook"/>
       </body>
     </html>
   </xsl:template>
@@ -2138,6 +2136,7 @@ $ID: requests a particular page
     <xd:short>[html] Make a TOC section </xd:short>
     <xd:param name="style">CSS style to use</xd:param>
     <xd:param name="id">ID to link to</xd:param>
+    <xd:param name="element">which element to wrap the TOC entry in</xd:param>
     <xd:param name="force">whether to force a TOC entry even if other
     rules would normally prevent it</xd:param>
     <xd:detail>&#160;</xd:detail>
@@ -2152,6 +2151,7 @@ $ID: requests a particular page
 	  <xsl:call-template name="tocEntry">
 	    <xsl:with-param name="style" select="$style"/>
 	    <xsl:with-param name="id" select="$id"/>
+	    <xsl:with-param name="element">p</xsl:with-param>
 	  </xsl:call-template>
 	</xsl:for-each>
       </xsl:when>
@@ -2160,6 +2160,7 @@ $ID: requests a particular page
 	  <xsl:call-template name="tocEntry">
 	    <xsl:with-param name="style" select="$style"/>
 	    <xsl:with-param name="id" select="$id"/>
+	    <xsl:with-param name="element">p</xsl:with-param>
 	  </xsl:call-template>
 	</xsl:for-each>
       </xsl:when>
@@ -2168,6 +2169,7 @@ $ID: requests a particular page
 	  <xsl:call-template name="tocEntry">
 	    <xsl:with-param name="style" select="$style"/>
 	    <xsl:with-param name="id" select="$id"/>
+	    <xsl:with-param name="element">p</xsl:with-param>
 	  </xsl:call-template>
 	</xsl:for-each>
       </xsl:when>
@@ -2176,6 +2178,7 @@ $ID: requests a particular page
 	  <xsl:call-template name="tocEntry">
 	    <xsl:with-param name="style" select="$style"/>
 	    <xsl:with-param name="id" select="$id"/>
+	    <xsl:with-param name="element">p</xsl:with-param>
 	  </xsl:call-template>
 	</xsl:for-each>
       </xsl:when>
@@ -2188,6 +2191,7 @@ $ID: requests a particular page
 	    <xsl:call-template name="tocEntry">
 	      <xsl:with-param name="style" select="$style"/>
 	      <xsl:with-param name="id" select="$id"/>
+	      <xsl:with-param name="element">p</xsl:with-param>
 	    </xsl:call-template>
 	  </xsl:for-each>
 	</xsl:if>
@@ -2197,6 +2201,7 @@ $ID: requests a particular page
 	    <xsl:call-template name="tocEntry">
 	      <xsl:with-param name="style" select="$style"/>
 	      <xsl:with-param name="id" select="$id"/>
+	      <xsl:with-param name="element">p</xsl:with-param>
 	    </xsl:call-template>
 	  </xsl:for-each>
       </xsl:otherwise>
@@ -2212,7 +2217,8 @@ $ID: requests a particular page
   <xsl:template name="tocEntry">
     <xsl:param name="style"/>
     <xsl:param name="id"/>
-    <p>
+    <xsl:param name="element">p</xsl:param>
+    <xsl:element name="{$element}">
       <xsl:attribute name="class">
 	<xsl:value-of select="$style"/>
 	<xsl:apply-templates select="." mode="depth"/>
@@ -2241,7 +2247,7 @@ $ID: requests a particular page
 	  <xsl:if test="generate-id(.)=$id">true</xsl:if>
 	</xsl:with-param>
       </xsl:call-template>
-    </p>
+    </xsl:element>
   </xsl:template>
 
 
