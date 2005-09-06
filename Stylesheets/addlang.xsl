@@ -18,8 +18,12 @@
 </xsl:template>
 
 <xsl:template match="text">
-  <xsl:if test="string-length(.)&gt;0"><xsl:copy-of select="."/></xsl:if>
+<xsl:if test="not(@xml:lang=$newlang)">
+  <xsl:if test="string-length(.)&gt;0"><xsl:copy-of
+  select="."/></xsl:if>
+</xsl:if>
 </xsl:template>
+
 <xsl:template match="*" >
   <xsl:copy>
     <xsl:apply-templates
