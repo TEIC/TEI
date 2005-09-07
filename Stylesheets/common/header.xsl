@@ -142,7 +142,7 @@
       <xsl:when
 	  test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/@vcdate">
 	<xsl:apply-templates 
-	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/@vcdateq"/>
+	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/@vcdate"/>
       </xsl:when>
       <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/descendant::tei:date">
 	<xsl:value-of
