@@ -745,7 +745,7 @@ $ID: requests a particular page
   </xd:doc>
   <xsl:template name="aCrumb">
     <xsl:param name="crumbBody"/>
-    <li>
+    <li class="breadcrumb">
       <xsl:copy-of select="$crumbBody"/>
     </li>
   </xsl:template>
@@ -803,7 +803,7 @@ $ID: requests a particular page
   <xsl:template name="crumbPath">
     <xsl:call-template name="preBreadCrumbPath"/>
     <ul class="breadcrumb">
-      <li>
+      <li class="breadcrumb-first">
         <a target="_top" class="breadcrumb" href="{$homeURL}">
           <xsl:value-of select="$homeLabel"/>
         </a>
