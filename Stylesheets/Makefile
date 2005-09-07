@@ -57,7 +57,7 @@ clean:
 
 install: installp4 installp5
 
-installp4: p4
+installp4: p4 release
 	mkdir -p ${PREFIX}/share/xml/teip4/stylesheet
 	(cd release/tei-xsl/p4; tar cf - .) | \
 	(cd ${PREFIX}/share/xml/teip4/stylesheet; tar xf -)

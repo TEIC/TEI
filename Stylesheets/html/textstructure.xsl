@@ -737,6 +737,7 @@ $ID: requests a particular page
       <xsl:apply-templates/>
     </div>
   </xsl:template>
+
   <xd:doc>
     <xd:short>[html] </xd:short>
     <xd:param name="crumbBody">crumbBody</xd:param>
@@ -748,6 +749,7 @@ $ID: requests a particular page
       <xsl:copy-of select="$crumbBody"/>
     </li>
   </xsl:template>
+
   <xd:doc>
     <xd:short>[html] </xd:short>
     <xd:detail>&#160;</xd:detail>
@@ -799,6 +801,7 @@ $ID: requests a particular page
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template name="crumbPath">
+    <xsl:call-template name="preBreadCrumbPath"/>
     <ul class="breadcrumb">
       <li>
         <a target="_top" class="breadcrumb" href="{$homeURL}">
@@ -813,6 +816,7 @@ $ID: requests a particular page
       </xsl:call-template>
     </ul>
   </xsl:template>
+
   <xd:doc>
     <xd:short>[html] </xd:short>
     <xd:param name="Head">Head</xd:param>
@@ -1274,36 +1278,51 @@ $ID: requests a particular page
       <xsl:value-of select="generate-id()"/>
     </xsl:variable>
     <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text">
-<!-- front matter -->
+      <!-- front matter -->
       <xsl:for-each select="tei:front">
 	<div class="tocFront">
-        <xsl:call-template name="tocSection">
-          <xsl:with-param name="id" select="$thisOne"/>
-          <xsl:with-param name="style" select="$style"/>
-        </xsl:call-template>
+	  <xsl:element name="{$tocContainerElement}">
+	    <xsl:attribute name="class">
+	      <xsl:text>tocContainer</xsl:text>
+	    </xsl:attribute>
+	    <xsl:call-template name="tocSection">
+	      <xsl:with-param name="id" select="$thisOne"/>
+	      <xsl:with-param name="style" select="$style"/>
+	    </xsl:call-template>
+	  </xsl:element>
 	</div>
       </xsl:for-each>
-<!-- body matter -->
+      <!-- body matter -->
       <xsl:for-each select="tei:body">
 	<div class="tocBody">
-        <xsl:call-template name="tocSection">
-          <xsl:with-param name="id" select="$thisOne"/>
-          <xsl:with-param name="style" select="$style"/>
-        </xsl:call-template>
+	  <xsl:element name="{$tocContainerElement}">
+	    <xsl:attribute name="class">
+	      <xsl:text>tocContainer</xsl:text>
+	    </xsl:attribute>
+	    <xsl:call-template name="tocSection">
+	      <xsl:with-param name="id" select="$thisOne"/>
+	      <xsl:with-param name="style" select="$style"/>
+	    </xsl:call-template>
+	  </xsl:element>
 	</div>
       </xsl:for-each>
-<!-- back matter -->
+      <!-- back matter -->
       <xsl:for-each select="tei:back">
 	<div class="tocBack">
-        <xsl:call-template name="tocSection">
-          <xsl:with-param name="id" select="$thisOne"/>
-          <xsl:with-param name="style" select="$style"/>
-        </xsl:call-template>
+	  <xsl:element name="{$tocContainerElement}">
+	    <xsl:attribute name="class">
+	      <xsl:text>tocContainer</xsl:text>
+	    </xsl:attribute>
+	    <xsl:call-template name="tocSection">
+	      <xsl:with-param name="id" select="$thisOne"/>
+	      <xsl:with-param name="style" select="$style"/>
+	    </xsl:call-template>
+	  </xsl:element>
 	</div>
       </xsl:for-each>
     </xsl:for-each>
   </xsl:template>
-
+  
   <xd:doc>
     <xd:short>[html] Main page in right-hand column</xd:short>
     <xd:param name="currentID">currentID</xd:param>
@@ -2136,7 +2155,6 @@ $ID: requests a particular page
     <xd:short>[html] Make a TOC section </xd:short>
     <xd:param name="style">CSS style to use</xd:param>
     <xd:param name="id">ID to link to</xd:param>
-    <xd:param name="element">which element to wrap the TOC entry in</xd:param>
     <xd:param name="force">whether to force a TOC entry even if other
     rules would normally prevent it</xd:param>
     <xd:detail>&#160;</xd:detail>
@@ -2151,7 +2169,6 @@ $ID: requests a particular page
 	  <xsl:call-template name="tocEntry">
 	    <xsl:with-param name="style" select="$style"/>
 	    <xsl:with-param name="id" select="$id"/>
-	    <xsl:with-param name="element">p</xsl:with-param>
 	  </xsl:call-template>
 	</xsl:for-each>
       </xsl:when>
@@ -2160,7 +2177,6 @@ $ID: requests a particular page
 	  <xsl:call-template name="tocEntry">
 	    <xsl:with-param name="style" select="$style"/>
 	    <xsl:with-param name="id" select="$id"/>
-	    <xsl:with-param name="element">p</xsl:with-param>
 	  </xsl:call-template>
 	</xsl:for-each>
       </xsl:when>
@@ -2169,7 +2185,6 @@ $ID: requests a particular page
 	  <xsl:call-template name="tocEntry">
 	    <xsl:with-param name="style" select="$style"/>
 	    <xsl:with-param name="id" select="$id"/>
-	    <xsl:with-param name="element">p</xsl:with-param>
 	  </xsl:call-template>
 	</xsl:for-each>
       </xsl:when>
@@ -2178,7 +2193,6 @@ $ID: requests a particular page
 	  <xsl:call-template name="tocEntry">
 	    <xsl:with-param name="style" select="$style"/>
 	    <xsl:with-param name="id" select="$id"/>
-	    <xsl:with-param name="element">p</xsl:with-param>
 	  </xsl:call-template>
 	</xsl:for-each>
       </xsl:when>
@@ -2191,7 +2205,6 @@ $ID: requests a particular page
 	    <xsl:call-template name="tocEntry">
 	      <xsl:with-param name="style" select="$style"/>
 	      <xsl:with-param name="id" select="$id"/>
-	      <xsl:with-param name="element">p</xsl:with-param>
 	    </xsl:call-template>
 	  </xsl:for-each>
 	</xsl:if>
@@ -2201,7 +2214,6 @@ $ID: requests a particular page
 	    <xsl:call-template name="tocEntry">
 	      <xsl:with-param name="style" select="$style"/>
 	      <xsl:with-param name="id" select="$id"/>
-	      <xsl:with-param name="element">p</xsl:with-param>
 	    </xsl:call-template>
 	  </xsl:for-each>
       </xsl:otherwise>
@@ -2217,8 +2229,7 @@ $ID: requests a particular page
   <xsl:template name="tocEntry">
     <xsl:param name="style"/>
     <xsl:param name="id"/>
-    <xsl:param name="element">p</xsl:param>
-    <xsl:element name="{$element}">
+    <xsl:element name="{$tocElement}">
       <xsl:attribute name="class">
 	<xsl:value-of select="$style"/>
 	<xsl:apply-templates select="." mode="depth"/>

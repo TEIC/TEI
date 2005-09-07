@@ -212,6 +212,13 @@ Make a separate file for footnotes
   </xsl:template>
 
 <xd:doc class="layout">
+    <xd:short>[html] Text or action to take at the start of the
+    breadcrumb trail </xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template name="preBreadCrumbPath"/>
+
+<xd:doc class="layout">
     <xd:short>[html] Breadcrumb trail </xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
@@ -590,4 +597,15 @@ Depth to which table of contents is constructed.
 Include the front matter in the table of contents.
 </xd:doc>
 <xsl:param name="tocFront">true</xsl:param>
+
+<xd:doc type="boolean" class="toc">
+Which HTML element to wrap each TOCs entry in.
+</xd:doc>
+<xsl:param name="tocElement">p</xsl:param>
+
+<xd:doc type="boolean" class="toc">
+Which HTML element to wrap each TOC sections in.
+</xd:doc>
+<xsl:param name="tocContainerElement">div</xsl:param>
+
 </xsl:stylesheet>
