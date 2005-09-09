@@ -64,11 +64,11 @@ select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:authority"/>
 </xsl:template>
 
 <xsl:template match="tei:div|tei:div1">
-\frame
-{
+\begin{frame}<xsl:if test="@rend='fragile'">[fragile]</xsl:if>
+<xsl:text>&#10;</xsl:text>
   \frametitle{<xsl:for-each select="tei:head"><xsl:apply-templates/></xsl:for-each>}
   <xsl:apply-templates/>
-}
+\end{frame}
 </xsl:template>
 
   <xsl:template name="makePic">

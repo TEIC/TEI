@@ -133,6 +133,7 @@ capable of dealing with UTF-8 directly.
 \def\textlarge#1{{\large #1}}
 \def\textoverbar#1{\ensuremath{\overline{#1}}}
 \def\textgothic#1{\ensuremath{\mathscr{#1}}}
+\def\Panel#1#2#3#4{\multicolumn{#3}{>{\columncolor{#2}}#4}{#1}}
 \RequirePackage{array}
 \gdef\arraybackslash{\let\\=\@arraycr}
 <xsl:text disable-output-escaping="yes">
