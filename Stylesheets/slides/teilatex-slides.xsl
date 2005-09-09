@@ -77,7 +77,7 @@ select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:authority"/>
   <xsl:call-template name="graphicsAttributes">
     <xsl:with-param name="mode">latex</xsl:with-param>
   </xsl:call-template>
-  <xsl:if test="not(@width)">
+  <xsl:if test="not(@width) and not(@scale)">
     <xsl:text>width=\textwidth</xsl:text>
   </xsl:if>
   <xsl:text>]{</xsl:text>
