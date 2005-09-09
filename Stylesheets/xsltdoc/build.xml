@@ -1,0 +1,84 @@
+<project name="XSLTdoc" default="xsltdoc" basedir=".">
+  <description>Ant Build file for the XSLTdoc program</description>
+
+  <path id="classpath">
+    <pathelement location="lib/saxon8.jar" />
+    <pathelement path="${java.class.path}" />
+  </path>
+
+  <target name="xsltdoc">
+    <delete dir="doc" />
+    <copy todir="doc">
+      <fileset dir="css">
+        <filename name="*.css" />
+      </fileset>
+    </copy>
+    <xslt force="true" style="xsl/xsltdoc.xsl" in="xsl/XSLTdocConfig.xml" out="doc/log.xml">
+      <classpath refid="classpath" />
+    </xslt>
+  </target>
+
+  <target name="xsltdoc1">
+    <delete dir="doc" />
+    <copy todir="doc">
+      <fileset dir="css">
+        <filename name="*.css" />
+      </fileset>
+    </copy>
+    <xslt force="true" style="xsl/xsltdoc.xsl" in="xsl/xsltdoc.xsl" out="doc/log.xml">
+      <param name="targetDir" expression="../doc" />
+      <classpath refid="classpath" />
+    </xslt>
+  </target>
+
+  <target name="dist" depends="xsltdoc">
+    <property name="version" value="1.1">
+    </property>
+    <!-- Delete old zip files -->
+    <delete file="XSLTdoc_${version}.zip" />
+
+    <delete dir="XSLTdoc_${version}" />
+    <mkdir dir="XSLTdoc_${version}" />
+
+    
+    <copy todir="XSLTdoc_${version}">
+      <fileset dir=".">
+        <!-- root -->
+        <include name="build.xml" />
+
+        <!-- documentation -->
+        <include name="doc/**/*.html" />
+        <include name="doc/**/*.css" />
+        
+        <!-- css -->
+        <include name="css/*.css" />
+        
+        <!-- htmlTemplates -->
+        <include name="**/*.html"/>
+        
+        <!-- lib -->
+        <include name="lib/*.jar" />
+
+        <!-- xsl -->
+        <include name="xsl/**/*.xsl" />
+        <include name="xsl/**/*.xml" />
+
+        <!-- Default excludes -->
+        <exclude name="**/CVS" />
+        <exclude name="webUpdate.xml" />
+        <exclude name="**/.cvsignore" />
+        <exclude name="XSLTdoc_${version}.zip" />
+      </fileset>
+    </copy>
+    
+    <zip destfile="XSLTdoc_${version}.zip">
+      <fileset dir="XSLTdoc_${version}">
+        <include name="**/*"/>
+      </fileset>
+    </zip>
+  </target>
+  <target name="testUtil">
+    <xslt style="xsl/test/utilTest.xsl" in="xsl/test/dummy.xml" out="xsl/test/testResult.txt">
+    </xslt>
+  </target>
+</project>
