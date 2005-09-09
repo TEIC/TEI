@@ -34,13 +34,13 @@ release: doc p4 p5
 	cp *.css release/tei-xsl/p4
 	cp *.css release/tei-xsl/p5
 	mkdir -p release/tei-xsl/doc
-	cp -r doc/xsltdoc doc/*.png release/tei-xsl/doc
-	cp doc/*.css release/tei-xsl/doc/xsltdoc
+	-test -d xsltdoc && cp -r doc/xsltdoc doc/*.png release/tei-xsl/doc
+	-test -d xsltdoc && cp doc/*.css release/tei-xsl/doc/xsltdoc
 	cp ChangeLog style.xml customize.xml LICENSE release/tei-xsl/doc
 	cp teixsl.xml release/tei-xsl/doc/index.xml
 
 doc:
-	(cd doc; saxon configdoc.xsl xsltdoc.xsl)
+	-test -d xsltdoc && (cd doc; saxon configdoc.xsl xsltdoc.xsl)
 	xsltproc -o customize.xml param.xsl param.xml
 	xsltproc -o style.xml paramform.xsl param.xml 
 
