@@ -245,7 +245,12 @@
   </xd:doc>
   <xsl:template match="tei:classSpec">
     <xsl:if test="parent::tei:specGrp">
-      <dt>Class: <xsl:value-of select="@ident"/></dt>
+      <dt>
+	<i>
+	  <xsl:call-template name="i18n"><xsl:with-param
+					     name="word">Class</xsl:with-param></xsl:call-template>
+	  </i>:
+      <xsl:value-of select="@ident"/></dt>
       <dd>
         <xsl:apply-templates select="." mode="tangle"/>
       </dd>
@@ -655,7 +660,7 @@
   </xd:doc>
   <xsl:template match="tei:macroSpec">
     <xsl:if test="parent::tei:specGrp">
-      <dt>Class: <xsl:value-of select="@ident"/></dt>
+      <dt><xsl:value-of select="@ident"/></dt>
       <dd>
         <xsl:apply-templates select="." mode="tangle"/>
       </dd>
