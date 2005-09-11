@@ -427,7 +427,7 @@
     <xsl:apply-templates/>
   </xsl:template>
   
-  <xsl:template match="tei:elementSpec|tei:classSpec" mode="show">
+  <xsl:template match="tei:elementSpec|tei:classSpec|tei:macroSpec" mode="show">
     <xsl:param name="atts"/>
     <tei:hi>&lt;<xsl:call-template name="identifyMe"/>&gt; </tei:hi>
     <xsl:value-of select="tei:desc"/>

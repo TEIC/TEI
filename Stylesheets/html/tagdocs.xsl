@@ -256,19 +256,6 @@
     <xd:short>Process elements  tei:classSpec</xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
-  <xsl:template match="tei:classSpec">
-    <xsl:if test="parent::tei:specGrp">
-      <dt>Class: <xsl:value-of select="@ident"/></dt>
-      <dd>
-        <xsl:apply-templates select="." mode="tangle"/>
-      </dd>
-    </xsl:if>
-  </xsl:template>
-  
-<xd:doc>
-    <xd:short>Process elements  tei:classSpec</xd:short>
-    <xd:detail>&#160;</xd:detail>
-  </xd:doc>
   <xsl:template match="tei:classSpec" mode="weavebody">
     <xsl:variable name="name">
       <xsl:choose>
@@ -514,11 +501,12 @@
   </xsl:template>
   
 <xd:doc>
-    <xd:short>Process elements  tei:elementSpec|tei:classSpec</xd:short>
+    <xd:short>Process the specification elements  elements, classes
+    and macros</xd:short>
     <xd:param name="atts">attributes we have been asked to display</xd:param>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
-  <xsl:template match="tei:elementSpec|tei:classSpec" mode="show">
+  <xsl:template match="tei:elementSpec|tei:classSpec|tei:macroSpec" mode="show">
     <xsl:param name="atts"/>
     <xsl:variable name="name">
       <xsl:choose>
@@ -663,6 +651,20 @@
   
 <xd:doc>
     <xd:short>Process elements  tei:macroSpec</xd:short>
+    <xd:detail>&#160;</xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:macroSpec">
+    <xsl:if test="parent::tei:specGrp">
+      <dt>Class: <xsl:value-of select="@ident"/></dt>
+      <dd>
+        <xsl:apply-templates select="." mode="tangle"/>
+      </dd>
+    </xsl:if>
+  </xsl:template>
+  
+
+<xd:doc>
+    <xd:short>Process elements  tei:macroSpec in weavebody mode</xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:macroSpec" mode="weavebody">
