@@ -420,7 +420,8 @@ To avoid having
       <p>Note that there must be a single parent element for each
       <soCalled>domain</soCalled>; if some notes are contained by a
       section with identifier <val>dunnotes</val>, and
-      others by a section with identifier <val>dunimits</val>, an intermediate pointer must be
+      others by a section with identifier <val>dunimits</val>,
+      an intermediate pointer must be
       provided (as described in section <ptr target="#SAPTIP"/>) within
       the <gi>linkGrp</gi> and its identifier used instead.</p>
       <p>Next, the <att>targFunc</att> attribute can be used to
@@ -508,7 +509,7 @@ To avoid having
     <head>Advanced Pointing</head>
     <p>In this section we further describe methods of pointing:
     <list>
-      <item>into documents other than the ccurrent document;</item>
+      <item>into documents other than the current document;</item>
       <item>to a particular element in a document other than the
       current document using its <att>xml:id</att>;</item>
       <item>to a particular element whether in the current document or
@@ -525,14 +526,14 @@ To avoid having
     capable not only of addressing a single XML resource, but also a
     sub-portion of the resource it identifies by the use of an
     appropriate <term>fragment identifier</term> (the
-    <soCalled>Fragment-ID</soCalled>, this is the portion of a URI
+    <soCalled>Fragment-ID</soCalled> is the portion of a URI
     reference following the first unescaped <q>#</q> character). <!-- The
     details of the interpretation of the Fragment-ID depend on the
     Internet MIME-type of the resource identified by the URI. --></p>
-    <p>The first two or three of the following subsections provide
-    only a brief overview and some examples of the W3C mechanisms
-    recommended. Those intimately familiar with pointing on the web
-    will likely find little new.</p>
+    <p>The first three of the following subsections provide only a
+    brief overview and some examples of the W3C mechanisms
+    recommended. More detailed information on the use of these
+    mechanisms is readily available elsewhere.</p>
     <div3 type="subsection" xml:id="SAUR">
       <head>Pointing Elsewhere</head>
       <p>Like the ubiquitous if misnamed HTML pointing attribute <att
@@ -547,7 +548,7 @@ To avoid having
       <ref target="http://www.w3.org/TR/xmlbase/">XML Base</ref>
       recommendation. In general, it is the value of the
       <att>xml:base</att> attribute of the closest ancestor that has
-      one, or if there are none, the location of the current document.</p>
+      one, or if there are none, the URI of the location of the current document.</p>
 
       <p>The following example demonstrates an absolute URI reference
       that points to a remote document. It is the source code for the
@@ -620,16 +621,18 @@ States Code</title>, found at <ptr
 target="http://www.copyright.gov/title17/92chap1.html#107"/> and
 converted from HTML to TEI encoding.</note>
 
-This method of pointing, by refering to the <att>xml:id</att> of the
-target element as a bare name only (e.g., <val>#there</val>) is
-recommended in a variety of situations by these Guidelines.</p>
+This method of pointing, by referring to the <att>xml:id</att> of the
+target element as a bare name only (e.g., <val>#there</val>) is 
+the simplest and often the best approach where it can be applied, i.e. where
+both the source element and target element are in the same XML document.</p>
     </div3>
 
     <div3 type="subsection" xml:id="SAES">
+   
       <head>W3C element() Scheme</head>
       <p>An element may be pointed to by its position in the XML
       element tree using the <name type="xpscheme">element</name>
-      scheme defined by the World Wide Web Consortium.<note><ref
+      scheme defined by the World Wide Web Consortium. <note><ref
       target="http://www.w3.org/TR/xptr-element/">XPointer element()
       Scheme</ref>.</note> In this scheme, an element is identified by
       stepwise navigation via a slash-separated list of child element
@@ -637,7 +640,8 @@ recommended in a variety of situations by these Guidelines.</p>
       <hi>n</hi>th child element of the previously located element.</p>
       <p>For example, the following pointer selects
       one of Shakespeare's most famous lines:
-      <egXML xmlns="http://www.tei-c.org/ns/Examples"><ref target="http://www.cs.mu.oz.au/621/2003project/hamlet.xml#element(/1/8/2/25/2)">2B|^2B&hellip;</ref></egXML>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><ref target="http://www.cs.mu.oz.au/621/2003project/hamlet.xml#element(/1/8/2/25/2)"
+      >2B|^2B&hellip;</ref></egXML>
       <note type="cit" resp="sdb">Jon Bosak's XMLification of Moby
       Lexical Tools' plain text version of Hamlet. As of <date
       value="2004-12-22"/>, the node xpath(/*[1]/*[8]/*[2]/*[25]/*[2])
@@ -646,8 +650,8 @@ recommended in a variety of situations by these Guidelines.</p>
       element <q><![CDATA[<LINE>To be, or not to be: that is the
       question:</LINE>]]></q>.</note>
 
-      The specified URI reference points to an XML file ostensibly
-      available via the HTTP protocol on the web; and then, within
+      The  URI reference in this example points to an XML resource ostensibly
+      available via the HTTP protocol on the web; within
       that file, the specified <name type="xpscheme">element</name>
       scheme points to <q>the 1st (and only) root-level element's 8th
       child element's 2nd child element's 25th child element's 2nd
@@ -655,8 +659,8 @@ recommended in a variety of situations by these Guidelines.</p>
       specification <code>/*[1]/*[8]/*[2]/*[25]/*[2]</code>.</p>
 
       <p>The starting point for the child-element sequence may be
-      indicated by the identifier (i.e., the value of the
-      <att>xml:id</att>) of an element in the source document. So, for
+      indicated by an identifier selecting the value of the
+      <att>xml:id</att> attribute of an element in the indicated document. So, for
       example, if we had a copy of <title>The Nameless
       Shakespeare</title> in a nearby directory, a pointer to the same
       line might be as follows.
@@ -679,67 +683,164 @@ recommended in a variety of situations by these Guidelines.</p>
       Scheme</term>. The W3C has defined a useful but limited set of
       schemes for pointing within XML documents. The <name
       type="xpscheme">element</name> scheme described above is one
-      such scheme.</p>
-      <p>In order to provide more capability and greater precision in
-      pointing, the TEI defines seven new XPointer schemes using the
-      extensibility of the XPointer Framework: <name
-      type="xpscheme">xpath</name>, <name
-      type="xpscheme">xpath2</name>, <name
+      such scheme, defined by the W3C.</p>
+      <p>The TEI XPointer schemes can designate more types of entity than an XML
+      information set node, because there is often a need in text
+      analysis to address additional types of location such as the
+      <soCalled>point</soCalled> locations between nodes, and
+      <soCalled>ranges</soCalled> that may arbitrarily cross the
+      boundaries of nodes in a document. A range corresponds closely
+      to a selection in a text editor, and for processing purposes a
+      range is defined by the pair of points at its start and end.
+      While it is sometimes useful to think of pointer schemes as
+      analogous to query functions that return nodes in the DOM tree
+      of an XML document, this is a misleading model, as a point is
+      adjacent to one or two nodes, but is not a node itself, while a
+      range may not even overlap with any complete node in the DOM
+      tree.</p>
+
+      <p>The types of object that can be selected by a TEI pointer
+      scheme are as follows:
+      <list>
+        <label>Node</label>
+	<item>A node represents a single item in the XML information
+	set for a document. For pointing
+	purposes, the only nodes that are of interest are Text Nodes,
+	Element Nodes, and Attribute nodes.</item>
+        <label>Node Set</label>
+	<item>A node set is a set of nodes in the XML infoset of a
+	document. In TEI Pointing applications, node sets are only
+	allowed as the result of resolving a URI when multiple URIs
+	would have been allowed where it appears, i.e. in attributes
+	which are declared as <name
+	type="datatype">tei.data.pointers</name> as opposed to <name
+	type="datatype">tei.data.pointer</name>. As befits the name
+	<soCalled>set,</soCalled> the individual items in a node set
+	are not ordered, and no assumptions about relative ordering of
+	items in a node set should be made.</item>
+        <label>Point</label>
+	<item>A Point represents a point between nodes in a document.
+	Every point is
+	adjacent to either characters or elements, and never to
+	another point. In fact, in the character representation
+        of an XML document, every position between data characters, start-tags or
+	end-tags is a point, and there are no other points. If one
+	treats all character content as if it were broken into
+	single-character text-nodes, every point is definable as the
+	point preceding (or following) a node, and if that node has a
+	successor (or predecessor) in document order, then is is the
+	same as the point preceding (or following) that successor (or
+	predecessor).</item>
+        <label>Range</label>
+	<item>A Range is defined as the portion of a document between
+	two points. Since points may occur anywhere within the
+	document, ranges do not correspond directly to nodes or node
+	sets. A range may overlap the contents of a node either
+	completely or partially.</item>
+      </list>
+      </p>
+
+      <p>In order to provide the greater pointer convenience, and the ability to point to
+      textual ranges regardless of how they are marked-up, the TEI hes defined new
+      XPointer schemes to be used within the XPointer Framework:<name
+      type="xpscheme">xpath</name>,<!-- xpath2 deleted until standardized <name
+      type="xpscheme">xpath2</name>, --> <name
       type="xpscheme">range</name>, <name
       type="xpscheme">string-range</name>, <name
       type="xpscheme">left</name>, <name
       type="xpscheme">right</name>, and <name
       type="xpscheme">match</name>. These schemes overlap in
       functionality with the W3C's <name
-      type="xpscheme">xpointer</name> scheme draft, but are
+      type="xpscheme">xpointer scheme</name> draft, but are
       individually much simpler.<note place="foot">At the time of this
       writing, there is no current or scheduled activity at the W3C
       towards revising this draft or issuing it as a
       recommendation.</note></p>
-      <p>The <name type="xpscheme">xpath</name> and <name
+      <p>The <name type="xpscheme">xpath</name> scheme refers to the
+      existing XPath specification which is adopted without
+      modification or extension.
+      <!-- The <name type="xpscheme">xpath</name> and <name
       type="xpscheme">xpath2</name> schemes reference existing
-      specifications which are adopted without modification. The other
-      four schemes introduce new facilities, but are simple enough
-      that implementation should not be difficult.</p>
+      specifications which are adopted without modification.-->
+      The other five schemes introduce new facilities, but are simple
+      enough that implementation should not be difficult.</p>
 
       <div4 type="subsubsection" xml:id="SATSXP">
           <head>xpath(path)</head>
-          <p>The xpath scheme locates a node within an XML Information
-          Set. The single argument <rs>path</rs> is an XPath path as
-          defined in the <ref target="http://www.w3.org/TR/xpath">W3C
-          XPath 1 Recommendation</ref>. The node resulting from
+          <p>The <name type="xpscheme">xpath</name> scheme locates a
+          node or node set within an XML Information Set. The single
+          argument <rs>path</rs> is an XPath path as defined in the
+          <ref target="http://www.w3.org/TR/xpath">W3C XPath 1
+          Recommendation</ref>. The node or node set resulting from
           evaluating the XPath is the reference of an address using
           the <name type="xpscheme">xpath</name> scheme. For example,
-          the following points to the epigraph found in the 8th example in section <ptr target="#COHQQ"/>.
-          <egXML xmlns="http://www.tei-c.org/ns/Examples">#xpath(id(mm01)/epigraph)</egXML></p>
-        </div4>
+          the following example selects the first paragraph of the <gi
+          scheme="extreme">ftnote</gi> element with <att>id</att> of
+          <val>fn6</val> of a paper that discusses XPointers. <egXML
+          xmlns="http://www.tei-c.org/ns/Examples"><ptr target="http://www.mulberrytech.com/Extreme/Proceedings/xml/2004/Thompson01/EML2004Thompson01.xml#xpath(//ftnote[@id='fn6']/para[1])"/></egXML></p>
+	  <!-- I tried "xpath(id(fn6)/para[1])" but it didn't work in
+	       my implementations of XPath (jEdit, oXygen, IIRC) -Syd
+	       -->
+        <p>When a URI reference is specified as the value of an
+        attribute declared as <name
+        type="datatype">tei.data.pointer</name>, the result must be a
+        single node, and it is an error if the result is a node set.
+        When the URI reference is specified as the value of an
+        attribute declared as <name
+        type="datatype">tei.data.pointers</name>, each node in the
+        node set is treated as if it were the result of a separate URI
+        reference.</p>
+        <p>When an xpath is interpreted by a TEI processor, the information set of the referenced
+        document is interpreted without any additional information supplied by any schema processing
+        that may or may not be present. In particular this means that no white space normalization
+        is applied to a document before the xpath is interpreted.
+        </p>
+        <p>This pointer scheme allows easy, direct use of the most
+        widely-implemented XML query method. It is probably the most
+        robust pointing mechanism for the common situation of
+        selecting an XML element or its contents where an
+        <att>xml:id</att> is not present. The ability to use element
+        type names (<soCalled>GI</soCalled>s) and attribute names and
+        values makes <name type="xpscheme">xpath</name> pointers more
+        robust than <name type="xpscheme">element</name> pointers,
+        even if the designated dovument changes. For durability in the
+        presence of editing, use of <att>xml:id</att> is always
+        recommended when possible.</p>
+          </div4>
  
-        <div4 type="subsubsection" xml:id="SATSXP2">
+       <!-- xpath2 deleted for the time being, as it is not standardized
+       <div4 type="subsubsection" xml:id="SATSXP2">
           <head>xpath2(path)</head>
           <p>The <name type="xpscheme">xpath2</name> scheme locates a node within
             an XML Information Set. The single argument
             <rs>path</rs> is an XPath 2.0 path as defined in the
             <ref target="http://www.w3.org/TR/xpath20/">W3C XPath 2
-              Recommendation</ref>. The  node resulting from
-            evaluating the XPath is the reference of an address using
-            the <name type="xpscheme">xpath2</name> scheme.</p>
-        </div4>
+              Recommendation</ref>. The results of the xpath2() pointer scheme are treated exactly as the
+              results of an <name type="xpscheme">xpath</name> pointer scheme. </p>
+        </div4> -->
         
          <div4 type="subsubsection" xml:id="SATSLR">
           <head>left(pointer) and right(pointer)</head>
-          <p>The <name type="xpscheme">left</name> (<name type="xpscheme">right</name>) scheme
-          locates the point immediately
-          preceding (following) its argument. The pointer
-            argument to <name type="xpscheme">left</name> or <name type="xpscheme">right</name>
-            are bare names or XPointer pointer schemes
-            themselves, and are resolved according to their normal rules.
-            <note place="foot">Bare names (<gi>xml:id</gi> references) are
-            permitted as arguments to all TEI-defined XPointer pointer
-              scheme parameters.</note> Because
-            most pointer schemes return nodes or ranges rather than
-            points, the following description lists the behavior of
-            <name type="xpscheme">left</name> and <name type="xpscheme">right</name> for all
-            three types of possible result.
+          <p>The <name type="xpscheme">left</name> (<name
+          type="xpscheme">right</name>) scheme locates the point
+          immediately preceding (following) its argument. The single
+          <rs>pointer</rs> argument to <name
+          type="xpscheme">left</name> or <name
+          type="xpscheme">right</name> is treated like a fragment
+          identifier itself, and must be a bare name or XPointer
+          pointer.  The designation of this argument is
+          resolved with respect to the base URI in effect for the
+          <name type="xpscheme">left</name> or <name
+          type="xpscheme">right</name> according to the normal
+          rules.<note place="foot">Like other XPointer schemes, bare
+          names (i.e. values of <gi>xml:id</gi>
+          references) are permitted as pointer arguments to all TEI-defined
+          XPointer pointer scheme parameters.</note> Because
+          most pointer schemes return nodes or ranges rather than
+          points, the following description lists the behavior of
+          <name type="xpscheme">left</name> and <name
+          type="xpscheme">right</name> for all three types of possible
+          location that might result from interpreting its argument.
             <list>
               <item>
                 <label>A Node</label> When <rs>pointer</rs> resolves
@@ -748,91 +849,135 @@ recommended in a variety of situations by these Guidelines.</p>
                 following (<name type="xpscheme">right</name>) the node.
               </item>
               <item>
+                <label>A Node Set</label> When <rs>pointer</rs> resolves
+                to a node set, the point designated is the point preceding the first
+                element of the set (<name type="xpscheme">left</name>) or
+                following the last
+                element of the set (<name type="xpscheme">right</name>)</item>
+              <item>
                 <label>A range</label> When <rs>pointer</rs> resolves
                 to a range, the point designated is the
                 point designating the start (<name type="xpscheme">left</name>) or end
                 (<name type="xpscheme">right</name>) of the range.
               </item>
               <item>
-                <label>A Point</label> When pointer resolves to a
-                point, that point is the result. The pointer schemes
-                <name type="xpscheme">left</name> and <ident>right</ident> make no change when
-                given a point as argument.
+                <label>A Point</label> When <rs>pointer</rs> resolves
+                to a point, that point is the result. The pointer
+                schemes <name type="xpscheme">left</name> and
+                <ident>right</ident> make no change when given a point
+                as argument.
                </item>
-            </list></p>
+            </list>
+            </p>
+	    <p>The folowing example points to the spot immediately
+	    following the last character of a <gi
+	    scheme="extreme">postcode</gi> node in a seminal paper
+	    about markup alternatives. This node contains the string
+	    <q>20850</q>, so the point being pointed to is the one
+	    following the second <q>0</q> character.. <egXML
+	    xmlns="http://www.tei-c.org/ns/Examples"><ptr target="http://www.mulberrytech.com/Extreme/Proceedings/xml/2002/Usdin01/EML2002Usdin01.xml#right(element(/1/1/3/3/6))"/></egXML></p>
            </div4>
 
        <div4 type="subsubsection" xml:id="SATSRN">
           <head>range(pointer1, pointer2)</head>
-          <p>The <name type="xpscheme">range</name> scheme locates a range between
-            two locations in an XML information set. The two pointer
-            arguments to <name type="xpscheme">range</name> locate the boundaries
-            of the range by two points. The parameters
-            <rs>pointer1</rs> and <rs>pointer2</rs> are XPointers
-            themselves, and are resolved according to the rules
-            specified in the definition of the pointer scheme they
-            use. <note place="foot">Bare names (i.e., <att>xml:id</att> value) references are
-            permitted as <name type="xpscheme">range</name>
-            scheme parameters.</note> Because
-            most pointer schemes return nodes or ranges rather than
-            points, the following description lists the behavior of
-            <name type="xpscheme">range</name> for all three types of possible
-            result.
+          <p>The <name type="xpscheme">range</name> scheme locates a
+          range between two points in an XML information set. The two
+          pointer arguments to <name type="xpscheme">range</name>
+          locate the boundaries of the range by two points, and are
+          interpreted as fragment identifiers. The parameters
+          <rs>pointer1</rs> and <rs>pointer2</rs> are XPointers
+          themselves, and are resolved according to the rules
+          specified in the definition of the pointer scheme they use.
+          <note place="foot">Bare names (i.e., <att>xml:id</att>
+          values), like other Xpointer schemes, are permitted as <name
+          type="xpscheme">range</name> parameters.</note>
+          Because most pointer schemes return nodes or ranges rather
+          than points, the following description lists the behavior of
+          <name type="xpscheme">range</name> for all three types of
+          possible result.
             <list>
-              <item>
-                <label>A Node</label> When <rs>pointer1</rs> resolves
-                to a node, the starting point of the range is the
-                point immediately preceding the node. When
-                <rs>pointer2</rs> resolves to a node, the ending point
-                of the range is the point immediately following the
-                node. It is an error if the ending point precedes the
-                starting point of a range.
-              </item>
-              <item>
-                <label>A range</label> When <rs>pointer1</rs> resolves
-                to a range <rs>R</rs>, the starting point of the
-                result range is the same as the starting point of
-                <rs>R</rs>. When <rs>pointer2</rs> resolves to a range
-                <rs>R</rs>, the ending point of the result range is
-                the ending point of <rs>R</rs>.
-              </item>
-              <item>
-                <label>A Point</label> When pointer1 resolves to a
-                point, that point is the start of the range. When
-                pointer2 resolves to a point, that point is the end of
-                the range.
-              </item>
-            </list></p>
-           </div4>
-           
+              <label>A Node</label>
+	      <item>When <rs>pointer1</rs> resolves to a node, the
+	      starting point of the range is the point immediately
+	      preceding the node. When <rs>pointer2</rs> resolves to a
+	      node, the ending point of the range is the point
+	      immediately following the node. It is an error if the
+	      ending point precedes the starting point of a
+	      range.</item>
+              <label>A range</label>
+	      <item>When <rs>pointer1</rs> resolves to a range
+	      <rs>R</rs>, the starting point of the result range is
+	      the same as the starting point of <rs>R</rs>. When
+	      <rs>pointer2</rs> resolves to a range <rs>R</rs>, the
+	      ending point of the result range is the ending point of
+	      <rs>R</rs>.</item>
+              <label>A Point</label>
+	      <item>When pointer1 resolves to a point, that point is
+	      the start of the range. When pointer2 resolves to a
+	      point, that point is the end of the range.</item>
+            </list>
+	  </p>
+       </div4>
+
         <div4 type="subsubsection" xml:id="SATSSR">
-          <head>string-range(pointer, offset, [length])</head>
-          <p>The <name type="xpscheme">string-range</name> scheme locates a range based on
-          character positions. While string-range endpoints are points adjacent to
-          character positions, they must be designated by the characters to which
-          they are adjacent, in the same way that the nodes corresponding to XML
-          elements are. This avoids ambiguity about which point between two
-          characters is indicated when characters are interrupted by markup.
-          </p>
-          <p>The <rs>pointer</rs> argument to <name type="xpscheme">string-range</name>
-          designates a node or a range within which a string is to be located. No
-          string range, even an empty one, can be defined by a
-          <name type="xpscheme">string-range</name> if <rs>pointer</rs> has the empty string as
-          string value. Every string-range is defined based on an <soCalled>origin
-          character</soCalled>. The origin is numbered 0, and designates the first
-          character of the string-value of <rs>pointer</rs>. The offset is a
-          character index relative to the origin; the start of the resulting range
-          is the position designated by the sum of the origin and
-          <rs>offset</rs>.</p>
-          <p>If <rs>length</rs> is specified, the end of the range is at a point
-          adjacent to the character designated by the origin added to
-          <rs>length</rs>. If the offset is negative, or <rs>length</rs> is
-          sufficiently large, a string-range can designate characters outside the
-          string-value of the intitial pointer. In this case, characters are located
-          using the string-value of the entire document. It is also legal for
-          <rs>length</rs> plus the origin to exceed the length of the string-value
-          of the document by one, in order to accomodate ranges that include the
-          last character of a document. </p>          
+          <head>string-range(pointer, offset [, length])</head>
+          <p>The <name type="xpscheme">string-range</name> scheme
+          locates a range based on character positions.
+          <!-- what is it? -->
+          While
+          string-range endpoints are points adjacent to character
+          positions, they must be designated by the characters to
+          which they are adjacent, in the same way that the nodes
+          corresponding to XML elements are. This avoids ambiguity
+          about which point between two characters is indicated when
+          characters are interrupted by markup.</p>
+	  <!-- DGD: I'm wondering if the whole previous paragraph
+	       could be moved to *after* the explanation of what
+	       string-range() is? Either way, the last sentence
+	       deserves an example, IMHO. Am I correct that the
+	       ambiguity we are trying to avoid is that within
+	       "foo<tag>bar", where the point between 'o' and 'b'
+	       might be the one between 'o' and '<' or it might be the
+	       one between '>' and 'b'? But how does the phrase "must
+	       be designated by the characters to which they are
+	       adjacent" resolve this ambiguity? -->
+	  <!-- "... [points] are designated by the characers [note the
+	       plural] to which they are adjacent" We need to do
+	       better than that. Because the sentence is in the
+	       plural, there's some ambiguity about whether one
+	       designates a point using 1 character or two. If the
+	       answer is 1, is it the one to its left or right? More
+	       reason we need an example. -Syd
+	       -->
+          <p>The <rs>pointer</rs> argument to <name
+          type="xpscheme">string-range</name> designates a node or a
+          range within which a string is to be located. No string
+          range, even an empty one, can be defined by a <name
+          type="xpscheme">string-range</name> if <rs>pointer</rs> has
+	  the empty string as string value.
+	  <!-- DGD: we haven't mentioned the concept of 'string value'
+	       before; do we need to? Either way, should the above
+	       line read "... empty string as its string value"? -->
+	  Every string-range is defined based on an <soCalled>origin
+	  character</soCalled>. The origin is numbered 0, and
+	  designates the first character of the string-value of
+	  <rs>pointer</rs>. The offset is a character index relative
+	  to the origin; the start of the resulting range is the
+	  position designated by the sum of the origin and
+	  <!-- DGD: does the concept of origin char gain us much here? -->
+	  <rs>offset</rs>.</p>
+          <p>If <rs>length</rs> is specified, the end of the range is
+          at a point adjacent <!-- DGD: L or R; or perhaps before or
+          after? --> to the character designated by the origin added
+          to <rs>length</rs>. If the offset is negative, or
+          <rs>length</rs> is sufficiently large, a string-range can
+          designate characters outside the string-value of the
+          intitial pointer. In this case, characters are located using
+          the string-value of the entire document. It is also legal
+          for <rs>length</rs> plus the origin to exceed the length of
+          the string-value of the document by one, in order to
+          accomodate ranges that include the last character of a
+          document. </p>
           <p>If <rs>length</rs> is not specified, it defaults to the value 1, and
           the string range contains one character. If it is specified as 0, the
           zero-length range is interpreted as the point immediately preceding the
@@ -840,7 +985,7 @@ recommended in a variety of situations by these Guidelines.</p>
          </div4>
 
          <div4 type="subsubsection" xml:id="SATSMA">
-           <head>match(pointer, string[, index])</head>
+           <head>match(pointer, string [, index])</head>
            <p>The match scheme designates the result of a literal match of the
            argument <rs>string</rs> within the string-value of the <rs>pointer</rs>
            argument. The result is a range from the first matching character to the
@@ -850,7 +995,7 @@ recommended in a variety of situations by these Guidelines.</p>
            <p>The <rs>index</rs> argument is an integer greater than or equal to 1,
            specifying which match should be chosen when there is more than one match
            within the string-value of <rs>pointer</rs>. If no <rs>index</rs> is
-           provided, the default value is 0, indicating the first match found.</p>
+	   provided, the default value is 1, indicating the first match found.</p>
          </div4>
            
     </div3>
@@ -865,12 +1010,12 @@ recommended in a variety of situations by these Guidelines.</p>
       into a TEI-encoded document, selecting the element which
       corresponds to the seventh <gi>div</gi> element within the fifth
       <gi>div</gi> element within the <gi>div</gi> element with the
-      <ident type="attrName">n</ident> attribute valued
+      <att>n</att> attribute valued
       <q>Matt.</q></p>
 
       <p>Several elements in the TEI scheme (<gi>gloss</gi>,
       <gi>ptr</gi> <gi>ref</gi>, and <gi>term</gi>) bear a special
-      attribute, <att>cref</att>>, just for this purpose. Using the
+      attribute, <att>cref</att>, just for this purpose. Using the
       system described in this section, an encoder may specify
       references to canonical works in a discipline-familiar format,
       and expect software to derive a complete URI from it. The value
@@ -2690,7 +2835,7 @@ attributes on the word segments <mentioned>We</mentioned>, <mentioned>Lee</menti
   at the beach today.</u></egXML></p>
 
 <p>The value of the <att>select</att> attribute is defined as a list of
-identifiers (<val>IDREFS</val>); hence it can also be used to
+identifiers (<ident type="kw">IDREFS</ident>); hence it can also be used to
 narrow down the range of alternants, as in:
  
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div select="#we.fun5 #lee.fun5" type="interview">
@@ -2863,8 +3008,8 @@ better encoded without an <tag>alt</tag> tag.</p>
 <p>If it is desired, <gi>alt</gi> elements may be grouped together in an
 <gi>altGrp</gi> element, and attribute values shared by the individual
 <gi>alt</gi> elements may be identified on the <gi>altGrp</gi> element. The
-<att>targFunc</att> attribute defaults to the value <val>'first.alternant next.alternant'</val>. Thus, specifying
-the value <code>2</code> for the <att>extendTarg</att> attribute   permits the alternants to be
+<att>targFunc</att> attribute defaults to the value <val>first.alternant next.alternant</val>. Thus, specifying
+the value <val>2</val> for the <att>extendTarg</att> attribute   permits the alternants to be
 extended indefinitely.</p>
 <p>To illustrate, consider again the example of a transcribed utterance,
 in which it is uncertain whether the first word is <mentioned>We</mentioned> or
