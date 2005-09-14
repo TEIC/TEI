@@ -88,7 +88,7 @@
             </xsl:attribute>
           </xsl:when>
           <xsl:when test="name(.)='rend'">
-            <xsl:attribute name="bgcolor">
+            <xsl:attribute name="class">
               <xsl:value-of select="."/>
             </xsl:attribute>
           </xsl:when>
