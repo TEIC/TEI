@@ -1484,25 +1484,25 @@ $ID: requests a particular page
       <xsl:when test="following-sibling::tei:TEI">
         <xsl:apply-templates mode="generateNextLink" select="following-sibling::tei:TEI[1]"/>
       </xsl:when>
-      <xsl:when test="following-sibling::tei:div">
+      <xsl:when test="following-sibling::tei:div[tei:head]">
         <xsl:apply-templates mode="generateNextLink" select="following-sibling::tei:div[1]"/>
       </xsl:when>
-      <xsl:when test="parent::tei:body/following-sibling::tei:back/tei:div">
+      <xsl:when test="parent::tei:body/following-sibling::tei:back/tei:div[tei:head]">
         <xsl:apply-templates mode="generateNextLink" select="parent::tei:body/following-sibling::tei:back/tei:div[1]"/>
       </xsl:when>
-      <xsl:when test="parent::tei:front/following-sibling::tei:body/tei:div">
+      <xsl:when test="parent::tei:front/following-sibling::tei:body/tei:div[tei:head]">
         <xsl:apply-templates mode="generateNextLink" select="parent::tei:front/following-sibling::tei:body/tei:div[1]"/>
       </xsl:when>
-      <xsl:when test="$myName='div0' and following-sibling::tei:div0">
+      <xsl:when test="$myName='div0' and following-sibling::tei:div0[tei:head]">
         <xsl:apply-templates mode="generateNextLink" select="following-sibling::tei:div0[1]"/>
       </xsl:when>
-      <xsl:when test="$myName='div1' and following-sibling::tei:div1">
+      <xsl:when test="$myName='div1' and following-sibling::tei:div1[tei:head]">
         <xsl:apply-templates mode="generateNextLink" select="following-sibling::tei:div1[1]"/>
       </xsl:when>
-      <xsl:when test="$myName='div2' and following-sibling::tei:div2">
+      <xsl:when test="$myName='div2' and following-sibling::tei:div2[tei:head]">
         <xsl:apply-templates mode="generateNextLink" select="following-sibling::tei:div2[1]"/>
       </xsl:when>
-      <xsl:when test="$myName='div3' and following-sibling::tei:div3">
+      <xsl:when test="$myName='div3' and following-sibling::tei:div3[tei:head]">
         <xsl:apply-templates mode="generateNextLink" select="following-sibling::tei:div3[1]"/>
       </xsl:when>
     </xsl:choose>
@@ -1862,25 +1862,25 @@ $ID: requests a particular page
       <xsl:when test="preceding-sibling::tei:TEI">
         <xsl:apply-templates mode="generatePreviousLink" select="preceding-sibling::tei:TEI[1]"/>
       </xsl:when>
-      <xsl:when test="preceding-sibling::tei:div">
+      <xsl:when test="preceding-sibling::tei:div[tei:head]">
         <xsl:apply-templates mode="generatePreviousLink" select="preceding-sibling::tei:div[1]"/>
       </xsl:when>
-      <xsl:when test="parent::tei:body/preceding-sibling::tei:back/tei:div">
+      <xsl:when test="parent::tei:body/preceding-sibling::tei:back/tei:div[tei:head]">
         <xsl:apply-templates mode="generatePreviousLink" select="parent::tei:body/preceding-sibling::tei:back/tei:div[1]"/>
       </xsl:when>
-      <xsl:when test="parent::tei:front/preceding-sibling::tei:body/tei:div">
+      <xsl:when test="parent::tei:front/preceding-sibling::tei:body/tei:div[tei:head]">
         <xsl:apply-templates mode="generatePreviousLink" select="parent::tei:front/preceding-sibling::tei:body/tei:div[1]"/>
       </xsl:when>
-      <xsl:when test="$myName='div0' and preceding-sibling::tei:div0">
+      <xsl:when test="$myName='div0' and preceding-sibling::tei:div0[tei:head]">
         <xsl:apply-templates mode="generatePreviousLink" select="preceding-sibling::tei:div0[1]"/>
       </xsl:when>
-      <xsl:when test="$myName='div1' and preceding-sibling::tei:div1">
+      <xsl:when test="$myName='div1' and preceding-sibling::tei:div1[tei:head]">
         <xsl:apply-templates mode="generatePreviousLink" select="preceding-sibling::tei:div1[1]"/>
       </xsl:when>
-      <xsl:when test="$myName='div2' and preceding-sibling::tei:div2">
+      <xsl:when test="$myName='div2' and preceding-sibling::tei:div2[tei:head]">
         <xsl:apply-templates mode="generatePreviousLink" select="preceding-sibling::tei:div2[1]"/>
       </xsl:when>
-      <xsl:when test="$myName='div3' and preceding-sibling::tei:div3">
+      <xsl:when test="$myName='div3' and preceding-sibling::tei:div3[tei:head]">
         <xsl:apply-templates mode="generatePreviousLink" select="preceding-sibling::tei:div3[1]"/>
       </xsl:when>
     </xsl:choose>
