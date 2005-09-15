@@ -1365,7 +1365,17 @@ overall structure:
   </p>
   <specGrpRef target="#DSTKEYS"/>
 
+<p>Define the macros which implement TEI datatypes</p>
+
+  <specGrpRef target="#DSTKEYS-1"/>
+  <specGrpRef target="#DSTKEYS-2"/>
+  <specGrpRef target="#DSTKEYS-3"/>
+  <specGrpRef target="#DSTKEYS-4"/>
+  <specGrpRef target="#DSTKEYS-5"/>
+
+<p>Define the TEI gis</p>
    <specGrpRef target="#DSTGIS"/>
+
 
 <p>Now we can declare the 'low-level' core classes:
 these are classes of semantically and structurally similar elements
@@ -1991,12 +2001,173 @@ conformant;
 if the parameter entity is set to IGNORE, the DTD is suitable for SGML.</p>
 </div3>
 
-<div3><head>Declaration of TEI keywords</head>
-<p> 
-<specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:id="DSTKEYS" n="TEI Keywords">
-<p>I.  Declare TEI keywords for data types.</p>
-<p>These patterns are used to express
 
+<div3 xml:id="DTYPES"><head>Datatype macros</head>
+
+<p>The values which attributes may take in a TEI schema are defined,
+for the most part, by reference to a TEI <term>datatype</term>. Each
+such datatype is defined in terms of other primitive datatypes (for
+the most part defined by the W3C Schema language <!-- need proper
+reference-->), literal values, or other datatypes. This indirection
+makes it possible for a TEI application to set constraints either
+globally or in individual cases, by redefining the datatype definition
+or the reference to it respectively. In some cases, the TEI datatype
+includes additional usage constraints which cannot be enforced by
+existing schema languages, although a TEI-compliant processor should
+attempt to validate them (see further discussion in chapter <ptr
+target="CF"/>). </p>
+
+<p>Where literal values or name tokens are used in a datatype
+definition an associated value list supplies definitions for the
+significance of suggested or (in the case of closed lists) all
+possible values.</p>
+<!-- but can we put a valList in a macroSpec ? -->
+<p>TEI-defined datatypes may be grouped into those which define
+normalised values for numeric quantities or probabilities, those which
+define various kinds of short-hand codes or keys, and those which
+define pointers or links. </p>
+<p>The following datatypes are used for attributes which are intended
+to hold normalized values of various kinds. First, numeric values:
+
+<specList>
+<specDesc key="tei.data.certainty"/>
+<specDesc key="tei.data.probability"/>
+<specDesc key="tei.data.numeric"/>
+</specList>
+
+</p>
+<p>Examples of attributes using these datatypes include
+<att>cert</att>...They are formally defined as follows:
+
+<specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0"
+	 xml:id="DSTKEYS-1" n="Datatypes: numeric">
+&tei.data.certainty;
+&tei.data.probability;
+&tei.data.numeric;
+</specGrp>
+</p>
+
+<p>Next, the datatypes used for attributes which are intended to hold
+normalized dates or times, durations, or truth values:
+
+<specList>
+<specDesc key="tei.data.duration"/>
+<specDesc key="tei.data.temporal"/>
+<specDesc key="tei.data.truthValue"/>
+<specDesc key="tei.data.language"/>
+<specDesc key="tei.data.sex"/>
+</specList>
+</p>
+<p>Note that in each of these cases the values used are those
+recommended by existing international standards: ISO 8601 in the case
+of time, date, and duration; RelaxNG in the case of truth values; RFC
+1766 in the case of language; and ISO 5218 in the case of sex.</p>
+<p>Examples of attributes using these datatypes include
+<att></att>...They are formally defined as follows:
+
+<specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0"
+	 xml:id="DSTKEYS-2" n="Datatypes: normalised">
+&tei.data.temporal;
+&tei.data.duration;
+&tei.data.truthvalue;
+&tei.data.language;
+&tei.data.sex;
+</specGrp>
+
+</p>
+
+<p>The following datatypes have very specialised uses:
+<specList>
+<specDesc key="tei.data.notation"/>
+<specDesc key="tei.data.pointer"/>
+<specDesc key="tei.data.pointers"/>
+</specList>
+</p>
+<p>Examples of attributes using these datatypes include
+<att></att>...They are formally defined as follows:
+<specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0"
+	 xml:id="DSTKEYS-3" n="Datatypes: notations and pointers">
+&tei.data.notation;
+&tei.data.pointer;
+&tei.data.pointers;
+</specGrp>
+</p>
+
+<p>By far the largest number of TEI attributes have values which are
+coded values or names of some kind. These values may be constrained or
+defined in a number of different ways, each of which is given a
+different name, as follows:
+<specList>
+<specDesc key="tei.data.key"/>
+<specDesc key="tei.data.name"/>
+<specDesc key="tei.data.names"/>
+<specDesc key="tei.data.enumerated"/>
+<specDesc key="tei.data.code"/>
+</specList>
+</p>
+
+<p>Attributes of type <ident>tei.data.key</ident>, such as
+<att>key</att> on <gi>persName</gi> are used to supply an arbitrary
+external identifier, such as a database key or filename. For that
+reason, no constraints are placed on their possible values: any string
+of Unicode characters may be used. </p>
+
+<p>Attributes of type <ident>tei.data.name</ident>, such as
+<att></att> on <gi></gi> are used to supply a single XML name of some
+kind. The name can contain (or begin with) any alphabetic characters,
+digits, and a limited set of punctuation characters (specifically,
+underscore, colon, or stop, but not hyphen, comma, exclamation mark,
+questionmark, or semicolon.  Legal names of this kind include
+<val>1234</val>, <val>cholmondeley</val>, <val>e_content</val>, or
+<val>xml:id</val>, but not <val>e-content</val> or <val>grand
+wazoo</val>. Attributes of this kind are often used to associate (by
+co-reference) elements of different types.</p>
+
+<p>Attributes of type <ident>tei.data.names</ident>, such as
+<att></att> on <gi></gi> are used to supply a list of names (as
+defined above), each
+being separated by a single space. </p>
+
+<p>Attributes of type <ident>tei.data.enumerated</ident>, such as
+<att></att> on <gi></gi> are used to supply a name taken from a
+specific list of possibilities. Unlike other names, these may include
+white space. Legal names of this kind include <val>1234</val>,
+<val>cholmondeley</val>, <val>e_content</val>, <val>xml:id</val>, and
+<val>grand wazoo</val>. In each case, the element or class
+specification which includes the definition for the attribute will
+also contain a list of possible values, together with a prose
+description of their intended significance. This list may be open (in
+which case the list is advisory), or closed (in which case, it
+determines the range of legal values).</p>
+
+<p>Attributes of type <ident>tei.data.code</ident> such as
+<att></att> on <gi></gi> are similar in function, in that they also
+supply encoded names for values which are defined in more detail
+elsewhere. In this case, however, the full definition is supplied as
+content of another XML element, typically but not necessarily in the
+same document, referenced by means of a pointer.</p>
+
+<p>Here are the specifications for these datatypes:
+
+<specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0"
+	 xml:id="DSTKEYS-4" n="Datatypes: coded values">
+
+&tei.data.code;
+&tei.data.enumerated;
+&tei.data.key;
+&tei.data.name;
+&tei.data.names;
+
+</specGrp>
+</p>
+
+<p>The following datatype declarations are temporarily retained for
+compatibility purposes only:
+
+<specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0"
+	 xml:id="DSTKEYS-5" n="Old Dataypes">
+
+<p>These patterns are used to express
 rules or constraints used mainly in attribute declarations.
 In some cases, the constraint cannot be directly expressed, so the
 nearest equivalent is used.</p>
@@ -2013,6 +2184,13 @@ nearest equivalent is used.</p>
 &datatype.urilist.odd;
 &datatype.choice.odd;
 
+</specGrp></p>
+</div3>
+
+
+<div3><head>Declaration of TEI keywords</head>
+<p> 
+<specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:id="DSTKEYS" n="TEI Keywords">
 <p>II.  Declare keywords for tag-set selection.</p>
 <p>Declare all bases and additional modules as IGNORE.  The
 user can override this default by declaring the same entity with the
