@@ -3,6 +3,7 @@ TEISERVER=http://tei.oucs.ox.ac.uk/Query/
 ROMAOPTS=--doc --localsource=../Source-driver.xml
 
 TESTFILES= \
+	detest \
 	testchinese \
 	testcorpus \
 	testdictionaries \
