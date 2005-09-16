@@ -1118,7 +1118,7 @@ $ID: requests a particular page
       <link rel="stylesheet" type="text/css" href="{$cssFile}"/>
     </xsl:if>
     <xsl:if test="not($cssSecondaryFile='')">
-      <link rel="stylesheet" type="text/css" href="{$cssSecondaryFile}"/>
+      <link rel="stylesheet" media="screen" type="text/css" href="{$cssSecondaryFile}"/>
     </xsl:if>
   </xsl:template>
 
