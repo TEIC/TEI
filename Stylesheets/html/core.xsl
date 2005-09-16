@@ -104,8 +104,12 @@
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:ab">
-    <xsl:apply-templates/>
-    <br/>
+    <div>
+      <xsl:if test="string-length(@rend) &gt;0">
+	<xsl:attribute name="class"><xsl:value-of select="@rend"/></xsl:attribute>
+      </xsl:if>
+      <xsl:apply-templates/>
+    </div>
   </xsl:template>
 
   <xd:doc>
@@ -403,11 +407,11 @@
     </xd:detail>
   </xd:doc>
   <xsl:template match="tei:gi">
-    <tt>
+    <code>
       <xsl:text>&lt;</xsl:text>
       <xsl:apply-templates/>
       <xsl:text>&gt;</xsl:text>
-    </tt>
+    </code>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:gi</xd:short>
@@ -1133,11 +1137,16 @@
 	  <xsl:apply-templates/>
 	</blockquote>
       </xsl:when>
-      <xsl:when test="tei:text">
+      <xsl:when test="@rend='display'">
+	<p class="blockquote">
 	  <xsl:apply-templates/>
+	</p>
+      </xsl:when>
+      <xsl:when test="tei:text">
+	<xsl:apply-templates/>
       </xsl:when>
       <xsl:when test="tei:lg">
-	  <xsl:apply-templates/>
+	<xsl:apply-templates/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:variable name="pre">
