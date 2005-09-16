@@ -627,6 +627,7 @@ so that is only put back in if there is some content
 	  <xsl:when test="local-name(.)='data'">
 	    <data xmlns="http://relaxng.org/ns/structure/1.0">
 	      <xsl:copy-of select="@*"/>
+	      <xsl:apply-templates mode="copy"/>
 	    </data>
 	  </xsl:when>
 	  <xsl:when test="local-name(.)='text'">
