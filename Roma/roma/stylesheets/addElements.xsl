@@ -237,7 +237,7 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
       <xsl:attribute name="onMouseover">descriptionPopup_Show( 'modelClass_<xsl:value-of select="className"/>' )</xsl:attribute>
       <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'modelClass_<xsl:value-of select="className"/>' )</xsl:attribute>
       <a>
-	<xsl:attribute name="href"><xsl:value-of select="$host"/>/class.xq?name=<xsl:value-of select="className"/></xsl:attribute>
+	<xsl:attribute name="href"><xsl:value-of select="$host"/>class.xq?name=<xsl:value-of select="className"/></xsl:attribute>
 	<xsl:attribute name="target">_blank</xsl:attribute>
 	<xsl:value-of select="className"/>
       </a>

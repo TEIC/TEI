@@ -36,7 +36,7 @@ Description
   <xsl:template name="generateList">
     <xsl:for-each select="//attClassList/attClass">
       <tr>
-	<td><a><xsl:attribute name="href"><xsl:value-of select="$host"/>/class.xq?name=<xsl:value-of select="className"/></xsl:attribute><xsl:value-of select="className"/></a></td>
+	<td><a><xsl:attribute name="href"><xsl:value-of select="$host"/>class.xq?name=<xsl:value-of select="className"/></xsl:attribute><xsl:value-of select="className"/></a></td>
 	<td width="580"><xsl:value-of select="classDesc"/></td>
 	<td>
 	  <a><xsl:attribute name="href">?class=<xsl:value-of

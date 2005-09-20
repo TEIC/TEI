@@ -14,12 +14,14 @@ makeODD()
     if test "x$lang" = "x"
     then
 	xsltproc -o $N.compiled.odd \
+	     --stringparam TEIC true \
 	    --stringparam TEISERVER $TEISERVER  \
 	    --stringparam localsource "$LOCAL"  \
 	    $TEIXSLDIR/odds/odd2odd.xsl $ODD 
     else
 	echo  [translated to language $lang]
 	xsltproc \
+	     --stringparam TEIC true \
 	    --stringparam TEISERVER $TEISERVER  \
 	    --stringparam localsource "$LOCAL"  \
 	    $TEIXSLDIR/odds/odd2odd.xsl $ODD  | \
@@ -35,6 +37,7 @@ makeRelax()
 {
     echo "2. make Relax NG from compiled ODD"
     xsltproc $XSLOPTS  \
+	     --stringparam TEIC true \
              --stringparam RNGDIR $RESULTS       \
              $TEIXSLDIR/odds/odd2relax.xsl $N.compiled.odd
     (cd $RESULTS; \
@@ -55,6 +58,7 @@ makeDTD()
 {
     echo "5. make DTD from compiled ODD"
     xsltproc  $XSLOPTS \
+	     --stringparam TEIC true \
              --stringparam outputDir $RESULTS       \
              $TEIXSLDIR/odds/odd2dtd.xsl $N.compiled.odd
 }
@@ -64,6 +68,7 @@ makeHTMLDOC()
     echo "8. make HTML documentation"
     xsltproc $XSLOPTS     \
 	-o $N.doc.html \
+	--stringparam TEIC true \
 	--stringparam STDOUT true \
 	--stringparam splitLevel -1 \
 	$TEIXSLDIR/odds/odd2html.xsl $N.compiled.odd
@@ -74,6 +79,7 @@ makePDFDOC()
 {
     echo "7. make PDF documentation"
     xsltproc $XSLOPTS     \
+	--stringparam TEIC true \
 	-o $N.doc.tex \
 	$TEIXSLDIR/latex/tei.xsl $N.doc.xml
     pdflatex $N.doc.tex
@@ -84,6 +90,7 @@ makeXMLDOC()
 {
     echo "6. make expanded documented ODD"
     xsltproc $XSLOPTS     \
+	--stringparam TEIC true \
 	-o $N.doc.xml \
 	$TEIXSLDIR/odds/odd2lite.xsl $N.compiled.odd 
     echo created $N.doc.xml 

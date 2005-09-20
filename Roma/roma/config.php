@@ -18,11 +18,11 @@ define( 'roma_pdflatex', 'pdflatex' );
 //#########################
 
 define( 'roma_temporaryFilesDir', '/tmp' );
-define( 'roma_StylesheetDir', 'http://localhost/stylesheet' );
+define( 'roma_StylesheetDir', 'http://www.tei-c.org.uk/stylesheet' );
 
 define( 'roma_localStylesheetDir', 'roma/stylesheets' );
 define( 'romadom_templateDir', 'roma/templates' );
 define( 'roma_templateDir', 'roma/templates' );
 define( 'roma_ressource_path', 'roma/res' );
-define( 'roma_xquery_server', 'http://localhost:8080/cocoon/Query/' );
+define( 'roma_xquery_server', 'http://www.tei-c.org.uk/Query/' );
 </script>
