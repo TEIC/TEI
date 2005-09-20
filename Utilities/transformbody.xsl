@@ -26,1183 +26,2840 @@
  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:div1[@id]">
-    <xsl:variable name="ident">
-    <xsl:value-of select="translate(@id,$uc,$lc)"/>
-      <xsl:text>.odd</xsl:text>
-    </xsl:variable>
- <xsl:variable name="outName">
-   <xsl:if test="not($PREFIX ='')">
-     <xsl:value-of select="$PREFIX"/>
-     <xsl:if test="not(substring($PREFIX,string-length($PREFIX),string-length($PREFIX))='/')">
-       <xsl:text>/</xsl:text>
-     </xsl:if>
-   </xsl:if>
-	<xsl:value-of  select="translate(ancestor-or-self::tei:div1/@id,$lc,$uc)"/>
-	<xsl:text>/</xsl:text>
-	<xsl:value-of select="$ident"/>
-    </xsl:variable>
-    <xsl:message>write <xsl:value-of select="$ident"/></xsl:message>
-    <xsl:text disable-output-escaping="yes">&amp;</xsl:text>
-    <xsl:value-of select="$ident"/>
-    <xsl:text disable-output-escaping="yes">;</xsl:text>
-    <exsl:document         
-     method="xml"
-     cdata-section-elements="tei:eg teix:egXML" 
-     omit-doctype-declaration="yes"
-     omit-xml-declaration="yes" 
-     href="{$outName}">
-<xsl:comment>
-Copyright TEI Consortium. 
-
-Licensed under the GNU General Public License. 
 
-See the file COPYING for details.
 
-$Date$
-$Author$
 
-</xsl:comment>
-      <xsl:copy>
-	<xsl:apply-templates select="@*"/>
-	<xsl:apply-templates select="rng:*|teix:*|tei:*|comment()|processing-instruction()|text()"/>
-      </xsl:copy>
-    </exsl:document>
+
+
+
+<xsl:template match="tei:interaction//tei:attDef[@ident='active']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:relation//tei:attDef[@ident='active']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:node//tei:attDef[@ident='adj']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:node//tei:attDef[@ident='adjFrom']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:node//tei:attDef[@ident='adjTo']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:person//tei:attDef[@ident='age']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.duration"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:personGrp//tei:attDef[@ident='age']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.duration"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:damage//tei:attDef[@ident='agent']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:gap//tei:attDef[@ident='agent']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:supplied//tei:attDef[@ident='agent']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:unclear//tei:attDef[@ident='agent']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='ana']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:note//tei:attDef[@ident='anchored']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.uboolean"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ <xsl:template match="tei:certainty//tei:attDef[@ident='assertedValue']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token | tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:specDesc//tei:attDef[@ident='atts']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ <xsl:template match="tei:fsDecl//tei:attDef[@ident='baseType']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:date//tei:attDef[@ident='calendar']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:dateRange//tei:attDef[@ident='calendar']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:dateStruct//tei:attDef[@ident='calendar']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='cause']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:add//tei:attDef[@ident='cert']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.certainty"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:addSpan//tei:attDef[@ident='cert']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.certainty"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:corr//tei:attDef[@ident='cert']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.certainty"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:del//tei:attDef[@ident='cert']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.certainty"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:delSpan//tei:attDef[@ident='cert']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.certainty"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:expan//tei:attDef[@ident='cert']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.certainty"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:restore//tei:attDef[@ident='cert']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.certainty"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:unclear//tei:attDef[@ident='cert']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.certainty"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='certainty']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.certainty"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:date//tei:attDef[@ident='certainty']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.certainty"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:hand//tei:attDef[@ident='character']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:handShift//tei:attDef[@ident='character']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:iNode//tei:attDef[@ident='children']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:root//tei:attDef[@ident='children']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ <xsl:template match="tei:msContents//tei:attDef[@ident='class']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:msItem//tei:attDef[@ident='class']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:msItemStruct//tei:attDef[@ident='class']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:occupation//tei:attDef[@ident='code']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:socecStatus//tei:attDef[@ident='code']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ 
+
+ <xsl:template match="tei:layout//tei:attDef[@ident='columns']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.numeric"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:macroSpec//tei:attDef[@ident='combine']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.uboolean??"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:binding//tei:attDef[@ident='contemporary']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.uboolean"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:seal//tei:attDef[@ident='contemporary']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.uboolean"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='copyOf']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='corresp']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:teiHeader//tei:attDef[@ident='creator']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:gloss//tei:attDef[@ident='cref']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:ptr//tei:attDef[@ident='cref']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:ref//tei:attDef[@ident='cref']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:term//tei:attDef[@ident='cref']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:birth//tei:attDef[@ident='date']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.temporalExpression"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='dateAttrib']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:teiHeader//tei:attDef[@ident='dateCreated']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.temporalExpression"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:teiHeader//tei:attDef[@ident='dateUpdated']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.temporalExpression"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='decls']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ <xsl:template match="tei:explicit//tei:attDef[@ident='defective']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.uboolean"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:incipit//tei:attDef[@ident='defective']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.uboolean"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:msContents//tei:attDef[@ident='defective']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.uboolean"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:msItem//tei:attDef[@ident='defective']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.uboolean"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:msItemStruct//tei:attDef[@ident='defective']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.uboolean"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ <xsl:template match="tei:damage//tei:attDef[@ident='degree']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.certainty?"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ <xsl:template match="tei:purpose//tei:attDef[@ident='degree']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.certainty"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:state//tei:attDef[@ident='delim']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ <xsl:template match="tei:certainty//tei:attDef[@ident='desc']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:event//tei:attDef[@ident='desc']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ 
+
+ 
+
+ <xsl:template match="tei:kinesic//tei:attDef[@ident='desc']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:relation//tei:attDef[@ident='desc']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:respons//tei:attDef[@ident='desc']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:restore//tei:attDef[@ident='desc']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:vocal//tei:attDef[@ident='desc']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:space//tei:attDef[@ident='dim']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:q//tei:attDef[@ident='direct']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.uboolean"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:sound//tei:attDef[@ident='discrete']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.uboolean"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ 
+
+ <xsl:template match="tei://tei:attDef[@ident='dur']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.duration"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:recording//tei:attDef[@ident='dur']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.duration"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:cb//tei:attDef[@ident='ed']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:lb//tei:attDef[@ident='ed']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:milestone//tei:attDef[@ident='ed']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:pb//tei:attDef[@ident='ed']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:state//tei:attDef[@ident='ed']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='end']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='enjamb']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:hyphenation//tei:attDef[@ident='eol']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='evaluate']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='evidence']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ <xsl:template match="tei:dateStruct//tei:attDef[@ident='exact']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.certainty?"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:distance//tei:attDef[@ident='exact']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ <xsl:template match="tei://tei:attDef[@ident='exclude']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ <xsl:template match="tei:damage//tei:attDef[@ident='extent']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:gap//tei:attDef[@ident='extent']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:orth//tei:attDef[@ident='extent']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:pron//tei:attDef[@ident='extent']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:space//tei:attDef[@ident='extent']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:fs//tei:attDef[@ident='feats']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:shift//tei:attDef[@ident='feature']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:hand//tei:attDef[@ident='first']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.uboolean"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:iNode//tei:attDef[@ident='follow']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:leaf//tei:attDef[@ident='follow']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:biblItem//tei:attDef[@ident='form']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:objectDesc//tei:attDef[@ident='form']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:quotation//tei:attDef[@ident='form']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:app//tei:attDef[@ident='from']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:arc//tei:attDef[@ident='from']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:dateRange//tei:attDef[@ident='from']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.temporalExpression"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:locus//tei:attDef[@ident='from']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:span//tei:attDef[@ident='from']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:timeRange//tei:attDef[@ident='from']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.temporalExpression"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='full']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='full']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='function']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:f//tei:attDef[@ident='fVal']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:tagUsage//tei:attDef[@ident='gi']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:certainty//tei:attDef[@ident='given']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:writing//tei:attDef[@ident='gradual']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.uboolean"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='hand']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:add//tei:attDef[@ident='hand']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:addSpan//tei:attDef[@ident='hand']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:damage//tei:attDef[@ident='hand']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:del//tei:attDef[@ident='hand']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:delSpan//tei:attDef[@ident='hand']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:gap//tei:attDef[@ident='hand']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ <xsl:template match="tei:restore//tei:attDef[@ident='hand']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:supplied//tei:attDef[@ident='hand']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:unclear//tei:attDef[@ident='hand']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:handDesc//tei:attDef[@ident='hands']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:graphic//tei:attDef[@ident='height']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.numeric"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='ident']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:language//tei:attDef[@ident='ident']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.language"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:witness//tei:attDef[@ident='included']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ 
+
+ <xsl:template match="tei:hand//tei:attDef[@ident='ink']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:handShift//tei:attDef[@ident='ink']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='inst']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:timeline//tei:attDef[@ident='interval']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.numeric"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:when//tei:attDef[@ident='interval']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.numeric"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:event//tei:attDef[@ident='iterated']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.uboolean"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:kinesic//tei:attDef[@ident='iterated']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.uboolean"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:vocal//tei:attDef[@ident='iterated']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.uboolean"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='key']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='key']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='key']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='key']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ 
+
+ 
+
+ <xsl:template match="tei:orgName//tei:attDef[@ident='key']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ <xsl:template match="tei:textLang//tei:attDef[@ident='langKey']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.language"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ <xsl:template match="tei:sense//tei:attDef[@ident='level']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.numeric"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:title//tei:attDef[@ident='level']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:app//tei:attDef[@ident='loc']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='location']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:variantEncoding//tei:attDef[@ident='location']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:certainty//tei:attDef[@ident='locus']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:respons//tei:attDef[@ident='locus']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:hand//tei:attDef[@ident='mainLang']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.language"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:quotation//tei:attDef[@ident='marks']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:supportDesc//tei:attDef[@ident='material']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:numeric//tei:attDef[@ident='max']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.numeric"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ <xsl:template match="tei://tei:attDef[@ident='mergedin']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='met']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:correction//tei:attDef[@ident='method']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:normalization//tei:attDef[@ident='method']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:variantEncoding//tei:attDef[@ident='method']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='mode']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:alt//tei:attDef[@ident='mode']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:altGrp//tei:attDef[@ident='mode']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:channel//tei:attDef[@ident='mode']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ <xsl:template match="tei:relation//tei:attDef[@ident='mutual']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.uboolean"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='n']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:equiv//tei:attDef[@ident='name']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ 
+
+ <xsl:template match="tei:vLabel//tei:attDef[@ident='name']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ <xsl:template match="tei:handShift//tei:attDef[@ident='new']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:shift//tei:attDef[@ident='new']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='next']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='norm']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='notAfter']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.temporalExpression"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ <xsl:template match="tei:pron//tei:attDef[@ident='notation']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='notBefore']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.temporalExpression"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ 
+
+ <xsl:template match="tei:handShift//tei:attDef[@ident='old']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='opt']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.uboolean"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:iNode//tei:attDef[@ident='ord']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.uboolean"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:root//tei:attDef[@ident='ord']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.uboolean"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ 
+
+ 
+
+ <xsl:template match="tei://tei:attDef[@ident='org']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:attList//tei:attDef[@ident='org']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:coll//tei:attDef[@ident='org']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:fDecl//tei:attDef[@ident='org']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:vMerge//tei:attDef[@ident='org']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ <xsl:template match="tei:timeline//tei:attDef[@ident='origin']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:textLang//tei:attDef[@ident='otherLangs']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ 
+
+ 
+
+ <xsl:template match="tei:iNode//tei:attDef[@ident='parent']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:leaf//tei:attDef[@ident='parent']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='part']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='part']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:ab//tei:attDef[@ident='part']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:l//tei:attDef[@ident='part']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:interaction//tei:attDef[@ident='passive']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:relation//tei:attDef[@ident='passive']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ <xsl:template match="tei:metDecl//tei:attDef[@ident='pattern']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.regexp"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:move//tei:attDef[@ident='perf']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:tech//tei:attDef[@ident='perf']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ 
+
+ <xsl:template match="tei:fw//tei:attDef[@ident='place']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:note//tei:attDef[@ident='place']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:witDetail//tei:attDef[@ident='place']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ <xsl:template match="tei://tei:attDef[@ident='prev']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:fragmentPattern//tei:attDef[@ident='re']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.regexp"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='real']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:gap//tei:attDef[@ident='reason']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:supplied//tei:attDef[@ident='reason']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:elementSpec|tei:classSpec|tei:macroSpec">
-    <xsl:call-template name="redoDoc"/>
+ <xsl:template match="tei:unclear//tei:attDef[@ident='reason']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template name="redoDoc">
-    <xsl:variable name="filename">
-      <xsl:value-of select="translate(@id,$uc,$lc)"/>
-      <xsl:text>.odd</xsl:text>
-    </xsl:variable>
-
-    <xsl:variable name="ident">
-      <xsl:value-of select="@ident"/>
-    </xsl:variable>
-
-    <xsl:message>write <xsl:value-of select="$ident"/> (<xsl:value-of select="@id"/>) to <xsl:value-of select="$filename"/> </xsl:message>
-    <xsl:text disable-output-escaping="yes">&amp;</xsl:text>
-    <!--xsl:value-of select="tei:ident"/--><xsl:value-of select="$filename"/>
-    <xsl:text disable-output-escaping="yes">;</xsl:text>
-    <exsl:document         
-     indent="yes"
-     method="xml"
-     cdata-section-elements="tei:eg teix:egXML" 
-     omit-doctype-declaration="yes"
-     omit-xml-declaration="yes"
-        href="{$filename}">
-<xsl:comment>Copyright 2004 TEI Consortium. 
+ <xsl:template match="tei:g//tei:attDef[@ident='ref']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ <xsl:template match="tei://tei:attDef[@ident='rend']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:tagUsage//tei:attDef[@ident='render']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='resp']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='resp']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:add//tei:attDef[@ident='resp']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:addSpan//tei:attDef[@ident='resp']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:corr//tei:attDef[@ident='resp']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:damage//tei:attDef[@ident='resp']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:del//tei:attDef[@ident='resp']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:delSpan//tei:attDef[@ident='resp']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:expan//tei:attDef[@ident='resp']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:gap//tei:attDef[@ident='resp']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:hand//tei:attDef[@ident='resp']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:handShift//tei:attDef[@ident='resp']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:note//tei:attDef[@ident='resp']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:reg//tei:attDef[@ident='resp']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:respons//tei:attDef[@ident='resp']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:restore//tei:attDef[@ident='resp']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:space//tei:attDef[@ident='resp']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:supplied//tei:attDef[@ident='resp']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:unclear//tei:attDef[@ident='resp']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:witDetail//tei:attDef[@ident='resp']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ 
+
+ <xsl:template match="tei://tei:attDef[@ident='rhyme']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:biblItem//tei:attDef[@ident='role']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:cell//tei:attDef[@ident='role']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:editor//tei:attDef[@ident='role']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:person//tei:attDef[@ident='role']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
 
-Licensed under the GNU General Public License. 
+ <xsl:template match="tei:personGrp//tei:attDef[@ident='role']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:row//tei:attDef[@ident='role']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ 
+
+ <xsl:template match="tei:layout//tei:attDef[@ident='ruledLines']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.numeric"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='sameAs']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei://tei:attDef[@ident='sample']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:graphic//tei:attDef[@ident='scale']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.numeric"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ <xsl:template match="tei:catRef//tei:attDef[@ident='scheme']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:classCode//tei:attDef[@ident='scheme']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ <xsl:template match="tei:keywords//tei:attDef[@ident='scheme']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:locus//tei:attDef[@ident='scheme']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:occupation//tei:attDef[@ident='scheme']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:socecStatus//tei:attDef[@ident='scheme']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ <xsl:template match="tei://tei:attDef[@ident='scope']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:handNote//tei:attDef[@ident='scope']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token"/>
+  </xsl:copy>
+</xsl:template>
 
-See the file COPYING for details.
-</xsl:comment>
-      <xsl:copy>
-	<xsl:apply-templates select="rng:*|teix:*|tei:*|@*|comment()|processing-instruction()|text()"/>
-      </xsl:copy>
-    </exsl:document>
+ <xsl:template match="tei:join//tei:attDef[@ident='scope']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
+ <xsl:template match="tei:hand//tei:attDef[@ident='scribe']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
+</xsl:template>
+
+ 
+
+ 
+
+ 
 
-<xsl:template
-    match="tei:attDef/tei:datatype/rng:data[@type='IDREFS']">
-     <rng:ref name="datatype.uriList"/>
+ <xsl:template match="tei://tei:attDef[@ident='select']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template
-    match="tei:attDef/tei:datatype/rng:data[@type='IDREF']">
-     <rng:ref name="datatype.uri"/>
+ <xsl:template match="tei:person//tei:attDef[@ident='sex']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.sex"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="@ana">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:personGrp//tei:attDef[@ident='sex']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.sex"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="@copyOf">
- <xsl:attribute name="copyOf">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:witness//tei:attDef[@ident='sigil']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="@corresp">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:when//tei:attDef[@ident='since']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="@decls">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ 
+
+ <xsl:template match="tei:personGrp//tei:attDef[@ident='size']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
+</xsl:template>
+
+ <xsl:template match="tei:distinct//tei:attDef[@ident='social']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
 </xsl:template>
+
+ 
 
-<xsl:template match="@doc">
- <xsl:attribute name="target">
-   <xsl:value-of select="unparsed-entity-uri(.)"/>
- </xsl:attribute>
+ <xsl:template match="tei:normalization//tei:attDef[@ident='source']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="@domains">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:supplied//tei:attDef[@ident='source']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="@end">
- <xsl:attribute name="end">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:distinct//tei:attDef[@ident='space']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="@exclude">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ 
+
+ <xsl:template match="tei://tei:attDef[@ident='start']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
+
+ 
 
-<xsl:template match="@hand">
- <xsl:attribute name="hand">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:availability//tei:attDef[@ident='status']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="@id">
-  <xsl:choose>
-    <xsl:when test="parent::tei:lang">
-      <xsl:attribute name="ident">
-	<xsl:value-of select="."/>
-      </xsl:attribute>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:attribute name="xml:id">
-	<xsl:value-of select="."/>
-      </xsl:attribute>
-    </xsl:otherwise>
-  </xsl:choose>
+ <xsl:template match="tei:biblItem//tei:attDef[@ident='status']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="@inst">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:correction//tei:attDef[@ident='status']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.certainty"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="@lang">
- <xsl:attribute name="xml:lang">
-      <xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:del//tei:attDef[@ident='status']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="@location">
- <xsl:attribute name="location">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:delSpan//tei:attDef[@ident='status']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="@mergedin">
- <xsl:attribute name="mergedin">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:msDescription//tei:attDef[@ident='status']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="@next">
- <xsl:attribute name="next">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ 
+
+ <xsl:template match="tei:hand//tei:attDef[@ident='style']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="@prev">
- <xsl:attribute name="prev">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:handShift//tei:attDef[@ident='style']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="@sameAs">
- <xsl:attribute name="sameAs">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei://tei:attDef[@ident='subtype']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="@select">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:decoNote//tei:attDef[@ident='subtype']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="@start">
- <xsl:attribute name="start">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:seg//tei:attDef[@ident='subtype']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="@synch">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei://tei:attDef[@ident='synch']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="@target|@targets">
- <xsl:attribute name="{name(.)}">
-   <xsl:if test="not(starts-with(.,'http'))">
-     <xsl:text>#</xsl:text>
-   </xsl:if>
-   <xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei://tei:attDef[@ident='target']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:add/@hand">
- <xsl:attribute name="hand">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:catRef//tei:attDef[@ident='target']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:add/@resp">
- <xsl:attribute name="resp">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:certainty//tei:attDef[@ident='target']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:addSpan/@hand">
- <xsl:attribute name="hand">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:gloss//tei:attDef[@ident='target']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:addSpan/@resp">
- <xsl:attribute name="resp">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:note//tei:attDef[@ident='target']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:addSpan/@to">
- <xsl:attribute name="to">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:ptr//tei:attDef[@ident='target']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:app/@from">
- <xsl:attribute name="from">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:ref//tei:attDef[@ident='target']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:app/@to">
- <xsl:attribute name="to">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:respons//tei:attDef[@ident='target']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:arc/@from">
- <xsl:attribute name="from">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:specGrpRef//tei:attDef[@ident='target']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:arc/@to">
- <xsl:attribute name="to">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:term//tei:attDef[@ident='target']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:catRef/@scheme">
- <xsl:attribute name="scheme">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:witDetail//tei:attDef[@ident='target']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:classCode/@scheme">
- <xsl:attribute name="scheme">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:note//tei:attDef[@ident='targetEnd']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:damage/@hand">
- <xsl:attribute name="hand">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:alt//tei:attDef[@ident='targets']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:damage/@resp">
- <xsl:attribute name="resp">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:join//tei:attDef[@ident='targets']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:del/@hand">
- <xsl:attribute name="hand">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:link//tei:attDef[@ident='targets']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:del/@resp">
- <xsl:attribute name="resp">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:locus//tei:attDef[@ident='targets']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
 </xsl:template>
+
+ 
 
-<xsl:template match="tei:delSpan/@hand">
- <xsl:attribute name="hand">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ 
+
+ 
+
+ <xsl:template match="tei:distinct//tei:attDef[@ident='time']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:delSpan/@resp">
- <xsl:attribute name="resp">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:addSpan//tei:attDef[@ident='to']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:delSpan/@to">
- <xsl:attribute name="to">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:app//tei:attDef[@ident='to']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:eLeaf/@value">
- <xsl:attribute name="value">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:arc//tei:attDef[@ident='to']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:eTree/@value">
- <xsl:attribute name="value">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:dateRange//tei:attDef[@ident='to']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.temporalExpression"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:event/@who">
- <xsl:attribute name="who">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:delSpan//tei:attDef[@ident='to']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:expan/@resp">
- <xsl:attribute name="resp">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:locus//tei:attDef[@ident='to']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:f/@fVal">
- <xsl:attribute name="fVal">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:span//tei:attDef[@ident='to']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:fs/@feats">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:timeRange//tei:attDef[@ident='to']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.temporalExpression"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:g/@ref">
-  <xsl:choose>
-    <xsl:when test="starts-with(.,'#')">
-      <xsl:copy/>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:attribute name="ref">
-	<xsl:text>#</xsl:text><xsl:value-of select="."/>
-      </xsl:attribute>
-    </xsl:otherwise>
-  </xsl:choose>
+ <xsl:template match="tei:u//tei:attDef[@ident='trans']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:gap/@hand">
- <xsl:attribute name="hand">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ 
+
+ <xsl:template match="tei://tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:gap/@resp">
- <xsl:attribute name="resp">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei://tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:graphic/@url">
- <xsl:attribute name="url">
-   <xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei://tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:handShift/@new">
- <xsl:attribute name="new">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei://tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:handShift/@old">
- <xsl:attribute name="old">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei://tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:handShift/@resp">
- <xsl:attribute name="resp">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei://tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:iNode/@children">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei://tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:iNode/@follow">
- <xsl:attribute name="follow">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei://tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:iNode/@parent">
- <xsl:attribute name="parent">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei://tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:iNode/@value">
- <xsl:attribute name="value">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:abbr//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:keywords/@scheme">
- <xsl:attribute name="scheme">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:accMat//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:kinesic/@who">
- <xsl:attribute name="who">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:addSpan//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:leaf/@follow">
- <xsl:attribute name="follow">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:altName//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:leaf/@parent">
- <xsl:attribute name="parent">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:app//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:leaf/@value">
- <xsl:attribute name="value">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:biblScope//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:move/@perf">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:camera//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:move/@who">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:castItem//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:msContents/@class">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:classSpec//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:msItem/@class">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:code//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:node/@adj">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:colloc//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:node/@adjFrom">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:constitution//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:node/@adjTo">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:custEvent//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:node/@value">
- <xsl:attribute name="value">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:damage//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:note/@targetEnd">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:decoNote//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:occupation/@code">
- <xsl:attribute name="code">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:del//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:occupation/@scheme">
- <xsl:attribute name="scheme">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:delSpan//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:pause/@who">
- <xsl:attribute name="who">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:derivation//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:reg/@resp">
- <xsl:attribute name="resp">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:dimensions//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:relation/@active">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:distinct//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:relation/@passive">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:divGen//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:restore/@hand">
- <xsl:attribute name="hand">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:domain//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:restore/@resp">
- <xsl:attribute name="resp">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:explicit//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:root/@children">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:finalRubric//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:root/@value">
- <xsl:attribute name="value">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:forest//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:setting/@who">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:forestGrp//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:shift/@who">
- <xsl:attribute name="who">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:form//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:socecStatus/@code">
- <xsl:attribute name="code">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:fs//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:socecStatus/@scheme">
- <xsl:attribute name="scheme">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:fsdDecl//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:sp/@who">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:fsDecl//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:span/@from">
- <xsl:attribute name="from">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:fvLib//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:span/@to">
- <xsl:attribute name="to">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:fw//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:supplied/@hand">
- <xsl:attribute name="hand">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:geogName//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:tagUsage/@render">
- <xsl:attribute name="render">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:gram//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:tech/@perf">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:graph//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:textLang/@langKey">
- <xsl:attribute name="langKey">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:head//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:textLang/@otherLangs">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:idno//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:timeline/@origin">
- <xsl:attribute name="origin">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:incipit//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:triangle/@value">
- <xsl:attribute name="value">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:interaction//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:u/@who">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:itype//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:unclear/@hand">
- <xsl:attribute name="hand">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:lbl//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:vocal/@who">
- <xsl:attribute name="who">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:list//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:when/@since">
- <xsl:attribute name="since">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:macroSpec//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:writing/@script">
- <xsl:attribute name="script">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:measure//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
+
+ 
 
-<xsl:template match="tei:writing/@who">
- <xsl:attribute name="who">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:moduleSpec//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
+ <xsl:template match="tei:move//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
+</xsl:template>
 
-<xsl:template match="tei:xptr">
-  <tei:ptr>
-    <xsl:apply-templates
-	select="*|@*|processing-instruction()|comment()|text()"/>
-  </tei:ptr>
+ <xsl:template match="tei:msDescription//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:xptr/@url">
-      <xsl:attribute name="target"><xsl:value-of select="."/></xsl:attribute>
+ <xsl:template match="tei:name//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:xref">
-  <tei:ref>
-    <xsl:apply-templates
-	select="*|@*|processing-instruction()|comment()|text()"/>
-  </tei:ref>
+ <xsl:template match="tei:node//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="tei:xref/@url">
-      <xsl:attribute name="target"><xsl:value-of select="."/></xsl:attribute>
+ <xsl:template match="tei:note//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:add/@hand">
- <xsl:attribute name="hand">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:num//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:add/@resp">
- <xsl:attribute name="resp">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:oRef//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:addSpan/@hand">
- <xsl:attribute name="hand">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:orgDivn//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:addSpan/@resp">
- <xsl:attribute name="resp">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:orgName//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:addSpan/@to">
- <xsl:attribute name="to">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:orgTitle//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:app/@from">
- <xsl:attribute name="from">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:orgType//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:app/@to">
- <xsl:attribute name="to">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:orth//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:arc/@from">
- <xsl:attribute name="from">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:oVar//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:arc/@to">
- <xsl:attribute name="to">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:persName//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:catRef/@scheme">
- <xsl:attribute name="scheme">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:preparedness//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:classCode/@scheme">
- <xsl:attribute name="scheme">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:purpose//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:damage/@hand">
- <xsl:attribute name="hand">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:q//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:damage/@resp">
- <xsl:attribute name="resp">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:re//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:del/@hand">
- <xsl:attribute name="hand">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:recording//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:del/@resp">
- <xsl:attribute name="resp">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:relation//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
+
+ 
 
-<xsl:template match="teix:delSpan/@hand">
- <xsl:attribute name="hand">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:rs//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:delSpan/@resp">
- <xsl:attribute name="resp">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:rubric//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:delSpan/@to">
- <xsl:attribute name="to">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:schemaSpec//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:eLeaf/@value">
- <xsl:attribute name="value">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:sound//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:eTree/@value">
- <xsl:attribute name="value">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:stage//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:event/@who">
- <xsl:attribute name="who">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:tech//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:expan/@resp">
- <xsl:attribute name="resp">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:teiHeader//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:f/@fVal">
- <xsl:attribute name="fVal">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:term//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:fs/@feats">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:time//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:g/@ref">
-  <xsl:choose>
-    <xsl:when test="starts-with(.,'#')">
-      <xsl:copy/>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:attribute name="ref">
-	<xsl:text>#</xsl:text><xsl:value-of select="."/>
-      </xsl:attribute>
-    </xsl:otherwise>
-  </xsl:choose>
+ <xsl:template match="tei:title//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:gap/@hand">
- <xsl:attribute name="hand">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:titlePage//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:gap/@resp">
- <xsl:attribute name="resp">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:titlePart//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:handShift/@new">
- <xsl:attribute name="new">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:usg//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:handShift/@old">
- <xsl:attribute name="old">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:valList//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:handShift/@resp">
- <xsl:attribute name="resp">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:witDetail//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:iNode/@children">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:writing//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:iNode/@follow">
- <xsl:attribute name="follow">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:xr//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.token via tei.attr.typed"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:iNode/@parent">
- <xsl:attribute name="parent">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:factuality//tei:attDef[@ident='type']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:iNode/@value">
- <xsl:attribute name="value">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:milestone//tei:attDef[@ident='unit']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:keywords/@scheme">
- <xsl:attribute name="scheme">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:state//tei:attDef[@ident='unit']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:kinesic/@who">
- <xsl:attribute name="who">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:timeline//tei:attDef[@ident='unit']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:leaf/@follow">
- <xsl:attribute name="follow">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:when//tei:attDef[@ident='unit']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:leaf/@parent">
- <xsl:attribute name="parent">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei://tei:attDef[@ident='units']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:leaf/@value">
- <xsl:attribute name="value">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:equiv//tei:attDef[@ident='uri']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:move/@perf">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:normalization//tei:attDef[@ident='uri']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:move/@who">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:fsdDecl//tei:attDef[@ident='url']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:msContents/@class">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:graphic//tei:attDef[@ident='url']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:msItem/@class">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:moduleRef//tei:attDef[@ident='url']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:node/@adj">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:attDef//tei:attDef[@ident='usage']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:node/@adjFrom">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:elementSpec//tei:attDef[@ident='usage']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:node/@adjTo">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:language//tei:attDef[@ident='usage']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.probability"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:node/@value">
- <xsl:attribute name="value">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ 
+
+ <xsl:template match="tei://tei:attDef[@ident='value']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.temporalExpression"/>
+  </xsl:copy>
 </xsl:template>
+
+ 
 
-<xsl:template match="teix:note/@targetEnd">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:date//tei:attDef[@ident='value']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.temporalExpression"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:occupation/@code">
- <xsl:attribute name="code">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:docDate//tei:attDef[@ident='value']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.temporalExpression"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:occupation/@scheme">
- <xsl:attribute name="scheme">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:eLeaf//tei:attDef[@ident='value']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:pause/@who">
- <xsl:attribute name="who">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:eTree//tei:attDef[@ident='value']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:reg/@resp">
- <xsl:attribute name="resp">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:iNode//tei:attDef[@ident='value']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:relation/@active">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ 
+
+ <xsl:template match="tei:leaf//tei:attDef[@ident='value']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:relation/@passive">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:metSym//tei:attDef[@ident='value']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.string"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:restore/@hand">
- <xsl:attribute name="hand">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:node//tei:attDef[@ident='value']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:restore/@resp">
- <xsl:attribute name="resp">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:num//tei:attDef[@ident='value']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.numeric"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:root/@children">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:numeric//tei:attDef[@ident='value']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.numeric"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:root/@value">
- <xsl:attribute name="value">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:root//tei:attDef[@ident='value']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
+
+ 
 
-<xsl:template match="teix:setting/@who">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ 
+
+ <xsl:template match="tei:time//tei:attDef[@ident='value']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.temporalExpression"/>
+  </xsl:copy>
 </xsl:template>
-<xsl:template match="teix:shift/@who">
- <xsl:attribute name="who">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+
+ <xsl:template match="tei:triangle//tei:attDef[@ident='value']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:socecStatus/@code">
- <xsl:attribute name="code">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ 
+
+ 
+
+ <xsl:template match="tei:unicodeName//tei:attDef[@ident='version']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.numeric"/>
+  </xsl:copy>
 </xsl:template>
+
+ 
+
+ 
 
-<xsl:template match="teix:socecStatus/@scheme">
- <xsl:attribute name="scheme">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:event//tei:attDef[@ident='who']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:sp/@who">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:kinesic//tei:attDef[@ident='who']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:span/@from">
- <xsl:attribute name="from">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:move//tei:attDef[@ident='who']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:span/@to">
- <xsl:attribute name="to">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:pause//tei:attDef[@ident='who']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:supplied/@hand">
- <xsl:attribute name="hand">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:q//tei:attDef[@ident='who']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:tagUsage/@render">
- <xsl:attribute name="render">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:setting//tei:attDef[@ident='who']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:tech/@perf">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:shift//tei:attDef[@ident='who']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:textLang/@langKey">
- <xsl:attribute name="langKey">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:sp//tei:attDef[@ident='who']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:textLang/@otherLangs">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ <xsl:template match="tei:u//tei:attDef[@ident='who']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:timeline/@origin">
- <xsl:attribute name="origin">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:vocal//tei:attDef[@ident='who']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:triangle/@value">
- <xsl:attribute name="value">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:writing//tei:attDef[@ident='who']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:u/@who">
-  <xsl:attribute name="{name(.)}">#<xsl:value-of
-  select="."/></xsl:attribute>
+ 
+
+ <xsl:template match="tei://tei:attDef[@ident='wit']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:unclear/@hand">
- <xsl:attribute name="hand">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei://tei:attDef[@ident='wit']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:vocal/@who">
- <xsl:attribute name="who">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:witDetail//tei:attDef[@ident='wit']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.tokens"/>
+  </xsl:copy>
 </xsl:template>
+
+ 
 
-<xsl:template match="teix:when/@since">
- <xsl:attribute name="since">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei:layout//tei:attDef[@ident='writtenLines']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.numeric"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:writing/@script">
- <xsl:attribute name="script">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ 
+
+ 
+
+ <xsl:template match="tei://tei:attDef[@ident='xmlbase']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer?"/>
+  </xsl:copy>
 </xsl:template>
+
+ 
 
-<xsl:template match="teix:writing/@who">
- <xsl:attribute name="who">
-    <xsl:text>#</xsl:text><xsl:value-of select="."/>
- </xsl:attribute>
+ <xsl:template match="tei://tei:attDef[@ident='xmllang']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.language"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:xptr">
-  <teix:ptr>
-    <xsl:apply-templates
-	select="*|@*|processing-instruction()|comment()|text()"/>
-  </teix:ptr>
+ <xsl:template match="tei:time//tei:attDef[@ident='zone']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="teix:xref">
-  <teix:ref>
-    <xsl:apply-templates
-	select="*|@*|processing-instruction()|comment()|text()"/>
-  </teix:ref>
+ <xsl:template match="tei:timeStruct//tei:attDef[@ident='zone']/tei:datatype">
+  <xsl:copy>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/>
+  </xsl:copy>
 </xsl:template>
 
 
+ 
 </xsl:stylesheet>
