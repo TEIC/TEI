@@ -18,7 +18,8 @@ dtds: check
 	-rm DTD/*
 	# generate the DTDs
 	xmllint --noent   Source-driver.xml | \
-	xsltproc --stringparam outputDir DTD --stringparam verbose true ${XSL}/odds/odd2dtd.xsl -
+	xsltproc --stringparam outputDir DTD 	--stringparam TEIC true \
+	--stringparam verbose true ${XSL}/odds/odd2dtd.xsl -
 	for i in DTD/* ; do perl -i tools/cleandtd.pl $$i; done	
 	# I cannot be bothered to see why these don't work,
 	# just hack them by hand.
@@ -33,7 +34,9 @@ schemas:check
 	-rm Schema/*
 	# generate the relaxNG schemas
 	xmllint --noent   Source-driver.xml | \
-	xsltproc --stringparam verbose true ${XSL}/odds/odd2relax.xsl -
+	xsltproc --stringparam verbose true \
+	--stringparam TEIC true \
+	${XSL}/odds/odd2relax.xsl -
 	# do the indentation better 
 	for i in Schema/* ; \
 	do echo clean $$i; \
