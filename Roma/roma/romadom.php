@@ -1840,6 +1840,7 @@ class romaDom extends domDocument
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
 	$oProc->setParameter( null, 'TEISERVER', roma_xquery_server);
+	$oProc->setParameter( null, 'TEIC', 'true');
 	$this->getOddLanguage( $szOddLanguage );
         if (szOddLanguage=='en') 
      	  { 
@@ -1849,6 +1850,7 @@ class romaDom extends domDocument
               $oXSL2 = new domDocument();
               $oXSL2->load( roma_StylesheetDir . '/odds/translate-odd.xsl' );
               $oProc2 = new XsltProcessor();
+ 	      $oProc->setParameter( null, 'TEIC', 'true');	
               $oProc2->setParameter( null, 'TEISERVER', roma_xquery_server);
               $oProc2->setParameter( null, 'lang', $szOddLanguage );
               $oProc2->importStylesheet( $oXSL2 );
@@ -1863,6 +1865,7 @@ class romaDom extends domDocument
  	$oXSL->load( roma_StylesheetDir . '/odds/odd2relax.xsl'  );
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
+	$oProc->setParameter( null, 'TEIC', 'true');
 	$oProc->setParameter( null, 'displayMode', 'rnc' );
 	$oProc->setParameter( null, 'RNGDIR', '-' );
 	$oRNG = $oProc->transformToDoc( $oDOC );
@@ -1909,9 +1912,9 @@ class romaDom extends domDocument
 	$this->getDocDom( $oDOC );
         $oXSL = new domDocument();
  	$oXSL->load( roma_StylesheetDir . '/odds/odd2lite.xsl'  );
-
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
+	$oProc->setParameter( null, 'TEIC', 'true');
 	$oProc->setParameter( null, 'displayMode', 'rnc' );
 	
 	$oTeiLite = $oProc->transformToDoc( $oDOC );
@@ -1974,7 +1977,6 @@ class romaDom extends domDocument
 
 	$oXSL = new domDocument();
 	$oXSL->load( roma_StylesheetDir . '/latex/tei.xsl'  );
-	
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
 	
@@ -1996,7 +1998,6 @@ class romaDom extends domDocument
 	
 	$oXSL = new domDocument();
 	$oXSL->load( roma_StylesheetDir . '/latex/tei.xsl'  );
-	
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
 
@@ -2141,6 +2142,7 @@ class romaDom extends domDocument
 
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
+	$oProc->setParameter( null, 'TEIC', 'true');	
 	$oProc->setParameter( null, 'displayMode', 'rnc' );
 	$oProc->setParameter( null, 'STDOUT', 'true' );
 	$oProc->setParameter( null, 'splitLevel', '-1' );
@@ -2288,6 +2290,7 @@ class romaDom extends domDocument
  	$oXSL->load( roma_StylesheetDir . '/odds/odd2dtd.xsl'  );
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
+	$oProc->setParameter( null, 'TEIC', 'true');	
 	$oProc->setParameter( null, 'outputDir', '-' );
 	if ( $bBar )
 	    $this->updateProgressBar( '70' );
