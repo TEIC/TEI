@@ -679,23 +679,38 @@
     <xsl:param name="filename"/>
         <hr/>
     
-      <h1>Classes</h1>
-      <xsl:apply-templates mode="weave" select="tei:classSpec">
-	<xsl:sort select="tei:altIdent|@ident"/>
-      </xsl:apply-templates>
+	<xsl:if test="tei:classSpec">
+	  <h1>
+        <xsl:call-template name="i18n">
+	  <xsl:with-param  name="word">Classes defined</xsl:with-param>
+	</xsl:call-template>
+	  </h1>
+	  <xsl:apply-templates mode="weave" select="tei:classSpec">
+	    <xsl:sort select="tei:altIdent|@ident"/>
+	  </xsl:apply-templates>
+	</xsl:if>
     
     
-    
-      <h1>Elements</h1>
-      <xsl:apply-templates mode="weave" select="tei:elementSpec">
-	<xsl:sort select="tei:altIdent|@ident"/>
-      </xsl:apply-templates>
+	<h1>
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param  name="word">Elements defined</xsl:with-param>
+	  </xsl:call-template>
+	</h1>
+	<xsl:apply-templates mode="weave" select="tei:elementSpec">
+	  <xsl:sort select="tei:altIdent|@ident"/>
+	</xsl:apply-templates>
+	
+	<xsl:if test="tei:macroSpec">
+	  <h1>
+        <xsl:call-template name="i18n">
+	  <xsl:with-param  name="word">Macros defined</xsl:with-param>
+	</xsl:call-template>
 
-      <h1>Macros</h1>
-      <xsl:apply-templates mode="weave" select="tei:macroSpec">
-	<xsl:sort select="tei:altIdent|@ident"/>
-      </xsl:apply-templates>
-    
+	  </h1>
+	  <xsl:apply-templates mode="weave" select="tei:macroSpec">
+	    <xsl:sort select="tei:altIdent|@ident"/>
+	  </xsl:apply-templates>
+	</xsl:if>
       <hr/>
   </xsl:template>
 

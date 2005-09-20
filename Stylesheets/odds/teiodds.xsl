@@ -48,6 +48,7 @@
   <xsl:output encoding="utf-8" method="xml" indent="yes"/>
 
   <xsl:param name="localsource"/>
+  <xsl:param name="TEIC">false</xsl:param>
   <xsl:param name="lookupDatabase">false</xsl:param>
   <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
   <xsl:param name="verbose"></xsl:param>
@@ -443,6 +444,9 @@
       </xsl:apply-templates>
       
       <xsl:choose>
+	<xsl:when test="ancestor::tei:schemaSpec/@ns">
+	  <rng:empty/>
+	</xsl:when>
 	<xsl:when test="not(@ns) or contains(@ns,'http://www.tei-c.org')">
 	  <optional xmlns="http://relaxng.org/ns/structure/1.0">
 	    <attribute name="TEIform" a:defaultValue="{@ident}" xmlns="http://relaxng.org/ns/structure/1.0">
@@ -1008,6 +1012,9 @@
   </xsl:variable>
  
   <rng:attribute name="{$name}" >
+    <xsl:if test="@ns">
+      <xsl:attribute name="ns"><xsl:value-of select="@ns"/></xsl:attribute>
+    </xsl:if>
     <xsl:if test="tei:defaultVal">
       <xsl:attribute name="a:defaultValue">
 	<xsl:value-of select="normalize-space(tei:defaultVal)"/>

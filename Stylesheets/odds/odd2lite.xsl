@@ -364,6 +364,7 @@
 	  <xsl:with-param name="word">Attributes</xsl:with-param>
 	</xsl:call-template>
       </tei:emph>
+      <xsl:text>: </xsl:text>
       <xsl:choose>
 	<xsl:when test="count(../tei:classes/tei:memberOf)&gt;0">
 	  <xsl:call-template name="i18n">
@@ -398,7 +399,9 @@
 	<xsl:with-param name="content">
 	    <Wrapper>
 	      <rng:element name="{../@ident}">
-		<rng:ref name="tei.global.attributes"/>
+		<xsl:if test="not(ancestor::tei:schemaSpec/@ns)">
+		  <rng:ref name="tei.global.attributes"/>
+		</xsl:if>
 		<xsl:for-each select="../tei:classes/tei:memberOf">
 		  <xsl:for-each select="key('IDENTS',@key)">
 		    <xsl:if test="tei:attList">
@@ -965,17 +968,19 @@
   <xsl:template name="processSchemaFragment">
     <xsl:param name="filename"/>
 
-    <tei:div>
-      <tei:head>
-      <xsl:call-template name="i18n">
-	<xsl:with-param name="word">Classes defined</xsl:with-param>
-      </xsl:call-template>
-      </tei:head>
-      <xsl:apply-templates mode="weave" select="tei:classSpec">
-	<xsl:sort select="tei:altIdent"/>
-	<xsl:sort select="@ident"/>
-      </xsl:apply-templates>
-    </tei:div>
+    <xsl:if test="tei:classSpec">
+      <tei:div>
+	<tei:head>
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Classes defined</xsl:with-param>
+	  </xsl:call-template>
+	</tei:head>
+	<xsl:apply-templates mode="weave" select="tei:classSpec">
+	  <xsl:sort select="tei:altIdent"/>
+	  <xsl:sort select="@ident"/>
+	</xsl:apply-templates>
+      </tei:div>
+    </xsl:if>
     
     <tei:div>
       <tei:head>
@@ -989,17 +994,19 @@
       </xsl:apply-templates>
     </tei:div>
 
-    <tei:div>
-      <tei:head>
-      <xsl:call-template name="i18n">
-	<xsl:with-param name="word">Macros defined</xsl:with-param>
-      </xsl:call-template>
-      </tei:head>
-      <xsl:apply-templates mode="weave" select="tei:macroSpec">
-	    <xsl:sort select="tei:altIdent"/>
-	    <xsl:sort select="@ident"/>
-      </xsl:apply-templates>
-    </tei:div>
+    <xsl:if test="tei:macroSpec">
+      <tei:div>
+	<tei:head>
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Macros defined</xsl:with-param>
+	  </xsl:call-template>
+	</tei:head>
+	<xsl:apply-templates mode="weave" select="tei:macroSpec">
+	  <xsl:sort select="tei:altIdent"/>
+	  <xsl:sort select="@ident"/>
+	</xsl:apply-templates>
+      </tei:div>
+    </xsl:if>
     
   </xsl:template>
 

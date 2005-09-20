@@ -122,15 +122,16 @@
 	    <xsl:text>Schema generated </xsl:text>
 	    <xsl:value-of  select="edate:date-time()"/>
 	    <xsl:text>&#010;</xsl:text>
-
-	    <xsl:call-template name="copyright"/>
-<!--
-           <xsl:text>WARNING! Generated from a pre-release draft of TEI P5
-from 1st October 2004. This is NOT the final P5</xsl:text>
--->
 	  </xsl:comment>
-	  <xsl:text>&#10;</xsl:text>
-	  <xsl:call-template name="predeclarations"/>
+	    <xsl:if test="$TEIC='true'">
+	      <xsl:call-template name="copyright"/>
+	      <!--
+		  <xsl:text>WARNING! Generated from a pre-release draft of TEI P5
+		  from 1st October 2004. This is NOT the final P5</xsl:text>
+	      -->
+	    <xsl:text>&#10;</xsl:text>
+	    <xsl:call-template name="predeclarations"/>
+	    </xsl:if>
   	  <xsl:apply-templates mode="tangle"
 			       select="tei:specGrpRef"/>
   	  <xsl:apply-templates mode="tangle"

@@ -169,9 +169,10 @@ End of macro declarations
 </xsl:template>
 
 <xsl:template name="schemaOut">
-      <xsl:text>&lt;!-- TEI P5 DTD. Generated </xsl:text>
-      <xsl:value-of select="edate:date-time()"/>
-      <xsl:call-template name="copyright"/>
+<xsl:if test="$TEIC='true'">
+  <xsl:text>&lt;!-- TEI P5 DTD. Generated </xsl:text>
+  <xsl:value-of select="edate:date-time()"/>
+  <xsl:call-template name="copyright"/>
  --&gt;
 &lt;!--predeclared classes --&gt;
 <xsl:for-each select="key('DefClasses',1)">
@@ -192,16 +193,14 @@ End of macro declarations
     </xsl:otherwise>
   </xsl:choose>
 </xsl:for-each>
+</xsl:if>
 
-&lt;!--classes--&gt;
       <xsl:apply-templates select="key('CLASSDOCS',1)"  mode="tangle"/>
 
-&lt;!--macros--&gt;
       <xsl:for-each select="key('MACRODOCS',1)">
 	<xsl:apply-templates select="." mode="tangle"/>
       </xsl:for-each>
 
-&lt;!--elements--&gt;
       <xsl:apply-templates select="key('ELEMENTDOCS',1)"  mode="tangle">      
 	<xsl:sort select="@ident"/>
       </xsl:apply-templates>
@@ -894,10 +893,12 @@ So, at the first, process the second; at the second, do nothing.
     <xsl:apply-templates select="tei:classes/tei:memberOf" mode="tangleAtts"/>
   </xsl:if>
   <xsl:call-template name="attributeList"/>
-  <xsl:if test="not(starts-with(@ident,'%'))">
-    <xsl:text>&#10; TEIform CDATA &#39;</xsl:text>
-    <xsl:value-of select="@ident"/>
-    <xsl:text>&#39; </xsl:text>
+  <xsl:if test="$TEIC='true'">
+    <xsl:if test="not(starts-with(@ident,'%'))">
+      <xsl:text>&#10; TEIform CDATA &#39;</xsl:text>
+      <xsl:value-of select="@ident"/>
+      <xsl:text>&#39; </xsl:text>
+    </xsl:if>
   </xsl:if>
   <xsl:text> &gt;</xsl:text>
 </xsl:template>
