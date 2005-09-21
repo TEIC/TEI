@@ -1867,7 +1867,7 @@ class romaDom extends domDocument
 	$oProc->importStylesheet( $oXSL );
 	$oProc->setParameter( null, 'TEIC', 'true');
 	$oProc->setParameter( null, 'displayMode', 'rnc' );
-	$oProc->setParameter( null, 'RNGDIR', '-' );
+	$oProc->setParameter( null, 'outputDir', '-' );
 	$oRNG = $oProc->transformToDoc( $oDOC );
       } 
 

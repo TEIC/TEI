@@ -38,7 +38,7 @@ makeRelax()
     echo "2. make Relax NG from compiled ODD"
     xsltproc $XSLOPTS  \
 	     --stringparam TEIC true \
-             --stringparam RNGDIR $RESULTS       \
+             --stringparam outputDir $RESULTS       \
              $TEIXSLDIR/odds/odd2relax.xsl $N.compiled.odd
     (cd $RESULTS; \
     echo "3. make Relax NG compact from XML"; \
