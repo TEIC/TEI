@@ -17,7 +17,7 @@ define( 'roma_pdflatex', 'pdflatex' );
 
 //#########################
 
-define( 'roma_xquery_server', 'http://www.tei-c.org.uk/Query/' );
+define( 'roma_xquery_server', 'http://www.tei-c.org.uk/release/xml/tei/xquery/' );
 define( 'roma_temporaryFilesDir', '/tmp' );
 define( 'roma_StylesheetDir', 'http://www.tei-c.org.uk/release/xml/tei/stylesheet/' );
 
