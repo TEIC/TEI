@@ -19,7 +19,7 @@ define( 'roma_pdflatex', 'pdflatex' );
 
 define( 'roma_xquery_server', 'http://www.tei-c.org.uk/Query/' );
 define( 'roma_temporaryFilesDir', '/tmp' );
-define( 'roma_StylesheetDir', 'http://www.tei-c.org.uk/stylesheet' );
+define( 'roma_StylesheetDir', 'http://www.tei-c.org.uk/release/xml/tei/stylesheet/' );
 
 define( 'roma_localStylesheetDir', 'roma/stylesheets' );
 define( 'romadom_templateDir', 'roma/templates' );
