@@ -52,8 +52,11 @@
   <xsl:param name="numberHeadingsDepth">  </xsl:param>
   <xsl:param name="oddmode">dtd</xsl:param>       
   <xsl:param name="prenumberedHeadings">  </xsl:param>
-
+  <xsl:param name="splitLevel">-1</xsl:param>
   <xsl:key name="Modules"   match="tei:moduleSpec" use="1"/>
+
+<xsl:key name="FILES"   match="tei:moduleSpec[@ident]"
+	 use="@ident"/>
 
 <xsl:template match="/">
 <xsl:choose>
@@ -156,8 +159,16 @@ End of macro declarations
 </xsl:template>
 
 <xsl:template match="tei:schemaSpec">
+
+<xsl:variable name="processor">
+   <xsl:value-of select="system-property('xsl:vendor')"/>
+</xsl:variable>
+
 <xsl:choose>
   <xsl:when test="$outputDir='' or $outputDir='-'">
+    <xsl:call-template name="schemaOut"/>
+  </xsl:when>
+  <xsl:when test="contains($processor,'SAXON')">
     <xsl:call-template name="schemaOut"/>
   </xsl:when>
   <xsl:otherwise>
@@ -408,108 +419,6 @@ End of macro declarations
 </xsl:template>
 
 
-<xsl:template name="oldcontent">
-<!--
-  <xsl:choose>
-    <xsl:when test="count(rng:*|processing-instruction())=1 and rng:ref">
-      <xsl:text>(</xsl:text>
-    </xsl:when>
-    <xsl:when test="count(rng:*|processing-instruction())=1 and rng:element[@name='when']">
-      <xsl:text>(</xsl:text>
-    </xsl:when>
-    <xsl:when test="count(rng:*|processing-instruction())&gt;1">
-      <xsl:text>(</xsl:text>
-    </xsl:when>
-  </xsl:choose>
--->
-  <xsl:for-each select="rng:*|processing-instruction()">
-    <xsl:variable name="F">
-      <xsl:value-of select="local-name((following-sibling::rng:*|following-sibling::processing-instruction())[1])"/>
-    </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="self::processing-instruction()">
-	<xsl:apply-templates select="."/>
-	<xsl:choose>
-	  <xsl:when test="$F='teidtd'">
-	    <xsl:value-of select="$sep"/>
-	  </xsl:when>
-	  <xsl:when test=".=')' and not($F='')">
-	    <xsl:value-of select="$sep"/>
-	  </xsl:when>                
-	</xsl:choose>
-      </xsl:when>
-      <xsl:when test="$F='teidtd'">
-	<xsl:apply-templates select="."/>
-      </xsl:when>      
-      <xsl:when test="$F='choice'">
-	  <xsl:apply-templates select="."/>
-	  <xsl:value-of select="$sep"/>
-      </xsl:when>
-      <xsl:when test="$F='group'">
-	  <xsl:apply-templates select="."/>
-	  <xsl:value-of select="$sep"/>
-      </xsl:when>
-      <xsl:when test="$F='interleave'">
-	  <xsl:apply-templates select="."/>
-	  <xsl:value-of select="$sep"/>
-      </xsl:when>
-      <xsl:when test="$F='oneOrMore'">
-	<xsl:apply-templates select="."/>
-	<xsl:value-of select="$sep"/>
-      </xsl:when>
-      <xsl:when test="$F='optional'">
-	  <xsl:apply-templates select="."/>
-	  <xsl:value-of select="$sep"/>
-      </xsl:when>
-      <xsl:when test="$F='ref' and $parameterize='false'">
-	<xsl:apply-templates select="."/>
-	  <xsl:for-each select="following-sibling::rng:ref[1]">
-	    <xsl:choose>
-	      <xsl:when test="key('CLASSES',@name)">
-		<xsl:variable name="exists">
-		  <xsl:call-template name="checkClass">
-		    <xsl:with-param name="id" select="@name"/>
-		  </xsl:call-template>
-		</xsl:variable>	
-		<xsl:if test="not($exists='')">
-		  <xsl:value-of select="$sep"/>
-		</xsl:if>
-	      </xsl:when>
-	    <xsl:when test="key('MACROS',@name)">
-	      <xsl:value-of select="$sep"/>
-	    </xsl:when>
-	    <xsl:when test="key('ELEMENTS',@name)">
-	      <xsl:value-of select="$sep"/>
-	    </xsl:when>
-	    </xsl:choose>
-	  </xsl:for-each>
-      </xsl:when>
-      <xsl:when test="$F='ref'">
-	<xsl:apply-templates select="."/>
-	<xsl:value-of select="$sep"/>
-      </xsl:when>
-      <xsl:when test="$F='zeroOrMore'">
-	<xsl:apply-templates select="."/>
-	<xsl:value-of select="$sep"/>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:apply-templates select="."/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:for-each>
-  <xsl:choose>
-    <xsl:when test="count(rng:*|processing-instruction())=1 and rng:ref">
-      <xsl:text>)</xsl:text>
-    </xsl:when>
-    <xsl:when test="count(rng:*|processing-instruction())=1 and rng:element[@name='when']">
-      <xsl:text>)</xsl:text>
-    </xsl:when>
-    <xsl:when test="count(rng:*|processing-instruction())&gt;1">
-      <xsl:text>)</xsl:text>
-    </xsl:when>
-  </xsl:choose>
-</xsl:template>
-
 <xsl:template match="tei:datatype">
   <xsl:choose>
     <xsl:when test="rng:data/@type='ID'">
@@ -731,12 +640,26 @@ End of macro declarations
 
 <xsl:template match="tei:gloss" mode="doc">
     <xsl:text>(</xsl:text>
-    <xsl:value-of select="."/>
+    <xsl:choose>
+      <xsl:when test="$lang='en' and not(@xml:lang)">
+	<xsl:value-of select="."/>
+      </xsl:when>
+      <xsl:when test="@xml:lang=$lang">
+	<xsl:value-of select="."/>
+      </xsl:when>
+    </xsl:choose>
     <xsl:text>) </xsl:text>
 </xsl:template>
 
 <xsl:template match="tei:desc" mode="doc">
-    <xsl:value-of select="."/>
+    <xsl:choose>
+      <xsl:when test="$lang='en' and not(@xml:lang)">
+	<xsl:value-of select="."/>
+      </xsl:when>
+      <xsl:when test="@xml:lang=$lang">
+	<xsl:value-of select="."/>
+      </xsl:when>
+    </xsl:choose>
 </xsl:template>
 
 <xsl:template match="tei:gloss|tei:remarks|tei:desc"/>

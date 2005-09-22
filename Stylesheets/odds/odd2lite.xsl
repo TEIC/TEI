@@ -51,7 +51,7 @@
   <xsl:variable name="lc">abcdefghijklmnopqrstuvwxyz</xsl:variable>
   
   <xsl:param name="displayMode">rnc</xsl:param>
-  
+  <xsl:param name="splitLevel">-1</xsl:param>
   <xsl:variable name="top" select="/"/>
 
 

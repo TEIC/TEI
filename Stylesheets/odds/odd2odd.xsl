@@ -56,23 +56,17 @@
 
   <xsl:key name="DELETE" match="tei:elementSpec[@mode='delete']"
 	   use="@ident"/>
-  <xsl:key name="ADD" match="tei:elementSpec[@mode='add']"
-	   use="@ident"/>
   <xsl:key name="REPLACE" match="tei:elementSpec[@mode='replace']"
 	   use="@ident"/>
   <xsl:key name="CHANGE" match="tei:elementSpec[@mode='change']" use="@ident"/>
 
   <xsl:key name="DELETE" match="tei:classSpec[@mode='delete']"
 	   use="@ident"/>
-  <xsl:key name="ADD" match="tei:classSpec[@mode='add']"
-	   use="@ident"/>
   <xsl:key name="REPLACE" match="tei:classSpec[@mode='replace']"
 	   use="@ident"/>
   <xsl:key name="CHANGE" match="tei:classSpec[@mode='change']" use="@ident"/>
 
   <xsl:key name="DELETE" match="tei:macroSpec[@mode='delete']"
-	   use="@ident"/>
-  <xsl:key name="ADD" match="tei:macroSpec[@mode='add']"
 	   use="@ident"/>
   <xsl:key name="REPLACE" match="tei:macroSpec[@mode='replace']"
 	   use="@ident"/>
@@ -121,10 +115,19 @@ because of the order of declarations
   <xsl:for-each select="tei:classSpec[@mode='add']">
     <xsl:copy-of select="."/>
   </xsl:for-each>
+  <xsl:for-each select="tei:classSpec[not(@mode)]">
+    <xsl:copy-of select="."/>
+  </xsl:for-each>
   <xsl:for-each select="tei:macroSpec[@mode='add']">
     <xsl:copy-of select="."/>
   </xsl:for-each>
+  <xsl:for-each select="tei:macroSpec[not(@mode)]">
+    <xsl:copy-of select="."/>
+  </xsl:for-each>
   <xsl:for-each select="tei:elementSpec[@mode='add']">
+    <xsl:apply-templates select="." mode="copy"/>
+  </xsl:for-each>
+  <xsl:for-each select="tei:elementSpec[not(@mode)]">
     <xsl:apply-templates select="." mode="copy"/>
   </xsl:for-each>
   <xsl:if test="$verbose='true'">
@@ -166,6 +169,7 @@ because of the order of declarations
 <xsl:variable name="KD" select="concat(@key,'-decl')"/>
 
   <xsl:choose>
+    <xsl:when test="$TEIC='false'"/>
     <xsl:when test="not($localsource='')">
       <xsl:variable name="Local">
 	<List>
@@ -281,22 +285,23 @@ because of the order of declarations
     <xsl:copy-of select="tei:desc"/>
     <xsl:copy-of select="tei:classes"/>
     <xsl:apply-templates select="tei:content" mode="copy"/>
-    <tei:attList>
-      <xsl:call-template name="classAttributes">
+      <attList xmlns="http://www.tei-c.org/ns/1.0">
+	<xsl:call-template name="classAttributes">
 	<xsl:with-param name="I" select="@ident"/>
 	<xsl:with-param name="K" select="'tei.global'"/>
-      </xsl:call-template>
-      <xsl:for-each select="tei:classes/tei:memberOf"> 
-	<xsl:variable name="K" select="@key"/>
-	<xsl:call-template name="classAttributes">
-	  <xsl:with-param name="I" select="$I"/>
-	  <xsl:with-param name="K" select="@key"/>
 	</xsl:call-template>
+	<xsl:for-each select="tei:classes/tei:memberOf"> 
+	  <xsl:variable name="K" select="@key"/>
+	  <xsl:call-template name="classAttributes">
+	    <xsl:with-param name="I" select="$I"/>
+	    <xsl:with-param name="K" select="@key"/>
+	  </xsl:call-template>
       </xsl:for-each>
       <xsl:copy-of select="tei:attList/tei:attDef[not(@mode)]"/>
       <xsl:copy-of select="tei:attList/tei:attRef"/>
       <xsl:copy-of select="tei:attList/tei:attList"/>
-    </tei:attList>
+      </attList>
+
     <xsl:copy-of select="tei:exemplum"/>
     <xsl:copy-of select="tei:remarks"/>
     <xsl:copy-of select="tei:listRef"/>
@@ -680,6 +685,7 @@ so that is only put back in if there is some content
   <xsl:param name="I"/>
   <xsl:param name="K"/>
   <xsl:choose>
+    <xsl:when test="$TEIC='false'"/>
     <xsl:when test="not($localsource='')">
       <xsl:for-each select="document($localsource)/tei:TEI">
 	<xsl:call-template name="classAttributesA">

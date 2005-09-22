@@ -49,6 +49,7 @@
 
   <xsl:param name="localsource"/>
   <xsl:param name="TEIC">false</xsl:param>
+  <xsl:param name="lang">en</xsl:param>
   <xsl:param name="lookupDatabase">false</xsl:param>
   <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
   <xsl:param name="verbose"></xsl:param>
@@ -326,9 +327,17 @@
   
   
   <xsl:template match="tei:desc" mode="show">
-    <xsl:apply-templates select="preceding-sibling::tei:gloss"
-			 mode="show"/>
-    <xsl:apply-templates/>
+    <xsl:apply-templates 
+	select="preceding-sibling::tei:gloss" mode="show"/>
+    <xsl:choose>
+      <xsl:when test="$lang='en' and not(@xml:lang)">
+	<xsl:apply-templates/>
+      </xsl:when>
+      <xsl:when test="@xml:lang=$lang">
+	<xsl:apply-templates/>
+      </xsl:when>
+    </xsl:choose>
+
   </xsl:template>
   
   
@@ -400,7 +409,8 @@
 		  </xsl:if>
 		  <xsl:if test="not($oddmode='tei')">
 		    <a:documentation>
-		      <xsl:apply-templates select="tei:gloss" mode="doc"/>
+		      <xsl:apply-templates
+			  select="tei:gloss" mode="doc"/>
 		      <xsl:apply-templates select="tei:desc" mode="doc"/>
 		    </a:documentation>
 		  </xsl:if>
@@ -508,7 +518,17 @@
   
   <xsl:template match="tei:gloss" mode="show">
     <xsl:if test="not(.='')">
-      (<xsl:apply-templates/>)
+      <xsl:text>(</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:choose>
+	<xsl:when test="$lang='en' and not(@xml:lang)">
+	  <xsl:apply-templates/>
+	</xsl:when>
+	<xsl:when test="@xml:lang=$lang">
+	  <xsl:apply-templates/>
+	</xsl:when>
+      </xsl:choose>
+      <xsl:text>) </xsl:text>
     </xsl:if>
   </xsl:template>
   
@@ -1424,12 +1444,26 @@ it wrong otherwise. I suspect a bug there somewhere.
 
 <xsl:template match="tei:gloss" mode="doc">
     <xsl:text>(</xsl:text>
-    <xsl:value-of select="."/>
+    <xsl:choose>
+      <xsl:when test="$lang='en' and not(@xml:lang)">
+	<xsl:value-of select="."/>
+      </xsl:when>
+      <xsl:when test="@xml:lang=$lang">
+	<xsl:value-of select="."/>
+      </xsl:when>
+    </xsl:choose>
     <xsl:text>) </xsl:text>
 </xsl:template>
 
 <xsl:template match="tei:desc" mode="doc">
-    <xsl:value-of select="."/>
+    <xsl:choose>
+      <xsl:when test="$lang='en' and not(@xml:lang)">
+	<xsl:value-of select="."/>
+      </xsl:when>
+      <xsl:when test="@xml:lang=$lang">
+	<xsl:value-of select="."/>
+      </xsl:when>
+    </xsl:choose>
 </xsl:template>
 
 <xd:doc>
@@ -1440,5 +1474,9 @@ it wrong otherwise. I suspect a bug there somewhere.
     <xsl:call-template name="processSchemaFragment"/>
   </xsl:template>
   
+
+<xsl:template name="typewriter"/>
+
+<xsl:template name="refdoc"/>
 
 </xsl:stylesheet>

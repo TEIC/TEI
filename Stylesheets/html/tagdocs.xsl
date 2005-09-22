@@ -1320,18 +1320,41 @@
     <xsl:param name="autowrap">true</xsl:param>
     <pre class="eg">
       <xsl:if test="$startnewline='true'">
-        <xsl:text>
-</xsl:text>
+        <xsl:text>&#10;</xsl:text>
       </xsl:if>
       <xsl:choose>
         <xsl:when test="$autowrap='false'">
           <xsl:value-of select="."/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:variable name="lines" select="estr:tokenize($text,'&#10;')"/>
+	  <xsl:call-template name="nextLine">
+	    <xsl:with-param name="text">
+	    <xsl:value-of select="$text"/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+<!--          <xsl:variable name="lines" select="estr:tokenize($text,'&#10;')"/>
           <xsl:apply-templates select="$lines[1]" mode="normalline"/>
+-->
         </xsl:otherwise>
       </xsl:choose>
     </pre>
   </xsl:template>
+
+  <xsl:template name="nextLine">
+    <xsl:param name="text"/>
+    <xsl:choose>
+      <xsl:when test="contains($text,'&#10;')">
+	<xsl:value-of select="substring-before($text,'&#10;')"/>
+	<xsl:call-template name="nextLine">
+	  <xsl:with-param name="text">
+	    <xsl:value-of select="substring-after($text,'&#10;')"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$text"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
 </xsl:stylesheet>

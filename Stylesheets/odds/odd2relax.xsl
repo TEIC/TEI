@@ -48,7 +48,7 @@
 <xsl:output encoding="utf-8" method="xml" indent="yes"/>
 
 <xsl:param name="verbose"></xsl:param>
-<xsl:param name="RNGDIR">Schema</xsl:param>
+<xsl:param name="outputDir">Schema</xsl:param>
 <xsl:param name="appendixWords"/>
 <xsl:variable name="headingNumberSuffix"/>
 <xsl:variable name="numberBackHeadings"/>
@@ -59,7 +59,7 @@
 <xsl:template name="italicize"/>
 <xsl:template name="makeAnchor"/>
 <xsl:template name="makeLink"/>
-
+<xsl:param name="splitLevel">-1</xsl:param>
 <xsl:variable name="oddmode">dtd</xsl:variable>       
 <xsl:variable name="filesuffix"></xsl:variable>
 <!-- get list of output files -->
@@ -82,8 +82,15 @@
 
 <xsl:template name="generateOutput">
 <xsl:param name="body"/>
+<xsl:variable name="processor">
+   <xsl:value-of select="system-property('xsl:vendor')"/>
+</xsl:variable>
+
 <xsl:choose>
-  <xsl:when test="$RNGDIR='' or $RNGDIR='-'">
+  <xsl:when test="$outputDir='' or $outputDir='-'">
+      <xsl:copy-of select="$body"/>
+  </xsl:when>
+  <xsl:when test="contains($processor,'SAXON')">
       <xsl:copy-of select="$body"/>
   </xsl:when>
   <xsl:otherwise>
@@ -91,7 +98,7 @@
     <xsl:message>   File [<xsl:value-of select="@ident"/>]      </xsl:message>
     </xsl:if>
     <exsl:document method="xml" indent="yes"
-		   href="{$RNGDIR}/{@ident}.rng">
+		   href="{$outputDir}/{@ident}.rng">
       <xsl:copy-of select="$body"/>
     </exsl:document>
   </xsl:otherwise>
@@ -124,11 +131,13 @@
 	    <xsl:text>&#010;</xsl:text>
 	  </xsl:comment>
 	    <xsl:if test="$TEIC='true'">
+	      <xsl:comment>
 	      <xsl:call-template name="copyright"/>
 	      <!--
 		  <xsl:text>WARNING! Generated from a pre-release draft of TEI P5
 		  from 1st October 2004. This is NOT the final P5</xsl:text>
 	      -->
+	      </xsl:comment>
 	    <xsl:text>&#10;</xsl:text>
 	    <xsl:call-template name="predeclarations"/>
 	    </xsl:if>

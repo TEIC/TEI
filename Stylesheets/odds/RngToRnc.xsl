@@ -1327,7 +1327,7 @@
 
   <xsl:template name="leading-documentation">
     <xsl:param name="nd"/>
-
+<!--
     <xsl:choose>
       <xsl:when test="not ($nd) or $nd/self::rng:*"/>
 
@@ -1357,11 +1357,11 @@
 	<nl size="1"/>
       </xsl:otherwise>
     </xsl:choose>
+-->
   </xsl:template>
 
   <xsl:template name="leading-annotations">
     <xsl:param name="nd"/>
-
     <xsl:if test="$nd and not ($nd/self::rng:*)">
       <xsl:for-each select="$nd">
 	<xsl:call-template name="annotation-element"/>
@@ -1373,6 +1373,7 @@
   </xsl:template>
 
   <xsl:template name="annotations">
+<!--
     <xsl:choose>
       <xsl:when test="(self::rng:value or self::rng:param) and
 	following-sibling::*[1][not (self::rng:*)]">
@@ -1397,11 +1398,12 @@
 	<nl size="1"/>
       </xsl:when>
     </xsl:choose>
+-->
   </xsl:template>
 
   <xsl:template name="doc-comment">
     <xsl:param name="comment"/>
-
+<!--
     <xsl:if test="$comment">
       <xsl:variable name="head" select="substring-before ($comment, '&#10;')"/>
       <xsl:variable name="line">
@@ -1427,6 +1429,7 @@
 	  select="substring-after ($comment, '&#10;')"/>
       </xsl:call-template>
     </xsl:if>
+-->
   </xsl:template>
 
   <xsl:template match="rng:grammar/a:documentation | rng:div/a:documentation |

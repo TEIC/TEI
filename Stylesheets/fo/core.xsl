@@ -301,9 +301,7 @@
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:gloss">
-    <fo:inline font-style="italic">
       <xsl:apply-templates/>
-    </fo:inline>
   </xsl:template>
   
 <xd:doc>
