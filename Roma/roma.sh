@@ -11,23 +11,23 @@
 makeODD() 
 {
     echo "1. expand and simplify ODD "
-    if test "x$lang" = "x"
+    if test "x$translatelang" = "x"
     then
 	xsltproc -o $N.compiled.odd \
-	     --stringparam TEIC true \
+	    --stringparam TEIC $TEIC \
 	    --stringparam TEISERVER $TEISERVER  \
 	    --stringparam localsource "$LOCAL"  \
 	    $TEIXSLDIR/odds/odd2odd.xsl $ODD 
     else
 	echo  [translated to language $lang]
 	xsltproc \
-	     --stringparam TEIC true \
+	     --stringparam TEIC $TEIC \
 	    --stringparam TEISERVER $TEISERVER  \
 	    --stringparam localsource "$LOCAL"  \
 	    $TEIXSLDIR/odds/odd2odd.xsl $ODD  | \
 	xsltproc -o $N.compiled.odd \
 	    --stringparam TEISERVER $TEISERVER  \
-	    --stringparam lang $lang  \
+	    --stringparam lang $translatelang  \
 	    --stringparam verbose true  \
 	    $TEIXSLDIR/odds/translate-odd.xsl - 
     fi
@@ -37,7 +37,8 @@ makeRelax()
 {
     echo "2. make Relax NG from compiled ODD"
     xsltproc $XSLOPTS  \
-	     --stringparam TEIC true \
+	     --stringparam TEIC $TEIC \
+	     --stringparam lang $lang  \
              --stringparam outputDir $RESULTS       \
              $TEIXSLDIR/odds/odd2relax.xsl $N.compiled.odd
     (cd $RESULTS; \
@@ -58,9 +59,10 @@ makeDTD()
 {
     echo "5. make DTD from compiled ODD"
     xsltproc  $XSLOPTS \
-	     --stringparam TEIC true \
-             --stringparam outputDir $RESULTS       \
-             $TEIXSLDIR/odds/odd2dtd.xsl $N.compiled.odd
+	    --stringparam lang $lang  \
+	    --stringparam TEIC $TEIC \
+            --stringparam outputDir $RESULTS       \
+            $TEIXSLDIR/odds/odd2dtd.xsl $N.compiled.odd
 }
 
 makeHTMLDOC() 
@@ -68,7 +70,8 @@ makeHTMLDOC()
     echo "8. make HTML documentation"
     xsltproc $XSLOPTS     \
 	-o $N.doc.html \
-	--stringparam TEIC true \
+	--stringparam TEIC $TEIC \
+        --stringparam lang $lang  \
 	--stringparam STDOUT true \
 	--stringparam splitLevel -1 \
 	$TEIXSLDIR/odds/odd2html.xsl $N.compiled.odd
@@ -79,7 +82,8 @@ makePDFDOC()
 {
     echo "7. make PDF documentation"
     xsltproc $XSLOPTS     \
-	--stringparam TEIC true \
+	--stringparam TEIC $TEIC \
+        --stringparam lang $lang  \
 	-o $N.doc.tex \
 	$TEIXSLDIR/latex/tei.xsl $N.doc.xml
     pdflatex $N.doc.tex
@@ -90,7 +94,8 @@ makeXMLDOC()
 {
     echo "6. make expanded documented ODD"
     xsltproc $XSLOPTS     \
-	--stringparam TEIC true \
+	--stringparam TEIC $TEIC \
+        --stringparam lang $lang  \
 	-o $N.doc.xml \
 	$TEIXSLDIR/odds/odd2lite.xsl $N.compiled.odd 
     echo created $N.doc.xml 
@@ -119,14 +124,16 @@ echo "  --xsl=$TEIXSLDIR"
 echo "  --teiserver=$TEISERVER"
 echo "  --localsource=$LOCALSOURCE # local copy of P5 sources
 echo "  options, binary switches:"
-echo "  --doc         # create expanded documented ODD (TEI Lite XML)"
-echo "  --lang=LANG  # translate to LANG (es, de, fr)"
-echo "  --dochtml     # create HTML version of doc"
-echo "  --docpdf      # create PDF version of doc"
-echo "  --nodtd       # suppress DTD creation"
-echo "  --norelax     # suppress RelaxNG creation"
-echo "  --noxsd       # suppress W3C XML Schema creation"
-echo "  --debug       # leave temporary files, etc."
+echo "  --doc              # create expanded documented ODD (TEI Lite XML)"
+echo "  --translate=LANG   # translate tags to LANG (es, de, fr)"
+echo "  --lang=LANG        # use LANG for interface and documentation where possible
+echo "  --dochtml          # create HTML version of doc"
+echo "  --docpdf           # create PDF version of doc"
+echo "  --nodtd            # suppress DTD creation"
+echo "  --norelax          # suppress RelaxNG creation"
+echo "  --noxsd            # suppress W3C XML Schema creation"
+echo "  --noteic           # suppress TEI-specific features
+echo "  --debug            # leave temporary files, etc."
 exit 1
 }
 
@@ -135,7 +142,9 @@ TEISERVER=http://tei.oucs.ox.ac.uk/Query/
 TEIXSLDIR=/usr/share/xml/tei/stylesheet
 LOCALSOURCE=
 LOCAL=
-lang=
+TEIC=true
+lang=en
+translatelang=
 debug=false
 dtd=true
 relax=true
@@ -145,18 +154,20 @@ docpdf=false
 dochtml=false
 while test $# -gt 0; do
   case $1 in
-    --xsl=*)    TEIXSLDIR=`echo $1 | sed 's/.*=//'`;;
-    --lang=*)   lang=`echo $1 | sed 's/.*=//'`;;
-    --doc)      doc=true;;
-    --dochtml)  dochtml=true;;
-    --docpdf)   docpdf=true;;
+    --xsl=*)       TEIXSLDIR=`echo $1 | sed 's/.*=//'`;;
+    --lang=*)      lang=`echo $1 | sed 's/.*=//'`;;
+    --translate=*) translatelang=`echo $1 | sed 's/.*=//'`;;
+    --doc)         doc=true;;
+    --dochtml)     dochtml=true;;
+    --docpdf)      docpdf=true;;
     --teiserver=*) TEISERVER=`echo $1 | sed 's/.*=//'`;;
     --localsource=*) LOCALSOURCE=`echo $1 | sed 's/.*=//'`;;
-    --nodtd)    dtd=false;;
-    --norelax)  relax=false;;
-    --noxsd)    xsd=false;;
-    --debug)    debug=true;;
-    --help)     usageMsg;;
+    --nodtd)       dtd=false;;
+    --norelax)     relax=false;;
+    --noxsd)       xsd=false;;
+    --noteic)      TEIC=false;;
+    --debug)       debug=true;;
+    --help)        usageMsg;;
      *) if test "$1" = "${1#--}" ; then 
 	   break
 	else
