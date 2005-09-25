@@ -1,16 +1,11 @@
 <!--
 Copyright TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
-
 $Date$
 $Author$
-
 -->
 <div1 xmlns="http://www.tei-c.org/ns/1.0" type="Faisal" xml:id="PH" n="18"><head>Transcription of Primary Sources</head>
-
 <p>This chapter defines an optional additional tag set intended for use
 in the transcription of primary sources, in particular manuscripts,
 and describes how some
@@ -29,7 +24,6 @@ fill lacunae.  Further, it is customary in transcriptions to
 register certain features of the source, such as ornamentation,
 underlining, deletion, areas of damage and lacunae.  This chapter
 indicates means to record such information:
- 
 <list type="bullets">
 <item>first, the problem of recording editorial or other alterations to
 the text, such as expansion of abbreviations, corrections, conjectures,
@@ -48,7 +42,6 @@ types.  In time, the feature structure notation developed in chapter
 <ptr target="#FS"/>, may also permit scholars to tailor the encoding
 of complex transcriptional information in ways not here anticipated.
 </p>
-
 <p>It should be noted that this chapter focuses primarily upon
 problems associated with the transcription of manuscript materials,
 and that consequently problems of codicology other matters peculiar to
@@ -60,7 +53,6 @@ these areas, and that the encoder will need to take even more
 individual responsibility than usual in applying the recommendations
 of this chapter in such contexts, but believe that these
 recommendations form a good basis for such future work.</p>
-
 <p>Many of the descriptions below use terms like
 <soCalled>scribe</soCalled>, <soCalled>author</soCalled>,
 <soCalled>editor</soCalled>,
@@ -81,29 +73,12 @@ apparatus, i.e. within the elements proposed in chapter <ptr target="#TC"/>.
 This can generally be achieved by nesting a
 particular reading containing tagged elements from a particular witness
 within the <gi>rdg</gi> element in an <gi>app</gi> structure.
-	
-	
-	
 	</p>
 <p>Just as a critical apparatus may contain transcriptional elements
 within its record of variant readings in various witnesses, one may
 record variant readings in an individual witness by use of the apparatus
 mechanisms <gi>app</gi> and <gi>rdg</gi>.  This is discussed in
 section <ptr target="#TCTR"/>.
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	</p>
 <p>The tag set defined in this chapter may be selected using the
 mechanisms described in section <ptr target="#STIN"/>; in a document using
@@ -111,13 +86,10 @@ this tag set, the document-type-declaration subset should contain the
 following declaration of the parameter
 entity <ident type="pe">TEI.transcr</ident>, or the
 equivalent:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % TEI.transcr 'INCLUDE' >]]></egXML>
- 
 In an XML document using this tag set together with that for textual
 criticism and the base tag set for verse, the entire document type
 declaration might resemble the following:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN"
                        "tei2.dtd" [
    <!ENTITY % TEI.XML 'INCLUDE' >
@@ -127,10 +99,7 @@ declaration might resemble the following:
 ]>]]></egXML></p>
 <p>The overall structure of the tag set defined by this chapter is as
 follows:
- 
 <moduleSpec xml:id="DPH" ident="transcr"><altIdent type="FPI">Transcription of Primary Sources</altIdent><desc>Transcription of primary sources</desc></moduleSpec><!--publicID:  -//TEI P5//ELEMENTS Additional Element Set for Transcription of Primary Sources//EN-->
-
-
 <specGrpRef target="#DTCAD"/>
 <specGrpRef target="#DPHCD"/>
 <specGrpRef target="#DPHOM"/>
@@ -138,23 +107,16 @@ follows:
 <specGrpRef target="#DPHDA"/>
 <specGrpRef target="#DPHSP"/>
 <specGrpRef target="#DTCHD"/>
-
 </p>
-
-
 <!-- this extension never referenced by DTD, so removed -->
-
 <!--
 <p>This tag set modifies the element class
 <ident type="class">edit</ident> by declaring two extra attributes
 for members of the class:
- 
 <module xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:id="DPHENT" n="Attributes for Transcription of Primary Sources" ident="transcr-decl" type="decls"><publicID>-//TEI P5//ENTITIES Element Classes for Transcription of Primary Sources//EN</publicID>
 &editph.cla;
     </module></p>
-
 -->
-
 <div2 type="Ilocano" xml:id="PHCH"><head>Altered, Corrected, and Erroneous Texts</head>
 <p>In the detailed transcription of any source, it may prove necessary
 to record various types of actual or potential alteration of the text:
@@ -172,7 +134,6 @@ of any type, encoders may record their corrections, normalizations,
 expansions of abbreviations, additions, and omissions
 using the elements described in section <ptr target="#COED"/>.
 Those particularly relevant to this chapter include:
- 
 <specList><specDesc key="abbr"/><specDesc key="expan"/><specDesc key="sic"/><specDesc key="corr"/><specDesc key="add"/><specDesc key="del"/><specDesc key="hi"/><specDesc key="gap"/></specList>
 	</p>
 <p>When the additional tag set for transcription of primary sources
@@ -180,9 +141,7 @@ is selected,
 these elements all gain two specialized attributes for specifying who is
 responsible for certain aspects of the interpretation and markup, and
 the certainty attributed to the interpretation:
- 
 <specList><specDesc key="tei.edit"/></specList>
- 
 The specific aspect of the markup described by these attributes differs
 on different elements; for further discussion, see the relevant sections
 below, especially section <ptr target="#PHHR"/>.</p>
@@ -230,14 +189,11 @@ transcribed as follows, using the <gi>expan</gi> element, with the
 <att>abbr</att> attribute to hold an entity reference for the
 brevigraph or other sign indicating the abbreviation in the
 manuscript:
-
 <eg><![CDATA[eu<expan abbr="&er;" resp="mp">er</expan>y
 <expan abbr="&p-underbar;">per</expan>sone that
 loketh after heuen hath a place in this ladder]]></eg>
- 
 Alternatively, the abbreviations may be encoded using the <gi>abbr</gi>
 element.
- 
 <eg><![CDATA[eu<abbr expan="er" resp="mp">&er;</abbr>y
 <abbr expan="per">&p-underbar;</abbr>sone that
 loketh after heuen hath a place in this ladder]]></eg></p>
@@ -267,26 +223,21 @@ instance from the English <title>Brut</title>,<note place="foot">On fol
 65v of Bodleian MS. Rawlinson Poetry 32; in Parkes 12(ii).</note>
 a note is attached to an editorial expansion of the tail on the final d
 of <mentioned>good</mentioned> to <mentioned>goode</mentioned>:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">For alle the while that I had
 good<expan xml:id="exp01">e</expan>
 I was welbeloued</egXML>
  <!--  abbr="&#x027d;" -->
 Then the note:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><note target="#exp01">The stroke added to 
 the final d could signify the plural ending (-es, -is, -ys&gt;)
 but the singular <hi rend="it">good</hi> was used with the meaning
 <q>property</q>, <q>wealth</q>, at this time (v. examples
 quoted in OED, sb. Good, C. 7, b, c, d and 8 spec.)</note></egXML>
- 
 The editor might declare a degree of certainty for this expansion, based
 on the OED examples, and state the responsibility for the expansion:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">For alle the while that I had
 good<expan resp="mp" cert="90">e</expan>
 I was welbeloued</egXML>
- 
 Observe that the <att>cert</att> and <att>resp</att> attributes may be
 used with the <gi>expan</gi> element only to indicate respectively
 confidence in the content of the element (i.e. the expansion), and
@@ -295,11 +246,9 @@ responsibility for suggesting this expansion. </p>
 <p>The <gi>choice</gi> element may be used to indicate that the
 proposed expansion is one way of encoding what might equally well be
 represented as an abbreviation, represented by the hooked D, as follows:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples">For alle the while that I had
 good<choice><abbr>&#x027d;</abbr><expan resp="mp" cert="90">e</expan></choice>
 I was welbeloued</egXML>
- 
 If it is desired to express aspects of certainty and responsibility for
 some other aspect of the use of these elements, then the mechanisms
 discussed in chapter <ptr target="#CE"/> should be used. See also <ptr target="#PHHR"/> for discussion of the issues of certainty and
@@ -308,7 +257,6 @@ responsibility in the context of transcription.</p>
 recorded, multiple notes may be supplied. It may also be appropriate
 to use the markup for critical apparatus; an example is given in
 section <ptr target="#TCTR"/>.</p>
-
 </div3>
 <div3 type="subsection" xml:id="PHCC"><head>Correction and Conjecture</head>
 <p>The <gi>sic</gi>, <gi>corr</gi>, and <gi>choice</gi> elements, defined in the core module
@@ -316,32 +264,23 @@ may be used to register authorial or scribal corrections within a
 witness. For example, in the manuscript of William James's <title>A
 Pluralistic Universe</title>, edited by Fredson Bowers (Cambridge:
 Harvard University Press, 1977) a sentence first written
- 
 <q rend="display">One must have lived longer with this system,
 to appreciate its advantages.</q>
- 
 has been modified by James to begin <q>But one must ...</q>, without the
 inital capital O having been reduced to lowercase. This non-standard
 orthography could be recorded thus:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">But <sic>One</sic> must have lived ...</egXML>
- 
 or corrected:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples">But <corr>one</corr> must have lived ...</egXML>
-
 or the two possibilities might be represented as a choice:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples">But <choice><sic>One</sic><corr>one</corr></choice> must have lived ...</egXML></p>
 <p>In this example from Albertus Magnus,<note place="foot"><title>De
 Nutrimento et Nutribili, Tractatus 1</title>, fol 217r col b of Merton
 College Oxford MS O.2.1 (Parkes pl. 16).</note>
 both a manuscript error <mentioned>angues</mentioned> and its correction
 <mentioned>augens</mentioned> are registered within a  <gi>choice</gi> element:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Nos autem iam ostendimus quod nutrimentum
 et <choice><sic>angues</sic><corr>augens</corr></choice>.</egXML>
- 
 </p> 
 <!-- dropped example for the moment, pending clarification of when to -->
 	<!-- use supplied etc,. LB -->
@@ -352,21 +291,15 @@ In this example, from George Moore's draft of additional materials for
   to 1914</title>, by V. Klinkenborg, H.Cahoon and C. Ryskamp (New York:
   Pierpont Morgan Library, 1981).</note>
 the transcriber supplies the word <mentioned>we</mentioned> omitted by the author:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">You see that I avoid the word create for we
 create nothing <sic corr="we"/> develope.</egXML>
- 
 Or with reverse use of the <gi>corr</gi> element:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">You see that I avoid the word create for we
 create nothing <corr sic="">we</corr> develope.</egXML>
- 
 (N.B. when the additional tag set defined in this chapter is selected,
 the <gi>supplied</gi> element should normally be used in preference
 to <gi>sic</gi> or <gi>corr</gi> for such supplied text.)</p>
-
 -->
-
 <p>As with <gi>expan</gi> and <gi>abbr</gi>, the
 choice as to whether to record simply that there is an apparent error,
 or simply that a correction has been applied, or to record both
@@ -383,16 +316,12 @@ only <gi>corr</gi> throughout.</p>
 the <gi>note</gi> element and <att>resp</att> and <att>cert</att>
 attributes. Here, two separate corrections in Dudo of S. Quentin<note place="foot"><title>De moribus et actis primorum Normannie ducum</title>,
 in fol 4v of British Library MS Harley 3742, Parkes pl 6(i).</note>
-are assigned the same note. First the corrections, held in the
-attribute value of the <gi>sic</gi> elements:
- 
+are assigned the same note. First the correction is represented within
+a <gi>choice</gi> element:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">quamuis <choice xml:id="sic01"><sic>mens</sic><corr>iners</corr></choice> que nutu dei
 gesta sunt ... unde esset uiriliter
 <choice xml:id="sic02"><corr>uegetata</corr><sic>negata</sic></choice></egXML>
- 
-then the note, linked to the <att>xml:id</att> of the <gi>choice</gi> element
-for each of the two corrections:
- 
+then the note, linked to the <att>xml:id</att> of the two <gi>choice</gi> elements
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><note target="#sic01 #sic02">Substitution of a more
 familiar word which resembles graphically what the
 scribe should be copying but which
@@ -404,16 +333,13 @@ responsible for the conjecture. In this example, editorial confidence
 in E. Talbot Donaldson's emendation of the Hengwrt manuscript reading
 <mentioned>wight</mentioned> to <mentioned>wright</mentioned> in line 117 of Chaucer's
 <title>The Wife of Bath's Prologue</title> may be marked as follows:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Telle me also, to what conclusioun
 Were membres maad, of generacioun
 And of so parfit wis a 
 <choice xml:id="corr117"><sic>wight</sic><corr resp="ETD" cert="70">wright</corr></choice>
 ywroght?</egXML>
- 
 The editor might also conveniently add a note referring to Donaldson's
 discussion of this passage:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><note target="#corr117">This emendation of the Hengwrt copy text,
 based on a Latin source and on the reading of three late
 and usually unauthoritative manuscripts, was proposed
@@ -425,14 +351,12 @@ alternative expansions are so grouped in the example given in section
 <ptr target="#TCTR"/>. Here, Donaldson's conjectured emendation of the
 Hengwrt manuscript may be recorded not only alongside the editorial
 transcription but also alongside another conjecture:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">And of so parfit wis a
 <app>
   <rdg wit="Hg">wight</rdg>
   <rdg wit="Ln Ry2 Ld" resp="ETD"> <corr>wright</corr> </rdg>
   <rdg wit="Gg" resp="PR"> <corr>wyf</corr> </rdg>
 </app></egXML></p>
-
 <p>Observe that no <att>resp</att> attribute is necessary for the base
 transcription:  by default, responsibility is assigned to the scholar(s)
 responsible for the transcription, as identified in the TEI header.  The
@@ -452,7 +376,6 @@ respectively confidence in the conjecture held in the <att>corr</att>
 attribute and the responsibility for suggesting this conjecture. The
 above example could be encoded using the <gi>sic</gi> element as
 follows:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">And of so parfit wis a
 <sic corr="wright" resp="etd" cert="70">wight</sic>
 ywroght?</egXML>
@@ -464,9 +387,7 @@ responsibility in the context of transcription.</p></div3>
 <div3 type="subsection" xml:id="PHAD"><head>Additions and Deletions</head>
 <p>Additions and deletions to a text may be described using the
 following elements:
- 
 <specList><specDesc key="add"/><specDesc key="addSpan" atts="place hand to"/><specDesc key="del"/><specDesc key="delSpan" atts="type status hand to"/></specList>
- 
 Of these, <gi>add</gi> and <gi>del</gi> are included in the core tag
 set, while <gi>addSpan</gi> and <gi>delSpan</gi> are available only when
 using the additional tag set defined in this chapter.</p>
@@ -478,13 +399,11 @@ of Max Beerbohm's <title>The Golden Drugget</title>,<note place="foot">In
 the author's addition of "do ever" may be recorded as follows, with the
 <att>hand</att> attribute indicating that the addition was Beerbohm's
 by referencing a <gi>hand</gi> element defined elsewhere in the document:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Some things are best at first sight. Others &#x2014; and
 here is one of them &#x2014; <add hand="#mb">do ever</add>
 improve by recognition ....
 <hand xml:id="mb" scribe="Max Beerbohm holograph"/>
 </egXML>
- 
 Similarly, the <gi>del</gi> element indicating material deleted may be
 used to signify manuscript deletions. In the autograph manuscript of D.
 H. Lawrence's <title>Eloi, Eloi, lama sabachthani</title><note place="foot">In Pierpont
@@ -493,14 +412,11 @@ Morgan MA 1892, (Klinkenborg 129).</note>, the author's deletion of
 <att>hand</att> attribute indicating that the deletion was Lawrence's,
 the <att>rend</att> attribute indicates that the deletion was by
 strike-through:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">For I hate this <del rend="strikethrough" hand="#dhl">my</del> body,
 which is so dear to me
 ...
 <hand xml:id="dhl" scribe="holograph"/>
 </egXML>
-
- 
 If deletions are classified systematically, the <att>type</att>
 attribute should normally
 be used to indicate the classification; when they
@@ -540,11 +456,8 @@ is placed to mark the beginning of the span of added text.  The
 <att>hand</att> attribute ascribes the responsibility for the addition
 to the manuscript to Helgi, and the <att>to</att> attribute declares the
 identifier for the anchor which marks the end of the added text:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><hand xml:id="heol" n="Helgi &#xD3;lafsson"/>
-
 <addSpan n="added gathering" hand="#heol" to="#p025"/>
-
 <anchor xml:id="p025"/>
 </egXML></p>
 <p>In this example of the use of the <gi>delSpan</gi> element, a full
@@ -559,12 +472,10 @@ The lines also themselves include a further deletion and addition.  The
 deletion, with the <att>to</att> attribute giving the identifier
 <ident>delend01</ident> for an <gi>anchor</gi> element which marks the end of the span of text so
 marked:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><l n="1">
    <delSpan rend="vertical strike" to="#delend01"/>
    Tis moonlight <del>upon</del> <add>over</add> Oman's sky</l>
 <l n="2">Her isles of pearl look lovelily<anchor xml:id="delend01"/></l></egXML></p>
-
 <p>The text deleted must be at least partially legible, in order for the
 encoder to be able to transcribe it.  If it is not legible at all, the
 <gi>gap</gi> element should be used to signal that the text was not transcribed,
@@ -582,35 +493,9 @@ section <ptr target="#PHDA"/>.</p>
 in the core tag set and are available in all TEI documents.  The
 elements <gi>addSpan</gi> and <gi>delSpan</gi> have the following formal
 declarations:
- 
 <specGrp xml:id="DTCAD" n="Added and Deleted Spans">
-
-
 &addspan.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
 &delspan.odd;
-
-
-
-
-
-
-
-
-
-
 </specGrp></p></div3>
 <div3 type="subsection" xml:id="PHSU"><head>Substitutions</head>
 <p>Substitution of one word or phrase for another is
@@ -624,7 +509,6 @@ substitutions on the one stretch of text, with uncertainty as to the
 order of substitution and as to the final reading.</p>
 <p>Three different methods may be used to express substitution of one
 stretch of text by another:
- 
 <list type="bullets">
 <item>the <gi>sic</gi> and <gi>corr</gi> elements, either individually
 to encode a single substitution or nested to encode a sequence of
@@ -636,7 +520,6 @@ show that text was first deleted then other text inserted;</item>
 indicate that the deleted and added text within the individual reading
 elements making up the <gi>app</gi> structure are variants of one
 another.</item></list>
- 
 The use of all three of these is illustrated in the following encodings
 of the second line of <title>Eloi, Eloi, lama sabachthani</title> from
 the Lawrence manuscript mentioned above.  Lawrence first wrote <q>How it
@@ -649,32 +532,26 @@ Note the use of the <att>resp</att> attribute on the <gi>corr</gi>
 element to assign the correction to Lawrence.  (For further information
 on the <att>hand</att> and <att>resp</att> attributes, see section
 <ptr target="#PHHR"/>.) 
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">How it <choice><sic>galls</sic><corr resp="DHL">dogs</corr></choice>
 me, what a galling shadow</egXML>
- 
 This substitution could be registered using the second method outlined
 above, using the <gi>del</gi> and <gi>add</gi> elements in sequence to
 reflect the fact that text was first deleted then other text inserted:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">How it <del type="overstrike" hand="#dhl">galls</del>
 <add place="supralinear" hand="#dhl">dogs</add>
 me, what a galling shadow</egXML>
- 
 This substitution could be registered using the third method outlined
 above, using the <gi>del</gi> and <gi>add</gi> elements within an
 <gi>app</gi> structure to indicate that the deleted and added texts are
 variants of one another.  Note that within the <gi>app</gi> structure
 the <att>hand</att> attribute is moved from the inner <gi>del</gi> and
 <gi>add</gi> elements to the outer <gi>rdg</gi> element:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">How it
   <app>
     <rdg hand="#dhl"> <del type="overstrike"> galls</del> </rdg>
     <rdg hand="#dhl"> <add place="supralinear"> dogs</add> </rdg>
   </app>
 me, what a galling shadow</egXML>
- 
 Each of these three methods has its particular advantages and
 disadvantages.  The first method (use of <gi>sic</gi> and <gi>corr</gi>)
 is compact and indicates clearly that one text is a substitute for
@@ -707,14 +584,12 @@ declaration of how the deletion and insertion are effected and for
 explicit indication that one text is a substitute for another.  Further,
 the exact sequence of readings may also be declared by use of the
 <att>varSeq</att> attribute on the <gi>rdg</gi> element, as follows:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">How it
   <app>
     <rdg varSeq="1" hand="#dhl"> <del>galls</del> </rdg>
     <rdg varSeq="2" hand="#dhl"> <add>dogs</add> </rdg>
   </app>
 me, what a galling shadow</egXML>
- 
 Here, the combination of the <att>hand</att> and <att>varSeq</att>
 attributes suffices to inform the reader of the authorial substitution
 of <mentioned>dogs</mentioned> for <mentioned>galls</mentioned>.</p>
@@ -747,7 +622,6 @@ ignored here for the sake of clarity.</note>
 <!-- This may be encoded using
 the first method, with the sequence of substitutions shown by the
 nesting of <gi>corr</gi> elements:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">One must have lived longer with
 <choice>
 <sic>this</sic>
@@ -756,17 +630,14 @@ to appreciate its advantages.</egXML></p>
 -->
 It may be encoded using the second method, with the two changes being
 treated as a sequence of additions and deletions:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">One must have lived longer with
 <del>this</del> <del><add>such a</add></del>
 <add>a</add> system, to appreciate its advantages.</egXML>
- 
 Note the nesting of an <gi>add</gi> element within a <gi>del</gi> to
 record text first added, then deleted in the source.</p>
 <p>It may be encoded using the third method, with each reading in the
 series contained in a <gi>rdg</gi> element within an <gi>app</gi>
 structure:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">One must have lived longer with
   <app>
     <rdg varSeq="1"><del>this</del></rdg>
@@ -774,7 +645,6 @@ structure:
     <rdg varSeq="3"><add>a</add></rdg>
   </app>
 system, to appreciate its advantages.</egXML>
- 
 The three encodings of this slightly more complex example illustrate the
 general truth that the more information involving substitutions there is
 to be encoded, the clearer become the advantages of the use of the
@@ -791,23 +661,17 @@ on reflection decide to cancel the marking.  For example, text may be
 marked for deletion and the deletion then cancelled, thus restoring the
 deleted text.  Such cancellation may be indicated by the
 <gi>restore</gi> element:
- 
 <specList><specDesc key="restore" atts="type  hand "/></specList></p>
 <p>Presume that Lawrence decided to restore <mentioned>my</mentioned> to the
 phrase of <title>Eloi, Eloi, lama sabachthani</title> first written
 <q>For I hate this my body</q>, with the <mentioned>my</mentioned> first deleted
 then restored by writing <q>stet</q> in the margin.  This may be
 encoded:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">For I hate this
 <restore hand="#dhl" desc="marginal &#34;stet&#34;"><del>my</del></restore>
 body</egXML></p>
-
 <p>The <gi>restore</gi> element is defined as follows:
- 
 <specGrp xml:id="DPHCD" n="Cancelled Deletions">
-
-
 &restore.odd;
 </specGrp>
 	</p></div3>
@@ -819,7 +683,6 @@ where text not present in the source is supplied (whether
 conjecturally or from other witnesses) to fill an apparent gap in the
 text, it should be marked using the <gi>supplied</gi> element provided
 by the tag set defined in this chapter.
- 
 <specList><specDesc key="gap" atts="reason extent  hand agent"/><specDesc key="supplied" atts="reason hand agent source"/></specList></p>
 <p>By its nature, the <gi>gap</gi> element must have no content.  It
 should be used wherever an authorial or scribal erasure is so
@@ -827,14 +690,11 @@ successful, or the text is so illegible, that nothing can be read.  In
 the Beerbohm manuscript of <title>The Golden Drugget</title> cited
 above, for example, the author has erased several passages by inking
 them over completely:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Others <gap reason="cancelled" hand="#mb" extent="10cm"/>&#x2014;and
 here is one of them...</egXML></p>
 <p>In an autograph letter of Sydney Smith in the Pierpont Morgan
 library,<note place="foot">In Klinkenborg 11</note> three words in the signature are quite illegible:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">I am dr Sr yr <gap reason="illegible"  extent="3 words"/>Sydney Smith</egXML>
- 
 It is possible, but not always necessary, to provide measurements
 precise to the millimeter or even to the printer's point.  The degree of
 precision attempted will vary with the purpose of the encoding and the
@@ -849,31 +709,16 @@ is supplied to fill the gap, it should be marked as <gi>supplied</gi>.
 If another (imaginary) copy of the letter above preserved the signature
 as reading <q>I am dear Sir your very humble Servt Sydney Smith</q>, the
 text illegible in the autograph might be supplied in the transcription:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">I am dr Sr yr
 <supplied reason="illegible" resp="RW" source="amanuensis copy">very
 humble Servt</supplied> Sydney Smith</egXML>
- 
 Both <gi>gap</gi> and <gi>supplied</gi> may be used in combination with
 <gi>unclear</gi>, <gi>damage</gi>, and other elements; for
 discussion, see section <ptr target="#PHCOMB"/>.</p>
 <p>As noted, <gi>gap</gi> is defined in the core tag set.  The
 <gi>supplied</gi> element is declared thus:
- 
 <specGrp xml:id="DPHOM" n="Supplied Text">
-
-
 &supplied.odd;
-
-
-
-
-
-
-
-
-
-
 </specGrp></p></div3></div2>
 <div2 type="Ilocano" xml:id="PHPH"><head>Non-Linguistic Phenomena in the Source</head>
 <p>This section describes methods for recording a number of
@@ -946,21 +791,16 @@ introducing a new <gi>handShift</gi> element.</p>
 Dean of Sarum Churchwardens' presentments, 1731, Hurst; the
 transcription was provided by Donald A. Spaeth.</note> first the
 document hands are declared in the header:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
    <profileDesc>
-    
     <handList>
       <hand xml:id="h1" style="copperplate" ink="brown" writing="regular" first="true" resp="das"/>
       <hand xml:id="h2" style="print" ink="brown" writing="unschooled" resp="das"/>
     </handList>
-    
   </profileDesc>
  </egXML>
- 
 <!-- teiheader def will need to be modified PR   --></p>
 <p>Then the change of hand is indicated in the text:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">... and that good Order Decency and regular worship
 may be once more introduced and Established in this
 Parish according to the Rules and Ceremonies of the
@@ -968,17 +808,14 @@ Church of England and as under a good Consciencious
 and sober Curate there would and ought to be
 <handShift new="#h2" old="#h1" resp="das"/>
 and for that purpose the parishioners pray</egXML></p>
-
 <p>In this example<note place="foot">From folio 52 recto of the Holkham
 manuscript of Chaucer's <title>Canterbury Tales</title>.</note> there is
 a change of ink within the one hand.  This is indicated by a new value
 for the <att>ink</att> attribute on the <gi>handShift</gi> element:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><l>When wolde the cat dwelle in his ynne</l>
 <handShift new="#h2" old="#h1" ink="black"/>
 <l>And if the cattes skynne be slyk and gaye</l></egXML></p>
 <p>These elements are declared as follows:
- 
 <specGrp xml:id="DPHHD" n="Hand Shifts">
 &hand.odd;
 &handshft.odd;
@@ -992,11 +829,9 @@ section <ptr target="#PHCC"/>.  In this example, the <mentioned>But</mentioned>
 inserted by James is tagged as an <gi>add</gi>, and the consequent
 editorial correction of <mentioned>One</mentioned> to <mentioned>one</mentioned> treated
 separately:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><add
 						    place="supralinear" resp="#FB" hand="#WJ">But</add>
 <choice><sic>One</sic><corr resp="#FB">one</corr></choice> must have lived ...</egXML>
- 
 As in this example, <att>hand</att> should be reserved for indicating
 the hand of any form of marking&#x2014;here, addition but also deletion,
 correction, annotation, underlining, etc.&#x2014;within the primary text
@@ -1074,18 +909,14 @@ For example, the encoding of Donaldson's conjectured emendation of
 <title>Wife of Bath's Prologue</title> (see <ptr target="#PHCC"/>) may be
 encoded as follows using the <att>resp</att> and <att>cert</att>
 attributes on the <gi>corr</gi> element:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <choice><sic>wight</sic><corr resp="ETD" cert="70">wright</corr></choice></egXML>
- 
 Exactly the same information could be conveyed using the certainty
 and responsibility mechanisms, as follows:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <choice><corr xml:id="c117">wright</corr><sic>wight</sic></choice>
-<certainty target="#c117" locus="#gicontent" degree="70"/>
+<certainty target="#c117" locus="#gicontent" degree="0.7"/>
 <respons target="#c117" locus="#gicontent" resp="ETD"/></egXML>
- 
 The choice of which mechanism to use is left to the encoder.  In
 transcriptions where only such statements of responsibility and
 certainty are made as can be accommodated within the <att>resp</att> and
@@ -1111,7 +942,6 @@ nothing can be read and the text must be either omitted or supplied
 either conjecturally or from one or more other sources.  In many cases, however,
 despite damage or illegibility, the text may yet be read with reasonable
 confidence.  In these cases, the following elements should be used:
- 
 <specList><specDesc key="damage" atts="type  hand agent degree extent"/><specDesc key="unclear" atts="reason  hand agent"/></specList></p>
 <p>The following examples refer to the recto of folio 5 of the unique
 manuscript of the Elder Edda.<note place="foot">Codex Regius, ed.  L. F.
@@ -1121,74 +951,51 @@ through irregular rubbing so that letters in various places are obscured
 and in some cases cannot be read at all.  The existence of the damage
 may be registered in general for this leaf by use of the <gi>damage</gi>
 element.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><damage extent="whole leaf" agent="rubbing"> ... </damage></egXML>
- 
 However, in fact the damage crosses structural divisions, so the
 <gi>damage</gi> element does not nest properly within the containing
 <gi>div</gi> elements.  The simplest method to solve this problem is to
 split the element into two fragments, one within each structural
 division:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>
-  
-  
   <pb n="5r"/>
   <damage agent="rubbing" extent="whole leaf">
-  
   </damage>
 </p>
 <p>
   <damage agent="rubbing" extent="whole leaf">
-  
-  
   </damage>
   <pb n="5v"/>
-  
 </p></egXML>
- 
 For other techniques of handling non-nesting information, see chapter
 <ptr target="#NH"/>.</p>
 <p>In the first line of this leaf, the transcriber may believe that the
 last three letters of <mentioned>daga</mentioned> can be read clearly despite
 the damage:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">um aldr d<damage>aga</damage> yndisniota</egXML></p>
-
 <p>Alternatively, the letters in question may be only imperfectly
 legible on account of the damage; this state of affairs may be indicated
 simply by using the <gi>unclear</gi> element:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples">um aldr d<unclear reason="damage">aga</unclear> yndisniota</egXML></p>
-
 <p>If it is desired to supply more information about the kind of
 damage, it is also possible to nest an <gi>unclear</gi> element within
 the <gi>damage</gi> element:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">um aldr d<damage agent="rubbing"><unclear>aga</unclear></damage> yndisniota</egXML></p>
-
 <p>Alternatively, the transcriber may not feel able to read the last
 three letters of <mentioned>daga</mentioned> but may wish to supply them by
 conjecture. Note the use of the <att>source</att> attribute to assign
 the conjecture to Finnur J&#xF3;nsson:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">um aldr d<supplied reason="rubbing" source="FJ">aga</supplied> yndisniota</egXML>
- 
 The <gi>supplied</gi> element may if desired be enclosed within a
 <gi>damage</gi> element:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">um aldr d<damage agent="rubbing"><supplied source="FJ">aga</supplied></damage> yndisniota</egXML></p>
-
 <p>Contrast the use of <gi>gap</gi> in the next line, where the
 transcriber believes that four letters cannot be read at all because
 of the damage:
- 
 <eg><![CDATA[&Thorn;ar k&hook-o;mr inn dimmi dreki fliugandi na&thorn;r frann
 ne&thorn;an <gap reason="illegible" agent="rubbing" extent="4"/>]]></eg>
- 
 As with <gi>supplied</gi>, this <gi>gap</gi> might be enclosed by a
 <gi>damage</gi> element.</p>
-
 <p>In these examples, various phenomena of illegibility and conjecture
 all result from the one cause, an area of damage to the text &#x2014; rubbing
 at various points &#x2014; which is not continuous in the text, affecting it
@@ -1203,22 +1010,15 @@ autograph of <title>The Life of Cowper</title>,<note place="foot">In
 Pierpont Morgan MA 412 (Klinkenborg 15).</note> the final six letters
 of <mentioned>attention</mentioned> are difficult to read because of the haste
 of the writing, though reasonably certain from the context.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">and from time to time invited in like manner
 his att<unclear>ention</unclear></egXML>
- 
 The <att>cert</att> attribute on the <gi>unclear</gi> element may be
 used to indicate the level of editorial confidence in the reading
 contained within it.</p>
 <p>The <gi>damage</gi> element is defined formally as follows:
- 
 <specGrp xml:id="DPHDA" n="Damage and Illegiblity">
-
-
 &damage.odd;
-
 </specGrp>
- 
 The <gi>unclear</gi> element is defined in section <ptr target="#COED"/>.</p></div3>
 <div3 type="subsection" xml:id="PHCOMB"><head>Use of the Gap, Del, Damage, Unclear and Supplied Tags in Combination</head>
 <p>The <gi>gap</gi>, <gi>damage</gi>, <gi>unclear</gi>,
@@ -1230,7 +1030,6 @@ Further, certain of the elements may nest within one another. The
 examples given in the last sections illustrate something of how these
 elements are to be distinguished in use.  This may be formulated as
 follows:
- 
 <list type="bullets">
 <item>where the text has been rendered completely illegible by
 deletion or damage and no text is supplied by the editor in place of
@@ -1275,7 +1074,6 @@ and the certainty of the reading.</item></list></p>
 <p>The rules for combinations of the <gi>add</gi> and <gi>del</gi>
 elements, and for the interpretation of such combinations, are
 similar:
- 
 <list type="bullets">
 <item>if one <gi>add</gi> element (with identifier <ident>ADD1</ident>)
 contains another (with identifier <ident>ADD2</ident>), then
@@ -1314,28 +1112,22 @@ have left space for a word, or for an initial capital, and for some
 reason the word or capital was never supplied and the space left empty.
 This element should not be used to mark normal inter-word space or the
 like.
- 
 <specList><specDesc key="space" atts="dim extent resp"/></specList></p>
 <p>In line 694 of Chaucer's <title>Wife of Bath's Prologue</title> in
 the Holkham manuscript the scribe has left a space for a word where
 other manuscripts read <mentioned>preestes</mentioned>:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">By god if wommen had writen storyes
 As <space extent="7"/> han within her oratoryes</egXML>
- 
 The <gi>supplied</gi> element discussed in the previous section may be
 used to supply the text presumed missing:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">By god if wommen had writen storyes
 As <supplied reason="space" resp="ES" source="Hg">preestes</supplied>
 han within her oratoryes</egXML>
- 
 Here, the fact of the space within the manuscript is indicated by the
 value of the <att>reason</att> attribute.  The source of the supplied
 text is shown by the value of the <att>source</att> attribute as the
 Hengwrt manuscript; the transcriber responsible for supplying the text
 is ES.
- 
 The <gi>space</gi> element is formally defined thus:
 <specGrp xml:id="DPHSP" n="Spaces in the source">
 &space.odd;
@@ -1355,7 +1147,6 @@ attribute may be used on these or other elements to indicate that the
 text is marked by a line and the style of the line.  Thus, Lawrence's
 deletion by strike-through of <mentioned>my</mentioned> in the autograph of
 <title>Eloi, Eloi, lama sabachthani</title> is noted:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">For I hate this
 <del rend="strikethrough" hand="#dhl">my</del> body,
 which is so dear to me</egXML></p>
@@ -1367,7 +1158,6 @@ style of line.  In the manuscript of a letter by Robert Browning to
 George Moulton-Barrett,<note place="foot">Pierpont Morgan MA 310, Klinkenborg 23</note> the
 underlining of the phrase <mentioned>had obtained all the letters to Mr Boyd</mentioned>
 may be marked-up as follows:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">I have once,&mdash;by declaring I would prosecute
 by law&mdash;, hindered a man's proceedings who
 <hi rend="underline">had obtained all the letters
@@ -1379,7 +1169,6 @@ areas of text.  Where there is doubt, the <gi>certainty</gi> element may
 be used to record the doubt.  In the Browning example cited above the
 underlining actually begins half-way under <mentioned>who</mentioned>, and this
 uncertainty could be remarked as follows:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">I have once,&mdash;by declaring I would prosecute
 by law&mdash;, hindered a man's proceedings who
 <hi xml:id="cstart1" rend="underline">had obtained all
@@ -1389,7 +1178,6 @@ the letters to Mr Boyd</hi>
            locus="#startloc"
            desc="may begin with previous word"
            degree="0.70"/></egXML></p>
-
 <p>Where the area of text marked overlaps other areas of text, for
 example crossing a structural division, one of the span mechanisms
 outlined in these Guidelines may be used.  Where the line is thought to
@@ -1430,9 +1218,7 @@ situations where these elements need tagging in their own right (for
 instance, when the catch-word presents a variant reading, or spacing
 in the header or footer is significant for compositor identification),
 the element <gi>fw</gi> may be used:
- 
 <specList><specDesc key="fw" atts="place"/></specList>
- 
 The name <mentioned>fw</mentioned> is short for <q>forme work</q>. It
 may be used  to encode any of
 the unchanging portions of a page forme, such as:
@@ -1444,13 +1230,11 @@ every page)</item>
 <item>catch-words</item>
 <item>other material repeated from page to page, which falls outside the
 stream of the text</item></list>
- 
 It should not be used for marginal glosses, annotations, or textual
 variants, which should be tagged using <gi>gloss</gi>, <gi>note</gi>, or
 the text-critical tags described in chapter <ptr target="#TC"/>,
 respectively.</p>
 <p>For example:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fw type="head" place="top-centre">Po&#xEB;ms.</fw>
 <fw type="pageno" place="top-right">29</fw>
 <fw type="sig" place="bot-centre">E3</fw>
@@ -1460,13 +1244,8 @@ respectively.</p>
 	<!-- Take from DOSL materials? -MSM]                          --></p>
 <p>The formal declaration for the <gi>fw</gi> element is
 this:
- 
 <specGrp xml:id="DTCHD" n="Headers and footers">
-
 &fw.odd;
-
-
-
 </specGrp></p></div2>
 <div2 type="Ilocano" xml:id="PHTRXX"><head>Other Primary Source Features not Covered in These Guidelines</head>
 <p>We repeat the advice given at the beginning of this chapter, that

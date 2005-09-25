@@ -1,16 +1,11 @@
 <!--
 Copyright TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
-
 $Date$
 $Author$
-
 -->
 <div1 xmlns="http://www.tei-c.org/ns/1.0" xml:id="FS" n="16"><head>Feature Structures</head>
-
 <!-- this para is repeated at the start of ISO std -->
 <p>A <term>feature structure</term> is a general purpose data
 structure which identifies and groups together individual
@@ -31,9 +26,7 @@ target="FD"/>. Such restrictions provide the basis for at least
 partial validation of the feature-structure encodings that are
 used.-->
 </p>
-
 <div2><head>Organization of this Chapter</head>
-
 <p>This chapter is organized as follows.  Following this introduction,
 section <ptr target="#FSBI"/> introduces the elements <gi>fs</gi> and
 <gi>f</gi>, used to represent feature structures and features
@@ -58,14 +51,11 @@ Section <ptr target="#FSLINK"/> discusses how analyses may be linked to
 other parts of an encoded text. Formal definitions for
 all the elements introduced in this chapter are provided in section
 <ptr target="#FSDEF"/>. <!-- KL says this shd be in Annex A Normative --></p>
-
 <!-- &intro.odd; -->
-
 <!-- intro moved to section 4 somewhere -->
 </div2>
 <div2 xml:id="FSBI"><head>Elementary Feature Structures and the Binary
 Feature Value</head>
-
 <p>The fundamental elements used to represent a feature structure
 analysis are <gi>f</gi> (for <term>feature</term>), which represents a
 feature-value pair, and <gi>fs</gi> (for <term>feature
@@ -90,17 +80,14 @@ feature or feature-value <term>libraries</term>. The components of
 such libraries may then be referenced from other feature or
 feature-value representations, using the <ident>feats</ident> or
 <ident>fVal</ident> attribute as appropriate. </p>
-
 <p>We begin by considering the simple case of a feature structure
 which  contains binary-valued features only. The following three XML elements  are
 needed to  represent such a feature structure: 
-
 <specList>
 <specDesc key="fs" atts="type feats"/>
 <specDesc key="f" atts="name fVal"/>
 <specDesc key="binary"/>
 </specList>
- 
 The attributes <att>feats</att> and the <att>fVal</att> are not
 discussed in this section: they provide an alternative way of
 indicating the content of an element, as further discussed in  section
@@ -123,7 +110,6 @@ New York:  Harper &amp; Row, 1968, p. 415.</note>
 +---          ---+</egXML>
  </p>
 <p>This representation may be encoded in XML as follows:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fs type="phonological segments">
    <f name="consonantal"> <binary value="true"/>  </f>
    <f name="vocalic">     <binary value="false"/> </f>
@@ -133,14 +119,12 @@ New York:  Harper &amp; Row, 1968, p. 415.</note>
    <f name="continuant">  <binary value="true"/>  </f>
    <f name="strident">    <binary value="true"/>  </f>
 </fs></egXML>
- 
 Note that <gi>fs</gi> elements may have an optional <att>type</att>
 attribute to indicate the kind of feature structure in question,
 whereas <gi>f</gi> elements must have a <att>name</att> attribute to
 indicate the name of the feature. Feature structures need not be
 typed, but features must be named. Similarly, the <gi>fs</gi> element may
 be empty, but the <gi>f</gi> element must have (or reference) some content.</p>
- 
 <p>The restriction of specific features to specific types of values
 (e.g.  the restriction of the feature <mentioned>strident</mentioned>
 to a binary value) requires additional validation, as does any
@@ -154,7 +138,6 @@ level, using an additional mechanism such as the <term>feature-system
 declaration</term> discussed in <!-- ref ref="#FD"--><ref>chapter FD
 of the TEI Guidelines</ref>.
  </p>
-
 <p>Although we have used the term <term>binary</term> for this kind
 of value, and its representation in XML uses values such as
 <code>true</code> and <code>false</code> (or, equivalently,
@@ -165,7 +148,6 @@ feature. </p>
 <p>Formal declarations for the <gi>fs</gi>, <gi>f</gi> and
 <gi>binary</gi> elements are provided below in <ptr target="#FSDEF"/>.</p>
 </div2>
-
 <div2 xml:id="FSSY"><head>Other Atomic Feature Values</head>
 <p>Features may take other kinds of atomic value. In this section, we
 define elements which may be used to represent: <term>symbolic
@@ -180,7 +162,6 @@ complex datatyping should be represented as feature structures.
 <specDesc key="numeric"/>
 <specDesc key="string"/></specList>
  </p>
-
 <p>The <gi>symbol</gi> element is used for the value of a feature when
 that feature can have any of a small, finite set of possible values,
 representable as character strings.  For example, the following might
@@ -193,7 +174,6 @@ plural number:<egXML xmlns="http://www.tei-c.org/ns/Examples"><fs>
    <f name="number"> <symbol value="plural"/> </f>
 </fs></egXML>
  </p>
-
 <p>More formally, this representation shows a structure in which three
 features (<term>case</term>, <term>gender</term> and
 <term>number</term>) are used to define morpho-syntactic properties of
@@ -211,7 +191,6 @@ an appropriate binary value, as in the following example: <egXML xmlns="http://w
 </fs></egXML>
 Whether one uses a binary or symbolic value in situations like this is
 largely a matter of taste. </p>
-
 <p>The <gi>string</gi> element is used for the value of a
 feature when that value is a string drawn from a very large or potentially
 unbounded set of possible strings of characters, so that it would be
@@ -249,7 +228,6 @@ number of numeric values falling between 0 and 1.3; by contrast
    <f name="dailyRainFall"><numeric value="0.0" max="1.3" trunc="true"/></f>
 </fs></egXML> represents only two possible values: 0 and 1.
 </p>
-
 <p>As noted above, additional processing is necessary to ensure that
 appropriate values are supplied for particular features, for example
 to ensure that the feature <code>singular</code> is not given a value
@@ -301,7 +279,6 @@ and <!-- feature-structure and--> feature-value libraries:
  </p>
 <p>For example, suppose a feature library for phonological feature
 specifications is set up as follows.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fLib n="phonological features">
    <f xml:id="CNS1" name="consonantal"> <binary value="true"/> </f>
    <f xml:id="CNS0" name="consonantal"> <binary value="false"/> </f>
@@ -323,7 +300,6 @@ specifications is set up as follows.
 <p>Then the feature structures that represent the analysis of the
 phonological segments (phonemes) <code>/t/</code>, <code>/d/</code>,
 <code>/s/</code>, and <code>/z/</code> may be defined as follows.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fs feats="#CNS1 #VOC0 #VOI0 #ANT1 #COR1 #CNT0 #STR0"/>
 <fs feats="#CNS1 #VOC0 #VOI1 #ANT1 #COR1 #CNT0 #STR0"/>
 <fs feats="#CNS1 #VOC0 #VOI0 #ANT1 #COR1 #CNT1 #STR1"/>
@@ -336,7 +312,6 @@ correspond to phonological segments (there are no strident vowels, for
 example).  The legal combinations, however, can be collected together,
 each one represented as an identifiable <gi>fs</gi> element within a
 <term>feature-value library</term>, as in the following example:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fvLib xml:id="fsl1" n="phonological segment definitions">
    <!-- ... -->
    <fs xml:id="T.DF" feats="#CNS1 #VOC0 #VOI0 #ANT1 #COR1 #CNT0 #STR0"/>
@@ -346,7 +321,6 @@ each one represented as an identifiable <gi>fs</gi> element within a
    <!-- ... -->
 </fvLib></egXML>
  </p>
-
 <p>Once defined, these feature structure values can also be reused.
 Other <gi>f</gi> elements may invoke them by reference, using the
 <ident>fVal</ident> attribute; for example, one might use them in a
@@ -354,7 +328,6 @@ feature value pair such as : <egXML
 xmlns="http://www.tei-c.org/ns/Examples"><f name="dental-fricative"
 fVal="#T.DF"/> </egXML> rather than expanding the hierarchy of the
 component phonological features explicitly.  </p>
-
 <p>Feature structures stored in this way  may also be associated with
 the text which they are intended to annotate, either by a link from the text
 (for example, using the TEI global <ident>ana</ident> attribute), or
@@ -362,7 +335,6 @@ by means of standoff annotation techniques (for example, using the TEI
 <gi>link</gi> element): see further section <ptr target="#FSLINK"/>
 below.
 </p>
-
 <p>Note that when features or feature structures are linked to in this
 way, the result is effectively a copy of the item linked to into the
 place from which it is linked. This form of linking should be distinguished  from
@@ -372,9 +344,7 @@ simultaneously in two or more places within the structure. This kind
 of annotation should be represented using the <gi>vLabel</gi> element, as
 discussed in <ptr target="#FSVAR"/> below. </p>
 </div2>
-
 <div2 xml:id="FSST"><head>Feature Structures as Complex Feature Values</head>
-
 <p>Features may have complex values as well as atomic ones; the
 simplest such complex value is represented by supplying a <gi>fs</gi>
 element as the content of an <gi>f</gi> element, or (equivalently) by
@@ -385,7 +355,6 @@ mechanism.  For example, an <gi>fs</gi> element may contain or point
 to an <gi>f</gi> element, which may contain or point to an <gi>fs</gi>
 element, which may contain or point to an <gi>f</gi> element, and so
 on.</p>
-
 <p>To illustrate the use of complex values, consider the following
 simple model of a word, as a structure combining surface form
 information, a syntactic category, and semantic information. Each word
@@ -395,7 +364,6 @@ containing three features named <code>surface</code>,
 has an atomic string value, but the other two have complex values,
 represented as nested feature structures of types
 <code>category</code> and <code>act</code> respectively:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fs type="word">
    <f name="surface"><string>love</string></f>
    <f name="syntax">
@@ -410,26 +378,22 @@ represented as nested feature structures of types
 	</fs>
    </f>
 </fs></egXML></p>
-
 <p>This analysis does not tell us much about the meaning of the
 symbols <code>verb</code> or <code>transitive</code>. It might be
 preferable to replace these atomic feature values by feature
 structures.  Suppose therefore that we maintain a feature-value
 library for each of the major syntactic categories (N, V, ADJ, PREP):
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fvLib n="Major category definitions">
 <!-- ... -->
 <fs xml:id="N" type="noun">
   <!--  noun features defined here -->
 </fs>
-
 <fs xml:id="V" type="verb">
   <!-- verb features defined here -->
 </fs>
 </fvLib>
 </egXML>
 </p>
-
 <p>This library allows us to use shortcut codes (<code>N</code>,
 <code>V</code> etc.) to reference a complete definition for the
 corresponding feature structure. Each definition may be explicitly
@@ -443,12 +407,10 @@ attribute, as in these examples:
 <!-- ... -->
 ]]></egXML>
 </p>
-
 <p>This ability to re-use feature definitions within multiple feature
 structure definitions is an essential simplification in any realistic
 example.  In this case, we assume the existence of a feature library
 containing specifications for the basic feature categories like the following:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fLib n="categorial features">
    <f xml:id="NN1" name="nominal"><binary value="true"/></f>
    <f xml:id="NN0" name="nominal"><binary value="false"/></f>
@@ -458,11 +420,9 @@ containing specifications for the basic feature categories like the following:
 </fLib>
 </egXML>
 </p>
-
 <p>With these libraries in place, and assuming the availability of
 similarly predefined feature structures for transitivity and
 semantics, the preceding example could be considerably simplified:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fs type="word">
 <f name="surf"><string>love</string></f>
    <f name="syntax">
@@ -478,11 +438,9 @@ semantics, the preceding example could be considerably simplified:
    </f>
 </fs>
 </egXML></p>
-
 <p>Although in principle the <att>fVal</att> attribute could  point to
 any kind of feature value, its use is not recommended for simple
 atomic values. </p>
-
 </div2>
 <div2 xml:id="FSVAR"><head>Re-entrant feature structures</head>
 <p>Sometimes the same feature value is required at multiple places
@@ -493,13 +451,11 @@ provided as a means of labelling each such re-entrancy point:
 <specDesc key="vLabel"/>
 </specList>
 </p>
-
 <p>For example, suppose one wishes to represent noun-verb agreement as
 a single feature structure. Within the representation, the feature
 indicating (say) number appears more than once. To represent the fact
 that each occurrence is another appearance of the same feature (rather
 than a copy) one could use an encoding like the following:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fs xml:id="NVA">
 <f name="nominal">
   <fs>
@@ -511,7 +467,6 @@ than a copy) one could use an encoding like the following:
    <!-- other nominal features -->
   </fs>
 </f>
-
 <f name="verbal">
   <fs>
     <f name="vb-num">
@@ -522,13 +477,11 @@ than a copy) one could use an encoding like the following:
 </f>
 </fs></egXML>
 </p>
-
 <p>In the above encoding, the features named <code>vb-num</code> and
 <code>nm-num</code> exhibit structure sharing. Their values, given as
 <code>vLabel</code> elements, are understood to be references to the same
 point in the feature structure, which is labelled by their
 <att>name</att> attribute. </p>
-
 <p>The scope of the names used to label re-entrancy points is that of the
 outermost <gi>fs</gi> element in which they appear. When a feature
 structure is imported from a feature value library, or referenced from
@@ -540,11 +493,8 @@ some other feature structure were to reference the <gi>fs</gi> element
 given in the example above, for example in this way: <egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="class" fVal="#NVA"/></egXML> then
 the labelled points in the example would be interpreted as if they had the
 name <code>NVAL1</code>. </p>
-
 </div2>
-
 <div2 xml:id="FSSS"><head>Collections as Complex Feature Values</head>
-
 <p>Complex feature values need not always be represented as feature
 structures. Multiple values may also be organized as as sets, bags (or
 multisets), or lists of atomic values of any type. The <gi>coll</gi>
@@ -553,7 +503,6 @@ element is provided to represent such cases:
 <specDesc key="coll"/>
 </specList>
 </p>
-
 <p>A feature whose value is regarded  as a set, bag or list may have
 any positive number of values as its content, or none at
 all, (thus allowing for representation of the empty set, bag or list).
@@ -572,8 +521,6 @@ the null list, set, or bag. <!--, unless the <att>feats</att> attribute is
 used to specify its contents. If values are supplied  within a <gi>coll</gi> element
 which also specifies values on its <att>feats</att> attribute, the
 implication is that the two sets of values are to be unified.--></p>
-
-
 <p>To illustrate the use of the <att>org</att> attribute, suppose that
 a feature structure analysis is used to represent a genealogical tree,
 with the information about each individual treated as a single feature
@@ -599,7 +546,6 @@ structure, like this:
    </f>
 </fs></egXML>
  </p>
-
 <p>In this example, the <gi>coll</gi> element is first used to supply
 a list of <soCalled>name</soCalled> feature values, which together
 constitute the <soCalled>forenames</soCalled> feature. Other features
@@ -610,7 +556,6 @@ persons's siblings should be regarded as constituting a set rather
 than a list. Each sibling is represented by a feature structure: in
 this example, each feature structure is a copy of one specified in the
 feature value library. </p>
- 
 <p>If a specific feature contains only a single feature structure as
 its value, the component features of which are organized as a set, bag
 or list, it may be more convenient to represent the value as a
@@ -620,7 +565,6 @@ following encoding of the English verb form
 <mentioned>agreement</mentioned> feature whose value is a feature
 structure which contains <mentioned>person</mentioned> and
 <mentioned>number</mentioned> features with symbolic values.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fs type="word">
   <f name="category"> <symbol value="verb"/> </f>
   <f name="tense"> <symbol value="present"/> </f>
@@ -636,7 +580,6 @@ structure which contains <mentioned>person</mentioned> and
 the <mentioned>agreement</mentioned> feature structure are
 of no particular significance, the following simpler representation
 may be used:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fs type="word">
   <f name="word.oddss"> <symbol value="verb"/> </f>
   <f name="tense"> <symbol value="present"/> </f>
@@ -678,14 +621,11 @@ empty) set, bag or list.  A <gi>coll</gi> element with no content and
 with no value for its <att>feats</att> attribute is interpreted as
 referring to the null set, bag, or list, depending on the value of its
 <att>org</att> attribute.</p>
-
 <p>If, for example, the individual described by the
 feature structure with identifier <code>p027</code> (above) had no siblings, we might specify the
 <mentioned>siblings</mentioned> feature as follows.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="siblings"><coll org="set"/></f></egXML>
  </p>
-
 <p>A <gi>coll</gi> element may also collect together one or more other
 <gi>coll</gi> elements, if, for example one of the members of a set is
 itself a set, or if two lists are concatenated together. Note that
@@ -693,27 +633,21 @@ such collections pay no attention to the contents of the nested
 <gi>coll</gi> elements: if it is desired to produce the union of two
 sets, the <gi>vMerge</gi> element discussed below should be used to
 make a new collection from the two sets.  </p>
-
 </div2>
-
 <div2 xml:id="FVE"><head>Feature Value Expressions</head>
-
 <p>It is sometimes desirable to express the value of a feature as the
 result of an operation over some other value (for example, as
 <soCalled>not green</soCalled>, or as <soCalled>male or
 female</soCalled>, or as the concatenation of two collections).  Three
 special purpose elements are provided to represent disjunctive
 alternation, negation, and collection of values:
-
 <specList>
   <specDesc key="vAlt"/>
   <specDesc key="vNot"/>
   <specDesc key="vMerge"/>
 </specList>
  </p>
-
 <div3 xml:id="FVALT"><head>Alternation</head>
-
 <p>The <gi>vAlt</gi> element can be used wherever a feature value can
 appear. It contains two or more feature values, any one of which is to
 be understood as the value required. Suppose, for example, that we are
@@ -722,15 +656,12 @@ features as <mentioned>number.of.bathrooms</mentioned>. In a
 particular case, we might wish to represent uncertainty as to whether
 a house has two or three bathrooms. As we have already shown, one
 simple way to represent this would be with a numeric maximum:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="number.of.bathrooms"><numeric value="2" max="3"/></f></egXML>
  </p>
 <p>A better, and more general, way would be to represent the
 alternation explicitly, in this way:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="number.of.bathrooms"> <vAlt><numeric value="2"/><numeric value="3"/> </vAlt></f></egXML>
  </p>
-
 <p>The <gi>vAlt</gi> element represents alternation over feature
 values, not feature-value pairs. If therefore the uncertainty relates
 to two or more feature value specifications, each  must be represented
@@ -738,7 +669,6 @@ as a feature structure, since a feature structure can always appear
 where a value is required. For example, suppose that it is uncertain
 as to whether the house being described has two bathrooms or two
 bedrooms, a structure like the following may be used:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="rooms">
    <vAlt>
       <fs><f name="number.of.bathrooms"> <numeric value="2"/> </f></fs>
@@ -763,7 +693,6 @@ included in the alternation as follows:
 This analysis indicates that the property may have two bathrooms, two
 bedrooms, or both two bathrooms and two bedrooms.
 </p>
-
 <p>As the previous example shows, the <gi>vAlt</gi> element can also
 be used to indicate alternations among values of features organized as
 sets, bags or lists.  Suppose we use a feature
@@ -773,9 +702,7 @@ good view.  Now suppose for a particular listing, the selling points include
 an alarm system and a good view, and either a pool or a jacuzzi (but
 not both).  This situation could be represented, using the
 <gi>vAlt</gi> element, as follows.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fs type="real estate listing">
-
    <f name="selling.points"> 
       <coll org="set">
       <string>alarm system</string>
@@ -786,15 +713,12 @@ not both).  This situation could be represented, using the
       </vAlt>
       </coll>
    </f>
-
 </fs></egXML>
  </p>
 <p>Now suppose the situation is like the preceding except that one is
 also uncertain whether the property has an alarm system or a good
 view.  This can be represented as follows.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fs type="real estate listing">
-
    <f name="selling.points">
       <coll org="set">
        <vAlt>
@@ -809,7 +733,6 @@ view.  This can be represented as follows.
    </f>
 </fs></egXML>
  </p>
-
 <p>If a large number of ambiguities or uncertainties need to be
 represented, involving a relatively small number of features and
 values, it is recommended that a stand-off technique, for example
@@ -817,7 +740,6 @@ using the general-purpose <gi>alt</gi> element discussed in <!--
 section <ptr target="SAAT"/> of --> TEI P5, be used, rather than the
 special-purpose <gi>vAlt</gi> element.
 </p>
-
 </div3>
 <div3 xml:id="FVNOT"><head>Negation</head>
 <p>The <gi>vNot</gi> element can be used wherever a feature value can
@@ -825,7 +747,6 @@ appear. It contains any feature value and returns the complement of
 its contents. For example, the feature
 <mentioned>number.of.bathrooms</mentioned> in the following example
 has any whole numeric value other than 2:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="number.of.bathrooms"> <vNot><numeric value="2"/> </vNot></f></egXML>
  </p>
 <p>Strictly speaking, the effect of the <gi>vNot</gi> element is to
@@ -837,10 +758,8 @@ available values for the feature <code>case</code> are declared to be
 nominative, genitive, dative, or accusative, whether in a TEI feature
 system declaration or
 by some other means. Then the following two specifications are equivalent:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"> (i) <f name="case">
       <vNot><symbol value="genitive"/></vNot></f><![CDATA[
-
 (ii) ]]><f name="case">
       <vAlt>
        <symbol value="nominative"/>
@@ -849,15 +768,12 @@ by some other means. Then the following two specifications are equivalent:
      </vAlt>
     </f></egXML>
 </p>
-
 <p>If however no such system declaration is available, all that one
 can say about a feature specified via negation is that its value is
 something other than the negated value. </p>
-
 <p>Negation is always applied to a feature value, rather than to a
 feature-value pair. The negation of an atomic value is the set of all
 other values which are possible for the feature. </p>
-
 <p>Any kind of value can be negated, including collections
 (represented by a <gi>coll</gi> elements) or feature structures
 (represented by <gi>fs</gi> elements). The negation of any complex
@@ -874,7 +790,6 @@ is understood to mean the set which is a complement of the set, but
 such a requirement cannot be enforced in the absence of a constraint
 mechanism. </p>
 </div3>
-
 <div3 xml:id="FVCOLL"><head>Collection of values</head>
 <p>The <gi>vMerge</gi> element can be used wherever a feature value can
 appear. It contains two or more feature values, all of which are to be
@@ -901,7 +816,6 @@ example:
 to add a new possible value, and to treat the value of the
 feature as a list rather than as a set. The <gi>vMerge</gi> element can
 be used to achieve this:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fs>
 <f name="genders">
 <vMerge org="list">
@@ -916,14 +830,9 @@ be used to achieve this:
 </egXML>
 </p> 
 <!-- more examples needed, use from sect 4 -->
-
 </div3>
-
 </div2>
-
-
 <div2 xml:id="FSBO"><head>Default Values</head>
-
 <p>The value of a feature may be underspecified in a number of
 different ways. It may be null, unknown, or uncertain with respect to
 a range of known possibilities, as well as being defined as a negation
@@ -941,7 +850,6 @@ element is provided for this purpose:
 <specDesc key="default"/>
 </specList>
 </p> 
-
 <p>The value of an empty <gi>f</gi> element which also lacks a <ident>fVal</ident>
 attribute is understood to be the most general
 case, i.e. any of the available values. Thus, assuming the feature
@@ -969,16 +877,11 @@ default, then the following two representations are equivalent:
       <symbol value="masculine"/>
 </vAlt></f></egXML>
 </p>
-
 </div2>
-
 <!-- discussion of subsumption and nonsubsumption was here: removed to
      separate file for now -->
-
 <!-- dogstoday example was here: removed to separate file pro tem -->
-
 <div2 xml:id="FSLINK"><head>Linking Text and Analysis</head>
-
 <p>Text elements can be linked with feature structures using any of
 the linking methods discussed elsewhere in the Guidelines (see for
 example sections <ptr target="#AIATTS"/> and <ptr target="#AILA"/>).
@@ -1011,13 +914,11 @@ example:
    <!-- ... -->
 </s></egXML>
  </p>
-
 <p>The values specified for the <att>ana</att> attribute reference
 components of a feature-structure library, which represents all of the
 grammatical structures used by this encoding scheme. (For illustrative
 purposes, we cite here only the structures needed for the first six
 words of the sample sentence):
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fvLib xml:id="C6"
 						      n="Claws 6 tags">
    <!-- ... -->
@@ -1029,13 +930,11 @@ words of the sample sentence):
    <fs xml:id="nnn" type="grammatical structure" feats="#wn #tc #ns"/>
  <!-- ... -->
 </fvLib></egXML>
-
 The components of each feature structure in the library are 
 referenced in much the same way, using the
 <att>feats</att> attribute to  identify one or more <gi>f</gi>
 elements in the following feature library (again, only a few of the
 available features are quoted here):
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fLib>
    <!-- ... -->
    <f xml:id="bv" name="verbbase"> <symbol value="main"/> </f>
@@ -1054,20 +953,16 @@ available features are quoted here):
    <!-- ... -->
 </fLib></egXML>
  </p>
-
-  
 <p>Alternatively, a stand-off technique may be used, as in the following
 example, where a <gi>linkGrp</gi> element is used to link selected
 characters in the text <mentioned>Caesar seized control</mentioned> with 
 their phonological representations.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
  <s>
   <w xml:id="S1W1"><c xml:id="S1W1C1">C</c>ae<c xml:id="S1W1C2">s</c>ar</w>
   <w xml:id="S1W2"><c xml:id="S1W2C1">s</c>ei<c xml:id="S1W2C2">z</c>e<c xml:id="S1W2C3">d</c></w>
   <w xml:id="S1W3">con<c xml:id="S1W3C1">t</c>rol</w>.
 </s>
-
   <fvLib xml:id="FSL1" n="phonological segment definitions">
 	<!-- as in previous example -->
   </fvLib>
@@ -1103,96 +998,31 @@ annotation in the feature library quoted above, as follows:
 	<!-- ... -->
   </linkGrp></egXML>
 </p>
-
 </div2>
-
 <div2 xml:id="FSDEF"><head>Formal Definition and Implementation</head>
-
 <p>This elements discussed in this chapter constitute a module of the
 TEI scheme which is formally defined as follows:
- 
 <moduleSpec xml:id="DFS" ident="iso-fs">
 <altIdent type="FPI">Feature Structures</altIdent>
 <desc>Feature structures</desc></moduleSpec>
-
-
 <!--publicID:  -//TEI P5//DTD Additional Module for Feature Structure Representation//EN-->
-
-
 &fstag.odd;
-
-
-
-
 &f.odd;
-
-
-
-
 &binary.odd;
-
-
-
-
 &symbol.odd;
-
-
-
-
 &numeric.odd;
-
-
-
-
 &string.odd;
-
-
-
-
 &vlabel.odd;
-
-
-
-
 &coll.odd;
-
-
-
-
 &default.odd;
-
-
-
-
 &valt.odd;
-
-
-
-
 &vnot.odd;
-
-
-
-
 &vmerge.odd;
-
-
-
-
 &flib.odd;
-
-
-
-
 &fvlib.odd;
-
-
 </p>
-
 <!--<p>In a TEI conformant document, this module is selected as described
 in <ref target="#STIN">TEI P5, chapter ST</ref></p>
 -->
 </div2>
-
-
 </div1>

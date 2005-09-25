@@ -1,7 +1,5 @@
 <!--Copyright 2004 TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="NOTE" usage="rec" ident="note">
@@ -22,7 +20,7 @@ annotation.</desc>
     <attDef ident="type" usage="opt">
 	<equiv/>
 	<desc>describes the type of note.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Code"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/></datatype>
       <valDesc>Values can be taken from any convenient typology of annotation
 suitable to the work in hand;  e.g. annotation, gloss, citation,
 digression, preliminary, temporary</valDesc>
@@ -47,56 +45,46 @@ digression, preliminary, temporary</valDesc>
     <attDef ident="place" usage="opt">
 	<equiv/>
 	<desc>indicates where the note appears in the source text.</desc>
-      
-      
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.code"/></datatype>
       <defaultVal>unspecified</defaultVal>
       <valList type="open">
         <valItem ident="foot">
-          
           <equiv/>
           <gloss>note appears at foot of page.
     </gloss>
         </valItem>
         <valItem ident="end">
-          
           <equiv/>
           <gloss>note appears at end of chapter or volume.
     </gloss>
         </valItem>
         <valItem ident="inline">
-          
           <equiv/>
           <gloss>note appears as a marked paragraph in the
         body of the text.
     </gloss>
         </valItem>
         <valItem ident="left">
-          
           <equiv/>
           <gloss>note appears in left margin.
     </gloss>
         </valItem>
         <valItem ident="right">
-          
           <equiv/>
           <gloss>note appears in right margin.
     </gloss>
         </valItem>
         <valItem ident="interlinear">
-          
           <equiv/>
           <gloss>note appears between lines of the text.
     </gloss>
         </valItem>
         <valItem ident="app">
-          
           <equiv/>
           <gloss>note appears in the apparatus at the foot of the
         page.</gloss>
         </valItem>
       </valList>
-      
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
@@ -113,24 +101,19 @@ indicated in the TEI header.</p>
 	<equiv/>
 	<desc>indicates whether the copy text shows the exact place of reference
 for the note.</desc>
-      
-      
-      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="boolean"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/></datatype>
       <defaultVal>true</defaultVal>
       <valList type="closed">
         <valItem ident="true">
-          
           <equiv/>
           <gloss>copy text indicates the place of attachment for the note.
     </gloss>
         </valItem>
         <valItem ident="false">
-          
           <equiv/>
           <gloss>copy text indicates no place of attachment for the note.</gloss>
         </valItem>
       </valList>
-      
       <remarks>
         <p>In modern texts, notes are usually anchored by means of
 explicit footnote or endnote symbols.  An explicit indication of the
@@ -143,15 +126,14 @@ the <att>n</att> attribute.</p>
     </attDef>
     <attDef ident="target" usage="rwa">
 	<equiv/>
-	<desc>indicates the point of attachment of a note, or the beginning of
+	<desc>indicates the point (or points) of attachment for a note, or the beginning of
 the span to which the note is attached.</desc>
-      
-      
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/></datatype>
+      <datatype>
+<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+	 name="tei.data.pointers"/></datatype>
       <valDesc>reference to the <att>xml:id</att>s of element(s) which begin at
 the location in question (e.g. the <att>xml:id</att> of an <gi>anchor</gi>
 element).</valDesc>
-      
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
@@ -166,14 +148,11 @@ given <att>xml:id</att> values to be pointed at.</p>
 	<equiv/>
 	<desc>points to the end of the span to which the note is attached, if
 the note is not embedded in the text at that point.</desc>
-      
-      
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/></datatype>
       <valDesc>reference to the <att>xml:id</att>(s) of element(s) which
 <emph>end</emph> at the location(s)
 in question, or to an empty element at
 the point in question.</valDesc>
-      
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
@@ -182,7 +161,6 @@ the point in question.</valDesc>
       </remarks>
     </attDef>
   </attList>
-  
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">And yet it is not only in the great line of Italian 
 renaissance art, but even in the painterly 

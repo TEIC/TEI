@@ -1,7 +1,5 @@
 <!--Copyright 2004 TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
 -->
 <elementSpec 
@@ -13,20 +11,18 @@ See the file COPYING for details.
 <desc>contains a single TEI-conformant document,
 comprising a TEI header and a text, either in isolation or as part of a
 teiCorpus element.</desc>
-  
-  
   <content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:ref name="tei.teiHeader"/>
       <rng:ref name="tei.teiText"/>
     </rng:group>
   </content>
-
   <attList>
     <attDef ident="xmlns" usage="req">
 	<equiv/>
 	<desc>The TEI default namespace</desc>
-	<datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+	<datatype><rng:ref
+	xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/></datatype>
 	<defaultVal>http://www.tei-c.org/ns/1.0</defaultVal>
 	<valDesc>A valid XML namespace</valDesc>
     </attDef>
@@ -38,7 +34,6 @@ teiCorpus element.</desc>
       <valDesc>A number identifying the version of the TEI guidelines</valDesc>
     </attDef>
   </attList>
-  
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">      <TEI>
         <teiHeader>

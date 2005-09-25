@@ -1,13 +1,9 @@
 <!--
 Copyright TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
-
 $Date$
 $Author$
-
 -->
 <div1 xmlns="http://www.tei-c.org/ns/1.0" type="chapter" xml:id="TS" n="11"><head>Transcriptions of Speech</head>
 <note place="divtop">This chapter has not yet been revised to reflect
@@ -28,13 +24,11 @@ regarded as a purely acoustic phenomenon may well require different
 methods from those outlined here, as may speech regarded solely as a
 process of social interaction.
 </p>
-
 <p>This chapter begins with a discussion of some of the problems
 commonly encountered in transcribing spoken language (section <ptr target="#TSOV"/>).  Section <ptr target="#TSBA"/> describes the basic
 structural elements of this tag set.  Finally, section <ptr target="#TSSA"/> of this chapter reviews further problems specific to the
 encoding of spoken language, demonstrating how mechanisms and elements
 discussed elsewhere in these Guidelines may be applied to them.</p>
-
 <p>The overall structure of a TEI spoken text is identical to that of
 any other TEI text:  the <gi>TEI</gi> element for a spoken text
 contains a <gi>teiHeader</gi> element, followed by a <gi>text</gi>
@@ -49,43 +43,30 @@ the spoken base tag set.</p>
 type declaration subset, the value of which is <val>INCLUDE</val>, as
 further described in section <ptr target="#STIN"/>.  A document using this
 base tag set and no additional tag sets will thus begin as follows:
- 
 <eg><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei2.dtd" [
     <!ENTITY % TEI.XML     'INCLUDE' >
     <!ENTITY % TEI.spoken  'INCLUDE' >
  ]>]]></eg>
- 
 This declaration makes available all of the elements and attributes
 discussed in the present chapter, in addition to the core elements
 described in chapter <ptr target="#CO"/>.  If other elements are needed (in
 particular, those needed for synchronization or segmentation),
 additional tag sets may also be enabled in a similar way.</p>
-
 <p>Two additional classes are defined by this tag set.  Elements which
 appear only within transcribed speech constitute the <ident type="class">comp.spoken</ident> element class.  Elements with a
 specificable temporal duration constitute the <ident type="class">timed</ident> element class.  These classes are defined
 in the file <ident type="file">spoken.ent</ident> using the
 following parameter entities:
- 
 <moduleSpec xml:id="DTSCLA" type="decls" ident="spoken-decl"><altIdent type="FPI">Class declarations for Transcribed Speech</altIdent><desc>Class declarations for Transcribed Speech</desc></moduleSpec><!--publicID:  -//TEI P5//ENTITIES Element Classes for Transcriptions of Speech//EN-->
 &compspok.odd;
 &tsmix.odd;
- 
 The elements of the base tag set for transcribed speech are declared in
 the file <ident type="file">spoken.dtd</ident>, which is organized as
 follows:
- 
 <moduleSpec xml:id="DTS" ident="spoken"><altIdent type="FPI">Base tag set for Transcribed Speech</altIdent><desc>Transcribed Speech</desc></moduleSpec><!--publicID:  -//TEI P5//ELEMENTS Base Element Set for Transcriptions of Speech//EN-->
 <specGrpRef target="#DTSCOMP"/>
 </p> 
-
-
-	
-	
-	
-	
-	
 <div2 type="subsection" xml:id="TSOV"><head>General Considerations and Overview</head>
 <p>There is great variation in the ways different researchers have
 chosen to represent speech using the written medium.<note place="foot">For a
@@ -159,19 +140,16 @@ contexts, a text may be simply a conversation involving a specific group
 of participants.  Alternatively, researchers may elect to define spoken
 texts solely in terms of their duration in time or length in words.  By
 default, these Guidelines assume of a text only that:
- 
 <list type="simple">
 <item>it is internally cohesive,</item>
 <item>it is describable by a single header, and</item>
 <item>it represents a single stretch of time with no significant
 discontinuities.</item></list>
- 
 Deviation from these assumptions may be specified (for example, the
 <att>org</att> attribute on the <gi>text</gi> element may take the value
 <val>compos</val> to specify that the components of the
 text are discrete) but is not recommended.
  </p>
-
 <p>Within a <gi>text</gi> it may be necessary to identify subdivisions
 of various kinds, if only for convenience of handling.  The neutral
 <gi>div</gi> element discussed in section <ptr target="#DSDIV"/> is
@@ -181,8 +159,6 @@ theory, transactional analysis, etc., provided that these divisions
 are hierarchically well-behaved.  Where they are not, as is often the
 case, the mechanisms discussed in chapters <ptr target="#SA"/> and
 <ptr target="#NH"/> may be used.
-
- 
  </p>
 <p>A spoken text may contain any of the following components:
 <list type="simple">
@@ -208,8 +184,6 @@ elements listed, interspersed with a transcription of the lexical items
 of the utterance; the other elements may all appear between utterances
 or next to each other, but except for <gi>writing</gi> they do not
 contain any other elements nor any data.
- 
-
  </p>
 <div3 type="subsection" xml:id="TSOSDC"><head>Divisions</head>
 <p>A spoken text itself may be without substructure, that is, it may
@@ -237,7 +211,6 @@ for this purpose, as in the example below.
  </p>
 <p>The <gi>div</gi> element is a member of the <ident type="class">divn</ident> class of structural elements, and therefore has
 the following attributes in common with other members of the class:
- 
 <specList><specDesc key="tei.divn" atts="type org sample part"/></specList>
  </p>
 <p>The <att>type</att> attribute may be used to characterize divisions
@@ -247,19 +220,14 @@ these Guidelines.  For example, a collection made up of transcribed
 politician on different occasions, might encode each extract as a
 distinct <gi>div</gi>, nested within a single composite <gi>div</gi> as
 follows:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="soundbites" org="composite">
    <div sample="medial">
-      
    </div>
    <div sample="medial">
-      
    </div>
    <div sample="initial">
-      
    </div>
 </div></egXML>
- 
 <!-- removed dur attribute on div                             -->
 	<!-- The <att>dur</att> attribute may specify temporal        -->
 	<!-- duration in any units convenient; for further            -->
@@ -271,25 +239,12 @@ follows:
 use where the divisions of a text do not all share the same set of the
 contextual declarations specified in the TEI header.  (See further
 section <ptr target="#CCAS"/>).
- 
-
 </p> 
 </div3>
 </div2>
-
-
- 
-
-	
-	
-	
-	
-	
-	
 <div2 type="subsection" xml:id="TSBA"><head>Elements Unique to Spoken Texts</head>
 <p>The following elements characterize spoken texts, transcribed
 according to these Guidelines:
- 
 <specList><specDesc key="u"/><specDesc key="pause"/><specDesc key="vocal"/><specDesc key="kinesic"/><specDesc key="event"/><specDesc key="writing"/><specDesc key="shift"/></specList>
  </p>
 <p>These elements are all members of the <ident
@@ -297,21 +252,17 @@ type="class">tei.ascribed</ident> class, from which they inherit the
 <att>who</att> attribute:
 <specList><specDesc key="tei.ascribed"/></specList>
 </p>
-
 <p>Each of these elements is further discussed and specified below in sections <ptr target="#TSBAUT"/>
  to <ptr target="#TSBAWR"/>.
  </p>
 <p>We can show the relationship between four of these constituents of
 speech using the features <ident type="feature">eventive</ident>, <ident type="feature">communicative</ident>, <ident type="feature">anthropophonic</ident> (for sounds produced by the human
 vocal apparatus), and <ident type="feature">lexical</ident>:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">         eventive  communicative  anthropophonic  lexical
 event       +             -              -           -
 kinesic     +             +              -           -
 vocal       +             +              +           -
 utterance   +             +              +           +</egXML>
- 
-
 The differences are not always clear-cut.  Among <term
 rend="noindex">events</term> might be included actions like slamming
 the door, which can certainly be communicative.  <term
@@ -333,7 +284,6 @@ their parents, recorded in 1987, and discussed in
 <title>CHAT Manual</title>
 ([Pittsburgh]: Dept of Psychology, Carnegie-Mellon University,
 1988), pp. 87ff.</bibl></note>
-
 Each utterance is encoded using a <gi>u</gi> element (see section <ptr target="#TSBAUT"/>). Pauses marked by the transcriber are indicated
 using the <gi>pause</gi> element (see section <ptr target="#TSBAPA"/>).
 Non-verbal vocal effects such as the child's meowing are indicated
@@ -341,7 +291,6 @@ either with orthographic transcriptions or with the <gi>vocal</gi>
 element, and entirely non-linguistic but significant events such as
 the sound of the toy cat are represented by the <gi>event</gi>
 elements (see section <ptr target="#TSBAVO"/>).
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#mar">you never <pause/> take this cat for show&amp;sp;and&amp;sp;tell
 <pause/> meow meow</u>
 <u who="#ros">yeah well I dont want to</u>
@@ -355,7 +304,6 @@ elements (see section <ptr target="#TSBAVO"/>).
 <u who="#mar">no mine&amp;stress; isnt old
 mine is just um a little dirty</u></egXML>
 <!-- from MacWhinney 88, 87, cited by SJ --></p>
-
 <p>This example also uses some elements common to all TEI texts,
 notably the <gi>reg</gi> tag for editorial regularization. Special
 purpose entity references have been used to indicate non-separating
@@ -377,7 +325,6 @@ surrounding elements within a given division or text by means of the
 <div3 type="subsection" xml:id="TSBAUT"><head>Utterances</head>
 <p>Each distinct <term>utterance</term> in a spoken text is represented
 by a <gi>u</gi> element, described as follows:
- 
 <specList><specDesc key="u" atts="trans"/>
 </specList>
  </p>
@@ -390,11 +337,9 @@ attributed with confidence to any particular participant or group of
 participants, the encoder may choose to define
 <soCalled>participants</soCalled> such as <ident type="var">all</ident> or
 <ident type="var">various</ident>. For example:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#A">           </u>
 <u who="#A #B">  </u>
 <u who="#ALL"> </u></egXML></p>
-
 <p>The <att>trans</att> attribute is provided as a means of
 characterizing the transition from one utterance to the next at a
 simpler level of detail than that provided by the temporal alignment
@@ -404,12 +349,10 @@ utterance bearing the attribute.  For example:<note place="foot">For
 the most part, the examples in this chapter use no sentence punctuation
 except to mark the rising intonation often found in interrogative
 statements; for further discussion, see section <ptr target="#TSREG"/>.</note>
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u xml:id="ts_a1" who="#a">Have you heard the</u>
 <u xml:id="ts_b1" trans="latching" who="#b">the election results? yes</u>
 <u xml:id="ts_a2" trans="pause" who="#a">it's a disaster</u>
 <u xml:id="ts_b2" trans="overlap" who="#b">it's a miracle</u></egXML>
- 
 In this example, utterance B1 latches on to utterance A1, while there is
 a marked pause between B1 and A2.  B2 and A2 overlap, but by an
 unspecified amount.  For ways of providing a more precise indication of
@@ -426,13 +369,11 @@ between utterances applies to all speakers.
 <p>Occasionally, an utterance may contain other utterances, for example
 where there is a change in the script associated with it.  This may
 occur when a speaker changes script in mid-utterance.  For example:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#a">Listen to this
     <u decls="#s1" who="#a">The government is confident, he
     said, that the current economic problems will be
     completely overcome by June</u>
  what nonsense</u></egXML>
- 
 Here speaker A's own utterance contains a second nested utterance, which
 is read from a newspaper.  The <att>decls</att> attribute on the nested
 utterance is used to indicate that its script is S1, rather than the
@@ -440,30 +381,23 @@ default.  Alternatively, the embedded utterance might be regarded as a
 new (non-nested) one.  It might also be encoded using the
 <gi>writing</gi> element described in section <ptr target="#TSBAVO"/>
 below, or the <gi>event</gi> element described in section <ptr target="#TSBAVO"/>, without transcribing the read material:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#a">Listen to this <event desc="reads"/>
  what nonsense</u></egXML>
- 
  </p></div3>
 <div3 type="subsection" xml:id="TSBAPA"><head>Pause</head>
 <p>The <gi>pause</gi> empty element is used to indicate a perceived
 pause, either between or within utterances.
- 
 <specList><specDesc key="pause" /></specList>
- 
 A pause contained by an utterance applies to the speaker of that
 utterance.  A pause between utterances applies to all speakers.  The
 <att>type</att> attribute may be used to categorize the pause, for
 example as short, medium or long; alternatively the attribute
 <att>dur</att> may be used to indicate its length more exactly, as in
 the following example:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u>Okay <pause dur="PT2M"/>U-m<pause dur="PT75S"/>the scene opens up
 <pause dur="PT50S"/> with <pause dur="PT20S"/> um <pause dur="PT145S"/> you see
 a tree okay?</u></egXML>
- 
 <!-- example recoded from Chafe  -->
- 
 If detailed synchronization of pausing with other vocal phenomena is
 required, the alignment mechanism defined at section <ptr target="#SASY"/>
 and discussed informally below should be used.  Note that the
@@ -475,7 +409,6 @@ utterances.
 <p>These three empty elements are used to indicate the presence of
 non-transcribed semi-lexical or non-lexical phenomena either between or
 within utterances.
- 
 <specList><specDesc key="vocal" atts="desc iterated"/><specDesc key="kinesic" atts="desc iterated"/><specDesc key="event" atts="desc iterated"/></specList>
  </p>
 <p>The <att>who</att> attribute should be used to specify the person or
@@ -492,7 +425,6 @@ case, the <gi>shift</gi> element discussed in section <ptr target="#TSSASH"/> sh
  </p>
 <p>The <att>desc</att> attribute may be used to supply a conventional
 representation for the phenomenon, for example:
- 
 <list type="gloss"><label>non-lexical </label>
 <item>burp, click, cough, exhale, giggle, gulp,
     inhale, laugh, sneeze, sniff, snort, sob, swallow, throat, yawn
@@ -500,7 +432,6 @@ representation for the phenomenon, for example:
 <item>ah, aha, aw, eh, ehm, er, erm, hmm, huh,
     mm, mmhm, oh, ooh, oops, phew, tsk, uh, uh-huh, uh-uh, um, urgh,
     yup</item></list>
- 
 Researchers may prefer to regard some semi-lexical phenomena as
 <soCalled>words</soCalled> within the bounds of the <gi>u</gi> element.
 See further the discussion at section <ptr target="#TSREG"/> below.  As
@@ -512,16 +443,13 @@ for all basic categories, the definition should be made clear in the
 <title>Transcript notation. Structures of social action: Studies in
 conversation analysis,</title> Cambridge University Press,
 1984</bibl>).
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#jan">This is just delicious</u>
 <event desc="telephone rings"/>
 <u who="#kim">I'll get it</u>
 <u who="#tom">I used to <vocal desc="cough"/> smoke a lot</u>
 <u who="#bob"><vocal desc="sniff"/>He thinks he's tough</u>
 <vocal who="#ann" desc="snorts"/></egXML>
- 
 Note that Ann's snorting could equally well be encoded as follows:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#ann">
    <vocal desc="snorts"/>
 </u></egXML>
@@ -531,14 +459,6 @@ transcription will depend entirely on the purpose for which the
 transcription was made.  As elsewhere, this will depend on the
 particular research agenda and the extent to which their presence is
 felt to be significant for the interpretation of spoken interactions.
- 
-
-	
-	
-	
-	
-	
-	
  </p></div3>
 <div3 type="subsection" xml:id="TSBAWR"><head>Writing</head>
 <p>Written text may also be encountered when speech is transcribed, for
@@ -546,16 +466,12 @@ example in a television broadcast or cinema performance, or where one
 participant shows written text to another.  The <gi>writing</gi> element
 may be used to distinguish such written elements from the spoken text in
 which they are embedded.
- 
 <specList><specDesc key="writing" atts="gradual type"/></specList>
- 
 <!-- example needed -->
- 
 For example, if speaker A in the breakfast table conversation in section <ptr target="#TSBAUT"/>
  above had simply shown the newspaper passage to her
 interlocutor instead of reading it, the interaction might have been
 encoded as follows:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#a">look at this</u>
 <writing who="#a" type="newspaper" gradual="false">
    The government is confident, he said, that the
@@ -571,9 +487,7 @@ information about their position in time.  For this reason, these
 elements are regarded as forming a <term>class</term>, referred to here
 as <ident type="class">timed</ident>.  The following attributes are common
 to all elements in this class:
- 
 <specList><specDesc key="tei.timed" atts="start end dur"/></specList>
- 
 Note that if <att>start</att> and <att>end</att> point to <gi>when</gi>
 elements whose temporal distance from each other is specified in a
 timeline, then <att>dur</att> is ignored.
@@ -591,42 +505,34 @@ stretches of speech which are not co-extensive with utterances or any of
 the other units discussed so far.  One simple method of encoding such
 units is simply to mark their boundaries.  An empty element called
 <gi>shift</gi> is provided for this purpose.
- 
 <specList><specDesc key="shift" atts="feature new"/></specList>
- 
 A <gi>shift</gi> element may appear within an utterance or a segment to
 mark a significant change in the particular feature defined by its
 attributes, which is then understood to apply to all subsequent
 utterances for the same speaker, unless changed by a new shift for the
 same feature in the same speaker.  Intervening utterances by other
 speakers do not normally carry the same feature.
- 
 For example:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#lb"><shift feature="loud" new="f"/>Elizabeth</u>
 <u who="#eb">Yes</u>
 <u who="#lb"><shift feature="loud" new="normal"/>Come and try this <pause/>
      <shift feature="loud" new="ff"/>come on</u></egXML>
- 
 In this example, the word <mentioned>Elizabeth</mentioned> is spoken loudly, the
 words <mentioned>Yes</mentioned> and <mentioned>Come and try this</mentioned> with
 normal volume, and the words <mentioned>come on</mentioned> very loudly.
  </p>
-
 <p>The values proposed here for the <att>feature</att> attribute are
 based on those used by the Survey of English Usage;<note place="foot">For details see <bibl>S. Boase, <title>London-Lund
 Corpus: Example Text and Transcription Guide</title> (London: Survey
 of English Usage, University College London, 1990)</bibl>.</note> this
 list may be revised or supplemented using the methods outlined in
 section <ptr target="#MD"/>. </p>
-
 <p>The <att>new</att> attribute specifies the new state of the feature
 following the shift.  If no value is specified, it is implied that the
 feature concerned ceases to be remarkable at this point:  the special
 value <val>normal</val> may be specified to have the same
 effect.</p>
 <p>A list of suggested values for each of the features proposed follows:
- 
 <list type="simple">
 <item>tempo
 <list type="gloss"><label>a    </label>
@@ -701,10 +607,7 @@ text header (see section <ptr target="#HD5"/>).
 <div3 type="subsection" xml:id="TSBAFD"><head>Formal Definition</head>
 <p>The components of the tag set for transcribed speech are formally
 defined as follows:
- 
 <specGrp xml:id="DTSCOMP" n="Components of Transcribed Speech">
-
-
 &u.odd;
 &pause.odd;
 &vocal.odd;
@@ -718,12 +621,10 @@ defined as follows:
 <p>This section describes the following features characteristic of
 spoken texts for which elements are defined elsewhere in these
 Guidelines:
- 
 <list type="simple">
 <item>segmentation below the utterance level</item>
 <item>synchronization and overlap</item>
 <item>regularization of orthography</item></list>
- 
 The elements discussed here are not provided by the base tag set for
 spoken texts.  Some of them are included in the core tag set available
 to all TEI documents, but others are contained in the TEI additional
@@ -733,24 +634,20 @@ document type declaration subset, as described in section <ptr target="#STIN"/>.
 defined in this chapter additionally wishes to make use of the
 <gi>timeline</gi> element, then the following declarations would be
 necessary:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei2.dtd" [
       <!ENTITY % TEI.XML      'INCLUDE'>
       <!ENTITY % TEI.spoken   'INCLUDE'>
       <!ENTITY % TEI.linking  'INCLUDE'>
  ]>]]></egXML>
- 
 If the complex segmentation elements defined in the additional tag set
 for analysis were also required, the following declarations would be
 needed:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei2.dtd" [
       <!ENTITY % TEI.XML      'INCLUDE'>
       <!ENTITY % TEI.spoken   'INCLUDE'>
       <!ENTITY % TEI.linking  'INCLUDE'>
       <!ENTITY % TEI.analysis 'INCLUDE'>
  ]>]]></egXML>
- 
 <!-- I still think it's completely bonkers not to define timeline here. LB --></p>
 <div3 type="subsection" xml:id="TSSASE"><head>Segmentation</head>
 <p>For some analytic purposes it may be desirable to subdivide the
@@ -769,7 +666,6 @@ of segments which are internally connected by a network of syntactic
 relations and externally delimited by the absence of such relations with
 respect to neighbouring segments. Such a segment is a syntactic unit
 called a macrosyntagm</q> (trans. S. Johansson).</note></p>
-
 <p>These Guidelines propose that such analyses be performed in terms of
 neutrally-named <term>segments</term>, represented by the <gi>seg</gi>
 element, which is discussed more fully in section <ptr target="#SASE"/>.
@@ -786,7 +682,6 @@ prosodically (an entity reference <code>&amp;stress;</code>
 has been used to mark the position immediately following the syllable
 bearing the primary accent or stress), and may be thought of as
 <soCalled>tone units</soCalled>.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#m1">
    <seg>we went to the pub yesterday</seg>
    <pause/>
@@ -796,9 +691,7 @@ bearing the primary accent or stress), and may be thought of as
    <seg>although its an old ide&amp;stress;a</seg>
    <seg>it hasnt been on the mar&amp;stress;ket very long</seg>
 </u></egXML>
- 
 <!-- examples from J Payne NERC Report -->
- 
 In either case, the <gi>segmentation</gi> element in the header of the
 text should specify the principles adopted to define the segments marked
 in this way.</p>
@@ -808,14 +701,12 @@ s-units in written texts, the <gi>s</gi> element discussed in chapter <ptr targe
 the more general purpose <gi>seg</gi> element.  The <gi>s</gi> element
 is available without formality in all texts, but does not allow segments
 to nest within each other.
- 
 </p>
 <p>Where segments of different kinds are to be distinguished within the
 same stretch of speech, the <att>type</att> attribute may be used, as in
 the following example.  The example also shows the use of a
 user-specified extension to the TEI tag sets, for specifying
 paraphasia.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<u who="#T1">
 <seg type="C">I think </seg>
 <seg type="C">this chap was writing </seg>
@@ -833,7 +724,6 @@ paraphasia.
             writing there </seg>
 </u>]]></egXML>
 <!-- <note>Reference needed!</note>                           -->
- 
 In this example, recoded from a corpus of language-impaired speech
 prepared by Fletcher and Garman, the speaker's utterance has been fully
 segmented into clausal (<code>type="C"</code>) 
@@ -855,7 +745,6 @@ utterance boundaries; for example, syntactic units may cross utterance
 boundaries.  For a detailed discussion of this problem, and the various
 methods proposed by these Guidelines for handling it, see chapter
 <ptr target="#NH"/>. Methods discussed there include these:
- 
 <list type="simple">
 <item><soCalled>milestone</soCalled> tags may be used;
 the special-purpose <gi>shift</gi> tag discussed
@@ -870,20 +759,16 @@ complement), the <gi>join</gi> element may be used</item>
 of the temporal dimension to the former.  As a very simple example,
 consider the following, first as it might be represented in a
 playscript:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Jane: Have you read Vanity Fair?
 Stig: Yes
 Lou: (nods vigorously)</egXML>
-
 Let us assume that Stig and Lou respond to Jane's question before she
 has finished asking it &#x2014; a fairly normal situation in spontaneous
 speech.  The simplest way of representing this <term>overlap</term>
 would be to use the <att>trans</att> attribute previously discussed:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#jane">have you read Vanity Fair</u>
 <u trans="overlap" who="#stig">yes</u>
 </egXML>
- 
 However, this does not allow us to indicate either the extent to which
 Jane's utterance is overlapped, nor does it show that there are in
 fact three things which are synchronous:  the end of Jane's utterance,
@@ -893,17 +778,14 @@ alignment discussed in detail in section <ptr target="#SASY"/>, are needed.
 If the additional tag set for linking has been enabled (as described in
 section <ptr target="#TSSASE"/> above), one way to represent the simple
 example above would be as follows:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u xml:id="utt1" who="#jane">have you read Vanity <anchor synch="#utt2 #k1" xml:id="a1"/> Fair</u>
 <u xml:id="utt2" who="#stig">yes</u>
 <kinesic xml:id="k1" who="#lou" iterated="true" desc="nod"/></egXML></p>
-
 <p>For a full discussion of this and related mechanisms, section <ptr target="#SASYMP"/> should be consulted. The rest of the present
 section, which should be read in conjunction with that more detailed
 discussion, presents a number of ways in which these mechanisms may be
 applied to the specific problem of representing temporal alignment,
 synchrony or overlap in transcribing spoken texts.</p>
-
 <p>In the simple example above, the first utterance (that with
 identifier u1) contains an <gi>anchor</gi> element, the function of
 which is simply to mark a point within it. The <att>synch</att>
@@ -911,7 +793,6 @@ attribute associated with this anchor point specifies the identifiers of
 the other two elements which are to be synchronized with it:
 specifically, the second utterance (u2) and the kinesic (k1). Note that
 one of these elements has content and the other is empty.</p>
-
 <p>This example demonstrates only a way of indicating a point within one
 utterance at which it can be synchronized with another utterance and a
 kinesic. For more complex kinds of alignment, involving possibly
@@ -922,14 +803,12 @@ attributes which indicate its exact temporal position relative to other
 elements in the same timeline, in addition to the sequencing implied by
 its position within it.</p>
 <p>For example:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><timeline unit="s" origin="#TS-P1">
    <when xml:id="TS-P1" absolute="12:20:01"/>
    <when xml:id="TS-P2" interval="4.5" since="#TS-P1"/>
    <when xml:id="TS-P6"/>
    <when xml:id="TS-P3" interval="1.5" since="#TS-P6"/>
 </timeline></egXML>
- 
 This timeline represents four points in time, named TS-P1, TS-P2, TS-P6, and TS-P3
 (as with all attributes named <att>xml:id</att> in the TEI scheme, the
 names must be unique within the document but have no other
@@ -939,7 +818,6 @@ at some unspecified time later than TS-P2 and previous to TS-P3 (this is
 implied by its position within the timeline, as no attribute values have
 been specified for it).  The fourth point, TS-P3, is 1.5 seconds 
 later than TS-P6.</p>
-
 <p>One or more such timelines may be specified within a spoken text, to
 suit the encoder's convenience.  If more than one is supplied, the
 <att>origin</att> attribute may be used on each to specify which other
@@ -964,30 +842,24 @@ free-standing <gi>link</gi> element may be used to associate the
 specifying their identifiers as values for its <att>target</att>
 attribute.</item></list></p>
 <p>For example, using the timeline given above:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u xml:id="TS-U1" start="#TS-P2" end="#TS-P3">This is my <anchor synch="#TS-P6" xml:id="TS-P6A"/> turn</u></egXML>
- 
 The start of utterance TS-U1 is aligned with TS-P2 and its end with TS-P3.  The
 transition between the words <mentioned>my</mentioned> and <mentioned>turn</mentioned>
 occurs at point TS-P6A, which is synchronous with point TS-P6 on the timeline.</p>
 <p>The synchronization represented by the preceding examples could
 equally well be represented as follows:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><timeline origin="#ts-p1" unit="s">
   <when xml:id="ts-p1" absolute="12:20:01"/>
   <when synch="#ts-u1" xml:id="ts-p2" interval="4.5" since="#ts-p1"/>
   <when synch="#ts-x1" xml:id="ts-p6"/>
   <when synch="#ts-u1" xml:id="ts-p3" interval="1.5" since="#ts-p6"/>
 </timeline>
-
 <u xml:id="ts-u1">This is my <anchor xml:id="ts-x1"/> turn</u></egXML>
- 
 Here, the whole of the object with identifier ts-u1 (the utterance) has
 been aligned with two different points, ts-p2 and ts-p3.  This is interpreted
 to mean that the utterance spans at least those two points.</p>
 <p>Finally, a <gi>linkGrp</gi> may be used as an alternative to the
 <att>synch</att> attribute:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><timeline origin="#TS-p1" unit="s">
   <when xml:id="TS-p1" absolute="12:20:01"/>
   <when xml:id="TS-p2" interval="4.5" since="#TS-p1"/>
@@ -1007,20 +879,16 @@ to mean that the utterance spans at least those two points.</p>
 <p>As a further example of the three possibilities, consider the
 following dialogue, represented first as it might appear in a
 conventional playscript:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Tom: I used to smoke - -
 Bob: (interrupting) You used to smoke?
 Tom: (at the same time) a lot more than this.  But I never
      inhaled the smoke</egXML>
 <!-- Atkinson and Heritage (1984) ix-xvi -->
- 
 A commonly used convention might be to transcribe such a passage as
 follows:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">(1) I used to smoke [ a lot more than this ]
 (2)                 [ you used to smoke ]
 (1) but I never inhaled the smoke</egXML>
- 
 Such conventions have the drawback that they are hard to generalize or
 to extend beyond the very simple case presented here.  Their reliance on
 the accidentals of physical layout may also make them difficult to
@@ -1028,23 +896,18 @@ transport and to process computationally.  These Guidelines recommend
 one of the courses described in what follows:</p>
 <p>Where the whole of one or another utterance is to be synchronized,
 the <att>start</att> and <att>end</att> attributes may be used:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#tom">I used to smoke <anchor xml:id="TS-p10"/> a lot more than this
 <anchor xml:id="TS-p20"/>but I never inhaled the smoke</u>
 <u start="#TS-p10" end="#TS-p20" who="#bob">You used to smoke</u></egXML>
- 
 Note that the second utterance above could equally well be encoded as
 follows with exactly the same effect:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#bob"><anchor synch="#TS-p10"/>You used to smoke<anchor synch="#TS-p20"/></u></egXML></p>
 <p>If synchronization with specific timing information is required, a
 <gi>timeline</gi> must be included:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><timeline origin="#TS-t01">
    <when xml:id="TS-t01"/>
    <when xml:id="TS-t02"/>
 </timeline>
-
 <u who="#tom">I used to smoke
    <anchor synch="#TS-t01"/>a lot more than this
    <anchor synch="#TS-t02"/>but I never inhaled the smoke</u>
@@ -1053,35 +916,28 @@ follows with exactly the same effect:
 <p>As above, since the whole of Bob's utterance is to be aligned, the
 <att>start</att> and <att>end</att> attributes may be used as an
 alternative to the second pair of <gi>anchor</gi> elements:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u start="#TS-t01" end="#TS-t02" who="#bob">You used to smoke</u></egXML></p>
 <p>An alternative approach is to mark the synchronization by pointing
 from the <gi>timeline</gi> to the text:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><timeline origin="#TS-T01">
    <when synch="#TS-nm1 #bob-u2" xml:id="TS-T01"/>
    <when synch="#TS-nm2 #bob-u2" xml:id="TS-T02"/>
 </timeline>
-
 <u who="#tom">I used to smoke
    <anchor xml:id="TS-nm1"/>a lot more than this
    <anchor xml:id="TS-nm2"/>but I never inhaled the smoke</u>
 <u xml:id="bob-u2" who="#bob">You used to smoke</u></egXML>
- 
 To avoid deciding whether to point from the timeline to the text or vice
 versa, a <gi>linkGrp</gi> may be used:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><body>
   <timeline origin="#T001">
      <when xml:id="T001"/>
      <when xml:id="T002"/>
   </timeline>
-  
   <u who="#tom">I used to smoke
      <anchor xml:id="NM01"/>a lot more than this
      <anchor xml:id="NM02"/>but I never inhaled the smoke</u>
   <u xml:id="bob-U2" who="#bob">You used to smoke</u>
-  
   <linkGrp type="synchronize">
      <link targets="#T001 #NM01 #bob-U2"/>
      <link targets="#T002 #NM02 #bob-U2"/>
@@ -1094,27 +950,21 @@ without any need to disrupt the normal syntax of the text.</p>
 might be represented using a musical-score-like notation, in which
 points of synchronization are represented by vertical alignment of the
 text:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">A : This is |my  |turn
 B :         |Balderdash
 C :         |No, |it's mine</egXML>
-
 All three speakers are simultaneous at the words <mentioned>my</mentioned>,
 <mentioned>Balderdash</mentioned>, and <mentioned>No</mentioned>; speakers A and C are
 simultaneous at the words <mentioned>turn</mentioned> and <mentioned>it's</mentioned>.
 This could be encoded as follows, using pointers from the alignment map
 into the text:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><timeline origin="#TSp1">
    <when synch="#TSa1 #TSb1 #TSc1" xml:id="TSp1"/>
    <when synch="#TSa2 #TSc2" xml:id="TSp2"/>
 </timeline>
-
 <u who="#TSa">this is <anchor xml:id="TSa1"/> my <anchor xml:id="TSa2"/> turn</u>
 <u xml:id="TSb1" who="#TSb">balderdash</u>
 <u xml:id="TSc1" who="#TSc"> no <anchor xml:id="TSc2"/> it's mine</u></egXML></p></div3>
-
-
 <div3 type="subsection" xml:id="TSREG"><head>Regularization of Word Forms</head>
 <p>When speech is transcribed using ordinary orthographic notation, as
 is customary, some compromise must be made between the sounds produced
@@ -1181,21 +1031,18 @@ part of speech tags (see section <ptr target="#AILA"/>).</p>
 <p>In the following example, a small set of prosodic features are
 recorded throughout the transcript using a user-defined entity set such
 as the following:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY lf ".">    <!-- low fall intonation -->
 <!ENTITY fr ",">    <!-- fall rise intonation -->
 <!ENTITY lr "?">    <!-- low rise intonation -->
 <!ENTITY rf "!">    <!-- rise fall intonation -->
 <!ENTITY trunc "-"> <!-- truncated syllable -->
 <!ENTITY long ":">  <!-- lengthened syllable -->]]></egXML>
- 
 This set of entity definitions may be included directly within the
 document type declaration subset for the file, or more conveniently
 along with any other extensions or modifications within the user
 extensions file defined by the entity <ident type="pe">extensions-decl</ident>, as discussed in section <ptr target="#STIN"/>.  For convenience of reading on the screen, these entity
 declarations will map the mnemonic entity names used in the text below
 to a conventional punctuation mark.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div n="Lod E-03" type="exchange">
    <note>C is with a friend</note>
    <u who="#cwn">
@@ -1217,7 +1064,6 @@ to a conventional punctuation mark.
       Yes thats fine. <unclear>just as soon as it comes in we'll send
       you a postcard&amp;lf;</unclear> </u>
 </div></egXML>
- 
 <!-- Recoded from Gavioli and Mansfield: The PIXI Corpora     -->
 	<!-- (Bologna, 1990, CLUEB), p74                              --></p>
 <p>This example, which is taken from a corpus of bookshop service
@@ -1236,7 +1082,6 @@ will generally be convenient to use a specialized writing system, as
 defined in chapters <ptr target="#CH"/> and <ptr target="#WD"/>. For
 representation of phonemic information, the use of the International
 Phonetic Alphabet is recommended.</p></div3>
-
 <div3 type="subsection" xml:id="TSTPSM"><head>Speech Management</head>
 <p>Phenomena of <term>speech management</term> include disfluencies such
 as filled and unfilled pauses, interrupted or repeated words,
@@ -1255,31 +1100,25 @@ transcriber.</p>
 <p>For example, false starts, repetition, and truncated words might all
 be included within a transcript, but marked as editorially deleted, in
 the following way:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u><del type="truncation">s</del>see
 <del type="repetition">you you</del> you know
 <del type="falseStart">it's</del> he's crazy</u></egXML></p>
 <p>As previously noted, the <gi>gap</gi> element may be used to mark
 points within a transcript where words have been omitted, for example
 because they are inaudible:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><gap reason="passing truck" extent="approx 10 sylls"/></egXML></p>
 <p>The <gi>unclear</gi> element may be used to mark words which have
 been included although the transcriber is unsure of their accuracy:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u>...and then <unclear reason="passing truck">marbled queen</unclear></u></egXML></p>
 <p>Where a transcriber is believed to have incorrectly identified a
 word, the elements <gi>corr</gi> or <gi>sic</gi> embedded within a
 <gi>choice</gi> element may be used to indicate
 both the original and a corrected form of it:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <choice><corr resp="dd">SCSI</corr><sic>skuzzy</sic></choice>
 </egXML>
- 
 These elements are further discussed in section <ptr
 target="#COEDCOR"/>.
- 
 <!-- delete following scandinavian para? -->
 </p></div3>
 <div3 type="subsection" xml:id="TSTPAC"><head>Analytic Coding</head>
@@ -1296,15 +1135,6 @@ type of speech act (imperative, concessive, etc.), or information status
 the general purpose analytic tools discussed in chapters <ptr target="#SA"/>, <ptr target="#AI"/>, and <ptr target="#FS"/>, may be used to
 advantage.
 </p>
-
-	
-	
-	
-	
-	
-	
 </div3>
 </div2>
-
-
 </div1>

@@ -1,7 +1,5 @@
 <!--Copyright 2005 TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
 -->
 <macroSpec xmlns="http://www.tei-c.org/ns/1.0"
@@ -20,13 +18,22 @@ expression such as a date, a time, or a combination of them</desc>
 	  <rng:data type="gMonthDay"/>
 	  <rng:data type="time"/>
 	  <rng:data type="dateTime"/>
+          <rng:data type="token">
+             <rng:param name="pattern">([01][0-9]|2[0-3]):[0-5][0-9]</rng:param>
+          </rng:data>
 	</rng:choice>
  </content>
  <remarks>
      <p>A normalized form of temporal expression conforming to ISO
      ISO 8601:2004 <title>Data elements and interchange formats —
      Information interchange — Representation of dates and
-     times</title>. This also permits representation of periods of
-     time, e.g. "1939/1945" or "2046-12-09T08:14Z/12:00Z" </p>
+     times</title>. <!--This also permits representation of periods of
+     time, e.g. "1939/1945" or "2046-12-09T08:14Z/12:00Z" --> Only a
+     subset of the representations defined in that standard is
+     permitted; in particular times, if specified, must always contain
+     both hours and minutes, though seconds may be omitted. </p>
+<p>If it is likely that the value used is to be compared with another,
+then a time zone indicator should always be included, and only the
+dateTime representation should be used.</p>
 </remarks>
 </macroSpec>

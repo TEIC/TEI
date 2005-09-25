@@ -1,7 +1,5 @@
 <!--Copyright 2004 TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" xml:id="TIMELINE" usage="opt" ident="timeline">
@@ -22,7 +20,7 @@ elements of a spoken text to create a temporal alignment of that text.</desc>
 	<equiv/>
 	<desc>designates the origin of the timeline, i.e. the time at which it
 begins.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/></datatype>
       <valDesc>must point either to one of the <gi>when</gi> elements in
       its content, or to another <gi>timeline</gi> element.</valDesc>
       <remarks>
@@ -37,7 +35,7 @@ night of the murder</mentioned> or <mentioned>unknown</mentioned>.--></p>
 	<equiv/>
 	<desc>specifies the unit of time corresponding to the <att>interval</att>
 value of the timeline or of its constituent points in time.</desc>
-      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="NMTOKEN"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/></datatype>
       <valList type="semi">
 <valItem ident="s"><gloss>seconds</gloss></valItem>
 <valItem ident="ms"><gloss>milliseconds</gloss></valItem>
@@ -51,10 +49,11 @@ value of the timeline or of its constituent points in time.</desc>
     <attDef ident="interval" usage="opt">
 	<equiv/>
 	<desc>specifies the numeric portion of a time interval</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
-      <valDesc>-1 or any nonnegative number</valDesc>
+      <datatype><rng:ref
+		    xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.numeric"/></datatype>
+      <valDesc>a numeric value</valDesc>
       <remarks>
-        <p>The value -1 indicates uncertainty about all the intervals in
+        <p>Any negative value indicates uncertainty about all the intervals in
 the timeline; 0 indicates that all the intervals are evenly spaced, but
 the size of the intervals is not known; positive values indicate evenly
 spaced values of the size specified.  If individual points in time in the
@@ -63,7 +62,6 @@ attribute, those values locally override the value given in the timeline.</p>
       </remarks>
     </attDef>
   </attList>
-  
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">      <timeline xml:id="TL01" origin="#TL-w0" unit="ms">
         <when xml:id="TL-w0" absolute="11:30:00"/>

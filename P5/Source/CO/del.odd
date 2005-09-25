@@ -1,7 +1,5 @@
 <!--Copyright 2004 TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="DEL" usage="opt" ident="del">
@@ -21,7 +19,7 @@ author, scribe, annotator, or corrector.</desc>
     <attDef ident="type" usage="opt">
 	<equiv/>
 	<desc>classifies the type of deletion using any convenient typology.</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/></datatype>
       <valDesc>any string identifying the class of deletion.</valDesc>
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
@@ -47,12 +45,11 @@ that
 	<equiv/>
 	<desc>may be used to indicate faulty deletions, e.g.
 strikeouts which include too much or too little text.</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/></datatype>
       <defaultVal>unremarkable</defaultVal>
       <valDesc>any description of flaws in the marking of a deletion, e.g.
 <mentioned>excess left</mentioned>, <mentioned>excess right</mentioned>, <mentioned>short left</mentioned>, <mentioned>short
 right</mentioned>.</valDesc>
-      
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
@@ -88,18 +85,14 @@ identification of the hand of the deletion.</desc>
     <attDef ident="hand" usage="opt">
 	<equiv/>
 	<desc>signifies the hand of the agent which made the deletion.</desc>
-      
-      
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/></datatype>
       <valDesc>must be one of the hand identifiers declared in the document
 header (see section <ptr target="#PHDH"/>).</valDesc>
-      
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
     </attDef>
   </attList>
-  
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">      <l><del rend="overtyped">Mein</del> Frisch
 <del rend="overstrike" type="primary">schwebt</del> weht der Wind</l>

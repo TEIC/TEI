@@ -1,13 +1,10 @@
 <!--Copyright 2004 TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="SCHEMASPEC" ident="schemaSpec">
 <equiv/>
 <desc>generates a TEI-conformant schema and documentation for it.</desc>
-  
   <classes>
     <memberOf key="tei.chunk"/>
     <memberOf key="tei.identifiable"/>
@@ -38,7 +35,9 @@ See the file COPYING for details.
       elements  are allowed to be used as  the root of
       documents conforming to it. </desc>
       <datatype>
-	<rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="NMTOKENS"/>
+	<rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
+          <rng:oneOrMore><rng:ref name="tei.data.ident"/></rng:oneOrMore>
+        </rng:list>
       </datatype>
       <defaultVal>TEI</defaultVal>
     </attDef>
@@ -52,7 +51,6 @@ See the file COPYING for details.
       <defaultVal>http://www.tei-c.org/ns/1.0</defaultVal>
     </attDef>
   </attList>
-  
   <remarks>
     <p>A schema combines references to  modules or specification
     groups with other atomic declarations. The processing of a

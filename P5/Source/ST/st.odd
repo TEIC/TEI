@@ -1,32 +1,22 @@
 
 <!-- open questions
-
 1. how far do we need to maintain the distincn between base addnl aux
 modules?
-
 2. what about x. entities: can we do without them?
-
 3. The filenames for modules are now made in a different way : is it fixed?
-
 4. should *all* classes be defined in this chapter or not?
-
 -->
 <!-- changed "tag set" to "module" passim (well, its a start) LB 20
      aug 05 -->
 <!--
 Copyright TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
-
 $Date$
 $Author$
-
 -->
 <div1 xmlns="http://www.tei-c.org/ns/1.0" type="Chapter" xml:id="ST" n="3">
 <head>Structure of the TEI Document Type Definition</head>
-				
 <p>This chapter describes the overall structure of the encoding scheme
 defined by these Guidelines.  It introduces the conceptual framework
 within which the following chapters are to be understood, and
@@ -34,7 +24,6 @@ describes the technical means by which that conceptual framework is
 implemented.  It assumes familiarity with SGML or XML; see chapter
 <ptr target="#SG"/>.
  						</p>
-
 <p>The TEI encoding scheme consists of a number of <term>modules</term>, each of
 which declares particular elements and attributes. Part of an
 element's declaration includes its assignment to one or more
@@ -42,26 +31,21 @@ element classes. Selected modules may be
 combined in different ways, according to principles described in
 this chapter, within the framework of the overall TEI.
 	</p>
-
 <p>The modules from which the main TEI scheme is constructed may be
 classified as follows:
- 
 <list type="bullets">
 <item>core modules</item>
 <item>base modules</item>
 <item>additional modules</item></list></p>
-
 <p>The first two sections of this chapter discuss these distinctions
 and list the specific modules included in each category.  Section
 <ptr target="#STIN" type="div2"/> describes how to create a TEI schema
 or invoke the TEI document type declaration, and how to specify which
 of the various base modules and optional additional modules are used
 in a document.</p>
-
 <p>The <term>global attributes</term>, characteristics postulated of
 every element or tag in the encoding scheme, are defined in section 
 <ptr target="#STGA" type="div2"/>.</p>
-
 <p>The remainder of the chapter contains a more technical description of
 the mechanisms used to implement the encoding scheme.  It may be
 skipped at a first reading, but a proper understanding of the topics
@@ -75,9 +59,7 @@ characteristics are described in section <ptr target="#STEC" type="div2"/>.
 Both global attributes and element classes are implemented using
 <term>parameter entities</term>; various other uses of parameter
 entities in the TEI DTDs are discussed in section <ptr target="#STPE"/>.</p>
-	
 <div2 xml:id="STMA"><head>Main modules</head>
-	
 <p>These Guidelines define a large number of elements for marking up
 documents, all of which are formally defined within the <term>document
 type declaration</term> (<term>DTD</term>) files provided by the TEI
@@ -96,12 +78,10 @@ files in which they are defined, and the rules determining their
 selection and combination, is given in section <ptr target="#STBA"/>.
  </p>
 </div2>
-
 <div2 xml:id="STBA"><head>Core, Base, and Additional Modules</head>	
 <p>A TEI schema is constructed by selecting an appropriate
 combination of smaller modules, each containing some set of tags likely
 to be used together.  These building blocks include:
- 
 <list type="gloss"><label><term>core modules</term> </label>
 <item>standard components of the TEI
 main DTD in all its forms; these are always included without any special
@@ -115,7 +95,6 @@ tags useful for particular purposes. All additional modules are
 compatible with all bases and with each other; an encoder may therefore
 add them to the selected base in any combination desired.
  </item></list>
- 
 Each module is contained in one or more system files, which are
 defined by appropriate inclusions of  schema modules or 
 <term>parameter entity declarations</term>
@@ -136,7 +115,6 @@ classes to the system of element classes.  Consistent naming principles
 are applied throughout the TEI scheme for these and other entities.
 Thus, assuming a module named <ident rend="noindex" type="class">xxx</ident>, the following parameter entities may be
 encountered:
- 
 <list type="gloss"><label>TEI.xxx </label>
 <item>used to enable or disable module <ident rend="noindex">xxx</ident>; must have the value <val>INCLUDE</val> (module is enabled) or, by default, <val>IGNORE</val> (module not enabled).
  </item><label>TEI.xxx.ent </label>
@@ -159,7 +137,6 @@ component-level elements when the mixed base module is in use.
 <item>a special entity for use in defining the set of
 component-level elements when the general base module is in use.
  </item></list>
- 
 Few modules declare all of these entities; only those actually used are
 declared.
  </p>
@@ -176,7 +153,6 @@ parameter entities associated with them.
 invocation of the main TEI DTD.  The tags and attributes that they
 contain are therefore available to any TEI document.  The parameter
 entities used for this purpose, and the files they refer to, are:
- 
 <list type="gloss"><label><ident type="pe">core</ident> </label>
 <item>refers to the file
 <ident type="file">core.dtd</ident>, which declares the core tags
@@ -186,7 +162,6 @@ defined in chapter <ptr target="#CO"/>
 <ident type="file">header.dtd</ident>, which declares the tags of the TEI
 header defined in chapter <ptr target="#HD"/>
  </item></list>
- 
 Together with these modules, part II also documents a module for
 default text structure and front and back matter.  This module is
 embedded by the base module selected, and may vary with the base; it is
@@ -207,7 +182,6 @@ different base modules.  For documents which mingle structurally
 dissimilar elements and require elements from more than one base,
 however, either the <term>mixed base</term> or the <term>general
 base</term> may be used; see section <ptr target="#STCO"/>.
-  
 These bases require the encoder to specify which of the other bases are
 to be combined.
 </p>
@@ -215,12 +189,10 @@ to be combined.
 parameter entity with the replacement text <val>INCLUDE</val>
 To invoke the base module for prose, for example, the encoder must
 ensure that the DTD subset in the document contains the declaration:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % TEI.prose 'INCLUDE' >]]></egXML>
  </p>
 <p>The entities used to select the different base modules, and the
 files containing the declarations for each base, are listed below.
- 
 <list type="gloss"><label><ident type="pe">TEI.prose</ident> </label>
 <item>selects the base module
 for prose, contained in <ident type="file">prose.dtd</ident>.
@@ -274,7 +246,6 @@ section <ptr target="#STOV"/>. </p>
 <p>Most base modules (but not necessarily all) embed common definitions
 of text structure, front matter, and back matter, by referring to three
 standard parameter entities; these are:
- 
 <list type="gloss"><label><ident type="pe">structure</ident> </label>
 <item>refers to the file
 <ident type="file">structure.dtd</ident>, with default definitions for
@@ -286,10 +257,8 @@ standard parameter entities; these are:
 <item>refers to the file
 <ident type="file">backmatter.dtd</ident>, with tags for back matter
  </item></list>
- 
 These default-structure tags are documented in chapter <ptr target="#DS"/>.
  </p></div3>
-
 <div3 xml:id="STBAAD"><head>The Additional Modules</head>
 <p>The additional modules define optional tags required by different
 encoders for different types of analysis and processing; each
@@ -376,7 +345,6 @@ enables declarations of <ident type="pe">linking-decl</ident> and
 <ident type="file">linking.ent</ident> and
 <ident type="file">linking.dtd</ident>.
  </p></div3>
-
 <div3 xml:id="STBAUS"><head>User-Defined Modules</head>
 <p>As described in chapter <ptr target="#MD"/>, users may modify the markup
 language defined here by renaming elements, suppressing elements, adding
@@ -387,7 +355,6 @@ used in the DTDs, and the other containing new or modified
 declarations of elements and their attributes.  These files will be
 embedded in the TEI DTD if they are associated with the following two
 parameter entities:
- 
 <list type="gloss"><label><ident type="pe">extensions-decl</ident></label>
 <item>local modifications to parameter entities</item><label><ident type="pe">extensions</ident></label>
 <item>declarations of new elements and modified
@@ -405,9 +372,7 @@ of this chapter; see in particular section <ptr target="#STOVLO"/>.
 <p>Further recommendations for the creation of user-defined extension or
 modification are provided in chapters <ptr target="#MD"/> and <ptr target="#CF"/>.
 </p> 	</div3></div2>	
-
 <div2 xml:id="STIN"><head>Invocation of the TEI DTD</head>
-
 <p>A valid TEI XML document (though not a merely well-formed TEI XML
 document) must begin with a document type definition (DTD).  Local
 systems may allow the DTD to be implicit, but for interchange purposes
@@ -415,20 +380,16 @@ it <emph>must</emph> be explicit for both SGML and XML. Because of its
 highly modular nature, it may in any case be desirable for the
 component parts of the TEI DTD to be made explicit even for local
 processing.</p>
-
 <p>The simplest version of the TEI DTD names the main TEI DTD file as
 an external file, and specifies a single base module for use in the
 document, using the parameter entity names specified in section <ptr target="#STBA"/>.  For example, a document using the base module for
 prose will begin with a document type declaration something like this:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei2.dtd" [
       <!ENTITY % TEI.XML   'INCLUDE' >
       <!ENTITY % TEI.prose 'INCLUDE' >
 ]>]]></egXML>
- 
 A document using the base module for drama will define a different
 parameter entity:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei2.dtd" [
       <!ENTITY % TEI.XML   'INCLUDE' >
       <!ENTITY % TEI.drama 'INCLUDE' >
@@ -439,13 +400,10 @@ set.  A document using the base module for prose, with the additional
 modules for text criticism and for linking, segmentation, and
 alignment, for example, will begin with a document type declaration
 something like this:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei2.dtd" [
       <!ENTITY % TEI.XML      'INCLUDE' >
- 
 <!-- TEI base module specified here: ... -->
       <!ENTITY % TEI.prose 'INCLUDE' >
- 
 <!-- TEI additional modules optionally specified here: ... -->
       <!ENTITY % TEI.textcrit 'INCLUDE' >
       <!ENTITY % TEI.linking 'INCLUDE' >
@@ -453,22 +411,18 @@ something like this:
 <p>If local modifications are used, they may be stored in separate
 files and pointed to using the parameter entities <ident type="pe">extensions-decl</ident> and <ident type="pe">extensions</ident>.  If such local modifications are
 added to the example just given, this is the result:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei2.dtd" [
       <!ENTITY % TEI.XML      'INCLUDE' ><!-- Local modifications to the TEI DTD declared here.  They
       will be embedded at an appropriate point in the main
       DTD. ... -->
       <!ENTITY % extensions-decl SYSTEM 'project.ent' >
       <!ENTITY % extensions SYSTEM 'project.dtd' >
- 
 <!-- TEI base module specified here: ... -->
       <!ENTITY % TEI.prose 'INCLUDE' >
- 
 <!-- TEI additional modules specified here: ... -->
       <!ENTITY % TEI.textcrit 'INCLUDE' >
       <!ENTITY % TEI.linking 'INCLUDE' >
  ]>]]></egXML>
- 
 <!-- changed following para to reflect fact that mixed base needed when -->
 	<!-- different bases are mixed, not just when prose and verse are needed -->
 	<!-- 
@@ -480,7 +434,6 @@ added to the example just given, this is the result:
 modules (e.g. prose and drama) or embeds smaller texts which use
 different base modules, then one of the mixed-type bases must be used.
 Their proper invocation is described below in section <ptr target="#STCO"/>.</p></div2>
-
 <div2 xml:id="STCO"><head>Combining TEI Base Modules</head>
 <p>The TEI DTD has been designed to simplify the task of choosing an
 appropriate set of tags for the text in hand.  The core module includes
@@ -493,7 +446,6 @@ is generally assumed for clarity of exposition that a text will fall
 into one, not several, of these types.  It is not uncommon, however, for
 a text to combine prose and verse, or other forms treated by the TEI as
 different bases.  Examples include:
- 
 <list type="bullets">
 <item>when the text is a collection of other texts, which do not all use
 the same base:  e.g. an anthology of prose, verse, and drama</item>
@@ -507,7 +459,6 @@ scenes in a play</item>
 sections but within a single section:  e.g. mixed prose-and-verse forms
 like many pastorals or like some portions of the Poetic Edda</item></list></p>
 <p>The TEI DTD provides the following mechanisms to handle these cases:
- 
 <list type="bullets">
 <item>a definition of a corpus or collection as a series of
 <gi>TEI</gi>
@@ -523,7 +474,6 @@ briefly at the conclusion of section <ptr target="#DSGRP"/>)</item></list></p>
 document is to be parseable by the main TEI DTD it may need to combine
 elements from different TEI base modules.  Two special-purpose base
 modules are defined for this purpose:
- 
 <list type="simple">
 <item>the <term>general</term> base, which allows different sections of a
 text to use different bases, but ensures that each section uses
@@ -535,11 +485,9 @@ user must specify all of the other bases to be included in the mix as
 well as either the general or the mixed base.  This is the only
 exception to the general rule that no more than one base module may be
 enabled in a TEI document.
- 
 The following set of declarations for example allows for any mixture of
 the low level structural tags defined in the prose, drama and dictionary
 base modules:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei2.dtd" [
    <!ENTITY % TEI.XML   'INCLUDE' >
    <!ENTITY % TEI.mixed 'INCLUDE' >
@@ -549,7 +497,6 @@ base modules:
 <!-- Structurally, Moby Dick is not your
     everyday common or garden variety novel ... -->
 ]>]]></egXML>
- 
 The following set of declarations has the same effect, but with the
 additional restriction that each text division (i.e. each member of the
 element class <ident type="class">divn</ident>) must be homogenous with
@@ -558,7 +505,6 @@ respect to the mixture of available bases.  Because in a
 a different base, the divisions of the text prefixed by this set of
 declarations will each be composed of elements taken solely from one of
 the prose, verse, or dictionary base modules:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei2.dtd" [
    <!ENTITY % TEI.XML      'INCLUDE' >
    <!ENTITY % TEI.general  'INCLUDE' >
@@ -567,16 +513,13 @@ the prose, verse, or dictionary base modules:
    <!ENTITY % TEI.dictionaries 'INCLUDE' >
 ]>]]></egXML>
 </p>
-
 </div2>	
-
 <div2 xml:id="STGA"><head>Global Attributes</head>
 <p>The following attributes are defined for every TEI element.<note place="foot">More
 exactly, these are the attributes of the element class
 <ident type="class">global</ident>, to which all elements belong; for
 further discussion of attribute classes and ways in which attributes
 may be inherited and over-ridden, see section <ptr target="#STECAT"/>.</note>
- 
 <specList><specDesc key="tei.global" atts="xml:id n xml:lang rend"/></specList>
  </p>
 <p>Some modules (e.g. those for terminology, linking, and analysis)
@@ -588,26 +531,21 @@ for every TEI element.  Unlike the other attributes defined for every
 element, <att>TEIform</att> is not defined by class <ident type="class">global</ident> because its default value is different in
 every case and must be defined individually for each element.<note place="foot">A dummy element class <ident type="class">TEIform</ident> is
 defined in the reference section, solely for documentary purposes.</note>
- 
 <specList><specDesc key="tei.TEIform" atts="TEIform"/></specList>
  </p>
 <p>Any TEI element may be given values for <att>xml:id</att>, <att>n</att>,
 <att>xml:lang</att>, <att>rend</att>, or <att>TEIform</att>, simply by
 specifying values for these attributes.
- 
 <!-- not sure if this is not too obvious here, but left it in for now -->
- 
 The following two examples convey the same information about the text:
 that the material transcribed occurs within a <gi>p</gi> element
 (paragraph).  They differ only in that the second provides an identifier
 for the paragraph, to which other elements (e.g. notes or hypertext
 links) can conveniently refer.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>If to do were as easy as to know what were
 good to do, chapels had been churches and poor men's cottages
 princes' palaces.  It is a good divine that follows his own
 instructions ...</p></egXML>
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p xml:id="mv1.2.5">If to do were as easy as to know what were
 good to do, chapels had been churches and poor men's cottages
 princes' palaces.  It is a good divine that follows his own
@@ -662,24 +600,18 @@ recorded with the <att>n</att> attribute; this would make it possible to
 record errors in the numeration of the original, as in this list of
 chapters, transcribed from a faulty original in which the number 10 is
 used twice, and 11 is omitted:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><list type="ordered">
   <item n="1">About These Guidelines</item>
   <item n="2">A Gentle Introduction to SGML</item>
-  
   <item n="9">Verse</item>
   <item n="10">Drama</item>
   <item n="10">Spoken Materials </item>
   <item n="12">Printed Dictionaries</item>
-  
 </list></egXML>
- 
 The <att>n</att> attribute may also be used to record non-unique names
 associated with elements in a text, possibly together with a unique
 identifier as in the following example start-tags:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type='chap' n='One' xml:id='TXT0101'/></egXML>
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type='stanza' n='xlii'/></egXML>
  </p>
 <p>The <att>xml:lang</att> attribute indicates the language, writing system,
@@ -696,17 +628,14 @@ language of the text, since in the first the <att>xml:lang</att> attributes
 on the <gi>emph</gi> elements specify the same value as that on the
 parent <gi>p</gi> element, while in the second they inherit that value
 without specifying it.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p xml:lang="en"> ... Both parties deprecated war, but one of
  them would <emph xml:lang="en">make</emph> war rather than let
  the nation survive, and the other would <emph xml:lang="en">accept
  </emph> war rather than let it perish, and the war came.</p></egXML>
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p xml:lang="en"> ... Both parties deprecated war, but one of
  them would <emph>make</emph> war rather than let
  the nation survive, and the other would <emph>accept</emph>
  war rather than let it perish, and the war came.</p></egXML>
- 
 <!-- Lincoln's Second Inaugural Address, 4 March 1865, rpt.   -->
 	<!-- (from Richardson, ed., Messages and Papers, 6:276ff) in  -->
 	<!-- H. S. Commager, ed., Documents of American History, 5th  -->
@@ -721,10 +650,8 @@ contrast, because it is in the same language as its parent.  It is
 strongly recommended that all language shifts in the source be
 explicitly identified by use of the <att>xml:lang</att> attribute, as
 described in chapter <ptr target="#CH"/>.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p xml:lang="en">The constitution declares <q>that no bill of attainder
 or <term xml:lang="la">ex post facto</term> law shall be passed.</q> ... </p></egXML>
- 
 <!-- Marbury v. Madison, 1 Cranch, 137 (1803), rpt. in H. S.  -->
 	<!-- Commager, ed., Documents of American History, 5th ed.    -->
 	<!-- (New York:  Appleton-Century-Crofts, 1949), p. 192.      -->
@@ -744,18 +671,15 @@ description of a language and occurences of it.</p>
 physical presentation of the text in the source.  In the following
 example, it is used to indicate that both the emphasized word and the
 proper name are printed in italics:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p> ... Their motives <emph rend="italics">might</emph> be
  pure and pious; but he was equally alarmed by his knowledge
  of the ambitious <name rend="italics">Bohemond</name>, and
  his ignorance of the Transalpine chiefs: ...</p></egXML>
- 
 <!-- Gibbon, Decline and Fall, chapter 58, para beginning     -->
 	<!-- 'In some Oriental tale I have read ...', p. 391 of       -->
 	<!-- Britannica edition.                                      -->
 	<!--  ... played fast and loose with by LB for pedagogic purposes -->
 	<!-- Shame, shame.                                            -->
- 
 If all or most <gi>emph</gi> and <gi>name</gi> elements are rendered in
 the text by italics, it will be more convenient to register that fact in
 the TEI header once and for all and specify a <att>rend</att> value
@@ -802,15 +726,11 @@ specialized variant of the <gi>lg</gi> (line group) element which must
 contain exactly four lines, then its declaration might give its
 <att>TEIform</att> as <val>lg</val>, to signify that a
 quatrain is a particular type of line group, thus:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ELEMENT quatrain (l, l, l, l)            >
 <!ATTLIST quatrain      %a.global;
           TEIform       (lg)            'lg'    >]]></egXML>
- 
  </p>
-
 <p>The formal definition of the global attributes is as follows.</p>
-
 <specGrp xml:id="DSTGA" n="Global attributes">
 <p>The global
 attributes are defined for every element in the TEI module;
@@ -820,21 +740,12 @@ the user define extra global attributes (they do this in their .ent
 file), then they are inherited by GLOBAL; otherwise the parameter
 entities referred to expand to the empty string, as shown here.
 </p>
-
-
-
-
 &global.odd;
-
-
-
     <p>The TEIform attribute is also global, but is declared
 individually for each element, not in a parameter entity
 declaration.</p>
 </specGrp>	
-	
 </div2>
-
 <div2 xml:id="STOV"><head>The TEI2.DTD File</head>
 <p>All TEI-encoded documents use the same top-level DTD file, which
 refers to a number of other DTD files, the exact set of other files
@@ -842,10 +753,8 @@ referred to depending on which base and which additional tagsets are in
 use.  The remainder of this chapter describes in some detail the
 organization and function of this file and those it embeds; it is
 necessarily of a rather technical and specialized nature.</p>
-
 <p>The main TEI DTD is always invoked by specifying the file
 <ident type="file">tei2.dtd</ident>.  This file:
- 
 <list type="ordered">
 <item>takes care of certain necessary preliminaries:
  <list type="ordered">
@@ -868,13 +777,11 @@ and global attributes (by embedding <ident type="file">teiclasses.ent</ident>; s
 <item>embeds DTD files containing local modifications (if any),
 the core modules, the base module, and the additional modules.</item></list></p>
 <div3 xml:id="STOVOV"><head>Structure of the TEI2.DTD File</head>
-
 <p>Each parameter entity associated with a module controls several
 marked sections in the main DTD file <ident type="file">tei2.dtd</ident>.  If the entity has been declared in the
 DTD subset with the text <val>INCLUDE</val>, then the
 marked sections it controls will be parsed; otherwise, they will be
 ignored.  The marked sections controlled by each entity:
- 
 <list type="ordered">
 <item>declare and refer to the entity file for the module,
 which defines its global attributes and element classes;</item>
@@ -882,10 +789,8 @@ which defines its global attributes and element classes;</item>
 which defines its elements and their attributes;</item>
 <item>declare the parameter entity <ident type="pe">macro.component</ident> in
 a form suitable for texts using that base.</item></list></p>
-
 <p>The main TEI module has the following
 structure.</p>
- 
 <moduleSpec xml:id="DSTTEI2" type="core" ident="tei">
 <altIdent type="FPI">Main document type declaration
 file</altIdent>
@@ -894,57 +799,34 @@ file</altIdent>
   <p>This file first defines some useful entities, then defines the
   element TEI and includes files with the various specialized parts of
   the document type declaration. 
-
   I.  Preliminaries.
-  
   Embed any local modifications to TEI entities.
   </p>
   <specGrpRef target="#DSTOVLE"/>
-
   <p>II. Define element classes for content models, shared
   attributes for element classes, global attributes, entities for TEI keywords,
   entities for TEI generic identifiers.  </p>
-
   <specGrpRef target="#DSTECOV"/>
-  
   <p>III.  Embed the core modules, the
   (single) base module, and the (optional) additional modules specified
   by the user.
   </p>
   <specGrpRef target="#DSTOVLO"/>
   <specGrpRef target="#DSTOVAD"/>
-
-
-
 <p>A TEI-conformant document <emph>must</emph> use the <ident type="file">tei2.dtd</ident> file, or one derived from it in the manner
 described in chapter <ptr target="#MD"/>.
 It must also specify which base and
 which additional modules are to be invoked, using the mechanisms
 described in section <ptr target="#STIN"/>.</p>
-
 <p>Define the top-level TEI elements:  one for individual
 texts, one for composites with a collective header.
 The <gi>TEI</gi> and <gi>teiCorpus</gi>
 elements are formally declared as follows:
 <specGrp xml:id="DCOTOPELEMENTS" n="TEI2">
-
-
-
-
 &tei2.odd;
-
-
-
-
-
-
 &teicorp2.odd;
-
-
-
 </specGrp>
 </p></div3>
-
 <div3 xml:id="STOVLO"><head>Embedding Local Modifications</head>
 <p>As noted above in section <ptr target="#STBAUS"/>, local modifications
 to the DTD are most conveniently grouped into two files, one containing
@@ -956,7 +838,6 @@ should be associated with the parameter entities
 the document's DTD subset.</p>
 <p>For example, if the relevant files are called <ident rend="noindex" type="file">project.ent</ident> and <ident rend="noindex" type="file">project.dtd</ident>, then declarations like the following
 would be appropriate:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % extensions-decl SYSTEM 'project.ent' >
 <!ENTITY % extensions SYSTEM 'project.dtd' >]]></egXML></p>
 <p>When an entity is declared more than once, the first declaration
@@ -978,21 +859,13 @@ elements should be attached.  To do this, the standard parameter entity
 new generic identifiers.  The file containing local declarations of the
 standard parameter entities will thus contain a declaration of the
 following form:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % x.phrase 'it | bd |' >]]></egXML></p>
 <p>The relevant fragment of the DTD is this:
- 
 <specGrp xml:id="DSTOVLE" n="Local modifications to parameter entities">
 <p>Embed local modifications to TEI parameter entities.  Declare
 entity as empty string first, in case user has no mods and has not
 declared it.</p>
-
-
-
 &teiexte.odd;
-
-
-
 </specGrp></p>
 <p>The second type of modification needed is most conveniently performed
 after all the standard TEI parameter entities have been declared; this
@@ -1007,7 +880,6 @@ the TEI element classes and other parameter entities have been declared.</p>
 the same parameter entities as the <gi>hi</gi> element.  A suitable
 local DTD-modifications file might look like the following (note that
 the standard parameter-entitity reference for phrase sequence is used):
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ELEMENT it            (%macro.phraseSeq;)                         >
 <!ATTLIST it
           id                ID             #IMPLIED
@@ -1027,39 +899,26 @@ entities and element declarations, see chapter <ptr target="#MD"/>.</p>
 <p>The relevant fragment of the DTD is this:
 <specGrp xml:id="DSTOVLO" n="Embed local element declarations, etc."><p>Embedding local modifications here allows user modifications
 to use all the standard TEI element classes and parameter entities.</p>
-
-
-
 &teiextd.odd;
-
-
-
 </specGrp></p></div3>
 <div3 xml:id="STOVCO"><head>Embedding the Core Modules</head>
 <p>Because all TEI identifiers are referred to indirectly, every
 TEI application must first embed declarations  for the entities
 holding their names. This is carried out by the following DTD
 fragment:</p>
-
 <specGrp xml:id="DSTGIS" n="Define TEI generic identifiers">
-
 &teigis.odd;
-
 </specGrp>
-
 <p>The default text structure tags, which are also documented as part of
 the core, are embedded by the base module, unless the base defines its
 own text structure tags; see the chapters on the individual bases.</p></div3>
-
 <div3 xml:id="STOVBA"><head>Embedding the Base Module</head>
-
 <p>The <ident type="file">tei2.dtd</ident> file embeds the appropriate
 files for the base module previously selected by means of the
 parameter entities described in section <ptr target="#STBA"/>.  A
 parameter entity for the file containing the relevant module is
 declared and referred to inside a conditional marked section
 controlled by the appropriate parameter entity.  </p></div3>
-
 <div3 xml:id="STOVAD"><head>Embedding the Additional Modules</head>
 <p>The <ident type="file">tei2.dtd</ident> file embeds the appropriate
 files for any additional base module previously enabled by means of the
@@ -1068,7 +927,6 @@ entity for the file containing the relevant module is declared and
 referred to, inside a conditional marked section controlled by the
 appropriate parameter entity.  The relevant fragment of <ident type="file">tei2.dtd</ident> is this:
 </p>
-
 <specGrp xml:id="DSTOVAD" n="Embed additional modules"><p>These entities are declared and embedded only when the user
 has overridden the default declaration of IGNORE for a specific
 additional module.</p>
@@ -1130,7 +988,6 @@ class includes attribute definitions for its two attributes
       key  CDATA #IMPLIED
       reg  CDATA #IMPLIED'> 
 ]]></egXML> 
- 
 Members of the class typically inherit these definitions by referring to
 <ident type="class">a.names</ident>:<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % name 'INCLUDE' >
 <!ELEMENT %n.name; %om.RR;  %phrase.seq;> 
@@ -1202,9 +1059,7 @@ global attributes; these additions are declared in the
 <soCalled>ent</soCalled> file of each module, using the following
 entity names.  If the module does not define new global attributes, no
 entity of this type is declared.
- 
 <list type="gloss">	
-	
 <label><ident type="pe">a.analysis</ident> </label>
 <item>additional global
 attributes for the analysis module
@@ -1216,13 +1071,11 @@ attributes for the linking module
 attributes for the terminology base
  </item></list>
  </p>
-
 <p>These entities are included in the <ident type="file">teiclasses.ent</ident> file indirectly, when the
 entity-declaration files of each module are embedded, as shown below
 in section <ptr target="#STECMK"/>.  For purposes of documentation,
 these attributes are treated as if inherited by the class <ident type="class">global</ident> from superclasses called <ident type="class">terminology</ident>, etc., and are documented under the
 class name.
-
 <specGrp xml:id="DSTECAT" n="Attribute classes">
 &decling.odd;
 &declabl.odd;
@@ -1239,7 +1092,6 @@ class name.
 &ascribed.odd;
 </specGrp></p>
 </div3>
-
 <div3 xml:id="STECCM"><head>Classes Used in Content Models</head>
 <p>When the members of a class are structurally similar and can appear
 at the same kinds of structural locations in the document, they are
@@ -1263,18 +1115,14 @@ declaring a new value for an x-dot entity.
 <p>For example, the class <ident type="class">bibl</ident> has the three
 members <gi>bibl</gi>, <gi>biblFull</gi>, and <gi>biblStruct</gi>.
 Its content-model entity is defined thus:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % x.bibl '' >
 <!ENTITY % tei.bibl '%x.bibl; bibl | biblFull | biblStruct' >]]></egXML>
- 
 With the default value of the x-dot entity, this is the same as defining
 <ident type="pe">tei.bibl</ident> with the replacement text <code>bibl | biblFull | biblStruct</code>.  If an encoder wishes
 to add a new bibliographic element called <gi>my.bib</gi>, it can
 be added to the <ident type="class">bibl</ident> class by redefining the
 x-dot entity thus:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % x.bibl 'my.bib |' >]]></egXML>
- 
 This changes the replacement text of <ident type="pe">tei.bibl</ident> from
 its default value to <code>my.bib | bibl | biblFull |
 biblStruct</code>.  If more than one element is to be added to a class,
@@ -1313,7 +1161,6 @@ and their declarations reproduced, in the following sections.
  </p>
 <p>The class system is structured around the following threefold
 division of elements:
- 
 <list type="gloss"><label><term>chunks</term> </label>
 <item>elements such as paragraphs and other
 paragraph-level elements, which can appear directly within texts or
@@ -1357,26 +1204,20 @@ entity declarations, as shown below.
  </p>
 <p>The <ident type="file">teiclasses.ent</ident> file has the following
 overall structure:
- 
 <specGrp xml:id="DSTECOV">
   <p>Define the default for each base and additional
   module as 'IGNORE', and initialising the tag omissibility indicator
   entities, depending on the value of TEI.XML
   </p>
   <specGrpRef target="#DSTKEYS"/>
-
 <p>Define the macros which implement TEI datatypes</p>
-
   <specGrpRef target="#DSTKEYS-1"/>
   <specGrpRef target="#DSTKEYS-2"/>
   <specGrpRef target="#DSTKEYS-3"/>
   <specGrpRef target="#DSTKEYS-4"/>
   <specGrpRef target="#DSTKEYS-5"/>
-
 <p>Define the TEI gis</p>
    <specGrpRef target="#DSTGIS"/>
-
-
 <p>Now we can declare the 'low-level' core classes:
 these are classes of semantically and structurally similar elements
 declared as part of the core module, e.g. the classes 'data' or
@@ -1412,7 +1253,6 @@ elements in the core and elements declared in particular modules; a
 reference is given at least to the relevant section on the core tags.
  </p>
 <p>The following are phrase-level element classes:
- 
 <list type="gloss"><label><ident type="class">hqphrase</ident> </label>
 <item>elements for highlighted
 phrases or material marked by quotation marks, including those defined
@@ -1472,7 +1312,6 @@ pronunciation of the headword, documented in section <ptr target="#DIHW"/>
  </p>
 <p>The following classes of elements may appear anywhere within the
 <gi>text</gi> element:
- 
 <list type="gloss"><label>metadata</label>
 <item>elements which convey non-textual
 information about the text (meta-information, as it were)</item><label>refsys</label>
@@ -1494,8 +1333,6 @@ models only.
 <specGrp xml:id="DSTECLO" n="Low-level classes">
   <p>Most of these elements are in the core module, but
   some may be from other modules.</p>
-
- 
 &teiheader.odd;
 &teitext.odd;
 &hqphrase.odd;
@@ -1511,9 +1348,7 @@ models only.
 &odddecl.odd;
 &oddref.odd;
 &oddphr.odd;
-    
  <p>Inter-level classes</p>
-
 &hqinter.odd;
 &clbibl.odd;
 &lists.odd;
@@ -1523,8 +1358,6 @@ models only.
 &singval.odd;
 &featval.odd;
 &ditoplev.odd;
-
-   
 </specGrp>
 </p>
 </div3>
@@ -1551,19 +1384,14 @@ section <ptr target="#STCO"/>.
 &chunk.odd;
 &segment.odd;
 &paragraph.odd;
-
 <p>This class isolates all the common component-level elements.</p>
-
 &common.odd;
-
 </specGrp>
 </p></div3>
-
 <div3 xml:id="STECMK"><head>Elements Marked for Text Type</head>
 <p>The following element classes are used to group together
 component-level elements which are allowed only in texts of a particular
 type (i.e. texts using a specific module).
- 
 <list type="gloss"><label><ident type="class">comp.verse</ident> </label>
 <item>elements unique to
 verse
@@ -1573,7 +1401,6 @@ drama
  </item><label><ident type="class">comp.spoken</ident> </label>
 <item>elements unique to
 spoken texts
- 	
  </item><label><ident type="class">comp.dictionaries</ident> </label>
 <item>elements unique
 to dictionaries
@@ -1594,79 +1421,62 @@ otherwise not.
 </specGrp>  
 -->
  </p></div3>
-
 <div3 xml:id="STECMX"><head>Components in Mixed and General Bases</head>
 <p>When the mixed or general base is in use, the definitions of the
 entities <ident type="pe">macro.component</ident> and
 <ident type="pe">macro.componentSeq</ident> are rather more complex.
 The relevant portion of the DTD is this:
- 
 <specGrp xml:id="DSTECMX" n="Definition of components for combined bases">
 <p>Default declarations for the 'mix.' entities used for mixed
 and general bases.</p>
-
 &vemixxx.odd;
 &drmixxx.odd;
 &tsmixxx.odd;
 &dimixxx.odd;
-
 <p>But it defines a special version of macro.componentSeq, which
 restricts each div of the text to a single base:  bases can shift only
 in embedded divs or at div boundaries.  This entity is constructed out
 of a series of smaller entities, one for each module.  If the module
 is not in use, its entity will expand to the empty string.</p>
-
 <p>Conditional declarations for all the entities gen.verse,
 etc.</p>
-
 &vegen.odd;
 &drgen.odd;
 &tsgen.odd;
 &digen.odd;
-
 <p>Default declarations for all the entities gen.verse,
 etc.</p>
-
 &drgenxx.odd;
 &tsgenxx.odd;
 &digenxx.odd;
 &vegenxx.odd;
-
 </specGrp>
 </p>
 </div3>
-
 <div3 xml:id="STECST"><head>Standard Content Models</head>
 <p>As far as possible, the TEI DTDs use the following set of
 frequently-encountered content models to help achieve consistency among
 different elements.
- 
 <list type="gloss"><label><ident type="pe">phrase</ident> </label>
 <item>a single sequence of
 character data or single phrase-level element</item>
-
 <label><ident type="pe">macro.phraseSeq</ident> </label>
 <item>sequence of character
 data and phrase-level elements</item>
-
 <label><ident type="pe">macro.component</ident> </label>
 <item>a single chunk- or
 inter-level element</item>
-
 <label><ident type="pe">macro.componentSeq</ident> </label>
 <item>sequence of chunk- and
 inter-level elements; this is the usual content of a <gi>div</gi>
 element</item>
-
 <label><ident type="pe">macro.glossseq</ident> </label>
 <item>sequence of identifying and glossing
 elements</item>
-
 <label><ident type="pe">macro.paraContent</ident> </label>
 <item>sequence of character
 data, phrase-level elements, and inter-level elements; this is the usual
 content of chunks (including, most prominently, paragraphs)</item>
-
 <label><ident type="pe">macro.specialPara</ident> </label>
 <item>specialized content
 model, allowing <emph>either</emph> a sequence of chunks <emph>or</emph>
@@ -1677,7 +1487,6 @@ component-level elements.
  </item></list>
  </p>
 <p>The relevant portion of the DTD looks like this:
- 
 <specGrp xml:id="DSTECST" n="Standard Content Models"><p>Here we
 declare the macros phrase, macro.phraseSeq, component,
 macro.componentSeq, macro.paraContent, and macro.specialPara, for use
@@ -1686,99 +1495,74 @@ and macro.phraseSeq are the same in all bases.  They may include
 elements specific to single modules; if the module is not selected,
 these elements are undefined and have no
 effect.</p>
-
 &cbcomp.odd;
 &pephrase.odd;
 &phrseq.odd;
-
 &glossseq.odd;
-
 <p>The component varies with the base.  The
 versions for the combined bases are declared first (so as to
 take precedence over the declarations in the individual
 bases).</p>
-
 <specGrpRef target="#DSTECMX"/>
-
 <p>The patterm macro.componentSeq is always a starred sequence of
 component elements.  Its definition does not vary with the base (unless
 we are using the general base, in which case it has already been defined
 above), but the meaning of the definition does.</p>
-
 &compseq.odd;
-
 <p>The following entities do not vary with the base.</p>
-
 &peparac.odd;
-
 &pespecp.odd;
-
 </specGrp>
  </p></div3>
 <div3 xml:id="STECMI"><head>Miscellaneous Content-Model Classes</head>
 <p>The following element classes occupy specific places in content
 models; most are relevant only when certain modules are selected
- 
 <list type="gloss"><label><ident type="class">agent</ident> </label>
 <item>elements which denote an
 individual or organization to whom or to which responsibility for an action
 can be assigned</item>
-
 <label><ident type="class">addrPart</ident> </label>
 <item>elements which can occur
 as part of an address</item>
-
 <label><ident type="class">biblPart</ident> </label>
 <item>elements which can occur in bibliographic citations</item>
 <label><ident type="class">chooseable</ident></label>
 <item>elements which can be used as part  of a
 <gi>choice</gi> alternation</item>
-
 <label><ident type="class">demographic</ident> </label>
 <item>elements which record
 demographic characteristics of the participants in a text or language
 interaction (used in module for corpora and collections)</item>
-
 <label><ident type="class">divbot</ident> </label>
 <item>elements which can occur
 as part of the closing material of a text division or body</item>
-
 <label><ident type="class">divtop</ident> </label>
 <item>elements which can occur
 as part of the opening material of a text division or body</item>
-
 <label><ident type="class">dramafront</ident> </label>
 <item>elements which can
 occur in the front matter of drama and other performance texts</item>
-
 <label><ident type="class">fmchunk</ident> </label>
 <item>elements which can
 occur in place of a title page in front matter only </item>
-
 <label><ident type="class">front</ident> </label>
 <item>elements which can occur
 (at the level of text divisions) in front matter only</item>
-
 <label><ident type="class">msItemPart</ident></label>
 <item>elements which can appear within the description of an
 individual title or item in a manuscript description</item>
-
 <label><ident type="class">personPart</ident> </label>
 <item>elements which contain
 parts of a personal name</item>
-
 <label><ident type="class">placePart</ident> </label>
 <item>elements which contain
 parts of a place name</item>
 <label><ident type="class">tpParts</ident> </label>
 <item>elements which occur within title pages</item>
-
 </list>
  </p>
 <p>They are declared in the following module:
- 
 <specGrp xml:id="DSTECMI" n="Misc. Element Class Models">
-
 &agent.odd;
 &addrpart.odd;
 &biblpart.odd;
@@ -1789,14 +1573,11 @@ parts of a place name</item>
 &clfront.odd;
 &fmchunk.odd;
 &tpparts.odd;
-
 &msitempart.odd;
-
 &chooseable.odd;
     </specGrp>
 </p></div3></div2>
 <div2 xml:id="STPE"><head>Other Parameter Entities in TEI DTDs</head><p>The TEI DTDs use parameter entities for several purposes:
- 
 <list type="bullets">
 <item>to define sets of attributes shared by given classes of elements</item>
 <item>to define classes of elements which can occur at the same
@@ -1808,7 +1589,6 @@ locations in content models</item>
 <item>to specify tag omissibility information within
 a DTD, or alternatively to omit such information in an XML DTD</item>
 </list>
- 
 The first two applications of parameter entities are described above in
 section <ptr target="#STEC"/>.  This chapter describes the other uses of
 parameter entities in the TEI DTDs.
@@ -1829,7 +1609,6 @@ will be obvious upon examination of the document's DTD.
 <p>The following entities are referred to by the main
 <ident type="file">tei2.dtd</ident> file to embed portions of the TEI DTDs
 or locally developed extensions.
- 
 <list type="gloss"><label><ident type="pe">extensions-decl</ident></label>
 <item>identifies a local file containing
 extensions to the TEI parameter entities; see section <ptr target="#STOVLO"/></item><label><ident type="pe">extensions</ident></label>
@@ -1872,7 +1651,6 @@ preceded by a definition for a parameter entity with the name
 <ident rend="noindex" type="ge">p</ident> and contained within a marked
 section whose keyword is
 given as <code>%p;</code>:
- 
 <eg><![CDATA[<!ENTITY % p 'INCLUDE' >
 <![ %p; [
        <!-- element and attlist declaration for p here -->
@@ -1893,7 +1671,6 @@ attaching the string <q>n.</q> as a prefix.  Thus the standard generic
 identifiers for paragraphs, notes, and quotations, <gi>p</gi>,
 <gi>note</gi>, and <gi>q</gi> are defined by declarations of the
 following form:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % n.p "p">
 <!ENTITY % n.pb "pb">
 <!ENTITY % n.persName "persName">]]></egXML>
@@ -1921,11 +1698,9 @@ however, that in the interests of simplicity parameter entities are
 used only for generic identifiers. Attribute names, standard attribute
 values, and parameter entity names are less easily modified.</note>
  </p></div3>
-
 <div3 xml:id="STPEKW"><head>Parameter Entities for TEI Keywords</head>
 <p>The TEI uses the following parameter entities to signal
 information which cannot be expressed using attribute declaration keywords:
- 
 <list type="gloss"><label>INHERITED </label>
 <item>indicates that an attribute value is inherited
 from the enclosing element, if not specified</item><label>ISO-date </label>
@@ -1936,10 +1711,8 @@ attribute value should be a date in a format defined by ISO
 as defined in <title>XML Schema Part 2: Datatypes Second
 Edition</title>, <ref target="http://www.w3.org/TR/xmlschema-2/#regexs">Appendix
 F</ref></item></list>
- 
 In addition, the parameter entities which control the selection of
 base and additional modules may be regarded as a keyword.
- 
 </p>
 <p>The parameter entity <ident type="pe">INHERITED</ident> is used
 to signal that the default value for an attribute should be inherited
@@ -1975,7 +1748,6 @@ as described in section <ptr target="#STIN"/>.
 <div3 xml:id="STXML"><head>Generation of Schemas and DTDs </head>
 <p>The TEI Guidelines can
 generate schemas, or DTDs which are both SGML and XML compliant.</p>
-
 <p>Only two SGML tag omissibility indicators are used in the TEI
 Guidelines: <code>- O</code> (i.e., the end-tag may be omitted but not
 the start-tag); and <code>- -</code> (i.e. neither start- nor end-tag
@@ -2000,10 +1772,7 @@ be redefined as null strings, so that the resulting DTD is XML
 conformant;
 if the parameter entity is set to IGNORE, the DTD is suitable for SGML.</p>
 </div3>
-
-
 <div3 xml:id="DTYPES"><head>Datatype macros</head>
-
 <p>The values which attributes may take in a TEI schema are defined,
 for the most part, by reference to a TEI <term>datatype</term>. Each
 such datatype is defined in terms of other primitive datatypes (for
@@ -2016,7 +1785,6 @@ includes additional usage constraints which cannot be enforced by
 existing schema languages, although a TEI-compliant processor should
 attempt to validate them (see further discussion in chapter <ptr
 target="#CF"/>). </p>
-
 <p>Where literal values or name tokens are used in a datatype
 definition an associated value list supplies definitions for the
 significance of suggested or (in the case of closed lists) all
@@ -2028,18 +1796,15 @@ define various kinds of short-hand codes or keys, and those which
 define pointers or links. </p>
 <p>The following datatypes are used for attributes which are intended
 to hold normalized values of various kinds. First, numeric values:
-
 <specList>
 <specDesc key="tei.data.certainty"/>
 <specDesc key="tei.data.probability"/>
 <specDesc key="tei.data.numeric"/>
 <specDesc key="tei.data.count"/>
 </specList>
-
 </p>
 <p>Examples of attributes using these datatypes include
 <att>cert</att>...They are formally defined as follows:
-
 <specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0"
 	 xml:id="DSTKEYS-1" n="Datatypes: numeric">
 &tei.data.certainty;
@@ -2048,10 +1813,8 @@ to hold normalized values of various kinds. First, numeric values:
 &tei.data.count;
 </specGrp>
 </p>
-
 <p>Next, the datatypes used for attributes which are intended to hold
 normalized dates or times, durations, or truth values:
-
 <specList>
 <specDesc key="tei.data.duration"/>
 <specDesc key="tei.data.temporal"/>
@@ -2067,7 +1830,6 @@ of time, date, and duration; RelaxNG in the case of truth values; RFC
 1766 in the case of language; and ISO 5218 in the case of sex.</p>
 <p>Examples of attributes using these datatypes include
 <att></att>...They are formally defined as follows:
-
 <specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0"
 	 xml:id="DSTKEYS-2" n="Datatypes: normalised">
 &tei.data.temporal;
@@ -2077,9 +1839,7 @@ of time, date, and duration; RelaxNG in the case of truth values; RFC
 &tei.data.language;
 &tei.data.sex;
 </specGrp>
-
 </p>
-
 <p>The following datatypes have very specialised uses:
 <specList>
 <specDesc key="tei.data.pattern"/>
@@ -2096,7 +1856,6 @@ of time, date, and duration; RelaxNG in the case of truth values; RFC
 &tei.data.pointers;
 </specGrp>
 </p>
-
 <p>By far the largest number of TEI attributes have values which are
 coded values or names of some kind. These values may be constrained or
 defined in a number of different ways, each of which is given a
@@ -2110,13 +1869,11 @@ different name, as follows:
 <specDesc key="tei.data.code"/>
 </specList>
 </p>
-
 <p>Attributes of type <ident>tei.data.key</ident>, such as
 <att>key</att> on <gi>persName</gi> are used to supply an arbitrary
 external identifier, such as a database key or filename. For that
 reason, no constraints are placed on their possible values: any string
 of Unicode characters may be used. </p>
-
 <p>Attributes of type <ident>tei.data.name</ident>, such as
 <att></att> on <gi></gi> are used to supply a single XML name of some
 kind. The name can contain any non-white-space Unicode characters which are legal
@@ -2126,7 +1883,6 @@ specification. Legal names  include
 <val>xml:id</val>, but not  <val>grand
 wazoo</val>. Attributes of this kind are often used to associate (by
 co-reference) elements of different types.</p>
-
 <p>Attributes of type <ident>tei.data.ident</ident> are also names in
 this sense, but they have the additional constraint that they must be
 legal XML identifiers, as defined by the XML 1.0 specification. As
@@ -2135,12 +1891,10 @@ identifiers include <val>cholmondeley</val>, <val>été</val>,
 <val>e_content</val>, or <val>xml:id</val>, but not <val>grand
 wazoo</val> or <val>1234</val>. Attributes of this kind are typically used to
 represent XML element or attribute names.</p>
-
 <p>Attributes of type <ident>tei.data.names</ident>, such as
 <att></att> on <gi></gi> are used to supply a list of names (as
 defined above), each
 being separated by a single space. </p>
-
 <p>Attributes of type <ident>tei.data.enumerated</ident>, such as
 <att></att> on <gi></gi> are used to supply a name taken from a
 specific list of possibilities. Unlike other names, these may include
@@ -2152,40 +1906,31 @@ also contain a list of possible values, together with a prose
 description of their intended significance. This list may be open (in
 which case the list is advisory), or closed (in which case, it
 determines the range of legal values).</p>
-
 <p>Attributes of type <ident>tei.data.code</ident> such as
 <att></att> on <gi></gi> are similar in function, in that they also
 supply encoded names for values which are defined in more detail
 elsewhere. In this case, however, the full definition is supplied as
 content of another XML element, typically but not necessarily in the
 same document, and it is referenced by means of a pointer.</p>
-
 <p>Here are the specifications for these datatypes:
-
 <specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0"
 	 xml:id="DSTKEYS-4" n="Datatypes: coded values">
-
 &tei.data.code;
 &tei.data.enumerated;
 &tei.data.key;
 &tei.data.name;
 &tei.data.names;
 &tei.data.ident;
-
 </specGrp>
 </p>
-
 <p>The following datatype declarations are temporarily retained for
 compatibility purposes only:
-
 <specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0"
 	 xml:id="DSTKEYS-5" n="Old Dataypes">
-
 <p>These patterns are used to express
 rules or constraints used mainly in attribute declarations.
 In some cases, the constraint cannot be directly expressed, so the
 nearest equivalent is used.</p>
-
 &datatype.certainty.odd;
 &datatype.code.odd;
 &datatype.key.odd;
@@ -2197,11 +1942,8 @@ nearest equivalent is used.</p>
 &datatype.uri.odd;
 &datatype.urilist.odd;
 &datatype.choice.odd;
-
 </specGrp></p>
 </div3>
-
-
 <div3><head>Declaration of TEI keywords</head>
 <p> 
 <specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:id="DSTKEYS" n="TEI Keywords">
@@ -2211,21 +1953,16 @@ user can override this default by declaring the same entity with the
 replacement text INCLUDE, in the document's DTD
 subset.</p>
 <p>Base modules first.</p>
-
 &prtop.odd;
 &vetop.odd;
 &drtop.odd;
 &tstop.odd;
 &ditop.odd;
 &tetop.odd;
-
 <p>Now the mixed bases.</p>
-
 &cbgetop.odd;
 &cbmxtop.odd;
-
 <p>Now additional modules.</p>
-
 &satop.odd;
 &aitop.odd;
 &fstop.odd;
@@ -2238,7 +1975,6 @@ subset.</p>
 &fttop.odd;
 &cctop.odd;
 &mstop.odd;
-
 </specGrp>
  </p>
 </div3>

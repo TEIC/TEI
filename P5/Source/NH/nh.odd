@@ -1,13 +1,9 @@
 <!--
 Copyright TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
-
 $Date$
 $Author$
-
 -->
 <div1 xmlns="http://www.tei-c.org/ns/1.0" type="Faisal" xml:id="NH" n="31"><head>Multiple Hierarchies</head>
 <note place="divtop">This chapter will be substantially revised and
@@ -21,7 +17,6 @@ handling such problems, and should be consulted when deciding how to
 deal with them.</p>
 <p>The following examples illustrate the type of problem with which this
 chapter is concerned:
- 
 <list type="bullets">
 <item>in narrative, a speech by a character may begin in the middle of a
 paragraph and continue for several more paragraphs</item>
@@ -45,13 +40,10 @@ notation; the encoder may wish both to preserve the presentation of the
 material in the source text and to disentangle the logically distinct
 pieces of information in the interests of more convenient processing of
 the lexical information</item></list>
- 
 Many other examples might be given, but these should suffice to show the
 variety of applications where non-hierarchical or non-nesting
 information appears, and to illustrate the various methods for
 addressing the problem.
- 
-
 	</p>
 <p>Non-nesting information poses fundamental problems for any encoding
 scheme, and it must be stated at the outset that no solution has yet
@@ -65,7 +57,6 @@ among alternatives, of tradeoffs between various sets of different
 advantages and disadvantages.</p>
 <p>There are several methods used within these Guidelines to handle
 non-nesting information:
- 
 <list type="bullets">
 <item><term>concur</term>: an optional feature of SGML (not 
 available in XML) which allows multiple
@@ -78,13 +69,11 @@ nests properly within its context</item>
 <item><term>virtual joins</term>: the recreation of a virtual element
 from fragments of text, possibly discontiguous or out of order</item>
 <item>redundant encoding of information in multiple forms</item></list>
- 
 In the sections which follow, these techniques, their advantages, and
 their disadvantages, are briefly described, and instances of their use
 within these Guidelines are pointed out.  The examples show various
 solutions to the problem of direct speech spanning several paragraphs in
 a narrative; the text in question takes the following form:
- 
 <q rend="display">
 <p><q>The first thing that
 put us out was that advertisement.  Spaulding, he came
@@ -94,13 +83,6 @@ says:&#x2014;</q></p>
 <p><q><q>I wish to the Lord, Mr. Wilson, that I was a red-headed
 man.</q></q></p>
 <p><q><q>Why that?</q> I asks.</q></p></q>
-
-	
-	
-	
-	
-	
-	
 	</p>
 <div2 type="Anthony" xml:id="NHCO"><head>Concurrent Markup of Multiple Hierarchies</head>
 <p>In SGML only, CONCUR allows us to mark up the document with many different
@@ -161,7 +143,6 @@ and lines defined elsewhere in this chapter.</p></div2>
 regions of the text which have something in common; they work like COCOA
 tags.  Examples in these Guidelines include the <gi>milestone</gi>
 element and the elements <gi>pb</gi>, <gi>lb</gi>, and <gi>cb</gi>.</p>
-
 <p>For example, if quotations are marked using (user-defined) empty
 elements given the names <q>qb</q> and <q>qe</q>, the empty elements
 mark the beginning and end of the speeches, but because they do not
@@ -170,7 +151,6 @@ elements at the paragraph breaks.<note place="foot">as elsewhere in these Guidel
 empty elements are denoted with a penultimate slash character, which is
 the XML syntax; in SGML, either omit the slash or modify the SGML declaration
 to permit it via the NET delimiter.</note>
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<qb who="Wilson"/>
 ...<p>The first thing that put us out was that
 advertisement.  Spaulding, he came down into the
@@ -187,13 +167,10 @@ processing of the text. One way to improve on this situation would be
 to use the linking attribute <att>corresp</att> discussed in chapter <ptr target="#SA"/>
  to associate the milestone indicating the end of a
 given speech with that indicating its start, as follows:
-
- 
 <!-- further discussion needed! -->
 	<!-- Elli notes that we should add id/idrefs to link QE with their -->
 	<!-- corresponding QBs in the above example. I agree, but not yet. -->
 	<!-- and LB obliges... -->
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<qb who="Wilson" xml:id="W1"/> ...
 <p>The first thing that put us out was that
 advertisement.  Spaulding, he came down into the
@@ -259,7 +236,6 @@ can be broken up to fit into the series of paragraphs, using the
 <att>rend</att> attribute to record the absence of closing quotation
 marks at the end of each paragraph.  The inner speeches, being
 punctuated conventionally, need not carry <att>rend</att> values.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p><q rend="pre ldquo" who="Wilson">The first thing that put us out
     was that advertisement. Spaulding, he came down into the office
     just this day eight weeks with this very paper in his hand, and he
@@ -281,7 +257,6 @@ units are not realized at all in the markup (here, the single long
 outermost speech of Wilson), and that automatic processing of these
 units is thus impossible when this method is used without further
 refinement.</p></div2>
-
 <div2 type="Anthony" xml:id="NHVI"><head>Reconstitution of Virtual Elements</head>
 <p>Virtual joins may be used to indicate objects in the text which
 would, for whatever reason, be difficult to mark using hierarchical
@@ -295,7 +270,6 @@ the interpretation with the text fragment instantiating it.</p>
 that given in the preceding section, with the addition of <gi>join</gi>
 elements to indicate the component parts of the individual speeches
 which have been broken up to fit into the paragraph hierarchy:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p><q xml:id="qw1" rend="pre ldquo" who="Wilson"> The first thing that put
     us out was that advertisement. Spaulding, he came down into the
     office just this day eight weeks with this very paper in his hand,
@@ -304,13 +278,11 @@ which have been broken up to fit into the paragraph hierarchy:
       wish to the Lord, Mr. Wilson, that I was a red-headed man.</q></q></p>
 <p><q xml:id="qw3" rend="pre ldquo" who="Wilson"> <q who="Wilson">Why
       that?</q> I asks.</q></p>
-
 <join targets="#qw1 #qw2 #qw3" result="q"/></egXML>
 <!-- A C Doyle, Red headed league (but where?) --></p>
 <p>Alternatively, the <att>next</att> and <att>prev</att> attributes
 defined in chapter <ptr target="#SA"/> may be used to join the fragmentary
 quotations:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p><q next="#qw5" xml:id="qw4" rend="pre ldquo" who="Wilson">The first
     thing that put us out was that advertisement. Spaulding, he came
     down into the office just this day eight weeks with this very
@@ -384,8 +356,6 @@ a text is to represent competing referencing schemes describing the
 same basic text, the CONCUR mechanism of SGML provides a very natural
 solution. Note, however, that the CONCUR feature is not supported by
 much of the available SGML software, nor is it available in XML at all.
- 
-
 	</p>
 <p>One common form of traditional reference system specifies the page
 and line, or page, column, and line of a passage as it appears in some
@@ -394,7 +364,6 @@ markup hierarchy which divides the body of a text into pages and lines
 or into pages, columns, and lines.  Volumes may also need to be
 identified.  The document type name should be a short identifier for the
 edition cited.  The following tags may be used:
- 
 <specList><specDesc key="vol"/><specDesc key="page"/><specDesc key="col"/><specDesc key="line"/></specList></p>
 <p>Page and line numbers for an edition by Lachmann, for example, might
 be specified thus:
@@ -426,7 +395,6 @@ to be labeled with their document type, however, the
 <soCalled>normal</soCalled> markup would need to have the notation
 <ident>TEI</ident> inserted before each tag's generic identifier.  The
 combined markup might look something like this:
- 
 <?tei winita ?>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<(TEI)TEI>
  <(TEI)TEI.Header> ... </(TEI)TEI.Header>
@@ -470,113 +438,25 @@ combined markup might look something like this:
  <!-- etc. -->
  </(TEI)text>
  </(TEI)TEI>]]></egXML>
- 
 The following declarations give the formal specification for the
 standard pre-defined document type designed for recording page and line
 numbers of a reference edition in an SGML concurrent markup stream.
- 
 <moduleSpec xml:id="DCORSC" type="decls" ident="concurrent-decl"><altIdent type="FPI">Concurrent Document Type for Page and Line   References</altIdent><desc>Concurrent Document Type for Page and Line   References</desc></moduleSpec>
-  
-
-
 &version.odd;
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
 &vername.odd;
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
 &plvol.odd;
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
 &plpage.odd;
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
 &plcol.odd;
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
 &plline.odd;
-
-
-
-
-
-
-
-
-
-
-
 </p>
 <p>This concurrent hierarchy is enabled as shown below:  after the
 document type declaration for the TEI document type, the document
 should contain the sequence of lines:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE La PUBLIC 
   "-//TEI P5//DTD Concurrent Document Type: Pages and Lines//EN"
        'concurrent-decl.dtd' [
     <!ENTITY % version "La" >
     ]>]]></egXML>
- 
 which call the document type for page and line references and give it
 the name <q>La</q>.  If page and line numbers from more than one standard
 edition are to be marked, then the relevant lines may be repeated, each
@@ -585,8 +465,6 @@ time using a different value for the document type and entity definition
 numbers from the editions of Lachmann (La), Kraus (Kr), and
 Moser/Tervooren (MT) at the same time, one might use declarations like
 the following:
- 
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE La PUBLIC 
     "-//TEI P5//DTD Concurrent Document Type: Pages and Lines//EN"
        "concurrent-decl.dtd" [
@@ -631,7 +509,6 @@ using the base tag sets described in part III of these Guidelines,
 however, reference systems with such structures may most readily be
 expressed using the <att>n</att> or <att>xml:id</att> attributes, as
 described above in section <ptr target="#CORS1" type="div3"/>.</p>
-
 <p>Any text with an idiosyncratic standard reference system will
 require its own dtd, so that appropriately named tags can be created
 for the reference units.  Such dtds may follow the pattern of those

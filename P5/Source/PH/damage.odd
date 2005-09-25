@@ -1,7 +1,5 @@
 <!--Copyright 2004 TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="transcr" xml:id="DAMAGE" usage="opt" ident="damage">
@@ -19,7 +17,7 @@ See the file COPYING for details.
     <attDef ident="type" usage="opt">
 	<equiv/>
 	<desc>classifies the damage according to any convenient typology.</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/></datatype>
       <valDesc>any phrase describing the damage, e.g. <mentioned>faded</mentioned>,
 <mentioned>overbound</mentioned>, <mentioned>water</mentioned>, <mentioned>charred with loss of paper</mentioned>.</valDesc>
       <exemplum>
@@ -33,7 +31,7 @@ in letters, minims, inches, or any appropriate unit, where this
 cannot be deduced from the contents of the tag.  For example, the
 damage may span structural divisions in the text so that the tag must
 then be empty of content.</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.names"/></datatype>
       <valDesc>any measurement phrase, e.g. <mentioned>25 letters</mentioned>, <mentioned>2 &#xD7; 3
 inches</mentioned>.</valDesc>
       <exemplum>
@@ -58,7 +56,7 @@ aspect of the text's creation, transcription, editing, or encoding
 	<desc>In the case of damage (deliberate defacement, etc.) assignable
 to an identifiable hand, signifies the hand responsible for the
 damage.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/></datatype>
       <valDesc>must be one of the hand identifiers declared in the document
 header (see section <ptr target="#PHDH"/>).</valDesc>
       <exemplum>
@@ -68,7 +66,7 @@ header (see section <ptr target="#PHDH"/>).</valDesc>
     <attDef ident="agent" usage="opt">
 	<equiv/>
 	<desc>categorizes the cause of the damage, if it can be identified.</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/></datatype>
 <valList type="open">
   <valItem ident="rubbing"><gloss>damage results from rubbing of the
   leaf edges</gloss></valItem>
@@ -85,9 +83,13 @@ header (see section <ptr target="#PHDH"/>).</valDesc>
 The <gi>damage</gi> tag with the <att>degree</att> attribute should
 only be used where the text may be read with some confidence; text
 supplied from other sources should be tagged as <gi>supplied</gi>.</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <datatype>
+         <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+         <rng:ref  name="tei.data.probability"/>
+         <rng:ref  name="tei.data.certainty"/>
+         </rng:choice></datatype>
       <valDesc>an alphanumeric categorization of the degree of damage, as
-<mentioned>40%</mentioned>.</valDesc>
+<mentioned>0.4</mentioned>.</valDesc>
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
@@ -107,7 +109,6 @@ tags in particular circumstances.</p>
       </remarks>
     </attDef>
   </attList>
-  
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
   </exemplum>

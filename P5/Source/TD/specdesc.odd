@@ -1,7 +1,5 @@
 <!--Copyright 2004 TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="SPECDESC" ident="specDesc">
@@ -21,13 +19,18 @@ See the file COPYING for details.
 	<desc>supplies the identifier of the documentary element or class for
           which a description is to be obtained.
     </desc>
-    <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="NCName"/></datatype>
+    <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.ident"/></datatype>
     <exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"> <specDesc key="emph"/> </egXML></exemplum>
   </attDef>
   <attDef ident="atts" usage="rec">
 	<gloss>attributes</gloss>
 	<desc>supplies attribute names for which descriptions should additionally
           be obtained.</desc>
+    <datatype><rng:list
+		  xmlns:rng="http://relaxng.org/ns/structure/1.0">
+        <rng:zeroOrMore>
+<rng:ref name="tei.data.ident"/></rng:zeroOrMore></rng:list></datatype>
+
         <valDesc>a whitespace-separated list of attribute names</valDesc>
     <exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><specDesc key="foreign" atts="usage xml:lang"/> </egXML></exemplum>
 <remarks><p>The attribute names listed may include both attributes
@@ -39,7 +42,6 @@ element. If the <att>atts</att> attribute is not supplied, then descriptions for
 	  description should be displayed.</p></remarks>
   </attDef>
 </attList>
-  
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples"><specDesc key='orth' /></egXML>
   </exemplum>

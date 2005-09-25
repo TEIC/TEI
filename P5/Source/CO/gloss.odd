@@ -1,7 +1,5 @@
 <!--Copyright 2004 TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="GLOSS" usage="rwa" ident="gloss">
@@ -12,12 +10,12 @@ See the file COPYING for details.
   <classes>
     <memberOf key="tei.hqphrase"/>
     <memberOf key="tei.declaring"/>
+
   </classes>
   <content>
     <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
   </content>
   <attList org="choice">
-
     <attDef ident="target" usage="opt">
       <equiv/>
       <desc>identifies the associated <gi>term</gi> element by an
@@ -28,13 +26,12 @@ See the file COPYING for details.
       <valDesc>should be a valid URI reference that resolves to a
       <gi>term</gi> element</valDesc>
     </attDef>
-
     <attDef ident="cref" usage="opt">
       <equiv/>
       <desc>identifies the associated <gi>term</gi> element using a canonical
       reference from a scheme defined in a <gi>refsDecl</gi> element
       in the TEI header</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/></datatype>
       <valDesc>the result of applying the algorithm for the resolution
       of canonical references (described in section <ptr
       target="#SACR"/>) should be a valid URI reference that resolves
@@ -44,9 +41,7 @@ See the file COPYING for details.
 	<att>decls</att> attribute.</p>
       </remarks>
     </attDef>
-
   </attList>
-  
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">We may define <term xml:id="tdpv" rend="sc">discoursal point of view</term>
 as <gloss target="tdpv">the relationship, expressed through discourse

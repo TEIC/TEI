@@ -1,7 +1,5 @@
 <!--Copyright 2004 TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" xml:id="ALTGRP" usage="opt" ident="altGrp">
@@ -9,8 +7,6 @@ See the file COPYING for details.
 <gloss>alternation group</gloss>
 <desc>groups a collection of alt elements and possibly
 pointers.</desc>
-  
-  
   <classes>
     <memberOf key="tei.pointerGroup"/>
     <memberOf key="tei.metadata"/>
@@ -28,64 +24,53 @@ pointers.</desc>
 	<equiv/>
 	<desc>states whether the alternations gathered in this collection are
 exclusive or inclusive.</desc>
-      
-      
       <defaultVal>excl</defaultVal>
       <valList type="closed">
         <valItem ident="excl">
-          
           <equiv/>
           <gloss>indicates that the alternation is exclusive, i.e. that at
 most one of the alternatives occurs.</gloss>
         </valItem>
         <valItem ident="incl">
-          
           <equiv/>
           <gloss>indicates that the alternation is not exclusive, i.e. that
 one or more of the alternatives occur.</gloss>
         </valItem>
       </valList>
-      
     </attDef>
-    <attDef ident="wScale" usage="opt">
+<!--    <attDef ident="wScale" usage="opt">
 	<equiv/>
 	<desc>indicates the scale used to express the value of the
 <att>weights</att> attribute value.</desc>
-      
-      
       <defaultVal>perc</defaultVal>
       <valList type="closed">
         <valItem ident="perc">
-          
           <equiv/>
           <gloss>indicates that the weights are expressed as percentages.</gloss>
         </valItem>
         <valItem ident="real">
-          
           <equiv/>
           <gloss>indicates that the weights are expressed as values
 between 0 and 1.</gloss>
         </valItem>
       </valList>
-      
-    </attDef>
+    </attDef>-->
   </attList>
-  
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">      <altGrp mode="excl">
-        <alt targets="#dm #lt #bb" weights="50 25 25"/>
-        <alt targets="#rl #db" weights="50 50"/>
+        <alt targets="#dm #lt #bb" weights="0.5 0.25 0.25"/>
+        <alt targets="#rl #db" weights="0.5 0.5"/>
       </altGrp>
     </egXML>
   </exemplum>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <altGrp mode="incl" wScale="perc">
-        <alt targets="#dm #rl" weights="90 90"/>
-        <alt targets="#lt #rl" weights="5 5"/>
-        <alt targets="#bb #rl" weights="5 5"/>
-        <alt targets="#dm #db" weights="10 10"/>
-        <alt targets="#lt #db" weights="45 90"/>
-        <alt targets="#bb #db" weights="45 90"/>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <altGrp mode="incl" >
+        <alt targets="#dm #rl" weights="0.90 0.90"/>
+        <alt targets="#lt #rl" weights="0.5 0.5"/>
+        <alt targets="#bb #rl" weights="0.5 0.5"/>
+        <alt targets="#dm #db" weights="0.10 0.10"/>
+        <alt targets="#lt #db" weights="0.45 0.90"/>
+        <alt targets="#bb #db" weights="0.45 0.90"/>
       </altGrp>
     </egXML>
   </exemplum>
