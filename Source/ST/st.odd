@@ -2056,6 +2056,7 @@ normalized dates or times, durations, or truth values:
 <specDesc key="tei.data.duration"/>
 <specDesc key="tei.data.temporal"/>
 <specDesc key="tei.data.truthValue"/>
+<specDesc key="tei.data.xTruthValue"/>
 <specDesc key="tei.data.language"/>
 <specDesc key="tei.data.sex"/>
 </specList>
@@ -2072,6 +2073,7 @@ of time, date, and duration; RelaxNG in the case of truth values; RFC
 &tei.data.temporal;
 &tei.data.duration;
 &tei.data.truthvalue;
+&tei.data.xtruthvalue;
 &tei.data.language;
 &tei.data.sex;
 </specGrp>
@@ -2103,6 +2105,7 @@ different name, as follows:
 <specDesc key="tei.data.key"/>
 <specDesc key="tei.data.name"/>
 <specDesc key="tei.data.names"/>
+<specDesc key="tei.data.ident"/>
 <specDesc key="tei.data.enumerated"/>
 <specDesc key="tei.data.code"/>
 </specList>
@@ -2116,14 +2119,22 @@ of Unicode characters may be used. </p>
 
 <p>Attributes of type <ident>tei.data.name</ident>, such as
 <att></att> on <gi></gi> are used to supply a single XML name of some
-kind. The name can contain (or begin with) any alphabetic characters,
-digits, and a limited set of punctuation characters (specifically,
-underscore, colon, or stop, but not hyphen, comma, exclamation mark,
-questionmark, or semicolon.  Legal names of this kind include
-<val>1234</val>, <val>cholmondeley</val>, <val>e_content</val>, or
-<val>xml:id</val>, but not <val>e-content</val> or <val>grand
+kind. The name can contain any non-white-space Unicode characters which are legal
+within an XML name, as defined by the XML 1.0
+specification. Legal names  include
+<val>cholmondeley</val>, <val>été</val>, <val>1234</val>, <val>e_content</val>, or
+<val>xml:id</val>, but not  <val>grand
 wazoo</val>. Attributes of this kind are often used to associate (by
 co-reference) elements of different types.</p>
+
+<p>Attributes of type <ident>tei.data.ident</ident> are also names in
+this sense, but they have the additional constraint that they must be
+legal XML identifiers, as defined by the XML 1.0 specification. As
+such, they may not begin with digits or punctuation characters. Legal
+identifiers include <val>cholmondeley</val>, <val>été</val>,
+<val>e_content</val>, or <val>xml:id</val>, but not <val>grand
+wazoo</val> or <val>1234</val>. Attributes of this kind are typically used to
+represent XML element or attribute names.</p>
 
 <p>Attributes of type <ident>tei.data.names</ident>, such as
 <att></att> on <gi></gi> are used to supply a list of names (as
@@ -2134,7 +2145,7 @@ being separated by a single space. </p>
 <att></att> on <gi></gi> are used to supply a name taken from a
 specific list of possibilities. Unlike other names, these may include
 white space. Legal names of this kind include <val>1234</val>,
-<val>cholmondeley</val>, <val>e_content</val>, <val>xml:id</val>, and
+<val>cholmondeley</val>, <val>été</val>, <val>e_content</val>, <val>xml:id</val>, and
 <val>grand wazoo</val>. In each case, the element or class
 specification which includes the definition for the attribute will
 also contain a list of possible values, together with a prose
@@ -2147,7 +2158,7 @@ determines the range of legal values).</p>
 supply encoded names for values which are defined in more detail
 elsewhere. In this case, however, the full definition is supplied as
 content of another XML element, typically but not necessarily in the
-same document, referenced by means of a pointer.</p>
+same document, and it is referenced by means of a pointer.</p>
 
 <p>Here are the specifications for these datatypes:
 
@@ -2159,6 +2170,7 @@ same document, referenced by means of a pointer.</p>
 &tei.data.key;
 &tei.data.name;
 &tei.data.names;
+&tei.data.ident;
 
 </specGrp>
 </p>
