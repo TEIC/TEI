@@ -1,7 +1,5 @@
 <!--Copyright 2004 TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="TAGUSAGE" usage="rec" ident="tagUsage">
@@ -9,8 +7,6 @@ See the file COPYING for details.
 <gloss>tagUsage</gloss>
 <desc>supplies information about the usage of a specific element
 within a text. </desc>
-  
-  
   <content>
     <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
   </content>
@@ -19,45 +15,32 @@ within a text. </desc>
 	<equiv/>
 	<desc>the name (generic identifier)
 of the element indicated by the tag.</desc>
-      
-      
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.ident"/></datatype>
       <valDesc>the name of an element from the current dtd</valDesc>
-      
     </attDef>
     <attDef ident="occurs" usage="rec">
 	<equiv/>
 	<desc>specifies the number of occurrences of this element within the text.
  </desc>
-      
-      
-      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="nonNegativeInteger"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.count"/></datatype>
       <valDesc>an integer number greater than zero</valDesc>
-      
     </attDef>
     <attDef ident="withId" usage="rec">
 	<equiv/>
 	<desc>specifies the number of occurrences of this element within the text
 which bear a distinct value for the global <att>xml:id</att> attribute. </desc>
-      
-      
-      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="nonNegativeInteger"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.count"/></datatype>
       <valDesc>an integer number greater than zero</valDesc>
-      
     </attDef>
     <attDef ident="render" usage="opt">
 	<equiv/>
 	<desc>specifies the identifier of a <gi>rendition</gi> element which
 defines how this element is to be rendered.</desc>
-      
-      
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/></datatype>
       <valDesc>an identifier specified as the value of the <att>xml:id</att>
 attribute on some <gi>rendition</gi> element in the current document.</valDesc>
-      
     </attDef>
   </attList>
-  
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">      <tagUsage gi="hi" occurs="28" withId="2" render="#it">
 Used only to mark English words italicised in the copy text

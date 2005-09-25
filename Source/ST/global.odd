@@ -1,7 +1,5 @@
 <!--Copyright 2004 TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
 -->
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" xml:id="GLOBAL" type="atts" ident="tei.global">
@@ -12,25 +10,27 @@ See the file COPYING for details.
     <memberOf key="tei.analysis"/>
   </classes>
   <attList>
-
     <attDef ident="xml:id" usage="opt">
       <equiv/>
       <desc>provides a unique identifier for the element bearing the
       attribute.</desc>
       <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="ID"/></datatype>
-      <valDesc>any valid name.</valDesc>
+      <valDesc>any valid XML identifier .</valDesc>
       <remarks>
         <p>The <att>xml:id</att> attribute may be used to specify a
         canonical reference for an element; see section <ptr
         target="#CORS"/>.</p>
       </remarks>
     </attDef>
-
     <attDef ident="n" usage="opt">
       <equiv/>
       <desc>gives a number (or other label) for an element, which is
       not necessarily unique within the document.</desc>
+
       <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+
+<!--<rng:ref
+      xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.ident"/>-->
       <valDesc>any string of characters; often, but not necessarily,
       numeric.</valDesc>
       <exemplum>
@@ -43,13 +43,12 @@ See the file COPYING for details.
 	for the text.</p>
       </remarks>
     </attDef>
-
     <attDef ident="xml:lang" usage="opt">
       <equiv/>
       <desc>indicates the language of the element content using the
       codes from <ref target="http://www.ietf.org/rfc/rfc3066.txt">RFC
       3066</ref></desc>
-      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="language"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.language"/></datatype>
       <valDesc>The value must conform to RFC 3066 or its succesor. If
       the value is a private use code (i.e., starts with
       <code>x-</code>) it should, and if not it may, match the value
@@ -62,12 +61,11 @@ See the file COPYING for details.
         be specified on the outermost element (<gi>TEI</gi>).</p>
       </remarks>
     </attDef>
-
     <attDef ident="rend" usage="opt">
 	<equiv/>
 	<desc>indicates how the element in question was rendered or
 	presented in the source text.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Code"/></datatype>
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
       <valDesc>any string of characters; if the typographic rendition
       of a text is to be systematically recorded, a systematic set of
       values for the <att>rend</att> attribute should be
@@ -96,14 +94,13 @@ See the file COPYING for details.
         in the Guidelines.</p>
       </remarks>
     </attDef>
-
     <attDef ident="xml:base" usage="opt">
       <equiv/>
       <desc>provides a base URI reference with which applications can
       resolve relative URI references into absolute URI
       references.</desc>
       <datatype>
-	<rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="anyURI"/>
+	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/>
       </datatype>
       <valDesc>any syntactically valid URI reference.</valDesc>
       <exemplum>
@@ -134,9 +131,7 @@ See the file COPYING for details.
       <remarks>
       </remarks>
     </attDef>
-
   </attList>
-  
   <remarks>
     <p>The global attributes described here are made part of the
     attribute definition list declaration of each element by including

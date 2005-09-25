@@ -1,7 +1,5 @@
 <!--Copyright 2004 TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="nets" xml:id="TREE" usage="rwa" ident="tree">
@@ -9,8 +7,6 @@ See the file COPYING for details.
 <gloss/>
 <desc>encodes a tree, which is made up of a root, internal nodes,
 leaves, and arcs from root to leaves.</desc>
-  
-  
   <classes>
     <memberOf key="tei.chunk"/>
   </classes>
@@ -35,30 +31,21 @@ leaves, and arcs from root to leaves.</desc>
     <attDef ident="label" usage="opt">
 	<equiv/>
 	<desc>gives a label for a tree.</desc>
-      
-      
       <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
       <valDesc>A character string.</valDesc>
-      
     </attDef>
     <attDef ident="arity" usage="opt">
 	<equiv/>
 	<desc>gives the maximum number of children of the root and internal
 nodes of the tree.</desc>
-      
-      
-      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="nonNegativeInteger"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.count"/></datatype>
       <valDesc>A nonnegative integer.</valDesc>
-      
     </attDef>
     <attDef ident="ord" usage="req">
 	<equiv/>
 	<desc>indicates whether or not the tree is ordered, or if it is
 partially ordered.</desc>
-      
-      
-      <datatype><rng:text
-      xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/></datatype>
       <defaultVal>true</defaultVal>
 <!-- cant be boolean because we hjave to allow for partial ordering -->
       <valList type="closed">
@@ -77,16 +64,12 @@ and some are unordered.</gloss>
 unordered.</gloss>
         </valItem>
       </valList>
-      
     </attDef>
     <attDef ident="order" usage="opt">
 	<equiv/>
 	<desc>gives the order of the tree, i.e., the number of its nodes.</desc>
-      
-      
-      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="nonNegativeInteger"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.count"/></datatype>
       <valDesc>A nonnegative integer.</valDesc>
-      
       <remarks>
         <p>The size of a tree is always one less than its order, hence
 there is no need for both a <att>size</att> and <att>order</att>
@@ -94,7 +77,6 @@ attribute.</p>
       </remarks>
     </attDef>
   </attList>
-  
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">      <tree n="ex2" arity="2" ord="partial" order="13">
         <root xml:id="G-div1" label="/" children="#G-plu1 #G-exp1" ord="true"/>

@@ -1,17 +1,12 @@
 <!--
 Copyright TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
-
 $Date$
 $Author$
-
 -->
 <div1 xmlns="http://www.tei-c.org/ns/1.0" xml:id="WD">
     <head>Representation of non-standard characters and glyphs</head>
-
     <p>Despite the availability of Unicode, text encoders still
     sometimes find that the published repertoire of available
     characters is inadequate to their needs. This is particularly the
@@ -22,20 +17,16 @@ $Author$
     that need, while retaining compatibility with standards.
 </p>
 <div2><head>Is your journey really necessary?</head>
-
     <p>When encoders encounter some graphical unit in a document which
     is to be represented electronically, the first issue to be
     resolved should be <q>Is this really a different character?</q> To determine
     whether a particular graphical unit <emph>is</emph> a character or
     not, see <ptr target="#D4-42"/>. </p>
-
     <p>If the unit is indeed determined to be a character, the next
     question should be <q>Has this character been encoded already?</q>
     In order to determine whether a character has been encoded,
     encoders should follow the following steps:
-
 <list type="ordered">
-
       <item><p>Check the Unicode
       website at <ptr target="http://www.unicode.org"/>, in particular the page <ref target="http://unicode.org/standard/where/">"Where is my
       Character?"</ref>, and the associated character code charts.
@@ -43,7 +34,6 @@ $Author$
       <title>The Unicode Standard</title> , though the website is
       often more up to date than the printed version, and should be
       checked for preference.</p> 
-
 <p>The pictures (<soCalled>glyphs</soCalled>) in the Unicode code
 charts are only meant to be representative, not definitive. If a
 specific form of an already encoded character is required for a
@@ -51,16 +41,12 @@ project, refer to the guidelines contained below under <ref target="#D25-30">Ann
 encoded document may be rendered on a system which has different fonts
 from yours: if the specific form of a character is important to you,
 then you should document it. </p></item>
-
       <item>Check the Proposed New Characters webpage (<ptr target="http://unicode.org/alloc/Pipeline.html"/>) to see whether
       the character is in line for approval.</item>
-
 <item>Ask on the Unicode email list (<ptr target="http://www.unicode.org/consortium/distlist.html"/>) to determine if a proposal is
 pending, or whether this is indeed a new character (or if this not a
 character at all, in which case it would not be eligible for addition
 to the Unicode Standard).  </item> </list> </p>
-
-
     <p>Since there are now close to 100,000 characters in Unicode,
     chances are good that what you need is already there, but it might
     not be easy to find, since it might have a different name in
@@ -71,7 +57,6 @@ to the Unicode Standard).  </item> </list> </p>
     your character is definitely a digit, but the properties of the
     best match you can find for it say that it is a letter, you may
     have a character not yet defined in Unicode.  </p>
-
 <p>In general, it is advisable to avoid Unicode characters generally
 described as presentation forms<note place="foot">Specifically,
 characters in the Unicode blocks Alphabetic Presentation Forms, Arabic
@@ -82,23 +67,19 @@ a language) then it is quite acceptable to select characters from the
 Mathematical Operators block, provided that they have the appropriate
 properties (i.e. <code>So</code>: Symbol, Other; or <code>Sm</code>:
 Symbol, Math).</p>
-
     <p>An encoded character may be precomposed or it may be formed
     from base characters and combining diacritical marks. Either will
     suffice for a character to be "found" as an encoded character. </p>
-
 <p>If there are several possible Unicode characters to choose amongst,
 it is good practice to consult other colleagues and practitioners to
 see whether a consensus has emerged in favour of one or other of
 them. </p>
-
 <p>If, however, no suitable form of your character seems to exist,
     the next question will be: <q>Does the graphical unit in question
     represent a variant form of a known character, or does it
     represent a completely unencoded character?</q> If the character
     is determined to be missing from the Unicode Standard, it would be helpful to
     submit the new character for inclusion (see <ptr target="http://unicode.org/pending/proposals.html"/>).  </p>
-
     <p>These guidelines will help you proceed once you have
      identified a given graphical unit as either a variant or an
      unencoded character. Determining this will require knowledge of
@@ -109,7 +90,6 @@ them. </p>
      will be discussed below (<ptr target="#D25-30"/>)
      while the problem of representing new characters will be dealt
      with in section <ptr target="#D25-40"/>.    </p>
-
     <p>While there is some overlap between these requirements,
     distinct specialized markup constructs have been created for each
     of these cases as explained in section <ptr target="#D25-20"/>
@@ -118,11 +98,9 @@ them. </p>
     existing characters in section <ptr target="#D25-30"/> and finally
     creation of new ones in <ptr target="#D25-40"/>.</p>
    </div2>
-
    <div2 xml:id="D25-20">
 <!--
     <head>Markup constructs for representing non-standard characters</head>
-
     <p>The gaiji module provides a mechanism to declare characters
     additional to those available from the document character set. XML
     allows for a document (or document component) to declare its
@@ -136,11 +114,8 @@ them. </p>
     the Unicode Standard. Generally speaking, however, the document character set
     will be Unicode, and this mechanism will be needed only for
     characters not defined by the Unicode Standard. </p>
-
 -->
-
 <head>Markup constructs for representation of characters and glyphs</head>
-
 <p>An XML document can, in principle, contain any defined Unicode
 character. The standard allows these characters to be represented
 either directly, using an appropriate encoding (UTF-8 by defaut), or
@@ -151,14 +126,12 @@ part of it) by adding a suitable encoding declaration. For example, if
 a document begins with the declaration <code>&lt;?xml
 encoding="iso-8859-1"?&gt;</code> any Unicode characters which are not
 in the ISO-8859-1 character set must be represented by NCRs. </p>
-
 <p>The gaiji module defined by this chapter adds a further way of
 representing specific characters and glyphs in a document. This allows
 the encoder to distinguish characters and glyphs which Unicode regards
 as identical, to add new nonstandard characters or glyphs, and to
 represent Unicode characters not available in the document encoding by
 an alternative means.</p>
-
     <p>The mechanism provided here consists functionally of two parts:
      <list>
       <item>an element <gi>g</gi>, which serves as a proxy for new
@@ -169,13 +142,11 @@ an alternative means.</p>
        properly. </item>
      </list>
     </p>
-
 <p>When the gaiji module is included in a schema, the
 <gi>charDesc</gi> element is added to the <ident>tei.encoding</ident>
 class, and the <gi>g</gi> element is added to the phrase class. These
 elements and their components are documented in the rest of this
 section. </p>
-
 <p>The Unicode standard defines properties for all the characters it
 defines in the Unicode Character Database, knowledge of which is
 usually built into text processing systems.  If the character
@@ -186,7 +157,6 @@ character set recognized by a given text processing system, it may
 also be convenient to have access to its properties in the same way.
 The <gi>charDesc</gi> element makes it possible to store properties
 for use by such applications in a standard way.</p>
-
 <p> The list of attributes (properties) for characters is modelled on
 those in the Unicode Character Database, which distinguishes
 <term>normative</term> and <term>informative</term> character
@@ -194,7 +164,6 @@ properties. Additional, non-Unicode, properties may also be supplied.
 Since the list of properties will vary with different versions of
 the Unicode Standard, there may not be an exact correspondence between them and the
 list of properties defined in these Guidelines.</p>
-
 <p>Usage examples for  these elements are given below at <ptr target="#D25-30"/>
      and  <ptr target="#D25-40"/>.
 The gaiji module itself is formally defined in section <ptr target="#WSD-DEF"/> below. It defines the following  additional
@@ -204,7 +173,6 @@ The gaiji module itself is formally defined in section <ptr target="#WSD-DEF"/> 
 <specDesc key="g" atts="ref"/>
 </specList>
 </p>
-
 <p>The following elements may appear within a <gi>charDesc</gi>
      element:
 <specList>
@@ -213,7 +181,6 @@ The gaiji module itself is formally defined in section <ptr target="#WSD-DEF"/> 
 <specDesc key="glyph"/>
      </specList>
     </p>
-
 <p>The <gi>char</gi> and <gi>glyph</gi> elements have similar contents
 and are used in similar ways, but their functions are different.  The
 <gi>char</gi> element is provided to define a character which is not
@@ -225,7 +192,6 @@ refer to a very general abstract character, which can be rendered by a
 very large number of possible representations.  The <gi>glyph</gi>
 element is provided for cases where the encoder wants to specify a
 specific glyph (or family of glyphs) out of all possible glyphs.</p>
-
 <!--
 <p>As noted above, the <att>ucs</att> attribute specifies the Unicode
 codepoint corresponding with the character or glyph under
@@ -237,7 +203,6 @@ representation of any valid Unicode code point, including values taken
 from the <soCalled>Private Use Area</soCalled> (see further <ptr
 target="D25-50"/>).</p>
 -->
-
 <p>The Unicode Standard recommends naming conventions which must be followed strictly
 where the intention is to annotate an existing Unicode character, and
 which should also be used as a model when creating new names for
@@ -247,7 +212,6 @@ distinct elements are proposed for naming characters and glyphs:
 <specDesc key="charName"/>
 <specDesc key="glyphName"/>
 </specList></p>
-
 <p>Within both <gi>char</gi> and <gi>glyph</gi>, the following elements are available:
 <specList>
 <specDesc key="gloss"/>
@@ -258,7 +222,6 @@ distinct elements are proposed for naming characters and glyphs:
 <specDesc key="remarks"/>
      </specList>
 </p>
-
 <p>Four of these elements (<gi>gloss</gi>, <gi>desc</gi>,
 <gi>graphic</gi> and <gi>remarks</gi>) are defined by other TEI
 modules, and their usage here is no different from their usage
@@ -268,7 +231,6 @@ contain a representation of it in SVG. Several <gi>graphic</gi>
 elements may be given, for example to provide images with different
 resolution, or in different formats. The <att>type</att> attribute may
 be used to specify the type of image.</p>
-
 <p>The <gi>mapping</gi> element is similar to the standard TEI
 <gi>equiv</gi> element. While the latter is used to express correspondence 
 relationships between TEI concepts or elements and those in other
@@ -312,9 +274,7 @@ glyph may be supplied using the generic <gi>charProp</gi> element
 described in the next section. Despite its name, this element may be
 used for either characters or glyphs.
 </p>
-
 <div3 xml:id="ucsprops"><head>Character Properties</head>
-
 <p>The Unicode Standard documents <soCalled>ideal</soCalled> characters, defined by reference
 to a number of <term>properties</term> (or attribute-value pairs)
 which they are said to possess. For example, a lower case letter is
@@ -329,12 +289,10 @@ properties. When making such modifications however, great care should
 be taken not to over-ride standard informative properties for
 characters which exist in the Unicode Standard.<note place="foot">See further the
 Unicode technical report TR23 <ref target="http://www.unicode.org/reports/tr23/"><title>Character Property Model</title></ref></note></p>
-
 <p>The <gi>charProp</gi> element allows an encoder to supply information
 about a character or glyph. Where the information concerned relates to
 a property which has already been identified in the Unicode Standard, encoders are
 urged to use the appropriate Unicode property name. </p>
-
 <p>The following elements are used to record character properties:
 <specList>
 <specDesc key="unicodeName"/>
@@ -344,7 +302,6 @@ urged to use the appropriate Unicode property name. </p>
 For each property, the encoder must supply either a
 <gi>unicodeName</gi> or a <gi>localName</gi>, followed by a
 <gi>value</gi>. </p>
-
 <p>For convenience, we list here some of the normative character
 properties and their values. For full information, refer to chapter 4 of
 <title>The Unicode Standard</title>, or the online documentation of the Unicode Character Database.
@@ -413,7 +370,6 @@ Database</ref>:<list type="gloss">
 <label>S</label><item>Segment separator</item>
 <label>WS</label><item>Whitespace</item>
 </list></item>
-
 	 <label>canonical-combining-class</label> <item>This
 	  property exists for characters that are not used
 	  independently, but in combination with other characters, for
@@ -448,7 +404,6 @@ Database</ref>:<list type="gloss">
 <label>234</label><item>Double above </item>
 <label>240</label><item>Below (iota subscript) </item>
 </list>	  </item>
-
 <label>character-decomposition-mapping</label> 
           <item>This property is defined for characters,
 	  which may be decomposed, for example to a canonical form
@@ -485,7 +440,6 @@ Database</ref>:<list type="gloss">
 	 the text direction: it has the value <code>Y</code>
 (character is mirrored) or <code>N</code> (code is not mirrored).</item>
 	</list></p>
-
 <p>the Unicode Standard also defines a set of informative (but non-normative)
 properties for Unicode characters.  If encoders want to provide such
 properties, they may be included using the suggested Unicode name,
@@ -495,13 +449,10 @@ the <gi>localName</gi> element to distinguish them. If a Unicode name
 exists for a given property, it should however always be preferred to
 a locally defined name. Locally defined names should be used only for   properties
 which are not specified by the Unicode Standard.</p>
-
 </div3>
-
    </div2>
    <div2 xml:id="D25-30">
     <head>Annotating characters</head>
-
     <p>Annotation of a character becomes necessary when it is desired
     to distinguish it on the basis of certain aspects (typically, its
     graphical appearance) only.  In a manuscript, for example, where
@@ -517,7 +468,6 @@ which are not specified by the Unicode Standard.</p>
     any kind of text encoding is an abstraction and an interpretation of
     the text at hand, which will not necessarily  be useful in reproducing an exact
     facsimile of the appearance of a manuscript.</note> </p>
-
 <p>Assuming that we wish to distinguish the variant glyphs from the standard representation for the character
 concerned, we will need to define distinct <gi>glyph</gi> elements, one for
 each of the forms of the letter we wish to distinguish:
@@ -562,7 +512,6 @@ each of the forms of the letter we wish to distinguish:
       <code>Fi</code> ligature; the encoder may however prefer not to
       use it in order to simplify other text processing  operations,
       such as indexing).    </p>
-
 <p>With this
      markup in place, it will be possible to write programs to analyze
      the distribution of the different letters "r" as well as produce
@@ -597,7 +546,6 @@ xmlns="http://www.tei-c.org/ns/Examples">
     </p>   </div2>
    <div2 xml:id="D25-40">
     <head>Adding new characters</head>
-
     <p>The creation of additional characters for use in text encoding
     is similar to the annotation of an existing character.  The same
     element <gi>g</gi> is used to provide a link from the character
@@ -609,7 +557,6 @@ xmlns="http://www.tei-c.org/ns/Examples">
     which is an area set aside for the very purpose of privately
     adding new characters to a document.  Recommendations on how to
     use such PUA characters are given in the following section.  </p>
-
 <p>In some circumstances, it may be desirable to provide a single
 precomposed form of a character that is encoded in Unicode only as a
 sequence of codepoints. For example, in Medieval
@@ -642,7 +589,6 @@ up. It also supplies a single locally-defined property (<soCalled>entity</soCall
 character concerned, the purpose of which is
 to supply a recommended character entity name for the character. 
 </p>
-    
 <p>Under certain circumstances, Han characters can be written
     within a circle.  Rather than considering this as simply an aspect of the
     rendering, an encoder may wish to treat such circled characters as
@@ -681,8 +627,6 @@ character  <code>&amp;#xE000;</code>. For convenience of local
 processing this PUA character may in fact appear  as content of
 the <gi>g</gi> element. In general, however, the <gi>g</gi> element
 will be empty.</p>
-
-
    </div2>
    <div2 xml:id="D25-50">
     <head>How to use codepoints from the Private Use Area</head>
@@ -701,7 +645,6 @@ will be empty.</p>
     receiving parties to find out what PUA characters are used in a
     document and where possible codepoint clashes with local use on
     the receiving side occurs.</p>
-
 <p>In the two previous examples, we mentioned that the variant
 characters concerned might well be assigned specific codepoints from
 the PUA. This might, for example, facilitate the use of a particular
@@ -723,7 +666,6 @@ local processing environment at the receiving site will be necessary
 to handle such characters, during which variant letters can be
 converted to hitherto unused codepoints on the basis of the
 information provided in the <gi>charDesc</gi> element.</p>
-
     <p>This mechanism is rather weak in cases where DOM trees or
     parsed XML fragments are exchanged, which may increasingly be the
     case.  The best an application can do here is to treat any
@@ -738,120 +680,23 @@ element; it will however normally be simpler to remove the
 <gi>char</gi> element and replace all occurrences of <gi>g</gi>
 elements which reference it by occurrences of the specific coded
 character. </p>
-
    </div2>
-
 <div2 xml:id="WSD-DEF"><head>Additional module defined by this section</head>
 <p>The elements described in this section are declared in a module
      called <ident>gaiji</ident> which has the following formal
      declaration:
-
 <moduleSpec xml:id="DWSD" ident="gaiji"><altIdent type="FPI">Character and Glyph documentation</altIdent><desc>Character and glyph documentation</desc></moduleSpec>
-
-
-
 &datatype.ucs.odd;
-
-
-
-
-
- 
-
-
 &g.odd;
-
-
-
-
- 
-
-
 &char.odd;
-
-
-
-
- 
-
-
 &charname.odd;
-
-
-
-
-
- 
-
-
 &charprop.odd;
-
-
-
-
-
- 
-
-
 &chardesc.odd;
-
-
-
-
- 
-
-
 &glyph.odd;
-
-
-
-
- 
-
-
 &glyphname.odd;
-
-
-
-
-
-
-
-
-
 &localname.odd;
-
-
-
-
-
- 
-
-
 &mapping.odd;
-
-
-
-
-
- 
-
-
 &unicodename.odd;
-
-
-
-
-
- 
-
-
 &value.odd;
-
-
-
-
-
-
     </p></div2>
 </div1>

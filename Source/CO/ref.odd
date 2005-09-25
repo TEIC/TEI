@@ -1,7 +1,5 @@
 <!--Copyright 2004 TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="REF" usage="opt" ident="ref">
@@ -19,7 +17,6 @@ See the file COPYING for details.
   <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
 </content>
 <attList org="choice">
-
   <attDef ident="target" usage="opt">
     <equiv/>
     <desc>specifies the destination of the reference by supplying one
@@ -33,13 +30,12 @@ See the file COPYING for details.
     character is required in a URI, it should be escaped with the
     normal mechanism, e.g. <code>TEI%20Consortium</code>.</valDesc>
   </attDef>
-    
     <attDef ident="cref" usage="opt">
       <equiv/>
       <desc>specifies the destination of the reference by supplying a
       canonical reference from a scheme defined in a <gi>refsDecl</gi>
       element in the TEI header</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/></datatype>
       <valDesc>the result of applying the algorithm for the resolution
       of canonical references (described in section <ptr
       target="#SACR"/>) should be a valid URI reference to the
@@ -52,7 +48,6 @@ See the file COPYING for details.
 	element.</p>
       </remarks>
     </attDef>
-
 </attList>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples"><ref target="#s234">

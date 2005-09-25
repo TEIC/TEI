@@ -1,7 +1,5 @@
 <!--Copyright 2004 TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
 -->
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking-decl" xml:id="PTRGROUP" type="atts" ident="tei.pointerGroup">
@@ -9,7 +7,6 @@ See the file COPYING for details.
   enclose groups of pointer elements.</desc>
   <classes> <memberOf key="tei.pointer"/> </classes>
   <attList>
-
     <attDef ident="domains" usage="opt">
       <equiv/>
       <desc>optionally specifies the identifiers of the elements
@@ -17,27 +14,26 @@ See the file COPYING for details.
       element lie.</desc>
       <datatype>
 	<rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
-	  <rng:data type="anyURI"/>
+	  <rng:ref name="tei.data.ident"/>
 	  <rng:oneOrMore>
-	    <rng:data type="anyURI"/>
+	    <rng:ref name="tei.data.ident"/>
 	  </rng:oneOrMore>
 	</rng:list>
       </datatype>
-      <valDesc>a list of at least two URI references, separated by
-      whitespace. If a whitespace character is needed inside a URI
+      <valDesc>a list of at least two generic identifiersnames, separated by
+      whitespace. <!--If a whitespace character is needed inside a URI
       reference, it must be escaped, e.g.
-      <code>TEI%20P5%20folder</code>.</valDesc>
+      <code>TEI%20P5%20folder</code>.--></valDesc>
       <remarks>
 	<p>If this attribute is supplied every element specified as a
 	target must be contained within the element or elements
-	specified by it. An application may choose whether or not to
+	named by it. An application may choose whether or not to
 	report failures to satisfy this constraint as errors, but may
 	not access an element of the right identifier but in the wrong
 	context. If this attribute is not supplied, then target
 	elements may appear anywhere within the target document.</p>
       </remarks>
     </attDef>
-
     <attDef ident="targFunc" usage="opt">
       <equiv/>
       <desc>describes the function of each of the values of the
@@ -45,9 +41,9 @@ See the file COPYING for details.
       <gi>join</gi> or <gi>alt</gi> tags.</desc>
       <datatype>
       	<rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
-	  <rng:data type="NCName"/>
+	  <rng:ref name="tei.data.name"/>
 	  <rng:oneOrMore>
-	    <rng:data type="NCName"/>
+	    <rng:ref name="tei.data.name"/>
 	  </rng:oneOrMore>
 	</rng:list>
       </datatype>
@@ -62,7 +58,6 @@ See the file COPYING for details.
         current tag, if those have been specified.</p>
       </remarks>
     </attDef>
-
   </attList>
   <remarks/>
   <listRef>

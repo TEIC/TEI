@@ -1,7 +1,5 @@
 <!--Copyright 2004 TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="corpus" xml:id="RELATION" usage="opt" ident="relation">
@@ -17,7 +15,7 @@ group of participants.</desc>
 	<equiv/>
 	<desc>categorizes the relationship in some respect, e.g.
 as social, personal or other.</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/></datatype>
       <defaultVal>personal</defaultVal>
       <valList type="semi" mode="add">
         <valItem ident="social">
@@ -38,14 +36,14 @@ kinship, marriage, etc.</gloss>
     <attDef ident="desc" usage="req">
 	<equiv/>
 	<desc>briefly describes the relationship.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Code"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/></datatype>
       <valDesc>an open list of application-dependent keywords</valDesc>
     </attDef>
     <attDef ident="active" usage="req">
 	<equiv/>
 	<desc>identifies the <q>active</q> participants in a non-mutual
 relationship, or all the participants in a mutual one.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/></datatype>
       <valDesc>a list of identifier values for participant or participant
 groups</valDesc>
     </attDef>
@@ -53,7 +51,7 @@ groups</valDesc>
 	<equiv/>
 	<desc>identifies the <q>passive</q> participants in a non-mutual
 relationship.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/></datatype>
       <valDesc>a list of identifier values for participant or participant
 groups</valDesc>
     </attDef>
@@ -61,7 +59,7 @@ groups</valDesc>
 	<equiv/>
 	<desc>indicates whether the relationship holds equally amongst all the
 participants.</desc>
-      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="boolean"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.truthValue"/></datatype>
       <defaultVal>true</defaultVal>
       <valList type="closed">
         <valItem ident="true">
@@ -75,7 +73,6 @@ participants.</desc>
       </valList>
     </attDef>
   </attList>
-  
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <relation type="social" desc="supervisor" active="#p1" passive="#p2 #p3 #p4" mutual="false"/>

@@ -1,13 +1,9 @@
 <!--
 Copyright TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
-
 $Date$
 $Author$
-
 -->
 <div1 xmlns="http://www.tei-c.org/ns/1.0" type="Chapter" xml:id="HD" n="5"><head>The TEI Header</head>
 <p>This chapter addresses the problems of describing an encoded work so
@@ -23,7 +19,6 @@ electronic data sets.</p>
 prefixed to it and encoded as described in this chapter.  The set is
 known as the <term>TEI header</term>, tagged <gi>teiHeader</gi>,
 and it has four major parts:
-
 <list type="bullets">
 <item>a <term>file description</term>, tagged <gi>fileDesc</gi>,
 containing a full bibliographical description of the computer file
@@ -84,7 +79,6 @@ standard library cataloguing practices.  Recommendations relevant to the
 use of TEI headers as free-standing documents, for interchange among
 libraries, data archives, and similar institutions may be found in
 chapter <ptr target="#SH"/>.</p>
-
 <div2 type="bar" xml:id="HD1"><head>Organization of the TEI Header</head>
 <div3  xml:id="HD11"><head>The TEI Header and Its Components</head>
 <p>The <gi>teiHeader</gi> element should be clearly distinguished both
@@ -96,27 +90,22 @@ collection, may contain several headers, as further discussed below.  In
 the usual case however, a TEI-conformant text will contain a single
 <gi>teiHeader</gi> element, followed by a single <gi>text</gi> element.</p>
 <p>The header element has the following description:
-
 <specList><specDesc key="teiHeader" atts="type"/></specList>
 </p>
 <p>As discussed above, the <gi>teiHeader</gi> element has four principal
 components:
-
 <specList><specDesc key="fileDesc"/><specDesc key="encodingDesc"/><specDesc key="profileDesc"/><specDesc key="revisionDesc"/></specList>
 </p>
 <p>Of these, only the <gi>fileDesc</gi> element is required in all TEI
 headers; the others are optional.  The full form of a TEI header is
 thus:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
     <fileDesc>  </fileDesc>
     <encodingDesc>  </encodingDesc>
     <profileDesc>  </profileDesc>
     <revisionDesc>  </revisionDesc>
 </teiHeader></egXML>
-
 while a minimal header takes the form:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
     <fileDesc>  </fileDesc>
 </teiHeader></egXML>
@@ -129,14 +118,11 @@ concerning the tagging of composite texts are given in section <ptr target="#CC"
 chapter.  An optional <att>type</att> attribute may also be supplied on
 the <gi>teiHeader</gi> element to indicate whether the header applies
 to a corpus or a single text.  A corpus may thus take the form:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><teiCorpus>
    <teiHeader type="corpus">
-      
    </teiHeader>
    <TEI>
       <teiHeader type="text">
-         
       </teiHeader>
       <text>  </text>
    </TEI>
@@ -144,7 +130,6 @@ to a corpus or a single text.  A corpus may thus take the form:
       <teiHeader type="text">  </teiHeader>
       <text>  </text>
    </TEI>
-   
 </teiCorpus></egXML>
 <!-- left this in for now, but I dont think it's very helpful (LB) -->
 	<!-- that's cause you already know it.  the reader don't. -msm     -->
@@ -154,7 +139,6 @@ to a corpus or a single text.  A corpus may thus take the form:
 <p>The tags required for the TEI header are defined in the DTD file
 <ident type="file">header.dtd</ident> which first defines the
 <gi>teiHeader</gi> element:
-
 <moduleSpec xml:id="D221" ident="header">
 <altIdent type="FPI">The TEI Header</altIdent><desc>The TEI
 Header</desc>
@@ -165,7 +149,6 @@ Header</desc>
 </p>
 <p>Then it defines the rest of the header elements, embedding the
 DTD fragments found later in this chapter:
-
 <specGrp xml:id="D221B">
 <specGrpRef target="#D222"/>
 <specGrpRef target="#D223"/>
@@ -177,7 +160,6 @@ DTD fragments found later in this chapter:
 <p>The elements occurring within the TEI header may contain several
 types of content; the following list indicates how these types of
 content are described in the following sections:
-
 <list type="gloss"><label>free prose </label>
 <item>Most elements contain simple running prose at
 some level.  Many elements may contain either prose (possibly organized
@@ -197,7 +179,6 @@ recording some structured information.  In the case of the bibliographic
 elements, the suffix <mentioned>Stmt</mentioned> is used in names of elements
 corresponding to the <soCalled>areas</soCalled> of the International
 Standard Bibliographic Description. <note place="foot">
-
 For more information on this highly influential family of standards, first
 proposed in 1969 by the International
 Federation of Library Associations, see <ptr target="http://www.ifla.org/VII/s13/pubs/isbd.htm"/>.
@@ -219,7 +200,6 @@ need not be repeated in the header of each such text.  Instead, the
 <att>decls</att> attribute of each text (or subdivision of the text) to
 which the declaration applies may be used to supply a cross
 reference to it, as further described in section <ptr target="#CCAS"/>.
-	
 </item><label>descriptions </label>
 <item>Elements whose name end with the suffix
 <mentioned>Desc</mentioned> (e.g.  <gi>settingDesc</gi>, <gi>projectDesc</gi>)
@@ -227,7 +207,6 @@ contain a prose description, possibly organized under some specific
 headings by suggested sub-elements, but not necessarily so.
 </item></list>
 </p></div3></div2>
-	
 <div2 type="bar" xml:id="HD2"><head>The File Description</head>
 <p>This section describes the <gi>fileDesc</gi> element, which is the
 first component of the <gi>teiHeader</gi> element.
@@ -242,7 +221,6 @@ to allow cataloguers to catalogue it.  Bibliographic citations
 occurring elsewhere in the header, and also in the text itself, are
 derived from the same model (on bibliographic citations in general, see
 further section <ptr target="#COBI"/>).  See further section <ptr target="#HD8"/>.
-
 </p>
 <p>The bibliographic description of the electronic text (not its
 source) is given in the mandatory <gi>fileDesc</gi> element:
@@ -257,7 +235,6 @@ are listed below in the order in which they must be given within the
 </p>
 <p>A file description containing all possible subelements has the
 following structure:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
     <fileDesc>
          <titleStmt>  </titleStmt>
@@ -269,29 +246,19 @@ following structure:
          <sourceDesc>  </sourceDesc>
     </fileDesc>
 </teiHeader></egXML>
-
 Several of these elements may be omitted; a minimal file description has
 the following structure:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
     <fileDesc>
          <titleStmt>  </titleStmt>
          <publicationStmt>  </publicationStmt>
          <sourceDesc>  </sourceDesc>
     </fileDesc>
-    
 </teiHeader></egXML>
 </p>
 <p>The <gi>fileDesc</gi> itself has the following formal definition:
-
-
-
 <specGrp xml:id="D222" n="The file description">
-
-
 &fildesc.odd;
-
-
 <specGrpRef target="#D2221"/>
 <specGrpRef target="#D2222"/>
 <specGrpRef target="#D2223"/>
@@ -307,9 +274,7 @@ It contains the title given to the electronic work, together with
 one or more optional <term>statements of responsibility</term> which
 identify the encoder, author, compiler, or other parties responsible
 for it:
-
 <specList><specDesc key="title"/><specDesc key="author"/><specDesc key="sponsor"/><specDesc key="funder"/><specDesc key="principal"/><specDesc key="respStmt"/><specDesc key="resp"/><specDesc key="name"/></specList>
-
 </p>
 <p>The <gi>title</gi> element contains the chief name of the
 file, including any alternative title or subtitles it may have.
@@ -326,12 +291,10 @@ based upon the St. Petersburg Lexicons: a machine readable
 transcription</q>.  If you wish to retain some or all of the
 title of the source text in the title of the computer file, then
 introduce one of the following phrases:
-
 <list type="bullets">
 <item>[title of source]:  a machine readable transcription.</item>
 <item>[title of source]:  electronic edition.</item>
 <item>A machine readable version of:  [title of source].</item></list>
-
 This will distinguish the computer file from the source text in
 citations and in catalogues which contain descriptions of both types of
 material.
@@ -354,7 +317,6 @@ Rules<note place="foot"><bibl>Michael Gorman and Paul W. Winkler, eds.,
 Ottawa:  Canadian Library Association, 1978).</bibl></note>
 (AACR 2), chapter 25, or in equivalent national-level bibliographical
 documentation.
-
 </p>
 <p>The specialized elements <gi>author</gi>, <gi>sponsor</gi>,
 <gi>funder</gi>, and <gi>principal</gi>, and the more general
@@ -391,7 +353,6 @@ such as the Library of Congress Name Authority List, for all common
 personal names.</note>
 </p>
 <p>Examples:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><titleStmt>
   <title>Capgrave's Life of St. John Norbert:  a
          machine-readable transcription</title>
@@ -421,31 +382,20 @@ personal names.</note>
 </p>
 <p>The formal definition of the <gi>titleStmt</gi> element and its
 constituents is as follows:
-
-
-
 <specGrp xml:id="D2221" n="The title statement">
-
-
-
 &titstmt.odd;
-
 &sponsor.odd;
 &funder.odd;
 &principl.odd;
-
 <p>The TITLE, AUTHOR, NAME, RESPSTMT, and RESP elements are
 declared in file teicore2.dtd, not here.</p></specGrp>
-
 </p></div3>
 <div3  xml:id="HD22"><head>The Edition Statement</head>
 <p>The <gi>editionStmt</gi> element is the second component of the
 <gi>fileDesc</gi> element.  It is optional but recommended.
 <specList><specDesc key="editionStmt"/></specList>
-
 It contains either phrases or more specialized elements identifying the
 edition and those responsible for it:
-
 <specList><specDesc key="edition"/><specDesc key="respStmt"/><specDesc key="name"/><specDesc key="resp"/></specList>
 </p>
 <p>For printed texts, the word <mentioned>edition</mentioned> applies to the set
@@ -490,30 +440,6 @@ though this requirement cannot be enforced by the parser.
 regarded as constituting a new edition or simply a new revision, should
 be independently noted in the revision description section of the file
 header (see section <ptr target="#HD6"/>).
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 </p>
 <p>The <gi>edition</gi> element should contain phrases describing the
 edition or version, including the word <mentioned>edition</mentioned>,
@@ -533,12 +459,10 @@ provision of supplementary matter, of appendices, etc., in a new
 edition.  For further detail on the <gi>respStmt</gi> element,
 see section <ptr target="#COBI"/>.</p>
 <p>Some examples follow:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><editionStmt>
   <edition n="P2">Second draft, substantially
        extended, revised, and corrected.</edition>
 </editionStmt></egXML>
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><editionStmt>
 <edition>Student's edition, <date>June 1987</date></edition>
 <respStmt>
@@ -546,39 +470,11 @@ see section <ptr target="#COBI"/>.</p>
   <name>George Brown</name>
 </respStmt>
 </editionStmt></egXML>
-
 The formal definition of the <gi>editionStmt</gi> element is as follows:
-
 <!-- removed file attrib since it was confusing dtdGen LB, 20 may 01 -->
-
 <specGrp xml:id="D2222" n="The edition statement">
-
-
 &edstmt.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
 &edition.odd;
-
-
-
-
-
-
-
-
-
-
 </specGrp>
 </p></div3>
 <div3  xml:id="HD23"><head>Type and Extent of File</head>
@@ -603,15 +499,6 @@ although library-oriented rules for cataloguing often distinguish two
 types of computer file:  <q>data</q> and <q>programs</q>.  This
 distinction is quite difficult to draw in some cases, for example,
 hypermedia or texts with built in search and retrieval software.
-
-	
-	
-	
-	
-	
-	
-	
-	
 </p>
 <p>Although it is equally system-dependent, some measure of the size of
 the computer file may be of use for cataloguing and other practical
@@ -620,7 +507,6 @@ fraught with difficulties, only very general recommendations are
 possible; the element <gi>extent</gi> is provided for this purpose.  It
 contains a phrase indicating the size or approximate size of the
 computer file in one of the following ways:
-
 <list type="bullets">
 <item>in bytes of a specified length (e.g. <q>4000 16-bit bytes</q>)</item>
 <item>as falling within a range of categories, for example:
@@ -635,13 +521,11 @@ words or sentences, citations, paragraphs)</item>
 blocks, disks, tapes)</item></list>
 </p>
 <p>Examples:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><extent>between 1 16-bit MB and 2 16-bit MB</extent>
 <extent>4.2 MiB</extent>
 <extent>4532 bytes</extent>
 <extent>3200 sentences</extent>
 <extent>5 3.5" High Density Diskettes</extent></egXML>
-
 <!--
 ** These examples and the list above have *got* to be fixed, and TEI
 ** should advise use of standard symbols ala NIST
@@ -649,36 +533,17 @@ blocks, disks, tapes)</item></list>
 ** Syd, 2001-12-23
 -->
 	<!-- removed file attrib since it was confusing dtdGen LB, 20 may 01 -->
-
 The <gi>extent</gi> element has the following formal declaration:
 <specGrp xml:id="D2223" n="The extent statement">
-
-
 &extent.odd;
-
-
-
-
-
-
-
-
-
-
 </specGrp>
 </p></div3>
 <div3  xml:id="HD24"><head>Publication, Distribution, etc.</head>
-
-	
-	
 <p>The <gi>publicationStmt</gi> element is the fourth component of the
 <gi>fileDesc</gi> element and is mandatory.
-
 <specList><specDesc key="publicationStmt"/></specList>
-
 It may contain either a simple prose description, or groups of the
 elements described below:
-
 <specList><specDesc key="publisher"/><specDesc key="distributor"/><specDesc key="authority"/></specList>
 </p>
 <p>The <term>publisher</term> is the person or institution by whose
@@ -692,7 +557,6 @@ individual or organization, this person or institution is termed the
 <p>At least one of the above three elements must be present, unless the
 entire publication statement is given as prose.  Each may be followed by
 one or more of the following elements, in the following order:
-
 <specList><specDesc key="pubPlace"/><specDesc key="address"/><specDesc key="idno" atts="type"/><specDesc key="availability" atts="status"/><specDesc key="date"/></specList>
 </p>
 <p>Note that the dates, places, etc., given in the publication statement
@@ -707,14 +571,12 @@ dates, and addresses, as further described in section <ptr target="#CONA"/>
 and chapter <ptr target="#ND"/>.
 </p>
 <p>Examples:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><publicationStmt>
      <publisher>Oxford University Press</publisher>
      <pubPlace>Oxford</pubPlace> <date>1989</date>
      <idno type="ISBN">0-19-254705-4</idno>
      <availability><p>Copyright 1989, Oxford University Press
      </p></availability></publicationStmt></egXML>
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><publicationStmt>
     <authority>James D. Benson</authority>
     <pubPlace>London</pubPlace> <date>1984</date></publicationStmt></egXML>
@@ -741,91 +603,21 @@ and chapter <ptr target="#ND"/>.
 </p>
 <p>The publication statement and its components are formally defined as
 follows:
-
-
-
 <specGrp xml:id="D2224" n="The publication statement">
-
-
 &pubstmt.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
 &distrib.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
 &authorty.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
 &idno.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
 &avail.odd;
-
-
-
-
-
-
-
-
-
-
 </specGrp>
-
 </p></div3>
 <div3  xml:id="HD26"><head>The Series Statement</head>
 <p>The <gi>seriesStmt</gi> element is the fifth component of the
 <gi>fileDesc</gi> element and is optional.
-
 <specList><specDesc key="seriesStmt"/></specList>
 </p>
 <p>In bibliographic parlance, a <term>series</term> may be defined in
 one of the following ways:
-
 <list type="bullets">
 <item>A group of separate items related to one another by the fact
 that each item bears, in addition to its own title proper, a
@@ -835,10 +627,8 @@ individual items may or may not be numbered.</item>
 or other items, similar in character and issued in sequence.</item>
 <item>A separately numbered sequence of volumes within a series or
 serial.</item></list>
-
 The <gi>seriesStmt</gi> element may contain a prose description or one
 or more of the following more specific elements:
-
 <specList><specDesc key="title"/><specDesc key="idno"/><specDesc key="respStmt"/><specDesc key="resp"/><specDesc key="name"/></specList>
 </p>
 <p>The <gi>idno</gi> may be used to supply any identifying number
@@ -850,7 +640,6 @@ the number further, taking the value <val>ISSN</val> for an ISSN for
 example.
 </p>
 <p>Examples:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><seriesStmt>
     <title level="s">Machine-Readable Texts for the Study of
       Indian Literature</title>
@@ -858,27 +647,11 @@ example.
     <idno type="vol">1.2</idno>
     <idno type="ISSN">0 345 6789</idno>
 </seriesStmt></egXML>
-
 The series statement has the following formal definition:
-
 <!-- removed file attrib since it was confusing dtdGen LB, 20 may 01 -->
-
 <specGrp xml:id="D2225" n="The series statement">
-
-
 &serstmt.odd;
-
-
-
-
-
-
-
-
-
-
 </specGrp>
-
 Its components are all defined elsewhere.
 </p></div3>
 <div3  xml:id="HD27"><head>The Notes Statement</head>
@@ -887,14 +660,12 @@ Its components are all defined elsewhere.
 more <gi>note</gi> elements, each containing a single piece of
 descriptive information of the kind treated as <soCalled>general
 notes</soCalled> in traditional bibliographic descriptions.
-
 <specList><specDesc key="notesStmt"/><specDesc key="note"/></specList>
 </p>
 <p>Some information found in the notes area in conventional bibliography
 has been assigned specific elements in these Guidelines; in particular
 the following items should be tagged as indicated, rather than as
 general notes:
-
 <list type="bullets">
 <item>the nature, scope, artistic form, or purpose of the file; also
 the genre or other intellectual category to which it may belong:
@@ -931,7 +702,6 @@ way, rather than as specialized bibliographic notes.</item></list>
 </p>
 <p>Nevertheless, the <gi>notesStmt</gi> element may be used to record
 potentially significant details about the file and its features, e.g.:
-
 <list type="bullets">
 <item>dates, when they are relevant to the content or condition of the
 computer file:  e.g.  <q>manual dated 1983,</q> <q>Interview wave I:
@@ -961,48 +731,13 @@ general-purpose <gi>note</gi> element, which is described in section <ptr target
   <note>OCR scanning done at University of Toronto.</note>
 </notesStmt></egXML>
 The notes statement has the following formal definition:
-
 <!-- removed file attrib since it was confusing dtdGen LB, 20 may 01 -->
-
 <specGrp xml:id="D2226" n="The notes statement">
-
-
 &notstmt.odd;
-
-
-
-
-
-
-
-
-
-
-
 </specGrp>
 </p>
 </div3>
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
- 
 <div3 xml:id="HD3"><head>The Source Description</head>
-	
 <p>The <gi>sourceDesc</gi> element is the seventh and final component of
 the <gi>fileDesc</gi> element.  It is a mandatory element, and is used to
 record details of the source or sources from which a computer file is
@@ -1017,7 +752,6 @@ description, or, more usefully, a bibliographic citation of some kind
 specifying the provenance of the text.  For written or printed sources,
 the source should be described in the same way as any other
 bibliographic citation, using one of the following elements:
- 
 <specList>
 <specDesc key="bibl"/>
 <specDesc key="biblItem"/>
@@ -1025,7 +759,6 @@ bibliographic citation, using one of the following elements:
 <specDesc key="biblStruct"/>
 <specDesc key="listBibl"/>
 </specList>
- 
 These elements are described in more detail in section <ptr target="#COBI"/>
 .</p>
 <p>When the header describes a transcription of spoken material, the
@@ -1037,7 +770,6 @@ Full descriptions of these elements and their contents are given in
 section <ptr target="#HD32"/>.</p>
 <p>The <gi>sourceDesc</gi> element may contain a mixture of one or more
 of the above elements, as in the following examples:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><sourceDesc>
    <bibl>The first folio of Shakespeare, prepared by
    Charlton Hinman (The Norton Facsimile, 1968)</bibl>
@@ -1074,13 +806,11 @@ A) which includes a TEI file header, then the source text of
 computer file B is another computer file, A.  The four sections
 of A's file header will need to be incorporated into the new
 header for B in slightly differing ways, as listed below:
- 
 <list type="gloss"><label>fileDesc</label>
 <item>A's file description should be copied into the
 <gi>sourceDesc</gi> section of B's file description, enclosed
 within a <gi>biblFull</gi> element
 (see section <ptr target="#COBI"/>).
-	
  </item><label>profileDesc</label>
 <item>A's <gi>profileDesc</gi> should be
 copied into B's, in principle unchanged.
@@ -1108,7 +838,6 @@ written one, it will usually be desirable to record additional
 information about the recording or broadcast which constitutes its
 source.  Several additional elements are provided for this purpose
 within the source description element:
- 
 <specList><specDesc key="scriptStmt"/><specDesc key="recordingStmt"/><specDesc key="recording" atts="type dur"/><specDesc key="equipment"/><specDesc key="broadcast"/></specList>
  </p>
 <p>Note that detailed information about the participants or setting of
@@ -1130,7 +859,6 @@ tags mentioned above.  Utterances or groups of utterances may be linked
 to the script concerned by means of the <att>decls</att> attribute,
 described in section <ptr target="#CCAS"/>.<!-- was:  target='P2.3431'>. -->
 	<!-- or :  target='SP31'>. -->
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><sourceDesc>
   <scriptStmt xml:id="CNN12">
     <bibl>
@@ -1139,8 +867,6 @@ described in section <ptr target="#CCAS"/>.<!-- was:  target='P2.3431'>. -->
       <date value="1991-06-12">12 Jun 91</date>
     </bibl>
   </scriptStmt>
-  
-  
 </sourceDesc></egXML>
  </p>
 <p>The <gi>recordingStmt</gi> is used to group together information
@@ -1150,8 +876,6 @@ one or more <gi>recording</gi> elements, each corresponding with a
 particular recording.  The linkage between utterances or groups of
 utterances and the relevant recording statement is made by means of the
 <att>decls</att> attribute, described in section <ptr target="#CCAS"/>.
-
-	
  </p>
 <p>The <gi>recording</gi> element should be used to provide a
 description of how and by whom a recording was made.  This information
@@ -1172,12 +896,10 @@ components.  Note however that this element should be used only for
 information relating to the recording process itself; information about
 the setting or participants (for example) is recorded elsewhere:  see
 sections <ptr target="#CCAHSE"/> and <ptr target="#CCAHPA"/> below.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><recording type="video">
   <p>U-matic recording made by college audio-visual department staff, 
     available as PAL-standard VHS transfer or sound-only casssette</p>
 </recording></egXML>
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><recording type="audio" dur="P30M">
   <respStmt>
      <resp>Location recording by</resp>
@@ -1189,7 +911,6 @@ sections <ptr target="#CCAHSE"/> and <ptr target="#CCAHPA"/> below.
   </equipment>
   <date>12 Jan 1987</date>
 </recording></egXML></p>
-
 <p>When a recording has been made from a public broadcast, details of
 the broadcast itself should be supplied within the <gi>recording</gi>
 element, as a nested <gi>broadcast</gi> element.  A broadcast is closely
@@ -1202,7 +923,6 @@ interviewees, directors, producers, etc.) should be specified using the
 <gi>respStmt</gi> or <gi>editor</gi> element with an appropriate
 <gi>resp</gi> (see further section <ptr target="#COBI"/>).<!-- was:  target='P2.235'>). -->
 	<!-- was:  target='COBIBL'>). -->
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><recording type="audio" dur="P10M">
   <equipment><p>Recorded from FM Radio to digital tape</p></equipment>
   <broadcast>
@@ -1215,16 +935,12 @@ interviewees, directors, producers, etc.) should be specified using the
     </bibl>
   </broadcast>
 </recording></egXML></p>
-
 <p>When a broadcast contains several distinct recordings (for example a
 compilation), additional <gi>recording</gi> elements may be further
 nested within the <gi>broadcast</gi> element.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><recording dur="P100M">
    <broadcast>
-         
       <recording>
-         
       </recording>
    </broadcast>
 </recording></egXML>
@@ -1243,38 +959,7 @@ follows:
 <p>This concludes the discussion of the <gi>fileDesc</gi> element and
 its contents.
 </p></div3>
-
 </div2>
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 <div2 type="bar" xml:id="HD5"><head>The Encoding Description</head>
 <p>The <gi>encodingDesc</gi> element is the second major subdivision of
 the TEI header.  It specifies the methods and editorial principles which
@@ -1297,13 +982,10 @@ it may contain elements from the following list, in the order given:
 <specDesc key="metDecl"/>
 <specDesc key="variantEncoding"/>
 </specList>
- 
 Each of these elements is further described and formally defined
 in the appropriate section below. The encoding description itself
 is defined as follows:
- 
 <specGrp xml:id="D225" n="The encoding description">
-
 &encoding.odd;
     &encdesc.odd;<specGrpRef target="#D2251"/>
 <specGrpRef target="#D2252"/>
@@ -1345,23 +1027,19 @@ example to create a representative corpus.
 <specDesc key="samplingDecl"/>
 </specList>
 It should include information about such matters as
- 
 <list type="bullets">
 <item>the size of individual samples</item>
 <item>the method or methods by which they were selected</item>
 <item>the underlying population being sampled</item>
 <item>the object of the sampling procedure used</item></list>
- 
 but is not restricted to these.<!-- should attributes be used for sample size, etc? -LB -->
 	<!-- if it would help automatic processing yes.  but i   -->
 	<!-- doubt it.  so no.  -msm                             -->
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><samplingDecl>
    <p>Samples of 2000 words taken from the beginning of the text.</p>
 </samplingDecl></egXML></p>
 <p>It may also include a simple
 description of any parts of the source text included or excluded.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><samplingDecl>
   <p>Text of stories only has been transcribed. Pull quotes, captions,
     and advertisements have been silently omitted. Any mathematical
@@ -1375,7 +1053,6 @@ Instead, the <att>decls</att> attribute of each text (or subdivision of
 the text) to which the sampling declaration applies may be used to
 supply a cross reference to it, as further described in section <ptr target="#CCAS"/>.	
 This element has the following formal declaration:
- 
 <specGrp xml:id="D2252" n="The sampling declaration">&sampdecl.odd;</specGrp></p></div3>
 <div3  xml:id="HD53"><head>The Editorial Practices Declaration</head>
 <p>The <gi>editorialDecl</gi> element is the third of the nine optional
@@ -1387,7 +1064,6 @@ of a text.
 </specList>
 It may contain a prose description only, or one or more of the following
 specialized elements:
- 
 <specList>
 <specDesc key="correction" atts="status method"/>
 <specDesc key="normalization" atts="source method"/>
@@ -1397,7 +1073,6 @@ specialized elements:
 <specDesc key="stdVals"/>
 <specDesc key="interpretation"/>
 </specList>
- 
 These elements are all members of the TEI <ident>policy</ident>
 class. Where an encoder wishes to record an editorial policy not
 specified above, they may do so by adding a new element to this
@@ -1408,12 +1083,10 @@ description of the editorial principles adopted with respect to the
 particular feature concerned.  Examples of the kinds of questions which
 these descriptions are intended to answer are listed below, in the same
 order as the list above. 
- 
 <list type="gloss"><label><gi>correction</gi></label>
 <item>Was the text corrected during or after data capture?  If
 so, were corrections made silently or are they marked using the
 tags described in section <ptr target="#COED"/>?  What principles
-	
 have been adopted with respect to omissions, truncations, dubious
 corrections, alternate readings, false starts, repetitions, etc.?</item><label><gi>normalization</gi></label>
 <item>Was the text normalized, for example by regularizing any
@@ -1487,7 +1160,6 @@ the text in the first instance. A simple example follows:
 &stdvals.odd;
 &interptn.odd;
 </specGrp>
- 
 An editorial practices declaration which applies to more than one text
 or division of a text need not be repeated in the header of each such
 text.  Instead, the <att>decls</att> attribute of each text (or
@@ -1535,7 +1207,6 @@ specify that <gi>p</gi> elements are by default to be rendered using one
 set of specifications identified as <val>style1</val>,
 while <gi>hi</gi>
 elements are to use a different set, identified as <val>style2</val>:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><tagsDecl>
    <rendition xml:id="style1">   
       ... description of one default rendition here ...
@@ -1545,7 +1216,6 @@ elements are to use a different set, identified as <val>style2</val>:
    </rendition>
    <tagUsage gi="p" render="#style1"> ... </tagUsage>
    <tagUsage gi="hi" render="#style2"> ... </tagUsage>
-   
 </tagsDecl></egXML></p><p>No detailed proposals for the content of the <gi>rendition</gi>
 element have as yet been formulated. Earlier versions of
 these Guidelines suggested that specifications derived from,
@@ -1569,23 +1239,18 @@ used to supply a count of the number of occurrences of this
 	  <att>occurs</att> attribute.  It may also be used to hold
 	  any additional usage information, which is supplied as
 	  running prose within the element itself.</p> <p>For example:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><tagUsage gi="hi" occurs="28">
     Used only to mark English words italicised in the copy text.
 </tagUsage></egXML>
- 
 This indicates that the <gi>hi</gi> element appears a total of 28 times
 in the <gi>text</gi> element in question, and that the encoder has used
 it to mark italicised English phrases only.</p>
 <p>The <att>ident</att> attribute may optionally be used to specify how
 many of the occurrences of the element in question bear a value for the
 global <att>xml:id</att> attribute, as in the following example:
- 
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><tagUsage gi="pb" occurs="321" withId="321">
     Marks page breaks in the York (1734) edition only
 </tagUsage></egXML>
- 
 This indicates that the <gi>pb</gi> element occurs 321 times, on each
 of which an identifier is provided.</p>
 <p>The content of the <gi>tagUsage</gi> element is not susceptible of
@@ -1597,14 +1262,6 @@ contain <gi>tagUsage</gi> elements for each distinct element marked in
 the associated text, and the counts specified by their <att>occurs</att>
 attributes must correspond with the number of such elements present in the
 document, as identified by some conforming processor.
- 	
-	
-	
-	
-	
-	
-	
- 
 <specGrp xml:id="DHD57" n="Tag usage and rendition declarations">&tagsdecl.odd;
 &tagusage.odd;
 &renditn.odd;</specGrp></p></div3>
@@ -1614,13 +1271,11 @@ subdivisions of the <gi>encodingDesc</gi> element. It is used to
 document the way in which any standard referencing scheme built into
 the encoding works, either as a series of prose paragraphs or by
 using the following specialized elements:
- 
 <specList>
 <specDesc key="refsDecl" atts="doctype"/>
 <?tei winita insert <specDesc key="fragmentPattern"/> or whatever it's called here ?>
 <specDesc key="state"/>
 </specList>
- 
 Note that not all possible referencing schemes are equally easily
 supported by current software systems.  A choice must be made between
 the convenience of the encoder and the likely efficiency of the
@@ -1630,13 +1285,11 @@ systems supported by these Guidelines, see section <ptr target="#CORS"/> below.
 	</p>
 <p>A referencing scheme may be described in one of three ways using this
 element:
- 
 <list type="bullets">
 <item>as a prose description</item>
 <item>as a series of pairs of regular expressions and XPaths</item>
 <item>as a concatenation of sequentially organized
 <term>milestone</term>s</item></list>
- 
 Each method is described in more detail below. Only one method can be
 used within a single <gi>refsDecl</gi> element.</p>
 <p>More than one <gi>refsDecl</gi> element can be included in the
@@ -1658,7 +1311,6 @@ description cannot be processed automatically, and this method of
 specifying the structure of a canonical reference system is therefore
 not recommended for automatic processing.</p>
 <p>For example:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><refsDecl>
   <p>The <att>n</att> attribute of each text in this corpus carries a
   unique identifying code for the whole text. The title of the text is
@@ -1696,7 +1348,6 @@ value changes, it may be regarded as specifying the <term>state</term>
 of a variable.  A reference declaration using this method therefore
 specifies the individual components of the canonical reference as a
 sequence of <gi>state</gi> elements:
- 
 <specList>
 <specDesc key="state" atts="ed unit delim length"/>
 </specList></p>
@@ -1730,17 +1381,13 @@ on the <gi>milestone</gi> element, or it may be implied, if the
 the <mentioned>xx</mentioned> represents the page number in the first edition, and
 <mentioned>yyy</mentioned> the line number within this page, a reference system
 declaration such as the following would be appropriate:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><refsDecl>
    <state ed="first" unit="page" length="2" delim="."/>
    <state ed="first" unit="line" length="3"/>
 </refsDecl></egXML>
- 
 This implies that milestone tags of the form
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><milestone n="II" ed="first" unit="page"/>
 <milestone ed="first" unit="line"/></egXML>
- 
 will be found throughout the text, marking the positions at which page
 and line numbers change. Note that no value has been specified for the
 <att>n</att> attribute on the second milestone tag above; this implies
@@ -1765,7 +1412,6 @@ Instead, the <att>decls</att> attribute of each text (or subdivision of
 the text) to which the declaration applies may be used to supply a cross
 reference to it, as further described in section <ptr target="#CCAS"/>.</p>
 </div4></div3>
-	
 <div3  xml:id="HD55"><head>The Classification Declaration</head>
 <p>The <gi>classDecl</gi> element is the sixth of the nine optional
 subdivisions of the <gi>encodingDesc</gi> element.  It is used to group
@@ -1775,14 +1421,12 @@ represented by a <gi>taxonomy</gi> element, which may contain either a
 simple bibliographic citation, or a definition of the
 descriptive typology concerned; the following elements are used
 in defining a descriptive classification scheme:
- 
 <specList>
 <specDesc key="classDecl"/>
 <specDesc key="taxonomy"/>
 <specDesc key="category"/>
 <specDesc key="catDesc"/>
 </specList>
- 
 The <gi>taxonomy</gi> element has two slightly different, but related,
 functions. For well-recognized and documented public classification
 schemes, such as Dewey or other published descriptive thesauri, it
@@ -1792,10 +1436,8 @@ description of a particular taxonomy may be found.
   <bibl>
     <title>Dewey Decimal Classification</title>
     <edition>Abridged Edition 12</edition>
-    
   </bibl>
 </taxonomy></egXML>
- 
 For less easily accessible schemes, the <gi>taxonomy</gi> element
 contains a description of the taxonomy itself as well as an optional
 bibliographic citation.  The description consists of a number of
@@ -1810,7 +1452,6 @@ nested to an arbitrary depth in order to reflect the hierarchical
 structure of the taxonomy.  Each <gi>category</gi> element bears a
 unique <att>xml:id</att> attribute, which is used as the target for
 <gi>catRef</gi> elements referring to it.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><taxonomy xml:id="b">
   <bibl>Brown Corpus</bibl>
   <category xml:id="b.a">
@@ -1821,13 +1462,11 @@ unique <att>xml:id</att> attribute, which is used as the target for
     <category xml:id="b.a4"><catDesc>Provincial</catDesc></category>
     <category xml:id="b.a5"><catDesc>Political</catDesc></category>
     <category xml:id="b.a6"><catDesc>Sports</catDesc></category>
-    
   </category>
   <category xml:id="b.d"><catDesc>Religion</catDesc>
     <category xml:id="b.d1"><catDesc>Books</catDesc></category>
     <category xml:id="b.d2"><catDesc>Periodicals and tracts</catDesc></category>
   </category>
-  
 </taxonomy></egXML></p>
 <p>Linkage between a particular text and a category within such a
 taxonomy is made by means of the <gi>catRef</gi> element within the
@@ -1837,10 +1476,8 @@ particular <gi>catRef</gi>, as in the following example, which
 identifies a text with the sub-categories <q>Daily</q>, <q>National</q>
 and <q>Political</q>, within the category <q>Press Reportage</q> as
 defined above.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><catRef target="#b.a1 #b.a3 #b.a5"/></egXML></p>
 <p>The elements discussed in this section are defined as follows:
- 
 <specGrp xml:id="D2255" n="The classification declaration">&categorize.odd;
 &clasdecl.odd;
 &taxonomy.odd;
@@ -1853,11 +1490,9 @@ chapter <ptr target="#FD"/>) with any analytic <term>feature
 structures</term> (as defined in chapter <ptr target="#FS"/>) present in
 the text documented by this header.</p>
 <p>It has the following description and attributes:
- 
 <specList>
 <specDesc key="fsdDecl" />
 </specList>
- 
 Note that one <gi>fsdDecl</gi> element must be specified for each
 distinct type of feature structure used in the markup.  The
 <att>url</att> element supplies a link to the  entity
@@ -1867,7 +1502,6 @@ The external entity does not use the same DTD as the rest of the
 document; it is recommended therefore to declare it as an unparsed
 external entity using a foreign notation. The following document type subset for
 the document shows how this may be achieved in either XML or SGML.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei2.dtd" [-->
  <!-- Declare the fsd notation itself -->
 <!-- <!NOTATION fsd 
@@ -1894,16 +1528,13 @@ corresponding to a given type of feature structure used within the text,
 as follows:-->The feature system declaration will typically be held in an external
 entity, in much the same way as a file containing a graphic is
 referenced by the <gi>graphic</gi> element. For example:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
    <fileDesc>  </fileDesc>
    <encodingDesc>
       <fsdDecl type="myA1" url="http://fsd.com/myFeatures/"/>
       <fsdDecl type="myA2" url="http://fsd.com/myFeatures/"/>
    </encodingDesc>
-   
 </teiHeader></egXML>
- 
 This header would be attached to a text in which feature structures of
 types <val>myA1</val> and <val>myA2</val> are
 used. Definitions for the feature system in which these feature
@@ -1911,7 +1542,6 @@ structures are defined may be located at the URL stated above.</p>
 <p>Further details and examples of the use of feature structure analyses
 and feature system declarations are provided in chapters <ptr target="#FS"/> and <ptr target="#FD"/> respectively.</p>
 <p>The <gi>fsdDecl</gi> element is declared as follows:
- 
 <specGrp xml:id="D2256" n="The FSD declaration">&fsddecl.odd;
 </specGrp></p></div3>
 <div3  xml:id="HDMN"><head>The Metrical Declaration Element</head>
@@ -1920,7 +1550,6 @@ subdivisions of the <gi>encodingDesc</gi> element.  It is used to
 document any metrical notation scheme used in the text, as further
 discussed in section <ptr target="#VEME"/>. It consists either of
 a prose description or a series of <gi>metSym</gi> elements.
- 
 <specList>
 <specDesc key="metDecl" atts="pattern"/>
 <specDesc key="metSym" atts="value terminal"/>
@@ -1934,7 +1563,6 @@ given. In either case, the optional <att>pattern</att> attribute may be
 used to supply a regular expression which a processor can use to
 validate expressions in the intended notation. The following
 constraints apply:
- 
 <list type="simple">
 		<item>if <att>pattern</att> is supplied, any notation used
 		  which does not conform to it should be regarded as
@@ -1957,7 +1585,6 @@ symbol <mentioned>1</mentioned> is used for metrical prominence,
 <mentioned>0</mentioned> for non-prominence, <mentioned>|</mentioned> for foot boundary
 and <mentioned>/</mentioned> for line boundary, then the following declaration
 achieves this object:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><metDecl pattern="((1|0)+\|?/?)*">
    <metSym value="1">metrical promimence</metSym>
    <metSym value="0">metrical non-prominence</metSym>
@@ -1965,7 +1592,6 @@ achieves this object:
    <metSym value="/">metrical line boundary</metSym>
 </metDecl></egXML></p>
 <p>The same notation might also be specified less formally, as follows:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><metDecl>
   <p>Metrically prominent syllables are marked '1' and other
     syllables '0'. Foot divisions are marked by a vertical bar,
@@ -1974,7 +1600,6 @@ achieves this object:
     size (including, for example, individual feet as well as
     groups of lines).</p>
 </metDecl></egXML>
- 
 Note that in this case, because the <att>pattern</att> attribute has not
 been supplied, no processor can validate <att>met</att> attribute values
 within the text which use this metrical notation.</p><p>For more complex cases, it will often be more convenient to define
@@ -1986,7 +1611,6 @@ which symbols are provided for the most common types of foot.<!--
 feet? -sb 2001-11-03 --> These symbols are themselves documented
 within the same notation, in terms of more primitive long and short
 syllables:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><metDecl pattern="[DTIS3A]+">
    <metSym n="dactyl" value="D" terminal="false">-oo</metSym>
    <metSym n="trochee" value="T" terminal="false">-o</metSym>
@@ -1997,13 +1621,11 @@ syllables:
    <metSym value="o">short syllable</metSym>
    <metSym value="-">long syllable</metSym>
 </metDecl></egXML>
- 
 Note here the use of the global <att>n</att> attribute to supply an
 additional name for the symbols being documented.</p>
 <p>For further discussion of this metrical notation and its use in the
 encoding of verse, see section <ptr target="#VEME"/>.</p>
 <p>The elements discussed in this section are defined as follows:
- 
 <specGrp xml:id="D2258" n="Metrical Notation Declaration">
 &metdecl.odd;
 &metsym.odd;
@@ -2013,12 +1635,10 @@ encoding of verse, see section <ptr target="#VEME"/>.</p>
 subdivisions of the <gi>encodingDesc</gi> element.  It is used to
 document the method used to encode textual variants in the text, as
 discussed in section <ptr target="#TCAPLK"/>.
- 
 <specList>
 <specDesc key="variantEncoding" atts="method location"/>
 </specList></p>
 <p>Its formal declaration is as follows:
- 
 <specGrp xml:id="DHDVAR" n="Variant-Encoding Declaration">&varencod.odd;
 </specGrp></p></div3></div2>
 <div2 type="bar" xml:id="HD4"><head>The Profile Description</head>
@@ -2026,11 +1646,9 @@ discussed in section <ptr target="#TCAPLK"/>.
 the TEI Header. It is an optional element, the purpose of which is to
 enable information characterizing various descriptive aspects of a text
 or a corpus to be recorded within a single unified framework.
- 
 <specList>
 <specDesc key="profileDesc"/>
 </specList>
- 
 In principle, almost any component of the header might be of
 importance as a means of characterizing a text.  The author of a written
 text, its title or its date of publication, may all be regarded as
@@ -2043,7 +1661,6 @@ elsewhere in the TEI header.
 </p>
 <p>The core <gi>profileDesc</gi> element has three optional components,
 represented by the following elements:
- 
 <specList>
 <specDesc key="creation"/>
 <specDesc key="langUsage"/>
@@ -2053,25 +1670,20 @@ These elements are further described in the remainder of this section.</p>
 <p>Three other elements may also appear within the <gi>profileDesc</gi>
 element, when the
 corpus module is in use:
- 
 <specList>
 <specDesc key="textDesc"/>
 <specDesc key="particDesc"/>
 <specDesc key="settingDesc"/>
 </specList>
- 
 For descriptions of these elements, see section <ptr target="#CCAH" type="div1"/>.</p>
 <p>Finally, the following element can appear in the <gi>profileDesc</gi>
 element, when the additional tag set for transcription of primary
 sources is selected:
- 
 <specList>
 <specDesc key="handList"/>
 </specList>
- 
 For a description of this element, see section <ptr target="#PHDH"/>.</p>
 <p>The profile description itself has the following formal definition:
- 
 <specGrp xml:id="D224" n="The profile description">
 &profile.odd;
 &profdesc.odd;
@@ -2082,17 +1694,14 @@ For a description of this element, see section <ptr target="#PHDH"/>.</p>
 <div3  xml:id="HD4C"><head>Creation</head>
 <p>The <gi>creation</gi> element contains phrases describing the
 origin of the text, e.g. the date and place of its composition.
- 
 <specList>
 <specDesc key="creation"/>
 </specList>
- 
 The date and place of composition are often of particular importance for
 studies of linguistic variation; since such information cannot be
 inferred with confidence from the bibliographic description of the copy
 text, the <gi>creation</gi> element may be used to provide a consistent
 location for this information:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><creation>    
    <date value="1992-08">August 1992</date>
    <rs type="city">Taos, New Mexico</rs>
@@ -2112,7 +1721,6 @@ element should <emph>not</emph> be used to supply information about
 any non-standard characters or glyphs used by this language; such
 information should be recorded in the <gi>charDesc</gi> element in
 the encoding description (see further <ptr target="#WD"/>). 
- 
 <specList>
 <specDesc key="langUsage"/>
 <specDesc key="language" atts="usage"/>
@@ -2147,15 +1755,12 @@ element, only one of the <gi>language</gi> elements should bear the
 	<!-- elements don't have IDs, and these must be ignored or    -->
 	<!-- 'merged' somehow with LANGUAGE elements which do have    -->
 	<!-- IDs and which use the same wsd.  -msm                    -->
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><langUsage>
    <language ident="fr-CA" usage="60">Qu&#xE9;becois</language>
    <language ident="en-CA" usage="20">Canadian business English</language>
    <language ident="en-GB" usage="20">British English</language>
 </langUsage></egXML>
- 
 or, less formally,
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><langUsage>
 <p> Approximately two-thirds of the text is in
     Qu&#xE9;becois, the remainder being equally
@@ -2172,7 +1777,6 @@ following formal definitions:
 <p>The second component of the core <gi>profileDesc</gi> element is the
 <gi>textClass</gi> element. This element is used to classify a text
 according to one or more of the following methods:
- 
 <list type="bullets">
 <item>by reference to a recognized international classification such as
 the Dewey Decimal Classification, the Universal Decimal Classification,
@@ -2185,7 +1789,6 @@ the field concerned, or peculiar to the material in hand; this may
 include one based on recurring sets of values for the situational
 parameters defined in section <ptr target="#CCAHTD"/>, or the demographic
 elements described in section <ptr target="#CCAHPA"/></item></list>
- 
 The last of these may be particularly important for dealing with
 existing corpora or collections, both as a means of avoiding the expense
 or inconvenience of reclassification and as a means of documenting
@@ -2213,7 +1816,6 @@ further details of the source concerned may be found.  The
 <gi>taxonomy</gi> element occurs in the <gi>classDecl</gi> part of the
 encoding declarations within the TEI Header and is described in
 section <ptr target="#HD55"/>. For example:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><keywords scheme="#lcsh">
    <list>
       <item>Data base management</item>
@@ -2238,7 +1840,6 @@ classification scheme, such as the Dewey Decimal Classification.  The
 <att>scheme</att> attribute is used to indicate the source of the
 classification scheme, in the same way as for the <gi>keywords</gi>
 element, as in the following example:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><classCode scheme="#ddc19">005.756</classCode>
 <classCode scheme="#lc">QA76.9</classCode></egXML>
 <!-- subject classifications from Date, Guide to SQL Std      -->
@@ -2256,16 +1857,13 @@ within the category indicated.</p>
 case more than one identifier will be supplied as the value for
 the <att>target</att> attribute on the <gi>catRef</gi> element, as
 in the following example:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><catRef target="#B1 #B2 #B5"/></egXML></p>
 <p>Where more than one descriptive taxonomy is used to characterize the
 texts in a corpus or collection, the <att>scheme</att> attribute
 should be supplied to specify the taxonomy to which the categories
 identified by the target attribute belong. For example,
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><catRef target="#B12 #B15" scheme="brown.xml"/>
 <catRef target="#A45" scheme="suc.xml"/></egXML>
- 
 Here the same text has been classified as of categories <q>B12</q> and
 <q>B15</q> within the Brown classification scheme (presumed to be
 available from <ident>brown.xml</ident>), and as of category
@@ -2326,7 +1924,6 @@ attribute on the <gi>change</gi> element to supply it.
 </p>
 <p>It is recommended to give changes in reverse chronological order,
 most recent first.	
-	
 	</p>
 <p>For example:<!-- is this example perhaps not a bit over long? -->
 	<!-- possibly, i just took a real one from a file -->
@@ -2424,7 +2021,6 @@ the TEI header.
 <p>Supplying only the minimal level of encoding required, the
 TEI header of a single printed text might look like the following
 example:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
   <fileDesc>
     <titleStmt>
@@ -2462,7 +2058,6 @@ bibliographic record.  We have also added information about the
 encoding principles used in this (imaginary) encoding, about the
 text itself (in the form of Library of Congress subject headings),
 and about the revision of the file.
- 
 <!-- Bibliographic reference to a real OTA text.              -->
 	<!-- EncodingDesc mostly from description of                  -->
 	<!-- that text, but improvised in part.                       -->
@@ -2624,7 +2219,6 @@ and about the revision of the file.
       </change>
    </revisionDesc>
 </teiHeader></egXML>
- 
 <!-- this is what Rich suggested: me, I think the  -->
 	<!-- contents of the supplementary file should be  -->
 	<!-- decanted into the encodingDesc  (LB)          -->
@@ -2639,10 +2233,6 @@ in this chapter are provided here, in the reference index and in the
 associated tutorials.
 </p> 
 </div2>
-	
-	
-	
-	
 <div2 type="bar" xml:id="HD8"><head>Note for Library Cataloguers</head><p>A strong motivation in preparing the material in this chapter was to
 provide in the TEI file header a viable chief source of information
 for cataloguing the machine-readable data file.  The file header is not

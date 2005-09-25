@@ -1,15 +1,11 @@
 <!--Copyright 2004 TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="TIMERANG" usage="opt" ident="timeRange">
 <equiv/>
 <gloss>time range</gloss>
 <desc>contains two times or another phrase indicating a time period.</desc>
-  
-  
   <classes>
     <memberOf key="tei.data"/>
   </classes>
@@ -20,12 +16,9 @@ See the file COPYING for details.
     <attDef ident="from" usage="opt">
 	<equiv/>
 	<desc>indicates the starting point of the time period in a standard form, usually hh:mm.</desc>
-      
-      
-      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="time"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.temporal"/></datatype>
       <valDesc>a string representing a time in standard format;
 		recommended forms are the extended formats from ISO 8601.</valDesc>
-      
       <remarks>
         <p>If the format of the value is not one from ISO 8601, then
 		  its format should be declared in the <gi>stdVals</gi>
@@ -35,12 +28,9 @@ See the file COPYING for details.
     <attDef ident="to" usage="opt">
 	<equiv/>
 	<desc>indicates the ending point of the time period in standard form, usually hh:mm.</desc>
-      
-      
-      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="time"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.temporal"/></datatype>
       <valDesc>a string representing a time in standard format;
 		recommended forms are the extended formats from ISO 8601.</valDesc>
-      
       <remarks>
         <p>If the format of the value is not one from ISO 8601, then
 		  its format should be declared in the <gi>stdVals</gi>
@@ -51,31 +41,24 @@ See the file COPYING for details.
 	<equiv/>
 	<desc>indicates the precision to be attached to either or both times
 		specified.</desc>
-      
-      
       <valList type="closed">
         <valItem ident="to">
-          
           <equiv/>
           <gloss>the to time is exact</gloss>
         </valItem>
         <valItem ident="from">
-          
           <equiv/>
           <gloss>the from time is exact</gloss>
         </valItem>
         <valItem ident="both">
-          
           <equiv/>
           <gloss>both times are exact</gloss>
         </valItem>
         <valItem ident="none">
-          
           <equiv/>
           <gloss>both times are approximate or unspecified</gloss>
         </valItem>
       </valList>
-      
       <remarks>
         <p>unless they confrom to ISO 8601, time values should conform
 		  to the standard form declared in the <gi>stdVals</gi>
@@ -83,7 +66,6 @@ See the file COPYING for details.
       </remarks>
     </attDef>
   </attList>
-  
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
   </exemplum>

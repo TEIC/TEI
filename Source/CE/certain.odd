@@ -1,7 +1,5 @@
 <!--Copyright 2004 TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="certainty" xml:id="CERTAIN" usage="opt" ident="certainty">
@@ -10,8 +8,6 @@ See the file COPYING for details.
 <desc>indicates the degree of certainty or uncertainty associated with
 some aspect of the text markup.
  </desc>
-  
-  
   <classes>
     <memberOf key="tei.metadata"/>
   </classes>
@@ -24,7 +20,7 @@ some aspect of the text markup.
 	<desc>points at the
 elements whose markup is
 uncertain.</desc>
-        <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/></datatype>
+        <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/></datatype>
       <valDesc>one or more valid
 identifiers, separated by white space.</valDesc>
       <exemplum>
@@ -45,53 +41,43 @@ of this indirect pointing mechanism, see chapter <ptr target="#SA"/>.</p>
 	<desc>indicates the precise location of the uncertainty in the
 markup: applicability of the element, precise position of the
 start- or end-tag, value of a specific attribute, etc.</desc>
-      
-      
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/></datatype>
       <valList type="semi">
         <valItem ident="gi">
-          
           <equiv/>
           <gloss>uncertain whether the element used actually applies
 to the passage.</gloss>
         </valItem>
         <valItem ident="startloc">
-          
           <equiv/>
           <gloss>start-tag may not be correctly located.</gloss>
         </valItem>
         <valItem ident="endloc">
-          
           <equiv/>
           <gloss>end-tag may not be correctly located.</gloss>
         </valItem>
         <valItem ident="location">
-          
           <equiv/>
           <gloss>both the start-tag and the end-tag may not
 be correctly located.</gloss>
         </valItem>
         <valItem ident="att.name">
-          
           <equiv/>
           <gloss>the value given for the attribute
 name is uncertain.</gloss>
         </valItem>
         <valItem ident="transcribedContent">
-          
           <equiv/>
           <gloss>the content of the element may
 not be a correct transcription of the source text.</gloss>
         </valItem>
         <valItem ident="suppliedContent">
-          
           <equiv/>
           <gloss>the content of the element may not
 have been correctly supplied by the reader, e.g. as in the
 cases of corr and abbrev elements.</gloss>
         </valItem>
       </valList>
-      
       <remarks>
         <p>If the name of an attribute is supplied, it must be
   prefixed by <code>att.</code>. <!-- The <mentioned>#</mentioned> distinguishes the terms of the
@@ -110,14 +96,16 @@ indicate an alternative starting or ending location).  If an
 <att>degree</att> applies to the alternative markup specified by
 <att>assertedValue</att>; if none is given, it applies to the markup
 in the text.</desc>
-      
-      
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <datatype><rng:choice
+		    xmlns:rng="http://relaxng.org/ns/structure/1.0">
+<rng:ref name="tei.data.pointer"/>
+<rng:ref name="tei.data.ident"/>
+<rng:ref name="tei.data.name"/>
+</rng:choice></datatype>
       <valDesc>generic identifier, attribute value, location (e.g.
 indicated by a reference to an <gi>anchor</gi> element or to an
 <gi>ptr</gi> element), or other appropriate alternative
 value.</valDesc>
-      
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
    <certainty target="#ESX" locus="gi" assertedValue="place" degree="0.2"/></egXML>
@@ -136,12 +124,9 @@ element.</p>
 	<desc>further describes the uncertainty in prose, perhaps
 indicating its nature, cause, or the justification for the
 degree of confidence asserted.</desc>
-      
-      
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/></datatype>
       <valDesc>a prose description of how and why the markup is
 uncertain.</valDesc>
-      
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
  <certainty target="#ESX" locus="gi" degree="0.2"
@@ -160,13 +145,10 @@ general use.</p>
 	<equiv/>
 	<desc>indicates conditions assumed in the assignment of a
 degree of confidence.</desc>
-      
-      
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/></datatype>
       <valDesc>a characterization of the conditions which are assumed
 in the assignment of a degree of confidence.  This may be in
 prose.</valDesc>
-      
       <remarks>
         <p>A project may wish to control the vocabulary used
 in this attribute.</p>
@@ -204,11 +186,9 @@ ambiguity-free system for indicating certainty.</p>
 	<equiv/>
 	<desc>indicates the degree of confidence assigned to the aspect
 of the markup named by the <att>locus</att> attribute.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Certainty"/></datatype>
-      
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.probability"/></datatype>
     </attDef>
   </attList>
-  
   <exemplum>
     <p>(For discussion of this example, see section <ptr target="#CECECE"/>)</p>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Earnest went to <anchor xml:id="A1"/> old

@@ -1,7 +1,5 @@
 <!--Copyright 2004 TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="TERM" usage="rwa" ident="term">
@@ -17,7 +15,6 @@ See the file COPYING for details.
   <content>
     <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
   </content>
-
   <attList>
 <!--
     <attDef ident="type" usage="opt">
@@ -33,7 +30,6 @@ See the file COPYING for details.
     </attDef>
 -->
     <attList org="choice">
-      
       <attDef ident="target" usage="opt">
 	<equiv/>
 	<desc>identifies the associated <gi>gloss</gi> element by an
@@ -44,13 +40,12 @@ See the file COPYING for details.
 	<valDesc>should be a valid URI reference that resolves to a
 	<gi>gloss</gi> element</valDesc>
       </attDef>
-      
       <attDef ident="cref" usage="opt">
 	<equiv/>
 	<desc>identifies the associated <gi>gloss</gi> element using a
 	canonical reference from a scheme defined in a
 	<gi>refsDecl</gi> element in the TEI header</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/></datatype>
       <valDesc>the result of applying the algorithm for the resolution
       of canonical references (described in section <ptr
       target="#SACR"/>) should be a valid URI reference that resolves
@@ -60,10 +55,8 @@ See the file COPYING for details.
 	<att>decls</att> attribute.</p>
       </remarks>
     </attDef>
-
     </attList>    
   </attList>
-  
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">A computational device that infers structure from grammatical
 strings of words is known as a <term>parser</term>, and much

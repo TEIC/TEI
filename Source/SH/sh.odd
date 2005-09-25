@@ -1,18 +1,12 @@
 <!--
 Copyright TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
-
 $Date$
 $Author$
-
 -->
 <div1 xmlns="http://www.tei-c.org/ns/1.0" xml:id="SH">
-
 <head>Header Elements and Their Relationship to Other Metadata Standards</head>
-
 <p>Many libraries, text repositories, research sites and related
 institutions with collections of TEI documents need to map, or export,
 metadata from the TEI header to other metadata formats such as 
@@ -23,7 +17,6 @@ Open Archive Initiative (OAI) (<ptr
 target="http://www.openarchives.org/"/>), which facilitate the automated
 publishing, harvesting, and aggregation of digital object metadata,
 increases the need for such mappings.</p>
-
 <p>This section of the Guidelines outlines practices recommended for
 encoders (especially those responsible for the documentation of text)
 and catalogers when creating TEI headers that will require mapping to
@@ -35,9 +28,7 @@ TEI documents and the loading of TEI header metadata into MARC-based
 bibliographic databases, HTML/XHTML <gi>meta</gi> tags, OAI data
 providers, or other metadata systems.
 </p>
-
 <div2 xml:id="SHDEF"><head>Principles for Encoders</head>
-
 <p>The richness and size of the header reflect the diversity of uses
 to which electronic texts conforming to these Guidelines will be put.
 As described in section <ptr target="#HD7"/>, the TEI header allows for
@@ -56,10 +47,6 @@ header, in the latter case, will be very full, approximating the kind
 of documentation often supplied in the form of a manual.  Most texts
 will lie somewhere between these extremes; textual corpora in
 particular will tend toward the latter extreme.</p>
-
-
-
-
 <p>For a successful and complete mapping from the TEI header to other
 standards and formats, the TEI header should be as complete as
 possible.  <!-- LB: targetted section has been deleted:  
@@ -70,13 +57,10 @@ standards and formats. --> When deciding which information
 to include in a TEI header that will be mapped to another metadata
 standard and the format or structure of that header information, the
 following should be kept in mind:
-
 <list>
-
 <item>The header should provide full bibliographic information on the
 encoded text, its source, where the text can be located, and any
 restrictions governing its use.</item>
-
 <item>The header should contain useful information about the encoding of
 the text itself.  In this regard, it is highly recommended that the
 encoding description be as complete as possible.  The Guidelines do
@@ -85,7 +69,6 @@ not require that the encoding description be included in the header
 but in practice a header without an encoding description
 would prove difficult mor impossible to map satisfactorily to most other
 metadata formats.</item>
-
 <item>The header should be amenable to automatic processing, particularly
 for loading into databases and for the creation of publications,
 indexes, and finding aids, without undue editorial intervention.  For
@@ -117,14 +100,11 @@ searching for information throughout a text; and third, generally
 speaking, this practice results in greater overall consistency,
 especially with respect to bibliographic citations.</item>
 </list></p>
-
 <p>The distribution and retrieval of TEI header metadata enable
 resource discovery by other means. The mappings to MARC and Dublin Core
 discussed in the remainder of this section provide two examples of
 how TEI header metadata may be re-used and re-purposed.</p>
-
 </div2>
-
 <!-- jawalsh: With the demise of the concept of the "Independent Header" it seems
      the maitenance of a separate listing of required and recommended tags is unnecessary. 
      The general guidelines above, along with the the suggested or sample mappings to DC 
@@ -132,12 +112,9 @@ how TEI header metadata may be re-used and re-purposed.</p>
      header for mapping.  -->
 <!--
 <div2  xml:id="SHRR"><head>Required and Recommended Tags to Facilitate Mapping</head>
-
 DELETED
-
 </div2>
 -->
-
 <div2 xml:id="SHMARC"><head>Header Elements and their Relationship to the MARC Record</head>
 <p><![CDATA[<!-- This entire section is undergoing review by professional catalogers and members of the
 TEI in Libraries SIG -->]]></p>
@@ -210,7 +187,6 @@ codebook.</p>
 <p>Subfields (or delimiters) are conventionally indicated by the
 dollar sign.</p>
 <div3 xml:id="SHFD"><head>MARC Fields for the File Description</head>
-
 <p>Note that there is no provision for the <soCalled>Main
 Entry</soCalled> (or USMARC <ident type="field">1XX</ident> fields) in the TEI
 header. The main entry should be constructed, using appropriate name
@@ -219,7 +195,6 @@ header that indicates who is primarily responsible for the
 intellectual content of the work. There is an <gi>author</gi> element,
 but the form of the name will have to be checked by a cataloguer
 before the main entry is constructed.
-
 <list type="gloss">
 <label><gi>titleStmt</gi></label><item> corresponds to title and statement of
 responsibility fields in MARC, typically <ident type="field">240</ident> (for uniform
@@ -242,9 +217,7 @@ statement of responsibility, as in the following example:
       <name>James D. Benson</name>
    </respStmt>
 </titleStmt></egXML>
-
 This might be tagged in MARC as:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples">245 Two stories by Edgar Allen Poe :$belectronic version ;
  compiled by $cJames D. Benson.</egXML>
 <!-- Natasha:
@@ -257,7 +230,6 @@ Also, our local practice maps funding information to MARC 536 field, ex.:
 statement) elements correspond with MARC fields <ident type="field">250
 $a</ident> and <ident type="field">250 $b</ident> respectively, as in the
 following example:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><editionStmt>
    <edition>Student's edition,
        <date>June 1987</date>
@@ -270,27 +242,21 @@ following example:
 <!-- N.B. the awkward tagging here is required by the fact    -->
 	<!-- that editionStmt *can* contain phrase data.  It ought    -->
 	<!-- to be just p instead. (msm)                              -->
-
 This might be tagged in MARC as:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples">250  $aStudent's edition, June, 1987, new annotation by
   $bGeorge Brown.</egXML>
 <!-- Natasha:
-
 In our local practice, catalogers record information about this particular electronic edition in the MARC 250 field. For example, for for ÒChristoph von Graffenried's Account of the Founding of New BernÉÓ (http://docsouth.unc.edu/nc/graffenried/menu.html) :
 250 $a Electronic ed.
 ÒIncidents in the Life of a Slave GirlÓ by Harriet Jacobs (http://docsouth.unc.edu/jacobs/menu.html) shows as a second edition, with a relevant note about the first edition:
 250 $a Electronic ed., 2nd ed.
 500 $a Second ed. has updated encoding and formatting, and replaces the 1st ed. published in 1998
-
 -->
-
 </p>
 <p>The <gi>extent</gi> element is analogous to the
 <soCalled>Physical Description</soCalled> MARC field.  Fields
 <ident type="field">256</ident> or <ident type="field">3XX</ident> are
 appropriate, depending on local practice. 
-
 The children of the <gi>publicationStmt</gi> element may be put in MARC <ident type="field">260</ident>.  The 
 <gi>pubPlace</gi> element corresponds with field <ident type="field">260
 $a</ident>; the 
@@ -341,7 +307,6 @@ elements do not easily map to existing MARC fields, and should be
 put into a local notes field (<ident type="field">590</ident>) treating the TEI element
 introducing each component as a print constant at the head of the
 field in order to facilitate future local processing and retrieval.
-
 Example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><scriptStmt>
    <bibl>
@@ -350,9 +315,7 @@ Example:
       <date>12 Jun 1991</date>
    </bibl>
 </scriptStmt></egXML>
-
 This may be tagged in MARC thus:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples">590  <scriptStmt>
 <bibl>
    <author>CNN Network News</author>
@@ -360,10 +323,7 @@ This may be tagged in MARC thus:
    <date> 12 Jun 1991</date>
 </bibl>
 </scriptStmt></egXML>
-
-
 Example:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><recordingStmt>
    <recording type="video" dur="P10M">
       <equipment>
@@ -381,7 +341,6 @@ Example:
       </broadcast>
    </recording>
 </recordingStmt></egXML>
-
 This can be tagged in MARC as:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">590 <recordingStmt>
 <recording type="video" dur="P10M">
@@ -419,7 +378,6 @@ and any TEI tagging left intact. This may facilitate any
 locally-developed retrieval software.</p>
 <!-- Natasha: Our local practice is to use also 516 field. -->
 <p>Example:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><encodingDesc>
   <projectDesc>
     <p>Texts were collected to illustrate the full range of
@@ -436,9 +394,7 @@ locally-developed retrieval software.</p>
     </interpretation>
   </editorialDecl>
 </encodingDesc></egXML>
-
 This may be tagged in MARC as:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples">567  
 <projectDesc>
       <p>Texts were collected to illustrate the
@@ -470,12 +426,10 @@ contents of the profile description may be mapped into a locally-defined
 notes field (<ident type="field">59X</ident>) with its TEI tagging intact, as in the examples
 above.
 <!-- jawalsh:  I think we can do better than the above paragraph.  I've started to revise it, but the suggestion in P4 that there it's not really possible to provide mapping guidance for the whole of the profile desciption is untrue.  There are things in there that can be cleanly mapped to MARC. -->
-
 </p>
 <p>Elements from the profile description that suggest clear mappings to MARC include the individual <gi>language</gi> children of <gi>langUsage</gi> which correspond to MARC 041. 
 <!--
 Natasha: possible example:
-
 <langUsage>  maps to MARC 041:
 <language>
   <language id="eng">English</language> 
@@ -484,7 +438,6 @@ Natasha: possible example:
   <language id="ger">German</language>
 In MARC: 
 041	1 	$a eng $a fre $a ger $h fre $h ger
-
 -->
 </p>
 <p>The metadata typically contained in <gi>textClass</gi> corresponds to MARC 6XX fields.

@@ -1,7 +1,5 @@
 <!--Copyright 2004 TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="EQUIV" usage="opt" ident="equiv">
@@ -16,13 +14,13 @@ See the file COPYING for details.
     <attDef ident="name" usage="opt">
 	<desc>names the underlying concept of which the parent is a
   representation</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.names"/></datatype>
       <valDesc>any name</valDesc>
     </attDef>
     <attDef ident="uri" usage="opt">
 	<desc>references the underlying concept of which the parent is a
   representation by means of some external identifier</desc>
-      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="anyURI"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/></datatype>
       <valDesc>a URI</valDesc>
     </attDef>
     <attDef ident="filter" usage="opt">
@@ -38,7 +36,6 @@ transform instances of this element to canonical TEI
       <valDesc>a URI</valDesc>
     </attDef>
   </attList>
-  
   <exemplum>
 <p>The following example declares that the <gi>bo</gi> element is
   conceptually equivalent to the markup construct <tag>hi
@@ -56,11 +53,9 @@ transform instances of this element to canonical TEI
 </attDef>
 </attList>
 </elementSpec>
-
 <elementSpec ident="bo" mode="add">
 <equiv name="BOLD" uri="http://www.typesrus.com/bold"/>
 </elementSpec>
-
     </egXML>
   </exemplum>
   <remarks>

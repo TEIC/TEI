@@ -1,7 +1,5 @@
 <!--Copyright 2004 TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="transcr" xml:id="DELSPAN" usage="opt" ident="delSpan">
@@ -10,8 +8,6 @@ See the file COPYING for details.
 <desc>marks the beginning of a longer sequence of text deleted,
 marked as deleted, or otherwise signaled as superfluous or spurious by an
 author, scribe, annotator, or corrector.</desc>
-  
-  
   <classes>
     <memberOf key="tei.editIncl"/>
     <memberOf key="tei.intervention"/>
@@ -23,32 +19,25 @@ author, scribe, annotator, or corrector.</desc>
     <attDef ident="type" usage="opt">
 	<equiv/>
 	<desc>classifies the deletion, using any convenient typology.</desc>
-      
-      
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/></datatype>
       <valList type="open">
         <valItem ident="overstrike">
-          
           <equiv/>
           <gloss>deletion indicated by line crossing out the text.</gloss>
         </valItem>
         <valItem ident="erasure">
-          
           <equiv/>
           <gloss>deletion indicated by erasure of the text.</gloss>
         </valItem>
         <valItem ident="bracketed">
-          
           <equiv/>
           <gloss>deletion indicated by brackets in the text or margin.</gloss>
         </valItem>
         <valItem ident="subpunction">
-          
           <equiv/>
           <gloss>deletion indicated by dots beneath the letters deleted.</gloss>
         </valItem>
       </valList>
-      
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
@@ -56,12 +45,9 @@ author, scribe, annotator, or corrector.</desc>
     <attDef ident="hand" usage="opt">
 	<equiv/>
 	<desc>signifies the hand of the agent which made the deletion.</desc>
-      
-      
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/></datatype>
       <valDesc>must be one of the hand identifiers declared in the document
 header (see section <ptr target="#PHDH"/>).</valDesc>
-      
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
@@ -71,11 +57,8 @@ header (see section <ptr target="#PHDH"/>).</valDesc>
 	<desc>identifies the endpoint of the deleted passage,
 by supplying the value of the <att>xml:id</att>
 attribute of an <gi>anchor</gi> or other empty element placed there.</desc>
-      
-      
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointer"/></datatype>
       <valDesc>any valid identifier.</valDesc>
-      
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
@@ -92,42 +75,34 @@ passage.</p>
 	<equiv/>
 	<desc>indicates whether the deletion is faulty, e.g. by including too
 much or too little text.</desc>
-      
-      
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/></datatype>
       <defaultVal>unremarkable</defaultVal>
       <valList type="open">
         <valItem ident="excessStart">
-          
           <equiv/>
           <gloss>some text at the beginning of the deletion is marked as
 deleted even though it clearly should not be deleted.</gloss>
         </valItem>
         <valItem ident="excessEnd">
-          
           <equiv/>
           <gloss>some text at the end of the deletion is marked as
 deleted even though it clearly should not be deleted.</gloss>
         </valItem>
         <valItem ident="shortStart">
-          
           <equiv/>
           <gloss>some text at the beginning of the deletion is not marked as
 deleted even though it clearly should be.</gloss>
         </valItem>
         <valItem ident="shortEnd">
-          
           <equiv/>
           <gloss>some text at the end of the deletion is not marked as
 deleted even though it clearly should be.</gloss>
         </valItem>
         <valItem ident="unremarkable">
-          
           <equiv/>
           <gloss>the deletion is not faulty.</gloss>
         </valItem>
       </valList>
-      
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
@@ -142,7 +117,6 @@ the text with and without the letters or words in question.</p>
       </remarks>
     </attDef>
   </attList>
-  
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">      <p>Paragraph partially deleted.  This is the undeleted
 portion <delSpan resp="#author" to="#a23"/>and this the deleted

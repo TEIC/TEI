@@ -1,7 +1,5 @@
 <!--Copyright 2004 TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="PTR" usage="opt" ident="ptr">
@@ -18,7 +16,6 @@ See the file COPYING for details.
     <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
   </content>
   <attList org="choice">
-
     <attDef ident="target" usage="req">
       <equiv/>
       <desc>specifies the destination of the pointer by supplying one or
@@ -33,13 +30,12 @@ See the file COPYING for details.
       with the normal mechanism, e.g.
       <code>TEI%20Consortium</code>.</valDesc>
     </attDef>
-    
     <attDef ident="cref" usage="opt">
       <equiv/>
       <desc>specifies the destination of the pointer by supplying a
       canonical reference from a scheme defined in a <gi>refsDecl</gi>
       element in the TEI header</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/></datatype>
       <valDesc>the result of applying the algorithm for the resolution
       of canonical references (described in section <ptr
       target="#SACR"/>) should be a valid URI reference to the
@@ -52,9 +48,7 @@ See the file COPYING for details.
 	element.</p>
       </remarks>
     </attDef>
-
   </attList>
-  
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">      <ptr target="#p2 #p5"/>
       <ptr target="#d1"/>

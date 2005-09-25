@@ -1,7 +1,5 @@
 <!--Copyright 2004 TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="LAYOUT" ident="layout">
@@ -10,7 +8,6 @@ See the file COPYING for details.
 <desc xml:id="layout.desc">describes how text is laid out on the page,
 including information about any ruling, pricking, or other evidence of
 page-preparation techniques.</desc>
-  
   <content>
 <!--<!ELEMENT layout  - -    (p+)>-->
     <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
@@ -22,29 +19,36 @@ page-preparation techniques.</desc>
 	<equiv/>
 	<gloss/>
 	<desc>specifies the number of columns per page</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Key"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.count"/></datatype>
       <valDesc>either a whole number or the string "NA" (not applicable)</valDesc>
     </attDef>
     <attDef ident="ruledLines">
 	<equiv/>
 	<gloss/>
 	<desc>specifies the number of ruled lines per column</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Key"/></datatype>
-      <valDesc>may be given as a pair of numbers (a range), as a whole number, or as
-the string "NA" (not applicable)</valDesc>
+      <datatype><rng:choice
+		    xmlns:rng="http://relaxng.org/ns/structure/1.0">
+<rng:ref name="tei.data.count"/>
+<rng:list>
+<rng:ref name="tei.data.count"/>
+<rng:ref name="tei.data.count"/>
+</rng:list>
+</rng:choice>
+</datatype>
+      <valDesc>may be given as a pair of numbers (a range) or as a
+      whole number.</valDesc>
     </attDef>
     <attDef ident="writtenLines">
 	<equiv/>
 	<gloss/>
 	<desc>specifies the number of written lines per colum</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Key"/></datatype>
-      
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.count"/></datatype>
       <valDesc>may be given as a pair of numbers (a range), as  a whole number, or as the string "NA" (not applicable)</valDesc>
     </attDef>
   </attList>
-  
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0"><layout ruledLines="25-32">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"
+	   xmlns:rng="http://relaxng.org/ns/structure/1.0"><layout						       ruledLines="25 32">
 <p>Most pages have between 25 and 32 long lines ruled in lead.</p>
 </layout></egXML>
   </exemplum><exemplum>    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0"><layout columns="2" ruledLines="42">

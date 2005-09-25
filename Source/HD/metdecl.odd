@@ -1,7 +1,5 @@
 <!--Copyright 2004 TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="METDECL" usage="rec" ident="metDecl">
@@ -29,7 +27,6 @@ See the file COPYING for details.
     </rng:choice>
   </content>
   <attList>
-
     <attDef ident="type" usage="mwa">
       <equiv/>
       <desc>indicates whether the notation conveys the abstract
@@ -61,12 +58,11 @@ See the file COPYING for details.
         notation defaults to the traditional <q>abab</q> notation.</p>
       </remarks>
     </attDef>
-
     <attDef ident="pattern" usage="opt">
 	<equiv/>
 	<desc>specifies a regular expression defining any value that
 	is legal for this notation.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Regexp"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/></datatype>
       <valDesc>the value must be a valid regular expression per the
       World Wide Web Consortium's <title>XML Schema Part 2: Datatypes
       Second Edition</title>, <ref
@@ -74,12 +70,11 @@ See the file COPYING for details.
       F</ref></valDesc>
       <remarks/>
     </attDef>
-
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <metDecl xml:id="ip" pattern="((+-|-+)-+-+-+-+/)">
-        <metSym value="+">stressed syllable</metSym>
-        <metSym value="-">unstressed syllable</metSym>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <metDecl xml:id="ip" pattern="((SU|US)USUSUSUS/)">
+        <metSym value="S">stressed syllable</metSym>
+        <metSym value="U">unstressed syllable</metSym>
         <metSym value="/">metrical line boundary</metSym>
       </metDecl>
     </egXML>

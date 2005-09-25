@@ -1,17 +1,12 @@
 <!--
 Copyright TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
-
 $Date$
 $Author$
-
 -->
 <div1 xmlns="http://www.tei-c.org/ns/1.0" type="Faisal" xml:id="IN" n="30"><head>Rules for Interchange
  </head>
-
 <note place="divtop">This chapter discusses issues related almost
 exclusively to the use of SGML-encoded TEI documents in
 interchange. XML-encoded TEI documents may be safely interchanged
@@ -19,7 +14,6 @@ without formality over current networks, largely without concern for
 any of the issues discussed here. This chapter has not therefore been
 revised, and will probably be
 withdrawn or substantially modified at the next release.</note>
-
 <p>This chapter describes how interested parties can determine and agree
 on the proper format for the successful interchange of TEI-conformant
 documents over a given communications link, and how to translate from
@@ -34,7 +28,6 @@ interchange of the text, the following procedures may be used to
 ensure the successful interchange of the text without information loss.
  </p>
 <p>The sender and receiver together must first:
- 
 <list type="ordered">
 <item>agree on whether to exchange the document in
 <term>TEI interchange form</term> or in some other form (e.g.
@@ -93,19 +86,9 @@ non-standard extended characters as well.
 <p>The mapping from non-transmissible characters to the transmission
 entity set may be derived from the writing system declarations in use by
 the sender and receiver.
- 
-
-	
-	
-	
-	
-	
-	
-	
  </p>
 <p>After the transmission character set and entity character sets
 have been defined, the sender must prepare and transmit the document:
- 
 <list type="ordered">
 <item>if the document is to be exchanged in TEI interchange format,
 translate it from the local-processing form into the TEI interchange
@@ -113,7 +96,6 @@ form (e.g. by passing SGML through an SGML normalizer to supply omitted
 SGML tags and interpret all short-reference sequences; XML documents are
 required to obey these same constraints, and
 are considered to be in the interchange format)
-
  </item>
 <item>in the case of SGML, pack the document for transmission by replacing every
 non-transmissible character with the appropriate transliteration or
@@ -126,7 +108,6 @@ conforming SGML document; otherwise, it may not be SGML-conformant but
 will be easily mappable to a conforming document. In the case of XML,
 which is always in Unicode, the document may be packed to UTF-8 for 
 transmission.
-
  </item>
 <item>transmit the document over the agreed link
  </item></list>
@@ -137,7 +118,6 @@ which reads the appropriate local writing system declarations, creates
 the necessary mapping tables, and packs the document for transmission.
  </p>
 <p>Upon receipt, the receiver must:
- 
 <list type="ordered">
 <item>unpack the document by expanding those entities which correspond
 to characters in the local system character set(s); at this point, the
@@ -166,7 +146,6 @@ survive transmission.  In this case, the transmission character set is
 composed of all the characters of 7-bit ISO 646.  The entity set
 required to handle the non-transmissible characters will include the
 following (assuming they actually occur in the document):
- 
 <list type="simple">
 <item>agrave</item>
 <item>ccedille</item>
@@ -178,7 +157,6 @@ following (assuming they actually occur in the document):
 <item>ouml, Ouml</item>
 <item>uuml, Uuml</item>
 <item>szlig</item></list>
- 
 When <soCalled>packing</soCalled> the file for transmission, the sender
 must replace the non-transmissible characters in the document with
 references to these entities.  After this subsitution, the document is a
@@ -246,10 +224,6 @@ used for this purpose.)
 networks at the time of transmission must be taken into account; it may
 be necessary to transliterate the text, or to replace non-transmissible
 characters with entity references.  
-
-	
-	
- 
  </p></div2>
 <div2 type="Anthony" xml:id="NHNON"><head>Non-Negotiated Interchange</head>
 <p>In some cases, no negotiation between interchange partners is
@@ -260,8 +234,6 @@ assumptions about the frailties of network gateways.
  </p>
 <p>Specifically, it is recommended that for non-negotiated interchange
 the following practices be adopted:
-
-
 <list type="bullets">
 <item>The transmission character set should be the International
 Reference Version of ISO 646 (commonly known as ASCII), or Unicode.  
@@ -285,7 +257,6 @@ set, and ensuring that they work properly on the receiving system.</item>
 <item>As transmitted, the document should be valid.</item></list>
  </p>
 <p>By these restrictions, 
-
 these recommendations ensure that documents interchanged in this way
 will be directly usable on a great variety of systems; moreover, since
 the allowed character sets are widely known and well documented, users of other systems will
@@ -302,19 +273,12 @@ negotiated interchange formats wherever possible.
 <p>The rules given here for non-negotiated interchange are not
 guaranteed to succeed, and negotiation of interchange formats is
 therefore <emph>required</emph>, if any of the following apply:
- 
 <list type="bullets">
 <item>The communications link between the interchange partners garbles
 or corrupts any characters of ISO 646 (IRV), (i.e., ISO 646 (IRV) is
 not a subset of the transmission character set).</item>
 <item>The communications link maps characters not in the repertoire of
 ISO 646 (IRV) onto characters in that repertoire.
-	
-	
-	
-	
-	
-	
  </item>
 <item>The document uses a non-standard SGML concrete syntax (XML
 does not permit variant concrete syntaxes, so this case does not
@@ -332,10 +296,8 @@ specification of such packing and unpacking software is beyond the scope
 of this chapter.  All that can be attempted here is to describe some
 complications which may arise in the packing and unpacking of documents
 for interchange, of which implementors of such software should be aware.
-
 Most of these difficulties do not arise with XML, because XML requires
 that the character set be Unicode.
- 
 <list type="bullets">
 <item>if the sender and receiver use different SGML syntaxes, various
 incompatibilities may be encountered which will require one partner or

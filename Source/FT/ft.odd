@@ -1,13 +1,9 @@
 <!--
 Copyright TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
-
 $Date$
 $Author$
-
 -->
 <div1 xmlns="http://www.tei-c.org/ns/1.0" type="Faisal" xml:id="FT" n="22"><head>Tables, Formulae, and Graphics</head>
 <p>Many documents, both historical and contemporary, include not only
@@ -61,33 +57,25 @@ understood.</p>
 <p>To enable the additional tag set defined by this chapter, the
 parameter entity <term>TEI.figures</term> must be defined with the
 value <val>INCLUDE</val>, as shown in the example below:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei2.dtd" [
     <!ENTITY % TEI.XML      'INCLUDE' >
     <!ENTITY % TEI.verse    'INCLUDE' >
     <!ENTITY % TEI.figures  'INCLUDE' >
  ]>]]></egXML>
- 
 With this declaration in effect, the TEI elements and attributes
 described in the following sections are all available. If any of the
 specialized notations described in sections <ptr target="#FTFOR"/> and
 <ptr target="#FTGRA"/> are used, then an additional <term>notation
 declaration</term> must also be included in the document type
 declaration subset, as further illustrated below.
- 
-
 	</p>
 <p>The overall structure of the tag set defined in this chapter is
 as follows:
 <moduleSpec xml:id="DFTFF" ident="figures"><altIdent type="FPI">Tables,
 Formulae, Figures</altIdent><desc>Tables, formulae, and figures</desc></moduleSpec><!--publicID:  -//TEI P5//ELEMENTS Additional Element Set for Tables, Formulae, and Graphics//EN-->
-
 <specGrpRef target="#DFTTAB"/>
 <specGrpRef target="#DFTFOR"/>
 <specGrpRef target="#DFTGRA"/></p>
-
-
-	
 <div2 type="Anthony" xml:id="FTTAB"><head>Tables</head>
 <p>A table is the least <soCalled>graphic</soCalled> of the elements
 discussed in this chapter.  Almost any text structure can be presented
@@ -117,7 +105,6 @@ table DTDs is also provided in section <ptr target="#FTTAB2"/>.
 <div3 type="subsection" xml:id="FTTAB1"><head>The TEI Table DTD</head>
 <p>For encoding tables of low to moderate complexity, these Guidelines
 provide the following special purpose elements:
- 
 <specList><specDesc key="table" atts="rows cols"/><specDesc key="row" atts="role"/><specDesc key="cell" atts="role cols rows"/></specList>
  </p>
 <p>The <gi>table</gi> element is defined as a member of the class
@@ -156,7 +143,6 @@ Guidelines distinguish the roles of <term>label</term> and
 <p>The following simple example demonstrates how the data presented as a
 labelled list in section <ptr target="#COLI"/> might be represented by an
 encoder wishing to preserve its original appearance as a table:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><table rend="boxed" rows="2" cols="2">
    <head rend="it">Report of the conduct and progress
       of Ernest Pontifex.  Upper Vth form &#x2014; half
@@ -194,7 +180,6 @@ interpretation, see chapter <ptr target="#SA"/>.
  </p>
 <p>The following example demonstrates how a simple statistical table may
 be represented using this scheme:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><table rows="4" cols="4">
   <head>Poor Man's Lodgings in Norfolk (Mayhew, 1843)</head>
   <row role="label">
@@ -214,7 +199,6 @@ be represented using this scheme:
   <row>
     <cell role="label">Wymondham</cell>
     <cell>1</cell> <cell>11</cell> <cell>22</cell> </row>
-  
 </table></egXML>
  </p>
 <p>Note the use of a blank cell in the first row to ensure that the
@@ -233,7 +217,6 @@ chapter <ptr target="#CO"/>, thus allowing for the encoding of potentially
 more useful semantic information, as in the following example, where the
 fact that one cell contains a number and the other contains a place name
 has been explicitly recorded:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><table>
   <head>US State populations, 1990</head>
   <row><cell> <name>Wyoming</name> </cell>
@@ -254,7 +237,6 @@ has been explicitly recorded:
        <cell> <num>799,065</num> </cell></row>
   <row><cell> <name>Rhode Island</name> </cell>
        <cell> <num>1,003,464</num> </cell></row>
-  
 </table></egXML>
  </p>
 <p>In syntactic terms this is little more than a name-change; however,
@@ -263,47 +245,9 @@ nature and significance of the information, rather than merely
 suggesting how to display it in rows and columns.</p>
 <p>The TEI table elements are defined as follows:
 <specGrp xml:id="DFTTAB" n="Tables">
-
-
 &table.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
 &row.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
 &cell.odd;
-
-
-
-
-
-
-
-
-
-
 </specGrp>
  </p></div3>
 <div3 type="subsection" xml:id="FTTAB2"><head>Other Table DTDs</head>
@@ -318,8 +262,6 @@ for correspondingly simple tables.  This has been further developed,
 together with the table DTD documented in ISO Technical Report 9537, and
 now forms part of ISO 12083.  The TEI DTD fragment described above has
 functionality very similar to that defined by ISO 12083.
- 
-
  </p>
 <p>For more complex tables, the most effective publically-available DTD
 is probably that developed by the US Department of Defense CALS project.
@@ -331,22 +273,17 @@ by a number of existing SGML software systems.
 information on it can be obtained, among other places, from the Graphic
 Communications Association in Alexandria, Virginia.  The formal name of
 the CALS SGML requirements is MIL-M-28001A.
- 
-
- 
 Tables conforming to the CALS DTD may be incorporated into documents
 conforming to these Guidelines, but this may require substantial
 modification of the TEI DTD which should not be undertaken without
 expert advice.
  </p>
- 
 <p>The apparent complexity of the CALS table DTD has led to
 simplification efforts, most notably by OASIS in the form of  <title>OASIS
 Technical Resolution 9503:1995, Exchange Table Model Document Type
 		Definition</title> (<ptr target="http://www.oasis-open.org/specs/a503.htm"/>). An XML
 version of this is also defined in <title>OASIS Technical Memorandum TR 9901:1999,
 		XML Exchange Table Model DTD</title> (<ptr target="http://www.oasis-open.org/specs/tm9901.html"/>). </p>
- 
 	<p>With the ascent of the Web, the HTML table model (<ptr target="http://www.w3.org/TR/html4/struct/tables.html"/>) has become very popular and widespread in use. The
 last few years have seen a growing access to information via devices
 of varying capabilities ranging from desktop computers to handheld
@@ -362,7 +299,6 @@ document type. The Basic Tables Module is a
 only the minimal functionality with the purpose of extending XHTML's
 reach onto resource-constrained devices. It is a part of the XHTML
 Basic document type (<ptr target="http://www.w3.org/TR/xhtml-basic"/>).</p>
-
 	<p>The XHTML table model is based on the HTML table model (<ptr target="http://www.w3.org/TR/html4/struct/tables.html"/>). It
 allows arrangement of data into rows and columns of cells. Table rows
 and columns may be grouped to convey additional structural information
@@ -378,17 +314,7 @@ problems (see further <ptr target="http://www.w3.org/TR/WCAG10-HTML-TECHS/#table
 Style sheets provide a far more effective means of controlling layout
 and other visual characteristics, in both HTML and XML documents.
 </p>
-
  </div3></div2>
-
-
-	
-	
-	
-	
-	
-	
-	
 <div2 type="Anthony" xml:id="FTFOR"><head>Formulae and
 Mathematical Expressions</head>
 <p>Mathematical and chemical formul&#xE6; pose similar problems to
@@ -398,7 +324,6 @@ range of special characters, for most of which standard entity names
 already exist in the documented ISO entity sets (see further chapters <ptr target="#CH"/>
  and <ptr target="#WD"/>).
  </p>
-
 <p>Formul&#xE6; and tables are also similar in that well-researched and
 detailed DTD fragments have already been developed for them
 independently of the TEI.  They differ in that (for mathematics at
@@ -406,10 +331,7 @@ least) there also exists a richly detailed text-based but non-SGML
 notation which is very widely used:  this is the TeX system, and the
 sets of descriptive macros developed for it such as LaTeX, AMS-TeX,
 and AMS-LaTeX.
- 
-
  </p>
-
 <p>The AAP and ISO standards mentioned in section <ptr target="#FTTAB"/>
 above both provide DTDs for equations as well as for tables, which
 now form part of ISO
@@ -439,7 +361,6 @@ that the user make an informed choice from those already available.  The
 additional tag set described in this chapter makes available only the
 following element, which should be used to encode any formula, no matter
 what notation is employed:
- 
 <specList><specDesc key="formula" atts="notation"/></specList>
  </p>
 <p>The legal content of a <gi>formula</gi> is determined by two factors.
@@ -452,14 +373,12 @@ contain only
 <!-- <code type="frag">#PCDATA</code>,  i.e. 
 but may be redefined in the document's DTD subset, for
 example as follows:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei2.dtd" [
   <!ENTITY % TEI.XML      'IGNORE' >
   <!ENTITY % TEI.prose    "INCLUDE">
   <!ENTITY % TEI.graphics "INCLUDE">
   <!ENTITY % formulaContent "CDATA">
 ]>]]></egXML>
- 
 With this declaration in force, formul&#230; may contain --> parsed
 character data, and may thus use entity references for any special
 symbols required.
@@ -472,7 +391,6 @@ Guidelines defines the content of
 <term>formulaContent</term> as <code>(#PCDATA)</code>.</note> For example, an expression such as <code>a&lt;b</code>, because it
 contains the &lt; character cannot be included directly in any XML
 element; instead, it must be represented by an entity reference: 
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><formula notation="TeX"> a&lt;b </formula></egXML>
 </p>
 <p>If so desired, the content of the  <gi>formula</gi> element may be
@@ -490,7 +408,6 @@ be specified using the <att>notation</att> attribute as in the above
 example.  
 Each notation used by a document must be declared in its
 DTD subset: 
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN"
  "http://www.tei-c.org/P4X/DTD/tei2.dtd" [
   <!ENTITY % TEI.graphics "INCLUDE">
@@ -500,7 +417,6 @@ DTD subset:
  </p>
 <p>With these declarations in force, a document may include formul&#xE6;
 expressed using standard TeX conventions, as in the following example:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>Achilles runs ten times faster than the tortoise and
 gives the animal a headstart of ten meters.  Achilles runs
 those ten meters, the tortoise one; Achilles runs that
@@ -527,19 +443,13 @@ the argument owes its fame.</p></egXML>
 	<!-- James E. Irby, in <title>Labyrinths:  Selected Stories   -->
 	<!-- and Other Writings</title> ([New York]:  New             -->
 	<!-- Directions, 1962), pp. 202-203.                          -->
- 
 The <att>notation</att> attribute supplies the name of a defined
 notation (<q>TeX</q>), which is associated by its declaration in the
 DTD subset with an external public entity.  How that declaration is
 resolved will depend on the kind of processor in use, and is outside the
 scope of these Guidelines.  </p>
-
-
-
-
 <p>The following SGML- and XML- based notations for encoding
 formul&#xE6; are recommended by these Guidelines:
- 
 <eg><![CDATA[<!NOTATION iso12083 PUBLIC 'ISO 12083:1993//DTD Formulae//EN'>
 <!NOTATION euromath PUBLIC '-//Euromath 1992//DTD Euromath equations//EN'>
 <!NOTATION mathml2  PUBLIC '-//W3C//DTD MathML 2.0//EN'>
@@ -554,7 +464,6 @@ content. MathML 1.0, which became a W3C Recommendation on April 7
 status. It was subsequently revised, as MathML 1.01 (W3C
 Recommendation July 7, 1999), and as the current version MathML 2.0,
 which became a W3C recommendation on February 21, 2001.</p>
-
 <p>MathML provides two types of markup: Presentation Markup, which
 captures the <hi>notational</hi> structure of an expression and could
 be seen as the <soCalled>TeX for the Web</soCalled> and Content
@@ -587,7 +496,6 @@ in TeX can be re-expressed in MathML as
    <mo>&#x2026;</mo>
 </math></egXML>
 </p>
-
   <p>MathML 2.0 (<ptr target="http://www.w3.org/TR/MathML2"/>)
 adds to these some additional elements for MathML Content Markup,
 thereby further strengthening the support for a <soCalled>Semantic
@@ -596,7 +504,6 @@ other current XML standards, such as XML DOM, OMG IDL, ECMAScript and
 Java. It also provided a modularized version of the MathML DTD so that
 MathML fragments <soCalled>embedded</soCalled> in XHTML 1.1 documents
 as data islands can be correctly validated.</p>
-
 <p>The OpenMath (<ptr target="http://www.nag.co.uk/projects/OpenMath.html"/>) project is coordinated by
 the OpenMath Society (<ptr target="http://www.openmath.org/"/>)and funded by the
 European Commission under the Esprit Multimedia Standards Initiative
@@ -604,14 +511,12 @@ that commenced in September 1997. It is likely to become a key
 standard for communicating semantically-rich representations of
 mathematical objects both on and off the Web in a platform-independent
 manner.</p>
-
 <p>The OpenMath Standard (<ptr target="http://www.openmath.org/V2/standard/index.html"/>) consists of specifications for
 <list type="ordered">
 <item>OpenMath objects, representing the structure of formulas (<ptr target="http://www.openmath.org/V2/standard/objects.html"/>);</item>
 <item>Content Dictionaries, providing semantic context (<ptr target="http://www.openmath.org/V2/standard/cd.html"/>);</item>
 <item>Encodings, both binary (<ptr target="http://www.openmath.org/V2/standard/binary.html"/>) and
 XML (<ptr target="http://www.openmath.org/V2/standard/xml.html"/>).</item></list></p>
-
 <p>OpenMath and MathML have certain common aspects. They both use
 prefix operators, both are XML based and they both construct their
 objects by applying certain rules recursively. Such similarities
@@ -623,21 +528,15 @@ the expressive power to cover virtually all areas of computational
 mathematics. In fact, a particular set of Content Dictionaries, the
 <soCalled>MathML CD Group</soCalled>, covers the same areas of
 mathematics as the Content Markup elements of MathML 2.0.</p>
-
 <p>Finally, OMDoc (<ptr target="http://www.mathweb.org/omdoc/"/>) is
 an extension of the OpenMath standard that supplies markup for
 structures such as axioms, theorems, proofs, definitions, texts
 (mixing formal content with mathematical text). </p>
-
-
-
-
 <p>In-line versus block placement for an equation can be distinguished
 if desired, via the global <att>rend</att> attribute.  The global
 <att>n</att> and <att>xml:id</att> attributes may also be used to label or
 identify the formula, as in the following (imaginary) example:<note place="foot">We do not show here how the MathML names are to be
 included in the TEI name space</note>
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>The volume of a sphere is given by the formula:
 <formula xml:id="f12" n="12" rend="inline">
  <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -657,78 +556,24 @@ included in the TEI name space</note>
 which is readily calculated.</p>
 <p>As we have seen in equation 
 <ptr target="#f12"/>, ... </p></egXML>
- 
  </p>
 <p>The <term>formulaContent</term> and <term>formulaNotations</term>
 parameter entities are defined as follows:
- 
 <moduleSpec xml:id="DFTPE" type="decls" ident="figures-decl">
 <altIdent type="FPI">Declarations for figures and tables</altIdent>
 <desc>Declarations for figures and tables</desc>
 </moduleSpec><!--publicID:  -//TEI P5//ENTITIES Formulae Notations and Contents//EN-->
-
-
-
-
 &formulanotations.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &datatype.formula.odd;
-
-
-
-
-
-
-
-
-
-
-
-
  </p>
 <p>The formula element itself is defined as follows:
- 
 <specGrp xml:id="DFTFOR" n="Formulae">
-
-
 &formula.odd;
-
-
-
-
-
-
-
-
-
-
 </specGrp>
  </p></div2>
-
-
-	
-	
-	
-	
-	
-	
 <div2 type="Anthony" xml:id="FTGRA"><head>Specific Elements for Graphic Images</head>
 <p>The following special purpose elements are provided by this
 tag set to indicate the presence of graphic images within a document:
- 
 <specList>
 <specDesc key="figure"/>
 <specDesc key="graphic" atts="url"/>
@@ -736,7 +581,6 @@ tag set to indicate the presence of graphic images within a document:
 </p>
 <p>Inclusion of a graphic image in a marked-up document
 typically requires three distinct steps:
- 
 <list type="ordered">
 <item>The <term>notation</term> employed by the image itself must be
 defined; this is done with a notation declaration in the document
@@ -747,7 +591,6 @@ notation declared at step one.</item>
 <item>Within the document, the <gi>figure</gi> element is used to mark
 the position of the image, which is referenced by name, like any other
 kind of external entity.</item></list>
- 
 In the TEI scheme, these three functions are carried out as follows.</p>
 <p>Declarations for all notations used by a document must be provided
 within the DTD subset, as described above in section <ptr target="#FTFOR"/>.  
@@ -756,13 +599,11 @@ Many such notations are in common use; for details see section <ptr target="#FTG
 graphics themselves must be made, using system or public identifiers,
 within the document's DTD subset,
 either directly or by including them within a suitable file, as in the example below.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN"
                        "http://www.tei-c.org/P4X/DTD/tei2.dtd" [
   <!ENTITY % TEI.XML "INCLUDE">
   <!ENTITY % TEI.prose "INCLUDE">
   <!ENTITY % TEI.graphics "INCLUDE">
- 
   <!-- Graphics notations used in this document ... -->
   <!NOTATION svg PUBLIC
     '-//TEI//NOTATION W3C Scalable Vector Graphics Format//EN' >
@@ -770,19 +611,15 @@ either directly or by including them within a suitable file, as in the example b
     '-//TEI//NOTATION IETF RFC2083 Portable Network Graphics//EN'>
   <!NOTATION jpeg  PUBLIC
     'ISO DIS 10918//NOTATION JPEG Graphics Format//EN' >
- 
   <!-- The file 'figures.ent' contains entity declarations -->
   <!-- for all external entities needed by this document -->
   <!ENTITY % myFigures SYSTEM "figures.ent"> %myFigures;
 ]>]]></egXML>
- 
 The file <term>figures.ent</term> will contain a series of
 declarations like the following:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY Fig1    SYSTEM  "fig1.svg"    NDATA svg>
 <!ENTITY Fig1th  SYSTEM  "fig1.jpg"    NDATA jpeg>
 <!ENTITY pullman SYSTEM  "pullman.png" NDATA png>]]></egXML>
- 
 the effect of which is to associate the name <ident>Fig1</ident> with the
 external entity <ident>fig1.svg</ident>, and also to declare that that
 entity uses the notation called <code>svg</code>, which is declared
@@ -791,20 +628,16 @@ in the DTD subset.  In the same way, the external entity
 may be referenced by the name <ident>Fig1th</ident> (see further below).</p>
 <p>Finally, the <gi>figure</gi> element is used to indicate the location
 of the graphic image in the text.  For example:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><figure><graphic url="Fig1.pdf"/></figure></egXML></p>
-
 <p>Note that an end-tag is always required for this element.  Three
 kinds of content may be supplied: the element <gi>head</gi> may be
 used to transcribe (or supply) a descriptive heading or title for the
 graphic itself as in this example:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><figure><graphic url="Fig1.pdf"/><head>Figure One: The View from the Bridge</head></figure></egXML></p>
 <p>Figures are often accompanied not only by a title or heading, but
 by a paragraph or so of commentary or caption.  One or more <gi>p</gi>
 elements following the <gi>head</gi> may be used to transcribe any
 caption or discussion of the figure in the source:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><figure><graphic url="pullman.png"/>
   <head>Above:</head>
   <p>The drawing room of the Pullman house, the white and gold saloon
@@ -818,14 +651,12 @@ caption or discussion of the figure in the source:
 </figure></egXML>
 <!-- David Lowe, Lost Chicago (Boston:  Houghton Mifflin, 1978), -->
 	<!-- p. 30 top.  Ex libris Wendy Plotkin.                     -->
- 
 Here, the paragraph <q>The drawing room ... several hundred people</q>
 is transcribed from the source, while the description is provided by
 the encoder, for use by applications which cannot display the graphic
 directly. In documents created in electronic form with the needs of
 print-handicapped readers in mind, the <gi>figDesc</gi> element may be
 provided by the author rather than a subsequent encoder.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><figure><graphic url="Fig1.jpg"/>
   <head>Figure One: The View from the Bridge</head>
   <figDesc>A Whistleresque view showing four
@@ -857,15 +688,12 @@ acts as a <term>reference</term> to the other.  Referring to the example
 above, we will assume that the entity <ident>Fig1th</ident> contains a thumbnail
 version of the full Fig1 entity.  We can now embed a reference to that
 image using the simple <gi>ref</gi> element discussed in section <ptr target="#COXR"/>:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><ref target="#IM1">Click here
   <graphic url="fig1th.png"/>
   for enlightenment
 </ref>
-
 <figure xml:id="IM1"><graphic url="fig1.jpg"/></figure>
 </egXML></p>
-
 <p>Another common requirement is to associate part or the whole of an
 image with a textual element not necessarily contiguous to it in the
 text; this is sometimes known as a <term>callout</term>. Again,
@@ -879,10 +707,8 @@ read next, but the mechanism is independent of this particular
 application.</p> <p>The first requirement is some way of identifying
 and hence pointing to sub-parts of a graphic image. This is most
 easily done by pointing into an XML graphic reprsentation, for example an SVG file. Thus
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><ptr xml:id="PD1" target="Fig1.svg#rect1"/>
 <ptr target="Fig1.svg#rect2"/></egXML></p>
-
 <p>These <gi>ptr</gi> elements identify two areas within the image
 <q>Fig1</q> by pointing at elements inside the XML file <ident type="file">Fig1.svg</ident>, which contains the following.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><?tei winita WE NEED SVG XMP HERE ?></egXML>
@@ -894,33 +720,25 @@ co-ordinate system used by this document.</p>
 <p>The next requirement is some way of identifying the parts of the
 document to which a link is to be made. The most obvious way of doing
 this is to use the global <att>xml:id</att> attribute:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div1 type="chapter" xml:id="CHAP1">
   <!-- ... -->
 </div1>
 <div1 type="chapter" xml:id="CHAP2">
   <!-- ... -->
 </div1></egXML></p>
-
 <p>Now, all that is needed to linking these areas to the relevant
 chapters is a <gi>linkGrp</gi> element, as described in section <ptr target="#SAPT"/>:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><linkGrp type="callout">
   <link targets="#CHAP1 PD1"/>
   <link targets="#CHAP2 PD2"/>
 </linkGrp></egXML>
- 
 Further examples of this technique are provided in chapter <ptr target="#SA"/>.</p>
 <p>The elements discussed in this section are defined as follows:
- 
 <specGrp xml:id="DFTGRA" n="Figures">
 &figure.odd;
 &figdesc.odd;
 </specGrp></p></div2>
-
 <div2 type="Anthony" xml:id="FTGROV"><head>Overview of Basic Graphics Concepts</head>
-
-
 <p>The first major distinction in graphic representation is that between
 raster graphics and vector graphics.  A <term>raster image</term> is a
 list of points, or dots.  Scanners, fax machines and other simple
@@ -999,7 +817,6 @@ be regarded as standards in any meaningful sense. They are however
 widely used by many different vendors.</p>
 <p>The following formats are widely used at the present time, and likely to
 remain supported by more than one vendor's software:
- 
 <list type="simple">
 <item>BMP:   Microsoft bitmap format</item>
 <item>CGM:  Computer Graphics Metafile</item>
@@ -1015,7 +832,6 @@ remain supported by more than one vendor's software:
 <item>SVG:  Scalable Vector Graphics format</item>
 <item>SVG: Scalable Vector Graphics format</item>
 <item>TIFF:  Tagged Image File Format</item>
-
 </list></p>
 <p>Brief descriptions of all the above are given below.  Where possible,
 current addresses or other contact information are shown for the
@@ -1024,10 +840,6 @@ promulgated by ISO and many related national organizations (ANSI, DIN,
 BSI, and many more), are available from those national organizations.
 Addresses may be found in any standard organizational directory for the
 country in question.
- 
-
-	
-	
 	</p>
 <p>For each format, a sample notation declaration is given, using a
 formal public identifier constructed from the best information available
@@ -1048,7 +860,6 @@ public identifier.  The documentation for the system in use should
 be consulted for details.
 </p>
 <div3 type="subsection" xml:id="FTGRAVGF"><head>Vector Graphic Formats</head>
-
 <list type="gloss"><label>CGM:  Computer Graphics Metafile</label>
 <item>This  vector graphics format is
 specified by an ISO standard, ISO 8632:1987, amended in 1990.
@@ -1057,7 +868,6 @@ the non-binary forms are safer for blind interchange,
 especially over networks.  Documentation on CGM is available from ISO
 and from its member national bodies such as AFNOR, ANSI, BSI, DIN, JIS,
 etc.  Sample declarations:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!NOTATION cgm PUBLIC
     'ISO 8632:1987//NOTATION Computer Graphics Metafile//EN'>
 <!NOTATION cgmchar  PUBLIC
@@ -1067,7 +877,6 @@ etc.  Sample declarations:
 <!NOTATION cgmclear PUBLIC
     'ISO 8632-4:1987//NOTATION Clear text
     encoding//EN'>]]></egXML></item>
-
 <label>SVG:  Scalable Vector Graphics format</label>
 <item>SVG is a language for describing two-dimensional vector and 
 mixed vector or raster graphics in XML.  
@@ -1076,21 +885,16 @@ Vector Graphics (SVG) 1.0 Specification, W3C Recommendation, 04 September 2001, 
 		available at <ptr target="http://www.w3.org/TR/2001/REC-SVG-20010904/"/>.
    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!NOTATION SVG PUBLIC
   '-//TEI//NOTATION W3C Scalable Vector Graphics Format//EN' >]]></egXML></item>
-
 <label>PICT:  Macintosh drawing format</label>
 <item>This format is universally supported on Macintosh(tm) systems, and
 readable by a limited range of software for other systems.
 Documentation is available from Apple Computer Company, Cupertino,
 California USA.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!NOTATION pict PUBLIC
     '-//TEI//NOTATION PICT:  Macintosh Drawing Format//EN'>]]></egXML>
  </item></list></div3>
 <div3 type="subsection" xml:id="FTGRARGF"><head>Raster Graphic Formats</head>
-
-
 <list type="gloss">
-
 <label>PNG:  Portable Network Graphics format</label>
 <item>PNG is the only non-proprietary raster format currently widely
 available. It provides an
@@ -1102,8 +906,6 @@ available. It provides an
    It is defined by IETF RFC 2083, March 1997.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!NOTATION PNG PUBLIC
   '-//TEI//NOTATION IETF RFC2083 Portable Network Graphics//EN' >]]></egXML></item>
-   
-
 <label>TIFF:  Tagged Image File Format</label>
 <item>Currently the most widely supported raster image format,
 especially for black and white images, TIFF is also one of the few
@@ -1118,7 +920,6 @@ document including TIFF images.  TIFF is owned by Aldus Corporation.
 Documentation on TIFF is available from them at Craigcook Castle,
 Craigcook Road, Edinburgh EH4 3UH, Scotland, or 411 First Avenue
 South, Seattle, Washington 98104 USA.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!NOTATION tiff PUBLIC
    '-//TEI//NOTATION Aldus Tagged Image File Format//EN'>]]></egXML></item><label>GIF:  Graphics Interchange Format</label>
 <item>Color raster images are widely available in this form, which was
@@ -1127,7 +928,6 @@ implemented for many other systems as well.  Documentation on GIF is
 copyright by, and is available from, CompuServe Incorporated, Graphics
 Technology Department, 5000 Arlington Center Boulevard, Columbus, Ohio
 43220 USA.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!NOTATION gif PUBLIC
   '-//TEI//NOTATION
   Compuserve Graphics Interchange Format//EN' >]]></egXML></item><label>PBM:  Portable Bit Map</label>
@@ -1137,10 +937,8 @@ by generic file-compression tools for storage and transfer.  Public
 domain software exists which will convert many other formats to and from
 PBM.  Documentation on PBM is copyright by Jeff Poskanzer, and is available
 widely on the Internet.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!NOTATION pbm PUBLIC
   '-//TEI//NOTATION Jeff Poskanzer, Portable Bit Map//EN' >]]></egXML></item>
-  
 <label>PCX:  IBM PC raster format</label>
 <item>This format is used by most IBM PC paint programs, and supports
 both monochrome and color images.  Documentation is available from
@@ -1149,19 +947,14 @@ Reference Manual, 450 Franklin Rd. Suite 100, Marietta, GA 30067 USA.
  <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!NOTATION pcx PUBLIC
   '-//TEI//NOTATION PCX:  ZSoft IBM PC Raster Graphics Format//EN' >]]></egXML>
  </item>
- 
 <label>BMP:   Microsoft bitmap format</label>
 <item>This format is the standard raster format for computer using
 Microsoft Windows (tm) or Presentation Manager (tm).  Documentation
 is available from Microsoft Corporation.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!NOTATION bmp PUBLIC
   '-//TEI//NOTATION BMP:  Microsoft Bitmap Graphics Format//EN' >]]></egXML>
  </item>
-
- 
  </list></div3>
- 
 <div3 type="subsection" xml:id="FTGRAMPEG">
 <head>Photographic and Motion Video Formats</head>
 <list type="gloss"><label>JPEG:  Joint Photographic Experts Group</label>
@@ -1174,7 +967,6 @@ Interchange Format (JFIF), as commonly done for Internet delivery.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!NOTATION JPEG PUBLIC
   'ISO DIS 10918//NOTATION JPEG Graphics Format//EN' >]]></egXML>
  </item>
- 
 <label>QuickTime:  Apple real-time image system</label>
 <item>QuickTime is a proprietary method introduced by Apple Computer
 Company to synchronize the display of various data.  The data can
@@ -1186,7 +978,6 @@ California 95014 USA.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!NOTATION QuickTime PUBLIC
   '-//TEI//NOTATION Apple QuickTime Video Data Format//EN' >]]></egXML>
 </item>
- 
 <label>Photo-CD:  Kodak Photo Compact Disk format</label>
 <item>This format was introduced by Kodak for rasterizing photographs
 and storing them on CD-ROMs (about one hundred 35mm file images fit on
@@ -1196,7 +987,6 @@ Headstone Drive, Harrow, Middlesex HA1 4TY, UK.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!NOTATION pcx PUBLIC
   '-//TEI//NOTATION Eastman Kodak Photo-CD Raster Graphics Format//EN' >]]></egXML>
 </item>
-
 <label>SMIL: Synchronized Multimedia Integration Language
     format</label> <item>SMIL is a W3C Recommendation which supports
     the integration of independent multimedia objects into a
@@ -1225,142 +1015,14 @@ Headstone Drive, Harrow, Middlesex HA1 4TY, UK.
 		2.0 markup.  SMIL 2.0 (<ptr target="http://www.w3.org/TR/smil20/"/>) became a W3C
     Recommendation on August 7, 2001, becoming the first vocabulary to
     provide XML Schema support and to have reached such status.
-
   <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!NOTATION SMIL PUBLIC 
     '-//TEI//NOTATION W3C Synchronized Multimedia Integration Language
     Format//EN' >]]></egXML>
 </item>
 </list>
-
 <p>As noted above, the reader will encounter many, many other graphics
 formats.  Other formats are not recommended for data interchange
 according to the TEI scheme at this time, but may be included in a TEI
 document without affecting its conformance in other respects, provided
 that a notation declaration is provided.</p></div3></div2>
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
 </div1>

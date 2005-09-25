@@ -1,7 +1,5 @@
 <!--Copyright 2004 TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="TEXTLANG" ident="textLang">
@@ -16,24 +14,28 @@ manuscript (as opposed to its description, which is described in the <gi>langUsa
     <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
   </content>
   <attList>
-    <attDef ident="langKey">
+    <attDef ident="mainLang">
 	<equiv/>
 	<gloss/>
 	<desc>supplies a code which identifies the chief language used in the manuscript.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uri"/></datatype>
+      <datatype>
+            <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.language"/>
+      </datatype>
       <valDesc>a code identifying a <gi>language</gi> element in the header</valDesc>
     </attDef>
     <attDef ident="otherLangs">
 	<equiv/>
 	<gloss/>
 	<desc>one or more codes identifying any other languages used in the manuscript.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/></datatype>
+      <datatype>        <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0" >
+        <rng:zeroOrMore>
+<rng:ref  name="tei.data.language"/>	</rng:zeroOrMore></rng:list></datatype>
+
       <valDesc>a list of codes, each of which identifies a <gi>language</gi> element in the header</valDesc>
     </attDef>
   </attList>
-  
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0"><textLang langKey="#EN" otherLangs="#LA">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0"><textLang mainLang="en" otherLangs="la">
 Predominantly in English with Latin glosses</textLang></egXML>
   </exemplum>
   <listRef>

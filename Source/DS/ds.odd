@@ -1,13 +1,9 @@
 <!--
 Copyright TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
-
 $Date$
 $Author$
-
 -->
 <div1 xmlns="http://www.tei-c.org/ns/1.0" type="chapter" xml:id="DS" n="7"><head>Default Text Structure</head>
 <p>This chapter describes the default high-level structure for all TEI
@@ -35,7 +31,6 @@ composite texts, where the text body consists of a series of subordinate
 texts or groups, it is tagged <gi>group</gi>.  The overall structure of
 any text, unitary or composite, is thus defined by the following
 elements:
- 
 <specList><specDesc key="text"/><specDesc key="front"/><specDesc key="body"/><specDesc key="group"/><specDesc key="back"/></specList>
  </p>
 <p>The overall structure of a unitary text is:
@@ -43,13 +38,10 @@ elements:
   <teiHeader>  </teiHeader>
   <text>
     <front>
-      
     </front>
     <body>
-      
     </body>
     <back>
-      
     </back>
   </text>
  </TEI></egXML></p>
@@ -59,28 +51,22 @@ texts is:
   <teiHeader>  </teiHeader>
   <text>
     <front>
-      
     </front>
     <group>
       <text>
         <front>
-          
         </front>
         <body>
-          
         </body>
         <back>
-          
         </back>
       </text>
       <text>
         <body>
-          
         </body>
       </text>
     </group>
     <back>
-      
     </back>
   </text>
  </TEI></egXML>
@@ -88,55 +74,11 @@ texts is:
 <p>Each of these elements is further described in the following
 subsections.  <gi>text</gi>, <gi>body</gi>, and <gi>group</gi> are
 formally declared as follows:
- 
 <specGrp xml:id="DDSTEXT" n="Top-level parts of default structure">
-
-
-
 &text.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &body.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &group.odd;
-
-
-
-
-
-
-
-
-
-
-
 </specGrp>
- 
 Elements <gi>front</gi> and <gi>back</gi> are declared separately,
 and are further discussed in sections <ptr target="#DSFRONT"/> and
 <ptr target="#DSBACK"/>. Textual elements, such as paragraphs, lists
@@ -146,16 +88,6 @@ kinds of document) and in part II (for elements specific to a
 particular base). The <gi>group</gi> element, used for composite
 texts, is further discussed in section <ptr target="#DSGRP"/>.
 </p>
-
-	
-	
-	
-	
-	
-	
-	
-	
- 
 <div2 type="section" xml:id="DSDIV"><head>Divisions of the Body</head>
 <p>In some texts, the body consists simply of a sequence of low-level
 structural items, referred to here as <term>components</term> or
@@ -195,57 +127,32 @@ within a single <gi>front</gi>, <gi>body</gi> or <gi>back</gi> element.
 <p>The following element is used to identify textual subdivisions
 in the un-numbered style:
 <specList><specDesc key="div"/></specList>
- 
 As a member of the class <term>divn</term>, this element has the
 following additional attribute:
- 
 <specList><specDesc key="tei.divn" atts="type"/></specList>
  </p>
 <p>Using this style, the body of a text containing two parts, each
 composed of two chapters, might be represented as follows:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><body>
   <div type="part" n="1">
     <div type="chapter" n="1">
-      
     </div>
     <div type="chapter" n="2">
-      
     </div>
   </div>
   <div type="part" n="2">
     <div n="1" type="chapter">
-      
     </div>
     <div n="2" type="chapter">
-      
     </div>
   </div>
 </body></egXML>
  </p>
-
-	
 <p>The <gi>div</gi> element has the following formal definition:
- 
 <specGrp xml:id="DDSDIV" n="Un-numbered divisions">
-
-
-
 &div.odd;
-
-
-
-
-
-
-
-
-
-
-
 </specGrp>
 </p></div3>
-
 <div3 type="subsection" xml:id="DSDIV2"><head>Numbered Divisions</head>
 <p>The following elements are used to identify textual subdivisions
 in the numbered style:
@@ -259,13 +166,10 @@ in the numbered style:
 <specDesc key="div6"/>
 <specDesc key="div7"/>
 </specList>
- 
 As members of the class <term>divn</term> these elements all bear the
 following additional attribute:
- 
 <specList><specDesc key="tei.divn" atts="type"/></specList>
  </p>
-
 <p>The largest possible subdivision of the body may be regarded either
 as a <gi>div0</gi> or as a <gi>div1</gi> element,<note place="foot">This
 convention (corresponding with the idea that a type-set document
@@ -275,30 +179,21 @@ formatting systems.</note> and the smallest possible <gi>div7</gi>.
 If numbered divisions are in use, a division at any one level (say,
 <gi>div3</gi>), may contain only numbered divisions at the next lowest
 level (in this case, <gi>div4</gi>).</p>
-
 <p>Using this style, the body of a text containing two parts, each
 composed of two chapters, might be represented as follows:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><body>
- 
   <div0 type="Part" n="1">     
     <div1 type="Chapter" n="1">
-      
     </div1>     
     <div1 type="Chapter" n="2">
-      
     </div1>     
   </div0>
- 
   <div0 type="Part" n="2">
     <div1 type="Chapter" n="1">
-      
     </div1>     
     <div1 type="Chapter" n="2">
-      
     </div1> 
   </div0>
-
 </body></egXML>
 <!-- Changed example:  the point of the div1/div0             -->
 	<!-- alternation in the body is to allow the scheme to        -->
@@ -312,130 +207,17 @@ composed of two chapters, might be represented as follows:
  </p>
 <p>Formal definitions for these elements are as follows:
 <specGrp xml:id="DDSDIVN" n="Numbered divisions">
-
-
-
 &div0.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &div1.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &div2.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &div3.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &div4.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &div5.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &div6.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &div7.odd;
-
-
-
-
-
-
-
-
-
-
-
 </specGrp>
  </p></div3>
 <div3 type="subsection" xml:id="DSDIV3"><head>Numbered or Un-numbered?</head>
-
 <p>Within the same <gi>front</gi>, <gi>body</gi>, or <gi>back</gi>
 element, all hierarchic subdivisions must be marked either using
 nested <gi>div</gi> elements, or using the <gi>div0</gi>,
@@ -470,7 +252,6 @@ provide a name or description for the division.  Typical values might
 be <soCalled>book</soCalled>, <soCalled>chapter</soCalled>, <soCalled>section</soCalled>, <soCalled>part</soCalled>, or (for
 verse texts) <soCalled>book</soCalled>, <soCalled>canto</soCalled>, <soCalled>stanza</soCalled>, or (for
 dramatic texts) <soCalled>act</soCalled>, <soCalled>scene</soCalled>.  </p>
-
 <p>In previous versions of these Guidelines this attribute had a
 declared value of <val>#CURRENT</val>, which in
 SGML implies
@@ -485,10 +266,7 @@ the present edition of these Guidelines does not use it.
 the structure of a novel, and illustrates the use of the attributes
 discussed above.  It also uses some elements discussed in section <ptr target="#DSDTB"/>
 and the <gi>p</gi> element discussed in section <ptr target="#COPA"/>.
- 
-
 <!-- a long example but an irresistible one... -->
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div0 type="book" n="I" xml:id="JA0100">
   <head>Book I.</head>
   <div1 type="chapter" n="1" xml:id="JA0101">
@@ -496,7 +274,6 @@ and the <gi>p</gi> element discussed in section <ptr target="#COPA"/>.
       by the bye of Colley Cibber and others.</head>
     <p>It is a trite but true observation, that examples work more forcibly on
       the mind than precepts:  ... </p>
-    
   </div1>
   <div1 type="chapter" n="2" xml:id="JA0102">
     <head>Of Mr. Joseph Andrews, his birth, parentage, education, and great
@@ -504,9 +281,7 @@ and the <gi>p</gi> element discussed in section <ptr target="#COPA"/>.
     <p>Mr. Joseph Andrews, the hero of our ensuing history, was esteemed to
       be the only son of Gaffar and Gammar Andrews, and brother to the
       illustrious Pamela, whose virtue is at present so famous ... </p>
-    
   </div1>
-  
   <trailer>The end of the first Book</trailer>
 </div0> 
 <div0 type="book" n="II" xml:id="JA0200">
@@ -549,7 +324,6 @@ below.
  </p>
 <p>To overcome these problems, the following additional attributes are
 defined for all elements in the <term>divn</term> class:
- 
 <specList><specDesc key="tei.divn" atts="org sample part"/></specList>
  </p>
 <p>For example, an encoder might choose to transcribe only the first two
@@ -566,7 +340,6 @@ further described in section <ptr target="#HD52"/>.
  </p>
 <p>The following example demonstrates how a newspaper column composed of
 very short unrelated snippets may be encoded using these attributes:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div1 type="storylist" org="composite">
 <head>News in brief</head>
 <div2 type="story">
@@ -588,7 +361,6 @@ Crown hotel in the Royal Mile, Edinburgh.</p>
 between Radio 5 and Radio 3, after protests this
 year that it disrupted Radio 3's music schedule.</p>
 </div2>
-
 </div1></egXML> 
 <!-- Guardian 21 Dec 1992, p 2 -->
 </p>
@@ -620,26 +392,22 @@ respectively.
  </p>
 <p>The following special-purpose elements are provided to
 mark features which may appear only at the start of a division:
- 
 <specList>
 <specDesc key="head" atts="type"/>
 <specDesc key="epigraph"/>
 <specDesc key="argument"/>
 <specDesc key="opener"/>
 </specList>
- 
 For further details of the <gi>head</gi> element, see section <ptr target="#DSHD"/>; 
 for <gi>epigraph</gi> and <gi>argument</gi>, see section
 <ptr target="#DSAE"/>; for <gi>opener</gi>, see section <ptr target="#DSOC"/>.
  </p>
 <p>The following special-purpose elements are provided to mark features
 which may appear only at the end of a division:
- 
 <specList>
 <specDesc key="trailer"/>
 <specDesc key="closer"/>
 </specList>
- 
 For further details of the <gi>trailer</gi> element, see section <ptr target="#DSHD"/>; 
 for the <gi>closer</gi> element, section <ptr target="#DSOC"/>.
 </p>
@@ -647,7 +415,6 @@ for the <gi>closer</gi> element, section <ptr target="#DSOC"/>.
 <p>The <gi>head</gi> element is used to identify a heading prefixed to
 the start of any textual division, at any level. A given division may
 of course contain more than one such element, as in the following example:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div1 n="Etym">
 <head>Etymology</head>
 <head>(Supplied by a late consumptive usher to a
@@ -677,7 +444,6 @@ forms of heading.
 <p>In the following example, taken from a British newspaper, the lead
 story and its associated headlines have been encoded  as a <gi>div</gi>
 element, with appropriate <term>divtop</term> elements attached:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="story">
 <head rend="large underlined" type="sub">
 President pledges safeguards for 2,400 British
@@ -691,12 +457,6 @@ former Yugoslavia was pledged by President Bush ...</p></div></egXML>
  </p>
 <p>In older writings, the headings or <term>incipits</term> may be
 longer than in modern works.
-	
-	
-	
-	
-	
-	
 When heading-like material appears in the middle of a text, the encoder
 must decide whether or not to treat it as the start of a new division.
 If the phrase in question appears to be more closely connected with what
@@ -710,18 +470,15 @@ element may be more appropriate.
 <p>The <gi>trailer</gi> element, which can appear at the end of a
 division only, is used to mark any heading-like feature appearing in
 this position, as in this example:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div1 type="book" n="I"><head>In the name of Christ here begins the
     first book of the ecclesiastical history of Georgius Florentinus,
     known as Gregory, Bishop of Tours.</head>
   <div2><head>Chapter-Headings</head>
     <list>
-      
     </list>
   </div2>
   <div2><head>In the name of Christ here begins Book I of the history.</head>
     <p>Proposing as I do ...</p>
-    
     <p>From the Passion of our Lord until the death of Saint Martin four
       hundred and twelve years passed.</p>
     <trailer>Here ends the first Book, which covers five thousand, five
@@ -740,17 +497,13 @@ or exhortation to the reader, and so on.  Divisions in epistolary form
 are particularly liable to include such features.  
 Additional elements for the detailed encoding of personal names, dates,
 and places are provided in chapter <ptr target="#ND"/>.
-	
-	
 For simple cases, the following elements should be adequate:
- 
 <specList>
 <specDesc key="byline"/>
 <specDesc key="dateline"/>
 <specDesc key="salute"/>
 <specDesc key="signed"/>
 </specList>
- 
  </p>
 <p>The <gi>byline</gi> and <gi>dateline</gi> elements are used to encode
 headings which identify the authorship and provenance of a division.
@@ -759,7 +512,6 @@ implication that <gi>dateline</gi> or <gi>byline</gi> elements apply
 only to newspaper texts.  The following example illustrates use of the
 <gi>dateline</gi> and <gi>signed</gi> elements at the end of the
 preface to a novel:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="preface">
 <head>To Henry Hope.</head>
 <p>It is not because this volume was conceived and partly
@@ -779,14 +531,11 @@ enlightened mind.
 <p>Where a sequence of such elements appear together, either at the
 beginning or end of an element, it may be convenient to group them
 together using one of the following elements:
-
 <specList><specDesc key="opener"/>
 <specDesc key="closer"/>
 </specList>
-
 The following examples demonstrate the use of the <gi>opener</gi> and
 <gi>closer</gi> grouping elements:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="narrative" n="6">
   <head>Sixth Narrative</head>
   <head>contributed by Sergeant Cuff</head>
@@ -801,7 +550,6 @@ The following examples demonstrate the use of the <gi>opener</gi> and
 	<p>I beg to apologize for the delay that has occurred in the
 	  production of the Report, with which I engaged to furnish you. 
 	  I have waited to make it a complete Report ...</p>
-	
 	<closer>
 	  <salute>I have the honour to remain, dear sir, your
 		obedient servant </salute>
@@ -811,8 +559,6 @@ The following examples demonstrate the use of the <gi>opener</gi> and
   </div>
 </div></egXML>
 <!-- W. Collins, The Moonstone, Penguin, pp 503, 513 -->
- 
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="letter" n="14">
 <head>Letter XIV: Miss Clarissa Harlowe to Miss Howe</head>
 <opener> <dateline>Thursday evening, March 2.</dateline> </opener>
@@ -830,14 +576,12 @@ in some hurry, as well as fright, what I must ever be,</p>
 and of dates, see section <ptr target="#CONADA"/> and chapter <ptr target="#ND"/>.
  </p></div3>
 <div3 type="subsection" xml:id="DSAE"><head>Arguments and Epigraphs</head>
-
 <p>The <gi>argument</gi> element may be used to encode the prefatory
 list of topics sometimes found at the start of a chapter or
 other division.  It is most conveniently encoded as a list, since this
 allows each item to be distinguished, but may also simply be presented
 as a paragraph.  The following are thus both equally valid ways of
 encoding the same argument:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="chap" n="6">
   <argument>
     <p>Kingston &#x2014; Instructive remarks on early English history
@@ -876,7 +620,6 @@ encoded using the special-purpose <gi>epigraph</gi> element.  Its
 content will generally be a <gi>q</gi> or <gi>quote</gi> element,
 often associated with a bibliographic reference, as in the
 following example:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div n="19" type="chap"><head>Chapter 19</head>
  <epigraph>
  <cit><quote>I pity the man who can travel
@@ -886,7 +629,6 @@ following example:
      </quote>
      <bibl>Sterne: Sentimental Journey.</bibl>
  </cit></epigraph>
- 
 <p>To say that Deronda was romantic would be to
  misrepresent him: but under his calm and somewhat
  self-repressed exterior ...</p>
@@ -895,13 +637,11 @@ following example:
  </p>
 <p>For discussion of quotations appearing other than as epigraphs refer
 to section <ptr target="#COHQQ"/>.
- 
  </p></div3>
 <div3 type="subsection" xml:id="DSCO"><head>Content of Textual Divisions</head>
 <p>Other than its initial sequence of <term>divtop</term> elements,
 and its closing sequence of <term>divbot</term> elements, every
 textual division (numbered or un-numbered) consists of a sequence of
- 
 ungrouped <term>macro.component</term> elements (see <ptr target="#STEC"/>).  The actual elements available will depend on the base
 tag set in use; in all cases, at least the component-level structural
 elements defined in the core will be available (paragraphs, lists,
@@ -927,154 +667,20 @@ refer to section <ptr target="#STCO"/>.
  </p>
 <p>The elements discussed in this section are formally defined as
 follows:
- 
 <specGrp xml:id="DDSDIVX" n="Tags for start and end of divisions">
-
-
-
 &trailer.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &byline.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &dateline.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &argument.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &epigraph.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &opener.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &closer.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &salute.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &signed.odd;
-
-
-
-
-
-
-
-
-
-
-
-
 </specGrp>
- 
 </p>
 </div3> 
 </div2>
-
-
-	
-	
-	
 <div2 type="section" xml:id="DSGRP"><head>Groups of Texts</head>
 <p>The <gi>group</gi> element should be used to represent a collection
 of independent texts which is to be regarded as a single unit for
@@ -1085,15 +691,12 @@ relating to each individual text, is a good indication that a given text
 might usefully be encoded as a <gi>group</gi>, though encoders may
 choose to use this structure to represent other kinds of composite
 texts as well.
- 
 <specList><specDesc key="group"/></specList>
  </p>
 <p>For example, the overall structure of a collection of
 short stories might be encoded as follows:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><TEI>
   <teiHeader>
-    
   </teiHeader>
   <text>
     <front>
@@ -1102,7 +705,6 @@ short stories might be encoded as follows:
         </titlePart></docTitle>
       <docImprint>First published in <title>The Strand</title>
         between July 1891 and December 1892</docImprint>
-      
     </front>
     <group>
       <text>
@@ -1129,9 +731,6 @@ short stories might be encoded as follows:
           <p> </p>
         </body>
       </text>
-
-      
-
       <text>
         <front>
           <head rend="italic">Adventures of Sherlock Holmes</head>
@@ -1143,16 +742,13 @@ short stories might be encoded as follows:
         <body>
           <p><q>&#x201C;To the man who loves art for its
             own sake,&amp;cdq;</q> remarked Sherlock Holmes ...
-            
             ... she is now the head of a private school
             at Walsall, where I believe that she has
             met with considerable success.</p>
         </body>
       </text> 
-      
     </group>
   </text>  
-  
 </TEI></egXML>
 <!-- Original Illustrated Sherlock Holmes (Castle Books, 1989) -->
 </p>
@@ -1163,7 +759,6 @@ collection, such as the <title>Muses Library</title> edition of
 Crashaw's poetry (ed. J.R. Tutin, [ca. 1900]). Following a critical
 introduction and table of contents, this work contains the following
 major sections:
- 
 <list type="simple">
 <item><title>Steps to the Temple</title> (a collection of
 verse first published in 1648)</item>
@@ -1195,17 +790,14 @@ element. The beginning of the whole collection would thus appear as
 follows (for further discussion of the use of the elements <gi>div</gi>
 and <gi>lg</gi> for textual subdivision of verse, see section <ptr target="#COVE"/>
 and chapter <ptr target="#VE"/>):
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><text>
   <front>
     <titlePage>
       <docTitle><titlePart>The poems of Richard Crashaw</titlePart></docTitle>
       <byline>Edited by J.R. Tutin</byline>
-      
     </titlePage>    
     <div type="preface"><head>Editor's Note</head>
       <p>A few words are necessary ... </p>
-      
     </div>
   </front>
   <group>
@@ -1215,12 +807,10 @@ and chapter <ptr target="#VE"/>):
           <docTitle>
             <titlePart>Steps to the Temple, Sacred Poems</titlePart>
           </docTitle>
-          
         </titlePage>
         <div type="address"><head>The Preface to the Reader</head>
           <p>Learned Reader, The Author's friend will not usurp much
             upon thy eye ... </p>
-          
         </div>
       </front>
       <group>
@@ -1233,7 +823,6 @@ and chapter <ptr target="#VE"/>):
               <head>Libro Primo</head>
               <epigraph>
                 <l>Casting the times with their strong signs</l>
-                
               </epigraph>
               <lg n="I.1" type="stanza">
                 <l>Muse! now the servant of soft loves no more</l>
@@ -1241,7 +830,6 @@ and chapter <ptr target="#VE"/>):
                 <l>Hand (O, what dares not jealous greatness?) tore</l>
                 <l>A thousand sweet babes from their mothers' breast,</l>
                 <l>The blooms of martyrdom ...</l>
-                
               </lg> </div1> </body> </text> 
         <text>
           <front><docTitle><titlePart>The Tear</titlePart></docTitle></front>
@@ -1249,12 +837,7 @@ and chapter <ptr target="#VE"/>):
             <lg n="I">
               <l>What bright soft thing is this</l>
               <l>Sweet Mary, thy fair eyes' expense?</l>
-              
             </lg> </body> </text> 
-
-        
-           
-
       </group>  
       <back>  </back>
     </text>
@@ -1263,17 +846,14 @@ and chapter <ptr target="#VE"/>):
       <group>
         <text>  </text>
         <text>  </text>
-        
       </group>
     </text>
     <text> 
       <group>
         <text>  </text>
         <text>  </text>
-        
       </group>
     </text>
-    
   </group>
   <back>  </back>
 </text></egXML>
@@ -1286,7 +866,6 @@ journals, day books, etc.  As a fairly typical example, we consider
 <title>The Norton Book of Travel</title>, an anthology edited by Paul
 Fussell and published in 1987 by W. W. Norton.  This work comprises
 the following major sections:
- 
 <list type="ordered">
 <item>Front matter (title page, acknowledgments, introductory essay)</item>
 <item>The Beginnings</item>
@@ -1295,12 +874,10 @@ the following major sections:
 <item>Touristic Tendencies</item>
 <item>Post Tourism</item>
 <item>Back matter (permissions list, index)</item></list>
- 
 Each titled section listed above comprises a group of extracts or
 complete texts from writers of a given historical period, preceded by an
 introductory essay.  For example, the second group listed above
 contains, inter alia, the following:
- 
 <list type="ordered">
 <item>Prefatory essay</item>
 <item>Five letters by Lady Mary Wortley Montagu</item>
@@ -1308,7 +885,6 @@ contains, inter alia, the following:
 <item>Two poems by Alexander Pope</item>
 <item>Two extracts from Boswell's Journal</item>
 <item>A poem by William Blake</item></list>
- 
 Each group of writings by a single author is preceded by a brief
 biographical notice.  Some of the extracts are quite lengthy, containing
 several chapters or other divisions; others are quite short.  As the
@@ -1323,14 +899,11 @@ then be treated as a single <gi>group</gi> element within the larger
 composite texts making up a single section of the work is likewise
 treated, together with its prefatory essay, as a single <gi>group</gi>
 within the work.  Schematically:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><text> 
   <front>
-    
   </front>
   <group> 
     <group><head>The Beginnings</head>
-      
     </group>
     <group> 
       <text>  </text>
@@ -1338,7 +911,6 @@ within the work.  Schematically:
         <text>      </text>
         <text>      </text>
         <text>      </text>
-        
       </group>     
       <text>     
         <front>   </front>
@@ -1349,12 +921,9 @@ within the work.  Schematically:
         <text>  </text>
         <text>  </text>
       </group> 
-      
     </group> 
     <group><head>The Heyday</head>
-      
     </group>
-    
   </group> 
   <back>  </back>
 </text> </egXML>
@@ -1370,13 +939,11 @@ by Swift and one by the editor, or by treating the Montagu and Pope
 sections as <gi>text</gi> elements containing the editor's essays as
 front matter. Marked in the second way, the Pope section of the book
 would look like this:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">      <text>     
         <front>   </front>
         <group>
           <text>  </text>
           <text>  </text>
-          
         </group>
       </text>    </egXML>
  </p>
@@ -1400,13 +967,10 @@ in a single collection.
 often be preferable to regard each extract not as a text in its own
 right but simply as a quotation or <gi>cit</gi> element. The following
 component-level elements may be used to encode quotations of this kind:
- 
 <specList><specDesc key="cit"/><specDesc key="quote"/></specList>
- 
 For example, the chapter of <soCalled>extracts</soCalled> which appears
 in the front matter of Melville's <title>Moby Dick</title> might be
 encoded as follows:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div n="2" type="chap">
   <head>Extracts</head>
   <head>(Supplied by a sub-sub-Librarian)</head>
@@ -1429,7 +993,6 @@ encoded as follows:
 	  </quote>
 	  <bibl>Job</bibl>
 	</cit>
-	
 	<cit>
 	  <quote>By art is created that great Leviathan,
 		called a Commonwealth or State — (in Latin,
@@ -1453,22 +1016,8 @@ example, texts such as the <title>Decameron</title> or the
 texts embedded within another single text, the framing narrative, rather
 than as groups of discrete texts in which the fragments of framing
 narrative are regarded as front matter.
- 
-
- 
-
 </p>
 </div2>
-
-
-
-	
-	
-	
-	
-	
-	
- 
 <div2 type="section" xml:id="DSFRONT"><head>Front Matter</head>
 <p>By <term>front matter</term> we mean distinct sections of a text
 (usually, but not exclusively, a printed one), prefixed to it by way of
@@ -1498,7 +1047,6 @@ handle these values when they occur, without limiting the user to the
 values in this list.</note>
 for the <att>type</att> attribute may be used to distinguish various
 kinds of division characteristic of front matter:
- 
 <list type="gloss"><label><term>preface</term></label>
 <item>A foreword or preface addressed to
     the reader in which the author or publisher explains the
@@ -1522,19 +1070,16 @@ front matter of a text may be encoded.  The front part begins with a
 title page, which is presented in section <ptr target="#DSTITL"/> below.
 This is followed by a dedication and a preface, each of which is encoded
 as a distinct <gi>div</gi>:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="dedication">
   <p>To my parents, Ida and Max Fish</p>
 </div>
 <div type="preface"><head>Preface</head>
   <p>The answer this book gives to its title question is <q>there is
       and there isn't</q>.</p>
-  
   <p>Chapters 1&#x2013;12 have been previously published in the
     following journals and collections:
     <list>
       <item>chapters 1 and 3 in <title>New literary History</title></item>
-      
       <item>chapter 10 in <title>Boundary II</title> (1980)</item>
     </list>.
     I am grateful for permission to reprint.</p>
@@ -1553,7 +1098,6 @@ supplied (P1, P68 etc.) may correspond with identifiers used either for
 the literal page numbers present in the source text might be
 transcribed, but they are likely to be of little direct use in work with
 the electronic text.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="contents">
   <head>Contents</head>
   <list>
@@ -1566,7 +1110,6 @@ the electronic text.
 		  <ptr target="#P21"/></item>
 		<item n="2">What is Stylistics and Why Are They Saying Such
 		  Terrible Things About It? <ptr target="#P68"/></item>
-		
 	  </list></item></list>
   </div></egXML>
  </p>
@@ -1578,16 +1121,12 @@ sense occurs; the title is simply given as a heading at the start of the
 front matter. Note also the use of the <att>type</att> attribute on the
 <gi>div</gi> elements to indicate document elements comparatively
 unusual in modern books such as the initial prayer:
- 
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><front>
-  
   <div1 type="incipit">
     <p>Here bygynni&amp;th; a book of contemplacyon, &amp;th;e whiche 
       is clepyd <title>&amp;Th;E CLOWDE OF VNKNOWYNG</title>,
       in &amp;th;e whiche a soule is onyd wi&amp;th; GOD.</p>
   </div1>
-
   <div1 type="prayer">
     <head>Here biginne&amp;th; &amp;th;e preyer on &amp;th;e prologe.</head>
     <p>God, unto whom alle hertes ben open, &amp; unto whome alle wille
@@ -1596,7 +1135,6 @@ unusual in modern books such as the initial prayer:
       unspekable &amp;yogh;ift of &amp;th;i grace, &amp;th;at I may parfiteliche
       loue &amp;th;ee &amp; wor&amp;th;ilich  preise &amp;th;ee. Amen.</p>
   </div1>
-  
   <div1 type="preface">
     <head>Here biginne&amp;th; &amp;th;e prolog.</head> 
     <p>In &amp;th;e name of &amp;th;e Fader &amp; of &amp;th;e Sone &amp;
@@ -1606,7 +1144,6 @@ unusual in modern books such as the initial prayer:
       to suffre, what-so-euer &amp;th;ou be &amp;th;at &amp;th;is book schalt
       haue in possession ...</p>
   </div1>
-  
   <div1 type="contents">
     <head>Here biginne&amp;th; a table of &amp;th;e chapitres.</head>
     <list>
@@ -1616,14 +1153,12 @@ unusual in modern books such as the initial prayer:
       <label>&amp;th;e secound chapitre</label>
       <item>A schort stering to meeknes &amp; to &amp;th;e werk of &amp;th;this
         book</item>
-      
       <label>&amp;th;e fiue and seuenti chapitre</label>
       <item>Of somme certein tokenes bi &amp;th;e whiche a man may proue
         whe&amp;th;er he be clepid of God to worche in &amp;th;is werk.</item>
     </list>
     <trailer>&amp; here eende&amp;th; &amp;th;e table of &amp;th;e chapitres.</trailer>
   </div1>
-
 </front></egXML>
 <!-- Cloud of Unknowing, ed Phyllis Hodgson, EETS, 1944 -->
  </p></div2>
@@ -1641,7 +1176,6 @@ Modular Application for Journals: DTD for Article Headers</title>
 ([n.p.]: EWS, 1991).</bibl></note> The following elements are
 therefore proposed as an interim measure; they constitute a useful
 descriptive tag set for the major features of most title pages:
- 
 <specList>
 <specDesc key="titlePage"/>
 <specDesc key="docTitle"/>
@@ -1666,20 +1200,17 @@ record the presence of printers' ornaments or other illustrative
 material found within a title page; its use implies that the TEI
 tagset for figures and tables has been selected, as discussed in
 chapter <ptr target="#FT"/>).</p>
-
 <p>The elements listed above, together with the <gi>head</gi> element,
 also constitute the element class <ident type="unknown">fmchunk</ident>, which is
 defined by the parameter entity <ident type="unknown">m.fmchunk</ident>. The elements
 in this class can appear within a <soCalled>minimal</soCalled>
 <gi>front</gi> element without any need to group them together and
 encode a complete title page.</p>
-
 <p>Encoders wishing to add new elements to either class may do so by
 modifying or redefining this parameter entity, as further described in
 chapter <ptr target="#MD"/>. Two examples of the use of these elements
 follow. First, the title page of the work discussed earlier in this
 section:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><front>
   <titlePage>
     <docTitle>
@@ -1693,7 +1224,6 @@ section:
       <pubPlace>London, England</pubPlace>
     </docImprint>
   </titlePage></front></egXML></p>
-
 <p>Second, a characteristically verbose 17th century example. Note the
 use of the <gi>lb</gi> tag to mark the line breaks of the original
 where necessary:
@@ -1723,142 +1253,18 @@ where necessary:
     <lb/>at the <name>Peacock</name> in the <name>Poultrey</name>
     <lb/>near <name>Cornhil</name>, <docDate>1678</docDate>.
   </docImprint></titlePage></egXML></p>
-
 <p>Those elements in the above list which are not defined elsewhere have
 the following formal declarations:
- 
 <specGrp xml:id="DDSTPAGE" n="Tags for title pages">
-
-
-
 &titlepa.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &doctitle.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &titlept.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &docauth.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &imprimat.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &doceditn.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &docimprt.odd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &docdate.odd;
-
-
-
-
-
-
-
-
-
-
-
 </specGrp>
- 
-
-	
-	
-	
-	
-	
-	
-	
-	
  </p>
 <p>Where title pages are encoded, their physical rendition is
 often of considerable importance.  One approach to this requirement
@@ -1869,18 +1275,10 @@ description of typographic entities such as pages, lines, rules, etc.,
 bearing special-purpose attributes to describe line height, leading,
 degree of kerning, font, etc. Further discussion of these problems is
 provided in chapter <ptr target="#PH"/>.
-
  </p>
 <p>Front matter elements:
 <specGrp xml:id="DDSFRONT">
-
-
-
 &front.odd;
-
-
-
-
 <specGrpRef target="#DDSTPAGE"/>
 </specGrp>
  </p></div2>
@@ -1913,7 +1311,6 @@ conditions of its physical production.</item></list>
 at present.  Some characteristic examples follow; first, an index (for
 the case in which a printed index is of sufficient interest to merit
 transcription):
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><back>  
 <div type="index">
   <head>Index</head>
@@ -1927,20 +1324,15 @@ transcription):
     <item>ancient policy of Europe unfavourable to, <ptr target="#P371"/></item>
     <item>artificers necessary to carry it on, <ptr target="#P481"/></item>
     <item>cattle and tillage mutually improve each other, <ptr target="#P325"/></item>
-    
     <item>wealth arising from more solid than that which proceeds
     from commerce <ptr target="#P520"/></item>
     </list></item>
   <item>Alehouses, not the efficient cause of drunkenness, <ptr target="#P461"/></item>
-  
   </list>
 </div>
-
 </back></egXML>
 <!-- Smith, Wealth of Nations, 1776; index to vol 1 --></p>
-
 <p>Next, a back-matter division in epistolary form:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><back>  
   <div type="letter">
     <head>A letter written to his wife, founde with this booke
@@ -1956,13 +1348,10 @@ transcription):
     <epigraph xml:lang="la"><p>Faelicem fuisse infaustum</p></epigraph>
     <trailer>FINIS</trailer>
   </div>
-  
 </back></egXML>
 <!-- Greene, Groatsworth of witte, 1592 --></p>
-
 <p>And finally, a list of corrigenda and addenda with pseudo-epistolary
 features:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><back>
   <div type="corrigenda">
     <head>Addenda</head>
@@ -1983,25 +1372,14 @@ features:
  </p>
 <p>The <gi>back</gi> element; since there are no other specialized
 back-matter tags, nothing else is defined here.
- 
 <specGrp xml:id="DDSBACK">
-
-
-
 &back.odd;
-
-
-
-
 </specGrp>
- 
-
  </p></div2>
 <div2 type="section" xml:id="DSSTRUC">
 <head>Module for Default Text Structure</head>
 <p>The module described by the present chapter is found in file
 <term>structure.dtd</term>; it has the following overall structure:
- 
 <moduleSpec xml:id="DDS" ident="textstructure">
 <altIdent type="FPI">Default text structure</altIdent><desc>Default
 text structure</desc>
@@ -2013,10 +1391,6 @@ text structure</desc>
 <specGrpRef target="#DDSDIVX"/>
 <specGrpRef target="#DDSBACK"/>
 <specGrpRef target="#DDSFRONT"/>
-
 </p>
 </div2> 
-
-
-
 </div1>

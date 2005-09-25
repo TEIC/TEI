@@ -1,13 +1,9 @@
 <!--
 Copyright TEI Consortium. 
-
 Licensed under the GNU General Public License. 
-
 See the file COPYING for details.
-
 $Date$
 $Author$
-
 -->
 <div1 xmlns="http://www.tei-c.org/ns/1.0" type="chapter" xml:id="AI" n="15"><head>Simple Analytic Mechanisms</head>
 <p>This chapter describes a tag set for associating simple analyses and
@@ -59,13 +55,10 @@ following modules:
 document which uses the markup described in this chapter, the document
 type declaration should contain the following declaration of the entity
 <term>TEI.analysis</term>, or an equivalent one:
- 
 <eg><![CDATA[<!ENTITY % TEI.analysis 'INCLUDE'>]]></eg>
- 
 The entire document type declaration for a document using this
 additional tag set together with that for linking and alignment and the
 base tag set for prose might look like this:
- 
 <eg><![CDATA[<!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei2.dtd" [
     <!ENTITY % TEI.XML      'INCLUDE' >
     <!ENTITY % TEI.prose    'INCLUDE' >
@@ -80,20 +73,16 @@ a text into the traditional linguistic categories of
 <term>sentence</term>, <term>clause</term>, <term>phrase</term>,
 <term>word</term>, <term>morpheme</term>, and
 <term>characters</term>. 
- 
 <specList><specDesc key="s"/><specDesc key="cl"/><specDesc key="phr"/><specDesc key="w" atts="lemma"/>
-
 <specDesc key="m" atts="baseForm"/><specDesc key="c"/></specList>
  </p>
 <p>As members of the <ident type="class">seg</ident> class, these
 elements share the following attributes:
-
 <specList><specDesc key="tei.seg" atts="type function"/></specList>
 </p>
 <p>The <gi>s</gi> element may be used simply to segment a text
 end-to-end  into a series of non-overlapping segments, referred to here
 and elsewhere as <term>s-units</term>, or <term>sentences</term>.
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p> 
   <s>Nineteen fifty-four, when I was eighteen years old,
     is held to be a crucial turning point in the history of
@@ -105,7 +94,6 @@ and elsewhere as <term>s-units</term>, or <term>sentences</term>.
 </p></egXML>
 <note type="cit"><bibl>Eldridge Cleaver <title>Soul on Ice</title> (first para of first  
 letter from prison)</bibl></note>
-
 The <gi>s</gi> may be thought of as  providing an abbreviated version of
 the tag <tag>seg type='s-unit'</tag>, with the important additional
 proviso that (unlike <gi>seg</gi> elements) <gi>s</gi> elements may not
@@ -121,7 +109,6 @@ respectively.
 <p>The <gi>s</gi> element may be further subdivided into
 <term>clauses</term>, marked with the <gi>cl</gi> element,
 as in the following example:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>
   <s>
     <cl>It was about the beginning of September, 1664,
@@ -151,7 +138,6 @@ requires that special care be given to representing both using an
 element hierarchy. One simple approach is to split the syntactic phrases
 into fragments when they cross verse boundaries, reuniting them 
 with the <att>part</att> attribute:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="stanza">
   <l><cl part="I">Tweedledum and Tweedledee</cl></l>
   <l><cl part="F">Agreed to have a battle;</cl></l>
@@ -163,15 +149,12 @@ with the <att>part</att> attribute:
   <l><cl part="I">Which frightened both the heroes so,</cl></l>
   <l><cl part="F"><cl>They quite forgot their quarrel.</cl></cl></l></div></egXML>
 <note type="cit"><bibl>Lewis Carroll, <title>Through the Looking Glass</title>, ch4</bibl></note>
- 
 Another approach is to use the <att>next</att> and <att>prev</att>
 attributes defined in the additional tag set for linking (chapter <ptr target="#SA"/>):
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><l><cl next="#c5" xml:id="c3" part="I">For Tweedledum said
    <cl next="#c6" xml:id="c4" part="I">Tweedledee</cl></cl></l>
 <l><cl prev="#c3" xml:id="c5" part="F">  
    <cl prev="#c4" xml:id="c6" part="F">Had spoiled his nice new rattle.</cl></cl></l></egXML>
- 
 Other methods are also possible; for discussion, see chapter <ptr target="#NH"/>.
  </p>
 <p>The <att>type</att> attribute on linguistic segment categories can
@@ -190,15 +173,12 @@ way of specifying, for example, that the clause <mentioned>from whence it
 came</mentioned> is a relative clause modifying another, or that  the
 phrase <mentioned>by the U.S. Supreme Court</mentioned> is a prepositional
 post-modifier:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><cl>It mattered not
   <cl type="relative" function="clause modifier">from whence it came;</cl>
 </cl></egXML>
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><phr type="NP">the year segregation</phr>
 <phr>was outlawed</phr>
 <phr type="PP" function="postmodifier (agent)">by the U.S. Supreme Court.</phr></egXML>
- 
  </p>
 <p>Segmentation into clauses and phrases can, of course, be combined.
 Such detailed encodings as the following may require careful
@@ -253,7 +233,6 @@ formatting if they are to be easily readable however.
 	<phr type="NP" function="complement">a sentence in state prison
 	<phr type="PP" function="complement">for possession of marijuana</phr>
 </phr></phr></cl></cl></s>.</p></egXML></p>
-
 <p>This style of markup, however, introduces spurious new lines and
 blanks into the text, which could make restoring the text to its
 original layout problematic. If the original layout is important, the
@@ -279,30 +258,22 @@ especially in relation to the use of other tags that one may think of as
 <term>word level</term>, but which are in fact defined as <term>phrase
 level</term>. Consider the problem of segmenting an occurrence of the
 <gi>mentioned</gi> element as a word.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><mentioned>grandiloquent</mentioned></egXML>
- 
 The first of the following two encodings is legitimate; the second is
 not, since the <gi>mentioned</gi> element is not part of the content
 model of the <gi>w</gi> element:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><mentioned><w>grandiloquent</w></mentioned></egXML>
-
 <eg><![CDATA[<w><mentioned>grandiloquent</mentioned></w>]]></eg></p>
-
 <p>On the other hand, both of the following encodings <emph>are</emph>
 legitimate:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><mentioned>
    <phr>grandiloquent speech</phr>
 </mentioned></egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><phr>
    <mentioned>grandiloquent speech</mentioned>
 </phr></egXML>
- 
 The first encoding describes the citing of a phrase. The second
 describes a phrase which consists of something mentioned.
- 
 <!-- added following brief plug for otherwise  unsung attributes -->
 </p>
 <p>The <gi>w</gi> and <gi>m</gi> elements carry additional attributes
@@ -310,7 +281,6 @@ which may be of use in many indexing or analytic applications. The
 <att>lemma</att> attribute may be used to specify  the
 <term>lemma</term>, that is the head- or base- form of an
 inflected verb or noun, for example:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><s xml:lang="la">  
    <w lemma="timeo">timeo</w>
    <w lemma="danaii">Danaos</w>
@@ -318,7 +288,6 @@ inflected verb or noun, for example:
    <w lemma="donum">dona</w>
    <w lemma="fero">ferentes</w>
 </s></egXML>
-
 Similarly, the <att>baseForm</att> attribute may be specified for the
 <gi>m</gi> element, to indicate the <soCalled>base form</soCalled> of
 a transformed morpheme:
@@ -332,7 +301,6 @@ a transformed morpheme:
 together to give a fairly detailed low-level grammatical analysis of
 text. For example, consider the following segmentation of the English
 S-unit <mentioned>I didn't do it</mentioned>.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><w>I</w>
 <w> 
    <w>did</w>
@@ -352,9 +320,7 @@ This matter is taken up in detail in section <ptr target="#AILA"/>.
  </p>
 <p>The <gi>s</gi>, <gi>cl</gi>, <gi>phr</gi>, <gi>w</gi>, <gi>m</gi>,
 and <gi>c</gi> elements are formally declared as follows:
- 
 <specGrp xml:id="DAILC" n="Linguistic Segment Categories">
-
 &s.odd;
 &cl.odd;
 &phr.odd;
@@ -363,15 +329,11 @@ and <gi>c</gi> elements are formally declared as follows:
 &c.odd;
 </specGrp>
 </p>
- 
 </div2>
- 
 <div2 type="subsection" xml:id="AIATTS"><head>Global Attributes for Simple Analyses</head>
 <p>When the tag set described by this chapter is selected, an
 additional attribute is defined for all elements:
- 
 <specList><specDesc key="tei.analysis" atts="ana"/></specList>
- 
 The <att>ana</att> attribute may be specified for any element.
 Its effect is to  associate the element with one or more others
 representing an analysis or interpretation of it. Its target should be
@@ -381,7 +343,6 @@ see section <ptr target="#CONO"/> or <gi>fs</gi>,
 on which see chapter <ptr target="#FS"/>.
  </p>
 <p>The <att>ana</att> attribute is formally declared as follows:
- 
 <specGrp xml:id="DAIGA" n="Global attribute for analysis">
 &clana.odd;
     </specGrp>
@@ -391,11 +352,9 @@ on which see chapter <ptr target="#FS"/>.
 structured vocabulary to particular passages of text are provided by the
 <gi>span</gi> and <gi>interp</gi> elements, and their associated
 grouping elements <gi>spanGrp</gi> and <gi>interpGrp</gi>.
- 
 <specList><specDesc key="span" /><specDesc key="spanGrp"/><specDesc key="interp" /><specDesc key="interpGrp"/></specList>
  </p>
 <p>These elements are all members of the class <ident type="class">interpret</ident>, and thus share the following attributes:
-
 <specList><specDesc key="tei.interpret" atts="resp type inst"/></specList>
 </p>
 <p>The <att>type</att>  attribute of the
@@ -413,7 +372,6 @@ pointer from a <gi>link</gi> element or some similar mechanism.  The
 <att>resp</att> attribute indicates the annotator responsible for this annotation.
 Here is
 an example of the <gi>span</gi> element.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p xml:id="MaQp1s2p114">
 <s xml:id="MaQp1s2p114s1">There was certainly a definite point at which the
   thing began.</s>
@@ -439,7 +397,6 @@ an example of the <gi>span</gi> element.
 <s xml:id="MaQp1s2p114s6">For during that space of time (which was
   timeless) she understood quite finally her smallness, the
   unimportance of humanity.</s>
-
 </p></egXML>
 <note type="cit"><bibl>Doris Lessing, <title>Martha Quest</title>, 1952, p52-53</bibl></note>
  </p>
@@ -449,19 +406,16 @@ elsewhere in the same or a different document. Where several
 <gi>span</gi> or <gi>interp</gi> elements share the same attributes,
 for example having the same responsibility or type, it may be
 convenient to group them within a <gi>spanGrp</gi> element as follows:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><spanGrp resp="DTL">
   <span from="#MaQp1s2p114s3" to="#MaQp1s2p114s5">the moment</span>
   <!-- other spans identified by DTL here -->
 </spanGrp></egXML>
-
 <!-- As may be seen, the <att>type</att> attribute may be omitted in order to
 associate a span of text simply with a descriptive name.-->
  </p>
 <p>Spans may also be used to represent structural divisions within 
 a narrative, particularly when these do not coincide with the
 structure implied by the element structure. Consider the following narrative:
- 
 <q rend="display">
 <p>Sigmund, the son of Volsung, was a king in Frankish country.
 Sinfiotli was the eldest of his sons, the second was Helgi, the
@@ -503,12 +457,10 @@ strength, their growth, their intelligence, and their accomplishments.
 But Sigurd was the most outstanding of all, and everyone who knows about
 the old days says he was the most outstanding of men and the noblest of
 all the warrior kings.</p></q>
-
  </p>
 <p>A structural analysis of this text, dividing it into narrative units
 in a pattern shared with other texts from the same literature, might
 look like this:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p xml:id="P1">
 <s xml:id="S1">Sigmund ... was a king in Frankish country.</s>
 <s xml:id="S2">Sinfiotli was the eldest of his sons.</s>
@@ -518,14 +470,12 @@ look like this:
 <s xml:id="S5">And when he came home, ... she was obliged to accept it.</s>
 <s xml:id="S6">At the funeral feast Borghild was serving beer.</s>
 <s xml:id="S7">She took poison ... and brought it to Sinfiotli.</s>
-
 <s xml:id="S17">Sinfiotli drank it off and at once fell dead.</s>
 <anchor xml:id="EOS17"/>
 </p>
 <p xml:id="P2">Sigmund carried him a long way in his arms ... </p>
 <p xml:id="P3">King Sigmund lived a long time in Denmark ... </p>
 <p xml:id="P4">Sigmund and all his sons were tall ... </p>
-
 <spanGrp resp="TMA" type="narrative-structure">
  <span from="#S1" to="#S3">introduction</span>
  <span from="#S4a">conflict</span>
@@ -544,7 +494,6 @@ the narrative pattern but which is not realized in the text shown.
 together inside a <gi>spanGrp</gi> element, with the values of the
 common attribute(s) inherited from the higher element, as follows.
  -->
-
 <p>The same analysis may be expressed with the <gi>interp</gi> element
 instead of the <gi>span</gi> element; this element provide attributes
 for recording an interpretive category and its value, as well as the
@@ -565,7 +514,6 @@ described in <ptr target="#SASE" type="div2"/>, or the <att>join</att>
 element, described in <ptr target="#SAAG" type="div2"/>.  The resulting
 element can then be associated with the <gi>interp</gi> element using the
 <att>ana</att> attribute described in section <ptr target="#AIATTS" type="div1"/>.  We illustrate using the <gi>seg</gi> element.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p xml:id="MarQp1s2p114">
 <s xml:id="MarQp1s2p114s1">There was certainly a definite point ... </s>
 <s xml:id="MarQp1s2p114s2">It was not; then it was suddenly inescapable ... </s>
@@ -582,7 +530,6 @@ element can then be associated with the <gi>interp</gi> element using the
 <gi>interpGrp</gi> tags in a similar manner.  The interpretation
 itself can be expressed in an <gi>interpGrp</gi> element, which would
 replace the <gi>spanGrp</gi> in the example shown above:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><interpGrp resp="TMA" type="structuralUnit">
         <interp xml:id="INTRO">introduction</interp>
         <interp xml:id="CONFLICT">conflict</interp>
@@ -597,7 +544,6 @@ by means of the <att>ana</att> attribute, or by means of <gi>link</gi>
 elements.  Using the <att>ana</att> attribute (on <gi>seg</gi> elements
 introduced specifically for this purpose), the text would be encoded as
 follows:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p xml:id="PP1">
 <seg xml:id="SS1-SS3" ana="#INTRO">
 <s xml:id="SS1">Sigmund ... was a king in Frankish country.</s>
@@ -609,14 +555,12 @@ follows:
 <seg xml:id="SS5-SS17" ana="#CLIMAX">
 <s xml:id="SS5">And when he came home, ... she was obliged to accept it.</s>
 <s xml:id="SS6">At the funeral feast Borghild was serving beer.</s>
-
 <s xml:id="SS17">Sinfiotli drank it off and at once fell dead.</s>
 </seg></p>
 <anchor xml:id="NIL1" ana="#RECONCIL"/>
 <p xml:id="PP2">Sigmund carried him a long way in his arms ... </p>
 <p xml:id="PP3">King Sigmund lived a long time in Denmark ... </p>
 <p xml:id="PP4">Sigmund and all his sons were tall ... </p>
-
 <join xml:id="PP2-PP4" targets="#PP2 #PP3 #PP4" ana="#AFTERM"/></egXML>
  </p>
 <p>The linkage may also be accomplished using a <gi>linkGrp</gi> element,
@@ -624,7 +568,6 @@ whose content is a set of <gi>link</gi> elements which point to each
 interpretive element and its corresponding text unit.  This method does
 not require the use of the <att>ana</att> attribute on the text
 units.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><linkGrp targFunc="text interpretation">
   <link targets="#INTRO    #SS1-SS3"/>
   <link targets="#CONFLICT #SS4A"/>
@@ -647,7 +590,6 @@ whereas the the use of <gi>span</gi> elements does not.
  </p>
 <p>The formal declarations for the <gi>span</gi>, <gi>spanGrp</gi>,
 <gi>interp</gi> and <gi>interpGrp</gi> elements are:
- 
 <specGrp xml:id="DAISP" n="Spans">
 &span.odd;
 &spangrp.odd;
@@ -656,8 +598,6 @@ whereas the the use of <gi>span</gi> elements does not.
 </specGrp>
 </p>
 </div2>
-
-
 <div2 type="subsection" xml:id="AILA"><head>Linguistic Annotation</head>
 <p>By <term>linguistic annotation</term> we mean here any annotation
 determined by an analysis of linguistic features of the text, excluding
@@ -693,7 +633,6 @@ Where different parts of a language corpus have used
 different annotation methods, the <att>decls</att>
 attribute may be used to indicate the fact, as further
 discussed in section <ptr target="#CCAS"/>.
- 
 </p>
 <p>As one example of such types of analysis, consider the following
 sentence, taken from the Lancaster/IBM Treebank
@@ -704,7 +643,6 @@ Selected Papers and Research Guide,</title>
 <editor>S. Johansson and A.-B. Stenstr&#x2298;m</editor> ed.
 (Berlin: de Gruyter; New York: Mouton, 1991),
 pp. 15&#x2013;32.</bibl>
- 
 This sentence and its analysis are reproduced by kind permission of the
 University of Lancaster's Unit for Computer Research on the English
 Language.
@@ -718,12 +656,10 @@ principles may be applied to a wide variety of other systems.<note place="foot">
 Grammatical Word Class without Global Syntactic Analysis: Tagging
 Words in the LOB Corpus,</title> in <title>Computers and the
 Humanities</title> 17 (1983): 139&#x2013;50.</bibl>
- 
 For an overview of the system see <bibl><author>R. G. Garside,
 G. N. Leech, and G. R. Sampson</author> <title>The Computational
 Analysis of English: a Corpus-Based Approach</title> (Oxford: Oxford
 University Press, 1991).</bibl></note>
- 
 Output from the system consists of a segmented and tokenized version
 of the text, in which word class codes have been associated with each
 token.  For our example sentence, we might conveniently represent
@@ -732,11 +668,9 @@ replaced the Claws code <val>$</val> for the
 <mentioned>'s</mentioned> morpheme by <val>GEN</val>, as
 in the tag set used by the British National Corpus, and the code <val>.</val> for the
 final full stop by <val>PUN</val>.</note>
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><s>The&amp;AT; victim&amp;NN1;'s&amp;GEN; friends&amp;NN2; told&amp;VVD; police&amp;NN2;
 that&amp;CST; Krueger&amp;NP1;  drove&amp;VVD; into&amp;II; the&amp;AT;
 quarry&amp;NN1;  and&amp;CC;  never&amp;RR; surfaced&amp;VVD;.&amp;PUN;</s></egXML>
- 
 The names used for these entity references have some significance for
 the human reader (<val>AT</val> for <term>article</term>,
 <val>NN1</val> for <term>singular noun</term>, <val>NN2</val> for
@@ -747,22 +681,17 @@ analytic software is to be used.  For example, if a parser
 operating on this sentence uses a set of entity declarations in the
 following form, then the word class tags will simply disappear from
 the output.
- 
 <eg><![CDATA[<!ENTITY AT "">
 <!ENTITY NN1 "">
 <!ENTITY GEN "">
 <!-- ... -->]]></eg>
- 
 Alternatively, suppose the entity set in use follows the following
 pattern:
- 
 <eg><![CDATA[<!ENTITY AT  "[definite article]">
 <!ENTITY NN1 "[singular noun]">
 <!ENTITY GEN "[genitive suffix]">
 <!-- ... -->]]></eg>
- 
 Then the sample sentence will be processed as if it began:
- 
 <eg><![CDATA[The[definite article] 
 victim[singular noun]'s[genitive suffix] ...]]></eg>
  </p>
@@ -782,14 +711,11 @@ detailed example, see <ptr target="#F"SIL"/>.-->
 is a set of empty <gi>ptr</gi> elements bearing <att>target</att>
 attributes as described in section <ptr target="#COXR"/>.  The required
 entity definitions would look as follows.
- 
 <eg><![CDATA[<!ENTITY   AT   "<ptr target='AT'/>" >
 <!ENTITY   NN1  "<ptr target='NN1'/>">
 <!ENTITY   GEN  "<ptr target='GEN'/>">
 <!-- ... -->]]></eg>
- 
 Then the text would be expanded to read:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><s>The <ptr target="#AT"/> victim <ptr target="#NN1"/>'s <ptr target="#GEN"/>
 friends <ptr target="#NN2"/> told <ptr target="#VVD"/> police
 <ptr target="#NN2"/> that <ptr target="#CST"/> Krueger <ptr target="#NP1"/>
@@ -803,7 +729,6 @@ unique identifiers.  But we have yet to specify what those elements are.
 Suppose we say that they are <gi>interp</gi> elements whose values are the
 same as their identifiers.  That is, we provide an <gi>interpGrp</gi>
 element as follows:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><interpGrp type="word classes">
    <interp xml:id="at">article</interp>
    <interp xml:id="nn1">noun sing</interp>
@@ -830,7 +755,6 @@ intended to be associated with nested text elements.
 the linguistic segment elements described in section <ptr target="#AILC"/>,
 and the <att>ana</att> attribute to point to the interpretations
 that are associated with each such segment, as follows:
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><s type="sentence">
    <w ana="#at">The</w>
    <w ana="#nn1">victim</w>
@@ -854,7 +778,6 @@ that are associated with each such segment, as follows:
 word and morpheme tagging in the preceding illustration. For example,
 Claws provides the following constituent analysis of the sample sentence
 (the word class codes have been deleted):
- 
 <eg><![CDATA[[N [G The victim's G] friends N] [V told [N police N] 
 [Fn that [N Krueger N] [V [V& drove [P into [N the quarry N]P]V&]
 and [V+ never surfaced V+]V]Fn]V]]]></eg>
@@ -865,7 +788,6 @@ can be combined with the word class analysis and represented as follows
 (the symbol <val>V&amp;</val> representing the first part of a coordinate
 phrase, has been replaced by <val>V1</val>, and <val>V+</val>, representing the
 second part, has been replaced by <val>V2</val>).
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><s type="sentence">
    <phr ana="#n">  
       <phr ana="#g">    
@@ -912,7 +834,6 @@ supplying each linguistic segment with its own <att>xml:id</att> attribute,
 removing its <att>ana</att> attribute, and putting each
 segment-interpretation pair into a <gi>link</gi> element inside the
 <gi>linkGrp</gi> element.
- 
 </p>
 <p>Each linguistic segment so far discussed has been well-behaved with
 respect to the basic document hierarchy, having only a single parent.
@@ -926,13 +847,11 @@ chapter <ptr target="#NH"/>; also see <ptr target="#SA"/>.  These mechanisms
 all depend to a greater or lesser degree on the ability to associate a
 unique identifier with any element in a TEI-conformant text, and then to
 specify that identifier as the target of a pointing element of some kind.
- 
 </p>
 <p>The mechanisms proposed in this chapter may also be used to encode
 analyses of an entirely different kind, for example discourse function.
 Here is an application of the span technique to record details of a sales
 transaction in a spoken text.
- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u xml:id="u1" who="#p1">Can I have ten oranges and a kilo of bananas please?</u>
 <u xml:id="u2" who="#p2">Yes, anything else?</u>
 <u xml:id="u3" who="#p1">No thanks.</u>
@@ -948,11 +867,8 @@ transaction in a spoken text.
 </spanGrp></egXML>
 <note type="cit"><bibl>R. Hasan <title>Language, context, and
 text</title>... OUP 1989, p 59</bibl></note>
- 
 For further discussion of the <gi>u</gi> (utterance) element and other
 elements recommended for transcriptions of spoken language,
 see chapter <ptr target="#TS"/>.
 </p></div2>
-
-
 </div1>
