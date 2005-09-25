@@ -1,5 +1,4 @@
 XSL=/usr/share/xml/tei/stylesheet/
-TEISERVER=http://tei.oucs.ox.ac.uk/Query/
 ROMAOPTS=--doc --localsource=../Source-driver.xml
 
 TESTFILES= \
@@ -36,13 +35,13 @@ default: schemas test-schema test-dtd test-dtd-xmllint test-xsd
 all: test-schema test-dtd test-xsd
 
 schemas:
-	for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do roma $(ROMAOPTS) --xsl=$(XSL) --teiserver=$(TEISERVER)  $$i.odd .; done
+	for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do roma $(ROMAOPTS) --xsl=$(XSL)   $$i.odd .; done
 
 test-schema: test-rnv test-jing 
 #test-xmllint
 
 test-jing:
-	echo JING...
+	echo JING RelaxNG...
 	for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do echo $$i: ; jing -t $$i.rng $$i.xml; done
 	jing -t -c testfrag.rnc testlite.xml
 
@@ -56,8 +55,8 @@ test-xmllint:
 	for i in $(TESTFILES); do xmllint --dropdtd --noout --relaxng $$i.rng $$i.xml; done
 
 test-xsd:
-	echo JING
-	-for i in $(TESTFILES) ;do echo $$i: ; jing $$i.xsd $$i.xml; done
+	echo JING XSD
+	-for i in `echo $(TESTFILES) | sed 's/testall//'`;do echo $$i: ; jing $$i.xsd $$i.xml; done
 	echo XSDVALID....
 	-for i in $(TESTFILES) ;do echo $$i: ; xsdvalid -s $$i.xsd $$i.xml; done
 
