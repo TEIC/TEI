@@ -27,6 +27,8 @@
 <xsl:key name="REFS" match="tei:elementSpec|tei:macroSpec"
 	  use="tei:content//rng:ref/@name"/>
 
+<xsl:key name="IDENTS" match="tei:*[@ident]"	  use="@ident"/>
+
 <xsl:key  name="CLASSREFS" match="tei:elementSpec|tei:classSpec"
 	  use="tei:classes/tei:memberOf/@key"/>
 
@@ -54,9 +56,13 @@
 <row role="label">
   <cell>Name</cell>
   <cell>Module</cell>
+  <cell>Classes</cell>
+  <cell>Used in</cell>
   <cell>Content Model</cell>
 </row>
 <xsl:for-each select="//tei:elementSpec">
+<!--<xsl:sort select="tei:content//rng:ref[1]/@name"/>-->
+<xsl:sort select="@module"/>
 <xsl:sort select="@ident"/>
 <row rend="leave">
 <cell><anchor>
@@ -64,8 +70,47 @@
   <xsl:value-of select="@ident"/>
 </xsl:attribute>
 </anchor>
-<xsl:value-of select="@ident"/></cell>
+<xref n="{normalize-space(tei:desc)}"
+      url="http://tei.oucs.ox.ac.uk/Query/tag.xq?name={@ident}">
+<xsl:value-of select="@ident"/>
+</xref>
+</cell>
 <cell><xsl:value-of select="@module"/></cell>
+<cell><xsl:for-each select="tei:classes">
+  <xsl:for-each select="tei:memberOf">
+  <xsl:sort select="@key"/>
+    <ref>
+      <xsl:attribute name="target">
+	<xsl:value-of select="@key"/>
+      </xsl:attribute>
+      <xsl:for-each select="key('IDENTS',@key)">
+      <xsl:choose>
+	<xsl:when test="@type='model'">
+	  <hi><xsl:value-of select="@ident"/></hi>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="@ident"/>
+	</xsl:otherwise>
+      </xsl:choose>
+      </xsl:for-each>
+    </ref>
+    <xsl:text> </xsl:text>
+  </xsl:for-each>
+</xsl:for-each>
+</cell>
+<cell >
+<xsl:variable name="ID" select="@ident"/>
+<xsl:for-each select="key('REFS',@ident)">
+<xsl:if test="not(generate-id(.)=generate-id(key('REFS',$ID)[1]))"> |
+</xsl:if>
+    <ref>
+      <xsl:attribute name="target">
+	<xsl:value-of select="@ident"/>
+      </xsl:attribute>
+      <xsl:value-of select="@ident"/> 
+    </ref>
+</xsl:for-each>
+</cell>
 <cell><q rend="eg">
 <xsl:call-template name="make-body-from-r-t-f">
   <xsl:with-param name="schema">
@@ -74,7 +119,8 @@
     </xsl:for-each>
   </xsl:with-param>
 </xsl:call-template>
-</q></cell></row>
+</q></cell>
+</row>
 </xsl:for-each>
 </table>
 </div>
@@ -127,7 +173,11 @@
   <xsl:value-of select="@ident"/>
 </xsl:attribute>
 </anchor>
-<xsl:value-of select="@ident"/></cell>
+<xref n="{normalize-space(tei:desc)}"
+      url="http://tei.oucs.ox.ac.uk/Query/tag.xq?name={@ident}">
+  <xsl:value-of select="@ident"/>
+</xref>
+</cell>
 <cell ><xsl:value-of select="@type"/></cell>
 <cell >
 <xsl:variable name="ID" select="@ident"/>
@@ -140,9 +190,9 @@
 <cell >
 <xsl:variable name="ID" select="@ident"/>
 <xsl:for-each select="key('CLASSREFS',@ident)">
-<xsl:if test="not(generate-id(.)=generate-id(key('CLASSREFS',$ID)[1]))"> |
-</xsl:if>
- <xsl:value-of select="@ident"/> 
+<xsl:sort select="@ident"/>
+<ref target="{@ident}"><xsl:value-of select="@ident"/> </ref>
+<xsl:text> </xsl:text>
 </xsl:for-each>
 </cell>
 </row>
