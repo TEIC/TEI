@@ -497,10 +497,10 @@ name <code>NVAL1</code>. </p>
 <div2 xml:id="FSSS"><head>Collections as Complex Feature Values</head>
 <p>Complex feature values need not always be represented as feature
 structures. Multiple values may also be organized as as sets, bags (or
-multisets), or lists of atomic values of any type. The <gi>coll</gi>
+multisets), or lists of atomic values of any type. The <gi>vColl</gi>
 element is provided to represent such cases:
 <specList>
-<specDesc key="coll"/>
+<specDesc key="vColl"/>
 </specList>
 </p>
 <p>A feature whose value is regarded  as a set, bag or list may have
@@ -515,10 +515,10 @@ are distinguished from bags and lists in that repetitions of values do
 not count for the former but do count for the latter.  
 </p>
 <p>If no value is specified for the <att>org</att> attribute, the
-assumption is that the <gi>coll</gi> defines a list of values. If the
-<gi>coll</gi> element is empty, the assumption is that it represents
+assumption is that the <gi>vColl</gi> defines a list of values. If the
+<gi>vColl</gi> element is empty, the assumption is that it represents
 the null list, set, or bag. <!--, unless the <att>feats</att> attribute is
-used to specify its contents. If values are supplied  within a <gi>coll</gi> element
+used to specify its contents. If values are supplied  within a <gi>vColl</gi> element
 which also specifies values on its <att>feats</att> attribute, the
 implication is that the two sets of values are to be unified.--></p>
 <p>To illustrate the use of the <att>org</att> attribute, suppose that
@@ -527,10 +527,10 @@ with the information about each individual treated as a single feature
 structure, like this: 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fs xml:id="p027" type="person">
    <f name="forenames">
-     <coll>
+     <vColl>
        <string>Daniel</string>
        <string>Edouard</string>
-     </coll>
+     </vColl>
    </f>
    <f name="mother" fVal="#p002"/>
    <f name="father" fVal="#p009"/>
@@ -539,19 +539,19 @@ structure, like this:
    </f>
    <f name="birthPlace" fVal="#austintx"/>
    <f name="siblings">
-       <coll org="set">
+       <vColl org="set">
         <fs copyOf="#pnb005"/>
         <fs copyOf="#prb001"/>
-       </coll>
+       </vColl>
    </f>
 </fs></egXML>
  </p>
-<p>In this example, the <gi>coll</gi> element is first used to supply
+<p>In this example, the <gi>vColl</gi> element is first used to supply
 a list of <soCalled>name</soCalled> feature values, which together
 constitute the <soCalled>forenames</soCalled> feature. Other features
 are defined by reference to values which we assume are held in some
 external feature value library (not shown here). For example, the
-<gi>coll</gi> element is used a second time to indicate that the
+<gi>vColl</gi> element is used a second time to indicate that the
 persons's siblings should be regarded as constituting a set rather
 than a list. Each sibling is represented by a feature structure: in
 this example, each feature structure is a copy of one specified in the
@@ -559,7 +559,7 @@ feature value library. </p>
 <p>If a specific feature contains only a single feature structure as
 its value, the component features of which are organized as a set, bag
 or list, it may be more convenient to represent the value as a
-<gi>coll</gi> rather than as a <gi>fs</gi>. For example, consider the
+<gi>vColl</gi> rather than as a <gi>fs</gi>. For example, consider the
 following encoding of the English verb form
 <mentioned>sinks</mentioned>, which contains an
 <mentioned>agreement</mentioned> feature whose value is a feature
@@ -584,14 +584,14 @@ may be used:
   <f name="word.oddss"> <symbol value="verb"/> </f>
   <f name="tense"> <symbol value="present"/> </f>
   <f name="agreement">
-     <coll org="set">
+     <vColl org="set">
         <symbol value="third"/>
         <symbol value="singular"/>
-     </coll>
+     </vColl>
   </f>
 </fs></egXML>
  </p>
-<p>The <gi>coll</gi> element is also useful in cases where an analysis
+<p>The <gi>vColl</gi> element is also useful in cases where an analysis
 has several components. In the following example, the French
 word <mentioned>auxquels</mentioned> has a two-part analysis,
 represented as a list of two values. The first specifies that the word contains a
@@ -602,7 +602,7 @@ pronoun:
 	<symbol value="auxquels"/>
       </f>
       <f name="maf">
-	<coll org="list">
+	<vColl org="list">
 	  <fs>
 	    <f name="cat"><symbol value="prep"/></f>
 	  </fs>
@@ -612,25 +612,25 @@ pronoun:
 	    <f name="num"><symbol value="pl"/></f>
 	    <f name="gender"><symbol value="masc"/></f>
 	  </fs>
-	</coll>
+	</vColl>
       </f>
     </fs></egXML>
 </p>
 <p>The set, bag or list which has no members is known as the null (or
-empty) set, bag or list.  A <gi>coll</gi> element with no content and
+empty) set, bag or list.  A <gi>vColl</gi> element with no content and
 with no value for its <att>feats</att> attribute is interpreted as
 referring to the null set, bag, or list, depending on the value of its
 <att>org</att> attribute.</p>
 <p>If, for example, the individual described by the
 feature structure with identifier <code>p027</code> (above) had no siblings, we might specify the
 <mentioned>siblings</mentioned> feature as follows.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="siblings"><coll org="set"/></f></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="siblings"><vColl org="set"/></f></egXML>
  </p>
-<p>A <gi>coll</gi> element may also collect together one or more other
-<gi>coll</gi> elements, if, for example one of the members of a set is
+<p>A <gi>vColl</gi> element may also collect together one or more other
+<gi>vColl</gi> elements, if, for example one of the members of a set is
 itself a set, or if two lists are concatenated together. Note that
 such collections pay no attention to the contents of the nested
-<gi>coll</gi> elements: if it is desired to produce the union of two
+<gi>vColl</gi> elements: if it is desired to produce the union of two
 sets, the <gi>vMerge</gi> element discussed below should be used to
 make a new collection from the two sets.  </p>
 </div2>
@@ -679,15 +679,15 @@ bedrooms, a structure like the following may be used:
 <p>Note that alternation is always regarded as <term>exclusive</term>:
 in the case above, the implication is that  having two bathrooms
 excludes the possibility of having two bedrooms and vice versa. If
-inclusive alternation is required, a <gi>coll</gi> element may be
+inclusive alternation is required, a <gi>vColl</gi> element may be
 included in the alternation as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="rooms">
    <vAlt><fs><f name="number.of.bathrooms"> <numeric value="2"/> </f></fs>
           <fs><f name="number.of.bedrooms"> <numeric value="2"/> </f></fs>
-      <coll>
+      <vColl>
         <fs><f name="number.of.bathrooms"> <numeric value="2"/> </f></fs>
         <fs><f name="number.of.bedrooms"> <numeric value="2"/> </f></fs>
-      </coll>
+      </vColl>
    </vAlt>
 </f></egXML>
 This analysis indicates that the property may have two bathrooms, two
@@ -704,14 +704,14 @@ not both).  This situation could be represented, using the
 <gi>vAlt</gi> element, as follows.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fs type="real estate listing">
    <f name="selling.points"> 
-      <coll org="set">
+      <vColl org="set">
       <string>alarm system</string>
       <string>good view</string>
       <vAlt>
          <string>pool</string>
          <string>jacuzzi</string>
       </vAlt>
-      </coll>
+      </vColl>
    </f>
 </fs></egXML>
  </p>
@@ -720,7 +720,7 @@ also uncertain whether the property has an alarm system or a good
 view.  This can be represented as follows.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fs type="real estate listing">
    <f name="selling.points">
-      <coll org="set">
+      <vColl org="set">
        <vAlt>
          <string>alarm system</string>
          <string>good view</string>
@@ -729,7 +729,7 @@ view.  This can be represented as follows.
          <string>pool</string>
          <string>jacuzzi</string>
       </vAlt>
-      </coll>
+      </vColl>
    </f>
 </fs></egXML>
  </p>
@@ -775,7 +775,7 @@ something other than the negated value. </p>
 feature-value pair. The negation of an atomic value is the set of all
 other values which are possible for the feature. </p>
 <p>Any kind of value can be negated, including collections
-(represented by a <gi>coll</gi> elements) or feature structures
+(represented by a <gi>vColl</gi> elements) or feature structures
 (represented by <gi>fs</gi> elements). The negation of any complex
 value is understood to be the set of values  which
 cannot be unified with it. Thus, for example, the negation of the
@@ -800,14 +800,14 @@ are collections. For example, one can change a list to a set, or vice versa.</p>
 <p>As an example, suppose that we wish to represent the range of
 possible values for a feature <soCalled>genders</soCalled> used to
 describe some language. It would be natural to represent the possible
-values  as a set, using the <gi>coll</gi> element as in the following
+values  as a set, using the <gi>vColl</gi> element as in the following
 example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fs>
 <f name="genders">
-   <coll org="set">
+   <vColl org="set">
        <symbol value="masculine"/>
        <symbol value="feminine"/>
-   </coll>
+   </vColl>
 </f>
 </fs>
 </egXML>
@@ -819,10 +819,10 @@ be used to achieve this:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fs>
 <f name="genders">
 <vMerge org="list">
-   <coll org="set">
+   <vColl org="set">
        <symbol value="masculine"/>
        <symbol value="feminine"/>
-   </coll>
+   </vColl>
    <symbol value="neuter"/>
 </vMerge>
 </f>
@@ -1013,7 +1013,7 @@ TEI scheme which is formally defined as follows:
 &numeric.odd;
 &string.odd;
 &vlabel.odd;
-&coll.odd;
+&vcoll.odd;
 &default.odd;
 &valt.odd;
 &vnot.odd;
