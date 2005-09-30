@@ -52,6 +52,7 @@ schemas:check
 	xmllint --noent   Source-driver.xml | xsltproc extract-sch.xsl - > p5.sch
 
 html-web: check
+	perl -p -e "s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+" odd2htmlp5.xsl.model > odd2htmlp5.xsl
 	-rm -rf Guidelines-web
 	-mkdir Guidelines-web
 	xmllint --noent    Source-driver.xml | xsltproc \
@@ -66,7 +67,7 @@ html-web: check
 html:check subset
 	-rm -rf Guidelines
 	-mkdir Guidelines
-	(perl -p -e "s+http://www.tei-c.org/stylesheet+${XSL}+" guidelines-print.xsl > tmp$$$$.xsl; \
+	perl -p -e "s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+" odd2htmlp5.xsl.model > odd2htmlp5.xsl
 	xmllint --noent    Source-driver.xml | xsltproc \
 	-o Guidelines/index.html \
 	--stringparam localsource `pwd`/p5subset.xml \
@@ -74,7 +75,7 @@ html:check subset
 	--stringparam displayMode rnc \
 	--stringparam outputDir . \
 	--stringparam lang ${LANGUAGE} \
-	tmp$$$$.xsl - && rm tmp$$$$.xsl)
+	guidelines-print.xsl - 
 	-cp *.gif *.css Guidelines
 	-cp Source/*/*.png Guidelines
 	(cd Guidelines; for i in *.html; do perl -i ../tools/cleanrnc.pl $$i;done)

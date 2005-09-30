@@ -16,7 +16,7 @@
     version="1.0"
 >
   
-<xsl:import href="/usr/share/xml/tei/stylesheet/odds/odd2html.xsl"/>
+<xsl:import href="odd2htmlp5.xsl"/>
   
 <xsl:param name="autoToc">true</xsl:param>
 <xsl:param name="pageLayout">Simple</xsl:param>
