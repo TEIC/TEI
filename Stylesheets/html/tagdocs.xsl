@@ -104,12 +104,12 @@
     <tr>
       <td/>
       <td>
-	<i>
+	<span class="label">
 	  <xsl:call-template name="i18n">
 	    <xsl:with-param name="word">Status</xsl:with-param>
 	  </xsl:call-template>
 	  <xsl:text>: </xsl:text>
-	</i>
+	</span>
 	<xsl:choose>
 	  <xsl:when test="@usage='mwa'">
 	    <xsl:call-template name="i18n">
@@ -152,12 +152,12 @@
     <tr>
       <td/>
       <td colspan="2" valign="top">
-        <i>
+        <span class="label">
 	<xsl:call-template name="i18n">
 	  <xsl:with-param name="word">Datatype</xsl:with-param>
 	</xsl:call-template>
 	<xsl:text>: </xsl:text>
-	</i>
+	</span>
         <xsl:call-template name="bitOut">
           <xsl:with-param name="grammar"/>
           <xsl:with-param name="content">
@@ -179,12 +179,12 @@
     <tr>
       <td/>
       <td valign="top" colspan="2">
-        <i>
+        <span class="label">
 	<xsl:call-template name="i18n">
 	<xsl:with-param name="word">Example</xsl:with-param>
 	</xsl:call-template>
 	<xsl:text>: </xsl:text>
-	</i>
+	</span>
         <xsl:call-template name="verbatim">
           <xsl:with-param name="text">
             <xsl:apply-templates/>
@@ -224,11 +224,11 @@
   <xsl:template match="tei:attList" mode="weave">
     <tr>
       <td valign="top">
-        <i>
+        <span class="label">
 	<xsl:call-template name="i18n">
 	<xsl:with-param name="word">Attributes</xsl:with-param>
 	</xsl:call-template> 
-	</i>
+	</span>
 	<xsl:text> </xsl:text>
       </td>
       <td>
@@ -246,10 +246,11 @@
   <xsl:template match="tei:classSpec">
     <xsl:if test="parent::tei:specGrp">
       <dt>
-	<i>
-	  <xsl:call-template name="i18n"><xsl:with-param
-					     name="word">Class</xsl:with-param></xsl:call-template>
-	  </i>:
+	<span class="label">
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param  name="word">Class</xsl:with-param>
+	  </xsl:call-template>
+	  </span>:
       <xsl:value-of select="@ident"/></dt>
       <dd>
         <xsl:apply-templates select="." mode="tangle"/>
@@ -287,7 +288,7 @@
     <xsl:apply-templates mode="weave"/>
 <!--
   <tr>
-    <td valign="top"><i>Member of classes</i></td>
+    <td valign="top">Member of classes</td>
     <td colspan="2">
       <xsl:call-template name="generateClassParents"/>
       &#160;
@@ -296,16 +297,18 @@
 -->
     <tr>
       <td valign="top">
-        <i>
+        <span class="label">
 	<xsl:call-template name="i18n">
 	  <xsl:with-param name="word">Members</xsl:with-param>
-	</xsl:call-template></i>
+	</xsl:call-template></span>
       </td>
       <td colspan="2">
         <xsl:call-template name="generateMembers"/>
       </td>
     </tr>
-    <xsl:call-template name="HTMLmakeTagsetInfo"/>
+    <xsl:if test="@module">
+      <xsl:call-template name="HTMLmakeTagsetInfo"/>
+    </xsl:if>
   </xsl:template>
   
 <xd:doc>
@@ -316,8 +319,10 @@
     <xsl:if test="tei:memberOf">
       <tr>
         <td valign="top">
-          <i>
-	  <xsl:call-template name="i18n"><xsl:with-param name="word">Class</xsl:with-param></xsl:call-template></i>
+          <span class="label">
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Class</xsl:with-param>
+	  </xsl:call-template></span>
         </td>
         <td colspan="2">
           <xsl:for-each select="tei:memberOf">
@@ -356,8 +361,12 @@
     <tr>
       <td/>
       <td valign="top" colspan="2">
-        <i>
-	<xsl:call-template name="i18n"><xsl:with-param name="word">Default</xsl:with-param></xsl:call-template> </i>
+        <span class="label">
+	<xsl:call-template name="i18n">
+	  <xsl:with-param  name="word">Default</xsl:with-param>
+	</xsl:call-template>
+	</span>
+	<xsl:text>: </xsl:text>
         <xsl:apply-templates/>
       </td>
     </tr>
@@ -433,8 +442,8 @@
     <xsl:if test="not(tei:attList)">
       <tr>
         <td valign="top">
-          <i>
-	  <xsl:call-template name="i18n"><xsl:with-param name="word">Attributes</xsl:with-param></xsl:call-template>: </i>
+          <span class="label">
+	  <xsl:call-template name="i18n"><xsl:with-param name="word">Attributes</xsl:with-param></xsl:call-template>: </span>
         </td>
         <td>
           <xsl:choose>
@@ -456,7 +465,10 @@
       </tr>
     </xsl:if>
     <xsl:apply-templates mode="weave"/>
-    <xsl:call-template name="HTMLmakeTagsetInfo"/>
+    <xsl:if test="@module">
+      <xsl:call-template name="HTMLmakeTagsetInfo"/>
+    </xsl:if>
+
   </xsl:template>
   
 <xd:doc>
@@ -476,8 +488,11 @@
     </xsl:variable>
     <tr>
       <td valign="top">
-        <i>
-	<xsl:call-template name="i18n"><xsl:with-param name="word">Declaration</xsl:with-param></xsl:call-template></i>
+        <span class="label">
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Declaration</xsl:with-param>
+	</xsl:call-template>
+	</span>
       </td>
       <td colspan="2">
         <xsl:call-template name="bitOut">
@@ -610,11 +625,11 @@
   <xsl:template match="tei:exemplum" mode="weave">
     <tr>
       <td valign="top">
-        <i>
+        <span class="label">
 	  <xsl:call-template name="i18n">
 	    <xsl:with-param name="word">Example</xsl:with-param>
 	  </xsl:call-template>
-	</i>
+	</span>
       </td>
       <td colspan="2">
         <xsl:apply-templates/>
@@ -696,7 +711,9 @@
       </td>
     </tr>
     <xsl:apply-templates mode="weave"/>
-    <xsl:call-template name="HTMLmakeTagsetInfo"/>
+    <xsl:if test="@module">
+      <xsl:call-template name="HTMLmakeTagsetInfo"/>
+    </xsl:if>
   </xsl:template>
   
 <xd:doc>
@@ -706,8 +723,11 @@
   <xsl:template match="tei:macroSpec/tei:content" mode="weave">
     <tr>
       <td valign="top">
-        <i>
-	<xsl:call-template name="i18n"><xsl:with-param name="word">Declaration</xsl:with-param></xsl:call-template></i>
+        <span class="label">
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Declaration</xsl:with-param>
+	  </xsl:call-template>
+	</span>
       </td>
       <td colspan="2">
         <xsl:call-template name="bitOut">
@@ -804,9 +824,12 @@
     <xsl:if test="*//text()">
       <tr>
         <td valign="top">
-          <i>
-	  <xsl:call-template name="i18n"><xsl:with-param name="word">Note</xsl:with-param></xsl:call-template></i>
-        </td>
+          <span class="label">
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Note</xsl:with-param>
+	  </xsl:call-template>
+	  </span>
+	</td>
         <td colspan="2">
           <xsl:apply-templates/>
         </td>
@@ -863,7 +886,7 @@
         <dd>
 	  <xsl:text>« </xsl:text>
           <a href="{@target}">
-	    <i>
+	    <span class="label">
 	      <xsl:call-template name="i18n"><xsl:with-param name="word">include</xsl:with-param></xsl:call-template> 
 	      <xsl:text> </xsl:text>
 	    <xsl:choose>
@@ -879,7 +902,7 @@
 		<xsl:value-of select="@target"/>
 	      </xsl:otherwise>
 	    </xsl:choose>
-	    </i>
+	    </span>
 	  </a>
 	  <xsl:text> » </xsl:text>
 	</dd>
@@ -888,25 +911,28 @@
         <p>
           <a href="{@target}">
 	    <xsl:text>« </xsl:text>
-	    <i><xsl:call-template name="i18n"><xsl:with-param  name="word">include</xsl:with-param></xsl:call-template>
-	    <xsl:text> </xsl:text>
-	    <xsl:choose>
-	      <xsl:when test="starts-with(@target,'#')">
-		<xsl:for-each select="key('IDS',substring-after(@target,'#'))">
-		  <xsl:number level="any"/>
+	    <span class="label">
+	      <xsl:call-template name="i18n">
+		<xsl:with-param  name="word">include</xsl:with-param>
+	      </xsl:call-template>
+	      <xsl:text> </xsl:text>
+	      <xsl:choose>
+		<xsl:when test="starts-with(@target,'#')">
+		  <xsl:for-each select="key('IDS',substring-after(@target,'#'))">
+		    <xsl:number level="any"/>
 		  <xsl:if test="@n">
 		    <xsl:text>: </xsl:text><xsl:value-of select="@n"/>
 		  </xsl:if>
-		</xsl:for-each>
-	      </xsl:when>
+		  </xsl:for-each>
+		</xsl:when>
 	      <xsl:otherwise>
 		<xsl:value-of select="@target"/>
 	      </xsl:otherwise>
-	    </xsl:choose>
-	    </i>
+	      </xsl:choose>
+	    </span>
 	  </a>
 	  <xsl:text> » </xsl:text>
-      </p>
+	</p>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -929,12 +955,12 @@
     <tr>
       <td/>
       <td>
-        <i>
+        <span class="label">
 	  <xsl:call-template name="i18n">
 	    <xsl:with-param name="word">Values</xsl:with-param>
 	  </xsl:call-template>
 	  <xsl:text>: </xsl:text>
-	</i>
+	</span>
 	<xsl:apply-templates/>
       </td>
     </tr>
@@ -1023,8 +1049,11 @@
   <xsl:template name="HTMLmakeTagsetInfo">
     <tr>
       <td valign="top">
-        <i>
-	<xsl:call-template name="i18n"><xsl:with-param name="word">Module</xsl:with-param></xsl:call-template></i>
+        <span class="label">
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Module</xsl:with-param>
+	  </xsl:call-template>
+	</span>
       </td>
       <td colspan="2">
         <xsl:call-template name="makeTagsetInfo"/>
@@ -1151,9 +1180,9 @@
   </xd:doc>
   <xsl:template name="italicize">
     <xsl:param name="text"/>
-    <i>
+    <em>
       <xsl:copy-of select="$text"/>
-    </i>
+    </em>
   </xsl:template>
   
 <xd:doc>

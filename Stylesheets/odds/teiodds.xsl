@@ -454,6 +454,9 @@
       </xsl:apply-templates>
       
       <xsl:choose>
+	<xsl:when test="ancestor::tei:schemaSpec/@ns">
+	  <rng:empty/>
+	</xsl:when>
 	<xsl:when test="not(@ns) or @ns='' or contains(@ns,'http://www.tei-c.org')">
 	  <optional xmlns="http://relaxng.org/ns/structure/1.0">
 	    <attribute name="TEIform" a:defaultValue="{@ident}" xmlns="http://relaxng.org/ns/structure/1.0">
@@ -701,6 +704,11 @@
 
 <xsl:template match="tei:specGrp" mode="ok">
   <xsl:param name="filename"/>
+  <xsl:if test="$verbose='true'">
+  <xsl:message>       processing spec grp  <xsl:value-of
+    select="@ident"/></xsl:message>
+  </xsl:if>
+
   <xsl:call-template name="processSchemaFragment">
     <xsl:with-param name="filename" select="$filename"/>
   </xsl:call-template>
@@ -1308,6 +1316,7 @@
   <xsl:variable name="secnum">
     <xsl:call-template name="sectionNumber"/>
   </xsl:variable>
+<!--
   <xsl:if test="@xml:id">
     <xsl:comment>[<xsl:value-of select="@xml:id"/>] <xsl:value-of
     select="$secnum"/>
@@ -1317,12 +1326,15 @@
     </xsl:if>
     </xsl:comment>
   </xsl:if>
+-->
   <xsl:apply-templates mode="tangle"/>
 
-  <xsl:if test="@xml:id">
+<!--
+    <xsl:if test="@xml:id">
     <xsl:comment> end of [<xsl:value-of select="@xml:id"/>]  <xsl:value-of select="$secnum"/>    
     </xsl:comment>
   </xsl:if>
+-->
 </xsl:template>
 
 

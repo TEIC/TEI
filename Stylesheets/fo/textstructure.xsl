@@ -848,39 +848,6 @@
   
 <xd:doc>
     <xd:short>[fo] </xd:short>
-    <xd:param name="numbersuffix">suffix to add after number (typically ". ")</xd:param>
-    <xd:detail>&#160;</xd:detail>
-  </xd:doc>
-  <xsl:template name="calculateNumber">
-    <xsl:param name="numbersuffix"/>
-    <xsl:choose>
-      <xsl:when test="@n">
-        <xsl:value-of select="@n"/>
-        <xsl:value-of select="$numbersuffix"/>
-      </xsl:when>
-      <xsl:when test="ancestor::tei:front">
-        <xsl:if test="not($numberFrontHeadings='')">
-          <xsl:number format="{$numberFrontHeadings}" level="multiple" from="text" count="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4"/>
-          <xsl:value-of select="$numbersuffix"/>
-        </xsl:if>
-      </xsl:when>
-      <xsl:when test="ancestor::tei:back">
-        <xsl:if test="not($numberBackHeadings='')">
-          <xsl:call-template name="i18n"><xsl:with-param name="word">appendixWords</xsl:with-param></xsl:call-template>
-          <xsl:text> </xsl:text>
-          <xsl:number format="{$numberBackHeadings}" level="multiple" from="text" count="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4"/>
-          <xsl:value-of select="$numbersuffix"/>
-        </xsl:if>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:number level="multiple" from="text" count="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4"/>
-        <xsl:value-of select="$numbersuffix"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  
-<xd:doc>
-    <xd:short>[fo] </xd:short>
     <xd:param name="where">where</xd:param>
     <xd:param name="force">force</xd:param>
     <xd:detail>&#160;</xd:detail>
@@ -1461,7 +1428,7 @@
       </xsl:attribute>
       <xsl:variable name="Number">
         <xsl:if test="$numberHeadings='true' and $numberHeadingsDepth &gt; $level">
-          <xsl:call-template name="calculateNumber">
+          <xsl:call-template name="calculateNumber,">
             <xsl:with-param name="numbersuffix" select="$tocNumberSuffix"/>
           </xsl:call-template>
         </xsl:if>

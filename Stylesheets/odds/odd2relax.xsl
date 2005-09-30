@@ -364,13 +364,13 @@
 <xsl:template match="tei:specGrpRef" mode="tangle">
   <xsl:param name="filename"/>
   <xsl:if test="$verbose='true'">
-  <xsl:message>spec grp ref to <xsl:value-of
+  <xsl:message>     spec grp ref to <xsl:value-of
     select="@target"/></xsl:message>
   </xsl:if>
   <xsl:choose>
     <xsl:when test="starts-with(@target,'#')">
       <xsl:for-each select="key('IDS',substring-after(@target,'#'))">
-	<xsl:apply-templates select="key('IDS',@target)" mode="ok">
+	<xsl:apply-templates select="." mode="ok">
 	  <xsl:with-param name="filename" select="$filename"/>
 	</xsl:apply-templates>
       </xsl:for-each>

@@ -304,7 +304,7 @@ End of macro declarations
 </xsl:template>
 
 
-<xsl:template match="rng:group">
+<xsl:template match="rng:group|rng:mixed">
   <xsl:call-template name="content">
     <xsl:with-param name="sep" select="','"/>
   </xsl:call-template>

@@ -337,11 +337,9 @@
   
   <xsl:template match="tei:defaultVal">
     <tei:label>
-      <tei:emph>
 	<xsl:call-template name="i18n">
 	  <xsl:with-param name="word">Default</xsl:with-param>
 	</xsl:call-template>
-      </tei:emph>
      </tei:label>
     <tei:item>
       <xsl:apply-templates/>
@@ -359,11 +357,9 @@
   <xsl:template match="tei:elementSpec" mode="weavebody">
     <xsl:if test="not(tei:attList)">
       <tei:p>
-	<tei:emph>
 	<xsl:call-template name="i18n">
 	  <xsl:with-param name="word">Attributes</xsl:with-param>
 	</xsl:call-template>
-      </tei:emph>
       <xsl:text>: </xsl:text>
       <xsl:choose>
 	<xsl:when test="count(../tei:classes/tei:memberOf)&gt;0">
@@ -389,11 +385,9 @@
   
   <xsl:template match="tei:elementSpec/tei:content" mode="weave">
     <tei:p>
-      <tei:emph>	
 	<xsl:call-template name="i18n">
 	  <xsl:with-param name="word">Declaration</xsl:with-param>
 	</xsl:call-template>
-      </tei:emph>
       <xsl:call-template name="bitOut">
 	<xsl:with-param name="grammar"></xsl:with-param>
 	<xsl:with-param name="content">
