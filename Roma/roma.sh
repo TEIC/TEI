@@ -36,7 +36,7 @@ makeODD()
 makeRelax() 
 {
     echo "2. make Relax NG from compiled ODD"
-    xsltproc $XSLOPTS  \
+    xsltproc $PATTERN $DEBUG  \
 	     --stringparam TEIC $TEIC \
 	     --stringparam lang $lang  \
              --stringparam outputDir $RESULTS       \
@@ -58,7 +58,7 @@ makeXSD()
 makeDTD()
 {
     echo "5. make DTD from compiled ODD"
-    xsltproc  $XSLOPTS \
+    xsltproc  $DEBUG \
 	    --stringparam lang $lang  \
 	    --stringparam TEIC $TEIC \
             --stringparam outputDir $RESULTS       \
@@ -68,7 +68,7 @@ makeDTD()
 makeHTMLDOC() 
 {
     echo "8. make HTML documentation"
-    xsltproc $XSLOPTS     \
+    xsltproc $DEBUG     \
 	-o $N.doc.html \
 	--stringparam TEIC $TEIC \
         --stringparam lang $lang  \
@@ -81,7 +81,7 @@ makeHTMLDOC()
 makePDFDOC() 
 {
     echo "7. make PDF documentation"
-    xsltproc $XSLOPTS     \
+    xsltproc $DEBUG     \
 	--stringparam TEIC $TEIC \
         --stringparam lang $lang  \
 	-o $N.doc.tex \
@@ -93,7 +93,7 @@ makePDFDOC()
 makeXMLDOC() 
 {
     echo "6. make expanded documented ODD"
-    xsltproc $XSLOPTS     \
+    xsltproc $DEBUG     \
 	--stringparam TEIC $TEIC \
         --stringparam lang $lang  \
 	-o $N.doc.xml \
@@ -122,17 +122,18 @@ echo "  Usage: roma [options] schemaspec [output_directory]"
 echo "  options, shown with defaults:"
 echo "  --xsl=$TEIXSLDIR"
 echo "  --teiserver=$TEISERVER"
-echo "  --localsource=$LOCALSOURCE # local copy of P5 sources
+echo "  --localsource=$LOCALSOURCE # local copy of P5 sources"
 echo "  options, binary switches:"
 echo "  --doc              # create expanded documented ODD (TEI Lite XML)"
 echo "  --translate=LANG   # translate tags to LANG (es, de, fr)"
-echo "  --lang=LANG        # use LANG for interface and documentation where possible
+echo "  --lang=LANG        # use LANG for interface and documentation where possible"
 echo "  --dochtml          # create HTML version of doc"
+echo "  --patternprefix=STRING # prefix relax patterns with STRING"
 echo "  --docpdf           # create PDF version of doc"
 echo "  --nodtd            # suppress DTD creation"
 echo "  --norelax          # suppress RelaxNG creation"
 echo "  --noxsd            # suppress W3C XML Schema creation"
-echo "  --noteic           # suppress TEI-specific features
+echo "  --noteic           # suppress TEI-specific features"
 echo "  --debug            # leave temporary files, etc."
 exit 1
 }
@@ -152,6 +153,7 @@ xsd=true
 doc=false
 docpdf=false
 dochtml=false
+PATTERNPREFIX=
 while test $# -gt 0; do
   case $1 in
     --xsl=*)       TEIXSLDIR=`echo $1 | sed 's/.*=//'`;;
@@ -166,6 +168,7 @@ while test $# -gt 0; do
     --norelax)     relax=false;;
     --noxsd)       xsd=false;;
     --noteic)      TEIC=false;;
+    --patternprefix=*) PATTERNPREFIX=`echo $1 | sed 's/.*=//'`;;
     --debug)       debug=true;;
     --help)        usageMsg;;
      *) if test "$1" = "${1#--}" ; then 
@@ -199,11 +202,16 @@ mkdir -p $RESULTS || die "cannot make directory $RESULTS"
 D=`date "+%Y-%m-%d %H:%M:%S.%N"`
 echo "Process $ODD to create $N{.dtd|.xsd|.doc.xml|.rng|.rnc} in $RESULTS"
 echo "========= $D Roma starts, execution:"
+if test "x$PATTERNPREFIX" = "x"
+   PATTERN=""
+else
+   PATTERN=" --stringparam patternPrefix $PATTERNPREFIX"
+fi
 if $debug
 then
-    XSLOPTS=" --stringparam verbose true"
+    DEBUG=" --stringparam verbose true"
 else
-    XSLOPTS=""
+    DEBUG=""
 fi
 if test "x$LOCALSOURCE" = "x"
 then
@@ -224,7 +232,7 @@ cat > subset.xsl <<EOF
 </xsl:template>
 </xsl:stylesheet>
 EOF
-xsltproc -o tei$$.xml $XSLOPTS subset.xsl $LOCALSOURCE || die "failed to extract subset from $LOCALSOURCE "
+xsltproc -o tei$$.xml $DEBUG subset.xsl $LOCALSOURCE || die "failed to extract subset from $LOCALSOURCE "
 LOCAL=$H/tei$$.xml
 fi
 
