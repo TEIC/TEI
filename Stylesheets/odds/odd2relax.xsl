@@ -160,12 +160,12 @@
 	    </xsl:when>
 	    <xsl:when test="@start">
 	      <rng:start>
-		<rng:ref name="{@start}"/>
+		<rng:ref name="{$patternPrefix}{@start}"/>
 	      </rng:start>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <rng:start>
-		<rng:ref name="TEI"/>
+		<rng:ref name="{$patternPrefix}TEI"/>
 	      </rng:start>
 	    </xsl:otherwise>
 	    
@@ -180,13 +180,13 @@
   <xsl:if test="not($toks='')">
     <xsl:choose>
       <xsl:when test="contains($toks,' ')">
-	<ref name="{substring-before($toks, ' ')}" xmlns="http://relaxng.org/ns/structure/1.0"/>
+	<ref name="{$patternPrefix}{substring-before($toks, ' ')}" xmlns="http://relaxng.org/ns/structure/1.0"/>
 	<xsl:call-template name="startNames">
 	  <xsl:with-param name="toks" select="substring-after($toks, ' ')"/>
 	</xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-	<ref name="{$toks}" xmlns="http://relaxng.org/ns/structure/1.0"/>
+	<ref name="{$patternPrefix}{$patternPrefix}{$toks}" xmlns="http://relaxng.org/ns/structure/1.0"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:if>
@@ -342,7 +342,7 @@
  <xsl:param name="name"/>
  <xsl:choose>
    <xsl:when test="$parameterize='true'">
-     <rng:define name="{$name}" combine="choice">
+     <rng:define name="{$patternPrefix}{$name}" combine="choice">
        <rng:choice>
 	 <rng:notAllowed/>
        </rng:choice>
@@ -350,7 +350,7 @@
    </xsl:when>
    <xsl:otherwise>
      <xsl:if test="not(key('IDENTS',$name))">
-       <rng:define name="{$name}">
+       <rng:define name="{$patternPrefix}{$name}">
 	 <rng:choice>
 	   <rng:notAllowed/>
 	 </rng:choice>

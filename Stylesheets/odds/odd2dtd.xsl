@@ -672,12 +672,13 @@ End of macro declarations
  </xsl:if>
 <xsl:choose>
 <!-- This is an odd situation. A macro is declared twice,
-and we want the occurence of from a module called "xxx-decl". 
+and we want the occurence of it from a module called "xxx-decl". 
 However, we want it at the position of the first declaration.
 So, at the first, process the second; at the second, do nothing.
 -->
   <xsl:when test="count(key('MACROS',@ident))=2 and $parameterize='false'">
     <xsl:choose>
+      <xsl:when test="generate-id(key('MACROS',@ident)[2])=generate-id()"/>
       <xsl:when test="contains(@module,'-decl')"/>
       <xsl:otherwise>
 	<xsl:for-each  select="key('MACROS',@ident)[2]">

@@ -49,6 +49,7 @@
 
   <xsl:param name="localsource"/>
   <xsl:param name="TEIC">false</xsl:param>
+  <xsl:param name="patternPrefix"/>
   <xsl:param name="lang">en</xsl:param>
   <xsl:param name="lookupDatabase">false</xsl:param>
   <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
@@ -136,6 +137,17 @@
   
   
   
+  <xsl:template match="rng:ref">
+    <xsl:copy>
+      <xsl:attribute name="name">
+	<xsl:if test="key('IDENTS',@name)">
+	  <xsl:value-of select="$patternPrefix"/>
+	</xsl:if>
+	<xsl:value-of select="@name"/>
+      </xsl:attribute>
+    </xsl:copy>
+  </xsl:template>
+
   <xsl:template match="rng:*">
     <xsl:copy>
       <xsl:copy-of select="@*"/>
@@ -271,7 +283,7 @@
 	  <xsl:choose>
 	    <xsl:when test="$parameterize='true'">
 	      <xsl:if test="$declare='true'">
-		<define name="{$thisClass}" xmlns="http://relaxng.org/ns/structure/1.0">
+		<define name="{$patternPrefix}{$thisClass}" xmlns="http://relaxng.org/ns/structure/1.0">
 		  <notAllowed xmlns="http://relaxng.org/ns/structure/1.0"/>
 		</define>
 	      </xsl:if>
@@ -280,12 +292,12 @@
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:if test="@type='both' or @type='model'">
-		<define name="{$thisClass}" xmlns="http://relaxng.org/ns/structure/1.0">
+		<define name="{$patternPrefix}{$thisClass}" xmlns="http://relaxng.org/ns/structure/1.0">
 		  <rng:choice>
 		    <xsl:choose>
 		      <xsl:when test="count(key('CLASSMEMBERS',$thisClass))&gt;0">
 			<xsl:for-each select="key('CLASSMEMBERS',$thisClass)">
-			  <ref name="{@ident}" xmlns="http://relaxng.org/ns/structure/1.0"/>
+			  <ref name="{$patternPrefix}{@ident}" xmlns="http://relaxng.org/ns/structure/1.0"/>
 			</xsl:for-each>
 		      </xsl:when>
 		      <xsl:otherwise>
@@ -397,12 +409,12 @@
 	  </xsl:variable>
 	  <xsl:choose>
 	    <xsl:when test="tei:content/notAllowed">
-	      <define name="{@ident}" xmlns="http://relaxng.org/ns/structure/1.0">
+	      <define name="{$patternPrefix}{@ident}" xmlns="http://relaxng.org/ns/structure/1.0">
 		<notAllowed xmlns="http://relaxng.org/ns/structure/1.0"/>
 	      </define>
 	    </xsl:when>
 	    <xsl:otherwise>
-	      <define  name="{@ident}"  xmlns="http://relaxng.org/ns/structure/1.0">
+	      <define  name="{$patternPrefix}{@ident}"  xmlns="http://relaxng.org/ns/structure/1.0">
 		<element  name="{$name}" xmlns="http://relaxng.org/ns/structure/1.0">
 		  <xsl:if test="@ns">
 		    <xsl:attribute name="ns"><xsl:value-of select="@ns"/></xsl:attribute>
@@ -438,7 +450,7 @@
     
     <define name="{@ident}.attributes"  xmlns="http://relaxng.org/ns/structure/1.0">
       <xsl:if test="$parameterize='true'">
-	<rng:ref name="tei.global.attributes"/>
+	<rng:ref name="{$patternPrefix}tei.global.attributes"/>
 	<xsl:for-each select="tei:classes/tei:memberOf">
 	  <xsl:for-each select="key('CLASSES',@key)">
 	    <xsl:if test="@type='atts' or @type='both'">
@@ -585,7 +597,7 @@
 	    <xsl:with-param name="grammar">true</xsl:with-param>
 	    <xsl:with-param name="content">
 	      <Wrapper>
-		<define name="{@ident}"  xmlns="http://relaxng.org/ns/structure/1.0">
+		<define name="{$patternPrefix}{@ident}"  xmlns="http://relaxng.org/ns/structure/1.0">
 		  <xsl:if test="$parameterize='true'">
 		    <xsl:if test="starts-with(@ident,'macro.component')
 				  or @combine='true'">
@@ -640,7 +652,7 @@
     <xsl:value-of select="ancestor::tei:elementSpec/@ident|ancestor::tei:classSpec/@ident"/>
   </xsl:variable>
   <define name="{@key}" combine="choice"  xmlns="http://relaxng.org/ns/structure/1.0">
-    <ref name="{$owner}" xmlns="http://relaxng.org/ns/structure/1.0"/>
+    <ref name="{$patternPrefix}{$owner}" xmlns="http://relaxng.org/ns/structure/1.0"/>
   </define>
 </xsl:template>
 
@@ -1447,6 +1459,17 @@ it wrong otherwise. I suspect a bug there somewhere.
   <xsl:element name="{local-name(.)}" xmlns="http://relaxng.org/ns/structure/1.0">
     <xsl:copy-of select="@*"/>
     <xsl:apply-templates mode="forceRNG"/>
+  </xsl:element>
+</xsl:template>
+
+<xsl:template match="rng:ref" mode="forceRNG">
+  <xsl:element name="{local-name(.)}" xmlns="http://relaxng.org/ns/structure/1.0">
+      <xsl:attribute name="name">
+	<xsl:if test="key('IDENTS',@name)">
+	  <xsl:value-of select="$patternPrefix"/>
+	</xsl:if>
+	<xsl:value-of select="@name"/>
+      </xsl:attribute>
   </xsl:element>
 </xsl:template>
 
