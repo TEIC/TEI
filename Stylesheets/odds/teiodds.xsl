@@ -466,10 +466,7 @@
       </xsl:apply-templates>
       
       <xsl:choose>
-	<xsl:when test="ancestor::tei:schemaSpec/@ns">
-	  <rng:empty/>
-	</xsl:when>
-	<xsl:when test="not(@ns) or @ns='' or contains(@ns,'http://www.tei-c.org')">
+	<xsl:when test="$TEIC='true'">
 	  <optional xmlns="http://relaxng.org/ns/structure/1.0">
 	    <attribute name="TEIform" a:defaultValue="{@ident}" xmlns="http://relaxng.org/ns/structure/1.0">
 	      <text xmlns="http://relaxng.org/ns/structure/1.0"/>
