@@ -812,7 +812,7 @@ So, at the first, process the second; at the second, do nothing.
   <xsl:text>&#10;&lt;!ATTLIST </xsl:text>
   <xsl:value-of select="$ename"/>
   <xsl:if test="$parameterize='true'">
-    <xsl:text>&#10; %tei.global.attributess;</xsl:text>
+    <xsl:text>&#10; %tei.global.attributes;</xsl:text>
   </xsl:if>
   <xsl:if test="$parameterize='true'">
     <xsl:apply-templates select="tei:classes/tei:memberOf" mode="tangleAtts"/>
