@@ -52,7 +52,7 @@ XSL stylesheet to process TEI documents using ODD markup
 	  <xsl:when test="count(rng:*)=1 and (rng:empty or rng:notAllowed)">
 	    <xsl:copy-of select="*"/>
 	  </xsl:when>
-	  <xsl:when test="contains($what,'.attributes')">
+	  <xsl:when test="contains($what,'attributes')">
 	    <xsl:copy-of select="*"/>
 	  </xsl:when>
 	  <xsl:otherwise>

@@ -204,6 +204,7 @@ End of macro declarations
     </xsl:otherwise>
   </xsl:choose>
 </xsl:for-each>
+&lt;!--end of predeclared classes --&gt;
 </xsl:if>
 
       <xsl:apply-templates select="key('CLASSDOCS',1)"  mode="tangle"/>
@@ -811,7 +812,7 @@ So, at the first, process the second; at the second, do nothing.
   <xsl:text>&#10;&lt;!ATTLIST </xsl:text>
   <xsl:value-of select="$ename"/>
   <xsl:if test="$parameterize='true'">
-    <xsl:text>&#10; %tei.global.attributes;</xsl:text>
+    <xsl:text>&#10; %tei.global.attributess;</xsl:text>
   </xsl:if>
   <xsl:if test="$parameterize='true'">
     <xsl:apply-templates select="tei:classes/tei:memberOf" mode="tangleAtts"/>
@@ -832,7 +833,7 @@ So, at the first, process the second; at the second, do nothing.
     <xsl:for-each select="key('IDENTS',@key)[1]">
       <xsl:if test="@type='atts'">
 	%<xsl:value-of select="@ident"/>
-	<xsl:text>.attributes;</xsl:text>
+	<xsl:text>attributes;</xsl:text>
       </xsl:if>
     </xsl:for-each>
   </xsl:for-each>
@@ -841,7 +842,7 @@ So, at the first, process the second; at the second, do nothing.
 <xsl:template name="classAtt">
   <xsl:if test="$verbose='true'">
     <xsl:message>    ....  <xsl:value-of
-    select="@ident"/>.attributes</xsl:message>  
+    select="@ident"/>attributes</xsl:message>  
   </xsl:if>
   <xsl:variable name="thisclass">
     <xsl:value-of select="@ident"/>   
@@ -850,7 +851,7 @@ So, at the first, process the second; at the second, do nothing.
     <xsl:when test="$parameterize='true'">
       <xsl:text>&#10;&lt;!ENTITY % </xsl:text>
       <xsl:value-of select="$thisclass"/>
-      <xsl:text>.attributes &#39;</xsl:text>
+      <xsl:text>attributes &#39;</xsl:text>
       <xsl:call-template name="attclasses"/>
       <xsl:call-template name="attributeList"/>
       <xsl:text>&#39;&gt; </xsl:text>
@@ -874,11 +875,11 @@ So, at the first, process the second; at the second, do nothing.
   <xsl:if test="@type='atts' or @type='both'">
     <xsl:if test="$verbose='true'">
       <xsl:message>      .... added contents of [%<xsl:value-of
-      select="@ident"/>.attributes;]</xsl:message> 
+      select="@ident"/>attributes;]</xsl:message> 
     </xsl:if>
    <xsl:text>&#10; %</xsl:text>
    <xsl:value-of select="@ident"/>
-   <xsl:text>.attributes;</xsl:text>
+   <xsl:text>attributes;</xsl:text>
   </xsl:if>
 </xsl:template>
 
@@ -1033,6 +1034,9 @@ So, at the first, process the second; at the second, do nothing.
 	      <xsl:if test="starts-with($N,'%tei.')">
 		<xsl:attribute name="type">class</xsl:attribute>
 	      </xsl:if>
+	      <xsl:if test="starts-with($N,'%model.')">
+		<xsl:attribute name="type">class</xsl:attribute>
+	      </xsl:if>
 	      <xsl:value-of select="$N"/>
 	    </N>
 	  </xsl:if>
@@ -1063,7 +1067,7 @@ So, at the first, process the second; at the second, do nothing.
 <xsl:template match="tei:classSpec" mode="processDefaultAtts">
   <xsl:text>
 &lt;!ENTITY % </xsl:text><xsl:value-of select="@ident"/>
-    <xsl:text>.attributes &#39;&#39;&gt;</xsl:text>
+    <xsl:text>attributes &#39;&#39;&gt;</xsl:text>
 </xsl:template>
 
 <xsl:template name="attributeList">
@@ -1072,6 +1076,7 @@ So, at the first, process the second; at the second, do nothing.
     
 <xsl:template match="tei:attDef" mode="tangle">
   <xsl:text>&#10; </xsl:text>
+  <xsl:if test="@ns='http://www.w3.org/XML/1998/namespace'">xml:</xsl:if>
   <xsl:choose>
     <xsl:when test="tei:altIdent">
       <xsl:value-of select="normalize-space(tei:altIdent)"/>

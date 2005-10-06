@@ -243,7 +243,7 @@
 	<xsl:with-param name="grammar">true</xsl:with-param>
 	<xsl:with-param name="content">
 	  <Wrapper>
-	    <define name="{@ident}.attributes" xmlns="http://relaxng.org/ns/structure/1.0">
+	    <define name="{$patternPrefix}{@ident}.attributes" xmlns="http://relaxng.org/ns/structure/1.0">
 	      <xsl:choose>
 		<xsl:when test="tei:attList//tei:attDef">
 		  <xsl:for-each select="tei:attList//tei:attDef">
@@ -426,8 +426,8 @@
 		      <xsl:apply-templates select="tei:desc" mode="doc"/>
 		    </a:documentation>
 		  </xsl:if>
-		  <ref name="{@ident}.content"  xmlns="http://relaxng.org/ns/structure/1.0"/>
-		  <ref name="{@ident}.attributes"  xmlns="http://relaxng.org/ns/structure/1.0"/>
+		  <ref name="{$patternPrefix}{@ident}.content"  xmlns="http://relaxng.org/ns/structure/1.0"/>
+		  <ref name="{$patternPrefix}{@ident}.attributes"  xmlns="http://relaxng.org/ns/structure/1.0"/>
 		</element>
 	      </define>
 	      <xsl:call-template name="defineContent"/>
@@ -448,13 +448,13 @@
   <xsl:template name="defineAttributes">
     <xsl:variable name="name" select="@ident"/>
     
-    <define name="{@ident}.attributes"  xmlns="http://relaxng.org/ns/structure/1.0">
+    <define name="{$patternPrefix}{@ident}.attributes"  xmlns="http://relaxng.org/ns/structure/1.0">
       <xsl:if test="$parameterize='true'">
 	<rng:ref name="{$patternPrefix}tei.global.attributes"/>
 	<xsl:for-each select="tei:classes/tei:memberOf">
 	  <xsl:for-each select="key('CLASSES',@key)">
 	    <xsl:if test="@type='atts' or @type='both'">
-	      <ref name="{@ident}.attributes" xmlns="http://relaxng.org/ns/structure/1.0"/>
+	      <ref name="{$patternPrefix}{@ident}.attributes" xmlns="http://relaxng.org/ns/structure/1.0"/>
 	    </xsl:if>
 	  </xsl:for-each>
 	</xsl:for-each>
@@ -512,7 +512,7 @@
       </BLAH>
     </xsl:variable>
     
-    <define name="{@ident}.content" xmlns="http://relaxng.org/ns/structure/1.0">
+    <define name="{$patternPrefix}{@ident}.content" xmlns="http://relaxng.org/ns/structure/1.0">
       <xsl:choose>
 	<xsl:when test="count(exsl:node-set($Contents)/BLAH/*)=0">
 	  <rng:empty/>
@@ -1042,14 +1042,15 @@
 	<xsl:value-of select="normalize-space(tei:altIdent)"/>
       </xsl:when>
       <xsl:otherwise>
-	    <xsl:value-of select="@ident"/>
+	<xsl:if test="@ns='http://www.w3.org/XML/1998/namespace'">xml:</xsl:if>
+	<xsl:value-of select="@ident"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
  
   <rng:attribute name="{$name}" >
     <xsl:if test="@ns">
-      <xsl:attribute name="ns"><xsl:value-of select="@ns"/></xsl:attribute>
+      <xsl:copy-of select="@ns"/>
     </xsl:if>
     <xsl:if test="tei:defaultVal">
       <xsl:attribute name="a:defaultValue">
@@ -1443,7 +1444,7 @@
       <xsl:with-param name="grammar">true</xsl:with-param>
       <xsl:with-param name="content">
 	<Wrapper>
-	  <rng:define name="{@ident}.attributes" combine="choice" >
+	  <rng:define name="{$patternPrefix}{@ident}.attributes" combine="choice" >
 	    <rng:empty />
 	  </rng:define>
 	</Wrapper>

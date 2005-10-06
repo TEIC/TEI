@@ -824,7 +824,8 @@ so that is only put back in if there is some content
 	      <xsl:comment>element replacement of class attribute named <xsl:value-of 
 		  select="$att"/></xsl:comment>
 	      <xsl:for-each select="key('REPLACEATT',$lookingAt)">
-		<tei:attDef name="{$att}">
+		<tei:attDef ident="{$att}">
+		  <xsl:copy-of select="@ns"/>
 		  <xsl:copy-of select="@usage"/>
 		  <xsl:copy-of select="tei:*"/>
 		</tei:attDef>
