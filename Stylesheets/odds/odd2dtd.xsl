@@ -833,7 +833,7 @@ So, at the first, process the second; at the second, do nothing.
     <xsl:for-each select="key('IDENTS',@key)[1]">
       <xsl:if test="@type='atts'">
 	%<xsl:value-of select="@ident"/>
-	<xsl:text>attributes;</xsl:text>
+	<xsl:text>.attributes;</xsl:text>
       </xsl:if>
     </xsl:for-each>
   </xsl:for-each>
@@ -842,7 +842,7 @@ So, at the first, process the second; at the second, do nothing.
 <xsl:template name="classAtt">
   <xsl:if test="$verbose='true'">
     <xsl:message>    ....  <xsl:value-of
-    select="@ident"/>attributes</xsl:message>  
+    select="@ident"/>.attributes</xsl:message>  
   </xsl:if>
   <xsl:variable name="thisclass">
     <xsl:value-of select="@ident"/>   
@@ -851,7 +851,7 @@ So, at the first, process the second; at the second, do nothing.
     <xsl:when test="$parameterize='true'">
       <xsl:text>&#10;&lt;!ENTITY % </xsl:text>
       <xsl:value-of select="$thisclass"/>
-      <xsl:text>attributes &#39;</xsl:text>
+      <xsl:text>.attributes &#39;</xsl:text>
       <xsl:call-template name="attclasses"/>
       <xsl:call-template name="attributeList"/>
       <xsl:text>&#39;&gt; </xsl:text>
@@ -875,11 +875,11 @@ So, at the first, process the second; at the second, do nothing.
   <xsl:if test="@type='atts' or @type='both'">
     <xsl:if test="$verbose='true'">
       <xsl:message>      .... added contents of [%<xsl:value-of
-      select="@ident"/>attributes;]</xsl:message> 
+      select="@ident"/>.attributes;]</xsl:message> 
     </xsl:if>
    <xsl:text>&#10; %</xsl:text>
    <xsl:value-of select="@ident"/>
-   <xsl:text>attributes;</xsl:text>
+   <xsl:text>.attributes;</xsl:text>
   </xsl:if>
 </xsl:template>
 
@@ -1067,7 +1067,7 @@ So, at the first, process the second; at the second, do nothing.
 <xsl:template match="tei:classSpec" mode="processDefaultAtts">
   <xsl:text>
 &lt;!ENTITY % </xsl:text><xsl:value-of select="@ident"/>
-    <xsl:text>attributes &#39;&#39;&gt;</xsl:text>
+    <xsl:text>.attributes &#39;&#39;&gt;</xsl:text>
 </xsl:template>
 
 <xsl:template name="attributeList">
