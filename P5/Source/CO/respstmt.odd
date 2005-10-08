@@ -14,14 +14,31 @@ See the file COPYING for details.
     <memberOf key="tei.msItemPart"/>
   </classes>
   <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
-    <rng:zeroOrMore>
-      <rng:choice>
-	<rng:ref name="tei.naming"/>
-<!--	<rng:ref name="tei.Incl"/>-->
+    <rng:choice>
+      <rng:group>
 	<rng:ref name="resp"/>
-      </rng:choice>
-    </rng:zeroOrMore>
-    <!-- 
+	<rng:zeroOrMore>
+	  <rng:ref name="resp"/>
+	</rng:zeroOrMore>
+	<rng:oneOrMore>
+	  <rng:ref name="tei.naming"/>
+	</rng:oneOrMore>
+      </rng:group>
+      <rng:group>
+	<rng:group> <!-- this group here just so that proper parens are output for DTDs -->
+	  <rng:ref name="tei.naming"/>
+	</rng:group>
+	<rng:zeroOrMore>
+            <rng:ref name="tei.naming"/>
+	</rng:zeroOrMore>
+	<rng:oneOrMore>
+	  <rng:ref name="resp"/>
+	</rng:oneOrMore>
+      </rng:group>
+    </rng:choice>
+      <!-- the following Schematron rule will not be needed after we switch to
+	   new "model.agent" class (or whatever it ends up being called)-->
+      <!-- 
     <s:pattern name="not_in_respStmt"  xmlns:s="http://www.ascc.net/xml/schematron">
       <s:rule context="tei:respStmt">
 	<s:report test="./tei:geogName or ./tei:placeName">
