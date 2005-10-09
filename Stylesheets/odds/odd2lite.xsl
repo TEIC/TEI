@@ -368,7 +368,7 @@
 	  </xsl:call-template>
 	  <xsl:text> </xsl:text>
 	  <xsl:for-each select="..">
-	    <xsl:call-template name="generateClassParents"/>
+	    <xsl:call-template name="showAttClasses"/>
 	  </xsl:for-each>
 	</xsl:when>
 	<xsl:otherwise>
@@ -758,7 +758,7 @@
 	      <xsl:with-param name="word">In addition to global attributes and those inherited from</xsl:with-param></xsl:call-template>
 	      <xsl:text> </xsl:text>
 	    <xsl:for-each select="..">
-	      <xsl:call-template name="generateClassParents"/>
+	      <xsl:call-template name="showAttClasses"/>
 	    </xsl:for-each>
 	    <xsl:text>)</xsl:text>
 	  </xsl:when>
@@ -787,7 +787,7 @@
 	    </xsl:call-template>
 	    <xsl:text> </xsl:text>
 	    <xsl:for-each select="..">
-	      <xsl:call-template name="generateClassParents"/>
+	      <xsl:call-template name="showAttClasses"/>
 	    </xsl:for-each>
 	  </xsl:when>
 	  <xsl:otherwise>

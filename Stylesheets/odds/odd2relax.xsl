@@ -284,15 +284,6 @@
 	<xsl:when test="@type='atts'">    
 	  <xsl:apply-templates select="." mode="processDefaultAtts"/>
 	</xsl:when>
-	<xsl:when test="@type='default'">    
-	  <xsl:apply-templates select="." mode="processDefaultAtts"/>
-	</xsl:when>
-	<xsl:when test="@type='both'">    
-	  <xsl:apply-templates select="." mode="processModel">
-	    <xsl:with-param name="declare">true</xsl:with-param>
-	  </xsl:apply-templates>
-	  <xsl:apply-templates select="." mode="processDefaultAtts"/>
-	</xsl:when>
       </xsl:choose>
     </xsl:for-each>
 </xsl:template>

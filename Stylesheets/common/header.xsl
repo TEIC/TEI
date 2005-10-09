@@ -63,9 +63,9 @@
 	</xsl:for-each>
       </xsl:when>
       <xsl:when
-	  test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/respStmt[tei:resp='author']">
+	  test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:respStmt[tei:resp='author']">
 	<xsl:apply-templates 
-	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/respStmt[tei:resp='author'][1]/tei:name"/>
+	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:respStmt[tei:resp='author'][1]/tei:name"/>
       </xsl:when>
       <xsl:when test="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor">
 	<xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor[1]" mode="author"/>

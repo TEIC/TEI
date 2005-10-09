@@ -238,7 +238,7 @@
       </xsl:choose>
       </xsl:with-param>
     </xsl:apply-templates>
-    <xsl:if test="@type='atts' or @type='both'">
+    <xsl:if test="@type='atts'">
       <xsl:call-template name="bitOut">
 	<xsl:with-param name="grammar">true</xsl:with-param>
 	<xsl:with-param name="content">
@@ -291,7 +291,7 @@
 				   mode="tangleModel"/>
 	    </xsl:when>
 	    <xsl:otherwise>
-	      <xsl:if test="@type='both' or @type='model'">
+	      <xsl:if test="@type='model'">
 		<define name="{$patternPrefix}{$thisClass}" xmlns="http://relaxng.org/ns/structure/1.0">
 		  <rng:choice>
 		    <xsl:choose>
@@ -453,7 +453,7 @@
 	<rng:ref name="{$patternPrefix}tei.global.attributes"/>
 	<xsl:for-each select="tei:classes/tei:memberOf">
 	  <xsl:for-each select="key('CLASSES',@key)">
-	    <xsl:if test="@type='atts' or @type='both'">
+	    <xsl:if test="@type='atts'">
 	      <ref name="{$patternPrefix}{@ident}.attributes" xmlns="http://relaxng.org/ns/structure/1.0"/>
 	    </xsl:if>
 	  </xsl:for-each>
@@ -1086,10 +1086,12 @@
     <xsl:when test="not(tei:classes)"> (none)   </xsl:when>
     <xsl:otherwise>
       <xsl:for-each select="tei:classes/tei:memberOf">
+	<xsl:if test="preceding-sibling::tei:memberOf">
+	  <xsl:text>: </xsl:text>
+	</xsl:if>
 	<xsl:choose>
 	  <xsl:when test="key('CLASSES',@key)">
 	    <xsl:for-each select="key('CLASSES',@key)">
-	      <xsl:text>: </xsl:text>
 	      <xsl:call-template name="makeLink">
 		<xsl:with-param name="class">classlink</xsl:with-param>
 		<xsl:with-param name="name"><xsl:value-of select="@ident"/></xsl:with-param>
@@ -1100,7 +1102,6 @@
 	    </xsl:for-each>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <xsl:text>: </xsl:text>
 	    <xsl:value-of select="@key"/>
 	  </xsl:otherwise>
 	</xsl:choose>
@@ -1115,7 +1116,7 @@
       <xsl:choose>
 	<xsl:when test="key('CLASSES',@key)">
 	  <xsl:for-each select="key('CLASSES',@key)">
-	    <xsl:if test="@type='both' or @type='atts'">
+	    <xsl:if test="@type='atts'">
 	      <xsl:call-template name="makeLink">
 		<xsl:with-param name="class">classlink</xsl:with-param>
 		<xsl:with-param name="name"><xsl:value-of select="@ident"/></xsl:with-param>

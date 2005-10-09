@@ -872,7 +872,7 @@ So, at the first, process the second; at the second, do nothing.
 </xsl:template>
 
 <xsl:template match="tei:classSpec" mode="tagatts">
-  <xsl:if test="@type='atts' or @type='both'">
+  <xsl:if test="@type='atts'">
     <xsl:if test="$verbose='true'">
       <xsl:message>      .... added contents of [%<xsl:value-of
       select="@ident"/>.attributes;]</xsl:message> 
@@ -923,10 +923,6 @@ So, at the first, process the second; at the second, do nothing.
       <xsl:call-template name="classModel"/>
     </xsl:when>
    
-    <xsl:when test="@type='both'">
-      <xsl:call-template name="classAtt"/>
-      <xsl:call-template name="classModel"/>
-    </xsl:when>
   </xsl:choose>
 </xsl:template>
 
@@ -940,10 +936,6 @@ So, at the first, process the second; at the second, do nothing.
       <xsl:call-template name="classModel"/>
     </xsl:when>
     
-    <xsl:when test="@type='both'">
-      <xsl:call-template name="classModel"/>
-      <!--    <xsl:call-template name="classAtt"/>-->
-    </xsl:when>
   </xsl:choose>
 </xsl:template>
 
