@@ -329,7 +329,7 @@ introduced.  An entity is associated with each class named by
 prefixing the string <q>m.</q> (for <q>model</q>) to the name of the
 class.  For example, the value of the parameter entity
 <ident type="pe">tei.bibl</ident> is a list of the members of the class
-<ident type="class">bibl</ident>.</p>
+<ident type="class">tei.bibl</ident>.</p>
 <p>In the modifiable version of the TEI DTD, an additional entity is
 defined for each model class.  This additional entity also takes the
 name of the class, this time prefixed by the string <q>x.</q> (for
@@ -339,13 +339,13 @@ corresponding x-dot entity is always included within the replacement
 string for each m-dot entity.  This enables an encoder to add new
 members to a class simply by declaring a new value for its associated
 x-dot entity.</p>
-<p>For example, the class <ident type="class">bibl</ident> has the three
+<p>For example, the class <ident type="class">tei.bibl</ident> has the three
 members <gi>bibl</gi>, <gi>biblFull</gi>, and <gi>biblStruct</gi>.
 Its content-model entity is defined thus:
 <eg><![CDATA[<!ENTITY % x.bibl '' >
 <!ENTITY % tei.bibl '%x.bibl; bibl | biblFull | biblStruct' >]]></eg>
 With the default value of the x-dot entity, this is the same as
-defining <ident type="class">tei.bibl</ident> with the replacement text
+defining <ident type="class">tei.tei.bibl</ident> with the replacement text
 <code>bibl | biblFull | biblStruct</code>.</p>
 <p>An encoder can add an element to the class by providing a new
 declaration for the x-dot entity.  For example, to add a new element
@@ -503,11 +503,11 @@ declared for this customization into existing model classes:
 <!ENTITY % x.common    'eg |'                                   >]]></eg>
 As further discussed in section <ptr target="#STEC"/>, these
 declarations have the effect of adding the elements <gi>ident</gi>,
-<gi>code</gi>, and <gi>kw</gi> to the <ident type="class">data</ident>
-model class, and adding the element <gi>eg</gi> to the <ident type="class">inter</ident> and <ident type="class">common</ident>
+<gi>code</gi>, and <gi>kw</gi> to the <ident type="class">tei.data</ident>
+model class, and adding the element <gi>eg</gi> to the <ident type="class">tei.inter</ident> and <ident type="class">tei.common</ident>
 classes. Without these declarations, the elements named here would not
 appear anywhere within the structure of the TEI DTD.</p>
-<p>The entity file also redefines the <ident type="class">linking</ident> attribute class, which is used to add
+<p>The entity file also redefines the <ident type="class">tei.linking</ident> attribute class, which is used to add
 linking attributes to all elements when the <ident>TEI.linking</ident>
 tag set is enabled. In TEI lite only a subset of the linking
 attributes, given by the following definition, is required (compare
