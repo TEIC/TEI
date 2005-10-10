@@ -8,21 +8,21 @@ See the file COPYING for details.
 <desc>contains text displayed in tabular form, in
 rows and columns.</desc>
   <classes>
-    <memberOf key="tei.inter"/>
-    <memberOf key="tei.common"/>
+    <memberOf key="model.inter"/>
+    <memberOf key="model.common"/>
   </classes>
   <content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:zeroOrMore>
         <rng:choice>
           <rng:ref name="head"/>
-          <rng:ref name="tei.Incl"/>
+          <rng:ref name="model.global"/>
         </rng:choice>
       </rng:zeroOrMore>
       <rng:oneOrMore>
         <rng:ref name="row"/>
         <rng:zeroOrMore>
-          <rng:ref name="tei.Incl"/>
+          <rng:ref name="model.global"/>
         </rng:zeroOrMore>
       </rng:oneOrMore>
     </rng:group>
@@ -31,7 +31,7 @@ rows and columns.</desc>
     <attDef ident="rows" usage="opt">
 	<equiv/>
 	<desc>indicates the number of rows in the table.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.count"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/></datatype>
       <valDesc>If no number is supplied, an application must calculate the
 number of rows.</valDesc>
       <remarks>
@@ -41,7 +41,7 @@ number of rows.</valDesc>
     <attDef ident="cols" usage="opt">
 	<equiv/>
 	<desc>indicates the number of columns in each row of the table.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.count"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/></datatype>
       <valDesc>If no number is supplied, an application must calculate the
 number of columns.</valDesc>
       <remarks>

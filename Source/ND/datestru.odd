@@ -7,18 +7,18 @@ See the file COPYING for details.
 <gloss/>
 <desc>contains an internally structured representation of a date.</desc>
   <classes>
-    <memberOf key="tei.data"/>
-    <memberOf key="tei.date"/>
-    <memberOf key="tei.temporalExpr"/>
-    <memberOf key="tei.temporalExprAtts"/>
+    <memberOf key="model.pPart.data"/>
+    <memberOf key="model.dateLike"/>
+    <memberOf key="model.datePart"/>
+    <memberOf key="att.datePart"/>
   </classes>
   <content>
     <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:choice>
         <rng:text/>
-<rng:ref name="tei.gLike"/>
-        <rng:ref name="tei.temporalExpr"/>
-        <rng:ref name="tei.Incl"/>
+<rng:ref name="model.gLike"/>
+        <rng:ref name="model.datePart"/>
+        <rng:ref name="model.global"/>
       </rng:choice>
     </rng:zeroOrMore>
   </content>
@@ -26,7 +26,7 @@ See the file COPYING for details.
     <attDef ident="calendar" usage="opt">
 	<equiv/>
 	<desc>indicates the system or calendar to which the date belongs.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
 <!--      <valDesc>Recommended values include:
 <term>Gregorian</term>,
 <term>Julian</term>,
@@ -49,7 +49,7 @@ See the file COPYING for details.
     <attDef ident="exact" usage="opt">
 	<equiv/>
 	<desc>indicates the degree of precision to be attributed to the date.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.certainty"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.certainty"/></datatype>
       <valDesc>Any appropriate value, e.g.
 <term>ca.</term>,
 <term>approx</term>,
