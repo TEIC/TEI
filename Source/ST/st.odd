@@ -499,7 +499,7 @@ base modules:
 ]>]]></egXML>
 The following set of declarations has the same effect, but with the
 additional restriction that each text division (i.e. each member of the
-element class <ident type="class">tei.divn</ident>) must be homogenous with
+element class <ident type="class">att.divLike</ident>) must be homogenous with
 respect to the mixture of available bases.  Because in a
 <soCalled>general</soCalled> base, each <gi>div</gi> of the text may use
 a different base, the divisions of the text prefixed by this set of
@@ -517,7 +517,7 @@ the prose, verse, or dictionary base modules:
 <div2 xml:id="STGA"><head>Global Attributes</head>
 <p>The following attributes are defined for every TEI element.<note place="foot">More
 exactly, these are the attributes of the element class
-<ident type="class">tei.global</ident>, to which all elements belong; for
+<ident type="class">att.global</ident>, to which all elements belong; for
 further discussion of attribute classes and ways in which attributes
 may be inherited and over-ridden, see section <ptr target="#STECAT"/>.</note>
 <specList><specDesc key="att.global" atts="xml:id n xml:lang rend"/></specList>
@@ -528,7 +528,7 @@ chapters of Part III and Part IV.  See also section <ptr target="#STECAT"/>.
  </p>
 <p>An additional attribute, <att>TEIform</att>, is also defined
 for every TEI element.  Unlike the other attributes defined for every
-element, <att>TEIform</att> is not defined by class <ident type="class">tei.global</ident> because its default value is different in
+element, <att>TEIform</att> is not defined by class <ident type="class">att.global</ident> because its default value is different in
 every case and must be defined individually for each element.<note place="foot">A dummy element class <ident type="class">tei.att.TEIform</ident> is
 defined in the reference section, solely for documentary purposes.</note>
 <specList><specDesc key="att.TEIform" atts="TEIform"/></specList>
@@ -973,7 +973,7 @@ members of the <ident type="class">tei.att.pointing</ident> class share a set
 of attributes useful for managing cross-reference links and other
 pointers.<note place="foot">Because the details of their pointing
 mechanism differ, the members of the <ident
-type="class">tei.pointer</ident> class do not, however, share their
+type="class">att.pointing</ident> class do not, however, share their
 pointing attributes.</note>
  </p>
 <p>The attributes shared by the members of an attribute class are defined in a
@@ -1036,7 +1036,7 @@ regularizing their spelling (section <ptr target="#CONARS"/>)
  </item><label><ident type="class">tei.att.personal</ident> </label>
 <item>elements which contain
 personal names or parts of them
-</item><!--<label><ident type="class">tei.placePart</ident> </label>
+</item><!--<label><ident type="class">model.placeNamePart</ident> </label>
 <item>elements which contain
 place names or parts of them
  </item>--><label><ident type="class">tei.att.pointing</ident> </label>
@@ -1084,7 +1084,7 @@ attributes for the terminology base
 <p>These entities are included in the <ident type="file">teiclasses.ent</ident> file indirectly, when the
 entity-declaration files of each module are embedded, as shown below
 in section <ptr target="#STECMK"/>.  For purposes of documentation,
-these attributes are treated as if inherited by the class <ident type="class">tei.global</ident> from superclasses called <ident type="class">tei.analysis</ident>, etc., and are documented under the
+these attributes are treated as if inherited by the class <ident type="class">att.global</ident> from superclasses called <ident type="class">att.analytic</ident>, etc., and are documented under the
 class name.
 
 <specGrp xml:id="DSTECAT" n="Attribute classes">
@@ -1124,24 +1124,24 @@ entity is always included within the replacement string for each m-dot
 entity.  This enables an encoder to add new members to a class simply by
 declaring a new value for an x-dot entity.
  </p>
-<p>For example, the class <ident type="class">tei.bibl</ident> has the three
+<p>For example, the class <ident type="class">model.biblLike</ident> has the three
 members <gi>bibl</gi>, <gi>biblFull</gi>, and <gi>biblStruct</gi>.
 Its content-model entity is defined thus:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % x.bibl '' >
-<!ENTITY % tei.bibl '%x.bibl; bibl | biblFull | biblStruct' >]]></egXML>
+<!ENTITY % model.biblLike '%x.bibl; bibl | biblFull | biblStruct' >]]></egXML>
 With the default value of the x-dot entity, this is the same as defining
-<ident type="pe">tei.bibl</ident> with the replacement text <code>bibl | biblFull | biblStruct</code>.  If an encoder wishes
+<ident type="pe">model.biblLike</ident> with the replacement text <code>bibl | biblFull | biblStruct</code>.  If an encoder wishes
 to add a new bibliographic element called <gi>my.bib</gi>, it can
-be added to the <ident type="class">tei.bibl</ident> class by redefining the
+be added to the <ident type="class">model.biblLike</ident> class by redefining the
 x-dot entity thus:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % x.bibl 'my.bib |' >]]></egXML>
-This changes the replacement text of <ident type="pe">tei.bibl</ident> from
+This changes the replacement text of <ident type="pe">model.biblLike</ident> from
 its default value to <code>my.bib | bibl | biblFull |
 biblStruct</code>.  If more than one element is to be added to a class,
 the x-dot entity for the class should be redefined as a list of the new
 generic identifiers, each one <emph>(including the last)</emph> followed
 by a vertical bar.  The same effect could be achieved simply by
-redefining the whole of the new <ident type="pe">tei.bibl</ident> entity
+redefining the whole of the new <ident type="pe">model.biblLike</ident> entity
 directly, but the x-dot method requires no repetition of the already
 existing members of the class and thus minimizes the chance of error.
  </p>
@@ -1153,16 +1153,16 @@ appear.  Superclasses transmit their location characteristics to their
 subclasses by referring, in declaring their m-dot entity, to the m-dot
 entities of the subclasses.
  </p>
-<p>For example, the class <ident type="class">tei.phrase</ident> includes the
-classes <ident type="class">tei.data</ident>, <ident type="class">tei.edit</ident>,
-<ident type="class">tei.hqphrase</ident>, <ident type="class">tei.loc</ident>, and
-<ident type="class">tei.seg</ident> as members, as can be seen in the
+<p>For example, the class <ident type="class">model.phrase</ident> includes the
+classes <ident type="class">model.pPart.data</ident>, <ident type="class">model.pPart.edit</ident>,
+<ident type="class">model.hiLike</ident>, <ident type="class">model.ptrLike</ident>, and
+<ident type="class">model.segLike</ident> as members, as can be seen in the
 declaration for its m-dot entity:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % class.phrase "%x.class.phrase; %class.data; | %class.edit;
  | %class.formPointers; | %class.hqphrase; | %class.loc; 
  | %class.oddPhr; | %class.phrase.verse; | %class.seg; | %n.formula; 
  | %n.handShift;">]]></egXML>
- When the entity <ident type="pe">tei.phrase</ident> is referred to in
+ When the entity <ident type="pe">model.phrase</ident> is referred to in
 content models, all members of all subclasses are included in the model.
  </p></div3>
 <div3 xml:id="STECOV"><head>The TEICLAS2.ENT File</head>
@@ -1264,26 +1264,26 @@ elements in the core and elements declared in particular modules; a
 reference is given at least to the relevant section on the core tags.
  </p>
 <p>The following are phrase-level element classes:
-<list type="gloss"><label><ident type="class">tei.hqphrase</ident> </label>
+<list type="gloss"><label><ident type="class">model.hiLike</ident> </label>
 <item>elements for highlighted
 phrases or material marked by quotation marks, including those defined
 in section <ptr target="#COHQ"/>
- </item><label><ident type="class">tei.data</ident> </label>
+ </item><label><ident type="class">model.pPart.data</ident> </label>
 <item>elements for recording
 information about the referents of a text, including those defined in
 section <ptr target="#CONA"/>
- </item><label><ident type="class">tei.date</ident> </label>
+ </item><label><ident type="class">model.dateLike</ident> </label>
 <item>elements for recording
 dates, including those defined in
 section <ptr target="#CONADA"/>
- </item><label><ident type="class">tei.edit</ident> </label>
+ </item><label><ident type="class">model.pPart.edit</ident> </label>
 <item>elements for recording
 simple editorial interventions in a text, including those defined in
 section <ptr target="#COED"/>
- </item><label><ident type="class">tei.loc</ident> </label>
+ </item><label><ident type="class">model.ptrLike</ident> </label>
 <item>elements for recording
 location information in a text, including those defined in section <ptr target="#CORS"/>
- </item><label><ident type="class">tei.seg</ident></label>
+ </item><label><ident type="class">model.segLike</ident></label>
 <item>elements for marking arbitrary
 segments at the level of individual characters or phrases, including
 those documented in section <ptr target="#SASE"/> and <ptr target="#AILC"/>
@@ -1295,7 +1295,7 @@ which see chapter <ptr target="#TD"/>)
  </item><label><ident type="class">tei.versePhrases</ident></label>
 <item>phrase-level elements
 specific to verse, documented in section <ptr target="#VESE"/>
- </item><label><ident type="class">tei.formPointers</ident></label>
+ </item><label><ident type="class">model.ptrLike.form</ident></label>
 <item>elements for
 referring, within a dictionary entry, to the orthographic form or
 pronunciation of the headword, documented in section <ptr target="#DIHW"/>
@@ -1303,20 +1303,20 @@ pronunciation of the headword, documented in section <ptr target="#DIHW"/>
  </p>
 <p>The following are inter-level element classes:
 <list type="gloss">
-  <label><ident type="class">tei.hqinter</ident></label>
+  <label><ident type="class">model.qLike</ident></label>
   <item>elements for highlighted
   phrases or material marked by quotation marks, including those defined
   in section <ptr target="#COHQ"/></item>
-  <label><ident type="class">tei.bibl</ident></label>
+  <label><ident type="class">model.biblLike</ident></label>
   <item>elements for bibliographic
   citations; see section <ptr target="#COBI"/></item>
-  <label><ident type="class">tei.lists</ident></label>
+  <label><ident type="class">model.listLike</ident></label>
   <item>elements for lists; see
   section <ptr target="#COLI"/></item>
-  <label><ident type="class">tei.notes</ident></label>
+  <label><ident type="class">model.noteLike</ident></label>
   <item>general-purpose annotation
   elements; see section <ptr target="#CONO"/></item>
-  <label><ident type="class">tei.stageDirection</ident></label>
+  <label><ident type="class">model.stageLike</ident></label>
   <item>elements for
   specialized stage-direction elements documented in section <ptr target="#DRSTA"/></item>
 </list>
@@ -1332,7 +1332,7 @@ reference systems</item><label>editincl</label>
 of text which has been added, deleted, or omitted from a
 transcription</item>
 </list>
-These three classes together make up the <ident type="class">tei.Incl</ident>
+These three classes together make up the <ident type="class">model.global</ident>
 class, comprising elements which may appear anywhere within
 a <gi>text</gi> element. In earlier versions of the Guidelines, this
 was implemented as an SGML inclusion
@@ -1382,7 +1382,7 @@ chunks (at phrase-level) or between chunks (e.g. at paragraph-level),
 and <term>phrase-level elements</term> can occur only at phrase level,
 within chunks (e.g. within but not between paragraphs).
  </p>
-<p>The element class <ident type="class">tei.common</ident> includes all
+<p>The element class <ident type="class">model.common</ident> includes all
 component-level (chunk- and inter-level) elements common to more than
 one base.  It is used in implementing the combined bases described in
 section <ptr target="#STCO"/>.
@@ -1402,16 +1402,16 @@ section <ptr target="#STCO"/>.
 <p>The following element classes are used to group together
 component-level elements which are allowed only in texts of a particular
 type (i.e. texts using a specific module).
-<list type="gloss"><label><ident type="class">tei.comp.verse</ident> </label>
+<list type="gloss"><label><ident type="class">model.divPart.verse</ident> </label>
 <item>elements unique to
 verse
- </item><label><ident type="class">tei.comp.drama</ident> </label>
+ </item><label><ident type="class">model.divPart.stage</ident> </label>
 <item>elements unique to
 drama
- </item><label><ident type="class">tei.comp.spoken</ident> </label>
+ </item><label><ident type="class">model.divPart.spoken</ident> </label>
 <item>elements unique to
 spoken texts
- </item><label><ident type="class">tei.comp.dictionaries</ident> </label>
+ </item><label><ident type="class">model.entryLike</ident> </label>
 <item>elements unique
 to dictionaries
  </item><label><ident type="class">tei.comp.terminology</ident> </label>
@@ -1527,47 +1527,47 @@ above), but the meaning of the definition does.</p>
 <div3 xml:id="STECMI"><head>Miscellaneous Content-Model Classes</head>
 <p>The following element classes occupy specific places in content
 models; most are relevant only when certain modules are selected
-<list type="gloss"><label><ident type="class">tei.agent</ident> </label>
+<list type="gloss"><label><ident type="class">model.nameLike.agent</ident> </label>
 <item>elements which denote an
 individual or organization to whom or to which responsibility for an action
 can be assigned</item>
-<label><ident type="class">tei.addrPart</ident> </label>
+<label><ident type="class">model.addrPart</ident> </label>
 <item>elements which can occur
 as part of an address</item>
-<label><ident type="class">tei.biblPart</ident> </label>
+<label><ident type="class">model.biblPart</ident> </label>
 <item>elements which can occur in bibliographic citations</item>
-<label><ident type="class">tei.chooseable</ident></label>
+<label><ident type="class">model.choicePart</ident></label>
 <item>elements which can be used as part  of a
 <gi>choice</gi> alternation</item>
-<label><ident type="class">tei.demographic</ident> </label>
+<label><ident type="class">model.personPart</ident> </label>
 <item>elements which record
 demographic characteristics of the participants in a text or language
 interaction (used in module for corpora and collections)</item>
-<label><ident type="class">tei.divbot</ident> </label>
+<label><ident type="class">model.divWrapper.bottom</ident> </label>
 <item>elements which can occur
 as part of the closing material of a text division or body</item>
-<label><ident type="class">tei.divtop</ident> </label>
+<label><ident type="class">model.divWrapper</ident> </label>
 <item>elements which can occur
 as part of the opening material of a text division or body</item>
-<label><ident type="class">tei.dramafront</ident> </label>
+<label><ident type="class">model.frontPart.drama</ident> </label>
 <item>elements which can
 occur in the front matter of drama and other performance texts</item>
-<label><ident type="class">tei.fmchunk</ident> </label>
+<label><ident type="class">model.pLike.front</ident> </label>
 <item>elements which can
 occur in place of a title page in front matter only </item>
-<label><ident type="class">tei.front</ident> </label>
+<label><ident type="class">model.frontPart</ident> </label>
 <item>elements which can occur
 (at the level of text divisions) in front matter only</item>
-<label><ident type="class">tei.msItemPart</ident></label>
+<label><ident type="class">model.msItemPart</ident></label>
 <item>elements which can appear within the description of an
 individual title or item in a manuscript description</item>
-<label><ident type="class">tei.personPart</ident> </label>
+<label><ident type="class">model.persNamePart</ident> </label>
 <item>elements which contain
 parts of a personal name</item>
-<label><ident type="class">tei.placePart</ident> </label>
+<label><ident type="class">model.placeNamePart</ident> </label>
 <item>elements which contain
 parts of a place name</item>
-<label><ident type="class">tei.tpParts</ident> </label>
+<label><ident type="class">model.titlepagePart</ident> </label>
 <item>elements which occur within title pages</item>
 </list>
  </p>
@@ -1807,10 +1807,10 @@ define pointers or links. </p>
 <p>The following datatypes are used for attributes which are intended
 to hold normalized values of various kinds. First, numeric values:
 <specList>
-<specDesc key="tei.data.certainty"/>
-<specDesc key="tei.data.probability"/>
-<specDesc key="tei.data.numeric"/>
-<specDesc key="tei.data.count"/>
+<specDesc key="data.certainty"/>
+<specDesc key="data.probability"/>
+<specDesc key="data.numeric"/>
+<specDesc key="data.count"/>
 </specList>
 </p>
 <p>Examples of attributes using these datatypes include
@@ -1826,12 +1826,12 @@ to hold normalized values of various kinds. First, numeric values:
 <p>Next, the datatypes used for attributes which are intended to hold
 normalized dates or times, durations, or truth values:
 <specList>
-<specDesc key="tei.data.duration"/>
-<specDesc key="tei.data.temporal"/>
-<specDesc key="tei.data.truthValue"/>
-<specDesc key="tei.data.xTruthValue"/>
-<specDesc key="tei.data.language"/>
-<specDesc key="tei.data.sex"/>
+<specDesc key="data.duration"/>
+<specDesc key="data.temporal"/>
+<specDesc key="data.truthValue"/>
+<specDesc key="data.xTruthValue"/>
+<specDesc key="data.language"/>
+<specDesc key="data.sex"/>
 </specList>
 </p>
 <p>Note that in each of these cases the values used are those
@@ -1852,9 +1852,9 @@ of time, date, and duration; RelaxNG in the case of truth values; RFC
 </p>
 <p>The following datatypes have very specialised uses:
 <specList>
-<specDesc key="tei.data.pattern"/>
-<specDesc key="tei.data.pointer"/>
-<specDesc key="tei.data.pointers"/>
+<specDesc key="data.pattern"/>
+<specDesc key="data.pointer"/>
+<specDesc key="data.pointers"/>
 </specList>
 </p>
 <p>Examples of attributes using these datatypes include
@@ -1871,20 +1871,20 @@ coded values or names of some kind. These values may be constrained or
 defined in a number of different ways, each of which is given a
 different name, as follows:
 <specList>
-<specDesc key="tei.data.key"/>
-<specDesc key="tei.data.name"/>
-<specDesc key="tei.data.names"/>
-<specDesc key="tei.data.ident"/>
-<specDesc key="tei.data.enumerated"/>
-<specDesc key="tei.data.code"/>
+<specDesc key="data.key"/>
+<specDesc key="data.name"/>
+<specDesc key="data.names"/>
+<specDesc key="data.ident"/>
+<specDesc key="data.enumerated"/>
+<specDesc key="data.code"/>
 </specList>
 </p>
-<p>Attributes of type <ident>tei.data.key</ident>, such as
+<p>Attributes of type <ident>data.key</ident>, such as
 <att>key</att> on <gi>persName</gi> are used to supply an arbitrary
 external identifier, such as a database key or filename. For that
 reason, no constraints are placed on their possible values: any string
 of Unicode characters may be used. </p>
-<p>Attributes of type <ident>tei.data.name</ident>, such as
+<p>Attributes of type <ident>data.name</ident>, such as
 <att>age</att> on <gi>person</gi> are used to supply a single XML name of some
 kind. The name can contain any non-white-space Unicode characters which are legal
 within an XML name, as defined by the XML 1.0
@@ -1893,7 +1893,7 @@ specification. Legal names include
 <val>xml:id</val>, but not  <val>grand
 wazoo</val>. Attributes of this kind are often used to associate (by
 co-reference) elements of different types.</p>
-<p>Attributes of type <ident>tei.data.ident</ident> are also names in
+<p>Attributes of type <ident>data.ident</ident> are also names in
 this sense, but they have the additional constraint that they must be
 legal XML identifiers, as defined by the XML 1.0 specification. As
 such, they may not begin with digits or punctuation characters. Legal
@@ -1901,11 +1901,11 @@ identifiers include <val>cholmondeley</val>, <val>été</val>,
 <val>e_content</val>, or <val>xml:id</val>, but not <val>grand
 wazoo</val> or <val>1234</val>. Attributes of this kind are typically used to
 represent XML element or attribute names.</p>
-<p>Attributes of type <ident>tei.data.names</ident>, such as
+<p>Attributes of type <ident>data.names</ident>, such as
 <att>extent</att> on <gi>damage</gi> are used to supply a list of names (as
 defined above), each
 being separated by a single space. </p>
-<p>Attributes of type <ident>tei.data.enumerated</ident>, such as
+<p>Attributes of type <ident>data.enumerated</ident>, such as
 <att>zone</att> on <gi>time</gi> are used to supply a name taken from a
 specific list of possibilities. Unlike other names, these may include
 white space. Legal names of this kind include <val>1234</val>,
@@ -1916,7 +1916,7 @@ also contain a list of possible values, together with a prose
 description of their intended significance. This list may be open (in
 which case the list is advisory), or closed (in which case, it
 determines the range of legal values).</p>
-<p>Attributes of type <ident>tei.data.code</ident> such as
+<p>Attributes of type <ident>data.code</ident> such as
 <att>new</att> and <att>old</att> on <gi>handShift</gi> are similar in function, in that they also
 supply encoded names for values which are defined in more detail
 elsewhere. In this case, however, the full definition is supplied as
