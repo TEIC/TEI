@@ -8,7 +8,7 @@ See the file COPYING for details.
 <desc>encodes a graph, which is a collection of nodes, and arcs which
 connect the nodes.</desc>
   <classes>
-    <memberOf key="tei.chunk"/>
+    <memberOf key="model.divPart"/>
   </classes>
   <content>
     <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
@@ -16,13 +16,13 @@ connect the nodes.</desc>
         <rng:oneOrMore>
           <rng:ref name="node"/>
           <rng:zeroOrMore>
-            <rng:ref name="tei.Incl"/>
+            <rng:ref name="model.global"/>
           </rng:zeroOrMore>
         </rng:oneOrMore>
         <rng:zeroOrMore>
           <rng:ref name="arc"/>
           <rng:zeroOrMore>
-            <rng:ref name="tei.Incl"/>
+            <rng:ref name="model.global"/>
           </rng:zeroOrMore>
         </rng:zeroOrMore>
       </rng:group>
@@ -30,13 +30,13 @@ connect the nodes.</desc>
         <rng:oneOrMore>
           <rng:ref name="arc"/>
           <rng:zeroOrMore>
-            <rng:ref name="tei.Incl"/>
+            <rng:ref name="model.global"/>
           </rng:zeroOrMore>
         </rng:oneOrMore>
         <rng:oneOrMore>
           <rng:ref name="node"/>
           <rng:zeroOrMore>
-            <rng:ref name="tei.Incl"/>
+            <rng:ref name="model.global"/>
           </rng:zeroOrMore>
         </rng:oneOrMore>
       </rng:group>
@@ -46,7 +46,7 @@ connect the nodes.</desc>
     <attDef ident="type" usage="rec">
 	<equiv/>
 	<desc>describes the type of graph.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
       <valList type="semi">
         <valItem ident="undirected">
           <equiv/>
@@ -85,13 +85,13 @@ instead of the <att>adj</att> attribute.</p>
     <attDef ident="order" usage="opt">
 	<equiv/>
 	<desc>states the order of the graph, i.e., the number of its nodes.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.count"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/></datatype>
       <valDesc>A positive integer.</valDesc>
     </attDef>
     <attDef ident="size" usage="opt">
 	<equiv/>
 	<desc>states the size of the graph, i.e., the number of its arcs.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.count"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/></datatype>
       <valDesc>A non-negative integer.</valDesc>
     </attDef>
   </attList>
