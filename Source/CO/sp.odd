@@ -8,30 +8,30 @@ See the file COPYING for details.
 <desc>An individual speech in a performance text, or a passage
 	  presented as such in a prose or verse text.</desc>
   <classes>
-    <memberOf key="tei.chunk"/>
-    <memberOf key="tei.ascribed"/>
+    <memberOf key="model.divPart"/>
+    <memberOf key="att.ascribed"/>
   </classes>
   <content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:zeroOrMore>
-        <rng:ref name="tei.Incl"/>
+        <rng:ref name="model.global"/>
       </rng:zeroOrMore>
       <rng:optional>
         <rng:ref name="speaker"/>
         <rng:zeroOrMore>
-          <rng:ref name="tei.Incl"/>
+          <rng:ref name="model.global"/>
         </rng:zeroOrMore>
       </rng:optional>
       <rng:oneOrMore>
         <rng:choice>
           <rng:ref name="l"/>
           <rng:ref name="lg"/>
-          <rng:ref name="tei.paragraph"/>
-          <rng:ref name="tei.segment"/>
+          <rng:ref name="model.pLike"/>
+          <rng:ref name="model.blockLike"/>
           <rng:ref name="stage"/>
         </rng:choice>
         <rng:zeroOrMore>
-          <rng:ref name="tei.Incl"/>
+          <rng:ref name="model.global"/>
         </rng:zeroOrMore>
       </rng:oneOrMore>
     </rng:group>
@@ -41,7 +41,7 @@ See the file COPYING for details.
 	<equiv/>
 	<desc>identifies the speaker of the part by supplying an
 	  <code>IDREF</code> value.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.pointers"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointers"/></datatype>
       <valDesc>The values used are derived from the <att>xml:id</att> attribute on the <gi>role</gi>
 		elements in the cast list or from a list of the participants.</valDesc>
     </attDef>

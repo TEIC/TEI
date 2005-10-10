@@ -8,15 +8,15 @@ See the file COPYING for details.
 <desc>contains a group of verse lines functioning as a formal unit,
 e.g. a stanza, refrain, verse paragraph, etc.</desc>
   <classes>
-    <memberOf key="tei.chunk"/>
-    <memberOf key="tei.divn"/>
+    <memberOf key="model.divPart"/>
+    <memberOf key="att.divLike"/>
   </classes>
   <content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:zeroOrMore>
         <rng:choice>
-          <rng:ref name="tei.divtop"/>
-          <rng:ref name="tei.Incl"/>
+          <rng:ref name="model.divWrapper"/>
+          <rng:ref name="model.global"/>
         </rng:choice>
       </rng:zeroOrMore>
       <rng:choice>
@@ -27,15 +27,15 @@ e.g. a stanza, refrain, verse paragraph, etc.</desc>
         <rng:choice>
           <rng:ref name="l"/>
           <rng:ref name="lg"/>
-          <rng:ref name="tei.Incl"/>
+          <rng:ref name="model.global"/>
         </rng:choice>
       </rng:zeroOrMore>
       <rng:zeroOrMore>
 <?teidtd (?>
-        <rng:ref name="tei.divbot"/>
+        <rng:ref name="model.divWrapper.bottom"/>
 <?teidtd )?>
         <rng:zeroOrMore>
-          <rng:ref name="tei.Incl"/>
+          <rng:ref name="model.global"/>
         </rng:zeroOrMore>
       </rng:zeroOrMore>
     </rng:group>
