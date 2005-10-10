@@ -10,14 +10,14 @@ sequence of distinct texts (or groups of such texts) which are regarded
 as a unit for some purpose, for example the collected works of an
 author, a sequence of prose essays, etc.</desc>
   <classes>
-    <memberOf key="tei.declaring"/>
+    <memberOf key="att.declaring"/>
   </classes>
   <content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:zeroOrMore>
         <rng:choice>
-          <rng:ref name="tei.divtop"/>
-          <rng:ref name="tei.Incl"/>
+          <rng:ref name="model.divWrapper"/>
+          <rng:ref name="model.global"/>
         </rng:choice>
       </rng:zeroOrMore>
       <rng:group>
@@ -29,16 +29,16 @@ author, a sequence of prose essays, etc.</desc>
           <rng:choice>
             <rng:ref name="text"/>
             <rng:ref name="group"/>
-            <rng:ref name="tei.Incl"/>
+            <rng:ref name="model.global"/>
           </rng:choice>
         </rng:zeroOrMore>
       </rng:group>
       <rng:zeroOrMore>
 <?teidtd (?>
-        <rng:ref name="tei.divbot"/>
+        <rng:ref name="model.divWrapper.bottom"/>
 <?teidtd )?>
         <rng:zeroOrMore>
-          <rng:ref name="tei.Incl"/>
+          <rng:ref name="model.global"/>
         </rng:zeroOrMore>
       </rng:zeroOrMore>
     </rng:group>

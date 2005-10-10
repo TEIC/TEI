@@ -8,20 +8,20 @@ See the file COPYING for details.
 <desc>contains the title page of a text, appearing within the front
 or back matter. </desc>
   <classes>
-    <memberOf key="tei.front"/>
+    <memberOf key="model.frontPart"/>
   </classes>
   <content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:zeroOrMore>
-        <rng:ref name="tei.Incl"/>
+        <rng:ref name="model.global"/>
       </rng:zeroOrMore>
       <rng:group>
-	<rng:ref name="tei.tpParts"/>
+	<rng:ref name="model.titlepagePart"/>
       </rng:group>
       <rng:zeroOrMore>
         <rng:choice>
-          <rng:ref name="tei.tpParts"/>
-          <rng:ref name="tei.Incl"/>
+          <rng:ref name="model.titlepagePart"/>
+          <rng:ref name="model.global"/>
         </rng:choice>
       </rng:zeroOrMore>
     </rng:group>
@@ -30,7 +30,7 @@ or back matter. </desc>
     <attDef ident="type" usage="opt">
 	<equiv/>
 	<desc>classifies the title page according to any convenient typology.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
       <valDesc>Any string, e.g. <mentioned>full</mentioned>, <mentioned>half</mentioned>, <mentioned>Series</mentioned>, etc.</valDesc>
       <remarks>
         <p>This attribute allows the same element to be used for
