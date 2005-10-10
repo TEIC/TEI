@@ -7,17 +7,17 @@ See the file COPYING for details.
 <gloss/>
 <desc>contains any sequence of items organized as a list.</desc>
   <classes>
-    <memberOf key="tei.lists"/>
+    <memberOf key="model.listLike"/>
   </classes>
   <content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:zeroOrMore>
-        <rng:ref name="tei.Incl"/>
+        <rng:ref name="model.global"/>
       </rng:zeroOrMore>
       <rng:optional>
         <rng:ref name="head"/>
         <rng:zeroOrMore>
-          <rng:ref name="tei.Incl"/>
+          <rng:ref name="model.global"/>
         </rng:zeroOrMore>
       </rng:optional>
       <rng:choice>
@@ -25,7 +25,7 @@ See the file COPYING for details.
         <rng:zeroOrMore>
           <rng:ref name="item"/>
           <rng:zeroOrMore>
-            <rng:ref name="tei.Incl"/>
+            <rng:ref name="model.global"/>
           </rng:zeroOrMore>
         </rng:zeroOrMore>
 <?teidtd )?>
@@ -33,23 +33,23 @@ See the file COPYING for details.
           <rng:optional>
             <rng:ref name="headLabel"/>
 <!--            <rng:zeroOrMore>
-              <rng:ref name="tei.Incl"/> 
+              <rng:ref name="model.global"/> 
             </rng:zeroOrMore> -->
           </rng:optional> 
           <rng:optional>
             <rng:ref name="headItem"/>
 <!--            <rng:zeroOrMore>
-              <rng:ref name="tei.Incl"/>
+              <rng:ref name="model.global"/>
             </rng:zeroOrMore>-->
           </rng:optional> 
           <rng:oneOrMore>
             <rng:ref name="label"/>
             <rng:zeroOrMore>
-              <rng:ref name="tei.Incl"/>
+              <rng:ref name="model.global"/>
             </rng:zeroOrMore>
             <rng:ref name="item"/>
             <rng:zeroOrMore>
-              <rng:ref name="tei.Incl"/>
+              <rng:ref name="model.global"/>
             </rng:zeroOrMore>
           </rng:oneOrMore>
         </rng:group>
@@ -60,7 +60,7 @@ See the file COPYING for details.
     <attDef ident="type" usage="opt">
 	<equiv/>
 	<desc>describes the form of the list.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="tei.data.enumerated"/></datatype>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
       <defaultVal>simple</defaultVal>
       <valList type="semi">
         <valItem ident="ordered">

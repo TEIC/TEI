@@ -7,36 +7,36 @@ See the file COPYING for details.
 <gloss>citation list</gloss>
 <desc>contains a list of bibliographic citations of any kind. </desc>
   <classes>
-    <memberOf key="tei.lists"/>
-    <memberOf key="tei.declarable"/>
-    <memberOf key="tei.msItemPart"/>
+    <memberOf key="model.listLike"/>
+    <memberOf key="att.declarable"/>
+    <memberOf key="model.msItemPart"/>
   </classes>
   <content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:zeroOrMore>
-        <rng:ref name="tei.Incl"/>
+        <rng:ref name="model.global"/>
       </rng:zeroOrMore>
       <rng:optional>
         <rng:ref name="head"/>
         <rng:zeroOrMore>
-          <rng:ref name="tei.Incl"/>
+          <rng:ref name="model.global"/>
         </rng:zeroOrMore>
       </rng:optional>
       <rng:group>
-        <rng:ref name="tei.bibl"/>
+        <rng:ref name="model.biblLike"/>
       </rng:group>
       <rng:zeroOrMore>
         <rng:choice>
-          <rng:ref name="tei.bibl"/>
-          <rng:ref name="tei.Incl"/>
+          <rng:ref name="model.biblLike"/>
+          <rng:ref name="model.global"/>
         </rng:choice>
       </rng:zeroOrMore>
       <rng:optional>
 <?teidtd (?>
-        <rng:ref name="tei.divbot"/>
+        <rng:ref name="model.divWrapper.bottom"/>
 <?teidtd )?>
         <rng:zeroOrMore>
-          <rng:ref name="tei.Incl"/>
+          <rng:ref name="model.global"/>
         </rng:zeroOrMore>
       </rng:optional>
     </rng:group>
