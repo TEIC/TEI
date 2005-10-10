@@ -1,4 +1,4 @@
--o<xsl:stylesheet 
+<xsl:stylesheet 
     extension-element-prefixes="exsl" 
     xmlns:xd="http://www.pnp-software.com/XSLTdoc" 
      exclude-result-prefixes="exsl XSL" 

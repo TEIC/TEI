@@ -384,10 +384,7 @@
       <xsl:call-template name="xrefHook"/>
       <xsl:choose>
         <xsl:when test="$ptr='true'">
-          <xsl:element>
-	    <xsl:attribute name="name">
-	      <xsl:value-of select="$urlMarkup"/>
-	    </xsl:attribute>
+          <xsl:element  name="{$urlMarkup}">
             <xsl:choose>
               <xsl:when test="starts-with($dest,'mailto:')">
                 <xsl:value-of select="substring-after($dest,'mailto:')"/>

@@ -361,15 +361,7 @@
       <xsl:apply-templates/>
     </div>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements  tei:epigraph</xd:short>
-    <xd:detail>&#160;</xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:epigraph">
-    <p align="center">
-      <xsl:apply-templates/>
-    </p>
-  </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements  tei:epigraph/lg</xd:short>
     <xd:detail>&#160;</xd:detail>
