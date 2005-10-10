@@ -43,9 +43,9 @@
             senses.</desc>
             <classes>
               <!-- The following makes this element automatically available in <entry> -->
-              <memberOf key="tei.dictionaryTopLevel"/>
-              <memberOf key="tei.dictionaryParts"/>
-              <memberOf key="tei.dictionaries"/>
+              <memberOf key="model.entryParts.top"/>
+              <memberOf key="model.entryParts"/>
+              <memberOf key="att.lexicographic"/>
 
             </classes>
             <content>
@@ -55,12 +55,12 @@
                   <!-- organized as a hierarchy of senses -->
                   <rng:ref name="sense"/>
                   <!-- can contain any top level element (even diachrony!; which may not be desirable) -->
-                  <rng:ref name="tei.dictionaryTopLevel"/>
+                  <rng:ref name="model.entryParts.top"/>
                   <!-- Bibliographical elements such as <bibl> can be used -->
-                  <rng:ref name="tei.bibl"/>
-                  <!-- Rem.: we have dates, since tei.date is a member of tei.phrase -->
-                  <rng:ref name="tei.phrase"/>
-                  <rng:ref name="tei.Incl"/>
+                  <rng:ref name="model.biblLike"/>
+                  <!-- Rem.: we have dates, since model.dateLike is a member of model.phrase -->
+                  <rng:ref name="model.phrase"/>
+                  <rng:ref name="model.global"/>
                 </rng:choice>
               </rng:zeroOrMore>
             </content>
@@ -149,7 +149,7 @@
             </remarks>
           </elementSpec>
           <!-- I just change the <sense> element so that it can contain
-               tei.bibl objects. This is needed to indicate the actual
+               model.biblLike objects. This is needed to indicate the actual
                source where the corresponding sense or expression has been
                observed. We may as well officialize this extension in the
                main DI spec...  -->
@@ -160,10 +160,10 @@
                 <rng:choice>
                   <rng:text/>
                   <rng:ref name="sense"/>
-                  <rng:ref name="tei.dictionaryTopLevel"/>
-                  <rng:ref name="tei.bibl"/>
-                  <rng:ref name="tei.phrase"/>
-                  <rng:ref name="tei.Incl"/>
+                  <rng:ref name="model.entryParts.top"/>
+                  <rng:ref name="model.biblLike"/>
+                  <rng:ref name="model.phrase"/>
+                  <rng:ref name="model.global"/>
                 </rng:choice>
               </rng:zeroOrMore>
             </content>
