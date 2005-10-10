@@ -119,10 +119,10 @@ $Author$
       of which is a unitary object. It may be thought of as a
       representing a <term>double link</term> between the objects
       specified.</p>
-      <p>As members of the class <ident type="class">tei.pointer</ident>,
+      <p>As members of the class <ident type="class">att.pointing</ident>,
       these elements share a common set of attributes:
       <specList>
-        <specDesc key="tei.pointer" atts="type evaluate"/>
+        <specDesc key="att.pointing" atts="type evaluate"/>
       </specList></p>
       <p>Double connection among elements could also be expressed by a
       combination of pointer elements, for example, two <gi>ptr</gi>
@@ -309,14 +309,14 @@ notes to it. In this case, the note
       to in the literature of Hypertext as a <term>web</term>, a term
       introduced by the Brown University FRESS project in 1969.
       <specList><specDesc key="linkGrp"/></specList>
-      As a member of the class <ident type="class">tei.pointerGroup</ident>, this element shares the
+      As a member of the class <ident type="class">att.pointing.group</ident>, this element shares the
       following attributes with other members of that class:
-      <specList><specDesc key="tei.pointerGroup" atts="domains targFunc "/></specList>
-      It is also a member of the <ident type="class">tei.pointer</ident>
+      <specList><specDesc key="att.pointing.group" atts="domains targFunc "/></specList>
+      It is also a member of the <ident type="class">att.pointing</ident>
       class, and therefore also carries the attributes specified in
       section <ptr target="#SAPTL"/> above, in particular the
       <att>type</att> attribute:
-      <specList><specDesc key="tei.pointer" atts="type"/></specList></p>
+      <specList><specDesc key="att.pointing" atts="type"/></specList></p>
       <p>The <gi>linkGrp</gi> element provides a convenient way of
       establishing a default for the <att>type</att> attribute on a
       group of links of the same type: by default, the <att>type</att>
@@ -657,8 +657,8 @@ both the source element and target element are in the same XML document.</p>
 	allowed as the result of resolving a URI when multiple URIs
 	would have been allowed where it appears, i.e. in attributes
 	which are declared as <name
-	type="datatype">tei.data.pointers</name> as opposed to <name
-	type="datatype">tei.data.pointer</name>. As befits the name
+	type="datatype">data.pointers</name> as opposed to <name
+	type="datatype">data.pointer</name>. As befits the name
 	<soCalled>set,</soCalled> the individual items in a node set
 	are not ordered, and no assumptions about relative ordering of
 	items in a node set should be made.</item>
@@ -725,11 +725,11 @@ both the source element and target element are in the same XML document.</p>
 	       -->
         <p>When a URI reference is specified as the value of an
         attribute declared as <name
-        type="datatype">tei.data.pointer</name>, the result must be a
+        type="datatype">data.pointer</name>, the result must be a
         single node, and it is an error if the result is a node set.
         When the URI reference is specified as the value of an
         attribute declared as <name
-        type="datatype">tei.data.pointers</name>, each node in the
+        type="datatype">data.pointers</name>, each node in the
         node set is treated as if it were the result of a separate URI
         reference.</p>
         <p>When an xpath is interpreted by a TEI processor, the information set of the referenced
@@ -960,7 +960,7 @@ both the source element and target element are in the same XML document.</p>
       exclusive: only one or the other may be specified on any given
       occurrence of an element.</p>
       <p>The <gi>refsDecl</gi> element (which is a member of class
-      <ident type="class">tei.declaring</ident>) of provides a means to
+      <ident type="class">att.declaring</ident>) of provides a means to
       encode an algorithm for translating a canonical reference string
       (like <val>Matt 5:7</val>) into a URI reference. The
       <gi>refsDecl</gi> element is described in section <ptr
@@ -1178,15 +1178,15 @@ both the source element and target element are in the same XML document.</p>
       <specDesc key="seg"/>
     </specList>
     The elements <gi>anchor</gi> and <gi>ab</gi> are both members of
-    the class <ident type="class">tei.typed</ident>, from which they
+    the class <ident type="class">att.typed</ident>, from which they
     inherit the following attributes:
     <specList>
-      <specDesc key="tei.typed" atts="type subtype"/>
+      <specDesc key="att.typed" atts="type subtype"/>
     </specList>
-    The <gi>seg</gi> element is a member of the class <ident type="class">tei.segAtts</ident>, from which it inherits the following
+    The <gi>seg</gi> element is a member of the class <ident type="class">att.segLike</ident>, from which it inherits the following
     attributes:
     <specList>
-      <specDesc key="tei.segAtts" atts="type function part"/>
+      <specDesc key="att.segLike" atts="type function part"/>
     </specList></p>
     <p>The <gi>anchor</gi> element may be thought of as an empty
     <gi>seg</gi>, or as an artifice enabling an identifier to be
@@ -1342,7 +1342,7 @@ Melvin, just say <q>I'm afraid.</q></q></egXML>
       <ptr target="#NH"/>.</p>
       <p>The <gi>seg</gi> element has the same content as a paragraph
       in prose: it can therefore be used to group together consecutive
-      sequences of <ident type="class">tei.inter</ident> class elements,
+      sequences of <ident type="class">model.inter</ident> class elements,
       such as lists, quotations, notes, stage directions etc. as well
       as to contain sequences of phrase-level elements. It cannot
       however be used to group together sequences of paragraphs or
@@ -1482,7 +1482,7 @@ M&uuml;nchen: Rogner & Bernhard, 1972. *--></p>
         <att>corresp</att> may be used to encode such correspondence,
         once it has been identified.
         <specList>
-          <specDesc key="tei.linking"/>
+          <specDesc key="att.global.linking"/>
         </specList>
         This is one of the attributes made available by the mechanism
         described in the introduction to this chapter (<ptr target="#SA"/>). Correspondence can also be expressed by means
@@ -2160,8 +2160,8 @@ aggregation of parts, and the <gi>joinGrp</gi> for grouping
 <p>The linking attributes for aggregation are <att>next</att> and
 <att>prev</att>; each of these attributes has a single identifier as its
 value:
-<specList><specDesc key="tei.linking"/></specList></p>
-<p>The <gi>join</gi> element is also a member of the class of <ident type="class">tei.pointer</ident> elements, and so may carry any of the
+<specList><specDesc key="att.global.linking"/></specList></p>
+<p>The <gi>join</gi> element is also a member of the class of <ident type="class">att.pointing</ident> elements, and so may carry any of the
 attributes of that class; for the list, see section <ptr target="#SAPT"/>.</p>
 <p>Here is the material on which we base our first illustration of the
 use of these mechanisms. Our problem is to represent the S-units
@@ -2549,13 +2549,13 @@ certainty in general.</p>
 with any element assuming that they have been declared following the
 procedure discussed in the introduction to this chapter.
  <specList>
-   <specDesc key="tei.linking"/>
+   <specDesc key="att.global.linking"/>
 </specList></p>
 <p>A more general way to mark alternation, encompassing both exclusive
 and inclusive alternation, is to use the linking element <gi>alt</gi>.
 The description and attributes of this tag and of the associated
 grouping tag <gi>altGrp</gi> are as follows. These elements are also
-members of the <ident type="class">tei.pointer</ident> class and therefore
+members of the <ident type="class">att.pointing</ident> class and therefore
 have all the attributes associated with that class.
 <specList><specDesc key="alt" atts="targets weights"/><specDesc key="altGrp"/></specList></p>
 <p>To take a simple hypothetical example, suppose in transcribing a
