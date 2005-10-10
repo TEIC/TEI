@@ -86,14 +86,16 @@ print "Created on $today-->\n";
 #              @values = $query->param($key);
 #              print join(", ",@values),"]\n";
 #          }
-print "&lt;xsl:import href=\"",$HOME,"/",$VERSION,"/tei.xsl\"/>\n";
+print "&lt;xsl:import href=\"",$HOME,"/",$VERSION,"/stylesheet/html/tei.xsl\"/>\n";
 foreach $key (keys %Default) {
 my $Passed=$query->param($key);
 my $D=$Default{$key};
 $Passed =~ tr/\015//d;
 if ($D eq "false") { $D=""; }
 $D =~ s/^[\n\r]//;
-if ($Passed ne $D) {
+if ($key == 'preQuote') {}
+elsif ($key == 'postQuote') {}
+elsif ($Passed ne $D) {
 # print "&lt;!--\n\DIFFERENCE in $key:|$Passed|$D|--&gt;\n";
  print qq(&lt;xsl:$Type{$key} name="$key">);
  print "$Passed";
@@ -139,18 +141,18 @@ return "";
 <html:form
  encoding="iso-8859-1"
  enctype="multipart/form-data"
- action="http://www.tei-c.org.uk/tei-bin/stylebear"
+ action="/cgi-bin/stylebear"
  method="post"
  id="stylebear">
 <p>Make stylesheet for: 
     <html:select name="Version">
-      <html:option value="p4" selected="selected">TEI P4</html:option>
-      <html:option value="p5" selected="selected">TEI P5</html:option>
+      <html:option value="teip4" selected="selected">TEI P4</html:option>
+      <html:option value="tei" selected="selected">TEI P5</html:option>
     </html:select>
 </p>
 <p>Location of XSL stylesheets:
  <html:input type="textbox" name="TEIXSL" size="48"
-	     value="http://www.tei-c.org/stylesheet/base"/></p>
+	     value="http://www.tei-c.org/release/xml"/></p>
 
 
 <p>Name of output file:

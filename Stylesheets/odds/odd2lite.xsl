@@ -394,7 +394,7 @@
 	    <Wrapper>
 	      <rng:element name="{../@ident}">
 		<xsl:if test="not(ancestor::tei:schemaSpec/@ns)">
-		  <rng:ref name="tei.global.attributes"/>
+		  <rng:ref name="att.global.attributes"/>
 		</xsl:if>
 		<xsl:for-each select="../tei:classes/tei:memberOf">
 		  <xsl:for-each select="key('IDENTS',@key)">

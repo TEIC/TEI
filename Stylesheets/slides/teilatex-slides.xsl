@@ -7,8 +7,9 @@ XSL FO stylesheet to format TEI XML documents
 ##LICENSE
 -->
 <xsl:stylesheet 
-	xmlns:tei="http://www.tei-c.org/ns/1.0" 
-	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+    xmlns:teix="http://www.tei-c.org/ns/Examples"
+    xmlns:tei="http://www.tei-c.org/ns/1.0" 
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 <xsl:import href="../latex/tei.xsl"/>
 
@@ -22,6 +23,7 @@ XSL FO stylesheet to format TEI XML documents
 \usepackage{colortbl}
 \usetheme{<xsl:value-of select="$beamerClass"/>}
 \usepackage{times}
+\usepackage{fancyvrb}
 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
 \setbeamercovered{transparent}
 \let\mainmatter\relax
@@ -64,7 +66,12 @@ select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:authority"/>
 </xsl:template>
 
 <xsl:template match="tei:div|tei:div1">
-\begin{frame}<xsl:if test="@rend='fragile'">[fragile]</xsl:if>
+\begin{frame}<xsl:choose>
+<xsl:when test="@rend='fragile'">[fragile]</xsl:when>
+<xsl:when test=".//tei:eg">[fragile]</xsl:when>
+<xsl:when test=".//tei:Output">[fragile]</xsl:when>
+<xsl:when test=".//teix:egXML">[fragile]</xsl:when>
+</xsl:choose>
 <xsl:text>&#10;</xsl:text>
   \frametitle{<xsl:for-each select="tei:head"><xsl:apply-templates/></xsl:for-each>}
   <xsl:apply-templates/>
@@ -100,6 +107,12 @@ select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:authority"/>
 
 <xsl:template match="tei:item[@rend='pause']">
 \item <xsl:apply-templates/>\pause
+</xsl:template>
+
+<xsl:template match="tei:eg">
+\begin{Verbatim}[fontsize=\footnotesize,frame=single,fillcolor=\color{yellow}]
+<xsl:apply-templates mode="eg"/>
+\end{Verbatim}
 </xsl:template>
 
 </xsl:stylesheet>

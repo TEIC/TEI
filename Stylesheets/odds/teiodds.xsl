@@ -450,7 +450,7 @@
     
     <define name="{$patternPrefix}{@ident}.attributes"  xmlns="http://relaxng.org/ns/structure/1.0">
       <xsl:if test="$parameterize='true'">
-	<rng:ref name="{$patternPrefix}tei.global.attributes"/>
+	<rng:ref name="{$patternPrefix}att.global.attributes"/>
 	<xsl:for-each select="tei:classes/tei:memberOf">
 	  <xsl:for-each select="key('CLASSES',@key)">
 	    <xsl:if test="@type='atts'">

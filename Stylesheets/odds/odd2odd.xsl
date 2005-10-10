@@ -288,7 +288,7 @@ because of the order of declarations
       <attList xmlns="http://www.tei-c.org/ns/1.0">
 	<xsl:call-template name="classAttributes">
 	<xsl:with-param name="I" select="@ident"/>
-	<xsl:with-param name="K" select="'tei.global'"/>
+	<xsl:with-param name="K" select="'att.global'"/>
 	</xsl:call-template>
 	<xsl:for-each select="tei:classes/tei:memberOf"> 
 	  <xsl:variable name="K" select="@key"/>
@@ -885,7 +885,7 @@ so that is only put back in if there is some content
     <xsl:if test="local-name(.)='elementSpec'">
       <xsl:call-template name="classAttributes">
 	<xsl:with-param name="I" select="$I"/>
-	<xsl:with-param name="K" select="'tei.global'"/>
+	<xsl:with-param name="K" select="'att.global'"/>
       </xsl:call-template>
       <xsl:for-each select="tei:classes/tei:memberOf"> 
 	<xsl:variable name="K" select="@key"/>
@@ -1113,7 +1113,7 @@ so that is only put back in if there is some content
 	<xsl:comment>1.</xsl:comment>
 	<xsl:call-template name="classAttributesSimple">
 	  <xsl:with-param name="I" select="$I"/>
-	  <xsl:with-param name="K" select="'tei.global'"/>
+	  <xsl:with-param name="K" select="'att.global'"/>
 	</xsl:call-template>
 	<xsl:comment>2.</xsl:comment>
 	<xsl:for-each select="tei:classes/tei:memberOf"> 
