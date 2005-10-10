@@ -8,15 +8,15 @@ See the file COPYING for details.
 <desc>contains a third-level subdivision of the front, body, or back of a
  text.</desc>
   <classes>
-    <memberOf key="tei.divn"/>
-    <memberOf key="tei.declaring"/>
+    <memberOf key="att.divLike"/>
+    <memberOf key="att.declaring"/>
   </classes>
   <content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:zeroOrMore>
         <rng:choice>
-          <rng:ref name="tei.divtop"/>
-          <rng:ref name="tei.Incl"/>
+          <rng:ref name="model.divWrapper"/>
+          <rng:ref name="model.global"/>
         </rng:choice>
       </rng:zeroOrMore>
       <rng:choice>
@@ -26,14 +26,14 @@ See the file COPYING for details.
             <rng:ref name="divGen"/>
           </rng:choice>
           <rng:zeroOrMore>
-            <rng:ref name="tei.Incl"/>
+            <rng:ref name="model.global"/>
           </rng:zeroOrMore>
         </rng:oneOrMore>
         <rng:group>
           <rng:oneOrMore>
             <rng:ref name="macro.component"/>
             <rng:zeroOrMore>
-              <rng:ref name="tei.Incl"/>
+              <rng:ref name="model.global"/>
             </rng:zeroOrMore>
           </rng:oneOrMore>
           <rng:zeroOrMore>
@@ -42,17 +42,17 @@ See the file COPYING for details.
               <rng:ref name="divGen"/>
             </rng:choice>
             <rng:zeroOrMore>
-              <rng:ref name="tei.Incl"/>
+              <rng:ref name="model.global"/>
             </rng:zeroOrMore>
           </rng:zeroOrMore>
         </rng:group>
       </rng:choice>
       <rng:zeroOrMore>
 <?teidtd (?>
-        <rng:ref name="tei.divbot"/>
+        <rng:ref name="model.divWrapper.bottom"/>
 <?teidtd )?>
         <rng:zeroOrMore>
-          <rng:ref name="tei.Incl"/>
+          <rng:ref name="model.global"/>
         </rng:zeroOrMore>
       </rng:zeroOrMore>
     </rng:group>

@@ -7,14 +7,14 @@ See the file COPYING for details.
 <gloss>text body</gloss>
 <desc>contains the whole body of a single unitary text, excluding any front or back matter.</desc>
   <classes>
-    <memberOf key="tei.declaring"/>
+    <memberOf key="att.declaring"/>
   </classes>
   <content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:zeroOrMore>
         <rng:choice>
-          <rng:ref name="tei.divtop"/>
-          <rng:ref name="tei.Incl"/>
+          <rng:ref name="model.divWrapper"/>
+          <rng:ref name="model.global"/>
         </rng:choice>
       </rng:zeroOrMore>
       <rng:choice>
@@ -24,14 +24,14 @@ See the file COPYING for details.
             <rng:ref name="macro.component"/>
 <?teidtd )?>
             <rng:zeroOrMore>
-              <rng:ref name="tei.Incl"/>
+              <rng:ref name="model.global"/>
             </rng:zeroOrMore>
           </rng:oneOrMore>
           <rng:group>
             <rng:zeroOrMore>
               <rng:ref name="divGen"/>
               <rng:zeroOrMore>
-                <rng:ref name="tei.Incl"/>
+                <rng:ref name="model.global"/>
               </rng:zeroOrMore>
             </rng:zeroOrMore>
             <rng:optional>
@@ -42,7 +42,7 @@ See the file COPYING for details.
                     <rng:choice>
                       <rng:ref name="div"/>
                       <rng:ref name="divGen"/>
-                      <rng:ref name="tei.Incl"/>
+                      <rng:ref name="model.global"/>
                     </rng:choice>
                   </rng:zeroOrMore>
                 </rng:group>
@@ -52,7 +52,7 @@ See the file COPYING for details.
                     <rng:choice>
                       <rng:ref name="div0"/>
                       <rng:ref name="divGen"/>
-                      <rng:ref name="tei.Incl"/>
+                      <rng:ref name="model.global"/>
                     </rng:choice>
                   </rng:zeroOrMore>
                 </rng:group>
@@ -62,7 +62,7 @@ See the file COPYING for details.
                     <rng:choice>
                       <rng:ref name="div1"/>
                       <rng:ref name="divGen"/>
-                      <rng:ref name="tei.Incl"/>
+                      <rng:ref name="model.global"/>
                     </rng:choice>
                   </rng:zeroOrMore>
                 </rng:group>
@@ -74,7 +74,7 @@ See the file COPYING for details.
           <rng:zeroOrMore>
             <rng:ref name="divGen"/>
             <rng:zeroOrMore>
-              <rng:ref name="tei.Incl"/>
+              <rng:ref name="model.global"/>
             </rng:zeroOrMore>
           </rng:zeroOrMore>
           <rng:choice>
@@ -84,7 +84,7 @@ See the file COPYING for details.
                 <rng:choice>
                   <rng:ref name="div"/>
                   <rng:ref name="divGen"/>
-                  <rng:ref name="tei.Incl"/>
+                  <rng:ref name="model.global"/>
                 </rng:choice>
               </rng:zeroOrMore>
             </rng:group>
@@ -94,7 +94,7 @@ See the file COPYING for details.
                 <rng:choice>
                   <rng:ref name="div0"/>
                   <rng:ref name="divGen"/>
-                  <rng:ref name="tei.Incl"/>
+                  <rng:ref name="model.global"/>
                 </rng:choice>
               </rng:zeroOrMore>
             </rng:group>
@@ -104,7 +104,7 @@ See the file COPYING for details.
                 <rng:choice>
                   <rng:ref name="div1"/>
                   <rng:ref name="divGen"/>
-                  <rng:ref name="tei.Incl"/>
+                  <rng:ref name="model.global"/>
                 </rng:choice>
               </rng:zeroOrMore>
             </rng:group>
@@ -113,10 +113,10 @@ See the file COPYING for details.
       </rng:choice>
       <rng:zeroOrMore>
 <?teidtd (?>
-        <rng:ref name="tei.divbot"/>
+        <rng:ref name="model.divWrapper.bottom"/>
 <?teidtd )?>
         <rng:zeroOrMore>
-          <rng:ref name="tei.Incl"/>
+          <rng:ref name="model.global"/>
         </rng:zeroOrMore>
       </rng:zeroOrMore>
     </rng:group>
