@@ -19,10 +19,10 @@
       <p>The Lite schema consists some new elements and a view of the
 TEI.</p>
       <p>First, here is the small set of new elements:
-<specGrp xml:id="LITEADD"><elementSpec ident="eg"><desc>Example code</desc><classes><memberOf key="tei.data"/><memberOf key="tei.common"/></classes><content><rng:text/></content></elementSpec><elementSpec ident="gi"><desc>contains the name (generic identifier) of an element.</desc><classes><memberOf key="tei.data"/></classes><content><rng:text/></content><attList><attDef usage="opt" ident="tei"><equiv/><desc>indicates whether this element is part of the TEI encoding
+<specGrp xml:id="LITEADD"><elementSpec ident="eg"><desc>Example code</desc><classes><memberOf key="model.pPart.data"/><memberOf key="model.common"/></classes><content><rng:text/></content></elementSpec><elementSpec ident="gi"><desc>contains the name (generic identifier) of an element.</desc><classes><memberOf key="model.pPart.data"/></classes><content><rng:text/></content><attList><attDef usage="opt" ident="tei"><equiv/><desc>indicates whether this element is part of the TEI encoding
 		scheme (i.e. defined in a TEI DTD fragment) or not.</desc><datatype><rng:data type="boolean"/></datatype><defaultVal>true</defaultVal><valList type="closed"><valItem ident="true"><equiv/><gloss>this element is part of the TEI scheme.</gloss></valItem><valItem ident="false"><equiv/><gloss>this element is not part of the TEI scheme.</gloss></valItem></valList></attDef></attList><exemplum><eg>
 An &lt;gi tei="false"&gt;LI&lt;/gi&gt; element is roughly analagous to an &lt;gi&gt;item&lt;/gi&gt; element.
-    </eg></exemplum></elementSpec><elementSpec ident="ident"><classes><memberOf key="tei.data"/><memberOf key="tei.typed"/></classes><content><rng:text/></content></elementSpec><elementSpec ident="code"><classes><memberOf key="tei.data"/></classes><content><rng:text/></content></elementSpec><elementSpec ident="kw"><classes><memberOf key="tei.data"/></classes><content><rng:text/></content></elementSpec></specGrp>
+    </eg></exemplum></elementSpec><elementSpec ident="ident"><classes><memberOf key="model.pPart.data"/><memberOf key="att.typed"/></classes><content><rng:text/></content></elementSpec><elementSpec ident="code"><classes><memberOf key="model.pPart.data"/></classes><content><rng:text/></content></elementSpec><elementSpec ident="kw"><classes><memberOf key="model.pPart.data"/></classes><content><rng:text/></content></elementSpec></specGrp>
 </p>
       <p>Now for the wrapping schema, which imports 
 selected TEI modules. Some existing elements are redefined
@@ -86,7 +86,7 @@ to be null.</p>
 <elementSpec ident="variantEncoding" mode="delete" module="header"/>
 <elementSpec ident="w" mode="delete" module="analysis"/>
 <elementSpec ident="when" mode="delete" module="linking"/>
-<classSpec ident="tei.global" module="tei" mode="change">
+<classSpec ident="att.global" module="tei" mode="change">
 <attList>
 <attDef mode="change" ident="n">
 <altIdent type="lang">n
@@ -94,7 +94,7 @@ to be null.</p>
 </attDef>
 </attList>
 </classSpec>
-<classSpec ident="tei.typed" module="tei" mode="change">
+<classSpec ident="att.typed" module="tei" mode="change">
 <attList>
 <attDef mode="change" ident="type">
 <altIdent type="lang">Typ
@@ -102,7 +102,7 @@ to be null.</p>
 </attDef>
 </attList>
 </classSpec>
-<classSpec ident="tei.interpret" module="tei" mode="change">
+<classSpec ident="att.interpLike" module="tei" mode="change">
 <attList>
 <attDef mode="change" ident="type">
 <altIdent type="lang">Typ
@@ -110,7 +110,7 @@ to be null.</p>
 </attDef>
 </attList>
 </classSpec>
-<classSpec ident="tei.divn" module="tei" mode="change">
+<classSpec ident="att.divLike" module="tei" mode="change">
 <attList>
 <attDef mode="change" ident="type">
 <altIdent type="lang">Typ
@@ -122,7 +122,7 @@ to be null.</p>
 </attDef>
 </attList>
 </classSpec>
-<classSpec ident="tei.seg" module="tei" mode="change">
+<classSpec ident="model.segLike" module="tei" mode="change">
 <attList>
 <attDef mode="change" ident="type">
 <altIdent type="lang">Typ
@@ -936,7 +936,7 @@ to be null.</p>
 </attDef>
 </attList>
 </elementSpec>
-<classSpec ident="tei.linking" module="linking" mode="change">
+<classSpec ident="att.global.linking" module="linking" mode="change">
 <attList>
 <attDef mode="change" ident="next">
 <altIdent type="lang">n&#xE4;chstes
@@ -948,7 +948,7 @@ to be null.</p>
 </attDef>
 </attList>
 </classSpec>
-<classSpec ident="tei.pointer" module="linking" mode="change">
+<classSpec ident="att.pointing" module="linking" mode="change">
 <attList>
 <attDef mode="change" ident="type">
 <altIdent type="lang">Typ
