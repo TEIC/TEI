@@ -599,12 +599,12 @@ Include the front matter in the table of contents.
 </xd:doc>
 <xsl:param name="tocFront">true</xsl:param>
 
-<xd:doc type="boolean" class="toc">
+<xd:doc type="string" class="toc">
 Which HTML element to wrap each TOCs entry in.
 </xd:doc>
 <xsl:param name="tocElement">p</xsl:param>
 
-<xd:doc type="boolean" class="toc">
+<xd:doc type="string" class="toc">
 Which HTML element to wrap each TOC sections in.
 </xd:doc>
 <xsl:param name="tocContainerElement">div</xsl:param>

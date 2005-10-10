@@ -664,6 +664,7 @@
   <xsl:template match="tei:l">
     <div class="l"><xsl:apply-templates/></div>
   </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements  tei:lg</xd:short>
     <xd:detail>&#160;</xd:detail>
@@ -683,10 +684,10 @@
       <xsl:attribute name="class">
         <xsl:choose>
           <xsl:when test="@rend='Alignr'">
-            <xsl:attribute name="class">right</xsl:attribute>
+            <xsl:text>right</xsl:text>
           </xsl:when>
           <xsl:when test="@rend='Alignc'">
-            <xsl:attribute name="class">center</xsl:attribute>
+            <xsl:text>center</xsl:text>
           </xsl:when>
 	  <xsl:when test="starts-with(@rend,'indent(')">
 	    <xsl:text>indent</xsl:text>
@@ -697,7 +698,7 @@
 	    <xsl:text>indent1</xsl:text>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <xsl:attribute name="class">left</xsl:attribute>
+            <xsl:text>left</xsl:text>
 	  </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute> 

@@ -356,7 +356,7 @@ Write to standard output channel
 </xd:doc>
 <xsl:param name="STDOUT">true</xsl:param>
 
-<xd:doc type="boolean" class="style">
+<xd:doc type="string" class="style">
 Display of &lt;pb&gt; element. Choices are "visible", "active" and "none".
 </xd:doc>
 <xsl:param name="pagebreakStyle">none</xsl:param>

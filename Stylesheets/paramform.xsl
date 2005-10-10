@@ -1,4 +1,4 @@
-<xsl:stylesheet 
+-o<xsl:stylesheet 
     extension-element-prefixes="exsl" 
     xmlns:xd="http://www.pnp-software.com/XSLTdoc" 
      exclude-result-prefixes="exsl XSL" 
@@ -93,8 +93,8 @@ my $D=$Default{$key};
 $Passed =~ tr/\015//d;
 if ($D eq "false") { $D=""; }
 $D =~ s/^[\n\r]//;
-if ($key == 'preQuote') {}
-elsif ($key == 'postQuote') {}
+if ($key eq 'preQuote') {}
+elsif ($key eq 'postQuote') {}
 elsif ($Passed ne $D) {
 # print "&lt;!--\n\DIFFERENCE in $key:|$Passed|$D|--&gt;\n";
  print qq(&lt;xsl:$Type{$key} name="$key">);

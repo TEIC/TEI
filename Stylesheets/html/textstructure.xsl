@@ -497,6 +497,7 @@ $ID: requests a particular page
 <xsl:template match="tei:div[@type='canto']">
   <xsl:variable name="divlevel" select="count(ancestor::tei:div)"/>
   <xsl:element name="h{$divlevel + $divOffset}">
+    <xsl:call-template name="makeAnchor"/>
     <xsl:call-template name="header"/>
   </xsl:element>
   <xsl:apply-templates/>
@@ -1281,7 +1282,10 @@ $ID: requests a particular page
       <!-- front matter -->
       <xsl:for-each select="tei:front">
 	<div class="tocFront">
-	  <xsl:element name="{$tocContainerElement}">
+	  <xsl:element>
+	    <xsl:attribute name="name">
+	      <xsl:value-of select="$tocContainerElement"/>
+	    </xsl:attribute>
 	    <xsl:attribute name="class">
 	      <xsl:text>tocContainer</xsl:text>
 	    </xsl:attribute>
@@ -1295,7 +1299,10 @@ $ID: requests a particular page
       <!-- body matter -->
       <xsl:for-each select="tei:body">
 	<div class="tocBody">
-	  <xsl:element name="{$tocContainerElement}">
+	  <xsl:element>
+	    <xsl:attribute name="name">
+	      <xsl:value-of select="$tocContainerElement"/>
+	    </xsl:attribute>
 	    <xsl:attribute name="class">
 	      <xsl:text>tocContainer</xsl:text>
 	    </xsl:attribute>
@@ -1309,7 +1316,10 @@ $ID: requests a particular page
       <!-- back matter -->
       <xsl:for-each select="tei:back">
 	<div class="tocBack">
-	  <xsl:element name="{$tocContainerElement}">
+	  <xsl:element>
+	    <xsl:attribute name="name">
+	      <xsl:value-of select="$tocContainerElement"/>
+	    </xsl:attribute>
 	    <xsl:attribute name="class">
 	      <xsl:text>tocContainer</xsl:text>
 	    </xsl:attribute>
@@ -2229,7 +2239,10 @@ $ID: requests a particular page
   <xsl:template name="tocEntry">
     <xsl:param name="style"/>
     <xsl:param name="id"/>
-    <xsl:element name="{$tocElement}">
+    <xsl:element>
+      <xsl:attribute name="name">
+	<xsl:value-of select="$tocElement"/>
+      </xsl:attribute>
       <xsl:attribute name="class">
 	<xsl:value-of select="$style"/>
 	<xsl:apply-templates select="." mode="depth"/>
