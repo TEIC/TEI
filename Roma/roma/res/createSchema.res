@@ -14,3 +14,7 @@ form_output=Quel format pr&eacute;f&eacute;riez-vous?
 
 [de]
 helpmessage=asdljasdklasjd
+headline=Time to give you a schema
+
+form_headline=Creating a schema
+form_output=Which format do you prefer?

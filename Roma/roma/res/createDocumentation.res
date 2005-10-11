@@ -14,3 +14,5 @@ form_output=Quel format pr&eacute;f&eacutelriez-vous?
 
 [de]
 helpmessage=Niemand kennt
+form_headline=Getting some nice documentation
+form_output=Which output would you prefer?
