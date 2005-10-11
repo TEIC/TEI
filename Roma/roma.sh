@@ -203,6 +203,7 @@ D=`date "+%Y-%m-%d %H:%M:%S.%N"`
 echo "Process $ODD to create $N{.dtd|.xsd|.doc.xml|.rng|.rnc} in $RESULTS"
 echo "========= $D Roma starts, execution:"
 if test "x$PATTERNPREFIX" = "x"
+then
    PATTERN=""
 else
    PATTERN=" --stringparam patternPrefix $PATTERNPREFIX"

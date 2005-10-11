@@ -25,3 +25,10 @@ form_changeAttributes=Changer les attributs
 
 [de]
 helpmessage=asdljasdklasjd
+form_headline=Liste der hinzugef&uuml;gten Elemente
+form_changeAttributes=Attribute ver&auml;ndern
+form_include=einbinden
+form_exclude=ausnehmen
+form_tagName=Name des Tags
+form_description=Beschreibung
+form_attributes=Attribute

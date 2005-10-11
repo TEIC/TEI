@@ -20,3 +20,8 @@ form_changeAttributes=Modification des attributs
 
 [de]
 helpmessage=asdljasdklasjd
+form_headline=Liste der Attribute
+form_className=Name des Klasse
+form_description=Beschreibung
+form_attributes=Attribute
+form_changeAttributes=Attribute ver&auml;ndern
