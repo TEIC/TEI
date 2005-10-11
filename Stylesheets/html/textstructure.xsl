@@ -802,20 +802,22 @@ $ID: requests a particular page
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template name="crumbPath">
-    <xsl:call-template name="preBreadCrumbPath"/>
-    <ul class="breadcrumb">
-      <li class="breadcrumb-first">
-        <a target="_top" class="breadcrumb" href="{$homeURL}">
-          <xsl:value-of select="$homeLabel"/>
-        </a>
-      </li>
-      <xsl:call-template name="walkTree">
-        <xsl:with-param name="path">
-          <xsl:value-of select="substring-after($REQUEST,'/')"/>
-        </xsl:with-param>
-        <xsl:with-param name="class">breadcrumb</xsl:with-param>
-      </xsl:call-template>
-    </ul>
+    <div class="breadcrumb">
+      <xsl:call-template name="preBreadCrumbPath"/>
+      <ul class="breadcrumb">
+	<li class="breadcrumb-first">
+	  <a target="_top" class="breadcrumb" href="{$homeURL}">
+	    <xsl:value-of select="$homeLabel"/>
+	  </a>
+	</li>
+	<xsl:call-template name="walkTree">
+	  <xsl:with-param name="path">
+	    <xsl:value-of select="substring-after($REQUEST,'/')"/>
+	  </xsl:with-param>
+	  <xsl:with-param name="class">breadcrumb</xsl:with-param>
+	</xsl:call-template>
+      </ul>
+    </div>
   </xsl:template>
 
   <xd:doc>
