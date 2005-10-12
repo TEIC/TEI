@@ -40,10 +40,19 @@ value is expressed, if this is not inherited from the parent <gi>timeLine</gi>.<
     <attDef ident="interval" usage="rwa">
 	<equiv/>
 	<desc>specifies the numeric portion of a time interval</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
-      <valDesc>-1 or any positive number</valDesc>
+      <datatype xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	<rng:choice>
+	  <rng:data type="float">
+	    <rng:param name="minExclusive">0</rng:param>
+	  </rng:data>
+	  <rng:value>unknown</rng:value>
+	</rng:choice>
+      </datatype>
+      <valDesc>a positive number, or the special value
+      <val>unknown</val>.</valDesc>
       <remarks>
-        <p>The value -1 indicates uncertainty about the interval.</p>
+        <p>The value <val>unknown</val> indicates uncertainty about
+        the interval.</p>
       </remarks>
     </attDef>
     <attDef ident="since" usage="rwa">

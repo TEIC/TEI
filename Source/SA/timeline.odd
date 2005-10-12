@@ -33,39 +33,48 @@ night of the murder</mentioned> or <mentioned>unknown</mentioned>.--></p>
     </attDef>
     <attDef ident="unit" usage="rwa">
 	<equiv/>
-	<desc>specifies the unit of time corresponding to the <att>interval</att>
-value of the timeline or of its constituent points in time.</desc>
+	<desc>specifies the unit of time corresponding to the
+	<att>interval</att> value of the timeline or of its
+	constituent points in time.</desc>
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
       <valList type="semi">
-<valItem ident="s"><gloss>seconds</gloss></valItem>
-<valItem ident="ms"><gloss>milliseconds</gloss></valItem>
-<valItem ident="m"><gloss>minutes</gloss></valItem>
-<valItem ident="h"><gloss>hours</gloss></valItem>
-<valItem ident="d"><gloss>days</gloss></valItem>
+	<valItem ident="d"> <gloss>days</gloss></valItem>
+	<valItem ident="h"> <gloss>hours</gloss></valItem>
+	<valItem ident="m"> <gloss>minutes</gloss></valItem>
+	<valItem ident="s"> <gloss>seconds</gloss></valItem>
+	<valItem ident="ms"><gloss>milliseconds</gloss></valItem>
       </valList>
-<!--      <valDesc>a semi-closed list of recognized time units such as
-<mentioned>millisecond</mentioned>, <mentioned>second</mentioned>, <mentioned>minute</mentioned>.</valDesc>-->
     </attDef>
     <attDef ident="interval" usage="opt">
 	<equiv/>
 	<desc>specifies the numeric portion of a time interval</desc>
-      <datatype><rng:ref
-		    xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.numeric"/></datatype>
-      <valDesc>a numeric value</valDesc>
+      <datatype xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	<rng:choice>
+	  <rng:data type="float">
+	    <rng:param name="minExclusive">0</rng:param>
+	  </rng:data>
+	  <rng:value>regular</rng:value>
+	  <rng:value>irregular</rng:value>
+	</rng:choice>
+      </datatype>
+      <valDesc>a positive number, or one of the two special values
+      <val>irregular</val> or <val>regular</val>.</valDesc>
       <remarks>
-        <p>Any negative value indicates uncertainty about all the intervals in
-the timeline; 0 indicates that all the intervals are evenly spaced, but
-the size of the intervals is not known; positive values indicate evenly
-spaced values of the size specified.  If individual points in time in the
-timeline are given different values for the <att>interval</att>
-attribute, those values locally override the value given in the timeline.</p>
+        <p>The value <val>irregular</val> indicates uncertainty about
+        all the intervals in the timeline; the value
+        <val>regular</val> indicates that all the intervals are evenly
+        spaced, but the size of the intervals is not known; numeric
+        values indicate evenly spaced values of the size specified. If
+        individual points in time in the timeline are given different
+        values for the <att>interval</att> attribute, those values
+        locally override the value given in the timeline.</p>
       </remarks>
     </attDef>
   </attList>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">      <timeline xml:id="TL01" origin="#TL-w0" unit="ms">
         <when xml:id="TL-w0" absolute="11:30:00"/>
-        <when xml:id="TL-w1" interval="-1" since="#TL-w0"/>
+        <when xml:id="TL-w1" interval="unknown" since="#TL-w0"/>
         <when xml:id="TL-w2" interval="100" since="#TL-w1"/>
         <when xml:id="TL-w3" interval="200" since="#TL-w2"/>
         <when xml:id="TL-w4" interval="150" since="#TL-w3"/>
