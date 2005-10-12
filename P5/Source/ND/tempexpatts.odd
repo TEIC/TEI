@@ -10,21 +10,15 @@ See the file COPYING for details.
     <attDef ident="value" usage="opt">
 	<equiv/>
 	<desc>supplies the value of a date or time in a standard form.</desc>
-      <datatype>
-	<rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
-	  <rng:data type="date"/>
-	  <rng:data type="gYear"/>
-	  <rng:data type="gMonth"/>
-	  <rng:data type="gDay"/>
-	  <rng:data type="gYearMonth"/>
-	  <rng:data type="gMonthDay"/>
-	  <rng:data type="time"/>
-	  <rng:data type="dateTime"/>
-          <rng:ref name="data.duration"/>
-	</rng:choice>
-      </datatype>
-      <valDesc>Any string representing a date in any of the standard
-      formats recommended as W3C schema datatypes or a duration.</valDesc>
+	<datatype xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	  <rng:choice>
+	    <rng:ref name="data.temporal"/>
+	    <rng:ref name="data.duration"/>
+	  </rng:choice>
+	</datatype>
+	<valDesc>Any string representing a date in any of the standard
+	formats recommended as W3C schema datatypes or a
+	duration.</valDesc>
       <remarks>
         <p>The forms available for use are 
       also defined in ISO 8601:2000(E),
@@ -35,19 +29,8 @@ See the file COPYING for details.
 		  times; <code>--MM-DD</code> for month and day;
 		  <code>YY-MM</code> for year and month.</p>
       </remarks>
-<!--standard form used should be described in the
-		  <gi>stdVals</gi> element in the TEI header. If a decimal
-		  point is used (e.g., to indicate fractions of a second),
-		  the character used to indicate a decimal point (typically a
-		  full stop or comma) should be documented in the
-		  <gi>stdVals</gi> elment in the TEI header.</p>
-        <p>Encoders may follow  perhaps as limited by the W3C's profile
-		  <title>Date and Time Formats</title>. However, standard
-		  forms may be defined from scratch, or borrowed from
-		  existing practice.</p>
-      </remarks>-->
     </attDef>
-    <attDef ident="key">
+<!--    <attDef ident="key">
 	<equiv/>
 	<desc>provides an alternative identifier for the object being named,
 		such as a database record key.</desc>
@@ -57,7 +40,7 @@ See the file COPYING for details.
         <p>For example and discussion, see the description of the
 		  <ident>names</ident> class.</p>
       </remarks>
-    </attDef>
+    </attDef> -->
 <!--    <attDef ident="reg">
 	<equiv/>
 	<desc>gives a normalized or regularized form of the name used.</desc>
@@ -68,7 +51,7 @@ See the file COPYING for details.
 	<equiv/>
 	<desc>characterizes the element in some sense, using any convenient
  classification scheme or typology.</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <datatype><rng:ref name="data.name" xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
       <valDesc>any string of characters. The range of permissible values
 is application
  dependent.</valDesc>
