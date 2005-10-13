@@ -949,14 +949,14 @@ both the source element and target element are in the same XML document.</p>
       <q>Matt.</q></p>
       <p>Several elements in the TEI scheme (<gi>gloss</gi>,
       <gi>ptr</gi> <gi>ref</gi>, and <gi>term</gi>) bear a special
-      attribute, <att>cref</att>, just for this purpose. Using the
+      attribute, <att>cRef</att>, just for this purpose. Using the
       system described in this section, an encoder may specify
       references to canonical works in a discipline-familiar format,
       and expect software to derive a complete URI from it. The value
-      of the <att>cref</att> attribute is processed as described in
+      of the <att>cRef</att> attribute is processed as described in
       this section, and the resulting URI reference is treated as if
       it were the value of the <att>target</att> attribute. The
-      <att>cref</att> and <att>target</att> attributes are mutually
+      <att>cRef</att> and <att>target</att> attributes are mutually
       exclusive: only one or the other may be specified on any given
       occurrence of an element.</p>
       <p>The <gi>refsDecl</gi> element (which is a member of class
@@ -967,34 +967,34 @@ both the source element and target element are in the same XML document.</p>
       target="#HD54"/>; the follwoing example is discussed in more
       detail below in section <ptr target="#SACRWE"/>.
       <egXML xmlns="http://www.tei-c.org/ns/Examples"><refsDecl xml:id="biblical">
-   <fragmentPattern re="(.+) (.+):(.+)" pat="#xpath(//div[@n='$1']/div[$2]/div[$3])">
+   <cRefPattern matchPattern="(.+) (.+):(.+)" replacementPattern="#xpath(//div[@n='$1']/div[$2]/div[$3])">
     <p>This pointer pattern extracts and references the <q>book,</q>
       <q>chapter,</q> and <q>verse</q> parts of a biblical reference.</p>
-   </fragmentPattern>
-   <fragmentPattern re="(.+) (.+)" pat="#xpath(//div[@n='$1']/div[$2])">
+   </cRefPattern>
+   <cRefPattern matchPattern="(.+) (.+)" replacementPattern="#xpath(//div[@n='$1']/div[$2])">
     <p>This pointer pattern extracts and references the <q>book</q> and
       <q>chapter</q> parts of a biblical reference.</p>
-   </fragmentPattern>
-   <fragmentPattern re="(.+)" pat="#xpath(//div[@n='$1'])">
+   </cRefPattern>
+   <cRefPattern matchPattern="(.+)" replacementPattern="#xpath(//div[@n='$1'])">
     <p>This pointer pattern extracts and references just the <q>book</q>
       part of a biblical reference.</p>
-   </fragmentPattern>
+   </cRefPattern>
 </refsDecl></egXML>
       </p>
       <p>When an application encounters a canonical reference as the
-      value of <att>cref</att> attribute, it can follow a sequence of
+      value of <att>cRef</att> attribute, it can follow a sequence of
       specific steps to transform it into a URI reference.
       <list type="ordered">
         <item>Ascertain the correct <gi>refsDecl</gi>
         following the rules summarized in section <ptr
         target="#CCAS3"/>.</item>
-        <item>For each <gi>fragmentPattern</gi> element encountered in
+        <item>For each <gi>cRefPattern</gi> element encountered in
         the appropriate <gi>refsDecl</gi>, in the order encountered:
         <list type="ordered">
-          <item>match the value of <att>cref</att> to the regular
+          <item>match the value of <att>cRef</att> to the regular
           expression found as the value of the <att>re</att>
           attribute</item>
-          <item>if the <att>cref</att> value matches, take the value
+          <item>if the <att>cRef</att> value matches, take the value
           of the <att>pat</att> attribute and substitute the back
           references ($1, $2, etc.) with the corresponding matched
           substrings</item>
@@ -1002,14 +1002,14 @@ both the source element and target element are in the same XML document.</p>
           absolute URI reference specified on the <att>target</att>
           attribute; i.e., it should be used as is or combined with
           the current <att>xml:base</att> value as usual</item>
-          <item>no further processing of this <att>cref</att> against
+          <item>no further processing of this <att>cRef</att> against
           the <gi>refsDecl</gi> should take place</item>
-          <item>if, however, the <att>cref</att> value does not match
+          <item>if, however, the <att>cRef</att> value does not match
           the regular expression specified on <att>re</att> attribute,
           proceed to the next <gi>fragmentPatter</gi></item>
         </list>
         </item>
-        <item>If all the <gi>fragmentPattern</gi> elements are
+        <item>If all the <gi>cRefPattern</gi> elements are
         examined in turn and none matches, the pointer fails.</item>
       </list></p>
       <p>The regular expression language used as the value of the
@@ -1036,7 +1036,7 @@ both the source element and target element are in the same XML document.</p>
 <!--      <p>A TEI application
       encounters a canonical reference, for example <egXML
       xmlns="http://www.tei-c.org/ns/Examples">This story is continued
-      in <ptr cref="Matt 5:7" decls="#biblical"/>.</egXML> and wants
+      in <ptr cRef="Matt 5:7" decls="#biblical"/>.</egXML> and wants
       to be able to convert it to a standard URI Reference that
       corresponds to <q>Matt 5:7</q>.</p>
         <p>The application first follows the URI in the
@@ -1049,28 +1049,28 @@ both the source element and target element are in the same XML document.</p>
         <gi>refsDecl</gi>s, the one that has a <val>yes</val> value
         specified for the <att>default</att> attriubte.</note> Within
         that declaration (see example above), it refers to the list of
-        <gi>fragmentPattern</gi>s, and for each pattern in the order
+        <gi>cRefPattern</gi>s, and for each pattern in the order
         specified, applies the regular expression found on the
         <att>re</att> attribute to the reference <q>Matt 5:7</q>.</p>
         <p>If
         the first regular expression matches, it applies the matched
         substrings (in this case, <q>Matt</q>, <q>5</q>, and <q>7</q>)
         to the string in the <att>pat</att> attribute of that
-        <gi>fragmentPattern</gi> element, substituting the first
+        <gi>cRefPattern</gi> element, substituting the first
         matched substring for $1, the second for $2, and so on, to
         produce an absolute or relative URI. In the case that a
         relative URI is produced, it is relative to whatever
         <att>xml:base</att> is in force for the pointer itself, i.e.
         the <gi>ptr</gi> or <gi>ref</gi> element that bore the
-        <att>cref</att> attripte.</p>
+        <att>cRef</att> attripte.</p>
         <p>If the regular expression in the first
-        <gi>fragmentPattern</gi> element does not match, the regular
-        expression in the second <gi>fragmentPattern</gi> element is
+        <gi>cRefPattern</gi> element does not match, the regular
+        expression in the second <gi>cRefPattern</gi> element is
         tried, and so on.</p> -->
       <div4 xml:id="SACRWE" type="subsubsection">
         <head>Worked Example</head>
         <p>Let us presume that with the example <gi>refsDecl</gi>
-        above, an application comes across a <att>cref</att> value of
+        above, an application comes across a <att>cRef</att> value of
         <val>Matt 5:7</val> inside a <gi>div</gi> which has an
         <att>xml:base</att> of
         <val>http://www.jph.org/resources/books/Bible.xml</val>. The
@@ -1105,7 +1105,7 @@ both the source element and target element are in the same XML document.</p>
           <code>http://www.jph.org/resources/books/Bible.xml#xpath(//div[@n='Matt'])</code>.</p>
         <p>It is an error to reference more matched substrings than
           are produced by the regular expression. For example:
-          <egXML xmlns="http://www.tei-c.org/ns/Examples"><fragmentPattern re="(.+) (.+):(.+)" pat="//div[@n='$1']/div[$2]/div[$3]/p[$4]"/></egXML>
+          <egXML xmlns="http://www.tei-c.org/ns/Examples"><cRefPattern matchPattern="(.+) (.+):(.+)" replacementPattern="//div[@n='$1']/div[$2]/div[$3]/p[$4]"/></egXML>
           would produce an error, since only three matched
           substrings would have been produced, but a fourth (<code>$4</code>) was
           referenced.</p>
@@ -1116,37 +1116,37 @@ both the source element and target element are in the same XML document.</p>
       </div4>
       <div4>
         <head>Complete and Partial URI Examples</head>
-        <p>In the above example, the value of <att>cref</att> was used
+        <p>In the above example, the value of <att>cRef</att> was used
         to generate a Fragment Identifier, which in turn was used to
         generate a complete URI. The complete URI could be generated
         directly, as in the following example.
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <refsDecl xml:id="USC">
-            <fragmentPattern re="([0-9][0-9])\s*U\.?S\.?C\.?\s*[Cc](h(\.|ap(ter|\.)?)?)?\s*([1-9][0-9]*)"
-                             pat="http://uscode.house.gov/download/pls/$1C$5.txt">
+            <cRefPattern matchPattern="([0-9][0-9])\s*U\.?S\.?C\.?\s*[Cc](h(\.|ap(ter|\.)?)?)?\s*([1-9][0-9]*)"
+                             replacementPattern="http://uscode.house.gov/download/pls/$1C$5.txt">
               <p>Matches most standard references to particular
               chapters of the United States Code, e.g.
               <val>11USCC7</val>, <val>17 U.S.C. Chapter 3</val>, or
               <val>14 USC Ch. 5</val>. Note that a leading zero is
               required for the title (must be two digits), but is not
               permitted for the chapter number.</p>
-            </fragmentPattern>
-            <fragmentPattern re="([0-9][0-9])\s*U\.?S\.?C\.?\s*[Pp](re(lim(inary)?)?)?\s*[Mm](at(erial)?)?"
-                             pat="http://uscode.house.gov/download/pls/$1T.txt">
+            </cRefPattern>
+            <cRefPattern matchPattern="([0-9][0-9])\s*U\.?S\.?C\.?\s*[Pp](re(lim(inary)?)?)?\s*[Mm](at(erial)?)?"
+                             replacementPattern="http://uscode.house.gov/download/pls/$1T.txt">
               <p>Matches references to the preliminary material for a
               given title, e.g. <val>11USCP</val>, <val>17 U.S.C.
               Prelim Mat</val>, or <val>14 USC pm</val>.</p>
-            </fragmentPattern>
-            <fragmentPattern re="([0-9][0-9])\s*U\.?S\.?C\.?\s*[Aa](ppend(ix)?)?"
-                             pat="http://uscode.house.gov/download/pls/$1A.txt">
+            </cRefPattern>
+            <cRefPattern matchPattern="([0-9][0-9])\s*U\.?S\.?C\.?\s*[Aa](ppend(ix)?)?"
+                             replacementPattern="http://uscode.house.gov/download/pls/$1A.txt">
               <p>Matches references to the appendix of a given tile,
               e.g. <val>05USCA</val>, <val>11 U.S.C. Appendix</val>,
               or <val>18 USC Append</val>.</p>
-            </fragmentPattern>
+            </cRefPattern>
           </refsDecl>
           <!-- ... -->
           <p>The example in section <ptr target="#SABN"/> is taken
-          from <ref cref="17 USC Ch 1">Subject Matter and Scope of
+          from <ref cRef="17 USC Ch 1">Subject Matter and Scope of
           Copyright</ref>.</p>
         </egXML>
         </p>
