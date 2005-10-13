@@ -2984,7 +2984,7 @@ is recommended that the TEI header contain a description of its
 construction in the <gi>refsDecl</gi> element described in section
 <ptr target="#HD54" type="div3"/>. As described there, the declaration
 may consist either of a formal declaration using the
-<gi>fragmentPattern</gi> element or an informal description in prose.
+<gi>cRefPattern</gi> element or an informal description in prose.
 The former is recommended because unlike prose it can be processed by
 software.</p>
 <p>The three examples given in section <ptr target="#CORS1"
@@ -2997,8 +2997,8 @@ an encoding should look something like this:
     <fileDesc><!-- ... --></fileDesc>
     <encodingDesc>
          <refsDecl>
-           <fragmentPattern re="([^ ]+) ([0-9]+)\.([0-9]+)\.([0-9]+)"
-			    pat="#xpath(//div0[@n='$1']/div1[@n='$2']/div2[@n='$3']/l[@n='$4']">
+           <cRefPattern matchPattern="([^ ]+) ([0-9]+)\.([0-9]+)\.([0-9]+)"
+			    replacementPattern="#xpath(//div0[@n='$1']/div1[@n='$2']/div2[@n='$3']/l[@n='$4']">
 	     <p>A canonical reference is assembled with
 	     <list>
 	       <item>the name of the <label>work</label>: the
@@ -3013,17 +3013,17 @@ an encoding should look something like this:
 	       child <gi>l</gi></item>
 	     </list>
 	     </p>
-	   </fragmentPattern>
-           <fragmentPattern re="([^ ]+) ([0-9]+)\.([0-9]+)"
-			    pat="#xpath(//div0[@n='$1']/div1[@n='$2']/div2[@n='$3']">
+	   </cRefPattern>
+           <cRefPattern matchPattern="([^ ]+) ([0-9]+)\.([0-9]+)"
+			    replacementPattern="#xpath(//div0[@n='$1']/div1[@n='$2']/div2[@n='$3']">
 	     <p>Same as above, but without the last component (full
 	     stop follwed by the <gi>l</gi>'s <att>n</att>.</p>
-	   </fragmentPattern>
-           <fragmentPattern re="([^ ]+) ([0-9]+)"
-			    pat="#xpath(//div0[@n='$1']/div1[@n='$2']">
+	   </cRefPattern>
+           <cRefPattern matchPattern="([^ ]+) ([0-9]+)"
+			    replacementPattern="#xpath(//div0[@n='$1']/div1[@n='$2']">
 	     <p>Same as above, but without the poem component (full
 	     stop follwed by the <gi>div2</gi>'s <att>n</att>.</p>
-	   </fragmentPattern>
+	   </cRefPattern>
          </refsDecl>         
     </encodingDesc>
 </teiHeader></egXML>
@@ -3034,8 +3034,8 @@ an encoding should look something like this:
 full on each tag. If canonical references are made only to lines, the
 reference system could be declared as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><refsDecl>
-  <fragmentPattern re="([^ ]+ [0-9]+\.[0-9]+\.[0-9]+)"
-		   pat="#xpath(//l[@n='$1')"/>
+  <cRefPattern matchPattern="([^ ]+ [0-9]+\.[0-9]+\.[0-9]+)"
+		   replacementPattern="#xpath(//l[@n='$1')"/>
 </refsDecl></egXML>
 Since the entire regular expression is enclosed as a parenthetical
 subgroup, the entire canonical reference string is sought as the value
@@ -3045,10 +3045,10 @@ of the <att>n</att> attribute on an <gi>l</gi> element.
 lines, the declaration for the reference system must be more
 complicated:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><refsDecl>
-  <fragmentPattern re="([^ ]+ [0-9]+\.[0-9]+\.[0-9]+)"
-		   pat="#xpath(//l[@n='$1')"/>
-  <fragmentPattern re="([^ ]+ [0-9]+\.[0-9]+)"
-		   pat="#xpath(//div2[@n='$1')"/>
+  <cRefPattern matchPattern="([^ ]+ [0-9]+\.[0-9]+\.[0-9]+)"
+		   replacementPattern="#xpath(//l[@n='$1')"/>
+  <cRefPattern matchPattern="([^ ]+ [0-9]+\.[0-9]+)"
+		   replacementPattern="#xpath(//div2[@n='$1')"/>
 </refsDecl></egXML>
 This declaration indicates that the entire reference string must be
 sought as the value of the <att>n</att> attribute on a <gi>div0</gi>,
@@ -3059,8 +3059,8 @@ giving the entire reference string as the value of the
 <att>xml:id</att> attribute on the relevant tags. The reference system
 declaration for such an encoding could be:
  <egXML xmlns="http://www.tei-c.org/ns/Examples"><refsDecl>
-  <fragmentPattern re="(.*)"
-		   pat="#$1"/>
+  <cRefPattern matchPattern="(.*)"
+		   replacementPattern="#$1"/>
 </refsDecl></egXML>
 although in general there seems to be little advantage in this case:
 it is no more difficult to use a standard relative URI reference as
@@ -3082,10 +3082,10 @@ derived from edition <val>E1</val>.
 </refsDecl></egXML>
  </p>
 <p>This is synonymous with the following declaration using the
-<gi>fragmentPattern</gi> element:
+<gi>cRefPattern</gi> element:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><refsDecl>
-  <fragmentPattern re="([^ ]+ [0-9]+\.[0-9]+\.[0-9]+)"
-		   pat="???"/>
+  <cRefPattern matchPattern="([^ ]+ [0-9]+\.[0-9]+\.[0-9]+)"
+		   replacementPattern="???"/>
 </refsDecl></egXML>
 <?tei winita need to replace ??? above with something equivalent to:
 <refsDecl>
