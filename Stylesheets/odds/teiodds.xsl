@@ -1285,13 +1285,26 @@
   </xsl:variable>
   <xsl:choose>
     <xsl:when test="not(key('IDENTS',$name))">
-      <a>
-	<xsl:attribute name="href">
-	  <xsl:value-of select="$TEISERVER"/>tag.xq?name=<xsl:value-of
-	  select="$name"/>
-	</xsl:attribute>
-	<xsl:value-of select="$link"/>
-      </a>
+      <xsl:choose>
+	<xsl:when test="$oddmode='tei'">
+	  <tei:ref>
+	    <xsl:attribute name="target">
+	      <xsl:value-of select="$TEISERVER"/>tag.xq?name=<xsl:value-of
+	      select="$name"/>
+	    </xsl:attribute>
+	    <xsl:value-of select="$link"/>
+	  </tei:ref>
+	</xsl:when>
+	<xsl:otherwise>
+	  <a>
+	    <xsl:attribute name="href">
+	      <xsl:value-of select="$TEISERVER"/>tag.xq?name=<xsl:value-of
+	      select="$name"/>
+	    </xsl:attribute>
+	    <xsl:value-of select="$link"/>
+	  </a>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:when>
     <xsl:when test="$oddmode='html' and $splitLevel=-1">
       <a class="link_odd" href="#{$name}"><xsl:value-of select="$link"/></a>

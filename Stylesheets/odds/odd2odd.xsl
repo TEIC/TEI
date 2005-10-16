@@ -298,6 +298,7 @@ because of the order of declarations
 	  </xsl:call-template>
       </xsl:for-each>
       <xsl:copy-of select="tei:attList/tei:attDef[not(@mode)]"/>
+      <xsl:copy-of select="tei:attList/tei:attDef[@mode='add']"/>
       <xsl:copy-of select="tei:attList/tei:attRef"/>
       <xsl:copy-of select="tei:attList/tei:attList"/>
       </attList>

@@ -1424,6 +1424,9 @@
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template name="noteID">
+    <xsl:variable name="Place">
+      <xsl:value-of select="@place"/>
+    </xsl:variable>
     <xsl:choose>
       <xsl:when test="@xml:id">
         <xsl:value-of select="@xml:id"/>
@@ -1433,13 +1436,13 @@
         <xsl:value-of select="@n"/>
       </xsl:when>
       <xsl:when test="ancestor::tei:front">
-	<xsl:number level="any" count="tei:note[@place=current()/@place]" from="tei:front"/>
+	<xsl:number level="any" count="tei:note[@place=$Place]" from="tei:front"/>
       </xsl:when>
       <xsl:when test="ancestor::tei:back">
-	<xsl:number level="any" count="tei:note[@place=current()/@place]" from="tei:back"/>
+	<xsl:number level="any" count="tei:note[@place=$Place]" from="tei:back"/>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:number level="any" count="tei:note[@place=current()/@place]" from="tei:body"/>
+	<xsl:number level="any" count="tei:note[@place=$Place]" from="tei:body"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -1449,18 +1452,21 @@
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template name="noteN">
+    <xsl:variable name="Place">
+      <xsl:value-of select="@place"/>
+    </xsl:variable>
     <xsl:choose>
       <xsl:when test="@n">
         <xsl:value-of select="@n"/>
       </xsl:when>
       <xsl:when test="ancestor::tei:front">
-	<xsl:number level="any" count="tei:note[@place=current()/@place]" from="tei:front"/>
+	<xsl:number level="any" count="tei:note[@place=$Place]" from="tei:front"/>
       </xsl:when>
       <xsl:when test="ancestor::tei:back">
-	<xsl:number level="any" count="tei:note[@place=current()/@place]" from="tei:back"/>
+	<xsl:number level="any" count="tei:note[@place=$Place]" from="tei:back"/>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:number level="any" count="tei:note[@place=current()/@place]" from="tei:body"/>
+	<xsl:number level="any" count="tei:note[@place=$Place]" from="tei:body"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
