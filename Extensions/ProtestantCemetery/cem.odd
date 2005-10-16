@@ -34,329 +34,50 @@ view of the TEI.
   <moduleRef key="tei"/>
   <moduleRef key="textstructure"/>
   <moduleRef key="transcr"/>
+  <moduleRef key="msdescription"/>
 
 <elementSpec ident="death" mode="add">
   <classes>
-    <memberOf key="tei.demographic"/>
-    <memberOf key="tei.temporalExpr"/>
+    <memberOf key="model.personPart"/>
+    <memberOf key="model.datePart"/>
   </classes>
-  <content>
-    <rng:ref name="macro.phraseSeq"/> 
-  </content>
-</elementSpec>
- 
-<elementSpec module="header" ident="language" mode="change">
   <attList>
-    <attDef ident="ident" usage="req" mode="change">
-      <datatype><rng:text/></datatype>
-    </attDef>
-  </attList>
-</elementSpec>
-
-<elementSpec ident="birth" module="corpus" mode="change">
-  <content>
-    <rng:ref name="macro.phraseSeq"/> 
-  </content>
-  <attList>
-    <attDef ident="date" usage="opt" mode="delete"/>
-    <attDef ident="value" usage="opt" mode="add">
+    <attDef ident="date" usage="opt">
 	<equiv/>
-	<desc>supplies the value of a date or time in a standard form.</desc>
-      <datatype>
-	<rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
-	  <rng:data type="date"/>
-	  <rng:data type="gYear"/>
-	  <rng:data type="gMonth"/>
-	  <rng:data type="gDay"/>
-	  <rng:data type="gYearMonth"/>
-	  <rng:data type="gMonthDay"/>
-	  <rng:data type="time"/>
-	  <rng:data type="dateTime"/>
-	</rng:choice>
-      </datatype>
+	<desc>specifies the date of birth in an ISO standard form (yyyy-mm-dd).</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.temporal"/></datatype>
+      <valDesc>a date in ISO standard form, generally ISO 8601:2000 5.2.1.1 Complete representation, extended format (yyyy-mm-dd).</valDesc>
     </attDef>
   </attList>
+  <content>
+    <rng:ref name="macro.phraseSeq"/> 
+  </content>
 </elementSpec>
  
 <elementSpec ident="nationality" mode="add">
   <classes>
-    <memberOf key="tei.demographic"/>
+    <memberOf key="model.personPart"/>
   </classes>
   <content>
-  <rng:ref name="macro.phraseSeq"/> 
-  </content>
+    <rng:ref name="macro.phraseSeq"/> 
+  </content> 
   <attList>
-    <attDef ident="target">
+    <attDef ident="target" usage="opt">
       <datatype>
-	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/>
-        </datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
     </attDef>
   </attList>
-
 </elementSpec>
  
-<elementSpec ident="stoneDescription" mode="add">
-  <classes>
-    <memberOf key="tei.sourcedesc"/>
-  </classes>
-  <content> 
-    <rng:ref name="location"/>
-    <rng:ref name="physicalDescription"/>
-    <rng:ref name="history"/>
-  </content>
-</elementSpec>
-
-<elementSpec ident="location" mode="add">
-  <content> 
-    <rng:ref name="plot"/>
-    <rng:ref name="zone"/>
-    <rng:optional>
-      <rng:ref name="box"/>
-    </rng:optional>
-    <rng:oneOrMore> 
-      <rng:ref name="polygon"/>
-    </rng:oneOrMore>
-  </content>
-</elementSpec>
-
-<elementSpec ident="plot" mode="add">
-  <content> 
-    <rng:text/>
-  </content>
-</elementSpec>
-
-<elementSpec ident="zone" mode="add">
-  <content> 
-    <rng:empty/>
-  </content>
-  <attList>
-    <attDef ident="target">
-      <datatype>
-	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/>
-        </datatype>
-    </attDef>
-  </attList>
-</elementSpec>
-
-<elementSpec ident="box" mode="add">
-  <content>
-    <rng:empty/>
-  </content>
-  <attList>
-    <attDef ident="x">
-      <datatype><rng:data type="decimal"/></datatype>
-    </attDef>
-    <attDef ident="y">
-      <datatype><rng:data type="decimal"/></datatype>
-    </attDef>
-    <attDef ident="width">
-      <datatype><rng:data type="decimal"/></datatype>
-    </attDef>
-    <attDef ident="height">
-      <datatype><rng:data type="decimal"/></datatype>
-    </attDef>
-  </attList>
-</elementSpec>
-
-<elementSpec ident="polygon" mode="add">
-  <content> 
-    <rng:empty/>
-  </content>
-  <attList>
-    <attDef ident="points">
-      <datatype><rng:text/></datatype>
-    </attDef>
-  </attList>
-</elementSpec>
-
-<elementSpec ident="physicalDescription" mode="add">
-  <content>
-    <rng:ref name="dimensions"/>
-    <rng:ref name="form"/>
-    <rng:ref name="material"/>
-    <rng:ref name="numElements"/>
-    <rng:ref name="features"/>
-    <rng:ref name="condition"/>
-    <rng:optional>
-      <rng:ref name="faces"/>
-    </rng:optional>
-    <rng:ref name="decoration"/>
-  </content>
-</elementSpec>
-
-<elementSpec ident="form" mode="add">
-  <content> 
-    <rng:text/>
-  </content>
-  <attList>
-    <attDef ident="target">
-      <datatype>
-	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/>
-      </datatype>
-    </attDef>
-  </attList>
-</elementSpec>
-
-
-<elementSpec ident="material" mode="add">
-  <content>
-    <rng:text/>
-  </content>
-  <attList>
-    <attDef ident="target">
-      <datatype>
-	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/>
-      </datatype>
-    </attDef>
-  </attList>
-</elementSpec>
-
-<elementSpec ident="numElements" mode="add">
-  <content>
-    <rng:text/>
-  </content>
-</elementSpec>
-
-<elementSpec ident="features" mode="add">
-  <content>
-    <rng:text/>
-  </content>
-</elementSpec>
-
-<elementSpec ident="dimensions" mode="add">
-  <content> 
-    <rng:optional>
-      <rng:ref name="height"/>
-    </rng:optional>
-    <rng:optional>
-      <rng:ref name="breadth"/>
-    </rng:optional>
-    <rng:optional>
-      <rng:ref name="width"/>
-    </rng:optional>
-    <rng:optional>
-      <rng:ref name="diam"/>
-    </rng:optional>
-  </content>
-</elementSpec>
-
-<elementSpec ident="height" mode="add">
-  <content> 
-    <rng:text/>
-  </content>
-</elementSpec>
-
-<elementSpec ident="breadth" mode="add">
-  <content>
-    <rng:text/>
-  </content>
-</elementSpec>
-
-<elementSpec ident="width" mode="add">
-  <content>  
-    <rng:text/>
-  </content>
-</elementSpec>
-
-<elementSpec ident="diam" mode="add">
-  <content>   
-    <rng:text/>
-  </content>
-</elementSpec>
-
-<elementSpec ident="condition" mode="add">
-  <content>
-    <rng:text/>
-  </content>
-  <attList>
-    <attDef ident="target">
-      <datatype>
-	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/>
-      </datatype>
-    </attDef>
-  </attList>
-
-</elementSpec>
-
-<elementSpec ident="faces" mode="add">
-  <content>
-    <rng:text/>
-  </content>
-  <attList>
-    <attDef ident="target">
-      <datatype>
-	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.uriList"/>
-      </datatype>
-    </attDef>
-  </attList>
-</elementSpec>
-
-<elementSpec ident="decoration" mode="add">
-  <content> 
-    <rng:optional>
-      <rng:ref name="p"/>
-    </rng:optional>
-    <rng:zeroOrMore>
-      <rng:ref name="feature"/>
-    </rng:zeroOrMore>
-  </content>
-</elementSpec>
-
-<elementSpec ident="feature" mode="add">
-  <content>
-<rng:text/>
-  </content>
-  <attList>
-    <attDef ident="occs">
-      <datatype>
-	<rng:text/>
-      </datatype>
-    </attDef>
-    <attDef ident="decls">
-      <datatype>
-	<rng:text/>
-      </datatype>
-    </attDef>
-  </attList>
-</elementSpec>
-
-<elementSpec ident="history" mode="add">
-  <content>
-    <rng:zeroOrMore>
-      <rng:ref name="p"/>
-    </rng:zeroOrMore>
-    <rng:zeroOrMore>
-      <rng:ref name="surrogates"/>
-    </rng:zeroOrMore>
-  </content>
-</elementSpec>
-
-<elementSpec ident="surrogates" mode="add">
-  <content>
-    <rng:zeroOrMore>
-      <rng:ref name="photo"/>
-    </rng:zeroOrMore>
-  </content>
-</elementSpec>
-
-<elementSpec ident="photo" mode="add">
-  <content> 
-    <rng:text/> 
-  </content>
-  <attList>
-    <attDef ident="film">
-      <datatype>
-	<rng:text/>
-      </datatype>
-    </attDef>
-    <attDef ident="neg">
-      <datatype>
-	<rng:text/>
-      </datatype>
-    </attDef>
-  </attList>
-</elementSpec>
-
+  <elementSpec module="msdescription" ident="msDescription"
+	       mode="change">
+    <altIdent>stoneDescription</altIdent>
+  </elementSpec>
+  <elementSpec module="msdescription" ident="msIdentifier"
+	       mode="change">
+    <altIdent>stoneIdentifier</altIdent>
+  </elementSpec>
   <elementSpec module="core" ident="lg" mode="delete"/>
   <elementSpec module="core" ident="l" mode="delete"/>
   <elementSpec module="core" ident="add" mode="delete"/>

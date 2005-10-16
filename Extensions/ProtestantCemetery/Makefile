@@ -3,7 +3,7 @@ XSL=/usr/share/xml/tei/stylesheet
 TEISERVER=http://localhost/Query/
 
 schema:
-	roma --xsl=${XSL} --teiserver=${TEISERVER} cem.odd .
+	roma --localsource=../../P5/Source-driver.xml --xsl=${XSL} --teiserver=${TEISERVER} cem.odd .
 
 test:
 	xmllint --noent /TEI/Projects/ProtestantCemetery/cem.xml | xmllint --noout --relaxng teicem.rng - 
