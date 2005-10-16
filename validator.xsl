@@ -29,6 +29,8 @@
 
 <xsl:template match="@*"/>
 
+<!-- vallist data.enumerated check removed pro tem -->
+<!--
 <xsl:template match="rng:ref[@name='data.enumerated']">
   <xsl:if
       test="not(../tei:valList)">
@@ -54,7 +56,7 @@
     </xsl:call-template>
   </xsl:if>
 </xsl:template>
-
+-->
 <xsl:template match="tei:memberOf|tei:moduleRef">
      <xsl:if test="not(key('IDENTS',@key))">
        <xsl:call-template name="Error">
