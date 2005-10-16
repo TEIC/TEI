@@ -1510,7 +1510,7 @@
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template name="printNotes">
-    <xsl:if test="descendant::tei:note[@place]">
+    <xsl:if test="descendant::tei:note[@place!='inline']">
       <xsl:choose>
         <xsl:when test="$footnoteFile='true'">
           <xsl:variable name="BaseFile">
@@ -1531,7 +1531,7 @@
             <div class="noteHeading">
               <xsl:value-of select="$noteHeading"/>
             </div>
-            <xsl:apply-templates select="descendant::tei:note[@place]" mode="printnotes"/>
+            <xsl:apply-templates select="descendant::tei:note[@place!='inline']" mode="printnotes"/>
           </div>
         </xsl:otherwise>
       </xsl:choose>

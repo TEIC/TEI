@@ -460,7 +460,7 @@ A path fragment to put before all internal URLs
 <xsl:param name="URLPREFIX"/>
 
 <xd:doc type="string" class="output">
-The name of the input file
+The name of the output file
 </xd:doc>
 <xsl:param name="outputName"/>
 
