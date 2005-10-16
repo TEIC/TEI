@@ -33,27 +33,26 @@
 <!--
 <xsl:template match="rng:ref[@name='data.enumerated']">
   <xsl:if
-      test="not(../tei:valList)">
-    <xsl:call-template name="Error">
-      <xsl:with-param name="value">
+      test="not(../../tei:valList)">
+  <xsl:message>ERROR: 
 	No valList in <xsl:value-of
 	select="ancestor::tei:attDef/@ident"/>@<xsl:value-of
 	select="ancestor::tei:elementSpec/@ident|ancestor::tei:classSpec/@ident"/>
-	where datatype is enumerated</xsl:with-param>
-    </xsl:call-template>
+	where datatype is enumerated
+  </xsl:message>
   </xsl:if>
 </xsl:template>
 
 <xsl:template match="tei:valList">
   <xsl:if
       test="not(../tei:datatype/rng:ref[@name='data.enumerated'])">
-    <xsl:call-template name="Error">
-      <xsl:with-param name="value">
+  <xsl:message>ERROR: 
 	valList in <xsl:value-of
 	select="ancestor::tei:attDef/@ident"/>@<xsl:value-of
 	select="ancestor::tei:elementSpec/@ident|ancestor::tei:classSpec/@ident"/>
-	where datatype is not enumerated</xsl:with-param>
-    </xsl:call-template>
+	where datatype is not enumerated
+  </xsl:message>
+
   </xsl:if>
 </xsl:template>
 -->
