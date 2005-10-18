@@ -29,7 +29,6 @@
  <stoneDescription xmlns="http://www.tei-c.org/ns/1.0">
    <stoneIdentifier xmlns="http://www.tei-c.org/ns/1.0">
      <settlement xmlns="http://www.tei-c.org/ns/1.0">Protestant Cemetery</settlement>
-     <repository xmlns="http://www.tei-c.org/ns/1.0">PC</repository>
      <idno xmlns="http://www.tei-c.org/ns/1.0">
        <xsl:value-of select="ancestor::tei:TEI/@xml:id"/>
      </idno>
