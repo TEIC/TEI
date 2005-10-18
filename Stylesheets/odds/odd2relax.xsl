@@ -163,6 +163,14 @@
 		<rng:ref name="{$patternPrefix}{@start}"/>
 	      </rng:start>
 	    </xsl:when>
+	    <xsl:when test="key('IDENTS','teiCorpus')">
+	      <rng:start>
+		<rng:choice>
+		  <rng:ref name="{$patternPrefix}TEI"/>
+		  <rng:ref name="{$patternPrefix}teiCorpus"/>
+		</rng:choice>
+	      </rng:start>
+	    </xsl:when>
 	    <xsl:otherwise>
 	      <rng:start>
 		<rng:ref name="{$patternPrefix}TEI"/>
