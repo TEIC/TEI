@@ -17,6 +17,13 @@ $Author$
 -->
 <div1 xmlns="http://www.tei-c.org/ns/1.0" type="Chapter" xml:id="ST" n="3">
 <head>Structure of the TEI Document Type Definition</head>
+<note>Revision of this chapter is not yet complete. In particular,
+references to auxiliary, additional, and base tagsets is no longer
+appropriate, since in release P5 the distinction has been removed. The
+chapter also discusses (for the most part) only SGML constructs, and
+does not describe the way in which customization is carried out via
+the new ODD system documented in chapter <ptr target="#TD"/> which is
+now the recommended customization method. </note>
 <p>This chapter describes the overall structure of the encoding scheme
 defined by these Guidelines.  It introduces the conceptual framework
 within which the following chapters are to be understood, and
@@ -569,12 +576,6 @@ instructions ...</p></egXML>
 	other than letters, digits 0 to 9, full stop, and hyphen. By
 	default, i.e. using the TEI-supplied SGML declaration, SGML names
 	must be 32 or fewer characters long.</p>
-  <p>Furthermore, by default upper and lower case letters are not
-	distinguished in SGML names: thus, the strings
-	<mentioned>a23</mentioned> and <mentioned>A23</mentioned> are
-	identical, and may not be used to identify two distinct
-	elements. This may (and perhaps should) be changed in the SGML
-	declaration.</p>
   <p>In XML names (and thus the values of <att>xml:id</att> in an XML TEI
 	document) upper and lower case letters are distinguished, and
 	thus <mentioned>partTime</mentioned> and
@@ -584,8 +585,8 @@ instructions ...</p></egXML>
   <p>If two elements are given the same identifier, the parser will
 	signal a syntax error. The following example, therefore, is
 	<emph>not</emph> valid:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p xml:id="PAGE1"><q>What's it going to be then, eh?</q></p>
-<p xml:id="PAGE2">There was me, that is Alex, and my three droogs,
+<egXML xmlns="http://www.tei-c.org/ns/Examples">&lt;p xml:id="PAGE1"><q>What's it going to be then, eh?</q>&lt;/p>
+<p xml:id="PAGE1">There was me, that is Alex, and my three droogs,
 that is Pete, Georgie, and Dim, ... </p></egXML>
 <!-- Clockwork Orange, opening -->
 </p>
@@ -623,6 +624,9 @@ allow most elements to take the default value for <att>xml:lang</att>; the
 language of an element then need be explicitly specified only for
 elements in languages other than the base language.
  </p>
+<p>The values used for the <att>xml:lang</att> attribute must be
+constructed in a particular way, using values from standard lists. See
+further <ptr target="#CHSH"/>.</p>
 <p>The following two encodings convey the same information about the
 language of the text, since in the first the <att>xml:lang</att> attributes
 on the <gi>emph</gi> elements specify the same value as that on the
@@ -656,17 +660,10 @@ or <term xml:lang="la">ex post facto</term> law shall be passed.</q> ... </p></e
 	<!-- Commager, ed., Documents of American History, 5th ed.    -->
 	<!-- (New York:  Appleton-Century-Crofts, 1949), p. 192.      -->
 </p>
-<p>If it is useful to supply more details about a particular language
-than can be gleaned by its RFC 3066 language code alone, or if a
-private use code is used (i.e., a code that begins with <code>x-</code>),
-further information should be supplied in a <gi>language</gi>, which is  defined in
-section <ptr target="#HD41"/>. The RFC 3066
-language code for the language in question should be specified on the
-<att>ident</att> attribute of the <gi>language</gi> element —
-this allows processing software, by matching values of
-<att>xml:lang</att> against the values of the <att>ident</att>
-attribute of <gi>language</gi>, to form a mapping between the
-description of a language and occurences of it.</p>
+<p>As further discussed in section <ptr target="#CHSH"/>, additional
+information  about a particular language
+may be supplied in the <gi>language</gi> element within the header (see
+section <ptr target="#HD41"/>).</p>
 <p>The <att>rend</att> attribute is used to give information about the
 physical presentation of the text in the source.  In the following
 example, it is used to indicate that both the emphasized word and the
@@ -934,13 +931,13 @@ additional module.</p>
 </div3></div2>
 <div2 xml:id="STEC"><head>Element Classes</head>
 <p>The TEI DTD contains over four hundred element types.  To aid
-comprehension, modularity and modification, the majority of these
+comprehension, modularity, and modification, the majority of these
 elements are formally classified in some way.  This section describes
 the various <term>element classes</term> recognized in the TEI DTD.
 Element classes are used to express two distinct kinds of commonality
 among elements.  The elements of a class may share some set of
-attributes, or they may appear in the same locations in the content
-models of the TEI DTDs.  A class is known as an
+attributes, or they may appear in the same locations in a  content
+model.  A class is known as an
 <term>attribute class</term> if its members share attributes, and as an
 <term>model class</term> if its members appear at the same locations in the
 content models of other TEI elements.  An element is said to
@@ -949,8 +946,10 @@ point in a document, from any classes of which it is a member.  Classes
 may have subclasses and superclasses, and the characteristics of a
 superclass are inherited by all members of its subclasses.
  </p>
-<p>Both types of element classes are represented in the TEI DTDs by
-parameter entities.  For other uses of parameter entities in the TEI
+<p>Both types of element classes are represented by parameter entities  in the TEI DTD
+fragments; in RelaxNG frgments, they are represented by patterns whose
+names begin with <ident>att.</ident> or <ident>model.</ident> respectively. 
+For other uses of parameter entities in the TEI
 DTDs, see section <ptr target="#STPE"/>.
  </p>
 <p>This section describes the major element classes of each type
@@ -1796,7 +1795,7 @@ existing schema languages, although a TEI-compliant processor should
 attempt to validate them (see further discussion in chapter <ptr
 target="#CF"/>). </p>
 <p>Where literal values or name tokens are used in a datatype
-definition an associated value list supplies definitions for the
+definition, an associated value list supplies definitions for the
 significance of suggested or (in the case of closed lists) all
 possible values.</p>
 <!-- but can we put a valList in a macroSpec ? -->
@@ -1805,7 +1804,7 @@ normalised values for numeric quantities or probabilities, those which
 define various kinds of short-hand codes or keys, and those which
 define pointers or links. </p>
 <p>The following datatypes are used for attributes which are intended
-to hold normalized values of various kinds. First, numeric values:
+to hold normalized values of various kinds. First, expressions of quantity:
 <specList>
 <specDesc key="data.certainty"/>
 <specDesc key="data.probability"/>
@@ -1884,21 +1883,31 @@ different name, as follows:
 <specDesc key="data.code"/>
 </specList>
 </p>
-<p>Attributes of type <ident>data.key</ident>, such as
-<att>key</att> on <gi>persName</gi> are used to supply an arbitrary
-external identifier, such as a database key or filename. For that
-reason, no constraints are placed on their possible values: any string
-of Unicode characters may be used. </p>
-<p>Attributes of type <ident>data.name</ident>, such as
-<att>age</att> on <gi>person</gi> are used to supply a single XML name of some
-kind. The name can contain any non-white-space Unicode characters which are legal
-within an XML name, as defined by the XML 1.0
-specification. Legal names include
+
+<p>Attributes such as <att>key</att> of <gi>persName</gi> and other
+members of the <ident>att.naming</ident> class are of type
+<ident>data.key</ident>. They are used to supply am externally-defined
+identifier, such as a database key or filename. Because such
+identifiers are externally-defined, no constraints are placed on their
+possible values: and any string of Unicode characters may be used. If
+constraints on their values are known to the encoder such as the rules
+for constructing a valid database key in a particular system, this may
+be documented within the TEI Header but cannot be enforced.</p>
+
+<p>Attributes of type <ident>data.word</ident>, such as
+<att>age</att> on <gi>person</gi> are used to supply an identifier
+expressed as any kind of single token or word. The TEI places a few
+constraints on the characters which may be used for this purpose:
+only Unicode characters classified as letters, digits,  punctuation
+characters, or symbols can appear in an attribute value of this
+kind. Note in particular that such values cannot  cannot include
+whitespace name. Legal values include
 <val>cholmondeley</val>, <val>été</val>, <val>1234</val>, <val>e_content</val>, or
 <val>xml:id</val>, but not  <val>grand
-wazoo</val>. Attributes of this kind are often used to associate (by
+wazoo</val>. Attributes of this kind are sometimes used to associate (by
 co-reference) elements of different types.</p>
-<p>Attributes of type <ident>data.ident</ident> are also names in
+
+<p>Attributes of type <ident>data.name</ident> are also words in
 this sense, but they have the additional constraint that they must be
 legal XML identifiers, as defined by the XML 1.0 specification. As
 such, they may not begin with digits or punctuation characters. Legal
@@ -1906,27 +1915,32 @@ identifiers include <val>cholmondeley</val>, <val>été</val>,
 <val>e_content</val>, or <val>xml:id</val>, but not <val>grand
 wazoo</val> or <val>1234</val>. Attributes of this kind are typically used to
 represent XML element or attribute names.</p>
-<p>Attributes of type <ident>data.names</ident>, such as
-<att>extent</att> on <gi>damage</gi> are used to supply a list of names (as
+
+<p>Corresponding with these two datatypes, the TEI provides
+<soCalled>list</soCalled> valued datatypes <ident>data.words</ident>
+and <ident>data.names</ident>. These may be used to supply a list of
+words or names (as
 defined above), each
 being separated by a single space. </p>
+
 <p>Attributes of type <ident>data.enumerated</ident>, such as
-<att>zone</att> on <gi>time</gi> are used to supply a name taken from a
-specific list of possibilities. Unlike other names, these may include
-white space. Legal names of this kind include <val>1234</val>,
-<val>cholmondeley</val>, <val>été</val>, <val>e_content</val>, <val>xml:id</val>, and
-<val>grand wazoo</val>. In each case, the element or class
-specification which includes the definition for the attribute will
-also contain a list of possible values, together with a prose
-description of their intended significance. This list may be open (in
-which case the list is advisory), or closed (in which case, it
-determines the range of legal values).</p>
-<p>Attributes of type <ident>data.code</ident> such as
-<att>new</att> and <att>old</att> on <gi>handShift</gi> are similar in function, in that they also
-supply encoded names for values which are defined in more detail
-elsewhere. In this case, however, the full definition is supplied as
-content of another XML element, typically but not necessarily in the
-same document, and it is referenced by means of a pointer.</p>
+<att>zone</att> on <gi>time</gi> have the same definition as
+<ident>data.word</ident> above, with the added semantics that the word
+supplied is taken from a specific list of possibilities. In each case,
+the element or class specification which includes the definition for
+the attribute will also contain a list of possible values, together
+with a prose description of their intended significance. This list may
+be open (in which case the list is advisory), or closed (in which
+case, it determines the range of legal values).</p>
+
+<p>Attributes of type <ident>data.code</ident> such as <att>new</att>
+and <att>old</att> on <gi>handShift</gi> are similar in function, in
+that they also supply encoded names for values which are defined in
+more detail elsewhere. In this case, however, the full definition is
+supplied as content of another XML element, typically but not
+necessarily in the same document, and it is referenced by means of a
+pointer. </p>
+
 <p>Here are the specifications for these datatypes:
 <specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0"
 	 xml:id="DSTKEYS-4" n="Datatypes: coded values">
