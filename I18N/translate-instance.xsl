@@ -12,7 +12,7 @@
 <xsl:param name="verbose"></xsl:param>
 <xsl:key name="ELEMENTS" match="element" use="@ident"/>
 <xsl:key name="ATTRIBUTES" match="attribute" use="@ident"/>
-<xsl:param name="TEISERVER">http://localhost/Query/i18n.xq</xsl:param>
+<xsl:param name="TEISERVER">http://tei.oucs.ox.ac.uk/Query/i18n.xq</xsl:param>
 
 <xsl:template match="comment()|text()|processing-instruction()">
   <xsl:copy/>

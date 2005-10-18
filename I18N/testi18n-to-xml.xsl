@@ -17,6 +17,8 @@
 <xsl:import
     href="/usr/share/xml/tei/stylesheet/odds/odd2lite.xsl"/>
 
+  <xsl:param name="oddmode">tei</xsl:param>
+
 <xsl:template match="/">
   <TEI  xmlns="http://www.tei-c.org/ns/1.0">
    <teiHeader>

@@ -1,0 +1,69 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="corpus" xml:id="PERSON" usage="opt" ident="person">
+<equiv/>
+<gloss/>
+<desc>описва един участник в езиково взаимодействие.</desc>
+  <content>
+    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:oneOrMore>
+        <rng:ref name="p"/>
+      </rng:oneOrMore>
+      <rng:zeroOrMore>
+        <rng:ref name="model.personPart"/>
+      </rng:zeroOrMore>
+    </rng:choice>
+  </content>
+  <attList>
+    <attDef ident="role" usage="opt">
+	<equiv/>
+	<desc>уточнява ролята на този участник в групата.</desc>
+
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.code"/></datatype>
+      <valDesc>a set of keywords to be defined</valDesc>
+    </attDef>
+    <attDef ident="sex" usage="opt">
+	<equiv/>
+	<desc>уточнява пола на участника.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.sex"/></datatype>
+      <valList type="closed">
+        <valItem ident="m">
+          <equiv/>
+          <gloss>мъж</gloss>
+        </valItem>
+        <valItem ident="f">
+          <equiv/>
+          <gloss>жена</gloss>
+        </valItem>
+        <valItem ident="u">
+          <equiv/>
+          <gloss>неизвестен или несъществуващ</gloss>
+        </valItem>
+      </valList>
+    </attDef>
+    <attDef ident="age" usage="opt">
+	<equiv/>
+	<desc>уточнява възрастовата група, от която е участникът.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"/></datatype>
+      <valDesc>suggested values are to be supplied</valDesc>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <person sex="f" age="42">
+        <p>Female informant, well-educated, born in Shropshire
+UK, 12 Jan 1950, of unknown occupation.
+Speaks French fluently. Socio-Economic status B2.</p>
+      </person>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">May contain a prose description organized as paragraphs, or
+any sequence of demographic elements in any combination.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#CCAHPA"/>
+  </listRef>
+</elementSpec>
