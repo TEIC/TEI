@@ -4,36 +4,36 @@ See the file COPYING for details.
 -->
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs-decl" xml:id="IDENTIFY" type="atts" ident="att.identified">
 <desc>elements which can be referenced by means of a <att>key</att> attribute</desc>
-  <attList>
+  <attList xmlns:rng="http://relaxng.org/ns/structure/1.0" >
     <attDef ident="ident" usage="req">
 	<equiv/>
 	<desc>Supplies the identifier by which this element is referenced.</desc>
-      <datatype/>
+      <datatype><rng:ref name="data.name"/></datatype>
       <valDesc>an XML name</valDesc>
     </attDef>
     <attDef ident="depend" usage="opt">
 	<equiv/>
 	<desc>The name of a module on which this object depends.</desc>
-      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="NCName"/></datatype>
+      <datatype><rng:data type="NCName"/></datatype>
     </attDef>
     <attDef ident="predeclare" usage="opt">
 	<equiv/>
 	<desc>Says whether the class should be treated as global, and so
       needs predefining in the core.</desc>
-      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="boolean"/></datatype><defaultVal>false</defaultVal>
+      <datatype><rng:data type="boolean"/></datatype><defaultVal>false</defaultVal>
     </attDef>
     <attDef ident="module" usage="opt">
 	<equiv/>
 	<desc>Supplies the name of the module in which this object is to
       be defined.</desc>      
-      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="NCName"/></datatype>
+      <datatype><rng:data type="NCName"/></datatype>
       <valDesc>a name of module</valDesc>
     </attDef>
     <attDef ident="mode" usage="opt">
 	<equiv/>
 	<desc>specifies the effect of this declaration on its parent
     module.</desc>
-      <datatype><rng:ref name="data.enumerated" xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <datatype><rng:ref name="data.enumerated"/></datatype>
       <defaultVal>add</defaultVal>
       <valList>
       <valItem ident="add">
