@@ -39,15 +39,7 @@
 
 <xsl:template name="printLink"/>
 
-<!--  <xsl:variable name="printable">
-    <xsl:value-of select=""/>
-    <xsl:text>.html</xsl:text>
-  </xsl:variable>
-  <a href="{$printable}">printable version of this chapter</a>
--->
-
 <xsl:template match="tei:div0">
-<xsl:message>div 0 <xsl:value-of select="tei:head"/></xsl:message>
     <xsl:apply-templates/>
 </xsl:template>
   
