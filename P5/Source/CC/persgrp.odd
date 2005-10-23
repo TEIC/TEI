@@ -5,13 +5,16 @@ See the file COPYING for details
 $Date$
 $Author$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="corpus" xml:id="PERSGRP" usage="opt" ident="personGrp">
-<equiv/>
-<gloss>personal group</gloss>
-<desc>describes a group of individuals treated as a single person for
-analytic purposes.</desc>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+	     module="corpus"
+	     xml:id="PERSGRP" usage="opt" ident="personGrp">
+  <equiv/>
+  <gloss>personal group</gloss>
+  <desc>describes a group of individuals treated as a single person for
+  analytic purposes.</desc>
   <content>
-    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:choice>
       <rng:oneOrMore>
         <rng:ref name="p"/>
       </rng:oneOrMore>
@@ -25,48 +28,35 @@ analytic purposes.</desc>
 	<equiv/>
 	<desc>specifies the role of this group of participants in the
         interaction.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.code"/></datatype>
+      <datatype><rng:ref name="data.code"/></datatype>
       <valDesc>a set of keywords to be defined</valDesc>
     </attDef>
     <attDef ident="sex" usage="opt">
 	<equiv/>
 	<desc>specifies the sex of the participant group.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.sex"/></datatype>
-      <valList type="closed">
-        <valItem ident="not_known">
-          <equiv/>
-          <gloss>0</gloss>
-        </valItem>
-        <valItem ident="male">
-          <equiv/>
-          <gloss>1</gloss>
-        </valItem>
-        <valItem ident="female">
-          <equiv/>
-          <gloss>2</gloss>
-        </valItem>
-        <valItem ident="not_specified">
-          <equiv/>
-          <gloss>9</gloss>
-        </valItem>
-      </valList>
+      <datatype>
+	<rng:choice>
+	  <rng:ref name="data.sex"/>
+	  <rng:value>mixed</rng:value>
+	</rng:choice>
+      </datatype>
     </attDef>
     <attDef ident="age" usage="opt">
 	<equiv/>
 	<desc>specifies the age group of the participants.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/></datatype>
+      <datatype><rng:ref name="data.word"/></datatype>
       <valDesc>suggested values are to be supplied</valDesc>
     </attDef>
     <attDef ident="size" usage="opt">
 	<equiv/>
 	<desc>specifies the size or approximate size of the group.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.words"/></datatype>
+      <datatype><rng:ref name="data.words"/></datatype>
       <valDesc>may contain a number and an indication of accuracy, e.g. <mentioned>approx 200</mentioned></valDesc>
     </attDef>
   </attList>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <personGrp xml:id="pg1" role="audience" size="approx 50"/>
+      <personGrp xml:id="pg1" role="audience" sex="mixed" size="approx 50"/>
     </egXML>
   </exemplum>
   <remarks>
