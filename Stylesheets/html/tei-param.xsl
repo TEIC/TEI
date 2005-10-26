@@ -462,7 +462,7 @@ A path fragment to put before all internal URLs
 <xd:doc type="string" class="output">
 The name of the output file
 </xd:doc>
-<xsl:param name="outputName"/>
+<xsl:param name="outputName"></xsl:param>
 
 <xd:doc type="string" class="output">
 Directory in which to place generated files.

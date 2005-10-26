@@ -436,21 +436,6 @@
       </xsl:choose>
     </xsl:variable>
     <a>
-      <xsl:for-each select="key('IDS',$W)">
-	<xsl:attribute name="title">
-	  <xsl:choose>
-	    <xsl:when test="@n">
-	      <xsl:value-of select="@n"/>
-	    </xsl:when>
-	    <xsl:when test="starts-with(local-name(.),'div')">
-	      <xsl:value-of select="normalize-space(tei:head)"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:value-of select="normalize-space(.)"/>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:attribute>
-      </xsl:for-each>
       <xsl:attribute name="class">
         <xsl:choose>
           <xsl:when test="@rend">
@@ -471,6 +456,21 @@
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
+      <xsl:for-each select="key('IDS',$W)">
+	<xsl:attribute name="title">
+	  <xsl:choose>
+	    <xsl:when test="@n">
+	      <xsl:value-of select="@n"/>
+	    </xsl:when>
+	    <xsl:when test="starts-with(local-name(.),'div')">
+	      <xsl:value-of select="normalize-space(tei:head)"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:value-of select="normalize-space(.)"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:attribute>
+      </xsl:for-each>
       <xsl:choose>
         <xsl:when test="not($body='')">
           <xsl:value-of select="$body"/>

@@ -40,6 +40,7 @@
     <xd:copyright>2005, TEI Consortium</xd:copyright>
   </xd:doc>
   <xsl:output encoding="utf-8" indent="yes"/>
+  <xsl:param name="TEIC">false</xsl:param>
   <xsl:param name="verbose"></xsl:param>
   <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
   <xsl:param name="localsource"/>

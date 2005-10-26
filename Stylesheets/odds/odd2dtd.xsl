@@ -180,43 +180,46 @@ End of macro declarations
 </xsl:template>
 
 <xsl:template name="schemaOut">
-<xsl:if test="$TEIC='true'">
-  <xsl:text>&lt;!-- TEI P5 DTD. Generated </xsl:text>
-  <xsl:value-of select="edate:date-time()"/>
-  <xsl:call-template name="copyright"/>
- --&gt;
-&lt;!--predeclared classes --&gt;
-<xsl:for-each select="key('DefClasses',1)">
-  <xsl:choose>
-    <xsl:when test="@type='atts'">    
-      <xsl:apply-templates select="." mode="processAtts"/>
-    </xsl:when>
-    <xsl:when test="@type='model'">    
-      <xsl:apply-templates select="." mode="processModel">
+  <xsl:if test="$TEIC='true'">
+    <xsl:text>&lt;!-- TEI P5 DTD. Generated </xsl:text>
+    <xsl:value-of select="edate:date-time()"/>
+    <xsl:call-template name="copyright"/>
+    <xsl:text>&#10;--&gt;&#10;&lt;!--predeclared classes --&gt;&#10;</xsl:text>
+    <xsl:for-each select="key('DefClasses',1)">
+      <xsl:choose>
+	<xsl:when test="@type='atts'">    
+	  <xsl:apply-templates select="." mode="processAtts"/>
+	</xsl:when>
+	<xsl:when test="@type='model'">    
+	  <xsl:apply-templates select="." mode="processModel">
 	    <xsl:with-param name="declare">false</xsl:with-param>
-      </xsl:apply-templates>
-    </xsl:when>
-    <xsl:when test="@type='default'">    
-      <xsl:apply-templates select="." mode="processDefaultAtts"/>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:apply-templates select="." mode="process"/>
-    </xsl:otherwise>
-  </xsl:choose>
-</xsl:for-each>
-&lt;!--end of predeclared classes --&gt;
-</xsl:if>
-
-      <xsl:apply-templates select="key('CLASSDOCS',1)"  mode="tangle"/>
-
-      <xsl:for-each select="key('MACRODOCS',1)">
-	<xsl:apply-templates select="." mode="tangle"/>
-      </xsl:for-each>
-
-      <xsl:apply-templates select="key('ELEMENTDOCS',1)"  mode="tangle">      
-	<xsl:sort select="@ident"/>
-      </xsl:apply-templates>
-
+	  </xsl:apply-templates>
+	</xsl:when>
+	<xsl:when test="@type='default'">    
+	  <xsl:apply-templates select="." mode="processDefaultAtts"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:apply-templates select="." mode="process"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+    <xsl:text>&#10;&lt;!--end of predeclared classes --&gt;&#10;</xsl:text>
+  </xsl:if>
+  
+  <xsl:if test="$TEIC='true'">
+    <xsl:apply-templates select="key('CLASSDOCS',1)"  mode="tangle"/>
+  </xsl:if>
+  <xsl:for-each select="key('MACRODOCS',1)">
+    <xsl:apply-templates select="." mode="tangle"/>
+  </xsl:for-each>
+  
+  <xsl:if test="not($TEIC='true')">
+    <xsl:apply-templates select="key('CLASSDOCS',1)"  mode="tangle"/>
+  </xsl:if>
+  <xsl:apply-templates select="key('ELEMENTDOCS',1)"  mode="tangle">      
+    <xsl:sort select="@ident"/>
+  </xsl:apply-templates>
+  
 </xsl:template>
 
 <xsl:template match="tei:macroSpec[@id='TEIGIS' or @xml:id='TEIGIS']" mode="tangle"/>
@@ -442,6 +445,11 @@ End of macro declarations
       <xsl:text> NMTOKENS</xsl:text>
     </xsl:when>
     
+    <xsl:when test="rng:ref">
+      <xsl:text> %</xsl:text>
+      <xsl:value-of select="rng:ref/@name"/>
+      <xsl:text>; </xsl:text>
+    </xsl:when>
     <xsl:otherwise>
       <xsl:text> CDATA</xsl:text>
     </xsl:otherwise>
@@ -512,8 +520,21 @@ End of macro declarations
   <xsl:text> CDATA</xsl:text>              
 </xsl:template>
 
-<xsl:template match="tei:macroSpec[@type='dt']/tei:content/rng:choice">
-  <xsl:text> CDATA</xsl:text>              
+<xsl:template
+    match="tei:macroSpec[@type='dt']/tei:content/rng:choice">
+  <xsl:choose>
+    <xsl:when test="rng:value">
+      <xsl:text>(</xsl:text>
+      <xsl:for-each select="rng:value">
+	<xsl:value-of select="."/>
+	<xsl:if test="following-sibling::rng:value">|</xsl:if>
+      </xsl:for-each>
+      <xsl:text>)</xsl:text>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:text> CDATA</xsl:text>              
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 
@@ -770,9 +791,13 @@ So, at the first, process the second; at the second, do nothing.
 	<xsl:value-of select="@ident"/>    
       </xsl:when>
       <xsl:otherwise>
-	<xsl:text>%n.</xsl:text>
+	<xsl:if test="$TEIC='true'">
+	  <xsl:text>%n.</xsl:text>
+	</xsl:if>
 	<xsl:value-of select="@ident"/>    
-	<xsl:text>;</xsl:text>
+	<xsl:if test="$TEIC='true'">
+	  <xsl:text>;</xsl:text>
+	</xsl:if>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
@@ -781,7 +806,7 @@ So, at the first, process the second; at the second, do nothing.
   <xsl:apply-templates select="tei:desc" mode="doc"/>
   <xsl:text> --&gt;&#10;&lt;!ELEMENT </xsl:text>
   <xsl:value-of select="$ename"/>
-  <xsl:if test="$parameterize='true'">
+  <xsl:if test="$parameterize='true' and $TEIC='true'">
     <xsl:text> %om.RR;</xsl:text>
   </xsl:if>
   <xsl:text> </xsl:text>
@@ -811,7 +836,7 @@ So, at the first, process the second; at the second, do nothing.
     <xsl:text>&gt;</xsl:text>
   <xsl:text>&#10;&lt;!ATTLIST </xsl:text>
   <xsl:value-of select="$ename"/>
-  <xsl:if test="$parameterize='true'">
+  <xsl:if test="$parameterize='true' and $TEIC='true'">
     <xsl:text>&#10; %att.global.attributes;</xsl:text>
   </xsl:if>
   <xsl:if test="$parameterize='true'">
@@ -1010,9 +1035,13 @@ So, at the first, process the second; at the second, do nothing.
 		</xsl:choose>
 	      </xsl:when>
 	      <xsl:when test="self::tei:elementSpec">
-		<xsl:text>%n.</xsl:text>
+		<xsl:if test="$TEIC='true'">
+		  <xsl:text>%n.</xsl:text>
+		</xsl:if>
 		<xsl:value-of select="@ident"/>
-		<xsl:text>;</xsl:text>
+		<xsl:if test="$TEIC='true'">
+		  <xsl:text>;</xsl:text>
+		</xsl:if>
 	      </xsl:when>
 	      <xsl:otherwise>
 		<xsl:text>%</xsl:text>

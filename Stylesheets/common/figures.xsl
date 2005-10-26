@@ -93,51 +93,97 @@
   </xd:doc>
   <xsl:template name="graphicsAttributes">
     <xsl:param name="mode">fo</xsl:param>
-  <xsl:if test="@width">
-    <xsl:variable name="w">
+    <xsl:if test="@width">
       <xsl:choose>
-	<xsl:when test="contains(@width,'pt')"><xsl:value-of select="@width"/></xsl:when>
-	<xsl:when test="contains(@width,'in')"><xsl:value-of select="@width"/></xsl:when>
-	<xsl:when test="contains(@width,'cm')"><xsl:value-of select="@width"/></xsl:when>
+	<xsl:when test="contains(@width,'%')">
+	  <xsl:choose>
+	    <xsl:when test="$mode='fo'">
+	      <xsl:attribute name="content-width">
+		<xsl:value-of select="@width"/>
+	      </xsl:attribute>
+	    </xsl:when>
+	    <xsl:when test="$mode='latex'">
+	      <xsl:text>width=</xsl:text>
+	      <xsl:value-of select="substring-before(@width,'%') div 100"/>
+	      <xsl:text>\textwidth,</xsl:text>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:attribute name="width">
+		<xsl:value-of select="@width"/>
+	      </xsl:attribute>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:value-of select="@width"/><xsl:text>pt</xsl:text>
+	  <xsl:variable name="w">
+	    <xsl:choose>
+	      <xsl:when test="contains(@width,'pt')"><xsl:value-of select="@width"/></xsl:when>
+	      <xsl:when test="contains(@width,'in')"><xsl:value-of select="@width"/></xsl:when>
+	      <xsl:when test="contains(@width,'cm')"><xsl:value-of select="@width"/></xsl:when>
+	      <xsl:otherwise>
+		<xsl:value-of select="@width"/><xsl:text>pt</xsl:text>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:variable>
+	  <xsl:choose>
+	    <xsl:when test="$mode='fo'">
+	      <xsl:attribute name="content-width"><xsl:value-of
+	      select="$w"/></xsl:attribute>
+	    </xsl:when>
+	    <xsl:when test="$mode='latex'">
+	      <xsl:text>width=</xsl:text><xsl:value-of
+	      select="$w"/><xsl:text>,</xsl:text>
+	    </xsl:when>
+	  </xsl:choose>
+	</xsl:otherwise>
+      </xsl:choose>  
+    </xsl:if>
+    <xsl:if test="@height">
+      <xsl:choose>
+	<xsl:when test="contains(@height,'%')">
+	  <xsl:choose>
+	    <xsl:when test="$mode='fo'">
+	      <xsl:attribute name="content-height">
+		<xsl:value-of select="@height"/>
+	      </xsl:attribute>
+	    </xsl:when>
+	    <xsl:when test="$mode='latex'">
+	      <xsl:text>height=</xsl:text>
+	      <xsl:value-of select="substring-before(@height,'%') div 100"/>
+	      <xsl:text>\textheight,</xsl:text>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:attribute name="height">
+		<xsl:value-of select="@height"/>
+	      </xsl:attribute>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:variable name="h">
+	    <xsl:choose>
+	      <xsl:when test="contains(@height,'pt')"><xsl:value-of select="@height"/></xsl:when>
+	      <xsl:when test="contains(@height,'in')"><xsl:value-of select="@height"/></xsl:when>
+	      <xsl:when test="contains(@height,'cm')"><xsl:value-of select="@height"/></xsl:when>
+	      <xsl:otherwise>
+		<xsl:value-of select="@height"/><xsl:text>pt</xsl:text>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:variable>
+	  <xsl:choose>
+	    <xsl:when test="$mode='fo'">
+	      <xsl:attribute name="content-height"><xsl:value-of
+	      select="$h"/></xsl:attribute>
+	    </xsl:when>
+	    <xsl:when test="$mode='latex'">
+	      <xsl:text>height=</xsl:text><xsl:value-of
+	      select="$h"/><xsl:text>,</xsl:text>
+	    </xsl:when>
+	  </xsl:choose>
 	</xsl:otherwise>
       </xsl:choose>
-    </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="$mode='fo'">
-	<xsl:attribute name="content-width"><xsl:value-of
-	select="$w"/></xsl:attribute>
-      </xsl:when>
-      <xsl:when test="$mode='latex'">
-	<xsl:text>width=</xsl:text><xsl:value-of
-	select="$w"/><xsl:text>,</xsl:text>
-      </xsl:when>
-    </xsl:choose>
-  </xsl:if>
-  <xsl:if test="@height">
-    <xsl:variable name="h">
-      <xsl:choose>
-	<xsl:when test="contains(@height,'pt')"><xsl:value-of select="@height"/></xsl:when>
-	<xsl:when test="contains(@height,'in')"><xsl:value-of select="@height"/></xsl:when>
-	<xsl:when test="contains(@height,'cm')"><xsl:value-of select="@height"/></xsl:when>
-	<xsl:otherwise>
-	  <xsl:value-of select="@height"/><xsl:text>pt</xsl:text>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="$mode='fo'">
-	<xsl:attribute name="content-height"><xsl:value-of
-	select="$h"/></xsl:attribute>
-      </xsl:when>
-      <xsl:when test="$mode='latex'">
-	<xsl:text>height=</xsl:text><xsl:value-of
-	select="$h"/><xsl:text>,</xsl:text>
-      </xsl:when>
-    </xsl:choose>
-  </xsl:if>
-    <xsl:variable name="s">
+    </xsl:if>
+  <xsl:variable name="s">
   <xsl:choose>
     <xsl:when test="@scale and contains(@scale,'%')">
       <xsl:value-of select="substring-before(@scale,'%') div 100"/>

@@ -1420,7 +1420,7 @@
   </xsl:template>
 
   <xd:doc>
-    <xd:short>[html] How to identfiy a note</xd:short>
+    <xd:short>[html] How to identify a note</xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template name="noteID">
