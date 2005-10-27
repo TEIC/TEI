@@ -4,7 +4,8 @@ See the file COPYING for details
 $Date$
 $Author$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="certainty" xml:id="CERTAIN" usage="opt" ident="certainty">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     xmlns:rng="http://relaxng.org/ns/structure/1.0" module="certainty" xml:id="CERTAIN" usage="opt" ident="certainty">
 <equiv/>
 <gloss/>
 <desc>indicates the degree of certainty or uncertainty associated with
@@ -14,14 +15,12 @@ some aspect of the text markup.
     <memberOf key="model.global.meta"/>
   </classes>
   <content>
-    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+    <rng:ref name="macro.glossSeq"/>
   </content>
   <attList>
     <attDef ident="target" usage="req">
 	<equiv/>
-	<desc>points at the
-elements whose markup is
-uncertain.</desc>
+	<desc>points at the elements whose markup is uncertain.</desc>
         <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointers"/></datatype>
       <valDesc>one or more valid
 identifiers, separated by white space.</valDesc>
@@ -121,7 +120,7 @@ the likelihood (.2) that the generic identifier should be
 element.</p>
       </remarks>
     </attDef>
-    <attDef ident="desc" usage="rec">
+<!--    <attDef ident="desc" usage="rec">
 	<equiv/>
 	<desc>further describes the uncertainty in prose, perhaps
 indicating its nature, cause, or the justification for the
@@ -142,7 +141,8 @@ this attribute, to aid later mechanical manipulation.  It is
 not possible to suggest such a controlled vocabulary for
 general use.</p>
       </remarks>
-    </attDef>
+    </attDef> -->
+
     <attDef ident="given" usage="rec">
 	<equiv/>
 	<desc>indicates conditions assumed in the assignment of a

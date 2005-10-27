@@ -118,7 +118,7 @@ attribute to indicate what aspect of the markup we are uncertain about
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Elizabeth went to 
 <placeName xml:id="CE-pl1">Essex</placeName>.
 <!-- ... elsewhere in the document ... -->
-<certainty target="CE-pl1" locus="gi" desc="possibly not a placename"/></egXML>
+<certainty target="CE-pl1" locus="gi"><desc>possibly not a placename</desc></certainty></egXML>
 Because it is linked to the location of the uncertainty by a reference, the
 <gi>certainty</gi> element will typically be included in the same
 document as its target.  It may be placed adjacent to the target
@@ -129,7 +129,7 @@ can add a value for our <att>degree</att> of confidence (usually a
 number between 0 and 1, representing the estimated probability):
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <!-- ... -->
-<certainty target="CE-pl1" locus="gi" desc="possibly not a placename" degree="0.6"/></egXML>
+<certainty target="CE-pl1" locus="gi"  degree="0.6"/></egXML>
 According to one expert, there is a 60 percent chance of <q>Essex</q>
 being a place name here, and a 40 percent chance of its being a
 personal name. We use two <gi>certainty</gi> elements to indicate the
@@ -139,10 +139,10 @@ identifier (in this case <gi>persName</gi>) is given as the
 value of the <att>assertedValue</att> attribute:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <!-- ... -->
-<certainty target="CE-pl1" locus="gi" 
-   desc="probably a placename, but possibly not" degree="0.6"/>
-<certainty target="CE-pl1" locus="gi" assertedValue="persName" 
-   desc="may refer to the Earl of Essex" degree="0.4"/></egXML></p>
+<certainty target="CE-pl1" locus="gi"  degree="0.6">
+   <desc>probably a placename, but possibly not</desc></certainty>
+<certainty target="CE-pl1" locus="gi" degree="0.4" assertedValue="persName">
+   <desc>may refer to the Earl of Essex</desc></certainty></egXML></p>
 <p>Finally, we may wish to make our probability estimates contingent
 on some condition.  In the passage <q>Elizabeth went to Essex; she had
 always liked Essex,</q> for example, we may feel there is a 60 percent chance
@@ -156,17 +156,19 @@ She had always liked <placeName xml:id="CE-PL2">Essex</placeName>.
 <!-- ... -->
 <!-- 60% chance that P1 is a placename,
      40% chance a personal name. -->
-<certainty xml:id="cert-1" target="#CE-PL1" locus="gi"
-   desc="probably a placename, but possibly not" degree="0.6"/>
+<certainty xml:id="cert-1" target="#CE-PL1" locus="gi" degree="0.6">
+  <desc>probably a placename, but possibly not"</desc></certainty>
 <certainty xml:id="cert-2" target="#CE-PL1" locus="gi" 
-   desc="may refer to the Earl of Essex" assertedValue="persName" degree="0.4"/>
+      assertedValue="persName" degree="0.4">
+   <desc>may refer to the Earl of Essex"</desc></certainty>
 <!-- 60% chance that P2 is a placename,
      40% chance a personal name.
     100% chance that it agrees with P1. -->
-<certainty target="#CE-PL2" locus="gi" given="#cert-1" 
-   desc="if P1 is a placename, P2 certainly is" degree="1.0"/>
-<certainty target="#CE-PL2" locus="gi" assertedValue="persName" given="#cert-2" 
-   desc="if p1 refers to the Earl of Essex, so does P2" degree="1.0"/></egXML>
+<certainty target="#CE-PL2" locus="gi" given="#cert-1" degree="1.0">
+   <desc>if P1 is a placename, P2 certainly is"</desc></certainty>
+<certainty target="#CE-PL2" locus="gi" assertedValue="persName" 
+   degree="1.0" given="#cert-2">
+   <desc>if p1 refers to the Earl of Essex, so does P2</desc></certainty></egXML>
 When <att>given</att> conditions are listed, the <gi>certainty</gi>
 element is interpreted as claiming a given degree of confidence in a
 particular markup given the assertional content of the
@@ -228,7 +230,9 @@ alternative generic identifier, or the identifier of an alternative starting or
 ending point, as already shown, an alternative attribute value, or
 alternative element content, as in this example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">I have a <emph xml:id="CE-P3">gub</emph>.
-<certainty target="CE-P3" locus="transcribedContent" assertedValue="gun" desc="a gun makes more sense in a holdup" degree="0.8"/></egXML>
+<certainty target="CE-P3" locus="transcribedContent"
+	   assertedValue="gun" degree="0.8"> 
+  <desc>a gun makes more sense in a holdup</desc></certainty></egXML>
 Since attribute values have no internal substructure, the
 <att>assertedValue</att> attribute is useful for specifying alternative
 transcriptions only in relatively restricted circumstances
