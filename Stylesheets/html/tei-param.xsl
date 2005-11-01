@@ -480,6 +480,11 @@ Output method for output file(s).
 <xsl:param name="outputMethod">html</xsl:param>
 
 <xd:doc type="string" class="output">
+Suffix of output file(s).
+</xd:doc>
+<xsl:param name="outputSuffix">.html</xsl:param>
+
+<xd:doc type="string" class="output">
 Public Doctype of output file(s).
 </xd:doc>
 <xsl:param name="doctypePublic">-//W3C//DTD HTML 4.0 Transitional//EN</xsl:param>

@@ -64,6 +64,7 @@
   <xsl:key name="CLASSMEMBERS" match="tei:elementSpec|tei:classSpec" use="tei:classes/tei:memberOf/@key"/>
   <xsl:key name="IDENTS"   match="tei:elementSpec|tei:classSpec|tei:macroSpec"   use="@ident"/>
   <xsl:key name="IDS"      match="tei:*[@xml:id]" use="@xml:id"/>
+  <xsl:key name="DATATYPES" match="tei:macroSpec[@type='dt']" use='1'/>
   <xsl:key name="MACRODOCS" match="tei:macroSpec" use='1'/>
   <xsl:key name="CLASSDOCS" match="tei:classSpec" use='1'/>
   <xsl:key name="ELEMENTDOCS" match="tei:elementSpec" use='1'/>

@@ -184,7 +184,12 @@ End of macro declarations
     <xsl:text>&lt;!-- TEI P5 DTD. Generated </xsl:text>
     <xsl:value-of select="edate:date-time()"/>
     <xsl:call-template name="copyright"/>
-    <xsl:text>&#10;--&gt;&#10;&lt;!--predeclared classes --&gt;&#10;</xsl:text>
+    <xsl:text>&#10;--&gt;&#10;</xsl:text>
+    <xsl:text>&#10;&lt;!--datatypes --&gt;&#10;</xsl:text>
+    <xsl:for-each select="key('DATATYPES',1)">
+      <xsl:apply-templates select="." mode="tangle"/>
+    </xsl:for-each>
+    <xsl:text>&#10;&lt;!--predeclared classes --&gt;&#10;</xsl:text>
     <xsl:for-each select="key('DefClasses',1)">
       <xsl:choose>
 	<xsl:when test="@type='atts'">    
@@ -210,7 +215,9 @@ End of macro declarations
     <xsl:apply-templates select="key('CLASSDOCS',1)"  mode="tangle"/>
   </xsl:if>
   <xsl:for-each select="key('MACRODOCS',1)">
-    <xsl:apply-templates select="." mode="tangle"/>
+    <xsl:if test="not(@type='dt')">
+      <xsl:apply-templates select="." mode="tangle"/>
+    </xsl:if>
   </xsl:for-each>
   
   <xsl:if test="not($TEIC='true')">

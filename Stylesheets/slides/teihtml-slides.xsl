@@ -1,11 +1,18 @@
 <xsl:stylesheet 
-  xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-  xmlns:tei="http://www.tei-c.org/ns/1.0"
-  exclude-result-prefixes="tei xd" 
-  version="1.0"  >
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:rng="http://relaxng.org/ns/structure/1.0"
+    xmlns:teix="http://www.tei-c.org/ns/Examples"
+    xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    exclude-result-prefixes="tei xd" 
+    version="1.0"  >
 
-<xsl:import href="../html/tei.xsl"/>
+<xsl:import href="../xhtml/tei.xsl"/>
+
+<xsl:import href="slides-common.xsl"/>
+
+<xsl:strip-space elements="teix:* rng:* xsl:*"/>
 
 <xd:doc type="stylesheet">
     <xd:short>
@@ -31,13 +38,35 @@
     <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2005, TEI Consortium</xd:copyright>
   </xd:doc>
-<xsl:output encoding="iso-8859-1" 
-	    method="html" 
-	    doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>
+<xsl:output encoding="utf-8" 
+	    method="xml"
+	    doctype-public="-//W3C//DTD XHTML 1.1//EN"/>
+
+<xsl:param name="outputEncoding">utf-8</xsl:param>
+<xsl:param name="outputMethod" >xml</xsl:param>
+<xsl:param name="outputSuffix" >.xhtml</xsl:param>
+<xsl:param name="doctypePublic" >-//W3C//DTD XHTML 1.1//EN</xsl:param>
+<xsl:param name="doctypeSystem">http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd</xsl:param>
+<xsl:param name="startRed">&lt;span style="color:red"&gt;</xsl:param>
+<xsl:param name="startBold">&lt;span class="element"&gt;</xsl:param>
+<xsl:param name="endBold">&lt;/span&gt;</xsl:param>
+<xsl:param name="startItalic">&lt;span class="attribute"&gt;</xsl:param>
+<xsl:param name="endItalic">&lt;/span&gt;</xsl:param>
+<xsl:param name="endRed">&lt;/span&gt;</xsl:param>
 <xsl:param name="cssFile">http://www.tei-c.org/stylesheet/teislides.css</xsl:param>
 <xsl:param name="logoFile">logo.png</xsl:param>
 <xsl:param name="logoWidth">60</xsl:param>
 <xsl:param name="logoHeight">60</xsl:param>
+<xsl:param name="spaceCharacter">&#160;</xsl:param>
+<xsl:template name="lineBreak">
+  <xsl:param name="id"/>
+<xsl:text>&#10;</xsl:text>
+<!--
+<xsl:text>(</xsl:text>
+<xsl:value-of select="$id"/>
+<xsl:text>)</xsl:text>
+-->
+</xsl:template>
 
 <xsl:param name="numberHeadings"></xsl:param>
 <xsl:param name="splitLevel">0</xsl:param>
@@ -100,14 +129,14 @@
     </xsl:choose>
   </xsl:variable>
   <xsl:if test="not($prev='')">
-    <a class="xreflink" accesskey="p" href="{concat($prev,'.html')}"> 
+    <a class="xreflink" accesskey="p" href="{concat($prev,'.xhtml')}"> 
       <span class="button">&#171;</span>
     </a>
   </xsl:if>
     
   <xsl:text>  </xsl:text>
   <a class="xreflink"  accesskey="f"
-     href="{concat($first,'.html')}"> 
+     href="{concat($first,'.xhtml')}"> 
     <span class="button">^</span>
   </a>
   
@@ -122,14 +151,15 @@
     </xsl:choose>
   </xsl:variable>
   <xsl:if test="not($next='')">
-    <a class="xreflink" accesskey="n" href="{concat($next,'.html')}"> 
+    <a class="xreflink" accesskey="n" href="{concat($next,'.xhtml')}"> 
       <span class="button">&#187;</span>
     </a>
   </xsl:if>
 </xsl:template>
 
 <xsl:template name="mainslide">
-  <html><xsl:call-template name="addLangAtt"/> 
+  <html>
+    <xsl:call-template name="addLangAtt"/> 
   <head>
     <title> 
       <xsl:call-template name="generateTitle"/>
@@ -150,7 +180,7 @@
 	  <xsl:for-each select="tei:div|tei:div0/tei:div1">
 	    <xsl:variable name="n"><xsl:apply-templates select="." mode="genid"/></xsl:variable>
 	    <li class="slidetoc"> 
-	      <a href="{$n}.html"><xsl:value-of  select="tei:head"/></a>
+	      <a href="{$n}.xhtml"><xsl:value-of  select="tei:head"/></a>
 	    </li>
 	  </xsl:for-each>
 	  </xsl:for-each>
@@ -160,7 +190,7 @@
       <img src="{$logoFile}" width="{$logoWidth}" height="${logoHeight}" alt="logo"/>
       <xsl:text> </xsl:text>
       <xsl:variable name="next"><xsl:value-of select="$masterFile"/>1</xsl:variable>
-      <a accesskey="n" href="{concat($next,'.html')}">Start</a>
+      <a accesskey="n" href="{concat($next,'.xhtml')}">Start</a>
     </div>
   </body>
   </html>
@@ -207,12 +237,12 @@ function keys(key) {
 		case 34: // page down
 		case 39: // rightkey
 		case 40: // downkey
-			document.location = "<xsl:value-of select="$next"/>.html";
+			document.location = "<xsl:value-of select="$next"/>.xhtml";
 			break;
 		case 33: // page up
 		case 37: // leftkey
 		case 38: // upkey
-			document.location = "<xsl:value-of select="$prev"/>.html";
+			document.location = "<xsl:value-of select="$prev"/>.xhtml";
 			break;
 	}
 }
@@ -231,7 +261,7 @@ function clicker(e) {
 	} else target = e.target;
  	if (target.href != null ) return true;
 	if (!e.which || e.which == 1) 
-	   document.location = "<xsl:value-of select="$next"/>.html";
+	   document.location = "<xsl:value-of select="$next"/>.xhtml";
 }
 
 window.onload = startup;
@@ -319,6 +349,20 @@ window.onload = startup;
   <img src="{$logoFile}" width="{$logoWidth}" height="{$logoHeight}" alt="logo"/>
   <xsl:text> </xsl:text>
   <xsl:call-template name="generateTitle"/>
+</xsl:template>
+
+
+<xsl:template name="writeJavascript">
+  <xsl:param name="content"/>
+  <script type="text/javascript">
+    <xsl:value-of select="$content"/>
+  </script>
+</xsl:template>
+
+<xsl:template match="teix:egXML">
+  <pre>
+    <xsl:apply-templates mode="verbatim"/>
+  </pre>
 </xsl:template>
 
 </xsl:stylesheet>

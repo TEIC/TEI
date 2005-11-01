@@ -26,7 +26,9 @@ p5:
 	for i in  odds slides fo html common latex ; do \
 	mkdir -p release/tei-xsl/p5/$$i; cp $$i/*.xsl release/tei-xsl/p5/$$i; \
 	done
-
+	(cd release/tei-xsl/p5/html;mkdir ../xhtml; for i in *.xsl; do \
+	perl -p -e 's+<xsl:stylesheet+<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"+' \
+	< $$i | sed 's/>.html</>.xhtml</' > ../xhtml/$$i;done)
 
 release: doc p4 p5
 	cp i18n.xml release/tei-xsl/p4

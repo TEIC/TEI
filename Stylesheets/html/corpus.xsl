@@ -72,12 +72,14 @@
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:teiCorpus">
-    <xsl:for-each select="tei:TEI">
-      <xsl:if test="$verbose">
-        <xsl:message>Process <xsl:value-of select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/></xsl:message>
-      </xsl:if>
-      <xsl:apply-templates select="." mode="split"/>
-    </xsl:for-each>
+    <!--
+	<xsl:for-each select="tei:TEI">
+	<xsl:if test="$verbose">
+	<xsl:message>Process <xsl:value-of select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/></xsl:message>
+	</xsl:if>
+	<xsl:apply-templates select="." mode="split"/>
+	</xsl:for-each>
+    -->
     <html>
       <xsl:call-template name="addLangAtt"/>
       <head>

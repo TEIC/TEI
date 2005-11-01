@@ -1131,8 +1131,8 @@ $ID: requests a particular page
   </xd:doc>
   <xsl:template name="javaScript">
     <xsl:text>&#10;</xsl:text>
-    <script type="text/javascript">
-      <xsl:comment>
+    <xsl:call-template name="writeJavascript">
+      <xsl:with-param name="content">
 	function openpopup(location){
 	var newwin = window.open(location,"OUCSPopup","status=no,menu=no,toolbar=no,width=350,height=400,resizable=yes,scrollbars=yes")
 	}
@@ -1204,6 +1204,20 @@ $ID: requests a particular page
 	  }
     </xsl:if>
     <xsl:call-template name="javaScriptHook"/>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xd:doc>
+    <xd:short>[html] Write out some Javascript into the HTML</xd:short>
+    <xd:param name="content">The code</xd:param>
+    <xd:detail>&#160;</xd:detail>
+  </xd:doc>
+  <xsl:template name="writeJavascript">
+    <xsl:param name="content"/>
+    <script type="text/javascript">
+      <xsl:comment>
+	<xsl:value-of select="$content"/>
       </xsl:comment>
     </script>
   </xsl:template>
@@ -1526,12 +1540,10 @@ $ID: requests a particular page
           <xsl:if test="not(substring($outputDir,string-length($outputDir),string-length($outputDir))='/')">
             <xsl:text>/</xsl:text>
           </xsl:if>
-          <xsl:value-of select="concat($ident,'.html')"/>
         </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="concat($ident,'.html')"/>
-        </xsl:otherwise>
       </xsl:choose>
+      <xsl:value-of select="$ident"/>
+      <xsl:value-of select="$outputSuffix"/>
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="$ident=''">
