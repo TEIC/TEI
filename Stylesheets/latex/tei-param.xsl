@@ -123,9 +123,11 @@ capable of dealing with UTF-8 directly.
 \usepackage[]{ucs}
 </xsl:if>
 \usepackage{relsize}
+<xsl:if test="$reencode='true'">
 \uc@dclc{8421}{default}{\textbackslash }
 \uc@dclc{10100}{default}{\{}
 \uc@dclc{10101}{default}{\}}
+</xsl:if>
 \DeclareTextSymbol{\textpi}{OML}{25}
 \def\textquoted#1{`#1'}
 \def\textcal#1{\ensuremath{\mathcal{#1}}}
