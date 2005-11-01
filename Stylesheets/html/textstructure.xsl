@@ -1218,7 +1218,7 @@ $ID: requests a particular page
     <xsl:param name="content"/>
     <script type="text/javascript">
       <xsl:choose>
-	<xsl:when test="outputXHTML='true'">
+	<xsl:when test="$outputXHTML='true'">
 	  <xsl:value-of select="$content"/>
 	</xsl:when>
 	<xsl:otherwise>
