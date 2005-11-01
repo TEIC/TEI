@@ -479,6 +479,11 @@ Output method for output file(s).
 </xd:doc>
 <xsl:param name="outputMethod">html</xsl:param>
 
+<xd:doc type="boolean" class="output">
+Whether XHTML is being generated.
+</xd:doc>
+<xsl:param name="outputXHTML">false</xsl:param>
+
 <xd:doc type="string" class="output">
 Suffix of output file(s).
 </xd:doc>

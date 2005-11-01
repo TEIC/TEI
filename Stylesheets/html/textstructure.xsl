@@ -1211,14 +1211,22 @@ $ID: requests a particular page
   <xd:doc>
     <xd:short>[html] Write out some Javascript into the HTML</xd:short>
     <xd:param name="content">The code</xd:param>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail>Note that it does not have to commented if the output
+    is XHTML</xd:detail>
   </xd:doc>
   <xsl:template name="writeJavascript">
     <xsl:param name="content"/>
     <script type="text/javascript">
-      <xsl:comment>
-	<xsl:value-of select="$content"/>
-      </xsl:comment>
+      <xsl:choose>
+	<xsl:when test="outputXHTML='true'">
+	  <xsl:value-of select="$content"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:comment>
+	    <xsl:value-of select="$content"/>
+	  </xsl:comment>
+	</xsl:otherwise>
+      </xsl:choose>
     </script>
   </xsl:template>
 
