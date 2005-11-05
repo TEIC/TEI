@@ -1906,21 +1906,14 @@ course). At the very least, an entry should be supplied indicating the
 date of creation of the header.</p><p>The log consists of a list of entries, one for each change.  This
 may be encoded using either the regular <gi>list</gi> element,
 as described in section <ptr target="#COLI"/> or as a series of
-special purpose <gi>change</gi> elements, each of which has
-the following constituents:
-<specList>
-<specDesc key="date" />
-<specDesc key="respStmt"/>
-<specDesc key="item"/>
-</specList>
-The <gi>date</gi> element indicates the date of the change.
-The <gi>respStmt</gi> element indicates who made the change, and in what
-role.
-The <gi>item</gi> element indicates what change was made; it can
+special purpose <gi>change</gi> elements, each of which contains a
+more detailed description of the changes made. The attributes
+<att>date</att> and <att>resp</att> are used to indicate the date of and
+responsibility for the change. The description of the change itself  can
 range from a simple phrase to a series of paragraphs.
 If a number is to be associated with one or more changes (for
-example, a revision number), use the global <att>n</att>
-attribute on the <gi>change</gi> element to supply it.
+example, a revision number), the global <att>n</att>
+attribute may be used to indicate it.
 </p>
 <p>It is recommended to give changes in reverse chronological order,
 most recent first.	
@@ -1931,18 +1924,15 @@ most recent first.
 	<!-- WWP file elizabeth.godmed.sgml, and made some minor      -->
 	<!-- changes -sb 2001-11-03  [from 66 to 51 lines]            -->
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><revisionDesc>
-<change n="RCS:1.70"><date value="2001-04-11">Wed, 11 Apr 01</date>
-    <respStmt><name key="zmizuho.zgk">Zo&#xEB; Mizuho</name>
-    <resp>encoder</resp></respStmt>
-    <item>made correx entries (unfinished from <date value="1999-03-05">March 1999</date>.) all in text not tag.
-      supravalidated.</item>
+<change n="RCS:1.70" date="2001-04-11" resp="#ZM" >On Wed, 11 Apr 01
+    <name key="zmizuho.zgk">Zo&#xEB; Mizuho</name>
+    made correx entries (unfinished from <date value="1999-03-05">March 1999</date>.) all in text not tag.
+      supravalidated.
     </change>
-<change n="RCS:1.62"><date value="1999-08-24">Tue, 24 Aug 99</date>
-    <respStmt><name key="jrussom.zxg">Jacque Russom</name>
-    <resp>encoder</resp></respStmt>
-    <item>Removed vuji markup from FOREIGN and BIBL contents;
-          standardized vuji tags.</item>
-    </change>
+<change n="RCS:1.62" date="1999-08-24" resp="#JR">On Tue, 24 Aug 99
+    <name key="jrussom.zxg">Jacque Russom</name>
+    removed vuji markup from FOREIGN and BIBL contents;
+          standardized vuji tags.    </change>
 <change n="RCS:1.47"><date value="1999-07-05">Mon, 05 Jul 99</date>
     <respStmt><name key="edillon.pal">Erica Dillon</name>
     <resp>encoder</resp></respStmt>
@@ -1952,12 +1942,24 @@ most recent first.
           actually seems to be more appropriate. This should be
           looked into.</item>
     </change>
-<change n="RCS:1.45"><date value="1999-06-30">Wed, 30 Jun 99</date>
-    <respStmt><name key="cmah.dci">Carole Mah</name>
-    <resp>encoder</resp></respStmt>
-    <item>Fixed n= attribute on PB; they were mis-numbered.</item>
+<change n="RCS:1.45" date="1999-06-30" resp="#CM">On Wed, 30 Jun 99
+    <name key="cmah.dci">Carole Mah</name>
+     fixed n= attribute on PB; they were mis-numbered.
     </change>
-<change n="RCS:1.43"><date value="1999-06-18">Fri, 18 Jun 99</date>
+<change><date value="1997-03-13">13 March 1997</date>
+    <respStmt><name key="lmayer.ins">Lauryn S. Mayer</name>
+    <resp>Encoder</resp></respStmt>
+    <item>Began capture using Author/Editor v. 3.1 on Mac with
+          version 1.0.14 of DTD.</item>
+    </change> 
+<change date="1997-06-12" resp="#LM">On 12 June 1997
+    <name key="lmayer.ins">Lauryn S. Mayer</name>
+    began entering corrections with version 1.1.2a of DTD
+    </change>
+</revisionDesc>
+</egXML>
+</p>
+<!--<change n="RCS:1.43"><date value="1999-06-18">Fri, 18 Jun 99</date>
     <respStmt><name key="pcaton.xzc">Paul Caton</name>
     <resp>Electronic Publications Editor</resp></respStmt>
     <item>Within FIGURE, moved P to its correct position after
@@ -1968,20 +1970,7 @@ most recent first.
     <resp>Encoder</resp></respStmt>
     <item>Double-proofed and entered final corrections.</item>
     </change>
-<change><date value="1997-06-12">12 June 1997</date>
-    <respStmt><name key="lmayer.ins">Lauryn S. Mayer</name>
-    <resp>Encoder</resp></respStmt>
-    <item>Began entering corrections with version 1.1.2a of DTD</item>
-    </change>
-<change><date value="1997-03-13">13 March 1997</date>
-    <respStmt><name key="lmayer.ins">Lauryn S. Mayer</name>
-    <resp>Encoder</resp></respStmt>
-    <item>Began capture using Author/Editor v. 3.1 on Mac with
-          version 1.0.14 of DTD.</item>
-    </change> 
-</revisionDesc>
-</egXML>
-</p>
+-->
 <p>The formal definition of the <gi>revisionDesc</gi> element is thus as
 follows:<specGrp xml:id="D226" n="The Revision Description">&revdesc.odd;
 &change.odd;
