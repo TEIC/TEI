@@ -607,7 +607,7 @@ below.
 felt for some purposes to be worth retaining within a text, quite
 independently of their description by the <att>rend</att> attribute.
 Where this is done, either an appropriate entity reference may be
-chosen from the standard ISO entity sets defined by ISO 8879,<note>ISO
+chosen from the standard ISO entity sets defined by ISO 8879,<note place="foot">ISO
 8879-1986 (E) Annex D.4; see Goldfarb, p. 502. XML versions are
 available at <ptr target="http://www.tei-c.org/Entity_Sets/Unicode/iso-tech.ent"/>.</note>
 or the character code points may be entered either directly or as
@@ -1656,7 +1656,9 @@ described as follows:
 using the general purpose NAME element</p>
 </specGrp>
  </p></div3>
-<div3 type="subsection" xml:id="CONANU"><head>Numbers and Measures</head><p>This section describes two elements provided for the simple encoding
+<div3 type="subsection" xml:id="CONANU"><head>Numbers and
+Measures</head>
+<p>This section describes two elements provided for the simple encoding
 of numbers and measures and gives some indication of circumstances in
 which this may usefully be done.  The following phrase level elements
 are provided for this purpose:
@@ -1687,51 +1689,80 @@ standardized way of representing a numerical value.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><num type="fraction" value="0.5">one half</num>
 <num type="fraction" value="0.5">1/2</num></egXML>
  </p>
-<p>The word <mentioned>measure</mentioned> is used here to refer to a special
-kind of referring string, the referent of which is a <soCalled>virtual
-object</soCalled>.  In its fullest form, a measure consists of a number,
+
+<p>In its fullest form, a measure consists of a number,
 a phrase expressing units of measure and a phrase expressing the
-commodity being measured.  Not all of these components need be present
-in every case.  For some applications, particularly quantitative ones,
-the internal components of measure need to be marked so that their
-values can be calculated.  Thus, in order to evaluate a monetary measure
-according to some standard, it is necessary to mark its currency unit
-(e.g.  US dollars, pounds sterling, euro).  Similarly, the expression <mentioned>2
-ounces</mentioned> will have a different meaning when it is associated with
-<mentioned>flour</mentioned> from that which it has when associated with
-<mentioned>water</mentioned>.
- </p>
-<p>Such applications will require the elements discussed in chapter
-<ptr target="#ND"/>, or the more powerful analytical tools discussed in
-chapter <ptr target="#FS"/>.  Elsewhere, it may be sufficient simply to
-encode measures as such, perhaps also indicating their numeric content
-with the <gi>num</gi> element, as in the following examples:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><l>I've measured it from side to side</l>
-<l>'Tis
-<measure type="length">    
-<num value="3">three</num> feet</measure>
-long, and
-<measure type="length">   
-<num value="2">two</num> feet</measure>
-wide.</l></egXML>
-<!-- Wordsworth: The Thorn: Lyrical Ballads (1798) -->
-<!-- As the above example also demonstrates, the <gi>measure</gi> element is
-a member of the class <ident type="class">att.naming</ident> like other
-referencing strings, and may thus bear a <att>key</att> attribute to
-indicate a normalized value.  The form of normalization used should
-conform to a defined standard such as the International System of
-Units (SI).  The <gi>measure</gi> element may also carry a <att>key</att>
-attribute to indicate a database key value, as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><list>
-  <item><measure key="BH2" type="volume">         
+commodity being measured, but not all of these components need be present
+in every case. It may be helpful to distinguish measures from
+surrounding text for two reasons. Firstly, a measure may be expressed
+using a particular notation or system of abbreviations which the encoder does not
+wish to regard as lexical. Secondly, a quantitative application may
+wish to distinguish and normalize the internal components of a
+measure, in order to perform calculations on them.</p>
+
+<p>Consider, as an example of the first case, the following list of
+Celia's charms, in which the encoder has chosen to make  explicit the measurements:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div n="2"><list
+							       type="gloss">
+<label>Age</label><item>Unimportant</item>
+<label>Head</label><item>Small and round</item>
+<label>Eyes</label><item>Green</item>
+<label>Complexion</label><item>White</item>
+<label>Hair</label><item>yellow</item>
+<label>Features</label><item>Mobile</item>
+<label>Neck</label><item><measure>13¾"</measure></item>
+<label>Upper arm</label><item><measure>11"</measure></item>
+<!--...-->
+</list>
+<!-- ... -->
+</div></egXML>
+<note type="cit">Samuel Beckett: Murphy, chap 2</note>
+
+In the same way, it may be convenient to mark 
+representations of currency which might otherwise be misinterpreted as
+lexical:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>...the sum of
+<measure type="currency">12s 6d</measure>...</p></egXML>
+
+</p>
+<p>In general, only the numeric part of a measure can be reliably
+normalized. This may be done using the  <gi>num</gi> element:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<measure><num value="13.75">13¾</num>"</measure>
+</egXML>
+
+No special facilities are provided in the core module for normalizing other
+parts of a measure. The general-purpose <gi>reg</gi> element may be
+used:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<measure><num value="13.75">13</num><reg>inches</reg></measure>
+</egXML>
+
+As elsewhere, the <gi>choice</gi> element may be used to indicate both
+the original and its normalized form:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<measure><num value="13.75">13</num><choice><orig>"</orig><reg>inches</reg></choice></measure>
+</egXML>
+
+No direct way of mapping the content of a measure to its equivalent in other
+units is provided. Such mappings, being matters of interpretation, are
+best  treated using the analytical mechanisms discussed in
+chapters  <ptr target="#AI"/> and <ptr target="#FS"/>.  <!--
+<list>
+  <item><measure  type="volume">         
         <num value="2">ii</num> bags hops
         </measure>
   </item>
-  <item><measure key="TW6" type="volume">         
+  <item><measure  type="volume">         
         <num value="6">six</num> trusses Woolen and linen goods
         </measure>
   </item>
-  <item><measure key="WC5" type="weight">
+  <item><measure  type="weight">
         5 tonnes coale
        </measure>
   </item>
