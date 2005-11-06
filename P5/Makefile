@@ -58,6 +58,7 @@ html-web: check
 	xmllint --noent    Source-driver.xml | xsltproc \
 	-o Guidelines-web/index.html \
 	--stringparam displayMode rnc \
+	--stringparam lang ${LANGUAGE} \
 	--stringparam outputDir . \
 	guidelines.xsl - 
 	-cp *.gif *.css Guidelines-web
