@@ -35,7 +35,9 @@ default: schemas test-schema test-dtd test-dtd-xmllint test-xsd
 all: test-schema test-dtd test-xsd
 
 schemas:
-	for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do roma $(ROMAOPTS) --xsl=$(XSL)   $$i.odd .; done
+	for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do \
+		roma $(ROMAOPTS) --xsl=$(XSL)   $$i.odd .; \
+	done
 
 test-schema: test-rnv test-jing 
 #test-xmllint
