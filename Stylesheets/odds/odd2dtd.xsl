@@ -92,6 +92,18 @@
 &lt;!ENTITY % om.RR '' &gt;
 <xsl:call-template name="NameList"/>
 
+&lt;!--
+Start datatype macro declarations
+--&gt;
+<xsl:for-each select="key('MacroModule',@ident)">
+  <xsl:if test="@type='dt'">
+    <xsl:apply-templates select="." mode="tangle"/>
+  </xsl:if>
+</xsl:for-each>
+&lt;!--
+End of datatype macro declarations
+--&gt;
+
 <xsl:for-each select="key('DefClasses',1)">
   <xsl:choose>
     <xsl:when test="@type='atts'">    
@@ -102,12 +114,6 @@
 	    <xsl:with-param name="declare">false</xsl:with-param>
       </xsl:apply-templates>
     </xsl:when>
-    <xsl:when test="@type='default'">    
-      <xsl:apply-templates select="." mode="processDefaultAtts"/>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:apply-templates select="." mode="process"/>
-    </xsl:otherwise>
   </xsl:choose>
 </xsl:for-each>
 </xsl:if>
@@ -132,10 +138,12 @@
   </xsl:for-each>
 </xsl:if>
 &lt;!--
-Start macro declarations
+Start rest of  macro declarations
 --&gt;
 <xsl:for-each select="key('MacroModule',@ident)">
-  <xsl:apply-templates select="." mode="tangle"/>
+  <xsl:if test="not(@type='dt')">
+    <xsl:apply-templates select="." mode="tangle"/>
+  </xsl:if>
 </xsl:for-each>
 &lt;!--
 End of macro declarations
@@ -200,12 +208,6 @@ End of macro declarations
 	    <xsl:with-param name="declare">false</xsl:with-param>
 	  </xsl:apply-templates>
 	</xsl:when>
-	<xsl:when test="@type='default'">    
-	  <xsl:apply-templates select="." mode="processDefaultAtts"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:apply-templates select="." mode="process"/>
-	</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
     <xsl:text>&#10;&lt;!--end of predeclared classes --&gt;&#10;</xsl:text>
@@ -452,6 +454,10 @@ End of macro declarations
       <xsl:text> NMTOKENS</xsl:text>
     </xsl:when>
     
+    <xsl:when test="rng:data/@type='boolean'">
+      <xsl:text> (true | false) </xsl:text>
+    </xsl:when>
+    
     <xsl:when test="rng:ref">
       <xsl:text> %</xsl:text>
       <xsl:value-of select="rng:ref/@name"/>
@@ -536,6 +542,9 @@ End of macro declarations
 	<xsl:value-of select="."/>
 	<xsl:if test="following-sibling::rng:value">|</xsl:if>
       </xsl:for-each>
+      <xsl:if test="rng:data/@type='boolean'">
+	<xsl:text> | true | false</xsl:text>
+      </xsl:if>
       <xsl:text>)</xsl:text>
     </xsl:when>
     <xsl:otherwise>
@@ -1090,12 +1099,6 @@ So, at the first, process the second; at the second, do nothing.
   &lt;!--</xsl:text>
   <xsl:apply-templates/>
   <xsl:text>--&gt;</xsl:text>        
-</xsl:template>
-
-<xsl:template match="tei:classSpec" mode="processDefaultAtts">
-  <xsl:text>
-&lt;!ENTITY % </xsl:text><xsl:value-of select="@ident"/>
-    <xsl:text>.attributes &#39;&#39;&gt;</xsl:text>
 </xsl:template>
 
 <xsl:template name="attributeList">
