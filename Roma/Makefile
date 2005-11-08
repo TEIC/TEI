@@ -8,7 +8,7 @@ FILES=ChangeLog \
 	progressbar \
 	release \
 	ressource \
-	roma \
+	roma.sh \
 	roma.css \
 	roma.js \
 	startroma.php \
