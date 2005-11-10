@@ -113,9 +113,9 @@
 
     <xsl:call-template name="generateOutput">
       <xsl:with-param name="body">
-	<grammar
+	<rng:grammar
 	 xmlns:teix="http://www.tei-c.org/ns/Examples"
-	 xmlns="http://relaxng.org/ns/structure/1.0"
+	 xmlns:rng="http://relaxng.org/ns/structure/1.0"
 	 xmlns:t="http://www.thaiopensource.com/ns/annotations"
 	 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
 	 datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
@@ -178,7 +178,7 @@
 	    </xsl:otherwise>
 	    
 	  </xsl:choose>
-	</grammar>
+	</rng:grammar>
       </xsl:with-param>
     </xsl:call-template>
 </xsl:template>
@@ -210,8 +210,8 @@
       <xsl:otherwise>
 	<xsl:call-template name="generateOutput">
 	  <xsl:with-param name="body">
-	    <grammar
-		xmlns="http://relaxng.org/ns/structure/1.0"
+	    <rng:grammar
+		xmlns:rng="http://relaxng.org/ns/structure/1.0"
 		xmlns:t="http://www.thaiopensource.com/ns/annotations"
 		xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
 		datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
@@ -224,7 +224,7 @@
 	      </xsl:comment>
 	      <xsl:text>&#10;</xsl:text>
 	      <xsl:call-template name="moduleSpec-body"/>	  
-	    </grammar>
+	    </rng:grammar>
 	  </xsl:with-param>
 	</xsl:call-template>
       </xsl:otherwise>

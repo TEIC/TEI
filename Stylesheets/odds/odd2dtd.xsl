@@ -91,7 +91,9 @@
 &lt;!ENTITY % om.RO '' &gt;
 &lt;!ENTITY % om.RR '' &gt;
 <xsl:call-template name="NameList"/>
+</xsl:if>
 
+<xsl:if test="@type='core' or $TEIC='false'">
 &lt;!--
 Start datatype macro declarations
 --&gt;
@@ -103,7 +105,9 @@ Start datatype macro declarations
 &lt;!--
 End of datatype macro declarations
 --&gt;
+</xsl:if>
 
+<xsl:if test="@type='core'">
 <xsl:for-each select="key('DefClasses',1)">
   <xsl:choose>
     <xsl:when test="@type='atts'">    
@@ -193,11 +197,17 @@ End of macro declarations
     <xsl:value-of select="edate:date-time()"/>
     <xsl:call-template name="copyright"/>
     <xsl:text>&#10;--&gt;&#10;</xsl:text>
-    <xsl:text>&#10;&lt;!--datatypes --&gt;&#10;</xsl:text>
-    <xsl:for-each select="key('DATATYPES',1)">
-      <xsl:apply-templates select="." mode="tangle"/>
-    </xsl:for-each>
+  </xsl:if>
+
+  <xsl:text>&#10;&lt;!-- start datatypes --&gt;&#10;</xsl:text>
+  <xsl:for-each select="key('DATATYPES',1)">
+    <xsl:apply-templates select="." mode="tangle"/>
+  </xsl:for-each>
+  
+  <xsl:text>&#10;&lt;!-- end datatypes --&gt;&#10;</xsl:text>
+  <xsl:if test="$TEIC='true'">
     <xsl:text>&#10;&lt;!--predeclared classes --&gt;&#10;</xsl:text>
+
     <xsl:for-each select="key('DefClasses',1)">
       <xsl:choose>
 	<xsl:when test="@type='atts'">    
@@ -216,18 +226,24 @@ End of macro declarations
   <xsl:if test="$TEIC='true'">
     <xsl:apply-templates select="key('CLASSDOCS',1)"  mode="tangle"/>
   </xsl:if>
+
+  <xsl:text>&#10;&lt;!-- start patterns --&gt;&#10;</xsl:text>
   <xsl:for-each select="key('MACRODOCS',1)">
     <xsl:if test="not(@type='dt')">
       <xsl:apply-templates select="." mode="tangle"/>
     </xsl:if>
   </xsl:for-each>
-  
-  <xsl:if test="not($TEIC='true')">
+  <xsl:text>&#10;&lt;!-- end datatypes --&gt;&#10;</xsl:text>
+  <xsl:if test="$TEIC='false'">
+    <xsl:text>&#10;&lt;!-- start classes --&gt;&#10;</xsl:text>
     <xsl:apply-templates select="key('CLASSDOCS',1)"  mode="tangle"/>
+    <xsl:text>&#10;&lt;!-- stop classes --&gt;&#10;</xsl:text>
   </xsl:if>
+    <xsl:text>&#10;&lt;!-- start elements --&gt;&#10;</xsl:text>
   <xsl:apply-templates select="key('ELEMENTDOCS',1)"  mode="tangle">      
     <xsl:sort select="@ident"/>
   </xsl:apply-templates>
+    <xsl:text>&#10;&lt;!-- end elements --&gt;&#10;</xsl:text>
   
 </xsl:template>
 
