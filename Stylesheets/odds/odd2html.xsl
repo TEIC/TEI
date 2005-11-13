@@ -207,15 +207,16 @@
 	</xsl:apply-templates>
       </xsl:if>
       
-      
-      <h2>
-	<xsl:call-template name="i18n">
-	  <xsl:with-param  name="word">Elements defined</xsl:with-param>
-	</xsl:call-template>
-      </h2>
-      <xsl:apply-templates mode="weave" select="tei:elementSpec">
-	<xsl:sort select="tei:altIdent|@ident"/>
-      </xsl:apply-templates>
+      <xsl:if test="tei:elementSpec">
+	<h2>
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param  name="word">Elements defined</xsl:with-param>
+	  </xsl:call-template>
+	</h2>
+	<xsl:apply-templates mode="weave" select="tei:elementSpec">
+	  <xsl:sort select="tei:altIdent|@ident"/>
+	</xsl:apply-templates>
+      </xsl:if>
       
       <xsl:if test="tei:macroSpec">
 	<h2>
@@ -228,7 +229,7 @@
 	  <xsl:sort select="tei:altIdent|@ident"/>
 	</xsl:apply-templates>
       </xsl:if>
-
+      
       <xsl:apply-templates select="tei:specGrpRef"/>
 
     </div>

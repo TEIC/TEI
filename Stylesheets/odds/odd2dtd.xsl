@@ -233,7 +233,7 @@ End of macro declarations
       <xsl:apply-templates select="." mode="tangle"/>
     </xsl:if>
   </xsl:for-each>
-  <xsl:text>&#10;&lt;!-- end datatypes --&gt;&#10;</xsl:text>
+  <xsl:text>&#10;&lt;!-- end patterns --&gt;&#10;</xsl:text>
   <xsl:if test="$TEIC='false'">
     <xsl:text>&#10;&lt;!-- start classes --&gt;&#10;</xsl:text>
     <xsl:apply-templates select="key('CLASSDOCS',1)"  mode="tangle"/>
