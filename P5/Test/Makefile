@@ -71,7 +71,7 @@ test-dtd:
 
 
 test-dtd-xmllint:
-	echo RXP DTD ....
+	echo xmllint DTD ....
 	-for i in $(TESTFILES); do xmllint --noout --valid $$i.xml; done
 
 clean:
