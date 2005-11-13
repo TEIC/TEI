@@ -15,14 +15,21 @@ text.</desc>
   <content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:zeroOrMore>
+        <rng:choice>
           <rng:ref name="model.frontPart"/>
+          <rng:ref name="model.global"/>
+        </rng:choice>
       </rng:zeroOrMore>
       <rng:optional>
         <rng:choice>
           <rng:group>
+<?teidtd (?>
+            <rng:ref name="model.divWrapper"/>
+<?teidtd )?>
             <rng:zeroOrMore>
               <rng:choice>
                 <rng:ref name="model.divWrapper"/>
+                <rng:ref name="titlePage"/>
                 <rng:ref name="model.global"/>
               </rng:choice>
             </rng:zeroOrMore>
@@ -50,7 +57,13 @@ text.</desc>
         </rng:choice>
       </rng:optional>
       <rng:zeroOrMore>
-	<rng:ref name="model.divWrapper.bottom"/>
+<!--        <rng:choice>
+          <rng:ref name="trailer"/>
+	  <rng:ref name="closer"/
+        </rng:choice>-->
+
+          <rng:ref name="model.divWrapper.bottom"/>
+
       </rng:zeroOrMore>
     </rng:group>
   </content>
