@@ -36,7 +36,7 @@ class romaDom extends domDocument
         $oTemp = new domDocument();
 	$oTEI = $oTemp->createElementNS( 'http://www.tei-c.org/ns/1.0', 'TEI' );
 	$oTemp->appendChild( $oTEI );
-	$oTEI->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'lang', 'en' );
+	$oTEI->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'xml:lang', 'en' );
 
 	$oTeiHeader = $oTEI->appendChild( new domElement( 'teiHeader' ) );
 
@@ -64,7 +64,7 @@ class romaDom extends domDocument
 
 	$oSchema = $oBody->appendChild( new domElement( 'schemaSpec' ) );
 	$oSchema->setAttribute( 'ident', 'myTei' );
-	$oSchema->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'lang', 'en' );
+	$oSchema->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'xml:lang', 'en' );
 
 	$this->loadXML( $oTemp->SaveXML() );
       }
@@ -329,8 +329,7 @@ class romaDom extends domDocument
 
 	$this->getXPath( $oXPath );
 	$aoElements = $oXPath->query(
-	"//tei:schemaSpec/tei:elementSpec[@mode='change'
-	and @module='{$szModule}']/tei:altIdent" );
+	"//tei:schemaSpec/tei:elementSpec[@mode='change' and @module='{$szModule}']/tei:altIdent" );
 
 	foreach( $aoElements as $oElement )
 	  {
@@ -1366,19 +1365,10 @@ class romaDom extends domDocument
 		$oContent->appendChild( $oRNG );
 		break; 
 	      default:
-		if( substr( $aszConfig[ 'content' ], 0, 9 ) == 'datatype.' )
-		  {
 		    $oRNG = $this->createElementNS( 'http://relaxng.org/ns/structure/1.0', 'rng:ref' );
 		    $oRef = $oContent->appendChild( $oRNG );
 		    $oRef->setAttribute( 'name', $aszConfig[ 'content' ] );
-		  }
-		else
-		  {
-		    $oRNG = $this->createElementNS( 'http://relaxng.org/ns/structure/1.0', 'rng:data' );
-		    $oRef = $oContent->appendChild( $oRNG );
-		    $oRef->setAttribute( 'type', $aszConfig[ 'content' ] );
-		  }
-		break;
+		    break;
 	      }
 	      	    
 	    //default
@@ -1810,7 +1800,7 @@ class romaDom extends domDocument
     public function setCustomizationFilename( $szFilename )
       {
 	$this->getXPath( $oXPath );
-	$oTEI = $oXPath->query( "///tei:schemaSpec[1]" )->item(0);
+	$oTEI = $oXPath->query( "//tei:schemaSpec[1]" )->item(0);
 	$oTEI->setAttribute( 'ident', $szFilename );
       }
 
@@ -1818,14 +1808,14 @@ class romaDom extends domDocument
       {
 	$this->getXPath( $oXPath );
 	$oTEI = $oXPath->query( "/tei:TEI" )->item(0);
-	$oTEI->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'lang', $szLanguage );
+	$oTEI->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'xml:lang', $szLanguage );
       }
 
     public function setOddLanguage( $szOddLanguage )
       {
 	$this->getXPath( $oXPath );
-	$oTEI = $oXPath->query( "/tei:TEI//tei:schemaSpec" )->item(0);
-	$oTEI->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'lang', $szOddLanguage );
+	$oTEI = $oXPath->query( "//tei:schemaSpec" )->item(0);
+	$oTEI->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'xml:lang', $szOddLanguage );
       }
 
 

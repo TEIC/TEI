@@ -900,17 +900,16 @@ class roma
 	$oDatatypeDom = new domDocument();
 	$oDatatypeDom->loadXML( join( '', file( roma_xquery_server . 'datatypes.xq' ) ) ) ;
 	$oRootDat = $oDatatypeDom->documentElement;
-
+	$oRootDat = $oListDom->importNode( $oRootDat, true );
+	$oAddAttribute->appendChild( $oRootDat );
+/*
 	$oWCDom = new domDocument();
 	$oWCDom->loadXML( join( '', file( roma_xquery_server . 'w3cdatatypes.xq' ) ) ) ;
 	$oRootW3cDat = $oWCDom->documentElement;
-
-	$oRootDat = $oListDom->importNode( $oRootDat, true );
 	$oRootW3cDat = $oListDom->importNode( $oRootW3cDat, true );
-
-	
-	$oAddAttribute->appendChild( $oRootDat );
 	$oAddAttribute->appendChild( $oRootW3cDat );
+*/
+
 	
 	//attributes
 	$this->m_oRomaDom->getAttributeDomByElementInModule( $_REQUEST[ 'element' ], $_REQUEST[ 'module' ], $_REQUEST[ 'class' ], $oAtts );
@@ -1152,9 +1151,10 @@ class roma
 			     'input-xml' => true,
 			     'output-xml' => true
 			     );
-	$oTidy->parseString( $this->m_oRomaDom->SaveXML(), $aszOptions );
-	$oTidy->cleanRepair();
-	$szOutput = $oTidy;
+/*     $oTidy->parseString( $this->m_oRomaDom->SaveXML(), $aszOptions );
+	$oTidy->cleanRepair();  
+	$szOutput = $oTidy;*/
+	$szOutput = $this->m_oRomaDom->SaveXML();
       }
 
     /**
