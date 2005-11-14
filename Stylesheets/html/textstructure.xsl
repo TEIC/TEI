@@ -1693,12 +1693,14 @@ $ID: requests a particular page
         <xsl:choose>
           <xsl:when test="$contentStructure='all' or @rend='all'">
             <div>
-              <div id="lh-col">
-                <xsl:call-template name="searchbox"/>
+              <div id="col1">
                 <xsl:apply-templates select="descendant-or-self::tei:TEI/tei:text/tei:front"/>
               </div>
-              <div id="rh-col">
+              <div id="col2">
                 <xsl:apply-templates select="descendant-or-self::tei:TEI/tei:text/tei:body"/>
+              </div>
+              <div id="col3">
+                <xsl:apply-templates select="descendant-or-self::tei:TEI/tei:text/tei:back"/>
               </div>
             </div>
           </xsl:when>
