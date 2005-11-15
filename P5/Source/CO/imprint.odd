@@ -8,20 +8,17 @@ $Author$
 <equiv/>
 <gloss/>
 <desc>groups information relating to the publication or distribution
-of a bibliographic item.  </desc>
-  <classes>
-    <memberOf key="model.biblPart"/>
-  </classes>
-  <content>
-    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:choice>
-        <rng:ref name="pubPlace"/>
-        <rng:ref name="publisher"/>
-        <rng:ref name="date"/>
-        <rng:ref name="biblScope"/>
-<!--        <rng:ref name="model.global"/>-->
-      </rng:choice>
-    </rng:zeroOrMore>
+of a bibliographic item.</desc>
+  <classes/>
+  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:oneOrMore>
+<?teidtd (?>
+            <rng:ref name="model.imprintPart"/>
+<?teidtd )?>
+      <rng:zeroOrMore>
+        <rng:ref name="model.global"/>
+      </rng:zeroOrMore>
+    </rng:oneOrMore>
   </content>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">      <imprint>
