@@ -548,12 +548,45 @@ $ID: requests a particular page
 <!-- depending on depth and splitting level, 
 	 we may do one of two things: -->
     <xsl:choose>
+<!-- -1. Override at top level -->
+      <xsl:when test="ancestor::TEI.2/@rend='all'">
+        <div>
+          <xsl:attribute name="class">
+            <xsl:choose>
+              <xsl:when test="@type">
+                <xsl:value-of select="@type"/>
+              </xsl:when>
+              <xsl:otherwise>teidiv</xsl:otherwise>
+            </xsl:choose>
+          </xsl:attribute>
+          <xsl:call-template name="doDivBody">
+            <xsl:with-param name="Type" select="$depth"/>
+          </xsl:call-template>
+        </div>
+      </xsl:when>
+      <xsl:when test="ancestor::TEI.2/@rend='frontpage'">
+        <div>
+          <xsl:attribute name="class">
+            <xsl:choose>
+              <xsl:when test="@type">
+                <xsl:value-of select="@type"/>
+              </xsl:when>
+              <xsl:otherwise>teidiv</xsl:otherwise>
+            </xsl:choose>
+          </xsl:attribute>
+          <xsl:call-template name="doDivBody">
+            <xsl:with-param name="Type" select="$depth"/>
+          </xsl:call-template>
+        </div>
+      </xsl:when>
 <!-- 0. We have gone far enough -->
       <xsl:when test="$depth = $splitLevel and $STDOUT='true'">
       </xsl:when>
 <!-- 1. our section depth is below the splitting level -->
       <xsl:when test="$depth &gt; $splitLevel or
 		      @rend='nosplit' or
+		      ancestor::tei:TEI/@rend='all' or
+		      ancestor::tei:TEI/@rend='frontpage' or
 		      ancestor::tei:TEI/@rend='nosplit'">
         <div>
           <xsl:attribute name="class">
@@ -1664,6 +1697,7 @@ $ID: requests a particular page
         </title>
         <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+        <xsl:call-template name="headHook"/>
         <xsl:call-template name="metaHTML">
           <xsl:with-param name="title" select="$pagetitle"/>
         </xsl:call-template>
@@ -1694,13 +1728,36 @@ $ID: requests a particular page
           <xsl:when test="$contentStructure='all' or @rend='all'">
             <div>
               <div id="col1">
-                <xsl:apply-templates select="descendant-or-self::tei:TEI/tei:text/tei:front"/>
+                <xsl:for-each select="descendant-or-self::TEI.2/text/front">
+		  <xsl:apply-templates/>
+		</xsl:for-each>
               </div>
               <div id="col2">
-                <xsl:apply-templates select="descendant-or-self::tei:TEI/tei:text/tei:body"/>
+                <xsl:for-each
+		    select="descendant-or-self::TEI.2/text/body">
+		  <xsl:apply-templates/>
+		</xsl:for-each>
               </div>
               <div id="col3">
-                <xsl:apply-templates select="descendant-or-self::tei:TEI/tei:text/tei:back"/>
+                <xsl:for-each
+		    select="descendant-or-self::TEI.2/text/back">
+		  <xsl:apply-templates/>
+		</xsl:for-each>
+              </div>
+            </div>
+          </xsl:when>
+          <xsl:when test="@rend='frontpage'">
+            <div>
+              <div id="lh-col">
+                <xsl:for-each select="descendant-or-self::TEI.2/text/front">
+		  <xsl:apply-templates/>
+		</xsl:for-each>
+              </div>
+              <div id="rh-col">
+                <xsl:for-each
+		    select="descendant-or-self::TEI.2/text/body">
+		  <xsl:apply-templates/>
+		</xsl:for-each>
               </div>
             </div>
           </xsl:when>
@@ -1811,7 +1868,9 @@ $ID: requests a particular page
           <xsl:value-of select="$pagetitle"/>
         </title>
         <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+        <link rel="shortcut icon" href="/favicon.ico"
+	      type="image/x-icon"/>
+        <xsl:call-template name="headHook"/>
         <xsl:call-template name="metaHTML">
           <xsl:with-param name="title" select="$pagetitle"/>
         </xsl:call-template>

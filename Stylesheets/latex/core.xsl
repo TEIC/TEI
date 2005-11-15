@@ -48,7 +48,7 @@
   </xd:doc>
   <xsl:template match="tei:ab">
   <xsl:apply-templates/>
-  <xsl:if test="following-sibling::tei:ab">\\&#10;</xsl:if>
+  <xsl:if test="following-sibling::tei:ab">\par&#10;</xsl:if>
 </xsl:template>
   
 <xd:doc>

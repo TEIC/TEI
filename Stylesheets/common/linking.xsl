@@ -77,7 +77,8 @@
  </xsl:choose>
 </xsl:template>
   <xd:doc>
-    <xd:short>Process elements  tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6</xd:short>
+    <xd:short>Process elements
+    tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6 in xref mode</xd:short>
     <xd:param name="minimal">whether to make a link with just numbers
     or with text too</xd:param>
     <xd:detail>&#160;</xd:detail>
