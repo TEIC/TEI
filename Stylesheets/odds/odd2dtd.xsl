@@ -875,6 +875,7 @@ So, at the first, process the second; at the second, do nothing.
     <xsl:apply-templates select="tei:classes/tei:memberOf" mode="tangleAtts"/>
   </xsl:if>
   <xsl:call-template name="attributeList"/>
+<!--
   <xsl:if test="$TEIC='true'">
     <xsl:if test="not(starts-with(@ident,'%'))">
       <xsl:text>&#10; TEIform CDATA &#39;</xsl:text>
@@ -882,6 +883,7 @@ So, at the first, process the second; at the second, do nothing.
       <xsl:text>&#39; </xsl:text>
     </xsl:if>
   </xsl:if>
+-->
   <xsl:text> &gt;</xsl:text>
 </xsl:template>
 

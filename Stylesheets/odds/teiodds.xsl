@@ -500,6 +500,11 @@
       </xsl:with-param>
     </xsl:apply-templates>
     
+    <!-- place holder to make sure something gets into the
+	     pattern -->
+    <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
+
+<!--
     <xsl:choose>
       <xsl:when test="$TEIC='true'">
 	<optional xmlns="http://relaxng.org/ns/structure/1.0">
@@ -509,11 +514,10 @@
 	</optional>
       </xsl:when>
       <xsl:otherwise>
-	<!-- place holder to make sure something gets into the
-	     pattern -->
 	<empty xmlns="http://relaxng.org/ns/structure/1.0"/>
       </xsl:otherwise>
     </xsl:choose>
+-->
   </xsl:template>
   
   <xsl:template name="defineContent">

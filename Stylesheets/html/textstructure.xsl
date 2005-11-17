@@ -1726,7 +1726,7 @@ $ID: requests a particular page
         </xsl:if>
         <xsl:choose>
           <xsl:when test="$contentStructure='all' or @rend='all'">
-            <div>
+            <div class="column-wrapper">
               <div id="col1">
                 <xsl:for-each select="descendant-or-self::TEI.2/text/front">
 		  <xsl:apply-templates/>
@@ -1747,7 +1747,7 @@ $ID: requests a particular page
             </div>
           </xsl:when>
           <xsl:when test="@rend='frontpage'">
-            <div>
+            <div class="column-wrapper">
               <div id="lh-col">
                 <xsl:for-each select="descendant-or-self::TEI.2/text/front">
 		  <xsl:apply-templates/>
@@ -1780,25 +1780,27 @@ $ID: requests a particular page
   </xd:doc>
 <xsl:template name="bodyLayout">
   <xsl:param name="currentID"/>
-  <div id="rh-col">
-    <a name="rh-col"/>
-    <div id="rh-col-top">
-      <xsl:call-template name="rh-col-top"/>
+  <div class="column-wrapper">
+    <div id="rh-col">
+      <a name="rh-col"/>
+      <div id="rh-col-top">
+	<xsl:call-template name="rh-col-top"/>
+      </div>
+      <div id="rh-col-bottom">
+	<xsl:call-template name="rh-col-bottom">
+	  <xsl:with-param name="currentID" select="$currentID"/>
+	</xsl:call-template>
+      </div>
     </div>
-    <div id="rh-col-bottom">
-      <xsl:call-template name="rh-col-bottom">
-	<xsl:with-param name="currentID" select="$currentID"/>
-      </xsl:call-template>
-    </div>
-  </div>
-  <div id="lh-col">
-    <div id="lh-col-top">
-      <xsl:call-template name="lh-col-top"/>
-    </div>
-    <div id="lh-col-bottom">
-      <xsl:call-template name="lh-col-bottom">
-	<xsl:with-param name="currentID" select="$currentID"/>
-      </xsl:call-template>
+    <div id="lh-col">
+      <div id="lh-col-top">
+	<xsl:call-template name="lh-col-top"/>
+      </div>
+      <div id="lh-col-bottom">
+	<xsl:call-template name="lh-col-bottom">
+	  <xsl:with-param name="currentID" select="$currentID"/>
+	</xsl:call-template>
+      </div>
     </div>
   </div>
 </xsl:template>
