@@ -135,14 +135,41 @@ capable of dealing with UTF-8 directly.
 \def\textlarge#1{{\large #1}}
 \def\textoverbar#1{\ensuremath{\overline{#1}}}
 \def\textgothic#1{\ensuremath{\mathscr{#1}}}
-\def\Panel#1#2#3#4{\multicolumn{#3}{>{\columncolor{#2}}#4}{#1}}
 \RequirePackage{array}
+\def\@testpach{\@chclass
+ \ifnum \@lastchclass=6 \@ne \@chnum \@ne \else
+  \ifnum \@lastchclass=7 5 \else
+   \ifnum \@lastchclass=8 \tw@ \else
+    \ifnum \@lastchclass=9 \thr@@
+   \else \z@
+   \ifnum \@lastchclass = 10 \else
+   \edef\@nextchar{\expandafter\string\@nextchar}%
+   \@chnum
+   \if \@nextchar c\z@ \else
+    \if \@nextchar l\@ne \else
+     \if \@nextchar r\tw@ \else
+   \z@ \@chclass
+   \if\@nextchar |\@ne \else
+    \if \@nextchar !6 \else
+     \if \@nextchar @7 \else
+      \if \@nextchar (8 \else
+       \if \@nextchar )9 \else
+  10
+  \@chnum
+  \if \@nextchar m\thr@@\else
+   \if \@nextchar p4 \else
+    \if \@nextchar b5 \else
+   \z@ \@chclass \z@ \@preamerr \z@ \fi \fi \fi \fi
+   \fi \fi  \fi  \fi  \fi  \fi  \fi \fi \fi \fi \fi \fi}
+
+\gdef\arraybackslash{\let\\=\@arraycr}
+\def\Panel#1#2#3#4{\multicolumn{#3}{){\columncolor{#2}}#4}{#1}}
 \gdef\arraybackslash{\let\\=\@arraycr}
 <xsl:text disable-output-escaping="yes">
-\newcolumntype{L}[1]{&gt;{\raggedright\arraybackslash}p{#1}}
-\newcolumntype{C}[1]{&gt;{\centering\arraybackslash}p{#1}}
-\newcolumntype{R}[1]{&gt;{\raggedleft\arraybackslash}p{#1}}
-\newcolumntype{P}[1]{&gt;{\arraybackslash}p{#1}}
+\newcolumntype{L}[1]{){\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{){\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{){\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{P}[1]{){\arraybackslash}p{#1}}
 \IfFileExists{xcolor.sty}%
   {\RequirePackage{xcolor}}%
   {\RequirePackage{color}}
