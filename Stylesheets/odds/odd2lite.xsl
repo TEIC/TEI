@@ -669,7 +669,8 @@
       <xsl:for-each select="tei:valItem">
 	<tei:label><xsl:call-template name="identifyMe"/></tei:label>
 	<tei:item>
-	  <xsl:value-of select="tei:gloss"/>
+	  <xsl:value-of select="tei:gloss" mode="doc"/>
+	  <xsl:value-of select="tei:desc" mode="doc"/>
 	</tei:item>
       </xsl:for-each>
     </tei:list>

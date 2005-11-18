@@ -1006,7 +1006,8 @@
             </b>
           </td>
           <td valign="top">
-            <xsl:value-of select="tei:gloss"/>
+            <xsl:value-of select="tei:gloss" mode="doc"/>
+            <xsl:value-of select="tei:desc" mode="doc"/>
           </td>
         </tr>
       </xsl:for-each>
