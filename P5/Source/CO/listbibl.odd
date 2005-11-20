@@ -13,31 +13,33 @@ $Author$
     <memberOf key="att.declarable"/>
     <memberOf key="model.msItemPart"/>
   </classes>
-  <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:group>
       <rng:zeroOrMore>
-        <rng:ref name="model.global"/>
+	<rng:choice>
+	  <rng:group>
+	    <rng:ref name="model.divWrapper"/>
+	  </rng:group>
+	  <rng:group>
+	    <rng:ref name="model.global"/>
+	  </rng:group>
+      </rng:choice>
       </rng:zeroOrMore>
-      <rng:optional>
-        <rng:ref name="model.divWrapper"/>
-        <rng:zeroOrMore>
-          <rng:ref name="model.global"/>
-        </rng:zeroOrMore>
-      </rng:optional>
-      <rng:group>
-        <rng:ref name="model.biblLike"/>
-      </rng:group>
+      <rng:oneOrMore>
+	<rng:group>
+	  <rng:ref name="model.biblLike"/>
+	</rng:group>
+	<rng:zeroOrMore>
+	  <rng:ref name="model.global"/>
+	</rng:zeroOrMore>
+      </rng:oneOrMore>
       <rng:zeroOrMore>
-        <rng:choice>
-          <rng:ref name="model.biblLike"/>
-          <rng:ref name="model.global"/>
-	</rng:choice>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:choice>
-          <rng:ref name="model.divWrapper.bottom"/>
-          <rng:ref name="model.global"/>
-	</rng:choice>
+	<rng:group>
+	  <rng:ref name="model.divWrapper.bottom"/>
+	</rng:group>
+	<rng:zeroOrMore>
+	  <rng:ref name="model.global"/>
+	</rng:zeroOrMore>
       </rng:zeroOrMore>
     </rng:group>
   </content>
