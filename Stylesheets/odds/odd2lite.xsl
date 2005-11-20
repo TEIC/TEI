@@ -539,7 +539,7 @@
 	</xsl:call-template>
 	<xsl:text> </xsl:text>
 	<tei:hi><xsl:value-of select="@ident"/></tei:hi>:
-	<xsl:apply-templates select="tei:dgloss  mode="doc"/>
+	<xsl:apply-templates select="tei:gloss"  mode="doc"/>
 	<xsl:apply-templates select="tei:desc"  mode="doc"/>
       </xsl:when>
       <xsl:otherwise>
