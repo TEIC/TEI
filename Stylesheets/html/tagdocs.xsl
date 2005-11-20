@@ -13,7 +13,7 @@
     xmlns:html="http://www.w3.org/1999/xhtml"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     extension-element-prefixes="exsl estr edate" 
-    exclude-result-prefixes="exsl estr edate a fo local rng tei teix xd" 
+    exclude-result-prefixes="exsl estr edate a fo local rng tei teix xd html" 
     version="1.0">
   
 <xd:doc type="stylesheet">
@@ -68,7 +68,8 @@
         </tt>
       </td>
       <td colspan="2">
-        <xsl:apply-templates select="tei:desc" mode="show"/>
+        <xsl:apply-templates select="tei:gloss" mode="doc"/>
+        <xsl:apply-templates select="tei:desc" mode="doc"/>
       </td>
     </tr>
     <xsl:apply-templates select="valList"/>
@@ -98,7 +99,8 @@
         </tt>
       </td>
       <td colspan="2">
-        <xsl:apply-templates select="tei:desc" mode="show"/>
+        <xsl:apply-templates select="tei:gloss" mode="doc"/>
+        <xsl:apply-templates select="tei:desc" mode="doc"/>
       </td>
     </tr>
     <tr>
@@ -282,7 +284,8 @@
         </tt>
       </td>
       <td colspan="2">
-        <xsl:apply-templates select="tei:desc" mode="show"/>
+        <xsl:apply-templates select="tei:gloss" mode="doc"/>
+        <xsl:apply-templates select="tei:desc" mode="doc"/>
       </td>
     </tr>
     <xsl:apply-templates mode="weave"/>
@@ -436,7 +439,8 @@
         </tt>
       </td>
       <td colspan="2">
-        <xsl:apply-templates select="tei:desc" mode="show"/>
+        <xsl:apply-templates select="tei:gloss" mode="doc"/>
+	<xsl:apply-templates select="tei:desc" mode="doc"/>
       </td>
     </tr>
     <xsl:if test="not(tei:attList)">
@@ -614,7 +618,8 @@
       </b>
     </td>
     <td colspan="2">
-      <xsl:apply-templates select="tei:desc" mode="show"/>
+      <xsl:apply-templates select="tei:gloss" mode="doc"/>
+      <xsl:apply-templates select="tei:desc" mode="doc"/>
     </td>
   </tr>
 </xsl:template>
@@ -708,7 +713,8 @@
         </tt>
       </td>
       <td colspan="2">
-        <xsl:apply-templates select="tei:desc" mode="show"/>
+        <xsl:apply-templates select="tei:gloss" mode="doc"/>
+        <xsl:apply-templates select="tei:desc" mode="doc"/>
       </td>
     </tr>
     <xsl:apply-templates mode="weave"/>
@@ -777,7 +783,8 @@
       </strong>
       <xsl:text> </xsl:text>
       <em><xsl:value-of select="@ident"/></em>:
-      <xsl:apply-templates select="tei:desc" mode="show"/>
+      <xsl:apply-templates select="tei:gloss" mode="doc"/>
+      <xsl:apply-templates select="tei:desc" mode="doc"/>
       <ul>
 	<li>
 	  <xsl:call-template name="i18n">
@@ -1006,8 +1013,8 @@
             </b>
           </td>
           <td valign="top">
-            <xsl:value-of select="tei:gloss" mode="doc"/>
-            <xsl:value-of select="tei:desc" mode="doc"/>
+            <xsl:apply-templates select="tei:gloss" mode="doc"/>
+            <xsl:apply-templates select="tei:desc" mode="doc"/>
           </td>
         </tr>
       </xsl:for-each>

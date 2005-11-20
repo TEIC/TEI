@@ -339,23 +339,18 @@
   </xsl:template>
   
   
-  
-  <xsl:template match="tei:desc" mode="show">
-    <xsl:apply-templates 
-	select="preceding-sibling::tei:gloss" mode="show"/>
+  <xsl:template match="tei:desc" mode="doc">
     <xsl:choose>
       <xsl:when test="$lang='en' and not(@xml:lang)">
-	<xsl:apply-templates/>
+	<xsl:value-of select="."/>
       </xsl:when>
       <xsl:when test="@xml:lang=$lang">
-	<xsl:apply-templates/>
+	<xsl:value-of select="."/>
       </xsl:when>
     </xsl:choose>
-    
   </xsl:template>
   
-  
-  
+
   <xsl:template match="tei:desc"/>
   
   <xsl:template match="tei:desc" mode="tangle"/>
@@ -561,7 +556,7 @@
   
   <xsl:template match="tei:elementSpec/@ident"/>
   
-  <xsl:template match="tei:gloss" mode="show">
+  <xsl:template match="tei:gloss" mode="doc">
     <xsl:if test="not(.='')">
       <xsl:text>(</xsl:text>
       <xsl:choose>
@@ -1523,30 +1518,6 @@
 	<xsl:value-of select="@name"/>
       </xsl:attribute>
     </xsl:element>
-  </xsl:template>
-  
-  <xsl:template match="tei:gloss" mode="doc">
-    <xsl:text>(</xsl:text>
-    <xsl:choose>
-      <xsl:when test="$lang='en' and not(@xml:lang)">
-	<xsl:value-of select="."/>
-      </xsl:when>
-      <xsl:when test="@xml:lang=$lang">
-	<xsl:value-of select="."/>
-      </xsl:when>
-    </xsl:choose>
-    <xsl:text>) </xsl:text>
-  </xsl:template>
-  
-  <xsl:template match="tei:desc" mode="doc">
-    <xsl:choose>
-      <xsl:when test="$lang='en' and not(@xml:lang)">
-	<xsl:value-of select="."/>
-      </xsl:when>
-      <xsl:when test="@xml:lang=$lang">
-	<xsl:value-of select="."/>
-      </xsl:when>
-    </xsl:choose>
   </xsl:template>
   
   <xd:doc>

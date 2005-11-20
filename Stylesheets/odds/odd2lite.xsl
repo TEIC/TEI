@@ -180,7 +180,8 @@
   <xsl:template match="tei:attDef" mode="summary">
     <tei:label><tei:code><xsl:call-template name="identifyMe"/></tei:code></tei:label>
     <tei:item>
-      <xsl:apply-templates select="tei:desc" mode="show"/>
+      <xsl:apply-templates select="tei:gloss" mode="doc"/>
+      <xsl:apply-templates select="tei:desc" mode="doc"/>
       <xsl:apply-templates select="tei:valList"/>
     </tei:item>
   </xsl:template>
@@ -188,7 +189,8 @@
   <xsl:template match="tei:attDef">
     <tei:label><tei:code><xsl:call-template name="identifyMe"/></tei:code></tei:label>
     <tei:item>
-      <xsl:apply-templates select="tei:desc" mode="show"/>
+      <xsl:apply-templates select="tei:gloss" mode="doc"/>
+      <xsl:apply-templates select="tei:desc" mode="doc"/>
       <xsl:apply-templates select="tei:valList"/>
       <xsl:apply-templates select="tei:exemplum"/>
     </tei:item>
@@ -478,7 +480,8 @@
       </xsl:choose>
     </tei:label>
     <tei:item>
-      <xsl:apply-templates select="tei:desc" mode="show"/>
+      <xsl:apply-templates select="tei:gloss" mode="doc"/>
+      <xsl:apply-templates select="tei:desc" mode="doc"/>
     </tei:item>
   </xsl:template>
   
@@ -536,7 +539,8 @@
 	</xsl:call-template>
 	<xsl:text> </xsl:text>
 	<tei:hi><xsl:value-of select="@ident"/></tei:hi>:
-	<xsl:apply-templates select="tei:desc"  mode="show"/>
+	<xsl:apply-templates select="tei:dgloss  mode="doc"/>
+	<xsl:apply-templates select="tei:desc"  mode="doc"/>
       </xsl:when>
       <xsl:otherwise>
 	<tei:p>
@@ -545,7 +549,9 @@
 	  </xsl:call-template>
 	  <xsl:text> </xsl:text>
 	  <tei:hi><xsl:value-of select="@ident"/></tei:hi>:
-	<xsl:apply-templates select="tei:desc"  mode="show"/></tei:p>
+	  <xsl:apply-templates select="tei:gloss" mode="doc"/>
+	  <xsl:apply-templates select="tei:desc"  mode="doc"/>
+	</tei:p>
       </xsl:otherwise>
     </xsl:choose>
     <tei:list>
@@ -669,8 +675,8 @@
       <xsl:for-each select="tei:valItem">
 	<tei:label><xsl:call-template name="identifyMe"/></tei:label>
 	<tei:item>
-	  <xsl:value-of select="tei:gloss" mode="doc"/>
-	  <xsl:value-of select="tei:desc" mode="doc"/>
+	  <xsl:apply-templates select="tei:gloss" mode="doc"/>
+	  <xsl:apply-templates select="tei:desc" mode="doc"/>
 	</tei:item>
       </xsl:for-each>
     </tei:list>
@@ -866,7 +872,10 @@
 	<xsl:text> </xsl:text>
 	<xsl:call-template name="identifyMe"/>
       </tei:head>
-      <tei:p><xsl:apply-templates select="tei:desc" mode="show"/></tei:p>
+      <tei:p>
+	<xsl:apply-templates select="tei:gloss" mode="doc"/>
+	<xsl:apply-templates select="tei:desc" mode="doc"/>
+      </tei:p>
       <xsl:apply-templates select="." mode="weavebody"/>
     </tei:div>
   </xsl:template>
