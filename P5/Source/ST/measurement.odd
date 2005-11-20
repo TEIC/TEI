@@ -12,7 +12,8 @@ $Author$
       <desc>indicates the units used for the measurement, usually
       using the standard symbol for the desired units.</desc>
       <datatype>
-	<rng:ref name="data.word"/>
+	<rng:ref name="data.enumerated"/>
+	<!-- this only works because data.enumerated is currently mis-defeined as xsd:token instead of data.name -->
       </datatype>
       <valList type="semi">
 	<!-- base SI units -->
@@ -27,12 +28,12 @@ $Author$
 <!--	<valItem ident="rad"><gloss>radian</gloss><desc>SI unit of plane angle</desc></valItem> -->
 <!--	<valItem ident="sr"><gloss>steradian</gloss><desc>SI unit of solid angle</desc></valItem> -->
 	<valItem ident="Hz"><gloss>hertz</gloss><desc>SI unit of frequency</desc></valItem>
-	<valItem ident="N"><gloss>newton</gloss><desc>SI unit of force</desc></valItem>
+<!--	<valItem ident="N"><gloss>newton</gloss><desc>SI unit of force</desc></valItem> -->
 	<valItem ident="Pa"><gloss>pascal</gloss><desc>SI unit of pressure or stress</desc></valItem>
-	<valItem ident="J"><gloss>joule</gloss><desc>SI unit of energy or work</desc></valItem>
-	<valItem ident="W"><gloss>watt</gloss><desc>SI unit of power or radiant flux</desc></valItem>
+<!--	<valItem ident="J"><gloss>joule</gloss><desc>SI unit of energy or work</desc></valItem> -->
+<!--	<valItem ident="W"><gloss>watt</gloss><desc>SI unit of power or radiant flux</desc></valItem> -->
 <!--	<valItem ident="C"><gloss>coulomb</gloss><desc>SI unit of electric charge or quantity of electricity</desc></valItem> -->
-	<valItem ident="V"><gloss>volt</gloss><desc>SI unit of electric potential difference or electromotive force</desc></valItem>
+<!--	<valItem ident="V"><gloss>volt</gloss><desc>SI unit of electric potential difference or electromotive force</desc></valItem> -->
 <!--	<valItem ident="F"><gloss>farad</gloss><desc>SI unit of capacitance</desc></valItem> -->
 	<valItem ident="&#x2126;"><gloss>ohm</gloss><desc>SI unit of electric resistance</desc></valItem>
 <!--	<valItem ident="S"><gloss>siemens</gloss><desc>SI unit of electric conductance</desc></valItem> -->
@@ -44,13 +45,7 @@ $Author$
 <!--	<valItem ident="lx"><gloss>lux</gloss><desc>SI unit of illuminance</desc></valItem> -->
 <!--	<valItem ident="Bq"><gloss>becquerel</gloss><desc>SI unit of activity (referred to a radionuclide</desc></valItem> -->
 <!--	<valItem ident="Gy"><gloss>gray</gloss><desc>SI unit of absorbed dose or specific energy (imparted)</desc></valItem> -->
-	<valItem ident="Sv"><gloss>sievert</gloss><desc>SI unit of
-	dose equivalent, ambient dose equivalent,
-directional dose
-	equivalent,
-personal dose equivalent, or
-organ equivalent
-	dose</desc></valItem>
+<!--	<valItem ident="Sv"><gloss>sievert</gloss><desc>SI unit of dose equivalent, ambient dose equivalent, directional dose equivalent, personal dose equivalent, or organ equivalent dose</desc></valItem> -->
 	<!-- selected non-SI units accepted for use with the International System -->
 <!--	<valItem ident="min"><gloss>minute</gloss><desc>60 s</desc></valItem> -->
 <!--	<valItem ident="h"><gloss>hour</gloss><desc>3600 s</desc></valItem> -->
@@ -70,7 +65,7 @@ organ equivalent
 <!--	<valItem ident="bar"><gloss>bar</gloss><desc>10&#x2075; Pa</desc></valItem> -->
 	<valItem ident="&#x212B;"><gloss>&#x00E5;ngstr&#x00F6;m</gloss><desc>10&#x207B;&#x00B9;&#x2070; m</desc></valItem>
 	<!-- selected prefixed base SI units -->
-	<valItem ident="g"><gloss>gram</gloss><desc>unit of mass</desc></valItem>
+<!--	<valItem ident="g"><gloss>gram</gloss><desc>unit of mass</desc></valItem> -->
 	<valItem ident="mL"><gloss>millilitre</gloss></valItem>
 	<valItem ident="cm"><gloss>centimetre</gloss></valItem>
 	<valItem ident="dB"><gloss>decibel</gloss><desc>see remarks, below</desc></valItem>
@@ -94,6 +89,10 @@ organ equivalent
 	<valItem ident="TiB"><gloss>tebibyte</gloss><desc>2&#x2074;&#x2070; bytes</desc></valItem>
       </valList>
       <remarks>
+	<p>If the measurement being represented is not expressed in a
+	particular unit, but rather is a number of discrete items, the
+	unit <val>count</val> should be used, or the <att>unit</att>
+	attribute may be left unspecified.</p>	
 	<p>These Guidelines recommend that the symbol
 	<mentioned>B</mentioned> be used to indicate a bel only when
 	prefixed by a symbol indicating a factor less than one; and
@@ -104,10 +103,6 @@ organ equivalent
 	indicating a facter greater than one, the entire unit should
 	be spelled out, as in <val>kbel</val> (10,000 decibels) or
 	<val>Mbel</val> (10&#x2077; decibels).</p>
-	<p>If the measurement being represented is not expressed in a
-	particular unit, but rather is a number of discrete items, the
-	unit <val>count</val> should be used, or the <att>unit</att>
-	attribute may be left unspecified.</p>	
       </remarks>
     </attDef>
     <attDef ident="quantity" usage="opt">
@@ -122,14 +117,29 @@ organ equivalent
       <equiv/>
       <desc>indicates the substance that is being measured</desc>
       <datatype>
-	<rng:ref name="data.word"/>
+	<rng:ref name="data.words"/>
       </datatype>
-      <remarks/>
+      <remarks>
+	<p>In general, when the commodity is made of discrete
+	entities, the plural form should be used, even when the
+	measurement is of only one of them.</p>
+      </remarks>
     </attDef>
   </attList>
-  <exemplum>
-    <egXML  xmlns="http://www.tei-c.org/ns/Examples">
-      <measure unit="hogshead" quantity="12" commodity="rum">doz. hh rum</measure>
+  <remarks>
+    <p>This attribute class provides a triplet of attributes that may
+    be used either to regularize the values of the measurement being
+    encoded, or to normalize them with respect to a standard
+    measurement system.
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+<!-- regularization: -->
+<l>So weren't you gonna buy <measure quantity="0.5" unit="gal" commodity="ice cream">half a gallon</measure>, baby</l>
+<!-- normalization: -->
+<l>So won't you go and buy <measure quantity="1.893" unit="L" commodity="ice cream">half a gallon</measure>, baby?</l>
     </egXML>
-  </exemplum>
+    <?tei winita need better examples.?>
+    <!-- 1st is from several places, including http://www.azlyrics.com/lyrics/weirdalyankovic/iloverockyroad.html-->
+    <!-- 2nd is from http://www.lyricsdownload.com/weird-al-yankovic-1985-food-medley08i-love-rocky-road-lyrics.html -->
+    </p>
+  </remarks>
 </classSpec>
