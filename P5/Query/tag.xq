@@ -14,6 +14,13 @@ declare namespace html="http://www.w3.org/1999/xhtml";
 </p>
 <p>
 {
+let $ename := request:request-parameter("name", "")
+for $c in collection("/db/TEI")//i18n/element[@ident=$ename]
+return $c
+}
+</p>
+<p>
+{
 let $name := request:request-parameter("name", "")
 for $c in collection("/db/TEI")//(tei:elementSpec|tei:classSpec|tei:macroSpec)[@ident=$name]
 return $c
