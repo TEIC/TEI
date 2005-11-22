@@ -20,30 +20,103 @@ $Author$
 	</rng:choice>
       </rng:zeroOrMore>
       <rng:choice>
-	<rng:group>
-	  <rng:oneOrMore>
-	    <rng:group>      <!-- this <group> exists just so odd2dtd can get parens in right place  -->
-	      <rng:ref name="macro.component"/>
-	    </rng:group>
-	    <rng:zeroOrMore>
-	      <rng:ref name="model.global"/>
-	    </rng:zeroOrMore>
-	  </rng:oneOrMore>
-	  <rng:optional>
-	    <rng:ref name="macro.bodyPart.main"/>
-	  </rng:optional>
-	</rng:group>
-	<rng:group>      <!-- this <group> exists just so odd2dtd can get parens in right place  -->
-	  <rng:ref name="macro.bodyPart.main"/>
+        <rng:group>
+          <rng:oneOrMore>
+<?teidtd (?>
+            <rng:ref name="macro.component"/>
+<?teidtd )?>
+            <rng:zeroOrMore>
+              <rng:ref name="model.global"/>
+            </rng:zeroOrMore>
+          </rng:oneOrMore>
+
+          <rng:group>
+            <rng:zeroOrMore>
+              <rng:ref name="divGen"/>
+              <rng:zeroOrMore>
+                <rng:ref name="model.global"/>
+              </rng:zeroOrMore>
+            </rng:zeroOrMore>
+            <rng:optional>
+              <rng:choice>
+                <rng:group>
+                  <rng:ref name="div"/>
+                  <rng:zeroOrMore>
+                    <rng:choice>
+                      <rng:ref name="div"/>
+                      <rng:ref name="divGen"/>
+                      <rng:ref name="model.global"/>
+                    </rng:choice>
+                  </rng:zeroOrMore>
+                </rng:group>
+                <rng:group>
+                  <rng:ref name="div0"/>
+                  <rng:zeroOrMore>
+                    <rng:choice>
+                      <rng:ref name="div0"/>
+                      <rng:ref name="divGen"/>
+                      <rng:ref name="model.global"/>
+                    </rng:choice>
+                  </rng:zeroOrMore>
+                </rng:group>
+                <rng:group>
+                  <rng:ref name="div1"/>
+                  <rng:zeroOrMore>
+                    <rng:choice>
+                      <rng:ref name="div1"/>
+                      <rng:ref name="divGen"/>
+                      <rng:ref name="model.global"/>
+                    </rng:choice>
+                  </rng:zeroOrMore>
+                </rng:group>
+              </rng:choice>
+            </rng:optional>
+          </rng:group>
+        </rng:group>
+
+        <rng:group>
+          <rng:zeroOrMore>
+            <rng:ref name="divGen"/>
+            <rng:zeroOrMore>
+              <rng:ref name="model.global"/>
+            </rng:zeroOrMore>
+          </rng:zeroOrMore>
+          <rng:choice>
+            <rng:group>
+              <rng:ref name="div"/>
+              <rng:zeroOrMore>
+                <rng:choice>
+                  <rng:ref name="div"/>
+                  <rng:ref name="divGen"/>
+                  <rng:ref name="model.global"/>
+                </rng:choice>
+              </rng:zeroOrMore>
+            </rng:group>
+            <rng:group>
+              <rng:ref name="div0"/>
+              <rng:zeroOrMore>
+                <rng:choice>
+                  <rng:ref name="div0"/>
+                  <rng:ref name="divGen"/>
+                  <rng:ref name="model.global"/>
+                </rng:choice>
+              </rng:zeroOrMore>
+            </rng:group>
+            <rng:group>
+              <rng:ref name="div1"/>
+              <rng:zeroOrMore>
+                <rng:choice>
+                  <rng:ref name="div1"/>
+                  <rng:ref name="divGen"/>
+                  <rng:ref name="model.global"/>
+                </rng:choice>
+              </rng:zeroOrMore>
+            </rng:group>
+          </rng:choice>
 	</rng:group>
       </rng:choice>
       <rng:zeroOrMore>
-	<rng:group>      <!-- this <group> exists just so odd2dtd can get parens in right place  -->
-	  <rng:ref name="model.divWrapper.bottom"/>
-	</rng:group>
-	<rng:zeroOrMore>
-	  <rng:ref name="model.global"/>
-	</rng:zeroOrMore>
+	<rng:ref name="model.divWrapper.bottom"/>
       </rng:zeroOrMore>
     </rng:group>
   </content>

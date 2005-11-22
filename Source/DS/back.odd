@@ -15,44 +15,43 @@ text.</desc>
   <content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:zeroOrMore>
-        <rng:choice>
-          <rng:ref name="model.frontPart"/>
-          <rng:ref name="model.global"/>
-        </rng:choice>
+	<rng:choice>
+	  <rng:ref name="model.frontPart"/>
+	  <rng:ref name="model.global"/>
+	  <rng:ref name="model.divWrapper"/>
+	</rng:choice>
       </rng:zeroOrMore>
+
       <rng:optional>
-	<rng:ref name="model.divWrapper"/>
+	<rng:choice>
+
+	  <rng:group>
+	    <rng:ref name="div"/>
+	    <rng:zeroOrMore>
+	      <rng:choice>
+		<rng:ref name="div"/>
+		<rng:ref name="model.frontPart"/>
+		<rng:ref name="model.global"/>
+	      </rng:choice>
+	    </rng:zeroOrMore>
+	  </rng:group>
+
+	  <rng:group>
+	    <rng:ref name="div1"/>
+	    <rng:zeroOrMore>
+	      <rng:choice>
+		<rng:ref name="div1"/>
+		<rng:ref name="model.frontPart"/>
+		<rng:ref name="model.global"/>
+	      </rng:choice>
+	    </rng:zeroOrMore>
+	  </rng:group>
+
+	</rng:choice>
       </rng:optional>
-      <rng:choice>
-	<rng:group>
-	  <rng:ref name="div"/>
-	  <rng:zeroOrMore>
-	    <rng:choice>
-	      <rng:ref name="div"/>
-	      <rng:ref name="model.frontPart"/>
-	      <rng:ref name="model.global"/>
-	    </rng:choice>
-	  </rng:zeroOrMore>
-	</rng:group>
-	<rng:group>
-	  <rng:ref name="div1"/>
-	  <rng:zeroOrMore>
-	    <rng:choice>
-	      <rng:ref name="div1"/>
-	      <rng:ref name="model.frontPart"/>
-	      <rng:ref name="model.global"/>
-	    </rng:choice>
-	  </rng:zeroOrMore>
-	</rng:group>
-      </rng:choice>
+
       <rng:zeroOrMore>
-<!--        <rng:choice>
-          <rng:ref name="trailer"/>
-	  <rng:ref name="closer"/
-        </rng:choice>-->
-
-          <rng:ref name="model.divWrapper.bottom"/>
-
+	<rng:ref name="model.divWrapper.bottom"/>
       </rng:zeroOrMore>
     </rng:group>
   </content>

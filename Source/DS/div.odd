@@ -21,42 +21,42 @@ text.</desc>
           <rng:ref name="model.global"/>
         </rng:choice>
       </rng:zeroOrMore>
+
       <rng:choice>
-        <rng:oneOrMore>
-          <rng:choice>
-            <rng:ref name="div"/>
-            <rng:ref name="divGen"/>
-          </rng:choice>
-          <rng:zeroOrMore>
-            <rng:ref name="model.global"/>
-          </rng:zeroOrMore>
-        </rng:oneOrMore>
+
+	<rng:group>
+	  <rng:oneOrMore>
+	    <rng:choice>
+	      <rng:ref name="div"/>
+	      <rng:ref name="divGen"/>
+	    </rng:choice>
+	  </rng:oneOrMore>
+	</rng:group>
+
         <rng:group>
           <rng:oneOrMore>
             <rng:ref name="macro.component"/>
-            <rng:zeroOrMore>
-              <rng:ref name="model.global"/>
-            </rng:zeroOrMore>
+	    <rng:optional>
+	      <rng:ref name="model.global"/>
+	    </rng:optional>
           </rng:oneOrMore>
           <rng:zeroOrMore>
-            <rng:choice>
+	    <rng:choice>
               <rng:ref name="div"/>
               <rng:ref name="divGen"/>
             </rng:choice>
-            <rng:zeroOrMore>
-              <rng:ref name="model.global"/>
-            </rng:zeroOrMore>
-          </rng:zeroOrMore>
+	  </rng:zeroOrMore>
         </rng:group>
+
       </rng:choice>
+      
       <rng:zeroOrMore>
-<?teidtd (?>
-        <rng:ref name="model.divWrapper.bottom"/>
-<?teidtd )?>
-        <rng:zeroOrMore>
-          <rng:ref name="model.global"/>
-        </rng:zeroOrMore>
+	<rng:choice>
+	  <rng:ref name="model.divWrapper"/>
+	  <rng:ref name="model.divWrapper.bottom"/>
+	</rng:choice>
       </rng:zeroOrMore>
+
     </rng:group>
   </content>
   <exemplum>
