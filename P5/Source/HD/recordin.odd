@@ -19,12 +19,7 @@ a public broadcast. </desc>
         <rng:ref name="model.pLike"/>
       </rng:oneOrMore>
       <rng:zeroOrMore>
-        <rng:choice>
-          <rng:ref name="respStmt"/>
-          <rng:ref name="equipment"/>
-          <rng:ref name="broadcast"/>
-          <rng:ref name="date"/>
-        </rng:choice>
+	<rng:ref name="model.recordingPart"/>
       </rng:zeroOrMore>
     </rng:choice>
   </content>
@@ -41,17 +36,17 @@ a public broadcast. </desc>
         </valItem>
         <valItem ident="video">
           <equiv/>
-          <gloss>audio and video recording
-   </gloss>
+          <gloss>audio and video recording</gloss>
         </valItem>
       </valList>
     </attDef>
     <attDef ident="dur" usage="opt">
 	<equiv/>
 	<desc>the original duration of the recording. </desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
-      <valDesc>Include the units, e.g. 30M.
-    </valDesc>
+      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="duration"/></datatype>
+      <valDesc>use the format specified by W3C Schema: PnYnMnDTnHnMnS.
+      E.g., <val>P2H20M</val> for a two hour and twenty minute long
+      recording</valDesc>
     </attDef>
   </attList>
   <exemplum>
