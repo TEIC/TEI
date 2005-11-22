@@ -12,15 +12,21 @@ which an electronic text was derived or generated.</desc>
   <classes>
     <memberOf key="att.declarable"/>
   </classes>
-  <content>
-    <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:choice>
-        <rng:ref name="model.pLike"/>
-        <rng:ref name="model.biblLike"/>
-        <rng:ref name="listBibl"/>
-        <rng:ref name="model.sourceDescPart"/>
-      </rng:choice>
-    </rng:oneOrMore>
+  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:choice>
+      <rng:oneOrMore>
+	<rng:ref name="model.pLike"/>
+      </rng:oneOrMore>
+      <rng:group>
+	<rng:ref name="listBibl"/>
+      </rng:group>
+      <rng:oneOrMore>
+	<rng:choice>
+	  <rng:ref name="model.biblLike"/>
+	  <rng:ref name="model.sourceDescPart"/>
+	</rng:choice>
+      </rng:oneOrMore>
+    </rng:choice>
   </content>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">      <sourceDesc>
