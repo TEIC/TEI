@@ -8,11 +8,13 @@ $Author$
 <equiv/>
 <gloss/>
 <desc xml:id="msidentifier.desc">contains the information required to identify
-a given manuscript or manuscript part uniquely within its holding institution. </desc>
+a given manuscript or manuscript part. </desc>
   <classes>
     <memberOf key="model.biblPart"/>
   </classes>
   <content>
+<rng:group>
+<rng:choice>
 <rng:group>
     <rng:optional>
       <rng:ref name="country"/>
@@ -28,7 +30,11 @@ a given manuscript or manuscript part uniquely within its holding institution. <
     <rng:optional>
       <rng:ref name="collection"/>
     </rng:optional>
-    <rng:ref name="idno"/>
+    <rng:optional><rng:ref name="idno"/></rng:optional>
+</rng:group>
+<rng:ref name="altName"/>
+</rng:choice>
+
     <rng:zeroOrMore>
      <rng:choice>
       <rng:ref name="altIdentifier"/>
