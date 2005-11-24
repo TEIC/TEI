@@ -65,14 +65,16 @@ test-xsd:
 test-xerces:
 	-for i in $(TESTFILES) ;do echo $$i: ; java -cp ~/jar/xercesSamples.jar jaxp.SourceValidator -HS -VA -GA -a $$i.xsd -i $$i.xml; done
 
+
 test-dtd:
 	echo XMLLINT DTD ....
-	-for i in $(TESTFILES); do echo $$i: ; xmllint --dropdtd $$i.xml | xmllint --noout --dtdvalid $$i.dtd -; done
+	-for i in `echo $(TESTFILES) | sed 's/testodds//'`; do echo $$i: ; xmllint --dropdtd $$i.xml | xmllint --noout --dtdvalid $$i.dtd -; done
 
 
+# testall, detest, testp4compat, testodds have no DOCTYPE
 test-dtd-xmllint:
 	echo xmllint DTD ....
-	-for i in $(TESTFILES); do xmllint --noout --valid $$i.xml; done
+	-for i in `echo $(TESTFILES) | sed 's/testi18n//' | sed 's/testodds//' | sed 's/detest//' | sed 's/testall//' | sed 's/testp4compat//'`; do xmllint --noout --valid $$i.xml; done
 
 clean:
 	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do rm -f $$i.doc.xml $$i.rnc $$i.dtd $$i.compiled.* $$i.xsd $$i.rnc $$i.rng;done
