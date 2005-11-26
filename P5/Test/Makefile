@@ -2,7 +2,6 @@ XSL=/usr/share/xml/tei/stylesheet/
 ROMAOPTS=--doc --localsource=../Source-driver.xml
 
 TESTFILES= \
-	detest \
 	testchinese \
 	testcorpus \
 	testdictionaries \
@@ -17,6 +16,9 @@ TESTFILES= \
 	tripReport \
 	testall 
 
+TESTBADFILES= \
+	detest
+
 TESTDOCBOOKFILES= 
 
 #testdocbook1 \
@@ -30,13 +32,15 @@ TESTSPECIALFILES= \
 	testodds \
 	testmathml 
 
-default: schemas test-schema test-dtd test-dtd-xmllint test-xsd
+default: schemas test-schema test-dtd test-dtd-xmllint test-xsd test-bad
 
 all: test-schema test-dtd test-xsd
 
 schemas:
 	for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do \
 		roma $(ROMAOPTS) --xsl=$(XSL)   $$i.odd .; \
+		cp xml.xsd.w3c xml.xsd ; \
+		test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd; \
 	done
 
 test-schema: test-rnv test-jing 
@@ -59,8 +63,8 @@ test-xmllint:
 test-xsd:
 	echo JING XSD
 	-for i in `echo $(TESTFILES) | sed 's/testall//'`;do echo $$i: ; jing $$i.xsd $$i.xml; done
-	echo XSDVALID....
-	-for i in $(TESTFILES) ;do echo $$i: ; xsdvalid -s $$i.xsd $$i.xml; done
+	echo XSDVALID.... except for testall
+	-for i in $(TESTFILES);do echo $$i: ; xsdvalid -s $$i.xsd $$i.xml; done
 
 test-xerces:
 	-for i in $(TESTFILES) ;do echo $$i: ; java -cp ~/jar/xercesSamples.jar jaxp.SourceValidator -HS -VA -GA -a $$i.xsd -i $$i.xml; done
@@ -71,10 +75,20 @@ test-dtd:
 	-for i in `echo $(TESTFILES) | sed 's/testodds//'`; do echo $$i: ; xmllint --dropdtd $$i.xml | xmllint --noout --dtdvalid $$i.dtd -; done
 
 
-# testall, detest, testp4compat, testodds have no DOCTYPE
+# testall, testp4compat, testodds have no DOCTYPE
 test-dtd-xmllint:
 	echo xmllint DTD ....
-	-for i in `echo $(TESTFILES) | sed 's/testi18n//' | sed 's/testodds//' | sed 's/detest//' | sed 's/testall//' | sed 's/testp4compat//'`; do xmllint --noout --valid $$i.xml; done
+	-for i in `echo $(TESTFILES) | sed 's/testi18n//' | sed 's/testodds//'  | sed 's/testall//' | sed 's/testp4compat//'`; do xmllint --noout --valid $$i.xml; done
+
+
+test-bad:
+	echo Now test file with deliberate errors
+	echo JING RelaxNG...
+	-jing -t $(TESTBADFILES).rng $(TESTBADFILES).xml
+	echo RNV....
+	-xx -P $(TESTBADFILES).xml | rnv $(TESTBADFILES).rnc
+	echo JING XSD
+	-jing $(TESTBADFILES).xsd $(TESTBADFILES).xml
 
 clean:
 	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do rm -f $$i.doc.xml $$i.rnc $$i.dtd $$i.compiled.* $$i.xsd $$i.rnc $$i.rng;done
