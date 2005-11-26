@@ -5,16 +5,21 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="IMPRINT" usage="opt" ident="imprint">
-<equiv/>
-<gloss/>
-<desc>groups information relating to the publication or distribution
-of a bibliographic item.</desc>
+  <equiv/>
+  <gloss/>
+  <desc>groups information relating to the publication or distribution
+  of a bibliographic item.</desc>
   <classes/>
   <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
     <rng:oneOrMore>
-<?teidtd (?>
-            <rng:ref name="model.imprintPart"/>
-<?teidtd )?>
+      <rng:choice>
+	<rng:group>  <!--just here to so odd2dtd puts parens into DTD-->
+	  <rng:ref name="model.imprintPart"/>
+	</rng:group>
+	<rng:group>  <!--just here to so odd2dtd puts parens into DTD-->
+	  <rng:ref name="model.dateLike"/>
+	</rng:group>
+      </rng:choice>
       <rng:zeroOrMore>
         <rng:ref name="model.global"/>
       </rng:zeroOrMore>
