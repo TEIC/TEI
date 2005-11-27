@@ -37,7 +37,7 @@ default: schemas test-schema test-dtd test-dtd-xmllint test-xsd test-bad
 all: test-schema test-dtd test-xsd
 
 schemas:
-	for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do \
+	for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES) $(TESTBADFILES); do \
 		roma $(ROMAOPTS) --xsl=$(XSL)   $$i.odd .; \
 		cp xml.xsd.w3c xml.xsd ; \
 		test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd; \
@@ -62,8 +62,8 @@ test-xmllint:
 
 test-xsd:
 	echo JING XSD
-	-for i in `echo $(TESTFILES) | sed 's/testall//'`;do echo $$i: ; jing $$i.xsd $$i.xml; done
-	echo XSDVALID.... except for testall
+	-for i in $(TESTFILES);do echo $$i: ; jing $$i.xsd $$i.xml; done
+	echo XSDVALID
 	-for i in $(TESTFILES);do echo $$i: ; xsdvalid -s $$i.xsd $$i.xml; done
 
 test-xerces:
@@ -71,7 +71,7 @@ test-xerces:
 
 
 test-dtd:
-	echo XMLLINT DTD ....
+	echo XMLLINT DTD ...except testodds ....
 	-for i in `echo $(TESTFILES) | sed 's/testodds//'`; do echo $$i: ; xmllint --dropdtd $$i.xml | xmllint --noout --dtdvalid $$i.dtd -; done
 
 
