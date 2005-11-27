@@ -4,7 +4,9 @@ See the file COPYING for details
 $Date$
 $Author$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="PROVENANCE" ident="provenance">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+module="msdescription" xml:id="PROVENANCE" ident="provenance">
 <equiv/>
 <gloss/>
 <desc xml:id="prov.desc">contains any descriptive or other information
@@ -14,16 +16,12 @@ or manuscript part, after its creation but before its acquisition. </desc>
     <memberOf key="att.datable"/>
   </classes>
   <content>
-<!--<!ELEMENT provenance  - -  (p+)>-->
-    <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:ref name="model.pLike"/>
-    </rng:oneOrMore>
+      <rng:ref name="macro.specialPara"/>
   </content>
   <attList/>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0"><provenance>
-<p>Listed as the property of Lawrence Sterne in 1788.</p></provenance>
-<provenance><p>Sold at Sothebys in 1899.</p></provenance></egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0"><provenance>Listed as the property of Lawrence Sterne in 1788.</provenance>
+<provenance>Sold at Sothebys in 1899.</provenance></egXML>
   </exemplum>
   <listRef>
     <ptr target="#mshy"/>
