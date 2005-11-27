@@ -37,10 +37,12 @@ default: schemas test-schema test-dtd test-dtd-xmllint test-xsd test-bad
 all: test-schema test-dtd test-xsd
 
 schemas:
-	for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES) $(TESTBADFILES); do \
+	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES) $(TESTBADFILES); do \
 		roma $(ROMAOPTS) --xsl=$(XSL)   $$i.odd .; \
 		cp xml.xsd.w3c xml.xsd ; \
 		test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd; \
+		test -f teix.xsd && mv teix.xsd $$i.teix.xsd ; \
+		test -f $$i.teix.xsd && perl -p -i -e "s/teix.xsd/$$i.teix.xsd/" $$i.xsd; \
 	done
 
 test-schema: test-rnv test-jing 
@@ -57,11 +59,11 @@ test-rnv:
 	xmllint --dropdtd testlite.xml | 	rnv testfrag.rnc 
 
 test-xmllint:
-	echo XMLLINT....
+	echo XMLLINT ... for DTD ....
 	for i in $(TESTFILES); do xmllint --dropdtd --noout --relaxng $$i.rng $$i.xml; done
 
 test-xsd:
-	echo JING XSD
+	echo JING .. for XSD....
 	-for i in $(TESTFILES);do echo $$i: ; jing $$i.xsd $$i.xml; done
 	echo XSDVALID
 	-for i in $(TESTFILES);do echo $$i: ; xsdvalid -s $$i.xsd $$i.xml; done
@@ -91,7 +93,7 @@ test-bad:
 	-jing $(TESTBADFILES).xsd $(TESTBADFILES).xml
 
 clean:
-	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do rm -f $$i.doc.xml $$i.rnc $$i.dtd $$i.compiled.* $$i.xsd $$i.rnc $$i.rng;done
+	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do rm -f $$i.doc.xml $$i.rnc $$i.dtd $$i.compiled.* $$i.teix.xsd $$i.xsd $$i.rnc $$i.rng;done
 	-rm -rf LOG *~ *.xsd Schema RomaResults DTD
 	-rm -rf *.doc.*
 
