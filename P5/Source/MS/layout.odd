@@ -4,24 +4,23 @@ See the file COPYING for details
 $Date$
 $Author$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="LAYOUT" ident="layout">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     module="msdescription"
+	     xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:id="LAYOUT" ident="layout">
 <equiv/>
 <gloss/>
 <desc xml:id="layout.desc">describes how text is laid out on the page,
 including information about any ruling, pricking, or other evidence of
 page-preparation techniques.</desc>
   <content>
-<!--<!ELEMENT layout  - -    (p+)>-->
-    <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:ref name="model.pLike"/>
-    </rng:oneOrMore>
+      <rng:ref name="macro.specialPara"/>
   </content>
   <attList>
     <attDef ident="columns">
 	<equiv/>
 	<gloss/>
 	<desc>specifies the number of columns per page</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/></datatype>
+      <datatype><rng:ref  name="data.count"/></datatype>
       <valDesc>either a whole number or the string "NA" (not applicable)</valDesc>
     </attDef>
     <attDef ident="ruledLines">
@@ -51,8 +50,7 @@ page-preparation techniques.</desc>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples"
 	   xmlns:rng="http://relaxng.org/ns/structure/1.0"><layout						       ruledLines="25 32">
-<p>Most pages have between 25 and 32 long lines ruled in lead.</p>
-</layout></egXML>
+Most pages have between 25 and 32 long lines ruled in lead.</layout></egXML>
   </exemplum><exemplum>    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0"><layout columns="2" ruledLines="42">
 <p>2 columns of 42 lines ruled in ink, with central rule 
 between the columns.</p>
