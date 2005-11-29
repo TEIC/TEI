@@ -172,7 +172,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
     <profileDesc>
       <langUsage>
 	<language>
-	  <xsl:attribute name="ident">
+	  <xsl:attribute name="id">
 	    <xsl:value-of
 		select="/office:document/office:meta/dc:language"/>
 	  </xsl:attribute>
@@ -181,7 +181,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
       </langUsage>
       <xsl:if test="/office:document/office:meta/meta:keyword">
 	<textClass>
-	  <keywords scheme="http://openoffice.org/2004/writer">
+	  <keywords>
 	    <list>
 	      <xsl:for-each select="/office:document/office:meta/meta:keyword">
 		<item>
@@ -207,7 +207,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
 
 
   
-<xsl:template match="office:body">
+<xsl:template match="/office:document/office:body">
   <text>
     <xsl:apply-templates/>
   </text>
@@ -407,7 +407,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
 <xsl:template match="text:p">
     <xsl:choose>
       <xsl:when test="parent::text:list-item">
-        <xsl:apply-templates/>
+	<xsl:call-template name="applyStyle"/>
       </xsl:when>
       <xsl:when test="@text:style-name='Table'"/>
       <xsl:when test="normalize-space(.)=''"/>
@@ -429,7 +429,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
 </xsl:template>
 
 <xsl:template match="text:unordered-list">
-  <list type="ounrdered">
+  <list type="unordered">
     <xsl:apply-templates/>
   </list>
 </xsl:template>
@@ -761,7 +761,7 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
 </xsl:template>
 
 <xsl:template match="table:table-cell/text:p">
-  <xsl:apply-templates/>
+  <xsl:call-template name="applyStyle"/>
 </xsl:template>
 
 <xsl:template match="table:table-cell">
@@ -812,36 +812,64 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
     <xsl:choose>
       <xsl:when test="parent::text:p[@text:style-name='Mediaobject']">
         <figure>
+	  <xsl:call-template name="findGraphic"/>
           <head>
             <xsl:value-of select="."/>
           </head>
-	  <graphic  url="{@xlink:href}" />
         </figure>
       </xsl:when>
       <xsl:otherwise>
-        <graphic url="{@xlink:href}" />
+	<figure>
+	  <xsl:call-template name="findGraphic"/>
+	</figure>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
+<xsl:template name="findGraphic">
+  <xsl:choose>
+    <xsl:when test="office:binary-data">
+      <binaryObject mimeType="image/jpg">
+	<xsl:value-of select="."/>
+      </binaryObject>
+    </xsl:when>
+    <xsl:when test="@xlink:href">
+      <xsl:attribute name="url">
+	<xsl:value-of select="@xlink:href" />
+      </xsl:attribute>
+    </xsl:when>
+  </xsl:choose>
+</xsl:template>
 <!-- linking -->
 <xsl:template match="text:a">
-    <xsl:choose>
-      <xsl:when test="contains(@xlink:href,'://')">
-        <xsl:choose>
-          <xsl:when test=".=@xlink:href">
-            <xptr url="{@xlink:href}"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xref url="{@xlink:href}">
-	      <xsl:apply-templates/>
-            </xref>        
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:when>
-      <xsl:when test="not(contains(@xlink:href,'#'))">
-        <ref target="{@xlink:href}">
-          <xsl:apply-templates/>
+  <xsl:choose>
+    <xsl:when test="starts-with(@xlink:href,'mailto:')">
+      <xsl:choose>
+	<xsl:when test=".=@xlink:href">
+	  <xptr url="{substring-after(@xlink:href,'mailto:')}"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xref url="{@xlink:href}">
+	    <xsl:apply-templates/>
+	  </xref>        
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:when>
+    <xsl:when test="contains(@xlink:href,'://')">
+      <xsl:choose>
+	<xsl:when test=".=@xlink:href">
+	  <xptr url="{@xlink:href}"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xref url="{@xlink:href}">
+	    <xsl:apply-templates/>
+	  </xref>        
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:when>
+    <xsl:when test="not(contains(@xlink:href,'#'))">
+      <ref target="{@xlink:href}">
+	<xsl:apply-templates/>
         </ref>
       </xsl:when>
       <xsl:otherwise>
@@ -867,8 +895,8 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
   </xsl:if>
 </xsl:template>
   
-<xsl:template match="text:tab-stop">
-  <xsl:text disable-output-escaping="yes">	</xsl:text>
+<xsl:template match="text:tab">
+  <xsl:text>	</xsl:text>
 </xsl:template>
   
 <xsl:template match="text:reference-ref">

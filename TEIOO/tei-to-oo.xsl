@@ -94,7 +94,9 @@
 	  <xsl:copy-of select="document('styles.xml')/office:document-styles"/>
       -->
       <office:body>
+	<office:text>
 	<xsl:apply-templates select="(.//TEI.2|text|div)[1]"/>
+	</office:text>
       </office:body>
     </office:document>
   </xsl:template>
