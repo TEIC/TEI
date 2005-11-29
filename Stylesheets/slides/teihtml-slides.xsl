@@ -10,7 +10,7 @@
 
 <xsl:import href="../xhtml/tei.xsl"/>
 
-<xsl:import href="slides-common.xsl"/>
+<xsl:import href="../common/verbatim.xsl"/>
 
 <xsl:strip-space elements="teix:* rng:* xsl:*"/>
 
@@ -47,26 +47,26 @@
 <xsl:param name="outputSuffix" >.xhtml</xsl:param>
 <xsl:param name="doctypePublic" >-//W3C//DTD XHTML 1.1//EN</xsl:param>
 <xsl:param name="doctypeSystem">http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd</xsl:param>
+<xsl:param name="cssFile">http://www.tei-c.org/stylesheet/teislides.css</xsl:param>
+<xsl:param name="logoFile">logo.png</xsl:param>
+<xsl:param name="logoWidth">60</xsl:param>
+<xsl:param name="logoHeight">60</xsl:param>
 <xsl:param name="startRed">&lt;span style="color:red"&gt;</xsl:param>
 <xsl:param name="startBold">&lt;span class="element"&gt;</xsl:param>
 <xsl:param name="endBold">&lt;/span&gt;</xsl:param>
 <xsl:param name="startItalic">&lt;span class="attribute"&gt;</xsl:param>
 <xsl:param name="endItalic">&lt;/span&gt;</xsl:param>
 <xsl:param name="endRed">&lt;/span&gt;</xsl:param>
-<xsl:param name="cssFile">http://www.tei-c.org/stylesheet/teislides.css</xsl:param>
-<xsl:param name="logoFile">logo.png</xsl:param>
-<xsl:param name="logoWidth">60</xsl:param>
-<xsl:param name="logoHeight">60</xsl:param>
 <xsl:param name="spaceCharacter">&#160;</xsl:param>
 <xsl:template name="lineBreak">
   <xsl:param name="id"/>
 <xsl:text>&#10;</xsl:text>
+</xsl:template>
 <!--
 <xsl:text>(</xsl:text>
 <xsl:value-of select="$id"/>
 <xsl:text>)</xsl:text>
 -->
-</xsl:template>
 
 <xsl:param name="numberHeadings"></xsl:param>
 <xsl:param name="splitLevel">0</xsl:param>

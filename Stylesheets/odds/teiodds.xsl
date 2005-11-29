@@ -16,6 +16,7 @@
     extension-element-prefixes="edate exsl estr"
     version="1.0">
   
+  <xsl:import href="../common/verbatim.xsl"/>
   <xd:doc type="stylesheet">
     <xd:short>
       TEI stylesheet for processing TEI ODD markup
@@ -44,6 +45,7 @@
   </xd:doc>
   
   <xsl:include href="RngToRnc.xsl"/>
+  
   
   <xsl:output encoding="utf-8" method="xml" indent="yes"/>
   
@@ -118,8 +120,7 @@
 	<xsl:text>&gt;</xsl:text>
 	<xsl:apply-templates mode="literal"/>
 	<xsl:if test="node()[last()]/self::rng:*"> 
-	  <xsl:text>
-	  </xsl:text>
+	  <xsl:text>&#10;</xsl:text>
 	</xsl:if>
 	<xsl:for-each select="ancestor::rng:*">
 	  <xsl:text> </xsl:text>
@@ -793,106 +794,7 @@
   </xsl:template>
   
   
-  <xsl:template match="comment()" mode="verbatim">
-    <xsl:text>&#10;&lt;!--</xsl:text>
-    <xsl:value-of select="."/>
-    <xsl:text>--&gt;&#10;</xsl:text>
-  </xsl:template>
-  
-  <xsl:template name="wraptext">
-    <xsl:param name="indent"/>
-    <xsl:param name="text"/>
-    <xsl:choose>
-      <xsl:when test="contains($text,'&#10;')">
-	<xsl:value-of select="substring-before($text,'&#10;')"/>
-	<xsl:text>&#10;</xsl:text>
-	<xsl:value-of select="$indent"/>
-	<xsl:call-template name="wraptext">
-	  <xsl:with-param name="indent">
-	    <xsl:value-of select="$indent"/>
-	  </xsl:with-param>
-	  <xsl:with-param name="text">
-	    <xsl:value-of select="substring-after($text,'&#10;')"/>
-	  </xsl:with-param>
-	</xsl:call-template>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:value-of select="$text"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  
-  <xsl:template match="text()" mode="verbatim">
-    <xsl:call-template name="wraptext">
-      <xsl:with-param name="indent">
-	<xsl:for-each select="ancestor::teix:*|ancestor::rng:*">
-	  <xsl:text> </xsl:text>
-	</xsl:for-each>
-      </xsl:with-param>
-      <xsl:with-param name="text">
-	<xsl:value-of select="."/>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  
-  
-  <xsl:template match="teix:*|rng:*|tei:*" mode="verbatim">
-    <xsl:choose>
-      <xsl:when test="preceding-sibling::node()[1]/self::*">
-	<xsl:text>&#10;</xsl:text>
-	<xsl:for-each select="ancestor::teix:*|ancestor::rng:*">
-	  <xsl:text> </xsl:text>
-	</xsl:for-each>
-      </xsl:when>
-      <xsl:when test="not(preceding-sibling::node())">
-	<xsl:text>&#10;</xsl:text>
-	<xsl:for-each select="ancestor::teix:*|ancestor::rng:*">
-	  <xsl:text> </xsl:text>
-	</xsl:for-each>
-      </xsl:when>
-    </xsl:choose>
-    <xsl:text>&lt;</xsl:text>
-    <xsl:value-of select="local-name(.)"/>
-    <xsl:for-each select="@*">
-      <xsl:text> </xsl:text>
-    <xsl:value-of select="local-name(.)"/>="<xsl:value-of select="."/>"</xsl:for-each>
-    <xsl:choose>
-      <xsl:when test="child::node()">
-	<xsl:text>&gt;</xsl:text>
-	<xsl:apply-templates mode="verbatim"/>
-	<xsl:choose>
-	  <xsl:when
-	      test="child::node()[last()]/self::text()[normalize-space(.)='']"> 
-	    <xsl:text>&#10;</xsl:text>
-	    <xsl:for-each select="ancestor::teix:*|ancestor::rng:*">
-	      <xsl:text> </xsl:text>
-	    </xsl:for-each>
-	  </xsl:when>
-	  <xsl:when
-	      test="child::node()[last()]/self::comment()"> 
-	    <xsl:text>&#10;</xsl:text>
-	    <xsl:for-each select="ancestor::teix:*|ancestor::rng:*">
-	      <xsl:text> </xsl:text>
-	    </xsl:for-each>
-	  </xsl:when>
-	  <xsl:when
-	      test="child::node()[last()]/self::*"> 
-	    <xsl:text>&#10;</xsl:text>
-	    <xsl:for-each select="ancestor::teix:*|ancestor::rng:*">
-	      <xsl:text> </xsl:text>
-	    </xsl:for-each>
-	  </xsl:when>
-	</xsl:choose>
-	<xsl:text>&lt;/</xsl:text>
-	<xsl:value-of select="local-name(.)"/>
-	<xsl:text>&gt;</xsl:text>
-      </xsl:when>    
-      <xsl:otherwise>
-	<xsl:text>/&gt;</xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  
+ 
   <xsl:template match="token" mode="commentline">
     <xsl:call-template name="italicize">
       <xsl:with-param name="text">

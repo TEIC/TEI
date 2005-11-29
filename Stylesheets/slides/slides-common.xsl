@@ -105,6 +105,10 @@
   <xsl:for-each select="@*">
     <xsl:text>&#160;</xsl:text>
     <xsl:value-of disable-output-escaping="yes" select="$startItalic"/>
+    <xsl:if
+	test="namespace-uri()='http://relaxng.org/ns/structure/1.0'">
+      <xsl:text>xml:</xsl:text>
+    </xsl:if>
     <xsl:value-of select="local-name(.)"/>
     <xsl:value-of disable-output-escaping="yes" select="$endItalic"/>
     <xsl:text>="</xsl:text>

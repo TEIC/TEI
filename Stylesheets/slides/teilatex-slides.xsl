@@ -76,9 +76,16 @@ select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:authority"/>
   \begin{frame} 
   \frametitle{<xsl:for-each
   select="tei:head"><xsl:apply-templates/></xsl:for-each>}
-  {\Huge…}
+  <xsl:choose>
+    <xsl:when test="tei:*[not(local-name(.)='div1')]">
+      <xsl:apply-templates select="tei:*[not(local-name(.)='div1')]"/>
+    </xsl:when>
+    <xsl:otherwise>
+      {\Huge…}
+    </xsl:otherwise>
+  </xsl:choose>
   \end{frame}
-  <xsl:apply-templates/>
+  <xsl:apply-templates select="tei:div1"/>
 </xsl:template>
 
 <xsl:template match="tei:div|tei:div1">
@@ -86,6 +93,7 @@ select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:authority"/>
 <xsl:when test="@rend='fragile'">[fragile]</xsl:when>
 <xsl:when test=".//tei:eg">[fragile]</xsl:when>
 <xsl:when test=".//tei:Output">[fragile]</xsl:when>
+<xsl:when test=".//tei:Screen">[fragile]</xsl:when>
 </xsl:choose>
 <xsl:text>&#10;</xsl:text>
   \frametitle{<xsl:for-each select="tei:head"><xsl:apply-templates/></xsl:for-each>}

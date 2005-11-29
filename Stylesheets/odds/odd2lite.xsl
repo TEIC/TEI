@@ -44,6 +44,19 @@
     <xd:copyright>2005, TEI Consortium</xd:copyright>
   </xd:doc>
   
+
+<xsl:param name="startRed"></xsl:param>
+<xsl:param name="endRed"></xsl:param>
+<xsl:param name="startBold"></xsl:param>
+<xsl:param name="startItalic"></xsl:param>
+<xsl:param name="endBold"></xsl:param>
+<xsl:param name="endItalic"></xsl:param>
+<xsl:param name="spaceCharacter">&#160;</xsl:param>
+<xsl:template name="lineBreak">
+  <xsl:param name="id"/>
+  <xsl:text>&#10;</xsl:text>
+</xsl:template>
+
   
   <xsl:param name="oddmode">tei</xsl:param>
   <xsl:key name="FILES"   match="tei:moduleSpec[@ident]"   use="@ident"/>
