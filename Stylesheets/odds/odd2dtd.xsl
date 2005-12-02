@@ -1219,9 +1219,7 @@ So, at the first, process the second; at the second, do nothing.
 
 <xsl:template match="tei:attRef" mode="tangle">
   <xsl:text>&#10; %</xsl:text>
-  <xsl:value-of select="@class"/>
-  <xsl:text>.attribute.</xsl:text>
-  <xsl:value-of select="@key"/>
+  <xsl:value-of select="@name"/>
   <xsl:text>;</xsl:text>
 </xsl:template>
 

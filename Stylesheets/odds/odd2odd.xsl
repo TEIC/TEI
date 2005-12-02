@@ -288,8 +288,8 @@ because of the order of declarations
     <xsl:apply-templates select="tei:content" mode="copy"/>
       <attList xmlns="http://www.tei-c.org/ns/1.0">
 	<xsl:call-template name="classAttributes">
-	<xsl:with-param name="I" select="@ident"/>
-	<xsl:with-param name="K" select="'att.global'"/>
+	  <xsl:with-param name="I" select="@ident"/>
+	  <xsl:with-param name="K" select="'att.global'"/>
 	</xsl:call-template>
 	<xsl:for-each select="tei:classes/tei:memberOf"> 
 	  <xsl:variable name="K" select="@key"/>
@@ -755,6 +755,9 @@ so that is only put back in if there is some content
 		  <xsl:with-param name="original" select="$CURRENTCLASS"/>
 		</xsl:call-template>
 	      </xsl:for-each>
+	      <xsl:for-each select="tei:attList/tei:attRef">
+		<xsl:copy-of select="."/>
+	      </xsl:for-each>
 	    </xsl:for-each>
 	    <xsl:for-each select="$CURRENTCLASS">
 	      <xsl:for-each select="tei:attList/tei:attDef">
@@ -842,8 +845,7 @@ so that is only put back in if there is some content
 	      </xsl:call-template>
 	    </xsl:when>
 	    <xsl:otherwise>
-		<tei:attRef class="{$class}"
-			    key="{translate($att,':','')}"/>
+		<tei:attRef name="{$class}.attribute.{translate($att,':','')}"/>
 	    </xsl:otherwise>
 	  </xsl:choose>
 	</xsl:for-each>
