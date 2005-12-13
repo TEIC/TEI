@@ -5,12 +5,13 @@ $Date$
 $Author$
 -->
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="atts" ident="att.editLike">
-<desc>elements which carry attributes describing editorial interventions.</desc>
+<desc>elements which carry attributes describing scholarly
+interventions or interpretations.</desc>
 <attList>
     <attDef ident="cert" usage="opt">
 	<equiv/>
 	<desc>signifies the degree of certainty associated with the
-	intervention in question.</desc>
+	intervention or interpretation.</desc>
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
 <valList>
 <valItem ident="high"><gloss>a high degree of certainty is associated
@@ -23,20 +24,44 @@ appropriateness of the intervention</gloss></valItem>
     <attDef ident="resp" usage="opt">
 	<equiv/>
 	<desc>indicates the  editor or transcriber responsible for the
-	particular intervention recorded by the encoding.</desc>
+	intervention or interpretation.</desc>
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
       <valDesc>A pointer to an element in the document header that is
       associated with a person asserted as responsible for some aspect
       of the text's creation, transcription, editing, or encoding.</valDesc>
-      <exemplum>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
-      </exemplum>
+    </attDef>
+    <attDef ident="evidence" usage="opt">
+	<equiv/>
+	<desc>indicates the nature of the evidence supporting the reliability or
+  accuracy of the intervention or interpretation.</desc>
+	<datatype>
+	  <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+	</datatype>
+      <valList type="open">
+        <valItem ident="internal">
+          <equiv/>
+          <gloss>there is internal evidence to support the intervention.</gloss>
+        </valItem>
+        <valItem ident="external">
+          <equiv/>
+          <gloss>there is internal evidence to support the intervention.</gloss>
+        </valItem>
+        <valItem ident="conjecture">
+          <equiv/>
+          <gloss>the intervention or interpretation has been made by
+	  the editor, cataloguer, or scholar on the basis of their expertise.</gloss>
+        </valItem>
+</valList>
+      <remarks>
+        <p/>
+      </remarks>
     </attDef>
   </attList>
   <remarks>
-    <p>The members of this attribute class are all elements used to
+    <p>The members of this attribute class are typically used to
     represent any kind of editorial intervention in a text, for
-    example any addition, deletion, correction etc.</p> 
+    example a correction or interpretation. It is also used for
+    elements used to date or localize manuscripts etc.</p> 
   </remarks>
   <listRef>
     <ptr target="#ST"/>
