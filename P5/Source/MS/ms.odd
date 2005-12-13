@@ -5,7 +5,7 @@ See the file COPYING for details.
 $Date$
 $Author$
 -->
-<div1 xmlns="http://www.tei-c.org/ns/1.0" n="13" xml:id="MS">
+<div1 xmlns="http://www.tei-c.org/ns/1.0" xml:id="MS">
 <head>Manuscript Description</head>
 <div2 xml:id="msov">
 <head>Overview</head>
@@ -131,7 +131,12 @@ fol. 45 to the end; hand 3 writes only three lines and a few words on fol.
 between them.</p>
 </msDescription> 
 </egXML></p>
-<p>And finally, a more structured description of the same manuscript, using many, but by no means all, of the elements described in the following sections. Note that some slight reordering of the material has been necessary.
+
+<p>And finally, a more structured description of the same manuscript,
+using many, but by no means all, of the elements described in the
+following sections. Note that some slight reordering of the material
+has been necessary.
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <msDescription  xml:id="MSRP149">
 <msIdentifier>
@@ -190,9 +195,9 @@ follows:
 </div2>
 <div2 type="d2" xml:id="msphrase">
 <head>Phrase-level elements</head>
-<p>When this module is in use, a number of extra elements are added to
+<p>When the msdescription module is in use, several extra elements are added to
 the phrase level class, and thus become available within paragraphs
-and elsewhere in a document. These elements are listed below in
+and elsewhere in the document. These elements are listed below in
 alphabetical order:
 <specList>
 <specDesc key="catchwords"/>
@@ -217,7 +222,7 @@ module in one's schema.</p>
 <p>The following elements may be used to provide information about the
 origins of any aspect of a manuscript:
 <specList><specDesc key="origDate"/>
-<specDesc key="origPlace" atts="placeAttrib evidence"/>
+<specDesc key="origPlace"/>
 </specList></p>
 <p>The <gi>origDate</gi> and <gi>origPlace</gi> elements are
 specialized forms of the existing <gi>date</gi> and <gi>name</gi>
@@ -228,22 +233,15 @@ discussed in section <ptr target="#mshy"/>. <gi>origDate</gi> and
 <gi>origPlace</gi> can also be used to identify the place or date of
 origin of any aspect of the manuscript, such as its decoration or
 binding, when these are not of the same date as the manuscript
-itself. The <gi>origDate</gi> element is a member of the
+itself. Both these elements are members of the
+<ident>att.editLike</ident> class, from which they inherit the
+following attributes:
+<specList><specDesc key="att.editLike"/></specList></p>
+<p>The <gi>origDate</gi> element is a member of the
 <ident>att.datable</ident> class, and may thus also carry the following
 attributes:
 <specList><specDesc key="att.datable"/></specList></p>
-<p>As a specialization of the <gi>name</gi> element, the
-<gi>origPlace</gi> element has a <att>reg</att> attribute which can be
-used to supply a regularized form of the place name. Alternatively,
-the <att>key</att> attribute can be used to provide an identifying
-code or key for the name. <!--In addition, <gi>origPlace</gi> has three
-attributes analogous to those available on <gi>origDate</gi>, to
-indicate how a manuscript's place of origin has been ascertained, on
-what basis and with what level of certainty.
--->
-<!-- <specList><specDesc key="tei.placeable"/></specList> (placeAttrib, with possible values localized, localizable and unknown, evidence with the values internal, external and attributed, and certainty, with values high, medium, low)-->
-<!-- should be done by membership in intervention class -->
-</p>
+
 </div3>
 <div3 xml:id="msmat" type="d3">
 <head>Material</head>
@@ -260,7 +258,7 @@ the encoder occurs, as in the following example:
 <p>Brown <material>calfskin</material>, previously with two clasps.</p>
 </binding>
 </egXML>
-<!-- shouldn't there be a specDesc for material? --><!-- there is now -->
+
 </p>
 </div3>
 <div3 xml:id="msdim" type="d3">
@@ -403,30 +401,45 @@ to Hoccleve in the document (however spelled), but there will only be
 one <gi>person</gi> element with this identifier.</p>
 <p>All the <gi>person</gi> elements referenced by a particular
 document set should be collected together within a <gi>listPerson</gi>
+<!-- need xref -->
 element, located in the TEI Header. This functions as a kind
 of prosopography for all the people referenced by the set of
 manuscripts being described, in much the same way as a
 <gi>listBibl</gi> element in the back matter may be used to hold
 bibliographic information for all the works referenced.</p>
-<p>Similar mechanisms are available for referencing the names of places and organizations.</p>
+<p>Similar mechanisms may be used to create and maintain canonical
+lists of places or organizations, but no specific elements are defined
+for this purpose.</p>
 </div3>
 <div3 xml:id="msmisc">
 <head>Catchwords, signatures, secundo folio</head>
-<p>The <gi>catchwords</gi> element can be used to provide a description of the system of word(s), written in the lower margin of the last leaf verso of a gathering, as a preview of the first word(s) of the first leaf recto of the successive gathering, to ensure correct ordering of the quires, as in the following examples:
+<p>The <gi>catchwords</gi> element is used to describe one method by
+which correct ordering of the quires of a codex is ensured. Typically,
+this takes the form of a word or phrase written in the lower margin of
+the last leaf verso of a gathering, which provides a preview of the
+first recto leaf of the successive gathering. This may be a simple
+phrase such as the following:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><catchwords>Quires signed on the last leaf verso in roman numerals.</catchwords>
+</egXML>
+Alternatively, it may contain more details:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<catchwords>Quires signed on the last leaf verso in roman numerals.</catchwords>
-<catchwords>The only evidence of the use of catchwords is a tiny trace 
-of one on fol. 144v.</catchwords>
 <catchwords>Vertical catchwords in the hand of the scribe placed along 
 the inner bounding line, reading from top to bottom.</catchwords>
 </egXML></p>
-<p><soCalled>Signatures</soCalled> denotes the system of progressive marking of quires and/or of leaves in order to facilitate arrangement during binding. The <gi>signatures</gi> element can be used for either leaf signatures, or a combination of quire and leaf signatures, whether the marking is alphabetic, alphanumeric or some ad hoc system.
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<signatures>Quires 23-32 have no signatures.</signatures>
-<signatures>At the bottom of the first four leaves of quires 1-14 are 
-the remains of a series of quire signatures a-o plus roman figures in 
-a cursive hand of the fourteenth century.</signatures>
-<signatures>Quire and leaf signatures in letters, [b]-v, and roman numerals; 
+<p>The <soCalled>Signatures</soCalled> element is used, in a similar
+way, to describe a similar  system in which quires or leaves are
+marked  progressively  in order to facilitate arrangement during
+binding. For example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><signatures>At the bottom of the first four leaves of quires 1-14 are 
+  the remains of a series of quire signatures a-o plus roman figures in 
+  a cursive hand of the fourteenth century.</signatures>
+</egXML></p>
+<p>The <gi>signatures</gi> element can be used for either leaf
+signatures, or a combination of quire and leaf signatures, whether the
+marking is alphabetic, alphanumeric or some ad hoc system, as in the
+following more complex example:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><signatures>Quire and leaf signatures in letters, [b]-v, and roman numerals; 
 those in quires 10 (1) and 17 (s) in red ink and different from others; 
 every third quire also signed with red crayon in arabic numerals in the 
 centre lower margin of the first leaf recto: "2" for quire 4 (f. 19), 
@@ -434,28 +447,31 @@ centre lower margin of the first leaf recto: "2" for quire 4 (f. 19),
 in a later hand, for quire 13 (f. 89), "6", in a later hand, for quire 
 16 (f. 113).</signatures>
 </egXML></p>
-<p>The <gi>secFol</gi> element (for <soCalled>secundo folio</soCalled>) is used to record the opening word or words of the second leaf of a manuscript; since these words differ from one copy of a text to another, the practice originated in the middle ages of using them when cataloguing a manuscript in order to distinguish individual copies of a work in a way which its opening words could not.
+<p>The <gi>secFol</gi> element (for <soCalled>secundo
+folio</soCalled>) is used to record the opening word or words of the
+second leaf of a manuscript. Since these words differ from one copy of
+a text to another, the practice originated in the middle ages of using
+them when cataloguing a manuscript in order to distinguish individual
+copies of a work in a way which its opening words could not.
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<secFol>(ando-)ssene in una villa</secFol>
+<secFol>(ando-)ssene in una villa</secFol><!-- better example needed -->
 </egXML></p></div3>
 <div3 xml:id="mshera">
-<head>Heraldry</head>
+<head>Heraldry</head><!-- rename as armsDesc? -->
 <p>Descriptions of heraldic arms, supporters, devices, and mottos may
-appear at various points in the description of Western European early
-modern and medieval manuscripts, usually in the context of ownership
+appear at various points in the description of a manuscript, usually in the context of ownership
 information, binding descriptions, or detailed accounts of
-illustrations. If a description contains a detailed account of the
-heraldic components of a manuscript independently considered, this can
-appear as a distinct paragraph within the appropriate section of the
-physical description. Frequently, however, heraldic descriptions will
+illustrations. A full description may also contain a detailed account of the
+heraldic components of a manuscript independently considered. Frequently, however, heraldic descriptions will
 be cited as short phrases within other parts of the record. The phrase
 level element <gi>heraldry</gi> is provided to allow such phrases to
-be marked for further subsequent analysis, as in the following
+be marked for further  analysis, as in the following
 examples:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <p>Ownership stamp (xvii cent.) on i recto with the arms <heraldry>A bull 
 passant within a bordure bezanty, in chief a crescent for difference</heraldry> 
 [Cole], crest, and the legend <q>Cole Deum</q>.</p>
+<!-- ... -->
 <p>A c. 8r fregio su due lati, <heraldry>stemma e imprese medicee</heraldry> 
 racchiudono l'inizio dell'epistolario di Paolino.</p>
 </egXML></p>
@@ -482,11 +498,12 @@ racchiudono l'inizio dell'epistolario di Paolino.</p>
 <div2 xml:id="msid">
 <head>The manuscript identifier</head>
 <p>The <gi>msIdentifier</gi> element is intended to provide an
-unambiguous means of uniquely identifying a particular manuscript, and
-comprises information about its holding institution, the call number,
+unambiguous means of uniquely identifying a particular
+manuscript. This may be done in a structured way, by providing
+ information about the holding institution and the call number,
 shelfmark, or other identifier used to indicate its location within
-that institution, and optionally any other name by which the
-manuscript may commonly be known.
+that institution. Alternatively, or in addition, a manuscript may be
+identified simply by a commonly used name.
 <specList>
 <specDesc key="msIdentifier"/>
 </specList></p>
@@ -515,11 +532,10 @@ constrained rather more tightly than would otherwise be
 possible. Specifically, only one of each of the elements listed above
 may appear within the <gi>msIdentifier</gi> and they must, if present,
 appear in the order given.</p>
-<p>These elements are all also members of the standard TEI attribute class
-<ident>names</ident>, which means that they can all bear attributes such
-as <att>reg</att> to supply a regularized form of a name, or <att>key</att>
-to specify a database or similar unique key for it, as further documented
-in the description of this class.</p>
+<p>These elements are all also members of the  attribute class
+<ident>att.naming</ident>, from which they inherit the following
+attributes:
+<specList><specDesc key="att.naming"/></specList></p>
 <p>The following elements are used within <gi>msIdentifier</gi> to
 provide different ways of identifying the manuscript within its holding institution:
 <specList>
