@@ -436,9 +436,9 @@ where otherwise stated.  For the purposes of analysis of language usage,
 the information specified here should be equally applicable to written
 and spoken texts.</p>
 <p>The element <gi>particDesc</gi> contains one or more
-<gi>person</gi> or <gi>personGrp</gi> elements, followed by an
+<gi>listPerson</gi> or <gi>personGrp</gi> elements, followed by an
 optional <gi>particLinks</gi> element, as described below:
-<specList><specDesc key="person" atts="role sex age"/><specDesc key="personGrp" atts="role sex age size"/><specDesc key="particLinks"/></specList>
+<specList><specDesc key="listPerson"/><specDesc key="person" /><specDesc key="personGrp" atts="role sex age size"/><specDesc key="particLinks"/></specList>
 	</p>
 <p>Both <gi>person</gi> and <gi>personGrp</gi> elements have the same
 substructure.  This may be a prose description, or, more formally, a
@@ -459,7 +459,8 @@ as for text classification (see section <ptr target="#HD55"/>)
 <p>The following elements are the default members of the class
 <ident type="class">model.personParts</ident>:
 <specList>
-<specDesc key="birth" atts="date"/><specDesc key="firstLang"/><specDesc key="langKnown"/><specDesc key="residence"/><specDesc key="education"/><specDesc key="affiliation"/><specDesc key="occupation" atts="scheme code"/><specDesc key="socecStatus" atts="scheme code"/></specList></p>
+<specDesc key="birth" atts="date"/>
+<specDesc key="death" atts="date"/><specDesc key="firstLang"/><specDesc key="langKnown"/><specDesc key="residence"/><specDesc key="education"/><specDesc key="affiliation"/><specDesc key="occupation" atts="scheme code"/><specDesc key="socecStatus" atts="scheme code"/></specList></p>
 <p>For example, an individual might be described informally by the
 following <gi>person</gi> element:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><person sex="2" age="mid">
@@ -553,9 +554,11 @@ P5, P6, and P7.</item></list></p>
 <p>The elements discussed in this section are formally defined as
 follows:
 <specGrp xml:id="DCCAHPA" n="Participants description">
+&listperson.odd;
 &person.odd;
 &persgrp.odd;
 &birth.odd;
+&death.odd;
 &frstlang.odd;
 &langknow.odd;
 &residenc.odd;

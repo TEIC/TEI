@@ -561,8 +561,8 @@ following encodings is therefore feasible:
 <region>California</region>
 <settlement>San Marino</settlement>
 <repository>Huntington Library</repository>
-<collection>Ellesmere</collection>
-<idno>El 26 C 9</idno>
+<collection>El</collection>
+<idno>26 C 9</idno>
 <msName>The Ellesmere Chaucer</msName>
 </msIdentifier>
 </egXML>
@@ -576,28 +576,40 @@ following encodings is therefore feasible:
 <msName>The Ellesmere Chaucer</msName>
 </msIdentifier>
 </egXML></p>
-
-<p>In the above example, the latter would be preferred, since it
-avoids repeating the name
-of the collection, which is implicit in the standard form of the manuscript shelfmark. In many
-cases, however, such as the following example, a collection name is necessary:
-
+<p>In the former example, the preferred form of the identifier can be
+retrieved by prefixing the content of the <gi>idno</gi> element with
+that of the  <gi>collection</gi> element, while in the latter it is
+given explicitly. The advantage of the former is that it it simplifies
+accurate retrieval of all manuscripts from a given collection; the
+disadvantage is that encoded abbreviations of this kind may not be as
+immediately comprehensible. Care should be taken to avoid redundancy:
+for example <egXML xmlns="http://www.tei-c.org/ns/Examples">
+<collection>El</collection>
+<idno>El 26 C 9</idno>
+</egXML> would clearly be inappropriate. Equally clearly, 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<collection>Ellesmere</collection>
+<idno>El 26 C 9</idno>
+</egXML> might be considered helpful in some circumstances (if, for
+example, some of the items in the Ellsemere collection had shelfmarks
+which did not begin <q>El</q>)</p>
+<p>In cases where the shelfmark  contains no information about the
+collection, it may be necessary to provide this explicitly, as in
+the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <msIdentifier>
 <country>USA</country>
 <region>New Jersey</region>
 <settlement>Princeton</settlement>
-<institution>Princeton University</institution>
 <repository>Princeton University Library</repository>
 <collection>Scheide Library</collection>
 <idno>MS 71</idno>
 <msName>Blickling Homiliary</msName>
 </msIdentifier>
 </egXML></p>
-<p>In the previous two examples, <gi>msName</gi> has been used to provide
+<p>In these examples, <gi>msName</gi> has been used to provide
 a common name other than the shelfmark by which a manuscript is
-known. Any number of these elements may be used to supply
-alternative names used for the manuscript, as in the following
+known. Where a manuscript has several such names, more than one of these elements may be used, as in the following
 example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <msIdentifier>
@@ -616,10 +628,10 @@ environments (for example, when compiling a single catalogue from a
 variety of originally different sources), but which may safely be
 ignored in others. --><!-- is this second sentence necessary? --></p>
 <p>In very rare cases a repository may have only one manuscript (or
-only one of any significance), which will have no call number as such
+only one of any significance), which will have no shelfmark as such
 but will be known by a particular name or names. In such
 circumstances, the <gi>idno</gi> element may be omitted, and the
-manuscript identified by  the name or names used for it,  using
+manuscript identified by  the name or names used for it, using
 one or more <gi>msName</gi> elements, as in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <msIdentifier>
@@ -683,19 +695,22 @@ internal administrative purposes, the secondary could be given within
 <altIdentifier type="SC"><idno>2297</idno></altIdentifier>
 </msIdentifier>
 </egXML>
-It might, however, be preferable to include such information within the <gi>adminInfo</gi> element discussed in section <ptr target="#msadad"/> below.</p>
+It might, however, be preferable to include such information within
+the <gi>adminInfo</gi> element discussed in section <ptr
+target="#msadad"/> below.</p>
 
 <p>Cases of such changed or alternative identifiers should be clearly
-distinguished from cases of
-<soCalled>scattered</soCalled> manuscripts, that is to say manuscripts
-which although physically disjoint are nevertheless generally treated as single units. One well-known example is
-the Old Church Slavonic manuscript known as <title>Codex Suprasliensis</title>,
-substantial parts of which are to be found in three separate repositories, in Ljubljana,
-Warsaw, and St. Petersburg. This should be represented using three distinct
-<gi>altIdentifier</gi> elements, using an appropriate value on the type
-attribute to indicate that these three identifiers are not alternate
-ways of referring to the same physical object, but three parts of the
-same entity.
+distinguished from cases of <soCalled>scattered</soCalled>
+manuscripts, that is to say manuscripts which although physically
+disjoint are nevertheless generally treated as single units. One
+well-known example is the Old Church Slavonic manuscript known as
+<title>Codex Suprasliensis</title>, substantial parts of which are to
+be found in three separate repositories, in Ljubljana, Warsaw, and
+St. Petersburg. This should be represented using three distinct
+<gi>altIdentifier</gi> elements, using an appropriate value on the
+type attribute to indicate that these three identifiers are not
+alternate ways of referring to the same physical object, but three
+parts of the same entity.
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <msIdentifier>
@@ -704,6 +719,7 @@ same entity.
     <settlement>Ljubljana</settlement>
     <repository>Narodna in univerzitetna knjiznica</repository>
     <idno>MS Kopitar 2</idno>
+    <note>Contains ff. 10 to 42 only</note>
   </altIdentifier>
   <altIdentifier type="partial">
     <settlement>Warszawa</settlement>
@@ -717,6 +733,7 @@ same entity.
   </altIdentifier>
 </msIdentifier>
 </egXML></p>
+
 <p>As mentioned above, the smallest possible description is one that
 contains only the element <gi>msIdentifier</gi>; internally to that
 element, the three subelements <gi>settlement</gi>,
@@ -742,10 +759,10 @@ e.g. <mentioned>Polychronicon</mentioned>. This will often have been
 enough to identify a manuscript in a small collection because the
 identity of the author is implicit. Where a title does not imply the
 author, and is thus insufficient to identify the main text of a
-manuscript, the author has to be stated explicitly
+manuscript, the author should be stated explicitly
 (e.g. <mentioned>Augustinus, Sermones</mentioned> or <mentioned>Cicero,
 Letters</mentioned>). Many inventories of manuscripts consist of no
-more than this, the author and title, with some form of copy-specific
+more than an author and title, with some form of copy-specific
 identifier, such as a shelfmark or <soCalled>secundo folio</soCalled> reference
 (e.g. <mentioned>Arch. B. 3. 2: Evangelium Matthei cum
 glossa</mentioned>, <mentioned>126. Isidori Originum libri
@@ -758,7 +775,7 @@ element can be used to provide a brief description of this kind.
 </specList>
 In this way the cataloguer or scholar can supply in one place a
 minimum of essential information, such as might be displayed or
-printed as the heading of a full description. , such as the following:
+printed as the heading of a full description. For example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <head>Marsilius de Inghen, Abbreviata phisicorum Aristotelis; Italy, 1463.</head>
 </egXML>
@@ -766,11 +783,14 @@ Any phrase-level elements, such as <gi>title</gi>, <gi>name</gi>,
 <gi>date</gi>, or the specialized elements <gi>origPlace</gi> and
 <gi>origDate</gi>, can also be used within a <gi>head</gi> element,
 but it should be remembered that the <gi>head</gi> element is intended
-principally for that purpose, viz. to contain a heading, and more
+principally to contain a heading. More
 structured information concerning the contents, physical form, or
 history of the manuscript should be given within the specialized
 elements described below, <gi>msContents</gi>, <gi>physDesc</gi>,
-<gi>history</gi>, etc.</p>
+<gi>history</gi>, etc. However, in simple cases, the <gi>p</gi>
+element may also be used to supply an unstructured collection of
+such information, as in the example given above (<ptr target="#msdesc"/>.
+</p>
 </div2>
 <div2 xml:id="msco">
 <head>Intellectual content</head>
@@ -842,20 +862,20 @@ mutilation throughout</note>
 <specList>
 <specDesc key="author"/>
 <specDesc key="respStmt"/>
-<specDesc key="title"/>
+<specDesc key="title" atts="type"/>
 <specDesc key="rubric" />
 <specDesc key="incipit" />
-<specDesc key="msItem" atts="defective"/>
-<specDesc key="msItemStruct" atts="defective"/>
+<specDesc key="q" atts="type"/>
+<specDesc key="msItem" />
+<specDesc key="msItemStruct"/>
 <specDesc key="explicit" />
 <specDesc key="finalRubric"/>
 <specDesc key="colophon"/>
 <specDesc key="decoNote"/>
 <specDesc key="listBibl"/>
-<specDesc key="q"/>
 <specDesc key="bibl"/>
 <specDesc key="filiation"/>
-<specDesc key="note"/>
+<specDesc key="note" atts="type"/>
 <specDesc key="textLang"/>
 </specList></p>
 <p>The difference between <gi>msItem</gi> and <gi>msItemStruct</gi> is
@@ -865,10 +885,11 @@ and repeated as often as necessary. In the latter, however, the
 subelements, if used, must be given in the order specified above; they
 may be repeated, with the exception of <gi>rubric</gi>,
 <gi>incipit</gi>, and <gi>explicit</gi>, each of which can appear only
-once. In neither <gi>msItem</gi> nor <gi>msItemStruct</gi> may any
-untagged running text be included (although <gi>msItem</gi> may, as an
-alternative to more structured mark-up, contain one or more <gi>p</gi>
-elements, into which ordinary prose can be put). <gi>msItem</gi> and
+once. Neither <gi>msItem</gi> nor <gi>msItemStruct</gi> may contain 
+untagged running text, although <gi>msItem</gi> may contain one or
+more <gi>p</gi>
+elements as an unstructured alternative to the possible components
+listed above.  <gi>msItem</gi> and
 <gi>msItemStruct</gi> elements may also nest, where a number of
 separate items in a manuscript are grouped under a single title or
 rubric, as is the case, for example, with a work like <mentioned>The
@@ -1715,7 +1736,7 @@ the same substructure, consisting of one or more paragraphs marked as
 <gi>p</gi> elements. Each of these three elements is also a member of
 the <ident>att.datable</ident> attribute class, and thus also carries the
 following optional attributes:
-<specList><specDesc key="att.datable" atts="notBefore notAfter evidence">
+<specList><specDesc key="att.datable" atts="notBefore notAfter">
  </specDesc></specList></p>
 <p>Information about the origins of the manuscript, its place and date
 of writing, should be given as one or more paragraphs contained by a
@@ -1747,7 +1768,7 @@ his son <name type="person">Roger</name>.</p></acquisition>
 <p>Here is a fuller example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <history>
-<origin notBefore="1225" notAfter="1275" evidence="attributed">
+<origin notBefore="1225" notAfter="1275" >
 <p>Written in Spain or Portugal in the middle of the 13th century 
 (the date 1042, given in a marginal note on f. 97v, cannot be correct.)</p></origin>
 <provenance><p>The Spanish scholar <name type="person">Benito Arias
@@ -2038,8 +2059,8 @@ module</desc>
 </p>
 <p>Here is an overview of the declarations documented by this chapter:
 <specGrp>
-&measured.odd;
-&datable.odd;
+<!-- &measured.odd; -->
+<!--&datable.odd;-->
 <specGrpRef target="#msdesc.def"/>
 <specGrpRef target="#xphrase.def"/>
 <specGrpRef target="#msidentifier.def"/>

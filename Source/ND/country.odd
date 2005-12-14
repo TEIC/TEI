@@ -16,18 +16,30 @@ to the region and smaller than the bloc.</desc>
     <memberOf key="att.naming"/>
     <memberOf key="att.typed"/>
   </classes>
+
   <content>
     <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
   </content>
+
+  <attList>
+    <attDef ident="reg" >
+	<equiv/>
+	<desc>supplies a regularized form of the country name using a
+	name or	code from ISO 3166</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.code"/></datatype>
+      <valDesc>The value used may be either a country name or a short
+      code. Both are defined in ISO 3166-1.</valDesc>
+    </attDef>
+  </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <country n="DK">Denmark</country>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <country reg="DK">Denmark</country>
     </egXML>
   </exemplum>
   <remarks>
-    <p>If attributes are used to identify the country referred to
-(as the <att>n</att> is used above), the values should be
-taken from recognized lists of abbreviations, e.g. ISO 3166. </p>
-  </remarks>
+<p>To represent country names not included in  ISO 3166, the standard
+suggests the use of a number of <soCalled>user assigned code
+elements</soCalled>, such as the  letters AA, QM to QZ, XA to XZ, and
+ZZ, or the numbers 900 to 999.</p> </remarks>
   <listRef>
     <ptr target="#NDPLAC"/>
   </listRef>
