@@ -534,7 +534,7 @@ may appear within the <gi>msIdentifier</gi> and they must, if present,
 appear in the order given.</p>
 <p>These elements are all also members of the  attribute class
 <ident>att.naming</ident>, from which they inherit the following
-attributes:
+attribute:
 <specList><specDesc key="att.naming"/></specList></p>
 <p>The following elements are used within <gi>msIdentifier</gi> to
 provide different ways of identifying the manuscript within its holding institution:
@@ -542,7 +542,7 @@ provide different ways of identifying the manuscript within its holding institut
 <specDesc key="collection"/>
 <specDesc key="idno"/>
 <specDesc key="altIdentifier"/>
-<specDesc key="altName"/>
+<specDesc key="msName"/>
 </specList></p>
 <p>Major manuscript repositories will usually have a preferred
 form of citation for manuscript shelfmarks, including rules
@@ -550,22 +550,22 @@ about punctuation, spacing, abbreviation, etc., which should be
 adhered to. Where such a format also contains information which might
 additionally be supplied as a distinct subcomponent of the
 <gi>msIdentifier</gi>, for example a collection name,
-it must be decided whether or not to include this information
-in both locations. For example,
+a decision must be taken as to whether to use the more specific
+element, or to include within the <gi>idno</gi> element. For
+example, the manuscript formally identified as <q>El 26 C 0</q> forms
+a part of the Ellesmere (<q>El</q>) collection. Either of the
+following encodings is therefore feasible:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<collection>fr.</collection><idno>2810</idno>
+<msIdentifier>
+<country>USA</country>
+<region>California</region>
+<settlement>San Marino</settlement>
+<repository>Huntington Library</repository>
+<collection>Ellesmere</collection>
+<idno>El 26 C 9</idno>
+<msName>The Ellesmere Chaucer</msName>
+</msIdentifier>
 </egXML>
-may be considered as gratuitous or extraneous markup by cataloguers at the Biblioth&#xE8;que nationale de France, where the concept of
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<idno>fr. 2810</idno>
-</egXML>
-as a unit may be felt to better determine the identity of the
-manuscript in question. Other examples are the Rawlinson collection in
-the Bodleian Library, or the Ellesmere collection in the Huntington
-Library, where separate tagging of <mentioned>Rawlinson</mentioned>
-and <mentioned>Ellesmere</mentioned> as collections would lead users
-to incorrect forms of citation; in the latter case correct markup
-would be:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <msIdentifier>
 <country>USA</country>
@@ -573,13 +573,15 @@ would be:
 <settlement>San Marino</settlement>
 <repository>Huntington Library</repository>
 <idno>El 26 C 9</idno>
-<altName>The Ellesmere Chaucer</altName>
+<msName>The Ellesmere Chaucer</msName>
 </msIdentifier>
 </egXML></p>
-<p>Here the name of the collection is not explicitly tagged, since it is
-implicit in the standard form of the manuscript shelfmark. In many
-cases, however, such as the following example, a collection name is
-useful:
+
+<p>In the above example, the latter would be preferred, since it
+avoids repeating the name
+of the collection, which is implicit in the standard form of the manuscript shelfmark. In many
+cases, however, such as the following example, a collection name is necessary:
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <msIdentifier>
 <country>USA</country>
@@ -589,11 +591,11 @@ useful:
 <repository>Princeton University Library</repository>
 <collection>Scheide Library</collection>
 <idno>MS 71</idno>
-<altName>Blickling Homiliary</altName>
+<msName>Blickling Homiliary</msName>
 </msIdentifier>
 </egXML></p>
-<p>In the previous two examples, <gi>altName</gi> has been used to provide
-a common name, other than the shelfmark, by which a manuscript is
+<p>In the previous two examples, <gi>msName</gi> has been used to provide
+a common name other than the shelfmark by which a manuscript is
 known. Any number of these elements may be used to supply
 alternative names used for the manuscript, as in the following
 example:
@@ -603,8 +605,8 @@ example:
 <settlement>K&#xF8;benhavn</settlement>
 <repository>Det Arnamagn&#xE6;anske Institut</repository>
 <idno>AM 45 fol.</idno>
-<altName xml:lang="la">Codex Frisianus</altName>
-<altName xml:lang="is">Fr&#xED;ssb&#xF3;k</altName>
+<msName xml:lang="la">Codex Frisianus</msName>
+<msName xml:lang="is">Fr&#xED;ssb&#xF3;k</msName>
 </msIdentifier>
 </egXML>
 Here the globally available <att>xml:lang</att> attribute has been
@@ -613,20 +615,19 @@ standard TEI facility, which may be found useful in certain
 environments (for example, when compiling a single catalogue from a
 variety of originally different sources), but which may safely be
 ignored in others. --><!-- is this second sentence necessary? --></p>
-<p>In very rare cases a repository may only have one manuscript (or
+<p>In very rare cases a repository may have only one manuscript (or
 only one of any significance), which will have no call number as such
-but will be known by a particular name or names. In such circumstances
-one may have no choice but to leave the <gi>idno</gi> element empty,
-and provide the name or names by which the manuscript is known using
-<gi>altName</gi>, as in the following example:
+but will be known by a particular name or names. In such
+circumstances, the <gi>idno</gi> element may be omitted, and the
+manuscript identified by  the name or names used for it,  using
+one or more <gi>msName</gi> elements, as in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <msIdentifier>
 <settlement>Rossano</settlement>
 <repository xml:lang="it">Biblioteca arcivescovile</repository>
-<idno></idno>
-<altName xml:lang="la">Codex Rossanensis</altName>
-<altName xml:lang="la">Codex purpureus</altName> 
-<altName xml:lang="en">The Rossano Gospels</altName> 
+<msName xml:lang="la">Codex Rossanensis</msName>
+<msName xml:lang="la">Codex purpureus</msName> 
+<msName xml:lang="en">The Rossano Gospels</msName> 
 </msIdentifier>
 </egXML></p>
 <p>Where manuscripts have moved from one institution to another, or
@@ -679,11 +680,50 @@ internal administrative purposes, the secondary could be given within
 <settlement>Oxford</settlement>
 <repository>Bodleian Library</repository>
 <idno>MS. Bodley 406</idno>
-<altIdentifier type="internal"><idno>S.C. 2297</idno></altIdentifier>
+<altIdentifier type="SC"><idno>2297</idno></altIdentifier>
 </msIdentifier>
 </egXML>
 It might, however, be preferable to include such information within the <gi>adminInfo</gi> element discussed in section <ptr target="#msadad"/> below.</p>
-<p>As mentioned above, the smallest possible description is one that contains only the element <gi>msIdentifier</gi>; internally to that element, the three subelements <gi>settlement</gi>, <gi>repository</gi>, and <gi>idno</gi> are required, since they provide what is, by common consent, the minimum amount of information necessary to identify a manuscript.</p>
+
+<p>Cases of such changed or alternative identifiers should be clearly
+distinguished from cases of
+<soCalled>scattered</soCalled> manuscripts, that is to say manuscripts
+which although physically disjoint are nevertheless generally treated as single units. One well-known example is
+the Old Church Slavonic manuscript known as <title>Codex Suprasliensis</title>,
+substantial parts of which are to be found in three separate repositories, in Ljubljana,
+Warsaw, and St. Petersburg. This should be represented using three distinct
+<gi>altIdentifier</gi> elements, using an appropriate value on the type
+attribute to indicate that these three identifiers are not alternate
+ways of referring to the same physical object, but three parts of the
+same entity.
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<msIdentifier>
+  <msName xml:lang="la">Codex Suprasliensis</msName>
+    <altIdentifier type="partial">
+    <settlement>Ljubljana</settlement>
+    <repository>Narodna in univerzitetna knjiznica</repository>
+    <idno>MS Kopitar 2</idno>
+  </altIdentifier>
+  <altIdentifier type="partial">
+    <settlement>Warszawa</settlement>
+    <repository>Biblioteka Narodowa</repository>
+    <idno>BO 3.201</idno>
+  </altIdentifier>
+  <altIdentifier type="partial">
+    <settlement>Sankt-Peterburg</settlement>
+    <repository>Rossiiskaia natsional'naia biblioteka</repository>
+    <idno>Q.p.I.72</idno>
+  </altIdentifier>
+</msIdentifier>
+</egXML></p>
+<p>As mentioned above, the smallest possible description is one that
+contains only the element <gi>msIdentifier</gi>; internally to that
+element, the three subelements <gi>settlement</gi>,
+<gi>repository</gi>, and <gi>idno</gi> are required, since they
+provide what is, by common consent, the minimum amount of information
+necessary to identify a manuscript.</p>
+
 <p>The <gi>msIdentifier</gi> element and its constituents are formally
 defined as follows:
 <specGrp xml:id="msidentifier.def">
@@ -692,7 +732,7 @@ defined as follows:
 &repository.odd;
 &collection.odd;
 &altidentifier.odd;
-&altname.odd;</specGrp></p>
+&msname.odd;</specGrp></p>
 </div2>
 <div2 xml:id="msdo">
 <head>The manuscript heading</head>
@@ -1959,7 +1999,7 @@ element, as in the following example:
 <settlement>Amiens</settlement>
 <repository>Biblioth&#xE8;que Municipale</repository>
 <idno>MS 3</idno>
-<altName>Maurdramnus Bible</altName>
+<msName>Maurdramnus Bible</msName>
 </msIdentifier>
 <!-- other elements here -->
 <msPart>
