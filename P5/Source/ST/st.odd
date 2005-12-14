@@ -536,7 +536,7 @@ chapters of Part III and Part IV.  See also section <ptr target="#STECAT"/>.
 <p>An additional attribute, <att>TEIform</att>, is also defined
 for every TEI element.  Unlike the other attributes defined for every
 element, <att>TEIform</att> is not defined by class <ident type="class">att.global</ident> because its default value is different in
-every case and must be defined individually for each element.<note place="foot">A dummy element class <ident type="class">tei.att.TEIform</ident> is
+every case and must be defined individually for each element.<note place="foot">A dummy element class <ident type="class">att.TEIform</ident> is
 defined in the reference section, solely for documentary purposes.</note>
 <specList><specDesc key="att.TEIform" atts="TEIform"/></specList>
  </p>
@@ -963,12 +963,12 @@ in Part VII.
 some set of common attributes.  Attribute classes are given 
 names
 beginning <code>att.</code> and are usually adjectival. For example, the members of the class
-<ident type="class">tei.att.naming</ident> are all elements which contain
+<ident type="class">att.naming</ident> are all elements which contain
 proper nouns: e.g.  <gi>name</gi>, <gi>placeName</gi>, or
 <gi>persName</gi>.  All of these elements use the same attributes
 (<att>key</att> and <att>reg</att>) to record information about the
 referent or the regularized form of the proper nouns.  Similarly, the
-members of the <ident type="class">tei.att.pointing</ident> class share a set
+members of the <ident type="class">att.pointing</ident> class share a set
 of attributes useful for managing cross-reference links and other
 pointers.<note place="foot">Because the details of their pointing
 mechanism differ, the members of the <ident
@@ -985,7 +985,7 @@ form their names by taking the name of the class they define
 (including the <code>att.</code> prefix) and
 suffixing the string <mentioned>attributes</mentioned><!--; we refer to these entities as
 <term>a-dot entities.</term>-->
- </p><p>For example, the declaration for the <ident type="class">tei.att.naming</ident>
+ </p><p>For example, the declaration for the <ident type="class">att.naming</ident>
 class includes attribute definitions for its two attributes
 <att>reg</att> and <att>key</att>:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % att.naming.attributes '
@@ -993,7 +993,7 @@ class includes attribute definitions for its two attributes
       reg  CDATA #IMPLIED'> 
 ]]></egXML> 
 Members of the class typically inherit these definitions by referring to
-<ident type="class">tei.att.naming.attributes</ident>:<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % name 'INCLUDE' >
+<ident type="class">att.naming.attributes</ident>:<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % name 'INCLUDE' >
 <!ELEMENT %n.name; %om.RR;  %phrase.seq;> 
 <!ATTLIST %n.name;
       %att.global.attributes;
@@ -1010,51 +1010,53 @@ their own definition.  </p>
 <list type="gloss">
 <label><ident type="class">att.measurement</ident></label>
 <item>provides attributes for describing or regularizing a measurement</item>
-  <label><ident type="class">tei.att.declaring</ident> </label>
+<label><ident type="class">att.measured</ident></label>
+<item>provides attributes for describing a measurement</item>
+  <label><ident type="class">att.declaring</ident> </label>
 <item>elements which have a
 <att>decls</att> attribute for specifying which declarations in the
 header apply to the element, as described in section <ptr target="#CCAS"/>
- </item><label><ident type="class">tei.att.declarable</ident> </label>
+ </item><label><ident type="class">att.declarable</ident> </label>
 <item>header elements containing declarations, which can be pointed at by the <att>decls</att>
 attribute, as described in section <ptr target="#CCAS"/>
- </item><label><ident type="class">tei.att.divLike</ident> </label>
+ </item><label><ident type="class">att.divLike</ident> </label>
 <item>structural elements which
 behave in the same way as divisions, as described in section <ptr target="#DSDIV"/>
- </item><label><ident type="class">tei.att.enjamb</ident> </label>
+ </item><label><ident type="class">att.enjamb</ident> </label>
 <item>elements which carry the
 <att>enjamb</att> attribute for indicating metrical enjambement
- </item><label><ident type="class">tei.att.interpLike</ident> </label>
+ </item><label><ident type="class">att.interpLike</ident> </label>
 <item>elements which contain
 overtly interpretive or extra-textual analysis or commentary on a text
 or some portion of it
- </item><label><ident type="class">tei.att.metrical</ident> </label>
+ </item><label><ident type="class">att.metrical</ident> </label>
 <item>elements which carry
 metrical information (metrical pattern, realization of the pattern,
 rhyme)
- </item><label><ident type="class">tei.att.names</ident> </label>
+ </item><label><ident type="class">att.names</ident> </label>
 <item>elements which contain
 proper nouns and share attributes for identifying their referents and
 regularizing their spelling (section <ptr target="#CONARS"/>)
- </item><label><ident type="class">tei.att.personal</ident> </label>
+ </item><label><ident type="class">att.personal</ident> </label>
 <item>elements which contain
 personal names or parts of them
 </item><!--<label><ident type="class">model.placeNamePart</ident> </label>
 <item>elements which contain
 place names or parts of them
- </item>--><label><ident type="class">tei.att.pointing</ident> </label>
+ </item>--><label><ident type="class">att.pointing</ident> </label>
 <item>elements which point from
 one location in the document to another (section <ptr target="#COXR"/>)
- </item><label><ident type="class">tei.att.segLike</ident> </label>
+ </item><label><ident type="class">att.segLike</ident> </label>
 <item>elements for the systematic
 or arbitrary segmentation of the text
- </item><label><ident type="class">tei.att.datePart</ident> </label>
+ </item><label><ident type="class">att.datePart</ident> </label>
 <item>elements which
 contain temporal expressions
- </item><label><ident type="class">tei.att.timed</ident> </label>
+ </item><label><ident type="class">att.timed</ident> </label>
 <item>elements (in the base tag
 set for spoken texts) which have a duration in time expressible with the
 attributes, as described in section <ptr target="#TSBATI"/>
-</item><label><ident type="class">tei.att.typed</ident> </label>
+</item><label><ident type="class">att.typed</ident> </label>
 <item>elements which carry
 an additional semantic or functional classification
  </item>
@@ -1065,7 +1067,7 @@ content of the element to a point indicated by the spanTo attribute</item>
 </list>
 
  </p>
-<p>All elements are considered members of the class <ident type="class">tei.att.global</ident> and thus include a reference to <ident type="pe">att.global.attributes;</ident> in their attribute definition list
+<p>All elements are considered members of the class <ident type="class">att.global</ident> and thus include a reference to <ident type="pe">att.global.attributes;</ident> in their attribute definition list
 declaration.  Some modules add specialized attributes to the set of
 global attributes; these additions are declared in the
 <soCalled>ent</soCalled> file of each module, using the following
@@ -1102,10 +1104,12 @@ class name.
 &clseg.odd;
 &clsegatts.odd;
 &timed.odd;
-<!-- the following classes are not yet documented -->
+<!-- the following classes are not yet documented here -->
 &spanning.odd;
 &intervention.odd;
 &ascribed.odd;
+&datable.odd;
+&measured.odd;
 </specGrp></p>
 </div3>
 <div3 xml:id="STECCM"><head>Classes Used in Content Models</head>
@@ -1580,10 +1584,9 @@ the text </item>
 <label><ident type="class">model.respLike</ident> </label>
 <item>elements which  indicate intellectual
   responsibility, for example within a bibliographic element</item>
-<label><ident type="class">demographic</ident> </label>
-<item>elements which record
-demographic characteristics of the participants in a text or language
-interaction (used in module for corpora and collections)</item>
+<label><ident type="class">model.persPart</ident> </label>
+<item>elements which describe characteristics of the people referenced by a text, or
+participating in a language interaction</item>
 <label><ident type="class">model.divWrapper.bottom</ident> </label>
 <item>elements which can occur
 as part of the closing material of a text division or body</item>
