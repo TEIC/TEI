@@ -11,6 +11,7 @@ TESTFILES= \
 	testlite \
 	testminimal \
 	testms \
+	testnames \
 	testoucs \
 	testp4compat \
 	tripReport \
