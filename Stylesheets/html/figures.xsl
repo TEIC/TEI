@@ -206,11 +206,7 @@
   </xd:doc>
   <xsl:template match="tei:row">
     <tr>
-      <xsl:if test="@rend and starts-with(@rend,'class:')">
-        <xsl:attribute name="class">
-          <xsl:value-of select="substring-after(@rend,'class:')"/>
-        </xsl:attribute>
-      </xsl:if>
+      <xsl:call-template name="rendToClass"/>
       <xsl:if test="@role">
         <xsl:attribute name="class">
           <xsl:value-of select="@role"/>
@@ -242,11 +238,7 @@
         </p>
       </xsl:if>
       <table>
-        <xsl:if test="@rend">
-          <xsl:attribute name="class">
-            <xsl:value-of select="@rend"/>
-          </xsl:attribute>
-        </xsl:if>
+	<xsl:call-template name="rendToClass"/>
         <xsl:if test="@rend='frame' or @rend='rules'">
           <xsl:attribute name="rules">all</xsl:attribute>
           <xsl:attribute name="border">1</xsl:attribute>
@@ -380,11 +372,7 @@
               <xsl:value-of select="@xml:id"/>
             </xsl:attribute>
           </xsl:if>
-          <xsl:if test="@rend">
-            <xsl:attribute name="class">
-              <xsl:value-of select="@rend"/>
-            </xsl:attribute>
-          </xsl:if>
+	  <xsl:call-template name="rendToClass"/>
           <xsl:if test="@width">
             <xsl:call-template name="setDimension">
               <xsl:with-param name="value">

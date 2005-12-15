@@ -105,9 +105,7 @@
   </xd:doc>
   <xsl:template match="tei:ab">
     <div>
-      <xsl:if test="string-length(@rend) &gt;0">
-	<xsl:attribute name="class"><xsl:value-of select="@rend"/></xsl:attribute>
-      </xsl:if>
+      <xsl:call-template name="rendToClass"/>
       <xsl:apply-templates/>
     </div>
   </xsl:template>
@@ -526,11 +524,7 @@
   </xd:doc>
   <xsl:template match="tei:item">
     <li>
-      <xsl:if test="@rend">
-        <xsl:attribute name="class">
-          <xsl:value-of select="@rend"/>
-        </xsl:attribute>
-      </xsl:if>
+      <xsl:call-template name="rendToClass"/>
       <xsl:if test="@n">
         <xsl:attribute name="value">
           <xsl:value-of select="@n"/>
@@ -738,6 +732,7 @@
       <xsl:when test="@type='catalogue'">
         <p>
           <dl>
+	    <xsl:call-template name="rendToClass"/>
             <xsl:for-each select="tei:item">
               <p/>
               <xsl:apply-templates select="." mode="gloss"/>
@@ -751,6 +746,7 @@
         </xsl:variable>
         <p>
           <table>
+	  <xsl:call-template name="rendToClass"/>
             <tr>
               <td valign="top">
                 <dl>
@@ -768,11 +764,13 @@
       </xsl:when>
       <xsl:when test="@type='gloss'">
           <dl>
+	    <xsl:call-template name="rendToClass"/>
             <xsl:apply-templates mode="gloss" select="tei:item"/>
           </dl>
       </xsl:when>
       <xsl:when test="@type='glosstable' or @type='vallist'">
         <table>
+	  <xsl:call-template name="rendToClass"/>
           <xsl:apply-templates mode="glosstable" select="tei:item"/>
         </table>
       </xsl:when>
@@ -787,18 +785,8 @@
       </xsl:when>
       <xsl:when test="@type='unordered' or @type='simple'">
         <ul>
-          <xsl:choose>
-            <xsl:when test="@rend and starts-with(@rend,'class:')">
-              <xsl:attribute name="class">
-                <xsl:value-of select="substring-after(@rend,'class:')"/>
-              </xsl:attribute>
-            </xsl:when>
-            <xsl:when test="@rend">
-              <xsl:attribute name="class">
-                <xsl:value-of select="@rend"/>
-              </xsl:attribute>
-            </xsl:when>
-          </xsl:choose>
+	  <xsl:call-template name="rendToClass"/>
+	  <xsl:call-template name="rendToClass"/>
           <xsl:apply-templates select="tei:item"/>
         </ul>
       </xsl:when>
@@ -807,40 +795,19 @@
       </xsl:when>
       <xsl:when test="starts-with(@type,'ordered')">
         <ol>
+	  <xsl:call-template name="rendToClass"/>
           <xsl:if test="starts-with(@type,'ordered:')">
             <xsl:attribute name="start">
               <xsl:value-of select="substring-after(@type,':')"/>
             </xsl:attribute>
           </xsl:if>
-          <xsl:choose>
-            <xsl:when test="@rend and starts-with(@rend,'class:')">
-              <xsl:attribute name="class">
-                <xsl:value-of select="substring-after(@rend,'class:')"/>
-              </xsl:attribute>
-            </xsl:when>
-            <xsl:when test="@rend">
-              <xsl:attribute name="class">
-                <xsl:value-of select="@rend"/>
-              </xsl:attribute>
-            </xsl:when>
-          </xsl:choose>
+	  <xsl:call-template name="rendToClass"/>
           <xsl:apply-templates select="tei:item"/>
         </ol>
       </xsl:when>
       <xsl:otherwise>
         <ul>
-          <xsl:choose>
-            <xsl:when test="@rend and starts-with(@rend,'class:')">
-              <xsl:attribute name="class">
-                <xsl:value-of select="substring-after(@rend,'class:')"/>
-              </xsl:attribute>
-            </xsl:when>
-            <xsl:when test="@rend">
-              <xsl:attribute name="class">
-                <xsl:value-of select="@rend"/>
-              </xsl:attribute>
-            </xsl:when>
-          </xsl:choose>
+	  <xsl:call-template name="rendToClass"/>
           <xsl:apply-templates select="tei:item"/>
         </ul>
       </xsl:otherwise>
@@ -1074,18 +1041,7 @@
       </xsl:when>
       <xsl:otherwise>
         <p>
-          <xsl:choose>
-            <xsl:when test="@rend and starts-with(@rend,'class:')">
-              <xsl:attribute name="class">
-                <xsl:value-of select="substring-after(@rend,'class:')"/>
-              </xsl:attribute>
-            </xsl:when>
-            <xsl:when test="@rend">
-              <xsl:attribute name="class">
-                <xsl:value-of select="@rend"/>
-              </xsl:attribute>
-            </xsl:when>
-          </xsl:choose>
+	  <xsl:call-template name="rendToClass"/>
           <xsl:choose>
             <xsl:when test="@xml:id">
               <a name="{@xml:id}"/>
@@ -1886,4 +1842,20 @@ by Nick Nicholas </p>
       </body>
     </html>
   </xsl:template>
+
+  <xsl:template name="rendToClass">
+    <xsl:choose>
+      <xsl:when test="@rend and starts-with(@rend,'class:')">
+	<xsl:attribute name="class">
+	  <xsl:value-of select="substring-after(@rend,'class:')"/>
+	</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="@rend">
+	<xsl:attribute name="class">
+	  <xsl:value-of select="@rend"/>
+	</xsl:attribute>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+
 </xsl:stylesheet>
