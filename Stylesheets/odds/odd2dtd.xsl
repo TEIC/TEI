@@ -791,6 +791,9 @@ So, at the first, process the second; at the second, do nothing.
     <xsl:when test="$parameterize='false'">
       <xsl:call-template name="elementBody"/>
     </xsl:when>
+    <xsl:when test="$TEIC='false'">
+      <xsl:call-template name="elementBody"/>
+    </xsl:when>
     <xsl:otherwise>
       <xsl:text>&#10;&lt;!ENTITY % </xsl:text>
       <xsl:value-of select="@ident"/>

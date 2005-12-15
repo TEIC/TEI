@@ -148,7 +148,7 @@
   	  <xsl:apply-templates mode="tangle"
 			       select="tei:elementSpec|tei:macroSpec|tei:classSpec"/>
 	  <xsl:choose>
-	    <xsl:when test="@start=''"/>
+	    <xsl:when test="@start and @start=''"/>
 	    <xsl:when test="@start and contains(@start,' ')">
 	      <rng:start>
 		<rng:choice>

@@ -232,11 +232,7 @@
       </tei:hi>
     </tei:label>
     <tei:item>
-      <xsl:call-template name="verbatim">
-	<xsl:with-param name="text">
-	  <xsl:apply-templates/>
-	</xsl:with-param>
-      </xsl:call-template>
+      <xsl:apply-templates/>
     </tei:item>
   </xsl:template>
   
