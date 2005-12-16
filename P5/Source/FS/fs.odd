@@ -78,8 +78,8 @@ structure representations) may be embedded directly at any point in an
 XML document, or they may be collected together in special-purpose
 feature or feature-value <term>libraries</term>. The components of
 such libraries may then be referenced from other feature or
-feature-value representations, using the <ident>feats</ident> or
-<ident>fVal</ident> attribute as appropriate. </p>
+feature-value representations, using the <att>feats</att> or
+<att>fVal</att> attribute as appropriate. </p>
 <p>We begin by considering the simple case of a feature structure
 which  contains binary-valued features only. The following three XML elements  are
 needed to  represent such a feature structure: 
@@ -154,7 +154,7 @@ define elements which may be used to represent: <term>symbolic
 values</term>, <term>numeric values</term>, and <term>string
 values</term>. The module defined by this chapter allows for the
 specification of additional datatypes if necessary, by extending the
-underlying class <ident>class.singleValue</ident>. If this is done, it
+underlying class <ident type="class">class.singleVal</ident>. If this is done, it
 is recommended that only the basic W3C datatypes should be used; more
 complex datatyping should be represented as feature structures.
 <specList>
@@ -323,14 +323,14 @@ each one represented as an identifiable <gi>fs</gi> element within a
  </p>
 <p>Once defined, these feature structure values can also be reused.
 Other <gi>f</gi> elements may invoke them by reference, using the
-<ident>fVal</ident> attribute; for example, one might use them in a
-feature value pair such as : <egXML
+<att>fVal</att> attribute; for example, one might use them in a
+feature value pair such as: <egXML
 xmlns="http://www.tei-c.org/ns/Examples"><f name="dental-fricative"
 fVal="#T.DF"/> </egXML> rather than expanding the hierarchy of the
 component phonological features explicitly.  </p>
 <p>Feature structures stored in this way  may also be associated with
 the text which they are intended to annotate, either by a link from the text
-(for example, using the TEI global <ident>ana</ident> attribute), or
+(for example, using the TEI global <att>ana</att> attribute), or
 by means of standoff annotation techniques (for example, using the TEI
 <gi>link</gi> element): see further section <ptr target="#FSLINK"/>
 below.
@@ -349,7 +349,7 @@ discussed in <ptr target="#FSVAR"/> below. </p>
 simplest such complex value is represented by supplying a <gi>fs</gi>
 element as the content of an <gi>f</gi> element, or (equivalently) by
 supplying the identifier of an <gi>fs</gi> element as the value for
-the <ident>fVal</ident> attribute on the <gi>f</gi>
+the <att>fVal</att> attribute on the <gi>f</gi>
 element. Structures may be nested as deeply as appropriate, using this
 mechanism.  For example, an <gi>fs</gi> element may contain or point
 to an <gi>f</gi> element, which may contain or point to an <gi>fs</gi>
@@ -794,7 +794,7 @@ mechanism. </p>
 <p>The <gi>vMerge</gi> element can be used wherever a feature value can
 appear. It contains two or more feature values, all of which are to be
 collected together. The organization of the resulting collection is
-specified by the value of the <ident>org</ident> attribute, which need
+specified by the value of the <att>org</att> attribute, which need
 not necessarily be the same as that of its constituent values if these
 are collections. For example, one can change a list to a set, or vice versa.</p>
 <p>As an example, suppose that we wish to represent the range of
@@ -850,7 +850,7 @@ element is provided for this purpose:
 <specDesc key="default"/>
 </specList>
 </p> 
-<p>The value of an empty <gi>f</gi> element which also lacks a <ident>fVal</ident>
+<p>The value of an empty <gi>f</gi> element which also lacks a <att>fVal</att>
 attribute is understood to be the most general
 case, i.e. any of the available values. Thus, assuming the feature
 system defined above, the following two representations are equivalent. 
@@ -885,7 +885,7 @@ default, then the following two representations are equivalent:
 <p>Text elements can be linked with feature structures using any of
 the linking methods discussed elsewhere in the Guidelines (see for
 example sections <ptr target="#AIATTS"/> and <ptr target="#AILA"/>).
-. In the simplest case, the <ident>ana</ident> attribute may be used
+In the simplest case, the <att>ana</att> attribute may be used
 to point from any element to an annotation of it, as in the following
 example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><s n="00741">

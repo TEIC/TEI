@@ -118,7 +118,7 @@ such as <code>x=y/z</code> will usually cause a fatal error.</p>
 </p>
 <p>If the cited phrase is a mathematical or chemical formula, the more
 specific <gi>formula</gi> element defined by the
-<ident>figures</ident> module (<ptr target="#FTFOR"/>) may be more
+<ident type="module">figures</ident> module (<ptr target="#FTFOR"/>) may be more
 appropriate. </p>
 <p>The <gi>eg</gi> element may be used to enclose any kind of example,
 which will typically be rendered as a distinct block, possibly using
@@ -129,7 +129,7 @@ examples of XML markup, the <gi>egXML</gi> element should be used for
 preference, as further discussed below in <ptr target="#TDeg"/>, since
 the content of this element can be checked for well-formedness. </p>
 <p>These elements are all members of the class
-<ident>model.oddPhr</ident>, which is turn a member of the general
+<ident type="class">model.oddPhr</ident>, which is turn a member of the general
 phrase class. When this module is included in a schema, this class is
 expanded to include these elements, and they are therefore available
 at any point that a phrase level element is available. </p>
@@ -238,7 +238,7 @@ patterns which make up that module, expressed using
 <gi>elementSpec</gi>, <gi>classSpec</gi> or <gi>patternSpec</gi>
 elements as appropriate. (These elements are discussed in section <ptr
 target="#TDcrystals"/> below) Each of those specifications carries a
-<ident>module</ident> attribute, the value of which is
+<att>module</att> attribute, the value of which is
 <code>namesdates</code>. An ODD processor encountering the
 <gi>moduleSpec</gi> element above can thus generate a schema fragment
 for the TEI namesdates module that includes declarations for all the
@@ -488,7 +488,7 @@ references a class by means of its <att>key</att> attribute. Classes
 themselves are defined by the <gi>classSpec</gi> element described in
 section <ptr target="#TDCLA"/> below.</p>
 <p>For example, to show that the element <gi>gi</gi> is a member of the class
-<ident>model.oddPhr</ident>, the  <gi>elementSpec</gi> which documents this
+<ident type="class">model.oddPhr</ident>, the  <gi>elementSpec</gi> which documents this
 element contains the following <gi>classes</gi> element:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><classes>
   <memberOf key="model.oddPhr"/>
@@ -523,8 +523,8 @@ listed above, it may contain the following subcomponents:
 <p>The content of the element <gi>content</gi> may be
 expressed in one of two ways. It may use a schema language of some
 kind, as defined by a pattern called
-<ident>schemapattern</ident>, which is declared in the
-<ident>tagdocs-decl</ident> module, defined by this
+<code>schemapattern</code>, which is declared in the
+<ident type="module">tagdocs-decl</ident> module, defined by this
 chapter. Alternatively, the legal content for an element may be fully
 specified using the <gi>valList</gi> element, described in <ptr target="#TDATT"/> below. </p>
 <p>In the case of the TEI
@@ -658,8 +658,8 @@ headings.</valDesc></egXML>
 <p>As noted above, the <gi>datatype</gi> element also constrains the
 possible values for an attribute. The <gi>valDesc</gi> can be used to
 specify further constraints. For example, to specify that an attribute
-<ident>age</ident> can take positive integer values less than 100, the
-datatype <ident>tei.numeric</ident> might be used in combination with
+<att>age</att> can take positive integer values less than 100, the
+datatype <ident type="datatype">data.numeric</ident> might be used in combination with
 a <gi>valDesc</gi> such as <q>values must be positive integers less
 than 100</q>. </p>
 <p>More usually, however, where constraints on values are explicitly
@@ -767,28 +767,28 @@ concerned. For example, the <gi>elementSpec</gi> for the element
 </classes>
 </egXML>
 which indicates that the <gi>hi</gi> element is a member of the class
-with identifier <ident>model.phrase</ident>. The <gi>classSpec</gi>
+with identifier <ident type="class">model.phrase</ident>. The <gi>classSpec</gi>
 documenting this class is as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><classSpec type="model"  ident="model.hiLike">
   <desc>groups phrase-level elements related to highlighting. </desc>
   <classes><memberOf key="model.phrase"/></classes>
 </classSpec>
 </egXML>
-which indicates that the class <ident>model.hiLike</ident> is actually
-a member (or subclass) of the class <ident>model.phrase</ident>.
+which indicates that the class <ident type="class">model.hiLike</ident> is actually
+a member (or subclass) of the class <ident type="class">model.phrase</ident>.
  </p>
 <p>When a <gi>classSpec</gi> contains an <gi>attList</gi> element, all
 the members of that class inherit the attributes specified by it. For
-example, the class <ident>att.interpLike</ident> defines a small set of
+example, the class <ident type="class">att.interpLike</ident> defines a small set of
 attributes common to all elements which are members of that
 class: those attributes are listed by the <gi>attList</gi> element
 contained by the <gi>classSpec</gi> for
-<ident>att.interpLike</ident>. When processing the documentation
+<ident type="class">att.interpLike</ident>. When processing the documentation
 elements for elements which are members of that class, an ODD
 processor is required to extend the <gi>attList</gi> (or equivalent)
 for such elements to include any attributes defined by the
 <gi>classSpec</gi> elements concerned.  There is a single global
-attribute class, <ident>att.global</ident>.
+attribute class, <ident type="class">att.global</ident>.
 <!-- eh what ? -->
 <!-- Membership of an attribute class can be inherited by any class, but
 model-only classes may not include attribute-only classes amongst their
@@ -835,7 +835,7 @@ is to document an Relax NG pattern for which no SGML equivalent exists.-->
 </div2>
 <div2 xml:id="TDbuild"><head>Building a schema</head>
 <p>The specification elements, and several of their children, are all members of
-the <ident>identifiable</ident> class, from which they inherit the
+the <ident type="class">att.identified</ident> class, from which they inherit the
 following attributes:
 <specList><specDesc key="att.identified"/></specList>
 </p>
@@ -874,7 +874,7 @@ the following example:
 </schemaSpec></egXML>
 A declaration for the element <gi>soundClip</gi>, which is not defined in the TEI
 scheme, will be added to the output schema. This element will also be added to
-the existing TEI class <ident>model.pPart.data</ident>, and will thus be
+the existing TEI class <ident type="class">model.pPart.data</ident>, and will thus be
 avilable in TEI conformant documents.</p>
 <p>A schema might also include re-declarations of existing elements, as
 in the following example:
@@ -889,16 +889,16 @@ in the following example:
 The effect of this is to redefine the content model for the element
 <gi>head</gi> as plain text, by over-riding the <gi>content</gi> child
 of the selected <gi>elementSpec</gi>. The attribute specification
-<ident>mode="change"</ident> has the effect of over-riding only those
+<code>mode="change"</code> has the effect of over-riding only those
 children elements of the <gi>elementSpec</gi> which appear both in the
 original specification and in the new specification supplied above:
 <gi>content</gi> in this example. Note that if the value for
-<ident>mode</ident> were <code>replace</code>, the effect would be to
+<att>mode</att> were <val>replace</val>, the effect would be to
 replace all children elements of the original specification with the 
 the children elements of the new specification, and thus (in this
 example) to delete all of them except <gi>content</gi>. </p>
 <p>A schema may not contain more than two declarations for any given
-component. The value of the <ident>mode</ident> attribute is used to
+component. The value of the <att>mode</att> attribute is used to
 determine exactly how the second declaration (and its constituents)
 should be combined with the first. The
  following table summarizes how a processor should resolve duplicate declarations:
@@ -962,16 +962,21 @@ mode; retain existing (unreplaced) children</cell>
 <altIdent type="FPI">Elements for Tag Set Documentation</altIdent>
 <desc>Documentation of  TEI modules</desc>
 </moduleSpec>
-<p>The elements described in this chapter are all members of one of four 
-classes: <ident>oddDecl</ident>,  <ident>oddRef</ident>,
-<ident>oddPhr</ident>, or <ident>oddPara</ident>. These classes are declared
-along with the other general TEI classes, in the basic structure
-module documented in <ptr target="#ST"/>. </p>
+<p>The elements described in this chapter are all members of one of
+three classes: <ident type="class">model.oddDecl</ident>, <ident
+type="class">model.oddRef</ident>, or <ident
+type="class">model.oddPhr</ident>, with the exceptions of
+<gi>schemaSpec</gi> (a member of <ident type="class">model.divPart</ident>)
+and both <gi>eg</gi> and <gi>egXML</gi> (members of <ident
+type="class">model.common</ident> and <ident
+type="class">model.graphicLike</ident>). All of these classes are
+declared along with the other general TEI classes, in the basic
+structure module documented in <ptr target="#ST"/>. </p>
 <p>In addition, some elements are members of the
-<ident>att.identified</ident> class, which is documented in <ptr target="#TDbuild"/> above, and make use of the
-<ident>schemapattern</ident> pattern, which is documented in <ptr target="#TDTAG"/> above. 
+<ident type="class">att.identified</ident> class, which is documented in <ptr target="#TDbuild"/> above, and make use of the
+<code>schemapattern</code> pattern, which is documented in <ptr target="#TDTAG"/> above. 
 </p>
-<p>The <ident>tagdocs</ident> module consists of the following specification groups:
+<p>The <ident type="module">tagdocs</ident> module consists of the following specification groups:
 <specGrp>
 <specGrpRef target="#TDSG1"/>
 <specGrpRef target="#TDSG2"/>
