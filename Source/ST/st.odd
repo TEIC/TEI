@@ -123,7 +123,7 @@ are applied throughout the TEI scheme for these and other entities.
 Thus, assuming a module named <ident rend="noindex" type="class">tei.xxx</ident>, the following parameter entities may be
 encountered:
 <list type="gloss"><label>TEI.xxx </label>
-<item>used to enable or disable module <ident rend="noindex">xxx</ident>; must have the value <val>INCLUDE</val> (module is enabled) or, by default, <val>IGNORE</val> (module not enabled).
+<item>used to enable or disable module <ident type="module" rend="noindex">xxx</ident>; must have the value <val>INCLUDE</val> (module is enabled) or, by default, <val>IGNORE</val> (module not enabled).
  </item><label>TEI.xxx.ent </label>
 <item>refers to a system file containing any
 parameter entity declarations unique to module <ident rend="noindex" type="class">tei.xxx</ident>.
@@ -560,7 +560,7 @@ instructions ...</p></egXML>
 <!-- Merchant of Venice, I.ii, speech 5 (Portia)              -->
 </p>
   <p>The values of <att>xml:id</att> attributes must be legal
-	<ident>names</ident> with respect to the SGML declaration in
+	<ident type="kw">names</ident> with respect to the SGML declaration in
 	force. For XML documents this means that an <att>xml:id</att> value
 	must begin with a letter (as defined in the World Wide Web
 	Consortium's XML Recommendation) or the underscore charcter
@@ -1833,8 +1833,8 @@ generate schemas, or DTDs which are both SGML and XML compliant.</p>
 Guidelines: <code>- O</code> (i.e., the end-tag may be omitted but not
 the start-tag); and <code>- -</code> (i.e. neither start- nor end-tag
 may be omitted). Two parameter entities are defined, one called
-<ident>om.RO</ident> (<q>omissibility-required-optional</q>), and the
-other called <ident>om.RR</ident>
+<ident type="pe">om.RO</ident> (<q>omissibility-required-optional</q>), and the
+other called <ident type="pe">om.RR</ident>
 (<q>omissibility-required-required</q>). In SGML mode, the value for each of these
 parameter entities is the appropriate indicator. Content models in the
 text of the Guidelines and in generated DTDs always reference the
@@ -1844,7 +1844,7 @@ parameter entities. </p>
 indicators are syntactically invalid. Thus 
 these parameter entities are redefined as the null string, by
 means of a second set of declarations contained within the file
-<ident>keywords.ent</ident> and controlled by a marked section
+<ident type="file">keywords.ent</ident> and controlled by a marked section
 guarded by the <ident type="pe">TEI.XML</ident> parameter entity. 
 If the user declares a parameter
 entity TEI.XML with the value INCLUDE in the DTD subset, then the 
@@ -1957,8 +1957,8 @@ different name, as follows:
 </p>
 
 <p>Attributes such as <att>key</att> of <gi>persName</gi> and other
-members of the <ident>att.naming</ident> class are of type
-<ident>data.key</ident>. They are used to supply am externally-defined
+members of the <ident type="class">att.naming</ident> class are of type
+<ident type="datatype">data.key</ident>. They are used to supply am externally-defined
 identifier, such as a database key or filename. Because such
 identifiers are externally-defined, no constraints are placed on their
 possible values: and any string of Unicode characters may be used. If
@@ -1966,7 +1966,7 @@ constraints on their values are known to the encoder such as the rules
 for constructing a valid database key in a particular system, this may
 be documented within the TEI Header but cannot be enforced.</p>
 
-<p>Attributes of type <ident>data.word</ident>, such as
+<p>Attributes of type <ident type="datatype">data.word</ident>, such as
 <att>age</att> on <gi>person</gi> are used to supply an identifier
 expressed as any kind of single token or word. The TEI places a few
 constraints on the characters which may be used for this purpose:
@@ -1979,7 +1979,7 @@ whitespace name. Legal values include
 wazoo</val>. Attributes of this kind are sometimes used to associate (by
 co-reference) elements of different types.</p>
 
-<p>Attributes of type <ident>data.name</ident> are also words in
+<p>Attributes of type <ident type="datatype">data.name</ident> are also words in
 this sense, but they have the additional constraint that they must be
 legal XML identifiers, as defined by the XML 1.0 specification. As
 such, they may not begin with digits or punctuation characters. Legal
@@ -1989,15 +1989,15 @@ wazoo</val> or <val>1234</val>. Attributes of this kind are typically used to
 represent XML element or attribute names.</p>
 
 <p>Corresponding with these two datatypes, the TEI provides
-<soCalled>list</soCalled> valued datatypes <ident>data.words</ident>
-and <ident>data.names</ident>. These may be used to supply a list of
+<soCalled>list</soCalled> valued datatypes <ident type="datatype">data.words</ident>
+and <ident type="datatype">data.names</ident>. These may be used to supply a list of
 words or names (as
 defined above), each
 being separated by a single space. </p>
 
-<p>Attributes of type <ident>data.enumerated</ident>, such as
+<p>Attributes of type <ident type="datatype">data.enumerated</ident>, such as
 <att>zone</att> on <gi>time</gi> have the same definition as
-<ident>data.word</ident> above, with the added semantics that the word
+<ident type="datatype">data.word</ident> above, with the added semantics that the word
 supplied is taken from a specific list of possibilities. In each case,
 the element or class specification which includes the definition for
 the attribute will also contain a list of possible values, together
@@ -2005,7 +2005,7 @@ with a prose description of their intended significance. This list may
 be open (in which case the list is advisory), or closed (in which
 case, it determines the range of legal values).</p>
 
-<p>Attributes of type <ident>data.code</ident> such as <att>new</att>
+<p>Attributes of type <ident type="datatype">data.code</ident> such as <att>new</att>
 and <att>old</att> on <gi>handShift</gi> are similar in function, in
 that they also supply encoded names for values which are defined in
 more detail elsewhere. In this case, however, the full definition is

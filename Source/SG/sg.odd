@@ -925,11 +925,11 @@ in the document itself.
 <div3 xml:id="SG-ents"><head>Entity declarations</head>
 <p>Like all other declarations, an  entity declaration begins with a
      special keyword, in this case the word
-     <ident>ENTITY</ident>, followed by the name of the entity
+     <ident type="kw">ENTITY</ident>, followed by the name of the entity
      to be declared, and the value to be used when it is referenced in
      the document. For example, the following declaration
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY tei "Text Encoding Initiative">]]></egXML>
-defines an entity whose name is <ident rend="noindex">tei</ident> and
+defines an entity whose name is <ident type="ge" rend="noindex">tei</ident> and
 whose value is the string <code>Text Encoding Initiative</code>. This is an
 instance of an <term>entity declaration</term>, which declares an
 <term>internal entity</term>.  The following declaration, by contrast,
@@ -1009,7 +1009,7 @@ then be used at different sites to supply the appropriate string to be
 substituted for this name, with no need to change the text of the
 document itself.</p>
 <p>In XML documents, two special entities are predefined, with the names
-<ident>amp</ident> and <ident>lt</ident>. These are available  without
+<ident type="ge">amp</ident> and <ident type="ge">lt</ident>. These are available  without
      declaration, so that the ampersand character or less-than sign
 can be represented  in a text without their being confused with the start of
      an entity reference or a tag respectively.</p>
@@ -1079,7 +1079,7 @@ contain text! This is accomplished by including an additional keyword
 in the declaration of such entities, as in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY fig1 SYSTEM "figure1.png" NDATA png>]]></egXML>
  </p>
-<p>The keyword <ident>NDATA</ident> indicates that this external entity is
+<p>The keyword <ident type="kw">NDATA</ident> indicates that this external entity is
 <term>unparsed</term>: it contains non-XML data which an XML parser
 should ignore. It is followed by an additional name (<code>png</code>
 in the example above) which identifies the <term>notation</term> used
@@ -1243,7 +1243,7 @@ references to two parameter entities:
 ]]
 ]]></egXML>
 The exact meaning of this will depend on the values of the parameter
-entities <ident>stanzas</ident> and <ident>couplets</ident> when the
+entities <ident type="pe">stanzas</ident> and <ident type="pe">couplets</ident> when the
 DTD is processed. When parameter entities are used in this way to
 control marked sections in a DTD, the  DTD file must
 contain default declarations for them.  If the user wishes to override
@@ -1272,16 +1272,16 @@ stanzas and the second set of declarations will be ignored:
 ]]
 ]]></egXML>
 This works because, although there are two declarations for the
-parameter entity <ident>couplets</ident>, only the first is
-effective. It declares the parameter entity <ident>couplets</ident> to
+parameter entity <ident type="pe">couplets</ident>, only the first is
+effective. It declares the parameter entity <ident type="pe">couplets</ident> to
 have the value <code>IGNORE</code>, and so the declarations within the
 second conditional marked section are ignored. Suppose however that a
-declaration for <ident>stanzas</ident> giving it the value
+declaration for <ident type="pe">stanzas</ident> giving it the value
 <code>IGNORE</code> were processed before this part of the DTD. In
 that event, only the second declaration for the entity
-<ident>couplets</ident> would be effective, since all the declarations
+<ident type="pe">couplets</ident> would be effective, since all the declarations
 within the conditional marked section governed by
-<ident>stanzas</ident> would be ignored. </p>
+<ident type="pe">stanzas</ident> would be ignored. </p>
 <p>Variations on this technique are used to control how the various
 parts of a TEI DTD are constructed. For example:
 <eg>
@@ -1291,7 +1291,7 @@ parts of a TEI DTD are constructed. For example:
 These declarations have two effects: they activate a section of the
 DTD containing declarations relevant to prose and they add into the
 DTD whatever additional declarations are held in the external file
-<ident>mystuff.dtd</ident>. In the standard DTD files, there is a
+<ident type="file">mystuff.dtd</ident>. In the standard DTD files, there is a
 marked section controlled by the parameter entity <ident type="pe">TEI.prose</ident>, the default value of which is
 <code>IGNORE</code>, and there is also a reference to the parameter
 entity <ident type="pe">extensions</ident>, the default value
@@ -1536,11 +1536,11 @@ customized.
 When, as here, the document type declaration in force includes both
 the contents of the DTD subset, and the contents of some external
 entity (in the case above, whatever file is specified by the
-<code>PUBLIC</code> identifier given, <ident>tei2.dtd</ident> by
+<code>PUBLIC</code> identifier given, <ident type="file">tei2.dtd</ident> by
 default), declarations in the DTD subset are always carried out first.
 As noted above, (<ptr target="#SG-pe"/>), the order is important,
 because in XML only the first declaration of an entity counts.  In the
-above example, therefore, the declaration of the entity <ident type="ent">tla</ident> in the DTD subset takes precedence over any
+above example, therefore, the declaration of the entity <ident type="ge">tla</ident> in the DTD subset takes precedence over any
 declaration of the same entity in the file <ident type="file">tei2.dtd</ident>.  Similarly, the declaration for <ident type="pe">x.phrase</ident> takes precedence over the existing
 declaration for that entity in the TEI dtd. It is perfectly legal for
 entities to be declared more than once; elements, by contrast, may not
