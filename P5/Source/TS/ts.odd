@@ -12,7 +12,7 @@ language annotation since its first publication. It is planned that
 a future revision of these Guidelines will include recommendations in
 these areas, which will in turn imply some revision of the features discussed
 here.</note>
-<p>The base tag set for transcriptions of spoken language described in
+<p>The module described in
 this chapter is intended for use with a wide variety of transcribed
 spoken material.  It should be stressed, however, that the present
 proposals are not intended to support unmodified every variety of
@@ -26,7 +26,7 @@ process of social interaction.
 </p>
 <p>This chapter begins with a discussion of some of the problems
 commonly encountered in transcribing spoken language (section <ptr target="#TSOV"/>).  Section <ptr target="#TSBA"/> describes the basic
-structural elements of this tag set.  Finally, section <ptr target="#TSSA"/> of this chapter reviews further problems specific to the
+structural elements of this module.  Finally, section <ptr target="#TSSA"/> of this chapter reviews further problems specific to the
 encoding of spoken language, demonstrating how mechanisms and elements
 discussed elsewhere in these Guidelines may be applied to them.</p>
 <p>The overall structure of a TEI spoken text is identical to that of
@@ -34,8 +34,8 @@ any other TEI text:  the <gi>TEI</gi> element for a spoken text
 contains a <gi>teiHeader</gi> element, followed by a <gi>text</gi>
 element.  Even texts primarily composed of transcribed speech may also
 include conventional front and back matter, and may even be organized
-into divisions like printed texts. For simplicity's sake, therefore, the
-base tag set for spoken text uses the default text structure, as defined
+into divisions like printed texts. For simplicity's sake, therefore,
+this module uses the default text structure, as defined
 in chapter <ptr target="#DS"/>; this tag set is embedded automatically by
 the spoken base tag set.</p>
 <p>To enable the base tag set for spoken texts, a parameter entity
@@ -52,8 +52,8 @@ This declaration makes available all of the elements and attributes
 discussed in the present chapter, in addition to the core elements
 described in chapter <ptr target="#CO"/>.  If other elements are needed (in
 particular, those needed for synchronization or segmentation),
-additional tag sets may also be enabled in a similar way.</p>
-<p>Two additional classes are defined by this tag set.  Elements which
+additional modules may also be enabled in a similar way.</p>
+<p>Two additional classes are defined by this module.  Elements which
 appear only within transcribed speech constitute the <ident type="class">model.divPart.spoken</ident> element class.  Elements with a
 specificable temporal duration constitute the <ident type="class">att.timed</ident> element class.  These classes are defined
 in the file <ident type="file">spoken.ent</ident> using the
@@ -61,10 +61,10 @@ following parameter entities:
 <moduleSpec xml:id="DTSCLA" type="decls" ident="spoken-decl"><altIdent type="FPI">Class declarations for Transcribed Speech</altIdent><desc>Class declarations for Transcribed Speech</desc></moduleSpec><!--publicID:  -//TEI P5//ENTITIES Element Classes for Transcriptions of Speech//EN-->
 &compspok.odd;
 &tsmix.odd;
-The elements of the base tag set for transcribed speech are declared in
+The elements of this module are declared in
 the file <ident type="file">spoken.dtd</ident>, which is organized as
 follows:
-<moduleSpec xml:id="DTS" ident="spoken"><altIdent type="FPI">Base tag set for Transcribed Speech</altIdent><desc>Transcribed Speech</desc></moduleSpec><!--publicID:  -//TEI P5//ELEMENTS Base Element Set for Transcriptions of Speech//EN-->
+<moduleSpec xml:id="DTS" ident="spoken"><altIdent type="FPI">Transcribed Speech</altIdent><desc>Transcribed Speech</desc></moduleSpec><!--publicID:  -//TEI P5//ELEMENTS Base Element Set for Transcriptions of Speech//EN-->
 <specGrpRef target="#DTSCOMP"/>
 </p> 
 <div2 type="subsection" xml:id="TSOV"><head>General Considerations and Overview</head>
@@ -606,7 +606,7 @@ feature should be provided in the encoding description section of the
 text header (see section <ptr target="#HD5"/>).
  </p></div3>
 <div3 type="subsection" xml:id="TSBAFD"><head>Formal Definition</head>
-<p>The components of the tag set for transcribed speech are formally
+<p>The components of the module for transcribed speech are formally
 defined as follows:
 <specGrp xml:id="DTSCOMP" n="Components of Transcribed Speech">
 &u.odd;
@@ -626,12 +626,10 @@ Guidelines:
 <item>segmentation below the utterance level</item>
 <item>synchronization and overlap</item>
 <item>regularization of orthography</item></list>
-The elements discussed here are not provided by the base tag set for
-spoken texts.  Some of them are included in the core tag set available
-to all TEI documents, but others are contained in the TEI additional
-tag sets for linking and for analysis respectively.  To enable these tag
-sets, the appropriate parameter entities must be declared in the
-document type declaration subset, as described in section <ptr target="#STIN"/>.  For example, if a transcript using the base tag set
+The elements discussed here are not provided by the module for
+spoken texts.  Some of them are included in the core module and others are contained in the 
+modules for linking and for analysis respectively.  To enable these modules, the appropriate parameter entities must be declared in the
+document type declaration subset, as described in section <ptr target="#STIN"/>.  For example, if a transcript using the  module
 defined in this chapter additionally wishes to make use of the
 <gi>timeline</gi> element, then the following declarations would be
 necessary:
@@ -640,7 +638,7 @@ necessary:
       <!ENTITY % TEI.spoken   'INCLUDE'>
       <!ENTITY % TEI.linking  'INCLUDE'>
  ]>]]></egXML>
-If the complex segmentation elements defined in the additional tag set
+If the complex segmentation elements defined in the module
 for analysis were also required, the following declarations would be
 needed:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei2.dtd" [
@@ -706,7 +704,7 @@ to nest within each other.
 <p>Where segments of different kinds are to be distinguished within the
 same stretch of speech, the <att>type</att> attribute may be used, as in
 the following example.  The example also shows the use of a
-user-specified extension to the TEI tag sets, for specifying
+user-specified extension to the TEI modules, for specifying
 paraphasia.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<u who="#T1">
 <seg type="C">I think </seg>
@@ -776,7 +774,7 @@ fact three things which are synchronous:  the end of Jane's utterance,
 Stig's whole utterance, and Lou's kinesic.  To overcome these problems,
 more sophisticated techniques, employing the mechanisms for pointing and
 alignment discussed in detail in section <ptr target="#SASY"/>, are needed.
-If the additional tag set for linking has been enabled (as described in
+If the module for linking has been enabled (as described in
 section <ptr target="#TSSASE"/> above), one way to represent the simple
 example above would be as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u xml:id="utt1" who="#jane">have you read Vanity <anchor synch="#utt2 #k1" xml:id="a1"/> Fair</u>
