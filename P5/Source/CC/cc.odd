@@ -44,9 +44,7 @@ Corpora share a number of characteristics with other types of composite
 texts, including anthologies and collections.  Most notably, different
 components of composite texts may exhibit different structural
 properties (for example, some may be composed of verse, and others of
-prose), thus potentially requiring elements from different TEI bases.
-Composite texts are thus especially likely to require the techniques for
-combining base tag sets described in section <ptr target="#STCO"/>.
+prose), thus potentially requiring elements from different TEI modules.
  </p>
 <p>Aside from these high-level structural differences, and possibly
 differences of scale, the encoding of language corpora and the encoding
@@ -78,7 +76,7 @@ these Guidelines for representing composite texts of different kinds
 (section <ptr target="#CCDEF"/>).  Section <ptr target="#CCAH"/> describes a
 set of additional header elements provided for the documentation of
 contextual information, of importance largely though not exclusively to
-language corpora.  This is the additional tag set for language corpora
+language corpora.  This is the additional module for language corpora
 proper.  Section <ptr target="#CCAS"/> discusses a mechanism by which
 individual parts of the TEI Header may be associated with different
 parts of a TEI-conformant text.  Section <ptr target="#CCAN"/> reviews
@@ -215,13 +213,12 @@ text.  For further discussion, see chapter <ptr target="#DS"/>.
  </p>
 <p>All composite texts share the characteristic that their different
 component texts may be of structurally similar or dissimilar types.  If
-all  component texts may all be encoded using the same base tag set,
+all  component texts may all be encoded using the same  module,
 then no problem arises. If however they require
-different base tag sets, then either the general or the mixed base tag
-set must be used, in addition to all relevant base tag sets. This
-process is described in more detail in section <ptr target="#STCO"/>.
+different modules, then these must be included in the schema. This
+process is described in more detail in section <ptr target="#STMA"/>.
 </p></div2>
-<div2 type="Anthony" xml:id="CCAH"><head>Contextual Information</head>
+<div2 xml:id="CCAH"><head>Contextual Information</head>
 <p>Contextual information is of particular importance for collections
 or corpora composed of samples from a variety of different kinds of
 text. Examples of such contextual information include:  the age, sex
@@ -260,15 +257,15 @@ languages used within it and any descriptive classification system used
 changes made in the electronic text (see section <ptr target="#HD6"/>).</p>
 <p>In addition to the elements defined by chapter <ptr target="#HD"/>,
 several other elements can be used in the TEI header if the additional
-tag set defined by this chapter is invoked.  These additional tags make
+module defined by this chapter is invoked.  These additional tags make
 it possible to characterize the social or other situation within which a
 language interaction takes place or is experienced, the physical setting
 of a language interaction, and the participants in it.  Though this
 information may be relevant to, and provided for, unitary texts as well
 as for collections or corpora, it is more often recorded for the
 components of systematically developed corpora than for isolated texts,
-and thus the additional tag set is referred to as being <q>for language
-corpora</q>.  Included in this tag set are the following elements:
+and thus the additional module is referred to as being <q>for language
+corpora</q>.  Included in this module are the following elements:
 <specList><specDesc key="textDesc"/><specDesc key="particDesc"/><specDesc key="settingDesc"/></specList>
 These elements form an optional extension to the <gi>profileDesc</gi>,
 defined in section <ptr target="#HD4"/> and are further described in the
@@ -279,7 +276,7 @@ remainder of this section. They are formally defined as follows:
 &settdesc.odd;
 <specGrpRef target="#DCCAHTD"/><specGrpRef target="#DCCAHPA"/><specGrpRef target="#DCCAHSE"/>
 	</p>
-<p>The additional tag set for language corpora will be invoked, thus
+<p>The additional module for language corpora will be invoked, thus
 enabling the use of these elements, if a parameter entity called
 <ident type="pe">TEI.corpus</ident> is declared with the value <val>INCLUDE</val>, somewhere within the DTD subset.  If the
 document is structured as a TEI corpus (that is, using the
@@ -493,7 +490,7 @@ description, may be encoded using either the general purpose
 <gi>date</gi>, <gi>name</gi> or <gi>rs</gi> elements discussed in
 section <ptr target="#CONA"/>, or the more specialised and detailed
 elements provided by chapter <ptr target="#ND"/>. In the latter case, the
-additional tag set for names and dates must be enabled together with
+additional module for names and dates must be enabled together with
 that for language corpora.</p>
 <p>An identified character in a drama or a novel might be defined using
 a subset of the same tags as follows:<note place="foot">It is particularly useful to
@@ -627,10 +624,10 @@ way:
    </setting>
 </settingDesc></egXML></p>
 <p>For more detailed encoding of names of persons and places, the
-additional tag set described in chapter <ptr target="#ND"/> may
+additional module described in chapter <ptr target="#ND"/> may
 additionally be used; if used, however, these elements may appear only
 within a <gi>p</gi> element. The above examples assume that only the
-general purpose <gi>name</gi> element supplied in the core tag set is
+general purpose <gi>name</gi> element supplied in the core module is
 available.
 The elements discussed in this section have the following formal
 definitions:
@@ -640,7 +637,7 @@ definitions:
 &activity.odd;
 </specGrp>
 </p></div3></div2>
-<div2 type="Anthony" xml:id="CCAS"><head>Associating Contextual Information with a Text</head>
+<div2 xml:id="CCAS"><head>Associating Contextual Information with a Text</head>
 <p>This section discusses the assocation of the contextual information
 held in the header with the individual elements making up a TEI text or
 corpus.  Contextual information is held in elements of various kinds
@@ -894,7 +891,7 @@ those contained elements which are specified as defaults.</item>
 to all of its descendants.
 	</item></list>
 </p></div3></div2>
-<div2 type="Anthony" xml:id="CCAN"><head>Linguistic Annotation of Corpora</head>
+<div2 xml:id="CCAN"><head>Linguistic Annotation of Corpora</head>
 <p>Language corpora often include analytic encodings or annotations,
 designed to support a variety of different views of language.  The
 present Guidelines do not advocate any particular approach to linguistic
@@ -917,7 +914,7 @@ information about its context (the circumstances of its production, its
 genre or medium).  The structural properties of any TEI-conformant text
 should be represented using the structural elements discussed elsewhere
 in this chapter and in chapters <ptr target="#CO"/>, <ptr target="#DS"/>, and
-the various chapters of Part III (on base tag sets).  The contextual
+the various chapters of Part III (on base modules).  The contextual
 properties of a TEI text are fully documented in the TEI Header, which
 is discussed in chapter <ptr target="#HD"/>, and in section <ptr target="#CCAH"/> of the present chapter.
  </p>
@@ -946,7 +943,7 @@ indicate the fact, as further discussed in section <ptr target="#CCAS"/>.
 practised in corpus linguistics is given in section <ptr target="#AILA"/>.
 </p>
 </div3></div2>
-<div2 type="Anthony" xml:id="CCREC"><head>Recommendations for the Encoding of Large Corpora</head>
+<div2 xml:id="CCREC"><head>Recommendations for the Encoding of Large Corpora</head>
 <p>These Guidelines include proposals for the identification and
 encoding of a far greater variety of textual features and
 characteristics than is likely to be either feasible or desirable in
