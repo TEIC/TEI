@@ -7,21 +7,25 @@ $Author$
 -->
 <div1 xmlns="http://www.tei-c.org/ns/1.0" type="Chapter" xml:id="ST" n="3">
 
-<head>Construction of a TEI schema</head>
+<head>The TEI infrastructure</head>
 
 <p>This chapter describes the infrastructure for the encoding scheme
 defined by these Guidelines.  It introduces the conceptual framework
 within which the following chapters are to be understood, and
 describes the technical means by which that conceptual framework is
-implemented.  It assumes some familiarity with XML and XML schemas;
-see chapter <ptr target="#SG"/>.</p>
+implemented.  It assumes some familiarity with XML and XML schemas
+(see chapter <ptr target="#SG"/>) but is intended to be accessible to
+any user of these Guidelines. </p>
 
 <p>The TEI encoding scheme consists of a number of
-<term>modules</term>, each of which declares particular elements and
-attributes. Part of an element's declaration includes its assignment
-to one or more element <term>classes</term>. Modules, and their
-contents, may be combined more less freely to form a
-<term>schema</term> appropriate to a particular set of requirements.
+<term>modules</term>, each of which declares particular XML elements
+and their attributes. Part of an element's declaration includes its
+assignment to one or more element <term>classes</term>. Modules, and
+their contents, may be combined more less freely to form a
+<term>schema</term> appropriate to a particular set of
+requirements. It is also possible to add new elements to a schema
+which reference existing classes or elements, as it is to remove
+existing elements from a schema.
 	</p>
 
 <p>In principle, a TEI schema may be constructed using any combination
@@ -41,10 +45,7 @@ type="module">text-structure</ident> module defined in chapter <ptr
 target="DS"/> declares basic structural elements needed for the
 encoding of almost any text-like object. Most schemas will therefore
 need to include these four modules, but are free to mix and match them
-with others. It is also possible to exclude or modify particular
-elements within a schema, as further described in chapter <ptr
-target="MD"/>.
-</p>
+with others.</p>
 
 <p>The specification for a TEI schema is itself a TEI document, using
 elements from the module described in chapter <ptr target="TD"/>: we
@@ -72,13 +73,26 @@ anyone planning to take full advantage of the TEI customization
 techniques described in chapter <ptr target="#MD"/>. The declarations
 needed to support these mechanisms are provided by a special purpose
 module called <ident type="module">tei</ident> which is documented in
-the present chapter, in section <ptr target="#STOV"/>.  The
+section <ptr target="#STOV"/>.  </p>
+
+<p>This module provides the following key components of the TEI
+encoding scheme:
+<list>
+<item>declaration for the default root elements <gi>TEI</gi> and
+<gi>TEIcorpus</gi> (section <ptr target="#STroot"/>) </item>
+<item>default declarations for all 
 <term>element classes</term> used to define groups of elements and
-their characteristics are described in section <ptr target="#STEC"
-type="div2"/>.  Both global attributes and element classes are
-implemented using <term>parameter entities</term>; various other uses
-of parameter entities in the TEI DTDs are discussed in section <ptr
-target="#STPE"/>.</p>
+their characteristics (section <ptr target="#STEC"/>)</item>
+<item>definition of all <term>datatypes</term> used to constrain the
+range of legal values for TEI attributes (section <ptr
+target="#DTYPES"/>)</item>
+<item>definition of all <term>macros</term> used to express some
+commonly used content models (section <ptr target="#STmacros"/>)</item>
+<item>various other bits of weirdness needed for DTD generation  (section <ptr
+target="#STPE"/>)</item>
+</list>
+
+</p>
 
 <div2 xml:id="STMA"><head>TEI modules</head>
 
@@ -127,11 +141,12 @@ mechanisms</cell><cell><ptr target="#AI"/></cell></row>
 <row><cell>concurrent-decl</cell><cell>Concurrent Document Type for Page and Line   References</cell><cell><ptr target="#NH"/></cell></row>
 <row><cell>transcr</cell><cell>Transcription of Primary Sources</cell><cell><ptr target="#PH"/></cell></row>
 <row><cell>linking</cell><cell>Linking, Segmentation, and Alignment</cell><cell><ptr target="#SA"/></cell></row>
-<row><cell>linking-decl</cell><cell>Class declarations for Linking,
-Segmentation, and Alignment<ptr target="#SA"/></cell></row>
+<row><cell>linking-decl</cell><cell>Class declarations for Linking, Segmentation, and Alignment</cell><cell><ptr target="#SA"/></cell></row>
 <row><cell>tei</cell><cell>TEI Infrastructure</cell><cell><ptr target="#ST"/></cell></row>
 <row><cell>textcrit-decl</cell><cell>Class declarations for text criticism</cell><cell><ptr target="#TC"/></cell></row>
-<row><cell>textcrit</cell><cell>Text criticism</cell><cell><ptr target="#TC"/></cell><cell>tagdocs-decl</cell><cell>Class declarations for Documentation elements</cell><cell><ptr target="#TD"/></cell></row>
+<row><cell>textcrit</cell><cell>Text criticism</cell><cell><ptr
+target="#TC"/></cell></row>
+<row><cell>tagdocs-decl</cell><cell>Class declarations for Documentation elements</cell><cell><ptr target="#TD"/></cell></row>
 <row><cell>tagdocs</cell><cell>Documentation Elements</cell><cell><ptr target="#TD"/></cell></row>
 <row><cell>spoken-decl</cell><cell>Class declarations for Transcribed Speech</cell><cell><ptr target="#TS"/></cell></row>
 <row><cell>spoken</cell><cell>Transcribed Speech</cell><cell><ptr target="#TS"/></cell></row>
@@ -142,12 +157,18 @@ Segmentation, and Alignment<ptr target="#SA"/></cell></row>
 
 </p></div2>
 
-<div2 xml:id="STIN"><head>Invocation of the TEI DTD</head>
+<div2 xml:id="STIN"><head>Associating a schema with a document</head>
 
-<p>A valid TEI XML document (though not a merely well-formed TEI XML
-document) must specify a schema. Local systems may allow their schema
-or DTD to be implicit, but for interchange purposes this
-<emph>must</emph> be explicit. As previously noted, the TEI itself
+<p>An XML document which is valid (as opposed to one which is  merely well-formed)
+must specify a schema. For a valid TEI document, this schema must be
+a valid TEI schema, as further defined in chapter <ptr target="CF"/>. 
+Local systems may allow their schema
+or DTD to be implicit, but for interchange purposes the schema
+associated with a document
+<emph>must</emph> be made explicit. At processing time, there must
+also be some</p>
+
+<p>As previously noted, the TEI
 provides an application independent way of defining the components of
 a TEI schema by means of the <gi>schemaSpec</gi> element defined in
 chapter <ptr target="TD"/> element. There are several ways in which
@@ -159,13 +180,20 @@ validating editor:
 a schema document in whichever schema language the editor
 supports</item>
 <item>for an editor using DTD language, a DTD subset declaration
-invoking the appropriate DTD fragments must be produced, together with
-XML DTD code for any additional modifications</item>
+invoking the DTD fragments corresponding with the schema specification
+may be produced, together with XML DTD code for any additional
+modifications</item>
 <item>for an editor using RelaxNG language, a schema referencing the
 appropriate predefined RelaxNG patterns must be produced, together
 with any additional definitions required to support
 modifications</item>
 </list>
+</p>
+<p>The schema fragments produced by the TEI are delivered in a
+parameterised form which facilitates the second and third options
+listed above. The recommended method of customization is however the
+first. For blind interchange of TEI documents, it should be necessary
+to supply no more than a complete ODD specification along with the documents.
 </p>
 
 <p>The simplest customization of the TEI schema combines just the
@@ -1125,95 +1153,7 @@ otherwise not.
 </specGrp>  
 -->
  </p></div3>
-<div3 xml:id="STECMX"><head>Components in Mixed and General Bases</head>
-<p>When the mixed or general base is in use, the definitions of the
-entities <ident type="pe">macro.component</ident> and
-<ident type="pe">macro.componentSeq</ident> are rather more complex.
-The relevant portion of the DTD is this:
-<specGrp xml:id="DSTECMX" n="Definition of components for combined bases">
-<p>Default declarations for the 'mix.' entities used for mixed
-and general bases.</p>
-&drmixxx.odd;
-&tsmixxx.odd;
-&dimixxx.odd;
-<p>But it defines a special version of macro.componentSeq, which
-restricts each div of the text to a single base:  bases can shift only
-in embedded divs or at div boundaries.  This entity is constructed out
-of a series of smaller entities, one for each module.  If the module
-is not in use, its entity will expand to the empty string.</p>
-<p>Conditional declarations for the module-specific entities.</p>
-&drgen.odd;
-&tsgen.odd;
-&digen.odd;
-<p>Default declarations for all the conditional entities.  </p>
-&drgenxx.odd;
-&tsgenxx.odd;
-&digenxx.odd;
-</specGrp>
-</p>
-</div3>
-<div3 xml:id="STECST"><head>Standard Content Models</head>
-<p>As far as possible, the TEI DTDs use the following set of
-frequently-encountered content models to help achieve consistency among
-different elements.
-<list type="gloss"><label><ident type="pe">phrase</ident> </label>
-<item>a single sequence of
-character data or single phrase-level element</item>
-<label><ident type="pe">macro.phraseSeq</ident> </label>
-<item>sequence of character
-data and phrase-level elements</item>
-<label><ident type="pe">macro.component</ident> </label>
-<item>a single chunk- or
-inter-level element</item>
-<label><ident type="pe">macro.componentSeq</ident> </label>
-<item>sequence of chunk- and
-inter-level elements; this is the usual content of a <gi>div</gi>
-element</item>
-<label><ident type="pe">macro.glossseq</ident> </label>
-<item>sequence of identifying and glossing
-elements</item>
-<label><ident type="pe">macro.paraContent</ident> </label>
-<item>sequence of character
-data, phrase-level elements, and inter-level elements; this is the usual
-content of chunks (including, most prominently, paragraphs)</item>
-<label><ident type="pe">macro.specialPara</ident> </label>
-<item>specialized content
-model, allowing <emph>either</emph> a sequence of chunks <emph>or</emph>
-the same content as <ident type="pe">macro.paraContent</ident>; this is used for
-elements such as notes and list items, which can behave either as
-chunk-level elements, or else as containers for groups of
-component-level elements.
- </item>
-</list>
- </p>
-<p>The relevant portion of the DTD looks like this:
-<specGrp xml:id="DSTECST" n="Standard Content Models"><p>Here we
-declare the macros phrase, macro.phraseSeq, component,
-macro.componentSeq, macro.paraContent, and macro.specialPara, for use
-in the content models of element declarations.  The entities phrase
-and macro.phraseSeq are the same in all bases.  They may include
-elements specific to single modules; if the module is not selected,
-these elements are undefined and have no effect.</p>
-&macroxtext.odd;
-&cbcomp.odd;
-&pephrase.odd;
-&phrseq.odd;
-&glossseq.odd;
-<p>The component varies with the base.  The
-versions for the combined bases are declared first (so as to
-take precedence over the declarations in the individual
-bases).</p>
-<specGrpRef target="#DSTECMX"/>
-<p>The patterm macro.componentSeq is always a starred sequence of
-component elements.  Its definition does not vary with the base (unless
-we are using the general base, in which case it has already been defined
-above), but the meaning of the definition does.</p>
-&compseq.odd;
-<p>The following entities do not vary with the base.</p>
-&peparac.odd;
-&pespecp.odd;
-</specGrp>
- </p></div3>
+
 <div3 xml:id="STECMI"><head>Miscellaneous Content-Model Classes</head>
 <p>The following element classes occupy specific places in content
 models; most are relevant only when certain modules are selected
@@ -1325,7 +1265,279 @@ representations of speech, but are not themselves spoken
 &biblpart.odd;
 <!-- &clstage.odd;-->
     </specGrp>
-</p></div3></div2>
+</p></div3>
+
+</div2>
+
+<div2 xml:id="STmacros"><head>Macros for commonly occurring content
+models</head>
+
+<div3 xml:id="STECST"><head>Standard Content Models</head>
+<p>As far as possible, the TEI DTDs use the following set of
+frequently-encountered content models to help achieve consistency among
+different elements.
+<list type="gloss"><label><ident type="pe">phrase</ident> </label>
+<item>a single sequence of
+character data or single phrase-level element</item>
+<label><ident type="pe">macro.phraseSeq</ident> </label>
+<item>sequence of character
+data and phrase-level elements</item>
+<label><ident type="pe">macro.component</ident> </label>
+<item>a single chunk- or
+inter-level element</item>
+<label><ident type="pe">macro.componentSeq</ident> </label>
+<item>sequence of chunk- and
+inter-level elements; this is the usual content of a <gi>div</gi>
+element</item>
+<label><ident type="pe">macro.glossseq</ident> </label>
+<item>sequence of identifying and glossing
+elements</item>
+<label><ident type="pe">macro.paraContent</ident> </label>
+<item>sequence of character
+data, phrase-level elements, and inter-level elements; this is the usual
+content of chunks (including, most prominently, paragraphs)</item>
+<label><ident type="pe">macro.specialPara</ident> </label>
+<item>specialized content
+model, allowing <emph>either</emph> a sequence of chunks <emph>or</emph>
+the same content as <ident type="pe">macro.paraContent</ident>; this is used for
+elements such as notes and list items, which can behave either as
+chunk-level elements, or else as containers for groups of
+component-level elements.
+ </item>
+</list>
+ </p>
+<p>The relevant portion of the DTD looks like this:
+<specGrp xml:id="DSTECST" n="Standard Content Models"><p>Here we
+declare the macros phrase, macro.phraseSeq, component,
+macro.componentSeq, macro.paraContent, and macro.specialPara, for use
+in the content models of element declarations.  The entities phrase
+and macro.phraseSeq are the same in all bases.  They may include
+elements specific to single modules; if the module is not selected,
+these elements are undefined and have no effect.</p>
+&macroxtext.odd;
+&cbcomp.odd;
+&pephrase.odd;
+&phrseq.odd;
+&glossseq.odd;
+<p>The component varies with the base.  The
+versions for the combined bases are declared first (so as to
+take precedence over the declarations in the individual
+bases).</p>
+<specGrpRef target="#DSTECMX"/>
+<p>The patterm macro.componentSeq is always a starred sequence of
+component elements.  Its definition does not vary with the base (unless
+we are using the general base, in which case it has already been defined
+above), but the meaning of the definition does.</p>
+&compseq.odd;
+<p>The following entities do not vary with the base.</p>
+&peparac.odd;
+&pespecp.odd;
+</specGrp>
+ </p></div3>
+<div3 xml:id="STECMX"><head>Components in Mixed and General Bases</head>
+<p>When the mixed base is in use, the definitions of the
+entities <ident type="pe">macro.component</ident> and
+<ident type="pe">macro.componentSeq</ident> are rather more complex.
+The relevant portion of the DTD is this:
+<specGrp xml:id="DSTECMX" n="Definition of components for combined bases">
+<p>Default declarations for the 'mix.' entities used for mixed
+and general bases.</p>
+&drmixxx.odd;
+&tsmixxx.odd;
+&dimixxx.odd;
+<p>But it defines a special version of macro.componentSeq, which
+restricts each div of the text to a single base:  bases can shift only
+in embedded divs or at div boundaries.  This entity is constructed out
+of a series of smaller entities, one for each module.  If the module
+is not in use, its entity will expand to the empty string.</p>
+<p>Conditional declarations for the module-specific entities.</p>
+&drgen.odd;
+&tsgen.odd;
+&digen.odd;
+<p>Default declarations for all the conditional entities.  </p>
+&drgenxx.odd;
+&tsgenxx.odd;
+&digenxx.odd;
+</specGrp>
+</p>
+</div3>
+</div2>
+
+<div2 xml:id="DTYPES"><head>Datatype macros</head>
+<p>The values which attributes may take in a TEI schema are defined,
+for the most part, by reference to a TEI <term>datatype</term>. Each
+such datatype is defined in terms of other primitive datatypes (for
+the most part defined by the W3C Schema language <!-- need proper
+reference-->), literal values, or other datatypes. This indirection
+makes it possible for a TEI application to set constraints either
+globally or in individual cases, by redefining the datatype definition
+or the reference to it respectively. In some cases, the TEI datatype
+includes additional usage constraints which cannot be enforced by
+existing schema languages, although a TEI-compliant processor should
+attempt to validate them (see further discussion in chapter <ptr
+target="#CF"/>). </p>
+<p>Where literal values or name tokens are used in a datatype
+definition, an associated value list supplies definitions for the
+significance of suggested or (in the case of closed lists) all
+possible values.</p>
+<!-- but can we put a valList in a macroSpec ? -->
+<p>TEI-defined datatypes may be grouped into those which define
+normalised values for numeric quantities or probabilities, those which
+define various kinds of short-hand codes or keys, and those which
+define pointers or links. </p>
+<p>The following datatypes are used for attributes which are intended
+to hold normalized values of various kinds. First, expressions of quantity:
+<specList>
+<specDesc key="data.certainty"/>
+<specDesc key="data.probability"/>
+<specDesc key="data.numeric"/>
+<specDesc key="data.count"/>
+</specList>
+</p>
+<p>Examples of attributes using these datatypes include
+<att>cert</att>...They are formally defined as follows:
+<specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0"
+	 xml:id="DSTKEYS-1" n="Datatypes: numeric">
+&data.certainty;
+&data.probability;
+&data.numeric;
+&data.count;
+</specGrp>
+</p>
+<p>Next, the datatypes used for attributes which are intended to hold
+normalized dates or times, durations, or truth values:
+<specList>
+<specDesc key="data.duration"/>
+<specDesc key="data.temporal"/>
+<specDesc key="data.truthValue"/>
+<specDesc key="data.xTruthValue"/>
+<specDesc key="data.language"/>
+<specDesc key="data.sex"/>
+</specList>
+</p>
+<p>Note that in each of these cases the values used are those
+recommended by existing international standards: ISO 8601 in the case
+of time, date, and duration; RelaxNG in the case of truth values; RFC
+1766 in the case of language; and ISO 5218 in the case of sex.</p>
+<p>Examples of attributes using these datatypes include
+...They are formally defined as follows:
+<specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0"
+	 xml:id="DSTKEYS-2" n="Datatypes: normalised">
+&data.temporal;
+&data.duration;
+&data.truthvalue;
+&data.xtruthvalue;
+&data.language;
+&data.sex;
+</specGrp>
+</p>
+<p>The following datatypes have very specialised uses:
+<specList>
+<specDesc key="data.outputMeasurement"/>
+<specDesc key="data.namespace"/>
+<specDesc key="data.pattern"/>
+<specDesc key="data.pointer"/>
+<specDesc key="data.pointers"/>
+</specList>
+</p>
+<p>Examples of attributes using these datatypes include
+...They are formally defined as follows:
+<specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0"
+	 xml:id="DSTKEYS-3" n="Datatypes: notations and pointers">
+&data.namespace;
+&data.outputmeasurement;
+&data.pattern;
+&data.pointer;
+&data.pointers;
+</specGrp>
+</p>
+<p>By far the largest number of TEI attributes have values which are
+coded values or names of some kind. These values may be constrained or
+defined in a number of different ways, each of which is given a
+different name, as follows:
+<specList>
+<specDesc key="data.key"/>
+<specDesc key="data.word"/>
+<specDesc key="data.words"/>
+<specDesc key="data.name"/>
+<specDesc key="data.names"/>
+<specDesc key="data.enumerated"/>
+<specDesc key="data.code"/>
+</specList>
+</p>
+
+<p>Attributes such as <att>key</att> of <gi>persName</gi> and other
+members of the <ident type="class">att.naming</ident> class are of type
+<ident type="datatype">data.key</ident>. They are used to supply am externally-defined
+identifier, such as a database key or filename. Because such
+identifiers are externally-defined, no constraints are placed on their
+possible values: and any string of Unicode characters may be used. If
+constraints on their values are known to the encoder such as the rules
+for constructing a valid database key in a particular system, this may
+be documented within the TEI Header but cannot be enforced.</p>
+
+<p>Attributes of type <ident type="datatype">data.word</ident>, such as
+<att>age</att> on <gi>person</gi> are used to supply an identifier
+expressed as any kind of single token or word. The TEI places a few
+constraints on the characters which may be used for this purpose:
+only Unicode characters classified as letters, digits,  punctuation
+characters, or symbols can appear in an attribute value of this
+kind. Note in particular that such values cannot  cannot include
+whitespace name. Legal values include
+<val>cholmondeley</val>, <val>été</val>, <val>1234</val>, <val>e_content</val>, or
+<val>xml:id</val>, but not  <val>grand
+wazoo</val>. Attributes of this kind are sometimes used to associate (by
+co-reference) elements of different types.</p>
+
+<p>Attributes of type <ident type="datatype">data.name</ident> are also words in
+this sense, but they have the additional constraint that they must be
+legal XML identifiers, as defined by the XML 1.0 specification. As
+such, they may not begin with digits or punctuation characters. Legal
+identifiers include <val>cholmondeley</val>, <val>été</val>,
+<val>e_content</val>, or <val>xml:id</val>, but not <val>grand
+wazoo</val> or <val>1234</val>. Attributes of this kind are typically used to
+represent XML element or attribute names.</p>
+
+<p>Corresponding with these two datatypes, the TEI provides
+<soCalled>list</soCalled> valued datatypes <ident type="datatype">data.words</ident>
+and <ident type="datatype">data.names</ident>. These may be used to supply a list of
+words or names (as
+defined above), each
+being separated by a single space. </p>
+
+<p>Attributes of type <ident type="datatype">data.enumerated</ident>, such as
+<att>zone</att> on <gi>time</gi> have the same definition as
+<ident type="datatype">data.word</ident> above, with the added semantics that the word
+supplied is taken from a specific list of possibilities. In each case,
+the element or class specification which includes the definition for
+the attribute will also contain a list of possible values, together
+with a prose description of their intended significance. This list may
+be open (in which case the list is advisory), or closed (in which
+case, it determines the range of legal values).</p>
+
+<p>Attributes of type <ident type="datatype">data.code</ident> such as <att>new</att>
+and <att>old</att> on <gi>handShift</gi> are similar in function, in
+that they also supply encoded names for values which are defined in
+more detail elsewhere. In this case, however, the full definition is
+supplied as content of another XML element, typically but not
+necessarily in the same document, and it is referenced by means of a
+pointer. </p>
+
+<p>Here are the specifications for these datatypes:
+<specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0"
+	 xml:id="DSTKEYS-4" n="Datatypes: coded values">
+&data.code;
+&data.enumerated;
+&data.key;
+&data.word;
+&data.names;
+&data.words;
+&data.name;
+</specGrp>
+</p>
+</div2>
+
+
 <div2 xml:id="STPE"><head>Other Parameter Entities in TEI DTDs</head>
 <p>The TEI DTDs use parameter entities for several purposes:
 <list type="bullets">
@@ -1521,179 +1733,6 @@ parameter entities representing tag omissibility indicators will
 be redefined as null strings, so that the resulting DTD is XML
 conformant;
 if the parameter entity is set to IGNORE, the DTD is suitable for SGML.</p>
-</div3>
-<div3 xml:id="DTYPES"><head>Datatype macros</head>
-<p>The values which attributes may take in a TEI schema are defined,
-for the most part, by reference to a TEI <term>datatype</term>. Each
-such datatype is defined in terms of other primitive datatypes (for
-the most part defined by the W3C Schema language <!-- need proper
-reference-->), literal values, or other datatypes. This indirection
-makes it possible for a TEI application to set constraints either
-globally or in individual cases, by redefining the datatype definition
-or the reference to it respectively. In some cases, the TEI datatype
-includes additional usage constraints which cannot be enforced by
-existing schema languages, although a TEI-compliant processor should
-attempt to validate them (see further discussion in chapter <ptr
-target="#CF"/>). </p>
-<p>Where literal values or name tokens are used in a datatype
-definition, an associated value list supplies definitions for the
-significance of suggested or (in the case of closed lists) all
-possible values.</p>
-<!-- but can we put a valList in a macroSpec ? -->
-<p>TEI-defined datatypes may be grouped into those which define
-normalised values for numeric quantities or probabilities, those which
-define various kinds of short-hand codes or keys, and those which
-define pointers or links. </p>
-<p>The following datatypes are used for attributes which are intended
-to hold normalized values of various kinds. First, expressions of quantity:
-<specList>
-<specDesc key="data.certainty"/>
-<specDesc key="data.probability"/>
-<specDesc key="data.numeric"/>
-<specDesc key="data.count"/>
-</specList>
-</p>
-<p>Examples of attributes using these datatypes include
-<att>cert</att>...They are formally defined as follows:
-<specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0"
-	 xml:id="DSTKEYS-1" n="Datatypes: numeric">
-&data.certainty;
-&data.probability;
-&data.numeric;
-&data.count;
-</specGrp>
-</p>
-<p>Next, the datatypes used for attributes which are intended to hold
-normalized dates or times, durations, or truth values:
-<specList>
-<specDesc key="data.duration"/>
-<specDesc key="data.temporal"/>
-<specDesc key="data.truthValue"/>
-<specDesc key="data.xTruthValue"/>
-<specDesc key="data.language"/>
-<specDesc key="data.sex"/>
-</specList>
-</p>
-<p>Note that in each of these cases the values used are those
-recommended by existing international standards: ISO 8601 in the case
-of time, date, and duration; RelaxNG in the case of truth values; RFC
-1766 in the case of language; and ISO 5218 in the case of sex.</p>
-<p>Examples of attributes using these datatypes include
-...They are formally defined as follows:
-<specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0"
-	 xml:id="DSTKEYS-2" n="Datatypes: normalised">
-&data.temporal;
-&data.duration;
-&data.truthvalue;
-&data.xtruthvalue;
-&data.language;
-&data.sex;
-</specGrp>
-</p>
-<p>The following datatypes have very specialised uses:
-<specList>
-<specDesc key="data.outputMeasurement"/>
-<specDesc key="data.namespace"/>
-<specDesc key="data.pattern"/>
-<specDesc key="data.pointer"/>
-<specDesc key="data.pointers"/>
-</specList>
-</p>
-<p>Examples of attributes using these datatypes include
-...They are formally defined as follows:
-<specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0"
-	 xml:id="DSTKEYS-3" n="Datatypes: notations and pointers">
-&data.namespace;
-&data.outputmeasurement;
-&data.pattern;
-&data.pointer;
-&data.pointers;
-</specGrp>
-</p>
-<p>By far the largest number of TEI attributes have values which are
-coded values or names of some kind. These values may be constrained or
-defined in a number of different ways, each of which is given a
-different name, as follows:
-<specList>
-<specDesc key="data.key"/>
-<specDesc key="data.word"/>
-<specDesc key="data.words"/>
-<specDesc key="data.name"/>
-<specDesc key="data.names"/>
-<specDesc key="data.enumerated"/>
-<specDesc key="data.code"/>
-</specList>
-</p>
-
-<p>Attributes such as <att>key</att> of <gi>persName</gi> and other
-members of the <ident type="class">att.naming</ident> class are of type
-<ident type="datatype">data.key</ident>. They are used to supply am externally-defined
-identifier, such as a database key or filename. Because such
-identifiers are externally-defined, no constraints are placed on their
-possible values: and any string of Unicode characters may be used. If
-constraints on their values are known to the encoder such as the rules
-for constructing a valid database key in a particular system, this may
-be documented within the TEI Header but cannot be enforced.</p>
-
-<p>Attributes of type <ident type="datatype">data.word</ident>, such as
-<att>age</att> on <gi>person</gi> are used to supply an identifier
-expressed as any kind of single token or word. The TEI places a few
-constraints on the characters which may be used for this purpose:
-only Unicode characters classified as letters, digits,  punctuation
-characters, or symbols can appear in an attribute value of this
-kind. Note in particular that such values cannot  cannot include
-whitespace name. Legal values include
-<val>cholmondeley</val>, <val>été</val>, <val>1234</val>, <val>e_content</val>, or
-<val>xml:id</val>, but not  <val>grand
-wazoo</val>. Attributes of this kind are sometimes used to associate (by
-co-reference) elements of different types.</p>
-
-<p>Attributes of type <ident type="datatype">data.name</ident> are also words in
-this sense, but they have the additional constraint that they must be
-legal XML identifiers, as defined by the XML 1.0 specification. As
-such, they may not begin with digits or punctuation characters. Legal
-identifiers include <val>cholmondeley</val>, <val>été</val>,
-<val>e_content</val>, or <val>xml:id</val>, but not <val>grand
-wazoo</val> or <val>1234</val>. Attributes of this kind are typically used to
-represent XML element or attribute names.</p>
-
-<p>Corresponding with these two datatypes, the TEI provides
-<soCalled>list</soCalled> valued datatypes <ident type="datatype">data.words</ident>
-and <ident type="datatype">data.names</ident>. These may be used to supply a list of
-words or names (as
-defined above), each
-being separated by a single space. </p>
-
-<p>Attributes of type <ident type="datatype">data.enumerated</ident>, such as
-<att>zone</att> on <gi>time</gi> have the same definition as
-<ident type="datatype">data.word</ident> above, with the added semantics that the word
-supplied is taken from a specific list of possibilities. In each case,
-the element or class specification which includes the definition for
-the attribute will also contain a list of possible values, together
-with a prose description of their intended significance. This list may
-be open (in which case the list is advisory), or closed (in which
-case, it determines the range of legal values).</p>
-
-<p>Attributes of type <ident type="datatype">data.code</ident> such as <att>new</att>
-and <att>old</att> on <gi>handShift</gi> are similar in function, in
-that they also supply encoded names for values which are defined in
-more detail elsewhere. In this case, however, the full definition is
-supplied as content of another XML element, typically but not
-necessarily in the same document, and it is referenced by means of a
-pointer. </p>
-
-<p>Here are the specifications for these datatypes:
-<specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0"
-	 xml:id="DSTKEYS-4" n="Datatypes: coded values">
-&data.code;
-&data.enumerated;
-&data.key;
-&data.word;
-&data.names;
-&data.words;
-&data.name;
-</specGrp>
-</p>
 </div3>
 <div3><head>Declaration of TEI keywords</head>
 <p> 
