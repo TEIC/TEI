@@ -173,10 +173,10 @@ four recommended modules mentioned above. In ODD format, this would
 look like this:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <schemaSpec start="TEI">
-<moduleRef name="tei"/>
-<moduleRef name="header"/>
-<moduleRef name="core"/>
-<moduleRef name="structure"/>
+  <moduleRef key="tei"/>
+  <moduleRef key="header"/>
+  <moduleRef key="core"/>
+  <moduleRef key="structure"/>
 </schemaSpec>
 </egXML></p>
 <p>An ODD processor will generate an appropriate XML DTD, or relaxNG
@@ -229,16 +229,15 @@ briefly at the conclusion of section <ptr target="#DSGRP"/>)</item></list></p>
 the low level structural tags defined in the prose, drama and dictionary
  modules:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec start="TEI">
-<moduleRef name="tei"/>
-<moduleRef name="header"/>
-<moduleRef name="core"/>
-<moduleRef name="structure"/>
-<moduleRef name="drama"/>
-<moduleRef name="dictionaries"/>
-<!-- Structurally, Moby Dick is not your
-    everyday common or garden variety novel ... -->
-</schemaSpec>
-</egXML></p>
+  <moduleRef key="tei"/>
+  <moduleRef key="header"/>
+  <moduleRef key="core"/>
+  <moduleRef key="structure"/>
+  <moduleRef key="drama"/>
+  <moduleRef key="dictionaries"/>
+  <!-- Structurally, Moby Dick is not your
+       everyday common or garden variety novel ... -->
+</schemaSpec></egXML></p>
 </div2>
 <div2 xml:id="STGA"><head>Global Attributes</head>
 <p>The following attributes are defined for every TEI element.<note place="foot">More
@@ -408,8 +407,9 @@ entities referred to expand to the empty string, as shown here.
 </specGrp>	
 </div2>
 
+
+<div2 xml:id="STOV"><head>The Main Root-level Elements</head>
 <!--
-<div2 xml:id="STOV"><head>The TEI2.DTD File</head>
 <p>All TEI-encoded documents use the same top-level DTD file, which
 refers to a number of other DTD files, the exact set of other files
 referred to depending on which base and which additional tagsets are in
@@ -478,6 +478,7 @@ described in chapter <ptr target="#MD"/>.
 It must also specify which base and
 which additional modules are to be invoked, using the mechanisms
 described in section <ptr target="#STIN"/>.</p>
+-->
 <p>Define the top-level TEI elements:  one for individual
 texts, one for composites with a collective header.
 The <gi>TEI</gi> and <gi>teiCorpus</gi>
@@ -486,7 +487,8 @@ elements are formally declared as follows:
 &tei2.odd;
 &teicorp2.odd;
 </specGrp>
-</p></div3>
+</p>
+<!-- </div3>
 <div3 xml:id="STOVLO"><head>Embedding Local Modifications</head>
 <p>As noted above in section <ptr target="#STBAUS"/>, local modifications
 to the DTD are most conveniently grouped into two files, one containing
@@ -591,8 +593,8 @@ appropriate parameter entity.  The relevant fragment of <ident type="file">tei2.
 has overridden the default declaration of IGNORE for a specific
 additional module.</p>
 </specGrp>
-</div3></div2>
--->
+</div3>
+--></div2>
 <div2 xml:id="STEC"><head>Element Classes</head>
 <p>The TEI DTD contains over four hundred element types.  To aid
 comprehension, modularity, and modification, the majority of these
