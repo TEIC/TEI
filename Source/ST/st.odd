@@ -167,6 +167,7 @@ with any additional definitions required to support
 modifications</item>
 </list>
 </p>
+
 <p>The simplest customization of the TEI schema combines just the
 four recommended modules mentioned above. In ODD format, this would
 look like this:
@@ -193,11 +194,13 @@ or, in a RelaxNG environment, by a schema like the following:
 ]>]]></egXML>
 </p>
 
-<p>In much of the discussion elsewhere in these Guidelines, it
-is generally assumed for clarity of exposition that a text is a
-unitary object for which only one module is necessary.  It is not uncommon, however, for
-a text to combine different kinds of object, or for an encoder to wish
-to enrich their encoding with elements drawn from many different modules.  Examples include:
+<p>In much of the discussion elsewhere in these Guidelines, it is
+generally assumed for clarity of exposition that a text is a unitary
+object for which only one module is necessary.  It is not uncommon,
+however, for a text to combine different kinds of object, or for an
+encoder to wish to enrich their encoding with elements drawn from many
+different modules.  Examples include:
+
 <list type="bullets">
 <item>when the text is a collection of other texts, which do not all use
 the same module:  e.g. an anthology of prose, verse, and drama</item>
@@ -225,7 +228,7 @@ briefly at the conclusion of section <ptr target="#DSGRP"/>)</item></list></p>
 <p>The following element specification for example allows for any mixture of
 the low level structural tags defined in the prose, drama and dictionary
  modules:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<schemaSpec start="TEI">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec start="TEI">
 <moduleRef name="tei"/>
 <moduleRef name="header"/>
 <moduleRef name="core"/>
@@ -236,6 +239,7 @@ the low level structural tags defined in the prose, drama and dictionary
     everyday common or garden variety novel ... -->
 </schemaSpec>
 </egXML></p>
+</div2>
 <div2 xml:id="STGA"><head>Global Attributes</head>
 <p>The following attributes are defined for every TEI element.<note place="foot">More
 exactly, these are the attributes of the element class
@@ -403,6 +407,8 @@ entities referred to expand to the empty string, as shown here.
 &global.odd;
 </specGrp>	
 </div2>
+
+<!--
 <div2 xml:id="STOV"><head>The TEI2.DTD File</head>
 <p>All TEI-encoded documents use the same top-level DTD file, which
 refers to a number of other DTD files, the exact set of other files
@@ -551,7 +557,7 @@ the standard parameter-entitity reference for phrase sequence is used):
 <p>For further examples of local modifications to both parameter
 entities and element declarations, see chapter <ptr target="#MD"/>.</p>
 <p>The relevant fragment of the DTD is this:
-<specGrp xml:id="DSTOVLO" n="Embed local element declarations, etc."><p>Embedding local modifications here allows user modifications
+<specGrp xml:id="DSTOVLO" n="Embed local element declarations"><p>Embedding local modifications here allows user modifications
 to use all the standard TEI element classes and parameter entities.</p>
 &teiextd.odd;
 </specGrp></p></div3>
@@ -586,7 +592,7 @@ has overridden the default declaration of IGNORE for a specific
 additional module.</p>
 </specGrp>
 </div3></div2>
-
+-->
 <div2 xml:id="STEC"><head>Element Classes</head>
 <p>The TEI DTD contains over four hundred element types.  To aid
 comprehension, modularity, and modification, the majority of these
