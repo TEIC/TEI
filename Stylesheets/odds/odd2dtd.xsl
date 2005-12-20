@@ -156,11 +156,13 @@ End of macro declarations
 <xsl:if test="@type='core'">
   <xsl:for-each select="key('Modules',1)">
     <xsl:sort select="@ident" order="descending"/>
-    <xsl:if test="not(@type='core')">
+    <xsl:if test="not(key('DeclModules',@ident))">
+      <xsl:if test="not(@type='core')">
 &lt;![%TEI.<xsl:value-of select="@ident"/>;[
 &lt;!ENTITY % file.<xsl:value-of select="@ident"/> PUBLIC '-//TEI P5//<xsl:value-of select="tei:altIdent[@type='FPI']"/>//EN' '<xsl:value-of select="@ident"/>.dtd' &gt;
 %file.<xsl:value-of select="@ident"/>;
 ]]&gt;
+    </xsl:if>
     </xsl:if>
   </xsl:for-each>
 </xsl:if>

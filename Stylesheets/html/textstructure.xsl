@@ -1726,25 +1726,19 @@ $ID: requests a particular page
         </xsl:if>
         <xsl:choose>
           <xsl:when test="$contentStructure='all' or @rend='all'">
-            <div class="column-wrapper">
-              <div id="col1">
-                <xsl:for-each select="descendant-or-self::TEI.2/text/front">
-		  <xsl:apply-templates/>
-		</xsl:for-each>
-              </div>
-              <div id="col2">
-                <xsl:for-each
-		    select="descendant-or-self::TEI.2/text/body">
-		  <xsl:apply-templates/>
-		</xsl:for-each>
-              </div>
-              <div id="col3">
-                <xsl:for-each
-		    select="descendant-or-self::TEI.2/text/back">
-		  <xsl:apply-templates/>
-		</xsl:for-each>
-              </div>
-            </div>
+	    <div class="column-wrapper">
+	      <xsl:call-template name="col1">
+		<xsl:with-param name="currentID" select="$currentID"/>
+	      </xsl:call-template>
+	      
+	      <xsl:call-template name="col2">
+		<xsl:with-param name="currentID" select="$currentID"/>
+	      </xsl:call-template>
+	      
+	      <xsl:call-template name="col3">
+		<xsl:with-param name="currentID" select="$currentID"/>
+	      </xsl:call-template>
+	    </div>
           </xsl:when>
           <xsl:when test="@rend='frontpage'">
             <div class="column-wrapper">
@@ -1772,6 +1766,44 @@ $ID: requests a particular page
     </html>
   </xsl:template>
 
+
+  <xd:doc>
+    <xd:short>[html] what to do in column 1 of 3 column arrangement </xd:short>
+    <xd:detail>&#160;</xd:detail>
+  </xd:doc>
+  <xsl:template name="col1">
+    <div id="col1">
+      <xsl:for-each select="descendant-or-self::TEI.2/text/front">
+	<xsl:apply-templates/>
+      </xsl:for-each>
+    </div>
+  </xsl:template>
+
+  <xd:doc>
+    <xd:short>[html] what to do in column 2 of 3 column arrangement </xd:short>
+    <xd:detail>&#160;</xd:detail>
+  </xd:doc>
+  <xsl:template name="col2">
+    <div id="col2">
+      <xsl:for-each
+	  select="descendant-or-self::TEI.2/text/body">
+	<xsl:apply-templates/>
+      </xsl:for-each>
+    </div>
+  </xsl:template>
+
+  <xd:doc>
+    <xd:short>[html] what to do in column 3 of 3 column arrangement </xd:short>
+    <xd:detail>&#160;</xd:detail>
+  </xd:doc>
+  <xsl:template name="col3">
+    <div id="col3">
+      <xsl:for-each
+	  select="descendant-or-self::TEI.2/text/back">
+	<xsl:apply-templates/>
+      </xsl:for-each>
+    </div>
+  </xsl:template>
 
   <xd:doc>
     <xd:short>[html] arrangment of page as HTML divs </xd:short>
