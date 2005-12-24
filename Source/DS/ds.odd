@@ -6,14 +6,52 @@ $Date$
 $Author$
 -->
 <div1 xmlns="http://www.tei-c.org/ns/1.0" type="chapter" xml:id="DS" n="7"><head>Default Text Structure</head>
-<p>This chapter describes the default high-level structure for all TEI
-documents.  The majority of the different base modules described in
-part II simply embed the framework defined in this chapter while a few
-redefine it with some minor modifications.  This chapter is therefore
-relevant to every kind of TEI document.  For further details on the
-overall structure of the TEI document type definitions, in particular
-the use of base and additional modules, see chapter <ptr target="#ST"/>.
- </p>
+<p>This chapter describes the default high-level structure for TEI
+documents.  <!-- The majority of the different base modules described
+in part II simply embed the framework defined in this chapter while a
+few redefine it with some minor modifications.  This chapter is
+therefore relevant to every kind of TEI document.  For further details
+on the overall structure of the TEI document type definitions, in
+particular the use of base and additional modules, see chapter <ptr
+target="#ST"/>.--> A full TEI document combines metadata describing
+it, represented by a <gi>teiHeader</gi> element, with the document
+itself, represented by a <gi>text</gi> element. This basic pair is
+represented by a <gi>TEI</gi> element. The <gi>teiHeader</gi> element
+is specified by the <ident>header</ident> module, which is fully
+described in chapter <ptr target="#HD"/>. The remainder of the present
+chapter describes the <gi>text</gi> element and its high-level
+constituents. </p>
+
+<p>A variant on this basic form, the <gi>teiCorpus</gi>, is also
+defined for the representation of language corpora, or other
+collections of encoded texts. A <gi>teiCorpus</gi> consists of one or
+more complete <gi>TEI</gi> elements, each combining a
+<gi>teiHeader</gi> and a <gi>text</gi>, which itself carries a
+<gi>teiHeader</gi>. This permits the encoder to distinguish metadata
+applicable to the whole collection of encoded texts, which is
+represented by the outermost <gi>teiHeader</gi>, from that applicable
+to each of the individual <gi>TEI</gi> elements within the
+corpus. Further information about the organization and encoding of
+language corpora is given in chapter <ptr target="#CC"/>. </p>
+
+<p>In summary, the following elements are available for the
+representation of the outermost structure of a TEI document:
+<specList>
+<specDesc key="TEI"/>
+<specDesc key="teiCorpus"/>
+<specDesc key="teiHeader"/>
+</specList>
+As noted above, the <gi>teiHeader</gi> element is formally declared in
+the <ident type="module">header</ident> module (see chapter <ptr
+target="#HD"/>). The <gi>TEI</gi> and <gi>teiCorpus</gi>
+elements are formally declared as follows:
+<specGrp xml:id="DCOTOPELEMENTS" n="TEI2">
+&tei.odd;
+&teicorpus.odd;
+</specGrp>
+</p>
+
+
 <p>TEI texts may be regarded either as <term>unitary</term>, that is,
 forming an organic whole, or as <term>composite,</term> that is,
 consisting of several components which are in some important sense
@@ -24,6 +62,7 @@ others.  In such borderline cases, the encoder must choose whether to
 treat the text as unitary or composite; each may have advantages and
 disadvantages in a given situation.
  </p>
+
 <p>Whether unitary or composite, the text is marked with the
 <gi>text</gi> tag and may contain front matter, a text body, and back
 matter.  In unitary texts, the text body is tagged <gi>body</gi>; in
@@ -89,25 +128,33 @@ particular base). The <gi>group</gi> element, used for composite
 texts, is further discussed in section <ptr target="#DSGRP"/>.
 </p>
 <div2 type="section" xml:id="DSDIV"><head>Divisions of the Body</head>
+
 <p>In some texts, the body consists simply of a sequence of low-level
 structural items, referred to here as <term>components</term> or
-<term>component-level elements</term> (see section <ptr target="#STEC"/>).  Examples in prose texts include paragraphs or lists; in
-dramatic texts, speeches and stage directions; in dictionaries,
-dictionary entries.  In other cases sequences of such elements will be
-grouped together hierarchically into textual divisions and subdivisions,
-such as chapters or sections.  The names used for these structural
-subdivisions of texts vary with the genre and period of the text, or
-even with the whim of the author, editor, or publisher. For example, a
-major subdivision of an epic or of the Bible is generally called a
-<soCalled>book</soCalled>, that of a report is usually called a <soCalled>part</soCalled> or
-<soCalled>section</soCalled>, that of a novel a <soCalled>chapter</soCalled> &#x2014; unless it is an
-epistolary novel, in which case it may be called a <soCalled>letter</soCalled>.  Even
-texts which are not organized as linear prose narratives, or not as
-narratives at all, will frequently be subdivided in a similar way:  a
-drama into <soCalled>acts</soCalled> and <soCalled>scenes</soCalled>; a reference book into
-<soCalled>sections</soCalled>; a diary or day book into <soCalled>entries</soCalled>; a newspaper
-into <soCalled>issues</soCalled> and <soCalled>sections</soCalled>, and so forth.
+<term>component-level elements</term> (see section <ptr
+target="#STEC"/>).  Examples in prose texts include paragraphs or
+lists; in dramatic texts, speeches and stage directions; in
+dictionaries, dictionary entries.  In other cases sequences of such
+elements will be grouped together hierarchically into textual
+divisions and subdivisions, such as chapters or sections.  The names
+used for these structural subdivisions of texts vary with the genre
+and period of the text, or even with the whim of the author, editor,
+or publisher. For example, a major subdivision of an epic or of the
+Bible is generally called a <soCalled>book</soCalled>, that of a
+report is usually called a <soCalled>part</soCalled> or
+<soCalled>section</soCalled>, that of a novel a
+<soCalled>chapter</soCalled> &#x2014; unless it is an epistolary
+novel, in which case it may be called a <soCalled>letter</soCalled>.
+Even texts which are not organized as linear prose narratives, or not
+as narratives at all, will frequently be subdivided in a similar way:
+a drama into <soCalled>acts</soCalled> and
+<soCalled>scenes</soCalled>; a reference book into
+<soCalled>sections</soCalled>; a diary or day book into
+<soCalled>entries</soCalled>; a newspaper into
+<soCalled>issues</soCalled> and <soCalled>sections</soCalled>, and so
+forth.
  </p>
+
 <p>Because of this variety, these Guidelines propose that all such
 textual divisions be regarded as occurrences of the same neutrally named
 elements, with an attribute <att>type</att> used to categorize elements

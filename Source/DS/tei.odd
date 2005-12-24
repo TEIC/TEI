@@ -1,0 +1,69 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.tei-c.org/ns/1.0" 
+    module="textstructure" xml:id="TEI2" usage="req" ident="TEI">
+<equiv/>
+<gloss>TEI document</gloss>
+<desc>contains a single TEI-conformant document,
+comprising a TEI header and a text, either in isolation or as part of a
+teiCorpus element.</desc>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:ref name="teiHeader"/>
+      <rng:ref name="text"/>
+    </rng:group>
+  </content>
+  <attList>
+    <attDef ident="xmlns" usage="req">
+	<equiv/>
+	<desc>The TEI default namespace</desc>
+	<datatype><rng:ref
+	xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+	<defaultVal>http://www.tei-c.org/ns/1.0</defaultVal>
+	<valDesc>A valid XML namespace</valDesc>
+    </attDef>
+    <attDef ident="version" usage="opt">
+	<equiv/>
+	<desc>The version of the TEI scheme</desc>
+	<datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="decimal"/></datatype>
+	<defaultVal>5.0</defaultVal>
+      <valDesc>A number identifying the version of the TEI guidelines</valDesc>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <TEI>
+        <teiHeader>
+          <fileDesc>
+            <titleStmt>
+              <title>The shortest TEI Document Imaginable</title>
+            </titleStmt>
+            <publicationStmt>
+              <p>First published as part of TEI P2.</p>
+            </publicationStmt>
+            <sourceDesc>
+              <p>No source: this is an original work.</p>
+            </sourceDesc>
+          </fileDesc>
+        </teiHeader>
+        <text>
+          <body>
+            <p>This is about the shortest TEI document imaginable.</p>
+          </body>
+        </text>
+      </TEI>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>This element is required.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#STroot" />
+    <ptr target="#CCDEF"/>
+  </listRef>
+</elementSpec>
