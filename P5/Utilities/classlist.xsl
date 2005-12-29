@@ -10,9 +10,13 @@
 <xsl:template match="/">
   <xsl:for-each select="//tei:classSpec">
     <xsl:if test="not(tei:classes/tei:memberOf)">
-      * <xsl:value-of select="@ident"/>: <xsl:value-of select="@type"/>
+      * <xsl:value-of select="@ident"/>: <xsl:value-of
+      select="@xml:id"/> <xsl:value-of
+      select="@module"/>
       <xsl:for-each select="key('MEMBERS',@ident)">
-         ** <xsl:value-of select="@ident"/>: <xsl:value-of select="@type"/>
+         ** <xsl:value-of select="@ident"/>: <xsl:value-of
+	 select="@xml:id"/>  <xsl:value-of
+      select="@module"/>
       </xsl:for-each>
     </xsl:if>
   </xsl:for-each>
