@@ -35,6 +35,7 @@
   <xsl:if test="generate-id()=generate-id(key('ATTS',@ident)[1]) and count(key('ATTS',@ident))&gt;1">
     <row>
       <cell><xsl:value-of select="@ident"/></cell>
+      <cell><xsl:value-of select="tei:datatype/rng:ref/@name"/></cell>
       <cell>
 	<xsl:for-each select="key('ATTS',@ident)">
 	  <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>:
