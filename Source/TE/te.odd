@@ -1,21 +1,918 @@
 <!--
-Copyright TEI Consortium. 
-Licensed under the GNU General Public License. 
-See the file COPYING for details.
-$Date$
-$Author$
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="http://www.tei-c.org.uk/release/xml/tei/custom/schema/relaxng/p5odds.rnc" type="compact"?>
+<TEI xml:lang="en" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title>Draft specification of the future terminology chapter</title>
+                <author>Laurent Romary</author>
+                <author>Isabelle Kramer</author>
+            </titleStmt>
+            <publicationStmt>
+                <availability>
+                    <p>public domain, to be reviewed by whoever wants to contribute</p>
+                    <p>for use by whoever wants it</p>
+                </availability>
+            </publicationStmt>
+            <sourceDesc>
+                <p>authored from scratch</p>
+            </sourceDesc>
+        </fileDesc>
+    </teiHeader>
+    <text>
+        <body>
+-->            <div1 type="documentation" xml:id="TE" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                <head>Terminologies</head>
+                <div2>
+                    <head>Introduction</head>
+<p>This chapter describes a general structure for representing lexical data
+    organized as terminologies, i.e. following a sense-to-word logical structure
+    (also known as onomasiological), in contrast with the usual word-to-sense
+    (semasiological) representation of lexical data, depicted in [Ref: print
+    dictionary chapter]. Typically, a terminological entry treats a single
+    concept and contains information on the assignment of single or multi-word
+    terms to this concept. Bilingual and multilingual terminological entries
+    deal with harmonized or very closely related concepts in two or more
+    languages that are treated as functional equivalents in the context of a
+    specific domain or subdomain.These representations are essentially used to
+    compile lexical knowledge in specific applicative domains, as opposed to the
+    general description of a language. Such data are particular important for
+    translation, technical writing or education, but may also be used as the
+    basis for indexing elementary assets in a document repository. As such, it
+    can be seen as a subset of thesaurus information.</p>
+<p>The elements presented in this chapter implements ISO standard 16642
+    (Terminological Markup Framework).</p>
+                </div2>
+                <div2>
+<head>The structure of a terminological entry</head>
+<p>In conformance with ISO 16642, the following elements are introduced to
+    implement the various component of the TMF metamodel: <specList>
+        <specDesc key="termEntry"/>
+        <specDesc key="langSet"/>
+        <specDesc key="ntig"/>
+        <specDesc key="tig"/>
+    </specList>
+</p>
+<p>The content model of the <gi>termEntry</gi> element is made of any number of
+    <gi>langSet</gi> preceded by members of the two following classes: <specList>
+        <specDesc key="tei.model.descte"/>
+        <specDesc key="tei.model.admte"/>
+    </specList>
+</p>
+                </div2>
+                <div2>
+<head>Descriptive elements for terminological entries</head>
+<p>The descriptive elements attached to the terminological entry component
+    (<gi>termEntry</gi>) are intended to provide information about the
+    underlying concept that is being described. <specList>
+        <specDesc key="associatedConcept"/>
+        <specDesc key="broaderConcept"/>
+        <specDesc key="definition"/>
+         <specDesc key="example"/>
+        <specDesc key="subjectField"/>
+    </specList>
+</p>
+<p>For elements that may be further qualified by source information, specific
+    coumpound statements are introduced: <specList>
+        <specDesc key="broaderConceptStmt"/>
+        <specDesc key="definitionStmt"/>
+        <specDesc key="subjectFieldStmt"/>
+    </specList>
+</p>
+                </div2>
+                <div2>
+<head>Administrative elements for terminological entries</head>
+<p>....</p>
+                </div2>
+                <div2>
+<head>Descriptive elements for language sections</head>
+<p>....</p>
+                </div2>
+                <div2>
+<head>Administrative elements for language sections</head>
+<p>....</p>
+                </div2>
+                <div2>
+<head>Descriptive elements for term sections</head>
+<p>....</p>
+                </div2>
+                <div2>
+<head>Administrative elements for term sections</head>
+<p>....</p>
+                </div2>
+                <div2>
+<head>Extending the TEI terminology model</head>
+<p>The class system provided for this chapter allows one to extend the core set
+    of available data categories by adding new elements that may either be
+    inspired by additional data categories taken from ISO 12620:1999 or by the
+    provision of newly created ones.</p>
+                </div2>
+
+<div2><head>Structure of the TEI module</head>
+<p>This chapter describes the following module:
+<moduleSpec ident="terminology" >
+<altIdent type="FPI">terminology</altIdent>
+</moduleSpec>
+<!--                <schemaSpec ident="newTerm" start="termEntry">-->
+<!-- classes organisants les catégories de données associées aux composants du modèle TMF -->
+<classSpec module="terminology" ident="tei.model.descte" type="model">
+    <desc xml:lang="en">groups descriptive data categories that may occur within
+        a terminological entry component (termEntry)</desc>
+    <desc xml:lang="fr">réunit les catégorie de données de type descriptif qui
+        s'ancrent au niveau d'une entrée terminologique (termEntry)</desc>
+</classSpec>
+<classSpec module="terminology" ident="tei.model.descls" xml:id="DESCLS" type="model">
+    <desc xml:lang="en">groups descriptive data categories that may occur within
+        a language section component (langSet)</desc>
+    <desc xml:lang="fr">réunit les catégorie de données de type descriptif qui
+        s'ancrent au niveau d'une section linguistique (langSet)</desc>
+</classSpec>
+<classSpec module="terminology" ident="tei.model.descts" xml:id="DESCTS" type="model">
+    <desc xml:lang="en">groups descriptive data categories that may occur within
+        a term section component (tig or ntig)</desc>
+    <desc xml:lang="fr">réunit les catégorie de données de type descriptif qui
+        s'ancrent au niveau d'une section terminologique (tig ou ntig)</desc>
+</classSpec>
+<classSpec module="terminology" ident="tei.model.admte" xml:id="ADMTE" type="model">
+    <desc xml:lang="en">groups administrative data categories that may occur
+        within a terminological entry component (termEntry)</desc>
+    <desc xml:lang="fr">réunit les catégorie de données de type administratif
+        qui s'ancrent au niveau d'une entrée terminologique (termEntry)</desc>
+</classSpec>
+<classSpec module="terminology" ident="tei.model.admls" xml:id="ADMLS" type="model">
+    <desc xml:lang="en">groups administrative data categories that may occur
+        within a language section component (langSet)</desc>
+    <desc xml:lang="fr">réunit les catégorie de données de type administratif
+        qui s'ancrent au niveau d'une section linguistique (langSet)</desc>
+</classSpec>
+<classSpec module="terminology" ident="tei.model.admts" xml:id="ADMTS" type="model">
+    <desc xml:lang="en">groups administrative data categories that may occur
+        within a term section component (tig or ntig)</desc>
+    <desc xml:lang="fr">réunit les catégorie de données de type administratif
+        qui s'ancrent au niveau d'une section terminologique (tig ou ntig)</desc>
+</classSpec>
+<classSpec module="terminology" ident="tei.model.notts" xml:id="NOTTS" type="model">
+    <desc xml:lang="fr">la classe deste concerne les catégorie de données de
+        type termNote qui s'ancrent au niveau du composant du terme (tig,
+        termSection, TS)</desc>
+    <desc xml:lang="en">A termnote tag is used since the information is closely
+        associated with the term itself rather than with the concept being described</desc>
+</classSpec>
+<classSpec module="terminology" ident="tei.model.nottcs" xml:id="NOTTCS" type="model">
+    <desc xml:lang="fr">la classe deste concerne les catégorie de données de
+        type administrative qui s'ancrent au niveau du composant du terme</desc>
+    <desc xml:lang="en">A termnote tag is used since the information is closely
+        associated with the term itself rather than with the concept being described</desc>
+</classSpec>
+<elementSpec ident="termEntry" xml:id="TERMENTRY" module="terminology">
+    <desc xml:lang="en">implements the terminological entry component of ISO
+        16642, which contains information that pertains to a single concept </desc>
+    <content>
+        <rng:group>
+            <rng:ref name="tei.model.admte"/>
+            <rng:ref name="tei.model.descte"/>
+        </rng:group>
+        <rng:ref name="langSet"/>
+    </content>
+</elementSpec>
+<elementSpec ident="langSet" xml:id="LANGSET" module="terminology">
+    <gloss>Language Section component</gloss>
+    <desc xml:lang="en">implements the language section component of ISO 16642,
+        which describes the part of a terminological entry containing
+        information related to one language</desc>
+    <content>
+        <rng:group>
+            <rng:ref name="tei.model.admls"/>
+            <rng:ref name="tei.model.descls"/>
+            <rng:ref name="tig"/>
+            <rng:ref name="ntig"/>
+        </rng:group>
+    </content>
+</elementSpec>
+<elementSpec ident="tig" xml:id="TIG" module="terminology">
+    <gloss>Term Information group.</gloss>
+    <desc xml:lang="en">The metamodel in ISO 16642 states that a Language
+        section consists of instances of term Section object class, which in TBX
+        corresponds to a tig (or ntig) element. An instance of a term section
+        consists of a term and associated informations.</desc>
+    <content>
+        <rng:ref name="term"/>
+        <rng:ref name="tei.model.descts"/>
+        <rng:ref name="tei.model.admts"/>
+        <rng:ref name="tei.model.notts"/>
+        <rng:text/>
+    </content>
+</elementSpec>
+<elementSpec ident="ntig" xml:id="NTIG" module="terminology">
+    <gloss>nested term information group</gloss>
+    <desc xml:lang="en">The metamodel in ISO 16642 states that a Language
+        section consists of instances of term Section object class, which in TBX
+        corresponds to a tig (or ntig) element. An instance of a term section
+        consists of a term and associated informations.</desc>
+    <content>
+        <rng:ref name="term"/>
+        <rng:ref name="tei.model.descts"/>
+        <rng:ref name="tei.model.admts"/>
+        <rng:ref name="tei.model.notts"/>
+        <rng:ref name="tei.model.nottcs"/>
+    </content>
+</elementSpec>
+<!--<elementSpec ident="term" xml:id="TERM" module="terminology">
+    <equiv name="term" uri="http://www.tc37sc4.org"/>
+    <desc>A verbal designation of a general concept in a specific subject field. [source:ISO12620]</desc>
+    <content>
+        <rng:text/>
+    </content>
+</elementSpec>-->
+<elementSpec ident="definition" xml:id="DEFINITION" module="terminology">
+    <equiv name="definition" uri="http://www.tc37sc4.org"/>
+    <desc>A representation of a concept by a descriptive statement which serves
+        to differentiate it from related concepts. [ISO12620:1999] </desc>
+    <classes>
+        <memberOf key="tei.model.descls"/>
+        <memberOf key="tei.model.descts"/>
+        <memberOf key="tei.model.descte"/>
+    </classes>
+    <content>
+        <rng:text/>
+    </content>
+</elementSpec>
+<elementSpec ident="definitionStmt" xml:id="DEFINITIONSTMT" module="terminology">
+    <desc>Element grouping a definition and corresponding refining elements</desc>
+    <classes>
+        <memberOf key="tei.model.descls"/>
+        <memberOf key="tei.model.descts"/>
+        <memberOf key="tei.model.descte"/>
+    </classes>
+    <content>
+        <rng:ref name="definition"/>
+        <rng:oneOrMore>
+            <rng:ref name="tei.model.sourceLikeElements"/>
+        </rng:oneOrMore>
+    </content>
+</elementSpec>
+<elementSpec ident="broaderConcept" xml:id="BROADERCONCEPT" module="terminology">
+    <equiv name="broaderConceptGeneric"/>
+    <desc> A concept two or more levels of abstraction higher than subject
+        concept in a generic hierarchical concept system. [lrom]May be used to
+        point to a more general data category (e.g.: from /Common noun/ to
+        /Noun/; from a given language to a language group or family);[ISO12620]</desc>
+    <classes>
+        <memberOf key="tei.model.descte"/>
+    </classes>
+    <content>
+        <rng:oneOrMore>
+            <rng:text/>
+        </rng:oneOrMore>
+    </content>
+</elementSpec>
+<elementSpec ident="broaderConceptStmt" xml:id="BROADERCONCEPTSTMT" module="terminology">
+    <desc> Element grouping a broader concept and corresponding refining elements</desc>
+    <classes>
+        <memberOf key="tei.model.descte"/>
+    </classes>
+    <content>
+        <rng:ref name="broaderConcept"/>
+        <rng:oneOrMore>
+            <rng:ref name="tei.model.sourceLikeElements"/>
+        </rng:oneOrMore>
+    </content>
+</elementSpec>
+<elementSpec ident="originatingDatabase" xml:id="ORIGINATINGDATABASE" module="terminology">
+    <equiv name="originatingDataBaseName" uri="http://www.tc37sc4.org"/>
+    <desc>A database treated as a document for the purpose of bibliographic
+        documentation; the database from which an entry or a group of entries
+        are exported.</desc>
+    <classes>
+        <memberOf key="tei.model.admte"/>
+        <memberOf key="tei.model.admts"/>
+        <memberOf key="tei.model.sourceLikeElements"/>
+    </classes>
+    <content>
+        <rng:text/>
+    </content>
+    <remarks>
+        <p>Care should be taken to distinguish between the name of the
+            originating database and the identification of the originating
+            application in which that database was created.</p>
+    </remarks>
+</elementSpec>
+<elementSpec ident="originatingInstitution" xml:id="ORIGINATINGINSTITUTION" module="terminology">
+    <equiv name="originatingInstitution" uri="http://www.tc37sc4.org"/>
+    <desc>n institution (i.e., company, government agency, etc.) treated as a
+        source of information for the purpose of bibliographic documentation.</desc>
+    <classes>
+        <memberOf key="tei.model.admte"/>
+        <memberOf key="tei.model.admts"/>
+        <memberOf key="tei.model.sourceLikeElements"/>
+    </classes>
+    <content>
+        <rng:text/>
+    </content>
+</elementSpec>
+<elementSpec ident="subjectFieldStmt" xml:id="SUBJECTFIELDSTMT" module="terminology">
+    <desc>Element grouping a subjectField and corresponding refining elements</desc>
+    <classes>
+        <memberOf key="tei.model.descte"/>
+        <memberOf key="tei.model.descts"/>
+    </classes>
+    <content>
+        <rng:ref name="subjectField"/>
+        <rng:oneOrMore>
+            <rng:ref name="tei.model.sourceLikeElements"/>
+        </rng:oneOrMore>
+    </content>
+</elementSpec>
+<elementSpec ident="subjectField" xml:id="SUBJECTFIELD" module="terminology">
+    <equiv name="subjectField" uri="http://www.tc37sc4.org"/>
+    <desc>A field of special knowledge. [ISO12620:1999]</desc>
+    <classes>
+        <memberOf key="tei.model.descte"/>
+        <memberOf key="tei.model.descts"/>
+    </classes>
+    <content>
+        <rng:text/>
+    </content>
+    <exemplum>
+        <eg n="1">The subject field for annex C, figure C.3 is plastics. Example
+            2: Multiple levels Subject field (level 1): disease Subject field
+            (level 2): cancer Subject field (level 3): non-Hodgkin's lymphoma. </eg>
+    </exemplum>
+    <exemplum>
+        <eg n="2">Multiple levels Subject field (level 1): disease Subject field
+            (level 2): cancer Subject field (level 3): non-Hodgkin's lymphoma. </eg>
+    </exemplum>
+    <remarks>
+        <p> Within a language resource database, a set of subject fields,
+            domains or classification codes will generally be defined. More than
+            one subject field can be indicated for a given concept, and subject
+            fields can be designated hierarchically as subfields by indicating a
+            level index. Three levels are typical, although additional levels up
+            to 9 are practically possible.</p>
+    </remarks>
+</elementSpec>
+<elementSpec ident="register" xml:id="REGISTER" module="terminology">
+    <equiv name="register" uri="http://www.tc37sc4.org"/>
+    <desc>Classification indicating the relative level of language individually
+        assigned to a lexeme or term or to a text type. [ISO12620:1999]</desc>
+    <classes>
+        <memberOf key="notte"/>
+    </classes>
+    <content>
+        <rng:text/>
+    </content>
+    <attList org="group">
+        <attDef ident="type">
+            <valList type="closed">
+                <valItem ident="neutralRegister">
+<equiv name="neutralRegister"/>
+<gloss>The register appropriate to general texts or
+    discourse. [source:ISO12620]</gloss>
+                </valItem>
+                <valItem ident="technicalRegister">
+<equiv name="technicalRegister"/>
+<gloss>The register appropriate to scientific texts or
+    special languages. [source:ISO12620]</gloss>
+                </valItem>
+                <valItem ident="in-houseRegister">
+<equiv name="in-houseRegister"/>
+<gloss>The register of terms that are company-specific and
+    not readily recognized outside this environment.
+    [source:ISO12620]Note: In-house terminology is not
+    necessarily equivalent to bench-level terminology,
+    inasmuch as the former can thrive at very high levels of
+    research and development. In-house terminology is
+    frequently the source of new technical terminology that
+    eventually gains widespread acceptance on a broader
+    scale. [source:Mitre; TEI] </gloss>
+                </valItem>
+                <valItem ident="bench-levelRegister">
+<equiv name="bench-levelRegister"/>
+<gloss>The register of terms used in applications-oriented
+    as opposed to theoretical or academic levels of
+    language. [source:ISO12620]</gloss>
+                </valItem>
+                <valItem ident="slangRegister">
+<equiv name="slangRegister"/>
+<gloss>An extremely informal register of a word, term, or
+    text that is used in spoken and everyday language and
+    less commonly in documents. [source:ISO12620]</gloss>
+                </valItem>
+            </valList>
+        </attDef>
+    </attList>
+    <remarks>
+        <p>In some regions and terminology management environments (for
+            instance, family-planning medicine), the categorization of terms
+            according to register can be critical.</p>
+    </remarks>
+</elementSpec>
+<elementSpec ident="example" xml:id="EXAMPLE" module="terminology">
+    <equiv name="example" uri="http://www.tc37sc4.org"/>
+    <desc>Descriptive material that provides a sample of an object or entity
+        defined in the entry. [ISO12620:1999]</desc>
+    <classes>
+        <memberOf key="tei.model.descte"/>
+        <memberOf key="tei.model.descts"/>
+    </classes>
+    <content>
+        <rng:text/>
+    </content>
+</elementSpec>
+<elementSpec ident="administrativeStatus" xml:id="ADMINISTRATIVESTATUS" module="terminology">
+    <equiv name="administrativeStatus" uri="http://www.tc37sc4.org"/>
+    <desc>The status of a term with respect to its assignment to an
+        administrative level within a certain working environment. [ISO12620:1999]</desc>
+    <classes>
+        <memberOf key="notte"/>
+    </classes>
+    <content>
+        <rng:text/>
+    </content>
+    <attList org="group">
+        <attDef ident="type">
+            <valList type="semi">
+                <valItem ident="standardizedTerm">
+<equiv name="standardizedTerm"/>
+<gloss>A term that has been standardized by a standardizing
+    body. [source:ISO12620]</gloss>
+                </valItem>
+                <valItem ident="preferredTerm">
+<equiv name="preferredTerm"/>
+<gloss>A term rated according to the scale of a term
+    acceptability rating as the primary term for a given
+    concept. [source:ISO12620</gloss>
+                </valItem>
+                <valItem ident="admittedTerm">
+<equiv name="admittedTerm"/>
+<gloss>A term rated according to the scale of a term
+    acceptability rating as a synonym for a preferred term. [source:ISO12620]</gloss>
+                </valItem>
+                <valItem ident="deprecatedTerm">
+<equiv name="deprecatedTerm"/>
+<gloss>A term rated according to the scale of a term
+    acceptability rating as undesired. [source:ISO12620]</gloss>
+                </valItem>
+                <valItem ident="supersededTerm">
+<equiv name="supersededTerm"/>
+<gloss>A term that is no longer preferred or admitted. [source:ISO12620]</gloss>
+                </valItem>
+                <valItem ident="legalTerm">
+<equiv name="legalTerm"/>
+<gloss>A term that is legally defined and used in legally
+    binding documents. [source:ISO12620]</gloss>
+                </valItem>
+            </valList>
+        </attDef>
+    </attList>
+</elementSpec>
+<elementSpec ident="grammaticalGender" xml:id="GRAMMATICALGENDER" module="terminology">
+    <equiv name="grammaticalGender" uri="http://www.tc37sc4.org"/>
+    <desc>A grammatical category that indicates grammatical relationships
+        between words in sentences. [ISO12620:1999]</desc>
+    <classes>
+        <memberOf key="notte"/>
+        <memberOf key="tei.model.nottcs"/>
+    </classes>
+    <content>
+        <rng:text/>
+    </content>
+    <attList org="group">
+        <attDef ident="type">
+            <valList type="closed">
+                <valItem ident="masculine">
+<equiv name="masculine"/>
+<gloss>Of, relating to, or constituting the gender that
+    ordinarily includes most words or grammatical forms
+    referring to males. [source:ISO12620]</gloss>
+                </valItem>
+                <valItem ident="feminine">
+<equiv name="feminine"/>
+<gloss>Of, relating to, or constituting the gender that
+    ordinarily includes most words or grammatical forms
+    referring to females. [source:ISO12620]</gloss>
+                </valItem>
+                <valItem ident="neuter">
+<equiv name="neuter"/>
+<gloss>Of, relating to, or constituting the gender that
+    ordinarily includes most words or grammatical forms
+    referring to objects that are not characterized as male
+    or female. [source:ISO12620]</gloss>
+                </valItem>
+            </valList>
+        </attDef>
+    </attList>
+    <remarks>
+        <p>The concept of gender varies from language to language and is not a
+            universal feature of all languages.</p>
+    </remarks>
+</elementSpec>
+<elementSpec ident="grammaticalNumber" xml:id="GRAMMATICALNUMBER" module="terminology">
+    <equiv name="grammaticalNumber" uri="http://www.tc37sc4.org"/>
+    <desc>In many languages, the grammatical distinction that indicates the
+        number of objects referred to by the term or word. [ISO12620:1999]</desc>
+    <classes>
+        <memberOf key="notte"/>
+        <memberOf key="tei.model.nottcs"/>
+    </classes>
+    <content>
+        <rng:text/>
+    </content>
+    <attList org="group">
+        <attDef ident="type">
+            <valList type="closed">
+                <valItem ident="singular">
+<equiv name="singular"/>
+<desc>The form of a term or word (usually of a noun) used to
+    designate one object. [source:ISO12620]</desc>
+                </valItem>
+                <valItem ident="plural">
+<equiv name="plural"/>
+<desc>The form of a term or word (usually of a noun) used to
+    designate more than one object. [source:ISO12620]</desc>
+                </valItem>
+                <valItem ident="dual">
+<equiv name="dual"/>
+<desc>The form used in some languages to designate two
+    persons or things. [source:ISO12620]</desc>
+                </valItem>
+            </valList>
+        </attDef>
+    </attList>
+    <exemplum>
+        <eg>Example 1: The child eats his dinner. The children eat their dinner.
+            singular: -- child is a singular noun child is a third person
+            singular verb plural: -- children is a plural noun eat is a third
+            person plural verb Example 2: mass noun: -- smoke, water, food.</eg>
+    </exemplum>
+    <remarks>
+        <p>In situations where the singular and the plural of a term do not
+            necessarily designate the same concept, the singular and plural
+            should be reported in separate entries in order to retain the
+            concept-orientation of the database.</p>
+    </remarks>
+</elementSpec>
+<elementSpec ident="partOfSpeech" xml:id="PARTOFSPEECH" module="terminology">
+    <equiv name="partOfSpeech" uri="http://www.tc37sc4.org"/>
+    <desc>A category assigned to a word based on its grammatical and semantic
+        properties. [ISO12620:1999]</desc>
+    <classes>
+        <memberOf key="tei.model.notts"/>
+        <memberOf key="tei.model.nottcs"/>
+    </classes>
+    <content>
+        <rng:text/>
+    </content>
+</elementSpec>
+<elementSpec ident="termType" xml:id="TERMTYPE" module="terminology">
+    <equiv name="lecTermType" uri="http://www.tc37sc4.org"/>
+    <desc>An attribute assigned to a lexeme or a term. [source:ISO12620]</desc>
+    <classes>
+        <memberOf key="tei.model.notts"/>
+    </classes>
+    <content>
+        <rng:text/>
+    </content>
+    <attList org="group">
+        <attDef ident="type">
+            <valList type="closed">
+                <valItem ident="fullForm">
+<equiv name="fullForm"/>
+<gloss>The complete presentation of a term or lexeme for
+    which there is an abbreviated form. [source:ISO12620]</gloss>
+                </valItem>
+                <valItem ident="transcribedForm">
+<equiv name="transcribedForm"/>
+<desc> A form of a term or lexeme resulting from an
+    operation whereby the characters of one writing system
+    are represented by characters from another writing
+    system, taking into account the pronunciation of the
+    characters converted. </desc>
+                </valItem>
+                <valItem ident="symbol">
+<equiv name="symbol"/>
+<desc>A designation of a concept by letters, numerals,
+    pictograms or any combination thereof. </desc>
+                </valItem>
+                <valItem ident="formula">
+<equiv name="formula"/>
+<desc>Figures, symbols or the like used to express a concept
+    briefly, such as a mathematical or chemical formula.
+    [source:ISO12620] </desc>
+<!--<exemplum>
+    <eg>H2O is the chemical formula for water.</eg>
+</exemplum>
+<remarks>
+    <p>A formula can function as a term representing the
+        concept. In some cases, no other representation
+        exists. [source:Mitre]</p>
+</remarks> -->
+                </valItem>
+                <valItem ident="equation">
+<equiv name="equation"/>
+<desc> An expression used to represent a concept based on a
+    statement that two mathematical expressions are, for
+    instance, equal as identified by the equal sign (=), or
+    assigned to one another by a similar sign.
+    [source:ISO12620] </desc>
+<!--<remarks>
+    <p>Such statements are sometimes documented in
+        terminology databases. [source:Mitre]</p>
+</remarks>
+<exemplum>
+    <eg>E=mc2 [source:Mitre]</eg>
+</exemplum> -->
+                </valItem>
+                <valItem ident="logicalExpression">
+<equiv name="logicalExpression"/>
+<desc>An expression used to represent a concept based on
+    mathematical or logical relations, such as statements of
+    inequality, set relationships, boolean operations, and
+    the like. [source:ISO12620] </desc>
+<!--<exemplum>
+    <eg>x y , x ? y , x NOT y , etc. [Insert Unicode] [source:Mitre]</eg>
+</exemplum>-->
+                </valItem>
+                <valItem ident="abbreviatedFormOfTerm">
+<equiv name="abbreviatedFormOfTerm"/>
+<gloss>...</gloss>
+                </valItem>
+                <valItem ident="variant">
+<equiv name="variant"/>
+<desc> One of the alternate forms of a term or lexeme. </desc>
+<!--<exemplum>
+    <eg>spelling variants: catalogue (GB), catalog
+        (US)</eg>
+</exemplum>-->
+                </valItem>
+                <valItem ident="shortFormOfTerm">
+<equiv name="shortForm"/>
+<desc> A variant of a multiword term or lexeme that includes
+    fewer words than the full form. [source:ISO12620] </desc>
+<!--<remarks>
+    <p>Many short forms are associated with long proper
+        nouns, such as the names of governmental agencies,
+        chemical compounds, and the like. [source:Mitre]</p>
+</remarks>-->
+                </valItem>
+                <valItem ident="transliteratedForm">
+<equiv name="transliteratedForm"/>
+<desc>A form of a term or lexeme resulting from an operation
+    whereby the characters of an alpabetic writing system
+    are represented by characters from another alphabetic
+    writing system.</desc>
+                </valItem>
+                <valItem ident="sku">
+<equiv name="sku"/>
+<desc> An inventory item identified by a unique alphanumeric
+    designation assigned to an object in an inventory
+    control system. </desc>
+<!--<remarks>
+    <p>Terminology databases that are linked to inventory
+        control systems and manufacturing logistical systems
+        include skus and part numbers, which act as
+        designations within the system representing the
+        object in question. Hence they function much like
+        terms and even take on the character of terms in
+        common discourse and text creation.</p>
+</remarks>-->
+                </valItem>
+                <valItem ident="phraseologicalUnit">
+<equiv name="phraseologicalUnit"/>
+<desc>Any group of two or more words that form a unit, the
+    meaning of which frequently cannot be deduced based on
+    the combined sense of the words making up the phrase. </desc>
+<!--<remarks>
+    <p>Although they are made up of more than one word and
+        frequently contain more than one concept,
+        phraseological units can be treated as individual
+        terminological or lexical units in databases. In
+        this sense they are grouped together with terms and
+        lexemes. They can, however, also be treated as
+        contextual material in some databases.</p>
+</remarks>-->
+                </valItem>
+                <valItem ident="synonymousPhrase">
+<equiv name="synonymousPhrase"/>
+<desc> A phraseological unit in a language that expresses
+    the same semantic content as another phrase in that same
+    language. [ISO12620] </desc>
+<!-- <exemplum>
+    <eg>The phrases response to open flame exposure and
+        effect of open flame exposure are treated as
+        synonymous phrases in some fire standards.</eg>
+</exemplum> -->
+                </valItem>
+                <valItem ident="standardText">
+<equiv name="standardText"/>
+<desc> fixed chunk of recurring text </desc>
+<!--<remarks>
+    <p>Although they are made up of more than one word and
+        generally contain more than one concept, standard
+        text units can be treated as individual
+        terminological units in terminology databases. These
+        text chunks, as they are called in discourse
+        analysis, are frequently called boiler plate in
+        North American English.[MITRE]</p>
+</remarks>
+<exemplum>
+    <eg>the force majeure clause of a standard contract
+        terms and conditions of sale warranty disclaimers[MITRE]</eg>
+</exemplum>-->
+                </valItem>
+                <valItem ident="string">
+<equiv name="string"/>
+<desc> A chunk of text used in a software interface,
+    documentation, help file, or the like.[ISO12620] </desc>
+<!--<remarks>
+    <p>Strings can consist a single word, a sentence, or
+        even a short paragraph. They are similar to standard
+        text in that they generally not really terms, but
+        they are treated as if they were terms in
+        localization environments.[MITRE]</p>
+</remarks>-->
+                </valItem>
+            </valList>
+        </attDef>
+    </attList>
+</elementSpec>
+<elementSpec ident="timeRestriction" xml:id="TIMERESTRICTION" module="terminology">
+    <equiv name="timeRestriction" uri="http://www.tc37sc4.org"/>
+    <desc>The indication of a period of time during or since which a term was or
+        has been subject to specified usage. [ISO12620:1999]</desc>
+    <classes>
+        <memberOf key="tei.model.notts"/>
+    </classes>
+    <content>
+        <rng:text/>
+    </content>
+    <exemplum>
+        <eg>Several European countries have redefined the requirements for
+            certain university degrees in recent years. If, for instance, the
+            requirements for a baccalaureate degree changed from three to four
+            years in 1993, then any terminology file defining the term used to
+            designate this degree would have to specify the time restriction
+            affecting the degree.</eg>
+    </exemplum>
+</elementSpec>
+<elementSpec ident="usageNote" xml:id="USAGENOTE" module="terminology">
+    <equiv name="usageNote" uri="http://www.tc37sc4.org"/>
+    <desc>A note containing information on the usage of the associated word or
+        term. [ISO12620:1999]</desc>
+    <classes>
+        <memberOf key="tei.model.notts"/>
+    </classes>
+    <content>
+        <rng:text/>
+    </content>
+</elementSpec>
+<elementSpec ident="usageNoteStmt" xml:id="USAGENOTESTMT" module="terminology">
+    <desc>Element grouping a usage note and corresponding refining elements</desc>
+    <classes>
+        <memberOf key="tei.model.notts"/>
+    </classes>
+    <content>
+        <rng:ref name="usageNote"/>
+        <rng:oneOrMore>
+            <rng:ref name="tei.model.sourceLikeElements"/>
+        </rng:oneOrMore>
+    </content>
+</elementSpec>
+<elementSpec ident="context" xml:id="CONTEXT" module="terminology">
+    <equiv name="context" uri="http://www.tc37sc4.org"/>
+    <desc>A text which illustrates a concept or the use of a designation. [source:ISO12620]</desc>
+    <classes>
+        <memberOf key="tei.model.notts"/>
+    </classes>
+    <content>
+        <rng:text/>
+    </content>
+</elementSpec>
+<elementSpec ident="contextStmt" xml:id="CONTEXTSTMT" module="terminology">
+    <desc>Element grouping a context and corresponding refining elements</desc>
+    <classes>
+        <memberOf key="tei.model.notts"/>
+    </classes>
+    <content>
+        <rng:ref name="context"/>
+        <rng:oneOrMore>
+            <rng:ref name="tei.model.sourceLikeElements"/>
+        </rng:oneOrMore>
+    </content>
+</elementSpec>
+<!--<elementSpec ident="note" xml:id="NOTE" module="terminology">
+    <equiv name="note" uri="http://www.tc37sc4.org"/>
+    <desc>A statement that provides further information on any part of a
+        language resource entry.[ISO12620:1999]</desc>
+    <classes>
+        <memberOf key="tei.model.notts"/>
+    </classes>
+    <content>
+        <rng:text/>
+    </content>
+</elementSpec>-->
+<elementSpec ident="noteStmt" xml:id="NOTESTMT" module="terminology">
+    <desc>Element grouping a note and corresponding refining elements</desc>
+    <classes>
+        <memberOf key="tei.model.notts"/>
+    </classes>
+    <content>
+        <rng:ref name="note"/>
+        <rng:oneOrMore>
+            <rng:ref name="tei.model.sourceLikeElements"/>
+        </rng:oneOrMore>
+    </content>
+</elementSpec>
+<elementSpec ident="associatedConcept" xml:id="ASSOCIATEDCONCEPT" module="terminology">
+    <equiv name="associatedConcept" uri="http://www.tc37sc4.org"/>
+    <desc>A concept that exhibits a relation to the subject concept that can be
+        established on the basis of non-hierarchical thematic connections.</desc>
+    <classes>
+        <memberOf key="tei.model.descte"/>
+        <memberOf key="tei.model.descls"/>
+    </classes>
+    <content>
+        <rng:oneOrMore>
+            <rng:text/>
+        </rng:oneOrMore>
+    </content>
+</elementSpec>
+<elementSpec ident="associatedConceptStmt" xml:id="ASSOCIATEDCONCEPTSTMT" module="terminology">
+    <desc> Element grouping a associated concept and corresponding refining elements</desc>
+    <classes>
+        <memberOf key="tei.model.notts"/>
+    </classes>
+    <content>
+        <rng:ref name="associatedConcept"/>
+        <rng:oneOrMore>
+            <rng:ref name="tei.model.sourceLikeElements"/>
+        </rng:oneOrMore>
+    </content>
+</elementSpec>
+<elementSpec ident="applicationSubset" xml:id="APPLICATIONSUBSET" module="terminology">
+    <equiv/>
+    <desc/>
+    <classes>
+        <memberOf key="tei.model.admte"/>
+    </classes>
+    <content>
+        <rng:text/>
+    </content>
+</elementSpec>
+<elementSpec ident="domainExpert" xml:id="DOMAINEXPERT" module="terminology">
+    <equiv name="domainExpert" uri="http://www.tc37sc4.org"/>
+    <desc>Subject field specialist who provides information pertinent to a
+        terminological entry, such as a definition or target language equivalent.</desc>
+    <classes>
+        <memberOf key="tei.model.admte"/>
+        <memberOf key="tei.model.admts"/>
+    </classes>
+    <content>
+        <rng:text/>
+    </content>
+</elementSpec>
+<elementSpec ident="productSubset" xml:id="PRODUCTSUBSET" module="terminology">
+    <equiv name="productSubset" uri="http://www.tc37sc4.org"/>
+    <desc>An identifier assigned to a product to which a term is related.</desc>
+    <classes>
+        <memberOf key="tei.model.admte"/>
+    </classes>
+    <content>
+        <rng:text/>
+    </content>
+</elementSpec>
+<elementSpec ident="te-source" xml:id="TE-SOURCE" module="terminology">
+    <equiv name="source" uri="http://www.tc37sc4.org"/>
+    <desc>[lrom] may refine1 /definition/, /explanation/, /Level/, /Target
+        Level/ or /example/ to indicate the source from which the corresponding
+        text has been borrowed or adapted. When a definition is compiled from
+        more then one source, this field can be repeated. The /source/ field
+        should not be used alone at DS level</desc>
+    <classes>
+        <memberOf key="tei.model.admte"/>
+        <memberOf key="tei.model.admts"/>
+        <memberOf key="tei.model.admls"/>
+        <memberOf key="tei.model.sourceLikeElements"/>
+    </classes>
+    <content>
+        <rng:text/>
+    </content>
+</elementSpec>
+<!-- classe des éléments de rafinement pour tout ce qui touche aux sources -->
+<classSpec module="terminology" ident="tei.model.sourceLikeElements" type="model">
+    <desc xml:lang="en">groups all data categories that may be used to refine
+        descriptive elements such as associatedConcept, definition, etc.</desc>
+    <desc xml:lang="fr">réunit les catégorie de données qui peuvent être
+        utilisées pour raffiner des éléments descriptifs tels que
+        associatedConcept, definition, etc.</desc>
+</classSpec>
+
+</p></div2></div1>
+
+<!--                </schemaSpec>
+            </div1>
+       </body>
+    </text>
+</TEI>
 -->
-<div1 xmlns="http://www.tei-c.org/ns/1.0" type="chapter" n="xx" xml:id="TE"><head>Terminological Databases</head>
-<p>This chapter has been temporarily removed, pending a complete
-revision. The work described here in earlier versions of the
-Guidelines has since been superceded by a number of related and
-emerging ISO standards, in particular ISO 12200: 1999 <title>Computer
-applications in Terminology — Machine-readable terminology interchange
-format (MARTIF) — negotiated interchange</title> and more recently ISO
-16642: 2003 <title>Computer applications in terminology -
-Terminological Markup Framework</title>, which defines a familly of
-formats to be used in combination with descriptors provided by ISO CD
-12620:1999 <title>Computer applications in terminology - Data
-categories</title> (under revision). The revised chapter will specify
-a core terminological model,  conformant with ISO 16642</p>
-</div1>
