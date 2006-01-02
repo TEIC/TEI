@@ -82,16 +82,17 @@
       <xsl:call-template name="copyright"/>
       <xsl:text>&#10;--&gt;&#10;</xsl:text>
       <xsl:if test="@type='core'">
-	  &lt;!ENTITY % TEI.extensions.ent '' &gt;%TEI.extensions.ent;
+	<xsl:text>&lt;!ENTITY % TEI.extensions.ent '' &gt;
+%TEI.extensions.ent;</xsl:text>
 	<!-- legacy declaration of omissability indicators -->
 	<xsl:text>
-	  &lt;!ENTITY % TEI.XML 'INCLUDE' &gt;
-	  &lt;![%TEI.XML;[
-	  &lt;!ENTITY % om.RO '' &gt;
-	  &lt;!ENTITY % om.RR '' &gt;
-	  ]]&gt;
-	  &lt;!ENTITY % om.RO '- o' &gt;
-	  &lt;!ENTITY % om.RR '- -' &gt;
+&lt;!ENTITY % TEI.XML 'INCLUDE' &gt;
+&lt;![%TEI.XML;[
+&lt;!ENTITY % om.RO '' &gt;
+&lt;!ENTITY % om.RR '' &gt;
+]]&gt;
+&lt;!ENTITY % om.RO '- o' &gt;
+&lt;!ENTITY % om.RR '- -' &gt;
 	</xsl:text>
 	<xsl:call-template name="NameList"/>
       </xsl:if>
@@ -111,12 +112,12 @@
 	<xsl:for-each select="key('DefClasses',1)">
 	  <xsl:choose>
 	    <xsl:when test="@type='atts'">    
-	      <xsl:apply-templates select="." mode="processAtts"/>
+	      <xsl:call-template name="classAtt">
+		<xsl:with-param name="declare">false</xsl:with-param>
+	      </xsl:call-template>
 	    </xsl:when>
 	    <xsl:when test="@type='model'">    
-	      <xsl:apply-templates select="." mode="processModel">
-		<xsl:with-param name="declare">false</xsl:with-param>
-	      </xsl:apply-templates>
+	      <xsl:call-template name="classModel"/>
 	    </xsl:when>
 	  </xsl:choose>
 	</xsl:for-each>
@@ -129,13 +130,22 @@
 	<xsl:sort select="@ident"/>
       </xsl:apply-templates>
       <xsl:if test="@type='core'">
-	&lt;!ENTITY % TEI.extensions.dtd '' &gt;%TEI.extensions.dtd;
+	<xsl:text>&#10;&lt;!ENTITY % TEI.extensions.dtd '' &gt;
+%TEI.extensions.dtd;</xsl:text>
 	<xsl:for-each select="key('Modules',1)">
 	  <xsl:sort select="@ident" order="descending"/>
 	  <xsl:if test="not(@type='core')">
 	    <xsl:text>&#10;&lt;!ENTITY % TEI.</xsl:text>
 	    <xsl:value-of select="@ident"/>
-	    <xsl:text> 'IGNORE' &gt;&#10;</xsl:text>
+	    <xsl:text> 'IGNORE' &gt;</xsl:text>
+	  </xsl:if>
+	</xsl:for-each>
+      </xsl:if>
+      <xsl:text>&#10;&lt;!-- the module entities --&gt;&#10;</xsl:text>
+      <xsl:if test="@type='core'">
+	<xsl:for-each select="key('Modules',1)">
+	  <xsl:sort select="@ident" order="descending"/>
+	  <xsl:if test="not(@type='core')">
 	    <xsl:if test="key('DeclModules',concat(@ident,'-decl'))">
 	      <xsl:text>&#10;&lt;!ENTITY % file.</xsl:text>
 	      <xsl:value-of select="@ident"/>
@@ -227,13 +237,16 @@
     <xsl:for-each select="key('DefClasses',1)">
       <xsl:choose>
 	<xsl:when test="@type='atts'">    
-	  <xsl:apply-templates select="." mode="processAtts"/>
-	</xsl:when>
-	<xsl:when test="@type='model'">    
-	  <xsl:apply-templates select="." mode="processModel">
+	  <xsl:call-template name="classAtt">
 	    <xsl:with-param name="declare">false</xsl:with-param>
-	  </xsl:apply-templates>
+	  </xsl:call-template>
 	</xsl:when>
+<!--	<xsl:when test="@type='model'">    
+	  <xsl:call-template name="classModel">
+	    <xsl:with-param name="declare">false</xsl:with-param>
+	  </xsl:call-template>
+	</xsl:when>
+-->
       </xsl:choose>
     </xsl:for-each>
     <xsl:text>&#10;&lt;!--end of predeclared classes --&gt;&#10;</xsl:text>
@@ -918,6 +931,7 @@ So, at the first, process the second; at the second, do nothing.
 </xsl:template>
 
 <xsl:template name="classAtt">
+  <xsl:param name="declare">true</xsl:param>
   <xsl:if test="$verbose='true'">
     <xsl:message>    ....  <xsl:value-of
     select="@ident"/>.attributes</xsl:message>  
@@ -926,27 +940,36 @@ So, at the first, process the second; at the second, do nothing.
     <xsl:value-of select="@ident"/>   
   </xsl:variable>
   <xsl:choose>
-    <xsl:when test="$parameterize='true'">
+    <xsl:when test="$declare='false'">
       <xsl:text>&#10;&lt;!ENTITY % </xsl:text>
-      <xsl:value-of select="$thisclass"/>
-      <xsl:text>.attributes &#39;</xsl:text>
-      <xsl:call-template name="attclasses"/>
-      <xsl:call-template name="attributeList"/>
-      <xsl:text>&#39;&gt; </xsl:text>
+      <xsl:value-of select="$thisclass"/>   
+      <xsl:text>.attributes</xsl:text>
+      <xsl:text> ''&gt;</xsl:text>
     </xsl:when>
-    <xsl:otherwise>
-      <xsl:for-each select="tei:attList/tei:attDef">
-	<xsl:text>&#10;&lt;!ENTITY % </xsl:text>
-	<xsl:value-of select="$thisclass"/>
-	<xsl:text>.attribute.</xsl:text>
-	<xsl:value-of select="translate(@ident,':','')"/>
-	<xsl:text> '</xsl:text>
-	<xsl:apply-templates select="." mode="tangle"/>
-	<xsl:text>'&gt;&#10;</xsl:text>
-      </xsl:for-each>
+    <xsl:otherwise>      
+      <xsl:choose>
+	<xsl:when test="$parameterize='true'">
+	  <xsl:text>&#10;&lt;!ENTITY % </xsl:text>
+	  <xsl:value-of select="$thisclass"/>
+	  <xsl:text>.attributes &#39;</xsl:text>
+	  <xsl:call-template name="attclasses"/>
+	  <xsl:call-template name="attributeList"/>
+	  <xsl:text>&#39;&gt; </xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:for-each select="tei:attList/tei:attDef">
+	    <xsl:text>&#10;&lt;!ENTITY % </xsl:text>
+	    <xsl:value-of select="$thisclass"/>
+	    <xsl:text>.attribute.</xsl:text>
+	    <xsl:value-of select="translate(@ident,':','')"/>
+	    <xsl:text> '</xsl:text>
+	    <xsl:apply-templates select="." mode="tangle"/>
+	    <xsl:text>'&gt;&#10;</xsl:text>
+	  </xsl:for-each>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:otherwise>
   </xsl:choose>
-  
 </xsl:template>
 
 <xsl:template match="tei:classSpec" mode="tagatts">
@@ -1018,36 +1041,22 @@ So, at the first, process the second; at the second, do nothing.
 </xsl:template>
 
 
-
-<xsl:template match="tei:classSpec" mode="processModel">
-  <xsl:param name="declare">false</xsl:param>
-  <xsl:call-template name="classModel"/>
-</xsl:template>
-
-<xsl:template match="tei:classSpec" mode="processAtts">
-  <xsl:call-template name="classAtt"/>
-</xsl:template>
-
-
 <xsl:template name="classModel">
   <xsl:if test="$verbose='true'">
     <xsl:message>    ....model <xsl:value-of
     select="@ident"/></xsl:message>
   </xsl:if>
-  <xsl:variable name="thisclass">
-    <xsl:value-of select="@ident"/>   
-  </xsl:variable>
-  <xsl:if test="$parameterize='true'">
-    <xsl:text>&#10;&lt;!ENTITY % x.</xsl:text>
-    <xsl:value-of select="$thisclass"/>
-    <xsl:text>&#10;"" &gt;</xsl:text>
-  </xsl:if>
-  <xsl:text>&#10;&lt;!ENTITY % </xsl:text>
-    <xsl:value-of select="$thisclass"/>
+    <xsl:if test="$parameterize='true'">
+      <xsl:text>&#10;&lt;!ENTITY % x.</xsl:text>
+      <xsl:value-of select="@ident"/>
+      <xsl:text> "" &gt;</xsl:text>
+    </xsl:if>
+    <xsl:text>&#10;&lt;!ENTITY % </xsl:text>
+    <xsl:value-of select="@ident"/>
     <xsl:text> "</xsl:text>
     <xsl:if test="$parameterize='true'">
       <xsl:text>%x.</xsl:text>
-      <xsl:value-of select="$thisclass"/>
+      <xsl:value-of select="@ident"/>
       <xsl:text>; </xsl:text>
     </xsl:if>
     <xsl:variable name="members">
@@ -1071,7 +1080,7 @@ So, at the first, process the second; at the second, do nothing.
 		    </xsl:if>
 		  </xsl:when>
 		  <xsl:when test="key('MACROS',@ident)">
-		      <xsl:text>%</xsl:text>
+		    <xsl:text>%</xsl:text>
 		      <xsl:value-of select="@ident"/>
 		      <xsl:text>;</xsl:text>
 		  </xsl:when>
@@ -1127,7 +1136,6 @@ So, at the first, process the second; at the second, do nothing.
       <xsl:if test="count(N) = 2 and count(N[@type])=count(N)">)</xsl:if>
     </xsl:for-each>
     <xsl:text>"&gt; </xsl:text>
-    
 </xsl:template>
 
 
