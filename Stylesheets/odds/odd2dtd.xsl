@@ -88,8 +88,8 @@
 &lt;!ENTITY % om.RO '' &gt;
 &lt;!ENTITY % om.RR '' &gt;
 ]]&gt;
-&lt;!ENTITY % om.RO '' &gt;
-&lt;!ENTITY % om.RR '' &gt;
+&lt;!ENTITY % om.RO '- o' &gt;
+&lt;!ENTITY % om.RR '- -' &gt;
 <xsl:call-template name="NameList"/>
 </xsl:if>
 
@@ -131,12 +131,21 @@ End of datatype macro declarations
   <xsl:for-each select="key('Modules',1)">
     <xsl:sort select="@ident" order="descending"/>
     <xsl:if test="not(@type='core')">
-&lt;!ENTITY % TEI.<xsl:value-of select="@ident"/> 'IGNORE' &gt;
+<xsl:text>&#10;&lt;!ENTITY % TEI.</xsl:text>
+<xsl:value-of select="@ident"/>
+<xsl:text>'IGNORE' &gt;&#10;</xsl:text>
 <xsl:if test="key('DeclModules',concat(@ident,'-decl'))">
-&lt;!ENTITY % file.<xsl:value-of select="@ident"/>-decl PUBLIC '-//TEI P5//<xsl:value-of select="tei:altIdent[@type='FPI']"/>//EN' '<xsl:value-of select="@ident"/>-decl.dtd' &gt;
-&lt;![%TEI.<xsl:value-of select="@ident"/>;[
-%file.<xsl:value-of select="@ident"/>-decl;
-]]&gt;
+  <xsl:text>&#10;&lt;!ENTITY % file.</xsl:text>
+  <xsl:value-of select="@ident"/>
+  <xsl:text>-decl PUBLIC '-//TEI P5//ENTITIES </xsl:text>
+  <xsl:value-of select="tei:altIdent[@type='FPI']"/>
+  <xsl:text>//EN' '</xsl:text>
+  <xsl:value-of select="@ident"/>
+  <xsl:text>-decl.dtd' &gt;&#10;&lt;![%TEI.</xsl:text>
+  <xsl:value-of select="@ident"/>
+  <xsl:text>;[ %file.</xsl:text>
+  <xsl:value-of select="@ident"/>
+  <xsl:text>-decl;&#10;]]&gt;&#10;</xsl:text>
 </xsl:if>
     </xsl:if>
   </xsl:for-each>
@@ -158,11 +167,18 @@ End of macro declarations
     <xsl:sort select="@ident" order="descending"/>
     <xsl:if test="not(key('DeclModules',@ident))">
       <xsl:if test="not(@type='core')">
-&lt;![%TEI.<xsl:value-of select="@ident"/>;[
-&lt;!ENTITY % file.<xsl:value-of select="@ident"/> PUBLIC '-//TEI P5//<xsl:value-of select="tei:altIdent[@type='FPI']"/>//EN' '<xsl:value-of select="@ident"/>.dtd' &gt;
-%file.<xsl:value-of select="@ident"/>;
-]]&gt;
-    </xsl:if>
+	<xsl:text>&#10;&lt;![%TEI.</xsl:text>
+	<xsl:value-of select="@ident"/>
+	<xsl:text>;[&#10;&lt;!ENTITY % file.</xsl:text>
+	<xsl:value-of select="@ident"/>
+	<xsl:text> PUBLIC '-//TEI P5//ELEMENTS </xsl:text>
+	<xsl:value-of select="tei:altIdent[@type='FPI']"/>
+	<xsl:text>//EN' '</xsl:text>
+	<xsl:value-of select="@ident"/>
+	<xsl:text>.dtd' &gt;&#10;%file.</xsl:text>
+	<xsl:value-of select="@ident"/>
+	<xsl:text>;&#10;]]&gt;&#10;</xsl:text>
+      </xsl:if>
     </xsl:if>
   </xsl:for-each>
 </xsl:if>
