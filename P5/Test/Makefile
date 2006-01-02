@@ -35,7 +35,7 @@ TESTSPECIALFILES= \
 
 default: schemas test-schema test-dtd test-dtd-xmllint test-xsd test-bad
 
-all: test-schema test-dtd test-xsd
+all: test-schema test-dtd test-xsd test-extns
 
 schemas:
 	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES) $(TESTBADFILES); do \
@@ -83,6 +83,9 @@ test-dtd-xmllint:
 	echo xmllint DTD ....
 	-for i in `echo $(TESTFILES) | sed 's/testi18n//' | sed 's/testodds//'  | sed 's/testall//' | sed 's/testp4compat//'`; do xmllint --noout --valid $$i.xml; done
 
+test-extns:
+	echo check whether user extensions work ....
+	xmllint --noout --valid testextns.xml
 
 test-bad:
 	echo Now test file with deliberate errors
