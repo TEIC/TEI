@@ -81,7 +81,7 @@ test-dtd:
 # testall, testp4compat, testodds have no DOCTYPE
 test-dtd-xmllint:
 	echo xmllint DTD ....
-	-for i in `echo $(TESTFILES) | sed 's/testi18n//' | sed 's/testodds//'  | sed 's/testall//' | sed 's/testp4compat//'`; do xmllint --noout --valid $$i.xml; done
+	-for i in `echo $(TESTFILES) | sed 's/testnames//' | sed 's/testi18n//' | sed 's/testodds//'  | sed 's/testall//' | sed 's/testp4compat//'`; do xmllint --noout --valid $$i.xml; done
 
 test-extns:
 	echo check whether user extensions work ....
