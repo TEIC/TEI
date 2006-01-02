@@ -496,16 +496,26 @@ To avoid having
       <p>Like the ubiquitous if misnamed HTML pointing attribute <att
       scheme="HTML">href</att>, the TEI pointing attributes can point
       to a document that is not the current document (the one that
-      contins the pointing element) whether it is in the same local
+      contains the pointing element) whether it is in the same local
       filesystem as the current document, or on a different system
       entirely. In either case, the pointing can be accomplished
       absolutely (using the entire address of the target document) or
       relatively (using an address relative to the current base URI in
-      force). The current base URI in force is as defined in the W3C
+      force). The <soCalled>current base URI</soCalled> is defined
+      according to the W3C <ref
+      target="http://www.w3.org/TR/xmlbase/">XML Base</ref>
+      recommendation. This recommendation defines an
+      <att>xml:base</att> attribute that may be inserted into XML
+      documents in order to make references more manageable. In
+      general the current base URI in force is the value of the
+      <att>xml:base</att> attribute of the closest ancestor that has one. If
+      there are none, the base URI is that of the current document.
+<!-- The current base URI in force is as defined in the W3C
       <ref target="http://www.w3.org/TR/xmlbase/">XML Base</ref>
       recommendation. In general, it is the value of the
       <att>xml:base</att> attribute of the closest ancestor that has
-      one, or if there are none, the URI of the location of the current document.</p>
+      one, or if there are none, the URI of the location of the current document.-->
+      </p>
       <p>The following example demonstrates an absolute URI reference
       that points to a remote document. It is the source code for the
       second to last sentence of the preceding paragraph.
@@ -580,7 +590,7 @@ both the source element and target element are in the same XML document.</p>
       <head>W3C element() Scheme</head>
       <p>An element may be pointed to by its position in the XML
       element tree using the <name type="xpscheme">element</name>
-      scheme defined by the World Wide Web Consortium. <note><ref
+      scheme defined by the World Wide Web Consortium.<note place="foot"><ref
       target="http://www.w3.org/TR/xptr-element/">XPointer element()
       Scheme</ref>.</note> In this scheme, an element is identified by
       stepwise navigation via a slash-separated list of child element
