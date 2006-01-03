@@ -97,15 +97,15 @@
 	<xsl:call-template name="NameList"/>
       </xsl:if>
       
-      <xsl:if test="@type='core' or $TEIC='false'">
-	<xsl:text>&#10;&lt;!-- Start datatype macro declarations --&gt;&#10;</xsl:text>
+	<xsl:text>&#10;&lt;!-- Start datatype macro declarations for </xsl:text>
+	<xsl:value-of select="@ident"/>
+	<xsl:text> --&gt;&#10;</xsl:text>
 	<xsl:for-each select="key('MacroModule',@ident)">
 	  <xsl:if test="@type='dt'">
 	    <xsl:apply-templates select="." mode="tangle"/>
 	  </xsl:if>
 	</xsl:for-each>
 	<xsl:text>&#10;&lt;!-- End of datatype macro declarations --&gt;&#10;</xsl:text>
-      </xsl:if>
       
       <xsl:if test="@type='core'">
 	<xsl:text>&#10;&lt;!-- Start of pre-declared classes --&gt;&#10;</xsl:text>
@@ -141,6 +141,7 @@
 	  </xsl:if>
 	</xsl:for-each>
       </xsl:if>
+
       <xsl:text>&#10;&lt;!-- the module entities --&gt;&#10;</xsl:text>
       <xsl:if test="@type='core'">
 	<xsl:for-each select="key('Modules',1)">
@@ -315,7 +316,7 @@
 </xsl:template>
 
 <xsl:template match="rng:element[rng:anyName]">
-  <xsl:text>ANY</xsl:text>
+  <xsl:text> #PCDATA</xsl:text>
 </xsl:template>
 
 <xsl:template match="rng:zeroOrMore">
@@ -877,6 +878,9 @@ So, at the first, process the second; at the second, do nothing.
     <xsl:variable name="Contents">
       <BLAH>
 	<xsl:choose>
+	  <xsl:when test="tei:content/rng:element[rng:anyName]">
+	    <xsl:text> (#PCDATA)</xsl:text>
+	  </xsl:when>
 	  <xsl:when test="tei:content/tei:valList[@type='closed']">
 	    <xsl:text> (#PCDATA)</xsl:text>
 	  </xsl:when>
