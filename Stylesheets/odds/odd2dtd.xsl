@@ -242,12 +242,11 @@
 	    <xsl:with-param name="declare">false</xsl:with-param>
 	  </xsl:call-template>
 	</xsl:when>
-<!--	<xsl:when test="@type='model'">    
+        <xsl:when test="@type='model' and $parameterize='false'">    
 	  <xsl:call-template name="classModel">
-	    <xsl:with-param name="declare">false</xsl:with-param>
+	    <xsl:with-param name="declare">true</xsl:with-param>
 	  </xsl:call-template>
 	</xsl:when>
--->
       </xsl:choose>
     </xsl:for-each>
     <xsl:text>&#10;&lt;!--end of predeclared classes --&gt;&#10;</xsl:text>
