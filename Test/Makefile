@@ -12,6 +12,7 @@ TESTFILES= \
 	testminimal \
 	testms \
 	testnames \
+	testtagdocs \
 	testoucs \
 	testp4compat \
 	tripReport \
