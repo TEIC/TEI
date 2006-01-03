@@ -25,7 +25,7 @@ dtds: check
 	# just hack them by hand.
 	perl -p -i -e 's/,\|/\|/' DTD/core.dtd
 	perl -p -i -e 's/\| %mix.seg;/%mix.seg;/' DTD/core.dtd
-	perl -p -i -e 's/\(\%schemapattern;\)\?/%schemapattern;/' DTD/tagdocs.dtd
+	perl -p -i -e 's/\(\%macro.schemapattern;\)\?/%macro.schemapattern;/' DTD/tagdocs.dtd
 	perl -p -i -e 's/\)\*\(/\)\*,\(/' DTD/textstructure.dtd
 	(cd DTD; ln -s tei.dtd tei2.dtd)
 
