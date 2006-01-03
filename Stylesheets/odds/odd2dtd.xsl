@@ -316,7 +316,7 @@
 </xsl:template>
 
 <xsl:template match="rng:element[rng:anyName]">
-  <xsl:text> #PCDATA</xsl:text>
+  <xsl:text>#PCDATA</xsl:text>
 </xsl:template>
 
 <xsl:template match="rng:zeroOrMore">
