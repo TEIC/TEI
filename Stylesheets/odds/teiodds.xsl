@@ -238,12 +238,13 @@
     <xsl:choose>
       <xsl:when test="@type='model'">
 	<xsl:apply-templates select="." mode="processModel">
-	  <xsl:with-param name="declare">
-	    <xsl:choose>
+	  <xsl:with-param name="declare">true</xsl:with-param>
+<!--	    <xsl:choose>
 	      <xsl:when test="@module='tei'">true</xsl:when>
 	      <xsl:otherwise>false</xsl:otherwise>
 	    </xsl:choose>
 	  </xsl:with-param>
+-->
 	</xsl:apply-templates>
       </xsl:when>
       <xsl:when test="@type='atts'">
@@ -305,13 +306,14 @@
 	      <xsl:apply-templates 
 		  select="tei:classes/tei:memberOf"  
 		  mode="tangleModel"/>
-	      <xsl:if test="not(@predeclare='true')">
 		<define name="{$patternPrefix}{$thisClass}"
 			xmlns="http://relaxng.org/ns/structure/1.0">
+		  <xsl:if test="@predeclare='true'">
+		    <xsl:attribute name="combine">choice</xsl:attribute>
+		  </xsl:if>
 		  <notAllowed
 		      xmlns="http://relaxng.org/ns/structure/1.0"/>
 		</define>
-	      </xsl:if>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <define name="{$patternPrefix}{$thisClass}" xmlns="http://relaxng.org/ns/structure/1.0">

@@ -261,9 +261,13 @@
 <xsl:comment>Definitions from module <xsl:value-of select="@ident"/></xsl:comment>
   <xsl:comment>1. classes</xsl:comment>
   <xsl:for-each select="key('ClassModule',@ident)">
-    <xsl:if test="not(@module='core' and @predeclare='true')">
-      <xsl:apply-templates  select="." mode="tangle"/>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="@module='core' and @predeclare='true'">
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:apply-templates  select="." mode="tangle"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:for-each>
 
   <xsl:comment>2. elements</xsl:comment>
@@ -302,8 +306,18 @@
       </xsl:with-param>
     </xsl:call-template>
   </xsl:for-each>
-
   <xsl:comment>Weird special cases</xsl:comment>
+   <xsl:if test="$parameterize='false' and $TEIC='true'">
+     <rng:define combine="choice" name="{$patternPrefix}mix.drama">
+	 <rng:notAllowed/>
+     </rng:define>
+     <rng:define combine="choice" name="{$patternPrefix}mix.dictionaries">
+	 <rng:notAllowed/>
+     </rng:define>
+     <rng:define combine="choice" name="{$patternPrefix}mix.spoken">
+	 <rng:notAllowed/>
+     </rng:define>
+   </xsl:if>
   <rng:define name="IGNORE">
     <rng:notAllowed/>
   </rng:define>
