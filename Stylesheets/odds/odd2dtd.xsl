@@ -108,6 +108,13 @@
 	<xsl:text>&#10;&lt;!-- End of datatype macro declarations --&gt;&#10;</xsl:text>
       
       <xsl:if test="@type='core'">
+	<xsl:text>&#10;&lt;!-- Start of pre-declared macros --&gt;&#10;</xsl:text>
+	<xsl:for-each select="key('DefMacros','1')">
+	 <xsl:text>&#10;&lt;!ENTITY </xsl:text>
+	 <xsl:value-of select="@ident"/>
+	 <xsl:text> ''&gt;</xsl:text>
+	</xsl:for-each>
+	<xsl:text>&#10;&lt;!-- End of pre-declared macros --&gt;&#10;</xsl:text>
 	<xsl:text>&#10;&lt;!-- Start of pre-declared classes --&gt;&#10;</xsl:text>
 	<xsl:for-each select="key('DefClasses',1)">
 	  <xsl:choose>
@@ -124,8 +131,11 @@
 	<xsl:text>&#10;&lt;!-- End of pre-declared classes --&gt;&#10;</xsl:text>
       </xsl:if>
       
-      <xsl:apply-templates select="key('ClassModule',@ident)"  mode="tangle"/>
-      
+      <xsl:text>&#10;&lt;!-- Start of normal classes --&gt;&#10;</xsl:text>
+      <xsl:apply-templates select="key('ClassModule',@ident)"
+			   mode="tangle"/>
+
+            <xsl:text>&#10;&lt;!-- Start of normal classes --&gt;&#10;</xsl:text>
       <xsl:apply-templates select="key('ElementModule',@ident)"  mode="tangle">      
 	<xsl:sort select="@ident"/>
       </xsl:apply-templates>

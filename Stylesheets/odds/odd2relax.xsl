@@ -132,11 +132,7 @@
 	  </xsl:comment>
 	    <xsl:if test="$TEIC='true'">
 	      <xsl:comment>
-	      <xsl:call-template name="copyright"/>
-	      <!--
-		  <xsl:text>WARNING! Generated from a pre-release draft of TEI P5
-		  from 1st October 2004. This is NOT the final P5</xsl:text>
-	      -->
+		<xsl:call-template name="copyright"/>
 	      </xsl:comment>
 	    <xsl:text>&#10;</xsl:text>
 	    <xsl:call-template name="predeclarations"/>
@@ -235,9 +231,9 @@
 <xsl:template name="moduleSpec-body">	  
   <xsl:variable name="filename" select="@ident"/>
   <xsl:if test="$filename='core'">
-    <xsl:call-template name="predeclarations"/>
   </xsl:if>
   <xsl:if test="@type='core'">
+    <xsl:call-template name="predeclarations"/>
     <xsl:call-template name="predeclare-classes"/>
   </xsl:if>
   
@@ -297,32 +293,26 @@
 </xsl:template>
 
 <xsl:template name="predeclarations">
+
+  <xsl:comment>Set default for predeclared macros</xsl:comment>
+  <xsl:for-each select="key('DefMacros','1')">
+    <xsl:call-template name="preDefine">
+      <xsl:with-param name="name">
+	<xsl:value-of select="@ident"/>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:for-each>
+
+  <xsl:comment>Weird special cases</xsl:comment>
   <rng:define name="IGNORE">
     <rng:notAllowed/>
   </rng:define>
   <rng:define name="INCLUDE">
     <rng:empty/>
   </rng:define>
-  <xsl:comment>Weird special cases</xsl:comment>
   <rng:define name="TEI...end">
     <rng:notAllowed/>
   </rng:define>
-  <xsl:call-template name="preDefine">
-    <xsl:with-param name="name">mix.dictionaries</xsl:with-param>
-  </xsl:call-template>
-  
-  <xsl:call-template name="preDefine">
-    <xsl:with-param name="name">mix.drama</xsl:with-param>
-  </xsl:call-template>
-  
-  <xsl:call-template name="preDefine">
-    <xsl:with-param name="name">mix.spoken</xsl:with-param>
-  </xsl:call-template>
-  
-  <xsl:call-template name="preDefine">
-    <xsl:with-param name="name">mix.verse</xsl:with-param>
-  </xsl:call-template>
-  
   <xsl:call-template name="preDefine">
     <xsl:with-param name="name">tei.comp.dictionaries</xsl:with-param>
   </xsl:call-template>
@@ -341,18 +331,14 @@
  <xsl:param name="name"/>
  <xsl:choose>
    <xsl:when test="$parameterize='true'">
-     <rng:define name="{$patternPrefix}{$name}" combine="choice">
-       <rng:choice>
+     <rng:define name="{$patternPrefix}{$name}">
 	 <rng:notAllowed/>
-       </rng:choice>
      </rng:define>
    </xsl:when>
    <xsl:otherwise>
      <xsl:if test="not(key('IDENTS',$name))">
        <rng:define name="{$patternPrefix}{$name}">
-	 <rng:choice>
-	   <rng:notAllowed/>
-	 </rng:choice>
+	 <rng:notAllowed/>
        </rng:define>
      </xsl:if>
    </xsl:otherwise>

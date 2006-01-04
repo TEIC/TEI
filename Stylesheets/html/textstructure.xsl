@@ -549,31 +549,17 @@ $ID: requests a particular page
 	 we may do one of two things: -->
     <xsl:choose>
 <!-- -1. Override at top level -->
-      <xsl:when test="ancestor::TEI.2/@rend='all'">
+      <xsl:when test="ancestor::TEI/@rend='all'">
         <div>
-          <xsl:attribute name="class">
-            <xsl:choose>
-              <xsl:when test="@type">
-                <xsl:value-of select="@type"/>
-              </xsl:when>
-              <xsl:otherwise>teidiv</xsl:otherwise>
-            </xsl:choose>
-          </xsl:attribute>
+	  <xsl:call-template name="divClassAttribute"/>
           <xsl:call-template name="doDivBody">
             <xsl:with-param name="Type" select="$depth"/>
           </xsl:call-template>
         </div>
       </xsl:when>
-      <xsl:when test="ancestor::TEI.2/@rend='frontpage'">
+      <xsl:when test="ancestor::TEI/@rend='frontpage'">
         <div>
-          <xsl:attribute name="class">
-            <xsl:choose>
-              <xsl:when test="@type">
-                <xsl:value-of select="@type"/>
-              </xsl:when>
-              <xsl:otherwise>teidiv</xsl:otherwise>
-            </xsl:choose>
-          </xsl:attribute>
+	  <xsl:call-template name="divClassAttribute"/>
           <xsl:call-template name="doDivBody">
             <xsl:with-param name="Type" select="$depth"/>
           </xsl:call-template>
@@ -589,14 +575,7 @@ $ID: requests a particular page
 		      ancestor::tei:TEI/@rend='frontpage' or
 		      ancestor::tei:TEI/@rend='nosplit'">
         <div>
-          <xsl:attribute name="class">
-            <xsl:choose>
-              <xsl:when test="@type">
-                <xsl:value-of select="@type"/>
-              </xsl:when>
-              <xsl:otherwise>teidiv</xsl:otherwise>
-            </xsl:choose>
-          </xsl:attribute>
+	  <xsl:call-template name="divClassAttribute"/>
           <xsl:call-template name="doDivBody">
             <xsl:with-param name="Type" select="$depth"/>
           </xsl:call-template>
@@ -691,14 +670,7 @@ $ID: requests a particular page
       </xsl:when>
       <xsl:otherwise>
         <div>
-          <xsl:attribute name="class">
-            <xsl:choose>
-              <xsl:when test="@type">
-                <xsl:value-of select="@type"/>
-              </xsl:when>
-              <xsl:otherwise>teidiv</xsl:otherwise>
-            </xsl:choose>
-          </xsl:attribute>
+	  <xsl:call-template name="divClassAttribute"/>
           <xsl:call-template name="doDivBody">
             <xsl:with-param name="Type" select="$depth"/>
           </xsl:call-template>
@@ -1743,13 +1715,13 @@ $ID: requests a particular page
           <xsl:when test="@rend='frontpage'">
             <div class="column-wrapper">
               <div id="lh-col">
-                <xsl:for-each select="descendant-or-self::TEI.2/text/front">
+                <xsl:for-each select="descendant-or-self::tei:TEI/tei:text/tei:front">
 		  <xsl:apply-templates/>
 		</xsl:for-each>
               </div>
               <div id="rh-col">
                 <xsl:for-each
-		    select="descendant-or-self::TEI.2/text/body">
+		    select="descendant-or-self::tei:TEI/tei:text/tei:body">
 		  <xsl:apply-templates/>
 		</xsl:for-each>
               </div>
@@ -1773,7 +1745,7 @@ $ID: requests a particular page
   </xd:doc>
   <xsl:template name="col1">
     <div id="col1">
-      <xsl:for-each select="descendant-or-self::TEI.2/text/front">
+      <xsl:for-each select="descendant-or-self::tei:TEI/tei:text/tei:front">
 	<xsl:apply-templates/>
       </xsl:for-each>
     </div>
@@ -1786,7 +1758,7 @@ $ID: requests a particular page
   <xsl:template name="col2">
     <div id="col2">
       <xsl:for-each
-	  select="descendant-or-self::TEI.2/text/body">
+	  select="descendant-or-self::tei:TEI/tei:text/tei:body">
 	<xsl:apply-templates/>
       </xsl:for-each>
     </div>
@@ -1799,7 +1771,7 @@ $ID: requests a particular page
   <xsl:template name="col3">
     <div id="col3">
       <xsl:for-each
-	  select="descendant-or-self::TEI.2/text/back">
+	  select="descendant-or-self::tei:TEI/tei:text/tei:back">
 	<xsl:apply-templates/>
       </xsl:for-each>
     </div>
@@ -2523,6 +2495,7 @@ $ID: requests a particular page
         <xsl:call-template name="bodyJavaScriptHook"/>
         <a name="TOP"/>
         <div class="teidiv">
+          <xsl:call-template name="divClassAttribute"/>
           <xsl:call-template name="stdheader">
             <xsl:with-param name="title">
               <xsl:call-template name="generateDivheading"/>
@@ -2551,6 +2524,24 @@ $ID: requests a particular page
       </body>
     </html>
   </xsl:template>
+
+  <xd:doc>
+    <xd:short>[html]provide a class attribute and/or ID for each div </xd:short>
+    <xd:detail>&#160;</xd:detail>
+  </xd:doc>
+  <xsl:template name="divClassAttribute">
+    <xsl:choose>
+      <xsl:when test="@type">
+	<xsl:attribute name="class">
+	  <xsl:value-of select="@type"/>
+	</xsl:attribute>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:attribute name="class">teidiv</xsl:attribute>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <xd:doc>
     <xd:short>[html] </xd:short>
     <xd:detail>&#160;</xd:detail>

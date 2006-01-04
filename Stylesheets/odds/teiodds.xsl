@@ -78,6 +78,7 @@
   <xsl:key name="DeclModules"   match="tei:moduleSpec[@type='decls']"	 use="@ident"/>
   <xsl:key name="AllModules"    match="tei:moduleSpec[not(@type='decls')]" use="1"/>
   <xsl:key name="DefClasses"    match="tei:classSpec[@predeclare='true']" use="1"/>
+  <xsl:key name="DefMacros"    match="tei:macroSpec[@predeclare='true']" use="1"/>
   
   <xsl:variable name="parameterize">
     <xsl:choose>
@@ -234,39 +235,54 @@
       <xsl:message> classSpec <xsl:value-of
       select="@ident"/> (type <xsl:value-of select="@type"/>)</xsl:message>
     </xsl:if>
-    <xsl:apply-templates select="." mode="processModel">
-      <xsl:with-param name="declare">
-	<xsl:choose>
-	  <xsl:when test="@module='tei'">true</xsl:when>
-	  <xsl:otherwise>false</xsl:otherwise>
-	</xsl:choose>
-      </xsl:with-param>
-    </xsl:apply-templates>
-    <xsl:if test="@type='atts'">
-      <xsl:call-template name="bitOut">
-	<xsl:with-param name="grammar">true</xsl:with-param>
-	<xsl:with-param name="content">
-	  <Wrapper>
-	    <define name="{$patternPrefix}{@ident}.attributes" xmlns="http://relaxng.org/ns/structure/1.0">
-	      <xsl:choose>
-		<xsl:when test="tei:attList//tei:attDef">
-		  <xsl:for-each select="tei:attList//tei:attDef">
-		    <ref xmlns="http://relaxng.org/ns/structure/1.0"
-			 name="{$c}.attribute.{translate(@ident,':','')}"/>
+    <xsl:choose>
+      <xsl:when test="@type='model'">
+	<xsl:apply-templates select="." mode="processModel">
+	  <xsl:with-param name="declare">
+	    <xsl:choose>
+	      <xsl:when test="@module='tei'">true</xsl:when>
+	      <xsl:otherwise>false</xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:with-param>
+	</xsl:apply-templates>
+      </xsl:when>
+      <xsl:when test="@type='atts'">
+	<xsl:call-template name="bitOut">
+	  <xsl:with-param name="grammar">true</xsl:with-param>
+	  <xsl:with-param name="content">
+	    <Wrapper>
+	      <define name="{$patternPrefix}{@ident}.attributes"
+		      xmlns="http://relaxng.org/ns/structure/1.0">
+		<xsl:if test="$parameterize='true'">
+		  <xsl:for-each select="tei:classes/tei:memberOf">
+		    <xsl:for-each select="key('IDENTS',@key)[1]">
+		      <xsl:if test="@type='atts'">
+			<ref xmlns="http://relaxng.org/ns/structure/1.0"
+			     name="{@ident}.attributes"/>
+		      </xsl:if>
+		    </xsl:for-each>
 		  </xsl:for-each>
-		</xsl:when>
-		<xsl:otherwise>
-		  <notAllowed  xmlns="http://relaxng.org/ns/structure/1.0"/>
-		</xsl:otherwise>
-	      </xsl:choose>
-	    </define>
-	    <xsl:apply-templates select="tei:attList" mode="tangle">
-	      <xsl:with-param name="element" select="@ident"/>
-	    </xsl:apply-templates>
-	  </Wrapper>
-	</xsl:with-param>
-      </xsl:call-template>
-    </xsl:if>
+		</xsl:if>
+		<xsl:choose>
+		  <xsl:when test="tei:attList//tei:attDef">
+		    <xsl:for-each select="tei:attList//tei:attDef">
+		      <ref xmlns="http://relaxng.org/ns/structure/1.0"
+			   name="{$c}.attribute.{translate(@ident,':','')}"/>
+		    </xsl:for-each>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <notAllowed  xmlns="http://relaxng.org/ns/structure/1.0"/>
+		  </xsl:otherwise>
+		</xsl:choose>
+	      </define>
+	      <xsl:apply-templates select="tei:attList" mode="tangle">
+		<xsl:with-param name="element" select="@ident"/>
+	      </xsl:apply-templates>
+	    </Wrapper>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
   
   
@@ -286,30 +302,32 @@
 	<Wrapper>
 	  <xsl:choose>
 	    <xsl:when test="$parameterize='true'">
-	      <xsl:if test="$declare='true'">
-		<define name="{$patternPrefix}{$thisClass}" xmlns="http://relaxng.org/ns/structure/1.0">
-		  <notAllowed xmlns="http://relaxng.org/ns/structure/1.0"/>
+	      <xsl:apply-templates 
+		  select="tei:classes/tei:memberOf"  
+		  mode="tangleModel"/>
+	      <xsl:if test="not(@predeclare='true')">
+		<define name="{$patternPrefix}{$thisClass}"
+			xmlns="http://relaxng.org/ns/structure/1.0">
+		  <notAllowed
+		      xmlns="http://relaxng.org/ns/structure/1.0"/>
 		</define>
 	      </xsl:if>
-	      <xsl:apply-templates select="tei:classes/tei:memberOf"  mode="tangleModel"/>
 	    </xsl:when>
 	    <xsl:otherwise>
-	      <xsl:if test="@type='model'">
-		<define name="{$patternPrefix}{$thisClass}" xmlns="http://relaxng.org/ns/structure/1.0">
-		  <rng:choice>
-		    <xsl:choose>
-		      <xsl:when test="count(key('CLASSMEMBERS',$thisClass))&gt;0">
-			<xsl:for-each select="key('CLASSMEMBERS',$thisClass)">
-			  <ref name="{$patternPrefix}{@ident}" xmlns="http://relaxng.org/ns/structure/1.0"/>
-			</xsl:for-each>
-		      </xsl:when>
-		      <xsl:otherwise>
-			<notAllowed   xmlns="http://relaxng.org/ns/structure/1.0"/>
-		      </xsl:otherwise>
-		    </xsl:choose>
-		  </rng:choice>
-		</define>
-	      </xsl:if>
+	      <define name="{$patternPrefix}{$thisClass}" xmlns="http://relaxng.org/ns/structure/1.0">
+		<rng:choice>
+		  <xsl:choose>
+		    <xsl:when test="count(key('CLASSMEMBERS',$thisClass))&gt;0">
+		      <xsl:for-each select="key('CLASSMEMBERS',$thisClass)">
+			<ref name="{$patternPrefix}{@ident}" xmlns="http://relaxng.org/ns/structure/1.0"/>
+		      </xsl:for-each>
+		    </xsl:when>
+		    <xsl:otherwise>
+		      <notAllowed   xmlns="http://relaxng.org/ns/structure/1.0"/>
+		    </xsl:otherwise>
+		  </xsl:choose>
+		</rng:choice>
+	      </define>
 	    </xsl:otherwise>
 	  </xsl:choose>
 	</Wrapper>
@@ -583,93 +601,83 @@
   <xsl:template match="tei:macroSpec" mode="tangle">
     <xsl:param name="msection"/>
     <xsl:param name="filename"/>
-    <xsl:choose>
-      <xsl:when test="generate-id()=generate-id(key('MACROS',@ident)[last()])">
-	<xsl:variable name="entCont">
-	  <BLAH>
-	    <xsl:choose>
-	      <xsl:when test="not($msection='') and tei:content/rng:group">
-		<rng:choice >
-		  <xsl:apply-templates select="tei:content/rng:group/rng:*"/>	     
-		</rng:choice>
-	      </xsl:when>
-	      <xsl:otherwise>
-		<xsl:apply-templates select="tei:content/rng:*"/>
-	      </xsl:otherwise>
-	    </xsl:choose>
-	  </BLAH>
-	</xsl:variable>
-	<xsl:variable name="entCount">
-	  <xsl:for-each select="exsl:node-set($entCont)/BLAH">
-	    <xsl:value-of select="count(rng:*)"/>
-	  </xsl:for-each>
-	</xsl:variable>
+    <xsl:variable name="entCont">
+      <BLAH>
 	<xsl:choose>
-	  <xsl:when test='@ident="TEI.singleBase"'/>
-	  <xsl:when test='starts-with($entCont,"&#39;")'>
-	    <xsl:if test="$verbose='true'">
-	      <xsl:message>Omit <xsl:value-of select="$entCont"/> for
-	      <xsl:value-of select="@ident"/></xsl:message>
-	    </xsl:if>
-	  </xsl:when>
-	  <xsl:when test='starts-with($entCont,"-")'>
-	    <xsl:if test="$verbose='true'">
-	      <xsl:message>Omit <xsl:value-of select="$entCont"/> for
-	      <xsl:value-of select="@ident"/></xsl:message>
-	    </xsl:if>
+	  <xsl:when test="not($msection='') and tei:content/rng:group">
+	    <rng:choice >
+	      <xsl:apply-templates select="tei:content/rng:group/rng:*"/>	     
+	    </rng:choice>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <xsl:if test="$verbose='true'">
-	      <xsl:message> macroSpec <xsl:value-of select="@ident"/></xsl:message>
-	    </xsl:if>
-	    <xsl:call-template name="bitOut">
-	      <xsl:with-param name="grammar">true</xsl:with-param>
-	      <xsl:with-param name="content">
-		<Wrapper>
-		  <define name="{$patternPrefix}{@ident}"  xmlns="http://relaxng.org/ns/structure/1.0">
-		    <xsl:if test="$parameterize='true'">
-		      <xsl:if test="starts-with(@ident,'macro.component')
-				    or @combine='true'">
-			<xsl:attribute name="combine">choice</xsl:attribute>
-		      </xsl:if>
-		    </xsl:if>
-		    <xsl:choose>
-		      <xsl:when test="starts-with(@ident,'type')">
-			<xsl:copy-of select="exsl:node-set($entCont)/BLAH/rng:*"/>
-		      </xsl:when>
-		      <xsl:when test="$entCount=0">
-			<rng:choice>
-			  <notAllowed   xmlns="http://relaxng.org/ns/structure/1.0"/>
-			</rng:choice>
-		      </xsl:when>
-		      <xsl:when test="$entCount=1">
-			<xsl:copy-of select="exsl:node-set($entCont)/BLAH/rng:*"/>
-		      </xsl:when>
-		      <xsl:when test="tei:content/rng:text|tei:content/rng:ref">
-			<rng:choice >
-			  <xsl:copy-of
-			      select="exsl:node-set($entCont)/BLAH/rng:*"/>
-			</rng:choice>
-		      </xsl:when>
-		      <xsl:otherwise>
-			<xsl:copy-of select="exsl:node-set($entCont)/BLAH/rng:*"/>
-		      </xsl:otherwise>
-		    </xsl:choose>
-		  </define>
-		</Wrapper>
-	      </xsl:with-param>
-	    </xsl:call-template>
+	    <xsl:apply-templates select="tei:content/rng:*"/>
 	  </xsl:otherwise>
 	</xsl:choose>
+      </BLAH>
+    </xsl:variable>
+    <xsl:variable name="entCount">
+      <xsl:for-each select="exsl:node-set($entCont)/BLAH">
+	<xsl:value-of select="count(rng:*)"/>
+      </xsl:for-each>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test='@ident="TEI.singleBase"'/>
+      <xsl:when test='starts-with($entCont,"&#39;")'>
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Omit <xsl:value-of select="$entCont"/> for
+	  <xsl:value-of select="@ident"/></xsl:message>
+	</xsl:if>
+      </xsl:when>
+      <xsl:when test='starts-with($entCont,"-")'>
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Omit <xsl:value-of select="$entCont"/> for
+	  <xsl:value-of select="@ident"/></xsl:message>
+	</xsl:if>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:if test="$verbose='true'">
-	  <xsl:message>ZAP pattern <xsl:value-of
-	  select="@ident"/></xsl:message>
+	  <xsl:message> macroSpec <xsl:value-of select="@ident"/></xsl:message>
 	</xsl:if>
+	<xsl:call-template name="bitOut">
+	  <xsl:with-param name="grammar">true</xsl:with-param>
+	  <xsl:with-param name="content">
+	    <Wrapper>
+	      <define name="{$patternPrefix}{@ident}" 
+		      xmlns="http://relaxng.org/ns/structure/1.0">
+		<xsl:if test="$parameterize='true'">
+		  <xsl:if test="starts-with(@ident,'macro.component')
+				or @predeclare='true'">
+		    <xsl:attribute name="combine">choice</xsl:attribute>
+		  </xsl:if>
+		</xsl:if>
+		<xsl:choose>
+		  <xsl:when test="starts-with(@ident,'type')">
+		    <xsl:copy-of select="exsl:node-set($entCont)/BLAH/rng:*"/>
+		  </xsl:when>
+		  <xsl:when test="$entCount=0">
+		    <rng:choice>
+		      <notAllowed xmlns="http://relaxng.org/ns/structure/1.0"/>
+		    </rng:choice>
+		  </xsl:when>
+		  <xsl:when test="$entCount=1">
+		    <xsl:copy-of select="exsl:node-set($entCont)/BLAH/rng:*"/>
+		  </xsl:when>
+		  <xsl:when test="tei:content/rng:text|tei:content/rng:ref">
+		    <rng:choice >
+		      <xsl:copy-of
+			  select="exsl:node-set($entCont)/BLAH/rng:*"/>
+		    </rng:choice>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <xsl:copy-of select="exsl:node-set($entCont)/BLAH/rng:*"/>
+		  </xsl:otherwise>
+		</xsl:choose>
+	      </define>
+	    </Wrapper>
+	  </xsl:with-param>
+	</xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
-    
   </xsl:template>
   
   <xsl:template match="tei:macroSpec/@ident"/>
