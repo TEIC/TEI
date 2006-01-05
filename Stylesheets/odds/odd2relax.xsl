@@ -202,7 +202,7 @@
 	</xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-	<ref name="{$patternPrefix}{$patternPrefix}{$toks}" xmlns="http://relaxng.org/ns/structure/1.0"/>
+	<ref name="{$patternPrefix}{$toks}" xmlns="http://relaxng.org/ns/structure/1.0"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:if>
