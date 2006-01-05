@@ -27,8 +27,9 @@
 <table>
 <row role="label">
 <cell>Attribute</cell>
+<cell>Datatype</cell>
 <cell>Elements</cell>
-<cell>(also in classes)</cell>
+<cell>Class</cell>
 </row>
 <xsl:for-each select="key('A','all')">
   <xsl:sort select="@ident"/>
