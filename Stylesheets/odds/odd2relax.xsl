@@ -128,21 +128,35 @@
 	  <xsl:comment>
 	    <xsl:text>Schema generated </xsl:text>
 	    <xsl:value-of  select="edate:date-time()"/>
-	    <xsl:text>&#010;</xsl:text>
+	    <xsl:text>&#10;</xsl:text>
 	  </xsl:comment>
 	    <xsl:if test="$TEIC='true'">
 	      <xsl:comment>
 		<xsl:call-template name="copyright"/>
 	      </xsl:comment>
-	    <xsl:text>&#10;</xsl:text>
+	    <xsl:comment>Set predeclared macros</xsl:comment>
+	    <xsl:for-each select="key('PredeclareMacrosModule',@ident)">
+	      <xsl:apply-templates select="." mode="tangle"/>
+	    </xsl:for-each>
 	    <xsl:call-template name="predeclarations"/>
 	    </xsl:if>
   	  <xsl:apply-templates mode="tangle"
 			       select="tei:specGrpRef"/>
   	  <xsl:apply-templates mode="tangle"
 			       select="tei:moduleRef"/>
+	  <xsl:for-each select="tei:macroSpec">
+	    <xsl:choose>
+	      <xsl:when test="@predeclare='true'">
+		<xsl:apply-templates select="." mode="tangle"/>
+	      </xsl:when>
+	      <xsl:when test="key('PredeclareMacros',@ident)"/>
+	      <xsl:otherwise>
+		<xsl:apply-templates select="." mode="tangle"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:for-each>
   	  <xsl:apply-templates mode="tangle"
-			       select="tei:elementSpec|tei:macroSpec|tei:classSpec"/>
+			       select="tei:elementSpec|tei:classSpec"/>
 	  <xsl:choose>
 	    <xsl:when test="@start and @start=''"/>
 	    <xsl:when test="@start and contains(@start,' ')">
@@ -211,14 +225,11 @@
 		xmlns:t="http://www.thaiopensource.com/ns/annotations"
 		xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
 		datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-	      <xsl:text>&#10;</xsl:text> 
 	      <xsl:comment>
 		<xsl:text>Schema generated </xsl:text>
 		<xsl:value-of  select="edate:date-time()"/>
-		<xsl:text>&#010;</xsl:text>
 		<xsl:call-template name="copyright"/>
 	      </xsl:comment>
-	      <xsl:text>&#10;</xsl:text>
 	      <xsl:call-template name="moduleSpec-body"/>	  
 	    </rng:grammar>
 	  </xsl:with-param>
@@ -230,10 +241,14 @@
 
 <xsl:template name="moduleSpec-body">	  
   <xsl:variable name="filename" select="@ident"/>
+  <xsl:comment>Set predeclared macros</xsl:comment>
+  <xsl:for-each select="key('PredeclareMacrosModule',@ident)">
+    <xsl:apply-templates select="." mode="tangle"/>
+  </xsl:for-each>
   <xsl:if test="$filename='core'">
+    <xsl:call-template name="predeclarations"/>
   </xsl:if>
   <xsl:if test="@type='core'">
-    <xsl:call-template name="predeclarations"/>
     <xsl:call-template name="predeclare-classes"/>
   </xsl:if>
   
@@ -247,16 +262,29 @@
     </xsl:if>
     <xsl:comment>Definitions from module <xsl:value-of
     select="$decl"/></xsl:comment>
+  <xsl:comment>0. predeclared macros</xsl:comment>
+  <xsl:for-each select="key('PredeclareMacrosModule',$decl)">
+    <xsl:apply-templates select="." mode="tangle"/>
+  </xsl:for-each>
   <xsl:comment>1. classes</xsl:comment>
-  <xsl:apply-templates select="key('ClassModule',$decl)"  mode="tangle"/>
+  <xsl:apply-templates select="key('ClassModule',$decl)"
+		       mode="tangle"/>
   <xsl:comment>2. elements</xsl:comment>    
     <xsl:apply-templates select="key('ElementModule',$decl)"  mode="tangle">      
       <xsl:sort select="@ident"/>
     </xsl:apply-templates>
     <xsl:comment>3. macros</xsl:comment>
-    <xsl:apply-templates select="key('MacroModule',$decl)" mode="tangle"/>
-
-  </xsl:for-each>    
+    <xsl:for-each 
+	select="key('MacroModule',$decl)">
+      <xsl:choose>
+	<xsl:when test="@predeclare='true'"/>
+<!--	<xsl:when test="key('PredeclareMacros',@ident)"/>-->
+	<xsl:otherwise>
+	  <xsl:apply-templates select="." mode="tangle"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+   </xsl:for-each>    
 
 <xsl:comment>Definitions from module <xsl:value-of select="@ident"/></xsl:comment>
   <xsl:comment>1. classes</xsl:comment>
@@ -276,7 +304,16 @@
   </xsl:apply-templates>
 
   <xsl:comment>3. macros</xsl:comment>
-  <xsl:apply-templates select="key('MacroModule',@ident)"  mode="tangle"/>
+  <xsl:for-each 
+      select="key('MacroModule',@ident)">
+      <xsl:choose>
+	<xsl:when test="@predeclare='true'"/>
+<!--	<xsl:when test="key('PredeclareMacros',@ident)"/>-->
+	<xsl:otherwise>
+	  <xsl:apply-templates select="." mode="tangle"/>
+	</xsl:otherwise>
+      </xsl:choose>
+  </xsl:for-each>
   
 </xsl:template>
 
@@ -297,48 +334,28 @@
 </xsl:template>
 
 <xsl:template name="predeclarations">
-
-  <xsl:comment>Set default for predeclared macros</xsl:comment>
-  <xsl:for-each select="key('DefMacros','1')">
+    <xsl:comment>Weird special cases</xsl:comment>
+    <rng:define name="IGNORE">
+      <rng:notAllowed/>
+    </rng:define>
+    <rng:define name="INCLUDE">
+      <rng:empty/>
+    </rng:define>
+    <rng:define name="TEI...end">
+      <rng:notAllowed/>
+    </rng:define>
     <xsl:call-template name="preDefine">
-      <xsl:with-param name="name">
-	<xsl:value-of select="@ident"/>
-      </xsl:with-param>
+      <xsl:with-param name="name">tei.comp.dictionaries</xsl:with-param>
     </xsl:call-template>
-  </xsl:for-each>
-  <xsl:comment>Weird special cases</xsl:comment>
-   <xsl:if test="$parameterize='false' and $TEIC='true'">
-     <rng:define combine="choice" name="{$patternPrefix}mix.drama">
-	 <rng:notAllowed/>
-     </rng:define>
-     <rng:define combine="choice" name="{$patternPrefix}mix.dictionaries">
-	 <rng:notAllowed/>
-     </rng:define>
-     <rng:define combine="choice" name="{$patternPrefix}mix.spoken">
-	 <rng:notAllowed/>
-     </rng:define>
-   </xsl:if>
-  <rng:define name="IGNORE">
-    <rng:notAllowed/>
-  </rng:define>
-  <rng:define name="INCLUDE">
-    <rng:empty/>
-  </rng:define>
-  <rng:define name="TEI...end">
-    <rng:notAllowed/>
-  </rng:define>
-  <xsl:call-template name="preDefine">
-    <xsl:with-param name="name">tei.comp.dictionaries</xsl:with-param>
-  </xsl:call-template>
-  
-  <xsl:call-template name="preDefine">
-    <xsl:with-param name="name">tei.comp.spoken</xsl:with-param>
-  </xsl:call-template>
-  
-  <xsl:call-template name="preDefine">
-    <xsl:with-param name="name">tei.comp.verse</xsl:with-param>
-  </xsl:call-template>
-  
+    
+    <xsl:call-template name="preDefine">
+      <xsl:with-param name="name">tei.comp.spoken</xsl:with-param>
+    </xsl:call-template>
+    
+    <xsl:call-template name="preDefine">
+      <xsl:with-param name="name">tei.comp.verse</xsl:with-param>
+    </xsl:call-template>
+
 </xsl:template>
 
 <xsl:template name="preDefine">

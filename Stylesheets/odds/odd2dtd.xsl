@@ -107,14 +107,12 @@
 	</xsl:for-each>
 	<xsl:text>&#10;&lt;!-- End of datatype macro declarations --&gt;&#10;</xsl:text>
       
-      <xsl:if test="@type='core'">
 	<xsl:text>&#10;&lt;!-- Start of pre-declared macros --&gt;&#10;</xsl:text>
-	<xsl:for-each select="key('DefMacros','1')">
-	 <xsl:text>&#10;&lt;!ENTITY </xsl:text>
-	 <xsl:value-of select="@ident"/>
-	 <xsl:text> ''&gt;</xsl:text>
+	<xsl:for-each select="key('PredeclareMacrosModule',@ident)">
+	  <xsl:apply-templates select="." mode="tangle"/>
 	</xsl:for-each>
 	<xsl:text>&#10;&lt;!-- End of pre-declared macros --&gt;&#10;</xsl:text>
+	<xsl:if test="@type='core'">
 	<xsl:text>&#10;&lt;!-- Start of pre-declared classes --&gt;&#10;</xsl:text>
 	<xsl:for-each select="key('DefClasses',1)">
 	  <xsl:choose>
@@ -177,9 +175,16 @@
       <xsl:text>&#10;&lt;!-- Start rest of  macro declarations --&gt;&#10;</xsl:text>
       <xsl:for-each select="key('MacroModule',@ident)">
 	<xsl:if test="not(@type='dt')">
-	  <xsl:apply-templates select="." mode="tangle"/>
+	  <xsl:choose>
+	    <xsl:when test="@predeclare='true'"/>
+<!--	    <xsl:when test="key('PredeclareMacros',@ident)"/>-->
+	    <xsl:otherwise>
+	      <xsl:apply-templates select="." mode="tangle"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
 	</xsl:if>
       </xsl:for-each>
+	  
       <xsl:text>&#10;&lt;!-- End of macro declarations --&gt;&#10;</xsl:text>
       
       <!-- set up the modules and their guards -->
@@ -269,7 +274,9 @@
   <xsl:text>&#10;&lt;!-- start patterns --&gt;&#10;</xsl:text>
   <xsl:for-each select="key('MACRODOCS',1)">
     <xsl:if test="not(@type='dt')">
-      <xsl:apply-templates select="." mode="tangle"/>
+      <xsl:if test="not(key('PredeclareMacros',@ident))">
+	<xsl:apply-templates select="." mode="tangle"/>
+      </xsl:if>
     </xsl:if>
   </xsl:for-each>
   <xsl:text>&#10;&lt;!-- end patterns --&gt;&#10;</xsl:text>
