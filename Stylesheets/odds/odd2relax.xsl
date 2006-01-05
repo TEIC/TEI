@@ -135,24 +135,22 @@
 		<xsl:call-template name="copyright"/>
 	      </xsl:comment>
 	    <xsl:comment>Set predeclared macros</xsl:comment>
-	    <xsl:for-each select="key('PredeclareMacrosModule',@ident)">
+	    <xsl:for-each select="key('PredeclareAllMacros',1)">
 	      <xsl:apply-templates select="." mode="tangle"/>
 	    </xsl:for-each>
 	    <xsl:call-template name="predeclarations"/>
 	    </xsl:if>
-  	  <xsl:apply-templates mode="tangle"
-			       select="tei:specGrpRef"/>
-  	  <xsl:apply-templates mode="tangle"
-			       select="tei:moduleRef"/>
-	  <xsl:for-each select="tei:macroSpec">
-	    <xsl:choose>
-	      <xsl:when test="@predeclare='true'">
-		<xsl:apply-templates select="." mode="tangle"/>
-	      </xsl:when>
-	      <xsl:when test="key('PredeclareMacros',@ident)"/>
-	      <xsl:otherwise>
-		<xsl:apply-templates select="." mode="tangle"/>
-	      </xsl:otherwise>
+	    <xsl:apply-templates mode="tangle"
+				 select="tei:specGrpRef"/>
+	    <xsl:apply-templates mode="tangle"
+				 select="tei:moduleRef"/>
+	    <xsl:for-each select="tei:macroSpec">
+	      <xsl:choose>
+		<xsl:when test="@predeclare='true'"/>
+		<xsl:when test="key('PredeclareMacros',@ident)"/>
+		<xsl:otherwise>
+		  <xsl:apply-templates select="." mode="tangle"/>
+		</xsl:otherwise>
 	    </xsl:choose>
 	  </xsl:for-each>
   	  <xsl:apply-templates mode="tangle"

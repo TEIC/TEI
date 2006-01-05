@@ -81,7 +81,9 @@
   <xsl:key name="PredeclareMacros"
 	   match="tei:macroSpec[@predeclare='true']" use="@ident"/>
   <xsl:key name="PredeclareMacrosModule"    
-	   match="tei:macroSpec[@predeclare='true']" use="@module"/>
+	   match="tei:macroSpec[@predeclare='true']" use="@module"/>  
+  <xsl:key name="PredeclareAllMacros"    
+	   match="tei:macroSpec[@predeclare='true']" use='1'/>
   
   <xsl:variable name="parameterize">
     <xsl:choose>

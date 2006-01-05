@@ -107,11 +107,6 @@
 	</xsl:for-each>
 	<xsl:text>&#10;&lt;!-- End of datatype macro declarations --&gt;&#10;</xsl:text>
       
-	<xsl:text>&#10;&lt;!-- Start of pre-declared macros --&gt;&#10;</xsl:text>
-	<xsl:for-each select="key('PredeclareMacrosModule',@ident)">
-	  <xsl:apply-templates select="." mode="tangle"/>
-	</xsl:for-each>
-	<xsl:text>&#10;&lt;!-- End of pre-declared macros --&gt;&#10;</xsl:text>
 	<xsl:if test="@type='core'">
 	<xsl:text>&#10;&lt;!-- Start of pre-declared classes --&gt;&#10;</xsl:text>
 	<xsl:for-each select="key('DefClasses',1)">
@@ -137,6 +132,12 @@
       <xsl:apply-templates select="key('ElementModule',@ident)"  mode="tangle">      
 	<xsl:sort select="@ident"/>
       </xsl:apply-templates>
+
+      <xsl:text>&#10;&lt;!-- Start of pre-declared macros --&gt;&#10;</xsl:text>
+	<xsl:for-each select="key('PredeclareMacrosModule',@ident)">
+	  <xsl:apply-templates select="." mode="tangle"/>
+	</xsl:for-each>
+	<xsl:text>&#10;&lt;!-- End of pre-declared macros --&gt;&#10;</xsl:text>
       <xsl:if test="@type='core'">
 	<xsl:text>&#10;&lt;!ENTITY % TEI.extensions.dtd '' &gt;
 %TEI.extensions.dtd;</xsl:text>
@@ -271,12 +272,20 @@
     <xsl:apply-templates select="key('CLASSDOCS',1)"  mode="tangle"/>
   </xsl:if>
 
-  <xsl:text>&#10;&lt;!-- start patterns --&gt;&#10;</xsl:text>
+  <xsl:text>&#10;&lt;!-- start predeclared patterns --&gt;&#10;</xsl:text>
+  <xsl:for-each select="tei:macroSpec[@predeclare='true']">
+    <xsl:apply-templates select="." mode="tangle"/>
+  </xsl:for-each>
+  <xsl:text>&#10;&lt;!-- start rest of patterns --&gt;&#10;</xsl:text>
   <xsl:for-each select="key('MACRODOCS',1)">
     <xsl:if test="not(@type='dt')">
-      <xsl:if test="not(key('PredeclareMacros',@ident))">
-	<xsl:apply-templates select="." mode="tangle"/>
-      </xsl:if>
+      <xsl:choose>
+	<xsl:when test="@predeclare='true'"/>
+	<xsl:when test="key('PredeclareMacros',@ident)"/>
+	<xsl:otherwise>
+	  <xsl:apply-templates select="." mode="tangle"/>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:if>
   </xsl:for-each>
   <xsl:text>&#10;&lt;!-- end patterns --&gt;&#10;</xsl:text>
@@ -765,48 +774,27 @@
 <xsl:template match="tei:gloss|tei:remarks|tei:desc"/>
 
 <xsl:template match="tei:macroSpec" mode="tangle">
- <xsl:if test="$verbose='true'">
-   <xsl:message>     .... macroSpec <xsl:value-of
-   select="@ident"/> occurs <xsl:value-of
-   select="count(key('MACROS',@ident))"/>, <xsl:value-of select="@module"/></xsl:message>
- </xsl:if>
-<xsl:choose>
-<!-- This is an odd situation. A macro is declared twice,
-and we want the occurence of it from a module called "xxx-decl". 
-However, we want it at the position of the first declaration.
-So, at the first, process the second; at the second, do nothing.
--->
-  <xsl:when test="count(key('MACROS',@ident))=2 and $parameterize='false'">
-    <xsl:choose>
-      <xsl:when test="generate-id(key('MACROS',@ident)[2])=generate-id()"/>
-      <xsl:when test="contains(@module,'-decl')"/>
-      <xsl:otherwise>
-	<xsl:for-each  select="key('MACROS',@ident)[2]">
-	    <xsl:call-template name="macroBody"/>
-	</xsl:for-each>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:when>
-  <xsl:when test="@depend and $parameterize='true'">
-    <xsl:if test="$verbose='true'">
-      <xsl:message>Dependency on <xsl:value-of select="@depend"/> for
-      <xsl:value-of select="@ident"/></xsl:message>
-    </xsl:if>
-    <xsl:text>&#10; &lt;![%TEI.</xsl:text>
-    <xsl:value-of select="@depend"/>;[
-    <xsl:call-template name="macroBody"/>
-    <xsl:text>&#10;]]&gt;</xsl:text>
-  </xsl:when>
-  <xsl:when test="@depend and count(key('ElementModule',@depend))=0">
-    <xsl:if test="$verbose='true'">
-      <xsl:message>Dependency on <xsl:value-of select="@depend"/>, but
-      not used in this schema </xsl:message>
-    </xsl:if>
-  </xsl:when>
-  <xsl:otherwise>
-    <xsl:call-template name="macroBody"/>
-  </xsl:otherwise>
-</xsl:choose>
+  <xsl:choose>
+    <xsl:when test="@depend and $parameterize='true'">
+      <xsl:if test="$verbose='true'">
+	<xsl:message>Dependency on <xsl:value-of select="@depend"/> for
+	<xsl:value-of select="@ident"/></xsl:message>
+      </xsl:if>
+      <xsl:text>&#10; &lt;![%TEI.</xsl:text>
+      <xsl:value-of select="@depend"/>;[
+      <xsl:call-template name="macroBody"/>
+      <xsl:text>&#10;]]&gt;</xsl:text>
+    </xsl:when>
+    <xsl:when test="@depend and count(key('ElementModule',@depend))=0">
+      <xsl:if test="$verbose='true'">
+	<xsl:message>Dependency on <xsl:value-of select="@depend"/>, but
+	not used in this schema </xsl:message>
+      </xsl:if>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:call-template name="macroBody"/>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template name="macroBody">
