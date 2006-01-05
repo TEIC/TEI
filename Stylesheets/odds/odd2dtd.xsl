@@ -630,6 +630,9 @@
     <xsl:when test="parent::tei:content/parent::tei:macroSpec[@type='dt']">
       <xsl:text> CDATA</xsl:text>              
     </xsl:when>
+    <xsl:when test="parent::tei:content/parent::tei:macroSpec[@type='pe']">
+      <xsl:text>#PCDATA</xsl:text>              
+    </xsl:when>
     <xsl:when test="parent::tei:content and not(following-sibling::rng:*) and not (preceding-sibling::rng:*)">
       <xsl:text>(#PCDATA)</xsl:text>
     </xsl:when>
