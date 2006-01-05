@@ -1,4 +1,4 @@
-XSL=/usr/share/xml/tei/stylesheet/
+XSL=../../Stylesheets/
 ROMAOPTS=--doc --localsource=../Source-driver.xml
 
 TESTFILES= \
@@ -98,7 +98,7 @@ test-bad:
 	-jing $(TESTBADFILES).xsd $(TESTBADFILES).xml
 
 clean:
-	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do rm -f $$i.doc.xml $$i.rnc $$i.dtd $$i.compiled.* $$i.teix.xsd $$i.xsd $$i.rnc $$i.rng;done
+	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES) $(TESTBADFILES); do rm -f $$i.doc.xml $$i.rnc $$i.dtd $$i.compiled.* $$i.teix.xsd $$i.xsd $$i.rnc $$i.rng;done
 	-rm -rf LOG *~ *.xsd Schema RomaResults DTD
 	-rm -rf *.doc.*
 
