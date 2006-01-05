@@ -160,7 +160,7 @@
 <table rules="all" border="1">
 <row role="label">
 <cell>Name</cell>
-<cell>Type</cell>
+<!--cell>Type</cell-->
 <cell>Used in content model of</cell>
 <cell>Members of club</cell>
 </row>
@@ -178,7 +178,7 @@
   <xsl:value-of select="@ident"/>
 </xref>
 </cell>
-<cell ><xsl:value-of select="@type"/></cell>
+<!--cell ><xsl:value-of select="@type"/></cell-->
 <cell >
 <xsl:variable name="ID" select="@ident"/>
 <xsl:for-each select="key('REFS',@ident)">
