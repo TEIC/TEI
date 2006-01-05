@@ -1,6 +1,7 @@
 TEISERVER=http://tei.oucs.ox.ac.uk/Query/
 PREFIX=/usr
-XSL=/usr/share/xml/tei/stylesheet
+#XSL=/usr/share/xml/tei/stylesheet
+XSL=../Stylesheets
 # alternativly, if you have not installed the Debian packages, uncomment the next line:
 # XSL=http://www.tei-c.org/stylesheet/release/xml/tei
 ROMAOPTS="--localsource=Source-driver.xml"
