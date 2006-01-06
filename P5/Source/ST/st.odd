@@ -650,8 +650,7 @@ characters, or symbols can appear in an attribute value of this
 kind. Note in particular that such values cannot include
 whitespace characters. Legal values include
 <val>cholmondeley</val>, <val>été</val>, <val>1234</val>, <val>e_content</val>, or
-<val>xml:id</val>, but not  <val>grand
-wazoo</val>. Attributes of this kind are sometimes used to associate (by
+<val>xml:id</val>, but not  <val>grand wazoo</val>. Attributes of this kind are sometimes used to associate (by
 co-reference) elements of different types.</p>
 
 <p>Attributes of type <ident type="datatype">data.name</ident> are also words in
@@ -989,13 +988,15 @@ declaration for its m-dot entity:
  | %n.handShift;">]]></egXML>
  When the entity <ident type="pe">model.phrase</ident> is referred to in
 content models, all members of all subclasses are included in the model.
- </p>-->
+ </p>
 
 
 </div3>
 
 
 <div3 xml:id="STECOV"><head>High-level structural element classes</head>
+
+-->
 
 <p>The TEI class system is structured around the following threefold
 division of elements:
@@ -1047,132 +1048,103 @@ elements in the core and elements declared in particular modules; a
 reference is given at least to the relevant section on the core tags.
  </p>
 <p>The following are phrase-level element classes:
-<list type="gloss">
-  <label><ident type="class">model.hiLike</ident> </label>
-<item>elements for highlighted
-phrases or material marked by quotation marks, including those defined
-in section <ptr target="#COHQ"/>
- </item><label><ident type="class">model.pPart.data</ident> </label>
-<item>elements for recording
-information about the referents of a text, including those defined in
-section <ptr target="#CONA"/>
- </item><label><ident type="class">model.dateLike</ident> </label>
-<item>elements for recording
-dates, including those defined in
-section <ptr target="#CONADA"/>
- </item>
- <label><ident type="class">model.timeLike</ident> </label>
-<item>elements for recording
-times, including those defined in
-section <ptr target="#CONADA"/>
- </item>
-<label><ident type="class">model.measureLike</ident> </label>
-<item>elements for numbers and measures</item>
-<label><ident type="class">model.pPart.msdesc</ident></label>
-<item>elements for describing manuscripts</item>
-<label><ident type="class">model.graphicLike</ident></label>
-<item>elements for indicating images, formulae, examples, etc.</item>
-<label><ident type="class">model.pPart.edit</ident> </label>
-<item>elements for recording
-simple editorial interventions in a text, including those defined in
-section <ptr target="#COED"/>
- </item><label><ident type="class">model.ptrLike</ident> </label>
-<item>elements for recording
-location information in a text, including those defined in section <ptr target="#CORS"/>
- </item><label><ident type="class">model.segLike</ident></label>
-<item>elements for marking arbitrary
-segments at the level of individual characters or phrases, including
-those documented in section <ptr target="#SASE"/> and <ptr target="#AILC"/>
- </item><label><ident type="class">tei.sgmlKeywords</ident></label>
-<item>elements for marking
-generic identifiers, attribute names, tags, and sample attribute
-values, when they occur in the text (used in module documentation, for
-which see chapter <ptr target="#TD"/>)
- </item><label><ident type="class">tei.versePhrases</ident></label>
-<item>phrase-level elements
-specific to verse, documented in section <ptr target="#VESE"/>
- </item><label><ident type="class">model.ptrLike.form</ident></label>
-<item>elements for
-referring, within a dictionary entry, to the orthographic form or
-pronunciation of the headword, documented in section <ptr target="#DIHW"/>
- </item></list>
- </p>
-<p>The following are inter-level element classes:
-<list type="gloss">
-  <label><ident type="class">model.qLike</ident></label>
-  <item>elements for highlighted
-  phrases or material marked by quotation marks, including those defined
-  in section <ptr target="#COHQ"/></item>
-  <label><ident type="class">model.biblLike</ident></label>
-  <item>elements for bibliographic
-  citations; see section <ptr target="#COBI"/></item>
-  <label><ident type="class">model.listLike</ident></label>
-  <item>elements for lists; see
-  section <ptr target="#COLI"/></item>
-  <label><ident type="class">model.noteLike</ident></label>
-  <item>general-purpose annotation
-  elements; see section <ptr target="#CONO"/></item>
-</list>
- </p>
-<p>The following classes of elements may appear anywhere within the
-<gi>text</gi> element:
-<list type="gloss"><label>metadata</label>
-<item>elements which convey non-textual
-information about the text (meta-information, as it were)</item><label>refsys</label>
-<item>milestone elements used in
-reference systems</item><label>editincl</label>
-<item>elements marking arbitrary  spans
-of text which has been added, deleted, or omitted from a
-transcription</item>
-</list>
-These three classes together make up the <ident type="class">model.global</ident>
-class, comprising elements which may appear anywhere within
-a <gi>text</gi> element. In earlier versions of the Guidelines, this
-was implemented as an SGML inclusion
-exception on the <gi>text</gi> element. In the current version,
-members of this class are explicitly added to relevant content
-models only.
+<specList>
+<specDesc key="model.biblLike"/>
+<specDesc key="model.dateLike"/>
+<specDesc key="model.global"/>
+<specDesc key="model.graphicLike"/>
+<specDesc key="model.hiLike"/>
+<specDesc key="model.listLike"/>
+<specDesc key="model.measureLike"/>
+<specDesc key="model.noteLike"/>
+<specDesc key="model.pPart.data"/>
+<specDesc key="model.pPart.edit"/>
+<specDesc key="model.pPart.msdesc"/>
+<specDesc key="model.ptrLike"/>
+<specDesc key="model.ptrLike.form"/>
+<specDesc key="model.qLike"/>
+<specDesc key="model.segLike"/>
+<specDesc key="model.timeLike"/>
+</specList>
 </p>
 <p>Here are the formal  declarations for the generally-available model classes:
-<specGrp xml:id="DSTECLO" n="Lowlevel classes">
-&agent.odd;
-&namelike.odd;
-&clseg.odd;
-&hqphrase.odd;
-&datelike.odd;
-&timelike.odd;
-&measurelike.odd;
-&graphiclike.odd;
-&ppartmsdesc.odd;
-&data.odd;
-&edit.odd;
-&clloc.odd;
-&lpart.odd;
-&metadata.odd;
-&refsys.odd;
-&editincl.odd;
-&globincl.odd;
-&glike.odd;
-&odddecl.odd;
-&oddref.odd;
-&oddphr.odd;
+
+<specGrp xml:id="DSTECLO" n="Primitive Lowlevel classes">
+
+<p>These classes refer only to elements</p>
+
+<!-- model.nameLike.agent -->&agent.odd;
+<!-- model.segLike -->&clseg.odd;
+<!-- model.hiLike -->&hqphrase.odd;
+<!-- model.dateLike -->&datelike.odd;
+<!-- model.timeLike -->&timelike.odd;
+<!-- model.measureLike -->&measurelike.odd;
+<!-- model.graphicLike -->&graphiclike.odd;
+<!-- model.pPartMsdesc -->&ppartmsdesc.odd; 
+<!-- model.pPart.edit -->&edit.odd; 
+<!-- model.ptrLike -->&clloc.odd;  
+<!-- model.lPart -->&lpart.odd;
+<!-- model.global.meta -->&metadata.odd; 
+<!-- model.milestoneLike -->&refsys.odd; 
+<!-- model.gLike -->&glike.odd;
+<!-- model.oddDecl -->&odddecl.odd;
+<!-- model.oddRef -->&oddref.odd;
+<!-- model.oddPhr -->&oddphr.odd;
  <p>Inter-level classes</p>
-&hqinter.odd;
-&clbibl.odd;
-&lists.odd;
-&notes.odd;
-&stagedir.odd;
-&cplxval.odd;
-&singval.odd;
-&featval.odd;
-&ditoplev.odd;
+<!-- model.qLike -->&hqinter.odd;
+<!-- model.biblLike -->&clbibl.odd;
+<!-- model.listLike -->&lists.odd;
+<!-- model.noteLike -->&notes.odd;
+<!-- model.stageLike -->&stagedir.odd;
+<!-- model.complexVal -->&cplxval.odd;
+<!-- model.singleVal -->&singval.odd;
+<!-- model.entryParts.top -->&ditoplev.odd;
+<!-- model.global.edit -->&editincl.odd;
+
+<!-- model.divPart -->&chunk.odd;
+<!-- model.blockLike -->&segment.odd;
+<!-- model.pLike -->&paragraph.odd; 
+
+
+<!-- model.publicationStmtPart -->&publicationstmtpart.odd;
+<!-- model.glossLike -->&glosslike.odd;
+<!-- model.quoteLike -->&quotelike.odd;
+<!-- model.respLike -->&resplike.odd;
+<!-- model.personPart -->&demog.odd;
+<!-- model.divWrapper.bottom -->&divbot.odd;
+<!-- model.divWrapper -->&divtop.odd;
+<!-- model.frontPart.drama -->&drfront.odd;
+<!-- model.frontPart -->&clfront.odd;
+<!-- model.pLike.front -->&fmchunk.odd;
+<!-- model.titlepagePart -->&tpparts.odd;
+<!-- model.msItemPart -->&msitempart.odd;
+<!-- model.choicePart -->&chooseable.odd;
+<!-- model.lLike -->&cllines.odd;
+<!-- model.recordingPart -->&recordingpart.odd;
+<!-- model.imprintPart -->&imprintpart.odd;
+<!-- model.catDescPart -->&categorize.odd;
+</specGrp>
+<specGrp xml:id="DSTECLO-1" n="level 1 classes">
+<p>These classes refer only to primitive lowlevel classes or to elements</p>
+<!-- model.nameLike -->&namelike.odd;
+<!-- model.global -->&globincl.odd;
+<!-- model.featureVal -->&featval.odd;
+<!-- model.common -->&common.odd;
+<!-- model.biblPart -->&biblpart.odd;
+</specGrp>
+<specGrp xml:id="DSTECLO-2" n="level 2 classes">
+<p>These classes refer only to level 1 or to primitive lowlevel
+classes or to elements</p>
+<!-- model.addrPart -->&addrpart.odd;
+<!-- model.pPart.data -->&data.odd; <!-- model.pPart.data -->
+<!-- model.inter -->&inter.odd;
 </specGrp>
 </p>
 </div3>
 <div3 xml:id="STECHI"><head>High-Level Element Classes</head>
 <p>The following element classes are used to implement the threefold
 structural distinction among phrases, chunks, and intermediate elements
-discussed above in section <ptr target="#STECOV"/>.  In this terminology,
+discussed above in section <ptr target="#STECCM"/>.  In this terminology,
 <term>chunk</term>s (or <term>chunk elements</term>) are elements which
 can occur only in chunk-level sequences (e.g. between but not within
 paragraphs); <term>inter-level elements</term> can occur either within
@@ -1187,35 +1159,20 @@ section <ptr target="#STECMX"/>.-->
   </p>
 <p>The relevant portion of the DTD looks like this:
 <specGrp xml:id="DSTECHI" n="Common high-level classes">
-&phrase.odd;
-&inter.odd;
-&chunk.odd;
-&segment.odd;
-&paragraph.odd;
-<p>This class isolates all the common component-level elements.</p>
-&common.odd;
+<!-- model.phrase--> &phrase.odd;
 </specGrp>
 </p></div3>
 <div3 xml:id="STECMK"><head>Elements Marked for Text Type</head>
 <p>The following element classes are used to group together
 component-level elements which are allowed only in texts of a particular
 type (i.e. texts using a specific module).
-<list type="gloss"><label><ident type="class">model.divPart.verse</ident> </label>
-<item>elements unique to
-verse
- </item><label><ident type="class">model.divPart.stage</ident> </label>
-<item>elements unique to
-drama
- </item><label><ident type="class">model.divPart.spoken</ident> </label>
-<item>elements unique to
-spoken texts
- </item><label><ident type="class">model.entryLike</ident> </label>
-<item>elements unique
-to dictionaries
- </item><label><ident type="class">tei.comp.terminology</ident> </label>
-<item>elements unique
-to terminological data
- </item></list>
+<specList>
+<specDesc key="model.divPart.spoken"/>
+<specDesc key="model.divPart.stage"/>
+<specDesc key="model.divPart.verse"/>
+<specDesc key="model.entryLike"/>
+<specDesc key="tei.comp.terminology"/>
+</specList>
  </p>
 <p>Declarations for these module-specific element classes are included
 in a separate <ident type="module">-decls</ident> schema fragment when
@@ -1226,123 +1183,72 @@ other declarations. </p></div3>
 <div3 xml:id="STECMI"><head>Miscellaneous Content-Model Classes</head>
 <p>The following element classes occupy specific places in content
 models; most are relevant only when certain modules are selected
-<list type="gloss"><label><ident type="class">model.nameLike.agent</ident> </label>
-<item>elements which denote an
-individual or organization to whom or to which responsibility for an action
-can be assigned</item>
-<label><ident type="class">model.addrPart</ident> </label>
-<item>elements which can occur
-as part of an address</item>
-<label><ident type="class">model.biblPart</ident> </label>
-<item>elements which can occur in bibliographic citations</item>
-<label><ident type="class">model.choicePart</ident></label>
-<item>elements which can be used as part  of a
-<gi>choice</gi> alternation</item>
-<label><ident type="class">model.publicationStmtPart</ident></label>
-<item>elements which can occur inside the <gi>publicationStmt</gi></item>
-<label><ident type="class">model.glossLike</ident></label>
-<item>elements which provide an alternative name,
-  explanation, or description for any markup construct</item>
-<label><ident type="class">model.quoteLike</ident> </label>
-<item>elements which indicate a quotation of some sort, particularly
-those that indicate a passage attributed to some agency external to
-the text </item>
-<label><ident type="class">model.respLike</ident> </label>
-<item>elements which  indicate intellectual
-  responsibility, for example within a bibliographic element</item>
-<label><ident type="class">model.persPart</ident> </label>
-<item>elements which describe characteristics of the people referenced by a text, or
-participating in a language interaction</item>
-<label><ident type="class">model.divWrapper.bottom</ident> </label>
-<item>elements which can occur
-as part of the closing material of a text division or body</item>
-<label><ident type="class">model.divWrapper</ident> </label>
-<item>elements which can occur
-as part of the opening material of a text division or body</item>
-<label><ident type="class">model.frontPart.drama</ident> </label>
-<item>elements which can
-occur in the front matter of drama and other performance texts</item>
-<label><ident type="class">model.pLike.front</ident> </label>
-<item>elements which can
-occur in place of a title page in front matter only </item>
-<label><ident type="class">model.frontPart</ident> </label>
-<item>elements which can occur
-(at the level of text divisions) in front matter only</item>
-<label><ident type="class">model.msItemPart</ident></label>
-<item>elements which can appear within the description of an
-individual title or item in a manuscript description</item>
-<label><ident type="class">model.persNamePart</ident> </label>
-<item>elements which contain
-parts of a personal name</item>
-<label><ident type="class">model.placeNamePart</ident> </label>
-<item>elements which contain
-parts of a place name</item>
-<label><ident type="class">model.titlepagePart</ident> </label>
-<item>elements which occur within title pages</item>
-  <label><ident type="class">model.lLike</ident></label>
-<item>elements such as <gi>l</gi> used to mark metrical components
-  such as verse lines
-</item>
-  <label><ident type="class">model.recordingPart</ident></label>
-<item>elements used to describe the details of an audio or video
-recording event</item>
-  <label><ident type="class">model.stageLike</ident></label>
-<item>elements such as <gi>stage</gi> which can appear within
-representations of speech, but are not themselves spoken
-</item>
-<label><ident type="class">model.imprintPart</ident></label>
-<item>bibliographic elements typically found in an imprint</item>
-</list>
+<specList>
+<specDesc key="model.addrPart"/>
+<specDesc key="model.biblPart"/>
+<specDesc key="model.choicePart"/>
+<specDesc key="model.divWrapper"/>
+<specDesc key="model.divWrapper.bottom"/>
+<specDesc key="model.frontPart"/>
+<specDesc key="model.frontPart.drama"/>
+<specDesc key="model.glossLike"/>
+<specDesc key="model.imprintPart"/>
+<specDesc key="model.lLike"/>
+<specDesc key="model.msItemPart"/>
+<specDesc key="model.nameLike.agent"/>
+<specDesc key="model.pLike.front"/>
+<specDesc key="model.persNamePart"/>
+<specDesc key="model.persPart"/>
+<specDesc key="model.placeNamePart"/>
+<specDesc key="model.publicationStmtPart"/>
+<specDesc key="model.quoteLike"/>
+<specDesc key="model.recordingPart"/>
+<specDesc key="model.respLike"/>
+<specDesc key="model.stageLike"/>
+<specDesc key="model.titlepagePart"/>
+</specList>
  </p>
-<p>They are declared in the following module:
-<specGrp xml:id="DSTECMI" n="Misc. Element Class Models">
-&addrpart.odd;
-&publicationstmtpart.odd;
-&glosslike.odd;
-&quotelike.odd;
-&resplike.odd;
-&demog.odd;
-&divbot.odd;
-&divtop.odd;
-&drfront.odd;
-&clfront.odd;
-&fmchunk.odd;
-&tpparts.odd;
-&msitempart.odd;
-&chooseable.odd;
-&cllines.odd;
-&recordingpart.odd;
-&imprintpart.odd;
-&biblpart.odd;
-<!-- &clstage.odd;-->
-    </specGrp>
-</p></div3>
-
-<div3 xml:id="STECMX"><head>Module-specific Components</head>
-<p>The macro <ident type="macro">macro.component</ident>  is defined
-as the concatenation of a number of other macros 
-<ident type="pe">macro.componentSeq</ident> are rather more complex.
-The relevant portion of the DTD is this:
-<specGrp xml:id="DSTECMX" n="Definition of components for combined bases">
-<p>Default declarations for the mix-ins used in the definition of macro.component</p>
-&drmixxx.odd; 
-&tsmixxx.odd;
-&dimixxx.odd;
-<p>These declarations are needed for arcane reasons which I have only
-managed to understand fleetingly.</p>
-</specGrp>
-</p>
 </div3>
+
 
 </div2>
 
-<div2 xml:id="STmacros"><head>Macros for commonly occurring content
-models</head>
+<div2 xml:id="STmacros"><head>Macros</head>
+
+<p>The <ident type="module">tei</ident> module also declares a number
+of <term>macros</term>, which are used for two distinct purposes in the
+TEI scheme. Firstly, macros are used to stand for
+frequently-encountered content models, or parts of content models
+(<ptr target="#STECST"/>); secondly, they are used to enable some
+components of other macros to be defined in a way that permits their
+significance to vary depending on the collection of modules in use
+(<ptr target="#STECMX"/>). In both cases, macros are implemented in
+the same way: as patterns in the RelaxNG schema fragments, and as
+parameter entities in the XML DTD  fragments.</p>
 
 <div3 xml:id="STECST"><head>Standard Content Models</head>
 <p>As far as possible, the TEI schemas use the following set of
 frequently-encountered content models to help achieve consistency among
 different elements.
+<specList>
+<specDesc key="macro.bodyPart.div"/>
+<specDesc key="macro.bodyPart.div0"/>
+<specDesc key="macro.bodyPart.div1"/>
+<specDesc key="macro.bodyPart.main"/> <!-- references pre -->
+<specDesc key="macro.bodyPart.pre"/>
+<specDesc key="macro.component"/>
+<specDesc key="macro.componentSeq"/>
+<specDesc key="macro.fileDescPart"/>
+<specDesc key="macro.glossSeq"/>
+<specDesc key="macro.paraContent"/>
+<specDesc key="macro.phraseSeq"/>
+<!-- specDesc key="macro.phrasegroup"/-->
+<specDesc key="macro.schemapattern"/>
+<specDesc key="macro.specialPara"/>
+<specDesc key="macro.xtext"/>
+</specList>
+</p>
+<!--
 <list type="gloss"><label><ident type="pe">phrase</ident> </label>
 <item>a single sequence of
 character data or single phrase-level element</item>
@@ -1384,35 +1290,70 @@ component-level elements.
 <label><ident type="class">macro.bodyPart.main</ident></label>
 <item>elemnts used in the declaration of <gi>body</gi></item>
 </list>
- </p>
+ </p>-->
+
 <p>These macros are declared as follows:
 <specGrp xml:id="DSTECST" n="Standard Content Models">
-&filedescpart.odd;
 &bodypartdiv.odd;
 &bodypartdiv0.odd;
 &bodypartdiv1.odd;
 &bodypartpre.odd;
-&bodypartmain.odd;
-&macroxtext.odd;
-&cbcomp.odd;
-&pephrase.odd;
-&phrseq.odd;
-&glossseq.odd;
+&bodypartmain.odd; <!-- references pre -->
 
-<p>The actual meaning of  <ident type="macro">macro.component</ident> will
-differ, depending on which modules are in use. This is because its
-value refers to other, module-specific, macros. 
-</p>
+<!-- component -->&cbcomp.odd;
 &compseq.odd;
-<p>The following macros are module independent.</p>
+<!-- &pephrase.odd; killed 6/1/6 -->
+
+&filedescpart.odd;
+&glossseq.odd;
 &peparac.odd;
+
+&phrseq.odd;
 &pespecp.odd;
+&macroxtext.odd;
+
 </specGrp>
  </p></div3>
 
+<div3 xml:id="STECMX"><head>Module-specific Components</head>
+
+<p>The macro <ident type="macro">macro.component</ident> is defined as
+the concatenation of a number of other macros and its actual meaning
+will differ, depending on which modules are in use. As stated above, 
+its value refers to the following special-purpose macros:
+
+<specList>
+<specDesc key="mix.dictionaries"/>
+<specDesc key="mix.drama"/>
+<specDesc key="mix.spoken"/>
+</specList></p>
+
+<p>These <soCalled>mix-in</soCalled> macros are defined differently in different modules. In the
+<ident type="module">tei</ident> module, they are all defined as the null
+string. In the modules after which they are named, however, each one
+references a class of elements defined by that module which are to be
+mixed into the component macro, but only if the module in question is
+included.</p>
+
+<p>For example, when the drama module is included in a schema, the
+macro <ident>mix.drama</ident> references the class
+<code>model.divPart.stage</code>, so that members of that class will
+be included when  <ident>macro.component.seq</ident> is evaluated.
+</p>
+<!-- cannot yet face explaining why there is an | in the dtd version
+and not the relaxng one -->
+
+<p>
+<specGrp xml:id="DSTECMX" n="Definition of components for combined bases">
+<p>Default declarations for the mix-ins used in the definition of macro.component</p>
+&drmixxx.odd; 
+&tsmixxx.odd;
+&dimixxx.odd;
+</specGrp>
+</p>
+</div3>
 
 </div2>
-
 
 
 <div2 xml:id="STPE"><head>TEI DTD-specific mechanisms</head>
@@ -1437,7 +1378,7 @@ briefly describe the other uses of parameter entities in the TEI DTD fragments.
 <p>Special-purpose parameter entities are used to specify which
 modules are to be combined into a TEI DTD. They take the
 form <val>TEI.xxxxx</val> where <code>xxxx</code> is the name of the
-module as given in  table <ptr target="tab-mods"/> in <ptr
+module as given in  table <ptr target="#tab-mods"/> in <ptr
 target="#STMA"/> above. For example, the
 parameter entity <ident type="pe">TEI.linking</ident> is used to
 define whether or not to include the module <ident
