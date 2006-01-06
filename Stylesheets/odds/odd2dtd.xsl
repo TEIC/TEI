@@ -157,15 +157,15 @@
 	  <xsl:sort select="@ident" order="descending"/>
 	  <xsl:if test="not(@type='core')">
 	    <xsl:if test="key('DeclModules',concat(@ident,'-decl'))">
-	      <xsl:text>&#10;&lt;!ENTITY % file.</xsl:text>
+	      <xsl:text>&#10;&lt;![%TEI.</xsl:text>
+	      <xsl:value-of select="@ident"/>
+	      <xsl:text>;[&#10;&lt;!ENTITY % file.</xsl:text>
 	      <xsl:value-of select="@ident"/>
 	      <xsl:text>-decl PUBLIC '-//TEI P5//ENTITIES </xsl:text>
 	      <xsl:value-of select="tei:altIdent[@type='FPI']"/>
 	      <xsl:text>//EN' '</xsl:text>
 	      <xsl:value-of select="@ident"/>
-	      <xsl:text>-decl.dtd' &gt;&#10;&lt;![%TEI.</xsl:text>
-	      <xsl:value-of select="@ident"/>
-	      <xsl:text>;[ %file.</xsl:text>
+	      <xsl:text>-decl.dtd' &gt;&#10;%file.</xsl:text>
 	      <xsl:value-of select="@ident"/>
 	      <xsl:text>-decl;&#10;]]&gt;&#10;</xsl:text>
 	    </xsl:if>
