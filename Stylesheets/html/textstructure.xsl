@@ -1514,25 +1514,25 @@ $ID: requests a particular page
       <xsl:when test="following-sibling::tei:TEI">
         <xsl:apply-templates mode="generateNextLink" select="following-sibling::tei:TEI[1]"/>
       </xsl:when>
-      <xsl:when test="following-sibling::tei:div[tei:head]">
+      <xsl:when test="following-sibling::tei:div[tei:head or $autoHead='true']">
         <xsl:apply-templates mode="generateNextLink" select="following-sibling::tei:div[1]"/>
       </xsl:when>
-      <xsl:when test="parent::tei:body/following-sibling::tei:back/tei:div[tei:head]">
+      <xsl:when test="parent::tei:body/following-sibling::tei:back/tei:div[tei:head or $autoHead='true']">
         <xsl:apply-templates mode="generateNextLink" select="parent::tei:body/following-sibling::tei:back/tei:div[1]"/>
       </xsl:when>
-      <xsl:when test="parent::tei:front/following-sibling::tei:body/tei:div[tei:head]">
+      <xsl:when test="parent::tei:front/following-sibling::tei:body/tei:div[tei:head or $autoHead='true']">
         <xsl:apply-templates mode="generateNextLink" select="parent::tei:front/following-sibling::tei:body/tei:div[1]"/>
       </xsl:when>
-      <xsl:when test="$myName='div0' and following-sibling::tei:div0[tei:head]">
+      <xsl:when test="$myName='div0' and following-sibling::tei:div0[tei:head or $autoHead='true']">
         <xsl:apply-templates mode="generateNextLink" select="following-sibling::tei:div0[1]"/>
       </xsl:when>
-      <xsl:when test="$myName='div1' and following-sibling::tei:div1[tei:head]">
+      <xsl:when test="$myName='div1' and following-sibling::tei:div1[tei:head or $autoHead='true']">
         <xsl:apply-templates mode="generateNextLink" select="following-sibling::tei:div1[1]"/>
       </xsl:when>
-      <xsl:when test="$myName='div2' and following-sibling::tei:div2[tei:head]">
+      <xsl:when test="$myName='div2' and following-sibling::tei:div2[tei:head or $autoHead='true']">
         <xsl:apply-templates mode="generateNextLink" select="following-sibling::tei:div2[1]"/>
       </xsl:when>
-      <xsl:when test="$myName='div3' and following-sibling::tei:div3[tei:head]">
+      <xsl:when test="$myName='div3' and following-sibling::tei:div3[tei:head or $autoHead='true']">
         <xsl:apply-templates mode="generateNextLink" select="following-sibling::tei:div3[1]"/>
       </xsl:when>
     </xsl:choose>
@@ -1637,8 +1637,7 @@ $ID: requests a particular page
       <xsl:call-template name="addLangAtt"/>
       <xsl:comment>THIS FILE IS GENERATED FROM AN XML MASTER. 
     DO NOT EDIT (4)</xsl:comment>
-      <xsl:text>
-</xsl:text>
+      <xsl:text>&#10;</xsl:text>
       <head>
         <xsl:variable name="pagetitle">
           <xsl:choose>
@@ -1952,25 +1951,25 @@ $ID: requests a particular page
       <xsl:when test="preceding-sibling::tei:TEI">
         <xsl:apply-templates mode="generatePreviousLink" select="preceding-sibling::tei:TEI[1]"/>
       </xsl:when>
-      <xsl:when test="preceding-sibling::tei:div[tei:head]">
+      <xsl:when test="preceding-sibling::tei:div[tei:head or $autoHead='true']">
         <xsl:apply-templates mode="generatePreviousLink" select="preceding-sibling::tei:div[1]"/>
       </xsl:when>
-      <xsl:when test="parent::tei:body/preceding-sibling::tei:back/tei:div[tei:head]">
+      <xsl:when test="parent::tei:body/preceding-sibling::tei:back/tei:div[tei:head or $autoHead='true']">
         <xsl:apply-templates mode="generatePreviousLink" select="parent::tei:body/preceding-sibling::tei:back/tei:div[1]"/>
       </xsl:when>
-      <xsl:when test="parent::tei:front/preceding-sibling::tei:body/tei:div[tei:head]">
+      <xsl:when test="parent::tei:front/preceding-sibling::tei:body/tei:div[tei:head or $autoHead='true']">
         <xsl:apply-templates mode="generatePreviousLink" select="parent::tei:front/preceding-sibling::tei:body/tei:div[1]"/>
       </xsl:when>
-      <xsl:when test="$myName='div0' and preceding-sibling::tei:div0[tei:head]">
+      <xsl:when test="$myName='div0' and preceding-sibling::tei:div0[tei:head or $autoHead='true']">
         <xsl:apply-templates mode="generatePreviousLink" select="preceding-sibling::tei:div0[1]"/>
       </xsl:when>
-      <xsl:when test="$myName='div1' and preceding-sibling::tei:div1[tei:head]">
+      <xsl:when test="$myName='div1' and preceding-sibling::tei:div1[tei:head or $autoHead='true']">
         <xsl:apply-templates mode="generatePreviousLink" select="preceding-sibling::tei:div1[1]"/>
       </xsl:when>
-      <xsl:when test="$myName='div2' and preceding-sibling::tei:div2[tei:head]">
+      <xsl:when test="$myName='div2' and preceding-sibling::tei:div2[tei:head or $autoHead='true']">
         <xsl:apply-templates mode="generatePreviousLink" select="preceding-sibling::tei:div2[1]"/>
       </xsl:when>
-      <xsl:when test="$myName='div3' and preceding-sibling::tei:div3[tei:head]">
+      <xsl:when test="$myName='div3' and preceding-sibling::tei:div3[tei:head or $autoHead='true']">
         <xsl:apply-templates mode="generatePreviousLink" select="preceding-sibling::tei:div3[1]"/>
       </xsl:when>
     </xsl:choose>
@@ -2255,7 +2254,7 @@ $ID: requests a particular page
     <xsl:param name="force">false</xsl:param>
     <xsl:choose>
       <xsl:when test="tei:div0">
-	<xsl:for-each select="tei:div0[tei:head]">
+	<xsl:for-each select="tei:div0[tei:head or $autoHead='true']">
 	  <xsl:call-template name="tocEntry">
 	    <xsl:with-param name="style" select="$style"/>
 	    <xsl:with-param name="id" select="$id"/>
@@ -2263,7 +2262,7 @@ $ID: requests a particular page
 	</xsl:for-each>
       </xsl:when>
       <xsl:when test="tei:div1">
-	<xsl:for-each select="tei:div1[tei:head]">
+	<xsl:for-each select="tei:div1[tei:head or $autoHead='true']">
 	  <xsl:call-template name="tocEntry">
 	    <xsl:with-param name="style" select="$style"/>
 	    <xsl:with-param name="id" select="$id"/>
@@ -2271,7 +2270,7 @@ $ID: requests a particular page
 	</xsl:for-each>
       </xsl:when>
       <xsl:when test="tei:div2 and ($splitLevel &gt;=1 or $force='true')">
-	<xsl:for-each select="tei:div2[tei:head]">
+	<xsl:for-each select="tei:div2[tei:head or $autoHead='true']">
 	  <xsl:call-template name="tocEntry">
 	    <xsl:with-param name="style" select="$style"/>
 	    <xsl:with-param name="id" select="$id"/>
@@ -2279,7 +2278,7 @@ $ID: requests a particular page
 	</xsl:for-each>
       </xsl:when>
       <xsl:when test="tei:div3 and ($splitLevel &gt;=2 or $force='true')">
-	<xsl:for-each select="tei:div3[tei:head]">
+	<xsl:for-each select="tei:div3[tei:head or $autoHead='true']">
 	  <xsl:call-template name="tocEntry">
 	    <xsl:with-param name="style" select="$style"/>
 	    <xsl:with-param name="id" select="$id"/>
@@ -2291,7 +2290,7 @@ $ID: requests a particular page
 	  <xsl:apply-templates select="." mode="depth"/>
 	</xsl:variable>
 	<xsl:if test="($splitLevel&gt;$depth  or $force='true')">
-	  <xsl:for-each select="tei:div[tei:head]">
+	  <xsl:for-each select="tei:div[tei:head or $autoHead='true']">
 	    <xsl:call-template name="tocEntry">
 	      <xsl:with-param name="style" select="$style"/>
 	      <xsl:with-param name="id" select="$id"/>
@@ -2300,7 +2299,7 @@ $ID: requests a particular page
 	</xsl:if>
       </xsl:when>
       <xsl:otherwise>
-	  <xsl:for-each select="tei:div[tei:head]">
+	  <xsl:for-each select="tei:div[tei:head or $autoHead='true']">
 	    <xsl:call-template name="tocEntry">
 	      <xsl:with-param name="style" select="$style"/>
 	      <xsl:with-param name="id" select="$id"/>
@@ -2540,6 +2539,7 @@ $ID: requests a particular page
 	<xsl:attribute name="class">teidiv</xsl:attribute>
       </xsl:otherwise>
     </xsl:choose>
+    <xsl:copy-of select="@id"/>
   </xsl:template>
 
   <xd:doc>

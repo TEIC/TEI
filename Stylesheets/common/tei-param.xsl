@@ -63,6 +63,9 @@ Construct a heading (eg "Heading") for &lt;div&gt; elements with no  &lt;head&gt
 </xd:doc>
 <xsl:template name="autoMakeHead">
 <xsl:choose>
+  <xsl:when test="head">
+    <xsl:apply-templates mode="plain" select="head"/>
+  </xsl:when>
   <xsl:when test="@type"><xsl:value-of select="@type"/></xsl:when>
   <xsl:otherwise>Heading</xsl:otherwise>
 </xsl:choose>

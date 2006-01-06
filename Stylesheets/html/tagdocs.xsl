@@ -538,7 +538,9 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <b>&lt;<a>
+    <b>
+      <xsl:if test="self::tei:elementSpec">&lt;</xsl:if>
+      <a>
       <xsl:attribute name="href">
 	<xsl:choose>
 	  <xsl:when test="$splitLevel=-1">
@@ -553,7 +555,9 @@
 	</xsl:choose>
       </xsl:attribute>
       <xsl:value-of select="$name"/>
-    </a>&gt; </b>
+    </a>
+    <xsl:if test="self::tei:elementSpec">&gt;</xsl:if>
+    </b>
     <xsl:value-of select="tei:desc"/>
     <xsl:choose>
       <xsl:when test="not($atts='')">
@@ -970,6 +974,17 @@
     </tr>
   </xsl:template>
   
+<xd:doc>
+    <xd:short>Process elements  tei:val</xd:short>
+    <xd:detail>&#160;</xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:val">
+    <span class="val">  
+      <xsl:apply-templates/>
+    </span>
+  </xsl:template>
+  
+
 <xd:doc>
     <xd:short>Process elements  tei:valList</xd:short>
     <xd:detail>&#160;</xd:detail>
