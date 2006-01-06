@@ -1249,72 +1249,45 @@ different elements.
 <specDesc key="macro.xtext"/>
 </specList>
 </p>
-<!--
-<list type="gloss"><label><ident type="pe">phrase</ident> </label>
-<item>a single sequence of
-character data or single phrase-level element</item>
-<label><ident type="pe">macro.phraseSeq</ident> </label>
-<item>sequence of character
-data and phrase-level elements</item>
-<label><ident type="pe">macro.component</ident> </label>
-<item>a single chunk- or
-inter-level element</item>
-<label><ident type="pe">macro.componentSeq</ident> </label>
-<item>sequence of chunk- and
-inter-level elements; this is the usual content of a <gi>div</gi>
-element</item>
-<label><ident type="pe">macro.glossseq</ident> </label>
-<item>sequence of identifying and glossing
-elements</item>
-<label><ident type="pe">macro.paraContent</ident> </label>
-<item>sequence of character
-data, phrase-level elements, and inter-level elements; this is the usual
-content of chunks (including, most prominently, paragraphs)</item>
-<label><ident type="pe">macro.specialPara</ident> </label>
-<item>specialized content
-model, allowing <emph>either</emph> a sequence of chunks <emph>or</emph>
-the same content as <ident type="pe">macro.paraContent</ident>; this is used for
-elements such as notes and list items, which can behave either as
-chunk-level elements, or else as containers for groups of
-component-level elements.
- </item>
-<label><ident type="class">macro.fileDescPart</ident></label>
-<item>elements that are used inside the <gi>fileDesc</gi> or a <gi>biblFull</gi></item>
-<label><ident type="class">macro.bodyPart.div</ident></label>
-<item>elemnts used in the declaration of <ident type="class">macro.bodyPart.main</ident></item>
-<label><ident type="class">macro.bodyPart.div0</ident></label>
-<item>elemnts used in the declaration of <ident type="class">macro.bodyPart.main</ident></item>
-<label><ident type="class">macro.bodyPart.div1</ident></label>
-<item>elemnts used in the declaration of <ident type="class">macro.bodyPart.main</ident></item>
-<label><ident type="class">macro.bodyPart.pre</ident></label>
-<item>elemnts used in the declaration of <ident type="class">macro.bodyPart.main</ident></item>
-<label><ident type="class">macro.bodyPart.main</ident></label>
-<item>elemnts used in the declaration of <gi>body</gi></item>
-</list>
- </p>-->
 
-<p>These macros are declared as follows:
+<p>The body part macros are declared as follows:
 <specGrp xml:id="DSTECST" n="Standard Content Models">
 &bodypartdiv.odd;
 &bodypartdiv0.odd;
 &bodypartdiv1.odd;
 &bodypartpre.odd;
 &bodypartmain.odd; <!-- references pre -->
-
 </specGrp>
+
+</p>
+
+<p>The component part macros reference the special purpose
+<soCalled>mix-in</soCalled> macros; the latter must therefore be
+declared first:
+
+<specGrp xml:id="DSTECMX" n="Definition of components for combined bases">
+<p>Default declarations for the mix-ins used in the definition of macro.component</p>
+&drmixxx.odd; 
+&tsmixxx.odd;
+&dimixxx.odd;
+</specGrp>
+See further <ptr target="#STECMX"/>. We can now declare the remaining component
+macros:
+
 <specGrpRef target="DSTECMX"/> 
 <specGrp>
 <!-- component -->&cbcomp.odd;
 &compseq.odd;
-<!-- &pephrase.odd; killed 6/1/6 -->
 
-&filedescpart.odd;
-&glossseq.odd;
+
 &peparac.odd;
 
 &phrseq.odd;
 &pespecp.odd;
+
 &macroxtext.odd;
+&filedescpart.odd;
+&glossseq.odd;
 
 </specGrp>
  </p></div3>
@@ -1323,8 +1296,8 @@ component-level elements.
 
 <p>The macro <ident type="macro">macro.component</ident> is defined as
 the concatenation of a number of other macros and its actual meaning
-will differ, depending on which modules are in use. As stated above, 
-its value refers to the following special-purpose macros:
+will differ, depending on which modules are in use. This effect is
+achieved by indirection; the macro value refers to the following special-purpose macros:
 
 <specList>
 <specDesc key="mix.dictionaries"/>
@@ -1348,12 +1321,6 @@ be included when  <ident>macro.component.seq</ident> is evaluated.
 and not the relaxng one -->
 
 <p>
-<specGrp xml:id="DSTECMX" n="Definition of components for combined bases">
-<p>Default declarations for the mix-ins used in the definition of macro.component</p>
-&drmixxx.odd; 
-&tsmixxx.odd;
-&dimixxx.odd;
-</specGrp>
 </p>
 </div3>
 
