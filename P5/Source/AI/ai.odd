@@ -6,7 +6,7 @@ $Date$
 $Author$
 -->
 <div1 xmlns="http://www.tei-c.org/ns/1.0" type="chapter" xml:id="AI" n="15"><head>Simple Analytic Mechanisms</head>
-<p>This chapter describes a tag set for associating simple analyses and
+<p>This chapter describes a module for associating simple analyses and
 interpretations with text elements.  We use the term
 <term>analysis</term> here to refer to any kind of semantic or
 syntactic interpretation which an encoder wishes to attach to all or
@@ -17,7 +17,7 @@ structure (such as <q>theme</q>, <q>reconciliation</q> etc.). The
 mechanisms presented in this chapter offer simpler but less powerful
 than those described in chapter <ptr target="#FS"/>.
 	</p>
-<p>Section <ptr target="#AILC"/> introduces a tag set for characterizing
+<p>Section <ptr target="#AILC"/> introduces a module for characterizing
 text segments according to the familiar linguistic categories of
 <term>sentence</term> or <term>s-unit</term>, <term>clause</term>,
 <term>phrase</term>, <term>word</term>, <term>morpheme</term>, and
@@ -38,12 +38,13 @@ case of spans, or indirectly, in the case of interpretations.</p>
 <p>Finally section <ptr target="#AILA"/> revisits the topic of linguistic
 analysis, and illustrates how these interpretative mechanisms may be
 used to associate simple linguistic analysis with text segments.</p>
+
 <p>The following schema fragments show the overall organization of the
 class of analytic elements discussed in the remainder of this chapter.
 When the analysis module is selected for inclusion in a TEI schema,
-an additional attributes becomes globally available, and some additional
-elements are declared. These declarations are effected by the
-following modules:
+some  additional attributes become globally available, and some additional
+elements are declared. These declarations are provided by the
+following schema fragments:
 <moduleSpec xml:id="DAIENT" type="decls"
 	    ident="analysis-decl">
 <altIdent type="FPI">Class declarations for Analysis and Interpretation</altIdent><desc>Modifications to TEI class system for analysis</desc></moduleSpec><!--publicID:  -//TEI P5//ENTITIES Element Classes for Simple Analysis//EN-->
@@ -51,24 +52,10 @@ following modules:
 <moduleSpec xml:id="DAI" ident="analysis">
 <altIdent type="FPI">Analysis and Interpretation</altIdent><desc>Simple analytic mechanisms</desc></moduleSpec><!--publicID:  -//TEI P5//ELEMENTS Additional Element Set for Simple Analysis//EN-->
 <specGrpRef target="#DAISP"/>
-<specGrpRef target="#DAILC"/></p>
-<p>Selection and combination of modules is performed as described in
+<specGrpRef target="#DAILC"/>
+The selection and combination of modules to form a TEI schema is described in
 <ptr target="#STIN"/>.
-<!-- ; in a
-document which uses the markup described in this chapter, the document
-type declaration should contain the following declaration of the entity
-<term>TEI.analysis</term>, or an equivalent one:
-<eg><![CDATA[<!ENTITY % TEI.analysis 'INCLUDE'>]]></eg>
-The entire document type declaration for a document using this
-additional tag set together with that for linking and alignment and the
-base tag set for prose might look like this:
-<eg><![CDATA[<!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei2.dtd" [
-    <!ENTITY % TEI.XML      'INCLUDE' >
-    <!ENTITY % TEI.prose    'INCLUDE' >
-    <!ENTITY % TEI.linking  'INCLUDE' >
-    <!ENTITY % TEI.analysis 'INCLUDE' >
- ]>]]></eg>
---></p>
+</p>
 <div2 type="subsection" xml:id="AILC"><head>Linguistic Segment Categories</head>
 <p>In this section we introduce specialized <term>linguistic segment
 category</term> elements which may be used to represent the segmentation of
@@ -153,7 +140,7 @@ with the <att>part</att> attribute:
   <l><cl part="F"><cl>They quite forgot their quarrel.</cl></cl></l></div></egXML>
 <note type="cit"><bibl>Lewis Carroll, <title>Through the Looking Glass</title>, ch4</bibl></note>
 Another approach is to use the <att>next</att> and <att>prev</att>
-attributes defined in the additional tag set for linking (chapter <ptr target="#SA"/>):
+attributes defined in the additional module for linking (chapter <ptr target="#SA"/>):
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><l><cl next="#c5" xml:id="c3" part="I">For Tweedledum said
    <cl next="#c6" xml:id="c4" part="I">Tweedledee</cl></cl></l>
 <l><cl prev="#c3" xml:id="c5" part="F">  
@@ -334,7 +321,7 @@ and <gi>c</gi> elements are formally declared as follows:
 </p>
 </div2>
 <div2 type="subsection" xml:id="AIATTS"><head>Global Attributes for Simple Analyses</head>
-<p>When the tag set described by this chapter is selected, an
+<p>When the module described by this chapter is selected, an
 additional attribute is defined for all elements:
 <specList><specDesc key="att.global.analytic" atts="ana"/></specList>
 The <att>ana</att> attribute may be specified for any element.
@@ -610,7 +597,7 @@ information about its context (the circumstances of its production, its
 genre or medium).  The structural properties of any TEI-conformant text
 should be represented using the structural elements discussed elsewhere
 in this chapter and in chapters <ptr target="#CO"/>, <ptr target="#DS"/>, and
-the various chapters of Part III (on base tag sets).  The contextual
+the various chapters of Part III.  The contextual
 properties of a TEI text are fully documented in the TEI Header, which
 is discussed in chapter <ptr target="#HD"/>, and in section <ptr target="#CCAH"/>.
  </p>

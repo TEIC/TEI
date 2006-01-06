@@ -91,9 +91,9 @@ large corpora.
 Guidelines; composite texts, including corpora, will typically make use
 of the following tags for their top-level organization.
 <specList><specDesc key="teiCorpus"/><specDesc key="TEI"/><specDesc key="teiHeader" atts="type "/><specDesc key="text"/><specDesc key="group"/></specList>
-Full descriptions of these may be found in chapter <ptr target="#ST"/> (for
-<gi>teiCorpus</gi> and <gi>TEI</gi>), chapter <ptr target="#HD"/> (for
-<gi>teiHeader</gi>), and chapter <ptr target="#DS"/> (for <gi>text</gi> and
+Full descriptions of these may be found in chapter <ptr target="#HD"/> (for
+<gi>teiHeader</gi>), and chapter <ptr target="#DS"/> (for
+<gi>teiCorpus</gi>  <gi>TEI</gi>), <gi>text</gi> and
 <gi>group</gi>); this section discusses their application to composite
 texts in particular.
  </p>
@@ -264,20 +264,27 @@ of a language interaction, and the participants in it.  Though this
 information may be relevant to, and provided for, unitary texts as well
 as for collections or corpora, it is more often recorded for the
 components of systematically developed corpora than for isolated texts,
-and thus the additional module is referred to as being <q>for language
-corpora</q>.  Included in this module are the following elements:
+and thus this module is referred to as being <q>for language
+corpora</q>.
+
+<moduleSpec xml:id="DCCHDR" ident="corpus"><altIdent
+type="FPI">Metadata for Language Corpora</altIdent><desc>Header extensions for corpus texts</desc></moduleSpec><!--publicID:  -//TEI P5//ELEMENTS Additional Element Set for Language Corpora//EN-->
+The selection and combination of modules to form a TEI schema is described in
+<ptr target="#STIN"/>.</p>
+<p>  Included in this module are the following elements:
 <specList><specDesc key="textDesc"/><specDesc key="particDesc"/><specDesc key="settingDesc"/></specList>
 These elements form an optional extension to the <gi>profileDesc</gi>,
 defined in section <ptr target="#HD4"/> and are further described in the
-remainder of this section. They are formally defined as follows:
-<moduleSpec xml:id="DCCHDR" ident="corpus"><altIdent
-type="FPI">Metadata for Language Corpora</altIdent><desc>Header extensions for corpus texts</desc></moduleSpec><!--publicID:  -//TEI P5//ELEMENTS Additional Element Set for Language Corpora//EN-->
+remainder of this chapter. They are formally defined as follows:
+
+<specGrp>
 &textdesc.odd;
 &partdesc.odd;
 &settdesc.odd;
+</specGrp>
 <specGrpRef target="#DCCAHTD"/><specGrpRef target="#DCCAHPA"/><specGrpRef target="#DCCAHSE"/>
 	</p>
-<p>The additional module for language corpora will be invoked, thus
+<!--<p>The module for language corpora will be invoked, thus
 enabling the use of these elements, if a parameter entity called
 <ident type="pe">TEI.corpus</ident> is declared with the value <val>INCLUDE</val>, somewhere within the DTD subset.  If the
 document is structured as a TEI corpus (that is, using the
@@ -287,8 +294,8 @@ resemble this:
          "-//TEI P5//DTD Main Document Type//EN" "tei2.dtd" [
    <!ENTITY % TEI.XML    'INCLUDE' >
    <!ENTITY % TEI.corpus 'INCLUDE' >
-]>]]></eg>
-<!-- 27 jan 93: LB extracted from old p2224.odd and revised  --></p>
+]>]]></eg>-->
+
 <div3 type="subsection" xml:id="CCAHTD"><head>The Text Description</head>
 <p>The <gi>textDesc</gi> element provides a full description of the
 situation within which a text was produced or experienced, and thus
