@@ -18,7 +18,7 @@ attribute.</item>
 <item>the <gi>certainty</gi> element defined in this chapter may be used
 to record the nature and degree of the uncertainty in a more structured
 way.</item>
-<item>the <gi>alt</gi> element defined in the additional tag set for
+<item>the <gi>alt</gi> element defined in the module for
 linking and segmentation may be used to provide alternative encodings
 for parts of a text, as described in section <ptr target="#SAAT"/>.</item></list>
 There are three methods of indicating responsibility for different
@@ -34,20 +34,19 @@ or <val>responsibility</val> in its <att>type</att> attribute.</item>
 <item>the <gi>respons</gi> element defined in this chapter may be used
 to record fine-grained structured information about responsibility for
 individual tags in the text.</item></list>
-No special steps are needed to use the <gi>note</gi> and <gi>respStmt</gi> elements, since they are defined in the core tag set and header
+No special steps are needed to use the <gi>note</gi> and <gi>respStmt</gi> elements, since they are defined in the core module and header
 respectively.  The <gi>alt</gi> element is only available when the
-additional tag set for linking has been selected, as described in
+module for linking has been selected, as described in
 chapter <ptr target="#SA"/>. To use the <gi>certainty</gi> and
-<gi>respons</gi> elements, the additional tag set for certainty and
-responsibility must be selected; this is done by defining the
-parameter entity <ident type="pe">TEI.certainty</ident> with the value
-<val>INCLUDE</val>, as shown in the example below:
-<eg><![CDATA[<!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei2.dtd" [
-    <!ENTITY % TEI.XML       'INCLUDE' >
-    <!ENTITY % TEI.prose     'INCLUDE' >
-    <!ENTITY % TEI.certainty 'INCLUDE' >
- ]>]]></eg></p>
-<div2 type="Ilocano" xml:id="CECERT"><head>Levels of Certainty</head>
+<gi>respons</gi> elements, the module for certainty and
+responsibility must be selected. 
+
+<moduleSpec xml:id="DCE" ident="certainty"><altIdent type="FPI">Certainty and Uncertainty</altIdent><desc>Certainty and uncertainty</desc></moduleSpec><!--publicID:  -//TEI P5//ELEMENTS Additional Element Set for Certainty and Responsibility//EN-->
+
+The selection and combination of modules to form a TEI schema is described in
+<ptr target="#STIN"/>.
+</p>
+<div2  xml:id="CECERT"><head>Levels of Certainty</head>
 <p>Many types of uncertainty may be distinguished.  The
 <gi>certainty</gi> element is designed to encode the following sorts:
 <list type="bullets">
@@ -270,10 +269,9 @@ in a given situation, encoders should provide their own controlled
 vocabulary and document it in the <gi>encodingDesc</gi> or
 <gi>tagUsage</gi> elements of the TEI header.</p>
 <p>The <gi>certainty</gi> element has the following formal declaration:
-<moduleSpec xml:id="DCE" ident="certainty"><altIdent type="FPI">Certainty and Uncertainty</altIdent><desc>Certainty and uncertainty</desc></moduleSpec><!--publicID:  -//TEI P5//ELEMENTS Additional Element Set for Certainty and Responsibility//EN-->
-&certain.odd;
+<specGrp>&certain.odd;</specGrp>
 <specGrpRef target="#DCERESP"/></p></div3></div2>
-<div2 type="Ilocano" xml:id="CERESP"><head>Attribution of Responsibility</head>
+<div2  xml:id="CERESP"><head>Attribution of Responsibility</head>
 <p>In general, attribution of responsibility for the transcription and
 markup of an electronic text is made by <gi>respStmt</gi> elements
 within the header: specifically, within the title statement, the
