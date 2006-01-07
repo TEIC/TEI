@@ -25,6 +25,9 @@ Finally, section <ptr target="#DROTH"/> discusses a small number of
 additional elements characteristic of screen plays and radio or
 television scripts, as well as some elements for representing
 technical stage directions such as lighting or blocking.</p>
+
+<p>These features are provided by the following module:
+
 <!--<p>To enable the base tag set for performance texts, the parameter
 entity <term>TEI.drama</term> must be declared within the document
 type subset with the value <val>INCLUDE</val>, as further
@@ -39,26 +42,47 @@ follows:
 This declaration makes available all of the elements described in this
 chapter, in addition to the core elements described in chapter <ptr
 target="#CO"/>. -->
+
+
+<moduleSpec xml:id="DDR" ident="drama"><altIdent
+type="FPI">Performance Texts</altIdent><desc>Performance texts</desc></moduleSpec>
+
+The selection and combination of modules to form a TEI schema is described in
+<ptr target="#STIN"/>.
+</p>
+
 <p>The default structure for dramatic texts is similar to that
 defined by chapter <ptr target="#DS"/>, as further discussed in
 section <ptr target="#DRDIV"/>.</p>
-<p>Three additional element classes are used by this base tag set.
-The <term>dramafront</term> class contains elements which can
-appear only in the front or back matter of performance texts.
-The <term>stageDirection</term> class contains a set of elements
-for specialized stage directions, which can occur between or within
-speeches. These two element classes were defined in <ptr target="#STEC"/> above.</p>
-<p>A default declaration for the <term>comp.drama</term> class is also defined in that section, but a
-different declaration is needed when the drama base is selected, in
-order to add all elements which may appear
-as components of performance texts, in addition to those defined in the
-core. This is achieved by the following declarations:
-<moduleSpec xml:id="DDRCLA" type="decls" ident="drama-decl"><altIdent type="FPI">Class declarations for Performance Texts</altIdent><desc>Class declarations for Performance Texts</desc></moduleSpec><!--publicID:  -//TEI P5//ENTITIES Element Classes for Drama//EN-->
+
+<p>Two element classes are used by this module.
+The <ident type="class">model.divPart.stage</ident> class supplies
+specialized elements which can appear only in the front or back matter
+of performance texts.  The <ident type="class">model.stageLike</ident>
+class supplies a set of elements for stage directions and similar
+items such as camera movements, which can occur between or within
+speeches. These two element classes were defined in <ptr
+target="#STEC"/> above.</p>
+
+<!--moduleSpec xml:id="DDRCLA" type="decls" ident="drama-decl">
+<altIdent type="FPI">Class declarations for Performance Texts</altIdent><desc>Class declarations for Performance Texts</desc></moduleSpec-->
+<!--publicID:  -//TEI P5//ELEMENTS Base Element Set for Drama 2001-12//EN-->
+<p>
+This module is organized as follows. First, the class <ident
+type="class">model.divPart.stage</ident> is declared. Next the
+macro <ident type="macro">mix.drama</ident> is declared as a  reference to this
+class, rather than as a
+null string (which is its default definition provided in the <ident
+type="module">tei</ident> module). This ensures that the macro <ident
+type="macro">macro.component.seq</ident> used in the definition of
+<gi>div</gi> and similar elements will include references to the
+appropriate elements defined by this module, as further discussed in
+section <ptr target="#STECMX"/>.  Following this, the module provides
+the elements declared by the following specifications. 
+
 &compdram.odd;
 &drmix.odd;
-The remainder of the DTD fragment defining the base tag set for drama
-has the following overall shape:
-<moduleSpec xml:id="DDR" ident="drama"><altIdent type="FPI">Performance Texts</altIdent><desc>Performance texts</desc></moduleSpec><!--publicID:  -//TEI P5//ELEMENTS Base Element Set for Drama 2001-12//EN-->
+
 <specGrpRef target="#DDRFAB"/>
 <specGrpRef target="#DDRSTA"/>
 <specGrpRef target="#DDROTH"/>
@@ -797,10 +821,10 @@ as verse or prose.  The following elements, all of which are defined in
 the core, are available for marking units of prose or verse within
 speeches:
 <specList><specDesc key="p"/><specDesc key="lb" atts="ed"/><specDesc key="l" atts="part"/><specDesc key="lg"/><specDesc key="seg"/></specList></p>
-<p>As members of the class <term>metrical</term>, the elements <gi>l</gi>
+<p>As members of the class <ident type="class">att.metrical</ident>, the elements <gi>l</gi>
 and <gi>lg</gi> share the following attributes:
 <specList><specDesc key="att.metrical" atts="met rhyme"/></specList></p>
-<p>As a member of the class <term>divn</term>, the element <gi>lg</gi>
+<p>As a member of the class <ident type="class">att.divLike</ident>, the element <gi>lg</gi>
 also bears the following attributes:
 <specList><specDesc key="att.divLike" atts="part type"/></specList></p>
 <p>In many texts, prose and verse may be inextricably mingled;
