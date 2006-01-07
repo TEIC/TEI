@@ -75,7 +75,7 @@
     <xsl:apply-templates select=".//tei:schemaSpec" />
   </xsl:when>
   <xsl:otherwise>
-    <xsl:apply-templates select="key('AllModules',1)"/>
+    <xsl:apply-templates select="key('Modules',1)"/>
   </xsl:otherwise>
 </xsl:choose>
 </xsl:template>
@@ -134,16 +134,18 @@
 	      <xsl:comment>
 		<xsl:call-template name="copyright"/>
 	      </xsl:comment>
+	    </xsl:if>
 	    <xsl:comment>Set predeclared macros</xsl:comment>
+	    
 	    <xsl:for-each select="key('PredeclareAllMacros',1)">
 	      <xsl:apply-templates select="." mode="tangle"/>
 	    </xsl:for-each>
-	    <xsl:call-template name="predeclarations"/>
-	    </xsl:if>
+
 	    <xsl:apply-templates mode="tangle"
 				 select="tei:specGrpRef"/>
 	    <xsl:apply-templates mode="tangle"
 				 select="tei:moduleRef"/>
+
 	    <xsl:for-each select="tei:macroSpec">
 	      <xsl:choose>
 		<xsl:when test="@predeclare='true'"/>
@@ -239,52 +241,21 @@
 
 <xsl:template name="moduleSpec-body">	  
   <xsl:variable name="filename" select="@ident"/>
+<xsl:comment>Definitions from module <xsl:value-of select="@ident"/></xsl:comment>
   <xsl:comment>Set predeclared macros</xsl:comment>
   <xsl:for-each select="key('PredeclareMacrosModule',@ident)">
     <xsl:apply-templates select="." mode="tangle"/>
   </xsl:for-each>
-  <xsl:if test="$filename='core'">
-    <xsl:call-template name="predeclarations"/>
-  </xsl:if>
+
   <xsl:if test="@type='core'">
     <xsl:call-template name="predeclare-classes"/>
   </xsl:if>
   
-  <xsl:variable name="decl">
-    <xsl:value-of select="@ident"/>
-    <xsl:text>-decl</xsl:text>
-  </xsl:variable>
-  <xsl:for-each select="key('DeclModules',$decl)">
-    <xsl:if test="$verbose='true'">
-      <xsl:message>    Include contents of <xsl:value-of select="$decl"/></xsl:message>
-    </xsl:if>
-    <xsl:comment>Definitions from module <xsl:value-of
-    select="$decl"/></xsl:comment>
   <xsl:comment>0. predeclared macros</xsl:comment>
-  <xsl:for-each select="key('PredeclareMacrosModule',$decl)">
+  <xsl:for-each select="key('PredeclareMacrosModule',@ident)">
     <xsl:apply-templates select="." mode="tangle"/>
   </xsl:for-each>
-  <xsl:comment>1. classes</xsl:comment>
-  <xsl:apply-templates select="key('ClassModule',$decl)"
-		       mode="tangle"/>
-  <xsl:comment>2. elements</xsl:comment>    
-    <xsl:apply-templates select="key('ElementModule',$decl)"  mode="tangle">      
-      <xsl:sort select="@ident"/>
-    </xsl:apply-templates>
-    <xsl:comment>3. macros</xsl:comment>
-    <xsl:for-each 
-	select="key('MacroModule',$decl)">
-      <xsl:choose>
-	<xsl:when test="@predeclare='true'"/>
-<!--	<xsl:when test="key('PredeclareMacros',@ident)"/>-->
-	<xsl:otherwise>
-	  <xsl:apply-templates select="." mode="tangle"/>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
-   </xsl:for-each>    
 
-<xsl:comment>Definitions from module <xsl:value-of select="@ident"/></xsl:comment>
   <xsl:comment>1. classes</xsl:comment>
   <xsl:for-each select="key('ClassModule',@ident)">
     <xsl:choose>
@@ -296,21 +267,21 @@
     </xsl:choose>
   </xsl:for-each>
 
-  <xsl:comment>2. elements</xsl:comment>
+  <xsl:comment>2. elements</xsl:comment>    
   <xsl:apply-templates select="key('ElementModule',@ident)"  mode="tangle">      
     <xsl:sort select="@ident"/>
   </xsl:apply-templates>
-
+  
   <xsl:comment>3. macros</xsl:comment>
   <xsl:for-each 
       select="key('MacroModule',@ident)">
-      <xsl:choose>
-	<xsl:when test="@predeclare='true'"/>
-<!--	<xsl:when test="key('PredeclareMacros',@ident)"/>-->
-	<xsl:otherwise>
-	  <xsl:apply-templates select="." mode="tangle"/>
-	</xsl:otherwise>
-      </xsl:choose>
+    <xsl:choose>
+      <xsl:when test="@predeclare='true'"/>
+      <!--	<xsl:when test="key('PredeclareMacros',@ident)"/>-->
+      <xsl:otherwise>
+	<xsl:apply-templates select="." mode="tangle"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:for-each>
   
 </xsl:template>
@@ -329,49 +300,6 @@
 	</xsl:when>
       </xsl:choose>
     </xsl:for-each>
-</xsl:template>
-
-<xsl:template name="predeclarations">
-    <xsl:comment>Weird special cases</xsl:comment>
-    <rng:define name="IGNORE">
-      <rng:notAllowed/>
-    </rng:define>
-    <rng:define name="INCLUDE">
-      <rng:empty/>
-    </rng:define>
-    <rng:define name="TEI...end">
-      <rng:notAllowed/>
-    </rng:define>
-    <xsl:call-template name="preDefine">
-      <xsl:with-param name="name">tei.comp.dictionaries</xsl:with-param>
-    </xsl:call-template>
-    
-    <xsl:call-template name="preDefine">
-      <xsl:with-param name="name">tei.comp.spoken</xsl:with-param>
-    </xsl:call-template>
-    
-    <xsl:call-template name="preDefine">
-      <xsl:with-param name="name">tei.comp.verse</xsl:with-param>
-    </xsl:call-template>
-
-</xsl:template>
-
-<xsl:template name="preDefine">
- <xsl:param name="name"/>
- <xsl:choose>
-   <xsl:when test="$parameterize='true'">
-     <rng:define name="{$patternPrefix}{$name}">
-	 <rng:notAllowed/>
-     </rng:define>
-   </xsl:when>
-   <xsl:otherwise>
-     <xsl:if test="not(key('IDENTS',$name))">
-       <rng:define name="{$patternPrefix}{$name}">
-	 <rng:notAllowed/>
-       </rng:define>
-     </xsl:if>
-   </xsl:otherwise>
- </xsl:choose>
 </xsl:template>
 
 

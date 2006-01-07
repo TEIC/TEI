@@ -75,8 +75,7 @@
   <xsl:key name="ElementModule" match="tei:elementSpec" use="@module"/>
   <xsl:key name="ClassModule"   match="tei:classSpec" use="@module"/>
   <xsl:key name="MacroModule"   match="tei:macroSpec" use="@module"/>
-  <xsl:key name="DeclModules"   match="tei:moduleSpec[@type='decls']"	 use="@ident"/>
-  <xsl:key name="AllModules"    match="tei:moduleSpec[not(@type='decls')]" use="1"/>
+  <xsl:key name="Modules"    match="tei:moduleSpec" use="1"/>
   <xsl:key name="DefClasses"    match="tei:classSpec[@predeclare='true']" use="1"/>
   <xsl:key name="PredeclareMacros"
 	   match="tei:macroSpec[@predeclare='true']" use="@ident"/>

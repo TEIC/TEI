@@ -94,20 +94,28 @@
 &lt;!ENTITY % om.RO '- o' &gt;
 &lt;!ENTITY % om.RR '- -' &gt;
 	</xsl:text>
-	<xsl:call-template name="NameList"/>
-      </xsl:if>
-      
-	<xsl:text>&#10;&lt;!-- Start datatype macro declarations for </xsl:text>
-	<xsl:value-of select="@ident"/>
-	<xsl:text> --&gt;&#10;</xsl:text>
-	<xsl:for-each select="key('MacroModule',@ident)">
-	  <xsl:if test="@type='dt'">
-	    <xsl:apply-templates select="." mode="tangle"/>
-	  </xsl:if>
+
+	<xsl:for-each select="key('Modules',1)">
+	  <xsl:sort select="@ident" order="descending"/>
+	  <xsl:if test="not(@type='core')">
+	    <xsl:text>&#10;&lt;![%TEI.</xsl:text>
+	    <xsl:value-of select="@ident"/>
+	    <xsl:text>;[&#10;&lt;!ENTITY % file.</xsl:text>
+	    <xsl:value-of select="@ident"/>
+	    <xsl:text>-decl PUBLIC '-//TEI P5//ENTITIES </xsl:text>
+	    <xsl:value-of select="tei:altIdent[@type='FPI']"/>
+	    <xsl:text>//EN' '</xsl:text>
+	    <xsl:value-of select="@ident"/>
+	    <xsl:text>-decl.dtd' &gt;&#10;%file.</xsl:text>
+	    <xsl:value-of select="@ident"/>
+	    <xsl:text>-decl;&#10;]]&gt;&#10;</xsl:text>
+	  </xsl:if>	    
 	</xsl:for-each>
-	<xsl:text>&#10;&lt;!-- End of datatype macro declarations --&gt;&#10;</xsl:text>
-      
-	<xsl:if test="@type='core'">
+	<xsl:text>&#10;&lt;!ENTITY % TEI.extensions.dtd '' &gt;
+%TEI.extensions.dtd;&#10;</xsl:text>
+
+	<xsl:call-template name="NameList"/>
+
 	<xsl:text>&#10;&lt;!-- Start of pre-declared classes --&gt;&#10;</xsl:text>
 	<xsl:for-each select="key('DefClasses',1)">
 	  <xsl:choose>
@@ -121,58 +129,65 @@
 	    </xsl:when>
 	  </xsl:choose>
 	</xsl:for-each>
-	<xsl:text>&#10;&lt;!-- End of pre-declared classes --&gt;&#10;</xsl:text>
+	<xsl:text>&#10;&lt;!-- End of pre-declared classes--&gt;&#10;</xsl:text>
+	<xsl:call-template name="macrosAndClasses"/>
       </xsl:if>
       
-      <xsl:text>&#10;&lt;!-- Start of normal classes --&gt;&#10;</xsl:text>
-      <xsl:apply-templates select="key('ClassModule',@ident)"
-			   mode="tangle"/>
-
-            <xsl:text>&#10;&lt;!-- Start of normal classes --&gt;&#10;</xsl:text>
       <xsl:apply-templates select="key('ElementModule',@ident)"  mode="tangle">      
 	<xsl:sort select="@ident"/>
       </xsl:apply-templates>
 
-      <xsl:text>&#10;&lt;!-- Start of pre-declared macros --&gt;&#10;</xsl:text>
-	<xsl:for-each select="key('PredeclareMacrosModule',@ident)">
-	  <xsl:apply-templates select="." mode="tangle"/>
-	</xsl:for-each>
-	<xsl:text>&#10;&lt;!-- End of pre-declared macros --&gt;&#10;</xsl:text>
-      <xsl:if test="@type='core'">
-	<xsl:text>&#10;&lt;!ENTITY % TEI.extensions.dtd '' &gt;
-%TEI.extensions.dtd;</xsl:text>
 	<xsl:for-each select="key('Modules',1)">
 	  <xsl:sort select="@ident" order="descending"/>
 	  <xsl:if test="not(@type='core')">
-	    <xsl:text>&#10;&lt;!ENTITY % TEI.</xsl:text>
+	    <xsl:text>&#10;&lt;![%TEI.</xsl:text>
 	    <xsl:value-of select="@ident"/>
-	    <xsl:text> 'IGNORE' &gt;</xsl:text>
+	    <xsl:text>;[&#10;&lt;!ENTITY % file.</xsl:text>
+	    <xsl:value-of select="@ident"/>
+	    <xsl:text> PUBLIC '-//TEI P5//ELEMENTS </xsl:text>
+	    <xsl:value-of select="tei:altIdent[@type='FPI']"/>
+	    <xsl:text>//EN' '</xsl:text>
+	    <xsl:value-of select="@ident"/>
+	    <xsl:text>.dtd' &gt;&#10;%file.</xsl:text>
+	    <xsl:value-of select="@ident"/>
+	    <xsl:text>;&#10;]]&gt;&#10;</xsl:text>
 	  </xsl:if>
 	</xsl:for-each>
-      </xsl:if>
 
-      <xsl:text>&#10;&lt;!-- the module entities --&gt;&#10;</xsl:text>
-      <xsl:if test="@type='core'">
-	<xsl:for-each select="key('Modules',1)">
-	  <xsl:sort select="@ident" order="descending"/>
-	  <xsl:if test="not(@type='core')">
-	    <xsl:if test="key('DeclModules',concat(@ident,'-decl'))">
-	      <xsl:text>&#10;&lt;![%TEI.</xsl:text>
-	      <xsl:value-of select="@ident"/>
-	      <xsl:text>;[&#10;&lt;!ENTITY % file.</xsl:text>
-	      <xsl:value-of select="@ident"/>
-	      <xsl:text>-decl PUBLIC '-//TEI P5//ENTITIES </xsl:text>
-	      <xsl:value-of select="tei:altIdent[@type='FPI']"/>
-	      <xsl:text>//EN' '</xsl:text>
-	      <xsl:value-of select="@ident"/>
-	      <xsl:text>-decl.dtd' &gt;&#10;%file.</xsl:text>
-	      <xsl:value-of select="@ident"/>
-	      <xsl:text>-decl;&#10;]]&gt;&#10;</xsl:text>
-	    </xsl:if>
-	  </xsl:if>
-	</xsl:for-each>
-      </xsl:if>
-      
+    </exsl:document>      
+
+    <xsl:if test="not(@type='core')">
+      <exsl:document method="text" href="{$outputDir}/{@ident}-decl.dtd">
+      <xsl:text>&lt;!-- TEI P5 DTD. Generated </xsl:text>
+      <xsl:value-of select="edate:date-time()"/>
+      <xsl:call-template name="copyright"/>
+      <xsl:text>&#10;--&gt;&#10;</xsl:text>
+	<xsl:call-template name="macrosAndClasses"/>
+    </exsl:document>
+    </xsl:if>
+
+  </xsl:for-each>
+
+</xsl:template>
+
+<xsl:template name="macrosAndClasses">
+      <xsl:text>&#10;&lt;!-- Start datatype macro declarations --&gt;&#10;</xsl:text>
+      <xsl:for-each select="key('MacroModule',@ident)">
+	<xsl:if test="@type='dt'">
+	  <xsl:apply-templates select="." mode="tangle"/>
+	</xsl:if>
+      </xsl:for-each>
+      <xsl:text>&#10;&lt;!-- End of datatype macro declarations --&gt;&#10;</xsl:text>
+      <xsl:text>&#10;&lt;!-- Start of pre-declared macros --&gt;&#10;</xsl:text>
+      <xsl:for-each select="key('PredeclareMacrosModule',@ident)">
+	<xsl:apply-templates select="." mode="tangle"/>
+      </xsl:for-each>
+      <xsl:text>&#10;&lt;!-- End of pre-declared macros --&gt;&#10;</xsl:text>
+      <xsl:text>&#10;&lt;!-- Start of classes --&gt;&#10;</xsl:text>
+      <xsl:apply-templates select="key('ClassModule',@ident)"
+			   mode="tangle"/>
+      <xsl:text>&#10;&lt;!-- End of classes --&gt;&#10;</xsl:text>
+
       <xsl:text>&#10;&lt;!-- Start rest of  macro declarations --&gt;&#10;</xsl:text>
       <xsl:for-each select="key('MacroModule',@ident)">
 	<xsl:if test="not(@type='dt')">
@@ -185,32 +200,6 @@
 	  </xsl:choose>
 	</xsl:if>
       </xsl:for-each>
-	  
-      <xsl:text>&#10;&lt;!-- End of macro declarations --&gt;&#10;</xsl:text>
-      
-      <!-- set up the modules and their guards -->
-      <xsl:if test="@type='core'">
-	<xsl:for-each select="key('Modules',1)">
-	  <xsl:sort select="@ident" order="descending"/>
-	  <xsl:if test="not(key('DeclModules',@ident))">
-	    <xsl:if test="not(@type='core')">
-	      <xsl:text>&#10;&lt;![%TEI.</xsl:text>
-	      <xsl:value-of select="@ident"/>
-	      <xsl:text>;[&#10;&lt;!ENTITY % file.</xsl:text>
-	      <xsl:value-of select="@ident"/>
-	      <xsl:text> PUBLIC '-//TEI P5//ELEMENTS </xsl:text>
-	      <xsl:value-of select="tei:altIdent[@type='FPI']"/>
-	      <xsl:text>//EN' '</xsl:text>
-	      <xsl:value-of select="@ident"/>
-	      <xsl:text>.dtd' &gt;&#10;%file.</xsl:text>
-	      <xsl:value-of select="@ident"/>
-	      <xsl:text>;&#10;]]&gt;&#10;</xsl:text>
-	    </xsl:if>
-	  </xsl:if>
-	</xsl:for-each>
-      </xsl:if>
-    </exsl:document>
-  </xsl:for-each>
 </xsl:template>
 
 <xsl:template match="tei:schemaSpec">

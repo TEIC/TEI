@@ -1,3 +1,96 @@
+2006-01-06  Sebastian Rahtz  <rahtz@localhost.localdomain>
+
+	* common/tei-param.xsl, html/tagdocs.xsl, html/textstructure.xsl, tei.css, teic.css:
+	a) when processing specDesc, only put <> around element names
+	b) process tei:val in HTML to make a CSS span
+	c) if $autoHead is true, it becomes possible to link to prev and next <div>s
+
+	* odds/odd2dtd.xsl: consistent declaration of file entities
+
+2006-01-05  Sebastian Rahtz  <rahtz@localhost.localdomain>
+
+	* odds/odd2dtd.xsl:
+	rng:text in a macro of type "pe" translates to #PCDATA
+
+	* odds/odd2relax.xsl:
+	remove duplicate patternprefix on multiple start names
+
+	* odds/odd2dtd.xsl, odds/odd2relax.xsl, odds/teiodds.xsl:
+	rethink this again. always explicitly do predeclared macros
+	first, and then do the others, but omit any predeclared twin.
+	remove all the complex code in odd2dtd for detecting this
+	situation before, now redundant.
+
+	* odds/odd2dtd.xsl, odds/odd2relax.xsl, odds/teiodds.xsl:
+	hit hard on the macros which are declared twice. When making
+	schema fragments, it comes out in the wash; but when making
+	a single schema or DTD, we need to avoid the first (null) version.
+	The second has @predeclare='true' on, so if we meet a macro
+	which has a @predeclare partner, we ignore it in free-standing
+	schema-making mode.
+
+2006-01-04  Sebastian Rahtz  <rahtz@localhost.localdomain>
+
+	* odds/odd2relax.xsl, odds/teiodds.xsl:
+	attempt to correct problems of class declarations
+
+	* odds/odd2dtd.xsl, odds/odd2relax.xsl, odds/teiodds.xsl, html/textstructure.xsl:
+	a) do proper processing of macroSpec[@predeclare='true'] (which
+	avoids some weird special-casing), to make empty declares in DTD/Schema.
+	b) attempt to get superclass processing right in schema fragments
+
+2006-01-03  Sebastian Rahtz  <rahtz@localhost.localdomain>
+
+	* odds/odd2dtd.xsl: emit class predeclarations when approoriate
+
+	* odds/odd2dtd.xsl: dont put space before #PCDATA
+
+	* odds/odd2dtd.xsl: make macro decls come out for every module
+
+2006-01-02  Sebastian Rahtz  <rahtz@localhost.localdomain>
+
+	* odds/odd2dtd.xsl:
+	attribute classes marked as "predeclare" should produce an empty
+	decl at the start, not the full details as before. They are
+	instantiated if the module is loaded (under guard of the entity TEI.$modulename).
+
+	* odds/odd2dtd.xsl:
+	force in use of TEI.extensions.{dtd,ent} entities, as by default they
+	are in the wrong place and do nothing
+
+	* odds/odd2dtd.xsl:
+	Correct FPIs by adding ELEMENTS or ENTITIES as appropropriate; set
+	TEI.XML to produce SGML ommissability indicators if TEI.XML is IGNORE.
+
+2005-12-20  Sebastian Rahtz  <rahtz@localhost.localdomain>
+
+	* html/textstructure.xsl, odds/odd2dtd.xsl:
+	avoid emitting decls modules twice
+
+2005-12-16  Sebastian Rahtz  <rahtz@localhost.localdomain>
+
+	* common/verbatim.xsl: add missing file
+
+2005-12-15  Sebastian Rahtz  <rahtz@localhost.localdomain>
+
+	* odds/odd2dtd.xsl, odds/odd2lite.xsl, odds/odd2relax.xsl, html/tagdocs.xsl:
+	deal properly with examples in attDef, and make schemas get
+	a start pattern
+
+	* html/core.xsl, html/figures.xsl:
+	turn @rend into @class in a uniform way
+
+2005-12-03  Sebastian Rahtz  <rahtz@localhost.localdomain>
+
+	* ChangeLog, VERSION: update changelog and version
+
+2005-12-02  Sebastian Rahtz  <rahtz@localhost.localdomain>
+
+	* odds/odd2dtd.xsl, odds/odd2odd.xsl, odds/teiodds.xsl:
+	redo the syntax of <attRef>; instead of @class and@key, just
+	have @name. this lets you reference attributes patterns from
+	external schemas
+
 2005-12-02  Sebastian Rahtz  <rahtz@localhost.localdomain>
 
 	* VERSION 5.2.12
