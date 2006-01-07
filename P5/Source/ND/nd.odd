@@ -2,17 +2,17 @@
 Copyright TEI Consortium. Licensed under the GNU General Public License. See the file COPYING for details.$Date$
 $Author$-->
 <div1 xmlns="http://www.tei-c.org/ns/1.0" type="Faisal" xml:id="ND" n="20"><head>Names and Dates</head>
-<p>This chapter describes an additional tag set which may be used for
+<p>This chapter describes a module which may be used for
 the encoding of proper names and other phrases descriptive of persons,
 places, organizations, and also of dates and times, in a manner more
 detailed than that possible using the elements already provided for
-these purposes in the core tag set described in chapter <ptr target="#CO"/>.</p>
+these purposes in the Common Core module described in chapter <ptr target="#CO"/>.</p>
 <p>In section <ptr target="#CONA"/> it was noted that the elements
 provided in the core allow the encoder to specify that a given
 text segment is a proper noun, or a <term>referring string</term>, and
 to specify the kind of object named or referred to only by supplying a
 value for the <att>type</att> attribute. The elements provided by the
-present tag set allow the encoder both to supply a detailed
+present module allow the encoder both to supply a detailed
 sub-structure for such referring strings, and also to distinguish
 explicitly between names of persons, places or organizations.</p>
 <p>Similarly, the elements provided here allow the encoder to supply a
@@ -20,42 +20,55 @@ detailed analysis of the component parts of any expression which
 denotes a date or time, which is not possible using the elements
 described in section <ptr target="#CONADA"/>.</p>
 <p>It should be noted however that no provision is made by the present
-tag set for the representation of the abstract structures, or
+module for the representation of the abstract structures, or
 virtual objects to which names or dates may be
-said to refer. In simple terms, where the core tag set allows one to
-represent a <term>name</term>, this additional tag set allows one to
+said to refer. In simple terms, where the Common Core module allows one to
+represent a <term>name</term>, this module allows one to
 represent a <term>personal name</term>, but neither provides for the
-direct representation of a <term>person</term>. Appropriate
-mechanisms for the encoding of such interpretative gestures may be
-found in chapters <ptr target="#AI"/> and <ptr target="#FS"/>.</p>
-<p>To enable the additional tag set described in the present chapter,
-a parameter entity <term>TEI.names.dates</term> must be declared in
-the document type subset with the value <val>INCLUDE</val>, as
-further described in section <ptr target="#STIN"/>. An XML document using the
-prose base tag set and this additional tag set will thus begin as
-follows:
-<eg><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei2.dtd" [
-      <!ENTITY % TEI.XML 'INCLUDE' >
-      <!ENTITY % TEI.prose 'INCLUDE' >
-      <!ENTITY % TEI.names.dates 'INCLUDE' >
- ]>]]></eg></p>
-<p>The chapter begins by discussing additional tags for the
+direct representation of a <term>person</term>. Section <ptr
+target="#CCAHPA"/> presents a simple way of representing biographical or
+other personal data for a limited range of applications; these Guidelines also provide general purpose
+mechanisms for the encoding of such interpretative gestures in chapters <ptr target="#AI"/> and <ptr target="#FS"/>.</p>
+
+
+<p>The chapter begins by discussing elements for the
 encoding of component parts of personal names (section <ptr target="#NDPER"/>), place names (section <ptr target="#NDPLAC"/>) and
 organizational names (section <ptr target="#NDORG"/>). Detailed encoding of
 dates and times is described in section <ptr target="#NDDATE"/>.</p>
-<p>The additional tag set for names and dates, included in the file
-<ident type="file">namesdates.dtd</ident>, has the following overall
-structure:
+
+
+<p>The names and dates  module makes available the following
+components:
+
 <moduleSpec xml:id="DND" ident="namesdates">
   <altIdent type="FPI">Names and Dates</altIdent>
   <desc>Names and dates</desc>
 </moduleSpec>
+
+The selection and combination of modules to form a TEI schema is described in
+<ptr target="#STIN"/>.
+</p>
+<p>The module is organized as follows:
+<specGrp>
+<p>This module  defines a number of additional classes:
+&perspart.odd;    
+&perspartatts.odd;    
+&placpart.odd;    
+&tempexp.odd;    
+&tempexpatts.odd;    
+</p>
+<p>
 <specGrpRef target="#DNDPER"/>
 <specGrpRef target="#DNDPLAC"/>
 <specGrpRef target="#DNDORG"/>
 <specGrpRef target="#DNDDATE"/>
 </p>
+</specGrp>
+<!-- no specgrp so these class definitions dont appear in the HTML -->
+</p>
+
+
+<!--
 <p>When this tag set is enabled, the attribute classes
 <term>persPart</term>, <term>placePart</term>, and <term>tempexp</term> gain additional
 attributes  to permit more delicate analysis, which replace the
@@ -66,14 +79,11 @@ corresponding with these modified classes are declared in the file
 <ident type="file">namesdates.ent</ident>, as follows:
 <moduleSpec xml:id="DNDENT" type="decls" ident="namesdates-decl">
 <altIdent type="FPI">Class declarations for Names and Dates</altIdent>
-</moduleSpec><!--publicID:  -//TEI P5//ENTITIES Element Classes for Names and Dates//EN-->
-&perspart.odd;    
-&perspartatts.odd;    
-&placpart.odd;    
-&tempexp.odd;    
-&tempexpatts.odd;    
-</p>	
-<div2 type="Ilocano" xml:id="NDPER"><head>Personal Names</head>
+</moduleSpec>
+-->
+
+
+<div2 xml:id="NDPER"><head>Personal Names</head>
 <p>The core <gi>rs</gi> and <gi>name</gi> elements can distinguish
 names in a text but are insufficiently powerful to mark their internal
 components or structure. To conduct nominal record linkage or even to
@@ -327,7 +337,7 @@ follows:
 &addname.odd;
 &rolename.odd;</specGrp>
 </p></div2>
-<div2 type="Ilocano" xml:id="NDPLAC"><head>Place Names</head>
+<div2 xml:id="NDPLAC"><head>Place Names</head>
 <p>Like other proper nouns or noun phrases used as names, place names
 can simply be marked up with the <gi>rs</gi> element, or with the
 <gi>name</gi> element. For cartographers and historical geographers,
@@ -343,11 +353,6 @@ element and its subcomponents should be used.
 elements share the following attribute:
 <specList><specDesc key="att.naming" atts="key"/></specList>
  </p>
-<p>Additionally, all of the above elements
-are members of the class <ident type="class">model.placeNamePart</ident>, and
-thus share the following attributes:
-<specList><specDesc key="model.placeNamePart"/></specList>
-</p>
 <p>Like the <gi>persName</gi> element discussed in section <ptr target="#NDPER"/>, the <gi>placeName</gi> element may be regarded
 simply as an abbreviation for the tags <tag>name type="place"</tag> or
 <tag>rs type="place"</tag>. The following encodings are thus
@@ -578,7 +583,7 @@ follows:
 </p>
 </div3>
 </div2>
-<div2 type="Ilocano" xml:id="NDORG"><head>Organization names</head>
+<div2 xml:id="NDORG"><head>Organization names</head>
 <p>Like names of persons or places, organization names can be marked as
 referent strings or as proper names with the <gi>rs</gi> and
 <gi>name</gi> elements.  For certain applications it may be desirable
@@ -713,7 +718,7 @@ structure notation is recommended (<ptr target="#FS"/>).
 &orgdivn.odd;</specGrp>
 </p>
 </div2>	
-<div2 type="Ilocano" xml:id="NDDATE"><head>Dates and Times</head>
+<div2 xml:id="NDDATE"><head>Dates and Times</head>
 <p>The following elements for the encoding of dates and times were
 introduced in section <ptr target="#CONADA"/>:
 <specList><specDesc key="date" /><specDesc key="time"/></specList>

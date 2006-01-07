@@ -6,16 +6,17 @@ $Date$
 $Author$
 -->
 <div1 xmlns="http://www.tei-c.org/ns/1.0" type="Faisal" xml:id="MD" n="29"><head>Modifying and Customizing the TEI DTD</head>
+
 <p>These Guidelines provide an encoding scheme suitable for encoding a
 wide range of texts, and capable of being extended in well-defined and
 documented ways for texts that cannot be conveniently or appropriately
 encoded using what is provided.  This chapter describes how the TEI
 encoding scheme may be customized, and should be read in conjunction
 with chapter <ptr target="#TD"/>, which describes how the TEI encoding
-scheme is documented.
-The modification scheme
-described in that chapter is, like the rest of the TEI scheme, independent of
-any particular schema or document type definition language. </p>
+scheme is documented.  The modification scheme described in that
+chapter is, like the rest of the TEI scheme, independent of any
+particular schema or document type definition language. </p>
+
 <p>Formally speaking, these Guidelines provide both syntactic
 information about how elements and attributes may be used in
 valid documents and semantic information about what interpretation
@@ -124,26 +125,27 @@ TEI DTD (the examples later in this chapter can be followed cookbook
 fashion), but it will probably prove helpful. An example set of
 modification files is provided as part of the current release: see
 further section <ptr target="#MDlite"/> below.</p>
-<p>Parameter entities are a mechanism for allowing string
-substitution within markup declarations; they can thus can be used to
-effect changes in declarations.
-A parameter entity, unlike an element, may be declared more than once
-in a DTD; if more than one declaration is given,
-the parser uses the first one it encounters.  Since the declaration
-subset within the document is read before the external file containing
-the predefined DTD, an entity declaration in the DTD subset will take
-precedence over one in the external file.  In the TEI DTD, the literal
-string which defines the model group for some elements, say
-<gi>p</gi>, is made the value of a parameter entity; the actual
-element declaration for <gi>p</gi> contains not the literal string
-itself, but a reference to the parameter entity (in this case, <ident type="pe">tei.cro.paraContent</ident>).  If the document's DTD subset contains
-a declaration for <ident type="pe">tei.cro.paraContent</ident>, this will be
-used in preference to the standard definition within the external TEI
-DTD files.  The redefinability of parameter entities accounts both for
-the TEI's use of parameter entities as the vehicle for effecting
-extensions, and for the separation of entity definitions from other
-material (to be defined below) that might be needed for certain
-modifications of the TEI DTD.</p>
+<p>Parameter entities are a mechanism for allowing string substitution
+within markup declarations; they can thus can be used to effect
+changes in declarations.  A parameter entity, unlike an element, may
+be declared more than once in a DTD; if more than one declaration is
+given, the parser uses the first one it encounters.  Since the
+declaration subset within the document is read before the external
+file containing the predefined DTD, an entity declaration in the DTD
+subset will take precedence over one in the external file.  In the TEI
+DTD, the literal string which defines the model group for some
+elements, say <gi>p</gi>, is made the value of a parameter entity; the
+actual element declaration for <gi>p</gi> contains not the literal
+string itself, but a reference to the parameter entity (in this case,
+<ident type="pe">macro.paraContent</ident>).  If the document's DTD
+subset contains a declaration for <ident
+type="pe">macro.paraContent</ident>, this will be used in preference
+to the standard definition within the external TEI DTD files.  The
+redefinability of parameter entities accounts both for the TEI's use
+of parameter entities as the vehicle for effecting extensions, and for
+the separation of entity definitions from other material (to be
+defined below) that might be needed for certain modifications of the
+TEI DTD.</p>
 <p>Local modifications are most conveniently grouped into two files,
 one containing modifications to the TEI parameter entities, and the
 other containing new or changed declarations of elements and their
@@ -159,7 +161,7 @@ The second is only required for the last type of extension
 described. The parameter entities thus defined are then referenced at
 an appropriate point in the compiling of the TEI DTD, as further
 described in section <ptr target="#STIN"/>.</p>
-<div2 type="Anthony" xml:id="MDMD"><head>Kinds of Modification</head>
+<div2  xml:id="MDMD"><head>Kinds of Modification</head>
 <p>There are several kinds of modification that can be made to the TEI
 DTD as follows:
 <list type="ordered">
@@ -418,7 +420,7 @@ fact, the mechanism, if used in an extreme way, permits deletion of
 the entire set of TEI definitions and their replacement by an entirely
 different DTD!  Such revisions would result in documents that are not
 TEI conformant in even the broadest sense, and it is not intended that
-encoders use the mechanism in this way.</p></div3></div2> <div2 type="Anthony" xml:id="MDDO"><head>Documenting the
+encoders use the mechanism in this way.</p></div3></div2> <div2  xml:id="MDDO"><head>Documenting the
 Modifications</head> <p>When the modification mechanisms are used,
 their use must be documented.  There are two ways in which information
 about the modifications is recorded.</p> <p>The first record of the
