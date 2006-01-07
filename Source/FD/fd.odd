@@ -7,7 +7,7 @@ $Author$
 -->
 <div1 xmlns="http://www.tei-c.org/ns/1.0" xml:id="FD" n="26">
 <head>Feature System Declaration</head>
-<p>The Feature System Declaration (FSD) is an auxiliary file used in
+<p>The Feature System Declaration (FSD) is intended for use in
 conjunction with a TEI-conforming text that makes use of <gi>fs</gi>
 (that is, feature structure) elements.
 The FSD serves three purposes:
@@ -137,25 +137,22 @@ assertions. </p>
 <ident type="file">declarefs.dtd</ident> or <ident
 type="file">declarefs.rng</ident>. The former has the public
 identifier <ident type="fpi">-//TEI P5//DTD Auxiliary Document Type:
-Feature System Declaration//EN</ident>. The overall structure of this
-module is as follows:
+Feature System Declaration//EN</ident>. This module makes available
+the following elements:
+
 <moduleSpec xml:id="DFDDTD" ident="declarefs"><altIdent type="FPI">Feature System Declaration</altIdent><desc>Feature system declarations</desc></moduleSpec>
-</p>
-<p>First, we declare TEI generic identifiers, element classes for
-content models, shared attributes for element classes, and global
-attributes by embedding the standard TEI module:
-<moduleRef key="tei"/>
-</p>
-<p>Next, we declare the elements for FSDs proper.
+
+This module has no particular dependencies on any other TEI module;
+for most practical purposes, however, it should be used in conjunction
+with the standard tei, header, and core modules, as well as the iso-fs
+module discussed in chapter <ptr target="#FS"/>. The selection and
+combination of modules to form a TEI schema is described in <ptr
+target="#STIN"/>.</p>
+
+<p>The module is organized as follows:
 <specGrpRef target="#DFDFSD2"/>
 <specGrpRef target="#DFDX"/>
 <specGrpRef target="#DFD2"/>
-</p>
-<p>Finally, we include the existing modules for the feature structure
-representation, the TEI header, and the TEI core module.
-<moduleRef key="iso-fs"/>
-<moduleRef key="header"/>
-<moduleRef key="core"/>
 </p>
 </div2>
 <div2 xml:id="FDOV"><head>The Overall Structure of a Feature System Declaration</head>
@@ -489,10 +486,6 @@ readability.
 <div2 xml:id="FDEG"><head>A Complete Example</head>
 <p>To summarize this chapter, the complete FSD for the example that has
 run through the chapter is reproduced below:
-<eg><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE teiFsd2 SYSTEM "declarefs.dtd" [
-  <!ENTITY % TEI.XML  'INCLUDE' >
-]>]]></eg>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <teifsd>
 <teiHeader>
@@ -597,4 +590,11 @@ Pullum, and Sag (Harvard University Press, 1985).</p>
       </vAlt></vRange>
    </fDecl>
 </fsDecl>
-</teifsd></egXML></p></div2></div1>
+</teifsd></egXML></p>
+
+<!--<eg><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE teiFsd2 SYSTEM "declarefs.dtd" [
+  <!ENTITY % TEI.XML  'INCLUDE' >
+]>]]></eg>-->
+
+</div2></div1>

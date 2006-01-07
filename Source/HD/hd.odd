@@ -138,19 +138,24 @@ to a corpus or a single text.  A corpus may thus take the form:
 	<!-- I left it, too, but at least I fixed the outermost TEI to   -->
 	<!-- teiCorpus! -sb, 2001-11-02                                  -->
 </p>
-<p>The tags required for the TEI header are defined in the DTD file
-<ident type="file">header.dtd</ident> which first defines the
-<gi>teiHeader</gi> element:
+
+<p>This module makes available the following components:
+
 <moduleSpec xml:id="DHD" ident="header">
 <altIdent type="FPI">Common Metadata</altIdent><desc>The TEI Header</desc>
 </moduleSpec><!--publicID:  -//TEI P5//ELEMENTS TEI Header//EN-->
-&header.odd;
-&teihead.odd;
-<specGrpRef target="#D221B"/>
+
+
+The selection and combination of modules to form a TEI schema is described in
+<ptr target="#STIN"/>. The header module is one of the four modules
+required for TEI conformance.
 </p>
-<p>Then it defines the rest of the header elements, embedding the
-DTD fragments found later in this chapter:
+<p>The module is organized as follows:
+
 <specGrp xml:id="D221B">
+<!-- model.headerPart-->&header.odd;
+&teihead.odd;
+
 <specGrpRef target="#D222"/>
 <specGrpRef target="#D223"/>
 <specGrpRef target="#D225"/>
@@ -567,7 +572,7 @@ publication, its date of creation should be given within the
 <gi>profileDesc</gi> element, not in the publication statement.  Give
 any other useful dates (e.g., dates of collection of data) in a note.
 </p>
-<p>Additional detailed tagsets may be used for the encoding of names,
+<p>Additional detailed modules may be used for the encoding of names,
 dates, and addresses, as further described in section <ptr target="#CONA"/>
 and chapter <ptr target="#ND"/>.
 </p>
@@ -1678,7 +1683,7 @@ corpus module is in use:
 </specList>
 For descriptions of these elements, see section <ptr target="#CCAH" type="div1"/>.</p>
 <p>Finally, the following element can appear in the <gi>profileDesc</gi>
-element, when the additional tag set for transcription of primary
+element, when the module  for transcription of primary
 sources is selected:
 <specList>
 <specDesc key="handList"/>
@@ -2197,7 +2202,9 @@ in this chapter are provided here, in the reference index and in the
 associated tutorials.
 </p> 
 </div2>
-<div2 type="bar" xml:id="HD8"><head>Note for Library Cataloguers</head><p>A strong motivation in preparing the material in this chapter was to
+<div2 xml:id="HD8"><head>Note for Library Cataloguers</head>
+
+<p>A strong motivation in preparing the material in this chapter was to
 provide in the TEI file header a viable chief source of information
 for cataloguing the machine-readable data file.  The file header is not
 a library catalogue record, and so will not make all of the distinctions

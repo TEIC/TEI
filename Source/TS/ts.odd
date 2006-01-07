@@ -34,40 +34,41 @@ any other TEI text:  the <gi>TEI</gi> element for a spoken text
 contains a <gi>teiHeader</gi> element, followed by a <gi>text</gi>
 element.  Even texts primarily composed of transcribed speech may also
 include conventional front and back matter, and may even be organized
-into divisions like printed texts. For simplicity's sake, therefore,
-this module uses the default text structure, as defined
-in chapter <ptr target="#DS"/>; this tag set is embedded automatically by
-the spoken base tag set.</p>
-<p>To enable the base tag set for spoken texts, a parameter entity
-<ident type="pe">TEI.spoken</ident> must be declared within the document
-type declaration subset, the value of which is <val>INCLUDE</val>, as
-further described in section <ptr target="#STIN"/>.  A document using this
-base tag set and no additional tag sets will thus begin as follows:
-<eg><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei2.dtd" [
-    <!ENTITY % TEI.XML     'INCLUDE' >
-    <!ENTITY % TEI.spoken  'INCLUDE' >
- ]>]]></eg>
-This declaration makes available all of the elements and attributes
-discussed in the present chapter, in addition to the core elements
-described in chapter <ptr target="#CO"/>.  If other elements are needed (in
-particular, those needed for synchronization or segmentation),
-additional modules may also be enabled in a similar way.</p>
+into divisions like printed texts. A complete transcript following
+these Guidelines should therefore include the header, structure, tei,
+and (in all probability) the common core modules along with the module
+described in this chapter.</p>
+<p>This module makes available the following components:
+<moduleSpec xml:id="DTS" ident="spoken">
+<altIdent type="FPI">Transcribed Speech</altIdent>
+<desc>Transcribed Speech</desc></moduleSpec>
+
+
+The selection and combination of modules to form a TEI schema is described in
+<ptr target="#STIN"/>.
+</p>
+<p>The module is organized as follows:
+<specGrp>
+&compspok.odd;
+&tsmix.odd;
+
+<specGrpRef target="#DTSCOMP"/>
+</specGrp>
+
+</p> 
+<!--
 <p>Two additional classes are defined by this module.  Elements which
 appear only within transcribed speech constitute the <ident type="class">model.divPart.spoken</ident> element class.  Elements with a
-specificable temporal duration constitute the <ident type="class">att.timed</ident> element class.  These classes are defined
+specificable temporal duration constitute the <ident
+type="class">att.timed</ident> element class.  
+These classes are defined
 in the file <ident type="file">spoken.ent</ident> using the
 following parameter entities:
 <moduleSpec xml:id="DTSCLA" type="decls" ident="spoken-decl">
-<altIdent type="FPI">Class declarations for Transcribed Speech</altIdent><desc>Class declarations for Transcribed Speech</desc></moduleSpec><!--publicID:  -//TEI P5//ENTITIES Element Classes for Transcriptions of Speech//EN-->
-&compspok.odd;
-&tsmix.odd;
-The elements of this module are declared in
-the file <ident type="file">spoken.dtd</ident>, which is organized as
-follows:
-<moduleSpec xml:id="DTS" ident="spoken"><altIdent type="FPI">Transcribed Speech</altIdent><desc>Transcribed Speech</desc></moduleSpec><!--publicID:  -//TEI P5//ELEMENTS Base Element Set for Transcriptions of Speech//EN-->
-<specGrpRef target="#DTSCOMP"/>
-</p> 
+<altIdent type="FPI">Class declarations for Transcribed
+Speech</altIdent><desc>Class declarations for Transcribed
+Speech</desc></moduleSpec>-->
+
 <div2 type="subsection" xml:id="TSOV"><head>General Considerations and Overview</head>
 <p>There is great variation in the ways different researchers have
 chosen to represent speech using the written medium.<note place="foot">For a

@@ -27,29 +27,23 @@ Linda Lesniak</author> <title>Graphs and Digraphs</title>
 <item><term>Charts</term>, which typically plot data in two or more
 dimensions, including plots with orthogonal or radial axes, bar charts,
 pie charts, and the like.  These can be described using the elements
-defined in the additional tag set for figures and graphics; see
+defined in the module for figures and graphics; see
 chapter <ptr target="#FT"/>.</item></list>
 </p>
-<p>The following DTD fragment shows the overall organization of the
-tag set discussed in the remainder of this chapter.
-<moduleSpec xml:id="DGD" ident="nets"><altIdent type="FPI">Graphs, networks and trees</altIdent><desc>Graphs, networks and trees</desc></moduleSpec><!--publicID:  -//TEI P5//ELEMENTS Additional Element Set for Graphs, Networks, and Trees//EN-->
+<p>This module makes available the following components:
+<moduleSpec xml:id="DGD" ident="nets">
+<altIdent type="FPI">Graphs, networks and trees</altIdent>
+<desc>Graphs, networks and trees</desc></moduleSpec>
+
+The selection and combination of modules to form a TEI schema is described in
+<ptr target="#STIN"/>.
+</p>
+<p>The module is organized as follows:
+
 <specGrpRef target="#DGDGR"/>
 <specGrpRef target="#DGDTR"/>
 <specGrpRef target="#DGDAL"/></p>
-<p>This tag set is made available as described in <ptr target="#STIN"/>; in
-a document which uses the markup described in this chapter, the document
-type declaration should contain the following declaration for the entity
-<ident type="pe">TEI.nets</ident>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % TEI.nets 'INCLUDE'>]]></egXML>
-The entire document type declaration for an XML document using this
-additional tag set together with the prose base might look like this:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN"
-                       "http://www.tei-c.org/P4X/DTD/tei2.dtd" [
-    <!ENTITY % TEI.XML   'INCLUDE' >
-    <!ENTITY % TEI.prose 'INCLUDE' >
-    <!ENTITY % TEI.nets  'INCLUDE' >
- ]>]]></egXML>
-<!-- end of LB insertion --></p>
+
 <p>Among the types of qualitative relations often represented by graphs
 are organizational hierarchies, flow charts, genealogies, semantic
 networks, transition networks, grammatical relations, tournament
@@ -60,7 +54,7 @@ common conventions for representing them visually.  However, it must be
 emphasized that these recommendations do not provide for the full range
 of possible graphical representations, and deal only partially with
 questions of design, layout and placement.</p>
-<div2 type="Ilocano" xml:id="GDGR"><head>Graphs and Digraphs</head>
+<div2 xml:id="GDGR"><head>Graphs and Digraphs</head>
 <p>Broadly speaking, graphs can be divided into two types:
 <term>undirected</term> and <term>directed</term>.  An undirected graph
 is a set of <term>nodes</term> (or <term>vertices</term>) together with
@@ -78,7 +72,10 @@ whole, <gi>node</gi> to encode nodes or vertices, and <gi>arc</gi> to
 encode arcs or edges; arcs can also be encoded by attributes on the
 <gi>node</gi> element.  These elements have the following descriptions
 and attributes:
-<specList><specDesc key="graph" atts="type label order size"/><specDesc key="node" atts="label label2 value type                            adjFrom adjTo adj inDegree outDegree                            degree"/><specDesc key="arc" atts="label label2 from to"/></specList></p>
+<specList>
+<specDesc key="graph"/>
+<specDesc key="node"/>
+<specDesc key="arc"/></specList></p>
 <p>Before proceeding, some additional terminology may be helpful.  We
 define a <term>path</term> in a graph as a sequence of nodes n1, ..., nk
 such that there is an arc from each ni to ni+1 in the sequence.  A
@@ -168,7 +165,7 @@ representation of the same graph.
   </graph></egXML></p>
 <p>Although in many cases the <gi>arc</gi> element is redundant (since
 arcs can be described using the adjacency attributes of their adjacent
-nodes), it has nevertheless been included in the tag set, in order to
+nodes), it has nevertheless been included in this module, in order to
 allow the convenient specification of identifiers, display or
 rendition information, and labels for each arc (using the attributes
 <att>xml:id</att>, <att>rend</att>, and <att>label</att>).</p>
