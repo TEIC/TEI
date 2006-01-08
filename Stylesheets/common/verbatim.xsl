@@ -100,7 +100,7 @@
   </xsl:choose>
 
   <xsl:text>&lt;</xsl:text>
-  <xsl:value-of disable-output-escaping="yes" select="$startBold"/>
+  <xsl:value-of select="$startBold"/>
   <xsl:choose>
     <xsl:when
 	test="namespace-uri()='http://relaxng.org/ns/structure/1.0'">
