@@ -19,6 +19,24 @@ $Author$
     + range()
       ^ left()
       ^ right()
+<!DOCTYPE div1 [
+<!ENTITY link.odd "">
+<!ENTITY linkgrp.odd "">
+<!ENTITY hellip "">
+<!ENTITY anonb.odd "">
+<!ENTITY anchor.odd "">
+<!ENTITY seg.odd "">
+<!ENTITY when.odd "">
+<!ENTITY timeline.odd "">
+<!ENTITY join.odd "">
+<!ENTITY joingrp.odd "">
+<!ENTITY alt.odd "">
+<!ENTITY altgrp.odd "">
+<!ENTITY cllink.odd "">
+<!ENTITY pointer.odd "">
+<!ENTITY ptrgroup.odd "">
+<!ENTITY hellip "">
+]>
 -->
 <div1 xmlns="http://www.tei-c.org/ns/1.0" type="chapter" xml:id="SA" n="14">
   <head>Linking, Segmentation, and Alignment</head>
@@ -2663,7 +2681,9 @@ element whose correct tagging is in doubt.</p>
 <p>The <att>copyOf</att> and the <att>exclude</att> attributes also
 provide for a simple way of indicating uncertainty about exactly where a
 particular element occurs in a document.<note place="foot">An alternative way of
-representing this problem is discussed in chapter <ptr target="#CE"/>.</note> For example suppose that a particular <gi>div2</gi>
+representing this problem is discussed in chapter <ptr target="#CE"/>.</note>
+
+For example suppose that a particular <gi>div2</gi>
 element appears either as the third and last of the <gi>div2</gi>
 elements within the first <tag>div1</tag> element in the body of a
 document, or as the first <gi>div2</gi> of the second <gi>div1</gi>.
@@ -2863,6 +2883,344 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
   &alt.odd;
   &altgrp.odd;
 </specGrp></p></div2>
+
+<div2 type="section" xml:id="SASO">
+<head>Stand-off Markup: markup stored separately from the data it describes</head>
+      <div3 type="subsection">
+	<head>Introduction</head>
+	<p>Markup is said to be stand-off, or external, when the markup
+	  data is placed outside of the text it is meant to tag:
+	  before, after, or even outside it altogether. The markup
+	  therefore points to, rather than wraps, the relevant data
+	  content.</p>
+	<p>There are many reasons for using stand-off markup: the source
+	  text might be read-only so that additional markup cannot be added,
+          or a single text may need to be marked up
+          according to several hierarchically incompatible schemes, or a single
+          scheme may need to accomodate multiple hierarchical ambiguities, so that
+          a single markup tree is not the most faithful representation of the
+          source material.</p>
+	<p>This section describes the Guidelines' generic mechanism for expressing
+	  <emph>all</emph> kinds of markup externally as stand-off tags, for use
+          whenever it is appropriate.</p>
+	<p>The three major requirements this scheme for stand-off markup satisfies are
+	  <list>
+	    <item n="a">Any valid TEI markup can be either internal or
+	      external, </item>
+	    <item n="b">External markup can be internalized by
+	      applying it to the document content by either
+	      substituting the existing markup or adding to it,
+	      to form a valid TEI document, and</item>
+	    <item n="c">the external markup itself specifies whether
+	      an internalized document should obtained by substituting
+	      the existing internal markup or by adding to
+	      it</item></list>.</p>
+              
+	<p>Throughout this section the following terms will be systematically used in
+	specific senses: the <term>source document</term> is a document to which the
+	stand-off markup refers (a source document can be either XML or plain text);
+	there may be more than one source document. We call <term>internal</term>
+	markup that is already present in an XML source document. The adjectives
+	<term>external</term> or <term>stand-off</term> denote documents and markup
+	that are outside of the source document and point to it; the verb
+	<term>internalize</term> refers to the action of creating a new XML document
+	with external markup and data integrated with the source document and/or
+	markup; similarly, to <term>externalize</term> markup from a pre-existing XML
+	document, is to split it into two documents, an XML (external) document
+	containing some of the markup of the original document, and another (source)
+	XML document containing whatever text content and markup has not been
+	extracted into the stand-off document. If all markup has been externalized from
+	a document, the new source may be a plain text document.</p>
+               
+      </div3>
+      <div3 type="subsection">
+	<head>Overview of XInclude </head>
+   <p>The basic notion of inclusion of 
+         virtual content is fully adequate to describe stand-off markup, and so the
+         guidelines make use of <ref
+	    target="http://www.w3.org/TR/xinclude/">XInclude</ref> as
+	  a way to specify virtual inclusion of content. <note place="foot">The version on which
+	    this text is based on is the <ref
+	      target="http://www.w3.org/TR/2004/REC-xinclude-20041220/">W3C
+	       Recommendation dated <date
+		value="2004-12-20">20 December
+		2004</date>.</ref>.</note> XInclude relies on <ref
+	    target="http://www.w3.org/TR/xptr-framework/">XPointer schemes</ref>
+	  for the expression of the actual fragments of text to be
+	  internalized, just as the TEI pointing attributes do. Although
+	  XInclude only requires support for the <ref
+	    target="http://www.w3.org/TR/xptr-element/"><code>element()</code></ref> 
+	  scheme of XPointer, this specification requires that all the
+	  W3C schemes of XPointer can be used for expressing
+	  addresses, and in particular it fully supports the <ref
+	    target="http://www.w3.org/TR/xptr-xpointer/"><code>xpointer()</code></ref> 
+	  scheme.</p>
+          
+	<p>XInclude is a W3C standard to specify a syntax for the
+	  inclusion within an XML document of data fragments placed in
+	  different resources. Included resources can be either plain
+	  text or XML. XInclude instructions within an XML document
+	  are meant to be replaced by a resource being pointed at by a
+	  URI, possibly including an XPointer for identifying the
+	  exact subresource to be included. Fallback content or
+	  resources can be specified in case of failure to fetch the
+	  requested resource. XInclude defines a namespace
+	  (<mentioned>http://www.w3.org/2001/XInclude</mentioned>),
+	  which we will usually prefix with
+	  <mentioned>xi:</mentioned>, and exactly two elements,
+	  <gi>xi:include</gi> and <gi>xi:fallback</gi>.</p>
+         
+	<p>The <gi>xi:include</gi> element uses the <ident
+	    type="attrName">href</ident> attribute to specify the
+	  location of the resource to be included; its value is an
+	  IURI containing, if necessary, an XPointer. Additionally, it
+	  uses the <ident type="attrName">parse</ident> attribute
+	  (whose valid values are either <ident
+	    type="attrVal">text</ident> or <ident
+	    type="attrVal">xml</ident> to specify whether the
+	  included content is plain text or an XML fragment, and the
+	  <ident type="attrName">encoding</ident> attribute to provide
+	  a hint, when the included fragment is text, of the character
+	  encoding of the fragment. The <gi>xi:fallback</gi> element
+	  is required within an <gi>xi:include</gi> and specifies an
+	  alternative content to be used when the external resource,
+	  for any reason, cannot be fetched.</p>
+          
+	<p>The current generation of XInclude  only requires one XPointer scheme,
+	  called <code>element()</code>, that can specify either bare
+	  names (elements with a specific <ident
+	    type="attrName">xml:id</ident> attribute) or child sequences
+	  (numerical sequences specifying the path onto the XML tree
+	  down to a specific subtree of XML content). Another scheme,
+	  <code>xpointer()</code>, has not been turned into a W3C
+	  recommendation yet, although it has been part of the
+	  XPointer drafts from the beginning. The <code>xpointer()</code>
+	  scheme defines two additional concepts, points and ranges,
+	  that can be used to specify sub-node fragments (e.g., a few
+	  words within a longer text node) or trans-node fragments
+	  (e.g., a longish text spanning across different branches of
+	  the overall XML tree).</p>
+
+        </div3>
+      <div3 type="subsection">
+	<head>Doing stand-off markup in TEI</head>
+              <p>The operations of internalizing and externalizing markup are very useful
+         and practically important. XInclude processing as defined by the W3C performs the operation
+        of internalization of a source document into a stand-off document. TEI use of
+        XInclude for stand-off markup enables use of XInclude-conformant sofware to
+        perform this useful operation. However, internalization
+        is not a clearly defined 
+        operation for
+        all stand-off files, because itthe structure of the internal and
+        external markup trees may overlap. In particular, when an external markup
+        document selects a range that overlaps partial
+        elements in the source document, it is not clear how the semantics of
+        inclusion should work, since partial elements are not XML objects, because 
+        the overlapping tags would not be well-formed with all markup present 
+         in a single document. This kind of overlap is one reason that stand-off 
+         markup is needed. XInclude defines a semantics for this case that involves
+         only complete elements.</p>
+         
+         <p>In the case of a range selection which partially
+         overlaps a number of elements in the source, XInclude specifies that
+         partially overlapping elements should be included as well
+         as all completely overlapping elements and characters (partially overlapping
+         characters are not possible). The effect of this is that elements that
+         straddle the start or end of a selected range may be included as wrappers for
+         those of their children that are selected by the range. For example, given
+         the following source document:
+                   
+        <eg><![CDATA[        <body>
+           <p xml:id="par1">home, <emph>home</emph> on Brokeback Mountain.</p>
+           <p xml:id="par1">That was the <emph>song</emph> that I sang</p>
+           </body>]]></eg>
+        and the following external document:
+        <eg><![CDATA[           <body xmlns:xi="http://www.w3.org/2001/XInclude">
+           <div><xi:include href="example1.xml"
+                  xpointer="range(xpath(id(par1)//emph),xpath(id(par2)//emph))"/>
+          </div>
+          </body>]]></eg>
+     
+        the resulting document after XInclude processing of this external document
+        would be:
+        <eg><![CDATA[            <body xmlns:xi="http://www.w3.org/2001/XInclude">
+            <div>
+               <p xml:id="par1"><emph>home</emph> on Brokeback Mountain.</p>
+               <p xml:id="par2">That was the <emph>song</emph></p>    
+            </div>
+            </body>]]></eg>
+
+        The result of the inclusion is two paragraph elements in the result, where the
+        original range designated in the the external document originally overlapped
+        two paragraph fragments in the source document. This ensures that XInclude can
+        guarantee the creation of controllable, well-formed XML documents, in when
+        encoders are using a powerful pointing mechanism that does not respect the
+        hierarchical structure of an XML document. While this is a good way to ensure
+        that internalization is always possible, it has implications for the use of
+        XInclude as a notation for the <emph>description</emph> of overlapping markup
+        structures.
+        </p>
+        
+        <p>Overlapping markup cannot be represented by a source document combined with
+        an external document using XInclude to impose overlapping tags. When
+        overlapping hierarchies need to be represented in a single document, each
+        hierarchy must be represented by a separate set of XInclude tags pointing to a
+        common source document. This sort of structure corresponds to common practice
+        in linguistic text corpus work. In such corpora, each potentially overlapping
+        hierarchy of elements for the text is represented as a separate stream of
+        stand-off markup. Generally the source text contains markup for features of the
+        smallest significant units of analysis in the corpus, such as words, or
+        morphemes, this information and its markup representing a layer of common
+        information that is shared by all the various hierarchies. As a way of
+        organizing the representation of complex data, this technique generally allows
+        a large number of <att>xml:id</att> attributes to be attached to the shared
+        elements, providing robust anchors for links and facilitating adjustments to
+        the source document without breaking external documents that reference it.
+        </p>
+	
+        <p>Any tag can be externalized by
+	  removing its content and placing an XInclude
+	  <gi>xi:include</gi> element that contains the XPointer
+	  pointing to the correct content.</p>
+	<p>For instance the following portion of a TEI document:
+<eg><![CDATA[<text>
+   <front>
+      <head>1755</head>
+   </front>
+   <body>
+      <l>To make a prairie it takes a clover and one bee,</l>
+      <l>One clover, and a bee,</l>
+      <l>And revery.</l>
+      <l>The revery alone will do,</l>
+      <l>If bees are few.</l>
+   </body>
+</text>]]></eg>
+	  can be externalized by placing the actual text in a separate
+	  document, and providing exactly the same markup with the
+	  <gi>xi:include</gi> elements:
+	  <lb/>	<!-- inappropriate kludge -->
+	 <label rend="ul">Source.txt</label>
+	      <eg><![CDATA[To make a prairie it takes a clover and one bee,\n
+One clover, and a bee,\n
+And revery.\n
+The revery alone will do,\n
+If bees are few.\n]]></eg>
+	  <lb/>	<!-- inappropriate kludge -->
+	  <label rend="ul">External.xml</label>
+	<eg><![CDATA[<text xmlns:xi="http://www.w3.org/2001/XInclude">
+   <front>
+      <head>1755</head>
+   </front>
+   <body>
+      <l><xi:include href="Source.txt#range(  /.0, /.48)" parse="text">
+             <xi:fallback>Verse not found</xi:fallback></xi:include></l>
+      <l><xi:include href="Source.txt#range( /.49, /.71)" parse="text">
+             <xi:fallback>Verse not found</xi:fallback></xi:include></l>
+      <l><xi:include href="Source.txt#range( /.72, /.83)" parse="text">
+             <xi:fallback>Verse not found</xi:fallback></xi:include></l>
+      <l><xi:include href="Source.txt#range( /.84,/.109)" parse="text">
+             <xi:fallback>Verse not found</xi:fallback></xi:include></l>
+      <l><xi:include href="Source.txt#range(/.110,/.126)" parse="text">
+             <xi:fallback>Verse not found</xi:fallback></xi:include></l>
+   </body>
+</text>]]></eg></p>
+	<p>Please note that this specification requires that the
+	  XInclude namespace declaration is present in all cases. The
+	  <gi>xi:fallback</gi> element contains text or XML fragments
+	  to be placed in the document if the inclusion, fails for any
+	  reason (for instance due to
+	  inaccessibility of an external resource).
+          The
+	  <gi>xi:fallback</gi> element is optional. An XInclude processor must
+          signal a fatal error when a resource is not fount, and no <gi>xi:fallback</gi> element is
+          present.</p>
+          <!-- there was a whole new element and discussion here, but the new spec from the W3C
+          makes the fallback element optional, and signals an error in the case that
+          the resource cannot be found. -->
+      </div3>
+      <div3 type="subsection">
+	<head>Well-formedness and validity of stand-off markup</head>
+	<p>This specification states that the whole source fragment
+	  identified by the XInclude element, as well as any markup
+	  therein contained, are inserted in the position specified.
+	  It is required that the internalized document is
+	  well-formed. It is a burden for the author of the external
+	  markup to ensure this. Inaccurate ranges, for instance,
+	  could very well create badly formed documents that could not
+	  be further processed. Of course, badly formed documents are
+	  a problem can only arise when source documents are XML.
+	  Plain text source documents will always create well-formed
+	  documents.</p>
+	<p>Validity always happen with internalized documents. Thus an
+	  XML document containing <gi>xi:include</gi> and
+	  <gi>xi:fallback</gi> elements is never a valid TEI document.
+	  This specification requires thus that validity is verified
+	  after the resolution of all the <gi>xi:include</gi> elements.</p>
+      </div3>
+      <div3 type="subsection">
+	<head>Including text and/or xml fragments</head>
+	<p>When the source text is plain text the overall form of the
+	  XPointer pointing to it is of minimal importance. The form
+	  of the XPointer matters considerably, on the other hand,
+	  when the source document is XML.</p>
+	<p>In this case, it is rather important to distinguish whether
+	  we intend to substitute the source XML with the new one, or
+	  just to add new markup to it. The XPointers used in the
+	  references can express both cases.</p>
+	<p>A simple way is to make sure to select only textual data in
+	  the XPointer. For instance, given the following
+	  document:
+	  <lb/>	<!-- inappropriate kludge -->
+	  <label rend="ul">Source.xhtml</label>
+	  <eg><![CDATA[<html>
+    <body>
+        <div>To make a prairie it takes a <a href="clover.gif">clover</a>
+             and one <a href="bee.gif">bee</a>,</div>
+        <div>One <a href="clover.gif">clover</a>, and
+             a <a href="bee.gif">bee</a>,</div>
+        <div>And revery.</div>
+        <div>The revery alone will do,</div>
+        <div>If bees are few.</div>
+    </body>
+</html>]]></eg>
+	  the expression <code>range(/1/2/1.0,/1/2/11.1)</code> will
+	  select the whole poem, <gi>text</gi> <emph>and</emph>
+	  <gi>div</gi> elements <emph>and</emph> hypertext links (NB:
+	  in XPointer whitespace-only text nodes count).</p>
+	<p>On the contrary, the expressions
+	  <code>xpointer(//text()/range-to(.))</code> and
+	  <code>xpointer(string-range(//text(),"To")/range-to(//text(),"few.")</code> 
+	  will only select the text of the poem, with no markup
+	  inside.</p>
+	<p>Thus, the following could be a valid stand-off document for
+	  the <title>Source.xhtml</title> document:
+	  <lb/>	<!-- inappropriate kludge -->
+	  <label rend="ul">External2.xml</label>
+	  <eg><![CDATA[<text>
+   <front>
+      <head>1755</head>
+   </front>
+   <body>
+      <l
+content='Source.xhtml#xpointer(string-range(//div[1]/text(),"To")/range-to(/
+/div[1]/text(),"bee,")'/>
+      <l
+content='Source.xhtml#xpointer(string-range(//div[2]/text(),"One")/range-to(
+//div[2]/text(),"bee,")'/>
+      <l
+content='Source.xhtml#xpointer(string-range(//div[3]/text(),"And")/range-to(
+//div[3]/text(),".")'/>
+      <l
+content='Source.xhtml#xpointer(string-range(//div[4]/text(),"The")/range-to(
+//div[4]/text(),",")'/>
+      <l
+content='Source.xhtml#xpointer(string-range(//div[5]/text(),"If")/range-to(/
+/div[5]/text(),".")'/>
+   </body>
+</text>]]></eg></p>
+      </div3>
+</div2>
+
 <div2 type="section" xml:id="SAAN">
 <head>Connecting Analytic and Textual Markup</head>
 <p>In chapters <ptr target="#AI"/> and <ptr target="#FS"/> and elsewhere,
@@ -2877,30 +3235,21 @@ chapters<!-- , particularly in sections <ptr target="#AILA"/>, <ptr target="#FSF
 </div2>
 <div2>
   <head>Reference Section</head>
-<p>The module documented by this chapter makes available the following components:
+  <p>This chapter documents the following two modules:
   <moduleSpec xml:id="DSA" ident="linking">
     <altIdent type="FPI">Linking, Segmentation, and Alignment</altIdent>
     <desc>Linking, segmentation and alignment</desc>
   </moduleSpec>
-<!--  <moduleSpec xml:id="DSAENTS" type="decls" ident="linking-decl">
+  <moduleSpec xml:id="DSAENTS" type="decls" ident="linking-decl">
     <altIdent type="FPI">Class declarations for Linking, Segmentation, and Alignment</altIdent>
     <desc>Global attributes for the TEI.linking tag set</desc>
-  </moduleSpec>
--->
-The selection and combination of modules to form a TEI schema is described in
-<ptr target="#STIN"/>.
-</p>
-<p>The module is organized as follows:
+  </moduleSpec><!--publicID:  -//TEI P5//ENTITIES Element Classes for Linking, Segmentation, and Alignment//EN-->
+  </p>
+  <p>Here is an overview of the declarations documented by this chapter:
   <specGrp>
     &cllink.odd;
     &pointer.odd;
     &ptrgroup.odd;
-
-<specGrpRef target="#DSAPT"/>
-<specGrpRef target="#DSASA"/>
-<specGrpRef target="#DSASYMP"/>
-<specGrpRef target="#DSAAG"/>
-<specGrpRef target="#DSAAT"/>
   </specGrp>
   </p>
 </div2>
