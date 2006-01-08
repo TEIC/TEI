@@ -35,9 +35,9 @@ TESTSPECIALFILES= \
 	testodds \
 	testmathml 
 
-default: schemas test-schema test-dtd test-dtd-xmllint test-xsd test-bad
+default: schemas test
 
-all: test-schema test-dtd test-xsd test-extns
+test: test-schema test-dtd test-dtd-xmllint test-extns test-xsd test-bad
 
 schemas:
 	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES) $(TESTBADFILES); do \
@@ -76,14 +76,14 @@ test-xerces:
 
 
 test-dtd:
-	echo XMLLINT DTD ...except testodds ....
+	echo xmllint DTD ...except testodds ....
 	-for i in `echo $(TESTFILES) | sed 's/testodds//'`; do echo $$i: ; xmllint --dropdtd $$i.xml | xmllint --noout --dtdvalid $$i.dtd -; done
 
 
 # testall, testp4compat, testodds have no DOCTYPE
 test-dtd-xmllint:
-	echo xmllint DTD ....
-	-for i in `echo $(TESTFILES) | sed 's/testnames//' | sed 's/testi18n//' | sed 's/testodds//'  | sed 's/testall//' | sed 's/testp4compat//'`; do xmllint --noout --valid $$i.xml; done
+	echo xmllint DTD using DTD fragments....
+	-for i in `echo $(TESTFILES) | sed 's/testlite//' | sed 's/testnames//' | sed 's/testi18n//' | sed 's/testodds//'  | sed 's/testall//' | sed 's/testp4compat//'`; do xmllint --noout --valid $$i.xml; done
 
 test-extns:
 	echo check whether user extensions work ....
