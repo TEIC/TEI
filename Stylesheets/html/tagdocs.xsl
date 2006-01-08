@@ -558,6 +558,7 @@
     </a>
     <xsl:if test="self::tei:elementSpec">&gt;</xsl:if>
     </b>
+    <xsl:text> </xsl:text>
     <xsl:value-of select="tei:desc"/>
     <xsl:choose>
       <xsl:when test="not($atts='')">
