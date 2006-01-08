@@ -298,12 +298,27 @@ because of the order of declarations
 	    <xsl:with-param name="K" select="@key"/>
 	  </xsl:call-template>
       </xsl:for-each>
-      <xsl:copy-of select="tei:attList/tei:attDef[not(@mode)]"/>
-      <xsl:copy-of select="tei:attList/tei:attDef[@mode='add']"/>
-      <xsl:copy-of select="tei:attList/tei:attRef"/>
-      <xsl:copy-of select="tei:attList/tei:attList"/>
+      <xsl:choose>
+	<xsl:when test="tei:attList[@org='choice']">
+	  <xsl:for-each select="tei:attList[@org='choice']">
+	    <xsl:copy>
+	      <xsl:copy-of select="@*"/>
+	      <xsl:copy-of select="tei:attDef[not(@mode)]"/>
+	      <xsl:copy-of select="tei:attDef[@mode='add']"/>
+	      <xsl:copy-of select="tei:attRef"/>
+	      <xsl:copy-of select="tei:attList"/>
+	    </xsl:copy>
+	  </xsl:for-each>    
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:copy-of select="tei:attList/tei:attDef[not(@mode)]"/>
+	  <xsl:copy-of select="tei:attList/tei:attDef[@mode='add']"/>
+	  <xsl:copy-of select="tei:attList/tei:attRef"/>
+	  <xsl:copy-of select="tei:attList/tei:attList"/>
+	</xsl:otherwise>
+      </xsl:choose>
       </attList>
-
+      
     <xsl:copy-of select="tei:exemplum"/>
     <xsl:copy-of select="tei:remarks"/>
     <xsl:copy-of select="tei:listRef"/>
