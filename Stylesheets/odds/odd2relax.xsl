@@ -121,8 +121,13 @@
 	 datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
 	  <xsl:attribute name="ns">
 	    <xsl:choose>
-	      <xsl:when test="@ns"><xsl:value-of select="@ns"/></xsl:when>
-	      <xsl:otherwise>http://www.tei-c.org/ns/1.0</xsl:otherwise>
+	      <xsl:when test="@ns">
+		<xsl:value-of select="@ns"/>
+	      </xsl:when>
+	      <xsl:when test="$TEIC='true'">
+		<xsl:text>http://www.tei-c.org/ns/1.0</xsl:text>
+	      </xsl:when>
+	      <xsl:otherwise></xsl:otherwise>
 	    </xsl:choose>
 	  </xsl:attribute>	  
 	  <xsl:comment>
