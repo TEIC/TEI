@@ -56,12 +56,12 @@ html-web: check
 	perl -p -e "s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+" odd2htmlp5.xsl.model > odd2htmlp5.xsl
 	-rm -rf Guidelines-web
 	-mkdir Guidelines-web
-	xmllint --noent    Source-driver.xml | xsltproc \
+	xsltproc \
 	-o Guidelines-web/index.html \
 	--stringparam displayMode rnc \
 	--stringparam lang ${LANGUAGE} \
 	--stringparam outputDir . \
-	guidelines.xsl - 
+	guidelines.xsl Source-driver.xml
 	-cp *.gif *.css Guidelines-web
 	-cp Source/*/*.png Guidelines
 	(cd Guidelines-web; for i in *.html; do perl -i ../tools/cleanrnc.pl $$i;done)
@@ -70,14 +70,14 @@ html:check subset
 	-rm -rf Guidelines
 	-mkdir Guidelines
 	perl -p -e "s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+" odd2htmlp5.xsl.model > odd2htmlp5.xsl
-	xmllint --noent    Source-driver.xml | xsltproc \
+	xsltproc \
 	-o Guidelines/index.html \
 	--stringparam localsource `pwd`/p5subset.xml \
 	--stringparam cssFile tei-print.css \
 	--stringparam displayMode rnc \
 	--stringparam outputDir . \
 	--stringparam lang ${LANGUAGE} \
-	guidelines-print.xsl - 
+	guidelines-print.xsl Source-driver.xml
 	-cp *.gif *.css Guidelines
 	-cp Source/*/*.png Guidelines
 	(cd Guidelines; for i in *.html; do perl -i ../tools/cleanrnc.pl $$i;done)
