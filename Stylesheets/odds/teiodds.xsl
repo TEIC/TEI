@@ -934,17 +934,17 @@
 	select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability" mode="copyrighttext"/>
   </xsl:template>
 
-  <xsl:template name="tei:p" mode="copyrighttext">
+  <xsl:template match="tei:p" mode="copyrighttext">
     <xsl:text>&#10;</xsl:text>
     <xsl:apply-templates/>
   </xsl:template>
   
-  <xsl:template name="tei:list" mode="copyrighttext">
+  <xsl:template match="tei:list" mode="copyrighttext">
     <xsl:text>&#10;</xsl:text>
     <xsl:apply-templates/>
   </xsl:template>
   
-  <xsl:template name="tei:item" mode="copyrighttext">
+  <xsl:template match="tei:item" mode="copyrighttext">
     <xsl:text>&#10; *</xsl:text>
     <xsl:apply-templates/>
   </xsl:template>
