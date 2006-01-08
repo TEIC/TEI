@@ -288,7 +288,7 @@
 
 <xsl:template name="predeclare-classes">
     <xsl:comment>0. predeclared classes</xsl:comment>
-    <xsl:for-each select="key('DefClasses',1)">
+    <xsl:for-each select="key('predeclaredClasses',1)">
       <xsl:choose>
 	<xsl:when test="@type='model'">    
 	  <xsl:apply-templates select="." mode="processModel">

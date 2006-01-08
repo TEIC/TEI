@@ -76,7 +76,7 @@
   <xsl:key name="ClassModule"   match="tei:classSpec" use="@module"/>
   <xsl:key name="MacroModule"   match="tei:macroSpec" use="@module"/>
   <xsl:key name="Modules"    match="tei:moduleSpec" use="1"/>
-  <xsl:key name="DefClasses"    match="tei:classSpec[@predeclare='true']" use="1"/>
+  <xsl:key name="predeclaredClasses"    match="tei:classSpec[@predeclare='true']" use="1"/>
   <xsl:key name="PredeclareMacros"
 	   match="tei:macroSpec[@predeclare='true']" use="@ident"/>
   <xsl:key name="PredeclareMacrosModule"    
@@ -931,7 +931,22 @@
   
   <xsl:template name="copyright">
     <xsl:apply-templates 
-	select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability"/>
+	select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability" mode="copyrighttext"/>
+  </xsl:template>
+
+  <xsl:template name="tei:p" mode="copyrighttext">
+    <xsl:text>&#10;</xsl:text>
+    <xsl:apply-templates/>
+  </xsl:template>
+  
+  <xsl:template name="tei:list" mode="copyrighttext">
+    <xsl:text>&#10;</xsl:text>
+    <xsl:apply-templates/>
+  </xsl:template>
+  
+  <xsl:template name="tei:item" mode="copyrighttext">
+    <xsl:text>&#10; *</xsl:text>
+    <xsl:apply-templates/>
   </xsl:template>
   
   <xsl:template name="attributeDatatype">
