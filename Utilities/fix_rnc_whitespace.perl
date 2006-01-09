@@ -10,20 +10,27 @@
 #
 # usage
 # -----
-# 	$PROGRAM_NAME
+# 	$PROGRAM_NAME [--patternprefix=STRING]
 # 
 # where:
-# - input, always from STDIN, should be a Roma-generated RelaxNG
+# * --patternprefix=STRING provides an optional prefix string that is
+# *                        prefixed to all patterns in the schema.
+# *                        I.e., This should be the same string that
+# *                        has just been handed to roma.sh.
+# * input, always from STDIN, should be a Roma-generated RelaxNG
 #          compact syntax file.
-# - output, always to STDOUT, will be the same file with much prettier
+# * output, always to STDOUT, will be the same file with much prettier
 #           use of whitespace.
 # 
 # Chnage log (CVS-maintained) near the bottom of this file (I hope :-).
 #
 
 use English;
+use Getopt::Long;
 
 # --------- program goes here --------- #
+
+GetOptions("patternprefix=s" => \$patpref );
 
 @file = <STDIN>;
 $file = join("", @file );
@@ -37,8 +44,8 @@ $file =~ s/\n\s*(\n\s*##)/\1/g;
 # don't leave or-bars on a line by themselves -- join lines above & below
 $file =~ s/\s*\n\s*\|\s*\n\s*/ | /g;
 # remove blank line from immediately before the start of the definition of
-# something that has a dot in its name
-$file =~ s/\n(\n[a-zA-Z0-9-]+\.[a-zA-Z0-9.-]+ =\n  ##)/\1/g;
+# something that has a dot in its (non-prefix) name
+$file =~ s/\n(\n$patpref[a-zA-Z0-9-]+\.[a-zA-Z0-9.-]+ =\n  ##)/\1/g;
 
 print STDOUT $file;
 
@@ -48,8 +55,8 @@ exit 0;
 # Update Hx
 # ------ --
 # $Log$
-# Revision 1.1  2006/01/09 02:47:55  sbauman
-# moved tools/* to Utilities/.
+# Revision 1.2  2006/01/09 03:53:55  sbauman
+# Give fix_rnc_whitespace filter a --prefixpattern switch to match roma.sh
 #
 # Revision 1.1  2005/07/09 21:01:47  rahtz
 # more movement of files
