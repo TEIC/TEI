@@ -53,7 +53,24 @@
   <xsl:param name="oddmode">dtd</xsl:param>       
   <xsl:param name="prenumberedHeadings">  </xsl:param>
   <xsl:param name="splitLevel">-1</xsl:param>
+  <xsl:param name="generateNamespacePrefix">false</xsl:param>
+  <xsl:param name="namespacePrefix"></xsl:param>
   <xsl:key name="Modules"   match="tei:moduleSpec" use="1"/>
+  <xsl:variable name="nsPrefix">
+    <xsl:choose>
+      <xsl:when test="generateNamespacePrefix='false'"/>
+      <xsl:when test="not($namespacePrefix='')">
+	<xsl:value-of select="$namespacePrefix"/>
+      </xsl:when>
+      <xsl:when test="//tei:schemaSpec/@ns">
+	<xsl:variable name="n" select="//tei:schemaSpec/@ns"/>
+	<xsl:choose>
+	  <xsl:when test="$n='http://www.w3.org/2005/11/its'">its:</xsl:when>
+	  <xsl:when test="$n='http://www.tei-c.org/ns/1.0'">tei:</xsl:when>
+	</xsl:choose>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:variable>
 
 <xsl:key name="FILES"   match="tei:moduleSpec[@ident]"
 	 use="@ident"/>
@@ -325,6 +342,9 @@
 </xsl:template>
 
 <xsl:template name="schemaOut">
+  <xsl:text>&lt;!ENTITY % NS '</xsl:text>
+  <xsl:value-of select="$nsPrefix"/>
+  <xsl:text>' &gt;&#10;</xsl:text>
   <xsl:if test="$TEIC='true'">
     <xsl:text>&lt;!-- TEI P5 DTD. Generated </xsl:text>
     <xsl:value-of select="edate:date-time()"/>
@@ -789,6 +809,7 @@
 	</xsl:when>
 	<xsl:when test="key('ELEMENTS',@name)">
 	  <xsl:for-each select="key('ELEMENTS',@name)">
+	    <xsl:text>%NS;</xsl:text>
 	    <xsl:choose>
 	      <xsl:when test="tei:altIdent">
 		<xsl:value-of select="normalize-space(tei:altIdent)"/>
@@ -810,6 +831,7 @@
       <xsl:text>;</xsl:text>
     </xsl:when>
     <xsl:otherwise>
+      <xsl:text>%NS;</xsl:text>
       <xsl:value-of select="@name"/>   
     </xsl:otherwise>
   </xsl:choose>
@@ -966,7 +988,7 @@
   <xsl:text>&#10;&lt;!--doc:</xsl:text>
   <xsl:apply-templates select="tei:gloss" mode="doc"/>
   <xsl:apply-templates select="tei:desc" mode="doc"/>
-  <xsl:text> --&gt;&#10;&lt;!ELEMENT </xsl:text>
+  <xsl:text> --&gt;&#10;&lt;!ELEMENT %NS;</xsl:text>
   <xsl:value-of select="$ename"/>
   <xsl:if test="$parameterize='true' and $TEIC='true'">
     <xsl:text> %om.RR;</xsl:text>
@@ -999,7 +1021,7 @@
       </xsl:otherwise>
     </xsl:choose>
     <xsl:text>&gt;</xsl:text>
-  <xsl:text>&#10;&lt;!ATTLIST </xsl:text>
+  <xsl:text>&#10;&lt;!ATTLIST %NS;</xsl:text>
   <xsl:value-of select="$ename"/>
   <xsl:if test="$parameterize='true' and $TEIC='true'">
     <xsl:text>&#10; %att.global.attributes;</xsl:text>
@@ -1253,7 +1275,14 @@
     
 <xsl:template match="tei:attDef" mode="tangle">
   <xsl:text>&#10; </xsl:text>
-  <xsl:if test="@ns='http://www.w3.org/XML/1998/namespace'">xml:</xsl:if>
+  <xsl:choose>
+    <xsl:when test="@ns='http://www.w3.org/XML/1998/namespace'">
+      <xsl:text>xml:</xsl:text>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:text>%NS;</xsl:text>
+    </xsl:otherwise>
+  </xsl:choose>
   <xsl:choose>
     <xsl:when test="tei:altIdent">
       <xsl:value-of select="normalize-space(tei:altIdent)"/>
@@ -1276,7 +1305,7 @@
       <xsl:text> CDATA </xsl:text>
     </xsl:when>
     <xsl:when test="tei:datatype/rng:*">
-	<xsl:apply-templates select="tei:datatype"/>
+      <xsl:apply-templates select="tei:datatype"/>
     </xsl:when>
     <xsl:otherwise>
       <xsl:text> CDATA </xsl:text>
@@ -1377,9 +1406,11 @@
 
 <xsl:template name="dtdComment">
 <xsl:param name="text"/>
-<xsl:text>&#10;&lt;!--&#10;</xsl:text>
-<xsl:value-of select="$text"/>
-<xsl:text>&#10;--&gt;&#10;</xsl:text>
+<xsl:if test="$TEIC='true'">
+  <xsl:text>&#10;&lt;!--&#10;</xsl:text>
+  <xsl:value-of select="$text"/>
+  <xsl:text>&#10;--&gt;&#10;</xsl:text>
+</xsl:if>
 </xsl:template>
 
 </xsl:stylesheet>
