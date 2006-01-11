@@ -345,6 +345,7 @@
   <xsl:text>&lt;!ENTITY % NS '</xsl:text>
   <xsl:value-of select="$nsPrefix"/>
   <xsl:text>' &gt;&#10;</xsl:text>
+  <xsl:call-template name="NameList"/>
   <xsl:if test="$TEIC='true'">
     <xsl:text>&lt;!-- TEI P5 DTD. Generated </xsl:text>
     <xsl:value-of select="edate:date-time()"/>
@@ -423,7 +424,7 @@
       <ident id="{@ident}"/>
       <xsl:text>&lt;!ENTITY % n.</xsl:text>
       <xsl:value-of select="@ident"/>
-      <xsl:text> "</xsl:text>
+      <xsl:text> "%NS;</xsl:text>
       <xsl:choose>
 	<xsl:when test="tei:altIdent">
 	  <xsl:value-of select="tei:altIdent"/>
@@ -809,7 +810,7 @@
 	</xsl:when>
 	<xsl:when test="key('ELEMENTS',@name)">
 	  <xsl:for-each select="key('ELEMENTS',@name)">
-	    <xsl:text>%NS;</xsl:text>
+	    <xsl:text>%n.</xsl:text>
 	    <xsl:choose>
 	      <xsl:when test="tei:altIdent">
 		<xsl:value-of select="normalize-space(tei:altIdent)"/>
@@ -818,6 +819,7 @@
 		<xsl:value-of select="@ident"/>
 	      </xsl:otherwise>
 	    </xsl:choose>
+	    <xsl:text>;</xsl:text>
 	  </xsl:for-each>
 	</xsl:when>
       </xsl:choose>
@@ -831,8 +833,9 @@
       <xsl:text>;</xsl:text>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:text>%NS;</xsl:text>
+      <xsl:text>%n.</xsl:text>
       <xsl:value-of select="@name"/>   
+      <xsl:text>;</xsl:text>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:variable>
@@ -975,20 +978,16 @@
 	<xsl:value-of select="@ident"/>    
       </xsl:when>
       <xsl:otherwise>
-	<xsl:if test="$TEIC='true'">
-	  <xsl:text>%n.</xsl:text>
-	</xsl:if>
+	<xsl:text>%n.</xsl:text>
 	<xsl:value-of select="@ident"/>    
-	<xsl:if test="$TEIC='true'">
-	  <xsl:text>;</xsl:text>
-	</xsl:if>
+	<xsl:text>;</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
   <xsl:text>&#10;&lt;!--doc:</xsl:text>
   <xsl:apply-templates select="tei:gloss" mode="doc"/>
   <xsl:apply-templates select="tei:desc" mode="doc"/>
-  <xsl:text> --&gt;&#10;&lt;!ELEMENT %NS;</xsl:text>
+  <xsl:text> --&gt;&#10;&lt;!ELEMENT </xsl:text>
   <xsl:value-of select="$ename"/>
   <xsl:if test="$parameterize='true' and $TEIC='true'">
     <xsl:text> %om.RR;</xsl:text>
@@ -1021,7 +1020,7 @@
       </xsl:otherwise>
     </xsl:choose>
     <xsl:text>&gt;</xsl:text>
-  <xsl:text>&#10;&lt;!ATTLIST %NS;</xsl:text>
+  <xsl:text>&#10;&lt;!ATTLIST </xsl:text>
   <xsl:value-of select="$ename"/>
   <xsl:if test="$parameterize='true' and $TEIC='true'">
     <xsl:text>&#10; %att.global.attributes;</xsl:text>
@@ -1220,18 +1219,12 @@
 		</xsl:choose>
 	      </xsl:when>
 	      <xsl:when test="self::tei:elementSpec">
-		<xsl:if test="$TEIC='true'">
 		  <xsl:text>%n.</xsl:text>
-		</xsl:if>
-		<xsl:value-of select="@ident"/>
-		<xsl:if test="$TEIC='true'">
+		  <xsl:value-of select="@ident"/>
 		  <xsl:text>;</xsl:text>
-		</xsl:if>
 	      </xsl:when>
 	      <xsl:otherwise>
-		<xsl:text>%</xsl:text>
 		<xsl:value-of select="@ident"/>
-		<xsl:text>;</xsl:text>
 	      </xsl:otherwise>
 	    </xsl:choose>
 	  </xsl:variable>
@@ -1279,9 +1272,6 @@
     <xsl:when test="@ns='http://www.w3.org/XML/1998/namespace'">
       <xsl:text>xml:</xsl:text>
     </xsl:when>
-    <xsl:otherwise>
-      <xsl:text>%NS;</xsl:text>
-    </xsl:otherwise>
   </xsl:choose>
   <xsl:choose>
     <xsl:when test="tei:altIdent">
@@ -1291,7 +1281,6 @@
       <xsl:value-of select="@ident"/>
     </xsl:otherwise>
   </xsl:choose>
-  <xsl:text> </xsl:text>
   <xsl:choose>
     <xsl:when test="tei:valList[@type='closed']">
       <xsl:text> (</xsl:text>
