@@ -1,3 +1,81 @@
+2006-01-11  Sebastian Rahtz  <rahtz@localhost.localdomain>
+	* VERSION 5.2.13
+
+	* html/core.xsl:
+	simplify bibl inside cit handling to always emit a new HTML <div>
+
+	* html/textstructure.xsl, html/core.xsl, tei.css, teic.css:
+	new CSS code to support some new spans
+
+	* i18n.xml: fixes to German (Torsten Schassan)
+
+	* odds/odd2dtd.xsl:
+	work out declaration of elements so that they have a %NS; prefix, to
+	allow hard-wired namespace decls
+
+	* html/tagdocs.xsl: handle <tag>, <att> and <val>
+
+	* html/tei-param.xsl: extra option  for numbering footnotes
+
+	* html/core.xsl:
+	option for numbering footnotes consecutively or not (Torsten
+	Schassan); also change processing for <cit><bibl>
+
+	* html/core.xsl:
+	apply i18n-ness to the words "Note" and "Notes" (Torsten Schassan)
+
+	* common/header.xsl:
+	allow for title/@type='subordinate' to indicate subtitle (Torsten Schassan)
+
+	* i18n.xml: Torsten Schassan revisions to I18N
+
+2006-01-10  Sebastian Rahtz  <rahtz@localhost.localdomain>
+
+	* odds/odd2dtd.xsl:
+	set up DTD creation to allow for adding a parameterized
+	namespace prefix to each element and attribute name
+
+2006-01-09  Sebastian Rahtz  <rahtz@localhost.localdomain>
+
+	* common/verbatim.xsl: put back doe
+
+2006-01-08  Sebastian Rahtz  <rahtz@localhost.localdomain>
+
+	* odds/odd2relax.xsl, VERSION:
+	namespace defaults to TEI only if $TEIC is true
+
+	* common/verbatim.xsl: saxon complains about disable-output-escaping
+
+	* odds/teiodds.xsl: templates should be "match" not "name"
+
+	* odds/odd2odd.xsl: preserve <attList type="choice"> in odd2odd process
+
+	* html/tagdocs.xsl:
+	add space between name and description in a speclist
+
+	* odds/odd2dtd.xsl, odds/odd2relax.xsl, odds/teiodds.xsl:
+	clean order of events in odd2dtd to make sure things are declared where needed in a DTD fragment. break into more templates for easy reading.
+
+	* odds/odd2dtd.xsl: working on order of things in DTD modules
+
+2006-01-07  Sebastian Rahtz  <rahtz@localhost.localdomain>
+
+	* odds/odd2dtd.xsl, odds/odd2relax.xsl, odds/teiodds.xsl, ChangeLog:
+	forget the existence of *-decl moduleSpecs, and generate
+	a -decl.dtd file for each module automatically, to include
+	all classes and macros. The exception is the main tei module,
+	which must refer to all the others, and have the default classes
+	up front.
+
+2006-01-06  Sebastian Rahtz  <rahtz@localhost.localdomain>
+
+	* common/tei-param.xsl, html/tagdocs.xsl, html/textstructure.xsl, tei.css, teic.css:
+	a) when processing specDesc, only put <> around element names
+	b) process tei:val in HTML to make a CSS span
+	c) if $autoHead is true, it becomes possible to link to prev and next <div>s
+
+	* odds/odd2dtd.xsl: consistent declaration of file entities
+
 2006-01-06  Sebastian Rahtz  <rahtz@localhost.localdomain>
 
 	* common/tei-param.xsl, html/tagdocs.xsl, html/textstructure.xsl, tei.css, teic.css:
