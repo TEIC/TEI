@@ -985,6 +985,28 @@
     </span>
   </xsl:template>
   
+  <xd:doc>
+    <xd:short>Process elements  tei:att</xd:short>
+    <xd:detail>&#160;</xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:att">
+    <span class="att">  
+      <xsl:apply-templates/>
+    </span>
+  </xsl:template>
+  
+<xd:doc>
+    <xd:short>Process elements  tei:tag</xd:short>
+    <xd:detail>&#160;</xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:tag">
+    <span class="tag">
+      <xsl:text>&lt;</xsl:text>
+      <xsl:apply-templates/>
+    <xsl:text>&gt;</xsl:text>
+    </span>
+  </xsl:template>
+  
 
 <xd:doc>
     <xd:short>Process elements  tei:valList</xd:short>
