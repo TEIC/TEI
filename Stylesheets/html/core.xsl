@@ -161,11 +161,22 @@
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:bibl">
-    <xsl:variable name="ident">
-      <xsl:apply-templates select="." mode="ident"/>
-    </xsl:variable>
-    <a name="{$ident}"/>
-    <xsl:apply-templates/>
+    <xsl:choose>
+      <xsl:when test="parent::tei:cit">
+        <div class="citbibl">
+          <xsl:text>(</xsl:text>
+	  <xsl:apply-templates/>
+          <xsl:text>)</xsl:text>
+        </div>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:variable name="ident">
+	  <xsl:apply-templates select="." mode="ident"/>
+	</xsl:variable>
+	<a name="{$ident}"/>
+	<xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:bibl/tei:title</xd:short>
@@ -263,17 +274,7 @@
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:cit">
-    <xsl:choose>
-      <xsl:when test="tei:quote and tei:bibl">
-        <xsl:apply-templates select="*[not(self::tei:bibl)]"/>
-	<xsl:text> (</xsl:text>
-	<xsl:apply-templates select="tei:bibl"/>
-	<xsl:text>)</xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
         <xsl:apply-templates/>
-      </xsl:otherwise>
-    </xsl:choose>
   </xsl:template>
 
   <xd:doc>
@@ -1169,11 +1170,6 @@
   <xsl:template match="tei:quote">
     <blockquote>
       <xsl:apply-templates/>
-      <xsl:if test="following-sibling::tei:bibl">
-        <div align="right">
-          <font size="-1">(<xsl:apply-templates select="following-sibling::tei:bibl"/>)</font>
-        </div>
-      </xsl:if>
     </blockquote>
   </xsl:template>
   <xd:doc>
