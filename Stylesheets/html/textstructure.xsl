@@ -793,10 +793,10 @@ $ID: requests a particular page
     <xsl:attribute name="lang">
       <xsl:choose>
         <xsl:when test="$supplied">
-          <xsl:text>en</xsl:text>
+          <xsl:value-of select="$supplied"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:value-of select="$supplied"/>
+          <xsl:text>en</xsl:text>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:attribute>

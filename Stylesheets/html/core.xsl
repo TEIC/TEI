@@ -266,6 +266,9 @@
     <xsl:choose>
       <xsl:when test="tei:quote and tei:bibl">
         <xsl:apply-templates select="*[not(self::tei:bibl)]"/>
+	<xsl:text> (</xsl:text>
+	<xsl:apply-templates select="tei:bibl"/>
+	<xsl:text>)</xsl:text>
       </xsl:when>
       <xsl:otherwise>
         <xsl:apply-templates/>
