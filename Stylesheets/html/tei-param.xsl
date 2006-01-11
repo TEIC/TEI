@@ -47,6 +47,11 @@ CSS class for links derived from &lt;xref&gt;
 </xd:doc>
 <xsl:param name="class_xref">xref</xsl:param>
 
+<xd:doc type="boolean" class="layout">
+Number footnotes consecutively
+</xd:doc>
+<xsl:param name="consecutiveFootnoteNumbers">false</xsl:param>
+
 <xd:doc type="anyURI" class="CSS">
 CSS style file to be associated with output file(s)
 </xd:doc>
