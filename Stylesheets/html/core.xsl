@@ -982,7 +982,11 @@
       </xsl:when>
       <xsl:otherwise>
 	<a name="{$identifier}"/>
-        <xsl:text> [Note: </xsl:text>
+        <xsl:text> [</xsl:text>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Note</xsl:with-param>
+	</xsl:call-template>
+         <xsl:text>: </xsl:text>
         <xsl:apply-templates/>
         <xsl:text>]</xsl:text>
       </xsl:otherwise>
@@ -1385,7 +1389,9 @@
         <xsl:value-of select="@xml:id"/>
       </xsl:when>
       <xsl:when test="@n">
-	<xsl:text>Note</xsl:text>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Note</xsl:with-param>
+	</xsl:call-template>
         <xsl:value-of select="@n"/>
       </xsl:when>
       <xsl:when test="not(@place)">
@@ -1817,8 +1823,12 @@ by Nick Nicholas </p>
     <html>
       <xsl:call-template name="addLangAtt"/>
       <head>
-        <title>Notes for
+        <title>
 	<xsl:apply-templates select="descendant-or-self::tei:text/tei:front//tei:docTitle//text()"/>
+	<xsl:text>: </xsl:text>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">noteHeading</xsl:with-param>
+	</xsl:call-template>
 	</title>
         <xsl:call-template name="includeCSS"/>
 	<xsl:call-template name="cssHook"/>
@@ -1828,8 +1838,11 @@ by Nick Nicholas </p>
         <xsl:call-template name="bodyJavaScriptHook"/>
         <xsl:call-template name="stdheader">
           <xsl:with-param name="title">
-            <xsl:text>Notes for </xsl:text>
             <xsl:apply-templates select="descendant-or-self::tei:text/tei:front//tei:docTitle//text()"/>
+	    <xsl:text>: </xsl:text>
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">noteHeading</xsl:with-param>
+	    </xsl:call-template>
           </xsl:with-param>
         </xsl:call-template>
         <div class="notes">
