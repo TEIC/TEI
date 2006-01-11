@@ -263,18 +263,16 @@
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:cit">
-    <xsl:apply-templates select="tei:q|quote"/>
-    <xsl:apply-templates select="tei:bibl"/>
+    <xsl:choose>
+      <xsl:when test="tei:quote and tei:bibl">
+        <xsl:apply-templates select="*[not(self::tei:bibl)]"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements  tei:cit</xd:short>
-    <xd:detail>&#160;</xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:cit">
-    <p class="cit">
-      <xsl:apply-templates/>
-    </p>
-  </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements  tei:cit[@rend='display']</xd:short>
     <xd:detail>
@@ -785,7 +783,6 @@
       </xsl:when>
       <xsl:when test="@type='unordered' or @type='simple'">
         <ul>
-	  <xsl:call-template name="rendToClass"/>
 	  <xsl:call-template name="rendToClass"/>
           <xsl:apply-templates select="tei:item"/>
         </ul>
@@ -1389,9 +1386,7 @@
         <xsl:value-of select="@xml:id"/>
       </xsl:when>
       <xsl:when test="@n">
-	<xsl:call-template name="i18n">
-	  <xsl:with-param name="word">Note</xsl:with-param>
-	</xsl:call-template>
+	<xsl:call-template name="i18n"><xsl:with-param name="word">Note</xsl:with-param></xsl:call-template>
         <xsl:value-of select="@n"/>
       </xsl:when>
       <xsl:when test="not(@place)">
@@ -1412,19 +1407,27 @@
 	  <xsl:value-of select="@place"/>
 	</xsl:variable>
 	<xsl:choose>
-	  <xsl:when test="ancestor::tei:front">
-	    <xsl:number level="any" count="tei:note[@place=$Place]" from="tei:front"/>
-	  </xsl:when>
-	  <xsl:when test="ancestor::tei:back">
-	    <xsl:number level="any" count="tei:note[@place=$Place]" from="tei:back"/>
+	  <xsl:when test="$consecutiveFootnoteNumbers = 'true'">
+            <xsl:number level="any" count="tei:note[@place=$Place]"/>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <xsl:number level="any" count="tei:note[@place=$Place]" from="tei:body"/>
+            <xsl:choose>
+              <xsl:when test="ancestor::tei:front">
+                <xsl:number level="any" count="tei:note[@place=$Place]" from="tei:front"/>
+              </xsl:when>
+              <xsl:when test="ancestor::tei:back">
+                <xsl:number level="any" count="tei:note[@place=$Place]" from="tei:back"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:number level="any" count="tei:note[@place=$Place]" from="tei:body"/>
+              </xsl:otherwise>
+            </xsl:choose>
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
 
   <xd:doc>
     <xd:short>[html] How to label a note</xd:short>
@@ -1453,14 +1456,21 @@
 	  <xsl:value-of select="@place"/>
 	</xsl:variable>
 	<xsl:choose>
-	  <xsl:when test="ancestor::tei:front">
-	    <xsl:number level="any" count="tei:note[@place=$Place]" from="tei:front"/>
-	  </xsl:when>
-	  <xsl:when test="ancestor::tei:back">
-	    <xsl:number level="any" count="tei:note[@place=$Place]" from="tei:back"/>
+	  <xsl:when test="$consecutiveFootnoteNumbers = 'true'">
+            <xsl:number level="any" count="tei:note[@place=$Place]"/>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <xsl:number level="any" count="tei:note[@place=$Place]" from="tei:body"/>
+            <xsl:choose>
+              <xsl:when test="ancestor::tei:front">
+                <xsl:number level="any" count="tei:note[@place=$Place]" from="tei:front"/>
+              </xsl:when>
+              <xsl:when test="ancestor::tei:back">
+                <xsl:number level="any" count="tei:note[@place=$Place]" from="tei:back"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:number level="any" count="tei:note[@place=$Place]" from="tei:body"/>
+              </xsl:otherwise>
+            </xsl:choose>
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:otherwise>
