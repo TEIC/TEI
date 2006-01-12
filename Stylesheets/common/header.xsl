@@ -191,7 +191,7 @@
   </xsl:template>
 
   <xd:doc>
-    <xd:short>[common] </xd:short>
+    <xd:short>[common] Generate a title</xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template name="generateTitle">
@@ -211,7 +211,7 @@
   </xsl:template>
 
   <xd:doc>
-    <xd:short>[common] </xd:short>
+    <xd:short>[common] Generate sub title </xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template name="generateSubTitle">

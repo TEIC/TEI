@@ -1022,11 +1022,6 @@ $ID: requests a particular page
     <xd:short>[html] </xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
-  <xsl:template name="generateSubTitle"/>
-  <xd:doc>
-    <xd:short>[html] </xd:short>
-    <xd:detail>&#160;</xd:detail>
-  </xd:doc>
   <xsl:template name="generateUpLink">
     <xsl:variable name="myName">
       <xsl:value-of select="local-name(.)"/>
