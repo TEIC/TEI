@@ -178,27 +178,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements  tei:bibl/tei:title</xd:short>
-    <xd:detail>&#160;</xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:bibl/tei:title">
-    <xsl:choose>
-      <xsl:when test="@rend='plain'">
-        <xsl:value-of select="."/>
-      </xsl:when>
-      <xsl:when test="@level='a'">
-        <xsl:text>‘</xsl:text>
-        <xsl:value-of select="."/>
-        <xsl:text>’ </xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-        <i>
-          <xsl:value-of select="."/>
-        </i>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements  tei:biblScope</xd:short>
     <xd:detail>&#160;</xd:detail>
@@ -1284,15 +1264,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements  tei:title</xd:short>
-    <xd:detail>&#160;</xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:title">
-    <i>
-      <xsl:apply-templates/>
-    </i>
-  </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements  tei:title</xd:short>
     <xd:detail>&#160;</xd:detail>
@@ -1312,13 +1284,25 @@
     <xsl:apply-templates/>
   </xsl:template>
   <xd:doc>
-    <xd:short>Process elements  tei:title[@level='a']</xd:short>
+    <xd:short>Process element  tei:title</xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
-  <xsl:template match="tei:title[@level='a']">
-    <xsl:text>‘</xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>’</xsl:text>
+  <xsl:template match="tei:title">
+    <xsl:choose>
+      <xsl:when test="@rend='plain'">
+        <xsl:value-of select="."/>
+      </xsl:when>
+      <xsl:when test="@level='a'">
+        <xsl:text>‘</xsl:text>
+        <xsl:value-of select="."/>
+        <xsl:text>’ </xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <i>
+          <xsl:value-of select="."/>
+        </i>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:witList</xd:short>
