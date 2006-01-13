@@ -1,3 +1,4 @@
+<?oxygen RNGSchema="../../p5odds.rnc" type="compact"?>
 <!--
 Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
@@ -77,7 +78,9 @@ $Author$
     (section <ptr target="#SAAG"/>);</item>
     <item>to specify that different elements are
     <emph>alternatives</emph> to one another and to express
-    <emph>preferences</emph> among the alternatives (section <ptr target="#SAAT"/>);</item> <item>to associate segments of a text
+    <emph>preferences</emph> among the alternatives (section <ptr target="#SAAT"/>);</item>
+    <item>to store markup separately from the the data it describes (section <ptr target="#SASO"/>);</item>
+    <item>to associate segments of a text
     with interpretations or analyses of their significance (section
     <ptr target="#SAAN"/>).</item>
   </list></p>
@@ -620,9 +623,9 @@ both the source element and target element are in the same XML document.</p>
       >2B|^2B&hellip;</ref></egXML>
       <note type="cit" resp="sdb">Jon Bosak's XMLification of Moby
       Lexical Tools' plain text version of Hamlet. As of <date
-      value="2004-12-22"/>, the node xpath(/*[1]/*[8]/*[2]/*[25]/*[2])
+      value="2004-12-22"/>, the node xpath1(/*[1]/*[8]/*[2]/*[25]/*[2])
       (or, perhaps more usefully,
-      xpath(/PLAY[1]/ACT[3]/SCENE[1]/SPEECH[19]/LINE[1])) selects the
+      xpath1(/PLAY[1]/ACT[3]/SCENE[1]/SPEECH[19]/LINE[1])) selects the
       element <q><![CDATA[<LINE>To be, or not to be: that is the
       question:</LINE>]]></q>.</note>
       The  URI reference in this example points to an XML resource ostensibly
@@ -713,7 +716,7 @@ both the source element and target element are in the same XML document.</p>
       <p>In order to provide the greater pointer convenience, and the ability to point to
       textual ranges regardless of how they are marked-up, the TEI hes defined new
       XPointer schemes to be used within the XPointer Framework:<name
-      type="xpscheme">xpath</name>,<!-- xpath2 deleted until standardized <name
+      type="xpscheme">xpath1</name>,<!-- xpath2 deleted until standardized <name
       type="xpscheme">xpath2</name>, --> <name
       type="xpscheme">range</name>, <name
       type="xpscheme">string-range</name>, <name
@@ -726,28 +729,28 @@ both the source element and target element are in the same XML document.</p>
       writing, there is no current or scheduled activity at the W3C
       towards revising this draft or issuing it as a
       recommendation.</note></p>
-      <p>The <name type="xpscheme">xpath</name> scheme refers to the
+      <p>The <name type="xpscheme">xpath1</name> scheme refers to the
       existing XPath specification which is adopted without
       modification or extension.
-      <!-- The <name type="xpscheme">xpath</name> and <name
+      <!-- The <name type="xpscheme">xpath1</name> and <name
       type="xpscheme">xpath2</name> schemes reference existing
       specifications which are adopted without modification.-->
       The other five schemes introduce new facilities, but are simple
       enough that implementation should not be difficult.</p>
       <div4 type="subsubsection" xml:id="SATSXP">
-          <head>xpath(path)</head>
-          <p>The <name type="xpscheme">xpath</name> scheme locates a
+          <head>xpath1(path)</head>
+          <p>The <name type="xpscheme">xpath1</name> scheme locates a
           node or node set within an XML Information Set. The single
           argument <rs>path</rs> is an XPath path as defined in the
           <ref target="http://www.w3.org/TR/xpath">W3C XPath 1
           Recommendation</ref>. The node or node set resulting from
           evaluating the XPath is the reference of an address using
-          the <name type="xpscheme">xpath</name> scheme. For example,
+          the <name type="xpscheme">xpath1</name> scheme. For example,
           the following example selects the first paragraph of the <gi
           scheme="extreme">ftnote</gi> element with <att>id</att> of
           <val>fn6</val> of a paper that discusses XPointers. <egXML
-          xmlns="http://www.tei-c.org/ns/Examples"><ptr target="http://www.mulberrytech.com/Extreme/Proceedings/xml/2004/Thompson01/EML2004Thompson01.xml#xpath(//ftnote[@id='fn6']/para[1])"/></egXML></p>
-	  <!-- I tried "xpath(id(fn6)/para[1])" but it didn't work in
+          xmlns="http://www.tei-c.org/ns/Examples"><ptr target="http://www.mulberrytech.com/Extreme/Proceedings/xml/2004/Thompson01/EML2004Thompson01.xml#xpath1(//ftnote[@id='fn6']/para[1])"/></egXML></p>
+	  <!-- I tried "xpath1(id(fn6)/para[1])" but it didn't work in
 	       my implementations of XPath (jEdit, oXygen, IIRC) -Syd
 	       -->
         <p>When a URI reference is specified as the value of an
@@ -770,7 +773,7 @@ both the source element and target element are in the same XML document.</p>
         selecting an XML element or its contents where an
         <att>xml:id</att> is not present. The ability to use element
         type names (<soCalled>GI</soCalled>s) and attribute names and
-        values makes <name type="xpscheme">xpath</name> pointers more
+        values makes <name type="xpscheme">xpath1</name> pointers more
         robust than <name type="xpscheme">element</name> pointers,
         even if the designated dovument changes. For durability in the
         presence of editing, use of <att>xml:id</att> is always
@@ -784,7 +787,7 @@ both the source element and target element are in the same XML document.</p>
             <rs>path</rs> is an XPath 2.0 path as defined in the
             <ref target="http://www.w3.org/TR/xpath20/">W3C XPath 2
               Recommendation</ref>. The results of the xpath2() pointer scheme are treated exactly as the
-              results of an <name type="xpscheme">xpath</name> pointer scheme. </p>
+              results of an <name type="xpscheme">xpath1</name> pointer scheme. </p>
         </div4> -->
          <div4 type="subsubsection" xml:id="SATSLR">
           <head>left(pointer) and right(pointer)</head>
@@ -994,15 +997,15 @@ both the source element and target element are in the same XML document.</p>
       target="#HD54"/>; the follwoing example is discussed in more
       detail below in section <ptr target="#SACRWE"/>.
       <egXML xmlns="http://www.tei-c.org/ns/Examples"><refsDecl xml:id="biblical">
-   <cRefPattern matchPattern="(.+) (.+):(.+)" replacementPattern="#xpath(//div[@n='$1']/div[$2]/div[$3])">
+   <cRefPattern matchPattern="(.+) (.+):(.+)" replacementPattern="#xpath1(//div[@n='$1']/div[$2]/div[$3])">
     <p>This pointer pattern extracts and references the <q>book,</q>
       <q>chapter,</q> and <q>verse</q> parts of a biblical reference.</p>
    </cRefPattern>
-   <cRefPattern matchPattern="(.+) (.+)" replacementPattern="#xpath(//div[@n='$1']/div[$2])">
+   <cRefPattern matchPattern="(.+) (.+)" replacementPattern="#xpath1(//div[@n='$1']/div[$2])">
     <p>This pointer pattern extracts and references the <q>book</q> and
       <q>chapter</q> parts of a biblical reference.</p>
    </cRefPattern>
-   <cRefPattern matchPattern="(.+)" replacementPattern="#xpath(//div[@n='$1'])">
+   <cRefPattern matchPattern="(.+)" replacementPattern="#xpath1(//div[@n='$1'])">
     <p>This pointer pattern extracts and references just the <q>book</q>
       part of a biblical reference.</p>
    </cRefPattern>
@@ -1107,11 +1110,11 @@ both the source element and target element are in the same XML document.</p>
         substring would be <q>Matt</q>, the second <q>5</q>, and the
         third <q>7</q>. The application would then apply these
         substrings to the pattern
-        <code>#xpath(//div[@n='$1']/div[$2]/div[$3])</code>, producing
-        <code>#xpath(//div[@n='Matt']/div[5]/div[7])</code>. It would
+        <code>#xpath1(//div[@n='$1']/div[$2]/div[$3])</code>, producing
+        <code>#xpath1(//div[@n='Matt']/div[5]/div[7])</code>. It would
         append this to the <att>xml:base</att> in force, thus
         generating the complete URI Reference
-        <code>http://www.jph.org/resources/books/Bible.xml#xpath(//div[@n='Matt']/div[5]/div[7])</code>.
+        <code>http://www.jph.org/resources/books/Bible.xml#xpath1(//div[@n='Matt']/div[5]/div[7])</code>.
         </p>
         <p>If, however, the input string had been <q>Matt 5</q>, the
         first regular expression would not have matched. The
@@ -1119,17 +1122,17 @@ both the source element and target element are in the same XML document.</p>
         (.+)</code>, producing a successful match, and the matched
         substrings <q>Matt</q> and <q>5</q>. It would then have
         substituted those matched substrings into the pattern
-        <code>#xpath(//div[@n='$1']/div[$2])</code> to produce a
+        <code>#xpath1(//div[@n='$1']/div[$2])</code> to produce a
         fragment identifier, which when appended to the
         <att>xml:base</att> in force produces the absolute URI
         reference Reference
-        <code>http://www.jph.org/resources/books/Bible.xml#xpath(//div[@n='Matt']/div[5])</code>.</p>
+        <code>http://www.jph.org/resources/books/Bible.xml#xpath1(//div[@n='Matt']/div[5])</code>.</p>
         <p>If the input string had been <q>Matt</q>, neither the first
           nor the second regular expressions would have successfully
           matched. The application would have then tried the third,
           <code>(.+)</code>, producing the matched substring <q>Matt</q>,
           and the URI Reference
-          <code>http://www.jph.org/resources/books/Bible.xml#xpath(//div[@n='Matt'])</code>.</p>
+          <code>http://www.jph.org/resources/books/Bible.xml#xpath1(//div[@n='Matt'])</code>.</p>
         <p>It is an error to reference more matched substrings than
           are produced by the regular expression. For example:
           <egXML xmlns="http://www.tei-c.org/ns/Examples"><cRefPattern matchPattern="(.+) (.+):(.+)" replacementPattern="//div[@n='$1']/div[$2]/div[$3]/p[$4]"/></egXML>
@@ -1872,8 +1875,8 @@ best choice. For example, to indicate that the words
 <mentioned>Studies</mentioned> and <mentioned>Studiis</mentioned>
 correspond, two external pointers might be defined and aligned as
 follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><ptr xml:id="xt981" target="#string-range(xpath(id('e9806')),16,6)"/>
-<ptr xml:id="xt982" target="#string-range(xpath(id('l9806')),0,7)"/>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><ptr xml:id="xt981" target="#string-range(xpath1(id('e9806')),16,6)"/>
+<ptr xml:id="xt982" target="#string-range(xpath1(id('l9806')),0,7)"/>
 <link targets="#xt981 #xt982"/></egXML></p>
 </div3></div2>
 <div2 type="section" xml:id="SASY">
@@ -2385,13 +2388,13 @@ or <ptr target="#SATS"/>. The <att>xml:id</att> attributes of
     <p><q>And after that,</q> he continued, <q>do not be deceived by others.</q></p>
     <p><q>Yes, sir; yes, sir,</q> he replied.</p>
     <ab type="aggregation">
-      <ptr xml:id="rzuiq1" target="./#xpath(//div0[2]/div1[6]/p[1]/q[1])"/>
-      <ptr xml:id="rzuiq2" target="./#xpath(//div0[2]/div1[6]/p[2]/q[1])"/>
-      <ptr xml:id="rzuiq3" target="./#xpath(//div0[2]/div1[6]/p[3]/q[1])"/>
-      <ptr xml:id="rzuiq4" target="./#xpath(//div0[2]/div1[6]/p[4]/q[1])"/>
-      <ptr xml:id="rzuiq5" target="./#xpath(//div0[2]/div1[6]/p[5]/q[1])"/>
-      <ptr xml:id="rzuiq6" target="./#xpath(//div0[2]/div1[6]/p[5]/q[2])"/>
-      <ptr xml:id="rzuiq7" target="./#xpath(//div0[2]/div1[6]/p[6]/q[1])"/>
+      <ptr xml:id="rzuiq1" target="./#xpath1(//div0[2]/div1[6]/p[1]/q[1])"/>
+      <ptr xml:id="rzuiq2" target="./#xpath1(//div0[2]/div1[6]/p[2]/q[1])"/>
+      <ptr xml:id="rzuiq3" target="./#xpath1(//div0[2]/div1[6]/p[3]/q[1])"/>
+      <ptr xml:id="rzuiq4" target="./#xpath1(//div0[2]/div1[6]/p[4]/q[1])"/>
+      <ptr xml:id="rzuiq5" target="./#xpath1(//div0[2]/div1[6]/p[5]/q[1])"/>
+      <ptr xml:id="rzuiq6" target="./#xpath1(//div0[2]/div1[6]/p[5]/q[2])"/>
+      <ptr xml:id="rzuiq7" target="./#xpath1(//div0[2]/div1[6]/p[6]/q[1])"/>
       <joinGrp evaluate="one" result="q">
         <join targets="#rzuiq1 #rzuiq2 #rzuiq4 #rzuiq7">
          <desc>what Zui-Gan said</desc></join>
@@ -2415,7 +2418,7 @@ which its target is to be found, as in the following example:
 <!-- ... -->
 <xptr xml:id='RZUIQ1'
       doc='fazdoc'
-      target="./#xpath(//div0[2]/div1[6]/p[1]/q[1])"/>
+      target="./#xpath1(//div0[2]/div1[6]/p[1]/q[1])"/>
 <!-- ... -->]]></eg>
 <!-- deleted following example. nice though it is, it's too long -->
         <!-- and adds nothing to preceding ones  -->
@@ -2885,12 +2888,12 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
 </specGrp></p></div2>
 
 <div2 type="section" xml:id="SASO">
-<head>Stand-off Markup: markup stored separately from the data it describes</head>
+<head>Stand-off Markup</head>
       <div3 type="subsection">
 	<head>Introduction</head>
-	<p>Markup is said to be stand-off, or external, when the markup
-	  data is placed outside of the text it is meant to tag:
-	  before, after, or even outside it altogether. The markup
+	<p>Markup is said to be stand-off, or external, when the tags representing
+	  elements are placed outside of the text being marked up:
+	  elsewhere within the same file, or even outside it altogether. The markup
 	  therefore points to, rather than wraps, the relevant data
 	  content.</p>
 	<p>There are many reasons for using stand-off markup: the source
@@ -2900,54 +2903,77 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
           scheme may need to accomodate multiple hierarchical ambiguities, so that
           a single markup tree is not the most faithful representation of the
           source material.</p>
-	<p>This section describes the Guidelines' generic mechanism for expressing
+	<p>This section describes a generic mechanism for expressing
 	  <emph>all</emph> kinds of markup externally as stand-off tags, for use
           whenever it is appropriate.</p>
 	<p>The three major requirements this scheme for stand-off markup satisfies are
 	  <list>
-	    <item n="a">Any valid TEI markup can be either internal or
-	      external, </item>
-	    <item n="b">External markup can be internalized by
+	    <item n="a">any valid TEI markup can be either internal or
+	      external,</item>
+	    <item n="b">external markup can be internalized by
 	      applying it to the document content by either
 	      substituting the existing markup or adding to it,
 	      to form a valid TEI document, and</item>
 	    <item n="c">the external markup itself specifies whether
-	      an internalized document should obtained by substituting
+	      an internalized document is to be created by substituting
 	      the existing internal markup or by adding to
 	      it</item></list>.</p>
               
 	<p>Throughout this section the following terms will be systematically used in
-	specific senses: the <term>source document</term> is a document to which the
-	stand-off markup refers (a source document can be either XML or plain text);
-	there may be more than one source document. We call <term>internal</term>
-	markup that is already present in an XML source document. The adjectives
-	<term>external</term> or <term>stand-off</term> denote documents and markup
-	that are outside of the source document and point to it; the verb
-	<term>internalize</term> refers to the action of creating a new XML document
-	with external markup and data integrated with the source document and/or
-	markup; similarly, to <term>externalize</term> markup from a pre-existing XML
-	document, is to split it into two documents, an XML (external) document
-	containing some of the markup of the original document, and another (source)
-	XML document containing whatever text content and markup has not been
-	extracted into the stand-off document. If all markup has been externalized from
-	a document, the new source may be a plain text document.</p>
+	specific senses.
+		<list type="gloss">
+			<label>
+				<term>source document</term>
+			</label>
+			<item>a document to which the stand-off markup refers (a source document can be either XML or
+				plain text); there may be more than one source document.</item>
+			<label>
+				<term>internal markup</term>
+			</label>
+			<item>markup that is already present in an XML source document</item>
+			<label>
+				<term>stand-off markup</term>
+			</label>
+			<item>markup that is either outside of the source document and points in to it to the data it
+				describes, or alternatively is in another part of the source document and points elsewhere
+				within the document to the data it describes</item>
+			<label>
+				<term>external document</term>
+			</label>
+			<item>a document that contains stand-off markup that points to a different, source document</item>
+			<label>
+				<term>internalize</term>
+			</label>
+			<item>the action of creating a new XML document with external markup and data integrated with the
+				source document data, and possibly some source document markup as well</item>
+			<label>
+				<term>externalize</term>
+			</label>
+			<item>a process applied to markup from a pre-existing XML document, which splits it into two
+				documents, an XML (external) document containing some of the markup of the original document,
+				and another (source) XML document containing whatever text content and markup has not been
+				extracted into the stand-off document; if all markup has been externalized from a document, the
+				new source may be a plain text document</item>
+		</list>
+	</p>
                
       </div3>
       <div3 type="subsection">
 	<head>Overview of XInclude </head>
    <p>The basic notion of inclusion of 
-         virtual content is fully adequate to describe stand-off markup, and so the
-         guidelines make use of <ref
+         virtual content is fully adequate to describe stand-off markup, and so these
+         Guidelines recommend use of <ref
 	    target="http://www.w3.org/TR/xinclude/">XInclude</ref> as
 	  a way to specify virtual inclusion of content. <note place="foot">The version on which
 	    this text is based on is the <ref
 	      target="http://www.w3.org/TR/2004/REC-xinclude-20041220/">W3C
 	       Recommendation dated <date
 		value="2004-12-20">20 December
-		2004</date>.</ref>.</note> XInclude relies on <ref
+	       	2004</date>.</ref>.</note> XInclude relies on <ref
 	    target="http://www.w3.org/TR/xptr-framework/">XPointer schemes</ref>
-	  for the expression of the actual fragments of text to be
-	  internalized, just as the TEI pointing attributes do. Although
+	  to point to the actual fragments of text to be
+	  internalized; this is the same mechanism that TEI pointing attributes use (e.g., 
+   	the <att>target</att> attribute of <gi>ref</gi>). Although
 	  XInclude only requires support for the <ref
 	    target="http://www.w3.org/TR/xptr-element/"><code>element()</code></ref> 
 	  scheme of XPointer, this specification requires that all the
@@ -2956,14 +2982,14 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
 	    target="http://www.w3.org/TR/xptr-xpointer/"><code>xpointer()</code></ref> 
 	  scheme.</p>
           
-	<p>XInclude is a W3C standard to specify a syntax for the
+	<p>XInclude is a W3C recommendation which specifies a syntax for the
 	  inclusion within an XML document of data fragments placed in
 	  different resources. Included resources can be either plain
 	  text or XML. XInclude instructions within an XML document
 	  are meant to be replaced by a resource being pointed at by a
-	  URI, possibly including an XPointer for identifying the
+	  URI, possibly augmented by an XPointer that identifies the
 	  exact subresource to be included. Fallback content or
-	  resources can be specified in case of failure to fetch the
+	  resources can be specified in case of a failure to fetch the
 	  requested resource. XInclude defines a namespace
 	  (<mentioned>http://www.w3.org/2001/XInclude</mentioned>),
 	  which we will usually prefix with
@@ -2973,7 +2999,8 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
 	<p>The <gi>xi:include</gi> element uses the <ident
 	    type="attrName">href</ident> attribute to specify the
 	  location of the resource to be included; its value is an
-	  IURI containing, if necessary, an XPointer. Additionally, it
+	  IURI <!-- this is the only occurence of "IURI" in the Guidelines;
+	  does it need to be explained?, or is it an error?-->containing, if necessary, an XPointer. Additionally, it
 	  uses the <ident type="attrName">parse</ident> attribute
 	  (whose valid values are either <ident
 	    type="attrVal">text</ident> or <ident
@@ -2982,77 +3009,92 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
 	  <ident type="attrName">encoding</ident> attribute to provide
 	  a hint, when the included fragment is text, of the character
 	  encoding of the fragment. The <gi>xi:fallback</gi> element
-	  is required within an <gi>xi:include</gi> and specifies an
+	  is required within an <gi>xi:include</gi> and specifies
 	  alternative content to be used when the external resource,
 	  for any reason, cannot be fetched.</p>
           
-	<p>The current generation of XInclude  only requires one XPointer scheme,
-	  called <code>element()</code>, that can specify either bare
-	  names (elements with a specific <ident
-	    type="attrName">xml:id</ident> attribute) or child sequences
-	  (numerical sequences specifying the path onto the XML tree
-	  down to a specific subtree of XML content). Another scheme,
+	<p>XInclude currently only requires support for one XPointer scheme,
+	  called <code>element()</code>. As described in <ptr target="#SAES"/>, the
+		<code>element()</code> scheme that can be either a bare
+	  names (denoting an element with a specific <ident
+	    type="attrName">xml:id</ident> attribute) or a child sequence
+	  (a numerical sequence of child numbers specifying a path in the XML tree
+	  whose final step selects a specific subtree of XML content). Another scheme,
 	  <code>xpointer()</code>, has not been turned into a W3C
 	  recommendation yet, although it has been part of the
 	  XPointer drafts from the beginning. The <code>xpointer()</code>
-	  scheme defines two additional concepts, points and ranges,
-	  that can be used to specify sub-node fragments (e.g., a few
+	  scheme and the TEI schemes defined earlier (see <ptr target="#SATS"/>) add the concepts of points and
+          ranges, which can be used to specify sub-node fragments (e.g., a few
 	  words within a longer text node) or trans-node fragments
-	  (e.g., a longish text spanning across different branches of
+	  (e.g., a segment of text that spans across different branches of
 	  the overall XML tree).</p>
 
         </div3>
       <div3 type="subsection">
 	<head>Doing stand-off markup in TEI</head>
               <p>The operations of internalizing and externalizing markup are very useful
-         and practically important. XInclude processing as defined by the W3C performs the operation
-        of internalization of a source document into a stand-off document. TEI use of
+         and practically important. XInclude processing as defined by the W3C
+         <emph>is</emph> internalization of one or more source documents'
+        content into a stand-off document. TEI use of
         XInclude for stand-off markup enables use of XInclude-conformant sofware to
-        perform this useful operation. However, internalization
-        is not a clearly defined 
-        operation for
-        all stand-off files, because itthe structure of the internal and
+        perform this useful operation. However, internalization is not clearly defined 
+        for all stand-off files, because the structure of the internal and
         external markup trees may overlap. In particular, when an external markup
         document selects a range that overlaps partial
         elements in the source document, it is not clear how the semantics of
-        inclusion should work, since partial elements are not XML objects, because 
-        the overlapping tags would not be well-formed with all markup present 
-         in a single document. This kind of overlap is one reason that stand-off 
-         markup is needed. XInclude defines a semantics for this case that involves
+        internalization (inclusion) should work, since partial elements are not
+        XML objects. <note type="foot">This corresponds to the observation that 
+         overlapping XML tags reflecting a textual version of such an inclusion
+         would not even be well-formed XML. This kind of overlap in textual
+         phenomena of interest in fact the major reason that stand-off 
+         markup is needed.</note>
+         XInclude defines a semantics for this case that involves
          only complete elements.</p>
          
-         <p>In the case of a range selection which partially
-         overlaps a number of elements in the source, XInclude specifies that
-         partially overlapping elements should be included as well
+         <p>When a range selection partially
+         overlaps a number of elements in a source document, XInclude specifies that
+         the partially overlapping elements should be included as well
          as all completely overlapping elements and characters (partially overlapping
          characters are not possible). The effect of this is that elements that
-         straddle the start or end of a selected range may be included as wrappers for
-         those of their children that are selected by the range. For example, given
-         the following source document:
+         straddle the start or end of a selected range will be included as wrappers for
+         those of their children that are completely or partially selected by the
+         range. For example, given the following source document:
                    
-        <eg><![CDATA[        <body>
+        <eg><![CDATA[
+        <body>
            <p xml:id="par1">home, <emph>home</emph> on Brokeback Mountain.</p>
            <p xml:id="par1">That was the <emph>song</emph> that I sang</p>
-           </body>]]></eg>
+           </body>]]>
+        </eg>
         and the following external document:
-        <eg><![CDATA[           <body xmlns:xi="http://www.w3.org/2001/XInclude">
-           <div><xi:include href="example1.xml"
-                  xpointer="range(xpath(id(par1)//emph),xpath(id(par2)//emph))"/>
-          </div>
-          </body>]]></eg>
-     
+        <eg><![CDATA[
+           <body xmlns:xi="http://www.w3.org/2001/XInclude">
+              <div><xi:include href="example1.xml"
+                  xpointer="range(xpath1(id(par1)//emph),xpath1(id(par2)//emph))"/>
+              </div>
+          </body>]]>
+        </eg>
         the resulting document after XInclude processing of this external document
         would be:
-        <eg><![CDATA[            <body xmlns:xi="http://www.w3.org/2001/XInclude">
+        <!-- DGD: I abandoned the egXML, because the namespaces
+        and namespace attributes were vanishing.
+        I hate the fact that the eg and the egXML have different backgrounds, and wish
+        there were a way to make this work as parsed XML, with the non-TEI stuff and
+        the namespace attributes preserved, etc.
+        The downside of pretty-printing, I guess.
+        -->
+        <eg><![CDATA[
+            <body xmlns:xi="http://www.w3.org/2001/XInclude">
             <div>
                <p xml:id="par1"><emph>home</emph> on Brokeback Mountain.</p>
                <p xml:id="par2">That was the <emph>song</emph></p>    
             </div>
-            </body>]]></eg>
+            </body>]]>
+        </eg>
 
-        The result of the inclusion is two paragraph elements in the result, where the
-        original range designated in the the external document originally overlapped
-        two paragraph fragments in the source document. This ensures that XInclude can
+        The result of the inclusion is two paragraph elements, while the
+        original range designated in the the source document overlapped
+        two paragraph fragments. This semantics ensures that XInclude can
         guarantee the creation of controllable, well-formed XML documents, in when
         encoders are using a powerful pointing mechanism that does not respect the
         hierarchical structure of an XML document. While this is a good way to ensure
@@ -3062,8 +3104,9 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
         </p>
         
         <p>Overlapping markup cannot be represented by a source document combined with
-        an external document using XInclude to impose overlapping tags. When
-        overlapping hierarchies need to be represented in a single document, each
+        an external document using XInclude to impose elements that overlap
+        those in the original document. When
+        overlapping hierarchies need to be represented for a single document, each
         hierarchy must be represented by a separate set of XInclude tags pointing to a
         common source document. This sort of structure corresponds to common practice
         in linguistic text corpus work. In such corpora, each potentially overlapping
@@ -3235,21 +3278,30 @@ chapters<!-- , particularly in sections <ptr target="#AILA"/>, <ptr target="#FSF
 </div2>
 <div2>
   <head>Reference Section</head>
-  <p>This chapter documents the following two modules:
+<p>The module documented by this chapter makes available the following components:
   <moduleSpec xml:id="DSA" ident="linking">
     <altIdent type="FPI">Linking, Segmentation, and Alignment</altIdent>
     <desc>Linking, segmentation and alignment</desc>
   </moduleSpec>
-  <moduleSpec xml:id="DSAENTS" type="decls" ident="linking-decl">
+<!--  <moduleSpec xml:id="DSAENTS" type="decls" ident="linking-decl">
     <altIdent type="FPI">Class declarations for Linking, Segmentation, and Alignment</altIdent>
     <desc>Global attributes for the TEI.linking tag set</desc>
-  </moduleSpec><!--publicID:  -//TEI P5//ENTITIES Element Classes for Linking, Segmentation, and Alignment//EN-->
-  </p>
-  <p>Here is an overview of the declarations documented by this chapter:
+  </moduleSpec>
+-->
+The selection and combination of modules to form a TEI schema is described in
+<ptr target="#STIN"/>.
+</p>
+<p>The module is organized as follows:
   <specGrp>
     &cllink.odd;
     &pointer.odd;
     &ptrgroup.odd;
+
+<specGrpRef target="#DSAPT"/>
+<specGrpRef target="#DSASA"/>
+<specGrpRef target="#DSASYMP"/>
+<specGrpRef target="#DSAAG"/>
+<specGrpRef target="#DSAAT"/>
   </specGrp>
   </p>
 </div2>
