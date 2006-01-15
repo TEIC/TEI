@@ -48,7 +48,7 @@
   </xd:doc>
   <xsl:template name="generateEndLink">
     <xsl:param name="where"/>
-    <xsl:apply-templates select="$where"/>
+    <xsl:value-of select="$where"/>
   </xsl:template>
   <xd:doc>
     <xd:short>[fo] </xd:short>

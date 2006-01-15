@@ -1428,7 +1428,7 @@
       </xsl:attribute>
       <xsl:variable name="Number">
         <xsl:if test="$numberHeadings='true' and $numberHeadingsDepth &gt; $level">
-          <xsl:call-template name="calculateNumber,">
+          <xsl:call-template name="calculateNumber">
             <xsl:with-param name="numbersuffix" select="$tocNumberSuffix"/>
           </xsl:call-template>
         </xsl:if>

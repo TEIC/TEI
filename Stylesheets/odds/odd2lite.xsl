@@ -975,7 +975,7 @@
   
   <xsl:template name="generateEndLink">
     <xsl:param name="where"/>
-    <xsl:apply-templates select="$where"/>
+    <xsl:value-of select="$where"/>
   </xsl:template>
   
   <xsl:template name="processSchemaFragment">
