@@ -477,7 +477,7 @@
 	  <xsl:value-of select="@url"/>
 	</xsl:when>
 	<xsl:when test="@entity">
-	  <xsl:value-of select="@entity"/>
+	  <xsl:value-of select="unparsed-entity-uri(@entity)"/>
 	</xsl:when>
       </xsl:choose>
     </xsl:variable>
