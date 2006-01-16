@@ -287,6 +287,9 @@
     \begin{enumerate}<xsl:apply-templates/>
     \end{enumerate}
   </xsl:when>
+  <xsl:when test="@type='runin'">
+    <xsl:apply-templates select="tei:item" mode="runin"/>
+  </xsl:when>
   <xsl:otherwise>
     \begin{itemize}<xsl:apply-templates/>
     \end{itemize}
