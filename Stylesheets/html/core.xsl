@@ -521,13 +521,7 @@
       <xsl:apply-templates/>
     </li>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements  tei:item</xd:short>
-    <xd:detail>&#160;</xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:item" mode="runin">
-  • <xsl:apply-templates/> 
-</xsl:template>
+
   <xd:doc>
     <xd:short>Process elements  tei:item</xd:short>
     <xd:detail>&#160;</xd:detail>

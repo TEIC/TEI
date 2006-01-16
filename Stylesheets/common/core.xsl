@@ -61,6 +61,15 @@
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:corr"/>
+
+  <xd:doc>
+    <xd:short>Process tei:item in runin mode</xd:short>
+    <xd:detail>&#160;</xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:item" mode="runin">
+    <xsl:text> • </xsl:text>
+  <xsl:apply-templates/> 
+</xsl:template>
  
 
 </xsl:stylesheet>

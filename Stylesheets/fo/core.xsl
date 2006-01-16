@@ -501,10 +501,19 @@
         <xsl:for-each select="tei:head"><xsl:apply-templates/></xsl:for-each>
       </fo:block>
     </xsl:if>
-    <fo:list-block>
-      <xsl:call-template name="setListIndents"/>
-      <xsl:apply-templates/>
-    </fo:list-block>
+    <xsl:choose>
+      <xsl:when test="@type='runin'">
+        <fo:block>
+          <xsl:apply-templates select="tei:item" mode="runin"/>
+        </fo:block>
+      </xsl:when>
+      <xsl:otherwise>
+	<fo:list-block>
+	  <xsl:call-template name="setListIndents"/>
+	  <xsl:apply-templates/>
+	</fo:list-block>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
 <xd:doc>
