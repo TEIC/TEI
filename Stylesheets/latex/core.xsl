@@ -191,8 +191,8 @@
       <xsl:when test="@rend='sc'">textsc</xsl:when>
       <xsl:when test="@rend='plain'">textrm</xsl:when>
       <xsl:when test="@rend='quoted'">textquoted</xsl:when>
-      <xsl:when test="@rend='sub'">textsuperscript</xsl:when>
-      <xsl:when test="@rend='sup'">textsubscript</xsl:when>
+      <xsl:when test="@rend='sup'">textsuperscript</xsl:when>
+      <xsl:when test="@rend='sub'">textsubscript</xsl:when>
       <xsl:when test="@rend='important'">textbf</xsl:when>
       <xsl:when test="@rend='ul'">uline</xsl:when>
       <xsl:when test="@rend='overbar'">textoverbar</xsl:when>
