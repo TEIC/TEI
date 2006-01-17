@@ -129,6 +129,10 @@ capable of dealing with UTF-8 directly.
 \uc@dclc{10101}{default}{\}}
 </xsl:if>
 \DeclareTextSymbol{\textpi}{OML}{25}
+\def\textsubscript#1{%
+  \@textsubscript{\selectfont#1}}
+\def\@textsubscript#1{%
+  {\m@th\ensuremath{_{\mbox{\fontsize\sf@size\z@#1}}}}}
 \def\textquoted#1{`#1'}
 \def\textcal#1{\ensuremath{\mathcal{#1}}}
 \def\textsmall#1{{\small #1}}
