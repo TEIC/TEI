@@ -263,7 +263,7 @@
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:lb">
-<xsl:text>\newline </xsl:text>
+<xsl:text>{&#160;}\newline </xsl:text>
 </xsl:template>
   
 <xd:doc>
@@ -275,6 +275,7 @@
     \centerline{<xsl:for-each select="tei:head"><xsl:apply-templates/></xsl:for-each>}
   </xsl:if>
 <xsl:choose>
+  <xsl:when test="not(tei:item)"/>
   <xsl:when test="@type='gloss'">
     \begin{description}<xsl:apply-templates mode="gloss" select="tei:item"/>
     \end{description}
