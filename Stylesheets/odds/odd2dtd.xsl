@@ -353,7 +353,7 @@
     <xsl:call-template name="copyright"/>
     <xsl:text>&#10;--&gt;&#10;</xsl:text>
   </xsl:if>
-  <xsl:if test="not($nsPrefix='')">
+  <xsl:if test="$parameterize='true'">
     <xsl:text>&lt;!ENTITY % NS '</xsl:text>
     <xsl:value-of select="$nsPrefix"/>
     <xsl:text>' &gt;&#10;</xsl:text>
@@ -431,8 +431,8 @@
       <xsl:text>&lt;!ENTITY % n.</xsl:text>
       <xsl:value-of select="@ident"/>
       <xsl:text> "</xsl:text>
-      <xsl:if test="not($nsPrefix='')">
-	<xsl:text> "%NS;</xsl:text>
+      <xsl:if test="$parameterize='true'">
+	<xsl:text>%NS;</xsl:text>
       </xsl:if>
       <xsl:choose>
 	<xsl:when test="tei:altIdent">
@@ -819,13 +819,14 @@
 	</xsl:when>
 	<xsl:when test="key('ELEMENTS',@name)">
 	  <xsl:for-each select="key('ELEMENTS',@name)">
-	    <xsl:if test="$parameterize='true'">
-	      <xsl:text>%n.</xsl:text>
-	    </xsl:if>
-	    <xsl:value-of select="@ident"/>
-	    <xsl:if test="$parameterize='true'">
-	      <xsl:text>;</xsl:text>
-	    </xsl:if>
+	    <xsl:choose>
+	      <xsl:when test="tei:altIdent">
+		<xsl:value-of select="normalize-space(tei:altIdent)"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:value-of select="@ident"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
 	  </xsl:for-each>
 	</xsl:when>
       </xsl:choose>
@@ -839,9 +840,9 @@
       <xsl:text>;</xsl:text>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:text></xsl:text>
+      <xsl:text>%n.</xsl:text>
       <xsl:value-of select="@name"/>   
-      <xsl:text></xsl:text>
+      <xsl:text>;</xsl:text>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:variable>
