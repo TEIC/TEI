@@ -252,6 +252,13 @@
       <xsl:value-of select="@ident"/></dt>
       <dd>
         <xsl:apply-templates select="." mode="tangle"/>
+	<xsl:text>(</xsl:text>
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param  name="word">Members</xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:text>: </xsl:text>
+	  <xsl:call-template name="generateMembers"/>
+	<xsl:text>)</xsl:text>
       </dd>
     </xsl:if>
   </xsl:template>
@@ -787,6 +794,7 @@
       <xsl:apply-templates select="tei:gloss" mode="doc"/>
       <xsl:apply-templates select="tei:desc" mode="doc"/>
       <ul>
+	<xsl:if test="key('ElementModule',@ident)">
 	<li>
 	  <xsl:call-template name="i18n">
 	    <xsl:with-param name="word">Elements defined</xsl:with-param>
@@ -798,6 +806,8 @@
 	    <xsl:text> </xsl:text>
 	  </xsl:for-each>
 	</li>
+	</xsl:if>
+	<xsl:if test="key('ClassModule',@ident)">
 	<li>
 	  <xsl:call-template name="i18n">
 	    <xsl:with-param name="word">Classes defined</xsl:with-param>
@@ -808,18 +818,21 @@
 	    </xsl:call-template>
 	    <xsl:text> </xsl:text>
 	  </xsl:for-each>
-      </li>
-      <li>
-	<xsl:call-template name="i18n">
-	  <xsl:with-param name="word">Macros defined</xsl:with-param>
-	  </xsl:call-template>:
-	  <xsl:for-each select="key('MacroModule',@ident)">
-	  <xsl:call-template name="linkTogether">
-	    <xsl:with-param name="name" select="@ident"/>
-	  </xsl:call-template>
-	  <xsl:text> </xsl:text>
-	</xsl:for-each>
-      </li>
+	</li>
+	</xsl:if>
+	<xsl:if test="key('MacroModule',@ident)">
+	  <li>
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">Macros defined</xsl:with-param>
+	      </xsl:call-template>:
+	      <xsl:for-each select="key('MacroModule',@ident)">
+		<xsl:call-template name="linkTogether">
+		  <xsl:with-param name="name" select="@ident"/>
+		</xsl:call-template>
+		<xsl:text> </xsl:text>
+	      </xsl:for-each>
+	  </li>
+	</xsl:if>
       </ul>
       <hr/>
     </p>
