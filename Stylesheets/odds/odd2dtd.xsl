@@ -345,16 +345,17 @@
 </xsl:template>
 
 <xsl:template name="schemaOut">
-  <xsl:text>&lt;!ENTITY % NS '</xsl:text>
-  <xsl:value-of select="$nsPrefix"/>
-  <xsl:text>' &gt;&#10;</xsl:text>
-  <xsl:call-template name="NameList"/>
   <xsl:if test="$TEIC='true'">
     <xsl:text>&lt;!-- TEI P5 DTD. Generated </xsl:text>
     <xsl:value-of select="edate:date-time()"/>
     <xsl:call-template name="copyright"/>
     <xsl:text>&#10;--&gt;&#10;</xsl:text>
   </xsl:if>
+  <xsl:text>&lt;!ENTITY % NS '</xsl:text>
+  <xsl:value-of select="$nsPrefix"/>
+  <xsl:text>' &gt;&#10;</xsl:text>
+
+  <xsl:call-template name="NameList"/>
 
   <xsl:text>&#10;&lt;!-- start datatypes --&gt;&#10;</xsl:text>
   <xsl:for-each select="key('DATATYPES',1)">
@@ -836,9 +837,9 @@
       <xsl:text>;</xsl:text>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:text>%n.</xsl:text>
+      <xsl:text></xsl:text>
       <xsl:value-of select="@name"/>   
-      <xsl:text>;</xsl:text>
+      <xsl:text></xsl:text>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:variable>
