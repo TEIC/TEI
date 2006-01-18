@@ -110,6 +110,9 @@
 	  <xsl:call-template name="dtdComment">
 	    <xsl:with-param name="text">list of element names</xsl:with-param>
 	  </xsl:call-template>
+	  <xsl:text>&lt;!ENTITY % NS '</xsl:text>
+	  <xsl:value-of select="$nsPrefix"/>
+	  <xsl:text>' &gt;&#10;</xsl:text>
 	  <xsl:call-template name="NameList"/>
 	  <xsl:call-template name="datatypeMacros"/>
 	  <xsl:if test="$TEIC='true'">
