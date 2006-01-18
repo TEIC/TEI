@@ -110,10 +110,12 @@
 	  <xsl:call-template name="dtdComment">
 	    <xsl:with-param name="text">list of element names</xsl:with-param>
 	  </xsl:call-template>
-	  <xsl:text>&lt;!ENTITY % NS '</xsl:text>
-	  <xsl:value-of select="$nsPrefix"/>
-	  <xsl:text>' &gt;&#10;</xsl:text>
-	  <xsl:call-template name="NameList"/>
+	  <xsl:if test="$parameterize='true'">
+	    <xsl:text>&lt;!ENTITY % NS '</xsl:text>
+	    <xsl:value-of select="$nsPrefix"/>
+	    <xsl:text>' &gt;&#10;</xsl:text>
+	    <xsl:call-template name="NameList"/>
+	  </xsl:if>
 	  <xsl:call-template name="datatypeMacros"/>
 	  <xsl:if test="$TEIC='true'">
 	    <xsl:call-template name="omissability"/>
@@ -351,12 +353,12 @@
     <xsl:call-template name="copyright"/>
     <xsl:text>&#10;--&gt;&#10;</xsl:text>
   </xsl:if>
-  <xsl:text>&lt;!ENTITY % NS '</xsl:text>
-  <xsl:value-of select="$nsPrefix"/>
-  <xsl:text>' &gt;&#10;</xsl:text>
-
-  <xsl:call-template name="NameList"/>
-
+  <xsl:if test="not($nsPrefix='')">
+    <xsl:text>&lt;!ENTITY % NS '</xsl:text>
+    <xsl:value-of select="$nsPrefix"/>
+    <xsl:text>' &gt;&#10;</xsl:text>
+    <xsl:call-template name="NameList"/>
+  </xsl:if>
   <xsl:text>&#10;&lt;!-- start datatypes --&gt;&#10;</xsl:text>
   <xsl:for-each select="key('DATATYPES',1)">
     <xsl:apply-templates select="." mode="tangle"/>
@@ -428,7 +430,10 @@
       <ident id="{@ident}"/>
       <xsl:text>&lt;!ENTITY % n.</xsl:text>
       <xsl:value-of select="@ident"/>
-      <xsl:text> "%NS;</xsl:text>
+      <xsl:text> "</xsl:text>
+      <xsl:if test="not($nsPrefix='')">
+	<xsl:text> "%NS;</xsl:text>
+      </xsl:if>
       <xsl:choose>
 	<xsl:when test="tei:altIdent">
 	  <xsl:value-of select="tei:altIdent"/>
@@ -814,16 +819,13 @@
 	</xsl:when>
 	<xsl:when test="key('ELEMENTS',@name)">
 	  <xsl:for-each select="key('ELEMENTS',@name)">
-	    <xsl:text>%n.</xsl:text>
-	    <xsl:choose>
-	      <xsl:when test="tei:altIdent">
-		<xsl:value-of select="normalize-space(tei:altIdent)"/>
-	      </xsl:when>
-	      <xsl:otherwise>
-		<xsl:value-of select="@ident"/>
-	      </xsl:otherwise>
-	    </xsl:choose>
-	    <xsl:text>;</xsl:text>
+	    <xsl:if test="$parameterize='true'">
+	      <xsl:text>%n.</xsl:text>
+	    </xsl:if>
+	    <xsl:value-of select="@ident"/>
+	    <xsl:if test="$parameterize='true'">
+	      <xsl:text>;</xsl:text>
+	    </xsl:if>
 	  </xsl:for-each>
 	</xsl:when>
       </xsl:choose>
@@ -1223,9 +1225,13 @@
 		</xsl:choose>
 	      </xsl:when>
 	      <xsl:when test="self::tei:elementSpec">
+		<xsl:if test="$parameterize='true'">
 		  <xsl:text>%n.</xsl:text>
-		  <xsl:value-of select="@ident"/>
+		</xsl:if>
+		<xsl:value-of select="@ident"/>
+		<xsl:if test="$parameterize='true'">
 		  <xsl:text>;</xsl:text>
+		</xsl:if>
 	      </xsl:when>
 	      <xsl:otherwise>
 		<xsl:value-of select="@ident"/>
