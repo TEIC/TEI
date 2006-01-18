@@ -179,7 +179,7 @@ element. A running XML system, such as a validating editor, may use
 this specification in several different ways:
 
 <list>
-<item>the ODD specification may be automatically processed to generate
+<item>the ODD specification may be processed to generate
 a schema document in whichever schema language the editor
 supports</item>
 <item>for an editor using DTD language, a DTD subset declaration
@@ -208,7 +208,7 @@ look like this:
   <moduleRef key="tei"/>
   <moduleRef key="header"/>
   <moduleRef key="core"/>
-  <moduleRef key="structure"/>
+  <moduleRef key="textstructure"/>
 </schemaSpec>
 </egXML></p>
 <p>This schema specification contains references to each of the four
@@ -235,10 +235,10 @@ schema with the given start point. </p>
 <p>The same effect might be obtained in a DTD processing environment
 by prefixing the document with a <term>DOCTYPE declaration</term> like the following:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI
-PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei2.dtd" [
+PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei.dtd" [
       <!ENTITY % TEI.header 'INCLUDE' >
       <!ENTITY % TEI.core 'INCLUDE' >
-      <!ENTITY % TEI.structure 'INCLUDE' >
+      <!ENTITY % TEI.textstructure 'INCLUDE' >
 ]>]]></egXML>
 This uses an indirect method of nominating the DTD schema fragments
 from which the DTD is to be constructed, based on the use of parameter
@@ -265,7 +265,7 @@ scenes in a play</item>
 <item>when the text moves back and forth among forms not between
 sections but within a single section:  e.g. mixed prose-and-verse forms
 like many pastorals or like some portions of the Poetic Edda</item></list></p>
-<p>The TEI DTD provides the following mechanisms to handle these cases:
+<p>The TEI provides the following mechanisms to handle these cases:
 <list type="bullets">
 <item>a definition of a corpus or collection as a series of
 <gi>TEI</gi>
@@ -274,7 +274,7 @@ documents, sharing a common TEI header (see chapter <ptr target="#CC"/>)</item>
 group or several possibly nested groups of collected texts,
 themselves possibly composite (see section <ptr target="#DSGRP"/>)</item>
 <item>a notion of <term>embedded text</term>
-which allows one text to be embedded within another (that is,
+which allows one text to be embedded within another (that gi,
 <gi>text</gi> is defined as a component-level element, as described
 briefly at the conclusion of section <ptr target="#DSGRP"/>)</item></list></p>
 <p>The following element specification for example allows for any mixture of
@@ -284,7 +284,7 @@ the low level structural tags defined in the prose, drama and dictionary
   <moduleRef key="tei"/>
   <moduleRef key="header"/>
   <moduleRef key="core"/>
-  <moduleRef key="structure"/>
+  <moduleRef key="textstructure"/>
   <moduleRef key="drama"/>
   <moduleRef key="dictionaries"/>
   <!-- Structurally, Moby Dick is not your
