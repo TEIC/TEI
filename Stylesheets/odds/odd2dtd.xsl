@@ -1233,6 +1233,11 @@
 		  <xsl:text>;</xsl:text>
 		</xsl:if>
 	      </xsl:when>
+	      <xsl:when test="self::tei:classSpec">
+		<xsl:text>%</xsl:text>
+		<xsl:value-of select="@ident"/>
+		<xsl:text>;</xsl:text>
+	      </xsl:when>
 	      <xsl:otherwise>
 		<xsl:value-of select="@ident"/>
 	      </xsl:otherwise>
