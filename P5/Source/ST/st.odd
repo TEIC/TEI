@@ -76,13 +76,13 @@ described in chapter <ptr target="#MD"/>. </p>
 <p>In particular, the infrastructure module provides the following
 components of the TEI encoding scheme:
 <list>
-<item>definition of all <term>datatypes</term> used to constrain the
-range of legal values for TEI attributes (section <ptr
-target="#DTYPES"/>)</item>
 <item>declarations for all 
 <term>element classes</term> used to define groups of elements and
 their characteristics (section <ptr target="#STEC"/>)</item>
-<item>definition of all <term>macros</term> used to express some
+<item>definition of the <term>datatypes</term> used to constrain the
+range of legal values for TEI attributes (section <ptr
+target="#DTYPES"/>)</item>
+<item>definition of other <term>macros</term> used to express some
 commonly used content models (section <ptr target="#STmacros"/>)</item>
 </list>
 </p>
@@ -164,19 +164,25 @@ current release of the Guidelines:
 
 <div2 xml:id="STIN"><head>Defining a TEI schema</head>
 
-<p>To determine that an XML document is valid (as opposed to
-merely well-formed), its structure must be checked against a
-schema. For a valid TEI document, this schema must be a conformant TEI
-schema, as further defined in chapter <ptr target="#CF"/>.  Local
-systems may allow their schema or DTD to be implicit, but for
-interchange purposes the schema associated with a document
-<emph>must</emph> be made explicit. </p>
+<p>To determine that an XML document is valid (as opposed to merely
+well-formed), its structure must be checked against a schema, as
+discussed in chapter <ptr target="SG"/>. For a valid TEI document,
+this schema must be a conformant TEI schema, as further defined in
+chapter <ptr target="#CF"/>.  Local systems may allow their schema or
+DTD to be implicit, but for interchange purposes the schema associated
+with a document <emph>must</emph> be made explicit. </p>
 
-<p>As previously noted, the TEI provides an application independent
+<p>A TEI-conformant schema is a specific combination of TEI modules, possibly
+also including additional declarations that add or
+change the element and attribute declarations contained by each
+module. The TEI provides an application-independent
 way of specifying the components of a TEI schema by means of the
 <gi>schemaSpec</gi> element defined in chapter <ptr target="#TD"/>
-element. A running XML system, such as a validating editor, may use
-this specification in several different ways:
+element, but it may also be supplied using schema definition
+mechanisms specific to a particular schema language. The process of
+assembling a usable schema, which a running
+XML system such as a validating editor might use, may thus be carried
+out in several different ways:
 
 <list>
 <item>the ODD specification may be processed to generate
@@ -270,12 +276,15 @@ like many pastorals or like some portions of the Poetic Edda</item></list></p>
 <item>a definition of a corpus or collection as a series of
 <gi>TEI</gi>
 documents, sharing a common TEI header (see chapter <ptr target="#CC"/>)</item>
-<item>a definition of composite texts which comprise front matter, a
-group or several possibly nested groups of collected texts,
+<item>a definition of composite texts which combine optional front and
+backmatter with a
+group of collected texts,
 themselves possibly composite (see section <ptr target="#DSGRP"/>)</item>
 <item>a notion of <term>embedded text</term>
-which allows one text to be embedded within another (that gi,
-<gi>text</gi> is defined as a component-level element, as described
+which allows one narrative to be embedded within another: this is
+accomplished by defining the <gi>text</gi> element to be a member of
+the class of elements which can appear within or between text
+components such as paragraphs, as described
 briefly at the conclusion of section <ptr target="#DSGRP"/>)</item></list></p>
 <p>The following element specification for example allows for any mixture of
 the low level structural tags defined in the prose, drama and dictionary
@@ -306,7 +315,7 @@ define other global attributes; these are documented in the appropriate
 chapters of Part III and Part IV.  See also section <ptr target="#STECAT"/>.
  </p>
 <p>Any TEI element may be given values for <att>xml:id</att>, <att>n</att>,
-<att>xml:lang</att>, <att>rend</att>, or <att>TEIform</att>, simply by
+<att>xml:lang</att>, <att>rend</att>, simply by
 specifying values for these attributes.
 The following two examples convey the same information about the text:
 that the material transcribed occurs within a <gi>p</gi> element
@@ -703,12 +712,11 @@ to express two distinct kinds of commonality among elements.  The
 elements of a class may share some set of attributes, or they may
 appear in the same locations in a content model.  A class is known as
 an <term>attribute class</term> if its members share attributes, and
-as an <term>model class</term> if its members appear at the same
-locations in the content models of other TEI elements. In either case,
-an element is said to <term>inherit</term> properties from any classes
-of which it is a member.  Classes may have subclasses and
-superclasses, and the properties of a superclass are inherited by
-all members of its subclasses.
+as a <term>model class</term> if its members appear in the same
+locations. In either case, an element is said to <term>inherit</term>
+properties from any classes of which it is a member.  Classes may have
+subclasses and superclasses, and the properties of a superclass are
+inherited by all members of its subclasses.
  </p>
 
 <p>In the RelaxNG fragments which express the TEI scheme, attribute
@@ -721,7 +729,11 @@ used to implement the class system.
 <p>In both cases, the <ident type="module">tei</ident> module provides
 an appropriate initial declaration for the class, so that it can
 subsequently be referenced, either by a subclass, or by someone
-wishing to extend the class with a new element. </p>
+wishing to extend the class with a new element. In the TEI DTD
+fragments, each class is fully defined by its associated parameter
+entity declaration; in the RelaxNG schema fragment, each class is
+incrementally defined as each element declaration modifies the initial
+pattern provided by the TEI infrastructure module.</p>
 
 <p>This section describes the major element classes of each type.
  </p>
@@ -821,10 +833,10 @@ only the three attributes first mentioned. </p>
 </specGrp>
 
 
-<p>In RelaxNG schema fragments, all attribute classes are defined as named
-patterns, as shown above. For each class, one pattern combining the
-class name with the suffix <code>.attributes</code> is defined, and
-for each attribute supplied by  membership in the class a further
+<p>In RelaxNG schema fragments, all attribute classes are defined as
+named patterns, as shown above. For each class, one pattern combining
+the class name with the suffix <code>.attributes</code> is defined,
+and for each attribute supplied by membership in the class a further
 pattern is defined combining the class name, the string
 <code>attribute</code> and the attribute name. Thus, the class <ident
 type="class">att.naming</ident> is implemented using the pattern
@@ -833,6 +845,7 @@ a reference to the pattern <ident
 type="pattern">att.naming.attribute.key</ident>. The attribute
 <att>key</att> supplied by the class is declared using this
 pattern. </p>
+
 <p>Members of the class inherit its definition by referring to this
 pattern:
 <eg><![CDATA[
