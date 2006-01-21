@@ -17,20 +17,4 @@ return
   </Attributes>
 </Object>
 }
-{
-let $module := request:request-parameter("module", "")
-for $c in collection("/db/TEI")//(tei:elementSpec|tei:classSpec)[@module=concat($module,'-decl')]
-return
-<Object>
-  <Type>{name($c)}</Type>
-  <Name>{data($c/@ident)}</Name>
-  <Attributes>
-  {
-for $att in $c/tei:attList//tei:attDef
-return
-    <attribute>{data($att/@ident)}</attribute>
-  }
-  </Attributes>
-</Object>
-}
 </List>

@@ -16,7 +16,14 @@ return
     {$a/@usage}
     {data($a/@ident)}</name>
     <default>{data($a/tei:defaultVal)}</default>
-    <datatype>{$a/tei:datatype/*}</datatype>
+    <datatype>{
+    if (tei:valList[@type='closed'])
+    then
+      'Closed list'
+    else
+      string($a/tei:datatype/*)
+     }
+     </datatype>
     <desc>{data($a/tei:desc)}</desc>
   </att>
 }
