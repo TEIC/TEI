@@ -5,7 +5,7 @@ See the file COPYING for details.
 $Date$
 $Author$
 -->
-<div1 xmlns="http://www.tei-c.org/ns/1.0" type="Faisal" xml:id="MD" n="29"><head>Modifying and Customizing the TEI DTD</head>
+<div1 xmlns="http://www.tei-c.org/ns/1.0"  xml:id="MD" n="29"><head>Modifying and Customizing the TEI DTD</head>
 
 <p>These Guidelines provide an encoding scheme suitable for encoding a
 wide range of texts, and capable of being extended in well-defined and
@@ -16,6 +16,11 @@ with chapter <ptr target="#TD"/>, which describes how the TEI encoding
 scheme is documented.  The modification scheme described in that
 chapter is, like the rest of the TEI scheme, independent of any
 particular schema or document type definition language. </p>
+<p rend="italic">The present chapter has not been fully revised. In
+particular, it
+discusses only the modification methods provided for users of XML DTD
+fragments, rather than the more powerful mechanisms now available
+using the ODD schema described in chapter <ptr target="#TD"/>. </p>
 
 <p>Formally speaking, these Guidelines provide both syntactic
 information about how elements and attributes may be used in
@@ -299,6 +304,8 @@ this in the terms used earlier, the set of documents matching the new
 DTD (with all names systematically changed in both the DTD and the
 documents) is isomorphic to the set of documents matching the original
 DTD with no names changed (in either the DTD or the documents).</p>
+
+<!--
 <p>The formal declarations of the parameter entities used for generic
 identifiers are contained in the file <ident type="file">teigis.ent</ident>; since their names and replacement texts
 are fully predictable, these parameter entities are not individually
@@ -323,14 +330,14 @@ this allows application programs to process correctly a locally
 defined element which usually corresponds to one TEI element (which
 would be expressed by the default value) but sometimes to another TEI
 element (which would be expressed by explicit values attached to the
-element instance).</p></div3>
+element instance).</p>--></div3>
 <div3 type="subsection" xml:id="MDMDCL"><head>Class Extension</head>
 <p>In <ptr target="#STECCM"/>, the concept of a class of elements that
 can appear in the same kinds of structural locations in a document was
-introduced.  An entity is associated with each class named by
-prefixing the string <q>m.</q> (for <q>model</q>) to the name of the
-class.  For example, the value of the parameter entity
-<ident type="pe">model.biblLike</ident> is a list of the members of the class
+introduced.  In the RelaxNG schema fragments, a pattern is  associated
+with each named model class; in the XML DTD fragments, a parameter
+entity is used. For example, the value of the pattern (or parameter entity)
+<ident type="pe">model.biblLike</ident> in a TEI schema will be  a list of the members of the class
 <ident type="class">model.biblLike</ident>.</p>
 <p>In the modifiable version of the TEI DTD, an additional entity is
 defined for each model class.  This additional entity also takes the
