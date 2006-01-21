@@ -694,6 +694,11 @@ class romaDom extends domDocument
 	$oAdd = $oRoot->appendChild( new domElement( 'added' ) );
 	$oAdd->appendChild( new domText( $oAttDef->getAttribute( 'added' ) ) );
 
+	$this->getAttributeValList( $szAttribute, $szElement,
+             $szModule, $szClass, $aszList, $aszListType );
+        $szValList = join( ',', $aszList );
+
+
 	foreach( $oAttDef->childNodes as $oChild )
 	  {
 	    switch( $oChild->nodeName )
@@ -719,20 +724,34 @@ class romaDom extends domDocument
 		    $oNode->appendChild( new domText( $oChild->firstChild->getAttribute( 'name' ) ) );
 		  }
 		break;
+	      case 'valList':
+	        if ($szValList == '') {
+		 foreach( $oChild->childNodes as $oChild )
+		   {
+		    $aszList[] = $oChild->getAttribute( 'ident' );
+		   }
+		   $szValList = join( ',', $aszList );	
+		  }
+		  if ($aszListType =='') {
+		     $aszListType = $oChild->getAttribute( 'type' );
+		  }
+	       break;
 	      default:
 		$oNode = $oRoot->appendChild( new domElement( $oChild->nodeName ) );
 		$oNode->appendChild( new domText( $oChild->nodeValue ) );
 		break;		      
 	      }
 	  }
+	
 
-	$this->getAttributeValList( $szAttribute, $szElement, $szModule, $szClass, $aszList );
-	$szValList = join( ',', $aszList );
-	$oRoot->appendChild( new domElement( 'valList', $szValList ) );
-
+	$oValList = $oRoot->appendChild( new domElement( 'valList', $szValList ));
+	if ($aszListType != '') {
+	 $oValList->setAttribute('type',$aszListType);
+	}
       }
 
-    public function getAttributeValList( $szAttribute, $szElement, $szModule, $szClass, &$aszList )
+    public function getAttributeValList( $szAttribute, $szElement,
+      $szModule, $szClass, &$aszList, &$aszListType )
       {
 	$aszList = array();
 	$this->getXPath( $oXPath );
@@ -747,6 +766,7 @@ class romaDom extends domDocument
 		  {
 		    $aszList[] = $oChild->getAttribute( 'ident' );
 		  }
+		  $aszListType = $oValList->getAttribute( 'type' );
 	      }
 	  }
 	elseif( $szClass == '' )
@@ -755,23 +775,30 @@ class romaDom extends domDocument
 
 	    if ( is_object( $oValList ) )
 	      {
-		echo 'lala2';
+		foreach( $oValList->childNodes as $oChild )
+		  {
+		    $aszList[] = $oChild->getAttribute( 'ident' );
+		  }
+		  $aszListType = $oValList->getAttribute( 'type' );
 	      }
 	    
 	  }
 	else
 	  {
+
 	    $oValList = $oXPath->query("//tei:schemaSpec/tei:classSpec[@module='$szModule' and @ident='{$szClass}']/tei:attList/tei:attDef[@ident='{$szAttribute}']/tei:valList" )->item(0);
 
 	    if ( is_object( $oValList ) )
 	      {
-		echo 'lala3';
+		foreach( $oValList->childNodes as $oChild )
+		  {
+		    $aszList[] = $oChild->getAttribute( 'ident' );
+		  }
+		  $aszListType = $oValList->getAttribute( 'type' );
 	      }
-	    
-	    
-
 	  }
       }
+
 
 
     public function getChangedAttributeClasses( &$aszClasses )
@@ -1345,9 +1372,11 @@ class romaDom extends domDocument
 	      }
 
 	    //optional
-	    $oAttDef->setAttribute( 'usage', ($aszConfig[ 'optional' ] == 'true' ) ? 'opt' : 'req' );
-
-
+	    
+	    if ($aszConfig[ 'optional' ] == 'no')
+	    	{
+		    $oAttDef->setAttribute( 'usage', 'req' );
+		    }
 	    //content
 	    $oContent = $oAttDef->getElementsByTagname( 'datatype' )->item(0);
 	    if ( is_object( $oContent ) )
@@ -1370,6 +1399,7 @@ class romaDom extends domDocument
 		    $oRef->setAttribute( 'name', $aszConfig[ 'content' ] );
 		    break;
 	      }
+
 	      	    
 	    //default
 	    $oDefault = $oAttDef->getElementsByTagname( 'default' )->item(0);
@@ -1387,9 +1417,10 @@ class romaDom extends domDocument
 	      {
 		$oAttDef->removeChild( $oValList );
 	      }
+	    $aszValList = explode( ',', $aszConfig[ 'valList' ] );
 	    $theValList = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'valList' );
 	    $oValList = $oAttDef->appendChild( $theValList );
-	    if ( $aszConfig[ 'content' ] == 'datatype.Choice' )
+	    if ( $aszConfig[ 'closed' ] == 'true' )
 	      {
 		$oValList->setAttribute( 'type', 'closed' );
 	      }
@@ -1397,8 +1428,7 @@ class romaDom extends domDocument
 	      {
 		$oValList->setAttribute( 'type', 'open' );
 	      }
-
-	    $aszValList = explode( ',', $aszConfig[ 'valList' ] );
+    	    $oValList->setAttribute( 'mode', 'replace' );	
 	    if ( is_array( $aszValList ) )
 	      {
 		foreach( $aszValList as $szValue )

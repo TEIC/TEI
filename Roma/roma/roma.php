@@ -332,6 +332,7 @@ class roma
 				   'valList' => $_REQUEST[ 'valList' ],
 				   'added' => $_REQUEST[ 'added' ],
 				   'optional' => $_REQUEST[ 'optional' ],
+				   'closed' => $_REQUEST[ 'closed' ],
 				   'content' => $_REQUEST[ 'content' ],
 				   'defaultValue' => $_REQUEST[ 'defaultValue' ],
 				   'description' => $_REQUEST[ 'description' ] );
