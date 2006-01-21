@@ -6,13 +6,7 @@ return
 <attClass>
  <className>{data($t/@ident)}</className>
  <classDesc>{$t/tei:desc}</classDesc>
- <module>{
- if  (contains(string($t/@module),'-decl'))
- then
-   substring-before(string($t/@module),'-decl')
- else
-   string($t/@module)
- }</module>
+ <module>{string($t/@module)}</module>
  <attributes>
 {
 for $a in $t//tei:attDef
@@ -22,7 +16,13 @@ return
     {$a/@usage}
     {data($a/@ident)}</name>
     <default>{data($a/tei:defaultVal)}</default>
-    <datatype>{$a/tei:datatype/*}</datatype>
+    <datatype>{
+    if (tei:valList[@type='closed'])
+    then
+      'Closed list'
+    else
+      string($a/tei:datatype/*)
+     }</datatype>
     <desc>{data($a/tei:desc)}</desc>
 </att>
 }
