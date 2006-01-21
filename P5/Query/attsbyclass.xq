@@ -14,14 +14,15 @@ return
     {data($a/@ident)}</name>
     <default>{data($a/tei:defaultVal)}</default>
     <datatype>{
-    if (tei:valList[@type='closed'])
-    then
-      'Closed list'
-    else
       string($a/tei:datatype/*)
      }</datatype>
      <valList>
-       {$a/tei:valList/*}
+       {
+	for $v in $a/tei:valList/tei:valItem return
+	<valItem>
+	   {$v/@ident}
+	</valItem>
+       }
      </valList>	
     <desc>{data($a/tei:desc)}</desc>
 </att>

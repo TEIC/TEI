@@ -7,6 +7,4 @@ order by $t/@ident
 return
 <dataType><dataName>{data($t/@ident)}</dataName><dataDesc>{$t/tei:desc}</dataDesc></dataType>
 }
-<dataType><dataName>Closed list</dataName><dataDesc>A closed list of
-possible values</dataDesc></dataType>
 </dataList>
