@@ -1377,6 +1377,16 @@ class romaDom extends domDocument
 	    	{
 		    $oAttDef->setAttribute( 'usage', 'req' );
 		    }
+	    //desc
+	    $oDesc = $oAttDef->getElementsByTagname( 'desc' )->item(0);
+	    if ( is_object( $oDesc ) )
+	      {
+		$oAttDef->removeChild( $oDesc );
+	      }
+	    $theDesc = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'desc' );
+	    $oDesc = $oAttDef->appendChild( $theDesc );
+	    $oDesc->appendChild( new domText( stripslashes($aszConfig[ 'description' ]) ) );
+
 	    //content
 	    $oContent = $oAttDef->getElementsByTagname( 'datatype' )->item(0);
 	    if ( is_object( $oContent ) )
@@ -1428,7 +1438,10 @@ class romaDom extends domDocument
 	      {
 		$oValList->setAttribute( 'type', 'open' );
 	      }
-    	    $oValList->setAttribute( 'mode', 'replace' );	
+    	    if ( $aszConfig[ 'added' ] != 'true' )
+	     {
+		 $oValList->setAttribute( 'mode', 'replace' );	
+		 }
 	    if ( is_array( $aszValList ) )
 	      {
 		foreach( $aszValList as $szValue )
@@ -1443,15 +1456,6 @@ class romaDom extends domDocument
 		  }
 	      }
 
-	    //desc
-	    $oDesc = $oAttDef->getElementsByTagname( 'desc' )->item(0);
-	    if ( is_object( $oDesc ) )
-	      {
-		$oAttDef->removeChild( $oDesc );
-	      }
-	    $theDesc = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'desc' );
-	    $oDesc = $oAttDef->appendChild( $theDesc );
-	    $oDesc->appendChild( new domText( stripslashes($aszConfig[ 'description' ]) ) );
 	  }
 	return $errResult;
 
