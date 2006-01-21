@@ -2,7 +2,7 @@ declare namespace tei="http://www.tei-c.org/ns/1.0";
 declare namespace rng="http://relaxng.org/ns/structure/1.0";
 
 let $e := request:request-parameter("name", "")
-for $c in collection("/db/TEI")//tei:elementSpec[@ident=$e]
+for $c in collection("/db/TEI")//tei:classSpec[@ident=$e]
 return
 <Element>
 {
@@ -20,6 +20,9 @@ return
     else
       string($a/tei:datatype/*)
      }</datatype>
+     <valList>
+       {$a/tei:valList/*}
+     </valList>	
     <desc>{data($a/tei:desc)}</desc>
 </att>
 }

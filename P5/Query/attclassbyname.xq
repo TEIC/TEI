@@ -23,6 +23,9 @@ return
     else
       string($a/tei:datatype/*)
      }</datatype>
+     <valList>
+       {$a/tei:valList/*}
+     </valList>	
     <desc>{data($a/tei:desc)}</desc>
 </att>
 }
