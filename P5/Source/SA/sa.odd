@@ -598,7 +598,7 @@ To avoid having
   finding of fair use if such finding is made upon consideration
   of all the above factors.</p>
 </div></egXML>
-<note resp="sdb" type="cit">Title 17, Section 107 of the <title>United
+<note resp="#sdb" type="cit">Title 17, Section 107 of the <title>United
 States Code</title>, found at <ptr
 target="http://www.copyright.gov/title17/92chap1.html#107"/> and
 converted from HTML to TEI encoding.</note>
@@ -621,7 +621,7 @@ both the source element and target element are in the same XML document.</p>
       one of Shakespeare's most famous lines:
       <egXML xmlns="http://www.tei-c.org/ns/Examples"><ref target="http://www.cs.mu.oz.au/621/2003project/hamlet.xml#element(/1/8/2/25/2)"
       >2B|^2B&hellip;</ref></egXML>
-      <note type="cit" resp="sdb">Jon Bosak's XMLification of Moby
+      <note type="cit" resp="#sdb">Jon Bosak's XMLification of Moby
       Lexical Tools' plain text version of Hamlet. As of <date
       value="2004-12-22"/>, the node xpath1(/*[1]/*[8]/*[2]/*[25]/*[2])
       (or, perhaps more usefully,
@@ -1047,7 +1047,7 @@ both the source element and target element are in the same XML document.</p>
       <ident>pattern</ident> facet of the World Wide Web Consortium's
       XML Schema Language in an <ref
       target="http://www.w3.org/TR/xmlschema-2/#regexs">Appendix to
-      XML Schema Part 2</ref>.<note place="foot" resp="sdb">As always
+      XML Schema Part 2</ref>.<note place="foot" resp="#sdb">As always
       seems to be the case, no two regular expression languages are
       precisely the same. For those used to Perl regular expressions,
       be warned that while in Perl the pattern <code>tei</code>
@@ -1072,7 +1072,7 @@ both the source element and target element are in the same XML document.</p>
         <p>The application first follows the URI in the
         <ident>decls</ident> attribute, which points to a
         <gi>refsDecl</gi> element in the local document or a remote
-        document<note place="foot" resp="sdb">As with other elements
+        document<note place="foot" resp="#sdb">As with other elements
         in the <ident type="class">tei.delcarable</ident> class, the
         default is the <gi>refsDecl</gi> in the <gi>teiHeader</gi> of
         the current document; or, if there are more than one
@@ -1792,7 +1792,7 @@ simplify the example.
       <seg xml:id="l9808">Libros,</seg></p>
 </div></egXML></p>
 <?tei winita?>
-<note resp="sdb" place="inline">Need to re-work this entire graphical example; probably DGD or CC.</note>
+<note resp="#sdb" place="inline">Need to re-work this entire graphical example; probably DGD or CC.</note>
 <p>Next we assume that we have stored a digitized image of the picture
 itself in some external entity we will call <ident rend="noindex"
 type="ge">com98</ident> (for further discussion of the handling of
@@ -3016,9 +3016,9 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
 	<p>XInclude currently only requires support for one XPointer scheme,
 	  called <code>element()</code>. As described in <ptr target="#SAES"/>, the
 		<code>element()</code> scheme that can be either a bare
-	  names (denoting an element with a specific <ident
+	  name (denoting an element with a specific <ident
 	    type="attrName">xml:id</ident> attribute) or a child sequence
-	  (a numerical sequence of child numbers specifying a path in the XML tree
+	  (a numerical sequence of slash-separated child numbers specifying a path in the XML tree
 	  whose final step selects a specific subtree of XML content). Another scheme,
 	  <code>xpointer()</code>, has not been turned into a W3C
 	  recommendation yet, although it has been part of the
@@ -3063,7 +3063,7 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
         <eg><![CDATA[
         <body>
            <p xml:id="par1">home, <emph>home</emph> on Brokeback Mountain.</p>
-           <p xml:id="par1">That was the <emph>song</emph> that I sang</p>
+           <p xml:id="par2">That was the <emph>song</emph> that I sang</p>
            </body>]]>
         </eg>
         and the following external document:
@@ -3076,13 +3076,6 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
         </eg>
         the resulting document after XInclude processing of this external document
         would be:
-        <!-- DGD: I abandoned the egXML, because the namespaces
-        and namespace attributes were vanishing.
-        I hate the fact that the eg and the egXML have different backgrounds, and wish
-        there were a way to make this work as parsed XML, with the non-TEI stuff and
-        the namespace attributes preserved, etc.
-        The downside of pretty-printing, I guess.
-        -->
         <eg><![CDATA[
             <body xmlns:xi="http://www.w3.org/2001/XInclude">
             <div>
@@ -3155,15 +3148,15 @@ If bees are few.\n]]></eg>
       <head>1755</head>
    </front>
    <body>
-      <l><xi:include href="Source.txt#range(  /.0, /.48)" parse="text">
+      <l><xi:include href="Source.txt" xpointer="range(  /.0, /.48)" parse="text">
              <xi:fallback>Verse not found</xi:fallback></xi:include></l>
-      <l><xi:include href="Source.txt#range( /.49, /.71)" parse="text">
+      <l><xi:include href="Source.txt" xpointer="range( /.49, /.71)" parse="text">
              <xi:fallback>Verse not found</xi:fallback></xi:include></l>
-      <l><xi:include href="Source.txt#range( /.72, /.83)" parse="text">
+      <l><xi:include href="Source.txt" xpointer="range( /.72, /.83)" parse="text">
              <xi:fallback>Verse not found</xi:fallback></xi:include></l>
-      <l><xi:include href="Source.txt#range( /.84,/.109)" parse="text">
+      <l><xi:include href="Source.txt" xpointer="range( /.84,/.109)" parse="text">
              <xi:fallback>Verse not found</xi:fallback></xi:include></l>
-      <l><xi:include href="Source.txt#range(/.110,/.126)" parse="text">
+      <l><xi:include href="Source.txt" xpointer="range(/.110,/.126)" parse="text">
              <xi:fallback>Verse not found</xi:fallback></xi:include></l>
    </body>
 </text>]]></eg></p>
@@ -3244,21 +3237,26 @@ If bees are few.\n]]></eg>
       <head>1755</head>
    </front>
    <body>
-      <l
-content='Source.xhtml#xpointer(string-range(//div[1]/text(),"To")/range-to(/
+      <l>
+        <xi:include href="Source.xhtml" xpointer='xpointer(string-range(//div[1]/text(),"To")/range-to(/
 /div[1]/text(),"bee,")'/>
-      <l
-content='Source.xhtml#xpointer(string-range(//div[2]/text(),"One")/range-to(
+      </l>
+      <l>
+        <xi:include href="Source.xhtml" xpointer='xpointer(string-range(//div[2]/text(),"One")/range-to(
 //div[2]/text(),"bee,")'/>
-      <l
-content='Source.xhtml#xpointer(string-range(//div[3]/text(),"And")/range-to(
+      </l>
+      <l>
+        <xi:include href="Source.xhtml" xpointer='xpointer(string-range(//div[3]/text(),"And")/range-to(
 //div[3]/text(),".")'/>
-      <l
-content='Source.xhtml#xpointer(string-range(//div[4]/text(),"The")/range-to(
+      </l>
+      <l>
+        <xi:include href="Source.xhtml" xpointer='xpointer(string-range(//div[4]/text(),"The")/range-to(
 //div[4]/text(),",")'/>
-      <l
-content='Source.xhtml#xpointer(string-range(//div[5]/text(),"If")/range-to(/
+      </l>
+      <l>
+        <xi:include href="Source.xhtml" xpointer='xpointer(string-range(//div[5]/text(),"If")/range-to(/
 /div[5]/text(),".")'/>
+      </l>
    </body>
 </text>]]></eg></p>
       </div3>
