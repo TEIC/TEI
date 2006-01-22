@@ -353,10 +353,24 @@ can simply be marked up with the <gi>rs</gi> element, or with the
 however, the component parts of a place name provide important
 information about the relation between the name and some spot in space
 and time. They also provide important evidence in historical
-linguistics.  For such applications and others in which the internal
-structure of a place name is to be encoded, the <gi>placeName</gi>
-element and its subcomponents should be used.
-<specList><specDesc key="placeName"/><specDesc key="settlement"/><specDesc key="region"/><specDesc key="country"/><specDesc key="bloc"/><specDesc key="geogName"/><specDesc key="geog"/><specDesc key="distance"/><specDesc key="offset"/></specList>
+linguistics.  </p>
+
+<p>These Guidelines distinguish three ways of referring to places.  A
+place name (represented using the <gi>placeName</gi> element) may
+consist of one or more names for
+hierarchically-organized geo-political or administrative units (see
+section <ptr target="#NDPLGU"/>). A place  named simply in
+terms of  geographical features such
+as mountains or rivers is represented using the <gi>geogName</gi>
+element (see section <ptr target="#NDPLGF"/>). Finally, an expression
+consisting of 
+phrases expressing spatial or other kinds of relationship between
+other kinds of named place may also be regarded as a a kind of
+<gi>placename</gi> (see section
+<ptr target="#NDPLR"/>).  
+
+<specList><specDesc key="placeName"/><specDesc key="geogName"/>
+</specList>
  </p>
 <p>As members of the <ident type="class">att.naming</ident> class, all these
 elements share the following attribute:
@@ -386,30 +400,32 @@ I have proceeded to the
 <!-- from letter from 'JK' found in Poulson's Daily Advertiser -->
 	<!-- 8 October, 1835, -->
  </p>
-<p>As indicated above, the <gi>placeName</gi> may simply contain a
-character string and its <att>type</att> attribute may be used to
-provide a sub-categorization of place names. Alternatively, it may
-contain more detailed sub components. A place name may be analysed in
-several different ways: as a geo-political unit, using a hierarchy of
-descriptive names (see section <ptr target="#NDPLGU"/>); in terms of
-geographic features such as mountains and rivers (see section <ptr target="#NDPLGF"/>); relative to other place names (see section <ptr target="#NDPLR"/>).
- </p>
+
+
 <div3 type="subsection" xml:id="NDPLGU"><head>Geo-political Place Names
  </head>
-<p>A place name is sometimes given as sequence of
-geo-political or administrative units, often arranged in
+<p>A place name may contain text with no indication of its internal structure:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName>  
+Rochester, NY</placeName></egXML>
+More usually however, a place name of this kind will  be further
+analysed in terms of its constitutive
+geo-political or administrative units. These may be arranged in
 ascending sequence according to their size or administrative
 importance, for example: <q>Rochester, New York</q>, or as a single
-such unit, for example <q>Belgium</q>. The more detailed component
-elements listed above (<gi>settle</gi> for a settlement, such as a
-village, town or city; <gi>region</gi> for any administrative unit
-such as a county, parish or state; <gi>country</gi> for a politically
-recognized national entity; or <gi>bloc</gi> for any grouping of such
-entities) have been chosen for their generality of application. They
-may be tailored more closely to project- and
-culture-specific needs by specifying appropriate values in their
-respective <att>type</att> attributes, as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName key="RNY1">  
+such unit, for example <q>Belgium</q>. These Guidelines provide a
+hierarchy of generic element names, each of which may be more exactly
+specified by means of a <att>type</att> attribute:
+<specList>
+<specDesc key="district"/>
+<specDesc key="settlement"/>
+<specDesc key="region"/>
+<specDesc key="country"/>
+<specDesc key="bloc"/>
+</specList></p>
+<p>A <gi>placeName</gi> may contain any combination of these and other
+members of the <ident type="class">model.placeNamePart</ident> class,
+as in the following examples: 
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName>  
   <settlement type="city">Rochester</settlement>,
   <region type="state">New York</region>
 </placeName></egXML>
@@ -417,19 +433,17 @@ respective <att>type</att> attributes, as in the following example:
   <country type="nation">Laos</country>,
   <bloc type="sub-continent">Southeast Asia</bloc>
 </placeName></egXML>
-<!-- 
-<p>When place names which are given in terms of a single -->
-	<!-- geo-political unit, the lower-level elements -->
-	<!-- (<gi>settlement</gi>, <gi>region</gi>, <gi>country</gi>, -->
-	<!-- <gi>bloc</gi>) may be used and the <gi>gu</gi> element -->
-	<!-- dispensed with as in: -->
-	<!-- Not without serious damage to your content model it cant!  -->
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName>
+<district type="arondissement">6ème</district>
+ <settlement type="city">Paris</settlement>,
+</placeName>
+</egXML>
  </p>
 <p>Note that, even in the case where only one of these component place
 name elements is used, the <gi>placeName</gi> element must still be
 present.
 <egXML xmlns="http://www.tei-c.org/ns/Examples">I'd rather be in
-<placeName><settlement key="RNY1" type="city">Rochester</settlement></placeName>
+<placeName><settlement type="city">Rochester</settlement></placeName>
 than any other place I know.</egXML>
  </p></div3>
 <div3 type="subsection" xml:id="NDPLGF"><head>Geographic Names
@@ -437,10 +451,10 @@ than any other place I know.</egXML>
 <p>Places may also be named in terms of geographic features such as
 mountains, lakes or rivers, independently of geo-political units. The
 <gi>geogName</gi> is provided to mark up such names, as an alternative
-to the <gi>placeName</gi> element discussed above. It contains a
-sequence of phrase level elements, optionally extended by the following
-special element:
-<specList><specDesc key="geog"/></specList>
+to the <gi>placeName</gi> element discussed above. In addition to the
+usual phrase level elements, this element may include the following
+specialized  elements:
+<specList><specDesc key="geog"/><specDesc key="distance"/><specDesc key="offset"/></specList>
  </p>
 <p>For example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><geogName key="MIRI1" type="river">Mississippi River</geogName></egXML>
