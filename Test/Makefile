@@ -88,6 +88,9 @@ test-dtd-xmllint:
 test-extns:
 	echo check whether user extensions work ....
 	xmllint --noout --valid testextns.xml
+test-sgml:
+	echo Check SGML extension mechanism
+	onsgmls -e -g -s  sgmldecl.tei testextns.sgm 
 
 test-bad:
 	echo Now test file with deliberate errors
@@ -97,6 +100,7 @@ test-bad:
 	-xx -P $(TESTBADFILES).xml | rnv $(TESTBADFILES).rnc
 	echo JING XSD
 	-jing $(TESTBADFILES).xsd $(TESTBADFILES).xml
+
 
 clean:
 	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES) $(TESTBADFILES); do rm -f $$i.doc.xml $$i.rnc $$i.dtd $$i.compiled.* $$i.teix.xsd $$i.xsd $$i.rnc $$i.rng;done
