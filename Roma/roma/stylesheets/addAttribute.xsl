@@ -223,7 +223,7 @@ Description
 	    <xsl:attribute name="value"><xsl:value-of
 	    select="dataName"/></xsl:attribute>
 	    <xsl:if
-	     test="Current=string(./dataName)">
+	     test="string(//currentAttribute/attDef/datatype)=string(./dataName)">
 	      <xsl:attribute name="selected">1</xsl:attribute>
 	    </xsl:if>
 	    <xsl:value-of select="dataName"/>
