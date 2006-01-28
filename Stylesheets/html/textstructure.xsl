@@ -239,8 +239,9 @@ $ID: requests a particular page
       </xsl:call-template>
     </a>
   </xsl:template>
+
   <xd:doc>
-    <xd:short>Process elements  tei:*</xd:short>
+    <xd:short>Process any element in xpath mode</xd:short>
     <xd:param name="xpath">xpath</xd:param>
     <xd:param name="action">action</xd:param>
     <xd:detail>
@@ -315,11 +316,11 @@ $ID: requests a particular page
                 <xsl:call-template name="bodyHook"/>
                 <xsl:call-template name="bodyJavaScriptHook"/>
                 <a name="TOP"/>
-                <xsl:call-template name="stdheader">
-                  <xsl:with-param name="title">
-                    <xsl:call-template name="generateTitle"/>
-                  </xsl:with-param>
-                </xsl:call-template>
+		  <xsl:call-template name="stdheader">
+		    <xsl:with-param name="title">
+		      <xsl:call-template name="generateTitle"/>
+		    </xsl:with-param>
+		  </xsl:call-template>
                 <h2>
                   <xsl:apply-templates select="." mode="xref"/>
                 </h2>
@@ -367,11 +368,13 @@ $ID: requests a particular page
         <xsl:call-template name="bodyHook"/>
         <xsl:call-template name="bodyJavaScriptHook"/>
         <a name="TOP"/>
-        <xsl:call-template name="stdheader">
-          <xsl:with-param name="title">
-            <xsl:call-template name="generateTitle"/>
-          </xsl:with-param>
-        </xsl:call-template>
+	<xsl:if test="not(tei:text/tei:front/tei:titlePage)">
+	  <xsl:call-template name="stdheader">
+	    <xsl:with-param name="title">
+	      <xsl:call-template name="generateTitle"/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:if>
         <xsl:call-template name="startHook"/>
         <xsl:call-template name="simpleBody"/>
         <xsl:call-template name="stdfooter"/>
@@ -1815,11 +1818,13 @@ $ID: requests a particular page
         <xsl:call-template name="bodyHook"/>
         <xsl:call-template name="bodyJavaScriptHook"/>
         <a name="TOP"/>
-        <xsl:call-template name="stdheader">
-          <xsl:with-param name="title">
-            <xsl:call-template name="generateTitle"/>
-          </xsl:with-param>
-        </xsl:call-template>
+	<xsl:if test="not(tei:text/tei:front/tei:titlePage)">
+	  <xsl:call-template name="stdheader">
+	    <xsl:with-param name="title">
+	      <xsl:call-template name="generateTitle"/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:if>
         <xsl:call-template name="mainbody"/>
         <xsl:call-template name="printNotes"/>
         <xsl:call-template name="htmlFileBottom"/>
@@ -2141,6 +2146,7 @@ $ID: requests a particular page
     </xsl:choose>
     <hr/>
   </xsl:template>
+
   <xd:doc>
     <xd:short>[html] </xd:short>
     <xd:detail>&#160;</xd:detail>
