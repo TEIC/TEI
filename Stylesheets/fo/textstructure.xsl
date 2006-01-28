@@ -1089,7 +1089,7 @@
   <xsl:template name="mainTOC">
     <fo:block>
       <xsl:call-template name="setupDiv1"/>
-      <xsl:call-template name="i18n"><xsl:with-param name="word">ontentsWord</xsl:with-param></xsl:call-template>
+      <xsl:call-template name="i18n"><xsl:with-param name="word">contentsWord</xsl:with-param></xsl:call-template>
     </fo:block>
     <xsl:choose>
       <xsl:when test="ancestor::tei:text/tei:group">
