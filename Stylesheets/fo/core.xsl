@@ -524,12 +524,10 @@
     <xsl:choose>
 <!-- is it in the back matter? -->
       <xsl:when test="ancestor::tei:back">
-        <fo:page-sequence>
           <fo:block>
             <xsl:call-template name="listBiblSetup"/>
           </fo:block>
           <xsl:apply-templates/>
-        </fo:page-sequence>
       </xsl:when>
       <xsl:otherwise>
         <xsl:apply-templates/>
