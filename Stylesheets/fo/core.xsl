@@ -666,7 +666,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
+  
 <xd:doc>
     <xd:short>Process elements  tei:note properly</xd:short>
     <xd:detail>&#160;</xd:detail>
@@ -690,13 +690,33 @@
           </fo:inline>
         </fo:simple-link>
       </xsl:when>
+      <xsl:when test="@place='inline'">
+	<fo:inline>
+	  <xsl:text> (</xsl:text>
+	  <xsl:apply-templates/>
+	  <xsl:text>)</xsl:text>
+	</fo:inline>
+      </xsl:when>      
       <xsl:when test="@place='display'">
-        <fo:block text-indent="0pt" end-indent="{$exampleMargin}" start-indent="{$exampleMargin}" font-size="{$exampleSize}" space-before.optimum="{$exampleBefore}" space-after.optimum="{$exampleAfter}">
+        <fo:block 
+	    text-indent="0pt" 
+	    end-indent="{$exampleMargin}" 
+	    start-indent="{$exampleMargin}" 
+	    font-size="{$exampleSize}" 
+	    space-before.optimum="{$exampleBefore}" 
+	    space-after.optimum="{$exampleAfter}">
           <xsl:apply-templates/>
         </fo:block>
       </xsl:when>
       <xsl:when test="@place='divtop'">
-        <fo:block text-indent="0pt" end-indent="{$exampleMargin}" start-indent="{$exampleMargin}" font-style="italic" font-size="{$exampleSize}" space-before.optimum="{$exampleBefore}" space-after.optimum="{$exampleAfter}">
+        <fo:block 
+	    text-indent="0pt" 
+	    end-indent="{$exampleMargin}" 
+	    start-indent="{$exampleMargin}" 
+	    font-style="italic" 
+	    font-size="{$exampleSize}" 
+	    space-before.optimum="{$exampleBefore}" 
+	    space-after.optimum="{$exampleAfter}">
           <xsl:apply-templates/>
         </fo:block>
       </xsl:when>
