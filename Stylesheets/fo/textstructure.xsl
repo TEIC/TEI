@@ -1156,91 +1156,223 @@
   <xsl:template name="setupPagemasters">
     <fo:layout-master-set>
 <!-- one sided, single column -->
-      <fo:simple-page-master master-name="simple1" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
-        <fo:region-body margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
-        <fo:region-before extent="{$regionBeforeExtent}"/>
-        <fo:region-after extent="{$regionAfterExtent}"/>
+      <fo:simple-page-master 
+	  master-name="simple1" 
+	  page-width="{$pageWidth}" 
+	  page-height="{$pageHeight}" 
+	  margin-top="{$pageMarginTop}" 
+	  margin-bottom="{$pageMarginBottom}" 
+	  margin-left="{$pageMarginLeft}" 
+	  margin-right="{$pageMarginRight}">
+        <fo:region-body 
+	    margin-bottom="{$bodyMarginBottom}" 
+	    margin-top="{$bodyMarginTop}"/>
+        <fo:region-before 
+	    extent="{$regionBeforeExtent}"/>
+        <fo:region-after 
+	    extent="{$regionAfterExtent}"/>
       </fo:simple-page-master>
 <!-- for left-hand/tei:even pages in twosided mode, single column -->
-      <fo:simple-page-master master-name="left1" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
-        <fo:region-body margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
-        <fo:region-before region-name="xsl-region-before-left" extent="{$regionBeforeExtent}"/>
-        <fo:region-after region-name="xsl-region-after-left" extent="{$regionAfterExtent}"/>
+      <fo:simple-page-master 
+	  master-name="left1" 
+	  page-width="{$pageWidth}" 
+	  page-height="{$pageHeight}" 
+	  margin-top="{$pageMarginTop}" 
+	  margin-bottom="{$pageMarginBottom}" 
+	  margin-left="{$pageMarginLeft}" 
+	  margin-right="{$pageMarginRight}">
+        <fo:region-body 
+	    margin-bottom="{$bodyMarginBottom}" 
+	    margin-top="{$bodyMarginTop}"/>
+        <fo:region-before 
+	    region-name="xsl-region-before-left" 
+	    extent="{$regionBeforeExtent}"/>
+        <fo:region-after 
+	    region-name="xsl-region-after-left" 
+	    extent="{$regionAfterExtent}"/>
       </fo:simple-page-master>
 <!-- for right-hand/tei:odd pages in twosided mode, single column -->
-      <fo:simple-page-master master-name="right1" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
-        <fo:region-body margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
-        <fo:region-before region-name="xsl-region-before-right" extent="{$regionBeforeExtent}"/>
-        <fo:region-after region-name="xsl-region-after-right" extent="{$regionAfterExtent}"/>
+      <fo:simple-page-master 
+	  master-name="right1" 
+	  page-width="{$pageWidth}" 
+	  page-height="{$pageHeight}" 
+	  margin-top="{$pageMarginTop}" 
+	  margin-bottom="{$pageMarginBottom}" 
+	  margin-left="{$pageMarginLeft}" 
+	  margin-right="{$pageMarginRight}">
+        <fo:region-body 
+	    margin-bottom="{$bodyMarginBottom}" 
+	    margin-top="{$bodyMarginTop}"/>
+        <fo:region-before 
+	    region-name="xsl-region-before-right" 
+	    extent="{$regionBeforeExtent}"/>
+        <fo:region-after 
+	    region-name="xsl-region-after-right" 
+	    extent="{$regionAfterExtent}"/>
       </fo:simple-page-master>
 <!-- special case of first page in either mode, single column -->
-      <fo:simple-page-master master-name="first1" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
-        <fo:region-body margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
-        <fo:region-before region-name="xsl-region-before-first" extent="{$regionBeforeExtent}"/>
-        <fo:region-after region-name="xsl-region-after-first" extent="{$regionAfterExtent}"/>
+      <fo:simple-page-master 
+	  master-name="first1" 
+	  page-width="{$pageWidth}" 
+	  page-height="{$pageHeight}" 
+	  margin-top="{$pageMarginTop}" 
+	  margin-bottom="{$pageMarginBottom}" 
+	  margin-left="{$pageMarginLeft}" 
+	  margin-right="{$pageMarginRight}">
+        <fo:region-body 
+	    margin-bottom="{$bodyMarginBottom}" 
+	    margin-top="{$bodyMarginTop}"/>
+        <fo:region-before 
+	    region-name="xsl-region-before-first" 
+	    extent="{$regionBeforeExtent}"/>
+        <fo:region-after 
+	    region-name="xsl-region-after-first" 
+	    extent="{$regionAfterExtent}"/>
       </fo:simple-page-master>
 <!-- for pages in one-side mode, 2 column -->
-      <fo:simple-page-master master-name="simple2" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
-        <fo:region-body column-count="{$columnCount}" margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
-        <fo:region-before extent="{$regionBeforeExtent}"/>
-        <fo:region-after extent="{$regionAfterExtent}"/>
+      <fo:simple-page-master 
+	  master-name="simple2" 
+	  page-width="{$pageWidth}" 
+	  page-height="{$pageHeight}" 
+	  margin-top="{$pageMarginTop}" 
+	  margin-bottom="{$pageMarginBottom}" 
+	  margin-left="{$pageMarginLeft}" 
+	  margin-right="{$pageMarginRight}">
+        <fo:region-body 
+	    column-count="{$columnCount}" 
+	    margin-bottom="{$bodyMarginBottom}" 
+	    margin-top="{$bodyMarginTop}"/>
+        <fo:region-before 
+	    extent="{$regionBeforeExtent}"/>
+        <fo:region-after 
+	    extent="{$regionAfterExtent}"/>
       </fo:simple-page-master>
 <!-- for left-hand/tei:even pages in twosided mode, 2 column -->
-      <fo:simple-page-master master-name="left2" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
-        <fo:region-body column-count="{$columnCount}" margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
-        <fo:region-before region-name="xsl-region-before-left" extent="{$regionBeforeExtent}"/>
-        <fo:region-after region-name="xsl-region-after-left" extent="{$regionAfterExtent}"/>
+      <fo:simple-page-master 
+	  master-name="left2" 
+	  page-width="{$pageWidth}" 
+	  page-height="{$pageHeight}" 
+	  margin-top="{$pageMarginTop}" 
+	  margin-bottom="{$pageMarginBottom}" 
+	  margin-left="{$pageMarginLeft}" 
+	  margin-right="{$pageMarginRight}">
+        <fo:region-body 
+	    column-count="{$columnCount}" 
+	    margin-bottom="{$bodyMarginBottom}" 
+	    margin-top="{$bodyMarginTop}"/>
+        <fo:region-before 
+	    region-name="xsl-region-before-left" 
+	    extent="{$regionBeforeExtent}"/>
+        <fo:region-after 
+	    region-name="xsl-region-after-left" 
+	    extent="{$regionAfterExtent}"/>
       </fo:simple-page-master>
-<!-- for right-hand/tei:odd pages in twosided mode, 2 column -->
-      <fo:simple-page-master master-name="right2" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
-        <fo:region-body column-count="{$columnCount}" margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
-        <fo:region-before region-name="xsl-region-before-right" extent="{$regionBeforeExtent}"/>
-        <fo:region-after region-name="xsl-region-after-right" extent="{$regionAfterExtent}"/>
+      <!-- for right-hand/tei:odd pages in twosided mode, 2 column -->
+      <fo:simple-page-master 
+	  master-name="right2" 
+	  page-width="{$pageWidth}" 
+	  page-height="{$pageHeight}" 
+	  margin-top="{$pageMarginTop}" 
+	  margin-bottom="{$pageMarginBottom}" 
+	  margin-left="{$pageMarginLeft}" 
+	  margin-right="{$pageMarginRight}">
+	<fo:region-body 
+	    column-count="{$columnCount}" 
+	    margin-bottom="{$bodyMarginBottom}" 
+	    margin-top="{$bodyMarginTop}"/>
+        <fo:region-before 
+	    region-name="xsl-region-before-right" 
+	    extent="{$regionBeforeExtent}"/>
+        <fo:region-after 
+	    region-name="xsl-region-after-right" 
+	    extent="{$regionAfterExtent}"/>
       </fo:simple-page-master>
 <!-- special case of first page in either mode -->
-      <fo:simple-page-master master-name="first2" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
-        <fo:region-body column-count="{$columnCount}" margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
-        <fo:region-before region-name="xsl-region-before-first" extent="{$regionBeforeExtent}"/>
-        <fo:region-after region-name="xsl-region-after-first" extent="{$regionAfterExtent}"/>
+      <fo:simple-page-master 
+	  master-name="first2"
+	  page-width="{$pageWidth}"
+	  page-height="{$pageHeight}" 
+	  margin-top="{$pageMarginTop}" 
+	  margin-bottom="{$pageMarginBottom}" 
+	  margin-left="{$pageMarginLeft}" 
+	  margin-right="{$pageMarginRight}">
+        <fo:region-body 
+	    column-count="{$columnCount}" 
+	    margin-bottom="{$bodyMarginBottom}" 
+	    margin-top="{$bodyMarginTop}"/>
+        <fo:region-before 
+	    region-name="xsl-region-before-first" 
+	    extent="{$regionBeforeExtent}"/>
+        <fo:region-after 
+	    region-name="xsl-region-after-first" 
+	    extent="{$regionAfterExtent}"/>
       </fo:simple-page-master>
 <!-- setup for double-sided, 1 column, no first page -->
-      <fo:page-sequence-master master-name="twoside1nofirst">
+      <fo:page-sequence-master 
+	  master-name="twoside1nofirst">
         <fo:repeatable-page-master-alternatives>
-          <fo:conditional-page-master-reference master-reference="right1" odd-or-even="odd"/>
-          <fo:conditional-page-master-reference master-reference="left1" odd-or-even="even"/>
+          <fo:conditional-page-master-reference 
+	      master-reference="right1" 
+	      odd-or-even="odd"/>
+          <fo:conditional-page-master-reference 
+	      master-reference="left1" 
+	      odd-or-even="even"/>
         </fo:repeatable-page-master-alternatives>
       </fo:page-sequence-master>
 <!-- setup for double-sided, 1 column -->
-      <fo:page-sequence-master master-name="twoside1">
+      <fo:page-sequence-master 
+	  master-name="twoside1">
         <fo:repeatable-page-master-alternatives>
-          <fo:conditional-page-master-reference master-reference="first1" page-position="first"/>
-          <fo:conditional-page-master-reference master-reference="right1" odd-or-even="odd"/>
-          <fo:conditional-page-master-reference master-reference="left1" odd-or-even="even"/>
+          <fo:conditional-page-master-reference 
+	      master-reference="first1" 
+	      page-position="first"/>
+          <fo:conditional-page-master-reference 
+	      master-reference="right1" 
+	      odd-or-even="odd"/>
+          <fo:conditional-page-master-reference 
+	      master-reference="left1" 
+	      odd-or-even="even"/>
         </fo:repeatable-page-master-alternatives>
       </fo:page-sequence-master>
 <!-- setup for single-sided, 1 column -->
-      <fo:page-sequence-master master-name="oneside1">
+      <fo:page-sequence-master 
+	  master-name="oneside1">
         <fo:repeatable-page-master-alternatives>
-          <fo:conditional-page-master-reference master-reference="first1" page-position="first"/>
-          <fo:conditional-page-master-reference master-reference="simple1"/>
+          <fo:conditional-page-master-reference 
+	      master-reference="first1" 
+	      page-position="first"/>
+          <fo:conditional-page-master-reference 
+	      master-reference="simple1"/>
         </fo:repeatable-page-master-alternatives>
       </fo:page-sequence-master>
 <!-- setup for double-sided, 2 column -->
-      <fo:page-sequence-master master-name="twoside2">
+      <fo:page-sequence-master 
+	  master-name="twoside2">
         <fo:repeatable-page-master-alternatives>
-          <fo:conditional-page-master-reference master-reference="first2" page-position="first"/>
-          <fo:conditional-page-master-reference master-reference="right2" odd-or-even="odd"/>
-          <fo:conditional-page-master-reference master-reference="left2" odd-or-even="even"/>
+          <fo:conditional-page-master-reference 
+	      master-reference="first2" 
+	      page-position="first"/>
+          <fo:conditional-page-master-reference 
+	      master-reference="right2" 
+	      odd-or-even="odd"/>
+          <fo:conditional-page-master-reference 
+	      master-reference="left2" 
+	      odd-or-even="even"/>
         </fo:repeatable-page-master-alternatives>
       </fo:page-sequence-master>
 <!-- setup for single-sided, 2 column -->
-      <fo:page-sequence-master master-name="oneside2">
+      <fo:page-sequence-master 
+	  master-name="oneside2">
         <fo:repeatable-page-master-alternatives>
-          <fo:conditional-page-master-reference master-reference="first2" page-position="first"/>
-          <fo:conditional-page-master-reference master-reference="simple2"/>
+          <fo:conditional-page-master-reference 
+	      master-reference="first2" 
+	      page-position="first"/>
+          <fo:conditional-page-master-reference 
+	      master-reference="simple2"/>
         </fo:repeatable-page-master-alternatives>
       </fo:page-sequence-master>
-      <xsl:call-template name="pageMasterHook"/>
+      <xsl:call-template 
+	  name="pageMasterHook"/>
     </fo:layout-master-set>
     <xsl:if test="$foEngine='xep'">
       <!-- PDF bookmarks using XEP -->
