@@ -613,10 +613,10 @@
   </xsl:template>
   
 <xd:doc>
-    <xd:short>Process elements  tei:titlePage/tei:titlePart[@type='main']</xd:short>
+    <xd:short>Process elements  tei:titlePage//tei:titlePart[@type='main']</xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
-  <xsl:template match="tei:titlePage/tei:titlePart[@type='main']">
+  <xsl:template match="tei:titlePage//tei:titlePart[@type='main']">
     <fo:block font-size="{$titleSize}" space-after="8pt" text-align="center">
       <xsl:apply-templates/>
     </fo:block>
