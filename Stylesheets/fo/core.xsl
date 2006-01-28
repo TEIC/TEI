@@ -193,6 +193,8 @@
   </xd:doc>
   <xsl:template match="tei:eg">
     <fo:block font-family="{$typewriterFont}" 
+	      background-color="{$exampleBackgroundColor}"
+	      color="{$exampleColor}"
 	      white-space-treatment="preserve" 
 	      linefeed-treatment="preserve" 
 	      white-space-collapse="false" 
@@ -289,7 +291,9 @@
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:gi">
-    <fo:inline hyphenate="false" color="{$giColor}" font-family="{$typewriterFont}">
+    <fo:inline hyphenate="false" 
+	       color="{$giColor}" 
+	       font-family="{$typewriterFont}">
       <xsl:text>&lt;</xsl:text>
       <xsl:apply-templates/>
       <xsl:text>&gt;</xsl:text>
@@ -960,7 +964,19 @@
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:seg">
-    <fo:block font-family="{$typewriterFont}" background-color="yellow" white-space-collapse="false" wrap-option="no-wrap" text-indent="0em" start-indent="{$exampleMargin}" text-align="start" font-size="{$exampleSize}" padding-before="8pt" padding-after="8pt" space-before.optimum="4pt" space-after.optimum="4pt">
+    <fo:block 
+	font-family="{$typewriterFont}" 
+	background-color="yellow" 
+	white-space-collapse="false" 
+	wrap-option="no-wrap" 
+	text-indent="0em" 
+	start-indent="{$exampleMargin}" 
+	text-align="start" 
+	font-size="{$exampleSize}" 
+	padding-before="8pt" 
+	padding-after="8pt" 
+	space-before.optimum="4pt" 
+	space-after.optimum="4pt">
       <xsl:apply-templates/>
     </fo:block>
   </xsl:template>

@@ -447,6 +447,16 @@ Font for section headings
 </xsl:template>
 
 <xd:doc type="string" class="style">
+Colour for display of &lt;eg&gt; blocks.
+</xd:doc>
+<xsl:param name="exampleColor">black</xsl:param>
+
+<xd:doc type="string" class="style">
+Colour for background display of &lt;eg&gt; blocks.
+</xd:doc>
+<xsl:param name="exampleBackgroundColor">yellow</xsl:param>
+
+<xd:doc type="string" class="style">
 Calculation of font size for examples (add dimension)
 </xd:doc>
 <xsl:param name="exampleSize">
