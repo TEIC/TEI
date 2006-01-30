@@ -3085,15 +3085,16 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
             </body>]]>
         </eg>
 
-        The result of the inclusion is two paragraph elements, while the
-        original range designated in the the source document overlapped
-        two paragraph fragments. This semantics ensures that XInclude can
-        guarantee the creation of controllable, well-formed XML documents, in when
-        encoders are using a powerful pointing mechanism that does not respect the
-        hierarchical structure of an XML document. While this is a good way to ensure
-        that internalization is always possible, it has implications for the use of
-        XInclude as a notation for the <emph>description</emph> of overlapping markup
-        structures.
+        The result of the inclusion is two paragraph elements, while
+        the original range designated in the the source document
+        overlapped two paragraph fragments. XInclude semantics
+        guarantees the creation of well-formed XML results even though
+        the powerful pointing mechanisms it uses do not automatically
+        respect the hierarchical structure of XML documents. While
+        this is a good way to ensure that internalization is always
+        possible, it has implications for the use of XInclude as a
+        notation for the <emph>description</emph> of overlapping
+        markup structures.
         </p>
         
         <p>Overlapping markup cannot be represented by a source document combined with
@@ -3120,10 +3121,8 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
 	  pointing to the correct content.</p>
 	<p>For instance the following portion of a TEI document:
 <eg><![CDATA[<text>
-   <front>
-      <head>1755</head>
-   </front>
    <body>
+      <head>1755</head>
       <l>To make a prairie it takes a clover and one bee,</l>
       <l>One clover, and a bee,</l>
       <l>And revery.</l>
@@ -3135,41 +3134,49 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
 	  document, and providing exactly the same markup with the
 	  <gi>xi:include</gi> elements:
 	  <lb/>	<!-- inappropriate kludge -->
-	 <label rend="ul">Source.txt</label>
-	      <eg><![CDATA[To make a prairie it takes a clover and one bee,\n
+	 <label rend="it">Source.xml</label>
+	      <eg><![CDATA[<content>To make a prairie it takes a clover and one bee,\n
 One clover, and a bee,\n
 And revery.\n
 The revery alone will do,\n
-If bees are few.\n]]></eg>
+If bees are few.\n
+</content>]]></eg>
 	  <lb/>	<!-- inappropriate kludge -->
-	  <label rend="ul">External.xml</label>
+	  <label rend="it">External.xml</label>
 	<eg><![CDATA[<text xmlns:xi="http://www.w3.org/2001/XInclude">
-   <front>
-      <head>1755</head>
-   </front>
-   <body>
-      <l><xi:include href="Source.txt" xpointer="range(  /.0, /.48)" parse="text">
-             <xi:fallback>Verse not found</xi:fallback></xi:include></l>
-      <l><xi:include href="Source.txt" xpointer="range( /.49, /.71)" parse="text">
-             <xi:fallback>Verse not found</xi:fallback></xi:include></l>
-      <l><xi:include href="Source.txt" xpointer="range( /.72, /.83)" parse="text">
-             <xi:fallback>Verse not found</xi:fallback></xi:include></l>
-      <l><xi:include href="Source.txt" xpointer="range( /.84,/.109)" parse="text">
-             <xi:fallback>Verse not found</xi:fallback></xi:include></l>
-      <l><xi:include href="Source.txt" xpointer="range(/.110,/.126)" parse="text">
-             <xi:fallback>Verse not found</xi:fallback></xi:include></l>
-   </body>
+ <body>
+  <head>1755</head>
+   <l>
+    <xi:include href="Source.xml" parse="xml"
+                xpointer="string-range(xpath(doc('Source.xml')),  0, 48)"/>
+   </l>
+   <l>
+    <xi:include href="Source.xml" parse="xml"
+                xpointer="string-range(xpath(doc('Source.xml')), 49, 71)"/>
+   </l>
+   <l>
+    <xi:include href="Source.xml" parse="xml"
+                xpointer="string-range(xpath(doc('Source.xml')), 72, 83)"/>
+   </l>
+   <l>
+    <xi:include href="Source.xml" parse="xml"
+                xpointer="string-range(xpath(doc('Source.xml')), 84,109)"/>
+   </l>
+   <l>
+    <xi:include href="Source.xml" parse="xml"
+                xpointer="string-range(xpath(doc('Source.xml')),110,126)"/>
+   </l>
+ </body>
 </text>]]></eg></p>
 	<p>Please note that this specification requires that the
-	  XInclude namespace declaration is present in all cases. The
-	  <gi>xi:fallback</gi> element contains text or XML fragments
-	  to be placed in the document if the inclusion, fails for any
-	  reason (for instance due to
-	  inaccessibility of an external resource).
-          The
-	  <gi>xi:fallback</gi> element is optional. An XInclude processor must
-          signal a fatal error when a resource is not fount, and no <gi>xi:fallback</gi> element is
-          present.</p>
+	XInclude namespace declaration is present in all cases. The
+	<gi>xi:fallback</gi> element contains text or XML fragments to
+	be placed in the document if the inclusion, fails for any
+	reason (for instance due to inaccessibility of an external
+	resource). The <gi>xi:fallback</gi> element is optional. An
+	XInclude processor must signal a fatal error when a resource
+	is not found, and no <gi>xi:fallback</gi> element is
+	present.</p>
           <!-- there was a whole new element and discussion here, but the new spec from the W3C
           makes the fallback element optional, and signals an error in the case that
           the resource cannot be found. -->
@@ -3207,7 +3214,7 @@ If bees are few.\n]]></eg>
 	  the XPointer. For instance, given the following
 	  document:
 	  <lb/>	<!-- inappropriate kludge -->
-	  <label rend="ul">Source.xhtml</label>
+	  <label rend="it">Source.xhtml</label>
 	  <eg><![CDATA[<html>
     <body>
         <div>To make a prairie it takes a <a href="clover.gif">clover</a>
@@ -3231,33 +3238,31 @@ If bees are few.\n]]></eg>
 	<p>Thus, the following could be a valid stand-off document for
 	  the <title>Source.xhtml</title> document:
 	  <lb/>	<!-- inappropriate kludge -->
-	  <label rend="ul">External2.xml</label>
-	  <eg><![CDATA[<text>
-   <front>
-      <head>1755</head>
-   </front>
-   <body>
-      <l>
-        <xi:include href="Source.xhtml" xpointer='xpointer(string-range(//div[1]/text(),"To")/range-to(/
-/div[1]/text(),"bee,")'/>
-      </l>
-      <l>
-        <xi:include href="Source.xhtml" xpointer='xpointer(string-range(//div[2]/text(),"One")/range-to(
-//div[2]/text(),"bee,")'/>
-      </l>
-      <l>
-        <xi:include href="Source.xhtml" xpointer='xpointer(string-range(//div[3]/text(),"And")/range-to(
-//div[3]/text(),".")'/>
-      </l>
-      <l>
-        <xi:include href="Source.xhtml" xpointer='xpointer(string-range(//div[4]/text(),"The")/range-to(
-//div[4]/text(),",")'/>
-      </l>
-      <l>
-        <xi:include href="Source.xhtml" xpointer='xpointer(string-range(//div[5]/text(),"If")/range-to(/
-/div[5]/text(),".")'/>
-      </l>
-   </body>
+	  <label rend="it">External2.xml</label>
+	  <eg><![CDATA[<text xmlns:xi="http://www.w3.org/2001/XInclude">
+ <body>
+  <head>1755</head>
+  <l>
+   <xi:include href="Source.xhtml"
+       xpointer='xpointer(string-range(//div[1]/text(),"To")/range-to(//div[1]/text(),"bee,")'/>
+  </l>
+  <l>
+   <xi:include href="Source.xhtml"
+       xpointer='xpointer(string-range(//div[2]/text(),"One")/range-to(//div[2]/text(),"bee,")'/>
+  </l>
+  <l>
+   <xi:include href="Source.xhtml"
+       xpointer='xpointer(string-range(//div[3]/text(),"And")/range-to(//div[3]/text(),".")'/>
+  </l>
+  <l>
+   <xi:include href="Source.xhtml"
+       xpointer='xpointer(string-range(//div[4]/text(),"The")/range-to(//div[4]/text(),",")'/>
+  </l>
+  <l>
+   <xi:include href="Source.xhtml"
+       xpointer='xpointer(string-range(//div[5]/text(),"If")/range-to(//div[5]/text(),".")'/>
+  </l>
+ </body>
 </text>]]></eg></p>
       </div3>
 </div2>
