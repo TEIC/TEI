@@ -1,6 +1,7 @@
 TEISERVER=http://tei.oucs.ox.ac.uk/Query/
 PREFIX=/usr
 XSL=/usr/share/xml/tei/stylesheet
+XSLP4=/usr/share/xml/teip4/stylesheet
 #XSL=../Stylesheets
 # alternativly, if you have not installed the Debian packages, uncomment the next line:
 # XSL=http://www.tei-c.org/stylesheet/release/xml/tei
@@ -220,6 +221,12 @@ dist-doc:  html
 	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc/html
 	(cd Guidelines; tar --exclude CVS -c -f - . ) \
 	| (cd release/tei-p5-doc/share/doc/tei-p5-doc/html; tar xf - )
+	for i in readme*xml; do  \
+	xsltproc \
+	--stringparam cssFile html/teic.css \
+	${XSLP4}/teic/teihtml-teic.xsl $$i \
+	> release/tei-p5-doc/share/doc/tei-p5-doc/`basename $$i .xml`.html; \
+	done
 	(cd release; 	\
 	ln -s tei-p5-doc tei-p5-doc-`cat ../VERSION` ; \
 	zip -r tei-p5-doc-`cat ../VERSION`.zip tei-p5-doc-`cat ../VERSION` )
