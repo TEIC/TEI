@@ -2996,38 +2996,42 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
 	  <mentioned>xi:</mentioned>, and exactly two elements,
 	  <gi>xi:include</gi> and <gi>xi:fallback</gi>.</p>
          
-	<p>The <gi>xi:include</gi> element uses the <ident
-	    type="attrName">href</ident> attribute to specify the
+	  <p>The <gi>xi:include</gi> element uses the <ident
+	  type="attrName">href</ident> attribute to specify the
 	  location of the resource to be included; its value is an
-	  IURI <!-- this is the only occurence of "IURI" in the Guidelines;
-	  does it need to be explained?, or is it an error?-->containing, if necessary, an XPointer. Additionally, it
-	  uses the <ident type="attrName">parse</ident> attribute
-	  (whose valid values are either <ident
-	    type="attrVal">text</ident> or <ident
-	    type="attrVal">xml</ident> to specify whether the
-	  included content is plain text or an XML fragment, and the
-	  <ident type="attrName">encoding</ident> attribute to provide
-	  a hint, when the included fragment is text, of the character
-	  encoding of the fragment. The <gi>xi:fallback</gi> element
-	  is required within an <gi>xi:include</gi> and specifies
-	  alternative content to be used when the external resource,
-	  for any reason, cannot be fetched.</p>
+	  IURI <!-- this is the only occurence of "IURI" in the
+	  Guidelines; does it need to be explained?, or is it an
+	  error?-->containing, if necessary, an XPointer.
+	  Additionally, it uses the <ident
+	  type="attrName">parse</ident> attribute (whose valid values
+	  are either <ident type="attrVal">text</ident> or <ident
+	  type="attrVal">xml</ident> to specify whether the included
+	  content is plain text or an XML fragment, and the <ident
+	  type="attrName">encoding</ident> attribute to provide a
+	  hint, when the included fragment is text, of the character
+	  encoding of the fragment. An optional <gi>xi:fallback</gi>
+	  element is permitted within an <gi>xi:include</gi>; it
+	  specifies alternative content to be used when the external
+	  resource, for any reason, cannot be fetched. Its use is not
+	  recommeded for stand-off markup.</p>
           
-	<p>XInclude currently only requires support for one XPointer scheme,
-	  called <code>element()</code>. As described in <ptr target="#SAES"/>, the
-		<code>element()</code> scheme that can be either a bare
-	  name (denoting an element with a specific <ident
-	    type="attrName">xml:id</ident> attribute) or a child sequence
-	  (a numerical sequence of slash-separated child numbers specifying a path in the XML tree
-	  whose final step selects a specific subtree of XML content). Another scheme,
+	  <p>XInclude currently only requires support for one XPointer
+	  scheme, called <code>element()</code>. As described in <ptr
+	  target="#SAES"/>, the <code>element()</code> scheme that can
+	  be either a bare name (denoting an element with a specific
+	  <ident type="attrName">xml:id</ident> attribute) or a child
+	  sequence (a numerical sequence of slash-separated child
+	  numbers specifying a path in the XML tree whose final step
+	  selects a specific subtree of XML content). Another scheme,
 	  <code>xpointer()</code>, has not been turned into a W3C
 	  recommendation yet, although it has been part of the
-	  XPointer drafts from the beginning. The <code>xpointer()</code>
-	  scheme and the TEI schemes defined earlier (see <ptr target="#SATS"/>) add the concepts of points and
-          ranges, which can be used to specify sub-node fragments (e.g., a few
-	  words within a longer text node) or trans-node fragments
-	  (e.g., a segment of text that spans across different branches of
-	  the overall XML tree).</p>
+	  XPointer drafts from the beginning. The
+	  <code>xpointer()</code> scheme and the TEI schemes defined
+	  earlier (see <ptr target="#SATS"/>) add the concepts of
+	  points and ranges, which can be used to specify sub-node
+	  fragments (e.g., a few words within a longer text node) or
+	  trans-node fragments (e.g., a segment of text that spans
+	  across different branches of the overall XML tree).</p>
 
         </div3>
       <div3 type="subsection">
@@ -3148,38 +3152,37 @@ If bees are few.\n
   <head>1755</head>
    <l>
     <xi:include href="Source.xml" parse="xml"
-                xpointer="string-range(xpath(doc('Source.xml')),  0, 48)"/>
+                xpointer="string-range(element(/1),  0, 48)"/>
    </l>
    <l>
     <xi:include href="Source.xml" parse="xml"
-                xpointer="string-range(xpath(doc('Source.xml')), 49, 71)"/>
+                xpointer="string-range(element(/1), 49, 71)"/>
    </l>
    <l>
     <xi:include href="Source.xml" parse="xml"
-                xpointer="string-range(xpath(doc('Source.xml')), 72, 83)"/>
+                xpointer="string-range(element(/1), 72, 83)"/>
    </l>
    <l>
     <xi:include href="Source.xml" parse="xml"
-                xpointer="string-range(xpath(doc('Source.xml')), 84,109)"/>
+                xpointer="string-range(element(/1), 84,109)"/>
    </l>
    <l>
     <xi:include href="Source.xml" parse="xml"
-                xpointer="string-range(xpath(doc('Source.xml')),110,126)"/>
+                xpointer="string-range(element(/1),110,126)"/>
    </l>
  </body>
 </text>]]></eg></p>
 	<p>Please note that this specification requires that the
 	XInclude namespace declaration is present in all cases. The
 	<gi>xi:fallback</gi> element contains text or XML fragments to
-	be placed in the document if the inclusion, fails for any
+	be placed in the document if the inclusion fails for any
 	reason (for instance due to inaccessibility of an external
-	resource). The <gi>xi:fallback</gi> element is optional. An
-	XInclude processor must signal a fatal error when a resource
-	is not found, and no <gi>xi:fallback</gi> element is
-	present.</p>
-          <!-- there was a whole new element and discussion here, but the new spec from the W3C
-          makes the fallback element optional, and signals an error in the case that
-          the resource cannot be found. -->
+	resource). The <gi>xi:fallback</gi> element is optional; if it
+	is not present an XInclude processor must signal a fatal error
+	when a resource is not found. This is the preferred behavior
+	for use with stand-off markup, thus these Guidelines recommend
+	against the use of <gi>xi:fallback</gi> for stand-off
+	markup.</p>
       </div3>
       <div3 type="subsection">
 	<head>Well-formedness and validity of stand-off markup</head>
