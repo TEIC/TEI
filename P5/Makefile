@@ -195,7 +195,7 @@ fascicule: subset
 dist: clean dist-source dist-schema dist-doc dist-test dist-database dist-exemplars
 
 dist-source: 
-	rm -rf release/tei-p5-source
+	rm -rf release/tei-p5-source*
 	mkdir -p release/tei-p5-source/share/xml/tei/odd
 	tar -c -f - --exclude "*~" --exclude CVS *.* VERSION ChangeLog Source Makefile Utilities  \
 	| (cd release/tei-p5-source/share/xml/tei/odd; tar xf - )
@@ -204,7 +204,7 @@ dist-source:
 	zip -r tei-p5-source-`cat ../VERSION`.zip tei-p5-source-`cat ../VERSION` )
 
 dist-schema: schemas dtds oddschema
-	rm -rf release/tei-p5-schema
+	rm -rf release/tei-p5-schema*
 	mkdir -p release/tei-p5-schema/share/xml/tei/schema/dtd
 	mkdir -p release/tei-p5-schema/share/xml/tei/schema/relaxng
 	(cd DTD; tar --exclude CVS -c -f - .) \
@@ -217,7 +217,7 @@ dist-schema: schemas dtds oddschema
 	zip -r tei-p5-schema-`cat ../VERSION`.zip tei-p5-schema-`cat ../VERSION` )
 
 dist-doc:  html
-	rm -rf release/tei-p5-doc
+	rm -rf release/tei-p5-doc*
 	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc/html
 	(cd Guidelines; tar --exclude CVS -c -f - . ) \
 	| (cd release/tei-p5-doc/share/doc/tei-p5-doc/html; tar xf - )
@@ -232,7 +232,7 @@ dist-doc:  html
 	zip -r tei-p5-doc-`cat ../VERSION`.zip tei-p5-doc-`cat ../VERSION` )
 
 dist-test: 
-	rm -rf release/tei-p5-test
+	rm -rf release/tei-p5-test*
 	mkdir -p release/tei-p5-test/share/tei
 	(cd Test; make clean)
 	tar --exclude "*~" --exclude CVS -c -f - Test \
@@ -245,7 +245,7 @@ dist-exemplars:
 	(cd Exemplars; make dist)
 
 dist-database: 
-	rm -rf release/tei-p5-database
+	rm -rf release/tei-p5-database*
 	mkdir -p release/tei-p5-database/share/xml/tei/xquery
 	(cd Query; tar --exclude CVS -c -f - . ) \
 	| (cd release/tei-p5-database/share/xml/tei/xquery; tar xf - )
