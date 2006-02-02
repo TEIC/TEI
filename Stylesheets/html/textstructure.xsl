@@ -1373,14 +1373,16 @@ $ID: requests a particular page
 	     the first grandchild of <text > -->
         <xsl:for-each select=" descendant-or-self::tei:TEI/tei:text/tei:*[1]/*[1]">
           <xsl:apply-templates select="." mode="paging"/>
-          <xsl:if test="following-sibling::tei:div/tei:head and not(ancestor-or-self::tei:TEI[@rend='nomenu'])">
-            <xsl:call-template name="contentsHeading"/>
-            <ul class="toc">
-              <xsl:apply-templates select="following-sibling::tei:div" mode="maketoc">
-                <xsl:with-param name="forcedepth" select="'0'"/>
-              </xsl:apply-templates>
-            </ul>
-          </xsl:if>
+	  <xsl:if test="$autoToc='true'">
+	    <xsl:if test="following-sibling::tei:div/tei:head">
+	      <xsl:call-template name="contentsHeading"/>
+	      <ul class="toc">
+		<xsl:apply-templates select="following-sibling::tei:div" mode="maketoc">
+		  <xsl:with-param name="forcedepth" select="'0'"/>
+		</xsl:apply-templates>
+	      </ul>
+	    </xsl:if>
+	  </xsl:if>
         </xsl:for-each>
       </xsl:when>
       <xsl:otherwise>

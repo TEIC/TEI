@@ -271,8 +271,10 @@
 		<xsl:choose>
 		  <xsl:when test="tei:attList//tei:attDef">
 		    <xsl:for-each select="tei:attList//tei:attDef">
-		      <ref xmlns="http://relaxng.org/ns/structure/1.0"
-			   name="{$c}.attribute.{translate(@ident,':','')}"/>
+		      <xsl:if test="not(@ident='xmlns')">
+			<ref xmlns="http://relaxng.org/ns/structure/1.0"
+			     name="{$c}.attribute.{translate(@ident,':','')}"/>
+		      </xsl:if>
 		    </xsl:for-each>
 		  </xsl:when>
 		  <xsl:otherwise>

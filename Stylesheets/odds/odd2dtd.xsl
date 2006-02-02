@@ -1288,7 +1288,7 @@
     <xsl:when test="@ns='http://www.w3.org/XML/1998/namespace'">
       <xsl:text>xml:</xsl:text>
     </xsl:when>
-    <xsl:when test="$parameterize='true' and not($nsPrefix='')" >
+    <xsl:when test="$parameterize='true' and not($nsPrefix='') and not(@ident='xmlns')" >
 	<xsl:text>%NS;</xsl:text>
     </xsl:when>
   </xsl:choose>

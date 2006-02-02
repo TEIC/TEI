@@ -235,7 +235,6 @@ Make a separate file for footnotes
     <a class="hide">|</a>
     <a class="bannerright" href="{$parentURL}" title="Go to home page">
       <xsl:value-of select="$parentWords"/>
-      <xsl:text> home page</xsl:text>
     </a>
   </xsl:template>
 
