@@ -56,7 +56,7 @@
   <xsl:param name="lang">en</xsl:param>
   <xsl:param name="lookupDatabase">false</xsl:param>
   <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
-  <xsl:param name="verbose"></xsl:param>
+  <xsl:param name="verbose">false</xsl:param>
   <xsl:param name="schemaBaseURL">http://localhost/schema/relaxng/</xsl:param>
   
   <xsl:key name="LOCALIDENTS"   match="tei:*"   use="@ident"/>
@@ -1154,7 +1154,7 @@
 	      <xsl:text>classmembers.xq?class=</xsl:text>
 	      <xsl:value-of select="@ident"/>
 	    </xsl:variable>
-	    <xsl:if test="$verbose">
+	    <xsl:if test="$verbose='true'">
 	      <xsl:message>Accessing TEISERVER: <xsl:value-of
 	      select="$address"/></xsl:message>
 	    </xsl:if>
@@ -1361,7 +1361,7 @@
 	  <xsl:text>copytag.xq?name=</xsl:text>
 	  <xsl:value-of select="$name"/>
 	</xsl:variable>
-	<xsl:if test="$verbose">
+	<xsl:if test="$verbose='true'">
 	  <xsl:message>Accessing TEISERVER: <xsl:value-of
 	  select="$loc"/></xsl:message>
 	</xsl:if>

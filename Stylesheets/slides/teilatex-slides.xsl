@@ -94,6 +94,7 @@ select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:authority"/>
 <xsl:when test=".//tei:eg">[fragile]</xsl:when>
 <xsl:when test=".//tei:Output">[fragile]</xsl:when>
 <xsl:when test=".//tei:Screen">[fragile]</xsl:when>
+<xsl:when test=".//teix:egXML">[fragile]</xsl:when>
 </xsl:choose>
 <xsl:text>&#10;</xsl:text>
   \frametitle{<xsl:for-each select="tei:head"><xsl:apply-templates/></xsl:for-each>}
