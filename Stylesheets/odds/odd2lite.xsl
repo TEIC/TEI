@@ -77,11 +77,13 @@
   </xsl:template>
   
   <xsl:template match="tei:attRef">
-   <tei:label> 
-     <tei:ref target="#{@class}"><xsl:value-of
-     select="@class"/>.attribute.<xsl:value-of
-     select="@key"/></tei:ref></tei:label>
-     <tei:item></tei:item>
+    <tei:label> 
+      <tei:ref target="#{@name}">
+	<xsl:value-of  select="@name"/>
+      </tei:ref>
+    </tei:label>
+    <tei:item>
+    </tei:item>
   </xsl:template>
 
   <xsl:template match="tei:att">
@@ -147,33 +149,46 @@
     <xsl:choose>
       <xsl:when test="parent::tei:specGrp">
 	<tei:label/><tei:item><tei:emph>specification group
-	<tei:ref target="#{$W}"><xsl:for-each select="key('IDS',$W)">
-	  <xsl:number level="any"/>
-	  <xsl:if test="@n">
-	    <xsl:text>: </xsl:text><xsl:value-of select="@n"/>
-	  </xsl:if>
-	</xsl:for-each></tei:ref> appears here</tei:emph>
-	</tei:item>
+	<tei:ref target="#{$W}">
+	  <xsl:for-each select="key('IDS',$W)">
+	    <xsl:number level="any"/>
+	    <xsl:if test="@n">
+	      <xsl:text>: </xsl:text><xsl:value-of select="@n"/>
+	    </xsl:if>
+	    </xsl:for-each></tei:ref> appears here</tei:emph>
+	  </tei:item>
       </xsl:when>
       <xsl:when test="parent::tei:p">
-	&#171; <tei:emph>include
-	<tei:ref target="#{$W}"><xsl:for-each select="key('IDS',$W)">
-	  <xsl:number level="any"/>
-	  <xsl:if test="@n">
-	    <xsl:text>: </xsl:text><xsl:value-of select="@n"/>
-	  </xsl:if>
-	</xsl:for-each></tei:ref></tei:emph>
+	<xsl:text>&#171; </xsl:text>
+	<tei:emph>include
+	<tei:ref target="#{$W}">
+	  <xsl:for-each select="key('IDS',$W)">
+	    <xsl:number level="any"/>
+	    <xsl:if test="@n">
+	      <xsl:text>: </xsl:text>
+	      <xsl:value-of select="@n"/>
+	    </xsl:if>
+	  </xsl:for-each>
+	</tei:ref>
+	</tei:emph>
 	<xsl:text> &#187; </xsl:text>
       </xsl:when>
       <xsl:otherwise>
-	<tei:p>&#171; <tei:emph>include
-	<tei:ref target="#{$W}"><xsl:for-each select="key('IDS',$W)">
-	  <xsl:number level="any"/>
-	  <xsl:if test="@n">
-	    <xsl:text>: </xsl:text><xsl:value-of select="@n"/>
-	  </xsl:if>
-	</xsl:for-each></tei:ref></tei:emph>
-	<xsl:text> &#187; </xsl:text></tei:p>
+	<tei:p>
+	  <xsl:text>&#171; </xsl:text>
+	  <tei:emph>include
+	  <tei:ref target="#{$W}">
+	    <xsl:for-each select="key('IDS',$W)">
+	      <xsl:number level="any"/>
+	      <xsl:if test="@n">
+		<xsl:text>: </xsl:text>
+		<xsl:value-of select="@n"/>
+	      </xsl:if>
+	    </xsl:for-each>
+	  </tei:ref>
+	  </tei:emph>
+	  <xsl:text> &#187; </xsl:text>
+	</tei:p>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -224,16 +239,18 @@
   </xsl:template>
   
   <xsl:template match="tei:attDef/tei:exemplum">
-    <tei:label>
-      <tei:hi>
-	<xsl:call-template name="i18n">
-	  <xsl:with-param name="word">Example</xsl:with-param>
+    <tei:list type="gloss">
+      <tei:label>
+	<tei:hi>
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Example</xsl:with-param>
 	</xsl:call-template>
-      </tei:hi>
-    </tei:label>
-    <tei:item>
-      <xsl:apply-templates/>
-    </tei:item>
+	</tei:hi>
+      </tei:label>
+      <tei:item>
+	<xsl:apply-templates/>
+      </tei:item>
+    </tei:list>
   </xsl:template>
   
   
@@ -252,6 +269,15 @@
   </xsl:template>
   
   <xsl:template match="tei:attList[@org='choice']">
+    <tei:label>Choice:</tei:label>
+    <tei:item>
+      <tei:list type="gloss">
+	<xsl:apply-templates mode="summary"/>
+      </tei:list>
+    </tei:item>
+  </xsl:template>
+  
+  <xsl:template match="tei:attList[@org='choice']" mode="summary">
     <tei:label>Choice:</tei:label>
     <tei:item>
       <tei:list type="gloss">
@@ -464,9 +490,7 @@
 	</tei:list>
       </xsl:when>
       <xsl:when test="tei:attList//tei:attDef">
-	<tei:list type="gloss">
-	  <xsl:apply-templates select="tei:attList" mode="summary"/>
-	</tei:list>
+	<xsl:apply-templates select="tei:attList" mode="summary"/>
 	<xsl:if test="tei:classes/tei:memberOf">
 	  <xsl:call-template name="showAttClasses"/>
 	</xsl:if>
@@ -654,10 +678,11 @@
   
   
   <xsl:template match="tei:valList" mode="contents">
+    <xsl:text> </xsl:text>
     <xsl:choose>
       <xsl:when test="@type='semi'"> 
       <xsl:call-template name="i18n">
-	<xsl:with-param name="word">Suggested values	include</xsl:with-param>
+	<xsl:with-param name="word">Suggested values include</xsl:with-param>
       </xsl:call-template>
       <xsl:text>:</xsl:text>
       </xsl:when>
@@ -703,7 +728,6 @@
 	<xsl:call-template name="i18n">
 	  <xsl:with-param name="word">Example</xsl:with-param>
 	</xsl:call-template>
-	<xsl:text> </xsl:text>
 	<xsl:call-template name="compositeNumber"/>
 	</xsl:if>
       </xsl:with-param>
@@ -860,7 +884,9 @@
     <xsl:param name="id"/>
     <xsl:param name="name"/>
     <xsl:param name="text"/>
-    <tei:ref rend="{$class}" target="#{$name}"><xsl:copy-of  select="$text"/></tei:ref>
+    <tei:ref rend="{$class}" target="#{$name}">
+      <xsl:copy-of  select="$text"/>
+    </tei:ref>
   </xsl:template>
   
   <xsl:template name="refdoc">
@@ -947,7 +973,9 @@
     
     <xsl:choose>
       <xsl:when test="not($body='')">
-	<tei:ref target="#{$W}"><xsl:value-of select="$body"/></tei:ref>
+	<tei:ref target="#{$W}">
+	  <xsl:value-of select="$body"/>
+	</tei:ref>
       </xsl:when>
       <xsl:when test="$ptr='true'">
 	<tei:ptr target="#{$W}"/>
@@ -1031,7 +1059,9 @@
 <xsl:template name="linkIt">
   <xsl:param name="x"/>
   <xsl:param name="y"/>
-  <tei:ref target="{$x}"><xsl:value-of select="$y"/></tei:ref>
+  <tei:ref target="{$x}">
+    <xsl:value-of select="$y"/>
+  </tei:ref>
 </xsl:template>
   
 </xsl:stylesheet>

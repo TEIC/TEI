@@ -924,16 +924,30 @@
   
   
   <xsl:template name="compositeNumber">
-    <xsl:for-each select="ancestor::tei:div1|ancestor::tei:body/tei:div">
-      <xsl:number level="any"/>
-      <xsl:text>.</xsl:text>
-    </xsl:for-each>
-    <xsl:number level="any" from="tei:div1"/>
+    <xsl:choose>
+      <xsl:when test="ancestor::tei:div1">
+	<xsl:for-each select="ancestor::tei:div1">
+	  <xsl:number/>
+	</xsl:for-each>
+	<xsl:text>.</xsl:text>
+	<xsl:number level="any" from="tei:div1"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:for-each select="ancestor::tei:div[1]">
+	  <xsl:number
+	      level="multiple" 
+	      count="tei:div" from="tei:text"/>
+	</xsl:for-each>
+	<xsl:text>.</xsl:text>
+	<xsl:number from="tei:div"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template name="copyright">
     <xsl:apply-templates 
-	select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability" mode="copyrighttext"/>
+	select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability" 
+	mode="copyrighttext"/>
   </xsl:template>
 
   <xsl:template match="tei:p" mode="copyrighttext">
