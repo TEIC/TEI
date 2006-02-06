@@ -190,7 +190,7 @@
     <xsl:variable name="I">
       <xsl:value-of select="translate(@ident,':','')"/>
     </xsl:variable>
-    <xsl:if test="not(@ident='xmlns')">
+    <xsl:if test="not(starts-with(@ident,'xmlns'))">
       <xsl:choose>
 	<xsl:when test="ancestor::tei:elementSpec">
 	  <xsl:call-template name="makeAnAttribute"/>
@@ -271,7 +271,7 @@
 		<xsl:choose>
 		  <xsl:when test="tei:attList//tei:attDef">
 		    <xsl:for-each select="tei:attList//tei:attDef">
-		      <xsl:if test="not(@ident='xmlns')">
+		      <xsl:if test="not(starts-with(@ident,'xmlns'))">
 			<ref xmlns="http://relaxng.org/ns/structure/1.0"
 			     name="{$c}.attribute.{translate(@ident,':','')}"/>
 		      </xsl:if>
@@ -281,6 +281,7 @@
 		    <notAllowed  xmlns="http://relaxng.org/ns/structure/1.0"/>
 		  </xsl:otherwise>
 		</xsl:choose>
+		<empty xmlns="http://relaxng.org/ns/structure/1.0"/>
 	      </define>
 	      <xsl:apply-templates select="tei:attList" mode="tangle">
 		<xsl:with-param name="element" select="@ident"/>
