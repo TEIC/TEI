@@ -40,8 +40,7 @@
       
     </xd:detail>
     <xd:author>Sebastian Rahtz sebastian.rahtz@oucs.ox.ac.uk</xd:author>
-    <xd:cvsId>$Id$</xd:cvsId>
-    <xd:copyright>2005, TEI Consortium</xd:copyright>
+    <xd:cvsId>$Id$</xd:cvsId>    <xd:copyright>2005, TEI Consortium</xd:copyright>
   </xd:doc>
   
   <xsl:include href="RngToRnc.xsl"/>
@@ -190,7 +189,7 @@
     <xsl:variable name="I">
       <xsl:value-of select="translate(@ident,':','')"/>
     </xsl:variable>
-    <xsl:if test="not(starts-with(@ident,'xmlns'))">
+    <xsl:if test="not(starts-with(@ident,'xml'))">
       <xsl:choose>
 	<xsl:when test="ancestor::tei:elementSpec">
 	  <xsl:call-template name="makeAnAttribute"/>
@@ -271,7 +270,7 @@
 		<xsl:choose>
 		  <xsl:when test="tei:attList//tei:attDef">
 		    <xsl:for-each select="tei:attList//tei:attDef">
-		      <xsl:if test="not(starts-with(@ident,'xmlns'))">
+		      <xsl:if test="not(starts-with(@ident,'xml'))">
 			<ref xmlns="http://relaxng.org/ns/structure/1.0"
 			     name="{$c}.attribute.{translate(@ident,':','')}"/>
 		      </xsl:if>
