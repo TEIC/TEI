@@ -1352,7 +1352,12 @@
       <xsl:value-of select="@key"/>
     </xsl:variable>
     <xsl:variable name="atts">
-      <xsl:value-of select="normalize-space(@atts)"/>
+      <xsl:choose>
+	<xsl:when test="@rend='noatts'">-</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="normalize-space(@atts)"/>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="$name=''">
