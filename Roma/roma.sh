@@ -94,6 +94,8 @@ makeXMLDOC()
 {
     echo "6. make expanded documented ODD"
     xsltproc $DEBUG     \
+        --stringparam TEISERVER $TEISERVER  \
+	--stringparam localsource "$LOCAL"  \
 	--stringparam TEIC $TEIC \
         --stringparam lang $lang  \
 	-o $N.doc.xml \
