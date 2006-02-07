@@ -466,6 +466,7 @@
     <tei:hi>&lt;<xsl:call-template name="identifyMe"/>&gt; </tei:hi>
     <xsl:value-of select="tei:desc"/>
     <xsl:choose>
+      <xsl:when test="$atts='-'"/>
       <xsl:when test="not($atts='')">
 	<tei:list type="gloss">
 	  <xsl:variable name="HERE" select="."/>
