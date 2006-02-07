@@ -43,8 +43,16 @@ page-preparation techniques.</desc>
 	<equiv/>
 	<gloss/>
 	<desc>specifies the number of written lines per colum</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/></datatype>
-      <valDesc>may be given as a pair of numbers (a range), as  a whole number, or as the string "NA" (not applicable)</valDesc>
+      <datatype>
+<rng:choice
+		    xmlns:rng="http://relaxng.org/ns/structure/1.0">
+<rng:ref name="data.count"/>
+<rng:list>
+<rng:ref name="data.count"/>
+<rng:ref name="data.count"/>
+</rng:list>
+</rng:choice></datatype>
+      <valDesc>may be given as a pair of numbers (a range), as  a single number.</valDesc>
     </attDef>
   </attList>
   <exemplum>
@@ -54,6 +62,12 @@ Most pages have between 25 and 32 long lines ruled in lead.</layout></egXML>
   </exemplum><exemplum>    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0"><layout columns="2" ruledLines="42">
 <p>2 columns of 42 lines ruled in ink, with central rule 
 between the columns.</p>
+</layout></egXML>  </exemplum><exemplum>    <egXML
+xmlns="http://www.tei-c.org/ns/Examples"
+xmlns:rng="http://relaxng.org/ns/structure/1.0"><layout columns="2"
+writtenLines="40 50">
+<p>2 columns, with central rule 
+between the columns; each column with between 40 and 50 lines of writing.</p>
 </layout></egXML>
   </exemplum>
   <listRef>
