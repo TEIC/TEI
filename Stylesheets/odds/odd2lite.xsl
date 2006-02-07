@@ -398,22 +398,7 @@
 	  <xsl:with-param name="word">Attributes</xsl:with-param>
 	</xsl:call-template>
       <xsl:text>: </xsl:text>
-      <xsl:choose>
-	<xsl:when test="count(../tei:classes/tei:memberOf)&gt;0">
-	  <xsl:call-template name="i18n">
-	    <xsl:with-param name="word">Global attributes and those inherited from</xsl:with-param>
-	  </xsl:call-template>
-	  <xsl:text> </xsl:text>
-	  <xsl:for-each select="..">
-	    <xsl:call-template name="showAttClasses"/>
-	  </xsl:for-each>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:call-template name="i18n">
-	    <xsl:with-param name="word">Global attributes only</xsl:with-param>
-	  </xsl:call-template>
-	</xsl:otherwise>
-      </xsl:choose>
+      <xsl:call-template name="showAttClasses"/>
       </tei:p>
     </xsl:if>
     <xsl:apply-templates mode="weave"/>
@@ -490,15 +475,12 @@
 	  </xsl:for-each>
 	</tei:list>
       </xsl:when>
-      <xsl:when test="tei:attList//tei:attDef">
+      <xsl:otherwise>
 	<xsl:apply-templates select="tei:attList" mode="summary"/>
-	<xsl:if test="tei:classes/tei:memberOf">
-	  <xsl:call-template name="showAttClasses"/>
-	</xsl:if>
-      </xsl:when>
-      <xsl:when test="tei:classes/tei:memberOf">
+	<xsl:text>(</xsl:text>
 	<xsl:call-template name="showAttClasses"/>
-      </xsl:when>
+	<xsl:text>)</xsl:text>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   
@@ -790,25 +772,7 @@
   
   <xsl:template name="displayAttList">
     <xsl:param name="mode"/>
-    <xsl:choose>
-      <xsl:when test=".//tei:attDef">
-	<xsl:choose>
-	  <xsl:when test="count(../tei:classes/tei:memberOf)&gt;0">
-	    <xsl:text> (</xsl:text>
-	      <xsl:call-template name="i18n">
-	      <xsl:with-param name="word">In addition to global attributes and those inherited from</xsl:with-param></xsl:call-template>
-	      <xsl:text> </xsl:text>
-	    <xsl:for-each select="..">
-	      <xsl:call-template name="showAttClasses"/>
-	    </xsl:for-each>
-	    <xsl:text>)</xsl:text>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    (<xsl:call-template name="i18n">
-	      <xsl:with-param name="word">In addition to global attributes</xsl:with-param>
-	      </xsl:call-template>)
-	  </xsl:otherwise>
-	</xsl:choose>
+        <xsl:call-template name="showAttClasses"/>
 	<tei:list type="gloss">
 	  <xsl:choose>
 	    <xsl:when test="$mode='all'">
@@ -819,26 +783,6 @@
 	    </xsl:otherwise>
 	  </xsl:choose>
 	</tei:list>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:choose>
-	  <xsl:when test="count(../tei:classes/tei:memberOf)&gt;0">
-	    <xsl:call-template name="i18n">
-	      <xsl:with-param name="word">Global attributes and those inherited from</xsl:with-param>
-	    </xsl:call-template>
-	    <xsl:text> </xsl:text>
-	    <xsl:for-each select="..">
-	      <xsl:call-template name="showAttClasses"/>
-	    </xsl:for-each>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:call-template name="i18n">
-	      <xsl:with-param name="word">Global attributes only</xsl:with-param>
-	    </xsl:call-template>
-	  </xsl:otherwise>
-	</xsl:choose>
-      </xsl:otherwise>
-    </xsl:choose>
   </xsl:template>
   
   

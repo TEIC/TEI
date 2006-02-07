@@ -189,7 +189,7 @@
     <xsl:variable name="I">
       <xsl:value-of select="translate(@ident,':','')"/>
     </xsl:variable>
-    <xsl:if test="not(starts-with(@ident,'xml'))">
+    <xsl:if test="not(starts-with(@ident,'xmlns'))">
       <xsl:choose>
 	<xsl:when test="ancestor::tei:elementSpec">
 	  <xsl:call-template name="makeAnAttribute"/>
@@ -270,7 +270,7 @@
 		<xsl:choose>
 		  <xsl:when test="tei:attList//tei:attDef">
 		    <xsl:for-each select="tei:attList//tei:attDef">
-		      <xsl:if test="not(starts-with(@ident,'xml'))">
+		      <xsl:if test="not(starts-with(@ident,'xmlns'))">
 			<ref xmlns="http://relaxng.org/ns/structure/1.0"
 			     name="{$c}.attribute.{translate(@ident,':','')}"/>
 		      </xsl:if>
@@ -1093,7 +1093,10 @@
   </xsl:template>
   
   <xsl:template name="showAttClasses">
+    <xsl:param name="minimal">false</xsl:param>
     <xsl:variable name="clatts">
+    <xsl:for-each
+         select="ancestor-or-self::tei:elementSpec|ancestor-or-self::tei:classSpec">
       <xsl:for-each select="tei:classes/tei:memberOf">
 	<xsl:choose>
 	  <xsl:when test="key('CLASSES',@key)">
@@ -1116,12 +1119,47 @@
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:for-each>
+    </xsl:for-each>
     </xsl:variable>
-    <xsl:if test="not($clatts='')">
-      <xsl:text> [</xsl:text>
-      <xsl:copy-of select="$clatts"/>
-      <xsl:text>] </xsl:text>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="$minimal='true' and not($clatts='')">
+	<xsl:text> [+ </xsl:text>
+	<xsl:copy-of select="$clatts"/>
+	<xsl:text>]</xsl:text>
+      </xsl:when>
+      <xsl:when test="not($clatts='')">
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">
+	  <xsl:choose>
+	    <xsl:when test=".//tei:attDef">
+	      <xsl:text>In addition to global attributes and those inherited from</xsl:text>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:text>Global attributes and those inherited from</xsl:text>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	  </xsl:with-param>
+	</xsl:call-template>
+	<xsl:text> </xsl:text>
+	<xsl:text> [</xsl:text>
+	<xsl:copy-of select="$clatts"/>
+	<xsl:text>] </xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">
+	    <xsl:choose>
+	      <xsl:when test=".//tei:attDef">
+		<xsl:text>In addition to global attributes</xsl:text>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:text>Global attributes only</xsl:text>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template name="generateMembers">
