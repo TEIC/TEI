@@ -568,6 +568,7 @@
     <xsl:text> </xsl:text>
     <xsl:value-of select="tei:desc"/>
     <xsl:choose>
+      <xsl:when test="$atts='-'"/>
       <xsl:when test="not($atts='')">
 	<table class="attList">
 	  <xsl:variable name="HERE" select="."/>
