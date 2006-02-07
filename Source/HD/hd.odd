@@ -1179,6 +1179,8 @@ subdivisions of the <gi>encodingDesc</gi> element.  It is used to record
 the following information about the tagging used within a particular
 text:
 <list type="simple">
+<item>the namespace to which elements appearing within the transcribed
+text belong.</item>
 <item>how often particular elements appear within the text, so that
 a recipient can validate the integrity of a text during interchange.</item>
 <item>any comment relating to the usage of particular elements not
@@ -1189,12 +1191,14 @@ attribute.</item></list></p>
 <p>This information is conveyed by the following elements:
 <specList>
 <specDesc key="rendition"/>
-<specDesc key="tagUsage" atts="occurs withId render"/>
+<specDesc key="namespace"/>
+<specDesc key="tagUsage" />
 </specList></p>
 <p>The <gi>tagsDecl</gi> element consists of an optional sequence of
 <gi>rendition</gi> elements, each of which must bear a unique
-identifier, followed by a sequence of <gi>tagUsage</gi> elements, one
-for each distinct element occurring within the outermost
+identifier, followed by at least one <gi>namespace</gi> element,
+containing a series <gi>tagUsage</gi> elements, one
+for each distinct element from that namespace occurring within the outermost
 <gi>text</gi> element of a TEI document.</p>
 <p>The <gi>rendition</gi> element defined in this version of the TEI
 Guidelines is a preliminary proposal only, intended to provide a hook
@@ -1220,8 +1224,10 @@ elements are to use a different set, identified as <val>style2</val>:
    <rendition xml:id="style2">   
       ... description of another default rendition here ...
    </rendition>
+   <namespace name="http://www.tei-c.org/ns/1.0">
    <tagUsage gi="p" render="#style1"> ... </tagUsage>
    <tagUsage gi="hi" render="#style2"> ... </tagUsage>
+   </namespace>
 </tagsDecl></egXML></p><p>No detailed proposals for the content of the <gi>rendition</gi>
 element have as yet been formulated. Earlier versions of
 these Guidelines suggested that specifications derived from,
@@ -1233,7 +1239,7 @@ vehicle for their expression, as is the XML vocabulary for
 specifying formatting semantics which forms a part of the
 W3C's Extensible Stylesheet Language (<ptr target="http://www.w3.org/TR/xsl"/>).</p> <p>A <gi>tagsDecl</gi> need not specify
 any <gi>rendition</gi> element.  It must however 
-contain exactly one occurrence of a <gi>tagUsage</gi>
+contain at least one <gi>namespace</gi> element, which should contain exactly one occurrence of a <gi>tagUsage</gi>
 element for each distinct element marked within the
 outermost <gi>text</gi> element associated with the
 <gi>teiHeader</gi> in which it appears.<note place="foot">In the case of a TEI corpus (<ptr target="#CC"/>), a
@@ -1251,7 +1257,7 @@ used to supply a count of the number of occurrences of this
 This indicates that the <gi>hi</gi> element appears a total of 28 times
 in the <gi>text</gi> element in question, and that the encoder has used
 it to mark italicised English phrases only.</p>
-<p>The <att>ident</att> attribute may optionally be used to specify how
+<p>The <att>withId</att> attribute may optionally be used to specify how
 many of the occurrences of the element in question bear a value for the
 global <att>xml:id</att> attribute, as in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><tagUsage gi="pb" occurs="321" withId="321">
@@ -1270,6 +1276,7 @@ attributes must correspond with the number of such elements present in the
 document, as identified by some conforming processor.
 <specGrp xml:id="DHD57" n="Tag usage and rendition declarations">&tagsdecl.odd;
 &tagusage.odd;
+&namespace.odd;
 &renditn.odd;</specGrp></p></div3>
 <div3  xml:id="HD54"><head>The Reference System Declaration</head>
 <p>The <gi>refsDecl</gi> element is the fifth of the nine optional
