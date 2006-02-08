@@ -35,6 +35,9 @@
     <xd:copyright>2005, TEI Consortium</xd:copyright>
   </xd:doc>
 
+  <xsl:key name="KEYS" use="key" match="entry"/>
+  <xsl:param name="lang">en</xsl:param>
+
   <xd:doc>
     <xd:short>[common] give language-specific version of a word of phrase</xd:short>
     <xd:param name="word">the word(s) to translate</xd:param>
