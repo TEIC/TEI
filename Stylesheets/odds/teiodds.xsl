@@ -17,6 +17,7 @@
     version="1.0">
   
   <xsl:import href="../common/verbatim.xsl"/>
+  <xsl:import href="../common/i18n.xsl"/>
   <xd:doc type="stylesheet">
     <xd:short>
       TEI stylesheet for processing TEI ODD markup

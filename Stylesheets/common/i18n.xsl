@@ -8,9 +8,6 @@
   exclude-result-prefixes="xd tei fotex fo" 
   version="1.0">
 
-
-  <xsl:import href="tei-param.xsl"/>
-
 <xd:doc type="stylesheet">
     <xd:short>
     TEI stylesheet definitions common for all of HTML, FO and LaTeX outputs
@@ -37,13 +34,6 @@
     <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2005, TEI Consortium</xd:copyright>
   </xd:doc>
-
-  <xsl:include href="core.xsl"/>
-  <xsl:include href="textstructure.xsl"/>
-  <xsl:include href="header.xsl"/>
-  <xsl:include href="linking.xsl"/>
-  <xsl:include href="figures.xsl"/>
-  <xsl:include href="i18n.xsl"/>
 
   <xd:doc>
     <xd:short>[common] give language-specific version of a word of phrase</xd:short>
