@@ -1145,10 +1145,22 @@
   </xd:doc>
   <xsl:template match="tei:quote">
     <xsl:choose>
-      <xsl:when test="ancestor::tei:dicteg">
+      <xsl:when test="parent::tei:cit">
+	<div class="citquote">
+	  <xsl:apply-templates/>
+	</div>
+      </xsl:when>
+      <xsl:when test="@rend='quoted'">
 	<xsl:value-of select="$preQuote"/>
 	<xsl:apply-templates/>
 	<xsl:value-of select="$postQuote"/>
+	<xsl:if test="following-sibling::tei:bibl">
+	  <span class="quotedbibl">
+	   <xsl:text>(</xsl:text>
+	   <xsl:apply-templates select="following-sibling::tei:bibl"/>
+	   <xsl:text>)</xsl:text>
+	  </span>
+	</xsl:if>
       </xsl:when>
       <xsl:otherwise>
 	<blockquote>
@@ -1157,18 +1169,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements  tei:quote[@rend='quoted']</xd:short>
-    <xd:detail>&#160;</xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:quote[@rend='quoted']">
-    <xsl:text>`</xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>' </xsl:text>
-    <xsl:if test="following-sibling::tei:bibl">
-      <font size="-1">(<xsl:apply-templates select="following-sibling::tei:bibl"/>)</font>
-    </xsl:if>
-  </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements  tei:resp</xd:short>
     <xd:detail>&#160;</xd:detail>
