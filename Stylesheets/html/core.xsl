@@ -234,38 +234,38 @@
     </div>
   </xsl:template>
   <xd:doc>
-    <xd:short>Process elements  tei:change</xd:short>
+    <xd:short>Process element  tei:change</xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:change">
     <tr>
       <td width="15%" valign="top">
-        <xsl:value-of select="./date"/>
+        <xsl:value-of select="tei:date"/>
       </td>
       <td width="85%">
-        <xsl:value-of select="./item"/>
+        <xsl:value-of select="tei:item"/>
       </td>
     </tr>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements  tei:cit</xd:short>
-    <xd:detail>&#160;</xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:cit">
-        <xsl:apply-templates/>
-  </xsl:template>
 
   <xd:doc>
-    <xd:short>Process elements  tei:cit[@rend='display']</xd:short>
+    <xd:short>Process element tei:cit</xd:short>
     <xd:detail>
       <p> quoting </p>
     </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:cit[@rend='display']">
-    <blockquote>
-      <xsl:apply-templates select="tei:q|quote"/>
-      <xsl:apply-templates select="tei:bibl"/>
-    </blockquote>
+  <xsl:template match="tei:cit">
+    <xsl:choose>
+      <xsl:when test="@rend='display'">
+	<blockquote>
+	  <xsl:apply-templates select="tei:q|tei:quote"/>
+	  <xsl:apply-templates select="tei:bibl"/>
+	</blockquote>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>  
   </xsl:template>
 
   <xd:doc>
@@ -290,7 +290,7 @@
   <xsl:template match="tei:editor" mode="first">
     <xsl:value-of select="tei:name/@reg"/>
     <xsl:text> (ed.)</xsl:text>
-    <xsl:if test="name[position()&gt;1]">
+    <xsl:if test="tei:name[position()&gt;1]">
       <xsl:text> (e.a.)</xsl:text>
     </xsl:if>
     <xsl:text>: </xsl:text>
@@ -344,7 +344,7 @@
     <xd:short>Process elements  tei:epigraph/lg</xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
-  <xsl:template match="tei:epigraph/lg">
+  <xsl:template match="tei:epigraph/tei:lg">
     <table>
       <xsl:apply-templates/>
     </table>
@@ -716,7 +716,7 @@
       </xsl:when>
       <xsl:when test="@type='gloss' and @rend='multicol'">
         <xsl:variable name="nitems">
-          <xsl:value-of select="count(item)div 2"/>
+          <xsl:value-of select="count(tei:item)div 2"/>
         </xsl:variable>
         <p>
           <table>
@@ -889,7 +889,11 @@
         <xsl:apply-templates select="tei:edition"/>
         <xsl:apply-templates select="tei:imprint"/>
         <xsl:if test="child::tei:note">
-      Zie noot: <xsl:apply-templates select="child::tei:note"/>
+      	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Note</xsl:with-param>
+	</xsl:call-template>
+	<xsl:text>: </xsl:text>
+	<xsl:apply-templates select="child::tei:note"/>
     </xsl:if>
       </td>
     </tr>
@@ -1140,9 +1144,18 @@
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:quote">
-    <blockquote>
-      <xsl:apply-templates/>
-    </blockquote>
+    <xsl:choose>
+      <xsl:when test="ancestor::tei:dicteg">
+	<xsl:value-of select="$preQuote"/>
+	<xsl:apply-templates/>
+	<xsl:value-of select="$postQuote"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<blockquote>
+	  <xsl:apply-templates/>
+	</blockquote>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:quote[@rend='quoted']</xd:short>

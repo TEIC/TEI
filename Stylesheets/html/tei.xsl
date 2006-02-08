@@ -45,6 +45,7 @@
   </xd:doc>
   <xsl:include href="core.xsl"/>
   <xsl:include href="corpus.xsl"/>
+  <xsl:include href="dictionaries.xsl"/>
   <xsl:include href="drama.xsl"/>
   <xsl:include href="figures.xsl"/>
   <xsl:include href="header.xsl"/>
