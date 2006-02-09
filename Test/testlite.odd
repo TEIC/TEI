@@ -83,12 +83,13 @@ made file from old ED W21
       <titlePage>
         <docTitle>
           <titlePart type="main">TEI Lite: 
-An Introduction to Text Encoding for Interchange</titlePart>
-<titlePart>Revised for TEI P5 release</titlePart>
+Encoding for Interchange: an introduction to the TEI
+</titlePart>
+<titlePart type="sub">Revised for TEI P5 release</titlePart>
         </docTitle>
         <docAuthor>Lou Burnard</docAuthor>
         <docAuthor>C. M. Sperberg-McQueen</docAuthor>
-        <docDate>January 2006</docDate>
+        <docDate>February 2006</docDate>
       </titlePage>
       <div type="preface" xml:id="U5-pref">
         <head>Prefatory note</head>
@@ -100,7 +101,7 @@ imagine TEI Lite to be all there is to TEI, or find TEI Lite to be far
 too heavy for their needs.<!-- (to meet the latter criticism, Michael also
 prepared a special <ref target="http://www.tei-c.org/Vault/Bare">barebones version of TEI
 Lite</ref>).--></p>
-        <p>The original TEI Lite was based largely on our observations of existing and
+        <p>The original TEI Lite was based largely on  observations of existing and
 previous practice in the encoding of texts, particularly as manifest
 in the collections of the <ref target="http://ota.ahds.ac.uk">Oxford
 Text Archive</ref> and in our own experience. It is therefore
@@ -116,22 +117,25 @@ formatted versions in HTML, PDF, etc., some of which can be found
 in <ref target="http://www.tei-c.org/Vault/">The TEI Vault</ref>.</p>
 -->
         <p>Early adopters of TEI Lite included a number of
-<soCalled>Electronic Text Centers</soCalled>, many of whom produced
-their own documentation and tutorial materials (some examples are
-listed in <ref target="http://www.tei-c.org/Tutorials">the TEI Tutorials
-pages</ref>). </p>
+        <soCalled>Electronic Text Centers</soCalled>, many of whom
+        produced their own documentation and tutorial materials (some
+        examples are listed in <ref
+        target="http://www.tei-c.org/Tutorials">the TEI Tutorials
+        pages</ref>). It was also widely adopted as the basis for
+        TEI-conformant authoring systems. Documentation introducing
+        TEI Lite has been widely used for tutorial purposes and has
+        been widely translated (see further the list of versions at
+        <ptr target="http://www.tei-c.org/Lite/"/>).</p>
 
 <p>With the publication of TEI P4, the XML version of the TEI
 Guidelines, which uses the generation of TEI Lite as an example of the
-Modification mechanism built into the TEI Guidelines, the opportunity
-was taken to produce a lightly revised version which documents an 
-<ref target="http://www.tei-c.org/Lite/DTD/teixlite.dtd">XML version of the
-original TEI Lite DTD</ref>. </p>
-
-<p>The present version is a more substantive revision, taking
-advantage of the many new features introduced into the TEI Guidelines
-at release P5. A brief list of those changes likely to affect users of
-previous versions of this document is given below (<ptr target="#changes"/>). </p>
+modification mechanism built into the TEI Guidelines, the opportunity
+was taken to produce a lightly revised XML-conformant version, but the
+present revision is the first substantively changed version since its
+first appearance in 1997. This revision takes advantage of the many
+new features introduced into the TEI Guidelines at release P5. A brief
+list of those changes likely to affect users of previous versions of
+this document is given below (<ptr target="#changes"/>). </p>
 
         <trailer>Lou Burnard, February 2006</trailer>
       </div>
@@ -1695,8 +1699,86 @@ and so on.
 Sebastopol: O'Reilly & Associates, 1991, p. 8. -->
       </div>
 
+        <div >
+          <head>Abbreviations and their Expansion</head>
+  <p>Like names, dates, and numbers, abbreviations may be transcribed
+as they stand or expanded; they may be left unmarked, or encoded using
+the following elements:
+<specList>
+<specDesc key="abbr"/>
+<specDesc key="expan"/>
+</specList>
+<!--<list type="gloss"><label><gi>abbr</gi></label><item>contains an abbreviation of any sort. Attributes include:
+<list type="gloss"><label><att>expan</att></label><item>gives an expansion of the abbreviation.</item><label><att>type</att></label><item>allows the encoder to classify the abbreviation according to
+some convenient typology. Sample values include
+<mentioned>contraction</mentioned>,
+<mentioned>suspension</mentioned>, <mentioned>brevigraph</mentioned>,
+<mentioned>superscription</mentioned>, or <mentioned>acronym</mentioned>.
+ The <att>type</att> attribute may also be given values like
+<mentioned>title</mentioned> (for titles of address),
+<mentioned>geographic</mentioned>,
+<mentioned>organization</mentioned>, etc., describing the nature of
+the object referred to.</item></list></item></list>-->
+</p>
+  <p>The <gi>abbr</gi> element is useful as a means of distinguishing
+semi-lexical items such as acronyms or jargon:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">We can sum up the above discussion as follows:  the identity of a
+<abbr>CC</abbr> is defined by that calibration of values which
+motivates the elements of its <abbr>GSP</abbr>;</egXML><!-- Halliday and Hassan, Language, context, and text:        --><!-- aspects of language in a social-semiotic perspective     --><!-- (OUP, 1990), p 104                                       -->
+<egXML xmlns="http://www.tei-c.org/ns/Examples">Every manufacturer of <abbr>3GL</abbr> or <abbr>4GL</abbr>
+languages is currently nailing on <abbr>OOP</abbr> extensions</egXML> <!-- .EXE magazine Editorial, 6.11, (May 1992) p2 --></p>
+  <p>The <att>type</att> attribute may be used to distinguish
+types of abbreviation by their function. </p>
+<!--, and the <att>expan</att>
+attribute may be used to supply an expansion:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"> <name><abbr type="title" expan="Doctor">Dr.</abbr>
+ <abbr type="initial" expan="Marilyn">M.</abbr>
+ Deegan</name>
+ is the Director of the
+ <abbr expan="Computers in Teaching Initiative" type="acronym">
+ CTI</abbr> Centre for Textual Studies.</egXML></p>-->
+<p>The <gi>expan</gi> element is used to mark an expansion supplied by
+an encoder. This element is particularly useful in the transcription of manuscript
+materials. For example, the
+character p with a bar through its descender as a conventional
+representation for the word <val>per</val> is commonly encountered in
+Medieval European manuscripts. An encoder may choose to expand this as
+follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<expan>per</expan> 
+</egXML>
+</p>
+<p>The expansion corresponding with an abbreviated form may not
+always contain the same letters as the abbreviation. Where it does,
+however, common editorial practice is  to italicize or otherwise
+signal which letters have been supplied. The <gi>expan</gi> element
+should not be used for this purpose since its function is to indicate an
+expanded form, not a part of one. 
+For example, consider the common
+abbreviation <val>wt</val> (for <val>with</val>) found in medieval
+texts. In a modern edition, an editor might wish to represent this as
+<soCalled>w<hi>i</hi>t<hi>h</hi></soCalled>, italicising the
+letters not found in the source. An appropriate encoding for this
+purpose would be 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<expan>w<hi>i</hi>t<hi>h</hi></expan>
+</egXML>
+</p>
+<p>To record both an
+abbreviation and its expansion, the <gi>choice</gi> element mentioned
+above may be used to group the abbreviated form with its proposed
+expansion: 
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><choice>
+<abbr>wt</abbr>
+<expan>with</expan>
+</choice> 
+</egXML>
+  </p>       </div>
+
+      </div>
+
       <div type="Section" xml:id="U5-names">
-        <head>Names, Dates, Numbers and   Abbreviations</head>
+        <head>Names, Dates, and  Numbers</head>
 <p>The TEI scheme defines elements for a large number of
 <soCalled>data-like</soCalled> features which may appear almost
 anywhere within almost any kind of text. These features may be of
@@ -1850,110 +1932,10 @@ standard form.</item></list></item></list>-->
 <num type="percentage" value="10">10%</num>
 <num type="ordinal" value="5">5th</num></egXML></p>
         </div>
-        <div >
-          <head>Abbreviations and their Expansion</head>
-  <p>Like names, dates, and numbers, abbreviations may be transcribed
-as they stand or expanded; they may be left unmarked, or encoded using
-the following elements:
-<specList>
-<specDesc key="abbr"/>
-<specDesc key="expan"/>
-</specList>
-<!--<list type="gloss"><label><gi>abbr</gi></label><item>contains an abbreviation of any sort. Attributes include:
-<list type="gloss"><label><att>expan</att></label><item>gives an expansion of the abbreviation.</item><label><att>type</att></label><item>allows the encoder to classify the abbreviation according to
-some convenient typology. Sample values include
-<mentioned>contraction</mentioned>,
-<mentioned>suspension</mentioned>, <mentioned>brevigraph</mentioned>,
-<mentioned>superscription</mentioned>, or <mentioned>acronym</mentioned>.
- The <att>type</att> attribute may also be given values like
-<mentioned>title</mentioned> (for titles of address),
-<mentioned>geographic</mentioned>,
-<mentioned>organization</mentioned>, etc., describing the nature of
-the object referred to.</item></list></item></list>-->
-</p>
-  <p>The <gi>abbr</gi> element is useful as a means of distinguishing
-semi-lexical items such as acronyms or jargon:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">We can sum up the above discussion as follows:  the identity of a
-<abbr>CC</abbr> is defined by that calibration of values which
-motivates the elements of its <abbr>GSP</abbr>;</egXML><!-- Halliday and Hassan, Language, context, and text:        --><!-- aspects of language in a social-semiotic perspective     --><!-- (OUP, 1990), p 104                                       -->
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Every manufacturer of <abbr>3GL</abbr> or <abbr>4GL</abbr>
-languages is currently nailing on <abbr>OOP</abbr> extensions</egXML> <!-- .EXE magazine Editorial, 6.11, (May 1992) p2 --></p>
-  <p>The <att>type</att> attribute may be used to distinguish
-types of abbreviation by their function. </p>
-<!--, and the <att>expan</att>
-attribute may be used to supply an expansion:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"> <name><abbr type="title" expan="Doctor">Dr.</abbr>
- <abbr type="initial" expan="Marilyn">M.</abbr>
- Deegan</name>
- is the Director of the
- <abbr expan="Computers in Teaching Initiative" type="acronym">
- CTI</abbr> Centre for Textual Studies.</egXML></p>-->
-<p>The <gi>expan</gi> element is used to mark an expansion supplied by
-an encoder. This element is particularly useful in the transcription of manuscript
-materials. For example, the
-character p with a bar through its descender as a conventional
-representation for the word <val>per</val> is commonly encountered in
-Medieval European manuscripts. An encoder may choose to expand this as
-follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<expan>per</expan> 
-</egXML>
-</p>
-<p>The expansion corresponding with an abbreviated form may not
-always contain the same letters as the abbreviation. Where it does,
-however, common editorial practice is  to italicize or otherwise
-signal which letters have been supplied. The <gi>expan</gi> element
-should not be used for this purpose since its function is to indicate an
-expanded form, not a part of one. 
-For example, consider the common
-abbreviation <val>wt</val> (for <val>with</val>) found in medieval
-texts. In a modern edition, an editor might wish to represent this as
-<soCalled>w<hi>i</hi>t<hi>h</hi></soCalled>, italicising the
-letters not found in the source. An appropriate encoding for this
-purpose would be 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<expan>w<hi>i</hi>t<hi>h</hi></expan>
-</egXML>
-</p>
-<p>To record both an
-abbreviation and its expansion, the <gi>choice</gi> element mentioned
-above may be used to group the abbreviated form with its proposed
-expansion: 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><choice>
-<abbr>wt</abbr>
-<expan>with</expan>
-</choice> 
-</egXML>
-  </p>       </div>
-        <div >
-          <head>Addresses</head>
-  <p>The <gi>address</gi> element is used to mark a postal address of
-any kind. It contains one or more <gi>addrLine</gi> elements, one for
-each line of the address.
-<specList>
-<specDesc key="address"/>
-<specDesc key="addrLine"/>
-</specList>
-<!--
-<list type="gloss"><label><att>address</att></label><item>contains a postal or other address, for example of a publisher,
-an organization, or an individual.</item><label><att>addrLine</att></label><item>contains one line of a postal or other address.</item></list>--></p>
-  <p>Here is a simple example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><address>
-<addrLine>Computer Center (M/C 135)</addrLine>
-<addrLine>1940 W. Taylor, Room 124</addrLine>
-<addrLine>Chicago, IL 60612-7352</addrLine>
-<addrLine>U.S.A.</addrLine>
-</address></egXML></p>
-  <p>The individual parts of an address may be further distinguished by
- using the <gi>name</gi> element discussed above (section <ptr target="#nomen"/>).
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><address>
-<addrLine>Computer Center (M/C 135)</addrLine>
-<addrLine>1940 W. Taylor, Room 124</addrLine>
-<addrLine><name type="city">Chicago</name>, IL 60612-7352</addrLine>
-<addrLine><name type="country">USA</name></addrLine>
-</address></egXML></p>
-        </div>
+
       </div>
+
+
       <div type="Section" xml:id="U5-lists">
         <head>Lists</head>
 <p>The element <gi>list</gi> is used to mark any kind of
@@ -2294,6 +2276,8 @@ element:
       a group of revellers.</figDesc>
    </figure></egXML></p>-->
       </div>
+
+
       <div xml:id="U5-anal" type="Section">
         <head>Interpretation and  Analysis</head>
 <p>It is often said that <emph>all</emph> markup is a form of
@@ -2544,8 +2528,6 @@ the name of an XML element or attribute.</item>-->
 <specDesc key="gi"/><!--</gi></label><item>contains a special type of identifier: an XML generic
 identifier, or element name.</item>-->
 <specDesc key="att"/>
-<specDesc key="kw"/><!--</gi></label><item>contains a keyword in some
-formal language.</item>-->
 <specDesc key="formula"/><!--</gi></label><item>contains a mathematical or chemical formula, optionally
 presented in some non-XML notation. Attributes include:
 <list type="gloss"><label><att>notation</att></label><item>specifies the notation used to represent the body of the
@@ -2574,7 +2556,7 @@ is then assigned. This is followed by a <val>PRINT</val> statement and an
   <p>A formatting application, given a text like that above, can be
 instructed to format examples appropriately (e.g. to preserve line
 breaks, or to use a distinctive font). Similarly, the use of tags such
-as <gi>ident</gi> and <gi>kw</gi> greatly facilitates the
+as <gi>ident</gi> greatly facilitates the
 construction of a useful index.</p>
   <p>The <gi>formula</gi> element should be used to enclose a
 mathematical or chemical formula presented within the text as a
@@ -2751,6 +2733,36 @@ provide a secondary keyword. The actual reference will be taken from the context
 in which the <gi>index</gi> element appears, i.e. in this case the
 identifier of the <gi>l</gi> element containing it. </p>
         </div>
+
+        <div >
+          <head>Addresses</head>
+  <p>The <gi>address</gi> element is used to mark a postal address of
+any kind. It contains one or more <gi>addrLine</gi> elements, one for
+each line of the address.
+<specList>
+<specDesc key="address"/>
+<specDesc key="addrLine"/>
+</specList>
+<!--
+<list type="gloss"><label><att>address</att></label><item>contains a postal or other address, for example of a publisher,
+an organization, or an individual.</item><label><att>addrLine</att></label><item>contains one line of a postal or other address.</item></list>--></p>
+  <p>Here is a simple example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><address>
+<addrLine>Computer Center (M/C 135)</addrLine>
+<addrLine>1940 W. Taylor, Room 124</addrLine>
+<addrLine>Chicago, IL 60612-7352</addrLine>
+<addrLine>U.S.A.</addrLine>
+</address></egXML></p>
+  <p>The individual parts of an address may be further distinguished by
+ using the <gi>name</gi> element discussed above (section <ptr target="#nomen"/>).
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><address>
+<addrLine>Computer Center (M/C 135)</addrLine>
+<addrLine>1940 W. Taylor, Room 124</addrLine>
+<addrLine><name type="city">Chicago</name>, IL 60612-7352</addrLine>
+<addrLine><name type="country">USA</name></addrLine>
+</address></egXML></p>
+        </div>
+
       </div>
       <div xml:id="U5-chars" type="Section">
         <head>Character Sets, Diacritics, etc.</head>
@@ -2769,7 +2781,9 @@ entered directly in an XML document, since they have a special
 significance as initiating markup. They must always be represented as
 <term>entity references</term>, like this: <code>&amp;amp;</code> or
 <code>&amp;lt;</code>. Other characters may also be represented by
-means of entity reference where necessary. </p>
+means of entity reference where necessary, for example to retain
+compatibility with a pre-Unicode processing system. </p>
+
 
 <!-- <p>For compatability with other older systems, however, the TEI Lite
      DTD includes declarations for a number of the most widely used
@@ -2809,20 +2823,20 @@ these characters will probably be safe:
 references must be used for all accented and extended-Latin
 characters, all non-Latin characters, and all symbols not on
 conventional computer keyboards.</p> -->
-<p>You may use your own entity names in TEI-conformant files, if
+<!-- <p>You may use your own entity names in TEI-conformant files, if
 you wish and if you provide entity declarations for
 them, mapping the name to the appropriate Unicode value. The standard names (though long-winded) have the advantage
 of clarity; the characters intended are reasonably clear to any
 speaker of English who recognizes that a character is being named,
 often even without recourse to any list.  This is not true of many
-older schemes for representing accented characters.</p>
+older schemes for representing accented characters.</p>-->
 <!--<p>The entity names needed for the characters listed above as
 <soCalled>unsafe</soCalled> and for the accented characters of some
 major Western European languages are given below. Lists of public
 entity sets and their contents are available in any reference work on
 SGML:  the names given below are from ISO public entity sets, are
 widely used, and are therefore recommended.</p>-->
-<p>When the character you need does not appear in the public entity
+<!--<p>When the character you need does not appear in the public entity
 sets, you may wish to generate a name using the same naming
 conventions used in ISO public entity sets, as described here:<list type="gloss"><label>digraphs</label><item>Form entity names for digraphs by appending the string
 <mentioned>lig</mentioned> to the letters forming the digraph. If a
@@ -2849,7 +2863,7 @@ accent: e.g. <mentioned>aacute</mentioned> (á),
 <mentioned>acirc</mentioned> (â), <mentioned>ecirc</mentioned>
 (ê), <mentioned>Ecirc</mentioned> (Ê), <mentioned>icirc</mentioned>
 (î), <mentioned>ocirc</mentioned> (ô), <mentioned>ucirc</mentioned>
-(û).</item><!-- Need Acirc Icirc Ocirc Ucirc --><label>tilde</label><item> use <mentioned>tilde</mentioned> for tilde: e.g.
+(û).</item><label>tilde</label><item> use <mentioned>tilde</mentioned> for tilde: e.g.
 <mentioned>atilde</mentioned> (ã), <mentioned>Atilde</mentioned>
 (Ã),
 <mentioned>ntilde</mentioned> (ñ), <mentioned>Ntilde</mentioned>
@@ -2869,7 +2883,7 @@ superscript 66), <mentioned>rdquo</mentioned> (right double quotation
 mark, superscript 99), <mentioned>mdash</mentioned> (one-em dash),
 <mentioned>hellip</mentioned> (horizontal ellipsis, three closely
 spaced dots), <mentioned>rsquo</mentioned> (right single quote, in
-shape of superscript 9).  <!--See also the list of <soCalled>unsafe</soCalled>
+shape of superscript 9).-->  <!--See also the list of <soCalled>unsafe</soCalled>
 characters given below.</item><label><soCalled>unsafe</soCalled> characters</label><item>The characters listed above as unsafe for transmission over
 current international academic and public-access networks may be
 represented with the following entities:  <mentioned>excl</mentioned>
@@ -2883,11 +2897,11 @@ quotation mark), <mentioned>grave</mentioned> (grave accent),
 <mentioned>lcub</mentioned> (left curly bracket, <mentioned>{</mentioned>),
 <mentioned>rcub</mentioned> (right curly bracket, <mentioned>}</mentioned>),
 <mentioned>verbar</mentioned> (vertical bar, <mentioned>|</mentioned>),
-<mentioned>tilde</mentioned> (~).--></item></list></p>
+<mentioned>tilde</mentioned> (~).--><!-- /item></list></p-->
       </div>
       <div xml:id="U5-fronbac" type="Section">
         <head>Front and Back Matter</head>
-<!---->
+
         <div >          <head>Front Matter</head>
   <p>For many purposes, particularly in older texts, the preliminary
 material such as title pages, prefatory epistles, etc., may provide
@@ -3511,382 +3525,390 @@ and the agency responsible for it. </p>
 </revisionDesc></egXML><!----><!----></p>
         </div>
       </div>
-      </div></body>
-    <back>
+
       <div xml:id="U5-taglist" type="Section">
         <head>List of Elements Described</head>
-        <div >
-          <head>Global Attributes</head>
-  <p>All elements in the TEI Lite document type definition have the
-following global attributes:
-<list type="gloss"><label><att>ana</att></label><item>links an element with its interpretation.</item><label><att>corresp</att></label><item>links an element with one or more other corresponding elements.</item><label><att>xml:id</att></label><item>Unique identifier for the element; must begin with a letter,
-can contain letters, digits, hyphens, and periods.</item><label><att>lang</att></label><item>language of the text in this element; if not specified,
-language is assumed to be the same as in the surrounding context.</item><label><att>n</att></label><item>Name or number of this element; may be any string of
-characters. Often used for recording traditional reference systems.</item><label><att>next</att></label><item>links an element to the next element in an aggregate.</item><label><att>prev</att></label><item>links an element to the previous element in an aggregate.</item><label><att>rend</att></label><item>physical realization of the element in the copy text:
-<code>italic</code>,
-<code>roman</code>,<code>display block</code>, etc. Value may be any
-string of characters.</item></list></p>
-        </div>
-        <div >
-          <head>Alphabetical list of Elements in TEI Lite</head>
-  <p>The following list shows all the elements defined for the TEI Lite
-DTD, with a brief description of each, and a link to its full
-specification.
-<specList>
-<specDesc key="abbr"/><!--</gi></label><item>contains an abbreviation of any sort; expansion may be given in
+
+  <p>The following list shows all the elements defined for the TEI
+  Lite schema, with a brief description of each, and a link to its full
+specification in the Appendix.
+<specList rend="noatts">
+<specDesc rend="noatts" key="abbr"/><!--</gi></label><item>contains an abbreviation of any sort; expansion may be given in
 the <att>expan</att> attribute.</item>-->
-<specDesc key="add"/><!--</gi></label><item>contains letters, words, or phrases inserted in the text by an
+<specDesc rend="noatts" key="add"/><!--</gi></label><item>contains letters, words, or phrases inserted in the text by an
 author, scribe, annotator, or corrector.</item>-->
-<specDesc atts="" key="address"/><!--</gi></label><item>contains a postal or other address, for example of a publisher,
+<specDesc rend="noatts" key="address"/><!--</gi></label><item>contains a postal or other address, for example of a publisher,
 an organization, or an individual.</item>-->
-<specDesc atts="" key="addrLine"/><!--</gi></label><item>contains one line of
+<specDesc rend="noatts" key="addrLine"/><!--</gi></label><item>contains one line of
 a postal or other address.</item>-->
-<specDesc atts="" key="anchor"/><!--</gi></label><item>specifies a location or point within a document so that it may
+<specDesc rend="noatts" key="anchor"/><!--</gi></label><item>specifies a location or point within a document so that it may
 be pointed to.</item>-->
-<specDesc atts="" key="argument"/><!--</gi></label><item>A formal list or prose description of the topics addressed by a
+<specDesc rend="noatts" key="argument"/><!--</gi></label><item>A formal list or prose description of the topics addressed by a
 subdivision of a text.</item>-->
-<specDesc atts="" key="author"/><!--</gi></label><item>in a bibliographic reference, contains the name of the
+<specDesc rend="noatts" key="author"/><!--</gi></label><item>in a bibliographic reference, contains the name of the
 author(s), personal or corporate, of a work; the primary
 <term>statement of responsibility</term> for any bibliographic
 item.</item>-->
-<specDesc atts="" key="authority"/><!--</gi></label><item>supplies the name of a person or other agency responsible for
+<specDesc rend="noatts" key="authority"/><!--</gi></label><item>supplies the name of a person or other agency responsible for
 making an electronic file available, other than a publisher or
 distributor.</item>-->
-<specDesc atts="" key="availability"/><!--</gi></label><item>supplies information about the availability of a text, for
+<specDesc rend="noatts" key="availability"/><!--</gi></label><item>supplies information about the availability of a text, for
 example any restrictions on its use or distribution, its copyright
 status, etc.</item>-->
-<specDesc atts="" key="back"/><!--</gi></label><item>contains any appendixes, etc., following the main part of a
+<specDesc rend="noatts" key="back"/><!--</gi></label><item>contains any appendixes, etc., following the main part of a
 text.</item>-->
-<specDesc atts="" key="bibl"/><!--</gi></label><item>contains a loosely-structured bibliographic citation of which
+<specDesc rend="noatts" key="bibl"/><!--</gi></label><item>contains a loosely-structured bibliographic citation of which
 the sub-components may or may not be explicitly tagged.</item>-->
-<specDesc atts="" key="biblFull"/><!--</gi></label><item>contains a fully-structured bibliographic citation, in which
+<specDesc rend="noatts" key="biblFull"/><!--</gi></label><item>contains a fully-structured bibliographic citation, in which
 all components of the TEI file description are present.</item>-->
-<specDesc atts="" key="biblScope"/><!--</gi></label><item>defines the scope of a bibliographic reference, for example as
+<specDesc rend="noatts" key="biblScope"/><!--</gi></label><item>defines the scope of a bibliographic reference, for example as
 a list of page numbers, or a named subdivision of a larger
 work.</item>-->
-<specDesc atts="" key="body"/><!--</gi></label><item>contains the whole body of a single unitary text, excluding any
+<specDesc rend="noatts" key="body"/><!--</gi></label><item>contains the whole body of a single unitary text, excluding any
 front or back matter.</item>-->
-<specDesc atts="" key="byline"/><!--</gi></label><item>contains the primary statement of responsibility given for a
+<specDesc rend="noatts" key="byline"/><!--</gi></label><item>contains the primary statement of responsibility given for a
 work on its title page or at the head or end of the work.</item>-->
-<specDesc atts="" key="catDesc"/><!--</gi></label><item>describes some category within a taxonomy or text typology, in
+<specDesc rend="noatts" key="catDesc"/><!--</gi></label><item>describes some category within a taxonomy or text typology, in
 the form of a brief prose description.</item>-->
-<specDesc atts="" key="category"/><!--</gi></label><item>contains an individual descriptive category, possibly nested
+<specDesc rend="noatts" key="category"/><!--</gi></label><item>contains an individual descriptive category, possibly nested
 within a superordinate category, within a user-defined
 taxonomy.</item>-->
-<specDesc atts="" key="catRef"/><!--</gi></label><item>specifies one or more defined categories within some taxonomy
+<specDesc rend="noatts" key="catRef"/><!--</gi></label><item>specifies one or more defined categories within some taxonomy
 or text typology.</item>-->
-<specDesc atts="" key="cell"/><!--</gi></label><item>contains one cell of a
+<specDesc rend="noatts" key="cell"/><!--</gi></label><item>contains one cell of a
 table.</item>-->
-<specDesc key="change"/>
-<specDesc key="choice"/>
-<specDesc atts="" key="cit"/><!--</gi></label><item>A quotation from some other document, together with a
+<specDesc rend="noatts" key="change"/>
+<specDesc rend="noatts" key="choice"/>
+<specDesc rend="noatts" key="cit"/><!--</gi></label><item>A quotation from some other document, together with a
 bibliographic reference to its source.</item>-->
-<specDesc atts="" key="classCode"/><!--</gi></label><item>contains the classification code used for this text in some
+<specDesc rend="noatts" key="classCode"/><!--</gi></label><item>contains the classification code used for this text in some
 standard classification system, which is identified by the
 <att>scheme</att> attribute.</item>-->
-<specDesc atts="" key="classDecl"/><!--</gi></label><item>contains one or more taxonomies defining any classificatory
+<specDesc rend="noatts" key="classDecl"/><!--</gi></label><item>contains one or more taxonomies defining any classificatory
 codes used elsewhere in the text.</item>-->
-<specDesc atts="" key="closer"/><!--</gi></label><item>groups together dateline, byline, salutation, and similar
+<specDesc rend="noatts" key="closer"/><!--</gi></label><item>groups together dateline, byline, salutation, and similar
 phrases appearing as a final group at the end of a division,
 especially of a letter.</item>-->
-<specDesc atts="" key="code"/><!--</gi></label><item>contains a short fragment of code in some formal language
+<specDesc rend="noatts" key="code"/><!--</gi></label><item>contains a short fragment of code in some formal language
 (often a programming language).</item>-->
-<specDesc atts="" key="corr"/><!--</gi></label><item>contains the correct form of a passage apparently erroneous in
+<specDesc rend="noatts" key="corr"/><!--</gi></label><item>contains the correct form of a passage apparently erroneous in
 the copy text.</item>-->
-<specDesc atts="" key="creation"/><!--</gi></label><item>contains information
+<specDesc rend="noatts" key="creation"/><!--</gi></label><item>contains information
 about the creation of a text.</item>-->
-<specDesc atts="" key="date"/><!--</gi></label><item>contains a date in any format, with normalized value in the
+<specDesc rend="noatts" key="date"/><!--</gi></label><item>contains a date in any format, with normalized value in the
 <att>value</att> attribute.</item>-->
-<specDesc atts="" key="dateline"/><!--</gi></label><item>contains a brief description of the place, date, time, etc., of
+<specDesc rend="noatts" key="dateline"/><!--</gi></label><item>contains a brief description of the place, date, time, etc., of
 production of a letter, newspaper story, or other work, prefixed or
 suffixed to it as a kind of heading or trailer.</item>-->
-<specDesc atts="" key="del"/><!--</gi></label><item>contains a letter, word or passage deleted, marked as deleted,
+<specDesc rend="noatts" key="del"/><!--</gi></label><item>contains a letter, word or passage deleted, marked as deleted,
 or otherwise indicated as superfluous or spurious in the copy text by
 an author, scribe, annotator or corrector.</item>-->
-<specDesc atts="" key="distributor"/><!--</gi></label><item>supplies the name of a person or other agency responsible for
+<specDesc rend="noatts" key="distributor"/><!--</gi></label><item>supplies the name of a person or other agency responsible for
 the distribution of a text.</item>-->
-<specDesc atts="" key="div"/><!--</gi></label><item>contains a subdivision of
+<specDesc rend="noatts" key="div"/><!--</gi></label><item>contains a subdivision of
 the front, body, or back of a text.</item>-->
-<specDesc atts="" key="divGen"/><!--</gi></label><item>indicates the location at which a textual division generated
+<specDesc rend="noatts" key="divGen"/><!--</gi></label><item>indicates the location at which a textual division generated
 automatically by a text-processing application is to appear; the
 <att>type</att> attribute specifies whether it is an index, table
 of contents, or something else.</item>-->
-<specDesc atts="" key="docAuthor"/><!--</gi></label><item>contains the name of the author of the document, as given on
+<specDesc rend="noatts" key="docAuthor"/><!--</gi></label><item>contains the name of the author of the document, as given on
 the title page (often but not always contained in a
 <gi>byline</gi>).</item>-->
-<specDesc atts="" key="docDate"/><!--</gi></label><item>contains the date of the document, as given (usually) on the
+<specDesc rend="noatts" key="docDate"/><!--</gi></label><item>contains the date of the document, as given (usually) on the
 title page.</item>-->
-<specDesc atts="" key="docEdition"/><!--</gi></label><item>contains an edition statement as presented on a title page of a
+<specDesc rend="noatts" key="docEdition"/><!--</gi></label><item>contains an edition statement as presented on a title page of a
 document.</item>-->
-<specDesc atts="" key="docImprint"/><!--</gi></label><item>contains the imprint statement (place and date of publication,
+<specDesc rend="noatts" key="docImprint"/><!--</gi></label><item>contains the imprint statement (place and date of publication,
 publisher name), as given (usually) at the foot of a title
 page.</item>-->
-<specDesc atts="" key="docTitle"/><!--</gi></label><item>contains the title of a document, including all its
+<specDesc rend="noatts" key="docTitle"/><!--</gi></label><item>contains the title of a document, including all its
 constituents, as given on a title page.  Must be divided into <gi>titlePart</gi>
 elements.</item>-->
-<specDesc atts="" key="edition"/><!--</gi></label><item>describes the
+<specDesc rend="noatts" key="edition"/><!--</gi></label><item>describes the
 particularities of one edition of a text.</item>-->
-<specDesc atts="" key="editionStmt"/><!--</gi></label><item>groups information
+<specDesc rend="noatts" key="editionStmt"/><!--</gi></label><item>groups information
 relating to one edition of a text.</item>-->
-<specDesc atts="" key="editor"/><!--</gi></label><item>secondary
+<specDesc rend="noatts" key="editor"/><!--</gi></label><item>secondary
 <term>statement of responsibility</term> for a bibliographic item,
 for example the name of an individual, institution or organization,
 (or of several such) acting as editor, compiler, translator,
 etc.</item>-->
-<specDesc atts="" key="editorialDecl"/><!--</gi></label><item>provides details of editorial principles and practices applied
+<specDesc rend="noatts" key="editorialDecl"/><!--</gi></label><item>provides details of editorial principles and practices applied
 during the encoding of a text.</item>-->
-<specDesc atts="" key="eg"/><!--</gi></label><item>contains a single short example of some technical topic being
+<specDesc rend="noatts" key="eg"/><!--</gi></label><item>contains a single short example of some technical topic being
 discussed, e.g. a code fragment or a sample of SGML
 encoding.</item>-->
-<specDesc atts="" key="emph"/><!--</gi></label><item>marks words or phrases which are stressed or emphasized for
+<specDesc rend="noatts" key="emph"/><!--</gi></label><item>marks words or phrases which are stressed or emphasized for
 linguistic or rhetorical effect.</item>-->
-<specDesc atts="" key="encodingDesc"/><!--</gi></label><item>documents the relationship between an electronic text and the
+<specDesc rend="noatts" key="encodingDesc"/><!--</gi></label><item>documents the relationship between an electronic text and the
 source or sources from which it was derived.</item>-->
-<specDesc atts="" key="epigraph"/><!--</gi></label><item>contains a quotation, anonymous or attributed, appearing at the
+<specDesc rend="noatts" key="epigraph"/><!--</gi></label><item>contains a quotation, anonymous or attributed, appearing at the
 start of a section or chapter, or on a title page. </item>-->
-<specDesc atts="" key="extent"/><!--</gi></label><item>describes the approximate size of the electronic text as stored
+<specDesc rend="noatts" key="extent"/><!--</gi></label><item>describes the approximate size of the electronic text as stored
 on some carrier medium, specified in any convenient units.</item>-->
-<specDesc atts="" key="figure"/><!--</gi></label><item>marks the spot at which a graphic is to be inserted in a
+<specDesc rend="noatts" key="figure"/><!--</gi></label><item>marks the spot at which a graphic is to be inserted in a
 document. Attributes may be used to indicate an SGML entity containing
 the image itself (in some non-SGML notation); paragraphs within the
 <gi>figure</gi> element may be used to transcribe captions.</item>-->
-<specDesc atts="" key="fileDesc"/><!--</gi></label><item>contains a full bibliographic description of an electronic
+<specDesc rend="noatts" key="fileDesc"/><!--</gi></label><item>contains a full bibliographic description of an electronic
 file.</item>-->
-<specDesc atts="" key="foreign"/><!--</gi></label><item>identifies a word or phrase as belonging to some language other
+<specDesc rend="noatts" key="foreign"/><!--</gi></label><item>identifies a word or phrase as belonging to some language other
 than that of the surrounding text.</item>-->
-<specDesc atts="" key="formula"/><!--</gi></label><item>contains a mathematical or chemical formula, optionally
+<specDesc rend="noatts" key="formula"/><!--</gi></label><item>contains a mathematical or chemical formula, optionally
 presented in some non-SGML notation. The <att>notation</att> is
 used to name the non-SGML notation used to transcribe the
 formula.</item>-->
-<specDesc atts="" key="front"/><!--</gi></label><item>contains any prefatory matter (headers, title page, prefaces,
+<specDesc rend="noatts" key="front"/><!--</gi></label><item>contains any prefatory matter (headers, title page, prefaces,
 dedications, etc.) found before the start of a text proper.</item>-->
-<specDesc atts="" key="funder"/><!--</gi></label><item>specifies the name of an individual, institution, or
+<specDesc rend="noatts" key="funder"/><!--</gi></label><item>specifies the name of an individual, institution, or
 organization responsible for the funding of a project or
 text.</item>-->
-<specDesc atts="" key="gap"/><!--</gi></label><item>indicates a point where material has been omitted in a
+<specDesc rend="noatts" key="gap"/><!--</gi></label><item>indicates a point where material has been omitted in a
 transcription, whether for editorial reasons described in the TEI
 header, as part of sampling practice, or because the material is
 illegible or inaudible.</item>-->
-<specDesc atts="" key="gi"/><!--</gi></label><item>contains a special type of identifier: an SGML generic
+<specDesc rend="noatts" key="gi"/><!--</gi></label><item>contains a special type of identifier: an SGML generic
 identifier, or element name.</item>-->
-<specDesc atts="" key="gloss"/><!--</gi></label><item>marks a word or phrase which provides a gloss or definition for
+<specDesc rend="noatts" key="gloss"/><!--</gi></label><item>marks a word or phrase which provides a gloss or definition for
 some other word or phrase.</item>-->
-<specDesc atts="" key="group"/><!--</gi></label><item>contains a number of
+<specDesc rend="noatts" key="group"/><!--</gi></label><item>contains a number of
 unitary texts or groups of texts.</item>-->
-<specDesc atts="" key="head"/><!--</gi></label><item>contains any heading, for example, the title of a section, or
+<specDesc rend="noatts" key="head"/><!--</gi></label><item>contains any heading, for example, the title of a section, or
 the heading of a list or glossary.</item>-->
-<specDesc atts="" key="hi"/><!--</gi></label><item>marks a word or phrase as graphically distinct from the
+<specDesc rend="noatts" key="hi"/><!--</gi></label><item>marks a word or phrase as graphically distinct from the
 surrounding text, for reasons concerning which no claim is
 made.</item>-->
-<specDesc atts="" key="ident"/><!--</gi></label><item>contains an identifier of some kind, e.g. a variable name or
+<specDesc rend="noatts" key="ident"/><!--</gi></label><item>contains an identifier of some kind, e.g. a variable name or
 the name of an SGML element or attribute.</item>-->
-<specDesc atts="" key="idno"/><!--</gi></label><item>supplies any standard or non-standard number used to identify a
+<specDesc rend="noatts" key="idno"/><!--</gi></label><item>supplies any standard or non-standard number used to identify a
 bibliographic item; the <att>type</att> attribute identifies the
 scheme or standard.</item>-->
-<specDesc atts="" key="imprint"/><!--</gi></label><item>groups information relating to the publication or distribution
+<specDesc rend="noatts" key="imprint"/><!--</gi></label><item>groups information relating to the publication or distribution
 of a bibliographic item.  </item>-->
-<specDesc atts="" key="index"/><!--</gi></label><item>marks a location to be indexed for some purpose. Attributes are
+<specDesc rend="noatts" key="index"/><!--</gi></label><item>marks a location to be indexed for some purpose. Attributes are
 used to give the main form, and second- through fourth-level forms to
 be entered in the index indicated.</item>-->
-<specDesc atts="" key="interp"/><!--</gi></label><item>provides for an interpretive annotation which can be  linked to
+<specDesc rend="noatts" key="interp"/><!--</gi></label><item>provides for an interpretive annotation which can be  linked to
 a span of text. Attributes include <att>resp</att>,
 <att>type</att>, and <att>value</att>.</item>-->
-<specDesc atts="" key="interpGrp"/><!--</gi></label><item>collects together
+<specDesc rend="noatts" key="interpGrp"/><!--</gi></label><item>collects together
 <gi>interp</gi> tags.</item>-->
-<specDesc atts="" key="item"/><!--</gi></label><item>contains one component of
+<specDesc rend="noatts" key="item"/><!--</gi></label><item>contains one component of
 a list.</item>-->
-<specDesc atts="" key="keywords"/><!--</gi></label><item>contains a list of keywords or phrases identifying the topic or
+<specDesc rend="noatts" key="keywords"/><!--</gi></label><item>contains a list of keywords or phrases identifying the topic or
 nature of a text; if the keywords come from a controlled vocabulary,
 it can be identified by the <att>scheme</att> attribute.</item>-->
-<specDesc atts="" key="kw"/><!--</gi></label><item>contains a keyword in some
-formal language.</item>-->
-<specDesc atts="" key="l"/><!--</gi></label><item>contains a single, possibly
+<specDesc rend="noatts" key="l"/><!--</gi></label><item>contains a single, possibly
 incomplete, line of verse.</item>-->
-<specDesc atts="" key="label"/><!--</gi></label><item>contains the label associated with an item in a list; in
+<specDesc rend="noatts" key="label"/><!--</gi></label><item>contains the label associated with an item in a list; in
 glossaries, marks the term being defined.</item>-->
-<specDesc key="language"/>
-<specDesc atts="" key="langUsage"/><!--</gi></label><item>describes the languages, sublanguages, registers, dialects,
+<specDesc rend="noatts" key="language"/>
+<specDesc rend="noatts" key="langUsage"/><!--</gi></label><item>describes the languages, sublanguages, registers, dialects,
 etc., represented within a text.</item>-->
-<specDesc atts="" key="lb"/><!--</gi></label><item>marks the start of a new (typographic) line in some  edition or
+<specDesc rend="noatts" key="lb"/><!--</gi></label><item>marks the start of a new (typographic) line in some  edition or
 version of a text.</item>-->
-<specDesc atts="" key="lg"/><!--</gi></label><item>contains a group of verse lines functioning as a formal unit
+<specDesc rend="noatts" key="lg"/><!--</gi></label><item>contains a group of verse lines functioning as a formal unit
 e.g. a stanza, refrain, verse paragraph, etc.</item>-->
-<specDesc atts="" key="list"/><!--</gi></label><item>contains any sequence of items organized as a list, whether of
+<specDesc rend="noatts" key="list"/><!--</gi></label><item>contains any sequence of items organized as a list, whether of
 numbered, bulletted, or other type.</item>-->
-<specDesc atts="" key="listBibl"/><!--</gi></label><item>contains a list of
+<specDesc rend="noatts" key="listBibl"/><!--</gi></label><item>contains a list of
 bibliographic citations of any kind.</item>-->
-<specDesc atts="" key="mentioned"/><!--</gi></label><item>marks words or
+<specDesc rend="noatts" key="mentioned"/><!--</gi></label><item>marks words or
 phrases mentioned, not used.</item>-->
-<specDesc atts="" key="milestone"/><!--</gi></label><item>marks the boundary between sections of a text, as indicated by
+<specDesc rend="noatts" key="milestone"/><!--</gi></label><item>marks the boundary between sections of a text, as indicated by
 changes in a standard reference system. Attributes include
 <att>ed</att> (edition),
 <att>unit</att> (page, etc.), and
 <att>n</att> (new value).</item>-->
-<specDesc atts="" key="name"/><!--</gi></label><item>contains a proper noun or noun phrase. Attributes can indicate
+<specDesc rend="noatts" key="name"/><!--</gi></label><item>contains a proper noun or noun phrase. Attributes can indicate
 its type, give a normalized form, or associate it with a specific
 individual or thing by means of a unique identifiers.</item>-->
-<specDesc atts="" key="note"/><!--</gi></label><item>contains a note or annotation, with attributes to indicate the
+<specDesc rend="noatts" key="note"/><!--</gi></label><item>contains a note or annotation, with attributes to indicate the
 type, location, and source of the note.</item>-->
-<specDesc atts="" key="notesStmt"/><!--</gi></label><item>collects together any notes providing information about a text
+<specDesc rend="noatts" key="notesStmt"/><!--</gi></label><item>collects together any notes providing information about a text
 additional to that recorded in other parts of the bibliographic
 description.</item>-->
-<specDesc atts="" key="num"/><!--</gi></label><item>contains a number, written in any form, with normalized value
+<specDesc rend="noatts" key="num"/><!--</gi></label><item>contains a number, written in any form, with normalized value
 in the <att>value</att> attribute.</item>-->
-<specDesc atts="" key="opener"/><!--</gi></label><item>groups together dateline, byline, salutation, and similar
+<specDesc rend="noatts" key="opener"/><!--</gi></label><item>groups together dateline, byline, salutation, and similar
 phrases appearing as a preliminary group at the start of a division,
 especially of a letter.</item>-->
-<specDesc atts="" key="orig"/><!--</gi></label><item>contains the original form of a reading, for which a
+<specDesc rend="noatts" key="orig"/><!--</gi></label><item>contains the original form of a reading, for which a
 regularized form may be given in the attribute
 <att>reg</att>.</item>-->
-<specDesc atts="" key="p"/><!--</gi></label><item>marks paragraphs in
+<specDesc rend="noatts" key="p"/><!--</gi></label><item>marks paragraphs in
 prose.</item>-->
-<specDesc atts="" key="pb"/><!--</gi></label><item>marks the boundary between one page of a text and the next in a
+<specDesc rend="noatts" key="pb"/><!--</gi></label><item>marks the boundary between one page of a text and the next in a
 standard reference system.</item>-->
-<specDesc atts="" key="principal"/><!--</gi></label><item>supplies the name of the principal researcher responsible for
+<specDesc rend="noatts" key="principal"/><!--</gi></label><item>supplies the name of the principal researcher responsible for
 the creation of an electronic text.</item>-->
-<specDesc atts="" key="profileDesc"/><!--</gi></label><item>provides a detailed description of non-bibliographic aspects of
+<specDesc rend="noatts" key="profileDesc"/><!--</gi></label><item>provides a detailed description of non-bibliographic aspects of
 a text, specifically the languages and sublanguages used, the
 situation in which it was produced, the participants and their
 setting.</item>-->
-<specDesc atts="" key="projectDesc"/><!--</gi></label><item>describes in detail the aim or purpose for which an electronic
+<specDesc rend="noatts" key="projectDesc"/><!--</gi></label><item>describes in detail the aim or purpose for which an electronic
 file was encoded, together with any other relevant information
 concerning the process by which it was assembled or
 collected.</item>-->
-<specDesc atts="" key="ptr"/><!--</gi></label><item>a pointer to another location in the current document in terms
+<specDesc rend="noatts" key="ptr"/><!--</gi></label><item>a pointer to another location in the current document in terms
 of one or more identifiable elements.</item>-->
-<specDesc atts="" key="publicationStmt"/><!--</gi></label><item>groups information concerning the publication or distribution
+<specDesc rend="noatts" key="publicationStmt"/><!--</gi></label><item>groups information concerning the publication or distribution
 of an electronic or other text. </item>-->
-<specDesc atts="" key="publisher"/><!--</gi></label><item>provides the name of the organization responsible for the
+<specDesc rend="noatts" key="publisher"/><!--</gi></label><item>provides the name of the organization responsible for the
 publication or distribution of a bibliographic item.</item>-->
-<specDesc atts="" key="pubPlace"/><!--</gi></label><item>contains the name of the place where a bibliographic item was
+<specDesc rend="noatts" key="pubPlace"/><!--</gi></label><item>contains the name of the place where a bibliographic item was
 published.</item>-->
-<specDesc atts="" key="q"/><!--</gi></label><item>contains a quotation or
+<specDesc rend="noatts" key="q"/><!--</gi></label><item>contains a quotation or
 apparent quotation.</item>-->
-<specDesc atts="" key="ref"/><!--</gi></label><item>a reference to another location in the current document, in
+<specDesc rend="noatts" key="ref"/><!--</gi></label><item>a reference to another location in the current document, in
 terms of one or more identifiable elements, possibly modified by
 additional text or comment.</item>-->
-<specDesc atts="" key="refsDecl"/><!--</gi></label><item>specifies how canonical references are constructed for this
+<specDesc rend="noatts" key="refsDecl"/><!--</gi></label><item>specifies how canonical references are constructed for this
 text.</item>-->
-<specDesc atts="" key="reg"/><!--</gi></label><item>contains a reading which has been regularized or normalized in
+<specDesc rend="noatts" key="reg"/><!--</gi></label><item>contains a reading which has been regularized or normalized in
 some sense; original reading may be given in the attribute
 <att>orig</att>.</item>-->
-<specDesc atts="" key="rendition"/><!--</gi></label><item>supplies information about the intended rendition of one or
+<specDesc rend="noatts" key="rendition"/><!--</gi></label><item>supplies information about the intended rendition of one or
 more elements.</item>-->
-<specDesc atts="" key="resp"/><!--</gi></label><item>contains a phrase describing the nature of a person's
+<specDesc rend="noatts" key="resp"/><!--</gi></label><item>contains a phrase describing the nature of a person's
 intellectual responsibility.</item>-->
-<specDesc atts="" key="respStmt"/><!--</gi></label><item>supplies a statement of responsibility for someone responsible
+<specDesc rend="noatts" key="respStmt"/><!--</gi></label><item>supplies a statement of responsibility for someone responsible
 for the intellectual content of a text, edition, recording, or series,
 where the specialized elements for authors, editors, etc., do not
 suffice or do not apply.</item>-->
-<specDesc atts="" key="revisionDesc"/><!--</gi></label><item>summarizes the
+<specDesc rend="noatts" key="revisionDesc"/><!--</gi></label><item>summarizes the
 revision history for a file.</item>-->
-<specDesc atts="" key="row"/><!--</gi></label><item>contains one row of a
+<specDesc rend="noatts" key="row"/><!--</gi></label><item>contains one row of a
 table.</item>-->
-<specDesc atts="" key="rs"/><!--</gi></label><item>contains a general purpose name or referring string. Attributes
+<specDesc rend="noatts" key="rs"/><!--</gi></label><item>contains a general purpose name or referring string. Attributes
 can indicate its type, give a normalized form, or associate it with a
 specific individual or thing by means of a unique
 identifiers.</item>-->
 
-<specDesc atts="" key="s"/><!--</gi></label><item>identifies an <term>s-unit</term> within a document, for
+<specDesc rend="noatts" key="s"/><!--</gi></label><item>identifies an <term>s-unit</term> within a document, for
 purposes of establishing a simple canonical referencing scheme
 covering the entire text.</item>-->
-<specDesc atts="" key="salute"/><!--</gi></label><item>contains a salutation or greeting prefixed to a foreword,
+<specDesc rend="noatts" key="salute"/><!--</gi></label><item>contains a salutation or greeting prefixed to a foreword,
 dedicatory epistle or other division of a text, or the salutation in
 the closing of a letter, preface, etc.</item>-->
-<specDesc atts="" key="samplingDecl"/><!--</gi></label><item>contains a prose description of the rationale and methods used
+<specDesc rend="noatts" key="samplingDecl"/><!--</gi></label><item>contains a prose description of the rationale and methods used
 in sampling texts in the creation of a corpus or collection.</item>-->
-<specDesc atts="" key="seg"/><!--</gi></label><item>identifies a span or segment of text within a document so that
+<specDesc rend="noatts" key="seg"/><!--</gi></label><item>identifies a span or segment of text within a document so that
 it may be pointed to; the <att>type</att> attribute categorizes
 the segment.</item>-->
-<specDesc atts="" key="seriesStmt"/><!--</gi></label><item>groups information about the <term>series</term>, if any, to
+<specDesc rend="noatts" key="seriesStmt"/><!--</gi></label><item>groups information about the <term>series</term>, if any, to
 which a publication belongs.</item>-->
-<specDesc atts="" key="sic"/><!--</gi></label><item>contains text reproduced although apparently incorrect or
+<specDesc rend="noatts" key="sic"/><!--</gi></label><item>contains text reproduced although apparently incorrect or
 inaccurate.</item>-->
-<specDesc atts="" key="signed"/><!--</gi></label><item>contains the closing salutation, etc., appended to a foreword,
+<specDesc rend="noatts" key="signed"/><!--</gi></label><item>contains the closing salutation, etc., appended to a foreword,
 dedicatory epistle, or other division of a text.</item>-->
-<specDesc atts="" key="soCalled"/><!--</gi></label><item>contains a word or phrase for which the author or narrator
+<specDesc rend="noatts" key="soCalled"/><!--</gi></label><item>contains a word or phrase for which the author or narrator
 indicates a disclaiming of responsibility, for example by the use of
 scare quotes or italics.</item>-->
-<specDesc atts="" key="sourceDesc"/><!--</gi></label><item>supplies a bibliographic description of the copy text(s) from
+<specDesc rend="noatts" key="sourceDesc"/><!--</gi></label><item>supplies a bibliographic description of the copy text(s) from
 which an electronic text was derived or generated.</item>-->
-<specDesc atts="" key="sp"/><!--</gi></label><item>contains an individual speech in a performance text, or a
+<specDesc rend="noatts" key="sp"/><!--</gi></label><item>contains an individual speech in a performance text, or a
 passage presented as such in a prose or verse text, with <att>who</att>
 attribute to identify speaker.</item>-->
-<specDesc atts="" key="speaker"/><!--</gi></label><item>contains a special form of heading or label, giving the name of
+<specDesc rend="noatts" key="speaker"/><!--</gi></label><item>contains a special form of heading or label, giving the name of
 one or more speakers in a performance text or fragment.</item>-->
-<specDesc atts="" key="sponsor"/><!--</gi></label><item>specifies the name of
+<specDesc rend="noatts" key="sponsor"/><!--</gi></label><item>specifies the name of
 a sponsoring organization or institution.</item>-->
-<specDesc atts="" key="stage"/><!--</gi></label><item>contains any kind of stage direction within a performance text
+<specDesc rend="noatts" key="stage"/><!--</gi></label><item>contains any kind of stage direction within a performance text
 or fragment.</item>-->
-<specDesc atts="" key="table"/><!--</gi></label><item>contains text displayed
+<specDesc rend="noatts" key="table"/><!--</gi></label><item>contains text displayed
 in tabular form, in rows and columns.</item>-->
-<specDesc atts="" key="tagsDecl"/><!--</gi></label><item>provides detailed information about the tagging applied to an
+<specDesc rend="noatts" key="tagsDecl"/><!--</gi></label><item>provides detailed information about the tagging applied to an
 SGML document. </item>-->
-<specDesc atts="" key="namespace"/>
-<specDesc atts="" key="tagUsage"/><!--</gi></label><item>supplies information about the usage of a specific element
+<specDesc rend="noatts" key="namespace"/>
+<specDesc rend="noatts" key="tagUsage"/><!--</gi></label><item>supplies information about the usage of a specific element
 within the outermost <gi>text</gi> of a TEI conformant
 document.</item>-->
-<specDesc atts="" key="taxonomy"/><!--</gi></label><item>defines a typology used to classify texts either implicitly, by
+<specDesc rend="noatts" key="taxonomy"/><!--</gi></label><item>defines a typology used to classify texts either implicitly, by
 means of a bibliographic citation, or explicitly by a structured
 taxonomy.</item>-->
-<specDesc key="TEI"/>
-<specDesc key="teiHeader"/>
-<specDesc key="text"/>
-<specDesc atts="" key="term"/><!--</gi></label><item>contains a single-word, multi-word or symbolic designation
+<specDesc rend="noatts" key="TEI"/>
+<specDesc rend="noatts" key="teiHeader"/>
+<specDesc rend="noatts" key="text"/>
+<specDesc rend="noatts" key="term"/><!--</gi></label><item>contains a single-word, multi-word or symbolic designation
 which is regarded as a technical term.</item>-->
-<specDesc atts="" key="textClass"/><!--</gi></label><item>groups information which describes the nature or topic of a
+<specDesc rend="noatts" key="textClass"/><!--</gi></label><item>groups information which describes the nature or topic of a
 text in terms of a standard classification scheme, thesaurus,
 etc.</item>-->
-<specDesc atts="" key="time"/><!--</gi></label><item>contains a phrase defining a time of day in any format, with
+<specDesc rend="noatts" key="time"/><!--</gi></label><item>contains a phrase defining a time of day in any format, with
 normalized value in the <att>value</att> attribute.</item>-->
-<specDesc atts="" key="title"/><!--</gi></label><item>contains the title of a work, whether article, book, journal,
+<specDesc rend="noatts" key="title"/><!--</gi></label><item>contains the title of a work, whether article, book, journal,
 or series, including any alternative titles or subtitles.</item>-->
-<specDesc atts="" key="titlePage"/><!--</gi></label><item>contains the title page of a text, appearing within the front
+<specDesc rend="noatts" key="titlePage"/><!--</gi></label><item>contains the title page of a text, appearing within the front
 or back matter. </item>-->
-<specDesc atts="" key="titlePart"/><!--</gi></label><item>contains a subsection or division of the title of a work, as
+<specDesc rend="noatts" key="titlePart"/><!--</gi></label><item>contains a subsection or division of the title of a work, as
 indicated on a title page; also used for free-floating fragments of
 the title page not part of the document title, authorship attribution,
 etc.</item>-->
-<specDesc atts="" key="titleStmt"/><!--</gi></label><item>groups information about the title of a work and those
+<specDesc rend="noatts" key="titleStmt"/><!--</gi></label><item>groups information about the title of a work and those
 responsible for its intellectual content.</item>-->
-<specDesc atts="" key="trailer"/><!--</gi></label><item>contains a closing title or footer appearing at the end of  a
+<specDesc rend="noatts" key="trailer"/><!--</gi></label><item>contains a closing title or footer appearing at the end of  a
 division of a text. </item>-->
-<specDesc atts="" key="unclear"/><!--</gi></label><item>contains a word, phrase, or passage which cannot be transcribed
+<specDesc rend="noatts" key="unclear"/><!--</gi></label><item>contains a word, phrase, or passage which cannot be transcribed
 with certainty because it is illegible or inaudible in the
 source.</item>-->
-<specDesc atts="" key="ptr"/><!--</gi></label><item>defines a pointer to another location in the current document
+<specDesc rend="noatts" key="ptr"/><!--</gi></label><item>defines a pointer to another location in the current document
 or an external document.</item>-->
-<!--<specDesc atts="" key="xref"/></gi></label><item>defines a pointer to another location in the current document
+<!--<specDesc rend="noatts" key="xref"/></gi></label><item>defines a pointer to another location in the current document
 or an external document, possibly modified by additional text or
 comment.</item>-->
 </specList>
-</p>
+  </p></div></body>
 
-<p>In addition to these elements, which are provided by standard TEI
-modules, the TEI Lite schema defines the following  additional
-element:
+<back><head>Appendixes</head>
 
-<specGrp xml:id="LITEADD">
+<div xml:id="changes"><head>Substantive changes from the P4
+version</head>
+<p>This revision of the TEI Lite schema conforms to the TEI P5
+Guidelines, which makes a number of changes from the TEI P4 Guidelines
+underlying earlier versions of TEI Lite. The following brief list
+indicates some of the major changes which will be needed in existing
+TEI P4-conformant documents before they can be used with the new
+schema. A fuller list is in preparation for publication as a part of
+TEI P5: the items listed here relate specifically to changes in TEI Lite
+only.</p>
 
+<list>
+<item>At P5, a TEI document must declare a namespace of
+<code>http://www.tei-c.org/ns/1.0</code></item>
+<item>The attributes <att>id</att> and <att>lang</att> are replaced by
+the attributes <att>xml:id</att> and <att>xml:lang</att>
+respectively. Values for the latter attribute must conform to RFC
+3066</item>
+<item>The element <gi>choice</gi> must be used to wrap <gi>reg</gi>
+and <gi>orig</gi> if both are supplied. Similarly for
+<gi>sic</gi> and <gi>corr</gi>, and for <gi>abbr</gi> and
+<gi>expan</gi>.</item>
+<item><soCalled>numbered divs</soCalled> (<gi>div0</gi>,
+<gi>div1</gi>, etc.) are not supported in this version of TEI Lite</item>
+<item>all pointing and linking mechanisms now use the same W3C-defined
+mechanism: there is no longer any distinction between internal and
+external pointing elements</item>
+<item>the content model of <gi>change</gi> has changed
+significantly</item>
+<item><hi>hic desunt multa</hi></item></list></div>
 
- <elementSpec ident="kw">
-<desc>contains a keyword from some programming language</desc>
-  <classes><memberOf key="model.pPart.data"/></classes>
-  <content>
-    <rng:text/>
-  </content>
- </elementSpec>
-</specGrp>
-</p>
+        <div >
 
-<p>The TEI Lite schema combines the modules <ident
-type="module">tei</ident>, <ident>
-type="module">core</ident>, <ident>
-type="module">header</ident>, <ident>
-type="module">textstructure</ident>, <ident>
-type="module">figures</ident>, <ident>
-type="module">linking</ident>, <ident>
-type="module">analysis</ident>, and <ident>
+<head>Formal specification</head>
+
+<p>The TEI Lite is a pure subset of the TEI. All of the  elements
+defined in it are taken from the following  standard TEI
+modules:
+
+ <ident
+type="module">tei</ident>, <ident
+type="module">core</ident>, <ident
+type="module">header</ident>, <ident
+type="module">textstructure</ident>, <ident
+type="module">figures</ident>, <ident
+type="module">linking</ident>, <ident
+type="module">analysis</ident>, and <ident
 type="module">tagdocs</ident>.
 </p>
 
@@ -3995,6 +4017,240 @@ schema:
   <moduleRef key="linking"/>
   <moduleRef key="analysis"/>
   <moduleRef key="tagdocs"/>
+
+<!-- temporary kludge dept -->
+<elementSpec module="textstructure" ident="back" mode="change">
+  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:group>      <!-- this <group> exists just so odd2dtd can get parens in right place  -->
+      <rng:zeroOrMore>
+	<rng:choice>
+	  <rng:ref name="model.divWrapper"/>
+	  <rng:ref name="model.global"/>
+	</rng:choice>
+      </rng:zeroOrMore>
+      <rng:choice>
+        <rng:group>
+          <rng:oneOrMore>
+<?teidtd (?>
+            <rng:ref name="macro.component"/>
+<?teidtd )?>
+            <rng:zeroOrMore>
+              <rng:ref name="model.global"/>
+            </rng:zeroOrMore>
+          </rng:oneOrMore>
+
+          <rng:group>
+            <rng:zeroOrMore>
+              <rng:ref name="divGen"/>
+              <rng:zeroOrMore>
+                <rng:ref name="model.global"/>
+              </rng:zeroOrMore>
+            </rng:zeroOrMore>
+            <rng:optional>
+
+                <rng:group>
+                  <rng:ref name="div"/>
+                  <rng:zeroOrMore>
+                    <rng:choice>
+                      <rng:ref name="div"/>
+                      <rng:ref name="divGen"/>
+                      <rng:ref name="model.global"/>
+                    </rng:choice>
+                  </rng:zeroOrMore>
+                </rng:group>
+
+            </rng:optional>
+          </rng:group>
+        </rng:group>
+
+        <rng:group>
+          <rng:zeroOrMore>
+            <rng:ref name="divGen"/>
+            <rng:zeroOrMore>
+              <rng:ref name="model.global"/>
+            </rng:zeroOrMore>
+          </rng:zeroOrMore>
+
+            <rng:group>
+              <rng:ref name="div"/>
+              <rng:zeroOrMore>
+                <rng:choice>
+                  <rng:ref name="div"/>
+                  <rng:ref name="divGen"/>
+                  <rng:ref name="model.global"/>
+                </rng:choice>
+              </rng:zeroOrMore>
+            </rng:group>
+
+
+	</rng:group>
+      </rng:choice>
+      <rng:zeroOrMore>
+	<rng:ref name="model.divWrapper.bottom"/>
+      </rng:zeroOrMore>
+    </rng:group>
+  </content>
+	  </elementSpec>
+
+<elementSpec module="textstructure" mode="change" ident="body">
+
+  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:group>      <!-- this <group> exists just so odd2dtd can get parens in right place  -->
+      <rng:zeroOrMore>
+	<rng:choice>
+	  <rng:ref name="model.divWrapper"/>
+	  <rng:ref name="model.global"/>
+	</rng:choice>
+      </rng:zeroOrMore>
+      <rng:choice>
+        <rng:group>
+          <rng:oneOrMore>
+<?teidtd (?>
+            <rng:ref name="macro.component"/>
+<?teidtd )?>
+            <rng:zeroOrMore>
+              <rng:ref name="model.global"/>
+            </rng:zeroOrMore>
+          </rng:oneOrMore>
+
+          <rng:group>
+            <rng:zeroOrMore>
+              <rng:ref name="divGen"/>
+              <rng:zeroOrMore>
+                <rng:ref name="model.global"/>
+              </rng:zeroOrMore>
+            </rng:zeroOrMore>
+            <rng:optional>
+
+                <rng:group>
+                  <rng:ref name="div"/>
+                  <rng:zeroOrMore>
+                    <rng:choice>
+                      <rng:ref name="div"/>
+                      <rng:ref name="divGen"/>
+                      <rng:ref name="model.global"/>
+                    </rng:choice>
+                  </rng:zeroOrMore>
+                </rng:group>
+
+            </rng:optional>
+          </rng:group>
+        </rng:group>
+
+        <rng:group>
+          <rng:zeroOrMore>
+            <rng:ref name="divGen"/>
+            <rng:zeroOrMore>
+              <rng:ref name="model.global"/>
+            </rng:zeroOrMore>
+          </rng:zeroOrMore>
+
+            <rng:group>
+              <rng:ref name="div"/>
+              <rng:zeroOrMore>
+                <rng:choice>
+                  <rng:ref name="div"/>
+                  <rng:ref name="divGen"/>
+                  <rng:ref name="model.global"/>
+                </rng:choice>
+              </rng:zeroOrMore>
+            </rng:group>
+
+
+	</rng:group>
+      </rng:choice>
+      <rng:zeroOrMore>
+	<rng:ref name="model.divWrapper.bottom"/>
+      </rng:zeroOrMore>
+    </rng:group>
+  </content>
+
+	  </elementSpec>
+
+<elementSpec module="textstructure" ident="front" mode="change">
+  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:group>      <!-- this <group> exists just so odd2dtd can get parens in right place  -->
+      <rng:zeroOrMore>
+	<rng:choice>
+	  <rng:ref name="model.divWrapper"/>
+	  <rng:ref name="model.global"/>
+	</rng:choice>
+      </rng:zeroOrMore>
+      <rng:choice>
+        <rng:group>
+          <rng:oneOrMore>
+<?teidtd (?>
+            <rng:ref name="macro.component"/>
+<?teidtd )?>
+            <rng:zeroOrMore>
+              <rng:ref name="model.global"/>
+            </rng:zeroOrMore>
+          </rng:oneOrMore>
+
+          <rng:group>
+            <rng:zeroOrMore>
+              <rng:ref name="divGen"/>
+              <rng:zeroOrMore>
+                <rng:ref name="model.global"/>
+              </rng:zeroOrMore>
+            </rng:zeroOrMore>
+            <rng:optional>
+
+                <rng:group>
+                  <rng:ref name="div"/>
+                  <rng:zeroOrMore>
+                    <rng:choice>
+                      <rng:ref name="model.frontPart"/>
+                      <rng:ref name="div"/>
+                      <rng:ref name="divGen"/>
+                      <rng:ref name="model.global"/>
+                    </rng:choice>
+                  </rng:zeroOrMore>
+                </rng:group>
+
+            </rng:optional>
+          </rng:group>
+        </rng:group>
+
+        <rng:group>
+          <rng:zeroOrMore>
+            <rng:ref name="divGen"/>
+            <rng:zeroOrMore>
+              <rng:ref name="model.global"/>
+            </rng:zeroOrMore>
+          </rng:zeroOrMore>
+
+            <rng:group>
+              <rng:ref name="div"/>
+              <rng:zeroOrMore>
+                <rng:choice>
+                  <rng:ref name="model.frontPart"/>
+                <rng:ref name="div"/>
+                  <rng:ref name="divGen"/>
+                  <rng:ref name="model.global"/>
+                </rng:choice>
+              </rng:zeroOrMore>
+            </rng:group>
+
+
+	</rng:group>
+      </rng:choice>
+      <rng:zeroOrMore>
+	<rng:ref name="model.divWrapper.bottom"/>
+      </rng:zeroOrMore>
+    </rng:group>
+  </content>
+	  </elementSpec>
+
+
+
+
+
+
+
+<!-- end of temporary kludge dept -->
+
+
 <elementSpec ident="ab" mode="delete" module="linking"  />
 <elementSpec ident="alt" mode="delete" module="linking"  />
 <elementSpec ident="altGrp" mode="delete" module="linking"  />
@@ -4087,7 +4343,7 @@ schema:
 <elementSpec ident="valList" mode="delete" module="tagdocs"/>
 </schemaSpec>
 
-	</div></div></back>
+	</div></back>
 
 </text>
 </TEI>
