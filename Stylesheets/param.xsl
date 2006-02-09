@@ -50,7 +50,6 @@
     <row role="label">
       <cell>Type</cell>
       <cell>Name</cell>
-      <cell>Datatype</cell>
       <cell>Description</cell>
       <cell>Default</cell>
     </row>
@@ -71,13 +70,6 @@
 
 <div>
 <head>Templates</head>
-  <table rend="rules">
-    <row role="label">
-      <cell>Type</cell>
-      <cell>Name</cell>
-      <cell>Description</cell>
-      <cell>Content</cell>
-    </row>
     <xsl:call-template name="listtemplates">
       <xsl:with-param name="Type">common</xsl:with-param>
     </xsl:call-template>
@@ -90,7 +82,6 @@
     <xsl:call-template name="listtemplates">
       <xsl:with-param name="Type">latex</xsl:with-param>
     </xsl:call-template>
-  </table>
 </div>
 </xsl:if>
 </xsl:copy>
@@ -100,22 +91,24 @@
   <xsl:param name="Type"/>
   <xsl:variable name="I" select="@id"/>
     <xsl:for-each select="document(concat($Type,'/tei-param.xsl'))">
+      <xsl:if test="count(key('XDS',$I))&gt;0">
+	<list type="gloss">
       <xsl:for-each select="key('XDS',$I)">
 	<xsl:if test="following-sibling::xsl:*[1]/self::xsl:template">
-	  <row>
-	    <cell><xsl:value-of select="$Type"/></cell>
-	    <cell>
+	  <label>
 	      <hi>
 		<xsl:value-of  select="following-sibling::xsl:*[1]/@name"/>
 	      </hi>
-	    </cell>
-	    <cell>
+	  </label>
+	     <item>
+	     (for <xsl:value-of select="$Type"/>)
 	      <xsl:choose>
 		<xsl:when test="starts-with(xd:short,'[')">
 		  <xsl:value-of select="substring-after(xd:short,']')"/>
 		</xsl:when>
-		<xsl:when test="xd:short"><xsl:apply-templates
-		select="xd:short"/></xsl:when>
+		<xsl:when test="xd:short">
+		  <xsl:apply-templates select="xd:short/*"/>
+		</xsl:when>
 		<xsl:when test="starts-with(.,'[')">
 		  <xsl:value-of select="substring-after(.,']')"/>
 		</xsl:when>
@@ -126,8 +119,6 @@
 		  <xsl:copy-of select="."/>
 		</xsl:otherwise>
 	      </xsl:choose>
-	    </cell>
-	    <cell>
 	      <xsl:for-each select="following-sibling::xsl:*[1]">
 		<xsl:choose>
 		  <xsl:when test="*">
@@ -141,10 +132,11 @@
 		  </xsl:otherwise>
 		</xsl:choose>
 	      </xsl:for-each>
-	    </cell>
-	  </row>
+	  </item>
 	</xsl:if>
       </xsl:for-each>
+	</list>
+      </xsl:if>
     </xsl:for-each>
 </xsl:template>
 
@@ -155,20 +147,27 @@
       <xsl:for-each select="key('XDS',$I)">
 	<xsl:if test="not(following-sibling::xsl:*[1]/self::xsl:template)">
       <row>
-	<cell><xsl:value-of select="$Type"/></cell>
+	<cell>
+	<xsl:choose>
+	  <xsl:when test="$Type='common'"></xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="$Type"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+	  </cell>
 	<cell>
 	  <hi>
 	    <xsl:value-of	select="following-sibling::xsl:*[1]/@name"/>
 	  </hi>
 	</cell>
-	<cell><xsl:value-of select="@type"/></cell>
 	<cell>
 	  <xsl:choose>
 	    <xsl:when test="starts-with(xd:short,'[')">
 	      <xsl:value-of select="substring-after(xd:short,']')"/>
 	    </xsl:when>
-	    <xsl:when test="xd:short"><xsl:apply-templates
-	    select="xd:short"/></xsl:when>
+	    <xsl:when test="xd:short">
+	      <xsl:apply-templates  select="xd:short"/>
+	    </xsl:when>
 	    <xsl:when test="starts-with(.,'[')">
 	      <xsl:value-of select="substring-after(.,']')"/>
 	    </xsl:when>
@@ -176,9 +175,11 @@
 	      <xsl:value-of select="substring-before(.,'.')"/>
 	    </xsl:when>
 	    <xsl:otherwise>
-	      <xsl:copy-of select="."/>
+	      <xsl:apply-templates/>
 	    </xsl:otherwise>
 	  </xsl:choose>
+	  <xsl:text> [</xsl:text>
+	  <code><xsl:value-of select="@type"/></code>]
 	</cell>
 	<cell>
 	  <xsl:for-each select="following-sibling::xsl:*[1]">
@@ -201,6 +202,10 @@
     </xsl:for-each>
 </xsl:template>
 
+
+<xsl:template match="xd:short|xd:doc">
+  <xsl:apply-templates/>
+</xsl:template>
 
 <xsl:template match="*">
  <xsl:copy>

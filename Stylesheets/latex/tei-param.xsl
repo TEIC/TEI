@@ -27,14 +27,15 @@
 </xd:doc>
 
 <xd:doc class="hook">
-    <xd:short>[latex] Hook where LaTeX commands can be inserted after \begin{document}</xd:short>
+    <xd:short>[latex] Hook where LaTeX commands can be inserted after 
+the beginning of the document</xd:short>
     <xd:detail> </xd:detail>
 </xd:doc>
 <xsl:template name="beginDocumentHook"/>
 
 <xd:doc class="hook">
     <xd:short>[latex] Hook where LaTeX commands can be inserted in the
-    preamble before \begin{document}</xd:short>
+    preamble before the beginning of the document</xd:short>
     <xd:detail> </xd:detail>
 </xd:doc>
 <xsl:template name="latexPreambleHook"/>

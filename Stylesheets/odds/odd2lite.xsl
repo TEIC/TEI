@@ -711,6 +711,7 @@
 	<xsl:call-template name="i18n">
 	  <xsl:with-param name="word">Example</xsl:with-param>
 	</xsl:call-template>
+	<xsl:text> </xsl:text>
 	<xsl:call-template name="compositeNumber"/>
 	</xsl:if>
       </xsl:with-param>
