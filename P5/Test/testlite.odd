@@ -15,6 +15,10 @@ Guidelines)</bibl>
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
+<change date="2006-02-08" who="LB">
+more substantive changes: add elements from tagdocs module; kill
+numbered divs
+</change>
 <change date="2006-01-29" who="LB">
 first cut conversion to P5
 </change>
@@ -93,10 +97,10 @@ conceived of as a simple demonstration of how the TEI encoding scheme
 might be adopted to meet 90% of the needs of 90% of the TEI user
 community. In retrospect, it was predictable that many people should
 imagine TEI Lite to be all there is to TEI, or find TEI Lite to be far
-too heavy for their needs (to meet the latter criticism, Michael also
+too heavy for their needs.<!-- (to meet the latter criticism, Michael also
 prepared a special <ref target="http://www.tei-c.org/Vault/Bare">barebones version of TEI
-Lite</ref>).</p>
-        <p>TEI Lite was based largely on our observations of existing and
+Lite</ref>).--></p>
+        <p>The original TEI Lite was based largely on our observations of existing and
 previous practice in the encoding of texts, particularly as manifest
 in the collections of the <ref target="http://ota.ahds.ac.uk">Oxford
 Text Archive</ref> and in our own experience. It is therefore
@@ -105,12 +109,12 @@ at least a common point of departure for electronic text centres and
 encoding projects world wide. Maybe the fact that we actually produced
 this shortish, readable, manual for it also helped.</p>
 
-<p>That manual was, of course, authored and is maintained in the DTD
+<!-- <p>That manual was, of course, authored and is maintained in the DTD
 it describes, originally as <ref target="#teiu5_en.xml">an XML
 document</ref>. This makes it easy to produce a number of differently
 formatted versions in HTML, PDF, etc., some of which can be found
 in <ref target="http://www.tei-c.org/Vault/">The TEI Vault</ref>.</p>
-
+-->
         <p>Early adopters of TEI Lite included a number of
 <soCalled>Electronic Text Centers</soCalled>, many of whom produced
 their own documentation and tutorial materials (some examples are
@@ -120,27 +124,35 @@ pages</ref>). </p>
 <p>With the publication of TEI P4, the XML version of the TEI
 Guidelines, which uses the generation of TEI Lite as an example of the
 Modification mechanism built into the TEI Guidelines, the opportunity
-has been taken to produce a lightly revised version of the present
-document. This revision documents the <ref target="http://www.tei-c.org/Lite/DTD/teixlite.dtd">XML version of the
-TEI Lite DTD</ref>. </p>
-        <trailer>Lou Burnard, May 2002</trailer>
+was taken to produce a lightly revised version which documents an 
+<ref target="http://www.tei-c.org/Lite/DTD/teixlite.dtd">XML version of the
+original TEI Lite DTD</ref>. </p>
+
+<p>The present version is a more substantive revision, taking
+advantage of the many new features introduced into the TEI Guidelines
+at release P5. A brief list of those changes likely to affect users of
+previous versions of this document is given below (<ptr target="#changes"/>). </p>
+
+        <trailer>Lou Burnard, February 2006</trailer>
       </div>
-<!-- <divGen type="toc"/> -->
     </front>
-    <body>
+    
+
+<body>
       <p>This document provides an
 introduction to the recommendations of the Text Encoding Initiative
-(TEI), by describing a manageable subset of the full TEI encoding
+(TEI), by describing a specific subset of the full TEI encoding
 scheme. The scheme documented here can be used to encode a wide
 variety of commonly encountered textual features, in such a way as to
 maximize the usability of electronic transcriptions and to facilitate
 their interchange among scholars using different computer systems. It
-is also fully compatible with the full TEI scheme, as defined by TEI
-document P4, <title>Guidelines for Electronic Text Encoding and
-Interchange</title>, published in May 2002, and available from the TEI
+is fully compatible with the full TEI scheme, as defined by TEI
+document P5, <title>Guidelines for Electronic Text Encoding and
+Interchange</title>, as of February 2006, and available from the TEI
     Consortium website at <ptr target="http://www.tei-c.org"/>.
 </p>
-      <div type="Section" xml:id="U5-Intro">
+
+<div type="Section" xml:id="U5-Intro">
         <head>Introduction</head>
         <p>The Text Encoding Initiative (TEI) Guidelines are addressed
         to anyone who wants to interchange information stored in an
@@ -221,8 +233,8 @@ design goals, which is called <title>TEI Lite</title>.</p>
 the full TEI scheme, we have tried to identify a useful <soCalled>starter
 set</soCalled>, comprising the elements which almost every user should
 know about.  Experience working with TEI Lite will be invaluable in
-understanding the full TEI DTD and in knowing which optional parts of
-the full DTD are necessary for work with particular types of text.</p>
+understanding the full TEI scheme and in knowing how to integrate
+specialized parts of it into the general TEI framework.</p>
         <p>Our goals in defining this subset may be summarized as follows:
 <list type="simple">
 
@@ -237,7 +249,7 @@ this one) as well as the encoding of existing texts;</item>
 <item>it should be usable with a wide range of existing XML
 software;</item>
 
-<item>it should be derivable from the full TEI DTD using the
+<item>it should be derivable from the full TEI scheme using the
 extension mechanisms described in the TEI Guidelines;</item>
 
 <item>it should be as small and simple as is consistent with the
@@ -268,7 +280,7 @@ basic knowledge of XML is assumed.</p>
 <p>We begin with a short example, intended to show what happens when
 a passage of prose is typed into a computer by someone with little
 sense of the purpose of mark-up, or the potential of electronic texts.
- In an ideal world, such output might be generated by a very accurate
+In an ideal world, such output might be generated by a very accurate
 optical scanner.  It attempts to be faithful to the appearance of the
 printed text, by retaining the original line breaks, by introducing
 blanks to represent the layout of the original headings and page
@@ -334,8 +346,7 @@ ing to my marriage. His letter was then calm, and though very serious,
 kind. He has maintained a regular, though not very frequent correspond-
 ence ever since: he hopes I am happy, and trusts I am not of those who
 live without God in the world, and only mind earthly
-      things.</eg>
-<!---->
+things.</eg>
         </p>
 <p>This transcription suffers from a number of shortcomings:
 <list type="bullets">
@@ -455,12 +466,18 @@ short passage might readily be extended. For example:
 provided;</item>
 <item>footnotes glossing or commenting on any passage could be
 added;</item>
-<item>pointers linking parts of this text to others could be added;</item><item>proper names of various kinds could be distinguished from the
-surrounding text;</item><item>detailed bibliographic information about the text's provenance
-and context could be prefixed to it;</item><item>a linguistic analysis of the passage into sentences, clauses,
+<item>pointers linking parts of this text to others could be
+added;</item>
+<item>proper names of various kinds could be distinguished from the
+surrounding text;</item>
+<item>detailed bibliographic information about the text's provenance
+and context could be prefixed to it;</item>
+<item>a linguistic analysis of the passage into sentences, clauses,
 words, etc., could be provided, each unit being associated with
-appropriate category codes;</item><item>the text could be segmented into narrative or discourse
-       units;</item><item>systematic analysis or interpretation of the text could be
+appropriate category codes;</item>
+<item>the text could be segmented into narrative or discourse
+       units;</item>
+<item>systematic analysis or interpretation of the text could be
 included in the encoding, with potentially complex alignment or
 linkage between the text and the analysis, or between the text and one
 or more translations of it;</item><item>passages in the text could be linked to images or sound held on
@@ -549,7 +566,10 @@ version of the TEI Guidelines.</p>
 structures. The discussion in each case consists of a short list of
 relevant TEI <term>elements</term> with a brief definition of each,
 followed by definitions for any <term>attributes</term> specific to
-that element. In most cases, short examples are also given.<!----></p>
+that element, and a reference to any <term>classes</term> of which the
+element is a member. These references are linked to full
+specifications for each object, as given in the TEI
+<title>Guidelines</title>. In most cases, short examples are also given.<!----></p>
       </div>
       <div type="Section" xml:id="U5-body">
         <head>Encoding the Body</head>
@@ -934,7 +954,6 @@ in consideration of the said intended marriage ...</p></egXML></p>
   <p>Alternatively, where the cause for the highlighting can be
 identified with confidence, a number of other, more specific, elements
 are available.
-
 <specList>
 <specDesc key="emph"/>
 <specDesc key="foreign"/>
@@ -991,8 +1010,7 @@ France, the <hi rend="italic">romans
 d'antiquité</hi>, the romances of
 Chrétien de Troyes, ...</p></egXML></p>
         </div>
-        <div xml:id="z635" >
-          <head>Quotations and Related Features</head>
+<div xml:id="z635" ><head>Quotations and Related Features</head>
   <p>Like changes of typeface, quotation marks are conventionally used
 to denote several different features within a text, of which the most
 frequent is quotation.  When possible, we recommend that the
@@ -1067,7 +1085,7 @@ status.<!----></p>
   <p>Words or phrases which are not in the main language of the texts
 may be tagged as such in one of two ways. If the word or phrase is
 already tagged for some reason, the element indicated should bear a
-value for the global <att>lang</att> attribute indicating the
+value for the global <att>xml:lang</att> attribute indicating the
 language used. Where there is no applicable element, the element
 <gi>foreign</gi> may be used, again using the <att>xml:lang</att>
 attribute.  For example:
@@ -1083,7 +1101,29 @@ as <gi>title</gi>, <gi>mentioned</gi>, or <gi>term</gi> applies.
 The global <att>xml:lang</att> attribute may be attached to any
 element to show that it uses some other language than that of the
 surrounding text.</p>
-        </div>
+<p>The codes used to identify languages, supplied on the
+<att>xml:lang</att> attribute, must be constructed in a particular
+way, and must conform to common Internet standards<note
+place="foot">The relevant standards are RFC 3066, and the lists of two
+and three language identifiers maintained as part of ISO 639 (see http://www.w3.org/WAI/ER/IG/ert/iso639.htm)</note>, as further
+explained in the relevant section of the TEI Guidelines. Some simple example
+codes for a few commonly encoded languages are given here:
+<table>
+<row><cell>zh or zho</cell><cell>Chinese</cell></row>
+<row><cell>en</cell><cell>English</cell></row>
+<row><cell>enm</cell><cell>Middle English</cell></row>
+<row><cell>fr or fra</cell><cell>French</cell></row>
+<row><cell>de or deu</cell><cell>German</cell></row>
+<row><cell>grc</cell><cell>Ancient Greek</cell></row>
+<row><cell>ell or el</cell><cell>Greek</cell></row>
+<row><cell>ja or jpn</cell><cell>Japanese</cell></row>
+<row><cell>la or lat</cell><cell>Latin</cell></row>
+<row><cell>sa or san</cell><cell>Sanskrit</cell></row>
+<row><cell>es or esl</cell><cell>Spanish</cell></row>
+</table>
+</p>
+
+</div>
       </div>
       <div type="Section" xml:id="U5-notes">
         <head>Notes</head>
@@ -1275,7 +1315,7 @@ elements might be used in a text. Some other uses are  discussed in
 section <ptr target="#xatts"/> below.</p>
         </div>
         <div xml:id="xptrs" >
-          <head>Extended Pointers</head>
+          <head>Pointing to other documents</head>
 
 <p>So far, we have shown how the elements <gi>ptr</gi> and
 <gi>ref</gi> may be used for cross-references or links whose targets
@@ -1283,24 +1323,6 @@ occur within the same document as their source. However, the same
 elements may also be used to refer to elements in any other XML
 document or resource, such as a document on the web, or a database
 component.
-
-<!--
-The elements discussed in this section are not restricted in this way.
-<list type="gloss"><label><gi>xptr</gi></label><item>defines a pointer to another location in the current document
-or an external document.</item><label><gi>xref</gi></label><item>defines a pointer to another location in the current document
-or an external document, possibly modified by additional text or
-comment.</item></list></p>
-  <p>In addition to the pointer attributes already discussed in section
-<ptr target="ptrs"/> above, these elements share the following
-additional attributes, which are used to specify the target of the
-cross reference or link in place of the
-<att>target</att> attribute:
-<list type="gloss"><label><att>doc</att></label><item>specifies the document within which the required location is to
-be found, by default the current document.</item><label><att>from</att></label><item>specifies the start of the destination of the pointer as an
-expression in the TEI extended pointer syntax, by default the whole of
-the document indicated by the <att>doc</att> attribute. </item><label><att>to</att></label><item>specifies the endpoint of the destination of the pointer as an 
-  expression in the TEI extended pointer syntax; may only be specified
-if the <att>from</att> attribute has been. </item></list></p>-->
 This is possible because the value of the <att>target</att> attribute
 may be any valid <term>universal resource indicator</term> (URI). A
 full definition of this
@@ -1329,7 +1351,7 @@ located by some other means.  A full specification of the language is
 well beyond the scope of this document; here we provide only a flavour
 of its power. </p>
 
-<p>In the Xpath language, locations are defined as a series of
+<p>In the XPath language, locations are defined as a series of
 <term>steps</term>, each one identifying some part of the document,
 often in terms of the locations identified by the previous step.  For
 example, you would point to the third sentence of the second paragraph
@@ -1338,9 +1360,8 @@ paragraph in the second step, and the third sentence in the last step.
 A step can be defined in terms of the document tree itself, using such
 concepts as <val>parent</val>, <val>descendent</val>,
 <val>preceding</val>, etc. or, more loosely, in terms of text
-patterns, word or character positions. You can also use a foreign
-(non-XML) notation, or specify a location within a graphic in terms of
-its co-ordinate system.</p>
+patterns, word or character positions. </p>
+<!--
   <p>The first step in a location path will often be to specify the
 identifier of some element within the target document, as in this
 example:
@@ -1405,8 +1426,8 @@ identifier
 <att>X1</att> within the current document:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><ptr target="#X1"/>
 <ptr from="id (X1)"/></egXML></p>
-
-<div xml:id="xatts" > <head>Linking Attributes</head>
+--></div>
+<div xml:id="xatts" > <head>Special kinds of Linking</head>
   <p>The following special purpose <term>linking</term> attributes are
 defined for every element in the TEI Lite scheme:
 <list type="gloss"><label><att>ana</att></label><item>links an element with its interpretation.</item><label><att>corresp</att></label><item>links an element with one or more other corresponding elements.</item><label><att>next</att></label><item>links an element to the next element in an aggregate.</item><label><att>prev</att></label><item>links an element to the previous element in an aggregate.</item></list></p>
@@ -1420,9 +1441,9 @@ somewhere within a document, as further discussed in section
   <seg type="lex" ana="#VVI">loves</seg>
   <seg type="lex" ana="#NP1">Nancy</seg>
 </seg></egXML>  This encoding implies the existence elsewhere in the
-document of elements with identifiers <att>SVO</att>, <att>NP1</att>,
+document of elements with identifiers <val>SVO</val>, <val>NP1</val>,
 and
-<att>VV1</att> where the significance of these particular codes
+<val>VV1</val> where the significance of these particular codes
 is explained. Note the use of the <gi>seg</gi> element to mark
 particular components of the analysis, distinguished by the <att>type</att>
 attribute.</p>
@@ -1454,6 +1475,7 @@ about me in the dark.</egXML><!-- Melville, Moby Dick (but where?) --><!-- (The 
 close to beginning) --><!-- ophelias song eg might be better --><!-- ha. --></p>
         </div>
       </div>
+
       <div type="Section" xml:id="U5-edit1">
         <head>Editorial  Interventions</head>
 <p>The process of encoding an electronic text has much in common with
@@ -1462,6 +1484,9 @@ publication. In either  case a conscientious editor may  wish to record
 both the original state of the source and any editorial correction or
 other change made in it. The elements discussed in this and the next
 section provide some facilities for meeting these needs.</p>
+
+<div><head>Correction and Normalization</head>
+
 <p>The following elements may be used to mark
 <term>correction</term>, that is editorial changes introduced where
 the editor believes the original to be erroneous:
@@ -1532,7 +1557,14 @@ of the readings it contains are in some sense anomalous:
 
 <p>Finally, a modern digital editor may decide to combine both
 possibilities in a single composite text, using the <gi>choice</gi>
-element to mark where alternative readings are possible:
+element.
+
+<specList>
+<specDesc key="choice"/>
+</specList>
+
+
+This allows an editor to mark where alternative readings are possible:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">... for his nose was
 as sharp as a pen and 
 <choice><orig>a</orig><reg>he</reg></choice>
@@ -1662,6 +1694,7 @@ and so on.
 <!-- Debra Cameron and Bill Rosenblatt, Learning GNU Emacs.
 Sebastopol: O'Reilly & Associates, 1991, p. 8. -->
       </div>
+
       <div type="Section" xml:id="U5-names">
         <head>Names, Dates, Numbers and   Abbreviations</head>
 <p>The TEI scheme defines elements for a large number of
@@ -1808,8 +1841,9 @@ this possibility:
 <val>ordinal</val>  (for ordinal numbers,  e.g. <q>21st</q>),
 <val>percentage</val>, and <val>cardinal</val> (an absolute number, e.g.
 <q>21</q>, <q>21.5</q>, etc.)</item><label><att>value</att></label><item>supplies the value of the number in an application-dependent
-standard form.</item></list></item></list>--></p>
-  <p>For example:<!---->
+standard form.</item></list></item></list>-->
+</p>
+  <p>For example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><num value="33">xxxiii</num>
 <num type="cardinal" value="21">twenty-one</num>
 <num type="percentage" value="10">ten percent</num>
@@ -1854,13 +1888,41 @@ attribute may be used to supply an expansion:
  is the Director of the
  <abbr expan="Computers in Teaching Initiative" type="acronym">
  CTI</abbr> Centre for Textual Studies.</egXML></p>-->
-  <p>This element is particularly useful in the transcription of manuscript
-materials in which abbreviation is very frequent. To record both an
+<p>The <gi>expan</gi> element is used to mark an expansion supplied by
+an encoder. This element is particularly useful in the transcription of manuscript
+materials. For example, the
+character p with a bar through its descender as a conventional
+representation for the word <val>per</val> is commonly encountered in
+Medieval European manuscripts. An encoder may choose to expand this as
+follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<expan>per</expan> 
+</egXML>
+</p>
+<p>The expansion corresponding with an abbreviated form may not
+always contain the same letters as the abbreviation. Where it does,
+however, common editorial practice is  to italicize or otherwise
+signal which letters have been supplied. The <gi>expan</gi> element
+should not be used for this purpose since its function is to indicate an
+expanded form, not a part of one. 
+For example, consider the common
+abbreviation <val>wt</val> (for <val>with</val>) found in medieval
+texts. In a modern edition, an editor might wish to represent this as
+<soCalled>w<hi>i</hi>t<hi>h</hi></soCalled>, italicising the
+letters not found in the source. An appropriate encoding for this
+purpose would be 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<expan>w<hi>i</hi>t<hi>h</hi></expan>
+</egXML>
+</p>
+<p>To record both an
 abbreviation and its expansion, the <gi>choice</gi> element mentioned
 above may be used to group the abbreviated form with its proposed
 expansion: 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
- 
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><choice>
+<abbr>wt</abbr>
+<expan>with</expan>
+</choice> 
 </egXML>
   </p>       </div>
         <div >
@@ -1920,8 +1982,7 @@ glossaries, marks the term being defined.</item></list>-->
 </p>
 <p>Individual list items are tagged with <gi>item</gi>.  The first
 <gi>item</gi> may optionally be preceded by a <gi>head</gi>, which
-gives a heading for the list.  The numbering of a list may be omitted
-(if reconstructible), indicated using the <att>n</att> attribute
+gives a heading for the list.  The numbering of a list may be omitted, indicated using the <att>n</att> attribute
 on each item, or (rarely) tagged as content using the <gi>label</gi>
 element.  The following are all thus equivalent:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><list>
@@ -1944,12 +2005,14 @@ element.  The following are all thus equivalent:
 <label>2</label><item>Second item in list.</item>
 <label>3</label><item>Third item in list.</item>
 </list></egXML> The styles should not be mixed in the same list.</p>
-<p>A simple two-column table may be treated as a <term>glossary list</term>,
-tagged <gi>list type="gloss"</gi>.  Here, each item comprises a <term>term</term>
-and a <term>gloss</term>, marked with <gi>label</gi> and <gi>item</gi>
-respectively.  These correspond to the elements
-<gi>term</gi> and <gi>gloss</gi>, which can occur anywhere in prose
-text.
+
+<p>A simple two-column table may be treated as a <term>glossary
+list</term>, tagged <gi>list type="gloss"</gi>.  Here, each item
+comprises a <term>term</term> and a <term>gloss</term>, marked with
+<gi>label</gi> and <gi>item</gi> respectively.  These correspond to
+the elements <gi>term</gi> and <gi>gloss</gi>, which can occur
+anywhere in prose text.
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><list type="gloss">
 <head>Vocabulary</head>
 <label lang="enm">nu</label>        <item>now</item>
@@ -2004,8 +2067,8 @@ were mad, </item><item n="j"> innumerable ones, </item><item n="k"> those
 drawn with a very fine camel's-hair brush, </item><item n="l">
 others, </item><item n="m"> those that have just broken a flower
 vase, </item><item n="n"> those that resemble flies from a
-distance.</item></list></p></egXML><!-- Borges, tr. R. Simms 'The analytical language of John Wilkins'
---><!-- in Monegal & Reid, Borges: a reader, (Dutton, 1981), p 141 --></p>
+distance.</item></list></p></egXML><!-- Borges, tr. R. Simms 'The
+analytical language of John Wilkins' in Monegal & Reid, Borges: a reader, (Dutton, 1981), p 141 --></p>
 <p>Lists of bibliographic items should be tagged using the <gi>listBibl</gi>
 element, described in the next section.</p>
       </div>
@@ -2048,7 +2111,7 @@ of a bibliographic item.  </item>-->
 publication or distribution of a bibliographic item.</item>-->
 <specDesc key="pubPlace"/><!--contains the name of the place where a bibliographic item was
 published.</item>-->
-<specDesc key="series"/><!--contains information about the series in which a book or other
+<!-- specDesc key="series"/--><!--contains information about the series in which a book or other
 bibliographic item has appeared.</item>-->
 <specDesc key="title"/><!--contains the title of a work, whether article, book, journal,
 or series, including any alternative titles or subtitles. Attributes
@@ -2073,7 +2136,7 @@ elements.  <!-- For an example, see the list in <ptr target="#U5-bibapp"/>.--></
       </div>
       <div xml:id="U5-tables" type="Section">
         <head>Tables</head>
-<p>Tables represent a sizable challenge for any text processing
+<p>Tables represent a  challenge for any text processing
 system, but simple tables, at least, appear in so many texts that even
 in the simplified TEI tag set presented here, markup for tables is
 necessary.  The following  elements are provided for this purpose:
@@ -2463,9 +2526,8 @@ represented, and the same electronic text can be re-used for many
 purposes &#8212; to provide both online hypertext or browsable versions
 and well-formatted typeset versions from a common source for
 example. </p>
-<p>To facilitate this, a small number of additional elements are
-included in TEI Lite as extensions of the main TEI DTD, for use in
-marking particular features of technical documents in general, and of
+<p>To facilitate this, the TEI Lite schema includes some elements for
+marking features of technical documents in general, and of
 XML-related documents in particular.</p>
         <div >
           <head>Additional Elements for Technical Documents</head>
@@ -2481,6 +2543,7 @@ encoding.</item>-->
 the name of an XML element or attribute.</item>-->
 <specDesc key="gi"/><!--</gi></label><item>contains a special type of identifier: an XML generic
 identifier, or element name.</item>-->
+<specDesc key="att"/>
 <specDesc key="kw"/><!--</gi></label><item>contains a keyword in some
 formal language.</item>-->
 <specDesc key="formula"/><!--</gi></label><item>contains a mathematical or chemical formula, optionally
@@ -2489,6 +2552,7 @@ presented in some non-XML notation. Attributes include:
 formula. Default value is
 <val>tex</val>, meaning the formula is represented using the TeX
 typesetting system.</item>-->
+<specDesc key="val"/>
 </specList></p>
   <p>The following example shows how these elements might be used to
 encode a passage from a tutorial introducing the Fortran programming
@@ -2699,11 +2763,18 @@ identifier of the <gi>l</gi> element containing it. </p>
      should enable you to input accented letters or other <soCalled>non-ASCII</soCalled>
      characters directly, and they should be stored in the resulting
      file in a way which is transferable directly between different
-     systems, whether as Unicode characters or as character entity references. </p>
-<p>For compatability with other older systems, however, the TEI Lite
+     systems. </p>
+<p>There are two important exceptions: the characters &amp; and &lt; may not be
+entered directly in an XML document, since they have a special
+significance as initiating markup. They must always be represented as
+<term>entity references</term>, like this: <code>&amp;amp;</code> or
+<code>&amp;lt;</code>. Other characters may also be represented by
+means of entity reference where necessary. </p>
+
+<!-- <p>For compatability with other older systems, however, the TEI Lite
      DTD includes declarations for a number of the most widely used
      character entities, so that such characters may be entered and
-     saved as character mnemonics. </p>
+     saved as character mnemonics. </p>-->
 <!--
 the TEI recommendations for character set use are simple.  For local
 use, use whatever character set is supported by your machine and your
@@ -2755,8 +2826,7 @@ widely used, and are therefore recommended.</p>-->
 sets, you may wish to generate a name using the same naming
 conventions used in ISO public entity sets, as described here:<list type="gloss"><label>digraphs</label><item>Form entity names for digraphs by appending the string
 <mentioned>lig</mentioned> to the letters forming the digraph. If a
-capitalized form is required, both letters are given in upper case
-(remember that case is usually significant in entity names).  E.g.:
+capitalized form is required, both letters are given in upper case.  E.g.:
 <mentioned>aelig</mentioned> (æ), <mentioned>AElig</mentioned>
 (Æ) <mentioned>szlig</mentioned> (ß).</item><label>diacritics and accents</label><item>Form entity names for accented letters in most Western European
 languages by appending one of the following strings to the letter
@@ -3173,7 +3243,7 @@ date in any format.</item>-->
           </div>
           <div type="Section">
             <head>Series and Notes Statements</head>
-    <p>The <gi>seriesStmt</gi> groups information about the series, if
+    <p>The <gi>seriesStmt</gi> element groups information about the series, if
 any, to which a publication belongs. It may contain <gi>title</gi>,
 <gi>idno</gi>, or <gi>respStmt</gi> elements.</p>
     <p>The <gi>notesStmt</gi>, if used, contains one or more <gi>note</gi>
@@ -3373,11 +3443,23 @@ etc., represented within a text.</item>-->
 text in terms of a standard classification scheme, thesaurus,
 etc.</item>-->
 </specList></p>
-  <p>Examples:
+<p>The <gi>creation</gi> element is useful for documenting where a
+work was created, even though it may not have been published or
+recorded there.</p>
+  <p>Example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><creation>
      <date value="1992-08">August 1992</date>
      <name type="place">Taos, New Mexico</name>
 </creation></egXML></p>
+<p>The <gi>langUsage</gi> element is useful where a text contains many
+different languages. It may contain <gi>language</gi> elements to
+document each particular language used:
+<specList>
+<specDesc key="language"/>
+</specList>
+an example is needed.
+</p>
+
   <p>The <gi>textClass</gi> element classifies a text by reference to
 the system or systems defined by the <gi>classDecl</gi> element, and
 contains one or more of the following elements:
@@ -3495,6 +3577,8 @@ taxonomy.</item>-->
 or text typology.</item>-->
 <specDesc atts="" key="cell"/><!--</gi></label><item>contains one cell of a
 table.</item>-->
+<specDesc key="change"/>
+<specDesc key="choice"/>
 <specDesc atts="" key="cit"/><!--</gi></label><item>A quotation from some other document, together with a
 bibliographic reference to its source.</item>-->
 <specDesc atts="" key="classCode"/><!--</gi></label><item>contains the classification code used for this text in some
@@ -3620,6 +3704,7 @@ formal language.</item>-->
 incomplete, line of verse.</item>-->
 <specDesc atts="" key="label"/><!--</gi></label><item>contains the label associated with an item in a list; in
 glossaries, marks the term being defined.</item>-->
+<specDesc key="language"/>
 <specDesc atts="" key="langUsage"/><!--</gi></label><item>describes the languages, sublanguages, registers, dialects,
 etc., represented within a text.</item>-->
 <specDesc atts="" key="lb"/><!--</gi></label><item>marks the start of a new (typographic) line in some  edition or
@@ -3713,8 +3798,6 @@ in sampling texts in the creation of a corpus or collection.</item>-->
 <specDesc atts="" key="seg"/><!--</gi></label><item>identifies a span or segment of text within a document so that
 it may be pointed to; the <att>type</att> attribute categorizes
 the segment.</item>-->
-<specDesc atts="" key="series"/><!--</gi></label><item>contains information about the series in which a book or other
-bibliographic item has appeared.</item>-->
 <specDesc atts="" key="seriesStmt"/><!--</gi></label><item>groups information about the <term>series</term>, if any, to
 which a publication belongs.</item>-->
 <specDesc atts="" key="sic"/><!--</gi></label><item>contains text reproduced although apparently incorrect or
@@ -3746,6 +3829,9 @@ document.</item>-->
 <specDesc atts="" key="taxonomy"/><!--</gi></label><item>defines a typology used to classify texts either implicitly, by
 means of a bibliographic citation, or explicitly by a structured
 taxonomy.</item>-->
+<specDesc key="TEI"/>
+<specDesc key="teiHeader"/>
+<specDesc key="text"/>
 <specDesc atts="" key="term"/><!--</gi></label><item>contains a single-word, multi-word or symbolic designation
 which is regarded as a technical term.</item>-->
 <specDesc atts="" key="textClass"/><!--</gi></label><item>groups information which describes the nature or topic of a
@@ -3777,91 +3863,10 @@ comment.</item>-->
 </p>
 
 <p>In addition to these elements, which are provided by standard TEI
-modules, the TEI Lite schema defines a small number  of additional
-elements. 
+modules, the TEI Lite schema defines the following  additional
+element:
 
 <specGrp xml:id="LITEADD">
-
-<!-- this lot should really be got from tagdocs module -->
-<!--
- <elementSpec ident="eg">
- <desc>Example code</desc>
-  <classes>
-    <memberOf key="model.pPart.data"/>
-    <memberOf key="model.common"/>
-  </classes>
-  <content>
-    <rng:text/>
-  </content>
-</elementSpec>
-
-
- <elementSpec ident="gi">
-  <desc>contains the name (generic identifier) of an element.</desc>
-  <classes><memberOf key="model.pPart.data"/></classes>
-  <content>
-    <rng:text/>
-  </content>
-  <attList>
-    <attDef ident="scheme" usage="opt">
-	<equiv/>
-	<desc>supplies the name of the scheme in which this name is defined.</desc>
-      <datatype><rng:ref
-      xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
-      <defaultVal>TEI</defaultVal>
-      <valList type="open">
-        <valItem ident="TEI">
-          <equiv/>
-          <gloss>this element is part of the TEI scheme.</gloss>
-        </valItem>
-        <valItem ident="DBK">
-          <equiv/>
-          <gloss>this element is  part of the Docbook scheme.</gloss>
-        </valItem>
-        <valItem ident="XHTML">
-          <equiv/>
-          <gloss>this element is  part of the XHTML  scheme.</gloss>
-        </valItem>
-        <valItem ident="XX">
-          <equiv/>
-          <gloss>this element is  part of an unknown scheme.</gloss>
-        </valItem>
-      </valList></attDef>  </attList>
-  <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-The <gi scheme="XHTML">LI</gi> element is roughly analagous to the TEI <gi>item</gi> element.
-    </egXML>
-  </exemplum>
-</elementSpec>
-
- <elementSpec ident="ident">
-<desc>contains an identifier or name for an object of some kind in a formal language</desc>
-  <classes><memberOf key="model.pPart.data"/>
-    <memberOf key="att.typed"/>
-  </classes>
-  <content>
-    <rng:text/>
-  </content>
-</elementSpec>
-
- <elementSpec ident="code">
-<desc>contains literal code from some formal language such as a
-programming language</desc>
-  <classes><memberOf key="model.pPart.data"/></classes>
-  <content>
-    <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
-  </content>
-  <attList>
-    <attDef ident="lang" usage="opt">
-	<equiv/>
-	<desc>a name identifying the formal language in which  the
-	code is expressed</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/></datatype>
-    </attDef>
-  </attList>
-</elementSpec>
--->
-<!-- this one is unique and special -->
 
 
  <elementSpec ident="kw">
@@ -3874,7 +3879,112 @@ programming language</desc>
 </specGrp>
 </p>
 
-<p>The TEI Lite schema itself :</p>
+<p>The TEI Lite schema combines the modules <ident
+type="module">tei</ident>, <ident>
+type="module">core</ident>, <ident>
+type="module">header</ident>, <ident>
+type="module">textstructure</ident>, <ident>
+type="module">figures</ident>, <ident>
+type="module">linking</ident>, <ident>
+type="module">analysis</ident>, and <ident>
+type="module">tagdocs</ident>.
+</p>
+
+<p>The following elements from those modules are excluded from the
+schema:
+<gi>ab</gi>, 
+<gi>alt</gi>, 
+<gi>altGrp</gi>, 
+<gi>altIdent</gi>, 
+<gi>analytic</gi>, 
+<gi>attDef</gi>, 
+<gi>attList</gi>, 
+<gi>attRef</gi>, 
+<gi>biblItem</gi>, 
+<gi>biblStruct</gi>, 
+<gi>binaryObject</gi>, 
+<gi>broadcast</gi>, 
+<gi>c</gi>, 
+<gi>cb</gi>, 
+<gi>cl</gi>, 
+<gi>classSpec</gi>, 
+<gi>classes</gi>, 
+<gi>content</gi>, 
+<gi>correction</gi>, 
+<gi>datatype</gi>, 
+<gi>dateRange</gi>, 
+<gi>defaultVal</gi>, 
+<gi>desc</gi>, 
+<gi>distinct</gi>, 
+<gi>div0</gi>, 
+<gi>div1</gi>, 
+<gi>div2</gi>, 
+<gi>div3</gi>, 
+<gi>div4</gi>, 
+<gi>div5</gi>, 
+<gi>div6</gi>, 
+<gi>div7</gi>, 
+<gi>egXML</gi>, 
+<gi>elementSpec</gi>, 
+<gi>equipment</gi>, 
+<gi>equiv</gi>, 
+<gi>exemplum</gi>, 
+<gi>fsdDecl</gi>, 
+<gi>headItem</gi>, 
+<gi>headLabel</gi>, 
+<gi>hyphenation</gi>, 
+<gi>imprimatur</gi>, 
+<gi>interpretation</gi>, 
+<gi>join</gi>, 
+<gi>joinGrp</gi>, 
+<gi>link</gi>, 
+<gi>linkGrp</gi>, 
+<gi>listRef</gi>, 
+<gi>m</gi>, 
+<gi>macroSpec</gi>, 
+<gi>measure</gi>, 
+<gi>meeting</gi>, 
+<gi>memberOf</gi>, 
+<gi>metDecl</gi>, 
+<gi>metSym</gi>, 
+<gi>moduleRef</gi>, 
+<gi>moduleSpec</gi>, 
+<gi>monogr</gi>, 
+<gi>normalization</gi>, 
+<gi>phr</gi>, 
+<gi>postBox</gi>, 
+<gi>postCode</gi>, 
+<gi>quotation</gi>, 
+<gi>quote</gi>, 
+<gi>recording</gi>, 
+<gi>recordingStmt</gi>, 
+<gi>remarks</gi>, 
+<gi>schemaSpec</gi>, 
+<gi>scriptStmt</gi>, 
+<gi>segmentation</gi>, 
+<gi>series</gi>, 
+<gi>span</gi>, 
+<gi>spanGrp</gi>, 
+<gi>specDesc</gi>, 
+<gi>specGrp</gi>, 
+<gi>specGrpRef</gi>, 
+<gi>specList</gi>, 
+<gi>state</gi>, 
+<gi>stdVals</gi>, 
+<gi>street</gi>, 
+<gi>stringVal</gi>, 
+<gi>tag</gi>, 
+<gi>timeRange</gi>, 
+<gi>timeline</gi>, 
+<gi>valDesc</gi>, 
+<gi>valItem</gi>, 
+<gi>valList</gi>, 
+<gi>variantEncoding</gi>, 
+<gi>w</gi>, 
+<gi>when</gi></p>
+
+
+<p>Here is the TEI Lite schema itself :</p>
 <schemaSpec ident="testlite" start="TEI">
   <specGrpRef target="#LITEADD"/>
   <moduleRef key="tei"/>
@@ -3884,31 +3994,39 @@ programming language</desc>
   <moduleRef key="figures"/>
   <moduleRef key="linking"/>
   <moduleRef key="analysis"/>
-<moduleRef key="tagdocs"/>
-
+  <moduleRef key="tagdocs"/>
+<elementSpec ident="ab" mode="delete" module="linking"  />
 <elementSpec ident="alt" mode="delete" module="linking"  />
 <elementSpec ident="altGrp" mode="delete" module="linking"  />
+<elementSpec ident="altIdent" mode="delete" module="tagdocs"  />
 <elementSpec ident="analytic" mode="delete" module="core"  />
+<elementSpec ident="biblItem" mode="delete" module="core"  />
+<elementSpec ident="biblStruct" mode="delete" module="core"  />
+<elementSpec ident="binaryObject" mode="delete" module="core"  />
 <elementSpec ident="broadcast" mode="delete" module="header"  />
 <elementSpec ident="c" mode="delete" module="analysis"  />
 <elementSpec ident="cb" mode="delete" module="core"  />
 <elementSpec ident="cl" mode="delete" module="analysis"  />
+<elementSpec ident="correction" mode="delete" module="header"  />
 <elementSpec ident="dateRange" mode="delete" module="core"  />
+<elementSpec ident="desc" mode="delete" module="core"  />
 <elementSpec ident="distinct" mode="delete" module="core"  />
-	  <elementSpec ident="div0" module="textstructure" mode="delete"/>
-	  <elementSpec ident="div1" module="textstructure" mode="delete"/>
-	  <elementSpec ident="div2" module="textstructure" mode="delete"/>
-	  <elementSpec ident="div3" module="textstructure" mode="delete"/>
-	  <elementSpec ident="div4" module="textstructure" mode="delete"/>
-	  <elementSpec ident="div5" module="textstructure" mode="delete"/>
-	  <elementSpec ident="div6" module="textstructure" mode="delete"/>
-	  <elementSpec ident="div7" module="textstructure" mode="delete"/>
+<elementSpec ident="div0" module="textstructure" mode="delete"/>
+<elementSpec ident="div1" module="textstructure" mode="delete"/>
+<elementSpec ident="div2" module="textstructure" mode="delete"/>
+<elementSpec ident="div3" module="textstructure" mode="delete"/>
+<elementSpec ident="div4" module="textstructure" mode="delete"/>
+<elementSpec ident="div5" module="textstructure" mode="delete"/>
+<elementSpec ident="div6" module="textstructure" mode="delete"/>
+<elementSpec ident="div7" module="textstructure" mode="delete"/>
+<elementSpec ident="egXML" mode="delete" module="tagdocs"  />
 <elementSpec ident="equipment" mode="delete" module="header"  />
-<elementSpec ident="expan" mode="delete" module="core"  />
+<elementSpec ident="equiv" mode="delete" module="core"  />
 <elementSpec ident="fsdDecl" mode="delete" module="header"  />
 <elementSpec ident="headItem" mode="delete" module="core"  />
 <elementSpec ident="headLabel" mode="delete" module="core"  />
 <elementSpec ident="hyphenation" mode="delete" module="header"  />
+<elementSpec ident="imprimatur" mode="delete" module="textstructure"  />
 <elementSpec ident="interpretation" mode="delete" module="header"  />
 <elementSpec ident="join" mode="delete" module="linking"  />
 <elementSpec ident="joinGrp" mode="delete" module="linking"  />
@@ -3918,9 +4036,9 @@ programming language</desc>
 <elementSpec ident="measure" mode="delete" module="core"  />
 <elementSpec ident="meeting" mode="delete" module="core"  />
 <elementSpec ident="metDecl" mode="delete" module="header"  />
+<elementSpec ident="metSym" mode="delete" module="header"  />
 <elementSpec ident="monogr" mode="delete" module="core"  />
 <elementSpec ident="normalization" mode="delete" module="header"  />
-<elementSpec ident="num" mode="delete" module="core"  />
 <elementSpec ident="phr" mode="delete" module="analysis"  />
 <elementSpec ident="postBox" mode="delete" module="core"  />
 <elementSpec ident="postCode" mode="delete" module="core"  />
@@ -3936,41 +4054,39 @@ programming language</desc>
 <elementSpec ident="state" mode="delete" module="header"  />
 <elementSpec ident="stdVals" mode="delete" module="header"  />
 <elementSpec ident="street" mode="delete" module="core"  />
-<elementSpec ident="teiCorpus" mode="delete" module="core"  />
 <elementSpec ident="timeRange" mode="delete" module="core"  />
 <elementSpec ident="timeline" mode="delete" module="linking"  />
 <elementSpec ident="variantEncoding" mode="delete" module="header"  />
 <elementSpec ident="w" mode="delete" module="analysis"  />
 <elementSpec ident="when" mode="delete" module="linking"  />
-
-
-<elementSpec module="tagdocs" ident="attDef" mode="delete"/>
-<elementSpec module="tagdocs" ident="attList" mode="delete"/>
-<elementSpec module="tagdocs" ident="attRef" mode="delete"/>
-<elementSpec module="tagdocs" ident="classSpec" mode="delete"/>
-<elementSpec module="tagdocs" ident="classes" mode="delete"/>
-<elementSpec module="tagdocs" ident="content" mode="delete"/>
-<elementSpec module="tagdocs" ident="datatype" mode="delete"/>
-<elementSpec module="tagdocs" ident="defaultVal" mode="delete"/>
-<elementSpec module="tagdocs" ident="elementSpec" mode="delete"/>
-<elementSpec module="tagdocs" ident="exemplum" mode="delete"/>
-<elementSpec module="tagdocs" ident="listRef" mode="delete"/>
-<elementSpec module="tagdocs" ident="macroSpec" mode="delete"/>
-<elementSpec module="tagdocs" ident="memberOf" mode="delete"/>
-<elementSpec module="tagdocs" ident="moduleRef" mode="delete"/>
-<elementSpec module="tagdocs" ident="moduleSpec" mode="delete"/>
-<elementSpec module="tagdocs" ident="remarks" mode="delete"/>
-<elementSpec module="tagdocs" ident="schemaSpec" mode="delete"/>
-<elementSpec module="tagdocs" ident="specDesc" mode="delete"/>
-<elementSpec module="tagdocs" ident="specGrp" mode="delete"/>
-<elementSpec module="tagdocs" ident="specGrpRef" mode="delete"/>
-<elementSpec module="tagdocs" ident="specList" mode="delete"/>
-<elementSpec module="tagdocs" ident="stringVal" mode="delete"/>
-<elementSpec module="tagdocs" ident="valDesc" mode="delete"/>
-<elementSpec module="tagdocs" ident="valItem" mode="delete"/>
-<elementSpec module="tagdocs" ident="valList" mode="delete"/>
-
+<elementSpec ident="attDef" mode="delete" module="tagdocs"/>
+<elementSpec ident="attList" mode="delete" module="tagdocs"/>
+<elementSpec ident="attRef" mode="delete" module="tagdocs"/>
+<elementSpec ident="classSpec" mode="delete" module="tagdocs"/>
+<elementSpec ident="classes" mode="delete" module="tagdocs"/>
+<elementSpec ident="content" mode="delete" module="tagdocs"/>
+<elementSpec ident="datatype" mode="delete" module="tagdocs"/>
+<elementSpec ident="defaultVal" mode="delete" module="tagdocs"/>
+<elementSpec ident="elementSpec" mode="delete" module="tagdocs"/>
+<elementSpec ident="exemplum" mode="delete" module="tagdocs"/>
+<elementSpec ident="listRef" mode="delete" module="tagdocs"/>
+<elementSpec ident="macroSpec" mode="delete" module="tagdocs"/>
+<elementSpec ident="memberOf" mode="delete" module="tagdocs"/>
+<elementSpec ident="moduleRef" mode="delete" module="tagdocs"/>
+<elementSpec ident="moduleSpec" mode="delete" module="tagdocs"/>
+<elementSpec ident="remarks" mode="delete" module="tagdocs"/>
+<elementSpec ident="schemaSpec" mode="delete" module="tagdocs"/>
+<elementSpec ident="specDesc" mode="delete" module="tagdocs"/>
+<elementSpec ident="specGrp" mode="delete" module="tagdocs"/>
+<elementSpec ident="specGrpRef" mode="delete" module="tagdocs"/>
+<elementSpec ident="specList" mode="delete" module="tagdocs"/>
+<elementSpec ident="stringVal" mode="delete" module="tagdocs"/>
+<elementSpec ident="tag" mode="delete" module="tagdocs"/>
+<elementSpec ident="valDesc" mode="delete" module="tagdocs"/>
+<elementSpec ident="valItem" mode="delete" module="tagdocs"/>
+<elementSpec ident="valList" mode="delete" module="tagdocs"/>
 </schemaSpec>
+
 	</div></div></back>
 
 </text>
