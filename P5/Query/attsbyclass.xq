@@ -1,6 +1,6 @@
 declare namespace tei="http://www.tei-c.org/ns/1.0";
 declare namespace rng="http://relaxng.org/ns/structure/1.0";
-
+declare namespace request="http://exist-db.org/xquery/request";
 let $e := request:request-parameter("name", "")
 for $c in collection("/db/TEI")//tei:classSpec[@ident=$e]
 return
