@@ -375,21 +375,19 @@ TEI Guidelines. As we shall see, there are many ways in which this
 encoding could be extended, but as a minimum, the TEI approach allows
 us to represent the following distinctions:
 <list type="bullets">
-<item>Paragraph divisions are now marked explicitly.</item>
-<item>Apostrophes are distinguished from quotation marks.</item>
-<item>Entity references are used for the accented letter and the long
-dash.</item>
+<item>Paragraph and chapter divisions are now marked explicitly.</item>
+<item>Apostrophes are distinguished from quotation marks; direct
+speech is explicitly marked.</item>
+<item>The accented letter and the long dash are correctly represented.</item>
 <item>Page divisions have been marked with an empty <gi>pb</gi>
 element alone.</item>
-<item>To simplify searching and processing, the lineation of the
+<item>The lineation of the
 original has not been retained and words broken by typographic
-accident at the end of a line have been re-assembled without comment.
-If the original lineation were of interest, as it might be for an
-important printing, it could easily be recorded, though it has not
-been here.</item>
+accident at the end of a line have been re-assembled without comment.</item>
 <item>For convenience of proof reading, a new line has been
 introduced at the start of each paragraph, but the indentation is
 removed.</item></list>
+
 <eg><![CDATA[<pb n='474'/>
 <div type="chapter" n='38'>
 
@@ -397,7 +395,7 @@ removed.</item></list>
 the parson and clerk, were alone present.  When we got back
 from church, I went into the kitchen of the manor-house,
 where Mary was cooking the dinner, and John cleaning the
-knives, and I said &mdash;</p>
+knives, and I said —</p>
 
 <p><q>Mary, I have been married to Mr Rochester this
 morning.</q> The housekeeper and her husband were of that
@@ -410,7 +408,7 @@ me; the ladle with which she was basting a pair of chickens
 roasting at the fire, did for some three minutes hang
 suspended in air, and for the same space of time John's
 knives also had rest from the polishing process; but Mary,
-bending again over the roast, said only &mdash;</p>
+bending again over the roast, said only —</p>
 
 <p><q>Have you, miss? Well, for sure!</q></p>
 
@@ -421,7 +419,7 @@ was grinning from ear to ear.  <q>I telled Mary how it would
 be,</q> he said: <q>I knew what Mr Edward</q> (John was an
 old servant, and had known his master when he was the cadet
 of the house, therefore he often gave him his Christian
-name) &mdash; <q>I knew what Mr Edward would do; and I was
+name) — <q>I knew what Mr Edward would do; and I was
 certain he would not wait long either: and he's done right,
 for aught I know.  I wish you joy, miss!</q> and he politely
 pulled his forelock.</p>
@@ -431,11 +429,11 @@ Mary this.</q></p>
 
 <p>I put into his hand a five-pound note.  Without waiting
 to hear more, I left the kitchen.  In passing the door of
-that sanctum some time after, I caught the words &mdash;</p>
+that sanctum some time after, I caught the words —</p>
 
 <p><q>She'll happen do better for him nor ony o' t' grand
 ladies.</q> And again, <q>If she ben't one o' th'
-handsomest, she's noan fa&agrave;l, and varry good-natured;
+handsomest, she's noan faàl, and varry good-natured;
 and i' his een she's fair beautiful, onybody may see
 that.</q></p>
 
@@ -459,9 +457,11 @@ then calm, and though very serious, kind.  He has maintained
 a regular, though not very frequent correspondence ever
 since: he hopes I am happy, and trusts I am not of those who
 live without God in the world, and only mind earthly things.</p>]]></eg></p>
-<p>The decision to focus on Brontë's text, rather than on the
-printing of it in this particular edition, is one aspect of a
-fundamental encoding issue: that of selectivity. An encoding makes
+
+<p>This particular encoding represents a set of choices or priorities.
+The decision to focus on Brontë's text, rather than on the
+printing of it in this particular edition, is an instance of the
+fundamental <emph>selectivity</emph> of any encoding. An encoding makes
 explicit only those textual features of importance to the encoder.  It
 is not difficult to think of ways in which the encoding of even this
 short passage might readily be extended. For example:
@@ -486,7 +486,7 @@ included in the encoding, with potentially complex alignment or
 linkage between the text and the analysis, or between the text and one
 or more translations of it;</item><item>passages in the text could be linked to images or sound held on
 other media.</item></list></p>
-<p>The TEI-recommended way of carrying all of these out is described
+<p>A TEI-recommended way of carrying out most of these is described
 in the remainder of this document. The TEI scheme as a whole also
 provides for an enormous range of other possibilities, of which we
 cite only a few:
@@ -574,6 +574,12 @@ that element, and a reference to any <term>classes</term> of which the
 element is a member. These references are linked to full
 specifications for each object, as given in the TEI
 <title>Guidelines</title>. In most cases, short examples are also given.<!----></p>
+<p>For example, here are the elements discussed so far:
+<specList>
+<specDesc key="TEI"/>
+<specDesc key="teiHeader"/>
+<specDesc key="text"/>
+</specList></p>
       </div>
       <div type="Section" xml:id="U5-body">
         <head>Encoding the Body</head>
@@ -587,11 +593,7 @@ consists of the following elements:
 <specDesc key="back"/>
 </specList>
 
-<!--
-<list type="gloss"><label><gi>front</gi></label><item>contains any prefatory matter (headers, title page, prefaces,
-dedications, etc.) found before the start of a text proper.</item><label><gi>group</gi></label><item>contains a number of unitary texts or groups of texts.</item><label><gi>body</gi></label><item>contains the whole body of a single unitary text, excluding any
-front or back matter.</item><label><gi>back</gi></label><item>contains any appendixes, etc., following the main part of a
-text.</item></list> -->
+
 Elements specific to front and back matter are described
 below in section <ptr target="#U5-fronbac"/>. In this section we discuss
 the elements making up the body of a text. </p>
@@ -607,39 +609,22 @@ such grouping of paragraphs.
 <specDesc key="div"/>
 </specList>
   </p>
-<!--
 
-<list type="gloss"><label><gi>p</gi></label><item>marks paragraphs in prose.</item><label><gi>div</gi></label><item>contains a subdivision of the front, body, or back of a text.</item><label><gi>div</gi></label><item>contains a first-level subdivision of the front, body, or back
-of a text (the largest, if
-<gi>div0</gi> is not used, the second largest if it is).</item></list></p>
--->
-<!--
-  <p>When structural subdivisions smaller than a <gi>div</gi> are
-necessary, a <gi>div</gi> may be divided into <gi>div</gi>
-elements, a <gi>div</gi> into smaller <gi>div</gi> elements, etc.,
-down to the level of <gi>div7</gi>.  If more than seven levels of
-structural division are present, one must either modify the TEI tag
-set to accept
-<gi tei="false">div8</gi>, etc., or else use the unnumbered <gi>div</gi>
-element:  a <gi>div</gi> may be subdivided by smaller <gi>div</gi>
-elements, without limit to the depth of nesting.</p> -->
+
 
 <p>The <att>type</att> attribute on the <gi>div</gi> element may be
 used to supply a conventional name for this category of text division,
 or otherwise distinguish them.  Typical values might be <q>book</q>,
 <q>chapter</q>, <q>section</q>, <q>part</q>, <q>poem</q>, <q>song</q>,
 etc.  For a given project, it will usually be advisable to define and
-adhere to a specific list of such values: methods of customizing a TEI
-scheme to do this are discussed below. </p>
+adhere to a specific list of such values.  </p>
 
-<!-- If no value is  supplied for the <ident>type</ident>
-attribute of,  the first <gi>div</gi>, <gi>div</gi>, <gi>div</gi>,
-etc., in a text is assumed to apply for all subsequent <gi>div</gi>,
-<gi>div</gi>s (etc.) within the same <gi>body</gi>. This implies
-that a value must be given for the first division element of each
-type, or whenever the value
-changes. </item><label><ident>id</ident></label>
--->
+<p>A <gi>div</gi> element may itself contain further, nested,
+<gi>div</gi>s, thus mimicking the traditional structure of a book,
+which can be decomposed hierarchically into units such as parts,
+containing chapters, containing sections, and so on. TEI texts in general
+conform to this simple hierarchic model.</p>
+
 <p> The <att>xml:id</att> attribute may be used to supply a unique
 identifier for the division, which may be used for cross references or
 other links to it, such as a commentary, as further discussed in
@@ -736,19 +721,19 @@ following elements may be used to transcribe them:
 <specDesc key="head"/>
 <specDesc key="trailer"/>
 </specList>
-<!--<list type="gloss"><label><gi>head</gi></label><item>contains any heading, for example, the title of a section, or
-the heading of a list or glossary.</item><label><gi>trailer</gi></label><item>contains a closing title or footer appearing at the end of  a
-division of a text. </item></list> -->
-Some other elements which may be necessary at the beginning or
-ending of text divisions are discussed below in section <ptr target="#h52"/> .</p>
-  <p>Whether or not headings and trailers are included in a
+
+Some other elements which may be necessary at the beginning or ending
+of text divisions are discussed below in section <ptr target="#h52"/>.</p>
+
+<p>Whether or not headings and trailers are included in a
 transcription is a matter for the individual transcriber to decide.
 Where a heading is completely regular (for example <q>Chapter 1</q>)
-or may be automatically constructed from  attribute values (e.g. <gi>div type="Chapter"
-n="1"</gi>), it may be omitted; where it contains otherwise
-unrecoverable text it should always be included.  For example, the
-start of Hardy's <title>Under the Greenwood Tree</title> might be
-encoded as follows:
+or may be automatically constructed from attribute values
+(e.g. <gi>div type="Chapter" n="1"</gi>), it may be omitted; where it
+contains otherwise unrecoverable text it should always be included.
+For example, the start of Hardy's <title>Under the Greenwood
+Tree</title> might be encoded as follows:
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div xml:id="UGT1" n="Winter" type="Part">
 <div xml:id="UGT11" n="1" type="Chapter">
 <head>Mellstock-Lane</head>
@@ -1061,7 +1046,7 @@ as in the following example:
 no speak-e, damme, I kill-e.</q>  And so saying, the lighted
 tomahawk began flourishing about me in the dark.</p></egXML>
 If it is important to convey the idea that the two <gi>q</gi>
-elements together reproduce a single speech, the linking attributes
+elements together make up a single speech, the linking attributes
 <att>next</att> and
 <att>prev</att> may be used, as described in section <ptr target="#xatts"/>.</p>
   <p>Quotations may be accompanied by a reference to the source or
@@ -1111,19 +1096,13 @@ way, and must conform to common Internet standards<note
 place="foot">The relevant standards are RFC 3066, and the lists of two
 and three language identifiers maintained as part of ISO 639 (see http://www.w3.org/WAI/ER/IG/ert/iso639.htm)</note>, as further
 explained in the relevant section of the TEI Guidelines. Some simple example
-codes for a few commonly encoded languages are given here:
+codes for a few languages are given here:
 <table>
-<row><cell>zh or zho</cell><cell>Chinese</cell></row>
-<row><cell>en</cell><cell>English</cell></row>
-<row><cell>enm</cell><cell>Middle English</cell></row>
-<row><cell>fr or fra</cell><cell>French</cell></row>
-<row><cell>de or deu</cell><cell>German</cell></row>
-<row><cell>grc</cell><cell>Ancient Greek</cell></row>
-<row><cell>ell or el</cell><cell>Greek</cell></row>
-<row><cell>ja or jpn</cell><cell>Japanese</cell></row>
-<row><cell>la or lat</cell><cell>Latin</cell></row>
-<row><cell>sa or san</cell><cell>Sanskrit</cell></row>
-<row><cell>es or esl</cell><cell>Spanish</cell></row>
+<row><cell>zh or zho</cell><cell>Chinese</cell><cell>grc</cell><cell>Ancient Greek</cell></row>
+<row><cell>en</cell><cell>English</cell><cell>ell or el</cell><cell>Greek</cell></row>
+<row><cell>enm</cell><cell>Middle English</cell><cell>ja or jpn</cell><cell>Japanese</cell></row>
+<row><cell>fr or fra</cell><cell>French</cell><cell>la or lat</cell><cell>Latin</cell></row>
+<row><cell>de or deu</cell><cell>German</cell><cell>sa or san</cell><cell>Sanskrit</cell></row>
 </table>
 </p>
 
@@ -1639,7 +1618,7 @@ corrected the duplication of <mentioned>for</mentioned>.</p>
 simple editorial interventions.</eg> (i.e. if the verb had been
 inadvertently dropped) then the corrected text might read:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">The following elements <add resp="#LB">are</add> provided for
-simple editorial interventions.</egXML>.</p>
+simple editorial interventions.</egXML></p>
 <p>These elements are not limited to changes made by an editor; they
 can also be used to record authorial changes in manuscripts.  A
 manuscript in which the author has first written <q>How it galls me,
@@ -1682,8 +1661,7 @@ Mercaturae Verlag, 1991), pp. 159-160.-->
 <name type="place">Koldinghus</name> <date>1611/12</date>
 is given below. It shows cash income from a sale of
 honey.</p>
-<q><gap desc="quotation from ledger"
-    reason="in Danish"/></q>
+<gap><desc>quotation from ledger (in Danish)</desc></gap>
 <p>A description of the overall structure of the account is
 once again ... </p></egXML></p>
 <p>Other corpora (particular those constructed before the widespread
@@ -1693,7 +1671,9 @@ mathematics: <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>At the bottom of
 echoes the commands you enter and where you specify
 filenames for Emacs to find, values for search and replace,
 and so on.
-<gap desc="diagram of Emacs screen" reason="graphic"/>
+<gap reason="graphic">
+<desc>diagram of Emacs screen</desc>
+</gap>
 </p></egXML></p>
 <!-- Debra Cameron and Bill Rosenblatt, Learning GNU Emacs.
 Sebastopol: O'Reilly & Associates, 1991, p. 8. -->
@@ -1836,10 +1816,9 @@ text may be inconsistently spelled, partial, or vague.  Moreover, name
 prefixes such as <mentioned>van</mentioned> or <mentioned>de la</mentioned>,
  may or may not be included as part of the reference form of a name,
 depending on the language and country of origin of the bearer.</p>
-  <p>The following attributes are also available for these and similar
-elements to help overcome these difficulties:
-<list type="gloss"><label><att>key</att></label><item>provides an alternative identifier for the object being named,
-such as a database record key.</item><label><att>reg</att></label><item>gives a normalized or regularized form of the name used.</item></list>   The <att>key</att> attribute may be useful as a means
+
+  <p>The <att>key</att>  attribute provides an alternative normalized identifier for the object being named,
+like  a database record key. It  may thus be useful as a means
 of gathering together all references to the same individual or
 location scattered throughout a document:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">  <q>My dear <rs type="person" key="BENM1">Mr. Bennet</rs>,
@@ -1848,16 +1827,32 @@ location scattered throughout a document:
   <rs type="place" key="NETP1">Netherfield Park</rs>
   is let at last?</q></egXML></p>
   <p>This use should be distinguished from the case of the
-<att>reg</att> (regularization) attribute, which provides a means
+<gi>reg</gi> (regularization) element, which provides a means
 of marking the standard form of a referencing string as demonstrated
 below:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">  <name type="person" key="WADLM1" reg="de la Mare, Walter">
-     Walter de la Mare</name> was born at
+<egXML xmlns="http://www.tei-c.org/ns/Examples">  <name type="person" key="WADLM1">
+<choice><sic>Walter de la Mare</sic> 
+<reg>de la Mare, Walter</reg></choice></name> was born at
   <name key="Ch1" type="place">Charlton</name>, in
   <name key="KT1" type="county">Kent</name>, in 1873.</egXML><!-- Frank Swinnerton, The Georgian Literary Scene, 1938, p. 195 --></p>
-  <p>More detailed tagging of the components of proper names is also
-possible, using the additional tag set for names and dates.</p>
-        </div>
+<p>The <gi>index</gi> element discussed in <ptr target="indexing"/> may be
+more appropriate if the function of the regularization is to provide a
+consistent index:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><p><name type="place">Montaillou</name> is not a large parish.
+At the time of the events which led to
+<name type="person">Fournier</name>'s <index><term>Benedict XII, Pope of Avignon (Jacques Fournier)</term></index>
+investigations, the local population consisted of between 200 and 250 inhabitants.</p></egXML>
+<!-- E.L Ladurie: Montaillou, Penguin 1980, p3 -->
+	<!-- but should we quote the French? (LB) -->
+
+ Although adequate for many simple applications, these methods have
+ two inconveniences: if the name occurs many times, then its
+ regularised form must be repeated many times; and the burden of
+ additional XML markup in the body of the text may be inconvenient to
+ maintain and complex to process. For applications such as onomastics,
+ relating to persons or places named rather than the name itself, or wherever a detailed
+analysis of the component parts of a name is needed, the full TEI
+Guidelines provide a range of other solutions.</p>        </div>
         <div >
           <head>Dates and Times</head>
   <p>Tags for the more detailed encoding of times and dates include the
@@ -1866,32 +1861,23 @@ following:
 <specDesc key="date"/>
 <specDesc key="time"/>
 </specList>
-<!--
-<list type="gloss"><label><gi>date</gi></label><item>contains a date in any format. Attributes include:
-<list type="gloss"><label><att>calendar</att></label><item>indicates the system or calendar to which the date belongs.</item><label><att>value</att></label><item>gives the value of the date in some standard form, usually
-yyyy-mm-dd.</item></list></item><label><gi>time</gi></label><item>contains a phrase defining a time of day in any format.
-Attributes include:
-<list type="gloss"><label><att>value</att></label><item>gives the
-value of the time in a standard form.</item></list></item></list>
--->
 </p>
   <p>The <att>value</att> attribute specifies a normalized form
-for the date or time, using a recognized format such as ISO 8601.
+for the date or time, using one of the standard formats defined by  ISO 8601.
 Partial dates or times (e.g. <q>1990</q>,
 <q>September 1990</q>,
-<q>twelvish</q>) can usually be expressed
-by simply omitting a part of the value supplied; alternatively
-imprecise dates or times (for example <q>early
-August</q>,
-<q>some time after ten and before twelve</q>)
-may be expressed as date or time ranges.  If either end of the date or
-time range is known to be accurate, (for example, <q>at some time before 1230</q>, <q>a few
-days after Hallowe'en</q>) the <att>exact</att> attribute may be
-used to specify this.</p>
-  <p>Examples:<!---->
+<q>twelvish</q>) can  be expressed
+by  omitting a part of the value supplied, as in the following examples:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><date value="1980-02-21">21 Feb 1980</date>
 <date value="1990">1990</date>
-<date value="1990-09">September 1990</date></egXML>
+<date value="1990-09">September 1990</date>
+<date value="--09">September</date>
+<date value="2001-09-11T12:48:00">Sept 11th, 12 minutes before 9 am</date>
+</egXML>Note in the last example the use of a normalized representation for
+the date string which includes a time: this example could thus equally
+well be tagged using the <gi>time</gi> element. 
+</p>
+<p>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Given on the <date value="1977-06-12">Twelfth Day of June
 in the Year of Our Lord One Thousand Nine Hundred and
 Seventy-seven of the Republic the Two Hundredth and first
@@ -2225,7 +2211,7 @@ anywhere  that textual content is permitted, within but not between
 paragraphs or headings. In the following example, the encoder has
 decided to treat a specific printer's ornament as a heading:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><head><graphic url="http://www.iath.virginia.edu/gants/Ornaments/Heads/hp-ral02.gif"/></head>
-</egXML>. </p>
+</egXML> </p>
 <p>More usually, a graphic will have at the
 least an identifying title, which may be encoded using the <gi>head</gi>
 element, or a number of figures may be grouped together in a
@@ -2241,40 +2227,7 @@ one or more such elements together as a kind of graphic
   </figure></egXML></p>
 <p>When a digitized version of the graphic concerned is available, it
 may be  embedded  at the appropriate point within the
-document in this way. </p>
-<!--
-Graphic elements such as pictures are typically stored in
-separate entities (files) from those containing the text of a
-document, and using a different notation (storage format). The TEI
-Lite DTD supports graphics encoded using the CGM, PNG, TIFF, GIF, or JPEG
-standards under the SGML notation names <mentioned>cgm</mentioned>,
-<mentioned>png</mentioned>, <mentioned>tiff</mentioned>,
-     <mentioned>gif</mentioned>, and <mentioned>jpeg</mentioned> respectively.<note place="foot" >Other
-notations may however be used, provided that an appropriate NOTATION
-declaration is added to the DTD. </note>-->
-<!--<p>Whatever format is used to encode the image, it may be embedded
-within the document in the same way. The first step is to declare an
-entity of a particular type, which specifies a name for the
-entity, an external identifier (such as a file name) for it, and the
-notation used. --><!--For example, assuming that the digitized image of Mr
-Fezziwig's ball were held in TIFF format in the file
-<att>fezzi.tff</att>, an entity declaration like the following
-would be necessary:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<!ENTITY fezziPic SYSTEM "fezzi.tff" NDATA tiff></egXML> All such declarations must be processed before the  document
-itself; -->
-<!--Other ways of doing this are beyond the scope of the present
-     document, but are discussed in the <ref target="http://www.tei-c.org/Guidelines2/gentleintro.html">Gentle Introduction to XML</ref> and
-     many other introductory texts on SGML and XML.-->
-<!--<p>With the above declaration in force, all that is necessary to
-embed the digitized image at the appropriate point in the document is
-to supply a value for the <att>entity</att> attribute of the <gi>figure</gi>
-element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">  <figure entity="fezziPic">
-   <head>Mr Fezziwig's Ball</head>
-   <figDesc>A Cruikshank engraving showing Mr Fezziwig leading
-      a group of revellers.</figDesc>
-   </figure></egXML></p>-->
+document in this way.</p>
       </div>
 
 
@@ -2303,11 +2256,7 @@ facilitate such uses, these units may not cross each other, nor nest
 within each other. They may conveniently be represented using the
 following element:
 <specList>
-<specDesc key="s"/><!--</gi></label><item>identifies an <term>s-unit</term> within a document, for
-purposes of establishing a simple canonical referencing scheme
-covering the entire text. Attributes include
-<list type="gloss"><label><att>type</att></label><item>categorizes the unit (e.g. as <mentioned>declarative</mentioned>,
-<mentioned>interrogative</mentioned>, etc.)</item>-->
+<specDesc key="s"/>
 </specList></p>
   <p>As the name suggests, the <gi>s</gi> element is most commonly
 used (in linguistic applications at least) for marking <term>orthographic
@@ -2324,7 +2273,7 @@ into the kitchen of the manor-house, where Mary was cooking the dinner,
 and John cleaning the knives, and I said —</s></p>
 <p><q><s n="005">Mary, I have been married to Mr Rochester
 this morning.</s></q> ... </p></div></egXML> 
-Note that <!-- The end-tags shown above are not strictly necessary, since--> <gi>s</gi>
+Note that  <gi>s</gi>
 elements cannot nest: the beginning of one <gi>s</gi> element implies
 that the previous one has finished. When s-units are tagged as shown
 above, it is advisable to tag the entire text end-to-end, so that
@@ -2382,18 +2331,7 @@ interpretive information in a relatively straightforward manner.
 <specDesc key="interp"/>
 <specDesc key="interpGrp"/>
 </specList>
-<!--
-<list type="gloss"><label><gi>interp</gi></label><item>provides for an interpretive annotation which can be  linked to
-a span of text. Attributes include:
-<list type="gloss"><label><att>value</att></label><item>identifies the specific phenomenon being annotated.</item><label><att>resp</att></label><item>indicates who is responsible for the interpretation.</item><label><att>type</att></label><item>indicates what kind of phenomenon is being noted in the
-passage. Sample values include
-<code>image</code>,
-<code>character</code>,
-<code>theme</code>, <code>allusion</code>, or the name of a
-particular discourse type whose instances are being identified.</item><label><att>inst</att></label><item>points to instances of the analysis or interpretation
-represented by the current
-element.</item></list></item><label><gi>interpGrp</gi></label><item>collects
-together <gi>interp</gi> tags.</item></list> -->
+
 
 These elements allows the encoder to specify both the class of
 an interpretation, and the particular instance of that class which the
@@ -2424,17 +2362,17 @@ element; it is however good practice to put them all in the same place
 following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><back>
 <div type="Interpretations">
-<p><interp xml:id="fig-apos-1"  resp="LB, MSM"
+<p><interp xml:id="fig-apos-1"  resp="#LB-MSM"
      type="figure of speech" value="apostrophe"/>
-<interp xml:id="fig-hyp-1"   resp="LB, MSM"
+<interp xml:id="fig-hyp-1"   resp="#LB-MSM"
      type="figure of speech" value="hyperbole"/>
 <!-- ... -->
-<interp xml:id="set-church-1"  resp="LB, MSM"
+<interp xml:id="set-church-1"  resp="#LB-MSM"
      type="setting" value="church"/>
 <!-- ... -->
-<interp xml:id="ref-church-1"  resp="LB, MSM"
+<interp xml:id="ref-church-1"  resp="#LB-MSM"
      type="reference" value="church"/>
-<interp xml:id="ref-serv-1"    resp="LB, MSM"
+<interp xml:id="ref-serv-1"    resp="#LB-MSM"
      type="reference" value="servants"/>
 <!-- ... -->
 </p></div></back></egXML><!-- the best place for this list would be in the ANALYSIS
@@ -2447,19 +2385,19 @@ as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><back>
 <div type="Interpretations">
 <p>
-<interpGrp type="figure of speech" resp="LB, MSM">
+<interpGrp type="figure of speech" resp="#LB-MSM">
 <interp xml:id="fig-apos" value="apostrophe"/>
 <interp xml:id="fig-hyp"  value="hyperbole"/>
 <interp xml:id="fig-meta" value="metaphor"/>
 <!-- ... -->
 </interpGrp>
-<interpGrp type="scene-setting" resp="LB, MSM">
+<interpGrp type="scene-setting" resp="#LB-MSM">
 <interp xml:id="set-church"  value="church"/>
 <interp xml:id="set-kitch"   value="kitchen"/>
 <interp xml:id="set-unspec"  value="unspecified"/>
 <!-- ... -->
 </interpGrp>
-<interpGrp type="reference" resp="LB, MSM">
+<interpGrp type="reference" resp="#LB-MSM">
 <interp xml:id="ref-church" value="church"/>
 <interp xml:id="ref-serv"   value="servants"/>
 <interp xml:id="ref-cook"   value="cooking"/>
@@ -2473,21 +2411,22 @@ whichever element is appropriate:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="chapter" n="38">
 <p xml:id="P38.1" ana="#set-church #set-kitch"></p>
 <s xml:id="P38.1.1" ana="#fig-apos">Reader, I married him.</s>
-...</div></egXML> Note in this example that since the paragraph has two settings
+...</div></egXML> 
+Note in this example that since the paragraph has two settings
 (in the church  and in the kitchen), the identifiers of both have been
 supplied.</p>
   <p>Alternatively, the <gi>interp</gi> elements can point to all the
 parts of the text to which they apply, using their <att>inst</att>
 attribute:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><interp xml:id="fig-apos-2" type="figure of speech" resp="LB, MSM"
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><interp xml:id="fig-apos-2" type="figure of speech" resp="#LB-MSM"
    value="apostrophe" inst="#P38.1.1"/>
 <!-- ... -->
 <interp xml:id="set-church-2"  type="scene-setting" value="church"
-   inst="#P38.1" resp="LB, MSM"/>
+   inst="#P38.1" resp="#LB-MSM"/>
 <interp xml:id="set-kitchen-2" type="scene-setting" value="kitchen"
-   inst="#P38.1" resp="LB, MSM"/>
+   inst="#P38.1" resp="#LB-MSM"/>
 <!-- ... --></egXML></p>
-  <p>The <gi>interp</gi> is not limited to any parti1cular type of
+  <p>The <gi>interp</gi> is not limited to any particular type of
 analysis, The literary analysis shown above is but one possibility;
 one could equally well use <gi>interp</gi> to capture a linguistic
 part-of-speech analysis. For example, the example sentence given in
@@ -2547,12 +2486,11 @@ following:
    PRINT *, GRTG
    END
 </eg></p>
-<p>This simple example first declares a variable <att>GRTG</att>, in
-the line <code>CHAR*12 GRTG</code>, which identifies <att>GRTG</att>
-as consisting of 12 bytes of type <val>CHAR</val>.  To this variable,
-the value <mentioned>HELLO WORLD</mentioned>
-is then assigned. This is followed by a <val>PRINT</val> statement and an
-<val>END</val> statement.</p></egXML></p>
+<p>This simple example first declares a variable <ident>GRTG</ident>, in
+the line <code>CHAR*12 GRTG</code>, which identifies <ident>GRTG</ident>
+as consisting of 12 bytes of type <ident>CHAR</ident>.  To this variable,
+the value <val>HELLO WORLD</val>
+is then assigned.</p></egXML></p>
   <p>A formatting application, given a text like that above, can be
 instructed to format examples appropriately (e.g. to preserve line
 breaks, or to use a distinctive font). Similarly, the use of tags such
@@ -2568,25 +2506,6 @@ specialized notation. The notation used should be specified by the
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><formula notation="tex">
   \(E = mc^{2}\)
 </formula></egXML></p>
-  <p>The <att>Tex</att> notation is not pre-defined for the TEI Lite
-DTD; <!-- other notations may be used if desired, but they --> and
-   must therefore  be
-defined by a <val>notation</val> declaration within the DTD subset.</p>
-<!-- <p>Almost any sequence of characters is permitted within the body of
-a <gi>formula</gi> element, as far as an SGML-aware processor is
-concerned. The data is passed unchanged by the parser to whatever
-application has been associated with the notation specified. The only
-exception to this rule is that the parser <emph>will</emph> recognize
-anything that resembles the start of an SGML end-tag, i.e. the
-character less-than (@) followed immediately by a solidus (/) and
-an alphabetic character. The following imaginary example would thus
-cause a confusing sequence of SGML parser errors:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><formula notation="tex">
-  \(@/E = mc^{2}\)</formula></egXML> Fortunately, the sequence <val>@/</val> is
-quite unlikely to occur in most mathematical notations in practical
-use: if it does occur, special steps must be taken which are beyond
-the scope of this document (see the full Guidelines for more
-information).</p> -->
 <!-- need something on mathml here -->
   <p>A particular problem arises when XML encoding is the
 subject of discussion within a technical document, itself encoded in
@@ -2594,12 +2513,12 @@ XML. In such a document, it is clearly essential to distinguish
 clearly the markup occurring within examples from that marking up
 the document itself, and end-tags are highly likely to occur. One
       simple solution is to use the predefined entity reference
-      <att>lt</att> to represent each &lt; character which marks
+      <code>&amp;lt</code> to represent each &lt; character which marks
       the start of an XML tag within the examples. A more
 general solution is to mark off the whole body of each example as
 containing data which is not to be scanned for XML mark-up by the
 parser. This is achieved by enclosing it within  a special XML
-construct called a <term><val>CDATA</val> marked section</term>,  as
+construct called a <term><code>CDATA</code> marked section</term>,  as
 in the following example:
 <eg>&lt;p&gt;A list should be encoded as follows:
 &lt;eg&gt;&lt;![ CDATA [
@@ -2626,17 +2545,7 @@ generate automatically whole sections such as a table of contents or
 an index. The TEI Lite scheme provides an element to mark the location
 at which such a generated section should be placed.
 <specList>
-<specDesc key="divGen"/><!--</gi></label><item>indicates the location at which a textual division generated
-automatically by a text-processing application is to appear.
-Attributes include:
-<list type="gloss"><label><att>type</att></label><item>specifies what type of generated text division (e.g. index,
-table of contents, etc.) is to appear. Sample values include:
-<code>index</code> (an index is to be generated and inserted at this
-point),
-<code>toc</code> (a table of contents)
-<code>figlist</code> (a list of figures)
-<code>tablist</code> (a list of tables).</item>-->
-</specList></p>
+<specDesc key="divGen"/></specList></p>
   <p>The <gi>divGen</gi> element can be placed anywhere that a
 division element would be legal, as in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><front>
@@ -2667,20 +2576,11 @@ tagging. It may not be enough simply to produce a list of all parts
 tagged in some particular way, although extracting (for example) all
 occurrences of elements such as <gi>term</gi> or <gi>name</gi> will
 often be a good departure point for an index. </p>
-  <p>The TEI DTD provides a special purpose <gi>index</gi> tag which
+  <p>The TEI schema provides a special purpose <gi>index</gi> tag which
 may be used to mark both the parts of the document which should be
 indexed, and how the indexing should be done.
 <specList>
-<specDesc key="index"/><!-- marks a location to be indexed for some purpose. Attributes
-include:<list type="gloss"><label><att>level1</att></label><item>gives
-the main form of the index entry.</item>
-<label><att>level2</att></label><item>gives the second-level form, if
-any.</item><label><att>level3</att></label><item>gives the third-level
-form, if any.</item><label><att>level4</att></label><item>gives the
-fourth-level form, if
-any.</item><label><att>index</att></label><item>indicates which index
-(of several) the index entry belongs
-to.</item></list></item></list>-->
+<specDesc key="index"/>
 </specList></p>
   <p>For example, the second paragraph of this section might include
 the following:<egXML xmlns="http://www.tei-c.org/ns/Examples">...
@@ -2998,12 +2898,12 @@ should be tagged using the <gi>name</gi>, as elsewhere.</p>
 <gi>div</gi> or <gi>div</gi> elements; the following suggested
 values for the <att>type</att> attribute may be used to
 distinguish various common types of prefatory matter:
-<list type="gloss"><label><val>foreword</val></label><item>a text addressed to the reader, by the author, editor or
-publisher, possibly in the form of a letter.</item><label><val>preface</val></label><item>a text addressed to the reader, by the author, editor or
-publisher, possibly in the form of a letter.</item><label><val>dedication</val></label><item>a text (often a letter) addressed to someone other than the
+<list type="gloss"><label>foreword</label><item>a text addressed to the reader, by the author, editor or
+publisher, possibly in the form of a letter.</item><label>preface</label><item>a text addressed to the reader, by the author, editor or
+publisher, possibly in the form of a letter.</item><label>dedication</label><item>a text (often a letter) addressed to someone other than the
 reader in which the author typically commends the work in hand to the
-attention of the person concerned.</item><label><val>abstract</val></label><item>a prose argument summarizing the content of the work.</item><label><val>ack</val></label><item>Acknowledgements.</item><label><val>contents</val></label><item>a table of contents (typically this should be tagged as a
-<gi>list</gi>).</item><label><val>frontispiece</val></label><item>a pictorial frontispiece, possibly including some text.</item></list></p>
+attention of the person concerned.</item><label>abstract</label><item>a prose argument summarizing the content of the work.</item><label>ack</label><item>Acknowledgements.</item><label>contents</label><item>a table of contents (typically this should be tagged as a
+<gi>list</gi>).</item><label>frontispiece</label><item>a pictorial frontispiece, possibly including some text.</item></list></p>
     <p>Like any text division, those in front matter may contain low
 level structural or non-structural elements as described elsewhere.
 They will generally begin with a heading or title of some kind which
@@ -3066,19 +2966,19 @@ back matter may contain the following types of matter within the
 these should be marked as  <gi>div</gi> elements,
 and distinguished by the following suggested values of the
 <att>type</att> attribute:
-<list type="gloss"><label><val>appendix</val></label><item>an
-appendix.</item><label><val>glossary</val></label><item>a list of
+<list type="gloss"><label>appendix</label><item>an
+appendix.</item><label>glossary</label><item>a list of
 words and definitions, typically marked up as a  <gi>list type="gloss"</gi>
 element
-.</item><label><val>notes</val></label><item>a series of <gi>note</gi>
-elements.</item><label><val>bibliography</val></label><item>a series of bibliographic references, typically in the form of
+.</item><label>notes</label><item>a series of <gi>note</gi>
+elements.</item><label>bibliography</label><item>a series of bibliographic references, typically in the form of
 a special bibliographic-list element <gi>listBibl</gi>, whose items
-are individual <gi>bibl</gi> elements.</item><label><val>index</val></label><item>a set of index entries, possibly represented as a structured
+are individual <gi>bibl</gi> elements.</item><label>index</label><item>a set of index entries, possibly represented as a structured
 list or glossary list, with optional leading
 <gi>head</gi> and perhaps some paragraphs of introductory or closing
 text (An index may also be generated for a document by using the
 <gi>index</gi> element, described above in section 
-<ptr target="#index"/>).</item><label><val>colophon</val></label><item>a description at the back of the book describing where, when,
+<ptr target="#index"/>).</item><label>colophon</label><item>a description at the back of the book describing where, when,
 and by whom it was printed; in modern books it also often gives
 production details and identifies the type faces used.</item></list></p>
           </div>
@@ -3090,16 +2990,10 @@ production details and identifies the type faces used.</item></list></p>
 to that provided by the title page of printed text. The header is
 introduced by the element <gi>teiHeader</gi> and has four major
 parts:
-<specList><specDesc key="fileDesc"/><!--</gi></label><item>contains a full bibliographic description of an electronic
-file.</item>-->
-<specDesc key="encodingDesc"/><!--</gi></label><item>documents the relationship between an electronic text and the
-source or sources from which it was derived.</item>-->
-<specDesc key="profileDesc"/><!--</gi></label><item>provides a detailed description of non-bibliographic aspects of
-a text, specifically the languages and sublanguages used, the
-situation in which it was produced, the participants and their
-setting.</item>-->
-<specDesc key="revisionDesc"/><!--</gi></label><item>summarizes the
-revision history for a file.</item>-->
+<specList><specDesc key="fileDesc"/>
+<specDesc key="encodingDesc"/>
+<specDesc key="profileDesc"/>
+<specDesc key="revisionDesc"/>
 </specList></p>
 <p>    A corpus or collection of texts, which share many
 characteristics, may have one header for the corpus and individual
@@ -3310,8 +3204,6 @@ collected.</item>-->
 in sampling texts in the creation of a corpus or collection.</item>-->
 <specDesc key="editorialDecl"/><!--</gi></label><item>provides details of editorial principles and practices applied
 during the encoding of a text.</item>-->
-<specDesc key="tagsDecl"/><!--</gi></label><item>provides detailed information about the tagging applied to an
-SGML document. </item>-->
 <specDesc key="refsDecl"/><!--</gi></label><item>specifies how canonical references are constructed for this
 text.</item>-->
 <specDesc key="classDecl"/><!--</gi></label><item>contains one or more taxonomies defining any classificatory
@@ -3361,20 +3253,13 @@ text. </item></list></p>
 </editorialDecl></egXML></p>
           </div>
           <div type="Section">
-            <head>Tagging, Reference, and Classification       Declarations</head>
-    <p>The <gi>tagsDecl</gi> element is used to provide detailed
-information about the SGML tags actually appearing within a text. It
+            <head>Reference and Classification Declarations</head>
+<!--    <p>The <gi>tagsDecl</gi> element is used to provide detailed
+information about the XML tags actually appearing within a text. It
 may contain a simple list of elements used, with a count for each,
 using the following special purpose elements:
-<specList><specDesc key="tagUsage"/><!--</gi></label><item>supplies information about the usage of a specific element
-within the outermost <gi>text</gi> of a TEI conformant document.
-Attributes include:
-<list type="gloss"><label><att>gi</att></label><item>the name (generic identifier) of the element indicated by the
-tag.</item>
-<label><att>occurs</att></label><item>specifies the number of occurrences of this element within the
-text.</item>-->
-<specDesc key="rendition"/><!--</gi></label><item>supplies information about the intended rendition of one or
-more elements.</item>-->
+<specList><specDesc key="tagUsage"/>
+<specDesc key="rendition"/>
 </specList></p>    <p>For example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><tagsDecl>
 <namespace name="http://www.tei-c.org/ns/1.0"> <tagUsage gi="text" occurs="1"/>
@@ -3385,7 +3270,7 @@ more elements.</item>-->
 text containing twelve paragraphs in its body, within which six <gi>hi</gi>
 elements have been marked. Note that if the <gi>tagsDecl</gi> element
 is used, it must contain a <gi>tagUsage</gi> element for <emph>every</emph>
-element tagged in the associated text element.</p>
+element tagged in the associated text element.</p>-->
     <p>The <gi>refsDecl</gi> element is used to document the way in
 which any standard referencing scheme built into the encoding works.
 In its simplest form, it consists of prose description.</p>
@@ -3818,12 +3703,6 @@ a sponsoring organization or institution.</item>-->
 or fragment.</item>-->
 <specDesc rend="noatts" key="table"/><!--</gi></label><item>contains text displayed
 in tabular form, in rows and columns.</item>-->
-<specDesc rend="noatts" key="tagsDecl"/><!--</gi></label><item>provides detailed information about the tagging applied to an
-SGML document. </item>-->
-<specDesc rend="noatts" key="namespace"/>
-<specDesc rend="noatts" key="tagUsage"/><!--</gi></label><item>supplies information about the usage of a specific element
-within the outermost <gi>text</gi> of a TEI conformant
-document.</item>-->
 <specDesc rend="noatts" key="taxonomy"/><!--</gi></label><item>defines a typology used to classify texts either implicitly, by
 means of a bibliographic citation, or explicitly by a structured
 taxonomy.</item>-->
@@ -3847,16 +3726,8 @@ the title page not part of the document title, authorship attribution,
 etc.</item>-->
 <specDesc rend="noatts" key="titleStmt"/><!--</gi></label><item>groups information about the title of a work and those
 responsible for its intellectual content.</item>-->
-<specDesc rend="noatts" key="trailer"/><!--</gi></label><item>contains a closing title or footer appearing at the end of  a
-division of a text. </item>-->
-<specDesc rend="noatts" key="unclear"/><!--</gi></label><item>contains a word, phrase, or passage which cannot be transcribed
-with certainty because it is illegible or inaudible in the
-source.</item>-->
-<specDesc rend="noatts" key="ptr"/><!--</gi></label><item>defines a pointer to another location in the current document
-or an external document.</item>-->
-<!--<specDesc rend="noatts" key="xref"/></gi></label><item>defines a pointer to another location in the current document
-or an external document, possibly modified by additional text or
-comment.</item>-->
+<specDesc rend="noatts" key="trailer"/>
+<specDesc rend="noatts" key="unclear"/>
 </specList>
   </p></div></body>
 
@@ -4338,6 +4209,7 @@ schema:
 <elementSpec ident="specList" mode="delete" module="tagdocs"/>
 <elementSpec ident="stringVal" mode="delete" module="tagdocs"/>
 <elementSpec ident="tag" mode="delete" module="tagdocs"/>
+<elementSpec ident="tagsDecl" mode="delete" module="header"/>
 <elementSpec ident="valDesc" mode="delete" module="tagdocs"/>
 <elementSpec ident="valItem" mode="delete" module="tagdocs"/>
 <elementSpec ident="valList" mode="delete" module="tagdocs"/>
