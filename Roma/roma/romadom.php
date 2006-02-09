@@ -1264,16 +1264,6 @@ class romaDom extends domDocument
 	//check if name already exists
 	$this->getXPath( $oXPath );
         $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);
-	$oTmpDom = new domDocument();
-	$oTmpDom->loadXML( join( '', file( roma_xquery_server . 'classattsbyelem.xq?name=' . $aszConfig[ 'element' ] ) ) );
-	$oNames = $oTmpDom->getElementsByTagname( 'name' );
-
-	foreach( $oNames as $oName )
-	  {
-	    if ( $oName->nodeValue == $aszConfig[ 'name' ] )
-	      throw new attributeExistsException( $aszConfig[ 'name' ] );	      
-	  }
-
 	if ( ! $errResult )
 	  {
 	    $this->getXPath( $oXPath );
