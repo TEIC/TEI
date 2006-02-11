@@ -56,6 +56,7 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" 
     xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
     office:version="1.0"
     exclude-result-prefixes="office style text table draw fo xlink dc meta
 			 number svg chart dr3d math form script ooo ooow oooc dom xforms xsd xsi"
@@ -118,7 +119,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
         <xsl:value-of select="@text:name"/>
       </xsl:variable>
       <xsl:if test="contains(@text:name,'entitydecl')">
-	<xsl:text disable-output-escaping="yes">&lt;!DOCTYPE TEI.2 [
+	<xsl:text disable-output-escaping="yes">&lt;!DOCTYPE TEI [
 	</xsl:text>
 	<xsl:text disable-output-escaping="yes">&lt;!ENTITY </xsl:text>
 	<xsl:value-of select="substring-after(@text:name,'entitydecl_')"/>
@@ -129,10 +130,10 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
       </xsl:if>
     </xsl:for-each>
 
-    <TEI.2 lang="{normalize-space(/office:document/office:meta/dc:language)}">
+    <tei:TEI xml:lang="{normalize-space(/office:document/office:meta/dc:language)}">
       <xsl:call-template name="teiHeader"/>
       <xsl:apply-templates/>
-    </TEI.2>
+    </tei:TEI>
   </xsl:template>
 
   
@@ -147,76 +148,76 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
 </xsl:template>
 
 <xsl:template name="teiHeader">
-  <teiHeader >
-    <fileDesc>
-      <titleStmt>
-	<title>
+  <tei:teiHeader >
+    <tei:fileDesc>
+      <tei:titleStmt>
+	<tei:title>
 	  <xsl:value-of select="$document-title"/>
-	</title>
-	<author>
+	</tei:title>
+	<tei:author>
 	  <xsl:value-of select="/office:document/office:meta/meta:initial-creator"/>
-	</author>
-      </titleStmt>
-      <editionStmt>
-	<edition>
-	  <date>
+	</tei:author>
+      </tei:titleStmt>
+      <tei:editionStmt>
+	<tei:edition>
+	  <tei:date>
 	    <xsl:value-of select="/office:document/office:meta/meta:creation-date"/>
-	  </date>
-	</edition>
-      </editionStmt>
-      <publicationStmt>
-	<authority></authority>
-      </publicationStmt>
-      <sourceDesc>
-	<p><xsl:apply-templates select="/office:document/office:meta/meta:generator"/>Written by OpenOffice</p>
-      </sourceDesc>
-    </fileDesc>
-    <profileDesc>
-      <langUsage>
-	<language>
+	  </tei:date>
+	</tei:edition>
+      </tei:editionStmt>
+      <tei:publicationStmt>
+	<tei:authority></tei:authority>
+      </tei:publicationStmt>
+      <tei:sourceDesc>
+	<tei:p><xsl:apply-templates select="/office:document/office:meta/meta:generator"/>Written by OpenOffice</tei:p>
+      </tei:sourceDesc>
+    </tei:fileDesc>
+    <tei:profileDesc>
+      <tei:langUsage>
+	<tei:language>
 	  <xsl:attribute name="id">
 	    <xsl:value-of
 		select="/office:document/office:meta/dc:language"/>
 	  </xsl:attribute>
 	  <xsl:value-of select="/office:document/office:meta/dc:language"/>
-	</language>
-      </langUsage>
+	</tei:language>
+      </tei:langUsage>
       <xsl:if test="/office:document/office:meta/meta:keyword">
-	<textClass>
-	  <keywords>
-	    <list>
+	<tei:textClass>
+	  <tei:keywords>
+	    <tei:list>
 	      <xsl:for-each select="/office:document/office:meta/meta:keyword">
-		<item>
+		<tei:item>
 		  <xsl:value-of select="."/>
-		</item>
+		</tei:item>
 	      </xsl:for-each>
-	    </list>
-	  </keywords>
-	</textClass>
+	    </tei:list>
+	  </tei:keywords>
+	</tei:textClass>
       </xsl:if>
-    </profileDesc>
-    <revisionDesc>
-      <change>
-	<date> <xsl:apply-templates select="/office:document/office:meta/dc:date"/></date>
-	<respStmt>
-	  <name> <xsl:apply-templates select="/office:document/office:meta/dc:creator"/></name>
-	</respStmt>
-	<item>revision</item>
-        </change>
-    </revisionDesc>
-    </teiHeader>
+    </tei:profileDesc>
+    <tei:revisionDesc>
+      <tei:change>
+	<tei:date> <xsl:apply-templates select="/office:document/office:meta/dc:date"/></tei:date>
+	<tei:respStmt>
+	  <tei:name> <xsl:apply-templates select="/office:document/office:meta/dc:creator"/></tei:name>
+	</tei:respStmt>
+	<tei:item>revision</tei:item>
+        </tei:change>
+    </tei:revisionDesc>
+    </tei:teiHeader>
 </xsl:template>
 
 
   
 <xsl:template match="/office:document/office:body">
-  <text>
+  <tei:text>
     <xsl:apply-templates/>
-  </text>
+  </tei:text>
 </xsl:template>
 
 <xsl:template match="office:text">
-  <body>
+  <tei:body>
     <xsl:apply-templates select="key('headchildren', generate-id())"/>
     <xsl:choose>
       <xsl:when test="text:h[@text:outline-level='1']">
@@ -232,7 +233,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
 	    select="text:h[@text:outline-level='3']"/>
       </xsl:when>
     </xsl:choose>
-  </body>
+  </tei:body>
 </xsl:template>
 
 <!-- sections -->
@@ -241,14 +242,14 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
       <xsl:when test="@text:style-name='ArticleInfo'">
       </xsl:when>
       <xsl:when test="@text:style-name='Abstract'">
-        <div type="abstract" >
+        <tei:div type="abstract" >
           <xsl:apply-templates/>
-        </div>
+        </tei:div>
       </xsl:when>
       <xsl:when test="@text:style-name='Appendix'">
-        <div>
+        <tei:div>
           <xsl:apply-templates/>
-        </div>
+        </tei:div>
       </xsl:when>
       <xsl:otherwise>
         <xsl:variable name="sectvar">
@@ -276,10 +277,10 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
 <xsl:template match="text:h[@text:outline-level='1']">
     <xsl:choose>
       <xsl:when test=".='Abstract'">
-        <div  type="abstract">
+        <tei:div  type="abstract">
           <xsl:apply-templates select="key('headchildren', generate-id())"/>
           <xsl:apply-templates select="key('children', generate-id())"/>
-        </div>
+        </tei:div>
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="make-section">
@@ -307,7 +308,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
 <xsl:template name="make-section">
     <xsl:param name="current"/>
     <xsl:param name="prev"/>
-    <div >
+    <tei:div >
       <!--
 <xsl:value-of select="@text:outline-level"/>, <xsl:value-of select="normalize-space(.)"/>:
         <xsl:for-each select="key('children',generate-id())">
@@ -317,14 +318,14 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
     <xsl:call-template name="id.attribute"/>
     <xsl:choose>
       <xsl:when test="$current &gt; $prev+1">
-          <head/>
+          <tei:head/>
           <xsl:call-template name="make-section">
             <xsl:with-param name="current" select="$current"/>
             <xsl:with-param name="prev" select="$prev +1"/>
           </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-	<head><xsl:apply-templates/></head>
+	<tei:head><xsl:apply-templates/></tei:head>
 	<xsl:variable name="this">
 	  <xsl:value-of select="generate-id()"/>
 	</xsl:variable>
@@ -336,7 +337,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
 	<xsl:apply-templates select="key('children', generate-id())"/>
       </xsl:otherwise>
     </xsl:choose>
-    </div>
+    </tei:div>
 </xsl:template>
 
 
@@ -354,69 +355,69 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
 
   
 <xsl:template match="text:p[@text:style-name='Document Title']">
-    <title>
+    <tei:title>
       <xsl:apply-templates/>
-    </title>
+    </tei:title>
   </xsl:template>
   
 <xsl:template match="text:p[@text:style-name='Author']">
-  <author><xsl:apply-templates/></author>
+  <tei:author><xsl:apply-templates/></tei:author>
 </xsl:template>
 
 <xsl:template match="text:p[@text:style-name='lg']">
-  <lg><xsl:apply-templates/></lg>
+  <tei:lg><xsl:apply-templates/></tei:lg>
 </xsl:template>
 
 <xsl:template match="text:p[@text:style-name='Title']">
-  <title>
+  <tei:title>
     <xsl:apply-templates/>
-  </title>
+  </tei:title>
 </xsl:template>
   
 <xsl:template match="text:p[@text:style-name='Date']">
-  <date>
+  <tei:date>
       <xsl:apply-templates/>
-  </date>
+  </tei:date>
 </xsl:template>
 
 <xsl:template match="text:p[@text:style-name='signed']">
-  <signed>
+  <tei:signed>
     <xsl:apply-templates/>
-  </signed>
+  </tei:signed>
 </xsl:template>
 
 <xsl:template match="text:p[@text:style-name='Section Title']">
-  <head>
+  <tei:head>
     <xsl:apply-templates/>
-  </head>
+  </tei:head>
 </xsl:template>
 
 <xsl:template match="text:p[@text:style-name='Appendix Title']">
-  <head>
+  <tei:head>
     <xsl:apply-templates/>
-  </head>
+  </tei:head>
 </xsl:template>
 
 <xsl:template match="text:p[@text:style-name='Screen']">
-    <Screen>
+    <tei:Screen>
       <xsl:apply-templates/>
-    </Screen>
+    </tei:Screen>
   </xsl:template>
 
 
 <xsl:template match="text:p[@text:style-name='Output']">
-    <Output>
+    <tei:Output>
       <xsl:apply-templates/>
-    </Output>
+    </tei:Output>
   </xsl:template>
   
  
 <xsl:template match="office:annotation/text:p">
-    <note>
-      <remark>
+    <tei:note>
+      <tei:remark>
         <xsl:apply-templates/>
-      </remark>
-    </note>
+      </tei:remark>
+    </tei:note>
   </xsl:template>
 
   
@@ -430,75 +431,75 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
       <xsl:when test="normalize-space(.)=''"/>
       <xsl:when test="text:span[@text:style-name = 'XrefLabel']"/>
       <xsl:when test="@text:style-name='Speech'">
-          <sp>
-	    <speaker></speaker>
-	    <p>
+          <tei:sp>
+	    <tei:speaker></tei:speaker>
+	    <tei:p>
 	      <xsl:call-template name="id.attribute"/>
 	      <xsl:call-template name="applyStyle"/>
-	    </p>
-          </sp>
+	    </tei:p>
+          </tei:sp>
       </xsl:when>
       <xsl:otherwise>
-          <p>
+          <tei:p>
             <xsl:call-template name="id.attribute"/>
             <xsl:call-template name="applyStyle"/>
-          </p>
+          </tei:p>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   
 <!-- lists -->  
 <xsl:template match="text:ordered-list">
-  <list type="bulleted">
+  <tei:list type="bulleted">
     <xsl:apply-templates/>
-  </list>
+  </tei:list>
 </xsl:template>
 
 <xsl:template match="text:unordered-list">
-  <list type="unordered">
+  <tei:list type="unordered">
     <xsl:apply-templates/>
-  </list>
+  </tei:list>
 </xsl:template>
 
 <xsl:template match="text:list">
     <xsl:choose>
       <xsl:when test="@text:style-name='Var List'">
-        <list>
+        <tei:list>
           <xsl:apply-templates/>
-        </list>
+        </tei:list>
       </xsl:when>
       <xsl:when test="starts-with(@text:style-name,'P')">
-        <list type="ordered" >
+        <tei:list type="ordered" >
           <xsl:apply-templates/>
-        </list>
+        </tei:list>
       </xsl:when>
       <xsl:otherwise>
-        <list type="unordered" >
+        <tei:list type="unordered" >
           <xsl:apply-templates/>
-        </list>
+        </tei:list>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   
 <xsl:template match="text:list-header">
-  <head>
+  <tei:head>
     <xsl:apply-templates/>
-  </head>
+  </tei:head>
 </xsl:template>
 
 <xsl:template match="text:list-item">
   <xsl:choose>
     <xsl:when test="parent::text:list/@text:style-name='Var List'">
-      <item>
+      <tei:item>
         <xsl:for-each select="text:p[@text:style-name='VarList Term']">
           <xsl:apply-templates select="."/>
         </xsl:for-each>
-      </item>
+      </tei:item>
     </xsl:when>
     <xsl:otherwise>
-      <item >
+      <tei:item >
         <xsl:apply-templates/>
-      </item>
+      </tei:item>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
@@ -544,9 +545,9 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
           <xsl:text disable-output-escaping="yes">&lt;list type="gloss"&gt;</xsl:text>
     </xsl:otherwise>
   </xsl:choose>
-    <label>
+    <tei:label>
       <xsl:apply-templates/>
-    </label>
+    </tei:label>
   </xsl:template>
   
 <!-- inline -->
@@ -557,32 +558,32 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
   </xsl:variable>
     <xsl:choose>
       <xsl:when test="$Style='Emphasis'">
-        <emph >
+        <tei:emph >
           <xsl:apply-templates/>
-        </emph>
+        </tei:emph>
       </xsl:when>
       <xsl:when test="$Style='Underline'">
-        <hi rend="ul" >
+        <tei:hi rend="ul" >
           <xsl:apply-templates/>
-        </hi>
+        </tei:hi>
       </xsl:when>
       <xsl:when test="$Style='SmallCaps'">
-        <hi rend="sc" >
+        <tei:hi rend="sc" >
           <xsl:apply-templates/>
-        </hi>
+        </tei:hi>
       </xsl:when>
       <xsl:when test="$Style='Emphasis Bold'">
-        <hi >
+        <tei:hi >
           <xsl:apply-templates/>
-        </hi>
+        </tei:hi>
       </xsl:when>
       <xsl:when test="$Style='Highlight'">
-        <hi >
+        <tei:hi >
           <xsl:apply-templates/>
-        </hi>
+        </tei:hi>
       </xsl:when>
       <xsl:when test="$Style='q'">
-        <q>
+        <tei:q>
           <xsl:choose>
             <xsl:when test="starts-with(.,'&#x2018;')">
                <xsl:value-of 
@@ -592,50 +593,50 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
               <xsl:apply-templates/>
             </xsl:otherwise>
           </xsl:choose>
-        </q>
+        </tei:q>
       </xsl:when>
       <xsl:when test="$Style='date'">
-        <date>
+        <tei:date>
           <xsl:apply-templates/>
-        </date>
+        </tei:date>
       </xsl:when>
       <xsl:when test="$Style='l'">
-        <l>
+        <tei:l>
           <xsl:apply-templates/>
-        </l>
+        </tei:l>
       </xsl:when>
       <xsl:when test="$Style='Filespec'">
-        <Filespec>
+        <tei:Filespec>
           <xsl:apply-templates/>
-        </Filespec>
+        </tei:Filespec>
       </xsl:when>
       <xsl:when test="$Style='gi'">
-        <gi>
+        <tei:gi>
           <xsl:apply-templates/>
-        </gi>
+        </tei:gi>
       </xsl:when>
       <xsl:when test="$Style='Code'">
-        <Code>
+        <tei:Code>
           <xsl:apply-templates/>
-        </Code>
+        </tei:Code>
       </xsl:when>
       <xsl:when test="$Style='Input'">
-        <Input>
+        <tei:Input>
           <xsl:apply-templates/>
-        </Input>
+        </tei:Input>
       </xsl:when>
       <xsl:when test="$Style='Internet Link'">
           <xsl:apply-templates/>
       </xsl:when>
       <xsl:when test="$Style='SubScript'">
-        <hi rend="sub" >
+        <tei:hi rend="sub" >
           <xsl:apply-templates/>
-        </hi>
+        </tei:hi>
       </xsl:when>
       <xsl:when test="$Style='SuperScript'">
-        <hi rend="sup" >
+        <tei:hi rend="sup" >
           <xsl:apply-templates/>
-        </hi>
+        </tei:hi>
       </xsl:when>
       <xsl:when test="../text:h">
          <xsl:apply-templates/>
@@ -666,31 +667,31 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
        <xsl:choose>
 	 <xsl:when
 	     test="style:text-properties[starts-with(@style:text-position,'super')]">
-	   <hi rend="sup">
+	   <tei:hi rend="sup">
 	     <xsl:copy-of select="$contents"/>
-	   </hi>
+	   </tei:hi>
 	 </xsl:when>
 	 <xsl:when
 	     test="style:text-properties[starts-with(@style:text-position,'sub')]">
-	   <hi rend="sub">
+	   <tei:hi rend="sub">
 	     <xsl:copy-of select="$contents"/>
-	   </hi>
+	   </tei:hi>
 	 </xsl:when>
 	 <xsl:when test="style:text-properties[@fo:font-weight='bold']">
-	   <hi>
+	   <tei:hi>
 	     <xsl:copy-of select="$contents"/>
-	   </hi>
+	   </tei:hi>
 	 </xsl:when>
 	 <xsl:when
 	     test="style:text-properties[style:text-underline-style='solid']">
-	   <hi rend="underline">
+	   <tei:hi rend="underline">
 	     <xsl:copy-of select="$contents"/>
-	   </hi>
+	   </tei:hi>
 	 </xsl:when>
 	 <xsl:when test="style:text-properties[@fo:font-style='italic']">
-	   <emph>
+	   <tei:emph>
 	     <xsl:copy-of select="$contents"/>
-	   </emph>
+	   </tei:emph>
 	 </xsl:when>
       <xsl:otherwise>
 	<xsl:copy-of select="$contents"/>
@@ -706,19 +707,19 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
   
 <!-- tables -->
 <xsl:template match="table:table">
- <table rend="frame">
+ <tei:table rend="frame">
    <xsl:if test="@table:name">
      <xsl:attribute name="id">
        <xsl:value-of select="@table:name"/>
      </xsl:attribute>
    </xsl:if>
    <xsl:if test="following-sibling::text:p[@text:style-name='Table']">
-   <head>
+   <tei:head>
    <xsl:value-of select="following-sibling::text:p[@text:style-name='Table']"/>
-   </head>
+   </tei:head>
   </xsl:if>
   <xsl:call-template name="generictable"/>
- </table>
+ </tei:table>
 
 </xsl:template>
 
@@ -748,7 +749,7 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
 <xsl:template name="colspec">
     <xsl:param name="left"/>
     <xsl:if test="number($left &lt; ( table:table-column/@table:number-columns-repeated +2)  )">
-      <xsl:element name="colspec">
+      <xsl:element namespace="http://www.tei-c.org/ns/1.0"  name="colspec">
         <xsl:attribute name="colnum">
           <xsl:value-of select="$left"/>
         </xsl:attribute>
@@ -771,15 +772,15 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
 </xsl:template>
   
 <xsl:template match="table:table-header-rows/table:table-row">
-    <row role="label">
+    <tei:row role="label">
       <xsl:apply-templates/>
-    </row>
+    </tei:row>
   </xsl:template>
   
 <xsl:template match="table:table/table:table-row">
-    <row>
+    <tei:row>
       <xsl:apply-templates/>
-    </row>
+    </tei:row>
 </xsl:template>
 
 <xsl:template match="table:table-cell/text:h">
@@ -791,7 +792,7 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
 </xsl:template>
 
 <xsl:template match="table:table-cell">
-  <cell>
+  <tei:cell>
       <xsl:if test="@table:number-columns-spanned &gt;'1'">
         <xsl:attribute name="cols">
           <xsl:value-of select="@table:number-columns-spanned"/>
@@ -801,7 +802,7 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
 	<xsl:attribute name="role">label</xsl:attribute>
       </xsl:if>
       <xsl:apply-templates/>
-  </cell>
+  </tei:cell>
 </xsl:template>
   
   
@@ -817,19 +818,19 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
 </xsl:template>
   
 <xsl:template match="text:note">
-  <note >
+  <tei:note >
     <xsl:choose>
       <xsl:when test="@text:note-class='endnote'">
 	<xsl:attribute name="place">end</xsl:attribute>
       </xsl:when>
     </xsl:choose>
     <xsl:apply-templates/>
-  </note>
+  </tei:note>
 </xsl:template>
 
 <!-- drawing -->  
 <xsl:template match="draw:plugin">
-  <ptr target="{@xlink:href}" />
+  <tei:ptr target="{@xlink:href}" />
 </xsl:template>
 
 <xsl:template match="draw:text-box"/>
@@ -837,17 +838,17 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
 <xsl:template match="draw:image">
     <xsl:choose>
       <xsl:when test="parent::text:p[@text:style-name='Mediaobject']">
-        <figure>
+        <tei:figure>
 	  <xsl:call-template name="findGraphic"/>
-          <head>
+          <tei:head>
             <xsl:value-of select="."/>
-          </head>
-        </figure>
+          </tei:head>
+        </tei:figure>
       </xsl:when>
       <xsl:otherwise>
-	<figure>
+	<tei:figure>
 	  <xsl:call-template name="findGraphic"/>
-	</figure>
+	</tei:figure>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -855,9 +856,9 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
 <xsl:template name="findGraphic">
   <xsl:choose>
     <xsl:when test="office:binary-data">
-      <binaryObject mimeType="image/jpg">
+      <tei:binaryObject mimeType="image/jpg">
 	<xsl:value-of select="."/>
-      </binaryObject>
+      </tei:binaryObject>
     </xsl:when>
     <xsl:when test="@xlink:href">
       <xsl:attribute name="url">
@@ -872,43 +873,43 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
     <xsl:when test="starts-with(@xlink:href,'mailto:')">
       <xsl:choose>
 	<xsl:when test=".=@xlink:href">
-	  <xptr url="{substring-after(@xlink:href,'mailto:')}"/>
+	  <tei:xptr url="{substring-after(@xlink:href,'mailto:')}"/>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xref url="{@xlink:href}">
+	  <tei:xref url="{@xlink:href}">
 	    <xsl:apply-templates/>
-	  </xref>        
+	  </tei:xref>        
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:when>
     <xsl:when test="contains(@xlink:href,'://')">
       <xsl:choose>
 	<xsl:when test=".=@xlink:href">
-	  <xptr url="{@xlink:href}"/>
+	  <tei:ptr target="{@xlink:href}"/>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xref url="{@xlink:href}">
+	  <tei:ref target="{@xlink:href}">
 	    <xsl:apply-templates/>
-	  </xref>        
+	  </tei:ref>        
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:when>
     <xsl:when test="not(contains(@xlink:href,'#'))">
-      <ref target="{@xlink:href}">
+      <tei:ref target="{@xlink:href}">
 	<xsl:apply-templates/>
-        </ref>
+        </tei:ref>
       </xsl:when>
       <xsl:otherwise>
         <xsl:variable name="linkvar" 
-          select="substring-after(@xlink:href,'#')"/>
+          select="@xlink:href"/>
         <xsl:choose>
           <xsl:when test=".=$linkvar">
-            <ptr target="{$linkvar}" />
+            <tei:ptr target="{$linkvar}" />
           </xsl:when>
           <xsl:otherwise>
-            <ref target="{$linkvar}" >
+            <tei:ref target="{$linkvar}" >
               <xsl:apply-templates/>
-            </ref>
+            </tei:ref>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:otherwise>
@@ -917,7 +918,7 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
   
 <xsl:template match="text:line-break">
   <xsl:if test="not(parent::text:span[@text:style-name='l'])">
-    <lb/>
+    <tei:lb/>
   </xsl:if>
 </xsl:template>
   
@@ -926,7 +927,7 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
 </xsl:template>
   
 <xsl:template match="text:reference-ref">
-    <ptr target="{@text:ref-name}"/>
+    <tei:ptr target="{@text:ref-name}"/>
   </xsl:template>
   
 <xsl:template name="id.attribute">
@@ -950,7 +951,7 @@ reference-ref text means that xreflabel and endterm are lost -->
   </xsl:template>
   
 <xsl:template match="text:alphabetical-index-mark-start">
-    <xsl:element name="indexterm">
+    <xsl:element namespace="http://www.tei-c.org/ns/1.0"  name="indexterm">
       <xsl:attribute name="class">
         <xsl:text disable-output-escaping="yes">startofrange</xsl:text>
       </xsl:attribute>
@@ -958,12 +959,12 @@ reference-ref text means that xreflabel and endterm are lost -->
         <xsl:value-of select="@text:id"/>
       </xsl:attribute>
 <!--<xsl:if test="@text:key1">-->
-      <xsl:element name="primary">
+      <xsl:element namespace="http://www.tei-c.org/ns/1.0"  name="primary">
         <xsl:value-of select="@text:key1"/>
       </xsl:element>
 <!--</xsl:if>-->
       <xsl:if test="@text:key2">
-        <xsl:element name="secondary">
+        <xsl:element namespace="http://www.tei-c.org/ns/1.0"  name="secondary">
           <xsl:value-of select="@text:key2"/>
         </xsl:element>
       </xsl:if>
@@ -971,7 +972,7 @@ reference-ref text means that xreflabel and endterm are lost -->
   </xsl:template>
   
 <xsl:template match="text:alphabetical-index-mark-end">
-    <xsl:element name="indexterm">
+    <xsl:element namespace="http://www.tei-c.org/ns/1.0"  name="indexterm">
       <xsl:attribute name="startref">
         <xsl:value-of select="@text:id"/>
       </xsl:attribute>
@@ -982,8 +983,8 @@ reference-ref text means that xreflabel and endterm are lost -->
   </xsl:template>
   
 <xsl:template match="text:alphabetical-index">
-    <xsl:element name="index">
-      <xsl:element name="title">
+    <xsl:element namespace="http://www.tei-c.org/ns/1.0"  name="index">
+      <xsl:element namespace="http://www.tei-c.org/ns/1.0"  name="title">
         <xsl:value-of select="text:index-body/text:index-title/text:p"/>
       </xsl:element>
       <xsl:apply-templates select="text:index-body"/>
@@ -992,12 +993,12 @@ reference-ref text means that xreflabel and endterm are lost -->
   
 <xsl:template match="text:index-body">
     <xsl:for-each select="text:p[@text:style-name = 'Index 1']">
-      <xsl:element name="indexentry">
-        <xsl:element name="primaryie">
+      <xsl:element namespace="http://www.tei-c.org/ns/1.0"  name="indexentry">
+        <xsl:element namespace="http://www.tei-c.org/ns/1.0"  name="primaryie">
           <xsl:value-of select="."/>
         </xsl:element>
         <xsl:if test="key('secondary_children', generate-id())">
-          <xsl:element name="secondaryie">
+          <xsl:element namespace="http://www.tei-c.org/ns/1.0"  name="secondaryie">
             <xsl:value-of select="key('secondary_children', generate-id())"/>
           </xsl:element>
         </xsl:if>

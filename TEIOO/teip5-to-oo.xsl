@@ -56,33 +56,34 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" 
     xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
     office:version="1.0"
     >
 
   <xsl:output method="xml" omit-xml-declaration="no"/>
 
   <xsl:decimal-format name="staff" digit="D"/>
-  <xsl:variable name="doc_type">TEI.2</xsl:variable>
+  <xsl:variable name="doc_type">TEI</xsl:variable>
   
-  <xsl:key name='IDS' match="*[@id]" use="@id"/>
+  <xsl:key name='IDS' match="tei:*[@id]" use="@id"/>
   
   <xsl:template match="/">
     <office:document>
       <office:meta>
 	<meta:generator>Open Office TEI to OO XSLT</meta:generator>
 	<dc:title>
-	  <xsl:value-of select="/TEI.2/teiHeader/fileDesc/titleStmt/title"/>
+	  <xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
 	</dc:title>
 	<dc:description/>
 	<dc:subject/>
 	<meta:creation-date>
-	  <xsl:value-of select="/TEI.2/teiHeader/fileDesc/editionStmt/edition/date"/>
+	  <xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition/tei:date"/>
 	</meta:creation-date>
 	<dc:date>
-	  <xsl:value-of select="/TEI.2/teiHeader/revisionDesc/change/date"/>
+	  <xsl:value-of select="/tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:date"/>
 	</dc:date>
 	<dc:language>
-	  <xsl:value-of select="/TEI.2/@lang"/>
+	  <xsl:value-of select="/tei:TEI/@xml:lang"/>
 	</dc:language>
 	<meta:editing-cycles>21</meta:editing-cycles>
 	<meta:editing-duration>P1DT0H11M54S</meta:editing-duration>
@@ -97,14 +98,14 @@
       -->
       <office:body>
 	<office:text>
-	  <xsl:apply-templates select="(.//TEI.2|text|div)[1]"/>
+	  <xsl:apply-templates select="(.//tei:TEI|tei:text|tei:div)[1]"/>
 	</office:text>
       </office:body>
     </office:document>
   </xsl:template>
   
-  <xsl:template match="TEI.2">
-    <xsl:apply-templates select="text"/>
+  <xsl:template match="tei:TEI">
+    <xsl:apply-templates select="tei:text"/>
   </xsl:template>
 
   <xsl:template name="entities">
@@ -129,12 +130,12 @@
   </xsl:template>
   
   
-  <xsl:template match="entity">
+  <xsl:template match="tei:entity">
     <xsl:variable name="entname">
       <xsl:value-of select="@name"/>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="not(preceding::entity[@name = $entname])">
+      <xsl:when test="not(preceding::tei:entity[@name = $entname])">
 	<text:variable-set>
 	  <xsl:attribute name="text:value-type">
 	    <xsl:text>string</xsl:text>
@@ -163,11 +164,11 @@
   <!-- table start -->
   
   
-  <xsl:template match="table">
+  <xsl:template match="tei:table">
     <xsl:call-template name="startHook"/>
     <xsl:variable name="tablenum">
       <xsl:choose>
-	<xsl:when test="@id"><xsl:value-of select="@id"/></xsl:when>
+	<xsl:when test="@xml:id"><xsl:value-of select="@xml:id"/></xsl:when>
 	<xsl:otherwise>table<xsl:number level="any"/></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
@@ -177,21 +178,21 @@
       <table:table-column 
 	  table:style-name="Table1.col1">
 	<xsl:attribute name="table:number-columns-repeated">
-	  <xsl:value-of select="count(row[1]/cell)"/>
+	  <xsl:value-of select="count(tei:row[1]/tei:cell)"/>
 	</xsl:attribute>
       </table:table-column>
       <xsl:apply-templates/>
     </table:table>
     <xsl:if test="head">
       <text:p text:style-name="Table">
-	<xsl:apply-templates select="head" mode="show"/>
+	<xsl:apply-templates select="tei:head" mode="show"/>
       </text:p>
     </xsl:if>
     <xsl:call-template name="endHook"/>
   </xsl:template>
   
   
-  <xsl:template match="row[@role='label']">
+  <xsl:template match="tei:row[@role='label']">
     <table:table-header-rows>
       <table:table-row>
 	<xsl:apply-templates/>
@@ -200,17 +201,17 @@
   </xsl:template>
   
   
-  <xsl:template match="row">
+  <xsl:template match="tei:row">
     <table:table-row>
       <xsl:apply-templates/>
     </table:table-row>
   </xsl:template>
   
   
-  <xsl:template match="cell">
+  <xsl:template match="tei:cell">
     <table:table-cell>
       <xsl:choose>
-	<xsl:when test="parent::row[@role='label']">
+	<xsl:when test="parent::tei:row[@role='label']">
 	  <xsl:attribute name="text:style-name">Table1.cellheading</xsl:attribute>
 	</xsl:when>
 	<xsl:when test="@role='label'">
@@ -221,10 +222,10 @@
 	</xsl:otherwise>
       </xsl:choose>
       <xsl:choose>
-	<xsl:when test="not(child::p)">
+	<xsl:when test="not(child::tei:p)">
 	  <text:p>
 	    <xsl:choose>
-	      <xsl:when test="parent::row[@role='label']">
+	      <xsl:when test="parent::tei:row[@role='label']">
 		<xsl:attribute name="text:style-name">Table Heading</xsl:attribute>
 	      </xsl:when>
 	      <xsl:when test="@role='label'">
@@ -245,24 +246,24 @@
   </xsl:template>
   
   
-  <xsl:template match="head">
+  <xsl:template match="tei:head">
     <xsl:choose>
-      <xsl:when test="parent::figure"/>
-      <xsl:when test="parent::list"/>
-      <xsl:when test="parent::div"/>
-      <xsl:when test="parent::div0"/>
-      <xsl:when test="parent::div1"/>
-      <xsl:when test="parent::div2"/>
-      <xsl:when test="parent::div3"/>
-      <xsl:when test="parent::div4"/>
-      <xsl:when test="parent::div5"/>
-      <xsl:when test="parent::table">
+      <xsl:when test="parent::tei:figure"/>
+      <xsl:when test="parent::tei:list"/>
+      <xsl:when test="parent::tei:div"/>
+      <xsl:when test="parent::tei:div0"/>
+      <xsl:when test="parent::tei:div1"/>
+      <xsl:when test="parent::tei:div2"/>
+      <xsl:when test="parent::tei:div3"/>
+      <xsl:when test="parent::tei:div4"/>
+      <xsl:when test="parent::tei:div5"/>
+      <xsl:when test="parent::tei:table">
 	<xsl:apply-templates/>
       </xsl:when>
       <xsl:otherwise>
 	<text:p>
 	  <xsl:choose>
-	    <xsl:when test="parent::appendix">
+	    <xsl:when test="parent::tei:appendix">
 	      <xsl:attribute name="text:style-name">Appendix Title</xsl:attribute>
 	    </xsl:when>
 	  </xsl:choose>
@@ -274,22 +275,22 @@
   
   
   
-  <xsl:template match="author">
+  <xsl:template match="tei:author">
     <xsl:apply-templates/>
   </xsl:template>
   
-  <xsl:template match="p">
+  <xsl:template match="tei:p">
     <text:p>
       <xsl:choose>
-	<xsl:when test="ancestor::note[@place='foot']">
+	<xsl:when test="ancestor::tei:note[@place='foot']">
 	  <xsl:attribute name="text:style-name">
 	    <xsl:text>Footnote</xsl:text>
 	  </xsl:attribute>
 	</xsl:when>
-	<xsl:when test="ancestor::row[@role='label']">
+	<xsl:when test="ancestor::tei:row[@role='label']">
 	  <xsl:attribute name="text:style-name">Table Heading</xsl:attribute>
 	</xsl:when>
-	<xsl:when test="ancestor::row">
+	<xsl:when test="ancestor::tei:row">
 	  <xsl:attribute name="text:style-name">Table Contents</xsl:attribute>
 	</xsl:when>
 	<xsl:otherwise>
@@ -302,9 +303,9 @@
   </xsl:template>
   
   
-  <xsl:template match="div">
+  <xsl:template match="tei:div">
     <xsl:variable name="depth">
-      <xsl:value-of select="count(ancestor::div)"/>
+      <xsl:value-of select="count(ancestor::tei:div)"/>
     </xsl:variable>
     <text:h>
       <xsl:attribute name="text:level">
@@ -314,12 +315,12 @@
 	<xsl:text>Heading </xsl:text><xsl:value-of select="$depth + 1"/>
       </xsl:attribute>
       <xsl:call-template name="test.id"/>
-      <xsl:apply-templates select="head" mode="show"/>
+      <xsl:apply-templates select="tei:head" mode="show"/>
     </text:h>
     <xsl:apply-templates/>
   </xsl:template>
   
-  <xsl:template match="div0|div1|div2|div3|div4|div5">
+  <xsl:template match="tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5">
     <xsl:variable name="depth">
       <xsl:value-of select="substring-after(name(.),'div')"/>
     </xsl:variable>
@@ -331,16 +332,36 @@
 	<xsl:text>Heading </xsl:text><xsl:value-of select="$depth + 1"/>
       </xsl:attribute>
       <xsl:call-template name="test.id"/>
-      <xsl:apply-templates select="head" mode="show"/>
+      <xsl:apply-templates select="tei:head" mode="show"/>
     </text:h>
     <xsl:apply-templates/>
   </xsl:template>
   
-  <xsl:template match="figure">
+  <xsl:template match="tei:figure">
+    <xsl:call-template name="startHook"/>
+    <text:p text:style-name="Standard">
+      <xsl:call-template name="test.id"/>
+      <xsl:apply-templates select="tei:graphic"/>
+    </text:p>
+    <xsl:if test="tei:head">
+      <text:p text:style-name="Caption">
+	<text:span text:style-name="Figurenum">Figure <text:sequence
+	text:ref-name="refFigure0" text:name="Figure"
+	text:formula="Figure+1"
+	style:num-format="1"><xsl:number level="any"/>. </text:sequence>
+	</text:span>
+	<xsl:apply-templates select="tei:head" mode="show"/>
+      </text:p>
+    </xsl:if>
+    <xsl:call-template name="endHook"/>
+    
+  </xsl:template>
+  
+  <xsl:template match="tei:graphic">
     <xsl:variable name="id">
       <xsl:choose>
-	<xsl:when test="@id">
-	  <xsl:value-of select="@id"/>
+	<xsl:when test="@xml:id">
+	  <xsl:value-of select="@xml:id"/>
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:text>Figure</xsl:text><xsl:number level="any"/>
@@ -348,9 +369,6 @@
       </xsl:choose>
     </xsl:variable>
     
-    <xsl:call-template name="startHook"/>
-    <text:p text:style-name="Standard">
-      <xsl:call-template name="test.id"/>
       <draw:image 
 	  draw:style-name="fr3" 
 	  draw:name="{$id}" 
@@ -362,14 +380,7 @@
 	  xlink:show="embed" 
 	  xlink:actuate="onLoad" >
 	<xsl:attribute name="xlink:href">
-	  <xsl:choose>
-	    <xsl:when test="@url|@file">
-	      <xsl:value-of select="@url|@file"/>   
-	    </xsl:when>
-	    <xsl:when test="@entity">
-	      <xsl:value-of select="unparsed-entity-uri(@entity)"/>
-	    </xsl:when>
-	  </xsl:choose>
+	  <xsl:value-of select="@url"/>
 	</xsl:attribute>
 	<xsl:attribute name="style:rel-width">scale</xsl:attribute>
 	<xsl:attribute name="style:rel-height">scale</xsl:attribute>
@@ -400,25 +411,12 @@
 	  </xsl:choose>
 	</xsl:attribute>
       </draw:image>
-    </text:p>
-    <xsl:if test="head">
-      <text:p text:style-name="Caption">
-	<text:span text:style-name="Figurenum">Figure <text:sequence
-	text:ref-name="refFigure0" text:name="Figure"
-	text:formula="Figure+1"
-	style:num-format="1"><xsl:number level="any"/>. </text:sequence>
-	</text:span>
-	<xsl:apply-templates select="head" mode="show"/>
-      </text:p>
-    </xsl:if>
-    <xsl:call-template name="endHook"/>
-    
   </xsl:template>
-  
-  <xsl:template match="list">
+
+  <xsl:template match="tei:list">
     <xsl:call-template name="startHook"/>
     <xsl:if test="head">
-      <text:p><xsl:apply-templates select="head" mode="show"/></text:p>
+      <text:p><xsl:apply-templates select="tei:head" mode="show"/></text:p>
     </xsl:if>
     <text:unordered-list text:style-name="Unordered List">
       <xsl:apply-templates/>
@@ -427,7 +425,7 @@
   </xsl:template>
   
   
-  <xsl:template match="list[@type='unordered']">
+  <xsl:template match="tei:list[@type='unordered']">
     <xsl:call-template name="startHook"/>
     <text:unordered-list text:style-name="Unordered List">
       <xsl:apply-templates/>
@@ -436,7 +434,7 @@
   </xsl:template>
   
   
-  <xsl:template match="list[@type='ordered']">
+  <xsl:template match="tei:list[@type='ordered']">
     <xsl:call-template name="startHook"/>
     <text:ordered-list text:style-name="Ordered List">
       <xsl:apply-templates/>
@@ -444,44 +442,44 @@
     <xsl:call-template name="endHook"/>
   </xsl:template>
   
-  <xsl:template match="list[@type='gloss']">
+  <xsl:template match="tei:list[@type='gloss']">
     <xsl:call-template name="startHook"/>
     <xsl:apply-templates/>
     <xsl:call-template name="endHook"/>
   </xsl:template>
   
-  <xsl:template match="list[@type='gloss']/item">
+  <xsl:template match="tei:list[@type='gloss']/tei:item">
     <text:p text:style-name="List Contents">
       <xsl:apply-templates/>
     </text:p>
   </xsl:template>
   
-  <xsl:template match="list[@type='gloss']/label">
+  <xsl:template match="tei:list[@type='gloss']/tei:label">
     <text:p text:style-name="List Heading">
       <xsl:apply-templates/>
     </text:p>
   </xsl:template>
   
   <xsl:template name="startHook">
-    <xsl:if test="parent::p">
+    <xsl:if test="parent::tei:p">
       <xsl:text disable-output-escaping="yes">&lt;/text:p&gt;</xsl:text>
     </xsl:if>
   </xsl:template>
   
   <xsl:template name="endHook">
-    <xsl:if test="parent::p">
+    <xsl:if test="parent::tei:p">
       <xsl:text disable-output-escaping="yes">&lt;text:p&gt;</xsl:text>
     </xsl:if>
   </xsl:template>
   
   
   
-  <xsl:template match="item/p">
+  <xsl:template match="tei:item/tei:p">
     <xsl:apply-templates/>
   </xsl:template>
   
   
-  <xsl:template match="item">
+  <xsl:template match="tei:item">
     <text:list-item>
       <xsl:choose>
 	<xsl:when test="list">
@@ -497,13 +495,13 @@
   </xsl:template>
   
   
-  <xsl:template match="emph">
+  <xsl:template match="tei:emph">
     <text:span text:style-name="Emphasis">
       <xsl:apply-templates/>
     </text:span>
   </xsl:template>
   
-  <xsl:template match="q">
+  <xsl:template match="tei:q">
     <text:span text:style-name="q">
       <xsl:text>&#x2018;</xsl:text>
       <xsl:apply-templates/>
@@ -512,9 +510,9 @@
   </xsl:template>
   
   
-  <xsl:template match="note[@place='foot']">
+  <xsl:template match="tei:note[@place='foot']">
     <text:footnote-citation>
-      <xsl:number level="any" count="note[@place='foot']"/>
+      <xsl:number level="any" count="tei:note[@place='foot']"/>
     </text:footnote-citation>
     <text:footnote>
       <text:footnote-body>
@@ -525,9 +523,9 @@
     </text:footnote>
   </xsl:template>
   
-  <xsl:template match="note[@place='end']">
+  <xsl:template match="tei:note[@place='end']">
     <text:endnote-citation>
-      <xsl:number format="i" level="any" count="note[@place='end']"/>
+      <xsl:number format="i" level="any" count="tei:note[@place='end']"/>
     </text:endnote-citation>
     <text:endnote>
       <text:endnote-body>
@@ -539,50 +537,44 @@
   </xsl:template>
   
   
-  <xsl:template match="ref">
-    <text:a xlink:type="simple" xlink:href="#{@target}">
+  <xsl:template match="tei:ref">
+    <text:a xlink:type="simple" xlink:href="{@target}">
       <xsl:apply-templates/>
     </text:a>
   </xsl:template>
   
-  <xsl:template match="ptr">
-    <text:a xlink:type="simple" xlink:href="#{@target}">
-      <xsl:for-each select="key('IDS',@target)">
-	<xsl:apply-templates select="." mode="crossref"/>
-      </xsl:for-each>
+  <xsl:template match="tei:ptr">
+    <text:a xlink:type="simple" xlink:href="{@target}">
+      <xsl:choose>
+	<xsl:when test="starts-with(@target,'#')">
+	  <xsl:for-each select="key('IDS',substring-after(@target,'#'))">
+	    <xsl:apply-templates select="." mode="crossref"/>
+	  </xsl:for-each>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="@target"/>
+	</xsl:otherwise>
+      </xsl:choose>
     </text:a>
   </xsl:template>
   
-  <xsl:template match="table|figure|item" mode="crossref">
+  <xsl:template match="tei:table|tei:figure|tei:item" mode="crossref">
     <xsl:number level="any"/>
   </xsl:template>
   
-  <xsl:template match="div" mode="crossref">
+  <xsl:template match="tei:div" mode="crossref">
     <xsl:number format="1.1.1.1.1" 
-		level="multiple" count="div"/>
+		level="multiple" count="tei:div"/>
   </xsl:template>
-  
-  <xsl:template match="xref">
-    <text:a xlink:type="simple" xlink:href="{@url}">
-      <xsl:apply-templates/>
-    </text:a>
-  </xsl:template>
-  
-  <xsl:template match="xptr">
-    <text:a xlink:type="simple" xlink:href="{@url}">
-      <xsl:value-of select="@url"/>
-    </text:a>
-  </xsl:template>
-  
   
   <xsl:template name="test.id">
-    <xsl:if test="@id">
-      <text:bookmark text:name="{@id}"/>
+    <xsl:if test="@xml:id">
+      <text:bookmark text:name="{@xml:id}"/>
     </xsl:if>
   </xsl:template>
   
   
-  <xsl:template match="note">
+  <xsl:template match="tei:note">
     <office:annotation>
       <text:p>
 	<xsl:apply-templates/>
@@ -591,7 +583,7 @@
   </xsl:template>
   
   
-  <xsl:template match="hi">
+  <xsl:template match="tei:hi">
     <text:span>
       <xsl:attribute name="text:style-name">
 	<xsl:choose>
@@ -625,14 +617,14 @@
     </text:span>
   </xsl:template>
   
-  <xsl:template match="date">
+  <xsl:template match="tei:date">
     <text:span text:style-name="{name(.)}">
       <xsl:apply-templates/>
     </text:span>
   </xsl:template>
   
   
-  <xsl:template match="eg">
+  <xsl:template match="tei:eg">
     <xsl:call-template name="startHook"/>
     <xsl:call-template name="Literal">
       <xsl:with-param name="Text">
@@ -645,11 +637,11 @@
   <!-- safest to drop comments entirely, I think -->
   <xsl:template match="comment()"/>
   
-  <xsl:template match="head" mode="show">
+  <xsl:template match="tei:head" mode="show">
     <xsl:apply-templates/>
   </xsl:template>
   
-  <xsl:template match="lb">
+  <xsl:template match="tei:lb">
     <text:line-break/>
   </xsl:template>
   
@@ -661,15 +653,15 @@
   </xsl:template>
   
   <!-- curiously, no apparent markup for a page break -->
-  <xsl:template match="pb"/>
+  <xsl:template match="tei:pb"/>
   
-  <xsl:template match="lg|bibl|signed">
+  <xsl:template match="tei:lg|tei:bibl|tei:signed">
     <text:p text:style-name="{name(.)}">
       <xsl:apply-templates/>
     </text:p>
   </xsl:template>
   
-  <xsl:template match="l">
+  <xsl:template match="tei:l">
     <text:span text:style-name="l">
       <xsl:apply-templates/>  
       <text:line-break/>
@@ -700,23 +692,23 @@
   </xsl:template>
 
 
-  <xsl:template match="sp">
+  <xsl:template match="tei:sp">
     <xsl:apply-templates/>
   </xsl:template>
 
-  <xsl:template match="stage">
+  <xsl:template match="tei:stage">
     <text:span text:style-name="Stage">
       <xsl:apply-templates/>
     </text:span>
   </xsl:template>
 
-  <xsl:template match="speaker">
+  <xsl:template match="tei:speaker">
       <text:p text:style-name="Speaker">
 	<xsl:apply-templates/>
       </text:p>
   </xsl:template>
 
-  <xsl:template match="body|front|back">
+  <xsl:template match="tei:body|tei:front|tei:back">
 	<xsl:apply-templates/>
   </xsl:template>
 </xsl:stylesheet>
