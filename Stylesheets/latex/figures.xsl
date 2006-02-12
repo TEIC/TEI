@@ -294,7 +294,14 @@
     </xsl:otherwise>
   </xsl:choose>
   <xsl:text>}&#10;</xsl:text>
-  <xsl:if test="not(ancestor::tei:table or @type='display')">\hline\endfoot\hline\endlastfoot </xsl:if>
+  <xsl:choose>
+    <xsl:when test="ancestor::tei:table or @type='display'">
+      \hline
+    </xsl:when>
+    <xsl:otherwise>
+      \hline\endfoot\hline\endlastfoot 
+    </xsl:otherwise>
+  </xsl:choose>
   <xsl:choose>
     <xsl:when test="tei:head and not(@type='display')">
       <xsl:if test="not(ancestor::tei:table)">

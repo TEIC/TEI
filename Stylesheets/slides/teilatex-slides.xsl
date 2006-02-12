@@ -149,12 +149,12 @@ select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:authority"/>
 </xsl:template>
   
 
-  <xsl:template match="tei:table">
+<xsl:template match="tei:table">
 \par  
 \begin{scriptsize}
-\begin{tabular}
+\begin{longtable}
 <xsl:call-template name="makeTable"/>
-\end{tabular}
+\end{longtable}
 \end{scriptsize}
 </xsl:template>
 
