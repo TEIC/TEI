@@ -649,13 +649,13 @@
 
     <xsl:variable name="ns" select="ancestor-or-self::*[@ns][1]/@ns"/>
     <xsl:choose>
-      <xsl:when test="$ns and $has-default-ns and $ns = $default-ns"/>
-      <xsl:when test="$ns and $has-local and $ns = ''">
+      <xsl:when test="$has-default-ns and $ns = $default-ns"/>
+      <xsl:when test="$has-local and $ns = ''">
 	<xsl:call-template name="make-inherit">
 	  <xsl:with-param name="prefix">local</xsl:with-param>
 	</xsl:call-template>
       </xsl:when>
-      <xsl:when test="$ns">
+      <xsl:when test="not($ns='')">
 	<xsl:call-template name="make-inherit">
 	  <xsl:with-param name="prefix">
 	    <xsl:call-template name="get-prefix">
@@ -1103,11 +1103,11 @@
     <xsl:param name="is-attr"/>
     <xsl:variable name="ns" select="ancestor-or-self::rng:*[@ns][1]/@ns"/>
     <xsl:choose>
-      <xsl:when test="$ns and $has-default-ns and $ns = $default-ns">
+      <xsl:when test="$has-default-ns and $ns = $default-ns">
 	<xsl:value-of select="$default-ns-id"/>
       </xsl:when>
-      <xsl:when test="$ns and $has-local and $ns = ''">local</xsl:when>
-      <xsl:when test="$ns">
+      <xsl:when test="$has-local and $ns = ''">local</xsl:when>
+      <xsl:when test="not($ns='')">
 	<xsl:call-template name="get-prefix">
 	  <xsl:with-param name="nd" select="$ns"/>
 	</xsl:call-template>
@@ -1178,14 +1178,14 @@
     <xsl:param name="name"/>
     <xsl:variable name="ns" select="ancestor-or-self::rng:*[@ns][1]/@ns"/>
     <xsl:choose>
-      <xsl:when test="not ($is-attr) and $ns and $has-default-ns and
+      <xsl:when test="not ($is-attr) and $has-default-ns and
 	$ns = $default-ns"/>
-      <xsl:when test="$is-attr and $ns and $ns = ''"/>
+      <xsl:when test="$is-attr and $ns = ''"/>
       <xsl:when test="$is-attr and $has-default-ns and $ns = $default-ns">
 	<xsl:value-of select="$default-ns-id"/>
 	<xsl:text>:</xsl:text>
       </xsl:when>
-      <xsl:when test="$ns">
+      <xsl:when test="not($ns='')">
 	<xsl:call-template name="get-prefix">
 	  <xsl:with-param name="nd" select="$ns"/>
 	</xsl:call-template>
@@ -1470,7 +1470,7 @@
       <xsl:call-template name="text">
 	<xsl:with-param name="text">
 	  <xsl:variable name="ns" select="namespace-uri (.)"/>
-	  <xsl:if test="$ns">
+	  <xsl:if test="not($ns='')">
 	    <xsl:variable name="mapped">
 	      <xsl:call-template name="mapped-prefix">
 		<xsl:with-param name="ns" select="$ns"/>
