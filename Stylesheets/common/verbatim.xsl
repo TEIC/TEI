@@ -108,6 +108,11 @@
       <xsl:value-of select="local-name(.)"/>
     </xsl:when>
     <xsl:when
+	test="namespace-uri()='http://www.w3.org/2005/11/its'">
+      <xsl:text>its:</xsl:text>
+      <xsl:value-of select="local-name(.)"/>
+    </xsl:when>
+    <xsl:when
 	test="namespace-uri()='http://www.w3.org/1999/XSL/Transform'">
       <xsl:value-of disable-output-escaping="yes" select="$startRed"/>
       <xsl:text>xsl:</xsl:text>
@@ -119,18 +124,25 @@
     </xsl:otherwise>
   </xsl:choose>
   <xsl:for-each select="@*">
-    <xsl:if test="count(../@*)&gt;3">
+    <xsl:if test="count(../@*)&gt;3 or string-length(../@*)&gt;60">
 	  <xsl:call-template name="lineBreak">
 	    <xsl:with-param name="id">5</xsl:with-param>
 	  </xsl:call-template>
 	  <xsl:call-template name="makeIndent"/>
     </xsl:if>
     <xsl:text>&#160;</xsl:text>
-    <xsl:value-of disable-output-escaping="yes" select="$startItalic"/>
-    <xsl:if
+    <xsl:value-of disable-output-escaping="yes"
+		  select="$startItalic"/>
+    <xsl:choose>
+    <xsl:when
+	test="namespace-uri()='http://www.w3.org/2005/11/its'">
+      <xsl:text>its:</xsl:text>
+    </xsl:when>
+    <xsl:when
 	test="namespace-uri()='http://www.w3.org/XML/1998/namespace'">
       <xsl:text>xml:</xsl:text>
-    </xsl:if>
+    </xsl:when>
+    </xsl:choose>
     <xsl:value-of select="local-name(.)"/>
     <xsl:value-of disable-output-escaping="yes" select="$endItalic"/>
     <xsl:text>="</xsl:text>
