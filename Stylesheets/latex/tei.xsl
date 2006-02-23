@@ -50,8 +50,11 @@
 
 <xsl:variable name="docClass">
 <xsl:choose>
-   <xsl:when test="/tei:TEI[@rend]">
-   	<xsl:value-of select="/tei:TEI/@rend"/>
+   <xsl:when test="/tei:TEI[@rend='letter']">
+     <xsl:text>letter</xsl:text>
+   </xsl:when>
+   <xsl:when test="/tei:TEI[@rend='book']">
+     <xsl:text>book</xsl:text>
    </xsl:when>
    <xsl:otherwise>
     	<xsl:text>article</xsl:text>

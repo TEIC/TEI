@@ -99,8 +99,8 @@
     </xsl:otherwise>
   </xsl:choose>
 
-  <xsl:text>&lt;</xsl:text>
   <xsl:value-of disable-output-escaping="yes" select="$startBold"/>
+  <xsl:text>&lt;</xsl:text>
   <xsl:choose>
     <xsl:when
 	test="namespace-uri()='http://relaxng.org/ns/structure/1.0'">
@@ -118,8 +118,13 @@
       <xsl:value-of select="local-name(.)"/>
     </xsl:otherwise>
   </xsl:choose>
-  <xsl:value-of disable-output-escaping="yes" select="$endBold"/>
   <xsl:for-each select="@*">
+    <xsl:if test="count(../@*)&gt;3">
+	  <xsl:call-template name="lineBreak">
+	    <xsl:with-param name="id">5</xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:call-template name="makeIndent"/>
+    </xsl:if>
     <xsl:text>&#160;</xsl:text>
     <xsl:value-of disable-output-escaping="yes" select="$startItalic"/>
     <xsl:if
@@ -135,7 +140,7 @@
   <xsl:choose>
     <xsl:when test="child::node()">
       <xsl:text>&gt;</xsl:text>
-
+      <xsl:value-of disable-output-escaping="yes" select="$endBold"/>
       <xsl:apply-templates mode="verbatim"/>
 
       <xsl:choose>
@@ -161,8 +166,8 @@
 	  <xsl:call-template name="makeIndent"/>
 	</xsl:when>
       </xsl:choose>
-      <xsl:text>&lt;/</xsl:text>
       <xsl:value-of disable-output-escaping="yes" select="$startBold"/>
+      <xsl:text>&lt;/</xsl:text>
       <xsl:choose>
 	<xsl:when
 	    test="namespace-uri()='http://relaxng.org/ns/structure/1.0'">
@@ -185,11 +190,10 @@
     </xsl:when>    
     <xsl:otherwise>
       <xsl:text>/&gt;</xsl:text>
+      <xsl:value-of disable-output-escaping="yes" select="$endBold"/>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
-
-
 
 <xsl:template name="makeIndent">
   <xsl:for-each select="ancestor::*[not(namespace-uri()='http://www.tei-c.org/ns/1.0')]">
