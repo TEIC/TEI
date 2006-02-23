@@ -1046,18 +1046,20 @@ following example:
       SGML or XML parser 
 alone, since such parsers can only check that some element
 <att>dspec</att> exists.--></p>
-          <p>The <att>type</att> attribute can be used to categorize the
-link represented by the pointer in any convenient way. The
-<att>resp</att> and <att>crDate</att> attributes may also be
-used to represent the person or agency responsible for making the
-link, and its date of creation, as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">    ...
-   this is discussed in
-   <ref type="xref" resp="auto" crdate="950521" target="#dspec">
-   the section on links</ref></egXML> These attributes are most likely to be of use in hypertext
+
+<p>The <att>type</att> attribute can be used to categorize the link
+represented by the pointer in any convenient way. The <att>resp</att>
+and <att>crDate</att> attributes may also be used to represent the
+person or agency responsible for making the link, and its date of
+creation, as in the following example: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"> ...  this is discussed in
+   <ref type="xref" crdate="950521" target="#dspec">
+   the section on links</ref></egXML> 
+These attributes are most likely to be of use in hypertext
 systems containing very many pointers used for a variety of purposes
 and created by a variety of means.</p>
-          <p>Sometimes the target of a cross reference  does not correspond
+
+<p>Sometimes the target of a cross reference  does not correspond
 with any particular feature of a text, and so may not be tagged as an
 element of some kind. If the desired target is simply a point in the
 current document, the easiest way to mark it is by introducing an
@@ -1073,7 +1075,7 @@ it may be pointed to. Attributes include
 <list type="gloss"><label><att>type</att></label><item>categorizes the
 segment</item></list></item></list>-->
 </p>
-          <p>In the following (imaginary) example, <gi>ref</gi> elements have
+<p>In the following (imaginary) example, <gi>ref</gi> elements have
 been used to represent points in this text which are to be linked in
 some way to other parts of it; in the first case to a point, and in
 the second, to a sequence of words:
@@ -1095,20 +1097,20 @@ section <ptr target="#xatts"/> below.</p>
         </div>
         <div xml:id="xptrs">
           <head>Pointing to other documents</head>
-          <p>So far, we have shown how the elements <gi>ptr</gi> and
+<p>So far, we have shown how the elements <gi>ptr</gi> and
 <gi>ref</gi> may be used for cross-references or links whose targets
 occur within the same document as their source. However, the same
 elements may also be used to refer to elements in any other XML
 document or resource, such as a document on the web, or a database
-component.
-This is possible because the value of the <att>target</att> attribute
-may be any valid <term>universal resource indicator</term> (URI). A
-full definition of this
-term, defined by the W3C (the consortium which manages the development
-and maintenance of the World Wide Web), is beyond the scope of this
-tutorial: however, the most frequently encountered version of a URI is the
-familiar <soCalled>URL</soCalled> used to indicate a web page, such as
+component.  This is possible because the value of the
+<att>target</att> attribute may be any valid <term>universal resource
+indicator</term> (URI). A full definition of this term, defined by the
+W3C (the consortium which manages the development and maintenance of
+the World Wide Web), is beyond the scope of this tutorial: however,
+the most frequently encountered version of a URI is the familiar
+<soCalled>URL</soCalled> used to indicate a web page, such as
 <code>http://www.tei-c.org/index.xml</code>. </p>
+
           <p>A URL may reference a web page or just a part of one, for example
 <code>http://www.tei-c.org/index.xml#SEC2</code>.  The sharp sign
 indicates that what follows it is the identifier of an element to be
@@ -1119,7 +1121,8 @@ document retrieved from <code>http://www.tei-c.org/index.xml</code>.
 In the examples we have discussed so far, the part to the left of the
 sharp sign has been omitted: this is understood to mean that the
 referenced element is to be located within the current document.</p>
-          <p>Within a URL, parts of an XML document can be specified by means of
+          
+<p>Within a URL, parts of an XML document can be specified by means of
 other more sophisticated mechanisms, using a special language called
 Xpath, also defined by the W3C.  This is particularly useful where the
 elements to be linked to do not bear identifiers and must therefore be
@@ -1308,7 +1311,7 @@ goes back to the 18th century Shakesperean scholar  Theobald. The
 following encoding would then be appropriate:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">... for his nose was as sharp as a pen and <reg>he</reg>
- <corr resp="Gifford">babbl'd</corr> of green
+ <corr resp="#Theobald">babbl'd</corr> of green
 <reg>fields</reg></egXML></p>
           <p>A more conservative or source-oriented editor, however, might want
 to retain the original, but at the same time signal that some
