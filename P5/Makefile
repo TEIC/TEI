@@ -9,7 +9,7 @@ ROMAOPTS="--localsource=Source-driver.xml"
 LOCALSOURCE=Source-driver.xml
 LANGUAGE=en
 
-.PHONY: convert dtds schemas html validate valid test split oddschema exampleschema fascicule exist clean dist
+.PHONY: convert dtds schemas html validate valid test split oddschema exampleschema fascicule clean dist
 
 default: dtds schemas html
 
