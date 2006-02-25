@@ -169,7 +169,7 @@ subset:
 	rm subset.xsl
 
 fascicule: subset
-	cat fasc-head.xml `find Source -name $(CHAP).odd` fasc-tail.xml > FASC-$(CHAP).xml
+	cat fasc-head.xml `find Source/$(CHAP) -iname $(CHAP).odd` fasc-tail.xml > FASC-$(CHAP).xml
 	export H=`pwd`; xmllint --noent    FASC-$(CHAP).xml | xsltproc \
 	-o FASC-$(CHAP)-Guidelines/index.html \
 	--stringparam localsource `pwd`/p5subset.xml \
