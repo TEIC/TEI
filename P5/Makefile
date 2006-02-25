@@ -8,6 +8,11 @@ XSLP4=/usr/share/xml/teip4/stylesheet
 ROMAOPTS="--localsource=Source-driver.xml"
 LOCALSOURCE=Source-driver.xml
 LANGUAGE=en
+# permit the CHAP variable to be specified on the commandline in mixed case:
+# generate an uppercase version for the directory,
+override CHAP:=$(strip $(shell echo $(CHAP) | tr "[:lower:]" "[:upper:]"))
+# and a lowercase version for the filename.
+chap:=$(strip $(shell echo $(CHAP) | tr "[:upper:]" "[:lower:]"))
 
 .PHONY: convert dtds schemas html validate valid test split oddschema exampleschema fascicule clean dist
 
@@ -168,8 +173,8 @@ subset:
 	xsltproc -o p5subset.xml subset.xsl $(LOCALSOURCE) || die "failed to extract subset from $(LOCALSOURCE) "
 	rm subset.xsl
 
-fascicule: subset
-	cat fasc-head.xml `find Source/$(CHAP) -iname $(CHAP).odd` fasc-tail.xml > FASC-$(CHAP).xml
+fascicule: subset 
+	cat fasc-head.xml `find Source/$(CHAP) -name $(chap).odd` fasc-tail.xml > FASC-$(CHAP).xml
 	export H=`pwd`; xmllint --noent    FASC-$(CHAP).xml | xsltproc \
 	-o FASC-$(CHAP)-Guidelines/index.html \
 	--stringparam localsource `pwd`/p5subset.xml \
