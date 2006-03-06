@@ -124,7 +124,7 @@
     </xsl:otherwise>
   </xsl:choose>
   <xsl:for-each select="@*">
-    <xsl:if test="count(../@*)&gt;3 or string-length(../@*)&gt;60">
+    <xsl:if test="count(../@*)&gt;3 or string-length(../@*)&gt;60 or namespace-uri()='http://www.w3.org/2005/11/its'">
 	  <xsl:call-template name="lineBreak">
 	    <xsl:with-param name="id">5</xsl:with-param>
 	  </xsl:call-template>
