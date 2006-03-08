@@ -900,21 +900,37 @@ so that is only put back in if there is some content
   </xsl:for-each>
   <!-- now we need to go back to the classes of which this 
        element is a member and reference their untouched attributes -->
-  <xsl:for-each select="$ORIGINAL">
-    <xsl:if test="local-name(.)='elementSpec'">
-      <xsl:call-template name="classAttributes">
-	<xsl:with-param name="I" select="$I"/>
-	<xsl:with-param name="K" select="'att.global'"/>
-      </xsl:call-template>
-      <xsl:for-each select="tei:classes/tei:memberOf"> 
-	<xsl:variable name="K" select="@key"/>
-	<xsl:call-template name="classAttributes">
+  <xsl:choose>
+    <xsl:when test="tei:classes">
+	<xsl:call-template name="manageClassAttributes">
 	  <xsl:with-param name="I" select="$I"/>
-	  <xsl:with-param name="K" select="@key"/>
+	</xsl:call-template>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:for-each select="$ORIGINAL">
+	<xsl:call-template name="manageClassAttributes">
+	  <xsl:with-param name="I" select="$I"/>
 	</xsl:call-template>
       </xsl:for-each>
-    </xsl:if>
-  </xsl:for-each>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+<xsl:template name="manageClassAttributes">
+  <xsl:param name="I"/>
+  <xsl:if test="local-name(.)='elementSpec'">
+    <xsl:call-template name="classAttributes">
+      <xsl:with-param name="I" select="$I"/>
+      <xsl:with-param name="K" select="'att.global'"/>
+    </xsl:call-template>
+    <xsl:for-each select="tei:classes/tei:memberOf"> 
+      <xsl:variable name="K" select="@key"/>
+      <xsl:call-template name="classAttributes">
+	<xsl:with-param name="I" select="$I"/>
+	      <xsl:with-param name="K" select="@key"/>
+      </xsl:call-template>
+    </xsl:for-each>
+  </xsl:if>
 </xsl:template>
 
 
