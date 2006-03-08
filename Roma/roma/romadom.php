@@ -1639,7 +1639,7 @@ class romaDom extends domDocument
       {
 	$errResult = false;
 
-	if ( preg_match( '/^[\w\d]+$/', $szNewName ) )
+	if ( preg_match( '/^[:\w\d]+$/', $szNewName ) )
 	  {
 	    $this->getXPath( $oXPath );
 	    $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);	    

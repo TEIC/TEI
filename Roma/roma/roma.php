@@ -1363,6 +1363,7 @@ class roma
       {
 	foreach( $_REQUEST as $key => $value )
 	  {
+print "look at $key\n";
 	    if( substr( $key, 0, 8 ) == 'include_' )
 	      {
 		switch( $value )
