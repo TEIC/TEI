@@ -9,9 +9,6 @@ $Author$
 <gloss/>
 <desc>specifies all the classes of which the documented element or
 class is a member or subclass.</desc>
-  <classes>
-    <memberOf key="att.identified"/>
-  </classes>
   <content>
    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
     <rng:zeroOrMore>
@@ -19,7 +16,30 @@ class is a member or subclass.</desc>
     </rng:zeroOrMore>
   </rng:choice>
   </content>
-  <attList/>
+  <attList>
+    <attDef ident="mode" usage="opt">
+	<equiv/>
+	<desc>specifies the effect of this declaration on its parent module.</desc>
+      <datatype><rng:ref name="data.enumerated" xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <defaultVal>add</defaultVal>
+      <valList type="closed">
+	<valItem ident="add">
+	  <gloss>this declaration is added to the current definitions</gloss>
+	</valItem>
+	<valItem ident="delete">
+	  <gloss>this declaration and all of its children are removed from the current setup</gloss>
+	</valItem>
+	<valItem ident="change">
+         <gloss>this declaration changes the declaration of the same
+	 name in the current definition</gloss>
+      </valItem>
+      <valItem ident="replace">
+	<gloss>this declaration replaces the declaration of the same
+	name in the current definition</gloss>
+      </valItem>
+      </valList>
+    </attDef>
+  </attList>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">      <classes>
         <memberOf key="model.qLike"/> 
