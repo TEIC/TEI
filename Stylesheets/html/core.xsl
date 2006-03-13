@@ -171,8 +171,9 @@
 	<xsl:variable name="ident">
 	  <xsl:apply-templates select="." mode="ident"/>
 	</xsl:variable>
-	<a name="{$ident}"/>
-	<xsl:apply-templates/>
+	<a name="{$ident}">
+	  <xsl:apply-templates/>
+	</a>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

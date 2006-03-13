@@ -354,23 +354,25 @@
           <xsl:value-of select="substring(@from,5,string-length(normalize-space(@from))-1)"/>
         </xsl:if>
       </xsl:attribute>
-      <xsl:choose>
-        <xsl:when test="@rend='new'">
-          <xsl:attribute name="target">_blank</xsl:attribute>
-        </xsl:when>
-        <xsl:when test="@rend='noframe' or $splitLevel=-1 or substring(@url,string-length(@url),1)='/'">
-          <xsl:attribute name="target">_top</xsl:attribute>
-        </xsl:when>
-        <xsl:when test="contains($dest,'://') or starts-with($dest,'.') or starts-with($dest,'/')">
-          <xsl:attribute name="target">_top</xsl:attribute>
-        </xsl:when>
-        <xsl:when test="substring($dest,string-length($dest),1)='/'">
-          <xsl:attribute name="target">_top</xsl:attribute>
-        </xsl:when>
-        <xsl:when test="$splitLevel=-1">
-          <xsl:attribute name="target">_top</xsl:attribute>
-        </xsl:when>
-      </xsl:choose>
+      <xsl:if test="$xhtml='false'"> 
+	<xsl:choose>
+	  <xsl:when test="@rend='new'">
+	    <xsl:attribute name="target">_blank</xsl:attribute>
+	  </xsl:when>
+	  <xsl:when test="@rend='noframe' or $splitLevel=-1 or substring(@url,string-length(@url),1)='/'">
+	    <xsl:attribute name="target">_top</xsl:attribute>
+	  </xsl:when>
+	  <xsl:when test="contains($dest,'://') or starts-with($dest,'.') or starts-with($dest,'/')">
+	    <xsl:attribute name="target">_top</xsl:attribute>
+	  </xsl:when>
+	  <xsl:when test="substring($dest,string-length($dest),1)='/'">
+	    <xsl:attribute name="target">_top</xsl:attribute>
+	  </xsl:when>
+	  <xsl:when test="$splitLevel=-1">
+	    <xsl:attribute name="target">_top</xsl:attribute>
+	  </xsl:when>
+	</xsl:choose>
+      </xsl:if>
       <xsl:attribute name="title">
         <xsl:choose>
           <xsl:when test="@n">

@@ -792,18 +792,23 @@ $ID: requests a particular page
         <xsl:when test="ancestor-or-self::tei:*[@lang]">
           <xsl:value-of select="ancestor-or-self::tei:*[@lang][1]/@lang"/>
         </xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$lang"/>
+	</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <xsl:attribute name="lang">
-      <xsl:choose>
-        <xsl:when test="$supplied">
-          <xsl:value-of select="$supplied"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:text>en</xsl:text>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:attribute>
+    <xsl:choose>
+      <xsl:when test="$xhtml='true'">
+	<xsl:attribute name="xml:lang">
+	  <xsl:value-of select="$supplied"/>
+	</xsl:attribute>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:attribute name="lang">
+	  <xsl:value-of select="$supplied"/>
+	</xsl:attribute>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xd:doc>
@@ -1713,19 +1718,19 @@ $ID: requests a particular page
 	    </div>
           </xsl:when>
           <xsl:when test="@rend='frontpage'">
-            <div class="column-wrapper">
-              <div id="lh-col">
-                <xsl:for-each select="descendant-or-self::tei:TEI/tei:text/tei:front">
-		  <xsl:apply-templates/>
-		</xsl:for-each>
-              </div>
+	    <div class="column-wrapper">
               <div id="rh-col">
                 <xsl:for-each
 		    select="descendant-or-self::tei:TEI/tei:text/tei:body">
 		  <xsl:apply-templates/>
 		</xsl:for-each>
               </div>
-            </div>
+              <div id="lh-col">
+                <xsl:for-each select="descendant-or-self::tei:TEI/tei:text/tei:front">
+		  <xsl:apply-templates/>
+		</xsl:for-each>
+              </div>
+	    </div>
           </xsl:when>
           <xsl:when test="$contentStructure='body'">
 	    <xsl:call-template name="bodyLayout">
@@ -1785,6 +1790,16 @@ $ID: requests a particular page
 <xsl:template name="bodyLayout">
   <xsl:param name="currentID"/>
   <div class="column-wrapper">
+    <div id="lh-col">
+      <div id="lh-col-top">
+	<xsl:call-template name="lh-col-top"/>
+      </div>
+      <div id="lh-col-bottom">
+	<xsl:call-template name="lh-col-bottom">
+	  <xsl:with-param name="currentID" select="$currentID"/>
+	</xsl:call-template>
+      </div>
+    </div>
     <div id="rh-col">
       <a name="rh-col"/>
       <div id="rh-col-top">
@@ -1792,16 +1807,6 @@ $ID: requests a particular page
       </div>
       <div id="rh-col-bottom">
 	<xsl:call-template name="rh-col-bottom">
-	  <xsl:with-param name="currentID" select="$currentID"/>
-	</xsl:call-template>
-      </div>
-    </div>
-    <div id="lh-col">
-      <div id="lh-col-top">
-	<xsl:call-template name="lh-col-top"/>
-      </div>
-      <div id="lh-col-bottom">
-	<xsl:call-template name="lh-col-bottom">
 	  <xsl:with-param name="currentID" select="$currentID"/>
 	</xsl:call-template>
       </div>

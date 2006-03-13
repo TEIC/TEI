@@ -579,6 +579,11 @@ HTML element to put around visible text of display URLs
 </xd:doc>
 <xsl:param name="urlMarkup">span</xsl:param>
 
+<xd:doc type="boolean" class="output">
+Make XHTML-compatible markup
+</xd:doc>
+<xsl:param name="xhtml">false</xsl:param>
+
 <xd:doc type="boolean" class="toc">
 Make an automatic table of contents
 </xd:doc>

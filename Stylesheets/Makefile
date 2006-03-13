@@ -32,11 +32,15 @@ p5:
 	perl -p -i -e 's+<xsl:stylesheet+<xsl:stylesheet xmlns=\"http://www.w3.org/1999/xhtml\"+'  ../xhtml/$$i ;  \
 	perl -p -i -e 's/>.html</>.xhtml</'  ../xhtml/$$i ;  \
 	perl -p -i -e 's/>html</>xml</'  ../xhtml/$$i ;  \
+	perl -p -i -e 's/<a name="/<a id="/'  ../xhtml/$$i ;  \
 	perl -p -i -e 's/>iso-8859-1</>utf-8</'  ../xhtml/$$i ;  \
 	perl -p -i -e 's+outputXHTML\">false<+outputXHTML\">true<+'  ../xhtml/$$i ;  \
 	perl -p -i -e 's+-//W3C//DTD HTML 4.0 Transitional//EN+-//W3C//DTD XHTML 1.1//EN+'  ../xhtml/$$i ;  \
 	perl -p -i -e 's+http://www.w3.org/TR/html4/loose.dtd+http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd+'  ../xhtml/$$i ;  \
 	 done); done
+	perl -p -i -e 's/name="xhtml">false</name="xhtml">true</' release/tei-xsl/p5/xhtml/tei-param.xsl
+	perl -p -i -e 's/name="xhtml">false</name="xhtml">true</' release/tei-xsl/p4/xhtml/tei-param.xsl
+
 
 release: doc p4 p5
 	cp i18n.xml release/tei-xsl/p4
