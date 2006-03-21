@@ -172,7 +172,7 @@
   
 
 <xd:doc>
-    <xd:short>Process elements extra in generateLink mode</xd:short>
+    <xd:short>Process extra elements in generateLink mode</xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:label|tei:figure|tei:table|tei:item|tei:p|tei:bibl|tei:anchor|tei:cell|tei:lg|tei:list|tei:sp" mode="generateLink">

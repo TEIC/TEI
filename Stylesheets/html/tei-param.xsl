@@ -91,7 +91,7 @@ Display figures.
     <xd:short>[html] Hook where Javascript calls can be inserted  just after &lt;body&gt;</xd:short>
     <xd:detail> </xd:detail>
 </xd:doc>
-<xsl:template name="bodyJavaScriptHook"/>
+<xsl:template name="bodyJavascriptHook"/>
 
 <xd:doc class="hook">
     <xd:short>[html] Hook where extra CSS can be inserted</xd:short>
@@ -115,7 +115,7 @@ Display figures.
     <xd:short>[html] Hook where extra Javascript functions can be defined</xd:short>
     <xd:detail> </xd:detail>
 </xd:doc>
-<xsl:template name="javaScriptHook"/>
+<xsl:template name="javascriptHook"/>
 
 <xd:doc class="hook">
     <xd:short>[html] Hook where HTML can be inserted just before the &lt;address&gt;</xd:short>
@@ -229,7 +229,7 @@ Make a separate file for footnotes
     <xd:detail> </xd:detail>
   </xd:doc>
 <xsl:template name="hdr3">
-    <a href="#rh-col" title="Go to main page content" class="skiplinks">Skip links</a>
+    <a href="#rh-column" title="Go to main page content" class="skiplinks">Skip links</a>
     <a class="hide">|</a>
     <xsl:call-template name="crumbPath"/>
     <a class="hide">|</a>
@@ -270,7 +270,7 @@ Width of left-hand column when $pageLayout is "Table"
     <xd:detail> </xd:detail>
 </xd:doc>
 <xsl:template name="logoPicture">
-    <a class="framelogo" target="_top" href="http://www.tei-c.org/Stylesheets/teic/">
+    <a class="framelogo" href="http://www.tei-c.org/Stylesheets/teic/">
       <img src="http://www.tei-c.org/Stylesheets/teic/teixsl.png"
 	   vspace="5" width="124" height="161" border="0" 
 	   alt="TEI XSL Stylesheets"/>
@@ -336,7 +336,7 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</xd:detail>
       <xsl:when test="$mode='table'">
         <table width="100%" border="0">
           <tr>
-            <td height="98" class="bgimage" onClick="window.location='{$homeURL}'" cellpadding="0">
+            <td height="98" class="bgimage" onclick="window.location='{$homeURL}'" cellpadding="0">
               <h2 class="subtitle">
                 <xsl:call-template name="generateSubTitle"/>
               </h2>
@@ -483,11 +483,6 @@ Output method for output file(s).
 </xd:doc>
 <xsl:param name="outputMethod">html</xsl:param>
 
-<xd:doc type="boolean" class="output">
-Whether XHTML is being generated.
-</xd:doc>
-<xsl:param name="outputXHTML">false</xsl:param>
-
 <xd:doc type="string" class="output">
 Suffix of output file(s).
 </xd:doc>
@@ -578,6 +573,13 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
 HTML element to put around visible text of display URLs
 </xd:doc>
 <xsl:param name="urlMarkup">span</xsl:param>
+
+<xd:doc type="boolean" class="output">
+Whether to make split pages appear virtually
+as layers in HTML, or physically as separate
+pages or server requests.
+</xd:doc>
+<xsl:param name="virtualPages">false</xsl:param>
 
 <xd:doc type="boolean" class="output">
 Make XHTML-compatible markup

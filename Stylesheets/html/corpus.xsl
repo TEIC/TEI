@@ -90,8 +90,11 @@
 	<xsl:call-template name="cssHook"/>
       </head>
       <body class="simple">
+	<xsl:attribute name="onload">
+	  <xsl:text>startUp()</xsl:text>
+	</xsl:attribute>
         <xsl:call-template name="bodyHook"/>
-        <xsl:call-template name="bodyJavaScriptHook"/>
+        <xsl:call-template name="bodyJavascriptHook"/>
         <xsl:call-template name="stdheader">
           <xsl:with-param name="title">
             <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>

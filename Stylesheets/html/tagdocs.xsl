@@ -1295,6 +1295,9 @@
 	      </xsl:if>
 	    </head>
 	    <body>
+	      <xsl:attribute name="onload">
+		<xsl:text>startUp()</xsl:text>
+	      </xsl:attribute>
 	      <xsl:call-template name="bodyHook"/>
 	      <a name="TOP"/>
 	      <div id="hdr">
