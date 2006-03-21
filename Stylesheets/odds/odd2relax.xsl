@@ -140,18 +140,15 @@
 		<xsl:call-template name="copyright"/>
 	      </xsl:comment>
 	    </xsl:if>
-	    <xsl:comment>Set predeclared macros</xsl:comment>
 	    
-	    <xsl:for-each select="key('PredeclareAllMacros',1)">
-	      <xsl:apply-templates select="." mode="tangle"/>
-	    </xsl:for-each>
-
 	    <xsl:apply-templates mode="tangle"
 				 select="tei:specGrpRef"/>
 	    <xsl:apply-templates mode="tangle"
 				 select="tei:moduleRef"/>
 
 	    <xsl:for-each select="tei:macroSpec">
+		  <xsl:apply-templates select="." mode="tangle"/>
+		  <!--
 	      <xsl:choose>
 		<xsl:when test="@predeclare='true'"/>
 		<xsl:when test="key('PredeclareMacros',@ident)"/>
@@ -159,6 +156,7 @@
 		  <xsl:apply-templates select="." mode="tangle"/>
 		</xsl:otherwise>
 	    </xsl:choose>
+-->
 	  </xsl:for-each>
   	  <xsl:apply-templates mode="tangle"
 			       select="tei:elementSpec|tei:classSpec"/>
@@ -246,7 +244,20 @@
 
 <xsl:template name="moduleSpec-body">	  
   <xsl:variable name="filename" select="@ident"/>
-<xsl:comment>Definitions from module <xsl:value-of select="@ident"/></xsl:comment>
+  <xsl:comment>Definitions from module <xsl:value-of select="@ident"/>
+  </xsl:comment>
+
+  <xsl:comment>Set global predeclared macros</xsl:comment>
+  <xsl:if test="@type='core'">
+    <xsl:for-each select="key('PredeclareAllMacros','1')">
+      <define xmlns="http://relaxng.org/ns/structure/1.0" 
+	      name="{@ident}">
+	<choice>
+	  <notAllowed/>
+	</choice>
+      </define>
+    </xsl:for-each>
+  </xsl:if>
   <xsl:comment>Set predeclared macros</xsl:comment>
   <xsl:for-each select="key('PredeclareMacrosModule',@ident)">
     <xsl:apply-templates select="." mode="tangle"/>

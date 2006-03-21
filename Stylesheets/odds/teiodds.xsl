@@ -147,14 +147,22 @@
   
   
   <xsl:template match="rng:ref">
-    <xsl:copy>
-      <xsl:attribute name="name">
-	<xsl:if test="key('IDENTS',@name)">
-	  <xsl:value-of select="$patternPrefix"/>
-	</xsl:if>
-	<xsl:value-of select="@name"/>
-      </xsl:attribute>
-    </xsl:copy>
+    <xsl:choose>
+      <xsl:when test="starts-with(@name,'mix.') and
+		      not(key('IDENTS',@name))">
+	<empty  xmlns="http://relaxng.org/ns/structure/1.0"/>	
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:copy>
+	  <xsl:attribute name="name">
+	    <xsl:if test="key('IDENTS',@name)">
+	      <xsl:value-of select="$patternPrefix"/>
+	    </xsl:if>
+	    <xsl:value-of select="@name"/>
+	  </xsl:attribute>
+	</xsl:copy>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template match="rng:*">

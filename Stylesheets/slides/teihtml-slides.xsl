@@ -166,7 +166,7 @@
     </title>
     <xsl:call-template name="includeCSS"/>
     <xsl:call-template name="cssHook"/>
-    <xsl:call-template name="javaScript"/>
+    <xsl:call-template name="javaccript"/>
   </head>
   <body>
     <div class="slidetitle" style="font-size: 36pt;">
@@ -196,7 +196,7 @@
   </html>
 </xsl:template>
 
-<xsl:template name="javaScriptHook">
+<xsl:template name="javascriptHook">
   <xsl:variable name="prev">
     <xsl:choose>
       <xsl:when test="preceding-sibling::tei:div">
@@ -281,7 +281,8 @@ window.onload = startup;
 	      <title><xsl:value-of select="tei:head"/></title>
 	      <xsl:call-template name="includeCSS"/>
 	      <xsl:call-template name="cssHook"/>
-	      <xsl:call-template name="javaScript"/>
+	      <xsl:call-template name="includeJavascript"/>
+	      <xsl:call-template name="javascriptHook"/>
 	    </head>
 	    <body>
 	      <h1><xsl:value-of select="tei:head"/></h1>
@@ -320,7 +321,8 @@ window.onload = startup;
       <title><xsl:value-of select="tei:head"/></title>
       <xsl:call-template name="includeCSS"/>
       <xsl:call-template name="cssHook"/>
-      <xsl:call-template name="javaScript"/>
+      <xsl:call-template name="includeJavascript"/>
+      <xsl:call-template name="javascriptHook"/>
     </head>
     <body>
       <xsl:call-template name="slidebody"/>
@@ -351,13 +353,6 @@ window.onload = startup;
   <xsl:call-template name="generateTitle"/>
 </xsl:template>
 
-
-<xsl:template name="writeJavascript">
-  <xsl:param name="content"/>
-  <script type="text/javascript">
-    <xsl:value-of select="$content"/>
-  </script>
-</xsl:template>
 
 <xsl:template match="teix:egXML">
   <pre>

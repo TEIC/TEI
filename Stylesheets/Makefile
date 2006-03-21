@@ -33,6 +33,7 @@ p5:
 	perl -p -i -e 's/>.html</>.xhtml</'  ../xhtml/$$i ;  \
 	perl -p -i -e 's/>html</>xml</'  ../xhtml/$$i ;  \
 	perl -p -i -e 's/<a name="/<a id="/'  ../xhtml/$$i ;  \
+	perl -p -i -e 's/ target="_top"//'  ../xhtml/$$i ;  \
 	perl -p -i -e 's/>iso-8859-1</>utf-8</'  ../xhtml/$$i ;  \
 	perl -p -i -e 's+outputXHTML\">false<+outputXHTML\">true<+'  ../xhtml/$$i ;  \
 	perl -p -i -e 's+-//W3C//DTD HTML 4.0 Transitional//EN+-//W3C//DTD XHTML 1.1//EN+'  ../xhtml/$$i ;  \
