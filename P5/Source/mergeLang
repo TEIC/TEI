@@ -1,0 +1,26 @@
+#!/bin/sh
+mkdir Guidelines/FR
+for i in Guidelines/EN/*.xml
+do
+ cp $i Guidelines/FR
+done
+cp ../french/hd.odd Guides/FR/HD.xml
+
+for i in `ls HD/*.odd | sed 's/HD.hd.odd//'`
+do
+ X=`basename $i`
+ N=`xsltproc getident.xsl $i`
+ if test -f ../french/$X
+ then
+ echo french for $i
+    xsltproc --stringparam newLang fr --stringparam newFile ../french/$X \
+    mergeLang.xsl $i | xmllint --format --encode utf-8 - > Guidelines/Odds/$N.xml
+ fi
+ if test -f ../chinese/$X
+ then
+ echo chinese for $i
+    xsltproc --stringparam newLang zh-tw --stringparam newFile ../chinese/$X \
+    mergeLang.xsl Guidelines/Odds/$N.xml | xmllint --format --encode utf-8 - > tmp
+    mv tmp Guidelines/Odds/$N.xml
+ fi
+done
