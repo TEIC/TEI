@@ -1,0 +1,84 @@
+#!/bin/sh
+mkdir -p Guidelines/Odds
+cat >OldOdds<<EOF
+cbgeseq.odd
+role.odd
+teifsd2.odd
+datatype.formula.odd
+altname.odd
+biblpartphrase.odd
+mcrend.odd
+tei2.odd
+tei.data.names.odd
+tei.data.regexp.odd
+vegen.odd
+vegenxx.odd
+vemixxx.odd
+te-new.odd
+lg1.odd
+lg2.odd
+lg3.odd
+lg4.odd
+lg5.odd
+vemix.odd
+datatype.ucs.odd
+EOF
+# get rid of last lot
+rm Guidelines/Odds/*.xml
+rm Guidelines/EN/*.xml
+
+# copy all ODD files
+for i in [A-Z]*/*.odd 
+do
+ cp $i Guidelines/Odds
+done
+for i in `cat OldOdds`
+do
+ rm Guidelines/Odds/$i
+done
+
+# move chapter files
+rm -f chaps.sed
+rm -f Guidelines/EN/fileents.dtd 
+rm -f ents.sed
+for i in [A-Z]*
+do
+if test -d $i
+then
+ lower=`echo $i | tr '[A-Z]' '[a-z]'`
+ if test -f Guidelines/Odds/$lower.odd
+ then
+   mv Guidelines/Odds/$lower.odd Guidelines/EN/$i.xml
+   echo 's/&'$lower.odd';/\&'$i.xml';/' >> chaps.sed
+   echo "<!ENTITY" $i.xml SYSTEM '"'$i.xml'">' \
+        >> Guidelines/EN/fileents.dtd
+ fi
+fi
+done
+
+
+# make entity file and rename ODD to XML by @ident
+for i in Guidelines/Odds/*.odd
+do
+ N=`xsltproc getident.xsl $i`
+ X=`basename $i .odd`
+ echo "<!ENTITY" $N SYSTEM '"'../Odds/$N.xml'">' \
+        >> Guidelines/EN/fileents.dtd
+ echo 's/&'$X.odd';/\&'$N';/' >> ents.sed
+ echo 's/&'$X';/\&'$N';/' >> ents.sed
+ mv $i Guidelines/Odds/$N.xml
+done
+echo 's/&ppartmsdesc.odd;/\&model.pPart.msdesc;/' >> ents.sed
+# now mangle chapter files
+for i in Guidelines/EN/*.xml
+do
+ sed -f ents.sed $i > tmp
+ mv tmp $i
+done
+
+# get driver
+sed -f chaps.sed ../Source-driver.xml >Guidelines/EN/driver.xml
+cp ../ents.dtd Guidelines/EN/ents.dtd
+
+
+#rm OldOdds chaps.sed ents.sed
