@@ -1,10 +1,18 @@
 #!/bin/sh
-mkdir Guidelines/FR
-for i in Guidelines/EN/*.xml
+rm -rf Guidelines/fr
+mkdir Guidelines/fr
+for i in Guidelines/en/*
 do
- cp $i Guidelines/FR
+ X=`basename $i`
+ (cd Guidelines/fr; ln -s ../en/$X $X)
 done
-cp ../french/hd.odd Guides/FR/HD.xml
+rm Guidelines/fr/HD.xml
+cp ../french/hd.odd Guidelines/fr/HD.xml
+for i in Guidelines/fr/HD.xml
+do
+ sed -f ents.sed $i > tmp
+ mv tmp $i
+done
 
 for i in `ls HD/*.odd | sed 's/HD.hd.odd//'`
 do

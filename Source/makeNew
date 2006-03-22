@@ -1,6 +1,6 @@
 #!/bin/sh
 mkdir -p Guidelines/Odds
-mkdir -p Guidelines/EN
+mkdir -p Guidelines/en
 cat >OldOdds<<EOF
 altname.odd
 biblpartphrase.odd
@@ -33,7 +33,7 @@ vemixxx.odd
 EOF
 # get rid of last lot
 rm Guidelines/Odds/*.xml
-rm Guidelines/EN/*.xml
+rm Guidelines/en/*.xml
 
 # copy all ODD files
 for i in [A-Z]*/*.odd 
@@ -47,7 +47,7 @@ done
 
 # move chapter files
 rm -f chaps.sed
-rm -f Guidelines/EN/fileents.dtd 
+rm -f Guidelines/en/fileents.dtd 
 rm -f ents.sed
 for i in [A-Z]*
 do
@@ -56,10 +56,10 @@ then
  lower=`echo $i | tr '[A-Z]' '[a-z]'`
  if test -f Guidelines/Odds/$lower.odd
  then
-   mv Guidelines/Odds/$lower.odd Guidelines/EN/$i.xml
+   mv Guidelines/Odds/$lower.odd Guidelines/en/$i.xml
    echo 's/&'$lower.odd';/\&'$i.xml';/' >> chaps.sed
    echo "<!ENTITY" $i.xml SYSTEM '"'$i.xml'">' \
-        >> Guidelines/EN/fileents.dtd
+        >> Guidelines/en/fileents.dtd
  fi
 fi
 done
@@ -71,22 +71,22 @@ do
  N=`xsltproc getident.xsl $i`
  X=`basename $i .odd`
  echo "<!ENTITY" $N SYSTEM '"'../Odds/$N.xml'">' \
-        >> Guidelines/EN/fileents.dtd
+        >> Guidelines/en/fileents.dtd
  echo 's/&'$X.odd';/\&'$N';/' >> ents.sed
  echo 's/&'$X';/\&'$N';/' >> ents.sed
  mv $i Guidelines/Odds/$N.xml
 done
 echo 's/&ppartmsdesc.odd;/\&model.pPart.msdesc;/' >> ents.sed
 # now mangle chapter files
-for i in Guidelines/EN/*.xml
+for i in Guidelines/en/*.xml
 do
  sed -f ents.sed $i > tmp
  mv tmp $i
 done
 
 # get driver
-sed -f chaps.sed ../Source-driver.xml >Guidelines/EN/driver.xml
-cp ../ents.dtd Guidelines/EN/ents.dtd
+sed -f chaps.sed ../Source-driver.xml >Guidelines/en/driver.xml
+cp ../ents.dtd Guidelines/en/ents.dtd
 
 
 #rm OldOdds chaps.sed ents.sed
