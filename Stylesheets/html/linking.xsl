@@ -437,32 +437,49 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <a>
-      <xsl:attribute name="class">
-        <xsl:choose>
-          <xsl:when test="@rend">
-            <xsl:value-of select="@rend"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="$class"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:attribute>
-      <xsl:attribute name="href">
-        <xsl:choose>
-          <xsl:when test="starts-with($dest,'#') or  contains($dest,'.html') or contains($dest,'ID=')">
-            <xsl:value-of select="$dest"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:apply-templates select="key('IDS',$W)" mode="generateLink"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:attribute>
-      <xsl:for-each select="key('IDS',$W)">
-	<xsl:attribute name="title">
+    <xsl:choose>
+      <xsl:when test="$dest=''">
 	  <xsl:choose>
-	    <xsl:when test="@n">
-	      <xsl:value-of select="@n"/>
+	    <xsl:when test="not($body='')">
+	      <xsl:value-of select="$body"/>
+	    </xsl:when>
+	    <xsl:when test="$ptr='true'">
+	      <xsl:apply-templates mode="xref" select="key('IDS',$W)">
+		<xsl:with-param name="minimal" select="$minimalCrossRef"/>
+	      </xsl:apply-templates>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:apply-templates/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+      </xsl:when>
+      <xsl:otherwise>
+	<a>
+	  <xsl:attribute name="class">
+	    <xsl:choose>
+	      <xsl:when test="@rend">
+		<xsl:value-of select="@rend"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:value-of select="$class"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:attribute>
+	  <xsl:attribute name="href">
+	    <xsl:choose>
+	      <xsl:when test="starts-with($dest,'#') or  contains($dest,'.html') or contains($dest,'ID=')">
+		<xsl:value-of select="$dest"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:apply-templates select="key('IDS',$W)" mode="generateLink"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:attribute>
+	  <xsl:for-each select="key('IDS',$W)">
+	    <xsl:attribute name="title">
+	      <xsl:choose>
+		<xsl:when test="@n">
+		  <xsl:value-of select="@n"/>
 	    </xsl:when>
 	    <xsl:when test="starts-with(local-name(.),'div')">
 	      <xsl:value-of select="normalize-space(tei:head)"/>
@@ -470,22 +487,24 @@
 	    <xsl:otherwise>
 	      <xsl:value-of select="normalize-space(.)"/>
 	    </xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:attribute>
+	  </xsl:for-each>
+	  <xsl:choose>
+	    <xsl:when test="not($body='')">
+	      <xsl:value-of select="$body"/>
+	    </xsl:when>
+	    <xsl:when test="$ptr='true'">
+	      <xsl:apply-templates mode="xref" select="key('IDS',$W)">
+		<xsl:with-param name="minimal" select="$minimalCrossRef"/>
+	      </xsl:apply-templates>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:apply-templates/>
+	    </xsl:otherwise>
 	  </xsl:choose>
-	</xsl:attribute>
-      </xsl:for-each>
-      <xsl:choose>
-        <xsl:when test="not($body='')">
-          <xsl:value-of select="$body"/>
-        </xsl:when>
-        <xsl:when test="$ptr='true'">
-          <xsl:apply-templates mode="xref" select="key('IDS',$W)">
-            <xsl:with-param name="minimal" select="$minimalCrossRef"/>
-          </xsl:apply-templates>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:apply-templates/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </a>
+	</a>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 </xsl:stylesheet>

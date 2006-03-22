@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet 
     xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+    xmlns:html="http://www.w3.org/1999/xhtml"
     xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
     xmlns:rng="http://relaxng.org/ns/structure/1.0"
     xmlns:xs="http://www.w3.org/2001/XMLSchema" 
@@ -238,7 +239,7 @@
     </tei:item>
   </xsl:template>
   
-  <xsl:template match="tei:attDef/tei:exemplum">
+  <xsl:template match="tei:attDef/tei:exemplum" mode="attdoc">
     <tei:list type="gloss">
       <tei:label>
 	<tei:hi>
@@ -435,21 +436,10 @@
     </tei:p>
     </xsl:template>
   
-  <xsl:template match="tei:elementSpec/tei:exemplum" mode="weave">
-    <tei:p>
-    <tei:hi>
-	<xsl:call-template name="i18n">
-	  <xsl:with-param name="word">Example</xsl:with-param>
-	</xsl:call-template>
-    </tei:hi>
-    </tei:p>
-    <xsl:apply-templates/>
-  </xsl:template>
-  
   <xsl:template match="tei:elementSpec|tei:classSpec|tei:macroSpec" mode="show">
     <xsl:param name="atts"/>
     <tei:hi>&lt;<xsl:call-template name="identifyMe"/>&gt; </tei:hi>
-    <xsl:value-of select="tei:desc"/>
+    <xsl:apply-templates select="tei:desc" mode="doc"/>
     <xsl:choose>
       <xsl:when test="$atts='-'"/>
       <xsl:when test="not($atts='')">
@@ -503,19 +493,18 @@
   
   <xsl:template match="tei:equiv"/>
   
-  <xsl:template match="tei:exemplum">
+  <xsl:template match="tei:exemplum" mode="doc">
     <tei:p>
-      <tei:hi>
+    <tei:hi>
 	<xsl:call-template name="i18n">
 	  <xsl:with-param name="word">Example</xsl:with-param>
 	</xsl:call-template>
-      </tei:hi>
+    </tei:hi>
     </tei:p>
     <xsl:apply-templates/>
   </xsl:template>
   
-  
-  
+
   <xsl:template match="tei:gloss" mode="weave"/>
   <xsl:template match="tei:gloss"/>
   
@@ -616,20 +605,16 @@
     </tei:p>
   </xsl:template>
   
-  <xsl:template match="tei:remarks" mode="weave">
-    <xsl:apply-templates/>
-  </xsl:template>
-  
-  <xsl:template match="tei:remarks">
-    <xsl:if test="*//text()">
-      <tei:label>
-	<xsl:call-template name="i18n">
-	  <xsl:with-param name="word">Notes</xsl:with-param>
-	</xsl:call-template>
-	<xsl:text>: </xsl:text>
-      </tei:label>
-      <tei:item><xsl:apply-templates/></tei:item>
-    </xsl:if>
+  <xsl:template match="tei:remarks" mode="doc">
+    <tei:label>
+      <xsl:call-template name="i18n">
+	<xsl:with-param name="word">Note</xsl:with-param>
+      </xsl:call-template>
+      <xsl:text>: </xsl:text>
+    </tei:label>
+    <tei:item>
+      <xsl:apply-templates/>
+    </tei:item>
   </xsl:template>
   
   

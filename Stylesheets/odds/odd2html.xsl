@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="1.0"
+    xmlns="http://www.w3.org/1999/xhtml"
     xmlns:html="http://www.w3.org/1999/xhtml" 
     xmlns:xd="http://www.pnp-software.com/XSLTdoc"
     xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
@@ -17,9 +18,10 @@
 
 
 <xsl:import href="teiodds.xsl"/>
-<xsl:import href="../html/tei.xsl"/>
-<xsl:import href="../html/tagdocs.xsl"/>
+<xsl:import href="../xhtml/tei.xsl"/>
+<xsl:import href="../xhtml/tagdocs.xsl"/>
 <xsl:import href="RngToRnc.xsl"/>
+<xsl:param name="xhtml">true</xsl:param>
 
 <xd:doc type="stylesheet">
     <xd:short>
@@ -48,7 +50,6 @@
     <xd:copyright>2005, TEI Consortium</xd:copyright>
   </xd:doc>
 
-<xsl:output method="html"/>
 <xsl:key name="NameToID" match="tei:*" use="@ident"/>
 
 <xsl:param name="oddmode">html</xsl:param>
@@ -130,13 +131,15 @@
 <dl>
 <xsl:for-each select="exsl:node-set($sindex)/Indexterms/index">
   <xsl:if test="not(@a=preceding-sibling::tei:index/@a)">
-    <dt><xsl:value-of select="@c"/></dt>
-    <dd>
+    <dt     xmlns="http://www.w3.org/1999/xhtml">
+    <xsl:value-of select="@c"/></dt>
+    <dd     xmlns="http://www.w3.org/1999/xhtml">
       <xsl:for-each select=".|following-sibling::tei:index[@a=current()/@a]">
           <xsl:if test="@b and not(@b=preceding-sibling::tei:index/@b)">
             <br/>&#160;&#160;<xsl:value-of select="@b"/><br/>
           </xsl:if>
-          <a href="{file}#{loc}"><xsl:value-of select="section"/></a>&#160;
+	  <a    xmlns="http://www.w3.org/1999/xhtml" 
+		href="{file}#{loc}"><xsl:value-of select="section"/></a>&#160;
       </xsl:for-each>
     </dd>
   </xsl:if>

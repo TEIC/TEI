@@ -884,34 +884,6 @@
   <xsl:value-of select="@name"/>
 </xsl:template>
 
-<xsl:template match="tei:gloss|tei:remarks|tei:desc"/>
-
-<xsl:template match="tei:gloss" mode="doc">
-    <xsl:text>(</xsl:text>
-    <xsl:choose>
-      <xsl:when test="$lang='en' and not(@xml:lang)">
-	<xsl:value-of select="."/>
-      </xsl:when>
-      <xsl:when test="@xml:lang=$lang">
-	<xsl:value-of select="."/>
-      </xsl:when>
-    </xsl:choose>
-    <xsl:text>) </xsl:text>
-</xsl:template>
-
-<xsl:template match="tei:desc" mode="doc">
-    <xsl:choose>
-      <xsl:when test="$lang='en' and not(@xml:lang)">
-	<xsl:value-of select="."/>
-      </xsl:when>
-      <xsl:when test="@xml:lang=$lang">
-	<xsl:value-of select="."/>
-      </xsl:when>
-    </xsl:choose>
-</xsl:template>
-
-<xsl:template match="tei:gloss|tei:remarks|tei:desc"/>
-
 <xsl:template match="tei:macroSpec" mode="tangle">
   <xsl:choose>
     <xsl:when test="@depend and $parameterize='true'">

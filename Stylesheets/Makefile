@@ -30,7 +30,6 @@ p5:
 	(cd release/tei-xsl/$$j/html;mkdir ../xhtml; for i in *.xsl; do \
 	cp  $$i ../xhtml/$$i;  \
 	perl -p -i -e 's+<xsl:stylesheet+<xsl:stylesheet xmlns=\"http://www.w3.org/1999/xhtml\"+'  ../xhtml/$$i ;  \
-	perl -p -i -e 's/>.html</>.xhtml</'  ../xhtml/$$i ;  \
 	perl -p -i -e 's/>html</>xml</'  ../xhtml/$$i ;  \
 	perl -p -i -e 's/<a name="/<a id="/'  ../xhtml/$$i ;  \
 	perl -p -i -e 's/ target="_top"//'  ../xhtml/$$i ;  \

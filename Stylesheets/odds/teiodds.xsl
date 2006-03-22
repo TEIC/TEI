@@ -378,10 +378,10 @@
   <xsl:template match="tei:desc" mode="doc">
     <xsl:choose>
       <xsl:when test="$lang='en' and not(@xml:lang)">
-	<xsl:value-of select="."/>
+	<xsl:apply-templates/>
       </xsl:when>
       <xsl:when test="@xml:lang=$lang">
-	<xsl:value-of select="."/>
+	<xsl:apply-templates/>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
@@ -591,19 +591,47 @@
   </xsl:template>
   
   <xsl:template match="tei:elementSpec/@ident"/>
+
+<xd:doc>
+    <xd:short>Process elements  tei:attDef/tei:exemplum</xd:short>
+    <xd:detail>&#160;</xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:attDef/tei:exemplum">
+    <xsl:choose>
+      <xsl:when test="$lang='en' and not(@xml:lang)">
+	<xsl:apply-templates select="." mode="attdoc"/>
+      </xsl:when>
+      <xsl:when test="@xml:lang=$lang">
+	<xsl:apply-templates select="." mode="attdoc"/>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
   
+  <xsl:template match="tei:exemplum" mode="weave">
+    <xsl:choose>
+      <xsl:when test="$lang='en' and not(@xml:lang)">
+	<xsl:apply-templates select="." mode="doc"/>
+      </xsl:when>
+      <xsl:when test="@xml:lang=$lang">
+	<xsl:apply-templates select="." mode="doc"/>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+
   <xsl:template match="tei:gloss" mode="doc">
     <xsl:if test="not(.='')">
-      <xsl:text>(</xsl:text>
       <xsl:choose>
 	<xsl:when test="$lang='en' and not(@xml:lang)">
+	  <xsl:text>(</xsl:text>
 	  <xsl:apply-templates/>
+	  <xsl:text>) </xsl:text>
 	</xsl:when>
 	<xsl:when test="@xml:lang=$lang">
+	  <xsl:text>(</xsl:text>
 	  <xsl:apply-templates/>
+	  <xsl:text>) </xsl:text>
 	</xsl:when>
       </xsl:choose>
-      <xsl:text>) </xsl:text>
     </xsl:if>
   </xsl:template>
   
@@ -772,6 +800,20 @@
   
   <xsl:template match="tei:remarks" mode="tangle"/>
   
+  <xsl:template match="tei:remarks"/>
+  
+  <xsl:template match="tei:remarks" mode="weave">
+    <xsl:choose>
+      <xsl:when test=".//text()=''"/>
+      <xsl:when test="$lang='en' and not(@xml:lang)">
+	<xsl:apply-templates select="." mode="doc"/>
+      </xsl:when>
+      <xsl:when test="@xml:lang=$lang">
+	<xsl:apply-templates select="." mode="doc"/>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+
   <xsl:template match="tei:specGrp" mode="ok">
     <xsl:param name="filename"/>
     <xsl:if test="$verbose='true'">
@@ -1243,17 +1285,20 @@
       <xsl:when test="$oddmode='html'">
 	<xsl:choose>
 	  <xsl:when test="key('IDENTS',$name) and $splitLevel=-1">
-	    <a class="link_element" href="#{$name}">
+	    <a     xmlns="http://www.w3.org/1999/xhtml"
+		   class="link_element" href="#{$name}">
 	      <xsl:value-of select="$name"/>
 	    </a>
 	  </xsl:when>
 	  <xsl:when test="key('IDENTS',$name)">
-	    <a class="link_element" href="ref-{$name}.html">
+	    <a     xmlns="http://www.w3.org/1999/xhtml"
+		   class="link_element" href="ref-{$name}.html">
 	      <xsl:value-of select="$name"/>
 	    </a>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <a href="{concat($TEISERVER,'tag.xq?name=',$name)}">
+	    <a     xmlns="http://www.w3.org/1999/xhtml"
+		   href="{concat($TEISERVER,'tag.xq?name=',$name)}">
 	      <xsl:value-of select="$name"/>
 	    </a>
 	  </xsl:otherwise>
@@ -1336,10 +1381,12 @@
 	</xsl:choose>
       </xsl:when>
       <xsl:when test="$oddmode='html' and $splitLevel=-1">
-	<a class="link_odd" href="#{$name}"><xsl:value-of select="$link"/></a>
+	<a     xmlns="http://www.w3.org/1999/xhtml"
+	       class="link_odd" href="#{$name}"><xsl:value-of select="$link"/></a>
       </xsl:when>
       <xsl:when test="$oddmode='html'">
-	<a class="link_odd" href="{concat('ref-',$name,'.html')}"><xsl:value-of select="$link"/></a>
+	<a     xmlns="http://www.w3.org/1999/xhtml"
+	       class="link_odd" href="{concat('ref-',$name,'.html')}"><xsl:value-of select="$link"/></a>
       </xsl:when>
       <xsl:when test="$oddmode='pdf'">
 	<fo:inline><xsl:value-of select="$link"/></fo:inline>

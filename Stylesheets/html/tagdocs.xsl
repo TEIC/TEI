@@ -173,36 +173,48 @@
     </tr>
   </xsl:template>
   
-<xd:doc>
-    <xd:short>Process elements  tei:attDef/tei:exemplum</xd:short>
+  <xd:doc>
+    <xd:short>Process elements  tei:attDef/tei:exemplum in doc mode</xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
-  <xsl:template match="tei:attDef/tei:exemplum">
+  <xsl:template match="tei:exemplum" mode="attdoc">
     <tr>
       <td/>
       <td valign="top" colspan="2">
-        <span class="label">
-	<xsl:call-template name="i18n">
-	<xsl:with-param name="word">Example</xsl:with-param>
-	</xsl:call-template>
-	<xsl:text>: </xsl:text>
+	<span class="label">
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Example</xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:text>: </xsl:text>
 	</span>
 	<xsl:apply-templates/>
       </td>
     </tr>
   </xsl:template>
-  
+
 <xd:doc>
     <xd:short>Process elements  tei:attDef/tei:remarks</xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:attDef/tei:remarks">
-    <tr>
-      <td/>
-      <td>
-        <xsl:apply-templates/>
-      </td>
-    </tr>
+	<xsl:choose>
+	  <xsl:when test="$lang='en' and not(@xml:lang)">
+	    <tr>
+	      <td/>
+	      <td>
+		<xsl:apply-templates/>
+	      </td>
+	    </tr>
+	  </xsl:when>
+	  <xsl:when test="@xml:lang=$lang">
+	    <tr>
+	      <td/>
+	      <td>
+		<xsl:apply-templates/>
+	      </td>
+	    </tr>
+	  </xsl:when>
+	</xsl:choose>
   </xsl:template>
   
 <xd:doc>
@@ -556,7 +568,7 @@
     <xsl:if test="self::tei:elementSpec">&gt;</xsl:if>
     </b>
     <xsl:text> </xsl:text>
-    <xsl:value-of select="tei:desc"/>
+    <xsl:apply-templates select="tei:desc" mode="doc"/>
     <xsl:choose>
       <xsl:when test="$atts='-'"/>
       <xsl:when test="not($atts='')">
@@ -625,17 +637,17 @@
     <xd:short>Process elements  tei:exemplum</xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
-  <xsl:template match="tei:exemplum" mode="weave">
+  <xsl:template match="tei:exemplum" mode="doc">
     <tr>
       <td valign="top">
-        <span class="label">
+	<span class="label">
 	  <xsl:call-template name="i18n">
 	    <xsl:with-param name="word">Example</xsl:with-param>
 	  </xsl:call-template>
 	</span>
       </td>
       <td colspan="2">
-        <xsl:apply-templates/>
+	<xsl:apply-templates/>
       </td>
     </tr>
   </xsl:template>
@@ -744,7 +756,7 @@
                 </Stuff>
               </xsl:variable>
               <xsl:variable name="entCount">
-                <xsl:for-each select="exsl:node-set($entCont)/Stuff">
+                <xsl:for-each select="exsl:node-set($entCont)/html:Stuff">
                   <xsl:value-of select="count(*)"/>
                 </xsl:for-each>
               </xsl:variable>
@@ -827,25 +839,23 @@
     </p>
   </xsl:template>
   
-<xd:doc>
-    <xd:short>Process elements  tei:remarks</xd:short>
+  <xd:doc>
+    <xd:short>Process tei:remarks in doc mode</xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
-  <xsl:template match="tei:remarks" mode="weave">
-    <xsl:if test="*//text()">
-      <tr>
-        <td valign="top">
-          <span class="label">
-	  <xsl:call-template name="i18n">
-	    <xsl:with-param name="word">Note</xsl:with-param>
-	  </xsl:call-template>
-	  </span>
-	</td>
-        <td colspan="2">
-          <xsl:apply-templates/>
-        </td>
-      </tr>
-    </xsl:if>
+  <xsl:template match="tei:remarks" mode="doc">
+    <tr>
+      <td valign="top">
+      <span class="label">
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Note</xsl:with-param>
+	</xsl:call-template>
+      </span>
+      </td>
+      <td colspan="2">
+	<xsl:apply-templates/>
+      </td>
+    </tr>
   </xsl:template>
   
 <xd:doc>
@@ -1121,19 +1131,19 @@
       <xsl:attribute name="class">eg</xsl:attribute>
       <xsl:choose>
         <xsl:when test="$displayMode='rng'">
-          <xsl:apply-templates select="exsl:node-set($content)/Wrapper/*" mode="verbatim"/>
+          <xsl:apply-templates select="exsl:node-set($content)/*/*" mode="verbatim"/>
         </xsl:when>
         <xsl:when test="$displayMode='rnc'">
           <xsl:call-template name="make-body-from-r-t-f">
             <xsl:with-param name="schema">
-              <xsl:for-each select="exsl:node-set($content)/Wrapper">
+              <xsl:for-each select="exsl:node-set($content)/*">
                 <xsl:call-template name="make-compact-schema"/>
               </xsl:for-each>
             </xsl:with-param>
           </xsl:call-template>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:for-each select="exsl:node-set($content)/Wrapper">
+          <xsl:for-each select="exsl:node-set($content)/*">
             <xsl:apply-templates mode="literal"/>
           </xsl:for-each>
         </xsl:otherwise>
@@ -1293,6 +1303,7 @@
 	      <xsl:if test="not($cssFile = '')">
 		<link rel="stylesheet" type="text/css" href="{$cssFile}"/>
 	      </xsl:if>
+	      <xsl:call-template name="includeJavascript"/>
 	    </head>
 	    <body>
 	      <xsl:attribute name="onload">
