@@ -19,7 +19,7 @@ GetOptions(
     "b|binary" => \$BINARY,
 ) or exit(1);
 
-$URL = "http://$USER:$PASS\@localhost:8080/cocoon/servlet";
+$URL = "http://$USER:$PASS\@localhost:8080/cocoon/rest";
 $ua = LWP::UserAgent->new();
 if($REMOVE) {
     remove($REMOVE)
