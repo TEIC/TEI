@@ -246,19 +246,6 @@
 </xsl:template>
 
 <xsl:template name="predeclaredMacros">
-  <xsl:if test="@type='core'">
-    <xsl:call-template name="dtdComment">
-      <xsl:with-param name="text">
-	<xsl:text>Global pre-declared macros</xsl:text>
-      </xsl:with-param>
-    </xsl:call-template>
-    <xsl:for-each select="key('PredeclareAllMacros','1')">
-      <xsl:text>&#10;&lt;!ENTITY % </xsl:text>   
-      <xsl:value-of select="@ident"/>
-      <xsl:text> ''</xsl:text>
-      <xsl:text>&gt;&#10;</xsl:text>   
-    </xsl:for-each>
-  </xsl:if>
   <xsl:call-template name="dtdComment">
     <xsl:with-param name="text">
       <xsl:text>Start of pre-declared macros</xsl:text>
@@ -315,6 +302,20 @@
 </xsl:template>
   
 <xsl:template name="normalMacros">
+  <xsl:if test="@type='core'">
+    <xsl:call-template name="dtdComment">
+      <xsl:with-param name="text">
+	<xsl:text>Global pre-declared macros</xsl:text>
+      </xsl:with-param>
+    </xsl:call-template>
+    <xsl:for-each select="key('PredeclareAllMacros','1')">
+      <xsl:text>&#10;&lt;!ENTITY % </xsl:text>   
+      <xsl:value-of select="@ident"/>
+      <xsl:text> ''</xsl:text>
+      <xsl:text>&gt;&#10;</xsl:text>   
+    </xsl:for-each>
+  </xsl:if>
+
   <xsl:call-template name="dtdComment">
     <xsl:with-param name="text">
       <xsl:text>Start rest of  macro declarations</xsl:text>

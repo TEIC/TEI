@@ -149,9 +149,9 @@
   <xsl:template match="rng:ref">
     <xsl:choose>
       <xsl:when test="starts-with(@name,'mix.') and
-		      not(key('IDENTS',@name))">
-	<empty  xmlns="http://relaxng.org/ns/structure/1.0"/>	
-      </xsl:when>
+		      not(key('IDENTS',@name))"/>
+<!--	<empty  xmlns="http://relaxng.org/ns/structure/1.0"/>
+      </xsl:when>	-->
       <xsl:otherwise>
 	<xsl:copy>
 	  <xsl:attribute name="name">
