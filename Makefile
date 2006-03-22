@@ -1,5 +1,6 @@
 TEISERVER=http://tei.oucs.ox.ac.uk/Query/
 SOURCETREE=Source
+SUFFIX=odd
 PREFIX=/usr
 XSL=/usr/share/xml/tei/stylesheet
 XSLP4=/usr/share/xml/teip4/stylesheet
@@ -174,7 +175,11 @@ subset:
 	rm subset.xsl
 
 fascicule: subset 
-	cat fasc-head.xml `find $(SOURCETREE) -iname $(CHAP).odd` fasc-tail.xml > FASC-$(CHAP).xml
+	cp fasc-head.xml FASC-$(CHAP).xml
+	perl -p -i -e "s+\"fileents.dtd+\"$(SOURCETREE)/fileents.dtd+" FASC-$(CHAP).xml
+	perl -p -i -e "s+\"ents.dtd+\"$(SOURCETREE)/ents.dtd+" FASC-$(CHAP).xml
+	cat `find $(SOURCETREE) -iname $(CHAP).$(SUFFIX)`  >> FASC-$(CHAP).xml
+	cat fasc-tail.xml  >> FASC-$(CHAP).xml
 	export H=`pwd`; xmllint --noent    FASC-$(CHAP).xml | xsltproc \
 	-o FASC-$(CHAP)-Guidelines/index.html \
 	--stringparam localsource `pwd`/p5subset.xml \
@@ -191,6 +196,7 @@ fascicule: subset
 	xsltproc -o FASC-$(CHAP)-lite.xml  \
 	--stringparam localsource `pwd`/p5subset.xml \
 	--stringparam displayMode rnc \
+	--stringparam lang ${LANGUAGE} \
 	$(XSL)/odds/odd2lite.xsl FASC-$(CHAP).xml 
 	perl Utilities/cleanrnc.pl FASC-$(CHAP)-lite.xml | \
 	xsltproc  \
