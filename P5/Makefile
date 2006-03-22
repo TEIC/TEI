@@ -9,11 +9,6 @@ XSLP4=/usr/share/xml/teip4/stylesheet
 ROMAOPTS="--localsource=Source-driver.xml"
 DRIVER=Source-driver.xml
 LANGUAGE=en
-# permit the CHAP variable to be specified on the commandline in mixed case:
-# generate an uppercase version for the directory,
-override CHAP:=$(strip $(shell echo $(CHAP) | tr "[:lower:]" "[:upper:]"))
-# and a lowercase version for the filename.
-chap:=$(strip $(shell echo $(CHAP) | tr "[:upper:]" "[:lower:]"))
 
 .PHONY: convert dtds schemas html validate valid test split oddschema exampleschema fascicule clean dist
 
@@ -26,7 +21,9 @@ dtds: check
 	-rm DTD/*
 	# generate the DTDs
 	xmllint --noent   $(DRIVER) | \
-	xsltproc --stringparam outputDir DTD 	--stringparam TEIC true \
+	xsltproc --stringparam outputDir DTD 	\
+	--stringparam lang ${LANGUAGE} \
+	--stringparam TEIC true \
 	--stringparam verbose true ${XSL}/odds/odd2dtd.xsl -
 	for i in DTD/* ; do perl -i Utilities/cleandtd.pl $$i; done	
 	# I cannot be bothered to see why these don't work,
@@ -43,6 +40,7 @@ schemas:check
 	# generate the relaxNG schemas
 	xmllint --noent   $(DRIVER) | \
 	xsltproc --stringparam verbose true \
+	--stringparam lang ${LANGUAGE} \
 	--stringparam TEIC true \
 	${XSL}/odds/odd2relax.xsl -
 	# do the indentation better 
@@ -82,6 +80,7 @@ html:check subset
 	--stringparam localsource `pwd`/p5subset.xml \
 	--stringparam cssFile tei-print.css \
 	--stringparam displayMode rnc \
+	--stringparam verbose true \
 	--stringparam outputDir . \
 	--stringparam lang ${LANGUAGE} \
 	guidelines-print.xsl $(DRIVER)
@@ -175,7 +174,7 @@ subset:
 	rm subset.xsl
 
 fascicule: subset 
-	cat fasc-head.xml `find $(SOURCETREE)/$(CHAP) -name $(chap).odd` fasc-tail.xml > FASC-$(CHAP).xml
+	cat fasc-head.xml `find $(SOURCETREE) -iname $(CHAP).odd` fasc-tail.xml > FASC-$(CHAP).xml
 	export H=`pwd`; xmllint --noent    FASC-$(CHAP).xml | xsltproc \
 	-o FASC-$(CHAP)-Guidelines/index.html \
 	--stringparam localsource `pwd`/p5subset.xml \

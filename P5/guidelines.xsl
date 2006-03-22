@@ -1,4 +1,5 @@
 <xsl:stylesheet
+    xmlns="http://www.w3.org/1999/xhtml"
     xmlns:html="http://www.w3.org/1999/xhtml" 
     xmlns:xd="http://www.pnp-software.com/XSLTdoc"
     xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
