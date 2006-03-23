@@ -1,15 +1,15 @@
-TEISERVER=http://tei.oucs.ox.ac.uk/Query/
-SOURCETREE=Source
-SUFFIX=odd
+SUFFIX=xml
+LANGUAGE=en
 PREFIX=/usr
+TEISERVER=http://tei.oucs.ox.ac.uk/Query/
+SOURCETREE=Source/Guidelines/en
+ROMAOPTS="--localsource=Source/Guidelines/en/driver.xml"
+DRIVER=driver.xml
 XSL=/usr/share/xml/tei/stylesheet
 XSLP4=/usr/share/xml/teip4/stylesheet
 #XSL=../Stylesheets
 # alternativly, if you have not installed the Debian packages, uncomment the next line:
 # XSL=http://www.tei-c.org/stylesheet/release/xml/tei
-ROMAOPTS="--localsource=Source-driver.xml"
-DRIVER=Source-driver.xml
-LANGUAGE=en
 
 .PHONY: convert dtds schemas html validate valid test split oddschema exampleschema fascicule clean dist
 
