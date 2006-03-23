@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -7,11 +8,20 @@ $Author$
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="METDECL" usage="rec" ident="metDecl">
   <equiv/>
   <gloss/>
+  <gloss xml:lang="zh-tw">韻律宣告</gloss>
+  <gloss xml:lang="fr">Déclaration métrique</gloss>
   <desc>documents the notation employed to represent a metrical
   pattern when this is specified as the value of a <att>met</att>,
   <att>real</att>, or <att>rhyme</att> attribute on any structural
   element of a metrical text (e.g. <gi>lg</gi>, <gi>l</gi>, or
   <gi>seg</gi>).</desc>
+  <desc xml:lang="zh-tw">
+    在標記韻文所用到的結構性元素(例：<gi>行組</gi>、<gi>詩行</gi>、或<gi>強制分割</gi>)當中使用<att>格律</att>、<att>實行</att>、或<att>押韻</att>等屬性，來表示文章的韻律模式時，則在此解釋該屬性屬性值標記韻律模式的方法。</desc>
+  <desc xml:lang="fr"> L’élément Déclaration métrique <gi>metDecl</gi> décrit la méthode employée
+  pour noter un modèle métrique lorsque celui-ci est spécifié par les attributs <att>met
+  </att>, <att>real</att>, ou <att>rhyme</att>, qui s’appliquent à tout élément de la structure
+  d’un texte versifié (par exemple <gi>lg</gi>, <gi>l</gi>, ou <gi>seg</gi>).
+  </desc>
   <classes>
     <memberOf key="model.encodingPart"/>
     <memberOf key="att.declarable"/>
@@ -34,16 +44,18 @@ $Author$
       <desc>indicates whether the notation conveys the abstract
       metrical form, its actual prosodic realization, or the rhyme
       scheme, or some combination thereof.</desc>
+      <desc xml:lang="fr">indique si la notation traduit la forme métrique abstraite, sa réalisation
+      prosodique, le schéma de rime, ou une combinaison de ces différents éléments.</desc>
       <datatype>
-	<rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
-	  <rng:oneOrMore>
-	    <rng:choice>
-	      <rng:value>met</rng:value>
-	      <rng:value>real</rng:value>
-	      <rng:value>rhyme</rng:value>
-	    </rng:choice>
-	  </rng:oneOrMore>
-	</rng:list>
+        <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
+          <rng:oneOrMore>
+            <rng:choice>
+              <rng:value>met</rng:value>
+              <rng:value>real</rng:value>
+              <rng:value>rhyme</rng:value>
+            </rng:choice>
+          </rng:oneOrMore>
+        </rng:list>
       </datatype>
       <defaultVal>met real</defaultVal>
       <valDesc>One or more of the three attribute names
@@ -59,22 +71,29 @@ $Author$
         information; if not otherwise documented, the rhyme scheme
         notation defaults to the traditional <q>abab</q> notation.</p>
       </remarks>
+      <remarks xml:lang="fr">
+        <p>Par défaut, l'élément <gi>metDecl</gi> documente la notation utilisée pour le modèle métrique et sa réalisation. Il peut aussi être utilisé pour la notation du schéma de rime ; s'il n'est pas documenté d'une autre manière, la notation du schéma de rime pourra l'être par défaut sous la forme traditionnelle <q>abab</q>.
+        </p>
+      </remarks>
     </attDef>
     <attDef ident="pattern" usage="opt">
-	<equiv/>
-	<desc>specifies a regular expression defining any value that
+      <equiv/>
+      <desc>specifies a regular expression defining any value that
 	is legal for this notation.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <desc xml:lang="fr">indique une expression régulière définissant toute valeur permise dans cette notation.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
       <valDesc>the value must be a valid regular expression per the
       World Wide Web Consortium's <title>XML Schema Part 2: Datatypes
-      Second Edition</title>, <ref
-      target="http://www.w3.org/TR/xmlschema-2/#regexs">Appendix
+      Second Edition</title>, <ref target="http://www.w3.org/TR/xmlschema-2/#regexs">Appendix
       F</ref></valDesc>
       <remarks/>
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <metDecl xml:id="ip" pattern="((SU|US)USUSUSUS/)">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <metDecl xml:id="ip" pattern="((SU|US)USUSUSUS/)">
         <metSym value="S">stressed syllable</metSym>
         <metSym value="U">unstressed syllable</metSym>
         <metSym value="/">metrical line boundary</metSym>
@@ -87,6 +106,16 @@ $Author$
     order) to each metrical line can be expressed using this
     notation.</p>
   </exemplum>
+  <exemplum xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <metDecl xml:id="ip-fr" pattern="((SU|US)USUSUSUS/)">
+        <metSym value="S">syllabe accentuée</metSym>
+        <metSym value="U">syllabe non accentuée</metSym>
+        <metSym value="/">frontière de vers métrique</metSym>
+      </metDecl>
+    </egXML>
+    <p>Cet exemple s'entend dans un cas beaucoup plus restreint dont l'exemple typique est le pentamètre iambique shakespearien. Seuls les modèles métriques contenant exactement dix syllabes, alternativement accentuées ou non accentuées, (à l'exception des deux premières qui peuvent être l'une ou l'autre) à chaque vers peuvent être exprimés en utilisant cette notation.</p>
+  </exemplum>
   <remarks>
     <p rend="dataDesc">contains either a sequence of <gi>metSym</gi>
     elements or paragraphs. If one <gi>metSym</gi> is defined, then
@@ -95,6 +124,11 @@ $Author$
     <p>The encoder may choose whether to define the notation formally
     or informally. However, the two methods may not be mixed.</p>
     <p>Only usable within the header if the verse base is enabled.</p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p rend="dataDesc">contient ou une suite d'éléments <gi>metSym</gi> ou des paragraphes. Si un seul élément <gi>metSym</gi> est défini, tous les codes apparaissant dans l'attribut <att>pattern</att> doivent être documentés, si ce dernier est renseigné.</p>
+    <p>L'encodeur peut choisir de définir la notation formellement ou non. Toutefois, les deux méthodes ne peuvent être combinées.</p>
+    <p>Ne peut être utilisé dans l'en-tête que si le jeu d'éléments pour la poésie est activé.</p>
   </remarks>
   <listRef>
     <ptr target="#HDMN"/>

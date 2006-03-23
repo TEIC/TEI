@@ -1,15 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
 $Date$
-$Author$
+$SLuthor: rahtz $
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="TEIHEAD" usage="req" ident="teiHeader">
-<equiv/>
-<gloss>TEI Header</gloss>
-<desc>supplies the descriptive and declarative information making
+  <equiv/>
+  <gloss>TEI Header</gloss>
+  <gloss xml:lang="zh-tw">tei標頭</gloss>
+  <gloss xml:lang="fr">En-tête TEI</gloss>
+  <desc>supplies the descriptive and declarative information making
 	up an electronic title page prefixed to every TEI-conformant
 	text.</desc>
+  <desc xml:lang="zh-tw">在所有符合TEI標準的文本起始的電子題名頁當中提供敘述性以及宣告性的資訊。</desc>
+  <desc xml:lang="fr">L'élément En-tête TEI <gi>TeiHeader</gi> fournit les informations descriptives et déclaratives précédant chaque texte conforme à la TEI et qui permettent de constituer une page de titre électronique.</desc>
   <content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:ref name="fileDesc"/>
@@ -23,18 +28,23 @@ $Author$
   </content>
   <attList>
     <attDef ident="type" usage="opt">
-	<equiv/>
-	<desc>specifies the kind of document to which the header is attached.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <equiv/>
+      <desc>specifies the kind of document to which the header is attached.</desc>
+      <desc xml:lang="fr">Spécifie le type de document auquel l'en-tête se rapporte.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
       <defaultVal>text</defaultVal>
       <valList type="open">
         <valItem ident="text">
           <equiv/>
           <gloss>the header is attached to a single text.</gloss>
+          <gloss xml:lang="fr">L'en-tête se rapporte à un texte isolé.</gloss>
         </valItem>
         <valItem ident="corpus">
           <equiv/>
           <gloss>the header is attached to a corpus.</gloss>
+          <gloss xml:lang="fr">L'en-tête se rapporte à un corpus.</gloss>
         </valItem>
       </valList>
     </attDef>
@@ -75,11 +85,12 @@ $Author$
 -->
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <teiHeader>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <teiHeader>
         <fileDesc>
           <titleStmt>
             <title>Shakespeare: the first folio (1623) in electronic form</title>
-            <author>Shakespeare, William (1564&#x2013;1616)</author>
+            <author>Shakespeare, William (1564–1616)</author>
             <respStmt>
               <resp>Originally prepared by</resp>
               <name>Trevor Howard-Hill</name>
@@ -122,17 +133,11 @@ $Author$
             </normalization>
           </editorialDecl>
           <refsDecl xml:id="ASLREF">
-	    <cRefPattern matchPattern="(\S+) ([^.]+)\.(.*)"
-			 replacementPattern="#xpath(//div1[@n='$1']/div2/[@n='$2']//lb[@n='$3'])">
-	      <p>A reference is created by assembling the following,
+            <cRefPattern matchPattern="(\S+) ([^.]+)\.(.*)" replacementPattern="#xpath(//div1[@n='$1']/div2/[@n='$2']//lb[@n='$3'])">
+              <p>A reference is created by assembling the following,
 	      in the reverse order as that listed here:
-	      <list>
-		<item>the <att>n</att> value of the preceding <gi>lb</gi></item>
-		<item>a period</item>
-		<item>the <att>n</att> value of the ancestor <gi>div2</gi></item>
-		<item>a space</item>
-		<item>the <att>n</att> value of the parent <gi>div1</gi></item>
-	      </list></p></cRefPattern>
+	      <list><item>the <att>n</att> value of the preceding <gi>lb</gi></item><item>a period</item><item>the <att>n</att> value of the ancestor <gi>div2</gi></item><item>a space</item><item>the <att>n</att> value of the parent <gi>div1</gi></item></list></p>
+            </cRefPattern>
           </refsDecl>
         </encodingDesc>
         <revisionDesc>
@@ -144,10 +149,75 @@ $Author$
       </teiHeader>
     </egXML>
   </exemplum>
+  <exemplum xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <teiHeader>
+        <fileDesc>
+          <titleStmt>
+            <title>Shakespeare: the first folio (1623) sous forme électronique</title>
+            <author>Shakespeare, William (1564–1616)</author>
+            <respStmt>
+              <resp>Préparé par</resp>
+              <name>Trevor Howard-Hill</name>
+            </respStmt>
+            <respStmt>
+              <resp>Révisé et édité par</resp>
+              <name>Christine Avern-Carr</name>
+            </respStmt>
+          </titleStmt>
+          <publicationStmt>
+            <distributor>Oxford Text Archive</distributor>
+            <address>
+              <addrLine>13 Banbury Road, Oxford OX2 6NN, UK</addrLine>
+            </address>
+            <idno type="OTA">119</idno>
+            <availability>
+              <p>Disponible gratuitement à des fins non commerciales.</p>
+            </availability>
+            <date value="1968">1968</date>
+          </publicationStmt>
+          <sourceDesc>
+            <bibl>The first folio of Shakespeare, préparé par Charlton Hinman
+		(The Norton Facsimile, 1968)</bibl>
+          </sourceDesc>
+        </fileDesc>
+        <encodingDesc>
+          <projectDesc>
+            <p>Préparé pour la production d'une collection de concordances old-spelling en 1968, ce texte a été profondément relu et révisé pour l'édition du new Oxford
+		Shakespeare (Wells and Taylor, 1989).</p>
+          </projectDesc>
+          <editorialDecl>
+            <correction>
+              <p>Les caractères bloqués sont corrigés sans commentaire.</p>
+            </correction>
+            <normalization>
+              <p>L'orthographe et la typographie originales sont conservées, à l'exception des s longs et des ligatures qui ne sont pas encodées.</p>
+            </normalization>
+          </editorialDecl>
+          <refsDecl xml:id="ASLREF-FR">
+            <cRefPattern matchPattern="(\S+) ([^.]+)\.(.*)" replacementPattern="#xpath(//div1[@n='$1']/div2/[@n='$2']//lb[@n='$3'])">
+              <p>Une référence est créée en assemblant les éléments suivants dans l'ordre inverse de la liste suivante :
+	      <list><item>la valeur de l'attribut <att>n</att> de l'élément <gi>lb</gi>précédent.</item><item>un point</item><item>la valeur de l'attribut <att>n</att> de l'élément <gi>div2</gi> ancêtre.</item><item>un espace</item><item>la valeur de l'attribut <att>n</att> de l'élément <gi>div1</gi> parent.</item></list></p>
+            </cRefPattern>
+          </refsDecl>
+        </encodingDesc>
+        <revisionDesc>
+          <list>
+            <item><date value="1989-04-12">12 avril 1989</date> Dernière vérification par CAC</item>
+            <item><date value="1989-03-01">1er mars 1989</date> Nouveau fichier par LB</item>
+          </list>
+        </revisionDesc>
+      </teiHeader>
+    </egXML>
+  </exemplum>
   <remarks>
     <p>One of the few elements unconditionally required in any
 TEI document.<!--; the header may also be exchanged as an independent
 document.--></p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p>Un des rares éléments obligatoires dans tout document TEI.
+<!--; l'en-tête peut aussi être échangé comme document isolé.--></p>
   </remarks>
   <listRef>
     <ptr target="#HD11"/>

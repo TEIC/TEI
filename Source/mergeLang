@@ -1,34 +1,32 @@
 #!/bin/sh
-rm -rf Guidelines/fr
-mkdir Guidelines/fr
-for i in Guidelines/en/*
+#for i in Guidelines/en/*
+#do
+# X=`basename $i`
+# (cd Guidelines/fr; ln -s ../en/$X $X)
+#done
+#rm Guidelines/fr/HD.xml
+#mv french/hd.odd Guidelines/fr/HD.xml
+#for i in Guidelines/fr/HD.xml
+#do
+# sed -f ents.sed $i > tmp
+# mv tmp $i
+#done
+
+for i in french/*.odd
 do
- X=`basename $i`
- (cd Guidelines/fr; ln -s ../en/$X $X)
-done
-rm Guidelines/fr/HD.xml
-cp ../french/hd.odd Guidelines/fr/HD.xml
-for i in Guidelines/fr/HD.xml
-do
- sed -f ents.sed $i > tmp
- mv tmp $i
+ N=`xsltproc getident.xsl $i`
+ echo french for $i to $N
+    xsltproc --stringparam newLang fr --stringparam newFile $i \
+    mergeLang.xsl Guidelines/Odds/$N.xml \
+	| xmllint --format --encode utf-8 - > tmp
+    mv tmp Guidelines/Odds/$N.xml
 done
 
-for i in `ls HD/*.odd | sed 's/HD.hd.odd//'`
+for i in chinese/*.odd
 do
- X=`basename $i`
  N=`xsltproc getident.xsl $i`
- if test -f ../french/$X
- then
- echo french for $i
-    xsltproc --stringparam newLang fr --stringparam newFile ../french/$X \
-    mergeLang.xsl $i | xmllint --format --encode utf-8 - > Guidelines/Odds/$N.xml
- fi
- if test -f ../chinese/$X
- then
- echo chinese for $i
-    xsltproc --stringparam newLang zh-tw --stringparam newFile ../chinese/$X \
+ echo chinese for $i to $N
+    xsltproc --stringparam newLang zh-tw --stringparam newFile $i \
     mergeLang.xsl Guidelines/Odds/$N.xml | xmllint --format --encode utf-8 - > tmp
     mv tmp Guidelines/Odds/$N.xml
- fi
 done
