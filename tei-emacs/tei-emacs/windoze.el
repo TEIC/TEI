@@ -64,7 +64,4 @@
 
 (setq w32-enable-synthesized-fonts t)
 
-;; load cua-mode for Windows peeps
-(cua-mode)
-
 (message "done loading windoze")

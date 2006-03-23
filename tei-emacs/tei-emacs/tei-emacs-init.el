@@ -124,11 +124,3 @@
 ))
 
 
-;; initial window
-(if (memq window-system '(x w32))
- (progn
-   (set-frame-height (selected-frame) 40)      
-   (set-frame-width (selected-frame) 100)
-   (require 'color-theme)
-	))
-
