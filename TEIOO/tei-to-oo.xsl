@@ -30,32 +30,32 @@
 #
 #
 -->
-<xsl:stylesheet 
+<xsl:stylesheet
     version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0" 
-    xmlns:dc="http://purl.org/dc/elements/1.1/" 
-    xmlns:dom="http://www.w3.org/2001/xml-events" 
-    xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0" 
-    xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" 
-    xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" 
-    xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0" 
-    xmlns:math="http://www.w3.org/1998/Math/MathML" 
-    xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0" 
-    xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0" 
-    xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" 
-    xmlns:ooo="http://openoffice.org/2004/office" 
-    xmlns:oooc="http://openoffice.org/2004/calc" 
-    xmlns:ooow="http://openoffice.org/2004/writer" 
-    xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0" 
-    xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" 
-    xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" 
-    xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" 
-    xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" 
-    xmlns:xforms="http://www.w3.org/2002/xforms" 
-    xmlns:xlink="http://www.w3.org/1999/xlink" 
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:dom="http://www.w3.org/2001/xml-events"
+    xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0"
+    xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0"
+    xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"
+    xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0"
+    xmlns:math="http://www.w3.org/1998/Math/MathML"
+    xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0"
+    xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0"
+    xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
+    xmlns:ooo="http://openoffice.org/2004/office"
+    xmlns:oooc="http://openoffice.org/2004/calc"
+    xmlns:ooow="http://openoffice.org/2004/writer"
+    xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0"
+    xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0"
+    xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0"
+    xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0"
+    xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
+    xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     office:version="1.0"
     >
 
@@ -63,9 +63,9 @@
 
   <xsl:decimal-format name="staff" digit="D"/>
   <xsl:variable name="doc_type">TEI.2</xsl:variable>
-  
+
   <xsl:key name='IDS' match="*[@id]" use="@id"/>
-  
+
   <xsl:template match="/">
     <office:document>
       <office:meta>
@@ -102,7 +102,7 @@
       </office:body>
     </office:document>
   </xsl:template>
-  
+
   <xsl:template match="TEI.2">
     <xsl:apply-templates select="text"/>
   </xsl:template>
@@ -127,8 +127,8 @@
       </xsl:for-each>
     </text:variable-decls>
   </xsl:template>
-  
-  
+
+
   <xsl:template match="entity">
     <xsl:variable name="entname">
       <xsl:value-of select="@name"/>
@@ -161,8 +161,8 @@
     </xsl:choose>
   </xsl:template>
   <!-- table start -->
-  
-  
+
+
   <xsl:template match="table">
     <xsl:call-template name="startHook"/>
     <xsl:variable name="tablenum">
@@ -171,10 +171,10 @@
 	<xsl:otherwise>table<xsl:number level="any"/></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <table:table 
+    <table:table
 	table:name="{$tablenum}"
 	table:style-name="Table1">
-      <table:table-column 
+      <table:table-column
 	  table:style-name="Table1.col1">
 	<xsl:attribute name="table:number-columns-repeated">
 	  <xsl:value-of select="count(row[1]/cell)"/>
@@ -189,8 +189,8 @@
     </xsl:if>
     <xsl:call-template name="endHook"/>
   </xsl:template>
-  
-  
+
+
   <xsl:template match="row[@role='label']">
     <table:table-header-rows>
       <table:table-row>
@@ -198,15 +198,15 @@
       </table:table-row>
     </table:table-header-rows>
   </xsl:template>
-  
-  
+
+
   <xsl:template match="row">
     <table:table-row>
       <xsl:apply-templates/>
     </table:table-row>
   </xsl:template>
-  
-  
+
+
   <xsl:template match="cell">
     <table:table-cell>
       <xsl:choose>
@@ -243,8 +243,8 @@
       </xsl:choose>
     </table:table-cell>
   </xsl:template>
-  
-  
+
+
   <xsl:template match="head">
     <xsl:choose>
       <xsl:when test="parent::figure"/>
@@ -271,13 +271,13 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
-  
-  
+
+
+
   <xsl:template match="author">
     <xsl:apply-templates/>
   </xsl:template>
-  
+
   <xsl:template match="p">
     <text:p>
       <xsl:choose>
@@ -300,8 +300,8 @@
       <xsl:apply-templates/>
     </text:p>
   </xsl:template>
-  
-  
+
+
   <xsl:template match="div">
     <xsl:variable name="depth">
       <xsl:value-of select="count(ancestor::div)"/>
@@ -318,7 +318,7 @@
     </text:h>
     <xsl:apply-templates/>
   </xsl:template>
-  
+
   <xsl:template match="div0|div1|div2|div3|div4|div5">
     <xsl:variable name="depth">
       <xsl:value-of select="substring-after(name(.),'div')"/>
@@ -335,7 +335,7 @@
     </text:h>
     <xsl:apply-templates/>
   </xsl:template>
-  
+
   <xsl:template match="figure">
     <xsl:variable name="id">
       <xsl:choose>
@@ -347,24 +347,24 @@
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    
+
     <xsl:call-template name="startHook"/>
     <text:p text:style-name="Standard">
       <xsl:call-template name="test.id"/>
-      <draw:image 
-	  draw:style-name="fr3" 
-	  draw:name="{$id}" 
-	  svg:x="0inch" 
-	  svg:y="0inch" 
-	  draw:z-index="3" 
-	  xlink:type="simple" 
+      <draw:image
+	  draw:style-name="fr3"
+	  draw:name="{$id}"
+	  svg:x="0inch"
+	  svg:y="0inch"
+	  draw:z-index="3"
+	  xlink:type="simple"
 	  text:anchor-type="as-char"
-	  xlink:show="embed" 
+	  xlink:show="embed"
 	  xlink:actuate="onLoad" >
 	<xsl:attribute name="xlink:href">
 	  <xsl:choose>
 	    <xsl:when test="@url|@file">
-	      <xsl:value-of select="@url|@file"/>   
+	      <xsl:value-of select="@url|@file"/>
 	    </xsl:when>
 	    <xsl:when test="@entity">
 	      <xsl:value-of select="unparsed-entity-uri(@entity)"/>
@@ -412,80 +412,80 @@
       </text:p>
     </xsl:if>
     <xsl:call-template name="endHook"/>
-    
+
   </xsl:template>
-  
+
   <xsl:template match="list">
     <xsl:call-template name="startHook"/>
     <xsl:if test="head">
       <text:p><xsl:apply-templates select="head" mode="show"/></text:p>
     </xsl:if>
-    <text:unordered-list text:style-name="Unordered List">
+    <text:list text:style-name="L3">
       <xsl:apply-templates/>
-    </text:unordered-list>
+    </text:list>
     <xsl:call-template name="endHook"/>
   </xsl:template>
-  
-  
+
+
   <xsl:template match="list[@type='unordered']">
     <xsl:call-template name="startHook"/>
-    <text:unordered-list text:style-name="Unordered List">
+    <text:list text:style-name="L3">
       <xsl:apply-templates/>
-    </text:unordered-list>
+    </text:list>
     <xsl:call-template name="endHook"/>
   </xsl:template>
-  
-  
+
+
   <xsl:template match="list[@type='ordered']">
     <xsl:call-template name="startHook"/>
-    <text:ordered-list text:style-name="Ordered List">
+    <text:list text:style-name="L2">
       <xsl:apply-templates/>
-    </text:ordered-list>
+    </text:list>
     <xsl:call-template name="endHook"/>
   </xsl:template>
-  
+
   <xsl:template match="list[@type='gloss']">
     <xsl:call-template name="startHook"/>
     <xsl:apply-templates/>
     <xsl:call-template name="endHook"/>
   </xsl:template>
-  
+
   <xsl:template match="list[@type='gloss']/item">
     <text:p text:style-name="List Contents">
       <xsl:apply-templates/>
     </text:p>
   </xsl:template>
-  
+
   <xsl:template match="list[@type='gloss']/label">
     <text:p text:style-name="List Heading">
       <xsl:apply-templates/>
     </text:p>
   </xsl:template>
-  
+
   <xsl:template name="startHook">
     <xsl:if test="parent::p">
       <xsl:text disable-output-escaping="yes">&lt;/text:p&gt;</xsl:text>
     </xsl:if>
   </xsl:template>
-  
+
   <xsl:template name="endHook">
     <xsl:if test="parent::p">
       <xsl:text disable-output-escaping="yes">&lt;text:p&gt;</xsl:text>
     </xsl:if>
   </xsl:template>
-  
-  
-  
+
+
+
   <xsl:template match="item/p">
     <xsl:apply-templates/>
   </xsl:template>
-  
-  
+
+
   <xsl:template match="item">
     <text:list-item>
       <xsl:choose>
 	<xsl:when test="list">
-	  <xsl:apply-templates/>              
+	  <xsl:apply-templates/>
 	</xsl:when>
 	<xsl:otherwise>
 	  <text:p>
@@ -495,14 +495,14 @@
       </xsl:choose>
     </text:list-item>
   </xsl:template>
-  
-  
+
+
   <xsl:template match="emph">
     <text:span text:style-name="Emphasis">
       <xsl:apply-templates/>
     </text:span>
   </xsl:template>
-  
+
   <xsl:template match="q">
     <text:span text:style-name="q">
       <xsl:text>&#x2018;</xsl:text>
@@ -510,8 +510,8 @@
       <xsl:text>&#x2019;</xsl:text>
     </text:span>
   </xsl:template>
-  
-  
+
+
   <xsl:template match="note[@place='foot']">
     <text:footnote-citation>
       <xsl:number level="any" count="note[@place='foot']"/>
@@ -524,7 +524,7 @@
       </text:footnote-body>
     </text:footnote>
   </xsl:template>
-  
+
   <xsl:template match="note[@place='end']">
     <text:endnote-citation>
       <xsl:number format="i" level="any" count="note[@place='end']"/>
@@ -537,14 +537,14 @@
       </text:endnote-body>
     </text:endnote>
   </xsl:template>
-  
-  
+
+
   <xsl:template match="ref">
     <text:a xlink:type="simple" xlink:href="#{@target}">
       <xsl:apply-templates/>
     </text:a>
   </xsl:template>
-  
+
   <xsl:template match="ptr">
     <text:a xlink:type="simple" xlink:href="#{@target}">
       <xsl:for-each select="key('IDS',@target)">
@@ -552,36 +552,36 @@
       </xsl:for-each>
     </text:a>
   </xsl:template>
-  
+
   <xsl:template match="table|figure|item" mode="crossref">
     <xsl:number level="any"/>
   </xsl:template>
-  
+
   <xsl:template match="div" mode="crossref">
-    <xsl:number format="1.1.1.1.1" 
+    <xsl:number format="1.1.1.1.1"
 		level="multiple" count="div"/>
   </xsl:template>
-  
+
   <xsl:template match="xref">
     <text:a xlink:type="simple" xlink:href="{@url}">
       <xsl:apply-templates/>
     </text:a>
   </xsl:template>
-  
+
   <xsl:template match="xptr">
     <text:a xlink:type="simple" xlink:href="{@url}">
       <xsl:value-of select="@url"/>
     </text:a>
   </xsl:template>
-  
-  
+
+
   <xsl:template name="test.id">
     <xsl:if test="@id">
       <text:bookmark text:name="{@id}"/>
     </xsl:if>
   </xsl:template>
-  
-  
+
+
   <xsl:template match="note">
     <office:annotation>
       <text:p>
@@ -589,8 +589,8 @@
       </text:p>
     </office:annotation>
   </xsl:template>
-  
-  
+
+
   <xsl:template match="hi">
     <text:span>
       <xsl:attribute name="text:style-name">
@@ -624,14 +624,14 @@
       <xsl:apply-templates/>
     </text:span>
   </xsl:template>
-  
+
   <xsl:template match="date">
     <text:span text:style-name="{name(.)}">
       <xsl:apply-templates/>
     </text:span>
   </xsl:template>
-  
-  
+
+
   <xsl:template match="eg">
     <xsl:call-template name="startHook"/>
     <xsl:call-template name="Literal">
@@ -641,47 +641,47 @@
     </xsl:call-template>
     <xsl:call-template name="endHook"/>
   </xsl:template>
-  
+
   <!-- safest to drop comments entirely, I think -->
   <xsl:template match="comment()"/>
-  
+
   <xsl:template match="head" mode="show">
     <xsl:apply-templates/>
   </xsl:template>
-  
+
   <xsl:template match="lb">
     <text:line-break/>
   </xsl:template>
-  
+
   <xsl:template name="checkunit">
     <xsl:param name="dim"/>
     <xsl:if test="contains($dim,'in')">
       <xsl:text>ch</xsl:text>
     </xsl:if>
   </xsl:template>
-  
+
   <!-- curiously, no apparent markup for a page break -->
   <xsl:template match="pb"/>
-  
+
   <xsl:template match="lg|bibl|signed">
     <text:p text:style-name="{name(.)}">
       <xsl:apply-templates/>
     </text:p>
   </xsl:template>
-  
+
   <xsl:template match="l">
     <text:span text:style-name="l">
-      <xsl:apply-templates/>  
+      <xsl:apply-templates/>
       <text:line-break/>
     </text:span>
   </xsl:template>
-  
+
   <xsl:template name="Literal">
     <xsl:param name="Text"/>
     <xsl:choose>
       <xsl:when test="contains($Text,'&#10;')">
-	<text:p text:style-name="Preformatted Text">      
-	  <xsl:value-of 
+	<text:p text:style-name="Preformatted Text">
+	  <xsl:value-of
 	      select="translate(substring-before($Text,'&#10;'),' ','&#160;')"/>
 	</text:p>
 	<xsl:call-template name="Literal">
@@ -691,7 +691,7 @@
 	</xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-	<text:p text:style-name="Preformatted Text">      
+	<text:p text:style-name="Preformatted Text">
 	  <xsl:value-of select="translate($Text,' ','&#160;')"/>
 	</text:p>
       </xsl:otherwise>

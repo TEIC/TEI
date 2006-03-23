@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<!--
  #  The Contents of this file are made available subject to the terms of
  # the GNU Lesser General Public License Version 2.1
 
@@ -30,39 +30,39 @@
  #
  #
 -->
-<xsl:stylesheet 
+<xsl:stylesheet
     version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0" 
-    xmlns:dc="http://purl.org/dc/elements/1.1/" 
-    xmlns:dom="http://www.w3.org/2001/xml-events" 
-    xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0" 
-    xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" 
-    xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" 
-    xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0" 
-    xmlns:math="http://www.w3.org/1998/Math/MathML" 
-    xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0" 
-    xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0" 
-    xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" 
-    xmlns:ooo="http://openoffice.org/2004/office" 
-    xmlns:oooc="http://openoffice.org/2004/calc" 
-    xmlns:ooow="http://openoffice.org/2004/writer" 
-    xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0" 
-    xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" 
-    xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" 
-    xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" 
-    xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" 
-    xmlns:xforms="http://www.w3.org/2002/xforms" 
-    xmlns:xlink="http://www.w3.org/1999/xlink" 
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:dom="http://www.w3.org/2001/xml-events"
+    xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0"
+    xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0"
+    xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"
+    xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0"
+    xmlns:math="http://www.w3.org/1998/Math/MathML"
+    xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0"
+    xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0"
+    xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
+    xmlns:ooo="http://openoffice.org/2004/office"
+    xmlns:oooc="http://openoffice.org/2004/calc"
+    xmlns:ooow="http://openoffice.org/2004/writer"
+    xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0"
+    xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0"
+    xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0"
+    xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0"
+    xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
+    xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     office:version="1.0"
     exclude-result-prefixes="office style text table draw fo xlink dc meta
 			 number svg chart dr3d math form script ooo ooow oooc dom xforms xsd xsi"
 >
 
   <xsl:key name="headchildren" match="text:p | text:alphabetical-index
-| table:table | text:span | text:ordered-list | office:annotation |
+| table:table | text:span | office:annotation |
 text:list | text:footnote | text:a | text:list-item |
 draw:plugin | draw:text-box | text:footnote-body | text:section"
 use="generate-id((..|preceding-sibling::text:h[@text:outline-level='1']|preceding-sibling::text:h[@text:outline-level='2']|preceding-sibling::text:h[@text:outline-level='3']|preceding-sibling::text:h[@text:outline-level='4']|preceding-sibling::text:h[@text:outline-level='5'])[last()])"/>
@@ -91,7 +91,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
 
   <xsl:key name="Headings" match="text:h" use="text:outline-level"/>
 
-  <xsl:param name="META" select="/"/> 
+  <xsl:param name="META" select="/"/>
 
   <xsl:output encoding="utf-8" indent="yes"/>
 
@@ -111,7 +111,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
     </xsl:choose>
   </xsl:variable>
 
-  
+
 <xsl:template match="/office:document">
     <xsl:for-each select="descendant::text:variable-decl">
       <xsl:variable name="name">
@@ -135,7 +135,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
     </TEI.2>
   </xsl:template>
 
-  
+
 <xsl:template match="text:variable-set|text:variable-get">
     <xsl:choose>
       <xsl:when test="contains(@text:style-name,'entitydecl')">
@@ -208,7 +208,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
 </xsl:template>
 
 
-  
+
 <xsl:template match="/office:document/office:body">
   <text>
     <xsl:apply-templates/>
@@ -272,7 +272,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
     </xsl:choose>
   </xsl:template>
 
-  
+
 <xsl:template match="text:h[@text:outline-level='1']">
     <xsl:choose>
       <xsl:when test=".='Abstract'">
@@ -290,7 +290,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
     </xsl:choose>
   </xsl:template>
 
-  
+
 <xsl:template match="text:h[@text:outline-level='2'] | text:h[@text:outline-level='3']| text:h[@text:outline-level='4'] | text:h[@text:outline-level='5']">
     <xsl:variable name="level">
       <xsl:value-of select="@text:outline-level"/>
@@ -303,7 +303,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
   </xsl:if>
 </xsl:template>
 
-  
+
 <xsl:template name="make-section">
     <xsl:param name="current"/>
     <xsl:param name="prev"/>
@@ -330,7 +330,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
 	</xsl:variable>
 	<xsl:for-each select="key('headchildren', $this)">
 	  <xsl:if test="not(parent::text:h)">
-	    <xsl:apply-templates select="."/> 
+	    <xsl:apply-templates select="."/>
 	  </xsl:if>
 	</xsl:for-each>
 	<xsl:apply-templates select="key('children', generate-id())"/>
@@ -347,18 +347,18 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
     </xsl:comment>
   </xsl:template>
 
-  
+
 <xsl:template match="text:section[@text:style-name = 'ArticleInfo']/text:p[not(@text:style-name='XMLComment')]">
     <xsl:apply-templates/>
   </xsl:template>
 
-  
+
 <xsl:template match="text:p[@text:style-name='Document Title']">
     <title>
       <xsl:apply-templates/>
     </title>
   </xsl:template>
-  
+
 <xsl:template match="text:p[@text:style-name='Author']">
   <author><xsl:apply-templates/></author>
 </xsl:template>
@@ -372,7 +372,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
     <xsl:apply-templates/>
   </title>
 </xsl:template>
-  
+
 <xsl:template match="text:p[@text:style-name='Date']">
   <date>
       <xsl:apply-templates/>
@@ -409,8 +409,8 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
       <xsl:apply-templates/>
     </Output>
   </xsl:template>
-  
- 
+
+
 <xsl:template match="office:annotation/text:p">
     <note>
       <remark>
@@ -419,7 +419,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
     </note>
   </xsl:template>
 
-  
+
 <!-- normal paragraphs -->
 <xsl:template match="text:p">
     <xsl:choose>
@@ -446,20 +446,8 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
-<!-- lists -->  
-<xsl:template match="text:ordered-list">
-  <list type="bulleted">
-    <xsl:apply-templates/>
-  </list>
-</xsl:template>
 
-<xsl:template match="text:unordered-list">
-  <list type="unordered">
-    <xsl:apply-templates/>
-  </list>
-</xsl:template>
-
+<!-- lists -->
 <xsl:template match="text:list">
     <xsl:choose>
       <xsl:when test="@text:style-name='Var List'">
@@ -479,7 +467,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
+
 <xsl:template match="text:list-header">
   <head>
     <xsl:apply-templates/>
@@ -503,7 +491,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
   </xsl:choose>
 </xsl:template>
 
- 
+
 <xsl:template match="text:p[@text:style-name='VarList Item' or @text:style-name='List Contents']">
     <xsl:if test="not(preceding-sibling::text:p[@text:style-name='VarList Item'])">
       <xsl:text disable-output-escaping="yes">&lt;item&gt;</xsl:text>
@@ -514,7 +502,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
     </xsl:if>
   <xsl:variable name="next">
     <xsl:for-each select="following-sibling::text:p[1]">
-        <xsl:value-of select="@text:style-name"/>      
+        <xsl:value-of select="@text:style-name"/>
     </xsl:for-each>
   </xsl:variable>
 <xsl:choose>
@@ -528,11 +516,11 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
   </xsl:choose>
 
 </xsl:template>
-  
+
 <xsl:template match="text:p[@text:style-name='VarList Term' or @text:style-name='List Heading']">
   <xsl:variable name="prev">
     <xsl:for-each select="preceding-sibling::text:p[1]">
-        <xsl:value-of select="@text:style-name"/>      
+        <xsl:value-of select="@text:style-name"/>
     </xsl:for-each>
   </xsl:variable>
   <xsl:choose>
@@ -548,9 +536,9 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
       <xsl:apply-templates/>
     </label>
   </xsl:template>
-  
+
 <!-- inline -->
-  
+
 <xsl:template match="text:span">
   <xsl:variable name="Style">
     <xsl:value-of select="@text:style-name"/>
@@ -585,7 +573,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
         <q>
           <xsl:choose>
             <xsl:when test="starts-with(.,'&#x2018;')">
-               <xsl:value-of 
+               <xsl:value-of
 select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
             </xsl:when>
             <xsl:otherwise>
@@ -703,7 +691,7 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
    </xsl:otherwise>
  </xsl:choose>
 </xsl:template>
-  
+
 <!-- tables -->
 <xsl:template match="table:table">
  <table rend="frame">
@@ -722,7 +710,7 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
 
 </xsl:template>
 
-  
+
 <xsl:template name="generictable">
     <xsl:variable name="cells" select="count(descendant::table:table-cell)"/>
     <xsl:variable name="rows">
@@ -744,7 +732,7 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
 
     <xsl:apply-templates/>
   </xsl:template>
-  
+
 <xsl:template name="colspec">
     <xsl:param name="left"/>
     <xsl:if test="number($left &lt; ( table:table-column/@table:number-columns-repeated +2)  )">
@@ -761,21 +749,21 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
       </xsl:call-template>
     </xsl:if>
   </xsl:template>
-  
+
 <xsl:template match="table:table-column">
     <xsl:apply-templates/>
   </xsl:template>
-  
+
 <xsl:template match="table:table-header-rows">
     <xsl:apply-templates/>
 </xsl:template>
-  
+
 <xsl:template match="table:table-header-rows/table:table-row">
     <row role="label">
       <xsl:apply-templates/>
     </row>
   </xsl:template>
-  
+
 <xsl:template match="table:table/table:table-row">
     <row>
       <xsl:apply-templates/>
@@ -803,19 +791,19 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
       <xsl:apply-templates/>
   </cell>
 </xsl:template>
-  
-  
+
+
 <!-- notes -->
 <xsl:template match="text:note-citation"/>
-  
+
 <xsl:template match="text:note-body">
     <xsl:apply-templates/>
 </xsl:template>
-  
+
 <xsl:template match="text:note-body/text:p">
     <xsl:apply-templates/>
 </xsl:template>
-  
+
 <xsl:template match="text:note">
   <note >
     <xsl:choose>
@@ -827,13 +815,13 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
   </note>
 </xsl:template>
 
-<!-- drawing -->  
+<!-- drawing -->
 <xsl:template match="draw:plugin">
   <ptr target="{@xlink:href}" />
 </xsl:template>
 
 <xsl:template match="draw:text-box"/>
-  
+
 <xsl:template match="draw:image">
     <xsl:choose>
       <xsl:when test="parent::text:p[@text:style-name='Mediaobject']">
@@ -877,7 +865,7 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
 	<xsl:otherwise>
 	  <xref url="{@xlink:href}">
 	    <xsl:apply-templates/>
-	  </xref>        
+	  </xref>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:when>
@@ -889,7 +877,7 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
 	<xsl:otherwise>
 	  <xref url="{@xlink:href}">
 	    <xsl:apply-templates/>
-	  </xref>        
+	  </xref>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:when>
@@ -899,7 +887,7 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
         </ref>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:variable name="linkvar" 
+        <xsl:variable name="linkvar"
           select="substring-after(@xlink:href,'#')"/>
         <xsl:choose>
           <xsl:when test=".=$linkvar">
@@ -914,41 +902,41 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
+
 <xsl:template match="text:line-break">
   <xsl:if test="not(parent::text:span[@text:style-name='l'])">
     <lb/>
   </xsl:if>
 </xsl:template>
-  
+
 <xsl:template match="text:tab">
   <xsl:text>	</xsl:text>
 </xsl:template>
-  
+
 <xsl:template match="text:reference-ref">
     <ptr target="{@text:ref-name}"/>
   </xsl:template>
-  
+
 <xsl:template name="id.attribute">
     <xsl:if test="child::text:reference-mark-start">
       <xsl:attribute name="id">
         <xsl:value-of select="child::text:reference-mark-start/@text:style-name"/>
       </xsl:attribute>
     </xsl:if>
-<!-- Constraints imposed by OOo method of displaying 
+<!-- Constraints imposed by OOo method of displaying
 reference-ref text means that xreflabel and endterm are lost -->
   </xsl:template>
-  
+
 <xsl:template match="text:reference-mark-start"/>
-  
+
 <xsl:template match="text:reference-mark-end"/>
-  
+
 <xsl:template match="comment">
     <xsl:comment>
       <xsl:value-of select="."/>
     </xsl:comment>
   </xsl:template>
-  
+
 <xsl:template match="text:alphabetical-index-mark-start">
     <xsl:element name="indexterm">
       <xsl:attribute name="class">
@@ -969,7 +957,7 @@ reference-ref text means that xreflabel and endterm are lost -->
       </xsl:if>
     </xsl:element>
   </xsl:template>
-  
+
 <xsl:template match="text:alphabetical-index-mark-end">
     <xsl:element name="indexterm">
       <xsl:attribute name="startref">
@@ -980,7 +968,7 @@ reference-ref text means that xreflabel and endterm are lost -->
       </xsl:attribute>
     </xsl:element>
   </xsl:template>
-  
+
 <xsl:template match="text:alphabetical-index">
     <xsl:element name="index">
       <xsl:element name="title">
@@ -989,7 +977,7 @@ reference-ref text means that xreflabel and endterm are lost -->
       <xsl:apply-templates select="text:index-body"/>
     </xsl:element>
   </xsl:template>
-  
+
 <xsl:template match="text:index-body">
     <xsl:for-each select="text:p[@text:style-name = 'Index 1']">
       <xsl:element name="indexentry">
@@ -1007,34 +995,34 @@ reference-ref text means that xreflabel and endterm are lost -->
 <!--
 These seem to have no obvious translation
 -->
-  
+
 <xsl:template match="text:bookmark-start"/>
 
 <xsl:template match="text:bookmark-end"/>
-  
+
 <xsl:template match="text:bookmark"/>
-  
+
 <xsl:template match="text:endnotes-configuration"/>
-  
+
 <xsl:template match="text:file-name"/>
-  
+
 <xsl:template match="text:footnotes-configuration"/>
-  
+
 <xsl:template match="text:linenumbering-configuration"/>
-  
+
 <xsl:template match="text:list-level-style-bullet"/>
-  
+
 <xsl:template match="text:list-level-style-number"/>
-  
+
 <xsl:template match="text:list-style"/>
-  
+
 <xsl:template match="text:outline-level-style"/>
-  
+
 <xsl:template match="text:outline-style"/>
-  
+
 <xsl:template match="text:s"/>
 
-  
+
 <xsl:template match="text:*">
       [[[UNTRANSLATED <xsl:value-of select="name(.)"/>
     <xsl:apply-templates/>]]]
@@ -1042,22 +1030,22 @@ These seem to have no obvious translation
 
 
   <!-- sections of the OO format we don't need at present -->
-  
+
 <xsl:template match="office:automatic-styles"/>
-  
+
 <xsl:template match="office:font-decls"/>
-  
+
 <xsl:template match="office:meta"/>
-  
+
 <xsl:template match="office:script"/>
-  
+
 <xsl:template match="office:settings"/>
-  
+
 <xsl:template match="office:styles"/>
-  
+
 <xsl:template match="style:*"/>
 
-  
+
 <xsl:template match="dc:*">
   <xsl:apply-templates/>
 </xsl:template>
@@ -1065,13 +1053,13 @@ These seem to have no obvious translation
 <xsl:template match="meta:creation-date">
   <xsl:apply-templates/>
 </xsl:template>
-  
+
 <xsl:template match="meta:editing-cycles"/>
-  
+
 <xsl:template match="meta:editing-duration"/>
-  
+
 <xsl:template match="meta:generator"/>
-  
+
 <xsl:template match="meta:user-defined"/>
 
 <!--
