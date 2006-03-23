@@ -1,48 +1,11 @@
 #!/bin/sh
 mkdir -p Guidelines/Odds
 mkdir -p Guidelines/en
-cat >OldOdds<<EOF
-altname.odd
-biblpartphrase.odd
-cbgeseq.odd
-datatype.formula.odd
-datatype.ucs.odd
-digenxx.odd
-dimixxx.odd  
-drgenxx.odd
-drmixxx.odd
-lg1.odd
-lg2.odd
-lg3.odd
-lg4.odd
-lg5.odd
-mcrend.odd
-role.odd
-segmixxx.odd
-te-new.odd
-tei.data.names.odd
-tei.data.regexp.odd
-tei2.odd
-teifsd2.odd
-tsgenxx.odd
-tsmixxx.odd
-vegen.odd
-vegenxx.odd
-vemix.odd
-vemixxx.odd
-EOF
-# get rid of last lot
-rm Guidelines/Odds/*.xml
-rm Guidelines/en/*.xml
 
 # copy all ODD files
 for i in [A-Z]*/*.odd 
 do
- cp $i Guidelines/Odds
-done
-for i in `cat OldOdds`
-do
- rm Guidelines/Odds/$i
+ svn move $i Guidelines/Odds
 done
 
 # move chapter files
@@ -56,14 +19,14 @@ then
  lower=`echo $i | tr '[A-Z]' '[a-z]'`
  if test -f Guidelines/Odds/$lower.odd
  then
-   mv Guidelines/Odds/$lower.odd Guidelines/en/$i.xml
+   svn move Guidelines/Odds/$lower.odd Guidelines/en/$i.xml
    echo 's/&'$lower.odd';/\&'$i.xml';/' >> chaps.sed
    echo "<!ENTITY" $i.xml SYSTEM '"'$i.xml'">' \
         >> Guidelines/en/fileents.dtd
  fi
 fi
 done
-
+svn add Guidelines/en/fileents.dtd 
 
 # make entity file and rename ODD to XML by @ident
 for i in Guidelines/Odds/*.odd
@@ -74,9 +37,12 @@ do
         >> Guidelines/en/fileents.dtd
  echo 's/&'$X.odd';/\&'$N';/' >> ents.sed
  echo 's/&'$X';/\&'$N';/' >> ents.sed
- mv $i Guidelines/Odds/$N.xml
+ svn move $i Guidelines/Odds/$N.xml
 done
 echo 's/&ppartmsdesc.odd;/\&model.pPart.msdesc;/' >> ents.sed
+
+svn commit
+
 # now mangle chapter files
 for i in Guidelines/en/*.xml
 do
@@ -88,5 +54,6 @@ done
 sed -f chaps.sed ../Source-driver.xml >Guidelines/en/driver.xml
 cp ../ents.dtd Guidelines/en/ents.dtd
 
+svn add Guidelines/en/*
 
 #rm OldOdds chaps.sed ents.sed
