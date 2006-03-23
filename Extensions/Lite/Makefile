@@ -1,20 +1,16 @@
 PREFIX=/usr
-XSL=/usr/share/xml/tei/stylesheet
 TEISERVER=http://localhost/Query/
 
 schema:
-	roma --xsl=${XSL} --teiserver=${TEISERVER} --doc teilite.xml .
+	roma --localsource=../../P5/Source-driver.xml --dochtml teilite.xml .
 
-doc: schema
-	xsltproc --stringparam lookupDatabase false --stringparam cssFile /usr/share/xml/tei/stylesheet/teic/teic.css ${XSL}/odds/odd2html.xsl teilite.doc.xml 
-
-install: clean doc
+install: schema
 	mkdir -p ${PREFIX}/share/xml/tei/schema/relaxng/p5
 	mkdir -p ${PREFIX}/share/xml/tei/schema/dtd/p5
 	mkdir -p ${PREFIX}/share/xml/tei/schema/xsd/p5
 	mv teilite.rnc teilite.rng ${PREFIX}/share/xml/tei/schema/relaxng/p5
 	mv teilite.dtd ${PREFIX}/share/xml/tei/schema/dtd/p5
-	mv teilite.xsd xml.xsd ${PREFIX}/share/xml/tei/schema/xsd/p5
+	mv teilite.xsd ${PREFIX}/share/xml/tei/schema/xsd/p5
 	mkdir -p ${PREFIX}/share/doc/tei/Lite
 	mv Guidelines teilite.doc.xml ${PREFIX}/share/doc/tei/Lite
 
