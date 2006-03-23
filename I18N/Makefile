@@ -1,4 +1,3 @@
-Warning: No xauth data; using fake authentication data for X11 forwarding.
 S=/usr/share/xml/tei/stylesheet
 lang=es
 
