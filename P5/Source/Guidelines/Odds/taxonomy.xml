@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -5,20 +6,25 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="TAXONOMY" usage="opt" ident="taxonomy">
-<equiv/>
-<gloss>taxonomy</gloss>
-<desc>defines a typology used to classify texts either implicitly, by
+  <equiv/>
+  <gloss>taxonomy</gloss>
+  <gloss xml:lang="zh-tw">分類學法</gloss>
+  <gloss xml:lang="fr">Taxinomie</gloss>
+  <desc>defines a typology used to classify texts either implicitly, by
 means of a bibliographic citation, or explicitly by a structured
 taxonomy.</desc>
+  <desc xml:lang="zh-tw">定義文件分類的類型學，可以是潛在地以書目資料的方式，或是明確地以結構分類法的方式來分類。</desc>
+  <desc xml:lang="fr">L'élément Taxinomie <gi>taxonomy</gi> définit une typologie employée pour classer des textes soit implicitement au moyen d’une citation bibliographique, soit explicitement au moyen d’une taxinomie structurée.</desc>
   <content>
     <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:oneOrMore>
         <rng:ref name="category"/>
       </rng:oneOrMore>
       <rng:group>
-	<rng:group>	<!-- this group a hack for odd2dtd processing -->
-	  <rng:ref name="model.biblLike"/>
-	</rng:group>
+        <rng:group>
+<!-- this group a hack for odd2dtd processing -->
+          <rng:ref name="model.biblLike"/>
+        </rng:group>
         <rng:zeroOrMore>
           <rng:ref name="category"/>
         </rng:zeroOrMore>
@@ -26,7 +32,8 @@ taxonomy.</desc>
     </rng:choice>
   </content>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <taxonomy xml:id="tax.b">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <taxonomy xml:id="tax.b">
         <bibl>Brown Corpus</bibl>
         <category xml:id="tax.b.a">
           <catDesc>Press Reportage</catDesc>
