@@ -383,6 +383,11 @@
       <xsl:when test="@xml:lang=$lang">
 	<xsl:apply-templates/>
       </xsl:when>
+      <xsl:when test="not(@xml:lang) and
+	not(preceding-sibling::tei:desc) and
+	not(following-sibling::tei:desc)">
+	<xsl:apply-templates/>
+      </xsl:when>
     </xsl:choose>
   </xsl:template>
   
@@ -627,6 +632,13 @@
 	  <xsl:text>) </xsl:text>
 	</xsl:when>
 	<xsl:when test="@xml:lang=$lang">
+	  <xsl:text>(</xsl:text>
+	  <xsl:apply-templates/>
+	  <xsl:text>) </xsl:text>
+	</xsl:when>
+	<xsl:when test="not(@xml:lang) and
+			not(preceding-sibling::tei:gloss) and
+			not(following-sibling::tei:gloss)">
 	  <xsl:text>(</xsl:text>
 	  <xsl:apply-templates/>
 	  <xsl:text>) </xsl:text>
