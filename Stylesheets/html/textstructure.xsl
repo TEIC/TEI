@@ -1398,10 +1398,12 @@ $ID: requests a particular page
       <!-- body matter -->
       <xsl:for-each select="tei:body">
 	<div class="tocBody">
+	  <xsl:comment>start TOC</xsl:comment>
 	  <xsl:element name="{$tocContainerElement}">
 	    <xsl:attribute name="class">
 	      <xsl:text>tocContainer</xsl:text>
 	    </xsl:attribute>
+	    <xsl:comment>TOC components</xsl:comment>
 	    <xsl:call-template name="tocSection">
 	      <xsl:with-param name="id" select="$thisOne"/>
 	      <xsl:with-param name="style" select="$style"/>
@@ -1872,9 +1874,11 @@ $ID: requests a particular page
   <div class="column-wrapper">
     <div id="lh-col">
       <div id="lh-col-top">
+	<xsl:comment>top of left-hand column</xsl:comment>
 	<xsl:call-template name="lh-col-top"/>
       </div>
       <div id="lh-col-bottom">
+	<xsl:comment>bottom of left-hand column</xsl:comment>
 	<xsl:call-template name="lh-col-bottom">
 	  <xsl:with-param name="currentID" select="$currentID"/>
 	</xsl:call-template>
@@ -1883,9 +1887,11 @@ $ID: requests a particular page
     <div id="rh-col">
       <a name="rh-column"/>
       <div id="rh-col-top">
+	<xsl:comment>top of right-hand column</xsl:comment>
 	<xsl:call-template name="rh-col-top"/>
       </div>
       <div id="rh-col-bottom">
+	<xsl:comment>bottom of right-hand column</xsl:comment>
 	<xsl:call-template name="rh-col-bottom">
 	  <xsl:with-param name="currentID" select="$currentID"/>
 	</xsl:call-template>
