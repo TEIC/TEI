@@ -40,7 +40,11 @@ return tei:atts($a)
 {
 for $class in $c/tei:classes/tei:memberOf
 return
-for $ac in collection("/db/TEI")//tei:classSpec[@ident=$class/@key or @ident='att.global']//tei:attDef
+for $ac in collection("/db/TEI")//tei:classSpec[@ident=$class/@key]//tei:attDef
+return tei:atts($ac)
+}
+{
+for $ac in collection("/db/TEI")//tei:classSpec[@ident='att.global']//tei:attDef
 return tei:atts($ac)
 }
 </Element>
