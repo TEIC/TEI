@@ -276,7 +276,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
   <xsl:param name="text"/>
   <xsl:param name="startnewline">false</xsl:param>
   <xsl:param name="autowrap">true</xsl:param>
-     <pre class="eg">
+     <div class="pre_eg">
         <xsl:if test="$startnewline='true'">
          <xsl:text>&#10;</xsl:text>
        </xsl:if>
@@ -290,7 +290,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
                 mode="normalline"/>
      </xsl:otherwise>
    </xsl:choose>
- </pre>
+     </div>
 </xsl:template>
 
 </xsl:stylesheet>

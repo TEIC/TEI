@@ -2469,7 +2469,7 @@ $ID: requests a particular page
   </xd:doc>
   <xsl:template name="topNavigation">
     <xsl:if test="ancestor::teiCorpus">
-      <p align="{$alignNavigationPanel}">
+      <p class="{$alignNavigationPanel}">
         <xsl:call-template name="nextLink"/>
         <xsl:call-template name="previousLink"/>
         <xsl:call-template name="upLink">
@@ -2705,7 +2705,7 @@ $ID: requests a particular page
   <xsl:template name="xrefpanel">
     <xsl:param name="homepage"/>
     <xsl:param name="mode"/>
-    <p align="{$alignNavigationPanel}">
+    <p class="{$alignNavigationPanel}">
       <xsl:variable name="Parent">
         <xsl:call-template name="locateParent"/>
 	<xsl:value-of select="$standardSuffix"/>

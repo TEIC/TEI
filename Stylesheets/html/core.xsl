@@ -308,12 +308,12 @@
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:eg">
-    <pre>
+    <div class="pre">
       <xsl:if test="$cssFile">
         <xsl:attribute name="class">eg</xsl:attribute>
       </xsl:if>
       <xsl:apply-templates/>
-    </pre>
+    </div>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:emph</xd:short>
@@ -1133,12 +1133,12 @@
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:q[@rend='eg']">
-    <pre>
+    <div class="pre">
       <xsl:if test="$cssFile">
         <xsl:attribute name="class">eg</xsl:attribute>
       </xsl:if>
       <xsl:apply-templates/>
-    </pre>
+    </div>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:quote</xd:short>
@@ -1189,7 +1189,7 @@
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:salute">
-    <p align="left">
+    <p class="left">
       <xsl:apply-templates/>
     </p>
   </xsl:template>
@@ -1218,7 +1218,7 @@
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:signed">
-    <p align="left">
+    <p class="left">
       <xsl:apply-templates/>
     </p>
   </xsl:template>

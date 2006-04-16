@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="1.0"
+    xmlns="http://www.w3.org/1999/xhtml"
     xmlns:html="http://www.w3.org/1999/xhtml" 
     xmlns:xd="http://www.pnp-software.com/XSLTdoc"
     xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
@@ -88,12 +89,12 @@
   
   
   <xsl:template match="tei:docAuthor">
-    <p align="center"><em><xsl:value-of select="@n"/><xsl:text> </xsl:text>
+    <p class="center"><em><xsl:value-of select="@n"/><xsl:text> </xsl:text>
     <xsl:apply-templates/></em></p>
   </xsl:template>
   
   <xsl:template match="tei:docTitle">
-    <p align="center">
+    <p class="center">
       <b><xsl:apply-templates/></b>
     </p>
   </xsl:template>
@@ -105,7 +106,7 @@
 	<xsl:number level="any"/>
       </xsl:variable>
       <p>
-	<a name="{concat('Note',$identifier)}"><xsl:value-of select="$identifier"/>. </a>
+	<a id="{concat('Note',$identifier)}"><xsl:value-of select="$identifier"/>. </a>
 	<xsl:apply-templates/>
       </p>
     </xsl:if>
@@ -144,17 +145,20 @@
   </xsl:template>
   
   <xsl:template match="tei:term">
-    <a><xsl:attribute name="name">TDX-<xsl:number level="any"/>
-    </xsl:attribute></a>
+    <a>
+      <xsl:attribute name="id">TDX-<xsl:number level="any"/>
+    </xsl:attribute>
+    </a>
     <em><xsl:apply-templates/></em>
   </xsl:template>
   
   <xsl:template match="tei:titlePage">
-    <p><center><xsl:apply-templates/></center></p><hr/>
+    <xsl:apply-templates/>
+    <hr/>
   </xsl:template>
   
   <xsl:template match="tei:titlePart">
-    <p align="center"><b><xsl:apply-templates/></b></p>
+    <p class="center"><b><xsl:apply-templates/></b></p>
   </xsl:template>
   
   <xsl:template name="calculateNumber">
@@ -478,7 +482,7 @@
     <xsl:param name="homepage"/>
     <xsl:param name="mode"/>
     
-    <p align="{$alignNavigationPanel}">
+    <p class="{$alignNavigationPanel}">
       
       <xsl:variable name="Parent">
 	<xsl:call-template name="locateParent"/>

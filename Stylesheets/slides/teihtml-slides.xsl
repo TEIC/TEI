@@ -355,9 +355,9 @@ window.onload = startup;
 
 
 <xsl:template match="teix:egXML">
-  <pre>
+  <div class="pre">
     <xsl:apply-templates mode="verbatim"/>
-  </pre>
+  </div>
 </xsl:template>
 
 </xsl:stylesheet>

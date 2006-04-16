@@ -1092,9 +1092,9 @@
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="teix:egXML">
-    <pre>
+    <div class="pre">
       <xsl:apply-templates mode="verbatim"/>
-    </pre>
+    </div>
   </xsl:template>
   
 <xd:doc>
@@ -1369,7 +1369,7 @@
     <xsl:param name="text"/>
     <xsl:param name="startnewline">false</xsl:param>
     <xsl:param name="autowrap">true</xsl:param>
-    <pre class="eg">
+    <div class="pre_eg">
       <xsl:if test="$startnewline='true'">
         <xsl:text>&#10;</xsl:text>
       </xsl:if>
@@ -1388,7 +1388,7 @@
 -->
         </xsl:otherwise>
       </xsl:choose>
-    </pre>
+    </div>
   </xsl:template>
 
   <xsl:template name="nextLine">
