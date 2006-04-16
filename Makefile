@@ -305,6 +305,12 @@ check:
 	@echo -n jing: 
 	@which jing || exit 1
 
+changelog:
+	(LastDate=`head -1 ChangeLog | awk '{print $$1}'`; \
+	svn log -v -r 'HEAD:{'$$LastDate'}' | grep -v "^;" | perl ../gnuify-changelog.pl > newchanges)
+	mv ChangeLog oldchanges
+	cat newchanges oldchanges > ChangeLog
+
 clean:
 	-rm -rf release Guidelines Guidelines-web Schema DTD dtd Split RomaResults *~
 	-rm Guidelines.xml core.rnc header.rnc tei.rnc \
