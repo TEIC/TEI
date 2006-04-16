@@ -48,6 +48,7 @@ release: doc p4 p5
 	cp *.css release/tei-xsl/p4
 	cp *.css release/tei-xsl/p5
 	mkdir -p release/tei-xsl/doc
+	mkdir -p release/tei-xsl/doc/xsltdoc
 	-test -d xsltdoc && cp -r doc/xsltdoc doc/*.png release/tei-xsl/doc
 	-test -d xsltdoc && cp doc/*.css release/tei-xsl/doc/xsltdoc
 	cp ChangeLog style.xml customize.xml LICENSE release/tei-xsl/doc
