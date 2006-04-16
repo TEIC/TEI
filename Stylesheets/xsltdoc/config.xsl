@@ -10,14 +10,14 @@
        where the HTML files are created. If a relative path
        is used it is always relative to the config file.
   -->
-  <TargetDirectory path="/TEI/Sourceforge/trunk/Stylesheets/doc/"/>
+  <TargetDirectory path="../doc/"/>
   <!-- 
        The absolute or relative path to the source directory.
        This is where the XSLT source files can be found.
        If a relative path is used it is always relative 
        to the config file.
   -->
-  <SourceDirectory path="/TEI/Sourceforge/trunk/Stylesheets/html/"/>
+  <SourceDirectory path="../html/"/>
   <!-- 
        A list of source code files which shall be documented. 
        Only stylesheets which are not included by another

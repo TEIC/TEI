@@ -14,7 +14,7 @@ will construct a XSL file for you, with all the variables configured.
 </Introduction>
   
   <TargetDirectory path="./xsltdoc/"/>
-  <SourceDirectory path="/TEI/Sourceforge/trunk/Stylesheets/"/>
+  <SourceDirectory path="../"/>
   <RootStylesheets>
     <File href="html/tei.xsl"/>
     <File href="fo/tei.xsl"/>
