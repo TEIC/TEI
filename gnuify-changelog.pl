@@ -14,9 +14,8 @@ use strict;
 
 my %hackers = (
     "rahtz"       => 'Sebastian Rahtz <sebastian.rahtz@oucs.ox.ac.uk>',
-    "lou"         => 'Lou Burnard <lou.burnard@oucs.ox.ac.uk>',
-    "burnard"         => 'Lou Burnard <lou.burnard@oucs.ox.ac.uk>',
-    "syd"         => 'Syd Bauman  <sbauman@brown.edu>',
+    "louburnard"         => 'Lou Burnard <lou.burnard@oucs.ox.ac.uk>',
+    "sbauman"         => 'Syd Bauman  <sbauman@brown.edu>',
 );
 
 my $parse_next_line = 0;
