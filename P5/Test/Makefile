@@ -1,6 +1,5 @@
 XSL=/usr/share/xml/tei/stylesheet/
-ROMAOPTS=--doc --localsource=../Source-driver.xml  
-ROMAOPTS=--doc --localsource=../Source-driver.xml
+ROMAOPTS=--doc --localsource=../Source/Guidelines/en/driver.xml
 
 TESTFILES= \
 	testchinese \
