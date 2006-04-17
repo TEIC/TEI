@@ -1231,19 +1231,19 @@
       <xsl:when test="key('CLASSMEMBERS',$this)">
 	<xsl:for-each select="key('CLASSMEMBERS',$this)">
 	  <xsl:sort select="@ident"/>
-	  <xsl:text> </xsl:text>
 	  <xsl:call-template name="linkTogether">
 	    <xsl:with-param name="name" select="@ident"/>
 	  </xsl:call-template>
+	    <xsl:text>&#160; </xsl:text>
 	  <xsl:if test="count(key('CLASSMEMBERS',@ident))&gt;0">
 	    <xsl:text>  [</xsl:text>
 	    <xsl:variable name="Key" select="@ident"/>
 	    <xsl:for-each select="key('CLASSMEMBERS',@ident)">
 	      <xsl:sort select="@ident"/>
-	      <xsl:text> </xsl:text>
 	      <xsl:call-template name="showElement">
 		<xsl:with-param name="name" select="@ident"/>
 	      </xsl:call-template>
+	      <xsl:text>&#160; </xsl:text>
 	    </xsl:for-each>
 	    <xsl:text>] </xsl:text>
 	  </xsl:if>

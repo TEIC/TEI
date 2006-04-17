@@ -151,7 +151,16 @@
   </xd:doc>
   <xsl:template match="tei:roleDesc">
     <blockquote>
-      <xsl:apply-templates/>
+	  <xsl:choose>
+	    <xsl:when test="tei:p">
+	      <xsl:apply-templates/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <p>
+		<xsl:apply-templates/>
+	      </p>
+	    </xsl:otherwise>
+	  </xsl:choose>
     </blockquote>
   </xsl:template>
   <xd:doc>

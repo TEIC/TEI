@@ -130,9 +130,9 @@
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:roleDesc">
-    <blockquote>
-      <xsl:apply-templates/>
-    </blockquote>
+   <xsl:text>\begin{quote}</xsl:text>
+   <xsl:apply-templates/>
+   <xsl:text>\end{quote}</xsl:text>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:set</xd:short>

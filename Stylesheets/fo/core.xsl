@@ -766,7 +766,7 @@
   </xsl:template>
   
 <xd:doc>
-    <xd:short>Process elements  tei:p</xd:short>
+    <xd:short>Process element  tei:p</xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:p">

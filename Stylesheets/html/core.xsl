@@ -171,9 +171,8 @@
 	<xsl:variable name="ident">
 	  <xsl:apply-templates select="." mode="ident"/>
 	</xsl:variable>
-	<a name="{$ident}">
-	  <xsl:apply-templates/>
-	</a>
+	<a name="{$ident}"/>
+	<xsl:apply-templates/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -259,8 +258,10 @@
     <xsl:choose>
       <xsl:when test="@rend='display'">
 	<blockquote>
-	  <xsl:apply-templates select="tei:q|tei:quote"/>
-	  <xsl:apply-templates select="tei:bibl"/>
+	  <p>
+	    <xsl:apply-templates select="tei:q|tei:quote"/>
+	    <xsl:apply-templates select="tei:bibl"/>
+	  </p>
 	</blockquote>
       </xsl:when>
       <xsl:otherwise>
@@ -788,19 +789,6 @@
     </xsl:choose>
   </xsl:template>
   <xd:doc>
-    <xd:short>Process elements  tei:list</xd:short>
-    <xd:detail>&#160;</xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:list" mode="inpara">
-    <p>
-      <xsl:apply-templates select="preceding-sibling::node()"/>
-    </p>
-    <xsl:apply-templates select="."/>
-    <p>
-      <xsl:apply-templates select="following-sibling::node()"/>
-    </p>
-  </xsl:template>
-  <xd:doc>
     <xd:short>Process elements  tei:list/tei:label</xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
@@ -936,8 +924,10 @@
       </xsl:when>
       <xsl:when test="@place='display'">
 	<a name="{$identifier}"/>
-        <blockquote>
-	<xsl:apply-templates/>
+	<blockquote>
+	  <p>
+	    <xsl:apply-templates/>
+	  </p>
 	</blockquote>
       </xsl:when>
       <xsl:when test="@place='foot' or @place='end'">
@@ -997,7 +987,7 @@
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:note[@type='action']">
-    <div align="right"><b>Action <xsl:number level="any" count="tei:note[@type='action']"/></b>:
+    <div class="right"><b>Action <xsl:number level="any" count="tei:note[@type='action']"/></b>:
       <i><xsl:apply-templates/></i></div>
   </xsl:template>
 
@@ -1013,34 +1003,55 @@
   </xsl:template>
 
   <xd:doc>
-    <xd:short>Process elements  tei:p</xd:short>
+    <xd:short>Process element tei:p</xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:p">
-    <xsl:choose>
-      <xsl:when test="list">
-        <xsl:apply-templates select="tei:list[1]" mode="inpara"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <p>
-	  <xsl:call-template name="rendToClass"/>
-          <xsl:choose>
-            <xsl:when test="@xml:id">
-              <a name="{@xml:id}"/>
-            </xsl:when>
-            <xsl:when test="$generateParagraphIDs='true'">
-              <a name="{generate-id()}"/>
-            </xsl:when>
-          </xsl:choose>
-          <xsl:if test="$numberParagraphs='true'">
-            <xsl:number/>
-            <xsl:text> </xsl:text>
-          </xsl:if>
-          <xsl:apply-templates/>
-        </p>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:variable name="wrapperElement">
+      <xsl:choose>
+	<xsl:when test="tei:specList|tei:moduleSpec|tei:list|tei:eg|teix:egXML|tei:table|tei:specGrp|tei:specGrpRef|tei:q[@rend='display']|tei:figure">
+	  <xsl:text>div</xsl:text>
+	</xsl:when>
+	<xsl:when test="parent::tei:p">
+	  <xsl:text>div</xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:text>p</xsl:text>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:element name="{$wrapperElement}">
+      <xsl:call-template name="rendToClass"/>
+      <xsl:choose>
+	<xsl:when test="@xml:id and $xhtml='true'">
+	  <xsl:attribute name="id">
+	    <xsl:value-of select="@xml:id"/>
+	  </xsl:attribute>
+	</xsl:when>
+	<xsl:when test="@xml:id">
+	  <a name="{@xml:id}"/>
+	</xsl:when>
+	<xsl:when test="$generateParagraphIDs='true'">
+	  <xsl:choose>
+	    <xsl:when test="$xhtml='true'">
+	      <xsl:attribute name="id">
+		<xsl:value-of select="generate-id()"/>
+	      </xsl:attribute>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <a name="{generate-id()}"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:when>
+      </xsl:choose>
+      <xsl:if test="$numberParagraphs='true'">
+	<xsl:number/>
+	<xsl:text> </xsl:text>
+      </xsl:if>
+      <xsl:apply-templates/>
+    </xsl:element>
   </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements  tei:p[@rend='box']</xd:short>
     <xd:detail>&#160;</xd:detail>
@@ -1065,7 +1076,7 @@
     <xsl:choose>
       <xsl:when test="tei:p">
 	<blockquote>
-	  <xsl:apply-templates/>
+	    <xsl:apply-templates/>
 	</blockquote>
       </xsl:when>
       <xsl:when test="@rend='display'">
@@ -1125,7 +1136,16 @@
   </xd:doc>
   <xsl:template match="tei:q[@rend='display']">
     <blockquote>
-      <xsl:apply-templates/>
+      <xsl:choose>
+	<xsl:when test="tei:p">
+	  <xsl:apply-templates/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <p>
+	    <xsl:apply-templates/>
+	  </p>
+	</xsl:otherwise>
+      </xsl:choose>
     </blockquote>
   </xsl:template>
   <xd:doc>
@@ -1165,7 +1185,16 @@
       </xsl:when>
       <xsl:otherwise>
 	<blockquote>
-	  <xsl:apply-templates/>
+	  <xsl:choose>
+	    <xsl:when test="tei:p">
+	      <xsl:apply-templates/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <p>
+		<xsl:apply-templates/>
+	      </p>
+	    </xsl:otherwise>
+	  </xsl:choose>
 	</blockquote>
       </xsl:otherwise>
     </xsl:choose>
@@ -1376,7 +1405,9 @@
         <xsl:value-of select="@xml:id"/>
       </xsl:when>
       <xsl:when test="@n">
-	<xsl:call-template name="i18n"><xsl:with-param name="word">Note</xsl:with-param></xsl:call-template>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Note</xsl:with-param>
+	</xsl:call-template>
         <xsl:value-of select="@n"/>
       </xsl:when>
       <xsl:when test="not(@place)">
@@ -1850,8 +1881,10 @@ by Nick Nicholas </p>
         </xsl:call-template>
         <div class="notes">
           <div class="noteHeading">
-            <xsl:value-of select="$noteHeading"/>
-          </div>
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">noteHeading</xsl:with-param>
+	    </xsl:call-template>
+	  </div>
           <xsl:apply-templates select="descendant::tei:note[@place]" mode="printnotes"/>
         </div>
         <xsl:call-template name="stdfooter"/>

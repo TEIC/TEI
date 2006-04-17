@@ -138,14 +138,14 @@
   </xd:doc>
   <xsl:template match="tei:figure">
     <xsl:if test="@xml:id">
-      <a class="f" name="{@xml:id}"/>
+      <a name="{@xml:id}" class="f"><xsl:comment></xsl:comment></a>
     </xsl:if>
     <xsl:if test="@file|@url|@entity">
       <xsl:call-template name="showGraphic"/>
     </xsl:if>
     <xsl:apply-templates/>
     <xsl:if test="tei:head">
-      <p class="caption">
+      <div class="caption">
         <xsl:choose>
 	  <xsl:when test="ancestor::tei:front and
 			  $numberFrontFigures='true'">
@@ -171,7 +171,7 @@
 	  </xsl:when>
         </xsl:choose>
         <xsl:apply-templates select="tei:head" mode="plain"/>
-      </p>
+      </div>
     </xsl:if>
   </xsl:template>
   
@@ -195,7 +195,7 @@
   </xd:doc>
   <xsl:template match="tei:graphic">
     <xsl:if test="@xml:id">
-      <a class="g" name="{@xml:id}"/>
+      <a name="{@xml:id}" class="g"><xsl:comment></xsl:comment></a>
     </xsl:if>
     <xsl:call-template name="showGraphic"/>
   </xsl:template>
@@ -222,7 +222,7 @@
   </xd:doc>
   <xsl:template match="tei:table">
     <div>
-      <xsl:attribute name="align">
+      <xsl:attribute name="class">
         <xsl:choose>
           <xsl:when test="@align">
             <xsl:value-of select="@align"/>

@@ -121,7 +121,7 @@
 </xsl:variable>
   <xsl:variable name="sindex">
     <Indexterms>
-    <xsl:for-each select="exsl:node-set($Index)/Indexterms/index">
+    <xsl:for-each select="exsl:node-set($Index)/html:Indexterms/html:index">
     <xsl:sort select="@a"/>
     <xsl:sort select="@b"/>
     <xsl:copy-of select="."/>
@@ -129,13 +129,13 @@
 </Indexterms>
 </xsl:variable>
 <dl>
-<xsl:for-each select="exsl:node-set($sindex)/Indexterms/index">
-  <xsl:if test="not(@a=preceding-sibling::tei:index/@a)">
+<xsl:for-each select="exsl:node-set($sindex)/html:Indexterms/html:index">
+  <xsl:if test="not(@a=preceding-sibling::html:index/@a)">
     <dt     xmlns="http://www.w3.org/1999/xhtml">
     <xsl:value-of select="@c"/></dt>
     <dd     xmlns="http://www.w3.org/1999/xhtml">
-      <xsl:for-each select=".|following-sibling::tei:index[@a=current()/@a]">
-          <xsl:if test="@b and not(@b=preceding-sibling::tei:index/@b)">
+      <xsl:for-each select=".|following-sibling::html:index[@a=current()/@a]">
+          <xsl:if test="@b and not(@b=preceding-sibling::html:index/@b)">
             <br/>&#160;&#160;<xsl:value-of select="@b"/><br/>
           </xsl:if>
 	  <a    xmlns="http://www.w3.org/1999/xhtml" 
@@ -300,7 +300,7 @@
       <xsl:when test="parent::tei:listRef">
         <xsl:if test="count(preceding-sibling::tei:ptr)=0">
           <tr>
-            <td valign="top"></td>
+            <td valign="top"><xsl:comment>!</xsl:comment></td>
             <td colspan="2">
               <xsl:if test="count(preceding-sibling::tei:ptr)&gt;0">;
 	      </xsl:if>

@@ -327,13 +327,12 @@ $ID: requests a particular page
             <html>
               <xsl:call-template name="addLangAtt"/>
               <xsl:call-template name="htmlFileTop"/>
-              <body>
+              <body id="TOP">
 		<xsl:attribute name="onload">
 		  <xsl:text>startUp()</xsl:text>
 		</xsl:attribute>
                 <xsl:call-template name="bodyHook"/>
                 <xsl:call-template name="bodyJavascriptHook"/>
-                <a name="TOP"/>
 		  <xsl:call-template name="stdheader">
 		    <xsl:with-param name="title">
 		      <xsl:call-template name="generateTitle"/>
@@ -383,13 +382,12 @@ $ID: requests a particular page
         <xsl:call-template name="includeJavascript"/>
 	<xsl:call-template name="javascriptHook"/>
       </head>
-      <body class="simple">
+      <body class="simple" id="TOP">
 	<xsl:attribute name="onload">
 	  <xsl:text>startUp()</xsl:text>
 	</xsl:attribute>
         <xsl:call-template name="bodyHook"/>
         <xsl:call-template name="bodyJavascriptHook"/>
-        <a name="TOP"/>
 	<xsl:if test="not(tei:text/tei:front/tei:titlePage)">
 	  <xsl:call-template name="stdheader">
 	    <xsl:with-param name="title">
@@ -470,7 +468,16 @@ $ID: requests a particular page
   </xd:doc>
   <xsl:template match="tei:closer">
     <blockquote class="closer">
-      <xsl:apply-templates/>
+	  <xsl:choose>
+	    <xsl:when test="tei:p">
+	      <xsl:apply-templates/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <p>
+		<xsl:apply-templates/>
+	      </p>
+	    </xsl:otherwise>
+	  </xsl:choose>
     </blockquote>
   </xsl:template>
 
@@ -745,7 +752,16 @@ $ID: requests a particular page
   </xd:doc>
   <xsl:template match="tei:opener">
     <blockquote class="opener">
-      <xsl:apply-templates/>
+	  <xsl:choose>
+	    <xsl:when test="tei:p">
+	      <xsl:apply-templates/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <p>
+		<xsl:apply-templates/>
+	      </p>
+	    </xsl:otherwise>
+	  </xsl:choose>
     </blockquote>
   </xsl:template>
 
@@ -1908,13 +1924,12 @@ $ID: requests a particular page
     <html>
       <xsl:call-template name="addLangAtt"/>
       <xsl:call-template name="htmlFileTop"/>
-      <body class="simple">
+      <body class="simple" id="TOP">
 	<xsl:attribute name="onload">
 	  <xsl:text>startUp()</xsl:text>
 	</xsl:attribute>
         <xsl:call-template name="bodyHook"/>
         <xsl:call-template name="bodyJavascriptHook"/>
-        <a name="TOP"/>
 	<xsl:if test="not(tei:text/tei:front/tei:titlePage)">
 	  <xsl:call-template name="stdheader">
 	    <xsl:with-param name="title">
@@ -2602,13 +2617,12 @@ $ID: requests a particular page
         <xsl:call-template name="includeJavascript"/>
 	<xsl:call-template name="javascriptHook"/>
       </head>
-      <body>
+      <body id="TOP">
 	<xsl:attribute name="onload">
 	  <xsl:text>startUp()</xsl:text>
 	</xsl:attribute>
         <xsl:call-template name="bodyHook"/>
         <xsl:call-template name="bodyJavascriptHook"/>
-        <a name="TOP"/>
         <div class="teidiv">
           <xsl:call-template name="divClassAttribute">
             <xsl:with-param name="depth">0</xsl:with-param>

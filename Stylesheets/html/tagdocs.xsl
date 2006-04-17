@@ -235,11 +235,10 @@
     <tr>
       <td valign="top">
         <span class="label">
-	<xsl:call-template name="i18n">
-	<xsl:with-param name="word">Attributes</xsl:with-param>
-	</xsl:call-template> 
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Attributes</xsl:with-param>
+	  </xsl:call-template> 
 	</span>
-	<xsl:text> </xsl:text>
       </td>
       <td>
         <xsl:call-template name="displayAttList">
@@ -783,8 +782,8 @@
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:moduleSpec">
-    <hr/>
-    <p>
+    <div>
+      <hr/>
       <strong>
 	<xsl:call-template name="i18n">
 	  <xsl:with-param name="word">Module</xsl:with-param>
@@ -836,7 +835,7 @@
 	</xsl:if>
       </ul>
       <hr/>
-    </p>
+    </div>
   </xsl:template>
   
   <xd:doc>
@@ -852,7 +851,7 @@
 	</xsl:call-template>
       </span>
       </td>
-      <td colspan="2">
+      <td colspan="2"><xsl:comment></xsl:comment>
 	<xsl:apply-templates/>
       </td>
     </tr>
@@ -874,14 +873,18 @@
   </xd:doc>
   <xsl:template match="tei:specGrp">
     <div class="specgrp">
-      <p><b>Specification group <xsl:number level="any"/>
-      <xsl:if test="@n"><xsl:text>: </xsl:text><xsl:value-of select="@n"/></xsl:if>
+      <b>Specification group <xsl:number level="any"/>
+      <xsl:if test="@n">
+	<xsl:text>: </xsl:text>
+	<xsl:value-of select="@n"/>
+      </xsl:if>
     </b>
-    <a name="{@xml:id}"/>
-      </p>
-      <dl>
-	<xsl:apply-templates/>
-      </dl>
+    <xsl:if test="@xml:id">
+      <a name="{@xml:id}"/>
+    </xsl:if>
+    <dl>
+      <xsl:apply-templates/>
+    </dl>
     </div>
   </xsl:template>
   
@@ -890,7 +893,7 @@
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:specGrp/tei:p">
-    <dt/>
+    <dt><xsl:comment/></dt>
     <dd>
       <xsl:apply-templates/>
     </dd>
@@ -903,7 +906,7 @@
   <xsl:template match="tei:specGrpRef">
     <xsl:choose>
       <xsl:when test="parent::tei:specGrp">
-        <dt/>
+        <dt><xsl:comment/></dt>
         <dd>
 	  <xsl:text>« </xsl:text>
           <a href="{@target}">
@@ -929,7 +932,7 @@
 	</dd>
       </xsl:when>
       <xsl:otherwise>
-        <p>
+	<div>
           <a href="{@target}">
 	    <xsl:text>« </xsl:text>
 	    <span class="label">
@@ -953,7 +956,7 @@
 	    </span>
 	  </a>
 	  <xsl:text> » </xsl:text>
-	</p>
+	</div>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -1075,7 +1078,7 @@
     <xsl:choose>
       <xsl:when test="ancestor::tei:elementSpec or ancestor::tei:classSpec or ancestor::tei:macroSpec">
         <tr>
-          <td/>
+          <td><xsl:comment></xsl:comment></td>
           <td valign="top">
             <xsl:apply-templates select="." mode="contents"/>
           </td>
@@ -1164,16 +1167,18 @@
 	  <xsl:text> (</xsl:text>
 	  <xsl:call-template name="showAttClasses"/>	  
 	  <xsl:text>)</xsl:text>
-	  <table>
-	    <xsl:choose>
-	      <xsl:when test="$mode='all'">
+	  <xsl:if test="tei:attDef">
+	    <table>
+	      <xsl:choose>
+		<xsl:when test="$mode='all'">
 		<xsl:apply-templates/>
-	      </xsl:when>
+		</xsl:when>
 	      <xsl:otherwise>
 		<xsl:apply-templates mode="summary"/>
 	      </xsl:otherwise>
-	    </xsl:choose>
-	  </table>
+	      </xsl:choose>
+	    </table>
+	  </xsl:if>
 	  </td>
 	</tr>
       </table>
@@ -1305,12 +1310,11 @@
 	      </xsl:if>
 	      <xsl:call-template name="includeJavascript"/>
 	    </head>
-	    <body>
+	    <body id="TOP">
 	      <xsl:attribute name="onload">
 		<xsl:text>startUp()</xsl:text>
 	      </xsl:attribute>
 	      <xsl:call-template name="bodyHook"/>
-	      <a name="TOP"/>
 	      <div id="hdr">
 		<xsl:call-template name="stdheader">
 		  <xsl:with-param name="title">
@@ -1318,12 +1322,12 @@
 		  </xsl:with-param>
 		</xsl:call-template>
 	      </div>
-	      <p>
+	      <div>
 		<a name="{@ident}"/>
 		<table class="wovenodd" border="1">
 		  <xsl:apply-templates select="." mode="weavebody"/>
 		</table>
-	      </p>
+	      </div>
 	    </body>
 	  </html>
 	</xsl:with-param>
