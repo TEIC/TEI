@@ -1,0 +1,59 @@
+#!/bin/sh
+mkdir -p Guidelines/Odds
+mkdir -p Guidelines/en
+
+# copy all ODD files
+for i in [A-Z]*/*.odd 
+do
+ svn move $i Guidelines/Odds
+done
+
+# move chapter files
+rm -f chaps.sed
+rm -f Guidelines/en/fileents.dtd 
+rm -f ents.sed
+for i in [A-Z]*
+do
+if test -d $i
+then
+ lower=`echo $i | tr '[A-Z]' '[a-z]'`
+ if test -f Guidelines/Odds/$lower.odd
+ then
+   svn move Guidelines/Odds/$lower.odd Guidelines/en/$i.xml
+   echo 's/&'$lower.odd';/\&'$i.xml';/' >> chaps.sed
+   echo "<!ENTITY" $i.xml SYSTEM '"'$i.xml'">' \
+        >> Guidelines/en/fileents.dtd
+ fi
+fi
+done
+svn add Guidelines/en/fileents.dtd 
+
+# make entity file and rename ODD to XML by @ident
+for i in Guidelines/Odds/*.odd
+do
+ N=`xsltproc getident.xsl $i`
+ X=`basename $i .odd`
+ echo "<!ENTITY" $N SYSTEM '"'../Odds/$N.xml'">' \
+        >> Guidelines/en/fileents.dtd
+ echo 's/&'$X.odd';/\&'$N';/' >> ents.sed
+ echo 's/&'$X';/\&'$N';/' >> ents.sed
+ svn move $i Guidelines/Odds/$N.xml
+done
+echo 's/&ppartmsdesc.odd;/\&model.pPart.msdesc;/' >> ents.sed
+
+svn commit
+
+# now mangle chapter files
+for i in Guidelines/en/*.xml
+do
+ sed -f ents.sed $i > tmp
+ mv tmp $i
+done
+
+# get driver
+sed -f chaps.sed ../Source-driver.xml >Guidelines/en/driver.xml
+cp ../ents.dtd Guidelines/en/ents.dtd
+
+svn add Guidelines/en/*
+
+#rm OldOdds chaps.sed ents.sed

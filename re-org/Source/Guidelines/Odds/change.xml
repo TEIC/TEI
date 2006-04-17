@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="header" xml:id="CHANGE" usage="opt" ident="change">
+  <equiv/>
+  <gloss/>
+  <gloss xml:lang="zh-tw">變更</gloss>
+  <gloss xml:lang="fr">Modification</gloss>
+  <desc>summarizes a particular change or correction made
+to a particular version of an electronic text which is
+shared between several researchers.</desc>
+  <desc xml:lang="zh-tw">概述多位研究者共享的某電子文本當中特定的內容變更或修正。</desc>
+  <desc xml:lang="fr">L'élément Modification <gi>change</gi> résume une modification ou une correction apportée à une version particulière d’un texte électronique partagé entre plusieurs chercheurs.</desc>
+  <classes>
+    <memberOf key="att.ascribed"/>
+  </classes>
+  <content>
+<!--    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:ref name="date"/>
+      <rng:oneOrMore>
+        <rng:ref name="respStmt"/>
+      </rng:oneOrMore>
+      <rng:ref name="item"/>
+    </rng:group>-->
+    <rng:ref name="macro.specialPara"/>
+  </content>
+  <attList>
+    <attDef ident="date" usage="mwa">
+      <equiv/>
+      <desc>supplies the date of the change in standard form,  i.e. yyyy-mm-dd.</desc>
+      <desc xml:lang="fr">fournit la date sous une forme normalisée, par exemple AAAA-MM-JJ.</desc>
+      <datatype>
+        <rng:ref name="data.temporal"/>
+      </datatype>
+      <valDesc>Any string representing a date in standard format as
+      defined in  ISO 8601:2000 5.2.1.1 to 3, extended format</valDesc>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <change n="P2.2" date="1991-12-21" who="#LB">
+Added examples to section 3 </change>
+      <change date="1991-11-11" who="#MSM">
+Deleted chapter 10 </change>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <change n="P2.2" date="1991-12-21" who="#LB">
+Exemples ajoutés à la section 3 </change>
+      <change date="1991-11-11" who="#MSM">
+Suppression du chapitre 10</change>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>Changes should be recorded in a consistent order, for
+example with the most recent first.</p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p>Les modifications doivent être enregistrées dans l'ordre, par exemple la plus récente en premier.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#HD6"/>
+  </listRef>
+</elementSpec>

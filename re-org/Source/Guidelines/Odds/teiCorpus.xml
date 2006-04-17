@@ -1,0 +1,77 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="TEICORP2" usage="mwa" ident="teiCorpus">
+<equiv/>
+<gloss>TEI corpus</gloss>
+<desc>contains the whole of a TEI encoded corpus, comprising a
+single corpus header and one or more TEI elements, each containing
+a single text header and a text.</desc>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:ref name="teiHeader"/>
+      <rng:oneOrMore>
+	<rng:choice>
+	  <rng:ref name="TEI"/>
+	  <rng:ref name="teiCorpus"/>
+	</rng:choice>
+      </rng:oneOrMore>
+    </rng:group>
+  </content>
+  <attList>
+    <attDef ident="xmlns" usage="req">
+      <equiv/>
+      <desc>The TEI default namespace</desc>
+      <datatype>
+	<rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="anyURI"/>
+      </datatype>
+      <defaultVal>http://www.tei-c.org/ns/1.0</defaultVal>
+      <valDesc>A valid XML namespace</valDesc>
+    </attDef>
+    <attDef ident="version" usage="opt">
+	<equiv/>
+	<desc>The version of the TEI scheme</desc>
+	<datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="decimal"/></datatype>
+	<defaultVal>5.0</defaultVal>
+      <valDesc>A number identifying the version of the TEI guidelines</valDesc>
+    </attDef>
+  </attList>
+
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <teiCorpus>
+        <teiHeader>
+<!-- header for corpus -->
+        </teiHeader>
+        <TEI>
+          <teiHeader>
+<!-- header for first text -->
+          </teiHeader>
+          <text>
+<!-- content of first text -->
+          </text>
+        </TEI>
+        <TEI>
+          <teiHeader>
+<!-- header for second text -->
+          </teiHeader>
+          <text>
+<!-- content of second text -->
+          </text>
+        </TEI>
+<!-- more TEI elements here -->
+      </teiCorpus>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">Must contain one TEI header for the corpus, and a series
+of <gi>TEI</gi> elements, one for each text.</p>
+    <p>This element is mandatory when applicable.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#DS"/>
+    <ptr target="#CCDEF"/>
+  </listRef>
+</elementSpec>

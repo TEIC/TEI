@@ -1,0 +1,47 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="corpus" xml:id="PARTIREL" usage="opt" ident="particLinks">
+<equiv/>
+<gloss>participant relationships</gloss>
+<desc>describes the relationships or social links existing between
+participants in a linguistic interaction. </desc>
+  <content>
+    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:oneOrMore>
+        <rng:ref name="model.pLike"/>
+      </rng:oneOrMore>
+      <rng:oneOrMore>
+        <rng:ref name="relation"/>
+      </rng:oneOrMore>
+    </rng:choice>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <particLinks>
+        <relation type="personal" name="parent" active="#p1 #p2" passive="#p3 #p4" mutual="false"/>
+        <relation type="personal" name="spouse" active="#p1" passive="#p2" mutual="true"/>
+        <relation type="social" name="employer" active="#p1" passive="#p3 #p5 #p6 #p7" mutual="false"/>
+      </particLinks>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <particLinks>
+        <p>The persons with ids P1 and P2 are the parents of
+  P3 and P4. P1 and P2 are married to each other.
+  P1 is the employer of P3, P5., P6, and P7.</p>
+      </particLinks>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">May contain a prose description organized as paragraphs, or
+a sequence of <gi>relation</gi> elements.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#CCAHPA"/>
+  </listRef>
+</elementSpec>

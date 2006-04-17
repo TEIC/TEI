@@ -1,0 +1,71 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="atts" ident="att.segLike">
+<desc>provides attributes for elements used for arbitrary segmentation. </desc>
+   <classes>
+       <memberOf key="att.metrical"/>
+   </classes>
+  <attList>
+    <attDef ident="type" usage="opt">
+	<equiv/>
+	<desc>characterizes the type of segment.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <valDesc>For a <gi>cl</gi> may take values such as finite, nonfinite,
+declarative, interrogative, relative etc. For a <gi>phr</gi> or
+<gi>w</gi>, values such as noun, verb, preposition, etc., may be used. For
+an <gi>m</gi> element, values such as clitic, prefix, stem will be more
+appropriate. For a <gi>c</gi> element, values such as letter, punctuation,
+digit may be used.</valDesc>
+    </attDef>
+    <attDef ident="function" usage="opt">
+	<equiv/>
+	<desc>characterizes the function of the segment.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <valDesc>For a <gi>cl</gi>, may take values such as
+coordinate, subject, adverbial etc. For a <gi>phr</gi>, such values as
+subject, predicate etc. may be more appropriate.</valDesc>
+    </attDef>
+    <attDef ident="part" usage="mwa">
+	<equiv/>
+	<desc>specifies whether or not the segment is fragmented by some other
+structural element, for example a clause which is divided between two
+or more sentences.</desc>
+      <defaultVal>N</defaultVal>
+      <valList type="closed">
+        <valItem ident="Y">
+          <equiv/>
+          <gloss>the segment is incomplete in some respect</gloss>
+        </valItem>
+        <valItem ident="N">
+          <equiv/>
+          <gloss>either the segment is complete, or no claim is made as to
+its completeness</gloss>
+        </valItem>
+        <valItem ident="I">
+          <equiv/>
+          <gloss>the initial part of an incomplete segment</gloss>
+        </valItem>
+        <valItem ident="M">
+          <equiv/>
+          <gloss>a medial part of an incomplete segment</gloss>
+        </valItem>
+        <valItem ident="F">
+          <equiv/>
+          <gloss>the final part of an incomplete segment</gloss>
+        </valItem>
+      </valList>
+      <remarks>
+        <p>The values I, M, or F should be used only where it is
+clear how the segment is to be reconstituted.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <listRef>
+    <ptr target="#SASE"/>
+    <ptr target="#AILC"/>
+  </listRef>
+</classSpec>

@@ -1,0 +1,69 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" xml:id="TITLEPA" usage="rec" ident="titlePage">
+<equiv/>
+<gloss>title page</gloss>
+<desc>contains the title page of a text, appearing within the front
+or back matter. </desc>
+  <classes>
+    <memberOf key="model.frontPart"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:ref name="model.global"/>
+      </rng:zeroOrMore>
+      <rng:group>
+	<rng:ref name="model.titlepagePart"/>
+      </rng:group>
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="model.titlepagePart"/>
+          <rng:ref name="model.global"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+    </rng:group>
+  </content>
+  <attList>
+    <attDef ident="type" usage="opt">
+	<equiv/>
+	<desc>classifies the title page according to any convenient typology.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <valDesc>Any string, e.g. <mentioned>full</mentioned>, <mentioned>half</mentioned>, <mentioned>Series</mentioned>, etc.</valDesc>
+      <remarks>
+        <p>This attribute allows the same element to be used for
+volume title pages, series title pages, etc., as well as for the
+<soCalled>main</soCalled> title page of a work.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <titlePage>
+        <docTitle>
+          <titlePart type="main">THOMAS OF Reading.</titlePart>
+          <titlePart type="alt">OR, The sixe worthy yeomen
+         of the West.</titlePart>
+        </docTitle>
+        <docEdition>Now the fourth time corrected and enlarged</docEdition>
+        <byline>By T.D.</byline>
+        <figure>
+          <head>TP</head>
+          <p>Thou shalt labor till thou returne to duste</p>
+          <figDesc>Printers Ornament used by TP</figDesc>
+        </figure>
+        <docImprint>Printed at <name type="place">London</name> 
+         for <name>T.P.</name>
+      <date>1612.</date>
+   </docImprint>
+      </titlePage>
+    </egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#DSTITL"/>
+  </listRef>
+</elementSpec>

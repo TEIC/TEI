@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="CORRECTN" usage="opt" ident="correction">
+  <equiv/>
+  <gloss>correction principles</gloss>
+  <gloss xml:lang="zh-tw">更正</gloss>
+  <gloss xml:lang="fr">Correction</gloss>
+  <desc>states how and under what circumstances corrections have been
+made in the text.</desc>
+  <desc xml:lang="zh-tw">說明文本中的更正是在什麼情況下、如何產生的。</desc>
+  <desc xml:lang="fr">L'élément Correction <gi>correction</gi> établit comment et dans quelles circonstances des corrections ont été apportées au texte.</desc>
+  <classes>
+    <memberOf key="att.declarable"/>
+    <memberOf key="model.editorialDeclPart"/>
+  </classes>
+  <content>
+    <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:ref name="model.pLike"/>
+    </rng:oneOrMore>
+  </content>
+  <attList>
+    <attDef ident="status" usage="opt">
+      <equiv/>
+      <desc>indicates the degree of correction applied to the text.
+   </desc>
+      <desc xml:lang="fr">indique le degré de correction apporté au texte.</desc>
+      <defaultVal>unknown</defaultVal>
+      <valList type="closed">
+        <valItem ident="high">
+          <equiv/>
+          <gloss>the text has been thoroughly checked and
+                       proofread.
+    </gloss>
+          <gloss xml:lang="fr">le texte a été entièrement vérifié et corrigé.</gloss>
+        </valItem>
+        <valItem ident="medium">
+          <equiv/>
+          <gloss>the text has been checked at least once.
+    </gloss>
+          <gloss xml:lang="fr">le texte a au moins été vérifié une fois.</gloss>
+        </valItem>
+        <valItem ident="low">
+          <equiv/>
+          <gloss>the text has not been checked.
+    </gloss>
+          <gloss xml:lang="fr">le texte n’a pas été vérifié.</gloss>
+        </valItem>
+        <valItem ident="unknown">
+          <equiv/>
+          <gloss>the correction status of the text is unknown.
+   </gloss>
+          <gloss xml:lang="fr">le niveau de correction du texte est inconnu.</gloss>
+        </valItem>
+      </valList>
+    </attDef>
+    <attDef ident="method" usage="opt">
+      <equiv/>
+      <desc>indicates the method adopted to indicate corrections within the
+         text.
+   </desc>
+      <desc xml:lang="fr">indique la méthode adoptée pour signaler les corrections dans le texte.</desc>
+      <defaultVal>silent</defaultVal>
+      <valList type="closed">
+        <valItem ident="silent">
+          <equiv/>
+          <gloss>corrections have been made silently
+    </gloss>
+          <gloss xml:lang="fr">les corrections ont été faites sans être marquées.</gloss>
+        </valItem>
+        <valItem ident="tags">
+          <equiv/>
+          <gloss>corrections have been represented using editorial tags
+   </gloss>
+          <gloss xml:lang="fr">les corrections sont marquées par les balises "éditoriales".</gloss>
+        </valItem>
+      </valList>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <correction>
+        <p>Errors in transcription controlled by using the
+WordPerfect spelling checker, with a user defined dictionary of 500
+extra words taken from Chambers Twentieth Century Dictionary.</p>
+      </correction>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <correction>
+        <p>Les erreurs de transcription ont été corrigées au moyen du correcteur orthographique de WordPerfect, avec un dictionnaire défini par l'utilisateur de 500
+mots supplémentaires issus du Chambers Twentieth Century Dictionary.</p>
+      </correction>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>May be used to note the results of proof reading the
+text against its original, indicating (for example) whether
+discrepancies have been silently rectified, or recorded using the
+editorial tags described in section <ptr target="#COED"/>.</p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p>Utilisées pour noter le résultat de la comparaison du texte et de l'original en indiquant par exemple si les différences ont été faites sans être marquées, ou si elles ont été marquées en utilisant les balises <q>éditoriales</q> décrites dans la section <ptr target="#COED"/>.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#HD53"/>
+    <ptr target="#CCAS2"/>
+  </listRef>
+</elementSpec>
