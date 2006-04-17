@@ -16,7 +16,7 @@
     exclude-result-prefixes="exsl rng edate estr tei html a pantor teix xs xd" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-  <xsl:import href="/usr/share/xml/tei/stylesheet/odds/odd2html.xsl"/>
+  <xsl:import href="/home/lou/TEI/P5/../Stylesheets/release/tei-xsl/p5/odds/odd2html.xsl"/>
   
   <xsl:param name="alignNavigationPanel">left</xsl:param>
   <xsl:param name="authorWord"></xsl:param>
