@@ -60,10 +60,6 @@
     <meta name="DC.Creator.Address" content="tei@oucs.ox.ac.uk"/>
   </xsl:template>
   
-  <xsl:template name="bodyHook">
-    <xsl:attribute name="background">background.gif</xsl:attribute>
-  </xsl:template>
-  
   
   <xsl:template match="processing-instruction()">
     <!--
@@ -89,14 +85,14 @@
   
   
   <xsl:template match="tei:docAuthor">
-    <p class="center"><em><xsl:value-of select="@n"/><xsl:text> </xsl:text>
-    <xsl:apply-templates/></em></p>
+    <div class="center"><em><xsl:value-of select="@n"/><xsl:text> </xsl:text>
+    <xsl:apply-templates/></em></div>
   </xsl:template>
   
   <xsl:template match="tei:docTitle">
-    <p class="center">
-      <b><xsl:apply-templates/></b>
-    </p>
+    <div class="centerbold">
+      <xsl:apply-templates/>
+    </div>
   </xsl:template>
   
   <xsl:template match="tei:note" mode="printnotes">
@@ -119,13 +115,23 @@
       </xsl:when>
       
       <xsl:when test="@place='display'">
-	<blockquote>NOTE <xsl:number level="any"/>:
-	<xsl:apply-templates/>
-	</blockquote>
+        <blockquote>
+          <p>
+            NOTE 
+            <xsl:number level="any"/>:
+            <xsl:apply-templates/>
+          </p>
+      </blockquote>
       </xsl:when>
       
       <xsl:when test="@place='divtop'">
-	<blockquote><i><xsl:apply-templates/></i></blockquote>
+	<blockquote>
+          <p>
+            <i>
+              <xsl:apply-templates/>
+            </i>
+          </p>
+        </blockquote>
       </xsl:when>
       
       <xsl:otherwise>
@@ -145,20 +151,23 @@
   </xsl:template>
   
   <xsl:template match="tei:term">
-    <a>
-      <xsl:attribute name="id">TDX-<xsl:number level="any"/>
-    </xsl:attribute>
-    </a>
-    <em><xsl:apply-templates/></em>
+    <span>
+      <xsl:attribute name="id">
+        <xsl:text>TDX-</xsl:text>
+        <xsl:number level="any"/>
+      </xsl:attribute>
+      <em>
+        <xsl:apply-templates/>
+      </em>
+    </span>
   </xsl:template>
   
   <xsl:template match="tei:titlePage">
     <xsl:apply-templates/>
-    <hr/>
   </xsl:template>
   
   <xsl:template match="tei:titlePart">
-    <p class="center"><b><xsl:apply-templates/></b></p>
+    <div class="centerbold"><xsl:apply-templates/></div>
   </xsl:template>
   
   <xsl:template name="calculateNumber">
@@ -457,24 +466,30 @@
   <xsl:template name="maintoc"> 
     <xsl:param name="force"/>
     <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:front">
-      <xsl:apply-templates 
-	  select=".//tei:div1" mode="maketoc">
-	<xsl:with-param name="forcedepth" select="$force"/>
-      </xsl:apply-templates>
+      <ul class="toc{$force}">
+        <xsl:apply-templates 
+          select=".//tei:div1" mode="maketoc">
+          <xsl:with-param name="forcedepth" select="$force"/>
+        </xsl:apply-templates>
+      </ul>
     </xsl:for-each>
     
     <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:body">
-      <xsl:apply-templates 
-	  select=".//tei:div1" mode="maketoc">
-	<xsl:with-param name="forcedepth" select="$force"/>
-      </xsl:apply-templates>
+      <ul class="toc{$force}">
+        <xsl:apply-templates 
+          select=".//tei:div1" mode="maketoc">
+          <xsl:with-param name="forcedepth" select="$force"/>
+        </xsl:apply-templates>
+      </ul>
     </xsl:for-each>
     
     <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:back">
-      <xsl:apply-templates 
-	  select=".//tei:div1" mode="maketoc">
-	<xsl:with-param name="forcedepth" select="$force"/>
-      </xsl:apply-templates>
+      <ul class="toc{$force}">
+        <xsl:apply-templates 
+          select=".//tei:div1" mode="maketoc">
+          <xsl:with-param name="forcedepth" select="$force"/>
+        </xsl:apply-templates>
+      </ul>
     </xsl:for-each>
   </xsl:template>
   

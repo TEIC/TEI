@@ -209,7 +209,7 @@ dist: clean dist-source dist-schema dist-doc dist-test dist-database dist-exempl
 dist-source: 
 	rm -rf release/tei-p5-source*
 	mkdir -p release/tei-p5-source/share/xml/tei/odd
-	tar -c -f - --exclude "*~" --exclude CVS *.* VERSION ChangeLog Source Makefile Utilities  \
+	tar -c -f - --exclude "*~" --exclude .svn *.* VERSION ChangeLog Source Makefile Utilities  \
 	| (cd release/tei-p5-source/share/xml/tei/odd; tar xf - )
 	(cd release; 	\
 	ln -s tei-p5-source tei-p5-source-`cat ../VERSION` ; \
@@ -219,10 +219,10 @@ dist-schema: schemas dtds oddschema
 	rm -rf release/tei-p5-schema*
 	mkdir -p release/tei-p5-schema/share/xml/tei/schema/dtd
 	mkdir -p release/tei-p5-schema/share/xml/tei/schema/relaxng
-	(cd DTD; tar --exclude CVS -c -f - .) \
+	(cd DTD; tar --exclude .svn -c -f - .) \
 	| (cd release/tei-p5-schema/share/xml/tei/schema/dtd; tar xf - )
 	cp catalog.p5 release/tei-p5-schema/share/xml/tei/schema/catalog.xml
-	(cd Schema; tar --exclude CVS -c -f - .) \
+	(cd Schema; tar --exclude .svn -c -f - .) \
 	| (cd release/tei-p5-schema/share/xml/tei/schema/relaxng; tar xf - )
 	(cd release; 	\
 	ln -s tei-p5-schema tei-p5-schema-`cat ../VERSION` ; \
@@ -231,7 +231,7 @@ dist-schema: schemas dtds oddschema
 dist-doc:  html
 	rm -rf release/tei-p5-doc*
 	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc/html
-	(cd Guidelines; tar --exclude CVS -c -f - . ) \
+	(cd Guidelines; tar --exclude .svn -c -f - . ) \
 	| (cd release/tei-p5-doc/share/doc/tei-p5-doc/html; tar xf - )
 	for i in readme*xml; do  \
 	xsltproc \
@@ -247,7 +247,7 @@ dist-test:
 	rm -rf release/tei-p5-test*
 	mkdir -p release/tei-p5-test/share/tei
 	(cd Test; make clean)
-	tar --exclude "*~" --exclude CVS -c -f - Test \
+	tar --exclude "*~" --exclude .svn -c -f - Test \
 	| (cd release/tei-p5-test/share/tei; tar xf - )
 	(cd release; 	\
 	ln -s tei-p5-test tei-p5-test-`cat ../VERSION` ; \
@@ -259,7 +259,7 @@ dist-exemplars:
 dist-database: 
 	rm -rf release/tei-p5-database*
 	mkdir -p release/tei-p5-database/share/xml/tei/xquery
-	(cd Query; tar --exclude CVS -c -f - . ) \
+	(cd Query; tar --exclude .svn --exclude "*~" -c -f - . ) \
 	| (cd release/tei-p5-database/share/xml/tei/xquery; tar xf - )
 	(cd release; 	\
 	ln -s tei-p5-database tei-p5-database-`cat ../VERSION` ; \
