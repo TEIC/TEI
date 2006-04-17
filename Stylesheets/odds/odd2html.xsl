@@ -139,7 +139,8 @@
             <br/>&#160;&#160;<xsl:value-of select="@b"/><br/>
           </xsl:if>
 	  <a    xmlns="http://www.w3.org/1999/xhtml" 
-		href="{file}#{loc}"><xsl:value-of select="section"/></a>&#160;
+		href="{html:file}#{html:loc}">
+	    <xsl:value-of select="html:section"/></a>&#160;
       </xsl:for-each>
     </dd>
   </xsl:if>

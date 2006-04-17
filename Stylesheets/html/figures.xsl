@@ -138,7 +138,7 @@
   </xd:doc>
   <xsl:template match="tei:figure">
     <xsl:if test="@xml:id">
-      <a name="{@xml:id}" class="f"><xsl:comment></xsl:comment></a>
+      <a name="{@xml:id}" class="f"><xsl:comment>&#160;</xsl:comment></a>
     </xsl:if>
     <xsl:if test="@file|@url|@entity">
       <xsl:call-template name="showGraphic"/>
@@ -195,7 +195,7 @@
   </xd:doc>
   <xsl:template match="tei:graphic">
     <xsl:if test="@xml:id">
-      <a name="{@xml:id}" class="g"><xsl:comment></xsl:comment></a>
+      <a name="{@xml:id}" class="g"><xsl:comment>&#160;</xsl:comment></a>
     </xsl:if>
     <xsl:call-template name="showGraphic"/>
   </xsl:template>

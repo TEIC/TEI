@@ -129,11 +129,11 @@
 	    </xsl:call-template> 
 	  </xsl:when>
 	  <xsl:when test="@usage='req'">
-	    <hi>
+	    <b>
 	      <xsl:call-template name="i18n">
 		<xsl:with-param name="word">Required</xsl:with-param>
 	      </xsl:call-template>
-	    </hi>
+	    </b>
 	  </xsl:when>
 	  <xsl:when test="@usage='rwa'">
 	    <xsl:call-template  name="i18n">
@@ -851,7 +851,7 @@
 	</xsl:call-template>
       </span>
       </td>
-      <td colspan="2"><xsl:comment></xsl:comment>
+      <td colspan="2"><xsl:comment>&#160;</xsl:comment>
 	<xsl:apply-templates/>
       </td>
     </tr>
@@ -893,7 +893,7 @@
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:specGrp/tei:p">
-    <dt><xsl:comment/></dt>
+    <dt><xsl:comment>&#160;</xsl:comment></dt>
     <dd>
       <xsl:apply-templates/>
     </dd>
@@ -906,7 +906,7 @@
   <xsl:template match="tei:specGrpRef">
     <xsl:choose>
       <xsl:when test="parent::tei:specGrp">
-        <dt><xsl:comment/></dt>
+        <dt><xsl:comment>&#160;</xsl:comment></dt>
         <dd>
 	  <xsl:text>« </xsl:text>
           <a href="{@target}">
@@ -1078,7 +1078,7 @@
     <xsl:choose>
       <xsl:when test="ancestor::tei:elementSpec or ancestor::tei:classSpec or ancestor::tei:macroSpec">
         <tr>
-          <td><xsl:comment></xsl:comment></td>
+          <td><xsl:comment>&#160;</xsl:comment></td>
           <td valign="top">
             <xsl:apply-templates select="." mode="contents"/>
           </td>
