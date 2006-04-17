@@ -20,6 +20,7 @@
 <xsl:import href="odd2htmlp5.xsl"/>
   
 <xsl:param name="autoToc">true</xsl:param>
+<xsl:param name="splitLevel">1</xsl:param>
 <xsl:param name="pageLayout">Simple</xsl:param>
 <xsl:param name="cssFile">tei-print.css</xsl:param>
 <xsl:param name="parentWords">Text Encoding Initiative Consortium</xsl:param>
