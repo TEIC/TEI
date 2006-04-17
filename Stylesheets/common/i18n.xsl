@@ -44,50 +44,6 @@
   </xd:doc>
 <xsl:template name="i18n">
   <xsl:param name="word"/>
-<xsl:choose>
-<xsl:when test="$word='appendixWords' and not($appendixWords='')">
-  <xsl:value-of select="$appendixWords"/>
-</xsl:when>
-<xsl:when test="$word='authorWord' and not($authorWord='')">
-  <xsl:value-of select="$authorWord"/>
-</xsl:when>
-<xsl:when test="$word='biblioWords' and not($biblioWords='')">
-  <xsl:value-of select="$biblioWords"/>
-</xsl:when>
-<xsl:when test="$word='dateWord' and not($dateWord='')">
-  <xsl:value-of select="$dateWord"/>
-</xsl:when>
-<xsl:when test="$word='figureWord' and not($figureWord='')">
-  <xsl:value-of select="$figureWord"/>
-</xsl:when>
-<xsl:when test="$word='figureWords' and not($figureWords='')">
-  <xsl:value-of select="$figureWords"/>
-</xsl:when>
-<xsl:when test="$word='nextWord' and not($nextWord='')">
-  <xsl:value-of select="$nextWord"/>
-</xsl:when>
-<xsl:when test="$word='noteHeading' and not($noteHeading='')">
-  <xsl:value-of select="$noteHeading"/>
-</xsl:when>
-<xsl:when test="$word='previousWord' and not($previousWord='')">
-  <xsl:value-of select="$previousWord"/>
-</xsl:when>
-<xsl:when test="$word='revisedWord' and not($revisedWord='')">
-  <xsl:value-of select="$revisedWord"/>
-</xsl:when>
-<xsl:when test="$word='tableWord' and not($tableWord='')">
-  <xsl:value-of select="$tableWord"/>
-</xsl:when>
-<xsl:when test="$word='tableWords' and not($tableWords='')">
-  <xsl:value-of select="$tableWords"/>
-</xsl:when>
-<xsl:when test="$word='tocWords' and not($tocWords='')">
-  <xsl:value-of select="$tocWords"/>
-</xsl:when>
-<xsl:when test="$word='upWord' and not($upWord='')">
-  <xsl:value-of select="$upWord"/>
-</xsl:when>
-<xsl:otherwise>
   <xsl:for-each select="document('../i18n.xml',document(''))">
     <xsl:choose>
     <xsl:when test="key('KEYS',normalize-space($word))/text[@xml:lang=$lang]">
@@ -98,33 +54,12 @@
     </xsl:otherwise>
     </xsl:choose>
   </xsl:for-each>
-</xsl:otherwise>
-</xsl:choose>
 </xsl:template>
   
 <xd:doc type="string" class="localisation">
 The language to use when generating text (use ISO 2-letter codes)
 </xd:doc>
 <xsl:param name="lang">en</xsl:param>
-
-
-<xd:doc type="string" class="localisation">
-The word for "Appendix"; by default uses language-specific lookup table.
-</xd:doc>
-<xsl:param name="appendixWords"></xsl:param>
-
-
-<xd:doc type="string" class="localisation">
-The word for "Author"; by default uses language-specific lookup table.
-</xd:doc>
-<xsl:param name="authorWord"></xsl:param>
-
-
-<xd:doc type="string" class="localisation">
-The word for "Bibliography"; by default uses language-specific lookup table.
-</xd:doc>
-<xsl:param name="biblioWords"></xsl:param>
-
 
 <xd:doc class="localisation">
     <xd:short>[common] Prefix text before an auto-generated table of contents </xd:short>
@@ -146,12 +81,6 @@ The word for "Bibliography"; by default uses language-specific lookup table.
 </xsl:call-template>
 </xsl:template>
 
-<xd:doc type="string" class="localisation">
-The word for "Date"; by default uses language-specific lookup table.
-</xd:doc>
-<xsl:param name="dateWord"></xsl:param>
-
-
 <xd:doc class="localisation">
     <xd:short>[common] Title for "Feedback"</xd:short>
     <xd:detail> </xd:detail>
@@ -161,43 +90,6 @@ The word for "Date"; by default uses language-specific lookup table.
   <xsl:with-param name="word">feedbackWords</xsl:with-param>
 </xsl:call-template>
 </xsl:template>
-
-<xd:doc type="string" class="localisation">
-The word for "Figure"; by default uses language-specific lookup table.
-</xd:doc>
-<xsl:param name="figureWord"></xsl:param>
-
-
-<xd:doc type="string" class="localisation">
-The word for "Figures"; by default uses language-specific lookup table.
-</xd:doc>
-<xsl:param name="figureWords"></xsl:param>
-
-
-<xd:doc type="string" class="localisation">
-The word for "Next"; by default uses language-specific lookup table.
-</xd:doc>
-<xsl:param name="nextWord"></xsl:param>
-
-
-<xd:doc type="string" class="localisation">
-The word for "Notes"; by default uses language-specific lookup table.
-</xd:doc>
-<xsl:param name="noteHeading">
-</xsl:param>
-
-
-<xd:doc type="string" class="localisation">
-The word for "Previous"; by default uses language-specific lookup table.
-</xd:doc>
-<xsl:param name="previousWord"></xsl:param>
-
-
-<xd:doc type="string" class="localisation">
-The word for "revised"; by default uses language-specific lookup table.
-</xd:doc>
-<xsl:param name="revisedWord"></xsl:param>
-
 
 <xd:doc class="localisation">
     <xd:short>[common] Title for "Search"; by default uses language-specific lookup table. </xd:short>
@@ -209,27 +101,5 @@ The word for "revised"; by default uses language-specific lookup table.
 </xsl:call-template>
 </xsl:template>
 
-<xd:doc type="string" class="localisation">
-The word for "Table"; by default uses language-specific lookup table.
-</xd:doc>
-<xsl:param name="tableWord"></xsl:param>
-
-
-<xd:doc type="string" class="localisation">
-The word for "Tables"; by default uses language-specific lookup table.
-</xd:doc>
-<xsl:param name="tableWords"></xsl:param>
-
-
-<xd:doc type="string" class="localisation">
-The word for "Contents"; by default uses language-specific lookup table.
-</xd:doc>
-<xsl:param name="tocWords"></xsl:param>
-
-
-<xd:doc type="string" class="localisation">
-The word for "Up"; by default uses language-specific lookup table.
-</xd:doc>
-<xsl:param name="upWord"></xsl:param>
 
 </xsl:stylesheet>

@@ -41,7 +41,7 @@
   <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
 </xsl:template>
   <xd:doc>
-    <xd:short>Process elements  tei:anchor|tei:p</xd:short>
+    <xd:short>Process elements  tei:anchor|tei:p in xref mode</xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:anchor|tei:p" mode="xref">
@@ -97,7 +97,7 @@
    <xsl:number level="any"/>
 </xsl:template>
   <xd:doc>
-    <xd:short>Process elements  tei:ptr|tei:xptr</xd:short>
+    <xd:short>Process elements  tei:ptr|tei:xptr in xref mode</xd:short>
     <xd:detail>&#160;</xd:detail>
   </xd:doc>
   <xsl:template match="tei:ptr|tei:xptr">
