@@ -304,10 +304,10 @@
     <xsl:param name="name"/>
     <xsl:choose>
       <xsl:when test="$name">
-        <a name="{$name}"/>
+        <a name="{$name}"><xsl:comment>anchor</xsl:comment></a>
       </xsl:when>
       <xsl:when test="@xml:id">
-        <a name="{@xml:id}"/>
+        <a name="{@xml:id}"><xsl:comment>anchor</xsl:comment></a>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
