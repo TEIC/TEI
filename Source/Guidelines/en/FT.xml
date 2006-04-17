@@ -99,7 +99,7 @@ table schemas is also provided in section <ptr target="#FTTAB2"/>.
 <div3 type="subsection" xml:id="FTTAB1"><head>The TEI Table DTD</head>
 <p>For encoding tables of low to moderate complexity, these Guidelines
 provide the following special purpose elements:
-<specList><specDesc key="table" atts="rows cols"/><specDesc key="row" atts="role"/><specDesc key="cell" atts="role cols rows"/></specList>
+<specList><specDesc key="table" atts="rows cols"/><specDesc key="row"/><specDesc key="cell" /></specList>
  </p>
 <p>The <gi>table</gi> element is defined as a member of the class
 <term>inter</term>; it may therefore appear both within other components
@@ -114,8 +114,8 @@ table simply as a series of cells; this may be useful for tabular
 material which is not presented as a simple matrix.
  </p>
 <p>The attributes <att>rows</att> and <att>cols</att> may be used to
-indicate the size of a table, or to indicate that a particular cell of a
-table spans more than one row or column.  For both tables and cells,
+indicate the size of a table, or to indicate that a particular cell or
+row of a table spans more than one row or column.  For both tables and cells,
 rows and columns are always given in top-to-bottom, left-to-right order.
 These Guidelines do not require that the size of a table be specified;
 for most formatting and many other applications, it will be necessary to
@@ -133,6 +133,10 @@ Guidelines distinguish the roles of <term>label</term> and
 <term>data</term> only, but the encoder may define other roles, such as
 <q>derived</q>, <q>numeric</q>, etc., as appropriate.
  </p>
+<p>These three attributes are provided by the attribute class <ident
+type="class">att.tableDecoration</ident> of which both <gi>cell</gi>
+and <gi>row</gi> are members; see further <ptr target="#STECAT"/>. </p>
+
 <p>The following simple example demonstrates how the data presented as a
 labelled list in section <ptr target="#COLI"/> might be represented by an
 encoder wishing to preserve its original appearance as a table:
