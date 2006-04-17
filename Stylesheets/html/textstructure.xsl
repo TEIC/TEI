@@ -1901,7 +1901,7 @@ $ID: requests a particular page
       </div>
     </div>
     <div id="rh-col">
-      <a name="rh-column"/>
+      <a name="rh-column"><xsl:comment>real top </xsl:comment></a>
       <div id="rh-col-top">
 	<xsl:comment>top of right-hand column</xsl:comment>
 	<xsl:call-template name="rh-col-top"/>
