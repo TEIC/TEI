@@ -1274,8 +1274,8 @@ different elements.
 </p>
 
 <p>The component part macros reference the special purpose
-<soCalled>mix-in</soCalled> macros; the latter must therefore be
-declared first:
+<soCalled>mix-in</soCalled> macros <!-- ; the latter must therefore be
+declared first:-->
 
 <!--
 <specGrp xml:id="DSTECMX" n="Definition of components for combined bases">
@@ -1285,20 +1285,15 @@ declared first:
 &dimixxx.odd;
 </specGrp>
 -->
-See further <ptr target="#STECMX"/>. We can now declare the remaining component
-macros:
+(see further <ptr target="#STECMX"/>). They are declared as follows:
 
-<specGrpRef target="#DSTECMX"/> 
+<!-- specGrpRef target="#DSTECMX"/--> 
 <specGrp>
-<!-- component -->&macro.component;
+&macro.component;
 &macro.componentSeq;
-
-
 &macro.paraContent;
-
 &macro.phraseSeq;
 &macro.specialPara;
-
 &macro.xtext;
 &macro.fileDescPart;
 &macro.glossSeq;
@@ -1311,7 +1306,8 @@ macros:
 <p>The macro <ident type="macro">macro.component</ident> is defined as
 the concatenation of a number of other macros and its actual meaning
 will differ, depending on which modules are in use. This effect is
-achieved by indirection; the macro value refers to the following special-purpose macros:
+achieved by indirection; the macro value refers to the following
+special-purpose macros:
 
 <specList>
 <specDesc key="mix.dictionaries"/>
@@ -1319,12 +1315,12 @@ achieved by indirection; the macro value refers to the following special-purpose
 <specDesc key="mix.spoken"/>
 </specList></p>
 
-<p>These <soCalled>mix-in</soCalled> macros are defined differently in different modules. In the
-<ident type="module">tei</ident> module, they are all defined as the null
-string. In the modules after which they are named, however, each one
-references a class of elements defined by that module which are to be
-mixed into the component macro, but only if the module in question is
-included.</p>
+<p>These <soCalled>mix-in</soCalled> macros are defined differently in
+different modules. In the <ident type="module">tei</ident> module,
+they are all defined as the null string. In the modules after which
+they are named, however, each one references a class of elements
+defined by that module which are to be mixed into the component macro,
+but only if the module in question is included.</p>
 
 <p>For example, when the drama module is included in a schema, the
 macro <ident>mix.drama</ident> references the class
