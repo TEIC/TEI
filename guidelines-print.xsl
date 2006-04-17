@@ -29,25 +29,32 @@
 
 <xsl:template name="maintoc"> 
   <xsl:param name="force"/>
-   <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:front">
-    <xsl:apply-templates 
-      select=".//tei:div1" mode="maketoc">
-     <xsl:with-param name="forcedepth" select="$force"/>
-    </xsl:apply-templates>
+   <xsl:for-each
+       select="ancestor-or-self::tei:TEI/tei:text/tei:front">
+     <ul class="toc{$force}">
+       <xsl:apply-templates 
+	   select=".//tei:div1" mode="maketoc">
+	 <xsl:with-param name="forcedepth" select="$force"/>
+       </xsl:apply-templates>
+     </ul>
    </xsl:for-each>
 
    <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:body">
+     <ul class="toc{$force}">
     <xsl:apply-templates 
       select=".//tei:div1" mode="maketoc">
      <xsl:with-param name="forcedepth" select="$force"/>
     </xsl:apply-templates>
+     </ul>
    </xsl:for-each>
 
    <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:back">
+     <ul class="toc{$force}">
     <xsl:apply-templates 
       select=".//tei:div1" mode="maketoc">
      <xsl:with-param name="forcedepth" select="$force"/>
    </xsl:apply-templates>
+     </ul>
    </xsl:for-each>
 </xsl:template>
   
