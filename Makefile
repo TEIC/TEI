@@ -2,9 +2,9 @@ SUFFIX=xml
 LANGUAGE=en
 PREFIX=/usr
 TEISERVER=http://tei.oucs.ox.ac.uk/Query/
-SOURCETREE=Source/Guidelines
-ROMAOPTS="--localsource=Source/Guidelines/en/driver.xml"
-DRIVER=driver.xml
+SOURCETREE=Source
+DRIVER=guidelines-${LANGUAGE}.xml
+ROMAOPTS="--localsource=Source/${DRIVER}"
 XSL=/usr/share/xml/tei/stylesheet
 XSLP4=/usr/share/xml/teip4/stylesheet
 #XSL=../Stylesheets
@@ -21,7 +21,7 @@ dtds: check
 	-mkdir DTD
 	-rm DTD/*
 	# generate the DTDs
-	xmllint --noent   $(SOURCETREE)/$(LANGUAGE)/$(DRIVER) | \
+	xmllint --noent   ${SOURCETREE}/${DRIVER} | \
 	xsltproc --stringparam outputDir DTD 	\
 	--stringparam lang ${LANGUAGE} \
 	--stringparam TEIC true \
@@ -39,7 +39,7 @@ schemas:check
 	-mkdir Schema
 	-rm Schema/*
 	# generate the relaxNG schemas
-	xmllint --noent   $(SOURCETREE)/$(LANGUAGE)/$(DRIVER) | \
+	xmllint --noent   ${SOURCETREE}/${DRIVER} | \
 	xsltproc --stringparam verbose true \
 	--stringparam lang ${LANGUAGE} \
 	--stringparam TEIC true \
@@ -56,7 +56,7 @@ schemas:check
 	(cd Schema; for i in *rng; do trang $$i `basename $$i .rng`.rnc;done)
 	# improve the positioning of blank lines in the RelaxNG compact syntax output for human readability
 	(for i in Schema/*.rnc; do t=`basename $$i .rnc`.tmp; mv $$i $$t; ./Utilities/fix_rnc_whitespace.perl < $$t > $$i; rm $$t; done)
-	xmllint --noent   $(SOURCETREE)/$(LANGUAGE)/$(DRIVER) | xsltproc extract-sch.xsl - > p5.sch
+	xmllint --noent ${SOURCETREE}/${DRIVER} | xsltproc extract-sch.xsl - > p5.sch
 
 html-web: check
 	perl -p -e "s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+" odd2htmlp5.xsl.model > odd2htmlp5.xsl
@@ -67,9 +67,9 @@ html-web: check
 	--stringparam displayMode rnc \
 	--stringparam lang ${LANGUAGE} \
 	--stringparam outputDir . \
-	guidelines.xsl $(SOURCETREE)/$(LANGUAGE)/$(DRIVER)
-	-cp *.gif *.css Guidelines-web
-	-cp $(SOURCETREE)/$(LANGUAGE)/*/*.png Guidelines
+	guidelines.xsl ${SOURCETREE}/${DRIVER}
+	-cp *.css Guidelines-web
+	-cp $(SOURCETREE)/Images/* Guidelines-web/
 	(cd Guidelines-web; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
 
 html:check subset
@@ -84,13 +84,13 @@ html:check subset
 	--stringparam verbose true \
 	--stringparam outputDir . \
 	--stringparam lang ${LANGUAGE} \
-	guidelines-print.xsl $(SOURCETREE)/$(LANGUAGE)/$(DRIVER)
-	-cp *.gif *.css Guidelines
-	-cp `find $(SOURCETREE)/$(LANGUAGE) -name "*.png"` Guidelines
+	guidelines-print.xsl ${SOURCETREE}/${DRIVER}
+	-cp *.css Guidelines
+	-cp $(SOURCETREE)/Images/* Guidelines/
 	(cd Guidelines; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
 
 xml: check subset
-	xmllint --noent   $(SOURCETREE)/$(LANGUAGE)/$(DRIVER) | perl Utilities/cleanrnc.pl | \
+	xmllint --noent ${SOURCETREE}/${DRIVER} | perl Utilities/cleanrnc.pl | \
 	xsltproc  -o Guidelines.xml \
 	--stringparam displayMode rnc  \
 	${XSL}/odds/odd2lite.xsl -
@@ -118,10 +118,10 @@ valid: check
 #	with grep -v. Note that we discard *all* such messages, even
 #	though fewer than 500 of the 17,576 possible combinations
 #	(i.e. < 3%) are valid codes.
-	-jing -t p5odds.rng $(SOURCETREE)/$(LANGUAGE)/$(DRIVER) \
+	-jing -t p5odds.rng ${SOURCETREE}/${DRIVER} \
 	 | grep -v ": error: Illegal xml:lang value \"[A-Za-z][A-Za-z][A-Za-z]\"\.$$"
-	@echo --------- xx/rnv
-	-xmllint --noent  $(SOURCETREE)/$(LANGUAGE)/$(DRIVER) > Source.xml
+	@echo --------- rnv
+	-xmllint --noent  ${SOURCETREE}/${DRIVER} > Source.xml
 	-rnv -v p5odds.rnc Source.xml && rm Source.xml
 	@echo --------- nrl
 #	In addition to erroneously reporting xml:lang= 3-letter
@@ -134,20 +134,20 @@ valid: check
 #	required to make it finished) we end up throwing out all such
 #	messages via the grep -v command so we're not annoyed by the
 #	over 800 that are not really problems.
-	-jing p5nrl.xml $(SOURCETREE)/$(LANGUAGE)/$(DRIVER) \
+	-jing p5nrl.xml ${SOURCETREE}/${DRIVER} \
 	 | grep -v ": error: Illegal xml:lang value \"[A-Za-z][A-Za-z][A-Za-z]\"\.$$" \
 	 | grep -v ': error: unfinished element$$'
 	@echo --------- XSLT validator
-	xsltproc validator.xsl $(SOURCETREE)/$(LANGUAGE)/$(DRIVER) >& tmp && sed 's/TEI...\/text...\/body...\///' tmp && rm tmp
-	@echo --------- xmllint RELAXNG TEST REMOVED
+	xsltproc validator.xsl ${SOURCETREE}/${DRIVER} >& tmp && sed 's/TEI...\/text...\/body...\///' tmp && rm tmp
+	@echo --------- xmllint RelaxNG test REMOVED
 #	@xmllint --version
-#	-xmllint  --relaxng p5odds.rng --noent --noout $(SOURCETREE)/$(LANGUAGE)/$(DRIVER)
+#	-xmllint  --relaxng p5odds.rng --noent --noout ${SOURCETREE}/${DRIVER}
 
 test:
 	(cd Test; make)
 
 split:
-	(mkdir Split; cd Split; xmllint --noent   ../$(SOURCETREE)/$(LANGUAGE)/$(DRIVER) | xsltproc ../divsplit.xsl -)
+	(mkdir Split; cd Split; xmllint --noent   ../${SOURCETREE}/${DRIVER} | xsltproc ../divsplit.xsl -)
 
 oddschema: 
 	roma $(ROMAOPTS) --nodtd --noxsd --xsl=$(XSL)/ --teiserver=$(TEISERVER) p5odds.odd .
@@ -171,16 +171,16 @@ subset:
 	@echo '    </tei:TEI>' >> subset.xsl
 	@echo '</xsl:template>' >> subset.xsl
 	@echo '</xsl:stylesheet>' >> subset.xsl
-	xsltproc -o p5subset.xml subset.xsl $(SOURCETREE)/$(LANGUAGE)/$(DRIVER) || die "failed to extract subset from $(DRIVER) "
+	xsltproc -o p5subset.xml subset.xsl ${SOURCETREE}/${DRIVER} || die "failed to extract subset from $(DRIVER) "
 	rm subset.xsl
 
 fascicule: subset 
 	cp fasc-head.xml FASC-$(CHAP).xml
-	perl -p -i -e "s+\"fileents.dtd+\"$(SOURCETREE)/$(LANGUAGE)/fileents.dtd+" FASC-$(CHAP).xml
-	perl -p -i -e "s+\"ents.dtd+\"$(SOURCETREE)/$(LANGUAGE)/ents.dtd+" FASC-$(CHAP).xml
-	cat `find $(SOURCETREE)/$(LANGUAGE) -iname $(CHAP).$(SUFFIX)`  >> FASC-$(CHAP).xml
+#	perl -p -i -e "s+\"internal-entities.dtd+\"$(SOURCETREE)/$(LANGUAGE)/internal-entities.dtd+" FASC-$(CHAP).xml
+#	perl -p -i -e "s+\"external-entities.dtd+\"$(SOURCETREE)/$(LANGUAGE)/external-entities.dtd+" FASC-$(CHAP).xml
+	cat `find $(SOURCETREE)/Chapters/$(LANGUAGE) -iname $(CHAP).$(SUFFIX)`  >> FASC-$(CHAP).xml
 	cat fasc-tail.xml  >> FASC-$(CHAP).xml
-	export H=`pwd`; xmllint --noent    FASC-$(CHAP).xml | xsltproc \
+	export H=`pwd`; xmllint --noent FASC-$(CHAP).xml | xsltproc \
 	-o FASC-$(CHAP)-Guidelines/index.html \
 	--stringparam localsource `pwd`/p5subset.xml \
 	--stringparam cssFile tei.css \
