@@ -920,8 +920,12 @@ class roma
 
 
 	//Parameters
-	$aszParam = array( 'element' => $_REQUEST[ 'element' ], 'module' => $_REQUEST[ 'module' ], 'class' => $_REQUEST[ 'class' ], 'type' => $_REQUEST[ 'type' ], 'added' => $_REQUEST[ 'added' ] );
-
+	$aszParam = array( 
+		  'element' => $_REQUEST[ 'element' ], 
+		  'module' => $_REQUEST[ 'module' ], 
+		  'class' => $_REQUEST[ 'class' ], 
+		  'type' => $_REQUEST[ 'type' ], 
+		  'added' => $_REQUEST[ 'added' ] );
 	//if attribute specified
 	if( $_REQUEST[ 'attribute' ] != '' )
 	  {

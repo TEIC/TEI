@@ -2211,12 +2211,23 @@ class romaDom extends domDocument
 	if ( $bBar )
 	    $this->updateProgressBar( '50' );
 
+	$oTidy = new tidy();
+	$aszOptions = array( 'indent' => true,
+			     'indent-spaces' => 1,
+			     'wrap' => 72,
+			     'input-xml' => true,
+			     'output-xml' => true
+			     );
+	$oTidy->parseString( $oRNG->SaveXML(), $aszOptions );
+
+	$oTidy->cleanRepair();
+
 	//Save File
 	$szID = md5( uniqid(rand(), true ) );
 	
 	$szInputFile = roma_temporaryFilesDir . '/' . $szID . '.tmp';    
 	$szOutputFile = roma_temporaryFilesDir . '/' . $szID . '.rnc';    
-	file_put_contents( $szInputFile , $oRNG ->SaveXML() );
+	file_put_contents( $szInputFile , $oTidy->value);
 
 	if ( $bBar )
 	    $this->updateProgressBar( '70' );

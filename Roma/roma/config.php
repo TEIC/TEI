@@ -3,7 +3,7 @@
 // Programm calls
 //
 // Defines how to call trang
-define( 'roma_trang', 'trang' );
+define( 'roma_trang', '/usr/bin/trang' );
 
 // Defines how to call fop
 define( 'roma_fop', 'fop' );

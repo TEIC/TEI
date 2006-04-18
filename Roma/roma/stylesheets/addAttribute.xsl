@@ -17,7 +17,7 @@ Description
   <xsl:param name="module"/>
   <xsl:param name="class"/>
   <xsl:param name="type"/>
-  <xsl:param name="added"/>
+  <xsl:param name="added">true</xsl:param>
   <xsl:param name="attributeName"/>
   <xsl:param name="MESSAGE"/>
   <xsl:param name="ERRORS"/>
@@ -49,16 +49,15 @@ Description
 	   </input>
 	   <input type="hidden" name="added">
 	     <xsl:attribute name="value">
-	       <xsl:if
-		   test="not(string(//currentAttribute/attDef/added)='')">
+	       <xsl:choose>
+		 <xsl:when test="not(//currentAttribute/attDef/added='')">
 		 <xsl:value-of
 		     select="//currentAttribute/attDef/added"/>
-	       </xsl:if>
-	       <xsl:if  
-		   test="string(//currentAttribute/attDef/added)=''
-			 and not($added='')">
-		 <xsl:value-of  select="$added"/>
-	       </xsl:if>
+		 </xsl:when>
+		 <xsl:otherwise>
+		   <xsl:value-of  select="$added"/>
+		 </xsl:otherwise>
+	       </xsl:choose>
 	     </xsl:attribute>
 	   </input>
 	   <table>
