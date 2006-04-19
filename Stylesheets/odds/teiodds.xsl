@@ -1629,6 +1629,9 @@
     <exsl:document method="xml" indent="yes"
 		   href="{$outputDir}/{@ident}{$suffix}">
       <xsl:copy-of select="$body"/>
+	  <xsl:fallback>
+	    <xsl:copy-of select="$body"/>
+	  </xsl:fallback>
     </exsl:document>
   </xsl:when>
   <xsl:otherwise>
