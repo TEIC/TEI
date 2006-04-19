@@ -93,73 +93,84 @@
       <xsl:message>   file [<xsl:value-of select="@ident"/>]
       </xsl:message>
     </xsl:if>
-    <exsl:document method="text" href="{$outputDir}/{@ident}.dtd">
-      <xsl:call-template name="dtdComment">
-	<xsl:with-param name="text">
-	  TEI P5 DTD module <xsl:value-of select="@ident"/>. 
-	  Generated <xsl:value-of select="edate:date-time()"/>
-	  <xsl:call-template name="copyright"/>
-	</xsl:with-param>
-      </xsl:call-template>
-      <xsl:choose>
-	<xsl:when test="@type='core'">
-	  <xsl:if test="$TEIC='true'">
-	    <xsl:text>&lt;!ENTITY % TEI.extensions.ent '' &gt;&#10;</xsl:text>
-	    <xsl:text>%TEI.extensions.ent;&#10;</xsl:text>
-	  </xsl:if>
-	  <xsl:call-template name="dtdComment">
-	    <xsl:with-param name="text">list of element names</xsl:with-param>
-	  </xsl:call-template>
-	  <xsl:if test="$parameterize='true'">
-	    <xsl:text>&lt;!ENTITY % NS '</xsl:text>
-	    <xsl:value-of select="$nsPrefix"/>
-	    <xsl:text>' &gt;&#10;</xsl:text>
-	    <xsl:call-template name="NameList"/>
-	  </xsl:if>
-	  <xsl:call-template name="datatypeMacros"/>
-	  <xsl:if test="$TEIC='true'">
-	    <xsl:call-template name="omissability"/>
-	  </xsl:if>
-	  <xsl:call-template name="predeclaredClasses"/>
-	  <xsl:call-template name="predeclaredMacros"/>
-	  <xsl:call-template name="normalClasses"/>
-	  <xsl:call-template name="entityModules"/>
-	  <xsl:call-template name="normalMacros"/>
-	  <xsl:if test="$TEIC='true'">
-	    <xsl:text>&#10;&lt;!ENTITY % TEI.extensions.dtd '' &gt;&#10;</xsl:text>
-	    <xsl:text>%TEI.extensions.dtd;&#10;</xsl:text>
-	  </xsl:if>
-	  <xsl:apply-templates select="key('ElementModule',@ident)"  
-			       mode="tangle">      
+    <xsl:call-template name="generateOutput">
+      <xsl:with-param name="suffix">.dtd</xsl:with-param>
+      <xsl:with-param name="body">
+	<xsl:call-template name="dtdComment">
+	  <xsl:with-param name="text">
+	    TEI P5 DTD module <xsl:value-of select="@ident"/>. 
+	    Generated 
+	    <xsl:call-template name="showDate"/>.
+	    <xsl:if test="$TEIC='true'">
+	      <xsl:call-template name="copyright"/>
+	    </xsl:if>
+	    <xsl:apply-templates select="tei:desc" mode="doc"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+	<xsl:choose>
+	  <xsl:when test="@type='core'">
+	    <xsl:if test="$TEIC='true'">
+	      <xsl:text>&lt;!ENTITY % TEI.extensions.ent '' &gt;&#10;</xsl:text>
+	      <xsl:text>%TEI.extensions.ent;&#10;</xsl:text>
+	    </xsl:if>
+	    <xsl:call-template name="dtdComment">
+	      <xsl:with-param name="text">list of element names</xsl:with-param>
+	    </xsl:call-template>
+	    <xsl:if test="$parameterize='true'">
+	      <xsl:text>&lt;!ENTITY % NS '</xsl:text>
+	      <xsl:value-of select="$nsPrefix"/>
+	      <xsl:text>' &gt;&#10;</xsl:text>
+	      <xsl:call-template name="NameList"/>
+	    </xsl:if>
+	    <xsl:call-template name="datatypeMacros"/>
+	    <xsl:if test="$TEIC='true'">
+	      <xsl:call-template name="omissability"/>
+	    </xsl:if>
+	    <xsl:call-template name="predeclaredClasses"/>
+	    <xsl:call-template name="predeclaredMacros"/>
+	    <xsl:call-template name="normalClasses"/>
+	    <xsl:call-template name="entityModules"/>
+	    <xsl:call-template name="normalMacros"/>
+	    <xsl:if test="$TEIC='true'">
+	      <xsl:text>&#10;&lt;!ENTITY % TEI.extensions.dtd '' &gt;&#10;</xsl:text>
+	      <xsl:text>%TEI.extensions.dtd;&#10;</xsl:text>
+	    </xsl:if>
+	    <xsl:apply-templates select="key('ElementModule',@ident)"  
+				 mode="tangle">      
+	      <xsl:sort select="@ident"/>
+	    </xsl:apply-templates>
+	    <xsl:call-template name="elementModules"/>	  
+	  </xsl:when>
+	  <xsl:otherwise>
+	    
+	    <xsl:apply-templates select="key('ElementModule',@ident)"  mode="tangle">      
 	    <xsl:sort select="@ident"/>
-	  </xsl:apply-templates>
-	  <xsl:call-template name="elementModules"/>	  
-	</xsl:when>
-	<xsl:otherwise>
-	  
-	  <xsl:apply-templates select="key('ElementModule',@ident)"  mode="tangle">      
-	    <xsl:sort select="@ident"/>
-	  </xsl:apply-templates>
-	</xsl:otherwise>
-      </xsl:choose>
-	
-    </exsl:document>      
-
+	    </xsl:apply-templates>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:with-param>
+    </xsl:call-template>
     <xsl:if test="not(@type='core')">
-      <exsl:document method="text" href="{$outputDir}/{@ident}-decl.dtd">
+    <xsl:call-template name="generateOutput">
+      <xsl:with-param name="suffix">.dtd</xsl:with-param>
+      <xsl:with-param name="body">
       <xsl:call-template name="dtdComment">
 	<xsl:with-param name="text">
-	  TEI P5 entitiy declaration module for <xsl:value-of select="@ident"/>
-	  Generated <xsl:value-of select="edate:date-time()"/>
+	  TEI P5 entity declaration module for <xsl:value-of select="@ident"/>.
+	  Generated <xsl:call-template name="showDate"/>.
 	  <xsl:text>&#10;</xsl:text>
-	  <xsl:call-template name="copyright"/>
+	  <xsl:if test="$TEIC='true'">
+	    <xsl:call-template name="copyright"/>
+	  </xsl:if>
+	  <xsl:apply-templates select="tei:desc" mode="doc"/>
 	</xsl:with-param>
       </xsl:call-template>
       <xsl:call-template name="datatypeMacros"/>
       <xsl:call-template name="normalClasses"/>
       <xsl:call-template name="normalMacros"/>
       <xsl:call-template name="predeclaredMacros"/>
-      </exsl:document>
+      </xsl:with-param>
+    </xsl:call-template>
     </xsl:if>
     
   </xsl:for-each>
@@ -341,32 +352,32 @@
 
 <xsl:template match="tei:schemaSpec">
 
-<xsl:variable name="processor">
-   <xsl:value-of select="system-property('xsl:vendor')"/>
-</xsl:variable>
-
-<xsl:choose>
-  <xsl:when test="$outputDir='' or $outputDir='-'">
-    <xsl:call-template name="schemaOut"/>
-  </xsl:when>
-  <xsl:when test="contains($processor,'SAXON')">
-    <xsl:call-template name="schemaOut"/>
-  </xsl:when>
-  <xsl:otherwise>
-    <exsl:document method="text" href="{$outputDir}/{@ident}.dtd">
+  <xsl:choose>
+    <xsl:when test="$outputDir='' or $outputDir='-'">
       <xsl:call-template name="schemaOut"/>
-    </exsl:document>
-  </xsl:otherwise>
-</xsl:choose>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:call-template name="generateOutput">
+	<xsl:with-param name="suffix">.dtd</xsl:with-param>
+	<xsl:with-param name="body">
+	  <xsl:call-template name="schemaOut"/>
+	</xsl:with-param>
+      </xsl:call-template>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template name="schemaOut">
-  <xsl:if test="$TEIC='true'">
-    <xsl:text>&lt;!-- TEI P5 DTD. Generated </xsl:text>
-    <xsl:value-of select="edate:date-time()"/>
-    <xsl:call-template name="copyright"/>
-    <xsl:text>&#10;--&gt;&#10;</xsl:text>
-  </xsl:if>
+  <xsl:call-template name="dtdComment">
+    <xsl:with-param name="text">
+    <xsl:text>DTD Generated </xsl:text>
+    <xsl:call-template name="showDate"/>.
+    <xsl:if test="$TEIC='true'">
+      <xsl:call-template name="copyright"/>
+    </xsl:if>
+    <xsl:apply-templates select="tei:desc" mode="doc"/>
+    </xsl:with-param>
+  </xsl:call-template>
   <xsl:if test="$parameterize='true'">
     <xsl:text>&lt;!ENTITY % NS '</xsl:text>
     <xsl:value-of select="$nsPrefix"/>
@@ -536,6 +547,8 @@
 
 <xsl:template name="content">
   <xsl:param name="sep"/>
+    <xsl:choose>
+    <xsl:when test="function-available('exsl:node-set')">
   <xsl:variable name="parent" select="local-name(..)"/>
   <xsl:variable name="contentbody">
     <xsl:variable name="members">
@@ -579,6 +592,7 @@
       </xsl:for-each>
     </M>
     </xsl:variable>
+
     <xsl:for-each select="exsl:node-set($members)/M">
       <xsl:choose>
 	<xsl:when test="starts-with(N[1],'(') and count(N)=1"/>
@@ -633,7 +647,11 @@
       <xsl:value-of select="$contentbody"/>
     </xsl:otherwise>
   </xsl:choose>
-
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:message>sorry no exsl:node-set available</xsl:message>
+    </xsl:otherwise>
+    </xsl:choose>
 </xsl:template>
 
 
@@ -1400,11 +1418,9 @@
 
 <xsl:template name="dtdComment">
 <xsl:param name="text"/>
-<xsl:if test="$TEIC='true'">
-  <xsl:text>&#10;&lt;!--&#10;</xsl:text>
-  <xsl:value-of select="$text"/>
-  <xsl:text>&#10;--&gt;&#10;</xsl:text>
-</xsl:if>
+<xsl:text>&#10;&lt;!--&#10;</xsl:text>
+<xsl:value-of select="$text"/>
+<xsl:text>&#10;--&gt;&#10;</xsl:text>
 </xsl:template>
 
 </xsl:stylesheet>

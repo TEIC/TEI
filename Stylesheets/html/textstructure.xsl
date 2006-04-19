@@ -1670,6 +1670,9 @@ $ID: requests a particular page
 		       doctype-system="{$doctypeSystem}" 
 		       href="{$outName}">
           <xsl:copy-of select="$content"/>
+	  <xsl:fallback>
+	    <xsl:copy-of select="$content"/>
+	  </xsl:fallback>
         </exsl:document>
         <xsl:if test="$verbose='true'">
           <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
@@ -1684,6 +1687,9 @@ $ID: requests a particular page
 		       doctype-system="{$doctypeSystem}" 
 		       href="{$outName}">
           <xsl:copy-of select="$content"/>
+	  <xsl:fallback>
+	    <xsl:copy-of select="$content"/>
+	  </xsl:fallback>
 	</saxon7:output>
         <xsl:if test="$verbose='true'">
           <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
@@ -1699,6 +1705,9 @@ $ID: requests a particular page
 		       doctype-system="{$doctypeSystem}" 
 		       href="{$outName}">
           <xsl:copy-of select="$content"/>
+	  <xsl:fallback>
+	    <xsl:copy-of select="$content"/>
+	  </xsl:fallback>
         </saxon6:output>
         <xsl:if test="$verbose='true'">
           <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
@@ -1710,6 +1719,9 @@ $ID: requests a particular page
         </xsl:if>
         <xalan:write xmlns:xalan="org.apache.xalan.xslt.extensions.Redirect" xsl:extension-element-prefixes="xalan" file="{$outName}">
           <xsl:copy-of select="$content"/>
+	  <xsl:fallback>
+	    <xsl:copy-of select="$content"/>
+	  </xsl:fallback>
         </xalan:write>
         <xsl:if test="$verbose='true'">
           <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>

@@ -101,7 +101,7 @@
       <xsl:choose>
 	<xsl:when test=".='date'">
 	  This formatted version of the Guidelines was 
-	  created on <xsl:value-of select="edate:date-time()"/>.
+	  created on <xsl:call-template name="showDate"/>.
 	</xsl:when>
       </xsl:choose>
     </xsl:if>
@@ -289,7 +289,9 @@
 		    <notAllowed  xmlns="http://relaxng.org/ns/structure/1.0"/>
 		  </xsl:otherwise>
 		</xsl:choose>
-		<empty xmlns="http://relaxng.org/ns/structure/1.0"/>
+		<xsl:if test="$TEIC='true'">
+		  <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
+		</xsl:if>
 	      </define>
 	      <xsl:apply-templates select="tei:attList" mode="tangle">
 		<xsl:with-param name="element" select="@ident"/>
@@ -538,8 +540,9 @@
     
     <!-- place holder to make sure something gets into the
 	     pattern -->
-    <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
-
+    <xsl:if test="$TEIC='true'">
+      <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
+    </xsl:if>
 <!--
     <xsl:choose>
       <xsl:when test="$TEIC='true'">
@@ -1590,5 +1593,65 @@
   <xsl:template name="typewriter"/>
   
   <xsl:template name="refdoc"/>
+
+<xsl:template name="generateOutput">
+<xsl:param name="body"/>
+<xsl:param name="suffix"/>
+
+<xsl:variable name="processor">
+   <xsl:value-of select="system-property('xsl:vendor')"/>
+</xsl:variable>
+
+<xsl:choose>
+  <xsl:when test="$outputDir='' or $outputDir='-'">
+      <xsl:copy-of select="$body"/>
+  </xsl:when>
+  <xsl:when test="contains($processor,'SAXON')">
+      <xsl:copy-of select="$body"/>
+  </xsl:when>
+  <xsl:when test="element-available('exsl:document') and $suffix='.dtd'">
+    <xsl:if test="$verbose='true'">
+    <xsl:message>   File [<xsl:value-of select="$outputDir"/>/<xsl:value-of select="@ident"/><xsl:value-of select="$suffix"/>]      </xsl:message>
+    </xsl:if>
+    <exsl:document method="text"
+		   href="{$outputDir}/{@ident}{$suffix}">
+      <xsl:copy-of select="$body"/>
+	  <xsl:fallback>
+	    <xsl:copy-of select="$content"/>
+	  </xsl:fallback>
+
+    </exsl:document>
+  </xsl:when>
+  <xsl:when test="element-available('exsl:document')">
+    <xsl:if test="$verbose='true'">
+    <xsl:message>   File [<xsl:value-of select="$outputDir"/>/<xsl:value-of select="@ident"/><xsl:value-of select="$suffix"/>]      </xsl:message>
+    </xsl:if>
+    <exsl:document method="xml" indent="yes"
+		   href="{$outputDir}/{@ident}{$suffix}">
+      <xsl:copy-of select="$body"/>
+    </exsl:document>
+  </xsl:when>
+  <xsl:otherwise>
+      <xsl:copy-of select="$body"/>
+  </xsl:otherwise>
+</xsl:choose>
+</xsl:template>
+
+ <xsl:template name="showDate">
+   <xsl:variable name="processor">
+     <xsl:value-of select="system-property('xsl:vendor')"/>
+   </xsl:variable>
+   <xsl:choose>
+     <xsl:when test="function-available('edate:date-time')">
+       <xsl:value-of select="edate:date-time()"/>
+     </xsl:when>
+     <xsl:when test="contains($processor,'SAXON')">
+       <xsl:value-of xmlns:Date="/java.util.Date" select="Date:toString(Date:new())"/>
+     </xsl:when>
+     <xsl:otherwise>
+       (unknown date)
+     </xsl:otherwise>
+   </xsl:choose>
+</xsl:template>
   
 </xsl:stylesheet>

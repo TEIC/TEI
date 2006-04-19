@@ -80,38 +80,14 @@
 </xsl:choose>
 </xsl:template>
 
-<xsl:template name="generateOutput">
-<xsl:param name="body"/>
-<xsl:variable name="processor">
-   <xsl:value-of select="system-property('xsl:vendor')"/>
-</xsl:variable>
-
-<xsl:choose>
-  <xsl:when test="$outputDir='' or $outputDir='-'">
-      <xsl:copy-of select="$body"/>
-  </xsl:when>
-  <xsl:when test="contains($processor,'SAXON')">
-      <xsl:copy-of select="$body"/>
-  </xsl:when>
-  <xsl:otherwise>
-    <xsl:if test="$verbose='true'">
-    <xsl:message>   File [<xsl:value-of select="@ident"/>]      </xsl:message>
-    </xsl:if>
-    <exsl:document method="xml" indent="yes"
-		   href="{$outputDir}/{@ident}.rng">
-      <xsl:copy-of select="$body"/>
-    </exsl:document>
-  </xsl:otherwise>
-</xsl:choose>
-</xsl:template>
-
 <xsl:template match="tei:schemaSpec" >
     <xsl:variable name="filename" select="@ident"/>
     <xsl:if test="$verbose='true'">
     <xsl:message>   process schemaSpec [<xsl:value-of select="@ident"/>]      </xsl:message>
     </xsl:if>
-
+    
     <xsl:call-template name="generateOutput">
+      <xsl:with-param name="suffix">.rng</xsl:with-param>
       <xsl:with-param name="body">
 	<rng:grammar
 	 xmlns:teix="http://www.tei-c.org/ns/Examples"
@@ -130,11 +106,11 @@
 	      <xsl:otherwise></xsl:otherwise>
 	    </xsl:choose>
 	  </xsl:attribute>	  
-	  <xsl:comment>
-	    <xsl:text>Schema generated </xsl:text>
-	    <xsl:value-of  select="edate:date-time()"/>
-	    <xsl:text>&#10;</xsl:text>
-	  </xsl:comment>
+	    <xsl:comment>
+	      <xsl:text>Schema generated from ODD source </xsl:text>
+	      <xsl:call-template name="showDate"/>.
+	      <xsl:apply-templates select="tei:desc" mode="doc"/>
+	    </xsl:comment>
 	    <xsl:if test="$TEIC='true'">
 	      <xsl:comment>
 		<xsl:call-template name="copyright"/>
@@ -222,6 +198,7 @@
       </xsl:when>
       <xsl:otherwise>
 	<xsl:call-template name="generateOutput">
+	  <xsl:with-param name="suffix">.rng</xsl:with-param>
 	  <xsl:with-param name="body">
 	    <rng:grammar
 		xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -230,8 +207,11 @@
 		datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
 	      <xsl:comment>
 		<xsl:text>Schema generated </xsl:text>
-		<xsl:value-of  select="edate:date-time()"/>
-		<xsl:call-template name="copyright"/>
+		<xsl:call-template name="showDate"/>..
+		<xsl:if test="$TEIC='true'">
+		  <xsl:call-template name="copyright"/>
+		</xsl:if>
+		<xsl:apply-templates select="tei:desc" mode="doc"/>
 	      </xsl:comment>
 	      <xsl:call-template name="moduleSpec-body"/>	  
 	    </rng:grammar>

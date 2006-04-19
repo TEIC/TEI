@@ -243,7 +243,7 @@
    <xsl:value-of xmlns:Date="/java.util.Date" select="Date:toString(Date:new())"/>
  </xsl:when>
  <xsl:otherwise>
-   (unknown)
+   (unknown date)
   </xsl:otherwise>
  </xsl:choose>
 </xsl:template>

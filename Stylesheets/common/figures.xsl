@@ -40,10 +40,10 @@
   <xsl:template match="tei:figure" mode="xref">
   <xsl:choose>
     <xsl:when test="$numberFigures='true'">
-      <xsl:if test="not($figureWord='')">
-	<xsl:call-template name="i18n"><xsl:with-param name="word">figureWord</xsl:with-param></xsl:call-template>
-	<xsl:text> </xsl:text>
-      </xsl:if>
+      <xsl:call-template name="i18n">
+	<xsl:with-param name="word">figureWord</xsl:with-param>
+      </xsl:call-template>
+      <xsl:text> </xsl:text>
       <xsl:choose>
 	<xsl:when test="ancestor::tei:front">
 	  <xsl:number level="any" count="tei:figure[tei:head]" from="tei:front"/>

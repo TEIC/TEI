@@ -1556,7 +1556,9 @@
         <xsl:otherwise>
           <div class="notes">
             <div class="noteHeading">
-              <xsl:value-of select="$noteHeading"/>
+	      <xsl:call-template name="i18n">
+		<xsl:with-param name="word">noteHeading</xsl:with-param>
+	      </xsl:call-template>
             </div>
             <xsl:apply-templates select="descendant::tei:note[@place!='inline']" mode="printnotes"/>
           </div>
