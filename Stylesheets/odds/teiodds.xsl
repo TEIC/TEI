@@ -1617,7 +1617,7 @@
 		   href="{$outputDir}/{@ident}{$suffix}">
       <xsl:copy-of select="$body"/>
 	  <xsl:fallback>
-	    <xsl:copy-of select="$content"/>
+	    <xsl:copy-of select="$body"/>
 	  </xsl:fallback>
 
     </exsl:document>
