@@ -1609,30 +1609,27 @@
   <xsl:when test="contains($processor,'SAXON')">
       <xsl:copy-of select="$body"/>
   </xsl:when>
-  <xsl:when test="element-available('exsl:document') and $suffix='.dtd'">
+  <xsl:when test="$suffix='.dtd' and element-available('exsl:document')">
     <xsl:if test="$verbose='true'">
     <xsl:message>   File [<xsl:value-of select="$outputDir"/>/<xsl:value-of select="@ident"/><xsl:value-of select="$suffix"/>]      </xsl:message>
     </xsl:if>
-    <exsl:document method="text"
-		   href="{$outputDir}/{@ident}{$suffix}">
-      <xsl:copy-of select="$body"/>
-	  <xsl:fallback>
-	    <xsl:copy-of select="$body"/>
-	  </xsl:fallback>
-
-    </exsl:document>
+    <xsl:if test="element-available('exsl:document')">
+      <exsl:document method="text"
+		     href="{$outputDir}/{@ident}{$suffix}">
+	<xsl:copy-of select="$body"/>
+      </exsl:document>
+    </xsl:if>
   </xsl:when>
   <xsl:when test="element-available('exsl:document')">
     <xsl:if test="$verbose='true'">
     <xsl:message>   File [<xsl:value-of select="$outputDir"/>/<xsl:value-of select="@ident"/><xsl:value-of select="$suffix"/>]      </xsl:message>
     </xsl:if>
-    <exsl:document method="xml" indent="yes"
-		   href="{$outputDir}/{@ident}{$suffix}">
-      <xsl:copy-of select="$body"/>
-	  <xsl:fallback>
-	    <xsl:copy-of select="$body"/>
-	  </xsl:fallback>
+    <xsl:if test="element-available('exsl:document')">
+      <exsl:document method="xml" indent="yes"
+		     href="{$outputDir}/{@ident}{$suffix}">
+	<xsl:copy-of select="$body"/>
     </exsl:document>
+    </xsl:if>
   </xsl:when>
   <xsl:otherwise>
       <xsl:copy-of select="$body"/>

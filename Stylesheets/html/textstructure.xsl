@@ -1664,16 +1664,15 @@ $ID: requests a particular page
         <xsl:if test="$verbose='true'">
           <xsl:message>Opening <xsl:value-of select="$outName"/> with exsl:document</xsl:message>
         </xsl:if>
-        <exsl:document encoding="{$outputEncoding}" 
+	<xsl:if test="element-available('exsl:document')">
+	  <exsl:document encoding="{$outputEncoding}" 
 		       method="{$outputMethod}" 
 		       doctype-public="{$doctypePublic}" 
 		       doctype-system="{$doctypeSystem}" 
 		       href="{$outName}">
-          <xsl:copy-of select="$content"/>
-	  <xsl:fallback>
 	    <xsl:copy-of select="$content"/>
-	  </xsl:fallback>
         </exsl:document>
+	</xsl:if>
         <xsl:if test="$verbose='true'">
           <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
         </xsl:if>
