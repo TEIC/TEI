@@ -90,11 +90,12 @@
   <xsl:for-each select="key('Modules',1)">
     <xsl:sort select="@ident" order="descending"/>
     <xsl:if test="$verbose='true'">
-      <xsl:message>   file [<xsl:value-of select="@ident"/>]
+      <xsl:message>   File [<xsl:value-of select="@ident"/>]
       </xsl:message>
     </xsl:if>
     <xsl:call-template name="generateOutput">
       <xsl:with-param name="suffix">.dtd</xsl:with-param>
+      <xsl:with-param name="method">text</xsl:with-param>
       <xsl:with-param name="body">
 	<xsl:call-template name="dtdComment">
 	  <xsl:with-param name="text">
@@ -152,7 +153,8 @@
     </xsl:call-template>
     <xsl:if test="not(@type='core')">
     <xsl:call-template name="generateOutput">
-      <xsl:with-param name="suffix">.dtd</xsl:with-param>
+      <xsl:with-param name="suffix">-decl.dtd</xsl:with-param>
+      <xsl:with-param name="method">text</xsl:with-param>
       <xsl:with-param name="body">
       <xsl:call-template name="dtdComment">
 	<xsl:with-param name="text">
@@ -359,6 +361,7 @@
     <xsl:otherwise>
       <xsl:call-template name="generateOutput">
 	<xsl:with-param name="suffix">.dtd</xsl:with-param>
+      <xsl:with-param name="method">text</xsl:with-param>
 	<xsl:with-param name="body">
 	  <xsl:call-template name="schemaOut"/>
 	</xsl:with-param>

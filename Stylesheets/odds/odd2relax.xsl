@@ -87,6 +87,7 @@
     </xsl:if>
     
     <xsl:call-template name="generateOutput">
+      <xsl:with-param name="method">xml</xsl:with-param>
       <xsl:with-param name="suffix">.rng</xsl:with-param>
       <xsl:with-param name="body">
 	<rng:grammar
@@ -198,6 +199,7 @@
       </xsl:when>
       <xsl:otherwise>
 	<xsl:call-template name="generateOutput">
+	  <xsl:with-param name="method">xml</xsl:with-param>
 	  <xsl:with-param name="suffix">.rng</xsl:with-param>
 	  <xsl:with-param name="body">
 	    <rng:grammar

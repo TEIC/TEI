@@ -1599,6 +1599,7 @@
 <xsl:template name="generateOutput">
 <xsl:param name="body"/>
 <xsl:param name="suffix"/>
+<xsl:param name="method">xml</xsl:param>
 
 <xsl:variable name="processor">
    <xsl:value-of select="system-property('xsl:vendor')"/>
@@ -1611,7 +1612,7 @@
   <xsl:when test="contains($processor,'SAXON')">
       <xsl:copy-of select="$body"/>
   </xsl:when>
-  <xsl:when test="$suffix='.dtd' and element-available('exsl:document')">
+  <xsl:when test="$method='text' and element-available('exsl:document')">
     <xsl:if test="$verbose='true'">
     <xsl:message>   File [<xsl:value-of select="$outputDir"/>/<xsl:value-of select="@ident"/><xsl:value-of select="$suffix"/>]      </xsl:message>
     </xsl:if>
