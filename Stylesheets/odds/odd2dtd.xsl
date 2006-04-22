@@ -459,7 +459,7 @@
       <xsl:text>&lt;!ENTITY % n.</xsl:text>
       <xsl:value-of select="@ident"/>
       <xsl:text> "</xsl:text>
-      <xsl:if test="$parameterize='true'">
+      <xsl:if test="$parameterize='true' and (@ns)">
 	<xsl:text>%NS;</xsl:text>
       </xsl:if>
       <xsl:choose>
@@ -1295,7 +1295,10 @@
     <xsl:when test="@ns='http://www.w3.org/XML/1998/namespace'">
       <xsl:text>xml:</xsl:text>
     </xsl:when>
-    <xsl:when test="$parameterize='true' and not($nsPrefix='') and not(starts-with(@ident,'xmlns'))" >
+    <xsl:when test="@ns='http://www.w3.org/1999/xlink'">
+      <xsl:text>xlink:</xsl:text>
+    </xsl:when>
+    <xsl:when test="$parameterize='true' and (@ns) and not($nsPrefix='') and not(starts-with(@ident,'xmlns'))" >
 	<xsl:text>%NS;</xsl:text>
     </xsl:when>
   </xsl:choose>
