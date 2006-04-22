@@ -187,6 +187,11 @@
 	  <xsl:value-of select="local-name(.)"/>
 	</xsl:when>
 	<xsl:when
+	    test="namespace-uri()='http://www.w3.org/2005/11/its'">
+	  <xsl:text>its:</xsl:text>
+	  <xsl:value-of select="local-name(.)"/>
+	</xsl:when>
+	<xsl:when
 	    test="namespace-uri()='http://www.w3.org/1999/XSL/Transform'">
 	  <xsl:value-of disable-output-escaping="yes" select="$startRed"/>
 	  <xsl:text>xsl:</xsl:text>

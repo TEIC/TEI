@@ -49,6 +49,7 @@
   
   <xsl:output encoding="utf-8" method="xml" indent="yes"/>
   
+  <xsl:param name="outputDir"/>
   <xsl:param name="simplify">false</xsl:param>
   <xsl:param name="localsource"/>
   <xsl:param name="TEIC">false</xsl:param>
@@ -1187,6 +1188,7 @@
       </xsl:for-each>
     </xsl:for-each>
     </xsl:variable>
+    <xsl:text> — </xsl:text>
     <xsl:choose>
       <xsl:when test="$minimal='true' and not($clatts='')">
 	<xsl:text> [+ </xsl:text>

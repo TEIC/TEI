@@ -573,24 +573,10 @@
       <xsl:when test="not($atts='')">
 	<table class="attList">
 	  <xsl:variable name="HERE" select="."/>
-	  <xsl:for-each select="estr:tokenize(concat(' ',$atts,' '))">
-	    <xsl:variable name="TOKEN" select="."/>
-	    <xsl:choose>
-	      <xsl:when test="$HERE/tei:attList//tei:attDef[@ident=$TOKEN]">
-		<xsl:for-each
-		    select="$HERE/tei:attList//tei:attDef[@ident=$TOKEN]">
-		  <xsl:call-template name="showAnAttribute"/>
-		</xsl:for-each>
-	      </xsl:when>
-	      <xsl:otherwise>
-		<xsl:for-each select="$HERE/tei:classes/tei:memberOf">
-		  <xsl:for-each select="key('IDENTS',@key)/tei:attList//tei:attDef[@ident=$TOKEN]">
-		    <xsl:call-template name="showAnAttribute"/>
-		  </xsl:for-each>
-		</xsl:for-each>
-	      </xsl:otherwise>
-	    </xsl:choose>
-	  </xsl:for-each>
+	  <xsl:call-template name="splitAttTokens">
+	    <xsl:with-param name="HERE" select="$HERE"/>
+	    <xsl:with-param name="atts" select="$atts"/>
+	  </xsl:call-template>
 	</table>
       </xsl:when>
       <xsl:otherwise>
@@ -606,6 +592,62 @@
     </xsl:choose>
   </xsl:template>
   
+<xd:doc>
+    <xd:short>Show a selected attribute</xd:short>
+    <xd:param name="HERE">the starting node </xd:param>
+    <xd:param name="TOKEN">attribute we have been asked to display</xd:param>
+    <xd:detail>&#160;</xd:detail>
+  </xd:doc>
+<xsl:template name="doAnAttToken">
+  <xsl:param name="HERE"/>
+  <xsl:param name="TOKEN"/>
+  <xsl:choose>
+    <xsl:when test="$HERE/tei:attList//tei:attDef[@ident=$TOKEN]">
+      <xsl:for-each
+	  select="$HERE/tei:attList//tei:attDef[@ident=$TOKEN]">
+	<xsl:call-template name="showAnAttribute"/>
+      </xsl:for-each>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:for-each select="$HERE/tei:classes/tei:memberOf">
+	<xsl:for-each select="key('IDENTS',@key)/tei:attList//tei:attDef[@ident=$TOKEN]">
+	  <xsl:call-template name="showAnAttribute"/>
+	</xsl:for-each>
+      </xsl:for-each>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+<xd:doc>
+    <xd:short>Split up and process a space-separated list of attribute
+    names</xd:short>
+    <xd:param name="HERE">the starting node </xd:param>
+    <xd:param name="TOKEN">attributes we have been asked to display</xd:param>
+    <xd:detail>&#160;</xd:detail>
+  </xd:doc>
+<xsl:template name="splitAttTokens">
+  <xsl:param name="HERE"/>
+  <xsl:param name="atts"/>
+  <xsl:choose>
+    <xsl:when test="contains($atts,' ')">
+      <xsl:call-template name="doAnAttToken">
+	<xsl:with-param name="HERE" select="$HERE"/>
+	<xsl:with-param name="TOKEN" select="substring-before($atts,' ')"/>
+      </xsl:call-template>
+      <xsl:call-template name="splitAttTokens">
+	<xsl:with-param name="HERE" select="$HERE"/>
+	<xsl:with-param name="atts" select="substring-after($atts,' ')"/>
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:call-template name="doAnAttToken">
+	<xsl:with-param name="HERE" select="$HERE"/>
+	<xsl:with-param name="TOKEN" select="$atts"/>
+      </xsl:call-template>
+    </xsl:otherwise>
+  </xsl:choose>
+  
+</xsl:template>
 
 <xd:doc>
     <xd:short>Display of an attribute</xd:short>
