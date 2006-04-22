@@ -56,7 +56,7 @@ schemas:check
 	(cd Schema; for i in *rng; do trang $$i `basename $$i .rng`.rnc;done)
 	# improve the positioning of blank lines in the RelaxNG compact syntax output for human readability
 	(for i in Schema/*.rnc; do t=`basename $$i .rnc`.tmp; mv $$i $$t; ./Utilities/fix_rnc_whitespace.perl < $$t > $$i; rm $$t; done)
-	xmllint --noent ${SOURCETREE}/${DRIVER} | xsltproc extract-sch.xsl - > p5.sch
+	xmllint --noent ${SOURCETREE}/${DRIVER} | xsltproc Utilities/extract-sch.xsl - > p5.sch
 
 html-web: check
 	perl -p -e "s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+" odd2htmlp5.xsl.model > odd2htmlp5.xsl
@@ -67,7 +67,7 @@ html-web: check
 	--stringparam displayMode rnc \
 	--stringparam lang ${LANGUAGE} \
 	--stringparam outputDir . \
-	guidelines.xsl ${SOURCETREE}/${DRIVER}
+	Utilities/guidelines.xsl ${SOURCETREE}/${DRIVER}
 	-cp *.css Guidelines-web
 	-cp $(SOURCETREE)/Images/* Guidelines-web/
 	(cd Guidelines-web; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
@@ -84,7 +84,7 @@ html:check subset
 	--stringparam verbose true \
 	--stringparam outputDir . \
 	--stringparam lang ${LANGUAGE} \
-	guidelines-print.xsl ${SOURCETREE}/${DRIVER}
+	Utilities/guidelines-print.xsl ${SOURCETREE}/${DRIVER}
 	-cp *.css Guidelines
 	-cp $(SOURCETREE)/Images/* Guidelines/
 	(cd Guidelines; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
@@ -147,7 +147,7 @@ test:
 	(cd Test; make)
 
 split:
-	(mkdir Split; cd Split; xmllint --noent   ../${SOURCETREE}/${DRIVER} | xsltproc ../divsplit.xsl -)
+	(mkdir Split; cd Split; xmllint --noent   ../${SOURCETREE}/${DRIVER} | xsltproc ../Utilities/divsplit.xsl -)
 
 oddschema: 
 	roma $(ROMAOPTS) --nodtd --noxsd --xsl=$(XSL)/ --teiserver=$(TEISERVER) p5odds.odd .
@@ -188,7 +188,7 @@ fascicule: subset
 	--stringparam displayMode rnc \
 	--stringparam lang ${LANGUAGE} \
 	--stringparam outputDir . \
-	guidelines.xsl -
+	Utilities/guidelines.xsl -
 	(cd FASC-$(CHAP)-Guidelines; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
 	-cp *.gif *.css FASC-$(CHAP)-Guidelines
 	-jing p5odds.rng FASC-$(CHAP).xml 
