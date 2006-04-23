@@ -4,7 +4,7 @@ See the file COPYING for details.
 $Date$
 $Author$-->
 <!-- GE 8 : 0.3.1 11/03/06 -->
-<div1 xmlns="http://www.tei-c.org/ns/1.0" type="Chapter" xml:id="HD" n="5">
+<div1 xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" type="Chapter" xml:id="HD" n="5">
 <head>En-tête TEI</head>
 <!-- 5 -->
 <p>Ce chapitre traite des problèmes de description d’une oeuvre encodée afin que le
@@ -163,8 +163,12 @@ isolé. Un corpus peut ainsi se présenter sous la forme :
 <desc>The TEI Header</desc>
 </moduleSpec>
 <!--publicID:  -//TEI P5//ELEMENTS TEI Header//EN-->
-&model.headerPart;
-&teiHeader;
+<xi:include href="../../Specs/model.headerPart.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>model.headerPart.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/teiHeader.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>teiHeader.xml</ident>.</p></xi:fallback>
+</xi:include>
 <specGrpRef target="#D221B"/>
 </p>
 <p>La DTD définit ensuite le reste des éléments de l’En-tête, en incluant les fragments de
@@ -302,7 +306,9 @@ Plusieurs éléments pouvant être omis, une description minimale de fichier pr�
 <p>L’élément Description bibliographique du fichier <gi>fileDesc</gi> a comme définition
  formelle :
 <specGrp xml:id="D222" n="The file description">
-&fileDesc;
+<xi:include href="../../Specs/fileDesc.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>fileDesc.xml</ident>.</p></xi:fallback>
+</xi:include>
 <specGrpRef target="#D2221"/>
 <specGrpRef target="#D2222"/>
 <specGrpRef target="#D2223"/>
@@ -416,7 +422,7 @@ personne.</note></p>
 </egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <titleStmt>
-  <title>Yogadarśanam (arthāt yogasūtrap¯&tdot;ha&hdot;) : transcription électronique.
+  <title>Yogadarśanam (arthāt yogasūtrap¯&#x20DB;ha&amp;hdot;) : transcription électronique.
   </title>
   <title>The Yogasūutras of Patañjali : transcription électronique.</title>
   <funder>Wellcome Institute for the History of Medicine</funder>
@@ -434,10 +440,18 @@ personne.</note></p>
 <p>L’élément Mention de titre <gi>titleStmt</gi> et ses sous-éléments ont comme
  définition formelle :
 <specGrp xml:id="D2221" n="Mention de titre = The title statement">
-&titleStmt;
-&sponsor;
-&funder;
-&principal;
+<xi:include href="../../Specs/titleStmt.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>titleStmt.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/sponsor.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>sponsor.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/funder.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>funder.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/principal.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>principal.xml</ident>.</p></xi:fallback>
+</xi:include>
 <p>Les éléments TITLE, AUTHOR, RESPSTMT et RESP ne sont pas déclarés ici, mais
  dans le fichier teicore2.dtd.</p>
 </specGrp>
@@ -530,8 +544,12 @@ target="#COBI"/>.
 L’élément <gi>editionStmt</gi> a comme définition formelle :
 <!-- removed file attrib since it was confusing dtdGen LB, 20 may 01 -->
 <specGrp xml:id="D2222" n="Mention d'édition = The edition statement">
-&editionStmt;
-&edition;
+<xi:include href="../../Specs/editionStmt.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>editionStmt.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/edition.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>edition.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp>
 </p>
 </div3>
@@ -598,7 +616,9 @@ cassettes).</item>
 	<!-- removed file attrib since it was confusing dtdGen LB, 20 may 01 -->
 L’élément <gi>extent</gi> a comme définition formelle :
 <specGrp xml:id="D2223" n="Importance matérielle = The extent statement">
-&extent;
+<xi:include href="../../Specs/extent.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>extent.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp>
 </p>
 </div3>
@@ -692,11 +712,21 @@ et dates <ptr target="#ND"/>.
 </p>
 <p>La mention de publication et ses composants ont pour définition formelle :
 <specGrp xml:id="D2224" n="Mention de publication = The publication statement">
-&publicationStmt;
-&distributor;
-&authority;
-&idno;
-&availability;
+<xi:include href="../../Specs/publicationStmt.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>publicationStmt.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/distributor.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>distributor.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/authority.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>authority.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/idno.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>idno.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/availability.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>availability.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp>
 </p>
 </div3>
@@ -751,7 +781,9 @@ valeur <val>ISSN</val> pour un ISSN.
 La mention de collection a comme définition formelle :
 <!-- removed file attrib since it was confusing dtdGen LB, 20 may 01 -->
 <specGrp xml:id="D2225" n="Mention de collection = The series statement">
-&seriesStmt;
+<xi:include href="../../Specs/seriesStmt.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>seriesStmt.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp>
 Ses composants sont tous définis ailleurs.
 </p>
@@ -849,7 +881,9 @@ comme dans l’exemple suivant :
 La mention de notes a comme définition formelle :
 <!-- removed file attrib since it was confusing dtdGen LB, 20 may 01 -->
 <specGrp xml:id="D2226" n="Mention  de notes = The notes statement">
-&notesStmt;
+<xi:include href="../../Specs/notesStmt.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>notesStmt.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp>
 </p>
 </div3>
@@ -924,8 +958,12 @@ La description complète de ces éléments et leur contenu sont donnés dans la 
  </p>
 <p>La description de la source a comme définition formelle :
 <specGrp xml:id="D223" n="Description de la source = The source description">
-&model.sourceDescPart;
-&sourceDesc;
+<xi:include href="../../Specs/model.sourceDescPart.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>model.sourceDescPart.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/sourceDesc.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>sourceDesc.xml</ident>.</p></xi:fallback>
+</xi:include>
 <specGrpRef target="#D2231"/>
 </specGrp>
  </p>
@@ -1110,11 +1148,21 @@ dans l’élément <gi>broadcast</gi>.
  </p>
 <p>Ces éléments ont comme définition formelle :
 <specGrp xml:id="D2231" n="Script statement and recording statement">
-&scriptStmt;
-&recordingStmt;
-&recording;
-&equipment;
-&broadcast;
+<xi:include href="../../Specs/scriptStmt.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>scriptStmt.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/recordingStmt.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>recordingStmt.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/recording.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>recording.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/equipment.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>equipment.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/broadcast.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>broadcast.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp></p>
 <p>Ceci termine la description de l’élément Description bibliographique du fichier <gi>
 fileDesc</gi> et de son contenu.</p>
@@ -1148,8 +1196,12 @@ suivie, ou peut contenir des éléments issus de la liste ci-dessous :
 Chacun de ces éléments est expliqué davantage et défini formellement dans la section
 appropriée ci-dessous. La description de l’encodage elle-même est définie comme suit :
 <specGrp xml:id="D225" n="The encoding description">
-&model.encodingPart;
-&encodingDesc;
+<xi:include href="../../Specs/model.encodingPart.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>model.encodingPart.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/encodingDesc.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>encodingDesc.xml</ident>.</p></xi:fallback>
+</xi:include>
 <specGrpRef target="#D2251"/>
 <specGrpRef target="#D2252"/>
 <specGrpRef target="#D2253"/>
@@ -1185,7 +1237,9 @@ expliquer pourquoi on a suivi telle pratique d’encodage plutôt que telle autr
 </p>
 <p>Cet élément a comme déclaration formelle :
 <specGrp xml:id="D2251" n="The project description">
-&projectDesc;
+<xi:include href="../../Specs/projectDesc.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>projectDesc.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp>
 </p>
 </div3>
@@ -1234,7 +1288,9 @@ d’échantillonnage peut être utilisé pour y faire référence, comme il est 
 Association d’informations contextuelles à un texte <ptr target="#CCAS"/>.	
 Cet élément a comme déclaration formelle :
 <specGrp xml:id="D2252" n="The sampling declaration">
-&samplingDecl;
+<xi:include href="../../Specs/samplingDecl.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>samplingDecl.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp>
 </p>
 </div3>
@@ -1349,15 +1405,33 @@ le projet à l’origine du texte. Voir l’exemple simple à la suite :
 </p>
 <p>Ces éléments ont comme définition formelle :
 <specGrp xml:id="D2253" n="The editorial practices declaration">
-&model.editorialDeclPart;
-&editorialDecl;
-&correction;
-&normalization;
-&quotation;
-&hyphenation;
-&segmentation;
-&stdVals;
-&interpretation;
+<xi:include href="../../Specs/model.editorialDeclPart.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>model.editorialDeclPart.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/editorialDecl.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>editorialDecl.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/correction.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>correction.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/normalization.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>normalization.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/quotation.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>quotation.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/hyphenation.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>hyphenation.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/segmentation.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>segmentation.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/stdVals.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>stdVals.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/interpretation.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>interpretation.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp>
 Une déclaration des pratiques éditoriales qui s’applique à plusieurs textes ou divisions
  d’un texte n’a pas besoin d’être répétée dans l’en-tête de chaque texte. À la place,
@@ -1471,10 +1545,18 @@ le texte associé ; les comptages, précisés par leurs attributs <att>occurs</a
 correspondre au nombre de ces éléments présents dans le document, comme identifiés
 par des parseurs.
 <specGrp xml:id="DHD57" n="Tag usage and rendition declarations">
-&tagsDecl;
-&tagUsage;
-&namespace;
-&rendition;
+<xi:include href="../../Specs/tagsDecl.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>tagsDecl.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/tagUsage.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>tagUsage.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/namespace.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>namespace.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/rendition.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>rendition.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp>
 </p>
 </div3>
@@ -1630,9 +1712,15 @@ pas supporté par un SGML générique ou un parseur XML. Son usage suppose un gr
 travail de vérification et de précision de la part de l’encodeur.</p>
 <p>Les éléments traités dans cette section ont la définition formelle suivante :
  <specGrp xml:id="D2254" n="The reference scheme declaration">
-&refsDecl;
-&cRefPattern;
-&state;
+<xi:include href="../../Specs/refsDecl.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>refsDecl.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/cRefPattern.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>cRefPattern.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/state.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>state.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp>
 </p>
 <p>Une déclaration de système de référence qui s’applique à plus d’un texte ou division
@@ -1726,10 +1814,18 @@ et <q>Political</q>, dans la catégorie <q>Press Reportage</q> définie ci-dessu
 </p>
 <p>Les éléments présentés dans cette section ont pour définition formelle :
 <specGrp xml:id="D2255" n="The classification declaration">
-&classDecl;
-&taxonomy;
-&category;
-&catDesc;
+<xi:include href="../../Specs/classDecl.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>classDecl.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/taxonomy.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>taxonomy.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/category.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>category.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/catDesc.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>catDesc.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp>
 </p>
 </div3>
@@ -1805,7 +1901,9 @@ profils et de structures de profils dans les chapitres 16 Structure de profils <
 </p>
 <p>L’élément  <gi>fsdDecl</gi> est déclaré comme suit :
 <specGrp xml:id="D2256" n="The FSD declaration">
-&fsdDecl;
+<xi:include href="../../Specs/fsdDecl.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>fsdDecl.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp>
 </p>
 </div3>
@@ -1899,8 +1997,12 @@ de la poésie versifiée, voir la section 8.4 Rime et analyse métrique <ptr tar
 </p>
 <p>Les éléments discutés dans cette section sont définis comme suit :
 <specGrp xml:id="D2258" n="Metrical Notation Declaration">
-&metDecl;
-&metSym;
+<xi:include href="../../Specs/metDecl.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>metDecl.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/metSym.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>metSym.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp>
 </p>
 </div3>
@@ -1918,7 +2020,9 @@ textuelles dans le texte (Voir section 19.2 Lier l’apparat critique au texte <
 </p>
 <p>Il a pour définition formelle :
 <specGrp xml:id="DHDVAR" n="Variant-Encoding Declaration">
-&variantEncoding;
+<xi:include href="../../Specs/variantEncoding.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>variantEncoding.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp>
 </p>
 </div3>
@@ -1970,8 +2074,12 @@ target="#PHDH"/>.
 </p>
 <p>La description de profil elle-même a comme définition formelle :
 <specGrp xml:id="D224" n="The profile description">
-&model.profileDescPart;
-&profileDesc;
+<xi:include href="../../Specs/model.profileDescPart.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>model.profileDescPart.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/profileDesc.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>profileDesc.xml</ident>.</p></xi:fallback>
+</xi:include>
 <specGrpRef target="#D224C"/>
 <specGrpRef target="#D2241"/>
 <specGrpRef target="#D2243"/>
@@ -1996,7 +2104,9 @@ avec certitude de la description bibliographique de l’exemplaire, l’élémen
 </p>
 <p>L’élément <gi>creation</gi> a comme déclaration formelle :
 <specGrp xml:id="D224C" n="Creation">
-&creation;
+<xi:include href="../../Specs/creation.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>creation.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp>
 </p>
 </div3>
@@ -2065,8 +2175,12 @@ l’anglais canadien des affaires et l’anglais britannique.</p>
 </p>
 <p>Les éléments <gi>langUsage</gi> et <gi>language</gi> ont comme définition formelle :
 <specGrp xml:id="D2241" n="Language usage">
-&langUsage;
-&language;
+<xi:include href="../../Specs/langUsage.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>langUsage.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/language.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>language.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp>
 </p>
 </div3>
@@ -2187,10 +2301,18 @@ suivante : dans le premier cas, les valeurs utilisées comme identifiants doiven
 le deuxième cas.</p>
 <p>Les éléments décrits dans cette section ont comme définition formelle :
 <specGrp xml:id="D2243" n="Text Classification">
-&textClass;
-&keywords;
-&classCode;
-&catRef;
+<xi:include href="../../Specs/textClass.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>textClass.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/keywords.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>keywords.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/classCode.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>classCode.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/catRef.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>catRef.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp>
 </p>
 </div3>
@@ -2318,8 +2440,12 @@ la plus récente en premier.</p>
 </p>
 <p>L’élément <gi>revisionDesc</gi> a comme définition formelle :
 <specGrp xml:id="D226" n="The Revision Description">
-&revisionDesc;
-&change;
+<xi:include href="../../Specs/revisionDesc.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>revisionDesc.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/change.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>change.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp>
 </p>
 </div2>

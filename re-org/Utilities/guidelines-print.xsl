@@ -17,7 +17,7 @@
     version="1.0"
 >
   
-<xsl:import href="odd2htmlp5.xsl"/>
+<xsl:import href="../odd2htmlp5.xsl"/>
   
 <xsl:param name="autoToc">true</xsl:param>
 <xsl:param name="splitLevel">1</xsl:param>
