@@ -59,7 +59,7 @@ schemas:check
 	xmllint --noent --xinclude ${SOURCETREE}/${DRIVER} | xsltproc Utilities/extract-sch.xsl - > p5.sch
 
 html-web: check
-	perl -p -e "s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+" odd2htmlp5.xsl.model > odd2htmlp5.xsl
+	perl -p -e "s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+" Utilities/odd2htmlp5.xsl.model > Utilities/odd2htmlp5.xsl
 	-rm -rf Guidelines-web
 	-mkdir Guidelines-web
 	xmllint --noent --xinclude ${SOURCETREE}/${DRIVER} \
@@ -76,7 +76,7 @@ html-web: check
 html:check subset
 	-rm -rf Guidelines
 	-mkdir Guidelines
-	perl -p -e "s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+" odd2htmlp5.xsl.model > odd2htmlp5.xsl
+	perl -p -e "s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+" Utilities/odd2htmlp5.xsl.model > Utilities/odd2htmlp5.xsl
 	xmllint --noent --xinclude ${SOURCETREE}/${DRIVER} \
 	| xsltproc \
 	    -o Guidelines/index.html \
@@ -310,10 +310,10 @@ check:
 	@which jing || exit 1
 
 changelog:
-	(LastDate=`head -1 ChangeLog | awk '{print $$1}'`; \
+	(LastDate=`head -1 ReleaseNotes/ChangeLog | awk '{print $$1}'`; \
 	svn log -v -r 'HEAD:{'$$LastDate'}' | grep -v "^;" | perl ../gnuify-changelog.pl > newchanges)
-	mv ChangeLog oldchanges
-	cat newchanges oldchanges > ChangeLog
+	mv ReleaseNotes/ChangeLog oldchanges
+	cat newchanges oldchanges > ReleaseNotes/ChangeLog
 
 clean:
 	-rm -rf release Guidelines Guidelines-web Schema DTD dtd Split RomaResults *~
