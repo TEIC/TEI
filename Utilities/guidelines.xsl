@@ -17,7 +17,7 @@
     version="1.0"
 >
   
-<xsl:import href="odd2htmlp5.xsl"/>
+<xsl:import href="./odd2htmlp5.xsl"/>
 <xsl:param name="cssFile">teic.css</xsl:param>
 <xsl:param name="parentWords">Text Encoding Initiative Consortium</xsl:param>
 
