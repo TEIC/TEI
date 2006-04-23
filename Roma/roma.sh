@@ -235,7 +235,7 @@ cat > subset.xsl <<EOF
 </xsl:template>
 </xsl:stylesheet>
 EOF
-xsltproc -o tei$$.xml $DEBUG subset.xsl $LOCALSOURCE || die "failed to extract subset from $LOCALSOURCE "
+xmllint --noent --xinclude $LOCALSOURCE | xsltproc -o tei$$.xml $DEBUG subset.xsl - || die "failed to extract subset from $LOCALSOURCE "
 LOCAL=$H/tei$$.xml
 fi
 
