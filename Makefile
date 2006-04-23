@@ -21,7 +21,7 @@ dtds: check
 	-mkdir DTD
 	-rm DTD/*
 	# generate the DTDs
-	xmllint --noent   ${SOURCETREE}/${DRIVER} | \
+	xmllint --noent --xinclude ${SOURCETREE}/${DRIVER} | \
 	xsltproc --stringparam outputDir DTD 	\
 	--stringparam lang ${LANGUAGE} \
 	--stringparam TEIC true \
@@ -39,7 +39,7 @@ schemas:check
 	-mkdir Schema
 	-rm Schema/*
 	# generate the relaxNG schemas
-	xmllint --noent   ${SOURCETREE}/${DRIVER} | \
+	xmllint --noent --xinclude ${SOURCETREE}/${DRIVER} | \
 	xsltproc --stringparam verbose true \
 	--stringparam lang ${LANGUAGE} \
 	--stringparam TEIC true \
@@ -56,18 +56,19 @@ schemas:check
 	(cd Schema; for i in *rng; do trang $$i `basename $$i .rng`.rnc;done)
 	# improve the positioning of blank lines in the RelaxNG compact syntax output for human readability
 	(for i in Schema/*.rnc; do t=`basename $$i .rnc`.tmp; mv $$i $$t; ./Utilities/fix_rnc_whitespace.perl < $$t > $$i; rm $$t; done)
-	xmllint --noent ${SOURCETREE}/${DRIVER} | xsltproc Utilities/extract-sch.xsl - > p5.sch
+	xmllint --noent --xinclude ${SOURCETREE}/${DRIVER} | xsltproc Utilities/extract-sch.xsl - > p5.sch
 
 html-web: check
 	perl -p -e "s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+" odd2htmlp5.xsl.model > odd2htmlp5.xsl
 	-rm -rf Guidelines-web
 	-mkdir Guidelines-web
-	xsltproc \
-	-o Guidelines-web/index.html \
-	--stringparam displayMode rnc \
-	--stringparam lang ${LANGUAGE} \
-	--stringparam outputDir . \
-	Utilities/guidelines.xsl ${SOURCETREE}/${DRIVER}
+	xmllint --noent --xinclude ${SOURCETREE}/${DRIVER} \
+	| xsltproc \
+	    -o Guidelines-web/index.html \
+	    --stringparam displayMode rnc \
+	    --stringparam lang ${LANGUAGE} \
+	    --stringparam outputDir . \
+	    Utilities/guidelines.xsl -
 	-cp *.css Guidelines-web
 	-cp $(SOURCETREE)/Images/* Guidelines-web/
 	(cd Guidelines-web; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
@@ -76,21 +77,22 @@ html:check subset
 	-rm -rf Guidelines
 	-mkdir Guidelines
 	perl -p -e "s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+" odd2htmlp5.xsl.model > odd2htmlp5.xsl
-	xsltproc \
-	-o Guidelines/index.html \
-	--stringparam localsource `pwd`/p5subset.xml \
-	--stringparam cssFile tei-print.css \
-	--stringparam displayMode rnc \
-	--stringparam verbose true \
-	--stringparam outputDir . \
-	--stringparam lang ${LANGUAGE} \
-	Utilities/guidelines-print.xsl ${SOURCETREE}/${DRIVER}
+	xmllint --noent --xinclude ${SOURCETREE}/${DRIVER} \
+	| xsltproc \
+	    -o Guidelines/index.html \
+	    --stringparam localsource `pwd`/p5subset.xml \
+	    --stringparam cssFile tei-print.css \
+	    --stringparam displayMode rnc \
+	    --stringparam verbose true \
+	    --stringparam outputDir . \
+	    --stringparam lang ${LANGUAGE} \
+	    Utilities/guidelines-print.xsl -
 	-cp *.css Guidelines
 	-cp $(SOURCETREE)/Images/* Guidelines/
 	(cd Guidelines; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
 
 xml: check subset
-	xmllint --noent ${SOURCETREE}/${DRIVER} | perl Utilities/cleanrnc.pl | \
+	xmllint --noent --xinclude ${SOURCETREE}/${DRIVER} | perl Utilities/cleanrnc.pl | \
 	xsltproc  -o Guidelines.xml \
 	--stringparam displayMode rnc  \
 	${XSL}/odds/odd2lite.xsl -
@@ -109,6 +111,7 @@ validate: oddschema exampleschema valid
 
 valid: jing_version=$(wordlist 1,3,$(shell jing))
 valid: check
+	-xmllint --noent --xinclude ${SOURCETREE}/${DRIVER} > Source.xml
 	@echo --------- jing
 	@echo ${jing_version}
 #	We have discovered that jing reports 3-letter language codes
@@ -118,11 +121,10 @@ valid: check
 #	with grep -v. Note that we discard *all* such messages, even
 #	though fewer than 500 of the 17,576 possible combinations
 #	(i.e. < 3%) are valid codes.
-	-jing -t p5odds.rng ${SOURCETREE}/${DRIVER} \
+	 jing -t p5odds.rng Source.xml \
 	 | grep -v ": error: Illegal xml:lang value \"[A-Za-z][A-Za-z][A-Za-z]\"\.$$"
 	@echo --------- rnv
-	-xmllint --noent  ${SOURCETREE}/${DRIVER} > Source.xml
-	-rnv -v p5odds.rnc Source.xml && rm Source.xml
+	-rnv -v p5odds.rnc Source.xml
 	@echo --------- nrl
 #	In addition to erroneously reporting xml:lang= 3-letter
 #	values, jing seems to report an "unfinished element" every
@@ -134,20 +136,21 @@ valid: check
 #	required to make it finished) we end up throwing out all such
 #	messages via the grep -v command so we're not annoyed by the
 #	over 800 that are not really problems.
-	-jing p5nrl.xml ${SOURCETREE}/${DRIVER} \
+	-jing p5nrl.xml Source.xml \
 	 | grep -v ": error: Illegal xml:lang value \"[A-Za-z][A-Za-z][A-Za-z]\"\.$$" \
 	 | grep -v ': error: unfinished element$$'
 	@echo --------- XSLT validator
-	xsltproc validator.xsl ${SOURCETREE}/${DRIVER} >& tmp && sed 's/TEI...\/text...\/body...\///' tmp && rm tmp
+	xsltproc validator.xsl Source.xml >& tmp && sed 's/TEI...\/text...\/body...\///' tmp && rm tmp
 	@echo --------- xmllint RelaxNG test REMOVED
 #	@xmllint --version
-#	-xmllint  --relaxng p5odds.rng --noent --noout ${SOURCETREE}/${DRIVER}
+#	-xmllint  --relaxng p5odds.rng --noent --xinclude --noout ${SOURCETREE}/${DRIVER}
+	rm Source.xml
 
 test:
 	(cd Test; make)
 
 split:
-	(mkdir Split; cd Split; xmllint --noent   ../${SOURCETREE}/${DRIVER} | xsltproc ../Utilities/divsplit.xsl -)
+	(mkdir Split; cd Split; xmllint --noent --xinclude  ../${SOURCETREE}/${DRIVER} | xsltproc ../Utilities/divsplit.xsl -)
 
 oddschema: 
 	roma $(ROMAOPTS) --nodtd --noxsd --xsl=$(XSL)/ --teiserver=$(TEISERVER) p5odds.odd .
@@ -171,7 +174,8 @@ subset:
 	@echo '    </tei:TEI>' >> subset.xsl
 	@echo '</xsl:template>' >> subset.xsl
 	@echo '</xsl:stylesheet>' >> subset.xsl
-	xsltproc -o p5subset.xml subset.xsl ${SOURCETREE}/${DRIVER} || die "failed to extract subset from $(DRIVER) "
+	-xmllint --noent --xinclude ${SOURCETREE}/${DRIVER} \
+	 | xsltproc -o p5subset.xml subset.xsl - || die "failed to extract subset from ${SOURCETREE}/${DRIVER}."
 	rm subset.xsl
 
 fascicule: subset 
@@ -180,7 +184,7 @@ fascicule: subset
 #	perl -p -i -e "s+\"external-entities.dtd+\"$(SOURCETREE)/$(LANGUAGE)/external-entities.dtd+" FASC-$(CHAP).xml
 	cat `find $(SOURCETREE)/Chapters/$(LANGUAGE) -iname $(CHAP).$(SUFFIX)`  >> FASC-$(CHAP).xml
 	cat fasc-tail.xml  >> FASC-$(CHAP).xml
-	export H=`pwd`; xmllint --noent FASC-$(CHAP).xml | xsltproc \
+	export H=`pwd`; xmllint --noent --xinclude FASC-$(CHAP).xml | xsltproc \
 	-o FASC-$(CHAP)-Guidelines/index.html \
 	--stringparam localsource `pwd`/p5subset.xml \
 	--stringparam cssFile tei.css \

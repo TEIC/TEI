@@ -5,7 +5,7 @@ See the file COPYING for details.
 $Date$
 $Author$
 -->
-<div1 xmlns="http://www.tei-c.org/ns/1.0" type="Faisal" xml:id="PH" n="18"><head>Transcription of Primary Sources</head>
+<div1 xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" type="Faisal" xml:id="PH" n="18"><head>Transcription of Primary Sources</head>
 <p>This chapter defines an optional module intended for use
 in the transcription of primary sources, in particular manuscripts,
 and describes how some
@@ -479,8 +479,12 @@ in the Common Core module and are available in all TEI documents.  The
 elements <gi>addSpan</gi> and <gi>delSpan</gi> have the following formal
 declarations:
 <specGrp xml:id="DTCAD" n="Added and Deleted Spans">
-&addSpan;
-&delSpan;
+<xi:include href="../../Specs/addSpan.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>addSpan.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/delSpan.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>delSpan.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp></p></div3>
 <div3 type="subsection" xml:id="PHSU"><head>Substitutions</head>
 <p>Substitution of one word or phrase for another is
@@ -657,7 +661,9 @@ encoded:
 body</egXML></p>
 <p>The <gi>restore</gi> element is defined as follows:
 <specGrp xml:id="DPHCD" n="Cancelled Deletions">
-&restore;
+<xi:include href="../../Specs/restore.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>restore.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp>
 	</p></div3>
 <div3 type="subsection" xml:id="PHOM"><head>Text Omitted from or Supplied in the Transcription</head>
@@ -703,7 +709,9 @@ discussion, see section <ptr target="#PHCOMB"/>.</p>
 <p>As noted, <gi>gap</gi> is defined in the Common Core module.  The
 <gi>supplied</gi> element is declared thus:
 <specGrp xml:id="DPHOM" n="Supplied Text">
-&supplied;
+<xi:include href="../../Specs/supplied.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>supplied.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp></p></div3></div2>
 <div2 xml:id="PHPH"><head>Non-Linguistic Phenomena in the Source</head>
 <p>This section describes methods for recording a number of
@@ -802,9 +810,15 @@ for the <att>ink</att> attribute on the <gi>handShift</gi> element:
 <l>And if the cattes skynne be slyk and gaye</l></egXML></p>
 <p>These elements are declared as follows:
 <specGrp xml:id="DPHHD" n="Hand Shifts">
-&hand;
-&handShift;
-&handList;
+<xi:include href="../../Specs/hand.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>hand.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/handShift.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>handShift.xml</ident>.</p></xi:fallback>
+</xi:include>
+<xi:include href="../../Specs/handList.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>handList.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp></p></div3>
 <div3 type="subsection" xml:id="PHHR"><head>Hand, Responsibility, and Certainty Attributes</head>
 <p>The <att>hand</att> and <att>resp</att> attributes have similar, but
@@ -1002,7 +1016,9 @@ used to indicate the level of editorial confidence in the reading
 contained within it.</p>
 <p>The <gi>damage</gi> element is defined formally as follows:
 <specGrp xml:id="DPHDA" n="Damage and Illegiblity">
-&damage;
+<xi:include href="../../Specs/damage.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>damage.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp>
 The <gi>unclear</gi> element is defined in section <ptr target="#COED"/>.</p></div3>
 <div3 type="subsection" xml:id="PHCOMB"><head>Use of the Gap, Del, Damage, Unclear and Supplied Tags in Combination</head>
@@ -1115,7 +1131,9 @@ Hengwrt manuscript; the transcriber responsible for supplying the text
 is ES.
 The <gi>space</gi> element is formally defined thus:
 <specGrp xml:id="DPHSP" n="Spaces in the source">
-&space;
+<xi:include href="../../Specs/space.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>space.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp>	</p></div3>
 <div3 type="subsection" xml:id="PHLN"><head>Lines</head>
 <p>The most common form of marking of text in manuscripts is by lines
@@ -1143,8 +1161,8 @@ style of line.  In the manuscript of a letter by Robert Browning to
 George Moulton-Barrett,<note place="foot">Pierpont Morgan MA 310, Klinkenborg 23</note> the
 underlining of the phrase <mentioned>had obtained all the letters to Mr Boyd</mentioned>
 may be marked-up as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">I have once,&mdash;by declaring I would prosecute
-by law&mdash;, hindered a man's proceedings who
+<egXML xmlns="http://www.tei-c.org/ns/Examples">I have once,&#x2014;by declaring I would prosecute
+by law&#x2014;, hindered a man's proceedings who
 <hi rend="underline">had obtained all the letters
 to Mr Boyd</hi></egXML></p>
 <p>The above examples presume the common case where a single word or
@@ -1154,8 +1172,8 @@ areas of text.  Where there is doubt, the <gi>certainty</gi> element may
 be used to record the doubt.  In the Browning example cited above the
 underlining actually begins half-way under <mentioned>who</mentioned>, and this
 uncertainty could be remarked as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">I have once,&mdash;by declaring I would prosecute
-by law&mdash;, hindered a man's proceedings who
+<egXML xmlns="http://www.tei-c.org/ns/Examples">I have once,&#x2014;by declaring I would prosecute
+by law&#x2014;, hindered a man's proceedings who
 <hi xml:id="cstart1" rend="underline">had obtained all
 the letters to Mr Boyd</hi>
 <!-- ... -->
@@ -1229,7 +1247,9 @@ respectively.</p>
 <p>The formal declaration for the <gi>fw</gi> element is
 this:
 <specGrp xml:id="DTCHD" n="Headers and footers">
-&fw;
+<xi:include href="../../Specs/fw.xml">
+  <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>fw.xml</ident>.</p></xi:fallback>
+</xi:include>
 </specGrp></p></div2>
 <div2 xml:id="PHTRXX"><head>Other Primary Source Features not Covered in These Guidelines</head>
 <p>We repeat the advice given at the beginning of this chapter, that

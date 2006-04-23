@@ -4,14 +4,15 @@
   <!NOTATION PNG SYSTEM "">
   <!NOTATION HTML SYSTEM "">
   <!ENTITY % int-ents SYSTEM "internal-entities.dtd">
-  <!ENTITY % TEIlang SYSTEM "fr">
-  <!ENTITY % ext-ents SYSTEM "external-entities.dtd">
   %int-ents;
+  <!ENTITY % ext-ents SYSTEM "external-entities.dtd">
   %ext-ents;
+  <!ENTITY % TEIlang SYSTEM "fr">
   ]>
 <TEI xmlns="http://www.tei-c.org/ns/1.0" 
      version="5.0"
-     xmlns:rng="http://relaxng.org/ns/structure/1.0">
+     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+     xmlns:xi="http://www.w3.org/2001/XInclude" >
   <teiHeader>
     <fileDesc>
       <titleStmt>
@@ -34,56 +35,52 @@
 	    License along with this file; if not, write to the Free
 	    Software Foundation, Inc., 59 Temple Place, Suite 330,
 	    Boston, MA 02111-1307, USA.</p>
-
 	  <p>To contact the TEI Consortium use the following addresses.
 	    <list>
-	      <item>For general (non-technical) enquiries: <ref>
-		  target="mailto:info@tei-c.org"/>info@tei-c.org</ref></item>
-	      <item>For membership enquiries: <ref target="mailto:membership@tei-c.org">membership@tei-c.org</ref></item>
+	      <item>For general (non-technical) enquiries:
+		<ref target="mailto:info@tei-c.org">info@tei-c.org</ref></item>
+	      <item>For membership enquiries:
+		<ref target="mailto:membership@tei-c.org">membership@tei-c.org</ref></item>
 	      <item>For technical enquiries, particularly about the
 		Guidelines, DTDs, schemas, or software available from
-		the TEI-C: <ref
-		  target="mailto:editors@tei-c.org">editors@tei-c.org</ref></item>
-<item>For up to date information, consult the TEI web site at <ref target="http://www.tei-c.org/P5">http://www.tei-c.org/P5</ref>
-<!--	      <item>via physical mail:
-		<address>
-		  <addrLine>TEI Office</addrLine>
-		  <addrLine>AKSIS</addrLine>
-		  <addrLine>Allegaten 27</addrLine>
-		  <addrLine>N-5007 Bergen</addrLine>
-		  <addrLine>Norway</addrLine>
-		</address>
-		or
-		<address>
-		  <addrLine>TEI c/o IATH</addrLine>
-		  <addrLine>Alderman Library, University of Virginia</addrLine>
-		  <addrLine>P.O. Box 400115</addrLine>
-		  <addrLine>Charlottesville, VA 22904-4115</addrLine>
-		  <addrLine>USA</addrLine>
-		</address>-->
-	      </item>
+		the TEI-C:
+		<ref target="mailto:editors@tei-c.org">editors@tei-c.org</ref></item>
+	      <item>For up to date information, consult the TEI web site at
+		<ref target="http://www.tei-c.org/P5">http://www.tei-c.org/P5</ref></item>
+	      <!--	      <item>via physical mail:
+	      <address>
+	      <addrLine>TEI Office</addrLine>
+	      <addrLine>AKSIS</addrLine>
+	      <addrLine>Allegaten 27</addrLine>
+	      <addrLine>N-5007 Bergen</addrLine>
+	      <addrLine>Norway</addrLine>
+	    </address>
+	      or
+	      <address>
+	      <addrLine>TEI c/o IATH</addrLine>
+	      <addrLine>Alderman Library, University of Virginia</addrLine>
+	      <addrLine>P.O. Box 400115</addrLine>
+	      <addrLine>Charlottesville, VA 22904-4115</addrLine>
+	      <addrLine>USA</addrLine>
+	    </address> </item> -->
 	    </list>
 	  </p>
 	</availability>
 	<distributor>TEI Consortium</distributor>
       </publicationStmt>
-      <sourceDesc><p>A long history from P2 onwards</p></sourceDesc></fileDesc>
-    <profileDesc>
-      <langUsage>
-	<language ident="x-sgml">Examples in p2ch used to use this</language>
-	<language ident="LA">Latin, I expect</language>
-      </langUsage>
-    </profileDesc>
+      <sourceDesc><p>A long history from P2 onwards</p></sourceDesc>
+    </fileDesc>
     <revisionDesc>
       <change>
 	<date>$Date$.</date>
-	  <name>$Author$</name>
+	<name>$Author$</name>
 	$Id$
       </change>
-    </revisionDesc></teiHeader>
+    </revisionDesc>
+  </teiHeader>
   <text>
-  <front xml:id="FM">
-    <titlePage>
+    <front xml:id="FM">
+      <titlePage>
 	<titlePart type="main">The TEI Consortium</titlePart>
 	<titlePart type="sub">The Association for Computers and the Humanities (ACH);
 	  <lb/>The Association for Computational Linguistics (ACL);
@@ -101,131 +98,289 @@
 	<docImprint>Oxford &#x2014; Providence &#x2014; Charlottesville &#x2014; Nancy</docImprint>
 	<docDate>2005</docDate>
       </titlePage>
-      
-      &DEDICATION.xml;
-      
-      &FM1.xml;
-      
+
+      <xi:include href="./Chapters/&TEIlang;/DEDICATION.xml">
+	<xi:fallback>
+	  <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>DEDICATION.xml</ident></p></div1>
+	</xi:fallback>
+      </xi:include>
+
+      <xi:include href="./Chapters/&TEIlang;/FM1.xml">
+	<xi:fallback>
+	  <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>FM1.xml</ident></p></div1>
+	</xi:fallback>
+      </xi:include>
     </front>
     <body>
+
       <div0 type="Part" xml:id="PART1" n="1">
 	<head>Introduction</head>
 
-	&AB.xml;
-	
-	&SG.xml;
+	<xi:include href="./Chapters/&TEIlang;/AB.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>AB.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
-	&ST.xml;
+	<xi:include href="./Chapters/&TEIlang;/SG.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>SG.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
+	<xi:include href="./Chapters/&TEIlang;/ST.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>ST.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
       </div0>
-      
+
       <div0 type="Part" xml:id="PART2" n="2">
 	<head>Core Tags and General Rules</head>
 
-	&CH.xml;
+	<xi:include href="./Chapters/&TEIlang;/CH.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>CH.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
-	&HD.xml;
+	<xi:include href="./Chapters/&TEIlang;/HD.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>HD.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
-	&CO.xml;
+	<xi:include href="./Chapters/&TEIlang;/CO.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>CO.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
-	&DS.xml;
-
+	<xi:include href="./Chapters/&TEIlang;/DS.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>DS.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
       </div0>
-    
+
       <div0 type="Part" xml:id="PART3" n="3">
 	<head>Base Tag Sets</head>
 
-	&VE.xml;
+	<xi:include href="./Chapters/&TEIlang;/VE.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>VE.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
-	&DR.xml;
+	<xi:include href="./Chapters/&TEIlang;/DR.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>DR.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
-	&TS.xml;
-	
-	&DI.xml;
+	<xi:include href="./Chapters/&TEIlang;/TS.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>TS.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
-	&TE.xml;
+	<xi:include href="./Chapters/&TEIlang;/DI.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>DI.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
+	<xi:include href="./Chapters/&TEIlang;/TE.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>TE.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
       </div0>
-      
+
       <div0 type="Part" xml:id="PART4" n="4">
 	<head>Additional Tag Sets</head>
 
-	&MS.xml;
+	<xi:include href="./Chapters/&TEIlang;/MS.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>MS.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
-	&SA.xml;
+	<xi:include href="./Chapters/&TEIlang;/SA.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>SA.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
-	&AI.xml;
+	<xi:include href="./Chapters/&TEIlang;/AI.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>AI.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
-	&FS.xml;
+	<xi:include href="./Chapters/&TEIlang;/FS.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>FS.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
-	&CE.xml;
+	<xi:include href="./Chapters/&TEIlang;/CE.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>CE.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
-	&PH.xml;
+	<xi:include href="./Chapters/&TEIlang;/PH.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>PH.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
-	&TC.xml;
+	<xi:include href="./Chapters/&TEIlang;/TC.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>TC.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
-	&ND.xml;
+	<xi:include href="./Chapters/&TEIlang;/ND.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>ND.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
-	&GD.xml;
+	<xi:include href="./Chapters/&TEIlang;/GD.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>GD.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
-	&FT.xml;
+	<xi:include href="./Chapters/&TEIlang;/FT.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>FT.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
-	&CC.xml;
-
+	<xi:include href="./Chapters/&TEIlang;/CC.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>CC.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
       </div0>
-      
+
       <div0 type="Part" xml:id="PART5" n="5">
 	<head>Auxiliary Document Types</head>
-	&SH.xml;
 
-	&WD.xml;
+	<xi:include href="./Chapters/&TEIlang;/SH.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>SH.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
-	&FD.xml;
+	<xi:include href="./Chapters/&TEIlang;/WD.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>WD.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
-	&TD.xml;
+	<xi:include href="./Chapters/&TEIlang;/FD.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>FD.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
+	<xi:include href="./Chapters/&TEIlang;/TD.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>TD.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
       </div0>
-      
+
       <div0 type="Part" xml:id="PART6" n="6">
 	<head>Technical Topics</head>
 
-	&CF.xml;
+	<xi:include href="./Chapters/&TEIlang;/CF.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>CF.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
-	&MD.xml;
+	<xi:include href="./Chapters/&TEIlang;/MD.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>MD.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
-	&IN.xml;
+	<xi:include href="./Chapters/&TEIlang;/IN.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>IN.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
-	&NH.xml;
-
+	<xi:include href="./Chapters/&TEIlang;/NH.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>NH.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
       </div0>
-      
+
       <div0 type="Part" xml:id="P2.refs" n="7">
 	<head>Alphabetical Reference Lists of Classes, Patterns, and Elements</head>
 
-	&REFCLA.xml;
+	<xi:include href="./Chapters/&TEIlang;/REFCLA.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>REFCLA.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
-	&REFENT.xml;
+	<xi:include href="./Chapters/&TEIlang;/REFENT.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>REFENT.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
-	&REFTAG.xml;
+	<xi:include href="./Chapters/&TEIlang;/REFTAG.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>REFTAG.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
 
       </div0>
+
       <div0 type="Part" xml:id="P2REFS" n="8">
 	<head>Reference Material</head>
 
-	&DT.xml;
-
+	<xi:include href="./Chapters/&TEIlang;/DT.xml">
+	  <xi:fallback>
+	    <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>DT.xml</ident></p></div1>
+	  </xi:fallback>
+	</xi:include>
       </div0>
-      
     </body>
     <back>
 
-      &BIB.xml;
+      <xi:include href="./Chapters/&TEIlang;/BIB.xml">
+	<xi:fallback>
+	  <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>BIB.xml</ident></p></div1>
+	</xi:fallback>
+      </xi:include>
 
-      &PARTIND.xml;
+      <xi:include href="./Chapters/&TEIlang;/PARTIND.xml">
+	<xi:fallback>
+	  <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>PARTIND.xml</ident></p></div1>
+	</xi:fallback>
+      </xi:include>
 
-      &PREFS.xml;
+      <xi:include href="./Chapters/&TEIlang;/PREFS.xml">
+	<xi:fallback>
+	  <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>PREFS.xml</ident></p></div1>
+	</xi:fallback>
+      </xi:include>
 
-      &COL.xml;
+      <xi:include href="./Chapters/&TEIlang;/COL.xml">
+	<xi:fallback>
+	  <div1><head>Warning:</head><p>Unable to find &amp; load file <ident>COL.xml</ident></p></div1>
+	</xi:fallback>
+      </xi:include>
 
     </back>
   </text>
