@@ -23,4 +23,5 @@ define( 'roma_xquery_server', 'http://tei.oucs.ox.ac.uk/Query/' );
 define( 'roma_localStylesheetDir', 'roma/stylesheets' );
 define( 'roma_templateDir', 'roma/templates' );
 define( 'roma_ressource_path', 'roma/res' );
+define ('roma_local_p5','file:///tmp/p5subset.xml');
 </script>

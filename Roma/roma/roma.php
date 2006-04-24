@@ -1367,7 +1367,7 @@ class roma
       {
 	foreach( $_REQUEST as $key => $value )
 	  {
-print "look at $key\n";
+//print "look at $key\n";
 	    if( substr( $key, 0, 8 ) == 'include_' )
 	      {
 		switch( $value )
@@ -1411,23 +1411,6 @@ print "look at $key\n";
 	      }
           }
 	
-	try {
-	  $this->m_oRomaDom->changeElementContentsInModule( $_REQUEST[ 'name' ], $_REQUEST[ 'module' ], $_REQUEST[ 'content' ] );
-	}
-	catch( falseContentsException $e )
-	  {
-	    $e->addError( 'elementChanged', 'contents' );
-
-	    //notam
-	    $oNotam = new notam();
-	    $oNotam->setHeadline( 'Illegal Content' );
-	    $oNotam->setMessage(  roma_message_elementContentError );
-	    $oNotam->setStatus( notam_status_error );
-	    $oNotam->addNotam();
-
-	    $errResult = true;
-	  }
-
 	$this->m_oRomaDom->changeElementDescInModule( $_REQUEST[ 'name' ], $_REQUEST[ 'module' ], $_REQUEST[ 'description' ] );
 	
 	$aszClasses = array();
@@ -1451,6 +1434,23 @@ print "look at $key\n";
 	    $oNotam->addNotam();
 	  }
 
+
+	try {
+	  $this->m_oRomaDom->changeElementContentsInModule( $_REQUEST[ 'name' ], $_REQUEST[ 'module' ], $_REQUEST[ 'content' ] );
+	}
+	catch( falseContentsException $e )
+	  {
+	    $e->addError( 'elementChanged', 'contents' );
+
+	    //notam
+	    $oNotam = new notam();
+	    $oNotam->setHeadline( 'Illegal Content' );
+	    $oNotam->setMessage(  roma_message_elementContentError );
+	    $oNotam->setStatus( notam_status_error );
+	    $oNotam->addNotam();
+
+	    $errResult = true;
+	  }
 
 	return $errResult;
       }

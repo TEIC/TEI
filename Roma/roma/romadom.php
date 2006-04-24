@@ -1226,7 +1226,7 @@ class romaDom extends domDocument
 	    $oElementSpec->setAttribute( 'mode', 'change' );
 	  }
 
-	//check weather there are any classes yet
+	//check whether there are any classes yet
 	$oClasses = $oXPath->query(
 	"//tei:schemaSpec/tei:elementSpec[@module='{$szModule}' and @ident='{$szElement}']/tei:classes" )->item(0);
 	
@@ -1854,9 +1854,10 @@ class romaDom extends domDocument
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
 	$oProc->setParameter( null, 'TEISERVER', roma_xquery_server);
+//DEBUG	$oProc->setParameter( null, 'localsource', roma_local_p5);
 	$oProc->setParameter( null, 'TEIC', 'true');
 	$this->getOddLanguage( $szOddLanguage );
-        if (szOddLanguage=='en') 
+        if ($szOddLanguage=='en') 
      	  { 
 	  $oDOC = $oProc->transformToDoc( $this ); }
 	else
@@ -1864,7 +1865,8 @@ class romaDom extends domDocument
               $oXSL2 = new domDocument();
               $oXSL2->load( roma_StylesheetDir . '/odds/translate-odd.xsl' );
               $oProc2 = new XsltProcessor();
- 	      $oProc->setParameter( null, 'TEIC', 'true');	
+ 	      $oProc2->setParameter( null, 'TEIC', 'true');	
+//DEBUG	      $oProc2->setParameter( null, 'localsource', roma_local_p5);
               $oProc2->setParameter( null, 'TEISERVER', roma_xquery_server);
               $oProc2->setParameter( null, 'lang', $szOddLanguage );
               $oProc2->importStylesheet( $oXSL2 );
@@ -1879,10 +1881,14 @@ class romaDom extends domDocument
  	$oXSL->load( roma_StylesheetDir . '/odds/odd2relax.xsl'  );
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
+//DEBUG        $oProc->setParameter( null, 'localsource', roma_local_p5);
 	$oProc->setParameter( null, 'TEIC', 'true');
 	$oProc->setParameter( null, 'displayMode', 'rnc' );
 	$oProc->setParameter( null, 'outputDir', '-' );
 	$oRNG = $oProc->transformToDoc( $oDOC );
+//DEBUG	$szSpecialFile = '/tmp/ROMA.xml';    
+//DEBUG	file_put_contents( $szSpecialFile , $oDOC->saveXML());
+
       } 
 
     public function loadProgressBar()
