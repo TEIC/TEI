@@ -50,7 +50,7 @@ Description
 	   <input type="hidden" name="added">
 	     <xsl:attribute name="value">
 	       <xsl:choose>
-		 <xsl:when test="not(//currentAttribute/attDef/added='')">
+		 <xsl:when test="string-length(//currentAttribute/attDef/added)&gt;0">
 		 <xsl:value-of
 		     select="//currentAttribute/attDef/added"/>
 		 </xsl:when>
