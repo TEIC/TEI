@@ -1,18 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet 
-  xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  xmlns:edate="http://exslt.org/dates-and-times"
-  xmlns:estr="http://exslt.org/strings"
-  xmlns:exsl="http://exslt.org/common"
-  xmlns:fo="http://www.w3.org/1999/XSL/Format"
-  xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:teix="http://www.tei-c.org/ns/Examples"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  extension-element-prefixes="exsl estr edate" 
-  exclude-result-prefixes="xd exsl estr edate a fo rng tei teix" 
-  version="1.0">
+<xsl:stylesheet xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" extension-element-prefixes="exsl estr edate" exclude-result-prefixes="xd exsl estr edate a fo rng tei teix" version="1.0">
   <xd:doc type="stylesheet">
     <xd:short>
     TEI stylesheet
@@ -44,7 +31,7 @@
   <xd:doc>
     <xd:short>[fo] </xd:short>
     <xd:param name="where">target of link</xd:param>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="generateEndLink">
     <xsl:param name="where"/>
@@ -55,7 +42,7 @@
     <xd:param name="ptr">whether the destination URL is also the body
     of the link</xd:param>
     <xd:param name="dest">destination URL</xd:param>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="makeExternalLink">
     <xsl:param name="ptr"/>
@@ -81,7 +68,7 @@
     <xd:param name="target">target</xd:param>
     <xd:param name="dest">destination</xd:param>
     <xd:param name="body">body</xd:param>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="makeInternalLink">
     <xsl:param name="ptr"/>

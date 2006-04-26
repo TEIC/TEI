@@ -1,23 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet 
-  xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  xmlns:edate="http://exslt.org/dates-and-times"
-  xmlns:estr="http://exslt.org/strings"
-  xmlns:exsl="http://exslt.org/common"
-  xmlns:fo="http://www.w3.org/1999/XSL/Format"
-  xmlns:local="http://www.pantor.com/ns/local"
-  xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:teix="http://www.tei-c.org/ns/Examples"
-  xmlns:html="http://www.w3.org/1999/xhtml"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-  extension-element-prefixes="exsl estr edate" 
-  exclude-result-prefixes="html xd exsl estr edate a fo local rng tei teix" 
-  version="1.0">
+<xsl:stylesheet xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:local="http://www.pantor.com/ns/local" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" extension-element-prefixes="exsl estr edate" exclude-result-prefixes="html xd exsl estr edate a fo local rng tei teix" version="1.0">
   <xsl:import href="../common/tei.xsl"/>
   <xsl:import href="tei-param.xsl"/>
-<xd:doc type="stylesheet">
+  <xd:doc type="stylesheet">
     <xd:short>
     TEI stylesheet for making HTML output.
       </xd:short>
@@ -53,17 +38,16 @@
   <xsl:include href="namesdates.xsl"/>
   <xsl:include href="textstructure.xsl"/>
   <xsl:include href="verse.xsl"/>
-  
-<xd:doc type="string">
+  <xd:doc type="string">
 Stylesheet constant setting the name of the main output file.
 </xd:doc>
-<xsl:variable name="masterFile">
+  <xsl:variable name="masterFile">
     <xsl:choose>
       <xsl:when test="not($outputName ='')">
         <xsl:choose>
-	  <xsl:when test="$STDOUT='true'">
+          <xsl:when test="$STDOUT='true'">
             <xsl:value-of select="$outputName"/>
-	  </xsl:when>
+          </xsl:when>
           <xsl:when test="contains($outputName,'.xml')">
             <xsl:value-of select="substring-before($outputName,'.xml')"/>
           </xsl:when>
@@ -89,35 +73,31 @@ Stylesheet constant setting the name of the main output file.
       <xsl:when test="contains($processor,'SAXON 8')">
         <xsl:call-template name="get-basename">
           <xsl:with-param name="file">
-            <xsl:value-of xmlns:sax8="http://saxon.sf.net/" 
-			  select="substring-after(sax8:system-id(),':')"/>
+            <xsl:value-of xmlns:sax8="http://saxon.sf.net/" select="substring-after(sax8:system-id(),':')"/>
           </xsl:with-param>
         </xsl:call-template>
       </xsl:when>
       <xsl:when test="contains($processor,'SAXON 6')">
         <xsl:call-template name="get-basename">
           <xsl:with-param name="file">
-            <xsl:value-of xmlns:saxon="http://icl.com/saxon" 
-			  select="substring-after(saxon:system-id(),':')"/>
+            <xsl:value-of xmlns:saxon="http://icl.com/saxon" select="substring-after(saxon:system-id(),':')"/>
           </xsl:with-param>
         </xsl:call-template>
       </xsl:when>
       <xsl:when test="$STDOUT='true'">
-	<xsl:text>index.xml</xsl:text>
+        <xsl:text>index.xml</xsl:text>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:text>index</xsl:text>
+        <xsl:text>index</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
-</xsl:variable>
-  
-
-<xd:doc>
+  </xsl:variable>
+  <xd:doc>
     <xd:short>[html] How to work out the filename component of a path</xd:short>
     <xd:param name="file">filename</xd:param>
-    <xd:detail>&#160;</xd:detail>
-</xd:doc>
-<xsl:template name="get-basename">
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template name="get-basename">
     <xsl:param name="file"/>
     <xsl:choose>
       <xsl:when test="contains($file,'/')">
@@ -141,6 +121,5 @@ Stylesheet constant setting the name of the main output file.
         </xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
-</xsl:template>
-  
+  </xsl:template>
 </xsl:stylesheet>

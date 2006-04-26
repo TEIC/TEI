@@ -1,19 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet 
-    xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-    xmlns:fotex="http://www.tug.org/fotex"
-    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-    xmlns:edate="http://exslt.org/dates-and-times"
-    xmlns:estr="http://exslt.org/strings"
-    xmlns:exsl="http://exslt.org/common"
-    xmlns:fo="http://www.w3.org/1999/XSL/Format"
-    xmlns:rng="http://relaxng.org/ns/structure/1.0"
-    xmlns:tei="http://www.tei-c.org/ns/1.0"
-    xmlns:teix="http://www.tei-c.org/ns/Examples"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    extension-element-prefixes="exsl estr edate" 
-    exclude-result-prefixes="xd exsl fotex estr edate a fo rng tei teix" 
-    version="1.0">
+<xsl:stylesheet xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:fotex="http://www.tug.org/fotex" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" extension-element-prefixes="exsl estr edate" exclude-result-prefixes="xd exsl fotex estr edate a fo rng tei teix" version="1.0">
   <xd:doc type="stylesheet">
     <xd:short>
     TEI stylesheet
@@ -44,30 +30,28 @@
   </xd:doc>
   <xd:doc>
     <xd:short>Process elements  * in inner mode</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
-  
   <xsl:template match="*" mode="innertext">
     <xsl:apply-templates select="."/>
   </xsl:template>
-
   <xd:doc>
     <xd:short>Process elements  tei:*</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:*" mode="heading">
     <xsl:apply-templates/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:*</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:*" mode="plain">
     <xsl:apply-templates/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:TEI</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:TEI">
     <fo:root>
@@ -75,10 +59,9 @@
       <xsl:call-template name="mainAction"/>
     </fo:root>
   </xsl:template>
-
   <xd:doc>
     <xd:short>Process elements  tei:back</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:back">
     <xsl:comment>Back matter</xsl:comment>
@@ -111,10 +94,9 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
   <xd:doc>
     <xd:short>Process elements  tei:body</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:body">
     <xsl:choose>
@@ -168,32 +150,24 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:closer</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:closer">
-    <fo:block
-	space-before.optimum="4pt" 
-	space-after.optimum="4pt"
-	end-indent="{$exampleMargin}"
-	start-indent="{$exampleMargin}">
+    <fo:block space-before.optimum="4pt" space-after.optimum="4pt" end-indent="{$exampleMargin}" start-indent="{$exampleMargin}">
       <xsl:apply-templates/>
     </fo:block>
   </xsl:template>
-
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:dateline</xd:short>
-    <xd:detail>&#160;</xd:detail>
-</xd:doc>
-<xsl:template match="tei:dateline">
-<fo:block text-align="end">
-  <xsl:apply-templates/>
-</fo:block>
-</xsl:template>
-  
-
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:dateline">
+    <fo:block text-align="end">
+      <xsl:apply-templates/>
+    </fo:block>
+  </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:div</xd:short>
     <xd:detail>
@@ -234,14 +208,13 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
   <xd:doc>
     <xd:short>Process elements  tei:div (toc mode)</xd:short>
     <xd:detail>
       <p> headings in TOC </p>
     </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:div"  mode="toc">
+  <xsl:template match="tei:div" mode="toc">
     <xsl:variable name="divlevel">
       <xsl:value-of select="count(ancestor::tei:div)"/>
     </xsl:variable>
@@ -251,43 +224,41 @@
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
-
   <xd:doc>
     <xd:short>Process elements  tei:div (xref mode)</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template  match="tei:div" mode="xref">
+  <xsl:template match="tei:div" mode="xref">
     <xsl:variable name="divlevel" select="count(ancestor::tei:div)"/>
     <xsl:call-template name="xheading">
       <xsl:with-param name="level">div<xsl:value-of select="$divlevel"/></xsl:with-param>
     </xsl:call-template>
   </xsl:template>
-
   <xd:doc>
     <xd:short>Process elements  tei:div0|tei:div1|tei:div2|tei:div3|tei:div4</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:div0|tei:div1|tei:div2|tei:div3|tei:div4">
     <xsl:choose>
       <xsl:when test="@type='letter'">
-	<xsl:apply-templates/>
+        <xsl:apply-templates/>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:call-template name="NumberedHeading">
-	  <xsl:with-param name="level">
-	    <xsl:value-of select="substring-after(local-name(),'div')"/>
-	  </xsl:with-param>
-	</xsl:call-template>
-	<xsl:apply-templates/>
+        <xsl:call-template name="NumberedHeading">
+          <xsl:with-param name="level">
+            <xsl:value-of select="substring-after(local-name(),'div')"/>
+          </xsl:with-param>
+        </xsl:call-template>
+        <xsl:apply-templates/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements
     tei:div0|tei:div1|tei:div2|tei:div3|tei:div4 (toc mode)</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:div0|tei:div1|tei:div2|tei:div3|tei:div4" mode="toc" >
+  <xsl:template match="tei:div0|tei:div1|tei:div2|tei:div3|tei:div4" mode="toc">
     <xsl:call-template name="tocheading">
       <xsl:with-param name="level">
         <xsl:value-of select="substring-after(local-name(),'div')"/>
@@ -297,7 +268,7 @@
   <xd:doc>
     <xd:short>Process elements  tei:div0|tei:div1|tei:div2|tei:div3|tei:div4
     (xref mode)</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template mode="xref" match="tei:div0|tei:div1|tei:div2|tei:div3|tei:div4">
     <xsl:call-template name="xheading">
@@ -306,11 +277,9 @@
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
-
-
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:div[@type='canto']</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:div[@type='canto']">
     <xsl:variable name="divlevel" select="count(ancestor::tei:div)"/>
@@ -321,10 +290,9 @@
     </xsl:call-template>
     <xsl:apply-templates/>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:div[@type='dedication']</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:div[@type='dedication']">
     <xsl:variable name="divlevel" select="count(ancestor::tei:div)"/>
@@ -335,31 +303,27 @@
     </xsl:call-template>
     <xsl:apply-templates/>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:div[@type='epistle']</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:div[@type='epistle']">
     <xsl:apply-templates/>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:div[@type='frontispiece']</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:div[@type='frontispiece']">
     <xsl:apply-templates/>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:div[@type='illustration']</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:div[@type='illustration']">
     <xsl:apply-templates/>
   </xsl:template>
-  
   <xd:doc>
     <xd:short>Process elements  tei:divGen</xd:short>
     <xd:detail>
@@ -376,10 +340,9 @@
       </xsl:when>
     </xsl:choose>
   </xsl:template>
-
   <xd:doc>
     <xd:short>Process elements  tei:front</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:front">
     <xsl:comment>Front matter</xsl:comment>
@@ -430,10 +393,10 @@
 <!-- now start the main flow -->
           <fo:flow flow-name="xsl-region-body" font-family="{$bodyFont}" font-size="{$bodySize}">
             <xsl:for-each select="tei:*">
-	      <xsl:comment>Start <xsl:value-of select="name(.)"/></xsl:comment>
-	      <xsl:apply-templates select="."/>
-	      <xsl:comment>End <xsl:value-of select="name(.)"/></xsl:comment>
-	    </xsl:for-each>
+              <xsl:comment>Start <xsl:value-of select="name(.)"/></xsl:comment>
+              <xsl:apply-templates select="."/>
+              <xsl:comment>End <xsl:value-of select="name(.)"/></xsl:comment>
+            </xsl:for-each>
           </fo:flow>
         </fo:page-sequence>
       </xsl:otherwise>
@@ -441,7 +404,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:group/tei:text</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:group/tei:text">
     <xsl:variable name="N">
@@ -466,7 +429,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:group/tei:text/tei:body</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:group/tei:text/tei:body">
     <xsl:apply-templates/>
@@ -484,7 +447,7 @@
       <p> simple head </p>
     </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:head" mode="section" >
+  <xsl:template match="tei:head" mode="section">
 <!-- if we have multiple <head> elements together, 
   separate by spaces -->
 <!--
@@ -501,29 +464,22 @@
     </xd:detail>
   </xd:doc>
   <xsl:template match="tei:head"/>
-
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:opener</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:opener">
-    <fo:block
-	space-before.optimum="4pt" 
-	space-after.optimum="4pt"
-	end-indent="{$exampleMargin}"
-	start-indent="{$exampleMargin}">
+    <fo:block space-before.optimum="4pt" space-after.optimum="4pt" end-indent="{$exampleMargin}" start-indent="{$exampleMargin}">
       <xsl:apply-templates/>
     </fo:block>
   </xsl:template>
-  
-
   <xd:doc>
     <xd:short>Process elements  tei:text (xref mode)</xd:short>
     <xd:detail>
       <p> headings when cross-referenced </p>
     </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:text"  mode="xref" >
+  <xsl:template match="tei:text" mode="xref">
     <xsl:choose>
       <xsl:when test="@n">
         <xsl:value-of select="@n"/>
@@ -535,34 +491,26 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:text</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:text">
     <xsl:choose>
       <xsl:when test="parent::tei:TEI">
-	<xsl:apply-templates/>
+        <xsl:apply-templates/>
       </xsl:when>
       <xsl:when test="parent::tei:group">
-	<xsl:apply-templates/>
+        <xsl:apply-templates/>
       </xsl:when>
       <xsl:otherwise>
-        <fo:block text-align="start" text-indent="0pt"
-		  end-indent="{$exampleMargin}"
-		  start-indent="{$exampleMargin}"
-		  font-size="{$exampleSize}"
-		  border-top-style="solid"
-		  border-bottom-style="solid"
-		  space-before.optimum="{$exampleBefore}"
-		  space-after.optimum="{$exampleAfter}">
-	  <xsl:apply-templates mode="innertext"/>
-	</fo:block>
+        <fo:block text-align="start" text-indent="0pt" end-indent="{$exampleMargin}" start-indent="{$exampleMargin}" font-size="{$exampleSize}" border-top-style="solid" border-bottom-style="solid" space-before.optimum="{$exampleBefore}" space-after.optimum="{$exampleAfter}">
+          <xsl:apply-templates mode="innertext"/>
+        </fo:block>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
   <xd:doc>
     <xd:short>Process elements  tei:text (toc mode)</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:text" mode="toc">
     <fo:block>
@@ -583,14 +531,14 @@
       <fo:inline>
         <xsl:call-template name="linkStyle"/>
         <xsl:variable name="pagref">
-	  <xsl:choose>
-	    <xsl:when test="@xml:id">
-	      <xsl:value-of select="@xml:id"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:value-of select="generate-id()"/>
-	    </xsl:otherwise>
-	  </xsl:choose>
+          <xsl:choose>
+            <xsl:when test="@xml:id">
+              <xsl:value-of select="@xml:id"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="generate-id()"/>
+            </xsl:otherwise>
+          </xsl:choose>
         </xsl:variable>
         <fo:basic-link internal-destination="{$pagref}">
           <fo:page-number-citation ref-id="{$pagref}"/>
@@ -601,30 +549,27 @@
       <xsl:apply-templates select="tei:front//tei:docAuthor" mode="heading"/>
     </fo:block>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:titlePage</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:titlePage">
     <fo:block text-align="center">
       <xsl:apply-templates/>
     </fo:block>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:titlePage//tei:titlePart[@type='main']</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:titlePage//tei:titlePart[@type='main']">
     <fo:block font-size="{$titleSize}" space-after="8pt" text-align="center">
       <xsl:apply-templates/>
     </fo:block>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:titlePage/tei:titlePart[@type='sub']</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:titlePage/tei:titlePart[@type='sub']">
     <fo:block>
@@ -633,52 +578,47 @@
       </fo:block>
     </fo:block>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:titlePart</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:titlePart">
     <xsl:apply-templates/>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:titlePart[@type='running']</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:titlePart[@type='running']"/>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:trailer</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:trailer">
     <fo:block>
       <xsl:apply-templates/>
     </fo:block>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  text()</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="text()" mode="plain">
     <xsl:value-of select="normalize-space(.)"/>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>[fo] </xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="Header">
     <fo:block>
       <fo:inline-container>
         <fo:table>
           <fo:table-column column-number="1" column-width="100%">
-		<xsl:if test="$foEngine='passivetex'">
-		  <xsl:attribute name="column-align" namespace="http://www.tug.org/fotex">R</xsl:attribute>
-		</xsl:if>
-	  </fo:table-column>
+            <xsl:if test="$foEngine='passivetex'">
+              <xsl:attribute name="column-align" namespace="http://www.tug.org/fotex">R</xsl:attribute>
+            </xsl:if>
+          </fo:table-column>
           <fo:table-body>
             <fo:table-row>
               <fo:table-cell border-top-style="solid">
@@ -715,27 +655,26 @@
       </fo:inline-container>
     </fo:block>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>[fo] </xd:short>
     <xd:param name="level">level</xd:param>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="NumberedHeading">
     <xsl:param name="level"/>
     <fo:block keep-with-next.within-page="always">
       <xsl:variable name="divid">
-	<xsl:choose>
-	  <xsl:when test="@xml:id">
-	    <xsl:value-of select="@xml:id"/>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:value-of select="generate-id()"/>
-	  </xsl:otherwise>
-	</xsl:choose>
+        <xsl:choose>
+          <xsl:when test="@xml:id">
+            <xsl:value-of select="@xml:id"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="generate-id()"/>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:variable>
       <xsl:attribute name="id">
-	<xsl:value-of select="$divid"/>
+        <xsl:value-of select="$divid"/>
       </xsl:attribute>
       <xsl:attribute name="text-align">start</xsl:attribute>
       <xsl:attribute name="font-family">
@@ -803,22 +742,21 @@
         </fo:marker>
       </xsl:if>
       <xsl:choose>
-	<xsl:when test="$foEngine='passivetex'">
-	    <!-- Passive TeX extension, to get PDF bookmarks -->
-	    <fotex:bookmark fotex-bookmark-level="{$level}" fotex-bookmark-label="{$divid}">
-	      <xsl:if test="$numberHeadings='true'">
-            <xsl:value-of select="$Number"/>
-          </xsl:if>
-          <xsl:value-of select="tei:head"/>
-        </fotex:bookmark>
-	</xsl:when>
+        <xsl:when test="$foEngine='passivetex'">
+<!-- Passive TeX extension, to get PDF bookmarks -->
+          <fotex:bookmark fotex-bookmark-level="{$level}" fotex-bookmark-label="{$divid}">
+            <xsl:if test="$numberHeadings='true'">
+              <xsl:value-of select="$Number"/>
+            </xsl:if>
+            <xsl:value-of select="tei:head"/>
+          </fotex:bookmark>
+        </xsl:when>
       </xsl:choose>
     </fo:block>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>[fo] </xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="bookTOC">
     <fo:page-sequence format="1" initial-page-number="{$tocStartPage}" master-reference="twoside1">
@@ -845,12 +783,11 @@
       </fo:flow>
     </fo:page-sequence>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>[fo] </xd:short>
     <xd:param name="where">where</xd:param>
     <xd:param name="force">force</xd:param>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="choosePageMaster">
     <xsl:param name="where"/>
@@ -878,10 +815,9 @@
       <xsl:value-of select="$mn"/>
     </xsl:attribute>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>[fo] </xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="grouptextStatic">
     <fo:static-content flow-name="xsl-region-after-right">
@@ -918,11 +854,10 @@
       </fo:block>
     </fo:static-content>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>[fo] </xd:short>
     <xd:param name="runhead">runhead</xd:param>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="headers-footers-oneside">
     <xsl:param name="runhead"/>
@@ -951,11 +886,10 @@
       </fo:block>
     </fo:static-content>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>[fo] </xd:short>
     <xd:param name="runhead">runhead</xd:param>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="headers-footers-oneside-back">
     <xsl:param name="runhead"/>
@@ -965,12 +899,11 @@
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>[fo] </xd:short>
     <xd:param name="runodd">odd page running head</xd:param>
     <xd:param name="runeven">even page running head</xd:param>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="headers-footers-twoside">
     <xsl:param name="runodd"/>
@@ -1044,12 +977,11 @@
       </fo:block>
     </fo:static-content>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>[fo] </xd:short>
     <xd:param name="runodd">odd page running head</xd:param>
     <xd:param name="runeven">even page running head</xd:param>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="headers-footers-twoside-back">
     <xsl:param name="runodd"/>
@@ -1063,10 +995,9 @@
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>[fo] </xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="mainAction">
     <xsl:choose>
@@ -1081,15 +1012,16 @@
     </xsl:choose>
     <xsl:apply-templates select="tei:text/tei:back"/>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>[fo] </xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="mainTOC">
     <fo:block>
       <xsl:call-template name="setupDiv1"/>
-      <xsl:call-template name="i18n"><xsl:with-param name="word">contentsWord</xsl:with-param></xsl:call-template>
+      <xsl:call-template name="i18n">
+        <xsl:with-param name="word">contentsWord</xsl:with-param>
+      </xsl:call-template>
     </fo:block>
     <xsl:choose>
       <xsl:when test="ancestor::tei:text/tei:group">
@@ -1117,10 +1049,9 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>[fo] </xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="runninghead-author">
     <xsl:choose>
@@ -1132,10 +1063,9 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>[fo] </xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="runninghead-title">
     <xsl:comment>Running Head: title</xsl:comment>
@@ -1148,363 +1078,227 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>[fo] </xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="setupPagemasters">
     <fo:layout-master-set>
 <!-- one sided, single column -->
-      <fo:simple-page-master 
-	  master-name="simple1" 
-	  page-width="{$pageWidth}" 
-	  page-height="{$pageHeight}" 
-	  margin-top="{$pageMarginTop}" 
-	  margin-bottom="{$pageMarginBottom}" 
-	  margin-left="{$pageMarginLeft}" 
-	  margin-right="{$pageMarginRight}">
-        <fo:region-body 
-	    margin-bottom="{$bodyMarginBottom}" 
-	    margin-top="{$bodyMarginTop}"/>
-        <fo:region-before 
-	    extent="{$regionBeforeExtent}"/>
-        <fo:region-after 
-	    extent="{$regionAfterExtent}"/>
+      <fo:simple-page-master master-name="simple1" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
+        <fo:region-body margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
+        <fo:region-before extent="{$regionBeforeExtent}"/>
+        <fo:region-after extent="{$regionAfterExtent}"/>
       </fo:simple-page-master>
 <!-- for left-hand/tei:even pages in twosided mode, single column -->
-      <fo:simple-page-master 
-	  master-name="left1" 
-	  page-width="{$pageWidth}" 
-	  page-height="{$pageHeight}" 
-	  margin-top="{$pageMarginTop}" 
-	  margin-bottom="{$pageMarginBottom}" 
-	  margin-left="{$pageMarginLeft}" 
-	  margin-right="{$pageMarginRight}">
-        <fo:region-body 
-	    margin-bottom="{$bodyMarginBottom}" 
-	    margin-top="{$bodyMarginTop}"/>
-        <fo:region-before 
-	    region-name="xsl-region-before-left" 
-	    extent="{$regionBeforeExtent}"/>
-        <fo:region-after 
-	    region-name="xsl-region-after-left" 
-	    extent="{$regionAfterExtent}"/>
+      <fo:simple-page-master master-name="left1" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
+        <fo:region-body margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
+        <fo:region-before region-name="xsl-region-before-left" extent="{$regionBeforeExtent}"/>
+        <fo:region-after region-name="xsl-region-after-left" extent="{$regionAfterExtent}"/>
       </fo:simple-page-master>
 <!-- for right-hand/tei:odd pages in twosided mode, single column -->
-      <fo:simple-page-master 
-	  master-name="right1" 
-	  page-width="{$pageWidth}" 
-	  page-height="{$pageHeight}" 
-	  margin-top="{$pageMarginTop}" 
-	  margin-bottom="{$pageMarginBottom}" 
-	  margin-left="{$pageMarginLeft}" 
-	  margin-right="{$pageMarginRight}">
-        <fo:region-body 
-	    margin-bottom="{$bodyMarginBottom}" 
-	    margin-top="{$bodyMarginTop}"/>
-        <fo:region-before 
-	    region-name="xsl-region-before-right" 
-	    extent="{$regionBeforeExtent}"/>
-        <fo:region-after 
-	    region-name="xsl-region-after-right" 
-	    extent="{$regionAfterExtent}"/>
+      <fo:simple-page-master master-name="right1" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
+        <fo:region-body margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
+        <fo:region-before region-name="xsl-region-before-right" extent="{$regionBeforeExtent}"/>
+        <fo:region-after region-name="xsl-region-after-right" extent="{$regionAfterExtent}"/>
       </fo:simple-page-master>
 <!-- special case of first page in either mode, single column -->
-      <fo:simple-page-master 
-	  master-name="first1" 
-	  page-width="{$pageWidth}" 
-	  page-height="{$pageHeight}" 
-	  margin-top="{$pageMarginTop}" 
-	  margin-bottom="{$pageMarginBottom}" 
-	  margin-left="{$pageMarginLeft}" 
-	  margin-right="{$pageMarginRight}">
-        <fo:region-body 
-	    margin-bottom="{$bodyMarginBottom}" 
-	    margin-top="{$bodyMarginTop}"/>
-        <fo:region-before 
-	    region-name="xsl-region-before-first" 
-	    extent="{$regionBeforeExtent}"/>
-        <fo:region-after 
-	    region-name="xsl-region-after-first" 
-	    extent="{$regionAfterExtent}"/>
+      <fo:simple-page-master master-name="first1" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
+        <fo:region-body margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
+        <fo:region-before region-name="xsl-region-before-first" extent="{$regionBeforeExtent}"/>
+        <fo:region-after region-name="xsl-region-after-first" extent="{$regionAfterExtent}"/>
       </fo:simple-page-master>
 <!-- for pages in one-side mode, 2 column -->
-      <fo:simple-page-master 
-	  master-name="simple2" 
-	  page-width="{$pageWidth}" 
-	  page-height="{$pageHeight}" 
-	  margin-top="{$pageMarginTop}" 
-	  margin-bottom="{$pageMarginBottom}" 
-	  margin-left="{$pageMarginLeft}" 
-	  margin-right="{$pageMarginRight}">
-        <fo:region-body 
-	    column-count="{$columnCount}" 
-	    margin-bottom="{$bodyMarginBottom}" 
-	    margin-top="{$bodyMarginTop}"/>
-        <fo:region-before 
-	    extent="{$regionBeforeExtent}"/>
-        <fo:region-after 
-	    extent="{$regionAfterExtent}"/>
+      <fo:simple-page-master master-name="simple2" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
+        <fo:region-body column-count="{$columnCount}" margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
+        <fo:region-before extent="{$regionBeforeExtent}"/>
+        <fo:region-after extent="{$regionAfterExtent}"/>
       </fo:simple-page-master>
 <!-- for left-hand/tei:even pages in twosided mode, 2 column -->
-      <fo:simple-page-master 
-	  master-name="left2" 
-	  page-width="{$pageWidth}" 
-	  page-height="{$pageHeight}" 
-	  margin-top="{$pageMarginTop}" 
-	  margin-bottom="{$pageMarginBottom}" 
-	  margin-left="{$pageMarginLeft}" 
-	  margin-right="{$pageMarginRight}">
-        <fo:region-body 
-	    column-count="{$columnCount}" 
-	    margin-bottom="{$bodyMarginBottom}" 
-	    margin-top="{$bodyMarginTop}"/>
-        <fo:region-before 
-	    region-name="xsl-region-before-left" 
-	    extent="{$regionBeforeExtent}"/>
-        <fo:region-after 
-	    region-name="xsl-region-after-left" 
-	    extent="{$regionAfterExtent}"/>
+      <fo:simple-page-master master-name="left2" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
+        <fo:region-body column-count="{$columnCount}" margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
+        <fo:region-before region-name="xsl-region-before-left" extent="{$regionBeforeExtent}"/>
+        <fo:region-after region-name="xsl-region-after-left" extent="{$regionAfterExtent}"/>
       </fo:simple-page-master>
-      <!-- for right-hand/tei:odd pages in twosided mode, 2 column -->
-      <fo:simple-page-master 
-	  master-name="right2" 
-	  page-width="{$pageWidth}" 
-	  page-height="{$pageHeight}" 
-	  margin-top="{$pageMarginTop}" 
-	  margin-bottom="{$pageMarginBottom}" 
-	  margin-left="{$pageMarginLeft}" 
-	  margin-right="{$pageMarginRight}">
-	<fo:region-body 
-	    column-count="{$columnCount}" 
-	    margin-bottom="{$bodyMarginBottom}" 
-	    margin-top="{$bodyMarginTop}"/>
-        <fo:region-before 
-	    region-name="xsl-region-before-right" 
-	    extent="{$regionBeforeExtent}"/>
-        <fo:region-after 
-	    region-name="xsl-region-after-right" 
-	    extent="{$regionAfterExtent}"/>
+<!-- for right-hand/tei:odd pages in twosided mode, 2 column -->
+      <fo:simple-page-master master-name="right2" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
+        <fo:region-body column-count="{$columnCount}" margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
+        <fo:region-before region-name="xsl-region-before-right" extent="{$regionBeforeExtent}"/>
+        <fo:region-after region-name="xsl-region-after-right" extent="{$regionAfterExtent}"/>
       </fo:simple-page-master>
 <!-- special case of first page in either mode -->
-      <fo:simple-page-master 
-	  master-name="first2"
-	  page-width="{$pageWidth}"
-	  page-height="{$pageHeight}" 
-	  margin-top="{$pageMarginTop}" 
-	  margin-bottom="{$pageMarginBottom}" 
-	  margin-left="{$pageMarginLeft}" 
-	  margin-right="{$pageMarginRight}">
-        <fo:region-body 
-	    column-count="{$columnCount}" 
-	    margin-bottom="{$bodyMarginBottom}" 
-	    margin-top="{$bodyMarginTop}"/>
-        <fo:region-before 
-	    region-name="xsl-region-before-first" 
-	    extent="{$regionBeforeExtent}"/>
-        <fo:region-after 
-	    region-name="xsl-region-after-first" 
-	    extent="{$regionAfterExtent}"/>
+      <fo:simple-page-master master-name="first2" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
+        <fo:region-body column-count="{$columnCount}" margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
+        <fo:region-before region-name="xsl-region-before-first" extent="{$regionBeforeExtent}"/>
+        <fo:region-after region-name="xsl-region-after-first" extent="{$regionAfterExtent}"/>
       </fo:simple-page-master>
 <!-- setup for double-sided, 1 column, no first page -->
-      <fo:page-sequence-master 
-	  master-name="twoside1nofirst">
+      <fo:page-sequence-master master-name="twoside1nofirst">
         <fo:repeatable-page-master-alternatives>
-          <fo:conditional-page-master-reference 
-	      master-reference="right1" 
-	      odd-or-even="odd"/>
-          <fo:conditional-page-master-reference 
-	      master-reference="left1" 
-	      odd-or-even="even"/>
+          <fo:conditional-page-master-reference master-reference="right1" odd-or-even="odd"/>
+          <fo:conditional-page-master-reference master-reference="left1" odd-or-even="even"/>
         </fo:repeatable-page-master-alternatives>
       </fo:page-sequence-master>
 <!-- setup for double-sided, 1 column -->
-      <fo:page-sequence-master 
-	  master-name="twoside1">
+      <fo:page-sequence-master master-name="twoside1">
         <fo:repeatable-page-master-alternatives>
-          <fo:conditional-page-master-reference 
-	      master-reference="first1" 
-	      page-position="first"/>
-          <fo:conditional-page-master-reference 
-	      master-reference="right1" 
-	      odd-or-even="odd"/>
-          <fo:conditional-page-master-reference 
-	      master-reference="left1" 
-	      odd-or-even="even"/>
+          <fo:conditional-page-master-reference master-reference="first1" page-position="first"/>
+          <fo:conditional-page-master-reference master-reference="right1" odd-or-even="odd"/>
+          <fo:conditional-page-master-reference master-reference="left1" odd-or-even="even"/>
         </fo:repeatable-page-master-alternatives>
       </fo:page-sequence-master>
 <!-- setup for single-sided, 1 column -->
-      <fo:page-sequence-master 
-	  master-name="oneside1">
+      <fo:page-sequence-master master-name="oneside1">
         <fo:repeatable-page-master-alternatives>
-          <fo:conditional-page-master-reference 
-	      master-reference="first1" 
-	      page-position="first"/>
-          <fo:conditional-page-master-reference 
-	      master-reference="simple1"/>
+          <fo:conditional-page-master-reference master-reference="first1" page-position="first"/>
+          <fo:conditional-page-master-reference master-reference="simple1"/>
         </fo:repeatable-page-master-alternatives>
       </fo:page-sequence-master>
 <!-- setup for double-sided, 2 column -->
-      <fo:page-sequence-master 
-	  master-name="twoside2">
+      <fo:page-sequence-master master-name="twoside2">
         <fo:repeatable-page-master-alternatives>
-          <fo:conditional-page-master-reference 
-	      master-reference="first2" 
-	      page-position="first"/>
-          <fo:conditional-page-master-reference 
-	      master-reference="right2" 
-	      odd-or-even="odd"/>
-          <fo:conditional-page-master-reference 
-	      master-reference="left2" 
-	      odd-or-even="even"/>
+          <fo:conditional-page-master-reference master-reference="first2" page-position="first"/>
+          <fo:conditional-page-master-reference master-reference="right2" odd-or-even="odd"/>
+          <fo:conditional-page-master-reference master-reference="left2" odd-or-even="even"/>
         </fo:repeatable-page-master-alternatives>
       </fo:page-sequence-master>
 <!-- setup for single-sided, 2 column -->
-      <fo:page-sequence-master 
-	  master-name="oneside2">
+      <fo:page-sequence-master master-name="oneside2">
         <fo:repeatable-page-master-alternatives>
-          <fo:conditional-page-master-reference 
-	      master-reference="first2" 
-	      page-position="first"/>
-          <fo:conditional-page-master-reference 
-	      master-reference="simple2"/>
+          <fo:conditional-page-master-reference master-reference="first2" page-position="first"/>
+          <fo:conditional-page-master-reference master-reference="simple2"/>
         </fo:repeatable-page-master-alternatives>
       </fo:page-sequence-master>
-      <xsl:call-template 
-	  name="pageMasterHook"/>
+      <xsl:call-template name="pageMasterHook"/>
     </fo:layout-master-set>
     <xsl:if test="$foEngine='xep'">
-      <!-- PDF bookmarks using XEP -->
+<!-- PDF bookmarks using XEP -->
       <outline xmlns="http://www.renderx.com/XSL/Extensions">
-	<xsl:for-each select="/tei:TEI/tei:text/tei:front/tei:div">
-	  <xsl:call-template name="makeBookMark"/>
-	</xsl:for-each>
-	<xsl:for-each select="/tei:TEI/tei:text/tei:body/tei:div">
-	  <xsl:call-template name="makeBookMark"/>
-	</xsl:for-each>
-	<xsl:for-each select="/tei:TEI/tei:text/tei:back/tei:div">
-	  <xsl:call-template name="makeBookMark"/>
-	</xsl:for-each>
+        <xsl:for-each select="/tei:TEI/tei:text/tei:front/tei:div">
+          <xsl:call-template name="makeBookMark"/>
+        </xsl:for-each>
+        <xsl:for-each select="/tei:TEI/tei:text/tei:body/tei:div">
+          <xsl:call-template name="makeBookMark"/>
+        </xsl:for-each>
+        <xsl:for-each select="/tei:TEI/tei:text/tei:back/tei:div">
+          <xsl:call-template name="makeBookMark"/>
+        </xsl:for-each>
 <!-- now try numbered divs -->
-	<xsl:for-each select="/tei:TEI/tei:text/tei:front/tei:div0">
-	  <xsl:call-template name="makeBookMarkN"/>
-	</xsl:for-each>
-	<xsl:for-each select="/tei:TEI/tei:text/tei:body/tei:div0">
-	  <xsl:call-template name="makeBookMarkN"/>
-	</xsl:for-each>
-	<xsl:for-each select="/tei:TEI/tei:text/tei:back/tei:div0">
-	  <xsl:call-template name="makeBookMarkN"/>
-	</xsl:for-each>
+        <xsl:for-each select="/tei:TEI/tei:text/tei:front/tei:div0">
+          <xsl:call-template name="makeBookMarkN"/>
+        </xsl:for-each>
+        <xsl:for-each select="/tei:TEI/tei:text/tei:body/tei:div0">
+          <xsl:call-template name="makeBookMarkN"/>
+        </xsl:for-each>
+        <xsl:for-each select="/tei:TEI/tei:text/tei:back/tei:div0">
+          <xsl:call-template name="makeBookMarkN"/>
+        </xsl:for-each>
 <!-- now try numbered divs -->
-	<xsl:for-each select="/tei:TEI/tei:text/tei:front/tei:div1">
-	  <xsl:call-template name="makeBookMarkN"/>
-	</xsl:for-each>
-	<xsl:for-each select="/tei:TEI/tei:text/tei:body/tei:div1">
-	  <xsl:call-template name="makeBookMarkN"/>
-	</xsl:for-each>
-	<xsl:for-each select="/tei:TEI/tei:text/tei:back/tei:div1">
-	  <xsl:call-template name="makeBookMarkN"/>
-	</xsl:for-each>
+        <xsl:for-each select="/tei:TEI/tei:text/tei:front/tei:div1">
+          <xsl:call-template name="makeBookMarkN"/>
+        </xsl:for-each>
+        <xsl:for-each select="/tei:TEI/tei:text/tei:body/tei:div1">
+          <xsl:call-template name="makeBookMarkN"/>
+        </xsl:for-each>
+        <xsl:for-each select="/tei:TEI/tei:text/tei:back/tei:div1">
+          <xsl:call-template name="makeBookMarkN"/>
+        </xsl:for-each>
       </outline>
     </xsl:if>
   </xsl:template>
-
-<xd:doc>
+  <xd:doc>
     <xd:short>[fo] Make an XEP bookmark</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
-<xsl:template name="makeBookMark">
-  <xsl:if test="tei:head">
-    <bookmark xmlns="http://www.renderx.com/XSL/Extensions">
-      <xsl:variable name="depth" select="count(ancestor::tei:div)"/>
-      <xsl:attribute name="internal-destination">
-	<xsl:choose>
-	  <xsl:when test="@xml:id">
-	    <xsl:value-of select="@xml:id"/>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:value-of select="generate-id()"/>
-	  </xsl:otherwise>
-	</xsl:choose>
-      </xsl:attribute>
-      <bookmark-label xmlns="http://www.renderx.com/XSL/Extensions">
-	<xsl:if test="$numberHeadings='true' and $numberHeadingsDepth &gt; $depth">
-	  <xsl:call-template name="calculateNumber">
-	    <xsl:with-param name="numbersuffix" select="$headingNumberSuffix"/>
-	  </xsl:call-template>
-	  <xsl:text> </xsl:text>
-	</xsl:if>
-	<xsl:value-of select="tei:head"/>
-      </bookmark-label>
-      <xsl:for-each select="tei:div">
-	<xsl:call-template name="makeBookMark"/>
-      </xsl:for-each>
-    </bookmark>
-  </xsl:if>
-</xsl:template>  
-
-<xd:doc>
+  <xsl:template name="makeBookMark">
+    <xsl:if test="tei:head">
+      <bookmark xmlns="http://www.renderx.com/XSL/Extensions">
+        <xsl:variable name="depth" select="count(ancestor::tei:div)"/>
+        <xsl:attribute name="internal-destination">
+          <xsl:choose>
+            <xsl:when test="@xml:id">
+              <xsl:value-of select="@xml:id"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="generate-id()"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:attribute>
+        <bookmark-label xmlns="http://www.renderx.com/XSL/Extensions">
+          <xsl:if test="$numberHeadings='true' and $numberHeadingsDepth &gt; $depth">
+            <xsl:call-template name="calculateNumber">
+              <xsl:with-param name="numbersuffix" select="$headingNumberSuffix"/>
+            </xsl:call-template>
+            <xsl:text> </xsl:text>
+          </xsl:if>
+          <xsl:value-of select="tei:head"/>
+        </bookmark-label>
+        <xsl:for-each select="tei:div">
+          <xsl:call-template name="makeBookMark"/>
+        </xsl:for-each>
+      </bookmark>
+    </xsl:if>
+  </xsl:template>
+  <xd:doc>
     <xd:short>[fo] Make an XEP bookmark for numbered divs</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
-<xsl:template name="makeBookMarkN">
-  <xsl:if test="tei:head">
-    <xsl:variable name="depth" select="substring-after(local-name(.),'div')"/>
-    <bookmark xmlns="http://www.renderx.com/XSL/Extensions">
-    <xsl:attribute name="internal-destination">
-      <xsl:choose>
-	<xsl:when test="@xml:id">
-	  <xsl:value-of select="@xml:id"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:value-of select="generate-id()"/>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:attribute>
-    <bookmark-label xmlns="http://www.renderx.com/XSL/Extensions">
-      <xsl:if test="$numberHeadings='true' and $numberHeadingsDepth &gt; $depth">
-	<xsl:call-template name="calculateNumber">
-	  <xsl:with-param name="numbersuffix" select="$headingNumberSuffix"/>
-	</xsl:call-template>
-	<xsl:text> </xsl:text>
-      </xsl:if>
-      <xsl:value-of select="tei:head"/>
-    </bookmark-label>
-    <xsl:choose>
-      <xsl:when test="$depth='0'">
-	<xsl:for-each select="tei:div1">
-	  <xsl:call-template name="makeBookMarkN"/>
-	</xsl:for-each>
-      </xsl:when>
-      <xsl:when test="$depth='1'">
-	<xsl:for-each select="tei:div2">
-	  <xsl:call-template name="makeBookMarkN"/>
-	</xsl:for-each>
-      </xsl:when>
-      <xsl:when test="$depth='2'">
-	<xsl:for-each select="tei:div3">
-	  <xsl:call-template name="makeBookMarkN"/>
-	</xsl:for-each>
-      </xsl:when>
-      <xsl:when test="$depth='3'">
-	<xsl:for-each select="tei:div4">
-	  <xsl:call-template name="makeBookMarkN"/>
-	</xsl:for-each>
-      </xsl:when>
-      <xsl:when test="$depth='4'">
-	<xsl:for-each select="tei:div5">
-	  <xsl:call-template name="makeBookMarkN"/>
-	</xsl:for-each>
-      </xsl:when>
-    </xsl:choose>
-    </bookmark>
-  </xsl:if>
-</xsl:template>  
-
-<xd:doc>
+  <xsl:template name="makeBookMarkN">
+    <xsl:if test="tei:head">
+      <xsl:variable name="depth" select="substring-after(local-name(.),'div')"/>
+      <bookmark xmlns="http://www.renderx.com/XSL/Extensions">
+        <xsl:attribute name="internal-destination">
+          <xsl:choose>
+            <xsl:when test="@xml:id">
+              <xsl:value-of select="@xml:id"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="generate-id()"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:attribute>
+        <bookmark-label xmlns="http://www.renderx.com/XSL/Extensions">
+          <xsl:if test="$numberHeadings='true' and $numberHeadingsDepth &gt; $depth">
+            <xsl:call-template name="calculateNumber">
+              <xsl:with-param name="numbersuffix" select="$headingNumberSuffix"/>
+            </xsl:call-template>
+            <xsl:text> </xsl:text>
+          </xsl:if>
+          <xsl:value-of select="tei:head"/>
+        </bookmark-label>
+        <xsl:choose>
+          <xsl:when test="$depth='0'">
+            <xsl:for-each select="tei:div1">
+              <xsl:call-template name="makeBookMarkN"/>
+            </xsl:for-each>
+          </xsl:when>
+          <xsl:when test="$depth='1'">
+            <xsl:for-each select="tei:div2">
+              <xsl:call-template name="makeBookMarkN"/>
+            </xsl:for-each>
+          </xsl:when>
+          <xsl:when test="$depth='2'">
+            <xsl:for-each select="tei:div3">
+              <xsl:call-template name="makeBookMarkN"/>
+            </xsl:for-each>
+          </xsl:when>
+          <xsl:when test="$depth='3'">
+            <xsl:for-each select="tei:div4">
+              <xsl:call-template name="makeBookMarkN"/>
+            </xsl:for-each>
+          </xsl:when>
+          <xsl:when test="$depth='4'">
+            <xsl:for-each select="tei:div5">
+              <xsl:call-template name="makeBookMarkN"/>
+            </xsl:for-each>
+          </xsl:when>
+        </xsl:choose>
+      </bookmark>
+    </xsl:if>
+  </xsl:template>
+  <xd:doc>
     <xd:short>[fo] </xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="tocBits">
     <xsl:if test="$tocFront='true'">
@@ -1521,11 +1315,10 @@
       </xsl:for-each>
     </xsl:if>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>[fo] </xd:short>
     <xd:param name="level">level</xd:param>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="tocheading">
     <xsl:param name="level"/>
@@ -1574,26 +1367,25 @@
       <fo:inline>
         <xsl:call-template name="linkStyle"/>
         <xsl:variable name="pagref">
-	  <xsl:choose>
-	    <xsl:when test="@xml:id">
-	      <xsl:value-of select="@xml:id"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:value-of select="generate-id()"/>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:variable>
+          <xsl:choose>
+            <xsl:when test="@xml:id">
+              <xsl:value-of select="@xml:id"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="generate-id()"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
         <fo:basic-link internal-destination="{$pagref}">
           <fo:page-number-citation ref-id="{$pagref}"/>
         </fo:basic-link>
       </fo:inline>
     </fo:block>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>[fo] </xd:short>
     <xd:param name="level">level</xd:param>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="xheading">
     <xsl:param name="level"/>

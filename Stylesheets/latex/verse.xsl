@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet 
-  xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  xmlns:edate="http://exslt.org/dates-and-times"
-  xmlns:estr="http://exslt.org/strings"
-  xmlns:exsl="http://exslt.org/common"
-  xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:teix="http://www.tei-c.org/ns/Examples"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-  extension-element-prefixes="exsl estr edate xd" 
-  exclude-result-prefixes="exsl estr edate a rng tei teix" 
-  version="1.0">
-  
-<xd:doc type="stylesheet">
+<xsl:stylesheet xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" extension-element-prefixes="exsl estr edate xd" exclude-result-prefixes="exsl estr edate a rng tei teix" version="1.0">
+  <xd:doc type="stylesheet">
     <xd:short>
     TEI stylesheet
     dealing  with elements from the

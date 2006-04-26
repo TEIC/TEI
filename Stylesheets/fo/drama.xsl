@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet 
-    xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  xmlns:edate="http://exslt.org/dates-and-times"
-  xmlns:estr="http://exslt.org/strings"
-  xmlns:exsl="http://exslt.org/common"
-  xmlns:fo="http://www.w3.org/1999/XSL/Format"
-  xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:teix="http://www.tei-c.org/ns/Examples"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-  extension-element-prefixes="exsl estr edate" 
-  exclude-result-prefixes="xd exsl estr edate a fo rng tei teix" 
-  version="1.0">
-  
-<xd:doc type="stylesheet">
+<xsl:stylesheet xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" extension-element-prefixes="exsl estr edate" exclude-result-prefixes="xd exsl estr edate a fo rng tei teix" version="1.0">
+  <xd:doc type="stylesheet">
     <xd:short>
     TEI stylesheet
     dealing  with elements from the
@@ -42,10 +28,9 @@
     <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2005, TEI Consortium</xd:copyright>
   </xd:doc>
-  
   <xd:doc>
     <xd:short>Process elements  tei:actor</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:actor">
     <fo:inline>
@@ -56,10 +41,9 @@
       <xsl:apply-templates/>
     </fo:inline>
   </xsl:template>
-
   <xd:doc>
     <xd:short>Process elements  tei:camera</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:camera">
     <fo:inline>
@@ -70,10 +54,9 @@
       <xsl:apply-templates/>
     </fo:inline>
   </xsl:template>
-
   <xd:doc>
     <xd:short>Process elements  tei:caption</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:caption">
     <fo:inline>
@@ -84,63 +67,61 @@
       <xsl:apply-templates/>
     </fo:inline>
   </xsl:template>
-
   <xd:doc>
     <xd:short>Process elements  tei:castGroup</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:castGroup">
-      <xsl:apply-templates/>
+    <xsl:apply-templates/>
   </xsl:template>
-
   <xd:doc>
     <xd:short>Process elements  tei:castItem</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:castItem">
     <xsl:call-template name="makeItem"/>
   </xsl:template>
-
   <xd:doc>
     <xd:short>Process elements  tei:castItem (when @type is 'list')</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:castItem[@type='list']">
     <fo:list-item>
-        <xsl:attribute name="space-before.optimum">
-          <xsl:value-of select="$listItemsep"/>
-        </xsl:attribute>
-	<fo:list-item-label end-indent="label-end()">
+      <xsl:attribute name="space-before.optimum">
+        <xsl:value-of select="$listItemsep"/>
+      </xsl:attribute>
+      <fo:list-item-label end-indent="label-end()">
         <xsl:if test="@xml:id">
-	  <xsl:attribute name="id">
-	    <xsl:value-of select="@xml:id"/>
+          <xsl:attribute name="id">
+            <xsl:value-of select="@xml:id"/>
           </xsl:attribute>
-	</xsl:if>
-	<xsl:text>&#10;</xsl:text>
-	<fo:block></fo:block>
-	</fo:list-item-label>
-	<fo:list-item-body start-indent="body-start()">
-	  <fo:block>
-	    <xsl:call-template name="rend">
-	      <xsl:with-param name="defaultvalue" select="string('italic')"/>
-	      <xsl:with-param name="defaultstyle" select="string('font-style')"/>
-	    </xsl:call-template>
-	    <xsl:text>(</xsl:text>
-	  <xsl:apply-templates/>
-	  <xsl:text>)</xsl:text>
-	  </fo:block>
-	</fo:list-item-body>
+        </xsl:if>
+        <xsl:text>&#10;</xsl:text>
+        <fo:block/>
+      </fo:list-item-label>
+      <fo:list-item-body start-indent="body-start()">
+        <fo:block>
+          <xsl:call-template name="rend">
+            <xsl:with-param name="defaultvalue" select="string('italic')"/>
+            <xsl:with-param name="defaultstyle" select="string('font-style')"/>
+          </xsl:call-template>
+          <xsl:text>(</xsl:text>
+          <xsl:apply-templates/>
+          <xsl:text>)</xsl:text>
+        </fo:block>
+      </fo:list-item-body>
     </fo:list-item>
   </xsl:template>
-
   <xd:doc>
     <xd:short>Process elements  tei:castList</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:castList">
     <xsl:if test="child::tei:head">
       <fo:block font-style="italic" text-align="start" space-before.optimum="4pt">
-        <xsl:for-each select="tei:head"><xsl:apply-templates/></xsl:for-each>
+        <xsl:for-each select="tei:head">
+          <xsl:apply-templates/>
+        </xsl:for-each>
       </fo:block>
     </xsl:if>
     <fo:list-block>
@@ -148,19 +129,16 @@
       <xsl:apply-templates/>
     </fo:list-block>
   </xsl:template>
-
-
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:sp</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:sp">
     <fo:block text-align="justify" start-indent="1em" text-indent="-1em" space-before="3pt">
       <xsl:apply-templates/>
     </fo:block>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:sp/tei:p</xd:short>
     <xd:detail>
       <p> paragraphs inside speeches do very little</p>
@@ -171,10 +149,9 @@
       <xsl:apply-templates/>
     </fo:inline>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:speaker</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:speaker">
     <fo:inline>
@@ -186,10 +163,9 @@
       <xsl:text> </xsl:text>
     </fo:inline>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:stage</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:stage">
     <fo:block>
@@ -201,10 +177,9 @@
       <xsl:apply-templates/>
     </fo:block>
   </xsl:template>
-
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:p/tei:stage</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:p/tei:stage">
     <fo:inline>
@@ -215,10 +190,9 @@
       <xsl:apply-templates/>
     </fo:inline>
   </xsl:template>
-  
   <xd:doc>
     <xd:short>Process elements  tei:sp/tei:stage</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:sp/tei:stage">
     <fo:inline>
@@ -228,12 +202,10 @@
       </xsl:call-template>
       <xsl:apply-templates/>
     </fo:inline>
-   </xsl:template>
-
-
+  </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:tech</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:tech">
     <fo:inline>
@@ -244,10 +216,9 @@
       <xsl:apply-templates/>
     </fo:inline>
   </xsl:template>
-
   <xd:doc>
     <xd:short>Process elements  tei:view</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:view">
     <fo:inline>
@@ -258,5 +229,4 @@
       <xsl:apply-templates/>
     </fo:inline>
   </xsl:template>
-
 </xsl:stylesheet>

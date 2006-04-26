@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet 
-    xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  xmlns:edate="http://exslt.org/dates-and-times"
-  xmlns:estr="http://exslt.org/strings"
-  xmlns:exsl="http://exslt.org/common"
-  xmlns:fo="http://www.w3.org/1999/XSL/Format"
-  xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:teix="http://www.tei-c.org/ns/Examples"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-  extension-element-prefixes="exsl estr edate" 
-  exclude-result-prefixes="xd exsl estr edate a fo rng tei teix" 
-  version="1.0">
-  
-<xd:doc type="stylesheet">
+<xsl:stylesheet xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" extension-element-prefixes="exsl estr edate" exclude-result-prefixes="xd exsl estr edate a fo rng tei teix" version="1.0">
+  <xd:doc type="stylesheet">
     <xd:short>
     TEI stylesheet
     dealing  with elements from the
@@ -42,30 +28,26 @@
     <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2005, TEI Consortium</xd:copyright>
   </xd:doc>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:div/tei:docAuthor</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:div/tei:docAuthor"/>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:div/tei:docDate</xd:short>
     <xd:detail>
       <p> omit if found outside front matter </p>
     </xd:detail>
   </xd:doc>
   <xsl:template match="tei:div/tei:docDate"/>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:div/tei:docTitle</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:div/tei:docTitle"/>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:docAuthor</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:docAuthor" mode="heading">
     <xsl:if test="preceding-sibling::tei:docAuthor">
@@ -80,10 +62,9 @@
     </xsl:if>
     <xsl:apply-templates/>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:docAuthor</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:docAuthor">
     <fo:block font-size="{$authorSize}">
@@ -92,24 +73,21 @@
       </fo:inline>
     </fo:block>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:docDate</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:docDate">
     <fo:block font-size="{$dateSize}">
       <xsl:apply-templates/>
     </fo:block>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:docImprint</xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:docImprint"/>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:docTitle</xd:short>
     <xd:detail>
       <p> author and title </p>
@@ -134,8 +112,7 @@
       </fo:inline>
     </fo:block>
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>Process elements  tei:teiHeader</xd:short>
     <xd:detail>
       <p> ignore the header </p>
@@ -143,10 +120,9 @@
   </xd:doc>
   <xsl:template match="tei:teiHeader">
   </xsl:template>
-  
-<xd:doc>
+  <xd:doc>
     <xd:short>[fo] </xd:short>
-    <xd:detail>&#160;</xd:detail>
+    <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="textTitle">
     <xsl:apply-templates select="tei:front"/>

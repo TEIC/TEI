@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <XSLTdocConfig>
   <Title>The title used on the main page</Title>
-  <Introduction>
-    This section is copied to the main documentation page. It can include any HTML tags.
-  </Introduction>
-  
+  <Introduction> This section is copied to the main documentation page. It can
+    include any HTML tags. </Introduction>
   <!-- 
        The absolute or relative path to the target directory 
        where the HTML files are created. If a relative path
@@ -30,7 +28,6 @@
   <RootStylesheets>
     <File href="tei.xsl"/>
   </RootStylesheets>
-  
   <!-- 
        A list of CSS Stylesheet files which should be added to the standard CSS file included (XSLTdoc.css)
        - Not mandatory

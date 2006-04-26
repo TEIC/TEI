@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
-
 <!-- ********************************************************************** -->
 <!--                                                                        -->
-<!-- Routine to return the value of the ident= attributes of any            --> 
+<!-- Routine to return the value of the ident= attributes of any            -->
 <!-- <schemaSpec> elements in a TEI document.                               -->
 <!--                                                                        -->
 <!-- Input: an XML file, presumably an ODD file, i.e., one that's in the    -->
@@ -17,18 +16,13 @@
 <!-- Copyright 2005 Brown University & TEI Consortium                        -->
 <!-- Licence: GPL                                                                       -->
 <!-- ********************************************************************** -->
-
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:tei="http://www.tei-c.org/ns/1.0"
-                version="1.0" >
-
-  <xsl:output method="text" encoding="utf8"/>
-
+<xsl:stylesheet version="1.0" xmlns:tei="http://www.tei-c.org/ns/1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <xsl:output encoding="utf8" method="text"/>
   <xsl:template match="/">
     <xsl:for-each select=".//tei:schemaSpec">
       <xsl:value-of select="@ident"/>
-      <xsl:text>&#x0A;</xsl:text>
+      <xsl:text>&#10;</xsl:text>
     </xsl:for-each>
   </xsl:template>
-
-</xsl:stylesheet> 
+</xsl:stylesheet>

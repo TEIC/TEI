@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet 
-        xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-	xmlns:tei="http://www.tei-c.org/ns/1.0" 
-	xmlns:exsl="http://exslt.org/common" 
-	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-	exclude-result-prefixes="exsl xd" 
-	extension-element-prefixes="exsl" 
-	version="1.0">
+<xsl:stylesheet xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:exsl="http://exslt.org/common" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" exclude-result-prefixes="exsl xd" extension-element-prefixes="exsl" version="1.0">
   <xsl:import href="../common/tei.xsl"/>
   <xsl:import href="tei-param.xsl"/>
   <xsl:output method="text" encoding="utf8"/>
@@ -47,26 +40,24 @@
     <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2005, TEI Consortium</xd:copyright>
   </xd:doc>
-
-<xsl:variable name="docClass">
-<xsl:choose>
-   <xsl:when test="/tei:TEI[@rend='letter']">
-     <xsl:text>letter</xsl:text>
-   </xsl:when>
-   <xsl:when test="/tei:TEI[@rend='book']">
-     <xsl:text>book</xsl:text>
-   </xsl:when>
-   <xsl:otherwise>
-    	<xsl:text>article</xsl:text>
-   </xsl:otherwise>
-</xsl:choose>
-</xsl:variable>
-
-<xd:doc>
-  <xd:short>Process elements  processing-instruction()[name(.)='tex']</xd:short>
-  <xd:detail>&#160;</xd:detail>
-</xd:doc>
-<xsl:template match="processing-instruction()[name(.)='tex']">
-  <xsl:value-of select="."/>
-</xsl:template>
+  <xsl:variable name="docClass">
+    <xsl:choose>
+      <xsl:when test="/tei:TEI[@rend='letter']">
+        <xsl:text>letter</xsl:text>
+      </xsl:when>
+      <xsl:when test="/tei:TEI[@rend='book']">
+        <xsl:text>book</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>article</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+  <xd:doc>
+    <xd:short>Process elements  processing-instruction()[name(.)='tex']</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="processing-instruction()[name(.)='tex']">
+    <xsl:value-of select="."/>
+  </xsl:template>
 </xsl:stylesheet>
