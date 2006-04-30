@@ -182,7 +182,7 @@ fascicule: subset
 	cp fasc-head.xml FASC-$(CHAP).xml
 #	perl -p -i -e "s+\"internal-entities.dtd+\"$(SOURCETREE)/$(LANGUAGE)/internal-entities.dtd+" FASC-$(CHAP).xml
 #	perl -p -i -e "s+\"external-entities.dtd+\"$(SOURCETREE)/$(LANGUAGE)/external-entities.dtd+" FASC-$(CHAP).xml
-	cat `find $(SOURCETREE)/Chapters/$(LANGUAGE) -iname $(CHAP).$(SUFFIX)`  >> FASC-$(CHAP).xml
+	cat `find $(SOURCETREE)/Guidelines/$(LANGUAGE) -iname $(CHAP).$(SUFFIX)`  >> FASC-$(CHAP).xml
 	cat fasc-tail.xml  >> FASC-$(CHAP).xml
 	export H=`pwd`; xmllint --noent --xinclude FASC-$(CHAP).xml | xsltproc \
 	-o FASC-$(CHAP)-Guidelines/index.html \
