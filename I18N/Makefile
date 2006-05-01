@@ -2,16 +2,16 @@ S=/usr/share/xml/tei/stylesheet
 lang=es
 
 test:
-	xsltproc  -o teilite-$(lang).xml --stringparam lang $(lang) $(S)/odds/translate-odd.xsl ../Extensions/Lite/teilite.xml 
-	perl -p -i -e 's/schemaSpec ident=.teilite./schemaSpec ident="teilite-$(lang)"/' teilite-$(lang).xml
-	roma --teiserver=http://localhost/Query/ teilite-$(lang).xml Schema
+	perl -p -e 's/schemaSpec ident=.test./schemaSpec ident="test-$(lang)"/' \
+	testodd.xml > testodd-$(lang).xml
+	roma --localsource=../P5/Source/Guidelines/en/driver.xml --translate=es  testodd-$(lang).xml Schema
 	xsltproc -o test-$(lang).xml --stringparam verbose true --stringparam lang $(lang) translate-instance.xsl test.xml
-	-rnv Schema/teilite-$(lang).rnc test-$(lang).xml
+	-rnv Schema/test-$(lang).rnc test-$(lang).xml
 	xsltproc -o test-back.xml --stringparam lang $(lang) translate-frominstance.xsl test-$(lang).xml
-	xsltproc $S/odds/subsetGuidelines.xsl teilite-$(lang).xml | xsltproc $S/odds/odd2html.xsl -
+	xsltproc $S/odds/subsetGuidelines.xsl test-$(lang).xml | xsltproc $S/odds/odd2html.xsl -
 
 clean:
-	-rm test-back.xml test-??.xml  teilite-??.xml
+	-rm test-back.xml test-??.xml  testodd-??.xml
 	-rm `find . -name "*~"`
 	-rm -rf Schema Guidelines
 
