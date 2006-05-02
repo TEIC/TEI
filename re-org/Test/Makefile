@@ -1,7 +1,7 @@
 LANGUAGE=en
 DRIVER=guidelines-${LANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
-ROMAOPTS=--doc --localsource=../Source/${DRIVER}
+ROMAOPTS=--doc --localsource=../Source/Guidelines/${LANGUAGE}/${DRIVER}
 
 TESTFILES= \
 	testchinese \
