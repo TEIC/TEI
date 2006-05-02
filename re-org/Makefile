@@ -184,13 +184,12 @@ fascicule: subset
 	-cp *.gif *.css FASC-${CHAP}-Guidelines
 	-jing p5odds.rng ${FASCFILE}
 	xsltproc -o FASC-${CHAP}-lite.xml  \
-	--stringparam localsource `pwd`/p5subset.xml \
-	--stringparam displayMode rnc \
-	--stringparam lang ${LANGUAGE} \
-	${XSL}/odds/odd2lite.xsl ${FASCFILE}
-	perl Utilities/cleanrnc.pl FASC-${CHAP}-lite.xml | \
-	xsltproc  \
-	 ${XSL}/teic/teilatex-teic.xsl - > FASC-${CHAP}.tex
+	  --stringparam localsource `pwd`/p5subset.xml \
+	  --stringparam displayMode rnc \
+	  --stringparam lang ${LANGUAGE} \
+	  ${XSL}/odds/odd2lite.xsl ${FASCFILE}
+	-perl Utilities/cleanrnc.pl FASC-${CHAP}-lite.xml \
+	  | xsltproc ${XSL}/teic/teilatex-teic.xsl - > FASC-${CHAP}.tex
 	-TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-${CHAP} 
 	-TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-${CHAP}
 	mv ${FASCFILE} ./
