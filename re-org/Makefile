@@ -2,8 +2,10 @@ SUFFIX=xml
 LANGUAGE=en
 PREFIX=/usr
 TEISERVER=http://tei.oucs.ox.ac.uk/Query/
-DRIVER=Source/Guidelines/${LANGUAGE}/guidelines-${LANGUAGE}.xml
 SOURCETREE=Source
+LANGTREE=${SOURCETREE}/Guidelines/${LANGUAGE}
+DRIVER=${LANGTREE}/guidelines-${LANGUAGE}.xml
+FASCFILE=${LANGTREE}/FASC-${CHAP}.xml
 ROMAOPTS="--localsource=${DRIVER}"
 XSL=/usr/share/xml/tei/stylesheet
 XSLP4=/usr/share/xml/teip4/stylesheet
@@ -153,39 +155,24 @@ split:
 	(mkdir Split; cd Split; xmllint --noent --xinclude  ../${DRIVER} | xsltproc ../Utilities/divsplit.xsl -)
 
 oddschema: 
-	roma $(ROMAOPTS) --nodtd --noxsd --xsl=$(XSL)/ --teiserver=$(TEISERVER) p5odds.odd .
+	roma ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ --teiserver=${TEISERVER} p5odds.odd .
 
 
 exampleschema:
-	roma  $(ROMAOPTS) --nodtd --noxsd --xsl=$(XSL)/ --teiserver=$(TEISERVER) p5odds-ex.odd . && \
+	roma  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ --teiserver=${TEISERVER} p5odds-ex.odd . && \
 	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rnc && \
 	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rng
 
 subset:
-	@echo '<xsl:stylesheet version="1.0"' > subset.xsl
-	@echo '  xmlns:tei="http://www.tei-c.org/ns/1.0"' >> subset.xsl
-	@echo '  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">' >> subset.xsl
-	@echo '  <xsl:template match="/">' >> subset.xsl
-	@echo '    <tei:TEI>' >> subset.xsl
-	@echo '<xsl:copy-of select=".//tei:elementSpec"/>' >> subset.xsl
-	@echo '      <xsl:copy-of select=".//tei:macroSpec"/>' >> subset.xsl
-	@echo '      <xsl:copy-of select=".//tei:classSpec"/>' >> subset.xsl
-	@echo '      <xsl:copy-of select=".//tei:moduleSpec"/>' >> subset.xsl
-	@echo '    </tei:TEI>' >> subset.xsl
-	@echo '</xsl:template>' >> subset.xsl
-	@echo '</xsl:stylesheet>' >> subset.xsl
 	-xmllint --noent --xinclude ${DRIVER} \
-	 | xsltproc -o p5subset.xml subset.xsl - || die "failed to extract subset from ${DRIVER}."
-	rm subset.xsl
+	 | xsltproc -o p5subset.xml Utilities/subset.xsl - || die "failed to extract subset from ${DRIVER}."
 
-fascicule: subset 
-	cp fasc-head.xml FASC-$(CHAP).xml
-#	perl -p -i -e "s+\"internal-entities.dtd+\"$(SOURCETREE)/$(LANGUAGE)/internal-entities.dtd+" FASC-$(CHAP).xml
-#	perl -p -i -e "s+\"external-entities.dtd+\"$(SOURCETREE)/$(LANGUAGE)/external-entities.dtd+" FASC-$(CHAP).xml
-	cat `find $(SOURCETREE)/Guidelines/$(LANGUAGE) -iname $(CHAP).$(SUFFIX)`  >> FASC-$(CHAP).xml
-	cat fasc-tail.xml  >> FASC-$(CHAP).xml
-	export H=`pwd`; xmllint --noent --xinclude FASC-$(CHAP).xml | xsltproc \
-	-o FASC-$(CHAP)-Guidelines/index.html \
+fascicule: subset
+	cp fasc-head.xml ${FASCFILE}
+	cat `find ${LANGTREE} -iname ${CHAP}.${SUFFIX}`  >> ${FASCFILE}
+	cat fasc-tail.xml  >> ${FASCFILE}
+	export H=`pwd`; xmllint --noent --xinclude ${FASCFILE} | xsltproc \
+	-o FASC-${CHAP}-Guidelines/index.html \
 	--stringparam localsource `pwd`/p5subset.xml \
 	--stringparam cssFile tei.css \
 	--stringparam verbose true \
@@ -193,20 +180,21 @@ fascicule: subset
 	--stringparam lang ${LANGUAGE} \
 	--stringparam outputDir . \
 	Utilities/guidelines.xsl -
-	(cd FASC-$(CHAP)-Guidelines; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
-	-cp *.gif *.css FASC-$(CHAP)-Guidelines
-	-jing p5odds.rng FASC-$(CHAP).xml 
+	(cd FASC-${CHAP}-Guidelines; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
+	-cp *.gif *.css FASC-${CHAP}-Guidelines
+	-jing p5odds.rng ${FASCFILE}
 	export H=`pwd`; \
-	xsltproc -o FASC-$(CHAP)-lite.xml  \
+	xsltproc -o FASC-${CHAP}-lite.xml  \
 	--stringparam localsource `pwd`/p5subset.xml \
 	--stringparam displayMode rnc \
 	--stringparam lang ${LANGUAGE} \
-	$(XSL)/odds/odd2lite.xsl FASC-$(CHAP).xml 
-	perl Utilities/cleanrnc.pl FASC-$(CHAP)-lite.xml | \
+	${XSL}/odds/odd2lite.xsl ${FASCFILE}
+	perl Utilities/cleanrnc.pl FASC-${CHAP}-lite.xml | \
 	xsltproc  \
-	 ${XSL}/teic/teilatex-teic.xsl - > FASC-$(CHAP).tex
-	TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-$(CHAP) 
-	TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-$(CHAP) 
+	 ${XSL}/teic/teilatex-teic.xsl - > FASC-${CHAP}.tex
+	TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-${CHAP} 
+	TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-${CHAP}
+	mv ${FASCFILE} ./
 
 dist: clean dist-source dist-schema dist-doc dist-test dist-database dist-exemplars
 
