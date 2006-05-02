@@ -121,12 +121,16 @@
       <xsl:text>&#xA0;</xsl:text>
       <xsl:value-of disable-output-escaping="yes" select="$startItalic"/>
       <xsl:choose>
-        <xsl:when test="namespace-uri()='http://www.w3.org/2005/11/its'">
-          <xsl:text>its:</xsl:text>
-        </xsl:when>
-        <xsl:when test="namespace-uri()='http://www.w3.org/XML/1998/namespace'">
-          <xsl:text>xml:</xsl:text>
-        </xsl:when>
+	<xsl:when test="namespace-uri()='http://www.w3.org/2005/11/its'">
+	  <xsl:text>its:</xsl:text>
+	</xsl:when>
+	<xsl:when
+	    test="namespace-uri()='http://www.w3.org/XML/1998/namespace'">
+	  <xsl:text>xml:</xsl:text>
+	</xsl:when>
+	<xsl:when test="namespace-uri()='http://www.w3.org/1999/xlink'">
+	  <xsl:text>xlink:</xsl:text>
+	</xsl:when>
       </xsl:choose>
       <xsl:value-of select="local-name(.)"/>
       <xsl:value-of disable-output-escaping="yes" select="$endItalic"/>

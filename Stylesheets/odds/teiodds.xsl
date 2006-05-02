@@ -708,12 +708,12 @@
               <rng:div>
                 <xsl:for-each select="document(@url)/rng:grammar">
                   <xsl:copy-of select="@*"/>
-                  <xsl:copy-of select="*"/>
+                  <xsl:call-template name="expandRNG"/>
                 </xsl:for-each>
                 <xsl:copy-of select="tei:content/*"/>
               </rng:div>
-              <xsl:comment>End of import of <xsl:value-of select="@url"
-              /></xsl:comment>
+              <xsl:comment>End of import of <xsl:value-of  select="@url"/>
+	      </xsl:comment>
             </xsl:when>
             <xsl:otherwise>
               <include href="{$schemaBaseURL}{$This}.rng"
@@ -737,6 +737,36 @@
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
+
+  <xsl:template name="expandRNG">
+    <xsl:for-each select="*">
+      <xsl:choose>
+        <xsl:when test="local-name(.)='start'"/>
+        <xsl:when test="local-name(.)='include'">
+	  <xsl:if test="$verbose='true'">
+	    <xsl:message> .... import <xsl:value-of
+	    select="@href"/></xsl:message>
+	  </xsl:if>
+	  <xsl:comment>Start of import of <xsl:value-of select="@href"/>
+	  </xsl:comment>
+          <rng:div>
+            <xsl:for-each select="document(@href)/rng:grammar">
+              <xsl:call-template name="expandRNG"/>
+            </xsl:for-each>
+          </rng:div>
+	  <xsl:comment>End of import of <xsl:value-of select="@href"/>
+	  </xsl:comment>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:copy>
+            <xsl:copy-of select="@*"/>
+            <xsl:call-template name="expandRNG"/>
+          </xsl:copy>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:template>
+
   <xsl:template match="tei:remarks" mode="tangle"/>
   <xsl:template match="tei:remarks"/>
   <xsl:template match="tei:remarks" mode="weave">

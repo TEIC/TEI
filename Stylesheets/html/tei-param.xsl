@@ -252,6 +252,8 @@ Width of left-hand column when $pageLayout is "Table"
     <meta name="DC.Title" content="{$title}"/>
     <meta name="DC.Type" content="Text"/>
     <meta name="DC.Format" content="text/html"/>
+    <meta http-equiv="Content-Type" 
+      content="text/html; charset={$outputEncoding}"/>
   </xsl:template>
   <xd:doc class="layout">
     <xd:short>[html] Construction of navigation bar </xd:short>

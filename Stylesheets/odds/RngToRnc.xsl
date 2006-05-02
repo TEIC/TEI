@@ -954,6 +954,12 @@
                     <xsl:with-param name="is-attr" select="false ()"/>
                   </xsl:call-template>
                 </xsl:when>
+		<xsl:when test="@ns">
+		  <xsl:text>[</xsl:text>
+		  <xsl:value-of select="@ns"/>
+		  <xsl:text>]</xsl:text>
+                  <xsl:value-of select="@name"/>
+		</xsl:when>
                 <xsl:otherwise>
                   <xsl:value-of select="@name"/>
                 </xsl:otherwise>

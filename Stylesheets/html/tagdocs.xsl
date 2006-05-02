@@ -526,7 +526,8 @@
     <xsl:apply-templates mode="doc" select="tei:desc"/>
     <xsl:choose>
       <xsl:when test="$atts='-'"/>
-      <xsl:when test="not($atts='')">
+      <xsl:when test="$atts=''"/>
+      <xsl:when test="string-length($atts)&gt;0">
         <table class="attList">
           <xsl:variable name="HERE" select="."/>
           <xsl:call-template name="splitAttTokens">

@@ -57,13 +57,17 @@
     <xd:short>Process elements tei:castGroup</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:castGroup"> \begin{itemize} <xsl:apply-templates/>
-    \end{itemize} </xsl:template>
+  <xsl:template match="tei:castGroup"> 
+    <xsl:text>\begin{itemize} </xsl:text>
+    <xsl:apply-templates/>
+    <xsl:text>&#10; \end{itemize}</xsl:text>
+  </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:castItem</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:castItem"> \item <xsl:apply-templates/>
+  <xsl:template match="tei:castItem">&#10;\item 
+  <xsl:apply-templates/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:castList</xd:short>

@@ -203,7 +203,9 @@
     <xd:short>Process elements tei:item</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:item"> \item<xsl:if test="@n">[<xsl:value-of
+  <xsl:template match="tei:item"> 
+    <xsl:text>&#10;\item</xsl:text>
+    <xsl:if test="@n">[<xsl:value-of
         select="@n"/>]</xsl:if>
     <xsl:text> </xsl:text>
     <xsl:apply-templates/>
@@ -306,13 +308,17 @@
     <xd:short>Process elements tei:p</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:p">\par<xsl:apply-templates/></xsl:template>
+  <xsl:template match="tei:p">
+  <xsl:text>\par </xsl:text>
+  <xsl:apply-templates/>
+  </xsl:template>
   <xd:doc>
     <xd:short>Process element tei:pb</xd:short>
     <xd:detail>Indication of a page break. We make it an anchor if it has an
     ID.</xd:detail>
   </xd:doc>
-  <xsl:template match="tei:pb">
+  
+<xsl:template match="tei:pb">
     <xsl:choose>
       <xsl:when test="$pagebreakStyle='active'">
         <xsl:text>\clearpage </xsl:text>
