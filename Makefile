@@ -2,9 +2,9 @@ SUFFIX=xml
 LANGUAGE=en
 PREFIX=/usr
 TEISERVER=http://tei.oucs.ox.ac.uk/Query/
+DRIVER=Source/Guidelines/${LANGUAGE}/guidelines-${LANGUAGE}.xml
 SOURCETREE=Source
-DRIVER=guidelines-${LANGUAGE}.xml
-ROMAOPTS="--localsource=Source/${DRIVER}"
+ROMAOPTS="--localsource=${DRIVER}"
 XSL=/usr/share/xml/tei/stylesheet
 XSLP4=/usr/share/xml/teip4/stylesheet
 #XSL=../Stylesheets
@@ -21,7 +21,7 @@ dtds: check
 	-mkdir DTD
 	-rm DTD/*
 	# generate the DTDs
-	xmllint --noent --xinclude ${SOURCETREE}/${DRIVER} | \
+	xmllint --noent --xinclude ${DRIVER} | \
 	xsltproc --stringparam outputDir DTD 	\
 	--stringparam lang ${LANGUAGE} \
 	--stringparam TEIC true \
@@ -39,7 +39,7 @@ schemas:check
 	-mkdir Schema
 	-rm Schema/*
 	# generate the relaxNG schemas
-	xmllint --noent --xinclude ${SOURCETREE}/${DRIVER} | \
+	xmllint --noent --xinclude ${DRIVER} | \
 	xsltproc --stringparam verbose true \
 	--stringparam lang ${LANGUAGE} \
 	--stringparam TEIC true \
@@ -56,13 +56,13 @@ schemas:check
 	(cd Schema; for i in *rng; do trang $$i `basename $$i .rng`.rnc;done)
 	# improve the positioning of blank lines in the RelaxNG compact syntax output for human readability
 	(for i in Schema/*.rnc; do t=`basename $$i .rnc`.tmp; mv $$i $$t; ./Utilities/fix_rnc_whitespace.perl < $$t > $$i; rm $$t; done)
-	xmllint --noent --xinclude ${SOURCETREE}/${DRIVER} | xsltproc Utilities/extract-sch.xsl - > p5.sch
+	xmllint --noent --xinclude ${DRIVER} | xsltproc Utilities/extract-sch.xsl - > p5.sch
 
 html-web: check
 	perl -p -e "s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+" Utilities/odd2htmlp5.xsl.model > Utilities/odd2htmlp5.xsl
 	-rm -rf Guidelines-web
 	-mkdir Guidelines-web
-	xmllint --noent --xinclude ${SOURCETREE}/${DRIVER} \
+	xmllint --noent --xinclude ${DRIVER} \
 	| xsltproc \
 	    -o Guidelines-web/index.html \
 	    --stringparam displayMode rnc \
@@ -70,14 +70,14 @@ html-web: check
 	    --stringparam outputDir . \
 	    Utilities/guidelines.xsl -
 	-cp *.css Guidelines-web
-	-cp $(SOURCETREE)/Images/* Guidelines-web/
+	-cp ${SOURCETREE}/Images/* Guidelines-web/
 	(cd Guidelines-web; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
 
 html:check subset
 	-rm -rf Guidelines
 	-mkdir Guidelines
 	perl -p -e "s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+" Utilities/odd2htmlp5.xsl.model > Utilities/odd2htmlp5.xsl
-	xmllint --noent --xinclude ${SOURCETREE}/${DRIVER} \
+	xmllint --noent --xinclude ${DRIVER} \
 	| xsltproc \
 	    -o Guidelines/index.html \
 	    --stringparam localsource `pwd`/p5subset.xml \
@@ -88,11 +88,11 @@ html:check subset
 	    --stringparam lang ${LANGUAGE} \
 	    Utilities/guidelines-print.xsl -
 	-cp *.css Guidelines
-	-cp $(SOURCETREE)/Images/* Guidelines/
+	-cp ${SOURCETREE}/Images/* Guidelines/
 	(cd Guidelines; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
 
 xml: check subset
-	xmllint --noent --xinclude ${SOURCETREE}/${DRIVER} | perl Utilities/cleanrnc.pl | \
+	xmllint --noent --xinclude ${DRIVER} | perl Utilities/cleanrnc.pl | \
 	xsltproc  -o Guidelines.xml \
 	--stringparam displayMode rnc  \
 	${XSL}/odds/odd2lite.xsl -
@@ -111,7 +111,7 @@ validate: oddschema exampleschema valid
 
 valid: jing_version=$(wordlist 1,3,$(shell jing))
 valid: check
-	-xmllint --noent --xinclude ${SOURCETREE}/${DRIVER} > Source.xml
+	-xmllint --noent --xinclude ${DRIVER} > Source.xml
 	@echo --------- jing
 	@echo ${jing_version}
 #	We have discovered that jing reports 3-letter language codes
@@ -143,14 +143,14 @@ valid: check
 	xsltproc validator.xsl Source.xml >& tmp && sed 's/TEI...\/text...\/body...\///' tmp && rm tmp
 	@echo --------- xmllint RelaxNG test REMOVED
 #	@xmllint --version
-#	-xmllint  --relaxng p5odds.rng --noent --xinclude --noout ${SOURCETREE}/${DRIVER}
+#	-xmllint  --relaxng p5odds.rng --noent --xinclude --noout ${DRIVER}
 	rm Source.xml
 
 test:
 	(cd Test; make)
 
 split:
-	(mkdir Split; cd Split; xmllint --noent --xinclude  ../${SOURCETREE}/${DRIVER} | xsltproc ../Utilities/divsplit.xsl -)
+	(mkdir Split; cd Split; xmllint --noent --xinclude  ../${DRIVER} | xsltproc ../Utilities/divsplit.xsl -)
 
 oddschema: 
 	roma $(ROMAOPTS) --nodtd --noxsd --xsl=$(XSL)/ --teiserver=$(TEISERVER) p5odds.odd .
@@ -174,8 +174,8 @@ subset:
 	@echo '    </tei:TEI>' >> subset.xsl
 	@echo '</xsl:template>' >> subset.xsl
 	@echo '</xsl:stylesheet>' >> subset.xsl
-	-xmllint --noent --xinclude ${SOURCETREE}/${DRIVER} \
-	 | xsltproc -o p5subset.xml subset.xsl - || die "failed to extract subset from ${SOURCETREE}/${DRIVER}."
+	-xmllint --noent --xinclude ${DRIVER} \
+	 | xsltproc -o p5subset.xml subset.xsl - || die "failed to extract subset from ${DRIVER}."
 	rm subset.xsl
 
 fascicule: subset 
