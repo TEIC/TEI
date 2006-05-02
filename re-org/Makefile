@@ -171,7 +171,7 @@ fascicule: subset
 	cp fasc-head.xml ${FASCFILE}
 	cat `find ${LANGTREE} -iname ${CHAP}.${SUFFIX}`  >> ${FASCFILE}
 	cat fasc-tail.xml  >> ${FASCFILE}
-	export H=`pwd`; xmllint --noent --xinclude ${FASCFILE} | xsltproc \
+	xmllint --noent --xinclude ${FASCFILE} | xsltproc \
 	-o FASC-${CHAP}-Guidelines/index.html \
 	--stringparam localsource `pwd`/p5subset.xml \
 	--stringparam cssFile tei.css \
@@ -183,7 +183,6 @@ fascicule: subset
 	(cd FASC-${CHAP}-Guidelines; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
 	-cp *.gif *.css FASC-${CHAP}-Guidelines
 	-jing p5odds.rng ${FASCFILE}
-	export H=`pwd`; \
 	xsltproc -o FASC-${CHAP}-lite.xml  \
 	--stringparam localsource `pwd`/p5subset.xml \
 	--stringparam displayMode rnc \
