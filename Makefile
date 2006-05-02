@@ -191,8 +191,8 @@ fascicule: subset
 	perl Utilities/cleanrnc.pl FASC-${CHAP}-lite.xml | \
 	xsltproc  \
 	 ${XSL}/teic/teilatex-teic.xsl - > FASC-${CHAP}.tex
-	TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-${CHAP} 
-	TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-${CHAP}
+	-TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-${CHAP} 
+	-TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-${CHAP}
 	mv ${FASCFILE} ./
 
 dist: clean dist-source dist-schema dist-doc dist-test dist-database dist-exemplars
