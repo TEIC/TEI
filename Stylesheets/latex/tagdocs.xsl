@@ -26,4 +26,17 @@
     <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2005, TEI Consortium</xd:copyright>
   </xd:doc>
+
+  <xd:doc>
+    <xd:short>Example element</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="teix:egXML">
+\begin{scriptsize}
+\bgroup
+\ttfamily\mbox{}
+<xsl:apply-templates mode="verbatim"/>
+\egroup
+\end{scriptsize}
+  </xsl:template>
 </xsl:stylesheet>

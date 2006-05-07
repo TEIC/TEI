@@ -14,17 +14,6 @@ XSL FO stylesheet to format TEI XML documents
   <xsl:variable name="docClass">beamer</xsl:variable>
   <xsl:param name="classParameters"/>
   <xsl:param name="beamerClass">PaloAlto</xsl:param>
-  <xsl:param name="startRed">\color{red}</xsl:param>
-  <xsl:param name="endRed"/>
-  <xsl:param name="startBold">\textbf{</xsl:param>
-  <xsl:param name="startItalic">\textit{</xsl:param>
-  <xsl:param name="endBold">}</xsl:param>
-  <xsl:param name="endItalic">}</xsl:param>
-  <xsl:param name="spaceCharacter">&#xA0;</xsl:param>
-  <xsl:template name="lineBreak">
-    <xsl:param name="id"/>
-    <xsl:text>\\&#10;</xsl:text>
-  </xsl:template>
   <xsl:template name="latexPackages">
 \usepackage{colortbl}
 \usetheme{<xsl:value-of select="$beamerClass"/>}

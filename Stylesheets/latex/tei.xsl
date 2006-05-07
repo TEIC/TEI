@@ -2,6 +2,7 @@
 <xsl:stylesheet xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:exsl="http://exslt.org/common" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" exclude-result-prefixes="exsl xd" extension-element-prefixes="exsl" version="1.0">
   <xsl:import href="../common/tei.xsl"/>
   <xsl:import href="tei-param.xsl"/>
+  <xsl:import href="../common/verbatim.xsl"/>
   <xsl:output method="text" encoding="utf8"/>
   <xsl:strip-space elements="*"/>
   <xsl:include href="core.xsl"/>
@@ -14,6 +15,14 @@
   <xsl:include href="tagdocs.xsl"/>
   <xsl:include href="textstructure.xsl"/>
   <xsl:include href="verse.xsl"/>
+
+  <xsl:param name="startRed">\color{red}</xsl:param>
+  <xsl:param name="endRed"/>
+  <xsl:param name="startBold">\textbf{</xsl:param>
+  <xsl:param name="startItalic">\textit{</xsl:param>
+  <xsl:param name="endBold">}</xsl:param>
+  <xsl:param name="endItalic">}</xsl:param>
+  <xsl:param name="spaceCharacter">\hspace*{1em}</xsl:param>
   <xd:doc type="stylesheet">
     <xd:short>
     TEI stylesheet for making LaTeX output.
@@ -60,4 +69,10 @@
   <xsl:template match="processing-instruction()[name(.)='tex']">
     <xsl:value-of select="."/>
   </xsl:template>
+
+  <xsl:template name="lineBreak">
+    <xsl:param name="id"/>
+    <xsl:text>\\&#10;</xsl:text>
+  </xsl:template>
+
 </xsl:stylesheet>

@@ -71,11 +71,18 @@
   </xd:doc>
   <xsl:template match="tei:eg|tei:q[@rend='eg']">
     <xsl:choose>
-      <xsl:when test="@n"> \begin{Verbatim}[numbers=left,label={<xsl:value-of
-          select="@n"/>}]<xsl:apply-templates mode="eg"/> \end{Verbatim}</xsl:when>
+      <xsl:when test="@n">
+	<xsl:text>&#10;\begin{Verbatim}[numbers=left,label={</xsl:text>
+	<xsl:value-of select="@n"/>
+      <xsl:text>}]&#10;</xsl:text>
+      <xsl:apply-templates mode="eg"/> 
+      <xsl:text>&#10;\end{Verbatim}&#10;</xsl:text>
+      </xsl:when>
       <xsl:otherwise>
-          \begin{Verbatim}[frame=single,fillcolor=\color{yellow}]<xsl:apply-templates
-          mode="eg"/> \end{Verbatim}</xsl:otherwise>
+	<xsl:text>&#10;\begin{Verbatim}[frame=single,fillcolor=\color{yellow}]&#10;</xsl:text>
+	<xsl:apply-templates mode="eg"/>
+	<xsl:text>&#10;\end{Verbatim}&#10;</xsl:text>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   <xd:doc>

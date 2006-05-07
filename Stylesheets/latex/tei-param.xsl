@@ -120,6 +120,7 @@ capable of dealing with UTF-8 directly.
 \IfFileExists{utf8x.def}%
  {\usepackage[utf8x]{inputenc}}%
  {\usepackage[utf8]{inputenc}}
+\usepackage[russianb,greek,english]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[]{ucs}
 </xsl:if>
