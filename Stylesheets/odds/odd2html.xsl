@@ -40,6 +40,9 @@
   <xsl:param name="BITS">Bits</xsl:param>
   <xsl:param name="STDOUT">false</xsl:param>
   <xsl:param name="TAG"/>
+
+  <xsl:output encoding="utf-8" type="xml" indent="yes"/>
+
   <xsl:variable name="top" select="/"/>
   <xsl:template match="tei:divGen[@type='index']">
     <xsl:variable name="Index">
@@ -330,4 +333,12 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+<xsl:template match="tei:elementSpec[@mode='delete']" mode="weave"/>
+
+<xsl:template match="tei:elementSpec[@mode='delete']">
+<dt>Element <xsl:value-of select="@ident"/></dt>
+<dd><b>DELETED</b></dd>
+</xsl:template>
+
 </xsl:stylesheet>
