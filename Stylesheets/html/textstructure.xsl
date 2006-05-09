@@ -2667,11 +2667,19 @@ $ID: requests a particular page
         </xsl:attribute>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:if test="@xml:id">
-      <xsl:attribute name="id">
-        <xsl:value-of select="@xml:id"/>
-      </xsl:attribute>
-    </xsl:if>
+    <xsl:variable name="ident">
+      <xsl:apply-templates mode="ident" select="."/>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$xhtml='false'">
+	<a name="{$ident}"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:attribute name="id">
+	  <xsl:value-of select="$ident"/>
+	</xsl:attribute>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>

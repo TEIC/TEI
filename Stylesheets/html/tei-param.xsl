@@ -352,7 +352,7 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</xd:detail>
     <xsl:if test="not($text='')">
       <xsl:element name="h{$level}">
 	<xsl:attribute name="class">
-	  <xsl:value-of select="class"/>
+	  <xsl:value-of select="$class"/>
 	</xsl:attribute>
 	<xsl:value-of select="$text"/>
       </xsl:element>
