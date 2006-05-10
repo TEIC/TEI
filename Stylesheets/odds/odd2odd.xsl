@@ -55,6 +55,11 @@
   <xsl:key match="tei:macroSpec[@mode='change']" name="CHANGE" use="@ident"/>
   <xsl:key match="tei:moduleRef" name="MODULES" use="@key"/>
   <xsl:variable name="ODD" select="/"/>
+
+  <xsl:variable name="AnonymousModule">
+    <xsl:text>module-from-</xsl:text>
+    <xsl:value-of select="//tei:schemaSpec/@ident"/>
+  </xsl:variable>
   <xsl:template match="/">
     <xsl:apply-templates/>
   </xsl:template>
@@ -88,16 +93,16 @@ because of the order of declarations
       <xsl:message>Phase 2: add elementSpec, classSpec, macroSpec</xsl:message>
     </xsl:if>
     <xsl:for-each select="tei:classSpec[@mode='add']">
-      <xsl:copy-of select="."/>
+      <xsl:call-template name="createCopy"/>
     </xsl:for-each>
     <xsl:for-each select="tei:classSpec[not(@mode)]">
-      <xsl:copy-of select="."/>
+      <xsl:call-template name="createCopy"/>
     </xsl:for-each>
     <xsl:for-each select="tei:macroSpec[@mode='add']">
-      <xsl:copy-of select="."/>
+      <xsl:call-template name="createCopy"/>
     </xsl:for-each>
     <xsl:for-each select="tei:macroSpec[not(@mode)]">
-      <xsl:copy-of select="."/>
+      <xsl:call-template name="createCopy"/>
     </xsl:for-each>
     <xsl:for-each select="tei:elementSpec[@mode='add']">
       <xsl:apply-templates mode="copy" select="."/>
@@ -112,18 +117,30 @@ because of the order of declarations
       <xsl:choose>
         <xsl:when test="starts-with(@target,'#')">
           <xsl:for-each select="key('IDS',substring-after(@target,'#'))">
+            <xsl:for-each 
+              select="tei:classSpec[not(@mode) or @mode='add']">
+	      <xsl:call-template name="createCopy"/>
+	    </xsl:for-each>
             <xsl:apply-templates mode="copy"
-              select="tei:*[not(@mode) or @mode='add']"/>
+              select="tei:elementSpec[not(@mode) or @mode='add']"/>
+            <xsl:for-each
+		select="tei:macroSpec[not(@mode) or @mode='add']">
+	      <xsl:call-template name="createCopy"/>
+	    </xsl:for-each>
           </xsl:for-each>
         </xsl:when>
         <xsl:otherwise>
           <xsl:for-each select="document(@target)/tei:specGrp">
+            <xsl:for-each 
+              select="tei:classSpec[not(@mode) or @mode='add']">
+	      <xsl:call-template name="createCopy"/>
+	    </xsl:for-each>
             <xsl:apply-templates mode="copy"
               select="tei:elementSpec[not(@mode) or @mode='add']"/>
-            <xsl:apply-templates mode="copy"
-              select="tei:classSpec[not(@mode) or @mode='add']"/>
-            <xsl:apply-templates mode="copy"
-              select="tei:macroSpec[not(@mode) or @mode='add']"/>
+            <xsl:for-each
+		select="tei:macroSpec[not(@mode) or @mode='add']">
+	      <xsl:call-template name="createCopy"/>
+	    </xsl:for-each>
           </xsl:for-each>
         </xsl:otherwise>
       </xsl:choose>
@@ -243,12 +260,19 @@ because of the order of declarations
   </xsl:template>
   <xsl:template match="tei:listRef" mode="copy"/>
   <xsl:template match="tei:elementSpec/@mode" mode="copy"/>
+  <xsl:template match="tei:macroSpec/@mode" mode="copy"/>
+  <xsl:template match="tei:classSpec/@mode" mode="copy"/>
   <xsl:template match="tei:elementSpec/@mode" mode="change"/>
   <xsl:template match="tei:elementSpec" mode="copy">
     <xsl:variable name="I">
       <xsl:value-of select="@ident"/>
     </xsl:variable>
     <xsl:copy>
+      <xsl:if test="not(@module)">
+	<xsl:attribute name="module">
+	  <xsl:value-of select="$AnonymousModule"/>
+	</xsl:attribute>
+      </xsl:if>
       <xsl:apply-templates mode="copy" select="@*"/>
       <xsl:copy-of select="tei:altIdent"/>
       <xsl:copy-of select="tei:equiv"/>
@@ -1138,4 +1162,20 @@ so that is only put back in if there is some content
     </xsl:for-each>
     <xsl:comment>FINISH <xsl:value-of select="$K"/></xsl:comment>
   </xsl:template>
+
+  <xsl:template name="createCopy">
+    <xsl:element name="{local-name()}"
+		 xmlns="http://www.tei-c.org/ns/1.0">
+      <xsl:if test="not(@module)">
+	<xsl:attribute name="module">
+	  <xsl:value-of select="$AnonymousModule"/>
+	</xsl:attribute>
+      </xsl:if>
+      <xsl:if test="local-name()='classSpec' and @type='model' and not(@predeclare)">
+	<xsl:attribute name="predeclare">true</xsl:attribute>
+      </xsl:if>
+      <xsl:apply-templates select="@*|*" mode="copy"/>
+    </xsl:element>
+  </xsl:template>
+
 </xsl:stylesheet>

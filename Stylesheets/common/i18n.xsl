@@ -23,7 +23,7 @@
   </xd:doc>
   <xsl:key match="entry" name="KEYS" use="key"/>
   <xd:doc>
-    <xd:short>[common] give language-specific version of a word of phrase</xd:short>
+    <xd:short>[common] give language-specific version of a word or phrase</xd:short>
     <xd:param name="word">the word(s) to translate</xd:param>
     <xd:detail> </xd:detail>
   </xd:doc>

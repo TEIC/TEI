@@ -526,6 +526,11 @@
     <xsl:apply-templates mode="doc" select="tei:desc"/>
     <xsl:choose>
       <xsl:when test="$atts='-'"/>
+      <xsl:when test="$atts='+'">
+        <xsl:call-template name="showAttClasses">
+          <xsl:with-param name="minimal">true</xsl:with-param>
+        </xsl:call-template>
+      </xsl:when>
       <xsl:when test="$atts=''"/>
       <xsl:when test="string-length($atts)&gt;0">
         <table class="attList">
@@ -539,7 +544,7 @@
       <xsl:otherwise>
         <xsl:if test="tei:attList//tei:attDef">
           <table class="attList">
-            <xsl:apply-templates mode="summary" select="tei:attList"/>
+            <xsl:apply-templates mode="summary" select="tei:attList//tei:attDef"/>
           </table>
         </xsl:if>
         <xsl:call-template name="showAttClasses">
