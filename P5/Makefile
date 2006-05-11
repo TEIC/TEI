@@ -223,7 +223,7 @@ dist-doc:  html
 	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc/html
 	(cd Guidelines; tar --exclude .svn -c -f - . ) \
 	| (cd release/tei-p5-doc/share/doc/tei-p5-doc/html; tar xf - )
-	for i in readme*xml; do  \
+	for i in ReleaseNotes/readme*xml; do  \
 	xsltproc \
 	--stringparam cssFile html/teic.css \
 	${XSLP4}/teic/teihtml-teic.xsl $$i \

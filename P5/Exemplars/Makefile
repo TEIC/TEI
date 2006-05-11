@@ -1,5 +1,8 @@
 PREFIX=/usr
-ROMAOPTS= --dochtml  --localsource=../Source-driver.xml
+LANGUAGE=en
+DRIVER=guidelines-${LANGUAGE}.xml
+XSL=/usr/share/xml/tei/stylesheet/
+ROMAOPTS=--dochtml --localsource=../Source/Guidelines/${LANGUAGE}/${DRIVER}
 
 schemas:
 	for i in *.odd; do echo Process $$i; $(PREFIX)/bin/roma $(ROMAOPTS) $$i .; done
