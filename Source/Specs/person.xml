@@ -1,0 +1,70 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="corpus" xml:id="PERSON" usage="opt" ident="person">
+<equiv/>
+<gloss/>
+<desc>provides information about an identifiable individual, for
+example a participant in a language interaction, or a person referred
+to in a historical source.</desc>
+  <content>
+    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:oneOrMore>
+        <rng:ref name="model.pLike"/>
+      </rng:oneOrMore>
+      <rng:zeroOrMore>
+        <rng:ref name="model.personPart"/>
+      </rng:zeroOrMore>
+    </rng:choice>
+  </content>
+  <attList>
+    <attDef ident="role" usage="opt">
+	<equiv/>
+	<desc>specifies a primary role or classification for the person.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.words"/></datatype>
+      <valDesc>one or more keywords separated by spaces</valDesc>
+    </attDef>
+    <attDef ident="sex" usage="opt">
+	<equiv/>
+	<desc>specifies the sex of the person.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.sex"/></datatype>
+    </attDef>
+    <attDef ident="age" usage="opt">
+	<equiv/>
+	<desc>specifies an age group for the person.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/></datatype>
+      <valDesc>suggested values are to be supplied</valDesc>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><person sex="2" age="42">
+        <p>Female respondent, well-educated, born in Shropshire
+UK, 12 Jan 1950, of unknown occupation.
+Speaks French fluently. Socio-Economic status B2.</p>
+      </person>
+    </egXML>
+  </exemplum>
+
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><person xml:id="Ovi01" sex="1" role="poet">
+<persName xml:lang="en">Ovid</persName>
+<persName xml:lang="la">Publius Ovidius Naso</persName>
+<birth date="-0044-03-20">
+  20 March 43 BC 
+<placeName><settlement type="city">Sulmona</settlement><country
+reg="IT">Italy</country></placeName></birth>
+<death notBefore="17" notAfter="18">17 or 18 AD 
+<placeName><settlement type="city">Tomis (Constanta)</settlement><country reg="RO">Romania</country></placeName></death>
+</person>
+</egXML></exemplum>
+  <remarks>
+    <p rend="dataDesc">May contain either a prose description organized as paragraphs, or
+a sequence of more specific demographic elements drawn from the <ident type="class">model.personPart</ident> class.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#CCAHPA"/>
+  </listRef>
+</elementSpec>
