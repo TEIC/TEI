@@ -1,0 +1,83 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="TIME" usage="opt" ident="time">
+<equiv/>
+<gloss/>
+<desc>contains a phrase defining a time of day in any format.</desc>
+  <classes>
+<!--    <memberOf key="model.pPart.data"/>-->
+    <memberOf key="model.timeLike"/>
+  </classes>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+  </content>
+  <attList>
+    <attDef ident="value" usage="opt">
+	<equiv/>
+	<desc>gives the value of the time in standard form, e.g. as hh:mm.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.temporal"/></datatype>
+      <valDesc>Any string representing a time in standard format;
+		recommended forms are the extended formats from ISO 8601:2000
+		(hh:mm, hh:mmZ, hh:mm&#xB1;hh)</valDesc>
+      <remarks>
+        <p>If the normalized form of time is not given using an ISO
+		  8601 format, this fact should be documented in the
+		  <gi>stdVals</gi> element in the TEI
+		  Header.</p>
+      </remarks>
+    </attDef>
+<!--    <attDef ident="type" usage="rwa">
+	<equiv/>
+	<desc>indicates something about the type of temporal expression being
+		tagged.</desc>
+      <valList type="closed">
+        <valItem ident="am">
+          <equiv/>
+          <gloss>indicates a temporal expression made on the basis of a
+		  twelve-hour clock and referring to a time between midnight
+		  and noon.</gloss>
+        </valItem>
+        <valItem ident="pm">
+          <equiv/>
+          <gloss>indicates a temporal expression made on the basis of a
+		  twelve-hour clock and referring to a time between noon and
+		  midnight.</gloss>
+        </valItem>
+        <valItem ident="military">
+-->           <!-- was 24hour --><!--
+          <equiv/>
+          <gloss>indicates a temporal expression made on the basis of a
+		  twenty-four-hour clock.</gloss>
+        </valItem>
+        <valItem ident="descriptive">
+          <equiv/>
+          <gloss>indicates a temporal expression made in descriptive
+		  terms, e.g. noon.</gloss>
+        </valItem>
+      </valList>
+    </attDef>
+    <attDef ident="zone" usage="rwa">
+	<equiv/>
+	<desc>indicates time zone or place name wherever this is necessary to
+		evaluate a temporal expression.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <valDesc>contains a word or phrase such as
+		<mentioned>GMT</mentioned> or <mentioned>Eastern Standard
+		  Time</mentioned> which might be helpful in evaluating the
+		temporal expression.</valDesc>
+    </attDef>-->
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">As he sat smiling, the quarter struck —
+	  <time value="11:45:00">the quarter to twelve</time>.</egXML>
+<!-- Woolf, Mrs Dalloway, p64 -->
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#CONADA" type="div3"/>
+  </listRef>
+</elementSpec>

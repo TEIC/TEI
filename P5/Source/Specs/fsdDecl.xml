@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="FSDDECL" usage="rwa" ident="fsdDecl">
+  <equiv/>
+  <gloss>FSD (feature-system declaration) declaration</gloss>
+  <gloss xml:lang="zh-tw">功能系統宣告</gloss>
+  <gloss xml:lang="fr">Déclaration de système de profils</gloss>
+  <desc>identifies the feature system declaration which contains
+definitions for a particular type of feature structure.</desc>
+  <desc xml:lang="zh-tw">明確指出規範某特定功能結構類型的功能系統宣告。</desc>
+  <desc xml:lang="fr">L’élément Déclaration de système de profils <gi>fsdDecl</gi> identifie la déclaration du système de profils contenant des définitions pour un type spécifique de structure de profils.</desc>
+  <classes>
+    <memberOf key="model.encodingPart"/>
+  </classes>
+  <content>
+    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+  </content>
+  <attList>
+    <attDef ident="type" usage="req">
+      <equiv/>
+      <desc>identifies the type of feature structure documented by the FSD;
+this will be the value of the <att>type</att> attribute on at least one
+feature structure.</desc>
+      <desc xml:lang="fr">identifie le type de structure de profils décrit dans la déclaration de systèmes de profils ; ce sera la valeur de l’attribut <att>type</att> d’au moins une structure de profils.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valDesc>any string of characters.</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+      <remarks>
+        <p>If better validation is required,
+the global <att>xml:id</att> attribute may be used to specify the type
+instead of this attribute; in such a case, the name must be a valid identifier.</p>
+      </remarks>
+      <remarks xml:lang="fr">
+        <p>Si une validation plus fine est requise, l'attribut global <att>xml:id</att> peut être utilisé pour spécifier le type à la place de cet attribut ; dans ce cas, le nom doit être un identifiant valide.</p>
+      </remarks>
+    </attDef>
+<!--    <attDef ident="fsd" usage="req">
+	<equiv/>
+	<desc>specifies the external entity containing the feature system
+declaration; an entity declaration in the document's DTD subset must
+associate the entity name with a file on the
+system.</desc>
+      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="ENTITY"/></datatype>
+      <valDesc>a valid external entity name</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>-->
+    <attDef ident="url" usage="req">
+      <equiv/>
+      <desc>supplies a link to the entity containing the feature system
+declaration. </desc>
+      <desc xml:lang="fr">fournit un lien vers l’entité contenant la déclaration de structure de profils. </desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <encodingDesc>
+        <fsdDecl type="GPSG" url="Gazdar.fsd"/>
+        <fsdDecl type="entry" url="Lexicon.fsd"/>
+        <fsdDecl type="subentry" url="Lexicon.fsd"/>
+      </encodingDesc>
+    </egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#HDFSD"/>
+    <ptr target="#FD"/>
+  </listRef>
+</elementSpec>

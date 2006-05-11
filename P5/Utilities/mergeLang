@@ -1,0 +1,49 @@
+#!/bin/sh
+#for i in Guidelines/en/*
+#do
+# X=`basename $i`
+# (cd Guidelines/fr; ln -s ../en/$X $X)
+#done
+#rm Guidelines/fr/HD.xml
+#mv french/hd.odd Guidelines/fr/HD.xml
+#for i in Guidelines/fr/HD.xml
+#do
+# sed -f ents.sed $i > tmp
+# mv tmp $i
+#done
+
+#
+# try to avoid running in wrong directory
+# Typically this should be run with
+#   cd [Sourceforge:tei]/[path]/P5
+#   ./Utilities/mergeLang
+# 
+wd=$(pwd)
+if [ "${wd##/*/}" != "P5" ]; then
+    echo "$0 is intended to be run from a P5 working directory, which would typically be named P5;"
+    echo "continue? (y or n)"
+    read CONTINUE
+    if [ "$CONTINUE" != "y" ]; then
+	echo "aborting"
+	exit 13
+    fi
+fi
+
+for i in Source/Chapters/fr/*.xml
+do
+ N=`xsltproc getident.xsl $i`
+ echo french for $i to $N
+    xsltproc --stringparam newLang fr --stringparam newFile $i \
+    mergeLang.xsl Source/Specs/$N.xml \
+	| xmllint --format --encode utf-8 - > tmp
+    mv tmp Source/Specs/$N.xml
+done
+
+for i in Source/Chapters/zh/*.xml
+do
+ N=`xsltproc getident.xsl $i`
+ echo chinese for $i to $N
+    xsltproc --stringparam newLang zh-tw --stringparam newFile $i \
+    mergeLang.xsl Source/Specs/$N.xml | xmllint --format --encode utf-8 - > tmp
+    mv tmp Source/Specs/$N.xml
+done

@@ -1,0 +1,57 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" xml:id="GROUP" usage="mwa" ident="group">
+<equiv/>
+<gloss/>
+<desc>contains the body of a composite text, grouping together a
+sequence of distinct texts (or groups of such texts) which are regarded
+as a unit for some purpose, for example the collected works of an
+author, a sequence of prose essays, etc.</desc>
+  <classes>
+    <memberOf key="att.declaring"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="model.divWrapper"/>
+          <rng:ref name="model.global"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+
+      <rng:group>
+        <rng:choice>
+          <rng:ref name="text"/>
+          <rng:ref name="group"/>
+        </rng:choice>
+        <rng:zeroOrMore>
+          <rng:choice>
+            <rng:ref name="text"/>
+            <rng:ref name="group"/>
+            <rng:ref name="model.global"/>
+          </rng:choice>
+        </rng:zeroOrMore>
+      </rng:group>
+
+      <rng:zeroOrMore>
+	  <rng:ref name="model.divWrapper.bottom"/>
+      </rng:zeroOrMore>
+
+    </rng:group>
+
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#DS"/>
+    <ptr target="#DSGRP"/>
+    <ptr target="#CCDEF"/>
+  </listRef>
+</elementSpec>

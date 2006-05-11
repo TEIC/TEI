@@ -1,0 +1,64 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" xml:id="BYLINE" usage="opt" ident="byline">
+<equiv/>
+<gloss/>
+<desc>contains the primary statement of responsibility given for a work
+on its title page or at the head or end of the work.</desc>
+  <classes>
+    <memberOf key="model.divWrapper"/>
+    <!--<memberOf key="model.divWrapper.bottom"/>-->
+    <memberOf key="model.titlepagePart"/>
+    <memberOf key="model.pLike.front"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+	<rng:ref name="model.gLike"/>
+        <rng:ref name="model.phrase"/>
+        <rng:ref name="docAuthor"/>
+        <rng:ref name="model.global"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <byline>Written by a CITIZEN who continued all the
+while in London. Never made publick before.</byline>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <byline>Written from her own MEMORANDUMS</byline>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <byline>By George Jones, Political Editor, in Washington</byline>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <dateline>Zagreb:</dateline>
+      <byline>de notre envoy&#xE9; sp&#xE9;cial.</byline>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <byline>BY
+<docAuthor>THOMAS PHILIPOTT,</docAuthor>
+Master of Arts,
+(Somtimes)
+Of Clare-Hall in Cambridge.</byline>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>The byline on a title page may include either the name
+or a description for the document's author. Where the name is included,
+it may optionally be tagged using the <gi>docAuthor</gi> element.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#DSOC"/>
+    <ptr target="#DSFRONT"/>
+  </listRef>
+</elementSpec>
