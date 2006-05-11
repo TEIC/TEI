@@ -29,19 +29,43 @@
   </xd:doc>
   <xsl:template name="i18n">
     <xsl:param name="word"/>
-    <xsl:for-each select="document('../i18n.xml',document(''))">
-      <xsl:choose>
-        <xsl:when
-          test="key('KEYS',normalize-space($word))/text[@xml:lang=$lang]">
-          <xsl:value-of
-            select="key('KEYS',normalize-space($word))/text[@xml:lang=$lang]"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="$word"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
+    <xsl:variable name="local">
+      <xsl:call-template name="myi18n">
+	<xsl:with-param name="word">
+	  <xsl:value-of select="$word"/>
+	</xsl:with-param>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:choose>
+     <xsl:when test="string-length($local)&gt;0">
+       <xsl:value-of select="$local"/>
+     </xsl:when>
+     <xsl:otherwise>
+       <xsl:for-each select="document('../i18n.xml',document(''))">
+	 <xsl:choose>
+	   <xsl:when
+	       test="key('KEYS',normalize-space($word))/text[@xml:lang=$lang]">
+	     <xsl:value-of
+		 select="key('KEYS',normalize-space($word))/text[@xml:lang=$lang]"/>
+	   </xsl:when>
+	   <xsl:otherwise>
+	     <xsl:value-of select="$word"/>
+	   </xsl:otherwise>
+	 </xsl:choose>
+       </xsl:for-each>
+     </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
+
+  <xd:doc>
+    <xd:short>[localisation] dummy template for overriding in a local system</xd:short>
+    <xd:param name="word">the word(s) to translate</xd:param>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template name="myi18n">
+	<xsl:param name="word"/>
+  </xsl:template>
+
   <xd:doc class="localisation" type="string"> The language to use when
     generating text (use ISO 2-letter codes)</xd:doc>
   <xsl:param name="lang">en</xsl:param>

@@ -707,8 +707,9 @@
               <xsl:comment>Start of import of <xsl:value-of select="@url"/></xsl:comment>
               <rng:div>
                 <xsl:for-each select="document(@url)/rng:grammar">
-                  <xsl:copy-of select="@*"/>
-                  <xsl:call-template name="expandRNG"/>
+                  <xsl:apply-templates
+		      select="*|@*|text()|comment()|processing-instruction()"
+		      mode="expandRNG"/>
                 </xsl:for-each>
                 <xsl:copy-of select="tei:content/*"/>
               </rng:div>
@@ -738,8 +739,13 @@
     </xsl:call-template>
   </xsl:template>
 
-  <xsl:template name="expandRNG">
-    <xsl:for-each select="*">
+  <xsl:template 
+      match="@*|text()|comment()|processing-instruction"
+      mode="expandRNG">
+    <xsl:copy/>
+  </xsl:template>
+
+  <xsl:template match="*" mode="expandRNG">
       <xsl:choose>
         <xsl:when test="local-name(.)='start'"/>
         <xsl:when test="local-name(.)='include'">
@@ -750,8 +756,10 @@
 	  <xsl:comment>Start of import of <xsl:value-of select="@href"/>
 	  </xsl:comment>
           <rng:div>
-            <xsl:for-each select="document(@href)/rng:grammar">
-              <xsl:call-template name="expandRNG"/>
+	    <xsl:for-each select="document(@href)/rng:grammar">
+	      <xsl:apply-templates 		      
+		  select="*|@*|text()|comment()|processing-instruction()"
+		  mode="expandRNG"/>
             </xsl:for-each>
           </rng:div>
 	  <xsl:comment>End of import of <xsl:value-of select="@href"/>
@@ -759,12 +767,12 @@
         </xsl:when>
         <xsl:otherwise>
           <xsl:copy>
-            <xsl:copy-of select="@*"/>
-            <xsl:call-template name="expandRNG"/>
-          </xsl:copy>
+	    <xsl:apply-templates 
+		select="*|@*|text()|comment()|processing-instruction()"
+		mode="expandRNG"/>
+	  </xsl:copy>
         </xsl:otherwise>
       </xsl:choose>
-    </xsl:for-each>
   </xsl:template>
 
   <xsl:template match="tei:remarks" mode="tangle"/>

@@ -72,6 +72,7 @@
           xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
           xmlns:rng="http://relaxng.org/ns/structure/1.0"
           xmlns:t="http://www.thaiopensource.com/ns/annotations"
+	  xmlns:xlink="http://www.w3.org/1999/xlink"
           xmlns:teix="http://www.tei-c.org/ns/Examples">
           <xsl:attribute name="ns">
             <xsl:choose>
