@@ -498,10 +498,28 @@
       </xsl:if>
       <xsl:choose>
         <xsl:when test="@xml:id">
-          <a name="{@xml:id}"/>
+	  <xsl:choose>
+	    <xsl:when test="$xhtml='true'">
+	      <xsl:attribute name="id">
+		<xsl:value-of select="@xml:id"/>
+	      </xsl:attribute>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <a name="{@xml:id}"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
         </xsl:when>
         <xsl:when test="$generateParagraphIDs='true'">
-          <a name="{generate-id()}"/>
+	  <xsl:choose>
+	    <xsl:when test="$xhtml='true'">
+	      <xsl:attribute name="id">
+		<xsl:value-of select="generate-id()"/>
+	      </xsl:attribute>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <a name="{generate-id()}"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
         </xsl:when>
       </xsl:choose>
       <xsl:apply-templates/>
