@@ -1,0 +1,29 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<macroSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs-decl" xml:id="SCHEMAPATTERN" type="dt" ident="schemapattern">
+<gloss/>
+<desc>A patterm to match elements from the chosen schema language</desc>
+  <content>
+     <rng:element xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:anyName/>
+      <rng:zeroOrMore>
+	<rng:choice>
+	  <rng:attribute>
+	    <rng:anyName>
+	      <rng:except>
+		<rng:name>xml:id</rng:name>
+	      </rng:except>
+	    </rng:anyName>
+	  </rng:attribute>
+	  <rng:text/>
+	  <rng:ref name="schemapattern"/>
+	</rng:choice>
+      </rng:zeroOrMore>
+     </rng:element>
+ </content>
+  <remarks>
+    <p/>
+  </remarks>
+</macroSpec>

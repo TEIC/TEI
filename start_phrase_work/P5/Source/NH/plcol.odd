@@ -1,0 +1,35 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="concurrent-decl" xml:id="PLCOL" usage="opt" ident="col">
+<equiv/>
+<gloss>column</gloss>
+<desc>contains one column of a multi-column reference edition.</desc>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+<rng:ref name="model.gLike"/>
+        <rng:ref name="line"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <exemplum>
+    <eg><![CDATA[<(La)page n="32">
+ <(La)col n='a'> ... </(La)col>
+ <(La)col n='b'> ... </(La)col>
+ </(La)page>]]></eg>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">May contain <gi>line</gi> elements, or character data.</p>
+    <p>The <gi>col</gi> tag should be used wherever a standard
+reference scheme uses references to individual columns of a reference
+edition; otherwise it need not be used.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#NHRS" type="div3"/>
+  </listRef>
+</elementSpec>

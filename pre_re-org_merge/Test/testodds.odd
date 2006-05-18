@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:lang="en"  xmlns="http://www.tei-c.org/ns/1.0"
+ xmlns:rng="http://relaxng.org/ns/structure/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>TEI with ODD elements</title>
+            <author>Sebastian Rahtz</author>
+         </titleStmt>
+         <publicationStmt>
+	   <p> </p>
+	 </publicationStmt>
+         <sourceDesc>
+            <p>authored from scratch</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+<text>
+<body>
+<schemaSpec ident="testodds" start="TEI">
+  <moduleRef key="header"/>
+  <moduleRef key="core"/>
+  <moduleRef key="tei"/>
+  <moduleRef key="textstructure"/>
+  <moduleRef key="tagdocs"/>
+  <moduleRef key="dictionaries"/>
+  <moduleRef key="linking"/>
+  
+  <elementSpec module="tagdocs" ns="http://www.tei-c.org/ns/Examples" usage="mwa" ident="egXML"
+	       mode="change">
+    <content>
+      <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+	<choice>
+	  <text/>
+	  <ref name="anyTEI"/>
+	</choice>
+      </oneOrMore>
+    </content>
+  </elementSpec>
+  
+<macroSpec module="tagdocs-decl" type="dt" ident="macro.schemapattern" mode="change">
+  <content>
+     <rng:element xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:anyName/>
+      <rng:zeroOrMore>
+	<rng:attribute>
+	  <rng:anyName>
+	    <rng:except>
+	      <rng:name>xml:id</rng:name>
+	      <rng:name>xml:lang</rng:name>
+	    </rng:except>
+	  </rng:anyName>
+	</rng:attribute>
+      </rng:zeroOrMore>
+      <rng:zeroOrMore>
+	<rng:choice>
+	  <rng:text/>
+	  <rng:ref name="macro.schemapattern"/>
+	</rng:choice>
+      </rng:zeroOrMore>
+     </rng:element>
+ </content>
+</macroSpec>
+
+<macroSpec ident="anyTEI" mode="add">
+    <content>
+      <element  xmlns="http://relaxng.org/ns/structure/1.0">
+	<nsName ns="http://www.tei-c.org/ns/Examples"/>
+	<zeroOrMore>
+	  <choice>
+	    <attribute>
+	      <anyName>
+		<rng:except>
+		  <rng:name>xml:id</rng:name>
+		  <rng:name>xml:lang</rng:name>
+		</rng:except>
+	      </anyName>
+	    </attribute>
+	    <text/>
+	    <ref name="anyTEI"/>
+	    <ref name="macro.schemapattern"/>
+	  </choice>
+	</zeroOrMore>
+      </element>
+    </content>
+  </macroSpec>
+</schemaSpec>
+</body>
+</text>
+</TEI>
+
+
+

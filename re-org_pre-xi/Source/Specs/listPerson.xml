@@ -1,0 +1,60 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="corpus" xml:id="LISTPERS" usage="opt" ident="listPerson">
+<equiv/><!-- formerly particDesc -->
+<desc>contains a list of descriptions, each of which provides information about an identifiable individual, for
+example the participants in a language interaction, or the people referred
+to in a historical source. </desc>
+  <classes>
+    <memberOf key="model.profileDescPart"/>
+    <memberOf key="att.declarable"/>
+  </classes>
+  <content>
+    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:oneOrMore>
+        <rng:ref name="model.pLike"/>
+      </rng:oneOrMore>
+      <rng:group>
+        <rng:oneOrMore>
+          <rng:choice>
+            <rng:ref name="person"/>
+            <rng:ref name="personGrp"/>
+          </rng:choice>
+        </rng:oneOrMore>
+        <rng:optional>
+          <rng:ref name="particLinks"/>
+        </rng:optional>
+      </rng:group>
+    </rng:choice>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <listPerson>
+        <person xml:id="P1234" sex="2" age="42">
+          <p>Female informant, well-educated, born in Shropshire
+UK, 12 Jan 1950, of unknown occupation.
+Speaks French fluently. Socio-Economic status B2.</p>
+        </person>
+        <person xml:id="P4332" sex="1" age="43"/>
+        <particLinks>
+          <relation type="personal" name="spouse" active="#P1234" passive="#P4332" mutual="true"/>
+        </particLinks>
+      </listPerson>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">May contain a prose description organized as paragraphs, or a
+structured list of persons and person groups, with an optional
+formal specification of any relationships amongst them.</p>
+  </remarks>
+<!-- do we need the paragraphs option? -->
+  <listRef>
+    <ptr target="#CCAH"/>
+    <ptr target="#HD4"/>
+    <ptr target="#CCAS2"/>
+  </listRef>
+</elementSpec>

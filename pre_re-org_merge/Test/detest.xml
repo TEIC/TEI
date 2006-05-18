@@ -1,0 +1,41 @@
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>A test file for datatypes</title>
+      </titleStmt>
+      <publicationStmt>
+        <p>Unpublished</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>all my own work</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+
+  <text>
+    <body>
+<p>This document is for testing datatype validation.
+<!-- following shd be errors and are correctly detected by emacs -->
+<blort truth="no"  numeric="fig" prob="low" sex="yes"
+       temporal="1994-31-12" count="-1"/>
+
+<!-- following shd be errors but are not detected by emacs -->
+<blort xml:lang="wibble" prob="12345"/>
+
+
+<!-- following shd not be errors -->
+<blort truth="false" xtruth="inapplicable" sex="2" temporal="1994-12-31" count="42"/>
+<blort cert="high" dur="P3M" enumerated=" dog  breath" temporal="--12-25"/>
+<blort key="123// wibble = 1^+ !!! $ ‰ false" language="sa" temporal="1994-12-31T12:00:00"/>
+<blort pointers="#foo #wibble" names="mutt jeff" pattern="[a-z]\w*w\/s" numeric="42"/>
+<blort numeric="-1.3" name="_12-45.dot"/>
+<blort  temporal="1994-12-31"/> 
+<blort pointer="http://www.tei-c.org" name="123"/>
+<blort prob="0.456"/>
+<blort />
+</p>
+    
+</body>
+  </text>
+</TEI>

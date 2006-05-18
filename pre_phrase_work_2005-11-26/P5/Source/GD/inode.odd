@@ -1,0 +1,94 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="nets" xml:id="INODE" usage="rwa" ident="iNode">
+<equiv/>
+<gloss>intermediate (or internal) node</gloss>
+<desc>represents an intermediate (or internal) node of a tree.</desc>
+  <content>
+    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+  </content>
+  <attList>
+    <attDef ident="label" usage="opt">
+	<equiv/>
+	<desc>gives a label for an intermediate node.</desc>
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>A character string.</valDesc>
+    </attDef>
+    <attDef ident="value" usage="rwa">
+	<equiv/>
+	<desc>provides the value of an intermediate node, which is a feature
+structure or other analytic element.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <valDesc>A valid identifier of a feature structure or other analytic
+element.</valDesc>
+    </attDef>
+    <attDef ident="children" usage="req">
+	<equiv/>
+	<desc>provides a list of identifiers of the elements which are the children of
+the intermediate node.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointers"/></datatype>
+      <valDesc>A list of identifiers.</valDesc>
+    </attDef>
+    <attDef ident="parent" usage="opt">
+	<equiv/>
+	<desc>provides the identifier of the element which is the parent of this node.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <valDesc>The identifier of the parent node.</valDesc>
+    </attDef>
+    <attDef ident="ord" usage="opt">
+	<equiv/>
+	<desc>indicates whether or not the internal node is ordered.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.truthValue"/></datatype>
+      <valList type="closed">
+        <valItem ident="true">
+          <equiv/>
+          <gloss>indicates that the children of the intermediate node are ordered.</gloss>
+        </valItem>
+        <valItem ident="false">
+          <equiv/>
+          <gloss>indicates that the children of the intermediate node are unordered.</gloss>
+        </valItem>
+      </valList>
+      <remarks>
+        <p>Use if and only if <att>ord</att> is specified as <val>partial</val> on the
+<gi>tree</gi> element and the intermediate node has more than one
+child.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="follow" usage="rwa">
+	<equiv/>
+	<desc>provides an identifier of
+the element which this node
+follows.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <valDesc>The identifier of another intermediate node or leaf of the tree.</valDesc>
+      <remarks>
+        <p>If the tree is unordered or partially ordered, this attribute
+has the property of fixing the relative order of the intermediate node
+and the element which is the value of the attribute.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="outDegree" usage="opt">
+	<equiv/>
+	<desc>gives the out degree of an intermediate node, the number of its
+children.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/></datatype>
+      <valDesc>A nonnegative integer.</valDesc>
+      <remarks>
+        <p>The in degree of an intermediate node is always 1.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <iNode xml:id="pt1" label="PT" children="#up1" parent="#vb1" follow="#pn1" outDegree="1"/>
+    </egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#GDTR" type="div2"/>
+  </listRef>
+</elementSpec>

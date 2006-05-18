@@ -1,0 +1,71 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="NUM" usage="opt" ident="num">
+<equiv/>
+<gloss>number</gloss>
+<desc>contains a number, written in any form.</desc>
+  <classes>
+    <memberOf key="model.pPart.data"/>
+  </classes>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+  </content>
+  <attList>
+    <attDef ident="type" usage="opt">
+	<equiv/>
+	<desc>indicates the type of numeric value.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <valList type="semi">
+        <valItem ident="cardinal">
+          <equiv/>
+          <gloss>absolute number, e.g. 21, 21.5</gloss>
+        </valItem>
+        <valItem ident="ordinal">
+          <equiv/>
+          <gloss>ordinal number, e.g. 21st</gloss>
+        </valItem>
+        <valItem ident="fraction">
+          <equiv/>
+          <gloss>fraction, e.g. one half or three-quarters</gloss>
+        </valItem>
+        <valItem ident="percentage">
+          <equiv/>
+          <gloss>a percentage</gloss>
+        </valItem>
+      </valList>
+      <remarks>
+        <p>If a different typology is desired, other values can be used
+for this attribute.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="value" usage="opt">
+	<equiv/>
+	<desc>supplies the value of the number in standard form.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.numeric"/></datatype>
+      <valDesc>a numeric value.</valDesc>
+      <remarks>
+        <p>The standard form used is defined by the TEI datatype
+	data.numeric.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+<p>I reached <num type="cardinal" value="21">twenty-one</num>
+on my <num type="ordinal" value="21">twenty-first</num> birthday...
+light travels at <num  value="10E10">10<hi rend="sup">10</hi></num> cm per second.</p></egXML>
+  </exemplum>
+  <remarks>
+    <p>Detailed analyses of quantities and units of measure in
+historical documents may also use the feature structure mechanism
+described in chapter <ptr target="#FS"/>.	The <gi>num</gi> element is
+intended for use in simple applications.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#CONANU" type="div3"/>
+  </listRef>
+</elementSpec>

@@ -1,0 +1,71 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="NUM" usage="opt" ident="num">
+<equiv/>
+<gloss>number</gloss>
+<desc>contains a number, written in any form.</desc>
+  <classes>
+    <memberOf key="model.pPart.data"/>
+  </classes>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+  </content>
+  <attList>
+    <attDef ident="type" usage="opt">
+	<equiv/>
+	<desc>indicates the type of numeric value.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <valList type="semi">
+        <valItem ident="cardinal">
+          <equiv/>
+          <gloss>absolute number, e.g. 21, 21.5</gloss>
+        </valItem>
+        <valItem ident="ordinal">
+          <equiv/>
+          <gloss>ordinal number, e.g. 21st</gloss>
+        </valItem>
+        <valItem ident="fraction">
+          <equiv/>
+          <gloss>fraction, e.g. one half or three halves</gloss>
+        </valItem>
+        <valItem ident="percentage">
+          <equiv/>
+          <gloss>e.g. ten percent</gloss>
+        </valItem>
+      </valList>
+      <remarks>
+        <p>If a different typology is desired, other values can be used
+for this attribute.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="value" usage="opt">
+	<equiv/>
+	<desc>supplies the value of the number in an application-dependent
+standard form.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.numeric"/></datatype>
+      <valDesc>any numeric value in the chosen standard form.</valDesc>
+      <remarks>
+        <p>The standard form used should be described in the
+<gi>stdVals</gi> element in the TEI header.  Standard forms may be
+defined from scratch, or borrowed from existing practice (e.g.
+<q>Standard values are given in the notation defined for numeric
+constants in the C language.</q>)</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><num type="cardinal" value="21">twenty-one</num><num type="cardinal" value="1.5">1.5</num><![CDATA[
+He stands ]]><num type="cardinal" value="1.9">1 &#xB7; 90</num><![CDATA[m. high.]]></egXML>
+  </exemplum>
+  <remarks>
+    <p>Detailed analyses of quantities and units of measure in
+historical documents should use the feature structure mechanism
+described in chapter <ptr target="#FS"/>.	The <gi>num</gi> element is
+intended for use in simple applications.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#CONANU" type="div3"/>
+  </listRef>
+</elementSpec>

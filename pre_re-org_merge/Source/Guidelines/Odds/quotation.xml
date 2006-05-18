@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="QUOTN" usage="opt" ident="quotation">
+  <equiv/>
+  <gloss/>
+  <gloss xml:lang="zh-tw">引文符號</gloss>
+  <gloss xml:lang="fr">Citation</gloss>
+  <desc>specifies editorial practice adopted with respect to quotation
+  marks in the original. </desc>
+  <desc xml:lang="zh-tw">說明在編輯上是如何處理來源文件中的引文符號。</desc>
+  <desc xml:lang="fr">L’élément Citation <gi>quotation</gi> précise la pratique éditoriale adoptée par rapport aux marques de citation dans l’original.</desc>
+  <classes>
+    <memberOf key="att.declarable"/>
+    <memberOf key="model.editorialDeclPart"/>
+  </classes>
+  <content>
+    <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:ref name="model.pLike"/>
+    </rng:oneOrMore>
+  </content>
+  <attList>
+    <attDef ident="marks" usage="opt">
+      <equiv/>
+      <desc>indicates whether or not quotation marks have been retained as
+      content within the text. </desc>
+      <desc xml:lang="fr">indique si les marques de citation (guillemets, etc.) ont été retenues ou non comme appartenant au texte.</desc>
+      <defaultVal>all</defaultVal>
+      <valList type="closed">
+        <valItem ident="none">
+          <equiv/>
+          <gloss>no quotation marks have been retained </gloss>
+          <gloss xml:lang="fr">aucune marque de citation n’a été retenue.</gloss>
+        </valItem>
+        <valItem ident="some">
+          <equiv/>
+          <gloss>some quotation marks have been retained </gloss>
+          <gloss xml:lang="fr">quelques marques de citation ont été retenues.</gloss>
+        </valItem>
+        <valItem ident="all">
+          <equiv/>
+          <gloss>all quotation marks have been retained </gloss>
+          <gloss xml:lang="fr">toutes les marques de citation ont été retenues.</gloss>
+        </valItem>
+      </valList>
+    </attDef>
+    <attDef ident="form" usage="opt">
+      <equiv/>
+      <desc>specifies how quotation marks are indicated within the
+      text.</desc>
+      <desc xml:lang="fr">précise comment les marques de citation (guillemets, etc.) sont indiquées dans le texte.</desc>
+      <defaultVal>unknown</defaultVal>
+      <valList type="closed">
+        <valItem ident="data">
+          <equiv/>
+          <gloss>quotation marks are retained as data.</gloss>
+          <gloss xml:lang="fr">les marques de citation sont retenues comme des données.</gloss>
+        </valItem>
+        <valItem ident="rend">
+          <equiv/>
+          <gloss>the rendition attribute is consistently used to
+          indicate the form of quotation marks.</gloss>
+          <gloss xml:lang="fr">l’attribut <att>rendition</att> est utilisé pour indiquer la forme des marques de citation.</gloss>
+        </valItem>
+        <valItem ident="std">
+          <equiv/>
+          <gloss>use of quotation marks has been standardized.</gloss>
+          <gloss xml:lang="fr">l’utilisation des marques de citation a été normalisée.</gloss>
+        </valItem>
+        <valItem ident="nonstd">
+          <equiv/>
+          <gloss>quotation marks are represented inconsistently.</gloss>
+          <gloss xml:lang="fr">les marques de citation ne sont pas normalisées.</gloss>
+        </valItem>
+        <valItem ident="unknown">
+          <equiv/>
+          <gloss>use of quotation marks is unknown.</gloss>
+          <gloss xml:lang="fr">l’usage des marques de citation n’est pas connu.</gloss>
+        </valItem>
+      </valList>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <quotation marks="none" form="rend">
+        <p>No quote marks have been retained. Instead, the
+  <att>rend</att> attribute on the <gi>q</gi> element is used
+  to specify what kinds of quotation mark was used, according
+  to the following list:
+  <list type="gloss"><label>dq</label><item>double quotes, open and close</item><label>sq</label><item>single quotes, open and close</item><label>dash</label><item>long dash open, no close</item><label>dg</label><item>double guillemets, open and close</item></list>
+  </p>
+      </quotation>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <quotation marks="none" form="rend">
+        <p>No quote marks have been retained. Instead, the <att>rend</att> attribute on the
+          <gi>q</gi> element is used to specify what kinds of quotation mark was used, according to
+          the following list: <list type="gloss"><label>dq</label><item>double quotes, open and close</item><label>sq</label><item>single quotes, open and close</item><label>dash</label><item>long dash open, no close</item><label>dg</label><item>double guillemets, open and close</item></list>
+        </p>
+      </quotation>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <quotation marks="all" form="std">
+        <p>All quotation marks are retained in the text and are represented by standard entity
+          references</p>
+      </quotation>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <quotation marks="none" form="rend">
+        <p>Aucune marque de citation n'a été retenue. On a utilisé à la place l'attribut  <att>rend</att> de l'élément Citation (discours direct) <gi>q</gi> pour préciser quelles sortes de marques de citation ont été utilisées, selon la liste suivante :
+  <list type="gloss"><label>dq</label><item>guillemets doubles, ouvrants et fermants</item><label>sq</label><item>guillemets simples, ouvrant et fermant</item><label>dash</label><item>tiret long ouvert, non fermé</item><label>dg</label><item>double guillemets, open and close</item></list>
+  </p>
+      </quotation>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <quotation marks="all" form="std">
+        <p>Toutes les marques de citation retenues dans le texte sont représentées par des entités de référence normalisées.</p>
+      </quotation>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <quotation marks="all" form="std">
+        <p>All quotation marks are retained in the text and
+           are represented by standard entity references</p>
+      </quotation>
+    </egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#HD53"/>
+    <ptr target="#CCAS2"/>
+  </listRef>
+</elementSpec>

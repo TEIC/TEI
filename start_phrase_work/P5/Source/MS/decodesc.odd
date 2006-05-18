@@ -1,0 +1,34 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="DECODESC" ident="decoDesc">
+<equiv/>
+<gloss/>
+<desc xml:id="decoDesc.desc">contains a description of the decoration of a manuscript, either as a sequence of paragraphs, or as a sequence of topically organised <gi>decoNote</gi> elements.</desc>
+  <content>
+<!--<!ELEMENT decoDesc (p+|decoNote+)>-->
+<rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:oneOrMore>
+      <rng:ref name="model.pLike"/>
+    </rng:oneOrMore>
+    <rng:oneOrMore>
+      <rng:ref name="decoNote"/>
+    </rng:oneOrMore>
+</rng:choice>
+  </content>
+  <attList/>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0"><decoDesc>
+<p>The start of each book of the Bible with a 10-line historiated
+illuminated initial; prefaces decorated with 6-line blue initials with red
+penwork flourishing; chapters marked by 3-line plain red initials; verses
+with 1-line initials, alternately blue or red.</p>
+</decoDesc></egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#msph3"/>
+  </listRef>
+</elementSpec>

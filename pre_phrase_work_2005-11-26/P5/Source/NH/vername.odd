@@ -1,0 +1,53 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="concurrent-decl" xml:id="VERNAME" usage="mwa" ident="vername">
+<equiv/>
+<gloss>version name</gloss>
+<desc>serves as the root element for a concurrent markup stream which
+will be used to mark page and line numbers of a reference edition of the
+text.</desc>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+<rng:ref name="model.gLike"/>
+        <rng:ref name="page"/>
+        <rng:ref name="vol"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI SYSTEM "tei2.dtd" [
+	   <!ENTITY % TEI.XML      'IGNORE' ><!-- SGML -->
+ ]>
+ <!DOCTYPE La    SYSTEM "teip2.dtd" [
+        <!ENTITY % version "La">
+ ]>
+ <(TEI)TEI><(La)La>
+ <(TEI)TEI.Header> ... </(TEI)TEI.Header>
+ <(TEI)text>
+ <(La)page n='[1]'>
+   ...
+ <(La)page n='4'>
+   ...
+ <(La)page n='5'>
+   ...
+ </(TEI)text>
+ </(La)La>
+ </(TEI)TEI>]]></egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">May contain character data, <gi>vol</gi>, and <gi>page</gi>
+elements.</p>
+    <p>The version name should be short (one or two characters), as
+it must be prefixed to all page and line tags in the concurrent markup
+stream.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#CORS" type="div3"/>
+  </listRef>
+</elementSpec>

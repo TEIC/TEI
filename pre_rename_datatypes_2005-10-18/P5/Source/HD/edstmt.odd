@@ -1,0 +1,44 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="EDSTMT" usage="opt" ident="editionStmt">
+<equiv/>
+<gloss>edition statement</gloss>
+<desc>groups information relating to one edition of a text.</desc>
+  <content>
+    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:group>
+        <rng:ref name="edition"/>
+        <rng:zeroOrMore>
+          <rng:ref name="respStmt"/>
+        </rng:zeroOrMore>
+      </rng:group>
+      <rng:oneOrMore>
+        <rng:ref name="p"/>
+      </rng:oneOrMore>
+    </rng:choice>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <editionStmt>
+        <edition n="S2">Students' edition</edition>
+        <respStmt>
+          <resp>Adapted by </resp>
+          <name>Elizabeth Kirk</name>
+        </respStmt>
+      </editionStmt>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <editionStmt>
+        <p>First edition, <date>Michaelmas Term, 1991.</date>
+   </p>
+      </editionStmt>
+    </egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#HD22"/>
+    <ptr target="#HD2"/>
+  </listRef>
+</elementSpec>

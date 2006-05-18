@@ -1,0 +1,49 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="VALDESC" usage="rwa" ident="valDesc">
+<equiv/>
+<gloss>value description</gloss>
+<desc>specifies any semantic or syntactic constraint on the value that
+an attribute may take, additional to the information carried by the
+datatype element.</desc>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+  </content>
+  <attList>
+    <attDef ident="mode" usage="opt">
+	<equiv/>
+	<desc>specifies the effect of this declaration on its parent module.</desc>
+      <datatype><rng:ref name="data.enumerated" xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <defaultVal>add</defaultVal>
+      <valList type="closed">
+	<valItem ident="add">
+	  <gloss>this declaration is added to the current definitions</gloss>
+	</valItem>
+	<valItem ident="delete">
+	  <gloss>this declaration and all of its children are removed from the current setup</gloss>
+	</valItem>
+	<valItem ident="change">
+         <gloss>this declaration changes the declaration of the same
+	 name in the current definition</gloss>
+      </valItem>
+      <valItem ident="replace">
+	<gloss>this declaration replaces the declaration of the same
+	name in the current definition</gloss>
+      </valItem>
+      </valList>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      
+      <valDesc>must point to another <gi>align</gi>
+      element logically preceding this
+      one.</valDesc>
+    </egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#TDATT"/>
+  </listRef>
+</elementSpec>

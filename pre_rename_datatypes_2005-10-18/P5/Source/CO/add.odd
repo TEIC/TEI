@@ -1,0 +1,94 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="ADD" usage="opt" ident="add">
+<equiv/>
+<gloss>addition</gloss>
+<desc>contains letters, words, or phrases inserted in the text by an
+author, scribe, annotator, or corrector.</desc>
+  <classes>
+    <memberOf key="model.pPart.edit"/>
+    <memberOf key="att.editLike"/>
+  </classes>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.specialPara"/>
+  </content>
+  <attList>
+    <attDef ident="place" usage="rec">
+	<equiv/>
+	<desc>if the the addition is written into the copy text, indicates
+where the additional text is written.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.words"/></datatype>
+      <valList type="semi">
+        <valItem ident="inline">
+          <equiv/>
+          <gloss>addition is made in a space left in the
+                   witness by an earlier scribe
+    </gloss>
+        </valItem>
+        <valItem ident="supralinear">
+          <gloss>addition is made above the line
+    </gloss>
+        </valItem>
+        <valItem ident="infralinear">
+          <gloss>addition is made below the line
+    </gloss>
+        </valItem>
+        <valItem ident="left">
+          <gloss>addition is made in left margin
+    </gloss>
+        </valItem>
+        <valItem ident="right">
+          <gloss>addition is made in right margin
+    </gloss>
+        </valItem>
+        <valItem ident="top">
+          <gloss>addition is made in top margin
+    </gloss>
+        </valItem>
+        <valItem ident="bottom">
+          <gloss>addition is made in bottom margin
+    </gloss>
+        </valItem>
+        <valItem ident="opposite">
+          <gloss>addition is made on opposite page
+    </gloss>
+        </valItem>
+        <valItem ident="verso">
+          <gloss>addition is made on verso of sheet
+    </gloss>
+        </valItem>
+        <valItem ident="mixed">
+          <gloss>addition is made somewhere, one or more of
+                   other values</gloss>
+        </valItem>
+      </valList>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+    <attDef ident="hand" usage="opt">
+	<equiv/>
+	<desc>signifies the hand of the agent which made the addition.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <valDesc>must be one of the hand identifiers declared in the document
+header (see section <ptr target="#PHDH"/>).</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+  </exemplum>
+  <remarks>
+    <p>The <gi>add</gi> tag should not be used for additions
+made by editors or encoders.  In these cases, either the
+<gi>corr</gi> tag or the <gi>supplied</gi> tag should be used.
+ </p>
+  </remarks>
+  <listRef>
+    <ptr target="#COEDADD" type="div3"/>
+  </listRef>
+</elementSpec>

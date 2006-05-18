@@ -1,0 +1,52 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="METSYM" usage="opt" ident="metSym">
+<equiv/>
+<gloss/>
+<desc>documents the intended significance of a particular character or
+character sequence within a metrical notation, either explicitly or in
+terms of other symbol elements in the same metDecl.</desc>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+  </content>
+  <attList>
+    <attDef ident="value" usage="req">
+	<equiv/>
+	<desc>specifies the character or character sequence being documented.</desc>
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>any available character or character sequence.</valDesc>
+    </attDef>
+    <attDef ident="terminal" usage="mwa">
+	<equiv/>
+	<desc>specifies whether the symbol is defined in terms of other
+symbols (<att>terminal</att> is set to <val>false</val>) or in prose
+(<att>terminal</att> is set to <val>true</val>).</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.truthValue"/></datatype>
+      <defaultVal>true</defaultVal>
+      <valList type="closed">
+        <valItem ident="true">
+          <equiv/>
+          <gloss>the element contains a prose definition of its meaning.</gloss>
+        </valItem>
+        <valItem ident="false">
+          <equiv/>
+          <gloss>the element contains a definition of its meaning given using
+symbols defined elsewhere in the same metDecl element.</gloss>
+        </valItem>
+      </valList>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <metSym value="x">a stressed syllable</metSym>
+      <metSym value="o">an unstressed syllable</metSym>
+      <metSym value="A" terminal="false">xoo</metSym>
+    </egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#HDMN"/>
+    <ptr target="#VEME"/>
+  </listRef>
+</elementSpec>

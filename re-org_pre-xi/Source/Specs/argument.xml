@@ -1,0 +1,53 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" xml:id="ARGUMENT" usage="opt" ident="argument">
+<equiv/>
+<gloss/>
+<desc>A formal list or prose description of the topics addressed by
+	a subdivision of a text.</desc>
+  <classes>
+    <memberOf key="model.divWrapper"/>
+    <memberOf key="model.pLike.front"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+       <rng:optional>
+          <rng:zeroOrMore>
+            <rng:ref name="model.global"/>
+          </rng:zeroOrMore>
+          <rng:ref name="head"/>
+       </rng:optional>
+       <rng:zeroOrMore>
+         <rng:group>
+           <rng:ref name="macro.component"/>
+           <rng:zeroOrMore>
+            <rng:ref name="model.global"/>
+            </rng:zeroOrMore>
+          </rng:group>
+       </rng:zeroOrMore>
+      </rng:group>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <argument>
+        <p>Monte Video &#x2014; Maldonado &#x2014; Excursion
+to R Polanco &#x2014; Lazo and Bolas &#x2014; Partridges &#x2014;
+Absence of Trees &#x2014; Deer &#x2014; Capybara, or River Hog &#x2014;
+Tucutuco &#x2014; Molothrus, cuckoo-like habits &#x2014; Tyrant
+Flycatcher &#x2014; Mocking-bird &#x2014; Carrion Hawks &#x2014;
+Tubes formed by Lightning &#x2014; House struck</p>
+      </argument>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc"> Often contains either a list or a
+	paragraph</p>
+  </remarks>
+  <listRef>
+    <ptr target="#DSCO"/>
+    <ptr target="#DSDTB"/>
+  </listRef>
+</elementSpec>

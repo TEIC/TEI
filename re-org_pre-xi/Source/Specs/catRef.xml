@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="CATREF" usage="opt" ident="catRef">
+  <equiv/>
+  <gloss>category reference</gloss>
+  <gloss xml:lang="zh-tw">類目參考</gloss>
+  <gloss xml:lang="fr">Référence de catégorie</gloss>
+  <desc>specifies one or more defined categories
+within some taxonomy or text typology.</desc>
+  <desc xml:lang="zh-tw">標明在某分類法或文件類型學中，一個或多個已定義之類目。</desc>
+  <desc xml:lang="fr">L'élément Référence de catégorie <gi>catref</gi> spécifie une ou plusieurs catégories définies dans une taxinomie ou une typologie de textes.</desc>
+  <content>
+    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+  </content>
+  <attList>
+    <attDef ident="target" usage="req">
+      <equiv/>
+      <desc>identifies the categories concerned
+   </desc>
+      <desc xml:lang="fr">identifie les catégories concernées</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointers"/>
+      </datatype>
+      <valDesc>One or more identifiers for <gi>category</gi> elements
+    defined in the current document.</valDesc>
+    </attDef>
+    <attDef ident="scheme" usage="opt">
+      <equiv/>
+      <desc>identifies the classification scheme within which the set of
+    categories concerned is defined
+   </desc>
+      <desc xml:lang="fr">identifie le schéma de classification dans lequel est défini le jeu de catégories concerné</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>identifier of the associated <gi>taxonomy</gi> element.</valDesc>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <catRef target="#ba #c1" scheme="#s1"/>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>The scheme attribute need be supplied only if more than
+one taxonomy has been declared</p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p>L'attribut scheme ne doit être fourni que si plus d'une taxinomie a été déclarée.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#HD43"/>
+  </listRef>
+</elementSpec>

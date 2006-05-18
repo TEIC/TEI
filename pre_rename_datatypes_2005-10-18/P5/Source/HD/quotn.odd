@@ -1,0 +1,101 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="QUOTN" usage="opt" ident="quotation">
+  <equiv/>
+  <gloss/>
+  <desc>specifies editorial practice adopted with respect to quotation
+  marks in the original. </desc>
+  <classes>
+    <memberOf key="att.declarable"/>
+    <memberOf key="model.editorialDeclPart"/>
+  </classes>
+  <content>
+    <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:ref name="model.pLike"/>
+    </rng:oneOrMore>
+  </content>
+  <attList>
+    <attDef ident="marks" usage="opt">
+      <equiv/>
+      <desc>indicates whether or not quotation marks have been retained as
+      content within the text. </desc>
+      <defaultVal>all</defaultVal>
+      <valList type="closed">
+	<valItem ident="none">
+          <equiv/>
+	  <gloss>no quotation marks have been retained </gloss>
+	</valItem>
+	<valItem ident="some">
+          <equiv/>
+          <gloss>some quotation marks have been retained </gloss>
+        </valItem>
+        <valItem ident="all">
+          <equiv/>
+          <gloss>all quotation marks have been retained </gloss>
+        </valItem>
+      </valList>
+    </attDef>
+    <attDef ident="form" usage="opt">
+      <equiv/>
+      <desc>specifies how quotation marks are indicated within the
+      text.</desc>
+      <defaultVal>unknown</defaultVal>
+      <valList type="closed">
+        <valItem ident="data">
+	  <equiv/>
+	  <gloss>quotation marks are retained as data.</gloss>
+	</valItem>
+	<valItem ident="rend">
+          <equiv/>
+          <gloss>the rendition attribute is consistently used to
+          indicate the form of quotation marks.</gloss>
+        </valItem>
+        <valItem ident="std">
+          <equiv/>
+          <gloss>use of quotation marks has been standardized.</gloss>
+        </valItem>
+        <valItem ident="nonstd">
+          <equiv/>
+          <gloss>quotation marks are represented inconsistently.</gloss>
+        </valItem>
+        <valItem ident="unknown">
+          <equiv/>
+          <gloss>use of quotation marks is unknown.</gloss>
+        </valItem>
+      </valList>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><quotation marks="none" form="rend">
+  <p>No quote marks have been retained. Instead, the
+  <att>rend</att> attribute on the <gi>q</gi> element is used
+  to specify what kinds of quotation mark was used, according
+  to the following list:
+  <list type="gloss">
+    <label>dq</label>
+    <item>double quotes, open and close</item>
+    <label>sq</label>
+    <item>single quotes, open and close</item>
+    <label>dash</label>
+    <item>long dash open, no close</item>
+    <label>dg</label>
+    <item>double guillemets, open and close</item>
+  </list>
+  </p>
+</quotation></egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <quotation marks="all" form="std">
+        <p>All quotation marks are retained in the text and
+           are represented by standard entity references</p>
+      </quotation>
+    </egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#HD53"/>
+    <ptr target="#CCAS2"/>
+  </listRef>
+</elementSpec>

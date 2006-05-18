@@ -1,0 +1,2598 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+$Date$
+$Author$-->
+<!-- GE 8 : 0.3.1 11/03/06 -->
+<div1 xmlns="http://www.tei-c.org/ns/1.0" type="Chapter" xml:id="HD" n="5">
+<head>En-tête TEI</head>
+<!-- 5 -->
+<p>Ce chapitre traite des problèmes de description d’une oeuvre encodée afin que le
+texte lui-même, sa source, son balisage et ses révisions soient correctement
+documentés. Cette documentation est également nécessaire pour les chercheurs qui
+travaillent sur les textes, pour les catalogueurs dans les bibliothèques et les archives
+et pour les logiciels qui traitent ces textes. Ces descriptions et déclarations fournissent
+ensemble un substitut électronique à la page de titre d’une œuvre imprimée. Elles
+constituent un équivalent au contenu des guides d’encodage ou des manuels
+d’introduction qui accompagnent généralement les jeux de données électroniques.</p>
+<p>Tout texte conforme à la TEI doit comporter en préambule ce jeu de description,
+balisé conformément aux principes directeurs figurant dans ce chapitre. Cet ensemble
+de données est appelé En-tête TE <term>TEI header</term>, balisé <gi>teiHeader</gi> et
+comporte quatre parties principales :
+<list type="bullets">
+<item>une description bibliographique du fichier <term>file description</term>, balisée 
+<gi>fileDesc</gi>, qui contient une description bibliographique complète du fichier
+informatique lui-même, dont un utilisateur du texte pourra extraire une citation
+bibliographique, et qu’un bibliothécaire ou un archiviste pourra utiliser dans un
+catalogue. Le terme « fichier informatique » <term>computer file</term> doit être compris
+comme faisant référence à l’intégralité du document décrit dans l’en-tête, même s’il est
+conservé dans plusieurs fichiers distincts. La description du fichier contient également
+des informations sur la ou les source(s) à l’origine du document électronique. Les
+éléments TEI utilisés pour encoder la description de fichier sont décrits à la section 5.2
+Description bibliographique du fichier <ptr target="#HD2"/>.</item>
+<item>une description de l’encodage <term>encoding description</term>, balisée 
+<gi>encodingDesc</gi>, qui décrit les relations existant entre le texte électronique et la
+ou les source(s) dont il dérive. Elle permet une description détaillée des éléments
+permettant de savoir si (et comment) le texte a été normalisé pendant sa transcription,
+comment l’encodeur a résolu les ambiguïtés de la source, quels niveaux d’encodage ou
+d’analyse ont été appliqués, etc. Les éléments TEI utilisés pour encoder la description de
+l’encodage sont décrits à la section 5.3 Description de l’encodage <ptr target="#HD5"/>.
+</item>
+<item>un profil de texte <term>text profile</term>, balisé <gi>profileDesc</gi>, qui
+contient des informations contextuelles et de classification sur le texte, telles que son
+sujet, le contexte dans lequel il a été produit, les individus mentionnés dans le texte ou
+ayant participé à sa création, etc. Cet élément est d’un intérêt particulier dans le cas de
+textes composites fortement structurés, tels que des corpus ou des collections
+linguistiques pour lesquels il est fortement souhaitable d’appliquer un vocabulaire
+descriptif contrôlé ou d’extraire du corps du texte des termes relatifs au type de texte ou
+à son origine. Le profil de texte peut toutefois être utile dans tous les cas de traitement
+automatique de texte. Les éléments TEI utilisés pour encoder le profil de texte sont
+décrits à la section 5.4 Description du profil <ptr target="#HD4"/>.</item>
+<item>un historique des révisions  <term>revision history</term>, balisé 
+<gi>revisionDesc</gi>, qui permet à l’encodeur de fournir un historique des
+modifications effectuées au cours de l’élaboration du texte électronique. L’historique des
+ révisions est important pour le suivi des versions <term>version control</term> et pour
+ répondre aux questions relatives à l’évolution d’un fichier. Les éléments TEI utilisés
+ pour encoder l’historique des révisions sont décrits à la section 5.5 Description des
+ révisions <ptr target="#HD6"/>.</item>
+ </list>
+ </p>
+<p>Un En-tête TEI peut être long et complexe comme il peut être très simple. Certains
+domaines d’applications (par exemple, la construction de corpus linguistiques et la
+transcription de la parole) nécessitent des informations plus spécifiques et détaillées
+que d’autres. Les propositions ci-dessous définissent à la fois un jeu d’éléments
+fondamentaux <term>core</term> pouvant être librement utilisés dans tout en-tête TEI et
+des jeux de balises additionnelles <term>additional tagsets</term> pouvant être
+déclarés comme extensions si nécessaire. Pour plus de détails sur ce mécanisme
+d’extension, voir le chapitre 3.2 Jeux d’éléments fondamentaux, de base et additionnels
+<ptr target="#STBA"/> ; les extensions de l’en-tête sont décrites au chapitre 23 Corpus
+linguistiques <ptr target="#CC"/>, qu’il est conseillé de lire conjointement au présent
+chapitre.</p>
+<p>La section suivante du présent chapitre est une brève introduction à la structure
+générale de l’en-tête et aux catégories de données qu’il peut contenir. Cette partie est
+suivie de la description détaillée de tous les éléments qui peuvent être utilisés dans
+l’En-tête de base. La section 5.6 En-têtes minimaux et recommandés <ptr target="#HD7"/>
+, à la fin du présent chapitre, expose le contenu recommandé d’un En-tête TEI minimal et
+ses relations avec les pratiques habituelles de catalogage en bibliothèque. Les
+recommandations pour l’utilisation d’en-têtes TEI comme documents autonomes, pour
+l’échange entre bibliothèques, dépôts d’archives et institutions similaires se trouvent au
+chapitre 24 Éléments de l’En-tête et leurs relations avec les autres formats de
+métadonnées <ptr target="#SH"/>.
+</p>
+<div2 type="bar" xml:id="HD1">
+<head>Organisation de l’En-tête TEI</head>
+<!-- 5.1 -->
+<div3  xml:id="HD11">
+<head>En-tête TEI et ses composants</head>
+<!-- 5.1.1 -->
+<p>L’élément En-tête TEI <gi>teiHeader</gi> doit être clairement distingué du prologue
+<term>prolog</term> qui comprend la déclaration XML ou SGML et la déclaration de 
+type de document (voir chapitre 2 Introduction à XML <ptr target="#SG"/>) ainsi que des
+parties liminaires du texte lui-même <term>front matter</term> (voir Section 7.4 Parties
+liminaires <ptr target="#DSFRONT"/>). Un texte composite, tel qu’un corpus ou une
+collection de textes, peut contenir plusieurs en-têtes (voir plus loin). Toutefois, dans le
+cas le plus courant, un texte conforme à la TEI ne contiendra qu’un seul élément 
+<gi>teiHeader</gi>, suivi d’un seul élément Texte <gi>text</gi>.</p>
+<p>L’élément En-tête est décrit comme suit : 
+<specList>
+<specDesc key="teiHeader" atts="type"/>
+</specList>
+</p>
+<p>Comme il a été dit plus haut, l’élément <gi>teiHeader</gi> est constitué de quatre
+ composants principaux :
+ <specList>
+ <specDesc key="fileDesc"/>
+ <specDesc key="encodingDesc"/>
+ <specDesc key="profileDesc"/>
+ <specDesc key="revisionDesc"/>
+ </specList>
+ </p>
+<p>Parmi ces éléments, seul l’élément Description bibliographique du fichier 
+<gi>fileDesc</gi> est obligatoire dans tous les En-têtes TEI ; les autres éléments sont
+ facultatifs. La forme complète d’un En-tête TEI se présente ainsi :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<teiHeader>
+    <fileDesc>  </fileDesc>
+    <encodingDesc>  </encodingDesc>
+    <profileDesc>  </profileDesc>
+    <revisionDesc>  </revisionDesc>
+</teiHeader>
+</egXML>
+Un En-tête TEI minimal se présente ainsi :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<teiHeader>
+    <fileDesc>  </fileDesc>
+</teiHeader>
+</egXML>
+</p>
+<p>Dans le cas de corpus linguistiques ou de collections de textes, il peut être
+souhaitable d’enregistrer l’information de l’En-tête au niveau de chacun des
+composants du corpus ou de la collection, ou bien une seule fois au niveau du corpus
+ou de la collection, ou encore aux deux niveaux. Des détails complémentaires
+concernant le balisage des textes composites sont donnés à la section 23 Corpus
+linguistiques<ptr target="#CC"/>, qu’il est conseillé de lire conjointement au présent
+chapitre. Un attribut facultatif <att>type</att> peut également être ajouté à l’élément
+En-tête <gi>teiHeader</gi> pour préciser si l’En-tête s’applique à un corpus ou à un texte
+isolé. Un corpus peut ainsi se présenter sous la forme :
+ <egXML xmlns="http://www.tei-c.org/ns/Examples">
+ <teiCorpus>
+   <teiHeader type="corpus">
+   </teiHeader>
+   <TEI>
+      <teiHeader type="text">
+      </teiHeader>
+      <text>  </text>
+   </TEI>
+   <TEI>
+      <teiHeader type="text">
+    </teiHeader>
+      <text>  </text>
+   </TEI>
+</teiCorpus>
+</egXML>
+<!-- left this in for now, but I dont think it's very helpful (LB) -->
+	<!-- that's cause you already know it.  the reader don't. -msm     -->
+	<!-- I left it, too, but at least I fixed the outermost TEI to   -->
+	<!-- teiCorpus! -sb, 2001-11-02                                  -->
+</p>
+<p>Les balises nécessaires à l’En-tête TEI sont définies dans la DTD 
+<ident type="file">header.dtd</ident> qui définit en premier lieu l’élément <gi>teiHeader
+</gi> element :
+<moduleSpec xml:id="D221" ident="header">
+<altIdent type="FPI">The TEI Header</altIdent>
+<desc>The TEI Header</desc>
+</moduleSpec>
+<!--publicID:  -//TEI P5//ELEMENTS TEI Header//EN-->
+&model.headerPart;
+&teiHeader;
+<specGrpRef target="#D221B"/>
+</p>
+<p>La DTD définit ensuite le reste des éléments de l’En-tête, en incluant les fragments de
+ la DTD utilisés plus loin dans ce chapitre :
+<specGrp xml:id="D221B">
+<specGrpRef target="#D222"/>Description bibliographique du fichier
+<specGrpRef target="#D223"/>Description de la source
+<specGrpRef target="#D225"/>Description de l’encodage
+<specGrpRef target="#D224"/>Description du profil
+<specGrpRef target="#D226"/>Description des révisions</specGrp>
+</p>
+</div3>
+<div3  xml:id="HD12">
+<head>Types de contenu dans l’En-tête TEI</head>
+<!-- 5.1.2 -->
+<p>Les éléments présents dans l’En-tête TEI peuvent avoir différents types de contenu ;
+la liste ci-dessous indique comment ces types de contenu sont décrits dans les sections
+suivantes :
+<list type="gloss">
+<label>texte libre</label>
+<item>La plupart des éléments contiennent du texte à un niveau ou à un autre. De
+nombreux éléments peuvent contenir du texte (qui peut être structuré en paragraphes)
+ou des éléments plus spécifiques qui, eux-mêmes, contiennent du texte. Dans les
+descriptions du contenu des éléments figurant dans ce chapitre, la formule « prose
+suivie » <mentioned>prose description</mentioned> doit être comprise comme
+impliquant une suite de paragraphes, chacun d’eux étant balisé par un élément
+Paragraphe <tag>p</tag>. En revanche, la formule « locution » <mentioned>phrase
+</mentioned> doit être comprise comme contenant des chaînes de caractères non
+structurées en paragraphes, pouvant contenir selon le besoin des éléments de niveau 
+« locution ». Voir la section 6.1 Paragraphes <ptr target="#COPA"/> pour plus
+d’informations sur les paragraphes, les expressions mises en valeur, les listes, etc.</item>
+<label>éléments de regroupement</label>
+<item>Les éléments dont l’intitulé se termine par le suffixe <mentioned>Stmt
+</mentioned> par exemple Mention d’édition <gi>editionStmt</gi>, Mention de titre
+<gi>titleStmt</gi>) englobent généralement un groupe d’éléments spécifiques contenant
+une information structurée. Dans le cas des éléments bibliographiques, le suffixe 
+<mentioned>Stmt</mentioned> est utilisé pour le nom des éléments qui correspondent
+aux <soCalled>zones</soCalled> de l’ISBD (International Standard Bibliographic
+Description = description bibliographique internationale normalisée)
+<note place="foot">Pour plus d’informations sur cet important ensemble normatif,
+proposé en 1969 par la Fédération internationale des associations de bibliothèques et
+institutions, voir <ptr target="http://www.ifla.org/VII/s13/pubs/isbd.htm"/>. Sur les
+relations existant entre les propositions de la TEI et d’autres normes de description
+bibliographique, voir 5.7 Note pour les catalogueurs en bibliothèque
+<ptr target="#HD8"/>.</note>. Dans la plupart des cas, les éléments de regroupement
+peuvent contenir des descriptions en prose suivie au lieu du jeu des éléments
+spécifiques. Ainsi, l’encodeur a le choix de présenter cette information sous forme
+structurée ou non.</item>
+<label>déclarations</label>
+<item>Les éléments dont l’intitulé se termine par le suffixe <mentioned>Decl</mentioned>
+ (Declaration) (par exemple Déclaration de sujet <gi>subjectDecl</gi>, Déclaration du
+système de références <gi>refsDecl</gi>) contiennent des informations sur les pratiques
+spécifiques d’encodage appliquées au texte électronique ; ces pratiques sont souvent
+décrites sous forme codée. Ces informations prennent généralement la forme d’une
+série de déclarations qui rattachent ce code à une structure ou une description plus
+complexe. Une déclaration qui s’applique à plus d’un texte ou division de texte n’a pas à
+être répétée dans l’En-tête de chacun des textes. En revanche, l’attribut <att>decls</att>
+de chaque texte (ou subdivision de texte) auquel s’applique la déclaration peut être
+utilisé pour y faire référence (voir section 23.3 Association d’informations contextuelles
+ à un texte)<ptr target="#CCAS"/>.</item>
+<label>descriptions</label>
+<item>Les éléments dont l’intitulé se termine par le suffixe <mentioned>Desc
+</mentioned> (Description) (par exemple Description de l’environnement 
+<gi>settingDesc</gi>, Description du projet <gi>projectDesc</gi>) contiennent une
+description en prose suivie, qui peut être structurée ou non selon des rubriques
+spécifiques à l’aide des sous-éléments disponibles.
+</item>
+</list>
+</p>
+</div3>
+</div2>
+<div2 type="bar" xml:id="HD2">
+<head>Description bibliographique du fichier</head>
+<!-- 5.2 -->
+<p>Cette section décrit l’élément Description bibliographique du fichier <gi>fileDesc
+</gi>, premier composant de l’élément En-tête TEI <gi>teiHeader</gi>.</p>
+<p>La structure de la description bibliographique d’un texte électronique ressemble à 
+celle d’un livre, d’un article ou de n’importe quel objet textuel. L’élément Description
+bibliographique du fichier de l’en-tête TEI a été largement calqué sur les normes en
+vigueur pour le catalogage en bibliothèque ; il devrait ainsi fournir aux utilisateurs des
+informations suffisantes pour donner les références bibliographiques habituelles au
+texte électronique, et pour permettre aux catalogueurs de les traiter. Les citations
+bibliographiques qui apparaissent ailleurs dans l’en-tête, ainsi que dans le texte
+lui-même, sont issues du même modèle (pour les citations bibliographiques en général,
+voir la section 6.10 Citations et références bibliographiques<ptr target="#COBI"/>) et la
+section suivante 5.7 Note pour les catalogueurs en bibliothèque<ptr target="#HD8"/>.</p>
+<p>La description bibliographique du texte électronique (pas de sa source) est fournie
+dans l’élément obligatoire Description bibliographique du fichier <gi>fileDesc</gi>.
+<specList>
+<specDesc key="fileDesc"/>
+</specList>
+</p>
+<p>L’élément <gi>fileDesc</gi> contient trois éléments obligatoires et quatre éléments
+ facultatifs, chacun d’eux étant décrit en détail dans les sections 5.2.1 Mention de titre 
+ <ptr target="#HD21"/> à 5.2.6 Mention de notes <ptr target="#HD27"/>. Ces éléments sont 
+ listés ci-dessous dans l’ordre où ils doivent apparaître dans l’élément <gi>fileDesc</gi>
+ element :
+<specList>
+<specDesc key="titleStmt"/>
+<specDesc key="editionStmt"/>
+<specDesc key="extent"/>
+<specDesc key="publicationStmt"/>
+<specDesc key="seriesStmt"/>
+<specDesc key="notesStmt"/>
+<specDesc key="sourceDesc"/>
+</specList>
+</p>
+<p>Une description de fichier contenant tous les sous-éléments possibles présente la
+structure suivante :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<teiHeader>
+    <fileDesc>
+         <titleStmt>  </titleStmt>
+         <editionStmt>  </editionStmt>
+         <extent>  </extent>
+         <publicationStmt>  </publicationStmt>
+         <seriesStmt>  </seriesStmt>
+         <notesStmt>  </notesStmt>
+         <sourceDesc>  </sourceDesc>
+    </fileDesc>
+</teiHeader>
+</egXML>
+Plusieurs éléments pouvant être omis, une description minimale de fichier présente la
+ structure suivante :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<teiHeader>
+    <fileDesc>
+         <titleStmt>  </titleStmt>
+         <publicationStmt>  </publicationStmt>
+         <sourceDesc>  </sourceDesc>
+    </fileDesc>
+</teiHeader>
+</egXML>
+</p>
+<p>L’élément Description bibliographique du fichier <gi>fileDesc</gi> a comme définition
+ formelle :
+<specGrp xml:id="D222" n="The file description">
+&fileDesc;
+<specGrpRef target="#D2221"/>
+<specGrpRef target="#D2222"/>
+<specGrpRef target="#D2223"/>
+<specGrpRef target="#D2224"/>
+<specGrpRef target="#D2225"/>
+<specGrpRef target="#D2226"/>
+</specGrp>
+</p>
+<div3  xml:id="HD21">
+<head>Mention de titre</head>
+<!-- 5.2.1 -->
+<p>L’élément obligatoire Mention de titre <gi>titleStmt</gi> est le premier composant de
+l’élément Description bibliographique du fichier <gi>fileDesc</gi> :
+<specList>
+<specDesc key="titleStmt"/>
+</specList>
+Il contient le titre donné à l’œuvre électronique, ainsi qu’une ou plusieurs mentions de
+responsabilité <term>statements of responsibility</term> qui identifie(nt) l’encodeur,
+l’auteur, le compilateur, ou tout autre responsable :
+<specList>
+<specDesc key="title"/>
+<specDesc key="author"/>
+<specDesc key="sponsor"/>
+<specDesc key="funder"/>
+<specDesc key="principal"/>
+<specDesc key="respStmt"/>
+<specDesc key="resp"/>
+<specDesc key="name"/>
+</specList>
+</p>
+<p>L’élément <gi>title</gi> contient le nom principal du fichier, y compris tous les titres ou
+compléments du titre alternatifs qu’il peut comporter. Il peut être répété si le fichier
+comporte plus d’un titre (éventuellement en différentes langues) et peut prendre toute
+forme que le créateur du fichier estime pertinente. Lorsque l’œuvre électronique est
+issue d’un texte existant, il est recommandé que le titre de cette oeuvre soit aussi dérivé
+du titre de la source, mais qu’il s’en distingue clairement. Par exemple, ne pas appeler le
+fichier informatique <q>A Sanskrit-English Dictionary, based upon the St. Petersburg
+Lexicons</q> mais plutôt <q>Sanskrit-English Dictionary, based upon the St.
+Petersburg Lexicons : transcription électronique</q>. Si l’on souhaite conserver une
+partie ou l’intégralité du texte source dans le titre du fichier informatique, on peut utiliser
+l’une des propositions suivantes :
+<list type="bullets">
+<item>[titre du texte source] : transcription électronique.</item>
+<item>[titre du texte source] :  édition électronique.</item>
+<item>Version électronique de :  [titre du texte source].</item>
+</list>
+On pourra ainsi distinguer le fichier informatique et le texte source dans des citations ou
+des catalogues qui contiennent des descriptions des deux versions.</p>
+<p>Le fichier informatique aura certainement un autre nom (son <soCalled>
+nom_de_fichier</soCalled>) ou un identifiant sur le système informatique où il est
+stocké. Ce nom est susceptible de changer fréquemment, lorsque de nouvelles copies
+du fichier sont enregistrées. Sa forme dépend entièrement du système utilisé et ne peut
+ainsi être facilement transférée d’un système à l’autre. Pour ces raisons, il est fortement
+recommandé par ces Principes directeurs de <emph>ne pas</emph> utiliser ces noms
+ou identifiants dans l’élément <gi>title</gi> d’un fichier informatique.</p>
+<p>Pour des cas difficiles, on peut trouver d’utiles recommandations pour la description
+des titres dans les Règles de catalogage anglo-américaines (Anglo-American
+Cataloguing Rules (AACR 2))<note place="foot"><bibl>Michael Gorman and Paul W.
+Winkler, eds., <title>Anglo-American Cataloguing Rules</title>, Second Edition
+(Chicago:  American Library Association; London:  Library Association ; Ottawa:
+Canadian Library Association, 1978).</bibl></note>, chapitre 25, ou dans la
+ documentation équivalente d’autres agences bibliographiques nationales.</p>
+<p>Les éléments spécifiques <gi>author</gi>, <gi>sponsor</gi>, <gi>funder</gi>, et 
+<gi>principal</gi>, ainsi que l’élément plus général <gi>respStmt</gi> fournissent les 
+<term>mentions de responsabilité</term> qui identifient les personnes physiques
+responsables du contenu intellectuel ou artistique d’un document et les collectivités
+dont il émane.</p>
+<p>La mention de titre peut comporter autant de mentions de responsabilité que
+nécessaire. Au minimum, on doit mentionner l’auteur du texte et le créateur du fichier
+électronique. Dans le cas où la description bibliographique est celle d’un corpus, le
+créateur du corpus doit être mentionné. Ces mentions sont obligatoires quand elles
+existent, bien qu’elles ne puissent être exigées par le parseur. Il est possible de
+mentionner les noms des autres personnes qui ont participé à la transcription ou à
+l’élaboration du texte, des commanditaires et des sources de financement. Le nom
+d’une personne qui a saisi les données n’est pas nécessaire, à moins qu’elle ait
+également une responsabilité intellectuelle dans la création du fichier.</p>
+<p>On utilise l’élément <gi>respStmt</gi> quand la personne dont la responsabilité doit
+être mentionnée n’est ni un auteur, ni un commanditaire, ni un financeur, ni un éditeur
+scientifique. Cet élément contient deux sous-éléments : l’élément <gi>name</gi> qui
+identifie une personne ou une institution responsable du contenu, et l’élément 
+<gi>resp</gi> qui indique la nature de la responsabilité. Il n’existe pas à l’heure actuelle
+de recommandations spécifiques pour un contenu approprié de l’élément <gi>resp</gi> :
+il doit clairement identifier la nature de la responsabilité en question, comme dans les
+exemples ci-dessous.</p>
+<p>Les noms peuvent être des noms de personne ou de collectivités. Il est recommandé
+d’indiquer les noms sous la forme sous laquelle les personnes ou les collectivités
+souhaitent apparaître publiquement. C’est souvent la forme la plus développée du nom,
+qui comprend les prénoms.<note place="foot"> Il est recommandé aux agences qui
+utilisent des catalogues électroniques d’utiliser les listes d’autorité disponibles, telles
+que le Fichier d’autorité Noms de la Bibliothèque du Congrès pour tous les noms de
+personne.</note></p>
+<p>Exemples :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<titleStmt>
+  <title>Capgrave's Life of St. John Norbert : transciption électronique</title>
+  <respStmt>
+	  <resp>compilée par</resp>
+	  <name>P.J. Lucas</name>
+  </respStmt>
+</titleStmt>
+</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<titleStmt>
+  <title>Two stories by Edgar Allen Poe : édition électronique</title>
+  <author>Poe, Edgar Allen (1809-1849)</author>
+  <respStmt>
+    <resp>compilée par</resp>
+    <name>James D. Benson</name>
+  </respStmt>
+</titleStmt>
+</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<titleStmt>
+  <title>Yogadarśanam (arthāt yogasūtrap¯&tdot;ha&hdot;) : transcription électronique.
+  </title>
+  <title>The Yogasūutras of Patañjali : transcription électronique.</title>
+  <funder>Wellcome Institute for the History of Medicine</funder>
+  <principal>Dominik Wujastyk</principal>
+  <respStmt><name>Wieslaw Mical</name>
+        <resp>saisie des données et correction des épreuvesn</resp>
+  </respStmt>
+  <respStmt>
+	  <name>Jan Hajic</name>
+      <resp>conversion par balisage conforme à la TEI</resp>
+   </respStmt>
+</titleStmt>
+</egXML>
+</p>
+<p>L’élément Mention de titre <gi>titleStmt</gi> et ses sous-éléments ont comme
+ définition formelle :
+<specGrp xml:id="D2221" n="Mention de titre = The title statement">
+&titleStmt;
+&sponsor;
+&funder;
+&principal;
+<p>Les éléments TITLE, AUTHOR, RESPSTMT et RESP ne sont pas déclarés ici, mais
+ dans le fichier teicore2.dtd.</p>
+</specGrp>
+</p>
+</div3>
+<div3  xml:id="HD22">
+<head>Mention d’édition</head>
+<!-- 5.2.2 -->
+<p>L’élément Mention d’édition <gi>editionStmt</gi> est le second composant de
+l’élément Description bibliographique du fichier <gi>fileDesc</gi> ; il est facultatif mais
+ recommandé.
+<specList><specDesc key="editionStmt"/></specList>
+Il contient du texte libre ou des éléments plus spécialisés identifiant l’édition et les
+responsables de son contenu :
+<specList><specDesc key="edition"/><specDesc key="respStmt"/><specDesc key="
+name"/><specDesc key="resp"/></specList>
+</p>
+<p>Pour les textes imprimés, le mot <mentioned>édition</mentioned> s’applique à
+l’ensemble des exemplaires identiques d’une œuvre produits à partir de la même matrice
+et publiés par un éditeur ou un groupe d’éditeurs. Un changement dans l’identité de
+l’organisme distributeur ne doit pas normalement constituer un changement d’édition,
+alors qu’un changement dans la matrice constitue une nouvelle édition.</p>
+<p>Pour les textes électroniques, la notion de <soCalled>matrice</soCalled> n’est pas
+parfaitement appropriée puisqu’il est infiniment plus facile de copier et de modifier les
+textes que dans le cas des imprimés ; le terme <mentioned>édition</mentioned> peut
+toutefois être utilisé pour identifier l’état particulier d’un texte électronique auquel on a
+apporté des modifications substantielles. Les termes <mentioned>version,</mentioned>
+<mentioned>niveau,</mentioned> et <mentioned>sortie</mentioned> employés dans
+ces Principes directeurs sont synonymes. En revanche, les termes <mentioned>révision
+</mentioned> et <mentioned>mise à jour</mentioned> s’appliquent à des fichiers qui
+n’ont subi que des modifications minimes ne justifiant pas une nouvelle édition.</p>
+<p>Il n’existe pas de règle simple pour spécifier l’importance des modifications d’un 
+texte pour qu’elles soient considérées comme l’origine d’une nouvelle édition plutôt que
+d’une simple mise à jour. Le principe général proposé ici est que la production d’une
+nouvelle édition introduit un changement significatif dans le contenu intellectuel du
+fichier, plutôt qu’une modification d’encodage ou de présentation. L’ajout d’un balisage
+analytique à un texte constitue ainsi une nouvelle édition du texte, alors que la
+conversion automatique d’une représentation codée à une autre n’en est pas une. Les
+modifications relatives au codage des caractères ou au stockage physique du fichier,
+les corrections de coquilles, de simples modifications dans l’organisation du contenu
+et des changements dans le format de sortie ne produisent généralement pas une
+nouvelle édition. L’ajout d’informations nouvelles (par exemple une analyse
+linguistique exprimée dans le balisage d’un extrait de discours, ou d’un fichier sonore
+ou graphique, des liens vers des jeux de données externes) produit pratiquement
+toujours une nouvelle édition.</p>
+<p>Évidemment, on trouvera toujours des cas limites et cette notion est quelque peu
+arbitraire. La règle la plus simple est que si l’on considère que le fichier est une nouvelle
+édition, on le traite comme tel. La mention d’édition est facultative pour la première sortie
+d’un fichier électronique ; elle devient obligatoire pour toute sortie ultérieure, bien que
+cette requête ne soit pas exigée par le parseur.</p>
+<p>À noter que <emph>toute</emph> modification dans un fichier, qu’on la considère 
+comme une nouvelle édition ou une simple révision, devrait être notée individuellement
+dans la section de description des révisions de l’en-tête TEI (voir la section 5.5
+Description des révisions <ptr target="#HD6"/>).</p>
+<p>L’élément <gi>edition</gi> contient des expressions décrivant l’édition ou la version,
+en utilisant les termes <mentioned>édition</mentioned>, <mentioned>version
+</mentioned> ou des termes équivalents, avec des numéros et des dates, ou des termes
+indiquant les différences avec d’autres éditions tels que <mentioned>nouvelle
+édition</mentioned>, <mentioned>édition révisée</mentioned>, etc. Toute date qui
+apparaît dans la mention d’édition doit être balisée avec l’élément Date <gi>date</gi>.
+L’attribut <att>n</att> de l’élément <gi>edition</gi> peut être utilisé, comme dans
+d’autres éléments pour fournir une identification formelle de l’édition (par exemple un
+numéro de version).</p>
+<p>Un ou plusieurs éléments <gi>respStmt</gi> peuvent également être utilisés pour
+fournir des informations sur les mentions de responsabilité de cette édition. Ces
+mentions peuvent faire référence à des personnes physiques ou à des collectivités,
+faire mention de fonctions telles que <soCalled>réviseur</soCalled>, ou nommer une
+personne ou une collectivité responsable de la fourniture de données complémentaires,
+d’annexes, etc. dans la nouvelle édition. Pour de plus amples détails sur l’élément 
+<gi>respStmt</gi>, voir la section 6.11 Citations et références bibliographiques <ptr
+target="#COBI"/>.
+</p>
+<p>Exemples :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<editionStmt>
+  <edition n="P2">Second projet, substantiellement étendu, revu et corrigé.</edition>
+</editionStmt>
+</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<editionStmt>
+<edition>Student's edition, 
+<date>juin 1987</date>
+</edition>
+<respStmt>
+  <resp>Nouvelles annotations de</resp>
+  <name>George Brown</name>
+</respStmt>
+</editionStmt>
+</egXML>
+L’élément <gi>editionStmt</gi> a comme définition formelle :
+<!-- removed file attrib since it was confusing dtdGen LB, 20 may 01 -->
+<specGrp xml:id="D2222" n="Mention d'édition = The edition statement">
+&editionStmt;
+&edition;
+</specGrp>
+</p>
+</div3>
+<div3  xml:id="HD23">
+<head>Type et importance matérielle du fichier</head>
+<!-- 5.2.3 -->
+<p>L’élément Importance matérielle <gi>extent</gi> est le troisième composant de
+l’élément Description bibliographique du fichier <gi>fileDesc</gi>. Il est facultatif.
+<specList><specDesc key="extent"/></specList>
+</p>
+<p>Pour les livres imprimés, l’information sur les caractéristiques matérielles, telle que le
+type de support et la taille, est d’une grande importance dans les procédures de
+catalogage. Conçues pour le papier, les règles de description bibliographique
+employées pour décrire le support et la taille d’un exemplaire requièrent une certaine
+réinterprétation pour les appliquer aux médias électroniques. Un fichier électronique
+existe en tant qu’entité indépendante de son support et demeure le même objet
+intellectuel qu’il soit stocké sur une bande magnétique, un CD-ROM, un jeu de
+disquettes ou dans un fichier sur un serveur. En outre, ces Principes directeurs étant
+spécialement destinées à faciliter le stockage et l’échange de documents de manière
+transparente, toute information purement dépendante de la machine devrait être écartée,
+tant qu’il s’agit de décrire l’en-tête du fichier.</p>
+<p>Ceci est particulièrement vrai pour l’information sur le <term>type de fichier</term>,
+bien que certaines règles de catalogage conçues pour les bibliothèques font la
+distinction entre deux types de fichier informatique : <q>données</q> et <q>programmes
+</q>. Cette distinction est très difficile à faire dans certains cas, par exemple pour les
+documents hypermédia ou les textes comportant un outil de recherche intégré.</p>
+<p>Bien qu’elle soit pareillement dépendante du système, un ordre de grandeur de la
+taille du fichier informatique peut être utile pour le catalogage ou d’autres raisons
+pratiques. Comme la mesure et l’expression de la taille du fichier sont très délicates,
+seules des recommandations très générales sont possibles ; l’élément <gi>extent</gi>
+est proposé à cet effet. Il contient une expression indiquant la taille exacte ou
+approximative du fichier informatique exprimée sous une des formes suivantes :
+<list type="bullets">
+<item>en multiplets d’une longueur spécifiée (e.g. <q>4 000 multiplets de 16 bits</q>)
+</item>
+<item>- selon une échelle de valeurs, par exemple :
+<list type="bullets">
+<item>moins de 1 Mo</item>
+<item>entre 1 et 5 Mo</item>
+<item>entre 6 et 10 Mo</item>
+<item>plus de 10 Mo</item>
+</list>
+</item>
+<item>- exprimée selon toute unité logique appropriée (par exemple, mots ou phrases,
+citations, paragraphes)</item>
+<item>- exprimée selon toute unité physique appropriée (par exemple, blocs, disques,
+cassettes).</item>
+</list>
+</p>
+<p>Exemples :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<extent>de 1 16-bit Mo à 2 16-bit Mo</extent>
+<extent>4.2 MiB</extent>
+<extent>4 532 octets</extent>
+<extent>3 200 phrases</extent>
+<extent>5 disquettes haute densité 3.5"</extent>
+</egXML>
+<!--
+** These examples and the list above have *got* to be fixed, and TEI
+** should advise use of standard symbols ala NIST
+** (http://physics.nist.gov/cuu/Units/binary.html)
+** Syd, 2001-12-23
+-->
+	<!-- removed file attrib since it was confusing dtdGen LB, 20 may 01 -->
+L’élément <gi>extent</gi> a comme définition formelle :
+<specGrp xml:id="D2223" n="Importance matérielle = The extent statement">
+&extent;
+</specGrp>
+</p>
+</div3>
+<div3  xml:id="HD24">
+<head>Mention de publication, diffusion, etc.</head>
+<!-- 5.2.4 -->
+<p>L’élément Mention de publication <gi>publicationStmt</gi> est le quatrième
+composant de l’élément Description bibliographique du fichier <gi>fileDesc</gi>. Il est
+obligatoire.
+<specList><specDesc key="publicationStmt"/></specList>
+Il peut contenir ou bien une simple description en prose suivie, ou bien des groupes
+d’éléments décrits ci-dessous :
+<specList>
+<specDesc key="publisher"/>
+<specDesc key="distributor"/>
+<specDesc key="authority"/>
+</specList>
+</p>
+<p>L'<term>éditeur</term> est la personne ou l’institution par qui une édition donnée
+d’un fichier est rendue publique. Le <term>distributeur</term> est la personne ou
+l’institution auprès de laquelle des exemplaires du texte peuvent être obtenus. Si un
+texte n’est pas réellement édité mais est néanmoins rendu disponible par un individu ou
+une institution, cette personne ou cette institution est nommée <term>Responsable de
+la mise à disposition</term>.
+</p>
+<p>Au moins un des trois éléments précédents doit être mentionné, à moins que toute
+la mention de publication ne soit exprimée sous forme de prose suivie. Chacun de ces
+éléments doit être suivi d’un ou plusieurs des éléments suivants, dans l’ordre prescrit
+ci-dessous :
+<specList>
+<specDesc key="pubPlace"/>
+<specDesc key="address"/>
+<specDesc key="idno" atts="type"/>
+<specDesc key="availability" atts="status"/>
+<specDesc key="date"/>
+</specList>
+</p>
+<p>À noter que les dates, noms de lieux, etc. cités dans la mention de publication se
+rapportent à l’éditeur, au distributeur ou au responsable de la mise à disposition
+précédemment mentionnés. Si le texte a été créé à une date autre que celle de sa
+publication, sa date de création sera donnée dans l’élément Description bibliographique
+du fichier <gi>profileDesc</gi> et non dans la mention de publication. On peut
+mentionner en note toutes les dates que l’on juge utiles, par exemple les dates de
+collecte des données.</p>
+<p>On peut utiliser des jeux de balises additionnelles détaillées pour l’encodage des
+noms, dates ou adresses. Ces jeux de balises sont décrits dans la section 6.5 Noms,
+numéros, dates, abréviations et adresses <ptr target="#CONA"/> et au chapitre 20 Noms
+et dates <ptr target="#ND"/>.
+</p>
+<p>Exemples :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<publicationStmt>
+     <publisher>Oxford University Press</publisher>
+     <pubPlace>Oxford</pubPlace> 
+     <date>1989</date>
+     <idno type="ISBN">0-19-254705-4</idno>
+     <availability><p>Copyright 1989, Oxford University Press
+     </p>
+     </availability>
+     </publicationStmt>
+     </egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<publicationStmt>
+    <authority>James D. Benson</authority>
+    <pubPlace>London</pubPlace>
+    <date>1984</date>
+    </publicationStmt>
+    </egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<publicationStmt>
+  <publisher>Sigma Press</publisher>
+  <address>
+    <addrLine>21 High Street,</addrLine> 
+    <addrLine>Wilmslow,</addrLine>  
+    <addrLine>Cheshire M24 3DF</addrLine> 
+  </address>
+  <date>1991</date>
+  <distributor>Oxford Text Archive</distributor>
+  <idno type="ota">1256</idno>
+  <availability>
+    <p>Disponible avec le consentement préalable du déposant uniquement à des fins de
+    recherche et d’enseignement.</p>
+  </availability>
+</publicationStmt>
+</egXML>
+<!--
+** I removed the second <date> element (1994) from the previous
+** example as it made no sense and wasn't in P3:1999.
+** Syd, 2001-12-23.
+-->
+</p>
+<p>La mention de publication et ses composants ont pour définition formelle :
+<specGrp xml:id="D2224" n="Mention de publication = The publication statement">
+&publicationStmt;
+&distributor;
+&authority;
+&idno;
+&availability;
+</specGrp>
+</p>
+</div3>
+<div3  xml:id="HD26">
+<head>Mention de collection</head>
+<!-- 5.2.5 -->
+<p>L’élément Mention de collection <gi>seriesStmt</gi> est le cinquième composant de
+l’élément Description bibliographique du fichier <gi>fileDesc</gi>. Il est facultatif.
+<specList>
+<specDesc key="seriesStmt"/>
+</specList>
+</p>
+<p>En termes de bibliographie, une <term>collection</term> peut être définie selon l’une
+ou l’autre des acceptions suivantes :
+<list type="bullets">
+<item>ensemble de documents distincts portant chacun son titre propre, reliés entre
+eux par un titre collectif s’appliquant à l’ensemble. Chaque document distinct peut être
+numéroté ou non.</item>
+<item>deux volumes au moins présentant les mêmes caractéristiques et publiés
+successivement, pouvant contenir essais, conférences, articles, ou autres...</item>
+<item>suite de volumes portant une numérotation distincte, à l’intérieur d’une collection
+ou d’une publication en série.</item></list>
+L’élément <gi>seriesStmt</gi> peut contenir une description en prose suivie ou un ou
+plusieurs des éléments plus spécifiques suivants :
+<specList>
+<specDesc key="title"/>
+<specDesc key="idno"/>
+<specDesc key="respStmt"/>
+<specDesc key="resp"/>
+<specDesc key="name"/>
+</specList>
+</p>
+<p>L’élément <gi>idno</gi> peut servir à indiquer tout numéro d’identification lié au
+document : il peut s’agir de numéros normalisés tels qu’un ISSN ou de numéros propres
+aux livraisons (dans ce dernier cas, il est recommandé d’utiliser des chiffres arabes
+séparés par une ponctuation : <val>6.19.33</val> par exemple, plutôt que : <val>VI/xix:33
+</val>). Son attribut <att>type</att> sert ensuite à caractériser le numéro, par exemple la
+valeur <val>ISSN</val> pour un ISSN.
+</p>
+<p>Exemples:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<seriesStmt>
+    <title level="s">Textes électroniques pour l’étude de la littérature indienne</title>
+    <respStmt>
+		 <resp>éd. par</resp>
+		 <name>Jan Gonda</name>
+	</respStmt>
+    <idno type="vol">1.2</idno>
+    <idno type="ISSN">0345-6789</idno>
+</seriesStmt>
+</egXML>
+La mention de collection a comme définition formelle :
+<!-- removed file attrib since it was confusing dtdGen LB, 20 may 01 -->
+<specGrp xml:id="D2225" n="Mention de collection = The series statement">
+&seriesStmt;
+</specGrp>
+Ses composants sont tous définis ailleurs.
+</p>
+</div3>
+<div3  xml:id="HD27">
+<head>Mention de notes</head>
+<!-- 5.2.6 -->
+<p>L’élément Mention de notes <gi>notesStmt</gi> est le sixième composant de
+l’élément Description bibliographique du fichier <gi>fileDesc</gi>. Il est facultatif.
+Lorsqu’il est utilisé, il contient un ou plusieurs éléments Note <gi>note</gi>, comportant
+chacun une seule information descriptive, similaire à celles mises en <soCalled>notes
+générales</soCalled> dans les descriptions bibliographiques traditionnelles.
+<specList>
+<specDesc key="notesStmt"/>
+<specDesc key="note"/>
+</specList>
+</p>
+<p>Certaines informations qui se trouvent en zone de note dans la bibliographie
+conventionnelle se sont vu attribuer des éléments spécifiques dans ces Principes
+directeurs ; en particulier, les éléments suivants devraient être balisés comme
+ci-dessous, plutôt que comme des notes générales :
+<list type="bullets">
+<item>la nature, l’étendue, la forme artistique ou l’objet du fichier ; ainsi que le genre ou
+toute autre catégorie intellectuelle à laquelle il peut appartenir : par exemple <q>types de
+textes : éditoriaux et reportages journalistiques, science fiction et romans policiers</q>.
+Ceci doit être décrit formellement dans l’élément Description du profil <gi>profileDesc
+</gi> (section 5.4 Description du profil <ptr target="#HD4"/>).
+</item>
+<item>une description brève fournissant un état factuel et objectif du sujet sur lequel
+porte le fichier. Par exemple : <q>Transcription d’entrevues sur des sujets généraux
+avec des anglophones de 17 villes au cours du printemps et de l’été 1963</q>. Ceci doit
+également faire l’objet d’une description formelle dans l’élément <gi>profileDesc</gi>
+ (section 5.4 Description du profil <ptr target="#HD4"/>).
+ </item>
+<item>les précisions bibliographiques relatives à la ou aux sources d’un texte
+électronique : par exemple <q>Transcription faite à partir du fac-similé Norton de l’édition
+in-folio de 1623</q>. Ceci doit également faire l’objet d’une description formelle dans
+l’élément Description de la source <gi>sourceDesc</gi> (section 5.2.7 Description de la
+source <ptr target="#HD3"/>).
+</item>
+<item>des informations complémentaires relatives à la publication, la diffusion ou la
+mise à disposition du texte, y compris les entités auprès desquelles le texte peut être
+obtenu, les restrictions d’utilisation éventuelles ou les conditions formelles de sa
+disponibilité. Ceci doit être placé dans la division appropriée de l’élément Mention de
+publication <gi>publicationStmt</gi> (section 5.2.4. Mention de publication, diffusion,
+etc. <ptr target="#HD24"/>).
+</item>
+<item>les identifiants numériques publics associés au fichier : par exemple <q>étude
+ICPSR numéro 1803</q> ou <q>Oxford Text Archive texte numéro 1243</q>. Ceux-ci
+doivent être placés dans un élément Numéro d’identification <gi>idno</gi> dans la
+division pertinente de l’élément <gi>publicationStmt</gi>. Le numéro international
+normalisé des publications en série (ISSN), le numéro international normalisé des livres
+(ISBN) et autres identifiants normalisés internationalement reconnus, qui identifient un
+document de façon unique, doivent être traités de cette manière plutôt que comme des
+notes bibliographiques spécialisées.</item>
+</list>
+</p>
+<p>Néanmoins l’élément <gi>notesStmt</gi> peut être utilisé pour recenser des détails
+potentiellement utiles sur le fichier et ses caractéristiques, par exemple :
+<list type="bullets">
+<item>des dates, quand elles sont pertinentes pour le contenu ou l’histoire du fichier
+informatique : par exemple <q>manuel daté de 1983</q>, <q>Première campagne
+d’interviews ; avril 1989 ; 2e campagne : janvier 1990</q>
+</item>
+<item>les noms des personnes et collectivités intervenus dans la production technique,
+l’administration ou comme consultants lors de la création du fichier, s’ils ne sont pas
+cités dans les mentions de responsabilité du titre ou de l’édition, par exemple <q>
+Commentaire historique de Mark Cohen</q>
+</item>
+<item>disponibilité du fichier sous d’autres formats, ou information non encore
+mentionnée sur l’existence d’une documentation, par exemple : <q> Le manuel
+d’utilisation se présente sous forme de feuillets mobiles en onze sections paginées</q>
+</item>
+<item>langue de l’œuvre et du résumé, par exemple : <q>texte en anglais avec des
+résumés en français et en allemand</q>
+</item>
+<item>nom unique assigné à un périodique par le Système international des données sur
+les publications en série (ISDS)</item>
+<item>listes de publications liées, soit décrivant la source elle-même, soit portant sur la
+création ou l’utilisation du fichier électronique, par exemple : <q>Textes utilisés dans 
+<bibl><title>Computation into Criticism</title>(Oxford, 1987)</bibl></q>
+</item>
+</list>
+</p>
+<p>Chacune de ces informations doit être balisée en utilisant l’élément générique 
+<gi>note</gi> qui est décrit dans la section 6.8 Notes, annotation et indexation <ptr target
+="#CONO"/>. Les groupes de notes sont contenus dans l’élément <gi>notesStmt</gi>,
+comme dans l’exemple suivant :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<notesStmt>
+  <note>Commentaire historique de Mark Cohen.</note>
+  <note>Numérisation OCR faite à l’Université de Toronto.</note>
+</notesStmt>
+</egXML>
+La mention de notes a comme définition formelle :
+<!-- removed file attrib since it was confusing dtdGen LB, 20 may 01 -->
+<specGrp xml:id="D2226" n="Mention  de notes = The notes statement">
+&notesStmt;
+</specGrp>
+</p>
+</div3>
+<div3 xml:id="HD3">
+<head>Description de la source</head>
+<!-- 5.2.7 -->
+<p>L’élément Description de la source <gi>sourceDesc</gi> est le septième et dernier
+composant de l’élément Description bibliographique du fichier <gi>fileDesc</gi>. Cet
+élément est obligatoire, il est utilisé pour décrire les détails de la ou des sources d’où le
+fichier informatique est dérivé. Il peut s’agir d’un texte imprimé ou manuscrit, d’un autre
+fichier informatique, d’un enregistrement audio ou vidéo, ou d’une combinaison de ces
+sources. Un fichier électronique peut également ne pas avoir de source si ce qui est
+catalogué est un texte créé originellement sous forme électronique.
+<specList>
+<specDesc key="sourceDesc"/>
+</specList>
+ </p>
+<p>L’élément <gi>sourceDesc</gi> peut contenir une simple description en prose
+suivie, ou, plus utilement, une citation bibliographique spécifiant la provenance du
+texte. Dans le cas de sources écrites ou imprimées, la source doit être décrite de la même
+façon que pour toute autre citation bibliographique, en utilisant l’un des éléments
+suivants :
+<specList>
+<specDesc key="bibl"/>
+<specDesc key="biblItem"/>
+<specDesc key="biblFull"/>
+<specDesc key="biblStruct"/>
+<specDesc key="listBibl"/>
+</specList>
+Ces éléments sont décrits plus en détail dans la section 6.10 Citations et références
+bibliographiques <ptr target="#COBI"/>.
+</p>
+<p>Lorsque l’en-tête décrit une transcription d’un document oral, l’élément <gi>
+sourceDesc</gi> peut également inclure les éléments spécifiques suivants, prévus pour
+le cas où un texte électronique provient d’un texte lu plutôt que d’un texte écrit :
+<specList>
+<specDesc key="scriptStmt"/>
+<specDesc key="recordingStmt"/>
+</specList>
+La description complète de ces éléments et leur contenu sont donnés dans la section
+5.2.9 Fichiers informatiques transcrivant la parole <ptr target="#HD32"/>.
+</p>
+<p>L’élément <gi>sourceDesc</gi> peut contenir une combinaison d’un ou plus des
+éléments ci-dessus, comme dans l’exemple suivant :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<sourceDesc>
+   <bibl>The first folio of Shakespeare, préparépar Charlton Hinman (The Norton
+ Facsimile, 1968)</bibl>
+</sourceDesc>
+</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<sourceDesc>
+   <p>Sans source : créé sous forme électronique.</p>
+</sourceDesc>
+</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<sourceDesc>
+  <biblStruct xml:lang="FR">
+    <monogr>
+      <author>Eugène Sue</author>
+      <title>Martin, l'enfant trouvé</title>
+      <title type="sub">Mémoires d'un valet de chambre</title>
+      <imprint>
+        <pubPlace>Bruxelles et Leipzig</pubPlace>
+        <publisher>C. Muquardt</publisher>
+        <date value="1846">1846</date>
+      </imprint>
+    </monogr>
+    </biblStruct>
+</sourceDesc>
+</egXML>
+ </p>
+<p>La description de la source a comme définition formelle :
+<specGrp xml:id="D223" n="Description de la source = The source description">
+&model.sourceDescPart;
+&sourceDesc;
+<specGrpRef target="#D2231"/>
+</specGrp>
+ </p>
+ </div3>
+<div3 xml:id="HD31">
+<head>Fichiers informatiques dérivés d’autres fichiers informatiques</head>
+<!-- 5.2.8 -->
+<p>Si un texte électronique (appelons-le B) ne provient pas d’une source imprimée mais
+d’un autre texte électronique (appelons-le A) incluant un en-tête de fichier TEI, alors le
+texte source du fichier informatique B est un autre fichier informatique, le fichier A. Les
+quatre éléments de l’en-tête du fichier A devront être incorporés dans le nouvel en-tête
+du fichier B, comme indiqué ci-dessous :
+<list type="gloss">
+<label>fileDesc</label>
+<item>La description du fichier A doit être copiée dans l’élément Source de la
+description <gi>sourceDesc</gi> du fichier B, à l’intérieur d’un élément Citation
+bibliographique entièrement structurée <gi>biblFull</gi> (voir section 6.11 Citations et
+références bibliographiques <ptr target="#COBI"/>).
+</item>
+<label>profileDesc</label>
+<item>L’élément Description du profil <gi>profileDesc</gi> du fichier A doit être copié,
+en principe inchangé, dans celui du fichier B.</item>
+<label>encodingDesc</label>
+<item>La façon de coder le fichier A peut être ou non (plus vraisemblablement) la même
+que celle adoptée pour le fichier B. Puisque le but de la description du codage est de
+définir la relation entre le fichier et sa source, en principe seuls les changements dans la
+pratique d’encodage entre les fichiers A et B ont besoin d’être documentés dans le
+fichier B. La relation entre le fichier A et sa ou ses sources peut alors être uniquement
+retrouvée dans l’en-tête original du fichier A. En pratique, il peut être plus approprié de
+créer un nouvel élément Description de l’encodage <gi>encodingDesc</gi> pour le
+fichier B basé sur celui du fichier A.</item>
+<label>revisionDesc</label>
+<item>Le fichier B est un nouveau fichier électronique et doit donc avoir une nouvelle
+description de révisions. Cependant, s’il semble utile d’inclure des informations
+provenant de l’élément Description des révisions <gi>revisionDesc</gi> du fichier A, par
+exemple des dates de mises à jour ou des mentions de versions majeures, de telles
+informations doivent clairement signaler qu’elles se rapportent au fichier A et non au
+fichier B.</item>
+</list>
+ </p>
+ </div3>
+<div3 xml:id="HD32">
+<head>Fichiers informatiques transcrivant la parole</head>
+<!-- 5.2.9 -->
+<p>Quand un texte électronique est dérivé de la parole plutôt que de l’écrit, il sera
+généralement souhaitable de donner des informations supplémentaires relatives à
+l’enregistrement ou à l’émission radio ou télédiffusée qui en constituent la source. Des
+éléments supplémentaires sont fournis dans ce but dans l’élément de description de la
+source :
+<specList>
+<specDesc key="scriptStmt"/>
+<specDesc key="recordingStmt"/>
+<specDesc key="recording" atts="type dur"/>
+<specDesc key="equipment"/>
+<specDesc key="broadcast"/></specList>
+ </p>
+<p>Noter que l’information détaillée sur les parties prenantes ou le cadre d’un interview
+ou autre transcription de la parole, devrait être enregistrée dans la division appropriée de
+la description du profil, discutée au chapitre 23 Corpus linguistiques <ptr target="#CC"/>
+, plutôt que comme partie de la description de la source. La description de la source sert
+à recueillir les informations qui ne concernent que la source d’où provient la parole : par
+exemple, tout script lu et toutes les précisions techniques sur la façon dont
+l’enregistrement a été réalisé. Si la source était une transcription préexistante, elle
+devrait être traitée de la même manière que tout autre texte source.</p>
+<p>L’élément <gi>scriptStmt</gi> doit être utilisé lorsque l’on sait qu’un ou plusieurs
+locuteurs parle(nt) à partir d’un script préexistant. Le script lui-même devrait être
+documenté de la même manière que tout autre texte écrit en utilisant une des trois
+balises de référencement mentionnées ci-dessus. Les énoncés ou groupes d’énoncés
+peuvent être liés au script en question au moyen de l’attribut <att>decls</att>, décrit en
+23.3 Association d’informations contextuelles à un texte <ptr target="#CCAS"/>.
+<!-- was:  target='P2.3431'>. -->
+	<!-- or :  target='SP31'>. -->
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<sourceDesc>
+  <scriptStmt xml:id="CNN12">
+    <bibl>
+      <author>CNN Network News</author>
+      <title>News headlines</title>
+      <date value="1991-06-12">12 juin 1991</date>
+    </bibl>
+  </scriptStmt>
+</sourceDesc>
+</egXML>
+ </p>
+<p>L’élément <gi>recordingStmt</gi> sert à rassembler des informations relatives aux
+enregistrements à partir desquels la parole a été transcrite. Cet élément peut contenir
+soit une description en prose suivie, soit, de manière plus utile, un ou plusieurs
+éléments <gi>recording</gi> dont chacun correspond à un enregistrement particulier. La
+liaison entre les énoncés ou groupes d’énoncés et la mention d’enregistrement
+correspondante est faite au moyen de l’attribut <att>decls</att> décrit dans la section
+23.3 Association d’informations contextuelles à un texte <ptr target="#CCAS"/>.</p>
+<p>L’élément <gi>recording</gi> est utilisé pour décrire comment et par qui
+l’enregistrement a été réalisé. Cette information peut être une description en prose
+suivie dans laquelle des éléments tels que des mentions de responsabilité, des noms,
+lieux et dates doivent être identifiés par les balises appropriées. L’élément <gi>recording
+</gi> prend deux attributs supplémentaires comme indiqué plus haut : <att>type</att>
+est utilisé pour préciser le type d’enregistrement concerné et <att>dur</att> pour
+spécifier sa durée.</p>
+<p>En outre, des informations relatives au type de matériel d’enregistrement utilisé
+doivent être précisées dans l’élément <gi>equipment</gi>. Si l’on veut donner des
+détails sur un enregistrement provenant d’une émission publique, on doit utiliser
+l’élément <gi>broadcast</gi> décrit ci-dessous. Des collections spécialisées peuvent
+ajouter davantage de sous-éléments à ces composants principaux. Noter cependant
+que cet élément doit être utilisé seulement pour les informations relatives au processus
+d’enregistrement lui-même ; les informations relatives au contexte ou aux parties
+prenantes (par exemple) sont notées ailleurs : voir les sections 23.2.3 Description du
+contexte <ptr target="#CCAHSE"/> et 23.2.2 Description des parties prenantes <ptr target
+="#CCAHPA"/>.
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<recording type="video">
+  <p>Enregistrement U-matic réalisé par le personnel du département audiovisuel
+  disponible au format PAL sur support VHS ou sur cassette audio</p>
+</recording>
+</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<recording type="audio" dur="P30M">
+  <respStmt>
+     <resp>Enregistrement de terrain réalisé par</resp>
+     <name>Sound Services Ltd.</name>
+  </respStmt>
+  <equipment>
+     <p>Microphones directionnels multiples, mixage sur bande stéréo audio numérique, vitesse normale, échantillonnage de fréquence 44.1 KHz</p>
+  </equipment>
+  <date>12 janvier 1987</date>
+</recording>
+</egXML>
+</p>
+<p>Lorsqu’un enregistrement a été effectué à partir d’une émission publique, les
+précisions sur l’émission elle-même doivent être données dans un élément <gi>
+broadcast</gi> enchâssé dans l’élément <gi>recording</gi>. Une émission est très
+proche d’une publication et l’élément <gi>broadcast</gi> doit par conséquent contenir
+l’un des éléments de citation bibliographique Citation bibliographique faiblement
+structurée <gi>bibl</gi>, Citation bibliographique faiblement structurée <gi>biblStruct</gi
+> ou Citation bibliographique complètement structurée <gi>biblFull</gi>. L’agence
+responsable de l’émission est considérée comme son auteur tandis que les autres
+parties prenantes (par exemple interviewers, interwievés, directeurs, producteurs, etc.)
+doivent être précisés avec les éléments Mention de responsabilité <gi>respStmt</gi> ou 
+Rédacteur <gi>editor</gi> avec un élément Responsabilité <gi>resp</gi> approprié (voir 
+la section 6.11 Citations et références bibliographiques <ptr target="#COBI"/>).
+<!-- was:  target='P2.235'>). -->
+<!-- was:  target='COBIBL'>). -->
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<recording type="audio" dur="P10M">
+  <equipment>
+	  <p>Enregistrement numérique sur bande d’une radio FM</p>
+  </equipment>
+  <broadcast>
+    <bibl>
+      <title>Interview de politique étrangère</title>
+           <author>BBC Radio 5</author>
+      <respStmt>
+		  <resp>interviewer</resp>
+		  <name>Robin Day</name>
+		</respStmt>
+      <respStmt>
+		  <resp>interviewée</resp>
+		  <name>Margaret Thatcher</name>
+		</respStmt>
+      <series>
+		  <title>The World Tonight</title>
+		</series>
+      <note>Première diffusion le
+      <date value="1989-11-27">27 novembre 1989</date>
+      </note>
+    </bibl>
+  </broadcast>
+</recording>
+</egXML>
+</p>
+<p>Lorsqu’une émission contient plusieurs enregistrements distincts (par exemple une
+compilation), des éléments supplémentaires <gi>recording</gi> peuvent être enchâssés
+dans l’élément <gi>broadcast</gi>.
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<recording dur="P100M">
+   <broadcast>
+      <recording>
+      </recording>
+   </broadcast>
+</recording></egXML>
+<!-- need a real example here -->
+	<!-- damn straight.  -msm     -->
+ </p>
+<p>Ces éléments ont comme définition formelle :
+<specGrp xml:id="D2231" n="Script statement and recording statement">
+&scriptStmt;
+&recordingStmt;
+&recording;
+&equipment;
+&broadcast;
+</specGrp></p>
+<p>Ceci termine la description de l’élément Description bibliographique du fichier <gi>
+fileDesc</gi> et de son contenu.</p>
+</div3>
+</div2>
+<div2 type="bar" xml:id="HD5">
+<head>Description de l’encodage</head>
+<!-- 5.3 -->
+<p>L’élément Description de l’encodage <gi>encodingDesc</gi> est la deuxième
+subdivision importante de l’En-tête TEI. Il précise les méthodes et principes éditoriaux
+qui ont servi à gérer la transcription ou l’encodage du texte en cours de traitement et
+peut également contenir des jeux de définitions codées utilisées par d’autres
+composants de l’en-tête. Bien qu’il ne soit pas obligatoire, son utilisation est fortement
+recommandée.
+<specList>
+<specDesc key="encodingDesc"/>
+</specList>
+Le contenu de la description de l’encodage peut se présenter sous forme de prose
+suivie, ou peut contenir des éléments issus de la liste ci-dessous :
+<specList>
+<specDesc key="projectDesc"/>
+<specDesc key="samplingDecl"/>
+<specDesc key="editorialDecl"/>
+<specDesc key="tagsDecl"/>
+<specDesc key="refsDecl"/>
+<specDesc key="classDecl"/>
+<specDesc key="fsdDecl"/>
+<specDesc key="metDecl"/>
+<specDesc key="variantEncoding"/>
+</specList>
+Chacun de ces éléments est expliqué davantage et défini formellement dans la section
+appropriée ci-dessous. La description de l’encodage elle-même est définie comme suit :
+<specGrp xml:id="D225" n="The encoding description">
+&model.encodingPart;
+&encodingDesc;
+<specGrpRef target="#D2251"/>
+<specGrpRef target="#D2252"/>
+<specGrpRef target="#D2253"/>
+<specGrpRef target="#DHD57"/>
+<specGrpRef target="#D2254"/>
+<specGrpRef target="#D2255"/>
+<specGrpRef target="#D2256"/>
+<specGrpRef target="#D2258"/>
+<specGrpRef target="#DHDVAR"/>
+</specGrp>
+</p>
+<div3  xml:id="HD51">
+<head>Description du projet</head>
+<!-- 5.3.1 -->
+<p>L’élément Description du projet <gi>projectDesc</gi> est la première des neuf
+subdivisions facultatives de l’élément Description du codage <gi>encodingDesc</gi>. Il
+peut servir à décrire en prose suivie l’objectif visé dans l’encodage d’un fichier
+électronique, ainsi que toute autre information pertinente sur la procédure d’assemblage
+ou de collecte. Ceci est d’une importance particulière dans le cas de corpus ou de
+recueils ; cela peut également être utile pour n’importe quel texte, par exemple pour
+expliquer pourquoi on a suivi telle pratique d’encodage plutôt que telle autre.
+<specList>
+<specDesc key="projectDesc"/>
+</specList></p>
+<p>For example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<encodingDesc>
+   <projectDesc>
+      <p>Textes réunis pour être utilisés dans Claremont Shakespeare Clinic, Juin 1990.</p>
+   </projectDesc>
+</encodingDesc>
+</egXML>
+</p>
+<p>Cet élément a comme déclaration formelle :
+<specGrp xml:id="D2251" n="The project description">
+&projectDesc;
+</specGrp>
+</p>
+</div3>
+<div3  xml:id="HD52">
+<head>Déclaration d’échantillonnage</head>
+<!-- 5.3.2 -->
+<p>L’élément Déclaration d’échantillonnage <gi>samplingDecl</gi> est la deuxième des
+neuf subdivisions facultatives de l’élément Description de l’encodage <gi>encodingDesc
+</gi>. Il contient une description en prose suivie de la logique et des méthodes utilisées
+pour l’échantillonnage des textes, par exemple pour créer un corpus représentatif.
+<specList>
+<specDesc key="samplingDecl"/>
+</specList>
+Il devrait comprendre des informations telles que :
+<list type="bullets">
+<item>la taille de chaque échantillon</item>
+<item>la ou les méthode(s) de sélection des échantillons</item>
+<item>la population sous-jacente à l’échantillonnage</item>
+<item>l’objet de la procédure d’échantillonnage utilisée</item>
+</list>
+mais ne s’y limite pas.
+<!-- should attributes be used for sample size, etc? -LB -->
+<!-- if it would help automatic processing yes.  but i   -->
+<!-- doubt it.  so no.  -msm                             -->
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<samplingDecl>
+   <p>Échantillon de 2 000 mots pris à partir du début du texte.</p>
+</samplingDecl>
+</egXML>
+</p>
+<p>Il peut également comprendre une simple description de toute partie du texte source
+qui a été retenue ou exclue.
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<samplingDecl>
+  <p>Seul le texte des histoires a été transcrit. Les citations, titres courants, annonces
+  ont été omis sans marque d’omission. Les expressions mathématiques comportant
+  des symboles absents des ensembles d’entités ISOnum et ISOpub ont été omises et
+  leur emplacement marqué par un élément GAP.</p>
+</samplingDecl>
+</egXML>
+</p>
+<p>Une déclaration d’échantillonnage qui s’applique à plusieurs textes ou divisions d’un
+texte n’a pas besoin d’être répétée dans l’en-tête de chaque texte. À la place, l’attribut <att
+>decls</att> de chaque texte (ou subdivision de texte) auquel s’applique la déclaration
+d’échantillonnage peut être utilisé pour y faire référence, comme il est décrit dans 23.3
+Association d’informations contextuelles à un texte <ptr target="#CCAS"/>.	
+Cet élément a comme déclaration formelle :
+<specGrp xml:id="D2252" n="The sampling declaration">
+&samplingDecl;
+</specGrp>
+</p>
+</div3>
+<div3  xml:id="HD53">
+<head>Déclaration des pratiques éditoriales</head>
+<!-- 5.3.3 -->
+<p>L’élément Déclaration des pratiques éditoriales <gi>editorialDecl</gi> est la troisième
+des neuf subdivisions facultatives de l’élément Description d’encodage <gi>
+ncodingDesc</gi>. Il sert à donner des précisions sur les pratiques éditoriales
+appliquées au cours de l’encodage du texte.
+<specList>
+<specDesc key="editorialDecl"/>
+</specList>
+Il peut ne contenir qu’une simple description en prose suivie ou bien un ou plusieurs
+des éléments spécifiques suivants :
+<specList>
+<specDesc key="correction" atts="status method"/>
+<specDesc key="normalization" atts="source method"/>
+<specDesc key="quotation" atts="marks form"/>
+<specDesc key="hyphenation" atts="eol"/>
+<specDesc key="segmentation"/>
+<specDesc key="stdVals"/>
+<specDesc key="interpretation"/>
+</specList>
+Ces éléments font tous partie de la pratique éditoriale TEI <ident>policy</ident>. Quand
+un encodeur souhaite enregistrer une pratique éditoriale non spécifiée plus haut, il peut
+le faire en y ajoutant un nouvel élément, à l’aide des mécanismes exposés au chapitre
+29 Modification et personnalisation de la DTD TEI <ptr target="#MD"/>.
+</p>
+<p>Certains de ces éléments portent des attributs qui permettent le traitement
+automatique de certaines décisions éditoriales bien définies ; tous contiennent une
+description en prose suivie des principes éditoriaux adoptés selon les caractéristiques
+du projet concerné. Quelques exemples du type de questions auxquelles ces
+descriptions sont censées répondre sont listés ci-dessous, dans le même ordre :
+<list type="gloss">
+<label><gi>correction</gi></label>
+<item>Le texte a-t-il été corrigé pendant ou après l’acquisition des données ?
+Si corrections il y a, ont-elles été faites sans être marquées comme telles ou bien
+ont-elles été marquées par les balises décrites dans la section 6.4 Changements
+éditoriaux simples <ptr target="#COED"/> ? Quels principes ont été adoptés eu égard
+aux omissions, troncatures, corrections de passages douteux, variantes, faux départs,
+répétitions, etc. ?</item>
+<label><gi>normalization</gi></label>
+<item>Le texte a-t-il été normalisé, par exemple en régularisant des orthographes non
+normalisées, des formes dialectales, etc. ? Si oui, les interventions ont-elles été
+effectuées sans être marquées comme telles ou bien ont-elles été marquées par les
+balises décrites dans la section 6.4 Changements éditoriaux simples <ptr target="#COED
+"/> ? Quelle autorité a été utilisée pour la régularisation ? De même, quels principes ont
+présidé à la normalisation des dates ou des nombres dans la fourniture des valeurs
+normalisées pour l’attribut <att>value</att> décrit aux sections 6.5.3 Nombres et mesures
+<ptr target="#CONANU"/> et 6.5.4 Dates et heures <ptr target="#CONADA"/>et quel
+format a été utilisé pour ce faire ?</item>
+<label><gi>quotation</gi></label>
+<item>Comment les marques de citation ont-elles été traitées ?
+Les apostrophes sont-elles distinguées des guillemets et si oui, comment ?
+Les marques de citation sont-elles retenues comme appartenant au texte ou remplacées
+par du balisage ? L’attribut <att>rendition</att> a-t-il été utilisé pour rendre l’apparence
+spécifique de toute marque de citation retirée du texte ? Y a-t-il des conventions
+particulières, par exemple pour l’usage de guillemets simples ou doubles lorsque les
+citations sont emboîtées ? Le fichier est-il cohérent dans la pratique suivie ou bien
+n’a-t-il pas été contrôlé ?</item>
+<label><gi>hyphenation</gi></label>
+<item>L’encodage distingue-t-il les <soCalled>tirets conditionnels</soCalled> des 
+<soCalled> traits d’union</soCalled> ? Quels principes ont été adoptés par rapport au
+trait d’union de fin de ligne lorsque le lignage de la source n’a pas été retenu ? Les tirets
+conditionnels ont-ils été supprimés sans marquage et si oui, quel effet cela a-t-il sur le
+lignage et la pagination ?</item>
+<label><gi>segmentation</gi></label>
+<item>Comment le texte est-il segmenté ? Si les unités de segmentation <gi>s</gi> ou 
+<gi>seg</gi> ont été utilisées pour diviser le texte en vue d’une analyse, comment
+sont-elles marquées et comment est-on parvenu à cette segmentation ?</item>
+<label><gi>stdVals</gi></label>
+<item>Quelles méthodes de normalisation sont à la base des valeurs normalisées pour
+les valeurs numériques et les dates ? Si l’attribut <att>value</att> décrit à la section 6.5.4
+Dates et heures <ptr target="#CONADA"/> a été utilisé, dans quel format ses valeurs
+sont-elles présentées ?</item>
+<label><gi>interpretation</gi></label>
+<item>Une information analytique ou <soCalled>interprétative</soCalled> – c’est-à-dire
+une information ressentie comme non évidente, contentieuse ou sujette à désaccord –
+a-t-elle été fournie ? Si oui, quelle en est la genèse ? Comment a-t-elle été encodée ? Si
+une analyse de type structure de profils a été utilisée, les éléments Déclaration de
+système de profils <gi>fsdDecl</gi>  sont-ils présents ? (section 5.3.7 Déclaration de
+système de profils <ptr target="#HDFSD"/>)</item>
+</list>
+</p>
+<p>Toute information sur les principes éditoriaux appliqués qui ne relève pas des
+éléments ci-dessus devrait être enregistrée dans une liste distincte. L’expérience a
+montré qu’il faut conserver un relevé de décisions complet relatif aux principes
+éditoriaux et aux pratiques d’encodage, tant pour les futurs utilisateurs du texte que pour
+le projet à l’origine du texte. Voir l’exemple simple à la suite :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<editorialDecl>
+  <interpretation>
+    <p>La partie de l’analyse du discours appliquée dans la section 4 a été ajoutée à la
+    main et n’a pas été contrôlée.</p>
+  </interpretation>
+  <correction>
+    <p>Les erreurs de transcription ont été corrigées au moyen du correcteur
+    orthographique de WordPerfect.</p>
+  </correction>
+  <normalization source="http://www.dict.sztaki.hu/webster">
+    <p>Tous les mots ont été convertis dans l’orthographe de l’américain moderne selon
+    la 9e édition du Websters Collegiate dictionary.</p>
+  </normalization>
+  <quotation marks="all" form="std">
+    <p>Toutes les marques ouvrantes de citation sont représentées par référence à
+    l’entité ODQ ; toutes les marques fermantes de citation sont représentées par
+    référence à l’entité CDQ.</p>
+  </quotation>
+</editorialDecl>
+</egXML>
+</p>
+<p>Ces éléments ont comme définition formelle :
+<specGrp xml:id="D2253" n="The editorial practices declaration">
+&model.editorialDeclPart;
+&editorialDecl;
+&correction;
+&normalization;
+&quotation;
+&hyphenation;
+&segmentation;
+&stdVals;
+&interpretation;
+</specGrp>
+Une déclaration des pratiques éditoriales qui s’applique à plusieurs textes ou divisions
+ d’un texte n’a pas besoin d’être répétée dans l’en-tête de chaque texte. À la place,
+ l’attribut <att>decls</att> de chaque texte (ou subdivision de texte) auquel elle
+ s’applique peut être utilisé pour y faire référence, comme il est décrit dans 23.3
+ Association d’informations contextuelles à un texte <ptr target="#CCAS"/>.
+ </p>
+ </div3>
+<div3  xml:id="HD57">
+<head>Déclaration de balisage</head>
+<!-- 5.3.4 -->
+<p>L’élément Déclaration de balisage <gi>tagsDecl</gi> est la quatrième des neuf
+subdivisions facultatives de l’élément Déclaration de l’encodage <gi>encodingDesc</gi>.
+Il est utilisé pour enregistrer les informations suivantes relatives au balisage utilisé dans
+un texte particulier :
+<list type="simple">
+<item>l'espace de nom auquel appartiennent les éléments qui apparaissent dans le texte transcrit.</item> 
+<item>la fréquence d’éléments particuliers apparaissant dans le texte de sorte que le
+récepteur puisse vérifier la validité d’un texte à l’occasion d’un échange</item>
+<item>tout commentaire relatif à l’usage d’éléments particuliers non précisés par ailleurs
+dans l’en-tête</item>
+<item>une définition de la restitution par défaut appliquée à toutes les instances d’un
+élément si elle n’a pas été autrement spécifiée par l’attribut global <att>rend</att></item>
+</list>
+</p>
+<p>Ces informations sont apportées par les éléments suivants :
+<specList>
+<specDesc key="rendition"/>
+<specDesc key="namespace"/> 
+   <specDesc key="tagUsage" /> 
+</specList>
+</p>
+<p>L’élément <gi>tagsDecl</gi> est constitué d’une séquence facultative d’éléments <gi>
+rendition</gi> dont chacun doit comporter un identifiant unique et obligatoire), suivie d'au moins un élément <gi>namespace</gi> contenant une série d'éléments <gi>tagUsage</gi>, un pour chaque élément distinct présent dans l’élément Texte <gi>text</gi> le plus à l’extérieur d’un document TEI, il y a un élément <gi>tagUsage</gi>.
+</p>
+<p>L’élément <gi>rendition</gi>  défini dans cette version des Principes directeurs de la
+TEI n’est qu’une proposition préliminaire en vue de fournir dans des versions
+ultérieures un outil pour des spécifications plus détaillées de restitution par défaut.</p>
+<p>Cette proposition autorise l’encodeur à saisir une description informelle de
+restitution, ou style, sous forme de prose suivie libre uniquement. Il est compris que la
+restitution s’applique, par défaut, à toutes les occurrences d’un élément qui nomme son
+identifiant comme étant la valeur de l’attribut <att>render</att> de l’élément <gi>tagUsage
+</gi> en question. Dans le cas d’occurrences d’un élément auxquelles la restitution par
+défaut ne s’applique pas, l’encodeur devrait en donner une description précise et
+explicite en utilisant l’attribut global <att>rend</att> pour les éléments en question.</p>
+<p>L’exemple suivant montre comment un encodeur peut préciser que les éléments
+Paragraphe <gi>p</gi> doivent être restitués par défaut en utilisant un ensemble de
+spécifications identifiées par <val>style1</val> tandis que les éléments Mise en valeur <gi
+>hi</gi> doivent utiliser un ensemble différent de spécifications identifiées par <val>
+style2</val> :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<tagsDecl>
+   <rendition xml:id="style1">   
+      ... description d’une restitution par défaut…
+   </rendition>
+   <rendition xml:id="style2">   
+      ... description d’une autre restitution par défaut…
+   </rendition>
+   <namespace name="http://www.tei-c.org/ns/1.0">
+   <tagUsage gi="p" render="#style1"> ... </tagUsage>
+   <tagUsage gi="hi" render="#style2"> ... </tagUsage>
+   </namespace>
+</tagsDecl>
+</egXML>
+</p>
+<p>Aucune proposition détaillée n’a pour le moment été faite sur le contenu de l’élément
+Restitution <gi>rendition</gi>. Des versions antérieures de ces Principes directeurs
+suggéraient que des spécifications dérivées de, ou compatibles avec les propriétés
+normalisées et intégrées dans l’ISO/IEC 10179 Document style and semantic
+specifications language pourraient être utiles. D’autres possibilités sont le langage CSS
+(Cascading stylesheet language <ptr target="http://www.w3.org/TR/REC-CSS1"/>), ou la
+partie du langage XSL du W3C (Extensible stylesheet language <ptr target="
+http://www.w3.org/TR/xsl"/>).</p>
+<p>Il est inutile que l’élément <gi>rendition</gi> soit précisé par un élément Déclaration
+de balisage <gi>tagsDecl</gi>. Toutefois, il doit contenir au moins une occurrence de
+l’élément Espace de nom <gi>namespace</gi>, qui doit contenir une et une seule occurrence de la balise <gi>tagUsage</gi> pour chaque élément distinct marqué à
+l’intérieur de l’élément Texte <gi>text</gi>, quel que soit le niveau de ce dernier dans
+l’arborescence<note place="foot">Pour un corpus TEI (23 Corpus linguistiques <ptr
+target="#CC"/>), un élément <gi>tagsDecl</gi> dans l’en-tête d’un corpus décrira l’usage
+des balises pour l’ensemble du corpus, alors que dans l’en-tête d’un texte isolé, il décrira
+l’usage des balises pour le texte concerné.</note>. L’élément <gi>tagUsage</gi> est
+utilisé pour fournir le nombre d’occurrences d’un élément à l’intérieur d’un texte. Ce
+nombre est donné par la valeur de son attribut <att>occurs</att>. Il peut également être
+utilisé pour contenir toute information additionnelle sur l’usage, formulée en prose suivie
+libre à l’intérieur de ce même élément.</p>
+<p>Par exemple :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<tagUsage gi="hi" occurs="28">
+    Utilisé seulement pour marquer les mots anglais en italiques dans le texte de la copie.
+</tagUsage>
+</egXML>
+Cela signifie que l’élément <gi>hi</gi> apparaît 28 fois au total dans l’élément <gi>text</gi>
+en question et que l’encodeur l’a utilisé seulement pour marquer les locutions anglaises
+en italiques.</p>
+<p>L’attribut <att>withld</att> peut être utilisé de manière facultative pour préciser
+combien d’occurrences de l’élément en question portent une valeur pour l’attribut
+<att>xml:id</att>, comme dans l’exemple suivant :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<tagUsage gi="pb" occurs="321" withId="321">
+Marque les sauts de page dans l’édition de York (1734) seulement.
+</tagUsage>
+</egXML>
+Cela signifie que l’élément Saut de page <gi>pb</gi> apparaît 321 fois et que dans
+chacune de ces occurrences un identifiant est fourni.</p>
+<p>Le contenu de l’élément <gi>tagUsage</gi> ne peut pas être traité automatiquement.
+Par conséquent, il ne doit pas être utilisé pour contenir une information déjà fournie par
+d’autres composantes de l’en-tête. La présence d’un élément <gi>tagsDecl</gi> n’est pas
+requise dans un document conforme à la TEI, mais lorsque cet élément est présent, il
+doit contenir des éléments <gi>tagUsage</gi> pour chaque élément distinct marqué dans
+le texte associé ; les comptages, précisés par leurs attributs <att>occurs</att>, doivent
+correspondre au nombre de ces éléments présents dans le document, comme identifiés
+par des parseurs.
+<specGrp xml:id="DHD57" n="Tag usage and rendition declarations">
+&tagsDecl;
+&tagUsage;
+&namespace;
+&rendition;
+</specGrp>
+</p>
+</div3>
+<div3  xml:id="HD54">
+<head>Déclaration du système de références</head>
+<!-- 5.3.5 -->
+<p>L’élément Déclaration du système de références <gi>refsDecl</gi> est la cinquième
+des neuf subdivisions facultatives de l’élément Description de l’encodage <gi>
+encodingDesc</gi>. Il est utilisé pour définir la manière dont fonctionne un schéma
+standardisé de référencement du texte à l’intérieur de l’encodage ; il se présente comme
+une série de paragraphes en prose suivie ou utilise les éléments spécifiques suivants :
+<specList>
+<specDesc key="refsDecl" atts="doctype"/>
+<specDesc key="cRefPattern"/>
+<specDesc key="state"/>
+</specList>
+Notons que tous les schémas de référencement ne sont pas également et facilement
+tolérés par des systèmes logiciels courants. Un choix devra être fait entre la demande de
+conformité de l’encodeur et l’équivalence en efficacité d’une application logicielle
+spécifique, dans ce contexte comme dans beaucoup d’autres. Pour une discussion plus
+détaillée des systèmes de référencement fournis par ces Principes directeurs, voir la
+section 6.10 Systèmes de références <ptr target="#CORS"/>.
+</p>
+<p>Un schéma de référencement peut être décrit de trois manières différentes, en
+utilisant un des éléments suivants :
+<list type="bullets">
+<item>sous la forme d’un texte en prose suivie</item>
+<item>sous la forme de paires associées d’expressions régulières et d’expressions
+Xpath</item>
+<item>sous la forme d’une concaténation de bornes organisées en séquences
+<term>milestone</term>
+</item>
+</list>
+Chaque méthode est décrite plus en détail en dessous. Une seule méthode peut être
+utilisée dans un élément <gi>refsDecl</gi> unique.</p>
+<p>Plus d’un élément <gi>refsDecl</gi> peut être inclus dans l’en-tête si plus d’un
+schéma de référence canonique est utilisé dans le même document, mais les
+propositions actuelles ne mentionnent pas les illogismes mutuels. Une déclaration de
+référence ne peut que décrire le système de référencement applicable à un type de
+document unique ; cependant, si plusieurs types de document sont utilisés en simultané
+(comme cela est décrit dans la section 6.10 Systèmes de références <ptr target="#CORS"
+/>), un élément <gi>refsDecl</gi> doit être fourni pour chacun ; l’attribut <att>doctype</att
+> doit être utilisé pour spécifier le type de document auquel la déclaration est liée.</p>
+<div4 type="Section" xml:id="HD54P">
+<head>Méthode de la prose suivie</head>
+<!-- 5.3.5.1 -->
+<p>Le schéma de référencement peut être précisé dans l’élément Déclaration du
+système de références <gi>refsDecl</gi> par de la prose suivie. Une telle description
+indiquera quels éléments sont porteurs d’une information identifiante, et si cette
+information est représentée par une valeur d’attribut ou comme un contenu. Toutes les
+règles spécifiques permettant de savoir si l’information doit être interprétée au moment
+de la lecture ou de la production d’une référence devront également être précisées à ce
+niveau. Une description en prose suivie ne peut pas être traitée automatiquement, et
+cette méthode de spécification de la structure d’un système de référence canonique est
+à déconseiller pour le traitement automatique.</p>
+<p>Par exemple :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<refsDecl>
+ <p>L’attribut <att>n</att> de chaque texte de ce corpus porte un code d’identification
+ unique pour l’ensemble du texte. Le titre du texte est pris comme le contenu de
+ l’élément du premier <gi>en-tête</gi> dans chaque texte. L’attribut <att>n</att> de
+ chaque <gi>div1</gi> et <gi>div2></gi> contient la référence canonique de chaque
+ subdivision, sous la forme ‘XX.yyy’, où XX est le numéro du livre en chiffres romains, et
+ yyy le numéro de section en chiffres arabes. Les coupures de ligne sont indiquées par
+ des éléments vides <gi>lb</gi>, chacun incluant le numéro réel de ligne dans l’édition
+ de Casaubon comme la valeur de son attribut <att>n</att>.</p>
+  <p>Le numéro réel de ligne et l’identifiant unique du texte désignent chaque ligne. Une
+  référence canonique peut être faite par la concaténation des valeurs de <att>n</att> à
+  partir de <gi>text</gi>, <gi>div1</gi> ou <gi>dv2</gi> et par le calcul du numéro de ligne
+  dans chaque division.</p>
+</refsDecl>
+</egXML>
+</p>
+</div4>
+<div4 type="Section" xml:id="HD54S">
+<head>Méthode rechercher-remplacer</head>
+<!-- 5.3.5.2 -->
+<p>Cette méthode exige souvent un investissement considérable en amont, mais
+permet un adressage extrêmement souple. Pour plus de détails, voir la section 14.2.5
+Références canoniques <ptr target="#SACR"/>.
+<?tei winita This section must be completely rewritten based on what is now #SACR. ?>
+<specList>
+  <specDesc key="cRefPattern"/>
+</specList>
+</p>
+</div4>
+<div4 type="Section" xml:id="HD54M">
+<head>Méthode du bornage</head>
+<!-- 5.3.5.3 -->
+<p>Cette méthode est justifiée lorsqu’on dispose uniquement de <soCalled>balises de
+bornage</soCalled> (voir section 6.10.3 Balises de bornage <ptr target="#CORS5"/>)
+pour fournir l’information nécessaire au référencement. Elle ne donne pas toutes les
+possibilités de simulation apportées par la méthode rechercher-remplacer discutée dans
+la section précédente mais, dans certains cas, son application simplifie l’annotation.</p>
+<p>Une référence basée sur les balises de bornage concatène les valeurs précisées par
+une ou plusieurs balises. Étant donné que chaque balise cible le point de changement
+d’une valeur, cette méthode peut être considérée comme une spécification de l’<term>
+état d’une variable</term>. Une déclaration de référence qui utilise cette méthode précise
+les composants individuels de la référence canonique comme une séquence d’éléments
+État d’une variable <gi>state</gi> :
+<specList>
+<specDesc key="state" atts="ed unit delim length"/>
+</specList>
+</p>
+<p>Par exemple, la référence <q>Matthieu 12:34</q> pourrait être pensée comme
+représentant l’état de trois variables : la variable <q>livre</q>  est dans l’état <q>Matthieu
+</q> ; la variable <ident type="var">chapitre</ident> est dans l’état <q>12</q>, et la
+variable <ident type="var">verset</ident> est dans l’état <q>34</q>. Si le balisage de
+bornage a été utilisé, il y aura une balise pour cibler dans le texte le point de
+changement d’état de chacune des <soCalled>variables ci-dessus</soCalled><note
+place="foot">En ce qui concerne la balise de bornage elle-même, ce qui est qualifé de
+<soCalled>variables</soCalled> est identifié par une combinaison d’attributs <att>ed</att
+> et <att>unit</att>.</note>. Ainsi, pour trouver <q>Matthieu 12:34</q>, une application
+doit balayer le texte de gauche à droite, surveiller les changements d’état de chacune de
+ces trois variables comme il est dit précédemment. Quand les trois variables sont
+simultanément dans l’état requis, le point désiré sera atteint. Il peut bien évidemment y
+avoir plusieurs points de cette nature.</p>
+<p>Les attributs <att>delim</att> et <att>length</att> sont utilisés avec cette méthode
+pour préciser les composants d’une référence canonique de même qu’avec la méthode
+rechercher-remplacer décrite dans la section précédente. Les autres attributs sont
+utilisés pour déterminer quelles instances des balises Borne <gi>milestone</gi> du texte
+doivent être contrôlées pour les changements d’état. Un changement d’état est signalé
+chaque fois qu’une nouvelle balise <gi>milestone</gi> est trouvée avec des attributs <att
+>unit</att> et facultativement <att>ed</att>, identiques à ceux de l’élément <gi>state</gi>
+en question. La valeur du nouvel état peut être donnée explicitement par l’attribut <att>n
+</att> dans l’élément <gi>milestone</gi>, ou elle peut être implicite si l’attribut <att>n</att>
+n’est pas précisé.</p>
+<p>Par exemple, pour des références canoniques de la forme <mentioned>xx.yyy</mentioned> où <mentioned>xx</mentioned> représente le numéro de page de la
+première édition, et <mentioned>yyy</mentioned> le numéro de ligne dans cette page,
+une déclaration de système de références comme dans l’exemple suivant conviendrait :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+	<refsDecl>
+		<state ed="première" unit="page" length="2" delim="."/>
+		<state ed="première" unit="ligne" length="3"/>
+	</refsDecl>
+ </egXML>
+Cela implique que les balises de bornage suivantes
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+	<milestone n="II" ed="première" unit="page"/>
+	<milestone ed="première" unit="ligne"/>
+</egXML>
+seront réparties dans le texte pour cibler les points de changement des numéros de
+page et de ligne. Notons qu’aucune valeur n’a été spécifiée pour l’attribut <att>n</att> de
+la deuxième balise de bornage citée ci-dessus ; ceci implique que sa valeur à chaque
+changement d’état est régulièrement augmentée. Pour plus de détails sur l’usage des
+balises de bornage, voir la section 6.10.3 Balises de bornage <ptr target="#CORS5"/>.
+<!-- was:  target='P2.232ms'> -->
+	<!-- was:  target='CORSYS5' > -->
+	<!-- following algorithm should also be moved to CREF -->
+</p>
+<p>Le schéma de référencement par bornage, bien que conceptuellement simple, n’est
+pas supporté par un SGML générique ou un parseur XML. Son usage suppose un gros
+travail de vérification et de précision de la part de l’encodeur.</p>
+<p>Les éléments traités dans cette section ont la définition formelle suivante :
+ <specGrp xml:id="D2254" n="The reference scheme declaration">
+&refsDecl;
+&cRefPattern;
+&state;
+</specGrp>
+</p>
+<p>Une déclaration de système de référence qui s’applique à plus d’un texte ou division
+d’un texte n’a pas besoin d’être répétée dans l’en-tête de chacun des textes. À sa place,
+l’attribut <att>decls</att> de chaque texte (ou subdivision du texte) auquel la déclaration
+s’applique peut être utilisé pour lui attribuer une référence croisée, comme décrit dans la
+section 23.3 Association d’informations contextuelles à un texte <ptr target="#CCAS"/>.
+</p>
+</div4>
+</div3>
+<div3  xml:id="HD55">
+<head>Déclaration de classification</head>
+<!-- 5.3.6 -->
+<p>L’élément Déclaration de classification <gi>classDecl</gi> est la sixième des neuf
+subdivisions facultatives de l’élément Description de l’encodage <gi>encodingDesc</gi>.
+Il regroupe les définitions pour, ou les sources de tous les systèmes de classifications
+descriptifs employés par d’autres parties de l’en-tête. Chacun de ces systèmes est codé
+au moyen de l’élément Taxinomie <gi>taxonomy</gi> qui peut contenir soit une simple
+citation bibliographique, soit la définition de la typologie descriptive utilisée ; les
+éléments utilisés pour définir un système de classification descriptif sont les suivants :
+<specList>
+<specDesc key="classDecl"/>
+<specDesc key="taxonomy"/>
+<specDesc key="category"/>
+<specDesc key="catDesc"/>
+</specList>
+L’élément <gi>taxonomy</gi> a deux fonctions, légèrement différentes mais liées.
+Lorsqu’il s’agit de bien identifier et documenter les systèmes de classifications publics,
+tels que la Classification décimale de Dewey ou autres thésaurus publiés, cet élément
+contient une simple référence bibliographique renvoyant à l’endroit où peut être trouvée
+la description complète d’une taxinomie particulière.
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<taxonomy id="ddc12">
+	<bibl>
+		 <title> Classification décimale de Dewey</title>
+		 <edition>12e édition, abrégée</edition>
+	</bibl>
+</taxonomy>
+</egXML>
+Dans le cas où ce système de classification est moins facilement accessible, l’élément 
+<gi>taxonomy</gi> peut contenir aussi bien la description de la taxinomie elle même
+qu’une référence bibliographique facultative. La description consiste en un certain
+nombre d’éléments <gi>category</gi>, chacun définissant une seule catégorie à
+l’intérieur d’une typologie donnée. La catégorie est définie par le contenu de l’élément
+fils <gi>catDesc</gi> qui doit contenir soit une locution qui décrit la catégorie en texte
+libre, soit un élément <gi>textDesc</gi> qui la définit en termes de paramètres
+conceptuels vus au paragraphe 23.2.1 Description du texte <ptr target="#CCAHTD"/>. Si
+la catégorie est subdivisée, chaque subdivision est représentée par un élément fils <gi>
+category</gi> de même structure. La profondeur d’imbrication des catégories reflète la
+structure hiérarchique de la taxinomie. À chaque élément <gi>category</gi> est associé
+un attribut unique <att>xml:id</att>, utilisé comme cible par l’élément Référence de
+catégorie <gi>catRef</gi> s’y référant.
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<taxonomy xml:id="b">
+  <bibl>Brown Corpus</bibl>
+  <category xml:id="b.a">
+    <catDesc>Press Reportage</catDesc>
+    <category xml:id="b.a1">
+    <catDesc>Daily</catDesc></category>
+    <category xml:id="b.a2">
+    <catDesc>Sunday</catDesc></category>
+    <category xml:id="b.a3">
+    <catDesc>National</catDesc></category>
+    <category xml:id="b.a4">
+    <catDesc>Provincial</catDesc></category>
+    <category xml:id="b.a5">
+    <catDesc>Political</catDesc></category>
+    <category xml:id="b.a6">
+    <catDesc>Sports</catDesc></category>
+  </category>
+  <category xml:id="b.d">
+  <catDesc>Religion</catDesc>
+    <category xml:id="b.d1">
+    <catDesc>Books</catDesc></category>
+    <category xml:id="b.d2">
+    <catDesc>Periodicals and tracts</catDesc></category>
+  </category>
+</taxonomy>
+</egXML>
+</p>
+<p>Le lien entre un texte particulier et une catégorie à l’intérieur d’une telle taxinomie est
+réalisé au moyen de l’élément <gi>catRef</gi> incorporé dans l’élément Classification du
+texte <gi>textClass</gi>, (voir la section 5.4.3 Classification du texte <ptr target="#HD43"
+/>). Lorsque la taxinomie admet une classification à facettes, chacune des catégories
+sera référencée par un élément <gi>catRef</gi> : voir l’exemple ci-dessous où il permet
+d’associer un texte aux sous-catégories <q>Daily</q>, <q>National</q>
+et <q>Political</q>, dans la catégorie <q>Press Reportage</q> définie ci-dessus.
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<catRef target="#b.a1 #b.a3 #b.a5"/>
+</egXML>
+</p>
+<p>Les éléments présentés dans cette section ont pour définition formelle :
+<specGrp xml:id="D2255" n="The classification declaration">
+&classDecl;
+&taxonomy;
+&category;
+&catDesc;
+</specGrp>
+</p>
+</div3>
+<div3  xml:id="HDFSD">
+<head>Déclaration de système de profils</head>
+<!-- 5.3.7 -->
+<p>L’élément Déclaration de système de profils <gi>fsdDecl</gi> est la septième des
+neuf subdivisions facultatives de l’élément Déclaration d’encodage <gi>encodingDesc</gi>. Il est utilisé pour associer une <term>déclaration de système de profils</term>
+(comme définie dans le chapitre 26 Déclaration de système de profils <ptr target="#FD"/>)
+à toutes <term>structures de profils</term> analytiques présentes dans le texte décrit
+par cet en-tête,  comme définies dans le chapitre 16 Structures de profils <ptr target="#FS
+"/>.
+</p>
+<p>Il a comme description et attributs :
+<specList>
+<specDesc key="fsdDecl" />
+</specList>
+Noter qu’il faut spécifier un élément <gi>fsdDecl</gi>  pour chaque type distinct de
+structure de profils utilisé dans le balisage. L’élément URL <att>url</att> fournit un lien
+vers l’entité contenant une déclaration de système de profils dans laquelle cette
+structure est définie (voir le chapitre 26 Déclaration de système de profils  <ptr target="
+#FD"/>).
+). <!--
+The external entity does not use the same DTD as the rest of the
+document; it is recommended therefore to declare it as an unparsed
+external entity using a foreign notation. The following document type subset for
+the document shows how this may be achieved in either XML or SGML.
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI PUBLIC 
+"-//TEI P5//DTD Main Document Type//EN" "tei2.dtd" [-->
+ <!-- Declare the fsd notation itself -->
+<!-- <!NOTATION fsd 
+          PUBLIC "-//TEI//Feature System Declaration (1994)//EN"-->
+ <!-- Declare the external entity containing the FSD -->
+<!--  <!ENTITY myFeatures  SYSTEM 'myfeat.fsd' NDATA FSD >
+]>
+<TEI-->
+<!-- ... -->
+<!-- /TEI>]]></egXML>This declaration associate the name <ident rend="noindex" 
+type="ge">myFeatures</ident>
+with an external unparsed entity located by the <code>SYSTEM</code> identifier
+<ident rend="noindex" type="file">myfeat.fsd</ident>, which uses the FSD
+notation, itself declared above and associated with an appropriate
+<code>PUBLIC</code> identifier.  <note place="foot">In an SGML context, the
+external entity might alternatively be declared using the 
+<code type="kw">SUBDOC</code> keyword to indicate that this
+entity contains SGML data which can be parsed using some other DTD than
+the current one. Since <code>SUBDOC</code> entities are not provided in XML, this
+is not recommended for general usage.</note> 
+This entity name may
+then be specified within an <gi>fsdDecl</gi> element in the header to
+inform a processor of the location of the feature system declaration
+corresponding to a given type of feature structure used within the text,
+as follows:-->
+La déclaration de système de profils est généralement  définie dans une entité externe,
+de la même manière qu’un fichier indépendant contenant un graphique est référencé par
+l’élément Graphique <gi>graphic</gi>. Par  exemple :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<teiHeader>
+   <fileDesc>  </fileDesc>
+   <encodingDesc>
+      <fsdDecl type="myA1" url="http://fsd.com/myFeatures/"/>
+      <fsdDecl type="myA2" url="http://fsd.com/myFeatures/"/>
+   </encodingDesc>
+</teiHeader>
+</egXML>
+Cet en-tête sera rattaché à un texte qui utilise  les structures de profils <val>myA1</val>
+et <val>myA2</val>. Leurs descriptions sont consultables à  l’url mentionnée ci-dessus.
+Les définitions du système de profils dans lequel les structures de profils sont précisées
+se trouvent à l'URL citée plus haut.</p>
+<p>On peut trouver des exemples détaillés d’utilisation de déclarations de systèmes de
+profils et de structures de profils dans les chapitres 16 Structure de profils <ptr target="
+#FS"/> et 26 Déclaration de système de profils <ptr target="#FD"/>.
+</p>
+<p>L’élément  <gi>fsdDecl</gi> est déclaré comme suit :
+<specGrp xml:id="D2256" n="The FSD declaration">
+&fsdDecl;
+</specGrp>
+</p>
+</div3>
+<div3  xml:id="HDMN">
+<head>Élément de déclaration métrique</head>
+<!-- 5.3.8 -->
+<p>L’élément Déclaration métrique <gi>metDecl</gi> est la huitième des neuf
+subdivisions facultatives de l’élément Description de l’encodage <gi>encodingDesc</gi>
+. Cet élément est employé pour décrire toute structure métrique employée dans le texte,
+comme exposé dans la section 8.4 Rime et analyse métrique <ptr target="#VEME"/>. Cet
+élément contient une description en prose suivie ou une suite d’éléments Symbole
+métrique <gi>metSym</gi>.
+<specList>
+<specDesc key="metDecl" atts="pattern"/>
+<specDesc key="metSym" atts="value terminal"/>
+</specList>
+</p>
+<p>Comme avec d’autres composants de l’En-tête, la notation métrique peut être
+indiquée formellement ou non. Dans une spécification formelle, chaque symbole utilisé
+dans la notation métrique doit être décrit par un élément <gi>metSym</gi>
+correspondant ; dans le cas d’une description non formelle, il suffit d’une courte
+description en prose suivie de la manière dont la notation est employée. Dans les deux
+cas, l’attribut facultatif <att>pattern</att> peut être employé pour fournir une expression
+régulière qu’un parseur peut utiliser pour valider des expressions dans la notation
+prévue. Les contraintes suivantes s’appliquent :
+<list type="simple">
+		<item>si l’attribut <att>pattern</att> est utilisé, toute notation employée qui ne s’y
+		conforme pas doit être considérée comme non valide</item>
+		<item>si un élément <gi>metSym</gi> est défini, toute notation employant des
+		symboles non définis doit être considérée comme non valide</item>
+		<item>si symbol et pattern sont tous les deux définis, alors chaque symbole
+		apparaissant explicitement dans le modèle doit être défini</item>
+		<item>des symboles qui ne sont pas prévus par le modèle peuvent être définis dans
+		un élément <gi>metDecl</gi></item>
+</list>
+</p>
+<p>Comme exemple, considérons le cas de la notation dans laquelle la proéminence 
+métrique, les frontières de pieds et de vers doivent toutes être encodées. On peut
+insérer dans cette notation à des endroits choisis arbitrairement des spécifications
+valides pour toute séquence de traits métriquement proéminents ou non,
+facultativement séparés par des frontières de pieds ou de vers. Étant donné que le
+symbole <mentioned>1</mentioned> est utilisé pour la proéminence métrique, le 
+<mentioned>0</mentioned> pour la non proéminence métrique, le symbole <mentioned>|
+</mentioned> pour la frontière de pied et le symbole <mentioned>/</mentioned> pour la
+frontière de vers, on parvient à la déclaration suivante :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<metDecl pattern="((1|0)+\|?/?)*">
+	<metSym value="1">proéminence métrique</metSym>
+	<metSym value="0">non proéminence métrique</metSym >
+	<metSym value="|">coupure de pied</metSym >
+	<metSym value="/">coupure de vers métrique</metSym >
+</metDecl>
+</egXML>
+</p>
+<p>La même notation peut aussi être exprimée de manière moins formelle :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<metDecl>
+  <p>Les syllabes métriquement proéminentes sont notées "1" et les autres syllabes "0".
+  Les frontières de pied sont notées par une barre verticale et les frontières de vers par
+  une barre oblique (slash).</p>
+  <p>Cette notation peut être appliquée à toute unité métrique, de toute taille, allant par
+  exemple d’un pied à un groupe de plusieurs vers.</p>
+</metDecl>
+</egXML>
+Noter que, dans ce cas, parce que l’attribut <att>pattern</att> n’a pas été fourni, aucun
+parseur ne peut valider les valeurs de l’attribut <att>met</att> dans le texte qui utilise
+cette notation métrique.</p>
+<p>Pour des cas plus complexes, il sera souvent plus commode de définir une notation
+par incrémentation. L’attribut <att>terminal</att> devrait être employé pour indiquer,
+pour un symbole donné, s’il peut ou non être redéfini par d’autres symboles utilisés dans
+la même notation. Par exemple, voici une notation pour encoder les mètres classiques,
+pour lesquels des symboles sont donnés pour les types les plus communs de pied.<!--
+feet? -sb 2001-11-03 --> Ces symboles sont eux-mêmes décrits dans la même notation,
+en termes de syllabes à l’origine longues et brèves :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<metDecl pattern="[DTIS3A]+">
+	<metSym n="dactyle" value="D" terminal="N">-oo</metSym>
+	<metSym n="trochée" value="T" terminal="N">-o</metSym>
+	<metSym n="iambe" value="I" terminal="N">o-</metSym>
+	<metSym n="spondée" value="S" terminal="N">--</metSym>
+	<metSym n="tribraque" value="3" terminal="N">ooo</metSym>
+	<metSym n="anapeste" value="A" terminal="N">oo-</metSym>
+	<metSym value="o">syllabe brève</metSym>
+	<metSym value="-">syllabe longue</metSym>
+</metDecl>
+</egXML>
+Noter ici l’utilisation de l’attribut global <att>n</att> qui donne un nom additionnel pour
+ les symboles décrits.</p>
+<p>Pour plus d’information sur cette notation métrique et son utilisation dans le codage
+de la poésie versifiée, voir la section 8.4 Rime et analyse métrique <ptr target="#VEME"/>.
+</p>
+<p>Les éléments discutés dans cette section sont définis comme suit :
+<specGrp xml:id="D2258" n="Metrical Notation Declaration">
+&metDecl;
+&metSym;
+</specGrp>
+</p>
+</div3>
+<div3  xml:id="HDVAR">
+<head>Méthode d’encodage des variantes</head>
+<!-- 5.3.9 -->
+<p>L’élément Méthode d’encodage des variantes <gi>variantEncoding</gi> est la
+dernière des neuf subdivisions facultatives de l’élément Description de l’encodage <gi>
+encodingDesc</gi>. Il est utilisé pour documenter la méthode d’encodage des variantes
+textuelles dans le texte (Voir section 19.2 Lier l’apparat critique au texte <ptr target="
+#TCAPLK"/>.
+<specList>
+<specDesc key="variantEncoding" atts="method location"/>
+</specList>
+</p>
+<p>Il a pour définition formelle :
+<specGrp xml:id="DHDVAR" n="Variant-Encoding Declaration">
+&variantEncoding;
+</specGrp>
+</p>
+</div3>
+</div2>
+<div2 type="bar" xml:id="HD4">
+<head>TDescription du profil</head>
+<!-- 5.4 -->
+<p>L’élément Description du profil <gi>profileDesc</gi> est la troisième subdivision
+principale de l’En-tête TEI. C’est un élément facultatif, destiné à fournir des informations
+caractérisant différents aspects descriptifs d’un texte ou d’un corpus enregistré de
+manière uniforme.
+<specList>
+<specDesc key="profileDesc"/>
+</specList>
+En principe, presque tous les composants de l’en-tête pourraient avoir une certaine
+importance pour la caractérisation d’un texte. L’auteur d’un écrit, son titre ou sa date de
+publication peuvent être considérés comme des données au moins aussi déterminantes
+que tout autre paramètre mentionné dans cette section. Le principe appliqué ici a été
+d’exclure de cette section la plupart des informations généralement contenues dans une
+description bibliographique normale, ne serait-ce que parce que ces informations ont
+déjà été incluses ailleurs dans l’en-tête TEI.
+</p>
+<p>L’élément <gi>profileDesc</gi> de base a trois composants facultatifs, représentés
+par les éléments suivants :
+<specList>
+<specDesc key="creation"/>
+<specDesc key="langUsage"/>
+<specDesc key="textClass"/>
+</specList>
+Ces éléments sont décrits de façon plus détaillée dans la suite de cette section.</p>
+<p>Trois autres éléments peuvent aussi apparaître dans l’élément <gi>profileDesc</gi>,
+lorsque le système de balises additionnelles pour l’en-tête TEI est utilisé :
+<specList>
+<specDesc key="textDesc"/>
+<specDesc key="particDesc"/>
+<specDesc key="settingDesc"/>
+</specList>
+Pour une description de ces éléments, voir la section 23.2 Informations contextuelles <ptr
+ target="#CCAH" type="div1"/>.
+</p>
+<p>Enfin, l’élément suivant peut apparaître dans l’élément <gi>profileDesc</gi>, quand
+est sélectionné le système de balises additionnel pour la transcription des sources
+primaires.
+<specList>
+<specDesc key="handList"/>
+</specList>
+Pour une description de cet élément, voir la section 18.2.1 Copistes d’un document <ptr 
+target="#PHDH"/>.
+</p>
+<p>La description de profil elle-même a comme définition formelle :
+<specGrp xml:id="D224" n="The profile description">
+&model.profileDescPart;
+&profileDesc;
+<specGrpRef target="#D224C"/>
+<specGrpRef target="#D2241"/>
+<specGrpRef target="#D2243"/>
+</specGrp></p>
+<div3  xml:id="HD4C">
+<head>Création</head>
+<!-- 5.4.1 -->
+<p>L’élément Création <gi>creation</gi> contient la description de l’origine du texte,
+c’est-à-dire ses date et lieu de composition.
+<specList>
+<specDesc key="creation"/>
+</specList>
+La date et le lieu de composition sont souvent particulièrement importants pour l’étude
+des variantes linguistiques ; puisque de telles informations ne peuvent être déduites
+avec certitude de la description bibliographique de l’exemplaire, l’élément <gi>creation</gi> peut être utilisé pour stocker cette information de façon systématique :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<creation>    
+   <date value="1992-08">Août 1992</date>
+   <rs type="city">Taos, Nouveau Mexique</rs>
+</creation>
+</egXML>
+</p>
+<p>L’élément <gi>creation</gi> a comme déclaration formelle :
+<specGrp xml:id="D224C" n="Creation">
+&creation;
+</specGrp>
+</p>
+</div3>
+<div3  xml:id="HD41">
+<head>Langue utilisée</head>
+<!-- 5.4.2 -->
+<p>L’élément Langue utilisée <gi>langUsage</gi> est utilisé à l’intérieur de l’élément
+Description du profil <gi>profileDesc</gi> pour décrire les langues, variétés de langues,
+registres de langues, dialectes, etc. représentés dans un texte. Il contient un ou
+plusieurs élément(s) Langue <gi>language</gi>, chacun d’eux fournissant des
+informations sur une seule langue, notamment la proportion du texte dans cette langue.
+À la suite des éléments <gi>language</gi>, il est possible d’ajouter également une
+description en prose suivie pour donner des renseignements supplémentaires
+pertinents. Cet élément ne doit <emph>surtout pas</emph> être utilisé pour fournir des
+indications relatives à des glyphes ou caractères non standards utilisés par cette langue
+; ces indications doivent être enregistrées dans l’élément Description de caractère <gi>
+charDesc</gi> dans la description de l’encodage (voir 25 Représentation des glyphes et
+caractères non standard <ptr target="#WD"/>). 
+<specList>
+<specDesc key="langUsage"/>
+<specDesc key="language" atts="usage"/>
+</specList>
+</p>
+<p>L’élément <gi>language</gi> peut être spécifié pour chaque langue différente
+utilisée dans le document. Quand il est utilisé, son attribut <ident>xml:id</ident> doit
+expliciter un identifiant de langue approprié (voir 4.1 Identification de la langue <ptr target
+="#CHSH"/>). Ceci est particulièrement important si des identifiants de langue
+comportant des extensions ont été utilisés comme valeur des attributs <ident>xml:lang</ident> ailleurs dans le document.</p>
+<p>Exemple :
+<!--links the document to the formal
+writing system declaration defining that language and its script; for
+that reason, its use is recommended.
+The <att>wsd</att> attribute must give the name of an entity containing a
+writing system declaration; typically, this will be an external file
+declared in the document type declaration. 
+</p>
+<p>When two sublanguages share the same language code and writing
+system declaration but are distinguished in the <gi>langUsage</gi>
+element, only one of the <gi>language</gi> elements should bear the
+<att>xml:id</att> attribute:-->
+<!-- I'm a bit hazy about the implications of that too: presumably -->
+	<!-- all will be made clear in the wsd chapter? -->
+	<!-- if not clear here, i doubt it will be clearer then. -msm -->
+	<!-- The only implications I see are 1 that nothing in the    -->
+	<!-- declarations can point at an individual sublanguage,     -->
+	<!-- only to something that has its own WSD, 2 that any       -->
+	<!-- processor which cares about identifying languages        -->
+	<!-- (wsds) in use must be aware that some LANGUAGE           -->
+	<!-- elements don't have IDs, and these must be ignored or    -->
+	<!-- 'merged' somehow with LANGUAGE elements which do have    -->
+	<!-- IDs and which use the same wsd.  -msm                    -->
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<langUsage>
+   <language ident="fr-CA" usage="60">Québecois</language>
+   <language ident="en-CA" usage="20">anglais canadien des affaires</language>
+   <language ident="en-GB" usage="20">anglais britannique</language>
+</langUsage>
+</egXML>
+ou bien, de façon moins formelle :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<langUsage>
+<p>Deux tiers du texte environ sont en québécois, le reste se partageant également entre
+l’anglais canadien des affaires et l’anglais britannique.</p>
+</langUsage>
+</egXML>
+</p>
+<p>Les éléments <gi>langUsage</gi> et <gi>language</gi> ont comme définition formelle :
+<specGrp xml:id="D2241" n="Language usage">
+&langUsage;
+&language;
+</specGrp>
+</p>
+</div3>
+<div3  xml:id="HD43">
+<head>Classification du texte</head>
+<!-- 5.4.3 -->
+<p>Le second composant de l’élément Profil de texte <gi>profileDesc</gi> de base est
+l’élément Classification du texte <gi>textClass</gi>. Cet élément est utilisé pour classer
+un texte à l’aide d’une ou plusieurs des méthodes suivantes :
+<list type="bullets">
+<item>par référence à une classification internationale reconnue comme la
+Classification décimale de Dewey, la Classification décimale Universelle, la
+classification Colon, la classification de la Bibliothèque du Congrès, ou tout autre
+système largement utilisé en bibliothéconomie</item>
+<item>en fournissant un ensemble de mots-clés, comme par exemple ceux présents
+dans les données du programme « Cataloguing in Publication » de la British Library ou
+de la Bibliothèque du Congrès</item>
+<item>en référençant toute autre taxinomie de catégories de textes reconnue dans le
+champ disciplinaire concerné, ou bien propre au document traité ; ceci peut inclure une
+typologie basée sur des ensembles de valeurs récurrentes pour les paramètres
+situationnels définis dans la section 23.2.1 Description du texte <ptr target="#CCAHTD"/>
+, ou les éléments démographiques décrits dans la section 23.2.2 Description des parties
+prenantes <ptr target="#CCAHPA"/></item>
+</list>
+Cette dernière méthode peut s’avérer particulièrement importante pour traiter des
+corpus ou des ensembles de textes existants, en permettant à la fois d’éviter le coût ou
+la gêne occasionnés par une reclassification, et de décrire les principes d’organisation
+de ces documents.</p>
+<p>Les balises suivantes sont fournies dans ce but :
+<specList>
+<specDesc key="keywords" atts="scheme"/>
+<specDesc key="classCode" atts="scheme"/>
+<specDesc key="catRef" atts="target"/>
+</specList>
+</p>
+<p>L’élément <gi>keywords</gi> caractérise de façon simple un texte donné en
+fournissant une liste de mots-clés qui décrit son thème, sa forme, sa date etc. Dans
+certains schémas classificatoires, l’ordre des mots dans la liste est signifiant, par
+ exemple, des sujets principaux aux sujets secondaires ; dans d’autres, la liste possède
+ une sous-structure organisée en propre. Aucune recommandation n’est donnée ici sur
+ la méthode à privilégier. Lorsque c’est possible, ces mots-clés devraient être issus
+ d’une source reconnue, par exemple les données du <q>Cataloguing in Publication</q>
+ de la British Library ou de la Bibliothèque du Congrès pour les livres imprimés, ou un
+ thésaurus publié adapté au champ disciplinaire.</p>
+<p>L’attribut <att>scheme</att> devrait être utilisé pour indiquer la source des mots-clés
+employés. Ceci se fait en indiquant la valeur utilisée pour l’attribut <att>xml:id</att>
+identifiant un élément Taxinomie <gi>taxonomy</gi> où l’on pourra trouver des détails
+sur la source concernée. L’élément <gi>taxonomy</gi> apparaît dans la partie
+Déclaration de classification <gi>classDecl</gi> des déclarations d’encodage dans
+l’en-tête TEI, et est décrit dans la section 5.3.6 Déclaration de classification <ptr target="
+#HD55"/>.Par exemple :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<keywords scheme="#lcsh">
+   <list>
+      <item>Gestion de bases de données</item>
+      <item>SQL (langage de programmation)</item>
+   </list>
+</keywords>
+</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<keywords scheme="#lcsh">
+  <list>
+    <item>Littérature anglaise -- Histoire et critique -- Traitement des données.</item>
+    <item>Littérature anglaise -- Histoire et critique -- Théorie, etc.</item>
+    <item>Langue anglaise -- Style -- Traitement des données.</item>
+    <item>Style, Littérature -- Traitement des données.</item>
+  </list>
+</keywords>
+</egXML>
+<!-- LC subject tracings on R Potter, ed., Literary           -->
+	<!-- Computing and Literary Criticism:  Theoretical and       -->
+	<!-- Practical Essays on Theme and Rhetoric (Philadelphia,    -->
+	<!-- U Penn, 1989), from CIP data on title overleaf.          --></p>
+<p>L’élément <gi>classCode</gi> caractérise aussi un texte donné, en fournissant un
+indice, numérique ou non, utilisé dans un schéma de classification reconnu, comme la
+Classification décimale de Dewey. L’attribut <att>scheme</att> est utilisé pour indiquer
+la source du schéma de classification, de la même façon que pour l’élément <gi>
+keywords</gi>, comme dans l’exemple suivant :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<classCode scheme="#ddc19">005.756</classCode>
+<classCode scheme="#lc">QA76.9</classCode>
+</egXML>
+<!-- subject classifications from Date, Guide to SQL Std      -->
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<classCode scheme="#ddc19">820.285</classCode>
+<classCode scheme="#lc">PR21</classCode>
+</egXML>
+<!-- subject classifications from Potter, Lit Comp & Lit Crit --></p>
+<p>L’élément <gi>catRef</gi> caractérise un texte donné en pointant vers un ou
+plusieurs éléments Catégorie <gi>category</gi>. L’élément <gi>category</gi> (décrit en
+détail dans la section 5.3.6 Déclaration de classification <ptr target="#HD55"/>) contient
+des informations sur une catégorie ou une classification particulières à l’intérieur d’une
+taxinomie donnée. Chacune de ces catégories doit avoir un identifiant unique, qui peut
+être fourni comme valeur de l’attribut <att>target</att> pour les éléments <gi>catRef</gi>
+considérés comme appartenant à la catégorie indiquée.</p>
+<p>Un texte peut bien sûr relever de plus d’une catégorie, auquel cas la valeur de
+l’attribut <att>target</att> dans l’élément <gi>catRef</gi>  comprendra plusieurs
+identifiants, comme dans l’exemple suivant :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<catRef target="#B1 #B2 #B5"/>
+</egXML>
+</p>
+<p>Lorsque plus d’une taxinomie descriptive est utilisée pour décrire les textes d’un
+corpus ou d’une collection, l’attribut <att>scheme</att> doit être fourni pour spécifier la
+taxinomie à laquelle appartiennent les catégories identifiées par l’attribut <att>target</att>
+. Par exemple :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<catRef target="#B12 #B15" scheme="brown.xml"/>
+<catRef target="#A45" scheme="suc.xml"/>
+</egXML>
+Ici, le même texte a été indexé comme relevant des catégories <q>B12</q> et <q>B15</q>
+dans le système de classification Brown, qu’on suppose disponible à <ident>brown.xml</ident>, et de la catégorie <q>A45</q> dans la classification SUC, qu’on suppose
+disponible à <ident>suc.xml</ident>.
+</p>
+<p>La distinction entre les éléments <gi>catRef</gi> et <gi>classCode</gi> est la
+suivante : dans le premier cas, les valeurs utilisées comme identifiants doivent
+<emph>obligatoirement</emph> être définies quelque part dans l’en-tête, mais pas dans
+le deuxième cas.</p>
+<p>Les éléments décrits dans cette section ont comme définition formelle :
+<specGrp xml:id="D2243" n="Text Classification">
+&textClass;
+&keywords;
+&classCode;
+&catRef;
+</specGrp>
+</p>
+</div3>
+</div2>
+<div2 type="bar" xml:id="HD6">
+<head>Description des révisions</head>
+<!-- 5.5 -->
+<p>Le dernier sous-élément de l’en-tête TEI, l’élément Description des révisions <gi>
+revisionDesc</gi>, fournit un registre détaillé des modifications dans lequel chaque
+modification apportée à un texte peut être enregistrée. Cet usage est facultatif mais très
+recommandé. Il fournit une information indispensable pour l’administration d’un grand
+nombre de fichiers qui sont mis à jour, corrigés ou modifiés, ainsi qu’une documentation
+extrêmement utile pour les fichiers échangés entre chercheurs ou entre systèmes. Sans
+registre des modifications, il est facile de confondre les différentes versions d’un fichier,
+ou d’ignorer des modifications minimes mais importantes apportées précédemment au
+fichier. Aucun changement ne doit être effectué dans un fichier conforme à la TEI sans
+qu’une entrée ne le signale dans le registre des modifications.
+<specList>
+<specDesc key="revisionDesc"/>
+<specDesc key="change"/>
+</specList>
+</p>
+<p>Le but principal de la révision des descriptions est de noter les changements du
+texte auquel un en-tête est adjoint. La pratique de la TEI recommande toutefois d'inclure
+les entrées pour les changements significatifs dans l'en-tête lui-même (autres que la
+description des révisions elle-même). Endin, on devrait signaler la date de cration de
+l'en-tête.</p>
+<p>Le registre se compose d’une liste d’entrées, une par modification. Il peut être
+encodé en utilisant soit l’élément Liste <gi>list</gi> comme le décrit la section 6.7 Listes
+<ptr target="#COLI"/>, soit une série d’éléments <gi>change</gi> à visée particulière
+dont chacun a les composants suivants :
+<specList>
+<specDesc key="date" />
+<specDesc key="respStmt"/>
+<specDesc key="item"/>
+</specList>
+L’élément <gi>date</gi> indique la date de la modification apportée.
+L’élément <gi>respStmt</gi> indique l’auteur de la modification, et à quel titre.
+L’élément <gi>item</gi> indique quelle modification a été apportée ; cela peut aller d’une
+simple phrase à une série de paragraphes.
+Si un numéro est associé à une ou plusieurs modifications (par exemple, un numéro de
+révision), on utilise l’attribut global <att>n</att> pour renseigner l’élément <gi>change</gi>
+.</p>
+<p>Il est recommandé de présenter les modifications dans l’ordre chronologique inversé,
+la plus récente en premier.</p>
+<p>Par exemple :
+<!-- is this example perhaps not a bit over long? -->
+	<!-- possibly, i just took a real one from a file -->
+	<!-- it's now a little bit shorter; i extracted this from the -->
+	<!-- WWP file elizabeth.godmed.sgml, and made some minor      -->
+	<!-- changes -sb 2001-11-03  [from 66 to 51 lines]            -->
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<revisionDesc>
+<change n="RCS:1.70">
+<date value="2001-04-11">Mercredi 11 avril 2001</date>
+    <respStmt>
+		<name key="zmizuho.zgk">Zoë Mizuho</name>
+		<resp>encodeur</resp>
+	</respStmt>
+		<item>corrections apportées (inachevé, date de début <date value="1999-03-05">
+		Mars 1999</date>.) Concernent toutes le texte, pas les balises. Validé plus haut.</item>
+    </change>
+<change n="RCS:1.62">
+	<date value="1999-08-24">Mardi 24 août 1999</date>
+    <respStmt>
+		<name key="jrussom.zxg">Jacque Russom</name>
+		<resp>encodeur</resp></respStmt>
+		<item>Suppression du marquage vuji dans les contenus de FOREIGN et BIBL ;
+		 standardisation des balises vuji.</item>
+    </change>
+<change n="RCS:1.47">
+	<date value="1999-07-05">Lundi 05 juillet 1999</date>
+    <respStmt>
+		<name key="edillon.pal">Erica Dillon</name>
+		<resp>encodeur</resp>
+	</respStmt>
+		<item>Suppression des éléments cit dans la conclusion et passage d’attributs de
+	cet élément à l’élément q. Toutefois, ce texte ne contient que des éléments q, alors que
+	l’élément quote semblerait plus approprié. À revoir.</item>
+    </change>
+<change n="RCS:1.45">
+	<date value="1999-06-30">Mercredi 30 juin 1999</date>
+    <respStmt>
+		<name key="cmah.dci">Carole Mah</name>
+		<resp>encodeur</resp>
+	</respStmt>
+		<item>Correction des attributs n= sur PB ; ils étaient mal numérotés.</item>
+    </change>
+<change n="RCS:1.43">
+	<date value="1999-06-18">Vendredi 18 juin 1999</date>
+    <respStmt>
+		<name key="pcaton.xzc">Paul Caton</name>
+		<resp>Rédacteur pour les publications électroniques</resp>
+	</respStmt>
+		<item>Dans FIGURE, déplacement de P à sa place correcte après FIGDESC. Validé
+	 selon la DTD 1.1.30b</item>
+    </change>
+<change>
+	<date value="1998-07-04">4 juillet 1998</date>
+    <respStmt>
+		<name key="kmessman.yec">Kevin Messman</name>
+		<resp>Encodeur</resp>
+	</respStmt>
+		<item>Relecture et saisie des corrections finales.</item>
+    </change>
+<change>
+	<date value="1997-06-12">12 juin 1997</date>
+    <respStmt>
+		<name key="lmayer.ins">Lauryn S. Mayer</name>
+		<resp>Encoder</resp>
+	</respStmt>
+		<item>Début d’introduction des corrections selon la version 1.1.2a de la DTD.</item>
+    </change>
+<change>
+	<date value="1997-03-13">13 mars 1997</date>
+    <respStmt>
+		<name key="lmayer.ins">Lauryn S. Mayer</name>
+		<resp>Encodeur</resp>
+	</respStmt>
+		<item>Début de la saisie sur Mac, avec le logiciel Author/Editor v. 3.1 et la version
+	1.0.14 de la DTD.</item>
+    </change> 
+</revisionDesc>
+</egXML>
+</p>
+<p>L’élément <gi>revisionDesc</gi> a comme définition formelle :
+<specGrp xml:id="D226" n="The Revision Description">
+&revisionDesc;
+&change;
+</specGrp>
+</p>
+</div2>
+<div2 type="bar" xml:id="HD7">
+<head>En-têtes minimaux et recommandés</head>
+<!-- 5.6 -->
+<p>L’en-tête TEI permet d’apporter une grande quantité d’informations sur le texte
+lui-même, ses sources, ses encodages et leurs révisions, ainsi qu’une abondante
+information descriptive : par exemple, les langues utilisées et le contexte d’élaboration 
+du texte, la fonction et l’identité des contributeurs. Cette variété et cette richesse reflètent
+la diversité des usages auxquels on envisage que les textes électroniques conformes
+aux Principes directeurs doivent s’adapter. Il n’est <emph>absolument pas</emph>
+nécessaire que tous les éléments décrits ci-dessus soient présents dans chaque en-tête
+TEI.</p>
+<p>La finesse d’encodage dans un en-tête dépend à la fois de la nature du texte et de
+l’utilisation que l’on compte en faire. À la limite, un encodeur peut prévoir que l’en-tête ne
+servira qu’à fournir une identification bibliographique du texte en adéquation avec les
+besoins locaux. À l’opposé, en voulant garantir que leurs textes puissent être utilisés par
+le maximum d’applications, les encodeurs pourront choisir que le document contienne
+des informations bibliographiques et descriptives aussi explicites que possible, de
+façon à ce qu’aucune connaissance antérieure ou annexe du texte ne soit nécessaire
+pour le traiter. Dans ce cas, l’en-tête sera très complet, se rapprochant du type de
+document fourni souvent sous forme de manuel. La plupart des textes se situeront entre
+ces deux extrêmes ; les corpus de textes en particulier auront plutôt tendance à relever
+du dernier cas. Dans la suite de cette section, le niveau d’encodage minimal sera décrit
+en premier ; il sera suivi du niveau d’encodage couramment recommandé pour
+l’information bibliographique à donner dans l’en-tête TEI.</p>
+<p>Avec le niveau d’encodage minimal requis, l’en-tête TEI d’un texte imprimé pourrait
+ressembler à l’exemple suivant :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<teiHeader>
+  <fileDesc>
+    <titleStmt>
+      <title>Thomas Paine : Common sense, transcription électronique</title>
+      <respStmt>
+        <resp>compilée par</resp>
+        <name>Jon K. Adams</name>
+      </respStmt>
+    </titleStmt>
+    <publicationStmt>
+      <distributor>Oxford Text Archive</distributor>
+    </publicationStmt>
+    <sourceDesc>
+      <bibl>The complete writings of Thomas Paine, collected and edited by Phillip S. Foner (New York, Citadel Press, 1945)</bibl>
+    </sourceDesc>
+  </fileDesc>
+</teiHeader>
+</egXML>
+</p>
+<p>Le seul élément obligatoire dans l’en-tête TEI est l’élément Description
+bibliographique du fichier <gi>fileDesc</gi>. À l’intérieur de celui-ci, les éléments
+Mention de titre <gi>titleStmt</gi>, Mention de publication <gi>publicationStmt</gi> et
+Description des sources <gi>sourceDesc</gi> sont obligatoires. Dans l’élément <gi>
+titleStmt</gi>, il faut un titre et un auteur même <mentioned>inconnu</mentioned> ; en
+outre, les mentions de responsabilité doivent être données dans l’élément Mention de
+responsabilité <gi>respStmt</gi>. Dans l’élément <gi>publicationStmt</gi>, l’éditeur, le
+distributeur ou tout autre organisme responsable du fichier doit être spécifié. Enfin,
+l’élément <gi>sourceDesc</gi> doit contenir au moins une citation bibliographique
+faiblement structurée identifiant la source du texte électronique s’il y en a une (c’est
+généralement le cas).</p>
+<p>Nous présentons maintenant le même exemple d’en-tête, augmenté d’informations
+recommandées adaptées à la plupart des besoins bibliographiques, en particulier pour
+permettre la création d’une notice bibliographique conforme aux AACR2. Nous avons
+ajouté aussi des informations sur les principes d’encodage utilisés dans cet encodage
+(fictif), sur le texte lui-même (sous forme de vedette matière de la Bibliothèque du
+Congrès) et la révision du fichier.
+<!-- Bibliographic reference to a real OTA text.              -->
+	<!-- EncodingDesc mostly from description of                  -->
+	<!-- that text, but improvised in part.                       -->
+	<!-- Revision desc is imaginary                               -->
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<teiHeader>
+   <fileDesc>
+      <titleStmt>
+         <title>Common sense, transcription électronique</title>
+         <author>Paine, Thomas (1737-1809)</author>
+         <respStmt>
+            <resp>compilée par</resp>
+            <name>Jon K. Adams</name>
+         </respStmt>
+      </titleStmt>
+      <editionStmt>
+         <edition>
+            <date>1986</date>
+         </edition>
+      </editionStmt>
+      <publicationStmt>
+         <distributor>Oxford Text Archive.</distributor>
+         <address>
+            <addrLine>Oxford University Computing Services,</addrLine>
+            <addrLine>13 Banbury Road,</addrLine>
+            <addrLine>Oxford OX2 6RB,</addrLine>
+            <addrLine>UK</addrLine>
+         </address>
+      </publicationStmt>
+      <notesStmt>
+         <note>Des notes sur le texte figurent dans un fichier séparé.</note>
+      </notesStmt>
+      <sourceDesc>
+         <biblStruct>
+            <monogr>
+               <editor>Foner, Philip S.</editor>
+               <title>The collected writings of Thomas Paine</title>
+               <imprint>
+                  <pubPlace>New York</pubPlace>
+                  <publisher>Citadel Press</publisher>
+                  <date>1945</date>
+               </imprint>
+            </monogr>
+         </biblStruct>
+      </sourceDesc>
+   </fileDesc>
+   <encodingDesc>
+      <samplingDecl>
+         <p>Les notes de l’édition Foner n’ont pas été reproduites. </p>
+         <p>Les lignes blanches et les espaces multiples, y compris les paragraphes, n’ont
+          pas été conservés. </p>
+      </samplingDecl>
+      <editorialDecl>
+         <correction status="high" method="silent">
+            <p>Les erreurs suivantes de l’édition Foner ont été corrigées :
+              <list>
+                <item>p.  13 l.  7 cotemporaries   contemporaries </item>
+                <item>p.  28 l. 26 [comma]         [period] </item>
+                <item>p.  84 l.  4 kin             kind </item>
+                <item>p.  95 l.  1 stuggle         struggle </item>
+                <item>p. 101 l.  4 certainy        certainty </item>
+                <item>p. 167 l.  6 than            that </item>
+                <item>p. 209 l. 24 publshed        published </item>
+              </list>
+            </p>
+         </correction>
+         <normalization>
+            <p>Aucune normalisation n’a été faite hors celle de Foner. </p>
+         </normalization>
+         <quotation marks="all" form="std">
+            <p>Tous les guillemets doubles sont rendus par ", tous les simples par une
+            apostrophe.</p>
+         </quotation>
+         <hyphenation eol="none">
+            <p>Les mots coupés en fin de ligne avec un trait d’union dans l’édition Foner ont
+            été reconstitués.</p>
+         </hyphenation>
+         <stdVals>
+            <p>Les dates sont données sous forme normalisée ISO : aaaa-mm-jj </p>
+         </stdVals>
+         <interpretation>
+            <p>Les noms propres composés sont balisés. </p>
+            <p>Les dates sont balisées. </p>
+            <p>Les caractères en italique sont signalés sans interprétation. </p>
+         </interpretation>
+      </editorialDecl>
+      <classDecl>
+         <taxonomy xml:id="lcsh">
+            <bibl>Library of Congress Subject Headings</bibl>
+         </taxonomy>
+         <taxonomy xml:id="lc">
+            <bibl>Classification de la Bibliothèque du Congrès</bibl>
+         </taxonomy>
+      </classDecl>
+   </encodingDesc>
+   <profileDesc>
+      <creation>
+         <date>1774</date>
+      </creation>
+      <langUsage>
+         <language ident="en" usage="100">Anglais.</language>
+      </langUsage>
+      <textClass>
+         <keywords scheme="#lcsh">
+            <list>
+               <item>Sciences politiques</item>
+               <item>États-Unis -- Politique et gouvernement -- Révolution, 1775-1783</item>
+            </list>
+         </keywords>
+         <classCode scheme="#lc">JC 177</classCode>
+      </textClass>
+   </profileDesc>
+   <revisionDesc>
+      <change>
+         <date>1996-01-22</date>
+         <respStmt>
+            <resp>éd</resp>
+            <name>CMSMcQ</name>
+         </respStmt>
+         <item>relecture d’épreuve terminée</item>
+      </change>
+      <change>
+         <date>1995-10-30</date>
+         <respStmt>
+            <resp>éd</resp>
+            <name>L.B. </name>
+         </respStmt>
+         <item>relecture d’épreuve terminée</item>
+      </change>
+      <change>
+         <date>1995-07-20</date>
+         <respStmt>
+            <resp>éd</resp>
+            <name>R.G. </name>
+         </respStmt>
+         <item>relecture d’épreuve terminée</item>
+      </change>
+      <change>
+         <date>1995-07-04</date>
+         <respStmt>
+            <resp>éd</resp>
+            <name>R.G. </name>
+         </respStmt>
+         <item>Fin de l’entrée des données</item>
+      </change>
+      <change>
+         <date>1995-01-15</date>
+         <respStmt>
+            <resp>éd</resp>
+            <name>R.G. </name>
+         </respStmt>
+         <item>Début de l’entrée des données.</item>
+      </change>
+   </revisionDesc>
+</teiHeader>
+</egXML>
+<!-- this is what Rich suggested: me, I think the  -->
+	<!-- contents of the supplementary file should be  -->
+	<!-- decanted into the encodingDesc  (LB)          -->
+	<!-- Do we agree that this really is an acceptable -->
+	<!-- minimal recommendation?                       -->
+	<!-- Not at all:  it ought to have encodingDesc,   -->
+	<!-- profileDesc, and revisionDesc too.            -->
+	<!-- Which I have now added.  -msm                 -->
+ </p>
+<p>Beaucoup d’autres exemples d’utilisation recommandée pour les éléments
+examinés dans ce chapitre sont fournis ici, dans les index de références et dans les
+supports pédagogiques associés.</p> 
+</div2>
+<div2 type="bar" xml:id="HD8">
+<head>Note pour les catalogueurs en bibliothèque</head>
+<!-- 5.7 -->
+<p>L’un des objectifs essentiels de ce chapitre est de fournir dans l’en-tête de fichier TEI
+une source d’information principale stable pour le catalogage de fichiers de données
+électroniques. L’en-tête n’est pas une notice de catalogue de bibliothèque et, par
+conséquent, ne fait pas toutes les distinctions essentielles à un travail de bibliothèque
+classique. Il inclut également beaucoup d’informations généralement exclues des
+descriptions bibliographiques classiques. Il est toutefois dans l’intention des rédacteurs
+de s’assurer que l’information nécessaire à une notice catalographique se retrouve dans
+l’en-tête TEI, et que le transfert de l’un vers l’autre soit aussi simple et direct que
+possible. Là où une correspondance n’est pas évidente, il pourrait se révéler utile de
+consulter l’un ou l’autre des travaux qui ont inspiré le développement du contenu de
+l’en-tête TEI, notamment :
+<list type="gloss">
+<label>ISBD(G) </label>
+<item>La Description bibliographique normalisée internationale (générale) est une norme
+internationale qui décrit les informations qui devraient apparaître dans la description
+d’un objet bibliographique. Il y a donc des ISBD différents pour les différents types de
+support, par exemple ISBD (M) pour les monographies, ISBD (ER) pour les ressources
+électroniques. Ces différents ISBD suivent le même schéma général que l’ISBD (G) mais
+fournissent les informations propres aux supports spécifiques qu’ils traitent.</item>
+<label>AACR2 </label>
+<item>Les Règles de catalogage anglo-américaines (2e édition) ont été publiées en 1978
+et révisées en 1988. Les AACR2 fournissent les principes de la construction des
+catalogues dans les bibliothèques multidisciplinaires. Les AACR2 sont explicitement
+fondées sur le cadre général de l’ISBD (G) et sur les autres ISBD. Elles décrivent
+comment cataloguer les documents selon les ISBD et comment construire les index et
+les références croisées entre catalogues.</item>
+<label>ANSI Z.39.29 </label>
+<item>ANSI Z.39.29 est une norme nationale américaine pour gérer les références
+bibliographiques : bibliographies, listes de références citées à la fin d’un travail
+universitaire, références dans les publications d’index et de résumés et sorties de bases
+de données bibliographiques informatisées. Toutefois, cette norme a été retirée dans
+l’attente d’une révision substantielle. La norme internationale qui couvre les mêmes
+sujets est l’ISO 690:1987. Parmi les autres normes pertinentes, on trouve les normes BS
+1629:1989, BS 5605:1978 et BS 6371:1983.</item>
+</list>
+</p>
+</div2>
+	</div1>

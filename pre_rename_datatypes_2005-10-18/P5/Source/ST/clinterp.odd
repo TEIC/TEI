@@ -1,0 +1,72 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" xml:id="CLINTERP" type="atts" ident="att.interpLike">
+<desc>defines the set of attributes common to this group of interpretative elements.</desc>
+  <attList>
+    <attDef ident="resp" usage="opt">
+      <equiv/>
+      <desc>indicates who is responsible for the interpretation.</desc>
+      <datatype>
+	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>A pointer to an element indicating the person
+      responsible for the interpretation, typically to a
+      <gi>respStmt</gi> in the <gi>teiHeader</gi>.</valDesc>
+      <remarks>
+        <p/>
+      </remarks>
+    </attDef>
+    <attDef ident="type" usage="rec">
+	<equiv/>
+	<desc>indicates what kind of phenomenon is being noted in the passage.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <valList type="open">
+        <valItem ident="image">
+          <equiv/>
+          <gloss>identifies an image in the passage.
+   </gloss>
+        </valItem>
+        <valItem ident="character">
+          <equiv/>
+          <gloss>identifies a character associated with the passage.
+   </gloss>
+        </valItem>
+        <valItem ident="theme">
+          <equiv/>
+          <gloss>identifies a theme in the passage.
+   </gloss>
+        </valItem>
+        <valItem ident="allusion">
+          <equiv/>
+          <gloss>identifies an allusion to another text.
+   </gloss>
+        </valItem>
+<!--        <valItem>
+          <ident>(discourse type)</ident>
+          <equiv/>
+          <gloss>specifies that the passage is of a particular discourse type.</gloss>
+        </valItem> -->
+      </valList>
+    </attDef>
+    <attDef ident="inst" usage="opt">
+	<equiv/>
+	<desc>points to instances of the analysis or interpretation represented
+by the current element.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointers"/></datatype>
+      <valDesc>One
+or more valid identifiers, separated by white space.</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+      <remarks>
+        <p>The current element should be an analytic one.  The element
+pointed at should be a textual one.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <listRef>
+    <ptr target="#AIATTS"/>
+  </listRef>
+</classSpec>

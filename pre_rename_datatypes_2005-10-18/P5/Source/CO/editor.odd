@@ -1,0 +1,42 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="EDITOR" usage="opt" ident="editor">
+<equiv/>
+<gloss>editor</gloss>
+<desc>secondary statement of responsibility for a
+bibliographic item, for example the name of an individual, institution
+or organization, (or of several such) acting as editor, compiler,
+translator, etc. </desc>
+  <classes>
+    <memberOf key="model.biblPart"/>
+  </classes>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+  </content>
+  <attList>
+    <attDef ident="role" usage="opt">
+	<equiv/>
+	<desc>specifies the nature of the intellectual responsibility</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <defaultVal>editor</defaultVal>
+      <valDesc>semi-open list (examples might include: translator, editor,
+        compiler, illustrator, etc.)</valDesc>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <editor>Eric Johnson</editor>
+      <editor role="illustrator">John Tenniel</editor>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">A consistent format should be adopted</p>
+    <p>Particularly where cataloguing is likely to be based on
+the content of the header, it is advisable to use generally recognized
+authority lists for the exact form of personal names. </p>
+  </remarks>
+  <listRef>
+    <ptr target="#COBICOR"/>
+  </listRef>
+</elementSpec>

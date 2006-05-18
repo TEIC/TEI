@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="TEXTCLAS" usage="opt" ident="textClass">
+  <equiv/>
+  <gloss>text classification</gloss>
+  <gloss xml:lang="zh-tw">文件分類</gloss>
+  <gloss xml:lang="fr">Classification du texte</gloss>
+  <desc>groups information which describes the nature or topic of a text
+in terms of a standard classification scheme, thesaurus, etc.</desc>
+  <desc xml:lang="zh-tw">匯集以標準分類架構、索引典等來描述文件性質或主題的資訊。</desc>
+  <desc xml:lang="fr">L’élément Classification du texte <gi>textClass</gi> regroupe des informations décrivant la nature ou le sujet d’un texte selon des termes issus d’un système de classification standardisé, d’un thésaurus, etc.</desc>
+  <classes>
+    <memberOf key="model.profileDescPart"/>
+    <memberOf key="att.declarable"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:ref name="classCode"/>
+        <rng:ref name="catRef"/>
+        <rng:ref name="keywords"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <textClass>
+        <catRef target="#TC1"/>
+        <classCode scheme="#DD12">001.9</classCode>
+        <keywords scheme="http://www.lcsh.org">
+          <list>
+            <item>End of the world</item>
+            <item>History - philosophy</item>
+          </list>
+        </keywords>
+      </textClass>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <textClass>
+        <catRef target="#TC1"/>
+        <classCode scheme="#DD12">001.9</classCode>
+        <keywords scheme="http://www.lcsh.org">
+          <list>
+            <item>Fin du monde</item>
+            <item>Histoire - philosophie</item>
+          </list>
+        </keywords>
+      </textClass>
+    </egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#HD43"/>
+  </listRef>
+</elementSpec>

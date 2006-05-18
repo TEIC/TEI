@@ -1,0 +1,74 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="transcr" xml:id="SPACE" usage="opt" ident="space">
+<equiv/>
+<gloss/>
+<desc>indicates the location of a significant space in the copy text.</desc>
+  <classes>
+    <memberOf key="model.pPart.edit"/>
+  </classes>
+  <content>
+    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+  </content>
+  <attList>
+    <attDef ident="dim" usage="rec">
+	<equiv/>
+	<desc>indicates whether the space is horizontal or vertical.</desc>
+      <valList type="closed">
+        <valItem ident="horizontal">
+          <equiv/>
+          <gloss>the space is horizontal.</gloss>
+        </valItem>
+        <valItem ident="vertical">
+          <equiv/>
+          <gloss>the space is vertical.</gloss>
+        </valItem>
+      </valList>
+      <remarks>
+        <p>For irregular shapes in two dimensions, the value for
+this attribute should reflect the more important of the two dimensions.
+In conventional left-right scripts, a space with both vertical and
+horizontal components should be classed as <mentioned>vertical</mentioned>.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="extent" usage="opt">
+	<equiv/>
+	<desc>indicates approximately how large the space is, in letters,
+minims, inches, or other appropriate unit.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <valDesc>any measured quantity, e.g. <mentioned>10 letters</mentioned> or <mentioned>4
+lines</mentioned>.</valDesc>
+      <remarks/>
+    </attDef>
+    <attDef ident="resp" usage="opt">
+	<equiv/>
+	<desc>indicates the individual responsible for identifying and measuring
+the space.</desc>
+      <datatype>
+	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>a pointer to one of the identifiers declared in the
+      document header, associated with a person asserted as
+      responsible for some aspect of the text's creation,
+      transcription, editing, or encoding</valDesc>
+      <remarks/>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">By god if wommen had writen storyes
+As <space extent='7 minims'/> han within her oratoryes</egXML>
+  </exemplum>
+  <remarks>
+    <p>This element should be used wherever it is desired to record
+an unusual space in the source text, e.g. space left for a word to be
+filled in later, for later rubrication, etc.  It is not intended to be
+used to mark normal inter-word space or the like.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#PHSP"/>
+  </listRef>
+</elementSpec>

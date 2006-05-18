@@ -1,0 +1,88 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="spoken" xml:id="WRITING" usage="rec" ident="writing">
+<equiv/>
+<gloss>Writing</gloss>
+<desc>a passage of written text revealed to participants in the course
+of a spoken text.</desc>
+  <classes>
+    <memberOf key="model.divPart.spoken"/>
+    <memberOf key="att.ascribed"/>
+  </classes>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
+  </content>
+  <attList>
+<!--    <attDef ident="who" usage="rwa">
+	<equiv/>
+	<desc>supplies an identifier for the participant who reveals or
+    creates the writing, if any.
+    Its value is the identifier of a <tag>participant</tag>
+    or <tag>participant.grp</tag> element in the TEI header.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <valDesc>Must identify a participant or participant group within the
+       TEI Header</valDesc>
+      <remarks/>
+    </attDef>
+-->
+    <attDef ident="type" usage="opt">
+	<equiv/>
+	<desc>categorizes the kind of writing in some way, for example
+      as a subtitle, noticeboard etc.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <valDesc>Open list</valDesc>
+      <remarks/>
+    </attDef>
+    <attDef ident="script" usage="opt">
+	<equiv/>
+	<desc>points to a bibliographic citation in the header giving
+      a full description of the source or script of the writing.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.code"/></datatype>
+      <valDesc>Must be a valid identifier for a
+      <!--<tag>script.decl</tag>--> bibliographic
+     element in the TEI header</valDesc>
+      <remarks/>
+    </attDef>
+    <attDef ident="gradual" usage="opt">
+	<equiv/>
+	<desc>indicates whether the writing is revealed all at once or
+        gradually.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.truthValue"/></datatype>
+      <valList type="closed">
+        <valItem ident="true">
+          <equiv/>
+          <gloss>the writing is revealed gradually.</gloss>
+        </valItem>
+        <valItem ident="false">
+          <equiv/>
+          <gloss>the writing is revealed all at once.</gloss>
+        </valItem>
+        <valItem ident="unknown">
+          <equiv/>
+          <gloss>unknown or unmarked.</gloss>
+        </valItem>
+      </valList>
+      <remarks/>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+  </exemplum>
+  <remarks>
+    <p>The <gi>writing</gi> element will usually be short
+    and most simply transcribed as a character string; the content
+    model also allows a sequence of paragraphs and paragraph-level
+    elements, in case the writing has enough internal structure to
+    warrant such markup.  In either case the usual phrase-level
+    tags for written text are available.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#TSBAFD"/>
+    <ptr target="#TSBAWR"/>
+    <ptr target="#TSBA"/>
+  </listRef>
+</elementSpec>

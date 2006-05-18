@@ -1,0 +1,112 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="drama" xml:id="CASTLIST" usage="mwa" ident="castList">
+<equiv/>
+<gloss>cast list</gloss>
+<desc>contains a single cast list or dramatis personae.</desc>
+  <classes>
+    <memberOf key="model.divPart.stage"/>
+    <memberOf key="model.inter"/>
+    <memberOf key="model.frontPart.drama"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="model.divWrapper"/>
+          <rng:ref name="model.global"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+      <rng:zeroOrMore>
+<?teidtd (?>
+        <rng:ref name="macro.component"/>
+<?teidtd )?>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:zeroOrMore>
+      <rng:oneOrMore>
+        <rng:choice>
+          <rng:ref name="castItem"/>
+          <rng:ref name="castGroup"/>
+        </rng:choice>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:oneOrMore>
+      <rng:zeroOrMore>
+<?teidtd (?>
+        <rng:ref name="macro.component"/>
+<?teidtd )?>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:zeroOrMore>
+    </rng:group>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <castList>
+        <castGroup>
+          <head rend="braced">Mendicants</head>
+          <castItem>
+            <role>Aafaa</role>
+            <actor>Femi Johnson</actor>
+          </castItem>
+          <castItem>
+            <role>Blindman</role>
+            <actor>Femi Osofisan</actor>
+          </castItem>
+          <castItem>
+            <role>Goyi</role>
+            <actor>Wale Ogunyemi</actor>
+          </castItem>
+          <castItem>
+            <role>Cripple</role>
+            <actor>Tunji Oyelana</actor>
+          </castItem>
+        </castGroup>
+        <castItem>
+          <role>Si Bero</role>
+          <roleDesc>Sister to Dr Bero</roleDesc>
+          <actor>Deolo Adedoyin</actor>
+        </castItem>
+        <castGroup>
+          <head rend="braced">Two old women</head>
+          <castItem>
+            <role>Iya Agba</role>
+            <actor>Nguba Agolia</actor>
+          </castItem>
+          <castItem>
+            <role>Iya Mate</role>
+            <actor>Bopo George</actor>
+          </castItem>
+        </castGroup>
+        <castItem>
+          <role>Dr Bero</role>
+          <roleDesc>Specialist</roleDesc>
+          <actor>Nat Okoro</actor>
+        </castItem>
+        <castItem>
+          <role>Priest</role>
+          <actor>Gbenga Sonuga</actor>
+        </castItem>
+        <castItem>
+          <role>The old man</role>
+          <roleDesc>Bero's father</roleDesc>
+          <actor>Dapo Adelugba</actor>
+        </castItem>
+      </castList>
+      <stage type="mix">The action takes place in and around the home surgery of
+Dr Bero, lately returned from the wars.</stage>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p/>
+  </remarks>
+  <listRef>
+    <ptr target="#DRCAST" type="div3"/>
+    <ptr target="#DRFAB" type="div3"/>
+  </listRef>
+</elementSpec>

@@ -1,0 +1,62 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="verse" xml:id="LG1" usage="opt" ident="lg1">
+<equiv/>
+<gloss>line group</gloss>
+<desc>contains a first-level (i.e. largest) group of verse lines
+functioning as a formal unit e.g. a stanza, refrain, verse paragraph,
+etc.</desc>
+  <classes>
+    <memberOf key="model.divPart.verse"/>
+    <memberOf key="att.divLike"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:ref name="model.global"/>
+      </rng:zeroOrMore>
+      <rng:optional>
+        <rng:ref name="head"/>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:optional>
+      <rng:oneOrMore>
+        <rng:choice>
+          <rng:ref name="l"/>
+          <rng:ref name="lg2"/>
+        </rng:choice>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:oneOrMore>
+    </rng:group>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <lg1 n="VIII" type="stanza">
+        <lg2 type="sestet">
+          <l>In the first year of Freedom's second dawn</l>
+          <l>Died George the Third; although no tyrant, one</l>
+          <l>Who shielded tyrants, till each sense withdrawn</l>
+          <l>Left him nor mental nor external sun:</l>
+          <l>A better farmer ne'er brushed dew from lawn,</l>
+          <l>A worse king never left a realm undone!</l>
+        </lg2>
+        <lg2 type="couplet">
+          <l>He died – but left his subjects still behind,</l>
+          <l>One half as mad – and t'other no less blind.</l>
+        </lg2>
+      </lg1>
+    </egXML>
+<!-- Byron, Vision of Judgment viii ed EH Coleridge 1922) -->
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">contains verse lines or nested line groups only, possibly
+prefixed by a heading.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#VEST"/>
+  </listRef>
+</elementSpec>

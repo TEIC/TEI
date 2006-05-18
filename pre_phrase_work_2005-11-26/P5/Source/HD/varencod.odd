@@ -1,0 +1,72 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="VARENCOD" usage="mwa" ident="variantEncoding">
+<equiv/>
+<gloss/>
+<desc>declares the method used to encode text-critical variants.</desc>
+  <classes>
+    <memberOf key="model.encodingPart"/>
+  </classes>
+  <content>
+    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+  </content>
+  <attList>
+    <attDef ident="method" usage="req">
+	<equiv/>
+	<desc>indicates which method is used to encode the apparatus of
+variants.</desc>
+      <valList type="closed">
+        <valItem ident="location-referenced">
+          <equiv/>
+          <gloss>apparatus uses line numbers or other canonical reference scheme
+referenced in a base text.</gloss>
+        </valItem>
+        <valItem ident="double-end-point">
+          <equiv/>
+          <gloss>apparatus indicates the precise locations of the beginning and
+ending of each lemma relative to a base text.</gloss>
+        </valItem>
+        <valItem ident="parallel-segmentation">
+          <equiv/>
+          <gloss>alternate readings of a passage are given in parallel in the
+text; no notion of a base text is necessary.</gloss>
+        </valItem>
+      </valList>
+      <remarks>
+        <p>The value <q>parallel-segmentation</q> requires in-line
+encoding of the apparatus.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="location" usage="req">
+	<equiv/>
+	<desc>indicates whether the apparatus appears within the running text
+or external to it.</desc>
+      <valList type="closed">
+        <valItem ident="internal">
+          <equiv/>
+          <gloss>apparatus appears within the running text.</gloss>
+        </valItem>
+        <valItem ident="external">
+          <equiv/>
+          <gloss>apparatus appears outside the base text.</gloss>
+        </valItem>
+      </valList>
+      <remarks>
+        <p>The value <q>external</q> is inconsistent with the
+parallel-segmentation method of apparatus markup.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <variantEncoding method="location-referenced" location="external"/>
+    </egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#TCAPEN"/>
+  </listRef>
+</elementSpec>

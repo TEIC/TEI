@@ -1,0 +1,57 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" xml:id="ITYPE" usage="opt" ident="iType">
+<equiv/>
+<gloss>inflectional class</gloss>
+<desc>indicates the inflectional class associated with a lexical item.</desc>
+    <classes>
+        <memberOf key="model.entryParts"/>
+        <memberOf key="model.morphLike"/>
+        <memberOf key="att.lexicographic"/>
+    </classes>
+    <content>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
+    </content>
+    <attList>
+        <attDef ident="type" usage="opt">
+	<equiv/>
+	<desc>indicates the type of indicator used to specify the inflection class, when it is
+                necessary to distinguish between the usual abbreviated indications (e.g.
+                <mentioned>inv</mentioned>) and other kinds of indicators, such as special codes
+                referring to conjugation patterns, etc.</desc>
+            <datatype>
+	      <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+            </datatype>
+            <valList type="open">
+                <valItem ident="abbrev">
+                    <equiv/>
+                    <gloss>abbreviated indicator</gloss>
+                </valItem>
+                <valItem ident="verbTable">
+                    <equiv/>
+                    <gloss>coded reference to a table of verbs</gloss>
+                </valItem>
+            </valList>
+            <exemplum>
+                <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+            </exemplum>
+            <remarks>
+                <p>This element is synonymous with <tag>gram type='inflectional type'</tag>.</p>
+            </remarks>
+        </attDef>
+    </attList>
+    <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+    </exemplum>
+    <remarks>
+        <p rend="dataDesc">May contain character data and phrase-level elements. Typical content
+            will be <mentioned>invariant</mentioned>, <mentioned>n 3</mentioned> etc.</p>
+    </remarks>
+    <listRef>
+        <ptr target="#DITPFO" type="div2"/>
+    </listRef>
+</elementSpec>

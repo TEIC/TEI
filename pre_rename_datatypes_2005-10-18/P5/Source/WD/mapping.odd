@@ -1,0 +1,40 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="gaiji" xml:id="MAPPING" ident="mapping">
+<equiv/>
+<gloss>character mapping</gloss>
+<desc>contains one or more
+	 characters which are related to the parent character or glyph
+	 in some respect, as specified by the <att>type</att>
+	 attribute.
+</desc>
+<classes><memberOf key="att.typed"/></classes>
+<content>
+<!-- (#PCDATA) -->
+<rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+  <rng:zeroOrMore>
+   <rng:choice>
+    <rng:text/>
+    <rng:ref name="g"/>
+   </rng:choice>
+  </rng:zeroOrMore>
+<!--s:assert> some schematron rules here</s:assert-->
+</rng:group>
+</content>
+  <attList/>
+<exemplum>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<mapping type="modern">r</mapping>
+  <mapping type="standard">
+   <g ref="#U4EBA">&#x4EBA;</g>
+  </mapping>
+    </egXML></exemplum>
+<remarks><p>Suggested values for the <att>type</att> attribute include
+<code>exact</code> for exact equivalences, <code>uppercase</code>
+for uppercase equivalences, <code>lowercase</code>   for lowercase equivalences,
+and <code>simplified</code>  for simplified characters. The
+	 <gi>g</gi> elements contained by this element can  point to either another
+	 <gi>char</gi> or <gi>glyph</gi>element or contain a character
+	 that is intended to be the target of this mapping.</p> </remarks></elementSpec>

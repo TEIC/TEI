@@ -1,0 +1,29 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<macroSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" xml:id="COMPSEQ" type="pe" ident="macro.componentSeq">
+<gloss>component-sequence</gloss>
+<desc>defines a sequence of component-level elements (such as paragraphs
+or lists) which can occur directly within text divisions and in similar
+positions.</desc>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+	<rng:group>
+	  <rng:ref name="macro.component"/>
+	</rng:group>
+	<rng:group>
+	  <rng:ref name="model.global"/>
+	</rng:group>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <remarks>
+    <p>This parameter entity is used in each base tag set to
+define the content of <gi>div</gi> and similar elements.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#STEC"/>
+  </listRef>
+</macroSpec>

@@ -1,0 +1,69 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="LG" usage="opt" ident="lg">
+<equiv/>
+<gloss>line group</gloss>
+<desc>contains a group of verse lines functioning as a formal unit,
+e.g. a stanza, refrain, verse paragraph, etc.</desc>
+  <classes>
+    <memberOf key="model.divPart"/>
+    <memberOf key="att.divLike"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="model.divWrapper"/>
+          <rng:ref name="model.global"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+      <rng:choice>
+        <rng:ref name="model.lLike"/>
+        <rng:ref name="lg"/>
+      </rng:choice>
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="model.lLike"/>
+          <rng:ref name="lg"/>
+          <rng:ref name="model.global"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+      <rng:zeroOrMore>
+<?teidtd (?>
+        <rng:ref name="model.divWrapper.bottom"/>
+<?teidtd )?>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:zeroOrMore>
+    </rng:group>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <lg type="free">
+        <l>Let me be my own fool</l>
+        <l>of my own making, the sum of it</l>
+      </lg>
+      <lg type="free">
+        <l>is equivocal.</l>
+        <l>One says of the drunken farmer:</l>
+      </lg>
+      <lg type="free">
+        <l>leave him lay off it. And this is</l>
+        <l>the explanation.</l>
+      </lg>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">contains verse lines or nested line groups only, possibly
+prefixed by a heading.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#COVE"/>
+    <ptr target="#CODV"/>
+    <ptr target="#DRPAL"/>
+  </listRef>
+</elementSpec>

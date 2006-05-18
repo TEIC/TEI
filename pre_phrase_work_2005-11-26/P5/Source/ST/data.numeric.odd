@@ -1,0 +1,52 @@
+<!--Copyright 2005 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<macroSpec xmlns="http://www.tei-c.org/ns/1.0"
+   xmlns:rng="http://relaxng.org/ns/structure/1.0"
+   module="tei" type="dt" ident="data.numeric">
+<gloss></gloss>
+<desc>defines the range of attribute values used for numeric values</desc>
+<content>
+  <rng:choice>
+    <rng:data type="double"/>
+    <rng:data type="decimal"/>
+  </rng:choice>
+</content>
+<remarks>
+    <p>Any numeric value can be represented as a decimal number.</p>
+    <p>In addition, the range of values that can be represented in an
+    IEEE double precision (i.e., 64-bit) floating point number may be
+    represented using scientific notation. Roughly that range is
+    &#x00B1;10&#x207B;&#x00B3;&#x00B2;&#x00B3; to
+    &#x00B1;10&#x00B3;&#x2070;&#x2078;.</p>
+    <p>To represent a number expressed in scientific notation,
+    <soCalled>exponential notation</soCalled> is used in the attribute
+    value. The significand (sometimes called the mantissa) is written
+    as a decimal number, followed by the letter
+    <mentioned>E</mentioned>, followed by an integer exponent. <!-- to
+    which a base of 10 should be raised and the result multiplied by
+    the signficand --> The multiplication sign and the base itself
+    (<mentioned>10</mentioned>) are implied. Either the significand or
+    the exponent (or both) may be a negative number, in which case it
+    should be preceded by a minus sign. There should be no whitespace
+    separating the significand from the <mentioned>E</mentioned> from
+    the exponent. E.g., 3&#x00D7;10&#x2078; can be expressed as
+    <val>3E8</val>.</p>
+    <p>Other examples of scientific notation include:
+    <list>
+      <item><val>10E10</val> (the speed of light in centimetres per second)</item>
+      <item><val>9.12E-31</val> (the mass of an electron in Kg)</item>
+      <item><val>4E11</val> (estimated number of stars in our galaxy)</item>
+      <item><val>-1.76E11</val> (electron charge to mass quotient in coulombs per Kg)</item>
+    </list>
+    </p>
+    <p>Either <mentioned>e</mentioned> or <mentioned>E</mentioned> may
+    be used to separate the significand from the exponent, however
+    these Guidelines recommend <mentioned>E</mentioned> be used both
+    for consistency with other standards bodies and to avoid confusion
+    with the mathematical constant <code>e</code>.</p>
+</remarks>
+</macroSpec>

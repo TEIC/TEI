@@ -1,0 +1,600 @@
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+$Date$
+$Author$
+-->
+<div1 xmlns="http://www.tei-c.org/ns/1.0" xml:id="FD" n="26">
+<head>Feature System Declaration</head>
+<p>The Feature System Declaration (FSD) is intended for use in
+conjunction with a TEI-conforming text that makes use of <gi>fs</gi>
+(that is, feature structure) elements.
+The FSD serves three purposes:
+<list type="simple">
+<item>It provides a mechanism by which the encoder can list all of the
+feature names and feature values and give a prose description as to what
+each represents.</item>
+<item>It provides a mechanism by which the encoder can define
+constraints on what it means to be a well-formed feature structure.
+These constraints may involve constraints on the range of a feature
+value, constraints on what features are valid within certain types of
+feature structures, or constraints that prevent the co-occurrence of
+certain feature-value pairs.</item>
+<item>It provides a mechanism by which the encoder can define the
+intended interpretation of underspecified feature structures.  This
+involves defining default values (whether literal or computed) for
+missing features.</item></list></p>
+<p>The scheme described in this chapter may be used to document any 
+feature structure system, but is primarily intended for use with the 
+feature structure representation defined by these
+Guidelines both in earlier versions (P3 or P4), and in the present
+draft in chapter <ptr target="#FS"/>, which is also a candidate
+for international standardization as ISO DIS 24610 (part one). Part two of
+that standard, which will address validation mechanisms such as
+that described in this chapter, is currently in preparation by a
+joint ISO/TEI Working Group reporting to ISO TC 37/SC4. </p>
+<p>As a component of an interchange standard for encoded text, the FSD
+serves an important function in documenting precisely what the encoder
+intended by the system of feature structure markup used in the encoded
+text.  As application software is developed which makes use of encoded
+texts, the FSD will also become an important resource that will allow
+software to validate the feature structure markup in a text and to infer
+the full interpretation of underspecified feature structures.</p>
+<p>This chapter begins by describing how the encoded text uses header
+information to make links to any associated FSDs.  The second, third, and
+fourth sections describe the overall structure of an FSD and give
+details of how to encode its parts.  The final section offers a full
+example.<note place="foot">A fuller discussion of the reasoning behind FSDs
+and another complete example are provided by <title level="a">A rationale for the TEI
+recommendations for feature-structure markup,</title> by D. Terence
+Langendoen and Gary F. Simons , in <title>Computers and the
+Humanities</title>, 29, (1995). </note></p>
+<div2 xml:id="FDLK">
+<head>Linking a TEI Text to Feature System Declarations</head>
+<p>In order for application software to use feature system
+declarations to aid in the automatic interpretation of encoded texts,
+or even for human readers to find the appropriate declarations which
+document the feature system used in markup, there must be a formal
+link from the encoded texts to the declarations. However, the
+schema  declares the syntax for the Feature System itself
+should  be kept distinct from the feature structure schema, which is an
+application of that system.</p> 
+<?tei winita what do about FSD schema ?>
+<!--<p>In the present version of these
+Guidelines, this is accomplished by regarding the Feature System
+document (FSD) as an external unparsed entity, which is referenced
+only by name within the document that uses it.<note place="foot">In
+SGML (but not in XML) a feature known as SUBDOC is available which
+allows a document using one DTD (the FSD) to be nested within another
+(the feature structure itself); this feature is not available in XML,
+and is therefore not recommended where usage of XML is
+intended.</note></p>
+-->
+<p>The association between an FSD and a document using the feature
+structures it declares is made by means of a link from a special
+purpose element in the TEI Header, <!--  Firstly, an
+external unparsed entity must be declared for each FSD that is
+associated with the encoded text.  That entity declaration gives a
+name for the external entity and associates it with some file or other
+resource on the host system.  It must also contain the keyword NDATA,
+to indicate that the external entity contains unparsed XML or SGML
+data conforming to some other notation, and a previously-declared name
+for that notation. <note>In an SGML document, the SUBDOC keyword may
+be used in place of NDATA and the Notation name to tell the processor
+that the named file is a self-contained SGML document.</note> See the
+example below for details of syntax.</p> <p>Secondly, the name of the
+relevant FSD entity will be referenced within the TEI header of a
+document containing feature structure annotation, --> as mentioned in
+section <ptr target="#HDFSD"/>.  Within the <gi>encodingDesc</gi>
+element of such a document's <gi>teiHeader</gi>, a special
+<gi>fsdDecl</gi> element may be used for each distinct feature
+structure type, as follows:
+<specList><specDesc key="fsdDecl" /></specList>
+Note that one <gi>fsdDecl</gi> element must be specified for each
+distinct type of feature structure used in the markup.  The
+<att>url</att> attribute provides a link to  the  entity
+containing the actual declaration for that type of feature structure.</p>
+<p>There may be multiple <gi>fsdDecl</gi> elements for a given FSD;
+one for each type of feature structure it defines.  For instance, in
+the following example, the file <ident rend="noindex"
+type="file">Lexicon.fsd</ident> contains an FSD that contains
+definitions of feature structures for lexical entries (<tag>fs
+type="entry"</tag>) and lexical subentries (<tag>fs
+type="subentry"</tag>). The file <ident rend="noindex"
+type="file">Gazdar.fsd</ident> contains another FSD which contains
+definition of a feature structure called <ident>GPSG</ident>:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+   <TEI>
+   <teiHeader>
+      <fileDesc> <!-- ... --> </fileDesc>
+      <encodingDesc>
+           <!-- ... -->
+           <fsdDecl type='GPSG'     url='Gazdar.fsd'/>
+           <fsdDecl type='entry'    url='Lexicon.fsd'/>
+           <fsdDecl type='subentry' url='Lexicon.fsd'/>
+           <!-- ... -->
+      </encodingDesc>
+   </teiHeader>
+   <!-- The text goes here -->
+   </TEI></egXML>
+As this example shows, a <gi>fsdDecl</gi> is given within the
+<gi>encodingDesc</gi> for each distinct value used as the
+<att>type</att> of the <gi>fs</gi> elements in the document itself. In
+this case, for example, the feature system declaration used by feature
+structures of types <val>entry</val> and <val>subentry</val> is to
+be found in the entity at the URL <ident>Lexicon.fsd</ident>.
+</p>
+<p>The current recommendations provide no way of enforcing uniqueness
+of the <att>type</att> values for the <gi>fsdDecl</gi> element, nor of
+requiring that every <att>type</att> value specified on a <gi>fs</gi>
+element be also declared on an <gi>fsdDecl</gi> element. Encoders
+requiring such constraints (which might have some obvious utility in
+assisting the consistency and accuracy of tagging) are recommended to
+develop tools to enforce them, using such mechanisms as Schematron
+assertions. </p>
+<p>The module for feature system declarations is contained in the file
+<ident type="file">declarefs.dtd</ident> or <ident
+type="file">declarefs.rng</ident>. The former has the public
+identifier <ident type="fpi">-//TEI P5//DTD Auxiliary Document Type:
+Feature System Declaration//EN</ident>. This module makes available
+the following elements:
+
+<moduleSpec xml:id="DFDDTD" ident="declarefs"><altIdent type="FPI">Feature System Declaration</altIdent><desc>Feature system declarations</desc></moduleSpec>
+
+This module has no particular dependencies on any other TEI module;
+for most practical purposes, however, it should be used in conjunction
+with the standard tei, header, and core modules, as well as the iso-fs
+module discussed in chapter <ptr target="#FS"/>. The selection and
+combination of modules to form a TEI schema is described in <ptr
+target="#STIN"/>.</p>
+
+<p>The module is organized as follows:
+<specGrpRef target="#DFDFSD2"/>
+<specGrpRef target="#DFDX"/>
+<specGrpRef target="#DFD2"/>
+</p>
+</div2>
+<div2 xml:id="FDOV"><head>The Overall Structure of a Feature System Declaration</head>
+<p>A feature system declaration is encoded as a document of type
+<gi>teifsd</gi>.  It has two parts:  an obligatory header (which
+provides bibliographic information for the file) and a set of feature
+structure declarations (each of which defines one type of feature
+structure).  Each feature structure declaration in turn has three parts:
+an optional description (which gives a prose comment on what that type
+of feature structure encodes), an obligatory set of feature declarations
+(which specify range constraints and default values for the features in
+that type of structure), and optional feature structure constraints
+(which specify co-occurrence restrictions on feature values).  The
+header is encoded as a <gi>teiHeader</gi>, just as for any TEI
+document; see chapter <ptr target="#HD"/>.  The other components listed
+above are unique to feature system declarations.  Thus, the following
+new elements are involved:
+<specList>
+<specDesc key="teifsd"/>
+<specDesc key="fsDecl"/>
+<specDesc key="fsDescr"/>
+<specDesc key="fDecl"/>
+<specDesc key="fsConstraints"/></specList></p>
+<p>Feature declarations and feature structure constraints are described
+in the next two sections of this chapter.  Note that the specification
+of similar <gi>fsDecl</gi> elements can be simplified by devising an
+inheritance hierarchy for the feature structure types.  Each
+<gi>fsDecl</gi> may name a <att>baseType</att> from which it inherits
+feature declarations and constraints.  For instance, suppose that
+<tag>fsDecl type="Basic"</tag> contains <tag>fDecl name="One"</tag> and
+<tag>fDecl name="Two"</tag>, and that <tag>fsDecl type="Derived"
+baseType="Basic"</tag> contains just <tag>fDecl name="Three"</tag>.  Then
+any instance of <tag>fs type="Derived"</tag> may include all three
+features.  This is because <tag>fsDecl type="Derived"</tag> inherits the
+two feature declarations from <tag>fsDecl type="Basic"</tag> when it
+specifies a <att>baseType</att> of <val>Basic</val>.</p>
+<p>The following sample shows the overall structure of a complete FSD:
+ <egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <teifsd>
+     <teiHeader>
+        <!-- The header is as for any TEI document -->
+     </teiHeader>
+     <fsDecl type='SomeName'>
+        <fsDescr>Describes what this type of fs represents</fsDescr>
+        <fDecl name='featureOne'>
+           <!-- The declaration for featureOne -->
+        </fDecl>
+        <fDecl name='featureTwo'>
+           <!-- The declaration for featureTwo -->
+        </fDecl>
+        <fsConstraints>
+           <!-- The feature structure constraints go here -->
+        </fsConstraints>
+     </fsDecl>
+     <fsDecl type='AnotherType'>
+           <!-- Declare another type of feature structure -->
+     </fsDecl>
+  </teifsd></egXML></p>
+<p>The formal definition of the <gi>teifsd</gi> and its components is as follows:
+<specGrp xml:id="DFDFSD2" n="Feature System Declaration">
+&teifsd;
+&fsDecl;&fsDescr;
+</specGrp>
+</p>
+</div2>
+<div2 xml:id="FDFD"><head>Feature Declarations</head>
+<p>Each feature is declared in an <gi>fDecl</gi> element whose
+<att>name</att> attribute identifies the feature being declared; this
+matches the <att>name</att> attribute of the <gi>f</gi> elements it
+declares.  An <gi>fDecl</gi> also has an <att>org</att> attribute
+which declares the organizing principle for the values of the
+<gi>f</gi> elements it declares.  That is, the value may be a 
+<val>unit</val> (a single value), a 
+<val>set</val> (in which the order is not significant and
+there are no duplicates), a <val>bag</val> (in which
+the order is not significant but duplicates are allowed), or a <val>list</val> (in which the order is significant).  (See
+definition of <att>org</att> attribute of <gi>f</gi> in section <ptr
+target="#FSSS"/>.)  An <gi>fDecl</gi> has three parts: an optional
+prose description (which should explain what the feature and its
+values represent), an obligatory range specification (which declares
+what values the feature is allowed to have), and an optional default
+specification (which declares what default value should be supplied
+when the named feature does not appear in an <gi>fs</gi>).  A single
+unconditional default value may be specified, or multiple conditional
+values.  If no default is specified, or if none of the conditions is
+met, then the default value is <gi>none</gi>; in other words, the
+feature is not applicable (see section <ptr target="#FSBO"/> for a
+discussion of the <gi>none</gi> element).</p>
+<p>The following elements are  used in feature system declarations:
+<specList>
+<specDesc key="fDecl" atts="name org"/>
+<specDesc key="fDescr"/>
+<specDesc key="vRange"/>
+<specDesc key="vDefault"/>
+<specDesc key="if"/>
+<specDesc key="then"/></specList></p>
+<p>The logic for validating feature values and for matching the
+conditions for supplying default values is based on the operation of
+<term>subsumption</term>.  Subsumption is a standard operation in
+feature-structure-based formalisms.  Informally, a feature structure
+<emph>fs</emph> subsumes all feature structures that are at least as
+informative as itself; that is, all feature structures that specify at
+least as many features as <emph>fs</emph> with values at least as
+informative as those given in <emph>fs</emph> (Pereira 1987:6; see also
+Shieber 1986:14&#x2013;16).<note place="foot"><bibl>Fernando C. N. Pereira, <title>Grammars and logics of partial
+information</title>, SRI International Technical Note 420 (Menlo
+Park, CA: SRI International, 1987)</bibl>, and
+<bibl>Stuart Shieber, <title>An Introduction to Unification-based
+Approaches to Grammar</title>, CSLI Lecture Notes 4 (Palo Alto,
+CA: Center for the Study of Language and Information,
+1986).</bibl></note>
+A more formal definition requires that we first define the notion of
+<q>domain of a feature structure.</q> A feature structure can be viewed
+as a partial function that maps features onto values; when viewed in
+this way, the domain of a feature structure is the set of top-level
+features it contains (that is, excluding features in embedded feature
+structures).  We can now offer a more precise definition:
+<q rend="display">     <emph>fs</emph> subsumes <emph>fs&#x2032;</emph> if both are
+     identical primitive values, or if the domain of <emph>fs</emph>
+     is a subset of the domain of <emph>fs&#x2032;</emph>, and for every
+     feature <emph>f</emph> in the domain of <emph>fs</emph>, the
+     value of <emph>f</emph> in <emph>fs</emph> subsumes the value
+     of <emph>f</emph> in <emph>fs&#x2032;</emph>.</q></p>
+<p>Following the spirit of the informal definition above, we can extend
+subsumption in a straightforward way to cover alternation, negation,
+special primitive values, and the use of attributes in the markup.
+For instance, a <gi>vAlt</gi> containing the value <val>v</val> subsumes <val>v</val>.  The negation
+of a value <val>v</val> (represented by means of the
+<gi>vNot</gi> element discussed in section <ptr target="#FVNOT"/>)
+subsumes any value that is not <val>v</val>; for
+example <code>&lt;vNot>&lt;numeric value='0'/>&lt;/vNot></code> subsumes any
+numeric value other than zero.
+The value <gi>binary value="true"</gi> subsumes any value that is in
+the range of a feature, and the value <gi>binary value="false"</gi>
+subsumes any value that is not.  The value <gi>fs
+type="X"/</gi> subsumes any feature structure of type <val>X</val>.
+</p>
+<!-- restore discussion of subsumption removed from old FS here? -->
+<p>As an example of feature declarations, consider the following extract
+from Gazdar et al's <title>Generalized Phrase Structure
+     Grammar</title>.<note place="foot"><bibl>Gerald
+Gazdar, Ewan Klein, Geoffrey Pullum, and Ivan Sag: <title>Generalized
+     Phrase Structure Grammar</title>, (Harvard University
+Press, 1985)</bibl></note> In the appendix to their book (pages 245&#x2013;247), they
+propose a feature system for English of which this is just a sampling:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">feature    value range
+INV        {+, -}
+CONJ       {and, both, but, either, neither, nor, or, NIL}
+COMP       {for, that, whether, if, NIL}
+AGR        CAT
+PFORM      {to, by, for, ...}</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">Feature specification defaults
+FSD 1:  [-INV]
+FSD 2:  ~[CONJ]
+FSD 9:  [INF, +SUBJ] --> [COMP for]</egXML></p>
+<p>The INV feature, which encodes whether or not a sentence is inverted,
+allows only the values plus (+) and minus (-).  If the feature is not
+specified, then the default rule (FSD 1 above) says that a value of
+minus is always assumed.  The feature declaration for this feature would
+be encoded as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><fDecl name="INV">
+  <fDescr>inverted sentence</fDescr>
+   <vRange><vAlt>
+      <binary value="true"/>
+      <binary value="false"/>
+   </vAlt></vRange>
+  <vDefault><binary value="false"/></vDefault>
+</fDecl></egXML></p>
+<p>The value range is specified as an alternation (more precisely, an
+exclusive disjunction), which can be reporesented by  the
+<gi>binary</gi> feature value.  <!--of <gi>plus/</gi> and <gi>minus/</gi>.-->  That is,
+the value must be either true or false, but cannot be both or neither.</p>
+<p>The CONJ feature indicates the surface form of the conjunction used
+in a construction.  The ~ in the default rule (see FSD 2 above)
+represents negation.  This means that by default the feature is not
+applicable, in other words, no conjunction is taking place.  This
+corresponds to the simple value <gi>none</gi><!--; see section <ptr target="#FSBO"/>-->.  Note that this is distinct from the NIL value allowed in
+the value range.  In their analysis, NIL means that the phenomenon of
+conjunction is taking place but there is no explicit conjunction in the
+surface form of the sentence.  The feature declaration for this feature
+would be encoded as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><fDecl name="CONJ">
+   <fDescr>surface form of the conjunction</fDescr>
+   <vRange>
+      <vAlt>
+        <symbol value="and"/>
+        <symbol value="both"/>
+        <symbol value="but"/>
+        <symbol value="either"/>
+        <symbol value="neither"/>
+        <symbol value="nor"/>
+        <symbol value="or"/>
+        <symbol value="NIL"/>
+      </vAlt>
+   </vRange>
+   <vDefault><binary value="false"/></vDefault>
+</fDecl></egXML>
+ <!-- binary was "none" -->
+Note that the <gi>vDefault</gi> is not strictly necessary in this case,
+since <gi>none</gi> is the value assumed in the absence of a default
+specification.</p>
+<p>The COMP feature indicates the surface form of the complementizer
+used in a construction.  In value range, it is analogous to CONJ.
+However, its default rule (see FSD 9 above) is conditional.  It says
+that if the verb form is infinitival (the VFORM feature is not mentioned
+in the rule since it is the only feature that can take INF as a value),
+and the construction has a subject, then a <mentioned>for</mentioned> complement
+must be used.  For instance, to make John the subject of the infinitive
+in <mentioned>It is necessary to go,</mentioned> a <mentioned>for</mentioned> complement
+must be used; that is, <mentioned>It is necessary for John to go.</mentioned>
+The feature declaration for this feature would be encoded as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><fDecl name="COMP">
+   <fDescr>surface form of the complementizer</fDescr>
+   <vRange>
+      <vAlt>
+        <symbol value="for"/>
+        <symbol value="that"/>
+        <symbol value="whether"/>
+        <symbol value="if"/>
+        <symbol value="NIL"/>
+      </vAlt></vRange>
+   <vDefault>
+      <if><fs><f name="VFORM"><symbol value="INF"/></f>
+              <f name="SUBJ"><binary value="true"/></f></fs>
+      <then/><symbol value="for"/></if>
+   </vDefault>
+</fDecl></egXML></p>
+<p>The AGR feature stores the features relevant to subject-verb
+agreement.  Gazdar et al. specify the range of this feature as CAT.
+This means that the value is a <term rend="noindex">category</term>, which
+is their term for a feature structure.  This is actually too weak a
+statement.  Not just any feature structure is allowable here; it must be
+a feature structure for agreement (which is defined in the complete
+example at the end of the chapter to contain the features of person and
+number).  The following feature declaration encodes this constraint on
+the value range:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><fDecl name="AGR">
+   <fDescr>agreement for person and number</fDescr>
+   <vRange><fs type="Agreement"/></vRange>
+</fDecl></egXML>
+That is, the value must be a feature structure of type <val>Agreement</val>.  The complete example at the end of this
+chapter includes the <tag>fsDecl type="Agreement"</tag> which includes
+<tag>fDecl name="PERS"</tag> and <tag>fDecl name="NUM"</tag>.</p>
+<p>The PFORM feature indicates the surface form of the preposition used
+in a construction.  Since PFORM is specified above as an open set,
+<gi>string</gi> is used in the range specification below rather than
+<gi>symbol</gi>.
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><fDecl name="PFORM">
+   <fDescr>word form of a preposition</fDescr>
+   <vRange><vNot><string/></vNot></vRange>
+</fDecl></egXML>
+This example makes use of a negated value:    <code>&lt;vNot>&lt;string/>&lt;/vNot></code>
+subsumes any string that is not the empty
+string.</p>
+<p>The formal definition for feature declarations follows.  Note that
+the class <ident type="class">model.featureVal</ident> includes all possible
+single feature values, including a <gi>vAlt</gi>.
+<specGrp xml:id="DFDX" n="Feature definitions">
+&fDecl;&fDescr;&vRange;&vDefault;&if;&then;
+</specGrp></p></div2>
+<div2 xml:id="FDFS"><head>Feature Structure Constraints</head>
+<p>Ensuring the validity of feature structures may require much more
+than simply specifying the range of allowed values for each feature.
+There may be constraints on the co-occurrence of one feature value with
+the value of another feature in the same feature structure or in an
+embedded feature structure.</p>
+<p>Such constraints on valid feature structures are expressed as a
+series of conditional and biconditional tests in the
+<gi>fsConstraints</gi> part of an <gi>fsDecl</gi>.  A particular feature
+structure is valid only if it meets all the constraints.  The
+<gi>cond</gi> element encodes the conventional if-then conditional of
+boolean logic which succeeds when both the antecedent and consequent are
+true, or whenever the antecedent is false.  The <gi>bicond</gi> element
+encodes the biconditional (if and only if) operation of boolean logic.
+It succeeds only when both antecedent and consequent are true, or both
+are false.  In feature structure constraints the antecedent and
+consequent are expressed as feature structures; they are considered true
+if they <term rend="noindex">subsume</term><index><term>subsumption</term><index><term>of feature structures</term></index></index>
+(see section <ptr target="#FDFD"/>) the target feature structure.  The
+following elements make up the <gi>fsConstraints</gi> part of an FSD:
+<specList><specDesc key="fsConstraints"/><specDesc key="cond"/><specDesc key="bicond"/><specDesc key="then"/><specDesc key="iff"/></specList></p>
+<p>For an example of feature structure constraints, consider the
+following <soCalled>feature co-occurrence restrictions</soCalled>
+extracted from the feature system for English proposed by Gazdar, Klein,
+Pullum, and Sag (1985:246&#x2013;247):
+<eg><![CDATA[FCR 1:  [+INV] &#8594; [+AUX, FIN]
+FCR 7:  [BAR 0] &equiv; [N] &amp; [V] &amp; [SUBCAT]
+FCR 8:  [BAR 1] &#8594; ~[SUBCAT]]]></eg></p>
+<p>The first constraint says that if a construction is inverted, it must
+also have an auxiliary and a finite verb form.  That is,
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><cond>
+   <fs><f name="INV"><binary value="true"/></f></fs>
+ <then/>
+   <fs><f name="AUX"><binary value="true"/></f>
+       <f name="VFORM"><symbol value="FIN"/></f>
+   </fs>
+</cond></egXML></p>
+<p>The second constraint says that if a construction has a BAR value of
+zero (i.e., it is a sentence), then it must have a value for the
+features N, V, and SUBCAT.  By the same token, because it is a
+biconditional, if it has values for N, V, and SUBCAT, it must have
+BAR='0'.  That is,
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><bicond>
+   <fs><f name="BAR"><symbol value="0"/></f></fs>
+   <iff/>
+   <fs>
+      <f name="N"><binary value="true"/></f>
+      <f name="V"><binary value="true"/></f>
+      <f name="SUBCAT"><binary value="true"/></f>
+   </fs>
+</bicond></egXML></p>
+<!-- <binary> was <any>-->
+<p>The final constraint says that if a construction has a BAR value of 1
+(i.e., it is a phrase), then the SUBCAT feature is irrelevant (~).
+This is not biconditional, since there are other instances under which
+the SUBCAT feature is irrelevant.  That is,
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><cond>
+   <fs><f name="BAR"><symbol value="1"/></f></fs>
+  <then/>
+    <fs><f name="SUBCAT"><binary value="false"/></f></fs>
+</cond></egXML></p>
+<!-- <binary> was <none>-->
+<p>The DTD fragment for feature structure constraints is as follows.
+Note that <gi>cond</gi> and <gi>bicond</gi> use the empty tags
+<gi>then</gi> and <gi>iff</gi>, respectively, to separate the antecedent
+and consequent.  These are primarily for the sake of enhancing human
+readability.
+<specGrp xml:id="DFD2" n="Feature structure constraints">
+&fsConstraints;&cond;&bicond;&iff;
+</specGrp></p></div2>
+<div2 xml:id="FDEG"><head>A Complete Example</head>
+<p>To summarize this chapter, the complete FSD for the example that has
+run through the chapter is reproduced below:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<teifsd>
+<teiHeader>
+<fileDesc>
+<titleStmt>
+   <title>A sample FSD based on an extract from Gazdar
+      et al.'s GPSG feature system for English</title>
+   <respStmt>
+      <resp>encoded by</resp>
+      <name>Gary F. Simons</name>
+   </respStmt>
+</titleStmt>
+<publicationStmt>
+<p>This sample was first encoded by Gary F. Simons (Summer
+Institute of Linguistics, Dallas, TX) on January 28, 1991.
+Revised April 8, 1993 to match the specification of FSDs
+in version P2 of the TEI Guidelines. Revised again December 2004 to
+be consistent with  the feature structure representation standard
+jointly developed with ISO TC37/SC4.
+</p></publicationStmt>
+<sourceDesc>
+<p>This sample FSD does not describe a complete feature
+system.  It is based on extracts from the feature system
+for English presented in the appendix (pages 245&#x2013;247) of
+Generalized Phrase Structure Grammar, by Gazdar, Klein,
+Pullum, and Sag (Harvard University Press, 1985).</p>
+</sourceDesc>
+</fileDesc>
+</teiHeader><fsDecl type='GPSG'>
+   <fsDescr>Encodes a feature structure for the GPSG analysis
+     of English (after Gazdar, Klein, Pullum, and Sag)</fsDescr>
+   <fDecl name='INV'>
+      <fDescr>inverted sentence</fDescr>
+      <vRange>
+         <vAlt>
+           <binary value="true"/>
+           <binary value="false"/>
+         </vAlt>
+      </vRange>
+      <vDefault><binary value="false"/></vDefault>
+   </fDecl>
+   <fDecl name='CONJ'>
+      <fDescr>surface form of the conjunction</fDescr>
+      <vRange><vAlt><symbol value='and'/><symbol value='both'/>
+         <symbol value='but'/><symbol value='either'/>
+         <symbol value='neither'/><symbol value='nor'/>
+         <symbol value='or'/><symbol value='NIL'/>
+      </vAlt></vRange>
+      <vDefault><binary value="false"/></vDefault>
+      </fDecl>
+   <fDecl name='COMP'>
+      <fDescr>surface form of the complementizer</fDescr>
+      <vRange><vAlt><symbol value='for'/>
+           <symbol value='that'/><symbol value='whether'/>
+           <symbol value='if'/><symbol value='NIL'/>
+       </vAlt></vRange>
+      <vDefault>
+         <if><fs><f name='VFORM'><symbol value='INF'/></f>
+                 <f name='SUBJ'><binary value="true"/></f></fs>
+        <then/><symbol value='for'/></if>
+      </vDefault>
+   </fDecl>
+   <fDecl name='AGR'>
+      <fDescr>agreement for person and number</fDescr>
+      <vRange><fs type='Agreement'></fs></vRange>
+   </fDecl>
+   <fDecl name='PFORM'>
+      <fDescr>word form of a preposition</fDescr>
+         <vRange><vNot><string/></vNot></vRange>
+   </fDecl>
+   <fsConstraints>
+      <cond><fs><f name='INV'><binary value="true"/></f></fs>
+      <then/><fs>
+          <f name='AUX'><binary value="true"/></f>
+          <f name='VFORM'><symbol value='FIN'/></f>
+          </fs>
+     </cond>
+     <bicond><fs><f name='BAR'><symbol value='0'/></f></fs>
+      <iff/><fs>
+         <f name='N'><binary value="true"/></f>
+         <f name='V'><binary value="true"/></f>
+         <f name='SUBCAT'><binary value="true"/></f>
+          </fs>
+      </bicond>
+      <cond><fs><f name='BAR'><symbol value='1'/></f></fs>
+        <then/>   
+           <fs><f name='SUBCAT'><binary value="false"/></f></fs>
+      </cond>
+   </fsConstraints>
+</fsDecl><fsDecl type='Agreement'>
+   <fsDescr>This type of feature structure encodes the features
+      for subject-verb agreement in English</fsDescr>
+   <fDecl name='PERS'>
+      <fDescr>person (first, second, or third)</fDescr>
+      <vRange><vAlt>
+        <symbol value='1'/><symbol value='2'/><symbol value='3'/>
+       </vAlt></vRange>
+   </fDecl>
+   <fDecl name='NUM'>
+      <fDescr>number (singular or plural)</fDescr>
+      <vRange><vAlt><symbol value='sg'/><symbol value='pl'/>
+      </vAlt></vRange>
+   </fDecl>
+</fsDecl>
+</teifsd></egXML></p>
+
+<!--<eg><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE teiFsd2 SYSTEM "declarefs.dtd" [
+  <!ENTITY % TEI.XML  'INCLUDE' >
+]>]]></eg>-->
+
+</div2></div1>

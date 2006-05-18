@@ -1,0 +1,37 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="declarefs" xml:id="COND" usage="opt" ident="cond">
+<equiv/>
+<gloss>conditional feature-structure constraint</gloss>
+<desc>defines a conditional feature-structure constraint; the consequent
+and the antecedent are specified as feature structures or
+feature-structure groups; the constraint is satisfied if both the
+antecedent and the consequent subsume a given feature
+structure, or if the antecedent does not.</desc>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:ref name="fs"/>
+        <rng:ref name="f"/>
+      </rng:choice>
+      <rng:ref name="then"/>
+      <rng:choice>
+        <rng:ref name="fs"/>
+        <rng:ref name="f"/>
+      </rng:choice>
+    </rng:group>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">May contain an antecedent feature structure, an empty
+<gi>then</gi> element, and a consequent feature structure.</p>
+    <p/>
+  </remarks>
+  <listRef>
+    <ptr target="#FD"/>
+  </listRef>
+</elementSpec>

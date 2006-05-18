@@ -1,0 +1,65 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" xml:id="TEXT" usage="req" ident="text">
+<equiv/>
+<gloss/>
+<desc>contains a single text of any kind, whether unitary or
+composite, for example a poem or drama, a collection of essays, a novel,
+a dictionary, or a corpus sample.</desc>
+  <classes>
+    <memberOf key="model.inter"/>
+    <memberOf key="att.declaring"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:ref name="model.global"/>
+      </rng:zeroOrMore>
+      <rng:optional>
+        <rng:ref name="front"/>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:optional>
+      <rng:choice>
+        <rng:ref name="body"/>
+        <rng:ref name="group"/>
+      </rng:choice>
+      <rng:zeroOrMore>
+        <rng:ref name="model.global"/>
+      </rng:zeroOrMore>
+      <rng:optional>
+        <rng:ref name="back"/>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:optional>
+    </rng:group>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <text>
+        <front>
+          <docTitle>
+            <titlePart>Autumn Haze</titlePart>
+          </docTitle>
+        </front>
+        <body>
+          <l>Is it a dragonfly or a maple leaf</l>
+          <l>That settles softly down upon the water?</l>
+        </body>
+      </text>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <p>The body of a text may be replaced by a group of nested texts, as
+in the following schematic:</p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><text><front/><group><text><front/><body/><back/></text><text/></group></text></egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#DS"/>
+    <ptr target="#CCDEF"/>
+  </listRef>
+</elementSpec>

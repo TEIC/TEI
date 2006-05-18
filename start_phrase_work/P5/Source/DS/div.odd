@@ -1,0 +1,95 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" xml:id="DIV" usage="rwa" ident="div">
+<equiv/>
+<gloss>text division</gloss>
+<desc>contains a subdivision of the front, body, or back of a
+text.</desc>
+  <classes>
+    <memberOf key="att.divLike"/>
+    <memberOf key="att.declaring"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="model.divWrapper"/>
+          <rng:ref name="model.global"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+
+      <rng:choice>
+
+	<rng:group>
+	  <rng:oneOrMore>
+	    <rng:choice>
+	      <rng:ref name="div"/>
+	      <rng:ref name="divGen"/>
+	    </rng:choice>
+	  </rng:oneOrMore>
+	</rng:group>
+
+        <rng:group>
+          <rng:oneOrMore>
+            <rng:ref name="macro.component"/>
+	    <rng:optional>
+	      <rng:ref name="model.global"/>
+	    </rng:optional>
+          </rng:oneOrMore>
+          <rng:zeroOrMore>
+	    <rng:choice>
+              <rng:ref name="div"/>
+              <rng:ref name="divGen"/>
+            </rng:choice>
+	  </rng:zeroOrMore>
+        </rng:group>
+
+      </rng:choice>
+      
+      <rng:zeroOrMore>
+	<rng:choice>
+	  <rng:ref name="model.divWrapper"/>
+	  <rng:ref name="model.divWrapper.bottom"/>
+	</rng:choice>
+      </rng:zeroOrMore>
+
+    </rng:group>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <body>
+        <div type="part">
+          <head>Fallacies of Authority</head>
+          <p>The subject of which is Authority in various shapes, and the
+      object, to repress all exercise of the reasoning faculty.</p>
+          <div n="1" type="chapter">
+            <head>The Nature of Authority</head>
+            <p>With reference to any proposed measures having for their
+        object the greatest happiness of the greatest number....</p>
+            <div n="1.1" type="section">
+              <head>Analysis of Authority</head>
+              <p>What on any given occasion is the legitimate weight or
+          influence to be attached to authority ... </p>
+            </div>
+            <div n="1.2" type="section">
+              <head>Appeal to Authority, in What Cases Fallacious.</head>
+              <p>Reference to authority is open to the charge of fallacy
+          when... </p>
+            </div>
+          </div>
+        </div>
+      </body>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">any sequence of low-level structural elements, possibly
+grouped into lower subdivisions.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#DSDIV"/>
+    <ptr target="#DSDIV1"/>
+  </listRef>
+</elementSpec>

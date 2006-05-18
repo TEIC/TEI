@@ -1,0 +1,74 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="declarefs" xml:id="FDECL" usage="mwa" ident="fDecl">
+<equiv/>
+<gloss>feature declaration</gloss>
+<desc>declares a single feature, specifying its name, organization,
+range of allowed values, and optionally its default value.</desc>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:optional>
+        <rng:ref name="fDescr"/>
+      </rng:optional>
+      <rng:ref name="vRange"/>
+      <rng:optional>
+        <rng:ref name="vDefault"/>
+      </rng:optional>
+    </rng:group>
+  </content>
+  <attList>
+    <attDef ident="name" usage="req">
+	<equiv/>
+	<desc>indicates the name of the feature being declared; matches the
+<att>name</att> attribute of <gi>f</gi> elements in the text.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"/></datatype>
+      <valDesc>any string of characters</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+      <remarks>
+        <p/>
+      </remarks>
+    </attDef>
+    <attDef ident="org" usage="opt">
+	<equiv/>
+	<desc>specifies the organizing discipline of the feature value.</desc>
+      <defaultVal>unit</defaultVal>
+      <valList type="closed">
+        <valItem ident="unit">
+          <equiv/>
+          <gloss>unitary atomic value</gloss>
+        </valItem>
+        <valItem ident="set">
+          <equiv/>
+          <gloss>set value (unordered, no duplicates)</gloss>
+        </valItem>
+        <valItem ident="bag">
+          <equiv/>
+          <gloss>bag value (unordered, may have duplicates)</gloss>
+        </valItem>
+        <valItem ident="list">
+          <equiv/>
+          <gloss>list value (ordered, may have duplicates)</gloss>
+        </valItem>
+      </valList>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+      <remarks>
+        <p/>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+  </exemplum>
+  <remarks>
+    <p/>
+  </remarks>
+  <listRef>
+    <ptr target="#FD"/>
+  </listRef>
+</elementSpec>

@@ -1,0 +1,56 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" xml:id="OPENER" usage="opt" ident="opener">
+<equiv/>
+<gloss/>
+<desc>groups together dateline, byline, salutation, and similar
+phrases appearing as a preliminary group at the start of a
+division, especially of a letter.</desc>
+  <classes>
+    <memberOf key="model.divWrapper"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+<rng:ref name="model.gLike"/>
+        <rng:ref name="model.phrase"/>
+        <rng:ref name="argument"/>
+        <rng:ref name="byline"/>
+        <rng:ref name="dateline"/>
+        <rng:ref name="epigraph"/>
+        <rng:ref name="salute"/>
+        <rng:ref name="signed"/>
+        <rng:ref name="model.global"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <opener>
+        <dateline>Walden, this 29. of August 1592</dateline>
+      </opener>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <opener>
+        <dateline>
+          <name type="place">Great Marlborough Street</name>
+          <date>November 11, 1848</date>
+        </dateline>
+        <salute>My dear Sir,</salute>
+      </opener>
+      <p>I am sorry to say that absence from town and other
+circumstances have prevented me from earlier enquiring...</p>
+    </egXML>
+<!-- Trollope Autobiog, p 77 -->
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#DSCO"/>
+    <ptr target="#DSDTB"/>
+  </listRef>
+</elementSpec>

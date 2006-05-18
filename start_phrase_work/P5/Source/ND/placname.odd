@@ -1,0 +1,47 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" xml:id="PLACNAME" usage="opt" ident="placeName">
+  <equiv/>
+  <gloss>place name</gloss>
+  <desc>contains an absolute or relative place name. </desc>
+  <classes>
+    <memberOf key="model.nameLike"/>
+    <memberOf key="att.naming"/>
+    <memberOf key="model.pPart.data"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+	<rng:text/>
+<rng:ref name="model.gLike"/>
+	<rng:ref name="model.placeNamePart"/>
+        <rng:ref name="model.phrase"/>
+	<rng:ref name="model.global"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <placeName>
+        <settlement>Rochester</settlement>
+        <region>New York</region>
+      </placeName>
+      <placeName>
+        <geogName>Arrochar Alps</geogName>
+        <region>Argylshire</region>
+      </placeName>
+      <placeName>
+        <distance>10 miles</distance>
+        <offset>Northeast of</offset>
+        <settlement>Attica</settlement>
+      </placeName>
+    </egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#NDPLAC"/>
+  </listRef>
+</elementSpec>

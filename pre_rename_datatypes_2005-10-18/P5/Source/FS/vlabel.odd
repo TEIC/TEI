@@ -1,0 +1,49 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="iso-fs" xml:id="VLABEL" usage="rwa" ident="vLabel">
+<equiv/>
+<gloss>value label</gloss>
+<desc>represents the value part of a feature-value specification
+  which appears at more than one point in a feature structure</desc>
+  <classes>
+    <memberOf key="model.singleVal"/>
+  </classes>
+  <content>
+    <rng:optional>
+    <rng:ref name="model.featureVal"/>
+    </rng:optional>
+  </content>
+  <attList>
+    <attDef ident="name" usage="req">
+	<equiv/>
+	<desc>supplies a name for the sharing point.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/></datatype>
+      <valDesc>An identifying name.</valDesc>
+    </attDef>
+  </attList>
+  <exemplum>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><fs>
+<f name="nominal">
+  <fs>
+    <f name="nm-num">
+     <vLabel name="L1">
+       <symbol value="singular"/>
+    </vLabel>
+   </f>
+   <!-- other nominal features -->
+  </fs>
+</f>
+<f name="verbal">
+  <fs>
+    <f name="vb-num">
+      <vLabel name="L1"/>
+    </f>
+  </fs>
+   <!-- other verbal features -->
+</f>
+</fs></egXML>
+  </exemplum>
+  <listRef/>
+</elementSpec>

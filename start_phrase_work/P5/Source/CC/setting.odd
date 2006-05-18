@@ -1,0 +1,49 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="corpus" xml:id="SETTING" usage="opt" ident="setting">
+  <equiv/>
+  <gloss>setting</gloss>
+  <desc>describes one particular setting in which a language
+  interaction takes place.</desc>
+  <classes>
+    <memberOf key="att.ascribed"/>
+  </classes>  
+  <content>
+    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:oneOrMore>
+        <rng:ref name="model.pLike"/>
+      </rng:oneOrMore>
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="model.nameLike"/>
+          <rng:ref name="model.dateLike"/>
+          <rng:ref name="locale"/>
+          <rng:ref name="activity"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+    </rng:choice>
+  </content>
+  <attList/>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <setting who="#p1">
+        <name>New York City, US</name>
+        <date>1989</date>
+        <locale>on a park bench</locale>
+        <activity>feeding birds</activity>
+      </setting>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>If the <att>who</att> attribute is not supplied, the setting is
+    assumed to be that of all participants in the language
+    interaction.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#CCAHSE"/>
+  </listRef>
+</elementSpec>

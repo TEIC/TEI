@@ -1,0 +1,37 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" xml:id="ENTRYFR" usage="mwa" ident="entryFree">
+<equiv/>
+<gloss/>
+<desc>contains a dictionary entry which does not necessarily conform to the constraints imposed
+        by the entry element.</desc>
+    <classes>
+        <memberOf key="model.entryLike"/>
+        <memberOf key="att.entryLike"/>
+        <memberOf key="att.lexicographic"/>
+    </classes>
+    <content>
+        <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+            <rng:choice>
+                <rng:text/>
+<rng:ref name="model.gLike"/>
+                <rng:ref name="model.entryParts"/>
+                <rng:ref name="model.phrase"/>
+                <rng:ref name="model.inter"/>
+                <rng:ref name="model.global"/>
+            </rng:choice>
+        </rng:zeroOrMore>
+    </content>
+    <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+    </exemplum>
+    <remarks>
+        <p rend="dataDesc">May contain any dictionary elements in any combination.</p>
+    </remarks>
+    <listRef>
+        <ptr target="#DIBO"/>
+        <ptr target="#DIEN"/>
+    </listRef>
+</elementSpec>

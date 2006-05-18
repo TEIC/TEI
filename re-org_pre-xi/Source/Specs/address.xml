@@ -1,0 +1,61 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="ADDRESS" usage="opt" ident="address">
+<equiv/>
+<gloss/>
+<desc>contains a postal or other address, for example of a
+publisher, an organization, or an individual.</desc>
+  <classes>
+    <memberOf key="model.pPart.data"/>
+    <memberOf key="model.publicationStmtPart"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:ref name="model.global"/>
+      </rng:zeroOrMore>
+      <rng:oneOrMore>
+	<rng:group>
+          <rng:ref name="model.addrPart"/>
+	</rng:group>
+          <rng:zeroOrMore>
+            <rng:ref name="model.global"/>
+          </rng:zeroOrMore>
+      </rng:oneOrMore>
+    </rng:group>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <address>
+        <street>via Marsala 24</street>
+        <postCode>40126</postCode>
+        <name>Bologna</name>
+        <name n="I">Italy</name>
+      </address>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <address>
+        <addrLine>Computing Center, MC 135</addrLine>
+        <addrLine>P.O. Box 6998</addrLine>
+        <addrLine>Chicago, IL  60680</addrLine>
+        <addrLine>USA</addrLine>
+      </address>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">If given as running prose, use a consistent format wherever
+possible, for example separating lines of the address by commas, and
+including any postal code in the standard form.</p>
+    <p>Addresses may be encoded either as a sequence of
+lines, or using any sequence of address component elements.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#CONAAD"/>
+    <ptr target="#HD24"/>
+    <ptr target="#COBICOI"/>
+  </listRef>
+</elementSpec>

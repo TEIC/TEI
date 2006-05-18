@@ -1,0 +1,49 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" xml:id="DOCDATE" usage="rec" ident="docDate">
+<equiv/>
+<gloss>document date</gloss>
+<desc>contains the date of a document, as given
+(usually) on a title page.</desc>
+  <classes>
+    <memberOf key="model.titlepagePart"/>
+    <memberOf key="model.divWrapper"/>
+    <memberOf key="model.pLike.front"/>
+  </classes>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+  </content>
+  <attList>
+    <attDef ident="value" usage="opt">
+	<equiv/>
+	<desc>gives the value of the date in a standard form.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.temporal"/></datatype>
+      <valDesc>a date in ISO standard form, generally ISO 8601:2000 5.2.1.1 Complete representation, extended format (yyyy-mm-dd). If the date in the source was not in the Gregorian calendar it should be converted to Gregorian or proleptic Gregorian here; alternatively, the fact that it was not converted should be documented in the <gi>stdVals</gi> element in the TEI header.</valDesc>
+      <remarks>
+        <p>For simple dates, the <att>value</att> should give the Gregorian or proleptic Gregorian date
+in the form (yyyy-mm-dd) specified by ISO 8601. More complicated dates
+or special applications may require another calendar or another form;
+these should be documented in the <gi>stdVals</gi> element in the TEI
+Header.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <docImprint>Oxford, Clarendon Press, <docDate>1987</docDate>
+</docImprint>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>Cf. the general <gi>date</gi> element in the core tag set.
+This specialized element is provided for convenience in marking and
+processing the date of the documents, since it is likely to require
+specialized handling for many applications.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#DSTITL"/>
+  </listRef>
+</elementSpec>

@@ -1,0 +1,48 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="BIBL" usage="opt" ident="bibl">
+<equiv/>
+<gloss>bibliographic citation</gloss>
+<desc>contains a loosely-structured bibliographic citation of which
+the sub-components may or may not be explicitly tagged. </desc>
+  <classes>
+    <memberOf key="model.biblLike"/>
+    <memberOf key="att.declarable"/>
+    <memberOf key="model.msItemPart"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+<rng:ref name="model.gLike"/>
+        <rng:ref name="model.phrase"/>
+        <rng:ref name="model.biblPart"/>
+        <rng:ref name="model.global"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <bibl>Blain, Clements and Grundy: Feminist Companion to Literature in
+English (Yale, 1990)</bibl>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <bibl><title level="a">The Interesting story of the Children in the Wood</title>.
+  In <author>Victor E Neuberg</author>, <title>The Penny Histories</title>.
+  <publisher>OUP</publisher><date>1968</date>.
+</bibl>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">Contains phrase-level elements, together with
+any combination of elements from the <term>biblPart</term>
+    class</p>
+  </remarks>
+  <listRef>
+    <ptr target="#COBITY"/>
+    <ptr target="#HD3"/>
+    <ptr target="#CCAS2"/>
+  </listRef>
+</elementSpec>

@@ -1,0 +1,63 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="RESPSTMT" usage="rwa" ident="respStmt">
+  <equiv/>
+  <gloss>statement of responsibility</gloss>
+  <desc>supplies a statement of responsibility for someone responsible
+  for the intellectual content of a text, edition, recording, or
+  series, where the specialized elements for authors, editors, etc. do
+  not suffice or do not apply.</desc>
+  <classes>
+    <memberOf key="model.respLike"/>
+    <memberOf key="model.recordingPart"/>
+  </classes>
+  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:choice>
+      <rng:group>
+	<rng:ref name="resp"/>
+	<rng:zeroOrMore>
+	  <rng:ref name="resp"/>
+	</rng:zeroOrMore>
+	<rng:oneOrMore>
+	  <rng:ref name="model.nameLike.agent"/>
+	</rng:oneOrMore>
+      </rng:group>
+      <rng:group>
+	<rng:group> <!-- this group here just so that proper parens are output for DTDs -->
+	  <rng:ref name="model.nameLike.agent"/>
+	</rng:group>
+	<rng:zeroOrMore>
+            <rng:ref name="model.nameLike.agent"/>
+	</rng:zeroOrMore>
+	<rng:oneOrMore>
+	  <rng:ref name="resp"/>
+	</rng:oneOrMore>
+      </rng:group>
+    </rng:choice>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <respStmt>
+        <resp>transcribed from original ms</resp>
+        <persName>Claus Huitfeldt</persName>
+      </respStmt>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <respStmt>
+        <resp>converted to SGML encoding</resp>
+        <name>Alan Morrison</name>
+      </respStmt>
+    </egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#COBICOR"/>
+    <ptr target="#HD21"/>
+    <ptr target="#HD22"/>
+    <ptr target="#HD26"/>
+  </listRef>
+</elementSpec>

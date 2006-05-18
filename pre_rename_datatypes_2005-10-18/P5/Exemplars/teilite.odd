@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:lang="en"  xmlns="http://www.tei-c.org/ns/1.0"
+     xmlns:rng="http://relaxng.org/ns/structure/1.0">
+  <teiHeader>
+    
+    <fileDesc>
+      <titleStmt>
+        <title>TEI Lite</title>
+        <author>Lou Burnard</author>
+      </titleStmt>
+      <publicationStmt>
+        <availability status="free">
+          <p>This template file is freely available and you are
+          hereby authorised to copy, modify, and redistribute it in
+          any way without further reference or permissions.</p>
+          <p>When making such modifications, you are strongly
+          recommended to change the present text to include an
+          accurate statement of the licencing conditions applicable
+          to your modified text.</p>
+        </availability>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Derived from the DTD extension files for P4.</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <p>The Lite schema consists some new elements and a view of the
+      TEI.</p>
+      
+      <p>First, here is the small set of new elements:
+      <specGrp xml:id="LITEADD">
+        <elementSpec ident="eg">
+          <desc>Example code</desc>
+          <classes>
+            <memberOf key="model.pPart.data"/>
+            <memberOf key="model.common"/>
+          </classes>
+          <content>
+            <rng:text/>
+          </content>
+        </elementSpec>
+        
+        <elementSpec ident="gi">
+          <desc>contains the name (generic identifier) of an element.</desc>
+          <classes><memberOf key="model.pPart.data"/></classes>
+          <content>
+            <rng:text/>
+          </content>
+          <attList>
+            <attDef usage="opt" ident="tei">
+              <equiv/>
+              <desc>indicates whether this element is part of the TEI encoding
+              scheme (i.e. defined in a TEI DTD fragment) or not.</desc>
+              <datatype><rng:data type="boolean"/></datatype>
+              <defaultVal>true</defaultVal>
+              <valList type="closed">
+                <valItem ident="true">
+                  <equiv/>
+                  <gloss>this element is part of the TEI scheme.</gloss>
+                </valItem>
+                <valItem ident="false">
+                  <equiv/>
+                  <gloss>this element is not part of the TEI scheme.</gloss>
+                </valItem>
+              </valList>
+            </attDef>
+          </attList>
+          <exemplum>
+            <eg><![CDATA[An <gi tei="false">LI</gi> element is roughly analagous to an <gi>item</gi> element.]]></eg>
+          </exemplum>
+        </elementSpec>
+        
+        <elementSpec ident="ident">
+          <classes>
+            <memberOf key="model.pPart.data"/>
+            <memberOf key="att.typed"/>
+          </classes>
+          <content>
+            <rng:text/>
+          </content>
+        </elementSpec>
+        
+        <elementSpec ident="code">
+          <classes>
+            <memberOf key="att.typed"/>
+            <memberOf key="model.pPart.data"/>
+          </classes>
+          <content>
+            <rng:text/>
+          </content>
+        </elementSpec>
+        
+        <elementSpec ident="kw">
+          <classes>
+            <memberOf key="model.pPart.data"/>
+          </classes>
+          <content>
+            <rng:text/>
+          </content>
+        </elementSpec>
+      </specGrp>
+      </p>
+
+      <p>Now the elements which are to be deleted:
+      <specGrp xml:id="LITEDEL">
+        <elementSpec ident="alt" mode="delete" module="linking"  />
+        <elementSpec ident="altGrp" mode="delete" module="linking"  />
+        <elementSpec ident="analytic" mode="delete" module="core"  />
+        <elementSpec ident="broadcast" mode="delete" module="header"  />
+        <elementSpec ident="c" mode="delete" module="analysis"  />
+        <elementSpec ident="cb" mode="delete" module="core"  />
+        <elementSpec ident="cl" mode="delete" module="analysis"  />
+        <!--elementSpec ident="correction" mode="delete" module="header"  /-->
+        <elementSpec ident="dateRange" mode="delete" module="core"  />
+        <elementSpec ident="distinct" mode="delete" module="core"  />
+        <elementSpec ident="equipment" mode="delete" module="header"  />
+        <elementSpec ident="expan" mode="delete" module="core"  />
+        <elementSpec ident="fsdDecl" mode="delete" module="header"  />
+        <elementSpec ident="headItem" mode="delete" module="core"  />
+        <elementSpec ident="headLabel" mode="delete" module="core"  />
+        <elementSpec ident="hyphenation" mode="delete" module="header"  />
+        <elementSpec ident="interpretation" mode="delete" module="header"  />
+        <elementSpec ident="join" mode="delete" module="linking"  />
+        <elementSpec ident="joinGrp" mode="delete" module="linking"  />
+        <elementSpec ident="link" mode="delete" module="linking"  />
+        <elementSpec ident="linkGrp" mode="delete" module="linking"  />
+        <elementSpec ident="m" mode="delete" module="analysis"  />
+        <elementSpec ident="measure" mode="delete" module="core"  />
+        <elementSpec ident="meeting" mode="delete" module="core"  />
+        <elementSpec ident="metDecl" mode="delete" module="header"  />
+        <elementSpec ident="monogr" mode="delete" module="core"  />
+        <elementSpec ident="normalization" mode="delete" module="header"  />
+        <elementSpec ident="num" mode="delete" module="core"  />
+        <elementSpec ident="phr" mode="delete" module="analysis"  />
+        <elementSpec ident="postBox" mode="delete" module="core"  />
+        <elementSpec ident="postCode" mode="delete" module="core"  />
+        <elementSpec ident="quotation" mode="delete" module="header"  />
+        <elementSpec ident="quote" mode="delete" module="core"  />
+        <elementSpec ident="recording" mode="delete" module="header"  />
+        <elementSpec ident="recordingStmt" mode="delete" module="header"  />
+        <elementSpec ident="scriptStmt" mode="delete" module="header"  />
+        <elementSpec ident="segmentation" mode="delete" module="header"  />
+        <elementSpec ident="series" mode="delete" module="core"  />
+        <elementSpec ident="span" mode="delete" module="analysis"  />
+        <elementSpec ident="spanGrp" mode="delete" module="analysis"  />
+        <elementSpec ident="state" mode="delete" module="header"  />
+        <elementSpec ident="stdVals" mode="delete" module="header"  />
+        <elementSpec ident="street" mode="delete" module="core"  />
+        <elementSpec ident="teiCorpus" mode="delete" module="core"  />
+        <elementSpec ident="timeRange" mode="delete" module="core"  />
+        <elementSpec ident="timeline" mode="delete" module="linking"  />
+        <elementSpec ident="variantEncoding" mode="delete" module="header"  />
+        <elementSpec ident="w" mode="delete" module="analysis"  />
+        <elementSpec ident="when" mode="delete" module="linking"  />
+      </specGrp>
+      </p>
+
+      <p>The wrapping schema, which imports selected TEI modules and
+      the specification groups.</p>
+      <schemaSpec ident="teilite" start="TEI">
+        <specGrpRef target="#LITEADD"/>
+        <specGrpRef target="#LITEDEL"/>
+        <moduleRef key="tei"/>
+        <moduleRef key="core"/>
+        <moduleRef key="header"/>
+        <moduleRef key="textstructure"/>
+        <moduleRef key="figures"/>
+        <moduleRef key="linking"/>
+        <moduleRef key="analysis"/>
+      </schemaSpec>
+
+    </body>
+  </text>
+</TEI>

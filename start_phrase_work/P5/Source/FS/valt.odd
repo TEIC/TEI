@@ -1,0 +1,41 @@
+<!--Copyright TEI Consortium  
+. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" xml:id="VALT" usage="rwa" ident="vAlt">
+<equiv/>
+<gloss>Value alternation</gloss>
+<desc>represents the value part of a feature-value specification
+  which contains a set of values, only one of which can be valid.</desc>
+  <classes>
+    <memberOf key="model.singleVal"/> 
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:group>
+	<rng:ref name="model.featureVal"/>
+      </rng:group>
+      <rng:oneOrMore>
+      <rng:ref name="model.featureVal"/>
+      </rng:oneOrMore>
+    </rng:group>
+  </content>
+  <attList>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="gender">
+      <vAlt>
+	<symbol value="masculine"/>
+	<symbol value="neuter"/>
+	<symbol value="feminine"/>
+      </vAlt>
+    </f>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#FVALT" type="div3"/>
+  </listRef>
+</elementSpec>

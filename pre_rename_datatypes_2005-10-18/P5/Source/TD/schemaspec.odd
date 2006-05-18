@@ -1,0 +1,61 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="SCHEMASPEC" ident="schemaSpec">
+<equiv/>
+<desc>generates a TEI-conformant schema and documentation for it.</desc>
+  <classes>
+    <memberOf key="model.divPart"/>
+    <memberOf key="att.identified"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:ref name="macro.glossSeq"/>
+    <rng:zeroOrMore>
+      <rng:choice>
+	<rng:ref name="moduleRef"/>
+	<rng:ref name="specGrpRef"/>
+	<rng:ref name="model.oddDecl"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+    </rng:group>
+  </content>
+  <attList>  
+    <attDef ident="type" usage="opt">
+      <equiv/>
+      <desc>type of schema</desc>
+      <datatype>
+	<rng:ref name="data.namespace" xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+      </datatype>
+    </attDef>
+    <attDef ident="start" usage="opt">
+      <equiv/>
+      <desc>specifies entry points to the schema, i.e. which
+      elements  are allowed to be used as  the root of
+      documents conforming to it. </desc>
+      <datatype>
+	<rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
+          <rng:oneOrMore><rng:ref name="data.name"/></rng:oneOrMore>
+        </rng:list>
+      </datatype>
+      <defaultVal>TEI</defaultVal>
+    </attDef>
+    <attDef ident="ns" usage="opt">
+      <equiv/>
+      <desc>specifies the default namespace (if any) applicable to
+      components of the schema.</desc>
+      <datatype>
+	<rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+      </datatype>
+      <defaultVal>http://www.tei-c.org/ns/1.0</defaultVal>
+    </attDef>
+  </attList>
+  <remarks>
+    <p>A schema combines references to  modules or specification
+    groups with other atomic declarations. The processing of a
+    schema element must resolve any conflicts amongst the declarations
+    it contains or references. Different ODD processors may generate
+    schemas and documentation using different concrete syntaxes. </p>
+  </remarks>
+</elementSpec>

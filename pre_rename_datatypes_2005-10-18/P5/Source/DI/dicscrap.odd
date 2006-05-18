@@ -1,0 +1,37 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" xml:id="DICSCRAP" usage="mwa" ident="dictScrap">
+<equiv/>
+<gloss/>
+<desc>encloses a part of a dictionary entry in which other phrase-level dictionary elements are
+        freely combined.</desc>
+    <classes>
+        <memberOf key="model.entryParts.top"/>
+    </classes>
+    <content>
+        <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+            <rng:choice>
+                <rng:text/>
+<rng:ref name="model.gLike"/>
+                <rng:ref name="model.entryParts"/>
+                <rng:ref name="model.phrase"/>
+                <rng:ref name="model.inter"/>
+                <rng:ref name="model.global"/>
+            </rng:choice>
+        </rng:zeroOrMore>
+    </content>
+    <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+    </exemplum>
+    <remarks>
+        <p rend="dataDesc">May contain any dictionary elements in any combination.</p>
+        <p>This element is used to mark part of a dictionary entry in which lower level dictionary
+            elements appear, but which does not itself form an identifiable structural unit.</p>
+    </remarks>
+    <listRef>
+        <ptr target="#DIBO"/>
+        <ptr target="#DIEN"/>
+    </listRef>
+</elementSpec>

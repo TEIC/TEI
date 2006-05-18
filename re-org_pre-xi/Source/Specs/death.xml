@@ -1,0 +1,49 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="corpus" xml:id="DEATH" usage="opt" ident="death">
+<equiv/>
+<desc>contains information about a person's death, such as its date
+and place.</desc>
+  <classes>
+    <memberOf key="att.datable"/>
+    <memberOf key="model.personPart"/>
+  </classes>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+  </content>
+  <attList>
+    <attDef ident="date" usage="opt">
+	<equiv/>
+	<desc>specifies the date of death in an ISO standard form (yyyy-mm-dd).</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.temporal"/></datatype>
+      <valDesc>a date in ISO standard form, generally ISO 8601:2000 5.2.1.1 Complete representation, extended format (yyyy-mm-dd).</valDesc>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <death date="1902-10-01"/>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <death date="1960-12-10">Passed away near
+<name type="place">Aix-la-Chapelle</name>,
+after suffering from cerebral palsy.
+</death>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>Dates and place names, if included in the content of this
+element, should in general be tagged using the <gi>date</gi> and
+<gi>name</gi> elements respectively. If the additional tagset for
+Names and Dates is in use, the more specific elements defined by that
+tagset may be used as an alternative.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#CCAHPA"/>
+  </listRef>
+</elementSpec>

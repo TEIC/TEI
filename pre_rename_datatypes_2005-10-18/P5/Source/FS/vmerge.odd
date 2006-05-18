@@ -1,0 +1,57 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="iso-fs" xml:id="VMERGE" usage="rwa" ident="vMerge">
+<equiv/>
+<gloss>Merged collection of values</gloss>
+<desc>represents a feature value which is the result of merging
+  together the feature values contained by its children, using the organization
+  specified by the ORG attribute.</desc>
+  <classes>
+    <memberOf key="model.complexVal"/>
+  </classes>
+  <content>
+<rng:oneOrMore>
+      <rng:ref name="model.featureVal"/>
+</rng:oneOrMore>
+  </content>
+  <attList>
+    <attDef ident="org" usage="rwa">
+	<equiv/>
+	<desc>indicates the organization of the resulting merged values as <!--
+  singleton,--> set, bag or list.</desc>
+      <valList type="closed">
+<valItem ident="set">
+          <equiv/>
+          <gloss>indicates that the resulting values are organized as a set.</gloss>
+        </valItem>
+        <valItem ident="bag">
+          <equiv/>
+          <gloss>indicates that the resulting values are organized as a bag (multiset).
+   </gloss>
+        </valItem>
+        <valItem ident="list">
+          <equiv/>
+          <gloss>indicates that the resulting values are organized as a list.</gloss>
+        </valItem>
+      </valList>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <vMerge org="list">
+        <vColl org="set">
+         <symbol value="masculine"/>
+         <symbol value="neuter"/>
+	 <symbol value="feminine"/>
+        </vColl>
+        <symbol value="indeterminate"/>
+      </vMerge>
+    </egXML>
+<p>This example returns a list,  concatenating the indeterminate value
+with the set of values masculine, neuter and feminine.</p>
+  </exemplum>
+  <listRef>
+    <ptr target="#FVCOLL" type="div3"/>
+  </listRef>
+</elementSpec>

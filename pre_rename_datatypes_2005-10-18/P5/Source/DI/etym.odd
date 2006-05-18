@@ -1,0 +1,57 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" xml:id="ETYM" usage="rec" ident="etym">
+<equiv/>
+<gloss>etymology</gloss>
+<desc>encloses the etymological information in a dictionary entry.</desc>
+    <classes>
+        <memberOf key="model.entryParts.top"/>
+        <memberOf key="model.entryParts"/>
+        <memberOf key="att.lexicographic"/>
+    </classes>
+    <content>
+        <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+            <rng:choice>
+                <rng:text/>
+<rng:ref name="model.gLike"/>
+                <rng:ref name="model.phrase"/>
+                <rng:ref name="model.inter"/>
+                <rng:ref name="usg"/>
+                <rng:ref name="lbl"/>
+                <rng:ref name="def"/>
+                <rng:ref name="trans"/>
+                <rng:ref name="tr"/>
+                <rng:ref name="model.morphLike"/>
+                <rng:ref name="dicteg"/>
+                <rng:ref name="xr"/>
+                <rng:ref name="model.global"/>
+            </rng:choice>
+        </rng:zeroOrMore>
+    </content>
+    <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <entry>
+                <form>
+                    <orth>publish</orth> ... </form>
+                <etym>
+                    <lang>ME.</lang>
+                    <mentioned>publisshen</mentioned>, <lang>F.</lang>
+                    <mentioned>publier</mentioned>, <lang>L.</lang>
+                    <mentioned>publicare, publicatum</mentioned>. <xr>See <ref>public</ref>; cf. 2d <ref>-ish</ref>.</xr>
+                </etym>
+            </entry><![CDATA[ (From: Webster's Second International)]]></egXML>
+    </exemplum>
+    <remarks>
+        <p rend="dataDesc">May contain character data mixed with any other elements defined in the
+            dictionary tag set.</p>
+        <p>There is no consensus on the internal structure of etymologies, ore even on whether there
+            is a standard internal structure. The <gi>etym</gi> element accordingly simply contains
+            prose, within which names of languages, cited words, glosses, and examples will
+            typically be prominent. The tagging of such internal objects is optional.</p>
+    </remarks>
+    <listRef>
+        <ptr target="#DITPET" type="div2"/>
+    </listRef>
+</elementSpec>

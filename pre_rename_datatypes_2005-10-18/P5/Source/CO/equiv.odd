@@ -1,0 +1,69 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="EQUIV" usage="opt" ident="equiv">
+<equiv/>
+<gloss/>
+<desc>specifies a component which is considered equivalent to the
+  parent element, either by co-reference, or by external link.</desc>
+  <content>
+    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+  </content>
+  <attList>
+    <attDef ident="name" usage="opt">
+	<desc>names the underlying concept of which the parent is a
+  representation</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"/></datatype>
+      <valDesc>any name</valDesc>
+    </attDef>
+    <attDef ident="uri" usage="opt">
+	<desc>references the underlying concept of which the parent is a
+  representation by means of some external identifier</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <valDesc>a URI</valDesc>
+    </attDef>
+    <attDef ident="filter" usage="opt">
+	<desc>references an external script which contains a method to
+transform instances of this element to canonical TEI
+	</desc>
+      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="anyURI"/></datatype>
+      <valDesc>a URI</valDesc>
+    </attDef>
+    <attDef ident="mimeType" usage="opt">
+	<desc>MIME type of external filter script</desc>
+      <datatype><rng:ref name="data.words" xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>a URI</valDesc>
+    </attDef>
+  </attList>
+  <exemplum>
+<p>The following example declares that the <gi>bo</gi> element is
+  conceptually equivalent to the markup construct <tag>hi
+  rend='bold'</tag>, and that an external definition of this concept
+  is available from the URI indicated</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="hi" mode="change">
+<equiv name="BOLD"/>
+<desc>bold typography</desc>
+<attList>
+<attDef ident="rend">
+<valList>
+<valItem ident="bold">
+</valItem>
+</valList>
+</attDef>
+</attList>
+</elementSpec>
+<elementSpec ident="bo" mode="add">
+<equiv name="BOLD" uri="http://www.typesrus.com/bold"/>
+</elementSpec>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p/></remarks>
+  <listRef>
+    <ptr target="#TDTAG"/>
+    <ptr target="#TDATT"/>
+    <ptr target="#TDCLA"/>
+    <ptr target="#TDENT"/>
+  </listRef>
+</elementSpec>

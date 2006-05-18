@@ -1,0 +1,87 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" xml:id="WHEN" usage="opt" ident="when">
+<equiv/>
+<gloss>when</gloss>
+<desc>indicates a point in time either relative to other elements in the
+same timeline tag, or absolutely.</desc>
+  <content>
+    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+  </content>
+  <attList>
+    <attDef ident="absolute" usage="rwa">
+	<equiv/>
+	<desc>supplies an absolute value for the time.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.temporal"/></datatype>
+      <valDesc>Times may be given in standard form, as specified in the
+Encoding Declarations section of the header.</valDesc>
+      <remarks>
+        <p>Required for the element designated as the value of the
+<att>origin</att> attribute in the <tag>timeline</tag> tag. </p>
+      </remarks>
+    </attDef>
+    <attDef ident="unit" usage="rwa">
+	<equiv/>
+	<desc>specifies the unit of time in which the  <att>interval</att>
+value is expressed, if this is not inherited from the parent <gi>timeLine</gi>.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <valList type="semi">
+<valItem ident="s"><gloss>seconds</gloss></valItem>
+<valItem ident="ms"><gloss>milliseconds</gloss></valItem>
+<valItem ident="m"><gloss>minutes</gloss></valItem>
+<valItem ident="h"><gloss>hours</gloss></valItem>
+<valItem ident="d"><gloss>days</gloss></valItem>
+      </valList>
+<!--<valDesc>a semi-closed list of recognized time units such as
+<mentioned>millisecond</mentioned>, <mentioned>second</mentioned>, <mentioned>minute</mentioned></valDesc>-->
+    </attDef>
+    <attDef ident="interval" usage="rwa">
+	<equiv/>
+	<desc>specifies the numeric portion of a time interval</desc>
+      <datatype xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	<rng:choice>
+	  <rng:data type="float">
+	    <rng:param name="minExclusive">0</rng:param>
+	  </rng:data>
+	  <rng:value>unknown</rng:value>
+	</rng:choice>
+      </datatype>
+      <valDesc>a positive number, or the special value
+      <val>unknown</val>.</valDesc>
+      <remarks>
+        <p>The value <val>unknown</val> indicates uncertainty about
+        the interval.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="since" usage="rwa">
+	<equiv/>
+	<desc>identifies the reference point for determining the time of the
+current <gi>when</gi> element, which is obtained by adding the interval to the
+time of the reference point.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <valDesc>Should point to another <gi>when</gi> element in the same
+<gi>timeline</gi>.</valDesc>
+      <remarks>
+        <p>If this attribute is omitted, and the <att>absolute</att>
+attribute is not specified, then the reference point is understood to be
+the origin of the enclosing <gi>timeline</gi>
+                  tag.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <when xml:id="TW3" interval="20" since="#w2"/>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>On this
+element, the global <att>xml:id</att> attribute must be supplied to
+specify an identifier for this point in time. The value used may be chosen freely provided that
+it is unique within the document and is a syntactically valid name. There is no requirement for values containing numbers to be in sequence.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#SASYMP" type="div3"/>
+  </listRef>
+</elementSpec>

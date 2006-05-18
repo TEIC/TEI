@@ -1,0 +1,104 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" xml:id="DIV2" usage="rwa" ident="div2">
+<equiv/>
+<gloss>level-2 text division</gloss>
+<desc>contains a second-level subdivision of the front, body, or back of a
+ text.</desc>
+  <classes>
+    <memberOf key="att.divLike"/>
+    <memberOf key="att.declaring"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="model.divWrapper"/>
+          <rng:ref name="model.global"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+      <rng:choice>
+        <rng:oneOrMore>
+          <rng:choice>
+            <rng:ref name="div3"/>
+            <rng:ref name="divGen"/>
+          </rng:choice>
+          <rng:zeroOrMore>
+            <rng:ref name="model.global"/>
+          </rng:zeroOrMore>
+        </rng:oneOrMore>
+        <rng:group>
+          <rng:oneOrMore>
+            <rng:ref name="macro.component"/>
+            <rng:zeroOrMore>
+              <rng:ref name="model.global"/>
+            </rng:zeroOrMore>
+          </rng:oneOrMore>
+          <rng:zeroOrMore>
+            <rng:choice>
+              <rng:ref name="div3"/>
+              <rng:ref name="divGen"/>
+            </rng:choice>
+            <rng:zeroOrMore>
+              <rng:ref name="model.global"/>
+            </rng:zeroOrMore>
+          </rng:zeroOrMore>
+        </rng:group>
+      </rng:choice>
+      <rng:zeroOrMore>
+<?teidtd (?>
+        <rng:ref name="model.divWrapper.bottom"/>
+<?teidtd )?>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:zeroOrMore>
+    </rng:group>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <div1 n="2" type="part">
+        <head>The Second Partition:
+           The Cure of Melancholy</head>
+        <div2 n="2.1" type="section">
+          <div3 n="2.1.1" type="member">
+            <div4 n="2.1.1.1" type="subsection">
+              <head>Unlawful Cures rejected.</head>
+              <p>Inveterate melancholy, howsoever it may seem to
+      be a continuate, inexorable disease, hard to be
+      cured, accompanying them to their graves most part
+      (as <ref target="#a">Montanus</ref> observes), yet many
+      times it may be helped...	
+   </p>
+            </div4>
+          </div3>
+        </div2>
+        <div2 n="2.2" type="section">
+          <div3 n="2.2.1" type="member">
+            <head>Sect. II. Memb. I</head>
+            <p>
+            </p>
+          </div3>
+        </div2>
+        <div2 n="2.3" type="section">
+          <div3 n="2.3.1" type="member">
+            <head>Sect. III. Memb. I</head>
+            <p>
+            </p>
+          </div3>
+        </div2>
+      </div1>
+    </egXML>
+<!-- Burton, Anatomy of Melancholy, 16th ed (1651), Blake, 1836 -->
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">any sequence of low-level structural elements, possibly grouped
+into lower subdivisions.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#DSDIV2"/>
+  </listRef>
+</elementSpec>

@@ -1,0 +1,49 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="INCIPIT" ident="incipit">
+<equiv/>
+<gloss/>
+<desc xml:id="incipit.desc">contains the <term>incipit</term> of a manuscript item, that is the opening words of the text proper, exclusive of any <term>rubric</term> which might precede it, of sufficient length to identify the work uniquely; such incipts were, in fomer times, frequently used a means of reference to a work, in place of a title.</desc>
+  <classes>
+    <memberOf key="model.msItemPart"/>
+    <memberOf key="att.typed"/>
+  </classes>
+  <content>
+<!--<!ELEMENT incipit  - -  (%phrase.seq;)>-->
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+  </content>
+  <attList>
+    <attDef ident="defective">
+	<equiv/>
+	<gloss/>
+	<desc>indicates whether the incipit as given is defective, i.e. the first words of the text as preserved, as opposed to the first words of the work itself.</desc>   
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.xTruthValue"/></datatype>
+      <valDesc>true, false, unknown, or unspecified</valDesc>
+    </attDef>
+<!--    <attDef ident="type">
+	<equiv/>
+	<gloss/>
+	<desc>specifies the type of incipit, e.g. whether it introduces a work,
+is biblical, legal, etc.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Key"/></datatype>
+      <valDesc>A typology has yet to be defined</valDesc>      
+    </attDef>
+-->
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+<incipit>Pater noster qui es in celis</incipit>
+<incipit defective="true">tatem dedit hominibus alleluia.</incipit>
+<incipit type="biblical">Ghif ons huden onse dagelix broet</incipit>
+<incipit>O ongehoerde gewerdighe christi</incipit>
+<incipit type="lemma">Firmiter</incipit>
+<incipit>Ideo dicit firmiter quia
+ordo fidei nostre probari non potest</incipit>
+</egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#mscoit"/>
+  </listRef>
+</elementSpec>

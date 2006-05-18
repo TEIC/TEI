@@ -1,0 +1,65 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" xml:id="DISTANCE" usage="opt" ident="distance">
+<equiv/>
+<gloss>distance</gloss>
+<desc>that part of a relative temporal or spatial expression which indicates
+the distance between the place or time denoted by it and the place or
+time referred to within it.</desc>
+  <classes>
+    <memberOf key="model.datePart"/>
+    <memberOf key="att.datePart"/>
+    <memberOf key="model.placeNamePart"/>
+  </classes>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+  </content>
+  <attList>
+    <attDef ident="exact" usage="mwa">
+	<equiv/>
+	<desc>indicates the degree
+of accuracy associated with the
+distance.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <defaultVal>unknown</defaultVal>
+      <valList type="closed">
+        <valItem ident="true">
+          <equiv/>
+          <gloss>The distance is exact.</gloss>
+        </valItem>
+        <valItem ident="false">
+          <equiv/>
+          <gloss>The distance is approximate.</gloss>
+        </valItem>
+        <valItem ident="unknown">
+          <equiv/>
+          <gloss>Accuracy unavailable or unknown.</gloss>
+        </valItem>
+      </valList>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <placeName>
+        <distance>two miles</distance> 
+        <offset>north east of</offset>
+        <placeName>Manchester</placeName>
+      </placeName>
+      <dateStruct>
+        <distance exact="false" value="P14D">a fortnight</distance>
+        <offset>after</offset>
+        <occasion>Michaelmas</occasion>
+      </dateStruct>
+      <timeStruct><distance>20 minutes</distance><offset>before</offset><hour>noon</hour>.
+</timeStruct>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>This is a specialized form of measure, used only within
+relative temporal and spatial expressions.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#NDPLAC"/>
+  </listRef>
+</elementSpec>

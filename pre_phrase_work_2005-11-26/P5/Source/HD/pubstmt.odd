@@ -1,0 +1,61 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="PUBSTMT" usage="req" ident="publicationStmt">
+<equiv/>
+<gloss>publication statement</gloss>
+<desc>groups information concerning the publication or distribution
+of an electronic or other text. </desc>
+  <content>
+    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:oneOrMore>
+        <rng:ref name="model.pLike"/>
+      </rng:oneOrMore>
+      <rng:oneOrMore>
+        <rng:choice>
+          <rng:ref name="publisher"/>
+          <rng:ref name="distributor"/>
+          <rng:ref name="authority"/>
+          <rng:ref name="pubPlace"/>
+          <rng:ref name="address"/>
+          <rng:ref name="idno"/>
+          <rng:ref name="availability"/>
+          <rng:ref name="date"/>
+        </rng:choice>
+      </rng:oneOrMore>
+    </rng:choice>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <publicationStmt>
+        <publisher>C. Muquardt </publisher>
+        <pubPlace>Bruxelles &amp; Leipzig</pubPlace>
+        <date value="1846"/>
+      </publicationStmt>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <publicationStmt>
+        <publisher>Chadwyck Healey</publisher>
+        <pubPlace>Cambridge</pubPlace>
+        <availability>
+          <p>Available under licence only</p>
+        </availability>
+        <date value="1992">1992</date>
+      </publicationStmt>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>Although not enforced by the
+DTD, it is a requirement for TEI conformance that information about
+publication place, address, identifier, availability, and date be
+given in that order, following the name of the publisher, distributor,
+or authority concerned</p>
+  </remarks>
+  <listRef>
+    <ptr target="#HD24"/>
+    <ptr target="#HD2"/>
+  </listRef>
+</elementSpec>

@@ -1,0 +1,36 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="concurrent" xml:id="PLPAGE" usage="opt" ident="page">
+<equiv/>
+<gloss/>
+<desc>marks pages in a reference edition.</desc>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+<rng:ref name="model.gLike"/>
+        <rng:ref name="line"/>
+        <rng:ref name="col"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <exemplum>
+    <eg><![CDATA[<(La)page n="32"> <!-- text of edition La, page 32 --></(La)page>
+ <(La)page n="33"> <!-- text of edition La, page 33 --> </(La)page>
+ <(La)page n="34"> <!-- text of edition La, page 34 --> </(La)page>
+ <(La)page n="35"> <!-- text of edition La, page 35 --> </(La)page>]]></eg>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">May contain <gi>col</gi> elements, <gi>line</gi> elements, or
+character data.</p>
+    <p>The <gi>page</gi> element in a concurrent page-reference DTD
+may be subdivided into columns or lines if desired, or left unanalysed.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#NHRS" type="div3"/>
+  </listRef>
+</elementSpec>

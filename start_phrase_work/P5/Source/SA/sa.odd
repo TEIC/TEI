@@ -1,0 +1,2889 @@
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+$Date$
+$Author$
+-->
+<!--
+* Links
+  - intro stays same, explains diff between ptr & link
+  - as now, explain links 1st with simple pointing mechannism
+* Pointing Elsewhere
+  - using http://blah \  probably move these 2 to SG or CO, and just remind reader here
+  - using bare names  /  or perhaps be redundant,
+  - using element()   element(/1/2/3) == xpath(/*[1]/*[2]/*[3])
+  - using TEI schemes
+    + xpath() xpath2()
+    + string-range()
+    + range()
+      ^ left()
+      ^ right()
+-->
+<div1 xmlns="http://www.tei-c.org/ns/1.0" type="chapter" xml:id="SA" n="14">
+  <head>Linking, Segmentation, and Alignment</head>
+  <p>This chapter discusses a number of ways in which encoders may
+  represent analyses of the structure of a text which are not
+  necessarily linear or hierarchic. In this chapter, tag sets and
+  global attributes are provided for the following common
+  requirements:
+  <list type="bullets">
+    <item>to <emph>link</emph> disparate elements 
+    using the <att>xml:id</att> attribute (section <ptr
+    target="#SAPT"/>);</item>
+    <item>to link disparate elements without using the
+    <att>xml:id</att> attribute (sections <ptr target="#SAUR"/>, <ptr
+    target="#SAES"/>, and <ptr target="#SATS"/>);</item>
+    <item>to <emph>segment</emph> text into elements convenient for
+    the encoder and to mark arbitrary points within documents (section
+    <ptr target="#SASE"/>);</item>
+    <item>to represent <term>correspondence</term> or
+    <term>alignment</term> among groups of text elements, both those
+    with content and those which are empty (section <ptr
+    target="#SACS"/>);<note place="foot">We use the term alignment as a
+    special case of the more general notion of correspondence. Using A
+    as a short form for <q>an element with its attribute <att>xml:id</att>
+    set to the value <val>A</val></q>, and suppose elements A1, A2,
+    and A3 occur in that order and form one group, while elements B1,
+    B2, and B3 occur in that order and form another group. Then a
+    relation in which A1 corresponds to B1, A2 corresponds to B2, and
+    A3 corresponds to B3 is an alignment. On the other hand, a
+    relation in which A1 corresponds to B2, B1 to C2, and C1 to A2 is
+    not an alignment.</note></item>
+    <item>to <term rend="noindex">synchronize</term> elements of a
+    text, that is to represent temporal correspondences and alignments
+    among text elements (section <ptr target="#SASY"/>) and also to
+    align them with specific points in time (section <ptr target="#SASYMP"/>);</item>
+    <item>to specify that one text element is <emph>identical</emph>
+    to or a <emph>copy</emph> of another (section <ptr target="#SAIE"/>);</item>
+    <item>to <emph>aggregate</emph> possibly noncontinguous elements
+    (section <ptr target="#SAAG"/>);</item>
+    <item>to specify that different elements are
+    <emph>alternatives</emph> to one another and to express
+    <emph>preferences</emph> among the alternatives (section <ptr target="#SAAT"/>);</item> <item>to associate segments of a text
+    with interpretations or analyses of their significance (section
+    <ptr target="#SAAN"/>).</item>
+  </list></p>
+  <p>These facilities all use the same basic set of techniques, which
+  are based on the W3C <ref>XPointer</ref> mechanism, which includes a
+  variety of <term rend="noindex">schemes</term>. The most convenient
+  technique, and that which is recommended by these Guidelines
+  wherever possible, makes use of the global <att>xml:id</att>
+  attribute, as defined in section <ptr target="#STGA"/>. For many of
+  the topics discussed in this chapter, a choice of methods of
+  encoding is offered, ranging from simple but less general ones,
+  which use attribute values only, to more elaborate and more general
+  ones, which use specialized elements.</p>
+  <div2 type="section" xml:id="SAPT">
+    <head>Links</head>
+    <p>We say that one element <term rend="noindex">points</term> to
+    others if the first has an attribute whose value is a reference to
+    the others: such an element is called a <term>pointer
+    element</term>, or simply a <term>pointer</term>. Among the
+    pointers that have been introduced up to this point in these
+    Guidelines are <gi>note</gi>, <gi>ref</gi>, and <gi>ptr</gi>.
+    These elements all indicate an association between one place in
+    the document (the location of the pointer itself) and one or more
+    others (the elements whose identifiers are specified by the
+    pointer's <att>target</att> attribute). This element set defines a
+    variation on this basic kind of pointer, known as a
+    <term>link</term> which specifies both <soCalled>ends</soCalled>
+    of an association. In addition, we define a syntax for
+    representing locations in a document by a variety of means not
+    dependent on the use of <att>xml:id</att> attributes.</p>
+    <div3 type="subsection" xml:id="SAPTL">
+      <head>Pointers and Links</head>
+      <p>In section <ptr target="#COXR"/> we introduced the simplest
+      pointer elements, <gi>ptr</gi> and <gi>ref</gi>. Here we
+      introduce additionally the <gi>link</gi> element, which
+      represents an association between two (or more) locations by
+      specifying each location explicitly. Its own location is
+      irrelevant to the intended linkage.
+      <specList>
+        <specDesc key="ptr" atts="target"/>
+        <specDesc key="ref" atts="target"/>
+        <specDesc key="link" atts="targets"/>
+      </specList>
+      The <gi>ptr</gi> element may be called a <soCalled>pure
+      pointer</soCalled>, because its primary function is simply to
+      point. A pointer sets up a <term rend="noindex">connection</term>
+      between an element (which, in
+      the case of a pure pointer, can be thought of simply as a
+      location in a document), and one or more others, known
+      collectively as its <term>target</term>. The <gi>ptr</gi> and
+      <gi>ref</gi> elements bear a <att>target</att> attribute (in the
+      singular), because they point, conceptually, at a single target,
+      even if that target may be discontinuous in the document. The
+      <gi>link</gi> element bears a <att>targets</att> attribute, with
+      a plural name, because it specifies at least two targets, each
+      of which is a unitary object. It may be thought of as a
+      representing a <term>double link</term> between the objects
+      specified.</p>
+      <p>As members of the class <ident type="class">att.pointing</ident>,
+      these elements share a common set of attributes:
+      <specList>
+        <specDesc key="att.pointing" atts="type evaluate"/>
+      </specList></p>
+      <p>Double connection among elements could also be expressed by a
+      combination of pointer elements, for example, two <gi>ptr</gi>
+      elements, or one <gi>ptr</gi> element and one <gi>note</gi>
+      element. All that is required is that the value of the
+      <att>target</att> (or other pointing) attribute of the one be
+      the value of the <att>xml:id</att> attribute of the other. What
+      the <gi>link</gi> element accomplishes is the handling of double
+      connection by means of a single element. Thus, in the following
+      encoding:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><ptr xml:id="sa-p1" target="#sa-p2"/><ptr xml:id="sa-p2" target="#sa-p1"/></egXML>
+      <val>sa-p1</val> points to <val>sa-p2</val>, and <val>sa-p2</val>
+      points to <val>sa-p1</val>. This is logically
+      equivalent to the more compact encoding:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><link targets="#sa-p1 #sa-p2"/></egXML></p>
+      <p>As noted above, elements pointed to or linked by this simple
+      method must be identifiable using the global <att>xml:id</att>
+      attribute. This implies that they must be present in the same
+      document, and that they must bear unique <att>xml:id</att>
+      values. Pointing or linking to external documents and pointing
+      or linking where identifiers are not available is implemented by
+      more complete forms of URI references, as described below in
+      section <ptr target="#SAXP"/>.</p>
+    </div3>
+    <div3 type="subsection" xml:id="SAPTEG">
+      <head>Using Pointers and Links</head>
+      <p>As an example of the use of these mechanisms which establish
+      connections among elements, consider the practice (common in
+      18th century English verse and elsewhere) of providing footnotes
+      citing parallel passages from classical authors. <figure
+      xml:id="POPE" rend="float fullpage">
+      <graphic  url="http://www.tei-c.org/Guidelines/Figures/dunpic.png" /><figDesc>The
+      figure shows the original page of Pope's <title>Dunciad</title>
+      which is discussed in the text.</figDesc></figure> Such
+      footnotes can of course simply be encoded using the
+      <gi>note</gi> element (see section <ptr target="#CONO"/>) without
+      a <att>target</att> attribute, placed adjacent to the passage to
+      which the note refers:<note place="foot">The <att>type</att>
+      attribute on the note is used to classify the notes using the
+      typology established in the Advertisement to the work: <q>The
+      <term rend="noindex">Imitations</term> of the Ancients are
+      added, to gratify those who either never read, or may have
+      forgotten them; together with some of the Parodies, and
+      Allusions to the most excellent of the Moderns.</q> In the
+      source text, the text of the poem shares the page with two sets
+      of notes, one headed <q>Remarks</q> and the other
+      <q>Imitations</q>.</note>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><l>(Diff'rent our parties, but with equal grace</l>
+<l>The Goddess smiles on Whig and Tory race,</l>
+<l><note type="imitation" place="foot" anchored="false">    
+    <bibl>Virg. &#xC6;n. 10.</bibl>
+    <quote>
+      <l>Tros Rutulusve fuat; nullo discrimine habebo.</l>
+      <l>&#x2014;&#x2014; Rex Jupiter omnibus idem.</l>
+    </quote>
+  </note>'Tis the same rope at sev'ral ends they twist,</l>
+<l>To Dulness, Ridpath is as dear as Mist)</l></egXML>
+      <!-- Pope, Dunciad (1729) III.284 --></p>
+      <p>This use of the <gi>note</gi> element can be called
+      <term>implicit pointing</term> (or <term>implicit
+      linking</term>). It relies on the juxtaposition of the note to
+      the text being commented on for the connection to be understood.
+      If it is felt that the mere juxtaposition of the note to the
+      text does not make it sufficiently clear exactly what text
+      segment is being commented on (for example, is it the
+      immediately preceding line, or the immediately preceding two
+      lines, or what?), or if it is decided to place the note at some
+      distance from the text, then the pointing or the linking must be
+      made explicit. We now consider various methods for doing
+      that.</p>
+      <p>Firstly, a <gi>ptr</gi> element might be placed at an
+      appropriate point within the text to link it with the
+      annotation:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><l>(Diff'rent our parties, but with equal grace</l>
+<l>The Goddess smiles on Whig and Tory race,
+   <ptr rend="unmarked" target="#note3.284"/></l>
+<l>'Tis the same rope at sev'ral ends they twist,</l>
+<l>To Dulness, Ridpath is as dear as Mist)</l>
+<note xml:id="note3.284" type="imitation" place="foot" anchored="false">    
+   <bibl>Virg. &#xC6;n. 10.</bibl>
+   <quote>
+      <l>Tros Rutulusve fuat; nullo discrimine habebo.</l>
+      <l>&#x2014;&#x2014; Rex Jupiter omnibus idem.</l>
+   </quote>
+</note></egXML>
+      <!-- Pope, Dunciad (1729) III.284 -->
+      The <gi>note</gi> element has been given an arbitrary identifier
+      (<val>note3.284</val>) to enable it to be specified
+      as the target of the pointer element. Because there is nothing
+      in the text to signal the existence of the annotation, the
+      <att>rend</att> attribute has been given the value <val>unmarked</val>.</p>
+      <p>Secondly, the <att>target</att> attribute of the
+      <gi>note</gi> element can be used to point at its associated
+      text, provided that an <att>xml:id</att> attribute has been
+      supplied for the associated text:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><l xml:id="l3.283">(Diff'rent our parties, but with equal grace</l>
+<l xml:id="l3.284">The Goddess smiles on Whig and Tory race,</l>
+<l xml:id="l3.285">'Tis the same rope at sev'ral ends they twist,</l>
+<l xml:id="l3.286">To Dulness, Ridpath is as dear as Mist)</l>
+<!-- ... -->
+      </egXML>
+Given this encoding of the text itself, we can now link the various
+notes to it. In this case, the note
+      itself contains a pointer to the place in the text which it is
+      annotating, this could be encoded using a <gi>ref</gi>
+      element, which bears a <att>target</att> attribute of its own
+      and contains a (slightly misquoted) extract from the text marked
+      as a <gi>quote</gi> element:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><note type="imitation" place="foot" anchored="false" target="#l3.284">    
+   <ref rend="sc" target="#l3.284">Verse 283&#x2013;84.
+       <quote>
+         <l>&#x2014;&#x2014;. With equal grace</l>
+         <l>Our Goddess smiles on Whig and Tory race.</l>
+      </quote>
+   </ref>
+   <bibl>Virg. &#xC6;n. 10.</bibl>
+   <quote>    
+      <l>Tros Rutulusve fuat; nullo discrimine habebo.</l>
+      <l>&#x2014;&#x2014; Rex Jupiter omnibus idem. </l>
+   </quote>
+</note></egXML>
+      <!-- Pope, Dunciad (1729) III.284 --></p>
+      <p>Combining these two approaches gives us the following
+      associations:
+      <list type="simple">
+        <item>a pointer within one line indicates the note</item>
+        <item>the note indicates the line</item>
+        <item>a pointer within the note indicates the line</item>
+      </list>
+      Note that we do not have any way of pointing from the line
+      itself to the note: the association is implied by containment of
+      the pointer. We do not as yet have a true double link between
+      text and note. To achieve that we will need to supply identifiers for
+      the annotations as well as for the verse lines, and use a <gi>link</gi> element to associate the
+      two. Note that the <gi>ptr</gi> element and the
+      <att>target</att> attribute on the <gi>note</gi> may now be
+      dispensed with:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+<note xml:id="n3.284" type="imitation" place="foot" anchored="false">    
+   <ref rend="sc" target="#l3.284">Verse 283&#x2013;84.
+      <quote>
+         <l>&#x2014;&#x2014;. With equal grace</l>
+         <l>Our Goddess smiles on Whig and Tory race.</l>
+      </quote></ref>
+   <bibl>Virg. &#xC6;n. 10.</bibl>
+   <quote>
+      <l>Tros Rutulusve fuat; nullo discrimine habebo.</l>
+      <l>&#x2014;&#x2014; Rex Jupiter omnibus idem. </l>
+   </quote>
+</note>
+<link targets="#n3.284 #l3.284"/></egXML>
+      <!-- Pope, Dunciad (1729) III.284 --></p>
+      <p>The <att>targets</att> attribute of the <gi>link</gi> element
+      here bears the identifiers of the note followed by that of the
+      verse line. For completeness, we could also allocate an
+      identifier to the reference within the note and encode the
+      association between it and the verse line in the same way:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><note xml:id="nt3.284" type="imitation" place="foot" anchored="false">    
+   <ref rend="sc" xml:id="r3.284" target="#l3.284">Verse 283&#x2013;84.
+      <quote>
+         <l>&#x2014;&#x2014;. With equal grace</l>
+         <l>Our Goddess smiles on Whig and Tory race.</l>
+      </quote></ref>
+   <!-- ... -->
+</note>
+<!-- ... -->
+<link targets="#r3.284 #l3.284"/></egXML>
+      <!-- Pope, Dunciad (1729) III.284 -->
+      Indeed, the two <gi>link</gi>s could be combined into one, as
+      follows:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><link targets="#n3.284 #r3.284 #l3.284"/></egXML></p>
+    </div3>
+    <div3 type="subsection" xml:id="SAPTLG">
+      <head>Groups of Links</head>
+      <p>Clearly, there are many reasons for which an encoder might
+      wish to represent a link or association between different
+      elements. For some of them, specific elements are provided in
+      these Guidelines; some of these are discussed elsewhere in the
+      present chapter. The <gi>link</gi> element is a general purpose
+      element which may be used for any kind of association. The
+      element <gi>linkGrp</gi> may be used to group links of a
+      particular type together in a single part of the document; such
+      a collection may be used to represent what is sometimes referred
+      to in the literature of Hypertext as a <term>web</term>, a term
+      introduced by the Brown University FRESS project in 1969.
+      <specList><specDesc key="linkGrp"/></specList>
+      As a member of the class <ident type="class">att.pointing.group</ident>, this element shares the
+      following attributes with other members of that class:
+      <specList><specDesc key="att.pointing.group" atts="domains targFunc "/></specList>
+      It is also a member of the <ident type="class">att.pointing</ident>
+      class, and therefore also carries the attributes specified in
+      section <ptr target="#SAPTL"/> above, in particular the
+      <att>type</att> attribute:
+      <specList><specDesc key="att.pointing" atts="type"/></specList></p>
+      <p>The <gi>linkGrp</gi> element provides a convenient way of
+      establishing a default for the <att>type</att> attribute on a
+      group of links of the same type: by default, the <att>type</att>
+      attribute on a <gi>link</gi> element has the same value as that
+      given for <att>type</att> on the enclosing <gi>linkGrp</gi>.</p>
+      <p>Typical software might hide a web entirely from the user, but
+      use it as a source of information about links, which are
+      displayed independently at their referenced locations.
+      Alternatively, software might provide a direct view of the link
+      collection, along with added functions for manipulating the
+      collection, as by filtering, sorting, and so on.
+      To continue our previous example, this text contains many other
+      notes of a kind similar to the one shown above. Here are a few
+      more of the lines to which annotations have to be attached,
+      followed by the annotations themselves:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><l xml:id="l2.79">A place there is, betwixt earth, air and seas</l>
+<l xml:id="l2.80">Where from Ambrosia, Jove retires for ease.</l>
+<!-- ... -->
+<l xml:id="l2.88">Sign'd with that Ichor which from Gods distills.</l>
+<!-- ... -->
+<note xml:id="n2.79" place="foot" anchored="false">
+   <bibl>Ovid Met. 12.</bibl>
+   <quote xml:lang="la">        
+      <l>Orbe locus media est, inter terrasq; fretumq;</l>
+      <l>C&#x153;lestesq; plagas &#x2014;</l>
+   </quote>
+</note>
+<note xml:id="n2.88" place="foot" anchored="false">
+    Alludes to <bibl>Homer, Iliad 5</bibl> ...
+</note>      </egXML>
+To avoid having
+      to repeat the specification of <att>type</att> as <val>imitation</val> on each <gi>note</gi>,
+      we may specify it once for all on a <gi>linkGrp</gi> element
+      containing all links of this type.
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+<linkGrp type="imitation">
+   <link targets="#n2.79 #l2.79"/>
+   <link targets="#n2.88 #l2.88"/>
+   <link targets="#n3.284 #l3.284"/>
+</linkGrp></egXML></p>
+      <p>Additional information for applications that use
+      <gi>linkGrp</gi> elements can be provided by means of special
+      attributes. First, the <att>domains</att> attribute can be used
+      to identify the text elements within which the individual
+      targets of the links are to be found. Suppose that the text
+      under discussion is organized into a <gi>body</gi> element,
+      containing the text of the poem, and a <gi>back</gi> element
+      containing the notes. Then the <att>domains</att> attribute can
+      have as its value the identifiers of the <gi>body</gi> and the
+      <gi>back</gi>, to enable an application to verify that the link
+      targets are in fact contained by appropriate elements, or to
+      limit its search space:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <!-- ... -->
+        <linkGrp type="imitation" domains="dunciad dunnotes">
+          <link targets="#n2.79 #l2.79"/>
+          <link targets="#n2.88 #l2.88"/>
+          <!-- ... -->
+          <link targets="#n3.284 #l3.284"/>
+          <!-- ... -->
+        </linkGrp>
+      </egXML></p>
+      <p>Note that there must be a single parent element for each
+      <soCalled>domain</soCalled>; if some notes are contained by a
+      section with identifier <val>dunnotes</val>, and
+      others by a section with identifier <val>dunimits</val>,
+      an intermediate pointer must be
+      provided (as described in section <ptr target="#SAPTIP"/>) within
+      the <gi>linkGrp</gi> and its identifier used instead.</p>
+      <p>Next, the <att>targFunc</att> attribute can be used to
+      provide further information about the role or function of the
+      various targets specified for each link in the group. The value
+      of the <att>targFunc</att> attribute is a list of names
+      (formally, name tokens), one for each of the targets in the
+      link; these names can be chosen freely by the encoder, but their
+      significance should be documented in the encoding declaration in
+      the header.<note place="foot">Since no special element is
+      provided for this purpose in the present version of these
+      Guidelines, the information should be supplied as a series of
+      paragraphs at the end of the <gi>encodingDesc</gi> element
+      described in section <ptr target="#HD5"/>.</note> In the current
+      example, we might think of the note as containing the <term
+      rend="noindex">source</term> of the imitation and the verse line
+      as containing the <term rend="noindex">goal</term> of the
+      imitation. Accordingly, we can specify the <gi>linkGrp</gi> in
+      the preceding example thus:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><linkGrp type="imitation" domains="dunciad dunnotes" targFunc="source goal">
+   <link targets="#n2.79 #l2.79"/>
+   <link targets="#n2.88 #l2.88"/>
+   <!-- ... -->
+   <link targets="#n3.284 #l3.284"/>
+   <!-- ... -->
+</linkGrp></egXML></p>
+      <p>The <gi>link</gi> and <gi>linkGrp</gi> elements are formally
+      defined as follows:
+      <specGrp xml:id="DSAPT" n="Links">
+        &link.odd;
+        &linkgrp.odd;
+      </specGrp>
+      </p>
+    </div3>
+    <div3 type="subsection" xml:id="SAPTIP">
+      <head>Intermediate Pointers</head>
+      <p>In the preceding examples, we have shown various ways of
+      linking an annotation and a single verse line. However, the
+      example cited in fact requires us to encode an association
+      between the note and a <emph>pair</emph> of verse lines (lines
+      284 and 285).</p>
+      <p>There are a number of possible ways of correcting this error:
+      one could use the <att>target</att> and <att>targetEnd</att>
+      attributes of the <gi>note</gi> element to delimit the span to
+      which the note applies (see further section <ptr
+      target="#CONO"/>). Alternatively one could create an element to
+      encode the couplet itself and assign it an <att>xml:id</att>
+      attribute, which can then be linked to the <gi>note</gi> and
+      <gi>ref</gi> elements. This could be done either explicitly by
+      means of an <gi>lg</gi> element, as defined in section <ptr
+      target="#COVE"/>, or a <gi>seg</gi> element, as defined in
+      section <ptr target="#SASE"/>, or implicitly, by means of the
+      <gi>join</gi> element discussed in section <ptr
+      target="#SAAG"/>.</p>
+      <p>A third possibility however, is to use an
+      <soCalled>intermediate pointer</soCalled> as follows:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+<ptr xml:id="l3.283-284" target="#l3.283 #l3.284"/></egXML>
+      When the <att>target</att> attribute of a <gi>ptr</gi> or
+      <gi>ref</gi> element specifies more than one element, the
+      indicated elements are intended to be combined or aggregated in
+      some way to produce the object of the pointer. (Such aggregation
+      is however the task of a processing application, and cannot be
+      defined simply by the mark-up). The <att>xml:id</att> attribute
+      provides an identifier which can then be linked to the
+      <gi>note</gi> and <gi>ref</gi> elements:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><link evaluate="all" targets="#n3.284 #r3.284 #l3.283284"/></egXML>
+      <!-- Pope, Dunciad (1729) III.284 --></p>
+      <p>The <val>all</val> value of <att>evaluate</att> is used on the
+      <gi>link</gi> element to specify that any pointer encountered as
+      a target of that element is itself evaluated. If
+      <att>evaluate</att> had the value <val>none</val>, the link target would be the pointer
+      itself, rather than the objects it points to.</p>
+      <p>Where a <gi>linkGrp</gi> element is used to group a
+      collection of <gi>link</gi> elements, any intermediate pointer
+      elements used by those <gi>link</gi> elements should be included
+      within the <gi>linkGrp</gi>.</p>
+    </div3> 
+  </div2>
+  <div2 type="section" xml:id="SAXP">
+    <head>Advanced Pointing</head>
+    <p>In this section we further describe methods of pointing:
+    <list>
+      <item>into documents other than the current document;</item>
+      <item>to a particular element in a document other than the
+      current document using its <att>xml:id</att>;</item>
+      <item>to a particular element whether in the current document or
+      not, using its position in the XML element tree;</item>
+      <item>at arbitrary content in any XML document using TEI-defined
+      XPointer schemes.</item>
+    </list>
+    </p>
+    <p>All TEI addresses use URI references as defined in the URI
+    specification.<note place="foot"><ref
+    target="http://www.ietf.org/rfc/rfc2396.txt">RFC2396</ref></note>
+    URI references are the same mechanism used by HTML to create
+    hypertext links, and are widely accepted. A URI reference is
+    capable not only of addressing a single XML resource, but also a
+    sub-portion of the resource it identifies by the use of an
+    appropriate <term>fragment identifier</term> (the
+    <soCalled>Fragment-ID</soCalled> is the portion of a URI
+    reference following the first unescaped <q>#</q> character). <!-- The
+    details of the interpretation of the Fragment-ID depend on the
+    Internet MIME-type of the resource identified by the URI. --></p>
+    <p>The first three of the following subsections provide only a
+    brief overview and some examples of the W3C mechanisms
+    recommended. More detailed information on the use of these
+    mechanisms is readily available elsewhere.</p>
+    <div3 type="subsection" xml:id="SAUR">
+      <head>Pointing Elsewhere</head>
+      <p>Like the ubiquitous if misnamed HTML pointing attribute <att
+      scheme="HTML">href</att>, the TEI pointing attributes can point
+      to a document that is not the current document (the one that
+      contins the pointing element) whether it is in the same local
+      filesystem as the current document, or on a different system
+      entirely. In either case, the pointing can be accomplished
+      absolutely (using the entire address of the target document) or
+      relatively (using an address relative to the current base URI in
+      force). The current base URI in force is as defined in the W3C
+      <ref target="http://www.w3.org/TR/xmlbase/">XML Base</ref>
+      recommendation. In general, it is the value of the
+      <att>xml:base</att> attribute of the closest ancestor that has
+      one, or if there are none, the URI of the location of the current document.</p>
+      <p>The following example demonstrates an absolute URI reference
+      that points to a remote document. It is the source code for the
+      second to last sentence of the preceding paragraph.
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">The current base URI in force is as defined in the
+ W3C <ref target="http://www.w3.org/TR/xmlbase/">XML
+ Base</ref> recommendation.</egXML></p>
+      <p>The following example demonstrates an absolute URI reference
+       that points to a local document.
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">This Debian package is distributed under the terms
+ of the <ref target="file:///usr/share/common-licenses/GPL-2">GNU General Public License</ref>.</egXML></p>
+      <p>The following example demonstrates a relative URI reference
+      that points to a local document. It is the source for the figure
+      in section <ptr target="#SACSXA"/>, later in this chapter.
+      <eg><![CDATA[<figure xml:id="COMENIUS" rend="float fullpage">
+  <graphic  url="./Figures/compic.png" />
+  <figDesc>The figure shows the page from the <title>Orbis pictus</title>
+    of Comenius which is discussed in the text.</figDesc>
+</figure>]]></eg></p>
+      <p>The following example demonstrates a relative URI reference
+      that points to a remote document.
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="chap" xml:base="http://classics.mit.edu/">
+  <head>On Ancient Persian Manners</head>
+  <p>In the very first story of <ref target="Sadi/gulistan.2.i.html"><title>The Gulistan of Sa'di</title></ref>,
+  Sa'di relates moral advice worthy of Miss Minners ...</p>
+  <!-- ... -->
+</div></egXML></p>
+    </div3>
+    <div3 type="subsection" xml:id="SABN">
+      <head>Special Case: Pointing Locally</head>
+      <p>Because the default base URI is the current document, a
+      pointer that is specified as a <term>bare name</term> fragment
+      identifier alone acts as a pointer to an element in the current
+      document, as in the following example.
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="section" n="107" xml:id="sect107">
+  <head>Limitations on exclusive rights: Fair use</head>
+  <p>Notwithstanding the provisions of
+  <ref target="#sect106">sections 106</ref> and
+  <ref target="#sect106a">106A,</ref> the fair use of a
+  copyrighted work, including such use by reproduction in copies 
+  or phonorecords or by any other means specified by that section,
+  for purposes such as criticism, comment, news reporting,
+  teaching (including multiple copies for classroom use),
+  scholarship, or research, is not an infringement of copyright.
+  In determining whether the use made of a work in any particular
+  case is a fair use the factors to be considered shall
+  include&#xA0;&#8212;&#xA0;
+  <list>
+    <item n="(1)">the purpose and character of the use, including
+    whether such use is of a commercial nature or is for nonprofit
+    educational purposes;</item>
+    <item n="(2)">the nature of the copyrighted work;</item>
+    <item n="(3)">the amount and substantiality of the portion
+    used in relation to the copyrighted work as a whole;
+    and</item>
+    <item n="(4)">the effect of the use upon the potential market
+    for or value of the copyrighted work.</item>
+  </list>
+  The fact that a work is unpublished shall not itself bar a
+  finding of fair use if such finding is made upon consideration
+  of all the above factors.</p>
+</div></egXML>
+<note resp="sdb" type="cit">Title 17, Section 107 of the <title>United
+States Code</title>, found at <ptr
+target="http://www.copyright.gov/title17/92chap1.html#107"/> and
+converted from HTML to TEI encoding.</note>
+This method of pointing, by referring to the <att>xml:id</att> of the
+target element as a bare name only (e.g., <val>#there</val>) is 
+the simplest and often the best approach where it can be applied, i.e. where
+both the source element and target element are in the same XML document.</p>
+    </div3>
+    <div3 type="subsection" xml:id="SAES">
+      <head>W3C element() Scheme</head>
+      <p>An element may be pointed to by its position in the XML
+      element tree using the <name type="xpscheme">element</name>
+      scheme defined by the World Wide Web Consortium. <note><ref
+      target="http://www.w3.org/TR/xptr-element/">XPointer element()
+      Scheme</ref>.</note> In this scheme, an element is identified by
+      stepwise navigation via a slash-separated list of child element
+      numbers. For each step the integer <code>n</code> locates the
+      <hi>n</hi>th child element of the previously located element.</p>
+      <p>For example, the following pointer selects
+      one of Shakespeare's most famous lines:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><ref target="http://www.cs.mu.oz.au/621/2003project/hamlet.xml#element(/1/8/2/25/2)"
+      >2B|^2B&hellip;</ref></egXML>
+      <note type="cit" resp="sdb">Jon Bosak's XMLification of Moby
+      Lexical Tools' plain text version of Hamlet. As of <date
+      value="2004-12-22"/>, the node xpath(/*[1]/*[8]/*[2]/*[25]/*[2])
+      (or, perhaps more usefully,
+      xpath(/PLAY[1]/ACT[3]/SCENE[1]/SPEECH[19]/LINE[1])) selects the
+      element <q><![CDATA[<LINE>To be, or not to be: that is the
+      question:</LINE>]]></q>.</note>
+      The  URI reference in this example points to an XML resource ostensibly
+      available via the HTTP protocol on the web; within
+      that file, the specified <name type="xpscheme">element</name>
+      scheme points to <q>the 1st (and only) root-level element's 8th
+      child element's 2nd child element's 25th child element's 2nd
+      child element</q>. This is equivalent to the XPath
+      specification <code>/*[1]/*[8]/*[2]/*[25]/*[2]</code>.</p>
+      <p>The starting point for the child-element sequence may be
+      indicated by an identifier selecting the value of the
+      <att>xml:id</att> attribute of an element in the indicated document. So, for
+      example, if we had a copy of <title>The Nameless
+      Shakespeare</title> in a nearby directory, a pointer to the same
+      line might be as follows.
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><ptr target="/Users/martin/Documents/c5/namelessShakespeare.xml#element(sha-ham301/22/2)"/></egXML>
+      Here the identifier <val>sha-ham301</val> indicates the <tag>div
+      type="scene"</tag> for Hamlet, Act III, Scene I. The 2nd child
+      of the 22nd child of that element is the desired <gi>l</gi>
+      element. This is equivalent to the XPath specfication
+      <code>id(sha-ham301)/*[22]/*[2]</code>.</p>
+    </div3>
+    <div3 type="subsection" xml:id="SATS">
+      <head>TEI XPointer Schemes</head>
+      <p>The W3C has defined an extensible syntax for addressing
+      within XML content, called the <ref
+      target="http://www.w3.org/TR/xptr-framework/">XPointer
+      Framework</ref>. Within this framework, multiple addressing
+      methods are distinguished by a named <term>XPointer
+      Scheme</term>. The W3C has defined a useful but limited set of
+      schemes for pointing within XML documents. The <name
+      type="xpscheme">element</name> scheme described above is one
+      such scheme, defined by the W3C.</p>
+      <p>The TEI XPointer schemes can designate more types of entity than an XML
+      information set node, because there is often a need in text
+      analysis to address additional types of location such as the
+      <soCalled>point</soCalled> locations between nodes, and
+      <soCalled>ranges</soCalled> that may arbitrarily cross the
+      boundaries of nodes in a document. A range corresponds closely
+      to a selection in a text editor, and for processing purposes a
+      range is defined by the pair of points at its start and end.
+      While it is sometimes useful to think of pointer schemes as
+      analogous to query functions that return nodes in the DOM tree
+      of an XML document, this is a misleading model, as a point is
+      adjacent to one or two nodes, but is not a node itself, while a
+      range may not even overlap with any complete node in the DOM
+      tree.</p>
+      <p>The types of object that can be selected by a TEI pointer
+      scheme are as follows:
+      <list>
+        <label>Node</label>
+	<item>A node represents a single item in the XML information
+	set for a document. For pointing
+	purposes, the only nodes that are of interest are Text Nodes,
+	Element Nodes, and Attribute nodes.</item>
+        <label>Node Set</label>
+	<item>A node set is a set of nodes in the XML infoset of a
+	document. In TEI Pointing applications, node sets are only
+	allowed as the result of resolving a URI when multiple URIs
+	would have been allowed where it appears, i.e. in attributes
+	which are declared as <name
+	type="datatype">data.pointers</name> as opposed to <name
+	type="datatype">data.pointer</name>. As befits the name
+	<soCalled>set,</soCalled> the individual items in a node set
+	are not ordered, and no assumptions about relative ordering of
+	items in a node set should be made.</item>
+        <label>Point</label>
+	<item>A Point represents a point between nodes in a document.
+	Every point is
+	adjacent to either characters or elements, and never to
+	another point. In fact, in the character representation
+        of an XML document, every position between data characters, start-tags or
+	end-tags is a point, and there are no other points. If one
+	treats all character content as if it were broken into
+	single-character text-nodes, every point is definable as the
+	point preceding (or following) a node, and if that node has a
+	successor (or predecessor) in document order, then is is the
+	same as the point preceding (or following) that successor (or
+	predecessor).</item>
+        <label>Range</label>
+	<item>A Range is defined as the portion of a document between
+	two points. Since points may occur anywhere within the
+	document, ranges do not correspond directly to nodes or node
+	sets. A range may overlap the contents of a node either
+	completely or partially.</item>
+      </list>
+      </p>
+      <p>In order to provide the greater pointer convenience, and the ability to point to
+      textual ranges regardless of how they are marked-up, the TEI hes defined new
+      XPointer schemes to be used within the XPointer Framework:<name
+      type="xpscheme">xpath</name>,<!-- xpath2 deleted until standardized <name
+      type="xpscheme">xpath2</name>, --> <name
+      type="xpscheme">range</name>, <name
+      type="xpscheme">string-range</name>, <name
+      type="xpscheme">left</name>, <name
+      type="xpscheme">right</name>, and <name
+      type="xpscheme">match</name>. These schemes overlap in
+      functionality with the W3C's <name
+      type="xpscheme">xpointer scheme</name> draft, but are
+      individually much simpler.<note place="foot">At the time of this
+      writing, there is no current or scheduled activity at the W3C
+      towards revising this draft or issuing it as a
+      recommendation.</note></p>
+      <p>The <name type="xpscheme">xpath</name> scheme refers to the
+      existing XPath specification which is adopted without
+      modification or extension.
+      <!-- The <name type="xpscheme">xpath</name> and <name
+      type="xpscheme">xpath2</name> schemes reference existing
+      specifications which are adopted without modification.-->
+      The other five schemes introduce new facilities, but are simple
+      enough that implementation should not be difficult.</p>
+      <div4 type="subsubsection" xml:id="SATSXP">
+          <head>xpath(path)</head>
+          <p>The <name type="xpscheme">xpath</name> scheme locates a
+          node or node set within an XML Information Set. The single
+          argument <rs>path</rs> is an XPath path as defined in the
+          <ref target="http://www.w3.org/TR/xpath">W3C XPath 1
+          Recommendation</ref>. The node or node set resulting from
+          evaluating the XPath is the reference of an address using
+          the <name type="xpscheme">xpath</name> scheme. For example,
+          the following example selects the first paragraph of the <gi
+          scheme="extreme">ftnote</gi> element with <att>id</att> of
+          <val>fn6</val> of a paper that discusses XPointers. <egXML
+          xmlns="http://www.tei-c.org/ns/Examples"><ptr target="http://www.mulberrytech.com/Extreme/Proceedings/xml/2004/Thompson01/EML2004Thompson01.xml#xpath(//ftnote[@id='fn6']/para[1])"/></egXML></p>
+	  <!-- I tried "xpath(id(fn6)/para[1])" but it didn't work in
+	       my implementations of XPath (jEdit, oXygen, IIRC) -Syd
+	       -->
+        <p>When a URI reference is specified as the value of an
+        attribute declared as <name
+        type="datatype">data.pointer</name>, the result must be a
+        single node, and it is an error if the result is a node set.
+        When the URI reference is specified as the value of an
+        attribute declared as <name
+        type="datatype">data.pointers</name>, each node in the
+        node set is treated as if it were the result of a separate URI
+        reference.</p>
+        <p>When an xpath is interpreted by a TEI processor, the information set of the referenced
+        document is interpreted without any additional information supplied by any schema processing
+        that may or may not be present. In particular this means that no white space normalization
+        is applied to a document before the xpath is interpreted.
+        </p>
+        <p>This pointer scheme allows easy, direct use of the most
+        widely-implemented XML query method. It is probably the most
+        robust pointing mechanism for the common situation of
+        selecting an XML element or its contents where an
+        <att>xml:id</att> is not present. The ability to use element
+        type names (<soCalled>GI</soCalled>s) and attribute names and
+        values makes <name type="xpscheme">xpath</name> pointers more
+        robust than <name type="xpscheme">element</name> pointers,
+        even if the designated dovument changes. For durability in the
+        presence of editing, use of <att>xml:id</att> is always
+        recommended when possible.</p>
+          </div4>
+       <!-- xpath2 deleted for the time being, as it is not standardized
+       <div4 type="subsubsection" xml:id="SATSXP2">
+          <head>xpath2(path)</head>
+          <p>The <name type="xpscheme">xpath2</name> scheme locates a node within
+            an XML Information Set. The single argument
+            <rs>path</rs> is an XPath 2.0 path as defined in the
+            <ref target="http://www.w3.org/TR/xpath20/">W3C XPath 2
+              Recommendation</ref>. The results of the xpath2() pointer scheme are treated exactly as the
+              results of an <name type="xpscheme">xpath</name> pointer scheme. </p>
+        </div4> -->
+         <div4 type="subsubsection" xml:id="SATSLR">
+          <head>left(pointer) and right(pointer)</head>
+          <p>The <name type="xpscheme">left</name> (<name
+          type="xpscheme">right</name>) scheme locates the point
+          immediately preceding (following) its argument. The single
+          <rs>pointer</rs> argument to <name
+          type="xpscheme">left</name> or <name
+          type="xpscheme">right</name> is treated like a fragment
+          identifier itself, and must be a bare name or XPointer
+          pointer.  The designation of this argument is
+          resolved with respect to the base URI in effect for the
+          <name type="xpscheme">left</name> or <name
+          type="xpscheme">right</name> according to the normal
+          rules.<note place="foot">Like other XPointer schemes, bare
+          names (i.e. values of <gi>xml:id</gi>
+          references) are permitted as pointer arguments to all TEI-defined
+          XPointer pointer scheme parameters.</note> Because
+          most pointer schemes return nodes or ranges rather than
+          points, the following description lists the behavior of
+          <name type="xpscheme">left</name> and <name
+          type="xpscheme">right</name> for all three types of possible
+          location that might result from interpreting its argument.
+            <list>
+              <item>
+                <label>A Node</label> When <rs>pointer</rs> resolves
+                to a node, the point designated is the
+                point immediately preceding (<name type="xpscheme">left</name>) or
+                following (<name type="xpscheme">right</name>) the node.
+              </item>
+              <item>
+                <label>A Node Set</label> When <rs>pointer</rs> resolves
+                to a node set, the point designated is the point preceding the first
+                element of the set (<name type="xpscheme">left</name>) or
+                following the last
+                element of the set (<name type="xpscheme">right</name>)</item>
+              <item>
+                <label>A range</label> When <rs>pointer</rs> resolves
+                to a range, the point designated is the
+                point designating the start (<name type="xpscheme">left</name>) or end
+                (<name type="xpscheme">right</name>) of the range.
+              </item>
+              <item>
+                <label>A Point</label> When <rs>pointer</rs> resolves
+                to a point, that point is the result. The pointer
+                schemes <name type="xpscheme">left</name> and
+                <ident>right</ident> make no change when given a point
+                as argument.
+               </item>
+            </list>
+            </p>
+	    <p>The folowing example points to the spot immediately
+	    following the last character of a <gi
+	    scheme="extreme">postcode</gi> node in a seminal paper
+	    about markup alternatives. This node contains the string
+	    <q>20850</q>, so the point being pointed to is the one
+	    following the second <q>0</q> character.. <egXML
+	    xmlns="http://www.tei-c.org/ns/Examples"><ptr target="http://www.mulberrytech.com/Extreme/Proceedings/xml/2002/Usdin01/EML2002Usdin01.xml#right(element(/1/1/3/3/6))"/></egXML></p>
+           </div4>
+       <div4 type="subsubsection" xml:id="SATSRN">
+          <head>range(pointer1, pointer2)</head>
+          <p>The <name type="xpscheme">range</name> scheme locates a
+          range between two points in an XML information set. The two
+          pointer arguments to <name type="xpscheme">range</name>
+          locate the boundaries of the range by two points, and are
+          interpreted as fragment identifiers. The parameters
+          <rs>pointer1</rs> and <rs>pointer2</rs> are XPointers
+          themselves, and are resolved according to the rules
+          specified in the definition of the pointer scheme they use.
+          <note place="foot">Bare names (i.e., <att>xml:id</att>
+          values), like other Xpointer schemes, are permitted as <name
+          type="xpscheme">range</name> parameters.</note>
+          Because most pointer schemes return nodes or ranges rather
+          than points, the following description lists the behavior of
+          <name type="xpscheme">range</name> for all three types of
+          possible result.
+            <list>
+              <label>A Node</label>
+	      <item>When <rs>pointer1</rs> resolves to a node, the
+	      starting point of the range is the point immediately
+	      preceding the node. When <rs>pointer2</rs> resolves to a
+	      node, the ending point of the range is the point
+	      immediately following the node. It is an error if the
+	      ending point precedes the starting point of a
+	      range.</item>
+              <label>A range</label>
+	      <item>When <rs>pointer1</rs> resolves to a range
+	      <rs>R</rs>, the starting point of the result range is
+	      the same as the starting point of <rs>R</rs>. When
+	      <rs>pointer2</rs> resolves to a range <rs>R</rs>, the
+	      ending point of the result range is the ending point of
+	      <rs>R</rs>.</item>
+              <label>A Point</label>
+	      <item>When pointer1 resolves to a point, that point is
+	      the start of the range. When pointer2 resolves to a
+	      point, that point is the end of the range.</item>
+            </list>
+	  </p>
+       </div4>
+        <div4 type="subsubsection" xml:id="SATSSR">
+          <head>string-range(pointer, offset [, length])</head>
+          <p>The <name type="xpscheme">string-range</name> scheme
+          locates a range based on character positions.
+          <!-- what is it? -->
+          While
+          string-range endpoints are points adjacent to character
+          positions, they must be designated by the characters to
+          which they are adjacent, in the same way that the nodes
+          corresponding to XML elements are. This avoids ambiguity
+          about which point between two characters is indicated when
+          characters are interrupted by markup.</p>
+	  <!-- DGD: I'm wondering if the whole previous paragraph
+	       could be moved to *after* the explanation of what
+	       string-range() is? Either way, the last sentence
+	       deserves an example, IMHO. Am I correct that the
+	       ambiguity we are trying to avoid is that within
+	       "foo<tag>bar", where the point between 'o' and 'b'
+	       might be the one between 'o' and '<' or it might be the
+	       one between '>' and 'b'? But how does the phrase "must
+	       be designated by the characters to which they are
+	       adjacent" resolve this ambiguity? -->
+	  <!-- "... [points] are designated by the characers [note the
+	       plural] to which they are adjacent" We need to do
+	       better than that. Because the sentence is in the
+	       plural, there's some ambiguity about whether one
+	       designates a point using 1 character or two. If the
+	       answer is 1, is it the one to its left or right? More
+	       reason we need an example. -Syd
+	       -->
+          <p>The <rs>pointer</rs> argument to <name
+          type="xpscheme">string-range</name> designates a node or a
+          range within which a string is to be located. No string
+          range, even an empty one, can be defined by a <name
+          type="xpscheme">string-range</name> if <rs>pointer</rs> has
+	  the empty string as string value.
+	  <!-- DGD: we haven't mentioned the concept of 'string value'
+	       before; do we need to? Either way, should the above
+	       line read "... empty string as its string value"? -->
+	  Every string-range is defined based on an <soCalled>origin
+	  character</soCalled>. The origin is numbered 0, and
+	  designates the first character of the string-value of
+	  <rs>pointer</rs>. The offset is a character index relative
+	  to the origin; the start of the resulting range is the
+	  position designated by the sum of the origin and
+	  <!-- DGD: does the concept of origin char gain us much here? -->
+	  <rs>offset</rs>.</p>
+          <p>If <rs>length</rs> is specified, the end of the range is
+          at a point adjacent <!-- DGD: L or R; or perhaps before or
+          after? --> to the character designated by the origin added
+          to <rs>length</rs>. If the offset is negative, or
+          <rs>length</rs> is sufficiently large, a string-range can
+          designate characters outside the string-value of the
+          intitial pointer. In this case, characters are located using
+          the string-value of the entire document. It is also legal
+          for <rs>length</rs> plus the origin to exceed the length of
+          the string-value of the document by one, in order to
+          accomodate ranges that include the last character of a
+          document. </p>
+          <p>If <rs>length</rs> is not specified, it defaults to the value 1, and
+          the string range contains one character. If it is specified as 0, the
+          zero-length range is interpreted as the point immediately preceding the
+          origin character.</p>
+         </div4>
+         <div4 type="subsubsection" xml:id="SATSMA">
+           <head>match(pointer, string [, index])</head>
+           <p>The match scheme designates the result of a literal match of the
+           argument <rs>string</rs> within the string-value of the <rs>pointer</rs>
+           argument. The result is a range from the first matching character to the
+           last. It is an error if there is no matching string. A match may not
+           extend outside the range corresponding to the string value of
+           <rs>pointer</rs>.</p>           
+           <p>The <rs>index</rs> argument is an integer greater than or equal to 1,
+           specifying which match should be chosen when there is more than one match
+           within the string-value of <rs>pointer</rs>. If no <rs>index</rs> is
+	   provided, the default value is 1, indicating the first match found.</p>
+         </div4>
+    </div3>
+    <div3 type="subsection" xml:id="SACR">
+      <head>Canonical References</head>
+      <p>A canonical reference is a means, specific to a community or
+      corpus, of pointing into documents. For example, biblical
+      scholars might understand <q>Matt 5:7</q> to mean <q>the book
+      called <title>Matt</title>, chapter 5, verse 7.</q> They might
+      then wish to translate the string <q>Matt 5:7</q> into a pointer
+      into a TEI-encoded document, selecting the element which
+      corresponds to the seventh <gi>div</gi> element within the fifth
+      <gi>div</gi> element within the <gi>div</gi> element with the
+      <att>n</att> attribute valued
+      <q>Matt.</q></p>
+      <p>Several elements in the TEI scheme (<gi>gloss</gi>,
+      <gi>ptr</gi> <gi>ref</gi>, and <gi>term</gi>) bear a special
+      attribute, <att>cRef</att>, just for this purpose. Using the
+      system described in this section, an encoder may specify
+      references to canonical works in a discipline-familiar format,
+      and expect software to derive a complete URI from it. The value
+      of the <att>cRef</att> attribute is processed as described in
+      this section, and the resulting URI reference is treated as if
+      it were the value of the <att>target</att> attribute. The
+      <att>cRef</att> and <att>target</att> attributes are mutually
+      exclusive: only one or the other may be specified on any given
+      occurrence of an element.</p>
+      <p>The <gi>refsDecl</gi> element (which is a member of class
+      <ident type="class">att.declaring</ident>) of provides a means to
+      encode an algorithm for translating a canonical reference string
+      (like <val>Matt 5:7</val>) into a URI reference. The
+      <gi>refsDecl</gi> element is described in section <ptr
+      target="#HD54"/>; the follwoing example is discussed in more
+      detail below in section <ptr target="#SACRWE"/>.
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><refsDecl xml:id="biblical">
+   <cRefPattern matchPattern="(.+) (.+):(.+)" replacementPattern="#xpath(//div[@n='$1']/div[$2]/div[$3])">
+    <p>This pointer pattern extracts and references the <q>book,</q>
+      <q>chapter,</q> and <q>verse</q> parts of a biblical reference.</p>
+   </cRefPattern>
+   <cRefPattern matchPattern="(.+) (.+)" replacementPattern="#xpath(//div[@n='$1']/div[$2])">
+    <p>This pointer pattern extracts and references the <q>book</q> and
+      <q>chapter</q> parts of a biblical reference.</p>
+   </cRefPattern>
+   <cRefPattern matchPattern="(.+)" replacementPattern="#xpath(//div[@n='$1'])">
+    <p>This pointer pattern extracts and references just the <q>book</q>
+      part of a biblical reference.</p>
+   </cRefPattern>
+</refsDecl></egXML>
+      </p>
+      <p>When an application encounters a canonical reference as the
+      value of <att>cRef</att> attribute, it can follow a sequence of
+      specific steps to transform it into a URI reference.
+      <list type="ordered">
+        <item>Ascertain the correct <gi>refsDecl</gi>
+        following the rules summarized in section <ptr
+        target="#CCAS3"/>.</item>
+        <item>For each <gi>cRefPattern</gi> element encountered in
+        the appropriate <gi>refsDecl</gi>, in the order encountered:
+        <list type="ordered">
+          <item>match the value of <att>cRef</att> to the regular
+          expression found as the value of the <att>re</att>
+          attribute</item>
+          <item>if the <att>cRef</att> value matches, take the value
+          of the <att>pat</att> attribute and substitute the back
+          references ($1, $2, etc.) with the corresponding matched
+          substrings</item>
+          <item>the result is taken as if it were a relative or
+          absolute URI reference specified on the <att>target</att>
+          attribute; i.e., it should be used as is or combined with
+          the current <att>xml:base</att> value as usual</item>
+          <item>no further processing of this <att>cRef</att> against
+          the <gi>refsDecl</gi> should take place</item>
+          <item>if, however, the <att>cRef</att> value does not match
+          the regular expression specified on <att>re</att> attribute,
+          proceed to the next <gi>fragmentPatter</gi></item>
+        </list>
+        </item>
+        <item>If all the <gi>cRefPattern</gi> elements are
+        examined in turn and none matches, the pointer fails.</item>
+      </list></p>
+      <p>The regular expression language used as the value of the
+      <att>re</att> attribute is that used for the
+      <ident>pattern</ident> facet of the World Wide Web Consortium's
+      XML Schema Language in an <ref
+      target="http://www.w3.org/TR/xmlschema-2/#regexs">Appendix to
+      XML Schema Part 2</ref>.<note place="foot" resp="sdb">As always
+      seems to be the case, no two regular expression languages are
+      precisely the same. For those used to Perl regular expressions,
+      be warned that while in Perl the pattern <code>tei</code>
+      matches any string that contains <mentioned>tei</mentioned>, in
+      the W3C language it only matches the string <q>tei</q>.</note>
+      The value of the <att>pat</att> attribute is simply a string,
+      except that occurences of <q>$1</q> through <q>$9</q> are
+      replaced by the corresponding substring match. Note that since a
+      maximum of nine substring matches are permitted, the string
+      <q>$18</q> means <q>the value of the first matched substring
+      follwed by the character <q>8</q></q> as opposed to <q>the
+      eighteenth matched substring</q>. If there is a need for an
+      actual string including dollar sign follwed by a digit that is
+      not supposed to be replaced, the dollar sign should be written
+      as <code>%24</code>.</p>
+<!--      <p>A TEI application
+      encounters a canonical reference, for example <egXML
+      xmlns="http://www.tei-c.org/ns/Examples">This story is continued
+      in <ptr cRef="Matt 5:7" decls="#biblical"/>.</egXML> and wants
+      to be able to convert it to a standard URI Reference that
+      corresponds to <q>Matt 5:7</q>.</p>
+        <p>The application first follows the URI in the
+        <ident>decls</ident> attribute, which points to a
+        <gi>refsDecl</gi> element in the local document or a remote
+        document<note place="foot" resp="sdb">As with other elements
+        in the <ident type="class">tei.delcarable</ident> class, the
+        default is the <gi>refsDecl</gi> in the <gi>teiHeader</gi> of
+        the current document; or, if there are more than one
+        <gi>refsDecl</gi>s, the one that has a <val>yes</val> value
+        specified for the <att>default</att> attriubte.</note> Within
+        that declaration (see example above), it refers to the list of
+        <gi>cRefPattern</gi>s, and for each pattern in the order
+        specified, applies the regular expression found on the
+        <att>re</att> attribute to the reference <q>Matt 5:7</q>.</p>
+        <p>If
+        the first regular expression matches, it applies the matched
+        substrings (in this case, <q>Matt</q>, <q>5</q>, and <q>7</q>)
+        to the string in the <att>pat</att> attribute of that
+        <gi>cRefPattern</gi> element, substituting the first
+        matched substring for $1, the second for $2, and so on, to
+        produce an absolute or relative URI. In the case that a
+        relative URI is produced, it is relative to whatever
+        <att>xml:base</att> is in force for the pointer itself, i.e.
+        the <gi>ptr</gi> or <gi>ref</gi> element that bore the
+        <att>cRef</att> attripte.</p>
+        <p>If the regular expression in the first
+        <gi>cRefPattern</gi> element does not match, the regular
+        expression in the second <gi>cRefPattern</gi> element is
+        tried, and so on.</p> -->
+      <div4 xml:id="SACRWE" type="subsubsection">
+        <head>Worked Example</head>
+        <p>Let us presume that with the example <gi>refsDecl</gi>
+        above, an application comes across a <att>cRef</att> value of
+        <val>Matt 5:7</val> inside a <gi>div</gi> which has an
+        <att>xml:base</att> of
+        <val>http://www.jph.org/resources/books/Bible.xml</val>. The
+        application would first apply the regular expression
+        <code>(.+) (.+):(.+)</code> to <q>Matt 5:7</q>. This regular
+        expression would successfully match. The first matched
+        substring would be <q>Matt</q>, the second <q>5</q>, and the
+        third <q>7</q>. The application would then apply these
+        substrings to the pattern
+        <code>#xpath(//div[@n='$1']/div[$2]/div[$3])</code>, producing
+        <code>#xpath(//div[@n='Matt']/div[5]/div[7])</code>. It would
+        append this to the <att>xml:base</att> in force, thus
+        generating the complete URI Reference
+        <code>http://www.jph.org/resources/books/Bible.xml#xpath(//div[@n='Matt']/div[5]/div[7])</code>.
+        </p>
+        <p>If, however, the input string had been <q>Matt 5</q>, the
+        first regular expression would not have matched. The
+        application would have then tried the second, <code>(.+)
+        (.+)</code>, producing a successful match, and the matched
+        substrings <q>Matt</q> and <q>5</q>. It would then have
+        substituted those matched substrings into the pattern
+        <code>#xpath(//div[@n='$1']/div[$2])</code> to produce a
+        fragment identifier, which when appended to the
+        <att>xml:base</att> in force produces the absolute URI
+        reference Reference
+        <code>http://www.jph.org/resources/books/Bible.xml#xpath(//div[@n='Matt']/div[5])</code>.</p>
+        <p>If the input string had been <q>Matt</q>, neither the first
+          nor the second regular expressions would have successfully
+          matched. The application would have then tried the third,
+          <code>(.+)</code>, producing the matched substring <q>Matt</q>,
+          and the URI Reference
+          <code>http://www.jph.org/resources/books/Bible.xml#xpath(//div[@n='Matt'])</code>.</p>
+        <p>It is an error to reference more matched substrings than
+          are produced by the regular expression. For example:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples"><cRefPattern matchPattern="(.+) (.+):(.+)" replacementPattern="//div[@n='$1']/div[$2]/div[$3]/p[$4]"/></egXML>
+          would produce an error, since only three matched
+          substrings would have been produced, but a fourth (<code>$4</code>) was
+          referenced.</p>
+          <p>It is quite reasonable to believe that encoders would
+          actually prefer much more precise regular expressions than
+          those used as examples above. E.g.,
+          <code>^\s*([1-9]?[A-Z][a-z]+)\s+([1-9][0-9]?[0-9]?):([1-9][0-9]?)\s*$</code>.</p>
+      </div4>
+      <div4>
+        <head>Complete and Partial URI Examples</head>
+        <p>In the above example, the value of <att>cRef</att> was used
+        to generate a Fragment Identifier, which in turn was used to
+        generate a complete URI. The complete URI could be generated
+        directly, as in the following example.
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <refsDecl xml:id="USC">
+            <cRefPattern matchPattern="([0-9][0-9])\s*U\.?S\.?C\.?\s*[Cc](h(\.|ap(ter|\.)?)?)?\s*([1-9][0-9]*)"
+                             replacementPattern="http://uscode.house.gov/download/pls/$1C$5.txt">
+              <p>Matches most standard references to particular
+              chapters of the United States Code, e.g.
+              <val>11USCC7</val>, <val>17 U.S.C. Chapter 3</val>, or
+              <val>14 USC Ch. 5</val>. Note that a leading zero is
+              required for the title (must be two digits), but is not
+              permitted for the chapter number.</p>
+            </cRefPattern>
+            <cRefPattern matchPattern="([0-9][0-9])\s*U\.?S\.?C\.?\s*[Pp](re(lim(inary)?)?)?\s*[Mm](at(erial)?)?"
+                             replacementPattern="http://uscode.house.gov/download/pls/$1T.txt">
+              <p>Matches references to the preliminary material for a
+              given title, e.g. <val>11USCP</val>, <val>17 U.S.C.
+              Prelim Mat</val>, or <val>14 USC pm</val>.</p>
+            </cRefPattern>
+            <cRefPattern matchPattern="([0-9][0-9])\s*U\.?S\.?C\.?\s*[Aa](ppend(ix)?)?"
+                             replacementPattern="http://uscode.house.gov/download/pls/$1A.txt">
+              <p>Matches references to the appendix of a given tile,
+              e.g. <val>05USCA</val>, <val>11 U.S.C. Appendix</val>,
+              or <val>18 USC Append</val>.</p>
+            </cRefPattern>
+          </refsDecl>
+          <!-- ... -->
+          <p>The example in section <ptr target="#SABN"/> is taken
+          from <ref cRef="17 USC Ch 1">Subject Matter and Scope of
+          Copyright</ref>.</p>
+        </egXML>
+        </p>
+      </div4>
+      <div4><head>Miscellaneous usages</head>
+      <p>Canonical reference pointers are intended for use by TEI
+          encoders. However, this specification might be useful to the
+          development of a process for recognizing canonical
+          references in non-TEI documents (such as plain text
+          documents), possibly as part of their conversion to TEI.</p>
+      </div4>
+    </div3>
+  </div2>
+  <div2 type="section" xml:id="SASE">
+    <head>Blocks, Segments and Anchors</head>
+    <p>In this section, we define three general purposes elements
+    which may be used to mark and categorize both a span of text and a
+    point within one. These elements have several uses, most notably
+    to provide elements which can be given identifiers for use when
+    aligning or linking to parts of a document, as discussed elsewhere
+    in this chapter. They also provide a convenient way of extending
+    the semantics of the TEI markup scheme in a theory-neutral manner,
+    by providing for two neutral or <soCalled>anonymous</soCalled>
+    elements to which the encoder can add any meaning not supplied by
+    other TEI defined elements.
+    <specList>
+      <specDesc key="anchor"/>
+      <specDesc key="ab" atts="part"/>
+      <specDesc key="seg"/>
+    </specList>
+    The elements <gi>anchor</gi> and <gi>ab</gi> are both members of
+    the class <ident type="class">att.typed</ident>, from which they
+    inherit the following attributes:
+    <specList>
+      <specDesc key="att.typed" atts="type subtype"/>
+    </specList>
+    The <gi>seg</gi> element is a member of the class <ident type="class">att.segLike</ident>, from which it inherits the following
+    attributes:
+    <specList>
+      <specDesc key="att.segLike" atts="type function part"/>
+    </specList></p>
+    <p>The <gi>anchor</gi> element may be thought of as an empty
+    <gi>seg</gi>, or as an artifice enabling an identifier to be
+    attached to any position in a text. Like the <gi>mileStone</gi>
+    element discussed in section <ptr target="#CORS"/>, it is useful
+    where multiple views of a document are to be combined, for
+    example, when a logical view based on paragraphs or verse lines is
+    to be mapped on to a physical view based on manuscript lines.
+    However, it differs from the milestone and related elements in
+    that the <gi>anchor</gi> element should not be used to mark the
+    start or end of an arbitrary zone within a text, but only to mark
+    an arbitrary point used for alignment, or as the target of a
+    spanning element such as those discussed in section <ptr target="#PHAD"/>.</p>
+    <p>For example, suppose that we wish to mark the end of the fifth
+    word following each occurrence of some term in a particular text,
+    perhaps to assist with some collocational analysis. This can most
+    easily be done with the help of the <tag>anchor</tag> tag, as
+    follows:
+    <!-- Vladimir Nabokov, Pnin, 1953, p14 of 1967 Avon pb reprinting -->
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[English language. Except for not very]]><anchor xml:id="eng1"/><![CDATA[
+English at all at the time]]><anchor xml:id="eng2"/><![CDATA[
+English was still full of flaws]]><anchor xml:id="eng3"/><![CDATA[
+English. This was revised by young]]><anchor xml:id="eng4"/></egXML>
+    In section <ptr target="#SACS1"/> we discuss ways in which these
+    <gi>anchor</gi> points might be used to represent an alignment
+    such as one might get in a keyword-in-context concordance.</p>
+    <p>The <gi>seg</gi> element may be used at the encoder's
+    discretion to mark almost any segment of the text of interest for
+    processing. One use of the element is to mark text features for
+    which no appropriate markup is otherwise defined, i.e. as a simple
+    extension mechanism. Another use is to provide an identifier for
+    some segment which is to be pointed at by some other element, i.e.
+    to provide a target, or a part of a target, for a <gi>ptr</gi> or
+    other similar element.</p>
+    <p>Several examples of uses for the <gi>seg</gi> element are
+    provided elsewhere in these Guidelines. For example:
+    <list type="simple">
+      <item>as a means of marking segments significant in a metrical
+      or rhyming analysis (see section <ptr target="#VEME"/>)</item>
+      <item>as a means of marking typographic lines in drama (see
+      section <ptr target="#DRBOD"/>) or title pages (see section <ptr target="#DSTITL"/>)</item>
+      <item>as a means of marking prosody- or pause-defined units in
+      transcribed speech (see section <ptr target="#TSSASE"/>)</item>
+      <item>as a means of marking linguistic or other analyses in a
+      theory-neutral manner (see chapter <ptr target="#AI"/>
+      passim)</item></list></p>
+      <p>In the following simple example, the <gi>seg</gi> element
+      simply delimits the extent of a stutter, a textual feature for
+      which no element is provided in these Guidelines.
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><q>Don't say <q><seg type="stutter">I-I-I</seg>'m afraid,</q>
+Melvin, just say <q>I'm afraid.</q></q></egXML>
+      <!-- David Shields, Dead Languages, 1990, p10 -->
+      The <gi>seg</gi> element is particularly useful for the mark-up
+      of linguistically significant constituents such as the phrases
+      that may be the output of an automatic parsing system. This
+      example also demonstrates the use of the <att>xml:id</att>
+      attribute to carry an identifier which other parts of a document
+      may use to point to, or align with:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">  <seg xml:id="bl0034" type="sentence">  
+          <seg xml:id="bl0034.1" type="phrase">Literate and illiterate speech</seg>
+          <seg xml:id="bl0034.2" type="phrase">in a language like English</seg>
+          <seg xml:id="bl0034.3" type="phrase">are plainly different.</seg>
+      </seg></egXML>
+      <!-- Bloomfield, "Literate and Illiterate Speech", 1927   --></p>
+      <p>As the above example shows, <gi>seg</gi> elements may be
+      nested directly within one another, to any degree of analysis
+      considered appropriate. This is taken a little further in the
+      following example, where the <att>type</att> and
+      <att>subtype</att> attributes have been used to further
+      categorise each word of the sentence (the <att>xml:id</att>
+      attributes have been removed to reduce the complexity of the
+      example):
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">  <seg type="sentence" subtype="declarative">  
+          <seg type="phrase" subtype="noun">    
+            <seg type="word" subtype="adjective">Literate</seg>
+            <seg type="word" subtype="conjunction">and</seg>
+            <seg type="word" subtype="adjective">illiterate</seg>
+            <seg type="word" subtype="noun">speech</seg>
+          </seg>
+          <seg type="phrase" subtype="preposition">    
+            <seg type="word" subtype="preposition">in</seg>
+            <seg type="word" subtype="article">a</seg>
+            <seg type="word" subtype="noun">language</seg>
+            <seg type="word" subtype="preposition">like</seg>
+            <seg type="word" subtype="noun">English</seg>
+          </seg>
+          <seg type="phrase" subtype="verb">    
+            <seg type="word" subtype="verb">are</seg>
+            <seg type="word" subtype="adverb">plainly</seg>
+            <seg type="word" subtype="adjective">different</seg>
+          </seg>
+          <seg type="punct">.</seg>
+        </seg></egXML></p>
+      <p>(The example values shown are chosen for simplicity of
+      comprehension, rather than verisimilitude). It should also be
+      noted that specialized segment elements are defined in section
+      <ptr target="#AILC"/> to facilitate this particular kind of
+      analysis. These allow for the explicit mark up of units called
+      <term>s-units</term>, <term>clauses</term>,
+      <term>phrases</term>, <term>words</term>, <term>morphemes</term>
+      and <term>characters</term>, which may be felt preferable to the
+      more generic approach typified by use of the <gi>seg</gi>
+      element. Using these, the first phrase above might be encoded
+      simply as
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">  <phr type="noun">    
+          <w type="adjective">Literate</w>
+          <w type="conjunction">and</w>
+          <w type="adjective">illiterate</w>
+          <w type="noun">speech</w>
+      </phr></egXML>
+      Note the way in which the <att>type</att> attribute of these
+      specialized elements now carries the value carried by the
+      <att>subtype</att> attribute of the more general <gi>seg</gi>
+      element. For an analysis not using these traditional linguistic
+      categories however, the <gi>seg</gi> element provides a simple
+      but powerful mechanism.</p>
+      <p>In language corpora and similar material, the <gi>seg</gi>
+      element may be used to provide an end-to-end segmentation as an
+      alternative to the more specific <gi>s</gi> element proposed in
+      chapter <ptr target="#AILC"/> for the mark-up of orthographic
+      sentences, or <term>s-units</term>. However, it may be more
+      useful to use the <gi>s</gi> element for this purpose, since
+      this means that the <gi>seg</gi> element can then be used to
+      mark both features within s-units and segments composed of
+      s-units, as in the following example:<note place="foot">See
+      section <ptr target="#AISP"/>, where the text from which this
+      fragment is taken is analyzed.</note>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><seg xml:id="s1s3" type="narrative unit">
+  <s xml:id="s1">Sigmund, the <seg type="patronymic">son of Volsung</seg>,
+             was a king in Frankish country.</s>
+  <s xml:id="s2">Sinfiotli was the eldest of his sons.</s>
+  <s xml:id="s3"> ... </s>
+</seg></egXML></p>
+      <p>Like other elements, the <gi>seg</gi> tag must be properly
+      enclosed within other elements. Thus, a single <gi>seg</gi>
+      element can be used to group together words in different
+      sentences only if the sentences are not themselves tagged. The
+      first of the following two encodings is legal, but the second is
+      not.
+<!-- Made up example -->
+<egXML xmlns="http://www.tei-c.org/ns/Examples">Give me <seg type='phrase'>a dozen. Or two or three.</seg></egXML>
+<eg><![CDATA[<!-- Illegal! -->
+<s>Give me <seg type="phrase">a dozen.</s>
+<s>Or two or three.</s></seg>]]></eg></p>
+      <p>The <att>part</att> attribute may be used as one simple
+      method of overcoming this restriction:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><s>Give me <seg type="phrase" part="I">a dozen.</seg></s>
+<s><seg part="F">Or two or three.</seg></s></egXML>
+      Another solution is to use the <gi>join</gi> element discussed
+      in section <ptr target="#SAAG"/>; this requires that each of the
+      <gi>seg</gi> elements be given an identifier. For further
+      discussion of this generic encoding problem see also chapter
+      <ptr target="#NH"/>.</p>
+      <p>The <gi>seg</gi> element has the same content as a paragraph
+      in prose: it can therefore be used to group together consecutive
+      sequences of <ident type="class">model.inter</ident> class elements,
+      such as lists, quotations, notes, stage directions etc. as well
+      as to contain sequences of phrase-level elements. It cannot
+      however be used to group together sequences of paragraphs or
+      similar text units such as verse lines; for this purpose, the
+      encoder should use intermediate pointers, as described in
+      section <ptr target="#SAPTIP"/> or the methods described in
+      section <ptr target="#SAAG"/>. It is particularly important that
+      the encoder provide a clear description of the principles by
+      which a text has been segmented, and the way in which that
+      segmentation is represented. This should include a description
+      of the method used and the significance of any categorization
+      codes. The description should be provided as a series of
+      paragraphs within the <gi>segmentation</gi> element of the
+      encoding description in the TEI header, as described in section
+      <ptr target="#HD53"/>.</p>
+      <p>The <gi>seg</gi> element may also be used to encode
+      simultaneous or mutually exclusive variants of a text when the
+      more special purpose elements for simple editorial changes,
+      abbreviation and expansion, addition and deletion, or for a
+      critical apparatus are not appropriate. In these circumstances,
+      one <gi>seg</gi> is encoded for each possible variant, and the
+      set of them is enclosed in a <gi>choice</gi> element. The
+      <att>src</att> attribute of <gi>choice</gi> may be used to indicate
+      which of the <gi>seg</gi> elements actually appeared in a source
+      text being transcribed.</p>
+      <p>For example, if one were writing dual-platform instructions for
+      installation of software, it might be useful to use <gi>seg</gi>
+      to record platform-specific pieces of mutually exclusive text.
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[…
+      pressing ]]><choice><seg type="platform" subtype="Mac">option</seg>
+      <seg type="platform" subtype="PC">alt</seg></choice><![CDATA[-f will …]]></egXML></p>
+      <p>The remainder of this chapter contains a number of examples
+      of the use of the <gi>seg</gi> element simply to provide an
+      element to which an identifier may be attached, for example so
+      that another segment may be linked or related to it in some
+      way.</p>
+      <p>The <gi>ab</gi> (anonymous block) 
+      element performs a similar function to that of the <gi>seg</gi> element, 
+      but is used for portions of the
+      text which occur not within paragraphs or other component-level
+      elements, but at the component level themselves. It may be used, for
+      example, to tag the canonical verse divisions of Biblical texts:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div1 n="Gen" type="book">
+  <head>The First Book of Moses, Called</head>
+  <head type="main">Genesis</head>
+  <div2 n="1" type="chapter">
+    <ab n="1">In the beginning God created the heaven and the
+      earth.</ab>
+    <ab n="2">And the earth was without form, and void; and darkness
+      <hi>was</hi> upon the face of the deep. And the Spirit of God
+      moved upon the face of the waters.</ab>
+    <ab n="3">And God said, Let there be light: and there was
+      light.</ab>
+  </div2>
+</div1></egXML>
+<!--* Authorised Version *--></p>
+      <p>In other cases, where the text clearly indicates paragraph
+      divisions containing one or more verses, the <gi>p</gi> element
+      may be used to tag the paragraphs, and the <gi>seg</gi> element
+      used to subdivide them. The <gi>ab</gi> element is provided as
+      an alternative to the <gi>p</gi> element; it may
+      <emph>not</emph> be used within paragraphs. The <gi>seg</gi>
+      element, by contrast, may appear only within and not between
+      paragraphs (or anonymous block elements).
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div1 n="Gen" type="book">
+  <head>Das Erste Buch Mose.</head>
+  <div2 n="1" type="chapter">
+    <p>
+      <seg n="1">Am Anfang schuff Gott Himel vnd Erden.</seg>
+      <seg n="2">Vnd die Erde war w&#xFC;st vnd leer / vnd es war
+        finster auff der Tieffe / Vnd der Geist Gottes schwebet auff
+        dem Wasser.</seg></p>
+    <p>
+      <seg n="3">Vnd Gott sprach / Es werde Liecht / Vnd es ward
+         Liecht.</seg></p>
+  </div2>
+</div1></egXML>
+<!--* Martin Luther [tr]. Die gantze Heilige Schrifft Deudsch.
+Wittenberg 1545. Letzte zu Luthers Lebzeiten erchienene Ausgabe, hsg.
+Hans Volz unter Mitarbeit von Heinz Blanke. Textredaktion Friedrich Kur.
+M&uuml;nchen: Rogner & Bernhard, 1972. *--></p>
+      <p>The <gi>ab</gi> element is also useful for marking dramatic
+      speeches when it is not clear whether the speech is to be
+      regarded as prose or verse. If, for example, am encoder does not
+      wish to express an opinion as to whether the opening lines of
+      Shakespeare's <title>The Tempest</title> are to be regarded as
+      prose or as verse, they might be tagged as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><div1 n="I" type="act">
+  <div2 n="1" type="scene">
+    <head rend="italic">Actus primus, Scena prima.</head>
+    <stage rend="italic" type="setting"> A tempestuous noise of 
+      Thunder and Lightning heard: 
+      Enter a Ship-master, and a Boteswaine.</stage>
+    <sp><speaker>Master.</speaker>
+        <ab>Bote-swaine.</ab></sp>
+    <sp><speaker>Botes.</speaker>
+        <ab>Heere Master: What cheere?</ab></sp>
+    <sp><speaker>Mast.</speaker>
+        <ab>Good: Speake to th' Mariners: fall too't, yarely,
+           or we run our selues a ground, bestirre, bestirre. 
+           <stage type="move">Exit.</stage>
+        </ab></sp>
+    <stage type="move">Enter Mariners.</stage>
+    <sp><speaker>Botes.</speaker>
+        <ab>Heigh my hearts, cheerely, cheerely my harts: yare, yare:
+          Take in the toppe-sale: Tend to th' Masters whistle: Blow
+          till thou burst thy winde, if roome e-nough.</ab></sp>
+  </div2>
+</div1></egXML>
+      See further section 6.11.2, "Core Tags for Drama," on p. 212,
+      and section 10.2.4, "Speech Contents," on p. 285).</p>
+      <p>These elements are formally defined as follows:
+      <specGrp xml:id="DSASA" n="Blocks, Segments and Anchors">
+        &anonb.odd;
+        &anchor.odd;
+        &seg.odd;
+      </specGrp>
+      </p>
+    </div2>
+    <div2 type="section" xml:id="SACS">
+      <head>Correspondence and Alignment</head>
+      <p>In this section we introduce the notions of
+      <term>correspondence</term>, expressed by the <att>corresp</att>
+      attribute, and of <term>alignment</term>, which is a special
+      kind of correspondence involving an ordered set of
+      correspondences. Both cases may be represented using the
+      <gi>link</gi> and <gi>linkGrp</gi> elements introduced in
+      section <ptr target="#SAPT"/>. We also discuss the special case
+      of alignment in time or <term>synchronization</term>, for which
+      special purpose elements are proposed in section <ptr target="#SASY"/>.</p>
+      <div3 type="subsection" xml:id="SACS1">
+        <head>Correspondence</head>
+        <p>A common problem in text analysis is to determine
+        correspondences between two or more parts of a single
+        document, or between places in different documents. Provided
+        that explicit elements are available to represent the parts or
+        places to be linked, then the global linking attribute
+        <att>corresp</att> may be used to encode such correspondence,
+        once it has been identified.
+        <specList>
+          <specDesc key="att.global.linking"/>
+        </specList>
+        This is one of the attributes made available by the mechanism
+        described in the introduction to this chapter (<ptr target="#SA"/>). Correspondence can also be expressed by means
+        of the <gi>link</gi> element introduced in section <ptr target="#SAPT"/>.</p>
+        <p>Where the correspondence is between <emph>spans</emph>, the
+        <gi>seg</gi> element should be used, if no other element is
+        available. Where the correspondence is between
+        <emph>points</emph>, the <gi>anchor</gi> element should be
+        used, if no other element is available.</p>
+        <p>The use of the <att>corresp</att> attribute with spans of
+        content is illustrated by the following example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><title xml:id="SHIRLEY">Shirley</title><![CDATA[, which made
+its Friday night debut only a month ago, was
+not listed on ]]><name xml:id="NBC">NBC</name><![CDATA['s new schedule,
+although ]]><seg corresp="#NBC" xml:id="NETWORK">the network</seg><![CDATA[
+says ]]><seg corresp="#SHIRLEY" xml:id="SHOW">the show</seg><![CDATA[
+still is being considered.]]></egXML>
+<!-- from G Leech. -->
+        <!-- commas after 'Shirley' and 'ago' added conjecturally by  -->
+        <!-- msm after consultation with lb.                          -->
+        Here the anaphoric phrases <mentioned>the network</mentioned>
+        and <mentioned>the show</mentioned> have been associated
+        directly with the elements to which they refer by means of
+        <att>corresp</att> attributes. This mechanism is simple to
+        apply, but has the drawback that it is not possible to specify
+        more exactly what kind of correspondence is intended. Where
+        this attribute is used, therefore, encoders are encouraged to
+        specify their intent in the associated encoding declarations
+        in the TEI Header.</p>
+        <p>Essentially, what the <att>corresp</att> attribute does is
+        to specify that the element that has the attribute and the
+        element(s) the attribute points to are doubly linked.<note place="foot">The <att>corresp</att> attribute is thus distinct
+        from the <att>target</att> attribute in that it is understood
+        to create a double, rather than a single, link. It is also
+        distinct from the <att>targets</att> attribute in that the
+        latter lists all the identifiers of the elements that are
+        doubly linked, whereas the <att>corresp</att> doubly links the
+        element that bears the attribute with the element(s) that make
+        up the value of the attribute.</note> Therefore, we can also
+        use the <gi>link</gi> and <gi>linkGrp</gi> elements defined in
+        section <ptr target="#SAPT"/> to indicate correspondence among
+        elements. Moreover, the use of these elements provides a
+        convenient place to indicate what kind of correspondence is
+        intended as in the following retagging of the preceding
+        example.
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><title xml:id="shirley">Shirley</title><![CDATA[, which made
+its Friday night debut only a month ago, was not
+listed on ]]><name xml:id="nbc">NBC</name><![CDATA['s new schedule,
+although ]]><seg xml:id="network">the network</seg><![CDATA[ says
+]]><seg xml:id="show">the show</seg><![CDATA[ still is being considered.
+]]><linkGrp type="anaphoric_link" targFunc="antecedent anaphor">
+   <link targets="#shirley #show"/>
+   <link targets="#nbc #network"/>
+</linkGrp></egXML></p>
+<p>In the following example, we use exactly the same mechanism to
+express a correspondence amongst the anchors introduced following the
+fifth word after <mentioned>English</mentioned> in a text:
+<eg><![CDATA[English language. Except for not very<anchor xml:id="eng1"/>
+<!-- ... -->
+English at all at the time<anchor xml:id="eng2"/>
+<!-- ... -->
+English was still full of flaws<anchor xml:id="eng3"/>
+<!-- ... -->
+English. This was revised by young<anchor xml:id="eng4"/>
+<!-- ... -->
+<linkGrp type="five-word collocates">
+  <link type="collocates of ENGLISH" targets="eng1 eng2 eng3 eng4"/>
+  <!-- ... -->
+</linkGrp>]]></eg></p></div3>
+        <div3 type="subsection" xml:id="SACSAL">
+          <head>Alignment of Parallel Texts</head>
+          <p>One very important application area for the alignment of
+          parallel texts is multilingual corpora. Consider, for
+          example, the need to align <soCalled>translation
+          pairs</soCalled> of sentences drawn from a corpus such as
+          the Canadian Hansard, in which each sentence is given in
+          both English and French. Concerning this problem, Gale and
+          Church write: <q rend="display">Most English sentences match
+          exactly one French sentence, but it is possible for an
+          English sentence to match two or more French sentences. The
+          first two English sentences [in the example below]
+          illustrate a particularly hard case where two English
+          sentences align to two French sentences. No smaller
+          alignments are possible because the clause
+          <q>...sales...were higher...</q> in the first English
+          sentence corresponds to (part of) the second French
+          sentence. The next two alignments ... illustrate the more
+          typical case where one English sentence aligns with exactly
+          one French sentence. The final alignment matches two English
+          sentences to a single French sentence. These alignments
+          [which were produced by a computer program] agreed with the
+          results produced by a human judge.<note place="foot">See
+          <bibl><author>William A. Gale and Kenneth W. Church</author>
+          <title level="a">Program for aligning sentences in bilingual
+          corpora</title>, <title>Computational Linguistics</title> 19
+          (1993): 75&#x2013;102</bibl>, from which the example in the
+          text is taken.</note></q></p>
+          <p>The alignment produced by Gale and Church's program can
+          be expressed in four different ways. The encoder must first
+          decide whether to represent the alignment in terms of points
+          within each text (using the <gi>anchor</gi> element) or in
+          terms of whole stretches of text, using the <gi>seg</gi>
+          element. To some extent the choice will depend on the
+          process by which the software works out where alignment
+          occurs, and the intention of the encoder. Secondly, the
+          encoder may elect to represent the actual encoding using
+          either <att>corresp</att> attributes attached to the
+          individual <gi>anchor</gi> or <gi>seg</gi> elements, or
+          using a free standing <gi>linkGrp</gi> element.</p>
+          <p>We present first a solution using <gi>anchor</gi>
+          elements bearing only <att>corresp</att> attributes:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div xml:lang="en" type="subsection">
+<p><anchor corresp="#fa1" xml:id="ea1"/>According to our survey, 1988
+sales of mineral water and soft drinks were much higher than in 1987,
+reflecting the growing popularity of these products. Cola drink
+manufacturers in particular achieved above-average growth rates.
+<anchor corresp="#fa2" xml:id="ea2"/>The higher turnover was largely
+due to an increase in the sales volume.
+<anchor corresp="#fa3" xml:id="ea3"/>Employment and investment levels also climbed.
+<anchor corresp="#fa4" xml:id="ea4"/>Following a two-year transitional period,
+the new Foodstuffs Ordinance for Mineral Water came into effect on
+April 1, 1988. Specifically, it contains more stringent requirements
+regarding quality consistency and purity guarantees.</p>
+</div>
+<div xml:lang="fr" type="subsection">
+<p><anchor corresp="#ea1" xml:id="fa1"/>Quant aux eaux min&#xE9;rales
+et aux limonades, elles rencontrent toujours plus d'adeptes. En effet,
+notre sondage fait ressortir des ventes nettement sup&#xE9;rieures
+&#xE0; celles de 1987, pour les boissons &#xE0; base de cola
+notamment. <anchor corresp="#ea2" xml:id="fa2"/>La progression des
+chiffres d'affaires r&#xE9;sulte en grande partie de l'accroissement
+du volume des ventes. <anchor corresp="#ea3" xml:id="fa3"/>L'emploi et
+les investissements ont &#xE9;galement augment&#xE9;.
+<anchor corresp="#ea4" xml:id="fa4"/>La nouvelle ordonnance f&#xE9;d&#xE9;rale
+sur les denr&#xE9;es alimentaires concernant entre autres les eaux
+min&#xE9;rales, entr&#xE9;e en vigueur le 1er avril 1988 apr&#xE8;s
+une p&#xE9;riode transitoire de deux ans, exige surtout une plus
+grande constance dans la qualit&#xE9; et une garantie de la
+puret&#xE9;.</p>
+</div></egXML></p>
+        <p>There is no requirement that the <att>corresp</att>
+        attribute be specified in both English and French texts, since
+        (as noted above) this attribute is defined as representing a
+        mutual association. However, it may simplify processing to do
+        so, and also avoids giving the impression that the English is
+        translating the French, or vice versa. More seriously, this
+        encoding does not make explicit the fact that it is in fact
+        the entire stretch of text between the anchors which is being
+        aligned, not simply the points themselves. If for example one
+        text contained material omitted from the other, this approach
+        would not be appropriate.</p>
+        <p>We now present the same passage using the alternative
+        <gi>linkGrp</gi> mechanism and marking explicitly the segments
+        which have been aligned:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div xml:id="div-e" xml:lang="en" type="subsection">
+  <p>
+    <seg xml:id="e_1">According to our survey, 1988 sales of mineral
+      water and soft drinks were much higher than in 1987,
+      reflecting the growing popularity of these products. Cola
+      drink manufacturers in particular achieved above-average
+      growth rates.</seg>
+    <seg xml:id="e_2">The higher turnover was largely due to an
+      increase in the sales volume.</seg>
+    <seg xml:id="e_3">Employment and investment levels also climbed.</seg>
+    <seg xml:id="e_4">Following a two-year transitional period, the new
+      Foodstuffs Ordinance for Mineral Water came into effect on
+      April 1, 1988. Specifically, it contains more stringent
+      requirements regarding quality consistency and purity
+      guarantees.</seg></p>
+</div>
+<div xml:id="div-f" xml:lang="fr" type="subsection">
+  <p>
+    <seg xml:id="f_1">Quant aux eaux min&#xE9;rales et aux limonades,
+      elles rencontrent toujours plus d'adeptes. En effet, notre
+      sondage fait ressortir des ventes nettement
+      sup&#xE9;rieures &#xE0; celles de 1987, pour les
+      boissons &#xE0; base de cola notamment.</seg>
+    <seg xml:id="f_2">La progression des chiffres d'affaires
+      r&#xE9;sulte en grande partie de l'accroissement du volume
+      des ventes.</seg>
+    <seg xml:id="f_3">L'emploi et les investissements ont
+      &#xE9;galement augment&#xE9;.</seg>
+    <seg xml:id="f_4">La nouvelle ordonnance f&#xE9;d&#xE9;rale sur
+      les denr&#xE9;es alimentaires concernant entre autres les
+      eaux min&#xE9;rales, entr&#xE9;e en vigueur le 1er avril
+      1988 apr&#xE8;s une p&#xE9;riode transitoire de deux
+      ans, exige surtout une plus grande constance dans la
+      qualit&#xE9; et une garantie de la puret&#xE9;.</seg></p>
+</div>
+<linkGrp type="alignment" domains="div-e div-f">
+  <link targets="#e_1 #f_1"/>
+  <link targets="#e_2 #f_2"/>
+  <link targets="#e_3 #f_3"/>
+  <link targets="#e_4 #f_4"/>
+</linkGrp></egXML></p>
+<p>Note that use of the <gi>ab</gi> element allows us to mark up the
+orthographic sentences in both languages independently of the alignment:
+the first translation pair in this example might be marked up as
+follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div xml:id="english" xml:lang="en" type="subsection">
+  <ab xml:id="english1">  
+    <s>According to our survey, 1988 sales of mineral water and soft
+      drinks were much higher than in 1987, reflecting the growing popularity
+      of these products.</s>
+    <s>Cola drink manufacturers in particular achieved above-average
+      growth rates.</s>
+  </ab>
+</div>
+<div xml:id="frencg" xml:lang="fr" type="subsection">
+  <ab xml:id="french1">  
+    <s xml:id="fs1">Quant aux eaux min&#xE9;rales et aux limonades, elles
+      rencontrent toujours plus d'adeptes.</s>
+    <s xml:id="fs2">En effet, notre sondage fait ressortir des ventes nettement
+      sup&#xE9;rieures &#xE0; celles de 1987, pour les boissons &#xE0;
+      base de cola notamment.</s>
+  </ab>
+</div></egXML>
+</p></div3>
+<div3 type="subsection" xml:id="SACSXA">
+<head>A Three-way Alignment</head>
+<p>The preceding encoding of the alignment of parallel passages from
+two texts requires that those texts and the alignment all be part of
+the same document. If the texts are in separate documents, then
+complete URIs, whether absolute or relative (section <ptr
+target="#SA"/>), will be required. These external pointers may appear
+anywhere within the document, but if they are created solely for use
+in encoding links, they may for convenience be grouped within the
+<gi>linkGrp</gi> (or other grouping element that uses them for
+linking).</p>
+<p>To demonstrate this facility, we consider how we might encode the
+alignments in an extract from Comenius' <title>Orbis Sensualium
+Pictus</title>.
+<!-- Whenever this <figure> is changed, copy-and-paste it into the
+     example in SAUR above. -->
+<figure xml:id="COMENIUS" rend="float fullpage">
+<graphic  url="./Figures/compic.png" />
+<figDesc>The figure shows the page from the <title>Orbis pictus</title>
+of Comenius which is discussed in the text.</figDesc></figure>
+Each topic covered in this work has three parts: a
+picture, a prose text in Latin describing the topic, and a
+carefully-aligned translation of the Latin into English, German or some
+other vernacular. Key terms in the two texts are typographically
+distinct, and are linked to the picture by numbers, which appear in the
+two texts and within the picture as well.<note place="foot">Our example uses the
+English translation of Charles Hoole (1659), and is taken from
+<bibl><editor>John E. Sadler</editor> ed., <title>John Amos
+Comenius Orbis Pictus: a facsimile of the first English edition of
+1659</title> (Oxford: Oxford University Press, 1968) (The Juvenile
+Library).</bibl></note></p>
+<p>First, we present the text portions. The English and Latin portions
+have been encoded as distinct <gi>div</gi> elements. Identifiers have
+been attached to each typographic line, but no other encoding added, to
+simplify the example.
+<!-- S tag changed to SEG -DTL  -->
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div xml:id="e98" xml:lang="en" type="lesson">
+   <head>The Study</head>
+   <p>
+      <seg xml:id="e9801">The Study</seg>
+      <seg xml:id="e9802">is a place</seg>
+      <seg xml:id="e9803">where a Student,</seg>
+      <seg xml:id="e9804">a part from men,</seg>
+      <seg xml:id="e9805">sitteth alone,</seg>
+      <seg xml:id="e9806">addicted to his Studies,</seg>
+      <seg xml:id="e9807">whilst he readeth</seg>
+      <seg xml:id="e9808">Books,</seg></p>
+</div>
+<div xml:id="l98" xml:lang="la" type="lesson">
+   <head>Mus&#xE9;um</head>
+   <p>
+      <seg xml:id="l9801">Museum</seg>
+      <seg xml:id="l9802">est locus</seg>
+      <seg xml:id="l9803">ubi Studiosus,</seg>
+      <seg xml:id="l9804">secretus ab hominibus,</seg>
+      <seg xml:id="l9805">solus sedet,</seg>
+      <seg xml:id="l9806">Studiis deditus,</seg>
+      <seg xml:id="l9807">dum lectitat</seg>
+      <seg xml:id="l9808">Libros,</seg></p>
+</div></egXML></p>
+<?tei winita?>
+<note resp="sdb" place="inline">Need to re-work this entire graphical example; probably DGD or CC.</note>
+<p>Next we assume that we have stored a digitized image of the picture
+itself in some external entity we will call <ident rend="noindex"
+type="ge">com98</ident> (for further discussion of the handling of
+external images and graphics, see section <ptr target="#FTGRA"/>). We
+further assume that we can address portions of this image as a
+two-dimensional co-ordinate space. The <ident type="teikw">SPACE</ident>
+location method of the <gi>ptr</gi> element (discussed in section <ptr
+target="#COXR"/> above) can now be used to point to the whole picture
+and to two portions of it, one containing the picture of a student and
+the other of a book, as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><ptr xml:id="p981" n="1" target="#idunno"/>
+<ptr xml:id="p982" n="2" target="#idunno" /><!-- from="space (2d) (75 5) (133 75)" -->
+<ptr xml:id="p983" n="3" target="#idunno" /><!-- from="space (2d) (55 42) (90 60)" --></egXML>
+Note that each external pointer has its own unique identifier, in
+addition to the <att>n</att> attribute, which last holds the visible
+label (or <soCalled>explainer</soCalled>) used for this image portion in
+the original.</p>
+<p>As printed, the text exhibits three kinds of alignment.
+ <list type="ordered">
+   <item n="1">The English and Latin portions are printed in two
+   parallel columns, with corresponding phrases, (represented above by
+   <gi>seg</gi> elements), more or less next to each other.</item>
+   <item n="2">Particular words or phrases are marked as terms in the
+   two languages by a change of rendition: the English text, which
+   otherwise uses black letter type throughout, has the words
+   <mentioned>The Study</mentioned>, <mentioned>a Student</mentioned>,
+   <mentioned>Studies</mentioned>, and <mentioned>Books</mentioned> in
+   a roman font; in the Latin text, which is printed in roman, the
+   corresponding words (<mentioned>Museum</mentioned>,
+   <mentioned>Studiosus</mentioned>, <mentioned>Studiis</mentioned>,
+   and <mentioned>Libros</mentioned>) are all in italic.</item>
+   <item n="3">Numbered labels appear within the text portions,
+   linking keywords to each other and to sections of the picture.
+   These labels, which have been left out of the above encoding, are
+   attached to the first third and last segment in each language
+   quoted below, and also appear (rather indistinctly) within the
+   picture itself. If it is desired to transcribe them in the text,
+   they might be encoded using as <gi>ref</gi> elements,
+   <gi>anchor</gi> elements, or <gi>ptr</gi>s to the picture; the
+   number itself would be transcribed as the value of the <att>n</att>
+   attribute (or as the content of the <gi>ref</gi>).
+   </item></list></p>
+<p>The first kind of alignment might be represented by using the
+<att>corresp</att> attribute on the <gi>seg</gi> element. The second
+kind might be represented by using the <gi>gloss</gi> and <gi>term</gi>
+mechanism described in section <ptr target="#COHQU"/>. The third kind of
+alignment might be represented using pointers embedded within the texts,
+although this would involve some duplication. We choose however to use
+the <gi>link</gi> element, since this provides an efficient way of
+representing the three-way alignment between English, Latin and picture
+without redundancy.
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><linkGrp type="alignment">
+   <link targets="#e9801 #l9801 #p981"/>
+   <link targets="#e9802 #l9802"/>
+   <link targets="#e9803 #l9803 #p982"/>
+   <link targets="#e9804 #l9804"/>
+   <link targets="#e9805 #l9805"/>
+   <link targets="#e9806 #l9806"/>
+   <link targets="#e9807 #l9807"/>
+   <link targets="#e9808 #l9808 #p983"/>
+</linkGrp></egXML></p>
+<p>This map, of course, only aligns whole segments and image portions,
+since these are the only parts of our encoding which bear identifiers
+and can therefore be pointed to. To add to it the alignment between
+the typographically distinct words mentioned above, new elements must
+be defined, either within the text itself or externally by using the
+extended pointer mechanism. Encoding these word pairs as <gi>term</gi>
+and <gi>gloss</gi>, although intuitively obvious, requires a
+non-trivial decision as to whether the Latin text is glossing the
+English, or vice-versa. Tagging all the marked words as <gi>term</gi>
+avoids the difficult decision, but might be thought by some encoders
+to convey the wrong information about the words in question. Simply
+tagging them as additional embedded <gi>seg</gi> elements with
+identifiers that can be aligned like the others is also a possibility.
+All of these require the addition of further markup to the text. This
+may pose no problems, or it may be infeasible (e.g. if the text is
+held on a read-only medium). If it is not feasible to add more markup
+to the original text, use of a fragment identifier is likely to be the
+best choice. For example, to indicate that the words
+<mentioned>Studies</mentioned> and <mentioned>Studiis</mentioned>
+correspond, two external pointers might be defined and aligned as
+follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><ptr xml:id="xt981" target="#string-range(xpath(id('e9806')),16,6)"/>
+<ptr xml:id="xt982" target="#string-range(xpath(id('l9806')),0,7)"/>
+<link targets="#xt981 #xt982"/></egXML></p>
+</div3></div2>
+<div2 type="section" xml:id="SASY">
+<head>Synchronization</head>
+<p>In the previous section we discussed two particular kinds of
+alignment: alignment of parallel texts in different languages; and
+alignment of texts and portions of an image. In this section we address
+another specialized form of alignment: synchronization. The need to
+mark the relative positions of text components with respect to time
+arises most naturally and frequently in transcribed spoken texts, but it
+may arise in any text in which quoted speech occurs, or events are
+described within a time frame. The methods described here are also
+generalizable for other kinds of alignment (for example, alignment of
+text elements with respect to space).</p>
+<div3 type="subsection" xml:id="SASYNC">
+<head>Aligning Synchronous Events
+ </head>
+<p>To mark synchronous elements, the <att>synch</att> attribute, which
+is one of the linking attributes that are available for all text
+elements, may be used. 
+Alternatively, the <gi>link</gi> and <gi>linkGrp</gi> elements may be
+used to make explicit the fact that the synchronous elements are
+aligned.</p>
+<p>To illustrate the use of these mechanisms for marking synchrony,
+consider the following representation of a spoken text:
+<!-- From BNC, via LB, retranscribed without SGML markup -->
+<eg><![CDATA[B: The first time in twenty five years, we've cooked Christmas
+   (unclear) for a blooming great load of people.
+A: So you're [1] (unclear) [2]
+B: [1] It will be [2] nice in a way, but, [3] be strange. [4]
+A: [3] Yeah [4], yeah, cos it, it's [5] the [6]
+B: [5] not [6]]]></eg></p>
+<p>This representation uses numbers in brackets to mark the points at
+which speakers overlap each other. For example, the <mentioned>[1]</mentioned>
+in A's first speech is to be understood as coinciding with the
+<mentioned>[1]</mentioned> in B's second speech.<note place="foot">This sample is taken from
+a conversation collected and transcribed for the British National
+Corpus.</note></p>
+<p>To encode this we use the base tag set for spoken texts, described
+in chapter <ptr target="#TS"/>, together with the additional tag set
+described in the present chapter. First, we transcribe this text,
+marking the synchronous points with <gi>anchor</gi> elements, and
+providing a <att>synch</att> attribute on one of each of the pairs of
+synchronous anchors. As noted in the example given above (section <ptr target="#SACSAL"/>), correspondence, and hence synchrony, is a
+symmetric relation; therefore the attribute need only be specified on
+one of the pairs of synchronous anchors.
+<egXML xmlns="http://www.tei-c.org/ns/Examples">    <div xml:id="BNC-d1" type="convers">
+      <u xml:id="u2b" who="#b">
+        The first time in twenty five years,
+        we've cooked Christmas <unclear> for a blooming great
+        load of people.</unclear> </u>
+<u xml:id="u3a" who="#a">So you're
+                    <anchor synch="#t1b" xml:id="t1a"/>
+                    <unclear> <anchor synch="#t2b" xml:id="t2a"/> </unclear> </u>
+<u xml:id="u3b" who="#b"><anchor xml:id="t1b"/>It will be <anchor xml:id="t2b"/>
+                    nice in a way, but, <anchor xml:id="t3b"/>
+                    be strange.<anchor xml:id="t4b"/> </u>
+<u xml:id="u4a" who="#a"><anchor synch="#t3b" xml:id="t3a"/>Yeah
+                    <anchor synch="#t4b" xml:id="t4a"/>, yeah, cos it, its
+                    <anchor synch="#t5b" xml:id="t5a"/>the
+                    <anchor synch="#t6b" xml:id="t6a"/> </u>
+<u xml:id="u4b" who="#b"><anchor xml:id="t5b"/>not<anchor
+xml:id="t6b"/> </u>
+<!-- ... --></div></egXML></p>
+<p>We can encode this same example using <gi>link</gi> and
+<gi>linkGrp</gi> elements to make the temporal alignment explicit. A <gi>back</gi>
+element has been used to enclose the <gi>linkGrp</gi> element, but the links
+may be located anywhere the encoder finds convenient:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><back>
+    <linkGrp xml:id="lg1" domains="BNC-d1 BNC-d1"
+             targFunc="speaker.a speaker.b"
+             type="synchronous_alignment">
+      <link xml:id="l1" targets="#t1a #t1b"/>
+      <link xml:id="l2" targets="#t2a #t2b"/>
+      <link xml:id="l3" targets="#t3a #t3b"/>
+      <link xml:id="l4" targets="#t4a #t4b"/>
+      <link xml:id="l5" targets="#t5a #t5b"/>
+      <link xml:id="l6" targets="#t6a #t6b"/>
+    </linkGrp>
+  </back></egXML>
+The
+<att>xml:id</att> attributes are provided for the <gi>link</gi> and
+<gi>linkGrp</gi> elements here for reasons discussed  in the next
+section, <ptr target="#SASYMP"/>. 
+</p>
+<p>As with other forms of alignment, synchronization may be expressed
+between stretches of speech as well as between points. When complete
+utterances are synchronous, for example, if one person says
+<mentioned>What?</mentioned> and another <mentioned>No!</mentioned> at the same time,
+that can be represented without <gi>anchor</gi> elements as follows.
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><u synch="#u02" xml:id="u01" who="#a">What?</u>
+<u xml:id="u02" who="#b">No!</u></egXML></p>
+<p>A simple way of expressing <term>overlap</term> (where one speaker
+starts speaking before another has finished) is thus to use the
+<gi>seg</gi> element to encode the overlapping portions of speech. For
+example,
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#a"> So you're <unclear synch="#u-b1"/> </u>
+<u who="#b"><seg xml:id="u-b1"> It will be </seg> nice in a way, but,
+           <seg synch="#u-a3"> be strange. </seg> </u>
+<u who="#a"><seg xml:id="u-a3"> Yeah </seg>, yeah, cos it,
+           its <seg synch="#u-b2"> the </seg> </u>
+<u xml:id="u-b2" who="#b"> not </u></egXML>
+Note in this encoding how synchronization has been effected between an
+empty <gi>unclear</gi> element and a <gi>seg</gi>, and between an entire
+<gi>u</gi> element and another <gi>seg</gi>, using the <att>synch</att>
+attribute. Alternatively, a <gi>linkGrp</gi> could be used in the same
+way as above.</p></div3>
+<div3 type="subsection" xml:id="SASYMP">
+<head>Placing Synchronous Events in Time</head>
+<p>A synchronous alignment specifies which points in a spoken text occur
+at the same time, and the order in which they occur, but does not say at
+what time those points actually occur. If that information is available
+to the encoder it can be represented by means of the <gi>when</gi> and
+<gi>timeline</gi> elements, whose description and attributes are the
+following:
+<specList><specDesc key="when" atts="absolute interval unit since"/><specDesc key="timeline" atts="origin interval unit"/></specList></p>
+<p>Each <gi>when</gi> element indicates a point in time, either directly
+by means of the <att>absolute</att> attribute, whose value is a string
+which specifies a particular time, or indirectly by means of the
+<att>since</att> attribute, which points to another <gi>when</gi>. If
+the <att>since</att> is used, then the <att>interval</att> and
+<att>unit</att> attributes should also be used to indicate the amount of
+time that has elapsed since the time specified by the element pointed to
+by the <att>since</att> attribute; the value <val>-1</val>
+can be given to indicate that the interval is unknown.</p>
+<p>If the <gi>when</gi> elements are uniformly spaced in time, then the
+<att>interval</att> and <att>unit</att> values need be given once in the
+<gi>timeline</gi>, and not repeated in any of the <gi>when</gi>
+elements. If the intervals vary, but the units are all the same, then
+the <att>unit</att> attribute alone can be given in the
+<gi>timeline</gi> element, and the <att>interval</att> attribute given
+in the <gi>when</gi> element.</p>
+<p>The <att>origin</att> attribute in the <gi>timeline</gi> element
+points to a <gi>when</gi> element which specifies the reference or
+origin for the timings within the <gi>timeline</gi>; this must, of
+course, specify its position in time absolutely.</p>
+<p>The following <gi>timeline</gi> might be used to accompany the marked
+up conversation shown in the preceding section:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><timeline xml:id="tl1" origin="#w0" unit="ms">
+   <when xml:id="w0" absolute="11:30:00"/>
+   <when xml:id="w1" interval="unknown" since="#w0"/>
+   <when xml:id="w2" interval="100" since="#w1"/>
+   <when xml:id="w3" interval="200" since="#w2"/>
+   <when xml:id="w4" interval="150" since="#w3"/>
+   <when xml:id="w5" interval="250" since="#w4"/>
+   <when xml:id="w6" interval="100" since="#w5"/>
+</timeline></egXML>
+The information in this <gi>timeline</gi> could now be linked to the
+information in the <gi>linkGrp</gi> which provides the temporal
+alignment (synchronization) for the text, as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><linkGrp type="temporal_specification"
+         domains="lg1 tl1" targFunc="synch.points when">
+   <link targets="#l1 #w1"/>
+   <link targets="#l2 #w2"/>
+   <link targets="#l3 #w3"/>
+   <link targets="#l4 #w4"/>
+   <link targets="#l5 #w5"/>
+   <link targets="#l6 #w6"/>
+</linkGrp></egXML></p>
+<p>To avoid the need for two distinct link groups (one marking the
+synchronization of anchors with each other, and the other marking their
+alignment with points on the time line) it would be better to link the
+<gi>when</gi> elements with the synchronous points directly:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><linkGrp type="temporal_specification"
+         domains="BNC-d1 BNC-d1 tl1" targFunc="speaker.a speaker.b when">
+   <link targets="#t1a #t1b #w1"/>
+   <link targets="#t2a #t2b #w2"/>
+   <link targets="#t3a #t3b #w3"/>
+   <link targets="#t4a #t4b #w4"/>
+   <link targets="#t5a #t5b #w5"/>
+   <link targets="#t6a #t6b #w6"/>
+</linkGrp></egXML></p>
+<?tei winita ?>
+<!-- We need to completely rewrite this para; I've started, but will
+need help to get the SMIL stuff right -sdb -->
+<p>Finally, suppose that a digitized audio recording is also
+available, and an XML file that asigns identifiers to the various
+temporal spans of sound is available. For example, the following
+Synchronized Multimedia Integration Language (SMIL, pronounced
+"smile") fragment:
+<eg><![CDATA[
+<audio src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
+       xml:id="au1" begin="05.2s" />
+<audio src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
+       xml:id="au2" begin="05.7s" />
+<audio src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
+       xml:id="au3" begin="05.9s" />
+<audio src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
+       xml:id="au4" begin="06.3s" />
+<audio src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
+       xml:id="au5" begin="06.9s" />
+<audio src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
+       xml:id="au6" begin="07.4s" />
+]]></eg>
+URIs pointing to the <gi scheme="SMIL">audi</gi> elements could also
+be included as a fourth component in each of the above <gi>link</gi>
+elements, thus providing a synchronized audio track to complement the
+transcribed text.</p>
+<p>For further discussion of this and related aspects of encoding
+transcribed speech, refer to chapter <ptr target="#TS"/>.</p>
+<p>The <gi>when</gi> and <gi>timeline</gi> elements are defined as
+follows:
+<specGrp xml:id="DSASYMP" n="Temporal specification">
+  &when.odd;
+  &timeline.odd;
+</specGrp></p></div3></div2>
+<div2 type="section" xml:id="SAIE">
+<head>Identical Elements and Virtual Copies</head>
+<p>This section introduces the notion of a <term>virtual element</term>,
+that is, an element which is not explicitly present in a text, but the
+presence of which an application can infer from the encoding supplied.
+In this section, we are concerned with virtual elements made by simply
+cloning existing elements. In the next section (<ptr target="#SAAG"/>), we
+discuss virtual elements made by aggregating existing elements.</p>
+<p>It is useful to be able to represent the fact that one element of
+text is identical to others, for analytical purposes, or (especially if
+the elements have lengthy content) to obviate the need to repeat the
+content. For example, consider the repetition of the <tag>date</tag>
+element in the following material:
+        <!-- Orwell, Nineteen-Eighty-Four  -->
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>In small clumsy letters he wrote:
+<q rend="centered italic"><date xml:id="d840404">April 4th,
+1984</date>.</q></p>
+<p>He sat back. A sense of complete helplessness had
+descended upon him. ...</p>
+<p>His small but childish handwriting straggled up
+and down the page, shedding first its capital letters
+and finally even its full stops:
+<q rend="italic"><date>April 4th, 1984</date>.
+Last night to the flicks. ... </q></p></egXML>
+Suppose now that we wish to encode the fact that the second
+<gi>date</gi> element above has identical content to the first. The
+<att>sameAs</att> attribute is provided for this purpose. Using it, we
+can recode the last line of the above example as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><date
+                                                    sameAs="#d840404" rend="italic">April 4th, 1984</date>
+Last night to the flicks ... </egXML></p>
+<p>The <att>sameAs</att> attribute may be used to document the fact
+that two elements have identical content. It may be regarded as a
+special kind of link. It should only be attached to an element with
+identical content to that it indicates, or to one the content of which
+clearly designates it as a repetition, such as the word
+<mentioned>repeat</mentioned> or <mentioned>bis</mentioned> in the
+representation of the chorus of a song, the second time it is to be
+sung. The relation specified by the <att>sameAs</att> attribute is
+symmetric: if a chorus is repeated three times and each repetition
+bears a <att>sameAs</att> attribute indicating the first occurrence of
+the element concerned, it is implied that each chorus is identical,
+and there is no need for the first occurrence to specify any of its
+copies.</p>
+<p>The <att>copyOf</att> attribute is used in a similar way to
+indicate that the content of the element bearing it is identical to
+that of another. The difference is that the content is not itself
+repeated. The effect of this attribute is thus to create a
+<term>virtual copy</term> of the element indicated. Using this
+attribute, the repeated date in the first example above could be
+recoded as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><date rend="italic" copyOf="#d840404"/></egXML></p>
+<p>An application program should replace whatever is the actual content
+of an element bearing a <att>copyOf</att> attribute with the content of
+the element specified by it. If the content of the element specified
+includes other elements, these will become embedded within the element
+bearing the attribute. Care must be taken to ensure that the document
+is valid both before and after this embedding takes
+place. If, for example, the element bearing a <att>copyOf</att>
+attribute requires a mandatory sub-component, then this component must
+be present (though possibly empty), even though it will be replaced by
+the content of the targetted element.</p>
+<p>The following example demonstrates how the <att>copyOf</att>
+attribute may be used in conjunction with the <gi>seg</gi> element to
+highlight the differences between almost identical repetitions:
+<!-- W.S. Gilbert, "A more humane Mikado", The Mikado  -->
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><sp who="#mikado">
+   <l>My <seg xml:id="Mik-l1s">object all sublime</seg></l>
+   <l>I shall <seg xml:id="Mik-l2s">achieve in time</seg>—</l>
+   <l xml:id="Mik-l3">To let <seg xml:id="l3s">the punishment fit the crime</seg>,</l>
+   <l xml:id="Mik-l4"><seg copyOf="#Mik-l3s"/>;</l>
+   <l xml:id="Mik-l5">And make each pris'ner pent</l>
+   <l xml:id="Mik-l6">Unwillingly represent</l>
+   <l xml:id="Mik-l7">A source <seg xml:id="Mik-l7s">of innocent merriment</seg>,</l>
+   <l xml:id="Mik-l8"><seg copyOf="#Mik-l7s"/>!</l>
+</sp>
+<sp who="#chorus">
+   <l>His <seg copyOf="#Mik-l1s"/></l>
+   <l>He will <seg copyOf="#Mik-l2s"/></l>
+   <l copyOf="#Mik-l3"/>
+   <l copyOf="#Mik-l4"/>
+   <l copyOf="#Mik-l5"/>
+   <l copyOf="#Mik-l6"/>
+   <l copyOf="#Mik-l7"/>
+   <l copyOf="#Mik-l8"/>
+</sp></egXML>
+</p>
+<p>For further examples of the use of this attribute, see <ptr target="#SAAT"/> and <ptr target="#GDAT"/>.</p></div2>
+<div2 type="section" xml:id="SAAG">
+<head>Aggregation</head>
+<p>Because of the strict hierarchical organization of elements, or for
+other reasons, it may not always be possible or desirable to include
+all the parts of a possibly fragmented text segment within a single
+element. In section <ptr target="#SAPTIP"/> we introduced the notion of
+an intermediate pointer as a way of pointing to discontinuous segments
+of this kind. In this section we first describe another way of linking
+the parts of a discontinuous whole, using a set of linking attributes,
+which are made available for any tag by following the procedure
+described at the beginning of this chapter. We then describe how the
+<gi>link</gi> element may be used to aggregate such segments, and
+finally introduce the <gi>join</gi> element, which is a
+special-purpose linking element specifically for representing the
+aggregation of parts, and the <gi>joinGrp</gi> for grouping
+<tag>join</tag> tags.</p>
+<p>The linking attributes for aggregation are <att>next</att> and
+<att>prev</att>; each of these attributes has a single identifier as its
+value:
+<specList><specDesc key="att.global.linking"/></specList></p>
+<p>The <gi>join</gi> element is also a member of the class of <ident type="class">att.pointing</ident> elements, and so may carry any of the
+attributes of that class; for the list, see section <ptr target="#SAPT"/>.</p>
+<p>Here is the material on which we base our first illustration of the
+use of these mechanisms. Our problem is to represent the S-units
+identified below as qs3 and qs4 as a single (but discontinuous) whole:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><q who="waitress">
+   <s xml:id="qs2">Monsieur Paul, after he has taken equal
+      parts of goose breast and the finest pork, and
+      broken a certain number of egg yolks into them,
+      and ground them <emph>very</emph>, very fine,
+      cooks all with seasoning for some three hours.</s>
+   <s xml:id="qs3">
+      <emph>But</emph>,</s> </q>
+<s xml:id="ps2">she pushed her face nearer, and looked with
+   ferocious gloating at the p&#xE2;t&#xE9;
+   inside me, her eyes like X rays,</s>
+<q who="waitress">
+   <s xml:id="qs4">he never stops stirring it!</s>
+   <s xml:id="qs5">Figure to yourself the work of it &#x2014;</s>
+   <s xml:id="qs6">stir, stir, never stopping!</s>
+</q></egXML>
+<!-- M.F.K. Fisher, I was really very hungry, As They Were, p43  -->
+</p>
+<p>Using the <att>prev</att> and <att>next</att> attributes, we can
+link the s-units with identifiers <val>s1</val> and <val>s2</val>, either singly or doubly as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><s xml:id="QS3" next="#QS4"><emph>But</emph>,</s>
+<s xml:id="QS4">he never stops stirring it!</s>
+<s xml:id="QS5"><emph>But</emph>,</s>
+<s xml:id="QS6" prev="#QS5">he never stops stirring it!</s>
+<s xml:id="QS7" next="#QS7"><emph>But</emph>,</s>
+<s xml:id="QS8" prev="#QS7">he never stops stirring it!</s></egXML>
+Double linking of the two S-units, as illustrated by the last of these
+encodings, is equivalent to specifying a <tag>link</tag> tag:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><link type="join" targets="#qs3 #qs4"/></egXML></p>
+<p>Such a <tag>link</tag> element must carry a <att>type</att>
+attribute with a value of <val>join</val> to specify that the link is
+to be understood as joining its targets into a single aggregate.</p>
+<p>The <gi>join</gi> element is equivalent to a <gi>link</gi> element of
+type <val>join</val>.
+<!-- LB added following, possibly contentious, clarification -->
+Unlike the <gi>link</gi> element, the <gi>join</gi> element can
+additionally specify information about the virtual element which it
+represents, by means of its <att>result</att> attribute. And finally,
+unlike the <gi>link</gi> element, the position of a <gi>join</gi>
+element within a text is significant: it must be supplied at a position
+where the element indicated by its <att>result</att> attribute would be
+contextually legal.
+<!-- and removed following -->
+        <!--   We now define the following equivalence:<eg>           -->
+        <!-- <![CDATA[-->
+        <!-- <link type='join'> = <join>                                -->
+        <!-- ]]>                                                      -->
+        <!-- </eg>                                                    -->
+        <!--                                                          -->
+        <!-- 
+<p>By using the <gi>join</gi> tag for representing       -->
+        <!-- element aggregation, another attribute is made           -->
+        <!-- available to indicate the nature of the                  -->
+        <!-- <term>result</term> of the joining operation.            -->
+        <!-- Moreover, we specify the default value for the           -->
+        <!-- <att>targOrder</att> attribute to be <term>Y</term>.     -->
+<specList><specDesc key="join" atts="result targets"/><specDesc key="joinGrp" atts="result"/></specList>
+To conclude the above example, we now use a <gi>join</gi> element to
+represent the virtual sentence formed by the aggregation of <val>s1</val> and <val>s2</val>:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><join targets="#qs3 #qs4" result="s"/></egXML>
+As a further example, consider the following list of authors' names.
+The object of the <gi>join</gi> element here is to provide another
+list, composed of those authors from the larger list who happen to
+come from Heidelberg:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><list>
+<head>Authors</head>
+   <item xml:id="a_uf">Figge, Udo </item>
+   <item xml:id="a_ch">Heibach, Christiane </item>
+   <item xml:id="a_gh">Heyer, Gerhard </item>
+   <item xml:id="a_bp">Philipp, Bettina </item>
+   <item xml:id="a_ms">Samiec, Monika </item>
+   <item xml:id="a_ss">Schierholz, Stefan </item>
+</list>
+<join targets="#a_ch #a_bp #a_ss" result="list">
+<desc>Authors from Heidelberg</desc></join></egXML></p>
+<p>The following example shows how <gi>join</gi> can be used to
+reconstruct a text cited in fragments presented out of order. The poem
+being remembered (an unusual translation of a well known poem by Basho)
+runs <q>When the old pond / gets a new frog, / it's a new pond.</q></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<sp who="#frog-hughie">
+  <p>How does it go?
+  <q>
+    <l xml:id="frog-x1">da-da-da</l>
+    <l xml:id="frog-l2">gets a new frog</l>
+    <l>...</l>
+  </q>
+  </p>
+</sp>
+<sp who="#frog-louie">
+  <p>
+    <q>
+      <l xml:id="frog-l1">When the old pond</l>
+      <l>...</l>
+    </q>
+  </p>
+</sp>
+<sp who="#frog-dewey">
+  <p>
+    <q>... 
+    <l xml:id="frog-l3">It's a new pond.</l>
+    </q>
+  </p>
+  <join targets="#frog-l1 #frog-l2 #frog-l3" result="lg" scope="root"/>
+</sp>
+</egXML>
+<p>As with other forms of link, a grouping element <tag>joinGrp</tag>
+is available for use when a number of <tag>join</tag> elements of the
+same kind co-occur. This avoids the need to specify the
+<att>result</att> attribute for each <gi>join</gi> if they are all of
+the same type, and also allows us to restrict the domain within which
+their target elements are to be found, in the same way as for
+<gi>linkGrp</gi> elements (see <ptr target="#SAPTLG"/>). Like a
+<gi>join</gi>, a <gi>joinGrp</gi> may appear only where the elements
+represented by its contents are legal. Thus if we had created many
+<tag>join</tag> tags of the sort just described, we could group them
+together, and require that their components are all contained by an
+element with the identifier <val>MFKFhungry</val> as
+follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><joinGrp domains="mfkfhungry mfkfhungry" result="s">
+   <join targets="#qs3 #qs4"/>
+   <join targets="#qs5 #qs6"/>
+</joinGrp>
+</egXML>
+</p>
+<p>The <gi>join</gi> element is useful as a means of representing
+non-hierarchic structures (as further discussed in chapter <ptr target="#NH"/>). It may also be used as a convenient way of representing a
+variety of analytic units, like the <gi>span</gi> and <gi>interp</gi>
+elements discussed in chapter <ptr target="#AI"/>. As an example, consider
+the following passage:
+<q rend="display">
+<p>Zui-Gan called out to himself every day, <q>Master.</q></p>
+<p>Then he answered himself, <q>Yes, sir.</q></p>
+<p>And then he added, <q>Become sober.</q></p>
+<p>Again he answered, <q>Yes, sir.</q></p>
+<p><q>And after that,</q> he continued, <q>do not be deceived by
+others.</q></p>
+<p><q>Yes, sir; yes, sir,</q> he replied.</p></q></p>
+<p>Suppose now that we wish to represent an interpretation of the above
+passage in which we distinguish between the various
+<soCalled>voices</soCalled> adopted by the character Zui-Gan. In the
+following encoding, the <att>who</att> attribute has been used for this
+purpose; <att>xml:id</att> attributes have also been added.
+The <att>xml:id</att> values specified allow us to link the material
+spoken by each voice:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><text xml:id="zuitxt">
+   <body>
+      <p>Zui-Gan called out to himself every day,
+         <q next="#zuiq2" xml:id="zuiq1" who="zuigan">Master.</q></p>
+      <p>Then he answered himself,
+         <q next="#zuiq4" xml:id="zuiq2" who="zuigan">Yes, sir.</q></p>
+      <p>And then he added,
+         <q next="#zuiq5" xml:id="zuiq3" who="master">Become sober.</q></p>
+      <p>Again he answered,
+         <q next="#zuiq7" xml:id="zuiq4" who="zuigan">Yes, sir.</q></p>
+      <p><q next="#zuiq6" xml:id="zuiq5" who="master">And after that,</q>
+         he continued,
+         <q xml:id="zuiq6" who="master">do not be deceived by others.</q></p>
+      <p><q xml:id="zuiq7" who="zuigan">Yes, sir; yes, sir,</q>
+         he replied.</p>
+   </body>
+</text></egXML></p>
+<p>However, by using the <gi>join</gi> element, we can directly
+represent the complete speech attributed to each voice:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><joinGrp result="q">
+   <join targets="#zuiq1 #zuiq2 #zuiq4 #zuiq7">
+    <desc>what Zui-Gan said</desc></join>
+   <join targets="#zuiq3 #zuiq5 #zuiq6"> 
+     <desc>what Master said</desc></join>
+</joinGrp></egXML></p>
+<p>Note the use of the <gi>desc</gi> child element within the two
+<gi>join</gi>s making up the <gi>q</gi> element here. These enable us
+to  document the speakers of the two virtual <gi>q</gi> elements
+represented by the <gi>join</gi> elements; this is necessary because the
+current proposals do not allow for any way of specifying the attributes
+to be associated with a virtual element, and hence we cannot specify a
+<att>who</att> value for them.</p>
+<p>Suppose now that <att>xml:id</att> attributes, for whatever
+reasons, are not available. Then <gi>ptr</gi> elements may be created
+using any of the methods described in sections <ptr target="#SAES"/>
+or <ptr target="#SATS"/>. The <att>xml:id</att> attributes of
+<emph>these</emph> elements may now be specified by the
+<att>targets</att> attribute on the <gi>join</gi> elements.
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><text>
+ <body>
+    <p>Zui-Gan called out to himself every day, <q>Master.</q></p>
+    <p>Then he answered himself, <q>Yes, sir.</q></p>
+    <p>And then he added, <q>Become sober.</q></p>
+    <p>Again he answered, <q>Yes, sir.</q></p>
+    <p><q>And after that,</q> he continued, <q>do not be deceived by others.</q></p>
+    <p><q>Yes, sir; yes, sir,</q> he replied.</p>
+    <ab type="aggregation">
+      <ptr xml:id="rzuiq1" target="./#xpath(//div0[2]/div1[6]/p[1]/q[1])"/>
+      <ptr xml:id="rzuiq2" target="./#xpath(//div0[2]/div1[6]/p[2]/q[1])"/>
+      <ptr xml:id="rzuiq3" target="./#xpath(//div0[2]/div1[6]/p[3]/q[1])"/>
+      <ptr xml:id="rzuiq4" target="./#xpath(//div0[2]/div1[6]/p[4]/q[1])"/>
+      <ptr xml:id="rzuiq5" target="./#xpath(//div0[2]/div1[6]/p[5]/q[1])"/>
+      <ptr xml:id="rzuiq6" target="./#xpath(//div0[2]/div1[6]/p[5]/q[2])"/>
+      <ptr xml:id="rzuiq7" target="./#xpath(//div0[2]/div1[6]/p[6]/q[1])"/>
+      <joinGrp evaluate="one" result="q">
+        <join targets="#rzuiq1 #rzuiq2 #rzuiq4 #rzuiq7">
+         <desc>what Zui-Gan said</desc></join>
+        <join targets="#rzuiq3 #rzuiq5 #rzuiq6">
+          <desc>what Master said</desc></join>
+      </joinGrp>
+    </ab>
+  </body>
+</text></egXML></p>
+<p> The extended pointer with identifier
+<val>rzuiq2</val> (for example) may be read as <q>the first
+<gi>q</gi> in the first <gi>p</gi>, inside the sixth <gi>div1</gi>
+within the second <gi>div0</gi> element of the current document.</q></p>
+<p>As mentioned above, there is no need for the <gi>join</gi> and
+<gi>ptr</gi> elements to be held in the same document as the text;
+indeed, if, for example, the text is held on a read-only medium, this
+may not be possible. The <att>doc</att> attribute of the <gi>ptr</gi>
+element may be used to specify the name of an external entity within
+which its target is to be found, as in the following example:
+<eg><![CDATA[<!ENTITY fazdoc SYSTEM 'faz.doc' NDATA w3cXML>
+<!-- ... -->
+<xptr xml:id='RZUIQ1'
+      doc='fazdoc'
+      target="./#xpath(//div0[2]/div1[6]/p[1]/q[1])"/>
+<!-- ... -->]]></eg>
+<!-- deleted following example. nice though it is, it's too long -->
+        <!-- and adds nothing to preceding ones  -->
+        <!-- 
+<p>The second example is a possible reconstruction of    -->
+        <!-- the fragment of the diary that the main character has    -->
+        <!-- been keeping throughout the first chapter of a           -->
+        <!-- well-known twentieth-century novel.                      -->
+        <!-- George Orwell, Nineteen-Eighty-Four, 1947 -->
+        <!-- empty head elements deleted, will be restored on demand. -->
+        <!-- diary excerpts retagged as Q not P (discussable).        -->
+        <!--  -msm -->
+        <!-- OK to both -dtl (93-07-08) -->
+        <!-- 
+<eg> -->
+        <!-- <![CDATA[-->
+        <!-- 
+<div1 xml:id='C1'>
+<head rend='large caps centered'>one</head> -->
+        <!-- 
+<div2 xml:id='C1S1'> -->
+        <!-- 
+<p> -->
+        <!-- <s>It was a bright cold day in April, and the clocks were striking -->
+        <!-- thirteen.</s> -->
+        <!-- ... -->
+        <!-- <s>In small clumsy letters he wrote:</s> -->
+        <!-- <q rend='centered italic' xml:id='D1'> -->
+        <!-- <date xml:id='D1.1' copyOf='d2.1'></date> -->
+        <!-- </q> -->
+        <!-- 
+<p><s>He sat back.</s> -->
+        <!-- <s>A sense of complete helplessness had descended upon him.</s> -->
+        <!-- ... -->
+        <!-- 
+<p> -->
+        <!-- <s>Suddenly he began writing in sheer panic, only imperfectly -->
+        <!-- aware of what he was setting down.</s> -->
+        <!-- <s>His small but childish handwriting straggled up and down the page, -->
+        <!-- shedding first its capital letters and finally even its full -->
+        <!-- stops:</s> -->
+        <!-- <q rend='italic' xml:id='D2'> -->
+        <!-- <date xml:id='D2.1'>April 4th, 1984.</date> -->
+        <!-- <s xml:id='D2.2'>Last night to the flicks.</s> -->
+        <!-- ... -->
+        <!-- <seg type='sentence' xml:id='D2.11.1'>then there was a wonderful shot of -->
+        <!-- a childs arm going up up up right up into the air</seg> -->
+        <!-- ... -->
+        <!-- <seg type='phrase' xml:id='D2.11.9'>typical prole reaction</seg> -->
+        <!-- <seg type='fragment' xml:id='D2.11.10'>they never&mdash;</seg> -->
+        <!-- </q> -->
+        <!-- 
+<p> -->
+        <!-- <s>Winston stopped writing, partly because he was suffering from -->
+        <!-- cramp.</s> -->
+        <!-- ... -->
+        <!-- 
+<p><s>For a moment he was seized by a kind of hysteria.</s> -->
+        <!-- <s>He began writing in a hurried untidy scrawl:</s> -->
+        <!-- <q rend='italic' xml:id='D3'> -->
+        <!-- <seg type='sentence' xml:id='D3.1'>theyll shoot me</seg> -->
+        <!-- <seg type='sentence' xml:id='D3.2'>i dont care</seg> -->
+        <!-- <seg type='sentence' xml:id='D3.3'>theyll shoot me in the back of the neck</seg> -->
+        <!-- <seg type='sentence' xml:id='D3.4'>i dont care </seg> -->
+        <!-- <seg type='phrase' xml:id='D3.5'>down with big brother</seg> -->
+        <!-- <seg type='sentence' xml:id='D3.6'>they always shoot you in the back of the -->
+        <!-- neck</seg> -->
+        <!-- <seg type='sentence' xml:id='D3.7'>i dont care</seg> -->
+        <!-- <seg type='phrase' xml:id='D3.8'>down with big brother&mdash;</seg> -->
+        <!-- </q> -->
+        <!-- 
+<p> -->
+        <!-- <s>He sat back in his chair, slightly ashamed of himself, and -->
+        <!-- laid down the pen.</s> -->
+        <!-- ... -->
+        <!-- <s>With the feeling that he was speaking to O'Brien, and also -->
+        <!-- that he was setting forth an important axiom, he wrote:</s> -->
+        <!-- <q rend='italic' xml:id='D15'> -->
+        <!-- <s xml:id='D15.1'>Freedom is the freedom to say that two plus two make -->
+        <!-- four.</s> -->
+        <!-- <s xml:id='D15.2'>If that is granted, all else follows.</s> -->
+        <!-- </q> -->
+        <!-- 
+<div2 xml:id='C1S8'>
+<head rend='large caps centered'>viii -->
+        <!-- ... -->
+        <!-- 
+<div1 xml:id='C2'>
+<head rend='large caps centered'>two</head> -->
+        <!-- ... -->
+        <!-- <joinGrp targType='q q' -->
+        <!--          domains='c1 c1' -->
+        <!--          extendTarg='2'> -->
+        <!--   <join  result="Winston Smith's diary" -->
+        <!--          targets='d2 d3 d4 d5 d6 d7 d8 d9 d10 d11 d12 d13 d14 d15'> -->
+        <!--   </joinGrp> -->
+        <!-- ]]> -->
+        <!-- </eg> -->
+        <!--   -->
+        <!-- Also dropped this example because I dont understand it.  -->
+        <!-- There's no relevant discussion at end of COse any more   -->
+        <!-- either                                                   -->
+        <!-- Well, if you wouldn't axe things quite so liberally,     -->
+        <!-- you wouldn't find yourself left with no explanations of  -->
+        <!-- things, would you?                                       -->
+        <!-- <p>Finally, here is a solution to the markup problem     -->
+        <!-- discussed at the end of section <xref type='div3'          -->
+        <!-- target='COSE'>, concerning a quotation that is shared      -->
+        <!-- between two identification ments.                        -->
+        <!-- Doris Lessing, The Four-Gated City, 1976, p257  -->
+        <!-- 
+<eg><![CDATA[-->
+        <!-- <s xml:id='S89235'>Martha said, -->
+        <!-- <q xml:id='Q89240'><s xml:id='S89240'>Mark.</s> -->
+        <!-- <s xml:id='S89245'>He's my employer, after all.</s></q></s> -->
+        <!-- <s id=S89250<q xml:id='Q89250'><s xml:id='S89255'>I suppose,</s></q> she -->
+        <!-- added, with a sort of desperation of her own which at least -->
+        <!-- hinted at the possibility of a return of the dry, cool, -->
+        <!-- irony where Mrs. Quest had never thought she might be able -->
+        <!-- to meet her daughter.</s> -->
+        <!-- <join rend='PRE ldquo POST rdquo' -->
+        <!--       result='full quote' -->
+        <!--       targType='q q' -->
+        <!--       targets='q89240 q89250'> -->
+        <!-- ]]> -->
+        <!-- </eg> --></p>
+<p>Here are the formal declarations of the <gi>join</gi> and
+<gi>joinGrp</gi> elements.
+<specGrp xml:id="DSAAG" n="Aggregation">
+  &join.odd;
+  &joingrp.odd;
+</specGrp></p></div2>
+<div2 type="section" xml:id="SAAT">
+<head>Alternation</head>
+<p>This section proposes elements for the representation of alternation.
+We say that two or more elements are in <term>exclusive
+alternation</term> if any of those elements could be present in a text,
+but one and only one of them is; in addition, we say that those elements
+are <term>mutually exclusive</term>. We say that the elements are in
+<term>inclusive alternation</term> if at least one (and possibly more)
+of them is present. The elements that are in alternation may also be
+called <term>alternants</term>.</p>
+<p>The need to mark exclusive alternation arises frequently in text
+encoding. A common situation is one in which it can determined that
+exactly one of several different words appears in a given location, but
+it cannot be determined which one. One way to mark such an exclusive
+alternation is to use the linking attribute <att>exclude</att>. Having
+marked an exclusive alternation, it can sometimes later be determined
+which of the alternants actually appears in the given location. To
+preserve the fact that an alternation was posited, one can add the
+linking attribute <att>select</att> to a tag which hierarchically
+encompasses the alternants, which points to the one which actually
+appears. To assign responsibility and degree of certainty to the
+choice, one can use the <gi>certainty</gi> tag described in
+chapter <ptr target="#CE"/>. Also see that chapter for further discussion of
+certainty in general.</p>
+<p>The <att>exclude</att> and <att>select</att> attributes may be used
+with any element assuming that they have been declared following the
+procedure discussed in the introduction to this chapter.
+ <specList>
+   <specDesc key="att.global.linking"/>
+</specList></p>
+<p>A more general way to mark alternation, encompassing both exclusive
+and inclusive alternation, is to use the linking element <gi>alt</gi>.
+The description and attributes of this tag and of the associated
+grouping tag <gi>altGrp</gi> are as follows. These elements are also
+members of the <ident type="class">att.pointing</ident> class and therefore
+have all the attributes associated with that class.
+<specList><specDesc key="alt" atts="targets weights"/><specDesc key="altGrp"/></specList></p>
+<p>To take a simple hypothetical example, suppose in transcribing a
+spoken text, we encounter an utterance that we can understand either as
+<mentioned>We had fun at the beach today.</mentioned> or as <mentioned>We had sun at
+the beach today.</mentioned> We can represent the exclusive alternation of
+these two possibilities by means of the <att>exclude</att> attribute as
+follows.
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="interview">
+  <u exclude="#we.sun1" xml:id="we.fun1">We had fun at the beach today.</u>
+  <u exclude="#we.fun1" xml:id="we.sun1">We had sun at the beach today.</u>
+</div></egXML></p>
+<p>If it is then determined that the speaker said <mentioned>fun</mentioned>,
+not <mentioned>sun</mentioned>, the encoder could amend the text by deleting the
+alternant containing <mentioned>sun</mentioned> and the <att>exclude</att>
+attribute on the remaining alternant. Alternatively, the encoder could
+preserve the fact that there was uncertainty in the original
+transcription by retaining the alternants, and assigning the
+<val>we.fun</val> value to the <att>select</att> attribute value on the <tag>div</tag> tag that
+encompasses the alternants, as in:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div select="#we.fun2" type="interview">
+   <u exclude="#we.sun2" xml:id="we.fun2">We had fun at the beach today.</u>
+   <u exclude="#we.fun2" xml:id="we.sun2">We had sun at the beach today.</u>
+</div></egXML></p>
+<p>The above alternation (including the <att>select</att> attribute)
+could be recoded by assigning the <att>exclude</att> attributes to tags
+that enclose just the words or even the characters that are mutually
+exclusive, as in:<note place="foot">See section <ptr target="#AILC"/> for discussion of the
+<tag>w</tag> and <tag>c</tag> tags that can be used in the following
+examples instead of the <tag>seg type="word"</tag> and <tag>seg
+type="character"</tag> tags.</note>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="interview">
+  <u select="#fun3">We had
+    <seg exclude="#sun3" xml:id="fun3" type="word">fun</seg>
+    <seg exclude="#fun3" xml:id="sun3" type="word">sun</seg>
+    at the beach today.</u>
+</div></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="interview">
+  <u>We had
+    <seg select="#f" type="word">
+      <seg exclude="#s" xml:id="f" type="character">f</seg>
+      <seg exclude="#f" xml:id="s" type="character">s</seg>
+      un</seg>
+    at the beach today.</u>
+</div></egXML></p>
+<p>Now suppose that the transcriber is uncertain whether the first word
+in the utterance is <mentioned>We</mentioned> or <mentioned>Lee</mentioned>, but is
+certain that if it is <mentioned>Lee</mentioned>, then the other uncertain word
+is definitely <mentioned>fun</mentioned> and not <mentioned>sun</mentioned>. The three
+utterances that are in mutual exclusion can be encoded as follows.
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="interview">
+  <!-- ... -->
+  <u exclude="#we.sun4 #lee.fun4" xml:id="we.fun4">We had fun at the beach today.</u>
+  <u exclude="#we.fun4 #lee.fun4" xml:id="we.sun4">We had sun at the beach today.</u>
+  <u exclude="#we.fun4 #we.sun4" xml:id="lee.fun4">Lee had fun at the beach today.</u>
+  <!-- ... -->
+</div></egXML></p>
+<p>The preceding example can also be encoded with <att>exclude</att>
+attributes on the word segments <mentioned>We</mentioned>, <mentioned>Lee</mentioned>,
+<mentioned>fun</mentioned> and <mentioned>sun</mentioned>:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><u>
+  <seg exclude="#lee" xml:id="we" type="word">We</seg>
+  <seg exclude="#we #sun" xml:id="lee" type="word">Lee</seg>
+  had
+  <seg exclude="#sun" xml:id="fun" type="word">fun</seg>
+  <seg exclude="#fun #lee" xml:id="sun" type="word">sun</seg>
+  at the beach today.</u></egXML></p>
+<p>The value of the <att>select</att> attribute is defined as a list of
+identifiers (<ident type="kw">IDREFS</ident>); hence it can also be used to
+narrow down the range of alternants, as in:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div select="#we.fun5 #lee.fun5" type="interview">
+  <u exclude="#we.sun5 #lee.fun5" xml:id="we.fun5">We had fun at the beach today.</u>
+  <u exclude="#we.fun5 #lee.fun5" xml:id="we.sun5">We had sun at the beach today.</u>
+  <u exclude="#we.fun5 #we.sun5" xml:id="lee.fun5">Lee had fun at the beach today.</u>
+</div></egXML>
+This is interpreted to mean that either the first or the third
+<tag>u</tag> tag appears, and is thus equivalent to just the alternation
+of those two tags:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="interview">
+  <u exclude="#lee.fun6" xml:id="we.fun6">We had fun at the beach today.</u>
+  <u exclude="#we.fun6" xml:id="lee.fun6">Lee had fun at the beach today.</u>
+</div></egXML></p>
+<p>The <att>exclude</att> attribute can also be used in case there is
+uncertainty about the tag that appears in a certain position. For
+example, the occurrence of the word <mentioned>May</mentioned> in the S-unit
+<mentioned>Let's go to May</mentioned> can be interpreted, in the absence of
+other information, either as a person's name or as a date. The
+uncertainty can be rendered as follows, using the <att>exclude</att>
+attribute.
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><s>Let's go to
+<name exclude="#mayn" xml:id="mayd">May</name>
+   <date copyOf="#mayd" exclude="#mayd" xml:id="mayn"/>.</s></egXML></p>
+<p>Note the use of the <att>copyOf</att> attribute discussed in
+section <ptr target="#SAIE"/>; this avoids having to repeat the content of the
+element whose correct tagging is in doubt.</p>
+<p>The <att>copyOf</att> and the <att>exclude</att> attributes also
+provide for a simple way of indicating uncertainty about exactly where a
+particular element occurs in a document.<note place="foot">An alternative way of
+representing this problem is discussed in chapter <ptr target="#CE"/>.</note> For example suppose that a particular <gi>div2</gi>
+element appears either as the third and last of the <gi>div2</gi>
+elements within the first <tag>div1</tag> element in the body of a
+document, or as the first <gi>div2</gi> of the second <gi>div1</gi>.
+One solution would be to record the <gi>div2</gi> in its entirety in the
+first of these positions, and a virtual copy of it in the second, and
+mark them as excluding each other as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><body>
+        <div1 xml:id="C1">
+                <div2 xml:id="C1S3" exclude="#c2s1">
+                </div2>
+        </div1>
+        <div1 xml:id="C2">
+                <div2 xml:id="C2S1" copyOf="#c1s3" exclude="#c1s3"/>
+        </div1>
+</body></egXML>
+In this case, the <att>select</att> attribute, if used, would appear on
+the <tag>body</tag> tag.</p>
+<p>Mutual exclusion can also be expressed using a <tag>link</tag>; the
+first example in this section can be recoded by removing the
+<att>exclude</att> attributes from the <tag>u</tag> tags, and adding a
+<tag>link</tag> as follows:<note place="foot">In this example, we have
+placed the <tag>link</tag> next to the tags that represent the
+alternants. It could also have been placed elsewhere in the document,
+perhaps within a <tag>linkGrp</tag>. </note>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="interview">
+  <u xml:id="we.had.fun">We had fun at the beach today.</u>
+  <u xml:id="we.had.sun">We had sun at the beach today.</u>
+  <link type="exclusive_alternation" targets="#we.had.fun #we.had.sun"/>
+</div></egXML></p>
+<p>Now we define the specialized linking element <gi>alt</gi>, making
+it a member of the pointer class of elements, and assigning it a
+<att>excl</att> (for <mentioned>mutually exclusive</mentioned>)
+attribute, which can have either of the values <val>Y</val> or <val>N</val>. Then the
+following equivalence holds:
+<eg><![CDATA[<alt mode="excl"/> = <link type="exclusive alternation"/>]]></eg></p>
+<p>The
+preceding <tag>link</tag> may therefore be recoded as the following
+<tag>alt</tag> element.
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><alt targets="#we.fun #we.sun" mode="excl"/></egXML></p>
+<p>Other attributes that are defined specifically for the <gi>alt</gi>
+element are <att>weights</att> and <att>percent</att>. The
+<att>weights</att> attribute is to be used if one wishes to assign
+<term>probabilistic weights</term> to the targets (alternants). Its
+value is a list of numbers, corresponding to the targets, expressing the
+probability that each target appears. <!--The <att>percent</att> attribute
+is used to indicate whether the weights are stated as percentages
+(<code>percent="Y"</code>, the default) or as the actual probabilities
+(<code>percent="N"</code>)--> If the alternants are mutually exclusive, then
+the weights must sum to 1.0.</p>
+<p>Suppose in the preceding example that it is equiprobable whether
+<mentioned>fun</mentioned> or <mentioned>sun</mentioned> appears. Then the
+<tag>alt</tag> that represents the alternation may be stated as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><alt targets="#we.fun #we.sun" mode="excl" weights="0.5 0.5"/></egXML></p>
+<p>The assignment of a weight of 1.0 to one target (and weights of 0
+to all the others) is equivalent to selecting that target. Thus the
+following encoding is equivalent to the second example at the beginning
+of this section.
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><u xml:id="we.fun">We had fun at the beach today.</u>
+<u xml:id="we.sun">We had sun at the beach today.</u>
+<alt targets="#we.fun #we.sun" mode="excl" weights="1 0"/>
+</egXML>
+<!-- 
+<p>Inclusive alternation can only be expressed by the    -->
+        <!-- use of a linking element, either a <tag>link             -->
+        <!-- type='inclusive alternation'</tag> tag, or an <tag>alt   -->
+        <!-- excl=N</tag> tag.  For example, suppose in the example   -->
+        <!-- concerning the <tag>div2</tag> tag that can appear in    -->
+        <!-- two different places, that it is also possible that it   -->
+        <!-- appears in both plases.  This situation can be encoded   -->
+        <!-- as follows.                                              -->
+        <!-- 
+<eg><![CDATA[-->
+        <!-- <body> -->
+        <!-- 
+<div1 xml:id='C1'> -->
+        <!-- ... -->
+        <!-- 
+<div2 xml:id='C1S3'> -->
+        <!-- Text of the "copyable" div2 appears here. -->
+        <!-- </div2> -->
+        <!-- 
+<div1 xml:id='C2'> -->
+        <!-- 
+<div2 xml:id='C2S1' copyOf='c1s3'></div2> -->
+        <!-- ... -->
+        <!-- </div1> -->
+        <!-- ... -->
+        <!-- </body> -->
+        <!-- ... -->
+        <!-- <alt excl='N' targType='div2 div2' targets='c1s3 c2s1'> -->
+        <!-- ]]> -->
+        <!-- </eg> -->
+        <!-- 
+<p>For inclusive alternation, the <att>weights</att>     -->
+        <!-- attribute works as follows:  each weight states the      -->
+        <!-- probability that the target appears given that one or    -->
+        <!-- more of the other targets appear.  For the current       -->
+        <!-- example, suppose that the probability that the           -->
+        <!-- <tag>div2</tag> appears in the first position given      -->
+        <!-- that it appears in the second position is 20%, but that  -->
+        <!-- the probability that it appears in the second position   -->
+        <!-- given that it appears in the first position is 0%.       -->
+        <!-- Then the preceding <tag>alt</tag> tag can be revised to  -->
+        <!-- read:                                                    -->
+        <!-- 
+<eg><![CDATA[-->
+        <!-- <alt excl='N' targType='div2 div2' targets='c1s3 c2s1' weights='20 0'> -->
+        <!-- ]]> -->
+        <!-- </eg> -->
+The sum of the weights for <tag>alt excl="N"</tag> tags ranges from 0% to
+(100 &#xD7; <code>k</code>)%, where <code>k</code> is the number of targets. If the sum is 0%, then
+the alternation is equivalent to exclusive alternation; if the sum is
+(100 x k)%, then all of the alternants must appear, and the situation is
+better encoded without an <tag>alt</tag> tag.</p>
+<p>If it is desired, <gi>alt</gi> elements may be grouped together in an
+<gi>altGrp</gi> element, and attribute values shared by the individual
+<gi>alt</gi> elements may be identified on the <gi>altGrp</gi> element. The
+<att>targFunc</att> attribute defaults to the value <val>first.alternant next.alternant</val>. Thus, specifying
+the value <val>2</val> for the <att>extendTarg</att> attribute   permits the alternants to be
+extended indefinitely.</p>
+<p>To illustrate, consider again the example of a transcribed utterance,
+in which it is uncertain whether the first word is <mentioned>We</mentioned> or
+<mentioned>Lee</mentioned>, whether the third word is <mentioned>fun</mentioned> or
+<mentioned>sun</mentioned>, but that if the first word is <mentioned>Lee</mentioned>,
+then the third word is <mentioned>fun</mentioned>. Now suppose we have the
+following additional information: if <mentioned>we</mentioned> occurs, then the
+probability that <mentioned>fun</mentioned> occurs is 50% and that
+<mentioned>sun</mentioned> occurs is 50%; if <mentioned>fun</mentioned> occurs, then the
+probability that <mentioned>we</mentioned> occurs is 40% and that
+<mentioned>Lee</mentioned> occurs is 60%. This situation can be encoded as
+follows.
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><u>
+  <seg exclude="#lee2" xml:id="we2" type="word">We</seg>
+  <seg exclude="#we2" xml:id="lee2" type="word">Lee</seg>
+  had
+  <seg exclude="#sun2" xml:id="fun2" type="word">fun</seg>
+  <seg exclude="#fun2" xml:id="sun2" type="word">sun</seg>
+  at the beach today.</u>
+<altGrp>
+   <alt targets="#we2 #lee2"/>
+   <alt targets="#fun2 #sun2"/>
+   <alt targets="#we2 #fun2" mode="incl" weights="0.5 0.5"/>
+   <alt targets="#lee2 #fun2" mode="incl" weights="1.0 0.6"/>
+</altGrp></egXML></p>
+<p>From the information in this encoding, we can determine that the
+probability is about 28.5% that the utterance is <q>We had fun at the
+beach today</q>, 28.5% that it is <mentioned>We had sun at the beach
+today</mentioned>, and 43% that it is <mentioned>Lee had fun at the beach
+today</mentioned>.</p>
+<p>Another very similar example is the following regarding the text of a
+Broadway song. In three different versions of the song, the same line
+reads <q>Her skin is tender as a leather glove,</q> <q>Her skin is
+tender as a baseball glove,</q> and <q>Her skin is tender as Dimaggio's
+glove.</q><note place="foot">The variant readings are found in the commercial sheet
+music, the performance score, and the Broadway cast recording.</note></p>
+<p>If we wish to express this textual variation using the <gi>alt</gi>
+element, we can record our relative confidence in the readings
+<mentioned>Dimaggio's</mentioned> (with probability 50%), <mentioned>a
+leather</mentioned> (25%), and <mentioned>a baseball</mentioned> (25%).</p>
+<p>Let us extend the example with a further (imaginary) variation,
+supposing for the sake of the argument that the next line is variously
+given as <mentioned>and she bats from right to left</mentioned> (with
+probability 50%) or <mentioned>now ain't that too damn bad</mentioned> (with
+probability 50%). Using the <gi>alt</gi> element, we can express the
+conviction that if the first choice for the second line is correct, then
+the probability that the first line contains <mentioned>Dimaggio's</mentioned>
+is 90%, and each of the others 5%; whereas if the second choice for the
+second line is correct, then the probability that the first line
+contains <mentioned>Dimaggio's</mentioned> is 10%, and each of the others is
+45%. This can be encoded, with an <tag>altGrp</tag> tag containing a
+combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
+<!-- Bloody Mary, from Rogers & Hammerstein, South Pacific -->
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div xml:id="bm" type="song">
+  <l>Her skin is tender as
+    <seg xml:id="dm">Dimaggio's</seg>
+    <seg xml:id="lt">a leather</seg>
+    <seg xml:id="bb">a baseball</seg>
+    glove,</l>
+  <l xml:id="rl">and she bats from right to left.</l>
+  <l xml:id="db">now ain't that too damn bad.</l>
+</div>
+  <altGrp>
+    <alt targets="#dm #lt #bb" mode="excl" weights="0.5 0.25 0.25"/>
+    <alt targets="#rl #db" mode="excl" weights="0.50 0.50"/>
+  </altGrp>
+  <altGrp mode="incl">
+    <alt targets="#dm #rl" weights="0.90 0.90"/>
+    <alt targets="#lt #rl" weights="0.5 0.5"/>
+    <alt targets="#bb #rl" weights="0.5 0.5"/>
+    <alt targets="#dm #db" weights="0.10 0.10"/>
+    <alt targets="#lt #db" weights="0.45 0.90"/>
+    <alt targets="#bb #db" weights="0.45 0.90"/>
+  </altGrp></egXML></p>
+<p>Here are the formal declarations of the <gi>alt</gi> and
+<gi>altGrp</gi> elements.
+<specGrp xml:id="DSAAT" n="Alternation">
+  &alt.odd;
+  &altgrp.odd;
+</specGrp></p></div2>
+<div2 type="section" xml:id="SAAN">
+<head>Connecting Analytic and Textual Markup</head>
+<p>In chapters <ptr target="#AI"/> and <ptr target="#FS"/> and elsewhere,
+provision is made for analytic and interpretive markup to be represented
+outside of textual markup, either in the same document or in a different
+document. The elements in these separate domains can be connected,
+either with the pointing attributes <att>ana</att> (for
+<mentioned>analysis</mentioned>) and <att>inst</att> (for
+<mentioned>instance</mentioned>), or by means of <gi>link</gi> and
+<gi>linkGrp</gi> elements. Numerous examples are given in these
+chapters<!-- , particularly in sections <ptr target="#AILA"/>, <ptr target="#FSFL"/> and <ptr target="#FSIL"/>-->.</p>
+</div2>
+<div2>
+  <head>Reference Section</head>
+  <p>This chapter documents the following two modules:
+  <moduleSpec xml:id="DSA" ident="linking">
+    <altIdent type="FPI">Linking, Segmentation and Alignment</altIdent>
+    <desc>Linking, segmentation and alignment</desc>
+  </moduleSpec>
+  <moduleSpec xml:id="DSAENTS" type="decls" ident="linking-decl">
+    <altIdent type="FPI">Global attributes for the TEI.linking tag set</altIdent>
+    <desc>Global attributes for the TEI.linking tag set</desc>
+  </moduleSpec><!--publicID:  -//TEI P5//ENTITIES Element Classes for Linking, Segmentation, and Alignment//EN-->
+  </p>
+  <p>Here is an overview of the declarations documented by this chapter:
+  <specGrp>
+    &cllink.odd;
+    &pointer.odd;
+    &ptrgroup.odd;
+  </specGrp>
+  </p>
+</div2>
+</div1>

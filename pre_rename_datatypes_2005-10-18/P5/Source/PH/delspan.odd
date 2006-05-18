@@ -1,0 +1,153 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="transcr" xml:id="DELSPAN" usage="opt" ident="delSpan">
+<equiv/>
+<gloss>deleted span of text</gloss>
+<desc>marks the beginning of a longer sequence of text deleted,
+marked as deleted, or otherwise signaled as superfluous or spurious by an
+author, scribe, annotator, or corrector.</desc>
+  <classes>
+    <memberOf key="model.global.edit"/>
+    <memberOf key="att.editLike"/>
+  </classes>
+  <content>
+    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+  </content>
+  <attList>
+    <attDef ident="type" usage="opt">
+	<equiv/>
+	<desc>classifies the deletion, using any convenient typology.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <valList type="open">
+        <valItem ident="overstrike">
+          <equiv/>
+          <gloss>deletion indicated by line crossing out the text.</gloss>
+        </valItem>
+        <valItem ident="erasure">
+          <equiv/>
+          <gloss>deletion indicated by erasure of the text.</gloss>
+        </valItem>
+        <valItem ident="bracketed">
+          <equiv/>
+          <gloss>deletion indicated by brackets in the text or margin.</gloss>
+        </valItem>
+        <valItem ident="subpunction">
+          <equiv/>
+          <gloss>deletion indicated by dots beneath the letters deleted.</gloss>
+        </valItem>
+      </valList>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+    <attDef ident="hand" usage="opt">
+	<equiv/>
+	<desc>signifies the hand of the agent which made the deletion.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <valDesc>must be one of the hand identifiers declared in the document
+header (see section <ptr target="#PHDH"/>).</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+    <attDef ident="to" usage="req">
+	<equiv/>
+	<desc>identifies the endpoint of the deleted passage,
+by supplying the value of the <att>xml:id</att>
+attribute of an <gi>anchor</gi> or other empty element placed there.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <valDesc>any valid identifier.</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+      <remarks>
+        <p>Both the beginning and the end of the deleted material
+must
+be marked; the beginning by the <gi>delSpan</gi> element itself, the
+end by the <att>to</att> attribute.  The element pointed at by
+<att>to</att> is understood to be included within the deleted
+passage.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="status" usage="opt">
+	<equiv/>
+	<desc>indicates whether the deletion is faulty, e.g. by including too
+much or too little text.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <defaultVal>unremarkable</defaultVal>
+      <valList type="open">
+        <valItem ident="excessStart">
+          <equiv/>
+          <gloss>some text at the beginning of the deletion is marked as
+deleted even though it clearly should not be deleted.</gloss>
+        </valItem>
+        <valItem ident="excessEnd">
+          <equiv/>
+          <gloss>some text at the end of the deletion is marked as
+deleted even though it clearly should not be deleted.</gloss>
+        </valItem>
+        <valItem ident="shortStart">
+          <equiv/>
+          <gloss>some text at the beginning of the deletion is not marked as
+deleted even though it clearly should be.</gloss>
+        </valItem>
+        <valItem ident="shortEnd">
+          <equiv/>
+          <gloss>some text at the end of the deletion is not marked as
+deleted even though it clearly should be.</gloss>
+        </valItem>
+        <valItem ident="unremarkable">
+          <equiv/>
+          <gloss>the deletion is not faulty.</gloss>
+        </valItem>
+      </valList>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+      <remarks>
+        <p>
+<!-- have replaced 'right' and 'left' with 'start' and 'end',  -->
+<!-- which are less ambiguous in the case of vertical writing.  -MSM -->
+        </p>
+        <p>Marking a deletion as faulty is inescapably an interpretive act;
+the usual test applied in practice is the linguistic acceptability of
+the text with and without the letters or words in question.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <p>Paragraph partially deleted.  This is the undeleted
+portion <delSpan resp="#author" to="#a23"/>and this the deleted
+portion of the paragraph.</p>
+      <p>Paragraph deleted together with neighboring material.</p>
+      <p>Second fully deleted paragraph.</p>
+      <p>Paragraph partially deleted; in the middle of this
+paragraph the deletion ends and the anchor point marks
+the resumption <anchor xml:id="a23"/> of the text. ...</p>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>Both the beginning and ending of the deleted sequence
+must be marked:  the beginning by the <gi>delSpan</gi> element, the
+ending by the target of the <att>to</att> attribute.</p>
+    <p>The text deleted must be at least partially legible, in order for
+the encoder to be able to transcribe it.  If it is not legible at
+all, the <gi>delSpan</gi> tag should not be used.  Rather, the
+<gi>gap</gi> tag should be employed to signal that text cannot be
+transcribed, with the value of the <att>reason</att> attribute giving
+the cause for the omission from the transcription as deletion.  If it
+is not fully legible, the <gi>unclear</gi> element should be used to
+signal the areas of text which cannot be read with confidence.  See
+further sections <ptr target="#PHOM"/> and, for the close association of
+the <gi>delSpan</gi> tag with the <gi>gap</gi>, <gi>damage</gi>,
+<gi>unclear</gi> and <gi>supplied</gi> elements, <ptr target="#PHCOMB"/>.</p>
+    <p>The <gi>delSpan</gi> tag should not be used for deletions made by
+editors or encoders.  In these cases, either the <gi>corr</gi> tag or
+the <gi>gap</gi> tag should be used.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#PHAD"/>
+  </listRef>
+</elementSpec>

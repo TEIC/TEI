@@ -1,0 +1,51 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" xml:id="ORGTITLE" usage="opt" ident="orgTitle">
+<equiv/>
+<gloss>organization title</gloss>
+<desc>contains the proper name component of an organizational
+name. </desc>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+  </content>
+  <attList>
+    <attDef ident="type" usage="mwa">
+	<equiv/>
+	<desc>more fully describes the organization title. Possible values
+include <q>formal</q>,
+<q>colloquial</q>, <q>acronym</q>, etc.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <valDesc>any string of characters</valDesc>
+    </attDef>
+    <attDef ident="reg" usage="opt">
+	<equiv/>
+	<desc>gives a normalized or regularized form of the organization title.</desc>
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>Any string of characters.</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+      <remarks>
+        <p>In providing a <soCalled>regularized</soCalled> form, no
+claim is made that the form in the source text is incorrect; the
+regularized form is simply that chosen as the main form for purposes
+of unifying variant forms under a single heading.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">Mr Frost will be able to earn an extra fee from
+<orgName type="media" key="BSB1">
+      <orgTitle type="acronym">BSkyB</orgTitle>
+   </orgName>
+rather than the <orgName type="media" key="BBC1">
+      <orgTitle type="acronym" reg="British Broadcasting Corporation">BBC</orgTitle>
+   </orgName></egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#NDORG"/>
+  </listRef>
+</elementSpec>

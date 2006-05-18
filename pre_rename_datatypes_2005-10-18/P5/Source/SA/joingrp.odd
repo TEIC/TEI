@@ -1,0 +1,50 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+            module="linking" xml:id="JOINGRP" usage="opt" ident="joinGrp">
+  <equiv/>
+  <gloss>join group</gloss>
+  <desc>groups a collection of join elements and possibly
+  pointers.</desc>
+  <classes>
+    <memberOf key="att.pointing.group"/>
+    <memberOf key="model.global.meta"/>
+  </classes>
+  <content>
+    <rng:group>
+       <rng:optional>
+       <rng:ref name="desc"/>
+      </rng:optional>
+    <rng:oneOrMore>
+      <rng:choice>
+        <rng:ref name="join"/>
+        <rng:ref name="ptr"/>
+      </rng:choice>
+    </rng:oneOrMore>
+    </rng:group></content>
+  <attList>
+    <attDef ident="result" usage="opt">
+      <equiv/>
+      <desc>describes the result of the joins gathered in this collection.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"/></datatype>
+      <valDesc>supplies the default value for the <att>result</att> on
+      each <gi>join</gi> included within the group.</valDesc>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <joinGrp domains="zuitxt zuitxt zuitxt" result="q">
+        <join targets="#zuiq1 #zuiq2 #zuiq6"/>
+        <join targets="#zuiq3 #zuiq4 #zuiq5"/>
+      </joinGrp>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">Any number of <gi>join</gi> or <gi>ptr</gi> elements.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#SAAG"/>
+  </listRef>
+</elementSpec>

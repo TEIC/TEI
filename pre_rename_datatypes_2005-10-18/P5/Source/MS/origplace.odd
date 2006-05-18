@@ -1,0 +1,76 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="ORIGPLACE" ident="origPlace">
+<equiv/>
+<gloss/>
+<desc xml:id="origplace.desc">contains any form of place name, used to identify the
+place of origin for a manuscript or manuscript part. </desc>
+  <classes>
+    <memberOf key="model.phrase"/>
+  </classes>
+  <content>
+<!--<!ELEMENT origPlace  - -  (#PCDATA)>-->
+<rng:ref name="macro.xtext" xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+  </content>
+  <attList>
+    <attDef ident="placeAttrib" usage="opt">
+	<equiv/>
+	<desc>indicates whether the attribution in question is definite,
+	feasible, or has been assigned by the cataloguer.</desc>
+	<datatype>
+	  <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+	</datatype>
+      <valList type="closed">
+        <valItem ident="located">
+          <equiv/>
+          <gloss>the item is explicitly placed.</gloss>
+        </valItem>
+        <valItem ident="locatable">
+          <equiv/>
+          <gloss>it is possible to place the item explicitly.</gloss>
+        </valItem>
+        <valItem ident="unknown">
+          <equiv/>
+          <gloss>the attribute has been made by the cataloguer on other
+	  grounds. </gloss>
+        </valItem>
+</valList>
+      <remarks>
+        <p/>
+      </remarks>
+    </attDef>
+    <attDef ident="evidence" usage="opt">
+	<equiv/>
+	<desc>indicates the nature of the evidence supporting the reliability or
+  accuracy of the attribution.</desc>
+	<datatype>
+	  <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+	</datatype>
+      <valList type="open">
+        <valItem ident="internal">
+          <equiv/>
+          <gloss>there is internal evidence to support the attribution.</gloss>
+        </valItem>
+        <valItem ident="external">
+          <equiv/>
+          <gloss>there is internal evidence to support the attribution.</gloss>
+        </valItem>
+        <valItem ident="attributed">
+          <equiv/>
+          <gloss>the attribution has been made by the cataloguer or scholar.</gloss>
+        </valItem>
+</valList>
+      <remarks>
+        <p/>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0"><origPlace>Birmingham</origPlace></egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#msdates"/>
+  </listRef>
+</elementSpec>

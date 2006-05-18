@@ -1,0 +1,75 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="figures" xml:id="CELL" usage="rwa" ident="cell">
+<equiv/>
+<gloss/>
+<desc>contains one cell of a table. </desc>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
+  </content>
+  <attList>
+    <attDef ident="role" usage="opt">
+	<equiv/>
+	<desc>indicates the kind of information held in the cell.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <defaultVal>data</defaultVal>
+      <valList type="semi">
+        <valItem ident="label">
+          <equiv/>
+          <gloss>labelling or descriptive information only.</gloss>
+        </valItem>
+        <valItem ident="data">
+          <equiv/>
+          <gloss>data values.</gloss>
+        </valItem>
+      </valList>
+      <remarks>
+        <p>The value specified overrides any default specified by the
+<att>role</att> attribute of the parent <gi>row</gi> element,
+for this cell only.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="rows" usage="opt">
+	<equiv/>
+	<desc>indicates the number of rows occupied by this cell.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/></datatype>
+      <defaultVal>1</defaultVal>
+      <valDesc>A number; a value greater than one indicates that this cell
+spans several rows.</valDesc>
+      <remarks>
+        <p>Where several cells span several rows, it may be more convenient
+to use nested tables.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="cols" usage="opt">
+	<equiv/>
+	<desc>indicates the number of columns occupied by this cell.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/></datatype>
+      <defaultVal>1</defaultVal>
+      <valDesc>A number; a value greater than one indicates that this cell
+spans several columns.</valDesc>
+      <remarks>
+        <p>Where an initial cell spans an entire row, it should be treated as
+a heading.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <row>
+        <cell role="label">General conduct</cell>
+        <cell role="data">Not satisfactory, on account of his great unpunctuality
+                     and inattention to duties</cell>
+      </row>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p/>
+  </remarks>
+  <listRef>
+    <ptr target="#FTTAB1" type="div1"/>
+  </listRef>
+</elementSpec>

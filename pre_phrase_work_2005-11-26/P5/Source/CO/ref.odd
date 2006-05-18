@@ -1,0 +1,67 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="REF" usage="opt" ident="ref">
+  <equiv/>
+  <gloss/>
+  <desc>defines a reference to another location in the current
+  document, in terms of one or more identifiable elements, possibly
+  modified by additional text or comment.</desc>
+  <classes>
+    <memberOf key="model.ptrLike"/>
+    <memberOf key="att.pointing"/>
+    <memberOf key="att.declaring"/>
+  </classes>
+<content>
+  <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
+</content>
+<attList org="choice">
+  <attDef ident="target" usage="opt">
+    <equiv/>
+    <desc>specifies the destination of the reference by supplying one
+    or more URI References</desc>
+    <datatype>
+      <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointers"/>
+    </datatype>
+    <valDesc>One or more syntactically valid URI references, separated
+    by white space. Because whitespace is used to separate URIs, no
+    whitespace is permitted inside a single URI. If a whitespace
+    character is required in a URI, it should be escaped with the
+    normal mechanism, e.g. <code>TEI%20Consortium</code>.</valDesc>
+  </attDef>
+    <attDef ident="cRef" usage="opt">
+      <equiv/>
+      <desc>specifies the destination of the reference by supplying a
+      canonical reference from a scheme defined in a <gi>refsDecl</gi>
+      element in the TEI header</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointers"/></datatype>
+      <valDesc>the result of applying the algorithm for the resolution
+      of canonical references (described in section <ptr
+      target="#SACR"/>) should be a valid URI reference to the
+      intended target</valDesc>
+      <remarks>
+	<p>The <gi>refsDecl</gi> to use may be indicated with the
+	<att>decls</att> attribute.</p>
+	<p>Currently these Guidelines only provide for a single
+	canonical reference to be encoded on any given <gi>ref</gi>
+	element.</p>
+      </remarks>
+    </attDef>
+</attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><ref target="#s234">
+See especially the second sentence</ref>
+See also <ref>s.v. <term>locution</term></ref>.></egXML>
+  </exemplum>
+  <remarks>
+    <p>The <att>target</att> and <att>cRef</att> attributes are
+    mutually exclusive.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#COXR"/>
+    <ptr target="#SAPT"/>
+  </listRef>
+</elementSpec>

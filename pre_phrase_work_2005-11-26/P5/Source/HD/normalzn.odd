@@ -1,0 +1,81 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+  module="header" xml:id="NORMALZN" usage="opt" ident="normalization">
+<equiv/>
+<gloss/>
+<desc>indicates the extent of normalization or regularization of the
+original source carried out in converting it to electronic form.</desc>
+  <classes>
+    <memberOf key="att.declarable"/>
+    <memberOf key="model.editorialDeclPart"/>
+  </classes>
+  <content>
+    <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:ref name="model.pLike"/>
+    </rng:oneOrMore>
+  </content>
+  <attList>
+    <attDef ident="source" usage="opt">
+	<equiv/>
+	<desc>indicates the authority for any normalization carried out.
+    </desc>
+      <datatype>
+	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>Points to a bibliographic
+      description or other resource documenting the principles
+      underlying the normalization which has been applied.
+   </valDesc>
+    </attDef>
+    <attDef ident="method" usage="opt">
+	<equiv/>
+	<desc>indicates the method adopted to indicate normalizations within
+         the text.
+   </desc>
+      <defaultVal>silent</defaultVal>
+      <valList type="closed">
+        <valItem ident="silent">
+          <equiv/>
+          <gloss>normalization made silently
+  </gloss>
+        </valItem>
+        <valItem ident="tags">
+          <equiv/>
+          <gloss>normalization represented using editorial tags
+   </gloss>
+        </valItem>
+      </valList>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><editorialDecl>
+ <normalization method="tags">
+  <p>Where both upper- and lower-case i, j, u, v, and vv have
+     been normalized, to modern 20th century typographical practice, 
+     the <gi>choice</gi> element  has been used to enclose
+     <gi>orig</gi> and <gi>reg</gi> elements giving the original and
+     new values respectively. ... </p>
+ </normalization>
+ <normalization method="silent">
+  <p>Spacing between words and following punctuation has been
+     regularized to zero spaces; spacing between words has been
+     regularized to one space.</p>
+ </normalization>
+ <normalization source="http://www.dict.sztaki.hu/webster">
+  <p>Spelling converted throughout to Modern American usage, based on
+     Websters 9th Collegiate dictionary.</p>
+ </normalization>
+</editorialDecl></egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#HD53"/>
+    <ptr target="#CCAS2"/>
+  </listRef>
+</elementSpec>

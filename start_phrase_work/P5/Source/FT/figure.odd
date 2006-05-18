@@ -1,0 +1,46 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="figures" xml:id="FIGURE" usage="rwa" ident="figure">
+<equiv/>
+<gloss/>
+<desc>contains a block containing graphics, illustrations, or figures.</desc>
+  <classes>
+    <memberOf key="model.inter"/>
+    <memberOf key="model.titlepagePart"/>
+    <memberOf key="model.common"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+	<rng:ref name="model.pLike"/>
+	<rng:ref name="model.global"/>
+	<rng:ref name="figure"/>
+	<rng:ref name="figDesc"/>
+	<rng:ref name="graphic"/>
+	<rng:ref name="binaryObject"/>
+	<rng:ref name="head"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <!--<rng:ref name="eg"/> -->
+  <attList/>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <figure>
+        <head>Figure One: The View from the Bridge</head>
+	<figDesc>A Whistleresque view showing four
+	or five sailing boats in the foreground, and a
+	series of buoys strung out between them.</figDesc>
+        <graphic url="http://www.somewhere.eu/fig1.png" 
+             scale="0.5"/>
+      </figure>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#FT" type="div1"/>
+  </listRef>
+</elementSpec>

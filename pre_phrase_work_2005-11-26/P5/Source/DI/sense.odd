@@ -1,0 +1,45 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" xml:id="SENSE" usage="opt" ident="sense">
+<equiv/>
+<gloss>sense information group</gloss>
+<desc>groups together all information relating to one word sense in a dictionary entry
+        (definitions, examples, translation equivalents, etc.)</desc>
+  <classes>
+    <memberOf key="model.entryParts"/>
+    <memberOf key="att.lexicographic"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+<rng:ref name="model.gLike"/>
+        <rng:ref name="sense"/>
+        <rng:ref name="model.entryParts.top"/>
+        <rng:ref name="model.phrase"/>
+        <rng:ref name="model.global"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <attList>
+    <attDef ident="level" usage="opt">
+	<equiv/>
+	<desc>gives the nesting depth of this sense.</desc>
+      <datatype>
+        <rng:ref name="data.numeric" xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+      </datatype>
+      <valDesc>a positive integer</valDesc>
+    </attDef>
+  </attList>
+  <remarks>
+    <p rend="dataDesc">May contain character data mixed with any other elements defined in the
+            dictionary tag set.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#DIEN" type="div2"/>
+  </listRef>
+</elementSpec>

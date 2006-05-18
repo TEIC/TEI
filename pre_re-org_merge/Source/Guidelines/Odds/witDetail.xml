@@ -1,0 +1,103 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textcrit" xml:id="WITDTL" usage="rwa" ident="witDetail">
+<equiv/>
+<gloss/>
+<desc>gives further information about a particular witness, or
+witnesses, to a particular reading.</desc>
+  <classes>
+    <memberOf key="model.noteLike"/>
+  </classes>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
+  </content>
+  <attList>
+    <attDef ident="target" usage="req">
+	<equiv/>
+	<desc>indicates the identifier for the reading, or readings, to which
+the witness detail refers.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointers"/></datatype>
+      <valDesc>the identifier of the reading or readings.</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+    <attDef ident="resp" usage="opt">
+	<equiv/>
+	<desc>identifies the individual responsible for  identifying the
+witness</desc>
+      <datatype>
+	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>a pointer to one of the identifiers declared in the
+      document header, associated with a person asserted as
+      responsible for some aspect of the text's creation,
+      transcription, editing, or encoding</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+    <attDef ident="wit" usage="req">
+	<equiv/>
+	<desc>indicates the sigil or sigla for the witnesses to which the
+detail refers.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.code"/></datatype>
+      <valDesc>the identifier of the sigil or sigla.</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+      <remarks/>
+<!--        <p>In local encoding schemes, the value of the
+<att>wit</att> attribute can be enforced as IDREFS, such that only
+witnesses referred to in a <gi>witList</gi> element may be the
+subject of a <gi>witDetail</gi>.</p>
+      </remarks>-->
+    </attDef>
+    <attDef ident="type" usage="opt">
+	<equiv/>
+	<desc>describes the type of information given about the witness.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointers"/></datatype>
+      <valDesc>Values can be taken from any convenient typology of annotation
+suitable to the work in hand;  e.g. letter form, ornament, ...</valDesc>
+    </attDef>
+    <attDef ident="place" usage="opt">
+	<equiv/>
+	<desc>indicates where the note appears in the source text.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <defaultVal>apparatus</defaultVal>
+      <valDesc>As for the <gi>note</gi> element.</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+      <remarks>
+        <p>For pages with multiple apparatus, values such as
+<term>app1</term> and <term>app2</term> can be used.</p>
+        <p>The <att>place</att> attribute can be used to indicate to text
+formatting software where a note should be printed.  If the locations
+indicated do not agree with those in the copy text, that fact should be
+indicated in the TEI header.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+  </exemplum>
+  <remarks>
+    <p>The <gi>witDetail</gi> element should be regarded as a
+specialized type of <gi>note</gi> element; it is synonymous with
+<tag>note type='witness detail'</tag>.  It differs from the general
+purpose <gi>note</gi> in the omission of some attributes seldom applicable to
+notes within critical apparatus, and in the provision of the
+<att>wit</att> attribute, which
+permits an application to extract all
+annotation concerning a particular witness or witnesses from the
+apparatus.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#TCAPLL"/>
+  </listRef>
+</elementSpec>

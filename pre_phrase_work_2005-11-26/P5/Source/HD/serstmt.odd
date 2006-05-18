@@ -1,0 +1,48 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="SERSTMT" usage="opt" ident="seriesStmt">
+<equiv/>
+<gloss>series statement</gloss>
+<desc>groups information about the series, if any, to which
+a publication belongs.</desc>
+  <content>
+    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:oneOrMore>
+        <rng:ref name="model.pLike"/>
+      </rng:oneOrMore>
+      <rng:group>
+        <rng:oneOrMore>
+          <rng:ref name="title"/>
+        </rng:oneOrMore>
+        <rng:zeroOrMore>
+          <rng:choice>
+            <rng:ref name="idno"/>
+            <rng:ref name="respStmt"/>
+          </rng:choice>
+        </rng:zeroOrMore>
+      </rng:group>
+    </rng:choice>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <seriesStmt>
+        <title>Machine-Readable Texts for the Study of Indian
+               Literature</title>
+        <respStmt>
+          <resp>ed. by</resp>
+          <name>Jan Gonda</name>
+        </respStmt>
+        <idno type="vol">1.2</idno>
+        <idno type="ISSN">0 345 6789</idno>
+      </seriesStmt>
+    </egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#HD26"/>
+    <ptr target="#HD2"/>
+  </listRef>
+</elementSpec>

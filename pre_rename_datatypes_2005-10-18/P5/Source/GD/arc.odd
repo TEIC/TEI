@@ -1,0 +1,56 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="nets" xml:id="ARC" usage="opt" ident="arc">
+<equiv/>
+<gloss/>
+<desc>encodes an arc, the connection from one node to another in a graph.</desc>
+  <content>
+    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+  </content>
+  <attList>
+    <attDef ident="label" usage="opt">
+	<equiv/>
+	<desc>gives a label for an arc.</desc>
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>A character string.</valDesc>
+    </attDef>
+    <attDef ident="label2" usage="opt">
+	<equiv/>
+	<desc>gives a second label for an arc.</desc>
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>A character string.</valDesc>
+      <remarks>
+        <p>Use this attribute together with the <att>label</att>
+attribute if a transducer is being encoded.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="from" usage="req">
+	<equiv/>
+	<desc>gives the identifier of the node which is adjacent from this arc.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <valDesc>The identifier of a node.</valDesc>
+    </attDef>
+    <attDef ident="to" usage="req">
+	<equiv/>
+	<desc>gives the identifier of the node which is adjacent to this arc.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <valDesc>The identifier of a node.</valDesc>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <arc label="OLD" label2="VIEUX" from="#t3" to="#t3"/>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>The <gi>arc</gi> element must be used if the arcs are
+labeled.  Otherwise, arcs can be encoded using the <att>adj</att>,
+<att>adjTo</att> and <att>adjFrom</att> attributes on the <gi>node</gi>
+tags in the graph.  Both <gi>arc</gi> tags and adjacency attributes can
+be used, but the resulting encoding would be highly redundant.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#GDGR"/>
+  </listRef>
+</elementSpec>

@@ -1,0 +1,60 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="drama" xml:id="CASTGRP" usage="opt" ident="castGroup">
+<equiv/>
+<gloss>Cast list grouping</gloss>
+<desc>groups one or more individual castItem
+elements within a cast list.</desc>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:ref name="model.global"/>
+      </rng:zeroOrMore>
+      <rng:optional>
+        <rng:ref name="head"/>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:optional>
+      <rng:oneOrMore>
+        <rng:choice>
+          <rng:ref name="castItem"/>
+          <rng:ref name="castGroup"/>
+        </rng:choice>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:oneOrMore>
+      <rng:optional>
+        <rng:ref name="trailer"/>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:optional>
+    </rng:group>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <castGroup rend="braced">
+        <head>friends of Mathias</head>
+        <castItem>
+          <role>Walter</role>
+          <actor>Mr Frank Hall</actor>
+        </castItem>
+        <castItem>
+          <role>Hans</role>
+          <actor>Mr F.W. Irish</actor>
+        </castItem>
+      </castGroup>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>Use the <att>rend</att> attribute to indicate
+whether the grouping is indicated by a brace, white space, font change,
+etc.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#DRCAST" type="div3"/>
+  </listRef>
+</elementSpec>

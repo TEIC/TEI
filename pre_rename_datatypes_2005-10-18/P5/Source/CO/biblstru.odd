@@ -1,0 +1,58 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="BIBLSTRU" usage="opt" ident="biblStruct">
+<equiv/>
+<gloss>structured bibliographic citation</gloss>
+<desc>contains a structured bibliographic citation, in which only
+bibliographic subelements appear and in a specified order. </desc>
+  <classes>
+    <memberOf key="model.biblLike"/>
+    <memberOf key="att.declarable"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+	 <rng:ref name="analytic"/>
+      </rng:zeroOrMore>
+      <rng:oneOrMore>
+        <rng:ref name="monogr"/>
+        <rng:zeroOrMore>
+          <rng:ref name="series"/>
+         </rng:zeroOrMore>
+      </rng:oneOrMore>
+      <rng:zeroOrMore>
+        <rng:choice>
+            <rng:ref name="note"/>
+            <rng:ref name="idno"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+    </rng:group>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <biblStruct>
+        <monogr>
+          <author>Blain, Virginia</author>
+          <author>Clements, Patricia</author>
+          <author>Grundy, Isobel</author>
+          <title>The Feminist Companion to Literature in
+             English: women writers from the middle ages
+             to the present</title>
+          <edition>first edition</edition>
+          <imprint>
+            <publisher>Yale University Press</publisher>
+            <pubPlace>New Haven and London</pubPlace>
+            <date>1990</date>
+          </imprint>
+        </monogr>
+      </biblStruct>
+    </egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#COBITY"/>
+    <ptr target="#HD3"/>
+    <ptr target="#CCAS2"/>
+  </listRef>
+</elementSpec>

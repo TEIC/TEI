@@ -1,0 +1,76 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" predeclare="true"
+	   module="namesdates-decl" type="atts" ident="att.personal">
+<gloss>attributes for components of personal names</gloss>
+<desc>common attributes for those elements which form part of a personal
+name.</desc>
+  <attList>
+<!--    <attDef ident="key">
+	<equiv/>
+	<desc>provides an alternative identifier for the object being named,
+such as a database record key.</desc>
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>any string</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+      <remarks>
+        <p>For example and discussion, see the description of the
+   <ident>names</ident> class.</p>
+      </remarks>
+    </attDef> -->
+<!--    <attDef ident="reg">
+	<equiv/>
+	<desc>gives a normalized or regularized form of the name used.</desc>
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>Any string of characters.</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>-->
+    <attDef ident="type" usage="mwa">
+	<equiv/>
+	<desc>provides more culture- linguistic- or application- specific
+information used to categorize this name component.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <valDesc>one of a set of codes defined for the application.</valDesc>
+    </attDef>
+    <attDef ident="full" usage="opt">
+	<equiv/>
+	<desc>indicates whether the name component is given in full, as an
+abbreviation or simply as an initial.</desc>
+      <defaultVal>yes</defaultVal>
+      <valList type="closed">
+        <valItem ident="yes">
+          <equiv/>
+          <gloss>the name component is spelled out in full.</gloss>
+        </valItem>
+        <valItem ident="abb">
+          <equiv/>
+          <gloss>the name component is given in an
+abbreviated form.</gloss>
+        </valItem>
+        <valItem ident="init">
+          <equiv/>
+          <gloss>the name component is indicated only by
+one initial.</gloss>
+        </valItem>
+      </valList>
+    </attDef>
+    <attDef ident="sort" usage="opt">
+	<equiv/>
+	<desc>specifies the sort order of the name component in relation
+to others within the personal name.</desc>
+      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="nonNegativeInteger"/></datatype>
+      <valDesc>A positive number indicating the sort order.</valDesc>
+    </attDef>
+  </attList>
+  <listRef>
+    <ptr target="#NDPER"/>
+  </listRef>
+</classSpec>

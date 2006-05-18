@@ -1,0 +1,983 @@
+<!--
+Copyright TEI Consortium. Licensed under the GNU General Public License. See the file COPYING for details.$Date$
+$Author$-->
+<div1 xmlns="http://www.tei-c.org/ns/1.0" type="Faisal" xml:id="ND" n="20"><head>Names and Dates</head>
+
+<p>This chapter describes a module which may be used for the encoding
+of proper names and other phrases descriptive of persons, places,
+organizations, and also of dates and times, in a manner more detailed
+than that possible using the elements already provided for these
+purposes in the Common Core module described in chapter <ptr
+target="#CO"/>.</p>
+
+<p>In section <ptr target="#CONA"/> it was noted that the elements
+provided in the core allow the encoder to specify that a given
+text segment is a proper noun, or a <term>referring string</term>, and
+to specify the kind of object named or referred to only by supplying a
+value for the <att>type</att> attribute. The elements provided by the
+present module allow the encoder both to supply a detailed
+sub-structure for such referring strings, and also to distinguish
+explicitly between names of persons, places or organizations.</p>
+<p>Similarly, the elements provided here allow the encoder to supply a
+detailed analysis of the component parts of any expression which
+denotes a date or time, which is not possible using the elements
+described in section <ptr target="#CONADA"/>.</p>
+<p>It should be noted however that no provision is made by the present
+module for the representation of the abstract structures, or
+virtual objects to which names or dates may be
+said to refer. In simple terms, where the Common Core module allows one to
+represent a <term>name</term>, this module allows one to
+represent a <term>personal name</term>, but neither provides for the
+direct representation of a <term>person</term>. Section <ptr
+target="#CCAHPA"/> presents a simple way of representing biographical or
+other personal data for a limited range of applications; these Guidelines also provide general purpose
+mechanisms for the encoding of such interpretative gestures in chapters <ptr target="#AI"/> and <ptr target="#FS"/>.</p>
+
+
+<p>The chapter begins by discussing elements for the
+encoding of component parts of personal names (section <ptr target="#NDPER"/>), place names (section <ptr target="#NDPLAC"/>) and
+organizational names (section <ptr target="#NDORG"/>). Detailed encoding of
+dates and times is described in section <ptr target="#NDDATE"/>.</p>
+
+
+<p>The names and dates  module makes available the following
+components:
+
+<moduleSpec xml:id="DND" ident="namesdates">
+  <altIdent type="FPI">Names and Dates</altIdent>
+  <desc>Names and dates</desc>
+</moduleSpec>
+
+The selection and combination of modules to form a TEI schema is described in
+<ptr target="#STIN"/>.
+</p>
+<p>The module is organized as follows:
+<specGrp>
+<p>This module  defines a number of additional classes:
+&model.persNamePart;    
+&att.personal;    
+&model.placeNamePart;    
+&model.datePart;    
+&att.datePart;    
+</p>
+<p>
+<specGrpRef target="#DNDPER"/>
+<specGrpRef target="#DNDPLAC"/>
+<specGrpRef target="#DNDORG"/>
+<specGrpRef target="#DNDDATE"/>
+</p>
+</specGrp>
+<!-- no specgrp so these class definitions dont appear in the HTML -->
+</p>
+
+
+<!--
+<p>When this tag set is enabled, the attribute classes
+<term>persPart</term>, <term>placePart</term>, and <term>tempexp</term> gain additional
+attributes  to permit more delicate analysis, which replace the
+default declarations given in <ident type="file">teiclasses.ent</ident>. The model
+classes declared in that file remain unchanged (see <ptr target="#STEC"/>).
+The parameter entities
+corresponding with these modified classes are declared in the file
+<ident type="file">namesdates.ent</ident>, as follows:
+<moduleSpec xml:id="DNDENT" type="decls" ident="namesdates-decl">
+<altIdent type="FPI">Class declarations for Names and Dates</altIdent>
+</moduleSpec>
+-->
+
+
+<div2 xml:id="NDPER"><head>Personal Names</head>
+<p>The core <gi>rs</gi> and <gi>name</gi> elements can distinguish
+names in a text but are insufficiently powerful to mark their internal
+components or structure. To conduct nominal record linkage or even to
+create an alphabetically sorted list of personal names, it is
+important to distinguish between a family name, a forename and an
+honorary title. Similarly, when confronted with a referencing string
+such as <q>John, by the grace of God, king of England, lord of
+Ireland, duke of Normandy and Aquitaine, and count of Anjou</q>, the
+analyst will often wish to distinguish among components giving some
+hint as to the status, occupation or residence of the person to whom
+the name belongs.  The following elements are provided for these and
+related purposes:
+<specList><specDesc key="persName"/><specDesc key="surname"/><specDesc key="forename"/><specDesc key="roleName"/><specDesc key="addName"/><specDesc key="nameLink"/><specDesc key="genName"/></specList>
+ </p>
+<p>As members of the <ident type="class">att.naming</ident> class, all of these
+elements share the following attribute:
+<specList><specDesc key="att.naming" atts="key"/></specList>
+ </p>
+<p>Additionally, all of the above elements except for <gi>persName</gi>
+are members of the class <ident type="class">att.personal</ident>, and thus
+share the following attributes:
+<specList><specDesc key="att.personal" atts="type full sort"/></specList>
+ </p>
+<p>The <gi>persName</gi> element may be used in preference to the
+general <gi>name</gi> element irrespective of whether or not the
+components of the personal name are also to be marked. Its
+<att>key</att> <!-- and <att>reg</att> --> attribute is used in exactly the
+same way as those on the <gi>rs</gi> and <gi>name</gi> elements (see
+section <ptr target="#CONA"/>). The tag <gi>persName</gi> is synonymous
+with the tag <tag>name type="person"</tag>, except that its
+<att>type</att> attribute allows for further subcategorization of the
+personal name for example as a <q>married</q>, <q>maiden</q>,
+<q>pen</q>, <q>pseudo</q> or <q>religious</q> name.  Consequently the
+following examples are equivalent:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">That silly man 
+<rs key="DPB1"  type="person">
+David Paul Brown</rs> has suffered the furniture of
+his office to be seized the third time for rent.</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">That silly man
+<rs key="DPB1" type="person">
+  <name>David Paul Brown</name>
+</rs> has suffered ...</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">That silly man
+<name key="DPB1" type="person">
+David Paul Brown</name> has suffered ...</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">That silly man
+<persName key="DPB1" >
+David Paul Brown</persName> has suffered ...</egXML>
+ </p>
+<p>The <gi>persName</gi> element is more powerful than the
+<gi>rs</gi> and <gi>name</gi> elements because distinctive name
+components occurring within it can be marked as such.
+ </p>
+<p>Many cultures distinguish between a family or inherited
+<term>surname</term> and additional personal names, often known as
+<term>given names</term>. These should be tagged using the
+<gi>surname</gi> and <gi>forename</gi> elements respectively and may
+occur in any order:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="FDR1">  
+   <surname>Roosevelt</surname>,
+   <forename>Franklin</forename>
+   <forename>Delano</forename>
+</persName>
+<persName key="FDR1">  
+   <forename>Franklin</forename>
+   <forename>Delano</forename>
+   <surname>Roosevelt</surname>
+</persName></egXML>
+ </p>
+<p>The <att>type</att> attribute may be used with both
+<gi>forename</gi> and <gi>surname</gi> elements to provide further
+culture- or project- specific detail about the name component, for
+example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="FDR1"> 
+   <forename type="first">Franklin</forename>
+   <forename type="middle">Delano</forename>
+   <surname>Roosevelt</surname>
+</persName></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="MRT1"> 
+   <forename type="given">Margaret</forename>
+   <forename type="abbrev">Maggie</forename>
+   <forename type="unused">Hilda</forename>
+   <surname type="maiden">Roberts</surname>
+   <surname type="married">Thatcher</surname>
+</persName></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="MUAL1" type="religious"> 
+   <forename>Muhammad</forename>
+   <surname>Ali</surname>
+</persName></egXML>
+In the following two examples the <att>type</att> attribute of the
+<gi>surname</gi> element is used to indicate so-called
+double-barrelled or hyphenated surnames:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="KHS1">  
+   <forename>Kara</forename>
+   <surname type="combine">Hattersley-Smith</surname>
+</persName></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="NSJS1">   
+   <forename>Norman</forename>
+   <surname type="combine">St John Stevas</surname>
+</persName></egXML>
+ </p>
+<p>In most cases, patronymics should be treated as forenames, thus:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">... but it remained for
+<persName>   
+   <forename>Snorri</forename>
+   <forename>Sturluson</forename>
+</persName>
+to combine the two traditions in cyclic form.</egXML>
+<!-- Carol Clover, The Medieval Saga (Ithaca:  Cornell        -->
+	<!-- Univ. Press, 1982), p. 57.                               -->
+When a patronymic is used as a surname, however (e.g. by an individual
+who otherwise would have no surname, but lives in a culture which
+requires surnames), it may be tagged as such:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">Even <persName><forename>Finnur</forename>
+<surname>Jonsson</surname></persName>
+acknowledged the artificiality of the procedure...</egXML>
+<!-- Clover, p. 77.                                           -->
+In the following example, the <att>type</att> attribute is used
+to distinguish a patronymic from other forenames:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="pn9">  
+   <forename sort="2">Sergei</forename>
+   <forename sort="3" type="patronym">Mikhailovic</forename>
+   <surname sort="1">Uspensky</surname>
+</persName></egXML>
+ </p>
+<p>This example also demonstrates the use of the <att>sort</att>
+attribute common to all members of the
+<ident type="class">model.persNamePart</ident> class; its effect is to state the
+sequence in which <gi>forename</gi> and <gi>surname</gi> elements should
+be combined when constructing a sort key for the name.
+ </p>
+<p>Some names include generational or dynastic information, such as
+ a number, or phrases such as <q>Junior</q>, or <q>the Elder</q>;
+ these qualifications may also be used to distinguish similarly named
+ but unrelated people. In either case, the <gi>genName</gi>
+element may be used to distinguish such labels from other parts of the name,
+as in the following examples:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="HEMA1">  
+  <surname>Marques</surname>
+  <genName>Junior</genName>,
+  <forename>Henrique</forename>
+</persName></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName>  
+  <forename>Charles</forename>
+  <genName>II</genName>
+</persName></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName>
+  <forename>Rudolf</forename>
+  <genName>II</genName>
+  <surname type="dynasty">Hapsburg</surname>
+</persName></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName>
+  <surname>Smith</surname>
+  <genName>Minor</genName>
+</persName></egXML>
+ </p>
+<p>It is also often convenient to distinguish phrases (historically
+similar to the generational labels mentioned above) used to link parts
+of a name together, such as <q>von</q>, <q>of</q>, <q>de</q> etc. It
+is often a matter of arbitrary choice whether or not such components
+are regarded as part of the surname or not; the <gi>nameLink</gi>
+element is provided as a means of making clear what the correct usage
+should be in a given case, as in the following examples:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="DUDO1"> 
+   <roleName type="honorific" full="abb">Mme</roleName>
+   <nameLink>de la</nameLink>
+   <surname>Rochefoucault</surname>
+</persName></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName>  
+   <forename>Walter</forename>
+   <surname>de la Mare</surname>
+</persName></egXML>
+</p>
+<p>Finally, the <gi>addName</gi> and <gi>roleName</gi> elements are
+used to mark all name components other than those already listed. The
+distinction between them is that a <gi>roleName</gi> encloses an
+associated name component such as an aristocratic or official title
+which exists in some sense independently of its bearer. The
+distinction is not always a clear one. As elsewhere, the
+<att>type</att> attribute may be used with either element to supply
+culture- or application- specific distinctions.  Some typical values
+for this attribute for names in the Western European tradition follow:
+<list type="gloss"><label>nobility</label>
+<item>An inherited or life-time
+title of nobility such as <mentioned>Lord</mentioned>, <mentioned>Viscount</mentioned>, <mentioned>Baron</mentioned>, etc.</item><label>honorific</label>
+<item>An academic or other honorific prefixed to a name
+e.g. <mentioned>Doctor</mentioned>, <mentioned>Professor</mentioned>, <mentioned>Mrs.</mentioned>, etc.</item><label>office</label>
+<item>Membership of some elected or
+appointed organization such as <mentioned>President</mentioned>, <mentioned>Governor</mentioned>, etc.</item><label>military</label>
+<item>Military rank such as <mentioned>Colonel</mentioned>.</item><label>epithet</label>
+<item>A traditional descriptive phrase
+or nick-name such as <mentioned>The Hammer</mentioned>, <mentioned>The Great</mentioned>, etc.</item></list>
+Note, however, that the <term>role</term> a person has in a given
+   context (such as <mentioned>witness</mentioned>,
+   <mentioned>defendant</mentioned> etc. in a legal document) should
+   not be encoded using the <gi>roleName</gi> element, since this is
+   intended to describe the role of this part of the name, not the
+   role of the person bearing the name.  </p>
+<p>Here are some further examples of the usage of these elements:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="PGK1">
+   <roleName type="nobility">Princess</roleName>
+   <forename>Grace</forename>
+</persName></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="GRMO1" type="pseudo">
+   <addName type="honorific">Grandma</addName>
+   <surname>Moses</surname>
+</persName></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="MRSRO1">
+   <addName type="honorific">Mrs</addName>
+   <surname>Robinson</surname>
+</persName></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="STAU1">
+   <roleName type="office">Saint</roleName>
+   <forename>Augustine</forename>
+</persName></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="SLWICL1">
+   <roleName type="office">President</roleName>
+   <forename>Bill</forename>
+   <surname>Clinton</surname>
+</persName></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="MOGA1">
+   <roleName type="military">Colonel</roleName>
+   <surname>Gaddafi</surname>
+</persName></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="FRTG1">
+   <forename>Frederick</forename>
+   <addName type="epithet">the Great</addName>
+</persName></egXML>
+ </p>
+<p>A name may have any combination of the above elements:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="EGBR1">     
+   <roleName type="office">Governor</roleName>
+   <forename sort="2">Edmund</forename>
+   <forename full="init" sort="3">G</forename>.
+   <addName type="nick">Jerry</addName>
+   <addName type="epithet">Moonbeam</addName>
+   <surname sort="1">Brown</surname>
+   <genName full="abb">Jr</genName>.
+</persName></egXML>
+ </p>
+<p>Although highly flexible, these mechanisms for marking
+personal name components will not cater for every personal name
+and processing need. Where the internal structure of personal
+names is highly complex or where name components are
+particularly ambiguous, feature structures are recommended as
+the most appropriate mechanism to mark and
+analyze them, as further discussed in chapter <ptr target="#FS"/>.
+ </p>
+<p>The elements discussed in this section are formally defined as
+follows:
+<specGrp xml:id="DNDPER" n="Personal names">
+&persName;
+&surname;
+&forename;
+&genName;
+&nameLink;
+&addName;
+&roleName;</specGrp>
+</p></div2>
+<div2 xml:id="NDPLAC"><head>Place Names</head>
+<p>Like other proper nouns or noun phrases used as names, place names
+can simply be marked up with the <gi>rs</gi> element, or with the
+<gi>name</gi> element. For cartographers and historical geographers,
+however, the component parts of a place name provide important
+information about the relation between the name and some spot in space
+and time. They also provide important evidence in historical
+linguistics.  </p>
+
+<p>These Guidelines distinguish three ways of referring to places.  A
+place name (represented using the <gi>placeName</gi> element) may
+consist of one or more names for
+hierarchically-organized geo-political or administrative units (see
+section <ptr target="#NDPLGU"/>). A place  named simply in
+terms of  geographical features such
+as mountains or rivers is represented using the <gi>geogName</gi>
+element (see section <ptr target="#NDPLGF"/>). Finally, an expression
+consisting of 
+phrases expressing spatial or other kinds of relationship between
+other kinds of named place may also be regarded as a a kind of
+<gi>placename</gi> (see section
+<ptr target="#NDPLR"/>).  
+
+<specList><specDesc key="placeName"/><specDesc key="geogName"/>
+</specList>
+ </p>
+<p>As members of the <ident type="class">att.naming</ident> class, all these
+elements share the following attribute:
+<specList><specDesc key="att.naming" atts="key"/></specList>
+ </p>
+<p>Like the <gi>persName</gi> element discussed in section <ptr target="#NDPER"/>, the <gi>placeName</gi> element may be regarded
+simply as an abbreviation for the tags <tag>name type="place"</tag> or
+<tag>rs type="place"</tag>. The following encodings are thus
+equivalent:<note place="foot">Strictly, a suitable value such as
+<val>figurative</val> should be added to the two place
+names which are presented periphrastically in the second example here,
+in order to preserve the distinction indicated by the choice of
+<gi>rs</gi> rather than <gi>name</gi> to encode them in the first
+version.</note>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">After spending some time in our
+<rs key="NY1" type="place">modern
+<name key="BA1" type="place">Babylon</name></rs>,
+<name key="NY1" type="place">New York</name>,
+I have proceeded to the
+<rs key="PH1" type="place">City of Brotherly Love</rs>.</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">After spending some time in our
+<placeName key="NY1">modern
+<placeName key="BA1">Babylon</placeName></placeName>,
+<placeName key="NY1">New York</placeName>,
+I have proceeded to the
+<placeName key="PH1">City of Brotherly Love</placeName>.</egXML>
+<!-- from letter from 'JK' found in Poulson's Daily Advertiser -->
+	<!-- 8 October, 1835, -->
+ </p>
+
+
+<div3 type="subsection" xml:id="NDPLGU"><head>Geo-political Place Names
+ </head>
+<p>A place name may contain text with no indication of its internal structure:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName>  
+Rochester, NY</placeName></egXML>
+More usually however, a place name of this kind will  be further
+analysed in terms of its constitutive
+geo-political or administrative units. These may be arranged in
+ascending sequence according to their size or administrative
+importance, for example: <q>Rochester, New York</q>, or as a single
+such unit, for example <q>Belgium</q>. These Guidelines provide a
+hierarchy of generic element names, each of which may be more exactly
+specified by means of a <att>type</att> attribute:
+<specList>
+<specDesc key="district"/>
+<specDesc key="settlement"/>
+<specDesc key="region"/>
+<specDesc key="country"/>
+<specDesc key="bloc"/>
+</specList></p>
+<p>A <gi>placeName</gi> may contain any combination of these and other
+members of the <ident type="class">model.placeNamePart</ident> class,
+as in the following examples: 
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName>  
+  <settlement type="city">Rochester</settlement>,
+  <region type="state">New York</region>
+</placeName></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName key="LSEA1">  
+  <country type="nation">Laos</country>,
+  <bloc type="sub-continent">Southeast Asia</bloc>
+</placeName></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName>
+<district type="arondissement">6ème</district>
+ <settlement type="city">Paris</settlement>,
+</placeName>
+</egXML>
+ </p>
+<p>Note that, even in the case where only one of these component place
+name elements is used, the <gi>placeName</gi> element must still be
+present.
+<egXML xmlns="http://www.tei-c.org/ns/Examples">I'd rather be in
+<placeName><settlement type="city">Rochester</settlement></placeName>
+than any other place I know.</egXML>
+ </p></div3>
+<div3 type="subsection" xml:id="NDPLGF"><head>Geographic Names
+ </head>
+<p>Places may also be named in terms of geographic features such as
+mountains, lakes or rivers, independently of geo-political units. The
+<gi>geogName</gi> is provided to mark up such names, as an alternative
+to the <gi>placeName</gi> element discussed above. In addition to the
+usual phrase level elements, this element may include the following
+specialized  elements:
+<specList><specDesc key="geog"/><specDesc key="distance"/><specDesc key="offset"/></specList>
+ </p>
+<p>For example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><geogName key="MIRI1" type="river">Mississippi River</geogName></egXML>
+ </p>
+<p>Where the <gi>geog</gi> element is used to characterize the kind of
+geographic feature being named, the <gi>name</gi> element will generally
+also be used to mark the associated proper noun or noun phrase:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><geogName key="MIRI1" type="river">    
+   <name>Mississippi</name>
+   <geog>River</geog>
+</geogName></egXML>
+A more complex example, showing a variety of practices, follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">The isolated ridge separates two great corridors which run from
+<name key="GLCO1" type="place">Glencoe</name> into
+<geogName key="GLET1" type="glen">
+   <geog>Glen</geog>
+   <name>Etive</name>
+</geogName>, the
+<geogName key="LAGA1" type="hill">  
+   <geog xml:lang="gd"> Lairig</geog> 
+   <rs type="gloss" xml:lang="en">sloping hill face</rs>
+   <name>Gartain</name>
+</geogName> and the
+<geogName key="LAEI1" type="hill">  
+   <geog xml:lang="gd">Lairig</geog> 
+   <rs type="gloss" xml:lang="en">sloping hill face</rs>
+   <name>Eilde</name>
+</geogName></egXML></p></div3>
+<div3 type="subsection" xml:id="NDPLR"><head>Relative Place Names</head>
+<p>All the place name specifications so far discussed are
+<term rend="noindex">absolute</term>, in the sense that they define only
+one place.  A
+place may however be specified in terms of its relationship to another
+place, for example <q>10 miles northeast of Paris</q> or <q>near the top
+of Mount Sinai</q>. These <term>relative place names</term> will contain
+a place name which acts as a referent (e.g. <q>Paris</q> and <q>Mount
+Sinai</q>). They will also contain a word or phrase indicating the
+position of the place being named in relation to the referent
+(e.g. <q>the top of</q>, <q>north of</q>). A distance, possibly only
+vaguely specified, between the referent place and the place being
+indicated may also be present (e.g. <q>10 miles</q>, <q>near</q>).
+ </p>
+<p>Relative place names may be encoded using the following elements in
+combination with either a <gi>placeName</gi> or a <gi>geogName</gi>
+element.
+<specList><specDesc key="offset"/><specDesc key="distance"/></specList>
+Some examples of relative place names are:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName key="NRPA1"> 
+   <offset>near the top of</offset>
+   <geogName>     
+      <geog>Mount</geog>
+      <name>Sinai</name>
+   </geogName>
+</placeName></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName key="NEPA1">  
+   <distance>10 miles</distance>
+   <offset>north of</offset>
+   <settlement type="city">Paris</settlement>
+</placeName></egXML>
+<!--
+  Where appropriate, the
+internal structure of the distance component may be tagged using the
+<gi>measure</gi> elements described in  section <ref type='div2'
+target="NDMEAS">, as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><relplace key="NRTA1">
+  <distance type="measured">
+    <measure type="length">
+      <num type="cardinal" value='2'>2</num>
+      <unit>miles</unit>
+    </measure>
+  </distance>
+  <offset reg='east'>
+    east of
+  </offset>
+  <settlement type="city">
+      Tel Aviv
+  </settlement>
+</relplace>
+]]>
+</egXML>
+<p>Some place names combine the distinctive place name
+types discussed above, for example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<![ CDATA[
+<relplace key="LIIT1">
+  <distance type="measured">
+     <measure type='length'>
+       <num type='cardinal' value='2'>2</num>
+       <unit type="area">blocks</unit>
+     </measure>
+   </distance>
+   <offset reg='west'>west of</offset>
+   <name>Little Italy</name>
+</relplace>
+]]>
+]]></egXML>
+<p>Before concluding, it is worth considering a number of
+substantive issues which need to be considered locally before
+tagging a particular document. Firstly, the tags provided here
+are sufficiently powerful to handle a wide variety of
+geographical place names whose internal structure varies
+considerably. The same flexibility, however, allows the encoder
+to treat the same geographical place name differently. Thus,
+the following variations on <q>The Mississippi River</q> are all
+valid but might make local processing different or error prone
+if all were implemented in the same document. The principal
+problem is that the keys which associate the place names with some
+particular place all refer to something slightly different:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<rs key="pln15" type='place'>
+  The Mississippi River
+</rs>
+<name key="pln15" type='place'>
+  The Mississippi River
+</name>
+<rs key="pln15" type='place'>
+The
+  <name>Mississippi
+  </name>
+  <geog>River</geog>
+</rs>
+]]>
+</egXML>
+Suffice it to say here as elsewhere in this volume, the encoder is urged
+to
+be as consistent as possible in applying encoding solutions to a
+given machine-readable text or project.
+-->
+ </p>
+<p>The internal structure of place names is like that of
+personal names &#x2014; complex and subject to an enormous amount of variation
+across time and different cultures. The recommendations in this section
+will be adequate for a majority of users and applications. They may
+not, however, satisfy the most specialized inquiries and/or
+applications in which case it is recommended that the internal
+structure of place names be represented using feature structures (<ptr target="#FS"/>).
+ </p>
+<p>The elements discussed in this section are formally defined as
+follows:
+<specGrp xml:id="DNDPLAC" n="Names for places">
+&placeName;
+&district;
+&settlement;
+&region;
+&country;
+&bloc;
+&offset;
+&distance;
+&geogName;
+&geog;
+</specGrp>
+</p>
+</div3>
+</div2>
+<div2 xml:id="NDORG"><head>Organization names</head>
+<p>Like names of persons or places, organization names can be marked as
+referent strings or as proper names with the <gi>rs</gi> and
+<gi>name</gi> elements.  For certain applications it may be desirable
+to mark the component parts of an organization. In some historical and
+social scientific studies, for example, the component parts of an
+organization names may give crucial clues which help to  characterizing
+the organization in terms of its geographical location, ownership,
+likely number of employees, management structure etc.  The elements
+discussed in this section are recommended for this purpose and include:
+<specList><specDesc key="orgName" atts="type key"/><specDesc key="orgTitle" atts="type"/><specDesc key="orgType" atts="type"/><specDesc key="orgDivn" atts="type"/></specList>
+ </p>
+<p>The <gi>orgName</gi> element should be used when it is desirable to
+mark an organization name irrespective of whether or not its components
+are also to be marked. In effect the <gi>orgName</gi> element is a
+special case of a <gi>name</gi> and thus of an <gi>rs</gi> element.
+Consequently, the following examples are synonymous, though the last is
+preferred:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
+interest was agitated in the <rs key="PAS1" type="org">
+Pennsyla. Abolition Society</rs>.</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
+interest was agitated in the  <rs key="PAS1" type="org">
+<name>Pennsyla. Abolition Society</name></rs>.</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
+interest was agitated in the 
+<name key="PAS1" type="org">Pennsyla. Abolition 
+Society</name>.</egXML>  
+<egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
+interest was agitated in the 
+<orgName type="voluntary" key="PAS1">
+Pennsyla. Abolition Society</orgName>.</egXML>
+<!-- From the Diary of Thomas Pym Cope -->
+Like the <gi>rs</gi> and <gi>name</gi> elements, the <gi>orgName</gi>
+element has a <att>key</att> attribute with which an external
+identifier such as a database key can be assigned to the organization
+name. It also has a <att>type</att> attribute with which the
+organization named in the expression can be described<!--, and a
+<att>reg</att> attribute with which the organization name can be
+presented in a regularized form.-->
+ </p>
+<p>The <gi>orgTitle</gi> element is used to mark the expression
+which provides the proper name component of an organization name.
+For example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">Mr Frost will be able to earn an extra fee from 
+<orgName type="media" key="BSB1">
+  <orgTitle type="acronym">BSkyB</orgTitle>
+</orgName>
+rather than the
+<orgName type="media" key="BBC1">
+  <orgTitle type="acronym">BBC</orgTitle>
+  <orgTitle type="reg">British Broadcasting Corporation"</orgTitle>
+</orgName></egXML>
+ </p>
+<p>Where personal names are encountered as component parts of an
+organization's title, as in <q>Ernst &amp; Young</q>, these may be
+tagged with the appropriate personal name elements as discussed
+in <ptr target="#NDPER" type="div2"/>. Examples include:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><orgName type="accountancy partnership" key="EY1">
+   <orgTitle>  
+      <persName>
+         <surname>Ernst</surname>
+      </persName> &amp;
+      <persName>
+         <surname>Young</surname>
+      </persName>
+   </orgTitle>
+</orgName></egXML>
+ </p>
+<p>Organization names may also contain within them place names
+which, in some applications, may yield vital clues as to the
+organization's location and or sphere of influence. These
+components should be tagged with the appropriate place name tags 
+(<ptr target="#NDPLAC" type="div2"/>). Examples include:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">A spokesman from 
+<orgName type="computers" key="IBM1">
+  <orgTitle>IBM</orgTitle>
+  <placeName>
+    <country key="UNKI1">UK</country>
+  </placeName>
+</orgName> said ... The feeling in <placeName><country key="CAN1"
+type="nation">Canada</country></placeName> is one of strong aversion to the
+<orgName type="government" key="USG1">United States Government</orgName>, 
+and of predilection for self-government under the <orgName type="government">English Crown</orgName></egXML>
+<!-- Anthony Trollope, North America, Penguin ed., 51 -->
+ </p>
+<p>The <gi>orgType</gi> element is used to mark those components
+of an organization name which indicate something about the
+structure or function of the organization. Examples include:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><orgName type="utility company" key="WWPC1">  
+   <name type="state">Washington</name>
+   <orgType type="function">Water Power</orgType> 
+   <orgType type="structure">Inc.</orgType>
+</orgName></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">THE TICKET which you will receive herewith has been formed by
+the <orgName type="political" key="WHI1" >
+   <orgTitle>Democratic Whig</orgTitle> 
+   <orgTitle type="reg">Whig party"</orgTitle>
+   <orgType type="function">Party</orgType>
+</orgName> after the most careful deliberation,
+with a reference to all the great objects of NATIONAL, STATE,
+COUNTY and CITY concern, and with a single eye to the 
+<hi>Welfare and Best Interests of the Community</hi>.</egXML>
+ </p>
+<p>Organizational names may also be specified hierarchically
+particularly where the named organization is itself a department
+or a branch of a larger organizational entity.  <q>The
+Department of Modern History, Glasgow University</q> is an
+example. The <gi>orgDivn</gi> element is recommended wherever
+it is desirable to isolate the independent levels of an
+organizational hierarchy that are specified in an organization name. 
+Examples include:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><orgName type="academic" key="DMHGU1">  
+   <orgDivn type="department">Department of Modern History</orgDivn>,
+   <name type="city">Glasgow</name>
+   <orgType type="function">University</orgType>
+</orgName></egXML>
+ </p>
+<p>Although highly flexible, the mechanisms discussed here for
+marking the components of organization names will not cater for
+every processing need or organizational name that is
+encountered. Where the internal structure of organization names
+is highly complex, where name components are particularly
+ambiguous, or where it is important to indicate the assumptions
+made in the evaluation of an organization name, then feature
+structure notation is recommended (<ptr target="#FS"/>).
+ </p>
+<p>The formal declaration of the elements discussed in this section include:
+<specGrp xml:id="DNDORG" n="Organization names">
+&orgName;
+&orgTitle;
+&orgType;
+&orgDivn;</specGrp>
+</p>
+</div2>	
+<div2 xml:id="NDDATE"><head>Dates and Times</head>
+<p>The following elements for the encoding of dates and times were
+introduced in section <ptr target="#CONADA"/>:
+<specList><specDesc key="date" /><specDesc key="time"/></specList>
+ </p>
+<p>While adequate for many applications, these elements do not allow
+for the representation of the internal structure of expressions
+indicating dates or times, which may however be of importance for the
+correct interpretation of such expressions, or for certain kinds of
+analytic applications. In this section, we introduce the following
+special-purpose elements, for use when the internal structure of a
+temporal expression is to be encoded:
+<specList><specDesc key="dateStruct"/><specDesc key="timeStruct"/></specList>
+ </p>
+<p>Two types of temporal expressions are envisaged for dates and
+times: absolute and relative. An <term>absolute temporal
+expression</term> is composed of a sequence of the following elements,
+possibly interspersed with character data:
+<specList><specDesc key="day"/><specDesc key="week"/><specDesc key="month"/><specDesc key="year"/><specDesc key="second"/><specDesc key="minute"/><specDesc key="hour"/><specDesc key="occasion"/></specList>
+ </p>
+<p>A <term>relative temporal expression</term> describes a date or time
+with reference to some other (absolute) temporal expression, and thus
+contains the following elements in addition to those listed above:
+<specList><specDesc key="distance"/><specDesc key="offset"/></specList>
+ </p>
+<p>As members of the class <ident type="class">att.datePart</ident>
+(temporal expression)
+these elements all share the following attributes:
+<specList><specDesc key="att.datePart" atts="value type"/></specList>
+ </p>
+<div3 type="subsection" xml:id="NDDATEA"><head>Absolute Dates and Times
+ </head>
+<p>An absolute temporal expression which is a date will contain only a
+sequence of <gi>day</gi>, <gi>month</gi>, <gi>week</gi>, <gi>year</gi>
+or <gi>occasion</gi> elements, as in the following examples:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">The university's view of American affairs produced a stinging
+attack by Edmund Burke in the Commons debate of
+<dateStruct value="1775-10-26">  
+    <day value="---26">26</day>
+    <month value="--10">October</month>
+    <year value="1775">1775</year>
+</dateStruct></egXML>
+<!-- The History of the University of Oxford, vol v, 178 -->
+Component elements of a <gi>dateStruct</gi> may be repeated, provided
+that only a single temporal expression is intended:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><dateStruct value="1993-05-14">  
+   <day type="name">Friday</day>,
+   <day type="number">14</day>
+   <month>May</month>
+   <year>1993</year>
+</dateStruct></egXML>
+<!-- the headline on the Independent Newspaper on that day -->
+ </p>
+<p>The <gi>occasion</gi> element may be used for any component of a
+temporal expression which is given in terms of a named event, such as
+a public holiday for dates, or a named time such as <q>tea time</q> or
+<q>matins</q>:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">In New York,
+<dateStruct value="--01-01">    
+   <occasion type="holiday">New Years Day</occasion>
+</dateStruct> is the quietest of holidays,
+<dateStruct value="--07-04">    
+   <occasion type="holiday">Independence Day</occasion>
+</dateStruct> the most turbulent.</egXML>
+ </p>
+<p>These components may be applied to dates using any calendar system
+using  subcomponents equivalent to those listed above:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><title>Le Vieux Cordelier:
+Journal r&#xE9;dig&#xE9; par Camille Desmoulins</title><![CDATA[,
+]]><dateStruct type="Revolutionary" value="1794-02-03">   
+   <day type="name">Quintidi</day>
+   <month>Pluviose</month>
+   <week>2e d&#xE9;cade</week>,
+   <year>l'an 2 de la R&#xE9;publique Indivisible</year>
+</dateStruct></egXML>
+<!-- NB - I removed value= attrs because I do not think -->
+	<!-- they were "correct" in the sense that they were    -->
+	<!-- non-ISO format and did not normalize; I'm not sure -->
+	<!-- what "correct" would be, though; 1794-02-03 was    -->
+	<!-- 1794-034 or 1794-W06-1 (per Emacs :-)              -->
+	<!-- Date headline from Le Vieux Cordelier of that date -->
+	<!-- Thanks to T. Munck for providing the above example -->
+ </p>
+<p>Absolute temporal expressions denoting times which are given
+in terms of seconds, minutes, hours or of well defined events
+(e.g. <q>noon</q>, <q>sunset</q>) may similarly be represented using
+the <gi>timeStruct</gi> element.
+<egXML xmlns="http://www.tei-c.org/ns/Examples">The train leaves for Boston at
+<timeStruct type="24hour" zone="EST" value="18:45:00">
+   <hour>13</hour>:<minute>45</minute>
+</timeStruct></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">At <timeStruct><occasion>sunset</occasion></timeStruct> we walked to the beach.</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">The train leaves for Boston at
+<timeStruct xml:lang="en-US" type="descriptive" value="13:45:00" zone="EST">
+   a quarter of <hour>two</hour>
+</timeStruct></egXML>
+ </p>
+<p>The <att>type</att> attribute may be used to distinguish sub-types
+of component elements (for example, months or days presented as words
+or as numbers) or to provide additional information about the function
+of this particular component (for example, to distinguish types of
+<gi>occasion</gi>).  The <att>value</att> <!-- and <att>reg</att>
+attributes are both used --> is used to provide a standardized or regularized form
+for the content of an element, conforming to a subset of the possible
+formats defined by the relevant international standard (ISO 8601).</p>
+<p>For example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><dateStruct value="1807-06-09">  
+   <month type="name" value="--06">June</month>
+   <day type="number" value="---09">9th</day>
+</dateStruct>The period is approaching which will
+terminate my present copartnership. On the <dateStruct value="1808-01-01">  
+   <day type="number" value="---01">1st</day>
+   <month type="name" value="--01">Jany.</month>
+</dateStruct>next, it expires by its own limitation.</egXML>
+<!-- Philadelphia Merchant: The Diary of TP Cope, 210 -->
+ </p>
+</div3>
+<div3 type="subsection" xml:id="NDDATER"><head>Relative Dates and Times
+ </head>
+<p>As noted above, relative dates and times such as <q>in the Two
+Hundredth and First Year of the Republic</q>, <q>twenty minutes before
+noon</q>, and, more ambiguously, <q>after the lamented death of the
+Doctor</q> or <q>an hour after the game</q> have two distinct
+components. As well as the absolute temporal expression or event to
+which reference is made (e.g. <q>noon</q>, <q>the game</q>, <q>the
+death of the Doctor</q> <q>[the foundation of] the Republic</q>), they
+also contain a description of the <soCalled>distance</soCalled>
+between the time or date which is indicated and the referent
+expression (e.g. <q>the Two Hundredth and First Year</q>, <q>twenty
+minutes</q>, <q>an hour</q>); and (optionally) an
+<soCalled>offset</soCalled> describing the direction of the distance
+between the time or date indicated and the referent expression
+(e.g. <q>of</q> implying after, <q>before</q>, <q>after</q>).
+ </p>
+<p>The elements <gi>distance</gi> (or <gi>measure</gi>) and
+<gi>offset</gi> are used to encode these last two components within a
+<gi>dateStruct</gi> or <gi>timeStruct</gi>. The absolute temporal
+expression contained within the relative expression may be encoded
+using an <gi>occasion</gi> element, or by a nested <gi>dateStruct</gi>
+or <gi>timeStruct</gi>, or by a simple <gi>date</gi> or
+<gi>time</gi>. This allows for deeply nested structures such as
+<q>the third Sunday after the first Monday before Lammastide in the
+fifth year of the King's second marriage ...</q> but so does
+natural language.
+In the following examples, the <att>reg</att> attribute has been used
+to simplify processing of variant forms of expression:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><dateStruct value="1786-12-11">     
+   <distance value="P14D">A fortnight</distance>
+   <offset>before</offset>
+   <dateStruct>       
+      <occasion type="holiday">Christmas</occasion>
+      <year>1786</year>
+   </dateStruct>
+</dateStruct></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">I reached the station
+<timeStruct value="14:15:00">
+  <distance value="P30M" exact="false">about a half hour</distance>
+  <offset>after</offset>
+  <occasion value="13:45:00">the departure of the afternoon train to Boston</occasion>
+</timeStruct></egXML></p>
+<p>In the following example, the <att>exact</att> attribute has been
+used to indicate a lack of precision in the distance stated:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">In practice, festival candles are lit
+<timeStruct>  
+   <distance exact="false">just</distance>
+   <offset>before</offset>
+   <occasion>sundown</occasion>
+</timeStruct></egXML>
+ </p>
+<p>In the following example, a nested <gi>dateStruct</gi> element is
+used to show that <q>my birthday</q> and the cited date are parts of
+the same temporal expression, and hence to disambiguate the phrase
+<q>A week before my birthday on 9th December</q>:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><dateStruct value="--12-02">  
+   <distance>A week</distance>
+   <offset>before</offset>
+   <dateStruct value="--12-09">    
+      <occasion>my birthday</occasion>
+      on <day>9th</day>
+      <month>December</month>
+   </dateStruct>
+</dateStruct></egXML>
+The alternative reading of this phrase would be encoded as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><dateStruct value="--09-02">  
+   <distance>A week</distance>
+   <offset>before</offset>
+   <occasion>my birthday</occasion>
+   on <day>9th</day>
+   <month>December</month>
+</dateStruct></egXML>
+<!-- really dont want to keep distance : shd be same as measure -->
+ </p>
+<p>Where more complex or ambiguous expressions are involved, and
+where it is desirable to make more explicit  the interpretive
+processes required, the feature
+structure notation described in chapter <ptr target="#FS"/> is
+recommended.  Consider, for example, the following
+temporal expression which occurs in the <title>Scottish Temperance
+Review</title> of August 1850, referring to the summer holiday known
+in Glasgow simply as <q>the Fair</q>:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">Not only is the city, <date ana="gf50">during the Fair</date>, a
+horrible nucleus of immorality and wickedness; it sends our
+multitudes to pollute and demoralize the country.</egXML>
+ </p>
+<p>For the definition of the <att>ana</att> attribute,
+see chapter <ptr target="#AI"/>. It is used here to link the temporal phrase with an
+interpretation of it. Like most traditional fairs and market days, the
+Glasgow Fair was established by local custom and could vary from year
+to year.  Consequently, in order to provide such an interpretation, it
+is necessary to drawn upon additional information which may or may not
+be located in the particular text in question. In this case, it is
+necessary at least to know the spatial and temporal context (year and
+place) of the fair referred to.
+These and other features required for
+the analysis of this particular temporal
+expression may be combined together as one feature
+structure of type <val>date-analysis</val>:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><fs xml:id="gf50" type="date-analysis">
+   <f name="event"><string>the Fair</string></f>
+   <f name="place"><string>Glasgow</string></f>
+   <f name="year"><numeric value="1850"/></f>
+   <f name="from-value"><string>1850-08-08</string></f>
+   <f name="to-value"><string>1850-09-19</string></f>
+</fs></egXML>
+The elements described in this section are formally defined as follows:
+<specGrp xml:id="DNDDATE" n="Date components">
+&dateStruct;
+&day;
+&week;
+&month;
+&year;
+&occasion;
+&timeStruct;
+&second;
+&minute;
+&hour;
+</specGrp>
+ </p></div3></div2>
+</div1>

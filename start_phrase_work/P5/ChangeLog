@@ -1,0 +1,2103 @@
+2005-11-20  sbauman  <sbauman@spqr-ibm>
+
+	* ChangeLog, Source/CO/biblfull.odd, Source/CO/list.odd, Source/CO/listbibl.odd:
+	Change content models of <biblFull>, <list>, and <listBibl> so that
+	DTD output is not broken.
+
+	* Source/FT/figure.odd, Source/HD/broadcas.odd, Source/HD/eddecl.odd, Source/HD/edstmt.odd, Source/HD/pubstmt.odd, Source/HD/recordin.odd, Source/HD/recstmt.odd, Source/HD/refsdecl.odd, Source/HD/scrstmt.odd, Source/HD/serstmt.odd, Source/HD/soustmt.odd, Source/MS/bindingdesc.odd, Source/MS/msdesc.odd, Source/MS/mspart.odd, Source/MS/sealdesc.odd, Source/TD/exemplum.odd, Source/CC/partdesc.odd, Source/CC/partirel.odd, Source/CC/persgrp.odd, Source/CC/person.odd, Source/CC/settdesc.odd, Source/CC/setting.odd:
+	ED W 92 #23: p->model.pLike pasim
+
+	* Source/ST/measurement.odd, Source/CO/measure.odd:
+	Updates to <measure> and att.measurement class, continuing ED W 92
+	#21. While I we can now claim the class part has been accomplished, as
+	per my mail to Council today, there's lots of work to be done in this
+	area (including better examples.)
+
+2005-11-20	Syd
+
+	* Source/CO/biblfull.odd: Change the hack. Use <rng:group> instead
+	  of <?tei dtd )?> so that odd2dtd does not produce broken output
+
+	* Source/CO/list.odd: overhaul content model, including changing
+	  hack as above, for DTD output. Note that content model remains
+	  broken (no globals after <headItem> or <headLabel> so that DTD
+	  output is deterministic even if <headItem> or <headLabel> is
+	  removed. Needs a real fix.
+
+	* Source/CO/listbibl.odd: overhaul content model so that DTD
+	  output works
+
+2005-11-10  louburnard  <louburnard@spqr-ibm>
+
+	* Source/DS/ds.odd, Source/VE/rhyme.odd, Source/VE/ve.odd, fileents.dtd, p5odds-ex.odd, p5odds.odd:
+	 removing numbered lgs from ve, and slipping in rhyme when nobody's looking
+
+2005-11-09  louburnard  <louburnard@spqr-ibm>
+
+	* Source/DS/back.odd:
+	change content model to reference divWrapper.bottom class
+
+2005-11-08  louburnard  <louburnard@spqr-ibm>
+
+	* Source/CO/sp.odd, Source/CO/stage.odd, Source/ST/st.odd, fileents.dtd:
+	 implement #26 of edw92
+
+	* Source/CO/name.odd, Source/CO/respstmt.odd, Source/ND/orgname.odd, Source/ND/persname.odd, Source/ST/agent.odd, Source/ST/st.odd, Source/VE/ve.odd:
+	 implement #22 from edw92
+
+	* Source/CO/l.odd: Ooops, forgot to add this to class model.lLike
+
+	* Source/CO/lg.odd, Source/CO/sp.odd, Source/ST/cllines.odd, Source/ST/st.odd, fileents.dtd:
+	 implement #18 from edw92.odd
+
+	* Source/HD/langusg.odd, Source/PH/restore.odd, Source/CO/add.odd, Source/CO/corr.odd, Source/CO/del.odd, Source/CO/orig.odd, Source/CO/reg.odd, Source/CO/sic.odd:
+	 implement #10 in edw92
+
+2005-11-07  louburnard  <louburnard@spqr-ibm>
+
+	* Source/HD/hd.odd: Remove option to give <p> within <langUsage>
+
+	* Source/HD/langusg.odd: Removed p from content model
+
+2005-11-06  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* ChangeLog: update public ChangeLog
+
+2005-11-06  louburnard  <louburnard@spqr-ibm>
+
+	* Source/HD/encdesc.odd: change content model per edw92
+
+	* Source/CO/foreign.odd:
+	change content model, per edw92 (was macro.paraContent)
+
+	* Source/ST/mcrend.odd, Source/ST/peparac.odd, Source/ST/st.odd:
+	 started doing #36 but didnt finish because it's a bad idea
+
+	* Source/ND/nd.odd: removed attributes from time
+
+	* Source/ND/timestru.odd, Source/CO/time.odd, Source/CO/timerang.odd:
+	 implement #28 from edw92
+
+	* Source/ND/tempexp.odd: Add xml:id of filename
+
+2005-11-06  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Source/FT/ft.odd: start removing even more rubbish
+
+2005-11-06  louburnard  <louburnard@spqr-ibm>
+
+	* Source/HD/change.odd:
+	reference data.temporal instead of choice of assorted datatypes
+
+	* Source/CO/date.odd:
+	reference data.temporal datatype rather than series of choices
+
+	* Source/CO/co.odd: revised discussion of measure
+
+2005-11-06  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Source/FT/ft.odd: simplify sentence about tables
+
+2005-11-06  louburnard  <louburnard@spqr-ibm>
+
+	* Source/CO/measure.odd: improve example
+
+	* Source/CO/abbr.odd, Source/CO/expan.odd:  implement #12 from edw92
+
+	* Source/CO/altident.odd, Source/CO/author.odd, Source/CO/desc.odd, Source/CO/editor.odd, Source/CO/equiv.odd, Source/CO/gloss.odd, Source/CO/respstmt.odd, Source/ST/glosslike.odd, Source/ST/resplike.odd, Source/ST/st.odd, ChangeLog, fileents.dtd:
+	 implement #4 from edw29
+
+2005-11-06  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Source/FT/ft.odd, p5odds-ex.odd:
+	make SVG CDATA, too hard to add SVG in
+
+	* Source/FT/formulanotations.odd, Source/FT/ft.odd, fileents.dtd:
+	bring FT into the 21st century, no more notation FPIs
+
+	* Exemplars/tei_drama.xml, Exemplars/tei_oucs.xml, Test/testall.xml:
+	more test and exemplar file fixing
+
+	* Source/HD/hd.odd, Source/HD/revdesc.odd, Source/MS/ms.odd, Source/MS/recordhist.odd, Test/Makefile, Test/testall.xml, Test/testdrama.xml, Test/testi18n.xml, Test/testlite.xml, Test/testoucs.xml, Test/testp4compat.xml, Source-driver.xml:
+	fixing examples and test files as a result of <change> changes
+
+	* Test/testall.xml, Test/testcorpus.xml, Makefile:
+	correct lang in Makefile, fix more examples
+
+2005-11-06  louburnard  <louburnard@spqr-ibm>
+
+	* Source/HD/encdesc.odd: change content model per edw92
+
+	* Source/CO/foreign.odd:
+	change content model, per edw92 (was macro.paraContent)
+
+	* Source/ST/mcrend.odd, Source/ST/peparac.odd, Source/ST/st.odd:
+	 started doing #36 but didnt finish because it's a bad idea
+
+	* Source/ND/nd.odd: removed attributes from time
+
+	* Source/ND/timestru.odd, Source/CO/time.odd, Source/CO/timerang.odd:
+	 implement #28 from edw92
+
+	* Source/ND/tempexp.odd: Add xml:id of filename
+
+2005-11-06  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Source/FT/ft.odd: start removing even more rubbish
+
+2005-11-06  louburnard  <louburnard@spqr-ibm>
+
+	* Source/HD/change.odd:
+	reference data.temporal instead of choice of assorted datatypes
+
+	* Source/CO/date.odd:
+	reference data.temporal datatype rather than series of choices
+
+	* Source/CO/co.odd: revised discussion of measure
+
+2005-11-06  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Source/FT/ft.odd: simplify sentence about tables
+
+2005-11-06  louburnard  <louburnard@spqr-ibm>
+
+	* Source/CO/measure.odd: improve example
+
+	* Source/CO/abbr.odd, Source/CO/expan.odd:  implement #12 from edw92
+
+	* Source/CO/altident.odd, Source/CO/author.odd, Source/CO/desc.odd, Source/CO/editor.odd, Source/CO/equiv.odd, Source/CO/gloss.odd, Source/CO/respstmt.odd, Source/ST/glosslike.odd, Source/ST/resplike.odd, Source/ST/st.odd, ChangeLog, fileents.dtd:
+	 implement #4 from edw29
+
+2005-11-06  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Source/FT/ft.odd, p5odds-ex.odd:
+	make SVG CDATA, too hard to add SVG in
+
+	* Source/FT/formulanotations.odd, Source/FT/ft.odd, fileents.dtd:
+	bring FT into the 21st century, no more notation FPIs
+
+	* Exemplars/tei_drama.xml, Exemplars/tei_oucs.xml, Test/testall.xml:
+	more test and exemplar file fixing
+
+	* Source/HD/hd.odd, Source/HD/revdesc.odd, Source/MS/ms.odd, Source/MS/recordhist.odd, Test/Makefile, Test/testall.xml, Test/testdrama.xml, Test/testi18n.xml, Test/testlite.xml, Test/testoucs.xml, Test/testp4compat.xml, Source-driver.xml:
+	fixing examples and test files as a result of <change> changes
+
+	* Test/testall.xml, Test/testcorpus.xml, Makefile:
+	correct lang in Makefile, fix more examples
+
+2005-11-05  louburnard  <louburnard@thimk>
+
+	* Source/HD/change.odd, Source/HD/hd.odd, Source/ST/ascribed.odd, Test/testcorpus.xml, Test/testdrama.xml, Test/testlite.xml, Test/testoucs.xml, Source/CO/co.odd:
+	 implement #34 in edw92 (change to change element)
+
+2005-11-05  rahtz  <rahtz@thimk>
+
+	* Test/testi18n.xml: make test file valid
+
+2005-11-02  louburnard  <louburnard@thimk>
+
+	* Source/ST/chooseable.odd, Source/CO/choice.odd, Source/CO/corr.odd, Source/CO/orig.odd, Source/CO/reg.odd, Source/CO/sic.odd, Source/CO/unclear.odd:
+	 sort out choicePart class, again
+
+	* Source/CO/address.odd:
+	add rng:group to get parens in dtd content model, sigh
+
+	* Source/CO/unclear.odd: cannot be both choicePart and pPart
+
+2005-11-01  louburnard  <louburnard@thimk>
+
+	* Source/ST/st.odd: move declaration for chooseable class
+
+	* Source/CO/reg.odd:
+	remove redundant resp, now inherited from att.editLike
+
+	* Source/ST/names.odd, Source/CO/co.odd, Source/CO/measure.odd:
+	 removing measure from naming class
+
+	* Source/MS/ms.odd, Source/ST/data.numeric.odd, Source/CO/co.odd, Source/CO/corr.odd, Source/CO/measure.odd, Source/CO/num.odd, Source/CO/orig.odd, Source/CO/reg.odd, Source/CO/sic.odd:
+	 sorting out choosable class; also fixing measure
+
+2005-10-31  louburnard  <louburnard@thimk>
+
+	* Source/CO/choice.odd:
+	remove explicit reference to seg in content model
+
+	* Source/SA/seg.odd: add to model.choicePart class
+
+	* Source/ST/cldate.odd:
+	 remove bogus class reference introduced in error
+
+	* Source/CC/cc.odd: remove atts from speclists
+
+	* Source/CE/ce.odd: remove atts from specList
+
+	* Source/TS/ts.odd: remove atts from specLists
+
+2005-10-27  louburnard  <louburnard@thimk>
+
+	* Source/CO/biblstru.odd, Source/CO/monogr.odd, Source/HD/notstmt.odd, Source/MS/admininfo.odd, Source/MS/msitem.odd, Source/MS/msitemstruct.odd, Source/WD/char.odd, Source/WD/glyph.odd:
+	 implemented 38
+
+	* Source/CO/gap.odd, Source/PH/ph.odd, Source/PH/restore.odd, Source/SA/join.odd, Source/SA/joingrp.odd, Source/ST/glossseq.odd, Source/TS/event.odd, Source/TS/kinesic.odd, Source/TS/ts.odd, Source/TS/vocal.odd, Source/CE/ce.odd, Source/CE/certain.odd, Source/CE/respons.odd, Source/CC/cc.odd, Source/CC/partdesc.odd, Source/CC/partirel.odd, Source/CC/relation.odd:
+	 implemented #14 from edw92
+
+	* Source/SA/seg.odd, Source/ST/chooseable.odd, Source/ST/cldate.odd, Source/CO/choice.odd:
+	 implement #25 from edw92
+
+	* Source/HD/metsym.odd, Source/ND/datestru.odd, Source/ST/cldate.odd, Exemplars/teilite.odd, Source/CO/address.odd, Source/CO/addrline.odd, Source/CO/date.odd, Source/CO/daterang.odd, Source/DI/entries.odd:
+	 starting work on class changes: addrline and daterange
+
+2005-10-24  rahtz  <rahtz@thimk>
+
+	* Source/TD/exemplum.odd: correct mistaken change to exemplum
+
+	* Source/TD/exemplum.odd, odd2htmlp5.xsl.model: remove debug message
+
+2005-10-23  sbauman  <sbauman@thimk>
+
+	* Source/CC/persgrp.odd:
+	Fix sex= of <personGrp> so that "mixed" is permitted as with P4. We
+	may well remove this attribute later.
+
+2005-10-21  rahtz  <rahtz@thimk>
+
+	* Source-driver.xml: stop tempting fate
+
+	* Source/MS/ms.odd, guidelines.xsl: poking
+
+	* Source/DT/dt.odd: correct prose
+
+	* odd2htmlp5.xsl.model:
+	correct error which made section numbering wrong
+
+	* Source/TE/te.odd: fake section number
+
+2005-10-20  rahtz  <rahtz@thimk>
+
+	* Source/TS/compspok.odd, Source/TS/event.odd, Source/TS/kinesic.odd, Source/TS/pause.odd, Source/TS/shift.odd, Source/TS/tsmix.odd, Source/TS/u.odd, Source/TS/vocal.odd, Source/TS/writing.odd, Source/VE/caesura.odd, Source/VE/compvers.odd, Source/VE/enjamb.odd, Source/VE/lg1.odd, Source/VE/lg2.odd, Source/VE/lg3.odd, Source/VE/lg4.odd, Source/VE/lg5.odd, Source/VE/metrical.odd, Source/VE/vemix.odd, Source/WD/char.odd, Source/WD/chardesc.odd, Source/WD/charname.odd, Source/WD/charprop.odd, Source/WD/datatype.ucs.odd, Source/WD/g.odd, Source/WD/glyph.odd, Source/WD/glyphname.odd, Source/WD/localname.odd, Source/WD/mapping.odd, Source/WD/unicodename.odd, Source/WD/value.odd:
+	and some more $Date and $Author
+
+	* Source/GD/arc.odd, Source/GD/eleaf.odd, Source/GD/etree.odd, Source/GD/forest.odd, Source/GD/forestgp.odd, Source/GD/graph.odd, Source/GD/inode.odd, Source/GD/leaf.odd, Source/GD/node.odd, Source/GD/root.odd, Source/GD/tree.odd, Source/GD/triangle.odd, Source/HD/authorty.odd, Source/HD/avail.odd, Source/HD/broadcas.odd, Source/HD/catdesc.odd, Source/HD/categorize.odd, Source/HD/category.odd, Source/HD/catref.odd, Source/HD/change.odd, Source/HD/clasdecl.odd, Source/HD/classcod.odd, Source/HD/correctn.odd, Source/HD/creatn.odd, Source/HD/crefpattern.odd, Source/HD/distrib.odd, Source/HD/eddecl.odd, Source/HD/edition.odd, Source/HD/edstmt.odd, Source/HD/encdesc.odd, Source/HD/encoding.odd, Source/HD/equipmen.odd, Source/HD/extent.odd, Source/HD/fildesc.odd, Source/HD/fsddecl.odd, Source/HD/funder.odd, Source/HD/hyphen.odd, Source/HD/idno.odd, Source/HD/interptn.odd, Source/HD/keywords.odd, Source/HD/language.odd, Source/HD/langusg.odd, Source/HD/metdecl.odd, Source/HD/metsym.odd, Source/HD/normalzn.odd, Source/HD/notstmt.odd, Source/HD/policy.odd, Source/HD/principl.odd, Source/HD/profdesc.odd, Source/HD/profile.odd, Source/HD/projdesc.odd, Source/HD/pubstmt.odd, Source/HD/quotn.odd, Source/HD/recordin.odd, Source/HD/recstmt.odd, Source/HD/refsdecl.odd, Source/HD/renditn.odd, Source/HD/revdesc.odd, Source/HD/sampdecl.odd, Source/HD/scrstmt.odd, Source/HD/segmentn.odd, Source/HD/serstmt.odd, Source/HD/sourcedesc.odd, Source/HD/soustmt.odd, Source/HD/sponsor.odd, Source/HD/state.odd, Source/HD/stdvals.odd, Source/HD/step.odd, Source/HD/tagsdecl.odd, Source/HD/tagusage.odd, Source/HD/taxonomy.odd, Source/HD/teihead.odd, Source/HD/textclas.odd, Source/HD/titstmt.odd, Source/HD/varencod.odd, Source/MS/accmat.odd, Source/MS/acquisition.odd, Source/MS/additional.odd, Source/MS/additions.odd, Source/MS/admininfo.odd, Source/MS/altidentifier.odd, Source/MS/altname.odd, Source/MS/binding.odd, Source/MS/bindingdesc.odd, Source/MS/catchwords.odd, Source/MS/collation.odd, Source/MS/collection.odd, Source/MS/colophon.odd, Source/MS/condition.odd, Source/MS/custevent.odd, Source/MS/custodialhist.odd, Source/MS/datable.odd, Source/MS/decodesc.odd, Source/MS/deconote.odd, Source/MS/depth.odd, Source/MS/dimensions.odd, Source/MS/explicit.odd, Source/MS/filiation.odd, Source/MS/finalrubric.odd, Source/MS/foliation.odd, Source/MS/format.odd, Source/MS/handdesc.odd, Source/MS/handnote.odd, Source/MS/height.odd, Source/MS/heraldry.odd, Source/MS/history.odd, Source/MS/incipit.odd, Source/MS/institution.odd, Source/MS/layout.odd, Source/MS/layoutdesc.odd, Source/MS/locus.odd, Source/MS/material.odd, Source/MS/measured.odd, Source/MS/mscontents.odd, Source/MS/msdesc.odd, Source/MS/msidentifier.odd, Source/MS/msitem.odd, Source/MS/msitemstruct.odd, Source/MS/mspart.odd, Source/MS/musicnotation.odd, Source/MS/objectdesc.odd, Source/MS/origdate.odd, Source/MS/origin.odd, Source/MS/origplace.odd, Source/MS/physdesc.odd, Source/MS/provenance.odd, Source/MS/recordhist.odd, Source/MS/repository.odd, Source/MS/rubric.odd, Source/MS/seal.odd, Source/MS/sealdesc.odd, Source/MS/secfol.odd, Source/MS/signatures.odd, Source/MS/source.odd, Source/MS/summary.odd, Source/MS/support.odd, Source/MS/supportdesc.odd, Source/MS/surrogates.odd, Source/MS/textlang.odd, Source/MS/watermark.odd, Source/MS/watermarks.odd, Source/MS/width.odd, Source/ND/addname.odd, Source/ND/bloc.odd, Source/ND/country.odd, Source/ND/datestru.odd, Source/ND/day.odd, Source/ND/distance.odd, Source/ND/forename.odd, Source/ND/genname.odd, Source/ND/geog.odd, Source/ND/geogname.odd, Source/ND/hour.odd, Source/ND/minute.odd, Source/ND/month.odd, Source/ND/namelink.odd, Source/ND/occasion.odd, Source/ND/offset.odd, Source/ND/orgdivn.odd, Source/ND/orgname.odd, Source/ND/orgtitle.odd, Source/ND/orgtype.odd, Source/ND/persname.odd, Source/ND/perspart.odd, Source/ND/perspartatts.odd, Source/ND/placname.odd, Source/ND/placpart.odd, Source/ND/region.odd, Source/ND/rolename.odd, Source/ND/second.odd, Source/ND/settle.odd, Source/ND/surname.odd, Source/ND/tempexp.odd, Source/ND/tempexpatts.odd, Source/ND/timestru.odd, Source/ND/week.odd, Source/ND/year.odd, Source/NH/plcol.odd, Source/NH/plline.odd, Source/NH/plpage.odd, Source/NH/plvol.odd, Source/NH/vername.odd, Source/NH/version.odd, Source/PH/addspan.odd, Source/PH/damage.odd, Source/PH/delspan.odd, Source/PH/fw.odd, Source/PH/hand.odd, Source/PH/handlist.odd, Source/PH/handshft.odd, Source/PH/restore.odd, Source/PH/space.odd, Source/PH/supplied.odd, Source/REFCLA/teiform.odd, Source/SA/alt.odd, Source/SA/altgrp.odd, Source/SA/anchor.odd, Source/SA/anonb.odd, Source/SA/cllink.odd, Source/SA/join.odd, Source/SA/joingrp.odd, Source/SA/link.odd, Source/SA/linkgrp.odd, Source/SA/pointer.odd, Source/SA/ptrgroup.odd, Source/SA/seg.odd, Source/SA/segmix.odd, Source/SA/timeline.odd, Source/SA/when.odd, Source/ST/addrpart.odd, Source/ST/agent.odd, Source/ST/aitop.odd, Source/ST/ascribed.odd, Source/ST/biblpart.odd, Source/ST/cbcomp.odd, Source/ST/cbgeseq.odd, Source/ST/cbgetop.odd, Source/ST/cbmxtop.odd, Source/ST/cctop.odd, Source/ST/cetop.odd, Source/ST/chooseable.odd, Source/ST/chunk.odd, Source/ST/clbibl.odd, Source/ST/cldate.odd, Source/ST/clfront.odd, Source/ST/clinterp.odd, Source/ST/clloc.odd, Source/ST/clseg.odd, Source/ST/clsegatts.odd, Source/ST/common.odd, Source/ST/compseq.odd, Source/ST/cplxval.odd, Source/ST/data.certainty.odd, Source/ST/data.code.odd, Source/ST/data.count.odd, Source/ST/data.duration.odd, Source/ST/data.enumerated.odd, Source/ST/data.key.odd, Source/ST/data.language.odd, Source/ST/data.name.odd, Source/ST/data.names.odd, Source/ST/data.namespace.odd, Source/ST/data.numeric.odd, Source/ST/data.odd, Source/ST/data.outputmeasurement.odd, Source/ST/data.pattern.odd, Source/ST/data.pointer.odd, Source/ST/data.pointers.odd, Source/ST/data.probability.odd, Source/ST/data.sex.odd, Source/ST/data.temporal.odd, Source/ST/data.truthvalue.odd, Source/ST/data.word.odd, Source/ST/data.words.odd, Source/ST/data.xtruthvalue.odd, Source/ST/declabl.odd, Source/ST/decling.odd, Source/ST/demog.odd, Source/ST/digen.odd, Source/ST/digenxx.odd, Source/ST/dimixxx.odd, Source/ST/ditop.odd, Source/ST/ditoplev.odd, Source/ST/divbot.odd, Source/ST/divn.odd, Source/ST/divtop.odd, Source/ST/drfront.odd, Source/ST/drgen.odd, Source/ST/drgenxx.odd, Source/ST/drmixxx.odd, Source/ST/drtop.odd, Source/ST/edit.odd, Source/ST/editincl.odd, Source/ST/featval.odd, Source/ST/fmchunk.odd, Source/ST/fstop.odd, Source/ST/fttop.odd, Source/ST/gdtop.odd, Source/ST/glike.odd, Source/ST/global.odd, Source/ST/globincl.odd, Source/ST/glossseq.odd, Source/ST/header.odd, Source/ST/hqinter.odd, Source/ST/hqphrase.odd, Source/ST/inter.odd, Source/ST/intervention.odd, Source/ST/lists.odd, Source/ST/macroxtext.odd, Source/ST/metadata.odd, Source/ST/mstop.odd, Source/ST/names.odd, Source/ST/naming.odd, Source/ST/ndtop.odd, Source/ST/notes.odd, Source/ST/odddecl.odd, Source/ST/oddphr.odd, Source/ST/oddref.odd, Source/ST/paragraph.odd, Source/ST/peparac.odd, Source/ST/pephrase.odd, Source/ST/pespecp.odd, Source/ST/phrase.odd, Source/ST/phrseq.odd, Source/ST/phtop.odd, Source/ST/prtop.odd, Source/ST/refsys.odd, Source/ST/satop.odd, Source/ST/segment.odd, Source/ST/segmixxx.odd, Source/ST/singval.odd, Source/ST/spanning.odd, Source/ST/stagedir.odd, Source/ST/tctop.odd, Source/ST/tei.data.names.odd, Source/ST/tei.data.regexp.odd, Source/ST/tei2.odd, Source/ST/teicorp2.odd, Source/ST/teiextd.odd, Source/ST/teiexte.odd, Source/ST/teigis.odd, Source/ST/tetop.odd, Source/ST/timed.odd, Source/ST/tpparts.odd, Source/ST/tsdtop.odd, Source/ST/tsgen.odd, Source/ST/tsgenxx.odd, Source/ST/tsmixxx.odd, Source/ST/tstop.odd, Source/ST/typed.odd, Source/ST/vegen.odd, Source/ST/vegenxx.odd, Source/ST/vemixxx.odd, Source/ST/vephr.odd, Source/ST/vetop.odd, Source/TC/app.odd, Source/TC/fragment.odd, Source/TC/fragmentatts.odd, Source/TC/lacend.odd, Source/TC/lacstart.odd, Source/TC/lem.odd, Source/TC/rdg.odd, Source/TC/rdggrp.odd, Source/TC/readings.odd, Source/TC/wit.odd, Source/TC/witdtl.odd, Source/TC/witend.odd, Source/TC/witlist.odd, Source/TC/witness.odd, Source/TC/witstart.odd, Source/TD/att.odd, Source/TD/attdef.odd, Source/TD/attlist.odd, Source/TD/attref.odd, Source/TD/classes.odd, Source/TD/classspec.odd, Source/TD/code.odd, Source/TD/content.odd, Source/TD/datatype.odd, Source/TD/defaultval.odd, Source/TD/egxml.odd, Source/TD/elementspec.odd, Source/TD/exemplum.odd, Source/TD/gi.odd, Source/TD/ident.odd, Source/TD/identify.odd, Source/TD/listref.odd, Source/TD/macrospec.odd, Source/TD/memberof.odd, Source/TD/moduleref.odd, Source/TD/modulespec.odd, Source/TD/remarks.odd, Source/TD/schemapattern.odd, Source/TD/schemaspec.odd, Source/TD/specdesc.odd, Source/TD/specgrp.odd, Source/TD/specgrpref.odd, Source/TD/speclist.odd, Source/TD/stringval.odd, Source/TD/tag.odd, Source/TD/tdeg.odd, Source/TD/val.odd, Source/TD/valdesc.odd, Source/TD/valitem.odd, Source/TD/vallist.odd, Source/AI/spangrp.odd, Source/AI/w.odd, Source/CC/activity.odd, Source/CC/affiliat.odd, Source/CC/birth.odd, Source/CC/channel.odd, Source/CC/constitn.odd, Source/CC/derivatn.odd, Source/CC/domain.odd, Source/CC/educn.odd, Source/CC/factual.odd, Source/CC/frstlang.odd, Source/CC/interact.odd, Source/CC/langknow.odd, Source/CC/locale.odd, Source/CC/occupat.odd, Source/CC/partdesc.odd, Source/CC/partirel.odd, Source/CC/persgrp.odd, Source/CC/person.odd, Source/CC/prepness.odd, Source/CC/purpose.odd, Source/CC/relation.odd, Source/CC/residenc.odd, Source/CC/settdesc.odd, Source/CC/setting.odd, Source/CC/socecsta.odd, Source/CC/textdesc.odd, Source/CE/certain.odd, Source/CE/respons.odd, Source/CO/abbr.odd, Source/CO/add.odd, Source/CO/address.odd, Source/CO/addrline.odd, Source/CO/altident.odd, Source/CO/analytic.odd, Source/CO/author.odd, Source/CO/bibl.odd, Source/CO/biblfull.odd, Source/CO/biblitem.odd, Source/CO/biblscop.odd, Source/CO/biblstru.odd, Source/CO/binaryobject.odd, Source/CO/choice.odd, Source/CO/cit.odd, Source/CO/colbr.odd, Source/CO/corr.odd, Source/CO/date.odd, Source/CO/daterang.odd, Source/CO/del.odd, Source/CO/desc.odd, Source/CO/distinct.odd, Source/CO/divgen.odd, Source/CO/editor.odd, Source/CO/emph.odd, Source/CO/equiv.odd, Source/CO/expan.odd, Source/CO/foreign.odd, Source/CO/gloss.odd, Source/CO/graphic.odd, Source/CO/head.odd, Source/CO/headit.odd, Source/CO/headlab.odd, Source/CO/hi.odd, Source/CO/imprint.odd, Source/CO/index.odd, Source/CO/item.odd, Source/CO/l.odd, Source/CO/label.odd, Source/CO/lg.odd, Source/CO/linebr.odd, Source/CO/list.odd, Source/CO/listbibl.odd, Source/CO/measure.odd, Source/CO/meeting.odd, Source/CO/mentiond.odd, Source/CO/milest.odd, Source/CO/monogr.odd, Source/CO/name.odd, Source/CO/note.odd, Source/CO/num.odd, Source/CO/orig.odd, Source/CO/p.odd, Source/CO/pagebr.odd, Source/CO/postbox.odd, Source/CO/postcode.odd, Source/CO/ptr.odd, Source/CO/publishr.odd, Source/CO/pubplace.odd, Source/CO/q.odd, Source/CO/quote.odd, Source/CO/ref.odd, Source/CO/reg.odd, Source/CO/resp.odd, Source/CO/respstmt.odd, Source/CO/role.odd, Source/CO/rs.odd, Source/CO/series.odd, Source/CO/sic.odd, Source/CO/socalled.odd, Source/CO/sp.odd, Source/CO/speaker.odd, Source/CO/stage.odd, Source/CO/street.odd, Source/CO/term.odd, Source/CO/time.odd, Source/CO/timerang.odd, Source/CO/title.odd, Source/CO/unclear.odd, Source/DI/case.odd, Source/DI/colloc.odd, Source/DI/compdict.odd, Source/DI/def.odd, Source/DI/dicscrap.odd, Source/DI/dieg.odd, Source/DI/diglobal.odd, Source/DI/dimix.odd, Source/DI/diparts.odd, Source/DI/entries.odd, Source/DI/entry.odd, Source/DI/entryfr.odd, Source/DI/etym.odd, Source/DI/form.odd, Source/DI/forminfo.odd, Source/DI/formptrs.odd, Source/DI/formptrsatts.odd, Source/DI/gen.odd, Source/DI/gram.odd, Source/DI/gramgrp.odd, Source/DI/graminfo.odd, Source/DI/hom.odd, Source/DI/hyph.odd, Source/DI/itype.odd, Source/DI/lang.odd, Source/DI/lbl.odd, Source/DI/mood.odd, Source/DI/morph.odd, Source/DI/number.odd, Source/DI/oref.odd, Source/DI/orth.odd, Source/DI/ovar.odd, Source/DI/per.odd, Source/DI/pos.odd, Source/DI/pref.odd, Source/DI/pron.odd, Source/DI/pvar.odd, Source/DI/re.odd, Source/DI/sense.odd, Source/DI/stress.odd, Source/DI/subc.odd, Source/DI/supentry.odd, Source/DI/syll.odd, Source/DI/tns.odd, Source/DI/tr.odd, Source/DI/trans.odd, Source/DI/usg.odd, Source/DI/xr.odd, Source/DR/actor.odd, Source/DR/camera.odd, Source/DR/caption.odd, Source/DR/castgrp.odd, Source/DR/castitem.odd, Source/DR/castlist.odd, Source/DR/compdram.odd, Source/DR/drmix.odd, Source/DR/drrole.odd, Source/DR/epilogue.odd, Source/DR/move.odd, Source/DR/perform.odd, Source/DR/prologue.odd, Source/DR/roledesc.odd, Source/DR/set.odd, Source/DR/sound.odd, Source/DR/tech.odd, Source/DR/view.odd, Source/DS/argument.odd, Source/DS/back.odd, Source/DS/body.odd, Source/DS/byline.odd, Source/DS/closer.odd, Source/DS/dateline.odd, Source/DS/div.odd, Source/DS/div0.odd, Source/DS/div1.odd, Source/DS/div2.odd, Source/DS/div3.odd, Source/DS/div4.odd, Source/DS/div5.odd, Source/DS/div6.odd, Source/DS/div7.odd, Source/DS/docauth.odd, Source/DS/docdate.odd, Source/DS/doceditn.odd, Source/DS/docimprt.odd, Source/DS/doctitle.odd, Source/DS/epigraph.odd, Source/DS/front.odd, Source/DS/group.odd, Source/DS/imprimat.odd, Source/DS/opener.odd, Source/DS/salute.odd, Source/DS/signed.odd, Source/DS/text.odd, Source/DS/titlepa.odd, Source/DS/titlept.odd, Source/DS/trailer.odd, Source/FD/bicond.odd, Source/FD/cond.odd, Source/FD/fdecl.odd, Source/FD/fdescr.odd, Source/FD/fsconstr.odd, Source/FD/fsdecl.odd, Source/FD/fsdescr.odd, Source/FD/if.odd, Source/FD/iff.odd, Source/FD/teifsd.odd, Source/FD/teifsd2.odd, Source/FD/then.odd, Source/FD/vdft.odd, Source/FD/vrange.odd, Source/FS/binary.odd, Source/FS/default.odd, Source/FS/f.odd, Source/FS/flib.odd, Source/FS/fstag.odd, Source/FS/fvlib.odd, Source/FS/numeric.odd, Source/FS/string.odd, Source/FS/symbol.odd, Source/FS/valt.odd, Source/FS/vcoll.odd, Source/FS/vlabel.odd, Source/FS/vmerge.odd, Source/FS/vnot.odd, Source/FT/cell.odd, Source/FT/datatype.formula.odd, Source/FT/figdesc.odd, Source/FT/figure.odd, Source/FT/formula.odd, Source/FT/formulanotations.odd, Source/FT/row.odd, Source/FT/table.odd, Source/AI/c.odd, Source/AI/cl.odd, Source/AI/clana.odd, Source/AI/interp.odd, Source/AI/interpgp.odd, Source/AI/m.odd, Source/AI/phr.odd, Source/AI/s.odd, Source/AI/span.odd:
+	Add $Date and $Author to all source files
+
+2005-10-19  rahtz  <rahtz@thimk>
+
+	* ChangeLog: finalize version 0.2.1
+
+2005-10-19  sbauman  <sbauman@thimk>
+
+	* Source/CO/binaryobject.odd, Source/CO/equiv.odd, Source/TD/identify.odd, Source/TD/schemaspec.odd, Source/CC/persgrp.odd:
+	ns= of <schemaSpec> -> data.namespace
+	ident= of %att.identified; -> data.name
+	mimeType= of <binaryObject> -> data.word
+	mimeType= of <equiv> -> data.word
+	sex= of <personGrp> -> changed <valList>; had to change example too
+
+2005-10-19  rahtz  <rahtz@thimk>
+
+	* ChangeLog: update changelog from CVS
+
+	* Exemplars/tei_examples.odd, Exemplars/tei_odds.odd, VERSION:
+	fix exemplars, bump version number
+
+2005-10-18  sbauman  <sbauman@thimk>
+
+	* Source/ST/data.temporal.odd:
+	Minor fix to regexp, with thanks to Eric van der Vlist's post of
+	2005-10-18T15:46 to rng-users.
+
+	* Source/ST/data.numeric.odd:
+	Per agreement on tei-council list (2005-10-06), change data.numeric to
+	xsd:decimal | xsd:double, and describe how to express scientific
+	notation in an attribute value.
+
+2005-10-19  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* I declare version 0.2.1 complete. Anything later than this
+	belongs in the next version.
+
+2005-10-19  sbauman  <sbauman@spqr-ibm>
+
+	* Source/CO/binaryobject.odd, Source/CO/equiv.odd, Source/TD/identify.odd, Source/TD/schemaspec.odd, Source/CC/persgrp.odd:
+	ns= of <schemaSpec> -> data.namespace
+	ident= of %att.identified; -> data.name
+	mimeType= of <binaryObject> -> data.word
+	mimeType= of <equiv> -> data.word
+	sex= of <personGrp> -> changed <valList>; had to change example too
+
+2005-10-19  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* ChangeLog: update changelog from CVS
+
+	* Exemplars/tei_examples.odd, Exemplars/tei_odds.odd, VERSION:
+	fix exemplars, bump version number
+
+2005-10-18  sbauman  <sbauman@spqr-ibm>
+
+	* Source/ST/data.temporal.odd:
+	Minor fix to regexp, with thanks to Eric van der Vlist's post of
+	2005-10-18T15:46 to rng-users.
+
+	* Source/ST/data.numeric.odd:
+	Per agreement on tei-council list (2005-10-06), change data.numeric to
+	xsd:decimal | xsd:double, and describe how to express scientific
+	notation in an attribute value.
+
+2005-10-19  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Exemplars/tei_examples.odd, Exemplars/tei_odds.odd, VERSION:
+	fix exemplars, bump version number
+
+2005-10-18  sbauman  <sbauman@spqr-ibm>
+
+	* Source/ST/data.temporal.odd:
+	Minor fix to regexp, with thanks to Eric van der Vlist's post of
+	2005-10-18T15:46 to rng-users.
+
+	* Source/ST/data.numeric.odd:
+	Per agreement on tei-council list (2005-10-06), change data.numeric to
+	xsd:decimal | xsd:double, and describe how to express scientific
+	notation in an attribute value.
+
+2005-10-18  louburnard  <louburnard@spqr-ibm>
+
+	* Source/ND/persname.odd, Source/ST/data.key.odd, Source/ST/data.word.odd, Source/ST/names.odd, Source/ST/st.odd:
+	 update discussion of datatypes in ST and add note at start
+
+	* Source/ST/names.odd: Should use data.key class, now we have one
+
+2005-10-18  sbauman  <sbauman@spqr-ibm>
+
+	* Source/ST/data.word.odd, Source/ST/data.words.odd:
+	Add facet restricting data.word to non-bizarre, non-separator
+	characters; fix up wording in tagdocs for data.word and data.words a
+	bit.
+
+	* Source/CO/binaryobject.odd, Source/CO/graphic.odd, Source/ST/data.outputmeasurement.odd, Source/ST/st.odd:
+	Changed data.htmlDimension to data.outputMeasurement, and added "%" to
+	list of possibe units therein. Also fixed typo in st.odd.
+
+	* Source/ST/data.code.odd, Source/ST/tei.data.code.odd:
+	oops, missed one; probably missed others?
+
+	* Source/ST/data.certainty.odd, Source/ST/data.count.odd, Source/ST/data.duration.odd, Source/ST/data.enumerated.odd, Source/ST/data.key.odd, Source/ST/data.language.odd, Source/ST/data.name.odd, Source/ST/data.namespace.odd, Source/ST/data.numeric.odd, Source/ST/data.outputmeasurement.odd, Source/ST/data.pattern.odd, Source/ST/data.pointer.odd, Source/ST/data.pointers.odd, Source/ST/data.probability.odd, Source/ST/data.sex.odd, Source/ST/data.temporal.odd, Source/ST/data.truthvalue.odd, Source/ST/data.word.odd, Source/ST/data.xtruthvalue.odd, Source/ST/tei.data.certainty.odd, Source/ST/tei.data.count.odd, Source/ST/tei.data.duration.odd, Source/ST/tei.data.enumerated.odd, Source/ST/tei.data.htmlDimension.odd, Source/ST/tei.data.ident.odd, Source/ST/tei.data.key.odd, Source/ST/tei.data.language.odd, Source/ST/tei.data.name.odd, Source/ST/tei.data.namespace.odd, Source/ST/tei.data.numeric.odd, Source/ST/tei.data.pattern.odd, Source/ST/tei.data.pointer.odd, Source/ST/tei.data.pointers.odd, Source/ST/tei.data.probability.odd, Source/ST/tei.data.sex.odd, Source/ST/tei.data.temporal.odd, Source/ST/tei.data.truthvalue.odd, Source/ST/tei.data.xtruthvalue.odd:
+	second 1/2 of changing name of datatype files from 'tei.data.X' to 'data.X'
+
+	* Source/ST/st.odd, fileents.dtd:
+	1/2 of changing names of datatype files from 'tei.data.X' to 'data.X'.
+	Also need next commit to make this work.
+
+	* Source/PH/supplied.odd, Source/CO/graphic.odd:
+	Fix copy-and-paste error I left in <graphic> last update; also
+	"fix" source= of <supplied>, by changing from data.name to data.names,
+	which may have the wrong semantics.
+
+	* Source/CO/graphic.odd: Fix height= and width= of <graphic>
+
+2005-10-17  louburnard  <louburnard@spqr-ibm>
+
+	* Source/AI/m.odd, Source/AI/w.odd, Source/CC/persgrp.odd, Source/CC/person.odd, Source/CE/certain.odd, Source/CO/add.odd, Source/CO/binaryobject.odd, Source/CO/equiv.odd, Source/CO/gap.odd, Source/CO/graphic.odd, Source/CO/index.odd, Source/CO/role.odd, Source/CO/term.odd, Source/CO/unclear.odd, Source/DI/colloc.odd, Source/DI/lbl.odd, Source/DI/re.odd, Source/DR/move.odd, Source/FD/fdecl.odd, Source/FD/fsdecl.odd, Source/FS/symbol.odd, Source/FS/vlabel.odd, Source/HD/refsdecl.odd, Source/HD/tagusage.odd, Source/MS/handnote.odd, Source/MS/locus.odd, Source/ND/tempexpatts.odd, Source/PH/addspan.odd, Source/PH/damage.odd, Source/PH/restore.odd, Source/PH/supplied.odd, Source/SA/join.odd, Source/SA/joingrp.odd, Source/SA/pointer.odd, Source/SA/ptrgroup.odd, Source/SA/seg.odd, Source/ST/data.names.odd, Source/ST/data.words.odd, Source/ST/global.odd, Source/ST/st.odd, Source/ST/tei.data.ident.odd, Source/ST/tei.data.name.odd, Source/ST/tei.data.names.odd, Source/ST/typed.odd, Source/TC/app.odd, Source/TD/att.odd, Source/TD/attref.odd, Source/TD/code.odd, Source/TD/memberof.odd, Source/TD/schemaspec.odd, Source/TD/specdesc.odd, README, fileents.dtd:
+	 datatype name changes
+
+2005-10-16  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* ChangeLog, validator.xsl:
+	update public ChangeLog, and correct validator
+
+2005-10-16  sbauman  <sbauman@spqr-ibm>
+
+	* Source/ST/st.odd, Source/ST/tei.data.namespace.odd, Source/TD/attdef.odd, Source/TD/elementspec.odd, Source/TD/schemaspec.odd, fileents.dtd:
+	Make ns= of <attDef>, <elementSpec>, and <schemaSpec> into new
+	data.namespace
+
+2005-10-16  louburnard  <louburnard@spqr-ibm>
+
+	* validator.xsl:  reverted valList/data.enumerated test temporarily
+
+2005-10-16  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* validator.xsl: check for valLists/enumerated
+
+	* Source/ND/genname.odd, Source/ND/namelink.odd, Source/ND/nd.odd, Source/ND/persname.odd, Source/ND/rolename.odd:
+	more implications of foreName to forename
+
+	* Source/MS/binding.odd, Source/MS/bindingdesc.odd, Source/MS/collation.odd, Source/MS/colophon.odd, Source/MS/custevent.odd, Source/MS/decodesc.odd, Source/MS/depth.odd, Source/MS/explicit.odd, Source/MS/finalrubric.odd, Source/MS/foliation.odd, Source/MS/height.odd, Source/MS/history.odd, Source/MS/incipit.odd, Source/MS/locus.odd, Source/MS/mscontents.odd, Source/MS/musicnotation.odd, Source/MS/origdate.odd, Source/MS/origin.odd, Source/MS/origplace.odd, Source/MS/provenance.odd, Source/MS/rubric.odd, Source/MS/secfol.odd, Source/MS/signatures.odd, Source/MS/source.odd, Source/MS/surrogates.odd, Source/MS/width.odd:
+	make the MS examples be genuine XML, not just CDATA sections
+
+	* Source/CC/cc.odd, Source/CC/partdesc.odd, Source/CC/persgrp.odd:
+	more implications of foreName to forename
+
+	* Source/ND/addname.odd, Source/ND/genname.odd, Source/ND/namelink.odd, Source/ND/nd.odd, Source/ND/persname.odd, Source/ND/rolename.odd, p5odds-ex.odd, p5odds.odd:
+	implications of changing foreName forename
+
+	* Source/ND/forename.odd: foreName should be forename, its a word
+
+	* Source/CC/person.odd: and correct the example
+
+	* Source/CC/person.odd:
+	removed closed valList from sex, because that overrides the datatype
+
+2005-10-16  louburnard  <louburnard@spqr-ibm>
+
+	* Source/MS/acquisition.odd, Source/MS/additional.odd, Source/MS/altname.odd, Source/MS/binding.odd, Source/MS/bindingdesc.odd, Source/MS/colophon.odd, Source/MS/condition.odd, Source/MS/custevent.odd, Source/MS/datable.odd, Source/MS/explicit.odd, Source/MS/foliation.odd, Source/MS/format.odd, Source/MS/ms.odd, Source/MS/mscontents.odd, Source/MS/mspart.odd, Source/MS/origdate.odd, Source/MS/origin.odd, Source/MS/origplace.odd, Source/MS/provenance.odd, Source/MS/seal.odd, Source/MS/sealdesc.odd:
+	correct classname for att.datable; make changes suggested by MJD
+
+2005-10-16  sbauman  <sbauman@spqr-ibm>
+
+	* Source/ST/st.odd, Source/ST/tei.data.namespace.odd, Source/TD/attdef.odd, Source/TD/elementspec.odd, Source/TD/schemaspec.odd, fileents.dtd:
+	Make ns= of <attDef>, <elementSpec>, and <schemaSpec> into new
+	data.namespace
+
+2005-10-16  louburnard  <louburnard@spqr-ibm>
+
+	* validator.xsl:  reverted valList/data.enumerated test temporarily
+
+2005-10-16  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* validator.xsl: check for valLists/enumerated
+
+	* Source/ND/genname.odd, Source/ND/namelink.odd, Source/ND/nd.odd, Source/ND/persname.odd, Source/ND/rolename.odd:
+	more implications of foreName to forename
+
+	* Source/MS/binding.odd, Source/MS/bindingdesc.odd, Source/MS/collation.odd, Source/MS/colophon.odd, Source/MS/custevent.odd, Source/MS/decodesc.odd, Source/MS/depth.odd, Source/MS/explicit.odd, Source/MS/finalrubric.odd, Source/MS/foliation.odd, Source/MS/height.odd, Source/MS/history.odd, Source/MS/incipit.odd, Source/MS/locus.odd, Source/MS/mscontents.odd, Source/MS/musicnotation.odd, Source/MS/origdate.odd, Source/MS/origin.odd, Source/MS/origplace.odd, Source/MS/provenance.odd, Source/MS/rubric.odd, Source/MS/secfol.odd, Source/MS/signatures.odd, Source/MS/source.odd, Source/MS/surrogates.odd, Source/MS/width.odd:
+	make the MS examples be genuine XML, not just CDATA sections
+
+	* Source/CC/cc.odd, Source/CC/partdesc.odd, Source/CC/persgrp.odd:
+	more implications of foreName to forename
+
+	* Source/ND/addname.odd, Source/ND/genname.odd, Source/ND/namelink.odd, Source/ND/nd.odd, Source/ND/persname.odd, Source/ND/rolename.odd, p5odds-ex.odd, p5odds.odd:
+	implications of changing foreName forename
+
+	* Source/ND/forename.odd: foreName should be forename, its a word
+
+	* Source/CC/person.odd: and correct the example
+
+	* Source/CC/person.odd:
+	removed closed valList from sex, because that overrides the datatype
+
+2005-10-16  louburnard  <louburnard@spqr-ibm>
+
+	* Source/MS/acquisition.odd, Source/MS/additional.odd, Source/MS/altname.odd, Source/MS/binding.odd, Source/MS/bindingdesc.odd, Source/MS/colophon.odd, Source/MS/condition.odd, Source/MS/custevent.odd, Source/MS/datable.odd, Source/MS/explicit.odd, Source/MS/foliation.odd, Source/MS/format.odd, Source/MS/ms.odd, Source/MS/mscontents.odd, Source/MS/mspart.odd, Source/MS/origdate.odd, Source/MS/origin.odd, Source/MS/origplace.odd, Source/MS/provenance.odd, Source/MS/seal.odd, Source/MS/sealdesc.odd:
+	correct classname for att.datable; make changes suggested by MJD
+
+2005-10-15  sbauman  <sbauman@spqr-ibm>
+
+	* Source/TD/attref.odd, Source/TD/identify.odd, Source/TD/schemaspec.odd, Source/TD/valdesc.odd, Source/TD/vallist.odd:
+	Second to last set of rng:text attribute corrections of this sweep.
+
+2005-10-13  sbauman  <sbauman@spqr-ibm>
+
+	* Source/CO/co.odd, Source/CO/gloss.odd, Source/CO/ptr.odd, Source/CO/ref.odd, Source/CO/term.odd, Source/HD/crefpattern.odd, Source/HD/fragmentpattern.odd, Source/HD/hd.odd, Source/HD/refsdecl.odd, Source/HD/teihead.odd, Source/NH/nh.odd, Source/SA/sa.odd, fileents.dtd, p5odds-ex.odd, p5odds.odd:
+	Rename canonical reference elements & attrs.
+
+2005-10-12  sbauman  <sbauman@spqr-ibm>
+
+	* Source/ND/perspartatts.odd, Source/ND/tempexpatts.odd, Source/SA/pointer.odd, Source/SA/sa.odd, Source/SA/timeline.odd, Source/SA/when.odd, Source/TC/readings.odd, Source/AI/m.odd, Source/AI/w.odd:
+	Continued rng:text attribute repair mission. Deleted key= of
+	att.personal and att.datePart. Fixed value= of att.datePart.
+
+2005-10-11  sbauman  <sbauman@spqr-ibm>
+
+	* Source/ST/tei.data.htmlDimension.odd:
+	new datatype for height= of <graphic>, etc.
+
+2005-10-11  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* ChangeLog: get changelog up to date
+
+2005-10-11  sbauman  <sbauman@spqr-ibm>
+
+	* Source/DI/colloc.odd, Source/DI/di.odd, Source/DI/gram.odd, Source/DI/gramgrp.odd, Source/DI/itype.odd, Source/DI/lbl.odd, Source/DI/oref.odd, Source/DI/ovar.odd, Source/DI/re.odd, Source/DI/usg.odd, Source/MS/datable.odd, Source/MS/measured.odd, Source/MS/origplace.odd, ChangeLog, p5odds-ex.odd, p5odds.odd:
+	More progress on rng:text removal from attributes warpath
+
+2005-10-11  sbauman  <sbauman@spqr-ibm>
+
+	* Source/DI/colloc.odd, Source/DI/di.odd, Source/DI/gram.odd, Source/DI/gramgrp.odd, Source/DI/itype.odd, Source/DI/lbl.odd, Source/DI/oref.odd, Source/DI/ovar.odd, Source/DI/re.odd, Source/DI/usg.odd, Source/MS/datable.odd, Source/MS/measured.odd, Source/MS/origplace.odd, ChangeLog, p5odds-ex.odd, p5odds.odd:
+	More progress on rng:text removal from attributes warpath
+
+2005-10-10  sbauman  <sbauman@spqr-ibm>
+
+	* Source/CO/binaryobject.odd, Source/CO/equiv.odd, Source/CO/index.odd, Source/DI/di.odd, Source/DI/entries.odd, Source/DI/form.odd, Source/DI/orth.odd, Source/DI/pron.odd, Source/DI/sense.odd, Source/HD/fragmentpattern.odd, Source/ST/st.odd, ChangeLog, fileents.dtd:
+	Continued the removal of rng:text from attr values project
+
+2005-10-10  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Source-driver.xml: correct file ents
+
+	* Source/ST/tei.data.xtruthvalue.odd, Test/testoucs.xml, Exemplars/tei_dictionaries.odd, Exemplars/tei_examples.odd, Exemplars/tei_odds.odd, Exemplars/tei_oucs.odd, Exemplars/teilite.odd:
+	redo Test and Exemplars to match edw87a
+
+2005-10-10  louburnard  <louburnard@spqr-ibm>
+
+	* Source/TC/app.odd, Source/TC/fragment.odd, Source/TC/fragmentatts.odd, Source/TC/lacend.odd, Source/TC/lacstart.odd, Source/TC/lem.odd, Source/TC/rdg.odd, Source/TC/rdggrp.odd, Source/TC/readings.odd, Source/TC/tc.odd, Source/TC/wit.odd, Source/TC/witdtl.odd, Source/TC/witend.odd, Source/TC/witlist.odd, Source/TC/witness.odd, Source/TC/witstart.odd, Source/TD/att.odd, Source/TD/attdef.odd, Source/TD/attlist.odd, Source/TD/attref.odd, Source/TD/classes.odd, Source/TD/classspec.odd, Source/TD/code.odd, Source/TD/content.odd, Source/TD/datatype.odd, Source/TD/egxml.odd, Source/TD/elementspec.odd, Source/TD/gi.odd, Source/TD/ident.odd, Source/TD/identify.odd, Source/TD/listref.odd, Source/TD/macrospec.odd, Source/TD/memberof.odd, Source/TD/moduleref.odd, Source/TD/modulespec.odd, Source/TD/schemaspec.odd, Source/TD/specdesc.odd, Source/TD/specgrp.odd, Source/TD/specgrpref.odd, Source/TD/speclist.odd, Source/TD/tag.odd, Source/TD/td.odd, Source/TD/tdeg.odd, Source/TD/val.odd, Source/TD/valitem.odd, Source/TS/compspok.odd, Source/TS/event.odd, Source/TS/kinesic.odd, Source/TS/pause.odd, Source/TS/shift.odd, Source/TS/ts.odd, Source/TS/tsmix.odd, Source/TS/u.odd, Source/TS/vocal.odd, Source/TS/writing.odd, Source/VE/caesura.odd, Source/VE/compvers.odd, Source/VE/enjamb.odd, Source/VE/lg1.odd, Source/VE/lg2.odd, Source/VE/lg3.odd, Source/VE/lg4.odd, Source/VE/lg5.odd, Source/VE/metrical.odd, Source/VE/ve.odd, Source/VE/vemix.odd, Source/WD/chardesc.odd, Source/WD/charprop.odd, Source/WD/g.odd, Source/WD/mapping.odd, Source/WD/unicodename.odd, Source/WD/wd.odd, Test/detest.odd, Test/testdictionaries.odd, Test/testdocbook1.odd, Test/testdocbook2.odd, Test/testdocbook4.odd, Test/testdocbook5.odd, Test/testi18n.odd, Test/testlite.odd, Test/testmathml.odd, Test/testoucs.odd, Test/testp4compat.odd, Test/testrdf.odd, Test/testsvg.odd, Test/torture.odd, Test/tripReport.odd:
+	 6th try
+
+	* Source/ST/refsys.odd, Source/ST/segment.odd, Source/ST/singval.odd, Source/ST/spanning.odd, Source/ST/st.odd, Source/ST/stagedir.odd, Source/ST/tei.data.certainty.odd, Source/ST/tei.data.code.odd, Source/ST/tei.data.count.odd, Source/ST/tei.data.duration.odd, Source/ST/tei.data.enumerated.odd, Source/ST/tei.data.ident.odd, Source/ST/tei.data.key.odd, Source/ST/tei.data.language.odd, Source/ST/tei.data.name.odd, Source/ST/tei.data.names.odd, Source/ST/tei.data.numeric.odd, Source/ST/tei.data.pattern.odd, Source/ST/tei.data.pointer.odd, Source/ST/tei.data.pointers.odd, Source/ST/tei.data.probability.odd, Source/ST/tei.data.sex.odd, Source/ST/tei.data.temporal.odd, Source/ST/tei.data.truthvalue.odd, Source/ST/tei2.odd, Source/ST/timed.odd, Source/ST/tpparts.odd, Source/ST/tsgen.odd, Source/ST/typed.odd, Source/ST/vegen.odd, Source/ST/vephr.odd, Source/PH/addspan.odd, Source/PH/damage.odd, Source/PH/delspan.odd, Source/PH/fw.odd, Source/PH/hand.odd, Source/PH/handlist.odd, Source/PH/handshft.odd, Source/PH/ph.odd, Source/PH/restore.odd, Source/PH/space.odd, Source/PH/supplied.odd, Source/REFCLA/teiform.odd, Source/SA/alt.odd, Source/SA/altgrp.odd, Source/SA/anchor.odd, Source/SA/anonb.odd, Source/SA/cllink.odd, Source/SA/join.odd, Source/SA/joingrp.odd, Source/SA/link.odd, Source/SA/linkgrp.odd, Source/SA/pointer.odd, Source/SA/ptrgroup.odd, Source/SA/sa.odd, Source/SA/seg.odd, Source/SA/timeline.odd, Source/SA/when.odd, Source/ST/addrpart.odd, Source/ST/agent.odd, Source/ST/ascribed.odd, Source/ST/biblpart.odd, Source/ST/cbcomp.odd, Source/ST/cbgeseq.odd, Source/ST/chooseable.odd, Source/ST/chunk.odd, Source/ST/clbibl.odd, Source/ST/cldate.odd, Source/ST/clfront.odd, Source/ST/clinterp.odd, Source/ST/clloc.odd, Source/ST/clseg.odd, Source/ST/clsegatts.odd, Source/ST/common.odd, Source/ST/compseq.odd, Source/ST/cplxval.odd, Source/ST/data.odd, Source/ST/declabl.odd, Source/ST/decling.odd, Source/ST/demog.odd, Source/ST/digen.odd, Source/ST/ditoplev.odd, Source/ST/divbot.odd, Source/ST/divn.odd, Source/ST/divtop.odd, Source/ST/drfront.odd, Source/ST/drgen.odd, Source/ST/edit.odd, Source/ST/editincl.odd, Source/ST/featval.odd, Source/ST/fmchunk.odd, Source/ST/glike.odd, Source/ST/global.odd, Source/ST/globincl.odd, Source/ST/header.odd, Source/ST/hqinter.odd, Source/ST/hqphrase.odd, Source/ST/inter.odd, Source/ST/intervention.odd, Source/ST/lists.odd, Source/ST/macroxtext.odd, Source/ST/metadata.odd, Source/ST/msitempart.odd, Source/ST/names.odd, Source/ST/naming.odd, Source/ST/notes.odd, Source/ST/odddecl.odd, Source/ST/oddphr.odd, Source/ST/oddref.odd, Source/ST/paragraph.odd, Source/ST/peparac.odd, Source/ST/pephrase.odd, Source/ST/pespecp.odd, Source/ST/phrase.odd, Source/ST/phrseq.odd:
+	i 5th try
+
+	* Source/NH/plcol.odd, Source/NH/plpage.odd, Source/NH/plvol.odd, Source/NH/vername.odd, Source/FS/binary.odd, Source/FS/default.odd, Source/FS/f.odd, Source/FS/flib.odd, Source/FS/fstag.odd, Source/FS/fvlib.odd, Source/FS/numeric.odd, Source/FS/string.odd, Source/FS/symbol.odd, Source/FS/valt.odd, Source/FS/vcoll.odd, Source/FS/vlabel.odd, Source/FS/vmerge.odd, Source/FS/vnot.odd, Source/FT/cell.odd, Source/FT/datatype.formula.odd, Source/FT/figure.odd, Source/FT/formula.odd, Source/FT/row.odd, Source/FT/table.odd, Source/GD/arc.odd, Source/GD/eleaf.odd, Source/GD/etree.odd, Source/GD/forest.odd, Source/GD/forestgp.odd, Source/GD/graph.odd, Source/GD/inode.odd, Source/GD/leaf.odd, Source/GD/node.odd, Source/GD/root.odd, Source/GD/tree.odd, Source/GD/triangle.odd, Source/HD/avail.odd, Source/HD/broadcas.odd, Source/HD/catdesc.odd, Source/HD/categorize.odd, Source/HD/catref.odd, Source/HD/clasdecl.odd, Source/HD/classcod.odd, Source/HD/correctn.odd, Source/HD/distrib.odd, Source/HD/eddecl.odd, Source/HD/edition.odd, Source/HD/encdesc.odd, Source/HD/encoding.odd, Source/HD/equipmen.odd, Source/HD/extent.odd, Source/HD/fragmentpattern.odd, Source/HD/fsddecl.odd, Source/HD/hyphen.odd, Source/HD/idno.odd, Source/HD/interptn.odd, Source/HD/keywords.odd, Source/HD/language.odd, Source/HD/langusg.odd, Source/HD/metdecl.odd, Source/HD/metsym.odd, Source/HD/normalzn.odd, Source/HD/policy.odd, Source/HD/profdesc.odd, Source/HD/profile.odd, Source/HD/projdesc.odd, Source/HD/pubstmt.odd, Source/HD/quotn.odd, Source/HD/recordin.odd, Source/HD/recstmt.odd, Source/HD/refsdecl.odd, Source/HD/sampdecl.odd, Source/HD/scrstmt.odd, Source/HD/segmentn.odd, Source/HD/sourcedesc.odd, Source/HD/soustmt.odd, Source/HD/state.odd, Source/HD/stdvals.odd, Source/HD/tagsdecl.odd, Source/HD/tagusage.odd, Source/HD/teihead.odd, Source/HD/textclas.odd, Source/HD/varencod.odd, Source/MD/md.odd, Source/MS/accmat.odd, Source/MS/acquisition.odd, Source/MS/additions.odd, Source/MS/admininfo.odd, Source/MS/altidentifier.odd, Source/MS/altname.odd, Source/MS/binding.odd, Source/MS/catchwords.odd, Source/MS/collation.odd, Source/MS/collection.odd, Source/MS/colophon.odd, Source/MS/condition.odd, Source/MS/custevent.odd, Source/MS/custodialhist.odd, Source/MS/datable.odd, Source/MS/decodesc.odd, Source/MS/deconote.odd, Source/MS/depth.odd, Source/MS/dimensions.odd, Source/MS/explicit.odd, Source/MS/filiation.odd, Source/MS/finalrubric.odd, Source/MS/foliation.odd, Source/MS/format.odd, Source/MS/handdesc.odd, Source/MS/handnote.odd, Source/MS/height.odd, Source/MS/heraldry.odd, Source/MS/history.odd, Source/MS/incipit.odd, Source/MS/institution.odd, Source/MS/layout.odd, Source/MS/layoutdesc.odd, Source/MS/locus.odd, Source/MS/material.odd, Source/MS/measured.odd, Source/MS/ms.odd, Source/MS/mscontents.odd, Source/MS/msdesc.odd, Source/MS/msidentifier.odd, Source/MS/msitem.odd, Source/MS/msitemstruct.odd, Source/MS/musicnotation.odd, Source/MS/objectdesc.odd, Source/MS/origdate.odd, Source/MS/origin.odd, Source/MS/origplace.odd, Source/MS/physdesc.odd, Source/MS/provenance.odd, Source/MS/recordhist.odd, Source/MS/repository.odd, Source/MS/rubric.odd, Source/MS/seal.odd, Source/MS/secfol.odd, Source/MS/signatures.odd, Source/MS/source.odd, Source/MS/support.odd, Source/MS/supportdesc.odd, Source/MS/surrogates.odd, Source/MS/textlang.odd, Source/MS/watermark.odd, Source/MS/watermarks.odd, Source/MS/width.odd, Source/ND/addname.odd, Source/ND/bloc.odd, Source/ND/country.odd, Source/ND/datestru.odd, Source/ND/day.odd, Source/ND/distance.odd, Source/ND/forename.odd, Source/ND/genname.odd, Source/ND/geog.odd, Source/ND/geogname.odd, Source/ND/hour.odd, Source/ND/minute.odd, Source/ND/month.odd, Source/ND/namelink.odd, Source/ND/nd.odd, Source/ND/occasion.odd, Source/ND/offset.odd, Source/ND/orgdivn.odd, Source/ND/orgname.odd, Source/ND/orgtitle.odd, Source/ND/orgtype.odd, Source/ND/persname.odd, Source/ND/perspart.odd, Source/ND/perspartatts.odd, Source/ND/placname.odd, Source/ND/placpart.odd, Source/ND/region.odd, Source/ND/rolename.odd, Source/ND/second.odd, Source/ND/settle.odd, Source/ND/surname.odd, Source/ND/tempexp.odd, Source/ND/tempexpatts.odd, Source/ND/timestru.odd, Source/ND/week.odd, Source/ND/year.odd:
+	 4th try
+
+	* Source/DS/argument.odd, Source/DS/back.odd, Source/DS/body.odd, Source/DS/byline.odd, Source/DS/closer.odd, Source/DS/dateline.odd, Source/DS/div.odd, Source/DS/div0.odd, Source/DS/div1.odd, Source/DS/div2.odd, Source/DS/div3.odd, Source/DS/div4.odd, Source/DS/div5.odd, Source/DS/div6.odd, Source/DS/div7.odd, Source/DS/docauth.odd, Source/DS/docdate.odd, Source/DS/doceditn.odd, Source/DS/docimprt.odd, Source/DS/doctitle.odd, Source/DS/ds.odd, Source/DS/epigraph.odd, Source/DS/front.odd, Source/DS/group.odd, Source/DS/imprimat.odd, Source/DS/opener.odd, Source/DS/salute.odd, Source/DS/signed.odd, Source/DS/text.odd, Source/DS/titlepa.odd, Source/DS/titlept.odd, Source/DS/trailer.odd, Source/FD/fd.odd, Source/FD/fdecl.odd, Source/FD/fsdecl.odd, Source/FD/if.odd, Source/FD/vdft.odd, Source/FD/vrange.odd:
+	 3rd attempt to change all classnames following edw87a
+
+	* Source/DR/camera.odd, Source/DR/caption.odd, Source/DR/castgrp.odd, Source/DR/castitem.odd, Source/DR/castlist.odd, Source/DR/compdram.odd, Source/DR/dr.odd, Source/DR/drmix.odd, Source/DR/epilogue.odd, Source/DR/move.odd, Source/DR/perform.odd, Source/DR/prologue.odd, Source/DR/set.odd, Source/DR/sound.odd, Source/DR/tech.odd, Source/DR/view.odd, Source/AI/ai.odd, Source/AI/c.odd, Source/AI/cl.odd, Source/AI/clana.odd, Source/AI/interp.odd, Source/AI/interpgp.odd, Source/AI/m.odd, Source/AI/phr.odd, Source/AI/s.odd, Source/AI/span.odd, Source/AI/spangrp.odd, Source/AI/w.odd, Source/CC/affiliat.odd, Source/CC/birth.odd, Source/CC/cc.odd, Source/CC/derivatn.odd, Source/CC/domain.odd, Source/CC/educn.odd, Source/CC/frstlang.odd, Source/CC/interact.odd, Source/CC/langknow.odd, Source/CC/occupat.odd, Source/CC/partdesc.odd, Source/CC/persgrp.odd, Source/CC/person.odd, Source/CC/prepness.odd, Source/CC/purpose.odd, Source/CC/relation.odd, Source/CC/residenc.odd, Source/CC/settdesc.odd, Source/CC/setting.odd, Source/CC/socecsta.odd, Source/CC/textdesc.odd, Source/CE/certain.odd, Source/CE/respons.odd, Source/CO/abbr.odd, Source/CO/add.odd, Source/CO/address.odd, Source/CO/altident.odd, Source/CO/analytic.odd, Source/CO/author.odd, Source/CO/bibl.odd, Source/CO/biblfull.odd, Source/CO/biblitem.odd, Source/CO/biblscop.odd, Source/CO/biblstru.odd, Source/CO/binaryobject.odd, Source/CO/choice.odd, Source/CO/cit.odd, Source/CO/co.odd, Source/CO/colbr.odd, Source/CO/corr.odd, Source/CO/date.odd, Source/CO/daterang.odd, Source/CO/del.odd, Source/CO/distinct.odd, Source/CO/divgen.odd, Source/CO/editor.odd, Source/CO/emph.odd, Source/CO/equiv.odd, Source/CO/expan.odd, Source/CO/foreign.odd, Source/CO/gap.odd, Source/CO/gloss.odd, Source/CO/graphic.odd, Source/CO/head.odd, Source/CO/hi.odd, Source/CO/imprint.odd, Source/CO/index.odd, Source/CO/l.odd, Source/CO/label.odd, Source/CO/lg.odd, Source/CO/linebr.odd, Source/CO/list.odd, Source/CO/listbibl.odd, Source/CO/measure.odd, Source/CO/mentiond.odd, Source/CO/milest.odd, Source/CO/monogr.odd, Source/CO/name.odd, Source/CO/note.odd, Source/CO/num.odd, Source/CO/orig.odd, Source/CO/p.odd, Source/CO/pagebr.odd, Source/CO/postbox.odd, Source/CO/postcode.odd, Source/CO/ptr.odd, Source/CO/publishr.odd, Source/CO/pubplace.odd, Source/CO/q.odd, Source/CO/quote.odd, Source/CO/ref.odd, Source/CO/reg.odd, Source/CO/respstmt.odd, Source/CO/rs.odd, Source/CO/series.odd, Source/CO/sic.odd, Source/CO/socalled.odd, Source/CO/sp.odd, Source/CO/stage.odd, Source/CO/street.odd, Source/CO/term.odd, Source/CO/time.odd, Source/CO/timerang.odd, Source/CO/title.odd, Source/CO/unclear.odd, Source/DI/case.odd, Source/DI/colloc.odd, Source/DI/compdict.odd, Source/DI/def.odd, Source/DI/di.odd, Source/DI/dicscrap.odd, Source/DI/dieg.odd, Source/DI/diglobal.odd, Source/DI/dimix.odd, Source/DI/diparts.odd, Source/DI/entries.odd, Source/DI/entry.odd, Source/DI/entryfr.odd, Source/DI/etym.odd, Source/DI/form.odd, Source/DI/forminfo.odd, Source/DI/formptrs.odd, Source/DI/formptrsatts.odd, Source/DI/gen.odd, Source/DI/gram.odd, Source/DI/gramgrp.odd, Source/DI/graminfo.odd, Source/DI/hom.odd, Source/DI/hyph.odd, Source/DI/itype.odd, Source/DI/lang.odd, Source/DI/lbl.odd, Source/DI/mood.odd, Source/DI/morph.odd, Source/DI/number.odd, Source/DI/oref.odd, Source/DI/orth.odd, Source/DI/ovar.odd, Source/DI/per.odd, Source/DI/pos.odd, Source/DI/pref.odd, Source/DI/pron.odd, Source/DI/pvar.odd, Source/DI/re.odd, Source/DI/sense.odd, Source/DI/stress.odd, Source/DI/subc.odd, Source/DI/supentry.odd, Source/DI/syll.odd, Source/DI/tns.odd, Source/DI/tr.odd, Source/DI/trans.odd, Source/DI/usg.odd, Source/DI/xr.odd, Source-driver.xml, p5odds.odd:
+	 changing names of all classes to edw87a proposals
+
+2005-10-10  sbauman  <sbauman@spqr-ibm>
+
+	* Source/WD/localname.odd:
+	Reverted from macro.xtext to rng:text per CW.
+
+2005-10-10  louburnard  <louburnard@spqr-ibm>
+
+	* Source/CC/cc.odd, Source/CO/co.odd, Source/DI/di.odd, Source/FD/fd.odd, Source/MD/md.odd, Source/ND/nd.odd, Source/PH/ph.odd, Source/SA/sa.odd, Source/ST/ascribed.odd, Source/ST/intervention.odd, Source/ST/st.odd, Source/TC/tc.odd, Source/TS/ts.odd, Source/AI/ai.odd:
+	 add tei. prefix to all classnames in text as preliminary to mass renaming u
+
+2005-10-10  sbauman  <sbauman@spqr-ibm>
+
+	* Source/MS/seal.odd, Source/ND/bloc.odd, Source/ST/clinterp.odd, Source/ST/clsegatts.odd, Source/ST/global.odd, Source/ST/intervention.odd, Source/ST/teicorp2.odd, Source/ST/typed.odd, Source/MS/custodialhist.odd, Source/MS/ms.odd, ChangeLog:
+	Started changing attributes declared as rng:text to proper
+	declarations.
+
+2005-10-10  Syd
+
+	* Source/CO/equiv.odd: changed mimetype= to mimeType= to match
+	  that of <graphic> and <binaryObject>
+	* Source/CO/index.odd: indexName= from rng:text to data.ident
+	* Source/CO/binaryobject.odd: 
+	  - scale= from rng:text to data.numeric
+	  - width= from rng:text to new data.htmlDimension
+	  - height= from rng:text to new data.htmlDimension
+	* Source/DI/entries.odd:
+	  - type= from rng:text to data.enumerated
+	  - key= changed to sortKey=
+	* Source/DI/sense.odd: level= from rng:text to data.numeric (argh!)
+	* Source/DI/form.odd: type= from rng:text to data.enumerated
+	* Source/DI/orth.odd: extent= from rng:text to data.enumerated
+	* Source/DI/pron.odd: extent= from rng:text to data.enumerated
+	---------
+	* Source/DI/gram.odd: type= from rng:text to data.enumerated
+	* Source/DI/itype.odd: type= from rng:text to data.enumerated,
+	  changed name from <itype> to <iType>
+	* Source/DI/coloc.odd: type= from rng:text to data.name
+	* Source/DI/usg.odd: type= from rng:text to data.enumerated
+	* Source/DI/lbl.odd: type= from rng:text to data.name
+	* Source/DI/re.odd: type= from rng:text to data.name
+	* Source/DI/oref.odd: type= from rng:text to data.enumerated
+	* Source/DI/ovar.odd: type= from rng:text to data.enumerated
+	* Source/MS/origplace.odd: placeAttrib= and evidence= from
+	  rng:text to data.enumerated
+	* Source/MS/measured.odd: unit= and scope= from rng:text to data.enumerated
+	* Source/MS/datable.odd:
+	  - certainty=, dateAttrib=, and evidence= from rng:text to data.enumerated
+	  - notBefore= and notAfter= from an rng:choice of xsd:YYY to data.temporal
+	
+2005-10-09  Syd
+
+	* Source/ST/global.odd: n= from rng:text to tei.data.names (this is a problem -- reverted)
+	* Source/ST/teicorp2.odd: xmlns from rng:text to xsd:anyURI
+	* Source/ST/typed.odd: type= and subtype= from rng:text to tei.data.name
+	* Source/ST/clinterp.odd: type= from rng:text to tei.data.enumerated
+	* Source/ST/clsegatts.odd: type= from rng:text to tei.data.enumerated (no valList!)
+	* Source/ST/intervention.odd: type= from rng:text to tei.data.enumerated
+	* Source/MS/ms.odd: changed value of subtype= from "cauda duplex" to "cauda_duplex" twice
+	* Source/MS/seal.odd: changed value of subtype= from "cauda duplex" to "cauda_duplex"
+	* Source/MS/custodialhist.odd: s/type="transfer dispatch"/type="transfer-dispatch"/
+	* Source/ND/bloc.odd: s/ type="economic union"/ type="economic_union"/
+
+2005-10-09  Syd
+
+	* Source/TD/att.odd: reverted content to text until Sebastian can
+	  fix odd2dtd.xsl
+
+	* Source/DI/etym.odd: Fixed typo
+
+	* Source/DI/pvar.odd: Changed remarks per suggestion LR on
+	  tei-council list.
+
+2005-10-08  Syd
+
+	* Changelog: updated
+	
+
+2005-10-09  Syd
+
+	* Source/TD/att.odd: reverted content to text until Sebastian can
+	  fix odd2dtd.xsl
+
+	* Source/DI/etym.odd: Fixed typo
+
+	* Source/DI/pvar.odd: Changed remarks per suggestion LR on
+	  tei-council list.
+
+2005-10-08  Syd
+
+	* Changelog: updated
+	
+	* Source/FT/formula.odd, Source/GD/gd.odd, Source/GD/graph.odd,
+	  Source/GD/inode.odd, Source/GD/root.odd, Source/HD/metsym.odd,
+	  Source/MS/origdate.odd, Source/SA/sa.odd, Source/ST/declabl.odd,
+	  Source/ST/st.odd, Source/TD/att.odd, Source/TD/code.odd,
+	  Source/TD/defaultval.odd, Source/TD/egxml.odd,
+	  Source/TD/ident.odd, Source/TD/schemapattern.odd,
+	  Source/TD/stringval.odd, Source/TD/tdeg.odd, Source/TD/val.odd,
+	  Source/WD/charname.odd, Source/WD/glyphname.odd,
+	  Source/WD/unicodename.odd: revert many an xtext back to
+	  rng:text. See mail to Council of today for details.
+
+2005-10-08  Syd
+
+	* Source/CO/respstmt.odd: fixed content model to follow spirit of
+	  P3, but slightly more restrictive than actual P3 model: allow 1
+	  or more names followed by 1 or more resps, or vice-versa.
+
+	* Source/CO/co.odd, Source/VE/metrical.odd, Test/testp4compat.xml:
+	  Datatype of met=, real=, rhyme= of tei.metrical changed to
+	  xsd:string
+
+2005-09-07  louburnard  <louburnard@thimk>
+
+	* Source/TS/ts.odd: correct lang to xml:lang in text
+
+2005-09-05  rahtz  <rahtz@thimk>
+
+	* Query/sitemap-dist.xmap, VERSION:
+	better default for sitemap for Cocoon for Query
+
+2005-09-04  rahtz  <rahtz@thimk>
+
+	* Utilities/listcontentmodels.xsl: update data gatherer
+
+2005-09-01  sbauman  <sbauman@thimk>
+
+	* ChangeLog: updated
+
+	* Source/TD/td.odd:
+	Split the single example of three <valDesc>s in TDATT into three
+	separate examples.
+
+	* Source/SA/timeline.odd:
+	Changed example from unit="centisecond" to unit="ms" one of the
+	suggested values; adjusted interval=s accordingly.
+
+	* Source/HD/normalzn.odd:
+	Changed type of source= from xsd:anyURI to datatype.uri; while I was
+	here fixed whitespace in example.
+
+	* Source/GD/graph.odd: Fixed whitespace in example so it's not so wide.
+
+	* Source/CH/ch.odd:
+	Globally changed "RTF" to "RFC", per mail from CW to tei-chars on
+	2005-06-01.
+
+	* Source/CE/respons.odd, Source/CO/note.odd, Source/PH/addspan.odd, Source/PH/delspan.odd, Source/PH/hand.odd, Source/PH/space.odd, Source/ST/clinterp.odd, Source/ST/intervention.odd, Source/TC/readings.odd, Source/TC/witdtl.odd:
+	Updated resp= to be a pointer in classes tei.readings & tei.interpret;
+	<hand>, <note>, <repsons>, and <space>; also in <addSpan> & <delSpan>
+	by adding them to class tei.intervention.
+
+2005-09-01  Syd
+
+	* Source/CH/ch.odd#1.4: s/RTF/RFC/g;, per CW posting to tei-chars
+
+	* Source/GD/graph.odd#1.2: fixed whitespace in example so it's not
+		so wide
+
+	* Source/HD/normalzn.odd#1.4: changed source= from xsd:anyURI to
+		datatype.uri 
+
+	* Source/SA/timeline.odd#1.4: fixed example to use one of the
+		suggested values for unit= (and adjusted interval=s
+		accordingly).
+
+	* Source/TD/td.odd#1.6: changed single example of 3 <valDesc>s to
+		3 examples of 1 <valDesc> each
+
+	* Source/CE/respons.odd#1.2, Source/CO/note.odd#1.3,
+	  Source/PH/addspan.odd#1.3, Source/PH/delspan.odd#1.2,
+	  Source/PH/hand.odd#1.5, Source/PH/space.odd#1.2,
+	  Source/ST/clinterp.odd#1.2, Source/ST/intervention.odd#1.3,
+	  Source/TC/readings.odd#1.3, Source/TC/witdtl.odd#1.3: changed
+	  resp= to datatype.uri
+
+2005-08-29  louburnard  <louburnard@thimk>
+
+	* Source/PH/addspan.odd: remove type attrib for consistency with add
+
+	* Source/CO/biblscop.odd: minor tweaks to valList
+
+	* Source/DR/camera.odd: add to typed class
+
+2005-08-28  louburnard  <louburnard@thimk>
+
+	* Source/DI/di.odd, Source/TS/ts.odd, Source/CO/co.odd: fix typos
+
+	* Source/AI/ai.odd, Source/CC/cc.odd, Source/CE/ce.odd, Source/CO/co.odd, Source/DI/di.odd, Source/DR/dr.odd, Source/DS/ds.odd, Source/FD/fd.odd, Source/FT/ft.odd, Source/GD/gd.odd:
+	tidyup <code> usage
+
+	* Source/HD/hd.odd: tidy up <code> usage
+
+	* Source/MS/explicit.odd, Source/MS/measured.odd:  add to typed class
+
+	* Source/MD/md.odd: Tidyup <code> usage
+
+	* Source/ND/nd.odd, Source/NH/nh.odd: tidy up <code> usage
+
+	* Source/SA/sa.odd, Source/SH/sh.odd, Source/ST/st.odd:
+	tidying up <code> usage
+
+	* Source/TC/tc.odd: tidied up <code> usage
+
+	* Source/TS/ts.odd: tidy up <code> usage
+
+	* Source/VE/ve.odd: recoded <code> as <val> passim
+
+	* Source/TD/code.odd:
+	changed "type" to "lang"; revised description a little
+
+	* Source/MS/custevent.odd: add to tei.typed
+
+	* Source/MS/deconote.odd: add to tei.typed class
+
+	* Source/FS/fvlib.odd: remove type attribute
+
+	* Source/MS/incipit.odd, Source/MS/rubric.odd: added to tei.typed
+
+	* Source/CO/term.odd: add to tei.typed
+
+	* Source/MS/finalrubric.odd: add to typed class
+
+	* Source/CO/milest.odd:
+	expanded description and change remarks a little
+
+	* Source/TS/ts.odd: fix unit= examples to match spec
+
+	* Source/SA/sa.odd: change unit= example for consistency with tagdoc
+
+	* Source/SA/when.odd: added valList for unit attribute
+
+	* Source/SA/timeline.odd: add vallist for unit
+
+	* Source/MS/measured.odd, Source/MS/ms.odd: change units= to unit=
+
+	* Source/HD/hd.odd: Correct normalization example
+
+	* Source/HD/normalzn.odd: Improve examples; remove URI attribute
+
+	* Source/DR/move.odd: changed example to be consistent with odd
+
+2005-08-23  sbauman  <sbauman@thimk>
+
+	* ChangeLog: Added entry for vlabel.odd & span.odd
+
+	* Source/FS/vlabel.odd, Source/AI/span.odd:
+	Inserted missing "one" in <desc> of vLabel.odd;
+	fixed whitespace in example of <span> in span.odd.
+
+2005-08-23  Syd
+
+	* vlabel.odd: inserted missing word "one" in <desc>
+
+	* span.odd: improved whitespace in example
+	
+2005-08-14  louburnard  <louburnard@thimk>
+
+	* witness.odd: remove sigil attribute
+
+	* witdtl.odd: change wit to datatype.uriList
+
+	* readings.odd: change datatype of wit to uriList; add vallist
+
+	* fragment.odd: change datatype for wit to datatype.uriList
+
+	* tc.odd:
+	tidy up ids following removal of sigil attribute and conversion
+	of wit attribute to URIlist; revise prose a bit; add link to MS description
+
+2005-08-13  louburnard  <louburnard@thimk>
+
+	* testdrama.xml: remove status attribute on header
+
+2005-08-13  rahtz  <rahtz@thimk>
+
+	* Makefile: fix error re testfrag.rnc
+
+	* Makefile:
+	update ChangeLog; add test of schema frags to Test/Makefile; clean main Makefile
+
+2005-08-06  louburnard  <louburnard@thimk>
+
+	* Source/PH/ph.odd: change character= to writing=
+
+	* Source/PH/handshft.odd:
+	rename character as writing; turn valdesc into vallist
+
+	* Source/PH/hand.odd:
+	rename character to writing and turn valdesc into valList
+
+	* Source/CO/date.odd:
+	change certainty into precision; add to tei.intervention (so as to
+	gain cert)
+
+	* Source/TD/specdesc.odd:
+	correct description of intended behaviour of atts attribute
+
+	* Source/CC/interact.odd, Source/CC/relation.odd:
+	revert experimental addition to typed class
+	* Source/MS/ms.odd: Matthew's revised version following chapter review
+
+	* Source/MS/origplace.odd: add placeAttrib and evidence attributes
+
+	* Source/MS/origplace.odd:
+	add attribution style attributes as requested by TS/MJD
+
+	* Test/testms.xml: remove now nonexistent status attribute
+
+	* Source/TS/ts.odd: correct reference to tei.ascribed class
+
+2005-08-03  louburnard  <louburnard@thimk>
+
+	* Source/CC/cc.odd: remove who from atts
+
+	* Source/TS/ts.odd: remove who from atts; add speclist for class
+
+	* Source/DR/dr.odd: remove refs to who in atts
+
+	* Source/CO/sp.odd, Source/CC/setting.odd, Source/CO/q.odd, Source/DR/move.odd:
+	add to ascribed class
+
+	* Source/TS/writing.odd:
+	add to ascribed class; remove reference to non-existent script.decl element
+
+	* Source/TS/vocal.odd, Source/TS/shift.odd, Source/TS/pause.odd:
+	add to ascribed class
+
+	* Source/TS/kinesic.odd: added to ascribed class
+
+	* Source/TS/event.odd, Source/TS/u.odd: add to ascribed class
+
+	* Source/ST/ascribed.odd, Source/ST/st.odd:  create tei.ascribed class
+
+	* fileents.dtd: add ascribed.odd
+
+	* Source/CO/unclear.odd: add valList to agent attribute
+
+	* Source/PH/supplied.odd: supply vallist for agent attribute
+
+	* Source/CO/gap.odd: add vallist to agent attribute
+
+	* Source/PH/ph.odd: simplify example of damage@agent
+
+	* Source/PH/damage.odd: add valList to agent attribute
+
+2005-08-02  louburnard  <louburnard@thimk>
+
+	* Source/HD/hd.odd:
+	add para licencing use of revisionDesc to frecord changes in header
+
+	* Source/HD/teihead.odd:
+	removed dateCreated, dateRevised, creator, and status attributes
+
+	* Source/CO/co.odd:
+	add discussion of intervention class; slightly revise discussion of choice
+
+	* Source/PH/ph.odd:
+	update atts consequent on changes in class membership
+
+	* Source/PH/damage.odd, Source/PH/supplied.odd:
+	add to tei.intervention class
+
+	* Source/MS/explicit.odd: correct syntax error in example
+
+2005-08-02  rahtz  <rahtz@thimk>
+
+	* Source/AI/spangrp.odd: change "value" to "type" in examples of <span>
+
+2005-08-01  louburnard  <louburnard@thimk>
+
+	* Source/AI/ai.odd: correct bad edit of sinfiotl example
+
+	* Source/CO/unclear.odd, Source/PH/restore.odd, Source/CO/expan.odd, Source/CO/del.odd:
+	add to intervention class
+
+	* Source/CO/corr.odd:
+	add to intervention class; remove dubious comment about order of
+	chooseable elements
+
+	* Source/CO/add.odd: add to intervention class
+
+	* Source/ST/intervention.odd: add resp and cert to intervention class
+
+	* fileents.dtd: adding intervention class
+
+	* Source/ST/st.odd: added reference to intervention class
+
+	* Source/CO/daterang.odd: turned valDesc into valList
+
+	* Source/CO/date.odd: turned valdesc into valList
+
+2005-07-30  louburnard  <louburnard@thimk>
+
+	* Source/AI/ai.odd:
+	change span value attrib into content; change examples
+
+	* Source/AI/span.odd:
+	change value attribute into phraseSeq content; fix example
+
+	* Source/AI/interp.odd: correct typo
+
+2005-07-28  louburnard  <louburnard@thimk>
+
+	* Source/PH/hand.odd: removce otiose hand attribute
+
+	* Source/SA/joingrp.odd: fix content model again
+
+	* Source/PH/ph.odd: remove hand attrib, make examples use proper urls
+
+	* Source/PH/hand.odd: remove otiose hand attribute
+
+2005-07-28  louburnard  <louburnard@spqr-ibm>
+
+	* Source/SA/joingrp.odd:
+	changed desc attribute into child element; disallowed empty element
+
+2005-07-27  louburnard  <louburnard@spqr-ibm>
+
+	* Source/SA/when.odd: remove wooly options on timeline origins
+
+	* Source/SA/sa.odd: make desc attrib on join into a child element
+
+	* Source/SA/join.odd: change desc attribute into child element
+
+	* Source/PH/ph.odd: remove refs to desc attribute on gap
+
+	* Source/CO/co.odd: reorder examples and explain use of desc
+
+	* Source/CO/gap.odd: sort out cvs confusion
+
+	* Source/CO/co.odd: correct example
+
+	* Source/CO/co.odd: chang gap examples to use child desc element
+
+	* Source/MS/explicit.odd: correct gap examples
+
+	* Source/CO/gap.odd: remove desc attribute; add desc child
+
+2005-07-26  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Makefile:
+	errors in Makefile for creating fascicule and Lite version of Guidelines
+
+2005-07-25  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Source/CC/interact.odd: remove surplus word to make grammatical
+
+2005-07-24  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Source/CC/interact.odd, Source/CC/relation.odd, Source/TD/valdesc.odd:
+	an element overriding a class attribute datatype with a valList needs
+	to supply that in "add" mode. Also add mode attribute to valDesc,
+	so that we can alter that if needed.
+
+2005-07-24  louburnard  <louburnard@spqr-ibm>
+
+	* Source/CC/relation.odd:
+	added to typed class to test ability to over-ride valList
+
+	* Source/CC/interact.odd:
+	experimentally changed to test ability to over-ride type value
+	inheritance in odd processors
+
+	* Source/SA/timeline.odd:
+	remove suggestion that absolute time can be specified as anything
+	other than a time value
+
+2005-07-18  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* ChangeLog: update change log
+
+	* Query/sitemap-dist.xmap, Exemplars/Makefile, Makefile, VERSION:
+	fix processing to cope with graphics files in ODD chapters. fix path in Query sitemap
+
+2005-07-18  louburnard  <louburnard@spqr-ibm>
+
+	* Source/CH/CHfig.png:
+	add graphic which was missing
+
+2005-07-18  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Source/CO/co.odd, Source/CH/ch.odd:
+	correct typos reported by dan@CIMEC.RO
+
+2005-07-18  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Query/sitemap-dist.xmap, Exemplars/Makefile, Makefile, VERSION:
+	fix processing to cope with graphics files in ODD chapters. fix path in Query sitemap
+
+2005-07-18  louburnard  <louburnard@spqr-ibm>
+
+	* Source/CH/CHfig.png:
+	CH graphic which was missing
+
+2005-07-18  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Source/CO/co.odd, Source/CH/ch.odd:
+	correct typos reported by dan@CIMEC.RO
+
+2005-07-14  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Release 0.1.10
+
+2005-07-14  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Exemplars/Makefile, Exemplars/tei_examples.odd, Exemplars/tei_odds.odd, Makefile, catalog.p5, catalog.p5.custom, guidelines-print.xsl, guidelines.xsl:
+	cleaning up some small errors in Relax processing to make
+	HTML. add XML catalogs to P5
+
+2005-07-11  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* README: revised text of README re Roma
+
+2005-07-11  louburnard  <louburnard@spqr-ibm>
+
+	* README: Add release notes for 0.1.9
+
+2005-07-11  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Exemplars/tei_all.odd, Exemplars/tei_corpus.odd, Exemplars/tei_dictionaries.odd, Exemplars/tei_drama.odd, Exemplars/tei_examples.odd, Exemplars/tei_minimal.odd, Exemplars/tei_ms.odd, Exemplars/tei_odds.odd, Exemplars/tei_oucs.odd, Exemplars/teilite.odd:
+	revised ODDs for exemplars from Syd
+
+2005-07-09  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Source/FT/figure.odd: check any files left over
+
+	* Exemplars/Makefile, Exemplars/tei_examples.odd, Exemplars/tei_odds.odd:
+	errors re bob
+
+	* ChangeLog: clean exemplars
+
+	* ChangeLog, Makefile, p5odds-ex.odd, p5odds.odd:
+	more <bob>-related fixes
+
+	* tools/cleandtd.pl, tools/cleanrnc.pl, tools/fix_rnc_whitespace.perl:
+	more movement of files
+
+	* Source/CO/binaryobject.odd, Source/CO/bob.odd, Source/CO/co.odd, ChangeLog, Makefile, VERSION, fileents.dtd:
+	rename <bob> to <binaryObject>
+
+2005-07-09  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* release version 0.1.9
+
+2005-07-09  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* ChangeLog, Makefile, p5odds-ex.odd, p5odds.odd:
+	more <bob>-related fixes
+
+	* tools/cleandtd.pl, tools/cleanrnc.pl, tools/fix_rnc_whitespace.perl:
+	more movement of files
+
+	* Tools/cleanrnc.pl, Tools/fix_rnc_whitespace.perl, Tools/cleandtd.pl:
+	rename Tools to tools
+
+	* Source/CO/binaryobject.odd, Source/CO/bob.odd, Source/CO/co.odd, ChangeLog, Makefile, VERSION, fileents.dtd:
+	rename <bob> to <binaryObject>
+
+2005-07-09  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Source/CO/binaryobject.odd, Source/CO/bob.odd, Source/CO/co.odd, ChangeLog, Makefile, VERSION, fileents.dtd:
+	rename <bob> to <binaryObject>
+
+2005-07-08  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Utilities/listcontentmodels.xsl, Exemplars/Makefile, Exemplars/tei_dictionaries.xml, Exemplars/tei_drama.xml, Exemplars/tei_ms.xml, Makefile, Query/sitemap-dist.xmap, Utilities/listattributes.xsl, VERSION:
+	changes to impleent new directory layout for runtime files; fix some
+	bugs in exemplars
+
+2005-07-08  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Utilities/listcontentmodels.xsl, Exemplars/Makefile, Exemplars/tei_dictionaries.xml, Exemplars/tei_drama.xml, Exemplars/tei_ms.xml, Makefile, Query/sitemap-dist.xmap, Utilities/listattributes.xsl, VERSION:
+	changes to implement new directory layout for runtime files; fix some
+	bugs in exemplars
+
+2005-07-07  louburnard  <louburnard@spqr-ibm>
+
+	* Source/AI/interp.odd: Make value= attribute content
+
+	* Source/AI/interpgp.odd: change value attribute to content
+
+	* Source/AI/ai.odd: tidy spacing
+
+	* Source/AI/ai.odd: fix those pesky id attributes
+
+	* Source/AI/ai.odd:
+	Revised <interp> as per 1007353; tidied up prose about module
+	invocation a bit
+
+	* Source/DS/dateline.odd:
+	Change content model to be consistent with other divtop elements as
+	per SF 1107481
+
+2005-07-05  louburnard  <louburnard@spqr-ibm>
+
+	* Makefile: get Makefiles in sync
+
+	* Makefile:
+	remove RNG validation step using xmllint as there is a bug in it
+
+2005-07-04  louburnard  <louburnard@spqr-ibm>
+
+	* Source/ST/pephrase.odd:
+	Probably this macro should be removed: it's dangerous.
+
+	* Source/ST/phrseq.odd:
+	Remove reference to macro.phraseGroup : it is unnecessary and
+	generates invalid DTD
+
+	* Source/ST/pephrase.odd:
+	Restore old definition changed in error: as per SF 1177698
+
+	* Source/CO/del.odd:
+	change content model to specialPara for consistency with add as per sf
+	request 1160955
+
+2005-07-03  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Exemplars/Makefile, Makefile, teic.css: remaking directory structures
+
+2005-07-02  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Test/mathml2.rng: we dont need this file here
+
+	* Source/CO/q.odd, Source/MS/binding.odd, Source/TS/event.odd, Source/TS/kinesic.odd, Source/TS/vocal.odd, Source/TS/writing.odd, Exemplars/mathml2.rng, ChangeLog, mathml2.rng:
+	consistency in valLists for uBoolean attributes; typo in mathml main
+
+2005-07-02  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* vocal.odd, kinesic.odd, binding.odd, event.odd, writing.odd, q.odd: fix
+	allowed values for attribute when datatype is uBoolean
+
+
+2005-06-25  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Source/DI/di.odd: insert missing space
+
+	* guidelines-print.xsl, guidelines.xsl, tei-print.css, tei.css, teic.css:
+	formatting of specGrp, examples and headings; stop headings linking to themselves
+
+2005-06-25  louburnard  <louburnard@spqr-ibm>
+
+	* Source/ST/spanning.odd: correct xref
+
+2005-06-25  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Source/TD/td.odd: wrong id in pointer
+
+	* Exemplars/tei_odds.odd: update exemplars with changed odd spec
+
+	* Exemplars/tei_odds.odd, Source/CO/co.odd, Source/CO/indexterm.odd, p5odds.odd:
+	clean up syntax errors resulting from index changes
+
+2005-06-24  louburnard  <louburnard@spqr-ibm>
+
+	* Source/CO/indexterm.odd: add indexterm (again)
+
+	* p5odds-ex.odd: Add indexTerm, I mean, of course
+
+	* Source/CO/co.odd, Source/CO/divgen.odd: specList must be within a p
+
+	* Source/CO/co.odd, Source/CO/divgen.odd, Source/DS/div.odd, indexterm.odd, schemas.xml, fasc-head.xml:
+	revisions for new index element
+
+	* Source/FD/fd.odd: Update index entry to new form
+
+	* Source/TS/ts.odd: remove old style index elements
+
+	* Source/CO/index.odd: child is indexterm, not indexentry
+
+	* Source/CO/co.odd: Revised index section
+
+	* fileents.dtd: Add indexterm
+
+	* fileents.dtd, Source/ST/st.odd: add spanning class
+
+	* Source/ST/spanning.odd: Add spanning class definition
+
+2005-06-24  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Exemplars/tei_odds.odd, p5odds-ex.odd, p5odds.odd:
+	adjust .odd files to put schemaSpec at chunk level
+
+	* Exemplars/relaxng.rng, Exemplars/tei_odds.odd:
+	add relaxng, update ODDs to full scale schema
+
+	* Exemplars/Makefile: path to source
+
+	* Exemplars/teilite.xml, Exemplars/teilite.odd:
+	add teilite to Exemplars
+
+	* Exemplars/Makefile, Exemplars/mathml2-main.rng, Exemplars/mathml2-qname-1.mod, Exemplars/mathml2-qname-1.mod.rng, Exemplars/mathml2.rng, Exemplars/svg-main.rng, Exemplars/svg.rng, Exemplars/tei_all.odd, Exemplars/tei_all.xml, Exemplars/tei_corpus.odd, Exemplars/tei_corpus.xml, Exemplars/tei_dictionaries.odd, Exemplars/tei_dictionaries.xml, Exemplars/tei_drama.odd, Exemplars/tei_drama.xml, Exemplars/tei_mathml.odd, Exemplars/tei_mathml.xml, Exemplars/tei_minimal.odd, Exemplars/tei_minimal.xml, Exemplars/tei_odds.odd, Exemplars/tei_odds.xml, Exemplars/tei_oucs.odd, Exemplars/tei_oucs.xml, Exemplars/tei_svg.odd, Exemplars/tei_svg.xml, Test/Makefile:
+	adding Exemplars
+
+2005-06-24  louburnard  <louburnard@spqr-ibm>
+
+	* Source/TD/schemaspec.odd:
+	Changed class membership to chunk instead of phrase
+
+2005-06-23  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Source/CO/bob.odd: add new <bob> element
+
+	* ChangeLog, Source/CO/biblitem.odd, Source/CO/co.odd, Source/FT/figure.odd, Source/TD/attlist.odd, fileents.dtd, p5odds-ex.odd, p5odds.odd:
+	correctly allow for attRef, correct typo in bibItem
+
+2005-06-22  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Test/testall.odd, Test/testchinese.odd, Test/testcorpus.odd, Test/testdictionaries.odd, Test/testdocbook1.odd, Test/testdocbook2.odd, Test/testdocbook3.odd, Test/testdocbook4.odd, Test/testdocbook5.odd, Test/testdrama.odd, Test/testfs.odd, Test/testi18n.odd, Test/testlite.odd, Test/testmathml.odd, Test/testminimal.odd, Test/testms.odd, Test/testodds.odd, Test/testoucs.odd, Test/testp4compat.odd, Test/testrdf.odd, Test/testsvg.odd, Test/torture.odd, Test/tripReport.odd, Source/TD/schemaspec.odd, ChangeLog:
+	make schemaSpec allowed to be inter, and adjust the test .odd accordingly
+
+2005-06-22  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Source/CO/bob.odd: add <bob>, to contain base64-encoded binary object
+
+	* Source/TD/schemaspec.odd: make <schemaSpec> allowed between paragraphs.
+
+2005-06-13  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Makefile: adjust to make fascicules use localsource,
+	and have correct styling
+
+2005-06-12  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Test/testoucs.odd: make sure <TEI.2> has no xmlns
+	* Test/testdocbook*xml: remove attributes referencing XSD schemas
+
+2005-06-10  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Source/CO/biblstru.odd: simplify content model so that it has
+	some chance of surviving odd2odd. I _think_ it has the same effect!
+
+2005-06-09  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Source/CO/biblstru.odd: add extra group in content model, to
+	generate valid DTD
+
+	* Source/CO/respstmt.odd: comment out the <interleave> for now, as
+	I cannot work out how to translate it.
+
+2005-06-08  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* guidelines-print.xsl: fix bugs in customization of odd2html to
+	do with heading numbering
+
+2005-05-28  Lou Burnard 
+	* Source/MS/*.odd Check in changes to MS chapter received from MJD
+	after checking that they parse
+	
+2005-04-22  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Source/ST/st.odd: remove blank lines making it hard to read
+
+2005-04-21  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Source/ST/clseg.odd: tei.seg does not need to be predeclared any more
+
+	* Source/TD/vallist.odd: add valList to identifiable, so that it
+	can have a "mode" attribute
+
+	* Source/FD/if.odd: PIs no longer needed in content model,
+	due to improvements on odd2dtd
+
+	* Source/DS/titlepa.odd: PIs no longer needed in content model,
+	due to improvements on odd2dtd; use <group> instead
+	
+	* Makefile: added database and web targets for dist and install;
+	the XQuery scripts have now moved to this directory.
+
+2005-04-09  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Source/ST/st.odd: remove ref to cbgeseq. does not seem to be
+	used, and we cannot have identically-named macros.
+
+	* segmix and segmixxx removed from SA and ST, as mix.seg is not
+	used anywhere at all now
+
+2005-03-29  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Makefile (install): add install target to Makefile, which copies
+	files to $PREFIX. Use www.tei-c.org/stylesheet for source of XSL for all jobs
+
+2005-03-20  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Makefile: use www.tei-c.org.uk eXist server
+
+2005-03-15  louburnard  <louburnard@spqr-ibm>
+
+	* Source/MS/datable.odd:
+	add dateAttrib attribute; rename conjecture attribute value
+
+2005-03-05  louburnard  <louburnard@spqr-ibm>
+
+	* Source/MS/finalrubric.odd, Source/MS/msitemstruct.odd, Source/ST/msitempart.odd:
+	Add new components needed to support fully structured msItems in msdescription
+
+	* Source/CO/author.odd, Source/CO/bibl.odd, Source/CO/listbibl.odd, Source/CO/note.odd, Source/CO/q.odd, Source/CO/respstmt.odd, Source/CO/title.odd, Source/MS/colophon.odd, Source/MS/deconote.odd, Source/MS/explicit.odd, Source/MS/filiation.odd, Source/MS/incipit.odd, Source/MS/ms.odd, Source/MS/mscontents.odd, Source/MS/msitem.odd, Source/MS/rubric.odd, Source/MS/textlang.odd, Source/ST/paragraph.odd, Source/ST/st.odd, fileents.dtd:
+	Add msItemStruct and msItemPart class to manuscript proposals (part 1) is
+
+2005-03-01  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Makefile: explicitly set TEISERVER
+
+2005-03-01  louburnard  <louburnard@spqr-ibm>
+
+	* Source/MS/bindingdesc.odd, Source/MS/handnote.odd, Source/MS/recordhist.odd, Source/MS/repository.odd, Source/MS/summary.odd, Source/MS/altidentifier.odd, Source/CO/respstmt.odd, Source/CO/graphic.odd:
+	last minute tidyup for msdescription; replace accidentally mislaid respstmt
+
+2005-02-22  sbauman  <sbauman@spqr-ibm>
+
+	* Source/CO/co.odd, Source/CO/resp.odd, p5odds-ex.odd, fileents.dtd:
+	Straighten out the filenames and IDs of <resp> and <respStmt>.
+
+	* Source/CO/biblitem.odd:
+	Add <date> and <dateRange> as possible children of <biblItem>
+
+	* Makefile:
+	Ignore inappropriate xml:lang= errors from the first call to jing,
+	too.
+
+2005-02-20  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* ChangeLog: update changelog from CVS entries
+
+2005-02-15  sbauman  <sbauman@spqr-ibm>
+
+	* Source/CO/biblitem.odd:
+	Changed gloss (again?), added <title> as a child, improved 1st xmp.
+
+2005-02-15  sbauman  <sbauman@sbauman>
+
+	* Source/CO/biblitem.odd:
+	Changed gloss (again?), added <title> as a child, improved 1st xmp.
+
+2005-02-14  sbauman  <sbauman@sbauman>
+
+	* Source/CO/biblitem.odd:
+	Fixed a few typos, changed values of form= to a proper <valList>.
+
+2005-02-12  sbauman  <sbauman@sbauman>
+
+	* Source/HD/broadcas.odd, Source/HD/scrstmt.odd, Source/HD/soustmt.odd, Source/HD/taxonomy.odd, Source/CO/biblitem.odd, Source/CO/biblstru.odd:
+	Minor updates to <biblItem> itself, examples in main Guidelines still invalid
+
+2005-02-10  sbauman  <sbauman@sbauman>
+
+	* fileents.dtd, Source/CC/cc.odd, Source/CO/biblitem.odd, Source/CO/co.odd, Source/HD/hd.odd, ents.dtd:
+	Begin process of changing <biblStruct> to <biblItem>
+
+2005-02-08  sbauman  <sbauman@sbauman>
+
+	* Makefile:
+	Separate out the schema generation part of the 'validation' target
+	from the rest, so that we can just re-validate w/o re-generating the
+	schemas quite easily. The target 'validate' still does the same thing
+	it used to: generate schemas and validate against them. A new target,
+	'valid', performs only validation, w/o schema generation.
+
+2005-02-08  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Test/testmathml.xml, guidelines.xsl, tei-print.css, tei.css, guidelines-print.xsl, Makefile:
+	redo Guidelines to be more portable and printable
+
+2005-02-06  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Test/Makefile: forget XSD on mixed-namespace
+
+2005-02-06  louburnard  <louburnard@spqr-ibm>
+
+	* Test/testdictionaries.xml, Test/testmathml.xml:
+	added correct dtdeclarations
+
+2005-02-06  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Test/Makefile: rationalize tests to what actually might work
+
+	* Test/Makefile: ignore xmllint but test xsd
+
+	* Source/SA/joingrp.odd, Source/SA/ptrgroup.odd, Test/testdictionaries.odd, ChangeLog, VERSION:
+	datatype issue; Name was not being recognised, so change to NCName
+
+2005-02-06  louburnard  <louburnard@spqr-ibm>
+
+	* Source/CO/co.odd:
+	 remove repeated word
+
+2005-02-06  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Test/testdictionaries.odd, Test/testlite.odd:
+	syntax errors in ODD files for dictionaries and lite
+
+	* Source/MS/source.odd: missing # on local target
+
+2005-02-06  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* in joingrp and ptrgroup, dont use datatype Name, but NCName
+	* add hash before an example in MS
+	* update Test files
+
+2005-01-16  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Makefile: when making normal and example schemas, omit xsd, dtd
+	and doc
+	* Roma: allow for omitting xsd, doc and dtd creation with new
+	options; define "die" function
+	* Test/testoucs.odd, Test/testp4compat.odd: when adding "id", make
+	it text, to avoid having two atts of type ID. removing xml:id
+	makes trang produce gibberish
+
+
+2005-01-15  Lou Burnard  <lou@thimk>
+
+	* Test/testlite.xml and others that cant work with just a DTD
+	subset modified to invoke compiled dtd explicitly
+
+	* CO/list.odd content model simplified by removing some optional
+	tei.Incls 
+
+	* HD/eddecl.odd content model changed to allow either paras or
+	members of new tei.policy class but not a mixture
+
+	* ST/policy.odd new class added; consisting of all previously explicitly-named
+	children of editorialDecl
+
+2005-01-15  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Source/ST/global.odd: make datatypes of xml:base and
+	xml:lang point direct to W3C datatypes, not redirects, to simplify
+	XSD output
+
+	* Roma: add a lot more error checking and make sure it survives
+	relative directories. clean up xml.xsd after creating it
+
+	* Test/Makefile, Test/testdictionaries.xml, Test/testfs.xml, ChangeLog, Source/ST/tei2.odd, Source/ST/teicorp2.odd:
+	test files and add xmlns to teiCorpus
+
+	* Test/Makefile, Test/testdrama.xml, Test/testoucs.odd, Test/testp4compat.odd, Test/testp4compat.xml:
+	fixing test xml and test odd files to work with current P5
+
+2005-01-15  Sebastian Rahtz  <rahtz@spqr-ibm>
+
+	* Source/FS/valt.odd: group around first featureVal to get DTD right
+
+	* Source/ST/teicorp2.odd: add xmlns attribute to teiCorpus
+
+2005-01-14  Sebastian Rahtz  <rahtz@spqr>
+
+	* Started work in CVS on Sourceforge
+
+	HIC DESUNT MULTA since 2004/10/01
+
+2004-10-01  Sebastian Rahtz  <rahtz@spqr-ibm>
+	* odd2relax.xsl and teiodds.xsl: bug fixes here and there to cater
+	for below
+	* teicommon.xsl: some un-namespaced remnants corrected
+	* classSpec.odd: allow for a <content> child, to contain a
+   	   starting declaration (defaults to <notAllowed/>)
+        * schemaspec.odd: add attribute "start" to generate Relax NG start
+	   statements (can be NMTOKENS, for multiple choices). modules
+	   do not now generate a start at all.
+	* figure.odd: make url and doc attributes of figure be a choice, not allowed together
+	* moduleref.odd:  make url and key attributes be a choice, not
+	  allowed together. also allow children (if using @url)
+	* orig.odd/reg.odd: put in correct classes for <choice>
+	
+2004-06-01  Sebastian Rahtz  <rahtz@computing-services.oxford.ac.uk>
+
+	Change 43901 submitted.
+	* Source/ST/st.odd: dftana and dftlink not needed; done by
+	"predeclare" attribute on all classes which are needed up front.
+
+	* remove all remaining <claDecl> elements, in favour of
+	predeclaration
+
+	* juggle order of macros to make them appear in right order
+
+	* cbcomp should be in "tei" module not "core"
+
+2004-05-31  Sebastian Rahtz  <rahtz@spqr-dell.oucs.ox.ac.uk>
+
+	* Tools/dtdGen.xsl: considerably simplify processing model:
+	visit every module in turn, and process the elements, classes and
+	macros which occur it it. Unless it has a type value of "core", in
+	which case it gets special treatment. At that point, declare a
+	marked section for every module, set to IGNORE. This means that
+	all modules must be explicitly requested.
+
+	* Source/PR/pr.odd (fragment): omit "prose" module entirely, as it
+	does nothing
+
+	* Source/ST/inherit.odd: kill this one. not used any more.
+	
+	* Source/TD/msection.odd: kill the whole concept.
+	
+	* Source/ST/st.odd: 
+	  - entirely kill marked sections for XML/SGML omissability. embed
+	    that in XSLT DTD generator directly.
+	  - kill marked sections guarding modules. Will now be generated.
+	  - kill mixno.odd. Everything is mixed now.
+
+2004-05-30  Sebastian Rahtz  <rahtz@spqr-dell.oucs.ox.ac.uk>
+	CHANGE 43890 committed
+
+	* all .odd files: change copyright notice
+
+	* all *Spec: add "module" attribute showing their rightful home
+	 (implemented in P5transform.xsl/transformbody.xsl)
+
+	* unusedSource/*: move over to here any .odd files which
+	 cease to be used.
+
+	CHANGE 43889 committed
+	
+	* Source-driver.xml: add copyright statement
+
+	CHANGE 43888 committed
+
+	* Source/TD/identify.odd: add "module" attribute to specify
+	  which module an object is defined it
+
+	* Source/DI/di.odd, VE/ve.odd, PR/pr.odd: remove guard section
+	around module for TEI.singleBase. It won't be needed.
+	
+	* Source/DS/ds.odd: backmatter and frontmatter no longer separate
+	modules, subsumed into new module "textstructure" (was old "structure")
+
+	* Source/ST/st.odd: we don't talk about "DTD fragments" any more,
+	we try to use the more neutral word "modules".
+	 - rename "structure" to "textstructure"
+	 - start hacking transitional text about P3->P4
+	 - remove discussion of independent modules
+	 - remove modules "mixed" and "general"
+	
+2004-05-06  Sebastian Rahtz  <rahtz@computing-services.oxford.ac.uk>
+
+	* <xmleg>  to <egXML>, and ditto <eg>
+	* no more publicID (construct from @n)
+	* namespace for examples loses trailing /
+	Yes, lots of XSL stylesheet changes as a result
+
+2004-05-04  Lou <lou@janus.oucs.ox.ac.uk>
+	Namechanges required by the integration of FS
+	in TD:   string-> stringVal
+	         default -> defaultVal
+	in HD:   symbol -> metSym
+	Did a global sweep through odds to change the first two, but only
+	looked in HD and VE for the third.
+
+
+2004-04-23  Sebastian Rahtz  <rahtz@computing-services.oxford.ac.uk>
+
+	* teiodds.xsl: change the way attributes are generate. instead of
+	X.attributes pattern, insert for each attribute Y a reference to
+	X.attributes.Y. Define this later to be pattern Y, definining
+	attribute "name of Y", with reference to
+	X.attributes.Y.content. This allows us to rename and override attributes.
+
+2004-04-21  Sebastian Rahtz  <rahtz@spqr-dell.oucs.ox.ac.uk>
+
+	* teiodds.xsl: if an <attDef> has a <valList type="closed">,
+	always generate and refer to a x.attributes.y.values pattern,
+	even of the datatype is not Code. This makes all closed values
+	lists parameterizable.
+
+2004-04-18  Sebastian Rahtz  <rahtz@spqr-dell.oucs.ox.ac.uk>
+
+	* in order to get extensions working properly, a series of naming
+	changes
+	 a) <schema> and <module> join the tei.identifiable class, and so
+	 use @ident instead of @name
+	 b) <xmlName> is illegal, replaced by <altIdent>
+	 c) drop @overrides and @inherits from moduleRef and set its
+	 content model to be <empty/>
+	 d) td.odd declared two modules called tagdocs, one should have
+	 been tagdocs-desc. tsk tsk
+
+	 e) corresponding changes in ODD-processing stylesheets
+
+2004-04-09  Lou Burnard  <lou@computing-services.oxford.ac.uk>
+
+	Integrate msdescription module into existing ST/st.odd as quickest
+	way of getting DTD validation. It now behaves just like any other
+	additional tagset: keyword is "TEI.msdescription". Moved all ODDs
+	into P5/Source/MS although they are still nominally under charge of
+	workgroup. 
+	
+
+2004-03-28  Sebastian Rahtz  <rahtz@spqr-dell.oucs.ox.ac.uk>
+
+	* implement the big revision following face to face META meeting,
+	documented in Activities/META/mem03.xml
+
+2004-03-16  Lou Burnard  <lou@computing-services.oxford.ac.uk>
+	    
+
+          1. revised Source-Driver.xml so that distinct files had distinct
+	       entity names (e.g. the 7 varieties of macro.component in different
+	          bases became macro.xx.component where xx is the base name)
+
+	  2. removed id from mixno.pat 
+
+	  3. revised transformP5 script to just do copy, moving things to
+		     newSource directory in the right place. Included
+		     unholy hack to  deal with mixno
+          4. Tried to validate regenerated newsource with following results
+
+/home/lou/TEI/P5/newSource/ST/prcomp.pat:1:119: error: ID "PRCOMP" has already been defined
+/home/lou/TEI/P5/newSource/ST/prcomp.pat:1:119: error: first occurrence of ID "PRCOMP"
+/home/lou/TEI/P5/newSource/ST/cbcomp.pat:1:119: error: ID "CBCOMP" has already been defined
+/home/lou/TEI/P5/newSource/ST/cbcomp.pat:1:119: error: first occurrence of ID "CBCOMP"
+/home/lou/TEI/P5/newSource/ST/clana.cla:1:70: error: ID "CLANA" has already been defined
+/home/lou/TEI/P5/newSource/ST/clana.cla:1:70: error: first occurrence of ID "CLANA"
+/home/lou/TEI/P5/newSource/ST/teigis.pat:1:119: error: ID "TEIGIS" has already been defined
+/home/lou/TEI/P5/newSource/ST/teigis.pat:1:119: error: first occurrence of ID "TEIGIS"
+/home/lou/TEI/P5/newSource/ST/teigis.pat:1:119: error: ID "TEIGIS" has already been defined
+/home/lou/TEI/P5/newSource/ST/teigis.pat:1:119: error: first occurrence of ID "TEIGIS"
+
+
+	5. TEIGIS is multiply defined because it's embedded by 3 different
+          modules (ST, FD, SH). Change the latter two to use a moduleref,
+          added new module to ST which defines the pattern/entity teigis2.ent.
+
+        6. CLANA got missed during last nights pass through the driver. Fixed
+           Source-driver.xml and st.odd.
+
+        7. CBCOMP is referenced twice from st.odd, once for the general and
+            once for the mixed base. Dunno what to do about that.
+
+        8. PRCOMP is referenced twice from st.odd, once within a msection to
+           define macro.component for the prose base; once at the end of the
+           singlebase section as "the default". Comment out the second
+           reference , since the rule is that you must supply a base.
+
+2004-03-15  Sebastian Rahtz  <rahtz@computing-services.oxford.ac.uk>
+
+	* more restructuring:
+
+	1. adList target=FOO  -> adList key=tei.foo
+	2. tagDesc target=FOO  -> tagDesc key=tei.foo
+	3. all datatypes  which are pointers to standard XSD datatypes
+	changed to direct <rng:data>
+	
+	* many many changes to XSLT to cope with classse changes
+	
+2004-03-11  Sebastian Rahtz  <rahtz@computing-services.oxford.ac.uk>
+
+	* restructure ODDs to remove use of IDs where possible:
+	
+	  1. change <datatype target="datatype.foo"> to
+	      <datatype><rng:ref name="datatype.foo"/></datatype>
+	  2. change <classes names="A B C"> to
+	      <classes>
+	         <memberOf key="tei.a"/>
+	          etc
+	      </classes>
+	  3. change entity names in Source-driver to be the ident, not the ID
+
+2004-03-08  Sebastian Rahtz  <rahtz@computing-services.oxford.ac.uk>
+
+	* rearrange output structure so that everything is in
+	subdirectories named after the id of the relevant <div1>. this
+	breaks up the monolithic set of tag files into their modules
+
+	* throw away all comments except those that seem related to <eg>
+	or <xmleg>
+
+2004-03-01  Sebastian Rahtz  <rahtz@computing-services.oxford.ac.uk>
+
+	* the big naming change.
+	   class.FOO              --> tei.FOO
+	   attributes.class.FOO   --> tei.FOO.attributes
+	   content.FOO            --> FOO.content
+	   attributes.FOO         --> FOO.attributes
+	   values.class.FOO.BAR   --> tei.FOO.attributes.BAR.values
+
+	 with the result that all public patterns start with "tei.",
+	 and go from general->specific consistently. 
+
+	 This affects lots of XSL files, moTags/* files, scripts
+
+2004-02-29  Sebastian Rahtz  <rahtz@computing-services.oxford.ac.uk>
+
+	* P4/p2st*: move TEI.2 and teiCorpus to core, to leave
+	            "tei" module free of any definitions
+	
+	* relaxGen.xsl: put initial declarations into core;
+	             leave "tei" as the start and some module loading
+
+	* dtdGen.xsl: fix module processing with change from @file to @name
+
+2004-02-27  Sebastian Rahtz  <rahtz@computing-services.oxford.ac.uk>
+
+	* revise the way we do extensions in ODDs
+	   - <schema> and <module> both have "name" attribute instead of
+	   "file"
+	   - moduleRef can refer to a module by any of
+	     * URL
+	     * target attribute to ID
+	     * body of the element refers to a @name of a <module>
+	   - moduleRef has an override attribute which points to a <chunk>
+	   containing tagdocs which override this module
+	   - <schema> can have <chunkRef> children which performs
+	   direct definition of tags (instead of via module)
+	   - <classes> have <classRef> children instead of <class>
+	   - kill <tagRename>
+	   - many changes to XSL to make all this work
+	   - <chunk> can occur anywhere, and has no direct effect on schema generation
+
+2004-02-23  Sebastian Rahtz  <rahtz@computing-services.oxford.ac.uk>
+
+	* P4/catref.tag: "scheme" attribute had type "req" instead of
+	"opt". changed.
+
+	* allow for writing TEI extensions in odds
+	     - add <schema> element like <module>
+	     - allow for "url" attribute of <moduleRef>
+	     - add <tagRename> element
+	     - allow <moduleRef> to have children (ie <tagDoc>s)
+	     - support <class> children of <classes> instead of "names"
+	     attribute
+	
+	 fix relaxGen.xsl accordingly
+	
+
+2004-01-26  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* cleanup.xsl: if <dataDesc> has something other than guff in it,
+	add that to the <remarks> as a first <p rend="dataDesc">
+
+	* prep5top5.xsl: kill all comments in ODDs. preserve them in old
+	P4 instead...
+
+	* moTags/tei2.tag: changed "teiversion" to "version"
+	
+	* (several files): changed <xmleg> to <xmlEg> for camel-case reasons
+
+2004-01-22  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* relaxGen.xsl: redo public attribute class stubs; fix
+	nomorechoices.xsl to not put <choice> around singleton <empty>
+
+	* P4/placpart.cla (type): remove <attList>, as this is a model
+	type, and so cannot have attributes
+
+2004-01-19  Sebastian Rahtz  <rahtz@spqr-dell.oucs.ox.ac.uk>
+
+	* odd2shared.xsl: suppress all but first occurence of each
+	<patternDoc> to avoid the moras of mixed bases and so on.
+
+	* change default for classes from <empty/> to <notAllowed/>
+	in order to make auto DTD generation work.
+
+2004-01-18  Sebastian Rahtz  <rahtz@spqr-dell.oucs.ox.ac.uk>
+
+	* P4/paragraph.cla: new class for elements which
+	just need <p> in the content model. viz
+	<avail>, <correctn>, <equipmen>, <hyphen>, <interptn>, <normalzn>,
+	<projdesc>, <quotn>, <sampdecl>, <segmentn>, <stdvals>
+
+
+	* P4/categorize.cla: new class for elements which can appear
+	inside <catDesc>. Affected element: <textDesc>. Needed because the
+	latter does not appear until corpora is loaded.
+
+	* P4/segment.cla: new class for segmenting elements 
+	called "segment". Members so far: <ab> and <seg>. Affects
+	content models of <m>, <sp>, <w>. Needed because these latter
+	are in the core, but ab and seg only appear in linking.
+
+2004-01-09  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* P4/profile.cla: add new class for elements allowed in
+	  <profileDesc>;  Affected tags: handList handShift langUsage particDesc
+	  settingDesc textClass
+
+	* P4/encoding.cla: add new class for elements allowed in
+	<encodingDesc>. Affected tags: projectDesc samplingDecl
+	editorialDecl tagsDecl refsDecl classDecl metDecl fsdDecl
+	variantEncoding
+
+	* P4/header.cla: add new class for elements allowed in <teiHeader>.
+	Affected tags: encodingDesc profileDesc
+
+2003-12-08  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* P4/p2te.odd: completely kill the terminology chapter and
+	associated elements and classes: admin.tag
+	clterm.cl compterm.cla descrip.tag dftdict.cla ofig.tag othform.tag
+	termentf.tag termentn.tag termincl.cla termmisc.cla
+
+	* prep5top5.xsl: <claDecl> is replaced by inline <classDoc> (as
+	entity) unless it is the second or subsequent
+	definition. Reference chapters are given as body a <divGen> to
+	generate the reference lists.
+
+	* P4/p2stec.odd (nouns): sorry, but i hate dummy.dtd. Put in examples by
+	hand and stop being clever.
+
+	* P4/p2ditp.odd (dictionaries): sorry, guys, don't declare NOTE
+	twice, please.
+
+	* P4/p2stec.odd (nouns): sorry, dummy file cannot hold duplicates
+	of existing things, it makes a mess.
+
+	* prep5top5.xsl: rewrite whole document, replacing each
+	<tagDecl> and <patternDecl> with corresponding <tagDoc> and
+	<patternDoc> (as entities). remove tagDecl and patternDecl from system.
+
+2003-11-26  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* odd2shared.xsl: if an attribute has a datatype of "Code", the
+	value will be a pattern called "values.GI.ATTNAME", which is
+	initially defined as "text". This can be overridden in a wrapper schema.
+
+	* added datatypes for Certainty, Key and Codes; changed 60-70
+	attributes to use them. they all expand to "CDATA" at present
+
+2003-11-25  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* relaxGen.xsl: do not include "general" in main tei.rng;
+	this means that alll wrapper schemas must include tei.rng and
+	general.rng
+
+	* listBibl.tag: in place of "trailer", use "divbot" class, to
+	avoid dependency
+
+	* add class.teiText and class.teiHeader, and change content model
+	of TEI accordingly.
+
+2003-11-24  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* Makefile (dtds): manually change (%schemapattern;)+ to
+	schemapattern in tagdocs.dtd, as ANY cannot be qualified
+
+	* P4/dieg.tag: changed name of this <eg> to <dicteg>, to avoid
+	overlap. TO BE SORTED OUT!
+
+	* rename elementContent to schemaContent, and use it in patternDoc
+	as well as tagDoc. lots of resulting changes in XSLT scripts.
+
+	* add pattern for "schemapattern"; this defaults to ANY, but
+	p5odds.xsl redefines it as "anything from RelaxNG"
+
+2003-11-22  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* relaxGen.xsl: when creating output modules, do not produce those
+	with type "decls"; instead, include the contents of that module at
+	the front of the module with the corresponding name with "-decl"
+	stripped off.
+
+	* relaxGen.xsl:  Put a fixed list of overrides of special defines
+
+	* relaxGen.xsl/oddtransform.xsl: do not construct class contents
+	at time of first definition, but extend the class at the relevant
+	point when the module is loaded.
+	
+	* P4/p2stec.odd (file): add ODDPHR and ODDREF to low-level classes
+
+	* P4/prxml.ent: make TEI.XML "INCLUDE" by default, not "IGNORE"
+
+2003-11-20  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* P4/figure.tag: added url, width, height, scale attributes
+
+	* P4/xpointer.cla: added url attribute
+	
+	* P5/moTags: clean up and add tag/class docs until they match what
+	is actually found in P5.
+
+	* Renamed peRef to moduleRef _passim_. added target attribute
+	pointing to id of <module>
+
+	* Removed all old <entDoc> elements which describe modules, and
+	moved the <publicID> into the <module>. This means that <module>
+	is the only place which references a filename. 
+
+	* Wholesale renaming of file references to remove the "tei2xxx" pattern
+	in favour of real names. 
+
+2003-11-10  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* Rename some patterns in P4/*:
+	       component -> macro.component
+	       component.plus -> macro.componentPlus
+	       component.seq -> macro.componentSeq
+	       paraContent -> macro.paraContent
+	       phrase.seq -> macro.phraseSeq
+	       phrase -> macro.phrasegroup
+	       seq -> macro.seq
+	       specialPara -> macro.specialPara
+	
+	* use <module> in place of <chunk file=>
+
+2003-11-09  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* insertcontentmodels.xsl: get rid of @contin in dtdFrag
+	(for each dtdFrag, find people who have it as @contin, and make a
+	dtdRef to them)
+	
+	Change tagDecl, classDecl, patternDecl etc to have normal @target
+	attribute instead of classDoc, tagDoc, patternDoc
+	
+	* clean.xsl etc: rename "a." to "attributes.", and insert "class."
+	in front of _all_ classes; so "a.global" is now
+	"attributes.class.global" 
+	
+	* relaxGen.xsl: zap whole concept of x.***** in schemas
+
+2003-11-07  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* odd2html.xsl: turn each fragment of RNG into compact syntax
+	using RngToRnc XSLT instead of external trang processor; this
+	allows <ref> elements to be made into hyperlinks.
+
+2003-11-05  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* insertcontentmodel.xsl: take each <eg> and put the contents
+	into an <xmleg> element if it looks like being well-formed.
+	<xmleg> and contents are in namespace
+	http://www.tei-c.org/ns/Examples
+
+	* odd2html.xsl: allow for xmleg, maybe correctly
+
+	* P4/* clean up some illformed <eg> contents, in preparation
+	for making them be proper XML in their own namespace.
+	
+	* change <gloss> for file patterns.
+
+2003-11-04  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* (Lou) created or found tagdocs for extra or new ODD elements
+	* Makefile and odd2html.xsl (etc) fixed to be able to make fascicules
+
+2003-11-02  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* get rid of <part> in classDoc.
+	 
+	* major rename: "m." to "class." passim, and embed it in <ident>
+
+2003-10-28  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* p2refs.odd, oddFiles.dtd: zap entName, tdeg; add patterndoc;
+
+	* p2refs.odd, oddFiles.dtd, p2wd.odd: kill all of WSD
+	which means all the following files are dead:
+	basewsd.tag
+	directn.tag
+	exceptns.tag
+	script.tag
+	teiwsd.tag
+	wsdccs.tag
+	wsdchar.tag
+	wsdchars.tag
+	wsddesc.tag
+	wsdents.tag
+	wsdfig.tag
+	wsdform.tag
+	wsdglob.cla
+	wsdlang.tag
+	wsdnote.tag
+	wsdxfig.tag
+
+	* P4/p2td.odd: took out top-level material which makes it a
+	separate DTD
+
+2003-10-19  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* most of the xsl files affected, and some P4 sources.
+	 Name changing (see MEW05):
+	 <dataDesc> demoted to a comment; should be scanned
+	 and interesting parts put into <remarks>
+	 change <gi>, <attName>, <entName>, <class> to <ident>
+	 change <name> to <gloss> in <entDoc>, <classDoc>, <tagDoc>, <attDef>
+	 wrapper of <elementContent> around content RelaxNG in tagdocs and
+	      classdocs
+	 change name of <dtdRef> and <dtdFrag> to <chunkRef> and <chunk>
+         disallow <rs> as alternative to <gloss> in tagdocs
+         zap empty <attList> from <classDoc>
+         zap empty <classes> from <classDoc>
+         <entDoc>, <entDecl> - renamed to <patternDoc>, <patternDecl>
+	 In <valList>, change from <val><desc> pair to <valitem>, containing
+         a standard <ident>, <equiv>, <glosss>
+
+2003-10-10  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* P4/*: change names of entities which load files so that they do
+          not conflict with element names. 
+
+	* relaxGen.xsl: model classes are populated initially only by
+          other model classes, not by any elements. Make some evil
+          elements have default empty models so that they can be used anywhere
+
+	* relaxGen.xsl: move to organic scheme whereby each element
+          interleaves itself into its model class. no more INCLUDE/IGNORE,
+	  we just include the schema file if we want to use it. Use proper
+	  filenames.
+	
+	* p5odds.rng, tei-oucs.rng, test0.rng: make conform to organic schema 
+
+2003-10-09  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* P4/*: change all typeXXXXX to datatype.Xxxxxx
+
+2003-10-08  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* rework odd2html and all associated stylesheets to
+	generate HTML from namespaced TEI
+
+2003-07-13  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* add a new part to gram.patch, which cleans up the multiple
+	component definitions. I don't know how to do this properly at
+	present. 
+	* remove TEI.* guard from inner <choice> elements
+
+2003-07-06  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* rework dtdGen.xsl, relaxGen.xsl, odd2shared.xsl to put all TEI
+	elements in TEI namespace. add necessary things in Makefile
+	to clean up rng/dtd files
+	
+	* redo all example XML and RNG wrappers to use TEI namespace
+
+	* get rid of <string> elements containing IGNORE, INCLUDE and 
+	CDATA in favour of rng elements (in insertcontents.xsl)
+
+	* add new type for entDoc "epe" for when it is providing
+	attributes
+
+	* clean up dtdGen until it works again. now RNG and DTD generation
+	both work.
+	
+2003-05-21  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* redo the file names. where before we had file=foo and
+	file=foo.ent, the latter is now file=fooent, so that we have a
+	single rule about file suffixes and lookups
+
+2003-05-19  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* redo the <string> elements which have public IDs in, replace
+	with <publicID file="...">...</publicID>
+	   
+
+2003-05-18  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
+
+	* relaxGen.xsl: find default for attributes, work to new schema
+	* p5odds.rng: adapted to new markup
+	* typecleanup.xsl:  content of attDef is valid rng:attribute
+   	  (possibly surrounded by rng:optional). zapped <datatype>,
+	  but preserve attList/attDef. Leave <default> in TEI
+	  namespace, as putting it in RNG makes the validation fall over.
+	* P4/* rename TEI.2 to TEI
+	       rename teiCorpus.2 to teiCorpus
+	       zapped parents/children/attldecl from TD
+

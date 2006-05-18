@@ -1,0 +1,70 @@
+<!--Copyright 2004 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details.
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" usage="opt" ident="cRefPattern">
+  <equiv/>
+  <gloss>defines how to convert a canonical reference into a URI</gloss>
+  <desc>specifies an expression and replacement pattern for
+  tranforming a canonical reference into a URI</desc>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:ref name="model.pLike"/>
+    </rng:zeroOrMore>
+  </content>
+  <attList>
+    <attDef ident="matchPattern" usage="req">
+      <equiv/>
+      <desc>specifies a regular expression against which the values of
+      <att>cRef</att> attributes can be matched.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pattern"/></datatype>
+      <valDesc>must be a regular expression according to the <ref
+      target="http://www.w3.org/TR/xmlschema-2/#regexs">W3C XML Schema
+      Language</ref></valDesc>
+      <remarks>
+        <p>Parenthesised groups are used not only for establishing
+        order of precedence and atoms for quantification, but also for
+        creating subpatterns to be referenced by the <att>pat</att>
+        attribute.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="replacementPattern" usage="req">
+      <equiv/>
+      <desc>specifies a <soCalled>replacement pattern</soCalled>
+      which, once subpattern substitution has been performed, provides
+      a URI.</desc>
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>Should be the skeleton of a relative or absolute URI,
+      with references to groups in the <att>matchPattern</att>.</valDesc>
+      <remarks>
+	<p>The strings <q>$1</q> through <q>$9</q> are references to
+	the corresponding group in the regular expression specified
+	by <att>re</att> (counting open parenthesis, left to right).
+	Processors are expected to replace them with whatever matched
+	the corresponding group in the regular expression.</p>
+	<p>If a digit preceded by a dollar sign is needed in the
+	actual replacement pattern (as opposed to being used as a back
+	reference), the dollar sign must be written as
+	<code>%24</code>.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <cRefPattern matchPattern="([1-9A-Za-z]+)\s+([0-9]+):([0-9]+)"
+	replacementPattern="#xpath(//div[@type='book'][@n='$1']/div[@type='chap'][@n='$2']/div[@type='verse'][@n='$3'])"
+	/></egXML>
+  </exemplum>
+  <remarks>
+    <p>The result of the substitution may be either an absolute or a
+    relative URI reference. In the latter case it is combined with the
+    value of <att>xml:base</att> in force at the place where the
+    <att>cRef</att> attribute occurs to form an absolute URI in the
+    usual manner as prescribed by <ref
+    target="http://www.w3.org/TR/xmlbase/">XML Base</ref>.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#HD54M"/>
+    <ptr target="#HD54"/>
+    <ptr target="#HD54S"/>
+  </listRef>
+</elementSpec>

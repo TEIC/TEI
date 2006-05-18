@@ -1,0 +1,107 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="nets" xml:id="TREE" usage="rwa" ident="tree">
+<equiv/>
+<gloss/>
+<desc>encodes a tree, which is made up of a root, internal nodes,
+leaves, and arcs from root to leaves.</desc>
+  <classes>
+    <memberOf key="model.divPart"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="leaf"/>
+          <rng:ref name="iNode"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+      <rng:ref name="root"/>
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="leaf"/>
+          <rng:ref name="iNode"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+    </rng:group>
+  </content>
+  <attList>
+    <attDef ident="label" usage="opt">
+	<equiv/>
+	<desc>gives a label for a tree.</desc>
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>A character string.</valDesc>
+    </attDef>
+    <attDef ident="arity" usage="opt">
+	<equiv/>
+	<desc>gives the maximum number of children of the root and internal
+nodes of the tree.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/></datatype>
+      <valDesc>A nonnegative integer.</valDesc>
+    </attDef>
+    <attDef ident="ord" usage="req">
+	<equiv/>
+	<desc>indicates whether or not the tree is ordered, or if it is
+partially ordered.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <defaultVal>true</defaultVal>
+<!-- cant be boolean because we hjave to allow for partial ordering -->
+      <valList type="closed">
+        <valItem ident="true">
+          <equiv/>
+          <gloss>indicates that all of the branching nodes of the tree are ordered.</gloss>
+        </valItem>
+        <valItem ident="partial">
+          <equiv/>
+          <gloss>indicates that some of the branching nodes of the tree are ordered
+and some are unordered.</gloss>
+        </valItem>
+        <valItem ident="false">
+          <equiv/>
+          <gloss>indicates that all of the branching nodes of the tree are
+unordered.</gloss>
+        </valItem>
+      </valList>
+    </attDef>
+    <attDef ident="order" usage="opt">
+	<equiv/>
+	<desc>gives the order of the tree, i.e., the number of its nodes.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/></datatype>
+      <valDesc>A nonnegative integer.</valDesc>
+      <remarks>
+        <p>The size of a tree is always one less than its order, hence
+there is no need for both a <att>size</att> and <att>order</att>
+attribute.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <tree n="ex2" arity="2" ord="partial" order="13">
+        <root xml:id="G-div1" label="/" children="#G-plu1 #G-exp1" ord="true"/>
+        <iNode xml:id="G-plu1" label="+" children="#G-exp2 #G-exp3" parent="#G-div1" ord="false"/>
+        <iNode xml:id="G-exp1" label="**" children="#G-plu2 #G-num2.3" parent="#G-div1" ord="true"/>
+        <iNode xml:id="G-exp2" label="**" children="#G-vara1 #G-num2.1" parent="#G-plu1" ord="true"/>
+        <iNode xml:id="G-exp3" label="**" children="#G-varb1 #G-num2.2" parent="#G-plu1" ord="true"/>
+        <iNode xml:id="G-plu2" label="+" children="#G-vara2 #G-varb2" parent="#G-exp1" ord="false"/>
+        <leaf xml:id="G-vara1" label="a" parent="#G-exp2"/>
+        <leaf xml:id="G-num2.1" label="2" parent="#G-exp2"/>
+        <leaf xml:id="G-varb1" label="b" parent="#G-exp3"/>
+        <leaf xml:id="G-num2.2" label="2" parent="#G-exp3"/>
+        <leaf xml:id="G-vara2" label="a" parent="#G-plu2"/>
+        <leaf xml:id="G-varb2" label="b" parent="#G-plu2"/>
+        <leaf xml:id="G-num2.3" label="2" parent="#G-exp1"/>
+      </tree>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">A root, and zero or more internal nodes and leaves, but if
+there is an internal node, there must also be at least one leaf.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#GDTR" type="div2"/>
+  </listRef>
+</elementSpec>

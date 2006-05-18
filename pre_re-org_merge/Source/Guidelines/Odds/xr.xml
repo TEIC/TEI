@@ -1,0 +1,91 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+$Author$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" xml:id="XR" usage="opt" ident="xr">
+<equiv/>
+<gloss>cross-reference phrase</gloss>
+<desc>contains a phrase, sentence, or icon referring the reader to
+some other location in this or another text.</desc>
+  <classes>
+    <memberOf key="model.entryParts.top"/>
+    <memberOf key="model.entryParts"/>
+    <memberOf key="att.lexicographic"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+<rng:ref name="model.gLike"/>
+        <rng:ref name="model.phrase"/>
+        <rng:ref name="model.inter"/>
+        <rng:ref name="usg"/>
+        <rng:ref name="lbl"/>
+        <rng:ref name="model.global"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <attList>
+    <attDef ident="type" usage="rec">
+	<equiv/>
+	<desc>indicates the type of cross reference, using any convenient
+typology.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <valList type="open">
+        <valItem ident="syn">
+          <equiv/>
+          <gloss>cross reference for synonym information</gloss>
+        </valItem>
+        <valItem ident="etym">
+          <equiv/>
+          <gloss>etymological information</gloss>
+        </valItem>
+        <valItem ident="cf">
+          <equiv/>
+          <gloss>related or similar term</gloss>
+        </valItem>
+        <valItem ident="illus">
+          <equiv/>
+          <gloss>illustration of an object</gloss>
+        </valItem>
+      </valList>
+      <remarks>
+        <p/>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <entry>
+        <form>
+          <orth>lavage</orth>
+        </form>
+        <etym>[Fr. &lt; <mentioned>laver</mentioned>;
+     L. <mentioned>lavare</mentioned>,
+     to wash; <xr>see <ref>lather</ref></xr>].
+   </etym>
+      </entry>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <entry>
+        <form>
+          <orth>lawful</orth>
+        </form>
+        <xr type="syn">SYN. see <ref>legal</ref></xr>
+      </entry>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">May contain character data and phrase-level elements; usually
+contains a <gi>ref</gi> or a <gi>ptr</gi> element.</p>
+    <p>This element encloses both the actual indication of the
+location referred to, which may be tagged using the <gi>ref</gi> or
+<gi>ptr</gi> elements, and any accompanying material which gives more
+information about why the reader is being referred there.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#DITPXR"/>
+  </listRef>
+</elementSpec>
