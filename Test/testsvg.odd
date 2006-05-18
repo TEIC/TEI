@@ -19,28 +19,19 @@
 <text>
 <body>
     <schemaSpec ident="testsvg" start="TEI">
-      <moduleRef url="svg-main.rng"/>
       <moduleRef key="header"/>
       <moduleRef key="core"/>
       <moduleRef key="tei"/>
       <moduleRef key="textstructure"/>
       <moduleRef key="linking"/>
       <moduleRef key="figures"/>
-      <elementSpec module="figures" ident="figure" mode="change">
-	<content>
-	  <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-	    <rng:choice>
-	      <rng:ref name="model.global"/>
-	      <rng:ref name="figure"/>
-	      <rng:ref name="figDesc"/>
-	      <rng:ref name="graphic"/>
-	      <rng:ref name="head"/>
-	      <rng:ref name="p"/>
-	      <rng:ref name="svg.svg"/>
-	    </rng:choice>
-	  </rng:zeroOrMore>
+      <moduleRef url="svg11.rng">
+      	<content>
+	  <rng:define name="tei_model.graphicLike" combine="choice">
+	    <rng:ref name="svg"/>
+	  </rng:define>
 	</content>
-      </elementSpec>
+      </moduleRef>
     </schemaSpec>
 </body>
 </text>
