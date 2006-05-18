@@ -31,7 +31,7 @@ TESTDOCBOOKFILES=
 #testdocbook4 \
 #testdocbook5 
 
-TESTSPECIALFILES= \
+TEStPECIALFILES= \
 	testsvg  \
 	testodds \
 	testmathml 
@@ -41,8 +41,15 @@ default: schemas test
 test: test-schema test-dtd test-dtd-xmllint test-extns test-xsd test-bad
 
 schemas:
-	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES) $(TESTBADFILES); do \
+	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTBADFILES); do \
 		roma $(ROMAOPTS) --xsl=$(XSL)   $$i.odd .; \
+		cp xml.xsd.w3c xml.xsd ; \
+		test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd; \
+		test -f teix.xsd && mv teix.xsd $$i.teix.xsd ; \
+		test -f $$i.teix.xsd && perl -p -i -e "s/teix.xsd/$$i.teix.xsd/" $$i.xsd; \
+	done
+	-for i in $(TESTSPECIALFILES) ; do \
+		roma --patternprefix=tei_ $(ROMAOPTS) --xsl=$(XSL)   $$i.odd .; \
 		cp xml.xsd.w3c xml.xsd ; \
 		test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd; \
 		test -f teix.xsd && mv teix.xsd $$i.teix.xsd ; \
