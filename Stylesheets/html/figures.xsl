@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet
-  exclude-result-prefixes="exsl estr edate a fo local rng tei teix xd m"
+  exclude-result-prefixes="exsl estr edate svg a fo local rng tei teix xd m"
   extension-element-prefixes="exsl estr edate" version="1.0"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:edate="http://exslt.org/dates-and-times"
   xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common"
   xmlns:fo="http://www.w3.org/1999/XSL/Format"
+  xmlns:svg="http://www.w3.org/2000/svg"
   xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:local="http://www.pantor.com/ns/local"
   xmlns:m="http://www.w3.org/1998/Math/MathML"
@@ -453,4 +454,9 @@ echo base64_decode($data[1]);
 ?>
 -->
   </xsl:template>
+
+  <xsl:template match="svg:*">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
 </xsl:stylesheet>

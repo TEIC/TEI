@@ -143,7 +143,7 @@
         </title>
         <xsl:call-template name="includeCSS"/>
         <xsl:call-template name="cssHook"/>
-        <xsl:call-template name="javaccript"/>
+        <xsl:call-template name="javascriptHook"/>
       </head>
       <body>
         <div class="slidetitle" style="font-size: 36pt;">
@@ -176,48 +176,92 @@
       </body>
     </html>
   </xsl:template>
-  <xsl:template name="javascriptHook"><xsl:variable name="prev"><xsl:choose><xsl:when test="preceding-sibling::tei:div"><xsl:apply-templates select="preceding-sibling::tei:div[1]" mode="genid"/></xsl:when><xsl:when test="preceding::tei:div1"><xsl:apply-templates select="preceding::tei:div1[1]" mode="genid"/></xsl:when><xsl:otherwise><xsl:value-of select="$masterFile"/><xsl:text>0</xsl:text></xsl:otherwise></xsl:choose></xsl:variable><xsl:variable name="next"><xsl:choose><xsl:when test="following-sibling::tei:div"><xsl:apply-templates select="following-sibling::tei:div[1]" mode="genid"/></xsl:when><xsl:when test="following::tei:div1"><xsl:apply-templates select="following::tei:div1[1]" mode="genid"/></xsl:when><xsl:otherwise><xsl:value-of select="$masterFile"/><xsl:text>0</xsl:text></xsl:otherwise></xsl:choose></xsl:variable>
-var isOp = navigator.userAgent.indexOf('Opera') &gt; -1 ? 1 : 0;
-function keys(key) {
-	if (!key) {
-		key = event;
-		key.which = key.keyCode;
+<xsl:template name="includeJavascript">
+  <xsl:variable   name="prev">
+    <xsl:choose>	
+      <xsl:when test="preceding-sibling::tei:div">
+	<xsl:apply-templates select="preceding-sibling::tei:div[1]" mode="genid"/>
+      </xsl:when>
+      <xsl:when test="preceding::tei:div1">
+	<xsl:apply-templates select="preceding::tei:div1[1]" mode="genid"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$masterFile"/>
+	<xsl:text>0</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+  <xsl:variable name="next">
+    <xsl:choose>
+      <xsl:when test="following-sibling::tei:div">
+	<xsl:apply-templates select="following-sibling::tei:div[1]" mode="genid"/>
+      </xsl:when>
+      <xsl:when test="following::tei:div1">
+	<xsl:apply-templates select="following::tei:div1[1]" mode="genid"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$masterFile"/>
+	<xsl:text>0
+	</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+    <xsl:call-template name="writeJavascript">
+      <xsl:with-param name="content">
+  <xsl:text>
+    var isOp = navigator.userAgent.indexOf('Opera') &gt; -1 ? 1 : 0;
+    function keys(key) {
+    if (!key) {
+    key = event;
+    key.which = key.keyCode;
+    }
+    switch (key.which) {
+    case 10: // return
+    case 32: // spacebar
+    case 34: // page down
+    case 39: // rightkey
+    // case 40: 
+    // downkey
+    document.location = "</xsl:text>
+    <xsl:value-of select="$next"/>
+    <xsl:text>.xhtml";
+    break;
+    case 33: // page up
+    case 37: // leftkey
+    //case 38: 
+    // upkey
+    document.location = "</xsl:text>
+    <xsl:value-of select="$prev"/>
+    <xsl:text>.xhtml";
+    break;
 	}
- 	switch (key.which) {
-		case 10: // return
-		case 32: // spacebar
-		case 34: // page down
-		case 39: // rightkey
-		case 40: // downkey
-			document.location = "<xsl:value-of select="$next"/>.xhtml";
-			break;
-		case 33: // page up
-		case 37: // leftkey
-		case 38: // upkey
-			document.location = "<xsl:value-of select="$prev"/>.xhtml";
-			break;
 	}
-}
-function startup() {      
+	function startup() {      
 	if (!isOp) {		
-		document.onkeyup = keys;
-		document.onclick = clicker;
+	document.onkeyup = keys;
+	document.onclick = clicker;
 	}
-}
-
-function clicker(e) {
+	}
+	
+	function clicker(e) {
 	var target;
 	if (window.event) {
-		target = window.event.srcElement;
-		e = window.event;
+	target = window.event.srcElement;
+	e = window.event;
 	} else target = e.target;
- 	if (target.href != null ) return true;
+	if (target.href != null ) return true;
 	if (!e.which || e.which == 1) 
-	   document.location = "<xsl:value-of select="$next"/>.xhtml";
-}
-
-window.onload = startup;
+	document.location = "</xsl:text>
+	<xsl:value-of select="$next"/>
+	<xsl:text>.xhtml";
+	}
+	
+	window.onload = startup;
+  </xsl:text>
+      </xsl:with-param>
+    </xsl:call-template>
 </xsl:template>
+
   <xsl:template match="tei:body/tei:div0">
     <xsl:variable name="slidenum">
       <xsl:value-of select="$masterFile"/>

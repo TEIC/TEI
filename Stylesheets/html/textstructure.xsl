@@ -1164,8 +1164,10 @@ $ID: requests a particular page
   <xsl:template name="includeJavascript">
     <xsl:text>&#10;</xsl:text>
     <xsl:call-template name="writeJavascript">
-      <xsl:with-param name="content"><xsl:if test="$virtualPages='true'"> var
-          thisDiv; var curID = '<xsl:choose>
+      <xsl:with-param name="content">
+	<xsl:if test="$virtualPages='true'"> 
+	  <xsl:text>var thisDiv; var curID = '</xsl:text>
+	  <xsl:choose>
             <xsl:when test="not($ID='')">
               <xsl:value-of select="$ID"/>
             </xsl:when>
@@ -1173,15 +1175,29 @@ $ID: requests a particular page
               <xsl:apply-templates mode="ident" select=".//tei:body/tei:div[1]"
               />
             </xsl:otherwise>
-          </xsl:choose>'; function switchDiv(id) { thisDiv =
+          </xsl:choose>
+	  <xsl:text>'; 
+
+	  function switchDiv(id) { thisDiv =
           document.getElementById(curID); thisDiv.style.display = "none";
           curID=id; thisDiv = document.getElementById(curID);
-          thisDiv.style.display = "block"; } </xsl:if> function startUp() {
+          thisDiv.style.display = "block"; } 
+	  </xsl:text>
+	  </xsl:if> 
+	  <xsl:text>
+	    function startUp() {
+	  </xsl:text>
           <xsl:if test="$virtualPages='true'"> thisDiv =
           document.getElementById(curID); thisDiv.style.display = "block";
-        </xsl:if> } function openpopup(location){ var newwin =
+        </xsl:if> 
+	<xsl:text>} 
+
+	function openpopup(location){ 
+	var newwin =
         window.open(location,"OUCSPopup","status=no,menu=no,toolbar=no,width=350,height=400,resizable=yes,scrollbars=yes")
-          }<!--	function clearsearch(){
+          }
+	</xsl:text>
+	<!--	function clearsearch(){
 	document.searchform.q.value = "";
 	}
 	
@@ -1208,13 +1224,18 @@ $ID: requests a particular page
 	
 	if (eval("ox"+pageName) &amp;&amp; window.focus) eval("ox"+pageName).focus();
 	}
---><xsl:if
-          test="$rawXML='true'"> function makeitsoyoubastard(hash){
-          alert("Fragment "+hash); var as = document.all.tags("A"); for (var
+	-->
+	<xsl:if   test="$rawXML='true'"> 
+	  <xsl:text>function makeitsoyoubastard(hash){
+          alert("Fragment "+hash); 
+	  var as = document.all.tags("A"); for (var
           i=0; i &lt; as.length; i++){ if (as[i].name == hash)
-          as[i].scrollIntoView(true); } } function gotoSection(frag,section){
-          var s = new ActiveXObject("MSXML2.FreeThreadedDOMDocument"); var x =
-          document.XMLDocument; if (x == null){ x = navigator.XMLDocument; s =
+          as[i].scrollIntoView(true); } } 
+	  
+	  function gotoSection(frag,section){
+          var s = new ActiveXObject("MSXML2.FreeThreadedDOMDocument"); 
+	  var x = document.XMLDocument; 
+	  if (x == null){ x = navigator.XMLDocument; s =
           navigator.XSLDocument; }else{ s.async = false;
           s.load(document.XSLDocument.url); x.load(document.XMLDocument.url); }
           var tem = new ActiveXObject("MSXML2.XSLTemplate"); tem.stylesheet = s;
@@ -1223,7 +1244,9 @@ $ID: requests a particular page
           document.open("text/html", "replace"); newDoc.write(str);
           newDoc.close(); navigator.XMLDocument = x; navigator.XSLDocument = s;
           if (frag == '') {} else { makeitsoyoubastard(frag); } }
-      </xsl:if></xsl:with-param>
+	    </xsl:text>
+      </xsl:if>
+    </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
   <xd:doc>
