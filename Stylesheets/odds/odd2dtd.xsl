@@ -1161,8 +1161,19 @@
     <xsl:for-each select="exsl:node-set($members)/M">
       <xsl:if test="count(N[@type]) = 2 and count(N[@type])=count(N)">(</xsl:if>
       <xsl:for-each select="N">
-        <xsl:value-of select="."/>
-        <xsl:if test="position() &lt; last()"> | </xsl:if>
+	<xsl:value-of select="."/>
+	<xsl:choose>
+	  <xsl:when test="@method='sequence'">
+	    <xsl:if test="position() &lt; last()">, </xsl:if>
+	  </xsl:when>
+	  <xsl:when test="@method='optsequence'">
+	    <xsl:text>?</xsl:text>
+	    <xsl:if test="position() &lt; last()">, </xsl:if>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:if test="position() &lt; last()"> | </xsl:if>
+	  </xsl:otherwise>
+	</xsl:choose>
       </xsl:for-each>
       <xsl:if test="count(N) = 2 and count(N[@type])=count(N)">)</xsl:if>
     </xsl:for-each>

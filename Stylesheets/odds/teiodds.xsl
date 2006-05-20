@@ -122,7 +122,7 @@
   <xsl:template match="rng:ref">
     <xsl:choose>
       <xsl:when
-        test="starts-with(@name,'mix.') and         not(key('IDENTS',@name))"/>
+        test="starts-with(@name,'mix.') and not(key('IDENTS',@name))"/>
       <!--	<empty  xmlns="http://relaxng.org/ns/structure/1.0"/>
       </xsl:when>	-->
       <xsl:otherwise>
@@ -289,22 +289,53 @@
               </define>
             </xsl:when>
             <xsl:otherwise>
-              <define name="{$patternPrefix}{$thisClass}"
-                xmlns="http://relaxng.org/ns/structure/1.0">
-                <rng:choice>
-                  <xsl:choose>
-                    <xsl:when
-                      test="count(key('CLASSMEMBERS',$thisClass))&gt;0">
-                      <xsl:for-each select="key('CLASSMEMBERS',$thisClass)">
-                        <ref name="{$patternPrefix}{@ident}"
-                          xmlns="http://relaxng.org/ns/structure/1.0"/>
-                      </xsl:for-each>
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <notAllowed xmlns="http://relaxng.org/ns/structure/1.0"/>
-                    </xsl:otherwise>
-                  </xsl:choose>
-                </rng:choice>
+	      <define name="{$patternPrefix}{$thisClass}"
+		      xmlns="http://relaxng.org/ns/structure/1.0">
+		<xsl:choose>
+		  <xsl:when
+		      test="count(key('CLASSMEMBERS',$thisClass))&gt;0">
+		    <xsl:choose>
+		      <xsl:when test="@method='sequence'">
+			<xsl:for-each
+			    select="key('CLASSMEMBERS',$thisClass)">
+			  <ref name="{$patternPrefix}{@ident}"
+			       xmlns="http://relaxng.org/ns/structure/1.0"/>
+			</xsl:for-each>
+		      </xsl:when>
+		      <xsl:when test="@method='optsequence'">
+			<xsl:for-each
+			    select="key('CLASSMEMBERS',$thisClass)">
+			  <optional xmlns="http://relaxng.org/ns/structure/1.0">
+			    <ref name="{$patternPrefix}{@ident}"
+				 xmlns="http://relaxng.org/ns/structure/1.0"/>
+			  </optional>
+			</xsl:for-each>
+			
+		      </xsl:when>
+		      <xsl:otherwise>
+			<rng:choice>
+			  <xsl:for-each
+			      select="key('CLASSMEMBERS',$thisClass)">
+			    <ref name="{$patternPrefix}{@ident}"
+				 xmlns="http://relaxng.org/ns/structure/1.0"/>
+			  </xsl:for-each>
+			</rng:choice>
+		      </xsl:otherwise>
+		    </xsl:choose>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <xsl:choose>
+		      <xsl:when test="@method='sequence' or @method='optsequence'">
+			<empty
+			    xmlns="http://relaxng.org/ns/structure/1.0"/>
+		      </xsl:when>
+		      <xsl:otherwise>
+			<notAllowed
+			    xmlns="http://relaxng.org/ns/structure/1.0"/>
+		      </xsl:otherwise>
+		    </xsl:choose>
+		  </xsl:otherwise>
+		</xsl:choose>
               </define>
             </xsl:otherwise>
           </xsl:choose>
@@ -707,14 +738,13 @@
               <xsl:comment>Start of import of <xsl:value-of select="@url"/></xsl:comment>
               <rng:div>
                 <xsl:for-each select="document(@url)/rng:grammar">
-                  <xsl:apply-templates
-		      select="*|@*|text()|comment()|processing-instruction()"
-		      mode="expandRNG"/>
+                  <xsl:apply-templates mode="expandRNG"
+                    select="*|@*|text()|comment()|processing-instruction()"/>
                 </xsl:for-each>
                 <xsl:copy-of select="tei:content/*"/>
               </rng:div>
-              <xsl:comment>End of import of <xsl:value-of  select="@url"/>
-	      </xsl:comment>
+              <xsl:comment>End of import of <xsl:value-of select="@url"/>
+              </xsl:comment>
             </xsl:when>
             <xsl:otherwise>
               <include href="{$schemaBaseURL}{$This}.rng"
@@ -739,40 +769,36 @@
     </xsl:call-template>
   </xsl:template>
 
-  <xsl:template 
-      match="@*|text()|comment()|processing-instruction"
-      mode="expandRNG">
+  <xsl:template match="@*|text()|comment()|processing-instruction"
+    mode="expandRNG">
     <xsl:copy/>
   </xsl:template>
 
   <xsl:template match="*" mode="expandRNG">
-      <xsl:choose>
-        <xsl:when test="local-name(.)='start'"/>
-        <xsl:when test="local-name(.)='include'">
-	  <xsl:if test="$verbose='true'">
-	    <xsl:message> .... import <xsl:value-of
-	    select="@href"/></xsl:message>
-	  </xsl:if>
-	  <xsl:comment>Start of import of <xsl:value-of select="@href"/>
-	  </xsl:comment>
-          <rng:div>
-	    <xsl:for-each select="document(@href)/rng:grammar">
-	      <xsl:apply-templates 		      
-		  select="*|@*|text()|comment()|processing-instruction()"
-		  mode="expandRNG"/>
-            </xsl:for-each>
-          </rng:div>
-	  <xsl:comment>End of import of <xsl:value-of select="@href"/>
-	  </xsl:comment>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:copy>
-	    <xsl:apply-templates 
-		select="*|@*|text()|comment()|processing-instruction()"
-		mode="expandRNG"/>
-	  </xsl:copy>
-        </xsl:otherwise>
-      </xsl:choose>
+    <xsl:choose>
+      <xsl:when test="local-name(.)='start'"/>
+      <xsl:when test="local-name(.)='include'">
+        <xsl:if test="$verbose='true'">
+          <xsl:message> .... import <xsl:value-of select="@href"/></xsl:message>
+        </xsl:if>
+        <xsl:comment>Start of import of <xsl:value-of select="@href"/>
+        </xsl:comment>
+        <rng:div>
+          <xsl:for-each select="document(@href)/rng:grammar">
+            <xsl:apply-templates mode="expandRNG"
+              select="*|@*|text()|comment()|processing-instruction()"/>
+          </xsl:for-each>
+        </rng:div>
+        <xsl:comment>End of import of <xsl:value-of select="@href"/>
+        </xsl:comment>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:copy>
+          <xsl:apply-templates mode="expandRNG"
+            select="*|@*|text()|comment()|processing-instruction()"/>
+        </xsl:copy>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="tei:remarks" mode="tangle"/>
@@ -1480,17 +1506,29 @@
       <xsl:apply-templates mode="forceRNG"/>
     </xsl:element>
   </xsl:template>
+
   <xsl:template match="rng:ref" mode="forceRNG">
-    <xsl:element name="{local-name(.)}"
-      xmlns="http://relaxng.org/ns/structure/1.0">
-      <xsl:attribute name="name">
-        <xsl:if test="key('IDENTS',@name)">
-          <xsl:value-of select="$patternPrefix"/>
-        </xsl:if>
-        <xsl:value-of select="@name"/>
-      </xsl:attribute>
-    </xsl:element>
+    <xsl:choose>
+      <xsl:when test="key('IDENTS',@name)">
+	<xsl:element name="ref"
+		     xmlns="http://relaxng.org/ns/structure/1.0">
+	  <xsl:attribute name="name">
+	    <xsl:value-of select="$patternPrefix"/>
+	    <xsl:value-of select="@name"/>
+	  </xsl:attribute>
+	</xsl:element>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:element name="ref"
+		     xmlns="http://relaxng.org/ns/structure/1.0">
+	  <xsl:attribute name="name">
+	    <xsl:value-of select="@name"/>
+	  </xsl:attribute>
+	</xsl:element>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements tei:schemaSpec</xd:short>
     <xd:detail> </xd:detail>
