@@ -1087,10 +1087,10 @@
       <xsl:value-of select="@ident"/>
       <xsl:text>; </xsl:text>
     </xsl:if>
+    <xsl:variable name="generate" select="@generate"/>
     <xsl:variable name="members">
       <M>
         <xsl:for-each select="key('CLASSMEMBERS',@ident)">
-          <xsl:sort select="@ident"/>
           <xsl:variable name="N">
             <xsl:choose>
               <xsl:when test="$parameterize='false'">
@@ -1159,31 +1159,54 @@
     </xsl:variable>
     <!-- a class model needs bracketing if all its members are also classes-->
     <xsl:for-each select="exsl:node-set($members)/M">
-      <xsl:if test="count(N[@type]) = 2 and count(N[@type])=count(N)">(</xsl:if>
-      <xsl:for-each select="N">
-	<xsl:value-of select="."/>
-	<xsl:choose>
-	  <xsl:when test="@method='sequence'">
-	    <xsl:if test="position() &lt; last()">, </xsl:if>
-	  </xsl:when>
-	  <xsl:when test="@method='optsequence'">
-	    <xsl:text>?</xsl:text>
-	    <xsl:if test="position() &lt; last()">, </xsl:if>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:if test="position() &lt; last()"> | </xsl:if>
-	  </xsl:otherwise>
-	</xsl:choose>
-      </xsl:for-each>
-      <xsl:if test="count(N) = 2 and count(N[@type])=count(N)">)</xsl:if>
+      <xsl:call-template name="processClassDefinition">
+	<xsl:with-param 
+	    name="type" select="$generate"/>
+      </xsl:call-template>
     </xsl:for-each>
     <xsl:text>"&gt; </xsl:text>
   </xsl:template>
+
+  <xsl:template name="makeClassDefinition">
+    <xsl:param name="type"/>
+    <xsl:if test="$verbose='true'">
+      <xsl:message> .... ... generate model <xsl:value-of select="$type"/>
+      </xsl:message>
+    </xsl:if>
+    <xsl:if test="count(N[@type]) = 2 and
+		  count(N[@type])=count(N)">(</xsl:if>
+    <xsl:for-each select="N">
+      <xsl:value-of select="."/>
+      <xsl:choose>
+	<xsl:when test="$type='sequence'">
+	  <xsl:if test="position() &lt; last()">, </xsl:if>
+	</xsl:when>
+	<xsl:when test="$type='sequenceOptional'">
+	  <xsl:text>?</xsl:text>
+	  <xsl:if test="position() &lt; last()">, </xsl:if>
+	</xsl:when>
+	<xsl:when test="$type='sequenceRepeatable'">
+	  <xsl:text>+</xsl:text>
+	  <xsl:if test="position() &lt; last()">, </xsl:if>
+	</xsl:when>
+	<xsl:when test="$type='sequenceOptionalRepeatable'">
+	  <xsl:text>*</xsl:text>
+	  <xsl:if test="position() &lt; last()">, </xsl:if>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:if test="position() &lt; last()"> | </xsl:if>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+    <xsl:if test="count(N) = 2 and count(N[@type])=count(N)">)</xsl:if>
+  </xsl:template>
+
   <xsl:template match="tei:commDecl" mode="tangle">
     <xsl:text>&#10;  &lt;!--</xsl:text>
     <xsl:apply-templates/>
     <xsl:text>--&gt;</xsl:text>
   </xsl:template>
+
   <xsl:template name="attributeList">
     <xsl:apply-templates mode="tangle" select="tei:attList/tei:*"/>
   </xsl:template>

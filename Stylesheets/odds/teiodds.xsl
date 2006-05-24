@@ -269,80 +269,158 @@
       <xsl:message> .... model class <xsl:value-of select="@ident"
       /></xsl:message>
     </xsl:if>
-    <xsl:variable name="thisClass">
-      <xsl:value-of select="@ident"/>
-    </xsl:variable>
     <xsl:call-template name="bitOut">
       <xsl:with-param name="grammar">true</xsl:with-param>
       <xsl:with-param name="content">
         <Wrapper>
-          <xsl:choose>
-            <xsl:when test="$parameterize='true'">
-              <xsl:apply-templates mode="tangleModel"
-                select="tei:classes/tei:memberOf"/>
-              <define name="{$patternPrefix}{$thisClass}"
-                xmlns="http://relaxng.org/ns/structure/1.0">
-                <xsl:if test="@predeclare='true'">
-                  <xsl:attribute name="combine">choice</xsl:attribute>
-                </xsl:if>
-                <notAllowed xmlns="http://relaxng.org/ns/structure/1.0"/>
-              </define>
-            </xsl:when>
-            <xsl:otherwise>
-	      <define name="{$patternPrefix}{$thisClass}"
-		      xmlns="http://relaxng.org/ns/structure/1.0">
-		<xsl:choose>
-		  <xsl:when
-		      test="count(key('CLASSMEMBERS',$thisClass))&gt;0">
-		    <xsl:choose>
-		      <xsl:when test="@method='sequence'">
-			<xsl:for-each
-			    select="key('CLASSMEMBERS',$thisClass)">
-			  <ref name="{$patternPrefix}{@ident}"
-			       xmlns="http://relaxng.org/ns/structure/1.0"/>
-			</xsl:for-each>
-		      </xsl:when>
-		      <xsl:when test="@method='optsequence'">
-			<xsl:for-each
-			    select="key('CLASSMEMBERS',$thisClass)">
-			  <optional xmlns="http://relaxng.org/ns/structure/1.0">
-			    <ref name="{$patternPrefix}{@ident}"
-				 xmlns="http://relaxng.org/ns/structure/1.0"/>
-			  </optional>
-			</xsl:for-each>
-			
-		      </xsl:when>
-		      <xsl:otherwise>
-			<rng:choice>
-			  <xsl:for-each
-			      select="key('CLASSMEMBERS',$thisClass)">
-			    <ref name="{$patternPrefix}{@ident}"
-				 xmlns="http://relaxng.org/ns/structure/1.0"/>
-			  </xsl:for-each>
-			</rng:choice>
-		      </xsl:otherwise>
-		    </xsl:choose>
-		  </xsl:when>
-		  <xsl:otherwise>
-		    <xsl:choose>
-		      <xsl:when test="@method='sequence' or @method='optsequence'">
-			<empty
-			    xmlns="http://relaxng.org/ns/structure/1.0"/>
-		      </xsl:when>
-		      <xsl:otherwise>
-			<notAllowed
-			    xmlns="http://relaxng.org/ns/structure/1.0"/>
-		      </xsl:otherwise>
-		    </xsl:choose>
-		  </xsl:otherwise>
-		</xsl:choose>
-              </define>
-            </xsl:otherwise>
-          </xsl:choose>
-        </Wrapper>
+	  <xsl:call-template name="processClassDefinition">
+	    <xsl:with-param 
+		name="type" select="@generate"/>
+	  </xsl:call-template>
+	</Wrapper>
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
+
+<xsl:template name="processClassDefinition">
+  <xsl:param name="type"/>
+  <xsl:choose>
+    <xsl:when test="string-length($type)=0">
+      <xsl:call-template name="makeClassDefinition">
+	<xsl:with-param name="type">alternation</xsl:with-param>
+      </xsl:call-template>
+    </xsl:when>
+
+    <xsl:when test="contains($type,' ')">
+      <xsl:call-template name="makeClassDefinition">
+	<xsl:with-param name="type" select="substring-before($type,' ')"/>
+      </xsl:call-template>
+      <xsl:call-template name="processClassDefinition">
+	<xsl:with-param 
+	    name="type" 
+	    select="substring-after($type,' ')"/>
+      </xsl:call-template>
+    </xsl:when>
+
+    <xsl:otherwise>
+      <xsl:call-template name="makeClassDefinition">
+	<xsl:with-param name="type" select="$type"/>
+      </xsl:call-template>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+  
+<xsl:template name="makeClassDefinition">
+  <xsl:param name="type"/>
+    <xsl:if test="$verbose='true'">
+      <xsl:message> .... ... generate model <xsl:value-of select="$type"/>
+      </xsl:message>
+    </xsl:if>
+<!--
+alternation
+sequence
+sequenceOptional
+sequenceOptionalRepeatable
+sequenceRepeatable
+-->
+    <xsl:variable name="thisClass">
+      <xsl:value-of select="@ident"/>
+    </xsl:variable>
+    <xsl:variable name="suffix">
+      <xsl:choose>
+	<xsl:when test="$type='alternation'"/>
+	<xsl:otherwise>
+	  <xsl:text>.</xsl:text>
+	  <xsl:value-of select="$type"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+<xsl:choose>
+  <xsl:when test="$parameterize='true'">
+    <xsl:apply-templates mode="tangleModel"
+			 select="tei:classes/tei:memberOf"/>
+    <define name="{$patternPrefix}{$thisClass}{$suffix}"
+	    xmlns="http://relaxng.org/ns/structure/1.0">
+      <xsl:if test="@predeclare='true'">
+	<xsl:attribute name="combine">choice</xsl:attribute>
+      </xsl:if>
+      <notAllowed xmlns="http://relaxng.org/ns/structure/1.0"/>
+    </define>
+  </xsl:when>
+  <xsl:otherwise>
+    <define name="{$patternPrefix}{$thisClass}{$suffix}"
+	    xmlns="http://relaxng.org/ns/structure/1.0">
+      <xsl:choose>
+	<xsl:when
+	    test="count(key('CLASSMEMBERS',$thisClass))&gt;0">
+	  <xsl:choose>
+	    <xsl:when test="$type='sequence'">
+	      <xsl:for-each
+		  select="key('CLASSMEMBERS',$thisClass)">
+		<ref name="{$patternPrefix}{@ident}"
+		     xmlns="http://relaxng.org/ns/structure/1.0"/>
+	      </xsl:for-each>
+	    </xsl:when>
+	    <xsl:when test="$type='sequenceOptional'">
+	      <xsl:for-each
+		  select="key('CLASSMEMBERS',$thisClass)">
+		<optional xmlns="http://relaxng.org/ns/structure/1.0">
+		  <ref name="{$patternPrefix}{@ident}"
+		       xmlns="http://relaxng.org/ns/structure/1.0"/>
+		</optional>
+	      </xsl:for-each>
+	    </xsl:when>
+
+	    <xsl:when test="$type='sequenceRepeatable'">
+	      <xsl:for-each
+		  select="key('CLASSMEMBERS',$thisClass)">
+		<oneOrMorel xmlns="http://relaxng.org/ns/structure/1.0">
+		  <ref name="{$patternPrefix}{@ident}"
+		       xmlns="http://relaxng.org/ns/structure/1.0"/>
+		</oneOrMorel>
+	      </xsl:for-each>
+	    </xsl:when>
+
+	    <xsl:when test="$type='sequenceOptionalRepeatable'">
+	      <xsl:for-each
+		  select="key('CLASSMEMBERS',$thisClass)">
+		<zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+		  <ref name="{$patternPrefix}{@ident}"
+		       xmlns="http://relaxng.org/ns/structure/1.0"/>
+		</zeroOrMore>
+	      </xsl:for-each>
+	    </xsl:when>
+
+	    <xsl:otherwise>
+	      <rng:choice>
+		<xsl:for-each
+		    select="key('CLASSMEMBERS',$thisClass)">
+		  <ref name="{$patternPrefix}{@ident}"
+		       xmlns="http://relaxng.org/ns/structure/1.0"/>
+		</xsl:for-each>
+	      </rng:choice>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:choose>
+	    <xsl:when test="$type='sequence' or
+			    $type='sequenceOptional' or $type='sequenceOptionalRepeatable'">
+	      <empty
+		  xmlns="http://relaxng.org/ns/structure/1.0"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <notAllowed
+		  xmlns="http://relaxng.org/ns/structure/1.0"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:otherwise>
+      </xsl:choose>
+    </define>
+  </xsl:otherwise>
+</xsl:choose>
+</xsl:template>
+
   <xsl:template match="tei:classSpec" mode="tangleadd">
     <xsl:apply-templates mode="tangleadd"/>
   </xsl:template>
