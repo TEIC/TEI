@@ -57,7 +57,6 @@ The selection and combination of modules to form a TEI schema is described in
 &model.persNamePart;    
 &att.personal;    
 &model.placeNamePart;    
-&model.datePart;    
 &att.datePart;    
 </p>
 <p>
@@ -747,30 +746,43 @@ structure notation is recommended (<ptr target="#FS"/>).
 introduced in section <ptr target="#CONADA"/>:
 <specList><specDesc key="date" /><specDesc key="time"/></specList>
  </p>
-<p>While adequate for many applications, these elements do not allow
-for the representation of the internal structure of expressions
-indicating dates or times, which may however be of importance for the
-correct interpretation of such expressions, or for certain kinds of
-analytic applications. In this section, we introduce the following
-special-purpose elements, for use when the internal structure of a
-temporal expression is to be encoded:
-<specList><specDesc key="dateStruct"/><specDesc key="timeStruct"/></specList>
- </p>
+<p>When the current module &#2014; <ident
+type="module">namesdates</ident> &#2014; is loaded, a class of elements
+for use representing the internal structure of expressions of
+dates or times become available inside these two general purpose
+elements. 
+These special-purpose elements may at times be of importance
+for the correct interpretation of temporal expressions, or for certain
+kinds of analytic applications.</p>
 <p>Two types of temporal expressions are envisaged for dates and
 times: absolute and relative. An <term>absolute temporal
-expression</term> is composed of a sequence of the following elements,
-possibly interspersed with character data:
-<specList><specDesc key="day"/><specDesc key="week"/><specDesc key="month"/><specDesc key="year"/><specDesc key="second"/><specDesc key="minute"/><specDesc key="hour"/><specDesc key="occasion"/></specList>
+expression</term> is includes of a sequence of one or more of the following elements,
+possibly interspersed with character data and other phrase-level elements:
+<specList>
+  <specDesc key="day"/>
+  <specDesc key="week"/>
+  <specDesc key="month"/>
+  <specDesc key="year"/>
+  <specDesc key="second"/>
+  <specDesc key="minute"/>
+  <specDesc key="hour"/>
+  <specDesc key="occasion"/>
+</specList>
  </p>
 <p>A <term>relative temporal expression</term> describes a date or time
 with reference to some other (absolute) temporal expression, and thus
 contains the following elements in addition to those listed above:
-<specList><specDesc key="distance"/><specDesc key="offset"/></specList>
- </p>
+<specList>
+  <specDesc key="distance"/>
+  <specDesc key="offset"/>
+</specList>
+</p>
 <p>As members of the class <ident type="class">att.datePart</ident>
 (temporal expression)
 these elements all share the following attributes:
-<specList><specDesc key="att.datePart" atts="value type"/></specList>
+<specList>
+<specDesc key="att.datePart" atts="value type"/>
+</specList>
  </p>
 <div3 type="subsection" xml:id="NDDATEA"><head>Absolute Dates and Times
  </head>
@@ -779,20 +791,20 @@ sequence of <gi>day</gi>, <gi>month</gi>, <gi>week</gi>, <gi>year</gi>
 or <gi>occasion</gi> elements, as in the following examples:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">The university's view of American affairs produced a stinging
 attack by Edmund Burke in the Commons debate of
-<dateStruct value="1775-10-26">  
+<date value="1775-10-26">  
     <day value="---26">26</day>
     <month value="--10">October</month>
     <year value="1775">1775</year>
-</dateStruct></egXML>
+</date></egXML>
 <!-- The History of the University of Oxford, vol v, 178 -->
-Component elements of a <gi>dateStruct</gi> may be repeated, provided
+Component elements of a <gi>date</gi> may be repeated, provided
 that only a single temporal expression is intended:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><dateStruct value="1993-05-14">  
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><date value="1993-05-14">  
    <day type="name">Friday</day>,
    <day type="number">14</day>
    <month>May</month>
    <year>1993</year>
-</dateStruct></egXML>
+</date></egXML>
 <!-- the headline on the Independent Newspaper on that day -->
  </p>
 <p>The <gi>occasion</gi> element may be used for any component of a
@@ -800,23 +812,23 @@ temporal expression which is given in terms of a named event, such as
 a public holiday for dates, or a named time such as <q>tea time</q> or
 <q>matins</q>:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">In New York,
-<dateStruct value="--01-01">    
+<date value="--01-01">    
    <occasion type="holiday">New Years Day</occasion>
-</dateStruct> is the quietest of holidays,
-<dateStruct value="--07-04">    
+</date> is the quietest of holidays,
+<date value="--07-04">    
    <occasion type="holiday">Independence Day</occasion>
-</dateStruct> the most turbulent.</egXML>
+</date> the most turbulent.</egXML>
  </p>
 <p>These components may be applied to dates using any calendar system
 using  subcomponents equivalent to those listed above:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><title>Le Vieux Cordelier:
 Journal r&#xE9;dig&#xE9; par Camille Desmoulins</title><![CDATA[,
-]]><dateStruct type="Revolutionary" value="1794-02-03">   
+]]><date calendar="Revolutionary" value="1794-02-03">   
    <day type="name">Quintidi</day>
    <month>Pluviose</month>
    <week>2e d&#xE9;cade</week>,
    <year>l'an 2 de la R&#xE9;publique Indivisible</year>
-</dateStruct></egXML>
+</date></egXML>
 <!-- NB - I removed value= attrs because I do not think -->
 	<!-- they were "correct" in the sense that they were    -->
 	<!-- non-ISO format and did not normalize; I'm not sure -->
@@ -826,36 +838,38 @@ Journal r&#xE9;dig&#xE9; par Camille Desmoulins</title><![CDATA[,
 	<!-- Thanks to T. Munck for providing the above example -->
  </p>
 <p>Absolute temporal expressions denoting times which are given
-in terms of seconds, minutes, hours or of well defined events
+in terms of seconds, minutes, hours, or of well defined events
 (e.g. <q>noon</q>, <q>sunset</q>) may similarly be represented using
-the <gi>timeStruct</gi> element.
+the <gi>time</gi> element.
 <egXML xmlns="http://www.tei-c.org/ns/Examples">The train leaves for Boston at
-<timeStruct type="24hour" zone="EST" value="18:45:00">
+<time value="18:45:00">
    <hour>13</hour>:<minute>45</minute>
-</timeStruct></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">At <timeStruct><occasion>sunset</occasion></timeStruct> we walked to the beach.</egXML>
+</time></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">At <time><occasion>sunset</occasion></time> we walked to the beach.</egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">The train leaves for Boston at
-<timeStruct xml:lang="en-US" type="descriptive" value="13:45:00" zone="EST">
+<time xml:lang="en-US" value="13:45:00-05:00">
    a quarter of <hour>two</hour>
-</timeStruct></egXML>
+</time></egXML>
  </p>
 <p>The <att>type</att> attribute may be used to distinguish sub-types
 of component elements (for example, months or days presented as words
 or as numbers) or to provide additional information about the function
 of this particular component (for example, to distinguish types of
-<gi>occasion</gi>).  The <att>value</att> <!-- and <att>reg</att>
-attributes are both used --> is used to provide a standardized or regularized form
-for the content of an element, conforming to a subset of the possible
-formats defined by the relevant international standard (ISO 8601).</p>
+<gi>occasion</gi>). The <att>value</att> <!-- and <att>reg</att>
+attributes are both used --> is used to provide a standardized or
+regularized form for the content of an element, conforming to a subset
+of the possible formats defined by the relevant international standard
+(ISO 8601) as profiled by <title>XML Schema Part 2: Datatypes Second
+Edition</title>.</p>
 <p>For example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><dateStruct value="1807-06-09">  
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><date value="1807-06-09">  
    <month type="name" value="--06">June</month>
    <day type="number" value="---09">9th</day>
-</dateStruct>The period is approaching which will
-terminate my present copartnership. On the <dateStruct value="1808-01-01">  
+</date>The period is approaching which will
+terminate my present copartnership. On the <date value="1808-01-01">  
    <day type="number" value="---01">1st</day>
    <month type="name" value="--01">Jany.</month>
-</dateStruct>next, it expires by its own limitation.</egXML>
+</date>next, it expires by its own limitation.</egXML>
 <!-- Philadelphia Merchant: The Diary of TP Cope, 210 -->
  </p>
 </div3>
@@ -878,60 +892,60 @@ between the time or date indicated and the referent expression
  </p>
 <p>The elements <gi>distance</gi> (or <gi>measure</gi>) and
 <gi>offset</gi> are used to encode these last two components within a
-<gi>dateStruct</gi> or <gi>timeStruct</gi>. The absolute temporal
+<gi>date</gi> or <gi>time</gi>. The absolute temporal
 expression contained within the relative expression may be encoded
-using an <gi>occasion</gi> element, or by a nested <gi>dateStruct</gi>
-or <gi>timeStruct</gi>, or by a simple <gi>date</gi> or
+using an <gi>occasion</gi> element, or by a nested <gi>date</gi>
+or <gi>time</gi>, or by a simple <gi>date</gi> or
 <gi>time</gi>. This allows for deeply nested structures such as
 <q>the third Sunday after the first Monday before Lammastide in the
 fifth year of the King's second marriage ...</q> but so does
 natural language.
 In the following examples, the <att>reg</att> attribute has been used
 to simplify processing of variant forms of expression:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><dateStruct value="1786-12-11">     
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><date value="1786-12-11">     
    <distance value="P14D">A fortnight</distance>
    <offset>before</offset>
-   <dateStruct>       
+   <date>       
       <occasion type="holiday">Christmas</occasion>
       <year>1786</year>
-   </dateStruct>
-</dateStruct></egXML>
+   </date>
+</date></egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">I reached the station
-<timeStruct value="14:15:00">
+<time value="14:15:00">
   <distance value="P30M" exact="false">about a half hour</distance>
   <offset>after</offset>
   <occasion value="13:45:00">the departure of the afternoon train to Boston</occasion>
-</timeStruct></egXML></p>
+</time></egXML></p>
 <p>In the following example, the <att>exact</att> attribute has been
 used to indicate a lack of precision in the distance stated:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">In practice, festival candles are lit
-<timeStruct>  
+<time>  
    <distance exact="false">just</distance>
    <offset>before</offset>
    <occasion>sundown</occasion>
-</timeStruct></egXML>
+</time></egXML>
  </p>
-<p>In the following example, a nested <gi>dateStruct</gi> element is
+<p>In the following example, a nested <gi>date</gi> element is
 used to show that <q>my birthday</q> and the cited date are parts of
 the same temporal expression, and hence to disambiguate the phrase
 <q>A week before my birthday on 9th December</q>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><dateStruct value="--12-02">  
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><date value="--12-02">  
    <distance>A week</distance>
    <offset>before</offset>
-   <dateStruct value="--12-09">    
+   <date value="--12-09">    
       <occasion>my birthday</occasion>
       on <day>9th</day>
       <month>December</month>
-   </dateStruct>
-</dateStruct></egXML>
+   </date>
+</date></egXML>
 The alternative reading of this phrase would be encoded as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><dateStruct value="--09-02">  
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><date value="--09-02">  
    <distance>A week</distance>
    <offset>before</offset>
    <occasion>my birthday</occasion>
    on <day>9th</day>
    <month>December</month>
-</dateStruct></egXML>
+</date></egXML>
 <!-- really dont want to keep distance : shd be same as measure -->
  </p>
 <p>Where more complex or ambiguous expressions are involved, and
@@ -968,13 +982,11 @@ structure of type <val>date-analysis</val>:
 </fs></egXML>
 The elements described in this section are formally defined as follows:
 <specGrp xml:id="DNDDATE" n="Date components">
-&dateStruct;
 &day;
 &week;
 &month;
 &year;
 &occasion;
-&timeStruct;
 &second;
 &minute;
 &hour;

@@ -18,18 +18,50 @@ $Author$
 	    <rng:ref name="data.duration"/>
 	  </rng:choice>
 	</datatype>
-	<valDesc>Any string representing a date in any of the standard
-	formats recommended as W3C schema datatypes or a
-	duration.</valDesc>
+	<valDesc>Any string representing a valid date or duration.</valDesc>
+	<exemplum>
+	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	    <date value="1945-10-24">24 Oct 45</date>
+	    <date value="1996-09-24T07:25Z">September 24th, 1996 at 3:25 in the morning</date>
+	    <time value="1999-01-04T20:42-05:00">Jan 4 1999 at 8 pm</time>
+	    <time value="14:12:38">fourteen twelve and 38 seconds</time>
+	    <date value="1962-10">October of 1962</date>
+	    <date value="--06-12">June 12th</date>
+	    <date value="---01">the first of each month</date>
+	    <date value="--08">August</date>
+	    <date value="2006">MMVI</date>
+	  </egXML>
+	</exemplum>
+	<exemplum>
+	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	    <date value="2006-05-18T10:03+09:00">a few minutes after ten in the morning on Thu 18 May</date>
+	    <time value="03:00">3 A.M.</time>
+	    <time value="12">around noon</time>
+	  </egXML>
+	</exemplum>
+	<exemplum>
+	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	    <distance value="PT45M">forty-five minutes</distance>
+	    <distance value="P1DT12H">a day and a half</distance>
+	    <distance value="P7D">a week</distance>
+	    <distance value="PT0.02S">20 ms</distance>
+	  </egXML>
+	</exemplum>
       <remarks>
-        <p>The forms available for use are 
-      also defined in ISO 8601:2000(E),
-		  <title>Data elements and interchange formats &#x2014;
-		  Information interchange &#x2014; Representation of dates and
-		  times</title>. These include <code>YYYY-MM-DD</code>
-		  for full dates; <code>HH:MM:SS.SSS</code> for full
-		  times; <code>--MM-DD</code> for month and day;
-		  <code>YY-MM</code> for year and month.</p>
+	<p>The value of the <att>value</att> attribute may be any string representing any one of
+	<list>
+	  <item>a date in any of the standard formats described by
+	  <title>XML Schema Part 2: Datatypes Second
+	  Edition</title></item>
+	  <item>a time or combined date &amp;
+	  time in the standard format as above, but with reduced
+	  precision (the minutes or minutes &amp; seconds may be
+	  omitted)</item>
+	  <item>a duration in the format defined in the section
+	  <title>Duration / Format with designators</title> of ISO
+	  8601.</item>
+	</list>
+	</p>
       </remarks>
     </attDef>
 <!--    <attDef ident="key">
@@ -74,7 +106,7 @@ is application
         </valItem>
         <valItem ident="init">
           <equiv/>
-          <gloss>the temporal expression is abbreviated.</gloss>
+          <gloss>the temporal expression is abbreviated using the initial characters.</gloss>
         </valItem>
       </valList>
     </attDef>
