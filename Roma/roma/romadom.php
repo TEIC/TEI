@@ -1950,17 +1950,17 @@ class romaDom extends domDocument
 	$this->getDocDom( $oDOC );
 	if ( $bBar )
 	    $this->updateProgressBar( '80' );
-	$oTidy = new tidy();
-	$aszOptions = array( 'indent' => true,
-			     'indent-spaces' => 1,
-			     'wrap' => 72,
-			     'input-xml' => true,
-			     'output-xml' => true
-			     );
-	$oTidy->parseString( $oDOC->SaveXML(), $aszOptions );
+//	$oTidy = new tidy();
+//	$aszOptions = array( 'indent' => true,
+//			     'indent-spaces' => 1,
+//			     'wrap' => 72,
+//			     'input-xml' => true,
+//			     'output-xml' => true
+//			     );
+//	$oTidy->parseString( $oDOC->SaveXML(), $aszOptions );
 
-	$oTidy->cleanRepair();
-	$szDoc = $oTidy->value;
+//	$oTidy->cleanRepair();
+	$szDoc = $oDOC->SaveXML();
 
 	if ( $bBar )
 	    $this->updateProgressBar( '100' );
@@ -1973,17 +1973,17 @@ class romaDom extends domDocument
 	if ( $this->bBar )
 	    $this->m_oRomaDom->updateProgressBar( '70' );
 	
-	$oTidy = new tidy();
-	$aszOptions = array( 'indent' => false,
-			     'input-xml' => true,
-			     'output-xml' => true
-			     );
-	$oTidy->parseString( $oTeiLiteDom->SaveXML(), $aszOptions );
+//	$oTidy = new tidy();
+//	$aszOptions = array( 'indent' => false,
+//			     'input-xml' => true,
+//			     'output-xml' => true
+//			     );
+//	$oTidy->parseString( $oTeiLiteDom->SaveXML(), $aszOptions );
 	if ( $this->bBar )
 	    $this->m_oRomaDom->updateProgressBar( '80' );
 
 	$oTidy->cleanRepair();
-	$szTeiLite = $oTidy->value;
+	$szTeiLite = $oTeiLiteDom->SaveXML();
 
 	if ( $this->bBar )
 	    $this->m_oRomaDom->updateProgressBar( '100' );
@@ -2190,18 +2190,18 @@ class romaDom extends domDocument
 	$this->getSchemaRNGDom( $oRNG );
 	if ( $bBar )
 	    $this->updateProgressBar( '80' );
-	$oTidy = new tidy();
-	$aszOptions = array( 'indent' => true,
-			     'indent-spaces' => 1,
-			     'wrap' => 72,
-			     'input-xml' => true,
-			     'output-xml' => true
-			     );
-	$oTidy->parseString( $oRNG->SaveXML(), $aszOptions );
+//	$oTidy = new tidy();
+//	$aszOptions = array( 'indent' => true,
+//			     'indent-spaces' => 1,
+//			     'wrap' => 72,
+//			     'input-xml' => true,
+//			     'output-xml' => true
+//			     );
+//	$oTidy->parseString( $oRNG->SaveXML(), $aszOptions );
 
-	$oTidy->cleanRepair();
-	$szRNG = $oTidy->value;
-
+//	$oTidy->cleanRepair();
+//	$szRNG = $oTidy->value;
+	$szRNG = $oRNG->SaveXML();
 	if ( $bBar )
 	    $this->updateProgressBar( '100' );
       }
@@ -2217,23 +2217,23 @@ class romaDom extends domDocument
 	if ( $bBar )
 	    $this->updateProgressBar( '50' );
 
-	$oTidy = new tidy();
-	$aszOptions = array( 'indent' => true,
-			     'indent-spaces' => 1,
-			     'wrap' => 72,
-			     'input-xml' => true,
-			     'output-xml' => true
-			     );
-	$oTidy->parseString( $oRNG->SaveXML(), $aszOptions );
+//	$oTidy = new tidy();
+//	$aszOptions = array( 'indent' => true,
+//			     'indent-spaces' => 1,
+//			     'wrap' => 72,
+//			     'input-xml' => true,
+//			     'output-xml' => true
+//			     );
+//	$oTidy->parseString( $oRNG->SaveXML(), $aszOptions );
 
-	$oTidy->cleanRepair();
+//	$oTidy->cleanRepair();
 
 	//Save File
 	$szID = md5( uniqid(rand(), true ) );
 	
 	$szInputFile = roma_temporaryFilesDir . '/' . $szID . '.tmp';    
 	$szOutputFile = roma_temporaryFilesDir . '/' . $szID . '.rnc';    
-	file_put_contents( $szInputFile , $oTidy->value);
+	file_put_contents( $szInputFile , $oRNG->SaveXML());
 
 	if ( $bBar )
 	    $this->updateProgressBar( '70' );

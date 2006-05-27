@@ -1149,13 +1149,13 @@ class roma
 	header( "Content-Disposition: attachment;  filename={$szFilename}.xml" );
 
 	//tidy up output
-	$oTidy = new tidy();
-	$aszOptions = array( 'indent' => true,
-			     'indent-spaces' => 4,
-			     'wrap' => 72,
-			     'input-xml' => true,
-			     'output-xml' => true
-			     );
+//	$oTidy = new tidy();
+//	$aszOptions = array( 'indent' => true,
+//			     'indent-spaces' => 4,
+//			     'wrap' => 72,
+//			     'input-xml' => true,
+//			     'output-xml' => true
+//			     );
 /*     $oTidy->parseString( $this->m_oRomaDom->SaveXML(), $aszOptions );
 	$oTidy->cleanRepair();  
 	$szOutput = $oTidy;*/
