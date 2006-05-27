@@ -103,11 +103,12 @@ xml: check subset
 pdf: xml
 	@echo Checking you have a running pdfLaTeX before trying to make PDF...
 	which pdflatex || exit 1
-	test -d /TEI/Talks/texconfig || exit 1
 	xsltproc ${XSL}/teic/teilatex-teic.xsl Guidelines.xml \
 	> Guidelines.tex
-	TEXINPUTS=/TEI/Talks/texconfig: pdflatex Guidelines
-	TEXINPUTS=/TEI/Talks/texconfig: pdflatex Guidelines
+	cp Source/Images/*.png .
+	pdflatex Guidelines
+	pdflatex Guidelines
+	for i in Source/Images/*.png; do rm `basename $$i`;done
 
 validate: oddschema exampleschema valid
 
