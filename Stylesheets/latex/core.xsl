@@ -70,16 +70,19 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:eg|tei:q[@rend='eg']">
+    <xsl:if test="ancestor::tei:list[@type='gloss']">
+      <xsl:text>\hspace{1em}\hfill\linebreak</xsl:text>
+    </xsl:if>
     <xsl:choose>
       <xsl:when test="@n">
-	<xsl:text>&#10;\begin{Verbatim}[numbers=left,label={</xsl:text>
+	<xsl:text>&#10;\begin{Verbatim}[fontsize=\scriptsize,numbers=left,label={</xsl:text>
 	<xsl:value-of select="@n"/>
       <xsl:text>}]&#10;</xsl:text>
       <xsl:apply-templates mode="eg"/> 
       <xsl:text>&#10;\end{Verbatim}&#10;</xsl:text>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:text>&#10;\begin{Verbatim}[frame=single,fillcolor=\color{yellow}]&#10;</xsl:text>
+	<xsl:text>&#10;\begin{Verbatim}[fontsize=\scriptsize,frame=single]&#10;</xsl:text>
 	<xsl:apply-templates mode="eg"/>
 	<xsl:text>&#10;\end{Verbatim}&#10;</xsl:text>
       </xsl:otherwise>
@@ -245,6 +248,11 @@
     <xsl:if test="tei:head"> \centerline{<xsl:for-each select="tei:head">
         <xsl:apply-templates/>
       </xsl:for-each>} </xsl:if>
+      <xsl:if test="@xml:id">
+	<xsl:text>\label{</xsl:text>
+	<xsl:value-of  select="@xml:id"/>
+	<xsl:text>}</xsl:text>
+      </xsl:if>
     <xsl:choose>
       <xsl:when test="not(tei:item)"/>
       <xsl:when test="@type='gloss'"> \begin{description}<xsl:apply-templates

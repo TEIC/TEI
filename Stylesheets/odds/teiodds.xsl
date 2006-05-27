@@ -1028,6 +1028,17 @@ sequenceRepeatable
   </xsl:template>
   <xsl:template name="compositeNumber">
     <xsl:choose>
+      <xsl:when test="ancestor::tei:div0">
+        <xsl:for-each select="ancestor::tei:div0">
+          <xsl:number/>
+        </xsl:for-each>
+	<xsl:text>-</xsl:text>
+        <xsl:for-each select="ancestor::tei:div1">
+          <xsl:number/>
+        </xsl:for-each>
+        <xsl:text>.</xsl:text>
+        <xsl:number from="tei:div1" level="any"/>
+      </xsl:when>
       <xsl:when test="ancestor::tei:div1">
         <xsl:for-each select="ancestor::tei:div1">
           <xsl:number/>

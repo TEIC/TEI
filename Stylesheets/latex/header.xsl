@@ -37,4 +37,11 @@
   </xd:doc>
   <xsl:template match="tei:docDate">
   \date{<xsl:apply-templates/>}</xsl:template>
+
+  <xd:doc>
+    <xd:short>Process elements tei:docImprint</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:docImprint">
+  </xsl:template>
 </xsl:stylesheet>

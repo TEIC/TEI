@@ -125,13 +125,26 @@
     <xd:short>Process elements tei:table</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:table"><xsl:if test="@xml:id">\label{<xsl:value-of
-        select="@xml:id"/>}</xsl:if> \par<xsl:choose>
-      <xsl:when test="ancestor::tei:table"> \begin{tabular}<xsl:call-template
-          name="makeTable"/> \end{tabular}</xsl:when>
-      <xsl:otherwise> \begin{longtable}<xsl:call-template name="makeTable"/>
-        \end{longtable} \par</xsl:otherwise>
-    </xsl:choose></xsl:template>
+  <xsl:template match="tei:table">
+    <xsl:if test="@xml:id">
+      <xsl:text>\label{</xsl:text>
+      <xsl:value-of   select="@xml:id"/>
+      <xsl:text>}</xsl:text>
+    </xsl:if>
+    <xsl:text> \par</xsl:text>
+    <xsl:choose>
+      <xsl:when test="ancestor::tei:table"> 
+	<xsl:text>\begin{tabular}</xsl:text>
+	<xsl:call-template  name="makeTable"/> 
+	<xsl:text>\end{tabular}</xsl:text>
+      </xsl:when>
+      <xsl:otherwise> 
+	<xsl:text>\begin{longtable}</xsl:text>
+	<xsl:call-template name="makeTable"/>
+	<xsl:text>\end{longtable} \par</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:table[@type='display']</xd:short>
     <xd:detail> </xd:detail>

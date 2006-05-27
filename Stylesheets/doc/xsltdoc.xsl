@@ -6,8 +6,19 @@
   <xsl:include href="../xsltdoc/xsl/properties/svnId.xsl"/>
   <xsl:include href="../xsltdoc/xsl/properties/copyright.xsl"/>
   <xsl:include href="../xsltdoc/xsl/inlineTags/xml.xsl"/>
+
   <xsl:template match="xsl:param" mode="printProperties">
-  Default: <span xmlns="http://www.w3.org/1999/xhtml" class="paramProperties"><xsl:choose><xsl:when test="*"><xsl:apply-templates select="*|text()" mode="verbatim"/></xsl:when><xsl:otherwise><xsl:value-of select="."/></xsl:otherwise></xsl:choose></span>
+  <xsl:text>Default: </xsl:text>
+  <span xmlns="http://www.w3.org/1999/xhtml" class="paramProperties">
+    <xsl:choose>
+      <xsl:when test="*">
+	<xsl:apply-templates select="*|text()" mode="verbatim"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="."/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </span>
 </xsl:template>
   <xd:doc type="stylesheet">
     Frontend for core.xsl

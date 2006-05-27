@@ -300,6 +300,7 @@
           <xsl:with-param name="word">Class</xsl:with-param>
         </xsl:call-template>
       </tei:hi>
+      <xsl:text>: </xsl:text>
       <xsl:call-template name="generateClassParents"/>
     </tei:p>
     <tei:p>
@@ -308,6 +309,7 @@
           <xsl:with-param name="word">Members</xsl:with-param>
         </xsl:call-template>
       </tei:hi>
+      <xsl:text>: </xsl:text>
       <xsl:call-template name="generateMembers"/>
     </tei:p>
     <xsl:call-template name="HTMLmakeTagsetInfo"/>
@@ -907,4 +909,21 @@
       <xsl:value-of select="$y"/>
     </tei:ref>
   </xsl:template>
+
+  <xsl:template match="tei:divGen[@type='classcat']">
+    <xsl:apply-templates mode="weave" select="key('CLASSDOCS',1)">
+      <xsl:sort select="@ident"/>
+    </xsl:apply-templates>
+  </xsl:template>
+  <xsl:template match="tei:divGen[@type='macrocat']">
+    <xsl:apply-templates mode="weave" select="key('MACRODOCS',1)">
+      <xsl:sort select="@ident"/>
+    </xsl:apply-templates>
+  </xsl:template>
+  <xsl:template match="tei:divGen[@type='tagcat']">
+    <xsl:apply-templates mode="weave" select="key('ELEMENTDOCS',1)">
+      <xsl:sort select="@ident"/>
+    </xsl:apply-templates>
+  </xsl:template>
+
 </xsl:stylesheet>
