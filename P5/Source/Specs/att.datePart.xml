@@ -4,7 +4,7 @@ See the file COPYING for details
 $Date$
 $Author$
 -->
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" predeclare="true" module="namesdates" type="atts" ident="att.datePart">
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" predeclare="true" module="tei" type="atts" ident="att.datePart">
 <gloss>attributes for temporal expression</gloss>
 <desc>attributes for component elements of temporal expressions involving
   dates and time</desc>
@@ -20,6 +20,7 @@ $Author$
 	</datatype>
 	<valDesc>Any string representing a valid date or duration.</valDesc>
 	<exemplum>
+	  <p>Examples of W3C date and date &amp; time formats.</p>
 	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
 	    <date value="1945-10-24">24 Oct 45</date>
 	    <date value="1996-09-24T07:25Z">September 24th, 1996 at 3:25 in the morning</date>
@@ -33,13 +34,18 @@ $Author$
 	  </egXML>
 	</exemplum>
 	<exemplum>
+	  <p>Examples of time formats with reduced precision.</p>
 	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
 	    <date value="2006-05-18T10:03+09:00">a few minutes after ten in the morning on Thu 18 May</date>
 	    <time value="03:00">3 A.M.</time>
 	    <time value="12">around noon</time>
 	  </egXML>
+	  <p>Software intended for use with W3C XML Schema datatypes
+	  may be unable to properly process times expressed with
+	  reduced precision.</p>
 	</exemplum>
 	<exemplum>
+	  <p>Examples of W3C durations.</p>
 	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
 	    <distance value="PT45M">forty-five minutes</distance>
 	    <distance value="P1DT12H">a day and a half</distance>
@@ -47,21 +53,45 @@ $Author$
 	    <distance value="PT0.02S">20 ms</distance>
 	  </egXML>
 	</exemplum>
+      <exemplum>
+	<p>A usage example of <gi>date</gi>.</p>
+	<egXML xmlns="http://www.tei-c.org/ns/Examples">This list
+	begins in the year 1632, more precisely on Trinity Sunday,
+	i.e. the Sunday after Pentecost, in that year the <date
+	calendar="Julian" value="1632-06-06">27th of May (old
+	style)</date>.</egXML>
+      </exemplum>
+      <exemplum>
+	<p>A usage example of <gi>time</gi>.</p>
+	<egXML xmlns="http://www.tei-c.org/ns/Examples">He likes to be
+	punctual. I said <q><time value="12">around noon</time></q>,
+	and he showed up at <time value="12:00:00">12 O'clock</time>
+	on the dot.</egXML>
+      </exemplum>
       <remarks>
-	<p>The value of the <att>value</att> attribute may be any string representing any one of
+	<p>The value of the <att>value</att> attribute is a string
+	representing a date, date &amp; time, time, or duration in any
+	one of the following forms:
 	<list>
 	  <item>a date in any of the standard formats described by
 	  <title>XML Schema Part 2: Datatypes Second
 	  Edition</title></item>
-	  <item>a time or combined date &amp;
-	  time in the standard format as above, but with reduced
-	  precision (the minutes or minutes &amp; seconds may be
-	  omitted)</item>
+	  <item>a time or combined date &amp; time in the standard
+	  format as above, but with reduced precision (the minutes or
+	  minutes &amp; seconds may be omitted &#x2014; e.g.,
+	  <val>12</val> and <val>12:00</val> are permitted to indicate
+	  noon, in addition to <val>12:00:00</val>)</item>
 	  <item>a duration in the format defined in the section
 	  <title>Duration / Format with designators</title> of ISO
 	  8601.</item>
 	</list>
 	</p>
+	<p>The value of <att>value</att> is constrained to be in one
+	of the date, time, or duration formats recognized by the W3C
+	<title>XML Schema Part 2: Datatypes</title> specification,
+	except that times may be expressed with reduced precision.
+	This is true whether the date component (if any) is a
+	Gregorian or a proleptic Gregorian date.</p>
       </remarks>
     </attDef>
 <!--    <attDef ident="key">

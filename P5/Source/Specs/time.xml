@@ -10,6 +10,7 @@ $Author$
 <desc>contains a phrase defining a time of day in any format.</desc>
   <classes>
     <memberOf key="model.timeLike"/>
+    <memberOf key="att.datePart"/>
     <memberOf key="att.editLike"/>
   </classes>
   <content>
@@ -24,37 +25,6 @@ $Author$
     </rng:zeroOrMore>
     <!-- Note that this content model is macro.phraseSeq + model.datePart, as it were -->
   </content>
-  <attList>
-    <attDef ident="value" usage="opt">
-	<equiv/>
-	<desc>gives the value of the time in standard form, e.g. as hh:mm.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.temporal"/></datatype>
-      <valDesc>A string representing a time in standard format as
-      defined in <title>XML Schema Part 2: Datatypes Second
-      Edition</title>, except that times may be expressed with reduced
-      precision (e.g., <val>12</val> and <val>12:00</val> are
-      permitted to indicate noon, in addition to <val>12:00:00</val>).
-      Software intended for use with W3C XML Schema datatypes may be
-      unable to properly process times expressed with reduced
-      precision.</valDesc>
-      <exemplum>
-	<egXML xmlns="http://www.tei-c.org/ns/Examples">He likes to be
-	punctual. I said <q><time value="12">around noon</time></q>,
-	and he showed up at <time value="12:00:00">12 O'clock</time> on the dot.</egXML>
-      </exemplum>
-      <remarks>
-	<p>The value of <att>value</att> is constrained to be in one
-	of the date formats recognized by the W3C <title>XML Schema
-	Part 2: Datatypes</title> specification, except that times may
-	be expressed with reduced precision. This is true whether the
-	date component (if any) is a Gregorian or a proleptic
-	Gregorian date.</p>
-	<p>Note that the allowable values of <att>value</att> are the
-	same as those for the <att>value</att> attribute of the
-	<gi>date</gi> element.</p>
-      </remarks>
-    </attDef>
-  </attList>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">As he sat smiling, the quarter struck —
 	  <time value="11:45:00">the quarter to twelve</time>.</egXML>
