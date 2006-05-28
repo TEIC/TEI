@@ -54,6 +54,7 @@
   <xsl:key match="tei:macroSpec[@mode='replace']" name="REPLACE" use="@ident"/>
   <xsl:key match="tei:macroSpec[@mode='change']" name="CHANGE" use="@ident"/>
   <xsl:key match="tei:moduleRef" name="MODULES" use="@key"/>
+  <xsl:key match="tei:attRef" name="ATTREFS" use="concat(@name,'_',../../@ident)"/>
   <xsl:variable name="ODD" select="/"/>
 
   <xsl:variable name="AnonymousModule">
@@ -249,9 +250,11 @@ because of the order of declarations
         select="*|@*|processing-instruction()|comment()|text()"/>
     </xsl:copy>
   </xsl:template>
+
   <xsl:template match="@*|processing-instruction()|comment()|text()" mode="copy">
     <xsl:copy/>
   </xsl:template>
+
   <xsl:template match="*" mode="copy">
     <xsl:copy>
       <xsl:apply-templates mode="copy"
@@ -777,6 +780,9 @@ so that is only put back in if there is some content
     <xsl:param name="original"/>
     <xsl:variable name="orig" select="."/>
     <xsl:variable name="A" select="@ident"/>
+    <xsl:variable name="attRef">
+      <xsl:value-of select="concat($class,'.attribute.' ,translate($att,':',''),'_',$element)"/>
+    </xsl:variable>
     <xsl:variable name="lookingAt">
       <xsl:value-of select="concat($element,'_',$A)"/>
     </xsl:variable>
@@ -793,10 +799,13 @@ so that is only put back in if there is some content
         </xsl:when>
         <xsl:otherwise>
           <xsl:for-each select="$original">
-            <xsl:choose>
-              <xsl:when test="key('DELETEATT',$lookingAt)"/>
-              <xsl:when test="key('REPLACEATT',$lookingAt)">
-                <xsl:comment>element replacement of class attribute named
+	    <xsl:choose>
+	      <!-- don't make another reference to a class attribute 
+		   if we already have an attRef -->
+	      <xsl:when test="key('ATTREFS',$attRef)"/>
+	      <xsl:when test="key('DELETEATT',$lookingAt)"/>
+	      <xsl:when test="key('REPLACEATT',$lookingAt)">
+		<xsl:comment>element replacement of class attribute named
                     <xsl:value-of select="$att"/></xsl:comment>
                 <xsl:for-each select="key('REPLACEATT',$lookingAt)">
                   <tei:attDef ident="{$att}">
