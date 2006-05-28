@@ -557,15 +557,15 @@
     </tei:p>
   </xsl:template>
   <xsl:template match="tei:remarks" mode="doc">
-    <tei:label>
+    <tei:p>
+      <tei:hi>
       <xsl:call-template name="i18n">
         <xsl:with-param name="word">Note</xsl:with-param>
       </xsl:call-template>
+      </tei:hi>
       <xsl:text>: </xsl:text>
-    </tei:label>
-    <tei:item>
       <xsl:apply-templates/>
-    </tei:item>
+    </tei:p>
   </xsl:template>
   <xsl:template match="tei:specDesc">
     <tei:item>
