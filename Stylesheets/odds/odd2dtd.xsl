@@ -419,7 +419,6 @@
     <xsl:for-each select="//tei:elementSpec">
       <xsl:sort select="@ident"/>
       <xsl:if test="not(starts-with(@ident,'%'))">
-        <ident id="{@ident}"/>
         <xsl:text>&lt;!ENTITY % n.</xsl:text>
         <xsl:value-of select="@ident"/>
         <xsl:text> "</xsl:text>
@@ -457,7 +456,10 @@
         <xsl:with-param name="sep" select="','"/>
       </xsl:call-template>
     </xsl:variable>
-    <xsl:if test="not($body='')"><xsl:value-of select="$body"/>*</xsl:if>
+    <xsl:if test="not($body='')">
+      <xsl:value-of select="$body"/>
+      <xsl:text>*</xsl:text>
+    </xsl:if>
   </xsl:template>
   <xsl:template match="rng:oneOrMore">
     <xsl:variable name="body">
@@ -465,39 +467,54 @@
         <xsl:with-param name="sep" select="','"/>
       </xsl:call-template>
     </xsl:variable>
-    <xsl:if test="not($body='')"><xsl:value-of select="$body"/>+</xsl:if>
+    <xsl:if test="not($body='')">
+      <xsl:value-of select="$body"/>
+      <xsl:text>+</xsl:text>
+    </xsl:if>
   </xsl:template>
+
   <xsl:template match="rng:optional">
     <xsl:variable name="body">
       <xsl:call-template name="content">
         <xsl:with-param name="sep" select="','"/>
       </xsl:call-template>
     </xsl:variable>
-    <xsl:if test="not($body='')"><xsl:value-of select="$body"/>?</xsl:if>
+    <xsl:if test="not($body='')">
+      <xsl:value-of select="$body"/>
+      <xsl:text>?</xsl:text>
+    </xsl:if>
   </xsl:template>
+
   <xsl:template match="rng:choice">
     <xsl:choose>
-      <xsl:when test="rng:value"> (<xsl:for-each select="rng:value">
+      <xsl:when test="rng:value"> 
+	<xsl:text> (</xsl:text>
+	<xsl:for-each select="rng:value">
           <xsl:value-of select="."/>
-          <xsl:if test="following-sibling::rng:value">|</xsl:if>
+          <xsl:if test="following-sibling::rng:value">
+	    <xsl:text>|</xsl:text>
+	  </xsl:if>
         </xsl:for-each>) </xsl:when>
-      <xsl:otherwise>
-        <xsl:call-template name="content">
+	<xsl:otherwise>
+	  <xsl:call-template name="content">
           <xsl:with-param name="sep" select="' | '"/>
-        </xsl:call-template>
-      </xsl:otherwise>
+	  </xsl:call-template>
+	</xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template match="rng:group|rng:mixed">
     <xsl:call-template name="content">
       <xsl:with-param name="sep" select="','"/>
     </xsl:call-template>
   </xsl:template>
+
   <xsl:template match="rng:interleave">
     <xsl:call-template name="content">
       <xsl:with-param name="sep" select="','"/>
     </xsl:call-template>
   </xsl:template>
+
   <xsl:template name="content">
     <xsl:param name="sep"/>
     <xsl:choose>
@@ -548,6 +565,7 @@
           <xsl:for-each select="exsl:node-set($members)/M">
             <xsl:choose>
               <xsl:when test="starts-with(N[1],'(') and count(N)=1"/>
+              <xsl:when test="$parent='content' and count(N)=1 and starts-with(N[1],'%macro.')"/>
               <xsl:when test="$parent='content' and count(N)=1">
                 <xsl:text>(</xsl:text>
               </xsl:when>
@@ -576,6 +594,7 @@
             </xsl:for-each>
             <xsl:choose>
               <xsl:when test="starts-with(N[1],'(') and count(N)=1"/>
+              <xsl:when test="$parent='content' and count(N)=1 and starts-with(N[1],'%macro.')"/>
               <xsl:when test="$parent='content' and count(N)=1">
                 <xsl:text>)</xsl:text>
               </xsl:when>

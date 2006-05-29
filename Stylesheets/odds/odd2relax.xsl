@@ -196,6 +196,7 @@
     </xsl:comment>
     <xsl:comment>Set global predeclared macros</xsl:comment>
     <xsl:if test="@type='core'">
+      <xsl:call-template name="NameList"/>
       <xsl:for-each select="key('PredeclareAllMacros','1')">
         <define name="{@ident}" xmlns="http://relaxng.org/ns/structure/1.0">
           <choice>
@@ -239,6 +240,16 @@
       </xsl:choose>
     </xsl:for-each>
   </xsl:template>
+
+  <xsl:template name="NameList">
+    <!-- walk over all the elementSpec elements and make list of 
+       elements -->
+    <xsl:for-each select="//tei:elementSpec">
+      <xsl:sort select="@ident"/>
+      <rng:define combine="choice" name="{@ident}"><rng:notAllowed/></rng:define>
+    </xsl:for-each>
+  </xsl:template>
+
   <xsl:template name="predeclare-classes">
     <xsl:comment>0. predeclared classes</xsl:comment>
     <xsl:for-each select="key('predeclaredClasses',1)">

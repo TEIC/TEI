@@ -211,7 +211,7 @@
     <xsl:choose>
       <xsl:when test="@type='model'">
         <xsl:apply-templates mode="processModel" select=".">
-          <xsl:with-param name="declare">true</xsl:with-param>
+          <xsl:with-param name="declare">false</xsl:with-param>
           <!--	    <xsl:choose>
 	      <xsl:when test="@module='tei'">true</xsl:when>
 	      <xsl:otherwise>false</xsl:otherwise>
@@ -276,6 +276,7 @@
 	  <xsl:call-template name="processClassDefinition">
 	    <xsl:with-param 
 		name="type" select="@generate"/>
+	    <xsl:with-param name="declare" select="$declare"/>
 	  </xsl:call-template>
 	</Wrapper>
       </xsl:with-param>
@@ -284,27 +285,33 @@
 
 <xsl:template name="processClassDefinition">
   <xsl:param name="type"/>
+  <xsl:param name="declare"/>
   <xsl:choose>
     <xsl:when test="string-length($type)=0">
       <xsl:call-template name="makeClassDefinition">
 	<xsl:with-param name="type">alternation</xsl:with-param>
+	<xsl:with-param name="declare" select="$declare"/>
       </xsl:call-template>
     </xsl:when>
 
     <xsl:when test="contains($type,' ')">
       <xsl:call-template name="makeClassDefinition">
-	<xsl:with-param name="type" select="substring-before($type,' ')"/>
+	<xsl:with-param name="type" select="substring-before($type,'
+					    ')"/>
+	    <xsl:with-param name="declare" select="$declare"/>
       </xsl:call-template>
       <xsl:call-template name="processClassDefinition">
 	<xsl:with-param 
 	    name="type" 
 	    select="substring-after($type,' ')"/>
+	    <xsl:with-param name="declare" select="$declare"/>
       </xsl:call-template>
     </xsl:when>
 
     <xsl:otherwise>
       <xsl:call-template name="makeClassDefinition">
 	<xsl:with-param name="type" select="$type"/>
+	    <xsl:with-param name="declare" select="$declare"/>
       </xsl:call-template>
     </xsl:otherwise>
   </xsl:choose>
@@ -312,6 +319,7 @@
   
 <xsl:template name="makeClassDefinition">
   <xsl:param name="type"/>
+  <xsl:param name="declare"/>
     <xsl:if test="$verbose='true'">
       <xsl:message> .... ... generate model <xsl:value-of select="$type"/>
       </xsl:message>
@@ -335,63 +343,63 @@ sequenceRepeatable
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-<xsl:choose>
-  <xsl:when test="$parameterize='true'">
-    <xsl:apply-templates mode="tangleModel"
-			 select="tei:classes/tei:memberOf"/>
-    <define name="{$patternPrefix}{$thisClass}{$suffix}"
-	    xmlns="http://relaxng.org/ns/structure/1.0">
-      <xsl:if test="@predeclare='true'">
-	<xsl:attribute name="combine">choice</xsl:attribute>
-      </xsl:if>
-      <notAllowed xmlns="http://relaxng.org/ns/structure/1.0"/>
-    </define>
-  </xsl:when>
-  <xsl:otherwise>
-    <define name="{$patternPrefix}{$thisClass}{$suffix}"
-	    xmlns="http://relaxng.org/ns/structure/1.0">
-      <xsl:choose>
-	<xsl:when
-	    test="count(key('CLASSMEMBERS',$thisClass))&gt;0">
+    <xsl:choose>
+      <xsl:when test="$declare='true'">
+	<xsl:apply-templates mode="tangleModel"
+			     select="tei:classes/tei:memberOf"/>
+	<define name="{$patternPrefix}{$thisClass}{$suffix}"
+		xmlns="http://relaxng.org/ns/structure/1.0">
+	  <xsl:if test="@predeclare='true'">
+	    <xsl:attribute name="combine">choice</xsl:attribute>
+	  </xsl:if>
+	  <notAllowed xmlns="http://relaxng.org/ns/structure/1.0"/>
+	</define>
+      </xsl:when>
+      <xsl:otherwise>
+	<define name="{$patternPrefix}{$thisClass}{$suffix}"
+		xmlns="http://relaxng.org/ns/structure/1.0">
 	  <xsl:choose>
-	    <xsl:when test="$type='sequence'">
-	      <xsl:for-each
-		  select="key('CLASSMEMBERS',$thisClass)">
-		<ref name="{$patternPrefix}{@ident}"
-		     xmlns="http://relaxng.org/ns/structure/1.0"/>
-	      </xsl:for-each>
-	    </xsl:when>
-	    <xsl:when test="$type='sequenceOptional'">
-	      <xsl:for-each
-		  select="key('CLASSMEMBERS',$thisClass)">
-		<optional xmlns="http://relaxng.org/ns/structure/1.0">
-		  <ref name="{$patternPrefix}{@ident}"
-		       xmlns="http://relaxng.org/ns/structure/1.0"/>
-		</optional>
-	      </xsl:for-each>
-	    </xsl:when>
+	    <xsl:when
+		test="count(key('CLASSMEMBERS',$thisClass))&gt;0">
+	      <xsl:choose>
+		<xsl:when test="$type='sequence'">
+		  <xsl:for-each
+		      select="key('CLASSMEMBERS',$thisClass)">
+		    <ref name="{$patternPrefix}{@ident}"
+			 xmlns="http://relaxng.org/ns/structure/1.0"/>
+		  </xsl:for-each>
+		</xsl:when>
+		<xsl:when test="$type='sequenceOptional'">
+		  <xsl:for-each
+		      select="key('CLASSMEMBERS',$thisClass)">
+		    <optional xmlns="http://relaxng.org/ns/structure/1.0">
+		      <ref name="{$patternPrefix}{@ident}"
+			   xmlns="http://relaxng.org/ns/structure/1.0"/>
+		    </optional>
+		  </xsl:for-each>
+		</xsl:when>
+		
+		<xsl:when test="$type='sequenceRepeatable'">
+		  <xsl:for-each
+		      select="key('CLASSMEMBERS',$thisClass)">
+		    <oneOrMorel xmlns="http://relaxng.org/ns/structure/1.0">
+		      <ref name="{$patternPrefix}{@ident}"
+			   xmlns="http://relaxng.org/ns/structure/1.0"/>
+		    </oneOrMorel>
+		  </xsl:for-each>
+		</xsl:when>
+		
+		<xsl:when test="$type='sequenceOptionalRepeatable'">
+		  <xsl:for-each
+		      select="key('CLASSMEMBERS',$thisClass)">
+		    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+		      <ref name="{$patternPrefix}{@ident}"
+			   xmlns="http://relaxng.org/ns/structure/1.0"/>
+		    </zeroOrMore>
+		  </xsl:for-each>
+		</xsl:when>
 
-	    <xsl:when test="$type='sequenceRepeatable'">
-	      <xsl:for-each
-		  select="key('CLASSMEMBERS',$thisClass)">
-		<oneOrMorel xmlns="http://relaxng.org/ns/structure/1.0">
-		  <ref name="{$patternPrefix}{@ident}"
-		       xmlns="http://relaxng.org/ns/structure/1.0"/>
-		</oneOrMorel>
-	      </xsl:for-each>
-	    </xsl:when>
-
-	    <xsl:when test="$type='sequenceOptionalRepeatable'">
-	      <xsl:for-each
-		  select="key('CLASSMEMBERS',$thisClass)">
-		<zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-		  <ref name="{$patternPrefix}{@ident}"
-		       xmlns="http://relaxng.org/ns/structure/1.0"/>
-		</zeroOrMore>
-	      </xsl:for-each>
-	    </xsl:when>
-
-	    <xsl:otherwise>
+		<xsl:otherwise>
 	      <rng:choice>
 		<xsl:for-each
 		    select="key('CLASSMEMBERS',$thisClass)">
@@ -399,9 +407,9 @@ sequenceRepeatable
 		       xmlns="http://relaxng.org/ns/structure/1.0"/>
 		</xsl:for-each>
 	      </rng:choice>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:when>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:when>
 	<xsl:otherwise>
 	  <xsl:choose>
 	    <xsl:when test="$type='sequence' or
@@ -415,30 +423,34 @@ sequenceRepeatable
 	    </xsl:otherwise>
 	  </xsl:choose>
 	</xsl:otherwise>
-      </xsl:choose>
+	  </xsl:choose>
     </define>
-  </xsl:otherwise>
-</xsl:choose>
+      </xsl:otherwise>
+    </xsl:choose>
 </xsl:template>
 
-  <xsl:template match="tei:classSpec" mode="tangleadd">
-    <xsl:apply-templates mode="tangleadd"/>
-  </xsl:template>
-  <xsl:template match="tei:classSpec/@ident"/>
-  <xsl:template match="tei:classSpec|tei:elementSpec|tei:macroSpec" mode="weave">
-    <xsl:call-template name="refdoc"/>
-  </xsl:template>
-  <xsl:template match="tei:code">
-    <xsl:call-template name="typewriter">
-      <xsl:with-param name="text">
-        <xsl:apply-templates/>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  <xsl:template match="tei:desc" mode="doc">
-    <xsl:choose>
+<xsl:template match="tei:classSpec" mode="tangleadd">
+  <xsl:apply-templates mode="tangleadd"/>
+</xsl:template>
+
+<xsl:template match="tei:classSpec/@ident"/>
+
+<xsl:template match="tei:classSpec|tei:elementSpec|tei:macroSpec" mode="weave">
+  <xsl:call-template name="refdoc"/>
+</xsl:template>
+
+<xsl:template match="tei:code">
+  <xsl:call-template name="typewriter">
+    <xsl:with-param name="text">
+      <xsl:apply-templates/>
+    </xsl:with-param>
+  </xsl:call-template>
+</xsl:template>
+
+<xsl:template match="tei:desc" mode="doc">
+  <xsl:choose>
       <xsl:when test="$lang='en' and not(@xml:lang)">
-        <xsl:apply-templates/>
+	<xsl:apply-templates/>
       </xsl:when>
       <xsl:when test="@xml:lang=$lang">
         <xsl:apply-templates/>
@@ -781,6 +793,7 @@ sequenceRepeatable
         select="ancestor::tei:elementSpec/@ident|ancestor::tei:classSpec/@ident"
       />
     </xsl:variable>
+<!--
     <xsl:for-each select="key('IDENTS',@key)">
       <xsl:if test="@type='model'">
         <define combine="choice" name="{@ident}"
@@ -790,6 +803,7 @@ sequenceRepeatable
         </define>
       </xsl:if>
     </xsl:for-each>
+-->
   </xsl:template>
   <xsl:template match="tei:mentioned">
     <xsl:text>‘</xsl:text>
