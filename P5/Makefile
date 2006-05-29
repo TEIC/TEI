@@ -292,9 +292,10 @@ check:
 
 changelog:
 	(LastDate=`head -1 ReleaseNotes/ChangeLog | awk '{print $$1}'`; \
-	svn log -v -r 'HEAD:{'$$LastDate'}' | grep -v "^;" | perl ../gnuify-changelog.pl > newchanges)
+	svn log -v -r 'HEAD:{'$$LastDate'}' | perl ../gnuify-changelog.pl | grep -v "^;" > newchanges)
 	mv ReleaseNotes/ChangeLog oldchanges
 	cat newchanges oldchanges > ReleaseNotes/ChangeLog
+	rm newchanges oldchanges
 
 clean:
 	-rm -rf release Guidelines Guidelines-web Schema DTD dtd Split RomaResults *~
