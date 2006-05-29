@@ -28,13 +28,7 @@ dtds: check
 	--stringparam lang ${LANGUAGE} \
 	--stringparam TEIC true \
 	${XSL}/odds/odd2dtd.xsl -
-	for i in DTD/* ; do perl -i Utilities/cleandtd.pl $$i; done	
-	# I cannot be bothered to see why these don't work,
-	# just hack them by hand.
-	perl -p -i -e 's/,\|/\|/' DTD/core.dtd
-	perl -p -i -e 's/\| %mix.seg;/%mix.seg;/' DTD/core.dtd
-	perl -p -i -e 's/\(\%macro.schemapattern;\)\?/%macro.schemapattern;/' DTD/tagdocs.dtd
-	perl -p -i -e 's/\)\*\(/\)\*,\(/' DTD/textstructure.dtd
+	#for i in DTD/* ; do perl -i Utilities/cleandtd.pl $$i; done	
 	(cd DTD; ln -s tei.dtd tei2.dtd)
 
 schemas:check
