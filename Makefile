@@ -27,7 +27,7 @@ dtds: check
 	xsltproc --stringparam outputDir DTD 	\
 	--stringparam lang ${LANGUAGE} \
 	--stringparam TEIC true \
-	--stringparam verbose true ${XSL}/odds/odd2dtd.xsl -
+	${XSL}/odds/odd2dtd.xsl -
 	for i in DTD/* ; do perl -i Utilities/cleandtd.pl $$i; done	
 	# I cannot be bothered to see why these don't work,
 	# just hack them by hand.
@@ -42,7 +42,7 @@ schemas:check
 	-rm Schema/*
 	# generate the relaxNG schemas
 	xmllint --noent --xinclude ${DRIVER} | \
-	xsltproc --stringparam verbose true \
+	xsltproc  \
 	--stringparam lang ${LANGUAGE} \
 	--stringparam TEIC true \
 	${XSL}/odds/odd2relax.xsl -
