@@ -1,3 +1,105 @@
+2006-05-29  Sebastian Rahtz <sebastian.rahtz@oucs.ox.ac.uk>
+	Changed paths:
+	   M /trunk/Stylesheets/odds/odd2dtd.xsl
+	   M /trunk/Stylesheets/odds/odd2relax.xsl
+	   M /trunk/Stylesheets/odds/teiodds.xsl
+
+	when making modules, no longer rely on RNG's ability
+	to "or" items to pattern. Each model class is generated
+	in its entirety; an empty entry is provided for the
+	predeclared ones. References to non-existent elements
+	work because initial patterns are provided which set
+	all elements to <notAllowed>. The upshot of this work
+	is that we can support model classes with patterns
+	other than alternation.
+
+2006-05-28  Sebastian Rahtz <sebastian.rahtz@oucs.ox.ac.uk>
+	Changed paths:
+	   M /trunk/Stylesheets/odds/odd2odd.xsl
+
+	do not repeat a class attribute twice; check if its already provided via
+	an <attRef> (this happens if the source is output from a previous run of
+	Roma)
+
+	M    odd2odd.xsl
+
+2006-05-28  Sebastian Rahtz <sebastian.rahtz@oucs.ox.ac.uk>
+	Changed paths:
+	   M /trunk/Stylesheets/odds/odd2lite.xsl
+
+	dont use lists for display
+
+2006-05-27  Sebastian Rahtz <sebastian.rahtz@oucs.ox.ac.uk>
+	Changed paths:
+	   M /trunk/Stylesheets/doc/xsltdoc.xsl
+	   M /trunk/Stylesheets/latex/core.xsl
+	   M /trunk/Stylesheets/latex/figures.xsl
+	   M /trunk/Stylesheets/latex/header.xsl
+	   M /trunk/Stylesheets/odds/odd2lite.xsl
+	   M /trunk/Stylesheets/odds/teiodds.xsl
+
+	clean up odd2lite, and associated 2latex work, to make
+	P5 format to PDF
+
+2006-05-24  Sebastian Rahtz <sebastian.rahtz@oucs.ox.ac.uk>
+	Changed paths:
+	   M /trunk/Stylesheets/odds/odd2dtd.xsl
+	   M /trunk/Stylesheets/odds/teiodds.xsl
+
+	implementation of @generate on <classSpec> to produce multiple patterns
+
+2006-05-20  Sebastian Rahtz <sebastian.rahtz@oucs.ox.ac.uk>
+	Changed paths:
+	   M /trunk/Stylesheets/odds/odd2dtd.xsl
+	   M /trunk/Stylesheets/odds/teiodds.xsl
+
+	allow for classes to be modelled as a, b, c and a?, b?, c? as well
+	as a | b | c; dependant of classSpec/@method
+
+2006-05-19  Sebastian Rahtz <sebastian.rahtz@oucs.ox.ac.uk>
+	Changed paths:
+	   M /trunk/Stylesheets/html/figures.xsl
+	   M /trunk/Stylesheets/html/textstructure.xsl
+	   M /trunk/Stylesheets/slides/teihtml-slides.xsl
+
+	pass SVG through unchanged, some cleanups of text
+
+2006-05-14  Sebastian Rahtz <sebastian.rahtz@oucs.ox.ac.uk>
+	Changed paths:
+	   M /trunk/Stylesheets/html/core.xsl
+
+	when making <li>, put an ID on it instead of making
+	an <a>, if using XHTML
+
+2006-05-11  Sebastian Rahtz <sebastian.rahtz@oucs.ox.ac.uk>
+	Changed paths:
+	   M /trunk/Stylesheets/ChangeLog
+	   M /trunk/Stylesheets/common/i18n.xsl
+	   M /trunk/Stylesheets/odds/odd2relax.xsl
+	   M /trunk/Stylesheets/odds/teiodds.xsl
+
+	Clean reading-in of external RNG files.
+	Allow for localized i18n template.
+
+2006-05-10  Sebastian Rahtz <sebastian.rahtz@oucs.ox.ac.uk>
+	Changed paths:
+	   M /trunk/Stylesheets/common/i18n.xsl
+	   M /trunk/Stylesheets/html/tagdocs.xsl
+	   M /trunk/Stylesheets/odds/odd2odd.xsl
+
+	When creating a compiled ODD, add an
+	anonymous module (named as "module-from-$schemaName")
+	to each added/replaced element or class. This allows ODDs to be chained.
+	Clean up mechanism of copying clases and elements to allow for this.
+	Add "predeclare=true" to all ADDed classSpecs. Adjust tagdocs processing
+	to supports atts="+".
+
+2006-05-09  Sebastian Rahtz <sebastian.rahtz@oucs.ox.ac.uk>
+	Changed paths:
+	   M /trunk/Stylesheets/odds/odd2html.xsl
+
+	allow for mode="delete" when making documentation for ODD
+
 2006-05-10  Sebastian Rahtz <sebastian.rahtz@oucs.ox.ac.uk>
 	Changed paths:
 	   M /trunk/Stylesheets/common/i18n.xsl
