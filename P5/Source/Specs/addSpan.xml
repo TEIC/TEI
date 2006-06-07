@@ -5,75 +5,24 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="transcr" xml:id="ADDSPAN" usage="opt" ident="addSpan">
-<equiv/>
-<gloss>added span of text</gloss>
-<desc>marks the beginning of a longer sequence of text added by an
-author, scribe, annotator or corrector (see also
-add).</desc>
+  <gloss>added span of text</gloss>
+  <desc>marks the beginning of a longer sequence of text added by an
+  author, scribe, annotator or corrector (see also <ref target="#ADD"><gi>add</gi></ref>).</desc>
   <classes>
     <memberOf key="model.global.edit"/>
-    <memberOf key="att.editLike"/>
     <memberOf key="att.authorialIntervention"/>
+    <memberOf key="att.editLike"/>
+    <memberOf key="att.placement"/>
   </classes>
   <content>
     <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
   </content>
   <attList>
-    <attDef ident="place" usage="rec">
-      <equiv/>
-      <desc>indicates where the addition is made.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.words"/></datatype>
-      <valList type="semi">
-	<valItem ident="inline">
-	  <equiv/>
-	  <gloss>addition is made in a space left in the witness by an
-	  earlier scribe.</gloss>
-        </valItem>
-        <valItem ident="supralinear">
-          <equiv/>
-          <gloss>addition is made above the line.</gloss>
-        </valItem>
-        <valItem ident="infralinear">
-          <equiv/>
-          <gloss>addition is made below the line.</gloss>
-        </valItem>
-        <valItem ident="marginleft">
-          <equiv/>
-          <gloss>addition is made in left margin.</gloss>
-        </valItem>
-        <valItem ident="marginright">
-          <equiv/>
-          <gloss>addition is made in right margin.</gloss>
-        </valItem>
-        <valItem ident="margintop">
-          <equiv/>
-          <gloss>addition is made in top margin.</gloss>
-        </valItem>
-        <valItem ident="marginbot">
-          <equiv/>
-          <gloss>addition is made in bottom margin.</gloss>
-        </valItem>
-        <valItem ident="overleaf">
-          <equiv/>
-          <gloss>addition is made on the other side of the leaf.</gloss>
-        </valItem>
-      </valList>
-      <exemplum>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">Then they went back home.
-<addSpan place="supralinear marginright overleaf" to="p23"/>
-When they got there, ...</egXML>
-      </exemplum>
-      <remarks>
-        <p>Long additions may frequently spill from one location to
-another; in this case, more than one value may be given, as shown in
-the example above.</p>
-      </remarks>
-    </attDef>
     <attDef ident="to" usage="req">
 	<equiv/>
-	<desc>indicates the endpoint
-of the added passage, by supplying the value of the <att>xml:id</att>
-attribute of an <gi>anchor</gi> or other empty element placed there.</desc>
+	<desc>indicates the endpoint of the added passage, by
+	supplying the value of the <att>xml:id</att> attribute of an
+	<gi>anchor</gi> or other empty element placed there.</desc>
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
       <valDesc>any valid identifier.</valDesc>
       <exemplum>
@@ -81,8 +30,8 @@ attribute of an <gi>anchor</gi> or other empty element placed there.</desc>
       </exemplum>
       <remarks>
         <p>Both the beginning and the end of the added material must
-be marked; the beginning by the <gi>addSpan</gi> element itself, the
-end by the <att>to</att> attribute.</p>
+        be marked; the beginning by the <gi>addSpan</gi> element
+        itself, the end by the <att>to</att> attribute.</p>
       </remarks>
     </attDef>
   </attList>
