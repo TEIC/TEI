@@ -28,16 +28,27 @@ form_remove=supprimer
 selectedModules_headline=Liste des Modules selectionn&eacute;s
 
 [de]
-helpmessage=Wovon man nicht sprechen kann, daruber muss mann schweigen
+helpmessage=Auf Hinzufügen klicken, um das Modul ihrem Schema hinzuzufügen, oder auf den Namen des Moduls klicken um dessen Inhalt zu verändern. 
 headline=Die TEI Module
 
 
-form_headline=List der TEI Module
+form_headline=Liste der TEI Module
 form_moduleName=Name des Modules
 form_description=Eine kurze Beschreibung
 form_changes=&Auml;nderungen
 form_changed=ver&auml;ndert
 form_add=hinzuf&uuml;gen
 form_remove=entfernen
-
 selectedModules_headline=Liste der ausgew&auml;hlten Module
+
+[ch]
+helpmessage=當要一個模組加到您的文件模型按「增加」. 當要更改一個模組的內容按它的名稱.
+headline=TEI 模組
+form_headline=TEI 模組清單
+form_moduleName=模組名稱
+form_description=簡短的說明
+form_changes=改變
+form_changed=改過
+form_add=增加
+form_remove=刪除
+selectedModules_headline=已被選的模組清單

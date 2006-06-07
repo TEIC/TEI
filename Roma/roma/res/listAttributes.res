@@ -25,13 +25,25 @@ form_description=Description
 form_delete=Supprimer
 
 [de]
-helpmessage=asdljasdklasjd
+helpmessage=Hier sind die für diese Klasse oder dieses Element definierten Attribute. 
 
 form_headline=Liste der Attribute
-form_add=Ein neues Attribut hinzuf�gen
+form_add=Ein neues Attribut hinzufügen
 form_change=Attribut bearbeiten
 form_include=einbinden
 form_exclude=ausnehmen
 form_tagName=Name des Tags
 form_description=Beschreibung
-form_delete=L�schen
+form_delete=Löschen
+
+
+[ch]
+helpmessage=已屬於這個集合或元素的屬性. 
+form_headline=屬性清單
+form_add=增加新的屬性
+form_change=更改屬性
+form_include=包含
+form_exclude=不包含
+form_tagName=標籤名稱
+form_description=描述
+form_delete=刪除

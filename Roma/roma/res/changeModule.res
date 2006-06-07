@@ -24,7 +24,7 @@ form_changeAttributes=Changer les attributs
 
 
 [de]
-helpmessage=asdljasdklasjd
+helpmessage=Hier können Sie die Elemente auswählen, die in dieses Modul eingebunden werden sollen.  Klicken Sie "Einbinden" um alle einzubinden, oder "Ausnehmen" um alle auszunehmen. 
 form_headline=Liste der hinzugef&uuml;gten Elemente
 form_changeAttributes=Attribute ver&auml;ndern
 form_include=einbinden
@@ -32,3 +32,14 @@ form_exclude=ausnehmen
 form_tagName=Name des Tags
 form_description=Beschreibung
 form_attributes=Attribute
+
+[ch]
+helpmessage=選想要包含的元素. 如要全部包含按「包含」, 要全部排除在外按「不包含」.
+headline=更改模組
+form_headline=模組所包含的元素:
+form_include=包含
+form_exclude=不包含
+form_tagName=標籤名稱
+form_description=描述
+form_attributes=屬性
+form_changeAttributes=更改屬性

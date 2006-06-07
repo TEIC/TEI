@@ -29,9 +29,8 @@ form_delete=Supprimer
 form_changeAttributes=Changer les attributs
 
 [de]
-helpmessage=asdljasdklasjd
+helpmessage=Diese Elemente haben Sie für Ihr Schema definiert.
 headline=Hinzugef&uuml;gte Elemente
-
 form_headline=Liste der hinzugef&uuml;gten Elemente
 form_add=Ein neues Element hinzuf&uuml;gen
 form_changeElement=Element bearbeiten
@@ -42,3 +41,17 @@ form_description=Beschreibung
 form_attributes=Attribute
 form_delete=L&ouml;schen
 form_changeAttributes=Attribute ver&auml;ndern
+
+[ch]
+helpmessage=已被定義的元素清單
+headline=被增加的元素
+form_headline=已被增加的元素清單
+form_add=增加新的元素
+form_changeElement=更改元素
+form_include=包含
+form_exclude=不包含
+form_tagName=標籤名稱
+form_description=描述
+form_attributes=屬性
+form_delete=刪除
+form_changeAttributes=更改刪除

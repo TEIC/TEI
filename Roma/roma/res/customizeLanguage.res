@@ -15,4 +15,15 @@ form_language=Quelle  langue pr&eacute;f&eacute;riez-vous?
 form_clearCustomization=Enlever personnalisation (retourner en anglais)
 
 [de]
-helpmessage=asdljasdklasjd
+helpmessage=Wählen Sie eine andere Sprache
+headline=Wählen Sie eine andere Sprache
+form_headline=Sollen die Elemente und Attribute in einer anderen Sprache erscheinen?
+form_language=Welche Sprache bevorzugen Sie?
+form_clearCustomization=Anpassung rückgängig machen (go back to english)
+
+[ch]
+helpmessage=選另外一種語言
+headline=選另外一種語言
+form_headline=您想要用另外一種語言來看元素和屬性?
+form_language=您想要用什麼語言?
+form_clearCustomization=還原 (go back to english)

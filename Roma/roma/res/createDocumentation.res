@@ -10,9 +10,16 @@ helpmessage=Maintenant on va cr&eacute;er de documentation de r&eacute;f&eacute;
 headline=Documentation?
 
 form_headline=Cr&eacute;ation de la  documentation en cours
-form_output=Quel format pr&eacute;f&eacutelriez-vous?
+form_output=Quel format pr&eacute;f&eacute;riez-vous?
 
 [de]
-helpmessage=Niemand kennt
-form_headline=Getting some nice documentation
-form_output=Which output would you prefer?
+helpmessage=Hier können Sie eine Datei erstellen, die ihr Schema dokumentiert
+headline=Dokumentierung
+form_headline=Dokumentierungsdatei erstellen
+form_output=Welches Format bevorzugen Sie?
+
+[ch]
+helpmessage=在這兒可以製造說明檔
+headline=需要說明檔嗎?
+form_headline=製造說明檔
+form_output=您想要哪一個格式

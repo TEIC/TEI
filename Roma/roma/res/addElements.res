@@ -21,12 +21,22 @@ form_contents=Contenu
 form_description=Description
 
 [de]
-helpmessage=asdljasdklasjd
+helpmessage=Nachdem Sie auf "Abschicken" drücken, können Sie Attribute hinzufügen.
 headline=Ein neues Element hinzuf&uuml;gen
 
-form_headline=Definieren Sie sich ein neues Element
+form_headline=Definieren Sie ein neues Element
 form_name=Name
 form_modelClasses=Model Klassen
 form_attributeClasses=Attribut Klassen
 form_contents=Inhalt
 form_description=Beschreibung
+
+[ch]
+helpmessage=
+headline=增加新的元素
+form_headline=定製新元素
+form_name=屬性名稱
+form_modelClasses=Model集合
+form_attributeClasses=屬性集合
+form_contents=內容
+form_description=描述

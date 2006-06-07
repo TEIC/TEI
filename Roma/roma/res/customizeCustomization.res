@@ -33,13 +33,23 @@ form_author=Author name
 form_description=Description
 
 [de]
-helpmessage=asdljasdklasjd
-headline=Verfeinern sie ihr pers&ouml;nliches TEI
+helpmessage=Hier koennen Sie globale Parameter bestimmen.
+headline=Parameter bestimmen
 
-form_headline=Verfeinern sie ihr pers&ouml;nliches TEI
+form_headline=Parameter bestimmen
 form_title=Titel
 form_filename=Dateiname
 form_language=Sprache
 form_author=Name des Autors
 form_description=Beschreibung
 
+[ch]
+helpmessage=在這兒可以定製全域參數
+headline=定製全域參數
+
+form_headline=定製全域參數
+form_title=標題
+form_filename=檔名
+form_language=語言
+form_author=作者名字
+form_description=描述
