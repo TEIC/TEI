@@ -13,47 +13,12 @@ author, scribe, annotator, or corrector.</desc>
   <classes>
     <memberOf key="model.global.edit"/>
     <memberOf key="att.editLike"/>
+    <memberOf key="att.authorialIntervention"/>
   </classes>
   <content>
     <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
   </content>
   <attList>
-    <attDef ident="type" usage="opt">
-	<equiv/>
-	<desc>classifies the deletion, using any convenient typology.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
-      <valList type="open">
-        <valItem ident="overstrike">
-          <equiv/>
-          <gloss>deletion indicated by line crossing out the text.</gloss>
-        </valItem>
-        <valItem ident="erasure">
-          <equiv/>
-          <gloss>deletion indicated by erasure of the text.</gloss>
-        </valItem>
-        <valItem ident="bracketed">
-          <equiv/>
-          <gloss>deletion indicated by brackets in the text or margin.</gloss>
-        </valItem>
-        <valItem ident="subpunction">
-          <equiv/>
-          <gloss>deletion indicated by dots beneath the letters deleted.</gloss>
-        </valItem>
-      </valList>
-      <exemplum>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
-      </exemplum>
-    </attDef>
-    <attDef ident="hand" usage="opt">
-	<equiv/>
-	<desc>signifies the hand of the agent which made the deletion.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
-      <valDesc>must be one of the hand identifiers declared in the document
-header (see section <ptr target="#PHDH"/>).</valDesc>
-      <exemplum>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
-      </exemplum>
-    </attDef>
     <attDef ident="to" usage="req">
 	<equiv/>
 	<desc>identifies the endpoint of the deleted passage,
@@ -71,51 +36,6 @@ be marked; the beginning by the <gi>delSpan</gi> element itself, the
 end by the <att>to</att> attribute.  The element pointed at by
 <att>to</att> is understood to be included within the deleted
 passage.</p>
-      </remarks>
-    </attDef>
-    <attDef ident="status" usage="opt">
-	<equiv/>
-	<desc>indicates whether the deletion is faulty, e.g. by including too
-much or too little text.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
-      <defaultVal>unremarkable</defaultVal>
-      <valList type="open">
-        <valItem ident="excessStart">
-          <equiv/>
-          <gloss>some text at the beginning of the deletion is marked as
-deleted even though it clearly should not be deleted.</gloss>
-        </valItem>
-        <valItem ident="excessEnd">
-          <equiv/>
-          <gloss>some text at the end of the deletion is marked as
-deleted even though it clearly should not be deleted.</gloss>
-        </valItem>
-        <valItem ident="shortStart">
-          <equiv/>
-          <gloss>some text at the beginning of the deletion is not marked as
-deleted even though it clearly should be.</gloss>
-        </valItem>
-        <valItem ident="shortEnd">
-          <equiv/>
-          <gloss>some text at the end of the deletion is not marked as
-deleted even though it clearly should be.</gloss>
-        </valItem>
-        <valItem ident="unremarkable">
-          <equiv/>
-          <gloss>the deletion is not faulty.</gloss>
-        </valItem>
-      </valList>
-      <exemplum>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
-      </exemplum>
-      <remarks>
-        <p>
-<!-- have replaced 'right' and 'left' with 'start' and 'end',  -->
-<!-- which are less ambiguous in the case of vertical writing.  -MSM -->
-        </p>
-        <p>Marking a deletion as faulty is inescapably an interpretive act;
-the usual test applied in practice is the linguistic acceptability of
-the text with and without the letters or words in question.</p>
       </remarks>
     </attDef>
   </attList>
