@@ -96,8 +96,9 @@
                 <xsl:text>%TEI.extensions.ent;&#10;</xsl:text>
               </xsl:if>
               <xsl:call-template name="dtdComment">
-                <xsl:with-param name="text">list of element
-                names</xsl:with-param>
+                <xsl:with-param name="text">
+		  <xsl:text>list of element names</xsl:text>
+		</xsl:with-param>
               </xsl:call-template>
               <xsl:if test="$parameterize='true'">
                 <xsl:text>&lt;!ENTITY % NS '</xsl:text>
