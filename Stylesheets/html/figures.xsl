@@ -124,7 +124,7 @@
   </xd:doc>
   <xsl:template match="tei:figure">
     <xsl:if test="@xml:id">
-      <a class="f" name="{@xml:id}">
+      <a name="{@xml:id}" class="f">
         <xsl:comment> </xsl:comment>
       </a>
     </xsl:if>
