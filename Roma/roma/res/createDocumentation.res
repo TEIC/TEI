@@ -15,11 +15,13 @@ form_output=Quel format pr&eacute;f&eacute;riez-vous?
 [de]
 helpmessage=Hier können Sie eine Datei erstellen, die ihr Schema dokumentiert
 headline=Dokumentierung
+
 form_headline=Dokumentierungsdatei erstellen
 form_output=Welches Format bevorzugen Sie?
 
 [ch]
-helpmessage=在這兒可以製造說明檔
+helpmessage=在這兒可以取得自製TEI模型的說明檔。
 headline=需要說明檔嗎?
-form_headline=製造說明檔
-form_output=您想要哪一個格式
+
+form_headline=建立說明檔
+form_output=您想要哪一種檔案格式？

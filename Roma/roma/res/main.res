@@ -45,15 +45,15 @@ searchtei=Suche in der TEI Database
 
 [ch]
 helpmessage=
-title=製造TEI的文件模型檔
-save=儲存
-help=說明
-customize=調整
-new=新
-addelements=加元素
-changeclasses=更改class
+title=製作TEI的文件模型檔
+save=儲存設定檔
+help=解說
+customize=調整設定
+new=重新開始
+addelements=新增元素
+changeclasses=更改元素集
 modules=模組
 language=語言
-schema=製造文件模型
-documentation=製造說明檔
+schema=建立文件模型
+documentation=建立說明檔
 searchtei=檢索TEI

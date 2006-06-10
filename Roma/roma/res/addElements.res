@@ -32,11 +32,12 @@ form_contents=Inhalt
 form_description=Beschreibung
 
 [ch]
-helpmessage=
-headline=增加新的元素
-form_headline=定製新元素
-form_name=屬性名稱
-form_modelClasses=Model集合
-form_attributeClasses=屬性集合
+helpmessage=將新元素定製完成並送出後，可以接著增加新屬性。
+headline=增加新元素
+
+form_headline=定製一個新元素
+form_name=名稱
+form_modelClasses=結構元素集
+form_attributeClasses=屬性元素集
 form_contents=內容
 form_description=描述

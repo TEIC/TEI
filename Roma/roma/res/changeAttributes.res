@@ -24,6 +24,8 @@ form_valList=Liste des valeurs
 
 [de]
 helpmessage=Sie können Attribute entfernen oder ihren Datentyp ändern.
+headline=Attribute verändern
+
 form_headline=Attribut verändern
 form_name=Attributname
 form_optional=Optional?
@@ -33,12 +35,14 @@ form_description=Beschreibung
 form_valList=Werteliste
 
 [ch]
-helpmessage=您可以刪除屬性或更改屬性的datatyp
+helpmessage=您可以刪除屬性或更改屬性的data種類。
+headline=更改屬性
+
 form_headline=更改屬性
 form_name=屬性名稱
-form_optional=是否不必備的?
+form_optional=是否為非必備屬性？
 form_contents=內容
-form_defaultValue=預設設定
+form_defaultValue=預設屬性值
 form_description=描述
 form_valList=屬性值清單
 

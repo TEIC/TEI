@@ -15,11 +15,13 @@ form_output=Quel format pr&eacute;f&eacute;riez-vous?
 [de]
 helpmessage=Sie können wählen, ob das Schema in Relax NG, W3C, oder DTD Syntax erstellt werden soll.
 headline=Zeit für das Schema
+
 form_headline=Schema machen
 form_output=Welches Format bevorzugen Sie?
 
 [ch]
-helpmessage=您可以選Relax NG, W3C或DTD的模型語言.
-headline=製造文件模型
-form_headline=製造模型語言
-form_output=您想要哪一個模型語言?
+helpmessage=您可以選擇Relax NG、W3C或DTD的模型語言來建立文件模型檔。
+headline=建立文件模型
+
+form_headline=建立文件模型
+form_output=您想要哪一種模型語言?

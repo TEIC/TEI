@@ -26,6 +26,7 @@ form_delete=Supprimer
 
 [de]
 helpmessage=Hier sind die für diese Klasse oder dieses Element definierten Attribute. 
+headline=Bereits hinzugefügte Attribute
 
 form_headline=Liste der Attribute
 form_add=Ein neues Attribut hinzufügen
@@ -38,9 +39,11 @@ form_delete=Löschen
 
 
 [ch]
-helpmessage=已屬於這個集合或元素的屬性. 
+helpmessage=已被定義在這個元素或元素集當中的屬性。
+headline=現有的屬性
+
 form_headline=屬性清單
-form_add=增加新的屬性
+form_add=增加新屬性
 form_change=更改屬性
 form_include=包含
 form_exclude=不包含
