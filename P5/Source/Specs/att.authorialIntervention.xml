@@ -1,0 +1,105 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date: $
+$Author: $
+-->
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="atts" ident="att.authorialIntervention">
+  <desc>provides attributes describing the nature of an authorial intervention.</desc>
+  <attList>
+    <!-- ********* hand= ********* -->
+    <attDef ident="hand" usage="opt">
+      <desc>signifies the hand of the agent which made the addition or
+      performed the deletion.</desc>
+      <datatype>
+	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>must refer to a <gi>hand</gi> element, typically
+      declared in the document header (see section <ptr
+      target="#PHDH"/>).</valDesc>
+    </attDef>
+    <!-- ********* status= ********* -->
+    <attDef ident="status" usage="opt">
+      <desc>may be used to indicate faulty deletions, e.g. strikeouts
+      which include too much or too little text, or erroneous
+      additions, e.g., an insertion which duplicates some of the text
+      already present.</desc>
+      <datatype>
+	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <defaultVal>unremarkable</defaultVal>
+<!--      <valDesc>any description of flaws in the marking of a deletion, e.g.
+      <val>excess left</val>, <val>excess right</val>, <val>short left</val>, <val>short
+      right</val>.</valDesc> -->
+      <valList type="open">
+	<valItem ident="duplicate">
+	  <gloss>all of the text indicated as an addition duplicates
+	  some text that is in the original, whether the duplication
+	  is word-for-word or less exact.</gloss>
+	</valItem>
+	<valItem ident="duplicate-partial">
+	  <gloss>part of the text indicated as an addition duplicates
+	  some text that is in the original</gloss>
+	</valItem>
+        <valItem ident="excessStart">
+          <gloss>some text at the beginning of the deletion is marked
+          as deleted even though it clearly should not be
+          deleted.</gloss>
+        </valItem>
+        <valItem ident="excessEnd">
+          <gloss>some text at the end of the deletion is marked as
+          deleted even though it clearly should not be
+          deleted.</gloss>
+        </valItem>
+        <valItem ident="shortStart">
+          <gloss>some text at the beginning of the deletion is not
+          marked as deleted even though it clearly should be.</gloss>
+        </valItem>
+        <valItem ident="shortEnd">
+          <gloss>some text at the end of the deletion is not marked as
+          deleted even though it clearly should be.</gloss>
+        </valItem>
+        <valItem ident="unremarkable">
+          <gloss>the deletion is not faulty.</gloss>
+        </valItem>
+      </valList>
+      <exemplum>
+	<egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+      <remarks>
+	<p>Status information on each deletion is needed rather rarely
+	except in critical editions from authorial manuscripts; status
+	information on additions is even less common.</p>
+        <p>Marking a deletion or addition as faulty is inescapably an
+        interpretive act; the usual test applied in practice is the
+	linguistic acceptability of the text with and without the
+        letters or words in question.</p>
+      </remarks>
+    </attDef>
+    <!-- ********* type= ********* -->
+    <attDef ident="type" usage="opt">
+      <desc>classifies the type of addition or deletion using any convenient typology.</desc>
+      <datatype>
+	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valDesc>a string identifying the class of addition or deletion.</valDesc>
+      <remarks>
+        <p>No recommendation of any particular typology is made here;
+        note however that the <att>type</att> attribute should not be
+        used to record the manner in which a deletion is signalled in
+        the source. This should be recorded using the global
+        <att>rend</att> attribute, with values such as
+        <val>subpunction</val> (dots below the line indicate matter to
+        be deleted); <val>overstrike</val> (lines through the text
+        indicated matter to be deleted); <val>erasure</val> (material
+        to be deleted has been erased, but remains legible enough to
+        transcribe); <val>bracketed</val> (brackets around the
+        material indicate that it is spurious or superfluous),
+        etc.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <listRef>
+    <ptr target="#COEDADD #PHAD"/>
+  </listRef>
+</classSpec>
