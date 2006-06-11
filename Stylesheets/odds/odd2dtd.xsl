@@ -542,6 +542,16 @@
                             <xsl:apply-templates select="."/>
                           </xsl:if>
                         </xsl:when>
+                        <xsl:when test="key('CLASSES',substring-before(@name,'.sequence'))">
+                          <xsl:variable name="exists">
+                            <xsl:call-template name="checkClass">
+                              <xsl:with-param name="id" select="substring-before(@name,'.sequence')"/>
+                            </xsl:call-template>
+                          </xsl:variable>
+                          <xsl:if test="not($exists='')">
+                            <xsl:apply-templates select="."/>
+                          </xsl:if>
+                        </xsl:when>
                         <xsl:when test="key('MACROS',@name)">
                           <xsl:apply-templates select="."/>
                         </xsl:when>
@@ -780,6 +790,18 @@
               <xsl:variable name="exists">
                 <xsl:call-template name="checkClass">
                   <xsl:with-param name="id" select="@name"/>
+                </xsl:call-template>
+              </xsl:variable>
+              <xsl:if test="not($exists='')">
+                <xsl:text>%</xsl:text>
+                <xsl:value-of select="@name"/>
+                <xsl:text>;</xsl:text>
+              </xsl:if>
+            </xsl:when>
+            <xsl:when test="key('CLASSES',substring-before(@name,'.sequence'))">
+              <xsl:variable name="exists">
+                <xsl:call-template name="checkClass">
+                  <xsl:with-param name="id" select="substring-before(@name,'.sequence')"/>
                 </xsl:call-template>
               </xsl:variable>
               <xsl:if test="not($exists='')">
@@ -1090,21 +1112,44 @@
       </xsl:when>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template name="classModel">
-    <xsl:if test="$verbose='true'">
-      <xsl:message> ....model <xsl:value-of select="@ident"/></xsl:message>
+    <xsl:param name="declare">false</xsl:param>
+    <xsl:call-template name="processClassDefinition">
+      <xsl:with-param name="type" select="@generate"/>
+      <xsl:with-param name="declare" select="$declare"/>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template name="makeClassDefinition">
+  <xsl:param name="type">alternation</xsl:param>
+  <xsl:param name="declare"/>
+  <xsl:variable name="IDENT">
+      <xsl:value-of select="@ident"/>
+      <xsl:choose>
+	<xsl:when test="$type='alternation'"/>
+	<xsl:otherwise>
+	  <xsl:text>.</xsl:text>
+	  <xsl:value-of select="$type"/>
+	</xsl:otherwise>
+      </xsl:choose>
+  </xsl:variable>
+  <xsl:if test="$verbose='true'">
+      <xsl:message> .... ... generate model <xsl:value-of
+      select="$type"/> for <xsl:value-of select="@ident"/>
+      </xsl:message>
     </xsl:if>
     <xsl:if test="$parameterize='true'">
       <xsl:text>&#10;&lt;!ENTITY % x.</xsl:text>
-      <xsl:value-of select="@ident"/>
+      <xsl:value-of select="$IDENT"/>
       <xsl:text> "" &gt;</xsl:text>
     </xsl:if>
     <xsl:text>&#10;&lt;!ENTITY % </xsl:text>
-    <xsl:value-of select="@ident"/>
+    <xsl:value-of select="$IDENT"/>
     <xsl:text> "</xsl:text>
     <xsl:if test="$parameterize='true'">
       <xsl:text>%x.</xsl:text>
-      <xsl:value-of select="@ident"/>
+      <xsl:value-of select="$IDENT"/>
       <xsl:text>; </xsl:text>
     </xsl:if>
     <xsl:variable name="generate" select="@generate"/>
@@ -1179,20 +1224,15 @@
     </xsl:variable>
     <!-- a class model needs bracketing if all its members are also classes-->
     <xsl:for-each select="exsl:node-set($members)/M">
-      <xsl:call-template name="processClassDefinition">
-	<xsl:with-param 
-	    name="type" select="$generate"/>
+      <xsl:call-template name="memberOfClassDefinition">
+	<xsl:with-param name="type" select="$type"/>
       </xsl:call-template>
     </xsl:for-each>
     <xsl:text>"&gt; </xsl:text>
   </xsl:template>
 
-  <xsl:template name="makeClassDefinition">
+  <xsl:template name="memberOfClassDefinition">
     <xsl:param name="type"/>
-    <xsl:if test="$verbose='true'">
-      <xsl:message> .... ... generate model <xsl:value-of select="$type"/>
-      </xsl:message>
-    </xsl:if>
     <xsl:if test="count(N[@type]) = 2 and
 		  count(N[@type])=count(N)">(</xsl:if>
     <xsl:for-each select="N">

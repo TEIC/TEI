@@ -274,8 +274,7 @@
       <xsl:with-param name="content">
         <Wrapper>
 	  <xsl:call-template name="processClassDefinition">
-	    <xsl:with-param 
-		name="type" select="@generate"/>
+	    <xsl:with-param name="type" select="@generate"/>
 	    <xsl:with-param name="declare" select="$declare"/>
 	  </xsl:call-template>
 	</Wrapper>
@@ -296,8 +295,7 @@
 
     <xsl:when test="contains($type,' ')">
       <xsl:call-template name="makeClassDefinition">
-	<xsl:with-param name="type" select="substring-before($type,'
-					    ')"/>
+	<xsl:with-param name="type" select="substring-before($type,' ')"/>
 	    <xsl:with-param name="declare" select="$declare"/>
       </xsl:call-template>
       <xsl:call-template name="processClassDefinition">
@@ -321,7 +319,8 @@
   <xsl:param name="type"/>
   <xsl:param name="declare"/>
     <xsl:if test="$verbose='true'">
-      <xsl:message> .... ... generate model <xsl:value-of select="$type"/>
+      <xsl:message> .... ... generate model <xsl:value-of
+      select="$type"/> for <xsl:value-of select="@ident"/>
       </xsl:message>
     </xsl:if>
 <!--
