@@ -16,11 +16,16 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     version="1.0"
 >
-  
 <xsl:import href="./odd2htmlp5.xsl"/>
-  
+<xsl:output method="xml"
+	      doctype-public="//W3C//DTD XHTML 1.1//EN"
+	      doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"
+	      encoding="utf-8"
+	      />  
+ 
 <xsl:param name="autoToc">true</xsl:param>
 <xsl:param name="splitLevel">-1</xsl:param>
+<xsl:param name="footnoteFile">false</xsl:param>
 <xsl:param name="pageLayout">Simple</xsl:param>
 <xsl:param name="cssFile">tei-print.css</xsl:param>
 <xsl:param name="parentWords">Text Encoding Initiative Consortium</xsl:param>
