@@ -14,34 +14,19 @@ author, scribe, annotator, or corrector.</desc>
     <memberOf key="model.global.edit"/>
     <memberOf key="att.editLike"/>
     <memberOf key="att.authorialIntervention"/>
+    <memberOf key="att.spanning"/>
   </classes>
-  <content>
+  <content xmlns:s="http://www.ascc.net/xml/schematron">
     <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+    <s:pattern name="spanTo_required">
+      <s:rule context="delSpan">
+	<s:assert test="@spanTo">The spanTo= attribute of <s:name/> is required.</s:assert>
+      </s:rule>
+    </s:pattern>
   </content>
-  <attList>
-    <attDef ident="to" usage="req">
-	<equiv/>
-	<desc>identifies the endpoint of the deleted passage,
-by supplying the value of the <att>xml:id</att>
-attribute of an <gi>anchor</gi> or other empty element placed there.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
-      <valDesc>any valid identifier.</valDesc>
-      <exemplum>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
-      </exemplum>
-      <remarks>
-        <p>Both the beginning and the end of the deleted material
-must
-be marked; the beginning by the <gi>delSpan</gi> element itself, the
-end by the <att>to</att> attribute.  The element pointed at by
-<att>to</att> is understood to be included within the deleted
-passage.</p>
-      </remarks>
-    </attDef>
-  </attList>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">      <p>Paragraph partially deleted.  This is the undeleted
-portion <delSpan resp="#author" to="#a23"/>and this the deleted
+portion <delSpan resp="#author" spanTo="#a23"/>and this the deleted
 portion of the paragraph.</p>
       <p>Paragraph deleted together with neighboring material.</p>
       <p>Second fully deleted paragraph.</p>
@@ -51,23 +36,24 @@ the resumption <anchor xml:id="a23"/> of the text. ...</p>
     </egXML>
   </exemplum>
   <remarks>
-    <p>Both the beginning and ending of the deleted sequence
-must be marked:  the beginning by the <gi>delSpan</gi> element, the
-ending by the target of the <att>to</att> attribute.</p>
-    <p>The text deleted must be at least partially legible, in order for
-the encoder to be able to transcribe it.  If it is not legible at
-all, the <gi>delSpan</gi> tag should not be used.  Rather, the
-<gi>gap</gi> tag should be employed to signal that text cannot be
-transcribed, with the value of the <att>reason</att> attribute giving
-the cause for the omission from the transcription as deletion.  If it
-is not fully legible, the <gi>unclear</gi> element should be used to
-signal the areas of text which cannot be read with confidence.  See
-further sections <ptr target="#PHOM"/> and, for the close association of
-the <gi>delSpan</gi> tag with the <gi>gap</gi>, <gi>damage</gi>,
-<gi>unclear</gi> and <gi>supplied</gi> elements, <ptr target="#PHCOMB"/>.</p>
-    <p>The <gi>delSpan</gi> tag should not be used for deletions made by
-editors or encoders.  In these cases, either the <gi>corr</gi> tag or
-the <gi>gap</gi> tag should be used.</p>
+    <p>Both the beginning and ending of the deleted sequence must be
+    marked: the beginning by the <gi>delSpan</gi> element, the ending
+    by the target of the <att>spanTo</att> attribute.</p>
+    <p>The text deleted must be at least partially legible, in order
+    for the encoder to be able to transcribe it. If it is not legible
+    at all, the <gi>delSpan</gi> tag should not be used. Rather, the
+    <gi>gap</gi> tag should be employed to signal that text cannot be
+    transcribed, with the value of the <att>reason</att> attribute
+    giving the cause for the omission from the transcription as
+    deletion. If it is not fully legible, the <gi>unclear</gi> element
+    should be used to signal the areas of text which cannot be read
+    with confidence. See further sections <ptr target="#PHOM"/> and,
+    for the close association of the <gi>delSpan</gi> tag with the
+    <gi>gap</gi>, <gi>damage</gi>, <gi>unclear</gi> and
+    <gi>supplied</gi> elements, <ptr target="#PHCOMB"/>.</p>
+    <p>The <gi>delSpan</gi> tag should not be used for deletions made
+    by editors or encoders. In these cases, either the <gi>corr</gi>
+    tag or the <gi>gap</gi> tag should be used.</p>
   </remarks>
   <listRef>
     <ptr target="#PHAD"/>
