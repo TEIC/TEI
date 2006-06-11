@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet
-  exclude-result-prefixes="exsl estr edate fo a xd tei rng local teix xs"
+  exclude-result-prefixes="exsl estr edate fo a xd tei html rng local teix xs"
   extension-element-prefixes="edate exsl estr" version="1.0"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:edate="http://exslt.org/dates-and-times"
@@ -205,7 +205,7 @@
       <xsl:apply-templates mode="doc" select="tei:gloss"/>
       <xsl:apply-templates mode="doc" select="tei:desc"/>
       <xsl:apply-templates select="tei:valList"/>
-      <xsl:apply-templates select="tei:exemplum"/>
+      <xsl:apply-templates select="tei:exemplum" mode="doc"/>
     </tei:item>
   </xsl:template>
   <xsl:template match="tei:attDef/tei:datatype">
@@ -241,27 +241,47 @@
     </xsl:call-template>
   </xsl:template>
   <xsl:template match="tei:attList" mode="summary">
-    <xsl:if test="tei:attDef">
+    <xsl:if test="tei:attDef or tei:attList/tei:attDef">
       <tei:list type="gloss">
         <xsl:apply-templates mode="summary"/>
       </tei:list>
     </xsl:if>
   </xsl:template>
   <xsl:template match="tei:attList[@org='choice']">
-    <tei:label>Choice:</tei:label>
-    <tei:item>
-      <tei:list type="gloss">
-        <xsl:apply-templates mode="summary"/>
-      </tei:list>
-    </tei:item>
+    <xsl:choose>
+      <xsl:when test="parent::tei:attList">
+	<tei:label>Choice:</tei:label>
+	<tei:item>
+	  <tei:list type="gloss">
+	    <xsl:apply-templates mode="summary"/>
+	  </tei:list>
+	</tei:item>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text> Choice: </xsl:text>
+	  <tei:list type="gloss">
+	    <xsl:apply-templates mode="summary"/>
+	  </tei:list>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xsl:template match="tei:attList[@org='choice']" mode="summary">
-    <tei:label>Choice:</tei:label>
-    <tei:item>
-      <tei:list type="gloss">
-        <xsl:apply-templates mode="summary"/>
-      </tei:list>
-    </tei:item>
+    <xsl:choose>
+      <xsl:when test="parent::tei:attList">
+	<tei:label>Choice:</tei:label>
+	<tei:item>
+	  <tei:list type="gloss">
+	    <xsl:apply-templates mode="summary"/>
+	  </tei:list>
+	</tei:item>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text> Choice: </xsl:text>
+	  <tei:list type="gloss">
+	    <xsl:apply-templates mode="summary"/>
+	  </tei:list>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xsl:template match="tei:equiv" mode="weave">
     <xsl:if test="@name">
@@ -408,6 +428,8 @@
     <xsl:apply-templates mode="doc" select="tei:desc"/>
     <xsl:choose>
       <xsl:when test="$atts='-'"/>
+      <xsl:when test="self::tei:macroSpec"/>
+      <xsl:when test="not(tei:attList/tei:attDef)"/>
       <xsl:when test="not($atts='')">
         <tei:list type="gloss">
           <xsl:variable name="HERE" select="."/>
@@ -555,6 +577,9 @@
     <tei:p>
       <xsl:apply-templates/>
     </tei:p>
+  </xsl:template>
+  <xsl:template match="tei:remarks/tei:p">
+      <xsl:apply-templates/>
   </xsl:template>
   <xsl:template match="tei:remarks" mode="doc">
     <tei:p>
@@ -729,12 +754,31 @@
     </tei:hi>
   </xsl:template>
   <xsl:template name="logoFramePicture"/>
-  <xsl:template match="tei:specGrp"> The following declarations constitute
-    specification group <xsl:number level="any"/>: <tei:list type="gloss">
-      <xsl:copy-of select="@xml:id"/>
-      <xsl:apply-templates/>
-    </tei:list>
+  <xsl:template match="tei:specGrp">
+    <xsl:variable name="text">
+      <xsl:text>The following declarations constitute
+      specification group</xsl:text>
+      <xsl:number level="any"/>
+      <xsl:text>: </xsl:text>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="parent::tei:p">
+      <tei:list type="gloss">
+	<xsl:copy-of select="@xml:id"/>
+	<xsl:apply-templates/>
+      </tei:list>
+      </xsl:when>
+      <xsl:otherwise>
+	<tei:p>
+	  <tei:list type="gloss">
+	    <xsl:copy-of select="@xml:id"/>
+	    <xsl:apply-templates/>
+	  </tei:list>
+	</tei:p>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
+
   <xsl:template name="makeAnchor">
     <xsl:param name="name"/>
   </xsl:template>
