@@ -108,7 +108,6 @@ validate: oddschema exampleschema valid
 
 valid: jing_version=$(wordlist 1,3,$(shell jing))
 valid: check
-	-xmllint --noent --xinclude ${DRIVER} > Source.xml
 	@echo --------- jing
 	@echo ${jing_version}
 #	We have discovered that jing reports 3-letter language codes
@@ -118,10 +117,12 @@ valid: check
 #	with grep -v. Note that we discard *all* such messages, even
 #	though fewer than 500 of the 17,576 possible combinations
 #	(i.e. < 3%) are valid codes.
-	 jing -t p5odds.rng Source.xml \
+	 jing -t p5odds.rng ${DRIVER} \
 	 | grep -v ": error: Illegal xml:lang value \"[A-Za-z][A-Za-z][A-Za-z]\"\.$$"
 	@echo --------- rnv
+	-xmllint --noent --xinclude ${DRIVER} > Source.xml
 	-rnv -v p5odds.rnc Source.xml
+	rm Source.xml
 	@echo --------- nrl
 #	In addition to erroneously reporting xml:lang= 3-letter
 #	values, jing seems to report an "unfinished element" every
@@ -133,15 +134,14 @@ valid: check
 #	required to make it finished) we end up throwing out all such
 #	messages via the grep -v command so we're not annoyed by the
 #	over 800 that are not really problems.
-	-jing p5nrl.xml Source.xml \
+	-jing p5nrl.xml ${DRIVER} \
 	 | grep -v ": error: Illegal xml:lang value \"[A-Za-z][A-Za-z][A-Za-z]\"\.$$" \
 	 | grep -v ': error: unfinished element$$'
 	@echo --------- XSLT validator
-	xsltproc validator.xsl Source.xml >& tmp && sed 's/TEI...\/text...\/body...\///' tmp && rm tmp
+	xsltproc validator.xsl ${DRIVER} >& tmp && sed 's/TEI...\/text...\/body...\///' tmp && rm tmp
 	@echo --------- xmllint RelaxNG test REMOVED
 #	@xmllint --version
 #	-xmllint  --relaxng p5odds.rng --noent --xinclude --noout ${DRIVER}
-	rm Source.xml
 
 test:
 	(cd Test; make)
