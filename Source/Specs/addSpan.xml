@@ -13,32 +13,24 @@ $Author$
     <memberOf key="att.authorialIntervention"/>
     <memberOf key="att.editLike"/>
     <memberOf key="att.placement"/>
+    <memberOf key="att.spanning"/>
   </classes>
-  <content>
+  <content xmlns:s="http://www.ascc.net/xml/schematron">
     <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+    <s:pattern name="spanTo_required">
+      <s:rule context="addSpan">
+	<s:assert test="@spanTo">The spanTo= attribute of <s:name/> is required.</s:assert>
+      </s:rule>
+    </s:pattern>
   </content>
-  <attList>
-    <attDef ident="to" usage="req">
-	<equiv/>
-	<desc>indicates the endpoint of the added passage, by
-	supplying the value of the <att>xml:id</att> attribute of an
-	<gi>anchor</gi> or other empty element placed there.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
-      <valDesc>any valid identifier.</valDesc>
-      <exemplum>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
-      </exemplum>
-      <remarks>
-        <p>Both the beginning and the end of the added material must
-        be marked; the beginning by the <gi>addSpan</gi> element
-        itself, the end by the <att>to</att> attribute.</p>
-      </remarks>
-    </attDef>
-  </attList>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
   </exemplum>
-  <remarks/>
+  <remarks>
+    <p>Both the beginning and the end of the added material must be
+    marked; the beginning by the <gi>addSpan</gi> element itself, the
+    end by the <att>spanTo</att> attribute.</p>
+  </remarks>
   <listRef>
     <ptr target="#PHAD"/>
   </listRef>
