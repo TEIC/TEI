@@ -63,10 +63,10 @@ consists of a number of discrete <term>modules</term>, which can be
 combined more or less as required. Each major chapter of these
 Guidelines defines a distinct module. Each module declares a number of
 <term>elements</term> specific to that module, and may also populate
-particular <term>classes</term>. All classes are declared globally,
-but particular modules extend the range of elements and attributes
-available by adding new members to existing classes of elements, or by
-defining new classes. Modules can also declare particular
+particular <term>classes</term>. All classes are declared globally;
+particular modules extend the meaning of a class by adding elements or attributes
+to it. Wherever possible, element content models are defined in terms
+of classes rather than in terms of specific elements. Modules can also declare particular
 <term>patterns</term>, which act as short-cuts for commonly used
 content models or class references.</p>
 <p>In the present chapter, we discuss the elements needed to support
@@ -77,7 +77,7 @@ technical features of an XML encoding such as element names and
 attributes. Section <ptr target="#TDmodules"/> discusses the elements
 which are used to document XML <term>modules</term> and their high
 level components. Section <ptr target="#TDcrystals"/> discusses the
-elements which document specific XML elements and their attributes,
+elements which document  XML elements and their attributes,
 element classes, and generic patterns or macros. Finally, section <ptr
 target="#TDformal"/> gives an overview of the whole module.</p>
 <div2 xml:id="TDphrase"><head>Phrase level documentary elements</head>
@@ -130,7 +130,7 @@ preference, as further discussed below in <ptr target="#TDeg"/>, since
 the content of this element can be checked for well-formedness. </p>
 <p>These elements are all members of the class
 <ident type="class">model.oddPhr</ident>, which is turn a member of the general
-phrase class. When this module is included in a schema, this class is
+<ident type="class">phrase</ident> class. When this module is included in a schema, this class is
 expanded to include these elements, and they are therefore available
 at any point that a phrase level element is available. </p>
 </div3>
@@ -768,7 +768,7 @@ concerned. For example, the <gi>elementSpec</gi> for the element
 </classes>
 </egXML>
 which indicates that the <gi>hi</gi> element is a member of the class
-with identifier <ident type="class">model.phrase</ident>. The <gi>classSpec</gi>
+with identifier <ident type="class">model.hiLike</ident>. The <gi>classSpec</gi>
 documenting this class is as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><classSpec type="model"  ident="model.hiLike">
   <desc>groups phrase-level elements related to highlighting. </desc>
@@ -778,6 +778,77 @@ documenting this class is as follows:
 which indicates that the class <ident type="class">model.hiLike</ident> is actually
 a member (or subclass) of the class <ident type="class">model.phrase</ident>.
  </p>
+<p>When a model class is referenced in the content model of an element
+(i.e. in the <gi>content</gi> of an <gi>elementSpec</gi>), its
+meaning will depend on the value of the <att>generate</att>
+attribute on the class declaration, and also on the name used to reference the class. </p>
+
+<p>The default and usual behaviour is to replace the class
+reference by an alternated list of all the current members of the
+class. For example, suppose that  the members of the class
+<ident>model.hiLike</ident> are elements  <gi>hi</gi>,  <gi>it</gi>,
+and <gi>bo</gi>. Then a content model such as
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
+  <rng:optional>
+   <rng:ref name="model.hiLike"/>
+</rng:optional></content></egXML>
+would be equivalent to the explicit content model:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
+  <rng:zeroOrMore>
+   <rng:choice>
+     <rng:ref name="hi"/>
+     <rng:ref name="it"/>
+     <rng:ref name="bo"/>
+   </rng:choice>
+</rng:zeroOrMore></content></egXML> and would generate, in DTD
+language, a model such as <code>(hi|it|bo)*</code>. However, if the <att>generate</att>
+attribute on the <gi>classSpec</gi>
+defining <gi>model.hiLike</gi> had the value <val>sequence</val>, a
+content model referencing the class as
+<code>model.hiLike_sequence</code> would be equivalent   to the
+following explicit content model:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
+  <rng:zeroOrMore>
+     <rng:ref name="hi"/>
+     <rng:ref name="it"/>
+     <rng:ref name="bo"/>
+</rng:zeroOrMore></content></egXML> and would generate, in DTD
+language, a model such as <code>(hi,it,bo)*</code>. Similarly, a value of
+<val>sequenceOptional</val> for this attribute (referenced as
+model.hiLike_sequenceOptional) would be equivalent to:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
+  <rng:zeroOrMore>
+     <rng:optional><rng:ref name="hi"/></rng:optional>
+     <rng:optional><rng:ref name="it"/></rng:optional>
+     <rng:optional><rng:ref name="bo"/></rng:optional>
+</rng:zeroOrMore></content></egXML> and would generate, in DTD
+language, a model such as <code>(hi?,it?,bo?)*</code>.</p>
+<p>The repeatability of members of a class may also be specified
+independently, using the same mechanism. For example, a value
+of<val>sequenceRepeatable</val> for the <att>generate</att> attribute would be equivalent to:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
+  <rng:zeroOrMore>
+     <rng:oneOrMore><rng:ref name="hi"/></rng:oneOrMore>
+     <rng:oneOrMore><rng:ref name="it"/></rng:oneOrMore>
+     <rng:oneOrMore><rng:ref name="bo"/></rng:oneOrMore>
+</rng:zeroOrMore></content></egXML> and would generate, in DTD
+language, a model such as <code>(hi+,it+,bo+)*</code>.   Similarly, a value
+of <val>sequenceOptionalRepeatable</val> for the <att>generate</att> attribute would be equivalent to:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
+  <rng:zeroOrMore>
+     <rng:zeroOrMore><rng:ref name="hi"/></rng:zeroOrMore>
+     <rng:zeroOrMore><rng:ref name="it"/></rng:zeroOrMore>
+     <rng:zeroOrMore><rng:ref name="bo"/></rng:zeroOrMore>
+</rng:zeroOrMore></content></egXML> and would generate, in DTD
+language, a model such as <code>(hi*,it*,bo*)*</code>.</p>
+<p>The generate attribute may specify more than one possible value.
+for example a value of <val>sequence alternates</val> would make
+available both a content model such as  <code>(hi,it,bo)*</code>,
+which would be referenced as <ident>model.hiLike_sequence</ident>, and a content
+model such as <code>(hi|it|bo)*</code>, which would be referenced as <ident>model.hiLike_alternates</ident>.</p>
+<p>The sequence in which members of a class appear in a content model when one of the
+sequence options is used is that in which the elements are declared. </p>
+
 <p>When a <gi>classSpec</gi> contains an <gi>attList</gi> element, all
 the members of that class inherit the attributes specified by it. For
 example, the class <ident type="class">att.interpLike</ident> defines a small set of
@@ -796,6 +867,8 @@ model-only classes may not include attribute-only classes amongst their
 members.  For further discussion of the TEI class system,
 see section <ptr target="STEC"/>.-->
  </p>
+
+
 </div3>
 <div3><head>Formal declarations</head>
 <p>The elements discussed in this section are formally defined as
@@ -814,7 +887,7 @@ follows:
 </specGrp></p>
 </div3>
 <div3 xml:id="TDENT"><head>Pattern Documentation</head>
-<p>The <gi>macroSpec</gi> element is used to document any other entity not
+<p>The <gi>macroSpec</gi> element is used to document patterns not
 otherwise documented by the elements described in this chapter.  Its
 chief uses are to provide systematic documentation of the parameter
 entities used within TEI DTD fragments and to describe common
@@ -838,6 +911,7 @@ is to document an Relax NG pattern for which no SGML equivalent exists.-->
 <p>The specification elements, and several of their children, are all members of
 the <ident type="class">att.identified</ident> class, from which they inherit the
 following attributes:
+
 <specList><specDesc key="att.identified"/></specList>
 </p>
 &att.identified;
