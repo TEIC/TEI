@@ -68,6 +68,8 @@ html-web: check
 	-cp *.css Guidelines-web
 	-cp ${SOURCETREE}/Images/* Guidelines-web/
 	(cd Guidelines-web; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
+	@echo validate HTML files
+	for i in Guidelines-web/*html; do echo validate $$i; xmllint --dropdtd $$i | jing -c xhtml.rnc; done
 
 html:check subset
 	-rm -rf Guidelines
