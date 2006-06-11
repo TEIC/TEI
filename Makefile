@@ -73,26 +73,28 @@ html:check subset
 	-rm -rf Guidelines
 	-mkdir Guidelines
 	perl -p -e "s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+" Utilities/odd2htmlp5.xsl.model > Utilities/odd2htmlp5.xsl
-	xmllint --noent --xinclude ${DRIVER} \
-	| xsltproc \
+	saxon \
 	    -o Guidelines/index.html \
-	    --stringparam localsource `pwd`/p5subset.xml \
-	    --stringparam cssFile tei-print.css \
-	    --stringparam displayMode rnc \
-	    --stringparam verbose true \
-	    --stringparam outputDir . \
-	    --stringparam lang ${LANGUAGE} \
-	    Utilities/guidelines-print.xsl -
+	    ${DRIVER} \
+	    Utilities/guidelines-print.xsl \
+	    localsource=`pwd`/p5subset.xml \
+	    cssFile=tei-print.css \
+	    STDOUT=true \
+	    displayMode=rnc \
+	    outputDir=. \
+	    lang=${LANGUAGE} 
 	-cp *.css Guidelines
 	-cp ${SOURCETREE}/Images/* Guidelines/
 	(cd Guidelines; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
+	xmllint --noout --valid Guidelines/index.html
 
-xml: check subset
+xml: check subset exemplars
 	xmllint --noent --xinclude ${DRIVER} | perl Utilities/cleanrnc.pl | \
 	xsltproc  -o Guidelines.xml \
 	--stringparam displayMode rnc  \
 	${XSL}/odds/odd2lite.xsl -
-	@echo Success. Created Guidelines.xml
+	@echo Success. Created Guidelines.xml. now attempt to validate
+	rnv Exemplars/teilite.rnc Guidelines.xml
 
 pdf: xml
 	@echo Checking you have a running pdfLaTeX before trying to make PDF...
@@ -145,6 +147,9 @@ valid: check
 
 test:
 	(cd Test; make)
+
+exemplars:
+	(cd Exemlars; make)
 
 split:
 	(mkdir Split; cd Split; xmllint --noent --xinclude  ../${DRIVER} | xsltproc ../Utilities/divsplit.xsl -)
@@ -289,6 +294,8 @@ check:
 	@which trang || exit 1
 	@echo -n jing: 
 	@which jing || exit 1
+	@echo -n saxon: 
+	@which saxon || exit 1
 
 changelog:
 	(LastDate=`head -1 ReleaseNotes/ChangeLog | awk '{print $$1}'`; \
