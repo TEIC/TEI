@@ -788,12 +788,12 @@ sequenceRepeatable
   <xsl:template match="tei:macroSpec/@ident"/>
   <xsl:template match="tei:macroSpec/content/rng:*"/>
   <xsl:template match="tei:memberOf" mode="tangleModel">
+<!--
     <xsl:variable name="owner">
       <xsl:value-of
         select="ancestor::tei:elementSpec/@ident|ancestor::tei:classSpec/@ident"
       />
     </xsl:variable>
-<!--
     <xsl:for-each select="key('IDENTS',@key)">
       <xsl:if test="@type='model'">
         <define combine="choice" name="{@ident}"
