@@ -69,7 +69,7 @@ html-web: check
 	-cp ${SOURCETREE}/Images/* Guidelines-web/
 	(cd Guidelines-web; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
 	@echo validate HTML files
-	for i in Guidelines-web/*html; do echo validate $$i; xmllint --dropdtd $$i | jing -c xhtml.rnc; done
+	-for i in Guidelines-web/*html; do echo validate $$i; xmllint --dropdtd $$i | jing -c xhtml.rnc; done
 
 html:check subset
 	-rm -rf Guidelines
@@ -88,7 +88,7 @@ html:check subset
 	-cp *.css Guidelines
 	-cp ${SOURCETREE}/Images/* Guidelines/
 	(cd Guidelines; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
-	xmllint --noout --valid Guidelines/index.html
+	-xmllint --noout --valid Guidelines/index.html
 
 xml: check subset exemplars
 	xmllint --noent --xinclude ${DRIVER} | perl Utilities/cleanrnc.pl | \
@@ -96,7 +96,7 @@ xml: check subset exemplars
 	--stringparam displayMode rnc  \
 	${XSL}/odds/odd2lite.xsl -
 	@echo Success. Created Guidelines.xml. now attempt to validate
-	rnv Exemplars/teilite.rnc Guidelines.xml
+	-rnv Exemplars/teilite.rnc Guidelines.xml
 
 pdf: xml
 	@echo Checking you have a running pdfLaTeX before trying to make PDF...
@@ -151,7 +151,7 @@ test:
 	(cd Test; make)
 
 exemplars:
-	(cd Exemlars; make)
+	(cd Exemplars; make)
 
 split:
 	(mkdir Split; cd Split; xmllint --noent --xinclude  ../${DRIVER} | xsltproc ../Utilities/divsplit.xsl -)
