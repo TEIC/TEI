@@ -337,7 +337,7 @@ sequenceRepeatable
       <xsl:choose>
 	<xsl:when test="$type='alternation'"/>
 	<xsl:otherwise>
-	  <xsl:text>.</xsl:text>
+	  <xsl:text>_</xsl:text>
 	  <xsl:value-of select="$type"/>
 	</xsl:otherwise>
       </xsl:choose>

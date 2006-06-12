@@ -542,10 +542,10 @@
                             <xsl:apply-templates select="."/>
                           </xsl:if>
                         </xsl:when>
-                        <xsl:when test="key('CLASSES',substring-before(@name,'.sequence'))">
+                        <xsl:when test="key('CLASSES',substring-before(@name,'_'))">
                           <xsl:variable name="exists">
                             <xsl:call-template name="checkClass">
-                              <xsl:with-param name="id" select="substring-before(@name,'.sequence')"/>
+                              <xsl:with-param name="id" select="substring-before(@name,'_')"/>
                             </xsl:call-template>
                           </xsl:variable>
                           <xsl:if test="not($exists='')">
@@ -798,10 +798,10 @@
                 <xsl:text>;</xsl:text>
               </xsl:if>
             </xsl:when>
-            <xsl:when test="key('CLASSES',substring-before(@name,'.sequence'))">
+            <xsl:when test="key('CLASSES',substring-before(@name,'_'))">
               <xsl:variable name="exists">
                 <xsl:call-template name="checkClass">
-                  <xsl:with-param name="id" select="substring-before(@name,'.sequence')"/>
+                  <xsl:with-param name="id" select="substring-before(@name,'_')"/>
                 </xsl:call-template>
               </xsl:variable>
               <xsl:if test="not($exists='')">
@@ -1236,7 +1236,7 @@
     <xsl:if test="count(N[@type]) = 2 and
 		  count(N[@type])=count(N)">(</xsl:if>
     <xsl:for-each select="N">
-      <xsl:value-of select="."/>
+      <xsl:text>_</xsl:text>
       <xsl:choose>
 	<xsl:when test="$type='sequence'">
 	  <xsl:if test="position() &lt; last()">, </xsl:if>
