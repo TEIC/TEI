@@ -1129,7 +1129,7 @@
       <xsl:choose>
 	<xsl:when test="$type='alternation'"/>
 	<xsl:otherwise>
-	  <xsl:text>.</xsl:text>
+	  <xsl:text>_</xsl:text>
 	  <xsl:value-of select="$type"/>
 	</xsl:otherwise>
       </xsl:choose>
@@ -1236,7 +1236,7 @@
     <xsl:if test="count(N[@type]) = 2 and
 		  count(N[@type])=count(N)">(</xsl:if>
     <xsl:for-each select="N">
-      <xsl:text>_</xsl:text>
+      <xsl:value-of select="."/>
       <xsl:choose>
 	<xsl:when test="$type='sequence'">
 	  <xsl:if test="position() &lt; last()">, </xsl:if>
