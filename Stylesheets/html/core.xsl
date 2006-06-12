@@ -1413,6 +1413,9 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="noteID">
+    <xsl:variable name="Place">
+      <xsl:value-of select="@place"/>
+    </xsl:variable>
     <xsl:choose>
       <xsl:when test="@xml:id">
         <xsl:value-of select="@xml:id"/>
@@ -1423,7 +1426,7 @@
         </xsl:call-template>
         <xsl:value-of select="@n"/>
       </xsl:when>
-      <xsl:when test="not(@place)">
+      <xsl:when test="string-length($Place)=0">
         <xsl:choose>
           <xsl:when test="ancestor::tei:front">
             <xsl:number count="tei:note[not(@place)]" from="tei:front"
@@ -1440,9 +1443,6 @@
         </xsl:choose>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:variable name="Place">
-          <xsl:value-of select="@place"/>
-        </xsl:variable>
         <xsl:choose>
           <xsl:when test="$consecutiveFootnoteNumbers = 'true'">
             <xsl:number count="tei:note[@place=$Place]" level="any"/>
@@ -1472,11 +1472,14 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="noteN">
+    <xsl:variable name="Place">
+      <xsl:value-of select="@place"/>
+    </xsl:variable>
     <xsl:choose>
       <xsl:when test="@n">
         <xsl:value-of select="@n"/>
       </xsl:when>
-      <xsl:when test="not(@place)">
+      <xsl:when test="string-length($Place)=0">
         <xsl:choose>
           <xsl:when test="ancestor::tei:front">
             <xsl:number count="tei:note[not(@place)]" from="tei:front"
@@ -1493,9 +1496,6 @@
         </xsl:choose>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:variable name="Place">
-          <xsl:value-of select="@place"/>
-        </xsl:variable>
         <xsl:choose>
           <xsl:when test="$consecutiveFootnoteNumbers = 'true'">
             <xsl:number count="tei:note[@place=$Place]" level="any"/>
