@@ -14,7 +14,7 @@ form_changeAttributes=Change attributes
 helpmessage=Modification d'un module
 headline=Modification d'un module
 
-form_headline=Liste des &eacute;l&eacute;ments compris dans ce module
+form_headline=Liste des éléments compris dans ce module
 form_include=Inclure
 form_exclude=Exclure
 form_tagName=Nom de balise
@@ -25,15 +25,15 @@ form_changeAttributes=Changer les attributs
 
 [de]
 helpmessage=Hier können Sie die Elemente auswählen, die in dieses Modul eingebunden werden sollen.  Klicken Sie "Einbinden" um alle einzubinden, oder "Ausnehmen" um alle auszunehmen.
-headline=Module ver&auml;ndern
+headline=Module verändern
 
-form_headline=Liste der hinzugef&uuml;gten Elemente
+form_headline=Liste der hinzugefügten Elemente
 form_include=einbinden
 form_exclude=ausnehmen
 form_tagName=Name des Tags
 form_description=Beschreibung
 form_attributes=Attribute
-form_changeAttributes=Attribute ver&auml;ndern
+form_changeAttributes=Attribute verändern
 
 [ch]
 helpmessage=從這個模組中選擇您想要包含的元素。點選「包含」來將元素全部包含, 若要全部排除在外則點選「不包含」。.

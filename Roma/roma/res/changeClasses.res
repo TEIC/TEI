@@ -26,7 +26,7 @@ form_headline=Liste der Attribute
 form_className=Name des Klasse
 form_description=Beschreibung
 form_attributes=Attribute
-form_changeAttributes=Attribute ver&auml;ndern
+form_changeAttributes=Attribute verändern
 
 [ch]
 helpmessage=選擇您想要更改的TEI集合。點選集合名稱來觀看它的說明檔。

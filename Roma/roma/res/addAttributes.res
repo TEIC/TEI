@@ -12,14 +12,14 @@ form_valList=List of values
 form_className=Class name
 
 [fr]
-helpmessage=Cr&eacute;ation d'attributs
-headline=Cr&eacute;ation d'attributs
-form_headline=Cr&eacute;ation d'attribut en cours
+helpmessage=Création d'attributs
+headline=Création d'attributs
+form_headline=Création d'attribut en cours
 form_name=Nom d'attribut
 form_optional=Facultatif?
 form_contents=Contenu
-form_closed=Liste ferm&eacute;e
-form_defaultValue=Valeur par d&eacute;faut
+form_closed=Liste fermée
+form_defaultValue=Valeur par défaut
 form_description=Description
 form_valList=Liste de valeurs
 form_className=Nome de class

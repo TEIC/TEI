@@ -6,11 +6,11 @@ form_headline=Getting some nice documentation
 form_output=Which output would you prefer?
 
 [fr]
-helpmessage=Maintenant on va cr&eacute;er de documentation de r&eacute;f&eacute;rence
+helpmessage=Maintenant on va créer de documentation de référence
 headline=Documentation?
 
-form_headline=Cr&eacute;ation de la  documentation en cours
-form_output=Quel format pr&eacute;f&eacute;riez-vous?
+form_headline=Création de la  documentation en cours
+form_output=Quel format préfériez-vous?
 
 [de]
 helpmessage=Hier können Sie eine Datei erstellen, die ihr Schema dokumentiert

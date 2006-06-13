@@ -54,6 +54,7 @@ class romaDom extends domDocument
 
 	$oSourceDesc = $oFileDesc->appendChild( new domElement( 'sourceDesc' ) );
 	$oP = $oSourceDesc->appendChild( new domElement( 'p' ) );
+//Tuesday 13th 2006f June 2006 10:57:23 PM
 	$oP->appendChild( new domText( 'created on ' . date( "l dS of F Y h:i:s A" ) . ' by the form at http://www.tei-c.org.uk/Roma/' ) );
 
 	$oText = $oTEI->appendChild( new domElement( 'text' ) );
@@ -848,6 +849,12 @@ class romaDom extends domDocument
 	$szFilename = $oXPath->query( "//tei:schemaSpec/@ident" )->item(0)->nodeValue;
       }
 
+    public function getCustomizationPrefix( &$szPrefix )
+      {
+	$this->getXPath( $oXPath );
+	$szPrefix = $oXPath->query( "//tei:schemaSpec/@prefix" )->item(0)->nodeValue;
+      }
+
     public function getCustomizationLanguage( &$szLanguage )
       {
 	$this->getXPath( $oXPath );
@@ -860,6 +867,13 @@ class romaDom extends domDocument
 	$this->getXPath( $oXPath );
 	$szOddLanguage = $oXPath->query( "/tei:TEI//tei:schemaSpec/@xml:lang" )->item(0)->nodeValue;
         if ($szOddLanguage=='') { $szOddLanguage='en'; }
+      }
+
+    public function getDocLanguage( &$szDocLanguage )
+      {
+	$this->getXPath( $oXPath );
+	$szDocLanguage = $oXPath->query( "/tei:TEI//tei:schemaSpec/doclanguage" )->item(0)->nodeValue;
+        if ($szDocLanguage=='') { $szDocLanguage='en'; }
       }
 
     public function getCustomizationDescription( &$szDesc )
@@ -1828,6 +1842,13 @@ class romaDom extends domDocument
 	$oTEI->setAttribute( 'ident', $szFilename );
       }
 
+    public function setCustomizationPrefix( $szPrefix )
+      {
+	$this->getXPath( $oXPath );
+	$oTEI = $oXPath->query( "//tei:schemaSpec[1]" )->item(0);
+	$oTEI->setAttribute( 'prefix', $szPrefix );
+      }
+
     public function setCustomizationLanguage( $szLanguage )
       {
 	$this->getXPath( $oXPath );
@@ -1840,6 +1861,13 @@ class romaDom extends domDocument
 	$this->getXPath( $oXPath );
 	$oTEI = $oXPath->query( "//tei:schemaSpec" )->item(0);
 	$oTEI->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'xml:lang', $szOddLanguage );
+      }
+
+    public function setDocLanguage( $szDocLanguage )
+      {
+	$this->getXPath( $oXPath );
+	$oTEI = $oXPath->query( "//tei:schemaSpec" )->item(0);
+	$oTEI->setAttribute('doclanguage', $szDocLanguage );
       }
 
 
@@ -1883,6 +1911,7 @@ class romaDom extends domDocument
 	$oProc->importStylesheet( $oXSL );
 //DEBUG        $oProc->setParameter( null, 'localsource', roma_local_p5);
 	$oProc->setParameter( null, 'TEIC', 'true');
+	$oProc->setParameter( null, 'lang', $szDocLanguage);
 	$oProc->setParameter( null, 'displayMode', 'rnc' );
 	$oProc->setParameter( null, 'outputDir', '-' );
 	$oRNG = $oProc->transformToDoc( $oDOC );
@@ -2322,6 +2351,7 @@ class romaDom extends domDocument
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
 	$oProc->setParameter( null, 'TEIC', 'true');	
+	$oProc->setParameter( null, 'lang', $szDocLanguage);
 	$oProc->setParameter( null, 'outputDir', '-' );
 	if ( $bBar )
 	    $this->updateProgressBar( '70' );

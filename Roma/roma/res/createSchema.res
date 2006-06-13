@@ -6,11 +6,11 @@ form_headline=Creating a schema
 form_output=Which format do you prefer?
 
 [fr]
-helpmessage=On y va! cr&eacute;ation du sch&eacute;ma
-headline=Enfin je vous rends votre sch&eacute;ma...
+helpmessage=On y va! création du schéma
+headline=Enfin je vous rends votre schéma...
 
-form_headline=Creation du sch&eacute;ma en cours
-form_output=Quel format pr&eacute;f&eacute;riez-vous?
+form_headline=Creation du schéma en cours
+form_output=Quel format préfériez-vous?
 
 [de]
 helpmessage=Sie können wählen, ob das Schema in Relax NG, W3C, oder DTD Syntax erstellt werden soll.

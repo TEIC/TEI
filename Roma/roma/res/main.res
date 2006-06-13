@@ -1,7 +1,7 @@
 [en]
 helpmessage=
 title=generating validators for the TEI
-save=Save
+save=Save Customization
 help=Help
 customize=Customize
 new=New
@@ -20,11 +20,11 @@ save=Enregistrer
 help=Aide
 customize=Personnaliser
 new=Nouvelle
-addelements=Ajouter des &eacute;l&eacute;ments
+addelements=Ajouter des éléments
 changeclasses=Modifier les classes
 modules=Modules
 language=Langage
-schema=Sch&eacute;ma
+schema=Schéma
 documentation=Documentation
 searchtei=Rechercher base TEI
 

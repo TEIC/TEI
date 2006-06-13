@@ -191,6 +191,8 @@ class roma
 
     private $m_szOddLanguage;
 
+    private $m_szDocLanguage;
+
     /**
      * The Constructor adds the mandatory modules
      * and reloads the customization from the session.
@@ -222,6 +224,7 @@ class roma
 	//set Language
 	$this->m_oRomaDom->getCustomizationLanguage( $this->m_szLanguage );
 	$this->m_oRomaDom->getOddLanguage( $this->m_szOddLanguage );
+	$this->m_oRomaDom->getDocLanguage( $this->m_szDocLanguage );
       }
 
     // #####################################################################
@@ -230,10 +233,10 @@ class roma
 
     /**
      * This function is called from the outside script
-     * It actually starts the wohle roma programm.
+     * It actually starts the whole roma programm.
      * Commands are executed here. After every command that changes something
      * in the customization, the webserver delivers a redirect.
-     * At the end of this function the customization is saved inside the Session.
+     * At the end of this function the customization is saved inside the session.
      * The actual output is printed on the screen at the end of this function.
      */
     public function run()
@@ -403,18 +406,19 @@ class roma
             case roma_mode_processCustomizeLanguage:
 	      //notam
 	      $this->m_oRomaDom->setOddLanguage( $_REQUEST[ 'language' ] );
+	      $this->m_oRomaDom->setDocLanguage( $_REQUEST[ 'doclanguage' ] );
 	      $oNotam = new notam();
 	      $oNotam->setHeadline( 'Language customization' );
 	      switch( $_REQUEST[ 'language' ] )
 		{
 		case 'de':
-		  $oNotam->setMessage( 'Translated customization into German.' );
+		  $oNotam->setMessage( 'Translated element names into German.' );
 		  break;
 		case 'es':
-		  $oNotam->setMessage( 'Translated customization into Spanish.' );
+		  $oNotam->setMessage( 'Translated element names into Spanish.' );
 		  break;
 		default:
-		  $oNotam->setMessage( 'Translated customization back to English.' );
+		  $oNotam->setMessage( 'Translated element names back to English.' );
 		  break;
 		}
 	      $oNotam->setStatus( notam_status_success );
@@ -1102,6 +1106,7 @@ class roma
 	$this->m_oRomaDom->getCustomizationTitle( $szTitle );
 	$this->m_oRomaDom->getCustomizationAuthor( $szAuthor );
 	$this->m_oRomaDom->getCustomizationFilename( $szFilename );
+	$this->m_oRomaDom->getCustomizationPrefix( $szPrefix );
 	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
 	$this->m_oRomaDom->getCustomizationDescription( $szDesc );
 
@@ -1109,6 +1114,7 @@ class roma
 	$oSchemaParser->AddReplacement( 'title', $szTitle );
 	$oSchemaParser->AddReplacement( 'author', $szAuthor );
 	$oSchemaParser->AddReplacement( 'filename', $szFilename );
+	$oSchemaParser->AddReplacement( 'prefix', $szPrefix );
 	$oSchemaParser->AddReplacement( 'language', $szLanguage );
 	$oSchemaParser->AddReplacement( 'description', $szDesc );
 	$oSchemaParser->Parse( $szSchemTem, $szSchema );
@@ -1202,7 +1208,9 @@ class roma
 
 	    $this->m_oRomaDom->getCustomizationFilename( $szFilename );
 	    $szFilename = ( $szFilename ) ? $szFilename : 'myTei';
-	    $this->redirectBrowserMeta( "http://" . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'PHP_SELF' ] . '?mode=' . roma_mode_downloadFile . '&file=' . $szFilename . '.' . $_REQUEST[ 'output' ] . '&nextpage=' .  roma_mode_createSchema );	    
+	    $this->redirectBrowserMeta( "http://" . $_SERVER[
+	    'HTTP_HOST' ] . $_SERVER[ 'PHP_SELF' ] . '?mode='
+	    . roma_mode_downloadFile . '&prefix=' . $szPrefix . '&file=' . $szFilename . '.' . $_REQUEST[ 'output' ] . '&nextpage=' .  roma_mode_createSchema );	    
 
 	    $_SESSION[ 'download' ] = $szSchema;
 	  }
@@ -1537,6 +1545,7 @@ class roma
       {
 	$this->m_oRomaDom->setCustomizationTitle( $_REQUEST[ 'title' ] );
 	$this->m_oRomaDom->setCustomizationFilename( $_REQUEST[ 'filename' ] );
+	$this->m_oRomaDom->setCustomizationPrefix( $_REQUEST[ 'prefix' ] );
 	$this->m_oRomaDom->setCustomizationLanguage( $_REQUEST[ 'lang' ] );
 	$this->m_oRomaDom->setCustomizationAuthor( $_REQUEST[ 'author' ] );
 	$this->m_oRomaDom->setCustomizationDescription( $_REQUEST[ 'description' ] );

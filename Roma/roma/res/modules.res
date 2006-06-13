@@ -19,13 +19,13 @@ headline=Modules
 
 form_headline=Liste des modules TEI
 form_moduleName=Titre du module
-form_description=Description br&egrave;ve
+form_description=Description brève
 form_changes=Modification
-form_changed=modifi&eacute;
+form_changed=modifié
 form_add=ajouter
 form_remove=supprimer
 
-selectedModules_headline=Liste des Modules selectionn&eacute;s
+selectedModules_headline=Liste des Modules selectionnés
 
 [de]
 helpmessage=Auf Hinzufügen klicken, um das Modul ihrem Schema hinzuzufügen, oder auf den Namen des Moduls klicken um dessen Inhalt zu verändern. 
@@ -34,12 +34,12 @@ headline=Die TEI Module
 form_headline=Liste der TEI Module
 form_moduleName=Name des Modules
 form_description=Eine kurze Beschreibung
-form_changes=&Auml;nderungen
-form_changed=ver&auml;ndert
-form_add=hinzuf&uuml;gen
+form_changes=Änderungen
+form_changed=verändert
+form_add=hinzufügen
 form_remove=entfernen
 
-selectedModules_headline=Liste der ausgew&auml;hlten Module
+selectedModules_headline=Liste der ausgewählten Module
 
 [ch]
 helpmessage=點選「加入」來將模組加到您的文件模型中，或是點選模組名稱來更改它的內容。

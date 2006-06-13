@@ -10,10 +10,10 @@ form_contents=Contents
 form_description=Description
 
 [fr]
-helpmessage=Modification ou cr&eacute;ation d'un &eacute;l&eacute;ment
-headline=D&eacute;finition d'un &eacute;l&eacute;ment 
+helpmessage=Modification ou création d'un élément
+headline=Définition d'un élément 
 
-form_headline=Definition d'&eacute;l&eacute;ment en cours
+form_headline=Definition d'élément en cours
 form_name=Nom
 form_modelClasses=Classes structurals
 form_attributeClasses=Classes attributives

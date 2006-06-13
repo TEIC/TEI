@@ -13,7 +13,7 @@ form_delete=Delete
 
 [fr]
 helpmessage=Ajoutons des attributs
-headline=Attributs suppl&eacute;mentaires
+headline=Attributs supplémentaires
 
 form_headline=Liste des attributs
 form_add=Ajouter des attributs

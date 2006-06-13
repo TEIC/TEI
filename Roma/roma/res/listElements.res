@@ -14,12 +14,12 @@ form_delete=Delete
 form_changeAttributes=Change attributes
 
 [fr]
-helpmessage=Ajoutons des &eacute;l&eacute;ments
-headline=&Eacute;l&eacute;ments suppl&eacute;mentaires
+helpmessage=Ajoutons des éléments
+headline=éléments supplémentaires
 
-form_headline=Liste des &eacute;l&eacute;ments suppl&eacute;mentaires
-form_add=Ajouter un &eacute;l&eacute;ment
-form_changeElement=Changer un &eacute;l&eacute;ment
+form_headline=Liste des éléments supplémentaires
+form_add=Ajouter un élément
+form_changeElement=Changer un élément
 form_include=Inclure
 form_exclude=Exclure
 form_tagName=Nom de balise
@@ -30,10 +30,10 @@ form_changeAttributes=Changer les attributs
 
 [de]
 helpmessage=Diese Elemente haben Sie für Ihr Schema definiert.
-headline=Hinzugef&uuml;gte Elemente
+headline=Hinzugefügte Elemente
 
-form_headline=Liste der hinzugef&uuml;gten Elemente
-form_add=Ein neues Element hinzuf&uuml;gen
+form_headline=Liste der hinzugefügten Elemente
+form_add=Ein neues Element hinzufügen
 form_changeElement=Element bearbeiten
 form_include=einbinden
 form_exclude=ausnehmen
@@ -41,7 +41,7 @@ form_tagName=Name des Tags
 form_description=Beschreibung
 form_attributes=Attribute
 form_delete=L&ouml;schen
-form_changeAttributes=Attribute ver&auml;ndern
+form_changeAttributes=Attribute verändern
 
 [ch]
 helpmessage=已被定義在您的文件模型當中的元素。

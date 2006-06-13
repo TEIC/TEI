@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 [en]
 helpmessage=When you submit this form, you will have a chance to add attributes.
 headline=Add Element
@@ -10,10 +11,10 @@ form_contents=Contents
 form_description=Description
 
 [fr]
-helpmessage=Cr&eacute;ion d'un &eacute;l&eacute;ment
-headline=Cr&eacute;ion d'un &eacute;l&eacute;ment
+helpmessage=Créion d'un élément
+headline=Créion d'un élément
 
-form_headline=Cr&eacute;ion d'un &eacute;l&eacute;ment en cours
+form_headline=Créion d'un élément en cours
 form_name=Nom
 form_modelClasses=Classes structurales
 form_attributeClasses=Classes attributives
@@ -22,7 +23,7 @@ form_description=Description
 
 [de]
 helpmessage=Nachdem Sie auf "Abschicken" drücken, können Sie Attribute hinzufügen.
-headline=Ein neues Element hinzuf&uuml;gen
+headline=Ein neues Element hinzufügen
 
 form_headline=Definieren Sie ein neues Element
 form_name=Name
