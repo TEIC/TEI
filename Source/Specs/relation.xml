@@ -42,6 +42,8 @@ kinship, marriage, etc.</gloss>
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
       <valDesc>an open list of application-dependent keywords</valDesc>
     </attDef>
+
+<attList org="choice">
     <attDef ident="active" usage="req">
 	<equiv/>
 	<desc>identifies the <q>active</q> participants in a non-mutual
@@ -50,7 +52,15 @@ relationship, or all the participants in a mutual one.</desc>
       <valDesc>a list of identifier values for participant or participant
 groups</valDesc>
     </attDef>
-    <attDef ident="passive" usage="req">
+    <attDef ident="mutual" usage="mwa">
+	<equiv/>
+	<desc>supplies a list of participants amongst all of whom the relationship holds equally.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointers"/></datatype>
+      <valDesc>a list of identifier values for participant or participant
+groups</valDesc>
+    </attDef>
+</attList>
+    <attDef ident="passive" usage="opt">
 	<equiv/>
 	<desc>identifies the <q>passive</q> participants in a non-mutual
 relationship.</desc>
@@ -58,35 +68,21 @@ relationship.</desc>
       <valDesc>a list of identifier values for participant or participant
 groups</valDesc>
     </attDef>
-    <attDef ident="mutual" usage="mwa">
-	<equiv/>
-	<desc>indicates whether the relationship holds equally amongst all the
-participants.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.truthValue"/></datatype>
-      <defaultVal>true</defaultVal>
-      <valList type="closed">
-        <valItem ident="true">
-          <equiv/>
-          <gloss>the relationship is mutual</gloss>
-        </valItem>
-        <valItem ident="false">
-          <equiv/>
-          <gloss>the relationship is directed</gloss>
-        </valItem>
-      </valList>
-    </attDef>
-  </attList>
+</attList>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <relation type="social" name="supervisor" active="#p1" passive="#p2 #p3 #p4" mutual="false"/>
+      <relation type="social" name="supervisor" active="#p1" passive="#p2 #p3 #p4" />
     </egXML>
   </exemplum>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <relation type="personal" name="friends" active="#p2" passive="#p3 #p4" mutual="true"/>
+      <relation type="personal" name="friends" mutual="#p2 #p3 #p4"/>
     </egXML>
   </exemplum>
-  <remarks/>
+  <remarks><p>Only one of the attributes <att>active</att> and
+  <att>mutual</att> may be supplied; the attribute <att>passive</att>
+  may be supplied only if the attribute <att>active</att>  is supplied. Not all
+  of these constraints can be enforced in all schema languages.</p></remarks>
   <listRef>
     <ptr target="#CCAHPA"/>
   </listRef>
