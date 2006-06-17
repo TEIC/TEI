@@ -122,20 +122,20 @@
             </xsl:when>
             <xsl:when test="@start">
               <rng:start>
-                <rng:ref name="{$patternPrefix}{@start}"/>
+                <rng:ref name="{$patternPrefixText}{@start}"/>
               </rng:start>
             </xsl:when>
             <xsl:when test="key('IDENTS','teiCorpus')">
               <rng:start>
                 <rng:choice>
-                  <rng:ref name="{$patternPrefix}TEI"/>
-                  <rng:ref name="{$patternPrefix}teiCorpus"/>
+                  <rng:ref name="{$patternPrefixText}TEI"/>
+                  <rng:ref name="{$patternPrefixText}teiCorpus"/>
                 </rng:choice>
               </rng:start>
             </xsl:when>
             <xsl:otherwise>
               <rng:start>
-                <rng:ref name="{$patternPrefix}TEI"/>
+                <rng:ref name="{$patternPrefixText}TEI"/>
               </rng:start>
             </xsl:otherwise>
           </xsl:choose>
@@ -148,14 +148,14 @@
     <xsl:if test="not($toks='')">
       <xsl:choose>
         <xsl:when test="contains($toks,' ')">
-          <ref name="{$patternPrefix}{substring-before($toks, ' ')}"
+          <ref name="{$patternPrefixText}{substring-before($toks, ' ')}"
             xmlns="http://relaxng.org/ns/structure/1.0"/>
           <xsl:call-template name="startNames">
             <xsl:with-param name="toks" select="substring-after($toks, ' ')"/>
           </xsl:call-template>
         </xsl:when>
         <xsl:otherwise>
-          <ref name="{$patternPrefix}{$toks}"
+          <ref name="{$patternPrefixText}{$toks}"
             xmlns="http://relaxng.org/ns/structure/1.0"/>
         </xsl:otherwise>
       </xsl:choose>

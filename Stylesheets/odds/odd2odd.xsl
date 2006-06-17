@@ -646,22 +646,36 @@ so that is only put back in if there is some content
     </xsl:variable>
     <xsl:variable name="entCount">
       <xsl:for-each select="exsl:node-set($contents)/WHAT">
-        <xsl:value-of select="count(*)"/>
+	<xsl:value-of select="count(*)"/>
       </xsl:for-each>
     </xsl:variable>
     <xsl:choose>
       <xsl:when
-        test="$entCount=1 and       local-name(exsl:node-set($contents)/WHAT/*)=$element">
-        <xsl:copy-of select="exsl:node-set($contents)/WHAT/node()"/>
+	  test="$entCount=1 and local-name(exsl:node-set($contents)/WHAT/*)=$element">
+	<xsl:copy-of select="exsl:node-set($contents)/WHAT/node()"/>
       </xsl:when>
+      <xsl:when test="$element='optional' and $entCount=1 and
+		      local-name(exsl:node-set($contents)/WHAT/*)='zeroOrMore'">
+	  <xsl:copy-of select="exsl:node-set($contents)/WHAT/node()"/>
+      </xsl:when>
+      <xsl:when test="$element='optional' and $entCount=1 and
+		      local-name(exsl:node-set($contents)/WHAT/*)='oneOrMore'">
+	  <xsl:copy-of select="exsl:node-set($contents)/WHAT/node()"/>
+      </xsl:when>
+      <xsl:when
+	  test="self::rng:zeroOrMore/rng:ref/@name='model.global'
+		and preceding-sibling::rng:*[1][self::rng:zeroOrMore/rng:ref/@name='model.global']"
+/>
+
       <xsl:when test="$entCount&gt;0">
-        <xsl:element name="{$element}"
-          xmlns="http://relaxng.org/ns/structure/1.0">
-          <xsl:copy-of select="exsl:node-set($contents)/WHAT/node()"/>
-        </xsl:element>
+	<xsl:element name="{$element}"
+		     xmlns="http://relaxng.org/ns/structure/1.0">
+	  <xsl:copy-of select="exsl:node-set($contents)/WHAT/node()"/>
+	</xsl:element>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template name="classAttributes">
     <xsl:param name="I"/>
     <xsl:param name="K"/>

@@ -442,12 +442,6 @@
   <xsl:template name="linkStyle"/>
   <xsl:template name="makeAnchor"/>
   <xsl:template name="makeLink"/>
-  <xsl:template match="tei:elemDecl" mode="literal">
-    <xsl:text> %om.</xsl:text>
-    <xsl:value-of select="@omit"/>
-    <xsl:text>; </xsl:text>
-    <xsl:apply-templates/>
-  </xsl:template>
   <xsl:template match="rng:element[rng:anyName]">
     <xsl:text>#PCDATA</xsl:text>
   </xsl:template>
@@ -480,10 +474,17 @@
         <xsl:with-param name="sep" select="','"/>
       </xsl:call-template>
     </xsl:variable>
-    <xsl:if test="not($body='')">
-      <xsl:value-of select="$body"/>
-      <xsl:text>?</xsl:text>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="$body=''">
+      </xsl:when>
+      <xsl:when test="substring($body,string-length($body)-1,1)='*'">
+	<xsl:value-of select="$body"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$body"/>
+	<xsl:text>?</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="rng:choice">
@@ -1222,7 +1223,6 @@
         </xsl:for-each>
       </M>
     </xsl:variable>
-    <!-- a class model needs bracketing if all its members are also classes-->
     <xsl:for-each select="exsl:node-set($members)/M">
       <xsl:call-template name="memberOfClassDefinition">
 	<xsl:with-param name="type" select="$type"/>
@@ -1233,8 +1233,11 @@
 
   <xsl:template name="memberOfClassDefinition">
     <xsl:param name="type"/>
-    <xsl:if test="count(N[@type]) = 2 and
-		  count(N[@type])=count(N)">(</xsl:if>
+    <!-- does a class model need bracketing if all its members are also classes?
+    <xsl:if test="count(N[@type='class'])=count(N) and count(N) &gt; 2">
+      <xsl:text>(</xsl:text>
+    </xsl:if>
+    -->
     <xsl:for-each select="N">
       <xsl:value-of select="."/>
       <xsl:choose>
@@ -1258,7 +1261,11 @@
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
-    <xsl:if test="count(N) = 2 and count(N[@type])=count(N)">)</xsl:if>
+<!-- see above
+    <xsl:if test="count(N[@type='class'])=count(N) and count(N) &gt; 2">
+      <xsl:text>)</xsl:text>
+    </xsl:if>
+-->
   </xsl:template>
 
   <xsl:template match="tei:commDecl" mode="tangle">

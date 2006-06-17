@@ -410,7 +410,7 @@
               <xsl:for-each select="../tei:classes/tei:memberOf">
                 <xsl:for-each select="key('IDENTS',@key)">
                   <xsl:if test="tei:attList">
-                    <rng:ref name="{$patternPrefix}{@ident}.attributes"/>
+                    <rng:ref name="{$patternPrefixText}{@ident}.attributes"/>
                   </xsl:if>
                 </xsl:for-each>
               </xsl:for-each>
