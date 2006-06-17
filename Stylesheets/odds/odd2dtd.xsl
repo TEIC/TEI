@@ -477,9 +477,6 @@
     <xsl:choose>
       <xsl:when test="$body=''">
       </xsl:when>
-      <xsl:when test="substring($body,string-length($body)-1,1)='*'">
-	<xsl:value-of select="$body"/>
-      </xsl:when>
       <xsl:otherwise>
 	<xsl:value-of select="$body"/>
 	<xsl:text>?</xsl:text>
