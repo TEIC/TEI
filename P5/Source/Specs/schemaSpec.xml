@@ -4,7 +4,11 @@ See the file COPYING for details
 $Date$
 $Author$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="SCHEMASPEC" ident="schemaSpec">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" 
+	     module="tagdocs"
+	     xml:id="SCHEMASPEC" 
+	     ident="schemaSpec"
+	     xmlns:rng="http://relaxng.org/ns/structure/1.0">
 <equiv/>
 <desc>generates a TEI-conformant schema and documentation for it.</desc>
   <classes>
@@ -55,20 +59,30 @@ $Author$
     <attDef ident="prefix" usage="opt">
       <equiv/>
       <desc>specifies a prefix which will be appended to all patterns
-      relating to TEI elements. This allows for schemas to be mixed in
-      which have elements of the same names as the TEI
+      relating to TEI elements. This allows for external schemas to be mixed in
+      which have elements of the same names as the TEI.
       </desc>
       <datatype>
 	<rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
       </datatype>
     </attDef>
-    <attDef ident="doclanguage" usage="opt">
+    <attDef ident="targetLang" usage="opt">
       <equiv/>
-      <desc>Where descriptions for elements or attributes are available
+      <desc>Where documentation material for an element or attribute
+      (including the name itself), is available
       in more than one language, specifies which language to
-      use. Documentation strings in schemas are created accordingly.</desc>
+      use when creating a schema.</desc>
       <datatype>
 	<rng:ref name="data.language" xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+      </datatype>
+    </attDef>
+    <attDef ident="translate" usage="opt">
+      <equiv/>
+      <desc>A list of tokens specifying which components of the schema should be
+      translated, if @targetLang is set. Allowed tokens in the list are
+      names, descs, and examples</desc>
+      <datatype>
+	<rng:ref name="data.names"/>
       </datatype>
     </attDef>
   </attList>
