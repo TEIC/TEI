@@ -262,7 +262,7 @@
     <!-- check if this group is identical to the last -->
     <xsl:choose>
       <xsl:when
-	  test="local-name(preceding-sibling::rng:*[1])='group' and rng:zeroOrMore">
+	  test="count(rng:*)=1 and local-name(preceding-sibling::rng:*[1])='group' and rng:zeroOrMore">
 	<xsl:variable name="that">
 	  <xsl:for-each select="preceding-sibling::rng:*[1]">
 	    <xsl:apply-templates mode="decomposed"/>
