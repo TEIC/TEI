@@ -1414,7 +1414,7 @@
   </xd:doc>
   <xsl:template name="noteID">
     <xsl:variable name="Place">
-      <xsl:value-of select="@place"/>
+	  <xsl:value-of select="@place"/>
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="@xml:id">
@@ -1445,20 +1445,20 @@
       <xsl:otherwise>
         <xsl:choose>
           <xsl:when test="$consecutiveFootnoteNumbers = 'true'">
-            <xsl:number count="tei:note[@place=$Place]" level="any"/>
+            <xsl:number count="tei:note[@place=current()/@place]" level="any"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:choose>
               <xsl:when test="ancestor::tei:front">
-                <xsl:number count="tei:note[@place=$Place]" from="tei:front"
+                <xsl:number count="tei:note[@place=current()/@place]" from="tei:front"
                   level="any"/>
               </xsl:when>
               <xsl:when test="ancestor::tei:back">
-                <xsl:number count="tei:note[@place=$Place]" from="tei:back"
+                <xsl:number count="tei:note[@place=current()/@place]" from="tei:back"
                   level="any"/>
               </xsl:when>
               <xsl:otherwise>
-                <xsl:number count="tei:note[@place=$Place]" from="tei:body"
+                <xsl:number count="tei:note[@place=current()/@place]" from="tei:body"
                   level="any"/>
               </xsl:otherwise>
             </xsl:choose>
@@ -1498,20 +1498,20 @@
       <xsl:otherwise>
         <xsl:choose>
           <xsl:when test="$consecutiveFootnoteNumbers = 'true'">
-            <xsl:number count="tei:note[@place=$Place]" level="any"/>
+            <xsl:number count="tei:note[@place=current()/@place]" level="any"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:choose>
               <xsl:when test="ancestor::tei:front">
-                <xsl:number count="tei:note[@place=$Place]" from="tei:front"
+                <xsl:number count="tei:note[@place=current()/@place]" from="tei:front"
                   level="any"/>
               </xsl:when>
               <xsl:when test="ancestor::tei:back">
-                <xsl:number count="tei:note[@place=$Place]" from="tei:back"
+                <xsl:number count="tei:note[@place=current()/@place]" from="tei:back"
                   level="any"/>
               </xsl:when>
               <xsl:otherwise>
-                <xsl:number count="tei:note[@place=$Place]" from="tei:body"
+                <xsl:number count="tei:note[@place=current()/@place]" from="tei:body"
                   level="any"/>
               </xsl:otherwise>
             </xsl:choose>

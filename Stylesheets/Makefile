@@ -62,7 +62,7 @@ release: doc p4 p5
 	cp teixsl.xml release/tei-xsl/doc/index.xml
 
 doc:
-	-test -d xsltdoc && (cd doc; saxon configdoc.xsl xsltdoc.xsl)
+	-test -d xsltdoc && (cd doc; saxon configdoc.xsl xsltdoc.xsl>& /dev/null)
 	xsltproc -o customize.xml param.xsl param.xml
 	xsltproc -o style.xml paramform.xsl param.xml 
 
