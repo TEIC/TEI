@@ -106,8 +106,8 @@ pdf: xml
 	xsltproc ${XSL}/teic/teilatex-teic.xsl Guidelines.xml \
 	> Guidelines.tex
 	cp Source/Images/*.png .
-	pdflatex Guidelines
-	pdflatex Guidelines
+	-pdflatex -interaction=nonstopmode Guidelines
+	-pdflatex -interaction=nonstopmode Guidelines
 	for i in Source/Images/*.png; do rm `basename $$i`;done
 
 validate: oddschema exampleschema valid
