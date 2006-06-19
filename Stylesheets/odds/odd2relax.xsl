@@ -58,6 +58,12 @@
     </xsl:choose>
   </xsl:template>
   <xsl:template match="tei:schemaSpec">
+<xsl:message>
+I18N setup:
+ Pattern prefix: <xsl:value-of select="$patternPrefixText"/>
+ Target language: <xsl:value-of select="$targetLanguage"/>
+ Documentation language: <xsl:value-of select="$documentationLanguage"/>
+</xsl:message>
     <xsl:variable name="filename" select="@ident"/>
     <xsl:if test="$verbose='true'">
       <xsl:message> process schemaSpec [<xsl:value-of select="@ident"/>]
@@ -85,13 +91,16 @@
               <xsl:otherwise/>
             </xsl:choose>
           </xsl:attribute>
-          <xsl:comment><xsl:text>Schema generated from ODD source </xsl:text><xsl:call-template
-              name="showDate"/>. <xsl:apply-templates mode="doc"
-              select="tei:desc"/></xsl:comment>
-          <xsl:if test="$TEIC='true'">
-            <xsl:comment>
-              <xsl:call-template name="copyright"/>
-            </xsl:comment>
+          <xsl:comment>
+	    <xsl:text>Schema generated from ODD source </xsl:text>
+	    <xsl:call-template name="showDate"/>
+	    <xsl:text>. </xsl:text>
+	    <xsl:apply-templates mode="weavedoc" select="tei:desc"/>
+	  </xsl:comment>
+	  <xsl:if test="$TEIC='true'">
+	    <xsl:comment>
+	      <xsl:call-template name="copyright"/>
+	    </xsl:comment>
           </xsl:if>
           <xsl:apply-templates mode="tangle" select="tei:specGrpRef"/>
           <xsl:apply-templates mode="tangle" select="tei:moduleRef"/>
@@ -178,10 +187,15 @@
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:t="http://www.thaiopensource.com/ns/annotations">
-                <xsl:comment><xsl:text>Schema generated </xsl:text><xsl:call-template
-                    name="showDate"/>.. <xsl:if test="$TEIC='true'">
+                <xsl:comment>
+		  <xsl:text>Schema generated </xsl:text>
+		  <xsl:call-template name="showDate"/>
+		  <xsl:text>..</xsl:text>
+		  <xsl:if test="$TEIC='true'">
                     <xsl:call-template name="copyright"/>
-                  </xsl:if><xsl:apply-templates mode="doc" select="tei:desc"/></xsl:comment>
+                  </xsl:if>
+		  <xsl:apply-templates mode="weavedoc" select="tei:desc"/>
+		</xsl:comment>
                 <xsl:call-template name="moduleSpec-body"/>
               </rng:grammar>
             </xsl:with-param>

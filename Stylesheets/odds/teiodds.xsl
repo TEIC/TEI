@@ -36,6 +36,9 @@
   <xsl:param name="outputDir"/>
   <xsl:param name="simplify">false</xsl:param>
   <xsl:param name="localsource"/>
+  <xsl:param name="lang"/>
+  <xsl:param name="doclang"/>
+  <xsl:param name="patternPrefix"/>
   <xsl:param name="TEIC">false</xsl:param>
   <xsl:param name="lookupDatabase">false</xsl:param>
   <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
@@ -85,78 +88,36 @@
 	<xsl:value-of select="$patternPrefix"/>
       </xsl:when>
       <xsl:when test="//tei:schemaSpec[@prefix]">
-	<xsl:value-of select="//tei:schemaSpec[@prefix]"/>
+	<xsl:value-of select="//tei:schemaSpec/@prefix"/>
       </xsl:when>
     </xsl:choose>
   </xsl:variable>
+
   <xsl:variable name="targetLanguage">
     <xsl:choose>
       <xsl:when test="string-length($lang)&gt;0">
 	<xsl:value-of select="$lang"/>
       </xsl:when>
       <xsl:when test="//tei:schemaSpec[@targetLang]">
-	<xsl:value-of select="//tei:schemaSpec[@targetLang]"/>
+	<xsl:value-of select="//tei:schemaSpec/@targetLang"/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:text>en</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
-  <xsl:variable name="translateNames">
-    <xsl:variable name="string">
-      <xsl:choose>
-	<xsl:when test="string-length($translate)&gt;0">
-	  <xsl:value-of select="$translate"/>
-	</xsl:when>
-	<xsl:when test="//tei:schemaSpec[@translate]">
-	  <xsl:value-of select="//tei:schemaSpec[@translate]"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:text>descs</xsl:text>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
+
+  <xsl:variable name="documentationLanguage">
     <xsl:choose>
-      <xsl:when test="contains($string,'names')">true</xsl:when>
-      <xsl:otherwise>false</xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-  <xsl:variable name="translateDescs">
-    <xsl:variable name="string">
-      <xsl:choose>
-	<xsl:when test="string-length($translate)&gt;0">
-	  <xsl:value-of select="$translate"/>
-	</xsl:when>
-	<xsl:when test="//tei:schemaSpec[@translate]">
-	  <xsl:value-of select="//tei:schemaSpec[@translate]"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:text>descs</xsl:text>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="contains($string,'descs')">true</xsl:when>
-      <xsl:otherwise>false</xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-  <xsl:variable name="translateExamples">
-    <xsl:variable name="string">
-      <xsl:choose>
-	<xsl:when test="string-length($translate)&gt;0">
-	  <xsl:value-of select="$translate"/>
-	</xsl:when>
-	<xsl:when test="//tei:schemaSpec[@translate]">
-	  <xsl:value-of select="//tei:schemaSpec[@translate]"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:text>descs</xsl:text>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="contains($string,'examples')">true</xsl:when>
-      <xsl:otherwise>false</xsl:otherwise>
+      <xsl:when test="string-length($doclang)&gt;0">
+	<xsl:value-of select="$doclang"/>
+      </xsl:when>
+      <xsl:when test="//tei:schemaSpec[@docLang]">
+	<xsl:value-of select="//tei:schemaSpec/@docLang"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text>en</xsl:text>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
 
@@ -1832,10 +1793,41 @@ sequenceRepeatable
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="count(node())=0"/>
-      <xsl:when test="$targetLanguage=$currentLang">
+      <xsl:when test="self::tei:exemplum">
         <xsl:apply-templates mode="doc" select="."/>
       </xsl:when>
+      <xsl:otherwise>
+	<xsl:call-template name="checkLang">
+	  <xsl:with-param name="lang"
+			  select="$documentationLanguage"/>
+	  <xsl:with-param name="currentLang" select="$currentLang"/>
+	</xsl:call-template>
+      </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+<xsl:template name="checkLang">
+  <xsl:param name="lang"/>
+  <xsl:param name="currentLang"/>
+    <xsl:choose>
+      <xsl:when test="contains($lang,' ')">
+	<xsl:if test="starts-with($lang,$currentLang)">
+	  <xsl:apply-templates mode="doc" select="."/>
+	</xsl:if>
+	<xsl:call-template name="checkLang">
+	  <xsl:with-param name="lang"
+			  select="substring-after($lang,' ')"/>
+	  <xsl:with-param name="currentLang" 
+			  select="$currentLang"/>
+	</xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:if test="$lang=$currentLang">
+        <xsl:apply-templates mode="doc" select="."/>
+	</xsl:if>
+      </xsl:otherwise>
+    </xsl:choose>
+
   </xsl:template>
 
 </xsl:stylesheet>

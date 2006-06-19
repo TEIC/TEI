@@ -47,7 +47,7 @@ XSL stylesheet to process TEI documents using ODD markup
       <xsl:variable name="me" select="@ident"/>
       <xsl:if test="not(tei:altIdent)">
         <xsl:for-each select="document($i18n)">
-          <xsl:for-each select="key('ELEMENTS',$me)/equiv[@xml:lang=$lang][not(@value='')]">
+          <xsl:for-each select="key('ELEMENTS',$me)/equiv[@xml:lang=$targetLanguage][not(@value='')]">
             <xsl:if test="$verbose='true'">
               <xsl:message><xsl:value-of select="$me"/> ... <xsl:value-of select="@value"/></xsl:message>
             </xsl:if>
@@ -66,7 +66,7 @@ XSL stylesheet to process TEI documents using ODD markup
     <xsl:variable name="me" select="../@ident"/>
     <xsl:variable name="trans">
       <xsl:for-each select="document($i18n)">
-        <xsl:for-each select="key('ELEMENTS',$me)/desc[@xml:lang=$lang]">
+        <xsl:for-each select="key('ELEMENTS',$me)/desc[@xml:lang=$targetLanguage]">
           <xsl:if test="not(.='.')">
             <xsl:if test="$verbose='true'">
               <xsl:message><xsl:value-of select="$me"/> ... <xsl:value-of select="."/></xsl:message>
@@ -95,7 +95,7 @@ XSL stylesheet to process TEI documents using ODD markup
       <xsl:variable name="me" select="@ident"/>
       <xsl:if test="not(tei:altIdent)">
         <xsl:for-each select="document($i18n)">
-          <xsl:for-each select="key('ATTRIBUTES',$me)/equiv[@xml:lang=$lang][not(@value='')]">
+          <xsl:for-each select="key('ATTRIBUTES',$me)/equiv[@xml:lang=$targetLanguage][not(@value='')]">
             <xsl:if test="$verbose='true'">
               <xsl:message><xsl:value-of select="$me"/> ... <xsl:value-of select="@value"/></xsl:message>
             </xsl:if>
