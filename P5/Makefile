@@ -65,9 +65,10 @@ html-web: check
 	    --stringparam lang ${LANGUAGE} \
 	    --stringparam outputDir . \
 	    Utilities/guidelines.xsl -
-	-cp *.css Guidelines-web
+	-cp *.css TEI-glow.png Guidelines-web
 	-cp ${SOURCETREE}/Images/* Guidelines-web/
 	(cd Guidelines-web; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
+	(cd Guidelines-web; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' teic.css)
 	@echo validate HTML files
 	-for i in Guidelines-web/*html; do echo validate $$i; xmllint --dropdtd $$i | jing -c xhtml.rnc; done
 
@@ -88,6 +89,7 @@ html:check subset
 	-cp *.css Guidelines
 	-cp ${SOURCETREE}/Images/* Guidelines/
 	(cd Guidelines; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
+	(cd Guidelines; perl -p -i -e 's+ xmlns:html="http://www.w3.org/1999/xhtml"++' index.html)
 	-xmllint --noout --valid Guidelines/index.html
 
 xml: check subset exemplars
