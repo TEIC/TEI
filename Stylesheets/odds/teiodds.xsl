@@ -758,7 +758,9 @@ sequenceRepeatable
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:exemplum" mode="weave">
-    <xsl:apply-templates select="." mode="doc"/>
+    <xsl:if test="teix:egXML/* or teix:egXML/text() or text()">
+      <xsl:apply-templates select="." mode="doc"/>
+    </xsl:if>
   </xsl:template>
 
   <xd:doc>
