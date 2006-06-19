@@ -1156,6 +1156,9 @@ $ID: requests a particular page
       <link href="{$cssSecondaryFile}" media="screen" rel="stylesheet"
         type="text/css"/>
     </xsl:if>
+    <xsl:if test="not($cssPrintFile='')">
+      <link rel="stylesheet" media="print" type="text/css" href="{$cssPrintFile}"/>
+    </xsl:if>
   </xsl:template>
   <xd:doc>
     <xd:short>[html] Javascript functions to be declared in HTML header</xd:short>

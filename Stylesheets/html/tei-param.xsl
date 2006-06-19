@@ -53,6 +53,10 @@ CSS style file to be associated with output file(s)
 Secondary CSS style file; this will be given a media=screen attribute,
 so that it does not affect printing. It should be used for screen layout.
 </xd:doc>
+  <xsl:param name="cssPrintFile"/>
+  <xd:doc type="anyURI" class="CSS">
+CSS style file for print; this will be given a media=print attribute.
+</xd:doc>
   <xsl:param name="cssSecondaryFile"/>
   <xd:doc type="integer" class="figures">
 Resolution of images. This is needed to calculate
