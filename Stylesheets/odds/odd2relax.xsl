@@ -95,7 +95,7 @@ I18N setup:
 	    <xsl:text>Schema generated from ODD source </xsl:text>
 	    <xsl:call-template name="showDate"/>
 	    <xsl:text>. </xsl:text>
-	    <xsl:apply-templates mode="weavedoc" select="tei:desc"/>
+	    <xsl:call-template name="makeDescription"/>
 	  </xsl:comment>
 	  <xsl:if test="$TEIC='true'">
 	    <xsl:comment>
@@ -194,7 +194,7 @@ I18N setup:
 		  <xsl:if test="$TEIC='true'">
                     <xsl:call-template name="copyright"/>
                   </xsl:if>
-		  <xsl:apply-templates mode="weavedoc" select="tei:desc"/>
+		  <xsl:call-template name="makeDescription"/>
 		</xsl:comment>
                 <xsl:call-template name="moduleSpec-body"/>
               </rng:grammar>

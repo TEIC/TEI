@@ -86,7 +86,7 @@
               />. <xsl:if test="$TEIC='true'">
                 <xsl:call-template name="copyright"/>
               </xsl:if>
-              <xsl:apply-templates mode="weavedoc" select="tei:desc"/>
+	      <xsl:call-template name="makeDescription"/>
             </xsl:with-param>
           </xsl:call-template>
           <xsl:choose>
@@ -146,7 +146,7 @@
                 <xsl:if test="$TEIC='true'">
                   <xsl:call-template name="copyright"/>
                 </xsl:if>
-                <xsl:apply-templates mode="weavedoc" select="tei:desc"/>
+		<xsl:call-template name="makeDescription"/>
               </xsl:with-param>
             </xsl:call-template>
             <xsl:call-template name="datatypeMacros"/>
@@ -345,12 +345,15 @@
   </xsl:template>
   <xsl:template name="schemaOut">
     <xsl:call-template name="dtdComment">
-      <xsl:with-param name="text"
-          ><xsl:text>DTD Generated </xsl:text><xsl:call-template name="showDate"
-        />. <xsl:if test="$TEIC='true'">
-          <xsl:call-template name="copyright"/>
-        </xsl:if><xsl:apply-templates mode="weavedoc" select="tei:desc"
-      /></xsl:with-param>
+      <xsl:with-param name="text">
+	<xsl:text>DTD Generated </xsl:text>
+	<xsl:call-template name="showDate"/>
+	<xsl:text>. </xsl:text>
+	<xsl:if test="$TEIC='true'">
+	  <xsl:call-template name="copyright"/>
+	</xsl:if>
+	<xsl:call-template name="makeDescription"/>
+      </xsl:with-param>
     </xsl:call-template>
     <xsl:if test="$parameterize='true'">
       <xsl:text>&lt;!ENTITY % NS '</xsl:text>
@@ -947,8 +950,7 @@
       </xsl:choose>
     </xsl:variable>
     <xsl:text>&#10;&lt;!--doc:</xsl:text>
-    <xsl:apply-templates mode="weavedoc" select="tei:gloss"/>
-    <xsl:apply-templates mode="weavedoc" select="tei:desc"/>
+    <xsl:call-template name="makeDescription"/>
     <xsl:text> --&gt;
 &lt;!ELEMENT </xsl:text>
     <xsl:value-of select="$ename"/>

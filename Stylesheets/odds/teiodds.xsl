@@ -302,10 +302,12 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template match="tei:author">
     <xsl:apply-templates/>
     <xsl:text>, </xsl:text>
   </xsl:template>
+
   <xsl:template match="tei:classSpec" mode="tangle">
     <xsl:variable name="c" select="@ident"/>
     <xsl:if test="$verbose='true'">
@@ -555,14 +557,6 @@ sequenceRepeatable
   <xsl:value-of select="."/>
 </xsl:template>
 
-<xsl:template match="tei:desc" mode="weave"/>
-
-<xsl:template match="tei:desc" mode="weavedoc">
-    <xsl:call-template name="findTranslatedVersion"/>
-</xsl:template>
-
-<xsl:template match="tei:desc"/>
-
 <xsl:template match="tei:desc" mode="tangle"/>
 
 <xsl:template match="tei:divGen[@type='classcat']">
@@ -627,8 +621,7 @@ sequenceRepeatable
                   </xsl:if>
                   <xsl:if test="not($oddmode='tei')">
                     <a:documentation>
-                      <xsl:apply-templates mode="weavedoc" select="tei:gloss"/>
-                      <xsl:apply-templates mode="weavedoc" select="tei:desc"/>
+		      <xsl:call-template name="makeDescription"/>
                     </a:documentation>
                   </xsl:if>
                   <xsl:choose>
@@ -731,8 +724,7 @@ sequenceRepeatable
                 </rng:value>
                 <xsl:if test="not($oddmode='tei')">
                   <a:documentation>
-                    <xsl:apply-templates mode="weavedoc" select="tei:gloss"/>
-                    <xsl:apply-templates mode="weavedoc" select="tei:desc"/>
+		    <xsl:call-template name="makeDescription"/>
                   </a:documentation>
                 </xsl:if>
               </xsl:for-each>
@@ -760,29 +752,23 @@ sequenceRepeatable
   </xsl:template>
 
   <xsl:template match="tei:elementSpec/@ident"/>
+
   <xd:doc>
-    <xd:short>Process elements tei:attDef/tei:exemplum</xd:short>
+    <xd:short>Process elements tei:exemplum</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-
   <xsl:template match="tei:exemplum" mode="weave">
-    <xsl:call-template name="findTranslatedVersion"/>
+    <xsl:apply-templates select="." mode="doc"/>
   </xsl:template>
 
-  <xsl:template match="tei:gloss" mode="weave"/>
+  <xd:doc>
+    <xd:short>Process elements tei:gloss and tei:desc in normal modes,
+    as they will always be called explicitly if needed.</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:desc|tei:gloss" mode="weave"/>
+  <xsl:template match="tei:desc|tei:gloss"/>
 
-  <xsl:template match="tei:gloss" mode="weavedoc">
-    <xsl:variable name="x">
-      <xsl:call-template name="findTranslatedVersion"/>
-    </xsl:variable>
-    <xsl:if test="string-length($x)&gt;0">
-      <xsl:text> (</xsl:text>
-      <xsl:value-of select="$x"/>
-      <xsl:text>)</xsl:text>
-    </xsl:if>
-  </xsl:template>
-
-  <xsl:template match="tei:gloss"/>
   <xsl:template match="tei:index">
     <xsl:call-template name="makeAnchor">
       <xsl:with-param name="name">IDX-<xsl:number level="any"/></xsl:with-param>
@@ -979,9 +965,34 @@ sequenceRepeatable
   </xsl:template>
 
   <xsl:template match="tei:remarks" mode="tangle"/>
-  <xsl:template match="tei:remarks"/>
+
   <xsl:template match="tei:remarks" mode="weave">
-    <xsl:call-template name="findTranslatedVersion"/>
+    <xsl:variable name="langs">
+      <xsl:value-of
+	  select="concat(normalize-space($documentationLanguage),' ')"/>
+    </xsl:variable>
+    <xsl:variable name="firstLang">
+      <xsl:value-of select="substring-before($langs,' ')"/>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="preceding-sibling::tei:remarks"/>
+      <xsl:when test="count(../tei:remarks)=1">
+	<xsl:apply-templates select="." mode="doc"/>
+      </xsl:when>
+      <xsl:when test="@xml:lang=$firstLang">
+	<xsl:apply-templates select="." mode="doc"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:for-each select="../tei:remarks">
+	  <xsl:variable name="currentLang">
+	    <xsl:call-template name="findLanguage"/>
+	  </xsl:variable>
+	  <xsl:if test="contains($langs,concat($currentLang,' '))">
+	    <xsl:apply-templates select="." mode="doc"/>
+	  </xsl:if>
+	</xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="tei:specGrp" mode="ok">
@@ -1177,8 +1188,7 @@ sequenceRepeatable
                 </value>
                 <xsl:if test="not($oddmode='tei')">
                   <a:documentation>
-                    <xsl:apply-templates mode="weavedoc" select="tei:gloss"/>
-                    <xsl:apply-templates mode="weavedoc" select="tei:desc"/>
+		    <xsl:call-template name="makeDescription"/>
                   </a:documentation>
                 </xsl:if>
               </xsl:for-each>
@@ -1197,8 +1207,7 @@ sequenceRepeatable
             </value>
             <xsl:if test="not($oddmode='tei')">
               <a:documentation>
-                <xsl:apply-templates mode="weavedoc" select="tei:gloss"/>
-                <xsl:apply-templates mode="weavedoc" select="tei:desc"/>
+		<xsl:call-template name="makeDescription"/>
               </a:documentation>
             </xsl:if>
           </xsl:for-each>
@@ -1235,8 +1244,7 @@ sequenceRepeatable
       </xsl:if>
       <xsl:if test="not($oddmode='tei')">
         <a:documentation>
-          <xsl:apply-templates mode="weavedoc" select="tei:gloss"/>
-          <xsl:apply-templates mode="weavedoc" select="tei:desc"/>
+	  <xsl:call-template name="makeDescription"/>
         </a:documentation>
       </xsl:if>
       <xsl:call-template name="attributeDatatype"/>
@@ -1761,6 +1769,7 @@ sequenceRepeatable
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template name="showDate">
     <xsl:variable name="processor">
       <xsl:value-of select="system-property('xsl:vendor')"/>
@@ -1777,57 +1786,76 @@ sequenceRepeatable
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template name="findTranslatedVersion">
-    <xsl:variable name="currentLang">
-      <xsl:choose>
-	<xsl:when test="@xml:lang">
-	  <xsl:value-of select="@xml:lang"/>
-	</xsl:when>
-	<xsl:when test="ancestor::tei:*[@xml:lang]">
-	  <xsl:value-of select="(ancestor::tei:*[@xml:lang])[1]/@xml:lang"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:text>en</xsl:text>
-	</xsl:otherwise>
-      </xsl:choose>
+
+  <xsl:template name="makeDescription">
+    <xsl:variable name="langs">
+      <xsl:value-of
+	  select="concat(normalize-space($documentationLanguage),' ')"/>
     </xsl:variable>
+    <xsl:variable name="firstLang">
+      <xsl:value-of select="substring-before($langs,' ')"/>
+    </xsl:variable>
+    <!-- first the gloss -->
     <xsl:choose>
-      <xsl:when test="count(node())=0"/>
-      <xsl:when test="self::tei:exemplum">
-        <xsl:apply-templates mode="doc" select="."/>
+      <xsl:when test="not(tei:gloss)"/>
+      <xsl:when test="count(tei:gloss)=1">
+	<xsl:text>(</xsl:text>
+	<xsl:value-of select="tei:gloss"/>
+	<xsl:text>) </xsl:text>
+      </xsl:when>
+      <xsl:when test="tei:gloss[@xml:lang=$firstLang]">
+	<xsl:text>(</xsl:text>
+	<xsl:value-of select="tei:gloss[@xml:lang=$firstLang]"/>
+	<xsl:text>) </xsl:text>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:call-template name="checkLang">
-	  <xsl:with-param name="lang"
-			  select="$documentationLanguage"/>
-	  <xsl:with-param name="currentLang" select="$currentLang"/>
-	</xsl:call-template>
+	<xsl:for-each select="tei:gloss">
+	  <xsl:variable name="currentLang">
+	    <xsl:call-template name="findLanguage"/>
+	  </xsl:variable>
+	  <xsl:if test="contains($langs,concat($currentLang,' '))">
+	    <xsl:text>(</xsl:text>
+	    <xsl:value-of select="."/>
+	    <xsl:text>) </xsl:text>
+	  </xsl:if>
+	</xsl:for-each>
+      </xsl:otherwise>
+
+    </xsl:choose>
+<!-- now the description -->
+    <xsl:choose>
+      <xsl:when test="not(tei:desc)"/>
+      <xsl:when test="count(tei:desc)=1">
+	<xsl:value-of select="tei:desc"/>
+      </xsl:when>
+      <xsl:when test="tei:desc[@xml:lang=$firstLang]">
+	<xsl:value-of select="tei:desc[@xml:lang=$firstLang]"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:for-each select="tei:desc">
+	  <xsl:variable name="currentLang">
+	    <xsl:call-template name="findLanguage"/>
+	  </xsl:variable>
+	  <xsl:if test="contains($langs,concat($currentLang,' '))">
+	    <xsl:value-of select="."/>
+	  </xsl:if>
+	</xsl:for-each>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
-<xsl:template name="checkLang">
-  <xsl:param name="lang"/>
-  <xsl:param name="currentLang"/>
+  <xsl:template name="findLanguage">
     <xsl:choose>
-      <xsl:when test="contains($lang,' ')">
-	<xsl:if test="starts-with($lang,$currentLang)">
-	  <xsl:apply-templates mode="doc" select="."/>
-	</xsl:if>
-	<xsl:call-template name="checkLang">
-	  <xsl:with-param name="lang"
-			  select="substring-after($lang,' ')"/>
-	  <xsl:with-param name="currentLang" 
-			  select="$currentLang"/>
-	</xsl:call-template>
+      <xsl:when test="@xml:lang">
+	<xsl:value-of select="@xml:lang"/>
+      </xsl:when>
+      <xsl:when test="ancestor::tei:*[@xml:lang]">
+	  <xsl:value-of select="(ancestor::tei:*[@xml:lang])[1]/@xml:lang"/>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:if test="$lang=$currentLang">
-        <xsl:apply-templates mode="doc" select="."/>
-	</xsl:if>
+	<xsl:text>en</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
-
   </xsl:template>
 
 </xsl:stylesheet>

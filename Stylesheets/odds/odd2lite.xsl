@@ -173,7 +173,7 @@
     match="rng:*|tei:*|@*|processing-instruction()|tei:author|tei:title">
     <xsl:copy>
       <xsl:apply-templates
-        select="tei:*|rng:*|@*|processing-instruction()|comment()|text()"/>
+       select="tei:*|rng:*|@*|processing-instruction()|comment()|text()"/>
     </xsl:copy>
   </xsl:template>
   <xsl:template match="tei:specGrp/tei:p">
@@ -190,9 +190,8 @@
       </tei:code>
     </tei:label>
     <tei:item>
-      <xsl:apply-templates mode="weavedoc" select="tei:gloss"/>
-      <xsl:apply-templates mode="weavedoc" select="tei:desc"/>
-      <xsl:apply-templates select="tei:valList"/>
+      <xsl:call-template name="makeDescription"/>
+      <xsl:apply-templates select="tei:valList" mode="weave"/>
     </tei:item>
   </xsl:template>
   <xsl:template match="tei:attDef">
@@ -202,13 +201,12 @@
       </tei:code>
     </tei:label>
     <tei:item>
-      <xsl:apply-templates mode="weavedoc" select="tei:gloss"/>
-      <xsl:apply-templates mode="weavedoc" select="tei:desc"/>
-      <xsl:apply-templates select="tei:valList"/>
-      <xsl:apply-templates select="tei:exemplum" mode="weavedoc"/>
+      <xsl:call-template name="makeDescription"/>
+      <xsl:apply-templates select="tei:valList" mode="weave"/>
+      <xsl:apply-templates select="tei:exemplum" mode="weave"/>
     </tei:item>
   </xsl:template>
-  <xsl:template match="tei:attDef/tei:datatype">
+  <xsl:template match="tei:attDef/tei:datatype" mode="weave">
     <tei:label>
       <tei:hi>
         <xsl:call-template name="i18n">
@@ -295,7 +293,7 @@
   <xsl:template match="tei:body">
     <xsl:copy>
       <xsl:apply-templates
-        select="tei:*|rng:*|@*|processing-instruction()|comment()|text()"/>
+       select="tei:*|rng:*|@*|processing-instruction()|comment()|text()"/>
     </xsl:copy>
   </xsl:template>
   <xsl:template match="tei:classSpec" mode="weavebody">
@@ -350,7 +348,7 @@
       </tei:p>
     </xsl:if>
   </xsl:template>
-  <xsl:template match="tei:defaultVal">
+  <xsl:template match="tei:defaultVal" mode="weave">
     <tei:label>
       <xsl:call-template name="i18n">
         <xsl:with-param name="word">Default</xsl:with-param>
@@ -364,7 +362,7 @@
   <xsl:template match="tei:div0|tei:div1|tei:div2|tei:div3|tei:div4">
     <tei:div>
       <xsl:apply-templates
-        select="tei:*|rng:*|@*|processing-instruction()|comment()|text()"/>
+       select="tei:*|rng:*|@*|processing-instruction()|comment()|text()"/>
     </tei:div>
   </xsl:template>
   <xsl:template match="tei:elementSpec" mode="weavebody">
@@ -411,7 +409,7 @@
   <xsl:template match="tei:elementSpec|tei:classSpec|tei:macroSpec" mode="show">
     <xsl:param name="atts"/>
     <tei:hi>&lt;<xsl:call-template name="identifyMe"/>&gt; </tei:hi>
-    <xsl:apply-templates mode="weavedoc" select="tei:desc"/>
+    <xsl:call-template name="makeDescription"/>
     <xsl:choose>
       <xsl:when test="$atts='-'"/>
       <xsl:when test="self::tei:macroSpec"/>
@@ -424,14 +422,14 @@
             <xsl:choose>
               <xsl:when test="$HERE/tei:attList//tei:attDef[@ident=$TOKEN]">
                 <xsl:for-each
-                  select="$HERE/tei:attList//tei:attDef[@ident=$TOKEN]">
+                 select="$HERE/tei:attList//tei:attDef[@ident=$TOKEN]">
                   <xsl:call-template name="showAnAttribute"/>
                 </xsl:for-each>
               </xsl:when>
               <xsl:otherwise>
                 <xsl:for-each select="$HERE/tei:classes/tei:memberOf">
                   <xsl:for-each
-                    select="key('IDENTS',@key)/tei:attList//tei:attDef[@ident=$TOKEN]">
+                   select="key('IDENTS',@key)/tei:attList//tei:attDef[@ident=$TOKEN]">
                     <xsl:call-template name="showAnAttribute"/>
                   </xsl:for-each>
                 </xsl:for-each>
@@ -460,8 +458,7 @@
       </xsl:choose>
     </tei:label>
     <tei:item>
-      <xsl:apply-templates mode="weavedoc" select="tei:gloss"/>
-      <xsl:apply-templates mode="weavedoc" select="tei:desc"/>
+      <xsl:call-template name="makeDescription"/>
     </tei:item>
   </xsl:template>
   <xsl:template match="tei:equiv"/>
@@ -494,8 +491,6 @@
     </xsl:choose>
   </xsl:template>
 
-
-  <xsl:template match="tei:gloss"/>
   <xsl:template match="tei:macroSpec" mode="weavebody">
     <xsl:apply-templates mode="weave"/>
     <xsl:call-template name="HTMLmakeTagsetInfo"/>
@@ -528,15 +523,19 @@
           <xsl:with-param name="word">Module</xsl:with-param>
         </xsl:call-template><xsl:text> </xsl:text><tei:hi>
           <xsl:value-of select="@ident"/>
-        </tei:hi>: <xsl:apply-templates mode="weavedoc" select="tei:gloss"
-          /><xsl:apply-templates mode="weavedoc" select="tei:desc"/></xsl:when>
+        </tei:hi>
+	<xsl:text>: </xsl:text>
+	<xsl:call-template name="makeDescription"/>
+      </xsl:when>
       <xsl:otherwise>
         <tei:p><xsl:call-template name="i18n">
             <xsl:with-param name="word">Module</xsl:with-param>
           </xsl:call-template><xsl:text> </xsl:text><tei:hi>
             <xsl:value-of select="@ident"/>
-          </tei:hi>: <xsl:apply-templates mode="weavedoc" select="tei:gloss"
-            /><xsl:apply-templates mode="weavedoc" select="tei:desc"/></tei:p>
+          </tei:hi>
+	  <xsl:text>: </xsl:text>
+	  <xsl:call-template name="makeDescription"/>
+	</tei:p>
       </xsl:otherwise>
     </xsl:choose>
     <tei:list>
@@ -587,15 +586,17 @@
       <xsl:apply-templates/>
   </xsl:template>
   <xsl:template match="tei:remarks" mode="doc">
-    <tei:p>
-      <tei:hi>
-      <xsl:call-template name="i18n">
-        <xsl:with-param name="word">Note</xsl:with-param>
-      </xsl:call-template>
-      </tei:hi>
-      <xsl:text>: </xsl:text>
+    <xsl:if test="string-length(.)&gt;0">
+      <tei:p>
+	<tei:hi>
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Note</xsl:with-param>
+	  </xsl:call-template>
+	</tei:hi>
+	<xsl:text>: </xsl:text>
       <xsl:apply-templates/>
-    </tei:p>
+      </tei:p>
+    </xsl:if>
   </xsl:template>
   <xsl:template match="tei:specDesc">
     <tei:item>
@@ -607,7 +608,7 @@
       <xsl:apply-templates/>
     </tei:list>
   </xsl:template>
-  <xsl:template match="tei:valDesc">
+  <xsl:template match="tei:valDesc" mode="weave">
     <tei:label>
       <tei:hi>
         <xsl:call-template name="i18n">
@@ -653,15 +654,16 @@
           <xsl:call-template name="identifyMe"/>
         </tei:label>
         <tei:item>
-          <xsl:apply-templates mode="weavedoc" select="tei:gloss"/>
-          <xsl:apply-templates mode="weavedoc" select="tei:desc"/>
+	  <xsl:call-template name="makeDescription"/>
         </tei:item>
       </xsl:for-each>
     </tei:list>
   </xsl:template>
-  <xsl:template match="tei:valList">
+
+  <xsl:template match="tei:valList" mode="weave">
     <xsl:apply-templates mode="contents" select="."/>
   </xsl:template>
+
   <xsl:template match="teix:egXML">
     <xsl:call-template name="verbatim">
       <xsl:with-param name="label">
@@ -800,7 +802,7 @@
     <xsl:param name="name"/>
     <xsl:if test="$verbose='true'">
       <xsl:message> refdoc for <xsl:value-of select="name(.)"/> - <xsl:value-of
-          select="@ident"/>
+         select="@ident"/>
       </xsl:message>
     </xsl:if>
     <tei:div>
@@ -815,8 +817,7 @@
         <xsl:call-template name="identifyMe"/>
       </tei:head>
       <tei:p>
-        <xsl:apply-templates mode="weavedoc" select="tei:gloss"/>
-        <xsl:apply-templates mode="weavedoc" select="tei:desc"/>
+	<xsl:call-template name="makeDescription"/>
       </tei:p>
       <xsl:apply-templates mode="weavebody" select="."/>
     </tei:div>
