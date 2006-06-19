@@ -1294,6 +1294,9 @@
                     <xsl:apply-templates mode="weavebody" select="."/>
                   </table>
                 </div>
+		<div>
+		  <a href="index.html">TEI Guidelines</a>
+		</div>
               </body>
             </html>
           </xsl:with-param>

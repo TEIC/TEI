@@ -1798,6 +1798,7 @@ sequenceRepeatable
     <!-- first the gloss -->
     <xsl:choose>
       <xsl:when test="not(tei:gloss)"/>
+      <xsl:when test="string-length(tei:gloss)=0"/>
       <xsl:when test="count(tei:gloss)=1">
 	<xsl:text>(</xsl:text>
 	<xsl:value-of select="tei:gloss"/>

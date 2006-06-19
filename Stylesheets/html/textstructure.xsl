@@ -2249,7 +2249,7 @@ $ID: requests a particular page
       </xsl:when>
       <xsl:otherwise>
 	<xsl:call-template name="makeHTMLHeading">
-	  <xsl:with-param name="class">maintitle</xsl:with-param>
+	  <xsl:with-param name="class">subtitle</xsl:with-param>
 	  <xsl:with-param name="text">
           <xsl:call-template name="generateTitle"/>
 	  </xsl:with-param>
