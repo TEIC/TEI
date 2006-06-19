@@ -42,6 +42,7 @@ test: test-schema test-dtd test-dtd-xmllint test-extns test-xsd test-bad
 
 schemas:
 	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTBADFILES); do \
+		rnv ../p5odds.rnc $$i.odd && echo $$i validates OK; \
 		roma $(ROMAOPTS) --xsl=$(XSL)   $$i.odd .; \
 		cp xml.xsd.w3c xml.xsd ; \
 		test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd; \
