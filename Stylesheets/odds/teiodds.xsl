@@ -41,7 +41,7 @@
   <xsl:param name="patternPrefix"/>
   <xsl:param name="TEIC">false</xsl:param>
   <xsl:param name="lookupDatabase">false</xsl:param>
-  <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
+  <xsl:param name="TEISERVER">http://tei.oucs.ox.ac.uk/Query/</xsl:param>
   <xsl:param name="verbose">false</xsl:param>
   <xsl:param name="schemaBaseURL">http://localhost/schema/relaxng/</xsl:param>
   <xsl:key match="tei:*" name="LOCALIDENTS" use="@ident"/>
@@ -1508,6 +1508,16 @@ sequenceRepeatable
   <xsl:template name="linkTogether">
     <xsl:param name="name"/>
     <xsl:param name="reftext"/>
+    <xsl:variable name="partialname">
+      <xsl:choose>
+	<xsl:when test="contains($name,'_')">
+	  <xsl:value-of select="substring-before($name,'_')"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$name"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     <xsl:variable name="link">
       <xsl:choose>
         <xsl:when test="$reftext=''">
@@ -1519,31 +1529,31 @@ sequenceRepeatable
       </xsl:choose>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="not(key('IDENTS',$name))">
+      <xsl:when test="not(key('IDENTS',$partialname))">
         <xsl:choose>
           <xsl:when test="$oddmode='tei'">
             <tei:ref>
               <xsl:attribute name="target"><xsl:value-of select="$TEISERVER"
-                  />tag.xq?name=<xsl:value-of select="$name"/></xsl:attribute>
+                  />tag.xq?name=<xsl:value-of select="$partialname"/></xsl:attribute>
               <xsl:value-of select="$link"/>
             </tei:ref>
           </xsl:when>
           <xsl:otherwise>
             <a xmlns="http://www.w3.org/1999/xhtml">
               <xsl:attribute name="href"><xsl:value-of select="$TEISERVER"
-                  />tag.xq?name=<xsl:value-of select="$name"/></xsl:attribute>
+                  />tag.xq?name=<xsl:value-of select="$partialname"/></xsl:attribute>
               <xsl:value-of select="$link"/>
             </a>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:when>
       <xsl:when test="$oddmode='html' and $splitLevel=-1">
-        <a class="link_odd" href="#{$name}" xmlns="http://www.w3.org/1999/xhtml">
+        <a class="link_odd" href="#{$partialname}" xmlns="http://www.w3.org/1999/xhtml">
           <xsl:value-of select="$link"/>
         </a>
       </xsl:when>
       <xsl:when test="$oddmode='html'">
-        <a class="link_odd" href="{concat('ref-',$name,'.html')}"
+        <a class="link_odd" href="{concat('ref-',$partialname,'.html')}"
           xmlns="http://www.w3.org/1999/xhtml">
           <xsl:value-of select="$link"/>
         </a>
@@ -1554,7 +1564,7 @@ sequenceRepeatable
         </fo:inline>
       </xsl:when>
       <xsl:when test="$oddmode='tei'">
-        <tei:ref target="#{$name}">
+        <tei:ref target="#{$partialname}">
           <xsl:value-of select="$link"/>
         </tei:ref>
       </xsl:when>

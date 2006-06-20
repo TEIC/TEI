@@ -238,6 +238,19 @@
 	<xsl:call-template name="makeDescription"/>
       </td>
     </tr>
+    <xsl:if test="@generate">
+      <tr>
+	<td>
+	  <xsl:call-template name="i18n">
+            <xsl:with-param name="word">Classes
+	    defined</xsl:with-param>
+	  </xsl:call-template>
+	</td>
+	<td>
+	  <xsl:value-of select="@generate"/>
+	</td>
+      </tr>
+    </xsl:if>
     <xsl:apply-templates mode="weave"/>
     <!--
   <tr>
@@ -1294,7 +1307,7 @@
                     <xsl:apply-templates mode="weavebody" select="."/>
                   </table>
                 </div>
-		<div>
+		<div style="margin: 20pt; font-weight: bold;">
 		  <a href="index.html">TEI Guidelines</a>
 		</div>
               </body>
