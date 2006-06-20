@@ -150,10 +150,10 @@ valid: check
 #	-xmllint  --relaxng p5odds.rng --noent --xinclude --noout ${DRIVER}
 
 test:
-	(cd Test; make)
+	(cd Test; make XSL=${XSL})
 
 exemplars:
-	(cd Exemplars; make)
+	(cd Exemplars; make XSL=${XSL})
 
 split:
 	(mkdir Split; cd Split; xmllint --noent --xinclude  ../${DRIVER} | xsltproc ../Utilities/divsplit.xsl -)
