@@ -11,23 +11,26 @@
 makeODD() 
 {
     echo "1. expand and simplify ODD "
-    if test "x$translatelang" = "x"
+    if test "x$lang" = "x"
     then
 	xsltproc -o $N.compiled.odd \
+        --stringparam lang "$lang"  \
+        --stringparam doclang "$doclang"  \
 	    --stringparam TEIC $TEIC \
 	    --stringparam TEISERVER $TEISERVER  \
 	    --stringparam localsource "$LOCAL"  \
 	    $TEIXSLDIR/odds/odd2odd.xsl $ODD 
     else
-	echo  [translated to language $lang]
+	echo  [names translated to language $lang]
 	xsltproc \
-	     --stringparam TEIC $TEIC \
+	    --stringparam TEIC $TEIC \
 	    --stringparam TEISERVER $TEISERVER  \
 	    --stringparam localsource "$LOCAL"  \
 	    $TEIXSLDIR/odds/odd2odd.xsl $ODD  | \
 	xsltproc -o $N.compiled.odd \
 	    --stringparam TEISERVER $TEISERVER  \
-	    --stringparam lang $translatelang  \
+        --stringparam lang "$lang"  \
+        --stringparam doclang "$doclang"  \
 	    --stringparam verbose true  \
 	    $TEIXSLDIR/odds/translate-odd.xsl - 
     fi
@@ -38,7 +41,8 @@ makeRelax()
     echo "2. make Relax NG from compiled ODD"
     xsltproc $PATTERN $DEBUG  \
 	     --stringparam TEIC $TEIC \
-	     --stringparam lang $lang  \
+        --stringparam lang "$lang"  \
+        --stringparam doclang "$doclang"  \
              --stringparam outputDir $RESULTS       \
              $TEIXSLDIR/odds/odd2relax.xsl $N.compiled.odd
     (cd $RESULTS; \
@@ -59,7 +63,8 @@ makeDTD()
 {
     echo "5. make DTD from compiled ODD"
     xsltproc  $DEBUG \
-	    --stringparam lang $lang  \
+        --stringparam lang "$lang"  \
+        --stringparam doclang "$doclang"  \
 	    --stringparam TEIC $TEIC \
             --stringparam outputDir $RESULTS       \
             $TEIXSLDIR/odds/odd2dtd.xsl $N.compiled.odd
@@ -71,7 +76,8 @@ makeHTMLDOC()
     xsltproc $DEBUG     \
 	-o $N.doc.html \
 	--stringparam TEIC $TEIC \
-        --stringparam lang $lang  \
+        --stringparam lang "$lang"  \
+        --stringparam doclang "$doclang"  \
 	--stringparam STDOUT true \
 	--stringparam splitLevel -1 \
 	$TEIXSLDIR/odds/odd2html.xsl $N.compiled.odd
@@ -83,7 +89,8 @@ makePDFDOC()
     echo "7. make PDF documentation"
     xsltproc $DEBUG     \
 	--stringparam TEIC $TEIC \
-        --stringparam lang $lang  \
+        --stringparam lang "$lang"  \
+        --stringparam doclang "$doclang"  \
 	-o $N.doc.tex \
 	$TEIXSLDIR/latex/tei.xsl $N.doc.xml
     pdflatex $N.doc.tex
@@ -97,7 +104,8 @@ makeXMLDOC()
         --stringparam TEISERVER $TEISERVER  \
 	--stringparam localsource "$LOCAL"  \
 	--stringparam TEIC $TEIC \
-        --stringparam lang $lang  \
+        --stringparam lang "$lang"  \
+        --stringparam doclang "$doclang"  \
 	-o $N.doc.xml \
 	$TEIXSLDIR/odds/odd2lite.xsl $N.compiled.odd 
     echo created $N.doc.xml 
@@ -122,13 +130,14 @@ echo "<schemaSpec> encountered in the input ODD file is processed; all others"
 echo "are ignored."
 echo "  Usage: roma [options] schemaspec [output_directory]"
 echo "  options, shown with defaults:"
+
 echo "  --xsl=$TEIXSLDIR"
 echo "  --teiserver=$TEISERVER"
-echo "  --localsource=$LOCALSOURCE # local copy of P5 sources"
+echo "  --localsource=$LOCALSOURCE  # local copy of P5 sources"
 echo "  options, binary switches:"
 echo "  --doc              # create expanded documented ODD (TEI Lite XML)"
-echo "  --translate=LANG   # translate tags to LANG (es, de, fr)"
-echo "  --lang=LANG        # use LANG for interface and documentation where possible"
+echo "  --schemalang=LANG  # language for names of attrbutes and elements"
+echo "  --doclang=LANG     # language for documentation"
 echo "  --dochtml          # create HTML version of doc"
 echo "  --patternprefix=STRING # prefix relax patterns with STRING"
 echo "  --docpdf           # create PDF version of doc"
@@ -146,8 +155,8 @@ TEIXSLDIR=/usr/share/xml/tei/stylesheet
 LOCALSOURCE=
 LOCAL=
 TEIC=true
-lang=en
-translatelang=
+doclang=
+lang=
 debug=false
 dtd=true
 relax=true
@@ -160,7 +169,7 @@ while test $# -gt 0; do
   case $1 in
     --xsl=*)       TEIXSLDIR=`echo $1 | sed 's/.*=//'`;;
     --lang=*)      lang=`echo $1 | sed 's/.*=//'`;;
-    --translate=*) translatelang=`echo $1 | sed 's/.*=//'`;;
+    --doclang=*)   doclang=`echo $1 | sed 's/.*=//'`;;
     --doc)         doc=true;;
     --dochtml)     dochtml=true;;
     --docpdf)      docpdf=true;;

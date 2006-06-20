@@ -6,7 +6,7 @@ form_headline=Do you want the output schema to use a different language?
 form_language=Language for element and attribute names
 form_doclanguage=Language for documentation
 form_clearCustomization=Clear customization (go back to english)
-form_
+
 [fr]
 helpmessage=Specifier un langage 
 headline=Choisissons un autre langage
