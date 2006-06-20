@@ -2130,7 +2130,7 @@ $ID: requests a particular page
               <xsl:call-template name="searchWords"/>
             </a>
           </xsl:if>
-          <xsl:if test="$searchURL"> | <a class="{$style}" href="{$feedbackURL}"
+          <xsl:if test="$feedbackURL"> | <a class="{$style}" href="{$feedbackURL}"
               target="_top">
               <xsl:call-template name="feedbackWords"/>
             </a>
