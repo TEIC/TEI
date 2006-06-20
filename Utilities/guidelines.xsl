@@ -19,7 +19,6 @@
   
 <xsl:import href="odd2htmlp5.xsl"/>
 <xsl:param name="cssFile">teic.css</xsl:param>
-<xsl:param name="parentWords">Text Encoding Initiative Consortium</xsl:param>
 
 <xsl:template name="generateSubTitle">
   <xsl:value-of select="tei:head"/>
