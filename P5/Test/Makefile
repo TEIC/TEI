@@ -11,6 +11,7 @@ TESTFILES= \
 	testfs \
 	testi18n \
 	testlite \
+	testlangs \
 	testminimal \
 	testms \
 	testnames \
