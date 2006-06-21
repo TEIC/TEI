@@ -1,13 +1,13 @@
 <!--
 Copyright TEI Consortium. Licensed under the GNU General Public License. See the file COPYING for details.$Date$
 $Author$-->
-<div1 xmlns="http://www.tei-c.org/ns/1.0" type="Faisal" xml:id="ND" n="20"><head>Names and Dates</head>
+<div1 xmlns="http://www.tei-c.org/ns/1.0" xml:id="ND" n="20"><head>Names and Dates</head>
 
 <p>This chapter describes a module which may be used for the encoding
 of proper names and other phrases descriptive of persons, places,
 organizations, and also of dates and times, in a manner more detailed
 than that possible using the elements already provided for these
-purposes in the Common Core module described in chapter <ptr
+purposes in the Core module described in chapter <ptr
 target="#CO"/>.</p>
 
 <p>In section <ptr target="#CONA"/> it was noted that the elements
@@ -22,21 +22,23 @@ explicitly between names of persons, places or organizations.</p>
 detailed analysis of the component parts of any expression which
 denotes a date or time, which is not possible using the elements
 described in section <ptr target="#CONADA"/>.</p>
-<p>It should be noted however that no provision is made by the present
-module for the representation of the abstract structures, or
-virtual objects to which names or dates may be
-said to refer. In simple terms, where the Common Core module allows one to
-represent a <term>name</term>, this module allows one to
-represent a <term>personal name</term>, but neither provides for the
-direct representation of a <term>person</term>. Section <ptr
-target="#CCAHPA"/> presents a simple way of representing biographical or
-other personal data for a limited range of applications; these Guidelines also provide general purpose
-mechanisms for the encoding of such interpretative gestures in chapters <ptr target="#AI"/> and <ptr target="#FS"/>.</p>
+
+<p>Finally, when this module is included, elements are provided to
+represent the abstract structures, or virtual objects to which names
+or dates may be said to refer. In simple terms, where the Common Core
+module allows one to represent a <term>name</term>, this module allows
+one further to represent a <term>personal name</term>. It also allows
+one to represent the <term>person</term> being named, and thus to
+encode biographical or other personal data for a wide range of
+applications, quite distinct from the names associated with such
+data.</p>
 
 
 <p>The chapter begins by discussing elements for the
 encoding of component parts of personal names (section <ptr target="#NDPER"/>), place names (section <ptr target="#NDPLAC"/>) and
-organizational names (section <ptr target="#NDORG"/>). Detailed encoding of
+organizational names (section <ptr target="#NDORG"/>). Elements for
+encoding personal data are discussed in section <ptr
+target="#NDPERS"/>. Finally, the detailed encoding of
 dates and times is described in section <ptr target="#NDDATE"/>.</p>
 
 
@@ -57,6 +59,8 @@ The selection and combination of modules to form a TEI schema is described in
 &model.persNamePart;    
 &att.personal;    
 &model.placeNamePart;    
+
+
 </p>
 <p>
 <specGrpRef target="#DNDPER"/>
@@ -65,23 +69,8 @@ The selection and combination of modules to form a TEI schema is described in
 <specGrpRef target="#DNDDATE"/>
 </p>
 </specGrp>
-<!-- no specgrp so these class definitions dont appear in the HTML -->
+
 </p>
-
-
-<!--
-<p>When this tag set is enabled, the attribute classes
-<term>persPart</term>, <term>placePart</term>, and <term>tempexp</term> gain additional
-attributes  to permit more delicate analysis, which replace the
-default declarations given in <ident type="file">teiclasses.ent</ident>. The model
-classes declared in that file remain unchanged (see <ptr target="#STEC"/>).
-The parameter entities
-corresponding with these modified classes are declared in the file
-<ident type="file">namesdates.ent</ident>, as follows:
-<moduleSpec xml:id="DNDENT" type="decls" ident="namesdates-decl">
-<altIdent type="FPI">Class declarations for Names and Dates</altIdent>
-</moduleSpec>
--->
 
 
 <div2 xml:id="NDPER"><head>Personal Names</head>
@@ -482,18 +471,18 @@ A more complex example, showing a variety of practices, follows:
    <name>Eilde</name>
 </geogName></egXML></p></div3>
 <div3 type="subsection" xml:id="NDPLR"><head>Relative Place Names</head>
-<p>All the place name specifications so far discussed are
-<term rend="noindex">absolute</term>, in the sense that they define only
-one place.  A
-place may however be specified in terms of its relationship to another
-place, for example <q>10 miles northeast of Paris</q> or <q>near the top
-of Mount Sinai</q>. These <term>relative place names</term> will contain
-a place name which acts as a referent (e.g. <q>Paris</q> and <q>Mount
-Sinai</q>). They will also contain a word or phrase indicating the
-position of the place being named in relation to the referent
-(e.g. <q>the top of</q>, <q>north of</q>). A distance, possibly only
-vaguely specified, between the referent place and the place being
-indicated may also be present (e.g. <q>10 miles</q>, <q>near</q>).
+<p>All the place name specifications so far discussed are <term
+rend="noindex">absolute</term>, in the sense that they define only one
+place.  A place may however be specified in terms of its relationship
+to another place, for example <q>10 miles northeast of Paris</q> or
+<q>near the top of Mount Sinai</q>. These <term>relative place
+names</term> will contain a place name which acts as a referent
+(e.g. <q>Paris</q> and <q>Mount Sinai</q>). They will also contain a
+word or phrase indicating the position of the place being named in
+relation to the referent (e.g. <q>the top of</q>, <q>north of</q>). A
+distance, possibly only vaguely specified, between the referent place
+and the place being indicated may also be present (e.g. <q>10
+miles</q>, <q>near</q>).
  </p>
 <p>Relative place names may be encoded using the following elements in
 combination with either a <gi>placeName</gi> or a <gi>geogName</gi>
@@ -740,6 +729,588 @@ structure notation is recommended (<ptr target="#FS"/>).
 &orgDivn;</specGrp>
 </p>
 </div2>	
+
+
+
+<div2 xml:id="NDPERS" type="subsect" 
+      xmlns="http://www.tei-c.org/ns/1.0"
+      xmlns:rng="http://relaxng.org/ns/structure/1.0">
+
+
+<head>Biographical and Prosopographical Data</head>
+
+<p>This module defines a number of special purpose elements which can
+be used to markup biographical and prosopographical data. We envisage
+three basic types of users and uses for these elements. The first is
+the person interested in creating or converting an existing set of
+biographical records, for example of the type found in a Dictionary of
+National Biography. The second is the person hoping to create or
+convert a database-like collection of information about a group of
+people, possibly but not necessarily the people referenced in a
+marked-up collection of documents or a text-corpus. The third type
+would be those interested in the creation or conversion of
+biographical or CV-like structured texts for use e.g. in Human
+Resources.</p>
+
+<p>To cater for this diversity, these Guidelines propose a flexible
+approach, in which encoders may choose for themselves the degree of
+prescription appropriate to their needs. If one were interested, for
+example, in converting existing DNB-type records, and wanted to
+preserve the text as is, the <gi>person</gi> element could simply
+contain the text of an article, placed within <gi>p</gi> elements,
+possibly using elements such as <gi>name</gi> or <gi>date</gi> to mark
+up features of that text.  For a more structured entry, however, one
+would extract the data and place information contained by the text,
+and encode it directly using the more specific elements described in
+this section.</p>
+
+
+<div3 >
+<head>Basic principles</head>
+
+<p>Information about people, of whatever type, essentially comprises a
+series of statements or assertions relating to:
+<list>
+<item>personal characteristics or <term>traits</term>,</item>
+<item>personal states, </item>
+<item>changes in personal state or events.</item></list>
+</p>
+
+<p><soCalled>Characteristics</soCalled> or <soCalled>traits</soCalled>
+are typically independent of an individual's volition or action and
+can be either physical, such as sex or hair and eye colour, or
+cultural, such as ethnicity, caste or faith.  The distinction is not
+entirely straightforward, however: while sex is fairly obviously a
+physical trait, gender should rather be regarded as culturally
+determined, and the division of mankind into different
+<soCalled>races</soCalled>, proposed by early (white European)
+anthropologists on the basis of physical characteristics such as skin
+colour, hair type and skull measurements, is by many modern cultural
+anthropologists now considered to be more a social or mental construct
+than an objective biological fact. Furthermore, while some
+characteristics will obviously change over time, hair colour for
+example, none, in principle — not even sex — is immutable.</p>
+
+<p><soCalled>States</soCalled> include, for example, marital status,
+place of residence and position or occupation. Such states have a
+definite duration, i.e. have a beginning and an end, and are typically
+a consequence of the individual's own action or that of others.</p>
+
+<p>By <soCalled>changes in state</soCalled> is meant the events
+in a person's life such as birth, marriage or appointment to office;
+such events will normally be associated with a specific date or a
+fairly narrow date-range. Changes in states can also cause or be caused
+by changes in characteristics. Any statement or assertion on any of
+these aspects of a person's life will be based on some source, possibly
+multiple sources, possibly contradictory. Taking all this into account
+it follows that each such statement or assertion needs to be able to be
+documented, put into a time frame and be relatable to other statements
+or assertions of the same or any of the other types.</p>
+</div3>
+
+<div3 >
+<head>The person element</head>
+<p>Information about a person, as distinct from references to a
+person, for example by name, is
+grouped together within a <gi>person</gi> element. A
+<gi>listPerson</gi> element is used to group such descriptions
+together, and optionally to describe relationships amongst the people
+listed. 
+<specList>
+<specDesc key="person"/>
+<specDesc key="personGrp"/>
+<specDesc key="listPerson"/>
+<specDesc key="particLinks"/>
+</specList>
+</p>
+<p>The <gi>listPerson</gi> element will usually  appear within the
+<gi>profileDesc</gi> of a TEI Header, but can also appear within the
+body of a text, in the same way as a bibliographic description.</p>
+
+<!-- simple example needed here -->
+
+<p>The <gi>person</gi> element may contain many subelements, each
+specifying a different property of the person being described. The
+remainder of this section describes these more specific elements. For
+convenience, these elements are grouped into three classes, corresponding with
+the tripartite division outlined above: one for traits, one for states
+and one for events. Each class  contains both 
+specific elements for  common types of biographical
+information, and a generic element for other, user-defined, types
+of information.</p> 
+
+<p>All the elements in these three classes belong to the attribute
+class <ident>att.datable</ident>, which provides
+<ident>dateValue</ident>, to indicate an exact date,
+<ident>from</ident> and <ident>to</ident>, to indicate a specific date
+range, and <ident>notBefore</ident> and <ident>notAfter</ident>, to
+indicate the earliest and latest possible dates — the <hi>terminus
+post quem</hi> and <hi>terminus ante quem</hi> — for a characteristic,
+state or event. The value of all of these is a date in standard format
+as defined in ISO 8601:2000 5.2.1.1 to 3, extended format,
+i.e. yyyy-mm-dd. The various attributes can be combined in various
+ways.  Consider, for example, the following:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<date value="1857-03-15">15 March 1857.</date> 
+
+<date notBefore="1857-03-01" notAfter="1857-04-30">Sometime in March or April of 1857.</date> 
+
+<dateRange from="1857-03-01" to="1857-04-30">In March and April of 1857.</dateRange> 
+
+<dateRange from="1857-03-01" notAfter="1857-04-30">From the 1st of March to sometime in April of 1857.</dateRange>
+</egXML>
+</p>
+
+<div4 type="d3" >
+
+<head>Personal Characteristics</head>
+
+
+<p>The <ident>model.persTraitLike</ident> class contains elements
+describing physical or socially-constructed characteristics or traits
+of a person. Members of the class comprise the following specific
+elements:
+
+<specList>
+<specDesc key="faith"/>
+<specDesc key="langKnowledge"/>
+<specDesc key="langKnown"/>
+<specDesc key="nationality"/>
+<specDesc key="sex"/>
+<specDesc key="socecStatus"/>
+</specList>
+
+All, apart from <gi>langKnowledge</gi>, have a content model of <ident>macro.phraseSeq</ident>, by which is meant ordinary prose containing phrase-level elements.
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<socecStatus key="#ab1" scheme="#rg">Status AB1 in the RG Classification scheme</socecStatus>
+</egXML>
+</p>
+
+<p>The <gi>langKnowledge</gi> element contains either paragraphs or a
+number of <gi>langKnown</gi> elements; both take a <ident>tag</ident>
+(or <ident>tags</ident>) attribute, which provides the standard code
+for the language as defined in RFC 3066 or its successor, while
+<gi>langKnown</gi> also has a <ident>level</ident> attribute to
+indicate the level of the person's competence in the language. It is
+thus possible either to say:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<langKnowledge tags="fu fr wo en"><p>Speaks fluent Fulani, Wolof and French. Some knowledge of English.</p></langKnowledge>
+</egXML>
+
+or
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<langKnowledge>
+    <langKnown level="fluent" tag="fu">Fulani</langKnown>
+    <langKnown level="fluent" tag="wo">Wolof</langKnown>
+    <langKnown level="fluent" tag="fr">French</langKnown>
+    <langKnown level="basic" tag="en">English</langKnown>
+</langKnowledge>
+</egXML>
+</p>
+
+<p>The <gi>sex</gi> element carries a <ident>value</ident> attribute to give the ISO 5218:1977 values, i.e. 1 for male, 2 for female, 9 for non-applicable and 0 for unknown.
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<sex value="2">female</sex>
+</egXML>
+</p>
+
+<p>In addition to these specific elements the class contains a generic
+element called <gi>persTrait</gi>.
+<specList>
+<specDesc key="persTrait"/>
+</specList>
+
+This element can be used to extend the range of information supplied
+about an individual's personal traits. It can contain an optional
+<gi>label</gi> element, used to provide a human-readable
+specification for the category of trait or feature concerned, followed
+by a <gi>date</gi> or <gi>dateRange</gi> element, followed by the
+description of the feature itself supplied within one or more
+<gi>p</gi> elements, following which there may be added one or more
+notes or bibliographical references. The <ident>type</ident> and
+<ident>key</ident> attributes are available on the <gi>persTrait</gi>
+element to indicate a fuller definition of the combination of feature
+and value.
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<persTrait type="ethnicity" key="#alb">
+    <label>Ethnicity</label>
+    <p>Ethnic Albanian.</p>
+</persTrait>
+</egXML>
+</p>
+<!-- what does alb point to here? -->
+
+<p>The  generic element can be used in place of one of the more
+specific elements: 
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<persTrait type="nationality">
+    <label>Nationality</label>
+    <dateRange notBefore="2002-01-15">From 15 January 2002</dateRange>
+    <p>American citizen.</p>
+</persTrait>
+</egXML>
+is the same as:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<nationality notBefore="2002-01-15">Became an American citizen on 15 January 2002.</nationality> 
+</egXML>
+or even:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<nationality notBefore="2002-01-15" key="#USA"/>
+</egXML>
+</p>
+<p>More usually however, the element is provided as a simple means of
+extending the set of descriptive features available in a standardized
+way. For example.... </p>
+
+</div4>
+
+<div4 type="d3" >
+<head>Personal States</head>
+
+<p>The <ident>model.persStateLike</ident> class contains elements
+describing changeable characteristics of a
+person which have a definite duration, for example occupation,
+residence, or name. Members of
+the class comprise the following specific elements:
+<specList>
+<specDesc key="persName"/>
+<specDesc key="relation"/>
+<specDesc key="occupation"/>
+<specDesc key="residence"/>
+<specDesc key="affiliation"/>
+<specDesc key="education"/>
+<specDesc key="floruit"/>
+</specList>
+</p>
+
+
+<p>The <gi>persName</gi> element is repeatable and can, like all TEI
+elements, take the attribute <ident>xml:lang</ident> to indicate the
+language of the content of the element, as well as a
+<ident>type</ident> attribute to indicate the type of name, whether a
+nickname, maiden name, alternative form etc. This is useful in cases
+where, for example, a person is known by a Latin name and also by any
+number of vernacular names, many or all of which may have claims to
+<soCalled>authenticity</soCalled>. In order to ensure uniformity, the
+method generally employed in the library world has been to accept the
+form found in some authority file, for example that of the American
+Library of Congress, as the <soCalled>base</soCalled> or
+<soCalled>neutral</soCalled> form. Feelings can run high on this
+matter, however, and people are often reluctant to accept as
+<soCalled>neutral</soCalled> an overtly foreign form of the name of
+their local saint or hero. Within the <gi>person</gi> element any
+number of variant forms of a name can be given, with no
+prioritisation, and hence less likelihood of offence. The Icelandic
+scholar and manuscript collector &#193;rni Magn&#250;sson, to give his
+name in standard modern Icelandic spelling, is known in Danish as Arne
+Magnusson, the form which he himself, as a life-long resident of
+Denmark, generally used; there is also a Latinised form, Arnas
+Magn&#230;us, which he used in his scholarly writings. All three forms
+can be given, and in any order:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<person xml:id="ArnMag">
+    <persName xml:lang="is">Árni Magnússon</persName>
+    <persName xml:lang="da">Arne Magnusson</persName>
+    <persName xml:lang="la">Arnas Magnæus</persName>
+</person>
+</egXML>
+</p>
+
+<!-- examples of other elements please! -->
+
+<p>In addition to these specific elements the class contains a generic
+element called <gi>persState</gi>.
+<specList>
+<specDesc key="persState"/>
+</specList>
+</p>
+<p>This element can be used to
+extend the range of descriptive information available in the same way
+as the <gi>persTrait</gi> element, using the same content model. 
+For example, a description of the first living held by the Icelandic
+clergyman and poet J&#243;n Oddsson Hjaltal&#237;n might be tagged as
+follows:
+
+<!-- accented letters need sorting ! -->
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<persState type="office" notBefore="1777-04-07" notAfter="1780-07-12">
+    <p>Jón's first living — which he apparently accepted rather
+    reluctantly — was at <name type="place">Hamarsfir</name>,
+    <name type="place">Msla</name>, to which he was presented on 7
+    April 1777. He was ordained the following month and spent three
+    years at H, but was never happy there, due largely to the general
+    penury in which he was forced to live — a recurrent theme
+    throughout the early part of his life. In June of 1780 the bishop
+    recommended that Jón should <q xml:lang="da">promoveres til andet bedre kald, end det hand hidindtil har havt</q>, and on 12 July it was agreed that he should exchange livings with <name type="person" key="#ThorJon">sr. ron</name> at <name type="place">Kafell </name>, <name type="place">Skaftafellssla</name>.</p>
+    <bibl>, Stms I.15, p. 733.</bibl>
+    <bibl>, Stms I.17, p. 102.</bibl>
+</persState>
+</egXML>
+</p>
+<!-- more discussion needed here -->
+
+</div4>
+
+<div4>
+<head>Personal Events</head>
+
+<p>The <ident>model.persEventLike</ident> class contains elements
+describing specific events in a person's
+history, for example birth, marriage, or appointment. These are not
+characteristics of an individual, but often cause an individual to
+gain such characteristics, or to enter a new state. Members of this
+class comprise the following  elements:
+<specList>
+<specDesc key="birth"/>
+<specDesc key="death"/>
+<specDesc key="persEvent"/>
+</specList>
+
+Only two specific elements (<gi>birth</gi> and <gi>death</gi>) are
+proposed. The generic element <gi>persEvent</gi> has the same content
+model as <gi>persState</gi> and <gi>persTrait</gi> and is used in the
+same way, to describe any event in the life of an individual. </p>
+
+<p>In the example below the event is the wedding of Jane Burdon to the
+English writer, designer and socialist William Morris.
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<persEvent type="marriage">
+    <label>Marriage</label>
+    <date value="1859-04-26">26 April 1859</date>
+    <p><name type="person" key="#WM">William Morris</name> and Jane
+    Burden were married at <name type="place">St Michael's Church,
+    Ship Street, Oxford</name> on <date value="1859-04-26">26 April
+    1859</date>. The wedding was conducted by Morris's friend <name
+    type="person" key="#RWD">R. W. Dixon</name> with <name
+    type="person" key="#CF">Charles Faulkner</name> as the best
+    man. The bride was given away by her father, <name type="person"
+    key="#RB">Robert Burden</name>. According to the account that
+    <name type="person" key="#EBJ">Burne-Jones</name> gave <name
+    type="person" key="#JWM">Mackail</name> <q>M. said to Dixon
+    beforehand <q>Mind you don't call her Mary</q> but he did</q>. The
+    entry in the Register reads: <q>William Morris, 25, Bachelor
+    Gentleman, 13 George Street, son of William Morris
+    decd. Gentleman. Jane Burden, minor, spinster, 65 Holywell Street,
+    d. of Robert Burden, Groom.</q> The witnesses were Jane's parents
+    and Faulkner. None of Morris's family attended the
+    ceremony. Morris presented Jane with a plain gold ring bearing the
+    London hallmark for 1858. She gave her husband a double-handled
+    antique silver cup.</p>
+    <bibl>J. W. Mackail, <title>The Life of William Morris</title>, 1899.</bibl>
+</persEvent>
+</egXML>
+
+In this example the keys on the various <gi>persName</gi> elements
+point to the <gi>person</gi> elements for the other people named. As
+further discussed below (<ptr target="#relations"/>), a
+<gi>relation</gi> element may then be used to link them in a more
+meaningful way:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<relation name="spouse" mutual="#WM #JBM"/>
+<relation name="friend" mutual="#WM #RWD"/>
+<relation name="parent" active="#RB" passive="#JBM"/>
+</egXML>
+</p>
+
+<p>As mentioned above, all these elements, both the specific and the generic, are members of the <ident>att.datable</ident>
+attribute class, which means they can be limited in terms of time. The
+folloowing encoding, for
+example, demonstrates that the person named David Jones 
+changed his name in 1966 to David Bowie:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<person xml:id="DB">
+    <persName notAfter="1966">David Jones</persName>
+    <persName notBefore="1966">David Bowie</persName>
+</person>
+</egXML>
+</p>
+
+<p>All the generic elements are also members of the <ident>att.editLike</ident>
+class, which, as its name implies, was originally intended to provide
+attributes <q>describing the nature of an encoded scholarly intervention
+or interpretation of any kind</q> and which makes available the attributes
+<ident>cert</ident>, to indicate the degree of certainty, <ident>resp</ident>, the agency responsible, and <ident>evidence</ident>,
+the nature of the evidence used. In this way it is possible, in the
+case of multiple and conflicting sources, to provide more than one view
+of what happened, as in the following example:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<persEvent type="birth" resp="#XYZ" cert="high"><p>Born in <name type="place">Brixton</name> on 8 January 1947.</p></persEvent>
+<persEvent type="birth" resp="#ABC" cert="low"><p>Born in <name type="place">Berkhamsted</name> on 9 January 1947.</p></persEvent>
+</egXML>
+</p>
+
+</div4>
+<div4 xml:id="relations"><head>Personal Relationships</head>
+
+<!-- rename particLinks as personLinks ? -->
+
+<p>As noted above, the <gi>particLinks</gi> element is used to document
+personal or social relationships between individual persons, where
+this is felt to be of importance in the analysis.  This may be done
+either as an informal prose description, or more formally using the
+special purpose <gi>relation</gi> element, as described below:
+<specList><specDesc key="relation" /></specList></p>
+<p>A <term>relationship</term>, as defined here, may be any kind of
+describable link between specified participants, for example a social
+relationship (such as employer/employee), a personal relationship
+(such as sibling, spouse, etc.) or something less precise such as
+<q>possessing shared knowledge</q>.  A relationship may be
+<term>mutual</term>, in that all the participants engage in it on an
+equal footing (for example the <q>sibling</q> relationship); or it may
+not be if participants are not identical with respect to their role in
+the relationship (for example, the <q>employer</q> relationship).  For
+non-mutual relationships, only two kinds of role are currently
+supported; they are named <term>active</term> and
+<term>passive</term>.  These names are chosen to reflect the fact that
+non-mutual relations are <term>directed</term>, in the sense that they
+are most readily described by a transitive verb, or a verb phrase of
+the form <mentioned>is X of</mentioned> or <mentioned>is X to</mentioned>.  The
+subject of the verb is classed as <term>active</term>; the direct
+object of the verb, or the object of the concluding preposition, as
+<term>passive</term>.  Thus parents are <q>active</q> and children
+<q>passive</q> in the relationship <q>parent</q> (interpreted as
+<mentioned>is parent of</mentioned>); the employer is <q>active</q>, the
+employee <q>passive</q>, in the relationship <mentioned>employs</mentioned>.
+These relationships can be inverted: parents are <q>passive</q> and
+children <q>active</q> in the relationship <mentioned>is child of</mentioned>;
+similarly <q>works for</q> inverts the active and passive roles of
+<q>employs</q>.</p>
+<p>For example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><particLinks>
+   <relation name="parent" active="#P1 #P2" passive="#P3 #P4" />
+   <relation name="spouse" mutual="#P1 #P2"/>
+   <relation type="social" name="employer" active="#P1" passive="#P3 #P5 #P6 #P7"/>
+</particLinks></egXML>
+This example defines the relationships amongst a number of people not
+further described here; we assume however that each person has been
+allocated an identifier such as <val>P1</val>, <val>P2</val>
+etc. which can be linked to using the reference <val>#P1</val>. Then
+the above set of <gi>relation</gi> elements describe the following
+three relationships amongst the seven people referenced:
+<list type="simple">
+<item>P1 and P2 are parents of P3 and P4.</item>
+<item>P1 and P2 are linked in a mutual relationship called <q>spouse</q>
+&#x2014; i.e.  P2 is the spouse of P1, and P1 is the spouse of P2.</item>
+<item>P1 has the social relationship <q>employer</q> with respect to P3,
+P5, P6, and P7.</item></list></p>
+</div4>
+</div3>
+<!--
+<div3 >
+<head>Assertions</head>
+<p>In order to allow even greater flexibility we intend to propose a new element, tentatively called <gi>assert</gi>,
+which may be used for making assertions about characteristics, states
+and changes in states and associating these assertions with
+bibliographical records, notes and so on. 
+<specList>
+<specDesc key="assert"/>
+</specList>
+Using this mechanism allows one for example to date the assertions as distinct from the things
+being asserted:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<assert resp="#XYZ" cert="high" notBefore="1999">
+    <birth dateValue="1947-01-08">Born in <name type="place">Brixton</name> on 8 January 1947.</birth>
+</assert>
+<assert resp="#ABC" cert="low" notAfter="1999">
+    <birth dateValue="1947-01-09">Born in <name type="place">Berkhamsted</name> on 9 January 1947.</birth>
+</assert>
+</egXML>
+In this example it can be seen that up until 1999 it was believed,
+on the authority of ABC, that the individual in question was born in
+Berkhamsted on the 9th of January 1947, whereas after 1999 XYZ's
+assertion that he had in fact been born in Brixton on the 8th of
+January was generally accepted. A bibliographical reference or note can
+be added to provide documentation or further explanation.</p>
+
+<p>We also propose a grouping element, <gi>assertGrp</gi> (for <soCalled>assertion group</soCalled>).
+<specList>
+<specDesc key="assertGrp"/>
+</specList>
+The <gi>assertGrp</gi> element can serve as a wrapper around several elements, as in the following example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<assertGrp type="causal">
+    <occupation to="2006-06-13">Manuscript scholar</occupation>
+    <residence to="2006-06-13">
+        <placeName>
+            <settlement type="city">Copenhagen</settlement>
+            <country>Denmark</country>
+        </placeName>
+    </residence>
+    <persEvent>
+        <label>Nervous breakdown</label>
+        <date dateValue="2006-06-14">14 June 2006</date>
+    </persEvent>
+    <occupation from="2006-06-15">Bee-keeper</occupation>
+    <residence from="2006-06-15">
+        <placeName>
+            <settlement type="village">Dobarsko</settlement>
+            <country>Bulgaria</country>
+        </placeName>
+    </residence>
+</assertGrp>
+</egXML>
+In this example an explicit causal link is made between the various
+elements, indicating that a specific event has resulted in a change of
+occupation and residence.</p>
+</div3>
+-->
+
+<div3><head>Formal definitions</head>
+
+<p>This module populates the   <ident>model.assertLike</ident> class,
+which is a superclass of the three more specific classes discussed
+above. <!-- The classes are defined as follows:
+<specGrp xml:id="classes">
+&model.persTraitLike;
+&model.persStateLike;
+&model.persEventLike;
+ &model.assertLike; 
+</specGrp>--> <!-- currently defined in ST -->
+</p>
+
+<p>The elements provided by this module are declared as follows:
+
+
+<specGrp xml:id="DCCAHPA" n="Personal data">
+&affiliation;
+&birth;
+&death;
+&education;
+&faith;
+&firstLang;
+&floruit;
+&langKnowledge;
+&langKnown;
+&listPerson;
+&nationality;
+&occupation;
+&particLinks;
+&persEvent;
+&persState;
+&persTrait;
+&person;
+&personGrp;
+&relation;
+&residence;
+&sex;
+&socecStatus;
+</specGrp></p></div3>
+
+</div2>
+
 <div2 xml:id="NDDATE"><head>Dates and Times</head>
 <p>The following elements for the encoding of dates and times were
 introduced in section <ptr target="#CONADA"/>:
