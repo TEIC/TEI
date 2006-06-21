@@ -399,7 +399,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template match="tei:bob">
+  <xsl:template match="tei:binaryObject">
     <img>
       <xsl:attribute name="src">
         <xsl:text>data:</xsl:text>

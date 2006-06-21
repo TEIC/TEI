@@ -49,6 +49,23 @@
     <xd:short>Process tei:item in runin mode</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:item" mode="runin"
-    ><xsl:text> • </xsl:text><xsl:apply-templates/> </xsl:template>
+  <xsl:template match="tei:item" mode="runin">
+    <xsl:text> • </xsl:text>
+   <xsl:apply-templates/> 
+  </xsl:template>
+
+  <xsl:template name="addIdentification">
+    <xsl:param name="id"/>
+    <xsl:choose>
+      <xsl:when test="$xhtml='true'">
+	<xsl:attribute name="xml:id">
+	  <xsl:value-of select="$id"/>
+	</xsl:attribute>
+      </xsl:when>
+      <xsl:otherwise>
+	<a name="{$id}"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
 </xsl:stylesheet>

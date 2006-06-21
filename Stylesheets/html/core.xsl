@@ -918,18 +918,23 @@
   </xd:doc>
   <xsl:template match="tei:note">
     <xsl:variable name="identifier">
+      <xsl:text>Note</xsl:text>
       <xsl:call-template name="noteID"/>
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="ancestor::tei:bibl"> (<xsl:apply-templates/>) </xsl:when>
       <xsl:when test="@place='inline'">
-        <a name="{$identifier}"/>
+	<xsl:call-template name="addIdentification">
+	  <xsl:with-param name="id" select="$identifier"/>
+	</xsl:call-template>
         <xsl:text> (</xsl:text>
         <xsl:apply-templates/>
         <xsl:text>)</xsl:text>
       </xsl:when>
       <xsl:when test="@place='display'">
-        <a name="{$identifier}"/>
+	<xsl:call-template name="addIdentification">
+	  <xsl:with-param name="id" select="$identifier"/>
+	</xsl:call-template>
         <blockquote>
           <p>
             <xsl:apply-templates/>
@@ -955,7 +960,9 @@
         </xsl:choose>
       </xsl:when>
       <xsl:otherwise>
-        <a name="{$identifier}"/>
+	<xsl:call-template name="addIdentification">
+	  <xsl:with-param name="id" select="$identifier"/>
+	</xsl:call-template>
         <xsl:text> [</xsl:text>
         <xsl:call-template name="i18n">
           <xsl:with-param name="word">Note</xsl:with-param>
@@ -973,6 +980,7 @@
   <xsl:template match="tei:note" mode="printnotes">
     <xsl:if test="not(ancestor::tei:bibl)">
       <xsl:variable name="identifier">
+	<xsl:text>Note</xsl:text>
         <xsl:call-template name="noteID"/>
       </xsl:variable>
       <xsl:variable name="parent">
@@ -982,8 +990,14 @@
         <xsl:message>Note <xsl:value-of select="$identifier"/> with parent
             <xsl:value-of select="$parent"/></xsl:message>
       </xsl:if>
-      <div class="note"><a name="{$identifier}"/><xsl:call-template name="noteN"
-        />. <xsl:apply-templates/></div>
+      <div class="note">
+	<xsl:call-template name="addIdentification">
+	  <xsl:with-param name="id" select="$identifier"/>
+	</xsl:call-template>
+	<xsl:call-template name="noteN"/>
+	<xsl:text>. </xsl:text>
+	<xsl:apply-templates/>
+      </div>
     </xsl:if>
   </xsl:template>
   <xd:doc>
