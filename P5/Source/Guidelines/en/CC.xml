@@ -428,11 +428,14 @@ The formal declarations for these elements are given below:
 <p>The <gi>particDesc</gi> element in the <gi>profileDesc</gi> element
 provides additional information about the participants in a spoken text
 or, where this is judged appropriate, the persons named or depicted in a
-written text.  Individual speakers or groups of speakers may be named or
+written text.  When the detailed elements provided by the Names and
+Dates module are included in a schema, this element can contain
+detailed demographic or descriptive information about individual speakers or groups of speakers,
+such as their names or other personal characteristics. Individually
+identified persons may also
 identified by a code which can then be used elsewhere within the encoded
-text, for example as the value of a <att>who</att> attribute.
-Demographic and descriptive information may be supplied about their
-individual characteristics and the relationships between them.</p>
+text, for example as the value of a <att>who</att> attribute.</p>
+
 <p>It should be noted that although the terms <term>speaker</term> or
 <term>participant</term> are used throughout this section, it is
 intended that the same mechanisms may be used to characterize fictional
@@ -440,11 +443,16 @@ person&#xE6; or <soCalled>voices</soCalled> within a written text, except
 where otherwise stated.  For the purposes of analysis of language usage,
 the information specified here should be equally applicable to written
 and spoken texts.</p>
-<p>The element <gi>particDesc</gi> contains one or more
-<gi>listPerson</gi> or <gi>personGrp</gi> elements, followed by an
-optional <gi>particLinks</gi> element, as described below:
-<specList><specDesc key="listPerson"/><specDesc key="person" /><specDesc key="personGrp" atts="role sex age size"/><specDesc key="particLinks"/></specList>
-	</p>
+<p>The element <gi>particDesc</gi> contains a description of the
+participants in an interaction, which may be supplied as
+straightforward prose, possibly containing a list of names, encoded
+using the usual <gi>list</gi> and <gi>name</gi> elements, or
+alternatively using the more specific and detailed 
+<gi>listPerson</gi>, <gi>personGrp</gi>, or <gi>particLinks</gi>
+elements which are provided by the Names and Dates module described in
+chapter <ptr target="#ND"/>. 
+</p>
+<!--
 <p>Both <gi>person</gi> and <gi>personGrp</gi> elements have the same
 substructure.  This may be a prose description, or, more formally, a
 series of specialized subelements providing more specific details.
@@ -470,96 +478,52 @@ key="firstLang"/><specDesc key="langKnown"/><specDesc
 key="residence"/><specDesc key="education"/><specDesc
 key="affiliation"/><specDesc key="nationality"/>
 <specDesc key="occupation" atts="scheme code"/><specDesc key="socecStatus" atts="scheme code"/></specList></p>
-<p>For example, an individual might be described informally by the
-following <gi>person</gi> element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><person sex="2" age="mid">
-  <p>Female informant, well-educated, born in Shropshire UK, 12 Jan
+-->
+<p>For example, the participants in a recorded conversation might be
+described informally as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><particDesc>
+<p>Female informant, well-educated, born in Shropshire UK, 12 Jan
     1950, of unknown occupation. Speaks French fluently.
     Socio-Economic status B2 in the PEP classification scheme.</p>
-</person></egXML>
-Provided that the <q>PEP classification scheme</q> has been defined
-elsewhere in the heading (as a <gi>taxonomy</gi> element within the
-<gi>textClass</gi> element; see <ptr target="#HD55"/>), the same individual
-might more formally be described as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><person sex="2" age="mid">
-   <birth date="1950-01-12">     
-      <date>12 Jan 1950</date>
-      <name type="place">Shropshire, UK</name>
-   </birth>
-   <firstLang>English</firstLang>
-   <langKnown>French</langKnown>
-   <residence>Long term resident of Hull</residence>
-   <education>University postgraduate</education>
-   <occupation>Unknown</occupation>
-   <socecStatus scheme="#pep" code="#b2"/>
-</person></egXML></p>
+</particDesc></egXML></p>
 <p>Dates and names of persons or places, if included in the prose
 description, may be encoded using either the general purpose
 <gi>date</gi>, <gi>name</gi> or <gi>rs</gi> elements discussed in
 section <ptr target="#CONA"/>, or the more specialised and detailed
 elements provided by chapter <ptr target="#ND"/>. In the latter case, the
-additional module for names and dates must be enabled together with
+module for names and dates must be included in the schema along with
 that for language corpora.</p>
-<p>An identified character in a drama or a novel might be defined using
-a subset of the same tags as follows:<note place="foot">It is particularly useful to
+<p>When this module is included, information about the participant described above might
+be provided in a more structured way as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><person sex="2" age="mid">
+   <birth date="1950-01-12">     
+      <date>12 Jan 1950</date>
+      <name type="place">Shropshire, UK</name>
+   </birth>
+   <langKnowledge tags="en fr">
+   <langKnown level="first" tag="en">English</langKnown>
+   <langKnown tag="fr">French</langKnown>
+   </langKnowledge>
+   <residence>Long term resident of Hull</residence>
+   <education>University postgraduate</education>
+   <occupation>Unknown</occupation>
+   <socecStatus scheme="#pep" code="#b2"/>
+</person></egXML></p>
+<p>An identified character in a drama or a novel may also be regarded
+as a participant in this sense, and encoding  using
+the same techniques:<note place="foot">It is particularly useful to
 define participants in a dramatic text in this way, since it enables the
 <att>who</att> attribute to be used to link <gi>sp</gi> elements to
 definitions for their speakers; see further section <ptr target="#DRSP"/>.</note>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><person xml:id="em01" sex="2" age="young">
-   <p><name>Emma Woodhouse</name></p>
-</person></egXML></p>
-<p>As noted above, the <gi>particLinks</gi> element is used to document
-personal or social relationships between individual participants, where
-this is felt to be of importance in the analysis.  This may be done
-either as an informal prose description, or more formally using the
-special purpose <gi>relation</gi> element, as described below:
-<specList><specDesc key="relation" /></specList></p>
-<p>A <term>relationship</term>, as defined here, may be any kind of
-describable link between specified participants, for example a social
-relationship (such as employer/employee), a personal relationship
-(such as sibling, spouse, etc.) or something less precise such as
-<q>possessing shared knowledge</q>.  A relationship may be
-<term>mutual</term>, in that all the participants engage in it on an
-equal footing (for example the <q>sibling</q> relationship); or it may
-not be if participants are not identical with respect to their role in
-the relationship (for example, the <q>employer</q> relationship).  For
-non-mutual relationships, only two kinds of role are currently
-supported; they are named <term>active</term> and
-<term>passive</term>.  These names are chosen to reflect the fact that
-non-mutual relations are <term>directed</term>, in the sense that they
-are most readily described by a transitive verb, or a verb phrase of
-the form <mentioned>is X of</mentioned> or <mentioned>is X to</mentioned>.  The
-subject of the verb is classed as <term>active</term>; the direct
-object of the verb, or the object of the concluding preposition, as
-<term>passive</term>.  Thus parents are <q>active</q> and children
-<q>passive</q> in the relationship <q>parent</q> (interpreted as
-<mentioned>is parent of</mentioned>); the employer is <q>active</q>, the
-employee <q>passive</q>, in the relationship <mentioned>employs</mentioned>.
-These relationships can be inverted: parents are <q>passive</q> and
-children <q>active</q> in the relationship <mentioned>is child of</mentioned>;
-similarly <q>works for</q> inverts the active and passive roles of
-<q>employs</q>.</p>
-<p>For example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><particLinks>
-   <relation name="parent" active="#P1 #P2" passive="#P3 #P4" />
-   <relation name="spouse" mutual="#P1 #P2"/>
-   <relation type="social" name="employer" active="#P1" passive="#P3 #P5 #P6 #P7"/>
-</particLinks></egXML>
-<!-- I hate these names too, especially 'relation' but I      -->
-	<!-- cant think of any better ones.  'socrel' 'link.social'   -->
-	<!-- ???  (LB)                                                -->
-This example defines the relationships amongst a number of people not
-further described here; we assume however that each person has been
-allocated an identifier such as <val>P1</val>, <val>P2</val>
-etc. which can be linked to using the reference <val>#P1</val>. Then
-the above set of <gi>relation</gi> elements describe the following
-three relationships amongst the seven people referenced:
-<list type="simple">
-<item>P1 and P2 are parents of P3 and P4.</item>
-<item>P1 and P2 are linked in a mutual relationship called <q>spouse</q>
-&#x2014; i.e.  P2 is the spouse of P1, and P1 is the spouse of P2.</item>
-<item>P1 has the social relationship <q>employer</q> with respect to P3,
-P5, P6, and P7.</item></list></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+   <particDesc><p>The chief speaking characters in this novel are
+<list><item xml:id="EMWOO"><name>Emma Woodhouse</name></item>
+<item xml:id="DARCY"><name>Mr Darcy</name></item>
+<!-- ... -->
+</list></p></particDesc>
+</egXML></p>
+
+<!--
 <p>The elements discussed in this section are formally defined as
 follows:
 <specGrp xml:id="DCCAHPA" n="Participants description">
@@ -579,7 +543,8 @@ follows:
 &particLinks;
 &relation;
 </specGrp>
-</p></div3>
+</p>-->
+</div3>
 <div3 type="subsection" xml:id="CCAHSE"><head>The Setting
 Description</head> <p>The <gi>settingDesc</gi> element is used to
 describe the setting or settings in which language interaction takes

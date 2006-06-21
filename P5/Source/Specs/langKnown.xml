@@ -4,22 +4,42 @@ See the file COPYING for details
 $Date$
 $Author$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="corpus" xml:id="LANGKNOW" usage="opt" ident="langKnown">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" 
+  xmlns:rng="http://relaxng.org/ns/structure/1.0" 
+  module="namesdates" xml:id="LANGKNOW" usage="opt" ident="langKnown">
 <equiv/>
 <gloss>linguistic competence</gloss>
-<desc>contains an informal description of a person's competence in
-different languages, dialects, etc.</desc>
+<desc>summarizes the state of a person's knowledge of a single language.</desc>
   <classes>
-    <memberOf key="model.personPart"/>
+    <memberOf key="att.datable"/>
+    <memberOf key="att.editLike"/>
   </classes>
   <content>
-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+    <rng:ref name="macro.phraseSeq"/>
   </content>
+  <attList>
+    <attDef ident="tag" usage="req">
+      <desc>supplies a  valid language tag for the language concerned.</desc>
+      <datatype>
+	<rng:ref name="data.language"/>
+      </datatype>
+      <remarks><p>The values for this attribute are language
+      <soCalled>tags</soCalled> as defined in <ref
+      target="http://www.ietf.org/rfc/rfc3066.txt">RFC 3066</ref> or its
+      successor</p></remarks>
+    </attDef>
+    <attDef ident="level" usage="opt">
+      <desc>a code indicating the person's level of knowledge for this language </desc>
+      <datatype>
+	<rng:ref name="data.code"/>
+      </datatype>
+    </attDef>
+  </attList>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <langKnown>Spoken French</langKnown>
-    </egXML>
-  </exemplum>
+      <langKnown tag="en-GB" level="H">British English</langKnown>
+      <langKnown tag="fr" level="M">French</langKnown>
+  </egXML></exemplum>
   <remarks/>
   <listRef>
     <ptr target="#CCAHPA"/>
