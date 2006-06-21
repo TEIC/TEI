@@ -182,9 +182,6 @@
   <xsl:variable name="headingNumberSuffix">
     <xsl:text> </xsl:text>
   </xsl:variable>
-  <xsl:template name="processFootnotes">
-    <xsl:apply-templates mode="printnotes" select="//tei:note"/>
-  </xsl:template>
   <xsl:template name="processSchemaFragment">
     <xsl:param name="filename"/>
     <div class="schemaFragment">

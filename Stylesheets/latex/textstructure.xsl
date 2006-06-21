@@ -41,17 +41,17 @@
   <xsl:template match="tei:TEI">
     
     <xsl:if test="not($realFigures='true')">
-      <xsl:text>%BEGINFIGMAP&#10;&#10;</xsl:text>
+      <xsl:text>%BEGINFIGMAP</xsl:text>
       <xsl:if test="not($latexLogo='')">
-	<xsl:text>%FIGMAP &#10;</xsl:text>
+	<xsl:text>&#10;%FIGMAP </xsl:text>
 	<xsl:value-of select="$latexLogo"/>
-	<xsl:text> FIG0&#10;&#10;</xsl:text>
+	<xsl:text> FIG0 </xsl:text>
       </xsl:if>
       <xsl:for-each select="//tei:figure">
 	<xsl:variable name="c">
 	  <xsl:number level="any"/>
 	</xsl:variable>
-	<xsl:text>%FIGMAP &#10;</xsl:text>
+	<xsl:text>&#10;%FIGMAP </xsl:text>
 	<xsl:variable name="f">
 	  <xsl:choose>
 	    <xsl:when test="@url">
@@ -73,11 +73,11 @@
 	    <xsl:value-of select="concat($f,'.png')"/>
 	  </xsl:otherwise>
 	</xsl:choose>
-	<xsl:text> FIG&#10;</xsl:text>
+	<xsl:text> FIG</xsl:text>
 	<xsl:value-of select="$c + 1000"/>
-	<xsl:text>&#10;&#10;</xsl:text>
+	<xsl:text>&#10;</xsl:text>
       </xsl:for-each>
-      <xsl:text>%ENDFIGMAP&#10;&#10;</xsl:text>
+      <xsl:text>&#10;%ENDFIGMAP&#10;</xsl:text>
     </xsl:if>
     <xsl:text>&#10;\documentclass[</xsl:text>
     <xsl:value-of select="$classParameters"/>]{<xsl:value-of select="$docClass"/>}

@@ -991,12 +991,16 @@
             <xsl:value-of select="$parent"/></xsl:message>
       </xsl:if>
       <div class="note">
-	<xsl:call-template name="addIdentification">
-	  <xsl:with-param name="id" select="$identifier"/>
-	</xsl:call-template>
-	<xsl:call-template name="noteN"/>
-	<xsl:text>. </xsl:text>
-	<xsl:apply-templates/>
+	<span class="noteLabel">
+	  <xsl:call-template name="addIdentification">
+	    <xsl:with-param name="id" select="$identifier"/>
+	  </xsl:call-template>
+	  <xsl:call-template name="noteN"/>
+	  <xsl:text>. </xsl:text>
+	</span>
+	<span class="noteBody">
+	  <xsl:apply-templates/>
+	</span>
       </div>
     </xsl:if>
   </xsl:template>
@@ -1573,6 +1577,11 @@
     <xd:short>[html] </xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
+
+  <xsl:template name="processFootnotes">
+    <xsl:apply-templates mode="printnotes" select="//tei:note"/>
+  </xsl:template>
+
   <xsl:template name="printNotes">
     <xsl:if test="descendant::tei:note[@place!='inline']">
       <xsl:choose>
