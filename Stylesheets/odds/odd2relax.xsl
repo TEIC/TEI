@@ -58,12 +58,14 @@
     </xsl:choose>
   </xsl:template>
   <xsl:template match="tei:schemaSpec">
-<xsl:message>
-I18N setup:
- Pattern prefix: <xsl:value-of select="$patternPrefixText"/>
- Target language: <xsl:value-of select="$targetLanguage"/>
- Documentation language: <xsl:value-of select="$documentationLanguage"/>
-</xsl:message>
+    <xsl:if test="$verbose='true'">
+      <xsl:message>
+	I18N setup:
+	Pattern prefix: <xsl:value-of select="$patternPrefixText"/>
+	Target language: <xsl:value-of select="$targetLanguage"/>
+	Documentation language: <xsl:value-of select="$documentationLanguage"/>
+      </xsl:message>
+    </xsl:if>
     <xsl:variable name="filename" select="@ident"/>
     <xsl:if test="$verbose='true'">
       <xsl:message> process schemaSpec [<xsl:value-of select="@ident"/>]
