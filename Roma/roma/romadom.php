@@ -865,14 +865,14 @@ class romaDom extends domDocument
     public function getOddLanguage( &$szOddLanguage )
       {
 	$this->getXPath( $oXPath );
-	$szOddLanguage = $oXPath->query( "/tei:TEI//tei:schemaSpec/@xml:lang" )->item(0)->nodeValue;
+	$szOddLanguage = $oXPath->query( "/tei:TEI//tei:schemaSpec/@targetLang" )->item(0)->nodeValue;
         if ($szOddLanguage=='') { $szOddLanguage='en'; }
       }
 
     public function getDocLanguage( &$szDocLanguage )
       {
 	$this->getXPath( $oXPath );
-	$szDocLanguage = $oXPath->query( "/tei:TEI//tei:schemaSpec/doclanguage" )->item(0)->nodeValue;
+	$szDocLanguage = $oXPath->query( "/tei:TEI//tei:schemaSpec/@docLang" )->item(0)->nodeValue;
         if ($szDocLanguage=='') { $szDocLanguage='en'; }
       }
 
@@ -1860,14 +1860,14 @@ class romaDom extends domDocument
       {
 	$this->getXPath( $oXPath );
 	$oTEI = $oXPath->query( "//tei:schemaSpec" )->item(0);
-	$oTEI->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'xml:lang', $szOddLanguage );
+	$oTEI->setAttributeNS('targetLang', $szOddLanguage );
       }
 
     public function setDocLanguage( $szDocLanguage )
       {
 	$this->getXPath( $oXPath );
 	$oTEI = $oXPath->query( "//tei:schemaSpec" )->item(0);
-	$oTEI->setAttribute('doclanguage', $szDocLanguage );
+	$oTEI->setAttribute('docLang', $szDocLanguage );
       }
 
 
