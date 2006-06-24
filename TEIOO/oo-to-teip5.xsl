@@ -58,8 +58,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     office:version="1.0"
-    exclude-result-prefixes="office style text table draw fo xlink dc meta
-			 number svg chart dr3d math form script ooo ooow oooc dom xforms xsd xsi"
+    exclude-result-prefixes="tei office style text table draw fo xlink dc meta number svg chart dr3d math form script ooo ooow oooc dom xforms xsd xsi"
 >
 
   <xsl:key name="headchildren" match="text:p | text:alphabetical-index
@@ -458,12 +457,12 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
         </list>
       </xsl:when>
       <xsl:when test="starts-with(@text:style-name,'P')">
-        <list type="ordered"  xmlns="http://www.tei-c.org/ns/1.0">
+        <list xmlns="http://www.tei-c.org/ns/1.0" type="ordered">
           <xsl:apply-templates/>
         </list>
       </xsl:when>
       <xsl:otherwise>
-        <list type="unordered"  xmlns="http://www.tei-c.org/ns/1.0">
+        <list xmlns="http://www.tei-c.org/ns/1.0" type="unordered">
           <xsl:apply-templates/>
         </list>
       </xsl:otherwise>

@@ -1,0 +1,3478 @@
+<!-- TEI P5 DTD. Generated 2005-10-19T23:39:42+01:00This template file is freely available and you are
+          hereby authorised to copy, modify, and redistribute it in
+          any way without further reference or permissions.When making such modifications, you are strongly
+          recommended to change the present text to include an
+          accurate statement of the licencing conditions applicable
+          to your modified text.
+ -->
+<!--predeclared classes -->
+
+<!ENTITY % att.global.linking.attribute.corresp '
+ corresp  CDATA #IMPLIED'>
+
+<!ENTITY % att.global.linking.attribute.synch '
+ synch  CDATA #IMPLIED'>
+
+<!ENTITY % att.global.linking.attribute.sameAs '
+ sameAs  CDATA #IMPLIED'>
+
+<!ENTITY % att.global.linking.attribute.copyOf '
+ copyOf  CDATA #IMPLIED'>
+
+<!ENTITY % att.global.linking.attribute.next '
+ next  CDATA #IMPLIED'>
+
+<!ENTITY % att.global.linking.attribute.prev '
+ prev  CDATA #IMPLIED'>
+
+<!ENTITY % att.global.linking.attribute.exclude '
+ exclude  CDATA #IMPLIED'>
+
+<!ENTITY % att.global.linking.attribute.select '
+ select  CDATA #IMPLIED'>
+
+<!ENTITY % att.pointing.attribute.type '
+ type  CDATA #IMPLIED'>
+
+<!ENTITY % att.pointing.attribute.evaluate '
+ evaluate  (all|one|none) #IMPLIED'>
+
+<!ENTITY % att.analytic.attribute.ana '
+ ana  CDATA #IMPLIED'>
+
+<!--end of predeclared classes -->
+
+<!ENTITY % att.global.attribute.xmlid '
+ xml:id  ID #IMPLIED'>
+
+<!ENTITY % att.global.attribute.n '
+ n  CDATA #IMPLIED'>
+
+<!ENTITY % att.global.attribute.xmllang '
+ xml:lang  CDATA #IMPLIED'>
+
+<!ENTITY % att.global.attribute.rend '
+ rend  CDATA #IMPLIED'>
+
+<!ENTITY % att.global.attribute.xmlbase '
+ xml:base  CDATA #IMPLIED'>
+
+<!ENTITY % att.declaring.attribute.decls '
+ decls  CDATA #IMPLIED'>
+
+<!ENTITY % att.declarable.attribute.default '
+ default  (true|false) "false" '>
+
+<!ENTITY % att.typed.attribute.type '
+ type  CDATA #IMPLIED'>
+
+<!ENTITY % att.typed.attribute.subtype '
+ subtype  CDATA #IMPLIED'>
+
+<!ENTITY % att.interpLike.attribute.resp '
+ resp  CDATA #IMPLIED'>
+
+<!ENTITY % att.interpLike.attribute.type '
+ type  CDATA #IMPLIED'>
+
+<!ENTITY % att.interpLike.attribute.inst '
+ inst  CDATA #IMPLIED'>
+
+<!ENTITY % att.divLike.attribute.type '
+ type  CDATA #IMPLIED'>
+
+<!ENTITY % att.divLike.attribute.org '
+ org  (composite|uniform) "uniform" '>
+
+<!ENTITY % att.divLike.attribute.sample '
+ sample  (initial|medial|final|unknown|complete) "complete" '>
+
+<!ENTITY % att.divLike.attribute.part '
+ part  (Y|N|I|M|F) "N" '>
+
+<!ENTITY % att.naming.attribute.key '
+ key  CDATA #IMPLIED'>
+
+<!ENTITY % model.nameLike "name | rs"> 
+<!ENTITY % model.segLike "s | seg"> 
+<!ENTITY % att.segLike.attribute.type '
+ type  CDATA #IMPLIED'>
+
+<!ENTITY % att.segLike.attribute.function '
+ function  CDATA #IMPLIED'>
+
+<!ENTITY % att.segLike.attribute.part '
+ part  (Y|N|I|M|F) "N" '>
+
+<!ENTITY % att.timed.attribute.start '
+ start  CDATA #IMPLIED'>
+
+<!ENTITY % att.timed.attribute.end '
+ end  CDATA #IMPLIED'>
+
+<!ENTITY % att.timed.attribute.dur '
+ dur  CDATA #IMPLIED'>
+
+<!ENTITY % att.spanning.attribute.spanTo '
+ spanTo  CDATA #IMPLIED'>
+
+<!ENTITY % att.editLike.attribute.cert '
+ cert  CDATA #IMPLIED'>
+
+<!ENTITY % att.editLike.attribute.resp '
+ resp  CDATA #IMPLIED'>
+
+<!ENTITY % att.ascribed.attribute.who '
+ who  CDATA #IMPLIED'>
+
+<!ENTITY % model.hiLike "emph | foreign | gloss | hi | mentioned | soCalled | term | title"> 
+<!ENTITY % model.dateLike "date"> 
+<!ENTITY % model.pPart.data "abbr | address | code | date | eg | gi | ident | kw | name | rs | time"> 
+<!ENTITY % model.pPart.edit "add | choice | corr | del | orig | reg | sic | unclear"> 
+<!ENTITY % model.ptrLike "ptr | ref"> 
+<!ENTITY % model.lPart ""> 
+<!ENTITY % model.global.meta "index | interp | interpGrp"> 
+<!ENTITY % model.milestoneLike "lb | milestone | pb"> 
+<!ENTITY % model.global.edit "gap"> 
+<!ENTITY % model.global "anchor | %model.global.edit; | %model.global.meta; | %model.milestoneLike;"> 
+<!ENTITY % model.gLike ""> 
+<!ENTITY % model.oddDecl ""> 
+<!ENTITY % model.oddRef ""> 
+<!ENTITY % model.oddPhr ""> 
+<!ENTITY % model.qLike "cit | q"> 
+<!ENTITY % model.biblLike "bibl | biblFull | biblItem | biblStruct"> 
+<!ENTITY % model.listLike "label | list | listBibl"> 
+<!ENTITY % model.noteLike "note"> 
+<!ENTITY % model.stageLike ""> 
+<!ENTITY % model.complexVal ""> 
+<!ENTITY % model.singleVal ""> 
+<!ENTITY % model.featureVal ""> 
+<!ENTITY % model.entryParts.top "note"> 
+<!ENTITY % model.phrase "binaryObject | formula | graphic | %model.hiLike; | %model.pPart.data; | %model.pPart.edit; | %model.ptrLike; | %model.segLike;"> 
+<!ENTITY % model.inter "figure | %model.biblLike; | %model.listLike; | %model.noteLike; | %model.qLike; | stage | table | text"> 
+<!ENTITY % model.divPart "ab | l | lg | p | sp"> 
+<!ENTITY % model.blockLike "seg"> 
+<!ENTITY % model.pLike "ab | p"> 
+<!ENTITY % model.common "eg | figure | %model.biblLike; | %model.divPart; | %model.listLike; | %model.noteLike; | %model.qLike; | stage | table"> 
+<!ENTITY % model.nameLike.agent "name"> 
+<!ENTITY % model.addrPart "%model.nameLike;"> 
+<!ENTITY % model.biblPart "author | biblScope | distributor | edition | editor | extent | idno | imprint | note | pubPlace | publisher | respStmt"> 
+<!ENTITY % model.personPart ""> 
+<!ENTITY % model.divWrapper.bottom "byline | closer | dateline | epigraph | salute | signed | trailer"> 
+<!ENTITY % model.divWrapper "argument | byline | dateline | docAuthor | docDate | epigraph | head | opener | salute | signed"> 
+<!ENTITY % model.frontPart.drama ""> 
+<!ENTITY % model.frontPart "divGen | titlePage"> 
+<!ENTITY % model.pLike.front "argument | byline | docAuthor | docDate | docEdition | docImprint | docTitle | epigraph | head | titlePart"> 
+<!ENTITY % model.titlepagePart "binaryObject | byline | docAuthor | docDate | docEdition | docImprint | docTitle | epigraph | figure | graphic | imprimatur | titlePart"> 
+<!ENTITY % model.msItemPart "author | bibl | listBibl | note | q | respStmt | title"> 
+<!ENTITY % model.choicePart "abbr | choice | corr | orig | reg | seg | sic | unclear"> 
+<!ENTITY % model.catDescPart ""> 
+<!ENTITY % att.TEIform.attribute.TEIform '
+ TEIform  CDATA #IMPLIED'>
+
+<!ENTITY % model.headerPart "encodingDesc | profileDesc"> 
+<!ENTITY % model.sourceDescPart ""> 
+<!ENTITY % model.encodingPart "classDecl | editorialDecl | projectDesc | refsDecl | samplingDecl | tagsDecl"> 
+<!ENTITY % model.editorialDeclPart "correction"> 
+<!ENTITY % model.profileDescPart "langUsage | textClass"> 
+<!ENTITY % att.global.linking.attribute.corresp '
+ corresp  CDATA #IMPLIED'>
+
+<!ENTITY % att.global.linking.attribute.synch '
+ synch  CDATA #IMPLIED'>
+
+<!ENTITY % att.global.linking.attribute.sameAs '
+ sameAs  CDATA #IMPLIED'>
+
+<!ENTITY % att.global.linking.attribute.copyOf '
+ copyOf  CDATA #IMPLIED'>
+
+<!ENTITY % att.global.linking.attribute.next '
+ next  CDATA #IMPLIED'>
+
+<!ENTITY % att.global.linking.attribute.prev '
+ prev  CDATA #IMPLIED'>
+
+<!ENTITY % att.global.linking.attribute.exclude '
+ exclude  CDATA #IMPLIED'>
+
+<!ENTITY % att.global.linking.attribute.select '
+ select  CDATA #IMPLIED'>
+
+<!ENTITY % att.pointing.attribute.type '
+ type  CDATA #IMPLIED'>
+
+<!ENTITY % att.pointing.attribute.evaluate '
+ evaluate  (all|one|none) #IMPLIED'>
+
+<!ENTITY % att.pointing.group.attribute.domains '
+ domains  CDATA #IMPLIED'>
+
+<!ENTITY % att.pointing.group.attribute.targFunc '
+ targFunc  CDATA #IMPLIED'>
+
+<!ENTITY % att.analytic.attribute.ana '
+ ana  CDATA #IMPLIED'>
+
+<!ENTITY % TEI.extensions.ent '' >
+
+<!ENTITY % TEI.extensions.dtd '' >
+
+<!ENTITY % mix.verse '' >
+
+<!ENTITY % mix.drama '' >
+
+<!ENTITY % mix.spoken '' >
+
+<!ENTITY % mix.dictionaries '' >
+
+<!ENTITY % macro.xtext '( #PCDATA)*' >
+
+<!ENTITY % macro.component '(%model.common;%mix.verse;%mix.drama;%mix.spoken;%mix.dictionaries;)' >
+
+<!ENTITY % macro.phrasegroup '( #PCDATA | %model.phrase; | %model.global;)' >
+
+<!ENTITY % macro.phraseSeq '( #PCDATA | %model.phrase; | %model.global;)*' >
+
+<!ENTITY % macro.glossSeq '(altIdent?,equiv*,gloss*,desc*)' >
+
+<!ENTITY % macro.componentSeq '((%macro.component;) | (%model.global;))*' >
+
+<!ENTITY % macro.paraContent '( #PCDATA | %model.phrase; | %model.inter; | %model.global;)*' >
+
+<!ENTITY % macro.specialPara '( #PCDATA | %model.phrase; | %model.inter; | %model.divPart; | %model.global;)*' >
+
+<!ENTITY % data.certainty ' CDATA' >
+
+<!ENTITY % data.probability ' CDATA' >
+
+<!ENTITY % data.numeric ' CDATA' >
+
+<!ENTITY % data.count ' CDATA' >
+
+<!ENTITY % data.temporal ' CDATA' >
+
+<!ENTITY % data.duration ' CDATA' >
+
+<!ENTITY % data.truthValue ' CDATA' >
+
+<!ENTITY % data.xTruthValue ' CDATA' >
+
+<!ENTITY % data.language ' CDATA' >
+
+<!ENTITY % data.sex ' CDATA' >
+
+<!ENTITY % data.namespace ' CDATA' >
+
+<!ENTITY % data.outputMeasurement ' CDATA' >
+
+<!ENTITY % data.pattern ' CDATA' >
+
+<!ENTITY % data.pointer ' CDATA' >
+
+<!ENTITY % data.pointers ' CDATA' >
+
+<!ENTITY % data.code ' CDATA' >
+
+<!ENTITY % data.enumerated ' CDATA' >
+
+<!ENTITY % data.key ' CDATA' >
+
+<!ENTITY % data.word ' CDATA' >
+
+<!ENTITY % data.names ' CDATA' >
+
+<!ENTITY % data.words ' CDATA' >
+
+<!ENTITY % data.name ' CDATA' >
+
+<!ENTITY % TEI.prose '' >
+
+<!ENTITY % TEI.verse '' >
+
+<!ENTITY % TEI.drama '' >
+
+<!ENTITY % TEI.spoken '' >
+
+<!ENTITY % TEI.dictionaries '' >
+
+<!ENTITY % TEI.terminology '' >
+
+<!ENTITY % TEI.general '' >
+
+<!ENTITY % TEI.mixed '' >
+
+<!ENTITY % TEI.linking '' >
+
+<!ENTITY % TEI.analysis '' >
+
+<!ENTITY % TEI.fs '' >
+
+<!ENTITY % TEI.certainty '' >
+
+<!ENTITY % TEI.transcr '' >
+
+<!ENTITY % TEI.textcrit '' >
+
+<!ENTITY % TEI.names.dates '' >
+
+<!ENTITY % TEI.tagdocs '' >
+
+<!ENTITY % TEI.nets '' >
+
+<!ENTITY % TEI.figures '' >
+
+<!ENTITY % TEI.corpus '' >
+
+<!ENTITY % TEI.msdescription '' >
+
+<!ENTITY % gen.verse '' >
+
+<!ENTITY % gen.drama '' >
+
+<!ENTITY % gen.spoken '' >
+
+<!ENTITY % gen.dictionaries '' >
+
+<!ENTITY % formulaNotations '%macro.xtext;' >
+
+<!--doc:(TEI document) contains a single TEI-conformant document,
+comprising a TEI header and a text, either in isolation or as part of a
+teiCorpus element. -->
+<!ELEMENT TEI (teiHeader,text)>
+<!ATTLIST TEI
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ xmlns  CDATA "http://www.tei-c.org/ns/1.0" 
+ version  CDATA "5.0" 
+ TEIform CDATA 'TEI'  >
+<!--doc:(anonymous block) contains any arbitrary component-level unit of text, acting as
+an anonymous container for phrase or inter level elements analogous to, but
+without the semantic baggage of, a paragraph. -->
+<!ELEMENT ab %macro.paraContent;>
+<!ATTLIST ab
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.typed.attribute.type;
+ %att.typed.attribute.subtype;
+ part  (Y|N|I|M|F) "N" 
+ TEIform CDATA 'ab'  >
+<!--doc:(abbreviation) contains an abbreviation of any sort. -->
+<!ELEMENT abbr %macro.phraseSeq;>
+<!ATTLIST abbr
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ type  CDATA #IMPLIED
+ TEIform CDATA 'abbr'  >
+<!--doc:(addition) contains letters, words, or phrases inserted in the text by an
+author, scribe, annotator, or corrector. -->
+<!ELEMENT add %macro.specialPara;>
+<!ATTLIST add
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.editLike.attribute.cert;
+ %att.editLike.attribute.resp;
+ place  CDATA #IMPLIED
+ hand  CDATA #IMPLIED
+ TEIform CDATA 'add'  >
+<!--doc:() contains one line of a postal or other address. -->
+<!ELEMENT addrLine %macro.phraseSeq;>
+<!ATTLIST addrLine
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'addrLine'  >
+<!--doc:() contains a postal or other address, for example of a
+publisher, an organization, or an individual. -->
+<!ELEMENT address ((%model.global;)*,((addrLine,(%model.global;)*)+ | ((%model.addrPart;),(%model.global;)*)*))>
+<!ATTLIST address
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'address'  >
+<!--doc:supplies the recommended XML name for an element, class,
+  attribute, etc. in some language. -->
+<!ELEMENT altIdent %macro.xtext;>
+<!ATTLIST altIdent
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.typed.attribute.type;
+ %att.typed.attribute.subtype;
+ TEIform CDATA 'altIdent'  >
+<!--doc:(anchor point) attaches an identifier to a
+point within a text, whether or not it corresponds with a textual
+element. -->
+<!ELEMENT anchor EMPTY>
+<!ATTLIST anchor
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.typed.attribute.type;
+ %att.typed.attribute.subtype;
+ TEIform CDATA 'anchor'  >
+<!--doc:() A formal list or prose description of the topics addressed by
+	a subdivision of a text. -->
+<!ELEMENT argument (((%model.global;)*,head)?,(%macro.component;,(%model.global;)*)*)>
+<!ATTLIST argument
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'argument'  >
+<!--doc:() in a bibliographic reference, contains the name of the author(s),
+personal or corporate,
+of a work; the primary statement of responsibility for any
+bibliographic item.  -->
+<!ELEMENT author %macro.phraseSeq;>
+<!ATTLIST author
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'author'  >
+<!--doc:(release authority) supplies the name of a person or other agency responsible for
+making an electronic file available, other than a publisher or
+distributor. -->
+<!ELEMENT authority %macro.phraseSeq;>
+<!ATTLIST authority
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'authority'  >
+<!--doc:() supplies information about the availability of a text, for
+example any restrictions on its use or distribution, its copyright
+status, etc. -->
+<!ELEMENT availability (%model.pLike;)+>
+<!ATTLIST availability
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ status  (free|unknown|restricted) "unknown" 
+ TEIform CDATA 'availability'  >
+<!--doc:(back matter) contains any appendixes, etc. following the main part of a
+text. -->
+<!ELEMENT back ((%model.frontPart; | %model.global;)*,(((%model.divWrapper;),(%model.divWrapper; | titlePage | %model.global;)*) | (div,(div | %model.frontPart; | %model.global;)*) | (div1,(div1 | %model.frontPart; | %model.global;)*))?,(trailer | closer)*)>
+<!ATTLIST back
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.declaring.attribute.decls;
+ TEIform CDATA 'back'  >
+<!--doc:(bibliographic citation) contains a loosely-structured bibliographic citation of which
+the sub-components may or may not be explicitly tagged.  -->
+<!ELEMENT bibl ( #PCDATA | %model.phrase; | %model.biblPart; | %model.global;)*>
+<!ATTLIST bibl
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.declarable.attribute.default;
+ TEIform CDATA 'bibl'  >
+<!--doc:() contains a fully-structured bibliographic citation, in which all
+components of the TEI file description
+are present. -->
+<!ELEMENT biblFull (titleStmt,editionStmt?,extent?,publicationStmt,seriesStmt?,notesStmt?,sourceDesc*)>
+<!ATTLIST biblFull
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.declarable.attribute.default;
+ TEIform CDATA 'biblFull'  >
+<!--doc:(bibliographic citation) contains a bibliographic citation in which only bibliographic
+  subelements appear. -->
+<!ELEMENT biblItem (%model.biblPart; | title | date | biblItem)+>
+<!ATTLIST biblItem
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.declarable.attribute.default;
+ %att.typed.attribute.type;
+ %att.typed.attribute.subtype;
+ form  CDATA #IMPLIED
+ status  CDATA  #IMPLIED
+ role  CDATA  #IMPLIED
+ TEIform CDATA 'biblItem'  >
+<!--doc:(scope of citation) defines the scope of a bibliographic reference, for example as a
+list of pagenumbers, or a named subdivision of a larger work. -->
+<!ELEMENT biblScope %macro.phraseSeq;>
+<!ATTLIST biblScope
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ type  CDATA #IMPLIED
+ TEIform CDATA 'biblScope'  >
+<!--doc:(structured bibliographic citation) contains a structured bibliographic citation, in which only
+bibliographic subelements appear and in a specified order.  -->
+<!ELEMENT biblStruct (note | idno)*>
+<!ATTLIST biblStruct
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.declarable.attribute.default;
+ TEIform CDATA 'biblStruct'  >
+<!--doc:provides encoded binary data representing an inline graphic or other object. -->
+<!ELEMENT binaryObject  (#PCDATA)>
+<!ATTLIST binaryObject
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ width  CDATA #IMPLIED
+ height  CDATA #IMPLIED
+ scale  CDATA #IMPLIED
+ mimeType  CDATA #IMPLIED
+ encoding  CDATA #IMPLIED
+ TEIform CDATA 'binaryObject'  >
+<!--doc:(text body) contains the whole body of a single unitary text, excluding any front or back matter. -->
+<!ELEMENT body ((%model.divWrapper; | %model.global;)*,((((%macro.component;),(%model.global;)*)+,((divGen,(%model.global;)*)*,((div,(div | divGen | %model.global;)*) | (div0,(div0 | divGen | %model.global;)*) | (div1,(div1 | divGen | %model.global;)*))?)) | ((divGen,(%model.global;)*)*,((div,(div | divGen | %model.global;)*) | (div0,(div0 | divGen | %model.global;)*) | (div1,(div1 | divGen | %model.global;)*)))),((%model.divWrapper.bottom;),(%model.global;)*)*)>
+<!ATTLIST body
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.declaring.attribute.decls;
+ TEIform CDATA 'body'  >
+<!--doc:() contains the primary statement of responsibility given for a work
+on its title page or at the head or end of the work. -->
+<!ELEMENT byline ( #PCDATA | %model.phrase; | docAuthor | %model.global;)*>
+<!ATTLIST byline
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'byline'  >
+<!--doc:(defines how to convert a canonical reference into a URI) specifies an expression and replacement pattern for
+  tranforming a canonical reference into a URI -->
+<!ELEMENT cRefPattern (%model.pLike;)*>
+<!ATTLIST cRefPattern
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ matchPattern  CDATA #REQUIRED
+ replacementPattern  CDATA #REQUIRED
+ TEIform CDATA 'cRefPattern'  >
+<!--doc:(category description) describes some category within a taxonomy
+or text typology, either in the form of a brief prose description
+or in terms of the situational parameters used by the TEI
+formal textDesc. -->
+<!ELEMENT catDesc ( #PCDATA | %model.phrase;)*>
+<!ATTLIST catDesc
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'catDesc'  >
+<!--doc:(category reference) specifies one or more defined categories
+within some taxonomy or text typology. -->
+<!ELEMENT catRef EMPTY>
+<!ATTLIST catRef
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ target  CDATA #REQUIRED
+ scheme  CDATA #IMPLIED
+ TEIform CDATA 'catRef'  >
+<!--doc:(category) contains an individual descriptive category, possibly nested
+within a superordinate category, within a user-defined taxonomy. -->
+<!ELEMENT category (catDesc,category*)>
+<!ATTLIST category
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'category'  >
+<!--doc:() contains one cell of a table.  -->
+<!ELEMENT cell %macro.paraContent;>
+<!ATTLIST cell
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ role  CDATA "data" 
+ rows  CDATA "1" 
+ cols  CDATA "1" 
+ TEIform CDATA 'cell'  >
+<!--doc:() summarizes a particular change or correction made
+to a particular version of an electronic text which is
+shared between several researchers. -->
+<!ELEMENT change (date,respStmt+,item)>
+<!ATTLIST change
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'change'  >
+<!--doc:() groups a number of alternative encodings for the same point in
+  a text. -->
+<!ELEMENT choice ((%model.choicePart;),(%model.choicePart;)+)>
+<!ATTLIST choice
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'choice'  >
+<!--doc:() A quotation from some other document, together with a bibliographic
+reference to its source. -->
+<!ELEMENT cit (q | %model.biblLike; | %model.ptrLike; | %model.global;)+>
+<!ATTLIST cit
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'cit'  >
+<!--doc:(classCode) contains the classification code used for this text in some
+standard classification system. -->
+<!ELEMENT classCode %macro.phraseSeq;>
+<!ATTLIST classCode
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ scheme  CDATA #REQUIRED
+ TEIform CDATA 'classCode'  >
+<!--doc:(classification declarations) contains one or more taxonomies defining any classificatory
+codes used elsewhere in the text. -->
+<!ELEMENT classDecl (taxonomy)+>
+<!ATTLIST classDecl
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'classDecl'  >
+<!--doc:() groups together dateline, byline, salutation, and similar
+phrases appearing as a final group at the end of a
+division, especially of a letter. -->
+<!ELEMENT closer ( #PCDATA | signed | dateline | salute | %model.phrase; | %model.global;)*>
+<!ATTLIST closer
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'closer'  >
+<!--doc: -->
+<!ELEMENT code  (#PCDATA)>
+<!ATTLIST code
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.typed.attribute.type;
+ %att.typed.attribute.subtype;
+ TEIform CDATA 'code'  >
+<!--doc:(correction) contains the correct form of a passage apparently erroneous in the copy text. -->
+<!ELEMENT corr %macro.specialPara;>
+<!ATTLIST corr
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.editLike.attribute.cert;
+ %att.editLike.attribute.resp;
+ TEIform CDATA 'corr'  >
+<!--doc:(correction principles) states how and under what circumstances corrections have been
+made in the text. -->
+<!ELEMENT correction (%model.pLike;)+>
+<!ATTLIST correction
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.declarable.attribute.default;
+ status  (high|medium|low|unknown) "unknown" 
+ method  (silent|tags) "silent" 
+ TEIform CDATA 'correction'  >
+<!--doc:() contains information about the creation of a text. -->
+<!ELEMENT creation %macro.phraseSeq;>
+<!ATTLIST creation
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'creation'  >
+<!--doc:() contains a date in any format. -->
+<!ELEMENT date %macro.phraseSeq;>
+<!ATTLIST date
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.editLike.attribute.cert;
+ %att.editLike.attribute.resp;
+ calendar  CDATA #IMPLIED
+ value  CDATA #IMPLIED
+ precision  CDATA #IMPLIED
+ TEIform CDATA 'date'  >
+<!--doc:() contains a brief description of the place, date, time, etc. of
+	production of a letter, newspaper story, or other work, prefixed or
+	suffixed to it as a kind of heading or trailer.  -->
+<!ELEMENT dateline %macro.phraseSeq;>
+<!ATTLIST dateline
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'dateline'  >
+<!--doc:(deletion) contains a letter, word or passage deleted, marked as deleted,
+or otherwise indicated as superfluous or spurious in the copy text by an
+author, scribe, annotator, or corrector. -->
+<!ELEMENT del %macro.specialPara;>
+<!ATTLIST del
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.editLike.attribute.cert;
+ %att.editLike.attribute.resp;
+ type  CDATA #IMPLIED
+ status  CDATA "unremarkable" 
+ hand  CDATA #IMPLIED
+ TEIform CDATA 'del'  >
+<!--doc:(description) contains a brief description of the purpose and application for
+an element, attribute, or attribute value. -->
+<!ELEMENT desc %macro.paraContent;>
+<!ATTLIST desc
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'desc'  >
+<!--doc:() supplies the name of a person or other agency responsible for the
+distribution of a text. -->
+<!ELEMENT distributor %macro.phraseSeq;>
+<!ATTLIST distributor
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'distributor'  >
+<!--doc:(text division) contains a subdivision of the front, body, or back of a
+text. -->
+<!ELEMENT div ((%model.divWrapper; | %model.global;)*,(((div | divGen),(%model.global;)*)+ | ((%macro.component;,(%model.global;)*)+,((div | divGen),(%model.global;)*)*)),((%model.divWrapper.bottom;),(%model.global;)*)*)>
+<!ATTLIST div
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.divLike.attribute.type;
+ %att.divLike.attribute.org;
+ %att.divLike.attribute.sample;
+ %att.divLike.attribute.part;
+ %att.declaring.attribute.decls;
+ TEIform CDATA 'div'  >
+<!--doc:(level-0 text division) contains the largest possible subdivision of the body
+of a text. -->
+<!ELEMENT div0 ((%model.divWrapper; | %model.global;)*,(((div1 | divGen),(%model.global;)*)+ | ((%macro.component;,(%model.global;)*)+,((div1 | divGen),(%model.global;)*)*)),((%model.divWrapper.bottom;),(%model.global;)*)*)>
+<!ATTLIST div0
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.divLike.attribute.type;
+ %att.divLike.attribute.org;
+ %att.divLike.attribute.sample;
+ %att.divLike.attribute.part;
+ %att.declaring.attribute.decls;
+ TEIform CDATA 'div0'  >
+<!--doc:(level-1 text division) contains a first-level subdivision of the front, body, or back
+of a text (the largest, if
+div0 is not used, the second largest if it is). -->
+<!ELEMENT div1 ((%model.divWrapper; | %model.global;)*,(((div2 | divGen),(%model.global;)*)+ | ((%macro.component;,(%model.global;)*)+,((div2 | divGen),(%model.global;)*)*)),((%model.divWrapper.bottom;),(%model.global;)*)*)>
+<!ATTLIST div1
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.divLike.attribute.type;
+ %att.divLike.attribute.org;
+ %att.divLike.attribute.sample;
+ %att.divLike.attribute.part;
+ %att.declaring.attribute.decls;
+ TEIform CDATA 'div1'  >
+<!--doc:(level-2 text division) contains a second-level subdivision of the front, body, or back of a
+ text. -->
+<!ELEMENT div2 ((%model.divWrapper; | %model.global;)*,(((div3 | divGen),(%model.global;)*)+ | ((%macro.component;,(%model.global;)*)+,((div3 | divGen),(%model.global;)*)*)),((%model.divWrapper.bottom;),(%model.global;)*)*)>
+<!ATTLIST div2
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.divLike.attribute.type;
+ %att.divLike.attribute.org;
+ %att.divLike.attribute.sample;
+ %att.divLike.attribute.part;
+ %att.declaring.attribute.decls;
+ TEIform CDATA 'div2'  >
+<!--doc:(level-3 text division) contains a third-level subdivision of the front, body, or back of a
+ text. -->
+<!ELEMENT div3 ((%model.divWrapper; | %model.global;)*,(((div4 | divGen),(%model.global;)*)+ | ((%macro.component;,(%model.global;)*)+,((div4 | divGen),(%model.global;)*)*)),((%model.divWrapper.bottom;),(%model.global;)*)*)>
+<!ATTLIST div3
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.divLike.attribute.type;
+ %att.divLike.attribute.org;
+ %att.divLike.attribute.sample;
+ %att.divLike.attribute.part;
+ %att.declaring.attribute.decls;
+ TEIform CDATA 'div3'  >
+<!--doc:(level-4 text division) contains a fourth-level subdivision of the front, body, or back of a
+ text. -->
+<!ELEMENT div4 ((%model.divWrapper; | %model.global;)*,(((div5 | divGen),(%model.global;)*)+ | ((%macro.component;,(%model.global;)*)+,((div5 | divGen),(%model.global;)*)*)),((%model.divWrapper.bottom;),(%model.global;)*)*)>
+<!ATTLIST div4
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.divLike.attribute.type;
+ %att.divLike.attribute.org;
+ %att.divLike.attribute.sample;
+ %att.divLike.attribute.part;
+ %att.declaring.attribute.decls;
+ TEIform CDATA 'div4'  >
+<!--doc:(level-5 text division) contains a fifth-level subdivision of the front, body, or back of a
+ text. -->
+<!ELEMENT div5 ((%model.divWrapper; | %model.global;)*,(((div6 | divGen),(%model.global;)*)+ | ((%macro.component;,(%model.global;)*)+,((div6 | divGen),(%model.global;)*)*)),((%model.divWrapper.bottom;),(%model.global;)*)*)>
+<!ATTLIST div5
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.divLike.attribute.type;
+ %att.divLike.attribute.org;
+ %att.divLike.attribute.sample;
+ %att.divLike.attribute.part;
+ %att.declaring.attribute.decls;
+ TEIform CDATA 'div5'  >
+<!--doc:(level-6 text division) contains a sixth-level subdivision of the front, body, or back of a
+ text. -->
+<!ELEMENT div6 ((%model.divWrapper; | %model.global;)*,(((div7 | divGen),(%model.global;)*)+ | ((%macro.component;,(%model.global;)*)+,((div7 | divGen),(%model.global;)*)*)),((%model.divWrapper.bottom;),(%model.global;)*)*)>
+<!ATTLIST div6
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.divLike.attribute.type;
+ %att.divLike.attribute.org;
+ %att.divLike.attribute.sample;
+ %att.divLike.attribute.part;
+ %att.declaring.attribute.decls;
+ TEIform CDATA 'div6'  >
+<!--doc:(level-7 text division) contains the smallest possible subdivision of the front, body or
+back of a text, larger than a paragraph. -->
+<!ELEMENT div7 ((%model.divWrapper; | %model.global;)*,(%macro.component;,(%model.global;)*)+,((%model.divWrapper.bottom;),(%model.global;)*)*)>
+<!ATTLIST div7
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.divLike.attribute.type;
+ %att.divLike.attribute.org;
+ %att.divLike.attribute.sample;
+ %att.divLike.attribute.part;
+ %att.declaring.attribute.decls;
+ TEIform CDATA 'div7'  >
+<!--doc:(automatically generated text division) indicates the location at which a textual division generated
+automatically by a text-processing application is to appear. -->
+<!ELEMENT divGen (%model.divWrapper;)*>
+<!ATTLIST divGen
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ type  CDATA #IMPLIED
+ TEIform CDATA 'divGen'  >
+<!--doc:(document author) contains the name of the author of the document, as given on the
+title page (often but not always contained in a byline). -->
+<!ELEMENT docAuthor %macro.phraseSeq;>
+<!ATTLIST docAuthor
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'docAuthor'  >
+<!--doc:(document date) contains the date of a document, as given
+(usually) on a title page. -->
+<!ELEMENT docDate %macro.phraseSeq;>
+<!ATTLIST docDate
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ value  CDATA #IMPLIED
+ TEIform CDATA 'docDate'  >
+<!--doc:(document edition) contains an edition statement as presented on a title page of a
+document. -->
+<!ELEMENT docEdition %macro.paraContent;>
+<!ATTLIST docEdition
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'docEdition'  >
+<!--doc:(document imprint) contains the imprint statement (place and date of publication,
+publisher name), as given
+(usually) at the foot of a title page. -->
+<!ELEMENT docImprint ( #PCDATA | %model.phrase; | pubPlace | docDate | publisher | %model.global;)*>
+<!ATTLIST docImprint
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'docImprint'  >
+<!--doc:(document title) contains the title of a document, including all its
+constituents, as given on a title page. -->
+<!ELEMENT docTitle ((%model.global;)*,(titlePart,(%model.global;)*)+)>
+<!ATTLIST docTitle
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'docTitle'  >
+<!--doc:(Edition) describes the particularities of one edition of a text. -->
+<!ELEMENT edition %macro.phraseSeq;>
+<!ATTLIST edition
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'edition'  >
+<!--doc:(edition statement) groups information relating to one edition of a text. -->
+<!ELEMENT editionStmt ((edition,respStmt*) | p+)>
+<!ATTLIST editionStmt
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'editionStmt'  >
+<!--doc:(editor) secondary statement of responsibility for a
+bibliographic item, for example the name of an individual, institution
+or organization, (or of several such) acting as editor, compiler,
+translator, etc.  -->
+<!ELEMENT editor %macro.phraseSeq;>
+<!ATTLIST editor
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ role  CDATA "editor" 
+ TEIform CDATA 'editor'  >
+<!--doc:(editorial practice declaration) provides details of editorial principles and practices applied
+during the encoding of a text. -->
+<!ELEMENT editorialDecl (p+ | (%model.editorialDeclPart;)+)>
+<!ATTLIST editorialDecl
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.declarable.attribute.default;
+ TEIform CDATA 'editorialDecl'  >
+<!--doc:Example code -->
+<!ELEMENT eg  (#PCDATA)>
+<!ATTLIST eg
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'eg'  >
+<!--doc:(emphasized) marks words or phrases which are stressed or emphasized for
+linguistic or rhetorical effect. -->
+<!ELEMENT emph %macro.paraContent;>
+<!ATTLIST emph
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'emph'  >
+<!--doc:(Encoding description) documents the relationship between an electronic text and the
+source or sources from which it was derived. -->
+<!ELEMENT encodingDesc ((%model.encodingPart;)*,p*)>
+<!ATTLIST encodingDesc
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'encodingDesc'  >
+<!--doc:(epigraph) contains a quotation, anonymous or attributed, appearing at
+the start of a section or chapter, or on a title page.  -->
+<!ELEMENT epigraph %macro.componentSeq;>
+<!ATTLIST epigraph
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'epigraph'  >
+<!--doc:() specifies a component which is considered equivalent to the
+  parent element, either by co-reference, or by external link. -->
+<!ELEMENT equiv EMPTY>
+<!ATTLIST equiv
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ name  CDATA #IMPLIED
+ uri  CDATA #IMPLIED
+ filter  CDATA #IMPLIED
+ mimeType  CDATA #IMPLIED
+ TEIform CDATA 'equiv'  >
+<!--doc:() describes the approximate size of the electronic text as stored on
+some carrier medium, specified in any convenient units. -->
+<!ELEMENT extent %macro.phraseSeq;>
+<!ATTLIST extent
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'extent'  >
+<!--doc:(Description of Figure) contains a brief prose description of the appearance or content
+of a graphic figure, for use when documenting an image without
+displaying it. -->
+<!ELEMENT figDesc %macro.paraContent;>
+<!ATTLIST figDesc
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'figDesc'  >
+<!--doc:() contains a block containing graphics, illustrations, or figures. -->
+<!ELEMENT figure (%model.global; | figure | figDesc | graphic | binaryObject | head | p)*>
+<!ATTLIST figure
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'figure'  >
+<!--doc:(File Description) contains a full bibliographic description of an electronic
+file. -->
+<!ELEMENT fileDesc (titleStmt,editionStmt?,extent?,publicationStmt,seriesStmt?,notesStmt?,sourceDesc+)>
+<!ATTLIST fileDesc
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'fileDesc'  >
+<!--doc:(foreign) identifies a word or phrase as belonging to some language other
+than that of the surrounding text.  -->
+<!ELEMENT foreign %macro.paraContent;>
+<!ATTLIST foreign
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'foreign'  >
+<!--doc:() contains a mathematical or other formula. -->
+<!ELEMENT formula  (#PCDATA)>
+<!ATTLIST formula
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ notation  CDATA #IMPLIED
+ TEIform CDATA 'formula'  >
+<!--doc:(front matter) contains any prefatory matter (headers,
+title page, prefaces, dedications, etc.)
+found  at the start of a document, before the main body. -->
+<!ELEMENT front ((%model.frontPart; | %model.global;)*,(((%model.pLike.front;),(%model.pLike.front; | titlePage | %model.global;)*) | (div,(div | %model.frontPart; | %model.global;)*) | (div1,(div1 | %model.frontPart; | %model.global;)*))?)>
+<!ATTLIST front
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.declaring.attribute.decls;
+ TEIform CDATA 'front'  >
+<!--doc:(Funding body) specifies the name of an individual, institution, or organization
+responsible for the funding of a project or text. -->
+<!ELEMENT funder %macro.phraseSeq;>
+<!ATTLIST funder
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'funder'  >
+<!--doc:(omitted material) indicates a point where material has been omitted in a
+transcription, whether for editorial reasons described in the TEI
+header, as part of sampling practice, or because the material is
+illegible or inaudible. -->
+<!ELEMENT gap (desc)?>
+<!ATTLIST gap
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.editLike.attribute.cert;
+ %att.editLike.attribute.resp;
+ reason  CDATA #IMPLIED
+ hand  CDATA #IMPLIED
+ agent  CDATA #IMPLIED
+ extent  CDATA #IMPLIED
+ TEIform CDATA 'gap'  >
+<!--doc:contains the name (generic identifier) of an element. -->
+<!ELEMENT gi  (#PCDATA)>
+<!ATTLIST gi
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ tei  (true|false) "true" 
+ TEIform CDATA 'gi'  >
+<!--doc:() identifies a phrase or word used to provide a gloss or
+  definition for some other word or phrase. -->
+<!ELEMENT gloss %macro.phraseSeq;>
+<!ATTLIST gloss
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.declaring.attribute.decls;
+ target  CDATA #IMPLIED
+ cRef  CDATA #IMPLIED
+ TEIform CDATA 'gloss'  >
+<!--doc:() indicates the location of an inline graphic, illustration, or figure. -->
+<!ELEMENT graphic EMPTY>
+<!ATTLIST graphic
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ width  CDATA #IMPLIED
+ height  CDATA #IMPLIED
+ scale  CDATA #IMPLIED
+ url  CDATA #IMPLIED
+ mimeType  CDATA #IMPLIED
+ TEIform CDATA 'graphic'  >
+<!--doc:() contains the body of a composite text, grouping together a
+sequence of distinct texts (or groups of such texts) which are regarded
+as a unit for some purpose, for example the collected works of an
+author, a sequence of prose essays, etc. -->
+<!ELEMENT group ((%model.divWrapper; | %model.global;)*,((text | group),(text | group | %model.global;)*),((%model.divWrapper.bottom;),(%model.global;)*)*)>
+<!ATTLIST group
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.declaring.attribute.decls;
+ TEIform CDATA 'group'  >
+<!--doc:(heading) contains any heading, for example, the title of a section,
+or the heading of a list or glossary. -->
+<!ELEMENT head %macro.paraContent;>
+<!ATTLIST head
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ type  CDATA #IMPLIED
+ TEIform CDATA 'head'  >
+<!--doc:(highlighted) marks a word or phrase as graphically distinct from the
+surrounding text, for reasons concerning which no claim is
+made.  -->
+<!ELEMENT hi %macro.paraContent;>
+<!ATTLIST hi
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'hi'  >
+<!--doc: -->
+<!ELEMENT ident  (#PCDATA)>
+<!ATTLIST ident
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.typed.attribute.type;
+ %att.typed.attribute.subtype;
+ TEIform CDATA 'ident'  >
+<!--doc:(identifying number) supplies any standard or non-standard number used to identify a
+bibliographic item. -->
+<!ELEMENT idno  (#PCDATA)>
+<!ATTLIST idno
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ type  CDATA #IMPLIED
+ TEIform CDATA 'idno'  >
+<!--doc:() contains a formal statement authorizing the publication of
+a work, sometimes required to appear on a title page or its verso. -->
+<!ELEMENT imprimatur %macro.paraContent;>
+<!ATTLIST imprimatur
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'imprimatur'  >
+<!--doc:() groups information relating to the publication or distribution
+of a bibliographic item.   -->
+<!ELEMENT imprint (pubPlace | publisher | date | biblScope)*>
+<!ATTLIST imprint
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'imprint'  >
+<!--doc:(index entry) marks a location to be indexed for whatever purpose. -->
+<!ELEMENT index (term,index?)*>
+<!ATTLIST index
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.spanning.attribute.spanTo;
+ indexName  CDATA #IMPLIED
+ TEIform CDATA 'index'  >
+<!--doc:(interpretation) summarizes a specific interpretative annotation which can be
+linked to a span of text. -->
+<!ELEMENT interp %macro.phraseSeq;>
+<!ATTLIST interp
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.interpLike.attribute.resp;
+ %att.interpLike.attribute.type;
+ %att.interpLike.attribute.inst;
+ TEIform CDATA 'interp'  >
+<!--doc:(interpretation group) collects together a set of related interpretations which share
+responsibility or type. -->
+<!ELEMENT interpGrp (interp)+>
+<!ATTLIST interpGrp
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.interpLike.attribute.resp;
+ %att.interpLike.attribute.type;
+ %att.interpLike.attribute.inst;
+ TEIform CDATA 'interpGrp'  >
+<!--doc:() contains one
+component of a list. -->
+<!ELEMENT item %macro.specialPara;>
+<!ATTLIST item
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'item'  >
+<!--doc:(Keywords) contains a list of keywords or phrases identifying the topic or
+nature of a text. -->
+<!ELEMENT keywords (term+ | list)>
+<!ATTLIST keywords
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ scheme  CDATA #REQUIRED
+ TEIform CDATA 'keywords'  >
+<!--doc: -->
+<!ELEMENT kw  (#PCDATA)>
+<!ATTLIST kw
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'kw'  >
+<!--doc:(verse line) contains a single, possibly incomplete, line of verse. -->
+<!ELEMENT l %macro.paraContent;>
+<!ATTLIST l
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ part  (Y|N|I|M|F) "N" 
+ TEIform CDATA 'l'  >
+<!--doc:() contains the label associated with an item in a list; in
+glossaries, marks the term being defined. -->
+<!ELEMENT label %macro.phraseSeq;>
+<!ATTLIST label
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'label'  >
+<!--doc:(language usage) describes the languages, sublanguages, registers, dialects etc.
+represented within a text. -->
+<!ELEMENT langUsage (p | language)+>
+<!ATTLIST langUsage
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.declarable.attribute.default;
+ TEIform CDATA 'langUsage'  >
+<!--doc:() characterizes a single language or sublanguage used within a
+  text. -->
+<!ELEMENT language %macro.phraseSeq;>
+<!ATTLIST language
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ ident  CDATA #REQUIRED
+ usage  CDATA #IMPLIED
+ TEIform CDATA 'language'  >
+<!--doc:(line break) marks the start of a new (typographic) line in some
+edition or version of a text. -->
+<!ELEMENT lb EMPTY>
+<!ATTLIST lb
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ ed  CDATA #IMPLIED
+ TEIform CDATA 'lb'  >
+<!--doc:(line group) contains a group of verse lines functioning as a formal unit,
+e.g. a stanza, refrain, verse paragraph, etc. -->
+<!ELEMENT lg ((%model.divWrapper; | %model.global;)*,(l | lg),(l | lg | %model.global;)*,((%model.divWrapper.bottom;),(%model.global;)*)*)>
+<!ATTLIST lg
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.divLike.attribute.type;
+ %att.divLike.attribute.org;
+ %att.divLike.attribute.sample;
+ %att.divLike.attribute.part;
+ TEIform CDATA 'lg'  >
+<!--doc:() contains any sequence of items organized as a list. -->
+<!ELEMENT list ((%model.global;)*,(head,(%model.global;)*)?,(((item,(%model.global;)*)*) | (label,(%model.global;)*,item,(%model.global;)*)+))>
+<!ATTLIST list
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ type  CDATA "simple" 
+ TEIform CDATA 'list'  >
+<!--doc:(citation list) contains a list of bibliographic citations of any kind.  -->
+<!ELEMENT listBibl ((%model.global;)*,(head,(%model.global;)*)?,(%model.biblLike;),(%model.biblLike; | %model.global;)*,((%model.divWrapper.bottom;),(%model.global;)*)?)>
+<!ATTLIST listBibl
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.declarable.attribute.default;
+ TEIform CDATA 'listBibl'  >
+<!--doc:() marks words or phrases mentioned, not used. -->
+<!ELEMENT mentioned %macro.phraseSeq;>
+<!ATTLIST mentioned
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'mentioned'  >
+<!--doc:() documents the intended significance of a particular character or
+character sequence within a metrical notation, either explicitly or in
+terms of other symbol elements in the same metDecl. -->
+<!ELEMENT metSym %macro.phraseSeq;>
+<!ATTLIST metSym
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ value  CDATA #REQUIRED
+ terminal  (true|false) "true" 
+ TEIform CDATA 'metSym'  >
+<!--doc:() marks a boundary point separating  any kind of section of a text, as indicated by
+changes in a standard reference system, where the section is not
+represented by a structural element. -->
+<!ELEMENT milestone EMPTY>
+<!ATTLIST milestone
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ ed  CDATA #IMPLIED
+ unit  CDATA #REQUIRED
+ TEIform CDATA 'milestone'  >
+<!--doc:(name, proper noun) contains a proper noun or noun phrase. -->
+<!ELEMENT name %macro.phraseSeq;>
+<!ATTLIST name
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.naming.attribute.key;
+ type  CDATA #IMPLIED
+ TEIform CDATA 'name'  >
+<!--doc:() contains a note or
+annotation. -->
+<!ELEMENT note %macro.specialPara;>
+<!ATTLIST note
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ type  CDATA #IMPLIED
+ resp  CDATA #IMPLIED
+ place  CDATA "unspecified" 
+ anchored  (true|false) "true" 
+ target  CDATA #IMPLIED
+ targetEnd  CDATA #IMPLIED
+ TEIform CDATA 'note'  >
+<!--doc:(Notes statement) collects together any notes providing information about a text
+additional to that recorded in other parts of the bibliographic
+description. -->
+<!ELEMENT notesStmt (note)+>
+<!ATTLIST notesStmt
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'notesStmt'  >
+<!--doc:() groups together dateline, byline, salutation, and similar
+phrases appearing as a preliminary group at the start of a
+division, especially of a letter. -->
+<!ELEMENT opener ( #PCDATA | %model.phrase; | argument | byline | dateline | epigraph | salute | signed | %model.global;)*>
+<!ATTLIST opener
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'opener'  >
+<!--doc:(original form) contains  a reading which is marked as following  the original,
+rather than being normalized or corrected. -->
+<!ELEMENT orig %macro.phraseSeq;>
+<!ATTLIST orig
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'orig'  >
+<!--doc:(paragraph) marks paragraphs in prose. -->
+<!ELEMENT p %macro.paraContent;>
+<!ATTLIST p
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'p'  >
+<!--doc:(page break) marks the boundary between one page of a text and the next
+in a standard reference system. -->
+<!ELEMENT pb EMPTY>
+<!ATTLIST pb
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ ed  CDATA #IMPLIED
+ TEIform CDATA 'pb'  >
+<!--doc:(principal researcher) supplies the name of the principal researcher responsible for the
+creation of an electronic text. -->
+<!ELEMENT principal %macro.phraseSeq;>
+<!ATTLIST principal
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'principal'  >
+<!--doc:(text-profile description) provides a detailed description of non-bibliographic aspects of a
+text, specifically the languages and sublanguages used, the situation in
+which it was produced, the participants and their setting. -->
+<!ELEMENT profileDesc (creation?,(%model.profileDescPart;)*)>
+<!ATTLIST profileDesc
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'profileDesc'  >
+<!--doc:(project description) describes in detail the aim or purpose for which an electronic
+file was encoded, together with any other relevant information
+concerning the process by which it was assembled or collected. -->
+<!ELEMENT projectDesc (%model.pLike;)+>
+<!ATTLIST projectDesc
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.declarable.attribute.default;
+ TEIform CDATA 'projectDesc'  >
+<!--doc:() defines a pointer to another location in the current document in
+  terms of one or more identifiable elements. -->
+<!ELEMENT ptr EMPTY>
+<!ATTLIST ptr
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.pointing.attribute.type;
+ %att.pointing.attribute.evaluate;
+ %att.declaring.attribute.decls;
+ target  CDATA #REQUIRED
+ cRef  CDATA #IMPLIED
+ TEIform CDATA 'ptr'  >
+<!--doc:() contains the name of the place where a bibliographic item was
+published. -->
+<!ELEMENT pubPlace %macro.phraseSeq;>
+<!ATTLIST pubPlace
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.naming.attribute.key;
+ TEIform CDATA 'pubPlace'  >
+<!--doc:(publication statement) groups information concerning the publication or distribution
+of an electronic or other text.  -->
+<!ELEMENT publicationStmt (p+ | (publisher | distributor | authority | pubPlace | address | idno | availability | date)+)>
+<!ATTLIST publicationStmt
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'publicationStmt'  >
+<!--doc:() provides the name of the organization responsible for
+the publication or distribution of a bibliographic item. -->
+<!ELEMENT publisher %macro.phraseSeq;>
+<!ATTLIST publisher
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'publisher'  >
+<!--doc:(quoted speech, thought, or writing) contains material which is
+marked as (ostensibly) quoted from elsewhere; in narrative, this element is used to mark direct or
+indirect speech; in dictionaries, it ay be used to mark
+real or contrived examples of usage; in manuscript descriptions or
+other metadata, to mark extracts quoted from the source being documented. -->
+<!ELEMENT q %macro.specialPara;>
+<!ATTLIST q
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.ascribed.attribute.who;
+ type  CDATA #IMPLIED
+ direct  (true|false|unknown) "unknown" 
+ TEIform CDATA 'q'  >
+<!--doc:() defines a reference to another location in the current
+  document, in terms of one or more identifiable elements, possibly
+  modified by additional text or comment. -->
+<!ELEMENT ref %macro.paraContent;>
+<!ATTLIST ref
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.pointing.attribute.type;
+ %att.pointing.attribute.evaluate;
+ %att.declaring.attribute.decls;
+ target  CDATA #IMPLIED
+ cRef  CDATA #IMPLIED
+ TEIform CDATA 'ref'  >
+<!--doc:(references declaration) specifies how canonical references are constructed for this
+  text. -->
+<!ELEMENT refsDecl (p+ | cRefPattern+)>
+<!ATTLIST refsDecl
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.declarable.attribute.default;
+ doctype  CDATA "TEI" 
+ TEIform CDATA 'refsDecl'  >
+<!--doc:(regularization) contains a reading which has been regularized or normalized
+in some sense. -->
+<!ELEMENT reg %macro.phraseSeq;>
+<!ATTLIST reg
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ resp  CDATA #IMPLIED
+ TEIform CDATA 'reg'  >
+<!--doc:(rendition) supplies information about the intended rendition of one or more
+elements. -->
+<!ELEMENT rendition %macro.paraContent;>
+<!ATTLIST rendition
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'rendition'  >
+<!--doc:() contains a phrase describing the nature of a person's
+  intellectual responsibility. -->
+<!ELEMENT resp %macro.phraseSeq;>
+<!ATTLIST resp
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'resp'  >
+<!--doc:(statement of responsibility) supplies a statement of responsibility for someone responsible
+  for the intellectual content of a text, edition, recording, or
+  series, where the specialized elements for authors, editors, etc. do
+  not suffice or do not apply. -->
+<!ELEMENT respStmt ((resp,resp*,(%model.nameLike;)+) | ((%model.nameLike;),(%model.nameLike;)*,resp+))>
+<!ATTLIST respStmt
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'respStmt'  >
+<!--doc:(revision description) summarizes the revision history for a file. -->
+<!ELEMENT revisionDesc (list | change+)>
+<!ATTLIST revisionDesc
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'revisionDesc'  >
+<!--doc:() contains one row of a table.  -->
+<!ELEMENT row ((cell | table),(%model.global;)*)+>
+<!ATTLIST row
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ role  CDATA "data" 
+ TEIform CDATA 'row'  >
+<!--doc:(referencing string) contains a general purpose name or referring string. -->
+<!ELEMENT rs %macro.phraseSeq;>
+<!ATTLIST rs
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.naming.attribute.key;
+ type  CDATA #IMPLIED
+ TEIform CDATA 'rs'  >
+<!--doc:(s-unit) contains a sentence-like division of a text. -->
+<!ELEMENT s %macro.phraseSeq;>
+<!ATTLIST s
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.segLike.attribute.type;
+ %att.segLike.attribute.function;
+ %att.segLike.attribute.part;
+ TEIform CDATA 's'  >
+<!--doc:(salutation) contains a salutation or greeting prefixed to a foreword,
+dedicatory epistle, or other division of a text, or the
+salutation in the closing of a letter, preface, etc. -->
+<!ELEMENT salute %macro.phraseSeq;>
+<!ATTLIST salute
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'salute'  >
+<!--doc:(sampling declaration) contains a prose description of the rationale and methods used
+in sampling texts in the creation of a corpus or collection. -->
+<!ELEMENT samplingDecl (%model.pLike;)+>
+<!ATTLIST samplingDecl
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.declarable.attribute.default;
+ TEIform CDATA 'samplingDecl'  >
+<!--doc:(arbitrary segment) contains any arbitrary phrase-level unit of text (including
+other seg elements). -->
+<!ELEMENT seg %macro.paraContent;>
+<!ATTLIST seg
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.segLike.attribute.type;
+ %att.segLike.attribute.function;
+ %att.segLike.attribute.part;
+ subtype  CDATA #IMPLIED
+ TEIform CDATA 'seg'  >
+<!--doc:(series statement) groups information about the series, if any, to which
+a publication belongs. -->
+<!ELEMENT seriesStmt ((title+,(idno | respStmt)*) | p+)>
+<!ATTLIST seriesStmt
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'seriesStmt'  >
+<!--doc:() contains text reproduced although apparently incorrect or inaccurate. -->
+<!ELEMENT sic %macro.specialPara;>
+<!ATTLIST sic
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'sic'  >
+<!--doc:(signature) contains the closing salutation, etc., appended to a foreword,
+dedicatory epistle, or other division of a text.  -->
+<!ELEMENT signed %macro.phraseSeq;>
+<!ATTLIST signed
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'signed'  >
+<!--doc:(so called) contains a word or phrase for which the author or narrator
+indicates a disclaiming of responsibility, for example by the use
+of scare quotes or italics. -->
+<!ELEMENT soCalled %macro.phraseSeq;>
+<!ATTLIST soCalled
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'soCalled'  >
+<!--doc:() supplies a description of the source text(s) from
+which an electronic text was derived or generated. -->
+<!ELEMENT sourceDesc (p | bibl | biblFull | biblItem | biblStruct | listBibl)+>
+<!ATTLIST sourceDesc
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.declarable.attribute.default;
+ TEIform CDATA 'sourceDesc'  >
+<!--doc:(speech) An individual speech in a performance text, or a passage
+	  presented as such in a prose or verse text. -->
+<!ELEMENT sp ((%model.global;)*,(speaker,(%model.global;)*)?,((l | lg | %model.pLike; | %model.blockLike; | stage),(%model.global;)*)+)>
+<!ATTLIST sp
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.ascribed.attribute.who;
+ TEIform CDATA 'sp'  >
+<!--doc:() A specialized form of heading or label, giving the name of
+one or more speakers in a dramatic text or fragment. -->
+<!ELEMENT speaker %macro.phraseSeq;>
+<!ATTLIST speaker
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'speaker'  >
+<!--doc:() specifies the name of a sponsoring organization or
+institution. -->
+<!ELEMENT sponsor %macro.phraseSeq;>
+<!ATTLIST sponsor
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'sponsor'  >
+<!--doc:(stage direction) contains any kind of stage direction within a dramatic text or
+fragment. -->
+<!ELEMENT stage %macro.specialPara;>
+<!ATTLIST stage
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ type  CDATA #IMPLIED
+ TEIform CDATA 'stage'  >
+<!--doc:() contains text displayed in tabular form, in
+rows and columns. -->
+<!ELEMENT table ((head | %model.global;)*,(row,(%model.global;)*)+)>
+<!ATTLIST table
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ rows  CDATA #IMPLIED
+ cols  CDATA #IMPLIED
+ TEIform CDATA 'table'  >
+<!--doc:(tagUsage) supplies information about the usage of a specific element
+within a text.  -->
+<!ELEMENT tagUsage %macro.paraContent;>
+<!ATTLIST tagUsage
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ gi  CDATA #REQUIRED
+ occurs  CDATA #IMPLIED
+ withId  CDATA #IMPLIED
+ render  CDATA #IMPLIED
+ TEIform CDATA 'tagUsage'  >
+<!--doc:(tagging declaration) provides detailed information about the tagging applied to an SGML or XML document. -->
+<!ELEMENT tagsDecl (rendition*,tagUsage*)>
+<!ATTLIST tagsDecl
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'tagsDecl'  >
+<!--doc:(taxonomy) defines a typology used to classify texts either implicitly, by
+means of a bibliographic citation, or explicitly by a structured
+taxonomy. -->
+<!ELEMENT taxonomy (category+ | ((bibl | biblItem | biblStruct | biblFull),category*))>
+<!ATTLIST taxonomy
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'taxonomy'  >
+<!--doc:(TEI Header) supplies the descriptive and declarative information making
+	up an electronic title page prefixed to every TEI-conformant
+	text. -->
+<!ELEMENT teiHeader (fileDesc,(%model.headerPart;)*,revisionDesc?)>
+<!ATTLIST teiHeader
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ type  CDATA "text" 
+ TEIform CDATA 'teiHeader'  >
+<!--doc:() contains a single-word, multi-word, or symbolic designation
+  which is regarded as a technical term. -->
+<!ELEMENT term %macro.phraseSeq;>
+<!ATTLIST term
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.declaring.attribute.decls;
+ %att.typed.attribute.type;
+ %att.typed.attribute.subtype;
+ sortKey  CDATA #IMPLIED
+ target  CDATA #IMPLIED
+ cRef  CDATA #IMPLIED
+ TEIform CDATA 'term'  >
+<!--doc:() contains a single text of any kind, whether unitary or
+composite, for example a poem or drama, a collection of essays, a novel,
+a dictionary, or a corpus sample. -->
+<!ELEMENT text ((%model.global;)*,(front,(%model.global;)*)?,(body | group),(%model.global;)*,(back,(%model.global;)*)?)>
+<!ATTLIST text
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.declaring.attribute.decls;
+ TEIform CDATA 'text'  >
+<!--doc:(text classification) groups information which describes the nature or topic of a text
+in terms of a standard classification scheme, thesaurus, etc. -->
+<!ELEMENT textClass (classCode | catRef | keywords)*>
+<!ATTLIST textClass
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.declarable.attribute.default;
+ TEIform CDATA 'textClass'  >
+<!--doc:() contains a phrase defining a time of day in any format. -->
+<!ELEMENT time %macro.phraseSeq;>
+<!ATTLIST time
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ value  CDATA #IMPLIED
+ type  (am|pm|military|descriptive) #IMPLIED
+ zone  CDATA #IMPLIED
+ TEIform CDATA 'time'  >
+<!--doc:() contains the full title of a work of any kind. -->
+<!ELEMENT title %macro.paraContent;>
+<!ATTLIST title
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ level  (a|m|j|s|u) #IMPLIED
+ type  CDATA #IMPLIED
+ TEIform CDATA 'title'  >
+<!--doc:(title page) contains the title page of a text, appearing within the front
+or back matter.  -->
+<!ELEMENT titlePage ((%model.global;)*,(%model.titlepagePart;),(%model.titlepagePart; | %model.global;)*)>
+<!ATTLIST titlePage
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ type  CDATA #IMPLIED
+ TEIform CDATA 'titlePage'  >
+<!--doc:(title part) contains a subsection or division of the title of a work, as
+indicated on a title page. -->
+<!ELEMENT titlePart %macro.paraContent;>
+<!ATTLIST titlePart
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ type  CDATA "main" 
+ TEIform CDATA 'titlePart'  >
+<!--doc:(title statement) groups information about the title of a work and those
+responsible for its intellectual content. -->
+<!ELEMENT titleStmt (title+,(author | editor | sponsor | funder | principal | respStmt)*)>
+<!ATTLIST titleStmt
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'titleStmt'  >
+<!--doc:(trailer) contains a closing title or footer appearing at the end of
+a division of a text.  -->
+<!ELEMENT trailer %macro.phraseSeq;>
+<!ATTLIST trailer
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ TEIform CDATA 'trailer'  >
+<!--doc:() contains a word, phrase, or passage which cannot be transcribed
+with certainty because it is illegible or inaudible in the source. -->
+<!ELEMENT unclear %macro.paraContent;>
+<!ATTLIST unclear
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.analytic.attribute.ana;
+ %att.editLike.attribute.cert;
+ %att.editLike.attribute.resp;
+ reason  CDATA #IMPLIED
+ hand  CDATA #IMPLIED
+ agent  CDATA #IMPLIED
+ TEIform CDATA 'unclear'  >
