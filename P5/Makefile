@@ -203,7 +203,7 @@ dist: clean dist-source dist-schema dist-doc dist-test dist-database dist-exempl
 dist-source: 
 	rm -rf release/tei-p5-source*
 	mkdir -p release/tei-p5-source/share/xml/tei/odd
-	tar -c -f - --exclude "*~" --exclude .svn *.* VERSION ChangeLog Source Makefile Utilities  \
+	tar -c -f - --exclude "*~" --exclude .svn *.* VERSION ReleaseNotes Source Makefile Utilities  \
 	| (cd release/tei-p5-source/share/xml/tei/odd; tar xf - )
 	(cd release; 	\
 	ln -s tei-p5-source tei-p5-source-`cat ../VERSION` ; \
@@ -310,28 +310,7 @@ changelog:
 
 clean:
 	-rm -rf release Guidelines Guidelines-web Schema DTD dtd Split RomaResults *~
-	-rm Guidelines.xml core.rnc header.rnc tei.rnc \
-	p5subset.xml \
-	dictionaries.rnc  linking.rnc  textstructure.rnc \
-	figures.rnc       tagdocs.rnc  \
-	analysis.rnc \
-	certainty.rnc \
-	corpus.rnc \
-	declarefs.rnc \
-	drama.rnc \
-	gaiji.rnc \
-	iso-fs.rnc \
-	msdescription.rnc \
-	namesdates.rnc \
-	nets.rnc \
-	p5examples.rnc \
-	p5odds.compiled.rnc \
-	p5odds.rnc \
-	spoken.rnc \
-	textcrit.rnc \
-	transcr.rnc \
-	verse.rnc \
-	mathml*rnc  \
+	-rm Guidelines.??? \
 	p5examples.rng \
 	p5odds.rng \
 	*.xsd \
