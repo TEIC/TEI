@@ -141,7 +141,7 @@ return "";
 <html:form
  encoding="iso-8859-1"
  enctype="multipart/form-data"
- action="/cgi-bin/stylebear"
+ action="/tei-bin/stylebear"
  method="post"
  id="stylebear">
 <p>Make stylesheet for: 
