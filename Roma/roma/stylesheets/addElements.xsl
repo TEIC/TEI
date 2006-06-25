@@ -132,7 +132,7 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
 	<td>
 	  <xsl:call-template name="contentTypes"/>
 	  <xsl:if test="$selectedMode='addElement'"><br/>
-	  <textarea name="contentmodel" rows="5" cols="50">
+	  <textarea name="contentmodel" rows="5" cols="70">
 	    <xsl:choose>
 	      <xsl:when test="$elementFullContents=''">
 		<xsl:text>&lt;content xmlns:rng="http://relaxng.org/ns/structure/1.0"&gt;
@@ -149,8 +149,12 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
       <tr>
 	<td class="formlabeltop"><xsl:value-of disable-output-escaping="yes" select="$res_form_description"/></td>
 	<td>
-           <textarea rows="5" cols="40" name="description">
-            <xsl:if test="not($elementDesc='')"><xsl:value-of select="$elementDesc"/></xsl:if>
+	  <input type="hidden" name="olddescription"
+	        value="{$elementDesc}"/>
+	  <textarea rows="5" cols="70" name="description">
+            <xsl:if test="not($elementDesc='')">
+	        <xsl:value-of select="$elementDesc"/>
+	    </xsl:if>
            </textarea>
         </td>
       </tr>
@@ -182,48 +186,15 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
   </xsl:template>
 
 <xsl:template name="modelClassList">
-  <xsl:for-each select="/addElement/modelClassList">
-  <table class="modelClasses">
-    <xsl:call-template name="makeRow">
-      <xsl:with-param name="M">1</xsl:with-param>
-    </xsl:call-template>
-    <xsl:call-template name="makeRow">
-      <xsl:with-param name="M">2</xsl:with-param>
-    </xsl:call-template>
-    <xsl:call-template name="makeRow">
-      <xsl:with-param name="M">3</xsl:with-param>
-    </xsl:call-template>
-    <xsl:call-template name="makeRow">
-      <xsl:with-param name="M">4</xsl:with-param>
-    </xsl:call-template>
-    <xsl:call-template name="makeRow">
-      <xsl:with-param name="M">5</xsl:with-param>
-    </xsl:call-template>
-    <xsl:call-template name="makeRow">
-      <xsl:with-param name="M">6</xsl:with-param>
-    </xsl:call-template>
-    <xsl:call-template name="makeRow">
-      <xsl:with-param name="M">7</xsl:with-param>
-    </xsl:call-template>
-    <xsl:call-template name="makeRow">
-      <xsl:with-param name="M">0</xsl:with-param>
-    </xsl:call-template>
-  </table>
-  </xsl:for-each>
-</xsl:template>
-
-<xsl:template name="makeRow">
-  <xsl:param name="M"/>
-  <tr>
-    <xsl:for-each select="modelClass[position() mod 8 = $M]">
+  <div class="classes">
+    <xsl:for-each select="/addElement/modelClassList/modelClass">
       <xsl:call-template name="makeCell"/>
     </xsl:for-each>
-  </tr>
+  </div>
 </xsl:template>
 
-
 <xsl:template name="makeCell">
-  <td>
+  <span class="class">
     <input class="checkbox" type="checkbox">
       <xsl:attribute name="name">class|<xsl:value-of select="className"/></xsl:attribute>
       <xsl:attribute name="value"><xsl:value-of select="className"/></xsl:attribute>
@@ -232,50 +203,29 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
 	<xsl:attribute name="checked">1</xsl:attribute>
       </xsl:if>
     </input>
-    <span>
-      <xsl:attribute name="id">descSpan_modelClass_<xsl:value-of select="className"/></xsl:attribute>
-      <xsl:attribute name="onMouseover">descriptionPopup_Show( 'modelClass_<xsl:value-of select="className"/>' )</xsl:attribute>
-      <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'modelClass_<xsl:value-of select="className"/>' )</xsl:attribute>
+    <span onMouseover="descriptionPopup_Show( 'modelClass_{className}')"
+	   onMouseout="descriptionPopup_Hide( 'modelClass_{className}')"
+           id="descSpan_modelClass_{className}">
       <a>
 	<xsl:attribute name="href"><xsl:value-of select="$host"/>class.xq?name=<xsl:value-of select="className"/></xsl:attribute>
 	<xsl:attribute name="target">_blank</xsl:attribute>
 	<xsl:value-of select="className"/>
       </a>
     </span>
-  </td>
+  </span>
 </xsl:template>
 
 
 <xsl:template name="attClassList">
-  <xsl:for-each select="/addElement/attClassList">
-    <table class="attClasses">
-    <xsl:call-template name="makeAttRow">
-      <xsl:with-param name="M">1</xsl:with-param>
-    </xsl:call-template>
-    <xsl:call-template name="makeAttRow">
-      <xsl:with-param name="M">2</xsl:with-param>
-    </xsl:call-template>
-    <xsl:call-template name="makeAttRow">
-      <xsl:with-param name="M">3</xsl:with-param>
-    </xsl:call-template>
-    <xsl:call-template name="makeAttRow">
-      <xsl:with-param name="M">0</xsl:with-param>
-    </xsl:call-template>
-    </table>
-  </xsl:for-each>
-</xsl:template>
-
-<xsl:template name="makeAttRow">
-  <xsl:param name="M"/>
-  <tr>
-    <xsl:for-each select="attClass[position() mod 4 = $M]">
-      <xsl:call-template name="makeCell"/>
+  <div class="classes">
+    <xsl:for-each select="/addElement/attClassList/attClass">
+      <xsl:call-template name="makeAttCell"/>
     </xsl:for-each>
-  </tr>
+  </div>
 </xsl:template>
 
 <xsl:template name="makeAttCell">
-  <td>
+ <span class="class">
     <input class="checkbox" type="checkbox">
       <xsl:attribute name="name">class|<xsl:value-of select="className"/></xsl:attribute>
       <xsl:attribute name="value"><xsl:value-of select="className"/></xsl:attribute>
@@ -294,7 +244,7 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
 	<xsl:value-of select="className"/>
       </a>
     </span>
-  </td>
+ </span>
 </xsl:template>
 
 
@@ -344,9 +294,19 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
        </div>
      </xsl:if>
      <xsl:if test="$selectedMode='changeElement'">
-      <textarea rows="8" cols="80" name="content"><xsl:if
-test="//errorList/error/location[node()='contents']"><xsl:value-of
-select="//errorList/error[child::location[node()='contents']]/oldValue"/></xsl:if><xsl:if test="not(//errorList/error/location[node()='contents'])"><xsl:value-of select="$elementContent"/></xsl:if></textarea>
+       <input type="hidden" name="oldcontent"
+	 value="{$elementContent}"/>
+      <textarea rows="8" cols="80" name="content">
+	<xsl:choose>
+	  <xsl:when test="//errorList/error/location[node()='contents']">
+	    <xsl:value-of
+		select="//errorList/error[child::location[node()='contents']]/oldValue"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="$elementContent"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </textarea>
      </xsl:if>
   </xsl:template>
 

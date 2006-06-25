@@ -9,7 +9,7 @@
 // --- REQUIRES
 // ######################################################################
 
-require_once( 'ressource/ressource.php' );
+require_once( 'resource/resource.php' );
 
 // ######################################################################
 // --- CONSTANTS
@@ -93,8 +93,8 @@ class parser
       {
 	list( $szPath, $szLang, $szString ) = explode( '|', $szTask );
 
-	//reading ressource File
-	$oRessource = new ressource( $szPath );
+	//reading resource File
+	$oRessource = new resource( $szPath );
 	$oRessource->getString( $szLang, $szString, $szParsed );
       }
    

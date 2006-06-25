@@ -181,7 +181,10 @@ Description
 	       </td>
 	     </tr>
 	     <tr>
-	       <td class="formlabel"><xsl:value-of disable-output-escaping="yes" select="$res_form_valList"/></td>
+	       <td class="formlabel">
+		 <xsl:value-of disable-output-escaping="yes"
+			     select="$res_form_valList"/>
+	       </td>
 	       <td class="formfield">
 		 <input type="text" name="valList" size="53">
 		   <xsl:if test="//currentAttribute">
@@ -193,10 +196,15 @@ Description
 	       </td>
 	     </tr>
 	     <tr>
-	       <td class="formlabeltop"><xsl:value-of disable-output-escaping="yes" select="$res_form_description"/></td>
+	       <td class="formlabeltop">
+	       <xsl:value-of disable-output-escaping="yes" 
+			     select="$res_form_description"/>
+	       </td>
 	       <td class="formfield">
-		 <textarea name="description" rows="5"
-		 cols="45"><xsl:value-of select="//currentAttribute/attDef/desc"/></textarea>
+		 <textarea name="description" rows="5" cols="70">
+		 <xsl:value-of
+		     select="//currentAttribute/attDef/desc"/>
+		 </textarea>
 	       </td>
 	     </tr>
 	     <tr>

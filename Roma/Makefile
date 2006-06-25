@@ -7,7 +7,7 @@ FILES=ChangeLog \
 	parser \
 	progressbar \
 	release \
-	ressource \
+	resource \
 	roma \
 	roma.sh \
 	roma.css \
@@ -40,12 +40,15 @@ dist:  release
 
 release: clean
 	mkdir -p release/tei-roma
+	V=`cat VERSION` D=`head -1 ChangeLog | awk '{print $$1}'`;export D V; \
+	perl -p -i -e "s+(define \(.roma_date.,).*(\'.*)+\1\'$$D\2+;s+(define \(.roma_version.,).*(\'.*)+\1\'$$V\2+" \
+	roma/config.php; perl -p -i -e "s/{roma_version}/$$V/;s/{roma_date}/$$D/" roma/templates/main.tem
 	tar --exclude=CVS -c -f - $(FILES) | (cd release/tei-roma; tar xf -)
 
 clean:
 	-rm -rf release
-	-find . -name "*~" | xargs rm
-	-find . -name semantic.cache | xargs rm
+	-find . -name "*~" | xargs rm -f
+	-find . -name semantic.cache | xargs rm -f
 
 changelog:
 	(LastDate=`head -1 ChangeLog | awk '{print $$1}'`; \

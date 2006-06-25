@@ -22,6 +22,8 @@ define( 'roma_StylesheetDir', 'http://www.tei-c.org/release/xml/tei/stylesheet' 
 define( 'roma_xquery_server', 'http://tei.oucs.ox.ac.uk/Query/' );
 define( 'roma_localStylesheetDir', 'roma/stylesheets' );
 define( 'roma_templateDir', 'roma/templates' );
-define( 'roma_ressource_path', 'roma/res' );
+define( 'roma_resource_path', 'roma/res' );
 define ('roma_local_p5','file:///tmp/p5subset.xml');
+define ('roma_version','2.0');
+define ('roma_date','2006-06-22');
 </script>

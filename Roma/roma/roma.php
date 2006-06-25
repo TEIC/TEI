@@ -91,7 +91,7 @@ require_once( 'notam/notamHandler.php' );
 require_once( 'roma/exception.php' );
 
 //Ressources
-require_once( 'ressource/ressource.php' );
+require_once( 'resource/resource.php' );
 
 // ######################################################################
 // --- CONSTANTS
@@ -409,18 +409,11 @@ class roma
 	      $this->m_oRomaDom->setDocLanguage( $_REQUEST[ 'doclanguage' ] );
 	      $oNotam = new notam();
 	      $oNotam->setHeadline( 'Language customization' );
-	      switch( $_REQUEST[ 'language' ] )
-		{
-		case 'de':
-		  $oNotam->setMessage( 'Translated element names into German.' );
-		  break;
-		case 'es':
-		  $oNotam->setMessage( 'Translated element names into Spanish.' );
-		  break;
-		default:
-		  $oNotam->setMessage( 'Translated element names back to English.' );
-		  break;
-		}
+	      $oNotam->setMessage( 'Translate to ' .
+              $_REQUEST['language' ] . 
+	      ' for names and ' . 
+	      $_REQUEST[ 'doclanguage' ] . 
+	      ' for documentation' );
 	      $oNotam->setStatus( notam_status_success );
 	      $oNotam->addNotam();
 	      $this->redirectBrowserHeader( 'mode=' . roma_mode_customizeLanguage );
@@ -442,8 +435,8 @@ class roma
 		}
 	      $aszConfig = array( 'name' => $_REQUEST[ 'name' ],
 				  'added' => $_REQUEST[ 'added' ],
-				  'contentmodel' => $_REQUEST[ 'contentmodel' ],
 				  'content' => $_REQUEST[ 'content' ],
+				  'contentmodel' => $_REQUEST[ 'contentmodel' ],
 				  'userContent' => $_REQUEST['userContent'],
 				  'classes' => $aszClasses,
 				  'description' => $_REQUEST[ 'description' ]);
@@ -803,12 +796,13 @@ class roma
         $szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
         $szLangTem = join( '', file(  roma_templateDir . '/customizeLanguage.tem' ) );
 	$this->getParser( $oParser );
-
 	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
 
 	$oLanguageParser = new parser();
-	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
-	$oLanguageParser->addReplacement( 'lang', $szLanguage );
+	$this->m_oRomaDom->getDocLanguage( $szDocLanguage );
+	$this->m_oRomaDom->getOddLanguage( $szOddLanguage );
+	$oLanguageParser->addReplacement( 'doclang', $szDocLanguage );
+	$oLanguageParser->addReplacement( 'oddlang', $szOddLanguage );
 	$oLanguageParser->Parse( $szLangTem, $szLanguage );
 
 	$oParser->addReplacement( 'mode', 'customizeLanguage' );
@@ -958,7 +952,6 @@ class roma
 	  {
 	    $oParser->addReplacement( 'view', 'listElements' );
 	  }
-
 	$oParser->addReplacement( 'mode', 'addAttributes' );
 	$oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
         $oParser->Parse( $szTemplate, $szOutput );
@@ -1111,6 +1104,8 @@ class roma
 	$this->m_oRomaDom->getCustomizationDescription( $szDesc );
 
 	$oSchemaParser->addReplacement( 'lang', $szLanguage );
+	$oSchemaParser->addReplacement( 'doclang', $szDocLanguage );
+	$oSchemaParser->addReplacement( 'oddlang', $szOddLanguage );
 	$oSchemaParser->AddReplacement( 'title', $szTitle );
 	$oSchemaParser->AddReplacement( 'author', $szAuthor );
 	$oSchemaParser->AddReplacement( 'filename', $szFilename );
@@ -1330,8 +1325,8 @@ class roma
 	
 	if ( $szRessource != '' )
 	  {
-	    //reading ressource File
-	    $oRessource = new ressource( roma_ressource_path . '/' . $szRessource );
+	    //reading resource File
+	    $oRessource = new resource( roma_resource_path . '/' . $szRessource );
 	    $oRessource->getStringArray( $this->m_szLanguage, $aszRessources );
 	    $aszParams = array_merge( $aszParams, $aszRessources );
 	  }
@@ -1418,9 +1413,11 @@ class roma
 		$errResult = true;
 	      }
           }
-	
+	if ($_REQUEST[ 'description' ] != $_REQUEST['olddescription']) 
+	      {
 	$this->m_oRomaDom->changeElementDescInModule( $_REQUEST[ 'name' ], $_REQUEST[ 'module' ], $_REQUEST[ 'description' ] );
 	
+	 }
 	$aszClasses = array();
 	foreach( $_REQUEST as $key => $value )
 	  {
@@ -1443,6 +1440,7 @@ class roma
 	  }
 
 
+	if ($_REQUEST[ 'content' ] != $_REQUEST['oldcontent']) {
 	try {
 	  $this->m_oRomaDom->changeElementContentsInModule( $_REQUEST[ 'name' ], $_REQUEST[ 'module' ], $_REQUEST[ 'content' ] );
 	}
@@ -1461,8 +1459,8 @@ class roma
 	  }
 
 	return $errResult;
+        }
       }
-
     private function moduleChanged()
       {
         $errResult = false;
