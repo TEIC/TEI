@@ -1,7 +1,7 @@
 <script language="php">
 // ######################################################################
 //
-// Path: /usr/local/php/includes/ressource/ressource.php
+// Path: /usr/local/php/includes/resource/resource.php
 //
 // ######################################################################
 
@@ -19,9 +19,9 @@
  * @author: Arno Mittelbach <arno@mittelbach-online.de>
  * @version: 0.1
  * @access:  public
- * @package: ressource
+ * @package: resource
  */
-class ressource
+class resource
   {
     
     private $m_aszRessource;
