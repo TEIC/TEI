@@ -2012,7 +2012,7 @@ class romaDom extends domDocument
 	if ( $this->bBar )
 	    $this->m_oRomaDom->updateProgressBar( '80' );
 
-	$oTidy->cleanRepair();
+//	$oTidy->cleanRepair();
 	$szTeiLite = $oTeiLiteDom->SaveXML();
 
 	if ( $this->bBar )
