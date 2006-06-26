@@ -1414,11 +1414,14 @@ class roma
 	      }
           }
 // description
-	if ($_REQUEST[ 'description' ] != $_REQUEST['olddescription']) 
-	      {
+        if ($_REQUEST[ 'changedDesc' ] = 'true')  {
 	$this->m_oRomaDom->changeElementDescInModule( $_REQUEST[ 'name' ], $_REQUEST[ 'module' ], $_REQUEST[ 'description' ] );
 	
 	 }
+
+// class membership
+
+   if ($_REQUEST[ 'changedClasses' ] == 'true' ) {
 	$aszClasses = array();
 	foreach( $_REQUEST as $key => $value )
 	  {
@@ -1427,12 +1430,7 @@ class roma
 		$aszClasses[] = $value;
 	      }
 	  }
-
-print "<pre>\n";
-print $aszClasses;
-print "</pre>\n";
-
-// class membership
+	  
 	$this->m_oRomaDom->replaceElementsClassesInModule( $_REQUEST[ 'name' ], $_REQUEST[ 'module' ], $aszClasses );
 
 	if( !  $errResult )
@@ -1444,11 +1442,11 @@ print "</pre>\n";
 	    $oNotam->setStatus( notam_status_success );
 	    $oNotam->addNotam();
 	  }
+}
 
 // content model
-	$old = trim($_REQUEST[ 'oldcontent' ]) ;
-        $new = trim($_REQUEST[ 'content' ]) ;
-	if ($old != $new) {
+        if ($_REQUEST[ 'changedContent' ] = 'true')  {
+
 	try {
 	  $this->m_oRomaDom->changeElementContentsInModule( $_REQUEST[ 'name' ], $_REQUEST[ 'module' ], $_REQUEST[ 'content' ] );
 	}
@@ -1466,8 +1464,9 @@ print "</pre>\n";
 	    $errResult = true;
 	  }
 
+	  }
 	return $errResult;
-        }
+
       }
 
 

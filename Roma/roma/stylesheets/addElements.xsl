@@ -49,6 +49,9 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
      <xsl:if test="$selectedMode='addElement'">
        <input type="hidden" name="added" value="true"/>
      </xsl:if>
+     <input type="hidden" id="changedClasses" name="changedClasses" value="false"/>
+     <input type="hidden" id="changedDesc" name="changedDesc" value="false"/>
+     <input type="hidden" id="changedContent" name="changedContent" value="false"/>
      <table>
       <tr>
        <td class="headline" colspan="2"><xsl:value-of disable-output-escaping="yes" select="$res_form_headline"/></td>
@@ -132,7 +135,9 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
 	<td>
 	  <xsl:call-template name="contentTypes"/>
 	  <xsl:if test="$selectedMode='addElement'"><br/>
-	  <textarea name="contentmodel" rows="5" cols="70">
+	  <span>
+	  <textarea name="contentmodel" rows="5" cols="70"
+		    onChange="setChangedContent(this)">
 	    <xsl:choose>
 	      <xsl:when test="$elementFullContents=''">
 		<xsl:text>&lt;content xmlns:rng="http://relaxng.org/ns/structure/1.0"&gt;
@@ -143,19 +148,22 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
 	      </xsl:otherwise>
 	    </xsl:choose>
 	  </textarea>
+	  </span>
 	 </xsl:if>
 	</td>
       </tr>
       <tr>
 	<td class="formlabeltop"><xsl:value-of disable-output-escaping="yes" select="$res_form_description"/></td>
 	<td>
-	  <input type="hidden" name="olddescription"
-	        value="{$elementDesc}"/>
-	  <textarea rows="5" cols="70" name="description">
+	  <span>
+	  <textarea rows="5" cols="70" 
+		    name="description"  
+		    onChange="setChangedDesc(this)">
             <xsl:if test="not($elementDesc='')">
 	        <xsl:value-of select="$elementDesc"/>
 	    </xsl:if>
            </textarea>
+	  </span>
         </td>
       </tr>
       <tr>
@@ -188,63 +196,80 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
 <xsl:template name="modelClassList">
   <div class="classes">
     <xsl:for-each select="/addElement/modelClassList/modelClass">
-      <xsl:call-template name="makeCell"/>
+      <xsl:variable name="currentClass">
+	<xsl:value-of select="className"/>
+      </xsl:variable>
+      <span class="class">
+	<input class="checkbox" 
+	       type="checkbox"
+	       name="class|{className}"
+	       value="{className}"
+	       onChange="setChangedClass(this)"
+	       >
+	  <xsl:if test="contains( $elementClasses, $currentClass )">
+	    <xsl:attribute name="checked">1</xsl:attribute>
+	  </xsl:if>
+	</input>
+	<span onMouseover="descriptionPopup_Show( 'modelClass_{className}')"
+	      onMouseout="descriptionPopup_Hide( 'modelClass_{className}')"
+	      id="descSpan_modelClass_{className}">
+	  <a href="{$host}class.xq?name={className}"
+	     target="blank">
+	    <xsl:value-of select="className"/>
+	  </a>
+	</span>
+      </span>
     </xsl:for-each>
   </div>
-</xsl:template>
-
-<xsl:template name="makeCell">
-  <span class="class">
-    <input class="checkbox" type="checkbox">
-      <xsl:attribute name="name">class|<xsl:value-of select="className"/></xsl:attribute>
-      <xsl:attribute name="value"><xsl:value-of select="className"/></xsl:attribute>
-      <xsl:variable name="currentClass"><xsl:value-of select="className"/></xsl:variable>
-      <xsl:if test="contains( $elementClasses, $currentClass )">
-	<xsl:attribute name="checked">1</xsl:attribute>
-      </xsl:if>
-    </input>
-    <span onMouseover="descriptionPopup_Show( 'modelClass_{className}')"
-	   onMouseout="descriptionPopup_Hide( 'modelClass_{className}')"
-           id="descSpan_modelClass_{className}">
-      <a>
-	<xsl:attribute name="href"><xsl:value-of select="$host"/>class.xq?name=<xsl:value-of select="className"/></xsl:attribute>
-	<xsl:attribute name="target">_blank</xsl:attribute>
-	<xsl:value-of select="className"/>
-      </a>
-    </span>
-  </span>
 </xsl:template>
 
 
 <xsl:template name="attClassList">
   <div class="classes">
     <xsl:for-each select="/addElement/attClassList/attClass">
-      <xsl:call-template name="makeAttCell"/>
+      <xsl:variable name="currentClass">
+	<xsl:value-of select="className"/>
+      </xsl:variable>
+      <span class="class">
+	<input class="checkbox" 
+	       type="checkbox"
+	       name="class|{className}"
+	       value="{className}"
+	       onChange="setChangedClass(this)">
+	       <xsl:if test="contains( $elementClasses, $currentClass )">
+		 <xsl:attribute name="checked">1</xsl:attribute>
+	       </xsl:if>
+	</input>
+	<span>
+	  <xsl:attribute name="id">
+	    <xsl:text>descSpan_attClass_</xsl:text>
+	    <xsl:value-of select="className"/>
+	  </xsl:attribute>
+	  <xsl:attribute name="onMouseover">
+	    <xsl:text>descriptionPopup_Show( 'attClass_</xsl:text>
+	    <xsl:value-of select="className"/>
+	    <xsl:text>' )</xsl:text>
+	  </xsl:attribute>
+	  <xsl:attribute name="onMouseout">
+	    <xsl:text>descriptionPopup_Hide( 'attClass_</xsl:text>
+	    <xsl:value-of select="className"/>
+	    <xsl:text>' )</xsl:text>
+	  </xsl:attribute>
+	  <a>
+	    <xsl:attribute name="href">
+	      <xsl:value-of select="$host"/>
+	      <xsl:text>/class.xq?name=</xsl:text>
+	      <xsl:value-of select="className"/>
+	    </xsl:attribute>
+	    <xsl:attribute name="target">
+	      <xsl:text>_blank</xsl:text>
+	    </xsl:attribute>
+	    <xsl:value-of select="className"/>
+	  </a>
+	</span>
+      </span>
     </xsl:for-each>
   </div>
-</xsl:template>
-
-<xsl:template name="makeAttCell">
- <span class="class">
-    <input class="checkbox" type="checkbox">
-      <xsl:attribute name="name">class|<xsl:value-of select="className"/></xsl:attribute>
-      <xsl:attribute name="value"><xsl:value-of select="className"/></xsl:attribute>
-      <xsl:variable name="currentClass"><xsl:value-of select="className"/></xsl:variable>
-      <xsl:if test="contains( $elementClasses, $currentClass )">
-	<xsl:attribute name="checked">1</xsl:attribute>
-      </xsl:if>
-    </input>
-    <span>
-      <xsl:attribute name="id">descSpan_attClass_<xsl:value-of select="className"/></xsl:attribute>
-      <xsl:attribute name="onMouseover">descriptionPopup_Show( 'attClass_<xsl:value-of select="className"/>' )</xsl:attribute>
-      <xsl:attribute name="onMouseout">descriptionPopup_Hide( 'attClass_<xsl:value-of select="className"/>' )</xsl:attribute>
-      <a>
-	<xsl:attribute name="href"><xsl:value-of select="$host"/>/class.xq?name=<xsl:value-of select="className"/></xsl:attribute>
-	<xsl:attribute name="target">_blank</xsl:attribute>
-	<xsl:value-of select="className"/>
-      </a>
-    </span>
- </span>
 </xsl:template>
 
 
@@ -294,9 +319,8 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
        </div>
      </xsl:if>
      <xsl:if test="$selectedMode='changeElement'">
-       <input type="hidden" name="oldcontent"
-	 value="{$elementContent}"/>
-      <textarea rows="8" cols="80" name="content">
+     <span>
+      <textarea rows="8" cols="80" name="content" onChange="setChangedContent(this)">
 	<xsl:choose>
 	  <xsl:when test="//errorList/error/location[node()='contents']">
 	    <xsl:value-of
@@ -307,6 +331,7 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
 	  </xsl:otherwise>
 	</xsl:choose>
       </textarea>
+     </span>
      </xsl:if>
   </xsl:template>
 

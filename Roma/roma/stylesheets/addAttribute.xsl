@@ -25,69 +25,70 @@ Description
   <xsl:template match="/">
     <p class="roma">
       <a>
-	<xsl:attribute
-	 name="href">?mode=listAddedAttributes&amp;element=<xsl:value-of
-	 select="$element"/>&amp;module=<xsl:value-of
-	 select="$module"/>&amp;class=<xsl:value-of select="$class"/></xsl:attribute>go back to list</a><br/>
-	 
-	 <form method="POST" action="?mode=attributeAdded">
-	   <input type="hidden" name="element">
-	     <xsl:attribute name="value"><xsl:value-of
-	     select="$element"/></xsl:attribute>
-	   </input>
-	   <input type="hidden" name="module">
-	     <xsl:attribute name="value"><xsl:value-of
-	     select="$module"/></xsl:attribute>
-	   </input>
-	   <input type="hidden" name="class">
-	     <xsl:attribute name="value"><xsl:value-of
-	     select="$class"/></xsl:attribute>
-	   </input>
-	   <input type="hidden" name="type">
-	     <xsl:attribute name="value"><xsl:value-of
-	     select="$type"/></xsl:attribute>
-	   </input>
-	   <input type="hidden" name="added">
-	     <xsl:attribute name="value">
-	       <xsl:choose>
-		 <xsl:when test="string-length(//currentAttribute/attDef/added)&gt;0">
+	<xsl:attribute name="href">
+	  <xsl:text>?mode=listAddedAttributes&amp;element=</xsl:text>
+	  <xsl:value-of select="$element"/>
+	  <xsl:text>&amp;module=</xsl:text>
+	  <xsl:value-of select="$module"/>
+	  <xsl:text>&amp;class=</xsl:text>
+	  <xsl:value-of select="$class"/>
+	</xsl:attribute>
+	<xsl:text>go back to list</xsl:text>
+      </a>
+      <br/>
+      
+      <form method="POST" action="?mode=attributeAdded">
+	<input type="hidden" name="element" value="{$element}"/>
+	<input type="hidden" name="module" value="{$module}"/>
+	<input type="hidden" name="class" value="{$class}"/>
+	<input type="hidden" name="type" value="{$type}"/>
+	<input type="hidden" name="added">
+	  <xsl:attribute name="value">
+	    <xsl:choose>
+	      <xsl:when test="string-length(//currentAttribute/attDef/added)&gt;0">
 		 <xsl:value-of
 		     select="//currentAttribute/attDef/added"/>
-		 </xsl:when>
-		 <xsl:otherwise>
-		   <xsl:value-of  select="$added"/>
-		 </xsl:otherwise>
-	       </xsl:choose>
-	     </xsl:attribute>
-	   </input>
-	   <table>
-	     <tr><td class="headline" colspan="4"><xsl:value-of
-	     disable-output-escaping="yes"
-	     select="$res_form_headline"/></td></tr>
-	     <tr>
-	     <xsl:choose>
-	     <xsl:when test="$type='change'">
-		 <td class="formlabel">
-		   <input type="hidden" name="name">
-		     <xsl:attribute name="value">
-		       <xsl:value-of
-			   select="//currentAttribute/attDef/attName"/>
-		     </xsl:attribute>
-		   </input>
-		   <xsl:value-of disable-output-escaping="yes"
-			       select="$res_form_name"/>
-		 </td>
-		 <td class="formfield">
-		   <xsl:value-of
-		       select="//currentAttribute/attDef/attName"/>
-		 </td>
-	     </xsl:when>
-	     <xsl:otherwise>
-	       <xsl:if
-		   test="//errorList/error/location[text()='name']">
-		 <xsl:attribute name="class">error</xsl:attribute>
-	       </xsl:if>
-	       <td class="formlabel">
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:value-of  select="$added"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:attribute>
+	</input>
+	<input type="hidden" id="changedDesc" name="changedDesc" value="false"/>
+	<input type="hidden" id="changedContent" name="changedContent" value="false"/>
+	<table>
+	  <tr>
+	    <td class="headline" colspan="4">
+	      <xsl:value-of 
+		  disable-output-escaping="yes" 
+		  select="$res_form_headline"/>
+	    </td>
+	  </tr>
+	  <tr>
+	    <xsl:choose>
+	      <xsl:when test="$type='change'">
+		<td class="formlabel">
+		  <input type="hidden" name="name">
+		    <xsl:attribute name="value">
+		      <xsl:value-of
+			  select="//currentAttribute/attDef/attName"/>
+		    </xsl:attribute>
+		  </input>
+		  <xsl:value-of disable-output-escaping="yes"
+				select="$res_form_name"/>
+		</td>
+		<td class="formfield">
+		  <xsl:value-of
+		      select="//currentAttribute/attDef/attName"/>
+		</td>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:if
+		    test="//errorList/error/location[text()='name']">
+		  <xsl:attribute name="class">error</xsl:attribute>
+		</xsl:if>
+		<td class="formlabel">
 		 <xsl:value-of 
 		     disable-output-escaping="yes" 
 		     select="$res_form_headline"/></td>
@@ -102,28 +103,28 @@ Description
 		   </input>
 		 </td>
 	     </xsl:otherwise>
-	     </xsl:choose>
-	     </tr>
-	     <tr>
-		 <td class="formlabel">
+	    </xsl:choose>
+	  </tr>
+	  <tr>
+	    <td class="formlabel">
 		 <xsl:value-of 
 		     disable-output-escaping="yes" 
 		     select="$res_form_className"/>
-		 </td>
-	       <td>
+	    </td>
+	    <td>
 		 <xsl:value-of select="$class"/>
-	       </td>
-	     </tr>
-	     <tr>
-	       <td class="formlabel">
-		 <xsl:value-of disable-output-escaping="yes"
-			     select="$res_form_optional"/>
-	       </td>
-	       <td class="formfield">
-		 <input class="radio" type="radio" name="optional" value="true">
-		   <xsl:if
+	    </td>
+	  </tr>
+	  <tr>
+	    <td class="formlabel">
+	      <xsl:value-of disable-output-escaping="yes"
+			    select="$res_form_optional"/>
+	    </td>
+	    <td class="formfield">
+	      <input class="radio" type="radio" name="optional" value="true">
+		<xsl:if
 		       test="not(//currentAttribute/attDef/optional='req')">
-		     <xsl:attribute name="checked">1</xsl:attribute>
+		  <xsl:attribute name="checked">1</xsl:attribute>
 		   </xsl:if>
 		   <xsl:if
 		       test="not(//currentAttribute)">
@@ -142,11 +143,17 @@ Description
 	       </td>
 	     </tr>
 	     <tr>
-	       <td class="formlabel"><xsl:value-of disable-output-escaping="yes" select="$res_form_contents"/></td>
-	       <td class="formfield"><xsl:call-template name="contentTypes"/></td>
+	       <td class="formlabel">
+	       <xsl:value-of disable-output-escaping="yes"
+			     select="$res_form_contents"/>
+	       </td>
+	       <td class="formfield">
+		 <xsl:call-template name="contentTypes"/>
+	       </td>
 	     </tr>
 	     <tr>
-	       <td class="formlabel"><xsl:value-of disable-output-escaping="yes" select="$res_form_defaultValue"/></td>
+	       <td class="formlabel">
+	       <xsl:value-of disable-output-escaping="yes" select="$res_form_defaultValue"/></td>
 	       <td class="formfield">
 		 <input type="text" name="defaultValue" size="53">
 		   <xsl:if test="//currentAttribute">
@@ -201,7 +208,10 @@ Description
 			     select="$res_form_description"/>
 	       </td>
 	       <td class="formfield">
-		 <textarea name="description" rows="5" cols="70">
+		 <textarea name="description" 
+			   rows="5" 
+			   cols="70" 
+			   onChange="setChangedDesc(this)">
 		 <xsl:value-of
 		     select="//currentAttribute/attDef/desc"/>
 		 </textarea>
@@ -217,7 +227,7 @@ Description
   
   <xsl:template name="contentTypes">
     <div class="HideItem">
-      <select name="content" size="1">
+      <select name="content" size="1" onChanged="setChangedContent">
 	<option value="text">
 	  <xsl:if
 	   test="string(//currentAttribute/attDef/datatype)='text'">

@@ -250,3 +250,21 @@ function includeAllAttributes()
           }
       }
   }
+
+function setChangedClass(obj) {
+   obj.parentNode.style.backgroundColor = "red";
+   var box = document.getElementById('changedClasses');
+   box.value='true';
+}
+
+function setChangedDesc(obj) {
+   obj.style.border = "solid red 1pt";
+   var box = document.getElementById('changedDesc');
+   box.value='true';
+}
+function setChangedContent(obj) {
+   obj.style.border = "solid red 1pt";
+   var box = document.getElementById('changedContent');
+   box.value='true';
+}
+
