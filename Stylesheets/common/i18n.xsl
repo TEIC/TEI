@@ -44,9 +44,9 @@
        <xsl:for-each select="document('../i18n.xml',document(''))">
 	 <xsl:choose>
 	   <xsl:when
-	       test="key('KEYS',normalize-space($word))/text[@xml:lang=$lang]">
+	       test="key('KEYS',normalize-space($word))/text[@xml:lang=$documentationLanguage]">
 	     <xsl:value-of
-		 select="key('KEYS',normalize-space($word))/text[@xml:lang=$lang]"/>
+		 select="key('KEYS',normalize-space($word))/text[@xml:lang=$documentationLanguage]"/>
 	   </xsl:when>
 	   <xsl:otherwise>
 	     <xsl:value-of select="$word"/>

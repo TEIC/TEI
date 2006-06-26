@@ -1247,6 +1247,14 @@
       </xsl:choose>
     </xsl:variable>
     <xsl:choose>
+      <xsl:when test="self::tei:classSpec and not(@ident='att.global') and
+		      count(key('CLASSMEMBERS',@ident))=0">
+    <xsl:if test="$verbose='true'">
+      <xsl:message> class <xsl:value-of select="@ident"/> omitted as it has no members
+      </xsl:message>
+    </xsl:if>
+
+      </xsl:when>
       <xsl:when test="$splitLevel=-1">
         <h2>
           <a name="{@ident}"/>
@@ -1389,4 +1397,26 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+<xsl:template match="tei:divGen[@type='odds']">
+  <ul>
+  <xsl:for-each
+      select=".//tei:classSpec|.//tei:macroSpec|.//tei:elementSpec">
+    <xsl:variable name="loc">
+      <xsl:choose>
+      <xsl:when test="$splitLevel=-1">
+	<xsl:text>#</xsl:text>
+	<xsl:value-of select="@ident"/>
+      </xsl:when>
+      <xsl:otherwise> 
+	<xsl:text>ref-</xsl:text>
+	<xsl:value-of select="@ident"/>
+	<xsl:text>.html</xsl:text>
+      </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+      <li><a href="{$loc}"><xsl:value-of select="@ident"/></a></li>
+  </xsl:for-each>
+  </ul>
+</xsl:template>
 </xsl:stylesheet>
