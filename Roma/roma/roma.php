@@ -1248,10 +1248,10 @@ class roma
 
 	switch( $_REQUEST[ 'format' ] )
 	  {
-	  case 'dvi':
-	    $szError = $this->m_oRomaDom->outputDVI( $szDoc );
-	    $szEnding = 'dvi';
-	    break;
+//	  case 'dvi':
+//	    $szError = $this->m_oRomaDom->outputDVI( $szDoc );
+//	    $szEnding = 'dvi';
+//	    break;
 	  case 'pdfLatex':
 	    $szError = $this->m_oRomaDom->outputPdfLatex( $szDoc );
 	    $szEnding = 'pdf';
@@ -1414,7 +1414,7 @@ class roma
 	      }
           }
 // description
-        if ($_REQUEST[ 'changedDesc' ] = 'true')  {
+        if ($_REQUEST[ 'changedDesc' ] == 'true')  {
 	$this->m_oRomaDom->changeElementDescInModule( $_REQUEST[ 'name' ], $_REQUEST[ 'module' ], $_REQUEST[ 'description' ] );
 	
 	 }
@@ -1445,7 +1445,7 @@ class roma
 }
 
 // content model
-        if ($_REQUEST[ 'changedContent' ] = 'true')  {
+        if ($_REQUEST[ 'changedContent' ] == 'true')  {
 
 	try {
 	  $this->m_oRomaDom->changeElementContentsInModule( $_REQUEST[ 'name' ], $_REQUEST[ 'module' ], $_REQUEST[ 'content' ] );
