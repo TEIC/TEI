@@ -475,10 +475,8 @@
   <xsl:template match="tei:item" mode="gloss">
     <dt>
       <xsl:call-template name="makeAnchor"/>
-      <strong>
         <xsl:apply-templates mode="print"
           select="preceding-sibling::tei:label[1]"/>
-      </strong>
     </dt>
     <dd>
       <xsl:apply-templates/>
@@ -1583,7 +1581,7 @@
   </xsl:template>
 
   <xsl:template name="printNotes">
-    <xsl:if test="descendant::tei:note[@place!='inline']">
+    <xsl:if test="ancestor-or-self::tei:TEI/tei:text/descendant::tei:note[@place!='inline']">
       <xsl:choose>
         <xsl:when test="$footnoteFile='true'">
           <xsl:variable name="BaseFile">
