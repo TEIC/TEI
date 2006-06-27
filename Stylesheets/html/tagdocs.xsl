@@ -1398,25 +1398,4 @@
     </xsl:choose>
   </xsl:template>
 
-<xsl:template match="tei:divGen[@type='odds']">
-  <ul>
-  <xsl:for-each
-      select=".//tei:classSpec|.//tei:macroSpec|.//tei:elementSpec">
-    <xsl:variable name="loc">
-      <xsl:choose>
-      <xsl:when test="$splitLevel=-1">
-	<xsl:text>#</xsl:text>
-	<xsl:value-of select="@ident"/>
-      </xsl:when>
-      <xsl:otherwise> 
-	<xsl:text>ref-</xsl:text>
-	<xsl:value-of select="@ident"/>
-	<xsl:text>.html</xsl:text>
-      </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-      <li><a href="{$loc}"><xsl:value-of select="@ident"/></a></li>
-  </xsl:for-each>
-  </ul>
-</xsl:template>
 </xsl:stylesheet>

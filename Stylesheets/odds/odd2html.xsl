@@ -338,4 +338,57 @@
 <dd><b>DELETED</b></dd>
 </xsl:template>
 
+<xsl:template match="tei:divGen[@type='toc']">
+
+<xsl:call-template name="maintoc"/>
+
+<div><b>Classes:</b>
+  <ul>
+    <xsl:for-each
+	select="ancestor-or-self::tei:text//tei:classSpec">
+    <xsl:sort select="@id"/>
+    <xsl:call-template name="oddTocEntry"/>
+    </xsl:for-each>
+  </ul>
+</div>
+
+<div><b>Elements:</b>
+  <ul>
+    <xsl:for-each
+	select="ancestor-or-self::tei:text//tei:elementSpec">
+    <xsl:sort select="@id"/>
+    <xsl:call-template name="oddTocEntry"/>
+    </xsl:for-each>
+  </ul>
+</div>
+
+<div><b>Macros:</b>
+  <ul>
+    <xsl:for-each
+	select="ancestor-or-self::tei:text//tei:macroSpec">
+    <xsl:sort select="@id"/>
+    <xsl:call-template name="oddTocEntry"/>
+    </xsl:for-each>
+  </ul>
+</div>
+
+</xsl:template>
+
+<xsl:template name="oddTocEntry">
+    <xsl:variable name="loc">
+      <xsl:choose>
+      <xsl:when test="$splitLevel=-1">
+	<xsl:text>#</xsl:text>
+	<xsl:value-of select="@ident"/>
+      </xsl:when>
+      <xsl:otherwise> 
+	<xsl:text>ref-</xsl:text>
+	<xsl:value-of select="@ident"/>
+	<xsl:text>.html</xsl:text>
+      </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+      <li><a href="{$loc}"><xsl:value-of select="@ident"/></a></li>
+</xsl:template>
+
 </xsl:stylesheet>
