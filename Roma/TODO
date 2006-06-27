@@ -1,0 +1,51 @@
+
+1. The "Filename" field on the customization page seems to accept
+   most anything typed there. Entering strings that have slashes,
+   back slashes colons, or whitespace are all likely to cause
+   problems on some system or other for the filename. But moreover,
+   this value is the value of ident= of <schemaSpec>, and therefore
+   has to be a data.name, i.e. an xsd:Name. It should be checked
+   immediately when the user clicks "Submit" on the "Customize your
+   customization" page. (Similarly the new "Prefix for TEI pattern
+   names in schema" field.)
+
+2. On the page for editing attributes (also used for adding a new
+   attribute, and thus I gather named "Add some attributes") the
+   "List of values" field has similar problems. It permits anything
+   to be entered, the result of which may not be at all what the user
+   intended, and often results in an invalid ODD file. More on the
+   datatype problems here in a subsequent mailpiece. But for now, I
+   think Roma should do something a bit more intelligent. The
+   error-checking should occur up front. My first-cut suggestion is: 
+   * a value stuck onto ident= of <valItem> and thus into the
+     schema should be an xsd:Name.
+   * Roma should either
+     - parse the string the user sticks in on any non-xsd:Name
+       characters (I.e., "red, white,and blue are the colors/of
+       the Union,Jack!" should result in
+          red     white  and
+          blue    are    the
+          colors  of     the
+          Union   Jack
+       with no errors.)
+     - expect a whitespace-separated string of xsd:Names, and
+       complain if there's anything else (I.e. the above string
+       gives an error, as does "This is 4you"; whereas "This is
+       for you" results in
+          This  is  for  you
+       with no errors.)
+
+3. (Non-Roma.) The content model for <div> is seriously screwed up.
+   (Besides the issues raised on TEI-L, it permits a <p> before a
+   <head>.) I will not have a chance to look at it today, but I hope
+   to tomorrow.
+
+4. A *lot* more on-screen documentation is in order. (E.g., the
+   existence of both the the drop-down menu and the type-in box in
+   the "Contents" field of the "Add Element" page seems quite
+   confusing. I can perhaps provide more examples later, but gotta go
+   now.)
+
+5. I doubt you can fix it, but everyone complains about losing stuff
+   when after having slected elements on the "Change module" page,
+   and clicking something other than "Submit Query".
