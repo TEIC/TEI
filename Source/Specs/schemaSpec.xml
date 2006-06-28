@@ -16,7 +16,7 @@ $Author$
     <memberOf key="att.identified"/>
   </classes>
   <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:group>
     <rng:ref name="macro.glossSeq"/>
     <rng:zeroOrMore>
       <rng:choice>
@@ -28,22 +28,13 @@ $Author$
     </rng:group>
   </content>
   <attList>  
-    <attDef ident="type" usage="opt">
-      <equiv/>
-      <desc>type of schema</desc>
-      <datatype>
-	<rng:ref name="data.namespace" xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
-      </datatype>
-    </attDef>
     <attDef ident="start" usage="opt">
       <equiv/>
-      <desc>specifies entry points to the schema, i.e. which
-      elements  are allowed to be used as  the root of
-      documents conforming to it. </desc>
+      <desc>specifies entry points to the schema, i.e. which elements
+      are allowed to be used as the root of documents conforming to
+      it. </desc>
       <datatype>
-	<rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
-          <rng:zeroOrMore><rng:ref name="data.name"/></rng:zeroOrMore>
-        </rng:list>
+	<rng:ref name="data.names"/>
       </datatype>
       <defaultVal>TEI</defaultVal>
     </attDef>
@@ -52,7 +43,7 @@ $Author$
       <desc>specifies the default namespace (if any) applicable to
       components of the schema.</desc>
       <datatype>
-	<rng:ref name="data.namespace" xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+	<rng:ref name="data.namespace"/>
       </datatype>
       <defaultVal>http://www.tei-c.org/ns/1.0</defaultVal>
     </attDef>
@@ -63,8 +54,12 @@ $Author$
       which have elements of the same names as the TEI.
       </desc>
       <datatype>
-	<rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+	<rng:ref name="data.name"/>
       </datatype>
+      <remarks>
+	<p>Colons, although permitted inside the value, will cause in
+	invalid schema to be generated.</p>
+      </remarks>
     </attDef>
     <attDef ident="targetLang" usage="opt">
       <equiv/>
@@ -73,23 +68,23 @@ $Author$
       in more than one language, specifies which language to
       use when creating the objects in a schema.</desc>
       <datatype>
-	<rng:ref name="data.language" xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+	<rng:ref name="data.language"/>
       </datatype>
     </attDef>
     <attDef ident="docLang" usage="opt">
       <equiv/>
-      <desc>Where descritions for an element, attribute, class or macro
+      <desc>Where the descrition for an element, attribute, class or macro
       is available in more than one language, specifies which languages to
       use when creating documentation.</desc>
       <datatype>
-	<rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	<rng:list>
 	  <rng:ref name="data.language" />
 	</rng:list>
       </datatype>
     </attDef>
   </attList>
   <remarks>
-    <p>A schema combines references to  modules or specification
+    <p>A schema combines references to modules or specification
     groups with other atomic declarations. The processing of a
     schema element must resolve any conflicts amongst the declarations
     it contains or references. Different ODD processors may generate
