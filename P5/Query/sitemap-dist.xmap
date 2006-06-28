@@ -23,12 +23,21 @@
   <map:pipelines>		
     <map:pipeline>	
       
-     <map:match pattern="tag.xq">
-	<map:generate src="tag.xq" type="xquery"/>
-	<map:transform type="xinclude"/>
-	<map:transform 
-	 src="file:///usr/share/xml/tei/stylesheet/teic/odd2htmlfragment.xsl"/>
-	<map:serialize encoding="UTF-8" type="html"/> 
+      <map:match pattern="tag.xq">
+	<map:select type="request">
+	  <map:parameter name="parameter-name" value="style"/>
+	  <map:when test="tei">
+	    <map:generate src="tag.xq" type="xquery"/>
+	    <map:serialize encoding="UTF-8" type="xml"/> 
+	  </map:when>
+	  <map:otherwise>
+	    <map:generate src="tag.xq" type="xquery"/>
+	    <map:transform type="xinclude"/>
+	    <map:transform 
+		src="file:///usr/share/xml/tei/stylesheet/teic/odd2htmlfragment.xsl"/>
+	    <map:serialize encoding="UTF-8" type="html"/> 
+	  </map:otherwise>
+	</map:select>
       </map:match> 
 
      <map:match pattern="class.xq">
