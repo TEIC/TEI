@@ -222,10 +222,10 @@ dist-schema: schemas dtds oddschema
 	ln -s tei-p5-schema tei-p5-schema-`cat ../VERSION` ; \
 	zip -r tei-p5-schema-`cat ../VERSION`.zip tei-p5-schema-`cat ../VERSION` )
 
-dist-doc:  html
+dist-doc:  html-web
 	rm -rf release/tei-p5-doc*
 	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc/html
-	(cd Guidelines; tar --exclude .svn -c -f - . ) \
+	(cd Guidelines-web; tar --exclude .svn -c -f - . ) \
 	| (cd release/tei-p5-doc/share/doc/tei-p5-doc/html; tar xf - )
 	for i in ReleaseNotes/readme*xml; do  \
 	xsltproc \
