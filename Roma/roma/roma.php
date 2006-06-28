@@ -1433,15 +1433,6 @@ class roma
 	  
 	$this->m_oRomaDom->replaceElementsClassesInModule( $_REQUEST[ 'name' ], $_REQUEST[ 'module' ], $aszClasses );
 
-	if( !  $errResult )
-	  {
-	    //notam
-	    $oNotam = new notam();
-	    $oNotam->setHeadline( 'Element ' . $_REQUEST[ 'name' ] . ' changed' );
-	    $oNotam->setMessage( roma_message_changedElement );
-	    $oNotam->setStatus( notam_status_success );
-	    $oNotam->addNotam();
-	  }
 }
 
 // content model
@@ -1465,6 +1456,17 @@ class roma
 	  }
 
 	  }
+
+	if( !  $errResult )
+	  {
+	    //notam
+	    $oNotam = new notam();
+	    $oNotam->setHeadline( 'Element ' . $_REQUEST[ 'name' ] . ' changed' );
+	    $oNotam->setMessage( roma_message_changedElement );
+	    $oNotam->setStatus( notam_status_success );
+	    $oNotam->addNotam();
+	  }
+
 	return $errResult;
 
       }

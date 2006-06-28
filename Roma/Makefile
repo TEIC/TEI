@@ -10,6 +10,7 @@ FILES=ChangeLog \
 	resource \
 	roma \
 	roma.sh \
+	roma.1 \
 	roma.css \
 	roma.js \
 	startroma.php \
