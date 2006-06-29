@@ -343,33 +343,33 @@
 <xsl:call-template name="maintoc"/>
 
 <div><b>Classes:</b>
-  <ul>
+  <div class="oddToc">
     <xsl:for-each
 	select="ancestor-or-self::tei:text//tei:classSpec">
     <xsl:sort select="@id"/>
     <xsl:call-template name="oddTocEntry"/>
     </xsl:for-each>
-  </ul>
+  </div>
 </div>
 
 <div><b>Elements:</b>
-  <ul>
+  <div class="oddToc">
     <xsl:for-each
 	select="ancestor-or-self::tei:text//tei:elementSpec">
     <xsl:sort select="@id"/>
     <xsl:call-template name="oddTocEntry"/>
     </xsl:for-each>
-  </ul>
+  </div>
 </div>
 
 <div><b>Macros:</b>
-  <ul>
+  <div class="oddToc">
     <xsl:for-each
 	select="ancestor-or-self::tei:text//tei:macroSpec">
     <xsl:sort select="@id"/>
     <xsl:call-template name="oddTocEntry"/>
     </xsl:for-each>
-  </ul>
+  </div>
 </div>
 
 </xsl:template>
@@ -388,7 +388,11 @@
       </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-      <li><a href="{$loc}"><xsl:value-of select="@ident"/></a></li>
+    <div class="oddTocEntry">
+      <a href="{$loc}">
+	<xsl:value-of select="@ident"/>
+      </a>
+    </div>
 </xsl:template>
 
 </xsl:stylesheet>
