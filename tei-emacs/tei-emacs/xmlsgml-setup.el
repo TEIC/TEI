@@ -398,6 +398,7 @@ encoding attribute
   (list "TEI"
 	(list "Insert skeleton TEI files"
 ["TEI all modules" (tei-file-skeleton "/custom/templates/tei_all.xml" "/custom/schema/relaxng/tei_all.rnc") t ]
+["TEI Lite" (tei-file-skeleton "/custom/templates/teilite.xml" "/custom/schema/relaxng/teilite.rnc") t ]
 ["TEI corpus" (tei-file-skeleton "/custom/templates/tei_corpus.xml" "/custom/schema/relaxng/tei_corpus.rnc") t ]
 ["TEI dictionary" (tei-file-skeleton "/custom/templates/tei_dictionaries.xml" "/custom/schema/relaxng/tei_dictionaries.rnc") t ]
 ["TEI drama" (tei-file-skeleton "/custom/templates/tei_drama.xml" "/custom/schema/relaxng/tei_drama.rnc") t ]
