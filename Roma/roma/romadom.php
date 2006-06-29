@@ -872,6 +872,7 @@ class romaDom extends domDocument
 	case 'ja'    : $szLanguage='ja'; break;
 	default: $szLanguage='en'; break;
       }
+      }
 
     public function getOddLanguage( &$szOddLanguage )
       {
