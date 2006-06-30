@@ -31,64 +31,62 @@
  #
 -->
 <xsl:stylesheet
-    version="1.0"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0"
-    xmlns:dc="http://purl.org/dc/elements/1.1/"
-    xmlns:dom="http://www.w3.org/2001/xml-events"
-    xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0"
-    xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0"
-    xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"
-    xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0"
-    xmlns:math="http://www.w3.org/1998/Math/MathML"
-    xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0"
-    xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0"
-    xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
-    xmlns:ooo="http://openoffice.org/2004/office"
-    xmlns:oooc="http://openoffice.org/2004/calc"
-    xmlns:ooow="http://openoffice.org/2004/writer"
-    xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0"
-    xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0"
-    xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0"
-    xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0"
-    xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
-    xmlns:xforms="http://www.w3.org/2002/xforms"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="http://www.tei-c.org/ns/1.0"
-    office:version="1.0"
-    exclude-result-prefixes="office style text table draw fo xlink dc meta number svg chart dr3d math form script ooo ooow oooc dom xforms xsd xsi"
->
+  exclude-result-prefixes="office style text table draw fo xlink dc meta number svg chart dr3d math form script ooo ooow oooc dom xforms xsd xsi"
+  office:version="1.0" version="1.0" xmlns="http://www.tei-c.org/ns/1.0"
+  xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:dom="http://www.w3.org/2001/xml-events"
+  xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0"
+  xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0"
+  xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"
+  xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0"
+  xmlns:math="http://www.w3.org/1998/Math/MathML"
+  xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0"
+  xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0"
+  xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
+  xmlns:ooo="http://openoffice.org/2004/office"
+  xmlns:oooc="http://openoffice.org/2004/calc"
+  xmlns:ooow="http://openoffice.org/2004/writer"
+  xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0"
+  xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0"
+  xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0"
+  xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0"
+  xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
+  xmlns:xforms="http://www.w3.org/2002/xforms"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-  <xsl:key name="headchildren" match="text:p | text:alphabetical-index
-| table:table | text:span | office:annotation |
-text:list | text:footnote | text:a | text:list-item |
+  <xsl:key
+    match="text:p | text:alphabetical-index
+| table:table | text:span | office:annotation | text:ordered-list
+| text:list | text:footnote | text:a | text:list-item |
 draw:plugin | draw:text-box | text:footnote-body | text:section"
-use="generate-id((..|preceding-sibling::text:h[@text:outline-level='1']|preceding-sibling::text:h[@text:outline-level='2']|preceding-sibling::text:h[@text:outline-level='3']|preceding-sibling::text:h[@text:outline-level='4']|preceding-sibling::text:h[@text:outline-level='5'])[last()])"/>
+    name="headchildren"
+    use="generate-id((..|preceding-sibling::text:h[@text:outline-level='1']|preceding-sibling::text:h[@text:outline-level='2']|preceding-sibling::text:h[@text:outline-level='3']|preceding-sibling::text:h[@text:outline-level='4']|preceding-sibling::text:h[@text:outline-level='5'])[last()])"/>
 
-  <xsl:key name="children" match="text:h[@text:outline-level='2']"
-use="generate-id(preceding-sibling::text:h[@text:outline-level='1'][1])"/>
+  <xsl:key match="text:h[@text:outline-level='2']" name="children"
+    use="generate-id(preceding-sibling::text:h[@text:outline-level='1'][1])"/>
 
-  <xsl:key name="children" match="text:h[@text:outline-level='3']"
-use="generate-id(preceding-sibling::text:h[@text:outline-level='2' or
+  <xsl:key match="text:h[@text:outline-level='3']" name="children"
+    use="generate-id(preceding-sibling::text:h[@text:outline-level='2' or
 @text:outline-level='1'][1])"/>
 
-  <xsl:key name="children" match="text:h[@text:outline-level='4']"
-use="generate-id(preceding-sibling::text:h[@text:outline-level='3' or
+  <xsl:key match="text:h[@text:outline-level='4']" name="children"
+    use="generate-id(preceding-sibling::text:h[@text:outline-level='3' or
 @text:outline-level='2' or @text:outline-level='1'][1])"/>
 
-  <xsl:key name="children" match="text:h[@text:outline-level='5']"
-use="generate-id(preceding-sibling::text:h[@text:outline-level='4' or
+  <xsl:key match="text:h[@text:outline-level='5']" name="children"
+    use="generate-id(preceding-sibling::text:h[@text:outline-level='4' or
 @text:outline-level='3' or @text:outline-level='2' or @text:outline-level='1'][1])"/>
 
-  <xsl:key name="secondary_children" 
-	   match="text:p[@text:style-name='Index 2']"
-	   use="generate-id(preceding-sibling::text:p[@text:style-name='Index 1'][1])"/>
+  <xsl:key match="text:p[@text:style-name='Index 2']" name="secondary_children"
+    use="generate-id(preceding-sibling::text:p[@text:style-name='Index 1'][1])"/>
 
-  <xsl:key name="STYLES" match="style:style" use="@style:name"/>
+  <xsl:key match="style:style" name="STYLES" use="@style:name"/>
 
-  <xsl:key name="Headings" match="text:h" use="text:outline-level"/>
+  <xsl:key match="text:h" name="Headings" use="text:outline-level"/>
 
   <xsl:param name="META" select="/"/>
 
@@ -98,8 +96,11 @@ use="generate-id(preceding-sibling::text:h[@text:outline-level='4' or
 
   <xsl:variable name="document-title">
     <xsl:choose>
-      <xsl:when test="/office:document-content/office:body/office:text/text:p[@text:style-name='Title']">
-        <xsl:value-of select="/office:document-content/office:body/office:text/text:p[@text:style-name='Title'][1]"/>
+      <xsl:when
+        test="/office:document-content/office:body/office:text/text:p[@text:style-name='Title']">
+        <xsl:value-of
+          select="/office:document-content/office:body/office:text/text:p[@text:style-name='Title'][1]"
+        />
       </xsl:when>
       <xsl:when test="/office:document/office:meta/dc:title">
         <xsl:value-of select="/office:document/office:meta/dc:title"/>
@@ -111,32 +112,32 @@ use="generate-id(preceding-sibling::text:h[@text:outline-level='4' or
   </xsl:variable>
 
 
-<xsl:template match="/office:document">
+  <xsl:template match="/office:document">
     <xsl:for-each select="descendant::text:variable-decl">
       <xsl:variable name="name">
         <xsl:value-of select="@text:name"/>
       </xsl:variable>
       <xsl:if test="contains(@text:name,'entitydecl')">
-	<xsl:text disable-output-escaping="yes">&lt;!DOCTYPE TEI [
+        <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE TEI [
 	</xsl:text>
-	<xsl:text disable-output-escaping="yes">&lt;!ENTITY </xsl:text>
-	<xsl:value-of select="substring-after(@text:name,'entitydecl_')"/>
-	<xsl:text> &quot;</xsl:text>
-	<xsl:value-of select="/descendant::text:variable-set[@text:name= $name][1]"/>
-	<xsl:text disable-output-escaping="yes">&quot;&gt;</xsl:text>
-	<xsl:text disable-output-escaping="yes">]&gt;</xsl:text>
+        <xsl:text disable-output-escaping="yes">&lt;!ENTITY </xsl:text>
+        <xsl:value-of select="substring-after(@text:name,'entitydecl_')"/>
+        <xsl:text> &quot;</xsl:text>
+        <xsl:value-of
+          select="/descendant::text:variable-set[@text:name= $name][1]"/>
+        <xsl:text disable-output-escaping="yes">&quot;&gt;</xsl:text>
+        <xsl:text disable-output-escaping="yes">]&gt;</xsl:text>
       </xsl:if>
     </xsl:for-each>
 
-    <TEI
-	xml:lang="{normalize-space(/office:document/office:meta/dc:language)}">
+    <TEI xml:lang="{normalize-space(/office:document/office:meta/dc:language)}">
       <xsl:call-template name="teiHeader"/>
       <xsl:apply-templates/>
     </TEI>
   </xsl:template>
 
 
-<xsl:template match="text:variable-set|text:variable-get">
+  <xsl:template match="text:variable-set|text:variable-get">
     <xsl:choose>
       <xsl:when test="contains(@text:style-name,'entitydecl')">
         <xsl:text disable-output-escaping="yes">&amp;</xsl:text>
@@ -144,104 +145,114 @@ use="generate-id(preceding-sibling::text:h[@text:outline-level='4' or
         <xsl:text disable-output-escaping="yes">;</xsl:text>
       </xsl:when>
     </xsl:choose>
-</xsl:template>
+  </xsl:template>
 
-<xsl:template name="teiHeader">
-  <teiHeader >
-    <fileDesc>
-      <titleStmt>
-	<title>
-	  <xsl:value-of select="$document-title"/>
-	</title>
-	<author>
-	  <xsl:value-of select="/office:document/office:meta/meta:initial-creator"/>
-	</author>
-      </titleStmt>
-      <editionStmt>
-	<edition>
-	  <date>
-	    <xsl:value-of select="/office:document/office:meta/meta:creation-date"/>
-	  </date>
-	</edition>
-      </editionStmt>
-      <publicationStmt>
-	<authority></authority>
-      </publicationStmt>
-      <sourceDesc>
-	<p><xsl:apply-templates select="/office:document/office:meta/meta:generator"/>Written by OpenOffice</p>
-      </sourceDesc>
-    </fileDesc>
-    <profileDesc>
-      <langUsage>
-	<language>
-	  <xsl:attribute name="id">
-	    <xsl:value-of
-		select="/office:document/office:meta/dc:language"/>
-	  </xsl:attribute>
-	  <xsl:value-of select="/office:document/office:meta/dc:language"/>
-	</language>
-      </langUsage>
-      <xsl:if test="/office:document/office:meta/meta:keyword">
-	<textClass>
-	  <keywords>
-	    <list>
-	      <xsl:for-each select="/office:document/office:meta/meta:keyword">
-		<item>
-		  <xsl:value-of select="."/>
-		</item>
-	      </xsl:for-each>
-	    </list>
-	  </keywords>
-	</textClass>
-      </xsl:if>
-    </profileDesc>
-    <revisionDesc>
-      <change>
-	<date> <xsl:apply-templates select="/office:document/office:meta/dc:date"/></date>
-	<respStmt>
-	  <name> <xsl:apply-templates select="/office:document/office:meta/dc:creator"/></name>
-	</respStmt>
-	<item>revision</item>
+  <xsl:template name="teiHeader">
+    <teiHeader>
+      <fileDesc>
+        <titleStmt>
+          <title>
+            <xsl:value-of select="$document-title"/>
+          </title>
+          <author>
+            <xsl:value-of
+              select="/office:document/office:meta/meta:initial-creator"/>
+          </author>
+        </titleStmt>
+        <editionStmt>
+          <edition>
+            <date>
+              <xsl:value-of
+                select="/office:document/office:meta/meta:creation-date"/>
+            </date>
+          </edition>
+        </editionStmt>
+        <publicationStmt>
+          <authority/>
+        </publicationStmt>
+        <sourceDesc>
+          <p><xsl:apply-templates
+              select="/office:document/office:meta/meta:generator"/>Written by
+            OpenOffice</p>
+        </sourceDesc>
+      </fileDesc>
+      <profileDesc>
+        <langUsage>
+          <language>
+            <xsl:attribute name="id">
+              <xsl:value-of select="/office:document/office:meta/dc:language"/>
+            </xsl:attribute>
+            <xsl:value-of select="/office:document/office:meta/dc:language"/>
+          </language>
+        </langUsage>
+        <xsl:if test="/office:document/office:meta/meta:keyword">
+          <textClass>
+            <keywords>
+              <list>
+                <xsl:for-each select="/office:document/office:meta/meta:keyword">
+                  <item>
+                    <xsl:value-of select="."/>
+                  </item>
+                </xsl:for-each>
+              </list>
+            </keywords>
+          </textClass>
+        </xsl:if>
+      </profileDesc>
+      <revisionDesc>
+        <change>
+          <date>
+            <xsl:apply-templates select="/office:document/office:meta/dc:date"/>
+          </date>
+          <respStmt>
+            <name>
+              <xsl:apply-templates
+                select="/office:document/office:meta/dc:creator"/>
+            </name>
+          </respStmt>
+          <item>revision</item>
         </change>
-    </revisionDesc>
+      </revisionDesc>
     </teiHeader>
-</xsl:template>
+  </xsl:template>
 
 
 
-<xsl:template match="/office:document/office:body">
-  <text>
-    <xsl:apply-templates/>
-  </text>
-</xsl:template>
+  <xsl:template match="/office:document/office:body">
+    <text>
+      <xsl:apply-templates/>
+    </text>
+  </xsl:template>
 
-<xsl:template match="office:text">
-  <body>
-    <xsl:apply-templates select="key('headchildren', generate-id())"/>
+  <xsl:template match="office:text">
+    <body>
+      <xsl:apply-templates select="key('headchildren', generate-id())"/>
+      <xsl:choose>
+        <xsl:when test="text:h[@text:outline-level='1']">
+          <xsl:apply-templates select="text:h[@text:outline-level='1']"/>
+        </xsl:when>
+        <xsl:when test="text:h[@text:outline-level='2']">
+          <xsl:apply-templates select="text:h[@text:outline-level='2']"/>
+        </xsl:when>
+        <xsl:when test="text:h[@text:outline-level='3']">
+          <xsl:apply-templates select="text:h[@text:outline-level='3']"/>
+        </xsl:when>
+      </xsl:choose>
+
+      <!-- output <div> to catchup and close document -->
+      <xsl:call-template name="closedivloop">
+        <xsl:with-param name="repeat"
+          select="text:h[@text:outline-level][last()]/@text:outline-level - 1"/>
+      </xsl:call-template>
+    </body>
+  </xsl:template>
+
+  <!-- sections -->
+  <xsl:template match="text:h">
     <xsl:choose>
-      <xsl:when test="text:h[@text:outline-level='1']">
-	<xsl:apply-templates
-	    select="text:h[@text:outline-level='1']"/>
-      </xsl:when>
-      <xsl:when test="text:h[@text:outline-level='2']">
-	<xsl:apply-templates
-	    select="text:h[@text:outline-level='2']"/>
-      </xsl:when>
-      <xsl:when test="text:h[@text:outline-level='3']">
-	<xsl:apply-templates
-	    select="text:h[@text:outline-level='3']"/>
-      </xsl:when>
-    </xsl:choose>
-  </body>
-</xsl:template>
-
-<!-- sections -->
-<xsl:template match="text:h">
-    <xsl:choose>
-      <xsl:when test="@text:style-name='ArticleInfo'">
-      </xsl:when>
+      <xsl:when test="@text:style-name='ArticleInfo'"> </xsl:when>
       <xsl:when test="@text:style-name='Abstract'">
-        <div type="abstract" >
+        <div type="abstract">
           <xsl:apply-templates/>
         </div>
       </xsl:when>
@@ -253,7 +264,6 @@ use="generate-id(preceding-sibling::text:h[@text:outline-level='4' or
       <xsl:otherwise>
         <xsl:variable name="sectvar">
           <xsl:text>div</xsl:text>
-  <!--          <xsl:value-of select="count(ancestor::text:section)+1"/>-->
         </xsl:variable>
         <xsl:variable name="idvar">
           <xsl:text> id=&quot;</xsl:text>
@@ -273,10 +283,10 @@ use="generate-id(preceding-sibling::text:h[@text:outline-level='4' or
   </xsl:template>
 
 
-<xsl:template match="text:h[@text:outline-level='1']">
+  <xsl:template match="text:h[@text:outline-level='1']">
     <xsl:choose>
       <xsl:when test=".='Abstract'">
-        <div  type="abstract">
+        <div type="abstract">
           <xsl:apply-templates select="key('headchildren', generate-id())"/>
           <xsl:apply-templates select="key('children', generate-id())"/>
         </div>
@@ -291,156 +301,180 @@ use="generate-id(preceding-sibling::text:h[@text:outline-level='4' or
   </xsl:template>
 
 
-<xsl:template match="text:h[@text:outline-level='2'] | text:h[@text:outline-level='3']| text:h[@text:outline-level='4'] | text:h[@text:outline-level='5']">
+  <xsl:template
+    match="text:h[@text:outline-level='2'] | text:h[@text:outline-level='3']| text:h[@text:outline-level='4'] | text:h[@text:outline-level='5']">
     <xsl:variable name="level">
       <xsl:value-of select="@text:outline-level"/>
     </xsl:variable>
+    <xsl:variable name="prelevel">
+      <xsl:value-of select="preceding::text:h[$level][1]/@text:outline-level "/>
+    </xsl:variable>
+    <xsl:if test="not($level &gt; $prelevel)">
+      <xsl:call-template name="closedivloop">
+        <xsl:with-param name="repeat" select="$prelevel - $level + 1"/>
+      </xsl:call-template>
+    </xsl:if>
     <xsl:if test="not(normalize-space(.)='')">
-    <xsl:call-template name="make-section">
-      <xsl:with-param name="current" select="$level"/>
-      <xsl:with-param name="prev" select="preceding-sibling::text:h[@text:outline-level &lt; $level][1]/@text:outline-level "/>
-    </xsl:call-template>
-  </xsl:if>
-</xsl:template>
+      <xsl:call-template name="make-section">
+        <xsl:with-param name="current" select="$level"/>
+        <xsl:with-param name="prev"
+          select="preceding-sibling::text:h[@text:outline-level &lt; $level][1]/@text:outline-level "
+        />
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
 
 
-<xsl:template name="make-section">
+  <xsl:template name="closedivloop">
+    <xsl:param name="repeat">0</xsl:param>
+    <xsl:if test="number($repeat) >= 1">
+      <xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
+      <xsl:call-template name="closedivloop">
+        <xsl:with-param name="repeat" select="$repeat - 1"/>
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
+
+
+  <xsl:template name="make-section">
     <xsl:param name="current"/>
     <xsl:param name="prev"/>
-    <div >
-      <!--
-<xsl:value-of select="@text:outline-level"/>, <xsl:value-of select="normalize-space(.)"/>:
-        <xsl:for-each select="key('children',generate-id())">
-<xsl:text>  </xsl:text><xsl:value-of select="@text:outline-level"/>, <xsl:value-of select="normalize-space(.)"/>;
-        </xsl:for-each>
--->
+    <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+
     <xsl:call-template name="id.attribute"/>
+
     <xsl:choose>
       <xsl:when test="$current &gt; $prev+1">
-          <head/>
-          <xsl:call-template name="make-section">
-            <xsl:with-param name="current" select="$current"/>
-            <xsl:with-param name="prev" select="$prev +1"/>
-          </xsl:call-template>
+        <head/>
+        <xsl:call-template name="make-section">
+          <xsl:with-param name="current" select="$current"/>
+          <xsl:with-param name="prev" select="$prev+1"/>
+        </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-	<head><xsl:apply-templates/></head>
-	<xsl:variable name="this">
-	  <xsl:value-of select="generate-id()"/>
-	</xsl:variable>
-	<xsl:for-each select="key('headchildren', $this)">
-	  <xsl:if test="not(parent::text:h)">
-	    <xsl:apply-templates select="."/>
-	  </xsl:if>
-	</xsl:for-each>
-	<xsl:apply-templates select="key('children', generate-id())"/>
+        <head>
+          <xsl:apply-templates/>
+        </head>
+        <xsl:variable name="this">
+          <xsl:value-of select="generate-id()"/>
+        </xsl:variable>
+        <xsl:for-each select="key('headchildren', $this)">
+          <xsl:if test="not(parent::text:h)">
+            <xsl:apply-templates select="."/>
+          </xsl:if>
+        </xsl:for-each>
+        <xsl:apply-templates select="key('children', generate-id())"/>
       </xsl:otherwise>
     </xsl:choose>
-    </div>
-</xsl:template>
 
+    <!-- outupt </div> -->
+    <xsl:if test="$current = 1">
+      <xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
+    </xsl:if>
 
-<!-- special case paragraphs -->
-<xsl:template match="text:p[@text:style-name='XMLComment']">
-  <xsl:comment>
-    <xsl:value-of select="."/>
-  </xsl:comment>
   </xsl:template>
-  
 
-<xsl:template match="text:p[@text:style-name]">
+  <!-- special case paragraphs -->
+  <xsl:template match="text:p[@text:style-name='XMLComment']">
+    <xsl:comment>
+      <xsl:value-of select="."/>
+    </xsl:comment>
+  </xsl:template>
+
+
+  <xsl:template match="text:p[@text:style-name]">
     <xsl:choose>
       <xsl:when test="@text:style-name='Document Title'">
-	<title>
-	  <xsl:apply-templates/>
-	</title>
+        <title>
+          <xsl:apply-templates/>
+        </title>
       </xsl:when>
       <xsl:when test="@text:style-name='Author'">
-	<author>
-	  <xsl:apply-templates/>
-	</author>
+        <author>
+          <xsl:apply-templates/>
+        </author>
       </xsl:when>
       <xsl:when test="@text:style-name='lg'">
-	<lg>
-	  <xsl:apply-templates/>
-	</lg>
+        <lg>
+          <xsl:apply-templates/>
+        </lg>
       </xsl:when>
       <xsl:when test="@text:style-name='Title'">
-	<title>
-	  <xsl:apply-templates/>
-	</title>
+        <title>
+          <xsl:apply-templates/>
+        </title>
       </xsl:when>
       <xsl:when test="@text:style-name='Date'">
-	<date>
-	  <xsl:apply-templates/>
-	</date>
+        <date>
+          <xsl:apply-templates/>
+        </date>
       </xsl:when>
       <xsl:when test="@text:style-name='Section Title'">
-	<head>
-	  <xsl:apply-templates/>
-	</head>
+        <head>
+          <xsl:apply-templates/>
+        </head>
       </xsl:when>
       <xsl:when test="@text:style-name='Appendix Title'">
-	<head>
-	  <xsl:apply-templates/>
-	</head>
+        <head>
+          <xsl:apply-templates/>
+        </head>
       </xsl:when>
       <xsl:when test="@text:style-name='Screen'">
-	<Screen>
-	  <xsl:apply-templates/>
-	</Screen>
+        <Screen>
+          <xsl:apply-templates/>
+        </Screen>
       </xsl:when>
       <xsl:when test="@text:style-name='Output'">
-	<Output>
-	  <xsl:apply-templates/>
-	</Output>
+        <Output>
+          <xsl:apply-templates/>
+        </Output>
       </xsl:when>
       <xsl:otherwise>
-	<p>
-	  <xsl:apply-templates/>
-	</p>
+        <p>
+          <xsl:apply-templates/>
+        </p>
       </xsl:otherwise>
     </xsl:choose>
-</xsl:template>
+  </xsl:template>
 
-<xsl:template match="office:annotation/text:p">'>
-  <note>
-    <remark>
-      <xsl:apply-templates/>
-    </remark>
-  </note>
-</xsl:template>
+  <xsl:template match="office:annotation/text:p">'> <note>
+      <remark>
+        <xsl:apply-templates/>
+      </remark>
+    </note>
+  </xsl:template>
 
 
-<!-- normal paragraphs -->
-<xsl:template match="text:p">
+  <!-- normal paragraphs -->
+  <xsl:template match="text:p">
     <xsl:choose>
       <xsl:when test="parent::text:list-item">
-	<xsl:call-template name="applyStyle"/>
+        <xsl:call-template name="applyStyle"/>
       </xsl:when>
       <xsl:when test="@text:style-name='Table'"/>
       <xsl:when test="normalize-space(.)=''"/>
       <xsl:when test="text:span[@text:style-name = 'XrefLabel']"/>
       <xsl:when test="@text:style-name='Speech'">
-	<sp>
-	  <speaker></speaker>
-	  <p>
-	    <xsl:call-template name="id.attribute"/>
-	    <xsl:call-template name="applyStyle"/>
-	    </p>
-          </sp>
-      </xsl:when>
-      <xsl:otherwise>
+        <sp>
+          <speaker/>
           <p>
             <xsl:call-template name="id.attribute"/>
             <xsl:call-template name="applyStyle"/>
           </p>
+        </sp>
+      </xsl:when>
+      <xsl:otherwise>
+        <p>
+          <xsl:call-template name="id.attribute"/>
+          <xsl:call-template name="applyStyle"/>
+        </p>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
-<!-- lists -->
-<xsl:template match="text:list">
+  <!-- lists -->
+  <xsl:template match="text:list">
     <xsl:choose>
       <xsl:when test="@text:style-name='Var List'">
         <list>
@@ -460,104 +494,108 @@ use="generate-id(preceding-sibling::text:h[@text:outline-level='4' or
     </xsl:choose>
   </xsl:template>
 
-<xsl:template match="text:list-header">
-  <head>
-    <xsl:apply-templates/>
-  </head>
-</xsl:template>
+  <xsl:template match="text:list-header">
+    <head>
+      <xsl:apply-templates/>
+    </head>
+  </xsl:template>
 
-<xsl:template match="text:list-item">
-  <xsl:choose>
-    <xsl:when test="parent::text:list/@text:style-name='Var List'">
-      <item>
-        <xsl:for-each select="text:p[@text:style-name='VarList Term']">
-          <xsl:apply-templates select="."/>
-        </xsl:for-each>
-      </item>
-    </xsl:when>
-    <xsl:otherwise>
-      <item >
-        <xsl:apply-templates/>
-      </item>
-    </xsl:otherwise>
-  </xsl:choose>
-</xsl:template>
+  <xsl:template match="text:list-item">
+    <xsl:choose>
+      <xsl:when test="parent::text:list/@text:style-name='Var List'">
+        <item>
+          <xsl:for-each select="text:p[@text:style-name='VarList Term']">
+            <xsl:apply-templates select="."/>
+          </xsl:for-each>
+        </item>
+      </xsl:when>
+      <xsl:otherwise>
+        <item>
+          <xsl:apply-templates/>
+        </item>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
 
-<xsl:template match="text:p[@text:style-name='VarList Item' or @text:style-name='List Contents']">
-    <xsl:if test="not(preceding-sibling::text:p[@text:style-name='VarList Item'])">
+  <xsl:template
+    match="text:p[@text:style-name='VarList Item' or @text:style-name='List Contents']">
+    <xsl:if
+      test="not(preceding-sibling::text:p[@text:style-name='VarList Item'])">
       <xsl:text disable-output-escaping="yes">&lt;item&gt;</xsl:text>
     </xsl:if>
     <xsl:apply-templates/>
-    <xsl:if test="not(following-sibling::text:p[@text:style-name='VarList Item'])">
+    <xsl:if
+      test="not(following-sibling::text:p[@text:style-name='VarList Item'])">
       <xsl:text disable-output-escaping="yes">&lt;/item&gt;</xsl:text>
     </xsl:if>
-  <xsl:variable name="next">
-    <xsl:for-each select="following-sibling::text:p[1]">
+    <xsl:variable name="next">
+      <xsl:for-each select="following-sibling::text:p[1]">
         <xsl:value-of select="@text:style-name"/>
-    </xsl:for-each>
-  </xsl:variable>
-<xsl:choose>
-    <xsl:when test="$next='VarList Term'"/>
-    <xsl:when test="$next='List Heading'"/>
-    <xsl:when test="$next='VarList Item'"/>
-    <xsl:when test="$next='List Contents'"/>
-    <xsl:otherwise>
-      <xsl:text disable-output-escaping="yes">&lt;/list&gt;</xsl:text>
-    </xsl:otherwise>
-  </xsl:choose>
+      </xsl:for-each>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$next='VarList Term'"/>
+      <xsl:when test="$next='List Heading'"/>
+      <xsl:when test="$next='VarList Item'"/>
+      <xsl:when test="$next='List Contents'"/>
+      <xsl:otherwise>
+        <xsl:text disable-output-escaping="yes">&lt;/list&gt;</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
 
-</xsl:template>
+  </xsl:template>
 
-<xsl:template match="text:p[@text:style-name='VarList Term' or @text:style-name='List Heading']">
-  <xsl:variable name="prev">
-    <xsl:for-each select="preceding-sibling::text:p[1]">
+  <xsl:template
+    match="text:p[@text:style-name='VarList Term' or @text:style-name='List Heading']">
+    <xsl:variable name="prev">
+      <xsl:for-each select="preceding-sibling::text:p[1]">
         <xsl:value-of select="@text:style-name"/>
-    </xsl:for-each>
-  </xsl:variable>
-  <xsl:choose>
-    <xsl:when test="$prev='VarList Term'"/>
-    <xsl:when test="$prev='List Heading'"/>
-    <xsl:when test="$prev='VarList Item'"/>
-    <xsl:when test="$prev='List Contents'"/>
-    <xsl:otherwise>
-          <xsl:text disable-output-escaping="yes">&lt;list type="gloss"&gt;</xsl:text>
-    </xsl:otherwise>
-  </xsl:choose>
+      </xsl:for-each>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$prev='VarList Term'"/>
+      <xsl:when test="$prev='List Heading'"/>
+      <xsl:when test="$prev='VarList Item'"/>
+      <xsl:when test="$prev='List Contents'"/>
+      <xsl:otherwise>
+        <xsl:text disable-output-escaping="yes">&lt;list type="gloss"&gt;</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
     <label>
       <xsl:apply-templates/>
     </label>
   </xsl:template>
 
-<!-- inline -->
+  <!-- inline -->
 
-<xsl:template match="text:span">
-  <xsl:variable name="Style">
-    <xsl:value-of select="@text:style-name"/>
-  </xsl:variable>
+  <xsl:template match="text:span">
+    <xsl:variable name="Style">
+      <xsl:value-of select="@text:style-name"/>
+    </xsl:variable>
     <xsl:choose>
       <xsl:when test="$Style='Emphasis'">
-        <emph >
+        <emph>
           <xsl:apply-templates/>
         </emph>
       </xsl:when>
       <xsl:when test="$Style='Underline'">
-        <hi rend="ul" >
+        <hi rend="ul">
           <xsl:apply-templates/>
         </hi>
       </xsl:when>
       <xsl:when test="$Style='SmallCaps'">
-        <hi rend="sc" >
+        <hi rend="sc">
           <xsl:apply-templates/>
         </hi>
       </xsl:when>
       <xsl:when test="$Style='Emphasis Bold'">
-        <hi >
+        <hi>
           <xsl:apply-templates/>
         </hi>
       </xsl:when>
       <xsl:when test="$Style='Highlight'">
-        <hi >
+        <hi>
           <xsl:apply-templates/>
         </hi>
       </xsl:when>
@@ -565,8 +603,9 @@ use="generate-id(preceding-sibling::text:h[@text:outline-level='4' or
         <q>
           <xsl:choose>
             <xsl:when test="starts-with(.,'&#x2018;')">
-               <xsl:value-of
-select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
+              <xsl:value-of
+                select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"
+              />
             </xsl:when>
             <xsl:otherwise>
               <xsl:apply-templates/>
@@ -605,20 +644,20 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
         </Input>
       </xsl:when>
       <xsl:when test="$Style='Internet Link'">
-          <xsl:apply-templates/>
+        <xsl:apply-templates/>
       </xsl:when>
       <xsl:when test="$Style='SubScript'">
-        <hi rend="sub" >
+        <hi rend="sub">
           <xsl:apply-templates/>
         </hi>
       </xsl:when>
       <xsl:when test="$Style='SuperScript'">
-        <hi rend="sup" >
+        <hi rend="sup">
           <xsl:apply-templates/>
         </hi>
       </xsl:when>
       <xsl:when test="../text:h">
-         <xsl:apply-templates/>
+        <xsl:apply-templates/>
       </xsl:when>
       <xsl:when test="normalize-space(.)=''"/>
       <xsl:otherwise>
@@ -627,83 +666,84 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
     </xsl:choose>
   </xsl:template>
 
-<xsl:template name="applyStyle">
-  <xsl:variable name="name">
-    <xsl:value-of select="@text:style-name"/>
-  </xsl:variable>
- <xsl:choose>
-   <xsl:when test="key('STYLES',$name)">
-     <xsl:variable name="contents">
-       <xsl:apply-templates/>
-     </xsl:variable>
-     <xsl:for-each select="key('STYLES',$name)">
-<!--
+  <xsl:template name="applyStyle">
+    <xsl:variable name="name">
+      <xsl:value-of select="@text:style-name"/>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="key('STYLES',$name)">
+        <xsl:variable name="contents">
+          <xsl:apply-templates/>
+        </xsl:variable>
+        <xsl:for-each select="key('STYLES',$name)">
+          <!--
     <xsl:message>! <xsl:for-each select="style:text-properties/@*">
     <xsl:value-of select="name(.)"/>:        <xsl:value-of select="."/>&#10;
     </xsl:for-each>
     </xsl:message>
 -->
-       <xsl:choose>
-	 <xsl:when
-	     test="style:text-properties[starts-with(@style:text-position,'super')]">
-	   <hi rend="sup">
-	     <xsl:copy-of select="$contents"/>
-	   </hi>
-	 </xsl:when>
-	 <xsl:when
-	     test="style:text-properties[starts-with(@style:text-position,'sub')]">
-	   <hi rend="sub">
-	     <xsl:copy-of select="$contents"/>
-	   </hi>
-	 </xsl:when>
-	 <xsl:when test="style:text-properties[@fo:font-weight='bold']">
-	   <hi>
-	     <xsl:copy-of select="$contents"/>
-	   </hi>
-	 </xsl:when>
-	 <xsl:when
-	     test="style:text-properties[style:text-underline-style='solid']">
-	   <hi rend="underline">
-	     <xsl:copy-of select="$contents"/>
-	   </hi>
-	 </xsl:when>
-	 <xsl:when test="style:text-properties[@fo:font-style='italic']">
-	   <emph>
-	     <xsl:copy-of select="$contents"/>
-	   </emph>
-	 </xsl:when>
+          <xsl:choose>
+            <xsl:when
+              test="style:text-properties[starts-with(@style:text-position,'super')]">
+              <hi rend="sup">
+                <xsl:copy-of select="$contents"/>
+              </hi>
+            </xsl:when>
+            <xsl:when
+              test="style:text-properties[starts-with(@style:text-position,'sub')]">
+              <hi rend="sub">
+                <xsl:copy-of select="$contents"/>
+              </hi>
+            </xsl:when>
+            <xsl:when test="style:text-properties[@fo:font-weight='bold']">
+              <hi>
+                <xsl:copy-of select="$contents"/>
+              </hi>
+            </xsl:when>
+            <xsl:when
+              test="style:text-properties[style:text-underline-style='solid']">
+              <hi rend="underline">
+                <xsl:copy-of select="$contents"/>
+              </hi>
+            </xsl:when>
+            <xsl:when test="style:text-properties[@fo:font-style='italic']">
+              <emph>
+                <xsl:copy-of select="$contents"/>
+              </emph>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:copy-of select="$contents"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:for-each>
+      </xsl:when>
       <xsl:otherwise>
-	<xsl:copy-of select="$contents"/>
+        <xsl:apply-templates/>
       </xsl:otherwise>
-       </xsl:choose>
-     </xsl:for-each>
-   </xsl:when>
-   <xsl:otherwise>
-     <xsl:apply-templates/>
-   </xsl:otherwise>
- </xsl:choose>
-</xsl:template>
+    </xsl:choose>
+  </xsl:template>
 
-<!-- tables -->
-<xsl:template match="table:table">
- <table rend="frame">
-   <xsl:if test="@table:name">
-     <xsl:attribute name="id">
-       <xsl:value-of select="@table:name"/>
-     </xsl:attribute>
-   </xsl:if>
-   <xsl:if test="following-sibling::text:p[@text:style-name='Table']">
-   <head>
-   <xsl:value-of select="following-sibling::text:p[@text:style-name='Table']"/>
-   </head>
-  </xsl:if>
-  <xsl:call-template name="generictable"/>
- </table>
+  <!-- tables -->
+  <xsl:template match="table:table">
+    <table rend="frame">
+      <xsl:if test="@table:name">
+        <xsl:attribute name="id">
+          <xsl:value-of select="@table:name"/>
+        </xsl:attribute>
+      </xsl:if>
+      <xsl:if test="following-sibling::text:p[@text:style-name='Table']">
+        <head>
+          <xsl:value-of
+            select="following-sibling::text:p[@text:style-name='Table']"/>
+        </head>
+      </xsl:if>
+      <xsl:call-template name="generictable"/>
+    </table>
 
-</xsl:template>
+  </xsl:template>
 
 
-<xsl:template name="generictable">
+  <xsl:template name="generictable">
     <xsl:variable name="cells" select="count(descendant::table:table-cell)"/>
     <xsl:variable name="rows">
       <xsl:value-of select="count(descendant::table:table-row) "/>
@@ -713,8 +753,11 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
     </xsl:variable>
     <xsl:variable name="numcols">
       <xsl:choose>
-        <xsl:when test="child::table:table-column/@table:number-columns-repeated">
-          <xsl:value-of select="number(table:table-column/@table:number-columns-repeated+1)"/>
+        <xsl:when
+          test="child::table:table-column/@table:number-columns-repeated">
+          <xsl:value-of
+            select="number(table:table-column/@table:number-columns-repeated+1)"
+          />
         </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="$cols"/>
@@ -725,17 +768,18 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
     <xsl:apply-templates/>
   </xsl:template>
 
-<xsl:template name="colspec">
+  <xsl:template name="colspec">
     <xsl:param name="left"/>
-    <xsl:if test="number($left &lt; ( table:table-column/@table:number-columns-repeated +2)  )">
+    <xsl:if
+      test="number($left &lt; ( table:table-column/@table:number-columns-repeated +2)  )">
       <colspec>
         <xsl:attribute name="colnum">
           <xsl:value-of select="$left"/>
         </xsl:attribute>
-	<xsl:attribute name="colname">
-	  <xsl:text>c</xsl:text>
-	<xsl:value-of select="$left"/>
-	</xsl:attribute>
+        <xsl:attribute name="colname">
+          <xsl:text>c</xsl:text>
+          <xsl:value-of select="$left"/>
+        </xsl:attribute>
       </colspec>
       <xsl:call-template name="colspec">
         <xsl:with-param name="left" select="$left+1"/>
@@ -743,153 +787,152 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
     </xsl:if>
   </xsl:template>
 
-<xsl:template match="table:table-column">
+  <xsl:template match="table:table-column">
     <xsl:apply-templates/>
   </xsl:template>
 
-<xsl:template match="table:table-header-rows">
+  <xsl:template match="table:table-header-rows">
     <xsl:apply-templates/>
-</xsl:template>
+  </xsl:template>
 
-<xsl:template match="table:table-header-rows/table:table-row">
+  <xsl:template match="table:table-header-rows/table:table-row">
     <row role="label">
       <xsl:apply-templates/>
     </row>
   </xsl:template>
 
-<xsl:template match="table:table/table:table-row">
+  <xsl:template match="table:table/table:table-row">
     <row>
       <xsl:apply-templates/>
     </row>
-</xsl:template>
+  </xsl:template>
 
-<xsl:template match="table:table-cell/text:h">
-  <xsl:apply-templates/>
-</xsl:template>
+  <xsl:template match="table:table-cell/text:h">
+    <xsl:apply-templates/>
+  </xsl:template>
 
-<xsl:template match="table:table-cell/text:p">
-  <xsl:call-template name="applyStyle"/>
-</xsl:template>
+  <xsl:template match="table:table-cell/text:p">
+    <xsl:call-template name="applyStyle"/>
+  </xsl:template>
 
-<xsl:template match="table:table-cell">
-  <cell>
+  <xsl:template match="table:table-cell">
+    <cell>
       <xsl:if test="@table:number-columns-spanned &gt;'1'">
         <xsl:attribute name="cols">
           <xsl:value-of select="@table:number-columns-spanned"/>
         </xsl:attribute>
       </xsl:if>
       <xsl:if test="text:h">
-	<xsl:attribute name="role">label</xsl:attribute>
+        <xsl:attribute name="role">label</xsl:attribute>
       </xsl:if>
       <xsl:apply-templates/>
-  </cell>
-</xsl:template>
+    </cell>
+  </xsl:template>
 
 
-<!-- notes -->
-<xsl:template match="text:note-citation"/>
+  <!-- notes -->
+  <xsl:template match="text:note-citation"/>
 
-<xsl:template match="text:note-body">
+  <xsl:template match="text:note-body">
     <xsl:apply-templates/>
-</xsl:template>
+  </xsl:template>
 
-<xsl:template match="text:note-body/text:p">
+  <xsl:template match="text:note-body/text:p">
     <xsl:apply-templates/>
-</xsl:template>
+  </xsl:template>
 
-<xsl:template match="text:note">
-  <note >
-    <xsl:choose>
-      <xsl:when test="@text:note-class='endnote'">
-	<xsl:attribute name="place">end</xsl:attribute>
-      </xsl:when>
-    </xsl:choose>
-    <xsl:apply-templates/>
-  </note>
-</xsl:template>
+  <xsl:template match="text:note">
+    <note>
+      <xsl:choose>
+        <xsl:when test="@text:note-class='endnote'">
+          <xsl:attribute name="place">end</xsl:attribute>
+        </xsl:when>
+      </xsl:choose>
+      <xsl:apply-templates/>
+    </note>
+  </xsl:template>
 
-<!-- drawing -->
-<xsl:template match="draw:plugin">
-  <ptr target="{@xlink:href}" />
-</xsl:template>
+  <!-- drawing -->
+  <xsl:template match="draw:plugin">
+    <ptr target="{@xlink:href}"/>
+  </xsl:template>
 
-<xsl:template match="draw:text-box"/>
+  <xsl:template match="draw:text-box"/>
 
-<xsl:template match="draw:image">
+  <xsl:template match="draw:image">
     <xsl:choose>
       <xsl:when test="parent::text:p[@text:style-name='Mediaobject']">
         <figure>
-	  <xsl:call-template name="findGraphic"/>
+          <xsl:call-template name="findGraphic"/>
           <head>
             <xsl:value-of select="."/>
           </head>
         </figure>
       </xsl:when>
       <xsl:otherwise>
-	<figure>
-	  <xsl:call-template name="findGraphic"/>
-	</figure>
+        <figure>
+          <xsl:call-template name="findGraphic"/>
+        </figure>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
-<xsl:template name="findGraphic">
-  <xsl:choose>
-    <xsl:when test="office:binary-data">
-      <binaryObject mimeType="image/jpg">
-	<xsl:value-of select="."/>
-      </binaryObject>
-    </xsl:when>
-    <xsl:when test="@xlink:href">
-      <graphic>
-	<xsl:attribute name="url">
-	  <xsl:value-of select="@xlink:href" />
-	</xsl:attribute>
-      </graphic>
-    </xsl:when>
-  </xsl:choose>
-</xsl:template>
-<!-- linking -->
-<xsl:template match="text:a">
-  <xsl:choose>
-    <xsl:when test="starts-with(@xlink:href,'mailto:')">
-      <xsl:choose>
-	<xsl:when test=".=@xlink:href">
-	  <ptr target="{substring-after(@xlink:href,'mailto:')}"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <ref target="{@xlink:href}">
-	    <xsl:apply-templates/>
-	  </ref>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:when>
-    <xsl:when test="contains(@xlink:href,'://')">
-      <xsl:choose>
-	<xsl:when test=".=@xlink:href">
-	  <ptr target="{@xlink:href}"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <ref target="{@xlink:href}">
-	    <xsl:apply-templates/>
-	  </ref>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:when>
-    <xsl:when test="not(contains(@xlink:href,'#'))">
-      <ref target="{@xlink:href}">
-	<xsl:apply-templates/>
+  <xsl:template name="findGraphic">
+    <xsl:choose>
+      <xsl:when test="office:binary-data">
+        <binaryObject mimeType="image/jpg">
+          <xsl:value-of select="."/>
+        </binaryObject>
+      </xsl:when>
+      <xsl:when test="@xlink:href">
+        <graphic>
+          <xsl:attribute name="url">
+            <xsl:value-of select="@xlink:href"/>
+          </xsl:attribute>
+        </graphic>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+  <!-- linking -->
+  <xsl:template match="text:a">
+    <xsl:choose>
+      <xsl:when test="starts-with(@xlink:href,'mailto:')">
+        <xsl:choose>
+          <xsl:when test=".=@xlink:href">
+            <ptr target="{substring-after(@xlink:href,'mailto:')}"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <ref target="{@xlink:href}">
+              <xsl:apply-templates/>
+            </ref>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+      <xsl:when test="contains(@xlink:href,'://')">
+        <xsl:choose>
+          <xsl:when test=".=@xlink:href">
+            <ptr target="{@xlink:href}"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <ref target="{@xlink:href}">
+              <xsl:apply-templates/>
+            </ref>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+      <xsl:when test="not(contains(@xlink:href,'#'))">
+        <ref target="{@xlink:href}">
+          <xsl:apply-templates/>
         </ref>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:variable name="linkvar"
-          select="@xlink:href"/>
+        <xsl:variable name="linkvar" select="@xlink:href"/>
         <xsl:choose>
           <xsl:when test=".=$linkvar">
-            <ptr target="{$linkvar}" />
+            <ptr target="{$linkvar}"/>
           </xsl:when>
           <xsl:otherwise>
-            <ref target="{$linkvar}" >
+            <ref target="{$linkvar}">
               <xsl:apply-templates/>
             </ref>
           </xsl:otherwise>
@@ -898,41 +941,42 @@ select="substring-before(substring-after(.,'&#x2018;'),'&#x2019;')"/>
     </xsl:choose>
   </xsl:template>
 
-<xsl:template match="text:line-break">
-  <xsl:if test="not(parent::text:span[@text:style-name='l'])">
-    <lb/>
-  </xsl:if>
-</xsl:template>
+  <xsl:template match="text:line-break">
+    <xsl:if test="not(parent::text:span[@text:style-name='l'])">
+      <lb/>
+    </xsl:if>
+  </xsl:template>
 
-<xsl:template match="text:tab">
-  <xsl:text>	</xsl:text>
-</xsl:template>
+  <xsl:template match="text:tab">
+    <xsl:text>	</xsl:text>
+  </xsl:template>
 
-<xsl:template match="text:reference-ref">
+  <xsl:template match="text:reference-ref">
     <ptr target="{@text:ref-name}"/>
   </xsl:template>
 
-<xsl:template name="id.attribute">
+  <xsl:template name="id.attribute">
     <xsl:if test="child::text:reference-mark-start">
       <xsl:attribute name="id">
-        <xsl:value-of select="child::text:reference-mark-start/@text:style-name"/>
+        <xsl:value-of select="child::text:reference-mark-start/@text:style-name"
+        />
       </xsl:attribute>
     </xsl:if>
-<!-- Constraints imposed by OOo method of displaying
+    <!-- Constraints imposed by OOo method of displaying
 reference-ref text means that xreflabel and endterm are lost -->
   </xsl:template>
 
-<xsl:template match="text:reference-mark-start"/>
+  <xsl:template match="text:reference-mark-start"/>
 
-<xsl:template match="text:reference-mark-end"/>
+  <xsl:template match="text:reference-mark-end"/>
 
-<xsl:template match="comment">
+  <xsl:template match="comment">
     <xsl:comment>
       <xsl:value-of select="."/>
     </xsl:comment>
   </xsl:template>
 
-<xsl:template match="text:alphabetical-index-mark-start">
+  <xsl:template match="text:alphabetical-index-mark-start">
     <indexterm>
       <xsl:attribute name="class">
         <xsl:text disable-output-escaping="yes">startofrange</xsl:text>
@@ -940,23 +984,23 @@ reference-ref text means that xreflabel and endterm are lost -->
       <xsl:attribute name="id">
         <xsl:value-of select="@text:id"/>
       </xsl:attribute>
-<!--<xsl:if test='@text:key1">-->
+      <!--<xsl:if test='@text:key1">-->
       <primary>
         <xsl:value-of select="@text:key1"/>
       </primary>
-<!--</xsl:if>-->
+      <!--</xsl:if>-->
       <xsl:if test="@text:key2">
         <secondary>
           <xsl:value-of select="@text:key2"/>
-	</secondary>
+        </secondary>
       </xsl:if>
     </indexterm>
   </xsl:template>
 
-<xsl:template match="text:alphabetical-index-mark-end">
+  <xsl:template match="text:alphabetical-index-mark-end">
     <indexterm>
       <xsl:attribute name="startref">
-        <xsl:value-of select='@text:id'/>
+        <xsl:value-of select="@text:id"/>
       </xsl:attribute>
       <xsl:attribute name="class">
         <xsl:text disable-output-escaping="yes">endofrange</xsl:text>
@@ -964,7 +1008,7 @@ reference-ref text means that xreflabel and endterm are lost -->
     </indexterm>
   </xsl:template>
 
-<xsl:template match="text:alphabetical-index">
+  <xsl:template match="text:alphabetical-index">
     <index>
       <title>
         <xsl:value-of select="text:index-body/text:index-title/text:p"/>
@@ -973,91 +1017,89 @@ reference-ref text means that xreflabel and endterm are lost -->
     </index>
   </xsl:template>
 
-<xsl:template match="text:index-body">
+  <xsl:template match="text:index-body">
     <xsl:for-each select="text:p[@text:style-name = 'Index 1']">
       <indexentry>
         <primaryie>
           <xsl:value-of select="."/>
-	</primaryie>
+        </primaryie>
         <xsl:if test="key('secondary_children', generate-id())">
           <secondaryie>
             <xsl:value-of select="key('secondary_children', generate-id())"/>
-	  </secondaryie>
+          </secondaryie>
         </xsl:if>
       </indexentry>
     </xsl:for-each>
   </xsl:template>
-<!--
+  <!--
 These seem to have no obvious translation
 -->
 
-<xsl:template match="text:bookmark-start"/>
+  <xsl:template match="text:bookmark-start"/>
 
-<xsl:template match="text:bookmark-end"/>
+  <xsl:template match="text:bookmark-end"/>
 
-<xsl:template match="text:bookmark"/>
+  <xsl:template match="text:bookmark"/>
 
-<xsl:template match="text:endnotes-configuration"/>
+  <xsl:template match="text:endnotes-configuration"/>
 
-<xsl:template match="text:file-name"/>
+  <xsl:template match="text:file-name"/>
 
-<xsl:template match="text:footnotes-configuration"/>
+  <xsl:template match="text:footnotes-configuration"/>
 
-<xsl:template match="text:linenumbering-configuration"/>
+  <xsl:template match="text:linenumbering-configuration"/>
 
-<xsl:template match="text:list-level-style-bullet"/>
+  <xsl:template match="text:list-level-style-bullet"/>
 
-<xsl:template match="text:list-level-style-number"/>
+  <xsl:template match="text:list-level-style-number"/>
 
-<xsl:template match="text:list-style"/>
+  <xsl:template match="text:list-style"/>
 
-<xsl:template match="text:outline-level-style"/>
+  <xsl:template match="text:outline-level-style"/>
 
-<xsl:template match="text:outline-style"/>
+  <xsl:template match="text:outline-style"/>
 
-<xsl:template match="text:s"/>
+  <xsl:template match="text:s"/>
 
 
-<xsl:template match="text:*">
-      [[[UNTRANSLATED <xsl:value-of select="name(.)"/>
-    <xsl:apply-templates/>]]]
-</xsl:template>
+  <xsl:template match="text:*"> [[[UNTRANSLATED <xsl:value-of select="name(.)"/>
+    <xsl:apply-templates/>]]] </xsl:template>
 
 
   <!-- sections of the OO format we don't need at present -->
 
-<xsl:template match="office:automatic-styles"/>
+  <xsl:template match="office:automatic-styles"/>
 
-<xsl:template match="office:font-decls"/>
+  <xsl:template match="office:font-decls"/>
 
-<xsl:template match="office:meta"/>
+  <xsl:template match="office:meta"/>
 
-<xsl:template match="office:script"/>
+  <xsl:template match="office:script"/>
 
-<xsl:template match="office:settings"/>
+  <xsl:template match="office:settings"/>
 
-<xsl:template match="office:styles"/>
+  <xsl:template match="office:styles"/>
 
-<xsl:template match="style:*"/>
+  <xsl:template match="style:*"/>
 
 
-<xsl:template match="dc:*">
-  <xsl:apply-templates/>
-</xsl:template>
+  <xsl:template match="dc:*">
+    <xsl:apply-templates/>
+  </xsl:template>
 
-<xsl:template match="meta:creation-date">
-  <xsl:apply-templates/>
-</xsl:template>
+  <xsl:template match="meta:creation-date">
+    <xsl:apply-templates/>
+  </xsl:template>
 
-<xsl:template match="meta:editing-cycles"/>
+  <xsl:template match="meta:editing-cycles"/>
 
-<xsl:template match="meta:editing-duration"/>
+  <xsl:template match="meta:editing-duration"/>
 
-<xsl:template match="meta:generator"/>
+  <xsl:template match="meta:generator"/>
 
-<xsl:template match="meta:user-defined"/>
+  <xsl:template match="meta:user-defined"/>
 
-<!--
+  <!--
 <xsl:template match="text()">
   <xsl:apply-templates select="normalize-space(.)"/>
 </xsl:template>
