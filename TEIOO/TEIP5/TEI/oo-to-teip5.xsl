@@ -130,7 +130,12 @@ draw:plugin | draw:text-box | text:footnote-body | text:section"
       </xsl:if>
     </xsl:for-each>
 
-    <TEI xml:lang="{normalize-space(/office:document/office:meta/dc:language)}">
+    <TEI>
+      <xsl:for-each select="/office:document/office:meta/dc:language)">
+	<xsl:attribute name="xml:lang">
+	  <xsl:value-of select="normalize-space(.)"/>
+	</xsl:attribute>
+      </xsl:for-each>
       <xsl:call-template name="teiHeader"/>
       <xsl:apply-templates/>
     </TEI>
