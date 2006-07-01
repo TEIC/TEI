@@ -15,6 +15,7 @@ text.</desc>
   </classes>
   <content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+
       <rng:zeroOrMore>
         <rng:choice>
           <rng:ref name="model.divWrapper"/>
@@ -30,6 +31,9 @@ text.</desc>
 	      <rng:ref name="div"/>
 	      <rng:ref name="divGen"/>
 	    </rng:choice>
+	    <rng:zeroOrMore>
+	      <rng:ref name="model.global"/>
+	    </rng:zeroOrMore>
 	  </rng:oneOrMore>
 	</rng:group>
 
@@ -45,17 +49,23 @@ text.</desc>
               <rng:ref name="div"/>
               <rng:ref name="divGen"/>
             </rng:choice>
+	    <rng:zeroOrMore>
+	      <rng:ref name="model.global"/>
+	    </rng:zeroOrMore>
 	  </rng:zeroOrMore>
         </rng:group>
 
       </rng:choice>
       
-      <rng:zeroOrMore>
-	<rng:choice>
-	  <rng:ref name="model.divWrapper"/>
-	  <rng:ref name="model.divWrapper.bottom"/>
-	</rng:choice>
-      </rng:zeroOrMore>
+	  <rng:zeroOrMore>
+	    <rng:choice>
+	      <rng:ref name="model.divWrapper"/>
+	      <rng:ref name="model.divWrapper.bottom"/>
+	    </rng:choice>
+	    <rng:zeroOrMore>
+	      <rng:ref name="model.global"/>
+	    </rng:zeroOrMore>
+	  </rng:zeroOrMore>
 
     </rng:group>
   </content>

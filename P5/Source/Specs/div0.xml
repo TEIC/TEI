@@ -5,10 +5,10 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" xml:id="DIV0" usage="rwa" ident="div0">
-<equiv/>
-<gloss>level-0 text division</gloss>
-<desc>contains the largest possible subdivision of the body
-of a text.</desc>
+  <equiv/>
+  <gloss>level-0 text division</gloss>
+  <desc>contains the largest possible subdivision of the body
+  of a text.</desc>
   <classes>
     <memberOf key="att.divLike"/>
     <memberOf key="att.declaring"/>
@@ -16,46 +16,47 @@ of a text.</desc>
   <content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:zeroOrMore>
-        <rng:choice>
-          <rng:ref name="model.divWrapper"/>
-          <rng:ref name="model.global"/>
-        </rng:choice>
+	<rng:choice>
+	  <rng:ref name="model.divWrapper"/>
+	  <rng:ref name="model.global"/>
+	</rng:choice>
       </rng:zeroOrMore>
       <rng:choice>
-        <rng:oneOrMore>
-          <rng:choice>
-            <rng:ref name="div1"/>
-            <rng:ref name="divGen"/>
-          </rng:choice>
+	<rng:oneOrMore>
+	  <rng:choice>
+	    <rng:ref name="div1"/>
+	    <rng:ref name="divGen"/>
+	  </rng:choice>
           <rng:zeroOrMore>
-            <rng:ref name="model.global"/>
-          </rng:zeroOrMore>
-        </rng:oneOrMore>
-        <rng:group>
-          <rng:oneOrMore>
-            <rng:ref name="macro.component"/>
-            <rng:zeroOrMore>
-              <rng:ref name="model.global"/>
-            </rng:zeroOrMore>
-          </rng:oneOrMore>
-          <rng:zeroOrMore>
-            <rng:choice>
-              <rng:ref name="div1"/>
-              <rng:ref name="divGen"/>
-            </rng:choice>
-            <rng:zeroOrMore>
-              <rng:ref name="model.global"/>
-            </rng:zeroOrMore>
-          </rng:zeroOrMore>
-        </rng:group>
+	    <rng:ref name="model.global"/>
+	  </rng:zeroOrMore>
+	</rng:oneOrMore>
+	<rng:group>
+	  <rng:oneOrMore>
+	    <rng:ref name="macro.component"/>
+	    <rng:zeroOrMore>
+	      <rng:ref name="model.global"/>
+	    </rng:zeroOrMore>
+	  </rng:oneOrMore>
+	  <rng:zeroOrMore>
+	    <rng:choice>
+	      <rng:ref name="div1"/>
+	      <rng:ref name="divGen"/>
+	    </rng:choice>
+	    <rng:zeroOrMore>
+	      <rng:ref name="model.global"/>
+	    </rng:zeroOrMore>
+	  </rng:zeroOrMore>
+	</rng:group>
       </rng:choice>
       <rng:zeroOrMore>
-	<rng:group>
+	<rng:choice>
+	  <rng:ref name="model.divWrapper"/>
 	  <rng:ref name="model.divWrapper.bottom"/>
-	</rng:group>
-        <rng:zeroOrMore>
-          <rng:ref name="model.global"/>
-        </rng:zeroOrMore>
+	</rng:choice>
+	<rng:zeroOrMore>
+	  <rng:ref name="model.global"/>
+	</rng:zeroOrMore>
       </rng:zeroOrMore>
     </rng:group>
   </content>
