@@ -15,21 +15,22 @@ $Author$
   </classes>
   <content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-       <rng:optional>
-          <rng:zeroOrMore>
-            <rng:ref name="model.global"/>
-          </rng:zeroOrMore>
-          <rng:ref name="head"/>
-       </rng:optional>
-       <rng:zeroOrMore>
-         <rng:group>
-           <rng:ref name="macro.component"/>
-           <rng:zeroOrMore>
-            <rng:ref name="model.global"/>
-            </rng:zeroOrMore>
-          </rng:group>
-       </rng:zeroOrMore>
-      </rng:group>
+      <rng:zeroOrMore>
+        <rng:ref name="model.global"/>
+      </rng:zeroOrMore>
+      <rng:optional>
+        <rng:ref name="head"/>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:optional>
+      <rng:oneOrMore>
+        <rng:ref name="macro.component"/>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:oneOrMore>
+    </rng:group>
   </content>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">      <argument>
