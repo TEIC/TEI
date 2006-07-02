@@ -812,7 +812,7 @@ $ID: requests a particular page
           <xsl:value-of select="ancestor-or-self::tei:*[@lang][1]/@lang"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:value-of select="$lang"/>
+          <xsl:value-of select="$documentationLanguage"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
