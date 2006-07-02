@@ -1429,105 +1429,92 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="noteID">
-    <xsl:variable name="Place">
-	  <xsl:value-of select="@place"/>
-    </xsl:variable>
     <xsl:choose>
       <xsl:when test="@xml:id">
         <xsl:value-of select="@xml:id"/>
       </xsl:when>
       <xsl:when test="@n">
-        <xsl:call-template name="i18n">
-          <xsl:with-param name="word">Note</xsl:with-param>
-        </xsl:call-template>
         <xsl:value-of select="@n"/>
       </xsl:when>
-      <xsl:when test="string-length($Place)=0">
-        <xsl:choose>
-          <xsl:when test="ancestor::tei:front">
-            <xsl:number count="tei:note[not(@place)]" from="tei:front"
-              level="any"/>
-          </xsl:when>
-          <xsl:when test="ancestor::tei:back">
-            <xsl:number count="tei:note[not(@place)]" from="tei:back"
-              level="any"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:number count="tei:note[not(@place)]" from="tei:body"
-              level="any"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:when>
       <xsl:otherwise>
-        <xsl:choose>
-          <xsl:when test="$consecutiveFootnoteNumbers = 'true'">
-            <xsl:number count="tei:note[./@place=current()/@place]" level="any"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:choose>
-              <xsl:when test="ancestor::tei:front">
-                <xsl:number count="tei:note[./@place=current()/@place]" from="tei:front"
-                  level="any"/>
-              </xsl:when>
-              <xsl:when test="ancestor::tei:back">
-                <xsl:number count="tei:note[./@place=current()/@place]" from="tei:back"
-                  level="any"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:number count="tei:note[./@place=current()/@place]" from="tei:body"
-                  level="any"/>
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:otherwise>
-        </xsl:choose>
+	<xsl:number count="tei:note" level="any"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xd:doc>
     <xd:short>[html] How to label a note</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="noteN">
-    <xsl:variable name="Place">
-      <xsl:value-of select="@place"/>
-    </xsl:variable>
     <xsl:choose>
       <xsl:when test="@n">
         <xsl:value-of select="@n"/>
       </xsl:when>
-      <xsl:when test="string-length($Place)=0">
+      <xsl:when test="not(@place)">
         <xsl:choose>
           <xsl:when test="ancestor::tei:front">
-            <xsl:number count="tei:note[not(@place)]" from="tei:front"
-              level="any"/>
+            <xsl:number count="tei:note[not(@place)]" 
+			from="tei:front"
+			level="any"/>
           </xsl:when>
           <xsl:when test="ancestor::tei:back">
-            <xsl:number count="tei:note[not(@place)]" from="tei:back"
-              level="any"/>
+            <xsl:number count="tei:note[not(@place)]" 
+			from="tei:back"
+			level="any"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:number count="tei:note[not(@place)]" from="tei:body"
-              level="any"/>
+            <xsl:number 
+		count="tei:note[not(@place)]" 
+		from="tei:body"
+		level="any"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+      <xsl:when test="@place='end'">
+        <xsl:choose>
+          <xsl:when test="$consecutiveFootnoteNumbers = 'true'">
+            <xsl:number 
+		count="tei:note[./@place='end']" 
+		level="any"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:choose>
+              <xsl:when test="ancestor::tei:front">
+                <xsl:number count="tei:note[./@place='end']" from="tei:front"
+                  level="any"/>
+              </xsl:when>
+              <xsl:when test="ancestor::tei:back">
+                <xsl:number count="tei:note[./@place='end']" from="tei:back"
+                  level="any"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:number count="tei:note[./@place='end']" from="tei:body"
+                  level="any"/>
+              </xsl:otherwise>
+            </xsl:choose>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:when>
       <xsl:otherwise>
         <xsl:choose>
           <xsl:when test="$consecutiveFootnoteNumbers = 'true'">
-            <xsl:number count="tei:note[./@place=current()/@place]" level="any"/>
+            <xsl:number 
+		count="tei:note[./@place='foot']" 
+		level="any"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:choose>
               <xsl:when test="ancestor::tei:front">
-                <xsl:number count="tei:note[./@place=current()/@place]" from="tei:front"
+                <xsl:number count="tei:note[./@place='foot']" from="tei:front"
                   level="any"/>
               </xsl:when>
               <xsl:when test="ancestor::tei:back">
-                <xsl:number count="tei:note[./@place=current()/@place]" from="tei:back"
+                <xsl:number count="tei:note[./@place='foot']" from="tei:back"
                   level="any"/>
               </xsl:when>
               <xsl:otherwise>
-                <xsl:number count="tei:note[./@place=current()/@place]" from="tei:body"
+                <xsl:number count="tei:note[./@place='foot']" from="tei:body"
                   level="any"/>
               </xsl:otherwise>
             </xsl:choose>
