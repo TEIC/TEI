@@ -819,7 +819,7 @@
     <xd:short>Process tei:remarks</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:remarks" mode="weave">
+  <xsl:template match="tei:remarks" mode="doc">
     <xsl:if test="string-length(.)&gt;0">
       <tr>
 	<td valign="top">
