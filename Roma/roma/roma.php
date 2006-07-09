@@ -1252,7 +1252,7 @@ class roma
 //	    $szError = $this->m_oRomaDom->outputDVI( $szDoc );
 //	    $szEnding = 'dvi';
 //	    break;
-	  case 'pdfLatex':
+	  case 'pdf':
 	    $szError = $this->m_oRomaDom->outputPdfLatex( $szDoc );
 	    $szEnding = 'pdf';
 	    break;
@@ -1260,10 +1260,10 @@ class roma
 	    $szError = $this->m_oRomaDom->outputLatex( $szDoc );
 	    $szEnding = 'tex';
 	    break;
-	  case 'pdf':
-	    $szError = $this->m_oRomaDom->outputPDF( $szDoc );
-	    $szEnding = 'pdf';
-	    break;
+//	  case 'pdf':
+//	    $szError = $this->m_oRomaDom->outputPDF( $szDoc );
+//	    $szEnding = 'pdf';
+//	    break;
 	  case 'teiLite':
 	    $szError = $this->m_oRomaDom->outputTeiLite( $szDoc, true );
 	    $szEnding = 'xml';
