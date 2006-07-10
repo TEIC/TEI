@@ -60,3 +60,13 @@ form_attributeClasses=Attributklasser
 form_contents=Innehåll
 form_description=Beskrivning
 
+[ru]
+helpmessage=When you submit this form, you will have a chance to add attributes.
+headline=Add Element
+
+form_headline=Defining a new element
+form_name=Name
+form_modelClasses=Model classes
+form_attributeClasses=Attribute classes
+form_contents=Contents
+form_description=Description
