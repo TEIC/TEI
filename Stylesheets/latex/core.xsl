@@ -224,8 +224,11 @@
     <xd:short>Process elements tei:item</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:item" mode="gloss"> \item[<xsl:apply-templates
-      mode="print" select="preceding-sibling::tei:*[1]"/>]
+  <xsl:template match="tei:item" mode="gloss"> 
+      <xsl:text>\item[</xsl:text>
+      <xsl:apply-templates 
+	  select="preceding-sibling::tei:label[1]/text()"/>
+      <xsl:text>]</xsl:text>
     <xsl:apply-templates/>
   </xsl:template>
   <xd:doc>
@@ -482,7 +485,7 @@
       for TEI in textstructure.xsl).</xd:detail>
   </xd:doc>
   <xsl:template match="text()">
-    <xsl:value-of select="translate(.,'\{}','⃥❴❵')"/>
+    <xsl:value-of select="translate(.,'&#8491; \{}','A,⃥❴❵')"/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements text()</xd:short>

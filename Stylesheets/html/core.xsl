@@ -296,7 +296,7 @@
   <xsl:template match="tei:eg">
     <div class="pre">
       <xsl:if test="$cssFile">
-        <xsl:attribute name="class">eg</xsl:attribute>
+        <xsl:attribute name="class">pre_eg</xsl:attribute>
       </xsl:if>
       <xsl:apply-templates/>
     </div>

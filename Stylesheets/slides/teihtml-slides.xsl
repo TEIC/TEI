@@ -168,7 +168,7 @@
           </ul>
         </div>
         <div class="slidebottom">
-          <img src="{$logoFile}" width="{$logoWidth}" height="${logoHeight}" alt="logo"/>
+          <img id="logo" src="{$logoFile}" width="{$logoWidth}" height="${logoHeight}" alt="logo"/>
           <xsl:text> </xsl:text>
           <xsl:variable name="next"><xsl:value-of select="$masterFile"/>1</xsl:variable>
           <a accesskey="n" href="{concat($next,'.xhtml')}">Start</a>
@@ -349,7 +349,7 @@
     </div>
   </xsl:template>
   <xsl:template name="slideBottom">
-    <img src="{$logoFile}" width="{$logoWidth}" height="{$logoHeight}" alt="logo"/>
+    <img id="logo" src="{$logoFile}" width="{$logoWidth}" height="{$logoHeight}" alt="logo"/>
     <xsl:text> </xsl:text>
     <xsl:call-template name="generateTitle"/>
   </xsl:template>

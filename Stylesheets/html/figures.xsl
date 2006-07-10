@@ -183,10 +183,10 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:graphic">
-    <xsl:if test="@xml:id">
-      <a class="g" name="{@xml:id}">
-        <xsl:comment> </xsl:comment>
-      </a>
+    <xsl:if test="@xml:id and not($xhtml='true')">
+	<a class="g" name="{@xml:id}">
+	  <xsl:comment> </xsl:comment>
+	</a>
     </xsl:if>
     <xsl:call-template name="showGraphic"/>
   </xsl:template>
@@ -358,8 +358,8 @@
     <xsl:choose>
       <xsl:when test="$showFigures='true'">
         <img src="{$graphicsPrefix}{$File}">
-          <xsl:if test="@xml:id">
-            <xsl:attribute name="name">
+          <xsl:if test="@xml:id and $xhtml='true'">
+            <xsl:attribute name="id">
               <xsl:value-of select="@xml:id"/>
             </xsl:attribute>
           </xsl:if>

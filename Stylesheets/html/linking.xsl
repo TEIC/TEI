@@ -45,10 +45,15 @@
       </xsl:when>
       <xsl:when test="starts-with(local-name(.),'div')">
         <xsl:variable name="xpath">
-          <xsl:for-each select="ancestor-or-self::tei:*"><xsl:value-of
-              select="local-name()"/><xsl:text/>.<xsl:number/><xsl:if
-              test="position() != last()">_</xsl:if></xsl:for-each>
-        </xsl:variable>
+          <xsl:for-each select="ancestor-or-self::tei:*">
+	    <xsl:value-of select="local-name()"/>
+	    <xsl:text>.</xsl:text>
+	    <xsl:number/>
+	    <xsl:if test="position() != last()">
+	      <xsl:text>_</xsl:text>
+	    </xsl:if>
+	  </xsl:for-each>
+	</xsl:variable>
         <xsl:value-of select="substring-after($xpath,'TEI.1_text.1_')"/>
       </xsl:when>
       <xsl:otherwise><xsl:value-of select="$BaseFile"/>-<xsl:value-of
