@@ -10,6 +10,10 @@ form_defaultValue=Default value
 form_description=Description
 form_valList=List of values
 
+
+
+
+
 [fr]
 helpmessage=Modification des attributs
 headline=Modification des attributs
@@ -21,6 +25,10 @@ form_contents=Contenu
 form_defaultValue=Valeur par d&eacutefaut
 form_description=Description
 form_valList=Liste des valeurs
+
+
+
+
 
 [de]
 helpmessage=Sie können Attribute entfernen oder ihren Datentyp ändern.
@@ -34,6 +42,10 @@ form_defaultValue=Voreinstellung
 form_description=Beschreibung
 form_valList=Werteliste
 
+
+
+
+
 [ch]
 helpmessage=您可以刪除屬性或更改屬性的data種類。
 headline=更改屬性
@@ -45,5 +57,38 @@ form_contents=內容
 form_defaultValue=預設屬性值
 form_description=描述
 form_valList=屬性值清單
+
+
+
+
+
+
+
+[sw]
+helpmessage=Du kan ta bort attribut, eller ändra deras datatyp.
+headline=Ändra attribut
+
+form_headline=Ändra ett attribut
+form_name=Attributets namn
+form_optional=Är attributet valfritt?
+form_contents=Innehåll
+form_defaultValue=Standardvärde 
+form_description=Beskrivning
+form_valList=Lista värden
+
+
+
+[ru]
+helpmessage=Вы можете иллиминировать атрибуты или изменить описывающий их тип данных
+headline=Изменение некоторых атрибутов
+
+form_headline=Изменить атрибут
+form_name=Наименование атрибута
+form_optional=Является ли атрибут факультативным?
+form_contents=Содержание
+form_defaultValue=Значение по умолчанию
+form_description=Описание
+form_valList=Список значений
+
 
 

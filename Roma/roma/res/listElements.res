@@ -13,6 +13,10 @@ form_attributes=Attributes
 form_delete=Delete
 form_changeAttributes=Change attributes
 
+
+
+
+
 [fr]
 helpmessage=Ajoutons des éléments
 headline=éléments supplémentaires
@@ -27,6 +31,10 @@ form_description=Description
 form_attributes=Attributs
 form_delete=Supprimer
 form_changeAttributes=Changer les attributs
+
+
+
+
 
 [de]
 helpmessage=Diese Elemente haben Sie für Ihr Schema definiert.
@@ -43,6 +51,10 @@ form_attributes=Attribute
 form_delete=L&ouml;schen
 form_changeAttributes=Attribute verändern
 
+
+
+
+
 [ch]
 helpmessage=已被定義在您的文件模型當中的元素。
 headline=現有的元素
@@ -57,3 +69,41 @@ form_description=描述
 form_attributes=屬性
 form_delete=刪除
 form_changeAttributes=更改屬性
+
+
+
+
+[sw]
+helpmessage=Följande element är definierade för ditt schema.
+headline=Tillvalda element
+
+form_headline=Lista på valda element
+form_add=Lägg till nya element
+form_changeElement=Ändra element
+form_include=Inkludera
+form_exclude=Exkludera
+form_tagName=Namn på tagg
+form_description=Beskrivning
+form_attributes=Attribut
+form_delete=Ta bort
+form_changeAttributes=Ändra attribut
+
+
+
+[ru]
+helpmessage=Элементы, которые Вы определили для своей схемы.
+headline=Включенные элементы
+
+form_headline=Список включенных элементов
+form_add=Добавить новый элемент
+form_changeElement=Изменить элемент
+form_include=Включить
+form_exclude=Исключить
+form_tagName=Наименование маркера
+form_description=Описание
+form_attributes=Атрибуты
+form_delete=Уничтожить
+form_changeAttributes=Изменить атрибуты
+
+
+

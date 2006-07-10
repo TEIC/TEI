@@ -9,6 +9,10 @@ form_attributeClasses=Attribute classes
 form_contents=Contents
 form_description=Description
 
+
+
+
+
 [fr]
 helpmessage=Modification ou création d'un élément
 headline=Définition d'un élément 
@@ -19,6 +23,10 @@ form_modelClasses=Classes structurals
 form_attributeClasses=Classes attributives
 form_contents=Contenu
 form_description=Description
+
+
+
+
 
 [de]
 helpmessage=Hier können Sie ein neues Element kreieren oder ein bereits existierendes Element modifizieren.
@@ -31,6 +39,10 @@ form_attributeClasses=Attribut Klassen
 form_contents=Inhalt
 form_description=Beschreibung
 
+
+
+
+
 [ch]
 helpmessage=在這兒可以定製新元素或調整現有的元素。
 headline=更改元素
@@ -41,3 +53,35 @@ form_modelClasses=結構元素集
 form_attributeClasses=屬性元素集
 form_contents=內容
 form_description=描述
+
+
+
+
+
+[sw]
+helpmessage=I detta formulär kan du skapa ett nytt element eller modifiera ett befintligt element
+headline=Ändra element
+
+form_headline=Definiera ett nytt element
+form_name=Namn
+form_modelClasses=Modellklasser
+form_attributeClasses=Attributklasser
+form_contents=Innehåll
+form_description=Beskrivning
+
+
+
+
+[ru]
+helpmessage=Данная форма позволяет создать новый элемент или модифицировать уже существующий 
+headline=Изменение элемента
+
+form_headline=Определение нового элемента
+form_name=Наименование
+form_modelClasses=Классы моделей
+form_attributeClasses=Классы атрибутов
+form_contents=Содержание
+form_description=Описание
+
+
+

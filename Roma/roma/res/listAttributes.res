@@ -11,6 +11,10 @@ form_tagName=Tag name
 form_description=Description
 form_delete=Delete
 
+
+
+
+
 [fr]
 helpmessage=Ajoutons des attributs
 headline=Attributs supplémentaires
@@ -23,6 +27,10 @@ form_exclude=Exclure
 form_tagName=Nom de balise
 form_description=Description
 form_delete=Supprimer
+
+
+
+
 
 [de]
 helpmessage=Hier sind die für diese Klasse oder dieses Element definierten Attribute. 
@@ -38,6 +46,10 @@ form_description=Beschreibung
 form_delete=Löschen
 
 
+
+
+
+
 [ch]
 helpmessage=已被定義在這個元素或元素集當中的屬性。
 headline=現有的屬性
@@ -50,3 +62,38 @@ form_exclude=不包含
 form_tagName=標籤名稱
 form_description=描述
 form_delete=刪除
+
+
+
+
+
+[sw]
+helpmessage=Följande attribut är definierade för denna klasss eller detta element. 
+headline=Tillvalda attribut
+
+form_headline=Lista på attribut
+form_add=Lägg till nya attribut
+form_changeAttribute=Ändra attribut
+form_include=Inkludera
+form_exclude=Exkludera
+form_tagName=Namn på tagg
+form_description=Beskrivning
+form_delete=Ta bort
+
+
+
+[ru]
+helpmessage=Включены атрибуты принадлежащие данному классу 
+headline=Включенные атрибуты
+
+form_headline=Список атрибутов
+form_add=Добавить новый атрибут
+form_changeAttribute=Изменить атрибут
+form_include=Включить
+form_exclude=Исключить
+form_tagName=Наименование маркера
+form_description=Описание
+form_delete=Уничтожить
+
+
+

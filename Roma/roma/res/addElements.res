@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 [en]
 helpmessage=When you submit this form, you will have a chance to add attributes.
 headline=Add Element
@@ -10,16 +9,20 @@ form_attributeClasses=Attribute classes
 form_contents=Contents
 form_description=Description
 
+
+
 [fr]
 helpmessage=Créion d'un élément
 headline=Créion d'un élément
 
-form_headline=Créion d'un élément en cours
+form_headline=Création d'un élément en cours
 form_name=Nom
 form_modelClasses=Classes structurales
 form_attributeClasses=Classes attributives
 form_contents=Contenu
 form_description=Description
+
+
 
 [de]
 helpmessage=Nachdem Sie auf "Abschicken" drücken, können Sie Attribute hinzufügen.
@@ -32,6 +35,8 @@ form_attributeClasses=Attribut Klassen
 form_contents=Inhalt
 form_description=Beschreibung
 
+
+
 [ch]
 helpmessage=將新元素定製完成並送出後，可以接著增加新屬性。
 headline=增加新元素
@@ -42,3 +47,16 @@ form_modelClasses=結構元素集
 form_attributeClasses=屬性元素集
 form_contents=內容
 form_description=描述
+
+
+[sw]
+helpmessage=När du skickar in detta formulär, har du möjlighet att lägga till attribut.
+headline=Lägg till element
+
+form_headline=Definiera ett nytt element
+form_name=Namn
+form_modelClasses=Modellklasser
+form_attributeClasses=Attributklasser
+form_contents=Innehåll
+form_description=Beskrivning
+
