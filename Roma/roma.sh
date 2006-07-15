@@ -13,24 +13,26 @@ makeODD()
     echo "1. expand and simplify ODD "
     if test "x$lang" = "x"
     then
-	xsltproc -o $N.compiled.odd \
-        --stringparam lang "$lang"  \
-        --stringparam doclang "$doclang"  \
+	xmllint --noent --xinclude $ODD \
+	    | xsltproc -o $N.compiled.odd \
+            --stringparam lang "$lang"  \
+            --stringparam doclang "$doclang"  \
 	    --stringparam TEIC $TEIC \
 	    --stringparam TEISERVER $TEISERVER  \
 	    --stringparam localsource "$LOCAL"  \
-	    $TEIXSLDIR/odds/odd2odd.xsl $ODD 
+	    $TEIXSLDIR/odds/odd2odd.xsl -
     else
 	echo  [names translated to language $lang]
-	xsltproc \
+	xmllint --noent --xinclude $ODD \
+	    | xsltproc \
 	    --stringparam TEIC $TEIC \
 	    --stringparam TEISERVER $TEISERVER  \
 	    --stringparam localsource "$LOCAL"  \
-	    $TEIXSLDIR/odds/odd2odd.xsl $ODD  | \
-	xsltproc -o $N.compiled.odd \
+	    $TEIXSLDIR/odds/odd2odd.xsl - \
+	    | xsltproc -o $N.compiled.odd \
 	    --stringparam TEISERVER $TEISERVER  \
-        --stringparam lang "$lang"  \
-        --stringparam doclang "$doclang"  \
+            --stringparam lang "$lang"  \
+            --stringparam doclang "$doclang"  \
 	    --stringparam verbose true  \
 	    $TEIXSLDIR/odds/translate-odd.xsl - 
     fi
