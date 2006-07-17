@@ -480,7 +480,7 @@
                   <xsl:value-of select="normalize-space(tei:head)"/>
                 </xsl:when>
                 <xsl:otherwise>
-                  <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="normalize-space(text())"/>
                 </xsl:otherwise>
               </xsl:choose>
             </xsl:attribute>

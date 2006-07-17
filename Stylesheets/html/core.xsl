@@ -989,13 +989,13 @@
             <xsl:value-of select="$parent"/></xsl:message>
       </xsl:if>
       <div class="note">
-	<span class="noteLabel">
 	  <xsl:call-template name="addIdentification">
 	    <xsl:with-param name="id" select="$identifier"/>
 	  </xsl:call-template>
-	  <xsl:call-template name="noteN"/>
-	  <xsl:text>. </xsl:text>
-	</span>
+	  <span class="noteLabel">
+	    <xsl:call-template name="noteN"/>
+	    <xsl:text>. </xsl:text>
+	  </span>
 	<span class="noteBody">
 	  <xsl:apply-templates/>
 	</span>
@@ -1940,4 +1940,21 @@
       </xsl:when>
     </xsl:choose>
   </xsl:template>
+
+  <xsl:template name="addIdentification">
+    <xsl:param name="id"/>
+    <xsl:choose>
+      <xsl:when test="$xhtml='true'">
+	<span>
+	  <xsl:attribute name="xml:id">
+	    <xsl:value-of select="$id"/>
+	  </xsl:attribute>
+	</span>
+      </xsl:when>
+      <xsl:otherwise>
+	<a name="{$id}"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
 </xsl:stylesheet>
