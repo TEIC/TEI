@@ -238,7 +238,7 @@
             <xsl:copy-of select="."/>
           </xsl:if>
         </xsl:for-each>
-        <xsl:apply-templates/>
+        <xsl:apply-templates select="tei:row"/>
       </table>
     </div>
   </xsl:template>
