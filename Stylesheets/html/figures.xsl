@@ -222,9 +222,9 @@
         </xsl:choose>
       </xsl:attribute>
       <xsl:if test="tei:head">
-        <p>
-          <xsl:apply-templates mode="xref" select="."/>
-        </p>
+	<div class="caption">
+	  <xsl:apply-templates mode="xref" select="."/>
+	</div>
       </xsl:if>
       <table>
         <xsl:call-template name="rendToClass"/>

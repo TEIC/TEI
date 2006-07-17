@@ -104,13 +104,13 @@
         <xsl:with-param name="word">authorWord</xsl:with-param>
       </xsl:call-template>
       <xsl:text> </xsl:text>
-      <xsl:value-of select="$realauthor"/>
+      <xsl:copy-of select="$realauthor"/>
     </xsl:if>
     <xsl:if test="not($revauthor = '')"> (<xsl:call-template name="i18n">
         <xsl:with-param name="word">revisedWord</xsl:with-param>
       </xsl:call-template>
       <xsl:text> </xsl:text>
-      <xsl:value-of select="$revauthor"/>
+      <xsl:copy-of select="$revauthor"/>
       <xsl:text>)</xsl:text>
     </xsl:if>
   </xsl:template>
