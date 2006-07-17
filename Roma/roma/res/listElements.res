@@ -55,7 +55,7 @@ form_changeAttributes=Attribute verändern
 
 
 
-[ch]
+[zh]
 helpmessage=已被定義在您的文件模型當中的元素。
 headline=現有的元素
 

@@ -43,7 +43,7 @@ form_description=Beschreibung
 
 
 
-[ch]
+[zh]
 helpmessage=在這兒可以定製新元素或調整現有的元素。
 headline=更改元素
 

@@ -55,7 +55,7 @@ searchtei=Suche in der TEI Database
 
 
 
-[ch]
+[zh]
 helpmessage=
 title=製作TEI的文件模型檔
 save=儲存設定檔

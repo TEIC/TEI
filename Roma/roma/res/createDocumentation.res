@@ -31,7 +31,7 @@ form_output=Welches Format bevorzugen Sie?
 
 
 
-[ch]
+[zh]
 helpmessage=在這兒可以取得自製TEI模型的說明檔。
 headline=需要說明檔嗎?
 

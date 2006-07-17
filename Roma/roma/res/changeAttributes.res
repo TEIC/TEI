@@ -46,7 +46,7 @@ form_valList=Werteliste
 
 
 
-[ch]
+[zh]
 helpmessage=您可以刪除屬性或更改屬性的data種類。
 headline=更改屬性
 

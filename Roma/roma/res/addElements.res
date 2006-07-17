@@ -37,7 +37,7 @@ form_description=Beschreibung
 
 
 
-[ch]
+[zh]
 helpmessage=將新元素定製完成並送出後，可以接著增加新屬性。
 headline=增加新元素
 

@@ -50,7 +50,7 @@ form_delete=Löschen
 
 
 
-[ch]
+[zh]
 helpmessage=已被定義在這個元素或元素集當中的屬性。
 headline=現有的屬性
 
