@@ -131,7 +131,7 @@ draw:plugin | draw:text-box | text:footnote-body | text:section"
     </xsl:for-each>
 
     <TEI>
-      <xsl:for-each select="/office:document/office:meta/dc:language)">
+      <xsl:for-each select="/office:document/office:meta/dc:language">
 	<xsl:attribute name="xml:lang">
 	  <xsl:value-of select="normalize-space(.)"/>
 	</xsl:attribute>
