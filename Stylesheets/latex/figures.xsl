@@ -167,9 +167,9 @@
       <xsl:text>\begin{center} \begin{small} \begin{tabular}</xsl:text>
       <xsl:call-template  name="makeTable"/> 
      <xsl:text>\end{tabular} 
-      <xsl:text>\caption{</xsl:text>
+      \caption{</xsl:text>
       <xsl:apply-templates mode="ok" select="tei:head"/>
-      <xsl:text>}</xsl:text>
+      <xsl:text>}
      \end{small} 
      \end{center}
      \end{table}</xsl:text>
