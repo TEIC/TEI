@@ -128,7 +128,7 @@
 	<xsl:choose>
 	  <xsl:when test="$xhtml='true'">
 	    <xsl:attribute name="id">
-	      <xsl:value-of select="{@xml:id}"/>
+	      <xsl:value-of select="@xml:id"/>
 	    </xsl:attribute>
 	  </xsl:when>
 	  <xsl:otherwise>
