@@ -146,29 +146,41 @@
     </xsl:choose>
   </xsl:template>
   <xd:doc>
-    <xd:short>Process elements tei:table[@type='display']</xd:short>
+    <xd:short>Process elements tei:table[@rend='display']</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:table[@type='display']" mode="xref">
+  <xsl:template match="tei:table[@rend='display']" mode="xref">
     <xsl:text>Table </xsl:text>
-    <xsl:number count="tei:table[@type='display']" level="any"/>
+    <xsl:number count="tei:table[@rend='display']" level="any"/>
   </xsl:template>
   <xd:doc>
-    <xd:short>Process elements tei:table[@type='display']</xd:short>
+    <xd:short>Process elements tei:table[@rend='display']</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:table[@type='display']"> \begin{table}
-      \caption{<xsl:apply-templates mode="ok" select="tei:head"/>} <xsl:if
-      test="@xml:id">\hypertarget{<xsl:value-of select="@xml:id"/>}{}</xsl:if>
-    \begin{center} \begin{small} \begin{tabular} <xsl:call-template
-      name="makeTable"/> \end{tabular} \end{small} \end{center} \end{table}</xsl:template>
+  <xsl:template match="tei:table[@rend='display']">
+    <xsl:text>\begin{table}</xsl:text>
+      <xsl:if  test="@xml:id">
+	<xsl:text>\hypertarget{</xsl:text>
+	<xsl:value-of select="@xml:id"/>
+	<xsl:text>}{}</xsl:text>
+      </xsl:if>
+      <xsl:text>\begin{center} \begin{small} \begin{tabular}</xsl:text>
+      <xsl:call-template  name="makeTable"/> 
+     <xsl:text>\end{tabular} 
+      <xsl:text>\caption{</xsl:text>
+      <xsl:apply-templates mode="ok" select="tei:head"/>
+      <xsl:text>}</xsl:text>
+     \end{small} 
+     \end{center}
+     \end{table}</xsl:text>
+     </xsl:template>
   <xd:doc>
     <xd:short>[latex] Make figure (start)</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="makeFigureStart">
     <xsl:choose>
-      <xsl:when test="@type='display' or tei:head or tei:p">
+      <xsl:when test="@rend='display' or tei:head or tei:p">
         <xsl:text>\begin{figure}[htbp]
       </xsl:text>
       </xsl:when>
@@ -184,9 +196,11 @@
   </xd:doc>
   <xsl:template name="makeFigureEnd">
     <xsl:choose>
-      <xsl:when test="@type='display' or tei:head or tei:p">
+      <xsl:when test="@rend='display' or tei:head or tei:p">
         <xsl:text>&#10;	\caption{</xsl:text>
-        <xsl:value-of select="tei:head"/>
+        <xsl:for-each select="tei:head">
+	  <xsl:apply-templates/>
+	</xsl:for-each>
         <xsl:text>}</xsl:text>
         <xsl:if test="@xml:id">\hypertarget{<xsl:value-of select="@xml:id"/>}{}</xsl:if>
         <xsl:text>\end{figure}
@@ -265,11 +279,11 @@
     </xsl:choose>
     <xsl:text>}&#10;</xsl:text>
     <xsl:choose>
-      <xsl:when test="ancestor::tei:table or @type='display'"> \hline </xsl:when>
+      <xsl:when test="ancestor::tei:table or @rend='display'"> \hline </xsl:when>
       <xsl:otherwise> \hline\endfoot\hline\endlastfoot </xsl:otherwise>
     </xsl:choose>
     <xsl:choose>
-      <xsl:when test="tei:head and not(@type='display')">
+      <xsl:when test="tei:head and not(@rend='display')">
         <xsl:if test="not(ancestor::tei:table)">
           <xsl:text>\endfirsthead </xsl:text>
           <xsl:text>\multicolumn{</xsl:text>

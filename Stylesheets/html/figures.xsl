@@ -221,11 +221,6 @@
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
-      <xsl:if test="tei:head">
-	<div class="caption">
-	  <xsl:apply-templates mode="xref" select="."/>
-	</div>
-      </xsl:if>
       <table>
         <xsl:call-template name="rendToClass"/>
         <xsl:if test="@rend='frame' or @rend='rules'">
@@ -238,6 +233,11 @@
             <xsl:copy-of select="."/>
           </xsl:if>
         </xsl:for-each>
+	<xsl:if test="tei:head">
+	  <caption>
+	    <xsl:apply-templates mode="xref" select="."/>
+	  </caption>
+	</xsl:if>
         <xsl:apply-templates select="tei:row"/>
       </table>
     </div>

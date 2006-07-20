@@ -85,7 +85,7 @@
   </xd:doc>
   <xsl:template match="tei:figure">
     <xsl:choose>
-      <xsl:when test="@type='display' or tei:head or tei:p">
+      <xsl:when test="@rend='display' or tei:head or tei:p">
         <fo:float>
           <xsl:call-template name="addID"/>
           <fo:block text-align="center">
