@@ -2194,7 +2194,7 @@ value:
 attributes of that class; for the list, see section <ptr target="#SAPT"/>.</p>
 <p>Here is the material on which we base our first illustration of the
 use of these mechanisms. Our problem is to represent the S-units
-identified below as qs3 and qs4 as a single (but discontinuous) whole:
+identified below as <val>qs3</val> and <val>qs4</val> as a single (but discontinuous) whole:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><q who="waitress">
    <s xml:id="qs2">Monsieur Paul, after he has taken equal
       parts of goose breast and the finest pork, and
@@ -2214,13 +2214,13 @@ identified below as qs3 and qs4 as a single (but discontinuous) whole:
 <!-- M.F.K. Fisher, I was really very hungry, As They Were, p43  -->
 </p>
 <p>Using the <att>prev</att> and <att>next</att> attributes, we can
-link the s-units with identifiers <val>s1</val> and <val>s2</val>, either singly or doubly as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><s xml:id="QS3" next="#QS4"><emph>But</emph>,</s>
-<s xml:id="QS4">he never stops stirring it!</s>
-<s xml:id="QS5"><emph>But</emph>,</s>
-<s xml:id="QS6" prev="#QS5">he never stops stirring it!</s>
-<s xml:id="QS7" next="#QS7"><emph>But</emph>,</s>
-<s xml:id="QS8" prev="#QS7">he never stops stirring it!</s></egXML>
+link the s-units with identifiers <val>qs3</val> and <val>qs4</val>, either singly or doubly as follows:
+<eg><![CDATA[  <s xml:id="qs3" next="#qs4"><emph>But</emph>,</s>
+  <s xml:id="qs4">he never stops stirring it!</s>]]></eg>
+<eg><![CDATA[  <s xml:id="qs3"><emph>But</emph>,</s>
+  <s xml:id="qs4" prev="#qs3">he never stops stirring it!</s>]]></eg>
+<eg><![CDATA[  <s xml:id="qs3" next="#qs4"><emph>But</emph>,</s>
+  <s xml:id="qs4" prev="#qs3">he never stops stirring it!</s>]]></eg>
 Double linking of the two S-units, as illustrated by the last of these
 encodings, is equivalent to specifying a <tag>link</tag> tag:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><link type="join" targets="#qs3 #qs4"/></egXML></p>
