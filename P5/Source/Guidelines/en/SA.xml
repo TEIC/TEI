@@ -2995,30 +2995,27 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
 	  <mentioned>xi:</mentioned>, and exactly two elements,
 	  <gi>xi:include</gi> and <gi>xi:fallback</gi>.</p>
          
-	  <p>The <gi>xi:include</gi> element uses the <ident
-	  type="attrName">href</ident> attribute to specify the
-	  location of the resource to be included; its value is an
-	  IURI <!-- this is the only occurence of "IURI" in the
-	  Guidelines; does it need to be explained?, or is it an
-	  error?-->containing, if necessary, an XPointer.
-	  Additionally, it uses the <ident
-	  type="attrName">parse</ident> attribute (whose valid values
-	  are either <ident type="attrVal">text</ident> or <ident
-	  type="attrVal">xml</ident> to specify whether the included
-	  content is plain text or an XML fragment, and the <ident
-	  type="attrName">encoding</ident> attribute to provide a
-	  hint, when the included fragment is text, of the character
-	  encoding of the fragment. An optional <gi>xi:fallback</gi>
-	  element is permitted within an <gi>xi:include</gi>; it
-	  specifies alternative content to be used when the external
-	  resource, for any reason, cannot be fetched. Its use is not
-	  recommeded for stand-off markup.</p>
+	  <p>The <gi>xi:include</gi> element uses the <att>href</att>
+	  attribute to specify the location of the resource to be
+	  included; its value is an IURI <!-- this is the only
+	  occurence of "IURI" in the Guidelines; does it need to be
+	  explained?, or is it an error?-->containing, if necessary,
+	  an XPointer. Additionally, it uses the <att>parse</att>
+	  attribute (whose only valid values are <val>text</val> and
+	  <val>xml</val>) to specify whether the included content is
+	  plain text or an XML fragment, and the <att>encoding</att>
+	  attribute to provide a hint, when the included fragment is
+	  text, of the character encoding of the fragment. An optional
+	  <gi>xi:fallback</gi> element is permitted within an
+	  <gi>xi:include</gi>; it specifies alternative content to be
+	  used when the external resource, for any reason, cannot be
+	  fetched. Its use is not recommeded for stand-off markup.</p>
           
 	  <p>XInclude currently only requires support for one XPointer
 	  scheme, called <code>element()</code>. As described in <ptr
-	  target="#SAES"/>, the <code>element()</code> scheme that can
+	  target="#SAES"/>, the <code>element()</code> scheme can
 	  be either a bare name (denoting an element with a specific
-	  <ident type="attrName">xml:id</ident> attribute) or a child
+	  <att>xml:id</att> attribute) or a child
 	  sequence (a numerical sequence of slash-separated child
 	  numbers specifying a path in the XML tree whose final step
 	  selects a specific subtree of XML content). Another scheme,
@@ -3193,14 +3190,15 @@ If bees are few.\n
 	  markup to ensure this. Inaccurate ranges, for instance,
 	  could very well create badly formed documents that could not
 	  be further processed. Of course, badly formed documents are
-	  a problem can only arise when source documents are XML.
+	  a problem that can only arise when source documents are XML.
 	  Plain text source documents will always create well-formed
 	  documents.</p>
-	<p>Validity always happen with internalized documents. Thus an
-	  XML document containing <gi>xi:include</gi> and
-	  <gi>xi:fallback</gi> elements is never a valid TEI document.
-	  This specification requires thus that validity is verified
-	  after the resolution of all the <gi>xi:include</gi> elements.</p>
+	<p>Validity is a concept that is applied to internalized
+	documents. Thus an XML document containing <gi>xi:include</gi>
+	and <gi>xi:fallback</gi> elements is never a valid TEI
+	document. This specification requires thus that validity is
+	verified after the resolution of all the <gi>xi:include</gi>
+	elements.</p>
       </div3>
       <div3 type="subsection">
 	<head>Including text and/or xml fragments</head>
@@ -3229,7 +3227,7 @@ If bees are few.\n
     </body>
 </html>]]></eg>
 	  the expression <code>range(/1/2/1.0,/1/2/11.1)</code> will
-	  select the whole poem, <gi>text</gi> <emph>and</emph>
+	  select the whole poem, text content <emph>and</emph>
 	  <gi>div</gi> elements <emph>and</emph> hypertext links (NB:
 	  in XPointer whitespace-only text nodes count).</p>
 	<p>On the contrary, the expressions
