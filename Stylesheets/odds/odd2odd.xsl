@@ -93,22 +93,13 @@ because of the order of declarations
     <xsl:if test="$verbose='true'">
       <xsl:message>Phase 2: add elementSpec, classSpec, macroSpec</xsl:message>
     </xsl:if>
-    <xsl:for-each select="tei:classSpec[@mode='add']">
+    <xsl:for-each select="tei:classSpec[@mode='add' or not(@mode)]">
       <xsl:call-template name="createCopy"/>
     </xsl:for-each>
-    <xsl:for-each select="tei:classSpec[not(@mode)]">
+    <xsl:for-each select="tei:macroSpec[@mode='add' or not(@mode)]">
       <xsl:call-template name="createCopy"/>
     </xsl:for-each>
-    <xsl:for-each select="tei:macroSpec[@mode='add']">
-      <xsl:call-template name="createCopy"/>
-    </xsl:for-each>
-    <xsl:for-each select="tei:macroSpec[not(@mode)]">
-      <xsl:call-template name="createCopy"/>
-    </xsl:for-each>
-    <xsl:for-each select="tei:elementSpec[@mode='add']">
-      <xsl:apply-templates mode="copy" select="."/>
-    </xsl:for-each>
-    <xsl:for-each select="tei:elementSpec[not(@mode)]">
+    <xsl:for-each select="tei:elementSpec[@mode='add' or not(@mode)]">
       <xsl:apply-templates mode="copy" select="."/>
     </xsl:for-each>
     <xsl:if test="$verbose='true'">
@@ -300,16 +291,14 @@ because of the order of declarations
             <xsl:for-each select="tei:attList[@org='choice']">
               <xsl:copy>
                 <xsl:copy-of select="@*"/>
-                <xsl:copy-of select="tei:attDef[not(@mode)]"/>
-                <xsl:copy-of select="tei:attDef[@mode='add']"/>
+                <xsl:copy-of select="tei:attDef[@mode='add' or not(@mode)]"/>
                 <xsl:copy-of select="tei:attRef"/>
                 <xsl:copy-of select="tei:attList"/>
               </xsl:copy>
             </xsl:for-each>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:copy-of select="tei:attList/tei:attDef[not(@mode)]"/>
-            <xsl:copy-of select="tei:attList/tei:attDef[@mode='add']"/>
+	    <xsl:copy-of select="tei:attList/tei:attDef[@mode='add' or not(@mode)]"/>
             <xsl:copy-of select="tei:attList/tei:attRef"/>
             <xsl:copy-of select="tei:attList/tei:attList"/>
           </xsl:otherwise>
@@ -748,7 +737,8 @@ so that is only put back in if there is some content
           <xsl:when test="key('CHANGE',$className)">
             <xsl:for-each select="key('CHANGE',$className)">
               <!-- add in the new attributes -->
-              <xsl:for-each select="tei:attList/tei:attDef[@mode='add']">
+              <xsl:for-each select="tei:attList/tei:attDef[@mode='add'
+				    or not(@mode)]">
                 <xsl:call-template name="mergeClassAttribute">
                   <xsl:with-param name="element" select="$elementName"/>
                   <xsl:with-param name="class" select="$className"/>
@@ -861,7 +851,7 @@ so that is only put back in if there is some content
     <xsl:param name="ORIGINAL"/>
     <xsl:param name="elementName"/>
     <!-- first put in the ones we know take precedence -->
-    <xsl:copy-of select="tei:attList/tei:attDef[@mode='add']"/>
+    <xsl:copy-of select="tei:attList/tei:attDef[@mode='add' or not(@mode)]"/>
     <xsl:copy-of select="tei:attList/tei:attDef[@mode='replace']"/>
     <xsl:for-each select="$ORIGINAL/tei:attList">
       <!-- original source  context -->
