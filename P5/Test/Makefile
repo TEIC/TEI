@@ -13,6 +13,7 @@ TESTFILES= \
 	testlite \
 	testlangs \
 	testminimal \
+	testmixedup \
 	testms \
 	testnames \
 	testtagdocs \
