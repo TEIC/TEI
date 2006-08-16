@@ -91,7 +91,9 @@
   </xd:doc>
   <xsl:template match="tei:ab">
     <div>
-      <xsl:call-template name="rendToClass"/>
+      <xsl:call-template name="rendToClass">
+	<xsl:with-param name="default">ab</xsl:with-param>
+      </xsl:call-template>
       <xsl:apply-templates/>
     </div>
   </xsl:template>
@@ -1042,7 +1044,11 @@
       </xsl:choose>
     </xsl:variable>
     <xsl:element name="{$wrapperElement}">
-      <xsl:call-template name="rendToClass"/>
+      <xsl:call-template name="rendToClass">
+	<xsl:with-param name="default">
+	  <xsl:if test="$wrapperElement='div'">p</xsl:if>
+	</xsl:with-param>
+      </xsl:call-template>
       <xsl:choose>
         <xsl:when test="@xml:id and $xhtml='true'">
           <xsl:attribute name="id">
@@ -1927,6 +1933,7 @@
     </html>
   </xsl:template>
   <xsl:template name="rendToClass">
+    <xsl:param name="default"/>
     <xsl:choose>
       <xsl:when test="@rend and starts-with(@rend,'class:')">
         <xsl:attribute name="class">
@@ -1936,6 +1943,11 @@
       <xsl:when test="@rend">
         <xsl:attribute name="class">
           <xsl:value-of select="@rend"/>
+        </xsl:attribute>
+      </xsl:when>
+      <xsl:when test="not($default='')">
+        <xsl:attribute name="class">
+	  <xsl:value-of select="$default"/>
         </xsl:attribute>
       </xsl:when>
     </xsl:choose>
