@@ -105,3 +105,33 @@ display ought, I suppose, to encourage them to think again about what they
 really want to accomplish and how, but I fear it is equally likely to lead
 them to conclude that it can't be done via this interface at all, leading
 them to resort to manual ODD-hacking with blunt instruments.
+
+Syd:
+* Still generates an invalid ODD file (puts in a <divGen> where it's
+  not allowed -- one solution would be to wrap the <schemaSpec> in a
+  <div>).
+
+* When a class has no members, its reference documentation is
+  (appropriately) not printed out. But references to it, including
+  its table of contents entry, still are.
+
+* In the TOC the headings "Classes", "Elements", and "Macros" neither
+  match nor link to the corresponding headings in the main part.
+
+* The first child of the resulting HTML <div class="specifications"
+  id="body.1_div.1"> is an <h2> element with the content "1". I'm not
+  sure in what series of what things this is the first, but it
+  certainly looks a bit weird.
+
+* I still think wrapping individual entires in the TOC with <div>
+  rather than <p>, <span>, or even nothing, is nuts.
+
+* The HTML reference documentation claims to be XHTML, but is
+  invalid: 
+  - <ul> element with class=toc that has no content
+  - <span>s with xml:id= instead of id= [In all fairness, these
+    result from <note type="cit"> elements that Lou & I decided to use,
+    but probably never told you about :-]
+  And it doesn't have an XML declaration.
+
+
