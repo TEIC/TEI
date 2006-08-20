@@ -1,4 +1,4 @@
-PREFIX=/usr
+PREFIX=/
 FILES=ChangeLog \
 	g \
 	index.html \
@@ -30,9 +30,9 @@ default:
 install: release
 	mkdir -p ${PREFIX}/usr/share/tei-roma
 	(cd release; tar cf - . ) | (cd ${PREFIX}/usr/share; tar xf - )
-	mkdir -p ${PREFIX}/bin
-	cp -p roma.sh ${PREFIX}/bin/roma
-	chmod 755 ${PREFIX}/bin/roma
+	mkdir -p ${PREFIX}/usr/bin
+	cp -p roma.sh ${PREFIX}/usr/bin/roma
+	chmod 755 ${PREFIX}/usr/bin/roma
 
 dist:  release
 	(cd release; 	\
