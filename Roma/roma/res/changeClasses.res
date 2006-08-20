@@ -12,6 +12,8 @@ form_changeAttributes=changeAttributes
 
 
 
+
+
 [fr]
 helpmessage=Modification des classes attributives
 headline=Modification des classes attributives
@@ -21,6 +23,8 @@ form_className=Nom de classe
 form_description=Description
 form_attributes=Attributs
 form_changeAttributes=Modification des attributs
+
+
 
 
 
@@ -40,6 +44,8 @@ form_changeAttributes=Attribute verändern
 
 
 
+
+
 [zh]
 helpmessage=選擇您想要更改的TEI集合。點選集合名稱來觀看它的說明檔。
 headline=更改屬性元素集
@@ -49,6 +55,22 @@ form_className=元素集名稱
 form_description=描述
 form_attributes=屬性
 form_changeAttributes=更改屬性
+
+
+
+
+
+
+[ru]
+helpmessage=Выберите тот класс TEI, который Вы хотите изменить. Наведите курсор на имя класса, активируйте имя и посмотрите документацию 
+headline=Изменения класса атрибутов
+
+form_headline=Список классов атрибутов
+form_className=Наименование класса
+form_description=Описание
+form_attributes=Атрибуты
+form_changeAttributes=Изменение атрибутов
+
 
 
 
@@ -65,15 +87,17 @@ form_changeAttributes=ändraAttribut
 
 
 
-[ru]
-helpmessage=Выберите тот класс TEI, который Вы хотите изменить. Наведите курсор на имя класса, активируйте имя и посмотрите документацию 
-headline=Изменения класса атрибутов
 
-form_headline=Список классов атрибутов
-form_className=Наименование класса
-form_description=Описание
-form_attributes=Атрибуты
-form_changeAttributes=Изменение атрибутов
+
+[ja]
+helpmessage=変更したいTEIクラスを選択して下さい。クラス名をクリックすると解説が表示されます。
+headline=属性クラスの変更
+
+form_headline=属性クラス一覧
+form_className=クラス名
+form_description=解説
+form_attributes=属性
+form_changeAttributes=属性の変更
 
 
 

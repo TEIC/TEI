@@ -16,6 +16,8 @@ selectedModules_headline=List of selected Modules
 
 
 
+
+
 [fr]
 helpmessage=Allons y, personnalisons quelques modules!
 headline=Modules
@@ -29,6 +31,8 @@ form_add=ajouter
 form_remove=supprimer
 
 selectedModules_headline=Liste des Modules selectionnés
+
+
 
 
 
@@ -52,6 +56,8 @@ selectedModules_headline=Liste der ausgewählten Module
 
 
 
+
+
 [zh]
 helpmessage=點選「加入」來將模組加到您的文件模型中，或是點選模組名稱來更改它的內容。
 headline=TEI 模組
@@ -66,6 +72,25 @@ form_remove=移除
 
 selectedModules_headline=已選入的模組清單
 
+
+
+
+
+
+
+[ru]
+helpmessage=Чтобы ввести модуль в Вашу схему, активируйте «add». Либо активируйте наименование модуля, чтобы персонализировать его содержание. headline=Модули
+
+form_headline=Список модулей TEI
+form_moduleName=Наименование модуля
+form_description=Краткое описание
+form_changes=Изменения
+form_changed=Изменен
+form_add=Добавление
+form_remove=Уничтожить
+
+selectedModules_headline=Список выбранных модулей
+ 
 
 
 
@@ -87,18 +112,22 @@ selectedModules_headline=Lista på valda moduler
 
 
 
-[ru]
-helpmessage=Чтобы ввести модуль в Вашу схему, активируйте «add». Либо активируйте наименование модуля, чтобы персонализировать его содержание. headline=Модули
 
-form_headline=Список модулей TEI
-form_moduleName=Наименование модуля
-form_description=Краткое описание
-form_changes=Изменения
-form_changed=Изменен
-form_add=Добавление
-form_remove=Уничтожить
 
-selectedModules_headline=Список выбранных модулей
- 
+[ja]
+helpmessage=スキーマにモジュールを追加したい場合には「追加する」を、モジュールの内容を修正したい場合には「モジュール名」をクリック
+
+headline=モジュール
+
+form_headline=TEIモジュール一覧
+form_moduleName=モジュール名
+form_description=解説
+form_changes=変更
+form_changed=変更済み
+form_add=追加する
+form_remove=外す
+
+selectedModules_headline=選択したモジュール
+
 
 

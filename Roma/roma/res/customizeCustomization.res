@@ -14,6 +14,8 @@ form_prefix=Prefix for TEI pattern names in schema
 
 
 
+
+
 [fr]
 helpmessage=Définissons les paramètres
 headline=Personnaliser les paramètres
@@ -25,6 +27,8 @@ form_language=Langage
 form_author=Auteur
 form_description=Description
 form_prefix=Prefix for TEI pattern names in schema
+
+
 
 
 
@@ -47,6 +51,26 @@ form_prefix=Prefix for TEI pattern names in schema
 
 
 
+
+
+[es]
+helpmessage=spanish message
+headline=Customize your customization
+
+form_headline=Customize your customization
+form_title=Title
+form_filename=Filename
+form_language=Language
+form_author=Author name
+form_description=Description
+form_prefix=Prefix for TEI pattern names in schema
+
+
+
+
+
+
+
 [zh]
 helpmessage=在這兒可以設定全域參數
 headline=設定全域參數
@@ -63,17 +87,19 @@ form_prefix=Prefix for TEI pattern names in schema
 
 
 
-[es]
-helpmessage=spanish message
-headline=Customize your customization
 
-form_headline=Customize your customization
-form_title=Title
-form_filename=Filename
-form_language=Language
-form_author=Author name
-form_description=Description
-form_prefix=Prefix for TEI pattern names in schema
+
+[ru]
+helpmessage=Этот диалог позволит Вам ввести глобальные параметры headline=Введите Ваши параметры
+
+form_headline=Введите Ваши параметры
+form_title=Заголовок
+form_filename=Наименование файла
+form_language=Язык наименования элементов
+form_doclanguage=Язык документации
+form_author=Имя автора
+form_description=Описание
+form_prefix=Префикс наименования модели TEI в данной схеме
 
 
 
@@ -95,17 +121,18 @@ form_prefix=Prefix för TEI namnen i schemat
 
 
 
-[ru]
-helpmessage=Этот диалог позволит Вам ввести глобальные параметры headline=Введите Ваши параметры
 
-form_headline=Введите Ваши параметры
-form_title=Заголовок
-form_filename=Наименование файла
-form_language=Язык наименования элементов
-form_doclanguage=Язык документации
-form_author=Имя автора
-form_description=Описание
-form_prefix=Префикс наименования модели TEI в данной схеме
 
+[ja]
+helpmessage=グローバル属性を定義します。
+headline=パラメータの定義
+
+form_headline=パラメータの定義
+form_title=名前
+form_filename=ファイル名
+form_language=言語
+form_author=制作者
+form_description=解説
+form_prefix=接頭辞
 
 

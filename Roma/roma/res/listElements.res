@@ -17,6 +17,8 @@ form_changeAttributes=Change attributes
 
 
 
+
+
 [fr]
 helpmessage=Ajoutons des éléments
 headline=éléments supplémentaires
@@ -31,6 +33,8 @@ form_description=Description
 form_attributes=Attributs
 form_delete=Supprimer
 form_changeAttributes=Changer les attributs
+
+
 
 
 
@@ -55,6 +59,8 @@ form_changeAttributes=Attribute verändern
 
 
 
+
+
 [zh]
 helpmessage=已被定義在您的文件模型當中的元素。
 headline=現有的元素
@@ -69,6 +75,27 @@ form_description=描述
 form_attributes=屬性
 form_delete=刪除
 form_changeAttributes=更改屬性
+
+
+
+
+
+
+[ru]
+helpmessage=Элементы, которые Вы определили для своей схемы.
+headline=Включенные элементы
+
+form_headline=Список включенных элементов
+form_add=Добавить новый элемент
+form_changeElement=Изменить элемент
+form_include=Включить
+form_exclude=Исключить
+form_tagName=Наименование маркера
+form_description=Описание
+form_attributes=Атрибуты
+form_delete=Уничтожить
+form_changeAttributes=Изменить атрибуты
+
 
 
 
@@ -90,20 +117,22 @@ form_changeAttributes=Ändra attribut
 
 
 
-[ru]
-helpmessage=Элементы, которые Вы определили для своей схемы.
-headline=Включенные элементы
 
-form_headline=Список включенных элементов
-form_add=Добавить новый элемент
-form_changeElement=Изменить элемент
-form_include=Включить
-form_exclude=Исключить
-form_tagName=Наименование маркера
-form_description=Описание
-form_attributes=Атрибуты
-form_delete=Уничтожить
-form_changeAttributes=Изменить атрибуты
 
+[ja]
+helpmessage=スキーマに追加定義した要素です
+
+headline=追加した属性
+
+form_headline=追加した属性
+form_add=要素の追加
+form_changeElement=要素の変更
+form_include=含める
+form_exclude=外す
+form_tagName=タグ名
+form_description=解説
+form_attributes=属性
+form_delete=削除
+form_changeAttributes=属性の変更
 
 

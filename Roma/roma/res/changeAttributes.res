@@ -14,6 +14,8 @@ form_valList=List of values
 
 
 
+
+
 [fr]
 helpmessage=Modification des attributs
 headline=Modification des attributs
@@ -30,6 +32,8 @@ form_valList=Liste des valeurs
 
 
 
+
+
 [de]
 helpmessage=Sie können Attribute entfernen oder ihren Datentyp ändern.
 headline=Attribute verändern
@@ -41,6 +45,8 @@ form_contents=Inhalt
 form_defaultValue=Voreinstellung
 form_description=Beschreibung
 form_valList=Werteliste
+
+
 
 
 
@@ -64,6 +70,24 @@ form_valList=屬性值清單
 
 
 
+
+
+[ru]
+helpmessage=Вы можете иллиминировать атрибуты или изменить описывающий их тип данных
+headline=Изменение некоторых атрибутов
+
+form_headline=Изменить атрибут
+form_name=Наименование атрибута
+form_optional=Является ли атрибут факультативным?
+form_contents=Содержание
+form_defaultValue=Значение по умолчанию
+form_description=Описание
+form_valList=Список значений
+
+
+
+
+
 [sw]
 helpmessage=Du kan ta bort attribut, eller ändra deras datatyp.
 headline=Ändra attribut
@@ -78,17 +102,19 @@ form_valList=Lista värden
 
 
 
-[ru]
-helpmessage=Вы можете иллиминировать атрибуты или изменить описывающий их тип данных
-headline=Изменение некоторых атрибутов
 
-form_headline=Изменить атрибут
-form_name=Наименование атрибута
-form_optional=Является ли атрибут факультативным?
-form_contents=Содержание
-form_defaultValue=Значение по умолчанию
-form_description=Описание
-form_valList=Список значений
+
+[ja]
+helpmessage=属性を外したり、データ型を変更することができます。
+headline=属性の変更
+
+form_headline=属性の変更
+form_name=属性名
+form_optional=選択
+form_contents=内容
+form_defaultValue=既定値
+form_description=解説
+form_valList=属性値のリスト
 
 
 

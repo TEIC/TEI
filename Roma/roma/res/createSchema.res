@@ -9,12 +9,16 @@ form_output=Which format do you prefer?
 
 
 
+
+
 [fr]
 helpmessage=On y va! création du schéma
 headline=Enfin je vous rends votre schéma...
 
 form_headline=Creation du schéma en cours
 form_output=Quel format préfériez-vous?
+
+
 
 
 
@@ -31,12 +35,27 @@ form_output=Welches Format bevorzugen Sie?
 
 
 
+
+
 [zh]
 helpmessage=您可以選擇Relax NG、W3C或DTD的模型語言來建立文件模型檔。
 headline=建立文件模型
 
 form_headline=建立文件模型
 form_output=您想要哪一種模型語言?
+
+
+
+
+
+
+
+[ru]
+helpmessage=Вы можете по своему усмотрению создать схему в Relax, W3C или в DTD 
+headline=Время выбрать схему
+
+form_headline=Создание схемы
+form_output=Какой формат Вы предпочитаете?
 
 
 
@@ -52,12 +71,14 @@ form_output=Vilket format föredrar du?
 
 
 
-[ru]
-helpmessage=Вы можете по своему усмотрению создать схему в Relax, W3C или в DTD 
-headline=Время выбрать схему
 
-form_headline=Создание схемы
-form_output=Какой формат Вы предпочитаете?
 
+[ja]
+helpmessage=スキーマを選択し、自動作成します。
+
+headline=スキーマの作成
+
+form_headline=スキーマの作成
+form_output=スキーマの選択
 
 

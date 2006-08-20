@@ -15,6 +15,8 @@ form_delete=Delete
 
 
 
+
+
 [fr]
 helpmessage=Ajoutons des attributs
 headline=Attributs supplémentaires
@@ -27,6 +29,8 @@ form_exclude=Exclure
 form_tagName=Nom de balise
 form_description=Description
 form_delete=Supprimer
+
+
 
 
 
@@ -50,6 +54,8 @@ form_delete=Löschen
 
 
 
+
+
 [zh]
 helpmessage=已被定義在這個元素或元素集當中的屬性。
 headline=現有的屬性
@@ -62,6 +68,25 @@ form_exclude=不包含
 form_tagName=標籤名稱
 form_description=描述
 form_delete=刪除
+
+
+
+
+
+
+
+[ru]
+helpmessage=Включены атрибуты принадлежащие данному классу 
+headline=Включенные атрибуты
+
+form_headline=Список атрибутов
+form_add=Добавить новый атрибут
+form_changeAttribute=Изменить атрибут
+form_include=Включить
+form_exclude=Исключить
+form_tagName=Наименование маркера
+form_description=Описание
+form_delete=Уничтожить
 
 
 
@@ -82,18 +107,20 @@ form_delete=Ta bort
 
 
 
-[ru]
-helpmessage=Включены атрибуты принадлежащие данному классу 
-headline=Включенные атрибуты
 
-form_headline=Список атрибутов
-form_add=Добавить новый атрибут
-form_changeAttribute=Изменить атрибут
-form_include=Включить
-form_exclude=Исключить
-form_tagName=Наименование маркера
-form_description=Описание
-form_delete=Уничтожить
 
+[ja]
+helpmessage=クラス・要素で定義した属性です
+
+headline=追加した属性
+
+form_headline=追加した属性
+form_add=属性の追加
+form_changeAttribute=属性の変更
+form_include=含める
+form_exclude=外す
+form_tagName=タグ名
+form_description=解説
+form_delete=削除
 
 
