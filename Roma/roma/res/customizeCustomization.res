@@ -47,30 +47,6 @@ form_author=Name des Autors
 form_description=Beschreibung
 form_prefix=Prefix for TEI pattern names in schema
 
-
-
-
-
-
-
-[es]
-helpmessage=spanish message
-headline=Customize your customization
-
-form_headline=Customize your customization
-form_title=Title
-form_filename=Filename
-form_language=Language
-form_author=Author name
-form_description=Description
-form_prefix=Prefix for TEI pattern names in schema
-
-
-
-
-
-
-
 [zh]
 helpmessage=在這兒可以設定全域參數
 headline=設定全域參數
