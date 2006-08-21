@@ -613,6 +613,7 @@ class roma
 
 	$this->applyStylesheet( $oListDom, 'modules.xsl', $oNewDom, array(), 'modules' );
 
+	$oParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'mode', 'modules' );
 	$oParser->addReplacement( 'view', 'main' );
 	$oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
@@ -643,7 +644,7 @@ class roma
 
 	$aszParam =  array( 'module' => $_REQUEST[ 'module' ] ) ;
 	$this->applyStylesheet( $oListDom, 'changeModules.xsl', $oNewDom, $aszParam , 'changeModule');
-
+	$oParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'mode', 'changeModule' );
 	$oParser->addReplacement( 'view', 'main' );
 	$oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
@@ -732,6 +733,7 @@ class roma
 
 	$this->applyStylesheet( $oListDom, 'addElements.xsl', $oNewDom, $aszParam, 'addElements'  );
 
+	$oParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'mode', 'addElements' );
 	$oParser->addReplacement( 'view', 'listElements' );
 	$oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
@@ -776,7 +778,7 @@ class roma
 	  }
 
 	$oSchemaParser->Parse( $szSchemTem, $szSchema );
-	
+	$oParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'mode', 'createSchema' );
 	$oParser->addReplacement( 'view', 'createSchema' );
 	$oParser->addReplacement( 'template', $szSchema );
@@ -805,6 +807,7 @@ class roma
 	$oLanguageParser->addReplacement( 'oddlang', $szOddLanguage );
 	$oLanguageParser->Parse( $szLangTem, $szLanguage );
 
+	$oParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'mode', 'customizeLanguage' );
 	$oParser->addReplacement( 'view', 'customizeLanguage' );
 	$oParser->addReplacement( 'template', $szLanguage );
@@ -876,6 +879,7 @@ class roma
 
 	$this->applyStylesheet( $oListDom, 'addElements.xsl', $oNewDom, $aszParam, 'changeElement'  );
 
+	$oParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'mode', 'changeElement' );
 	$oParser->addReplacement( 'view', 'main' );
 	$oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
@@ -952,6 +956,7 @@ class roma
 	  {
 	    $oParser->addReplacement( 'view', 'listElements' );
 	  }
+	$oParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'mode', 'addAttributes' );
 	$oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
         $oParser->Parse( $szTemplate, $szOutput );
@@ -974,6 +979,7 @@ class roma
 	    
 	    $this->applyStylesheet( $oElementsDom, 'listAddedElements.xsl', $oNewDom, array(), 'listElements' );
 
+	    $oParser->addReplacement( 'lang', $szLanguage );
 	    $oParser->addReplacement( 'mode', 'listElements' );
 	    $oParser->addReplacement( 'view', 'listElements' );
 	    $oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
@@ -1055,6 +1061,7 @@ class roma
 
 	$this->applyStylesheet( $oListDom, 'changeClasses.xsl',	$oNewDom, array( 'host' => roma_xquery_server, 'class' => $_REQUEST[ 'class' ], 'module' => $_REQUEST[ 'module' ] ), 'changeClasses' );
 
+	$oParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'mode', 'changeClasses' );
 	$oParser->addReplacement( 'view', 'changeClasses' );
 	$oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
@@ -1079,6 +1086,7 @@ class roma
 	$oDocParser->addReplacement( 'format', $_REQUEST[ 'format' ] );
 	$oDocParser->Parse( $szDocTem, $szDoc );
 
+	$oParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'mode', 'createDocumentation' );
 	$oParser->addReplacement( 'view', 'createDocumentation' );
 	$oParser->addReplacement( 'template', $szDoc );
