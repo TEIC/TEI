@@ -52,6 +52,7 @@ odd2html.xsl
 	 match="tei:classSpec|tei:elementSpec|tei:macroSpec" use="'yes'"/>
 
 <xsl:key name="PUBLICIDS" match="tei:publicID" use="@file"/>
+<xsl:param name="documentationLanguage">en</xsl:param>
 
 <!-- parameterization -->
 
@@ -98,7 +99,8 @@ odd2html.xsl
 <xsl:variable name="top" select="/"/>
 <xsl:param name="homeURL">http://www.tei-c.org/P5/</xsl:param>
 <xsl:param name="parentURL">http://www.tei-c.org/</xsl:param>
-<xsl:param name="TEISERVER">/Query/</xsl:param>
+<xsl:param name="TEISERVER">http://tei.oucs.ox.ac.uk/Query/</xsl:param>
+<xsl:param name="feedbackURL">mailto:tei@oucs.ox.ac.uk</xsl:param>
 <xsl:param name="schemaBaseURL">http://www.tei-c.org.uk/schema/relaxng/p5/</xsl:param>
 
 <!-- the level of division for each mini TOCs are built -->
@@ -111,31 +113,13 @@ odd2html.xsl
 </xsl:template>
 
 <xsl:template name="stdheader">
- <div id="hdr">
+  <xsl:param name="title"/>
+  <div id="hdr">
   <h2 class="institution">
-  <xsl:value-of select="$institution"/>: Guidelines</h2>
-  <h1>Specification for 
-  <xsl:for-each
-      select="key('SPECS','yes')[1]">
-    <xsl:choose>
-      <xsl:when test="self::tei:elementSpec">
-	<xsl:text>&lt;</xsl:text>
-	<xsl:value-of select="@ident"/>
-	<xsl:text>&gt;</xsl:text>
-      </xsl:when>
-      <xsl:when test="self::tei:classSpec[@type='model']">
-	<xsl:value-of select="@ident"/>
-	<xsl:text> model class</xsl:text>
-      </xsl:when>
-      <xsl:when test="self::tei:classSpec[@type='atts']">
-	<xsl:value-of select="@ident"/>
-	<xsl:text> attribute class</xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:value-of select="@ident"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:for-each>
+    <xsl:value-of select="$institution"/>
+  </h2>
+  <h1>
+    <xsl:value-of select="$title"/>
   </h1>
  </div>
 </xsl:template>
@@ -172,22 +156,29 @@ odd2html.xsl
     <xsl:comment>THIS FILE IS GENERATED FROM AN XML MASTER</xsl:comment>
     <head>
       <xsl:variable name="pagetitle">
-	<xsl:text>Specification for </xsl:text>
-	<xsl:for-each
-	    select="key('SPECS','yes')[1]">
+	<xsl:for-each select="key('SPECS','yes')[1]">
 	  <xsl:choose>
 	    <xsl:when test="self::tei:elementSpec">
-	      <xsl:text>&lt;</xsl:text>
+	      <xsl:call-template name="i18n">
+		<xsl:with-param name="word">Element</xsl:with-param>
+	      </xsl:call-template>
+	      <xsl:text> &lt;</xsl:text>
 	      <xsl:value-of select="@ident"/>
 	      <xsl:text>&gt;</xsl:text>
 	    </xsl:when>
 	    <xsl:when test="self::tei:classSpec[@type='model']">
+	      <xsl:call-template name="i18n">
+		<xsl:with-param name="word">Class</xsl:with-param>
+	      </xsl:call-template>
+	      <xsl:text> </xsl:text>
 	      <xsl:value-of select="@ident"/>
-	      <xsl:text> model class</xsl:text>
 	    </xsl:when>
-	    <xsl:when test="self::tei:classSpec[@type='model']">
+	    <xsl:when test="self::tei:classSpec[@type='atts']">
+	      <xsl:call-template name="i18n">
+		<xsl:with-param name="word">Class</xsl:with-param>
+	      </xsl:call-template>
+	      <xsl:text> </xsl:text>
 	      <xsl:value-of select="@ident"/>
-	      <xsl:text> attribute class</xsl:text>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:value-of select="@ident"/>
@@ -212,7 +203,9 @@ odd2html.xsl
         <xsl:call-template name="bodyHook"/>
 	<xsl:call-template name="bodyJavascriptHook"/>
 	<xsl:if test="not(tei:text/tei:front/tei:titlePage)">
-	  <xsl:call-template name="stdheader"/>
+	  <xsl:call-template name="stdheader">
+	    <xsl:with-param name="title" select="$pagetitle"/>
+	  </xsl:call-template>
 	</xsl:if>
 	<xsl:call-template name="startHook"/>
 	<xsl:apply-templates/>
