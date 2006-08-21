@@ -1457,8 +1457,14 @@ sequenceRepeatable
             </a>
           </xsl:when>
           <xsl:otherwise>
-            <a href="{concat($TEISERVER,'tag.xq?name=',$name)}"
-              xmlns="http://www.w3.org/1999/xhtml">
+	    <a xmlns="http://www.w3.org/1999/xhtml">
+	      <xsl:attribute name="href">
+		<xsl:value-of select="$TEISERVER"/>
+		<xsl:text>tag.xq?name=</xsl:text>
+		<xsl:value-of select="$name"/>
+		<xsl:text>&amp;documentationLanguage=</xsl:text>
+		<xsl:value-of select="$documentationLanguage"/>
+	      </xsl:attribute>
               <xsl:value-of select="$name"/>
             </a>
           </xsl:otherwise>
@@ -1533,15 +1539,25 @@ sequenceRepeatable
         <xsl:choose>
           <xsl:when test="$oddmode='tei'">
             <tei:ref>
-              <xsl:attribute name="target"><xsl:value-of select="$TEISERVER"
-                  />tag.xq?name=<xsl:value-of select="$partialname"/></xsl:attribute>
+              <xsl:attribute name="target">
+		<xsl:value-of select="$TEISERVER"/>
+	        <xsl:text>tag.xq?name=</xsl:text>
+		<xsl:value-of select="$partialname"/>
+		<xsl:text>&amp;documentationLanguage=</xsl:text>
+		<xsl:value-of select="$documentationLanguage"/>
+	      </xsl:attribute>
               <xsl:value-of select="$link"/>
             </tei:ref>
           </xsl:when>
           <xsl:otherwise>
             <a xmlns="http://www.w3.org/1999/xhtml">
-              <xsl:attribute name="href"><xsl:value-of select="$TEISERVER"
-                  />tag.xq?name=<xsl:value-of select="$partialname"/></xsl:attribute>
+              <xsl:attribute name="href">
+		<xsl:value-of select="$TEISERVER"/>
+	        <xsl:text>tag.xq?name=</xsl:text>
+		<xsl:value-of select="$partialname"/>
+		<xsl:text>&amp;documentationLanguage=</xsl:text>
+		<xsl:value-of select="$documentationLanguage"/>
+	      </xsl:attribute>
               <xsl:value-of select="$link"/>
             </a>
           </xsl:otherwise>
