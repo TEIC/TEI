@@ -5,7 +5,7 @@ declare namespace request="http://exist-db.org/xquery/request";
 <TEI xmlns="http://www.tei-c.org/ns/1.0" 
      xmlns:xi="http://www.w3.org/2001/XInclude"> 
 {
-let $name := request:request-parameter("name", "")
+let $name := request:get-parameter("name", "")
 for $c in collection("/db/TEI")//(tei:elementSpec|tei:classSpec|tei:macroSpec)[@ident=$name]
 return $c
 }

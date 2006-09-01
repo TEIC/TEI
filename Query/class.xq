@@ -14,7 +14,7 @@ declare namespace request="http://exist-db.org/xquery/request";
 </p>
 <p>
 {
-let $name := request:request-parameter("name", "")
+let $name := request:get-parameter("name", "")
 for $c in collection("/db/TEI")//tei:classSpec[@ident=$name]
 return $c
 }
