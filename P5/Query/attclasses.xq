@@ -2,7 +2,7 @@ declare namespace tei="http://www.tei-c.org/ns/1.0";
 declare namespace rng="http://relaxng.org/ns/structure/1.0";
 <attClassList>
 {
-let $lang := request:request-parameter("lang", "")
+let $lang := request:get-parameter("lang", "")
 for $t in
 collection("/db/TEI")//tei:classSpec[@type='atts' and not(@ident='tei.global'
 or @ident='tei.TEIform')]

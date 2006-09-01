@@ -1,7 +1,7 @@
 declare namespace tei="http://www.tei-c.org/ns/1.0";
 declare namespace rng="http://relaxng.org/ns/structure/1.0";
 declare namespace request="http://exist-db.org/xquery/request";
-let $class := request:request-parameter("class", "")
+let $class := request:get-parameter("class", "")
 for $t in collection("/db/TEI")//tei:classSpec[@ident=$class]
 return
 <attClass>

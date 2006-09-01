@@ -3,7 +3,7 @@ declare namespace rng="http://relaxng.org/ns/structure/1.0";
 declare namespace request="http://exist-db.org/xquery/request";
 <Element>
 {
-let $n := request:request-parameter("name", "")
+let $n := request:get-parameter("name", "")
 for $c in
 collection("/db/TEI")//tei:elementSpec[@ident=$n]/tei:classes/tei:memberOf
 return

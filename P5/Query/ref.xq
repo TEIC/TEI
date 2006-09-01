@@ -6,7 +6,7 @@ declare namespace request="http://exist-db.org/xquery/request";
 <text>
 <body>
 {
-let $name := request:request-parameter("name", "")
+let $name := request:get-parameter("name", "")
 for $c in collection("/db/TEI")//tei:elementSpec[@ident=$name][1]
 return $c
 }

@@ -8,14 +8,14 @@ declare namespace request="http://exist-db.org/xquery/request";
 <tei:body>
 <tei:p>
 {
-let $ename := request:request-parameter("name", "")
+let $ename := request:get-parameter("name", "")
 for $c in collection("/db/TEI")//i18n/element[@ident=$ename]
 return $c
 }
 </tei:p>
 <tei:p>
 {
-let $name := request:request-parameter("name", "")
+let $name := request:get-parameter("name", "")
 for $c in collection("/db/TEI")//(tei:elementSpec|tei:classSpec|tei:macroSpec)[@ident=$name]
 return $c
 }

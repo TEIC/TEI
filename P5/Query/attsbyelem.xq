@@ -29,7 +29,7 @@ declare function tei:atts($a as element()) as element() {
   </att>
 };
 
-let $e := request:request-parameter("name", "")
+let $e := request:get-parameter("name", "")
 for $c in collection("/db/TEI")//tei:elementSpec[@ident=$e]
 return
 <Element>
