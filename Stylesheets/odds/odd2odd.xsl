@@ -36,8 +36,11 @@
   <xsl:param name="localsource"/>
   <xsl:key match="tei:*[@xml:id]" name="IDS" use="@xml:id"/>
   <xsl:key
+    match="tei:classSpec[@type='atts' and @mode='add']"
+    name="NEWATTCLASSES" use="@ident"/>
+  <xsl:key
     match="tei:classSpec[@type='atts' and not(@ident='tei.TEIform')]"
-    name="IDENTS" use="@ident"/>
+    name="ATTCLASSES" use="@ident"/>
   <xsl:key match="tei:attDef[@mode='delete']" name="DELETEATT"
     use="concat(../../@ident,'_',@ident)"/>
   <xsl:key match="tei:attDef[@mode='replace']" name="REPLACEATT"
@@ -670,6 +673,14 @@ so that is only put back in if there is some content
     <xsl:param name="className"/>
     <xsl:choose>
       <xsl:when test="$TEIC='false'"/>
+      <xsl:when test="key('NEWATTCLASSES',$className)">
+	<xsl:for-each select="key('NEWATTCLASSES',$className)">
+          <xsl:call-template name="classAttributesA">
+            <xsl:with-param name="elementName" select="$elementName"/>
+            <xsl:with-param name="className" select="$className"/>
+          </xsl:call-template>
+	</xsl:for-each>
+      </xsl:when>
       <xsl:when test="not($localsource='')">
         <xsl:for-each select="document($localsource)/tei:TEI">
           <xsl:call-template name="classAttributesA">
@@ -692,6 +703,7 @@ so that is only put back in if there is some content
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template name="classAttributesA">
     <xsl:param name="elementName"/>
     <xsl:param name="className"/>
@@ -708,7 +720,8 @@ so that is only put back in if there is some content
  back to see if it is changed in the element (mergeClassAttribute)
     -->
     <xsl:for-each select="$ODD">
-      <xsl:for-each select="key('IDENTS',$className)">
+<!-- a) new class -->
+      <xsl:for-each select="key('ATTCLASSES',$className)">
 	<xsl:if test="@mode='add'">
 	  <xsl:for-each select="tei:attList/tei:attDef">
 	    <tei:attRef
@@ -717,12 +730,14 @@ so that is only put back in if there is some content
 	</xsl:if>
       </xsl:for-each>
     </xsl:for-each>
-    <xsl:for-each select="key('IDENTS',$className)">
+    <xsl:for-each select="key('ATTCLASSES',$className)">
       <xsl:variable name="M" select="@module"/>
       <xsl:variable name="CURRENTCLASS" select="."/>
       <xsl:for-each select="$ODD">
         <xsl:choose>
+<!-- b) its deleted -->
           <xsl:when test="key('DELETE',$className)"/>
+<!-- c) its a replacement -->
           <xsl:when test="key('REPLACE',$className)">
             <xsl:for-each select="key('REPLACE',$className)/tei:attList/tei:attDef">
               <xsl:call-template name="mergeClassAttribute">
@@ -733,7 +748,7 @@ so that is only put back in if there is some content
               </xsl:call-template>
             </xsl:for-each>
           </xsl:when>
-          <!-- there are changes to the class spec itself -->
+<!-- d) there are changes to the class spec itself -->
           <xsl:when test="key('CHANGE',$className)">
             <xsl:for-each select="key('CHANGE',$className)">
               <!-- add in the new attributes -->
@@ -746,9 +761,23 @@ so that is only put back in if there is some content
                   <xsl:with-param name="original" select="$CURRENTCLASS"/>
                 </xsl:call-template>
               </xsl:for-each>
-              <xsl:for-each select="tei:attList/tei:attRef">
-                <xsl:copy-of select="."/>
-              </xsl:for-each>
+	      <!-- merge others -->
+	      <xsl:for-each select="tei:attList/tei:attList">
+		<tei:attList>
+		  <xsl:copy-of select="@org"/>
+		  <xsl:for-each select="tei:attDef">
+		    <xsl:call-template name="mergeClassAttribute">
+		      <xsl:with-param name="element" select="$elementName"/>
+		      <xsl:with-param name="class" select="$className"/>
+		      <xsl:with-param name="att" select="@ident"/>
+		      <xsl:with-param name="original" select="$CURRENTCLASS"/>
+		    </xsl:call-template>
+		  </xsl:for-each>
+		</tei:attList>
+	      </xsl:for-each>
+	      <xsl:for-each select="tei:attList/tei:attRef">
+		<xsl:copy-of select="."/>
+	      </xsl:for-each>
             </xsl:for-each>
             <xsl:for-each select="$CURRENTCLASS">
               <xsl:for-each select="tei:attList/tei:attDef">
@@ -759,10 +788,24 @@ so that is only put back in if there is some content
                   <xsl:with-param name="original" select="$CURRENTCLASS"/>
                 </xsl:call-template>
               </xsl:for-each>
+		<xsl:for-each select="tei:attList/tei:attList">
+		  <tei:attList>
+		    <xsl:copy-of select="@org"/>
+		    <xsl:for-each select="tei:attDef">
+		      <xsl:call-template name="mergeClassAttribute">
+			<xsl:with-param name="element" select="$elementName"/>
+			<xsl:with-param name="class" select="$className"/>
+			<xsl:with-param name="att" select="@ident"/>
+			<xsl:with-param name="original" select="$CURRENTCLASS"/>
+		      </xsl:call-template>
+		    </xsl:for-each>
+		  </tei:attList>
+		</xsl:for-each>
             </xsl:for-each>
           </xsl:when>
+<!-- e) do some merging -->
           <xsl:when
-            test="key('MODULES',$M) or      key('MODULES',substring-before($M,'-decl'))">
+            test="key('MODULES',$M) or  key('MODULES',substring-before($M,'-decl'))">
             <xsl:for-each select="$CURRENTCLASS">
               <xsl:for-each select="tei:attList/tei:attDef">
                 <xsl:call-template name="mergeClassAttribute">
@@ -772,21 +815,70 @@ so that is only put back in if there is some content
                   <xsl:with-param name="original" select="$CURRENTCLASS"/>
                 </xsl:call-template>
               </xsl:for-each>
+		<xsl:for-each select="tei:attList/tei:attList">
+		  <tei:attList>
+		    <xsl:copy-of select="@org"/>
+		    <xsl:for-each select="tei:attDef">
+		      <xsl:call-template name="mergeClassAttribute">
+			<xsl:with-param name="element" select="$elementName"/>
+			<xsl:with-param name="class" select="$className"/>
+			<xsl:with-param name="att" select="@ident"/>
+			<xsl:with-param name="original" select="$CURRENTCLASS"/>
+		      </xsl:call-template>
+		    </xsl:for-each>
+		  </tei:attList>
+		</xsl:for-each>
             </xsl:for-each>
           </xsl:when>
         </xsl:choose>
       </xsl:for-each>
-      <xsl:if test="tei:classes/tei:memberOf">
-        <xsl:for-each select="tei:classes/tei:memberOf">
-          <xsl:variable name="className" select="@key"/>
-          <xsl:call-template name="classAttributes">
-            <xsl:with-param name="elementName" select="$elementName"/>
-            <xsl:with-param name="className" select="$className"/>
-          </xsl:call-template>
-        </xsl:for-each>
-      </xsl:if>
+    </xsl:for-each>
+    <!-- attributes referenced from classes we are a member of -->
+
+    <!-- first check if membership is changed in the ODD -->
+    <xsl:for-each select="$ODD">
+      <xsl:choose>
+	<xsl:when test="key('ATTCLASSES',$className)/tei:classes">
+	  <xsl:for-each select="key('ATTCLASSES',$className)/tei:classes/tei:memberOf">
+	    <xsl:call-template name="classAttributes">
+	      <xsl:with-param name="elementName" select="$elementName"/>
+	      <xsl:with-param name="className" select="@key"/>
+	    </xsl:call-template>
+	  </xsl:for-each>
+	</xsl:when>
+	<xsl:otherwise>
+	  <!-- else check class membership in original -->
+	  <xsl:choose>
+	    <xsl:when test="not($localsource='')">
+	      <xsl:for-each select="document($localsource)/tei:TEI">
+		<xsl:for-each select="key('ATTCLASSES',$className)/tei:classes/tei:memberOf">
+		  <xsl:call-template name="classAttributes">
+		    <xsl:with-param name="elementName" select="$elementName"/>
+		    <xsl:with-param name="className" select="@key"/>
+		  </xsl:call-template>
+		</xsl:for-each>
+	      </xsl:for-each>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:variable name="ATTCLASSDOC">
+		<xsl:value-of select="$TEISERVER"/>
+		<xsl:text>classspecs.xq</xsl:text>
+	      </xsl:variable>
+	      <xsl:for-each select="document($ATTCLASSDOC)/List">
+		<xsl:for-each select="key('ATTCLASSES',$className)/tei:classes/tei:memberOf">
+		  <xsl:call-template name="classAttributes">
+		    <xsl:with-param name="elementName" select="$elementName"/>
+		    <xsl:with-param name="className" select="@key"/>
+		  </xsl:call-template>
+		</xsl:for-each>
+	      </xsl:for-each>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:for-each>
   </xsl:template>
+
   <xsl:template name="mergeClassAttribute">
     <xsl:param name="element"/>
     <xsl:param name="class"/>
@@ -855,6 +947,32 @@ so that is only put back in if there is some content
     <xsl:copy-of select="tei:attList/tei:attDef[@mode='replace']"/>
     <xsl:for-each select="$ORIGINAL/tei:attList">
       <!-- original source  context -->
+      <xsl:for-each select="tei:attList">
+	<tei:attList>
+	  <xsl:copy-of select="@org"/>
+	  <xsl:for-each select="tei:attDef">
+	    <xsl:variable name="ATT" select="."/>
+	    <xsl:variable name="lookingAt">
+	      <xsl:value-of select="concat(../../../@ident,'_',@ident)"/>
+	    </xsl:variable>
+	    <xsl:for-each select="$ODD">
+	      <xsl:choose>
+		<xsl:when test="key('DELETEATT',$lookingAt)"/>
+		<xsl:when test="key('REPLACEATT',$lookingAt)"/>
+		<xsl:when test="key('CHANGEATT',$lookingAt)">
+		  <xsl:call-template name="mergeAttribute">
+		    <xsl:with-param name="New" select="key('CHANGEATT',$lookingAt)"/>
+		    <xsl:with-param name="Old" select="$ATT"/>
+		  </xsl:call-template>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:copy-of select="$ATT"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:for-each>
+	  </xsl:for-each>
+	</tei:attList>
+      </xsl:for-each>
       <xsl:for-each select="tei:attDef">
         <xsl:variable name="ATT" select="."/>
         <xsl:variable name="lookingAt">
@@ -1161,7 +1279,7 @@ so that is only put back in if there is some content
     <xsl:param name="elementName"/>
     <xsl:param name="className"/>
     <xsl:comment>START on <xsl:value-of select="$className"/></xsl:comment>
-    <xsl:for-each select="key('IDENTS',$className)">
+    <xsl:for-each select="key('ATTCLASSES',$className)">
       <xsl:variable name="CURRENTCLASS" select="."/>
       <xsl:for-each select="tei:attList/tei:attDef">
         <xsl:comment>looking at <xsl:value-of select="$elementName"/> + <xsl:value-of

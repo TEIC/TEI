@@ -286,6 +286,7 @@
   <xsl:template match="tei:attList" mode="tangle">
     <xsl:param name="element"/>
     <xsl:choose>
+      <xsl:when test="count(*)=0"/>
       <xsl:when test="@org='choice'">
         <rng:optional>
           <rng:choice>
@@ -764,8 +765,9 @@ sequenceRepeatable
   </xsl:template>
 
   <xd:doc>
-    <xd:short>Process elements tei:gloss and tei:desc in normal modes,
-    as they will always be called explicitly if needed.</xd:short>
+    <xd:short>No-op processing of elements tei:gloss and tei:desc in
+    normal modes, as they will always be called explicitly if
+    needed.</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:desc|tei:gloss" mode="weave"/>
@@ -1838,6 +1840,7 @@ sequenceRepeatable
 	<xsl:text>) </xsl:text>
       </xsl:when>
       <xsl:otherwise>
+	<xsl:variable name="G">
 	<xsl:for-each select="tei:gloss">
 	  <xsl:variable name="currentLang">
 	    <xsl:call-template name="findLanguage"/>
@@ -1848,6 +1851,17 @@ sequenceRepeatable
 	    <xsl:text>) </xsl:text>
 	  </xsl:if>
 	</xsl:for-each>
+	</xsl:variable>
+	<xsl:choose>
+	  <xsl:when test="$G='' and tei:gloss[not(@xml:lang)]">
+	    <xsl:text>(</xsl:text>
+	    <xsl:value-of select="tei:gloss[not(@xml:lang)]"/>
+	    <xsl:text>) </xsl:text>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:copy-of select="$G"/>
+	  </xsl:otherwise>
+	</xsl:choose>
       </xsl:otherwise>
 
     </xsl:choose>
@@ -1861,14 +1875,26 @@ sequenceRepeatable
 	<xsl:value-of select="tei:desc[@xml:lang=$firstLang]"/>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:for-each select="tei:desc">
-	  <xsl:variable name="currentLang">
-	    <xsl:call-template name="findLanguage"/>
-	  </xsl:variable>
-	  <xsl:if test="contains($langs,concat($currentLang,' '))">
-	    <xsl:value-of select="."/>
-	  </xsl:if>
-	</xsl:for-each>
+	<xsl:variable name="D">
+	  <xsl:for-each select="tei:desc">
+	    <xsl:variable name="currentLang">
+	      <xsl:call-template name="findLanguage"/>
+	    </xsl:variable>
+	    <xsl:if test="contains($langs,concat($currentLang,' '))">
+	      <xsl:value-of select="."/>
+	    </xsl:if>
+	  </xsl:for-each>
+	</xsl:variable>
+	<xsl:choose>
+	  <xsl:when test="$D='' and tei:desc[not(@xml:lang)]">
+	    <xsl:text>(</xsl:text>
+	      <xsl:value-of select="tei:desc[not(@xml:lang)]"/>
+	      <xsl:text>) </xsl:text>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:copy-of select="$D"/>
+	  </xsl:otherwise>
+	</xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
