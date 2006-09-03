@@ -15,7 +15,7 @@ XSLP4=/usr/share/xml/teip4/stylesheet
 
 .PHONY: convert dtds schemas html validate valid test split oddschema exampleschema fascicule clean dist
 
-default: dtds schemas html
+default: dtds schemas exemplars html
 
 convert: dtds schemas
 
