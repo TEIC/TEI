@@ -170,9 +170,14 @@
       <xsl:otherwise>
         <xsl:copy>
           <xsl:attribute name="name">
-            <xsl:if test="key('IDENTS',@name)">
-              <xsl:value-of select="$patternPrefixText"/>
-            </xsl:if>
+	    <xsl:choose>
+	      <xsl:when test="key('IDENTS',@name)">
+		<xsl:value-of select="$patternPrefixText"/>
+	      </xsl:when>
+	      <xsl:when test="key('IDENTS',substring-before(@name,'_'))">
+		<xsl:value-of select="$patternPrefixText"/>
+	      </xsl:when>
+	    </xsl:choose>
             <xsl:value-of select="@name"/>
           </xsl:attribute>
         </xsl:copy>
@@ -1729,6 +1734,15 @@ sequenceRepeatable
   <xsl:template match="rng:ref" mode="forceRNG">
     <xsl:choose>
       <xsl:when test="key('IDENTS',@name)">
+	<xsl:element name="ref"
+		     xmlns="http://relaxng.org/ns/structure/1.0">
+	  <xsl:attribute name="name">
+	    <xsl:value-of select="$patternPrefixText"/>
+	    <xsl:value-of select="@name"/>
+	  </xsl:attribute>
+	</xsl:element>
+      </xsl:when>
+      <xsl:when test="key('IDENTS',substring-before(@name,'_'))">
 	<xsl:element name="ref"
 		     xmlns="http://relaxng.org/ns/structure/1.0">
 	  <xsl:attribute name="name">

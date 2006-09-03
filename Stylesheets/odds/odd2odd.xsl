@@ -186,7 +186,7 @@ because of the order of declarations
         <xsl:variable name="Remote">
           <xsl:value-of select="$TEISERVER"/>
           <xsl:text>allbymod.xq?module=</xsl:text>
-          <xsl:value-of select="$className"/>
+          <xsl:value-of select="$moduleName"/>
         </xsl:variable>
         <xsl:for-each select="document($Remote)/List">
           <xsl:call-template name="phase1a"/>
