@@ -1958,7 +1958,7 @@
     <xsl:choose>
       <xsl:when test="$xhtml='true'">
 	<span>
-	  <xsl:attribute name="xml:id">
+	  <xsl:attribute name="id">
 	    <xsl:value-of select="$id"/>
 	  </xsl:attribute>
 	</span>
