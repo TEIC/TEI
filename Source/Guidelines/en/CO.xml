@@ -1836,9 +1836,27 @@ and of the University the Eighty-Sixth.</date></egXML>
 </p>
 <p>The <att>value</att> attribute always supplies a normalized
 representation of the date given as content of the <gi>date</gi>
-element. The format used should be one of those standardized in ISO
-8601:2000, and also a valid W3C schema datatype. Some typical examples
-follow:
+element. The format used should be a valid W3C schema datatype.<note place="foot" resp="#sdb">
+<p>The datatypes are taken from the W3C Recommendation <title>XML Schema Part 2: Datatypes Second Edition</title>. 
+The permitted datatypes are:
+<list>
+<item><ref target="http://www.w3.org/TR/xmlschema-2/#date">date</ref></item>
+<item><ref target="http://www.w3.org/TR/xmlschema-2/#gYear">gYear</ref></item>
+<item><ref target="http://www.w3.org/TR/xmlschema-2/#gMonth">gMonth</ref></item>
+<item><ref target="http://www.w3.org/TR/xmlschema-2/#gDay">gDay</ref></item>
+<item><ref target="http://www.w3.org/TR/xmlschema-2/#gYearMonth">gYearMonth</ref></item>
+<item><ref target="http://www.w3.org/TR/xmlschema-2/#gMonthDay">gMonthDay</ref></item>
+<item><ref target="http://www.w3.org/TR/xmlschema-2/#time">time</ref></item>
+<item><ref target="http://www.w3.org/TR/xmlschema-2/#dateTime">dateTime</ref></item>
+</list>
+</p><p>There
+is one exception: these Guidelines permit a time to be expressed as only a number of hours, or as a number of hours and minutes,
+as per ISO 8601:2004 section 4.2.2.3 and 4.3.3.
+(The W3C <name type="datatype">time</name> and <name type="datatype">dateTime</name> 
+datatypes require that the minutes and seconds be explicitly expressed.) This capability
+is necessary for the normalized representation of humanities data. However, some software may not be
+able to properly process (e.g., sort) a time value that does not have seconds.</p></note>
+Some typical examples follow:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><date value="2001">The
 year 2001</date>
 <date value="2001-09">September 2001</date>
@@ -2817,7 +2835,7 @@ this:
   </div1>
   <!-- ... -->
 </div0></egXML>
- </p>
+</p>
 <p>To document the usage and to allow automatic processing of these
 standard references, it is recommended that the TEI header be used to
 declare whether standard references are recorded in the <att>n</att> or
