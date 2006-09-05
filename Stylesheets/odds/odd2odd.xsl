@@ -711,16 +711,17 @@ so that is only put back in if there is some content
 	<xsl:otherwise>
 	  <xsl:variable name="ATTCLASSDOC">
 	    <xsl:value-of select="$TEISERVER"/>
-	    <xsl:text>copytag.xq?name=</xsl:text>
-	    <xsl:value-of select="$className"/>
+	    <xsl:text>classspecs.xq</xsl:text>
 	  </xsl:variable>
-	  <xsl:for-each select="document($ATTCLASSDOC)">
-	    <xsl:if test="@type='atts'">
-	      <xsl:call-template name="processClassAttributes">
-		<xsl:with-param name="elementName" select="$elementName"/>
-		<xsl:with-param name="className" select="$className"/>
-	      </xsl:call-template>
-	    </xsl:if>
+	  <xsl:for-each select="document($ATTCLASSDOC)/List">
+	    <xsl:for-each select="key('ATTCLASSES',$className)">
+	      <xsl:if test="@type='atts'">
+		<xsl:call-template name="processClassAttributes">
+		  <xsl:with-param name="elementName" select="$elementName"/>
+		  <xsl:with-param name="className" select="$className"/>
+		</xsl:call-template>
+	      </xsl:if>
+	    </xsl:for-each>
 	  </xsl:for-each>
 	</xsl:otherwise>
       </xsl:choose>
