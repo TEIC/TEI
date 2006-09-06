@@ -71,16 +71,16 @@
   <xsl:param name="department"/>
   <xd:doc class="links" type="string"> Name of link to home page of application</xd:doc>
   <xsl:param name="homeLabel">Home</xsl:param>
-  <xd:doc class="links" type="anyURI"> Home URL of project</xd:doc>
+  <xd:doc class="links" type="anyURI">Project Home</xd:doc>
   <xsl:param name="homeURL">http://www.tei-c.org/</xsl:param>
-  <xd:doc class="links" type="string"> Label for link to project</xd:doc>
+  <xd:doc class="links" type="string">Project</xd:doc>
   <xsl:param name="homeWords">TEI</xsl:param>
-  <xd:doc class="links" type="string"> Name of institution</xd:doc>
-  <xsl:param name="institution">TEI XSL Stylesheets</xsl:param>
-  <xd:doc class="links" type="anyURI"> Link to overall institution</xd:doc>
+  <xd:doc class="links" type="string"> Institution</xd:doc>
+  <xsl:param name="institution">A TEI Project</xsl:param>
+  <xd:doc class="links" type="anyURI"> Institution link</xd:doc>
   <xsl:param name="parentURL">http://www.tei-c.org/</xsl:param>
   <xd:doc class="links" type="string"> Name of overall institution</xd:doc>
-  <xsl:param name="parentWords">My Parent Institution</xsl:param>
+  <xsl:param name="parentWords">Parent Institution</xsl:param>
   <xd:doc class="links" type="anyURI"> Link to search application</xd:doc>
   <xsl:param name="searchURL">http://www.google.com</xsl:param>
   <xd:doc class="misc" type="anyURI"> The home page for these stylesheets</xd:doc>
