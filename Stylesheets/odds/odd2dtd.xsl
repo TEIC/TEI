@@ -984,9 +984,7 @@
         <xsl:value-of select="$Contents"/>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:text>&gt;</xsl:text>
-    <xsl:text>&#10;&lt;!ATTLIST </xsl:text>
-    <xsl:value-of select="$ename"/>
+    <xsl:variable name="maybeatts">
     <xsl:if test="$parameterize='true' and $TEIC='true'">
       <xsl:text>&#10; %att.global.attributes;</xsl:text>
     </xsl:if>
@@ -1004,6 +1002,13 @@
   </xsl:if>
 -->
     <xsl:text> &gt;</xsl:text>
+    </xsl:variable>
+    <xsl:if test="string-length($maybeatts) &gt;0">
+      <xsl:text>&gt;</xsl:text>
+      <xsl:text>&#10;&lt;!ATTLIST </xsl:text>
+      <xsl:value-of select="$ename"/>
+      <xsl:value-of select="$maybeatts"/>
+    </xsl:if>
   </xsl:template>
   <xsl:template name="attclasses">
     <xsl:for-each select="tei:classes/tei:memberOf">
@@ -1014,6 +1019,7 @@
       </xsl:for-each>
     </xsl:for-each>
   </xsl:template>
+
   <xsl:template name="classAtt">
     <xsl:param name="declare">true</xsl:param>
     <xsl:if test="$verbose='true'">
