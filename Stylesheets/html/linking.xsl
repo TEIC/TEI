@@ -203,7 +203,17 @@
     <!--
 <xsl:message>find link end for <xsl:value-of select="$where"/>,<xsl:value-of select="name(key('IDS',$where))"/></xsl:message>
 -->
-    <xsl:apply-templates mode="generateLink" select="key('IDS',$where)"/>
+    <xsl:choose>
+      <xsl:when test="key('IDS',$where)">
+	<xsl:apply-templates mode="generateLink"
+			     select="key('IDS',$where)"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text>[[undefined </xsl:text>
+	<xsl:value-of select="$where"/>
+	<xsl:text>]]</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
