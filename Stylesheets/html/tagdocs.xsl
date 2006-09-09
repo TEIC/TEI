@@ -1207,7 +1207,7 @@
           <xsl:otherwise>
             <xsl:text>ref-</xsl:text>
             <xsl:value-of select="$name"/>
-            <xsl:text>.html</xsl:text>
+	    <xsl:value-of select="$outputSuffix"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
@@ -1264,7 +1264,7 @@
           <xsl:apply-templates mode="weavebody" select="."/>
         </table>
       </xsl:when>
-      <xsl:otherwise> [<a href="ref-{@ident}.html">
+      <xsl:otherwise> [<a href="ref-{@ident}{$outputSuffix}">
           <xsl:value-of select="$name"/>
         </a>] <xsl:variable name="BaseFile">
           <xsl:value-of select="$masterFile"/>

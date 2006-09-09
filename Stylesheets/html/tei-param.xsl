@@ -518,7 +518,9 @@ Suffix for generated output files.
       <xsl:when test="$rawXML='true'">.xml</xsl:when>
       <xsl:when test="tei:teiCorpus">.html</xsl:when>
       <xsl:when test="$STDOUT='true'"/>
-      <xsl:otherwise>.html</xsl:otherwise>
+      <xsl:otherwise>
+	<xsl:value-of select="$outputSuffix"/>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:param>
   <xd:doc type="boolean" class="output">

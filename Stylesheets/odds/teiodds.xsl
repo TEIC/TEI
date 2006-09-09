@@ -1458,7 +1458,7 @@ sequenceRepeatable
             </a>
           </xsl:when>
           <xsl:when test="key('IDENTS',$name)">
-            <a class="link_element" href="ref-{$name}.html"
+            <a class="link_element" href="ref-{$name}{$outputSuffix}"
               xmlns="http://www.w3.org/1999/xhtml">
               <xsl:value-of select="$name"/>
             </a>

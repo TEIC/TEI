@@ -384,7 +384,7 @@
       <xsl:otherwise> 
 	<xsl:text>ref-</xsl:text>
 	<xsl:value-of select="@ident"/>
-	<xsl:text>.html</xsl:text>
+	<xsl:value-of select="$outputSuffix"/>
       </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
