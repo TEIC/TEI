@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet
+<xsl:stylesheet  xmlns="http://www.tei-c.org/ns/1.0"
   exclude-result-prefixes="exsl estr edate fo a xd tei html rng local teix xs"
   extension-element-prefixes="edate exsl estr" version="1.0"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
@@ -408,7 +408,20 @@
   </xsl:template>
   <xsl:template match="tei:elementSpec|tei:classSpec|tei:macroSpec" mode="show">
     <xsl:param name="atts"/>
-    <tei:hi>&lt;<xsl:call-template name="identifyMe"/>&gt; </tei:hi>
+    <xsl:choose>
+      <xsl:when test="self::tei:elementSpec">
+	<tei:hi>
+	  <xsl:text>&lt;</xsl:text>
+	  <xsl:call-template name="identifyMe"/>
+	  <xsl:text>&gt; </xsl:text>
+	</tei:hi>
+      </xsl:when>
+      <xsl:otherwise>>
+	<tei:hi>
+	  <xsl:call-template name="identifyMe"/>
+	</tei:hi>
+      </xsl:otherwise>
+    </xsl:choose>
     <xsl:call-template name="makeDescription"/>
     <xsl:choose>
       <xsl:when test="$atts='-'"/>
@@ -810,11 +823,21 @@
         <xsl:value-of select="@ident"/>
       </xsl:attribute>
       <tei:head>
-        <tei:gi>
-          <xsl:value-of select="local-name(.)"/>
-        </tei:gi>
-        <xsl:text> </xsl:text>
-        <xsl:call-template name="identifyMe"/>
+	<xsl:choose>
+	  <xsl:when test="self::macroSpec">
+	    <xsl:text>Macro </xsl:text>
+	    <xsl:call-template name="identifyMe"/>
+	  </xsl:when>
+	  <xsl:when test="self::classSpec">
+	    <xsl:text>Class </xsl:text>
+	    <xsl:call-template name="identifyMe"/>
+	  </xsl:when>
+	  <xsl:when test="self::elementSpec">
+	    <tei:gi>
+	      <xsl:call-template name="identifyMe"/>
+	    </tei:gi>	      
+	  </xsl:when>
+	</xsl:choose>
       </tei:head>
       <tei:p>
 	<xsl:call-template name="makeDescription"/>
