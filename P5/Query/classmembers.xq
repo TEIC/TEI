@@ -5,9 +5,10 @@ declare namespace request="http://exist-db.org/xquery/request";
 {
 let $class := request:get-parameter("class", "")
 for $e in
-collection("/db/TEI")//tei:elementSpec[tei:classes/tei:memberOf[@key=$class]]
+collection("/db/TEI")//(tei:elementSpec|tei:classSpec)[tei:classes/tei:memberOf[@key=$class]]
 order by $e/@ident
 	return
 	<item>{data($e/@ident)}</item>
 }
+
 </list>
