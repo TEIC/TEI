@@ -57,16 +57,16 @@ odd2html.xsl
 <!-- parameterization -->
 
  <xsl:param name="lookupDatabase">true</xsl:param>
-<xsl:template name="metaHook">
-  <xsl:param name="title"/>
- <meta name="DC.Title" content="{$title}"/>
- <meta name="DC.Language" content="(SCHEME=iso639) en"/> 
- <meta name="DC.Creator" content="TEI,Oxford University Computing Services, 13 Banbury Road, Oxford OX2 6NN, United Kingdom"/>
- <meta name="DC.Creator.Address" content="tei@oucs.ox.ac.uk"/>
-</xsl:template>
-
-<xsl:template name="bodyHook">
-</xsl:template>
+ <xsl:template name="metaHook">
+   <xsl:param name="title"/>
+   <meta name="DC.Title" content="{$title}"/>
+   <meta name="DC.Language" content="(SCHEME=iso639) en"/> 
+   <meta name="DC.Creator" content="TEI,Oxford University Computing Services, 13 Banbury Road, Oxford OX2 6NN, United Kingdom"/>
+   <meta name="DC.Creator.Address" content="tei@oucs.ox.ac.uk"/>
+ </xsl:template>
+ 
+ <xsl:template name="bodyHook">
+ </xsl:template>
 
 
 <xsl:param name="indent-width" select="3"/>
@@ -102,6 +102,18 @@ odd2html.xsl
 <xsl:param name="TEISERVER">http://tei.oucs.ox.ac.uk/Query/</xsl:param>
 <xsl:param name="feedbackURL">mailto:tei@oucs.ox.ac.uk</xsl:param>
 <xsl:param name="schemaBaseURL">http://www.tei-c.org.uk/schema/relaxng/p5/</xsl:param>
+  <xsl:param name="startRed">&lt;span style="color:red"&gt;</xsl:param>
+  <xsl:param name="startBold">&lt;span class="element"&gt;</xsl:param>
+  <xsl:param name="endBold">&lt;/span&gt;</xsl:param>
+  <xsl:param name="startItalic">&lt;span class="attribute"&gt;</xsl:param>
+  <xsl:param name="endItalic">&lt;/span&gt;</xsl:param>
+  <xsl:param name="endRed">&lt;/span&gt;</xsl:param>
+  <xsl:param name="spaceCharacter">&#xA0;</xsl:param>
+  <xsl:template name="lineBreak">
+    <xsl:param name="id"/>
+    <xsl:text>&#10;</xsl:text>
+  </xsl:template>
+
 
 <!-- the level of division for each mini TOCs are built -->
 <xsl:param name="subTocDepth">-1</xsl:param>
@@ -154,38 +166,38 @@ odd2html.xsl
   <html>
     <xsl:call-template name="addLangAtt"/>
     <xsl:comment>THIS FILE IS GENERATED FROM AN XML MASTER</xsl:comment>
-    <head>
-      <xsl:variable name="pagetitle">
-	<xsl:for-each select="key('SPECS','yes')[1]">
-	  <xsl:choose>
-	    <xsl:when test="self::tei:elementSpec">
-	      <xsl:call-template name="i18n">
-		<xsl:with-param name="word">Element</xsl:with-param>
-	      </xsl:call-template>
-	      <xsl:text> &lt;</xsl:text>
-	      <xsl:value-of select="@ident"/>
-	      <xsl:text>&gt;</xsl:text>
-	    </xsl:when>
-	    <xsl:when test="self::tei:classSpec[@type='model']">
-	      <xsl:call-template name="i18n">
-		<xsl:with-param name="word">Class</xsl:with-param>
-	      </xsl:call-template>
-	      <xsl:text> </xsl:text>
-	      <xsl:value-of select="@ident"/>
-	    </xsl:when>
-	    <xsl:when test="self::tei:classSpec[@type='atts']">
-	      <xsl:call-template name="i18n">
-		<xsl:with-param name="word">Class</xsl:with-param>
-	      </xsl:call-template>
-	      <xsl:text> </xsl:text>
-	      <xsl:value-of select="@ident"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:value-of select="@ident"/>
+    <xsl:variable name="pagetitle">
+      <xsl:for-each select="key('SPECS','yes')[1]">
+	<xsl:choose>
+	  <xsl:when test="self::tei:elementSpec">
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">Element</xsl:with-param>
+	    </xsl:call-template>
+	    <xsl:text> &lt;</xsl:text>
+	    <xsl:value-of select="@ident"/>
+	    <xsl:text>&gt;</xsl:text>
+	  </xsl:when>
+	  <xsl:when test="self::tei:classSpec[@type='model']">
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">Class</xsl:with-param>
+	    </xsl:call-template>
+	    <xsl:text> </xsl:text>
+	    <xsl:value-of select="@ident"/>
+	  </xsl:when>
+	  <xsl:when test="self::tei:classSpec[@type='atts']">
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">Class</xsl:with-param>
+	    </xsl:call-template>
+	    <xsl:text> </xsl:text>
+	    <xsl:value-of select="@ident"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="@ident"/>
 	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:for-each>
-      </xsl:variable>
+	</xsl:choose>
+      </xsl:for-each>
+    </xsl:variable>
+    <head>
       <title><xsl:value-of select="$pagetitle"/></title>
       <xsl:call-template name="headHook"/>
       <xsl:call-template name="metaHTML">
