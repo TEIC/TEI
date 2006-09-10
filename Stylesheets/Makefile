@@ -74,6 +74,7 @@ clean:
 	-rm `find . -name "*~" `
 	-rm stylebear style.xml customize.xml teixsl.html
 	-rm -rf release
+	-rm -rf xhtml
 	-rm -rf doc/xsltdoc
 	(cd Test; make clean)
 

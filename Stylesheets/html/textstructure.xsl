@@ -326,11 +326,13 @@ $ID: requests a particular page
                 </xsl:attribute>
                 <xsl:call-template name="bodyHook"/>
                 <xsl:call-template name="bodyJavascriptHook"/>
+		<div class="stdheader">
                 <xsl:call-template name="stdheader">
                   <xsl:with-param name="title">
                     <xsl:call-template name="generateTitle"/>
                   </xsl:with-param>
                 </xsl:call-template>
+		</div>
                 <h2>
                   <xsl:apply-templates mode="xref" select="."/>
                 </h2>
@@ -381,11 +383,13 @@ $ID: requests a particular page
         <xsl:call-template name="bodyHook"/>
         <xsl:call-template name="bodyJavascriptHook"/>
         <xsl:if test="not(tei:text/tei:front/tei:titlePage)">
-          <xsl:call-template name="stdheader">
-            <xsl:with-param name="title">
-              <xsl:call-template name="generateTitle"/>
-            </xsl:with-param>
-          </xsl:call-template>
+	  <div class="stdheader">
+	    <xsl:call-template name="stdheader">
+	      <xsl:with-param name="title">
+		<xsl:call-template name="generateTitle"/>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	  </div>
         </xsl:if>
         <xsl:call-template name="startHook"/>
         <xsl:call-template name="simpleBody"/>
@@ -1911,11 +1915,13 @@ $ID: requests a particular page
         <xsl:call-template name="bodyHook"/>
         <xsl:call-template name="bodyJavascriptHook"/>
         <xsl:if test="not(tei:text/tei:front/tei:titlePage)">
-          <xsl:call-template name="stdheader">
-            <xsl:with-param name="title">
-              <xsl:call-template name="generateTitle"/>
-            </xsl:with-param>
-          </xsl:call-template>
+	  <div class="stdheader">
+	    <xsl:call-template name="stdheader">
+	      <xsl:with-param name="title">
+		<xsl:call-template name="generateTitle"/>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	  </div>
         </xsl:if>
         <xsl:call-template name="mainbody"/>
         <xsl:call-template name="printNotes"/>
@@ -2274,7 +2280,6 @@ $ID: requests a particular page
         </xsl:if>
       </xsl:otherwise>
     </xsl:choose>
-    <hr/>
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>

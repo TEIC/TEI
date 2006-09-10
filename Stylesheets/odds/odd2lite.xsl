@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet  xmlns="http://www.tei-c.org/ns/1.0"
+<xsl:stylesheet 
   exclude-result-prefixes="exsl estr edate fo a xd tei html rng local teix xs"
   extension-element-prefixes="edate exsl estr" version="1.0"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"

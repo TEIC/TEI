@@ -216,7 +216,6 @@ Make a separate file for footnotes
     <xsl:call-template name="leftHandFrame">
       <xsl:with-param name="currentID" select="$currentID"/>
     </xsl:call-template>
-    <hr/>
   </xsl:template>
   <xd:doc class="layout">
     <xd:short>[html]Top of left-hand column </xd:short>

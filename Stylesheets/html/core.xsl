@@ -1909,6 +1909,7 @@
         </xsl:attribute>
         <xsl:call-template name="bodyHook"/>
         <xsl:call-template name="bodyJavascriptHook"/>
+	<div class="stdheader">
         <xsl:call-template name="stdheader">
           <xsl:with-param name="title">
             <xsl:apply-templates
@@ -1919,6 +1920,7 @@
             </xsl:call-template>
           </xsl:with-param>
         </xsl:call-template>
+	</div>
         <div class="notes">
           <div class="noteHeading">
             <xsl:call-template name="i18n">
