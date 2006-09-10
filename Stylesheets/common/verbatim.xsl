@@ -1,7 +1,13 @@
 <?xml version="1.0"?>
-<xsl:stylesheet version="1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet 
+    version="1.0" 
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:dbk="http://docbook.org/ns/docbook dbk"
+    xmlns:rng="http://relaxng.org/ns/structure/1.0"
+    xmlns:tei="http://www.tei-c.org/ns/1.0" 
+    xmlns:teix="http://www.tei-c.org/ns/Examples"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:param name="startBold">&lt;span class="element"&gt;</xsl:param>
   <xsl:param name="endBold">&lt;/span&gt;</xsl:param>
   <xsl:param name="startItalic">&lt;span class="attribute"&gt;</xsl:param>
@@ -92,6 +98,21 @@
     <xsl:value-of disable-output-escaping="yes" select="$startBold"/>
     <xsl:text>&lt;</xsl:text>
     <xsl:choose>
+	  <xsl:when
+	      test="namespace-uri()='http://docbook.org/ns/docbook'">
+	    <xsl:text>dbk:</xsl:text>
+	    <xsl:value-of select="local-name(.)"/>
+	  </xsl:when>
+	  <xsl:when
+	      test="namespace-uri()='http://www.w3.org/1999/xhtml'">
+	    <xsl:text>xhtml:</xsl:text>
+	    <xsl:value-of select="local-name(.)"/>
+	  </xsl:when>
+	  <xsl:when
+	      test="namespace-uri()='http://www.w3.org/1999/xlink'">
+	    <xsl:text>xlink:</xsl:text>
+	    <xsl:value-of select="local-name(.)"/>
+	  </xsl:when>
       <xsl:when test="namespace-uri()='http://relaxng.org/ns/structure/1.0'">
         <xsl:text>rng:</xsl:text>
         <xsl:value-of select="local-name(.)"/>
@@ -166,6 +187,22 @@
         <xsl:value-of disable-output-escaping="yes" select="$startBold"/>
         <xsl:text>&lt;/</xsl:text>
         <xsl:choose>
+	  <xsl:when
+	      test="namespace-uri()='http://docbook.org/ns/docbook'">
+	    <xsl:text>dbk:</xsl:text>
+	    <xsl:value-of select="local-name(.)"/>
+	  </xsl:when>
+	  <xsl:when
+	      test="namespace-uri()='http://www.w3.org/1999/xhtml'">
+	    <xsl:text>xhtml:</xsl:text>
+	    <xsl:value-of select="local-name(.)"/>
+	  </xsl:when>
+	  <xsl:when
+	      test="namespace-uri()='http://www.w3.org/1999/xlink'">
+	    <xsl:text>xlink:</xsl:text>
+	    <xsl:value-of select="local-name(.)"/>
+	  </xsl:when>
+
           <xsl:when test="namespace-uri()='http://relaxng.org/ns/structure/1.0'">
             <xsl:text>rng:</xsl:text>
             <xsl:value-of select="local-name(.)"/>
