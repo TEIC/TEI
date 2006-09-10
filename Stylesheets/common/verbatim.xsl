@@ -221,8 +221,8 @@
             <xsl:value-of select="local-name(.)"/>
           </xsl:otherwise>
         </xsl:choose>
-        <xsl:value-of disable-output-escaping="yes" select="$endBold"/>
         <xsl:text>&gt;</xsl:text>
+        <xsl:value-of disable-output-escaping="yes" select="$endBold"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:text>/&gt;</xsl:text>
