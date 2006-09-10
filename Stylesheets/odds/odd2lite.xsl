@@ -824,15 +824,15 @@
       </xsl:attribute>
       <tei:head>
 	<xsl:choose>
-	  <xsl:when test="self::macroSpec">
+	  <xsl:when test="self::tei:macroSpec">
 	    <xsl:text>Macro </xsl:text>
 	    <xsl:call-template name="identifyMe"/>
 	  </xsl:when>
-	  <xsl:when test="self::classSpec">
+	  <xsl:when test="self::tei:classSpec">
 	    <xsl:text>Class </xsl:text>
 	    <xsl:call-template name="identifyMe"/>
 	  </xsl:when>
-	  <xsl:when test="self::elementSpec">
+	  <xsl:when test="self::tei:elementSpec">
 	    <tei:gi>
 	      <xsl:call-template name="identifyMe"/>
 	    </tei:gi>	      
