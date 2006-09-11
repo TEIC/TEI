@@ -94,10 +94,6 @@
     </xsl:for-each>
   </xsl:template>
   <xsl:template name="xrefpanel">
-    <b>
-      <xsl:apply-templates select="." mode="number"/>
-    </b>
-    <xsl:text> </xsl:text>
     <xsl:variable name="first"><xsl:value-of select="$masterFile"/>0</xsl:variable>
     <xsl:variable name="prev">
       <xsl:choose>
@@ -133,6 +129,8 @@
         <span class="button">&#xBB;</span>
       </a>
     </xsl:if>
+    <xsl:text> </xsl:text>
+    <xsl:apply-templates select="." mode="number"/>
   </xsl:template>
   <xsl:template name="mainslide">
     <html>
@@ -168,10 +166,13 @@
           </ul>
         </div>
         <div class="slidebottom">
-          <img id="logo" src="{$logoFile}" width="{$logoWidth}" height="${logoHeight}" alt="logo"/>
-          <xsl:text> </xsl:text>
-          <xsl:variable name="next"><xsl:value-of select="$masterFile"/>1</xsl:variable>
-          <a accesskey="n" href="{concat($next,'.xhtml')}">Start</a>
+	  <div class="slidebottom-image">
+	    <img id="logo" src="{$logoFile}" width="{$logoWidth}" height="${logoHeight}" alt="logo"/>
+	  </div>
+	  <div class="slidebottom-text">
+	    <xsl:variable name="next"><xsl:value-of select="$masterFile"/>1</xsl:variable>
+	    <a accesskey="n" href="{concat($next,'.xhtml')}">Start</a>
+	  </div>
         </div>
       </body>
     </html>
@@ -201,8 +202,7 @@
       </xsl:when>
       <xsl:otherwise>
 	<xsl:value-of select="$masterFile"/>
-	<xsl:text>0
-	</xsl:text>
+	<xsl:text>0</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
@@ -348,14 +348,26 @@
       <xsl:call-template name="slideBottom"/>
     </div>
   </xsl:template>
+
+
   <xsl:template name="slideBottom">
-    <img id="logo" src="{$logoFile}" width="{$logoWidth}" height="{$logoHeight}" alt="logo"/>
-    <xsl:text> </xsl:text>
-    <xsl:call-template name="generateTitle"/>
+    <div class="slidebottom">
+      <div class="slidebottom-image">
+	<img id="logo" src="{$logoFile}" width="{$logoWidth}" height="${logoHeight}" alt="logo"/>
+      </div>
+      <div class="slidebottom-text">
+	<xsl:call-template name="generateTitle"/>
+      </div>
+    </div>
   </xsl:template>
-  <xsl:template match="teix:egXML">
-    <div class="pre">
+
+
+    <xsl:template match="teix:egXML">
+      <div class="pre">
       <xsl:apply-templates mode="verbatim"/>
     </div>
   </xsl:template>
 </xsl:stylesheet>
+
+
+
