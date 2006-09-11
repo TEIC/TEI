@@ -853,12 +853,15 @@ ways. Consider, for example, the following:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <date value="1857-03-15">15 March 1857.</date> 
-
+</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
 <date notBefore="1857-03-01" notAfter="1857-04-30">Sometime in March or April of 1857.</date> 
-
-<dateRange from="1857-03-01" to="1857-04-30">In March and April of 1857.</dateRange> 
-
-<dateRange from="1857-03-01" notAfter="1857-04-30">From the 1st of March to sometime in April of 1857.</dateRange>
+</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<date from="1857-03-01" to="1857-04-30">In March and April of 1857.</date> 
+</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<date from="1857-03-01" notAfter="1857-04-30">From the 1st of March to sometime in April of 1857.</date>
 </egXML>
 </p>
 
@@ -929,7 +932,7 @@ This element can be used to extend the range of information supplied
 about an individual's personal traits. It can contain an optional
 <gi>label</gi> element, used to provide a human-readable
 specification for the category of trait or feature concerned, followed
-by a <gi>date</gi> or <gi>dateRange</gi> element, followed by the
+by a <gi>date</gi> element, followed by the
 description of the feature itself supplied within one or more
 <gi>p</gi> elements, following which there may be added one or more
 notes or bibliographical references. The <ident>type</ident> and
@@ -952,7 +955,7 @@ specific elements:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <persTrait type="nationality">
     <label>Nationality</label>
-    <dateRange notBefore="2002-01-15">From 15 January 2002</dateRange>
+    <date notBefore="2002-01-15">From 15 January 2002</date>
     <p>American citizen.</p>
 </persTrait>
 </egXML>
@@ -1422,11 +1425,11 @@ the <gi>time</gi> element.
 </time></egXML>
  </p>
 <p>The <att>type</att> attribute may be used to distinguish sub-types
-of component elements (for example, months or days presented as words
-or as numbers) or to provide additional information about the function
+of component elements (for example, days presented as words for days of the week
+or as numbers for the cardinal day of the month) or to provide additional information about the function
 of this particular component (for example, to distinguish types of
-<gi>occasion</gi>). The <att>value</att> <!-- and <att>reg</att>
-attributes are both used --> attribute is used to provide a
+<gi>occasion</gi>). The <att>value</att> and <att>dur</att>
+attributes are both used to provide a
 standardized or regularized form for the content of an element,
 conforming to a subset of the possible formats defined by the relevant
 international standard (ISO 8601) as profiled by <title>XML Schema
@@ -1473,7 +1476,7 @@ natural language.
 In the following examples, the <att>reg</att> attribute has been used
 to simplify processing of variant forms of expression:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><date value="1786-12-11">     
-   <distance value="P14D">A fortnight</distance>
+   <distance dur="P14D">A fortnight</distance>
    <offset>before</offset>
    <date>       
       <occasion type="holiday">Christmas</occasion>
@@ -1482,7 +1485,7 @@ to simplify processing of variant forms of expression:
 </date></egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">I reached the station
 <time value="14:15:00">
-  <distance value="P30M" exact="false">about a half hour</distance>
+  <distance dur="P30M" exact="false">about a half hour</distance>
   <offset>after</offset>
   <occasion value="13:45:00">the departure of the afternoon train to Boston</occasion>
 </time></egXML></p>
