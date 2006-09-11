@@ -8,19 +8,16 @@ $Author$
 <gloss>attributes for temporal expression</gloss>
 <desc>attributes for component elements of temporal expressions involving
   dates and time</desc>
-  <attList>
+  <attList xmlns:rng="http://relaxng.org/ns/structure/1.0">
     <attDef ident="value" usage="opt">
 	<equiv/>
 	<desc>supplies the value of a date or time in a standard form.</desc>
 	<datatype>
-	  <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
-	    <rng:ref name="data.temporal"/>
-	    <rng:ref name="data.duration"/>
-	  </rng:choice>
+	  <rng:ref name="data.temporal"/>
 	</datatype>
-	<valDesc>Any string representing a valid date or duration.</valDesc>
+	<valDesc>Any string representing a valid date, time, or one of a variety of combinations.</valDesc>
 	<exemplum>
-	  <p>Examples of W3C date and date &amp; time formats.</p>
+	  <p>Examples of W3C date, time, and date &amp; time formats.</p>
 	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
 	    <date value="1945-10-24">24 Oct 45</date>
 	    <date value="1996-09-24T07:25Z">September 24th, 1996 at 3:25 in the morning</date>
@@ -44,15 +41,6 @@ $Author$
 	  may be unable to properly process times expressed with
 	  reduced precision.</p>
 	</exemplum>
-	<exemplum>
-	  <p>Examples of W3C durations.</p>
-	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
-	    <distance value="PT45M">forty-five minutes</distance>
-	    <distance value="P1DT12H">a day and a half</distance>
-	    <distance value="P7D">a week</distance>
-	    <distance value="PT0.02S">20 ms</distance>
-	  </egXML>
-	</exemplum>
       <exemplum>
 	<p>A usage example of <gi>date</gi>.</p>
 	<egXML xmlns="http://www.tei-c.org/ns/Examples">This list
@@ -70,29 +58,57 @@ $Author$
       </exemplum>
       <remarks>
 	<p>The value of the <att>value</att> attribute is a string
-	representing a date, date &amp; time, time, or duration in any
+	representing a date, date &amp; time, or time, in any
 	one of the following forms:
 	<list>
 	  <item>a date in any of the standard formats described by
 	  <title>XML Schema Part 2: Datatypes Second
 	  Edition</title></item>
+	  <item>a time in the standard format described by 
+	  <title>XML Schema Part 2: Datatypes Second
+	  Edition</title>, i.e. <code>hh:mm:ss</code></item>
+	  <item>a combined date and time in any of the standard
+	  formats described by <title>XML Schema Part 2: Datatypes
+	  Second Edition</title></item>
 	  <item>a time or combined date &amp; time in the standard
 	  format as above, but with reduced precision (the minutes or
 	  minutes &amp; seconds may be omitted &#x2014; e.g.,
 	  <val>12</val> and <val>12:00</val> are permitted to indicate
 	  noon, in addition to <val>12:00:00</val>)</item>
-	  <item>a duration in the format defined in the section
+<!--	  <item>a duration in the format defined in the section
 	  <title>Duration / Format with designators</title> of ISO
-	  8601.</item>
+	  8601.</item> -->
 	</list>
 	</p>
 	<p>The value of <att>value</att> is constrained to be in one
-	of the date, time, or duration formats recognized by the W3C
+	of the date, time, or combined date &amp; time formats recognized by the W3C
 	<title>XML Schema Part 2: Datatypes</title> specification,
 	except that times may be expressed with reduced precision.
 	This is true whether the date component (if any) is a
 	Gregorian or a proleptic Gregorian date.</p>
       </remarks>
+    </attDef>
+    <attDef ident="dur" usage="opt">
+      <equiv/>
+      <gloss>duration</gloss>
+      <desc>indicates the length of this element in time.</desc>
+      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="duration"/></datatype>
+	<exemplum>
+	  <p>Examples of W3C durations.</p>
+	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	    <distance dur="PT45M">forty-five minutes</distance>
+	    <distance dur="P1DT12H">a day and a half</distance>
+	    <distance dur="P7D">a week</distance>
+	    <distance dur="PT0.02S">20 ms</distance>
+	  </egXML>
+	</exemplum>
+	<remarks>
+	  <p>If both <att>value</att> and <att>dur</att> are
+	  specified, the values should be interpreted as indicating a
+	  span of time by its starting time (or date) and duration.
+	  These Guidelines do not provide a method for expressing a
+	  time range by a duration and its ending time.</p>
+	</remarks>
     </attDef>
 <!--    <attDef ident="key">
 	<equiv/>
