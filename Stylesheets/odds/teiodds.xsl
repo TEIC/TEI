@@ -33,6 +33,10 @@
   </xd:doc>
   <xsl:include href="RngToRnc.xsl"/>
   <xsl:output encoding="utf-8" indent="yes" method="xml"/>
+  <xsl:param name="outputSuffix">.html</xsl:param>
+  <xd:doc type="string" class="output">
+    Public Doctype of output file(s).
+  </xd:doc>
   <xsl:param name="outputDir"/>
   <xsl:param name="simplify">false</xsl:param>
   <xsl:param name="localsource"/>

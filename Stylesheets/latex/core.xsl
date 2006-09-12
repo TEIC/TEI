@@ -227,15 +227,22 @@
   <xsl:template match="tei:item" mode="gloss"> 
       <xsl:text>\item[</xsl:text>
       <xsl:apply-templates 
-	  select="preceding-sibling::tei:label[1]/text()"/>
+	  select="preceding-sibling::tei:label[1]" mode="gloss"/>
       <xsl:text>]</xsl:text>
     <xsl:apply-templates/>
   </xsl:template>
   <xd:doc>
-    <xd:short>Process elements tei:label</xd:short>
+    <xd:short>Process elements tei:label in normal mode</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:label"/>
+  <xd:doc>
+    <xd:short>Process elements tei:label in gloss mode</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:label" mode="gloss">
+    <xsl:apply-templates/>
+  </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:lb</xd:short>
     <xd:detail> </xd:detail>
