@@ -131,6 +131,31 @@
         <xsl:value-of select="local-name(.)"/>
       </xsl:otherwise>
     </xsl:choose>
+  <xsl:if test="not(parent::*)">
+    <xsl:if test="descendant-or-self::node()[namespace-uri()='http://www.w3.org/2005/11/its']">
+      <xsl:text>&#10;  xmlns:its="http://www.w3.org/2005/11/its" </xsl:text>
+    </xsl:if>
+    <xsl:if test="descendant-or-self::node()[namespace-uri()='http://www.tei-c.org/ns/1.0']">
+      <xsl:text>&#10;  xmlns:tei="http://www.tei-c.org/ns/1.0" </xsl:text>
+    </xsl:if>
+    <xsl:if test="descendant-or-self::node()[namespace-uri()='http://docbook.org/ns/docbook']">
+      <xsl:text>&#10;  xmlns:dbk="http://docbook.org/ns/docbook" </xsl:text>
+    </xsl:if>
+    <xsl:if test="descendant-or-self::node()[namespace-uri()='http://www.w3.org/1999/xhtml']">
+      <xsl:text>&#10;  xmlns:xhtml="http://www.w3.org/1999/xhtml" </xsl:text>
+    </xsl:if>
+    <xsl:if test="descendant-or-self::node()[namespace-uri()='http://www.w3.org/1999/xlink']">
+      <xsl:text>&#10;  xmlns:xlink="http://www.w3.org/1999/xlink" </xsl:text>
+    </xsl:if>
+    <xsl:if test="descendant-or-self::node()[namespace-uri()='http://www.w3.org/2001/XMLSchema']">
+      <xsl:text>&#10;  xmlns:xs="http://www.w3.org/2001/XMLSchema" </xsl:text>
+    </xsl:if>
+    <xsl:if test="descendant-or-self::node()[namespace-uri()='http://www.ascc.net/xml/schematron']">
+      <xsl:text>&#10;  xmlns:sch="http://www.ascc.net/xml/schematron" </xsl:text>
+    </xsl:if>
+
+  </xsl:if>
+
     <xsl:for-each select="@*">
       <xsl:if
         test="count(../@*)&gt;3 or string-length(../@*)&gt;60 or namespace-uri()='http://www.w3.org/2005/11/its'">
