@@ -61,24 +61,36 @@
   <xsl:param name="linkPanel"/>
   <xsl:template name="copyrightStatement"/>
   <xsl:param name="makingSlides">true</xsl:param>
+
   <xsl:template match="tei:div" mode="number">
     <xsl:number/>
   </xsl:template>
-  <xsl:template match="tei:div1" mode="number"><xsl:for-each select="parent::tei:div0"><xsl:number/></xsl:for-each>_<xsl:number/></xsl:template>
+
+  <xsl:template match="tei:div1" mode="number">
+    <xsl:for-each select="parent::tei:div0">
+      <xsl:number/>
+    </xsl:for-each>
+    <xsl:text>_</xsl:text>
+    <xsl:number/>
+  </xsl:template>
+
   <xsl:template match="tei:div1|tei:div" mode="genid">
     <xsl:value-of select="$masterFile"/>
     <xsl:apply-templates select="." mode="number"/>
   </xsl:template>
+
   <xsl:template match="tei:docAuthor">
     <div class="docAuthor">
       <xsl:apply-templates/>
     </div>
   </xsl:template>
+
   <xsl:template match="tei:docDate">
     <div class="docDate">
       <xsl:apply-templates/>
     </div>
   </xsl:template>
+
   <xsl:template match="/tei:TEI">
     <xsl:param name="slidenum"><xsl:value-of select="$masterFile"/>0</xsl:param>
     <xsl:call-template name="outputChunk">
@@ -93,6 +105,7 @@
       <xsl:apply-templates select="tei:div|tei:div0"/>
     </xsl:for-each>
   </xsl:template>
+
   <xsl:template name="xrefpanel">
     <xsl:variable name="first"><xsl:value-of select="$masterFile"/>0</xsl:variable>
     <xsl:variable name="prev">
@@ -293,6 +306,7 @@
     </xsl:call-template>
     <xsl:apply-templates select="tei:div1"/>
   </xsl:template>
+
   <xsl:template match="tei:body/tei:div|tei:div1">
     <xsl:choose>
       <xsl:when test="$splitLevel&gt;-1">
