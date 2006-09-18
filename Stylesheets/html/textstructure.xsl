@@ -1284,6 +1284,7 @@ $ID: requests a particular page
   </xd:doc>
   <xsl:template name="leftHandFrame">
     <xsl:param name="currentID"/>
+    <xsl:call-template name="makeSidebar"/>
     <xsl:choose>
       <xsl:when test="$currentID=''">
         <xsl:call-template name="linkListContents">
@@ -1309,7 +1310,6 @@ $ID: requests a particular page
         </xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:call-template name="makeSidebar"/>
   </xsl:template>
   <xd:doc>
     <xd:short>[html] bypass sidebar lists in normal mode</xd:short>

@@ -246,6 +246,17 @@
     <xsl:choose>
       <xsl:when test="@rend='display'">
         <blockquote>
+
+	  <xsl:attribute name="class">
+	  <xsl:choose>
+	    <xsl:when test="@rend">
+	      <xsl:value-of select="@rend"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:text>cit</xsl:text>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	  </xsl:attribute>
           <p>
             <xsl:apply-templates select="tei:q|tei:quote"/>
             <xsl:apply-templates select="tei:bibl"/>
@@ -936,7 +947,18 @@
 	  <xsl:with-param name="id" select="$identifier"/>
 	</xsl:call-template>
         <blockquote>
-          <p>
+
+	  <xsl:attribute name="class">
+	  <xsl:choose>
+	    <xsl:when test="@rend">
+	      <xsl:value-of select="@rend"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:text>note</xsl:text>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	  </xsl:attribute>  
+        <p>
             <xsl:apply-templates/>
           </p>
         </blockquote>
@@ -1100,6 +1122,16 @@
     <xsl:choose>
       <xsl:when test="tei:p">
         <blockquote>
+	  <xsl:attribute name="class">
+	  <xsl:choose>
+	    <xsl:when test="@rend">
+	      <xsl:value-of select="@rend"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:text>q</xsl:text>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	  </xsl:attribute>
           <xsl:apply-templates/>
         </blockquote>
       </xsl:when>
@@ -1164,6 +1196,17 @@
   </xd:doc>
   <xsl:template match="tei:q[@rend='display']">
     <blockquote>
+
+	  <xsl:attribute name="class">
+	  <xsl:choose>
+	    <xsl:when test="@rend">
+	      <xsl:value-of select="@rend"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:text>q</xsl:text>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	  </xsl:attribute>
       <xsl:choose>
         <xsl:when test="tei:p">
           <xsl:apply-templates/>
@@ -1213,6 +1256,16 @@
       </xsl:when>
       <xsl:otherwise>
         <blockquote>
+	  <xsl:attribute name="class">
+	  <xsl:choose>
+	    <xsl:when test="@rend">
+	      <xsl:value-of select="@rend"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:text>quote</xsl:text>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	  </xsl:attribute>
           <xsl:choose>
             <xsl:when test="tei:p">
               <xsl:apply-templates/>
@@ -1456,6 +1509,11 @@
     <xsl:choose>
       <xsl:when test="@n">
         <xsl:value-of select="@n"/>
+      </xsl:when>
+      <xsl:when test="not(@place) and $consecutiveFootnoteNumbers='true'">
+            <xsl:number 
+		count="tei:note[not(@place)]" 
+		level="any"/>
       </xsl:when>
       <xsl:when test="not(@place)">
         <xsl:choose>
