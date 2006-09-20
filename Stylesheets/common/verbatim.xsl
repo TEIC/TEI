@@ -153,6 +153,13 @@
     <xsl:if test="descendant-or-self::node()[namespace-uri()='http://www.ascc.net/xml/schematron']">
       <xsl:text>&#10;  xmlns:sch="http://www.ascc.net/xml/schematron" </xsl:text>
     </xsl:if>
+    <xsl:if test="descendant-or-self::node()[namespace-uri()='http://www.w3.org/1999/XSL/Transform']">
+      <xsl:text>&#10;  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" </xsl:text>
+    </xsl:if>
+
+    <xsl:if test="descendant-or-self::node()[namespace-uri()='http://www.w3.org/2000/svg']">
+      <xsl:text>&#10;  xmlns:svg="http://www.w3.org/2000/svg"</xsl:text>
+    </xsl:if>
 
   </xsl:if>
 

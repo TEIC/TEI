@@ -693,6 +693,15 @@ so that is only put back in if there is some content
 	    </xsl:call-template>
 	  </xsl:for-each>
 	</xsl:when>
+	<!-- the class is referenced in the ODD and has redefined <attList>-->
+	<xsl:when test="key('ATTCLASSES',$className)/tei:attList">
+	  <xsl:for-each select="key('ATTCLASSES',$className)">
+	    <xsl:call-template name="processClassAttributes">
+	      <xsl:with-param name="elementName" select="$elementName"/>
+	      <xsl:with-param name="className" select="$className"/>
+	    </xsl:call-template>
+	  </xsl:for-each>
+	</xsl:when>
 	<!-- otherwise, we'll revert to source
 	     (assuming the class is of type 'atts')
 	-->
