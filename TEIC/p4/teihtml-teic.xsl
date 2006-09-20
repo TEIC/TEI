@@ -104,6 +104,21 @@
     <img src="/logos/{$logoFile}" alt="" width="180" />
   </xsl:template>
   
+<xsl:template name="includeCSS">
+  <link rel="stylesheet" type="text/css" media="screen">
+    <xsl:attribute name="href">
+      <xsl:value-of select="$URLPREFIX"/>
+      <xsl:text>/release/xml/teip4/stylesheet/tei.css</xsl:text>
+    </xsl:attribute>
+  </link>
+  <link rel="stylesheet" type="text/css" media="screen">
+    <xsl:attribute name="href">
+      <xsl:value-of select="$URLPREFIX"/>
+      <xsl:text>/release/xml/teip4/stylesheet/teic.css</xsl:text>
+    </xsl:attribute>
+  </link>
+</xsl:template>
+
   <xsl:template name="generateSubTitle">
     <xsl:variable name="authority">
       <xsl:value-of select="/TEI.2/teiHeader/fileDesc/publicationStmt/authority"/>
