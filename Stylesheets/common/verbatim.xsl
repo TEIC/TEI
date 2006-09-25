@@ -132,32 +132,31 @@
       </xsl:otherwise>
     </xsl:choose>
   <xsl:if test="not(parent::*)">
-    <xsl:if test="descendant-or-self::node()[namespace-uri()='http://www.w3.org/2005/11/its']">
+    <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/2005/11/its']|@*[namespace-uri()='http://www.w3.org/2005/11/its']">
       <xsl:text>&#10;  xmlns:its="http://www.w3.org/2005/11/its" </xsl:text>
     </xsl:if>
-    <xsl:if test="descendant-or-self::node()[namespace-uri()='http://www.tei-c.org/ns/1.0']">
+    <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.tei-c.org/ns/1.0']|@*[namespace-uri()='http://www.tei-c.org/ns/1.0']">
       <xsl:text>&#10;  xmlns:tei="http://www.tei-c.org/ns/1.0" </xsl:text>
     </xsl:if>
-    <xsl:if test="descendant-or-self::node()[namespace-uri()='http://docbook.org/ns/docbook']">
+    <xsl:if test="descendant-or-self::*[namespace-uri()='http://docbook.org/ns/docbook']|@*[namespace-uri()='http://docbook.org/ns/docbook']">
       <xsl:text>&#10;  xmlns:dbk="http://docbook.org/ns/docbook" </xsl:text>
     </xsl:if>
-    <xsl:if test="descendant-or-self::node()[namespace-uri()='http://www.w3.org/1999/xhtml']">
+    <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/1999/xhtml']|@*[namespace-uri()='http://www.w3.org/1999/xhtml']">
       <xsl:text>&#10;  xmlns:xhtml="http://www.w3.org/1999/xhtml" </xsl:text>
     </xsl:if>
-    <xsl:if test="descendant-or-self::node()[namespace-uri()='http://www.w3.org/1999/xlink']">
+    <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/1999/xlink']|@*[namespace-uri()='http://www.w3.org/1999/xlink']">
       <xsl:text>&#10;  xmlns:xlink="http://www.w3.org/1999/xlink" </xsl:text>
     </xsl:if>
-    <xsl:if test="descendant-or-self::node()[namespace-uri()='http://www.w3.org/2001/XMLSchema']">
+    <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/2001/XMLSchema']|@*[namespace-uri()='http://www.w3.org/2001/XMLSchema']">
       <xsl:text>&#10;  xmlns:xs="http://www.w3.org/2001/XMLSchema" </xsl:text>
     </xsl:if>
-    <xsl:if test="descendant-or-self::node()[namespace-uri()='http://www.ascc.net/xml/schematron']">
+    <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.ascc.net/xml/schematron']|@*[namespace-uri()='http://www.ascc.net/xml/schematron']">
       <xsl:text>&#10;  xmlns:sch="http://www.ascc.net/xml/schematron" </xsl:text>
     </xsl:if>
-    <xsl:if test="descendant-or-self::node()[namespace-uri()='http://www.w3.org/1999/XSL/Transform']">
+    <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/1999/XSL/Transform']|@*[namespace-uri()='http://www.w3.org/1999/XSL/Transform']">
       <xsl:text>&#10;  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" </xsl:text>
     </xsl:if>
-
-    <xsl:if test="descendant-or-self::node()[namespace-uri()='http://www.w3.org/2000/svg']">
+    <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/2000/svg']|@*[namespace-uri()='http://www.w3.org/2000/svg']">
       <xsl:text>&#10;  xmlns:svg="http://www.w3.org/2000/svg"</xsl:text>
     </xsl:if>
 
