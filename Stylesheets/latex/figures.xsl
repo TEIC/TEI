@@ -197,7 +197,7 @@
   <xsl:template name="makeFigureEnd">
     <xsl:choose>
       <xsl:when test="@rend='display' or tei:head or tei:p">
-        <xsl:text>&#10;	\caption{</xsl:text>
+        <xsl:text>&#10;	\caption*{</xsl:text>
         <xsl:for-each select="tei:head">
 	  <xsl:apply-templates/>
 	</xsl:for-each>

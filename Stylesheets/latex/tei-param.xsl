@@ -247,8 +247,10 @@ capable of dealing with UTF-8 directly.
   \@mainmatterfalse
   \pagenumbering{roman}}
 \def\mainmatter{%
+<xsl:if test="$numberHeadings='true'">
   \setcounter{section}{0}
   \setcounter{secnumdepth}{4}
+</xsl:if>
   \@mainmattertrue
   \pagenumbering{arabic}}
 \def\backmatter{%
@@ -295,9 +297,6 @@ capable of dealing with UTF-8 directly.
 \markright{\@title}%
 \markboth{\@title}{\@author}%
 \makeatother
-<xsl:if test="not($docClass='letter')">
-\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
-</xsl:if>
 \fvset{frame=single,numberblanklines=false,xleftmargin=5mm,xrightmargin=5mm}
 \fancyhf{} 
 \fancyhead[LE]{\bfseries\leftmark} 

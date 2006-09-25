@@ -136,10 +136,10 @@
         <xsl:choose>
           <xsl:when test="ancestor::tei:q">Star</xsl:when>
           <xsl:when
-            test="ancestor::tei:back and         $numberBackHeadings='false'"
+            test="ancestor::tei:back and $numberBackHeadings='false'"
             >Star</xsl:when>
           <xsl:when
-            test="ancestor::tei:front and          $numberFrontHeadings='false'"
+            test="ancestor::tei:front and $numberFrontHeadings='false'"
             >Star</xsl:when>
         </xsl:choose>
         <xsl:call-template name="sectionhead"/>

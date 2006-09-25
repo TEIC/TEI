@@ -80,7 +80,10 @@
       <xsl:text>&#10;%ENDFIGMAP&#10;</xsl:text>
     </xsl:if>
     <xsl:text>&#10;\documentclass[</xsl:text>
-    <xsl:value-of select="$classParameters"/>]{<xsl:value-of select="$docClass"/>}
+    <xsl:value-of select="$classParameters"/>
+    <xsl:text>]{</xsl:text>
+    <xsl:value-of select="$docClass"/>
+    <xsl:text>}</xsl:text>
     <xsl:text>\makeatletter&#10;</xsl:text>
     <xsl:call-template name="latexSetup"/>
     <xsl:call-template name="latexPackages"/>
@@ -110,23 +113,46 @@
     \def\DivVStar[#1]#2{\paragraph*{#2}}
 }
 \makeatother
-    </xsl:text>
-\def\TheFullDate{<xsl:call-template name="generateDate"/><xsl:variable name="revdate"><xsl:call-template name="generateRevDate"/></xsl:variable><xsl:if test="not($revdate='')">
-  (<xsl:call-template name="i18n"><xsl:with-param name="word">revisedWord</xsl:with-param></xsl:call-template>: 
-  <xsl:value-of select="$revdate"/>)
-</xsl:if>}
-\def\TheDate{<xsl:call-template name="generateDate"/>}
-\title{<xsl:call-template name="generateTitle"/>}
-\author{<xsl:call-template name="generateAuthor"/>}
+\def\TheFullDate{</xsl:text>
+<xsl:call-template name="generateDate"/>
+<xsl:variable name="revdate">
+<xsl:call-template name="generateRevDate"/>
+</xsl:variable>
+<xsl:if test="not($revdate='')">
+  <xsl:text>(</xsl:text>
+  <xsl:call-template name="i18n">
+    <xsl:with-param name="word">revisedWord</xsl:with-param>
+    </xsl:call-template>: 
+    <xsl:value-of select="$revdate"/>
+    <xsl:text>)</xsl:text>
+</xsl:if>
+<xsl:text>}
+\def\TheDate{</xsl:text>
+<xsl:call-template name="generateDate"/>
+<xsl:text>}
+\title{</xsl:text>
+<xsl:call-template name="generateTitle"/>
+<xsl:text>}
+\author{</xsl:text>
+<xsl:call-template name="generateAuthor"/>
+<xsl:text>}
 \begin{document}
-<xsl:call-template name="latexBegin"/><!-- certainly don't touch the next few lines --><xsl:text disable-output-escaping="yes">
+</xsl:text>
+<xsl:call-template name="latexBegin"/>
+<!-- certainly don't touch the next few lines -->
+<xsl:text disable-output-escaping="yes">
 \catcode`\$=12\relax
 \catcode`\^=12\relax
 \catcode`\~=12\relax
 \catcode`\#=12\relax
-\catcode`\%=12\relax&#10;</xsl:text><xsl:text disable-output-escaping="yes">\let\tabcellsep&amp;
-\catcode`\&amp;=12\relax&#10;</xsl:text><xsl:apply-templates select="tei:text"/><xsl:call-template name="latexEnd"/>
+\catcode`\%=12\relax&#10;</xsl:text>
+<xsl:text disable-output-escaping="yes">\let\tabcellsep&amp;
+\catcode`\&amp;=12\relax&#10;</xsl:text>
+<xsl:apply-templates select="tei:text"/>
+<xsl:call-template name="latexEnd"/>
+<xsl:text>
 \end{document}
+</xsl:text>
 </xsl:template>
 
   <xd:doc>
