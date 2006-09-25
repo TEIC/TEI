@@ -21,10 +21,12 @@ Description
       <td>
        <form>
         <table>
-         <tr><td class="headline" colspan="4"><xsl:value-of disable-output-escaping="yes" select="$res_form_headline"/></td></tr>
+         <tr><td class="headline" colspan="5"><xsl:value-of disable-output-escaping="yes" select="$res_form_headline"/></td></tr>
          <tr class="header">
           <td></td>
-          <td><xsl:value-of  disable-output-escaping="yes" select="$res_form_moduleName"/></td>
+          <td><xsl:value-of  disable-output-escaping="yes"
+	  select="$res_form_moduleName"/></td>
+	  <td/>
           <td><xsl:value-of  disable-output-escaping="yes" select="$res_form_description"/></td>
           <td><xsl:value-of  disable-output-escaping="yes" select="$res_form_changes"/></td>
          </tr>
@@ -90,6 +92,16 @@ select="$res_selectedModules_headline"/></td>
 	 <a class="display">
 	   <xsl:attribute name="href">?mode=changeModule&amp;module=<xsl:value-of select="moduleName"/></xsl:attribute>
 	   <xsl:value-of select="moduleName"/>
+	 </a>
+       </td>
+       <td>
+	 <a target="_new">
+	   <xsl:attribute name="href">
+	     <xsl:text>http://www.tei-c.org/P5/Guidelines/</xsl:text>
+	     <xsl:value-of select="moduleChapter"/>
+	     <xsl:text>.html</xsl:text>
+	   </xsl:attribute>
+	   <span class="helpMe">?</span>
 	 </a>
        </td>
        <td><xsl:value-of select="moduleDesc"/></td>

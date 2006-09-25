@@ -19,6 +19,8 @@ searchtei=Search TEI database
 
 
 
+
+
 [fr]
 helpmessage=
 title=Production des validateurs TEI
@@ -33,6 +35,8 @@ language=Langage
 schema=Schéma
 documentation=Documentation
 searchtei=Rechercher base TEI
+
+
 
 
 
@@ -61,6 +65,8 @@ searchtei=Suche in der TEI Database
 
 
 
+
+
 [zh]
 helpmessage=
 title=製作TEI的文件模型檔
@@ -75,6 +81,29 @@ language=語言
 schema=建立文件模型
 documentation=建立說明檔
 searchtei=檢索TEI
+
+
+
+
+
+
+
+
+
+[sw]
+helpmessage=
+title=Valideringsverktyg för TEI
+save=Spara anpassningar
+help=Hjälp
+customize=Anpassa
+new=Ny
+addelements=Lägg till element
+changeclasses=Ändra klass
+modules=Moduler
+language=Språk
+schema=Schema
+documentation=Dokumentation
+searchtei=Sök i TEI databasen
 
 
 
@@ -101,28 +130,11 @@ searchtei=Поиск в базе данных TEI
 
 
 
-[sw]
-helpmessage=
-title=Valideringsverktyg för TEI
-save=Spara anpassningar
-help=Hjälp
-customize=Anpassa
-new=Ny
-addelements=Lägg till element
-changeclasses=Ändra klass
-modules=Moduler
-language=Språk
-schema=Schema
-documentation=Dokumentation
-searchtei=Sök i TEI databasen
-
-
-
 
 
 [ja]
 helpmessage=
-title=TEI検証ソフトの作成
+title=TEI検証ソフト
 save=保存
 help=ヘルプ
 customize=カスタム化

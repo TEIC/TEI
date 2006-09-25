@@ -224,11 +224,12 @@ class romaDom extends domDocument
      *    </Element>
      *   </addedElements>
      *
-     * There might be some more tags inside the Element-tag like <classes> but since
-     * they are not of interest here, they were omitted. There is also just one level of
-     * Elements beyond the Element-tag. So <classes> might be there, but there would be
-     * no <memberOf> inside the <classes>
-     */     
+     * There might be some more tags inside the Element-tag like
+     * <classes> but since they are not of interest here, they were
+     * omitted. There is also just one level of Elements beyond the
+     * Element-tag. So <classes> might be there, but there would be no
+     * <memberOf> inside the <classes> */
+
     public function getAddedElements( &$oElementDom )
       {
 	$errResult = false;
@@ -428,6 +429,8 @@ class romaDom extends domDocument
     public function getContentsByElementNameInModuleDom( $szElement, $szModule, &$oContents )
       {
 	$this->getXPath( $oXPath );
+	$this->m_oRomaDom->getDocLanguage( $szDocLanguage );
+
 	$oContent = $oXPath->query(
       "//tei:schemaSpec/tei:elementSpec[@module='$szModule'
       and @mode='change' and @ident='$szElement']/tei:content" )->item(0);
@@ -441,7 +444,8 @@ class romaDom extends domDocument
 	else
 	  {
 	    $oElementDom = new domDocument();
-	    $oElementDom->loadXML( join( '', file( roma_xquery_server . 'element.xq?name=' . $szElement ) ) );
+	    $oElementDom->loadXML( join( '', file( roma_xquery_server
+          . 'element.xq?lang=' . $szDocLanguage. '&name=' . $szElement ) ) );
 	    
 	    $oXPath = new domxpath( $oElementDom );
 	    $oXPath->registerNamespace( 'rng', 'http://relaxng.org/ns/structure/1.0' );

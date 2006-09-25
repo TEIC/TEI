@@ -631,8 +631,9 @@ class roma
       {
         $szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
 	$this->getParser( $oParser );
-
-	$this->getListDom( roma_xquery_server . 'elemsbymod.xq?module=' . $_REQUEST[ 'module' ], $oListDom );
+	$this->m_oRomaDom->getDocLanguage( $szDocLanguage );
+	$this->getListDom( roma_xquery_server . 'elemsbymod.xq?lang='
+	. $szDocLanguage . '&module=' . $_REQUEST[ 'module' ], $oListDom );
 	notamHandler::getError( 'moduleChanged', $aoErrors );
 	notamHandler::deleteError( 'moduleChanged' );
 	$this->addErrorsDom( $oListDom, $aoErrors );
@@ -642,7 +643,9 @@ class roma
 
 	$this->createChangeInListDom( $oListDom, array ( $oChanged, $oExcludedElements ) );
 
-	$aszParam =  array( 'module' => $_REQUEST[ 'module' ] ) ;
+	$aszParam =  array( 'module' => $_REQUEST[ 'module' ],
+	'lang' => $szDocLanguage ,
+	'TEISERVER' => roma_xquery_server);
 	$this->applyStylesheet( $oListDom, 'changeModules.xsl', $oNewDom, $aszParam , 'changeModule');
 	$oParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'mode', 'changeModule' );
@@ -661,13 +664,15 @@ class roma
       {
         $szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
 	$this->getParser( $oParser );
-
+	$this->m_oRomaDom->getDocLanguage( $szDocLanguage );
 	$oModelClassDom = new domDocument();
 	$oModelClassDom->loadXML( join( '', file( roma_xquery_server . 'classes.xq' ) ) );
 	$oRootClass = $oModelClassDom->documentElement;
 
 	$oAttributeDom = new domDocument();
-	$oAttributeDom->loadXML( join( '', file( roma_xquery_server . 'attclasses.xq' ) ) );
+	$oAttributeDom->loadXML( join( '', 
+	file( roma_xquery_server . 'attclasses.xq?lang=' . $szDocLanguage) 
+	) );
 	$oRootAtt = $oAttributeDom->documentElement;
 
 	$oDatatypeDom = new domDocument();
@@ -703,7 +708,9 @@ class roma
 	$this->addErrorsDom( $oListDom, $aoErrors );
 
 
-        $aszParam = array( 'host' => $_SERVER[ 'HTTP_HOST' ], 'MESSAGE' => $szMessage, 'selectedMode' => 'addElement' );
+        $aszParam = array( 'host' => $_SERVER[ 'HTTP_HOST' ], 
+		  'MESSAGE' => $szMessage, 
+		  'selectedMode' => 'addElement' );
         if ( $_REQUEST[ 'element' ] != '' )
           {
             //get Elements Classes
@@ -825,13 +832,14 @@ class roma
       {
         $szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
 	$this->getParser( $oParser );
- 
+ 	$this->m_oRomaDom->getDocLanguage( $szDocLanguage );
+
 	$oModelClassDom = new domDocument();
 	$oModelClassDom->loadXML( join( '', file( roma_xquery_server . 'classes.xq' ) ) );
 	$oRootClass = $oModelClassDom->documentElement;
 
 	$oAttributeDom = new domDocument();
-	$oAttributeDom->loadXML( join( '', file( roma_xquery_server . 'attclasses.xq' ) ) );
+	$oAttributeDom->loadXML( join( '', file( roma_xquery_server . 'attclasses.xq?lang=' . $szDocLanguage ) ) );
 	$oRootAtt = $oAttributeDom->documentElement;
 
 	$oDatatypeDom = new domDocument();
@@ -1055,9 +1063,10 @@ class roma
       {
         $szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
 	$this->getParser( $oParser );
+	$this->m_oRomaDom->getDocLanguage( $szDocLanguage );
 
 	$oListDom = new domDocument();
-	$oListDom->loadXML( join ( '', file( roma_xquery_server . 'attclasses.xq' ) ) );
+	$oListDom->loadXML( join ( '', file( roma_xquery_server . 'attclasses.xq?lang=' . $szDocLanguage ) ) );
 
 	$this->applyStylesheet( $oListDom, 'changeClasses.xsl',	$oNewDom, array( 'host' => roma_xquery_server, 'class' => $_REQUEST[ 'class' ], 'module' => $_REQUEST[ 'module' ] ), 'changeClasses' );
 

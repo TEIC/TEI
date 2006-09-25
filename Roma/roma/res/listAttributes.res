@@ -17,6 +17,8 @@ form_delete=Delete
 
 
 
+
+
 [fr]
 helpmessage=Ajoutons des attributs
 headline=Attributs supplémentaires
@@ -29,6 +31,8 @@ form_exclude=Exclure
 form_tagName=Nom de balise
 form_description=Description
 form_delete=Supprimer
+
+
 
 
 
@@ -56,6 +60,8 @@ form_delete=Löschen
 
 
 
+
+
 [zh]
 helpmessage=已被定義在這個元素或元素集當中的屬性。
 headline=現有的屬性
@@ -68,6 +74,27 @@ form_exclude=不包含
 form_tagName=標籤名稱
 form_description=描述
 form_delete=刪除
+
+
+
+
+
+
+
+
+
+[sw]
+helpmessage=Följande attribut är definierade för denna klasss eller detta element. 
+headline=Tillvalda attribut
+
+form_headline=Lista på attribut
+form_add=Lägg till nya attribut
+form_changeAttribute=Ändra attribut
+form_include=Inkludera
+form_exclude=Exkludera
+form_tagName=Namn på tagg
+form_description=Beskrivning
+form_delete=Ta bort
 
 
 
@@ -92,29 +119,14 @@ form_delete=Уничтожить
 
 
 
-[sw]
-helpmessage=Följande attribut är definierade för denna klasss eller detta element. 
-headline=Tillvalda attribut
-
-form_headline=Lista på attribut
-form_add=Lägg till nya attribut
-form_changeAttribute=Ändra attribut
-form_include=Inkludera
-form_exclude=Exkludera
-form_tagName=Namn på tagg
-form_description=Beskrivning
-form_delete=Ta bort
-
-
-
 
 
 [ja]
 helpmessage=クラス・要素で定義した属性です
 
-headline=追加した属性
+headline=追加する属性
 
-form_headline=追加した属性
+form_headline=追加する属性
 form_add=属性の追加
 form_changeAttribute=属性の変更
 form_include=含める

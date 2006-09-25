@@ -21,11 +21,26 @@ Description
     <p class="roma">
       <form method="POST">
 	<table>
-	  <tr><td class="headline" colspan="7"><xsl:value-of disable-output-escaping="yes" select="$res_form_headline"/></td></tr>
+	  <tr>
+	    <td class="headline" colspan="4">
+	      <xsl:value-of disable-output-escaping="yes"
+			    select="$res_form_headline"/>
+	    </td>
+	  </tr>
 	  <tr class="header">
-	    <td><xsl:value-of disable-output-escaping="yes" select="$res_form_className"/></td>
-	    <td width="580"><xsl:value-of disable-output-escaping="yes" select="$res_form_description"/></td>
-	    <td width=""><xsl:value-of disable-output-escaping="yes" select="$res_form_attributes"/></td>
+	    <td>
+	    <xsl:value-of disable-output-escaping="yes"
+			  select="$res_form_className"/>
+	    </td>
+	    <td/>
+	    <td width="400">
+	    <xsl:value-of disable-output-escaping="yes"
+			  select="$res_form_description"/>
+	    </td>
+	    <td width="">
+	      <xsl:value-of disable-output-escaping="yes"
+			    select="$res_form_attributes"/>
+	    </td>
 	  </tr>
 	  <xsl:call-template name="generateList"/>
 	</table>
@@ -36,11 +51,36 @@ Description
   <xsl:template name="generateList">
     <xsl:for-each select="//attClassList/attClass">
       <tr>
-	<td><a><xsl:attribute name="href"><xsl:value-of select="$host"/>class.xq?name=<xsl:value-of select="className"/></xsl:attribute><xsl:value-of select="className"/></a></td>
-	<td width="580"><xsl:value-of select="classDesc"/></td>
 	<td>
-	  <a><xsl:attribute name="href">?class=<xsl:value-of
-	select="className"/>&amp;mode=listAddedAttributes&amp;module=<xsl:value-of select="module"/></xsl:attribute><xsl:value-of disable-output-escaping="yes" select="$res_form_changeAttributes"/>
+	<a>
+	<xsl:attribute name="href">
+	  <xsl:value-of select="$host"/>
+	  <xsl:text>class.xq?name=</xsl:text>
+	  <xsl:value-of select="className"/>
+	</xsl:attribute>
+	<xsl:value-of select="className"/>
+	</a>
+	</td>
+	<td>
+	 <a target="_new">
+	   <xsl:attribute name="href">
+	     <xsl:value-of select="$host"/>
+	     <xsl:text>tag.xq?name=</xsl:text>
+	     <xsl:value-of select="className"/>
+	   </xsl:attribute>
+	   <span class="helpMe">?</span>
+	 </a>
+	</td>
+	<td width="400"><xsl:value-of select="classDesc"/></td>
+	<td>
+	  <a>
+	    <xsl:attribute name="href">
+	      <xsl:text>?class=</xsl:text>
+	      <xsl:value-of select="className"/>
+	      <xsl:text>&amp;mode=listAddedAttributes&amp;module=</xsl:text>
+	      <xsl:value-of select="module"/>
+	    </xsl:attribute>
+	    <xsl:value-of disable-output-escaping="yes" select="$res_form_changeAttributes"/>
 	  </a>
 	</td>
       </tr>

@@ -116,6 +116,20 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
        </tr>
       </xsl:if>
       <tr>
+	<td class="formlabeltop"><xsl:value-of disable-output-escaping="yes" select="$res_form_description"/></td>
+	<td>
+	  <span>
+	  <textarea rows="5" cols="70" 
+		    name="description"  
+		    onChange="setChangedDesc(this)">
+            <xsl:if test="not($elementDesc='')">
+	        <xsl:value-of select="$elementDesc"/>
+	    </xsl:if>
+           </textarea>
+	  </span>
+        </td>
+      </tr>
+      <tr>
         <td class="formlabeltop"><xsl:value-of disable-output-escaping="yes" select="$res_form_modelClasses"/></td>
         <td>
            <xsl:call-template name="modelClassList"/>
@@ -151,20 +165,6 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
 	  </span>
 	 </xsl:if>
 	</td>
-      </tr>
-      <tr>
-	<td class="formlabeltop"><xsl:value-of disable-output-escaping="yes" select="$res_form_description"/></td>
-	<td>
-	  <span>
-	  <textarea rows="5" cols="70" 
-		    name="description"  
-		    onChange="setChangedDesc(this)">
-            <xsl:if test="not($elementDesc='')">
-	        <xsl:value-of select="$elementDesc"/>
-	    </xsl:if>
-           </textarea>
-	  </span>
-        </td>
       </tr>
       <tr>
        <td class="button" colspan="2"><input type="submit"/></td>

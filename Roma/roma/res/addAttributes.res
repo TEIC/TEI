@@ -17,6 +17,8 @@ form_className=Class name
 
 
 
+
+
 [fr]
 helpmessage=Création d'attributs
 headline=Création d'attributs
@@ -29,6 +31,8 @@ form_defaultValue=Valeur par défaut
 form_description=Description
 form_valList=Liste de valeurs
 form_className=Nome de class
+
+
 
 
 
@@ -55,6 +59,8 @@ form_className=Klassenname
 
 
 
+
+
 [zh]
 helpmessage=每一個屬性必須個別增加。請務必選擇data種類。
 headline=增加屬性
@@ -67,6 +73,27 @@ form_defaultValue=預設屬性值
 form_description=描述
 form_valList=屬性值清單
 form_className=元素集名稱
+
+
+
+
+
+
+
+
+
+[sw]
+helpmessage=Varje attribut måste läggas till separat. Var noggran vid val av datatyp.
+headline=Lägga till attribut
+form_headline=Lägg till ett nytt attribut
+form_name=Attributets namn
+form_optional=Är attributet valfritt?
+form_closed=Stängd lista?
+form_contents=Innehåll
+form_defaultValue=Standardvärde
+form_description=Beskrivning
+form_valList=Lista värden
+form_className=Namn på klass
 
 
 
@@ -91,21 +118,6 @@ form_className=Наименование класса
 
 
 
-[sw]
-helpmessage=Varje attribut måste läggas till separat. Var noggran vid val av datatyp.
-headline=Lägga till attribut
-form_headline=Lägg till ett nytt attribut
-form_name=Attributets namn
-form_optional=Är attributet valfritt?
-form_closed=Stängd lista?
-form_contents=Innehåll
-form_defaultValue=Standardvärde
-form_description=Beskrivning
-form_valList=Lista värden
-form_className=Namn på klass
-
-
-
 
 
 [ja]
@@ -114,8 +126,8 @@ helpmessage=属性はひとつずつ定義します。データ型に注意し�
 headline=属性の定義
 form_headline=属性の追加
 form_name=属性名
-form_optional=選択
-form_closed=閉じる
+form_optional=選択的か
+form_closed=閉じたリストか
 form_contents=内容
 form_defaultValue=既定値
 form_description=説明
