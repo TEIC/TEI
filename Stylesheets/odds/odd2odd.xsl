@@ -817,29 +817,42 @@ so that is only put back in if there is some content
 	</xsl:when>
 	<!-- d) there are changes to the class spec itself -->
 	<xsl:when test="@mode='change'">
-	  <xsl:for-each select="tei:attList/tei:attDef">
-	    <xsl:call-template name="mergeClassAttribute">
-	      <xsl:with-param name="source">3</xsl:with-param>
-	      <xsl:with-param name="element" select="$elementName"/>
-	      <xsl:with-param name="class" select="$className"/>
-	      <xsl:with-param name="att" select="@ident"/>
-	      <xsl:with-param name="original" select="$CURRENTCLASS"/>
-	    </xsl:call-template>
+	  <!-- always references attributes in add mode -->
+	  <xsl:for-each select="tei:attList/tei:attDef[@mode='add']">
+	    <tei:attRef
+		name="{$className}.attribute.{translate(@ident,':','')}"/>
 	  </xsl:for-each>
-	  <xsl:for-each select="tei:attList/tei:attList">
-	    <tei:attList>
-	      <xsl:copy-of select="@org"/>
-	      <xsl:for-each select="tei:attDef">
-		<xsl:call-template name="mergeClassAttribute">
-	      <xsl:with-param name="source">4</xsl:with-param>
-		  <xsl:with-param name="element" select="$elementName"/>
-		  <xsl:with-param name="class" select="$className"/>
-		  <xsl:with-param name="att" select="@ident"/>
-		  <xsl:with-param name="original" select="$CURRENTCLASS"/>
-		</xsl:call-template>
+	  <!-- go back to original and proceed from there -->
+	  <xsl:choose>
+	    <xsl:when test="not($localsource='')">
+	      <xsl:for-each select="document($localsource)/tei:TEI">
+		<xsl:for-each select="key('ATTCLASSES',$className)">
+		  <xsl:call-template name="tryAttributes">
+		    <xsl:with-param name="elementName" select="$elementName"/>
+		    <xsl:with-param name="className"
+				    select="$className"/>
+		    <xsl:with-param name="CURRENTCLASS" select="$CURRENTCLASS"/>
+		  </xsl:call-template>
+		</xsl:for-each>
 	      </xsl:for-each>
-	    </tei:attList>
-	  </xsl:for-each>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:variable name="ATTCLASSDOC">
+		<xsl:value-of select="$TEISERVER"/>
+		<xsl:text>classspecs.xq</xsl:text>
+	      </xsl:variable>
+	      <xsl:for-each select="document($ATTCLASSDOC)/List">
+		<xsl:for-each select="key('ATTCLASSES',$className)">
+		  <xsl:call-template name="tryAttributes">
+		    <xsl:with-param name="elementName" select="$elementName"/>	
+		    <xsl:with-param name="className"
+				    select="$className"/>
+		    <xsl:with-param name="CURRENTCLASS" select="$CURRENTCLASS"/>
+		  </xsl:call-template>
+		</xsl:for-each>
+	      </xsl:for-each>
+	    </xsl:otherwise>
+	  </xsl:choose>
 	  <xsl:for-each select="tei:attList/tei:attRef">
 	    <xsl:copy-of select="."/>
 	  </xsl:for-each>
@@ -883,8 +896,40 @@ so that is only put back in if there is some content
       </xsl:for-each>
     </xsl:if>
   </xsl:template>
+
+<xsl:template name="tryAttributes">
+  <xsl:param name="elementName"/>
+  <xsl:param name="className"/>
+  <xsl:param name="CURRENTCLASS"/>
+  <xsl:for-each select="tei:attList/tei:attDef">
+    <xsl:call-template name="mergeClassAttribute">
+      <xsl:with-param name="source">3</xsl:with-param>
+      <xsl:with-param name="element" select="$elementName"/>
+      <xsl:with-param name="class" select="$className"/>
+      <xsl:with-param name="att" select="@ident"/>
+      <xsl:with-param name="original" select="$CURRENTCLASS"/>
+    </xsl:call-template>
+  </xsl:for-each>
+  <xsl:for-each select="tei:attList/tei:attList">
+    <tei:attList>
+      <xsl:copy-of select="@org"/>
+      <xsl:for-each select="tei:attDef">
+	<xsl:call-template name="mergeClassAttribute">
+	  <xsl:with-param name="source">4</xsl:with-param>
+	  <xsl:with-param name="element" select="$elementName"/>
+	  <xsl:with-param name="class" select="$className"/>
+	  <xsl:with-param name="att" select="@ident"/>
+	  <xsl:with-param name="original" select="$CURRENTCLASS"/>
+	</xsl:call-template>
+      </xsl:for-each>
+    </tei:attList>
+  </xsl:for-each>
+</xsl:template>
   
   <xsl:template name="mergeClassAttribute">
+/* sitting on a source class. go over
+every attribute and see whether the attribute has changed
+*/
     <xsl:param name="source"/>
     <xsl:param name="element"/>
     <xsl:param name="class"/>
