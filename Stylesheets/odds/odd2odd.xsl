@@ -39,7 +39,7 @@
     match="tei:classSpec[@type='atts' and @mode='add']"
     name="NEWATTCLASSES" use="@ident"/>
   <xsl:key
-    match="tei:classSpec[@type='atts' and not(@ident='tei.TEIform')]"
+    match="tei:classSpec[(tei:attList or @type='atts') and not(@ident='tei.TEIform')]"
     name="ATTCLASSES" use="@ident"/>
   <xsl:key match="tei:attDef[@mode='delete']" name="DELETEATT"
     use="concat(../../@ident,'_',@ident)"/>
@@ -690,6 +690,7 @@ so that is only put back in if there is some content
 	    <xsl:call-template name="processClassAttributes">
 	      <xsl:with-param name="elementName" select="$elementName"/>
 	      <xsl:with-param name="className" select="$className"/>
+	      <xsl:with-param name="route">1</xsl:with-param>
 	    </xsl:call-template>
 	  </xsl:for-each>
 	</xsl:when>
@@ -699,6 +700,7 @@ so that is only put back in if there is some content
 	    <xsl:call-template name="processClassAttributes">
 	      <xsl:with-param name="elementName" select="$elementName"/>
 	      <xsl:with-param name="className" select="$className"/>
+	      <xsl:with-param name="route">2</xsl:with-param>
 	    </xsl:call-template>
 	  </xsl:for-each>
 	</xsl:when>
@@ -708,12 +710,11 @@ so that is only put back in if there is some content
 	<xsl:when test="not($localsource='')">
 	  <xsl:for-each select="document($localsource)/tei:TEI">
 	    <xsl:for-each select="key('ATTCLASSES',$className)">
-	      <xsl:if test="@type='atts'">
 		<xsl:call-template name="processClassAttributes">
 		  <xsl:with-param name="elementName" select="$elementName"/>
 		  <xsl:with-param name="className" select="$className"/>
+		  <xsl:with-param name="route">3</xsl:with-param>
 		</xsl:call-template>
-	      </xsl:if>
 	    </xsl:for-each>
 	  </xsl:for-each>
 	</xsl:when>
@@ -724,12 +725,11 @@ so that is only put back in if there is some content
 	  </xsl:variable>
 	  <xsl:for-each select="document($ATTCLASSDOC)/List">
 	    <xsl:for-each select="key('ATTCLASSES',$className)">
-	      <xsl:if test="@type='atts'">
 		<xsl:call-template name="processClassAttributes">
 		  <xsl:with-param name="elementName" select="$elementName"/>
-		  <xsl:with-param name="className" select="$className"/>
+		  <xsl:with-param name="className"  select="$className"/>
+		  <xsl:with-param name="route">4</xsl:with-param>
 		</xsl:call-template>
-	      </xsl:if>
 	    </xsl:for-each>
 	  </xsl:for-each>
 	</xsl:otherwise>
@@ -740,6 +740,7 @@ so that is only put back in if there is some content
   <xsl:template name="processClassAttributes">
     <xsl:param name="elementName"/>
     <xsl:param name="className"/>
+    <xsl:param name="route"/>
     <!-- we are sitting on a classSpec, could be in the ODD
 	 or could be in the source -->
     <xsl:variable name="M" select="@module"/>
@@ -764,8 +765,6 @@ so that is only put back in if there is some content
       </xsl:choose>
     </xsl:variable>
     <xsl:if test="$use='true'">
-
-
       <!-- 
 	   We need to put in the class attributes. We'll 
 	   use the presence of @mode to see whether this is in the ODD.
@@ -927,9 +926,9 @@ so that is only put back in if there is some content
 </xsl:template>
   
   <xsl:template name="mergeClassAttribute">
-/* sitting on a source class. go over
-every attribute and see whether the attribute has changed
-*/
+<!-- sitting on a source class. go over
+every attribute and see whether the attribute has changed-->
+
     <xsl:param name="source"/>
     <xsl:param name="element"/>
     <xsl:param name="class"/>
@@ -996,7 +995,8 @@ every attribute and see whether the attribute has changed
     <xsl:param name="elementName"/>
     <!-- first put in the ones we know take precedence -->
     <xsl:copy-of select="tei:attList/tei:attDef[@mode='add' or not(@mode)]"/>
-    <xsl:copy-of select="tei:attList/tei:attDef[@mode='replace']"/>
+    <xsl:copy-of
+	select="tei:attList/tei:attDef[@mode='replace']"/>
     <xsl:for-each select="$ORIGINAL/tei:attList">
       <!-- original source  context -->
       <xsl:for-each select="tei:attList">
