@@ -2,12 +2,17 @@ declare namespace tei="http://www.tei-c.org/ns/1.0";
 declare namespace rng="http://relaxng.org/ns/structure/1.0";
 declare namespace request="http://exist-db.org/xquery/request";
 let $e := request:get-parameter("name", "")
+let $lang := request:get-parameter("lang", "")
 for $c in collection("/db/TEI")//tei:classSpec[@ident=$e]
-return
 <Element>
 {
 for $a in $c//tei:attDef
-return 
+let $Desc:=
+    if ($a/tei:desc[@xml:lang=$lang]) then
+        $a/tei:desc[@xml:lang=$lang]
+    else
+        $a/tei:desc[not(@xml:lang)]
+return
  <att>
     <name>
     {$a/@usage}
@@ -24,7 +29,7 @@ return
 	</valItem>
        }
      </valList>	
-    <desc>{data($a/tei:desc)}</desc>
+    <desc>{data($Desc)}</desc>
 </att>
 }
 </Element>
