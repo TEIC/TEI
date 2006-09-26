@@ -1,6 +1,7 @@
 declare namespace tei="http://www.tei-c.org/ns/1.0";
 declare namespace rng="http://relaxng.org/ns/structure/1.0";
 declare namespace request="http://exist-db.org/xquery/request";
+let $lang := request:get-parameter("lang", "")
 
 declare function tei:atts($a as element()) as element() {
  <att>
@@ -25,7 +26,12 @@ declare function tei:atts($a as element()) as element() {
        }
      </valList>	
      }
-    <desc>{data($a/tei:desc)}</desc>
+    <desc>{
+    if ($t/tei:desc[@xml:lang=$lang]) then
+        data($t/tei:desc[@xml:lang=$lang])
+    else
+        data($t/tei:desc[not(@xml:lang)])
+	}</desc>
   </att>
 };
 
