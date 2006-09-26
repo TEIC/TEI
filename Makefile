@@ -1,4 +1,4 @@
-eUFFIX=xml
+SUFFIX=xml
 LANGUAGE=en
 PREFIX=/usr
 TEISERVER=http://tei.oucs.ox.ac.uk/Query/
