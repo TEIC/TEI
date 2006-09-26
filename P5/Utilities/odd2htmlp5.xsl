@@ -16,7 +16,7 @@
     exclude-result-prefixes="exsl rng edate estr tei html a pantor teix xs xd" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-  <xsl:import href="/Volumes/data/Stylesheets/release/tei-xsl/p5/odds/odd2html.xsl"/>
+  <xsl:import href="/Volumes/data/TEIdepot/web/release/xml/tei/stylesheet/odds/odd2html.xsl"/>
 
   <xsl:output method="xml"
 	      doctype-public="//W3C//DTD XHTML 1.1//EN"
