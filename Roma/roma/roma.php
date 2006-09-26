@@ -666,7 +666,7 @@ class roma
 	$this->getParser( $oParser );
 	$this->m_oRomaDom->getDocLanguage( $szDocLanguage );
 	$oModelClassDom = new domDocument();
-	$oModelClassDom->loadXML( join( '', file( roma_xquery_server . 'classes.xq' ) ) );
+	$oModelClassDom->loadXML( join( '', file( roma_xquery_server  . 'classes.xq?lang=' . $szDocLanguage ) ) );
 	$oRootClass = $oModelClassDom->documentElement;
 
 	$oAttributeDom = new domDocument();
@@ -832,10 +832,10 @@ class roma
       {
         $szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
 	$this->getParser( $oParser );
- 	$this->m_oRomaDom->getDocLanguage( $szDocLanguage );
+	 $this->m_oRomaDom->getDocLanguage($szDocLanguage );
 
 	$oModelClassDom = new domDocument();
-	$oModelClassDom->loadXML( join( '', file( roma_xquery_server . 'classes.xq' ) ) );
+	$oModelClassDom->loadXML( join( '', file( roma_xquery_server . 'classes.xq?lang=' . $szDocLanguage ) ) );
 	$oRootClass = $oModelClassDom->documentElement;
 
 	$oAttributeDom = new domDocument();
@@ -865,7 +865,8 @@ class roma
         //
         $this->m_oRomaDom->getClassesByElementNameInModule( $_REQUEST[ 'element' ], $_REQUEST[ 'module' ], $aszClasses );
         $this->m_oRomaDom->getContentsByElementNameInModule( $_REQUEST[ 'element' ], $_REQUEST[ 'module' ], $szContent );
-        $this->m_oRomaDom->getDescriptionByElementNameInModule( $_REQUEST[ 'element' ], $_REQUEST[ 'module' ], $szDesc );    
+        $this->m_oRomaDom->getDescriptionByElementNameInModule(
+        $_REQUEST[ 'element' ], $_REQUEST[ 'module' ], $szDocLanguage,$szDesc );    
 	$this->m_oRomaDom->getElementsChangedNameInModule( $_REQUEST[ 'module' ], $_REQUEST[ 'element' ], $szChangedName );
 
 
@@ -904,6 +905,7 @@ class roma
       {
         $szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
 	$this->getParser( $oParser );
+        $this->m_oRomaDom->getDocLanguage($szDocLanguage );
 
        	$oListDom = new domDocument();
 	$oAddAttribute = $oListDom->appendChild ( new domElement( 'addAttribute' ) );
@@ -923,7 +925,7 @@ class roma
 
 	
 	//attributes
-	$this->m_oRomaDom->getAttributeDomByElementInModule( $_REQUEST[ 'element' ], $_REQUEST[ 'module' ], $_REQUEST[ 'class' ], $oAtts );
+	$this->m_oRomaDom->getAttributeDomByElementInModule( $_REQUEST[ 'element' ], $_REQUEST[ 'module' ], $_REQUEST[ 'class' ], $szDocLanguage,$oAtts );
 	$oRootAtts = $oAtts->documentElement;
 	$oRootAtts = $oListDom->importNode( $oRootAtts, true );
 	$oAddAttribute->appendChild( $oRootAtts );
@@ -939,7 +941,7 @@ class roma
 	//if attribute specified
 	if( $_REQUEST[ 'attribute' ] != '' )
 	  {
-	    $this->m_oRomaDom->getAttributeDefinition( $_REQUEST[ 'attribute' ], $_REQUEST[ 'element' ], $_REQUEST[ 'module' ], $_REQUEST[ 'class' ], $oAttDom );
+	    $this->m_oRomaDom->getAttributeDefinition( $_REQUEST[ 'attribute' ], $_REQUEST[ 'element' ], $_REQUEST[ 'module' ], $_REQUEST[ 'class' ], $Language,$oAttDom );
 	    $oCurrent = $oAddAttribute->appendChild( new domElement( 'currentAttribute' ) );
 	    $oTheAttribute = $oListDom->importNode( $oAttDom->documentElement, true );
 	    $oCurrent->appendChild( $oTheAttribute );
@@ -1008,7 +1010,8 @@ class roma
     private function processListAddedAttributes( &$szOutput )
       {
 	//Get added Attributes
-        if ( $this->m_oRomaDom->getAttributeDomByElementInModule( $_REQUEST[ 'element' ], $_REQUEST[ 'module' ], $_REQUEST[ 'class' ], $oAtts ) === false )
+        if ( $this->m_oRomaDom->getAttributeDomByElementInModule(
+    $_REQUEST[ 'element' ], $_REQUEST[ 'module' ], $_REQUEST[ 'class'], '', $oAtts ) === false )
 	  {
 	    $szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
 	    $this->getParser( $oParser );

@@ -24,7 +24,6 @@ Description
     <a href="?mode=main">
      back
     </a><br/>
-    Lang : <xsl:value-of select="$lang"/>; <xsl:value-of select="$TEISERVER"/>.
     <form method="POST">
      <xsl:attribute name="action">
       ?mode=moduleChanged&amp;module=<xsl:value-of select="$module"/>

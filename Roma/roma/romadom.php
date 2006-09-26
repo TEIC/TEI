@@ -395,7 +395,8 @@ class romaDom extends domDocument
 	  }
       } 
 
-    public function getDescriptionByElementNameInModule( $szElement, $szModule, &$szDesc )
+    public function getDescriptionByElementNameInModule( $szElement,
+      $szModule, $Language, &$szDesc )
       {
 	$this->getXPath( $oXPath );
 	$oDesc = $oXPath->query(
@@ -408,14 +409,14 @@ class romaDom extends domDocument
           }
 	else
 	  {
-	    $this->getDescriptionByElementName( $szElement, $szDesc );
+	    $this->getDescriptionByElementName($Language, $szElement, $szDesc );
 	  }
       }
 
-    public function getDescriptionByElementName( $szElement, &$szDesc )
+    public function getDescriptionByElementName($Language, $szElement, &$szDesc )
       {
 	$oElementDom = new domDocument();
-	$oElementDom->loadXML( join( '', file( roma_xquery_server . 'element.xq?name=' . $szElement ) ) );
+	$oElementDom->loadXML( join( '', file( roma_xquery_server . 'element.xq?lang=' . $Language .'&name=' . $szElement ) ) );
 	
 	$oXPath = new domxpath( $oElementDom );
 	$oDesc = $oXPath->query( "/Element/elementDesc" )->item(0);
@@ -505,7 +506,8 @@ class romaDom extends domDocument
 	$aszAttributes = array();
 
 	$oAttributesDom = new domDocument();
-	$oAttributesDom->loadXML( join( '', file( roma_xquery_server . 'attsbyelem.xq?name=' . $szElement ) ) );
+	$oAttributesDom->loadXML( join( '', file( roma_xquery_server
+	. 'attsbyelem.xq?lang=' . $Language . '&name=' . $szElement ) ) );
 	
 	$oElement = $oAttributesDom->documentElement;
 	foreach( $oElement->childNodes as $oChild )
@@ -514,7 +516,7 @@ class romaDom extends domDocument
 	  }
       }
 
-    public function getAttributeDomByElementInModule( $szElement, $szModule, $szClass, &$oAttDom )
+    public function getAttributeDomByElementInModule( $szElement, $szModule, $szClass, $Language,&$oAttDom )
       {
 	$errResult = false;
 
@@ -523,7 +525,8 @@ class romaDom extends domDocument
 
 	if ( $szModule != '' && $szClass == '')
 	  {
-	    @$oAttDom->loadXML( join( '', file( roma_xquery_server . 'attsbyelem.xq?name=' . $szElement ) ) );
+	    @$oAttDom->loadXML( join( '', file( roma_xquery_server
+	  . 'attsbyelem.xq?lang=' . $Language . '&name=' . $szElement ) ) );
 	    $oElement = $oAttDom->documentElement;
 		
 	    if ( is_object( $oElement ) )
@@ -684,14 +687,15 @@ class romaDom extends domDocument
 	return $errResult;
       }
 
-    public function getAttributeDefinition( $szAttribute, $szElement, $szModule, $szClass, &$oDef )
+    public function getAttributeDefinition( $szAttribute, $szElement, $szModule, $szClass, $Language,&$oDef )
       {
 	$this->getXPath( $oXPath );
 	
 	$oDef = new domDocument;
 	$oRoot = $oDef->appendChild( new domElement( 'attDef' ) );
 	
-	$this->getAttributeDomByElementInModule( $szElement, $szModule, $szClass, $oAtts );
+	$this->getAttributeDomByElementInModule( $szElement,
+	$szModule, $szClass, $Language, $oAtts );
 
 	$oXPath = new domxpath( $oAtts );
 	$oAttDef = $oXPath->query( "/Element/att[child::name[node()='$szAttribute']]" )->item(0);

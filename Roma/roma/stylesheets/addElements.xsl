@@ -24,6 +24,7 @@ Description
 <xsl:param name="selectedMode">addElement</xsl:param>
 <xsl:param name="elementChangedName"/>
 <xsl:param name="module"/>
+<xsl:param name="lang"/>
 <xsl:param name="changeNameERROR"/>
 
 
@@ -260,6 +261,8 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
 	      <xsl:value-of select="$host"/>
 	      <xsl:text>/class.xq?name=</xsl:text>
 	      <xsl:value-of select="className"/>
+	      <xsl:text>&amp;lang=</xsl:text>
+	      <xsl:value-of select="$lang"/>
 	    </xsl:attribute>
 	    <xsl:attribute name="target">
 	      <xsl:text>_blank</xsl:text>
