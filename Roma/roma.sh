@@ -29,11 +29,10 @@ makeODD()
 	    --stringparam TEISERVER $TEISERVER  \
 	    --stringparam localsource "$LOCAL"  \
 	    $TEIXSLDIR/odds/odd2odd.xsl - \
-	    | xsltproc -o $N.compiled.odd \
+	    | xsltproc -o $N.compiled.odd $DEBUG \
 	    --stringparam TEISERVER $TEISERVER  \
             --stringparam lang "$lang"  \
             --stringparam doclang "$doclang"  \
-	    --stringparam verbose true  \
 	    $TEIXSLDIR/odds/translate-odd.xsl - 
     fi
 }
@@ -43,8 +42,8 @@ makeRelax()
     echo "2. make Relax NG from compiled ODD"
     xsltproc $PATTERN $DEBUG  \
 	     --stringparam TEIC $TEIC \
-        --stringparam lang "$lang"  \
-        --stringparam doclang "$doclang"  \
+             --stringparam lang "$lang"  \
+             --stringparam doclang "$doclang"  \
              --stringparam outputDir $RESULTS       \
              $TEIXSLDIR/odds/odd2relax.xsl $N.compiled.odd
     (cd $RESULTS; \
@@ -65,8 +64,8 @@ makeDTD()
 {
     echo "5. make DTD from compiled ODD"
     xsltproc  $DEBUG \
-        --stringparam lang "$lang"  \
-        --stringparam doclang "$doclang"  \
+            --stringparam lang "$lang"  \
+            --stringparam doclang "$doclang"  \
 	    --stringparam TEIC $TEIC \
             --stringparam outputDir $RESULTS       \
             $TEIXSLDIR/odds/odd2dtd.xsl $N.compiled.odd

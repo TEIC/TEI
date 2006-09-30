@@ -100,7 +100,9 @@ Description
 	 <a target="_new">
 	   <xsl:attribute name="href">
 	     <xsl:value-of select="$TEISERVER"/>
-	     <xsl:text>tag.xq?name=</xsl:text>
+	     <xsl:text>tag.xq?documentationLanguage=</xsl:text>
+	     <xsl:value-of select="$lang"/>
+	     <xsl:text>&amp;name=</xsl:text>
 	     <xsl:value-of select="elementName"/>
 	   </xsl:attribute>
 	   <span class="helpMe">?</span>

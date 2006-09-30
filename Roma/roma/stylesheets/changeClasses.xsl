@@ -15,6 +15,7 @@ Description
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:param name="module"/>
 <xsl:param name="class"/>
+<xsl:param name="doclang"/>
 <xsl:param name="host">http://localhost:8080/cocoon/Query</xsl:param>
 
   <xsl:template match="/">
@@ -65,7 +66,9 @@ Description
 	 <a target="_new">
 	   <xsl:attribute name="href">
 	     <xsl:value-of select="$host"/>
-	     <xsl:text>tag.xq?name=</xsl:text>
+	     <xsl:text>tag.xq?documentationLanguage=</xsl:text>
+	     <xsl:value-of select="$doclang"/>
+	     <xsl:text>&amp;name=</xsl:text>
 	     <xsl:value-of select="className"/>
 	   </xsl:attribute>
 	   <span class="helpMe">?</span>
