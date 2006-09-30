@@ -375,6 +375,27 @@
     </div>
   </xsl:template>
 
+  <xsl:template match="tei:row">
+	<xsl:variable name="c">
+	  <xsl:number/>
+	</xsl:variable>
+	  <xsl:variable name="class">
+	    <xsl:choose>
+	      <xsl:when test="@role">
+		<xsl:value-of select="@role"/>
+	    </xsl:when>
+	    <xsl:when test="$c mod 2=0">
+	      <xsl:text>Even</xsl:text>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:text>Odd</xsl:text>
+	    </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:variable>
+	<tr class="{$class}">
+	  <xsl:apply-templates/>
+	</tr>
+  </xsl:template>
 
     <xsl:template match="teix:egXML">
       <div class="pre">
