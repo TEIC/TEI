@@ -346,7 +346,7 @@
   <div class="oddToc">
     <xsl:for-each
 	select="ancestor-or-self::tei:text//tei:classSpec">
-    <xsl:sort select="@id"/>
+    <xsl:sort select="@ident"/>
     <xsl:call-template name="oddTocEntry"/>
     </xsl:for-each>
   </div>
@@ -356,7 +356,7 @@
   <div class="oddToc">
     <xsl:for-each
 	select="ancestor-or-self::tei:text//tei:elementSpec">
-    <xsl:sort select="@id"/>
+    <xsl:sort select="@ident"/>
     <xsl:call-template name="oddTocEntry"/>
     </xsl:for-each>
   </div>
@@ -366,7 +366,7 @@
   <div class="oddToc">
     <xsl:for-each
 	select="ancestor-or-self::tei:text//tei:macroSpec">
-    <xsl:sort select="@id"/>
+    <xsl:sort select="@ident"/>
     <xsl:call-template name="oddTocEntry"/>
     </xsl:for-each>
   </div>

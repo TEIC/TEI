@@ -116,8 +116,8 @@
       <xsl:when test="string-length($doclang)&gt;0">
 	<xsl:value-of select="$doclang"/>
       </xsl:when>
-      <xsl:when test="//tei:schemaSpec[@docLang]">
-	<xsl:value-of select="//tei:schemaSpec/@docLang"/>
+      <xsl:when test="tei:schemaSpec/@docLang">
+	<xsl:value-of select="//tei:schemaSpec[1]/@docLang"/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:text>en</xsl:text>
@@ -390,7 +390,20 @@
       <xsl:with-param name="content">
         <Wrapper>
 	  <xsl:call-template name="processClassDefinition">
-	    <xsl:with-param name="type" select="@generate"/>
+	    <xsl:with-param name="type">
+	      <xsl:choose>
+		<xsl:when test="@generate">
+		  <xsl:value-of select="@generate"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:text>alternation
+		  sequence
+		  sequenceOptional
+		  sequenceOptionalRepeatable
+		  sequenceRepeatable</xsl:text>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:with-param>
 	    <xsl:with-param name="declare" select="$declare"/>
 	  </xsl:call-template>
 	</Wrapper>
@@ -401,30 +414,33 @@
 <xsl:template name="processClassDefinition">
   <xsl:param name="type"/>
   <xsl:param name="declare"/>
+  <xsl:variable name="Type">
+    <xsl:value-of select="normalize-space($type)"/>
+  </xsl:variable>
   <xsl:choose>
-    <xsl:when test="string-length($type)=0">
+    <xsl:when test="string-length($Type)=0">
       <xsl:call-template name="makeClassDefinition">
 	<xsl:with-param name="type">alternation</xsl:with-param>
 	<xsl:with-param name="declare" select="$declare"/>
       </xsl:call-template>
     </xsl:when>
 
-    <xsl:when test="contains($type,' ')">
+    <xsl:when test="contains($Type,' ')">
       <xsl:call-template name="makeClassDefinition">
-	<xsl:with-param name="type" select="substring-before($type,' ')"/>
+	<xsl:with-param name="type" select="substring-before($Type,' ')"/>
 	    <xsl:with-param name="declare" select="$declare"/>
       </xsl:call-template>
       <xsl:call-template name="processClassDefinition">
 	<xsl:with-param 
 	    name="type" 
-	    select="substring-after($type,' ')"/>
+	    select="substring-after($Type,' ')"/>
 	    <xsl:with-param name="declare" select="$declare"/>
       </xsl:call-template>
     </xsl:when>
 
     <xsl:otherwise>
       <xsl:call-template name="makeClassDefinition">
-	<xsl:with-param name="type" select="$type"/>
+	<xsl:with-param name="type" select="$Type"/>
 	    <xsl:with-param name="declare" select="$declare"/>
       </xsl:call-template>
     </xsl:otherwise>
@@ -497,10 +513,10 @@ sequenceRepeatable
 		<xsl:when test="$type='sequenceRepeatable'">
 		  <xsl:for-each
 		      select="key('CLASSMEMBERS',$thisClass)">
-		    <oneOrMorel xmlns="http://relaxng.org/ns/structure/1.0">
+		    <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
 		      <ref name="{$patternPrefixText}{@ident}"
 			   xmlns="http://relaxng.org/ns/structure/1.0"/>
-		    </oneOrMorel>
+		    </oneOrMore>
 		  </xsl:for-each>
 		</xsl:when>
 		
@@ -631,7 +647,9 @@ sequenceRepeatable
                   </xsl:if>
                   <xsl:if test="not($oddmode='tei')">
                     <a:documentation>
-		      <xsl:call-template name="makeDescription"/>
+		      <xsl:call-template name="makeDescription">
+			<xsl:with-param name="includeValList">true</xsl:with-param>
+		      </xsl:call-template>
                     </a:documentation>
                   </xsl:if>
                   <xsl:choose>
@@ -730,11 +748,20 @@ sequenceRepeatable
             <rng:choice>
               <xsl:for-each select="tei:content/tei:valList/tei:valItem">
                 <rng:value>
-                  <xsl:value-of select="@ident"/>
+		  <xsl:choose>
+		    <xsl:when test="tei:altIdent">
+		      <xsl:value-of select="normalize-space(tei:altIdent)"/>
+		    </xsl:when>
+		    <xsl:otherwise>
+		      <xsl:value-of select="@ident"/>
+		    </xsl:otherwise>
+		  </xsl:choose>
                 </rng:value>
                 <xsl:if test="not($oddmode='tei')">
                   <a:documentation>
-		    <xsl:call-template name="makeDescription"/>
+		    <xsl:call-template name="makeDescription">
+<xsl:with-param name="includeValList">true</xsl:with-param>
+</xsl:call-template>
                   </a:documentation>
                 </xsl:if>
               </xsl:for-each>
@@ -1197,11 +1224,20 @@ sequenceRepeatable
             <choice xmlns="http://relaxng.org/ns/structure/1.0">
               <xsl:for-each select="tei:valList/tei:valItem">
                 <value xmlns="http://relaxng.org/ns/structure/1.0">
-                  <xsl:value-of select="@ident"/>
+		  <xsl:choose>
+		    <xsl:when test="tei:altIdent">
+		      <xsl:value-of select="normalize-space(tei:altIdent)"/>
+		    </xsl:when>
+		    <xsl:otherwise>
+		      <xsl:value-of select="@ident"/>
+		    </xsl:otherwise>
+		  </xsl:choose>
                 </value>
                 <xsl:if test="not($oddmode='tei')">
                   <a:documentation>
-		    <xsl:call-template name="makeDescription"/>
+		    <xsl:call-template name="makeDescription">
+<xsl:with-param name="includeValList">true</xsl:with-param>
+</xsl:call-template>
                   </a:documentation>
                 </xsl:if>
               </xsl:for-each>
@@ -1216,11 +1252,20 @@ sequenceRepeatable
         <choice xmlns="http://relaxng.org/ns/structure/1.0">
           <xsl:for-each select="tei:valList/tei:valItem">
             <value xmlns="http://relaxng.org/ns/structure/1.0">
-              <xsl:value-of select="@ident"/>
+		  <xsl:choose>
+		    <xsl:when test="tei:altIdent">
+		      <xsl:value-of select="normalize-space(tei:altIdent)"/>
+		    </xsl:when>
+		    <xsl:otherwise>
+		      <xsl:value-of select="@ident"/>
+		    </xsl:otherwise>
+		  </xsl:choose>
             </value>
             <xsl:if test="not($oddmode='tei')">
               <a:documentation>
-		<xsl:call-template name="makeDescription"/>
+		<xsl:call-template name="makeDescription">
+<xsl:with-param name="includeValList">true</xsl:with-param>
+</xsl:call-template>
               </a:documentation>
             </xsl:if>
           </xsl:for-each>
@@ -1257,7 +1302,9 @@ sequenceRepeatable
       </xsl:if>
       <xsl:if test="not($oddmode='tei')">
         <a:documentation>
-	  <xsl:call-template name="makeDescription"/>
+	  <xsl:call-template name="makeDescription">
+	    <xsl:with-param name="includeValList">true</xsl:with-param>
+	  </xsl:call-template>
         </a:documentation>
       </xsl:if>
       <xsl:call-template name="attributeDatatype"/>
@@ -1836,6 +1883,7 @@ sequenceRepeatable
 
 
   <xsl:template name="makeDescription">
+    <xsl:param name="includeValList">false</xsl:param>
     <xsl:variable name="langs">
       <xsl:value-of
 	  select="concat(normalize-space($documentationLanguage),' ')"/>
@@ -1914,6 +1962,67 @@ sequenceRepeatable
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:otherwise>
+    </xsl:choose>
+    <xsl:choose>
+      <xsl:when test="$includeValList='false'"/>
+      <xsl:when test="tei:valList[@type='open']">
+	<xsl:text>&#10;</xsl:text>
+        <xsl:call-template name="i18n">
+          <xsl:with-param name="word">
+	    <xsl:text>Sample values include</xsl:text>
+	  </xsl:with-param>
+	</xsl:call-template>
+	<xsl:text>: </xsl:text>
+	<xsl:for-each select="tei:valList/tei:valItem">
+	  <xsl:number/>
+	  <xsl:text>] </xsl:text>
+	  <xsl:choose>
+	    <xsl:when test="tei:altIdent">
+	      <xsl:value-of select="normalize-space(tei:altIdent)"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:value-of select="@ident"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	  <xsl:if test="tei:gloss">
+	    <xsl:text> (</xsl:text>
+	    <xsl:value-of select="tei:gloss"/>
+	    <xsl:text>)</xsl:text>
+	  </xsl:if>
+	  <xsl:if test="following-sibling::tei:valItem">
+	    <xsl:text>; </xsl:text>
+	  </xsl:if>
+	</xsl:for-each>
+      </xsl:when>
+      <xsl:when test="tei:valList[@type='semi']">
+	<xsl:text>&#10;</xsl:text>
+        <xsl:call-template name="i18n">
+          <xsl:with-param name="word">
+	    <xsl:text>Suggested values include</xsl:text>
+	  </xsl:with-param>
+	</xsl:call-template>
+	<xsl:text>: </xsl:text>
+	<xsl:for-each select="tei:valList/tei:valItem">
+	  <xsl:number/>
+	  <xsl:text>] </xsl:text>
+	  <xsl:choose>
+	    <xsl:when test="tei:altIdent">
+	      <xsl:value-of select="normalize-space(tei:altIdent)"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:value-of select="@ident"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	  <xsl:if test="tei:gloss">
+	    <xsl:text> (</xsl:text>
+	    <xsl:value-of select="tei:gloss"/>
+	    <xsl:text>)</xsl:text>
+	  </xsl:if>
+	  <xsl:if test="following-sibling::tei:valItem">
+	    <xsl:text>; </xsl:text>
+	  </xsl:if>
+	</xsl:for-each>
+      </xsl:when>
     </xsl:choose>
   </xsl:template>
 

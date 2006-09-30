@@ -950,7 +950,9 @@
       </xsl:choose>
     </xsl:variable>
     <xsl:text>&#10;&lt;!--doc:</xsl:text>
-    <xsl:call-template name="makeDescription"/>
+    <xsl:call-template name="makeDescription">
+<xsl:with-param name="includeValList">true</xsl:with-param>
+</xsl:call-template>
     <xsl:text> --&gt;
 &lt;!ELEMENT </xsl:text>
     <xsl:value-of select="$ename"/>
@@ -1122,7 +1124,20 @@
   <xsl:template name="classModel">
     <xsl:param name="declare">false</xsl:param>
     <xsl:call-template name="processClassDefinition">
-      <xsl:with-param name="type" select="@generate"/>
+	    <xsl:with-param name="type">
+	      <xsl:choose>
+		<xsl:when test="@generate">
+		  <xsl:value-of select="@generate"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:text>alternation
+		  sequence
+		  sequenceOptional
+		  sequenceOptionalRepeatable
+		  sequenceRepeatable</xsl:text>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:with-param>
       <xsl:with-param name="declare" select="$declare"/>
     </xsl:call-template>
   </xsl:template>
