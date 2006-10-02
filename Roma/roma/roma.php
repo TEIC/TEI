@@ -821,7 +821,7 @@ class roma
 	$oParser->addReplacement( 'doclang', $_SESSION['docLang'] );
 	$oParser->addReplacement( 'mode', 'customizeLanguage' );
 	$oParser->addReplacement( 'view', 'customizeLanguage' );
-	$oParser->addReplacement( 'template', $szLangTem );
+	$oParser->addReplacement( 'template', $szLanguage );
         $oParser->Parse( $szTemplate, $szOutput );
 
 	$this->appendOutput( $szOutput );
