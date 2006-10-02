@@ -1,9 +1,8 @@
 declare namespace tei="http://www.tei-c.org/ns/1.0";
 declare namespace rng="http://relaxng.org/ns/structure/1.0";
 declare namespace request="http://exist-db.org/xquery/request";
-let $lang := request:get-parameter("lang", "")
 
-declare function tei:atts($a as element()) as element() {
+declare function tei:atts($a as element(),$lang as xs:string) as element() {
  <att>
     <name>
     {$a/@usage}
@@ -27,30 +26,31 @@ declare function tei:atts($a as element()) as element() {
      </valList>	
      }
     <desc>{
-    if ($t/tei:desc[@xml:lang=$lang]) then
-        data($t/tei:desc[@xml:lang=$lang])
+    if ($a/tei:desc[@xml:lang=$lang]) then
+        data($a/tei:desc[@xml:lang=$lang])
     else
-        data($t/tei:desc[not(@xml:lang)])
+        data($a/tei:desc[not(@xml:lang)])
 	}</desc>
   </att>
 };
 
 let $e := request:get-parameter("name", "")
+let $lang := request:get-parameter("lang", "")
 for $c in collection("/db/TEI")//tei:elementSpec[@ident=$e]
 return
 <Element>
 {
 for $a in $c//tei:attDef
-return tei:atts($a) 
+return tei:atts($a,$lang) 
 }
 {
 for $class in $c/tei:classes/tei:memberOf
 return
 for $ac in collection("/db/TEI")//tei:classSpec[@ident=$class/@key]//tei:attDef
-return tei:atts($ac)
+return tei:atts($ac,$lang)
 }
 {
 for $ac in collection("/db/TEI")//tei:classSpec[@ident='att.global']//tei:attDef
-return tei:atts($ac)
+return tei:atts($ac,$lang)
 }
 </Element>
