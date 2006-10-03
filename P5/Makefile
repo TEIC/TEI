@@ -1,4 +1,3 @@
-SUFFIX=xml
 LANGUAGE=en
 PREFIX=/usr
 TEISERVER=http://tei.oucs.ox.ac.uk/Query/
@@ -9,6 +8,7 @@ FASCFILE=${LANGTREE}/FASC-${CHAP}.xml
 ROMAOPTS="--localsource=${DRIVER}"
 XSL=/usr/share/xml/tei/stylesheet
 XSLP4=/usr/share/xml/teip4/stylesheet
+CHAPTER=$(shell find ${LANGTREE} -iname ${CHAP}*.xml)
 #XSL=../Stylesheets
 # alternativly, if you have not installed the Debian packages, uncomment the next line:
 # XSL=http://www.tei-c.org/stylesheet/release/xml/tei
@@ -172,8 +172,11 @@ subset:
 	 | xsltproc -o p5subset.xml Utilities/subset.xsl - || die "failed to extract subset from ${DRIVER}."
 
 fascicule: subset
+#	fail if we can't find the chapter
+	test -n "${CHAPTER}"
+#	create fascicule file by appending head- and tail- boilerplate text to chapter
 	cp fasc-head.xml ${FASCFILE}
-	cat `find ${LANGTREE} -iname ${CHAP}.${SUFFIX}`  >> ${FASCFILE}
+	cat ${CHAPTER} >> ${FASCFILE}
 	cat fasc-tail.xml  >> ${FASCFILE}
 	xmllint --noent --xinclude ${FASCFILE} | xsltproc \
 	-o FASC-${CHAP}-Guidelines/index.html \
