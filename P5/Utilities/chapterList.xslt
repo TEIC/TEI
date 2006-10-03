@@ -5,7 +5,7 @@
 <!-- Copyleft 2006 Syd Bauman and the Text Encoding Initiative Consortium -->
 
 <!-- usage: -->
-<!-- xmllint &#2D;&#2D;noent &#x2D;&#x2D;xinclude /path/to/P5/Source/Guidelines/en/guidelines-en.xml | xsltproc /path/to/me.xslt -->
+<!-- xmllint &#x2D;&#x2D;noent &#x2D;&#x2D;xinclude /path/to/P5/Source/Guidelines/en/guidelines-en.xml | xsltproc /path/to/me.xslt -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
