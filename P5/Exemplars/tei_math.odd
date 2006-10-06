@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:lang="en"  xmlns="http://www.tei-c.org/ns/1.0"
+ xmlns:rng="http://relaxng.org/ns/structure/1.0"
+ n="tei_math">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>TEI with MathML</title>
+            <author>Sebastian Rahtz</author>
+         </titleStmt>
+         <publicationStmt>
+	   <p> </p>
+	 </publicationStmt>
+         <sourceDesc>
+            <p>authored from scratch</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+<text>
+<body>
+<p>Example:
+<formula>
+  <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <mrow><mi>e</mi></mrow>
+  </math>
+</formula>
+</p>
+
+<schemaSpec ident="tei_math" prefix="tei_" start="TEI">
+    <moduleRef url="mathml2-main.rng"/>
+    <moduleRef key="header"/>
+    <moduleRef key="core"/>
+    <moduleRef key="tei"/>
+    <moduleRef key="textstructure"/>
+    <moduleRef key="figures"/>
+    <elementSpec module="figures" ident="formula" mode="change">
+      <content>
+	<rng:ref name="mathml.math"/>
+      </content>
+      <attList>
+	<attDef ident="type" mode="add">
+	<desc>what sort of formula is this?</desc>
+	<datatype><rng:text/></datatype>
+	</attDef>
+	<attDef ident="notation" mode="change">
+	<desc>what notation is used to describe the math</desc>
+	<datatype><rng:text/></datatype>
+	</attDef>
+      </attList>
+    </elementSpec>
+
+</schemaSpec>
+</body>
+</text>
+</TEI>
+
+
+
