@@ -20,24 +20,6 @@ $Author$
     + range()
       ^ left()
       ^ right()
-<!DOCTYPE div1 [
-<!ENTITY link.odd "">
-<!ENTITY linkgrp.odd "">
-<!ENTITY hellip "">
-<!ENTITY anonb.odd "">
-<!ENTITY anchor.odd "">
-<!ENTITY seg.odd "">
-<!ENTITY when.odd "">
-<!ENTITY timeline.odd "">
-<!ENTITY join.odd "">
-<!ENTITY joingrp.odd "">
-<!ENTITY alt.odd "">
-<!ENTITY altgrp.odd "">
-<!ENTITY cllink.odd "">
-<!ENTITY pointer.odd "">
-<!ENTITY ptrgroup.odd "">
-<!ENTITY hellip "">
-]>
 -->
 <div1 xmlns="http://www.tei-c.org/ns/1.0" type="chapter" xml:id="SA" n="14">
   <head>Linking, Segmentation, and Alignment</head>
@@ -454,8 +436,8 @@ To avoid having
       attribute, which can then be linked to the <gi>note</gi> and
       <gi>ref</gi> elements. This could be done either explicitly by
       means of an <gi>lg</gi> element, as defined in section <ptr
-      target="#COVE"/>, or a <gi>seg</gi> element, as defined in
-      section <ptr target="#SASE"/>, or implicitly, by means of the
+      target="#COVE"/> <!--, or a <gi>seg</gi> element, as defined in
+      section <ptr target="#SASE"/>,--> or implicitly, by means of the
       <gi>join</gi> element discussed in section <ptr
       target="#SAAG"/>.</p>
       <p>A third possibility however, is to use an
@@ -503,15 +485,18 @@ To avoid having
     hypertext links, and are widely accepted. A URI reference is
     capable not only of addressing a single XML resource, but also a
     sub-portion of the resource it identifies by the use of an
-    appropriate <term>fragment identifier</term> (the
-    <soCalled>Fragment-ID</soCalled> is the portion of a URI
-    reference following the first unescaped <q>#</q> character). <!-- The
+    appropriate <term>fragment identifier</term>. Technically
+    speaking, the
+    <soCalled>Fragment-ID</soCalled> is that portion of a URI
+    reference following the first unescaped <q>#</q> character; in
+    practice, it provides a means of accessing some part of the
+    resource described by the URI which is less than the whole.  <!-- The
     details of the interpretation of the Fragment-ID depend on the
     Internet MIME-type of the resource identified by the URI. --></p>
     <p>The first three of the following subsections provide only a
     brief overview and some examples of the W3C mechanisms
     recommended. More detailed information on the use of these
-    mechanisms is readily available elsewhere.</p>
+    mechanisms is readily available elsewhere.<!-- where? --></p>
     <div3 type="subsection" xml:id="SAUR">
       <head>Pointing Elsewhere</head>
       <p>Like the ubiquitous if misnamed HTML pointing attribute <att
@@ -525,9 +510,9 @@ To avoid having
       force). The <soCalled>current base URI</soCalled> is defined
       according to the W3C <ref
       target="http://www.w3.org/TR/xmlbase/">XML Base</ref>
-      recommendation. This recommendation defines an
+      recommendation. <!-- This recommendation defines an
       <att>xml:base</att> attribute that may be inserted into XML
-      documents in order to make references more manageable. In
+      documents in order to make references more manageable. --> In
       general the current base URI in force is the value of the
       <att>xml:base</att> attribute of the closest ancestor that has one. If
       there are none, the base URI is that of the current document.
@@ -538,31 +523,59 @@ To avoid having
       one, or if there are none, the URI of the location of the current document.-->
       </p>
       <p>The following example demonstrates an absolute URI reference
-      that points to a remote document. It is the source code for the
-      second to last sentence of the preceding paragraph.
+      that points to a remote document: <!--. It is the source code for the
+      second to last sentence of the preceding paragraph.-->
       <egXML xmlns="http://www.tei-c.org/ns/Examples">The current base URI in force is as defined in the
  W3C <ref target="http://www.w3.org/TR/xmlbase/">XML
  Base</ref> recommendation.</egXML></p>
-      <p>The following example demonstrates an absolute URI reference
-       that points to a local document.
+      <p>This example points explicitly to a location on the Web,
+      accessible via HTTP, the web Protocol. Suppose however that wish
+      to access a document stored locally in a file. Again we will
+      supply an absolute URI reference, but this time using a
+      different protocol:
       <egXML xmlns="http://www.tei-c.org/ns/Examples">This Debian package is distributed under the terms
  of the <ref target="file:///usr/share/common-licenses/GPL-2">GNU General Public License</ref>.</egXML></p>
-      <p>The following example demonstrates a relative URI reference
-      that points to a local document. It is the source for the figure
-      in section <ptr target="#SACSXA"/>, later in this chapter.
+      <p>In the  following example, we use a relative URI reference
+      to point to a local document: <!--. It is the source for the figure
+      in section <ptr target="#SACSXA"/>, later in this chapter.-->
       <eg><![CDATA[<figure xml:id="COMENIUS" rend="float fullpage">
   <graphic  url="./Figures/compic.png" />
   <figDesc>The figure shows the page from the <title>Orbis pictus</title>
     of Comenius which is discussed in the text.</figDesc>
-</figure>]]></eg></p>
-      <p>The following example demonstrates a relative URI reference
-      that points to a remote document.
+</figure>]]></eg>
+No xml:base is specified, so the location of the filename is
+determined relative to the resource indicated by the current base URI, which is 
+the current document.
+</p>
+      <p>In the following example, however, we first change the current base
+      URI by setting a new value for xml:base. The resource required
+      is then identified by means of a relative URI:
       <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="chap" xml:base="http://classics.mit.edu/">
   <head>On Ancient Persian Manners</head>
   <p>In the very first story of <ref target="Sadi/gulistan.2.i.html"><title>The Gulistan of Sa'di</title></ref>,
   Sa'di relates moral advice worthy of Miss Minners ...</p>
   <!-- ... -->
 </div></egXML></p>
+<p>As noted above, the current base URI is found on the nearest
+ancestor. This provides a useful way of abbreviating URIs within a
+given scope
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><body><div n="A">
+<p>The base URI here is  the current document. A URI such as
+<code>a.xml</code>  is equivalent to <code>./a.xml</code> </p>
+</div><div n="B" xml:base="http://a.b.org/">
+<p>The base URI here is  <code>http://a.b.org</code>. Any URI such as 
+<code>a.xml</code>  is equivalent to <code>http://a.b.org/a.xml</code> </p>
+</div><div n="C" xml:base="http://c.d.org/">
+<p>The base URI here is  <code>http://a.b.org</code>. Any URI such as 
+<code>a.xml</code>  is equivalent to <code>http://a.b.org/a.xml</code> </p>
+</div>
+<div n="D">
+<p>The base URI here is  the current document. Any URI such as
+<code>a.xml</code>  is equivalent to <code>./a.xml</code> </p>
+</div>
+</body></egXML>
+</p>
+
     </div3>
     <div3 type="subsection" xml:id="SABN">
       <head>Special Case: Pointing Locally</head>
@@ -598,14 +611,15 @@ To avoid having
   finding of fair use if such finding is made upon consideration
   of all the above factors.</p>
 </div></egXML>
-<note resp="#sdb" type="cit">Title 17, Section 107 of the <title>United
+<!--note resp="#sdb" type="cit">Title 17, Section 107 of the <title>United
 States Code</title>, found at <ptr
 target="http://www.copyright.gov/title17/92chap1.html#107"/> and
-converted from HTML to TEI encoding.</note>
+converted from HTML to TEI encoding.</note-->
 This method of pointing, by referring to the <att>xml:id</att> of the
 target element as a bare name only (e.g., <val>#there</val>) is 
 the simplest and often the best approach where it can be applied, i.e. where
-both the source element and target element are in the same XML document.</p>
+both the source element and target element are in the same XML
+      document, and where the target element carries an identifier.</p>
     </div3>
     <div3 type="subsection" xml:id="SAES">
       <head>W3C element() Scheme</head>
@@ -620,124 +634,183 @@ both the source element and target element are in the same XML document.</p>
       <p>For example, the following pointer selects
       one of Shakespeare's most famous lines:
       <egXML xmlns="http://www.tei-c.org/ns/Examples"><ref target="http://www.cs.mu.oz.au/621/2003project/hamlet.xml#element(/1/8/2/25/2)"
-      >2B|^2B&hellip;</ref></egXML>
-      <note type="cit" resp="#sdb">Jon Bosak's XMLification of Moby
+      >2B|^2B…</ref></egXML>
+<!--      <note type="cit" resp="#sdb">Jon Bosak's XMLification of Moby
       Lexical Tools' plain text version of Hamlet. As of <date
       value="2004-12-22"/>, the node xpath1(/*[1]/*[8]/*[2]/*[25]/*[2])
       (or, perhaps more usefully,
       xpath1(/PLAY[1]/ACT[3]/SCENE[1]/SPEECH[19]/LINE[1])) selects the
       element <q><![CDATA[<LINE>To be, or not to be: that is the
-      question:</LINE>]]></q>.</note>
-      The  URI reference in this example points to an XML resource ostensibly
+      question:</LINE>]]></q>.</note> -->
+      The  URI  in this example references an XML resource assumed to be
       available via the HTTP protocol on the web; within
       that file, the specified <name type="xpscheme">element</name>
-      scheme points to <q>the 1st (and only) root-level element's 8th
+      scheme is used to select  <q>the 1st (and only) root-level element's 8th
       child element's 2nd child element's 25th child element's 2nd
       child element</q>. This is equivalent to the XPath
       specification <code>/*[1]/*[8]/*[2]/*[25]/*[2]</code>.</p>
-      <p>The starting point for the child-element sequence may be
-      indicated by an identifier selecting the value of the
-      <att>xml:id</att> attribute of an element in the indicated document. So, for
-      example, if we had a copy of <title>The Nameless
-      Shakespeare</title> in a nearby directory, a pointer to the same
-      line might be as follows.
-      <egXML xmlns="http://www.tei-c.org/ns/Examples"><ptr target="/Users/martin/Documents/c5/namelessShakespeare.xml#element(sha-ham301/22/2)"/></egXML>
-      Here the identifier <val>sha-ham301</val> indicates the <tag>div
-      type="scene"</tag> for Hamlet, Act III, Scene I. The 2nd child
-      of the 22nd child of that element is the desired <gi>l</gi>
-      element. This is equivalent to the XPath specfication
+      <p>Rather than specifying a full path starting from the document
+      root, it is also possible in this pointer scheme to specify as
+      starting point any element which carries a value for its
+      <att>xml:id</att> attribute, supplying a unique identifier for
+      it.  In this case the identifier is prefixed to the location
+      path. For example, we can point more economically to the same
+      line of Hamlet in a different digital version of the play which
+      provides identifiers for the individual scenes: <egXML
+      xmlns="http://www.tei-c.org/ns/Examples"><div
+      xml:base="/Users/martin/Documents/c5/namelessShakespeare.xml"><p><ptr
+      target="#element(sha-ham301/22/2)"/></p></div></egXML> Here the
+      identifier <val>sha-ham301</val> is the identifier for the
+      <gi>div</gi> element containing Act III, Scene I of Hamlet. The
+      second child of the 22nd child of this <gi>div</gi> element
+      contains the desired <gi>l</gi> element. This is equivalent to
+      the XPath specfication
       <code>id(sha-ham301)/*[22]/*[2]</code>.</p>
+<p>As noted above, we could also point directly to this line if it had an
+identifier of its own. In another digital edition of Shakespeare,
+based on the first folio, each
+line is given an identifier based on its <soCalled>through line
+number</soCalled>. Our pointer to this line can now be represented
+simply as <gi>ptr target="#element(Ham01245)"/</gi>, or even more
+simply as <gi>ptr target="#Ham01245"/</gi>. The notation <gi>ptr
+target="#xxx"/</gi> is a convenient abbreviation for  <gi>ptr
+target="#element(xxx)"/</gi>. This method requires, of course, that
+the through line number is supplied as the value of an
+<att>xml:id</att> attribute on each line, and must therefore be unique
+within each document. In
+section <ptr target="#SACR"/> we discuss a method of pointing to the
+line which does not have this requirement.  </p> 
+
     </div3>
-    <div3 type="subsection" xml:id="SATS">
+<div3 type="subsection" xml:id="SATS">
       <head>TEI XPointer Schemes</head>
-      <p>The W3C has defined an extensible syntax for addressing
-      within XML content, called the <ref
+
+      <p>The pointing scheme described in this chapter is one of a
+      number of such schemes envisaged by the W3C, which together
+      constitute a framework for addressing data within XML documents,
+      known as the <ref
       target="http://www.w3.org/TR/xptr-framework/">XPointer
-      Framework</ref>. Within this framework, multiple addressing
-      methods are distinguished by a named <term>XPointer
-      Scheme</term>. The W3C has defined a useful but limited set of
-      schemes for pointing within XML documents. The <name
-      type="xpscheme">element</name> scheme described above is one
-      such scheme, defined by the W3C.</p>
-      <p>The TEI XPointer schemes can designate more types of entity than an XML
-      information set node, because there is often a need in text
-      analysis to address additional types of location such as the
-      <soCalled>point</soCalled> locations between nodes, and
-      <soCalled>ranges</soCalled> that may arbitrarily cross the
-      boundaries of nodes in a document. A range corresponds closely
-      to a selection in a text editor, and for processing purposes a
-      range is defined by the pair of points at its start and end.
-      While it is sometimes useful to think of pointer schemes as
-      analogous to query functions that return nodes in the DOM tree
-      of an XML document, this is a misleading model, as a point is
-      adjacent to one or two nodes, but is not a node itself, while a
-      range may not even overlap with any complete node in the DOM
-      tree.</p>
-      <p>The types of object that can be selected by a TEI pointer
-      scheme are as follows:
-      <list>
+      Framework</ref>. This framework permits the definition of many
+      other named addressing methods, each of which is known as an
+      <term>XPointer Scheme</term>. The W3C has pre-defined a set of
+      such schemes, and maintains a register for their expansion. The
+      <name type="xpscheme">element</name> scheme described above is
+      one such scheme, defined by the W3C, and widely implemented  by
+      XML processing systems.</p>
+
+<p>Another important scheme, also defined by the W3C, and recommended
+by these Guidelines is the <name type="xpscheme">xpath1</name> pointer
+scheme, which allows for any part of an XML structure to be selected
+using the syntax defined by the Xpath specification. This is further
+discussed below, <ptr target="#SATSXP"/>. These Guidelines also define
+five other pointer schemes, which provide access to parts of an XML
+document such as points within  data content or stretches of data
+content. These additional TEI pointer schemes are defined in sections
+<ptr target="#SATSLR"/> to <ptr target="#SATSMA"/> below. </p>
+
+<div4><head>Introduction to TEI pointers</head>
+
+<p>Before discussing the TEI pointer schemes, we introduce
+slightly more formally the terminology used to define them. So far, we
+have discussed only ways of pointing at components of the XML
+information set node such as elements and attributes. However, there
+is often a need in text analysis to address additional types of
+location such as the <soCalled>point</soCalled> locations
+<emph>between</emph> nodes, and <soCalled>ranges</soCalled> that may
+arbitrarily cross the boundaries of nodes in a document.  The content
+of an XML document is organized sequentially as well as
+hierarchically, and it therefore makes sense to consider ranges of
+characters within it independently of the nodes to which they belong,
+for example when making a selection in a text editor. For processing
+purposes, such a range is best defined by the pair of points at its
+start and end.  It is often useful to think of pointer schemes as
+analogous to query functions that return nodes in the XML information
+set (the DOM tree) of an
+XML document, as in the case of the element and xpath pointer schemes
+discussed so far, but this is not invariably the case. A point is
+adjacent to one or two nodes, but is not a node itself, while a range
+may not even overlap with any complete node in the DOM tree.</p>
+
+<p>The TEI pointer scheme thus distinguishes the following
+kinds of object:
+
+<list>
         <label>Node</label>
 	<item>A node represents a single item in the XML information
 	set for a document. For pointing
 	purposes, the only nodes that are of interest are Text Nodes,
-	Element Nodes, and Attribute nodes.</item>
+	Element Nodes, and Attribute nodes.</item> <!-- why not
+	comments ? -->
         <label>Node Set</label>
-	<item>A node set is a set of nodes in the XML infoset of a
+	<item>A node set is a set of nodes in the XML information set  of a
 	document. In TEI Pointing applications, node sets are only
 	allowed as the result of resolving a URI when multiple URIs
 	would have been allowed where it appears, i.e. in attributes
 	which are declared as <name
 	type="datatype">data.pointers</name> as opposed to <name
-	type="datatype">data.pointer</name>. As befits the name
-	<soCalled>set,</soCalled> the individual items in a node set
+	type="datatype">data.pointer</name>. As  the name
+	<soCalled>set,</soCalled> implies, the individual items in a node set
 	are not ordered, and no assumptions about relative ordering of
 	items in a node set should be made.</item>
         <label>Point</label>
 	<item>A Point represents a point between nodes in a document.
-	Every point is
-	adjacent to either characters or elements, and never to
-	another point. In fact, in the character representation
-        of an XML document, every position between data characters, start-tags or
-	end-tags is a point, and there are no other points. If one
-	treats all character content as if it were broken into
-	single-character text-nodes, every point is definable as the
-	point preceding (or following) a node, and if that node has a
-	successor (or predecessor) in document order, then is is the
-	same as the point preceding (or following) that successor (or
-	predecessor).</item>
+	Every point is adjacent to either characters or elements, and
+	never to another point. In fact, in the character
+	representation of an XML document, every position between data
+	characters, start-tags or end-tags is a point, and there are
+	no other points. If one treats all character content as if it
+	were broken into single-character text-nodes, every point is
+	definable as the point preceding (or following) a node, and if
+	that node has a successor (or predecessor) in document order,
+	then is is the same as the point preceding (or following) that
+	successor (or predecessor).</item>
         <label>Range</label>
 	<item>A Range is defined as the portion of a document between
 	two points. Since points may occur anywhere within the
-	document, ranges do not correspond directly to nodes or node
+	document, ranges do not correspond directly to nodes or to node
 	sets. A range may overlap the contents of a node either
 	completely or partially.</item>
       </list>
       </p>
-      <p>In order to provide the greater pointer convenience, and the ability to point to
-      textual ranges regardless of how they are marked-up, the TEI hes defined new
-      XPointer schemes to be used within the XPointer Framework:<name
-      type="xpscheme">xpath1</name>,<!-- xpath2 deleted until standardized <name
-      type="xpscheme">xpath2</name>, --> <name
-      type="xpscheme">range</name>, <name
-      type="xpscheme">string-range</name>, <name
-      type="xpscheme">left</name>, <name
-      type="xpscheme">right</name>, and <name
-      type="xpscheme">match</name>. These schemes overlap in
-      functionality with the W3C's <name
-      type="xpscheme">xpointer scheme</name> draft, but are
-      individually much simpler.<note place="foot">At the time of this
-      writing, there is no current or scheduled activity at the W3C
-      towards revising this draft or issuing it as a
-      recommendation.</note></p>
-      <p>The <name type="xpscheme">xpath1</name> scheme refers to the
-      existing XPath specification which is adopted without
-      modification or extension.
-      <!-- The <name type="xpscheme">xpath1</name> and <name
-      type="xpscheme">xpath2</name> schemes reference existing
-      specifications which are adopted without modification.-->
-      The other five schemes introduce new facilities, but are simple
-      enough that implementation should not be difficult.</p>
-      <div4 type="subsubsection" xml:id="SATSXP">
+
+
+     <p>The TEI has registered the following five pointer schemes:
+<list type="gloss">
+<label><name
+      type="xpscheme">xpath1</name></label>
+<item>Addresses a mode or nodeset using the Xpath syntax. (<ptr
+target="#SATSXP"/>)</item>
+<!-- xpath2 deleted until
+      standardized <name type="xpscheme">xpath2</name>, --> 
+<label><name
+      type="xpscheme">left</name> and <name
+      type="xpscheme">right</name></label><item>addresses the point
+before (left) or after (right) a node or node set (<ptr
+target="#SATSLR"/>) </item>
+<label><name
+      type="xpscheme">range</name></label>
+<item>addresses the range between two points (<ptr target="#SATSRN"/>)</item>
+<label><name
+      type="xpscheme">string-range</name></label>
+<item>addresses a range of a specified length starting from a
+specified point (<ptr target="#SATSRN"/>)</item>
+<label><name type="xpscheme">match</name></label>
+<item>addresses a range which matches a specified string within a node
+(<ptr target="#SATSMA"/>)</item>
+</list>
+     </p>
+<p>The <name type="xpscheme">xpath1</name> scheme refers to the
+existing XPath specification which is adopted without
+modification or extension.
+</p>
+<p>The other five schemes overlap in functionality with a W3C draft
+specification known as the <name type="xpscheme">xpointer
+scheme</name> draft, but are individually much simpler. At the time of
+this writing, there is no current or scheduled activity at the W3C
+towards revising this draft or issuing it as a recommendation.</p>
+</div4>
+
+<div4 type="subsubsection" xml:id="SATSXP">
           <head>xpath1(path)</head>
           <p>The <name type="xpscheme">xpath1</name> scheme locates a
           node or node set within an XML Information Set. The single
@@ -762,20 +835,23 @@ both the source element and target element are in the same XML document.</p>
         type="datatype">data.pointers</name>, each node in the
         node set is treated as if it were the result of a separate URI
         reference.</p>
-        <p>When an xpath is interpreted by a TEI processor, the information set of the referenced
-        document is interpreted without any additional information supplied by any schema processing
-        that may or may not be present. In particular this means that no white space normalization
-        is applied to a document before the xpath is interpreted.
+        <p>When an xpath is interpreted by a TEI processor, the
+        information set of the referenced document is interpreted
+        without any additional information supplied by any schema
+        processing that may or may not be present. In particular this
+        means that no white space normalization is applied to a
+        document before the xpath is interpreted.
         </p>
         <p>This pointer scheme allows easy, direct use of the most
         widely-implemented XML query method. It is probably the most
         robust pointing mechanism for the common situation of
         selecting an XML element or its contents where an
         <att>xml:id</att> is not present. The ability to use element
-        type names (<soCalled>GI</soCalled>s) and attribute names and
+        names and attribute names and
         values makes <name type="xpscheme">xpath1</name> pointers more
-        robust than <name type="xpscheme">element</name> pointers,
-        even if the designated dovument changes. For durability in the
+        robust than the other mechanisms discussed in this section 
+<!--<name type="xpscheme">element</name> pointers,-->
+        even if the designated document changes. For durability in the
         presence of editing, use of <att>xml:id</att> is always
         recommended when possible.</p>
           </div4>
@@ -789,6 +865,8 @@ both the source element and target element are in the same XML document.</p>
               Recommendation</ref>. The results of the xpath2() pointer scheme are treated exactly as the
               results of an <name type="xpscheme">xpath1</name> pointer scheme. </p>
         </div4> -->
+<!-- examples needed -->
+
          <div4 type="subsubsection" xml:id="SATSLR">
           <head>left(pointer) and right(pointer)</head>
           <p>The <name type="xpscheme">left</name> (<name
@@ -811,47 +889,50 @@ both the source element and target element are in the same XML document.</p>
           <name type="xpscheme">left</name> and <name
           type="xpscheme">right</name> for all three types of possible
           location that might result from interpreting its argument.
-            <list>
-              <item>
-                <label>A Node</label> When <rs>pointer</rs> resolves
-                to a node, the point designated is the
-                point immediately preceding (<name type="xpscheme">left</name>) or
-                following (<name type="xpscheme">right</name>) the node.
+            <list type="gloss">
+                <label>A Node</label>
+              <item> When <rs>pointer</rs> resolves to a node, the
+              point designated is the point immediately preceding
+              (<name type="xpscheme">left</name>) or following (<name
+              type="xpscheme">right</name>) the node.
               </item>
-              <item>
-                <label>A Node Set</label> When <rs>pointer</rs> resolves
-                to a node set, the point designated is the point preceding the first
-                element of the set (<name type="xpscheme">left</name>) or
-                following the last
-                element of the set (<name type="xpscheme">right</name>)</item>
-              <item>
-                <label>A range</label> When <rs>pointer</rs> resolves
-                to a range, the point designated is the
-                point designating the start (<name type="xpscheme">left</name>) or end
-                (<name type="xpscheme">right</name>) of the range.
+<label>A Node Set</label> 
+<item> When <rs>pointer</rs> resolves to a
+node set, the point designated is the point preceding the first
+element of the set (<name type="xpscheme">left</name>) or following
+the last element of the set (<name
+type="xpscheme">right</name>)</item>
+                <label>A range</label> <item> When <rs>pointer</rs>
+                resolves to a range, the point designated is the point
+                designating the start (<name
+                type="xpscheme">left</name>) or end (<name
+                type="xpscheme">right</name>) of the range.
               </item>
-              <item>
-                <label>A Point</label> When <rs>pointer</rs> resolves
-                to a point, that point is the result. The pointer
-                schemes <name type="xpscheme">left</name> and
-                <name type="xpscheme">right</name> make no change when given a point
-                as argument.
+<label>A Point</label> <item> When <rs>pointer</rs> resolves to a
+point, that point is the result. The pointer schemes <name
+type="xpscheme">left</name> and <name type="xpscheme">right</name>
+make no change when given a point as argument.
                </item>
             </list>
             </p>
-	    <p>The folowing example points to the spot immediately
-	    following the last character of a <gi
-	    scheme="extreme">postcode</gi> node in a seminal paper
-	    about markup alternatives. This node contains the string
-	    <q>20850</q>, so the point being pointed to is the one
-	    following the second <q>0</q> character.. <egXML
-	    xmlns="http://www.tei-c.org/ns/Examples"><ptr target="http://www.mulberrytech.com/Extreme/Proceedings/xml/2002/Usdin01/EML2002Usdin01.xml#right(element(/1/1/3/3/6))"/></egXML></p>
+	    <p>The following example points to the spot immediately
+	    following the last character of the element found by
+	    walking down the document tree to the 6th child of the
+	    3rd child of the 3rd child of the 2st child of the root
+	    element. In this case, the path takes us to a <gi
+	    scheme="extreme">postcode</gi> node which contains the string
+	    <q>20850</q>, so the point being pointed to is that
+	    following the second <q>0</q> character. <egXML
+	    xmlns="http://www.tei-c.org/ns/Examples"><p
+	    xml:base="http://www.mulberrytech.com/Extreme/Proceedings/xml/2002/">
+<ptr target="Usdin01/EML2002Usdin01.xml#right(element(/1/1/3/3/6))"/></p></egXML></p>
            </div4>
-       <div4 type="subsubsection" xml:id="SATSRN">
+
+ <div4 type="subsubsection" xml:id="SATSRN">
           <head>range(pointer1, pointer2)</head>
           <p>The <name type="xpscheme">range</name> scheme locates a
           range between two points in an XML information set. The two
-          pointer arguments to <name type="xpscheme">range</name>
+          pointer  arguments to <name type="xpscheme">range</name>
           locate the boundaries of the range by two points, and are
           interpreted as fragment identifiers. The parameters
           <rs>pointer1</rs> and <rs>pointer2</rs> are XPointers
@@ -887,7 +968,8 @@ both the source element and target element are in the same XML document.</p>
             </list>
 	  </p>
        </div4>
-        <div4 type="subsubsection" xml:id="SATSSR">
+
+<div4 type="subsubsection" xml:id="SATSSR">
           <head>string-range(pointer, offset [, length])</head>
           <p>The <name type="xpscheme">string-range</name> scheme
           locates a range based on character positions.
@@ -953,30 +1035,33 @@ both the source element and target element are in the same XML document.</p>
          </div4>
          <div4 type="subsubsection" xml:id="SATSMA">
            <head>match(pointer, string [, index])</head>
-           <p>The match scheme designates the result of a literal match of the
-           argument <rs>string</rs> within the string-value of the <rs>pointer</rs>
-           argument. The result is a range from the first matching character to the
-           last. It is an error if there is no matching string. A match may not
-           extend outside the range corresponding to the string value of
-           <rs>pointer</rs>.</p>           
-           <p>The <rs>index</rs> argument is an integer greater than or equal to 1,
-           specifying which match should be chosen when there is more than one match
-           within the string-value of <rs>pointer</rs>. If no <rs>index</rs> is
-	   provided, the default value is 1, indicating the first match found.</p>
+           <p>The match scheme designates the result of a literal
+           match of the argument <rs>string</rs> within the
+           string-value of the <rs>pointer</rs> argument. The result
+           is a range from the first matching character to the
+           last. It is an error if there is no matching string. A
+           match may not extend outside the range corresponding to the
+           string value of <rs>pointer</rs>.</p>
+           <p>The <rs>index</rs> argument is an integer greater than
+           or equal to 1, specifying which match should be chosen when
+           there is more than one match within the string-value of
+           <rs>pointer</rs>. If no <rs>index</rs> is provided, the
+           default value is 1, indicating the first match found.</p>
          </div4>
     </div3>
     <div3 type="subsection" xml:id="SACR">
       <head>Canonical References</head>
-      <p>A canonical reference is a means, specific to a community or
-      corpus, of pointing into documents. For example, biblical
-      scholars might understand <q>Matt 5:7</q> to mean <q>the book
-      called <title>Matt</title>, chapter 5, verse 7.</q> They might
-      then wish to translate the string <q>Matt 5:7</q> into a pointer
-      into a TEI-encoded document, selecting the element which
-      corresponds to the seventh <gi>div</gi> element within the fifth
-      <gi>div</gi> element within the <gi>div</gi> element with the
-      <att>n</att> attribute valued
-      <q>Matt.</q></p>
+
+      <p>By <soCalled>canonical</soCalled> reference we mean any means
+      of pointing into documents, specific to a community or
+      corpus. For example, biblical scholars might understand <q>Matt
+      5:7</q> to mean <q>the book called <title>Matt</title>, chapter
+      5, verse 7.</q> They might then wish to translate the string
+      <q>Matt 5:7</q> into a pointer into a TEI-encoded document,
+      selecting the element which corresponds to the seventh
+      <gi>div</gi> element within the fifth <gi>div</gi> element
+      within the <gi>div</gi> element with the <att>n</att> attribute
+      valued <q>Matt.</q></p>
       <p>Several elements in the TEI scheme (<gi>gloss</gi>,
       <gi>ptr</gi> <gi>ref</gi>, and <gi>term</gi>) bear a special
       attribute, <att>cRef</att>, just for this purpose. Using the
@@ -989,15 +1074,19 @@ both the source element and target element are in the same XML document.</p>
       <att>cRef</att> and <att>target</att> attributes are mutually
       exclusive: only one or the other may be specified on any given
       occurrence of an element.</p>
-      <p>The <gi>refsDecl</gi> element (which is a member of class
-      <ident type="class">att.declaring</ident>) of provides a means to
-      encode an algorithm for translating a canonical reference string
-      (like <val>Matt 5:7</val>) into a URI reference. The
+      <p>For the cref attribute to function as required, a mechanism is needed to define the
+mapping between (for example) <q>the book called
+<title>Matt</title></q> and the part of the XML structure which
+corresponds with it. This is provided by the  <gi>refsDecl</gi> element <!--(which is a member of class
+      <ident type="class">att.declaring</ident>)--> in the TEI Header,
+which contains   an algorithm for translating a canonical reference string
+      (like <val>Matt 5:7</val>) into a URI such as <code>#xpath1(//div[@n='Matt']/div[5]/div[$7]</code>. The
       <gi>refsDecl</gi> element is described in section <ptr
-      target="#HD54"/>; the follwoing example is discussed in more
+      target="#HD54"/>; the following example is discussed in more
       detail below in section <ptr target="#SACRWE"/>.
       <egXML xmlns="http://www.tei-c.org/ns/Examples"><refsDecl xml:id="biblical">
-   <cRefPattern matchPattern="(.+) (.+):(.+)" replacementPattern="#xpath1(//div[@n='$1']/div[$2]/div[$3])">
+   <cRefPattern matchPattern="(.+) (.+):(.+)" 
+       replacementPattern="#xpath1(//div[@n='$1']/div[$2]/div[$3])">
     <p>This pointer pattern extracts and references the <q>book,</q>
       <q>chapter,</q> and <q>verse</q> parts of a biblical reference.</p>
    </cRefPattern>
@@ -1012,7 +1101,7 @@ both the source element and target element are in the same XML document.</p>
 </refsDecl></egXML>
       </p>
       <p>When an application encounters a canonical reference as the
-      value of <att>cRef</att> attribute, it can follow a sequence of
+      value of <att>cRef</att> attribute, it  follows a sequence of
       specific steps to transform it into a URI reference.
       <list type="ordered">
         <item>Ascertain the correct <gi>refsDecl</gi>
@@ -1058,9 +1147,9 @@ both the source element and target element are in the same XML document.</p>
       replaced by the corresponding substring match. Note that since a
       maximum of nine substring matches are permitted, the string
       <q>$18</q> means <q>the value of the first matched substring
-      follwed by the character <q>8</q></q> as opposed to <q>the
+      followed by the character <q>8</q></q> as opposed to <q>the
       eighteenth matched substring</q>. If there is a need for an
-      actual string including dollar sign follwed by a digit that is
+      actual string including dollar sign followed by a digit that is
       not supposed to be replaced, the dollar sign should be written
       as <code>%24</code>.</p>
 <!--      <p>A TEI application
@@ -1125,7 +1214,7 @@ both the source element and target element are in the same XML document.</p>
         <code>#xpath1(//div[@n='$1']/div[$2])</code> to produce a
         fragment identifier, which when appended to the
         <att>xml:base</att> in force produces the absolute URI
-        reference Reference
+        reference 
         <code>http://www.jph.org/resources/books/Bible.xml#xpath1(//div[@n='Matt']/div[5])</code>.</p>
         <p>If the input string had been <q>Matt</q>, neither the first
           nor the second regular expressions would have successfully
@@ -1394,10 +1483,7 @@ Melvin, just say <q>I'm afraid.</q></q></egXML>
       abbreviation and expansion, addition and deletion, or for a
       critical apparatus are not appropriate. In these circumstances,
       one <gi>seg</gi> is encoded for each possible variant, and the
-      set of them is enclosed in a <gi>choice</gi> element. The
-      <att>src</att> attribute of <gi>choice</gi> may be used to indicate
-      which of the <gi>seg</gi> elements actually appeared in a source
-      text being transcribed.</p>
+      set of them is enclosed in a <gi>choice</gi> element. </p>
       <p>For example, if one were writing dual-platform instructions for
       installation of software, it might be useful to use <gi>seg</gi>
       to record platform-specific pieces of mutually exclusive text.
@@ -1503,7 +1589,7 @@ M&uuml;nchen: Rogner & Bernhard, 1972. *--></p>
       special purpose elements are proposed in section <ptr target="#SASY"/>.</p>
       <div3 type="subsection" xml:id="SACS1">
         <head>Correspondence</head>
-        <p>A common problem in text analysis is to determine
+        <p>A common requirement in text analysis is to represent
         correspondences between two or more parts of a single
         document, or between places in different documents. Provided
         that explicit elements are available to represent the parts or
@@ -1566,7 +1652,7 @@ although ]]><seg xml:id="network">the network</seg><![CDATA[ says
    <link targets="#shirley #show"/>
    <link targets="#nbc #network"/>
 </linkGrp></egXML></p>
-<p>In the following example, we use exactly the same mechanism to
+<p>In the following example, we may use exactly the same mechanism to
 express a correspondence amongst the anchors introduced following the
 fifth word after <mentioned>English</mentioned> in a text:
 <eg><![CDATA[English language. Except for not very<anchor xml:id="eng1"/>
@@ -1578,7 +1664,7 @@ English was still full of flaws<anchor xml:id="eng3"/>
 English. This was revised by young<anchor xml:id="eng4"/>
 <!-- ... -->
 <linkGrp type="five-word collocates">
-  <link type="collocates of ENGLISH" targets="eng1 eng2 eng3 eng4"/>
+  <link type="collocates of ENGLISH" targets="#eng1 #eng2 #eng3 #eng4"/>
   <!-- ... -->
 </linkGrp>]]></eg></p></div3>
         <div3 type="subsection" xml:id="SACSAL">
@@ -2890,11 +2976,14 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
 <head>Stand-off Markup</head>
       <div3 type="subsection">
 	<head>Introduction</head>
-	<p>Markup is said to be stand-off, or external, when the tags representing
-	  elements are placed outside of the text being marked up:
-	  elsewhere within the same file, or even outside it altogether. The markup
-	  therefore points to, rather than wraps, the relevant data
-	  content.</p>
+
+	<p>Markup is said to be <term>stand-off</term>, or external,
+	when the tags representing elements are placed outside the
+	text being marked up: elsewhere within the same file, or even
+	outside it altogether. In such a style of markup, the tags
+	point to the relevant data content rather than containing
+	it.</p>
+
 	<p>There are many reasons for using stand-off markup: the source
 	  text might be read-only so that additional markup cannot be added,
           or a single text may need to be marked up
@@ -2905,7 +2994,9 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
 	<p>This section describes a generic mechanism for expressing
 	  <emph>all</emph> kinds of markup externally as stand-off tags, for use
           whenever it is appropriate.</p>
-	<p>The three major requirements this scheme for stand-off markup satisfies are
+<!-- this list uses technical terms defined after it appears: it
+should be moved -->
+	<p>The three major requirements satisfied by this scheme for stand-off markup are:
 	  <list>
 	    <item n="a">any valid TEI markup can be either internal or
 	      external,</item>
@@ -2920,54 +3011,56 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
               
 	<p>Throughout this section the following terms will be systematically used in
 	specific senses.
-		<list type="gloss">
-			<label>
-				<term>source document</term>
-			</label>
-			<item>a document to which the stand-off markup refers (a source document can be either XML or
-				plain text); there may be more than one source document.</item>
-			<label>
-				<term>internal markup</term>
-			</label>
-			<item>markup that is already present in an XML source document</item>
-			<label>
-				<term>stand-off markup</term>
-			</label>
-			<item>markup that is either outside of the source document and points in to it to the data it
-				describes, or alternatively is in another part of the source document and points elsewhere
-				within the document to the data it describes</item>
-			<label>
-				<term>external document</term>
-			</label>
-			<item>a document that contains stand-off markup that points to a different, source document</item>
-			<label>
-				<term>internalize</term>
-			</label>
-			<item>the action of creating a new XML document with external markup and data integrated with the
-				source document data, and possibly some source document markup as well</item>
-			<label>
-				<term>externalize</term>
-			</label>
-			<item>a process applied to markup from a pre-existing XML document, which splits it into two
-				documents, an XML (external) document containing some of the markup of the original document,
-				and another (source) XML document containing whatever text content and markup has not been
-				extracted into the stand-off document; if all markup has been externalized from a document, the
-				new source may be a plain text document</item>
-		</list>
+<list type="gloss">
+	<label>
+<term>source document</term>
+	</label>
+	<item>a document to which the stand-off markup refers (a source document can be either XML or
+plain text); there may be more than one source document.</item>
+	<label>
+<term>internal markup</term>
+	</label>
+	<item>markup that is already present in an XML source document</item>
+	<label>
+<term>stand-off markup</term>
+	</label>
+	<item>markup that is either outside of the source document and points in to it to the data it
+describes, or alternatively is in another part of the source document and points elsewhere
+within the document to the data it describes</item>
+	<label>
+<term>external document</term>
+	</label>
+	<item>a document that contains stand-off markup that points to a different, source document</item>
+	<label>
+<term>internalize</term>
+	</label>
+	<item>the action of creating a new XML document with external markup and data integrated with the
+source document data, and possibly some source document markup as well</item>
+	<label>
+<term>externalize</term>
+	</label>
+	<item>a process applied to markup from a pre-existing XML document, which splits it into two
+documents, an XML (external) document containing some of the markup of the original document,
+and another (source) XML document containing whatever text content and markup has not been
+extracted into the stand-off document; if all markup has been externalized from a document, the
+new source may be a plain text document</item>
+</list>
 	</p>
                
       </div3>
-      <div3 type="subsection">
-	<head>Overview of XInclude </head>
+<div3 type="subsection">
+<head>Overview of XInclude </head>
+
+
    <p>The basic notion of inclusion of 
-         virtual content is fully adequate to describe stand-off markup, and so these
-         Guidelines recommend use of <ref
+virtual content is fully adequate to describe stand-off markup, and so these
+Guidelines recommend use of <ref
 	    target="http://www.w3.org/TR/xinclude/">XInclude</ref> as
 	  a way to specify virtual inclusion of content. <note place="foot">The version on which
 	    this text is based on is the <ref
 	      target="http://www.w3.org/TR/2004/REC-xinclude-20041220/">W3C
 	       Recommendation dated <date
-		value="2004-12-20">20 December
+value="2004-12-20">20 December
 	       	2004</date>.</ref>.</note> XInclude relies on <ref
 	    target="http://www.w3.org/TR/xptr-framework/">XPointer schemes</ref>
 	  to point to the actual fragments of text to be
@@ -2980,7 +3073,7 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
 	  addresses, and in particular it fully supports the <ref
 	    target="http://www.w3.org/TR/xptr-xpointer/"><code>xpointer()</code></ref> 
 	  scheme.</p>
-          
+ 
 	<p>XInclude is a W3C recommendation which specifies a syntax for the
 	  inclusion within an XML document of data fragments placed in
 	  different resources. Included resources can be either plain
@@ -2994,7 +3087,7 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
 	  which we will usually prefix with
 	  <mentioned>xi:</mentioned>, and exactly two elements,
 	  <gi>xi:include</gi> and <gi>xi:fallback</gi>.</p>
-         
+
 	  <p>The <gi>xi:include</gi> element uses the <att>href</att>
 	  attribute to specify the location of the resource to be
 	  included; its value is an IURI <!-- this is the only
@@ -3006,22 +3099,23 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
 	  plain text or an XML fragment, and the <att>encoding</att>
 	  attribute to provide a hint, when the included fragment is
 	  text, of the character encoding of the fragment. An optional
-	  <gi>xi:fallback</gi> element is permitted within an
+	  <gi>xi:fallback</gi> element is also permitted within an
 	  <gi>xi:include</gi>; it specifies alternative content to be
-	  used when the external resource, for any reason, cannot be
-	  fetched. Its use is not recommeded for stand-off markup.</p>
-          
+	  used when the external resource cannot be fetched for some
+	  reason. Its use is not however recommended for stand-off
+	  markup.</p>
+ 
 	  <p>XInclude currently only requires support for one XPointer
 	  scheme, called <code>element()</code>. As described in <ptr
-	  target="#SAES"/>, the <code>element()</code> scheme can
-	  be either a bare name (denoting an element with a specific
-	  <att>xml:id</att> attribute) or a child
-	  sequence (a numerical sequence of slash-separated child
-	  numbers specifying a path in the XML tree whose final step
-	  selects a specific subtree of XML content). Another scheme,
-	  <code>xpointer()</code>, has not been turned into a W3C
-	  recommendation yet, although it has been part of the
-	  XPointer drafts from the beginning. The
+	  target="#SAES"/>, the <code>element()</code> scheme can use
+	  either a bare name (denoting an element with a specific
+	  <att>xml:id</att> attribute) or a child sequence (a
+	  numerical sequence of slash-separated child numbers
+	  specifying a path in the XML tree whose final step selects a
+	  specific subtree of XML content) to specify its
+	  target. Another scheme, <code>xpointer()</code>, has not yet
+	  become a W3C recommendation, although it has been part of
+	  the XPointer drafts from the beginning. The
 	  <code>xpointer()</code> scheme and the TEI schemes defined
 	  earlier (see <ptr target="#SATS"/>) add the concepts of
 	  points and ranges, which can be used to specify sub-node
@@ -3031,91 +3125,101 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
 
         </div3>
       <div3 type="subsection">
+
 	<head>Doing stand-off markup in TEI</head>
-              <p>The operations of internalizing and externalizing markup are very useful
-         and practically important. XInclude processing as defined by the W3C
-         <emph>is</emph> internalization of one or more source documents'
-        content into a stand-off document. TEI use of
-        XInclude for stand-off markup enables use of XInclude-conformant sofware to
-        perform this useful operation. However, internalization is not clearly defined 
-        for all stand-off files, because the structure of the internal and
-        external markup trees may overlap. In particular, when an external markup
-        document selects a range that overlaps partial
-        elements in the source document, it is not clear how the semantics of
-        internalization (inclusion) should work, since partial elements are not
-        XML objects. <note type="foot">This corresponds to the observation that 
-         overlapping XML tags reflecting a textual version of such an inclusion
-         would not even be well-formed XML. This kind of overlap in textual
-         phenomena of interest in fact the major reason that stand-off 
-         markup is needed.</note>
-         XInclude defines a semantics for this case that involves
-         only complete elements.</p>
-         
-         <p>When a range selection partially
-         overlaps a number of elements in a source document, XInclude specifies that
-         the partially overlapping elements should be included as well
-         as all completely overlapping elements and characters (partially overlapping
-         characters are not possible). The effect of this is that elements that
-         straddle the start or end of a selected range will be included as wrappers for
-         those of their children that are completely or partially selected by the
-         range. For example, given the following source document:
-                   
+
+     <p>The operations of internalizing and externalizing markup are
+     very useful and practically important. XInclude processing as
+     defined by the W3C <emph>is</emph> internalization of one or more
+     source documents' content into a stand-off document. TEI use of
+     XInclude for stand-off markup enables use of XInclude-conformant
+     sofware to perform this useful operation. However,
+     internalization is not clearly defined for all stand-off files,
+     because the structure of the internal and external markup trees
+     may overlap. In particular, when an external markup document
+     selects a range that overlaps partial elements in the source
+     document, it is not clear how the semantics of internalization
+     (inclusion) should work, since partial elements are not XML
+     objects.  <note place="foot">This corresponds to the observation
+     that overlapping XML tags reflecting a textual version of such an
+     inclusion would not even be well-formed XML. This kind of overlap
+     in textual phenomena of interest is in fact the major reason that
+     stand-off markup is needed.</note> XInclude defines a semantics
+     for this case that involves only complete elements.</p>
+
+<p>When a range selection partially overlaps a number of elements in a
+source document, XInclude specifies that the partially overlapping
+elements should be included as well as all completely overlapping
+elements and characters (partially overlapping characters are not
+possible). The effect of this is that elements that straddle the start
+or end of a selected range will be included as wrappers for those of
+their children that are completely or partially selected by the
+range. For example, given the following source document:
+ 
         <eg><![CDATA[
         <body>
-           <p xml:id="par1">home, <emph>home</emph> on Brokeback Mountain.</p>
-           <p xml:id="par2">That was the <emph>song</emph> that I sang</p>
-           </body>]]>
+  <p xml:id="par1">home, <emph>home</emph> on Brokeback Mountain.</p>
+  <p xml:id="par2">That was the <emph>song</emph> that I sang</p>
+  </body>]]>
         </eg>
         and the following external document:
         <eg><![CDATA[
-           <body xmlns:xi="http://www.w3.org/2001/XInclude">
-              <div><xi:include href="example1.xml"
-                  xpointer="range(xpath1(id(par1)//emph),xpath1(id(par2)//emph))"/>
-              </div>
-          </body>]]>
-        </eg>
+  <body xmlns:xi="http://www.w3.org/2001/XInclude">
+     <div><xi:include href="example1.xml"
+xpointer="range(xpath1(id(par1)//emph),xpath1(id(par2)//emph))"/>
+     </div>
+ </body>]]>    </eg>
         the resulting document after XInclude processing of this external document
         would be:
         <eg><![CDATA[
-            <body xmlns:xi="http://www.w3.org/2001/XInclude">
-            <div>
-               <p xml:id="par1"><emph>home</emph> on Brokeback Mountain.</p>
-               <p xml:id="par2">That was the <emph>song</emph></p>    
-            </div>
-            </body>]]>
+   <body xmlns:xi="http://www.w3.org/2001/XInclude">
+   <div>
+      <p xml:id="par1"><emph>home</emph> on Brokeback Mountain.</p>
+      <p xml:id="par2">That was the <emph>song</emph></p>    
+   </div>
+   </body>]]>
         </eg>
 
         The result of the inclusion is two paragraph elements, while
         the original range designated in the the source document
-        overlapped two paragraph fragments. XInclude semantics
-        guarantees the creation of well-formed XML results even though
-        the powerful pointing mechanisms it uses do not automatically
-        respect the hierarchical structure of XML documents. While
+        overlapped two paragraph fragments. 
+<!-- what if it were a TEI join -->
+
+The semantics of XInclude require the creation of well-formed XML results even though
+        the  pointing mechanisms it uses do not necessarily
+        respect the hierarchical structure of XML documents, as in
+	this case. While
         this is a good way to ensure that internalization is always
         possible, it has implications for the use of XInclude as a
         notation for the <emph>description</emph> of overlapping
         markup structures.
         </p>
         
-        <p>Overlapping markup cannot be represented by a source document combined with
-        an external document using XInclude to impose elements that overlap
-        those in the original document. When
-        overlapping hierarchies need to be represented for a single document, each
-        hierarchy must be represented by a separate set of XInclude tags pointing to a
-        common source document. This sort of structure corresponds to common practice
-        in linguistic text corpus work. In such corpora, each potentially overlapping
-        hierarchy of elements for the text is represented as a separate stream of
-        stand-off markup. Generally the source text contains markup for features of the
-        smallest significant units of analysis in the corpus, such as words, or
-        morphemes, this information and its markup representing a layer of common
-        information that is shared by all the various hierarchies. As a way of
-        organizing the representation of complex data, this technique generally allows
-        a large number of <att>xml:id</att> attributes to be attached to the shared
-        elements, providing robust anchors for links and facilitating adjustments to
-        the source document without breaking external documents that reference it.
+        <p><!--Overlapping markup cannot be represented by a source
+        document combined with an external document using XInclude to
+        impose elements that overlap those in the original
+        document. -->When overlapping hierarchies need to be represented
+        for a single document, each hierarchy must be represented by a
+        separate set of XInclude tags pointing to a common source
+        document. This sort of structure corresponds to common
+        practice in work with linguistic text corpora. In such corpora, each
+        potentially overlapping hierarchy of elements for the text is
+        represented as a separate stream of stand-off
+        markup. Generally the source text contains markup for features
+        of the smallest significant units of analysis in the corpus,
+        such as words or morphemes, this information and its markup
+        representing a layer of common information that is shared by
+        all the various hierarchies. As a way of organizing the
+        representation of complex data, this technique generally
+        allows a large number of <att>xml:id</att> attributes to be
+        attached to the shared elements, providing robust anchors for
+        links and facilitating adjustments to the source document
+        without breaking external documents that reference it.
         </p>
-	
+	<!-- example please -->
+
         <p>Any tag can be externalized by
+<!-- this example is too simple: move it earlier -->
 	  removing its content and placing an XInclude
 	  <gi>xi:include</gi> element that contains the XPointer
 	  pointing to the correct content.</p>
@@ -3148,26 +3252,29 @@ If bees are few.\n
   <head>1755</head>
    <l>
     <xi:include href="Source.xml" parse="xml"
-                xpointer="string-range(element(/1),  0, 48)"/>
+       xpointer="string-range(element(/1),  0, 48)"/>
    </l>
    <l>
     <xi:include href="Source.xml" parse="xml"
-                xpointer="string-range(element(/1), 49, 71)"/>
+       xpointer="string-range(element(/1), 49, 71)"/>
    </l>
    <l>
     <xi:include href="Source.xml" parse="xml"
-                xpointer="string-range(element(/1), 72, 83)"/>
+       xpointer="string-range(element(/1), 72, 83)"/>
    </l>
    <l>
     <xi:include href="Source.xml" parse="xml"
-                xpointer="string-range(element(/1), 84,109)"/>
+       xpointer="string-range(element(/1), 84,109)"/>
    </l>
    <l>
     <xi:include href="Source.xml" parse="xml"
-                xpointer="string-range(element(/1),110,126)"/>
+       xpointer="string-range(element(/1),110,126)"/>
    </l>
  </body>
 </text>]]></eg></p>
+
+<!-- better eg might be to use <lb/>? -->
+
 	<p>Please note that this specification requires that the
 	XInclude namespace declaration is present in all cases. The
 	<gi>xi:fallback</gi> element contains text or XML fragments to
@@ -3175,7 +3282,7 @@ If bees are few.\n
 	reason (for instance due to inaccessibility of an external
 	resource). The <gi>xi:fallback</gi> element is optional; if it
 	is not present an XInclude processor must signal a fatal error
-	when a resource is not found. This is the preferred behavior
+	when a resource is not found. This is the preferred behaviour
 	for use with stand-off markup, thus these Guidelines recommend
 	against the use of <gi>xi:fallback</gi> for stand-off
 	markup.</p>
@@ -3201,7 +3308,7 @@ If bees are few.\n
 	elements.</p>
       </div3>
       <div3 type="subsection">
-	<head>Including text and/or xml fragments</head>
+	<head>Including text or xml fragments</head>
 	<p>When the source text is plain text the overall form of the
 	  XPointer pointing to it is of minimal importance. The form
 	  of the XPointer matters considerably, on the other hand,
@@ -3218,9 +3325,9 @@ If bees are few.\n
 	  <eg><![CDATA[<html>
     <body>
         <div>To make a prairie it takes a <a href="clover.gif">clover</a>
-             and one <a href="bee.gif">bee</a>,</div>
+    and one <a href="bee.gif">bee</a>,</div>
         <div>One <a href="clover.gif">clover</a>, and
-             a <a href="bee.gif">bee</a>,</div>
+    a <a href="bee.gif">bee</a>,</div>
         <div>And revery.</div>
         <div>The revery alone will do,</div>
         <div>If bees are few.</div>

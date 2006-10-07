@@ -34,34 +34,40 @@ $Author$
         <p/>
       </remarks>
     </attDef>
-    <attDef ident="baseType" usage="opt">
+    <attDef ident="baseTypes" usage="opt">
 	<equiv/>
-	<desc>gives the name of the feature structure type from which this
-type inherits features and constraints; if this type declares a feature
-with the same name as a feature of the base type, the definition within
-this <gi>fsDecl</gi> overrides the inherited definition.  The
-<gi>fsConstraints</gi> are inherited only if this <gi>fsDecl</gi>
-does not specify any; otherwise the constraints in this <gi>fsDecl</gi>
-override.  When no <att>baseType</att> is specified, no features
-or constraints are inherited.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"/></datatype>
+
+	<desc>gives the name of one or more typed feature structures
+	from which this type inherits feature specifications and
+	constraints; if this type includes a feature specification
+	with the same name as that of any of those specified by this
+	attribute, or if more than one specification of the same name
+	is inherited, then the set of possible values is defined by
+	unification. Similarly, the set of constraints applicable is
+	derived by combining those specified explicitly within this
+	element with those implied by the <att>baseTypes</att>
+	attribute. When no <att>baseType</att> is specified, no
+	feature specification or constraint is inherited.</desc>
+
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.names"/></datatype>
       <valDesc>any convenient string for use as a name.</valDesc>
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
       <remarks>
-        <p/>
+	<p>Inheritance is defined here as a monotonous relation.</p>
+        <p>The process of combining constraints
+	may result in a contradiction, for example if two
+	specifications for the same feature
+	specify disjoint ranges of values, and at least one such
+	specification is mandatory. In such a case, there is
+	no valid representative for the type being defined. </p>
       </remarks>
     </attDef>
   </attList>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
   </exemplum>
-  <remarks>
-    <p rend="dataDesc">Contains a series of feature
-declarations, together with (optionally) a description, and a set of feature structure constraints.</p>
-    <p/>
-  </remarks>
   <listRef>
     <ptr target="#FD"/>
   </listRef>
