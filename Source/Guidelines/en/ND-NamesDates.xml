@@ -823,9 +823,28 @@ listed.
 <specDesc key="particLinks"/>
 </specList>
 </p>
-<p>The <gi>listPerson</gi> element will usually  appear within the
-<gi>profileDesc</gi> of a TEI Header, but can also appear within the
-body of a text, in the same way as a bibliographic description.</p>
+<p>One or more  <gi>listPerson</gi> elements may be supplied  within the
+<gi>particDesc</gi> (participant description) element inside the
+<gi>profileDesc</gi> element of a TEI Header. Like bibliographic
+lists, however, the <gi>listPerson</gi> can also appear within the
+body of a text.</p>
+<p>The <att>type</att> attribute may be used to distinguish lists of
+people of different kinds where this is considered convenient:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><profileDesc>
+<particDesc>
+<listPerson type="historical">
+  <person xml:id="A1"><persName>Arthur</persName></person>
+  <person xml:id="B1"><persName>Bertrand</persName></person>
+  <!-- ... -->
+</listPerson>
+<listPerson type="mythological">
+  <person xml:id="A2"><persName>Arthur</persName></person>
+  <person xml:id="B2"><persName>Bertrand</persName></person>
+  <!-- ... -->
+</listPerson>
+</particDesc>
+</profileDesc></egXML>
 
 <!-- simple example needed here -->
 
@@ -840,7 +859,12 @@ information, and a generic element for other, user-defined, types
 of information.</p> 
 
 <p>All the elements in these three classes belong to the attribute
-class <ident>att.datable</ident>, which provides
+class <ident>att.datable</ident>, which provides the following
+attributes:
+
+<specList><specDesc key="att.datable"/></specList>
+
+<!--
 <ident>dateValue</ident>, to indicate an exact date,
 <ident>from</ident> and <ident>to</ident>, to indicate a specific date
 range, and <ident>notBefore</ident> and <ident>notAfter</ident>, to
@@ -848,7 +872,9 @@ indicate the earliest and latest possible dates — the <hi>terminus
 post quem</hi> and <hi>terminus ante quem</hi> — for a characteristic,
 state or event. The value of each of these is a date in standard format
 as defined by <title>XML Schema Part 2: Datatypes Second Edition</title>,
-i.e. YYYY-MM-DD. The various attributes can be combined in various
+i.e. YYYY-MM-DD. -->
+
+These attributes can be combined in various
 ways. Consider, for example, the following:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -858,10 +884,12 @@ ways. Consider, for example, the following:
 <date notBefore="1857-03-01" notAfter="1857-04-30">Sometime in March or April of 1857.</date> 
 </egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<date from="1857-03-01" to="1857-04-30">In March and April of 1857.</date> 
+<date notBefore="1857-03-01" notAfter="1857-04-30" exact="both">
+In March and April of 1857.</date> 
 </egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<date from="1857-03-01" notAfter="1857-04-30">From the 1st of March to sometime in April of 1857.</date>
+<date notBefore="1857-03-01" notAfter="1857-04-30" exact="from">
+From the 1st of March to sometime in April of 1857.</date>
 </egXML>
 </p>
 
@@ -881,6 +909,7 @@ elements:
 <specDesc key="langKnown"/>
 <specDesc key="nationality"/>
 <specDesc key="sex"/>
+<specDesc key="age"/>
 <specDesc key="socecStatus"/>
 </specList>
 
