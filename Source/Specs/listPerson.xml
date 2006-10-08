@@ -6,11 +6,13 @@ $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" xml:id="LISTPERS" usage="opt" ident="listPerson">
 <equiv/><!-- formerly particDesc -->
-<desc>contains a list of descriptions, each of which provides information about an identifiable individual, for
+<desc>contains a list of descriptions, each of which provides
+information about an identifiable person or a group of people, for
 example the participants in a language interaction, or the people referred
 to in a historical source. </desc>
   <classes>
     <!-- memberOf key="model.profileDescPart"/-->
+    <memberOf key="att.typed"/>
     <memberOf key="att.declarable"/>
     <memberOf key="model.biblLike"/>
   </classes>
@@ -34,12 +36,9 @@ to in a historical source. </desc>
   </content>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <listPerson>
-        <person xml:id="P1234" sex="2" age="42">
-          <p>Female informant, well-educated, born in Shropshire
-UK, 12 Jan 1950, of unknown occupation.
-Speaks French fluently. Socio-Economic status B2.</p>
-        </person>
+      <listPerson type="respondents">
+	<personGrp xml:id="PXXX"/>
+        <person xml:id="P1234" sex="2" age="42"/>
         <person xml:id="P4332" sex="1" age="43"/>
         <particLinks>
           <relation type="personal" name="spouse"
@@ -49,11 +48,9 @@ Speaks French fluently. Socio-Economic status B2.</p>
     </egXML>
   </exemplum>
   <remarks>
-    <p rend="dataDesc">May contain a prose description organized as paragraphs, or a
-structured list of persons and person groups, with an optional
-formal specification of any relationships amongst them.</p>
+    <p rend="dataDesc">The type attribute may be used to distinguish lists
+    of people of a particular type if convenient.</p>
   </remarks>
-<!-- do we need the paragraphs option? -->
   <listRef>
     <ptr target="#CCAH"/>
     <ptr target="#HD4"/>
