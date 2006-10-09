@@ -279,10 +279,12 @@ because of the order of declarations
       <xsl:copy-of select="tei:classes"/>
       <xsl:apply-templates mode="copy" select="tei:content"/>
       <attList xmlns="http://www.tei-c.org/ns/1.0">
-	<xsl:call-template name="classAttributes">
-	  <xsl:with-param name="elementName" select="$elementName"/>
-	  <xsl:with-param name="className" select="'att.global'"/>
-	</xsl:call-template>
+	<xsl:if test="not(@ns) or @ns='http://www.tei-c.org/ns/1.0'">
+	  <xsl:call-template name="classAttributes">
+	    <xsl:with-param name="elementName" select="$elementName"/>
+	    <xsl:with-param name="className" select="'att.global'"/>
+	  </xsl:call-template>
+	</xsl:if>
         <xsl:for-each select="tei:classes/tei:memberOf">
           <xsl:call-template name="classAttributes">
             <xsl:with-param name="elementName" select="$elementName"/>

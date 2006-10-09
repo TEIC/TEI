@@ -1632,7 +1632,7 @@
   </xsl:template>
 
   <xsl:template name="printNotes">
-    <xsl:if test="ancestor-or-self::tei:TEI/tei:text/descendant::tei:note[@place!='inline']">
+    <xsl:if test="ancestor-or-self::tei:TEI/tei:text/descendant::tei:note[not(@place='inline')]">
       <xsl:choose>
         <xsl:when test="$footnoteFile='true'">
           <xsl:variable name="BaseFile">
@@ -1656,7 +1656,7 @@
               </xsl:call-template>
             </div>
             <xsl:apply-templates mode="printnotes"
-              select="descendant::tei:note[@place!='inline']"/>
+              select="descendant::tei:note[not(@place='inline')]"/>
           </div>
         </xsl:otherwise>
       </xsl:choose>

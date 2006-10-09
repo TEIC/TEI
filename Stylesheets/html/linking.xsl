@@ -49,7 +49,7 @@
 	    <xsl:value-of select="local-name()"/>
 	    <xsl:text>.</xsl:text>
 	    <xsl:number/>
-	    <xsl:if test="position() != last()">
+	    <xsl:if test="not(position() = last())">
 	      <xsl:text>_</xsl:text>
 	    </xsl:if>
 	  </xsl:for-each>
