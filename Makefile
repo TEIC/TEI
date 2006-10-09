@@ -1,4 +1,5 @@
 LANGUAGE=en
+VERBOSE=
 PREFIX=/usr
 TEISERVER=http://tei.oucs.ox.ac.uk/Query/
 SOURCETREE=Source
@@ -59,8 +60,7 @@ html-web: check
 	-rm -rf Guidelines-web
 	-mkdir Guidelines-web
 	xmllint --noent --xinclude ${DRIVER} \
-	| xsltproc \
-	    -o Guidelines-web/index.html \
+	| xsltproc -o Guidelines-web/index.html ${VERBOSE} \
 	    --stringparam displayMode rnc \
 	    --stringparam lang ${LANGUAGE} \
 	    --stringparam outputDir . \
@@ -179,10 +179,9 @@ fascicule: subset
 	cat ${CHAPTER} >> ${FASCFILE}
 	cat fasc-tail.xml  >> ${FASCFILE}
 	xmllint --noent --xinclude ${FASCFILE} | xsltproc \
-	-o FASC-${CHAP}-Guidelines/index.html \
+	-o FASC-${CHAP}-Guidelines/index.html $VERBOSE \
 	--stringparam localsource `pwd`/p5subset.xml \
 	--stringparam cssFile tei.css \
-	--stringparam verbose true \
 	--stringparam displayMode rnc \
 	--stringparam lang ${LANGUAGE} \
 	--stringparam outputDir . \
