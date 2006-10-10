@@ -236,7 +236,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
     <xsl:param name="autowrap">true</xsl:param>
     <div class="pre_eg">
       <xsl:if test="$startnewline='true'">
-        <xsl:text>&#10;</xsl:text>
+       <xsl:call-template name="lineBreak"/>
       </xsl:if>
       <xsl:choose>
         <xsl:when test="$autowrap='false'">

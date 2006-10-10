@@ -1295,6 +1295,13 @@
                 <xsl:if test="not($cssFile = '')">
                   <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
                 </xsl:if>
+                <xsl:if test="not($cssSecondaryFile = '')">
+                  <link href="{$cssSecondaryFile}" rel="stylesheet" type="text/css"/>
+                </xsl:if>
+		<meta name="generator" content="Text Encoding Initiative Consortium XSLT stylesheets"/>
+		<meta name="DC.Title" content="{$name}"/>
+		<meta http-equiv="Content-Type" 
+		      content="application/xhtml+xml; charset=utf-8"/>
                 <xsl:call-template name="includeJavascript"/>
               </head>
               <body id="TOP">
@@ -1362,7 +1369,7 @@
     <xsl:param name="autowrap">true</xsl:param>
     <div class="pre_eg">
       <xsl:if test="$startnewline='true'">
-        <xsl:text>&#10;</xsl:text>
+       <xsl:call-template name="lineBreak"/>
       </xsl:if>
       <xsl:choose>
         <xsl:when test="$autowrap='false'">

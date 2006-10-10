@@ -44,9 +44,11 @@
     </xsl:choose>
   </xsl:template>
   <xsl:template match="comment()" mode="verbatim">
-    <xsl:text>&#10;&lt;!--</xsl:text>
+    <xsl:call-template name="lineBreak"/>
+    <xsl:text>&lt;!--</xsl:text>
     <xsl:value-of select="."/>
-    <xsl:text>--&gt;&#10;</xsl:text>
+    <xsl:text>--&gt;</xsl:text>
+    <xsl:call-template name="lineBreak"/>
   </xsl:template>
   <xsl:template name="wraptext">
     <xsl:param name="indent"/>
@@ -133,28 +135,36 @@
     </xsl:choose>
   <xsl:if test="not(parent::*)">
     <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/2005/11/its']|descendant-or-self::*/@*[namespace-uri()='http://www.w3.org/2005/11/its']">
-      <xsl:text>&#10;  xmlns:its="http://www.w3.org/2005/11/its" </xsl:text>
+          <xsl:call-template name="lineBreak"/>
+	  <xsl:text>  xmlns:its="http://www.w3.org/2005/11/its" </xsl:text>
     </xsl:if>
     <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.tei-c.org/ns/1.0']|descendant-or-self::*/@*[namespace-uri()='http://www.tei-c.org/ns/1.0']">
-      <xsl:text>&#10;  xmlns:tei="http://www.tei-c.org/ns/1.0" </xsl:text>
+    <xsl:call-template name="lineBreak"/>
+    <xsl:text>  xmlns:tei="http://www.tei-c.org/ns/1.0" </xsl:text>
     </xsl:if>
     <xsl:if test="descendant-or-self::*[namespace-uri()='http://docbook.org/ns/docbook']|descendant-or-self::*/@*[namespace-uri()='http://docbook.org/ns/docbook']">
-      <xsl:text>&#10;  xmlns:dbk="http://docbook.org/ns/docbook" </xsl:text>
+          <xsl:call-template name="lineBreak"/>
+	  <xsl:text>  xmlns:dbk="http://docbook.org/ns/docbook" </xsl:text>
     </xsl:if>
     <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/1999/xhtml']|descendant-or-self::*/@*[namespace-uri()='http://www.w3.org/1999/xhtml']">
-      <xsl:text>&#10;  xmlns:xhtml="http://www.w3.org/1999/xhtml" </xsl:text>
+          <xsl:call-template name="lineBreak"/>
+	  <xsl:text>  xmlns:xhtml="http://www.w3.org/1999/xhtml" </xsl:text>
     </xsl:if>
     <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/1999/xlink']|descendant-or-self::*/@*[namespace-uri()='http://www.w3.org/1999/xlink']">
-      <xsl:text>&#10;  xmlns:xlink="http://www.w3.org/1999/xlink" </xsl:text>
+          <xsl:call-template name="lineBreak"/>
+	  <xsl:text>  xmlns:xlink="http://www.w3.org/1999/xlink" </xsl:text>
     </xsl:if>
     <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/2001/XMLSchema']|descendant-or-self::*/@*[namespace-uri()='http://www.w3.org/2001/XMLSchema']">
-      <xsl:text>&#10;  xmlns:xs="http://www.w3.org/2001/XMLSchema" </xsl:text>
+          <xsl:call-template name="lineBreak"/>
+	  <xsl:text>  xmlns:xs="http://www.w3.org/2001/XMLSchema" </xsl:text>
     </xsl:if>
     <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.ascc.net/xml/schematron']|descendant-or-self::*/@*[namespace-uri()='http://www.ascc.net/xml/schematron']">
-      <xsl:text>&#10;  xmlns:sch="http://www.ascc.net/xml/schematron" </xsl:text>
+          <xsl:call-template name="lineBreak"/>
+	  <xsl:text>  xmlns:sch="http://www.ascc.net/xml/schematron" </xsl:text>
     </xsl:if>
     <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/2001/XMLSchema-instance']|descendant-or-self::*/@*[namespace-uri()='http://www.w3.org/2001/XMLSchema-instance']">
-      <xsl:text>&#10;  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" </xsl:text>
+          <xsl:call-template name="lineBreak"/>
+	  <xsl:text>  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" </xsl:text>
     </xsl:if>
   </xsl:if>
 

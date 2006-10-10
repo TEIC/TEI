@@ -307,7 +307,7 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:eg">
-    <div class="pre">
+    <div>
       <xsl:if test="$cssFile">
         <xsl:attribute name="class">pre_eg</xsl:attribute>
       </xsl:if>
@@ -1224,7 +1224,7 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:q[@rend='eg']">
-    <div class="pre">
+    <div>
       <xsl:if test="$cssFile">
         <xsl:attribute name="class">eg</xsl:attribute>
       </xsl:if>
