@@ -104,7 +104,7 @@
   
   <xsl:template match="tei:note" mode="printnotes">
     <xsl:param name="root"/>
-    <xsl:if test="not(ancestor::bibl)">
+      <xsl:if test="not(ancestor::tei:bibl)">
       <xsl:variable name="identifier">
 	<xsl:number level="any"/>
       </xsl:variable>
