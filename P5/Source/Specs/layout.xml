@@ -20,8 +20,17 @@ page-preparation techniques.</desc>
 	<equiv/>
 	<gloss/>
 	<desc>specifies the number of columns per page</desc>
-      <datatype><rng:ref  name="data.count"/></datatype>
-      <valDesc>either a whole number or the string "NA" (not applicable)</valDesc>
+      <datatype><rng:choice
+		    xmlns:rng="http://relaxng.org/ns/structure/1.0">
+<rng:ref name="data.count"/>
+<rng:list>
+<rng:ref name="data.count"/>
+<rng:ref name="data.count"/>
+</rng:list>
+</rng:choice>
+</datatype>
+      <valDesc>may be given as a pair of numbers (to indicate a range) or as a
+      single number.</valDesc>
     </attDef>
     <attDef ident="ruledLines">
 	<equiv/>
@@ -37,7 +46,7 @@ page-preparation techniques.</desc>
 </rng:choice>
 </datatype>
       <valDesc>may be given as a pair of numbers (a range) or as a
-      whole number.</valDesc>
+      single number.</valDesc>
     </attDef>
     <attDef ident="writtenLines">
 	<equiv/>
@@ -52,21 +61,23 @@ page-preparation techniques.</desc>
 <rng:ref name="data.count"/>
 </rng:list>
 </rng:choice></datatype>
-      <valDesc>may be given as a pair of numbers (a range), as  a single number.</valDesc>
+      <valDesc>may be given as a pair of numbers (a range), or as  a single number.</valDesc>
     </attDef>
   </attList>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples"
-	   xmlns:rng="http://relaxng.org/ns/structure/1.0"><layout						       ruledLines="25 32">
+	   xmlns:rng="http://relaxng.org/ns/structure/1.0"><layout columns="1"   ruledLines="25 32">
 Most pages have between 25 and 32 long lines ruled in lead.</layout></egXML>
-  </exemplum><exemplum>    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0"><layout columns="2" ruledLines="42">
+  </exemplum><exemplum>    <egXML
+  xmlns="http://www.tei-c.org/ns/Examples"
+  xmlns:rng="http://relaxng.org/ns/structure/1.0"><layout columns="2" ruledLines="42">
 <p>2 columns of 42 lines ruled in ink, with central rule 
 between the columns.</p>
 </layout></egXML>  </exemplum><exemplum>    <egXML
 xmlns="http://www.tei-c.org/ns/Examples"
-xmlns:rng="http://relaxng.org/ns/structure/1.0"><layout columns="2"
+xmlns:rng="http://relaxng.org/ns/structure/1.0"><layout columns="1 2"
 writtenLines="40 50">
-<p>2 columns, with central rule 
+<p>Some pages have 2 columns, with central rule 
 between the columns; each column with between 40 and 50 lines of writing.</p>
 </layout></egXML>
   </exemplum>
