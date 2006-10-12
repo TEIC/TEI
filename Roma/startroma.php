@@ -5,11 +5,17 @@ require_once( 'roma/roma.php' );
 
 switch( $_REQUEST[ 'option' ] )
   {
-    case 'old':
-      $oRoma = new roma( roma_startupOption_old );
+    case 'upload':
+      $oRoma = new roma( roma_startupOption_upload );
       break;
-    case 'new':
-      $oRoma = new roma( roma_startupOption_new );
+    case 'minimum':
+      $oRoma = new roma( roma_startupOption_minimum );
+      break;
+    case 'all':
+      $oRoma = new roma( roma_startupOption_all );
+      break;
+    case 'other':
+      $oRoma = new roma( roma_startupOption_other );
       break;
     default:
       $oRoma = new roma( '' );

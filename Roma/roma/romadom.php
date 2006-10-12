@@ -58,9 +58,10 @@ class romaDom extends domDocument
 	$oP->appendChild( new domText( 'created on ' . date( "l dS F Y h:i:s A" ) . ' by the form at http://www.tei-c.org.uk/Roma/' ) );
 
 	$oText = $oTEI->appendChild( new domElement( 'text' ) );
+	$oFront = $oText->appendChild( new domElement( 'front' ) );
 	$oBody = $oText->appendChild( new domElement( 'body' ) );
 
-	$oDivgen = $oBody->appendChild( new domElement( 'divGen' ) );
+	$oDivgen = $oFront->appendChild( new domElement( 'divGen' ) );
 	$oDivgen->setAttribute( 'type', 'toc' );
 
 	$oSchema = $oBody->appendChild( new domElement( 'schemaSpec' ) );
@@ -874,8 +875,8 @@ class romaDom extends domDocument
 	case 'en-GB' : $szLanguage='en'; break;
 	case 'fr'    : $szLanguage='fr'; break;
 	case 'de'    : $szLanguage='de'; break;
-	case 'zh-tw' : $szLanguage='zh'; break;
-	case 'zh'    : $szLanguage='zh'; break;
+	case 'zh-tw' : $szLanguage='zh-tw'; break;
+	case 'zh'    : $szLanguage='zh-tw'; break;
 	case 'ja'    : $szLanguage='ja'; break;
 	case 'ru'    : $szLanguage='ru'; break;
 	case 'sw'    : $szLanguage='sw'; break;

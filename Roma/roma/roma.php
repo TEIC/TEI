@@ -102,8 +102,10 @@ require_once( 'resource/resource.php' );
 //
 // These Options shouldn't be changed. But the only important thing
 // is, that they do not have the same value
-define( 'roma_startupOption_new', 'new' );
-define( 'roma_startupOption_old', 'old' );
+define( 'roma_startupOption_all', 'all' );
+define( 'roma_startupOption_minimum', 'minimum' );
+define( 'roma_startupOption_other', 'other' );
+define( 'roma_startupOption_upload', 'upload' );
 
 
 define( 'roma_validate_schema', false );
@@ -201,25 +203,34 @@ class roma
      */
     function __construct( $nOption = '')
       {
+
 	// Sessions have to be started
 	session_start();
 
         switch( $nOption )
           {
-            case roma_startupOption_old:
+            case roma_startupOption_upload:
 	      $this->m_oRomaDom = new romaDom( join( '', file(  $_FILES[ 'customization' ][ 'tmp_name' ] ) ) );
               break;
-            case roma_startupOption_new:
+            case roma_startupOption_minimum:
                $this->m_oRomaDom = new romaDom( '' ); 
                $this->m_oRomaDom->addModule( 'core' );
                $this->m_oRomaDom->addModule( 'tei' ); 
                $this->m_oRomaDom->addModule( 'header' ); 
                $this->m_oRomaDom->addModule( 'textstructure' ); 
 	       break;
-	    default;
-		$this->m_oRomaDom = new romaDom( $_SESSION[ 'romaDom' ] ); 
+	    case roma_startupOption_all:
+	      $this->m_oRomaDom = new romaDom( join( '',
+          file('/usr/share/xml/tei/custom/odd/tei_all.odd'   )));
+	       break;
+	    case roma_startupOption_other:
+	      $this->m_oRomaDom = new romaDom( join( '',
+          file('/usr/share/xml/tei/custom/odd/' . $_REQUEST ['tei_other' ] . '.odd'   )));
+	       break;
+	    default:
+               $this->m_oRomaDom = new romaDom( $_SESSION[ 'romaDom' ] );
               break;
-          }
+            }          
 
 	//set Language
 	$this->m_oRomaDom->getCustomizationLanguage( $this->m_szLanguage );
@@ -313,7 +324,7 @@ class roma
 	    case roma_mode_newCustomization:
 	      unset( $this->m_oRomaDom );
 	      unset( $_SESSION[ 'romaDom' ] );
-	      $this->redirectBrowserHeader( 'option=' . roma_startupOption_new );
+	      $this->redirectToStart();
 	      break;
 	    case roma_mode_elementChanged:
 	      if ( $this->elementChanged() === false )
@@ -586,6 +597,11 @@ class roma
     private function redirectBrowserHeader( $szLocation )
       {
 	header( "Location: http://" . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'PHP_SELF' ] . '?' . $szLocation );
+      }
+    
+    private function redirectToStart()
+      {
+	header( "Location: http://" . $_SERVER[ 'HTTP_HOST' ] . '/Roma/' );
       }
     
 
