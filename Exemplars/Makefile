@@ -35,4 +35,4 @@ dist: schemas
 
 
 clean:
-	-rm *.xsd *.dtd *.doc.* *.rnc tei*.rng *.compiled.*
+	-rm *.xsd *.dtd *.doc.* *.rnc tei*.rng *.compiled.* *~

@@ -5,7 +5,7 @@
    <teiHeader>
       <fileDesc>
          <titleStmt>
-            <title>TEI with XInclude</title>
+            <title>TEI with XInclude (experimental)</title>
             <author>Sebastian Rahtz</author>
          </titleStmt>
          <publicationStmt>
@@ -28,6 +28,16 @@
    </teiHeader>
 <text>
 <body>
+  <p>This customization loads the normal four modules, and adds the
+  <gi>include</gi> element from XInclude (see <ptr
+  target="http://www.w3.org/TR/xinclude/"/> for details on this
+  scheme). This allows you to validate TEI documents
+<emph>before</emph> XInclude processing. In general, this is not
+the right way to work, since you would normally validate after
+any inclusions have been resolved. <gi>include</gi> is set up here to
+  be allowed in the <gi>teiHeader</gi> and instead of or between
+  paragraph-like objects.</p>
+
     <schemaSpec ident="tei_xinclude" start="TEI">
       <moduleRef key="header"/>
       <moduleRef key="core"/>
