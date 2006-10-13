@@ -5,519 +5,684 @@ See the file COPYING for details.
 $Date$
 $Author$
 -->
-<div1 xmlns="http://www.tei-c.org/ns/1.0" type="Faisal" xml:id="NH" n="31"><head>Multiple Hierarchies</head>
-<note place="divtop">This chapter will be substantially revised and
-expanded at the next release of these Guidelines. </note>
-<p>At various points in these Guidelines, the discussion has mentioned
-the problems which arise when using SGML or XML to encode textual features
-which do not take a strictly hierarchical form:  features, that is,
-which do not necessarily nest within other features.  This chapter
-provides an overview of the techniques defined in these Guidelines for
-handling such problems, and should be consulted when deciding how to
-deal with them.</p>
-<p>The following examples illustrate the type of problem with which this
-chapter is concerned:
-<list type="bullets">
-<item>in narrative, a speech by a character may begin in the middle of a
-paragraph and continue for several more paragraphs</item>
-<item>in a verse text, the encoder may need to tag both the formal
-structure of the verse (its stanzas and lines) and its syntactic
-structures (which sometimes nest within the metrical structure and
-sometimes cross metrical boundaries)</item>
-<item>in any kind of text, the encoder may wish to record the physical
-structure of volume, page, column, and line, as well as the formal or
-logical structure of chapters and paragraphs or acts and scenes, etc.</item>
-<item>in verse drama, the structure of acts, scenes, and
-speeches often conflicts with the metrical structure</item>
-<item>in any kind of text, an embedded text (e.g. a play within a play,
-or a song) may be interrupted by other matter; the encoder may wish to
-establish explicitly the logical unity of the embedded material (e.g. to
-identify the song as a single song, and to mark its internal formal
- structure)</item>
-<item>in a dictionary, different types of information (e.g. orthography,
-syllabification, and hyphenation) may be combined within a single
-notation; the encoder may wish both to preserve the presentation of the
-material in the source text and to disentangle the logically distinct
-pieces of information in the interests of more convenient processing of
-the lexical information</item></list>
-Many other examples might be given, but these should suffice to show the
-variety of applications where non-hierarchical or non-nesting
-information appears, and to illustrate the various methods for
-addressing the problem.
-	</p>
-<p>Non-nesting information poses fundamental problems for any encoding
-scheme, and it must be stated at the outset that no solution has yet
-been suggested which combines all the desirable attributes of formal
-simplicity, capacity to represent all occurring or imaginable kinds of
-structures, suitability for formal or mechanical validation, and clear
-identity with the notations needed for simpler cases (i.e. cases where
-the textual features do nest properly).  The representation of
-non-hierarchical information is thus necessarily a matter of choices
-among alternatives, of tradeoffs between various sets of different
-advantages and disadvantages.</p>
-<p>There are several methods used within these Guidelines to handle
-non-nesting information:
-<list type="bullets">
-<item><term>concur</term>: an optional feature of SGML (not 
-available in XML) which allows multiple
-hierarchies to be marked up concurrently in the same document</item>
-<item><term>milestone elements</term>: empty elements which mark the
-boundaries between elements in a non-nesting structure</item>
-<item><term>fragmentation</term> of an item: the division of what
-logically is a single element into two or more parts, each of which
-nests properly within its context</item>
-<item><term>virtual joins</term>: the recreation of a virtual element
-from fragments of text, possibly discontiguous or out of order</item>
-<item>redundant encoding of information in multiple forms</item></list>
-In the sections which follow, these techniques, their advantages, and
-their disadvantages, are briefly described, and instances of their use
-within these Guidelines are pointed out.  The examples show various
-solutions to the problem of direct speech spanning several paragraphs in
-a narrative; the text in question takes the following form:
-<q rend="display">
-<p><q>The first thing that
-put us out was that advertisement.  Spaulding, he came
-down into the office just this day eight weeks with
-this very paper in his hand, and he
-says:&#x2014;</q></p>
-<p><q><q>I wish to the Lord, Mr. Wilson, that I was a red-headed
-man.</q></q></p>
-<p><q><q>Why that?</q> I asks.</q></p></q>
-	</p>
-<div2 type="Anthony" xml:id="NHCO"><head>Concurrent Markup of Multiple Hierarchies</head>
-<p>In SGML only, CONCUR allows us to mark up the document with many different
-hierarchical structures, but not to reorder the tree or to have
-different content in different views.  Note that the restriction against
-having different content in different views is imposed not by SGML but
-by the TEI Interchange Format.</p>
-<p>For example, if quotations are marked as part of a distinct markup
-stream given the name <q>QD</q>, the outermost speech in our
-example need not be broken up into multiple elements:
-<?tei winita ?>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<(QD)q who='Wilson'> ...
-<(TEI)p>The first thing that put us out was that
-advertisement.  Spaulding, he came down into the
-office just this day eight weeks with this very paper
-in his hand, and he says:&mdash;</(TEI)p>
-<(TEI)p><(QD)q who='Spaulding'>I wish to the Lord, Mr.
-Wilson, that I was a red-headed man.</(QD)q></(TEI)p>
-<p><(QD)q who='Wilson'>Why
-that?</(QD)q> I asks.</(TEI)p>
- ... </(QD)q></p>]]></egXML>
-<!-- A C Doyle, Red headed league (but where?) -->
-	<!-- 
-<list type=gloss>                                        -->
-	<!-- <label>examples 
-<item>                                   -->
-	<!-- 
-<list type=bullets>                                      -->
-	<!-- 
-<item>Red-Headed League example (Q in a separate hierarchy) -->
-	<!-- 
-<item>Tweedledum and Tweedledee (syntax in separate hierarchy) -->
-	<!-- 
-<item>vol page col line example (phys struc separate)    -->
-	<!-- 
-<item>l vs sp:  with bibliographic reference to Barnard et al. -->
-	<!-- 
-<item>embedded-text example (?  separate hierarchy for each level of -->
-	<!--         embedding, with does-not-apply tags to filter out the other -->
-	<!--         levels)                                          -->
-	<!-- 
-<item>dictionary example (omit:  does not apply)         -->
-	<!-- </list>                                                  --></p>
-<p>This method has the advantages of cleanly distinguishing among
-separate logical hierarchies in the text, using the same structures as
-non-concurrent markup and thus requiring no special conventions for use
-(as the other methods described in this chapter do).  It has the
-disadvantage of using a cumbersome notation, which means it could most
-conveniently be used within processing environments which
-masks the complexity of the notation from the user; unfortunately,
-CONCUR is an optional feature of SGML and is not supported by all SGML
-processors.</p>
-<p>The major use of concurrent markup in the current version of these
-Guidelines is in the tag set for concurrent markup for pages, columns,
-and lines defined elsewhere in this chapter.</p></div2>
-<div2 type="Anthony" xml:id="NHMI"><head>Boundary Marking with Milestone Elements</head>
-<p>Milestones use empty elements to mark the beginnings and endings of
-regions of the text which have something in common; they work like COCOA
-tags.  Examples in these Guidelines include the <gi>milestone</gi>
-element and the elements <gi>pb</gi>, <gi>lb</gi>, and <gi>cb</gi>.</p>
-<p>For example, if quotations are marked using (user-defined) empty
-elements given the names <q>qb</q> and <q>qe</q>, the empty elements
-mark the beginning and end of the speeches, but because they do not
-contain the speech as content, there is no element that needs to be broken up into multiple
-elements at the paragraph breaks.<note place="foot">as elsewhere in these Guidelines,
-empty elements are denoted with a penultimate slash character, which is
-the XML syntax; in SGML, either omit the slash or modify the SGML declaration
-to permit it via the NET delimiter.</note>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<qb who="Wilson"/>
-...<p>The first thing that put us out was that
-advertisement.  Spaulding, he came down into the
-office just this day eight weeks with this very paper
-in his hand, and he says:&#x2014;</p>
-<p><qb who="Spaulding"/>I wish to the Lord, Mr.
-Wilson, that I was a red-headed man.<qe/></p>
-<p><qb who="Wilson"/>Why that?<qe/> I asks.</p>
-... <qe/>]]></egXML>
-<!-- A C Doyle, Red headed league (but where?) --></p>
-<p>This has the drawback that it is difficult to tell which
-<gi>qe</gi> corresponds with which <gi>qb</gi> without a complex
-processing of the text. One way to improve on this situation would be
-to use the linking attribute <att>corresp</att> discussed in chapter <ptr target="#SA"/>
- to associate the milestone indicating the end of a
-given speech with that indicating its start, as follows:
-<!-- further discussion needed! -->
-	<!-- Elli notes that we should add id/idrefs to link QE with their -->
-	<!-- corresponding QBs in the above example. I agree, but not yet. -->
-	<!-- and LB obliges... -->
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<qb who="Wilson" xml:id="W1"/> ...
-<p>The first thing that put us out was that
-advertisement.  Spaulding, he came down into the
-office just this day eight weeks with this very paper
-in his hand, and he says:&#x2014;</p>
-<p><qb who="Spaulding" xml:id="S1"/>I wish to the Lord, Mr.
-Wilson, that I was a red-headed man.<qe corresp="#S1"/></p>
-<p><qb who="Wilson" xml:id="W2"/>Why that?<qe corresp="#W2"/> I asks.</p>
- ... <qe corresp="#W1"/>]]></egXML>
-<!-- A C Doyle, Red headed league (but where?) -->
-	<!-- 
-<list type=gloss><label>examples 
-<item>
-<list>            -->
-	<!-- 
-<item>Red-Headed League example (P boundaries, or Q boundaries) -->
-	<!-- 
-<item>Tweedledum and Tweedledee (LB instead of L)        -->
-	<!-- 
-<item>vol page col line example (vb, pb, cb, lb)         -->
-	<!-- 
-<item>l vs sp:  (lb?)                                    -->
-	<!-- 
-<item>embedded-text example (not applicable)             -->
-	<!-- 
-<item>dictionary example (not applicable)                -->
-	<!-- </list>                                                  --></p>
-<p>This method has the advantage of simplicity; it provides all the
-information needed to reconstruct all the competing hierarchical views
-of the text.  Many times, the only processing required for an element
-occurs at its start and end (or can easily be formulated to do so); this
-markup method handles those cases well.  In other cases, however, this
-method incurs the disadvantage of cumbersome processing:
-since the elements of the analysis (e.g. the direct speech of Wilson)
-are not uniformly represented by nodes in the document tree, they must
-be reconstituted by software in an ad hoc fashion, which may be
-difficult and is likely to be error prone.  Processing elements may
-often involve more than specified actions at the start and end of an
-element.  Most important for some encoders, this method disguises the
-logical relationship between the beginning and the ending of each
-logical element, making it impossible for parsers per se to provide the
-same kind of validation possible elsewhere in the encoding.</p></div2>
-<div2 type="Anthony" xml:id="NHFR"><head>Fragmentation of Elements</head>
-<p>Fragmentation breaks up what might be considered a single element
-into multiple smaller elements, in order to make it fit within the
-hierarchy.  If a passage of direct discourse begins in the middle of one
-paragraph and continues for several more paragraphs, for example, one
-could encode the passage as a series of <gi>q</gi> elements.  This has
-the effect that the document contains more <gi>q</gi> elements than it
-did before; to the extent that one might be interested in counting
-<gi>q</gi> elements, this is a drawback.  To the extent that the element
-being broken up is used primarily to signal some characteristic, (e.g.
-that of being spoken by someone other than the narrator) rather than
-some countable object, this drawback is rather minor.  Direct discourse
-is in fact so frequently interrupted by narrative irruptions, including
-but not limited to reporting clauses like <q>he said</q>, that the
-number of <gi>q</gi> elements is unlikely to correspond precisely to the
-number of utterances, speaker turns, or any other observable unit of
-conversation.  For that reason, some encoders prefer to solve
-the quotation-and-paragraph problem using fragmentation.</p>
-<p>To tag our example with this method, the outermost speech (Wilson's)
-can be broken up to fit into the series of paragraphs, using the
-<att>rend</att> attribute to record the absence of closing quotation
-marks at the end of each paragraph.  The inner speeches, being
-punctuated conventionally, need not carry <att>rend</att> values.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p><q rend="pre ldquo" who="Wilson">The first thing that put us out
-    was that advertisement. Spaulding, he came down into the office
-    just this day eight weeks with this very paper in his hand, and he
-    says:&#x2014;</q></p>
-<p><q rend="pre ldquo" who="Wilson"><q who="Spaulding">I wish to the
-      Lord, Mr. Wilson, that I was a red-headed man.</q></q></p>
-<p><q rend="pre ldquo" who="Wilson"><q who="Wilson">Why that?</q> I
-    asks.</q></p></egXML>
-<!-- A C Doyle, Red headed league (but where?) --></p>
-<p>Among the places where these Guidelines recommend fragmentation as a
-solution to the encoding of non-nesting information are the discussion
-of fragmentary verse lines, fragmentary stanzas, and fragmentary
-embedded texts in drama.</p>
-<p>The advantages of this method are that it is simple, that at least
-one of the competing hierarchies can be processed normally, and that
-it makes the reconstitution of virtual units much easier, using the
-method described in the next section.  Its disadvantages are that some
-units are not realized at all in the markup (here, the single long
-outermost speech of Wilson), and that automatic processing of these
-units is thus impossible when this method is used without further
-refinement.</p></div2>
-<div2 type="Anthony" xml:id="NHVI"><head>Reconstitution of Virtual Elements</head>
-<p>Virtual joins may be used to indicate objects in the text which
-would, for whatever reason, be difficult to mark using hierarchical
-syntax.  In the TEI encoding scheme, virtual joins are most often
-expressed by the <gi>join</gi> element, the <gi>span</gi> element, or
-the <gi>fs</gi> element.  This technique covers all out-of-line
-or <soCalled>stand-off</soCalled> annotation methods, which involve the construction, out of line, of a
-clean structure representing the interpretation, and the virtual join of
-the interpretation with the text fragment instantiating it.</p>
-<p>The tagging of our example with this method is almost identical to
-that given in the preceding section, with the addition of <gi>join</gi>
-elements to indicate the component parts of the individual speeches
-which have been broken up to fit into the paragraph hierarchy:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p><q xml:id="qw1" rend="pre ldquo" who="Wilson"> The first thing that put
-    us out was that advertisement. Spaulding, he came down into the
-    office just this day eight weeks with this very paper in his hand,
-    and he says:&#x2014;</q></p>
-<p><q xml:id="qw2" rend="pre ldquo" who="Wilson"><q who="Spaulding">I
-      wish to the Lord, Mr. Wilson, that I was a red-headed man.</q></q></p>
-<p><q xml:id="qw3" rend="pre ldquo" who="Wilson"> <q who="Wilson">Why
-      that?</q> I asks.</q></p>
-<join targets="#qw1 #qw2 #qw3" result="q"/></egXML>
-<!-- A C Doyle, Red headed league (but where?) --></p>
-<p>Alternatively, the <att>next</att> and <att>prev</att> attributes
-defined in chapter <ptr target="#SA"/> may be used to join the fragmentary
-quotations:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p><q next="#qw5" xml:id="qw4" rend="pre ldquo" who="Wilson">The first
-    thing that put us out was that advertisement. Spaulding, he came
-    down into the office just this day eight weeks with this very
-    paper in his hand, and he says:&#x2014;</q></p>
-<p><q next="#qw6" prev="#qw4" xml:id="qw5" rend="pre ldquo" who="Wilson"><q who="Spaulding">I wish to the Lord, Mr. Wilson, that I was a
-      red-headed man.</q></q></p>
-<p><q prev="#qw5" xml:id="qw6" rend="pre ldquo" who="Wilson"><q who="Wilson">Why that?</q> I asks.</q></p></egXML>
-<!-- A C Doyle, Red headed league (but where?) -->
-	<!-- 
-<list type=gloss><label>examples                         -->
-	<!-- 
-<item>(unless otherwise indicated,                       -->
-	<!-- these are further refinements of examples in previous section) -->
-	<!-- 
-<list>                                                   -->
-	<!-- 
-<item>Red-Headed League example (add NEXT, PREV, or PART to Q; or -->
-	<!--         use JOIN)                                        -->
-	<!-- 
-<item>Tweedledum and Tweedledee (as in chapter AI, use PART, NEXT; or -->
-	<!--         JOIN)                                            -->
-	<!-- 
-<item>vol page col line example (? or omit?)             -->
-	<!-- 
-<item>l vs sp:  fragmentary L elements, rejoined with PART -->
-	<!-- 
-<item>embedded-text example (each fragment tagged as an element, -->
-	<!--         as in DR examples)                               -->
-	<!-- 
-<item>dictionary example (?)                             -->
-	<!-- </list>                                                  --></p>
-<p>The major advantage of this method is that it allows all the
-hierarchies in the text to be handled explicitly, both
-the privileged one directly represented, and the alternate
-hierarchy which has been split up and rejoined.  Its major disadvantages
-are that (like most of the other methods described here) it privileges
-one hierarchy over the others, and requires special processing to
-reconstitute the elements of the other hierarchies.</p>
-<p>Instances of this markup method in these Guidelines include
-the <att>part</att> attribute on the <gi>l</gi>, <gi>lg</gi>,
-<gi>seg</gi>, and numbered-segment elements, the <gi>join</gi>,
-<gi>span</gi>, and <gi>fs</gi> elements, and the global <att>next</att>
-and <att>prev</att> attributes available with the additional tag set for
-linking and alignment.</p></div2>
-<div2 type="Anthony" xml:id="NHRE"><head>Multiple Encodings of the Same Information</head>
-<p>In some cases, the simplest method of disentangling two conflicting
-hierarchical views of the same information is to encode it twice, each
-time capturing a single view.  Thus, for example, a dictionary headword
-which gives in a single place the orthography, stress pattern,
-syllabification, and hyphenation for a word might be encoded several
-times:  once with all the information in a single notation (as in the
-print dictionary), and once again for each separate piece of information
-&#x2014; or at least, once more for the orthography, to speed up the common
-operation of searching for the article for a given headword in the
-electronic dictionary.</p>
-<p>The out-of-line treatment of annotation in the feature structure
-notation (defined in chapter <ptr target="#FS"/>) may also be considered
-to fall under this rubric.</p>
-<p>The advantages of this method of markup are that each way of looking
-at the information is explicitly represented in the data, and may be
-processed in straightforward ways, without requiring complex methods of
-disentangling information relevant to one view from information relevant
-only to other views.  It has the disadvantage of requiring more space
-and of introducing redundant information into the encoding, with the
-resulting risk that one view may be updated without corresponding
-changes being made to the others, resulting in inconsistencies within
-the document. </p></div2>
-<div2 type="Anthony" xml:id="NHRS"><head>Concurrent Markup for Pages and Lines</head>
-<p>Where the main purpose for encoding alternative hierarchies in
-a text is to represent competing referencing schemes describing the
-same basic text, the CONCUR mechanism of SGML provides a very natural
-solution. Note, however, that the CONCUR feature is not supported by
-much of the available SGML software, nor is it available in XML at all.
-	</p>
-<p>One common form of traditional reference system specifies the page
-and line, or page, column, and line of a passage as it appears in some
-standard edition.  Such references may be specified using a concurrent
-markup hierarchy which divides the body of a text into pages and lines
-or into pages, columns, and lines.  Volumes may also need to be
-identified.  The document type name should be a short identifier for the
-edition cited.  The following tags may be used:
-<specList><specDesc key="vol"/><specDesc key="page"/><specDesc key="col"/><specDesc key="line"/></specList></p>
-<p>Page and line numbers for an edition by Lachmann, for example, might
-be specified thus:
-<?tei winita ?>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<(La)page n='37'> <!-- Text from Lachmann, p. 37 -->
-          ...
-<(La)line n='32'> <!-- Text from Lachmann, p. 37, line 32 -->
-<(La)line n='33'> <!-- Text from Lachmann, p. 37, line 33 -->
-<(La)line n='34'> <!-- Text from Lachmann, p. 37, line 34 -->
-<(La)page n='38'> <!-- Text from Lachmann, p. 38 -->
-<(La)line n='1'>  <!-- Text from Lachmann, p. 38, line 1 -->
-<(La)line n='2'>  <!-- Text from Lachmann, p. 38, line 2 -->
-<(La)line n='3'>  <!-- Text from Lachmann, p. 38, line 3 -->
-          <!-- etc. -->
-<(La)page n='39'> <!-- Text from Lachmann, p. 39 -->
- ...
-<(La)line n='18'> <!-- Text from Lachmann, p. 39, line 18 -->
-<(La)line n='21'> <!-- Text from Lachmann, p. 39, line 21 -->
-          <!-- etc. -->
-<(La)page n='40'> <!-- Text from Lachmann, p. 40 -->
- ...
-          <!-- etc. -->
-<(La)page n='41'> <!-- Text from Lachmann, p. 41 -->
- ...
-          <!-- etc. -->]]></egXML></p>
-<p>The markup shown above would be interleaved with the normal markup
-for the document.  Since SGML requires tags in concurrent markup streams
-to be labeled with their document type, however, the
-<soCalled>normal</soCalled> markup would need to have the notation
-<ident>TEI</ident> inserted before each tag's generic identifier.  The
-combined markup might look something like this:
-<?tei winita ?>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<(TEI)TEI>
- <(TEI)TEI.Header> ... </(TEI)TEI.Header>
- <(TEI)text> ...
- <(TEI)div0><(TEI)head> ... </(TEI)head>
- ...
- <(TEI)div1>
- <(TEI)div2> ...
- <(La)page n='37'> <!-- Text from Lachmann, p. 37 -->
-                 ...
- <(La)line n='32'> <!-- Text from Lachmann, p. 37, line 32 -->
- <(La)line n='33'> <!-- Text from Lachmann, p. 37, line 33 -->
- <(La)line n='34'> <!-- Text from Lachmann, p. 37, line 34 -->
- <(La)page n='38'> <!-- Text from Lachmann, p. 38 -->
- <(La)line n='1'>  <!-- Text from Lachmann, p. 38, line 1 -->
- <(La)line n='2'>  <!-- Text from Lachmann, p. 38, line 2 -->
- <(La)line n='3'>  <!-- Text from Lachmann, p. 38, line 3 -->
- </(TEI)div2>
- <(TEI)div2>
- <(La)line n='4'>  <!-- Text from Lachmann, p. 38, line 4 -->
-                 <!-- etc. -->
- </(TEI)div2>
- </(TEI)div1>
- <(TEI)div1><head>... </head>
-                 ...
- <!-- Text from Lachmann, p. 39 -->
- ...
- <(La)page n='39'> <!-- Text from Lachmann, p. 39 -->
- ...
- <(La)line n='18'> <!-- Text from Lachmann, p. 39, line 18 -->
- <(La)line n='19'> <!-- Text from Lachmann, p. 39, line 19 -->
- <(La)line n='20'> <!-- Text from Lachmann, p. 39, line 20 -->
- <(La)line n='21'> <!-- Text from Lachmann, p. 39, line 21 -->
-                 ... <!-- etc. -->
- <(TEI)div1>
- <(TEI)div2>
- </(TEI)div2>
- <!-- etc. -->
- <!-- Text from Lachmann, p. 40 -->
- ...
- <!-- etc. -->
- </(TEI)text>
- </(TEI)TEI>]]></egXML>
-The following declarations give the formal specification for the
-standard pre-defined document type designed for recording page and line
-numbers of a reference edition in an SGML concurrent markup stream.
-<!--
-<moduleSpec xml:id="DCORSC" type="decls"
-	    ident="concurrent-decl"><altIdent type="FPI">Concurrent
-Document Type for Page and Line
-References</altIdent><desc>Concurrent Document Type for Page and Line
-References</desc></moduleSpec>
--->
-&version;
-&vername;
-&vol;
-&page;
-&col;
-&line;
-</p>
-<p>This concurrent hierarchy is enabled as shown below:  after the
-document type declaration for the TEI document type, the document
-should contain the sequence of lines:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE La PUBLIC 
-  "-//TEI P5//DTD Concurrent Document Type: Pages and Lines//EN"
-       'concurrent-decl.dtd' [
-    <!ENTITY % version "La" >
-    ]>]]></egXML>
-which call the document type for page and line references and give it
-the name <q>La</q>.  If page and line numbers from more than one standard
-edition are to be marked, then the relevant lines may be repeated, each
-time using a different value for the document type and entity definition
-(where the example has <q>La</q>).  For example, to show page and line
-numbers from the editions of Lachmann (La), Kraus (Kr), and
-Moser/Tervooren (MT) at the same time, one might use declarations like
-the following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE La PUBLIC 
-    "-//TEI P5//DTD Concurrent Document Type: Pages and Lines//EN"
-       "concurrent-decl.dtd" [
-         <!ENTITY % version "La" >
-    ]>
-    <!DOCTYPE Kr PUBLIC 
-    "-//TEI P5//DTD Concurrent Document Type: Pages and Lines//EN"
-       "concurrent-decl.dtd" [
-         <!ENTITY % version "Kr" >
-    ]>
-    <!DOCTYPE MT PUBLIC 
-    "-//TEI P5//DTD Concurrent Document Type: Pages and Lines//EN"
-       "concurrent-decl.dtd" [
-         <!ENTITY % version "MT" >
-    ]>]]></egXML></p>
-<p>To document a referencing system of this kind
-the TEI header, a formal declaration should be provided
-in the <gi>refsDecl</gi> element described in section <ptr target="#HD54" type="div3"/>. For the above example, a declaration
-such as the following would be appropriate:
- <?tei winita this entire section on CONCUR needs to be ditched,
-              so I haven't bothered to supply a cRefPattern version
-	      of the following.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><refsDecl doctype="La">
-    <step from="CHILD (1 page n %1)"/>
-    <step from="CHILD (1 line n %2)"/>
-</refsDecl>
-<refsDecl doctype="Kr">
-    <step from="CHILD (1 page n %1)"/>
-    <step from="CHILD (1 line n %2)"/>
-</refsDecl>
-<refsDecl doctype="MT">
-    <step from="CHILD (1 page n %1)"/>
-    <step from="CHILD (1 line n %2)"/>
-</refsDecl></egXML> ?></p>
-<p>Hierarchies similar to that defined above can be provided for most
-common hierarchical reference systems.  Hierarchies such as act / scene
-/ line, for conventional dramatic structure, book / canto / stanza /
-line, for longer verse texts, or book / poem / stanza / line, for
-collections of verse, may be readily expressed with concurrent SGML
-markup.  Since these hierarchical structures can readily be represented
-using the base tag sets described in part III of these Guidelines,
-however, reference systems with such structures may most readily be
-expressed using the <att>n</att> or <att>xml:id</att> attributes, as
-described above in section <ptr target="#CORS1" type="div3"/>.</p>
-<p>Any text with an idiosyncratic standard reference system will
-require its own dtd, so that appropriately named tags can be created
-for the reference units.  Such dtds may follow the pattern of those
-described in the preceding section; they should also be documented in
-an auxiliary tag set description file, using the tags described in
-chapter <ptr target="#TD" type="div1"/>.</p></div2></div1>
+<div1 xmlns="http://www.tei-c.org/ns/1.0" type="chapter" xml:id="NH" n="31">
+  <head>Multiple Hierarchies</head>
+  <p>At various points these Guidelines discuss the problems which arise when
+    using XML to encode textual features which do not take a strictly
+    hierarchical form: that is, features which do not necessarily nest within
+    other features. This chapter provides an overview of several techniques for
+    handling such problems, and should be consulted when deciding how to deal
+    with them.</p>
+  <p>The following examples illustrate the type of problem with which this
+    chapter is concerned: <list type="bullets">
+      <item>
+        <p>in narrative, a speech by a character may begin in the middle of a
+          paragraph and continue for several more paragraphs</p>
+      </item>
+      <item>
+        <p>in a verse text, the encoder may need to tag both the formal
+          structure of the verse (its stanzas and lines) and its syntactic
+          structures (which sometimes nest within the metrical structure and
+          sometimes cross metrical boundaries)</p>
+      </item>
+      <item>
+        <p>in any kind of text, the encoder may wish to record the physical
+          structure of volume, page, column, and line, as well as the formal or
+          logical structure of chapters and paragraphs or acts and scenes,
+        etc.</p>
+      </item>
+      <item>
+        <p>in verse drama, the structure of acts, scenes, and speeches often
+          conflicts with the metrical structure</p>
+      </item>
+      <item>
+        <p>in any kind of text, an embedded text (e.g. a play within a play, or
+          a song) may be interrupted by other matter; the encoder may wish to
+          establish explicitly the logical unity of the embedded material (e.g.
+          to identify the song as a single song, and to mark its internal formal
+          structure)</p>
+      </item>
+      <item>
+        <p>in a dictionary, different types of information (e.g. orthography,
+          syllabification, and hyphenation) may be combined within a single
+          notation; the encoder may wish both to preserve the presentation of
+          the material in the source text and to disentangle the logically
+          distinct pieces of information in the interests of more convenient
+          processing of the lexical information</p>
+      </item>
+    </list>
+  </p>
+  <p>Many other examples might be given, but these should suffice to show the
+    variety of applications where non-hierarchical or non-nesting information
+    appears, and to illustrate the various methods for addressing the problem.</p>
+  <p>Non-nesting information poses fundamental problems for any encoding scheme,
+    and it must be stated at the outset that no solution has yet been suggested
+    which combines all the desirable attributes of formal simplicity, capacity
+    to represent all occurring or imaginable kinds of structures, suitability
+    for formal or mechanical validation, and clear identity with the notations
+    needed for simpler cases (i.e. cases where the textual features do nest
+    properly). The representation of non-hierarchical information is thus
+    necessarily a matter of choices among alternatives, of trade-offs between
+    various sets of different advantages and disadvantages.</p>
+  <p>There are several methods used within these Guidelines to handle
+    non-nesting information: <list type="bullets">
+      <item>
+        <p>redundant encoding of information in multiple forms</p>
+      </item>
+      <item>
+        <p>remodeling of the document structure</p>
+      </item>
+      <item>
+        <p>boundary elements: empty elements which mark the boundaries between
+          elements in a non-nesting structure</p>
+      </item>
+      <item>
+        <p>fragmentation of an item: the division of what logically is a single
+          element into two or more parts, each of which nests properly within
+          its context</p>
+      </item>
+      <item>
+        <p>virtual joins: the recreation of a virtual element from fragments of
+          text, possibly discontinuous or out of order</p>
+      </item>
+    </list>
+  </p>
+  <p>In the sections which follow these techniques are described, and their
+    advantages and disadvantages are briefly discussed. The various solutions to
+    the problem will be exemplified using extracts of two poems as examples.</p>
+  <p>A stanza of a poem written by the Italian Nobel prize winner Salvatore
+    Quasimodo serves as a first example: <quote xml:lang="it">
+      <l>E l'orma dell'acqua è l'alba</l>
+      <l>sulla riva. Si esauriva in me</l>
+      <l>il supplizio della sabbia,</l>
+      <l>a batticuore, spaziando la notte.</l>
+    </quote> This stanza contains four metrical lines and two sentences. The
+    metrical lines can be considered part of a <mentioned>metrical</mentioned>
+    view of the text, the sentences part of a <mentioned>linguistic</mentioned>
+    view. The first sentence ends in the middle of the second line.</p>
+  <p>A stanza of a German ballad written by Friedrich Schiller serves as a
+    second example. As in the first example, sentence structure and line
+    structure of this stanza will be regarded. In Schiller's ballad, in addition
+    to sentences and lines, there is direct discourse which one might want to
+    annotate. <quote xml:lang="de">
+      <l>“Was wollt ihr?” ruft er, für Schrecken bleich,</l>
+      <l>“Ich habe nichts als mein Leben,</l>
+      <l>Das muß ich dem Könige geben!”</l>
+      <l>Und entreißt die Keule dem nächsten gleich:</l>
+      <l>“Um des Freundes willen erbarmet euch!”</l>
+      <l>Und drei mit gewaltigen Streichen</l>
+      <l>Erlegt er, die andern entweichen.</l>
+    </quote>
+  </p>
+  <p>Thus, there are three <soCalled>views</soCalled> that we will discuss in
+    the following sections. The first view concerns itself with the metrical
+    structure of the poetry. In encoding this view of the poems one is likely to
+    be interested in metrical lines, stanzas, cantos, rhyming schemes, scansion
+    patterns, etc. For the purposes of this discussion we will call this view
+    the <mentioned>metrical</mentioned> view, and encode only the metrical lines
+    and stanzas.</p>
+  <p>The second view concerns itself with the linguistic structure of the text
+    &#x2014; phonemes, morphemes, words, phrases, clauses, and sentences are
+    likely to be of interest to those encoding this view. However, here we will
+    only encode sentences in what we refer to as the
+    <mentioned>linguistic</mentioned> view.</p>
+  <p>The third view, which we will call the <mentioned>vocal</mentioned> view,
+    is concerned with direct speech or quotations; whether the text is in the
+    narrator's voice or a character's voice. Here we will not attempt to
+    differentiate which character is speaking. Note that in the example above,
+    the passages that are not in the narrator's voice are enclosed in quotation
+    marks, not encoded with a <gi>q</gi> element.</p>
+  <div2 xml:id="NHME">
+    <head>Multiple Encodings of the Same Information</head>
+    <p>Conceptually, the simplest method of disentangling two (or more)
+      conflicting hierarchical views of the same information is to encode it
+      twice (or more often), each time capturing a single view.</p>
+    <p>The metrical view of each stanza is straight-forwardly encoded using the
+        <gi>lg</gi> element to encode the stanza, and an <gi>l</gi> element to
+      encode each metrical line. Here is the passage by Quasimodo:
+      <egXML xml:lang="it" xmlns="http://www.tei-c.org/ns/Examples"><lg type="stanza">
+	    <l>E l'orma dell'acqua è l'alba</l>
+	    <l>sulla riva. Si esauriva in me</l>
+	    <l>il supplizio della sabbia,</l>
+	    <l>a batticuore, spaziando la notte.</l>
+	  </lg></egXML>
+      The passage by Schiller is structurally very similar in this view:
+      <egXML xml:lang="de" xmlns="http://www.tei-c.org/ns/Examples"><lg type="stanza">
+	    <l>“Was wollt ihr?” ruft er, für Schrecken bleich,</l>
+	    <l>“Ich habe nichts als mein Leben,</l>
+	    <l>Das muß ich dem Könige geben!”</l>
+	    <l>Und entreißt die Keule dem nächsten gleich:</l>
+	    <l>“Um des Freundes willen erbarmet euch!”</l>
+	    <l>Und drei mit gewaltigen Streichen</l>
+	    <l>Erlegt er, die andern entweichen.</l>
+	  </lg></egXML>
+    </p>
+    <p>An encoding of the second passage above with respect to the vocal view
+      follows.
+      <egXML xml:lang="de" xmlns="http://www.tei-c.org/ns/Examples"><p>
+  <q>Was wollt ihr?</q> ruft er, für Schrecken bleich, 
+  <q>Ich habe nichts als mein Leben, 
+  Das muß ich dem Könige geben!</q>
+  Und entreißt die Keule dem nächsten gleich:
+  <q>Um des Freundes willen erbarmet euch!</q>
+  Und drei mit gewaltigen Streichen
+  Erlegt er, die andern entweichen.
+</p></egXML>
+      Of course, this view does not make sense for the Italian poem, which does
+      not contain direct discourse.</p>
+    <p>A third annotation marks up linguistic categories, particularly the
+      sentences. Focusing on the linguistic structure, the first stanza can be
+      regarded as a paragraph containing two sentences:
+      <egXML xml:lang="it" xmlns="http://www.tei-c.org/ns/Examples"><p>
+  <s>E l'orma dell'acqua è l'alba sulla riva.</s>
+  <s>Si esauriva in me il supplizio della sabbia, a batticuore, 
+    spaziando la notte.</s>
+</p></egXML>
+      Respectively, one might want to annotate the second example in the
+      linguistic perspective, as follows: <!-- <egXML xml:lang="en" xmlns="http://www.tei-c.org/ns/Examples"><p>
+        <q>What do you want</q> shouts he, xxxx,
+        <q>I do not have anything left except my life,
+          and my life I have promised to the king</q>
+      </p></egXML> -->
+      <egXML xml:lang="de" xmlns="http://www.tei-c.org/ns/Examples"><p>
+  <q><s type="quest">Was wollt ihr?</s></q> ruft er, für Schrecken bleich,
+  <q><s type="emph">Ich habe nichts als mein Leben, 
+    Das muß ich dem Könige geben!</s></q>
+</p></egXML>
+    </p>
+    <p>The advantages of this method of markup are that each way of looking at
+      the information is explicitly represented in the data, and may be
+      processed in straightforward ways, without requiring complex methods of
+      disentangling information relevant to one view from information relevant
+      only to other views. Typically each view is straight forward to encode.</p>
+    <p>However, this method has several obvious drawbacks. It requires redundant
+      information be encoded, with the resulting risk that one view may be
+      updated without corresponding changes being made to the others, resulting
+      in inconsistencies within the document. Moreover, it is difficult to
+      access information from one view while processing the file that contains
+      the encoding of another, because the files are not related to each other,
+      at least not directly. It has been shown, however, that it is possible to
+      relate the different annotations in an indirect way: if the textual
+      content of the annotations is identical, the very text can serve as a
+      means for linking the different annotations.
+      <?sb2aw Should we be showing how this is done? ?></p>
+  </div2>
+  <div2 xml:id="NHRM">
+    <head>Remodeling of the document class</head>
+    <p>Sometimes it is possible to merge several logical hierarchies into one
+      physical hierarchy. In one of the examples, the stanza of Schiller's
+      ballad, such a merged document might look as follows: <eg xml:lang="de"><![CDATA[<!-- markup uses TEI names, but is not valid -->
+<lg type="stanza">
+  <l><q><s type="quest">Was wollt ihr?</s></q>
+    ruft er, für Schrecken bleich,</l> 
+  <q><s type="emph"><l>Ich habe nichts als mein Leben,</l>
+  <l>Das muß ich dem Könige geben!</l></s></q>
+  <!-- ... -->
+</lg>]]></eg>
+    </p>
+    <p>In this case, there exists a single hierarchy containing all the
+      information of the three separate annotations given above, but the single
+      hierarchy does not conform to the TEI document grammar. The first line
+      contains a quote which itself contains a sentence. In contrast to the
+      first line, the second and third lines are contained in a sentence. This
+      is a strange analysis, which is consequently not legitimated by the TEI
+      document type.</p>
+    <p>Even if such an annotation were valid, many overlapping structures exist
+      which cannot be annotated in this way. This can be seen in the second
+      example: the sentence <mentioned xml:lang="it">E l'orma dell'acqua è
+        l'alba sulla riva.</mentioned> ends in the middle of line 2. Thus there
+      is neither a line which contains a whole sentence nor a sentence which
+      contains a whole line.</p>
+  </div2>
+  <div2 xml:id="NHBM">
+    <head>Boundary Marking with Empty Elements</head>
+    <p>Usually a span of text, or a <soCalled>content object</soCalled>, is
+      annotated by encoding it as an XML element which has a start-tag at the
+      beginning of the span and an end-tag at the end. It is possible to encode a
+      span of text using an empty tag at the beginning and another empty tag at
+      the end. The empty tags used at each end are called <term>segment boundary
+        elements</term>. There are several variations on this method of
+      encoding: <list type="gloss">
+        <label>Segment-Boundary Elements</label>
+        <item>All segment boundary delimiter elements are of the same generic
+          type (e.g., <gi>boundary</gi>). The type of textual feature being
+          encoded, and whether any given tag is the start or end of said
+          feature, is encoded in attribute values (e.g., a <att>type</att>
+          attribute may be used to indicate the textual feature, and a
+            <att>position</att> attribute might take the values <val>start</val>
+          and <val>end</val>).</item>
+        <label>Paired Segment-Boundary Elements</label>
+        <item>The name of the segment-boundary elements reflect whether they
+          indicate the beginning of a passage or the end. E.g.,
+            <gi>boundary-start</gi> and <gi>boundary-end</gi>. As with single
+          empty segment-boundary elements, the type of feature being annotated
+          is indicated with an attribute.</item>
+        <label>Typed Segment-Boundary Delimiters</label>
+        <item>The name of the segment-boundary elements reflect the type of
+          feature being annotated; whether any given segment-boundary element
+          indicates the beginning or the end of a span of text is indicated with
+          an attribute. E.g., <gi>q-boundary</gi> and <gi>speech-boundary</gi>.</item>
+        <label>Paired Typed Segment-Boundary Delimiters</label>
+        <item>The name of the segment-boundary elements reflect both the type of
+          feature being annotated and whether the beginning or end of such a
+          feature is being indicated. E.g. <gi>speech-boundary-start</gi>.</item>
+        <label>Co-referenced Overlap Terminus</label>
+        <item>Referred to as <soCalled>COLT</soCalled> markup, this is a special
+          case of typed segment-boundary delimiters in which the type of element
+          used is exactly the same as the type of element that would have been
+          used if there were not an overlap problem. E.g., instead of
+            <gi>q-boundary</gi> and <gi>speech-boundary</gi>, the normal
+          elements <gi>q</gi> and <gi>speech</gi> would be used as empty
+          elements, with special attributes to indicate which is the beginning
+          and which is the end. Furthermore, each empty element that marks the
+          beginning is explicitly linked to the empty element that marks the
+          end, and vice-versa.</item>
+      </list></p>
+    <p>For example, if sentences are marked using (user-defined) empty elements
+        <gi>sb</gi> and <gi>se</gi>, the empty elements mark the beginning and
+      end of the sentences, but because they do not contain the sentence as
+      content, sentences can be encoded interspersed with other features that
+      overlap sentences, as in the following example of paired typed
+      segment-boundary delimiter elements <eg xml:lang="it"><![CDATA[<lg type="stanza">
+  <l><sb/>E l'orma dell'acqua è l'alba</l>
+  <l>sulla riva.<se/> <sb/>Si esauriva in me</l>
+  <l>il supplizio della sabbia,</l>
+  <l>a batticuore, spaziando la notte.<se/></l>
+</lg>]]></eg></p>
+    <p>Each of the various methods described above (except for COLT) has the
+      disadvantage that it is difficult to tell which start element corresponds
+      to which end element without a complex processing of the text. One way to
+      improve on this situation would be to use the linking attribute
+        <att>corresp</att> discussed in <ptr target="#SACS1"/> to associate the
+      boundary element indicating the end of a given sentence with that
+      indicating its start, as follows: <eg xml:lang="it"><![CDATA[<lg type="stanza">
+  <l><sb xml:id='s1'/>E l'orma dell'acqua è l'alba</l>
+  <l>sulla riva.<se corresp='#s1'/> <sb xml:id='s2'/>Si esauriva in me</l>
+  <l>il supplizio della sabbia,</l>
+  <l>a batticuore, spaziando la notte.<se corresp='#s2'/></l>
+</lg>]]></eg>
+    </p>
+    <p>This method has the advantage of simplicity; it provides all the
+      information needed to reconstruct all the competing hierarchical views of
+      the text. Often the only processing required for an element occurs at its
+      start and end (or can easily be formulated to do so); this markup method
+      handles those cases well.</p>
+    <p>In the above example the explicit indication of correspondence is not
+      strictly required, because every sentence-end follows its own
+      sentence-begin. However, cases do exist where the beginnings and endings do
+      not line up so predictably. In these cases, called self-overlap, the
+      explicit indication of which beginning corresponds with which end (or
+      vice-versa) is necessary.</p>
+    <p>This example is an extract from the lyrics of a common children's
+      clapping game. Here the example is encoded using paired segment boundary
+      delimiter elements, in this case <gi>ml</gi> for <gloss>metrical
+      line</gloss>. <eg><![CDATA[<ml xml:id="L21s" corresp="#L21e" delimit="start">Hello operator,<ml xml:id="L21e" corresp="#L21s" delimit="end">
+<ml xml:id="L22s" corresp="#L22e" delimit="start">Please give me Number 9,<ml xml:id="L22e" corresp="#L22s" delimit="end">
+<ml xml:id="L23s" corresp="#L23e" delimit="start">And if you disconnect me,<ml xml:id="L23e" corresp="#L23s" delimit="end">
+<ml xml:id="L24s" corresp="#L24e" delimit="start">I'll kick you in the
+<ml xml:id="L25s" corresp="#L25e" delimit="start">Behind<ml xml:id="L24e" corresp="#L24s" delimit="end"> the fridgerator<ml xml:id="L25e" corresp="#L25s" delimit="end">
+<ml xml:id="L26s" corresp="#L26e" delimit="start">There was a piece of glass,<ml xml:id="L26e" corresp="#L26s" delimit="end">]]></eg></p>
+    <p>Here is a short example of an ambiguous newspaper headline in which it is
+      desired to record the phrases of both possible readings. The encoding
+      demonstrates the use of paired segment-boundary elements. Each
+      end-boundary indicates its corresponding start-boundary, but the
+      start-boundaries do not indicate their ends.<eg><![CDATA[<start type="phr" xml:id="phrase01"/><start type="phr" xml:id="phraseA"/>Broadway<end type="phr" corresp="#phraseA"/>
+<start type="phr" xml:id="phraseB"/>hit<end type="phr" corresp="#phrase01"/>
+<start type="phr" xml:id="phrase02"/>and
+run<end type="phr" corresp="#phraseB"/><end type="phr" corresp="#phrase02"/>]]></eg></p>
+    <p>COLT is an interesting variant of the paired segment boundary delimiter
+      technique. The two differences are <list type="ordered">
+        <item>the type of element used as the empty segment boundary delimiter
+          element is the same element that would normally be used to encode the
+          feature if there were no overlap problem; and</item>
+        <item>each segment boundary that marks the beginning of a passage is
+          explicitly linked to the segment boundary element that marks its end,
+          and vice-versa.</item>
+      </list> So instead of using <gi>ml</gi> in the above example, the normal
+      TEI <gi>l</gi> element is used, only without content so that it functions
+      not as a container for the metrical line, but just as an indication of the
+      start and end of the metrical line. This is possible because each element
+      which allows text content (also called mixed content), i.e. all elements
+      which can be affected by overlap, can also have no content at all.<note>
+        <p>This holds when using XML DTDs as a document grammar, or when using
+          the TEI schemas. It is possible to write schemas in other languages
+          (notably RelaxNG and W3C Schema) for which an element that has text
+          content may not be empty.</p>
+      </note> Therefore all relevant elements can be used as empty segment
+      boundary delimiter elements. However, it is still necessary to use an
+      attribute to indicate whether a segment boundary delimiter element is a
+      start-boundary or an end-boundary. Furthermore, when using the same
+      element both in its normal role as a container and as a segment boundary
+      delimiter it is advisable to use an attribute other than the general
+      purpose <att>corresp</att> attribute to indicate the corresponding start-
+      or end-tag. Thus in COLT the <att>sID</att> and <att>eID</att> attributes
+      are used for both of these purposes: <list type="inline">
+        <item>the name of the attribute informs users (and programs) for which
+          kind of tag the empty element is substituting: <att>sID</att> for
+          start-tag and <att>eID</att> for end tag</item>
+        <item>the value of the attribute indicates where the corresponding end-
+          or start-tag is, by co-reference; i.e. the element whose
+          <att>sID</att> value matches the current element's <att>eID</att>
+          value is its start-tag</item>
+      </list>. <note>
+        <p>This method has been introduced in the markup literature under
+          various names, e.g. Trojan milestones, HORSE markup, and CLIX. It has
+          been described in detail by DeRose (2004).</p>
+      </note>
+    </p>
+    <p>Besides the already mentioned non-need to introduce new, somehow
+      artificial elements, this special use of empty elements has the advantage
+      that they use the same element name as the normal container elements. This
+      has at least two positive consequences: <list type="inline">
+        <item>the human reader of the markup immediately knows what the segment
+          boundary stands for and </item>
+        <item>the segment boundary element has exactly the same attribute
+          definition as the container element</item>
+      </list>.</p>
+    <p>Here is the same ambiguous newspaper headline as above encoded with COLT
+      markup. <eg><![CDATA[<phr sID="phrase01"/><phr sID="phraseA"/>Broadway<phr eID="phraseA"/>
+<phr sID="phraseB"/>hit<phr eID="phrase01"/>
+<phr sID="phrase02"/>and
+run<phr eID="phraseB"/><phr eID="phrase02"/>]]></eg></p>
+    <p>The example that follows again shows two views of the stanza of
+      Quasimodo's poem, the linguistic and the metrical view. The element
+      <gi>s</gi> is used as an empty element and serves as a segment boundary
+      delimiter: </p>
+    <egXML xml:lang="it" xmlns="http://www.tei-c.org/ns/Examples"><lg type="stanza">
+	    <l><s xml:id="sb1" corresp="#se1"/>E l'orma dell'acqua è l'alba</l>
+	    <l>sulla riva.<s xml:id="se1" corresp="#sb1"/> 
+	    <s xml:id="sb2" corresp="#se2"/>Si esauriva in me</l>
+	    <l>il supplizio della sabbia,</l>
+	    <l>a batticuore, spaziando la notte.<s xml:id="se2" corresp="#sb2"/></l>
+	  </lg></egXML>
+    <p>Together with the use of the attributes <att>xml:id</att> and
+        <att>corresp</att> this allows not only for using all of the relevant
+      TEI-elements as segment boundary delimiters, but also to do so without
+      introducing attributes. </p>
+    <p>The information contained in the attribute names <att>sID</att> and
+        <att>eID</att> is included implicitly: the first element of a matching
+      pair is the start element, the other empty element plays the role of a
+      closing element.<note>
+        <p>However, the use of the <att>sID</att> and <att>eID</att> attributes
+          allow for some kind of validation, e.g. it can be prohibited that
+          empty elements used as an end-tag have attributes normally given with
+          a start tag. (see Bauman 2005) </p>
+      </note></p>
+    <p>Despite their advantages, segment boundary delimiters incur the
+      disadvantage of cumbersome processing: since the elements of the analysis
+      (e.g. the sentences in the poems) are not uniformly represented by nodes
+      in the document tree, they must be reconstituted by software in an ad hoc
+      fashion, which is likely to be difficult and may be error prone.</p>
+    <p>Most important for some encoders, this method disguises the logical
+      relationship between the beginning and the ending of each logical element.
+      This makes it impossible for standard validation software to provide the
+      same kind of validation possible elsewhere in the encoding. When using
+      grammar based schema languages it is not possible to define a content
+      model for the range limited by empty elements.<note>
+        <p>Grammar based schema languages (e.g. DTD, W3C Schema, and RelaxNG)
+          are used to define markup languages (e.g. XHTML or TEI). Rule-based
+          schema languages (e.g. Schematron) can be used to define further
+          constrains. Such a rule-based schema language permits a sequence of
+          certain elements between empty elements to be legitimized or
+          prohibited.</p>
+      </note></p>
+  </div2>
+  <div2 xml:id="NHVE">
+    <head>Fragmentation of Elements and Reconstitution of Virtual Elements</head>
+    <p>Fragmentation breaks up what might be considered a single element into
+      multiple smaller elements, in order to make it fit within the hierarchy.
+      If a passage of direct discourse begins in the middle of one paragraph and
+      continues for several more paragraphs, for example, one could encode the
+      passage as a series of <gi>q</gi> elements. This has the effect that the
+      document contains more <gi>q</gi> elements than there are passages of
+      direct speech. If one wants to count the quotations by counting the
+      <gi>q</gi> elements, this is a drawback. To the extent that the element
+      being broken up is used primarily to signal some characteristic, (e.g.
+      that of being spoken by a character other than the narrator) rather than
+      some countable object, this drawback is rather minor. Direct discourse is
+      in fact so frequently interrupted by narrative interruptions, including
+      but not limited to reporting clauses like <mentioned>he said</mentioned>,
+      that the number of <gi>q</gi> elements is unlikely to correspond precisely
+      to the number of utterances, speaker turns, or any other observable unit
+      of conversation. However, since the technique of fragmentation is a
+      general technique to avoid overlapping markup, the effect of introducing
+      artificially new instances of a particular element must be kept in mind.
+      When applied to the encoding of e.g. sentences, pages, or entries in a
+      dictionary the mismatch between the annotated phenomenon and the number of
+      instances of the element may be more problematic.</p>
+    <p>To tag one of our examples with this method, the speech can be broken up
+      to fit into the series of lines:
+      <egXML xml:lang="de" xmlns="http://www.tei-c.org/ns/Examples"><lg type="stanza">
+	      <l><q>Was wollt ihr?</q> ruft er, für Schrecken bleich,</l>
+	      <l><q>Ich habe nichts als mein Leben,</q></l>
+	      <l><q>Das muß ich dem Könige geben!</q></l>
+	      <!-- ... -->
+	    </lg></egXML>
+      Here there are three <gi>q</gi> elements to encode two quotations. The
+      advantages of this method are that it is simple and that at least one of
+      the competing hierarchies can be processed normally.</p>
+    <p>The technique of fragmentation is often complemented by the technique of
+      virtual joins. Virtual joins may be used to combine objects in the text to
+      a new hierarchy. Here is the same example with two quotations encoded using
+      three <gi>q</gi> elements, but in this case the two <gi>q</gi> elements
+      that represent a single quotation are aggregated by use of the
+      <att>next</att> and <att>prev</att> attributes described in <ptr
+        target="#SAAG"/>.
+      <egXML xml:lang="de" xmlns="http://www.tei-c.org/ns/Examples"><lg type="stanza">
+            <l><q xml:id="q1">Was wollt ihr?</q> ruft er, für Schrecken bleich,</l>
+            <l><q xml:id="q2.1" next="#q2.2">Ich habe nichts als mein Leben,</q></l>
+            <l><q xml:id="q2.2" prev="#q2.1">Das muß ich dem Könige geben!</q></l>
+            <!-- ... -->
+          </lg></egXML></p>
+    <?tei winita Need example using part= here ?>
+    <?sb2aw Need example using part= here ?>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <note resp="#aw">[TODO: Need example using part= here ?? ]</note>
+	  </egXML>
+    <p>The major advantage of this method is that it allows all the hierarchies
+      in the text to be handled explicitly, both the privileged one directly
+      represented, and the alternate hierarchy which has been split up and
+      rejoined. Its major disadvantages are that (like most of the other methods
+      described here) it privileges one hierarchy over the others, and requires
+      special processing to reconstitute the elements of the other hierarchies.</p>
+    <!-- <p>Instances of this markup method in these Guidelines
+	       include the <att>part</att> attribute on the
+	       <gi>ab</gi>, <gi>div</gi>, <gi>divN</gi>, <gi>l</gi>,
+	       <gi>lg</gi>, and <gi>seg</gi> elements, the
+	       <gi>join</gi>, <gi>span</gi>, and <gi>fs</gi> elements,
+	       and the global <att>next</att> and <att>prev</att>
+	       attributes available with the additional tag set for
+	       linking and alignment.</p> -->
+  </div2>
+  <div2 xml:id="NHSO">
+    <head>Stand-off Markup</head>
+    <p>Classic use of markup is characterized by embedding the annotation in the
+      text. An alternative approach separates the text and the annotation. This
+      approach is known as stand-off annotation. See section <ptr target="#SASO"
+      /> for more information on, and examples of, stand-off markup. Stand-off
+      annotation establishes a new hierarchy by building a new tree whose nodes
+      are XML elements which do not contain textual content, but rather links to
+      another <term>layer</term>: <gloss>a node in another XML document or a
+        span of text</gloss>.
+      <?sb2aw In some respects a generalization of the virtual
+            joins, because not only contents of elements are joined, but also
+            ranges between points within the document. ?>
+      This approach can be subdivided according to different criteria. A first
+      distinction concerns the link base. Sometimes the link target contains
+      markup. Example:
+      <egXML xml:lang="de" xmlns="http://www.tei-c.org/ns/Examples"><l><q><w xml:id="w78">Was</w> <w xml:id="w79">wollt</w> <w xml:id="w80">ihr</w>?</q> 
+	    <w xml:id="w81">ruft</w> <w xml:id="w82">er</w>, <w xml:id="w83">für</w> 
+	    <w xml:id="w84">Schrecken</w> <w xml:id="w85">bleich</w>,</l>
+	    <l><q><w xml:id="w86">Ich</w> <w xml:id="w87">habe</w> <w xml:id="w88">nichts</w> 
+	    <w xml:id="w89">als</w> <w xml:id="w90">mein</w> <w xml:id="w91">Leben</w>, 
+	    <w xml:id="w92">Das</w> <w xml:id="w93"> muß</w> <w xml:id="w94"> ich</w> 
+	    <w xml:id="w95"> dem</w> <w xml:id="w96"> Könige</w> <w xml:id="w97">geben</w>!</q></l></egXML>
+    </p>
+    <p>The new hierarchy is built up by reference to that base annotation, e.g.
+      at the end of the same XML-file: <eg><![CDATA[<p>
+    <s><xi:include href="." xpointer="range(element(w78),element(w80))"/></s>
+    <s><xi:include href="." xpointer="range(element(w81),element(w97))"/></s>
+</p>]]></eg></p>
+    <p>Notice how similar this is to the use of <gi>join</gi> elements:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>
+  <join targets="#w78 #w79 #w80" result="s" scope="root"/>
+  <join targets="#w81 #w82 #w83 #w84 #w85 #w86 #w87 #w88 #w89
+            #w90 #w91 #w92 #w93 #w94 #w95 #w96 #w97"/>
+            </p></egXML>
+      The main advantages of XInclude over <gi>join</gi> are that it is possible
+      to specify attributes on the created <gi>s</gi> elements, and that there
+      exists off-the-shelf software that will perform XInclude processing.</p>
+    <p>In a different stand-off technique the link-base contains only plain
+      text. The range of text to be annotated is indicated by character offsets.
+      See <ptr target="#SATS"/>, in particular <ptr target="#SATSSR"/>.</p>
+    <p>Another distinction concerns the number of files which can serve as link
+      targets. Often, one (dedicated) annotation is used as the link target of
+      all the other annotations. It is also possible to freely interlink several
+      layers.</p>
+    <p>It has been noted that stand-off markup has several advantages over
+      embedded annotations. In particular, it is possible to produce annotations
+      of a text even when the source document is read-only. Furthermore,
+      annotation files can be distributed without distributing the source text.
+      Further advantages mentioned in the literature are that discontinuous
+      segments of text can be combined in a single annotation, that independent
+      parallel coders can produce independent annotations, and that different
+      annotation files can contain different layers of information. Lastly, it
+      has also been noted that this approach is elegant.</p>
+    <p>But there are also several drawbacks. First, new stand-off annotated
+      layers require a separate interpretation, and the layers &#x2014;
+      although separate &#x2014; depend on each other. Moreover, although
+      all the the information of the multiple hierarchies is included, the
+      information may be difficult to access using generic methods.
+      <!-- Another disadvantage is
+	  related with the use of document grammars: Standard document grammars can only be used
+	  for the level, containing both markup and textual data, standard parsing or editing
+	  software cannot be employed. --></p>
+    <!--     <p>linking at a sub-element range is difficult</p>
+	       <p>the primary layer should be a (primary) level</p>-->
+  </div2>
+  <div2 xml:id="NHNX">
+    <head>Non-XML-based Solutions</head>
+    <p>There exist many non-XML methods of encoding a text that either solve or
+      do not suffer the problem of the inability to encode overlapping
+      hierarchies. These include, but are not limited to the SGML feature
+      CONCUR, the powerful MECS or TeXMECS language, and the new LMNL
+      meta-language. Since TEI is currently based on XML, and these approaches
+      are not XML, they are not described any further in these Guidelines.</p>
+  </div2>
+  <div2 xml:id="NHDI">
+    <head>Discussion</head>
+    <p>All proposed solutions of the multiple hierarchy problem have advantages
+      as well as drawbacks. For different applications and usage scenarios,
+      different solutions may be approriate.</p>
+    <list>
+      <item>
+        <p>For editing purposes the following solutions may be most appropriate:<list>
+            <item>Multiple encodings of the same information </item>
+            <item>Remodeling of the document class </item>
+            <item>Boundary marking with empty elements </item>
+          </list> The choice of a solution depends on a number of specifics:
+            <list type="inline">
+            <item>the number of different views and potential hierarchies</item>
+            <item>the amount of overlap</item>
+            <item>how much, if any, customization is required</item>
+            <item>how much encoding guidance annotators need from the XML
+              editing software</item>
+          </list>. If good (special purpose) software is available it might also
+          be appropriate to use stand-off markup or non XML-based solutions.</p>
+      </item>
+      <item>For processing, the stand-off-approach often is quite easy to
+        handle. Several readily available XML tools will perform XInclude
+        processing.</item>
+      <item>For sustainable storage and easy information transfer redundant
+        encoding is desirable. Other formats can be generated by unifying the
+        separate annotations. </item>
+    </list>
+  </div2>
+  <?tei winita        <div2>
+          <head>Further Information</head>
+          <p>This reference list will be commented in the next days</p>
+          <p>Barnard, David; Burnard, Lou; Gaspart, Jean-Pierre; Price, Lynne
+            A.; Sperberg-McQueen, C. M.; Varile, Giovanni Battista.
+            "Hierarchical Encoding of Text: Technical Problems and SGML
+            Solutions." The Text Encoding Initiative: Background and Contents,
+            Guest Editors Nancy Ide and Jean Vèronis = Computers and the
+            Humanities 29/3 (1995) 211-231. </p>
+          <p>Bauman, Syd, TEI HORSEing Around. Paper presented at Extreme Markup
+            Languages 2005, August, Montreal, Quebec. August 2005. </p>
+          <p>Bayerl, Petra Saskia, Harald Lüngen, Daniela Goecke, Andreas Witt,
+            and Daniel Naber: Methods for the semantic analysis of document
+            markup. In: Roisin, C., E. Munson and C. Vanoirbeek (Ed.):
+            Proceedings of the ACM Symposium on Document Engineering (DocEng
+            2003). pp. 161 - 170 </p>
+          <p>Carletta, Jean, Jonathan Kilgour, Tim O'Donnell, Stefan Evert, and
+            Holger Voormann, The NITE Object Model Library for Handling
+            Structured Linguistic Annotation on Multimodal Data Sets.
+            Proceedings of the EACL Workshop on Language Technology and the
+            Semantic Web (3rd Workshop on NLP and XML, NLPXML-2003). </p>
+          <p>Cover, Robin . "Markup Languages and (Non-) Hierarchies".
+            http://xml.coverpages.org/hierarchies.html </p>
+          <p>DeRose, Steve, David Durand, Elli Mylonas, and Allen Renear. 'What
+            is Text, Really?', Journal of computing in higher education, 1. 2.
+            1990. </p>
+          <p>DeRose, Steven. Markup overlap: a review and a horse. Paper
+            presented at Extreme Markup Languages 2004, August, Montreal,
+            Quebec. August 2004.</p>
+          <p>DeRose, Steven, Eve Maler, and David Orchard (eds.). XML Linking
+            Language (XLink) Version 1.0. W3C Recommendation 27 June 2001.
+            http://www.w3.org/TR/xlink/ </p>
+          <p>[Witt et al. 2005] Andreas Witt, Daniela Goecke, Felix Sasaki, and
+            Harald Lüngen (2005). Unification of XML Documents with Concurrent
+            Markup Literary and Linguistic Computing, 20:1 103-116.
+            http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/core.html </p>
+          <p>Durand, David G., 1999. Palimpest: Change-Oriented Concurrency
+            Control for the Support of Collaborative Applications, Dissertation,
+            Boston University </p>
+          <p>Durusau, Patrick and Matthew Brook O'Donnell. "Coming down from the
+            trees: Next step in the evolution of markup?" Late breaking paper
+            presented at Extreme Markup, Montreal, 2002. </p>
+          <p>Durusau, Patrick and Matthew Brook O'Donnell Concurrent Markup for
+            XML Documents, XML Europe 2002 </p>
+          <p>Haugen, Odd Einar. Parallel Views: Multi-level Encoding of Medieval
+            Nordic Primary Sources. In: Literary and Linguistic Computing.
+            (19.1) pp. 73 - 91 </p>
+          <p>Huitfeldt, Claus and C. M. Sperberg-McQueen. (2001) TexMECS: An
+            experimental markup meta-language for complex documents.
+            (http://www.hit.uib.no/claus/mlcd/papers/texmecs.html.) </p>
+          <p>Pianta, Emanuele and Luisa Bentivogli (2004). Annotating
+            Discontinuous Structures in XML: the Multiword Case. In: Witt,
+            Andreas, Ulrich Heid, Henry S.Thompson, Jean Carletta, and Peter
+            Wittenburg. Proceedings of the LREC 1004, Satellite Workshop on
+            XML-based Richly Annotated Corpora. Lisbon 2004 pp. 30 - 37 </p>
+          <p>Renear, Allen, Elli Mylonas, and David Durand (1996). 'Refining Our
+            Notion of What Text Really Is: The Problem of Overlapping
+            Hierarchies' In: International Association for Literary and
+            Linguistic Computing: Selected papers from the ALLC, ACH Conference:
+            Christ Church, Oxford, April 1992. Oxford: Clarendon Press 1996. </p>
+          <p>Sperberg-McQueen, C. M. and Huitfeldt, Claus (1999). Concurrent
+            Document Hierarchies in MECS and SGML. In: Literary and Linguistic
+            Computing (14.1). pp. 29 - 42 </p>
+          <p>Tennison, Jeni and Wendell Piez (2002). The Layered Markup and
+            Annotation Language. Extreme Markup 2002. </p>
+          <p>Thompson, Henry S. and David McKelvie. Hyperlink semantics for
+            standoff markup of read-only documents. In: Proceedings of SGML
+            Europe '97: The Next Decade - Pushing the Envelope (Barcelona,
+            Spain, May 1997). </p>
+          <p>Witt, Andreas, Meaning and interpretation of concurrent markup In:
+            ALLCACH2002, Joint Conference of the ALLC and ACH, Tübingen, 2002. </p>
+          <p>Witt, Andreas (2005). Multiple Hierarchies: New Aspects of an Old
+            Solution. In: Stefanie Dipper, Michael Götze, and Manfred Stede
+            (eds.). 2005. "Heterogeneity in Focus: Creating and and Using
+            Linguistic Databases", volume 2 of "Interdisciplinary Studies on
+            Information Structure (ISIS), Working Papers of the SFB 632".
+            University of Potsdam, Germany. (Corrected reprint of an Extreme
+            Markup 2004 paper) http://www.sfb632.uni-potsdam.de/isis.php </p>
+          <p>Witt, Andreas, Daniela Goecke, Felix Sasaki, and Harald Lüngen
+            (2005). Unification of XML Documents with Concurrent Markup Literary
+            and Linguistic Computing, 20:1 103-116.
+            http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/core.html <bibl>
+              <author/>
+              <title/>
+            </bibl>
+          </p>
+        </div2> ?>
+</div1>
