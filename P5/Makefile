@@ -179,7 +179,7 @@ fascicule: subset
 	cat ${CHAPTER} >> ${FASCFILE}
 	cat fasc-tail.xml  >> ${FASCFILE}
 	xmllint --noent --xinclude ${FASCFILE} | xsltproc \
-	-o FASC-${CHAP}-Guidelines/index.html $VERBOSE \
+	-o FASC-${CHAP}-Guidelines/index.html ${VERBOSE} \
 	--stringparam localsource `pwd`/p5subset.xml \
 	--stringparam cssFile tei.css \
 	--stringparam displayMode rnc \
