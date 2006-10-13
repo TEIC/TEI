@@ -1270,6 +1270,9 @@
             <xsl:when test="tei:p">
               <xsl:apply-templates/>
             </xsl:when>
+            <xsl:when test="tei:l">
+              <xsl:apply-templates/>
+            </xsl:when>
             <xsl:otherwise>
               <p>
                 <xsl:apply-templates/>
