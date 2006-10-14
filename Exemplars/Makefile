@@ -1,11 +1,11 @@
-PREFIX=/usr
+PREFIX=/usr/bin
 LANGUAGE=en
 DRIVER=guidelines-${LANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
-ROMAOPTS=--dochtml --localsource=../Source/Guidelines/${LANGUAGE}/${DRIVER}
+ROMAOPTS=--dochtml --localsource=../Source/Guidelines/${LANGUAGE}/${DRIVER} --xsl=${XSL}
 
 schemas:
-	for i in *.odd; do echo Process $$i; $(PREFIX)/bin/roma $(ROMAOPTS) $$i .; done
+	for i in *.odd; do echo Process $$i; ${PREFIX}/roma ${ROMAOPTS} $$i .; done
 	-rm xlink.xsd xml.xsd mathml*xsd p5examples.xsd tei_odds.xsd
 	-rm p5odds.xsd structure.xsd ns1.xsd teix.xsd
 	-rm p5odds.dtd p5examples.dtd
