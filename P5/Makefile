@@ -70,7 +70,7 @@ html-web: check
 	(cd Guidelines-web; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
 	(cd Guidelines-web; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' teic.css)
 	@echo validate HTML files
-	-(cd Guidelines-web; for i in *html; do echo validate $$i; xmllint --dropdtd $$i > z_$$i; jing -c xhtml.rnc z_$$i; rm z_$$i; done)
+	-(cd Guidelines-web; for i in *html; do echo validate $$i; xmllint --dropdtd $$i > z_$$i; jing -c ../xhtml.rnc z_$$i; rm z_$$i; done)
 
 html:check subset
 	-rm -rf Guidelines
