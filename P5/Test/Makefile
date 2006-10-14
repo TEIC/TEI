@@ -13,7 +13,6 @@ TESTFILES= \
 	testlite \
 	testlangs \
 	testminimal \
-	testmixedup \
 	testms \
 	testnames \
 	testtagdocs \
@@ -48,6 +47,7 @@ schemas:
 		roma $(ROMAOPTS) --xsl=$(XSL)   $$i.odd .; \
 		cp xml.xsd.w3c xml.xsd ; \
 		test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd; \
+		test -f spec.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' spec.xsd; \
 		test -f teix.xsd && mv teix.xsd $$i.teix.xsd ; \
 		test -f $$i.teix.xsd && perl -p -i -e "s/teix.xsd/$$i.teix.xsd/" $$i.xsd; \
 	done
