@@ -29,6 +29,9 @@
 
   <xsl:param name="newFile"/>
   <xsl:param name="newLang"/>
+  <xsl:param name="date">
+    <xsl:value-of select="edate:date-time()"/>
+  </xsl:param>
 
   <xsl:output encoding="utf-8" indent="yes"/>
 
@@ -64,7 +67,9 @@
     <xsl:value-of select="normalize-space(.)"/>
   </xsl:variable>
     <xsl:if test="not($that=$this) and not($that='')">
-      <gloss xmlns="http://www.tei-c.org/ns/1.0">
+      <gloss xmlns="http://www.tei-c.org/ns/1.0"
+	     date="{$date}"
+	     >
 	<xsl:attribute name="xml:lang">
 	  <xsl:value-of select="$newLang"/>
 	</xsl:attribute>
@@ -89,7 +94,8 @@
     <xsl:value-of select="normalize-space(.)"/>
   </xsl:variable>
     <xsl:if test="not($that=$this) and not($that='')">
-      <desc xmlns="http://www.tei-c.org/ns/1.0">
+      <desc xmlns="http://www.tei-c.org/ns/1.0"
+	     date="{$date}">
 	<xsl:attribute name="xml:lang">
 	  <xsl:value-of select="$newLang"/>
 	</xsl:attribute>
