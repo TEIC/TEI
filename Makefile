@@ -1,4 +1,5 @@
 LANGUAGE=en
+LATEX=pdflatex
 VERBOSE=
 PREFIX=/usr
 TEISERVER=http://tei.oucs.ox.ac.uk/Query/
@@ -10,9 +11,10 @@ ROMAOPTS="--localsource=${DRIVER}"
 XSL=/usr/share/xml/tei/stylesheet
 XSLP4=/usr/share/xml/teip4/stylesheet
 CHAPTER=$(shell find ${LANGTREE} -iname ${CHAP}*.xml)
-#XSL=../Stylesheets
-# alternativly, if you have not installed the Debian packages, uncomment the next line:
-# XSL=http://www.tei-c.org/stylesheet/release/xml/tei
+# If you have not installed the Debian packages, uncomment one
+# of the next two lines:
+#XSL=../Stylesheets/release/tei-xsl/p5
+#XSL=http://www.tei-c.org/stylesheet/release/xml/tei
 
 .PHONY: convert dtds schemas html validate valid test split oddschema exampleschema fascicule clean dist
 
@@ -101,13 +103,13 @@ xml: check subset
 	-rnv Exemplars/teilite.rnc Guidelines.xml
 
 pdf: xml
-	@echo Checking you have a running XeLaTeX before trying to make PDF...
-	which xelatex || exit 1
+	@echo Checking you have a running ${LATEX} before trying to make PDF...
+	which ${LATEX} || exit 1
 	xsltproc Utilities/guidelines-latex.xsl Guidelines.xml \
 	> Guidelines.tex
 	cp Source/Images/*.png .
-	-xelatex -interaction=nonstopmode Guidelines
-	-xelatex -interaction=nonstopmode Guidelines
+	-${LATEX} -interaction=nonstopmode Guidelines
+	-${LATEX} -interaction=nonstopmode Guidelines
 	for i in Source/Images/*.png; do rm `basename $$i`;done
 
 validate: oddschema exampleschema valid
