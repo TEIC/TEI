@@ -70,29 +70,29 @@ html-web: check
 	(cd Guidelines-web; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
 	(cd Guidelines-web; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' teic.css)
 	@echo validate HTML files
-	-for i in Guidelines-web/*html; do echo validate $$i; xmllint --dropdtd $$i | jing -c xhtml.rnc; done
+	-(cd Guidelines-web; for i in *html; do echo validate $$i; xmllint --dropdtd $$i > z_$$i; jing -c xhtml.rnc z_$$i; rm z_$$i; done)
 
 html:check subset
 	-rm -rf Guidelines
 	-mkdir Guidelines
 	perl -p -e "s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+" Utilities/odd2htmlp5.xsl.model > Utilities/odd2htmlp5.xsl
-	saxon \
+	xsltproc \
 	    -o Guidelines/index.html \
-	    ${DRIVER} \
+	    --stringparam localsource `pwd`/p5subset.xml \
+	    --stringparam cssFile tei-print.css \
+	    --stringparam STDOUT true \
+	    --stringparam displayMode rnc \
+	    --stringparam outputDir . \
+	    --stringparam lang ${LANGUAGE} \
 	    Utilities/guidelines-print.xsl \
-	    localsource=`pwd`/p5subset.xml \
-	    cssFile=tei-print.css \
-	    STDOUT=true \
-	    displayMode=rnc \
-	    outputDir=. \
-	    lang=${LANGUAGE} 
+	    ${DRIVER} 
 	-cp *.css Guidelines
 	-cp ${SOURCETREE}/Images/* Guidelines/
 	(cd Guidelines; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
 	(cd Guidelines; perl -p -i -e 's+ xmlns:html="http://www.w3.org/1999/xhtml"++' index.html)
 	-xmllint --noout --valid Guidelines/index.html
 
-xml: check subset exemplars
+xml: check subset 
 	xmllint --noent --xinclude ${DRIVER} | perl Utilities/cleanrnc.pl | \
 	xsltproc  -o Guidelines.xml \
 	--stringparam displayMode rnc  \
@@ -101,13 +101,13 @@ xml: check subset exemplars
 	-rnv Exemplars/teilite.rnc Guidelines.xml
 
 pdf: xml
-	@echo Checking you have a running pdfLaTeX before trying to make PDF...
-	which pdflatex || exit 1
-	xsltproc ${XSL}/teic/teilatex-teic.xsl Guidelines.xml \
+	@echo Checking you have a running XeLaTeX before trying to make PDF...
+	which xelatex || exit 1
+	xsltproc Utilities/guidelines-latex.xsl Guidelines.xml \
 	> Guidelines.tex
 	cp Source/Images/*.png .
-	-pdflatex -interaction=nonstopmode Guidelines
-	-pdflatex -interaction=nonstopmode Guidelines
+	-xelatex -interaction=nonstopmode Guidelines
+	-xelatex -interaction=nonstopmode Guidelines
 	for i in Source/Images/*.png; do rm `basename $$i`;done
 
 validate: oddschema exampleschema valid
