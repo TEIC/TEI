@@ -1054,7 +1054,7 @@
     <xsl:variable name="wrapperElement">
       <xsl:choose>
         <xsl:when
-          test="tei:specList|tei:moduleSpec|tei:list|tei:eg|teix:egXML|tei:table|tei:specGrp|tei:specGrpRef|tei:q[@rend='display']|tei:figure">
+          test="tei:specList|tei:quote|tei:moduleSpec|tei:list|tei:eg|teix:egXML|tei:table|tei:specGrp|tei:specGrpRef|tei:q[@rend='display']|tei:figure">
           <xsl:text>div</xsl:text>
         </xsl:when>
         <xsl:when test="parent::tei:p">
@@ -1253,6 +1253,11 @@
             <xsl:text>)</xsl:text>
           </span>
         </xsl:if>
+      </xsl:when>
+      <xsl:when test="parent::tei:p">
+	<div class="blockquote">
+	  <xsl:apply-templates/>
+	</div>
       </xsl:when>
       <xsl:otherwise>
         <blockquote>

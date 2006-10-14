@@ -1009,8 +1009,8 @@
       <xsl:text>&#10;&lt;!ATTLIST </xsl:text>
       <xsl:value-of select="$ename"/>
       <xsl:value-of select="$maybeatts"/>
+      <xsl:text> &gt;</xsl:text>
     </xsl:if>
-    <xsl:text> &gt;</xsl:text>
   </xsl:template>
   <xsl:template name="attclasses">
     <xsl:for-each select="tei:classes/tei:memberOf">
