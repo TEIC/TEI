@@ -34,12 +34,12 @@
 -->
 <!-- Section A: XHTML XML Namespace Framework :::::::::::::::::::: -->
 <!-- XLink ............... -->
-  <define name="XLINK.xmlns.attrib">
+  <define name="math_XLINK.xmlns.attrib">
     <empty/>
   </define>
 <!-- MathML .............. -->
   <define name="MATHML.xmlns.extra.attrib">
-    <ref name="XLINK.xmlns.attrib"/>
+    <ref name="math_XLINK.xmlns.attrib"/>
   </define>
   <define name="MATHML.xmlns.attrib">
     <empty/>
