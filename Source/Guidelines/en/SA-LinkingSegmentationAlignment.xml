@@ -1,4 +1,3 @@
-<?oxygen RNGSchema="../../p5odds.rnc" type="compact"?>
 <!--
 Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
@@ -466,8 +465,10 @@ To avoid having
     </div3> 
   </div2>
   <div2 type="section" xml:id="SAXP">
-    <head>Advanced Pointing</head>
-    <p>In this section we further describe methods of pointing:
+    <head>Pointing mechanisms</head>
+    <p>This section introduces more formally the pointing mechanisms
+    available in the TEI. In addition to those
+    discussed so far, the TEI provides methods of pointing:
     <list>
       <item>into documents other than the current document;</item>
       <item>to a particular element in a document other than the
@@ -478,16 +479,20 @@ To avoid having
       XPointer schemes.</item>
     </list>
     </p>
-    <p>All TEI addresses use URI references as defined in the URI
-    specification.<note place="foot"><ref
-    target="http://www.ietf.org/rfc/rfc2396.txt">RFC2396</ref></note>
-    URI references are the same mechanism used by HTML to create
-    hypertext links, and are widely accepted. A URI reference is
-    capable not only of addressing a single XML resource, but also a
-    sub-portion of the resource it identifies by the use of an
+    <p>All TEI attributes used to point at something else are declared
+    as having the datatype <ident>att.pointer</ident>, which is
+    defined as a URI reference<note place="foot">The URI (Universal
+    Resource Indicator)  is defined in <ref
+    target="http://www.ietf.org/rfc/rfc2396.txt">RFC2396</ref></note>;
+    the cases so far discussed are all simple examples of a URI
+    reference. Another familiar example is the mechanism used in  HTML to create
+    represent hypertext links by means of the <att>href</att>
+    attribute. A URI reference can reference
+a single XML resource such as a document or an XML element, but also a
+    sub-portion of it  identified by means of an
     appropriate <term>fragment identifier</term>. Technically
     speaking, the
-    <soCalled>Fragment-ID</soCalled> is that portion of a URI
+    <soCalled>fragment identifier</soCalled> is that portion of a URI
     reference following the first unescaped <q>#</q> character; in
     practice, it provides a means of accessing some part of the
     resource described by the URI which is less than the whole.  <!-- The
@@ -515,7 +520,7 @@ To avoid having
       documents in order to make references more manageable. --> In
       general the current base URI in force is the value of the
       <att>xml:base</att> attribute of the closest ancestor that has one. If
-      there are none, the base URI is that of the current document.
+      there is none, the base URI is that of the current document.
 <!-- The current base URI in force is as defined in the W3C
       <ref target="http://www.w3.org/TR/xmlbase/">XML Base</ref>
       recommendation. In general, it is the value of the
@@ -578,7 +583,7 @@ given scope
 
     </div3>
     <div3 type="subsection" xml:id="SABN">
-      <head>Special Case: Pointing Locally</head>
+      <head>Pointing Locally</head>
       <p>Because the default base URI is the current document, a
       pointer that is specified as a <term>bare name</term> fragment
       identifier alone acts as a pointer to an element in the current
@@ -611,26 +616,33 @@ given scope
   finding of fair use if such finding is made upon consideration
   of all the above factors.</p>
 </div></egXML>
-<!--note resp="#sdb" type="cit">Title 17, Section 107 of the <title>United
+<note resp="#sdb" type="cit">Title 17, Section 107 of the <title>United
 States Code</title>, found at <ptr
 target="http://www.copyright.gov/title17/92chap1.html#107"/> and
-converted from HTML to TEI encoding.</note-->
+converted from HTML to TEI encoding.</note>
 This method of pointing, by referring to the <att>xml:id</att> of the
 target element as a bare name only (e.g., <val>#there</val>) is 
 the simplest and often the best approach where it can be applied, i.e. where
 both the source element and target element are in the same XML
-      document, and where the target element carries an identifier.</p>
+      document, and where the target element carries an identifier. It
+      is the method used extensively in previous sections of this
+      chapter and elsewhere in these Guidelines. </p>
     </div3>
     <div3 type="subsection" xml:id="SAES">
       <head>W3C element() Scheme</head>
-      <p>An element may be pointed to by its position in the XML
-      element tree using the <name type="xpscheme">element</name>
+      <p>If elements are not directly addressable by means of an
+      identifier, they may still  be pointed to by means of their position in the XML
+      element tree. This method of pointing uses the <name type="xpscheme">element</name>
       scheme defined by the World Wide Web Consortium.<note place="foot"><ref
       target="http://www.w3.org/TR/xptr-element/">XPointer element()
-      Scheme</ref>.</note> In this scheme, an element is identified by
-      stepwise navigation via a slash-separated list of child element
+      Scheme</ref>.</note> In this scheme, an element may be identified by
+      stepwise navigation  using a slash-separated list of child element
       numbers. For each step the integer <code>n</code> locates the
-      <hi>n</hi>th child element of the previously located element.</p>
+      <hi>n</hi>th child element of the previously located
+      element. Thus a pointer such as <code>&lt;ptr
+      target="foo.xml#element(1/4)"/></code> indicates the fourth
+      child element starting from the root element of the document
+      indicated by the URI <ident>foo.xml</ident>.   </p>
       <p>For example, the following pointer selects
       one of Shakespeare's most famous lines:
       <egXML xmlns="http://www.tei-c.org/ns/Examples"><ref target="http://www.cs.mu.oz.au/621/2003project/hamlet.xml#element(/1/8/2/25/2)"
@@ -645,7 +657,7 @@ both the source element and target element are in the same XML
       The  URI  in this example references an XML resource assumed to be
       available via the HTTP protocol on the web; within
       that file, the specified <name type="xpscheme">element</name>
-      scheme is used to select  <q>the 1st (and only) root-level element's 8th
+      scheme is used to select  <q>the first (root-level)  element's 8th
       child element's 2nd child element's 25th child element's 2nd
       child element</q>. This is equivalent to the XPath
       specification <code>/*[1]/*[8]/*[2]/*[25]/*[2]</code>.</p>
@@ -758,12 +770,18 @@ kinds of object:
 	never to another point. In fact, in the character
 	representation of an XML document, every position between data
 	characters, start-tags or end-tags is a point, and there are
-	no other points. If one treats all character content as if it
-	were broken into single-character text-nodes, every point is
-	definable as the point preceding (or following) a node, and if
-	that node has a successor (or predecessor) in document order,
-	then is is the same as the point preceding (or following) that
-	successor (or predecessor).</item>
+	no other points. 
+   If one treats all character content as if it were broken into
+   single-character text-nodes, every point is definable as either
+<list>
+<item> the point preceding a node, and if that node has a predecessor
+     in document order, then it is the same as the point following
+     that predecessor; or</item>
+<item> the point following a node, and if that node has a successor in
+     document order, then it is the same as the point preceding that
+     successor.
+</item></list>
+</item>
         <label>Range</label>
 	<item>A Range is defined as the portion of a document between
 	two points. Since points may occur anywhere within the
@@ -922,7 +940,8 @@ make no change when given a point as argument.
 	    element. In this case, the path takes us to a <gi
 	    scheme="extreme">postcode</gi> node which contains the string
 	    <q>20850</q>, so the point being pointed to is that
-	    following the second <q>0</q> character. <egXML
+	    following the  <q>0</q> character at the end of the
+	    element content. <egXML
 	    xmlns="http://www.tei-c.org/ns/Examples"><p
 	    xml:base="http://www.mulberrytech.com/Extreme/Proceedings/xml/2002/">
 <ptr target="Usdin01/EML2002Usdin01.xml#right(element(/1/1/3/3/6))"/></p></egXML></p>
@@ -1569,7 +1588,7 @@ M&uuml;nchen: Rogner & Bernhard, 1972. *--></p>
 </div1></egXML>
       See further <ptr target="#CODR"/> and <ptr target="#DRPAL"/>.</p>
       <p>These elements are formally defined as follows:
-      <specGrp xml:id="DSASA" n="Blocks, Segments and Anchors">
+      <specGrp xml:id="DSASA" n="Blocks Segments and Anchors">
         &ab;
         &anchor;
         &seg;
@@ -1847,7 +1866,7 @@ English translation of Charles Hoole (1659), and is taken from
 Comenius Orbis Pictus: a facsimile of the first English edition of
 1659</title> (Oxford: Oxford University Press, 1968) (The Juvenile
 Library).</bibl></note></p>
-<p>First, we present the text portions. The English and Latin portions
+<p>First, we consider the text portions. The English and Latin portions
 have been encoded as distinct <gi>div</gi> elements. Identifiers have
 been attached to each typographic line, but no other encoding added, to
 simplify the example.
@@ -1876,26 +1895,47 @@ simplify the example.
       <seg xml:id="l9807">dum lectitat</seg>
       <seg xml:id="l9808">Libros,</seg></p>
 </div></egXML></p>
-<?tei winita?>
-<note resp="#sdb" place="inline">Need to re-work this entire graphical example; probably DGD or CC.</note>
-<p>Next we assume that we have stored a digitized image of the picture
-itself in some external entity we will call <ident rend="noindex"
-type="ge">com98</ident> (for further discussion of the handling of
-external images and graphics, see section <ptr target="#FTGRA"/>). We
-further assume that we can address portions of this image as a
-two-dimensional co-ordinate space. The <ident type="kw">SPACE</ident>
-location method of the <gi>ptr</gi> element (discussed in section <ptr
-target="#COXR"/> above) can now be used to point to the whole picture
-and to two portions of it, one containing the picture of a student and
-the other of a book, as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><ptr xml:id="p981" n="1" target="#idunno"/>
-<ptr xml:id="p982" n="2" target="#idunno" /><!-- from="space (2d) (75 5) (133 75)" -->
-<ptr xml:id="p983" n="3" target="#idunno" /><!-- from="space (2d) (55 42) (90 60)" --></egXML>
-Note that each external pointer has its own unique identifier, in
-addition to the <att>n</att> attribute, which last holds the visible
-label (or <soCalled>explainer</soCalled>) used for this image portion in
-the original.</p>
-<p>As printed, the text exhibits three kinds of alignment.
+<!--<?tei winita?>
+<note resp="#sdb" place="inline">Need to re-work this entire graphical example; probably DGD or CC.</note>-->
+<p>Next we consider the non-textual parts of the page. Encoding this
+requires providing two distinct components: firstly a digitized rendering of the
+page itself, and secondly a representation of the areas within that image
+which are to be aligned. The XML notation SVG (Standard Vector
+Graphics) provides appropriate facilities for both these
+requirements:
+<!-- egXML  xmlns="http://www.tei-c.org/ns/Examples" -->
+<eg><![CDATA[<svg xmlns="http://www.w3.org/2000/svg" 
+               xmlns:xlink="http://www.w3.org/1999/xlink" >
+	  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	    <image xlink:href="p1764.png" width="597" height="897" id="p9801"/>
+	    <rect x="86.5" y="161.86218" width="440.5" height="303" style="fill:none;opacity:1;stroke:#eaac24;stroke-width:2"/>
+	    <view id="p981" viewBox="86.5 161.86218 440.5 303"/>
+	    <rect x="337.5" y="222.36218" width="158" height="222.5" style="fill:none;opacity:1;stroke:#eaac24;stroke-width:2"/>
+	    <view id="p982" viewBox="337.5 222.36218 158 222.5"/>
+	    <rect x="252" y="162.36218" width="270" height="153" style="fill:none;opacity:1;stroke:#eaac24;stroke-width:2"/>
+	    <view id="p983" viewBox="252 162.36218 270 153"/>
+	  </svg>
+]]></eg>
+<!--  <svg>
+    <image
+     xlink:href="p1764.png"
+     width="597"  height="897"
+     id="p981" />
+  <rect id="p982" x="75" y="75"  width="25" height="10"/>
+  <rect id="p983" x="55" y="42"  width="25" height="10"/>
+  </svg>-->
+This fragment of SVG defines three rectangles 
+at the locations with the specified x and y co-ordinates. A view is
+defined on these, enabling them to be 
+mapped by an SVG processor to the image found at the URL specified
+(<ident>p1764.png</ident>). It also defines unique identifiers for
+the whole image, and the three views of it, which will use within our
+alignment, as shown next (for further discussion of the handling of
+ images and graphics, see section <ptr target="#FTGRA"/>; for further
+ discussion of using non-TEI XML vocabularies such as SVG within a TEI
+ document, see section <ptr target="ST-aliens"/>).
+</p>
+<p>As printed, the Comenius text exhibits three kinds of alignment.
  <list type="ordered">
    <item n="1">The English and Latin portions are printed in two
    parallel columns, with corresponding phrases, (represented above by
@@ -1912,21 +1952,26 @@ the original.</p>
    <item n="3">Numbered labels appear within the text portions,
    linking keywords to each other and to sections of the picture.
    These labels, which have been left out of the above encoding, are
-   attached to the first third and last segment in each language
+   attached to the first, third, and last segments in each language
    quoted below, and also appear (rather indistinctly) within the
-   picture itself. If it is desired to transcribe them in the text,
-   they might be encoded using as <gi>ref</gi> elements,
-   <gi>anchor</gi> elements, or <gi>ptr</gi>s to the picture; the
-   number itself would be transcribed as the value of the <att>n</att>
-   attribute (or as the content of the <gi>ref</gi>).
+   picture itself. Thus, the images of the study, the student, and his
+   books are each aligned with the correct term for them in the two
+   languages. 
    </item></list></p>
 <p>The first kind of alignment might be represented by using the
 <att>corresp</att> attribute on the <gi>seg</gi> element. The second
 kind might be represented by using the <gi>gloss</gi> and <gi>term</gi>
 mechanism described in section <ptr target="#COHQU"/>. The third kind of
-alignment might be represented using pointers embedded within the texts,
-although this would involve some duplication. We choose however to use
-the <gi>link</gi> element, since this provides an efficient way of
+alignment might be represented using pointers embedded within the
+texts, for example: 
+<eg><![CDATA[...
+      <seg xml:id="e9803">where a <ref n="2" target="#P982">Student</ref>,</seg>
+...
+      <seg xml:id="l9803">ubi <ref n="2" target="#P982">Studiosus</ref>,</seg>
+...]]></eg>
+
+We choose however to use
+the <gi>link</gi> element, since this provides a more efficient way of
 representing the three-way alignment between English, Latin and picture
 without redundancy.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><linkGrp type="alignment">
@@ -1943,8 +1988,8 @@ without redundancy.
 since these are the only parts of our encoding which bear identifiers
 and can therefore be pointed to. To add to it the alignment between
 the typographically distinct words mentioned above, new elements must
-be defined, either within the text itself or externally by using the
-extended pointer mechanism. Encoding these word pairs as <gi>term</gi>
+be defined, either within the text itself or externally by using stand
+off techniques. Encoding these word pairs as <gi>term</gi>
 and <gi>gloss</gi>, although intuitively obvious, requires a
 non-trivial decision as to whether the Latin text is glossing the
 English, or vice-versa. Tagging all the marked words as <gi>term</gi>
@@ -1952,17 +1997,48 @@ avoids the difficult decision, but might be thought by some encoders
 to convey the wrong information about the words in question. Simply
 tagging them as additional embedded <gi>seg</gi> elements with
 identifiers that can be aligned like the others is also a possibility.
-All of these require the addition of further markup to the text. This
-may pose no problems, or it may be infeasible (e.g. if the text is
-held on a read-only medium). If it is not feasible to add more markup
-to the original text, use of a fragment identifier is likely to be the
-best choice. For example, to indicate that the words
+</p>
+<p>These solutions all require the addition of further markup to the text. This
+may pose no problems, or it may be infeasible, for example because the text is
+held on a read-only medium. If it is not feasible to add more markup
+to the original text, some form of stand-off markup will be
+needed. Any item within the text that can be pointed to using the
+various pointer schemes discussed in this chapter may be used, not
+simply those which rely on the existence of an <att>xml:id</att>
+attribute. For example, if the segments in our example did not have
+identifiers, they could still be addressed using the notation
+introduced in #SAES above. Suppose our example had been
+more lightly tagged, as follows:<egXML xmlns="http://www.tei-c.org/ns/Examples"><div xml:id="E98" xml:lang="en" type="lesson">
+   <head>The Study</head>
+      <seg>The Study</seg>
+      <seg>is a place</seg>
+      <seg>where a Student,</seg>
+...
+  </div>
+<div xml:id="L98" xml:lang="la" type="lesson">
+   <head>Mus&#xE9;um</head>
+      <seg>Museum</seg>
+      <seg>est locus</seg>
+      <seg>ubi Studiosus,</seg>
+  ...
+</div></egXML></p>
+<p>To express the same alignment mentioned above, we could use an
+Xpath expression to identify the required <gi>seg</gi> elements:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><linkGrp type="alignment">
+   <link targets="#element(L98/2) #element(E98/2) #p981"/>
+   <link targets="#element(L98/3) #element(E98/3)"/>
+...
+</linkGrp></egXML>
+In the absence of any markup around individual substrings of
+the element content, the string-range pointer scheme discussed in <ptr
+target="#SATSSR"/> may also be helpful: for example, to indicate that the words
 <mentioned>Studies</mentioned> and <mentioned>Studiis</mentioned>
-correspond, two external pointers might be defined and aligned as
-follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><ptr xml:id="xt981" target="#string-range(xpath1(id('e9806')),16,6)"/>
-<ptr xml:id="xt982" target="#string-range(xpath1(id('l9806')),0,7)"/>
-<link targets="#xt981 #xt982"/></egXML></p>
+correspond, we might express the link between them as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<link targets="#string-range(xpath1(id('e9806')),16,6)
+               #string-range(xpath1(id('l9806')),0,7)"/></egXML></p>
+
 </div3></div2>
 <div2 type="section" xml:id="SASY">
 <head>Synchronization</head>
@@ -1977,8 +2053,7 @@ described within a time frame. The methods described here are also
 generalizable for other kinds of alignment (for example, alignment of
 text elements with respect to space).</p>
 <div3 type="subsection" xml:id="SASYNC">
-<head>Aligning Synchronous Events
- </head>
+<head>Aligning Synchronous Events</head>
 <p>To mark synchronous elements, the <att>synch</att> attribute, which
 is one of the linking attributes that are available for all text
 elements, may be used. 
@@ -2977,12 +3052,17 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
       <div3 type="subsection">
 	<head>Introduction</head>
 
-	<p>Markup is said to be <term>stand-off</term>, or external,
-	when the tags representing elements are placed outside the
-	text being marked up: elsewhere within the same file, or even
-	outside it altogether. In such a style of markup, the tags
-	point to the relevant data content rather than containing
-	it.</p>
+    <p>Most of the mechanisms defined in this chapter rely to a
+    greater or lesser extent on the fact that tags in a marked-up
+    document can both assert a property for a span of text which they
+    enclose, and assert the existence of an association between
+    themselves and some other span of text elsewhere. In stand-off
+    markup, there is a clear separation of these two behaviours: the
+    markup does not directly contain any part of the text, but
+    instead includes it by reference. One specific mechanism
+    recommended by these Guidelines for this purpose is the standard
+    XInclude mechanism defined by the W3C; another is to use pointers
+    as demonstrated elsewhere in this chapter. </p>
 
 	<p>There are many reasons for using stand-off markup: the source
 	  text might be read-only so that additional markup cannot be added,
@@ -2996,19 +3076,6 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
           whenever it is appropriate.</p>
 <!-- this list uses technical terms defined after it appears: it
 should be moved -->
-	<p>The three major requirements satisfied by this scheme for stand-off markup are:
-	  <list>
-	    <item n="a">any valid TEI markup can be either internal or
-	      external,</item>
-	    <item n="b">external markup can be internalized by
-	      applying it to the document content by either
-	      substituting the existing markup or adding to it,
-	      to form a valid TEI document, and</item>
-	    <item n="c">the external markup itself specifies whether
-	      an internalized document is to be created by substituting
-	      the existing internal markup or by adding to
-	      it</item></list>.</p>
-              
 	<p>Throughout this section the following terms will be systematically used in
 	specific senses.
 <list type="gloss">
@@ -3046,33 +3113,47 @@ extracted into the stand-off document; if all markup has been externalized from 
 new source may be a plain text document</item>
 </list>
 	</p>
+	<p>The three major requirements satisfied by this scheme for stand-off markup are:
+	  <list>
+	    <item n="a">any valid TEI markup can be either internal or
+	      external,</item>
+	    <item n="b">external markup can be internalized by
+	      applying it to the document content by either
+	      substituting the existing markup or adding to it,
+	      to form a valid TEI document, and</item>
+	    <item n="c">the external markup itself specifies whether
+	      an internalized document is to be created by substituting
+	      the existing internal markup or by adding to
+	      it</item></list>.</p>
+              
+<!-- need simple example here -->
                
       </div3>
 <div3 type="subsection">
 <head>Overview of XInclude </head>
 
 
-   <p>The basic notion of inclusion of 
-virtual content is fully adequate to describe stand-off markup, and so these
-Guidelines recommend use of <ref
-	    target="http://www.w3.org/TR/xinclude/">XInclude</ref> as
-	  a way to specify virtual inclusion of content. <note place="foot">The version on which
+   <p>Stand-off markup which relies on the  inclusion of 
+virtual content is adequately supported by the W3C XInclude
+recommendation, which is also recommended for use by these Guidelines.<note place="foot">The version on which
 	    this text is based on is the <ref
 	      target="http://www.w3.org/TR/2004/REC-xinclude-20041220/">W3C
 	       Recommendation dated <date
 value="2004-12-20">20 December
-	       	2004</date>.</ref>.</note> XInclude relies on <ref
-	    target="http://www.w3.org/TR/xptr-framework/">XPointer schemes</ref>
+	       	2004</date>.</ref>.</note> XInclude defines a namespace
+	  (<mentioned>http://www.w3.org/2001/XInclude</mentioned>),
+	  which in these Guidelines will be associated with the prefix 
+	  <mentioned>xi:</mentioned>, and exactly two elements,
+	  <gi>xi:include</gi> and <gi>xi:fallback</gi>. XInclude
+	  relies on the <ref
+	    target="http://www.w3.org/TR/xptr-framework/">XPointer
+	  framework</ref> discussed elsewhere in this chapter
 	  to point to the actual fragments of text to be
-	  internalized; this is the same mechanism that TEI pointing attributes use (e.g., 
-   	the <att>target</att> attribute of <gi>ref</gi>). Although
+	  internalized. Although
 	  XInclude only requires support for the <ref
 	    target="http://www.w3.org/TR/xptr-element/"><code>element()</code></ref> 
-	  scheme of XPointer, this specification requires that all the
-	  W3C schemes of XPointer can be used for expressing
-	  addresses, and in particular it fully supports the <ref
-	    target="http://www.w3.org/TR/xptr-xpointer/"><code>xpointer()</code></ref> 
-	  scheme.</p>
+	  scheme of XPointer, these Guidelines permit the use of any of the
+pointing  schemes discussed in section <ptr target="#SAXP"/>.</p>
  
 	<p>XInclude is a W3C recommendation which specifies a syntax for the
 	  inclusion within an XML document of data fragments placed in
@@ -3082,11 +3163,7 @@ value="2004-12-20">20 December
 	  URI, possibly augmented by an XPointer that identifies the
 	  exact subresource to be included. Fallback content or
 	  resources can be specified in case of a failure to fetch the
-	  requested resource. XInclude defines a namespace
-	  (<mentioned>http://www.w3.org/2001/XInclude</mentioned>),
-	  which we will usually prefix with
-	  <mentioned>xi:</mentioned>, and exactly two elements,
-	  <gi>xi:include</gi> and <gi>xi:fallback</gi>.</p>
+	  requested resource. </p>
 
 	  <p>The <gi>xi:include</gi> element uses the <att>href</att>
 	  attribute to specify the location of the resource to be
@@ -3220,9 +3297,9 @@ The semantics of XInclude require the creation of well-formed XML results even t
 
         <p>Any tag can be externalized by
 <!-- this example is too simple: move it earlier -->
-	  removing its content and placing an XInclude
-	  <gi>xi:include</gi> element that contains the XPointer
-	  pointing to the correct content.</p>
+	  removing its content and replacing it with an 
+	  <gi>xi:include</gi> element that contains an XPointer
+	  pointing to the desired content.</p>
 	<p>For instance the following portion of a TEI document:
 <eg><![CDATA[<text>
    <body>
@@ -3289,23 +3366,20 @@ If bees are few.\n
       </div3>
       <div3 type="subsection">
 	<head>Well-formedness and validity of stand-off markup</head>
-	<p>This specification states that the whole source fragment
-	  identified by the XInclude element, as well as any markup
-	  therein contained, are inserted in the position specified.
-	  It is required that the internalized document is
-	  well-formed. It is a burden for the author of the external
-	  markup to ensure this. Inaccurate ranges, for instance,
-	  could very well create badly formed documents that could not
-	  be further processed. Of course, badly formed documents are
-	  a problem that can only arise when source documents are XML.
-	  Plain text source documents will always create well-formed
-	  documents.</p>
-	<p>Validity is a concept that is applied to internalized
-	documents. Thus an XML document containing <gi>xi:include</gi>
-	and <gi>xi:fallback</gi> elements is never a valid TEI
-	document. This specification requires thus that validity is
-	verified after the resolution of all the <gi>xi:include</gi>
-	elements.</p>
+	<p>The whole source fragment
+	  identified by an XInclude element, as well as any markup
+	  therein contained is inserted in the position specified, and
+	  an XInclude processor is required to ensure that the resulting
+	  internalized document is
+	  well-formed. This has obvious implications when the external
+	  document contains XML markup:a plain text source document
+	  will always create a well-formed
+	  internalized document.</p>
+	<p>While a TEI customization may permit
+       <gi>xi:include</gi> elements in various places in a TEI document
+       instance, in general these Guidelines suggest that validity be
+       verified after the resolution of all the <gi>xi:include</gi>
+       elements.</p>
       </div3>
       <div3 type="subsection">
 	<head>Including text or xml fragments</head>

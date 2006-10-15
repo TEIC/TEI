@@ -206,6 +206,8 @@ to supply no more than a complete ODD specification along with the
 documents.
 </p>
 
+<div3><head>A simple customization</head>
+
 <p>The simplest customization of the TEI scheme combines just the
 four recommended modules mentioned above. In ODD format, this would
 look like this:
@@ -250,7 +252,8 @@ This uses an indirect method of nominating the DTD schema fragments
 from which the DTD is to be constructed, based on the use of parameter
 entities, as further discussed in section <ptr target="#STPE"/>.
 </p>
-
+</div3>
+<div3><head>A larger customization</head>
 <!-- does this belong here? -->
 <p>In much of the discussion elsewhere in these Guidelines, it is
 generally assumed for clarity of exposition that a text is a unitary
@@ -299,6 +302,67 @@ the low level structural tags defined in the prose, drama and dictionary
   <!-- Structurally, Moby Dick is not your
        everyday common or garden variety novel ... -->
 </schemaSpec></egXML></p>
+</div3>
+<div3 xml:id="ST-aliens"><head>Combining TEI and non-TEI modules</head>
+<p>As noted above, a schema which is expressed in the ODD language may
+modify the declarations contained by the TEI  modules it embeds, for
+example to add new element declarations, or to change almost any
+property of the elements declared. The elements used for this purpose
+are documented in <ptr target="#TD"/>, and conformance rules relating
+to their application are discussed in <ptr target="#CF"/>. These
+facilities are available for any schema language (though some
+features such as alternation of attributes are not available in all
+languages). The ODD language also makes it  possible to combine
+TEI and non-TEI modules into a single schema, but only for the RELAXNG
+schema language.</p>
+<p>In the simplest case, all that is needed to include a non TEI
+module in a schema is to reference its RELAXNG source using the
+<att>uri</att> attribute on <gi>moduleref</gi>. The following schema specification, for
+example, creates a schema in which declarations from the non-TEI
+module <ident>svg11.rng</ident> (defining Standard vector Graphics)
+are included. To avoid any risk of name clashes, the schema specifies
+that all TEI patterns generated should be prefixed by the string
+"TEI_".
+<egXML  xmlns="http://www.tei-c.org/ns/Examples">
+    <schemaSpec prefix="tei_" ident="testsvg" start="TEI svg">
+      <moduleRef key="header"/>
+      <moduleRef key="core"/>
+      <moduleRef key="tei"/>
+      <moduleRef key="textstructure"/>
+      <moduleRef url="svg11.rng"/>
+    </schemaSpec></egXML>
+</p>
+
+<p>This specification generates a single schema which might be used to
+validate either a TEI document (with the root element <gi>TEI</gi>),
+or an SVG document (with a root element <gi>svg</gi>), but would
+<emph>not</emph> validate a TEI document containing <gi>svg</gi>
+elements. For that to be possible, the <gi>svg</gi> element must
+become a member of a TEI model class (<ptr target="#STEC"/>), so that
+it may be referenced by other TEI elements. To achieve this, we modify
+the last <gi>moduleRef</gi> in the above example as follows:
+<egXML  xmlns="http://www.tei-c.org/ns/Examples">
+    <moduleRef url="svg11.rng">
+	<content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	  <rng:define name="tei_model.graphicLike" combine="choice">
+	    <rng:ref name="svg"/>
+	  </rng:define>
+	</content>
+      </moduleRef>
+</egXML></p>
+<p>This states that when the declarations from the
+<ident>svg11.rng</ident> module are combined with those from the other
+modules, the declaration for the model class model.graphicLike in the TEI module
+should be extended to include the element <gi>svg</gi> as an
+alternative. This has the effect that elements in the TEI scheme
+which define their content model in terms of that element class
+(notably <gi>figure</gi>) can now include it. A RELAXNG schema
+generated from such a specification can be used to validate documents
+in which the TEI <gi>figure</gi> element contains  any valid SVG
+representation of a graphic, embedded within an <gi>svg</gi> element.
+</p>
+</div3>
+
 </div2>
 
 <div2 xml:id="STGA"><head>Global Attributes</head>
@@ -813,6 +877,8 @@ only the three attributes first mentioned. </p>
 <row><cell>att.spanning</cell><cell>provides attributes for elements which delimit a span of text by pointing mechanisms rather than by enclosing it.</cell><cell/></row>
 <row><cell>att.tableDecoration</cell><cell>provides attributes used to decorate rows or cells of a table.</cell><cell/></row>
 <row><cell>att.timed</cell><cell>provides a set of attributes common to those elements which have a duration in time, expressed either absolutely or by reference to an alignment map.</cell><cell/></row>
+<row><cell>att.translatable</cell><cell>provides attributes used to  indicate the status of a translatable
+portion of an ODD document. </cell><cell/></row>
 <row><cell>att.typed</cell><cell>provides generic attributes which can be used to classify or subclassify elements in any way. </cell><cell/></row>
 </table>
 </p>
@@ -837,6 +903,7 @@ only the three attributes first mentioned. </p>
 &att.spanning; 
 &att.tableDecoration; <!-- move to FT? -->
 &att.timed;   <!-- move to TS? -->
+&att.translatable;
 &att.typed;
 
 </specGrp>
