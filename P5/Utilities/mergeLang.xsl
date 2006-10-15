@@ -19,6 +19,7 @@
 <xsl:output 
    method="xml"
    indent="yes"
+   encoding="utf-8"
    cdata-section-elements="tei:eg"
    omit-xml-declaration="yes"/>
 
@@ -30,7 +31,7 @@
   <xsl:param name="newFile"/>
   <xsl:param name="newLang"/>
   <xsl:param name="date">
-    <xsl:value-of select="edate:date-time()"/>
+    <xsl:value-of select="substring-before(edate:date-time(),'T')"/>
   </xsl:param>
 
   <xsl:output encoding="utf-8" indent="yes"/>
@@ -68,7 +69,7 @@
   </xsl:variable>
     <xsl:if test="not($that=$this) and not($that='')">
       <gloss xmlns="http://www.tei-c.org/ns/1.0"
-	     date="{$date}"
+	     version="{$date}"
 	     >
 	<xsl:attribute name="xml:lang">
 	  <xsl:value-of select="$newLang"/>
@@ -95,7 +96,7 @@
   </xsl:variable>
     <xsl:if test="not($that=$this) and not($that='')">
       <desc xmlns="http://www.tei-c.org/ns/1.0"
-	     date="{$date}">
+	     version="{$date}">
 	<xsl:attribute name="xml:lang">
 	  <xsl:value-of select="$newLang"/>
 	</xsl:attribute>
