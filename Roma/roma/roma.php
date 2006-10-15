@@ -225,7 +225,7 @@ class roma
 	       break;
 	    case roma_startupOption_other:
 	      $this->m_oRomaDom = new romaDom( join( '',
-          file('/usr/share/xml/tei/custom/odd/' . $_REQUEST ['tei_other' ] . '.odd'   )));
+          file('/usr/share/xml/tei/custom/odd/' . $_REQUEST ['tei_other' ] )));
 	       break;
 	    default:
                $this->m_oRomaDom = new romaDom( $_SESSION[ 'romaDom' ] );
