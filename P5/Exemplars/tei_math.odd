@@ -1,69 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<TEI xml:lang="en"  xmlns="http://www.tei-c.org/ns/1.0"
- xmlns:rng="http://relaxng.org/ns/structure/1.0">
-   <teiHeader>
-      <fileDesc>
-         <titleStmt>
-            <title>TEI with MathML</title>
-            <author>Sebastian Rahtz</author>
-         </titleStmt>
-         <publicationStmt>
+<TEI xml:lang="en" xmlns="http://www.tei-c.org/ns/1.0"
+  xmlns:rng="http://relaxng.org/ns/structure/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>TEI with MathML</title>
+        <author>Sebastian Rahtz</author>
+      </titleStmt>
+      <publicationStmt>
         <availability status="free">
-          <p>This template file is freely available and you are
-          hereby authorised to copy, modify, and redistribute it in
-          any way without further reference or permissions.</p>
-          <p>When making such modifications, you are strongly
-          recommended to change the present text to include an
-          accurate statement of the licencing conditions applicable
-          to your modified text.</p>
+          <p>This template file is freely available and you are hereby
+            authorised to copy, modify, and redistribute it in any way without
+            further reference or permissions.</p>
+          <p>When making such modifications, you are strongly recommended to
+            change the present text to include an accurate statement of the
+            licencing conditions applicable to your modified text.</p>
         </availability>
-	 </publicationStmt>
-         <sourceDesc>
-            <p>authored from scratch</p>
-         </sourceDesc>
-      </fileDesc>
-   </teiHeader>
-<text>
-<body>
-<p>This customization loads the normal four core modules,
-plus <emph>figures</emph>; in the latter it adjusts
-the content model of <gi>figure</gi> to allow the <gi>math</gi>
-element from MathML (see <ptr target="http://www.w3.org/Math/"/>).</p>
-<p>Example:
-<formula>
+      </publicationStmt>
+      <sourceDesc>
+        <p>authored from scratch</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <p>This customization loads the normal four core modules, plus
+          <name>figures</name>; in the latter it adjusts the content model of
+          <gi>figure</gi> to allow the <gi>math</gi> element from MathML (see
+          <ptr target="http://www.w3.org/Math/"/>).</p>
+      <p>Example:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><formula>
   <math xmlns="http://www.w3.org/1998/Math/MathML">
     <mrow><mi>e</mi></mrow>
   </math>
-</formula>
-</p>
+</formula></egXML></p>
 
-<schemaSpec ident="tei_math" prefix="tei_" start="TEI">
-    <moduleRef url="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/mathml2-main.rng"/>
-    <moduleRef key="header"/>
-    <moduleRef key="core"/>
-    <moduleRef key="tei"/>
-    <moduleRef key="textstructure"/>
-    <moduleRef key="figures"/>
-    <elementSpec module="figures" ident="formula" mode="change">
-      <content>
-	<rng:ref name="mathml.math"/>
-      </content>
-      <attList>
-	<attDef ident="type" mode="add">
-	<desc>what sort of formula is this?</desc>
-	<datatype><rng:text/></datatype>
-	</attDef>
-	<attDef ident="notation" mode="change">
-	<desc>what notation is used to describe the math</desc>
-	<datatype><rng:text/></datatype>
-	</attDef>
-      </attList>
-    </elementSpec>
+      <schemaSpec ident="tei_math" prefix="tei_" start="TEI">
+        <moduleRef
+          url="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/mathml2-main.rng"/>
+        <moduleRef key="header"/>
+        <moduleRef key="core"/>
+        <moduleRef key="tei"/>
+        <moduleRef key="textstructure"/>
+        <moduleRef key="figures"/>
+        <elementSpec module="figures" ident="formula" mode="change">
+          <content>
+            <rng:ref name="mathml.math"/>
+          </content>
+          <attList>
+            <attDef ident="type" mode="add">
+              <desc>what sort of formula is this?</desc>
+              <datatype>
+                <rng:text/>
+              </datatype>
+            </attDef>
+            <attDef ident="notation" mode="change">
+              <desc>what notation is used to describe the math</desc>
+              <datatype>
+                <rng:text/>
+              </datatype>
+            </attDef>
+          </attList>
+        </elementSpec>
 
-</schemaSpec>
-</body>
-</text>
+      </schemaSpec>
+    </body>
+  </text>
 </TEI>
-
-
-
