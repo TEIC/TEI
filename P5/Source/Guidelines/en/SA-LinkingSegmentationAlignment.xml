@@ -2007,20 +2007,18 @@ various pointer schemes discussed in this chapter may be used, not
 simply those which rely on the existence of an <att>xml:id</att>
 attribute. For example, if the segments in our example did not have
 identifiers, they could still be addressed using the notation
-introduced in #SAES above. Suppose our example had been
+introduced in <ptr target="#SAES"/> above. Suppose our example had been
 more lightly tagged, as follows:<egXML xmlns="http://www.tei-c.org/ns/Examples"><div xml:id="E98" xml:lang="en" type="lesson">
    <head>The Study</head>
-      <seg>The Study</seg>
-      <seg>is a place</seg>
-      <seg>where a Student,</seg>
-...
+      <ab>The Study</ab>
+      <ab>is a place</ab>
+      <ab>where a Student,</ab>
   </div>
 <div xml:id="L98" xml:lang="la" type="lesson">
    <head>Mus&#xE9;um</head>
-      <seg>Museum</seg>
-      <seg>est locus</seg>
-      <seg>ubi Studiosus,</seg>
-  ...
+      <ab>Museum</ab>
+      <ab>est locus</ab>
+      <ab>ubi Studiosus,</ab>
 </div></egXML></p>
 <p>To express the same alignment mentioned above, we could use an
 Xpath expression to identify the required <gi>seg</gi> elements:
@@ -2028,7 +2026,6 @@ Xpath expression to identify the required <gi>seg</gi> elements:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><linkGrp type="alignment">
    <link targets="#element(L98/2) #element(E98/2) #p981"/>
    <link targets="#element(L98/3) #element(E98/3)"/>
-...
 </linkGrp></egXML>
 In the absence of any markup around individual substrings of
 the element content, the string-range pointer scheme discussed in <ptr
