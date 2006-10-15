@@ -4,13 +4,12 @@ See the file COPYING for details
 $Date$
 $Author$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
-	     xmlns:rng="http://relaxng.org/ns/structure/1.0" module="certainty" xml:id="CERTAIN" usage="opt" ident="certainty">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="certainty" xml:id="CERTAIN" usage="opt" ident="certainty">
 <equiv/>
 <gloss/>
 <desc>indicates the degree of certainty or uncertainty associated with
 some aspect of the text markup.
- </desc>
+ </desc><desc version="2006-10-15" xml:lang="es">indica el grado de certeza o incertidumbre asociado con algún aspecto del marcado del texto.</desc>
   <classes>
     <memberOf key="model.global.meta"/>
   </classes>
@@ -21,7 +20,7 @@ some aspect of the text markup.
     <attDef ident="target" usage="req">
 	<equiv/>
 	<desc>points at the elements whose markup is uncertain.</desc>
-        <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointers"/></datatype>
+        <datatype><rng:ref name="data.pointers"/></datatype>
       <valDesc>one or more valid
 identifiers, separated by white space.</valDesc>
       <exemplum>
@@ -42,7 +41,7 @@ of this indirect pointing mechanism, see chapter <ptr target="#SA"/>.</p>
 	<desc>indicates the precise location of the uncertainty in the
 markup: applicability of the element, precise position of the
 start- or end-tag, value of a specific attribute, etc.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <datatype><rng:ref name="data.enumerated"/></datatype>
       <valList type="semi">
         <valItem ident="gi">
           <equiv/>
@@ -90,15 +89,14 @@ prefix.--></p>
     <attDef ident="assertedValue" usage="rec">
 	<equiv/>
 	<desc>provides an alternative value for the aspect of the markup in
-question&#x2014;an alternative generic identifier, transcription,
+question—an alternative generic identifier, transcription,
 or attribute value, or the identifier of an <gi>anchor</gi> element (to
 indicate an alternative starting or ending location).  If an
 <att>assertedValue</att> is given, the confidence level specified by
 <att>degree</att> applies to the alternative markup specified by
 <att>assertedValue</att>; if none is given, it applies to the markup
 in the text.</desc>
-      <datatype><rng:choice
-		    xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <datatype><rng:choice>
 <rng:ref name="data.pointer"/>
 <rng:ref name="data.name"/>
 <rng:ref name="data.word"/>
@@ -147,7 +145,7 @@ general use.</p>
 	<equiv/>
 	<desc>indicates conditions assumed in the assignment of a
 degree of confidence.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointers"/></datatype>
+      <datatype><rng:ref name="data.pointers"/></datatype>
       <valDesc>a characterization of the conditions which are assumed
 in the assignment of a degree of confidence.  This may be in
 prose.</valDesc>
@@ -188,7 +186,7 @@ ambiguity-free system for indicating certainty.</p>
 	<equiv/>
 	<desc>indicates the degree of confidence assigned to the aspect
 of the markup named by the <att>locus</att> attribute.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.probability"/></datatype>
+      <datatype><rng:ref name="data.probability"/></datatype>
     </attDef>
   </attList>
   <exemplum>
@@ -197,11 +195,9 @@ of the markup named by the <att>locus</att> attribute.</desc>
 <persName xml:id="SYB">Saybrook</persName>.
 <certainty xml:id="c1" target="#SYB" locus="gi" degree="0.6"/>
 <certainty target="#SYB" locus="startloc" given="#c1" degree="0.9"/>
-<certainty xml:id="C-c2" target="#SYB" locus="gi" 
-   assertedValue="persName" degree="0.4"/>
+<certainty xml:id="C-c2" target="#SYB" locus="gi" assertedValue="persName" degree="0.4"/>
 <certainty target="#SYB" locus="startloc" given="#C-c2" degree="0.5"/>
-<certainty target="#SYB" locus="startloc" 
-   assertedValue="#a1" given="#c1" degree="0.5"/></egXML>
+<certainty target="#SYB" locus="startloc" assertedValue="#a1" given="#c1" degree="0.5"/></egXML>
   </exemplum>
   <remarks/>
   <listRef>
