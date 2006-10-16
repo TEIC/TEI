@@ -1,54 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<TEI xml:lang="en"  xmlns="http://www.tei-c.org/ns/1.0"
- xmlns:rng="http://relaxng.org/ns/structure/1.0"
- n="tei_svg">
-   <teiHeader>
-      <fileDesc>
-         <titleStmt>
-            <title>TEI with SVG</title>
-            <author>Sebastian Rahtz</author>
-         </titleStmt>
-         <publicationStmt>
+<TEI xml:lang="en" xmlns="http://www.tei-c.org/ns/1.0"
+  xmlns:rng="http://relaxng.org/ns/structure/1.0" n="tei_svg">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>TEI with SVG</title>
+        <author>Sebastian Rahtz</author>
+      </titleStmt>
+      <publicationStmt>
         <availability status="free">
-          <p>This template file is freely available and you are
-          hereby authorised to copy, modify, and redistribute it in
-          any way without further reference or permissions.</p>
-          <p>When making such modifications, you are strongly
-          recommended to change the present text to include an
-          accurate statement of the licencing conditions applicable
-          to your modified text.</p>
+          <p>This template file is freely available and you are hereby
+            authorised to copy, modify, and redistribute it in any way without
+            further reference or permissions.</p>
+          <p>When making such modifications, you are strongly recommended to
+            change the present text to include an accurate statement of the
+            licencing conditions applicable to your modified text.</p>
         </availability>
-	 </publicationStmt>
-         <sourceDesc>
-            <p>authored from scratch</p>
-         </sourceDesc>
-      </fileDesc>
-   </teiHeader>
-<text>
-<body>
-  <p>This customization loads the normal four modules, plus that
-for describing figures and tables. It extends the use of <gi>figure</gi>
-by allowing elements from the Scaleable Vector Graphics (SVG) schema
-alongside or instead of <gi>graphic</gi>. See <ptr
-target="http://www.w3.org/Graphics/SVG/"/> for more information on SVG.</p>
-    <schemaSpec ident="tei_svg" prefix="tei_" start="TEI">
-      <moduleRef key="header"/>
-      <moduleRef key="core"/>
-      <moduleRef key="tei"/>
-      <moduleRef key="textstructure"/>
-      <moduleRef key="linking"/>
-      <moduleRef key="figures"/>
-      <moduleRef url="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/svg11.rng">
-      	<content>
-	  <rng:define name="tei_model.graphicLike" combine="choice">
-	    <rng:ref name="svg"/>
-	  </rng:define>
-	</content>
-      </moduleRef>
-    </schemaSpec>
-</body>
-</text>
+      </publicationStmt>
+      <sourceDesc>
+        <p>authored from scratch</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <p>This customization loads the normal four modules, plus that for
+        describing figures and tables. It extends the use of <gi>figure</gi> by
+        allowing elements from the Scaleable Vector Graphics (SVG) schema
+        alongside or instead of <gi>graphic</gi>. See <ptr
+          target="http://www.w3.org/Graphics/SVG/"/> for more information on
+        SVG.</p>
+      <schemaSpec ident="tei_svg" prefix="tei_" start="TEI">
+        <!-- required modules -->
+        <moduleRef key="header"/>
+        <moduleRef key="core"/>
+        <moduleRef key="tei"/>
+        <moduleRef key="textstructure"/>
+        <!-- include the module for figures -->
+        <moduleRef key="figures"/>
+        <!-- include the SVG schema (based on the SVG 1.1 DTD version 1.2 -->
+        <!-- dated 2004-04-20) -->
+        <moduleRef
+          url="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/svg11.rng">
+          <!-- also add <svg:svg> to class model.graphicLike -->
+          <content>
+            <rng:define name="tei_model.graphicLike" combine="choice">
+              <rng:ref name="svg"/>
+            </rng:define>
+          </content>
+        </moduleRef>
+      </schemaSpec>
+    </body>
+  </text>
 </TEI>
-
-
-
