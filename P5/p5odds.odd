@@ -19,9 +19,17 @@
    </teiHeader>
 <text>
 <body>
-    <schemaSpec ident="p5odds" start="TEI schemaSpec elementSpec classSpec macroSpec div1 div2">
-      <moduleRef url="mathml2-main.rng"/>
-      <moduleRef url="relaxng.rng"/>
+    <schemaSpec prefix="TEI_" ident="p5odds" start="TEI schemaSpec elementSpec classSpec macroSpec div1 div2">
+      <moduleRef
+	  url="Exemplars/svg11.rng">
+	<content>
+	  <rng:define name="tei_model.graphicLike" combine="choice">
+	    <rng:ref name="svg"/>
+	  </rng:define>
+          </content>
+        </moduleRef>
+      <moduleRef url="Exemplars/mathml2-main.rng"/>
+      <moduleRef url="Exemplars/relaxng.rng"/>
       <moduleRef key="header"/>
       <moduleRef key="core"/>
       <moduleRef key="tei"/>
@@ -58,6 +66,7 @@ mode="change">
 	      <text/>
 	      <ref name="anyTEI"/>
 	      <ref name="mathml.math"/>
+	      <ref name="svg"/>
 	    </choice>
 	  </oneOrMore>
 	</content>
@@ -158,13 +167,13 @@ mode="change">
 	      <name>teix:choice</name>
 	      <name>teix:cit</name>
 	      <name>teix:cl</name>
- <name>teix:faith</name>
- <name>teix:floruit</name>
- <name>teix:langKnowledge</name>
- <name>teix:persEvent</name>
- <name>teix:persState</name>
- <name>teix:persTrait</name>
- <name>teix:sex</name>
+	      <name>teix:faith</name>
+	      <name>teix:floruit</name>
+	      <name>teix:langKnowledge</name>
+	      <name>teix:persEvent</name>
+	      <name>teix:persState</name>
+	      <name>teix:persTrait</name>
+	      <name>teix:sex</name>
 	      <name>teix:classCode</name>
 	      <name>teix:classDecl</name>
 	      <name>teix:classSpec</name>
