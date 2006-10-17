@@ -544,13 +544,15 @@ a single XML resource such as a document or an XML element, but also a
       to point to a local document: <!--. It is the source for the figure
       in section <ptr target="#SACSXA"/>, later in this chapter.-->
       <egXML xmlns="http://www.tei-c.org/ns/Examples"><figure rend="float fullpage">
-  <graphic  url="./Figures/compic.png" />
-  <figDesc>The figure shows the page from the <title>Orbis pictus</title>
-    of Comenius which is discussed in the text.</figDesc>
-</figure></egXML>
-No xml:base is specified, so the location of the filename is
-determined relative to the resource indicated by the current base URI, which is 
-the current document.
+  <graphic  url="Figures/compic.png" />
+  <figDesc>The figure shows the page from the <title>Orbis
+  pictus</title> of Comenius which is discussed in the text.</figDesc>
+  </figure></egXML> 
+
+Since no xml:base is specified here, the location of the resource
+<ident>Figures/compic.png</ident> is determined relative to the
+resource indicated by the current base URI, which is the current
+document.
 </p>
       <p>In the following example, however, we first change the current base
       URI by setting a new value for xml:base. The resource required
@@ -568,14 +570,14 @@ given scope
 <p>The base URI here is  the current document. A URI such as
 <code>a.xml</code>  is equivalent to <code>./a.xml</code> </p>
 </div><div n="B" xml:base="http://a.b.org/">
-<p>The base URI here is  <code>http://a.b.org</code>. Any URI such as 
+<p>The base URI here is  <code>http://a.b.org</code>. A URI such as 
 <code>a.xml</code>  is equivalent to <code>http://a.b.org/a.xml</code> </p>
 </div><div n="C" xml:base="http://c.d.org/">
-<p>The base URI here is  <code>http://a.b.org</code>. Any URI such as 
-<code>a.xml</code>  is equivalent to <code>http://a.b.org/a.xml</code> </p>
+<p>The base URI here is  <code>http://c.d.org</code>. A URI such as 
+<code>a.xml</code>  is equivalent to <code>http://c.d.org/a.xml</code> </p>
 </div>
 <div n="D">
-<p>The base URI here is  the current document. Any URI such as
+<p>The base URI here is  the current document. A URI such as
 <code>a.xml</code>  is equivalent to <code>./a.xml</code> </p>
 </div>
 </body></egXML>
