@@ -301,7 +301,9 @@
 	  <xsl:otherwise>
 	    <xsl:variable name="pre">
 	      <xsl:for-each select="ancestor::tei:div1">
-		<xsl:number level="any" from="tei:body" format="{$numberBodyHeadings}"/>
+                <xsl:call-template name="calculateNumber">
+                  <xsl:with-param name="numbersuffix">.</xsl:with-param>
+                </xsl:call-template>
 	      </xsl:for-each>
 	    </xsl:variable>
 	    <xsl:variable name="post">
