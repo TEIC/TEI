@@ -43,7 +43,7 @@ form_clearCustomization=Anpassung rückgängig machen (go back to english)
 
 
 
-[zh]
+[zh-tw]
 helpmessage=選擇另一種語言
 headline=選擇另一種語言
 

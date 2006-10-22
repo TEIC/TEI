@@ -53,7 +53,7 @@ form_changeAttributes=Attribute verändern
 
 
 
-[zh]
+[zh-tw]
 helpmessage=從這個模組中選擇您想要包含的元素。點選「包含」來將元素全部包含, 若要全部排除在外則點選「不包含」。.
 headline=更改模組
 

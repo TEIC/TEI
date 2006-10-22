@@ -61,7 +61,7 @@ form_className=Klassenname
 
 
 
-[zh]
+[zh-tw]
 helpmessage=每一個屬性必須個別增加。請務必選擇data種類。
 headline=增加屬性
 form_headline=增加新屬性

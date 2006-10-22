@@ -47,7 +47,7 @@ form_author=Name des Autors
 form_description=Beschreibung
 form_prefix=Prefix for TEI pattern names in schema
 
-[zh]
+[zh-tw]
 helpmessage=在這兒可以設定全域參數
 headline=設定全域參數
 

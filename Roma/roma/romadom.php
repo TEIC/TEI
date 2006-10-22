@@ -60,6 +60,9 @@ class romaDom extends domDocument
 	$oText = $oTEI->appendChild( new domElement( 'text' ) );
 	$oFront = $oText->appendChild( new domElement( 'front' ) );
 	$oBody = $oText->appendChild( new domElement( 'body' ) );
+	$oBodyP = $oBody->appendChild( new domElement( 'p' ) );
+	$oBodyP->appendChild( new domText( 'My TEI Customization
+	starts with modules tei, core, header, and textstructure' ) );
 
 	$oDivgen = $oFront->appendChild( new domElement( 'divGen' ) );
 	$oDivgen->setAttribute( 'type', 'toc' );
@@ -901,7 +904,7 @@ class romaDom extends domDocument
     public function getCustomizationDescription( &$szDesc )
       {
 	$this->getXPath( $oXPath );
-	$szDesc = $oXPath->query( "/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:p" )->item(0)->nodeValue;
+	$szDesc = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p[1]" )->item(0)->nodeValue;
       }
     
 
@@ -1844,7 +1847,7 @@ class romaDom extends domDocument
     public function setCustomizationDescription( $szDescription )
       {
 	$this->getXPath( $oXPath );
-	$oP = $oXPath->query( "/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:p" )->item(0);
+	$oP = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p" )->item(0);
 	if ( $oP->hasChildNodes() )
 	  $oP->removeChild( $oP->firstChild );
 	$oP->appendChild( new domText ( stripslashes($szDescription) ) );
