@@ -75,8 +75,9 @@ html-web: check
 	cp ${SOURCETREE}/Images/* Guidelines-web/$$i/ ; \
 	(cd Guidelines-web/$$i; for i in *.html; do perl -i ../../Utilities/cleanrnc.pl $$i;done); \
 	(cd Guidelines-web/$$i; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' teic.css); \
-	#(cd Guidelines-web/$$i; for i in *html; do echo validate $$i; xmllint --dropdtd $$i > z_$$i; jing -c ../../xhtml.rnc z_$$i; rm z_$$i; done); \
 	done
+
+#(cd Guidelines-web/$$i; for i in *html; do echo validate $$i; xmllint --dropdtd $$i > z_$$i; jing -c ../../xhtml.rnc z_$$i; rm z_$$i; done); \
 
 html:check subset
 	-rm -rf Guidelines
