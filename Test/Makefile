@@ -24,13 +24,12 @@ TESTFILES= \
 TESTBADFILES= \
 	detest
 
-TESTDOCBOOKFILES= 
-
-#testdocbook1 \
-#testdocbook2 \
-#testdocbook3 \
-#testdocbook4 \
-#testdocbook5 
+TESTDOCBOOKFILES=  \
+testdocbook1 \
+testdocbook2 \
+testdocbook3 \
+testdocbook4 \
+testdocbook5 
 
 TEStPECIALFILES= \
 	testsvg  \
