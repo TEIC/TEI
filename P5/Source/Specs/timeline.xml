@@ -6,9 +6,10 @@ $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" xml:id="TIMELINE" usage="opt" ident="timeline">
 <equiv/>
-<gloss>timeline</gloss>
+<gloss>timeline</gloss><gloss version="2006-10-28" xml:lang="ja">時間軸</gloss>
 <desc>provides a set of ordered points in time which can be linked to
-elements of a spoken text to create a temporal alignment of that text.</desc>
+elements of a spoken text to create a temporal alignment of that text.</desc><desc version="2006-10-28" xml:lang="ja"> 参照される時間軸を示す．例えば，発話されたテキストから参
+照される．</desc>
   <classes>
     <memberOf key="model.global.meta"/>
   </classes>
@@ -21,7 +22,7 @@ elements of a spoken text to create a temporal alignment of that text.</desc>
     <attDef ident="origin" usage="req">
 	<equiv/>
 	<desc>designates the origin of the timeline, i.e. the time at which it
-begins.</desc>
+begins.</desc><desc version="2006-10-28" xml:lang="ja">当該時間軸の始点を示す．</desc>
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
       <valDesc>must point either to one of the <gi>when</gi> elements in
       its content, or to another <gi>timeline</gi> element.</valDesc>
@@ -37,7 +38,7 @@ night of the murder</mentioned> or <mentioned>unknown</mentioned>.--></p>
 	<equiv/>
 	<desc>specifies the unit of time corresponding to the
 	<att>interval</att> value of the timeline or of its
-	constituent points in time.</desc>
+	constituent points in time.</desc><desc version="2006-10-28" xml:lang="ja">当該時間軸で使用される時間の単位を示す．</desc>
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
       <valList type="semi">
 	<valItem ident="d"> <gloss>days</gloss></valItem>
@@ -49,8 +50,8 @@ night of the murder</mentioned> or <mentioned>unknown</mentioned>.--></p>
     </attDef>
     <attDef ident="interval" usage="opt">
 	<equiv/>
-	<desc>specifies the numeric portion of a time interval</desc>
-      <datatype xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	<desc>specifies the numeric portion of a time interval</desc><desc version="2006-10-28" xml:lang="ja">時間幅を数値で示す．</desc>
+      <datatype xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0">
 	<rng:choice>
 	  <rng:data type="float">
 	    <rng:param name="minExclusive">0</rng:param>

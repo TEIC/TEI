@@ -6,16 +6,16 @@ $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" xml:id="WHEN" usage="opt" ident="when">
 <equiv/>
-<gloss>when</gloss>
+<gloss>when</gloss><gloss version="2006-10-28" xml:lang="ja">時点</gloss>
 <desc>indicates a point in time either relative to other elements in the
-same timeline tag, or absolutely.</desc>
+same timeline tag, or absolutely.</desc><desc version="2006-10-28" xml:lang="ja"> 要素timeline中にある時点を示す．</desc>
   <content>
     <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
   </content>
   <attList>
     <attDef ident="absolute" usage="rwa">
 	<equiv/>
-	<desc>supplies an absolute value for the time.</desc>
+	<desc>supplies an absolute value for the time.</desc><desc version="2006-10-28" xml:lang="ja">当該時点の絶対時間を示す．</desc>
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.temporal"/></datatype>
       <valDesc>Times may be given in standard form, as specified in the
 Encoding Declarations section of the header.</valDesc>
@@ -27,7 +27,8 @@ Encoding Declarations section of the header.</valDesc>
     <attDef ident="unit" usage="rwa">
 	<equiv/>
 	<desc>specifies the unit of time in which the  <att>interval</att>
-value is expressed, if this is not inherited from the parent <gi>timeLine</gi>.</desc>
+value is expressed, if this is not inherited from the parent <gi>timeLine</gi>.</desc><desc version="2006-10-28" xml:lang="ja">当該時点で使用される時間幅の単位を示す．指定がない場合は，要素
+timelineの値を継承する．</desc>
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
       <valList type="semi">
 <valItem ident="s"><gloss>seconds</gloss></valItem>
@@ -41,8 +42,8 @@ value is expressed, if this is not inherited from the parent <gi>timeLine</gi>.<
     </attDef>
     <attDef ident="interval" usage="rwa">
 	<equiv/>
-	<desc>specifies the numeric portion of a time interval</desc>
-      <datatype xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	<desc>specifies the numeric portion of a time interval</desc><desc version="2006-10-28" xml:lang="ja">時間幅を数値で示す．</desc>
+      <datatype xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0">
 	<rng:choice>
 	  <rng:data type="float">
 	    <rng:param name="minExclusive">0</rng:param>
@@ -61,7 +62,7 @@ value is expressed, if this is not inherited from the parent <gi>timeLine</gi>.<
 	<equiv/>
 	<desc>identifies the reference point for determining the time of the
 current <gi>when</gi> element, which is obtained by adding the interval to the
-time of the reference point.</desc>
+time of the reference point.</desc><desc version="2006-10-28" xml:lang="ja">当該時点を決める参照地点を示す．</desc>
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
       <valDesc>Should point to another <gi>when</gi> element in the same
 <gi>timeline</gi>.</valDesc>

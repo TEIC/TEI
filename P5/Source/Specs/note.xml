@@ -5,7 +5,7 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="NOTE" usage="rec" ident="note">
-  <desc>contains a note or annotation.</desc>
+  <desc>contains a note or annotation.</desc><desc version="2006-10-28" xml:lang="ja">注釈・コメント．</desc>
   <classes>
     <memberOf key="model.noteLike"/>
     <memberOf key="model.biblPart"/>
@@ -20,7 +20,7 @@ $Author$
   <attList>
     <attDef ident="type" usage="opt">
 	<equiv/>
-	<desc>describes the type of note.</desc>
+	<desc>describes the type of note.</desc><desc version="2006-10-28" xml:lang="ja">注釈・コメントの種類．</desc>
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
       <valDesc>Values can be taken from any convenient typology of annotation
 suitable to the work in hand;  e.g. annotation, gloss, citation,
@@ -29,7 +29,7 @@ digression, preliminary, temporary</valDesc>
     <attDef ident="resp" usage="rwa">
 	<equiv/>
 	<desc>indicates who is responsible for the annotation: author,
-	editor, translator, etc.</desc>
+	editor, translator, etc.</desc><desc version="2006-10-28" xml:lang="ja">当該注釈・コメントを書いた人．著者，編集者，翻訳者など．</desc>
       <datatype>
 	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
@@ -46,25 +46,26 @@ digression, preliminary, temporary</valDesc>
     <attDef ident="anchored" usage="opt">
 	<equiv/>
 	<desc>indicates whether the copy text shows the exact place of reference
-for the note.</desc>
+for the note.</desc><desc version="2006-10-28" xml:lang="ja">当該注釈がある場所への参照は，正確にその場所を示しているかどうか．</desc>
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
       <defaultVal>true</defaultVal>
       <valList type="closed">
         <valItem ident="true">
           <equiv/>
           <gloss>copy text indicates the place of attachment for the note.
-    </gloss>
+    </gloss><gloss version="2006-10-28" xml:lang="ja">(注釈がある場所を，正確に示している場合．)
+    ) </gloss>
         </valItem>
         <valItem ident="false">
           <equiv/>
-          <gloss>copy text indicates no place of attachment for the note.</gloss>
+          <gloss>copy text indicates no place of attachment for the note.</gloss><gloss version="2006-10-28" xml:lang="ja">(注釈がある場所を，正確には示していない場合．)</gloss>
         </valItem>
       </valList>
       <remarks>
         <p>In modern texts, notes are usually anchored by means of
 explicit footnote or endnote symbols.  An explicit indication of the
 phrase or line annotated may however be used instead (e.g.  <q>page 218,
-lines 3&#x2013;4</q>).  The <att>anchored</att> attribute indicates whether any
+lines 3–4</q>).  The <att>anchored</att> attribute indicates whether any
 explicit location is given, whether by symbol or by prose
 cross-reference.  If the specific symbols used are to be recorded, use
 the <att>n</att> attribute.</p>
@@ -73,10 +74,9 @@ the <att>n</att> attribute.</p>
     <attDef ident="target" usage="rwa">
 	<equiv/>
 	<desc>indicates the point (or points) of attachment for a note, or the beginning of
-the span to which the note is attached.</desc>
+the span to which the note is attached.</desc><desc version="2006-10-28" xml:lang="ja">当該注釈・コメントの場所や，開始点を示す．</desc>
       <datatype>
-<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
-	 name="data.pointers"/></datatype>
+<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointers"/></datatype>
       <valDesc>reference to the <att>xml:id</att>s of element(s) which begin at
 the location in question (e.g. the <att>xml:id</att> of an <gi>anchor</gi>
 element).</valDesc>
@@ -93,7 +93,8 @@ given <att>xml:id</att> values to be pointed at.</p>
     <attDef ident="targetEnd" usage="rwa">
 	<equiv/>
 	<desc>points to the end of the span to which the note is attached, if
-the note is not embedded in the text at that point.</desc>
+the note is not embedded in the text at that point.</desc><desc version="2006-10-28" xml:lang="ja">当該注釈・コメントの終了点を示す．(当該注釈が注釈先の場所に埋め込
+まれていない場合)</desc>
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointers"/></datatype>
       <valDesc>reference to the <att>xml:id</att>(s) of element(s) which
 <emph>end</emph> at the location(s)
