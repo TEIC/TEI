@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 #
 # Roma: transform TEI ODD files to schema and documentation
 #
@@ -14,8 +14,7 @@ makeODD()
     if test "x$lang" = "x"
     then
 	xmllint --noent --xinclude $ODD \
-	    | xsltproc -o $N.compiled.odd $LANG $DOCLANG  \
-	    --stringparam TEIC $TEIC \
+	    | xsltproc -o $N.compiled.odd $LANG $DOCLANG --stringparam TEIC $TEIC \
 	    --stringparam TEISERVER $TEISERVER  \
 	    --stringparam localsource "$LOCAL"  \
 	    $TEIXSLDIR/odds/odd2odd.xsl -
@@ -27,8 +26,7 @@ makeODD()
 	    --stringparam TEISERVER $TEISERVER  \
 	    --stringparam localsource "$LOCAL"  \
 	    $TEIXSLDIR/odds/odd2odd.xsl - \
-	    | xsltproc -o $N.compiled.odd $DEBUG  $LANG $DOCLANG  \
-	    --stringparam TEISERVER $TEISERVER  \
+	    | xsltproc -o $N.compiled.odd $DEBUG $LANG $DOCLANG --stringparam TEISERVER $TEISERVER  \
 	    $TEIXSLDIR/odds/translate-odd.xsl - 
     fi
 }
@@ -36,8 +34,7 @@ makeODD()
 makeRelax() 
 {
     echo "2. make Relax NG from compiled ODD"
-    xsltproc $PATTERN $DEBUG  $LANG $DOCLANG  \ 
-	     --stringparam TEIC $TEIC \
+    xsltproc $PATTERN $DEBUG $LANG $DOCLANG --stringparam TEIC $TEIC \
              --stringparam outputDir $RESULTS       \
              $TEIXSLDIR/odds/odd2relax.xsl $N.compiled.odd
     (cd $RESULTS; \
@@ -57,8 +54,7 @@ makeXSD()
 makeDTD()
 {
     echo "5. make DTD from compiled ODD"
-    xsltproc  $DEBUG $LANG $DOCLANG  \ 
-	    --stringparam TEIC $TEIC \
+    xsltproc  $DEBUG $LANG $DOCLANG --stringparam TEIC $TEIC \
             --stringparam outputDir $RESULTS       \
             $TEIXSLDIR/odds/odd2dtd.xsl $N.compiled.odd
 }
@@ -66,9 +62,7 @@ makeDTD()
 makeHTMLDOC() 
 {
     echo "8. make HTML documentation"
-    xsltproc $DEBUG  $LANG $DOCLANG  \ 
-	-o $N.doc.html \
-	--stringparam TEIC $TEIC \
+    xsltproc 	-o $N.doc.html $DEBUG  $LANG $DOCLANG --stringparam TEIC $TEIC \
 	--stringparam STDOUT true \
 	--stringparam splitLevel -1 \
 	$TEIXSLDIR/odds/odd2html.xsl $N.compiled.odd
@@ -78,8 +72,7 @@ makeHTMLDOC()
 makePDFDOC() 
 {
     echo "7. make PDF documentation"
-    xsltproc $DEBUG    $LANG $DOCLANG   \
-	--stringparam TEIC $TEIC \
+    xsltproc $DEBUG $LANG $DOCLANG --stringparam TEIC $TEIC \
 	-o $N.doc.tex \
 	$TEIXSLDIR/latex/tei.xsl $N.doc.xml
     pdflatex $N.doc.tex
@@ -89,8 +82,7 @@ makePDFDOC()
 makeXMLDOC() 
 {
     echo "6. make expanded documented ODD"
-    xsltproc $DEBUG     $LANG $DOCLANG  \ 
-        --stringparam TEISERVER $TEISERVER  \
+    xsltproc $DEBUG $LANG $DOCLANG --stringparam TEISERVER $TEISERVER  \
 	--stringparam localsource "$LOCAL"  \
 	--stringparam TEIC $TEIC \
 	-o $N.doc.xml \
@@ -202,25 +194,28 @@ echo "Process $ODD to create $N{.dtd|.xsd|.doc.xml|.rng|.rnc} in $RESULTS"
 echo "========= $D Roma starts, execution:"
 if test "x$PATTERNPREFIX" = "x"
 then
-   PATTERN=""
+   PATTERN=" "
 else
    PATTERN=" --stringparam patternPrefix $PATTERNPREFIX"
 fi
+
 if $debug
 then
     DEBUG=" --stringparam verbose true"
 else
-    DEBUG=""
+    DEBUG=" "
 fi
+
 if test "x$doclang" = "x"
 then
-  DOCLANG
+  DOCLANG=" "
 else 
   DOCLANG=" --stringparam doclang $doclang "
 fi
-if test "x$doclang" = "x"
+
+if test "x$lang" = "x"
 then
-  LANG
+  LANG=" "
 else 
   LANG=" --stringparam lang $lang "
 fi
