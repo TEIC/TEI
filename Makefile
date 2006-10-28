@@ -62,17 +62,17 @@ html-web: check
 	-rm -rf Guidelines-web
 	-mkdir Guidelines-web
 	xmllint --noent --xinclude ${DRIVER} \
-	| xsltproc -o Guidelines-web/index.html ${VERBOSE} \
+	| xsltproc -o Guidelines-web/${LANGUAGE}/index.html ${VERBOSE} \
 	    --stringparam displayMode rnc \
 	    --stringparam lang ${LANGUAGE} \
 	    --stringparam outputDir . \
 	    Utilities/guidelines.xsl -
-	-cp *.css TEI-glow.png Guidelines-web
-	-cp ${SOURCETREE}/Images/* Guidelines-web/
-	(cd Guidelines-web; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
-	(cd Guidelines-web; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' teic.css)
+	-cp *.css TEI-glow.png Guidelines-web/${LANGUAGE}/
+	-cp ${SOURCETREE}/Images/* Guidelines-web/${LANGUAGE}/
+	(cd Guidelines-web/${LANGUAGE}; for i in *.html; do perl -i ../../Utilities/cleanrnc.pl $$i;done)
+	(cd Guidelines-web/${LANGUAGE}; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' teic.css)
 	@echo validate HTML files
-	-(cd Guidelines-web; for i in *html; do echo validate $$i; xmllint --dropdtd $$i > z_$$i; jing -c ../xhtml.rnc z_$$i; rm z_$$i; done)
+	-(cd Guidelines-web/${LANGUAGE}; for i in *html; do echo validate $$i; xmllint --dropdtd $$i > z_$$i; jing -c ../../xhtml.rnc z_$$i; rm z_$$i; done)
 
 html:check subset
 	-rm -rf Guidelines
