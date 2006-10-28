@@ -61,18 +61,21 @@ html-web: check
 	perl -p -e "s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+" Utilities/odd2htmlp5.xsl.model > Utilities/odd2htmlp5.xsl
 	-rm -rf Guidelines-web
 	-mkdir Guidelines-web
-	xmllint --noent --xinclude ${DRIVER} \
-	| xsltproc -o Guidelines-web/${LANGUAGE}/index.html ${VERBOSE} \
+	for i in ${LANGUAGE} ; do \
+	echo making for language $$i ; \
+	mkdir -p Guidelines-web/$$i; \
+	xmllint --noent --xinclude ${SOURCETREE}/Guidelines/$$i/guidelines-$$i.xml \
+	| xsltproc -o Guidelines-web/$$i/index.html ${VERBOSE} \
 	    --stringparam displayMode rnc \
-	    --stringparam lang ${LANGUAGE} \
+	    --stringparam lang $$i \
 	    --stringparam outputDir . \
-	    Utilities/guidelines.xsl -
-	-cp *.css TEI-glow.png Guidelines-web/${LANGUAGE}/
-	-cp ${SOURCETREE}/Images/* Guidelines-web/${LANGUAGE}/
-	(cd Guidelines-web/${LANGUAGE}; for i in *.html; do perl -i ../../Utilities/cleanrnc.pl $$i;done)
-	(cd Guidelines-web/${LANGUAGE}; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' teic.css)
-	@echo validate HTML files
-	-(cd Guidelines-web/${LANGUAGE}; for i in *html; do echo validate $$i; xmllint --dropdtd $$i > z_$$i; jing -c ../../xhtml.rnc z_$$i; rm z_$$i; done)
+	    Utilities/guidelines.xsl - ; \
+	cp *.css TEI-glow.png Guidelines-web/$$i/ ; \
+	cp ${SOURCETREE}/Images/* Guidelines-web/$$i/ ; \
+	(cd Guidelines-web/$$i; for i in *.html; do perl -i ../../Utilities/cleanrnc.pl $$i;done); \
+	(cd Guidelines-web/$$i; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' teic.css); \
+	#(cd Guidelines-web/$$i; for i in *html; do echo validate $$i; xmllint --dropdtd $$i > z_$$i; jing -c ../../xhtml.rnc z_$$i; rm z_$$i; done); \
+	done
 
 html:check subset
 	-rm -rf Guidelines
