@@ -19,6 +19,8 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   
 <xsl:import href="odd2htmlp5.xsl"/>
+<xsl:param name="lang"/>
+<xsl:param name="doclang"/>
 <xsl:param name="cssFile">tei.css</xsl:param>
 <xsl:param name="cssSecondaryFile">teic.css</xsl:param>
 
