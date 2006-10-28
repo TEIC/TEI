@@ -6,51 +6,52 @@ $Author$
 -->
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" type="atts" ident="att.identified">
 <desc>elements which can be referenced by means of a <att>key</att> attribute</desc>
-  <attList xmlns:rng="http://relaxng.org/ns/structure/1.0" >
+  <attList xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0">
     <attDef ident="ident" usage="req">
 	<equiv/>
-	<desc>Supplies the identifier by which this element is referenced.</desc>
+	<desc>Supplies the identifier by which this element is referenced.</desc><desc version="2006-10-28" xml:lang="ja">当該要素を参照するIDを示す．</desc>
       <datatype><rng:ref name="data.name"/></datatype>
       <valDesc>an XML name</valDesc>
     </attDef>
     <attDef ident="depend" usage="opt">
 	<equiv/>
-	<desc>The name of a module on which this object depends.</desc>
+	<desc>The name of a module on which this object depends.</desc><desc version="2006-10-28" xml:lang="ja">依存するモジュール名を示す．</desc>
       <datatype><rng:data type="NCName"/></datatype>
     </attDef>
     <attDef ident="predeclare" usage="opt">
 	<equiv/>
 	<desc>Says whether the class should be treated as global, and so
-      needs predefining in the core.</desc>
+      needs predefining in the core.</desc><desc version="2006-10-28" xml:lang="ja">当該クラスはグローバル属性かどうか，中核モジュール中で定義される
+必要があるかどうかを示す．</desc>
       <datatype><rng:data type="boolean"/></datatype><defaultVal>false</defaultVal>
     </attDef>
     <attDef ident="module" usage="opt">
 	<equiv/>
 	<desc>Supplies the name of the module in which this object is to
-      be defined.</desc>      
+      be defined.</desc><desc version="2006-10-28" xml:lang="ja">当該クラスが定義されているモジュールを示す．</desc>      
       <datatype><rng:data type="NCName"/></datatype>
       <valDesc>a name of module</valDesc>
     </attDef>
     <attDef ident="mode" usage="opt">
 	<equiv/>
 	<desc>specifies the effect of this declaration on its parent
-    module.</desc>
+    module.</desc><desc version="2006-10-28" xml:lang="ja">当該宣言が親要素に与える影響を示す．</desc>
       <datatype><rng:ref name="data.enumerated"/></datatype>
       <defaultVal>add</defaultVal>
       <valList type="closed">
       <valItem ident="add">
-         <gloss>this declaration is added to the current definitions</gloss>
+         <gloss>this declaration is added to the current definitions</gloss><gloss version="2006-10-28" xml:lang="ja">(当該宣言は現行定義に追加される．)</gloss>
       </valItem>
       <valItem ident="delete">
-         <gloss>this declaration and all of its children are removed from the current setup</gloss>
+         <gloss>this declaration and all of its children are removed from the current setup</gloss><gloss version="2006-10-28" xml:lang="ja">(当該宣言と当該以下の子要素は，現行定義から外される．)</gloss>
       </valItem>
       <valItem ident="change">
          <gloss>this declaration changes the declaration of the same
-    name in the current definition</gloss>
+    name in the current definition</gloss><gloss version="2006-10-28" xml:lang="ja">(当該宣言は，現行定義中の同名宣言を修正する．)</gloss>
       </valItem>
       <valItem ident="replace">
          <gloss>this declaration replaces the declaration of the same
-    name in the current definition</gloss>
+    name in the current definition</gloss><gloss version="2006-10-28" xml:lang="ja">(当該宣言は，現行定義中の同名宣言に置き換わる．)</gloss>
       </valItem>
 </valList>
     </attDef>

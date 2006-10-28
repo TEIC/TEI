@@ -8,7 +8,7 @@ $Author$
 <equiv/>
 <gloss/>
 <desc>encodes a tree, which is made up of a root, internal nodes,
-leaves, and arcs from root to leaves.</desc><desc version="2006-10-15" xml:lang="es">codifica un árbol, compuesto de una raíz, nodos interiores, hojas, y arcos de la raíz a las hojas.</desc>
+leaves, and arcs from root to leaves.</desc><desc version="2006-10-28" xml:lang="ja">木構造を示す．</desc><desc version="2006-10-15" xml:lang="es">codifica un árbol, compuesto de una raíz, nodos interiores, hojas, y arcos de la raíz a las hojas.</desc>
   <classes>
     <memberOf key="model.divPart"/>
   </classes>
@@ -32,44 +32,45 @@ leaves, and arcs from root to leaves.</desc><desc version="2006-10-15" xml:lang=
   <attList>
     <attDef ident="label" usage="opt">
 	<equiv/>
-	<desc>gives a label for a tree.</desc>
+	<desc>gives a label for a tree.</desc><desc version="2006-10-28" xml:lang="ja">当該木のラベルを示す．
+gives a label for a tree.</desc>
       <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
       <valDesc>A character string.</valDesc>
     </attDef>
     <attDef ident="arity" usage="opt">
 	<equiv/>
 	<desc>gives the maximum number of children of the root and internal
-nodes of the tree.</desc>
+nodes of the tree.</desc><desc version="2006-10-28" xml:lang="ja">当該木の子要素の最大数を示す．</desc>
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/></datatype>
       <valDesc>A nonnegative integer.</valDesc>
     </attDef>
     <attDef ident="ord" usage="req">
 	<equiv/>
 	<desc>indicates whether or not the tree is ordered, or if it is
-partially ordered.</desc>
+partially ordered.</desc><desc version="2006-10-28" xml:lang="ja">順序付であるかどうかを示す．</desc>
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
       <defaultVal>true</defaultVal>
 <!-- cant be boolean because we hjave to allow for partial ordering -->
       <valList type="closed">
         <valItem ident="true">
           <equiv/>
-          <gloss>indicates that all of the branching nodes of the tree are ordered.</gloss>
+          <gloss>indicates that all of the branching nodes of the tree are ordered.</gloss><gloss version="2006-10-28" xml:lang="ja">(当該木の子要素は順序付である．)</gloss>
         </valItem>
         <valItem ident="partial">
           <equiv/>
           <gloss>indicates that some of the branching nodes of the tree are ordered
-and some are unordered.</gloss>
+and some are unordered.</gloss><gloss version="2006-10-28" xml:lang="ja">(当該木の子要素の一部は，順序付である．)</gloss>
         </valItem>
         <valItem ident="false">
           <equiv/>
           <gloss>indicates that all of the branching nodes of the tree are
-unordered.</gloss>
+unordered.</gloss><gloss version="2006-10-28" xml:lang="ja">(当該木の子要素は順序付でない．)</gloss>
         </valItem>
       </valList>
     </attDef>
     <attDef ident="order" usage="opt">
 	<equiv/>
-	<desc>gives the order of the tree, i.e., the number of its nodes.</desc>
+	<desc>gives the order of the tree, i.e., the number of its nodes.</desc><desc version="2006-10-28" xml:lang="ja">当該木の順番を示す．</desc>
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/></datatype>
       <valDesc>A nonnegative integer.</valDesc>
       <remarks>

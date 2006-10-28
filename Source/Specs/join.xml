@@ -4,27 +4,25 @@ See the file COPYING for details
 $Date$
 $Author$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" 
-  xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  module="linking" xml:id="JOIN" usage="opt" ident="join">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="linking" xml:id="JOIN" usage="opt" ident="join">
 <equiv/>
 <gloss/>
 <desc>identifies a possibly fragmented segment of text, by pointing
-at the possibly discontiguous elements which compose it.</desc>
+at the possibly discontiguous elements which compose it.</desc><desc version="2006-10-28" xml:lang="ja">ばらばらではあるがひとつのまとまりを作るテキスト部分を示す．</desc>
   <classes>
     <memberOf key="att.pointing"/>
     <memberOf key="model.global.meta"/>
   </classes>
   <content>
-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.glossSeq"/>
+    <rng:ref name="macro.glossSeq"/>
   </content>
   <attList>
     <attDef ident="targets" usage="req">
 	<equiv/>
 	<desc>specifies the identifiers of the elements or passages
        to be joined into a virtual
-       element.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointers"/></datatype>
+       element.</desc><desc version="2006-10-28" xml:lang="ja">まとめられる各要素の識別子を示す．</desc>
+      <datatype><rng:ref name="data.pointers"/></datatype>
       <valDesc>one or more
        valid identifiers, separated by white space.</valDesc>
     </attDef>
@@ -32,28 +30,29 @@ at the possibly discontiguous elements which compose it.</desc>
 	<equiv/>
 	<desc>specifies the name of an element
 which this aggregation
-may be understood to represent.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"/></datatype>
+may be understood to represent.</desc><desc version="2006-10-28" xml:lang="ja">まとめられた要素に与えられる名前を示す．</desc>
+      <datatype><rng:ref name="data.name"/></datatype>
       <valDesc>The generic identifier of an element in the current DTD.</valDesc>
     </attDef>
     <attDef ident="scope" usage="rec">
 	<equiv/>
 	<desc>indicates whether the targets to be joined include the
 entire element indicated (the entire subtree including its root),
-or just the children of the target (the branches of the subtree).</desc>
+or just the children of the target (the branches of the subtree).</desc><desc version="2006-10-28" xml:lang="ja">参照された要素自体を含むか，またはその子要素のみが対象となるかを
+示す．</desc>
       <defaultVal>root</defaultVal>
       <valList type="closed">
         <valItem ident="root">
           <equiv/>
           <gloss>the rooted subtrees indicated by the targets
 attribute are joined, each subtree become a child of the virtual
-element created by the join</gloss>
+element created by the join</gloss><gloss version="2006-10-28" xml:lang="ja">(参照された要素自体を含む．)</gloss>
         </valItem>
         <valItem ident="branches">
           <equiv/>
           <gloss>the children of the subtrees indicated by the
 targets attribute become the children of the virtual element
-(i.e. the roots of the subtrees are discarded)</gloss>
+(i.e. the roots of the subtrees are discarded)</gloss><gloss version="2006-10-28" xml:lang="ja">(参照された要素の子要素を含む．)</gloss>
         </valItem>
       </valList>
       <remarks>
@@ -115,8 +114,7 @@ list:</p>
   <list xml:id="LP3"><item><s>I've done gone</s></item><item><s>I've done went</s></item></list> which, when they occur in Negro dialect, should probably 
    be considered as borrowings from other varieties of
    English.</p>
-<join result="list" xml:id="LST1" targets="#LP1 #LP2 #LP3" 
-   scope="branches">
+<join result="list" xml:id="LST1" targets="#LP1 #LP2 #LP3" scope="branches">
  <desc>Sample sentences in Southern speech</desc>
 </join></egXML>
   </exemplum>
