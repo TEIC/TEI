@@ -68,6 +68,7 @@ html-web: check
 	| xsltproc -o Guidelines-web/$$i/index.html ${VERBOSE} \
 	    --stringparam displayMode rnc \
 	    --stringparam lang $$i \
+	    --stringparam doclang $$i \
 	    --stringparam outputDir . \
 	    Utilities/guidelines.xsl - ; \
 	cp *.css TEI-glow.png Guidelines-web/$$i/ ; \
@@ -89,6 +90,7 @@ html:check subset
 	    --stringparam displayMode rnc \
 	    --stringparam outputDir . \
 	    --stringparam lang ${LANGUAGE} \
+	    --stringparam doclang ${LANGUAGE} \
 	    Utilities/guidelines-print.xsl \
 	    ${DRIVER} 
 	-cp *.css Guidelines
@@ -237,7 +239,7 @@ dist-doc:  html-web
 	for i in ReleaseNotes/readme*xml; do  \
 	xsltproc \
 	--stringparam cssFile html/teic.css \
-	${XSLP4}/teic/teihtml-teic.xsl $$i \
+	${XSL}/teic/teihtml-teic.xsl $$i \
 	> release/tei-p5-doc/share/doc/tei-p5-doc/`basename $$i .xml`.html; \
 	done
 	(cd release; 	\
