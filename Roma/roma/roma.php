@@ -628,8 +628,7 @@ class roma
 
 	$this->createChangeInListDom( $oListDom, array ( $oModules, $oChanged ) );
 
-	$this->applyStylesheet( $oListDom, 'modules.xsl', $oNewDom, array(), 'modules' );
-
+	$this->applyStylesheet( $oListDom, 'modules.xsl', $oNewDom, array('lang' => $_SESSION['docLang'] ), 'modules' );
 	$oParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'doclang', $_SESSION['docLang'] );
 	$oParser->addReplacement( 'mode', 'modules' );

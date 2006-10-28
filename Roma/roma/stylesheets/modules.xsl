@@ -12,47 +12,50 @@ date: 10.06.2004
 Description
 
 -->
+
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-  <xsl:template match="/">
-   <p class="roma">
+<xsl:param name="lang">en</xsl:param>
+
+<xsl:template match="/">
+  <p class="roma">
     <table cellspacing="30">
-     <tr>
-      <td>
-       <form>
-        <table>
-         <tr><td class="headline" colspan="5"><xsl:value-of disable-output-escaping="yes" select="$res_form_headline"/></td></tr>
-         <tr class="header">
-          <td></td>
+      <tr>
+	<td>
+	  <form>
+	    <table>
+	      <tr><td class="headline" colspan="5"><xsl:value-of disable-output-escaping="yes" select="$res_form_headline"/></td></tr>
+	      <tr class="header">
+		<td></td>
           <td><xsl:value-of  disable-output-escaping="yes"
 	  select="$res_form_moduleName"/></td>
 	  <td/>
-          <td><xsl:value-of  disable-output-escaping="yes" select="$res_form_description"/></td>
+	  <td><xsl:value-of  disable-output-escaping="yes" select="$res_form_description"/></td>
           <td><xsl:value-of  disable-output-escaping="yes" select="$res_form_changes"/></td>
-         </tr>
-         <xsl:call-template name="processListModules"/>
-        </table>
+	      </tr>
+	      <xsl:call-template name="processListModules"/>
+	    </table>
        </form>
-      </td>
-      <td class="selectedModulesBox">
-       <form>
-       <table>
-        <tr>
-         <td class="headline" colspan="2"><xsl:value-of
-	 disable-output-escaping="yes"
-select="$res_selectedModules_headline"/></td>
-	</tr>
-	<xsl:call-template name="processSelectedModules"/>
-       </table>
+	</td>
+	<td class="selectedModulesBox">
+	  <form>
+	    <table>
+	      <tr>
+		<td class="headline" colspan="2"><xsl:value-of
+		disable-output-escaping="yes"
+		select="$res_selectedModules_headline"/></td>
+	      </tr>
+	      <xsl:call-template name="processSelectedModules"/>
+	    </table>
 	</form>
-      </td>
+	</td>
       </tr>
     </table>
-   </p>
-  </xsl:template>
+  </p>
+</xsl:template>
 
 
- <xsl:template name="processSelectedModules">
+<xsl:template name="processSelectedModules">
    <xsl:for-each select=".//selectedModules/module">
      <xsl:variable name="thisModule"><xsl:value-of select="."/></xsl:variable>
      <tr>
@@ -71,14 +74,14 @@ select="$res_selectedModules_headline"/></td>
      </tr>
    </xsl:for-each>
  </xsl:template>
-
+ 
  <xsl:template name="processListModules">
    <xsl:for-each select=".//teiModulesList/teiModule">
      <xsl:variable name="currentModule"><xsl:value-of
      select="moduleName"/></xsl:variable>
      <tr>
        <xsl:if
-	test="//changes/changedModules/module[text()=$currentModule]
+	   test="//changes/changedModules/module[text()=$currentModule]
 	and not(//changes/selectedModules/module[text()=$currentModule])">
 	 <xsl:attribute name="class">notAdded</xsl:attribute>
        </xsl:if>
@@ -97,7 +100,9 @@ select="$res_selectedModules_headline"/></td>
        <td>
 	 <a target="_new">
 	   <xsl:attribute name="href">
-	     <xsl:text>http://www.tei-c.org/P5/Guidelines/</xsl:text>
+	     <xsl:text>/release/doc/tei-doc-p5/html/</xsl:text>
+	     <xsl:value-of select="$lang"/>
+	     <xsl:text>/</xsl:text>
 	     <xsl:value-of select="moduleChapter"/>
 	     <xsl:text>.html</xsl:text>
 	   </xsl:attribute>
