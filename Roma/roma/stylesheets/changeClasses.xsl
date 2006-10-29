@@ -68,6 +68,8 @@ Description
 	     <xsl:value-of select="$host"/>
 	     <xsl:text>tag.xq?documentationLanguage=</xsl:text>
 	     <xsl:value-of select="$doclang"/>
+	     <xsl:text>&amp;doclang=</xsl:text>
+	     <xsl:value-of select="$doclang"/>
 	     <xsl:text>&amp;name=</xsl:text>
 	     <xsl:value-of select="className"/>
 	   </xsl:attribute>

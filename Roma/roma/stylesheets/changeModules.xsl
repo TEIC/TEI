@@ -102,6 +102,8 @@ Description
 	     <xsl:value-of select="$TEISERVER"/>
 	     <xsl:text>tag.xq?documentationLanguage=</xsl:text>
 	     <xsl:value-of select="$lang"/>
+	     <xsl:text>&amp;doclang=</xsl:text>
+	     <xsl:value-of select="$lang"/>
 	     <xsl:text>&amp;name=</xsl:text>
 	     <xsl:value-of select="elementName"/>
 	   </xsl:attribute>
