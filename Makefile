@@ -18,7 +18,7 @@ CHAPTER=$(shell find ${LANGTREE} -iname ${CHAP}*.xml)
 
 .PHONY: convert dtds schemas html validate valid test split oddschema exampleschema fascicule clean dist
 
-default: dtds schemas exemplars html
+default: dtds schemas exemplars html-web validate-html
 
 convert: dtds schemas
 
@@ -31,8 +31,8 @@ dtds: check
 	--stringparam lang ${LANGUAGE} \
 	--stringparam TEIC true \
 	${XSL}/odds/odd2dtd.xsl -
-	#for i in DTD/* ; do perl -i Utilities/cleandtd.pl $$i; done	
 	(cd DTD; ln -s tei.dtd tei2.dtd)
+	#for i in DTD/* ; do perl -i Utilities/cleandtd.pl $$i; done	
 
 schemas:check
 	-mkdir Schema
@@ -62,7 +62,7 @@ html-web: check
 	-rm -rf Guidelines-web
 	-mkdir Guidelines-web
 	for i in ${LANGUAGE} ; do \
-	echo making for language $$i ; \
+	echo making HTML Guidelines for language $$i ; \
 	mkdir -p Guidelines-web/$$i; \
 	xmllint --noent --xinclude ${SOURCETREE}/Guidelines/$$i/guidelines-$$i.xml \
 	| xsltproc -o Guidelines-web/$$i/index.html ${VERBOSE} \
@@ -77,7 +77,14 @@ html-web: check
 	(cd Guidelines-web/$$i; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' teic.css); \
 	done
 
-#(cd Guidelines-web/$$i; for i in *html; do echo validate $$i; xmllint --dropdtd $$i > z_$$i; jing -c ../../xhtml.rnc z_$$i; rm z_$$i; done); \
+validate-html:
+	(cd Guidelines-web/$$i;\
+	 for i in *html; do \
+	echo validate $$i; \
+	xmllint --dropdtd $$i > z_$$i; \
+	jing -c ../../xhtml.rnc z_$$i; \
+	 rm z_$$i;\
+	 done)
 
 html:check subset
 	-rm -rf Guidelines
