@@ -1328,9 +1328,6 @@
         </xsl:for-each>
         <xsl:text>)</xsl:text>
       </xsl:when>
-      <xsl:when test="tei:datatype[rng:ref/@name='datatype.Code']">
-        <xsl:text> CDATA </xsl:text>
-      </xsl:when>
       <xsl:when test="tei:datatype/rng:*">
         <xsl:apply-templates select="tei:datatype"/>
       </xsl:when>

@@ -809,6 +809,10 @@ $ID: requests a particular page
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="addLangAtt">
+    <xsl:variable name="documentationLanguage">
+      <xsl:call-template name="generateDoc"/>
+    </xsl:variable>
+
     <xsl:variable name="supplied">
       <xsl:choose>
         <xsl:when test="ancestor-or-self::tei:*[@xml:lang]">

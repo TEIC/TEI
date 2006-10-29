@@ -111,19 +111,19 @@
     </xsl:choose>
   </xsl:variable>
 
-  <xsl:variable name="documentationLanguage">
+  <xsl:template name="generateDoc">
     <xsl:choose>
       <xsl:when test="string-length($doclang)&gt;0">
 	<xsl:value-of select="$doclang"/>
       </xsl:when>
-      <xsl:when test="tei:schemaSpec/@docLang">
+      <xsl:when test="ancestor-or-self::tei:schemaSpec/@docLang">
 	<xsl:value-of select="//tei:schemaSpec[1]/@docLang"/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:text>en</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:variable>
+  </xsl:template>
 
   <xsl:template match="processing-instruction()">
     <xsl:if test="name(.) = 'odds'">
@@ -1007,6 +1007,10 @@ sequenceRepeatable
   <xsl:template match="tei:remarks" mode="tangle"/>
 
   <xsl:template match="tei:remarks" mode="weave">
+    <xsl:variable name="documentationLanguage">
+      <xsl:call-template name="generateDoc"/>
+    </xsl:variable>
+
     <xsl:variable name="langs">
       <xsl:value-of
 	  select="concat(normalize-space($documentationLanguage),' ')"/>
@@ -1494,6 +1498,10 @@ sequenceRepeatable
 
   <xsl:template name="showElement">
     <xsl:param name="name"/>
+    <xsl:variable name="documentationLanguage">
+      <xsl:call-template name="generateDoc"/>
+    </xsl:variable>
+
     <xsl:choose>
       <xsl:when test="$oddmode='tei'">
         <tei:ref target="#{$name}">
@@ -1569,9 +1577,13 @@ sequenceRepeatable
     </xsl:for-each>
   </xsl:template>
   <xsl:template name="linkStyle"/>
+
   <xsl:template name="linkTogether">
     <xsl:param name="name"/>
     <xsl:param name="reftext"/>
+    <xsl:variable name="documentationLanguage">
+      <xsl:call-template name="generateDoc"/>
+    </xsl:variable>
     <xsl:variable name="partialname">
       <xsl:choose>
 	<xsl:when test="contains($name,'_')">
@@ -1884,6 +1896,9 @@ sequenceRepeatable
 
   <xsl:template name="makeDescription">
     <xsl:param name="includeValList">false</xsl:param>
+    <xsl:variable name="documentationLanguage">
+      <xsl:call-template name="generateDoc"/>
+    </xsl:variable>
     <xsl:variable name="langs">
       <xsl:value-of
 	  select="concat(normalize-space($documentationLanguage),' ')"/>

@@ -58,6 +58,10 @@
     </xsl:choose>
   </xsl:template>
   <xsl:template match="tei:schemaSpec">
+    <xsl:variable name="documentationLanguage">
+      <xsl:call-template name="generateDoc"/>
+    </xsl:variable>
+
     <xsl:if test="$verbose='true'">
       <xsl:message>
 	I18N setup:
