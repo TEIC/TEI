@@ -100,9 +100,9 @@ Description
        <td>
 	 <a target="_new">
 	   <xsl:attribute name="href">
-	     <xsl:text>/release/doc/tei-p5-doc/html/</xsl:text>
+	     <xsl:text>/release/doc/tei-p5-doc/</xsl:text>
 	     <xsl:value-of select="$lang"/>
-	     <xsl:text>/</xsl:text>
+	     <xsl:text>/html/</xsl:text>
 	     <xsl:value-of select="moduleChapter"/>
 	     <xsl:text>.html</xsl:text>
 	   </xsl:attribute>
