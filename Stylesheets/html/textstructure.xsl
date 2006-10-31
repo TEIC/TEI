@@ -810,7 +810,17 @@ $ID: requests a particular page
   </xd:doc>
   <xsl:template name="addLangAtt">
     <xsl:variable name="documentationLanguage">
-      <xsl:call-template name="generateDoc"/>
+    <xsl:choose>
+      <xsl:when test="string-length($doclang)&gt;0">
+	<xsl:value-of select="$doclang"/>
+      </xsl:when>
+      <xsl:when test="ancestor-or-self::tei:schemaSpec/@docLang">
+	<xsl:value-of select="//tei:schemaSpec[1]/@docLang"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text>en</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
     </xsl:variable>
 
     <xsl:variable name="supplied">

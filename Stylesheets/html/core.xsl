@@ -134,17 +134,6 @@
       <xsl:apply-templates/>
     </xsl:for-each>. <br/></xsl:template>
   <xd:doc>
-    <xd:short>Process elements tei:author</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:author" mode="first">
-    <xsl:value-of select="tei:name/@reg"/>
-    <xsl:if test="name[position()&gt;1]">
-      <xsl:text>(e.a.)</xsl:text>
-    </xsl:if>
-    <xsl:text>: </xsl:text>
-  </xsl:template>
-  <xd:doc>
     <xd:short>Process elements tei:bibl</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
@@ -165,14 +154,6 @@
         <xsl:apply-templates/>
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:biblScope</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:biblScope">
-    <xsl:apply-templates/>
-    <xsl:if test="ancestor::tei:biblStruct">. </xsl:if>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:biblStruct</xd:short>
@@ -268,6 +249,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements tei:code</xd:short>
     <xd:detail> </xd:detail>
@@ -277,31 +259,8 @@
       <xsl:apply-templates/>
     </tt>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:edition</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:edition"><xsl:apply-templates/>.<br/></xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:editor</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:editor" mode="first">
-    <xsl:value-of select="tei:name/@reg"/>
-    <xsl:text> (ed.)</xsl:text>
-    <xsl:if test="tei:name[position()&gt;1]">
-      <xsl:text> (e.a.)</xsl:text>
-    </xsl:if>
-    <xsl:text>: </xsl:text>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:editor</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:editor"><xsl:apply-templates
-      select="tei:name[position()=1]"/><xsl:for-each
-      select="tei:name[position()&gt;1]">, <xsl:apply-templates/>
-    </xsl:for-each> (ed).<br/></xsl:template>
+
+
   <xd:doc>
     <xd:short>Process elements tei:eg</xd:short>
     <xd:detail> </xd:detail>
@@ -314,6 +273,7 @@
       <xsl:apply-templates/>
     </div>
   </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements tei:emph</xd:short>
     <xd:detail> </xd:detail>
@@ -446,13 +406,6 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:imprint</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:imprint"><xsl:apply-templates select="tei:biblScope"
-      /><xsl:apply-templates select="tei:pubPlace"/>, <xsl:apply-templates
-      select="tei:date"/>. <xsl:apply-templates select="publisher"/></xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:item</xd:short>
     <xd:detail> </xd:detail>
@@ -821,7 +774,7 @@
   </xd:doc>
   <xsl:template match="tei:listBibl">
     <ol>
-      <xsl:for-each select="tei:bibl">
+      <xsl:for-each select="tei:bibl|tei:biblItem">
         <li>
           <xsl:apply-templates select="."/>
         </li>
@@ -1109,11 +1062,6 @@
       <xsl:apply-templates/>
     </p>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:publisher</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:publisher"> (<xsl:apply-templates/>).</xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:q</xd:short>
     <xd:detail> </xd:detail>
@@ -1418,16 +1366,22 @@
   <xsl:template match="tei:title">
     <xsl:choose>
       <xsl:when test="@rend='plain'">
-        <xsl:value-of select="."/>
+        <xsl:apply-templates/>
+      </xsl:when>
+      <xsl:when test="@level='j'">
+	<xsl:text>, </xsl:text>
+        <i>
+          <xsl:apply-templates/>
+        </i>
       </xsl:when>
       <xsl:when test="@level='a'">
         <xsl:text>‘</xsl:text>
-        <xsl:value-of select="."/>
+        <xsl:apply-templates/>
         <xsl:text>’ </xsl:text>
       </xsl:when>
       <xsl:otherwise>
         <i>
-          <xsl:value-of select="."/>
+          <xsl:apply-templates/>
         </i>
       </xsl:otherwise>
     </xsl:choose>

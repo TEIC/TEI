@@ -55,4 +55,105 @@
   </xsl:template>
 
 
+<xd:doc>
+  <xd:short>tei:author inside a bibl</xd:short>
+  <xd:detail> </xd:detail>
+</xd:doc>
+<xsl:template match="tei:bibl/tei:author">
+<xsl:apply-templates/>
+<xsl:choose>
+  <xsl:when test="count(following-sibling::tei:author)=1">
+    <xsl:text> and </xsl:text>
+  </xsl:when>
+  <xsl:when test="following-sibling::tei:author">
+    <xsl:text>, </xsl:text>
+  </xsl:when>
+</xsl:choose>
+</xsl:template>
+
+<xd:doc>
+  <xd:short>tei:editor</xd:short>
+  <xd:detail> </xd:detail>
+</xd:doc>
+<xsl:template match="tei:editor">
+  <xsl:choose>
+    <xsl:when test="tei:name">
+      <xsl:apply-templates select="tei:name[position()=1]"/>
+      <xsl:for-each select="tei:name[position()&gt;1]">
+	<xsl:text>, </xsl:text>
+	<xsl:apply-templates/>
+      </xsl:for-each>
+      <xsl:text> (ed).&#10;</xsl:text>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:apply-templates/>
+      <xsl:choose>
+	<xsl:when test="count(following-sibling::tei:editor)=1">
+	  <xsl:text> and </xsl:text>
+	</xsl:when>
+	<xsl:when test="following-sibling::tei:author">
+	  <xsl:text>, </xsl:text>
+	</xsl:when>
+	<xsl:when test="preceding-sibling::tei:editor and
+			not(following-sibling::tei:editor)">
+	  <xsl:text> (eds.)</xsl:text>
+	</xsl:when>
+	<xsl:when test="not(following-sibling::tei:editor)">
+	  <xsl:text> (ed.)</xsl:text>
+	</xsl:when>
+      </xsl:choose>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+  <xd:doc>
+    <xd:short>Process elements tei:edition</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:edition">
+    <xsl:apply-templates/>
+    <xsl:text>.&#10;</xsl:text>
+  </xsl:template>
+
+
+  <xd:doc>
+    <xd:short>Process elements tei:biblScope</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:biblScope">
+    <xsl:text> </xsl:text>
+    <xsl:apply-templates/>
+  </xsl:template>
+
+  <xd:doc>
+    <xd:short>Process elements tei:imprint</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:imprint">
+    <xsl:apply-templates select="tei:biblScope"/>
+    <xsl:if test="tei:publisher">
+      <xsl:text>, </xsl:text>
+      <xsl:apply-templates select="tei:publisher"/>
+    </xsl:if>
+    <xsl:if test="tei:pubPlace">
+      <xsl:text>, </xsl:text>
+      <xsl:apply-templates select="tei:pubPlace"/>
+    </xsl:if>
+    <xsl:apply-templates select="tei:date"/>
+  </xsl:template>
+
+  <xd:doc>
+    <xd:short>Process elements tei:publisher</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:publisher">
+    <xsl:apply-templates/>
+  </xsl:template>
+
+  <xd:doc>
+    <xd:short>Process elements tei:eg</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+
+
 </xsl:stylesheet>

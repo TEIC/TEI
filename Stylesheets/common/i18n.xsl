@@ -74,6 +74,13 @@
     <xd:short>[common] Prefix text before an auto-generated table of contents </xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
+  <xd:doc class="localisation" type="string"> The language the text is in
+    (use ISO 2-letter codes)</xd:doc>
+  <xsl:param name="doclang">en</xsl:param>
+  <xd:doc class="localisation">
+    <xd:short>[common] Prefix text before an auto-generated table of contents </xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
   <xsl:template name="contentsHeading">
     <xsl:call-template name="i18n">
       <xsl:with-param name="word">contentsHeading</xsl:with-param>

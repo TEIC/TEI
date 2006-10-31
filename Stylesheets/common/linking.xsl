@@ -69,6 +69,33 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+  <xd:doc>
+    <xd:short>Process elements tei:author</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:author" mode="first">
+    <xsl:value-of select="tei:name/@reg"/>
+    <xsl:if test="name[position()&gt;1]">
+      <xsl:text>(e.a.)</xsl:text>
+    </xsl:if>
+    <xsl:text>: </xsl:text>
+  </xsl:template>
+
+  <xd:doc>
+    <xd:short>editor in cross-ref mode</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:editor" mode="first">
+    <xsl:value-of select="tei:name/@reg"/>
+    <xsl:text> (ed.)</xsl:text>
+    <xsl:if test="tei:name[position()&gt;1]">
+      <xsl:text> (e.a.)</xsl:text>
+    </xsl:if>
+    <xsl:text>: </xsl:text>
+  </xsl:template>
+
+
   <xd:doc>
     <xd:short>Process elements
       tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6 in
