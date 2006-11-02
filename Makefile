@@ -63,18 +63,18 @@ html-web: check
 	-mkdir Guidelines-web
 	for i in ${LANGUAGE} ; do \
 	echo making HTML Guidelines for language $$i ; \
-	mkdir -p Guidelines-web/$$i; \
+	mkdir -p Guidelines-web/$$i/html; \
 	xmllint --noent --xinclude ${SOURCETREE}/Guidelines/$$i/guidelines-$$i.xml \
-	| xsltproc -o Guidelines-web/$$i/index.html ${VERBOSE} \
+	| xsltproc -o Guidelines-web/$$i/html/index.html ${VERBOSE} \
 	    --stringparam displayMode rnc \
 	    --stringparam lang $$i \
 	    --stringparam doclang $$i \
 	    --stringparam outputDir . \
 	    Utilities/guidelines.xsl - ; \
-	cp *.css TEI-glow.png Guidelines-web/$$i/ ; \
-	cp ${SOURCETREE}/Images/* Guidelines-web/$$i/ ; \
-	(cd Guidelines-web/$$i; for i in *.html; do perl -i ../../Utilities/cleanrnc.pl $$i;done); \
-	(cd Guidelines-web/$$i; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' teic.css); \
+	cp *.css TEI-glow.png Guidelines-web/$$i/html/ ; \
+	cp ${SOURCETREE}/Images/* Guidelines-web/$$i/html/ ; \
+	(cd Guidelines-web/$$i/html; for i in *.html; do perl -i ../../../Utilities/cleanrnc.pl $$i;done); \
+	(cd Guidelines-web/$$i/html; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' teic.css); \
 	done
 
 validate-html:
@@ -241,9 +241,9 @@ dist-schema: schemas dtds oddschema
 
 dist-doc:  html-web
 	rm -rf release/tei-p5-doc*
-	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc/html
+	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc
 	(cd Guidelines-web; tar --exclude .svn -c -f - . ) \
-	| (cd release/tei-p5-doc/share/doc/tei-p5-doc/html; tar xf - )
+	| (cd release/tei-p5-doc/share/doc/tei-p5-doc; tar xf - )
 	for i in ReleaseNotes/readme*xml; do  \
 	xsltproc \
 	--stringparam cssFile html/teic.css \
