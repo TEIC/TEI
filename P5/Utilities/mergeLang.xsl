@@ -47,9 +47,6 @@
 
   <xsl:param name="newFile"/>
   <xsl:param name="newLang"/>
-  <xsl:param name="date">
-    <xsl:value-of select="substring-before(edate:date-time(),'T')"/>
-  </xsl:param>
 
   <xsl:output encoding="utf-8" indent="yes"/>
 
@@ -109,6 +106,17 @@
 	</xsl:variable>
 <!--<xsl:message>look for <xsl:value-of select="$What"/> giving <xsl:value-of select="$that"/></xsl:message>-->
 	<xsl:if test="not($that=$this) and not($that='')">
+  <xsl:variable name="date">
+    <xsl:choose>
+      <xsl:when test="@notBefore">
+	<xsl:value-of select="@notBefore"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of
+	    select="substring-before(edate:date-time(),'T')"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
 	  <gloss xmlns="http://www.tei-c.org/ns/1.0"
 		 version="{$date}"
 		 >
@@ -148,6 +156,17 @@
 	  <xsl:value-of select="normalize-space(.)"/>
 	</xsl:variable>
 	<xsl:if test="not($that=$this) and not($that='')">
+	  <xsl:variable name="date">
+	    <xsl:choose>
+	      <xsl:when test="@notBefore">
+		<xsl:value-of select="@notBefore"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:value-of
+		    select="substring-before(edate:date-time(),'T')"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:variable>
 	  <desc xmlns="http://www.tei-c.org/ns/1.0"
 		version="{$date}">
 	    <xsl:attribute name="xml:lang">
