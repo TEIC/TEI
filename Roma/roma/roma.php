@@ -960,7 +960,7 @@ class roma
 	//if attribute specified
 	if( $_REQUEST[ 'attribute' ] != '' )
 	  {
-	    $this->m_oRomaDom->getAttributeDefinition( $_REQUEST[ 'attribute' ], $_REQUEST[ 'element' ], $_REQUEST[ 'module' ], $_REQUEST[ 'class' ], $Language,$oAttDom );
+	    $this->m_oRomaDom->getAttributeDefinition( $_REQUEST[ 'attribute' ], $_REQUEST[ 'element' ], $_REQUEST[ 'module' ], $_REQUEST[ 'class' ], $oAttDom );
 	    $oCurrent = $oAddAttribute->appendChild( new domElement( 'currentAttribute' ) );
 	    $oTheAttribute = $oListDom->importNode( $oAttDom->documentElement, true );
 	    $oCurrent->appendChild( $oTheAttribute );
