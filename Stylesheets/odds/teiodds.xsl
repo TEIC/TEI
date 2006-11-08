@@ -531,13 +531,13 @@ sequenceRepeatable
 		</xsl:when>
 
 		<xsl:otherwise>
-	      <rng:choice>
-		<xsl:for-each
-		    select="key('CLASSMEMBERS',$thisClass)">
-		  <ref name="{$patternPrefixText}{@ident}"
-		       xmlns="http://relaxng.org/ns/structure/1.0"/>
-		</xsl:for-each>
-	      </rng:choice>
+		  <rng:choice>
+		    <xsl:for-each
+			select="key('CLASSMEMBERS',$thisClass)">
+		      <ref name="{$patternPrefixText}{@ident}"
+			   xmlns="http://relaxng.org/ns/structure/1.0"/>
+		    </xsl:for-each>
+		  </rng:choice>
 		</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:when>

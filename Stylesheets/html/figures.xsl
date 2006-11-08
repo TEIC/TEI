@@ -123,69 +123,76 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:figure">
-    <div>
-      <xsl:attribute name="class">
-      <xsl:choose>
-	<xsl:when test="@rend">
-	  <xsl:value-of select="@rend"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:text>figure</xsl:text>
-	</xsl:otherwise>
-      </xsl:choose>
-      </xsl:attribute>
-      <xsl:if test="@xml:id">
-	<xsl:choose>
-	  <xsl:when test="$xhtml='true'">
-	    <xsl:attribute name="id">
-	      <xsl:value-of select="@xml:id"/>
-	    </xsl:attribute>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <a class="f" name="{@xml:id}">
-	      <xsl:comment> </xsl:comment>
-	    </a>
-	  </xsl:otherwise>
-	</xsl:choose>
-      </xsl:if>
-      <xsl:if test="@file|@url|@entity">
+    <xsl:choose>
+      <xsl:when test="@rend='inline'">
 	<xsl:call-template name="showGraphic"/>
-      </xsl:if>
-      <xsl:apply-templates/>
-      <xsl:if test="tei:head">
-	<div class="caption">
-	  <xsl:choose>
-	    <xsl:when
-		test="ancestor::tei:front and  $numberFrontFigures='true'">
-	      <xsl:call-template name="i18n">
-		<xsl:with-param name="word">figureWord</xsl:with-param>
-	      </xsl:call-template>
-	      <xsl:text> </xsl:text>
-	      <xsl:number count="tei:figure[tei:head]" from="tei:front"
-			  level="any"/>
-	      <xsl:text>. </xsl:text>
-	    </xsl:when>
-	    <xsl:when test="ancestor::tei:back and $numberBackFigures='true'">
-	      <xsl:call-template name="i18n">
-		<xsl:with-param name="word">figureWord</xsl:with-param>
-	      </xsl:call-template>
-	      <xsl:text> </xsl:text>
-	      <xsl:number count="tei:figure[tei:head]" from="tei:back" level="any"/>
-	      <xsl:text>. </xsl:text>
-	    </xsl:when>
-	    <xsl:when test="ancestor::tei:body and $numberFigures='true'">
-	      <xsl:call-template name="i18n">
-		<xsl:with-param name="word">figureWord</xsl:with-param>
-	      </xsl:call-template>
-	      <xsl:text> </xsl:text>
-	      <xsl:number count="tei:figure[tei:head]" from="tei:body" level="any"/>
-	      <xsl:text>. </xsl:text>
-	    </xsl:when>
-	  </xsl:choose>
-	  <xsl:apply-templates mode="plain" select="tei:head"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<div>
+	  <xsl:attribute name="class">
+	    <xsl:choose>
+	      <xsl:when test="@rend">
+		<xsl:value-of select="@rend"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:text>figure</xsl:text>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:attribute>
+	  <xsl:if test="@xml:id">
+	    <xsl:choose>
+	      <xsl:when test="$xhtml='true'">
+		<xsl:attribute name="id">
+		  <xsl:value-of select="@xml:id"/>
+		</xsl:attribute>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<a class="f" name="{@xml:id}">
+		  <xsl:comment> </xsl:comment>
+		</a>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:if>
+	  <xsl:if test="@file|@url|@entity">
+	    <xsl:call-template name="showGraphic"/>
+	  </xsl:if>
+	  <xsl:apply-templates/>
+	  <xsl:if test="tei:head">
+	    <div class="caption">
+	      <xsl:choose>
+		<xsl:when
+		    test="ancestor::tei:front and  $numberFrontFigures='true'">
+		  <xsl:call-template name="i18n">
+		    <xsl:with-param name="word">figureWord</xsl:with-param>
+		  </xsl:call-template>
+		  <xsl:text> </xsl:text>
+		  <xsl:number count="tei:figure[tei:head]" from="tei:front"
+			      level="any"/>
+		  <xsl:text>. </xsl:text>
+		</xsl:when>
+		<xsl:when test="ancestor::tei:back and $numberBackFigures='true'">
+		  <xsl:call-template name="i18n">
+		    <xsl:with-param name="word">figureWord</xsl:with-param>
+		  </xsl:call-template>
+		  <xsl:text> </xsl:text>
+		  <xsl:number count="tei:figure[tei:head]" from="tei:back" level="any"/>
+		  <xsl:text>. </xsl:text>
+		</xsl:when>
+		<xsl:when test="ancestor::tei:body and $numberFigures='true'">
+		  <xsl:call-template name="i18n">
+		    <xsl:with-param name="word">figureWord</xsl:with-param>
+		  </xsl:call-template>
+		  <xsl:text> </xsl:text>
+		  <xsl:number count="tei:figure[tei:head]" from="tei:body" level="any"/>
+		  <xsl:text>. </xsl:text>
+		</xsl:when>
+	      </xsl:choose>
+	      <xsl:apply-templates mode="plain" select="tei:head"/>
+	    </div>
+	  </xsl:if>
 	</div>
-      </xsl:if>
-    </div>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:figure/tei:head</xd:short>
