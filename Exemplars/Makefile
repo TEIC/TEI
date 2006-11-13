@@ -6,9 +6,11 @@ ROMAOPTS=--dochtml --localsource=../Source/Guidelines/${LANGUAGE}/${DRIVER} --xs
 
 schemas:
 	for i in *.odd; do echo Process $$i; ${PREFIX}/roma ${ROMAOPTS} $$i .; done
-	-rm xlink.xsd xml.xsd mathml*xsd p5examples.xsd tei_odds.xsd
-	-rm p5odds.xsd structure.xsd ns1.xsd teix.xsd
-	-rm p5odds.dtd p5examples.dtd
+	-rm tei_odds.dtd tei_odds.xsd
+	-rm tei_allPlus.dtd tei_allPlus.xsd
+	-rm tei_svg.dtd tei_svg.xsd
+	-rm tei_math.dtd tei_math.xsd
+	-rm tei_xinclude.dtd tei_xinclude.xsd
 
 
 dist: schemas

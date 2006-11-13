@@ -221,9 +221,7 @@ dist-source:
 	rm -rf release/tei-p5-source*
 	mkdir -p release/tei-p5-source/share/xml/tei/odd
 	tar -c -f - --exclude "*~" --exclude .svn 	COPYING \
-	Exemplars \
 	Makefile \
-	Query \
 	ReleaseNotes  \
 	Source  \
 	TEI-glow.png \
