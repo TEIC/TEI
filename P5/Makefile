@@ -220,7 +220,29 @@ dist: clean dist-source dist-schema dist-doc dist-test dist-database dist-exempl
 dist-source: 
 	rm -rf release/tei-p5-source*
 	mkdir -p release/tei-p5-source/share/xml/tei/odd
-	tar -c -f - --exclude "*~" --exclude .svn *.* VERSION ReleaseNotes Source Makefile Utilities  \
+	tar -c -f - --exclude "*~" --exclude .svn 	COPYING \
+	Exemplars \
+	Makefile \
+	Query \
+	ReleaseNotes  \
+	Source  \
+	TEI-glow.png \
+	Utilities   \
+	VERSION  \
+	fasc-head.xml \
+	fasc-tail.xml \
+	p5examples.rnc \
+	p5nrl.xml \
+	p5odds-ex.odd \
+	p5odds.odd \
+	p5odds.rnc \
+	p5sch.xsl \
+	schematron1-5.rnc \
+	tei-print.css \
+	tei.css \
+	teic.css \
+	validator.xsl \
+	xhtml.rnc \
 	| (cd release/tei-p5-source/share/xml/tei/odd; tar xf - )
 	(cd release; 	\
 	ln -s tei-p5-source tei-p5-source-`cat ../VERSION` ; \
@@ -336,4 +358,5 @@ clean:
 	(cd Test; make clean)
 	(cd Exemplars; make clean)
 	rm -rf FASC-*
+
 
