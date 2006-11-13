@@ -159,7 +159,7 @@ valid: check
 	 | grep -v ": error: Illegal xml:lang value \"[A-Za-z][A-Za-z][A-Za-z]\"\.$$" \
 	 | grep -v ': error: unfinished element$$'
 	@echo --------- XSLT validator
-	xsltproc validator.xsl ${DRIVER} >& tmp && sed 's/TEI...\/text...\/body...\///' tmp && rm tmp
+	xsltproc validator.xsl ${DRIVER}
 	@echo --------- xmllint RelaxNG test REMOVED
 #	@xmllint --version
 #	-xmllint  --relaxng p5odds.rng --noent --xinclude --noout ${DRIVER}
