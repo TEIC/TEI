@@ -106,7 +106,9 @@
       <xsl:text> </xsl:text>
       <xsl:copy-of select="$realauthor"/>
     </xsl:if>
-    <xsl:if test="not($revauthor = '')"> (<xsl:call-template name="i18n">
+    <xsl:if test="not($revauthor = '')">
+      <xsl:text> (</xsl:text>
+      <xsl:call-template name="i18n">
         <xsl:with-param name="word">revisedWord</xsl:with-param>
       </xsl:call-template>
       <xsl:text> </xsl:text>

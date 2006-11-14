@@ -117,6 +117,11 @@
               applicable</xsl:with-param>
             </xsl:call-template>
           </xsl:when>
+	  <xsl:otherwise>
+            <xsl:call-template name="i18n">
+              <xsl:with-param name="word">Optional</xsl:with-param>
+            </xsl:call-template>
+	  </xsl:otherwise>
         </xsl:choose>
       </td>
     </tr>
@@ -1147,7 +1152,7 @@
           <xsl:text> (</xsl:text>
           <xsl:call-template name="showAttClasses"/>
           <xsl:text>)</xsl:text>
-          <xsl:if test="tei:attDef">
+          <xsl:if test=".//tei:attDef">
             <table>
               <xsl:choose>
                 <xsl:when test="$mode='all'">
@@ -1158,7 +1163,7 @@
                 </xsl:otherwise>
               </xsl:choose>
             </table>
-          </xsl:if>
+	  </xsl:if>
         </td>
       </tr>
     </table>
