@@ -1,4 +1,5 @@
 LANGUAGE=en
+OTHERLANGUAGES=fr
 LATEX=pdflatex
 VERBOSE=
 PREFIX=/usr
@@ -61,7 +62,7 @@ html-web: check
 	perl -p -e "s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+" Utilities/odd2htmlp5.xsl.model > Utilities/odd2htmlp5.xsl
 	-rm -rf Guidelines-web
 	-mkdir Guidelines-web
-	for i in ${LANGUAGE} ; do \
+	for i in ${LANGUAGE} ${OTHERLANGUAGES} ; do \
 	echo making HTML Guidelines for language $$i ; \
 	mkdir -p Guidelines-web/$$i/html; \
 	xmllint --noent --xinclude ${SOURCETREE}/Guidelines/$$i/guidelines-$$i.xml \
