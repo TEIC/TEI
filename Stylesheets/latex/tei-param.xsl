@@ -78,8 +78,9 @@ Use real name of graphics files rather than pointers
     this markup</xd:detail>
 </xd:doc>
 <xsl:template name="latexPackages">
-<xsl:text>
-\usepackage[<xsl:value-of select="$latexGeometryOptions"/>]{geometry}
+<xsl:text>&#10;\usepackage[</xsl:text>
+<xsl:value-of select="$latexGeometryOptions"/>
+<xsl:text>]{geometry}
 \usepackage{longtable}
 \usepackage{colortbl}
 \usepackage{ulem}
