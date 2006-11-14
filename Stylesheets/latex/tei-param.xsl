@@ -79,7 +79,7 @@ Use real name of graphics files rather than pointers
 </xd:doc>
 <xsl:template name="latexPackages">
 <xsl:text>
-\usepackage[twoside,a4paper,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in]{geometry}
+\usepackage[<xsl:value-of select="$latexGeometryOptions"/>]{geometry}
 \usepackage{longtable}
 \usepackage{colortbl}
 \usepackage{ulem}
@@ -102,6 +102,11 @@ Use real name of graphics files rather than pointers
   \pagestyle{fancy} 
 </xsl:text>
 </xsl:template>
+
+<xd:doc type="string" class="userpackage">
+Options to pass to the geometry package to set margins etc
+</xd:doc>
+<xsl:param name="latexGeometryOptions">twoside,a4paper,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in</xsl:param>
 
 <xd:doc class="layout">
     <xd:short>LaTeX setup</xd:short>
@@ -299,6 +304,7 @@ capable of dealing with UTF-8 directly.
 \makeatother
 \fvset{frame=single,numberblanklines=false,xleftmargin=5mm,xrightmargin=5mm}
 \fancyhf{} 
+\setlength{\headheight}{14pt}
 \fancyhead[LE]{\bfseries\leftmark} 
 \fancyhead[RO]{\bfseries\rightmark} 
 \fancyfoot[RO]{\TheFullDate}
@@ -324,9 +330,9 @@ capable of dealing with UTF-8 directly.
     <xd:detail>&#160;</xd:detail>
 </xd:doc>
 <xsl:template name="printTitleAndLogo">
-\parbox[b]{.75\textwidth}{\fontsize{14pt}{16pt}\bfseries\sffamily\selectfont \@title}
+\noindent\parbox[b]{.75\textwidth}{\fontsize{14pt}{16pt}\bfseries\sffamily\selectfont \@title}
 \vskip20pt
-\par{\fontsize{11pt}{13pt}\sffamily\itshape\selectfont\@author\hfill\TheDate}
+\par\noindent{\fontsize{11pt}{13pt}\sffamily\itshape\selectfont\@author\hfill\TheDate}
 \vspace{18pt}
 </xsl:template>
   

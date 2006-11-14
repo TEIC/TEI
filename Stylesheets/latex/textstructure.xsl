@@ -116,10 +116,10 @@
 \def\TheFullDate{</xsl:text>
 <xsl:call-template name="generateDate"/>
 <xsl:variable name="revdate">
-<xsl:call-template name="generateRevDate"/>
+  <xsl:call-template name="generateRevDate"/>
 </xsl:variable>
 <xsl:if test="not($revdate='')">
-  <xsl:text>(</xsl:text>
+  <xsl:text> (</xsl:text>
   <xsl:call-template name="i18n">
     <xsl:with-param name="word">revisedWord</xsl:with-param>
     </xsl:call-template>: 
