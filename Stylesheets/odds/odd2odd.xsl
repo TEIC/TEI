@@ -366,7 +366,17 @@ for change individually.
             </xsl:when>
             <xsl:otherwise>
               <xsl:for-each select="$ORIGINAL">
-                <xsl:copy-of select="tei:classes"/>
+		<xsl:for-each select="tei:classes">
+		  <xsl:copy>
+		    <xsl:for-each select="tei:memberOf">
+		      <xsl:for-each select="$ODD">
+			<xsl:if test="not(key('DELETE',@key))">
+			  <tei:memberOf key="{@ident}"/>
+			</xsl:if>
+		      </xsl:for-each>
+		    </xsl:for-each>
+		  </xsl:copy>
+		</xsl:for-each>
               </xsl:for-each>
             </xsl:otherwise>
           </xsl:choose>
