@@ -331,9 +331,9 @@ capable of dealing with UTF-8 directly.
     <xd:detail>&#160;</xd:detail>
 </xd:doc>
 <xsl:template name="printTitleAndLogo">
-\noindent\parbox[b]{.75\textwidth}{\fontsize{14pt}{16pt}\bfseries\sffamily\selectfont \@title}
+\noindent\parbox[b]{.75\textwidth}{\fontsize{14pt}{16pt}\bfseries\raggedright\sffamily\selectfont \@title}
 \vskip20pt
-\par\noindent{\fontsize{11pt}{13pt}\sffamily\itshape\selectfont\@author\hfill\TheDate}
+\par\noindent{\fontsize{11pt}{13pt}\sffamily\itshape\raggedright\selectfont\@author\hfill\TheDate}
 \vspace{18pt}
 </xsl:template>
   
