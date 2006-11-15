@@ -13,9 +13,10 @@
          <publicationStmt>
 	   <p></p>
 	 </publicationStmt>
-<sourceDesc><p>created on Thursday 10th August 2006 11:16:34 AM by the
+<sourceDesc><p>Originally created on Thursday 10th August 2006 11:16:34 AM by the
 form at http://www.tei-c.org.uk/Roma/, using data from
-/BNC/ODD/modulelist.txt and cross-checked with old DTD extension files for P4</p>
+/BNC/ODD/modulelist.txt and cross-checked with old DTD extension files
+for P4. Extensively modified and adapted during November.</p>
          </sourceDesc>
       </fileDesc>
    </teiHeader>
@@ -23,9 +24,22 @@ form at http://www.tei-c.org.uk/Roma/, using data from
 <text>
 <body>
 
-<p>This is the formal specification for the BNC XML schema as a
-TEI-conformant application.
+<p>This is the formal specification for the BNC XML schema. This schema is
+derived from the TEI P5 specification, but has been extensively
+modified. The present specification is expressed using the TEI
+conformant ODD language, as defined at <ptr
+target="http://www.tei-c.org/release/doc/tei-p5-doc/html/TD.html"/>.</p>
+
+<p>Although  this specification produces a single schema, it has three
+logically distinct components:
+<list>
+<item>the corpus text schema</item>
+<item>the corpus header schema</item>
+<item>the xaira specification schema</item>
+</list>
 </p>
+
+
 <schemaSpec ident="bncxml" xml:lang="en" prefix="" ns=""
 	    start="teiHeader bncDoc teiCorpus">
 
@@ -62,11 +76,11 @@ TEI-conformant application.
 <elementSpec ident="address" module="core" mode="change">
 <content>
 <rng:text/>
+</content>
 <exemplum>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><address>natcorp@oucs.ox.ac.uk</address></egXML></exemplum><exemplum>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><address>13 Banbury Road, Oxford OX2 6NN,UK</address></egXML>
 </exemplum>
-</content>
 
 </elementSpec>
 
@@ -86,7 +100,7 @@ TEI-conformant application.
 </attDef>
 </attList><exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><author
 n="AubreC1" domicile="Britain">Aubrey, Crispin</author></egXML>
-<remarks/></exemplum></elementSpec>
+</exemplum><remarks/></elementSpec>
 
 
 <elementSpec ident="availability" module="header" mode="change">
@@ -101,7 +115,10 @@ n="AubreC1" domicile="Britain">Aubrey, Crispin</author></egXML>
 <attDef ident="status" mode="delete"/>
 </attList>
 <exemplum>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><availability> This material is protected by international copyright laws and may not be copied or redistributed in any way. Consult the BNC Web Site at http://www.natcorp.ox.ac.uk for full licencing and distribution conditions.</availability>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><availability> This
+material is protected by international copyright laws and 
+may not be copied or redistributed in any way. Consult the BNC Web 
+Site at http://www.natcorp.ox.ac.uk for full licencing and distribution conditions.</availability>
 </egXML></exemplum></elementSpec>
 
 <elementSpec ident="bibl" module="core" mode="change">
@@ -175,7 +192,9 @@ declared in the corpus header.</desc>
 </attDef>
 </attList>
 <exemplum>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><catRef targets="WRI ALLTIM3 ALLAVA2 ALLTYP3 WRIAAG0 WRIAD1 WRIASE1 WRIATY3 WRIAUD3 WRIDOM7 WRILEV1 WRIMED1 WRIPP5 WRISAM2 WRISTA2 WRITAS3"/></egXML></exemplum></elementSpec>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><catRef targets="WRI
+ALLTIM3 ALLAVA2 ALLTYP3 WRIAAG0 WRIAD1 WRIASE1 WRIATY3 
+WRIAUD3 WRIDOM7 WRILEV1 WRIMED1 WRIPP5 WRISAM2 WRISTA2 WRITAS3"/></egXML></exemplum></elementSpec>
 
 
 <elementSpec ident="category" module="header"  mode="change">
@@ -204,7 +223,7 @@ declared in the corpus header.</desc>
 <rng:ref name="gap"/>
 </rng:choice>
 </rng:zeroOrMore>
-</content><!-- removed pcdata option -->
+</content>
 <attList>
 <attDef ident="sic" mode="add">
 <desc>contains verbatim text which has been corrected, or an empty string if
@@ -227,29 +246,32 @@ correction.</desc>
 <elementSpec ident="creation" mode="change" module="header">
 <attList>
 <attDef ident="date" mode="add">
-<desc>supplies the year of original composition, if known; or zero if
-this is unknown. </desc>
+<desc>supplies the year of original composition, if known; or 000-00-00 if
+the date is unknown. </desc>
 <datatype><rng:text/></datatype>
 </attDef>
+
 </attList>
-<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><creation date="0000-00-00"> Origination/creation date not known </creation></egXML></exemplum></elementSpec><!-- content model already permits pcdata -->
+<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><creation date="0000-00-00"> Origination/creation date not known </creation></egXML></exemplum>
 <exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><creation date="1986"> Original publisher: A &amp; C Black (Publishers) Ltd, London </creation></egXML></exemplum>
+</elementSpec>
 
 <elementSpec ident="date" module="core" mode="change">
   <classes>
     <memberOf key="model.dateLike"/>
     <memberOf key="model.publicationStmtPart"/>
-    <memberOf key="att.datePart"/><!-- was att.dateLike -->
-    <memberOf key="att.datable"/>
   </classes>
 <attList>
 <attDef ident="calendar" mode="delete"/>
-<attDef ident="dur" mode="delete"/>
 <attDef ident="precision" mode="delete"/>
-</attList>
-<exemplum>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><date value="1989">1989</date></egXML>
-</exemplum></elementSpec>
+<attDef ident="value">
+<desc>supplies a standardized representation of the date</desc>
+<datatype>xsd:date</datatype>
+</attDef></attList>
+<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><date value="1991-02-16">1991-02-16</date></egXML></exemplum>
+<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><date
+							     value="1989">1989</date></egXML></exemplum>
+</elementSpec>
 
 <elementSpec ident="distributor" module="header" mode="change">
 <content>
@@ -266,7 +288,7 @@ this is unknown. </desc>
 <classes>
 <memberOf key="att.divLike"/>
 <memberOf key="att.rendered"/>
-<memberOf key="att.declaring"/><!-- needed for spoken texts -->
+<!--memberOf key="att.declaring"/--><!-- needed for spoken texts -->
 </classes>
 
   <content>
@@ -333,6 +355,11 @@ this is unknown. </desc>
 <attDef ident="n" mode="add">
 <desc>for a spoken text, identities the tape corresponding to this
 division. </desc></attDef>
+<attDef ident="decls" mode="add">
+<desc>for a spoken text, identities the declarations (for setting,
+recording etc.) in the header which apply to this
+division. </desc>
+<datatype>data.pointers</datatype></attDef>
 </attList>
 <exemplum>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div level="1" n="1" type="chapter"><head rend="it">
@@ -380,7 +407,7 @@ specified for a single text</desc>
       <para>Material included in the BNC was produced by
 several different agencies ...</para></editorialDecl>
 </egXML></exemplum>
-<remarks>Used in corpus header only</remarks></elementSpec>
+<remarks><p>Used in corpus header only</p></remarks></elementSpec>
 
 <elementSpec ident="encodingDesc" module="header" mode="change">
 <content>
@@ -410,7 +437,7 @@ several different agencies ...</para>
     <xairaSpecification>
 ...</xairaSpecification></encodingDesc>
 </egXML></exemplum>
-<remarks>Used in corpus header only</remarks></elementSpec>
+<remarks><p>Used in corpus header only</p></remarks></elementSpec>
 
 <elementSpec ident="event" module="spoken" mode="change">
 <content>
@@ -478,19 +505,7 @@ journalist or other source of a newspaper report.</desc></valItem>
 <memberOf key="att.rendered"/>
 <memberOf key="model.hiLike"/>
 </classes>
-<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"></egXML></exemplum></elementSpec>
-
-<elementSpec ident="idno" module="header" mode="change">
-<desc>supplies an identifying code for a text.</desc>
-<attDef ident="type">
-<desc>categorizes the code number used.</desc>
-<valList>
-<valItem ident="bnc">the canonical three character text
-identifier</valItem>
-<valItem ident="old">a superceded six-character identifier used during
-production of the BNC</valItem>
-</valList>
-</attDef><exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><s
+<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><s
 n="2211"><hi rend="it"><w c5="NN1" hw="apple" pos="SUBST">Apple
 </w></hi><w c5="VBZ" hw="be" pos="VERB">is </w><w c5="PRP" hw="to"
 pos="PREP">to </w><hi rend="it"><w c5="NN0" hw="fruit"
@@ -498,7 +513,19 @@ pos="SUBST">fruit </w></hi><w c5="CJS-PRP" hw="as" pos="CONJ">as
 </w><hi rend="it"><w c5="NN1" hw="dog" pos="SUBST">dog </w></hi><w
 c5="VBZ" hw="be" pos="VERB">is </w><w c5="PRP" hw="to" pos="PREP">to
 </w><hi rend="it"><w c5="ZZ0" hw="x" pos="SUBST">X </w></hi><c
-c5="PUN">.</c></s></egXML></exemplum><!-- FAC --></elementSpec>
+c5="PUN">.</c></s></egXML></exemplum><!-- FAC --></egXML></exemplum></elementSpec>
+
+<elementSpec ident="idno" module="header" mode="change">
+<desc>supplies an identifying code for a text.</desc>
+<attList><attDef ident="type">
+<desc>categorizes the code number used.</desc>
+<valList>
+<valItem ident="bnc"><desc>the canonical three character text
+identifier</desc></valItem>
+<valItem ident="old"><desc>a superceded six-character identifier used during
+production of the BNC</desc></valItem>
+</valList>
+</attDef></attList><exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><idno type="bnc">KD7</idno><idno type="old"> XMa0KP </idno></egXML></exemplum></elementSpec>
 
 <elementSpec ident="imprint" module="core" mode="change">
 <content>
@@ -715,7 +742,6 @@ pos="SUBST">amount </w>...</s></item></list>
 
 <elementSpec ident="p" module="core" mode="change">
 <classes>
-<!--memberOf key="att.typed"/-->
 <memberOf key="att.rendered"/>
 <memberOf key="model.pLike"/>
 <memberOf key="model.divPart"/>
@@ -782,14 +808,13 @@ an attached caption</desc></valItem>
 </classes>
 <attList >
 <attDef ident="type" mode="delete"/>
-<exemplum><egXML
-	      xmlns="http://www.tei-c.org/ns/Examples"><placeName>North Yorkshire:   York  </placeName></egXML><!-- FUK--></exemplum></attList></elementSpec>
+</attList><exemplum><egXML
+	      xmlns="http://www.tei-c.org/ns/Examples"><placeName>North Yorkshire:   York  </placeName></egXML><!-- FUK--></exemplum></elementSpec>
 
 <elementSpec ident="persName" module="namesdates" mode="change">
 <attList >
 <attDef ident="type" mode="delete"/>
-<exemplum><egXML
-	      xmlns="http://www.tei-c.org/ns/Examples"><persName>Norman</persName></egXML><!-- FUK--></exemplum></attList></elementSpec>
+</attList><exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><persName>Norman</persName></egXML><!-- FUK--></exemplum></elementSpec>
 
 <elementSpec ident="person" module="namesdates" mode="change">
 <classes>
@@ -989,23 +1014,23 @@ target &lt;s&gt; element containing the material to be referenced.</para>
 <attDef ident="name" mode="change">
 <altIdent>desc</altIdent>
 <valList>
-<valItem ident="patient">A is patient of P</valItem>
-<valItem ident="colleagu">M are all colleagues</valItem>
-<valItem ident="intervee">A is being interviewed by P</valItem>
-<valItem ident="teacher">A is teacher, trainer, or tutor of P</valItem>
-<valItem ident="wife">A is wife of P</valItem>
-<valItem ident="speaker">A is speaking to P</valItem>
-<valItem ident="parent">A is parent of P</valItem>
-<valItem ident="employer">A is employer of P</valItem>
-<valItem ident="secretary">A is secretary of A</valItem>
-<valItem ident="friend">M are all friends or neighbours</valItem>
+<valItem ident="patient"><desc>A is patient of P</desc></valItem>
+<valItem ident="colleagu"><desc>M are all colleagues</desc></valItem>
+<valItem ident="intervee"><desc>A is being interviewed by P</desc></valItem>
+<valItem ident="teacher"><desc>A is teacher, trainer, or tutor of P</desc></valItem>
+<valItem ident="wife"><desc>A is wife of P</desc></valItem>
+<valItem ident="speaker"><desc>A is speaking to P</desc></valItem>
+<valItem ident="parent"><desc>A is parent of P</desc></valItem>
+<valItem ident="employer"><desc>A is employer of P</desc></valItem>
+<valItem ident="secretary"><desc>A is secretary of A</desc></valItem>
+<valItem ident="friend"><desc>M are all friends or neighbours</desc></valItem>
 </valList>
 </attDef>
 </attList>
-<remarks>Relationship information is also provided by the role attribute of
+<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><relation active="PS1YR" passive="PS1YS" desc="employer"/></egXML></exemplum> <exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><relation mutual="PS302 PS303 PS304 PS305 PS306 PS307" desc="colleagu"/><relation active="PS1YR" passive="PS1YS" desc="employer"/></egXML></exemplum><remarks><p>Relationship information is also provided by the role attribute of
 person, which indicates the relationship between a person and the
-respondent.</remarks>
-<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><relation active="PS1YR" passive="PS1YS" desc="employer"/></egXML></exemplum> <exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><relation mutual="PS302 PS303 PS304 PS305 PS306 PS307" desc="colleagu"/><relation active="PS1YR" passive="PS1YS" desc="employer"/></egXML></exemplum> </elementSpec>
+respondent.</p></remarks>
+ </elementSpec>
 
 <elementSpec ident="respStmt" mode="change" module="core">
 <classes/>
@@ -1047,7 +1072,7 @@ University of Lancaster</name>
 <attDef ident="n" usage="req" mode="add">
 <desc>sequence number </desc>
 <datatype><rng:text/></datatype>
-</attDef></attList><exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"></egXML><s n="1"><w c5="VVB" hw="come" pos="VERB">Come </w><w c5="AVP" hw="in" pos="ADV">in</w><c c5="PUN">.</c></s></exemplum></elementSpec>
+</attDef></attList><exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><s n="1"><w c5="VVB" hw="come" pos="VERB">Come </w><w c5="AVP" hw="in" pos="ADV">in</w><c c5="PUN">.</c></s></egXML></exemplum></elementSpec>
 
 <elementSpec ident="samplingDecl" mode="change" module="header">
 <content>
@@ -1064,6 +1089,10 @@ applied during  construction of the BNC is provided in the associated documentat
 
 
 <elementSpec ident="setting" mode="change" module="header">
+<classes>
+<memberOf key="att.uniqueId"/>
+<memberOf key="att.ascribed"/>
+</classes>
 <content>
 <rng:zeroOrMore>
 <rng:choice>
@@ -1072,10 +1101,6 @@ applied during  construction of the BNC is provided in the associated documentat
 </rng:choice>
 </rng:zeroOrMore>
 </content>
-<classes>
-<memberOf key="att.uniqueId"/>
-<memberOf key="att.ascribed"/>
-</classes>
 <attList>
 <attDef ident="n" mode="add">
 <desc>an internal identifier for a setting</desc>
@@ -1131,6 +1156,9 @@ xmlns="http://www.tei-c.org/ns/Examples"><u who="PS09K">
 <exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><tagUsage gi="c" occurs="41685"/></egXML></exemplum></elementSpec>
 
 <elementSpec ident="taxonomy" mode="change" module="header">
+<classes>
+<memberOf key="att.uniqueId"/>
+</classes>
 <content>
 <rng:optional>
 <rng:ref name="desc"/>
@@ -1142,9 +1170,6 @@ xmlns="http://www.tei-c.org/ns/Examples"><u who="PS09K">
    <rng:ref name="model.biblLike"/>
 </rng:choice>
 </content>
-<classes>
-<memberOf key="att.uniqueId"/>
-</classes>
 <exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><taxonomy xml:id="textMode">
 <desc>Text mode</desc>
 <category xml:id="WRI"><catDesc>Written</catDesc></category>
@@ -1185,6 +1210,7 @@ xmlns="http://www.tei-c.org/ns/Examples"><u who="PS09K">
 
 <elementSpec ident="text" module="textstructure" mode="change">
 <desc>contains a single written text. </desc>
+<!-- remove from declaring? -->
 <content>
   <rng:group>
     <rng:zeroOrMore>
@@ -1230,7 +1256,11 @@ xmlns="http://www.tei-c.org/ns/Examples"><u who="PS09K">
 <attDef ident="type" mode="delete"/>
 
 </attList>
-<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"></egXML></exemplum></elementSpec>
+<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><title>Amnesty
+International meeting. Sample containing about 15274 words speech
+recorded in public context</title></egXML></exemplum>
+<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><bibl><title>An awfully big adventure. </title> <author n="BainbB1" domicile="England">Bainbridge, B</author> <imprint n="DUCKWO1"><publisher>Duckworth &amp; Company Ltd</publisher> <pubPlace>London</pubPlace> <date value="1990">1990</date> </imprint> <pp>49-192</pp> </bibl></egXML></exemplum>
+</elementSpec>
 
 
 <elementSpec ident="w" module="analysis" mode="change">
@@ -1269,7 +1299,7 @@ xmlns="http://www.tei-c.org/ns/Examples"><u who="PS09K">
       <valDesc>a lower-case only normalised form of a word</valDesc>
 </attDef>
 </attList>
-<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"></egXML></exemplum></elementSpec>
+<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><w c5="PNP" hw="i" pos="PRON">I </w><w c5="VDB" hw="do" pos="VERB">do</w><w c5="XX0" hw="not" pos="ADV">n't </w><w c5="VVI" hw="care" pos="VERB">care </w></egXML></exemplum></elementSpec>
 
 
 <elementSpec ident="teiCorpus" mode="change" module="textstructure">
@@ -1287,6 +1317,9 @@ xmlns="http://www.tei-c.org/ns/Examples"><u who="PS09K">
 <elementSpec ident="bncDoc" mode="add">
  <desc>contains a distinct document within the corpus, either spoken
  or written.</desc>
+<classes>
+ <memberOf key="att.uniqueId"/>
+</classes>
  <content>
    <rng:group>
      <rng:ref name="teiHeader"/>
@@ -1296,9 +1329,6 @@ xmlns="http://www.tei-c.org/ns/Examples"><u who="PS09K">
      </rng:choice>
    </rng:group>
  </content>
-<classes>
- <memberOf key="att.uniqueId"/>
-</classes>
 </elementSpec>
 
 
@@ -1310,7 +1340,11 @@ xmlns="http://www.tei-c.org/ns/Examples"><u who="PS09K">
 <attList>
 <attDef ident="trans" mode="delete"/>
 </attList>
-<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"></egXML></exemplum></elementSpec>
+<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="PS0KU">
+<s n="414"><w c5="VM0" hw="shall" pos="VERB">shall </w><w c5="PNP" hw="i" pos="PRON">I </w><w c5="VVI" hw="get" pos="VERB">get </w><w c5="PNP" hw="it" pos="PRON">it </w><w c5="CJC" hw="or" pos="CONJ">or </w><w c5="XX0" hw="not" pos="ADV">not</w><c c5="PUN">?</c></s>
+<s n="415"><w c5="PNP" hw="i" pos="PRON">I </w><w c5="VDB" hw="do" pos="VERB">do</w><w c5="XX0" hw="not" pos="ADV">n't </w><w c5="VVI" hw="know" pos="VERB">know </w><w c5="DTQ" hw="what" pos="PRON">what </w><w c5="TO0" hw="to" pos="PREP">to </w><w c5="VDI" hw="do" pos="VERB">do</w></s></u><u who="PS0KR">
+<s n="416"><w c5="ITJ" hw="yes" pos="INTERJ">Yes </w><w c5="VVB" hw="get" pos="VERB">get </w><w c5="PNP" hw="it" pos="PRON">it</w></s></u><u who="PS0KP">
+<s n="417"><w c5="ITJ" hw="eh" pos="INTERJ">eh</w><c c5="PUN">, </c><w c5="PNP" hw="i" pos="PRON">me </w><w c5="CJC" hw="and" pos="CONJ">and </w><w c5="DPS" hw="you" pos="PRON">your </w><w c5="NN1" hw="mother" pos="SUBST">mother </w><pause/></s></u></egXML></exemplum></elementSpec>
 
 
 
@@ -1328,7 +1362,7 @@ xmlns="http://www.tei-c.org/ns/Examples"><u who="PS09K">
 <attDef ident="hand" mode="delete"/>
 <attDef ident="agent" mode="delete"/>
 </attList>
-<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"></egXML></exemplum></elementSpec>
+<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="PS000"><unclear/></u></egXML></exemplum></elementSpec>
 
 
 <elementSpec ident="vocal" module="spoken" mode="change">
@@ -1342,7 +1376,9 @@ xmlns="http://www.tei-c.org/ns/Examples"><u who="PS09K">
 <datatype><rng:text/></datatype>
 </attDef>
 </attList>
-<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"></egXML></exemplum></elementSpec>
+<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="PS000">
+<vocal desc="laugh"/>
+</u></egXML></exemplum></elementSpec>
 
 
 
@@ -1359,15 +1395,11 @@ xmlns="http://www.tei-c.org/ns/Examples"><u who="PS09K">
   <content>
     <rng:text/>
   </content>
-  <exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
-    <age>25</age>
-]]>  </egXML></exemplum>
 <attList>
 <attDef ident="resp" mode="delete"/>
 <attDef ident="value" mode="delete"/>
           </attList>
-
-<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"></egXML></exemplum></elementSpec>
+  <exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><age>25</age></egXML></exemplum></elementSpec>
 
 
 
@@ -1391,7 +1423,7 @@ xmlns="http://www.tei-c.org/ns/Examples"><u who="PS09K">
       <valDesc>A unique identifier in the form....</valDesc>
     </attDef>
   </attList>
-  <exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<u who="PS6SF">
+  <exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="PS6SF">
    <s n="12">
         <w c5="VVB" hw="tell" pos="VERB">tell </w>
         <w c5="NP0" hw="billy" pos="SUBST">Billy </w>
@@ -1407,7 +1439,7 @@ xmlns="http://www.tei-c.org/ns/Examples"><u who="PS09K">
        <w c5="PNP" hw="you" pos="PRON">you </w>
        <w c5="VVI" hw="hear" pos="VERB">hear </w>
        <w c5="PNP" hw="i" pos="PRON">me</w>
-  </s></u>  ]]></egXML></exemplum>
+  </s></u></egXML></exemplum>
 </elementSpec>
 
 <elementSpec ident="dialect">
@@ -1419,15 +1451,13 @@ English used by a participant in a spoken text. </desc>
 <content>
   <rng:text/>
 </content>
-  <exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
-    <dialect>Home Counties</dialect>
-]]>  </egXML></exemplum>
+  <exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><dialect>Home Counties</dialect></egXML></exemplum>
 </elementSpec>
 
 <elementSpec ident="mw">
 <desc>contains a multi-word unit as identified by CLAWS, that is, a
-sequence of individual tokens which function syntactically as a single
-unit with a single part of speech code. </desc>
+sequence of individual tokens which function as a single
+unit and can be given a single part of speech code. </desc>
 <classes>
 <memberOf key="model.segLike"/>
 <memberOf key="att.c5coded"/>
@@ -1437,7 +1467,8 @@ unit with a single part of speech code. </desc>
     <rng:ref name="w"/>
   </rng:oneOrMore>
 </content>
-<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"></egXML></exemplum></elementSpec>
+<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><mw
+							      c5="PRP"><w c5="PRP" hw="in" pos="PREP">in </w><w c5="NN1" hw="response" pos="SUBST">response </w><w c5="PRP" hw="to" pos="PREP">to </w></mw></egXML></exemplum><remarks><p>In CLAWS output the components of a <gi>mw</gi> are given <soCalled>ditto</soCalled> tags inherited from the parent <gi>mw</gi>. In BNC they have been given the same code as elsewhere in the corpus. </p></remarks></elementSpec>
 
 <elementSpec ident="para">
 <desc>contains descriptive text appearing within components of a TEI header</desc>
@@ -1450,7 +1481,9 @@ unit with a single part of speech code. </desc>
   </rng:choice>
 </rng:zeroOrMore>
 </content>
-<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"></egXML></exemplum></elementSpec>
+<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><para>For information, the conditions of the Standard License Agreement are as
+follows:</para>
+</egXML></exemplum></elementSpec>
 
 
 <elementSpec ident="persNote">
@@ -1461,7 +1494,7 @@ unit with a single part of speech code. </desc>
 <content>
   <rng:text/>
 </content>
-<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"></egXML></exemplum></elementSpec>
+<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><person ageGroup="X"><persNote>May well be an actor portraying a Davidian</persNote></person></egXML></exemplum></elementSpec>
 
 
 <elementSpec ident="pp">
@@ -1471,7 +1504,8 @@ unit with a single part of speech code. </desc>
 </classes>
 <content><rng:text/>
 </content>
-<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"></egXML></exemplum></elementSpec>
+<exemplum><egXML
+	      xmlns="http://www.tei-c.org/ns/Examples"><bibl><title>Misfortunes of Nigel. </title> ...  <pp>67-173</pp> </bibl></egXML></exemplum></elementSpec>
 
 
 
@@ -1517,7 +1551,7 @@ collection of transcriptions from a single source. </desc>
   </rng:choice>
 </rng:oneOrMore>
 </content>
-<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"></egXML></exemplum></elementSpec>
+<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><s n="1377"><trunc><w c5="UNC" hw="the" pos="UNC">The </w></trunc><c c5="PUN">, </c><w c5="AV0" hw="then" pos="ADV">then </w><w c5="PNP" hw="he" pos="PRON">he </w><trunc><w c5="UNC" hw="bo" pos="UNC">bo </w></trunc><w c5="VVD" hw="bowl" pos="VERB">bowled </w></s></egXML></exemplum></elementSpec>
 
 <!-- XAIRA specific parts -->
 
@@ -1532,8 +1566,6 @@ collection of transcriptions from a single source. </desc>
 </rng:oneOrMore>
 </content>
 <exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"></egXML></exemplum></elementSpec>
-
-
 
 
 <elementSpec ident="attributePolicy">
@@ -1578,8 +1610,8 @@ values</desc>
 words in the corpus. </desc>
 <content><rng:text/>
 </content>
-<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"></egXML></exemplum><remarks>The format for collating rules is defined at 
-http://icu.sourceforge.net/userguide/Collate_Customization.html</remarks>
+<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"></egXML></exemplum><remarks><p>The format for collating rules is defined at 
+http://icu.sourceforge.net/userguide/Collate_Customization.html</p></remarks>
 </elementSpec>
 
 
@@ -2001,36 +2033,36 @@ presented. </desc>
 <valItem ident="XX0" n="xx0"><desc>The negative particle <q>not</q> or <q>n't </q></desc></valItem>
 <!--valItem ident="XXX" n=""><desc>An unknown code</desc></valItem-->
 <valItem ident="ZZ0" n="zz0"><desc>Alphabetical symbols (e.g. <q>A</q>, <q>a</q>, <q>B</q>, <q>b</q>, <q>c</q>, <q>d</q>)</desc></valItem>
-<valItem ident="AJ0-AV0"><desc>Either AJ0 or AV0</desc></valItem>
-<valItem ident="AJ0-NN1"><desc>Either AJ0 or NN1</desc></valItem>
-<valItem ident="AJ0-VVD"><desc>Either AJ0 or VVD</desc></valItem>
-<valItem ident="AJ0-VVG"><desc>Either AJ0 or VVG</desc></valItem>
-<valItem ident="AJ0-VVN"><desc>Either AJ0 or VVN</desc></valItem>
-<valItem ident="AV0-AJ0"><desc>Either AV0 or AJ0</desc></valItem>
-<valItem ident="AVP-PRP"><desc>Either AVP or PRP</desc></valItem>
-<valItem ident="AVQ-CJS"><desc>Either AVQ or CJS</desc></valItem>
-<valItem ident="CJS-AVQ"><desc>Either CJS or AVQ</desc></valItem>
-<valItem ident="CJS-PRP"><desc>Either CJS or PRP</desc></valItem>
-<valItem ident="CJT-DT0"><desc>Either CJT or DT0</desc></valItem>
-<valItem ident="CRD-PNI"><desc>Either CRD or PNI</desc></valItem>
-<valItem ident="DT0-CJT"><desc>Either DT0 or CJT</desc></valItem>
-<valItem ident="NN1-AJ0"><desc>Either NN1 or AJ0</desc></valItem>
-<valItem ident="NN1-NP0"><desc>Either NN1 or NP0</desc></valItem>
-<valItem ident="NN1-VVB"><desc>Either NN1 or VVB</desc></valItem>
-<valItem ident="NN1-VVG"><desc>Either NN1 or VVG</desc></valItem>
-<valItem ident="NN2-VVZ"><desc>Either NN2 or VVZ</desc></valItem>
-<valItem ident="NP0-NN1"><desc>Either NP0 or NN1</desc></valItem>
-<valItem ident="PNI-CRD"><desc>Either PNI or CRD</desc></valItem>
-<valItem ident="PRP-AVP"><desc>Either PRP or AVP</desc></valItem>
-<valItem ident="PRP-CJS"><desc>Either PRP or CJS</desc></valItem>
-<valItem ident="VVB-NN1"><desc>Either VVB or NN1</desc></valItem>
-<valItem ident="VVD-AJ0"><desc>Either VVD or AJ0</desc></valItem>
-<valItem ident="VVD-VVN"><desc>Either VVD or VVN</desc></valItem>
-<valItem ident="VVG-AJ0"><desc>Either VVG or AJ0</desc></valItem>
-<valItem ident="VVG-NN1"><desc>Either VVG or NN1</desc></valItem>
-<valItem ident="VVN-AJ0"><desc>Either VVN or AJ0</desc></valItem>
-<valItem ident="VVN-VVD"><desc>Either VVN or VVD</desc></valItem>
-<valItem ident="VVZ-NN2"><desc>Either VVZ or NN2</desc></valItem>
+<valItem ident="AJ0-AV0"><desc>Probably AJ0 (adjective), but maybe AV0 (adverb)</desc></valItem>
+<valItem ident="AJ0-NN1"><desc>Probably AJ0 (adjective), but maybe NN1 (singular noun)</desc></valItem>
+<valItem ident="AJ0-VVD"><desc>Probably AJ0 (adjective), but maybe VVD (verb past tense)</desc></valItem>
+<valItem ident="AJ0-VVG"><desc>Probably AJ0 (adjective), but maybe VVG (-ing verb)</desc></valItem>
+<valItem ident="AJ0-VVN"><desc>Probably AJ0 (adjective), but maybe VVN (verb past participle)</desc></valItem>
+<valItem ident="AV0-AJ0"><desc>Probably AV0 (adverb), but maybe AJ0 (adjective)</desc></valItem>
+<valItem ident="AVP-PRP"><desc>Probably AVP (adverb particle), but maybe PRP (preposition)</desc></valItem>
+<valItem ident="AVQ-CJS"><desc>Probably AVQ (wh- adverb), but maybe CJS (subordinating conjunction)</desc></valItem>
+<valItem ident="CJS-AVQ"><desc>Probably CJS (subordinating conjunction), but maybe AVQ (wh- adverb)</desc></valItem>
+<valItem ident="CJS-PRP"><desc>Probably CJS (subordinating conjunction), but maybe PRP (preposition)</desc></valItem>
+<valItem ident="CJT-DT0"><desc>Probably CJT ("that" as conjunction), but maybe DT0 (determiner)</desc></valItem>
+<valItem ident="CRD-PNI"><desc>Probably CRD (number), but maybe PNI (indefinite pronoun)</desc></valItem>
+<valItem ident="DT0-CJT"><desc>Probably DT0 (determiner), but maybe CJT ("that" as conjunction)</desc></valItem>
+<valItem ident="NN1-AJ0"><desc>Probably NN1 (singular noun), but maybe AJ0 (adjective)</desc></valItem>
+<valItem ident="NN1-NP0"><desc>Probably NN1 (singular noun), but maybe NP0 (proper noun)</desc></valItem>
+<valItem ident="NN1-VVB"><desc>Probably NN1 (singular noun), but maybe VVB (verb)</desc></valItem>
+<valItem ident="NN1-VVG"><desc>Probably NN1 (singular noun), but maybe VVG (-ing verb)</desc></valItem>
+<valItem ident="NN2-VVZ"><desc>Probably NN2 (plural noun), but maybe VVZ (-s verb)</desc></valItem>
+<valItem ident="NP0-NN1"><desc>Probably NP0 (proper noun), but maybe NN1 (singular noun)</desc></valItem>
+<valItem ident="PNI-CRD"><desc>Probably PNI (indefinite pronoun), but maybe CRD (number)</desc></valItem>
+<valItem ident="PRP-AVP"><desc>Probably PRP (preposition), but maybe AVP (adverb particle)</desc></valItem>
+<valItem ident="PRP-CJS"><desc>Probably PRP (preposition), but maybe CJS (subordinating conjunction)</desc></valItem>
+<valItem ident="VVB-NN1"><desc>Probably VVB (verb), but maybe NN1 (singular noun)</desc></valItem>
+<valItem ident="VVD-AJ0"><desc>Probably VVD (verb past tense), but maybe AJ0 (adjective)</desc></valItem>
+<valItem ident="VVD-VVN"><desc>Probably VVD (verb past tense), but maybe VVN (verb past participle)</desc></valItem>
+<valItem ident="VVG-AJ0"><desc>Probably VVG (-ing verb), but maybe AJ0 (adjective)</desc></valItem>
+<valItem ident="VVG-NN1"><desc>Probably VVG (-ing verb), but maybe NN1 (singular noun)</desc></valItem>
+<valItem ident="VVN-AJ0"><desc>Probably VVN (verb past participle), but maybe AJ0</desc></valItem>
+<valItem ident="VVN-VVD"><desc>Probably VVN (verb past participle), but maybe VVD (verb past tense)</desc></valItem>
+<valItem ident="VVZ-NN2"><desc>Probably VVZ (-s verb), but maybe NN2 (plural noun)</desc></valItem>
 </valList>
 </attDef>
 </attList></classSpec>
@@ -2039,21 +2071,8 @@ presented. </desc>
 <!-- class changes -->
 
 <classSpec ident="att.global" module="tei" mode="delete" type="atts"/>
-<!--
-<attList>
-  <attDef ident="xml:space"  mode="delete"></attDef>
-<attDef ident="xml:id"	mode="delete"></attDef>
-<attDef ident="n" mode="delete"></attDef>
-<attDef ident="xml:lang" mode="delete"/>
-<attDef ident="rend" mode="delete"/>
-<attDef ident="xml:base" mode="delete"/>
-</attList>
-</classSpec>-->
 
 <classSpec ident="att.divLike" module="tei" mode="change" type="atts">
-<!--<classes>
-<memberOf key="att.rendered"/>
-</classes>-->
 <attList>
 <attDef ident="org" mode="delete"/>
 <attDef ident="sample" mode="delete"/>
@@ -2067,24 +2086,24 @@ between  1 (outermost or largest division) and 4
 <attDef ident="type" mode="change">
 <desc>identifies the type or function of the division.</desc>
 <valList>
-<valItem ident="advertisement">advertisement section or insert</valItem>
-<valItem ident="appendix">appendix</valItem>
-<valItem ident="article">single article in a journal</valItem>
-<valItem ident="blurb">any kind of promotional front matter</valItem>
-<valItem ident="cartoon">cartoon</valItem>
-<valItem ident="chapter">chapter of a novel etc.</valItem>
-<valItem ident="column">newspaper column, regular feature etc.</valItem>
-<valItem ident="compo">composite material</valItem> 
-<valItem ident="contents">table of contents</valItem>
-<valItem ident="front">any kind of front matter</valItem>
-<valItem ident="leaflet">free-standing leaflet or pamphlet</valItem>
-<valItem ident="paper">an academic paper in a collection</valItem>
-<valItem ident="part">subdivision of a chapter</valItem>
-<valItem ident="recipe">separate recipe in a cookbook</valItem>
-<valItem ident="section">any subdivision</valItem>
-<valItem ident="sidebar">sidebar or displayed paragraph e.g. in a news story</valItem>
-<valItem ident="story">distinct story in a periodical or collection</valItem>
-<valItem ident="subsection">smaller subdivision of any kind</valItem>
+<valItem ident="advertisement"><desc>advertisement section or insert</desc></valItem>
+<valItem ident="appendix"><desc>appendix</desc></valItem>
+<valItem ident="article"><desc>single article in a journal</desc></valItem>
+<valItem ident="blurb"><desc>any kind of promotional front matter</desc></valItem>
+<valItem ident="cartoon"><desc>cartoon</desc></valItem>
+<valItem ident="chapter"><desc>chapter of a novel etc.</desc></valItem>
+<valItem ident="column"><desc>newspaper column, regular feature etc.</desc></valItem>
+<valItem ident="compo"><desc>composite material</desc></valItem> 
+<valItem ident="contents"><desc>table of contents</desc></valItem>
+<valItem ident="front"><desc>any kind of front matter</desc></valItem>
+<valItem ident="leaflet"><desc>free-standing leaflet or pamphlet</desc></valItem>
+<valItem ident="paper"><desc>an academic paper in a collection</desc></valItem>
+<valItem ident="part"><desc>subdivision of a chapter</desc></valItem>
+<valItem ident="recipe"><desc>separate recipe in a cookbook</desc></valItem>
+<valItem ident="section"><desc>any subdivision</desc></valItem>
+<valItem ident="sidebar"><desc>sidebar or displayed paragraph e.g. in a news story</desc></valItem>
+<valItem ident="story"><desc>distinct story in a periodical or collection</desc></valItem>
+<valItem ident="subsection"><desc>smaller subdivision of any kind</desc></valItem>
 </valList> 
 </attDef></attList></classSpec>
 
@@ -2110,19 +2129,7 @@ between  1 (outermost or largest division) and 4
 </attList></classSpec>
 
 
-<classSpec ident="att.placement" module="tei" mode="delete" type="atts"/>
-<!--classSpec ident="att.placement" module="tei" mode="change" type="atts">
-<attList>
-<attDef ident="place" mode="change">
-<valList>
-<valItem ident="FOOT"><desc>footnote</desc></valItem>
-<valItem ident="SIDE"><desc>side note</desc></valItem>
-<valItem ident="END"><desc>endnote</desc></valItem>
-</valList>
-</attDef>
-</attList>
-</classSpec-->
--
+
 <classSpec ident="att.datepart" type="atts" mode="change">
 <attList>
 <attDef ident="value">
@@ -2135,9 +2142,11 @@ between  1 (outermost or largest division) and 4
 
 <!-- class deletions -->
 
+<classSpec ident="att.placement" module="tei" mode="delete" type="atts"/>
 <classSpec ident="att.global.analytic" type="atts" mode="delete"/>
 <classSpec ident="att.datable" type="atts" mode="delete"/>
 <classSpec ident="att.declarable" type="atts" mode="delete"/>
+<classSpec ident="att.declaring" type="atts" mode="delete"/>
 <classSpec ident="att.naming" type="atts" mode="delete"/>
 <classSpec ident="att.segLike" type="atts" mode="delete"/>
 <classSpec ident="model.choicePart" type="model" mode="delete"/>
