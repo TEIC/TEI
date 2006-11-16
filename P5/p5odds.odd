@@ -19,8 +19,9 @@
  </teiHeader>
  <text>
   <body>
-   <schemaSpec ident="p5odds" prefix="TEI_"
-    start="TEI schemaSpec elementSpec classSpec macroSpec div1 div2">
+   <schemaSpec 
+       ident="p5odds" prefix="TEI_"
+       start="TEI schemaSpec elementSpec classSpec macroSpec div1 div2">
     <moduleRef url="Exemplars/svg11.rng">
      <content>
       <rng:define combine="choice" name="tei_model.graphicLike">
@@ -39,6 +40,24 @@
     <moduleRef key="dictionaries"/>
     <moduleRef key="linking"/>
     <moduleRef key="figures"/>
+    <elementSpec xmlns="http://www.tei-c.org/ns/1.0" 
+		 module="tagdocs" 
+		 ident="schemaSpec">
+      <content>
+	<rng:group>
+	  <rng:ref name="macro.glossSeq"/>
+	  <rng:zeroOrMore>
+	    <rng:choice>
+	      <rng:ref name="moduleRef"/>
+	      <rng:ref name="specGrpRef"/>
+	      <rng:ref name="model.oddDecl"/>
+	    </rng:choice>
+	  </rng:zeroOrMore>
+	</rng:group>
+	<ref name="anySchematron"/>
+      </content>
+    </elementSpec>
+
     <macroSpec ident="macro.schemapattern" mode="change" module="tagdocs">
      <content>
       <group xmlns="http://relaxng.org/ns/structure/1.0">
