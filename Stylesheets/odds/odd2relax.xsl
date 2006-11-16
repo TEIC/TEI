@@ -29,6 +29,7 @@
     <xd:copyright>2005, TEI Consortium</xd:copyright>
   </xd:doc>
   <xsl:output encoding="utf-8" indent="yes" method="xml"/>
+  <xsl:key name="SCHEMATRON" match="s:*" use="1"/>
   <xsl:param name="verbose"/>
   <xsl:param name="outputDir">Schema</xsl:param>
   <xsl:param name="appendixWords"/>
@@ -124,7 +125,10 @@
           </xsl:for-each>
           <xsl:apply-templates mode="tangle"
             select="tei:elementSpec|tei:classSpec"/>
-          <xsl:choose>
+	    <xsl:for-each select="key('SCHEMATRON','1')">
+	      <xsl:copy-of select="."/>
+	    </xsl:for-each>
+	    <xsl:choose>
             <xsl:when test="@start and @start=''"/>
             <xsl:when test="@start and contains(@start,' ')">
               <rng:start>
@@ -321,5 +325,7 @@
   <xsl:template name="ttembolden"/>
   <xsl:template match="processing-instruction()"/>
   <xsl:template match="processing-instruction()" mode="tangle"/>
+
   <xsl:template match="s:*"/>
+
 </xsl:stylesheet>

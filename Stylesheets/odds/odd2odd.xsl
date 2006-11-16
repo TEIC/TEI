@@ -2,6 +2,7 @@
 <xsl:stylesheet
     version="1.0"
   extension-element-prefixes="edate exsl estr"
+  xmlns:s="http://www.ascc.net/xml/schematron"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:edate="http://exslt.org/dates-and-times"
   xmlns:estr="http://exslt.org/strings" 
@@ -89,6 +90,7 @@ because of the order of declarations
       </xsl:for-each>
       <xsl:copy-of select="tei:moduleRef[@url]"/>
       <xsl:call-template name="phase2"/>
+      <xsl:copy-of select="s:*"/>
     </xsl:copy>
   </xsl:template>
   <xsl:template name="phase2">
@@ -369,9 +371,12 @@ for change individually.
 		<xsl:for-each select="tei:classes">
 		  <xsl:copy>
 		    <xsl:for-each select="tei:memberOf">
+		      <xsl:variable name="me">
+			<xsl:value-of select="@key"/>
+		      </xsl:variable>
 		      <xsl:for-each select="$ODD">
 			<xsl:if test="not(key('DELETE',@key))">
-			  <tei:memberOf key="{@ident}"/>
+			  <tei:memberOf key="{$me}"/>
 			</xsl:if>
 		      </xsl:for-each>
 		    </xsl:for-each>

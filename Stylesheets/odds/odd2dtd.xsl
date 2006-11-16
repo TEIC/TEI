@@ -622,6 +622,9 @@
         <xsl:choose>
           <xsl:when test="$contentbody=''"/>
           <xsl:when test="$contentbody='()'"/>
+          <xsl:when test="$contentbody='(#PCDATA |  #PCDATA)'">
+	    <xsl:text>(#PCDATA)</xsl:text>
+	  </xsl:when>
           <xsl:when test="contains($contentbody, '| ()')">
             <xsl:value-of select="substring-before($contentbody,'| ()')"/>
             <xsl:value-of select="substring-after($contentbody,'| ()')"/>
@@ -864,7 +867,14 @@
     </xsl:if>
   </xsl:template>
   <xsl:template match="rng:element" mode="simple">
-    <xsl:value-of select="@name"/>
+    <xsl:choose>
+      <xsl:when test="@name">
+	<xsl:value-of select="@name"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text>ANY</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xsl:template match="tei:macroSpec" mode="tangle">
     <xsl:choose>
@@ -931,6 +941,10 @@
       <xsl:choose>
         <xsl:when test="$parameterize='false'">
           <xsl:choose>
+	    <xsl:when test="@ns='http://www.w3.org/1999/xhtml'">
+	      <xsl:text>html:</xsl:text>
+              <xsl:value-of select="@ident"/>
+	    </xsl:when>
             <xsl:when test="tei:altIdent">
               <xsl:value-of select="normalize-space(tei:altIdent)"/>
             </xsl:when>
@@ -965,6 +979,9 @@
         <xsl:choose>
           <xsl:when test="tei:content/rng:element[rng:anyName]">
             <xsl:text> (#PCDATA)</xsl:text>
+          </xsl:when>
+          <xsl:when test="tei:content/rng:element">
+            <xsl:text> ANY</xsl:text>
           </xsl:when>
           <xsl:when test="tei:content/tei:valList[@type='closed']">
             <xsl:text> (#PCDATA)</xsl:text>

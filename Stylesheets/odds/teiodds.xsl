@@ -1759,8 +1759,11 @@ sequenceRepeatable
     <xsl:param name="prefix"/>
     <xsl:param name="uri"/>
   </xsl:template>
+
   <xsl:template name="inhnamespace"/>
+
   <xsl:template match="s:*"/>
+
   <xsl:template match="tei:altIdent"/>
   <xsl:template match="a:*">
     <xsl:copy-of select="."/>
