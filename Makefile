@@ -16,6 +16,7 @@ CHAPTER=$(shell find ${LANGTREE} -iname ${CHAP}*.xml)
 # of the next two lines:
 #XSL=../Stylesheets/release/tei-xsl/p5
 #XSL=http://www.tei-c.org/stylesheet/release/xml/tei
+JING=jing
 
 .PHONY: convert dtds schemas html validate valid test split oddschema exampleschema fascicule clean dist
 
@@ -83,7 +84,7 @@ validate-html:
 	 for i in *html; do \
 	echo validate $$i; \
 	xmllint --dropdtd $$i > z_$$i; \
-	jing -c ../../xhtml.rnc z_$$i; \
+	$(JING) -c ../../xhtml.rnc z_$$i; \
 	 rm z_$$i;\
 	 done)
 
@@ -139,7 +140,7 @@ valid: check
 #	with grep -v. Note that we discard *all* such messages, even
 #	though fewer than 500 of the 17,576 possible combinations
 #	(i.e. < 3%) are valid codes.
-	 jing -t p5odds.rng ${DRIVER} \
+	 $(JING) -t p5odds.rng ${DRIVER} \
 	 | grep -v ": error: Illegal xml:lang value \"[A-Za-z][A-Za-z][A-Za-z]\"\.$$"
 	@echo --------- rnv
 	-xmllint --noent --xinclude ${DRIVER} > Source.xml
