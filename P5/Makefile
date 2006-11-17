@@ -179,9 +179,10 @@ oddschema:
 
 
 exampleschema:
-	roma  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ --teiserver=${TEISERVER} p5odds-ex.odd . && \
-	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rnc && \
-	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rng
+	roma  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ --teiserver=${TEISERVER} p5odds-ex.odd . 
+
+#	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rnc && \
+#	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rng
 
 subset:
 	-xmllint --noent --xinclude ${DRIVER} \
