@@ -252,7 +252,7 @@ correction.</desc>
 <attDef ident="date" mode="add">
 <desc>supplies the year of original composition, if known; or 000-00-00 if
 the date is unknown. </desc>
-<datatype><rng:text/></datatype>
+<datatype><rng:ref name="data.temporal"/></datatype>
 </attDef>
 </attList>
 <exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><creation date="0000-00-00"> Origination/creation date not known </creation></egXML></exemplum>
@@ -269,7 +269,7 @@ the date is unknown. </desc>
 <attDef ident="precision" mode="delete"/>
 <attDef ident="value">
 <desc>supplies a standardized representation of the date</desc>
-<datatype>xsd:date</datatype>
+<datatype><rng:ref name="data.temporal"/></datatype>
 </attDef></attList>
 <exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><date value="1991-02-16">1991-02-16</date></egXML></exemplum>
 <exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><date
@@ -362,7 +362,7 @@ division. </desc></attDef>
 <desc>for a spoken text, identities the declarations (for setting,
 recording etc.) in the header which apply to this
 division. </desc>
-<datatype>data.pointers</datatype></attDef>
+<datatype><rng:ref name="data.pointers"/></datatype></attDef>
 <attDef ident="level" mode="add">
 <desc>specifies the hierarchic level of this division as a number
 between  1 (outermost or largest division) and 4
@@ -529,7 +529,7 @@ transcription. </desc>
 </content>
 <attList>
 <attDef ident="type" mode="replace">
-<datatype>data.enumerated</datatype>
+<datatype><rng:ref name="data.enumerated"/></datatype>
 <valList type="closed">
 <valItem ident="MAIN"><desc>a major heading. </desc></valItem>
 <valItem ident="SUB"><desc>any sub-heading.</desc></valItem>
@@ -765,6 +765,11 @@ BNC: all elements belong to the empty namespace.</p></remarks>
 </elementSpec>
 
 <elementSpec ident="note" module="core" mode="change">
+<classes>
+<memberOf key="model.noteLike"/>
+<memberOf key="model.biblPart"/>
+<memberOf key="att.placement"/>
+</classes>
 <content>
 <rng:oneOrMore>
 <rng:ref name="s"/>
@@ -937,7 +942,8 @@ by the respondent. </desc>
 <desc>specifies the country of origin  of the 
 participant, as identified
 by the respondent. </desc> 
-<valList>
+<datatype><rng:ref name="data.enumerated"/></datatype>
+<valList type="closed">
 <valItem ident="XX-XXX"><desc>Unknown</desc></valItem>
 <valItem ident="DE-DEU"><desc>German</desc></valItem>
 <valItem ident="FR-FRA"><desc>French</desc></valItem>
@@ -952,7 +958,8 @@ by the respondent. </desc>
 </attDef>
 <attDef ident="soc" mode="replace">
 <desc>specifies the social class of the participant. </desc>
-<valList><valItem ident="AB"><desc>Higher management: administrative or  professional</desc></valItem>
+<datatype><rng:ref name="data.enumerated"/></datatype>
+<valList type="closed"><valItem ident="AB"><desc>Higher management: administrative or  professional</desc></valItem>
 <valItem ident="C1"><desc>Lower management: supervisory or clerical</desc></valItem>
 <valItem ident="C2"><desc>Skilled manual</desc></valItem>
 <valItem ident="DE"><desc>Semi-skilled or unskilled</desc></valItem>
@@ -962,7 +969,8 @@ by the respondent. </desc>
 <attDef ident="educ" mode="add">
 <desc>specifies the age at which the participant ceased full-time 
 education. </desc>
-<valList>
+<datatype><rng:ref name="data.enumerated"/></datatype>
+<valList type="closed">
 <valItem ident="Ed0"><desc>Still in education</desc></valItem>
 <valItem ident="Ed1"><desc>Left school aged 14 or under</desc></valItem>
 <valItem ident="Ed4"><desc>Education continued until age 19 or over</desc></valItem>
@@ -971,12 +979,12 @@ education. </desc>
 </attDef>
 <attDef ident="sex" mode="replace">
 <desc>specifies the sex of the participant. </desc>
-<valList>
+<datatype><rng:ref name="data.enumerated"/></datatype>
+<valList type="closed">
 <valItem ident="m"><desc>male</desc></valItem>
 <valItem ident="f"><desc>female</desc></valItem>
 <valItem ident="u"><desc>unknown</desc></valItem>
-</valList>
-</attDef>
+</valList></attDef>
 <attDef ident="role" mode="replace">
 <desc>describes the relationship or role of this participant with respect to the
 respondent. </desc>
@@ -1029,11 +1037,11 @@ commercial and academic research. The first edition was published in
 <attList>
 <attDef ident="date" mode="add">
 <desc>date of the recording in standardized form.</desc>
-<datatype>data.date</datatype>
+<datatype><rng:ref name="data.temporal"/></datatype>
 </attDef>
 <attDef ident="dur" mode="change">
 <desc>duration of the recording in minutes.</desc>
-<datatype>data.count</datatype>
+<datatype><rng:ref name="data.count"/></datatype>
 </attDef>
 <attDef ident="n" mode="add">
 <desc>tape number. </desc>
@@ -1603,7 +1611,17 @@ follows:</para>
 <s n="1627"><w c5="NP0" hw="mr." pos="SUBST">Mr. </w><w c5="NP0" hw="speaker" pos="SUBST">Speaker</w></s></speaker><p>
 <s n="1628"><w c5="PNP" hw="i" pos="PRON">I </w><w c5="VVB" hw="call" pos="VERB">call </w><w c5="NP0" hw="mr." pos="SUBST">Mr. </w><w c5="NP0" hw="dennis" pos="SUBST">Dennis </w><w c5="NP0" hw="turner" pos="SUBST">Turner</w><c c5="PUN">.</c></s></p></sp></egXML></exemplum><remarks/>
 </elementSpec>
+
 <elementSpec ident="speaker" module="core" mode="change">
+<content>
+<rng:oneOrMore>
+<rng:choice>
+<rng:ref name="s"/>
+<rng:ref name="gap"/>
+<rng:ref name="pb"/>
+</rng:choice>
+</rng:oneOrMore>
+</content>
 <exemplum><egXML  xmlns="http://www.tei-c.org/ns/Examples"><sp><speaker>
 <s n="1627"><w c5="NP0" hw="mr." pos="SUBST">Mr. </w><w c5="NP0" hw="speaker" pos="SUBST">Speaker</w></s></speaker><p>
 <s n="1628"><w c5="PNP" hw="i" pos="PRON">I </w><w c5="VVB" hw="call" pos="VERB">call </w><w c5="NP0" hw="mr." pos="SUBST">Mr. </w><w c5="NP0" hw="dennis" pos="SUBST">Dennis </w><w c5="NP0" hw="turner" pos="SUBST">Turner</w><c c5="PUN">.</c></s></p></sp></egXML></exemplum><remarks><p>In the BNC, used only for speaker labels in dramatic texts, or Hansard</p></remarks>
@@ -1989,7 +2007,7 @@ policies. </desc></valItem>
 <attDef ident="copyOf" mode="add">
 <desc>supplies the identifier of a previously-defined value list to be
 used at this point</desc>
-<datatype>data.pointer</datatype>
+<datatype><rng:ref name="data.pointer"/></datatype>
 </attDef>
 <attDef ident="mode" mode="delete"/>
 </attList>
@@ -2007,16 +2025,36 @@ used at this point</desc>
 <classSpec ident="att.identifiable" type="atts">
 <attList>
 <attDef ident="ident"><desc>supplies a unique identifier.</desc>
-<datatype>xsd:name</datatype>
+<datatype><rng:ref name="data.name"/></datatype>
 </attDef>
 <attDef ident="ns">
 <desc>supplies the namespace within which the identifier is to be
 found. </desc>
+<datatype><rng:ref name="data.namespace"/></datatype>
+
 </attDef>
 </attList>
 </classSpec>
 
-<classSpec ident="att.identified" type="atts" mode="delete"/>
+<!-- classes never used -->
+
+<classSpec ident="model.oddDecl" type="model" module="tagdocs" mode="delete"/>
+<classSpec ident="model.oddPhr" type="model" module="tagdocs" mode="delete"/>
+<classSpec ident="model.graphicLike" type="model" module="tei" mode="delete"/>
+<classSpec ident="model.lPart" type="model" module="tei" mode="delete"/>
+<classSpec ident="model.pPart.msdesc" type="model" module="tei" mode="delete"/>
+<classSpec ident="model.persEventLike" type="model" module="namesdates" mode="delete"/>
+<classSpec ident="model.persTraitLike" type="model" module="namesdates" mode="delete"/>
+<classSpec ident="model.measureLike" type="model" module="tei" mode="delete"/>
+<classSpec ident="model.timeLike" type="model" module="tei" mode="delete"/>
+<classSpec ident="model.global.meta" type="model" module="tei" mode="delete"/>
+
+<classSpec ident="att.identified" type="atts" mode="delete" module="tei"/>
+<classSpec ident="att.measured" type="atts" mode="delete" module="tei"/>
+<classSpec ident="att.measurement" type="atts" mode="delete" module="tei"/>
+
+
+
 <!--elementSpec module="tagdocs" ident="attList" mode="delete"/-->
 <!--elementSpec module="tagdocs" ident="attDef" mode="delete"/-->
 <elementSpec module="tagdocs" ident="att" mode="delete"/>
@@ -2189,7 +2227,7 @@ presented. </desc>
 <attDef ident="end" mode="delete"/>
 <attDef ident="dur" mode="change">
 <desc>indicates the duration of the element in minutes. </desc>
-<datatype>data.count</datatype>
+<datatype><rng:ref name="data.count"/></datatype>
 </attDef>
 </attList></classSpec>
 
@@ -2405,14 +2443,44 @@ presented. </desc>
 <elementSpec module="textstructure" ident="trailer" mode="delete"/>
 <!-- macros deleted -->
 
-<macroSpec ident="data.certainty" mode="delete"><content/></macroSpec>
+<macroSpec ident="data.certainty" mode="delete" module="tei"><content/></macroSpec>
+<macroSpec ident="data.code" mode="delete" module="tei"><content/></macroSpec>
+<macroSpec ident="data.duration" mode="delete" module="tei"><content/></macroSpec>
+<macroSpec ident="data.key" mode="delete" module="tei"><content/></macroSpec>
+<macroSpec ident="data.names" mode="delete" module="tei"><content/></macroSpec>
+<macroSpec ident="data.numeric" mode="delete" module="tei"><content/></macroSpec>
+<macroSpec ident="data.outputMeasurement" mode="delete" module="tei"><content/></macroSpec>
+<macroSpec ident="data.pattern" mode="delete" module="tei"><content/></macroSpec>
+<macroSpec ident="data.probability" mode="delete" module="tei"><content/></macroSpec>
+<macroSpec ident="data.truthValue" mode="delete" module="tei"><content/></macroSpec>
+<macroSpec ident="data.xTruthValue" mode="delete" module="tei"><content/></macroSpec>
+<macroSpec ident="data.words" mode="delete" module="tei"><content/></macroSpec>
+<macroSpec ident="macro.bodyPart.div" mode="delete" module="tei"><content/></macroSpec>
+<macroSpec ident="macro.bodyPart.div0" mode="delete" module="tei"><content/></macroSpec>
+<macroSpec ident="macro.bodyPart.div1" mode="delete" module="tei"><content/></macroSpec>
+<macroSpec ident="macro.bodyPart.main" mode="delete" module="tei"><content/></macroSpec>
+<macroSpec ident="macro.bodyPart.pre" mode="delete" module="tei"><content/></macroSpec>
+<macroSpec ident="macro.xtext" mode="delete" module="tei"><content/></macroSpec>
+<macroSpec ident="macro.glossSeq" mode="delete" module="tei"><content/></macroSpec>
+<macroSpec ident="macro.schemapattern" mode="delete" module="tei"><content/></macroSpec>
+<macroSpec ident="data.sex" mode="delete" module="tei"><content/></macroSpec>
 
-<macroSpec ident="data.temporal" mode="change">
+
+
+<!-- changed macro specs -->
+<macroSpec ident="macro.phraseSeq" mode="change" module="tei">
+<content><rng:text/></content>
+</macroSpec>
+
+
+<macroSpec ident="data.temporal" mode="change" module="tei">
  <content><rng:choice>
 <rng:data type="date"/>
 <rng:data type="gYear"/>
 <rng:data type="gYearMonth"/>
 </rng:choice></content></macroSpec>
+
+
 
 </schemaSpec>
 </body>
