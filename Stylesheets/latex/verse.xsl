@@ -28,4 +28,15 @@
     <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2005, TEI Consortium</xd:copyright>
   </xd:doc>
+
+  <xd:doc>
+    <xd:short>Process element caesura</xd:short>
+    <xd:detail>Caesurae are rendered as a LaTeX \quad{}.</xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:caesura">
+    <xsl:text>\quad{}</xsl:text>
+  </xsl:template>
+
+
+
 </xsl:stylesheet>
