@@ -22,7 +22,7 @@
 </xsl:template>
   <xd:doc type="stylesheet">
     Frontend for core.xsl
-    <xd:author>ibirrer</xd:author>
+    <xd:author>See AUTHORS</xd:author>
     <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2004, P&amp;P Software GmbH</xd:copyright>
   </xd:doc>

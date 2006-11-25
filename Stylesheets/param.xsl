@@ -28,7 +28,7 @@
    
    
       </xd:detail>
-    <xd:author>Sebastian Rahtz sebastian.rahtz@oucs.ox.ac.uk</xd:author>
+    <xd:author>See AUTHORS</xd:author>
     <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2005, TEI Consortium</xd:copyright>
   </xd:doc>
