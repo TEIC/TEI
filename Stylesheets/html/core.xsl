@@ -260,6 +260,14 @@
     </tt>
   </xsl:template>
 
+  <xd:doc>
+    <xd:short>Process elements  tei:corr</xd:short>
+    <xd:detail>Does not do anything yet.</xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:corr">
+    <xsl:apply-templates/>
+  </xsl:template>
+
 
   <xd:doc>
     <xd:short>Process elements tei:eg</xd:short>
@@ -1283,6 +1291,15 @@
       </td>
     </tr>
   </xsl:template>
+
+  <xd:doc>
+    <xd:short>Process elements  tei:sic</xd:short>
+    <xd:detail>Does not do anything yet.</xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:sic">
+    <xsl:apply-templates/> (sic)
+  </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements tei:signed</xd:short>
     <xd:detail> </xd:detail>

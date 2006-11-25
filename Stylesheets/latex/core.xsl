@@ -66,6 +66,40 @@
   </xd:doc>
   <xsl:template match="tei:code">\texttt{<xsl:apply-templates/>}</xsl:template>
   <xd:doc>
+    <xd:short>Process elements  tei:corr</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:corr">
+    <xsl:apply-templates/>
+    <xsl:choose>
+      <xsl:when test="@sic">
+      <xsl:text>\footnote{</xsl:text>
+                <xsl:call-template name="i18n">
+                <xsl:with-param name="word">appearsintheoriginalas</xsl:with-param>
+                </xsl:call-template>
+                <xsl:text> \emph{</xsl:text>
+                <xsl:value-of select="./@sic"/><xsl:text>}.}</xsl:text>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+  <xd:doc>
+    <xd:short>Process elements  tei:sic</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:sic">
+    <xsl:apply-templates/><xsl:text> (sic)</xsl:text>
+    <xsl:choose>
+      <xsl:when test="@corr">
+      <xsl:text>\footnote{</xsl:text>
+                <xsl:call-template name="i18n">
+                <xsl:with-param name="word">shouldbereadas</xsl:with-param>
+                </xsl:call-template>
+                <xsl:text> \emph{</xsl:text>
+                <xsl:value-of select="./@corr"/><xsl:text>}.}</xsl:text>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+  <xd:doc>
     <xd:short>Process elements tei:eg|tei:q[@rend='eg']</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
