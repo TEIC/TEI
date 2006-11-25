@@ -1297,7 +1297,8 @@
     <xd:detail>Does not do anything yet.</xd:detail>
   </xd:doc>
   <xsl:template match="tei:sic">
-    <xsl:apply-templates/> (sic)
+    <xsl:apply-templates/>
+    <xsl:text> (sic)</xsl:text>
   </xsl:template>
 
   <xd:doc>
