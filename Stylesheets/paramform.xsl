@@ -40,13 +40,14 @@
 <xsl:key name="XDS" match="xd:doc" use="@class"/>
 
 <xsl:param name="numberHeadings">false</xsl:param>
+<xsl:param name="numberBodyHeadings"></xsl:param>
 <xsl:output 
-    encoding="iso-8859-1"
+    encoding="utf-8"
     indent="yes" 
     method="xml"/>
 
 <xsl:template name="cgi">
-<exsl:document href="stylebear" method="text" encoding="iso-8859-1">
+<exsl:document href="stylebear" method="text" encoding="utf-8">
 <xsl:text>#!/usr/bin/perl&#10;</xsl:text>
 
 <xsl:for-each select="TEI.2/text/body/div[@id]">
@@ -79,7 +80,7 @@ print "     xmlns:tei=\"http://www.tei-c.org/ns/1.0\"\n";
 print "     xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" \n";
 print "     version=\"1.0\">\n";
 print "&lt;!-- XSLT stylesheet to generate HTML version of TEI document\n";
-print "Written by the TEI XSL generator (Sebastian Rahtz, sebastian.rahtz\@oucs.ox.ac.uk, April 2005)\n";
+print "Written by the TEI XSL generator (Sebastian Rahtz, sebastian.rahtz\@oucs.ox.ac.uk)\n";
 print "Created on $today-->\n";
 #foreach $key ($query->param) {
 #              print "Key [$key] --- Value[";
@@ -139,7 +140,7 @@ return "";
     <text>
 <body>
 <html:form
- encoding="iso-8859-1"
+ encoding="utf-8"
  enctype="multipart/form-data"
  action="/tei-bin/stylebear"
  method="post"
