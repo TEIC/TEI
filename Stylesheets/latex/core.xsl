@@ -282,7 +282,7 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:lb">
-    <xsl:text>{ }\newline </xsl:text>
+    <xsl:text>{\hskip1pt}\newline </xsl:text>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:list</xd:short>
