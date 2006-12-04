@@ -168,34 +168,7 @@
     </xsl:if>
   </xsl:if>
 
-    <xsl:for-each select="@*">
-      <xsl:if
-        test="count(../@*)&gt;3 or string-length(../@*)&gt;60 or namespace-uri()='http://www.w3.org/2005/11/its'">
-        <xsl:call-template name="lineBreak">
-          <xsl:with-param name="id">5</xsl:with-param>
-        </xsl:call-template>
-        <xsl:call-template name="makeIndent"/>
-      </xsl:if>
-      <xsl:text>&#xA0;</xsl:text>
-      <xsl:value-of disable-output-escaping="yes" select="$startItalic"/>
-      <xsl:choose>
-	<xsl:when test="namespace-uri()='http://www.w3.org/2005/11/its'">
-	  <xsl:text>its:</xsl:text>
-	</xsl:when>
-	<xsl:when
-	    test="namespace-uri()='http://www.w3.org/XML/1998/namespace'">
-	  <xsl:text>xml:</xsl:text>
-	</xsl:when>
-	<xsl:when test="namespace-uri()='http://www.w3.org/1999/xlink'">
-	  <xsl:text>xlink:</xsl:text>
-	</xsl:when>
-      </xsl:choose>
-      <xsl:value-of select="local-name(.)"/>
-      <xsl:value-of disable-output-escaping="yes" select="$endItalic"/>
-      <xsl:text>="</xsl:text>
-      <xsl:value-of select="."/>
-      <xsl:text>"</xsl:text>
-    </xsl:for-each>
+    <xsl:apply-templates select="@*" mode="verbatim"/>
     <xsl:choose>
       <xsl:when test="child::node()">
         <xsl:text>&gt;</xsl:text>
@@ -272,4 +245,35 @@
       <xsl:value-of select="$spaceCharacter"/>
     </xsl:for-each>
   </xsl:template>
+
+<xsl:template math="@*" mode="verbatim">
+  <xsl:if
+      test="count(../@*)&gt;3 or string-length(../@*)&gt;60 or namespace-uri()='http://www.w3.org/2005/11/its'">
+    <xsl:call-template name="lineBreak">
+      <xsl:with-param name="id">5</xsl:with-param>
+    </xsl:call-template>
+    <xsl:call-template name="makeIndent"/>
+  </xsl:if>
+  <xsl:text>&#xA0;</xsl:text>
+  <xsl:value-of disable-output-escaping="yes" select="$startItalic"/>
+  <xsl:choose>
+    <xsl:when test="namespace-uri()='http://www.w3.org/2005/11/its'">
+      <xsl:text>its:</xsl:text>
+    </xsl:when>
+    <xsl:when
+	test="namespace-uri()='http://www.w3.org/XML/1998/namespace'">
+      <xsl:text>xml:</xsl:text>
+    </xsl:when>
+    <xsl:when test="namespace-uri()='http://www.w3.org/1999/xlink'">
+      <xsl:text>xlink:</xsl:text>
+    </xsl:when>
+  </xsl:choose>
+  <xsl:value-of select="local-name(.)"/>
+  <xsl:value-of disable-output-escaping="yes" select="$endItalic"/>
+  <xsl:text>="</xsl:text>
+  <xsl:value-of select="."/>
+  <xsl:text>"</xsl:text>
+</xsl:template>
+    
 </xsl:stylesheet>
+
