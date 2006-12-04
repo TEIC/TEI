@@ -246,7 +246,7 @@
     </xsl:for-each>
   </xsl:template>
 
-<xsl:template math="@*" mode="verbatim">
+<xsl:template match="@*" mode="verbatim">
   <xsl:if
       test="count(../@*)&gt;3 or string-length(../@*)&gt;60 or namespace-uri()='http://www.w3.org/2005/11/its'">
     <xsl:call-template name="lineBreak">
