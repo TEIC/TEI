@@ -15,6 +15,8 @@ Guidelines)</bibl>
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
+      <change date="2006-12-06" who="LB">fix titlePage problem
+</change>
       <change date="2006-02-08" who="LB">
 more substantive changes: add elements from tagdocs module; kill
 numbered divs
@@ -2332,7 +2334,7 @@ schema:
           <moduleRef key="linking"/>
           <moduleRef key="analysis"/>
           <moduleRef key="tagdocs"/>
-
+<!--
           <elementSpec module="textstructure" ident="back" mode="change">
             <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
               <rng:group>
@@ -2398,6 +2400,7 @@ schema:
               </rng:group>
             </content>
           </elementSpec>
+
           <elementSpec module="textstructure" mode="change" ident="body">
             <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
 	      <rng:group>
@@ -2463,71 +2466,54 @@ schema:
               </rng:group>
             </content>
           </elementSpec>
-          <elementSpec module="textstructure" ident="front" mode="change">
+
+<elementSpec module="textstructure" ident="front" mode="change">
             <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
-              <rng:group>
-                <rng:zeroOrMore>
-                  <rng:choice>
-                    <rng:ref name="model.divWrapper"/>
-                    <rng:ref name="model.global"/>
-                  </rng:choice>
-                </rng:zeroOrMore>
-                <rng:choice>
-                  <rng:group>
-                    <rng:oneOrMore>
-		      <rng:group>
-			<rng:ref name="macro.component"/>
-		      </rng:group>
-                      <rng:zeroOrMore>
-                        <rng:ref name="model.global"/>
-                      </rng:zeroOrMore>
-                    </rng:oneOrMore>
-                    <rng:group>
-                      <rng:zeroOrMore>
-                        <rng:ref name="divGen"/>
-                        <rng:zeroOrMore>
-                          <rng:ref name="model.global"/>
-                        </rng:zeroOrMore>
-                      </rng:zeroOrMore>
-                      <rng:optional>
-                        <rng:group>
-                          <rng:ref name="div"/>
-                          <rng:zeroOrMore>
-                            <rng:choice>
-			      <rng:ref name="model.frontPart"/>
-                              <rng:ref name="div"/>
-                              <rng:ref name="model.global"/>
-                            </rng:choice>
-                          </rng:zeroOrMore>
-                        </rng:group>
-                      </rng:optional>
-                    </rng:group>
-                  </rng:group>
-                  <rng:group>
-                    <rng:zeroOrMore>
-                      <rng:ref name="divGen"/>
-                      <rng:zeroOrMore>
-                        <rng:ref name="model.global"/>
-                      </rng:zeroOrMore>
-                    </rng:zeroOrMore>
-                    <rng:group>
-                      <rng:ref name="div"/>
-                      <rng:zeroOrMore>
-                        <rng:choice>
-                          <rng:ref name="model.frontPart"/>
-                          <rng:ref name="div"/>
-                          <rng:ref name="model.global"/>
-                        </rng:choice>
-                      </rng:zeroOrMore>
-                    </rng:group>
-                  </rng:group>
-                </rng:choice>
-                <rng:zeroOrMore>
-                  <rng:ref name="model.divWrapper.bottom"/>
-                </rng:zeroOrMore>
-              </rng:group>
-            </content>
-          </elementSpec>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="model.frontPart"/>
+          <rng:ref name="model.global"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+      <rng:optional>
+        <rng:choice>
+          <rng:group>
+	    <rng:group>
+	      <rng:ref name="model.pLike.front"/>
+	    </rng:group>
+            <rng:zeroOrMore>
+              <rng:choice>
+                <rng:ref name="model.pLike.front"/>
+                <rng:ref name="titlePage"/>
+                <rng:ref name="model.global"/>
+              </rng:choice>
+            </rng:zeroOrMore>
+          </rng:group>
+          <rng:group>
+            <rng:ref name="div"/>
+            <rng:zeroOrMore>
+              <rng:choice>
+                <rng:ref name="div"/>
+                <rng:ref name="model.frontPart"/>
+                <rng:ref name="model.global"/>
+              </rng:choice>
+            </rng:zeroOrMore>
+          </rng:group>
+          <rng:group>
+            <rng:ref name="div1"/>
+            <rng:zeroOrMore>
+              <rng:choice>
+                <rng:ref name="div1"/>
+                <rng:ref name="model.frontPart"/>
+                <rng:ref name="model.global"/>
+              </rng:choice>
+            </rng:zeroOrMore>
+          </rng:group>
+        </rng:choice>
+      </rng:optional>
+    </rng:group>
+	    </content></elementSpec>-->
 
           <elementSpec ident="ab" mode="delete" module="linking"/>
           <elementSpec ident="altGrp" mode="delete" module="linking"/>
