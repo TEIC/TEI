@@ -652,6 +652,7 @@ $ID: requests a particular page
   <xd:doc>
     <xd:short>Create a new output page for a section</xd:short>
     <xd:detail> </xd:detail>
+    <xd:param name="depth">depth of section (1, 2 3, 4 etc)</xd:param>
   </xd:doc>
   <xsl:template name="makeDivPage">
     <xsl:param name="depth"/>
@@ -1810,15 +1811,9 @@ $ID: requests a particular page
         <xsl:choose>
           <xsl:when test="$contentStructure='all' or @rend='all'">
             <div class="column-wrapper">
-              <xsl:call-template name="col1">
-                <xsl:with-param name="currentID" select="$currentID"/>
-              </xsl:call-template>
-              <xsl:call-template name="col2">
-                <xsl:with-param name="currentID" select="$currentID"/>
-              </xsl:call-template>
-              <xsl:call-template name="col3">
-                <xsl:with-param name="currentID" select="$currentID"/>
-              </xsl:call-template>
+              <xsl:call-template name="col1"/>
+              <xsl:call-template name="col2"/>
+              <xsl:call-template name="col3"/>
             </div>
           </xsl:when>
           <xsl:when test="@rend='frontpage'">
@@ -2699,6 +2694,7 @@ $ID: requests a particular page
   <xd:doc>
     <xd:short>[html]provide a class attribute and/or ID for each div </xd:short>
     <xd:detail> </xd:detail>
+    <xd:param name="depth">depth of section (1, 2 3, 4 etc)</xd:param>
   </xd:doc>
   <xsl:template name="divClassAttribute">
     <xsl:param name="depth"/>

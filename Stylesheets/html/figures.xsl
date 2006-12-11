@@ -330,7 +330,6 @@
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:param name="ID">ID</xd:param>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="showGraphic">
