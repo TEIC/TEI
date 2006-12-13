@@ -337,6 +337,39 @@
   </xsl:template>
 
   <xsl:template match="figure">
+    <xsl:choose>
+      <xsl:when test="@rend='inline'">
+	  <xsl:call-template name="doFig"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:call-template name="startHook"/>
+	<text:p text:style-name="Standard">
+	  <xsl:call-template name="test.id"/>
+	  <xsl:call-template name="doFig"/>
+	</text:p>
+	<xsl:if test="head">
+	  <text:p text:style-name="Caption">
+	    <text:span text:style-name="Figurenum">
+	      <xsl:text>Figure </xsl:text>
+	      <text:sequence 
+		  text:ref-name="refFigure0" 
+		  text:name="Figure"
+		  text:formula="Figure+1"
+		  style:num-format="1">
+		<xsl:number level="any"/>
+		<xsl:text>.</xsl:text>
+	      </text:sequence>
+	    </text:span>
+	    <xsl:text> </xsl:text>
+	    <xsl:apply-templates select="head" mode="show"/>
+	  </text:p>
+	  <xsl:call-template name="endHook"/>
+	</xsl:if>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="doFig">
     <xsl:variable name="id">
       <xsl:choose>
 	<xsl:when test="@id">
@@ -347,71 +380,53 @@
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-
-    <xsl:call-template name="startHook"/>
-    <text:p text:style-name="Standard">
-      <xsl:call-template name="test.id"/>
+    
+    <draw:frame draw:style-name="fr3" 
+		draw:name="{$id}"
+		draw:z-index="3">
+      <xsl:attribute name="text:anchor-type">
+	<xsl:choose>
+	  <xsl:when test="@rend='inline'">
+	    <xsl:text>as-char</xsl:text>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:text>paragraph</xsl:text>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:attribute>
+      <xsl:attribute name="svg:width">
+	<xsl:choose>
+	  <xsl:when test="@width">
+	    <xsl:value-of select="@width"/>
+	    <xsl:call-template name="checkunit">
+	      <xsl:with-param name="dim" select="@width"/>
+	    </xsl:call-template>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:text>4inch</xsl:text>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:attribute>
+      <xsl:attribute name="svg:height">
+	<xsl:choose>
+	  <xsl:when test="@height">
+	    <xsl:value-of select="@height"/>
+	    <xsl:call-template name="checkunit">
+	      <xsl:with-param name="dim" select="@height"/>
+	    </xsl:call-template>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:text>4inch</xsl:text>
+	    </xsl:otherwise>
+	</xsl:choose>
+      </xsl:attribute>
       <draw:image
-	  draw:style-name="fr3"
-	  draw:name="{$id}"
-	  svg:x="0inch"
-	  svg:y="0inch"
-	  draw:z-index="3"
-	  xlink:type="simple"
-	  text:anchor-type="as-char"
+	  xlink:href="{@url|@file}" 
+	  xlink:type="simple" 
 	  xlink:show="embed"
-	  xlink:actuate="onLoad" >
-	<xsl:attribute name="xlink:href">
-	  <xsl:choose>
-	    <xsl:when test="@url|@file">
-	      <xsl:value-of select="@url|@file"/>
-	    </xsl:when>
-	    <xsl:when test="@entity">
-	      <xsl:value-of select="unparsed-entity-uri(@entity)"/>
-	    </xsl:when>
-	  </xsl:choose>
-	</xsl:attribute>
-	<xsl:attribute name="style:rel-width">scale</xsl:attribute>
-	<xsl:attribute name="style:rel-height">scale</xsl:attribute>
-	<xsl:attribute name="svg:width">
-	  <xsl:choose>
-	    <xsl:when test="@width">
-	      <xsl:value-of select="@width"/>
-	      <xsl:call-template name="checkunit">
-		<xsl:with-param name="dim" select="@width"/>
-	      </xsl:call-template>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:text>6inch</xsl:text>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:attribute>
-	<xsl:attribute name="svg:height">
-	  <xsl:choose>
-	    <xsl:when test="@height">
-	      <xsl:value-of select="@height"/>
-	      <xsl:call-template name="checkunit">
-		<xsl:with-param name="dim" select="@height"/>
-	      </xsl:call-template>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:text>6inch</xsl:text>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:attribute>
-      </draw:image>
-    </text:p>
-    <xsl:if test="head">
-      <text:p text:style-name="Caption">
-	<text:span text:style-name="Figurenum">Figure <text:sequence
-	text:ref-name="refFigure0" text:name="Figure"
-	text:formula="Figure+1"
-	style:num-format="1"><xsl:number level="any"/>. </text:sequence>
-	</text:span>
-	<xsl:apply-templates select="head" mode="show"/>
-      </text:p>
-    </xsl:if>
-    <xsl:call-template name="endHook"/>
+	  xlink:actuate="onLoad" 
+	  draw:filter-name="&lt;All formats&gt;"/>
+    </draw:frame>
 
   </xsl:template>
 
@@ -473,8 +488,6 @@
       <xsl:text disable-output-escaping="yes">&lt;text:p&gt;</xsl:text>
     </xsl:if>
   </xsl:template>
-
-
 
   <xsl:template match="item/p">
     <xsl:apply-templates/>
