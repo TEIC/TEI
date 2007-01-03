@@ -523,10 +523,11 @@
       RIGHT CURLY BRACKET ORNAMENT; if these are used in real text, the escape
       will have to be changed. They are translated back to the correct
       characters by appropriate definitions in the preamble (see the template
-      for TEI in textstructure.xsl).</xd:detail>
+      called latexSetup in tei-param.xsl).</xd:detail>
   </xd:doc>
-  <xsl:template match="text()">
-    <xsl:value-of select="translate(.,'&#8491; \{}','A,⃥❴❵')"/>
+  <xsl:template match="text()"> 
+    <xsl:value-of
+	select="translate(.,'\{}','&#8421;&#10100;&#10101;')"/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements text()</xd:short>
