@@ -19,17 +19,21 @@
 <text>
 <body>
 <divGen type="toc"/>
-<div1>
-<head>My Fand Schema</head>
+<div>
+<head>My FAND Schema</head>
 <p>Here is the introduction to your document</p>
   <p>Here is the schema:</p>
     <schemaSpec ident="testfand" start="TEI">
-      <moduleRef key="header"/>
-      <moduleRef key="core"/>
       <moduleRef key="tei"/>
+      <moduleRef key="core"/>
+      <moduleRef key="header"/>
       <moduleRef key="textstructure"/>
       <moduleRef key="msdescription"/>
+<!--
+      <elementSpec ident="div" module="textstructure" mode="delete"/>
+      <elementSpec ident="divGen" module="textstructure" mode="delete"/>
       <elementSpec ident="div0" module="textstructure" mode="delete"/>
+-->
       <elementSpec ident="div1" module="textstructure" mode="delete"/>
       <elementSpec ident="div2" module="textstructure" mode="delete"/>
       <elementSpec ident="div3" module="textstructure" mode="delete"/>
@@ -37,11 +41,264 @@
       <elementSpec ident="div5" module="textstructure" mode="delete"/>
       <elementSpec ident="div6" module="textstructure" mode="delete"/>
       <elementSpec ident="div7" module="textstructure" mode="delete"/>
+
+
+
+<elementSpec ident="div0" mode="change">
+  <classes>
+    <memberOf key="att.divLike"/>
+    <memberOf key="att.declaring"/>
+    <memberOf key="model.divLike"/>
+  </classes>
+</elementSpec>
+
+<!--
+<elementSpec ident="div1" mode="change">
+  <classes>
+    <memberOf key="att.divLike"/>
+    <memberOf key="att.declaring"/>
+    <memberOf key="model.divLike"/>
+  </classes>
+</elementSpec>
+-->
+
+<elementSpec ident="divGen" mode="change">
+  <classes>
+    <memberOf key="model.frontPart"/>
+    <memberOf key="model.divLike"/>
+  </classes>
+</elementSpec>
+
+<elementSpec ident="div" mode="change">
+  <classes>
+    <memberOf key="model.divLike"/>
+    <memberOf key="att.divLike"/>
+    <memberOf key="att.declaring"/>
+  </classes>
+</elementSpec>
+
+
+<classSpec ident="model.divLike" mode="add" module="tei" type="model">
+  <desc>A major structural division</desc>
+</classSpec>
+
+<elementSpec module="textstructure" mode="change" ident="body">
+  <content>
+    <rng:group>
+<!-- first, some globals or divWrappers interleaved -->
+      <rng:zeroOrMore>
+	<rng:choice>
+	  <rng:group>
+	    <rng:ref name="model.divWrapper"/>
+	  </rng:group>
+	  <rng:group>
+	    <rng:ref name="model.global"/>
+	  </rng:group>
+	</rng:choice>
+      </rng:zeroOrMore>
+
+      <rng:group>
+	<!-- 
+	     now a choice between
+	     
+	     a) some components, with globals after them if needed
+	     b) some divLike things, with globals after them if needed
+	-->
+	<!-- a -->
+	<rng:choice>
+	  <rng:oneOrMore>
+	    <rng:group>
+	      <rng:group>
+		<rng:ref name="macro.component"/>
+	      </rng:group>
+	      <rng:zeroOrMore>
+		<rng:ref name="model.global"/>
+		</rng:zeroOrMore>
+	    </rng:group>
+	  </rng:oneOrMore>
+	  <!-- b -->	  
+	  <rng:oneOrMore>
+	    <rng:group>
+	      <rng:group>
+		<rng:ref name="model.divLike"/>
+	      </rng:group>
+	      <rng:zeroOrMore>
+		<rng:ref name="model.global"/>
+		</rng:zeroOrMore>
+	    </rng:group>
+	  </rng:oneOrMore>
+
+	</rng:choice>
+      </rng:group>
+      <!-- end of choice -->
+      
+      <!-- finally, some divWrappers -->
+      <rng:zeroOrMore>
+	<rng:ref name="model.divWrapper.bottom"/>
+      </rng:zeroOrMore>
+    </rng:group>
+
+    <s:pattern xmlns:s="http://www.ascc.net/xml/schematron" name="pattern.body">
+      <s:rule context="tei:body">
+	<s:report test="tei:div and (tei:div0 or tei:div1)">
+	  You cannot mix numbered divs with unnumbered divs in body
+	</s:report>
+	<s:report test="tei:div0 and tei:div1">
+	  You cannot mix div0 with div1 at the same level in body
+	</s:report>
+      </s:rule>
+    </s:pattern>
+
+  </content>
+</elementSpec>
+
+<elementSpec ident="front" mode="change">
+  <classes>
+    <memberOf key="att.declaring"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="model.frontPart"/>
+          <rng:ref name="model.global"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+      <rng:optional>
+        <rng:choice>
+          <rng:group>
+	    <rng:group>
+	      <rng:ref name="model.pLike.front"/>
+	    </rng:group>
+            <rng:zeroOrMore>
+              <rng:choice>
+                <rng:ref name="model.pLike.front"/>
+                <rng:ref name="titlePage"/>
+                <rng:ref name="model.global"/>
+              </rng:choice>
+            </rng:zeroOrMore>
+          </rng:group>
+
+	  <rng:group>
+	    <rng:group>
+	      <rng:ref name="model.divLike"/>
+	    </rng:group>
+	    <rng:zeroOrMore>
+	      <rng:choice>
+		<rng:ref name="model.divLike"/>
+                <rng:ref name="model.frontPart"/>
+		<rng:ref name="model.global"/>
+	    </rng:choice>
+	    </rng:zeroOrMore>
+	  </rng:group>
+
+        </rng:choice>
+      </rng:optional>
+    </rng:group>
+  </content>
+</elementSpec>
+
+
+<elementSpec ident="back" mode="change">
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+	<rng:choice>
+	  <rng:ref name="model.frontPart"/>
+	  <rng:ref name="model.global"/>
+	  <rng:ref name="model.divWrapper"/>
+	</rng:choice>
+      </rng:zeroOrMore>
+
+      <rng:optional>
+	<rng:choice>
+
+	  <rng:group>
+	    <rng:ref name="div"/>
+	    <rng:zeroOrMore>
+	      <rng:choice>
+		<rng:ref name="div"/>
+		<rng:ref name="model.frontPart"/>
+		<rng:ref name="model.global"/>
+	      </rng:choice>
+	    </rng:zeroOrMore>
+	  </rng:group>
+
+	  <rng:group>
+	    <rng:ref name="div1"/>
+	    <rng:zeroOrMore>
+	      <rng:choice>
+		<rng:ref name="div1"/>
+		<rng:ref name="model.frontPart"/>
+		<rng:ref name="model.global"/>
+	      </rng:choice>
+	    </rng:zeroOrMore>
+	  </rng:group>
+
+	</rng:choice>
+      </rng:optional>
+
+      <rng:zeroOrMore>
+	<rng:ref name="model.divWrapper.bottom"/>
+      </rng:zeroOrMore>
+    </rng:group>
+  </content>
+</elementSpec>
     </schemaSpec>
-</div1>
+</div>
 </body>
 </text>
 </TEI>
 
 
 
+<!-- older more complex model for body
+<content>
+    <rng:group>
+
+      <rng:zeroOrMore>
+    <rng:choice>
+      <rng:group>
+        <rng:ref name="model.divWrapper"/>
+      </rng:group>
+      <rng:group>
+        <rng:ref name="model.global"/>
+      </rng:group>
+    </rng:choice>
+      </rng:zeroOrMore>
+
+      <rng:group>
+    <rng:choice>
+      <rng:group>
+        <rng:oneOrMore>
+          <rng:group>
+        <rng:ref name="macro.component"/>
+          </rng:group>
+          <rng:zeroOrMore>
+        <rng:ref name="model.global"/>
+          </rng:zeroOrMore>
+        </rng:oneOrMore>
+      </rng:group>
+     
+      <rng:group>
+        <rng:group>
+          <rng:ref name="model.divLike"/>
+        </rng:group>
+        <rng:zeroOrMore>
+          <rng:choice>
+        <rng:ref name="model.divLike"/>
+        <rng:ref name="model.global"/>
+          </rng:choice>
+        </rng:zeroOrMore>
+      </rng:group>
+    </rng:choice>
+      </rng:group>
+
+      <rng:zeroOrMore>
+    <rng:ref name="model.divWrapper.bottom"/>
+      </rng:zeroOrMore>
+    </rng:group>
+
+  </content>
+
+-->
