@@ -30,13 +30,6 @@
       <moduleRef key="textstructure"/>
       <moduleRef key="msdescription"/>
 
-<!--
-      <elementSpec ident="div" module="textstructure" mode="delete"/>
-      <elementSpec ident="divGen" module="textstructure" mode="delete"/>
--->
-      <elementSpec ident="div0" module="textstructure" mode="delete"/>
-      <elementSpec ident="div1" module="textstructure" mode="delete"/>
-
       <elementSpec ident="div2" module="textstructure" mode="delete"/>
       <elementSpec ident="div3" module="textstructure" mode="delete"/>
       <elementSpec ident="div4" module="textstructure" mode="delete"/>
@@ -47,6 +40,9 @@
 
 
 <!--
+      <elementSpec ident="div0" module="textstructure" mode="delete"/>
+      <elementSpec ident="div1" module="textstructure" mode="delete"/>
+-->
 <elementSpec ident="div0" mode="change">
   <classes>
     <memberOf key="att.divLike"/>
@@ -63,14 +59,18 @@
     <memberOf key="model.ndivLike"/>
   </classes>
 </elementSpec>
--->
+
+
+<elementSpec ident="div" module="textstructure" mode="delete"/>
 
 <elementSpec ident="divGen" mode="change">
   <classes>
-    <memberOf key="model.divLike"/>
+    <memberOf key="model.divGenLike"/>
   </classes>
 </elementSpec>
 
+<!--
+<elementSpec ident="divGen" module="textstructure" mode="delete"/>
 <elementSpec ident="div" mode="change">
   <classes>
     <memberOf key="model.divLike"/>
@@ -78,10 +78,14 @@
     <memberOf key="att.declaring"/>
   </classes>
 </elementSpec>
-
+-->
 
 <classSpec ident="model.divLike" mode="add" module="tei" type="model">
   <desc>A major structural division</desc>
+</classSpec>
+
+<classSpec ident="model.divGenLike" mode="add" module="tei" type="model">
+  <desc>A major generated division</desc>
 </classSpec>
 
 <classSpec ident="model.ndivLike" mode="add" module="tei" type="model">
@@ -98,7 +102,10 @@
 	    <rng:ref name="model.divWrapper"/>
 	  </rng:group>
 	  <rng:group>
-	    <rng:ref name="model.global"/>
+	    <rng:choice>
+	      <rng:ref name="model.global"/>
+	      <rng:ref name="model.divGenLike"/>
+	    </rng:choice>
 	  </rng:group>
 	</rng:choice>
       </rng:zeroOrMore>
@@ -119,8 +126,11 @@
 		<rng:ref name="macro.component"/>
 	      </rng:group>
 	      <rng:zeroOrMore>
-		<rng:ref name="model.global"/>
-		</rng:zeroOrMore>
+		<rng:choice>
+		  <rng:ref name="model.global"/>
+		  <rng:ref name="model.divGenLike"/>
+		</rng:choice>
+	      </rng:zeroOrMore>
 	    </rng:group>
 	  </rng:oneOrMore>
 
@@ -131,8 +141,11 @@
 		<rng:ref name="model.divLike"/>
 	      </rng:group>
 	      <rng:zeroOrMore>
-		<rng:ref name="model.global"/>
-		</rng:zeroOrMore>
+		<rng:choice>
+		  <rng:ref name="model.global"/>
+		  <rng:ref name="model.divGenLike"/>
+		</rng:choice>
+	      </rng:zeroOrMore>
 	    </rng:group>
 	  </rng:oneOrMore>
 
@@ -143,7 +156,10 @@
 		<rng:ref name="model.ndivLike"/>
 	      </rng:group>
 	      <rng:zeroOrMore>
-		<rng:ref name="model.global"/>
+		<rng:choice>
+		  <rng:ref name="model.global"/>
+		  <rng:ref name="model.divGenLike"/>
+		</rng:choice>
 	      </rng:zeroOrMore>
 	    </rng:group>
 	  </rng:oneOrMore>
