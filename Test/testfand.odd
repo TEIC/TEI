@@ -67,7 +67,6 @@
 
 <elementSpec ident="divGen" mode="change">
   <classes>
-    <memberOf key="model.frontPart"/>
     <memberOf key="model.divLike"/>
   </classes>
 </elementSpec>
@@ -124,6 +123,7 @@
 		</rng:zeroOrMore>
 	    </rng:group>
 	  </rng:oneOrMore>
+
 	  <!-- b -->	  
 	  <rng:oneOrMore>
 	    <rng:group>
@@ -186,31 +186,39 @@
       </rng:zeroOrMore>
       <rng:optional>
         <rng:choice>
-          <rng:group>
-	    <rng:group>
-	      <rng:ref name="model.pLike.front"/>
-	    </rng:group>
-            <rng:zeroOrMore>
-              <rng:choice>
-                <rng:ref name="model.pLike.front"/>
-                <rng:ref name="titlePage"/>
-                <rng:ref name="model.global"/>
-              </rng:choice>
-            </rng:zeroOrMore>
-          </rng:group>
 
-	  <rng:group>
+	  <rng:oneOrMore>
 	    <rng:group>
-	      <rng:ref name="model.divLike"/>
-	    </rng:group>
-	    <rng:zeroOrMore>
-	      <rng:choice>
-		<rng:ref name="model.divLike"/>
-                <rng:ref name="model.frontPart"/>
+	      <rng:group>
+		<rng:ref name="model.pLike.front"/>
+	      </rng:group>
+	      <rng:zeroOrMore>
 		<rng:ref name="model.global"/>
-	    </rng:choice>
-	    </rng:zeroOrMore>
-	  </rng:group>
+		</rng:zeroOrMore>
+	    </rng:group>
+	  </rng:oneOrMore>
+
+	  <rng:oneOrMore>
+	    <rng:group>
+	      <rng:group>
+		<rng:ref name="model.divLike"/>
+	      </rng:group>
+	      <rng:zeroOrMore>
+		<rng:ref name="model.global"/>
+		</rng:zeroOrMore>
+	    </rng:group>
+	  </rng:oneOrMore>
+
+	  <rng:oneOrMore>
+	    <rng:group>
+	      <rng:group>
+		<rng:ref name="model.ndivLike"/>
+	      </rng:group>
+	      <rng:zeroOrMore>
+		<rng:ref name="model.global"/>
+		</rng:zeroOrMore>
+	    </rng:group>
+	  </rng:oneOrMore>
 
         </rng:choice>
       </rng:optional>
@@ -231,31 +239,30 @@
       </rng:zeroOrMore>
 
       <rng:optional>
-	<rng:choice>
-
-	  <rng:group>
-	    <rng:ref name="div"/>
-	    <rng:zeroOrMore>
-	      <rng:choice>
-		<rng:ref name="div"/>
-		<rng:ref name="model.frontPart"/>
+        <rng:choice>
+	  <rng:oneOrMore>
+	    <rng:group>
+	      <rng:group>
+		<rng:ref name="model.divLike"/>
+	      </rng:group>
+	      <rng:zeroOrMore>
 		<rng:ref name="model.global"/>
-	      </rng:choice>
-	    </rng:zeroOrMore>
-	  </rng:group>
+		</rng:zeroOrMore>
+	    </rng:group>
+	  </rng:oneOrMore>
 
-	  <rng:group>
-	    <rng:ref name="div1"/>
-	    <rng:zeroOrMore>
-	      <rng:choice>
-		<rng:ref name="div1"/>
-		<rng:ref name="model.frontPart"/>
+	  <rng:oneOrMore>
+	    <rng:group>
+	      <rng:group>
+		<rng:ref name="model.ndivLike"/>
+	      </rng:group>
+	      <rng:zeroOrMore>
 		<rng:ref name="model.global"/>
-	      </rng:choice>
-	    </rng:zeroOrMore>
-	  </rng:group>
+		</rng:zeroOrMore>
+	    </rng:group>
+	  </rng:oneOrMore>
 
-	</rng:choice>
+        </rng:choice>
       </rng:optional>
 
       <rng:zeroOrMore>
