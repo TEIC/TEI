@@ -29,12 +29,14 @@
       <moduleRef key="header"/>
       <moduleRef key="textstructure"/>
       <moduleRef key="msdescription"/>
+
 <!--
       <elementSpec ident="div" module="textstructure" mode="delete"/>
       <elementSpec ident="divGen" module="textstructure" mode="delete"/>
-      <elementSpec ident="div0" module="textstructure" mode="delete"/>
 -->
+      <elementSpec ident="div0" module="textstructure" mode="delete"/>
       <elementSpec ident="div1" module="textstructure" mode="delete"/>
+
       <elementSpec ident="div2" module="textstructure" mode="delete"/>
       <elementSpec ident="div3" module="textstructure" mode="delete"/>
       <elementSpec ident="div4" module="textstructure" mode="delete"/>
@@ -44,20 +46,21 @@
 
 
 
+<!--
 <elementSpec ident="div0" mode="change">
   <classes>
     <memberOf key="att.divLike"/>
     <memberOf key="att.declaring"/>
-    <memberOf key="model.divLike"/>
+    <memberOf key="model.ndivLike"/>
   </classes>
 </elementSpec>
 
-<!--
+
 <elementSpec ident="div1" mode="change">
   <classes>
     <memberOf key="att.divLike"/>
     <memberOf key="att.declaring"/>
-    <memberOf key="model.divLike"/>
+    <memberOf key="model.ndivLike"/>
   </classes>
 </elementSpec>
 -->
@@ -82,6 +85,10 @@
   <desc>A major structural division</desc>
 </classSpec>
 
+<classSpec ident="model.ndivLike" mode="add" module="tei" type="model">
+  <desc>A major structural division</desc>
+</classSpec>
+
 <elementSpec module="textstructure" mode="change" ident="body">
   <content>
     <rng:group>
@@ -103,6 +110,7 @@
 	     
 	     a) some components, with globals after them if needed
 	     b) some divLike things, with globals after them if needed
+	     c) some ndivLike things, with globals after them if needed
 	-->
 	<!-- a -->
 	<rng:choice>
@@ -125,6 +133,18 @@
 	      <rng:zeroOrMore>
 		<rng:ref name="model.global"/>
 		</rng:zeroOrMore>
+	    </rng:group>
+	  </rng:oneOrMore>
+
+	  <!-- c -->	  
+	  <rng:oneOrMore>
+	    <rng:group>
+	      <rng:group>
+		<rng:ref name="model.ndivLike"/>
+	      </rng:group>
+	      <rng:zeroOrMore>
+		<rng:ref name="model.global"/>
+	      </rng:zeroOrMore>
 	    </rng:group>
 	  </rng:oneOrMore>
 
