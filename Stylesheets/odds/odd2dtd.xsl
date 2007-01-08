@@ -542,6 +542,7 @@
 			  <xsl:choose>
 			    <xsl:when test="$exists=''">
 			      <xsl:text>_DUMMY_</xsl:text>
+			      <xsl:value-of select="@name"/>
 			    </xsl:when>
 			    <xsl:otherwise>
 			      <xsl:apply-templates select="."/>
@@ -557,6 +558,7 @@
 			  <xsl:choose>
 			    <xsl:when test="$exists=''">
 			      <xsl:text>_DUMMY_</xsl:text>
+			      <xsl:value-of select="@name"/>
 			    </xsl:when>
 			    <xsl:otherwise>
 			      <xsl:apply-templates select="."/>
@@ -600,8 +602,8 @@
             </xsl:choose>
             <xsl:for-each select="N">
 	      <xsl:choose>
-		<xsl:when test=".='_DUMMY_' and
-				preceding-sibling::N='_DUMMY_'"/>
+		<xsl:when test="starts-with(.,'_DUMMY_') and
+				starts-with(preceding-sibling::N,'_DUMMY_')"/>
 		<xsl:otherwise>
 		<xsl:value-of select="."/>
 		<xsl:choose>
@@ -815,6 +817,7 @@
 	      <xsl:choose>
 		<xsl:when test="$exists=''">
 		  <xsl:text>_DUMMY_</xsl:text>
+		  <xsl:value-of select="@name"/>
 		</xsl:when>
 		<xsl:otherwise>
 		  <xsl:text>%</xsl:text>
@@ -832,6 +835,7 @@
 	      <xsl:choose>
 		<xsl:when test="$exists=''">
 		  <xsl:text>_DUMMY_</xsl:text>
+		  <xsl:value-of select="@name"/>
 		</xsl:when>
 		<xsl:otherwise>
 		  <xsl:text>%</xsl:text>
