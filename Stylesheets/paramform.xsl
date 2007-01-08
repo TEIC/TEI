@@ -147,7 +147,7 @@ return "";
  id="stylebear">
 <p>Make stylesheet for: 
     <html:select name="Version">
-      <html:option value="teip4" selected="selected">TEI P4</html:option>
+      <html:option value="teip4">TEI P4</html:option>
       <html:option value="tei" selected="selected">TEI P5</html:option>
     </html:select>
 </p>

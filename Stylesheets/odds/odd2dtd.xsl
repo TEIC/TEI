@@ -539,9 +539,14 @@
                               <xsl:with-param name="id" select="@name"/>
                             </xsl:call-template>
                           </xsl:variable>
-                          <xsl:if test="not($exists='')">
-                            <xsl:apply-templates select="."/>
-                          </xsl:if>
+			  <xsl:choose>
+			    <xsl:when test="$exists=''">
+			      <xsl:text>_DUMMY_</xsl:text>
+			    </xsl:when>
+			    <xsl:otherwise>
+			      <xsl:apply-templates select="."/>
+			    </xsl:otherwise>
+			  </xsl:choose>
                         </xsl:when>
                         <xsl:when test="key('CLASSES',substring-before(@name,'_'))">
                           <xsl:variable name="exists">
@@ -549,9 +554,14 @@
                               <xsl:with-param name="id" select="substring-before(@name,'_')"/>
                             </xsl:call-template>
                           </xsl:variable>
-                          <xsl:if test="not($exists='')">
-                            <xsl:apply-templates select="."/>
-                          </xsl:if>
+			  <xsl:choose>
+			    <xsl:when test="$exists=''">
+			      <xsl:text>_DUMMY_</xsl:text>
+			    </xsl:when>
+			    <xsl:otherwise>
+			      <xsl:apply-templates select="."/>
+			    </xsl:otherwise>
+			  </xsl:choose>
                         </xsl:when>
                         <xsl:when test="key('MACROS',@name)">
                           <xsl:apply-templates select="."/>
@@ -589,20 +599,26 @@
               </xsl:when>
             </xsl:choose>
             <xsl:for-each select="N">
-              <xsl:value-of select="."/>
-              <xsl:choose>
-                <xsl:when test="self::N[1]='|'"/>
-                <xsl:when test="self::N[1]='('"/>
-                <xsl:when test="self::N[1]=')'and position() &lt; last()">
-                  <xsl:value-of select="$sep"/>
-                </xsl:when>
-                <xsl:when test="following-sibling::N[1]='('"/>
-                <xsl:when test="following-sibling::N[1]=')'"/>
-                <xsl:when test="following-sibling::N[1]='|'"/>
-                <xsl:when test="position() &lt; last()">
-                  <xsl:value-of select="$sep"/>
-                </xsl:when>
-              </xsl:choose>
+	      <xsl:choose>
+		<xsl:when test=".='_DUMMY_' and
+				preceding-sibling::N='_DUMMY_'"/>
+		<xsl:otherwise>
+		<xsl:value-of select="."/>
+		<xsl:choose>
+		  <xsl:when test="self::N[1]='|'"/>
+		  <xsl:when test="self::N[1]='('"/>
+		  <xsl:when test="self::N[1]=')'and position() &lt; last()">
+		    <xsl:value-of select="$sep"/>
+		  </xsl:when>
+		  <xsl:when test="following-sibling::N[1]='('"/>
+		  <xsl:when test="following-sibling::N[1]=')'"/>
+		  <xsl:when test="following-sibling::N[1]='|'"/>
+		  <xsl:when test="position() &lt; last()">
+		    <xsl:value-of select="$sep"/>
+		  </xsl:when>
+		</xsl:choose>
+		</xsl:otherwise>
+	      </xsl:choose>
             </xsl:for-each>
             <xsl:choose>
               <xsl:when test="starts-with(N[1],'(') and count(N)=1"/>
@@ -796,11 +812,16 @@
                   <xsl:with-param name="id" select="@name"/>
                 </xsl:call-template>
               </xsl:variable>
-              <xsl:if test="not($exists='')">
-                <xsl:text>%</xsl:text>
-                <xsl:value-of select="@name"/>
-                <xsl:text>;</xsl:text>
-              </xsl:if>
+	      <xsl:choose>
+		<xsl:when test="$exists=''">
+		  <xsl:text>_DUMMY_</xsl:text>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:text>%</xsl:text>
+		  <xsl:value-of select="@name"/>
+		  <xsl:text>;</xsl:text>
+		</xsl:otherwise>
+	      </xsl:choose>
             </xsl:when>
             <xsl:when test="key('CLASSES',substring-before(@name,'_'))">
               <xsl:variable name="exists">
@@ -808,11 +829,16 @@
                   <xsl:with-param name="id" select="substring-before(@name,'_')"/>
                 </xsl:call-template>
               </xsl:variable>
-              <xsl:if test="not($exists='')">
-                <xsl:text>%</xsl:text>
-                <xsl:value-of select="@name"/>
-                <xsl:text>;</xsl:text>
-              </xsl:if>
+	      <xsl:choose>
+		<xsl:when test="$exists=''">
+		  <xsl:text>_DUMMY_</xsl:text>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:text>%</xsl:text>
+		  <xsl:value-of select="@name"/>
+		  <xsl:text>;</xsl:text>
+		</xsl:otherwise>
+	      </xsl:choose>
             </xsl:when>
             <xsl:when test="key('MACROS',@name)">
               <xsl:text>%</xsl:text>

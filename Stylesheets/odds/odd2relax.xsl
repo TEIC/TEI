@@ -29,7 +29,7 @@
     <xd:copyright>2005, TEI Consortium</xd:copyright>
   </xd:doc>
   <xsl:output encoding="utf-8" indent="yes" method="xml"/>
-  <xsl:key name="SCHEMATRON" match="s:*" use="1"/>
+  <xsl:key name="SCHEMATRON" match="s:pattern" use="1"/>
   <xsl:param name="verbose"/>
   <xsl:param name="outputDir">Schema</xsl:param>
   <xsl:param name="appendixWords"/>
