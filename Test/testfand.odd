@@ -47,30 +47,21 @@
   <classes>
     <memberOf key="att.divLike"/>
     <memberOf key="att.declaring"/>
-    <memberOf key="model.ndivLike"/>
-  </classes>
-</elementSpec>
-
-
-<elementSpec ident="div1" mode="change">
-  <classes>
-    <memberOf key="att.divLike"/>
-    <memberOf key="att.declaring"/>
-    <memberOf key="model.ndivLike"/>
+    <memberOf key="model.divNLike"/>
   </classes>
 </elementSpec>
 
 
 <elementSpec ident="div" module="textstructure" mode="delete"/>
 
-<!--
+
 <elementSpec ident="divGen" mode="change">
   <classes>
     <memberOf key="model.divGenLike"/>
   </classes>
 </elementSpec>
 
-
+<!--
 <elementSpec ident="divGen" module="textstructure" mode="delete"/>
 <elementSpec ident="div" mode="change">
   <classes>
@@ -85,13 +76,15 @@
   <desc>A major structural division</desc>
 </classSpec>
 
+<classSpec ident="model.divNLike" mode="add" module="tei" type="model">
+  <desc>A major structural division using alternate names to
+  <ident>divLike</ident></desc>
+</classSpec>
+
 <classSpec ident="model.divGenLike" mode="add" module="tei" type="model">
   <desc>A major generated division</desc>
 </classSpec>
 
-<classSpec ident="model.ndivLike" mode="add" module="tei" type="model">
-  <desc>A major structural division</desc>
-</classSpec>
 
 <elementSpec module="textstructure" mode="change" ident="body">
   <content>
@@ -117,7 +110,7 @@
 	     
 	     a) some components, with globals after them if needed
 	     b) some divLike things, with globals after them if needed
-	     c) some ndivLike things, with globals after them if needed
+	     c) some divNLike things, with globals after them if needed
 	-->
 	<!-- a -->
 	<rng:choice>
@@ -151,7 +144,7 @@
 	  <rng:oneOrMore>
 	    <rng:group>
 	      <rng:group>
-		<rng:ref name="model.ndivLike"/>
+		<rng:ref name="model.divNLike"/>
 	      </rng:group>
 	      <rng:zeroOrMore>
 		<rng:choice>
@@ -227,7 +220,7 @@
 	  <rng:oneOrMore>
 	    <rng:group>
 	      <rng:group>
-		<rng:ref name="model.ndivLike"/>
+		<rng:ref name="model.divNLike"/>
 	      </rng:group>
 	      <rng:zeroOrMore>
 		<rng:ref name="model.global"/>
@@ -269,7 +262,7 @@
 	  <rng:oneOrMore>
 	    <rng:group>
 	      <rng:group>
-		<rng:ref name="model.ndivLike"/>
+		<rng:ref name="model.divNLike"/>
 	      </rng:group>
 	      <rng:zeroOrMore>
 		<rng:ref name="model.global"/>
