@@ -603,7 +603,7 @@
             <xsl:for-each select="N">
 	      <xsl:choose>
 		<xsl:when test="starts-with(.,'_DUMMY_') and
-				starts-with(preceding-sibling::N,'_DUMMY_')"/>
+				.=preceding-sibling::N[1]"/>
 		<xsl:otherwise>
 		<xsl:value-of select="."/>
 		<xsl:choose>
