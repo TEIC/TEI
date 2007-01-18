@@ -75,9 +75,9 @@
 
 
 <elementSpec module="textstructure" mode="change" ident="body">
-  <content>
+    <content>
     <rng:group>
-<!-- first, some globals, components, or divWrappers interleaved -->
+<!-- first, some globals, or divWrappers interleaved -->
       <rng:zeroOrMore>
 	<rng:choice>
 	  <rng:group>
@@ -87,7 +87,6 @@
 	    <rng:choice>
 	      <rng:ref name="model.global"/>
 	      <rng:ref name="model.divGenLike"/>
-    	      <rng:ref name="macro.component"/>
 	    </rng:choice>
 	  </rng:group>
 	</rng:choice>
@@ -147,28 +146,75 @@
 	    </rng:group>
 	  </rng:oneOrMore>
 
+	  <!-- d -->	
+	  <rng:group>
+	    <rng:oneOrMore>
+	      <rng:group>
+		<rng:ref name="macro.component"/>
+	      </rng:group>
+	      <rng:zeroOrMore>
+		<rng:ref name="model.global"/>
+	      </rng:zeroOrMore>
+	    </rng:oneOrMore>
+	    <rng:optional>
+	      <rng:choice>
+		<!-- a -->
+		<rng:oneOrMore>
+		  <rng:group>
+		    <rng:group>
+		      <rng:ref name="model.divLike"/>
+		    </rng:group>
+		    <rng:zeroOrMore>
+		      <rng:choice>
+			<rng:ref name="model.global"/>
+			<rng:ref name="model.divGenLike"/>
+		      </rng:choice>
+		    </rng:zeroOrMore>
+		  </rng:group>
+		</rng:oneOrMore>
+		
+		<!-- b -->	  
+		<rng:oneOrMore>
+		  <rng:group>
+		    <rng:group>
+		      <rng:ref name="model.divN0Like"/>
+		    </rng:group>
+		    <rng:zeroOrMore>
+		      <rng:choice>
+			<rng:ref name="model.global"/>
+			<rng:ref name="model.divGenLike"/>
+		      </rng:choice>
+		    </rng:zeroOrMore>
+		  </rng:group>
+		</rng:oneOrMore>
+		
+		<!-- c -->	  
+		<rng:oneOrMore>
+		  <rng:group>
+		    <rng:group>
+		      <rng:ref name="model.divN1Like"/>
+		    </rng:group>
+		    <rng:zeroOrMore>
+		      <rng:choice>
+			<rng:ref name="model.global"/>
+			<rng:ref name="model.divGenLike"/>
+		      </rng:choice>
+		    </rng:zeroOrMore>
+		  </rng:group>
+		</rng:oneOrMore>
+	      </rng:choice>
+	    </rng:optional>
+	  </rng:group>	    
+
 	</rng:choice>
-      </rng:group>
       <!-- end of choice -->
-      
+      </rng:group>    
       <!-- finally, some divWrappers -->
       <rng:zeroOrMore>
 	<rng:ref name="model.divWrapper.bottom"/>
       </rng:zeroOrMore>
     </rng:group>
 
-<!--
-    <s:pattern xmlns:s="http://www.ascc.net/xml/schematron" name="pattern.body">
-      <s:rule context="tei:body">
-	<s:report test="tei:div and (tei:div0 or tei:div1)">
-	  You cannot mix numbered divs with unnumbered divs in body
-	</s:report>
-	<s:report test="tei:div0 and tei:div1">
-	  You cannot mix div0 with div1 at the same level in body
-	</s:report>
-      </s:rule>
-    </s:pattern>
--->
   </content>
 </elementSpec>
 
