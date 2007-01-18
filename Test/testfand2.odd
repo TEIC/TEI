@@ -55,7 +55,7 @@
   </classes>
 </elementSpec>
 
-<classSpec ident="model.divLike" mode="change" module="tei" type="model">
+<classSpec ident="model.divLike" mode="add" module="tei" type="model">
   <desc>A major structural division</desc>
 </classSpec>
 
@@ -69,7 +69,7 @@
   <ident>divLike</ident>, starting with 1</desc>
 </classSpec>
 
-<classSpec ident="model.divGenLike" mode="change" module="tei" type="model">
+<classSpec ident="model.divGenLike" mode="add" module="tei" type="model">
   <desc>A major generated division</desc>
 </classSpec>
 
@@ -77,7 +77,7 @@
 <elementSpec module="textstructure" mode="change" ident="body">
   <content>
     <rng:group>
-<!-- first, some globals or divWrappers interleaved -->
+<!-- first, some globals, components, or divWrappers interleaved -->
       <rng:zeroOrMore>
 	<rng:choice>
 	  <rng:group>
@@ -87,6 +87,7 @@
 	    <rng:choice>
 	      <rng:ref name="model.global"/>
 	      <rng:ref name="model.divGenLike"/>
+    	      <rng:ref name="macro.component"/>
 	    </rng:choice>
 	  </rng:group>
 	</rng:choice>
@@ -96,25 +97,12 @@
 	<!-- 
 	     now a choice between
 	     
-	     a) some components, with globals after them if needed
-	     b) some divLike things, with globals after them if needed
-	     c) some divN0Like things, with globals after them if needed
-	     d) some divN1Like things, with globals after them if needed
+	     a) some divLike things, with globals after them if needed
+	     b) some divN0Like things, with globals after them if needed
+	     c) some divN1Like things, with globals after them if needed
 	-->
-	<!-- a -->
 	<rng:choice>
-	  <rng:oneOrMore>
-	    <rng:group>
-	      <rng:group>
-		<rng:ref name="macro.component"/>
-	      </rng:group>
-	      <rng:zeroOrMore>
-		  <rng:ref name="model.global"/>
-	      </rng:zeroOrMore>
-	    </rng:group>
-	  </rng:oneOrMore>
-
-	  <!-- b -->	  
+	<!-- a -->
 	  <rng:oneOrMore>
 	    <rng:group>
 	      <rng:group>
@@ -129,7 +117,7 @@
 	    </rng:group>
 	  </rng:oneOrMore>
 
-	  <!-- c -->	  
+	  <!-- b -->	  
 	  <rng:oneOrMore>
 	    <rng:group>
 	      <rng:group>
@@ -144,7 +132,7 @@
 	    </rng:group>
 	  </rng:oneOrMore>
 
-	  <!-- d -->	  
+	  <!-- c -->	  
 	  <rng:oneOrMore>
 	    <rng:group>
 	      <rng:group>
