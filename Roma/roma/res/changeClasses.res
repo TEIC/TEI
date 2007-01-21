@@ -101,3 +101,15 @@ form_changeAttributes=属性の変更
 
 
 
+[it]
+helpmessage=Seleziona una classe TEI da modificare. Clicca sul nome per visualizzare la documentazione
+headline=Modifica delle classi di attributi
+
+form_headline=Lista delle classi di attributi
+form_className=Nome classe
+form_description=Descrizione
+form_attributes=Attributi
+form_changeAttributes=modificaAttributi
+
+
+

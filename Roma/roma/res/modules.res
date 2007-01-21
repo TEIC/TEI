@@ -131,3 +131,42 @@ selectedModules_headline=選択したモジュール
 
 
 
+[it]
+helpmessage=Clicca su "Aggiungi" per inserire il modulo nello schema, oppure clicca sul nome del modulo per modificarne il contenuto
+headline=Moduli
+
+form_headline=Lista dei moduli TEI
+form_moduleName=Nome modulo
+form_description=Breve descrizione
+form_changes=Modifiche
+form_changed=Modificato
+form_add=Aggiungi
+form_remove=Rimuovi
+
+selectedModules_headline=Lista dei moduli selezionati[en]
+helpmessage=Click on add to put the module into your schema, or click on the module name to customize its contents
+headline=Modules
+
+form_headline=List of TEI Modules
+form_moduleName=Module name
+form_description=A short description
+form_changes=Changes
+form_changed=changed
+form_add=add
+form_remove=remove
+
+selectedModules_headline=List of selected Modules
+
+[it]
+helpmessage=Clicca su "Aggiungi" per inserire il modulo nello schema, oppure clicca sul nome del modulo per modificarne il contenuto
+headline=Moduli
+
+form_headline=Lista dei moduli TEI
+form_moduleName=Nome modulo
+form_description=Breve descrizione
+form_changes=Modifiche
+form_changed=Modificato
+form_add=Aggiungi
+form_remove=Rimuovi
+
+selectedModules_headline=Lista dei moduli selezionati

@@ -82,3 +82,12 @@ form_output=出力形式
 
 
 
+[it]
+helpmessage=E' ora possibile creare una documentazione per le impostazioni personali
+headline=Documentazione?
+
+form_headline=Creazione della documentazione
+form_output=Quale formato preferisci?
+
+
+

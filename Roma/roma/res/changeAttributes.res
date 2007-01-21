@@ -118,3 +118,16 @@ form_valList=属性値のリスト
 
 
 
+[it]
+helpmessage=E' possibile eliminare gli attributi o modificarne i data type (tipi di dati)
+headline=Modifica degli attributi
+
+form_headline=Modifica un attributo
+form_name=Nome dell'attributo
+form_optional=Facoltativo?
+form_contents=Contenuto
+form_defaultValue=Valore predefinito
+form_description=Descrizione
+form_valList=Lista dei valori
+
+

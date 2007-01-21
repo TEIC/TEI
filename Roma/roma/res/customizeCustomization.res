@@ -112,3 +112,14 @@ form_description=解説
 form_prefix=接頭辞
 
 
+[it]
+helpmessage=Questa finestra ti permette di impostare i parametri globali
+headline=Impostazione dei parametri
+
+form_headline=Imposta i parametri
+form_title=Titolo
+form_filename=Nome file
+form_language=Lingua
+form_author=Autore
+form_description=Descrizione
+form_prefix=Prefisso per nomi di pattern TEI nello schema

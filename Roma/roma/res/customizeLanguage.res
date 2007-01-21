@@ -95,3 +95,12 @@ form_clearCustomization=元に戻す(全て英語)
 
 
 
+[it]
+helpmessage=Scegli una lingua
+headline=Impostazione della lingua
+
+form_headline=Vuoi che i componenti TEI nello schema siano visualizzati in un'altra lingua?
+form_language=Personalizza lingua 
+form_doclanguage=Lingua della documentazione
+form_clearCustomization=Annulla personalizza (torna all'inglese)
+

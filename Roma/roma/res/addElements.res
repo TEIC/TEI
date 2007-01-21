@@ -95,3 +95,14 @@ form_contents=内容
 form_description=説明
 
 
+[it]
+helpmessage=Una volta inviato questo modulo, sarà possibile aggiungere attributi.
+headline=Aggiunta di un elemento
+
+form_headline=Definisci un nuovo elemento
+form_name=Nome
+form_modelClasses=Classi di modelli
+form_attributeClasses=Classi di attributi
+form_contents=Contenuto
+form_description=Descrizione
+

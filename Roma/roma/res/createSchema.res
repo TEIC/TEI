@@ -82,3 +82,9 @@ form_headline=スキーマの作成
 form_output=スキーマの選択
 
 
+[it]
+helpmessage=Puoi scegliere se costruire lo schema XML in Relax, W3C o DTD
+headline= Creazione dello schema 
+
+form_headline= Crea il tuo schema
+form_output=Quale formato preferisci?

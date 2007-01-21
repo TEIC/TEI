@@ -148,3 +148,17 @@ documentation=ドキュメント
 searchtei=TEIデータベースの検索
 
 
+[it]
+helpmessage=
+title=Come creare validatori per TEI
+save=Salva impostazioni personali
+help=Aiuto
+customize=Personalizza
+new=Nuovo
+addelements=Aggiungi elementi
+changeclasses=Cambia classi
+modules=Moduli
+language=Lingua
+schema=Schema
+documentation=Documentazione
+searchtei=Interroga database TEI 

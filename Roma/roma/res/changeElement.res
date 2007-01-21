@@ -111,3 +111,17 @@ form_description=解説
 
 
 
+[it]
+helpmessage=Questo modulo permette di creare un nuovo elemento o di modificarne uno esistente
+headline=Modifica di un elemento
+
+form_headline=Definisci un nuovo elemento
+form_name=Nome
+form_modelClasses=Classi di modelli
+form_attributeClasses=Classi di attributi
+form_contents=Contenuto
+form_description=Descrizione
+
+
+
+

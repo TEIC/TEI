@@ -119,3 +119,17 @@ form_changeAttributes=属性の変更
 
 
 
+[it]
+helpmessage=Seleziona gli elementi di questo modulo da includere. Clicca su "Escludi" per escluderli tutti, o su "Includi" per includerli nuovamente tutti
+headline=Modifica del modulo
+
+form_headline=Lista degli elementi nel modulo:
+form_include=Includi
+form_exclude=Escludi
+form_tagName=Nome Tag
+form_description=Descrizione
+form_attributes=Attributi
+form_changeAttributes=Modifica attributi
+
+
+

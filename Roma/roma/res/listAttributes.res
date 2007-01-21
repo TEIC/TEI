@@ -136,3 +136,15 @@ form_description=解説
 form_delete=削除
 
 
+[it]
+helpmessage=Ecco gli attributi disponibili per questa/o classe/elemento 
+headline=Attributi aggiunti
+
+form_headline=Lista degli attributi
+form_add=Aggiungi nuovi attributi
+form_changeAttribute=Modifica attributo
+form_include=Includi
+form_exclude=Escludi
+form_tagName=Nome tag
+form_description=Descrizione
+form_delete=Elimina

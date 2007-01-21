@@ -136,3 +136,17 @@ form_delete=削除
 form_changeAttributes=属性の変更
 
 
+[it]
+helpmessage=Ecco gli elementi che hai definito per il tuo schema
+headline=Elementi aggiunti
+
+form_headline=Lista degli elementi aggiunti
+form_add=Aggiungi nuovo elemento
+form_changeElement=Modifica elemento
+form_include=Includi
+form_exclude=Escludi
+form_tagName=Nome tag
+form_description=Descrizione
+form_attributes=Attributi
+form_delete=Elimina
+form_changeAttributes=Modifica attributi

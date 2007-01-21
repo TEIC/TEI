@@ -135,3 +135,17 @@ form_valList=属性値のリスト
 form_className=クラス名
 
 
+[it]
+helpmessage=Ogni attributo deve essere aggiunto separatamente. Scegli accuratamente i data type (tipi di dati).
+headline=Aggiunta di attributi
+form_headline=Aggiungi un nuovo attributo
+form_name=Nome attributo
+form_optional=Facoltativo?
+form_closed=Lista chiusa?
+form_contents=Contenuti
+form_defaultValue=Valore predefinito
+form_description=Descrizione
+form_valList=Lista dei valori
+form_className=Nome classe
+
+
