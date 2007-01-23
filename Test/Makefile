@@ -8,6 +8,9 @@ TESTFILES= \
 	testcorpus \
 	testdictionaries \
 	testdrama \
+	testfand \
+	testfand2 \
+	testfand3 \
 	testfs \
 	testi18n \
 	testlite \
