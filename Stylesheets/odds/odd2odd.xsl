@@ -12,7 +12,7 @@
   xmlns:teix="http://www.tei-c.org/ns/Examples"
   xmlns:xd="http://www.pnp-software.com/XSLTdoc"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  exclude-result-prefixes="exsl estr edate teix a tei rng xd">
+  exclude-result-prefixes="exsl estr edate teix a s tei rng xd">
   <xd:doc type="stylesheet">
     <xd:short> TEI stylesheet for simplifying TEI ODD markup </xd:short>
     <xd:detail> This library is free software; you can redistribute it and/or
@@ -232,10 +232,12 @@ because of the order of declarations
       </xsl:for-each>
     </xsl:for-each>
   </xsl:template>
+
   <xsl:template match="@*|processing-instruction()|comment()|text()"
     mode="change">
     <xsl:copy/>
   </xsl:template>
+
   <xsl:template match="*" mode="change">
     <xsl:copy>
       <xsl:apply-templates mode="change"
@@ -247,12 +249,25 @@ because of the order of declarations
     <xsl:copy/>
   </xsl:template>
 
+  <xsl:template match="tei:memberOf" mode="copy">
+    <xsl:variable name="k" select="@key"/>
+    <xsl:for-each select="$ODD">
+      <xsl:choose>
+	<xsl:when test="key('DELETE',$k)"/>
+	<xsl:otherwise>
+	  <tei:memberOf key="{$k}"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:template>
+
   <xsl:template match="*" mode="copy">
     <xsl:copy>
       <xsl:apply-templates mode="copy"
         select="*|@*|processing-instruction()|comment()|text()"/>
     </xsl:copy>
   </xsl:template>
+
   <xsl:template match="tei:listRef" mode="copy"/>
   <xsl:template match="tei:elementSpec/@mode" mode="copy"/>
   <xsl:template match="tei:macroSpec/@mode" mode="copy"/>
@@ -551,21 +566,49 @@ If so, use them as is.
     <xsl:variable name="ORIGINAL" select="."/>
     <xsl:copy>
       <xsl:apply-templates mode="change" select="@*"/>
-      <!-- for each class, go through the sections one by one
-and see if they are present in the change mode version -->
+      <!-- for each section of the class spec, 
+     go through the sections one by one
+     and see if they are present in the change mode version -->
       <xsl:for-each select="$ODD">
         <xsl:for-each select="key('CHANGE',$className)">
-          <!-- classes -->
+<!-- context is now a classSpec in change mode in the ODD spec -->
+          <!-- description -->
           <xsl:choose>
-            <xsl:when test="tei:classes">
-              <xsl:copy-of select="tei:classes"/>
+            <xsl:when test="tei:desc">
+              <xsl:copy-of select="tei:desc"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:for-each select="$ORIGINAL">
-                <xsl:copy-of select="tei:classes"/>
+                <xsl:copy-of select="tei:desc"/>
               </xsl:for-each>
             </xsl:otherwise>
           </xsl:choose>
+
+          <!-- classes -->
+          <xsl:choose>
+            <xsl:when test="tei:classes">
+		<xsl:copy-of select="tei:classes"/>
+            </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:for-each select="$ORIGINAL">
+		<tei:classes>
+		  <xsl:for-each select="tei:classes/tei:memberOf">
+		    <xsl:variable name="this">
+		      <xsl:value-of select="@key"/>
+		    </xsl:variable>
+		    <xsl:for-each select="$ODD">
+		      <xsl:choose>
+			<xsl:when test="key('DELETE',$this)"/>
+			<xsl:otherwise>
+			  <tei:memberOf key="{$this}"/>
+			</xsl:otherwise>
+		      </xsl:choose>
+		    </xsl:for-each>
+		  </xsl:for-each>
+		</tei:classes>
+	      </xsl:for-each>
+	    </xsl:otherwise>
+	  </xsl:choose>
           <!-- attList -->
           <tei:attList>
             <xsl:call-template name="processAttributes">
