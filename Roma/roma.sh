@@ -17,7 +17,7 @@ makeODD()
 	    | xsltproc -o $N.compiled.odd $LANG $DOCLANG --stringparam TEIC $TEIC \
 	    --stringparam TEISERVER $TEISERVER  \
 	    --stringparam localsource "$LOCAL"  \
-	    $TEIXSLDIR/odds/odd2odd.xsl -
+	    $DEBUG  $TEIXSLDIR/odds/odd2odd.xsl -
     else
 	echo  [names translated to language $lang]
 	xmllint --noent --xinclude $ODD \
@@ -25,7 +25,7 @@ makeODD()
 	    --stringparam TEIC $TEIC \
 	    --stringparam TEISERVER $TEISERVER  \
 	    --stringparam localsource "$LOCAL"  \
-	    $TEIXSLDIR/odds/odd2odd.xsl - \
+	   $DEBUG  $TEIXSLDIR/odds/odd2odd.xsl - \
 	    | xsltproc -o $N.compiled.odd $DEBUG $LANG $DOCLANG --stringparam TEISERVER $TEISERVER  \
 	    $TEIXSLDIR/odds/translate-odd.xsl - 
     fi
