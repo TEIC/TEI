@@ -378,6 +378,7 @@
   </xd:doc>
   
 <xsl:template match="tei:pb">
+   <!-- string " Page " is now managed through the i18n file -->
     <xsl:choose>
       <xsl:when test="$pagebreakStyle='active'">
         <xsl:text>\clearpage </xsl:text>
@@ -385,9 +386,24 @@
       <xsl:when test="$pagebreakStyle='visible'">
         <xsl:text>✁[</xsl:text>
         <xsl:value-of select="@unit"/>
-        <xsl:text> Page </xsl:text>
+        <xsl:text> </xsl:text>
+        <xsl:call-template name="i18n">
+           <xsl:with-param name="word">page</xsl:with-param>
+        </xsl:call-template>
+        <xsl:text> </xsl:text>
         <xsl:value-of select="@n"/>
         <xsl:text>]✁</xsl:text>
+      </xsl:when>
+      <xsl:when test="$pagebreakStyle='bracketsonly'"> <!-- To avoid trouble with the scisssors character "✁" -->
+        <xsl:text>[</xsl:text>
+        <xsl:value-of select="@unit"/>
+        <xsl:text> </xsl:text>
+        <xsl:call-template name="i18n">
+           <xsl:with-param name="word">page</xsl:with-param>
+        </xsl:call-template>
+        <xsl:text> </xsl:text>
+        <xsl:value-of select="@n"/>
+        <xsl:text>]</xsl:text>
       </xsl:when>
       <xsl:otherwise> </xsl:otherwise>
     </xsl:choose>
@@ -429,7 +445,14 @@
               </xsl:choose>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:value-of select="$preQuote"/>
+              <xsl:choose> <!-- No odd preQuote if POST present -->
+                <xsl:when test="contains(@rend,'POST')">
+                  <xsl:text></xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                   <xsl:value-of select="$preQuote"/>
+                </xsl:otherwise>
+              </xsl:choose>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
@@ -442,7 +465,14 @@
               </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:value-of select="$postQuote"/>
+              <xsl:choose> <!-- No odd postQuote if PRE present -->
+                <xsl:when test="contains(@rend,'PRE')">
+                  <xsl:text></xsl:text> 
+                </xsl:when>
+                <xsl:otherwise>
+                   <xsl:value-of select="$postQuote"/>
+                </xsl:otherwise>
+              </xsl:choose>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
