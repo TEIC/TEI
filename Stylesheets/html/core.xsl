@@ -390,9 +390,9 @@
         <xsl:call-template name="rendering"/>
       </xsl:when>
       <xsl:otherwise>
-        <strong>
+        <span class="hi">
           <xsl:apply-templates/>
-        </strong>
+        </span>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
