@@ -293,7 +293,7 @@
             <td valign="top">
               <xsl:comment>!</xsl:comment>
             </td>
-            <td colspan="2">
+            <td colspan="2" class="wovenodd-col2">
               <xsl:if test="count(preceding-sibling::tei:ptr)&gt;0">; </xsl:if>
               <xsl:call-template name="makeInternalLink">
                 <xsl:with-param name="target"

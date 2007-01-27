@@ -183,14 +183,14 @@
   </xd:doc>
   <xsl:template match="tei:attList" mode="weave">
     <tr>
-      <td valign="top">
+      <td valign="top" class="wovenodd-col1">
         <span class="label">
           <xsl:call-template name="i18n">
             <xsl:with-param name="word">Attributes</xsl:with-param>
           </xsl:call-template>
         </span>
       </td>
-      <td>
+      <td class="wovenodd-col2">
         <xsl:call-template name="displayAttList">
           <xsl:with-param name="mode">all</xsl:with-param>
         </xsl:call-template>
@@ -239,7 +239,7 @@
       <td class="classSpec">
         <xsl:value-of select="$name"/>
       </td>
-      <td colspan="2">
+      <td colspan="2" class="wovenodd-col2">
 	<xsl:call-template name="makeDescription"/>
       </td>
     </tr>
@@ -260,21 +260,21 @@
     <!--
   <tr>
     <td valign="top">Member of classes</td>
-    <td colspan="2">
+    <td colspan="2" class="wovenodd-col2">
       <xsl:call-template name="generateClassParents"/>
       &#160;
     </td>
   </tr>
 -->
     <tr>
-      <td valign="top">
+      <td valign="top"  class="wovenodd-col1">
         <span class="label">
           <xsl:call-template name="i18n">
             <xsl:with-param name="word">Members</xsl:with-param>
           </xsl:call-template>
         </span>
       </td>
-      <td colspan="2">
+      <td colspan="2" class="wovenodd-col2">
         <xsl:call-template name="generateMembers"/>
       </td>
     </tr>
@@ -290,14 +290,14 @@
   <xsl:template match="tei:classes" mode="weave">
     <xsl:if test="tei:memberOf">
       <tr>
-        <td valign="top">
+        <td valign="top"  class="wovenodd-col1">
           <span class="label">
             <xsl:call-template name="i18n">
               <xsl:with-param name="word">Class</xsl:with-param>
             </xsl:call-template>
           </span>
         </td>
-        <td colspan="2">
+        <td colspan="2" class="wovenodd-col2">
           <xsl:for-each select="tei:memberOf">
             <xsl:choose>
               <xsl:when test="key('IDENTS',@key)">
@@ -397,7 +397,7 @@
       <td class="elementSpec">
         <xsl:value-of select="$name"/>
       </td>
-      <td colspan="2">
+      <td colspan="2" class="wovenodd-col2">
 	<xsl:call-template name="makeDescription"/>
       </td>
     </tr>
@@ -437,14 +437,14 @@
       </xsl:choose>
     </xsl:variable>
     <tr>
-      <td valign="top">
+      <td valign="top"  class="wovenodd-col1">
         <span class="label">
           <xsl:call-template name="i18n">
             <xsl:with-param name="word">Declaration</xsl:with-param>
           </xsl:call-template>
         </span>
       </td>
-      <td colspan="2">
+      <td colspan="2" class="wovenodd-col2">
         <xsl:call-template name="bitOut">
           <xsl:with-param name="grammar"/>
           <xsl:with-param name="content">
@@ -640,7 +640,7 @@
           </xsl:call-template>
 	    </span>
 	  </td>
-	  <td colspan="2">
+	  <td colspan="2" class="wovenodd-col2">
 	    <xsl:apply-templates/>
 	  </td>
 	</tr>
@@ -700,7 +700,7 @@
       <td class="macroSpec">
         <xsl:value-of select="$name"/>
       </td>
-      <td colspan="2">
+      <td colspan="2" class="wovenodd-col2">
 	<xsl:call-template name="makeDescription"/>
       </td>
     </tr>
@@ -722,7 +722,7 @@
           </xsl:call-template>
         </span>
       </td>
-      <td colspan="2">
+      <td colspan="2" class="wovenodd-col2">
         <xsl:call-template name="bitOut">
           <xsl:with-param name="grammar">true</xsl:with-param>
           <xsl:with-param name="content">
@@ -834,7 +834,7 @@
           </xsl:call-template>
 	  </span>
 	</td>
-	<td colspan="2">
+	<td colspan="2" class="wovenodd-col2">
 	  <xsl:comment> </xsl:comment>
 	  <xsl:apply-templates/>
 	</td>
@@ -1099,7 +1099,7 @@
           </xsl:call-template>
         </span>
       </td>
-      <td colspan="2">
+      <td colspan="2" class="wovenodd-col2">
         <xsl:call-template name="makeTagsetInfo"/>
       </td>
     </tr>
