@@ -346,21 +346,6 @@
   </xsl:template>
 
   <xd:doc>
-    <xd:short>Process elements tei:eg</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:eg">
-    <xsl:call-template name="verbatim">
-      <xsl:with-param name="autowrap">false</xsl:with-param>
-      <xsl:with-param name="startnewline">
-        <xsl:if test="parent::tei:exemplum">true</xsl:if>
-      </xsl:with-param>
-      <xsl:with-param name="text">
-        <xsl:apply-templates/>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  <xd:doc>
     <xd:short>Process elements tei:elementSpec</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
