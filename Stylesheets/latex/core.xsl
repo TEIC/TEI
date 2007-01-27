@@ -168,11 +168,11 @@
           <xsl:when test="$depth=4">V</xsl:when>
         </xsl:choose>
         <xsl:choose>
-          <xsl:when test="ancestor::tei:q">Starx</xsl:when>
+          <xsl:when test="ancestor::tei:q">Star</xsl:when>
           <xsl:when
             test="ancestor::tei:back and $numberBackHeadings='false'"
             >Star</xsl:when>
-	  <xsl:when test="$numberHeadings='true' and
+	  <xsl:when test="$numberHeadings='false' and
 			  ancestor::tei:body">Star</xsl:when>
           <xsl:when
             test="ancestor::tei:front and $numberFrontHeadings='false'"
