@@ -266,6 +266,7 @@ because of the order of declarations
       <xsl:apply-templates mode="copy"
         select="*|@*|processing-instruction()|comment()|text()"/>
     </xsl:copy>
+
   </xsl:template>
 
   <xsl:template match="tei:listRef" mode="copy"/>
