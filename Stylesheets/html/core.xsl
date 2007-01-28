@@ -870,9 +870,9 @@
       <xsl:apply-templates mode="ident" select="."/>
     </xsl:variable>
       <xsl:call-template name="makeAnchor">
-	<xsl:param name="name">
+	<xsl:with-param name="name">
 	  <xsl:value-of select="$ident"/>
-	</xsl:param>
+	</xsl:with-param>
       </xsl:call-template>
     <xsl:apply-templates/>
   </xsl:template>
