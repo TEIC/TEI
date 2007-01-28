@@ -1896,6 +1896,7 @@ $ID: requests a particular page
         </div>
       </div>
       <div id="rh-col">
+
         <a name="rh-column">
           <xsl:comment>real top </xsl:comment>
         </a>

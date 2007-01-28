@@ -841,17 +841,7 @@
   </xd:doc>
   <xsl:template match="tei:specGrp">
     <div class="specgrp">
-      <xsl:choose>
-	<xsl:when test="not(@xml:id)"/>
-	<xsl:when test="$xhtml='true'">
-	  <xsl:attribute name="id">
-	    <xsl:value-of select="@xml:id"/>
-	  </xsl:attribute>
-	</xsl:when>
-	<xsl:otherwise>
-        <a name="{@xml:id}"/>
-	</xsl:otherwise>
-      </xsl:choose>
+      <xsl:call-template name="makeAnchor"/>
       <b>Specification group <xsl:number level="any"/>
         <xsl:if test="@n">
           <xsl:text>: </xsl:text>
@@ -1247,7 +1237,11 @@
       </xsl:when>
       <xsl:when test="$splitLevel=-1">
         <h2>
-          <a name="{@ident}"/>
+	  <xsl:call-template name="makeAnchor">
+	    <xsl:with-param name="name">
+	      <xsl:value-of select="@ident"/>
+	    </xsl:with-param>
+	  </xsl:call-template>
           <xsl:value-of select="$name"/>
         </h2>
         <table border="1" class="wovenodd">
@@ -1307,7 +1301,11 @@
                   </xsl:call-template>
                 </div>
                 <div>
-                  <a name="{@ident}"/>
+		  <xsl:call-template name="makeAnchor">
+		    <xsl:with-param name="name">
+		      <xsl:value-of select="@ident"/>
+		    </xsl:with-param>
+		  </xsl:call-template>
                   <table border="1" class="wovenodd">
                     <xsl:apply-templates mode="weavebody" select="."/>
                   </table>

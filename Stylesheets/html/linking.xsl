@@ -152,7 +152,7 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:anchor">
-    <a name="{@xml:id}"/>
+      <xsl:call-template name="makeAnchor"/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process extra elements in generateLink mode</xd:short>

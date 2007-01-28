@@ -107,9 +107,7 @@
           <xsl:value-of select="@role"/>
         </xsl:attribute>
       </xsl:if>
-      <xsl:if test="@xml:id">
-        <a name="{@xml:id}"/>
-      </xsl:if>
+      <xsl:call-template name="makeAnchor"/>
       <xsl:apply-templates/>
     </td>
   </xsl:template>

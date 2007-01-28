@@ -185,9 +185,7 @@
   <xsl:template match="tei:sp">
     <dl>
       <dt>
-        <xsl:if test="@xml:id">
-          <a name="{@xml:id}"/>
-        </xsl:if>
+	<xsl:call-template name="makeAnchor"/>
         <xsl:apply-templates select="tei:speaker"/>
       </dt>
       <dd>
