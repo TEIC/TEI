@@ -1885,11 +1885,12 @@
     <xsl:param name="value"/>
     <xsl:param name="rest"/>
     <xsl:message>Unknown rend attribute <xsl:value-of select="$value"/></xsl:message>
-    <code class="undone">[Unknown rendering: <xsl:value-of select="$value"/>]</code>
+    <xsl:attribute name="class">
+      <xsl:value-of select="$rend"/>
+    </xsl:attribute>
     <xsl:call-template name="applyRend">
       <xsl:with-param name="value" select="$rest"/>
     </xsl:call-template>
-    <code class="undone">[End rendering]</code>
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
@@ -1900,12 +1901,17 @@
   <xsl:template name="unknownRendInline">
     <xsl:param name="value"/>
     <xsl:param name="rest"/>
-    <xsl:message>Unknown rend attribute <xsl:value-of select="$value"/></xsl:message>
-    <code class="undone">[Unknown rendering: <xsl:value-of select="$value"/>]</code>
-    <xsl:call-template name="applyRend">
-      <xsl:with-param name="value" select="$rest"/>
-    </xsl:call-template>
-    <code class="undone">[End rendering]</code>
+    <xsl:message>Unknown rend attribute <xsl:value-of
+    select="$value"/></xsl:message> 
+    <span class="{$rend}">
+      <xsl:if test="@id">
+	<xsl:attribute name="id"><xsl:value-of
+	select="@id"/></xsl:attribute>
+      </xsl:if>
+      <xsl:call-template name="applyRend">
+	<xsl:with-param name="value" select="$rest"/>
+      </xsl:call-template>
+    </span>
   </xsl:template>
   <xd:doc>
     <xd:short>[html] create external notes file</xd:short>
