@@ -1886,7 +1886,7 @@
     <xsl:param name="rest"/>
     <xsl:message>Unknown rend attribute <xsl:value-of select="$value"/></xsl:message>
     <xsl:attribute name="class">
-      <xsl:value-of select="$rend"/>
+      <xsl:value-of select="$value"/>
     </xsl:attribute>
     <xsl:call-template name="applyRend">
       <xsl:with-param name="value" select="$rest"/>
@@ -1903,7 +1903,7 @@
     <xsl:param name="rest"/>
     <xsl:message>Unknown rend attribute <xsl:value-of
     select="$value"/></xsl:message> 
-    <span class="{$rend}">
+    <span class="{$value}">
       <xsl:if test="@id">
 	<xsl:attribute name="id"><xsl:value-of
 	select="@id"/></xsl:attribute>
