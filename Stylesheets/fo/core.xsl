@@ -511,10 +511,11 @@
             <xsl:attribute name="column-align" namespace="http://www.tug.org/fotex">p</xsl:attribute>
           </xsl:if>
         </fo:table-column>
-        <fo:table-column column-number="2" column-width="80%"/>
+        <fo:table-column column-number="2" column-width="80%">
         <xsl:if test="$foEngine='passivetex'">
           <xsl:attribute name="column-align" namespace="http://www.tug.org/fotex">p</xsl:attribute>
         </xsl:if>
+        </fo:table-column>
         <fo:table-body>
           <xsl:for-each select="tei:item">
             <fo:table-row>

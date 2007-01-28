@@ -480,9 +480,9 @@
 	</xsl:when>
 	<xsl:when test="$generateParagraphIDs='true'">
 	  <xsl:call-template name="makeAnchor">
-	    <xsl:param name="name">
+	    <xsl:with-param name="name">
 	      <xsl:value-of select="generate-id()"/>
-	    </xsl:param>
+	    </xsl:with-param>
 	  </xsl:call-template>
 	</xsl:when>
       </xsl:choose>
