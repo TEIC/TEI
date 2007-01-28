@@ -2216,7 +2216,7 @@ class romaDom extends domDocument
 	if ( $this->bBar )
 	  $this->m_oRomaDom->updateProgressBar( '55' );
         $oXSL = new domDocument();
- 	$oXSL->load( roma_StylesheetDir . '/odds/odd2html.xsl'  );
+ 	$oXSL->load( roma_StylesheetDir . '/html/odd2html.xsl'  );
 
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
