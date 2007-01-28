@@ -19,10 +19,10 @@
   exclude-result-prefixes="xlink dbk rng tei teix xhtml a edate estr html pantor xd xs xsl"
   extension-element-prefixes="exsl estr edate" 
 >
-  <xsl:import href="teiodds.xsl"/>
-  <xsl:import href="../xhtml/tei.xsl"/>
-  <xsl:import href="../xhtml/tagdocs.xsl"/>
-  <xsl:import href="RngToRnc.xsl"/>
+  <xsl:import href="../odds/teiodds.xsl"/>
+  <xsl:import href="tei.xsl"/>
+  <xsl:import href="tagdocs.xsl"/>
+  <xsl:import href="../odds/RngToRnc.xsl"/>
   <xsl:param name="xhtml">true</xsl:param>
   <xd:doc type="stylesheet">
     <xd:short> TEI stylesheet for making HTML from ODD </xd:short>
