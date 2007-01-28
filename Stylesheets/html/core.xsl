@@ -150,7 +150,11 @@
         <xsl:variable name="ident">
           <xsl:apply-templates mode="ident" select="."/>
         </xsl:variable>
-        <a name="{$ident}"/>
+	<xsl:call-template name="makeAnchor">
+	  <xsl:with-param name="name">
+	    <xsl:value-of select="$ident"/>
+	  </xsl:with-param>
+	</xsl:call-template>
         <xsl:apply-templates/>
       </xsl:otherwise>
     </xsl:choose>
@@ -160,9 +164,7 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:biblStruct">
-    <xsl:if test="@xml:id">
-      <a name="{@xml:id}"/>
-    </xsl:if>
+    <xsl:call-template name="makeAnchor"/>
     <xsl:choose>
       <xsl:when test="@copyOf">
         <a class="biblink" href="{concat('#',substring(@copyOf,5,2))}">Zie
@@ -469,30 +471,20 @@
         </xsl:attribute>
       </xsl:if>
       <xsl:choose>
-        <xsl:when test="@xml:id">
-	  <xsl:choose>
-	    <xsl:when test="$xhtml='true'">
-	      <xsl:attribute name="id">
-		<xsl:value-of select="@xml:id"/>
-	      </xsl:attribute>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <a name="{@xml:id}"/>
-	    </xsl:otherwise>
-	  </xsl:choose>
-        </xsl:when>
-        <xsl:when test="$generateParagraphIDs='true'">
-	  <xsl:choose>
-	    <xsl:when test="$xhtml='true'">
-	      <xsl:attribute name="id">
-		<xsl:value-of select="generate-id()"/>
-	      </xsl:attribute>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <a name="{generate-id()}"/>
-	    </xsl:otherwise>
-	  </xsl:choose>
-        </xsl:when>
+	<xsl:when test="@xml:id">
+	  <xsl:call-template name="makeAnchor">
+	    <xsl:with-param name="name">
+	      <xsl:value-of select="@xml:id"/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:when>
+	<xsl:when test="$generateParagraphIDs='true'">
+	  <xsl:call-template name="makeAnchor">
+	    <xsl:param name="name">
+	      <xsl:value-of select="generate-id()"/>
+	    </xsl:param>
+	  </xsl:call-template>
+	</xsl:when>
       </xsl:choose>
       <xsl:apply-templates/>
     </li>
@@ -564,9 +556,7 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:label">
-    <xsl:if test="@xml:id">
-      <a name="{@xml:id}"/>
-    </xsl:if>
+      <xsl:call-template name="makeAnchor"/>
     <xsl:apply-templates/>
   </xsl:template>
   <xd:doc>
@@ -574,9 +564,7 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:label" mode="print">
-    <xsl:if test="@xml:id">
-      <a name="{@xml:id}"/>
-    </xsl:if>
+    <xsl:call-template name="makeAnchor"/>
     <xsl:choose>
       <xsl:when test="@rend">
         <xsl:call-template name="rendering"/>
@@ -881,7 +869,11 @@
     <xsl:variable name="ident">
       <xsl:apply-templates mode="ident" select="."/>
     </xsl:variable>
-    <a name="{$ident}"/>
+      <xsl:call-template name="makeAnchor">
+	<xsl:param name="name">
+	  <xsl:value-of select="$ident"/>
+	</xsl:param>
+      </xsl:call-template>
     <xsl:apply-templates/>
   </xsl:template>
   <xd:doc>
@@ -896,16 +888,16 @@
     <xsl:choose>
       <xsl:when test="ancestor::tei:bibl"> (<xsl:apply-templates/>) </xsl:when>
       <xsl:when test="@place='inline'">
-	<xsl:call-template name="addIdentification">
-	  <xsl:with-param name="id" select="$identifier"/>
+	<xsl:call-template name="makeAnchor">
+	  <xsl:with-param name="name" select="$identifier"/>
 	</xsl:call-template>
         <xsl:text> (</xsl:text>
         <xsl:apply-templates/>
         <xsl:text>)</xsl:text>
       </xsl:when>
       <xsl:when test="@place='display'">
-	<xsl:call-template name="addIdentification">
-	  <xsl:with-param name="id" select="$identifier"/>
+	<xsl:call-template name="makeAnchor">
+	  <xsl:with-param name="name" select="$identifier"/>
 	</xsl:call-template>
         <blockquote>
 
@@ -943,8 +935,8 @@
         </xsl:choose>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:call-template name="addIdentification">
-	  <xsl:with-param name="id" select="$identifier"/>
+	<xsl:call-template name="makeAnchor">
+	  <xsl:with-param name="name" select="$identifier"/>
 	</xsl:call-template>
         <xsl:text> [</xsl:text>
         <xsl:call-template name="i18n">
@@ -974,8 +966,8 @@
             <xsl:value-of select="$parent"/></xsl:message>
       </xsl:if>
       <div class="note">
-	  <xsl:call-template name="addIdentification">
-	    <xsl:with-param name="id" select="$identifier"/>
+	  <xsl:call-template name="makeAnchor">
+	    <xsl:with-param name="name" select="$identifier"/>
 	  </xsl:call-template>
 	  <span class="noteLabel">
 	    <xsl:call-template name="noteN"/>
@@ -1003,9 +995,7 @@
       make it an anchor if it has an ID.</xd:detail>
   </xd:doc>
   <xsl:template match="tei:pb">
-    <xsl:if test="@xml:id">
-      <a name="{@xml:id}"/>
-    </xsl:if>
+      <xsl:call-template name="makeAnchor"/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process element tei:p</xd:short>
@@ -1032,27 +1022,22 @@
 	  <xsl:if test="$wrapperElement='div'">p</xsl:if>
 	</xsl:with-param>
       </xsl:call-template>
+
       <xsl:choose>
-        <xsl:when test="@xml:id and $xhtml='true'">
-          <xsl:attribute name="id">
-            <xsl:value-of select="@xml:id"/>
-          </xsl:attribute>
-        </xsl:when>
-        <xsl:when test="@xml:id">
-          <a name="{@xml:id}"/>
-        </xsl:when>
-        <xsl:when test="$generateParagraphIDs='true'">
-          <xsl:choose>
-            <xsl:when test="$xhtml='true'">
-              <xsl:attribute name="id">
-                <xsl:value-of select="generate-id()"/>
-              </xsl:attribute>
-            </xsl:when>
-            <xsl:otherwise>
-              <a name="{generate-id()}"/>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:when>
+	<xsl:when test="@xml:id">
+	  <xsl:call-template name="makeAnchor">
+	    <xsl:with-param name="name">
+	      <xsl:value-of select="@xml:id"/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:when>
+	<xsl:when test="$generateParagraphIDs='true'">
+	  <xsl:call-template name="makeAnchor">
+	    <xsl:with-param name="name">
+	      <xsl:value-of select="generate-id()"/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:when>
       </xsl:choose>
       <xsl:if test="$numberParagraphs='true'">
         <xsl:number/>
@@ -1923,7 +1908,7 @@
     <code class="undone">[End rendering]</code>
   </xsl:template>
   <xd:doc>
-    <xd:short>[html] </xd:short>
+    <xd:short>[html] create external notes file</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="writeNotes">
@@ -1972,6 +1957,11 @@
       </body>
     </html>
   </xsl:template>
+
+  <xd:doc>
+    <xd:short>[html] convert rend attribute to HTML class</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
   <xsl:template name="rendToClass">
     <xsl:param name="default"/>
     <xsl:choose>
@@ -1993,19 +1983,38 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template name="addIdentification">
-    <xsl:param name="id"/>
+  <xd:doc>
+    <xd:short>[html] Create a point to which we can link in the HTML</xd:short>
+    <xd:param name="name">value for identifier</xd:param>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template name="makeAnchor">
+    <xsl:param name="name"/>
     <xsl:choose>
-      <xsl:when test="$xhtml='true'">
+      <xsl:when test="$name and $xhtml='true'">
 	<span>
 	  <xsl:attribute name="id">
-	    <xsl:value-of select="$id"/>
+	    <xsl:value-of select="$name"/>
 	  </xsl:attribute>
-	</span>
+	</span>	
       </xsl:when>
-      <xsl:otherwise>
-	<a name="{$id}"/>
-      </xsl:otherwise>
+      <xsl:when test="$name">
+        <a name="{$name}">
+          <xsl:comment>anchor</xsl:comment>
+        </a>
+      </xsl:when>
+      <xsl:when test="@xml:id and $xhtml='true'">
+	<span>
+	  <xsl:attribute name="name">
+	    <xsl:value-of select="@xml:id"/>
+	  </xsl:attribute>
+	</span>	
+      </xsl:when>
+      <xsl:when test="@xml:id">
+        <a name="{@xml:id}">
+          <xsl:comment>anchor</xsl:comment>
+        </a>
+      </xsl:when>
     </xsl:choose>
   </xsl:template>
 

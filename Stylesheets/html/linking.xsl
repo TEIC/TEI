@@ -297,26 +297,6 @@
     </xsl:choose>
   </xsl:template>
   <xd:doc>
-    <xd:short>[html] </xd:short>
-    <xd:param name="name">name</xd:param>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template name="makeAnchor">
-    <xsl:param name="name"/>
-    <xsl:choose>
-      <xsl:when test="$name">
-        <a name="{$name}">
-          <xsl:comment>anchor</xsl:comment>
-        </a>
-      </xsl:when>
-      <xsl:when test="@xml:id">
-        <a name="{@xml:id}">
-          <xsl:comment>anchor</xsl:comment>
-        </a>
-      </xsl:when>
-    </xsl:choose>
-  </xsl:template>
-  <xd:doc>
     <xd:short>[html] create external link</xd:short>
     <xd:param name="ptr">ptr</xd:param>
     <xd:param name="dest">dest</xd:param>
