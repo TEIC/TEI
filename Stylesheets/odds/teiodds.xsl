@@ -32,7 +32,7 @@
     <xd:copyright>2005, TEI Consortium</xd:copyright>
   </xd:doc>
   <xsl:include href="RngToRnc.xsl"/>
-  <xsl:output encoding="utf-8" indent="yes" method="xml"/>
+
   <xsl:param name="outputSuffix">.html</xsl:param>
   <xd:doc type="string" class="output">
     Public Doctype of output file(s).
