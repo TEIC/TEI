@@ -46,7 +46,7 @@
   <xsl:param name="STDOUT">false</xsl:param>
   <xsl:param name="TAG"/>
 
-  <xsl:output encoding="utf-8" method="xml" indent="yes"/>
+  <xsl:output encoding="utf-8" indent="yes"/>
 
   <xsl:variable name="top" select="/"/>
   <xsl:template match="tei:divGen[@type='index']">
