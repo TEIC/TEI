@@ -65,7 +65,7 @@ makeHTMLDOC()
     xsltproc 	-o $N.doc.html $DEBUG  $LANG $DOCLANG --stringparam TEIC $TEIC \
 	--stringparam STDOUT true \
 	--stringparam splitLevel -1 \
-	$TEIXSLDIR/odds/odd2html.xsl $N.compiled.odd
+	$DOCFLAGS $TEIXSLDIR/odds/odd2html.xsl $N.compiled.odd
     echo created $N.doc.html 
 }
 
@@ -134,6 +134,7 @@ TEIXSLDIR=/usr/share/xml/tei/stylesheet
 LOCALSOURCE=
 LOCAL=
 TEIC=true
+DOCFLAGS=
 doclang=
 lang=
 debug=false
@@ -149,6 +150,7 @@ while test $# -gt 0; do
     --xsl=*)       TEIXSLDIR=`echo $1 | sed 's/.*=//'`;;
     --lang=*)      lang=`echo $1 | sed 's/.*=//'`;;
     --doclang=*)   doclang=`echo $1 | sed 's/.*=//'`;;
+    --docflags=*)  DOCFLAGS=`echo $1 | sed 's/.*=//'`;;
     --doc)         doc=true;;
     --dochtml)     dochtml=true;;
     --docpdf)      docpdf=true;;
