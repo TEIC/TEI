@@ -7,7 +7,7 @@
       <s:rule context="delSpan">
 	<s:assert test="@spanTo">The spanTo= attribute of <s:name/> is required.</s:assert>
       </s:rule>
-    </s:pattern><s:pattern name="pattern.moduleRef">
+    </s:pattern><s:pattern name="testschemapattern">
       <s:rule context="tei:moduleRef">
 	<s:report test="* and @key">
 	  child elements of moduleRef are only allowed when an external module
