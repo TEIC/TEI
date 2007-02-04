@@ -579,7 +579,9 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:lb">
-    <br/>
+    <br>
+      <xsl:call-template name="rendering"/>
+    </br>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:l</xd:short>
@@ -772,6 +774,11 @@
     <ol>
       <xsl:for-each select="tei:bibl|tei:biblItem">
         <li>
+	  <xsl:if test="@n">
+	    <xsl:attribute name="value">
+	      <xsl:value-of select="@n"/>
+	    </xsl:attribute>
+	  </xsl:if>
           <xsl:apply-templates select="."/>
         </li>
       </xsl:for-each>
