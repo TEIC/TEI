@@ -111,7 +111,7 @@ odd2html.xsl
   <xsl:param name="spaceCharacter">&#xA0;</xsl:param>
   <xsl:template name="lineBreak">
     <xsl:param name="id"/>
-    <xsl:text>&#10;</xsl:text>
+    <br/>
   </xsl:template>
 
 
