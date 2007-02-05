@@ -237,6 +237,7 @@
   </xd:doc>
   <xsl:template match="tei:table">
     <div>
+      <xsl:call-template name="makeAnchor"/>
       <xsl:attribute name="class">
         <xsl:choose>
           <xsl:when test="@align">
