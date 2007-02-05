@@ -771,18 +771,29 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:listBibl">
-    <ol>
-      <xsl:for-each select="tei:bibl|tei:biblItem">
-        <li>
-	  <xsl:if test="@n">
-	    <xsl:attribute name="value">
-	      <xsl:value-of select="@n"/>
-	    </xsl:attribute>
-	  </xsl:if>
-          <xsl:apply-templates select="."/>
-        </li>
-      </xsl:for-each>
-    </ol>
+    <xsl:choose>
+      <xsl:when test="@rend='labels'">
+	<div class="listBibl">
+	  <xsl:for-each select="tei:bibl|tei:biblItem">
+	    <div class="bibl">
+	      <span class="biblLabel">
+		<xsl:value-of select="@n"/>
+	      </span>
+	      <xsl:apply-templates select="."/>
+	    </div>
+	  </xsl:for-each>
+	</div>
+      </xsl:when>
+      <xsl:otherwise>
+	<ol>
+	  <xsl:for-each select="tei:bibl|tei:biblItem">
+	    <li>
+	      <xsl:apply-templates select="."/>
+	    </li>
+	  </xsl:for-each>
+	</ol>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:mentioned</xd:short>
