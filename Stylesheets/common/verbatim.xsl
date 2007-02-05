@@ -21,6 +21,9 @@
   </xsl:template>
   <xsl:template match="text()" mode="verbatim">
     <xsl:choose>
+      <xsl:when test="not(preceding-sibling::node())">
+            <xsl:value-of select="."/>
+      </xsl:when>
       <xsl:when test="normalize-space(.)=''">
         <xsl:for-each select="following-sibling::*[1]">
           <xsl:call-template name="lineBreak">
@@ -165,6 +168,11 @@
     <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/2001/XMLSchema-instance']|descendant-or-self::*/@*[namespace-uri()='http://www.w3.org/2001/XMLSchema-instance']">
           <xsl:call-template name="lineBreak"/>
 	  <xsl:text>  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" </xsl:text>
+    </xsl:if>
+
+    <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/1999/XSL/Transform']">
+          <xsl:call-template name="lineBreak"/>
+	  <xsl:text>   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" </xsl:text>
     </xsl:if>
   </xsl:if>
 
