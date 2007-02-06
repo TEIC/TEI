@@ -15,6 +15,12 @@
   <xsl:param name="startRed">&lt;span style="color:red"&gt;</xsl:param>
   <xsl:param name="endRed">&lt;/span&gt;</xsl:param>
   <xsl:param name="spaceCharacter">&#xA0;</xsl:param>
+
+  <xsl:key name="Namespaces" match="*[ancestor::teix:egXML]" use="namespace-uri()"/>
+
+  <xsl:key name="Namespaces" match="*[not(ancestor::*)]" use="namespace-uri()"/>
+
+
   <xsl:template name="newLine"/>
   <xsl:template name="lineBreak">
     <xsl:param name="id"/>
@@ -135,11 +141,20 @@
         <xsl:value-of select="local-name(.)"/>
         <xsl:value-of disable-output-escaping="yes" select="$endRed"/>
       </xsl:when>
+      <xsl:when test="not(namespace-uri()='')">
+        <xsl:value-of select="local-name(.)"/>
+	<xsl:text> xmlns="</xsl:text>
+	<xsl:value-of select="namespace-uri()"/>
+	<xsl:text>"</xsl:text>
+      </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="local-name(.)"/>
       </xsl:otherwise>
     </xsl:choose>
+    <xsl:apply-templates select="@*" mode="verbatim"/>
   <xsl:if test="not(parent::*) or parent::teix:egXML">
+    <xsl:apply-templates select="." mode="ns"/>
+<!--
     <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/2005/11/its']|descendant-or-self::*/@*[namespace-uri()='http://www.w3.org/2005/11/its']">
           <xsl:call-template name="lineBreak"/>
 	  <xsl:text>  xmlns:its="http://www.w3.org/2005/11/its" </xsl:text>
@@ -181,9 +196,10 @@
 			  select="$endRed"/>
           <xsl:call-template name="lineBreak"/>
     </xsl:if>
+-->
+     
   </xsl:if>
 
-    <xsl:apply-templates select="@*" mode="verbatim"/>
     <xsl:choose>
       <xsl:when test="child::node()">
         <xsl:text>&gt;</xsl:text>
@@ -262,8 +278,13 @@
   </xsl:template>
 
 <xsl:template match="@*" mode="verbatim">
+  <xsl:variable name="L">
+    <xsl:for-each select="../@*">
+      <xsl:value-of select="."/>
+    </xsl:for-each>
+  </xsl:variable>
   <xsl:if
-      test="count(../@*)&gt;3 or string-length(../@*)&gt;40 or namespace-uri()='http://www.w3.org/2005/11/its'">
+      test="count(../@*)&gt;3 or string-length($L)&gt;40 or namespace-uri()='http://www.w3.org/2005/11/its'">
     <xsl:call-template name="lineBreak">
       <xsl:with-param name="id">5</xsl:with-param>
     </xsl:call-template>
@@ -289,6 +310,37 @@
   <xsl:value-of select="."/>
   <xsl:text>"</xsl:text>
 </xsl:template>
-    
+
+<xsl:template match="*" mode="ns">
+  <xsl:param name="list"/>
+  <xsl:variable name="used">
+    <xsl:for-each select="namespace::*">
+      <xsl:variable name="ns" select="."/>
+      <xsl:choose>
+	<xsl:when test="contains($list,$ns)"/>
+	<xsl:when test=".='http://www.tei-c.org/ns/Examples'"/>
+	<xsl:when test="name(.)=''"/>
+	<xsl:when test=".='http://www.w3.org/XML/1998/namespace'"/>
+	<xsl:otherwise>
+	  <xsl:call-template name="lineBreak"/>
+	  <xsl:text>  </xsl:text>
+	  <xsl:text>xmlns:</xsl:text>
+	  <xsl:value-of select="name(.)"/>
+	  <xsl:text>="</xsl:text>
+	  <xsl:value-of select="."/>
+	  <xsl:text>"</xsl:text>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:variable>
+  <xsl:copy-of select="$used"/>
+  <xsl:apply-templates mode="ns">
+    <xsl:with-param name="list">
+      <xsl:value-of select="$list"/>
+      <xsl:value-of select="$used"/>
+    </xsl:with-param>
+  </xsl:apply-templates>
+</xsl:template>
+
 </xsl:stylesheet>
 
