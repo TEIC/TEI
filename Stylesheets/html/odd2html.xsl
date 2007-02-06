@@ -291,7 +291,7 @@
 	  <xsl:comment>pointers</xsl:comment>
 	</td>
 	<td colspan="2" class="wovenodd-col2">
-	  <xsl:apply-templates/>
+	  <xsl:apply-templates mode="weave"/>
 	</td>
       </tr>
     </xsl:if>
