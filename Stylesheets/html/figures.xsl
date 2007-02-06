@@ -237,7 +237,6 @@
   </xd:doc>
   <xsl:template match="tei:table">
     <div>
-      <xsl:call-template name="makeAnchor"/>
       <xsl:attribute name="class">
         <xsl:choose>
           <xsl:when test="@align">
@@ -248,6 +247,7 @@
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
+      <xsl:call-template name="makeAnchor"/>
       <table>
         <xsl:call-template name="rendToClass"/>
         <xsl:if test="@rend='frame' or @rend='rules'">

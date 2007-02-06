@@ -1902,13 +1902,15 @@
   <xsl:template name="unknownRendBlock">
     <xsl:param name="value"/>
     <xsl:param name="rest"/>
-    <xsl:message>Unknown rend attribute <xsl:value-of select="$value"/></xsl:message>
-    <xsl:attribute name="class">
-      <xsl:value-of select="$value"/>
-    </xsl:attribute>
-    <xsl:call-template name="applyRend">
-      <xsl:with-param name="value" select="$rest"/>
-    </xsl:call-template>
+    <xsl:if test="not($value='')">
+      <xsl:message>Unknown rend attribute <xsl:value-of select="$value"/></xsl:message>
+      <xsl:attribute name="class">
+	<xsl:value-of select="$value"/>
+      </xsl:attribute>
+      <xsl:call-template name="applyRend">
+	<xsl:with-param name="value" select="$rest"/>
+      </xsl:call-template>
+    </xsl:if>
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
@@ -1919,17 +1921,19 @@
   <xsl:template name="unknownRendInline">
     <xsl:param name="value"/>
     <xsl:param name="rest"/>
-    <xsl:message>Unknown rend attribute <xsl:value-of
-    select="$value"/></xsl:message> 
-    <span class="{$value}">
-      <xsl:if test="@id">
-	<xsl:attribute name="id"><xsl:value-of
-	select="@id"/></xsl:attribute>
-      </xsl:if>
-      <xsl:call-template name="applyRend">
-	<xsl:with-param name="value" select="$rest"/>
-      </xsl:call-template>
-    </span>
+    <xsl:if test="not($value='')">
+      <xsl:message>Unknown rend attribute <xsl:value-of
+      select="$value"/></xsl:message> 
+      <span class="{$value}">
+	<xsl:if test="@id">
+	  <xsl:attribute name="id"><xsl:value-of
+	  select="@id"/></xsl:attribute>
+	</xsl:if>
+	<xsl:call-template name="applyRend">
+	  <xsl:with-param name="value" select="$rest"/>
+	</xsl:call-template>
+      </span>
+    </xsl:if>
   </xsl:template>
   <xd:doc>
     <xd:short>[html] create external notes file</xd:short>
@@ -2029,7 +2033,7 @@
       </xsl:when>
       <xsl:when test="@xml:id and $xhtml='true'">
 	<span>
-	  <xsl:attribute name="name">
+	  <xsl:attribute name="id">
 	    <xsl:value-of select="@xml:id"/>
 	  </xsl:attribute>
 	</span>	

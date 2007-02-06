@@ -279,6 +279,25 @@
       </xsl:for-each>
     </xsl:for-each>
   </xsl:template>
+
+  <xd:doc>
+    <xd:short>Process elements tei:listRef</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:listRef" mode="weave">
+    <xsl:if test="tei:ptr">
+      <tr>
+	<td valign="top">
+	  <xsl:comment>pointers</xsl:comment>
+	</td>
+	<td colspan="2" class="wovenodd-col2">
+	  <xsl:apply-templates/>
+	</td>
+      </tr>
+    </xsl:if>
+  </xsl:template>
+
+
   <xd:doc>
     <xd:short>Process elements tei:ptr</xd:short>
     <xd:detail> </xd:detail>
@@ -286,28 +305,19 @@
   <xsl:template match="tei:ptr" mode="weave">
     <xsl:choose>
       <xsl:when test="parent::tei:listRef">
-        <xsl:if test="count(preceding-sibling::tei:ptr)=0">
-          <tr>
-            <td valign="top">
-              <xsl:comment>!</xsl:comment>
-            </td>
-            <td colspan="2" class="wovenodd-col2">
-              <xsl:if test="count(preceding-sibling::tei:ptr)&gt;0">; </xsl:if>
-              <xsl:call-template name="makeInternalLink">
-                <xsl:with-param name="target"
-                  select="substring-after(@target,'#')"/>
-                <xsl:with-param name="ptr">true</xsl:with-param>
-                <xsl:with-param name="dest">
-                  <xsl:call-template name="generateEndLink">
-                    <xsl:with-param name="where">
-                      <xsl:value-of select="substring-after(@target,'#')"/>
-                    </xsl:with-param>
-                  </xsl:call-template>
-                </xsl:with-param>
-              </xsl:call-template>
-            </td>
-          </tr>
-        </xsl:if>
+	<xsl:if test="preceding-sibling::tei:ptr">; </xsl:if>
+	<xsl:call-template name="makeInternalLink">
+	  <xsl:with-param name="target"
+			  select="substring-after(@target,'#')"/>
+	  <xsl:with-param name="ptr">true</xsl:with-param>
+	  <xsl:with-param name="dest">
+	    <xsl:call-template name="generateEndLink">
+	      <xsl:with-param name="where">
+		<xsl:value-of select="substring-after(@target,'#')"/>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:with-param>
+	</xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
         <xsl:apply-imports/>
