@@ -87,8 +87,15 @@
   </xsl:template>
   <xsl:template match="*" mode="verbatim">
     <xsl:choose>
-      <xsl:when test="not(parent::*) or parent::teix:egXML">
-	<xsl:call-template name="newLine"/>
+      <xsl:when test="not(parent::*)  or parent::teix:egXML">
+	<xsl:choose>
+	  <xsl:when test="preceding-sibling::*">
+	    <xsl:call-template name="lineBreak"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:call-template name="newLine"/>
+	  </xsl:otherwise>
+	</xsl:choose>
         <xsl:call-template name="makeIndent"/>
       </xsl:when>
       <xsl:when test="not(preceding-sibling::node())">
@@ -141,6 +148,10 @@
         <xsl:value-of select="local-name(.)"/>
         <xsl:value-of disable-output-escaping="yes" select="$endRed"/>
       </xsl:when>
+      <xsl:when
+	  test="namespace-uri()='http://www.tei-c.org/ns/Examples'">
+	<xsl:value-of select="local-name(.)"/>
+      </xsl:when>
       <xsl:when test="not(namespace-uri()='')">
         <xsl:value-of select="local-name(.)"/>
 	<xsl:text> xmlns="</xsl:text>
@@ -152,8 +163,9 @@
       </xsl:otherwise>
     </xsl:choose>
     <xsl:apply-templates select="@*" mode="verbatim"/>
-  <xsl:if test="not(parent::*) or parent::teix:egXML">
+  <xsl:if test="(not(parent::*) or (parent::teix:egXML)) and not(preceding-sibling::*)">
     <xsl:apply-templates select="." mode="ns"/>
+  </xsl:if>
 <!--
     <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/2005/11/its']|descendant-or-self::*/@*[namespace-uri()='http://www.w3.org/2005/11/its']">
           <xsl:call-template name="lineBreak"/>
@@ -198,7 +210,6 @@
     </xsl:if>
 -->
      
-  </xsl:if>
 
     <xsl:choose>
       <xsl:when test="child::node()">
@@ -310,6 +321,9 @@
   <xsl:value-of select="."/>
   <xsl:text>"</xsl:text>
 </xsl:template>
+
+
+<xsl:template match="text()|comment()|processing-instruction()" mode="ns"/>
 
 <xsl:template match="*" mode="ns">
   <xsl:param name="list"/>
