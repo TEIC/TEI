@@ -1,5 +1,15 @@
 <?xml version="1.0"?>
-<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tei="http://www.tei-c.org/ns/1.0" exclude-result-prefixes="tei xd" version="1.0">
+<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:rng="http://relaxng.org/ns/structure/1.0"
+		xmlns:teix="http://www.tei-c.org/ns/Examples"
+		xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+		xmlns:tei="http://www.tei-c.org/ns/1.0" 
+		xmlns:xlink="http://www.w3.org/1999/xlink" 
+		xmlns:dbk="http://docbook.org/ns/docbook" 
+		xmlns:xhtml="http://www.w3.org/1999/xhtml"
+		exclude-result-prefixes="tei xd xlink dbk xhtml" 
+		version="1.0">
   <xsl:import href="../xhtml/tei.xsl"/>
   <xsl:import href="../common/verbatim.xsl"/>
   <xsl:strip-space elements="teix:* rng:* xsl:*"/>
@@ -46,7 +56,7 @@
   <xsl:param name="spaceCharacter">&#xA0;</xsl:param>
   <xsl:template name="lineBreak">
     <xsl:param name="id"/>
-    <br/>
+    <xhtml:br/>
   </xsl:template>
 <!--
 <xsl:text>(</xsl:text>

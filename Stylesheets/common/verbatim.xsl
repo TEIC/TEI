@@ -15,6 +15,7 @@
   <xsl:param name="startRed">&lt;span style="color:red"&gt;</xsl:param>
   <xsl:param name="endRed">&lt;/span&gt;</xsl:param>
   <xsl:param name="spaceCharacter">&#xA0;</xsl:param>
+  <xsl:template name="newLine"/>
   <xsl:template name="lineBreak">
     <xsl:param name="id"/>
     <xsl:text>&#10;</xsl:text>
@@ -80,10 +81,12 @@
   </xsl:template>
   <xsl:template match="*" mode="verbatim">
     <xsl:choose>
+      <xsl:when test="not(parent::*) or parent::teix:egXML">
+	<xsl:call-template name="newLine"/>
+        <xsl:call-template name="makeIndent"/>
+      </xsl:when>
       <xsl:when test="not(preceding-sibling::node())">
-        <xsl:call-template name="lineBreak">
-          <xsl:with-param name="id">2</xsl:with-param>
-        </xsl:call-template>
+	<xsl:call-template name="lineBreak"/>
         <xsl:call-template name="makeIndent"/>
       </xsl:when>
       <xsl:when test="preceding-sibling::node()[1]/self::*">
@@ -136,7 +139,7 @@
         <xsl:value-of select="local-name(.)"/>
       </xsl:otherwise>
     </xsl:choose>
-  <xsl:if test="not(parent::*)">
+  <xsl:if test="not(parent::*) or parent::teix:egXML">
     <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/2005/11/its']|descendant-or-self::*/@*[namespace-uri()='http://www.w3.org/2005/11/its']">
           <xsl:call-template name="lineBreak"/>
 	  <xsl:text>  xmlns:its="http://www.w3.org/2005/11/its" </xsl:text>
@@ -172,7 +175,11 @@
 
     <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/1999/XSL/Transform']">
           <xsl:call-template name="lineBreak"/>
+            <xsl:value-of disable-output-escaping="yes" select="$startRed"/>
 	  <xsl:text>   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" </xsl:text>
+            <xsl:value-of disable-output-escaping="yes"
+			  select="$endRed"/>
+          <xsl:call-template name="lineBreak"/>
     </xsl:if>
   </xsl:if>
 
