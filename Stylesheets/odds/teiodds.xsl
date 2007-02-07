@@ -1913,7 +1913,7 @@ sequenceRepeatable
     <xsl:choose>
       <xsl:when test="not(tei:gloss)"/>
       <xsl:when test="string-length(tei:gloss)=0"/>
-      <xsl:when test="count(tei:gloss)=1">
+      <xsl:when test="count(tei:gloss)=1 and not(tei:gloss[@xml:lang])">
 	<xsl:text>(</xsl:text>
 	<xsl:value-of select="tei:gloss"/>
 	<xsl:text>) </xsl:text>

@@ -15,7 +15,7 @@
   <xsl:param name="startRed">&lt;span style="color:red"&gt;</xsl:param>
   <xsl:param name="endRed">&lt;/span&gt;</xsl:param>
   <xsl:param name="spaceCharacter">&#xA0;</xsl:param>
-
+  <xsl:param name="showNamespaceDecls">true</xsl:param>
   <xsl:key name="Namespaces" match="*[ancestor::teix:egXML]" use="namespace-uri()"/>
 
   <xsl:key name="Namespaces" match="*[not(ancestor::*)]" use="namespace-uri()"/>
@@ -163,9 +163,11 @@
       </xsl:otherwise>
     </xsl:choose>
     <xsl:apply-templates select="@*" mode="verbatim"/>
-  <xsl:if test="(not(parent::*) or (parent::teix:egXML)) and not(preceding-sibling::*)">
-    <xsl:apply-templates select="." mode="ns"/>
-  </xsl:if>
+    <xsl:if test="$showNamespaceDecls='true'">
+      <xsl:if test="(not(parent::*) or (parent::teix:egXML)) and not(preceding-sibling::*)">
+	<xsl:apply-templates select="." mode="ns"/>
+      </xsl:if>
+    </xsl:if>
 <!--
     <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/2005/11/its']|descendant-or-self::*/@*[namespace-uri()='http://www.w3.org/2005/11/its']">
           <xsl:call-template name="lineBreak"/>
@@ -294,8 +296,9 @@
       <xsl:value-of select="."/>
     </xsl:for-each>
   </xsl:variable>
-  <xsl:if
-      test="count(../@*)&gt;3 or string-length($L)&gt;40 or namespace-uri()='http://www.w3.org/2005/11/its'">
+    <xsl:if test="count(../@*)&gt;3 or string-length($L)&gt;40 or
+		  namespace-uri()='http://www.w3.org/2005/11/its' or
+		  string-length(.)+string-length(name(.)) &gt; 40">
     <xsl:call-template name="lineBreak">
       <xsl:with-param name="id">5</xsl:with-param>
     </xsl:call-template>
