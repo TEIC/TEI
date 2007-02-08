@@ -22,10 +22,12 @@
 
 
   <xsl:template name="newLine"/>
+
   <xsl:template name="lineBreak">
     <xsl:param name="id"/>
     <xsl:text>&#10;</xsl:text>
   </xsl:template>
+
   <xsl:template match="text()" mode="verbatim">
     <xsl:choose>
       <xsl:when test="not(preceding-sibling::node())">
@@ -53,6 +55,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template match="comment()" mode="verbatim">
     <xsl:call-template name="lineBreak"/>
     <xsl:text>&lt;!--</xsl:text>
@@ -60,6 +63,7 @@
     <xsl:text>--&gt;</xsl:text>
     <xsl:call-template name="lineBreak"/>
   </xsl:template>
+
   <xsl:template name="wraptext">
     <xsl:param name="indent"/>
     <xsl:param name="text"/>
@@ -85,12 +89,15 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template match="*" mode="verbatim">
     <xsl:choose>
       <xsl:when test="not(parent::*)  or parent::teix:egXML">
 	<xsl:choose>
 	  <xsl:when test="preceding-sibling::*">
-	    <xsl:call-template name="lineBreak"/>
+	    <xsl:call-template name="lineBreak">
+	      <xsl:with-param name="id">-1</xsl:with-param>
+	    </xsl:call-template>
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <xsl:call-template name="newLine"/>
@@ -99,7 +106,9 @@
         <xsl:call-template name="makeIndent"/>
       </xsl:when>
       <xsl:when test="not(preceding-sibling::node())">
-	<xsl:call-template name="lineBreak"/>
+	<xsl:call-template name="lineBreak">
+          <xsl:with-param name="id">-2</xsl:with-param>
+	</xsl:call-template>
         <xsl:call-template name="makeIndent"/>
       </xsl:when>
       <xsl:when test="preceding-sibling::node()[1]/self::*">
@@ -108,7 +117,8 @@
         </xsl:call-template>
         <xsl:call-template name="makeIndent"/>
       </xsl:when>
-      <xsl:when test="preceding-sibling::node()[1]/self::text()"> </xsl:when>
+      <xsl:when test="preceding-sibling::node()[1]/self::text()">
+	</xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="lineBreak">
           <xsl:with-param name="id">9</xsl:with-param>
@@ -116,6 +126,7 @@
         <xsl:call-template name="makeIndent"/>
       </xsl:otherwise>
     </xsl:choose>
+
     <xsl:value-of disable-output-escaping="yes" select="$startBold"/>
     <xsl:text>&lt;</xsl:text>
     <xsl:choose>
@@ -152,6 +163,16 @@
 	  test="namespace-uri()='http://www.tei-c.org/ns/Examples'">
 	<xsl:value-of select="local-name(.)"/>
       </xsl:when>
+      <xsl:when
+	  test="namespace-uri()='http://www.w3.org/2005/Atom'">
+	<xsl:text>atom:</xsl:text>
+	<xsl:value-of select="local-name(.)"/>
+      </xsl:when>
+      <xsl:when
+	  test="namespace-uri()='http://purl.org/rss/1.0/modules/event/'">
+	<xsl:text>ev:</xsl:text>
+	<xsl:value-of select="local-name(.)"/>
+      </xsl:when>
       <xsl:when test="not(namespace-uri()='')">
         <xsl:value-of select="local-name(.)"/>
 	<xsl:text> xmlns="</xsl:text>
@@ -163,10 +184,15 @@
       </xsl:otherwise>
     </xsl:choose>
     <xsl:apply-templates select="@*" mode="verbatim"/>
-    <xsl:if test="$showNamespaceDecls='true'">
-      <xsl:if test="(not(parent::*) or (parent::teix:egXML)) and not(preceding-sibling::*)">
+    <xsl:if test="$showNamespaceDecls='true' or parent::teix:egXML[@rend='full']">
+      <xsl:choose>
+      <xsl:when test="not(parent::*)">
 	<xsl:apply-templates select="." mode="ns"/>
-      </xsl:if>
+      </xsl:when>
+      <xsl:when test="parent::teix:egXML and not(preceding-sibling::*)">
+	<xsl:apply-templates select="." mode="ns"/>
+      </xsl:when>
+      </xsl:choose>
     </xsl:if>
 <!--
     <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/2005/11/its']|descendant-or-self::*/@*[namespace-uri()='http://www.w3.org/2005/11/its']">
@@ -271,6 +297,16 @@
             <xsl:value-of select="local-name(.)"/>
             <xsl:value-of disable-output-escaping="yes" select="$endRed"/>
           </xsl:when>
+          <xsl:when
+	      test="namespace-uri()='http://www.w3.org/2005/Atom'">
+            <xsl:text>atom:</xsl:text>
+            <xsl:value-of select="local-name(.)"/>
+	  </xsl:when>
+          <xsl:when
+	      test="namespace-uri()='http://purl.org/rss/1.0/modules/event/'">
+            <xsl:text>ev:</xsl:text>
+            <xsl:value-of select="local-name(.)"/>
+	  </xsl:when>
           <xsl:otherwise>
             <xsl:value-of select="local-name(.)"/>
           </xsl:otherwise>
@@ -284,6 +320,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template name="makeIndent">
     <xsl:for-each select="ancestor::*[not(namespace-uri()='http://www.tei-c.org/ns/1.0')]">
       <xsl:value-of select="$spaceCharacter"/>

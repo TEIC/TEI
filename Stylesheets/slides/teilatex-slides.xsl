@@ -3,13 +3,21 @@
 TEI XSLT stylesheet family
 $Date$, $Revision$, $Author$
 
-XSL FO stylesheet to format TEI XML documents 
+XSL LaTeX stylesheet to make slides
 
 ##LICENSE
 -->
-<xsl:stylesheet xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet 		
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:rng="http://relaxng.org/ns/structure/1.0" 
+    xmlns:teix="http://www.tei-c.org/ns/Examples" 
+    xmlns:tei="http://www.tei-c.org/ns/1.0" 
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+    version="1.0">
   <xsl:import href="../latex/tei.xsl"/>
   <xsl:import href="slides-common.xsl"/>
+  <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:*"/>
   <xsl:output method="text" encoding="utf-8"/>
   <xsl:variable name="docClass">beamer</xsl:variable>
   <xsl:param name="classParameters"/>

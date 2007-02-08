@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"
+<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" 
+		xmlns:atom="http://www.w3.org/2005/Atom"
 		xmlns:rng="http://relaxng.org/ns/structure/1.0"
 		xmlns:teix="http://www.tei-c.org/ns/Examples"
 		xmlns:xd="http://www.pnp-software.com/XSLTdoc"
@@ -12,7 +13,7 @@
 		version="1.0">
   <xsl:import href="../xhtml/tei.xsl"/>
   <xsl:import href="../common/verbatim.xsl"/>
-  <xsl:strip-space elements="teix:* rng:* xsl:*"/>
+  <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:*"/>
   <xd:doc type="stylesheet">
     <xd:short>
       TEI stylesheet for making HTML presentations from TEI documents
