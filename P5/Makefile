@@ -80,13 +80,15 @@ html-web: check
 	done
 
 validate-html:
-	(cd Guidelines-web/$$i;\
-	 for i in *html; do \
+	for i in ${LANGUAGE} ${OTHERLANGUAGES} ; do \
+	(cd Guidelines-web/$$i/html;\
+	 for i in *.html; do \
 	echo validate $$i; \
 	xmllint --dropdtd $$i > z_$$i; \
-	$(JING) -c ../../xhtml.rnc z_$$i; \
+	$(JING) -c ../../../xhtml.rnc z_$$i; \
 	 rm z_$$i;\
-	 done)
+	 done); \
+	done
 
 html:check subset
 	-rm -rf Guidelines
