@@ -11,6 +11,8 @@ TESTFILES= \
 	testfand \
 	testfand2 \
 	testfand3 \
+	testfand4 \
+	testfand5 \
 	testfs \
 	testi18n \
 	testlite \
@@ -40,6 +42,10 @@ default: schemas test
 test: test-schema test-dtd test-dtd-xmllint test-extns test-xsd test-bad
 
 schemas:
+	xsltproc --xinclude --stringparam Modules \
+	"tei core textstructure figures header linking" \
+	../Utilities/makenames.xsl \
+	../Source/Guidelines/en/guidelines-en.xml > names.xml
 	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTBADFILES); do \
 		rnv ../p5odds.rnc $$i.odd && echo $$i validates OK; \
 		roma $(ROMAOPTS) --xsl=$(XSL)   $$i.odd .; \
