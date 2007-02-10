@@ -5,7 +5,7 @@ XSL=/usr/share/xml/tei/stylesheet/
 ROMAOPTS=--dochtml --localsource=../Source/Guidelines/${LANGUAGE}/${DRIVER} --xsl=${XSL}
 
 schemas:
-	xsltproc Utilities/makenames.xsl  ../Source/Guidelines/${LANGUAGE}/${DRIVER} > names.xml
+	xsltproc ../Utilities/makenames.xsl  ../Source/Guidelines/${LANGUAGE}/${DRIVER} > names.xml
 	for i in *.odd; do echo Process $$i; ${PREFIX}/roma ${ROMAOPTS} $$i .; done
 	-rm tei_odds.dtd tei_odds.xsd
 	-rm tei_allPlus.dtd tei_allPlus.xsd
