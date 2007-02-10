@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TEI xml:lang="en"  xmlns="http://www.tei-c.org/ns/1.0"
- xmlns:rng="http://relaxng.org/ns/structure/1.0"
- n="testsvg">
+     xmlns:xi="http://www.w3.org/2001/XInclude"
+     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+     n="testsvg">
    <teiHeader>
       <fileDesc>
          <titleStmt>
@@ -32,6 +33,112 @@
 	  </rng:define>
 	</content>
       </moduleRef>
+      <elementSpec 
+	  xmlns:rng="http://relaxng.org/ns/structure/1.0"
+	  ident="include" 
+	  ns="http://www.w3.org/2001/XInclude" 
+	  mode="add">
+	<desc>The W3C XInclude element</desc>
+	<classes>
+	  <memberOf key="model.common"/>
+	  <memberOf key="model.headerPart"/>
+	  <memberOf key="model.graphicLike"/>
+	</classes>
+	<content>
+	  <rng:optional>
+	    <rng:ref name="fallback"/>
+	  </rng:optional>
+	</content>
+	<attList>
+	  <attDef ident="href">
+	    <desc>pointer to the resource being included</desc>
+	    <datatype>
+	      <rng:ref name="data.pointer"/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="parse"  usage="opt">
+	    <defaultVal>xml</defaultVal>
+	    <valList type="closed">
+	      <valItem ident="xml"/>
+	      <valItem ident="text"/>
+	    </valList>
+	  </attDef>
+	  
+	  <attDef ident="xpointer" usage="opt">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="encoding"  usage="opt">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="accept" usage="opt">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="accept-charset"  usage="opt">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="accept-language"  usage="opt">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	</attList>
+      </elementSpec>
+      
+      <elementSpec 
+	  xmlns:rng="http://relaxng.org/ns/structure/1.0"
+	  ident="fallback" 
+	  ns="http://www.w3.org/2001/XInclude" 
+	  mode="add">
+	<desc>Wrapper for fallback elements if an XInclude fails</desc>
+	<content>
+	  <rng:ref name="anyThing"/>
+	</content>
+      </elementSpec>
+      
+      
+      
+    <macroSpec ident="anyThing" type ="pe" mode="add">
+     <content>
+      <element xmlns="http://relaxng.org/ns/structure/1.0"
+	       ns="http://www.tei-c.org/ns/Examples">
+        <xi:include href="names.xml">
+          <xi:fallback> ERROR: cannot locate list of names</xi:fallback>
+	</xi:include>
+       <ref name="att.global.attribute.xmlid"/>
+       <ref name="att.global.attribute.xmllang"/>
+       <zeroOrMore>
+        <attribute>
+         <anyName>
+          <except>
+           <name>xml:id</name>
+           <name>xml:lang</name>
+          </except>
+         </anyName>
+        </attribute>
+       </zeroOrMore>
+       <zeroOrMore>
+        <choice>
+         <text/>
+         <ref name="anyThing"/>
+        </choice>
+       </zeroOrMore>
+      </element>
+     </content>
+    </macroSpec>
+
     </schemaSpec>
 </body>
 </text>
