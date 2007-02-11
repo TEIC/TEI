@@ -5,28 +5,28 @@ See the file COPYING for details.
 $Date$
 $Author$
 -->
-<div1 xmlns="http://www.tei-c.org/ns/1.0" type="Faisal" xml:id="IN" n="30"><head>Rules for Interchange</head>
-<note place="divtop">This chapter discusses issues related almost
+<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="IN" n="30"><head xmlns="http://www.tei-c.org/ns/1.0">Rules for Interchange</head>
+<note xmlns="http://www.tei-c.org/ns/1.0" place="divtop">This chapter discusses issues related almost
 exclusively to the use of SGML-encoded TEI documents in
 interchange. XML-encoded TEI documents may be safely interchanged
 without formality over current networks, largely without concern for
 any of the issues discussed here. This chapter has not therefore been
 revised, and will probably be
 withdrawn or substantially modified at the next release.</note>
-<p>This chapter describes how interested parties can determine and agree
+<p xmlns="http://www.tei-c.org/ns/1.0">This chapter describes how interested parties can determine and agree
 on the proper format for the successful interchange of TEI-conformant
 documents over a given communications link, and how to translate from
 normal TEI form to the transmission format and back.  It also includes
 recommendations for formats to be used when private arrangements cannot
 be made, in non-negotiated or <soCalled>blind</soCalled> interchange.
  </p>
-<div2 type="Anthony" xml:id="NHNEG"><head>Negotiated Interchange</head>
-<p>When the sender and receiver of a given text know each other's
+<div type="div2" xml:id="NHNEG"><head xmlns="http://www.tei-c.org/ns/1.0">Negotiated Interchange</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">When the sender and receiver of a given text know each other's
 identity and can make appropriate special arrangements for the
 interchange of the text, the following procedures may be used to
 ensure the successful interchange of the text without information loss.
  </p>
-<p>The sender and receiver together must first:
+<p xmlns="http://www.tei-c.org/ns/1.0">The sender and receiver together must first:
 <list type="ordered">
 <item>agree on whether to exchange the document in
 <term>TEI interchange form</term> or in some other form (e.g.
@@ -49,7 +49,7 @@ or a transliteration into the transmission character set, which is to be
 used to transmit the character.  The set of entities needed for this
 purpose is the <term>transmission entity set</term>.</item></list>
  </p>
-<p>The transmission character set is defined as the set of characters
+<p xmlns="http://www.tei-c.org/ns/1.0">The transmission character set is defined as the set of characters
 in the sender's system character set(s) which survive transmission and
 are properly recognized in the recipient's system character set.  It is
 therefore by definition a subset of both the sender's and the
@@ -58,7 +58,7 @@ the characters may differ in the two systems (e.g. one may use ASCII,
 the other EBCDIC) if the communications link performs the proper
 translations.
  </p>
-<p>Current network standards allow &#x2014; indeed, require &#x2014; gateway nodes
+<p xmlns="http://www.tei-c.org/ns/1.0">Current network standards allow — indeed, require — gateway nodes
 to translate material passing through the gateway from one coded
 character set into another, when the networks joined by the gateway use
 different coded character sets.  Since there is no universally
@@ -67,7 +67,7 @@ the transmission character set will normally be the subset which is
 satisfactorily translated by the gateways encountered in transit between
 the sender and the receiver of the data.
  </p>
-<p>When material is transmitted on a physical storage medium
+<p xmlns="http://www.tei-c.org/ns/1.0">When material is transmitted on a physical storage medium
 (e.g. disk or tape), then those exchanging documents have far greater
 control over the data.  If both partners use compatible systems, the
 transmission character set may be equivalent to their system character
@@ -82,11 +82,11 @@ recipient's disk-reading utilities are more sophisticated, however,
 then it may be possible to include some or all of the two machines'
 non-standard extended characters as well.
  </p>
-<p>The mapping from non-transmissible characters to the transmission
+<p xmlns="http://www.tei-c.org/ns/1.0">The mapping from non-transmissible characters to the transmission
 entity set may be derived from the writing system declarations in use by
 the sender and receiver.
  </p>
-<p>After the transmission character set and entity character sets
+<p xmlns="http://www.tei-c.org/ns/1.0">After the transmission character set and entity character sets
 have been defined, the sender must prepare and transmit the document:
 <list type="ordered">
 <item>if the document is to be exchanged in TEI interchange format,
@@ -111,12 +111,12 @@ transmission.
 <item>transmit the document over the agreed link
  </item></list>
  </p>
-<p>The translation of non-transmissible characters into the transmission
+<p xmlns="http://www.tei-c.org/ns/1.0">The translation of non-transmissible characters into the transmission
 entity set may be accomplished under automatic control, by software
 which reads the appropriate local writing system declarations, creates
 the necessary mapping tables, and packs the document for transmission.
  </p>
-<p>Upon receipt, the receiver must:
+<p xmlns="http://www.tei-c.org/ns/1.0">Upon receipt, the receiver must:
 <list type="ordered">
 <item>unpack the document by expanding those entities which correspond
 to characters in the local system character set(s); at this point, the
@@ -127,14 +127,14 @@ may be translated into the local system character set(s) for more
 convenient display, or from the transmission entity set into a local
 transliteration scheme; in XML this should not typically be necessary</item></list>
  </p>
-<p>It is strongly recommended that when documents are interchanged they
+<p xmlns="http://www.tei-c.org/ns/1.0">It is strongly recommended that when documents are interchanged they
 be accompanied by any writing system declarations and feature system
 declarations which are applicable.  In TEI-conformant interchange,
 it is required that documents be accompanied by any applicable tag-set
 documentation files.
- </p></div2>
-<div2 type="Anthony" xml:id="NHEG"><head>Some Simple Examples</head>
-<p>As a first simple example, consider an SGML document containing English,
+ </p></div>
+<div type="div2" xml:id="NHEG"><head xmlns="http://www.tei-c.org/ns/1.0">Some Simple Examples</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">As a first simple example, consider an SGML document containing English,
 French, and German, to be transmitted from an IBM-compatible personal
 computer to a Macintosh, over a long-distance network connection.
 Uploading test files from the PC to the sender's local network node,
@@ -165,7 +165,7 @@ or loss of information.  Upon receipt, the recipient can replace the
 entity references with the specific coded characters used on the
 Macintosh to write French and German.
  </p>
-<p>As a second example, consider the same document being transmitted
+<p xmlns="http://www.tei-c.org/ns/1.0">As a second example, consider the same document being transmitted
 from a VAX running VMS to an IBM mainframe running VM/CMS.  Here, the
 accented characters might be represented on the VAX using the coded
 character set ISO 8859-1, but since ISO 8859-1 is not always
@@ -183,7 +183,7 @@ recognized.  (It is important, therefore, for validation to be
 performed before the square brackets are replaced by entity
 references.)
  </p>
-<p>Upon receipt, the document may be translated into a valid SGML
+<p xmlns="http://www.tei-c.org/ns/1.0">Upon receipt, the document may be translated into a valid SGML
 document by replacing all references to <ident type="ge">lbr</ident>
 and <ident type="ge">rbr</ident> with the appropriate square brackets,
 etc.  If the local system supports one of the IBM code pages with
@@ -192,19 +192,19 @@ to those characters may be replaced by the characters in the system
 character set.  More commonly, the entities for French and German
 characters will be left in place.
  </p>
-<p>As a third example, consider a document containing Greek, as well
+<p xmlns="http://www.tei-c.org/ns/1.0">As a third example, consider a document containing Greek, as well
 as Latin, German, French, and English.  If the sender's system has a
 full Greek character set, but the recipient's does not, then the Greek
 characters must all be replaced either by references to entities
 or by transliterations into Latin characters (e.g. using the beta code
-transliteration developed for the Thesaurus Lingu&#xE6;
-Gr&#xE6;c&#xE6;).  If the text is later transmitted to another
+transliteration developed for the Thesaurus Linguæ
+Græcæ).  If the text is later transmitted to another
 system which does have a full Greek character set, the transliterated
 text or entity references may be translated, under control of the
 relevant writing system declarations, into the local Greek character
 set.
  </p>
-<p>As a final example, consider a document written in Japanese, to be
+<p xmlns="http://www.tei-c.org/ns/1.0">As a final example, consider a document written in Japanese, to be
 transmitted over a network within Japan, or over an international
 network to a recipient in Europe.  Since networks within Japan transmit
 Japanese text without information loss, and common utilities may be used
@@ -219,19 +219,19 @@ and the description of the kanji themselves should accompany the
 documents in which they are used; the writing system declaration may be
 used for this purpose.)
  </p>
-<p>When transmitting Japanese text outside Japan, the limitations of the
+<p xmlns="http://www.tei-c.org/ns/1.0">When transmitting Japanese text outside Japan, the limitations of the
 networks at the time of transmission must be taken into account; it may
 be necessary to transliterate the text, or to replace non-transmissible
 characters with entity references.  
- </p></div2>
-<div2 type="Anthony" xml:id="NHNON"><head>Non-Negotiated Interchange</head>
-<p>In some cases, no negotiation between interchange partners is
+ </p></div>
+<div type="div2" xml:id="NHNON"><head xmlns="http://www.tei-c.org/ns/1.0">Non-Negotiated Interchange</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">In some cases, no negotiation between interchange partners is
 possible, because they do not know each other's identities.  Since it is
 impossible to discover an appropriate transmission entity set by
 experiment, such interchange requires the use of extremely conservative
 assumptions about the frailties of network gateways.
  </p>
-<p>Specifically, it is recommended that for non-negotiated interchange
+<p xmlns="http://www.tei-c.org/ns/1.0">Specifically, it is recommended that for non-negotiated interchange
 the following practices be adopted:
 <list type="bullets">
 <item>The transmission character set should be the International
@@ -255,21 +255,21 @@ parts of the SGML declaration which are dependent on the coded character
 set, and ensuring that they work properly on the receiving system.</item>
 <item>As transmitted, the document should be valid.</item></list>
  </p>
-<p>By these restrictions, 
+<p xmlns="http://www.tei-c.org/ns/1.0">By these restrictions, 
 these recommendations ensure that documents interchanged in this way
 will be directly usable on a great variety of systems; moreover, since
 the allowed character sets are widely known and well documented, users of other systems will
 normally be able to adjust the documentation and data stream to their
 local systems without difficulty.
  </p>
-<p>It should be noted that ISO 646 imposes a very
+<p xmlns="http://www.tei-c.org/ns/1.0">It should be noted that ISO 646 imposes a very
 restrictive and cumbersome encoding for researchers whose character
 sets have a large repertoire; it is strongly recommended, therefore,
 that such materials use XML and Unicode, or that arrangements for 
 their interchange involve explicitly
 negotiated interchange formats wherever possible.
  </p>
-<p>The rules given here for non-negotiated interchange are not
+<p xmlns="http://www.tei-c.org/ns/1.0">The rules given here for non-negotiated interchange are not
 guaranteed to succeed, and negotiation of interchange formats is
 therefore <emph>required</emph>, if any of the following apply:
 <list type="bullets">
@@ -283,9 +283,9 @@ ISO 646 (IRV) onto characters in that repertoire.
 does not permit variant concrete syntaxes, so this case does not
 apply when using XML).
  </item></list>
- </p></div2>
-<div2 type="Anthony" xml:id="NHCOMP"><head>Notes for Implementors</head>
-<p>The descriptions of document interchange in this chapter from time to
+ </p></div>
+<div type="div2" xml:id="NHCOMP"><head xmlns="http://www.tei-c.org/ns/1.0">Notes for Implementors</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">The descriptions of document interchange in this chapter from time to
 time refer to software used to pack documents for interchange, or to
 unpack documents upon receipt.  The descriptions do not characterize any
 specific existing software, but attempt to make clear how such software
@@ -330,5 +330,5 @@ and adjust its actions appropriately. If only one WSD is in use in a
 given document and no language shifts are present, then both packing
 and unpacking may be done by a much simpler string-replacement
 algorithm.  </item></list>
-</p></div2> 
-</div1>
+</p></div> 
+</div>
