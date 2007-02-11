@@ -5,43 +5,43 @@ See the file COPYING for details.
 $Date$
 $Author$
 -->
-<div1 xmlns="http://www.tei-c.org/ns/1.0" type="chapter" xml:id="DI" n="12">
-    <head>Print Dictionaries</head>
-    <p>This chapter defines a base tag set for encoding human-oriented monolingual and multilingual
+<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="DI" n="12">
+    <head xmlns="http://www.tei-c.org/ns/1.0">Print Dictionaries</head>
+    <p xmlns="http://www.tei-c.org/ns/1.0">This chapter defines a base tag set for encoding human-oriented monolingual and multilingual
 dictionaries (as opposed to computational lexica, which are intended for use by
 language-processing software). Dictionaries are most familiar in their printed form;
 however, increasing numbers of dictionaries exist also in electronic forms which are
 independent of any particular printed form, but from which various displays can be produced
-&#x2014; e.g. CD-ROM dictionaries. </p>
-    <p>Both typographically and structurally, dictionaries are extremely complex. In addition,
+— e.g. CD-ROM dictionaries. </p>
+    <p xmlns="http://www.tei-c.org/ns/1.0">Both typographically and structurally, dictionaries are extremely complex. In addition,
 dictionaries interest many communities with different and sometimes conflicting goals. As a
 result, many general problems of text encoding are particularly pronounced here, and more
 compromises and alternatives within the encoding scheme may be required.<note place="foot">We refer the reader to previous and current discussions of a common format
     for encoding dictionaries. For example,<bibl>Robert A. Amsler and Frank W. Tompa, <title level="a">An SGML-Based Standard for English Monolingual Dictionaries,</title>
     in<title>Information in Text: Fourth Annual Conference of the U[niversity of]
     W[aterloo] Centre for the New Oxford English Dictionary</title> October
-26&#x2013;28, 1988, Waterloo, Canada, pp.
-61&#x2013;79</bibl>;<bibl>Nicoletta Calzolari et al., <title level="a">Computational Model of the Dictionary Entry: Preliminary
+26–28, 1988, Waterloo, Canada, pp.
+61–79</bibl>;<bibl>Nicoletta Calzolari et al., <title level="a">Computational Model of the Dictionary Entry: Preliminary
 Report,</title> Acquilex: Esprit Basic Research Action No. 3030, Six-Month
 Deliverable, Pisa, April 1990</bibl>;<bibl>John Fought and Carol Van
     Ess-Dykema,<title level="a">Toward an SGML Document Type Definition for
     Bilingual Dictionaries,</title> TEI working paper TEI AIW20 (available from the
 TEI)</bibl>;<bibl>Nancy Ide and Jean Veronis, <title level="a">Encoding Print
 Dictionaries</title>, <title>Computers and the Humanities</title> 29:
-167&#x2013;195, 1995</bibl>;<bibl>Nancy Ide, Jacques Le Maitre, and Jean
+167–195, 1995</bibl>;<bibl>Nancy Ide, Jacques Le Maitre, and Jean
 Veronis, <title level="a">Outline of a Model for Lexical Databases,</title>
-(Information Processing and Management, 29, 2, 159&#x2013;186,
+(Information Processing and Management, 29, 2, 159–186,
 1993)</bibl>;<bibl>Nancy Ide, Jean Veronis, Susan Warwick- Armstrong, Nicoletta
     Calzolari,<title level="a">Principles for Encoding machine readable
 dictionaries</title>, <title>Proceedings of the Fifth EURALEX International
     Congress, EURALEX'92</title>, University of Tampere, Finland</bibl>;<bibl>The
 DANLEX Group, <title level="a">Descriptive tools for electronic processing of
     dictionary data,</title> in <title>Lexicographica, Series Maior</title>
-(T&#xFC;bingen: Niemeyer, 1987)</bibl>; and<bibl>A. Tutin and Jean V&#xE9;ronis, J. (1998).
+(Tübingen: Niemeyer, 1987)</bibl>; and<bibl>A. Tutin and Jean Véronis, J. (1998).
     <title level="a">Electronic dictionary encoding: customizing the TEI
 Guidelines</title>, in <title>Proceedings of the Eighth Euralex International
 Congress</title>, 1998</bibl>.</note> Two problems are particularly prominent.</p>
-    <p>First, because the structure of dictionary entries varies widely both among and within
+    <p xmlns="http://www.tei-c.org/ns/1.0">First, because the structure of dictionary entries varies widely both among and within
 dictionaries, the simplest way for an encoding scheme to accommodate the entire range of
 structures actually encountered is to allow virtually any element to appear virtually
 anywhere in a dictionary entry. It is clear, however, that strong and consistent structural
@@ -53,7 +53,7 @@ most conventional dictionary entries, and a second (<gi>entryFree</gi>) which us
 elements, but allows them to combine much more freely. It is recommended that <gi>entry</gi>
 be used in preference to<gi>entryFree</gi> wherever the structure of the entry allows it.
 These elements and their contents are described in sections <ptr target="#DIEN"/>, <ptr target="#DIFR"/>, and <ptr target="#DIHW"/>.</p>
-    <p>Second, since so much of the information in printed dictionaries is implicit or highly
+    <p xmlns="http://www.tei-c.org/ns/1.0">Second, since so much of the information in printed dictionaries is implicit or highly
 compressed, their encoding requires clear thought about whether it is to capture the precise
 typographic form of the source text or the underlying structure of the information it
 presents. Since both of these views of the dictionary may be of interest, it proves
@@ -67,23 +67,23 @@ encode<emph>both</emph> of these views of the data, and retain the links between
 elements of the two encodings. Problems of recording these two different views of dictionary
 data are discussed in section<ptr target="#DIMV"/>, together with mechanisms for retaining
 both views when this is desired.</p>
-    <p>To deal with this complexity, and in particular to account for the wide variety of linguistic
+    <p xmlns="http://www.tei-c.org/ns/1.0">To deal with this complexity, and in particular to account for the wide variety of linguistic
 context within within which a dictinoray may be designed, it can be necessary to use the
 extension capabilities offered by the ODD environment (see chapter <ptr target="#TD"/>) to
 provide more restriction or possibly alternate content models for the tags defined in this
 chapter. The corresponding mechanisms will be exemplified in this chapter to illustrate the
 provision of a closed set of values for grammatical descriptors (see <ptr target="#DITPGR"/>).</p>
-    <p>In order to use the elements defined in this chapter in your own TEI environment you can
+    <p xmlns="http://www.tei-c.org/ns/1.0">In order to use the elements defined in this chapter in your own TEI environment you can
 adopt one of the two following mechanisms:</p>
-    <list>
+    <list xmlns="http://www.tei-c.org/ns/1.0">
 <item>Create a schema in ODD format that comprises a reference to the Print Dictionary
-    chapter as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<schemaSpec ident="myDict.odd">
+    chapter as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><schemaSpec ident="myDict.odd">
     <moduleRef key="teistructure"/>
     <moduleRef key="teiheader"/>
     <moduleRef key="dictionaries"/>
-</schemaSpec>
-    </egXML> and compile it to generate a full DTD, RelaxNG Schema or W3C XML Schema; </item>
+</schemaSpec><![CDATA[
+    ]]></egXML> and compile it to generate a full DTD, RelaxNG Schema or W3C XML Schema; </item>
 <item>Directly include the RelaxNG schema associated with this chapter in your main schema
     file, as follows: <eg><![CDATA[ namespace ns1 = "http://www.tei-c.org/ns/Examples" # Relax NG
 grammar include "relaxng.rnc" # base TEI include "Schema/tei.rnc" # TEI modules
@@ -95,15 +95,15 @@ anyTEI | pattern )+ } include "Schema/linking.rnc" start |= elementSpec | classS
 | macroSpec | div1 | div2 ]]></eg>
 </item>
     </list>
-    <div2 type="subsection" xml:id="DIBO">
-<head>Dictionary Body and Overall Structure</head>
-<p>Overall, dictionaries have the same structure of front matter, body, and back matter
+    <div type="div2" xml:id="DIBO">
+<head xmlns="http://www.tei-c.org/ns/1.0">Dictionary Body and Overall Structure</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">Overall, dictionaries have the same structure of front matter, body, and back matter
     familiar from other texts; the base tag set for dictionaries uses the same front-matter
     and back-matter elements as other TEI base tag sets; these are documented in chapter
 <ptr target="#DS"/>. In addition, dictionaries define the elements<gi>entry</gi>,
     <gi>entryFree</gi>, and <gi>superEntry</gi> as component-level elements which can occur
     directly within a text division or the text body. </p>
-<p>The following tags should be used to mark the gross structure of a printed dictionary;
+<p xmlns="http://www.tei-c.org/ns/1.0">The following tags should be used to mark the gross structure of a printed dictionary;
     the dictionary-specific tags are discussed further in the following section.<specList>
 <specDesc key="text"/>
 <specDesc key="front"/>
@@ -113,20 +113,20 @@ anyTEI | pattern )+ } include "Schema/linking.rnc" start |= elementSpec | classS
 <specDesc key="entry"/>
 <specDesc key="entryFree"/>
 <specDesc key="superEntry"/>
-    </specList> The text-division elements <gi>div0</gi> through <gi>div7</gi> may also be
+    </specList> The text-division elements <gi>div1</gi> through <gi>div7</gi> may also be
     used, as described in chapter <ptr target="#DS"/>. </p>
-<p>As members of the class <ident type="class">att.entryLike</ident>,<gi>entry</gi> and
+<p xmlns="http://www.tei-c.org/ns/1.0">As members of the class <ident type="class">att.entryLike</ident>,<gi>entry</gi> and
     <gi>entryFree</gi> share the following attributes:<specList>
 <specDesc key="att.entryLike" atts="type sortKey"/>
     </specList>
 </p>
-<p>The front and back matter of a dictionary may well contain specialized material like
+<p xmlns="http://www.tei-c.org/ns/1.0">The front and back matter of a dictionary may well contain specialized material like
     lists of common and proper nouns, grammatical tables, gazetteers, a <soCalled>guide to
 the use of the dictionary</soCalled>, etc. These may be tagged as elements defined
     in the core tag set (chapter <ptr target="#CO"/>) or as specialized dictionary elements
     as defined in this chapter.</p>
-<p>The <gi>body</gi> element consists of a set of <term>entries</term>, optionally grouped
-    into one or several <gi>div</gi>, <gi>div0</gi>, or<gi>div1</gi> elements. These text
+<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>body</gi> element consists of a set of <term>entries</term>, optionally grouped
+    into one or several <gi>div</gi> or<gi>div1</gi> elements. These text
     divisions might correspond, for example, to sections for different languages in
     bilingual dictionaries, sections for different letters of the alphabet, etc.<note place="foot">It is unlikely that many conventional dictionaries will require smaller
 divisions, but all the usual division elements<gi>div2</gi> through <gi>div7</gi>
@@ -138,7 +138,7 @@ may be used.</note> In print dictionaries, entries are typically typographically
     <att>type</att> attribute may be used to distinguish different types of entries, for
     example main entries, related entries, run-on entries, or entries for cross-references,
     etc. </p>
-<p>Some dictionaries provide distinct entries for homographs, on the basis of etymology,
+<p xmlns="http://www.tei-c.org/ns/1.0">Some dictionaries provide distinct entries for homographs, on the basis of etymology,
     part-of-speech, or both, and typically provide a numeric superscript on the headword
     identifying the homograph number. In these cases each homograph should be encoded as a
     separate entry; the<gi>superEntry</gi> element may optionally be used to group such
@@ -148,13 +148,13 @@ may be used.</note> In print dictionaries, entries are typically typographically
     the global attribute <att>n</att> should be used for this purpose. In some dictionaries,
     homographs are treated in distinct parts of the same entry; in these cases, they may be
     separated by use of the <gi>hom</gi> element, for which see section <ptr target="#DIENHI"/>. </p>
-<p>A sort key, given in the <att>key</att> attribute, is often required for superentries and
+<p xmlns="http://www.tei-c.org/ns/1.0">A sort key, given in the <att>key</att> attribute, is often required for superentries and
     entries, especially in cases where the order of entries does not follow the local
     character-set collating sequence (as, for example, when an entry for <q>3D</q> appears
     at the place where<q>three-D</q> would appear). </p>
-<p>The body of a bilingual dictionary with two parts will thus have an overall structure
-    resembling the following:<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<body>
+<p xmlns="http://www.tei-c.org/ns/1.0">The body of a bilingual dictionary with two parts will thus have an overall structure
+    resembling the following:<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><body>
     <div type="dictionary">
 <entry/>
 <entry/>
@@ -165,23 +165,23 @@ may be used.</note> In print dictionaries, entries are typically typographically
 <entry/>
 <entry/>
     </div>
-</body>
-    </egXML>
+</body><![CDATA[
+    ]]></egXML>
 </p>
-<p>A dictionary with no internal divisions might have a structure like the following; a
-    <gi>superEntry</gi> is shown grouping two homograph entries.<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<body>
+<p xmlns="http://www.tei-c.org/ns/1.0">A dictionary with no internal divisions might have a structure like the following; a
+    <gi>superEntry</gi> is shown grouping two homograph entries.<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><body>
     <entry/>
     <entry/>
     <superEntry>
 <entry type="hom" n="1"/>
 <entry type="hom" n="2"/>
     </superEntry>
-</body>
-    </egXML>
+</body><![CDATA[
+    ]]></egXML>
 </p>
-<p>The base tag set for dictionaries is contained in the <ident type="file">dictionaries</ident> module. These define the class <ident type="class">model.entryLike</ident>, so that the generic text-division elements
-    <gi>div</gi>, <gi>div0</gi>,<gi>div1</gi>, etc. can contain <gi>entry</gi> elements.</p>
+<p xmlns="http://www.tei-c.org/ns/1.0">The base tag set for dictionaries is contained in the <ident type="file">dictionaries</ident> module. These define the class <ident type="class">model.entryLike</ident>, so that the generic text-division elements
+    <gi>div</gi>, <gi>div1</gi>, etc. can contain <gi>entry</gi> elements.</p>
 <!--
     <moduleSpec xml:id="DDIENTS" type="decls" ident="dictionaries-decl">
     <altIdent type="FPI">Class declarations for Print Dictionaries</altIdent>
@@ -189,39 +189,39 @@ may be used.</note> In print dictionaries, entries are typically typographically
 </moduleSpec>
 -->
 <!--publicID:  -//TEI P5//ENTITIES Element Classes for Print Dictionaries//EN-->
-<specGrpRef target="#DEDIMV"/> 
+<specGrpRef xmlns="http://www.tei-c.org/ns/1.0" target="#DEDIMV"/> 
 &model.entryLike;
 &mix.dictionaries;
-<p>Next, we declare some
+<p xmlns="http://www.tei-c.org/ns/1.0">Next, we declare some
     specialized element classes, used in various content models in the dictionary tag
 set.</p> 
 &att.entryLike;
- <specGrpRef target="#DEDITPFO"/>
-<specGrpRef target="#DEDITPGR"/>
-<specGrpRef target="#DEDIHW"/>
-<specGrpRef target="#DEDIFR"/>
-<p>The dictionary-specific elements are all declared in the file <ident type="file">dictionaries.dtd</ident>, which has the following overall structure.</p>
-<moduleSpec xml:id="DDIBO" ident="dictionaries">
+ <specGrpRef xmlns="http://www.tei-c.org/ns/1.0" target="#DEDITPFO"/>
+<specGrpRef xmlns="http://www.tei-c.org/ns/1.0" target="#DEDITPGR"/>
+<specGrpRef xmlns="http://www.tei-c.org/ns/1.0" target="#DEDIHW"/>
+<specGrpRef xmlns="http://www.tei-c.org/ns/1.0" target="#DEDIFR"/>
+<p xmlns="http://www.tei-c.org/ns/1.0">The dictionary-specific elements are all declared in the file <ident type="file">dictionaries.dtd</ident>, which has the following overall structure.</p>
+<moduleSpec xmlns="http://www.tei-c.org/ns/1.0" xml:id="DDIBO" ident="dictionaries">
     <altIdent type="FPI">Print Dictionaries</altIdent>
     <desc>Printed dictionaries</desc>
 </moduleSpec>
 <!--publicID:  -//TEI P5//ELEMENTS Base Element Set for Print Dictionaries//EN-->
-<p>Define the dictionary-specific material.</p>
-<specGrpRef target="#DDIEN"/>
-<specGrpRef target="#DDITPFO"/>
-<specGrpRef target="#DDITPGR"/>
-<specGrpRef target="#DDITPDE"/>
-<specGrpRef target="#DDITPTR"/>
-<specGrpRef target="#DDITPET"/>
-<specGrpRef target="#DDITPEG"/>
-<specGrpRef target="#DDITPUS"/>
-<specGrpRef target="#DDITPXR"/>
-<specGrpRef target="#DDITPRE"/>
-<specGrpRef target="#DDIHW"/>
-    </div2>
-    <div2 type="subsection" xml:id="DIEN">
-<head>The Structure of Dictionary Entries</head>
-<p>A simple dictionary entry may contain information about the form of the word treated, its
+<p xmlns="http://www.tei-c.org/ns/1.0">Define the dictionary-specific material.</p>
+<specGrpRef xmlns="http://www.tei-c.org/ns/1.0" target="#DDIEN"/>
+<specGrpRef xmlns="http://www.tei-c.org/ns/1.0" target="#DDITPFO"/>
+<specGrpRef xmlns="http://www.tei-c.org/ns/1.0" target="#DDITPGR"/>
+<specGrpRef xmlns="http://www.tei-c.org/ns/1.0" target="#DDITPDE"/>
+<specGrpRef xmlns="http://www.tei-c.org/ns/1.0" target="#DDITPTR"/>
+<specGrpRef xmlns="http://www.tei-c.org/ns/1.0" target="#DDITPET"/>
+<specGrpRef xmlns="http://www.tei-c.org/ns/1.0" target="#DDITPEG"/>
+<specGrpRef xmlns="http://www.tei-c.org/ns/1.0" target="#DDITPUS"/>
+<specGrpRef xmlns="http://www.tei-c.org/ns/1.0" target="#DDITPXR"/>
+<specGrpRef xmlns="http://www.tei-c.org/ns/1.0" target="#DDITPRE"/>
+<specGrpRef xmlns="http://www.tei-c.org/ns/1.0" target="#DDIHW"/>
+    </div>
+    <div type="div2" xml:id="DIEN">
+<head xmlns="http://www.tei-c.org/ns/1.0">The Structure of Dictionary Entries</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">A simple dictionary entry may contain information about the form of the word treated, its
     grammatical characterization, its definition, synonyms, or translation equivalents, its
     etymology, cross-references to other entries, usage information, and examples. These we
     refer to as the <term>constituent parts</term> or <term>constituents</term> of the
@@ -234,7 +234,7 @@ of<term>top-level constituents</term> of dictionary entries, which can occur
     can normally occur only within top-level constituents. The top-level constituents of
     dictionary entries are described in section <ptr target="#DIENGP"/>, and documented more
     fully, together with their phrase-level sub-constituents, in section <ptr target="#DITP"/>. </p>
-<p>In addition, however, dictionary entries often have a complex
+<p xmlns="http://www.tei-c.org/ns/1.0">In addition, however, dictionary entries often have a complex
 hierarchical structure. For example, an entry may consist of two or
 more sub-parts, each corresponding to information for a different
 part-of-speech homograph of the headword. The entry (or part-of-speech
@@ -245,9 +245,9 @@ we call a <term>level</term>; at any level in an entry, any or all of
 the constituent parts of dictionary entries may appear. The
 hierarchical levels of dictionary entries are documented in section
 <ptr target="#DIENHI"/>. </p>
-<div3 type="subsection" xml:id="DIENHI">
-    <head>Hierarchical Levels</head>
-    <p>The outermost structural level of an entry is marked with the elements <gi>entry</gi>
+<div type="div3" xml:id="DIENHI">
+    <head xmlns="http://www.tei-c.org/ns/1.0">Hierarchical Levels</head>
+    <p xmlns="http://www.tei-c.org/ns/1.0">The outermost structural level of an entry is marked with the elements <gi>entry</gi>
 or <gi>entryFree</gi>. The <gi>hom</gi> element marks the subdivision of entries
 into homographs differing in their part-of-speech. The<gi>sense</gi> element marks
 the subdivision of entries and part-of-speech homographs into senses; this element
@@ -265,16 +265,16 @@ in section <ptr target="#DIFR"/>.<specList>
     <specDesc key="dictScrap"/>
 </specList>
     </p>
-    <p>For example, an entry with two senses will have the following structure:<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <entry>
+    <p xmlns="http://www.tei-c.org/ns/1.0">For example, an entry with two senses will have the following structure:<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><entry>
 <sense n="1"/>
 <sense n="2"/>
-    </entry>
-</egXML>
+    </entry><![CDATA[
+]]></egXML>
     </p>
-    <p>An entry with two homographs, the first with two senses and the second with three
-(one of which has two sub-senses), may have a structure like this:<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <entry>
+    <p xmlns="http://www.tei-c.org/ns/1.0">An entry with two homographs, the first with two senses and the second with three
+(one of which has two sub-senses), may have a structure like this:<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><entry>
 <hom n="1">
     <sense n="1"> ... </sense>
     <sense n="2"> ... </sense>
@@ -287,11 +287,11 @@ in section <ptr target="#DIFR"/>.<specList>
     <sense n="2"> ... </sense>
     <sense n="3"> ... </sense>
 </hom>
-    </entry>
-</egXML> In some dictionaries, homographs typically receive separate entries; in
+    </entry><![CDATA[
+]]></egXML> In some dictionaries, homographs typically receive separate entries; in
 such a case, as noted in section <ptr target="#DIBO"/>, the two homographs may be
-treated as entries, optionally grouped by a <gi>superEntry</gi>:<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <superEntry>
+treated as entries, optionally grouped by a <gi>superEntry</gi>:<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><superEntry>
 <entry n="1">
     <sense n="1"> ... </sense>
     <sense n="2"> ... </sense>
@@ -304,10 +304,10 @@ treated as entries, optionally grouped by a <gi>superEntry</gi>:<egXML xmlns="ht
     <sense n="2"> ... </sense>
     <sense n="3"> ... </sense>
 </entry>
-    </superEntry>
-</egXML>
+    </superEntry><![CDATA[
+]]></egXML>
     </p>
-    <p>The hierarchical levels of dictionary entries are declared as shown in the following
+    <p xmlns="http://www.tei-c.org/ns/1.0">The hierarchical levels of dictionary entries are declared as shown in the following
 DTD fragment. As may be seen, the content model for<gi>entry</gi> specifies that
 entries do not nest, that homographs nest within entries, and that senses nest
 within entries, homographs, or senses, and may be nested to any depth to reflect the
@@ -323,10 +323,10 @@ within entries, homographs, or senses).<specGrp xml:id="DDIEN" n="Dictionary ent
 &dictScrap;
 </specGrp>
     </p>
-</div3>
-<div3 type="subsection" xml:id="DIENGP">
-    <head>Groups and Constituents</head>
-    <p>As noted above, dictionary entries, and subordinate levels within dictionary entries,
+</div>
+<div type="div3" xml:id="DIENGP">
+    <head xmlns="http://www.tei-c.org/ns/1.0">Groups and Constituents</head>
+    <p xmlns="http://www.tei-c.org/ns/1.0">As noted above, dictionary entries, and subordinate levels within dictionary entries,
 may comprise several constituent parts, each providing a different type of
 information about the word treated. The<term>top-level constituents</term> of
 dictionary entries are:<list type="bullets">
@@ -348,7 +348,7 @@ constituents, since information about word form, particular grammatical informat
 special pronunciation, usage information, etc., may apply to an entire entry, or to
 only one homograph, or only to a particular sense. The examples below illustrate
 this point. </p>
-    <p>The following elements are used to encode these top-level constituents:<specList>
+    <p xmlns="http://www.tei-c.org/ns/1.0">The following elements are used to encode these top-level constituents:<specList>
     <specDesc key="form"/>
     <specDesc key="gramGrp"/>
     <specDesc key="def"/>
@@ -360,7 +360,7 @@ this point. </p>
     <specDesc key="note"/>
 </specList>
     </p>
-    <p>In a simple entry with no internal hierarchy, all top-level constituents appear at
+    <p xmlns="http://www.tei-c.org/ns/1.0">In a simple entry with no internal hierarchy, all top-level constituents appear at
 the <gi>entry</gi> level.<note place="foot"> Each example taken from a real
     dictionary indicates its source using the following abbreviations for dictionary
 names:<list type="gloss">
@@ -373,7 +373,7 @@ English-French Dictionary</title> (London: Collins, 1978, rpt. 1983) </item>
 <item>Collins Pocket </item>
 <label>DNT</label>
 <item>
-    <title>Le Dictionnaire de Notre Temps</title>, ed. Fran&#xE7;oise
+    <title>Le Dictionnaire de Notre Temps</title>, ed. Françoise
     Guerard (Paris: Hachette, 1990). </item>
 <label>LDOCE</label>
 <item>Longman Dictionary of Contemporary English </item>
@@ -391,8 +391,8 @@ English-French Dictionary</title> (London: Collins, 1978, rpt. 1983) </item>
     <title>Petit Larousse en Couleurs</title> (Paris: Larousse, 1990). </item>
 <label>PLI</label>
 <item>
-    <title>Peque&#xF1;o Larousse Illustrado</title> por Ram&#xF3;n
-    Garc&#xED;a-Pelayo y Gross (Buenos Aires, Mexico, Paris: Ediciones
+    <title>Pequeño Larousse Illustrado</title> por Ramón
+    García-Pelayo y Gross (Buenos Aires, Mexico, Paris: Ediciones
     Larousse, 1964). </item>
 <label>PR</label>
 <item>
@@ -401,7 +401,7 @@ English-French Dictionary</title> (London: Collins, 1978, rpt. 1983) </item>
 <label>SSSE</label>
 <item>
     <title>Simon and Schuster's International Dictionary English/Spanish
-    Spanish/English</title> ed. Tana de G&#xF3;mez (New York: Simon and
+    Spanish/English</title> ed. Tana de Gómez (New York: Simon and
     Schuster, 1973). </item>
 <label>W7</label>
 <item>Webster's 7th Collegiate </item>
@@ -420,8 +420,8 @@ Learner's Dictionary</title>. Also, the middle dot in quoted entries is
 <q rend="display">
     <hi rend="bold">com.peti.tor</hi>
     <code lang="ipa">/k@m"petit@(r)/</code> n person who competes. [OALD] </q>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <entry>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><entry>
 <form>
     <orth>competitor</orth>
     <hyph>com|peti|tor</hyph>
@@ -431,19 +431,19 @@ Learner's Dictionary</title>. Also, the middle dot in quoted entries is
     <pos>n</pos>
 </gramGrp>
 <def>person who competes.</def>
-    </entry>
-</egXML> For the elements which appear within the <gi>form</gi> and <gi>gramGrp</gi>
+    </entry><![CDATA[
+]]></egXML> For the elements which appear within the <gi>form</gi> and <gi>gramGrp</gi>
 elements of this example, see below, section <ptr target="#DITPFO"/>, and section
     <ptr target="#DITPGR"/>. </p>
-    <p>As mentioned above, any top-level constituent can appear at any level when the
+    <p xmlns="http://www.tei-c.org/ns/1.0">As mentioned above, any top-level constituent can appear at any level when the
 hierarchical structure of the entry is more complex. The most obvious examples are
 <gi>def</gi> and <gi>trans</gi>, which appear at the<gi>sense</gi> level when
 several senses or translations exist:<q rend="display">
     <hi rend="bold">disproof</hi>
     <code lang="ipa">(dIs"pru:f)</code> n. 1. facts that disprove something. 2. the
     act of disproving. [CED] </q>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <entry>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><entry>
 <form>
     <orth>disproof</orth>
     <pron>dIs"pru:f</pron>
@@ -457,15 +457,15 @@ several senses or translations exist:<q rend="display">
 <sense n="2">
     <def>the act of disproving.</def>
 </sense>
-    </entry>
-</egXML>
+    </entry><![CDATA[
+]]></egXML>
     </p>
-    <p>In the following example, <gi>gramGrp</gi> is used to distinguish two homographs:<q rend="display">
+    <p xmlns="http://www.tei-c.org/ns/1.0">In the following example, <gi>gramGrp</gi> is used to distinguish two homographs:<q rend="display">
     <hi rend="bold">bray</hi>
     <code lang="ipa">/breI/</code> n cry of an ass; sound of a trumpet.
-    &#x2219; vt [VP2A] make a cry or sound of this kind. [OALD] </q>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <entry>
+    ∙ vt [VP2A] make a cry or sound of this kind. [OALD] </q>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><entry>
 <form>
     <orth>bray</orth>
     <pron>breI</pron>
@@ -483,17 +483,17 @@ several senses or translations exist:<q rend="display">
     </gramGrp>
     <def>make a cry or sound of this kind.</def>
 </hom>
-    </entry>
-</egXML>
+    </entry><![CDATA[
+]]></egXML>
     </p>
-    <p>Information of the same kind can appear at different levels within the same entry;
+    <p xmlns="http://www.tei-c.org/ns/1.0">Information of the same kind can appear at different levels within the same entry;
 here, grammatical information occurs both at entry and homograph level.<q rend="display">
     <hi rend="bold">ca.reen</hi>
     <code lang="ipa">/k@"ri:n/</code> vt,vi 1 [VP6A] turn (a ship) on one side for
     cleaning, repairing, etc. 2 [VP6A, 2A] (cause to) tilt, lean over to one side.
     [OALD] </q>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <entry>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><entry>
 <form>
     <orth>careen</orth>
     <hyph>ca|reen</hyph>
@@ -516,8 +516,8 @@ here, grammatical information occurs both at entry and homograph level.<q rend="
     </gramGrp>
     <def>(cause to) tilt, lean over to one side.</def>
 </sense>
-    </entry>
-</egXML>
+    </entry><![CDATA[
+]]></egXML>
 <!-- suppress:  supererogatory
 <q rend='display'>
 conjure <code>("kVndZ@) </code> vb 1. to practice conjuring. 2. to
@@ -548,7 +548,7 @@ appeal earnestly to ... [CP] </q>
 </egXML>
 -->
     </p>
-    <p>Alone among the constituent groups, <gi>form</gi> can appear at
+    <p xmlns="http://www.tei-c.org/ns/1.0">Alone among the constituent groups, <gi>form</gi> can appear at
 the<gi>superEntry</gi> level as well as at the <gi>entry</gi>,<gi>hom</gi>, and
 <gi>sense</gi> levels:<q rend="display">
     <hi rend="bold">a.ban.don</hi> 1<code lang="ipa">/@"b&amp;amp;nd@n/ </code>
@@ -556,8 +556,8 @@ the<gi>superEntry</gi> level as well as at the <gi>entry</gi>,<gi>hom</gi>, and
     burning ship. 2 ...<hi rend="bold">abandon</hi> 2 n [U] the state when one's
     feelings and actions are uncontrolled; freedom from control: The people were so
     excited that they jumped and shouted with abandon / in gay abandon. [LDOCE] </q>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <superEntry>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><superEntry>
 <form>
     <orth>abandon</orth>
     <hyph>a|ban|don</hyph>
@@ -581,16 +581,16 @@ the<gi>superEntry</gi> level as well as at the <gi>entry</gi>,<gi>hom</gi>, and
     <def>the state when one's feelings and actions are uncontrolled; freedom
 from control</def>
 </entry>
-    </superEntry>
-</egXML>
+    </superEntry><![CDATA[
+]]></egXML>
     </p>
-    <p>The individual constituents are declared below, each in the section which documents
+    <p xmlns="http://www.tei-c.org/ns/1.0">The individual constituents are declared below, each in the section which documents
 it in more detail.</p>
-</div3>
-    </div2>
-    <div2 type="subsection" xml:id="DITP">
-<head>Top-level Constituents of Entries</head>
-<p>This section describes the top-level constituents of dictionary entries, together with
+</div>
+    </div>
+    <div type="div2" xml:id="DITP">
+<head xmlns="http://www.tei-c.org/ns/1.0">Top-level Constituents of Entries</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">This section describes the top-level constituents of dictionary entries, together with
     the phrase-level constituents peculiar to each.<list type="bullets">
 <item>the <gi>form</gi> element, which groups orthographic information and
     pronunciations, is described in section <ptr target="#DITPFO"/>
@@ -612,14 +612,14 @@ it in more detail.</p>
 </item>
     </list>
 </p>
-<div3 type="subsection" xml:id="DITPFO">
-    <head>Information on Written and Spoken Forms</head>
-    <p>Dictionary entries most often begin with information about the form of the word to
+<div type="div3" xml:id="DITPFO">
+    <head xmlns="http://www.tei-c.org/ns/1.0">Information on Written and Spoken Forms</head>
+    <p xmlns="http://www.tei-c.org/ns/1.0">Dictionary entries most often begin with information about the form of the word to
 which the entry applies. Typically, the orthographic form of the word, sometimes
 marked for syllabification or hyphenation, is the first item in an entry. Other
 information about the word, including variant or alternate forms, inflected forms,
 pronunciation, etc., is also often given. </p>
-    <p>The following elements should be used to encode this information: the <gi>form</gi>
+    <p xmlns="http://www.tei-c.org/ns/1.0">The following elements should be used to encode this information: the <gi>form</gi>
 element groups one or more occurrences of any of the others; it can also be
 recursively nested to reflect more complex sub-grouping of information about word
 form(s), as shown in the examples.<specList>
@@ -632,7 +632,7 @@ form(s), as shown in the examples.<specList>
     <specDesc key="lbl"/>
 </specList>
     </p>
-    <p>In addition to those listed above, the following elements, which encode morphological
+    <p xmlns="http://www.tei-c.org/ns/1.0">In addition to those listed above, the following elements, which encode morphological
 details of the form, may also occur within<gi>form</gi> elements:<specList>
     <specDesc key="gram" atts="type"/>
     <specDesc key="gen"/>
@@ -644,7 +644,7 @@ details of the form, may also occur within<gi>form</gi> elements:<specList>
     <specDesc key="iType" atts="type"/>
 </specList> Of these, the <gi>gram</gi> element is most general, and all of the
 others are synonymous with <gi>gram</gi> elements with appropriate values (<val>gen, number, case</val>, etc.) for the<att>type</att> attribute. </p>
-    <p>Different dictionaries use different means to mark hyphenation, syllabification, and
+    <p xmlns="http://www.tei-c.org/ns/1.0">Different dictionaries use different means to mark hyphenation, syllabification, and
 stress, and they often use some unusual glyphs (e.g., the <soCalled>middle
 dot</soCalled> for hyphenation). All of these glyphs should however be available in
 the Unicode character set, and may be represented using either the standard ISO name
@@ -653,37 +653,37 @@ International Phonetic Alphabet should be used. It may be convenient (as has bee
 done in the text of this chapter) to use a simple transliteration scheme for the
 phonetic transcription scheme employed; such a scheme should however be properly
 documented in the header. </p>
-    <p>In the simplest case, nothing is given but the orthography:<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <form>
+    <p xmlns="http://www.tei-c.org/ns/1.0">In the simplest case, nothing is given but the orthography:<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><form>
 <orth>doom-laden</orth>
-    </form>
-</egXML>
+    </form><![CDATA[
+]]></egXML>
     </p>
-    <p>Often, however, pronunciation is given.<q rend="display">
+    <p xmlns="http://www.tei-c.org/ns/1.0">Often, however, pronunciation is given.<q rend="display">
     <hi rend="bold">soucoupe</hi> [sukup] ... [DNT]</q>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <form>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><form>
 <orth>soucoupe</orth>
 <pron>sukup</pron>
-    </form>
-</egXML>
+    </form><![CDATA[
+]]></egXML>
     </p>
-    <p>For a variety of reasons including ease of processing, it may be desired to split
+    <p xmlns="http://www.tei-c.org/ns/1.0">For a variety of reasons including ease of processing, it may be desired to split
 into separate elements information which is collapsed into a single element in the
 source text; orthography and hyphenation may for example be transcribed as separate
 elements, although given together in the source text. For a discussion of the issues
 involved, and of methods for retaining both the presentation form and the
 interpreted form, see section <ptr target="#DIMV"/>. </p>
-    <p>This example splits orthography and hyphenation, and adds syllabification because it
+    <p xmlns="http://www.tei-c.org/ns/1.0">This example splits orthography and hyphenation, and adds syllabification because it
 differs from hyphenation:<q rend="display">
     <hi rend="bold">ar.ea</hi> ... [W7]</q>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <form>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><form>
 <orth>area</orth>
 <hyph>ar|ea</hyph>
 <syll>ar|e|a</syll>
-    </form>
-</egXML>
+    </form><![CDATA[
+]]></egXML>
 <!--
 <q rend='display'>
 <hilited rend='bold'>alternating current</hilited>  <code>/,....'../
@@ -697,48 +697,48 @@ differs from hyphenation:<q rend="display">
 </egXML>
 -->
     </p>
-    <p>Multiple orthographic forms may be given, e.g. to illustrate a word's inflectional
+    <p xmlns="http://www.tei-c.org/ns/1.0">Multiple orthographic forms may be given, e.g. to illustrate a word's inflectional
     pattern:<q rend="display">
     <hi rend="bold">brag</hi> ... vb. brags, bragging, bragged ... [CED]</q>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <form>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><form>
 <orth>brag</orth>
-    </form>
-    <gramGrp>
+    </form><![CDATA[
+    ]]><gramGrp>
 <pos>vb</pos>
-    </gramGrp>
-    <form type="infl">
+    </gramGrp><![CDATA[
+    ]]><form type="infl">
 <orth>brags</orth>
 <orth>bragging</orth>
 <orth>bragged</orth>
-    </form>
-</egXML> Or the inflectional pattern may be indicated by reference to a table of
+    </form><![CDATA[
+]]></egXML> Or the inflectional pattern may be indicated by reference to a table of
 paradigms, as here:<q rend="display">
     <hi rend="bold">horrifier</hi>
     <code lang="ipa">[ORifje]</code> (7) vt ... [C/R] </q>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <form>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><form>
 <orth>horrifier</orth>
 <pron>ORifje</pron>
 <iType type="vbtable">7</iType>
-    </form>
-</egXML>
+    </form><![CDATA[
+]]></egXML>
     </p>
-    <p>As noted, <gi>iType</gi> etc. are synonymous with appropriately typed instances of
+    <p xmlns="http://www.tei-c.org/ns/1.0">As noted, <gi>iType</gi> etc. are synonymous with appropriately typed instances of
 the general <gi>gram</gi> element; the last example might equally be tagged
-    thus:<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <form>
+    thus:<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><form>
 <orth>horrifier</orth>
 <pron>ORifje</pron>
 <gram type="iType / vbtable">7</gram>
-    </form>
-</egXML>
+    </form><![CDATA[
+]]></egXML>
     </p>
-    <p>Explanatory labels may be attached to alternate forms:<q rend="display">
+    <p xmlns="http://www.tei-c.org/ns/1.0">Explanatory labels may be attached to alternate forms:<q rend="display">
     <hi rend="bold">MTBF</hi>
     <hi rend="it">abbrev. for</hi> mean time between failures. [CED]</q>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <entry>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><entry>
 <form type="abbrev">
     <orth>MTBF</orth>
 </form>
@@ -746,54 +746,54 @@ the general <gi>gram</gi> element; the last example might equally be tagged
     <lbl>abbrev. for</lbl>
     <orth>mean time between failures</orth>
 </form>
-    </entry>
-</egXML>
+    </entry><![CDATA[
+]]></egXML>
     </p>
-    <p>When multiple orthographic forms are given, a pronunciation may be associated with
+    <p xmlns="http://www.tei-c.org/ns/1.0">When multiple orthographic forms are given, a pronunciation may be associated with
 all of them, as here:<q rend="display">
     <hi rend="bold">biryani</hi> or <hi rend="bold">biriani</hi>
     <code lang="ipa">(%bIrI"A:nI) </code> ... [CED]</q>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <form>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><form>
 <orth>biryani</orth>
 <orth>biriani</orth>
 <pron>%bIrI"A:nI</pron>
-    </form>
-</egXML>
+    </form><![CDATA[
+]]></egXML>
     </p>
-    <p>In other cases, different pronunciations are provided for different orthographic
+    <p xmlns="http://www.tei-c.org/ns/1.0">In other cases, different pronunciations are provided for different orthographic
 forms; here, the <gi>form</gi> element is repeated to associate the first
 orthographic form explicitly with the first pronunciation, and the second
 orthographic form with the second pronunciation:<q rend="display">
     <hi rend="bold">mackle</hi>
     <code lang="ipa">("m&amp;amp;k^@l) </code> or macule <code lang="ipa">("m&amp;amp;kju:l) </code> ... [CED] </q>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <form>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><form>
 <orth>mackle</orth>
 <pron>"m&amp;k&amp;supschwa;l</pron>
-    </form>
-    <form>
+    </form><![CDATA[
+    ]]><form>
 <orth>macule</orth>
 <pron>"m&amp;kju:l</pron>
-    </form>
-</egXML>
+    </form><![CDATA[
+]]></egXML>
     </p>
-    <p>Recursive nesting of the <gi>form</gi> element can preserve relations among elements
+    <p xmlns="http://www.tei-c.org/ns/1.0">Recursive nesting of the <gi>form</gi> element can preserve relations among elements
 that are implicit in the text. For example, in the CED entry for <q>hospitaller</q>,
 it is clear that <q>U.S.</q> is associated only with <q>hospitaler</q>, but that the
 pronunciation applies to both forms. The following encoding preserves these
     relations:<q rend="display">
     <hi rend="bold">hospitaller</hi> or U.S. hospitaler <code lang="ipa">("hQspIt@l@) </code> ... [CED] </q>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <form>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><form>
 <orth>hospitaller</orth>
 <form>
     <usg type="geo">U.S.</usg>
     <orth>hospitaler</orth>
 </form>
 <pron>"hQspIt@l@</pron>
-    </form>
-</egXML>
+    </form><![CDATA[
+]]></egXML>
 <!-- suppressed; supererogatory (msm) -->
 <!-- 
 <p>In this example, the "pl." specification applies to   -->
@@ -827,7 +827,7 @@ pronunciation applies to both forms. The following encoding preserves these
 <!-- </egXML>    -->
 <!-- ... end suppression (msm)-->
     </p>
-    <p>The formal declarations for the elements of the <gi>form</gi> group are
+    <p xmlns="http://www.tei-c.org/ns/1.0">The formal declarations for the elements of the <gi>form</gi> group are
     these:<specGrp xml:id="DDITPFO" n="The form group"> 
 &form;
 &orth;
@@ -845,16 +845,16 @@ pronunciation applies to both forms. The following encoding preserves these
 &iType;
 </specGrp>
     </p>
-    <p>The classes of morphological elements, and of elements allowed within the
+    <p xmlns="http://www.tei-c.org/ns/1.0">The classes of morphological elements, and of elements allowed within the
 <gi>form</gi> group, are declared thus:<specGrp xml:id="DEDITPFO" n="Classes for morphological and form information"> 
 &model.morphLike;
 &model.formPart;
  </specGrp>
     </p>
-</div3>
-<div3 type="subsection" xml:id="DITPGR">
-    <head>Grammatical Information</head>
-    <p>The <gi>gramGrp</gi> element groups grammatical information, such as part of speech,
+</div>
+<div type="div3" xml:id="DITPGR">
+    <head xmlns="http://www.tei-c.org/ns/1.0">Grammatical Information</head>
+    <p xmlns="http://www.tei-c.org/ns/1.0">The <gi>gramGrp</gi> element groups grammatical information, such as part of speech,
 subcategorization information (e.g., syntactic patterns for verbs, count/mass
 distinctions for nouns), etc. It can contain any of the following elements:<specList>
     <specDesc key="pos"/>
@@ -862,7 +862,7 @@ distinctions for nouns), etc. It can contain any of the following elements:<spec
     <specDesc key="colloc"/>
 </specList>
     </p>
-    <p>In addition, <gi>gramGrp</gi> can contain any of the morphological elements defined
+    <p xmlns="http://www.tei-c.org/ns/1.0">In addition, <gi>gramGrp</gi> can contain any of the morphological elements defined
 in section <ptr target="#DITPFO"/> for <gi>form</gi>:<specList>
     <specDesc key="gram"/>
     <specDesc key="iType"/>
@@ -881,47 +881,47 @@ it applies to the headword form. For example, in the entry <q>
 word defined can be either singular or plural; the<q>pl.</q> specification applies
 only to the inflected forms provided. Compare this with <q>pants (paents) pl.
 n.</q>, where <q>pl.</q> applies to the headword itself. </p>
-    <p>As noted above in section <ptr target="#DITPFO"/>, the elements for morphological
+    <p xmlns="http://www.tei-c.org/ns/1.0">As noted above in section <ptr target="#DITPFO"/>, the elements for morphological
 information are simply shorthand for the general purpose<gi>gram</gi> element.
-Consider this entry for the French word<mentioned>m&#xE9;dire</mentioned>:
+Consider this entry for the French word<mentioned>médire</mentioned>:
 <!-- no such word, unless you add the accent! (LB -->
 <q rend="display">
-    <hi rend="bold">m&#xE9;dire</hi> v.t. ind. (de) ... [PLC]</q> This entry can be
-tagged using specialized grammatical elements:<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <form>
-<orth>m&#xE9;dire</orth>
-    </form>
-    <gramGrp>
+    <hi rend="bold">médire</hi> v.t. ind. (de) ... [PLC]</q> This entry can be
+tagged using specialized grammatical elements:<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><form>
+<orth>médire</orth>
+    </form><![CDATA[
+    ]]><gramGrp>
 <pos>v</pos>
 <subc>t ind</subc>
 <colloc type="prep">de</colloc>
-    </gramGrp>
-</egXML> Or using the <gi>gram</gi> element:<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <form>
-<orth>m&#xE9;dire</orth>
-    </form>
-    <gramGrp>
+    </gramGrp><![CDATA[
+]]></egXML> Or using the <gi>gram</gi> element:<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><form>
+<orth>médire</orth>
+    </form><![CDATA[
+    ]]><gramGrp>
 <gram type="pos">v</gram>
 <gram type="subc">t ind</gram>
 <gram type="colloc / prep">de</gram>
-    </gramGrp>
-</egXML>
+    </gramGrp><![CDATA[
+]]></egXML>
     </p>
-    <p>Like <gi>form</gi>, <gi>gramGrp</gi> can be repeated, recursively nested, or used at
+    <p xmlns="http://www.tei-c.org/ns/1.0">Like <gi>form</gi>, <gi>gramGrp</gi> can be repeated, recursively nested, or used at
 the <gi>sense</gi> level to show relations among elements.<q rend="display">
     <hi rend="bold">isotope</hi> adj. et n. m. ... [DNT]</q>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <form>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><form>
 <orth>isotope</orth>
-    </form>
-    <gramGrp>
+    </form><![CDATA[
+    ]]><gramGrp>
 <pos>adj</pos>
-    </gramGrp>
-    <gramGrp>
+    </gramGrp><![CDATA[
+    ]]><gramGrp>
 <pos>n</pos>
 <gen>m</gen>
-    </gramGrp>
-</egXML>
+    </gramGrp><![CDATA[
+]]></egXML>
 <!-- <q rend='display'> -->
 <!-- ablaze (@"bleIz) adj.  (postpositive), adv. 1. on fire;  -->
 <!-- burning. 2. brightly illuminated. 3. emotionnally-->
@@ -961,8 +961,8 @@ the <gi>sense</gi> level to show relations among elements.<q rend="display">
 <q rend="display">
     <hi rend="bold">wits</hi> (wIts) pl. n. 1. (sometimes sing.) the ability to
     reason and act, esp. quickly ... [CED] </q>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <entry>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><entry>
 <form>
     <orth>wits</orth>
     <pron>wIts</pron>
@@ -977,8 +977,8 @@ the <gi>sense</gi> level to show relations among elements.<q rend="display">
     </gramGrp>
     <def>the ability to reason and act, esp. quickly ...</def>
 </sense>
-    </entry>
-</egXML>
+    </entry><![CDATA[
+]]></egXML>
 <!-- <q rend='display'> -->
 <!-- carry ("k&amp;rI) vb.  ...(mainly tr.) 1. (also intr.)   -->
 <!-- to take or bear...  [CED]-->
@@ -1006,7 +1006,7 @@ the <gi>sense</gi> level to show relations among elements.<q rend="display">
 <!-- ]]>      -->
 <!-- </egXML>    -->
     </p>
-    <p>The following gives the formal declarations for elements in the
+    <p xmlns="http://www.tei-c.org/ns/1.0">The following gives the formal declarations for elements in the
 grammatical-information group.<specGrp xml:id="DDITPGR" n="The gram group">
 &gramGrp;
 &pos;
@@ -1014,30 +1014,30 @@ grammatical-information group.<specGrp xml:id="DDITPGR" n="The gram group">
 &colloc;
 </specGrp>
     </p>
-    <p>The class of elements allowed within the <gi>gramGrp</gi> element is declared thus.
+    <p xmlns="http://www.tei-c.org/ns/1.0">The class of elements allowed within the <gi>gramGrp</gi> element is declared thus.
 The class <term>morphInfo</term> is defined above in section <ptr target="#DITPFO"/>.<specGrp xml:id="DEDITPGR" n="Elements for grammatical information"> 
 &model.gramPart;
  </specGrp>
     </p>
-</div3>
-<div3 type="subsection" xml:id="DITPSE">
-    <head>Sense Information</head>
-    <p>Dictionaries may describe the meanings of words in a wide variety of different ways
-&#x2014; by means of synonyms, paraphrases, translations into other languages,
+</div>
+<div type="div3" xml:id="DITPSE">
+    <head xmlns="http://www.tei-c.org/ns/1.0">Sense Information</head>
+    <p xmlns="http://www.tei-c.org/ns/1.0">Dictionaries may describe the meanings of words in a wide variety of different ways
+— by means of synonyms, paraphrases, translations into other languages,
 formal definitions in various highly stylized forms, etc. No attempt is made here to
 distinguish all the different forms which sense information may take; all alike may
 be tagged using the<gi>def</gi> element described in section <ptr target="#DITPDE"/>. </p>
-    <p>Because as a special case it is frequently desired to distinguish the provision of
+    <p xmlns="http://www.tei-c.org/ns/1.0">Because as a special case it is frequently desired to distinguish the provision of
 translation equivalents in other languages from other forms of sense information,
 however, the specialized elements <gi>tr</gi> (translation equivalent) and
 <gi>trans</gi> (which groups a translation equivalent with related information such
 as its grammatical description) are defined for this purpose in section <ptr target="#DITPTR"/>. </p>
-    <p>Whether sense information in multilingual dictionaries is consistently tagged using
+    <p xmlns="http://www.tei-c.org/ns/1.0">Whether sense information in multilingual dictionaries is consistently tagged using
 <gi>tr</gi> or <gi>def</gi> is a matter of the encoder's choice; no blanket
 recommendation is made here. </p>
-    <div4 type="Section" xml:id="DITPDE">
-<head>Definitions</head>
-<p>Dictionary definitions are those pieces of prose in a dictionary entry that
+    <div type="div4" xml:id="DITPDE">
+<head xmlns="http://www.tei-c.org/ns/1.0">Definitions</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">Dictionary definitions are those pieces of prose in a dictionary entry that
     describe the meaning of some lexical item. Most often, definitions describe the
     headword of the entry; in some cases, they describe translated texts, examples,
     etc.; see <gi>tr</gi>, section<ptr target="#DITPTR"/>, and <gi>eg</gi>, section
@@ -1046,12 +1046,12 @@ recommendation is made here. </p>
     not serve solely to group a set of smaller elements. The close analysis of
     definition text, such as the tagging of hypernyms, typical objects, etc., is not
     covered by these Guidelines. </p>
-<p>Definitions may occur directly within an entry; when multiple definitions are
+<p xmlns="http://www.tei-c.org/ns/1.0">Definitions may occur directly within an entry; when multiple definitions are
     given, they typically are identified as belonging to distinct senses, as here:<q rend="display">
 <hi rend="bold">demigod</hi> (...) n. 1.a. a being who is part mortal, part
 god. b. a lesser deity. 2. a godlike person. [CP] </q>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<entry>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><entry>
     <form>
 <orth>demigod</orth>
 <pron> ... </pron>
@@ -1070,18 +1070,18 @@ god. b. a lesser deity. 2. a godlike person. [CP] </q>
     <sense n="2">
 <def>a godlike person.</def>
     </sense>
-</entry>
-    </egXML>
+</entry><![CDATA[
+    ]]></egXML>
 </p>
-<p>In multilingual dictionaries, it is sometimes possible to distinguish translation
+<p xmlns="http://www.tei-c.org/ns/1.0">In multilingual dictionaries, it is sometimes possible to distinguish translation
     equivalents from definitions proper; here a<gi>def</gi> element is distinguished
     from the translation information within which it appears.<q rend="display">
-<hi rend="bold">r&#xE9;moulade</hi>
-<code lang="ipa">[Remulad] </code> nf remoulade, r&#xE9;moulade (<hi rend="it">dressing containing mustard and herbs</hi>). [C/R]</q>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<entry>
+<hi rend="bold">rémoulade</hi>
+<code lang="ipa">[Remulad] </code> nf remoulade, rémoulade (<hi rend="it">dressing containing mustard and herbs</hi>). [C/R]</q>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><entry>
     <form>
-<orth>r&#xE9;moulade</orth>
+<orth>rémoulade</orth>
 <pron>Remulad</pron>
     </form>
     <gramGrp>
@@ -1090,27 +1090,27 @@ god. b. a lesser deity. 2. a godlike person. [CP] </q>
     </gramGrp>
     <trans>
 <tr>remoulade</tr>
-<tr>r&#xE9;moulade</tr>
+<tr>rémoulade</tr>
 <def>dressing containing mustard and herbs</def>
     </trans>
-</entry>
-    </egXML>
+</entry><![CDATA[
+    ]]></egXML>
 </p>
-<p>The following gives the formal definition of <gi>def</gi>:<specGrp xml:id="DDITPDE" n="Definition text"> 
+<p xmlns="http://www.tei-c.org/ns/1.0">The following gives the formal definition of <gi>def</gi>:<specGrp xml:id="DDITPDE" n="Definition text"> 
 &def;
 </specGrp>
 </p>
-    </div4>
-    <div4 type="Section" xml:id="DITPTR">
-<head>Translation Equivalents</head>
-<p>Multilingual dictionaries contain information about translations of a given word
+    </div>
+    <div type="div4" xml:id="DITPTR">
+<head xmlns="http://www.tei-c.org/ns/1.0">Translation Equivalents</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">Multilingual dictionaries contain information about translations of a given word
     in some source language for one or more target languages. Minimally, the
     dictionary provides the corresponding translation in the target language; other
     information, such as morphological information (gender, case), various kinds of
     usage restrictions, etc., may also be given. If translation equivalents are to
     be distinguished from other kinds of sense information, they may be encoded
     using the <gi>tr</gi> element. </p>
-<p>As in monolingual dictionaries, the <gi>sense</gi> element is used in
+<p xmlns="http://www.tei-c.org/ns/1.0">As in monolingual dictionaries, the <gi>sense</gi> element is used in
     multilingual dictionaries to group information (forms, grammatical information,
     usage, translation(s), etc.) about a given sense of a word where necessary, as
     in monolingual dictionaries. Information about the individual translation
@@ -1123,17 +1123,17 @@ god. b. a lesser deity. 2. a godlike person. [CP] </q>
 <specDesc key="lbl"/>
     </specList>
 </p>
-<p>Note how in the following example, different translation equivalents are grouped
+<p xmlns="http://www.tei-c.org/ns/1.0">Note how in the following example, different translation equivalents are grouped
     into the same or different senses, following the punctuation of the source and
     the usage labels:<q rend="display">
 <hi rend="bold">dresser</hi> ... (a) (Theat) habilleur m, -euse f; (Comm:
-window ~) &#xE9;talagiste mf. she's a stylish ~ elle s'habille avec chic; V hair.
+window ~) étalagiste mf. she's a stylish ~ elle s'habille avec chic; V hair.
 (b) (tool) (for wood) raboteuse f; (for stone) rabotin m. [C/R] </q>
     <!-- < note place='inline' > [homograph numbers superscripted   -->
     <!-- in original text; pronunciations have to be fixed -JV,   -->
     <!-- NI] < /note >    -->
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<entry n="1">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><entry n="1">
     <form>
 <orth>dresser</orth>
     </form>
@@ -1156,7 +1156,7 @@ window ~) &#xE9;talagiste mf. she's a stylish ~ elle s'habille avec chic; V hair
 </orth>
     </form>
     <trans>
-<tr>&#xE9;talagiste</tr>
+<tr>étalagiste</tr>
 <gen>mf</gen>
     </trans>
 </sense>
@@ -1187,23 +1187,23 @@ window ~) &#xE9;talagiste mf. she's a stylish ~ elle s'habille avec chic; V hair
     </trans>
 </sense>
     </sense>
-</entry>
-    </egXML>
+</entry><![CDATA[
+    ]]></egXML>
 </p>
-<p>In this encoding, a distinction is made between the translation equivalent
+<p xmlns="http://www.tei-c.org/ns/1.0">In this encoding, a distinction is made between the translation equivalent
     (<q>OAS</q>) and a descriptive phrase providing further information for the user
     of the dictionary.<q rend="display">
-<hi rend="bold">O.A.S.</hi> ... nf (abr&#xE9;v de <hi rend="bold">Organisation de
-    l'Arm&#xE9;e secr&#xE8;te</hi>) OAS (<hi rend="it">illegal military
+<hi rend="bold">O.A.S.</hi> ... nf (abrév de <hi rend="bold">Organisation de
+    l'Armée secrète</hi>) OAS (<hi rend="it">illegal military
     organization supporting French rule of Algeria</hi>). [C/R] </q>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<entry>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><entry>
     <trans>
 <tr>OAS</tr>
 <def>illegal military organization supporting French rule of Algeria</def>
     </trans>
-</entry>
-    </egXML>
+</entry><![CDATA[
+    ]]></egXML>
     <!-- <q rend='display'> -->
     <!-- canary [k@"nE@rI] 1 n (a) (bird) canari m, serin m.      -->
     <!--   (b) (wine) vin m des Canaries. -->
@@ -1312,7 +1312,7 @@ window ~) &#xE9;talagiste mf. she's a stylish ~ elle s'habille avec chic; V hair
     <!-- ]]>      -->
     <!-- </egXML>    -->
 </p>
-<p>Note that <gi>tr</gi> may also be used in monolingual dictionaries when a
+<p xmlns="http://www.tei-c.org/ns/1.0">Note that <gi>tr</gi> may also be used in monolingual dictionaries when a
     translation is given for a foreign word:
     <!-- < note place='inline' > [headwords are in bold italics     -->
     <!-- intead of just bold; pronunciations to be completed      -->
@@ -1322,8 +1322,8 @@ window ~) &#xE9;talagiste mf. she's a stylish ~ elle s'habille avec chic; V hair
 (Hebrew <code lang="ipa">hAvdA"lA; </code> Yiddish <code lang="ipa">hAv"dOl@) </code> n. Judaism. the ceremony marking the end
 of the sabbath or of a festival, including the blessings over wine, candles
 and spices. [literally: separation] [CED] </q>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<entry type="foreign">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><entry type="foreign">
     <form>
 <orth>havdalah</orth>
 <orth>havdoloh</orth>
@@ -1335,19 +1335,19 @@ including the blessings over wine, candles and spices.</def>
 <lbl>literally</lbl>
 <tr>separation</tr>
     </trans>
-</entry>
-    </egXML>
+</entry><![CDATA[
+    ]]></egXML>
 </p>
-<p>The formal definition of these elements is as follows:<specGrp xml:id="DDITPTR" n="Translation information"> 
+<p xmlns="http://www.tei-c.org/ns/1.0">The formal definition of these elements is as follows:<specGrp xml:id="DDITPTR" n="Translation information"> 
 &tr;
 &trans;
 </specGrp>
 </p>
-    </div4>
-</div3>
-<div3 type="subsection" xml:id="DITPET">
-    <head>Etymological Information</head>
-    <p>The element <gi>etym</gi> marks a block of etymological information. Etymologies may
+    </div>
+</div>
+<div type="div3" xml:id="DITPET">
+    <head xmlns="http://www.tei-c.org/ns/1.0">Etymological Information</head>
+    <p xmlns="http://www.tei-c.org/ns/1.0">The element <gi>etym</gi> marks a block of etymological information. Etymologies may
 contain highly structured lists of words in an order indicating their descent from
 each other, but often also include related words and forms outside the direct line
 of descent, for comparison. Not infrequently, etymologies include commentary of
@@ -1368,32 +1368,32 @@ markup of etymologies are:<specList>
     <specDesc key="lbl"/>
 </specList>
     </p>
-    <p>As in other prose, individual word forms mentioned in an etymological description are
+    <p xmlns="http://www.tei-c.org/ns/1.0">As in other prose, individual word forms mentioned in an etymological description are
 tagged with <gi>mentioned</gi> elements. Pronunciations, usage labels, and glosses
 can be tagged using the<gi>pron</gi>, <gi>usg</gi>, and <gi>gloss</gi> elements
 defined elsewhere in these Guidelines. In addition, the <gi>lang</gi> element may be
 used to identify a particular language name where it appears, in addition to using
 the <att>xml:lang</att> attribute of the<gi>mentioned</gi> element. </p>
-    <p>Examples:<q rend="display">
+    <p xmlns="http://www.tei-c.org/ns/1.0">Examples:<q rend="display">
     <hi rend="bold">abismo</hi> m. (del gr. a priv. y byssos, fondo). Sima, gran
     profundidad. ... </q>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <entry>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><entry>
 <form>
     <orth>abismo</orth>
 </form>
 <etym>del <lang>gr.</lang>
     <mentioned>a</mentioned> priv. y <mentioned>byssos</mentioned>, <gloss>fondo</gloss>
 </etym>
-    </entry>
-</egXML>
+    </entry><![CDATA[
+]]></egXML>
 <q rend="display">
     <hi rend="bold">neume</hi>
-    <code lang="ipa">\'n(y)&#xFC;m\</code> n [F, fr. ML pneuma, neuma, fr. Gk
-    pneuma breath &#x2014; more at <hi rend="bold">pneumatic</hi>]: any of
+    <code lang="ipa">\'n(y)üm\</code> n [F, fr. ML pneuma, neuma, fr. Gk
+    pneuma breath — more at <hi rend="bold">pneumatic</hi>]: any of
     various symbols used in the notation of Gregorian chant ... [WNC]</q>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <entry>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><entry>
 <etym>
     <lang>F</lang> fr. <lang>ML</lang>
     <mentioned>pneuma</mentioned>
@@ -1404,25 +1404,25 @@ the <att>xml:lang</att> attribute of the<gi>mentioned</gi> element. </p>
     </xr>
 </etym>
 <def>any of various symbols ... </def>
-    </entry>
-</egXML>
+    </entry><![CDATA[
+]]></egXML>
     </p>
-    <p>The formal definition for the elements described in this section and not declared
+    <p xmlns="http://www.tei-c.org/ns/1.0">The formal definition for the elements described in this section and not declared
 elsewhere is:<specGrp xml:id="DDITPET" n="Etymologies"> 
 <?oxygen RNGSchema="file:/Users/romary/Courant/Formats/TEI-P5Work/MasterODD/p5odds.rnc" type="compact"?>
 &etym;
 &lang;
 </specGrp>
     </p>
-</div3>
-<div3 type="subsection" xml:id="DITPMI">
-    <head>Other Information</head>
-    <div4 type="Section" xml:id="DITPEG">
-<head>Examples</head>
-<p>Dictionaries typically include examples of word use, usually accompanying
+</div>
+<div type="div3" xml:id="DITPMI">
+    <head xmlns="http://www.tei-c.org/ns/1.0">Other Information</head>
+    <div type="div4" xml:id="DITPEG">
+<head xmlns="http://www.tei-c.org/ns/1.0">Examples</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">Dictionaries typically include examples of word use, usually accompanying
     definitions or translations. In some cases, the examples are quotations from
     another source, and are occasionally followed by a citation to the author. </p>
-<p>The <gi>eg</gi> element contains usage examples and associated information; the
+<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>eg</gi> element contains usage examples and associated information; the
     example text itself should be enclosed in a<gi>cit</gi> element, if attributed,
     or a <gi>q</gi> or <gi>quote</gi> element otherwise. The <gi>cit</gi> element
     associates a quotation with a bibliographic reference to its source.<specList>
@@ -1432,24 +1432,24 @@ elsewhere is:<specGrp xml:id="DDITPET" n="Etymologies">
 <specDesc key="cit"/>
     </specList>
 </p>
-<p>Examples frequently abbreviate the headword, and so their transcription will
+<p xmlns="http://www.tei-c.org/ns/1.0">Examples frequently abbreviate the headword, and so their transcription will
     frequently make use of the <gi>oRef</gi> or<gi>oVar</gi> elements described
     below in section <ptr target="#DIHW"/>. </p>
-<p>Examples:<q rend="display">
+<p xmlns="http://www.tei-c.org/ns/1.0">Examples:<q rend="display">
 <hi rend="bold">multiplex</hi>
 <code lang="ipa">/.../</code> adj tech having many parts: the multiplex eye
 of the fly. [LDOCE]</q>
     <!-- [Check pron -JV, NI]     -->
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<q>the multiplex eye of the fly.</q>
-    </egXML> As the following example shows, <gi>eg</gi> can also contain elements
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><q>the multiplex eye of the fly.</q><![CDATA[
+    ]]></egXML> As the following example shows, <gi>eg</gi> can also contain elements
     such as <gi>pron</gi>, <gi>def</gi>, etc.<q rend="display">
 <hi rend="bold">some</hi> ... 4. (<hi rend="it">S~</hi> and <hi rend="it">any</hi> are used with <hi rend="it">more</hi>): Give me ~
     more<code lang="ipa">/s@'mO:(r)/</code> [OALD] </q>
     <!-- 
 <pron> in an example -->
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<sense n="4">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><sense n="4">
     <usg type="colloc">
 <oRef type="cap"/> and <mentioned>any</mentioned> are used with <mentioned>more</mentioned>
     </usg>
@@ -1457,25 +1457,25 @@ of the fly. [LDOCE]</q>
 <q>Give me <oRef/> more</q>
 <pron extent="part">s@'mO:(r)</pron>
     </dicteg>
-</sense>
-    </egXML> In multilingual dictionaries, examples may also be accompanied by
+</sense><![CDATA[
+    ]]></egXML> In multilingual dictionaries, examples may also be accompanied by
 translations:<q rend="display">
-<hi rend="bold">horrifier</hi> ... vt to horrify. <hi rend="bold">elle &#xE9;tait
-    horrifi&#xE9;e par la d&#xE9;pense</hi> she was horrified at the expense. [C/R] </q>
+<hi rend="bold">horrifier</hi> ... vt to horrify. <hi rend="bold">elle était
+    horrifiée par la dépense</hi> she was horrified at the expense. [C/R] </q>
     <!-- <trans> in an example -->
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<entry>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><entry>
     <trans>
 <tr>to horrify</tr>
     </trans>
     <dicteg>
-<q>elle &#xE9;tait horrifi&#xE9;e par la d&#xE9;pense</q>
+<q>elle était horrifiée par la dépense</q>
 <trans>
     <tr>she was horrified at the expense.</tr>
 </trans>
     </dicteg>
-</entry>
-    </egXML>
+</entry><![CDATA[
+    ]]></egXML>
     <!-- <q rend='display'> -->
     <!-- 1. cent ...  III.  POUR CENT.  B&eacute;n&eacute;fice    -->
     <!-- de trois pour cent (3 %):  B&eacute;n&eacute;fice de 3F  -->
@@ -1512,31 +1512,31 @@ translations:<q rend="display">
     <!-- </egXML>    --> When a
     source is indicated, the example should be marked with a<gi>cit</gi> element:<q rend="display">
 <hi rend="bold">valeur</hi> ... n. f. ... 2. Vx. Vaillance, bravoure
-(sp&#xE9;cial., au combat). <q>La valeur n'attend pas le nombre des ann&#xE9;es</q>
+(spécial., au combat). <q>La valeur n'attend pas le nombre des années</q>
 (Corneille). ... [DNT]</q>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<sense n="2">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><sense n="2">
     <usg type="time">Vx.</usg>
-    <def>Vaillance, bravoure (sp&#xE9;cial., au combat)</def>
+    <def>Vaillance, bravoure (spécial., au combat)</def>
     <dicteg>
 <cit>
-    <quote>La valeur n'attend pas le nombre des ann&#xE9;es</quote>
+    <quote>La valeur n'attend pas le nombre des années</quote>
     <bibl>
 <author>Corneille</author>
     </bibl>
 </cit>
     </dicteg>
-</sense>
-    </egXML>
+</sense><![CDATA[
+    ]]></egXML>
 </p>
-<p>The formal definition of <gi>eg</gi> is:<specGrp xml:id="DDITPEG" n="Examples and citations"> 
+<p xmlns="http://www.tei-c.org/ns/1.0">The formal definition of <gi>eg</gi> is:<specGrp xml:id="DDITPEG" n="Examples and citations"> 
 &dicteg;
 </specGrp>
 </p>
-    </div4>
-    <div4 type="Section" xml:id="DITPUS">
-<head>Usage Information and Other Labels</head>
-<p>Most dictionaries provide restrictive labels and phrases indicating the usage of
+    </div>
+    <div type="div4" xml:id="DITPUS">
+<head xmlns="http://www.tei-c.org/ns/1.0">Usage Information and Other Labels</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">Most dictionaries provide restrictive labels and phrases indicating the usage of
     given words or particular senses. Other labels, not necessarily related to
     usage, may be attached to forms, translations, cross references, and examples.
     Usage and other labels should be marked with the following elements:<specList>
@@ -1630,40 +1630,40 @@ translations:<q rend="display">
 <item>unclassifiable piece of information to guide sense choice</item>
     </list>
 </p>
-<p>In this entry, one spelling is marked as geographically restricted:<q rend="display">
+<p xmlns="http://www.tei-c.org/ns/1.0">In this entry, one spelling is marked as geographically restricted:<q rend="display">
 <hi rend="bold">colour</hi> or U.S. <hi rend="bold">color</hi> ... [CED] </q>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<form>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><form>
     <orth>colour</orth>
     <form>
 <usg type="geo">U.S.</usg>
 <orth>color</orth>
     </form>
-</form>
-    </egXML>
+</form><![CDATA[
+    ]]></egXML>
 </p>
-<p>In this example, usage labels are used to indicate domains, register, and
+<p xmlns="http://www.tei-c.org/ns/1.0">In this example, usage labels are used to indicate domains, register, and
     synonyms associated with different senses:<q rend="display">
 <hi rend="bold">palette</hi>
 <code lang="ipa">[palEt]</code> nf (a) (Peinture: lit, fig) palette. (b)
-(Boucherie) shoulder. (c) (aube de roue) paddle; (battoir &#xE0; linge)
+(Boucherie) shoulder. (c) (aube de roue) paddle; (battoir à linge)
 beetle; (Manutention, Constr) pallet. [C/R] </q>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<sense n="a">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><sense n="a">
     <usg type="dom">Peinture</usg>
     <usg type="style">lit</usg>
     <usg type="style">fig</usg>
     <trans>
 <tr>palette</tr>
     </trans>
-</sense>
-<sense n="b">
+</sense><![CDATA[
+]]><sense n="b">
     <usg type="dom">Boucherie</usg>
     <trans>
 <tr>shoulder</tr>
     </trans>
-</sense>
-<sense n="c">
+</sense><![CDATA[
+]]><sense n="c">
     <sense>
 <usg type="syn">aube de roue</usg>
 <trans>
@@ -1671,7 +1671,7 @@ beetle; (Manutention, Constr) pallet. [C/R] </q>
 </trans>
     </sense>
     <sense>
-<usg type="syn">battoir &#xE0; linge</usg>
+<usg type="syn">battoir à linge</usg>
 <trans>
     <tr>beetle</tr>
 </trans>
@@ -1683,8 +1683,8 @@ beetle; (Manutention, Constr) pallet. [C/R] </q>
     <tr>pallet</tr>
 </trans>
     </sense>
-</sense>
-    </egXML>
+</sense><![CDATA[
+    ]]></egXML>
     <!-- <q rend='display'> parabola [p@"r&amp;@l@] n parabole f    -->
     <!-- (Math) [C/R] </q>-->
     <!-- 
@@ -1709,34 +1709,34 @@ beetle; (Manutention, Constr) pallet. [C/R] </q>
     <!-- ]]>      -->
     <!-- </egXML>    -->
 </p>
-<p>When the usage label is hard to classify, it may be described as a<q>hint</q>:<q rend="display">
+<p xmlns="http://www.tei-c.org/ns/1.0">When the usage label is hard to classify, it may be described as a<q>hint</q>:<q rend="display">
 <hi rend="bold">rempaillage</hi> [...] nm reseating, rebottoming (<hi rend="it">with straw</hi>). [C/R] </q>
     <!-- [note: tilde on the a in ~a (IPA nasal a) -JV, NI]       -->
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<entry>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><entry>
     <trans>
 <tr>reseating</tr>
 <tr>rebottoming</tr>
 <usg type="hint">with straw</usg>
     </trans>
-</entry>
-    </egXML>
+</entry><![CDATA[
+    ]]></egXML>
 </p>
-<p>The following gives the formal definition of <gi>usg</gi>
+<p xmlns="http://www.tei-c.org/ns/1.0">The following gives the formal definition of <gi>usg</gi>
 and<gi>lbl</gi>:<specGrp xml:id="DDITPUS" n="Usage information"> 
 &usg;
 &lbl;
 </specGrp>
 		</p>
-	      </div4>
-	      <div4 type="Section" xml:id="DITPXR">
-		<head>Cross References to Other Entries</head>
-		<p>Dictionary entries frequently refer to information in other entries, often using
+	      </div>
+	      <div type="div4" xml:id="DITPXR">
+		<head xmlns="http://www.tei-c.org/ns/1.0">Cross References to Other Entries</head>
+		<p xmlns="http://www.tei-c.org/ns/1.0">Dictionary entries frequently refer to information in other entries, often using
 		extremely dense notations to convey the headword of the entry to be sought, the
 		particular part of the entry being referred to, and the nature of the
 		information to be sought there (synonyms, antonyms, usage notes, etymology, an
 		illustration, etc.)</p>
-		<p>Cross references may be tagged in dictionaries
+		<p xmlns="http://www.tei-c.org/ns/1.0">Cross references may be tagged in dictionaries
 		using the<gi>ref</gi> and <gi>ptr</gi> elements
 		defined in the core tag set (section <ptr target="#COXR"/>). In addition, the <gi>xr</gi> element
 		may be used to group all the information relating to a
@@ -1751,7 +1751,7 @@ dictionaries:<specList>
 <specDesc key="lbl"/>
     </specList>
 </p>
-<p>As in other types of text, the actual pointing element (e.g.<gi>ref</gi> or
+<p xmlns="http://www.tei-c.org/ns/1.0">As in other types of text, the actual pointing element (e.g.<gi>ref</gi> or
     <gi>ptr</gi>) is used to tag the cross-reference target proper (in dictionaries,
     usually the headword, possibly accompanyied by a homograph number, a sense
     number, or other further restriction specifiying what portion of the target
@@ -1766,41 +1766,41 @@ dictionaries:<specList>
 legitimate:<q rend="display">
 <hi rend="bold">glee</hi> ... Compare<hi rend="bold">madrigal</hi> (sense 1)
 [CED] </q>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<entry>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><entry>
     <form>
 <orth>glee</orth>
     </form>
     <xr>Compare <ptr target="#madrigal.1"/>
     </xr>
-</entry>
-    </egXML>
+</entry><![CDATA[
+    ]]></egXML>
     <q rend="display">
-<hi rend="bold">hostellerie</hi> Syn. de h&#xF4;tellerie (sens 1). [DNT] </q>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<xr type="syn">
+<hi rend="bold">hostellerie</hi> Syn. de hôtellerie (sens 1). [DNT] </q>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><xr type="syn">
     <lbl>Syn. de</lbl>
-    <ref>h&#xF4;tellerie (sens 1)</ref>.</xr>
-    </egXML> In addition to using, or not using, <gi>lbl</gi> to mark the
+    <ref>hôtellerie (sens 1)</ref>.</xr><![CDATA[
+    ]]></egXML> In addition to using, or not using, <gi>lbl</gi> to mark the
     cross-reference label, the two examples differ in another way. The former
     assumes that the first sense of <mentioned>madrigal</mentioned> has the
     identifier <q>madrigal.1</q>, and that the specific form of the reference in the
     source volume can be reconstructed, if needed, from that information. The latter
-    does not require the first sense of<q>h&#xF4;tellerie</q> to have an
+    does not require the first sense of<q>hôtellerie</q> to have an
     identifier, and retains the print form of the cross reference; by omitting the
     <att>target</att> attribute of the <gi>ref</gi> element, however, the second
     example does assume implicitly either that some software could usefully parse
     the phrase tagged as a <gi>ref</gi> and find the location referred to, or else
     that such processing will not be necessary. </p>
-<p>The <att>type</att> attribute on the pointing element or on the<gi>xr</gi>
+<p xmlns="http://www.tei-c.org/ns/1.0">The <att>type</att> attribute on the pointing element or on the<gi>xr</gi>
     element may be used to indicate what kind of cross reference is being made,
     using any convenient typology. Since different dictionaries may label the same
     kind of cross reference in different ways, it may be useful to give normalized
     indications in the<att>type</att> attribute, enabling the encoder to distinguish
     irregular forms of cross reference more reliably:<q rend="display">
 <hi rend="bold">rose</hi>2 ... vb. the past tense of <hi rend="bold">rise</hi>. [CED] </q>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<entry n="2" type="xr, hom">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><entry n="2" type="xr, hom">
     <form>
 <orth>rose</orth>
     </form>
@@ -1808,76 +1808,76 @@ legitimate:<q rend="display">
 <lbl>the past tense of</lbl>
 <ref target="#rise">rise</ref>
     </xr>
-</entry>
-    </egXML> from cross-references for synonyms and the like:<q rend="display">
+</entry><![CDATA[
+    ]]></egXML> from cross-references for synonyms and the like:<q rend="display">
 <hi rend="bold">antagonist</hi> ... syn see<hi rend="bold">adverse</hi> [W7] </q>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<xr type="syn">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><xr type="syn">
     <lbl>syn see</lbl>
     <ref target="#adverse">adverse</ref>
-</xr>
-    </egXML> Strictly speaking, the reference above is not to the entry
+</xr><![CDATA[
+    ]]></egXML> Strictly speaking, the reference above is not to the entry
     for<mentioned>adverse</mentioned>, but to the list of synonyms found at that
     entry. Slightly more complicated is the following reference to an illustration
     accompanying another entry:<q rend="display">
-<hi rend="bold">ax, axe</hi> ... &#x2192; see the illus at <hi rend="bold">tool</hi> [OALD] </q> This entry refers to the illustration at
+<hi rend="bold">ax, axe</hi> ... → see the illus at <hi rend="bold">tool</hi> [OALD] </q> This entry refers to the illustration at
     the entry for<mentioned>tool</mentioned>, not the entry itself. The
     <att>target</att> attribute might give the identifier of the illustration
     itself, or of the enclosing entry (in which case the <att>type</att> attribute
     might be used to infer that the reference is actually to the illustration, not
-    the entry as a whole).<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<xr type="see illustration">
+    the entry as a whole).<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><xr type="see illustration">
     <lbl>see the illus at</lbl>
     <ptr target="#tool.illus"/>
-</xr>
-    </egXML> In some cases, the cross reference is to a particular subset of the
+</xr><![CDATA[
+    ]]></egXML> In some cases, the cross reference is to a particular subset of the
     meanings of the entry in question:<q rend="display">
 <hi rend="bold">globe</hi> ...V. <hi rend="bold">armillaire</hi>
-(sph&#xE8;re) [PR] </q>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<xr>V. <ref target="#armillaire">armillaire</ref>
-    <lbl type="sense-restriction">sph&#xE8;re</lbl>
-</xr>
-    </egXML>
+(sphère) [PR] </q>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><xr>V. <ref target="#armillaire">armillaire</ref>
+    <lbl type="sense-restriction">sphère</lbl>
+</xr><![CDATA[
+    ]]></egXML>
 </p>
-<p>Cross-references occasionally occur in definition texts, example texts, etc., or
+<p xmlns="http://www.tei-c.org/ns/1.0">Cross-references occasionally occur in definition texts, example texts, etc., or
     may be free-standing within an entry. These may typically be encoded using
     <gi>ref</gi> or <gi>ptr</gi>, without an enclosing <gi>xr</gi>. For example:<q rend="display">
-<hi rend="bold">entacher</hi> ... <hi rend="it">Acte entach&#xE9; de
-nullit&#xE9;,</hi> contenant un vice de forme ou pass&#xE9; par un incapable*. [DNT]
+<hi rend="bold">entacher</hi> ... <hi rend="it">Acte entaché de
+nullité,</hi> contenant un vice de forme ou passé par un incapable*. [DNT]
     </q> The asterisk signals a reference to the entry
-for<mentioned>incapable</mentioned>.<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<def>contenant un vice de forme ou pass&#xE9; par un <ptr target="#incapable"/>.</def>
-    </egXML>
+for<mentioned>incapable</mentioned>.<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><def>contenant un vice de forme ou passé par un <ptr target="#incapable"/>.</def><![CDATA[
+    ]]></egXML>
     <!-- surely this should have been tagged as a <ref> not a 
 <ptr> LB ? --> In
     some cases, the form in the definition is inflected, and thus<gi>ref</gi> must
     be used, as here:<q rend="display">
 <hi rend="bold">justifier</hi> ...4. IMPRIM Donner a (une ligne) une longeur
 convenable au moyen de blancs (2, sens 1, 3). [DNT] </q>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<sense n="4">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><sense n="4">
     <usg type="dom">imprim</usg>
     <def>Donner a (une ligne) une longeur convenable au moyen de <ref target="#blanc-2.1 #blanc-2.3">blancs (2, sens 1, 3)</ref>
     </def>
-</sense>
-    </egXML>
+</sense><![CDATA[
+    ]]></egXML>
 </p>
-<p>The formal definition for <gi>xr</gi> is as follows:<specGrp xml:id="DDITPXR" n="Cross References"> 
+<p xmlns="http://www.tei-c.org/ns/1.0">The formal definition for <gi>xr</gi> is as follows:<specGrp xml:id="DDITPXR" n="Cross References"> 
 &xr;
 </specGrp>
 </p>
-    </div4>
-    <div4 type="Section" xml:id="DITPNO">
-<head>Notes within Entries</head>
-<p>Dictionaries may include extensive explanatory notes about usage, grammar,
+    </div>
+    <div type="div4" xml:id="DITPNO">
+<head xmlns="http://www.tei-c.org/ns/1.0">Notes within Entries</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">Dictionaries may include extensive explanatory notes about usage, grammar,
     context, etc. within entries. Very often, such notes appear as a separate
     section at the end of an entry. The <gi>note</gi> element should be used for
     such material.<specList>
 <specDesc key="note"/>
     </specList>
 </p>
-<p>For example:<q rend="display">
+<p xmlns="http://www.tei-c.org/ns/1.0">For example:<q rend="display">
 <hi rend="bold">ain't</hi>
 <code lang="ipa">(eInt)</code>
 <hi rend="it">Not standard. contraction of</hi> am not, is not, are not,
@@ -1889,8 +1889,8 @@ have not <hi rend="it">or</hi> has not: <hi rend="it">I ain't seen it.</hi>
     </q>
     <!-- note: &triangle; is a small triangle -JV, NI     -->
     <!-- note: &triangle; changed to utrif to avoid name conflict (msm)  -->
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<entry>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><entry>
     <form type="contr">
 <orth>ain't</orth>
 <pron>eInt</pron>
@@ -1911,30 +1911,30 @@ have not <hi rend="it">or</hi> has not: <hi rend="it">I ain't seen it.</hi>
 I?</mentioned> would be a natural contraction of <mentioned>am I
 not?</mentioned>, it is generally avoided in spoken English and
 never used in formal English.</note>
-</entry>
-    </egXML>
+</entry><![CDATA[
+    ]]></egXML>
 </p>
-<p>The formal declaration for <gi>note</gi> is given in section <ptr target="#CONO"/>. </p>
-    </div4>
-</div3>
-<div3 type="subsection" xml:id="DITPRE">
-    <head>Related Entries</head>
-    <p>The <gi>re</gi> element encloses a degenerate entry which appears in the body of
+<p xmlns="http://www.tei-c.org/ns/1.0">The formal declaration for <gi>note</gi> is given in section <ptr target="#CONO"/>. </p>
+    </div>
+</div>
+<div type="div3" xml:id="DITPRE">
+    <head xmlns="http://www.tei-c.org/ns/1.0">Related Entries</head>
+    <p xmlns="http://www.tei-c.org/ns/1.0">The <gi>re</gi> element encloses a degenerate entry which appears in the body of
 another entry for some purpose. Many dictionaries include related entries for direct
 derivatives or inflected forms of the entry word, or for compound words, phrases,
 collocations, and idioms containing the entry word. </p>
-    <p>Related entries can be complex, and may in fact include any of the information to be
+    <p xmlns="http://www.tei-c.org/ns/1.0">Related entries can be complex, and may in fact include any of the information to be
 found in a regular entry. Therefore, the <gi>re</gi> element is defined to contain
 the same elements as an <gi>entry</gi> element, with the exception that it may not
 contain any nested<gi>re</gi> elements. </p>
-    <p>Examples:<q rend="display">
+    <p xmlns="http://www.tei-c.org/ns/1.0">Examples:<q rend="display">
     <hi rend="bold">bevvy</hi>
     <code lang="ipa">("bEvI)</code> Dialect. ~ n., pl. -vies. 1. a drink, esp. an
     alcoholic one: we had a few bevvies last night. 2. a night of drinking. ~ vb. -
     vies, -vying, -vied (intr.) 3. to drink alcohol [probably from Old French bevee,
-    buvee, drinking] &#x2014;'bevvied adj. [CED] </q>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <entry>
+    buvee, drinking] —'bevvied adj. [CED] </q>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><entry>
 <form>
     <orth>bevvy</orth>
     <pron>"bEvI</pron>
@@ -1968,18 +1968,18 @@ contain any nested<gi>re</gi> elements. </p>
 <pos>adj</pos>
     </gramGrp>
 </re>
-    </entry>
-</egXML>
+    </entry><![CDATA[
+]]></egXML>
     </p>
-    <p>The formal definition of <gi>re</gi> is<specGrp xml:id="DDITPRE" n="Related entries"> 
+    <p xmlns="http://www.tei-c.org/ns/1.0">The formal definition of <gi>re</gi> is<specGrp xml:id="DDITPRE" n="Related entries"> 
 &re;
 </specGrp>
     </p>
-</div3>
-    </div2>
-    <div2 type="subsection" xml:id="DIHW">
-<head>Headword and Pronunciation References</head>
-<p>Examples, definitions, etymologies, and occasionally other elements such as cross
+</div>
+    </div>
+    <div type="div2" xml:id="DIHW">
+<head xmlns="http://www.tei-c.org/ns/1.0">Headword and Pronunciation References</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">Examples, definitions, etymologies, and occasionally other elements such as cross
     references, orthographic forms, etc., often contain a shortened or iconic reference to
     the headword, rather than repeating the headword itself. The references may be to the
     orthographic form or to the pronunciation, to the form given or to a variant of that
@@ -1990,13 +1990,13 @@ contain any nested<gi>re</gi> elements. </p>
 <specDesc key="pVar"/>
     </specList>
 </p>
-<p>As members of the class <ident type="class">att.ptrLike.form</ident>, all these elements
+<p xmlns="http://www.tei-c.org/ns/1.0">As members of the class <ident type="class">att.ptrLike.form</ident>, all these elements
     share a <att>target</att> attribute, which may optionally be used to resolve any
     ambiguity about the headword form being referred to.<specList>
 <specDesc key="att.ptrLike.form" atts="target"/>
     </specList>
 </p>
-<p>Headword references come in a variety of formats:<list type="gloss">
+<p xmlns="http://www.tei-c.org/ns/1.0">Headword references come in a variety of formats:<list type="gloss">
 <label>~ </label>
 <item>indicates a reference to the full form of the headword</item>
 <label>pref~ </label>
@@ -2014,19 +2014,19 @@ contain any nested<gi>re</gi> elements. </p>
 <item>refers to a capitalized form of the headword </item>
     </list>
 </p>
-<p>The <gi>oRef</gi> element should be used for iconic or shortened references to the
+<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>oRef</gi> element should be used for iconic or shortened references to the
     orthographic form(s) of the headword itself. It is an empty element and replaces, rather
     than enclosing, the reference. Note that the reference to a headword is not necessarily
     a simple string replacement. In the example <q>
 <hi rend="bold">colour</hi>1, (US = color) ...~ films; ~ TV; Red, blue and yellow
 are ~s.</q> [OALD], the tilde stands for either headword form
     (<mentioned>colour</mentioned>, <mentioned>color</mentioned>). </p>
-<p>Examples:<q rend="display">
+<p xmlns="http://www.tei-c.org/ns/1.0">Examples:<q rend="display">
 <hi rend="bold">colonel</hi> ... army officer above a lieutenant-~. [OALD] </q>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<def>army officer above a lieutenant-<oRef/>
-</def>
-    </egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><def>army officer above a lieutenant-<oRef/>
+</def><![CDATA[
+    ]]></egXML>
     <!-- <q rend='display'> -->
     <!-- take ...  < I don't &tilde; milk in my tea >   -->
     <!-- [NPEG]   -->
@@ -2040,9 +2040,9 @@ are ~s.</q> [OALD], the tilde stands for either headword form
     <!-- </egXML>    -->
     <q rend="display">
 <hi rend="bold">academy</hi> ... The Royal A~ of Arts [OALD]</q>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<q>The Royal <oRef type="cap"/> of Arts</q>
-    </egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><q>The Royal <oRef type="cap"/> of Arts</q><![CDATA[
+    ]]></egXML>
     <!-- abeja, f. 1. (ento.) bee. 2. busy bee, hard worker. 3.   -->
     <!-- (astron.)  A., Musca.  &mdash; a. albanila, mason bee; a.-->
     <!-- carpintera, carpenter bee; a. reina or maestra, queen    -->
@@ -2099,13 +2099,13 @@ are ~s.</q> [OALD], the tilde stands for either headword form
     <!-- ]]>      -->
     <!-- </egXML>    -->
 </p>
-<p>The following example demonstrates the use of the <att>target</att> attribute to refer to
+<p xmlns="http://www.tei-c.org/ns/1.0">The following example demonstrates the use of the <att>target</att> attribute to refer to
     a specific form of the headword:<q rend="display">
 <hi rend="bold">vag-</hi> or <hi rend="bold">vago-</hi> comb form ... : vagus nerve
 &lt; <hi rend="bold">vag</hi>al &gt; &lt; <hi rend="bold">vago</hi>tomy
 &gt; [W7] </q>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<entry>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><entry>
     <form>
 <orth xml:id="di-o1">vag-</orth>
 <orth xml:id="di-o2">vago-</orth>
@@ -2117,8 +2117,8 @@ are ~s.</q> [OALD], the tilde stands for either headword form
 <q>
     <oRef target="#di-o2" type="nohyph"/>tomy</q>
     </dicteg>
-</entry>
-    </egXML>
+</entry><![CDATA[
+    ]]></egXML>
     <!-- 
 <p>In this example the hyphen is retained in the first   -->
     <!-- oRef, and not in the second:     -->
@@ -2200,54 +2200,54 @@ are ~s.</q> [OALD], the tilde stands for either headword form
     <!-- ]]>      -->
     <!-- </egXML>    -->
 </p>
-<p>In many cases the reference is not to the orthographic form of the headword, but rather
-    to another form of the headword &#x2014; usually to an inflected form. In these
+<p xmlns="http://www.tei-c.org/ns/1.0">In many cases the reference is not to the orthographic form of the headword, but rather
+    to another form of the headword — usually to an inflected form. In these
     cases, the element <gi>oVar</gi> should be used; this element takes as its content the
     string as it appears in the text.<q rend="display">
 <hi rend="bold">take</hi> ... &lt; Mr Burton<hi rend="bold">took</hi> us for
 French &gt; [NPEG] </q>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<dicteg>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><dicteg>
     <q>Mr Burton <oVar type="pt">took</oVar> us for French</q>
-</dicteg>
-    </egXML>
+</dicteg><![CDATA[
+    ]]></egXML>
     <q rend="display">
 <hi rend="bold">take</hi> ... &lt; was quite<hi rend="bold">~n</hi> with him
 &gt; [NPEG] </q>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<dicteg>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><dicteg>
     <q>was quite <oVar type="pp">
     <oRef/>n</oVar> with him</q>
-</dicteg>
-    </egXML>
+</dicteg><![CDATA[
+    ]]></egXML>
 </p>
-<p>The next example shows a discontinuous reference, using the attributes<att>next</att> and
+<p xmlns="http://www.tei-c.org/ns/1.0">The next example shows a discontinuous reference, using the attributes<att>next</att> and
     <att>prev</att>, which are defined in the additional tag set for linking, segmentation,
     and alignment (see chapter <ptr target="#SA"/>) and therefore require that that tag set
     be selected in addition to that for dictionaries.<q rend="display">
 <hi rend="bold">mix up</hi>... &lt; it's easy to<hi rend="bold">mix</hi> her <hi rend="bold">up</hi> with her sister &gt; [NPEG] </q>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<dicteg>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><dicteg>
     <q>it's easy to <oVar next="#ov2" xml:id="ov1">mix</oVar> her <oVar prev="#ov1" xml:id="ov2">up</oVar> with her sister</q>
-</dicteg>
-    </egXML>
+</dicteg><![CDATA[
+    ]]></egXML>
 </p>
-<p>In addition, some dictionaries make reference to the pronunciation of the headword in the
+<p xmlns="http://www.tei-c.org/ns/1.0">In addition, some dictionaries make reference to the pronunciation of the headword in the
     pronunciation of related entries, variants, or examples. The <gi>pRef</gi>
     and<gi>pVar</gi> elements should be used for such references.<q rend="display">
 <hi rend="bold">hors d'oeuvre</hi>
-<code lang="ipa">/,aw'duhv </code> (Fr O:r d&#x153;vr)/ n, pl hors d'oeuvres
+<code lang="ipa">/,aw'duhv </code> (Fr O:r dœvr)/ n, pl hors d'oeuvres
 also hors d'oeuvre <code lang="ipa">/'duhv(z) </code> (Fr ~)/ [NPEG] </q>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<form>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><form>
     <orth>hors d'oeuvre</orth>
     <pron>%aU"dUv</pron>
     <form>
 <usg type="lang">Fr</usg>
 <pron xml:id="di-p2">OR d0vR</pron>
     </form>
-</form>
-<form type="infl">
+</form><![CDATA[
+]]><form type="infl">
     <number>pl</number>
     <orth>hors d'oeuvres</orth>
     <orth>hors d'oeuvre</orth>
@@ -2258,47 +2258,47 @@ also hors d'oeuvre <code lang="ipa">/'duhv(z) </code> (Fr ~)/ [NPEG] </q>
     <pRef target="#p2"/>
 </pron>
     </form>
-</form>
-    </egXML>
+</form><![CDATA[
+    ]]></egXML>
 </p>
-<p>Because headword and pronunciaton references can occur virtually anywhere in an entry,
+<p xmlns="http://www.tei-c.org/ns/1.0">Because headword and pronunciaton references can occur virtually anywhere in an entry,
     the <gi>oRef</gi>, <gi>oVar</gi>, <gi>pRef</gi>, and <gi>pVar</gi> elements can appear
     within any other element defined for dictionary entries. </p>
-<p>Since existing printed dictionaries use different conventions for headword references
+<p xmlns="http://www.tei-c.org/ns/1.0">Since existing printed dictionaries use different conventions for headword references
     (swung dash, first letter abbreviated form, capitalization or italicization of the word,
     etc.) the exact method used should be documented in the header. </p>
-<p>The class of headword references is defined thus:<specGrp xml:id="DEDIHW" n="Classes for headword references"> 
+<p xmlns="http://www.tei-c.org/ns/1.0">The class of headword references is defined thus:<specGrp xml:id="DEDIHW" n="Classes for headword references"> 
 &model.ptrLike.form;
 &att.ptrLike.form;
 </specGrp>
 </p>
-<p>The formal declaration for headword reference elements is:<specGrp xml:id="DDIHW" n="Headword references"> 
+<p xmlns="http://www.tei-c.org/ns/1.0">The formal declaration for headword reference elements is:<specGrp xml:id="DDIHW" n="Headword references"> 
 &oRef;
 &oVar;
 &pRef;
 &pVar;
 </specGrp>
 </p>
-    </div2>
-    <div2 type="subsection" xml:id="DIMV">
-<head>Typographic and Lexical Information in Dictionary Data</head>
-<p>Among the many possible views of dictionaries, it is useful to distinguish at least the
+    </div>
+    <div type="div2" xml:id="DIMV">
+<head xmlns="http://www.tei-c.org/ns/1.0">Typographic and Lexical Information in Dictionary Data</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">Among the many possible views of dictionaries, it is useful to distinguish at least the
     following three, which help to clarify some issues raised with particular urgency by
     dictionaries, on account of the complexity of both their typography and their
     information structure.<list type="bullets">
 <item>(a) the <term>typographic view</term>, which is concerned with the
     two-dimensional printed page, including information about line and page breaks
     and other features of layout </item>
-<item>(b) the <term>editorial view</term> &#x2014; the one-dimensional sequence
+<item>(b) the <term>editorial view</term> — the one-dimensional sequence
     of tokens which can be seen as the input to the typesetting process; the wording
     and punctuation of the text and the sequencing of items are visible in this
     view, but specifics of the typographic realization are not </item>
-<item>(c) the <term>lexical view</term> &#x2014; this view includes the
+<item>(c) the <term>lexical view</term> — this view includes the
     underlying information represented in a dictionary, without concern for its
     exact textual form </item>
     </list>
 </p>
-<p>For example, a domain indication in a dictionary entry might be broken over a line and
+<p xmlns="http://www.tei-c.org/ns/1.0">For example, a domain indication in a dictionary entry might be broken over a line and
     therefore hyphenated (<q>naut-</q>
     <q>ical</q>); the typographic view of the dictionary preserves this information. In a
     purely editorial view, the particular form in which the domain name is given in the
@@ -2308,8 +2308,8 @@ also hors d'oeuvre <code lang="ipa">/'duhv(z) </code> (Fr ~)/ [NPEG] </q>
     lexical view, the only information preserved concerning domain would be some standard
     symbol or string representing the nautical domain (e.g.<q>naut.</q>) regardless of the
     form in which it appears in the printed dictionary. </p>
-<p>In practice, publishers begin with the lexical view &#x2014; i.e., lexical data as it
-    might appear in a database &#x2014; and generate first the editorial view, which
+<p xmlns="http://www.tei-c.org/ns/1.0">In practice, publishers begin with the lexical view — i.e., lexical data as it
+    might appear in a database — and generate first the editorial view, which
     reflects editorial choices for a particular dictionary (such as the use of the
     abbreviation <q>Naut.</q> for<q>nautical</q>, the fonts in which different types of
     information are to be rendered, etc.), and then the typographic view, which is tied to a
@@ -2320,7 +2320,7 @@ also hors d'oeuvre <code lang="ipa">/'duhv(z) </code> (Fr ~)/ [NPEG] </q>
     against the loss or misinterpretation of information in the translation process. Some
     researchers may wish to retain all three views, and study their interrelations, since
     research questions may well span all three views. </p>
-<p>In general, an electronic encoding of a text will allow the recovery of at least one view
+<p xmlns="http://www.tei-c.org/ns/1.0">In general, an electronic encoding of a text will allow the recovery of at least one view
     of that text (the one which guided the encoding); if editorial and typographic practices
     are consistently applied in the production of a printed dictionary, or if exceptions to
     the rules are consistently recorded in the electronic encoding, then it is <emph>in
@@ -2331,7 +2331,7 @@ also hors d'oeuvre <code lang="ipa">/'duhv(z) </code> (Fr ~)/ [NPEG] </q>
     rules for editorial and typographic practice, and the relative rarity of complete
     consistency in the application of such rules, all make the mechanical transformation of
     information from one view into another something of a vexed question. </p>
-<p>This section describes some principles which may be useful in capturing one or the other
+<p xmlns="http://www.tei-c.org/ns/1.0">This section describes some principles which may be useful in capturing one or the other
     of these views as consistently and completely as possible, and describes some methods of
     attempting to capture more than one view in a single encoding. Only the editorial and
     lexical views are explicitly treated here; for methods of recording the physical or
@@ -2342,9 +2342,9 @@ also hors d'oeuvre <code lang="ipa">/'duhv(z) </code> (Fr ~)/ [NPEG] </q>
     transcription of the editorial view of a dictionary, are not discussed here. (For
     feature structures, see chapter <ptr target="#FS"/>. For linkage of textual form and
     underlying information, see chapter <ptr target="#AI"/>.) </p>
-<div3 type="subsection" xml:id="DIMVTV">
-    <head>Editorial View</head>
-    <p>Common practice in encoding texts of all sorts relies on principles such as the
+<div type="div3" xml:id="DIMVTV">
+    <head xmlns="http://www.tei-c.org/ns/1.0">Editorial View</head>
+    <p xmlns="http://www.tei-c.org/ns/1.0">Common practice in encoding texts of all sorts relies on principles such as the
 following, which can be used successfully to capture the editorial view when
 encoding a dictionary:<list type="ordered">
     <item>All characters of the source text should be retained, with the possible
@@ -2367,7 +2367,7 @@ usual means (for notes, see section <ptr target="#CONO"/>).<note place="foot">Co
     </item>
 </list>
     </p>
-    <p>In a very conservative transcription of the editorial view of a text, <term>rendition
+    <p xmlns="http://www.tei-c.org/ns/1.0">In a very conservative transcription of the editorial view of a text, <term>rendition
 characters</term> (e.g. the commas, parentheses, etc., used in dictionary entries to
 signal boundaries among parts of the entry) and <term>rendition text</term> (for
 example, conjunctions joining alternate headwords, etc.) are typically retained.
@@ -2381,13 +2381,13 @@ of the source text, in their original sequence.<note place="foot">This is a slig
     or recovered from a conservative transcription of the editorial view is, of
     course, the one established during the transcription by the encoder.</note>
     </p>
-    <p>Consider, for example, the following entry:<q rend="display">
+    <p xmlns="http://www.tei-c.org/ns/1.0">Consider, for example, the following entry:<q rend="display">
     <hi rend="bold">pinna</hi> ('pIn@) n., pl. -nae (-ni:) <hi rend="it">or</hi>
     -nas. 1. any leaflet of a pinnate compound leaf. 2. <hi rend="it">Zoology</hi>.
     a feather, wing, fin, or similarly shaped part. 3. another name for <hi rend="bold">auricle</hi> (sense 2). [C18: via New Latin from Latin: wing,
     feather, fin] [CED]</q> A conservative encoding of the editorial view of this
-entry, which retains all rendition text, might resemble the following:<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <entry>
+entry, which retains all rendition text, might resemble the following:<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><entry>
 <form>
     <orth>pinna</orth>
     <pron>("pIn@)</pron>
@@ -2413,10 +2413,10 @@ entry, which retains all rendition text, might resemble the following:<egXML xml
 </sense>
 <etym>[<date>C18</date>: via <lang>New Latin</lang> from <lang>Latin</lang>:
     <gloss>wing</gloss>, <gloss>feather</gloss>, <gloss>fin</gloss>]</etym>
-    </entry>
-</egXML>
+    </entry><![CDATA[
+]]></egXML>
     </p>
-    <p>A somewhat simplified encoding of the editorial view of this entry might exploit the
+    <p xmlns="http://www.tei-c.org/ns/1.0">A somewhat simplified encoding of the editorial view of this entry might exploit the
 fact that rendition text is often systematically recoverable. For example,
 parentheses consistently appear around pronunciation in this dictionary, and thus
 are effectively implied by the start- and end-tags for <gi>pron</gi>.<note place="foot">The omission of rendition text is particularly common in systems
@@ -2426,7 +2426,7 @@ are effectively implied by the start- and end-tags for <gi>pron</gi>.<note place
 encoding, removing the tags should exactly reproduce the sequence of characters in
 the source, minus rendition text. The original character sequence can be recovered
 fully by replacing tags with any rendition text they imply. </p>
-    <p>Encoding in this way, the example given above might resemble the following. The
+    <p xmlns="http://www.tei-c.org/ns/1.0">Encoding in this way, the example given above might resemble the following. The
 <gi>tagUsage</gi> element in the header would be used to record the following
 patterns of rendition text:<list type="bullets">
     <item>parentheses appear around <gi>pron</gi> elements</item>
@@ -2437,8 +2437,8 @@ patterns of rendition text:<list type="bullets">
     <item>senses are numbered in sequence unless otherwise specified using the
 global <att>n</att> attribute</item>
 </list>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <entry>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><entry>
 <form>
     <orth>pinna</orth>
     <pron>"pIn@</pron>
@@ -2471,22 +2471,22 @@ global <att>n</att> attribute</item>
     <date>C18</date>: via <lang>New Latin</lang> from <lang>Latin</lang>:
     <gloss>wing</gloss>, <gloss>feather</gloss>, <gloss>fin</gloss>
 </etym>
-    </entry>
-</egXML>
+    </entry><![CDATA[
+]]></egXML>
     </p>
-    <p>When rendition text is omitted, it is recommended that the means to regenerate it be
+    <p xmlns="http://www.tei-c.org/ns/1.0">When rendition text is omitted, it is recommended that the means to regenerate it be
 fully documented, using the <gi>tagUsage</gi> element of the TEI header. </p>
-    <p>If rendition text is used systematically in a dictionary, with only a few mistakes or
+    <p xmlns="http://www.tei-c.org/ns/1.0">If rendition text is used systematically in a dictionary, with only a few mistakes or
 exceptions, the global attribute <att>rend</att> may be used on any tag to flag
 exceptions to the normal treatment. The values of the <att>rend</att> attribute are
 not prescribed, but it can be used with values such as <val>no-comma</val>, <val>no-left-paren</val>, etc. Specific
 values can be documented using the <gi>rendition</gi> element in the TEI header. </p>
-    <p>In the following (imaginary) example, no left parenthesis precedes the
+    <p xmlns="http://www.tei-c.org/ns/1.0">In the following (imaginary) example, no left parenthesis precedes the
     pronunciation:<q rend="display">
     <hi rend="bold">biryani</hi> or<hi rend="bold">biriani</hi> %bIrI"A:nI) any of a
     variety of Indian dishes ... [from Urdu]</q> This irregularity can be recorded
-    thus:<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <entry>
+    thus:<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><entry>
 <form>
     <orth>biryani</orth>
     <orth>biriani</orth>
@@ -2495,23 +2495,23 @@ values can be documented using the <gi>rendition</gi> element in the TEI header.
 <def>any of a variety of Indian dishes ... </def>
 <etym>from <lang>Urdu</lang>
 </etym>
-    </entry>
-</egXML>
+    </entry><![CDATA[
+]]></egXML>
     </p>
-</div3>
-<div3 type="subsection" xml:id="DIMVLV">
-    <head>Lexical View</head>
-    <p>If the text to be interchanged retains only the lexical view of the text, there may
+</div>
+<div type="div3" xml:id="DIMVLV">
+    <head xmlns="http://www.tei-c.org/ns/1.0">Lexical View</head>
+    <p xmlns="http://www.tei-c.org/ns/1.0">If the text to be interchanged retains only the lexical view of the text, there may
 be no concern for the recoverability of the editorial (not to speak of the
 typographic) view of the text. However, it is strongly recommended that the TEI
 header be used to document fully the nature of all alterations to the original data,
 such as normalization of domain names, expansion of inflected forms, etc. </p>
-    <p>In an encoding of the lexical view of a text, there are degrees of departure from the
+    <p xmlns="http://www.tei-c.org/ns/1.0">In an encoding of the lexical view of a text, there are degrees of departure from the
 original data: normalizing inconsistent forms like<q>nautical</q>, <q>naut</q>.,
 <q>Naut.</q>, etc., to <q>nautical</q> is a relatively slight alteration; expansion
 of <q>delay -ed -ing</q> to<q>delay, delayed, delaying</q> is a more substantial
 departure. Still more severe is the rearranging of the order of information in
-entries &#x2014; for example,<list type="bullets">
+entries — for example,<list type="bullets">
     <item>reorganizing the order of elements in an entry to show their relationship,
 as in<q rend="display">
     <hi rend="bold">clem</hi> (klEm) or clam vb. clems, clemming, clemmed or
@@ -2526,7 +2526,7 @@ inflected forms. </item>
 entry for<q>celibacy</q> and a separate entry for <q>celibate</q>. </item>
 </list>
     </p>
-    <p>An encoding which captures the lexical view of the example given in the previous
+    <p xmlns="http://www.tei-c.org/ns/1.0">An encoding which captures the lexical view of the example given in the previous
 section might look something like the following. In this encoding,<list type="bullets">
     <item>abbreviated forms have been silently expanded</item>
     <item>some forms have been moved to allow related forms to be grouped together</item>
@@ -2534,8 +2534,8 @@ section might look something like the following. In this encoding,<list type="bu
 given together</item>
     <item>the cross reference to <q>auricle</q> has been simplified</item>
 </list>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <entry>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+    ]]><entry>
 <form>
     <orth>pinna</orth>
     <pron>"pIn@</pron>
@@ -2567,55 +2567,55 @@ given together</item>
     <date>C18</date>: via <lang>New Latin</lang> from <lang>Latin</lang>:
     <gloss>wing</gloss>, <gloss>feather</gloss>, <gloss>fin</gloss>
 </etym>
-    </entry>
-</egXML>
+    </entry><![CDATA[
+]]></egXML>
     </p>
-</div3>
-<div3 type="subsection" xml:id="DIMVBO">
-    <head>Retaining Both Views</head>
-    <p>It is sometimes desirable to retain both the lexical and the editorial view, in which
+</div>
+<div type="div3" xml:id="DIMVBO">
+    <head xmlns="http://www.tei-c.org/ns/1.0">Retaining Both Views</head>
+    <p xmlns="http://www.tei-c.org/ns/1.0">It is sometimes desirable to retain both the lexical and the editorial view, in which
 case a potential conflict exists between the two. When there is a conflict between
 the encodings for the lexical and editorial views, the principles described in the
 following sections may be applied. </p>
-    <div4 type="Section" xml:id="DIMVAV">
-<head>Using Attribute Values to Capture Alternate Views</head>
-<p>If the order of the data is the same in both views, then both views may be
+    <div type="div4" xml:id="DIMVAV">
+<head xmlns="http://www.tei-c.org/ns/1.0">Using Attribute Values to Capture Alternate Views</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">If the order of the data is the same in both views, then both views may be
     captured by encoding one <soCalled>dominant</soCalled> view in the character
     data content of the document, and encoding the other using attribute values on
     the appropriate elements. If all tags were to be removed, the remaining
     characters would be those of the dominant view of the text. </p>
-<p>The attribute class <ident type="class">att.lexicographic</ident> is used to provide
+<p xmlns="http://www.tei-c.org/ns/1.0">The attribute class <ident type="class">att.lexicographic</ident> is used to provide
     attributes for use in encoding multiple views of the same dictionary entry.
     These attributes are available for use on all elements defined in this chapter
     when the base tag set for dictionaries is selected. </p>
-<p>When the editorial view is dominant, the following attributes may be used to
+<p xmlns="http://www.tei-c.org/ns/1.0">When the editorial view is dominant, the following attributes may be used to
     capture the lexical view:<specList>
 <specDesc key="att.lexicographic" atts="norm split"/>
     </specList>
 </p>
-<p>When the lexical view is dominant, the following attributes may be used to record
+<p xmlns="http://www.tei-c.org/ns/1.0">When the lexical view is dominant, the following attributes may be used to record
     the editorial view:<specList>
 <specDesc key="att.lexicographic" atts="orig mergedin"/>
     </specList>
 </p>
-<p>One attribute is useful in either view:<specList>
+<p xmlns="http://www.tei-c.org/ns/1.0">One attribute is useful in either view:<specList>
 <specDesc key="att.lexicographic" atts="opt"/>
     </specList>
 </p>
-<p>For example, if the source text had the domain label <q>naut.</q>, it might be
-    encoded as follows. With the editorial view dominant:<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<usg norm="nautical" type="dom">naut.</usg>
-    </egXML> The lexical view of the same label would transcribe the normalized form
+<p xmlns="http://www.tei-c.org/ns/1.0">For example, if the source text had the domain label <q>naut.</q>, it might be
+    encoded as follows. With the editorial view dominant:<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><usg norm="nautical" type="dom">naut.</usg><![CDATA[
+    ]]></egXML> The lexical view of the same label would transcribe the normalized form
     as content of the <gi>usg</gi> element, the typographic form as an attribute
-value:<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<usg orig="naut." type="dom">nautical</usg>
-    </egXML>
+value:<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><usg orig="naut." type="dom">nautical</usg><![CDATA[
+    ]]></egXML>
 </p>
-<p>If the source text gives inflectional information for the
+<p xmlns="http://www.tei-c.org/ns/1.0">If the source text gives inflectional information for the
     verb<mentioned>delay</mentioned> as <q>delay, -ed, -ing</q>, it might usefully
     be expanded to <q>delayed, delayed, delaying</q>. An encoding of the editorial
-    view might take this form:<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<form>
+    view might take this form:<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><form>
     <orth>delay</orth>
     <form type="infl">
 <orth norm="delayed" extent="part">-ed</orth>
@@ -2625,11 +2625,11 @@ value:<egXML xmlns="http://www.tei-c.org/ns/Examples">
 <orth norm="delaying" extent="part">-ing</orth>
 <tns norm="prsp"/>
     </form>
-</form>
-    </egXML> Note the use of the <gi>tns</gi> tag with null content, to enable the
+</form><![CDATA[
+    ]]></egXML> Note the use of the <gi>tns</gi> tag with null content, to enable the
     representation of implicit information even though it has no print realization. </p>
-<p>The lexical view might be encoded thus:<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<form>
+<p xmlns="http://www.tei-c.org/ns/1.0">The lexical view might be encoded thus:<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><form>
     <orth>delay</orth>
     <form type="infl">
 <orth orig="-ed">delayed</orth>
@@ -2640,88 +2640,88 @@ value:<egXML xmlns="http://www.tei-c.org/ns/Examples">
 <orth orig="-ing">delaying</orth>
 <tns orig="">prsp</tns>
     </form>
-</form>
-    </egXML>
+</form><![CDATA[
+    ]]></egXML>
 </p>
-<p>A particular problem may be posed by the common practice of presenting two
+<p xmlns="http://www.tei-c.org/ns/1.0">A particular problem may be posed by the common practice of presenting two
     alternate forms of a word in a single string, by marking some parts of the word
     as optional in some forms. The following entry is for a word which can be
-    spelled either <q>thyrostimuline</q> or<q>thyr&#xE9;ostimuline</q>:<q rend="display">
-<hi rend="bold">thyr(&#xE9;)ostimuline</hi> [tiR(e)ostimylin] ...</q> With the
-    editorial view dominant, this entry might begin thus:<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<form>
-    <orth split="thyrostimuline, thyr&#xE9;ostimuline">thyr(&#xE9;)ostimuline</orth>
+    spelled either <q>thyrostimuline</q> or<q>thyréostimuline</q>:<q rend="display">
+<hi rend="bold">thyr(é)ostimuline</hi> [tiR(e)ostimylin] ...</q> With the
+    editorial view dominant, this entry might begin thus:<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><form>
+    <orth split="thyrostimuline, thyréostimuline">thyr(é)ostimuline</orth>
     <pron split="tiRostimylin, tiReostimylin">tiR(e)ostimylin</pron>
-</form>
-    </egXML> With the lexical view dominant, however, two <gi>orth</gi> and
+</form><![CDATA[
+    ]]></egXML> With the lexical view dominant, however, two <gi>orth</gi> and
     two<gi>pron</gi> elements would be encoded, in order to disentangle the two
     forms; the <att>orig</att> attribute would be used to record the typographic
-    presentation of the information in the source.<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<form>
-    <orth xml:id="dic-o1" orig="thyr(&#xE9;)ostimuline">thyrostimuline</orth>
+    presentation of the information in the source.<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><form>
+    <orth xml:id="dic-o1" orig="thyr(é)ostimuline">thyrostimuline</orth>
     <pron xml:id="dic-p1" orig="tiR(e)ostimylin">tiRostimylin</pron>
-</form>
-<form>
-    <orth mergedin="#dic-o1">thyr&#xE9;ostimuline</orth>
+</form><![CDATA[
+]]><form>
+    <orth mergedin="#dic-o1">thyréostimuline</orth>
     <pron mergedin="#dic-p1">tiReostimylin</pron>
-</form>
-    </egXML>
+</form><![CDATA[
+    ]]></egXML>
 </p>
-<p>This example might also be encoded using the <att>opt</att> attribute combined
-    with the attributes <att>next</att> and<att>prev</att> defined in chapter <ptr target="#SA"/>.<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<form>
+<p xmlns="http://www.tei-c.org/ns/1.0">This example might also be encoded using the <att>opt</att> attribute combined
+    with the attributes <att>next</att> and<att>prev</att> defined in chapter <ptr target="#SA"/>.<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><form>
     <orth next="#dict-o2" xml:id="dict-o1">thyr</orth>
-    <orth next="#dict-o3" prev="#dict-o1" xml:id="dict-o2" opt="true">&#xE9;</orth>
+    <orth next="#dict-o3" prev="#dict-o1" xml:id="dict-o2" opt="true">é</orth>
     <orth prev="#dict-o2" xml:id="dict-o3">ostimuline</orth>
     <pron next="#dict-p2" xml:id="dict-p1">tiR</pron>
     <pron next="#dict-p3" prev="#dict-p1" xml:id="dict-p2" opt="true">e</pron>
     <pron prev="#dict-p2" xml:id="dict-p3">ostimylin</pron>
-</form>
-    </egXML>
+</form><![CDATA[
+    ]]></egXML>
 </p>
-<p>Note that this transcription preserves both the lexical and editorial views in a
+<p xmlns="http://www.tei-c.org/ns/1.0">Note that this transcription preserves both the lexical and editorial views in a
     single encoding. However, it has the disadvantage that the strings corresponding
     to entire words do not appear in the encoding uninterrupted, and therefore
     complex processing is required to retrieve them from the encoded text. The use
     of the <att>opt</att> attribute is recommended, however, when long spans of text
     are involved, or when the optional part contains embedded tags. </p>
-<p>For example, the following gives two definitions in one text:<q>picture drawn
+<p xmlns="http://www.tei-c.org/ns/1.0">For example, the following gives two definitions in one text:<q>picture drawn
 with coloured chalk made into crayons</q>, and<q>coloured chalk made into
 crayons</q>:<q rend="display">
 <hi rend="bold">pas.tel</hi> /"p&amp;amp;stl US: p&amp;amp;"stel/ n
 1 (picture drawn with) coloured chalk made into crayons. 2... [OALD]</q>
 </p>
-<p>A simple encoding solution would be to leave the definition text unanalysed, but
+<p xmlns="http://www.tei-c.org/ns/1.0">A simple encoding solution would be to leave the definition text unanalysed, but
     this might be felt inadequate since it does not show that there are two
-    definitions. A possible alternative encoding would be:<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<sense n="1">
+    definitions. A possible alternative encoding would be:<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><sense n="1">
     <def>coloured chalk made into crayons</def>
     <def>picture drawn with coloured chalk made into crayons</def>
-</sense>
-    </egXML>
+</sense><![CDATA[
+    ]]></egXML>
 </p>
-<p>This transcribes some characters of the source text twice, however, which
+<p xmlns="http://www.tei-c.org/ns/1.0">This transcribes some characters of the source text twice, however, which
     deviates from the usual practice. The following encoding records both the
-    editorial and lexical views:<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<sense n="1">
+    editorial and lexical views:<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><sense n="1">
     <def next="#d2" xml:id="d1" opt="true">picture drawn with</def>
     <def prev="#d1" xml:id="d2">coloured chalk made into crayons</def>
-</sense>
-    </egXML>
+</sense><![CDATA[
+    ]]></egXML>
 </p>
-<p>A more complex example is the following, in which the optional element contains
+<p xmlns="http://www.tei-c.org/ns/1.0">A more complex example is the following, in which the optional element contains
     additional tags:<q rend="display">
-<hi rend="bold">canary</hi> ...(Geog) Canary Isles, Canaries (&#xEE;les
+<hi rend="bold">canary</hi> ...(Geog) Canary Isles, Canaries (îles
 fpl) Canaries fpl... [C/R]</q>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<re type="cmpd">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><re type="cmpd">
     <usg type="dom">Geog</usg>
     <form>
 <orth>Canary Isles</orth>
 <orth>Canaries</orth>
     </form>
     <trans next="#DICT-t2" xml:id="DICT-t1" opt="true">
-<tr>&#xEE;les</tr>
+<tr>îles</tr>
 <gen>f</gen>
 <number>pl</number>
     </trans>
@@ -2730,18 +2730,18 @@ fpl) Canaries fpl... [C/R]</q>
 <gen>f</gen>
 <number>pl</number>
     </trans>
-</re>
-    </egXML>
+</re><![CDATA[
+    ]]></egXML>
 </p>
-    </div4>
-    <div4 type="Section" xml:id="DIMVOL">
-<head>Recording Original Locations of Transposed Elements</head>
-<p>The attributes described in the previous section are useful only when the order
+    </div>
+    <div type="div4" xml:id="DIMVOL">
+<head xmlns="http://www.tei-c.org/ns/1.0">Recording Original Locations of Transposed Elements</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">The attributes described in the previous section are useful only when the order
     of material is the same in both the editorial and the lexical view. When the two
     views impose different orders on the data, the ID/IDREF mechanism may be used to
     show the original location of material transposed in an encoding of the lexical
     view. </p>
-<p>If the original is only slightly modified, the <gi>anchor</gi> element may be
+<p xmlns="http://www.tei-c.org/ns/1.0">If the original is only slightly modified, the <gi>anchor</gi> element may be
     used to mark the original location of the material, and the <att>location</att>
     attribute may be used on the lexical encoding of that material to indicate its
     original location(s). Like those in the preceding section, this attribute is
@@ -2749,11 +2749,11 @@ fpl) Canaries fpl... [C/R]</q>
 <specDesc key="att.lexicographic" atts="opt"/>
     </specList>
 </p>
-<p>For example:<q rend="display">
+<p xmlns="http://www.tei-c.org/ns/1.0">For example:<q rend="display">
 <hi rend="bold">pinna</hi>
 <code lang="ipa">("pIn@)</code> n., pl. -nae (-ni:) or -nas. [CED] </q>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<form>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><form>
     <orth>pinna</orth>
     <pron>'pIn@</pron>
     <anchor xml:id="p01"/>
@@ -2765,11 +2765,11 @@ fpl) Canaries fpl... [C/R]</q>
 </form>
 <orth extent="part">-nas</orth>
     </form>
-</form>
-<gramGrp>
+</form><![CDATA[
+]]><gramGrp>
     <pos location="#p01">n</pos>
-</gramGrp>
-    </egXML>
+</gramGrp><![CDATA[
+    ]]></egXML>
     <!-- < p > If the modifications are more drastic (for -->
     <!-- example, involving several elements), use the  < gi >    -->
     <!-- var < /gi >  and  < gi > rdg < /gi >  tags (see  -->
@@ -2902,20 +2902,20 @@ fpl) Canaries fpl... [C/R]</q>
     <!-- ]]>      -->
     <!-- </egXML>    -->
 </p>
-    </div4>
-</div3>
-<div3 type="subsection" xml:id="DIMVADE">
-    <head>Attributes for Dictionary Elements</head>
-    <p>The attributes provided for all dictionary-specific elements and documented in this
+    </div>
+</div>
+<div type="div3" xml:id="DIMVADE">
+    <head xmlns="http://www.tei-c.org/ns/1.0">Attributes for Dictionary Elements</head>
+    <p xmlns="http://www.tei-c.org/ns/1.0">The attributes provided for all dictionary-specific elements and documented in this
 section are defined thus:<specGrp xml:id="DEDIMV" n="Attributes for dictionary work">
 &att.lexicographic;
  </specGrp>
     </p>
-</div3>
-    </div2>
-    <div2 type="subsection" xml:id="DIFR">
-<head>Unstructured Entries</head>
-<p>The content model for the <gi>entry</gi> element provides an entry structure suitable for
+</div>
+    </div>
+    <div type="div2" xml:id="DIFR">
+<head xmlns="http://www.tei-c.org/ns/1.0">Unstructured Entries</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">The content model for the <gi>entry</gi> element provides an entry structure suitable for
     many average dictionaries, as well as many regular entries in more exotic dictionaries.
     However, the structure of some dictionaries does not allow the restrictions imposed by
     the content model for <gi>entry</gi>. To handle these cases, the <gi>entryFree</gi> and
@@ -2924,12 +2924,12 @@ section are defined thus:<specGrp xml:id="DEDIMV" n="Attributes for dictionary w
     contain phrase level elements, but it can itself appear at any point within a dictionary
     entry where any of the structural components of a dictionary entry are permitted. As
     such, it acts as a container for otherwise anomalous parts of an entry.</p>
-<p>The <gi>entryFree</gi> element places no constraints at all upon the entry: any element
+<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>entryFree</gi> element places no constraints at all upon the entry: any element
     defined in this chapter, as well as all the phrase-level and inter-level elements
     defined in the core tag set, can appear anywhere within it. With the <gi>entryFree</gi>
     element, the encoder is free to use any element anywhere, as well as to use or omit
     grouping elements such as <gi>form</gi>, <gi>gramGrp</gi>, etc. </p>
-<p>The <gi>entryFree</gi> element allows the encoding of entries which violate the structure
+<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>entryFree</gi> element allows the encoding of entries which violate the structure
     specified for the <gi>entry</gi> element. For example, in the following entry from a
     dictionary already in electronic form, it is necessary to include a<gi>pron</gi> element
     within a <gi>def</gi>. This is not permitted in the content model for <gi>entry</gi>,
@@ -2951,8 +2951,8 @@ section are defined thus:<specGrp xml:id="DEDIMV" n="Attributes for dictionary w
 		  </hsn>
 		</hps>
 	    </ent> [OALD electronic]]]></egXML>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<entryFree>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><entryFree>
     <form>
 <orth>demigod</orth>
 <hyph>demi|god</hyph>
@@ -2965,11 +2965,11 @@ section are defined thus:<specGrp xml:id="DEDIMV" n="Attributes for dictionary w
     <def>(in Gk myth, etc) the son of a god and a mortal
 		      woman, eg <mentioned>Hercules</mentioned></def>
 		    <pron>"h3:kjUli:z</pron>
-</entryFree>
-    </egXML>
+</entryFree><![CDATA[
+    ]]></egXML>
 </p>
-<p>The <gi>entryFree</gi> element also makes it possible to transcribe a dictionary using
-    only phrase-level (<soCalled>atomic</soCalled>) elements&#x2014;that is, using no
+<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>entryFree</gi> element also makes it possible to transcribe a dictionary using
+    only phrase-level (<soCalled>atomic</soCalled>) elements—that is, using no
     grouping elements at all. This can be desirable if the encoder wants a completely
     <soCalled>flat</soCalled> view, with no indication of or commitment to the association
     of one element with another. The following encoding uses no grouping elements, and keeps
@@ -2977,28 +2977,28 @@ section are defined thus:<specGrp xml:id="DEDIMV" n="Attributes for dictionary w
 <hi rend="bold">biryani</hi> or <hi rend="bold">biriani</hi>
 <code lang="ipa">(%bIrI"A:nI) </code> any of a variety of Indian dishes...[from
 Urdu] [CED] </q>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<entryFree>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><entryFree>
     <orth>biryani</orth> or <orth>biriani</orth>
     <pron>(%bIrI"A:nI)</pron>
     <def>any of a variety of Indian dishes ...</def>
     <etym>[from <lang>Urdu</lang>]</etym>
-</entryFree>
-    </egXML>
+</entryFree><![CDATA[
+    ]]></egXML>
 </p>
-<p>Here is an alternative way of representing the same structure, this time using
-<gi>dictScrap</gi>:<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<entry>
+<p xmlns="http://www.tei-c.org/ns/1.0">Here is an alternative way of representing the same structure, this time using
+<gi>dictScrap</gi>:<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><entry>
     <dictScrap>
 <orth>biryani</orth> or <orth>biriani</orth>
 <pron>(%bIrI"A:nI)</pron>
 <def>any of a variety of Indian dishes ...</def>
 <etym>[from <lang>Urdu</lang>]</etym>
     </dictScrap>
-</entry>
-    </egXML>
+</entry><![CDATA[
+    ]]></egXML>
 </p>
-<p>Declarations for <gi>dictScrap</gi> and for <gi>entryFree</gi> were given above in
+<p xmlns="http://www.tei-c.org/ns/1.0">Declarations for <gi>dictScrap</gi> and for <gi>entryFree</gi> were given above in
     section <ptr target="#DIEN"/>.<specGrp xml:id="DEDIFR" n="Model class for unstructured dictionary entries">
 <p>This entity declares the class of elements defined specifically for use in
     dictionary entries, except those which are included in the phrase class. This
@@ -3006,5 +3006,5 @@ Urdu] [CED] </q>
 &model.entryParts;
  </specGrp>
 </p>
-    </div2>
-</div1>
+    </div>
+</div>

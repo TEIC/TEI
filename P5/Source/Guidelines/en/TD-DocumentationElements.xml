@@ -5,19 +5,18 @@ See the file COPYING for details.
 $Date$
 $Author$
 -->
-<div1 xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0" xml:id="TD" n="27">
-<head>Documentation Elements</head>
-<p>This chapter describes a module which may be used for the
+<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="TD" n="27">
+<head xmlns="http://www.tei-c.org/ns/1.0">Documentation Elements</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">This chapter describes a module which may be used for the
 documentation of the XML elements and element classes which make up
 any markup scheme, in particular that described by the TEI Guidelines,
 and also for the automatic generation of schemas or DTDs conforming to
 that documentation. It should be used also by those wishing to
 customize or modify these Guidelines in a conformant manner, as
-further described in chapters <ptr target="#MD"/> and <ptr
-target="#CF"/> and may also be useful in the documentation of any
+further described in chapters <ptr target="#MD"/> and <ptr target="#CF"/> and may also be useful in the documentation of any
 other comparable encoding scheme, even though it contains some aspects
 which are specific to the TEI and may not be generally applicable.</p>
-<p>An overview of the kind of processing environment envisaged for the
+<p xmlns="http://www.tei-c.org/ns/1.0">An overview of the kind of processing environment envisaged for the
 module described by this chapter may be helpful. In the remainder of
 this chapter we refer to software which provides such as a processing
 environment as an <term>ODD processor</term><note place="foot">ODD is
@@ -29,7 +28,7 @@ may be instantiated in many ways: the current system uses a number of
 XSLT stylesheets which are freely available from the TEI, but this
 specification makes no particular assumptions about the tools which
 will be used to provide an ODD processing environment.</p>
-<p>As the name suggests, an ODD processor uses a single XML document
+<p xmlns="http://www.tei-c.org/ns/1.0">As the name suggests, an ODD processor uses a single XML document
 to generate multiple outputs. These outputs will include:
 <list>
 <item>formal reference documentation for elements, attributes, element
@@ -43,7 +42,7 @@ specifically Relax NG or W3C Schema.</item>
 an XML Document Type Declaration.</item>
 </list>
 </p>
-<p>The input required to generate these outputs consists of running
+<p xmlns="http://www.tei-c.org/ns/1.0">The input required to generate these outputs consists of running
 prose, and special purpose elements documenting the components
 (elements, classes, etc.) which are to be documented and also declared
 in the chosen schema language. All of this input is encoded in XML
@@ -58,7 +57,7 @@ of these Guidelines. We do however use the ISO standard XML schema
 language RelaxNG (<ptr target="http://www.relaxng.org"/>) as a means
 of declaring content models, rather than inventing a completely new
 XML-based representation for them.</p>
-<p> In the TEI abstract model, a markup scheme (a <term>schema</term>)
+<p xmlns="http://www.tei-c.org/ns/1.0"> In the TEI abstract model, a markup scheme (a <term>schema</term>)
 consists of a number of discrete <term>modules</term>, which can be
 combined more or less as required. Each major chapter of these
 Guidelines defines a distinct module. Each module declares a number of
@@ -69,7 +68,7 @@ to it. Wherever possible, element content models are defined in terms
 of classes rather than in terms of specific elements. Modules can also declare particular
 <term>patterns</term>, which act as short-cuts for commonly used
 content models or class references.</p>
-<p>In the present chapter, we discuss the elements needed to support
+<p xmlns="http://www.tei-c.org/ns/1.0">In the present chapter, we discuss the elements needed to support
 this system. In addition, section <ptr target="#TDphrase"/> discusses
 some general purpose elements which may be useful in any kind of
 technical documentation, wherever there is need to talk about
@@ -78,11 +77,10 @@ attributes. Section <ptr target="#TDmodules"/> discusses the elements
 which are used to document XML <term>modules</term> and their high
 level components. Section <ptr target="#TDcrystals"/> discusses the
 elements which document  XML elements and their attributes,
-element classes, and generic patterns or macros. Finally, section <ptr
-target="#TDformal"/> gives an overview of the whole module.</p>
-<div2 xml:id="TDphrase"><head>Phrase level documentary elements</head>
-<div3><head>Phrase level terms</head>
-<p>In any kind of technical documentation, the following phrase-level
+element classes, and generic patterns or macros. Finally, section <ptr target="#TDformal"/> gives an overview of the whole module.</p>
+<div type="div2" xml:id="TDphrase"><head xmlns="http://www.tei-c.org/ns/1.0">Phrase level documentary elements</head>
+<div type="div3"><head xmlns="http://www.tei-c.org/ns/1.0">Phrase level terms</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">In any kind of technical documentation, the following phrase-level
 elements may be found useful for marking up parts of a markup language
 or other formal language when these occur within the body of running text.
 <specList>
@@ -95,7 +93,7 @@ or other formal language when these occur within the body of running text.
   <specDesc key="val"/>
 </specList>
  </p>
-<p>As an example of the recommended use of these elements, we quote from
+<p xmlns="http://www.tei-c.org/ns/1.0">As an example of the recommended use of these elements, we quote from
 an imaginary TEI working paper:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>The <gi>gi</gi> element is used to tag
 element names when they appear in the text; the
@@ -107,20 +105,20 @@ such might appear. So one might talk of an occurrence of the
 value; the default value is <val>spqr</val>, in memory of
 its creator.</p></egXML>
  </p>
-<p>The <gi>code</gi> and <gi>egXML</gi> elements are used to mark
+<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>code</gi> and <gi>egXML</gi> elements are used to mark
 strings of formal code, or passages of markup. The first of these is
 intended for use in citing brief passages in some formal language such
 as a programming language, as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<p>If the variable <ident>z</ident> has a value of zero, a statement 
-such as <code>x=y/z</code> will usually cause a fatal error.</p>
-</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+]]><p>If the variable <ident>z</ident> has a value of zero, a statement 
+such as <code>x=y/z</code> will usually cause a fatal error.</p><![CDATA[
+]]></egXML>
 </p>
-<p>If the cited phrase is a mathematical or chemical formula, the more
+<p xmlns="http://www.tei-c.org/ns/1.0">If the cited phrase is a mathematical or chemical formula, the more
 specific <gi>formula</gi> element defined by the
 <ident type="module">figures</ident> module (<ptr target="#FTFOR"/>) may be more
 appropriate. </p>
-<p>The <gi>eg</gi> element may be used to enclose any kind of example,
+<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>eg</gi> element may be used to enclose any kind of example,
 which will typically be rendered as a distinct block, possibly using
 particular formatting conventions, when the document is processed. It
 is a specialised form of the more general <gi>q</gi> element provided
@@ -128,14 +126,14 @@ by the TEI core module. In documents containing
 examples of XML markup, the <gi>egXML</gi> element should be used for
 preference, as further discussed below in <ptr target="#TDeg"/>, since
 the content of this element can be checked for well-formedness. </p>
-<p>These elements are all members of the class
+<p xmlns="http://www.tei-c.org/ns/1.0">These elements are all members of the class
 <ident type="class">model.oddPhr</ident>, which is turn a member of the general
 <ident type="class">phrase</ident> class. When this module is included in a schema, this class is
 expanded to include these elements, and they are therefore available
 at any point that a phrase level element is available. </p>
-</div3>
-<div3><head>Element and attribute descriptions</head>
-<p>Within the body of a document using this module, the following
+</div>
+<div type="div3"><head xmlns="http://www.tei-c.org/ns/1.0">Element and attribute descriptions</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">Within the body of a document using this module, the following
 elements may be used to reference parts of the specification elements
 discussed in section <ptr target="#TDcrystals"/>, in particular the
 brief prose descriptions these provide for elements and attributes.
@@ -144,7 +142,7 @@ brief prose descriptions these provide for elements and attributes.
 <specDesc key="specDesc"/>
 </specList>
 </p>
-<p>TEI practice requires that a <gi>specList</gi> listing the elements
+<p xmlns="http://www.tei-c.org/ns/1.0">TEI practice requires that a <gi>specList</gi> listing the elements
 under discussion introduce each subsection of a module's
 documentation. The source for for the present section, for example, begins
 as follows:
@@ -159,10 +157,10 @@ brief prose descriptions these provide for elements and attributes.
 </specList></p>
 <p>TEI practice requires that a <gi>specList</gi> listing the elements
 ...
-</p><!-- ... --></div3>
-</egXML>
+</p><!-- ... --></div3><![CDATA[
+]]></egXML>
 </p>
-<p>When formatting the <gi>ptr</gi> element in this example, an ODD
+<p xmlns="http://www.tei-c.org/ns/1.0">When formatting the <gi>ptr</gi> element in this example, an ODD
 processor might simply generate the section number and title of the
 section referred to, perhaps additionally inserting a link to the
 section. In a similar way, when processing the <gi>specDesc</gi>
@@ -179,14 +177,14 @@ processor uses this key as a means of accessing the specification
 element required. There is no requirement that this be performed using
 the XML ID/IDREF mechanism, but there is an assumption that the
 identifier be unique.</p>
-<p>A <gi>specDesc</gi> generates in the documentation the identifier,
+<p xmlns="http://www.tei-c.org/ns/1.0">A <gi>specDesc</gi> generates in the documentation the identifier,
 and also the contents of the <gi>desc</gi> child of whatever
 specification element is indicated by its <att>key</att> attribute,
 together with any associated attribute list, as in the example
 above.</p>
-</div3>
-<div3><head>Formal definitions</head>
-<p>The elements discussed in this section are formally defined as
+</div>
+<div type="div3"><head xmlns="http://www.tei-c.org/ns/1.0">Formal definitions</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">The elements discussed in this section are formally defined as
 follows:
 <specGrp xml:id="TDSG1" n="Phrase-level elements for tag documentation">
 &att;
@@ -200,10 +198,10 @@ follows:
 &specList;
 &specDesc;
 </specGrp>
-</p></div3>
-</div2>
-<div2 xml:id="TDmodules"><head>Modules and schemas</head>
-<p>As mentioned above, the primary purpose of this module is to facilitate
+</p></div>
+</div>
+<div type="div2" xml:id="TDmodules"><head xmlns="http://www.tei-c.org/ns/1.0">Modules and schemas</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">As mentioned above, the primary purpose of this module is to facilitate
 the documentation of an XML schema derived from the TEI Guidelines. The following elements are
 provided for this purpose:
 <specList>
@@ -221,30 +219,28 @@ same function, but the resulting group is not accessible outside the
 scope of the ODD document in which it is defined, whereas a module can
 be accessed by name from any TEI schema.  Modules, elements and their
 attributes, element classes, and patterns are all individually
-documented using further elements described in section <ptr
-target="#TDcrystals"/> below; part of that specification includes the
+documented using further elements described in section <ptr target="#TDcrystals"/> below; part of that specification includes the
 name of a module to which the component belongs. An ODD processor
 generating XML DTD or schema fragments from a document marked up
 according to the recommendations of this chapter will generate such
 fragments for each <gi>module</gi> element found. For example, the
 chapter documenting the TEI module for names and dates contains a
 module specification like the following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"> <moduleSpec xml:id="XDND" ident="namesdates">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[ ]]><moduleSpec xml:id="XDND" ident="namesdates">
   <altIdent type="FPI">Names and Dates</altIdent>
   <desc>Additional elements for names and dates</desc>
-</moduleSpec>
-</egXML>
+</moduleSpec><![CDATA[
+]]></egXML>
 together with specifications for all the elements, classes, and
 patterns which make up that module, expressed using
 <gi>elementSpec</gi>, <gi>classSpec</gi> or <gi>patternSpec</gi>
-elements as appropriate. (These elements are discussed in section <ptr
-target="#TDcrystals"/> below) Each of those specifications carries a
+elements as appropriate. (These elements are discussed in section <ptr target="#TDcrystals"/> below) Each of those specifications carries a
 <att>module</att> attribute, the value of which is
 <code>namesdates</code>. An ODD processor encountering the
 <gi>moduleSpec</gi> element above can thus generate a schema fragment
 for the TEI namesdates module that includes declarations for all the
 elements (etc.) which reference it. </p>
-<p>In most realistic applications, it will be desirable to combine
+<p xmlns="http://www.tei-c.org/ns/1.0">In most realistic applications, it will be desirable to combine
 more than one module together to form a complete <term>schema</term>.
 A schema consists of references to one or more modules or
 specification groups, and may also contain explicit declarations or
@@ -252,16 +248,16 @@ redeclarations of elements (see further <ptr target="#TDbuild"/>). Any
 combination of modules can be used to create a schema: the distinction
 between base and additional tagsets in earlier versions of the TEI
 scheme has not been carried forward into P5. </p>
-<p>A schema can combine references to TEI modules with references to
+<p xmlns="http://www.tei-c.org/ns/1.0">A schema can combine references to TEI modules with references to
 other (non-TEI) modules using different namespaces, for example to
 include mathematical markup expressed using MathML in a TEI
 document. By default, the effect of combining modules is to allow all
 of the components declared by the constituent modules to coexist
-(where this is syntactically possible: where it is not &#x2014; for
-example, because of name clashes &#x2014; a schema cannot be
+(where this is syntactically possible: where it is not — for
+example, because of name clashes — a schema cannot be
 generated). It is also possible to over-ride declarations contained by
 a module, as further discussed in section <ptr target="#TDbuild"/></p>
-<p>It is often convenient to describe and operate on sets of
+<p xmlns="http://www.tei-c.org/ns/1.0">It is often convenient to describe and operate on sets of
 declarations smaller than the whole, and to document them in a
 specific order: such collections are called <term>specGrps</term>
 (specification groups). Individual <gi>specGrp</gi> elements are
@@ -273,7 +269,7 @@ sequence. Note however that the order in which  element declarations
 appear within the schema code generated from a <gi>moduleSpec</gi>
 element cannot be altered, and is not affected by the order of
 declarations within a <gi>specGrp</gi>. </p>
-<p>An ODD processor will generate a piece of schema code
+<p xmlns="http://www.tei-c.org/ns/1.0">An ODD processor will generate a piece of schema code
 corresponding with the declarations contained by a <gi>specGrp</gi>
 element in the documentation being output, and a cross reference to
 such a piece of schema code when processing a <gi>specGrpRef</gi>. For
@@ -288,8 +284,8 @@ and two blue ones:
 <specGrp xml:id="BLUE">
 <elementSpec ident="sky"><!-- ... --></elementSpec>
 <elementSpec ident="bayou"><!-- ... --></elementSpec>
-</specGrp></p>
-</egXML>
+</specGrp></p><![CDATA[
+]]></egXML>
 then the output documentation will replace the two <gi>specGrp</gi>
 elements above with a representation of the schema code declaring the
 elements <gi>beetroot</gi>, <gi>east</gi>, <gi>rose</gi> and that
@@ -313,17 +309,17 @@ specification groups will refer to elements that come from different
 modules.  Specification groups are always local to the document in
 which they are defined, and cannot be referenced externally (unlike
 modules). </p>
-<div3 xml:id="TDdeprecated"><head>DTD specific elements</head>
-<p>The following deprecated elements are also currently defined in P5
+<div type="div3" xml:id="TDdeprecated"><head xmlns="http://www.tei-c.org/ns/1.0">DTD specific elements</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">The following deprecated elements are also currently defined in P5
 ODDs for compatability reasons only. They will be removed as soon as
 we find out how to do without them when generating SGML dtds.
 <specList>
 <specDesc key="stringVal"/>
 </specList>
 </p>
-</div3>
-<div3><head>Formal definitions</head>
-<p>The elements discussed in this section are formally defined as
+</div>
+<div type="div3"><head xmlns="http://www.tei-c.org/ns/1.0">Formal definitions</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">The elements discussed in this section are formally defined as
 follows:
 <specGrp xml:id="TDSG2" n="Modules and Specification Groups">
 &moduleRef;
@@ -333,17 +329,17 @@ follows:
 &specGrpRef;
 &stringVal;
 </specGrp>
-</p></div3>
-</div2>
-<div2 xml:id="TDcrystals"><head>Specification elements</head>
-<p>The following elements are used to specify elements, classes, and
+</p></div>
+</div>
+<div type="div2" xml:id="TDcrystals"><head xmlns="http://www.tei-c.org/ns/1.0">Specification elements</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">The following elements are used to specify elements, classes, and
 patterns for inclusion in a given module:
 <specList>
 <specDesc key="elementSpec"/>
 <specDesc key="classSpec"/>
 <specDesc key="macroSpec"/></specList>
  </p>
-<p>Unlike most elements in the TEI scheme, each of these elements has
+<p xmlns="http://www.tei-c.org/ns/1.0">Unlike most elements in the TEI scheme, each of these elements has
 a fairly rigid internal structure consisting of a large number of
 child elements which are always presented in the same order. For this
 reason, we refer to them informally as
@@ -352,7 +348,7 @@ describe markup objects in broadly similar ways, they have several
 child elements in common. In the remainder of this section, we discuss
 first the elements which are common to all the specification elements,
 and then those which are specific to a particular type.  </p>
-<p>Specification elements may appear at any point in an ODD document,
+<p xmlns="http://www.tei-c.org/ns/1.0">Specification elements may appear at any point in an ODD document,
 both between and within paragraphs as well as inside a
 <gi>specGrp</gi> element, but the specification element for any
 particular component may only appear once (except in the case where a
@@ -371,27 +367,27 @@ it will also generate a full reference description for the object
 concerned in a catalogue of markup objects. These latter two actions
 always occur irrespective of whether or not the declaration is
 included in a <gi>specGrp</gi>. </p>
-<p>These elements are formally declared as follows:
+<p xmlns="http://www.tei-c.org/ns/1.0">These elements are formally declared as follows:
 <specGrp xml:id="TDSG3" n="Specification elements">
 &elementSpec;
 &classSpec;
 &macroSpec;
 </specGrp>
 </p>
-<div3><head>Common elements</head>
-<p>This section discusses the child elements common to all of the specification
+<div type="div3"><head xmlns="http://www.tei-c.org/ns/1.0">Common elements</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">This section discusses the child elements common to all of the specification
 elements. These child elements  are used to specify the naming, description,
 exemplification, and classification of the specification elements.</p>
-<div4><head>Description of components</head>
-<p><specList>
+<div type="div4"><head xmlns="http://www.tei-c.org/ns/1.0">Description of components</head>
+<p xmlns="http://www.tei-c.org/ns/1.0"><specList>
 <specDesc key="remarks"/>
 <specDesc key="listRef"/>
 </specList>
 </p>
-<p>A <gi>desc</gi> element is used to provide a brief
+<p xmlns="http://www.tei-c.org/ns/1.0">A <gi>desc</gi> element is used to provide a brief
 characterization of the intended function of the element, class,
 value etc. being documented.</p>
-<p>The <gi>remarks</gi> element contains any additional
+<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>remarks</gi> element contains any additional
 commentary about how the item concerned may be used, details of
 implementation-related issues, suggestions for other ways of treating
 related information etc., as in the following example:
@@ -410,28 +406,28 @@ languages.</p>
 <!--... -->
 </elementSpec></egXML>
 </p>
-<p> A specification element will usually conclude with a list of
+<p xmlns="http://www.tei-c.org/ns/1.0"> A specification element will usually conclude with a list of
 references, each tagged using the standard <gi>ptr</gi> element, and
 grouped together into a <gi>listRef</gi> element: in the case of the
 <gi>foreign</gi> element discussed above, the list is as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"> <listRef>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[ ]]><listRef>
     <ptr target="#COHQHF"/>
-  </listRef>
-</egXML></p>
-</div4>
-<div4 xml:id="TDeg"><head>Exemplification of components</head>
-<p><specList>
+  </listRef><![CDATA[
+]]></egXML></p>
+</div>
+<div type="div4" xml:id="TDeg"><head xmlns="http://www.tei-c.org/ns/1.0">Exemplification of components</head>
+<p xmlns="http://www.tei-c.org/ns/1.0"><specList>
 <specDesc key="exemplum"/>
   <specDesc key="eg"/> 
   <specDesc key="egXML"/>
 </specList>
 </p>
-<p>The <gi>exemplum</gi> element is used to combine a single
+<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>exemplum</gi> element is used to combine a single
 illustrative example with an optional paragraph of commentary
 following or preceding it. The illustrative example itself may be
 marked up using either the <gi>eg</gi> or the <gi>egXML</gi>
 element.</p>
-<p>If an example contains  XML markup, it should be marked up using
+<p xmlns="http://www.tei-c.org/ns/1.0">If an example contains  XML markup, it should be marked up using
 the <gi>egXML</gi> element. In such a case, it will clearly be necessary to
 distinguish the markup within the example from the
 markup of the document itself. In an XML schema environment, this is
@@ -439,21 +435,21 @@ easily done by  nominating a different name
 space for the  <gi>egXML</gi> element. For example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>The <gi>term</gi> element may be used 
 to mark any technical term, thus :
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-  This <term>recursion</term> is 
-  giving me a headache.</egXML></p>
-</egXML>
+<egXML><![CDATA[
+  This ]]><term>recursion</term><![CDATA[ is 
+  giving me a headache.]]></egXML></p><![CDATA[
+]]></egXML>
 </p>
-<p>Alternatively, the XML tagging within an example may be
+<p xmlns="http://www.tei-c.org/ns/1.0">Alternatively, the XML tagging within an example may be
 <soCalled>escaped</soCalled>, either by using entity
 references, or by wrapping the whole example in a CDATA marked
 section:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>The <gi>term</gi> element may be used 
 to mark any technical term, thus :
-<egXML>
-  This &lt;term&gt;recursion&lt;/term&gt; is 
-  giving me a headache.</egXML></p>
-</egXML>
+<egXML><![CDATA[
+  This <term>recursion</term> is 
+  giving me a headache.]]></egXML></p><![CDATA[
+]]></egXML>
 or, equivalently:
 <eg><![CDATA[<p>The <gi>term</gi> element may be used 
 to mark any technical term, thus :
@@ -462,18 +458,18 @@ to mark any technical term, thus :
   giving me a headache.]]&gt;</eg>
 ]]></eg>
 </p>
-<p>If the XML contained in an example is not well-formed then it must
+<p xmlns="http://www.tei-c.org/ns/1.0">If the XML contained in an example is not well-formed then it must
 either be enclosed in a CDATA marked section, or
 <soCalled>escaped</soCalled> as above: this applies whether the
 <gi>eg</gi> or <gi>egXML</gi> is used. If it is well-formed but not
 valid, then it should be enclosed in a CDATA marked section within an
 <gi>egXML</gi>.</p>
-<p>An <gi>egXML</gi> element should not be used to tag non-XML
+<p xmlns="http://www.tei-c.org/ns/1.0">An <gi>egXML</gi> element should not be used to tag non-XML
 examples: the general purpose <gi>eg</gi> or <gi>q</gi> elements
 should be used for such purposes.</p>
-</div4>
-<div4><head>Classification of components</head>
-<p>In the TEI scheme elements are assigned to one or more
+</div>
+<div type="div4"><head xmlns="http://www.tei-c.org/ns/1.0">Classification of components</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">In the TEI scheme elements are assigned to one or more
 <term>classes</term>, which  may themselves have subclasses. The
 following elements are used to indicate class membership:
 <specList>
@@ -481,23 +477,23 @@ following elements are used to indicate class membership:
 <specDesc key="memberOf" atts="key"/>
 </specList>
 </p>
-<p>The <gi>classes</gi> element appears within either the
+<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>classes</gi> element appears within either the
 <gi>elementSpec</gi> or <gi>classSpec</gi> element. It specifies the
 classes of which the element or class concerned is a member by means
 of one or more <gi>memberOf</gi> child elements. Each such element
 references a class by means of its <att>key</att> attribute. Classes
 themselves are defined by the <gi>classSpec</gi> element described in
 section <ptr target="#TDCLA"/> below.</p>
-<p>For example, to show that the element <gi>gi</gi> is a member of the class
+<p xmlns="http://www.tei-c.org/ns/1.0">For example, to show that the element <gi>gi</gi> is a member of the class
 <ident type="class">model.oddPhr</ident>, the  <gi>elementSpec</gi> which documents this
 element contains the following <gi>classes</gi> element:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><classes>
   <memberOf key="model.oddPhr"/>
-</classes>
-</egXML></p>
-</div4>
-<div4><head>Formal declarations</head>
-<p>The elements discussed in this section are formally declared as
+</classes><![CDATA[
+]]></egXML></p>
+</div>
+<div type="div4"><head xmlns="http://www.tei-c.org/ns/1.0">Formal declarations</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">The elements discussed in this section are formally declared as
 follows:
 <specGrp xml:id="TDSG4" n="Common specification elements">
 <!--&gloss;-->
@@ -510,10 +506,10 @@ follows:
 &memberOf;
 </specGrp>
 </p>
-</div4>
-</div3>
-<div3 xml:id="TDTAG"><head>Element Specifications</head>
-<p>The <gi>elementSpec</gi> element is used to document an element type,
+</div>
+</div>
+<div type="div3" xml:id="TDTAG"><head xmlns="http://www.tei-c.org/ns/1.0">Element Specifications</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>elementSpec</gi> element is used to document an element type,
 together with its associated attributes.  In addition to the elements
 listed above, it may contain the following subcomponents:
 <specList>
@@ -521,29 +517,29 @@ listed above, it may contain the following subcomponents:
 <specDesc key="attList" atts="org"/>
 </specList>
  </p>
-<p>The content of the element <gi>content</gi> may be
+<p xmlns="http://www.tei-c.org/ns/1.0">The content of the element <gi>content</gi> may be
 expressed in one of two ways. It may use a schema language of some
 kind, as defined by a pattern called
 <code>macro.schemapattern</code>, which is declared in the
 <ident type="module">tagdocs-decl</ident> module, defined by this
 chapter. Alternatively, the legal content for an element may be fully
 specified using the <gi>valList</gi> element, described in <ptr target="#TDATT"/> below. </p>
-<p>In the case of the TEI
+<p xmlns="http://www.tei-c.org/ns/1.0">In the case of the TEI
 Guidelines, element content models are defined using Relax NG
 patterns, but the user may over-ride this by redefining this
 pattern.</p>
-<p>Here is a very simple example
+<p xmlns="http://www.tei-c.org/ns/1.0">Here is a very simple example
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
-    <rng:text/>
-  </content>
-</egXML>
+    <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+  </content><![CDATA[
+]]></egXML>
 This content model uses the Relax NG namespace, and will be copied
 unchanged to the output when Relax NG schemas are being generated. When
 an XML DTD is being generated, an equivalent declaration (in this
 case <code>(#PCDATA)</code>) will be output.</p>
-<p>Here is a more complex example:
+<p xmlns="http://www.tei-c.org/ns/1.0">Here is a more complex example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
-    <rng:group>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:ref name="fileDesc"/>
       <rng:zeroOrMore>
         <rng:ref name="model.headerPart"/>
@@ -552,15 +548,15 @@ case <code>(#PCDATA)</code>) will be output.</p>
         <rng:ref name="revisionDesc"/>
       </rng:optional>
     </rng:group>
-  </content>
-</egXML>
+  </content><![CDATA[
+]]></egXML>
 This is the content model for the <gi>teiHeader</gi> element,
 expressed in the Relax NG syntax, which again is copied unchanged to
 the output during schema generation. The equivalent DTD notation
 generated from this is <code>(fileDesc, (%model.headerPart;)*,
 revisionDesc?)</code>.
 </p>
-<p>The Relax NG language does not formally distinguish element names,
+<p xmlns="http://www.tei-c.org/ns/1.0">The Relax NG language does not formally distinguish element names,
 class names or macro names: all names are patterns which are handled
 in the same way, as the above example shows. Within the TEI scheme,
 however, different naming conventions are used to distinguish amongst
@@ -571,16 +567,16 @@ names. In DTD language, element classes are represented by parameter
 entities (<code>%model.headerPart;</code> in the above example) See further
 <ptr target="#ST"/>.</p>
 <!-- more examples needed -->
-</div3>
-<div3 type="subsection" xml:id="TDATT"><head>Attribute list specification</head>
-<p>The <gi>attList</gi> element is used to document information about a
+</div>
+<div type="div3" xml:id="TDATT"><head xmlns="http://www.tei-c.org/ns/1.0">Attribute list specification</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>attList</gi> element is used to document information about a
 collection of attributes, either within a <gi>elementSpec</gi>, or within a
 <gi>classSpec</gi>.  An attribute list can be organized either as a
 group of attribute definitions, all of which are understood to be
 available, or as a choice of attribute definitions, of which only one
 is understood to be available. An attribute list may also contain
 nested attribute lists.  </p>
-<p>The <gi>attDef</gi> element is used to 
+<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>attDef</gi> element is used to 
 document a single attribute, using an appropriate
 selection from the common elements already mentioned and the
 following which are specific to attributes:
@@ -596,37 +592,37 @@ following which are specific to attributes:
 <specDesc key="remarks"/-->
 </specList>
  </p>
-<p>The <gi>attList</gi> within a <gi>elementSpec</gi> is used to specify
+<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>attList</gi> within a <gi>elementSpec</gi> is used to specify
 only the attributes which are specific to that particular
 element. Instances of the element may carry other attributes which are
 declared by the classes of which the element is a member.  These extra
 attributes, which are shared by other elements, or by all elements,
 are specified by an <gi>attList</gi> contained within a
 <gi>classSpec</gi> element, as described in section <ptr target="#TDCLA"/> below. </p>
-<div4><head>Datatypes</head>
-<p>The <gi>datatype</gi> element is used to state what kind of value
+<div type="div4"><head xmlns="http://www.tei-c.org/ns/1.0">Datatypes</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>datatype</gi> element is used to state what kind of value
 an attribute may have, using whatever facilities are provided by the
 underlying  schema language. For the TEI scheme, expressed in
 relaxNG, elements from the Relax NG namespace may be used, for example
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><datatype>
-  <rng:text/>
+  <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
 </datatype></egXML>
 permits any string of Unicode characters not containing markup, and is
 thus the equivalent of <code>CDATA</code> in DTD language. 
 </p>
-<p>The Relax NG language also provides support for a number of
+<p xmlns="http://www.tei-c.org/ns/1.0">The Relax NG language also provides support for a number of
 primitive datatypes which may be specified here, using the
 <gi>rng:data</gi> element: thus one may write
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><datatype>
-  <rng:data type="Boolean"/>
+  <rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="Boolean"/>
 </datatype></egXML>
 to specify that an element or attribute's contents should conform to
 the W3C definition for Boolean. </p>
-<p>Although only one child element may be given, this might be a
+<p xmlns="http://www.tei-c.org/ns/1.0">Although only one child element may be given, this might be a
 selector such as <val>rng:choice</val> to indicate multiple
 possibilities:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><datatype>
-<rng:choice>
+<rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
   <rng:data type="Date"/>
   <rng:data type="Float"/>
 </rng:choice>
@@ -644,9 +640,9 @@ carried out either by explicit enumeration of permitted values (using
 the TEI-specific <gi>valList</gi> element described below), or by
 definition of an explicit pattern, using the TEI-specific
 <gi>macroSpec</gi> element.</p>
-</div4>
-<div4><head>Value specification</head>
-<p>The <gi>valDesc</gi> element may be used to specify 
+</div>
+<div type="div4"><head xmlns="http://www.tei-c.org/ns/1.0">Value specification</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>valDesc</gi> element may be used to specify 
 constraints on data content in an informal way: for example
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><valDesc>must point to another <gi>align</gi>
     element logically preceding this
@@ -656,14 +652,14 @@ headings.</valDesc></egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><valDesc>A bookseller's surname,
  taken from the list in <title>Pollard and Redgrave</title></valDesc></egXML>
 </p>
-<p>As noted above, the <gi>datatype</gi> element also constrains the
+<p xmlns="http://www.tei-c.org/ns/1.0">As noted above, the <gi>datatype</gi> element also constrains the
 possible values for an attribute. The <gi>valDesc</gi> can be used to
 specify further constraints. For example, to specify that an attribute
 <att>age</att> can take positive integer values less than 100, the
 datatype <ident type="datatype">data.numeric</ident> might be used in combination with
 a <gi>valDesc</gi> such as <q>values must be positive integers less
 than 100</q>. </p>
-<p>More usually, however, where constraints on values are explicitly
+<p xmlns="http://www.tei-c.org/ns/1.0">More usually, however, where constraints on values are explicitly
 enumerated, the <gi>valList</gi> element is used, as in the
 following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><valList type="closed">
@@ -672,26 +668,26 @@ following example:
   <valItem ident="rec"><gloss>recommended</gloss></valItem>
   <valItem ident="rwa"><gloss>recommended when applicable</gloss></valItem>
   <valItem ident="opt"><gloss>optional</gloss></valItem>
- </valList>
-</egXML>
+ </valList><![CDATA[
+]]></egXML>
 Since this value list specifies that it is of type <val>closed</val>,
 only the values enumerated and glossed above are legal, and an ODD
 processor will typically enforce these constraints in the schema
 fragment generated. </p>
-<p>The <gi>valList</gi> element is also used to provide illustrative examples
+<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>valList</gi> element is also used to provide illustrative examples
 for the values permitted and their significance, or to gloss the
 meaning of values implied by an attribute's datatype.
 </p>
-</div4>
-<div4><head>Examples</head>
-<p>The following <gi>attList</gi> demonstrates some of the
+</div>
+<div type="div4"><head xmlns="http://www.tei-c.org/ns/1.0">Examples</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">The following <gi>attList</gi> demonstrates some of the
 possibilities; for more detailed examples, consult the tagged version of
 the reference material in these Guidelines.
 <!-- replace this example if we change the definition of gloss list!  -->
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><attList>
     <attDef ident="type">
       <desc>describes the form of the list.</desc>
-      <datatype><rng:text/></datatype>
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
       <defaultVal>simple</defaultVal>
       <valList type="semi">
         <valItem ident="ordered">
@@ -716,9 +712,9 @@ the reference material in these Guidelines.
         type="gloss"</tag>; this is however a semantic error.</p>
       </remarks>
     </attDef>
-  </attList> </egXML>
+  </attList><![CDATA[ ]]></egXML>
  </p>
-<p>In the following example, the <att>org</att> attribute is used to
+<p xmlns="http://www.tei-c.org/ns/1.0">In the following example, the <att>org</att> attribute is used to
 indicate that instances of the element concerned may bear  either a <att>bar</att>
 attribute or a <gi>baz</gi> attribute, but not both. The
 <att>bax</att> element is always available:
@@ -734,13 +730,13 @@ attribute or a <gi>baz</gi> attribute, but not both. The
   <!-- ... -->
 </attDef>
 </attList>  
-</attList>
-</egXML>
+</attList><![CDATA[
+]]></egXML>
 </p>
-</div4>
-</div3>
-<div3 xml:id="TDCLA"><head>Element Classes</head>
-<p>The element <gi>classSpec</gi> is used to document an <term>element
+</div>
+</div>
+<div type="div3" xml:id="TDCLA"><head xmlns="http://www.tei-c.org/ns/1.0">Element Classes</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">The element <gi>classSpec</gi> is used to document an <term>element
 class</term> or <soCalled>class</soCalled>, as defined in section <ptr target="#STEC"/>.  It has the
 following components, additional to those already mentioned:
 <specList>
@@ -752,7 +748,7 @@ following components, additional to those already mentioned:
 <specDesc key="ptr"/>
 <specDesc key="equiv"/--></specList>
 </p>
-<p>The attribute <att>type</att> is used to distinguish between
+<p xmlns="http://www.tei-c.org/ns/1.0">The attribute <att>type</att> is used to distinguish between
 <soCalled>model</soCalled> and <soCalled>attribute</soCalled>
 classes. In the case of attribute classes, the attributes which define
 membership in the class are documented by an <gi>attList</gi> element
@@ -765,36 +761,36 @@ concerned. For example, the <gi>elementSpec</gi> for the element
 <gi>hi</gi> contains the following:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><classes>
   <memberOf key="model.hiLike"/>
-</classes>
-</egXML>
+</classes><![CDATA[
+]]></egXML>
 which indicates that the <gi>hi</gi> element is a member of the class
 with identifier <ident type="class">model.hiLike</ident>. The <gi>classSpec</gi>
 documenting this class is as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><classSpec type="model"  ident="model.hiLike">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><classSpec type="model" ident="model.hiLike">
   <desc>groups phrase-level elements related to highlighting. </desc>
   <classes><memberOf key="model.phrase"/></classes>
-</classSpec>
-</egXML>
+</classSpec><![CDATA[
+]]></egXML>
 which indicates that the class <ident type="class">model.hiLike</ident> is actually
 a member (or subclass) of the class <ident type="class">model.phrase</ident>.
  </p>
-<p>When a model class is referenced in the content model of an element
+<p xmlns="http://www.tei-c.org/ns/1.0">When a model class is referenced in the content model of an element
 (i.e. in the <gi>content</gi> of an <gi>elementSpec</gi>), its
 meaning will depend on the value of the <att>generate</att>
 attribute on the class declaration, and also on the name used to reference the class. </p>
 
-<p>The default and usual behaviour is to replace the class
+<p xmlns="http://www.tei-c.org/ns/1.0">The default and usual behaviour is to replace the class
 reference by an alternated list of all the current members of the
 class. For example, suppose that  the members of the class
 <ident>model.hiLike</ident> are elements  <gi>hi</gi>,  <gi>it</gi>,
 and <gi>bo</gi>. Then a content model such as
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
-  <rng:optional>
+  <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
    <rng:ref name="model.hiLike"/>
 </rng:optional></content></egXML>
 would be equivalent to the explicit content model:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
-  <rng:zeroOrMore>
+  <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
    <rng:choice>
      <rng:ref name="hi"/>
      <rng:ref name="it"/>
@@ -808,7 +804,7 @@ content model referencing the class as
 <code>model.hiLike_sequence</code> would be equivalent   to the
 following explicit content model:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
-  <rng:zeroOrMore>
+  <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
      <rng:ref name="hi"/>
      <rng:ref name="it"/>
      <rng:ref name="bo"/>
@@ -817,17 +813,17 @@ language, a model such as <code>(hi,it,bo)*</code>. Similarly, a value of
 <val>sequenceOptional</val> for this attribute (referenced as
 model.hiLike_sequenceOptional) would be equivalent to:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
-  <rng:zeroOrMore>
+  <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
      <rng:optional><rng:ref name="hi"/></rng:optional>
      <rng:optional><rng:ref name="it"/></rng:optional>
      <rng:optional><rng:ref name="bo"/></rng:optional>
 </rng:zeroOrMore></content></egXML> and would generate, in DTD
 language, a model such as <code>(hi?,it?,bo?)*</code>.</p>
-<p>The repeatability of members of a class may also be specified
+<p xmlns="http://www.tei-c.org/ns/1.0">The repeatability of members of a class may also be specified
 independently, using the same mechanism. For example, a value
 of<val>sequenceRepeatable</val> for the <att>generate</att> attribute would be equivalent to:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
-  <rng:zeroOrMore>
+  <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
      <rng:oneOrMore><rng:ref name="hi"/></rng:oneOrMore>
      <rng:oneOrMore><rng:ref name="it"/></rng:oneOrMore>
      <rng:oneOrMore><rng:ref name="bo"/></rng:oneOrMore>
@@ -835,21 +831,21 @@ of<val>sequenceRepeatable</val> for the <att>generate</att> attribute would be e
 language, a model such as <code>(hi+,it+,bo+)*</code>.   Similarly, a value
 of <val>sequenceOptionalRepeatable</val> for the <att>generate</att> attribute would be equivalent to:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
-  <rng:zeroOrMore>
+  <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
      <rng:zeroOrMore><rng:ref name="hi"/></rng:zeroOrMore>
      <rng:zeroOrMore><rng:ref name="it"/></rng:zeroOrMore>
      <rng:zeroOrMore><rng:ref name="bo"/></rng:zeroOrMore>
 </rng:zeroOrMore></content></egXML> and would generate, in DTD
 language, a model such as <code>(hi*,it*,bo*)*</code>.</p>
-<p>The generate attribute may specify more than one possible value.
+<p xmlns="http://www.tei-c.org/ns/1.0">The generate attribute may specify more than one possible value.
 for example a value of <val>sequence alternates</val> would make
 available both a content model such as  <code>(hi,it,bo)*</code>,
 which would be referenced as <ident>model.hiLike_sequence</ident>, and a content
 model such as <code>(hi|it|bo)*</code>, which would be referenced as <ident>model.hiLike_alternates</ident>.</p>
-<p>The sequence in which members of a class appear in a content model when one of the
+<p xmlns="http://www.tei-c.org/ns/1.0">The sequence in which members of a class appear in a content model when one of the
 sequence options is used is that in which the elements are declared. </p>
 
-<p>When a <gi>classSpec</gi> contains an <gi>attList</gi> element, all
+<p xmlns="http://www.tei-c.org/ns/1.0">When a <gi>classSpec</gi> contains an <gi>attList</gi> element, all
 the members of that class inherit the attributes specified by it. For
 example, the class <ident type="class">att.interpLike</ident> defines a small set of
 attributes common to all elements which are members of that
@@ -869,9 +865,9 @@ see section <ptr target="STEC"/>.-->
  </p>
 
 
-</div3>
-<div3><head>Formal declarations</head>
-<p>The elements discussed in this section are formally defined as
+</div>
+<div type="div3"><head xmlns="http://www.tei-c.org/ns/1.0">Formal declarations</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">The elements discussed in this section are formally defined as
 follows:
 <specGrp xml:id="TDSG5" n="Element specification elements">
 &content;
@@ -885,9 +881,9 @@ follows:
 &valItem;
 &valList;
 </specGrp></p>
-</div3>
-<div3 xml:id="TDENT"><head>Pattern Documentation</head>
-<p>The <gi>macroSpec</gi> element is used to document patterns not
+</div>
+<div type="div3" xml:id="TDENT"><head xmlns="http://www.tei-c.org/ns/1.0">Pattern Documentation</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>macroSpec</gi> element is used to document patterns not
 otherwise documented by the elements described in this chapter.  Its
 chief uses are to provide systematic documentation of the parameter
 entities used within TEI DTD fragments and to describe common
@@ -905,10 +901,10 @@ following components additional to those already introduced:
 space, and therefore does not need to be declared above. It should be
 supplied in preference to the <gi>stringVal</gi> element if the intention
 is to document an Relax NG pattern for which no SGML equivalent exists.-->
-</div3>
-</div2>
-<div2 xml:id="TDbuild"><head>Building a schema</head>
-<p>The specification elements, and several of their children, are all members of
+</div>
+</div>
+<div type="div2" xml:id="TDbuild"><head xmlns="http://www.tei-c.org/ns/1.0">Building a schema</head>
+<p xmlns="http://www.tei-c.org/ns/1.0">The specification elements, and several of their children, are all members of
 the <ident type="class">att.identified</ident> class, from which they inherit the
 following attributes:
 
@@ -916,10 +912,10 @@ following attributes:
 </p>
 &att.identified;
 <!-- shd this be in a specGrp? but what would it produce? -->
-<p>These attributes are used by an ODD processor to determine how
+<p xmlns="http://www.tei-c.org/ns/1.0">These attributes are used by an ODD processor to determine how
 declarations are to be combined to form a schema or DTD, as further
 discussed in this section.</p>
-<p>As noted above, a TEI schema is defined by a <gi>schemaSpec</gi>
+<p xmlns="http://www.tei-c.org/ns/1.0">As noted above, a TEI schema is defined by a <gi>schemaSpec</gi>
 element containing an arbitrary mixture of explicit declarations for
 objects (i.e. elements, classes, patterns, or macro specifications)
 and references to other objects containing such declarations
@@ -928,7 +924,7 @@ purpose of this mechanism is to simplify the process of defining user
 customizations, by providing a formal method for the user to combine
 new declarations with existing ones, or to modify particular parts of
 existing declarations.</p>
-<p>In the simplest case, a user-defined schema might simply combine
+<p xmlns="http://www.tei-c.org/ns/1.0">In the simplest case, a user-defined schema might simply combine
 all the declarations from two nominated modules:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="example">
 <moduleRef key="teistructure"/>
@@ -938,7 +934,7 @@ An ODD processor, given such a document, would combine the
 declarations which belong to the named modules, and deliver the result
 as a schema of the requested type. It might also generate documentation for
 all and only the elements declared by those modules.</p>
-<p>A schema might also include declarations for new elements, as in
+<p xmlns="http://www.tei-c.org/ns/1.0">A schema might also include declarations for new elements, as in
 the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="example">
 <moduleRef key="teiheader"/>
@@ -951,16 +947,16 @@ A declaration for the element <gi>soundClip</gi>, which is not defined in the TE
 scheme, will be added to the output schema. This element will also be added to
 the existing TEI class <ident type="class">model.pPart.data</ident>, and will thus be
 avilable in TEI conformant documents.</p>
-<p>A schema might also include re-declarations of existing elements, as
+<p xmlns="http://www.tei-c.org/ns/1.0">A schema might also include re-declarations of existing elements, as
 in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="example">
 <moduleRef key="teiheader"/>
 <moduleRef key="teistructure"/>
 <elementSpec ident="head" mode="change">
-<content><rng:text/></content>
+<content><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></content>
 </elementSpec>
-</schemaSpec>
-</egXML>
+</schemaSpec><![CDATA[
+]]></egXML>
 The effect of this is to redefine the content model for the element
 <gi>head</gi> as plain text, by over-riding the <gi>content</gi> child
 of the selected <gi>elementSpec</gi>. The attribute specification
@@ -972,7 +968,7 @@ original specification and in the new specification supplied above:
 replace all children elements of the original specification with the 
 the children elements of the new specification, and thus (in this
 example) to delete all of them except <gi>content</gi>. </p>
-<p>A schema may not contain more than two declarations for any given
+<p xmlns="http://www.tei-c.org/ns/1.0">A schema may not contain more than two declarations for any given
 component. The value of the <att>mode</att> attribute is used to
 determine exactly how the second declaration (and its constituents)
 should be combined with the first. The
@@ -1027,10 +1023,10 @@ mode; retain existing (unreplaced) children</cell>
 </row>
 </table>
 </p>
-</div2>
-<div2 xml:id="TDformal"><head>Formal declaration</head>
+</div>
+<div type="div2" xml:id="TDformal"><head xmlns="http://www.tei-c.org/ns/1.0">Formal declaration</head>
 
-<p>This module makes available the following components:
+<p xmlns="http://www.tei-c.org/ns/1.0">This module makes available the following components:
 <moduleSpec xml:id="DTDDTD" ident="tagdocs">
 <altIdent type="FPI">Documentation Elements</altIdent>
 <desc>Documentation of TEI modules</desc>
@@ -1048,23 +1044,19 @@ This chapter documents the following two modules</p>
 <desc>Private classes for Documentation</desc>
 </moduleSpec>-->
 
-<p>The elements described in this chapter are all members of one of
-three classes: <ident type="class">model.oddDecl</ident>, <ident
-type="class">model.oddRef</ident>, or <ident
-type="class">model.oddPhr</ident>, with the exceptions of
+<p xmlns="http://www.tei-c.org/ns/1.0">The elements described in this chapter are all members of one of
+three classes: <ident type="class">model.oddDecl</ident>, <ident type="class">model.oddRef</ident>, or <ident type="class">model.oddPhr</ident>, with the exceptions of
 <gi>schemaSpec</gi> (a member of <ident type="class">model.divPart</ident>)
-and both <gi>eg</gi> and <gi>egXML</gi> (members of <ident
-type="class">model.common</ident> and <ident
-type="class">model.graphicLike</ident>). All of these classes are
+and both <gi>eg</gi> and <gi>egXML</gi> (members of <ident type="class">model.common</ident> and <ident type="class">model.graphicLike</ident>). All of these classes are
 declared along with the other general TEI classes, in the basic
 structure module documented in <ptr target="#ST"/>. </p>
 
-<p>In addition, some elements are members of the
+<p xmlns="http://www.tei-c.org/ns/1.0">In addition, some elements are members of the
 <ident type="class">att.identified</ident> class, which is documented in <ptr target="#TDbuild"/> above, and make use of the
 <code>macro.schemapattern</code> pattern, which is documented in <ptr target="#TDTAG"/> above. 
 </p>
 
-<p>The <ident type="module">tagdocs</ident> module is organized as
+<p xmlns="http://www.tei-c.org/ns/1.0">The <ident type="module">tagdocs</ident> module is organized as
 follows:
 <specGrp>
 <specGrpRef target="#TDSG1"/>
@@ -1074,5 +1066,5 @@ follows:
 <specGrpRef target="#TDSG5"/>
 </specGrp>
 </p>
-</div2>
-</div1>
+</div>
+</div>
