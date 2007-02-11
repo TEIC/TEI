@@ -16,12 +16,15 @@
   
   <xsl:output indent="yes"/>
   <xsl:key name="E" match="tei:elementSpec" use="'1'"/>
+  <xsl:param name="Modules">analysis certainty core corpus declarefs dictionaries drama figures gaiji header iso-fs linking msdescription namesdates nets spoken tagdocs tei textcrit textstructure transcr verse</xsl:param>
 
 <xsl:template match="/">
   <choice xmlns="http://relaxng.org/ns/structure/1.0">
     <xsl:for-each select="key('E','1')">
-      <xsl:sort select="@ident"/>
-      <name><xsl:value-of select="@ident"/></name>
+	<xsl:sort select="@ident"/>
+	<xsl:if test="contains($Modules,@module)">
+	  <name><xsl:value-of select="@ident"/></name>
+	</xsl:if>
     </xsl:for-each>
   </choice>
 </xsl:template>
