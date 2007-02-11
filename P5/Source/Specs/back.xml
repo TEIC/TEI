@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -24,29 +25,28 @@ text.</desc><desc version="2006-10-28" xml:lang="ja"> 本文の後に続く付�
 
       <rng:optional>
 	<rng:choice>
-
-	  <rng:group>
-	    <rng:ref name="div"/>
-	    <rng:zeroOrMore>
-	      <rng:choice>
-		<rng:ref name="div"/>
-		<rng:ref name="model.frontPart"/>
+	  <rng:oneOrMore>
+	    <rng:group>
+	      <rng:group>
+		<rng:ref name="model.divLike"/>
+	      </rng:group>
+	      <rng:zeroOrMore>
 		<rng:ref name="model.global"/>
-	      </rng:choice>
-	    </rng:zeroOrMore>
-	  </rng:group>
-
-	  <rng:group>
-	    <rng:ref name="div1"/>
-	    <rng:zeroOrMore>
-	      <rng:choice>
-		<rng:ref name="div1"/>
-		<rng:ref name="model.frontPart"/>
+	      </rng:zeroOrMore>
+	    </rng:group>
+	  </rng:oneOrMore>
+	  
+	  <rng:oneOrMore>
+	    <rng:group>
+	      <rng:group>
+		<rng:ref name="model.div1Like"/>
+	      </rng:group>
+	      <rng:zeroOrMore>
 		<rng:ref name="model.global"/>
-	      </rng:choice>
-	    </rng:zeroOrMore>
-	  </rng:group>
-
+	      </rng:zeroOrMore>
+	    </rng:group>
+	  </rng:oneOrMore>
+	  
 	</rng:choice>
       </rng:optional>
 

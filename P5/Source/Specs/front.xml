@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -25,38 +26,40 @@ found  at the start of a document, before the main body.</desc><desc version="20
       </rng:zeroOrMore>
       <rng:optional>
         <rng:choice>
-          <rng:group>
+
+	  <rng:oneOrMore>
 	    <rng:group>
-	      <rng:ref name="model.pLike.front"/>
+	      <rng:group>
+		<rng:ref name="model.pLike.front"/>
+	      </rng:group>
+	      <rng:zeroOrMore>
+		<rng:ref name="model.global"/>
+		</rng:zeroOrMore>
 	    </rng:group>
-            <rng:zeroOrMore>
-              <rng:choice>
-                <rng:ref name="model.pLike.front"/>
-                <rng:ref name="titlePage"/>
-                <rng:ref name="model.global"/>
-              </rng:choice>
-            </rng:zeroOrMore>
-          </rng:group>
-          <rng:group>
-            <rng:ref name="div"/>
-            <rng:zeroOrMore>
-              <rng:choice>
-                <rng:ref name="div"/>
-                <rng:ref name="model.frontPart"/>
-                <rng:ref name="model.global"/>
-              </rng:choice>
-            </rng:zeroOrMore>
-          </rng:group>
-          <rng:group>
-            <rng:ref name="div1"/>
-            <rng:zeroOrMore>
-              <rng:choice>
-                <rng:ref name="div1"/>
-                <rng:ref name="model.frontPart"/>
-                <rng:ref name="model.global"/>
-              </rng:choice>
-            </rng:zeroOrMore>
-          </rng:group>
+	  </rng:oneOrMore>
+
+	  <rng:oneOrMore>
+	    <rng:group>
+	      <rng:group>
+		<rng:ref name="model.div1Like"/>
+	      </rng:group>
+	      <rng:zeroOrMore>
+		<rng:ref name="model.global"/>
+		</rng:zeroOrMore>
+	    </rng:group>
+	  </rng:oneOrMore>
+
+	  <rng:oneOrMore>
+	    <rng:group>
+	      <rng:group>
+		<rng:ref name="model.divLike"/>
+	      </rng:group>
+	      <rng:zeroOrMore>
+		<rng:ref name="model.global"/>
+		</rng:zeroOrMore>
+	    </rng:group>
+	  </rng:oneOrMore>
+
         </rng:choice>
       </rng:optional>
     </rng:group>
