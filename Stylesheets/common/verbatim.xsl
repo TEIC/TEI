@@ -61,7 +61,6 @@
     <xsl:text>&lt;!--</xsl:text>
     <xsl:value-of select="."/>
     <xsl:text>--&gt;</xsl:text>
-    <xsl:call-template name="lineBreak"/>
   </xsl:template>
 
   <xsl:template name="wraptext">
