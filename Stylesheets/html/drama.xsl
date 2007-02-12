@@ -35,27 +35,27 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:actor">
-    <em>
+    <span class="actor">
       <xsl:apply-templates/>
-    </em>
+    </span>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:camera</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:camera">
-    <em>
+    <span class="camera">
       <xsl:apply-templates/>
-    </em>
+    </span>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:caption</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:caption">
-    <em>
+    <span class="caption">
       <xsl:apply-templates/>
-    </em>
+    </span>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:castGroup</xd:short>
@@ -99,26 +99,22 @@
   </xd:doc>
   <xsl:template match="tei:castList/tei:head"/>
   <xd:doc>
-    <xd:short>Process elements tei:p/tei:stage</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:p/tei:stage">
-    <em>
-      <xsl:apply-templates/>
-    </em>
-  </xsl:template>
-  <xd:doc>
     <xd:short>Process elements tei:role</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
+  <xsl:template match="tei:role">
+    <span class="role">
+      <xsl:apply-templates/>
+    </span>
+  </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:sp/tei:stage</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:sp/tei:stage">
-    <em>
+    <span class="stage">
       <xsl:apply-templates/>
-    </em>
+    </span>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:role</xd:short>
@@ -162,18 +158,18 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:set">
-    <em>
+    <span class="set">
       <xsl:apply-templates/>
-    </em>
+    </span>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:sound</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:sound">
-    <em>
+    <span class="sound">
       <xsl:apply-templates/>
-    </em>
+    </span>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:sp</xd:short>
@@ -207,9 +203,9 @@
   </xd:doc>
   <xsl:template match="tei:stage">
     <p>
-      <em>
+      <span class="stage">
         <xsl:apply-templates/>
-      </em>
+      </span>
     </p>
   </xsl:template>
   <xd:doc>
@@ -217,17 +213,17 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:tech">
-    <em>
+    <span class="tech">
       <xsl:apply-templates/>
-    </em>
+    </span>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:view</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:view">
-    <em>
+    <span class="view">
       <xsl:apply-templates/>
-    </em>
+    </span>
   </xsl:template>
 </xsl:stylesheet>

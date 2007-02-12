@@ -521,9 +521,9 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:kw">
-    <em>
+    <span class="kw">
       <xsl:apply-templates/>
-    </em>
+    </span>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:l</xd:short>
@@ -1356,9 +1356,9 @@
         <xsl:call-template name="rendering"/>
       </xsl:when>
       <xsl:otherwise>
-        <em>
+        <span class="term">
           <xsl:apply-templates/>
-        </em>
+        </span>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
