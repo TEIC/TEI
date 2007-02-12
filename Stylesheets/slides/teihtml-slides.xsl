@@ -8,12 +8,13 @@
 		xmlns:tei="http://www.tei-c.org/ns/1.0" 
 		xmlns:xlink="http://www.w3.org/1999/xlink" 
 		xmlns:dbk="http://docbook.org/ns/docbook" 
+		xmlns:m="http://www.w3.org/1998/Math/MathML"
 		xmlns:xhtml="http://www.w3.org/1999/xhtml"
-		exclude-result-prefixes="tei xd xlink dbk xhtml" 
+		exclude-result-prefixes="tei xd xlink dbk xhtml m" 
 		version="1.0">
   <xsl:import href="../xhtml/tei.xsl"/>
   <xsl:import href="../common/verbatim.xsl"/>
-  <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:*"/>
+  <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:* m:*"/>
   <xd:doc type="stylesheet">
     <xd:short>
       TEI stylesheet for making HTML presentations from TEI documents
