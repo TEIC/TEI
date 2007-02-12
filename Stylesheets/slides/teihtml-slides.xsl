@@ -413,6 +413,13 @@
       <xsl:apply-templates mode="verbatim"/>
     </div>
   </xsl:template>
+
+  <xsl:template match="tei:att">
+    <span class="att">
+      <xsl:apply-templates/>
+    </span>
+  </xsl:template>
+
 </xsl:stylesheet>
 
 

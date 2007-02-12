@@ -135,6 +135,11 @@
 	    <xsl:value-of select="local-name(.)"/>
 	  </xsl:when>
 	  <xsl:when
+	      test="namespace-uri()='http://www.w3.org/2001/XMLSchema'">
+	    <xsl:text>xsd:</xsl:text>
+	    <xsl:value-of select="local-name(.)"/>
+	  </xsl:when>
+	  <xsl:when
 	      test="namespace-uri()='http://www.w3.org/1999/xhtml'">
 	    <xsl:text>xhtml:</xsl:text>
 	    <xsl:value-of select="local-name(.)"/>
@@ -269,6 +274,11 @@
 	  <xsl:when
 	      test="namespace-uri()='http://docbook.org/ns/docbook'">
 	    <xsl:text>dbk:</xsl:text>
+	    <xsl:value-of select="local-name(.)"/>
+	  </xsl:when>
+	  <xsl:when
+	      test="namespace-uri()='http://www.w3.org/2001/XMLSchema'">
+	    <xsl:text>xsd:</xsl:text>
 	    <xsl:value-of select="local-name(.)"/>
 	  </xsl:when>
 	  <xsl:when
