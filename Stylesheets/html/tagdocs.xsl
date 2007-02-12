@@ -1276,9 +1276,19 @@
                 <title>
                   <xsl:value-of select="$name"/>
                 </title>
-                <xsl:if test="not($cssFile = '')">
-                  <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
-                </xsl:if>
+		<xsl:choose>
+		  <xsl:when test="$cssFile = ''"/>
+		  <xsl:when test="$cssFileInclude='true'">
+		    <style>
+		      <include xmlns="http://www.w3.org/2001/XInclude"
+			  href="{$cssFile}" 
+			  parse="text"/>
+		    </style>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
+		  </xsl:otherwise>
+		</xsl:choose>
                 <xsl:if test="not($cssSecondaryFile = '')">
                   <link href="{$cssSecondaryFile}" rel="stylesheet" type="text/css"/>
                 </xsl:if>

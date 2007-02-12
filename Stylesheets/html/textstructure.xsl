@@ -1171,9 +1171,19 @@ $ID: requests a particular page
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="includeCSS">
-    <xsl:if test="not($cssFile='')">
-      <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="$cssFile = ''"/>
+      <xsl:when test="$cssFileInclude='true'">
+	<style>
+	  <include xmlns="http://www.w3.org/2001/XInclude"
+		   href="{$cssFile}" 
+		   parse="text"/>
+	</style>
+      </xsl:when>
+      <xsl:otherwise>
+	<link href="{$cssFile}" rel="stylesheet" type="text/css"/>
+      </xsl:otherwise>
+    </xsl:choose>
     <xsl:if test="not($cssSecondaryFile='')">
       <link href="{$cssSecondaryFile}" media="screen" rel="stylesheet"
         type="text/css"/>
@@ -1896,13 +1906,19 @@ $ID: requests a particular page
         </div>
       </div>
       <div id="rh-col">
-
-        <a name="rh-column">
-          <xsl:comment>real top </xsl:comment>
-        </a>
-        <div id="rh-col-top">
-          <xsl:comment>top of right-hand column</xsl:comment>
-          <xsl:call-template name="rh-col-top"/>
+	<xsl:choose>
+	  <xsl:when test="$xhtml='false'">
+	    <a name="rh-column">
+	      <xsl:comment>real top </xsl:comment>
+	    </a>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <a id="rh-column"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+	<div id="rh-col-top">
+	  <xsl:comment>top of right-hand column</xsl:comment>
+	  <xsl:call-template name="rh-col-top"/>
         </div>
         <div id="rh-col-bottom">
           <xsl:comment>bottom of right-hand column</xsl:comment>

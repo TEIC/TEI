@@ -2027,9 +2027,9 @@
 	</span>	
       </xsl:when>
       <xsl:when test="$name">
-        <a name="{$name}">
-          <xsl:comment>anchor</xsl:comment>
-        </a>
+	<a name="{$name}">
+	  <xsl:comment>anchor</xsl:comment>
+	</a>
       </xsl:when>
       <xsl:when test="@xml:id and $xhtml='true'">
 	<span>
