@@ -448,9 +448,9 @@ may be marked as such by using the special purpose <gi>castGroup</gi>
 element.  The <att>rend</att> attribute may be used to indicate
 whether this grouping is indicated in the text by layout alone (i.e. the
 use of whitespace), by long braces or by some other means.  A
-<gi>castGroup</gi> consists of an optional heading (represented as
+<gi>castGroup</gi> may contain  an optional heading (represented as
 usual by a <gi>head</gi> element) followed by a series of
-<gi>castItem</gi> elements.
+<gi>castItem</gi> elements:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><castGroup rend="braced">
    <head>friends of Mathias</head>
    <castItem>        
@@ -464,9 +464,26 @@ usual by a <gi>head</gi> element) followed by a series of
 </castGroup></egXML>
 <!-- Leopold Lewis, The Bells (1871) -->
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The following example demonstrates the use of the <gi>castGroup</gi>
-element to structure the whole of a <gi>castList</gi>, reflecting the
-way it is presented on the page:
+<p>Alternatively, the encoder may prefer to regard the phrase
+<q>friends of Mathias</q> as a role description, and encode the above
+example as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><castGroup rend="braced">
+   <roleDesc>friends of Mathias</roleDesc>
+   <castItem>        
+      <role>Walter</role>
+      <actor>Mr Frank Hall</actor>
+   </castItem>
+   <castItem>       
+      <role>Hans</role>
+      <actor>Mr F.W. Irish</actor>
+   </castItem>
+</castGroup></egXML>
+</p>
+<p>This version has the advantage that all role descriptions are treated
+alike, rather than in some cases being treated as headings. On the
+other hand there are also  cases, such as the following, where the
+role description does function more like a heading:
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><castList>
    <castGroup>
       <head rend="braced">Mendicants</head>
