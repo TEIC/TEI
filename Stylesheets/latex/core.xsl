@@ -577,6 +577,17 @@
     <xsl:value-of
 	select="translate(.,'\{}','&#8421;&#10100;&#10101;')"/>
   </xsl:template>
+
+  <xd:doc>
+    <xd:short>Process attributes in text mode, escaping the LaTeX
+    command characters.</xd:short>
+    <xd:detail>as with text()</xd:detail>
+  </xd:doc>
+  <xsl:template match="@*" mode="attributetext">
+    <xsl:value-of
+	select="translate(.,'\{}','&#8421;&#10100;&#10101;')"/>
+  </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements text()</xd:short>
     <xd:detail> </xd:detail>

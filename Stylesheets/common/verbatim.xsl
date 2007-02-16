@@ -49,7 +49,7 @@
             </xsl:for-each>
           </xsl:with-param>
           <xsl:with-param name="text">
-            <xsl:value-of select="."/>
+	    <xsl:value-of select="."/>
           </xsl:with-param>
         </xsl:call-template>
       </xsl:otherwise>
@@ -387,10 +387,13 @@
   <xsl:value-of select="local-name(.)"/>
   <xsl:value-of disable-output-escaping="yes" select="$endItalic"/>
   <xsl:text>="</xsl:text>
-  <xsl:value-of select="."/>
+     <xsl:apply-templates select="." mode="attributetext"/>
   <xsl:text>"</xsl:text>
 </xsl:template>
 
+<xsl:template match="@*" mode="attributetext">
+  <xsl:value-of select="."/>
+</xsl:template>
 
 <xsl:template match="text()|comment()|processing-instruction()" mode="ns"/>
 
