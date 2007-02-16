@@ -83,6 +83,22 @@
     </xsl:choose>
   </xsl:template>
   <xd:doc>
+    <xd:short>Process elements  tei:supplied</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:supplied">
+    <xsl:text>[</xsl:text>
+    <xsl:apply-templates/>
+    <xsl:text>]</xsl:text>
+    <xsl:choose>
+      <xsl:when test="@reason">
+        <xsl:text>\footnote{</xsl:text>
+        <xsl:value-of select="./@reason"/>
+        <xsl:text>}</xsl:text>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+  <xd:doc>
     <xd:short>Process elements  tei:sic</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
