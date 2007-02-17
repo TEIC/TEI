@@ -87,13 +87,13 @@ uncertain whether to mark <q>Essex</q> as a place name or a personal
 name, since both might be plausible in the given context:
 <q rend="display">Elizabeth went to Essex. She had always liked Essex.</q>
 Using <gi>note</gi>, the uncertainty here may be recorded quite simply:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName>Elizabeth</persName><![CDATA[ went to ]]><placeName>Essex</placeName><![CDATA[. She had always liked ]]><placeName>Essex</placeName><![CDATA[.]]><note type="uncertainty" resp="#MSM">It is not
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName>Elizabeth</persName> went to <placeName>Essex</placeName>. She had always liked <placeName>Essex</placeName>.<note type="uncertainty" resp="#MSM">It is not
 clear here whether <mentioned>Essex</mentioned>
 refers to the place or to the nobleman. -MSM</note></egXML></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Using the normal mechanisms, the note may be associated
 unambiguously with specific elements of the text, thus:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName>Elizabeth</persName><![CDATA[ went to ]]><placeName xml:id="CE-p1a">Essex</placeName><![CDATA[.
-She had always liked ]]><placeName xml:id="CE-p1b">Essex</placeName><![CDATA[.]]><note type="uncertainty" resp="#MSM" target="#CE-p1a #CE-p1b">It
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName>Elizabeth</persName> went to <placeName xml:id="CE-p1a">Essex</placeName>.
+She had always liked <placeName xml:id="CE-p1b">Essex</placeName>.<note type="uncertainty" resp="#MSM" target="#CE-p1a #CE-p1b">It
 is not clear here whether <mentioned>Essex</mentioned>
 refers to the place or to the nobleman. If the latter,
 it should be tagged as a personal name. -MSM</note></egXML></p>
@@ -113,10 +113,10 @@ is in fact a place name, as it is tagged, we use the <att>target</att>
 attribute to identify the element in question, and the <att>locus</att>
 attribute to indicate what aspect of the markup we are uncertain about
 (in this case, whether we have used the correct element type):
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[Elizabeth went to 
-]]><placeName xml:id="CE-pl1">Essex</placeName><![CDATA[.
-]]><!-- ... elsewhere in the document ... --><![CDATA[
-]]><certainty target="CE-pl1" locus="gi"><desc>possibly not a placename</desc></certainty></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">Elizabeth went to 
+<placeName xml:id="CE-pl1">Essex</placeName>.
+<!-- ... elsewhere in the document ... -->
+<certainty target="CE-pl1" locus="gi"><desc>possibly not a placename</desc></certainty></egXML>
 Because it is linked to the location of the uncertainty by a reference, the
 <gi>certainty</gi> element will typically be included in the same
 document as its target.  It may be placed adjacent to the target
@@ -125,9 +125,9 @@ element, or elsewhere in the document.</p>
 that there is a 60 percent chance of <q>Essex</q> being a place name here, we
 can add a value for our <att>degree</att> of confidence (usually a
 number between 0 and 1, representing the estimated probability):
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
-]]><!-- ... --><![CDATA[
-]]><certainty target="CE-pl1" locus="gi" degree="0.6"/></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<!-- ... -->
+<certainty target="CE-pl1" locus="gi" degree="0.6"/></egXML>
 According to one expert, there is a 60 percent chance of <q>Essex</q>
 being a place name here, and a 40 percent chance of its being a
 personal name. We use two <gi>certainty</gi> elements to indicate the
@@ -135,11 +135,11 @@ two probabilities independently. Both elements indicate the same location in the
 text, but the second provides an alternative choice of generic
 identifier (in this case <gi>persName</gi>) is given as the
 value of the <att>assertedValue</att> attribute:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
-]]><!-- ... --><![CDATA[
-]]><certainty target="CE-pl1" locus="gi" degree="0.6">
-   <desc>probably a placename, but possibly not</desc></certainty><![CDATA[
-]]><certainty target="CE-pl1" locus="gi" degree="0.4" assertedValue="persName">
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<!-- ... -->
+<certainty target="CE-pl1" locus="gi" degree="0.6">
+   <desc>probably a placename, but possibly not</desc></certainty>
+<certainty target="CE-pl1" locus="gi" degree="0.4" assertedValue="persName">
    <desc>may refer to the Earl of Essex</desc></certainty></egXML></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Finally, we may wish to make our probability estimates contingent
 on some condition.  In the passage <q>Elizabeth went to Essex; she had
@@ -149,21 +149,21 @@ the two occurrences of the word are not independent:  there is (we may
 feel) no chance at all that one occurrence refers to the county and one
 to the earl.  We can express this by using the <att>given</att>
 attribute to list the identifiers of <gi>certainty</gi> elements.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[Elizabeth went to ]]><placeName xml:id="CE-PL1">Essex</placeName><![CDATA[.
-She had always liked ]]><placeName xml:id="CE-PL2">Essex</placeName><![CDATA[.
-]]><!-- ... --><![CDATA[
-]]><!-- 60% chance that P1 is a placename,
-     40% chance a personal name. --><![CDATA[
-]]><certainty xml:id="cert-1" target="#CE-PL1" locus="gi" degree="0.6">
-  <desc>probably a placename, but possibly not"</desc></certainty><![CDATA[
-]]><certainty xml:id="cert-2" target="#CE-PL1" locus="gi" assertedValue="persName" degree="0.4">
-   <desc>may refer to the Earl of Essex"</desc></certainty><![CDATA[
-]]><!-- 60% chance that P2 is a placename,
+<egXML xmlns="http://www.tei-c.org/ns/Examples">Elizabeth went to <placeName xml:id="CE-PL1">Essex</placeName>.
+She had always liked <placeName xml:id="CE-PL2">Essex</placeName>.
+<!-- ... -->
+<!-- 60% chance that P1 is a placename,
+     40% chance a personal name. -->
+<certainty xml:id="cert-1" target="#CE-PL1" locus="gi" degree="0.6">
+  <desc>probably a placename, but possibly not"</desc></certainty>
+<certainty xml:id="cert-2" target="#CE-PL1" locus="gi" assertedValue="persName" degree="0.4">
+   <desc>may refer to the Earl of Essex"</desc></certainty>
+<!-- 60% chance that P2 is a placename,
      40% chance a personal name.
-    100% chance that it agrees with P1. --><![CDATA[
-]]><certainty target="#CE-PL2" locus="gi" given="#cert-1" degree="1.0">
-   <desc>if P1 is a placename, P2 certainly is"</desc></certainty><![CDATA[
-]]><certainty target="#CE-PL2" locus="gi" assertedValue="persName" degree="1.0" given="#cert-2">
+    100% chance that it agrees with P1. -->
+<certainty target="#CE-PL2" locus="gi" given="#cert-1" degree="1.0">
+   <desc>if P1 is a placename, P2 certainly is"</desc></certainty>
+<certainty target="#CE-PL2" locus="gi" assertedValue="persName" degree="1.0" given="#cert-2">
    <desc>if p1 refers to the Earl of Essex, so does P2</desc></certainty></egXML>
 When <att>given</att> conditions are listed, the <gi>certainty</gi>
 element is interpreted as claiming a given degree of confidence in a
@@ -180,21 +180,21 @@ place name actually in question is <q>Old Saybrook</q> rather than
 is much more likely (say, 90 percent certain) that the name is <q>Saybrook</q>.
 This state of affairs can be expressed using the
 <gi>certainty</gi> element thus:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[Earnest went to ]]><anchor xml:id="CE-a1"/><![CDATA[ old ]]><persName xml:id="CE-p2">Saybrook</persName><![CDATA[.
-]]><certainty xml:id="cert1" target="#CE-p2" locus="gi" degree="0.6"/><![CDATA[
-]]><certainty target="#CE-p2" locus="startloc" given="cert1" degree="0.9"/><![CDATA[
-]]><certainty xml:id="cert2" target="#CE-p2" locus="gi" assertedValue="persName" degree="0.4"/><![CDATA[
-]]><certainty target="#CE-p2" locus="startloc" given="cert2" degree="0.5"/><![CDATA[
-]]><certainty xml:id="cert3" target="#CE-p2" locus="startloc" assertedValue="CE-a1" given="cert1" degree="0.5"/></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">Earnest went to <anchor xml:id="CE-a1"/> old <persName xml:id="CE-p2">Saybrook</persName>.
+<certainty xml:id="cert1" target="#CE-p2" locus="gi" degree="0.6"/>
+<certainty target="#CE-p2" locus="startloc" given="cert1" degree="0.9"/>
+<certainty xml:id="cert2" target="#CE-p2" locus="gi" assertedValue="persName" degree="0.4"/>
+<certainty target="#CE-p2" locus="startloc" given="cert2" degree="0.5"/>
+<certainty xml:id="cert3" target="#CE-p2" locus="startloc" assertedValue="CE-a1" given="cert1" degree="0.5"/></egXML>
 In this case, the <att>assertedValue</att> on <gi>certainty</gi> element
 <val>cert3</val> is a reference to an <gi>anchor</gi> element at the alternative starting
 point for the element.</p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Multiplying the numeric values out, this markup may be interpreted as
 assigning specific probabilities to three different ways of
 marking up the sentence:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[Earnest went to old ]]><persName>Saybrook</persName><![CDATA[.    (0.6 * 0.9, or 0.54)
-Earnest went to old ]]><placeName>Saybrook</placeName><![CDATA[.  (0.4 * 0.5, or 0.20)
-Earnest went to ]]><placeName>old Saybrook</placeName><![CDATA[.  (0.4 * 0.5, or 0.20)]]></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">Earnest went to old <persName>Saybrook</persName>.    (0.6 * 0.9, or 0.54)
+Earnest went to old <placeName>Saybrook</placeName>.  (0.4 * 0.5, or 0.20)
+Earnest went to <placeName>old Saybrook</placeName>.  (0.4 * 0.5, or 0.20)</egXML>
 The probabilities do not add up to 1.00 because the markup indicates
 that if <q>Saybrook</q> is (part of) a personal name, there is a
 10 percent likelihood that the element should start somewhere other than the
@@ -205,28 +205,28 @@ correct.</p>
 takes as its value the name of the attribute in question.  In this
 example, there is only a 50 percent chance that the question was spoken by
 participant A:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><u xml:id="CE-u1" who="#A">Have you heard the election results?</u><![CDATA[
-]]><certainty target="#CE-u1" locus="att.who" degree="0.5"/></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><u xml:id="CE-u1" who="#A">Have you heard the election results?</u>
+<certainty target="#CE-u1" locus="att.who" degree="0.5"/></egXML></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Doubts about whether the transcription is correct may be expressed
 by assigning to <att>locus</att> the value
 <mentioned>transcribedContent</mentioned>.  For example, if the source is
 hard to read and so the transcription is uncertain:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[I have a ]]><emph xml:id="CE-p3">gub</emph><![CDATA[.
-]]><certainty target="CE-p3" locus="transcribedContent" degree="0.5"/></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">I have a <emph xml:id="CE-p3">gub</emph>.
+<certainty target="CE-p3" locus="transcribedContent" degree="0.5"/></egXML></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Degrees of confidence in the proper expansion of abbreviations may
 also be expressed, by using the value <mentioned>suppliedContent</mentioned>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[You will want to use
-]]><choice xml:id="CE-e1"><expan>Standard
-Generalized Markup Language</expan><abbr>SGML</abbr></choice><![CDATA[ ...
-]]><!-- ... --><![CDATA[
-]]><certainty target="CE-e1" locus="suppliedContent" degree="0.9"/></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">You will want to use
+<choice xml:id="CE-e1"><expan>Standard
+Generalized Markup Language</expan><abbr>SGML</abbr></choice> ...
+<!-- ... -->
+<certainty target="CE-e1" locus="suppliedContent" degree="0.9"/></egXML></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">The <att>assertedValue</att> attribute should be used to provide an
 alternative value for whatever aspect of the markup is in doubt:  an
 alternative generic identifier, or the identifier of an alternative starting or
 ending point, as already shown, an alternative attribute value, or
 alternative element content, as in this example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[I have a ]]><emph xml:id="CE-P3">gub</emph><![CDATA[.
-]]><certainty target="CE-P3" locus="transcribedContent" assertedValue="gun" degree="0.8"> 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">I have a <emph xml:id="CE-P3">gub</emph>.
+<certainty target="CE-P3" locus="transcribedContent" assertedValue="gun" degree="0.8"> 
   <desc>a gun makes more sense in a holdup</desc></certainty></egXML>
 Since attribute values have no internal substructure, the
 <att>assertedValue</att> attribute is useful for specifying alternative
@@ -290,10 +290,10 @@ assigned.  The suggested values may be combined as appropriate. For example,  to
 indicate that RC is responsible for transcribing an
 illegible word, and that AR is responsible for identifying that word
 as a proper noun, the text might be encoded thus:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[Earnest went to old ]]><persName xml:id="CE-p5">Saybrook</persName><![CDATA[.
-]]><!-- ... --><![CDATA[
-]]><respons target="CE-p5" locus="transcribedContent" resp="#RC"/><![CDATA[
-]]><respons target="CE-p5" locus="gi location" resp="#AR"/></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">Earnest went to old <persName xml:id="CE-p5">Saybrook</persName>.
+<!-- ... -->
+<respons target="CE-p5" locus="transcribedContent" resp="#RC"/>
+<respons target="CE-p5" locus="gi location" resp="#AR"/></egXML></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Some elements bear specialized <att>resp</att> or <att>agent</att>
 attributes, which have specific meanings that vary from element to
 element; the <gi>respons</gi> element should be reserved for the general

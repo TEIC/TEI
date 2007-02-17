@@ -101,7 +101,7 @@ of feature-value specifications for phonetic segments, such as the
 following for the English segment [s].<note place="foot">Adapted from 
 Noam Chomsky and Morris Halle, <title>The Sound Pattern of English</title>.  
 New York:  Harper &amp; Row, 1968, p. 415.</note>
- <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[+---          ---+
+ <egXML xmlns="http://www.tei-c.org/ns/Examples">+---          ---+
 | consonantal +  |
 | vocalic  -     |
 | voiced  -      |
@@ -109,7 +109,7 @@ New York:  Harper &amp; Row, 1968, p. 415.</note>
 | coronal  +     |
 | continuant  +  |
 | strident  +    |
-+---          ---+]]></egXML>
++---          ---+</egXML>
  </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">This representation may be encoded in XML as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fs type="phonological segments">
@@ -302,10 +302,10 @@ specifications is set up as follows.
 <p xmlns="http://www.tei-c.org/ns/1.0">Then the feature structures that represent the analysis of the
 phonological segments (phonemes) <code>/t/</code>, <code>/d/</code>,
 <code>/s/</code>, and <code>/z/</code> may be defined as follows.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><fs feats="#CNS1 #VOC0 #VOI0 #ANT1 #COR1 #CNT0 #STR0"/><![CDATA[
-]]><fs feats="#CNS1 #VOC0 #VOI1 #ANT1 #COR1 #CNT0 #STR0"/><![CDATA[
-]]><fs feats="#CNS1 #VOC0 #VOI0 #ANT1 #COR1 #CNT1 #STR1"/><![CDATA[
-]]><fs feats="#CNS1 #VOC0 #VOI1 #ANT1 #COR1 #CNT1 #STR1"/></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><fs feats="#CNS1 #VOC0 #VOI0 #ANT1 #COR1 #CNT0 #STR0"/>
+<fs feats="#CNS1 #VOC0 #VOI1 #ANT1 #COR1 #CNT0 #STR0"/>
+<fs feats="#CNS1 #VOC0 #VOI0 #ANT1 #COR1 #CNT1 #STR1"/>
+<fs feats="#CNS1 #VOC0 #VOI1 #ANT1 #COR1 #CNT1 #STR1"/></egXML>
  </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">The preceding are but four of the 128 logically possible fully
 specified phonological segments using the seven binary features listed in
@@ -326,7 +326,7 @@ each one represented as an identifiable <gi>fs</gi> element within a
 <p xmlns="http://www.tei-c.org/ns/1.0">Once defined, these feature structure values can also be reused.
 Other <gi>f</gi> elements may invoke them by reference, using the
 <att>fVal</att> attribute; for example, one might use them in a
-feature value pair such as: <egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="dental-fricative" fVal="#T.DF"/><![CDATA[ ]]></egXML> rather than expanding the hierarchy of the
+feature value pair such as: <egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="dental-fricative" fVal="#T.DF"/> </egXML> rather than expanding the hierarchy of the
 component phonological features explicitly.  </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Feature structures stored in this way  may also be associated with
 the text which they are intended to annotate, either by a link from the text
@@ -391,8 +391,8 @@ library for each of the major syntactic categories (N, V, ADJ, PREP):
 <fs xml:id="V" type="verb">
   <!-- verb features defined here -->
 </fs>
-</fvLib><![CDATA[
-]]></egXML>
+</fvLib>
+</egXML>
 </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">This library allows us to use shortcut codes (<code>N</code>,
 <code>V</code> etc.) to reference a complete definition for the
@@ -417,8 +417,8 @@ containing specifications for the basic feature categories like the following:
    <f xml:id="VV1" name="verbal"><binary value="true"/></f>
    <f xml:id="VV0" name="verbal"><binary value="false"/></f>
 <!-- ... -->
-</fLib><![CDATA[
-]]></egXML>
+</fLib>
+</egXML>
 </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">With these libraries in place, and assuming the availability of
 similarly predefined feature structures for transitivity and
@@ -436,8 +436,8 @@ semantics, the preceding example could be considerably simplified:
 	  <f name="rel" fVal="#LOVE"/>
 	</fs>
    </f>
-</fs><![CDATA[
-]]></egXML></p>
+</fs>
+</egXML></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Although in principle the <att>fVal</att> attribute could  point to
 any kind of feature value, its use is not recommended for simple
 atomic values. </p>
@@ -758,9 +758,9 @@ available values for the feature <code>case</code> are declared to be
 nominative, genitive, dative, or accusative, whether in a TEI feature
 system declaration or
 by some other means. Then the following two specifications are equivalent:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[ (i) ]]><f name="case">
-      <vNot><symbol value="genitive"/></vNot></f><![CDATA[
-(ii) ]]><f name="case">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"> (i) <f name="case">
+      <vNot><symbol value="genitive"/></vNot></f>
+(ii) <f name="case">
       <vAlt>
        <symbol value="nominative"/>
        <symbol value="dative"/>
@@ -809,8 +809,8 @@ example:
        <symbol value="feminine"/>
    </vColl>
 </f>
-</fs><![CDATA[
-]]></egXML>
+</fs>
+</egXML>
 </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Suppose however that we discover for some language it is necessary
 to add a new possible value, and to treat the value of the
@@ -826,8 +826,8 @@ be used to achieve this:
    <symbol value="neuter"/>
 </vMerge>
 </f>
-</fs><![CDATA[
-]]></egXML>
+</fs>
+</egXML>
 </p> 
 <!-- more examples needed, use from sect 4 -->
 </div>
@@ -854,8 +854,8 @@ element is provided for this purpose:
 attribute is understood to be the most general
 case, i.e. any of the available values. Thus, assuming the feature
 system defined above, the following two representations are equivalent. 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="gender"/><![CDATA[
-]]><f name="gender">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="gender"/>
+<f name="gender">
    <vAlt>
       <symbol value="feminine"/>
       <symbol value="masculine"/>
@@ -956,16 +956,16 @@ available features are quoted here):
 example, where a <gi>linkGrp</gi> element is used to link selected
 characters in the text <mentioned>Caesar seized control</mentioned> with 
 their phonological representations.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
- ]]><s>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+ <s>
   <w xml:id="S1W1"><c xml:id="S1W1C1">C</c>ae<c xml:id="S1W1C2">s</c>ar</w>
   <w xml:id="S1W2"><c xml:id="S1W2C1">s</c>ei<c xml:id="S1W2C2">z</c>e<c xml:id="S1W2C3">d</c></w>
   <w xml:id="S1W3">con<c xml:id="S1W3C1">t</c>rol</w>.
-</s><![CDATA[
-  ]]><fvLib xml:id="FSL1" n="phonological segment definitions">
+</s>
+  <fvLib xml:id="FSL1" n="phonological segment definitions">
 	<!-- as in previous example -->
-  </fvLib><![CDATA[
-  ]]><linkGrp type="phonology">
+  </fvLib>
+  <linkGrp type="phonology">
 	<!-- ... -->
 	<link targets="#S.DF #S1W3C1"/>
 	<link targets="#Z.DF #S1W2C3"/>
