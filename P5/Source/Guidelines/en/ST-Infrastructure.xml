@@ -202,14 +202,14 @@ documents.
 <p xmlns="http://www.tei-c.org/ns/1.0">The simplest customization of the TEI scheme combines just the
 four recommended modules mentioned above. In ODD format, this would
 look like this:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
-]]><schemaSpec ident="TEI-minimal" start="TEI">
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<schemaSpec ident="TEI-minimal" start="TEI">
   <moduleRef key="tei"/>
   <moduleRef key="header"/>
   <moduleRef key="core"/>
   <moduleRef key="textstructure"/>
-</schemaSpec><![CDATA[
-]]></egXML></p>
+</schemaSpec>
+</egXML></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">This schema specification contains references to each of the four
 modules, identified by the <att>key</att> attribute on the
 <gi>moduleRef</gi> element. The schema specification itself is also
@@ -222,13 +222,13 @@ mechanisms, as further described in chapter <ptr target="#SG"/><!-- somewhere --
 
 <p xmlns="http://www.tei-c.org/ns/1.0">The same effect might be obtained by means of a RELAXNG
 schema like the following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
 include "tei.rnc" 
 include "core.rnc"
 include "header.rnc"
 include "textstructure.rnc"
 start = TEI 
-]]></egXML>
+</egXML>
 which combines the declarations from the filenames specified to form a
 schema with the given start point. </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">The same effect might be obtained in a DTD processing environment
@@ -314,8 +314,8 @@ module <ident>svg11.rng</ident> (defining Standard vector Graphics)
 are included. To avoid any risk of name clashes, the schema specifies
 that all TEI patterns generated should be prefixed by the string
 "TEI_".
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
-    ]]><schemaSpec prefix="tei_" ident="testsvg" start="TEI svg">
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <schemaSpec prefix="tei_" ident="testsvg" start="TEI svg">
       <moduleRef key="header"/>
       <moduleRef key="core"/>
       <moduleRef key="tei"/>
@@ -332,15 +332,15 @@ elements. For that to be possible, the <gi>svg</gi> element must
 become a member of a TEI model class (<ptr target="#STEC"/>), so that
 it may be referenced by other TEI elements. To achieve this, we modify
 the last <gi>moduleRef</gi> in the above example as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
-    ]]><moduleRef url="svg11.rng">
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <moduleRef url="svg11.rng">
 	<content xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/Examples">
 	  <rng:define name="tei_model.graphicLike" combine="choice">
 	    <rng:ref name="svg"/>
 	  </rng:define>
 	</content>
-      </moduleRef><![CDATA[
-]]></egXML></p>
+      </moduleRef>
+</egXML></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">This states that when the declarations from the
 <ident>svg11.rng</ident> module are combined with those from the other
 modules, the declaration for the model class model.graphicLike in the TEI module
@@ -898,7 +898,7 @@ pattern. </p>
 
 <p xmlns="http://www.tei-c.org/ns/1.0">Members of the class inherit its definition by referring to this
 pattern:
-<eg><![CDATA[
+<eg>
 name =
   element name { name.content, name.attributes }
 name.content = macro.phraseSeq
@@ -907,7 +907,7 @@ name.attributes =
   att.naming.attributes,
   attribute type { data.enumerated }?,
   empty
-]]></eg></p>
+</eg></p>
  
 <p xmlns="http://www.tei-c.org/ns/1.0">Superclasses are implemented using the same patterns. For example,
 the class <ident type="class">att.divLike</ident>, as noted above, is
@@ -1507,7 +1507,7 @@ is added earlier in the DTD than the default (see further <ptr target="#STOVLO"/
 after the element. To undefine an element therefore all that is
 necessary is to add a declaration like the following:
 
-<eg><![CDATA[ p = notAllowed ]]></eg>
+<eg> p = notAllowed </eg>
 </p></div>
 
 <div type="div3" xml:id="STPEGI"><head xmlns="http://www.tei-c.org/ns/1.0">Parameter Entities for Element Generic Identifiers</head>
@@ -1531,14 +1531,14 @@ be preserved in the entity name.
 when  TEI DTD fragments are created. </p>
 <p xmlns="http://www.tei-c.org/ns/1.0"> In the RELAXNG schemas, all elements are defined using a pattern
 with the same name as the element: for example
-<eg><![CDATA[
+<eg>
 abbr = element abbr { abbr.content, abbr.attributes }
-]]></eg>
+</eg>
 The easiest way of renaming the element is thus simply to declare a
 new pattern:
-<eg><![CDATA[
+<eg>
 abbrev = element abbr { abbr.content, abbr.attributes }
-]]></eg>
+</eg>
 More complex revisions, such as redefining the content of the element
 (defined by the pattern <ident type="rng">abbr.content</ident>) or its
 attributes (defined by the pattern <ident type="rng">abbr.attributes</ident>) can be accomplished in a similar
