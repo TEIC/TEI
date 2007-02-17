@@ -14,6 +14,7 @@ TESTFILES= \
 	testfand4 \
 	testfand5 \
 	testfs \
+	testglobals \
 	testi18n \
 	testlite \
 	testlangs \
