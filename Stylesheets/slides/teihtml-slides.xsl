@@ -415,6 +415,10 @@
     </div>
   </xsl:template>
 
+  <xsl:template match="xhtml:*">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
   <xsl:template match="tei:att">
     <span class="att">
       <xsl:apply-templates/>
