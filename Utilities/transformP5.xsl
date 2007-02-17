@@ -44,56 +44,20 @@
 %ENTS;
 </xsl:text>
 <xsl:for-each
- select=".//tei:elementSpec|.//tei:macroSpec|.//tei:classSpec|.//tei:div1[@xml:id]">
+ select=".//tei:elementSpec|.//tei:macroSpec|.//tei:classSpec|.//tei:div[@type='div1' and @xml:id]">
   <xsl:sort select="tei:ident"/>
   <xsl:variable name="filename">
-     <xsl:choose>
-   <xsl:when test="name(.)='div1'">
-        <xsl:value-of select="translate(@xml:id,$uc,$lc)"/>
-        <xsl:text>.odd</xsl:text>
-    </xsl:when>
-<xsl:when test='@xml:id'>
-        <xsl:value-of select="translate(@xml:id,$uc,$lc)"/>
-        <xsl:text>.odd</xsl:text>
-</xsl:when>
-    <xsl:otherwise>
-       <xsl:text>mixno.odd</xsl:text>
-    </xsl:otherwise>
-    </xsl:choose>
-    </xsl:variable>
-
-  <xsl:variable name="ident">
-     <xsl:choose>
-   <xsl:when test="name(.)='div1'">
-        <xsl:value-of select="translate(@xml:id,$uc,$lc)"/>
-      <xsl:text>.odd</xsl:text>
-    </xsl:when>
-    <xsl:otherwise>
-        <xsl:value-of select="tei:ident"/>
-    </xsl:otherwise>
-    </xsl:choose>
-    </xsl:variable>
-
-<xsl:variable name="entname">
-<xsl:choose>   <xsl:when test="name(.)='div1'">
-        <xsl:value-of select="$ident"/>
-    </xsl:when>
-
-    <xsl:otherwise>
-    <xsl:value-of select="$filename"/>
-    </xsl:otherwise>
-    </xsl:choose>
-    </xsl:variable>
-
+    <xsl:call-template name="Names"/>
+  </xsl:variable>
+  
     <xsl:text disable-output-escaping="yes">
 &lt;!ENTITY </xsl:text>
-    <xsl:value-of select="$entname"/>
+    <xsl:value-of select="$filename"/>
     <xsl:text disable-output-escaping="yes"> SYSTEM "</xsl:text>
     <xsl:value-of select="$PREFIX"/>
     <xsl:text>/</xsl:text>
-    <xsl:value-of  select="translate(ancestor-or-self::tei:div1/@xml:id,$lc,$uc)"/>
-    <xsl:text>/</xsl:text>
     <xsl:value-of select="$filename"/>
+    <xsl:text>.xml"</xsl:text>
     <xsl:text disable-output-escaping="yes">"&gt;</xsl:text>
   </xsl:for-each>
 <xsl:text disable-output-escaping="yes">
@@ -121,21 +85,9 @@
   <xsl:copy/>
 </xsl:template>
 
-<xsl:template match="tei:div1[@xml:id]">
+<xsl:template match="tei:div[@xml:id and @type='div1']">
     <xsl:variable name="ident">
-    <xsl:value-of select="translate(@xml:id,$uc,$lc)"/>
-      <xsl:text>.odd</xsl:text>
-    </xsl:variable>
- <xsl:variable name="outName">
-   <xsl:if test="not($PREFIX ='')">
-     <xsl:value-of select="$PREFIX"/>
-     <xsl:if test="not(substring($PREFIX,string-length($PREFIX),string-length($PREFIX))='/')">
-       <xsl:text>/</xsl:text>
-     </xsl:if>
-   </xsl:if>
-	<xsl:value-of  select="translate(ancestor-or-self::tei:div1/@xml:id,$lc,$uc)"/>
-	<xsl:text>/</xsl:text>
-	<xsl:value-of select="$ident"/>
+      <xsl:call-template name="Names"/>
     </xsl:variable>
     <xsl:message>write <xsl:value-of select="$ident"/></xsl:message>
     <xsl:text disable-output-escaping="yes">&amp;</xsl:text>
@@ -146,7 +98,7 @@
      cdata-section-elements="tei:eg teix:egXML" 
      omit-doctype-declaration="yes"
      omit-xml-declaration="yes" 
-     href="{$outName}">
+     href="{$PREFIX}/{$ident}.xml">
 <xsl:comment>
 Copyright TEI Consortium. 
 
@@ -170,18 +122,13 @@ $Author$
 </xsl:template>
 
 <xsl:template name="redoDoc">
-    <xsl:variable name="filename">
-      <xsl:value-of select="translate(@xml:id,$uc,$lc)"/>
-      <xsl:text>.odd</xsl:text>
-    </xsl:variable>
-
     <xsl:variable name="ident">
-      <xsl:value-of select="@xml:ident"/>
+      <xsl:value-of select="@ident"/>
     </xsl:variable>
 
-    <xsl:message>write <xsl:value-of select="$ident"/> (<xsl:value-of select="@xml:id"/>) to <xsl:value-of select="$filename"/> </xsl:message>
+    <xsl:message>write <xsl:value-of select="$ident"/> (<xsl:value-of select="@xml:id"/>) to <xsl:value-of select="$ident"/>.xml </xsl:message>
     <xsl:text disable-output-escaping="yes">&amp;</xsl:text>
-    <!--xsl:value-of select="tei:ident"/--><xsl:value-of select="$filename"/>
+    <!--xsl:value-of select="tei:ident"/--><xsl:value-of select="$ident"/>
     <xsl:text disable-output-escaping="yes">;</xsl:text>
     <exsl:document         
      indent="yes"
@@ -189,7 +136,7 @@ $Author$
      cdata-section-elements="tei:eg teix:egXML" 
      omit-doctype-declaration="yes"
      omit-xml-declaration="yes"
-        href="{$filename}">
+        href="{$ident}.xml">
 <xsl:comment>Copyright 2005 TEI Consortium. 
 
 Licensed under the GNU General Public License. 
@@ -202,5 +149,117 @@ See the file COPYING for details.
     </exsl:document>
 </xsl:template>
 
+<xsl:template name="Names">
+    <xsl:choose>
+      <xsl:when test="@xml:id='AB'">
+	<xsl:text>AB-About</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='AI'">
+	<xsl:text>AI-AnalyticMechanisms</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='CC'">
+	<xsl:text>CC-LanguageCorpora</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='CE'">
+	<xsl:text>CE-CertaintyResponsibility</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='CF'">
+	<xsl:text>CF-Conformance</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='CH'">
+	<xsl:text>CH-LanguagesCharacterSets</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='CO'">
+	<xsl:text>CO-CoreElements</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='DI'">
+	<xsl:text>DI-PrintDictionaries</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='DR'">
+	<xsl:text>DR-PerformanceTexts</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='DS'">
+	<xsl:text>DS-DefaultTextStructure</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='DT'">
+	<xsl:text>DT-ObtainingSchemas</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='FD'">
+	<xsl:text>FD-FeatureSystemDeclaration</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='FS'">
+	<xsl:text>FS-FeatureStructures</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='FT'">
+	<xsl:text>FT-TablesFormulaeGraphics</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='GD'">
+	<xsl:text>GD-GraphsNetworksTrees</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='HD'">
+	<xsl:text>HD-Header</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='IN'">
+	<xsl:text>IN-RulesForInterchange</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='MD'">
+	<xsl:text>MD-ModifyingCustomizing</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='MS'">
+	<xsl:text>MS-ManuscriptDescription</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='ND'">
+	<xsl:text>ND-NamesDates</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='NH'">
+	<xsl:text>NH-MultipleHierarchies</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='PH'">
+	<xsl:text>PH-PrimarySources</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='REFCLA'">
+	<xsl:text>Classes</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='REFENT'">
+	<xsl:text>Macros</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='REFTAG'">
+	<xsl:text>Elements</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='SA'">
+	<xsl:text>SA-LinkingSegmentationAlignment</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='SG'">
+	<xsl:text>SG-GentleIntroduction</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='SH'">
+	<xsl:text>SH-OtherMetadataStandards</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='ST'">
+	<xsl:text>ST-Infrastructure</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='TC'">
+	<xsl:text>TC-CriticalApparatus</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='TD'">
+	<xsl:text>TD-DocumentationElements</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='TE'">
+	<xsl:text>TE-TerminologicalDatabases</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='TS'">
+	<xsl:text>TS-TranscriptionsofSpeech</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='VE'">
+	<xsl:text>VE-Verse</xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id='WD'">
+	<xsl:text>WD-NonStandardCharacters</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="@ident"/>
+      </xsl:otherwise>
+    </xsl:choose>
+</xsl:template>
 
 </xsl:stylesheet>
