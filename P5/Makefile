@@ -129,7 +129,7 @@ pdf: xml
 	-${LATEX} -interaction=nonstopmode Guidelines
 	for i in Source/Images/*.png; do rm `basename $$i`;done
 
-validate: oddschema exampleschema valid
+validate: schemas oddschema exampleschema valid exemplars
 
 valid: jing_version=$(wordlist 1,3,$(shell jing))
 valid: check
@@ -189,7 +189,7 @@ exampleschema:
 
 subset:
 	-xmllint --noent --xinclude ${DRIVER} \
-	 | xsltproc -o p5subset.xml Utilities/subset.xsl - || die "failed to extract subset from ${DRIVER}."
+	 | xsltproc -o p5subset.xml Utilities/subset.xsl - || echo "failed to extract subset from ${DRIVER}." 
 
 fascicule: subset
 #	fail if we can't find the chapter
