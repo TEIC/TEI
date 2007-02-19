@@ -129,7 +129,7 @@ pdf: xml
 	-${LATEX} -interaction=nonstopmode Guidelines
 	for i in Source/Images/*.png; do rm `basename $$i`;done
 
-validate: schemas oddschema exampleschema valid exemplars
+validate: schemas oddschema exampleschema valid 
 
 valid: jing_version=$(wordlist 1,3,$(shell jing))
 valid: check
@@ -178,10 +178,12 @@ split:
 	(mkdir Split; cd Split; xmllint --noent --xinclude  ../${DRIVER} | xsltproc ../Utilities/divsplit.xsl -)
 
 oddschema: 
+	(cd Exemplars;make names)
 	roma ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ --teiserver=${TEISERVER} p5odds.odd .
 
 
 exampleschema:
+	(cd Exemplars;make names)
 	roma  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ --teiserver=${TEISERVER} p5odds-ex.odd . 
 
 #	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rnc && \
