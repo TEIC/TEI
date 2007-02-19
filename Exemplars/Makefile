@@ -4,14 +4,16 @@ DRIVER=guidelines-${LANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
 ROMAOPTS=--dochtml --localsource=../Source/Guidelines/${LANGUAGE}/${DRIVER} --xsl=${XSL}
 
-schemas:
-	xsltproc ../Utilities/makenames.xsl  ../Source/Guidelines/${LANGUAGE}/${DRIVER} > names.xml
+schemas: names
 	for i in *.odd; do echo Process $$i; ${PREFIX}/roma ${ROMAOPTS} $$i .; done
 	-rm tei_odds.dtd tei_odds.xsd
 	-rm tei_allPlus.dtd tei_allPlus.xsd
 	-rm tei_svg.dtd tei_svg.xsd
 	-rm tei_math.dtd tei_math.xsd
 	-rm tei_xinclude.dtd tei_xinclude.xsd
+
+names:
+	xsltproc ../Utilities/makenames.xsl  ../Source/Guidelines/${LANGUAGE}/${DRIVER} > names.xml
 
 
 dist: schemas
