@@ -249,8 +249,29 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:l">
-  \leftline{<xsl:apply-templates/>}
-</xsl:template>
+    <xsl:choose>
+      <xsl:when test="$verseNumbering">
+        <!-- First attempt: counts all verses in the document and 
+             labels every fifth verse using a LaTeX box 3 eMs wide -->
+        <!-- To be done: specify where to restart numbering -->
+      \leftline{
+      <xsl:choose>
+         <xsl:when test="(count(preceding::l)+1) mod 5 = 0">
+            <xsl:text>\makebox[3em][r]{</xsl:text>
+            <xsl:value-of select="count(preceding::l)+1"/>
+            <xsl:text>}\quad{}</xsl:text>
+         </xsl:when>
+         <xsl:otherwise>
+            <xsl:text>\makebox[3em][r]{}\quad{}</xsl:text>           
+         </xsl:otherwise>
+      </xsl:choose>
+      <xsl:apply-templates/>}
+      </xsl:when>
+      <xsl:otherwise>
+          \leftline{<xsl:apply-templates/>}
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:text</xd:short>
     <xd:detail> </xd:detail>
