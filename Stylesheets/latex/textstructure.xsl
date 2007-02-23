@@ -251,21 +251,28 @@
   <xsl:template match="tei:l">
     <xsl:choose>
       <xsl:when test="$verseNumbering">
-        <!-- First attempt: counts all verses in the document and 
-             labels every fifth verse using a LaTeX box 3 eMs wide -->
-        <!-- To be done: specify where to restart numbering -->
-      \leftline{
-      <xsl:choose>
-         <xsl:when test="(count(preceding::l)+1) mod 5 = 0">
-            <xsl:text>\makebox[3em][r]{</xsl:text>
-            <xsl:value-of select="count(preceding::l)+1"/>
-            <xsl:text>}\quad{}</xsl:text>
-         </xsl:when>
-         <xsl:otherwise>
-            <xsl:text>\makebox[3em][r]{}\quad{}</xsl:text>           
-         </xsl:otherwise>
-      </xsl:choose>
-      <xsl:apply-templates/>}
+        <!-- First attempt: counts all verses after div1 and 
+             labels every fifth verse using a LaTeX box 3 eMs wide 
+             To be done: specify where to restart numbering (instead
+             of div1). Thanks Carlos Perez Sancho!  -->
+         <xsl:variable name="id" select="generate-id()"/>
+         <xsl:variable name="pos">
+           <xsl:for-each select="ancestor::div1//l">
+               <xsl:if test="generate-id()=$id">
+                   <xsl:value-of select="position()"/>
+               </xsl:if>
+           </xsl:for-each>
+         </xsl:variable>
+         <xsl:choose>
+            <xsl:when test="$pos mod 5 = 0">
+              <xsl:text>\leftline{\makebox[3em][r]{</xsl:text><xsl:value-of select="$pos"/><xsl:text>}\quad{}</xsl:text>
+               <xsl:apply-templates/><xsl:text>}</xsl:text> 
+           </xsl:when>
+           <xsl:otherwise>
+               <xsl:text>\leftline{\makebox[3em][r]{}\quad{}</xsl:text>
+               <xsl:apply-templates/><xsl:text>}</xsl:text> 
+           </xsl:otherwise>
+         </xsl:choose>
       </xsl:when>
       <xsl:otherwise>
           \leftline{<xsl:apply-templates/>}
