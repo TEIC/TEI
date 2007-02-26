@@ -38,6 +38,13 @@
     <xd:short>Process elements  tei:TEI</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
+
+
+  <!-- Default parameter values for verse line numbering; maybe they
+do not belong here! -->
+  <xsl:param name="everyHowManyLines">5</xsl:param>
+  <xsl:param name="resetVerseLineNumbering">div1</xsl:param>
+
   <xsl:template match="tei:TEI">
     
     <xsl:if test="not($realFigures='true')">
@@ -252,19 +259,17 @@
     <xsl:choose>
       <xsl:when test="$verseNumbering">
         <!-- First attempt: counts all verses after div1 and 
-             labels every fifth verse using a LaTeX box 3 eMs wide 
-             To be done: specify where to restart numbering (instead
-             of div1). Thanks Carlos Perez Sancho!  -->
+             labels every fifth verse using a LaTeX box 3 eMs wide -->
          <xsl:variable name="id" select="generate-id()"/>
          <xsl:variable name="pos">
-           <xsl:for-each select="ancestor::div1//l">
+           <xsl:for-each select="ancestor::*[name()=$resetVerseLineNumbering]//l">
                <xsl:if test="generate-id()=$id">
                    <xsl:value-of select="position()"/>
                </xsl:if>
            </xsl:for-each>
          </xsl:variable>
          <xsl:choose>
-            <xsl:when test="$pos mod 5 = 0">
+            <xsl:when test="$pos mod $everyHowManyLines = 0">
               <xsl:text>\leftline{\makebox[3em][r]{</xsl:text><xsl:value-of select="$pos"/><xsl:text>}\quad{}</xsl:text>
                <xsl:apply-templates/><xsl:text>}</xsl:text> 
            </xsl:when>
