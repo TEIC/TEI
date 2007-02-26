@@ -40,7 +40,7 @@
        select="ancestor-or-self::tei:TEI/tei:text/tei:front">
      <ul class="toc{$force}">
        <xsl:apply-templates 
-	   select=".//tei:div1" mode="maketoc">
+	   select="tei:div/tei:div" mode="maketoc">
 	 <xsl:with-param name="forcedepth" select="$force"/>
        </xsl:apply-templates>
      </ul>
@@ -49,7 +49,7 @@
    <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:body">
      <ul class="toc{$force}">
     <xsl:apply-templates 
-      select=".//tei:div1" mode="maketoc">
+      select="tei:div/tei:div" mode="maketoc">
      <xsl:with-param name="forcedepth" select="$force"/>
     </xsl:apply-templates>
      </ul>
@@ -58,7 +58,7 @@
    <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:back">
      <ul class="toc{$force}">
     <xsl:apply-templates 
-      select=".//tei:div1" mode="maketoc">
+      select="tei:div/tei:div" mode="maketoc">
      <xsl:with-param name="forcedepth" select="$force"/>
    </xsl:apply-templates>
      </ul>
@@ -115,26 +115,26 @@
 
   <xsl:template name="nextLink">
     <xsl:choose>
-      <xsl:when test="following-sibling::tei:div1">
+      <xsl:when test="following-sibling::tei:div">
 	<xsl:apply-templates mode="generateNextLink"
-	     select="following-sibling::tei:div1[1]"/>
+	     select="following-sibling::tei:div[1]"/>
       </xsl:when>
-      <xsl:when test="parent::tei:div0/following-sibling::tei:div0/child::tei:div1">
+      <xsl:when test="parent::tei:div/following-sibling::tei:div/child::tei:div">
 	<xsl:apply-templates mode="generateNextLink"
-	     select="parent::tei:div0/following-sibling::tei:div0[1]/child::tei:div1[1]"/>
+	     select="parent::tei:div/following-sibling::tei:div[1]/child::tei:div[1]"/>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
   
   <xsl:template name="previousLink">
     <xsl:choose>
-      <xsl:when test="preceding-sibling::tei:div1">
+      <xsl:when test="preceding-sibling::tei:div">
 	<xsl:apply-templates mode="generatePreviousLink"
-	     select="preceding-sibling::tei:div1[1]"/>
+	     select="preceding-sibling::tei:div[1]"/>
       </xsl:when>
-      <xsl:when test="parent::tei:div0/preceding-sibling::tei:div0/child::tei:div1">
+      <xsl:when test="parent::tei:div/preceding-sibling::tei:div/child::tei:div">
 	<xsl:apply-templates mode="generatePreviousLink"
-	     select="parent::tei:div0/preceding-sibling::tei:div0[1]/child::tei:div1[last()]"/>
+	     select="parent::tei:div/preceding-sibling::tei:div[1]/child::tei:div[last()]"/>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
