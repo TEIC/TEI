@@ -809,10 +809,10 @@ them less regularly.<specList>
 </p>
 <p>A <gi>term</gi> may appear with or without a gloss, as may a
 <gi>mentioned</gi> element.  Where the <gi>gloss</gi> is present, it may
-be linked to the term it is glossing by means of the ID/IDREF
-mechanism.  To establish such a link, the encoder should give an
+be linked to the term it is glossing by means of its <att>target</att>
+attribute. To establish such a link, the encoder should give an
 <att>xml:id</att> value to the <gi>term</gi> or <gi>mentioned</gi> element
-and provide that id as the value of the <att>href</att> attribute on
+and provide that id as the value of the <att>target</att> attribute on
 the <gi>gloss</gi> element.  The following examples demonstrate this
 facility:  for more discussion of this and other kinds of linkage within
 TEI documents, see chapter <ptr target="#SA"/>.
@@ -834,9 +834,11 @@ form like <mentioned xml:id="cw234" xml:lang="grc">eluthemen</mentioned>
 second syllable of the word, and its participial derivative
 <mentioned xml:id="cw235" xml:lang="grc">lutheis</mentioned> <gloss target="#cw235">released,</gloss> accented on the last.</egXML>
 <!-- Sapir, Language (HBJ paperback), p. 79                        -->
- </p><p>Another set of elements is used to supply different kinds of names
-for objects described by the TEI. Examples of this are
-documentation of  elements, attributes, classes (and also attribute values where
+ </p>
+
+<p>Another set of elements is used to supply different kinds of names
+for objects described by the TEI. Examples of this are documentation
+of elements, attributes, classes (and also attribute values where
 appropriate), and description of glyphs.
 <specList>
 <specDesc key="altIdent"/>
@@ -850,7 +852,9 @@ TEI scheme also carry a different unique identifier supplied as the
 value of the <att>xml:id</att> attribute: this is intended only for
 internal use, since it depends on the ID/IDREF mechanism.  Identifiers
 must be unique across all the modules to be combined in a given
-schema.</p><p>The <gi>gloss</gi> element may be used to
+schema.</p>
+
+<p>The <gi>gloss</gi> element may be used to
 provide  a brief explanation of the object if this is not
 self-explanatory. For example, the specification for the element <gi>ab</gi> used to mark
 arbitrary blocks of text begins as follows:
