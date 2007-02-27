@@ -291,19 +291,6 @@
     <xsl:apply-templates/>
   </xsl:template>
   <xd:doc>
-    <xd:short>Process elements  tei:div[@type='dedication']</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:div[@type='dedication']">
-    <xsl:variable name="divlevel" select="count(ancestor::tei:div)"/>
-    <xsl:call-template name="NumberedHeading">
-      <xsl:with-param name="level">
-        <xsl:value-of select="$divlevel"/>
-      </xsl:with-param>
-    </xsl:call-template>
-    <xsl:apply-templates/>
-  </xsl:template>
-  <xd:doc>
     <xd:short>Process elements  tei:div[@type='epistle']</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
