@@ -67,11 +67,11 @@ html-web: check
 	echo making HTML Guidelines for language $$i ; \
 	mkdir -p Guidelines-web/$$i/html; \
 	xmllint --noent --xinclude ${SOURCETREE}/Guidelines/$$i/guidelines-$$i.xml \
-	| xsltproc -o Guidelines-web/$$i/html/index.html ${VERBOSE} \
-	    --stringparam displayMode rnc \
-	    --stringparam lang $$i \
-	    --stringparam doclang $$i \
-	    --stringparam outputDir . \
+	| xsltproc ${VERBOSE} \
+		--stringparam outputDir Guidelines-web/$$i/html \
+		--stringparam displayMode rnc \
+	        --stringparam lang $$i \
+	        --stringparam doclang $$i \
 	    Utilities/guidelines.xsl - ; \
 	cp *.css TEI-glow.png Guidelines-web/$$i/html/ ; \
 	cp ${SOURCETREE}/Images/* Guidelines-web/$$i/html/ ; \
@@ -95,12 +95,11 @@ html:check subset
 	-mkdir Guidelines
 	perl -p -e "s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+" Utilities/odd2htmlp5.xsl.model > Utilities/odd2htmlp5.xsl
 	xsltproc \
-	    -o Guidelines/index.html \
+	    --stringparam outputDir Guidelines \
 	    --stringparam localsource `pwd`/p5subset.xml \
 	    --stringparam cssFile tei-print.css \
-	    --stringparam STDOUT true \
+	    --stringparam STDOUT false \
 	    --stringparam displayMode rnc \
-	    --stringparam outputDir . \
 	    --stringparam lang ${LANGUAGE} \
 	    --stringparam doclang ${LANGUAGE} \
 	    Utilities/guidelines-print.xsl \

@@ -24,6 +24,22 @@
 <xsl:param name="cssFile">tei.css</xsl:param>
 <xsl:param name="cssSecondaryFile">teic.css</xsl:param>
 
+  <xsl:template name="includeCSS">
+    <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
+    <link href="{$cssSecondaryFile}" media="screen" rel="stylesheet" type="text/css"/>
+    <xsl:if test="not($cssPrintFile='')">
+      <link rel="stylesheet" media="print" type="text/css" href="{$cssPrintFile}"/>
+    </xsl:if>
+    <style>
+      p.toclist0 a.toclist { color: gray ; }
+      p.toclist0 a.toclist:hover { color: black ; }
+      p.toclist1 a.toclist {  }
+      span.toclist-this { 
+       color: black; 
+       font-weight: bold }
+    </style>
+  </xsl:template>
+
 <xsl:template name="generateSubTitle">
   <xsl:value-of select="tei:head"/>
 </xsl:template>
@@ -44,23 +60,6 @@
 <xsl:template name="printLink"/>
 
 
-<xsl:template match="tei:front/tei:div/tei:div">
-  <xsl:call-template name="makeDivPage">
-    <xsl:with-param name="depth">1</xsl:with-param>
-  </xsl:call-template>
-</xsl:template>  
-
-<xsl:template match="tei:body/tei:div/tei:div">
-  <xsl:call-template name="makeDivPage">
-    <xsl:with-param name="depth">1</xsl:with-param>
-  </xsl:call-template>
-</xsl:template>  
-
-<xsl:template match="tei:back/tei:div/tei:div">
-  <xsl:call-template name="makeDivPage">
-    <xsl:with-param name="depth">1</xsl:with-param>
-  </xsl:call-template>
-</xsl:template>  
 
 </xsl:stylesheet>
 
