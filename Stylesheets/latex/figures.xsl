@@ -335,7 +335,7 @@
             select="sum(following-sibling::cell[$c=@col]) + current()"/>
         </xsl:variable>
         <xsl:text>P{</xsl:text>
-        <xsl:value-of select="($len div $total) * 0.95"/>
+        <xsl:value-of select="($len div $total) * $tableMaxWidth"/>
         <xsl:text>\textwidth}</xsl:text>
         <xsl:if test="$r='rules'">|</xsl:if>
       </xsl:if>

@@ -104,6 +104,12 @@ Use real name of graphics files rather than pointers
 </xsl:text>
 </xsl:template>
 
+<xd:doc type="float" class="layout">
+When making a table, what width must be constrained to fit,
+as a proportion of the page width.
+</xd:doc>
+<xsl:param name="tableMaxWidth">0.85</xsl:param>
+
 <xd:doc type="integer" class="layout">
 When numbering poetry, how often to put in a line number
 </xd:doc>
