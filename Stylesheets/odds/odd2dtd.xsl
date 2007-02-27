@@ -39,7 +39,7 @@
   <xsl:param name="numberHeadings"> </xsl:param>
   <xsl:param name="numberHeadingsDepth"> </xsl:param>
   <xsl:param name="oddmode">dtd</xsl:param>
-  <xsl:param name="prenumberedHeadings"> </xsl:param>
+  <xsl:param name="prenumberedHeadings">false</xsl:param>
   <xsl:param name="splitLevel">-1</xsl:param>
   <xsl:param name="generateNamespacePrefix">false</xsl:param>
   <xsl:param name="namespacePrefix"/>

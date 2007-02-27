@@ -33,12 +33,6 @@
   <xsl:param name="verbose"/>
   <xsl:param name="outputDir">Schema</xsl:param>
   <xsl:param name="appendixWords"/>
-  <xsl:variable name="headingNumberSuffix"/>
-  <xsl:variable name="numberBackHeadings"/>
-  <xsl:variable name="numberFrontHeadings"/>
-  <xsl:variable name="numberHeadings"/>
-  <xsl:variable name="numberHeadingsDepth"/>
-  <xsl:variable name="prenumberedHeadings"/>
   <xsl:template name="italicize"/>
   <xsl:template name="makeAnchor"/>
   <xsl:template name="makeLink"/>
