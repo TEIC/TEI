@@ -1320,9 +1320,7 @@
                     <xsl:apply-templates mode="weavebody" select="."/>
                   </table>
                 </div>
-		<div style="margin: 20pt; font-weight: bold;">
-		  <a href="index.html">TEI Guidelines</a>
-		</div>
+		<xsl:call-template name="refdocFooter"/>
               </body>
             </html>
           </xsl:with-param>
@@ -1330,6 +1328,18 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+  <xd:doc>
+    <xd:short>[html] Provide a footer for each reference document</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+
+  <xsl:template name="refdocFooter">
+    <div style="margin: 20pt; font-weight: bold;">
+      <a href="index.html">TEI Guidelines</a>
+    </div>
+  </xsl:template>
+
   <xd:doc>
     <xd:short>[html] </xd:short>
     <xd:param name="text">text</xd:param>
