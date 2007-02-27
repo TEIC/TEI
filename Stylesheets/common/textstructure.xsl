@@ -53,7 +53,7 @@
   <xsl:template name="calculateNumber">
     <xsl:param name="numbersuffix"/>
     <xsl:choose>
-      <xsl:when test="$prenumberedHeadings and @n">
+      <xsl:when test="$prenumberedHeadings='true' and @n">
         <xsl:value-of select="@n"/>
         <xsl:value-of select="$numbersuffix"/>
       </xsl:when>
