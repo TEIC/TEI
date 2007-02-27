@@ -34,36 +34,6 @@
 
 <xsl:template name="generateSubTitle"/>
 
-<xsl:template name="maintoc"> 
-  <xsl:param name="force"/>
-   <xsl:for-each
-       select="ancestor-or-self::tei:TEI/tei:text/tei:front">
-     <ul class="toc{$force}">
-       <xsl:apply-templates 
-	   select="tei:div/tei:div" mode="maketoc">
-	 <xsl:with-param name="forcedepth" select="$force"/>
-       </xsl:apply-templates>
-     </ul>
-   </xsl:for-each>
-
-   <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:body">
-     <ul class="toc{$force}">
-    <xsl:apply-templates 
-      select="tei:div/tei:div" mode="maketoc">
-     <xsl:with-param name="forcedepth" select="$force"/>
-    </xsl:apply-templates>
-     </ul>
-   </xsl:for-each>
-
-   <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:back">
-     <ul class="toc{$force}">
-    <xsl:apply-templates 
-      select="tei:div/tei:div" mode="maketoc">
-     <xsl:with-param name="forcedepth" select="$force"/>
-   </xsl:apply-templates>
-     </ul>
-   </xsl:for-each>
-</xsl:template>
   
  <xsl:template name="pageTableHeader">
     <xsl:param name="mode"/>
@@ -79,66 +49,7 @@
 
 <xsl:template name="printLink"/>
 
-<xsl:template name="header">
- <xsl:param name="minimal">false</xsl:param>
- <xsl:param name="toc"/>
- <xsl:variable name="TOC">
-    <xsl:apply-templates select="." mode="generateLink"/>
- </xsl:variable>
- <xsl:variable name="depth">
-   <xsl:apply-templates select="." mode="depth"/>
- </xsl:variable>
- <xsl:if test="$numberHeadingsDepth &gt;= $depth">
-   <xsl:call-template name="calculateNumber">
-     <xsl:with-param name="numbersuffix" select="$headingNumberSuffix"/>
-   </xsl:call-template>
- </xsl:if>
- <xsl:if test="$minimal='false'">
-   <xsl:value-of select="$headingNumberSuffix"/>
-   <xsl:choose>
-     <xsl:when test="not($toc='')">
-       <xsl:call-template name="makeInternalLink">
-          <xsl:with-param name="class">toc</xsl:with-param>
-	  <xsl:with-param name="dest"><xsl:value-of select="$TOC"/></xsl:with-param>
-	  <xsl:with-param name="body">
-	    <xsl:apply-templates mode="plain" select="tei:head"/>
-	  </xsl:with-param>
-       </xsl:call-template>
-     </xsl:when>
-     <xsl:otherwise>
-       <xsl:apply-templates mode="plain" select="tei:head"/>
-     </xsl:otherwise>
-   </xsl:choose>
- </xsl:if> 
 
-</xsl:template>
-
-  <xsl:template name="nextLink">
-    <xsl:choose>
-      <xsl:when test="following-sibling::tei:div">
-	<xsl:apply-templates mode="generateNextLink"
-	     select="following-sibling::tei:div[1]"/>
-      </xsl:when>
-      <xsl:when test="parent::tei:div/following-sibling::tei:div/child::tei:div">
-	<xsl:apply-templates mode="generateNextLink"
-	     select="parent::tei:div/following-sibling::tei:div[1]/child::tei:div[1]"/>
-      </xsl:when>
-    </xsl:choose>
-  </xsl:template>
-  
-  <xsl:template name="previousLink">
-    <xsl:choose>
-      <xsl:when test="preceding-sibling::tei:div">
-	<xsl:apply-templates mode="generatePreviousLink"
-	     select="preceding-sibling::tei:div[1]"/>
-      </xsl:when>
-      <xsl:when test="parent::tei:div/preceding-sibling::tei:div/child::tei:div">
-	<xsl:apply-templates mode="generatePreviousLink"
-	     select="parent::tei:div/preceding-sibling::tei:div[1]/child::tei:div[last()]"/>
-      </xsl:when>
-    </xsl:choose>
-  </xsl:template>
-  
 
 </xsl:stylesheet>
 

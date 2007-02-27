@@ -43,16 +43,17 @@
   <xsl:param name="line-width" select="80"/>
   <xsl:param name="numberBackHeadings">A.1</xsl:param>
   <xsl:param name="numberFrontHeadings"></xsl:param>
-  <xsl:param name="numberBodyHeadings">1.1.1.1.</xsl:param>
   <xsl:param name="oddmode">html</xsl:param>
   <xsl:param name="outputDir">Guidelines</xsl:param>
   <xsl:param name="pageLayout">CSS</xsl:param>
+  <xsl:param name="prenumberedHeadings">false</xsl:param>
   <xsl:param name="searchURL"/>
   <xsl:param name="searchWords"/>
   <xsl:param name="showTitleAuthor">1</xsl:param>
   <xsl:param name="splitBackmatter">yes</xsl:param>
   <xsl:param name="splitFrontmatter">yes</xsl:param>
-  <xsl:param name="splitLevel">1</xsl:param>
+  <xsl:param name="splitLevel">0</xsl:param>
+  <xsl:param name="STDOUT">false</xsl:param>
   <xsl:param name="subTocDepth">-1</xsl:param>
   <xsl:param name="tocDepth">3</xsl:param>
   <xsl:param name="topNavigationPanel"></xsl:param>
@@ -83,20 +84,22 @@
     -->
   </xsl:template>
   
-  
-<!--  <xsl:template match="tei:div[@type='div0']">
-    <div style="font-size: 120%; font-style: bold; border: solid red 2pt">
-      Part <xsl:number format="I"/>: 
-      <xsl:value-of select="tei:head"/>
-    </div>
-    <xsl:apply-templates/>
-  </xsl:template>
--->
-  
-  
+
+ 
   <xsl:template match="tei:docAuthor">
-    <div class="center"><em><xsl:value-of select="@n"/><xsl:text> </xsl:text>
-    <xsl:apply-templates/></em></div>
+    <div class="center">
+      <em>
+	<xsl:value-of select="@n"/>
+	<xsl:text> </xsl:text>
+	<xsl:apply-templates/>
+      </em>
+    </div>
+  </xsl:template>
+  
+  <xsl:template match="tei:docImprint|tei:docDate">
+    <div class="center">
+      <xsl:apply-templates/>
+    </div>
   </xsl:template>
   
   <xsl:template match="tei:docTitle">
@@ -177,14 +180,16 @@
       </em>
   </xsl:template>
   
-  <xsl:template match="tei:titlePage">
-    <xsl:apply-templates/>
-  </xsl:template>
-  
   <xsl:template match="tei:titlePart">
     <div class="centerbold"><xsl:apply-templates/></div>
   </xsl:template>
   
+  <xsl:template name="logoPicture">
+    <img src="jaco001d.gif" alt="" width="180" />
+  </xsl:template>
+  
+
+<!--
   <xsl:template name="calculateNumber">
     <xsl:param name="numbersuffix"/>
     <xsl:choose>
@@ -193,12 +198,6 @@
       </xsl:when>
       <xsl:when test="self::tei:div">
 	<xsl:choose>
-<!--
-	  <xsl:when test="@n">
-	    <xsl:value-of select="@n"/>
-	    <xsl:value-of select="$numbersuffix"/>
-	  </xsl:when>
--->
 	  <xsl:when test="ancestor::tei:front">
 	    <xsl:if test="not($numberFrontHeadings='')">
 	      <xsl:number format="{$numberFrontHeadings}" 
@@ -276,7 +275,6 @@
 	</xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
-	<!-- root -->
 	<xsl:variable name="BaseFile">
 	  <xsl:value-of select="$masterFile"/>
 	</xsl:variable>
@@ -306,7 +304,6 @@
 	    <xsl:call-template name="header"/>
 	</a></p>
 	
-	<!-- ... any children it has -->
 	<xsl:for-each select="tei:div">
 	  <p class="{$style}-sub"><a class="{$style}-sub">
 	    <xsl:attribute name="href">
@@ -318,7 +315,6 @@
 	
 	
 	<hr/>
-	<!-- preceding divisions -->
 	<xsl:for-each select="preceding-sibling::tei:div">
 	  <p class="{$style}">
 	    <a class="{$style}">
@@ -329,7 +325,6 @@
 	  </a></p>
 	</xsl:for-each>
 	
-	<!-- current division -->
 	<p class="{$style}-this">
 	  <a class="{$style}-this">
 	    <xsl:attribute name="href">
@@ -339,7 +334,6 @@
 	  </a>
 	</p>
 	
-	<!-- following divisions -->
 	<xsl:for-each select="following-sibling::tei:div">
 	  <p class="{$style}">
 	    <a class="{$style}">
@@ -355,10 +349,6 @@
     <xsl:if test="$splitLevel=-1">
       <xsl:call-template name="listSpecs"/>
     </xsl:if>
-  </xsl:template>
-  
-  <xsl:template name="logoPicture">
-    <img src="jaco001d.gif" alt="" width="180" />
   </xsl:template>
   
   <xsl:template name="maintoc"> 
@@ -425,4 +415,5 @@
 
     </p>
   </xsl:template>
+-->
 </xsl:stylesheet>
