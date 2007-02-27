@@ -73,10 +73,10 @@ html-web: check
 	        --stringparam lang $$i \
 	        --stringparam doclang $$i \
 	    Utilities/guidelines.xsl - ; \
-	cp *.css TEI-glow.png Guidelines-web/$$i/html/ ; \
+	cp guidelines.css TEI-glow.png Guidelines-web/$$i/html/ ; \
 	cp ${SOURCETREE}/Images/* Guidelines-web/$$i/html/ ; \
 	(cd Guidelines-web/$$i/html; for i in *.html; do perl -i ../../../Utilities/cleanrnc.pl $$i;done); \
-	(cd Guidelines-web/$$i/html; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' teic.css); \
+	(cd Guidelines-web/$$i/html; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' guidelines.css); \
 	done
 
 validate-html:
@@ -97,14 +97,13 @@ html:check subset
 	xsltproc \
 	    --stringparam outputDir Guidelines \
 	    --stringparam localsource `pwd`/p5subset.xml \
-	    --stringparam cssFile tei-print.css \
 	    --stringparam STDOUT false \
 	    --stringparam displayMode rnc \
 	    --stringparam lang ${LANGUAGE} \
 	    --stringparam doclang ${LANGUAGE} \
 	    Utilities/guidelines-print.xsl \
 	    ${DRIVER} 
-	-cp *.css Guidelines
+	-cp guidelines.css Guidelines
 	-cp ${SOURCETREE}/Images/* Guidelines/
 	(cd Guidelines; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
 	(cd Guidelines; perl -p -i -e 's+ xmlns:html="http://www.w3.org/1999/xhtml"++' index.html)
@@ -202,13 +201,13 @@ fascicule: subset
 	xmllint --noent --xinclude ${FASCFILE} | xsltproc \
 	-o FASC-${CHAP}-Guidelines/index.html ${VERBOSE} \
 	--stringparam localsource `pwd`/p5subset.xml \
-	--stringparam cssFile tei.css \
+	--stringparam cssFile guidelines.css \
 	--stringparam displayMode rnc \
 	--stringparam lang ${LANGUAGE} \
 	--stringparam outputDir . \
 	Utilities/guidelines.xsl -
 	(cd FASC-${CHAP}-Guidelines; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
-	-cp *.gif *.css FASC-${CHAP}-Guidelines
+	-cp *.gif guidelines.css FASC-${CHAP}-Guidelines
 	-jing p5odds.rng ${FASCFILE}
 	xsltproc -o FASC-${CHAP}-lite.xml  \
 	  --stringparam localsource `pwd`/p5subset.xml \
@@ -242,9 +241,7 @@ dist-source:
 	p5odds.rnc \
 	p5sch.xsl \
 	schematron1-5.rnc \
-	tei-print.css \
-	tei.css \
-	teic.css \
+	guidelines.css \
 	validator.xsl \
 	xhtml.rnc \
 	| (cd release/tei-p5-source/share/xml/tei/odd; tar xf - )
@@ -272,7 +269,7 @@ dist-doc:  html-web
 	| (cd release/tei-p5-doc/share/doc/tei-p5-doc; tar xf - )
 	for i in ReleaseNotes/readme*xml; do  \
 	xsltproc \
-	--stringparam cssFile html/teic.css \
+	--stringparam cssFile html/guidelines.css \
 	${XSL}/teic/teihtml-teic.xsl $$i \
 	> release/tei-p5-doc/share/doc/tei-p5-doc/`basename $$i .xml`.html; \
 	done
