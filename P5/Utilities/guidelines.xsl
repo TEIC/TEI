@@ -50,6 +50,10 @@
 <xsl:template name="printLink"/>
 
 
+  <xsl:template match="tei:titlePage" mode="paging">
+    <xsl:apply-templates select="."/>
+  </xsl:template>
+
 
 </xsl:stylesheet>
 
