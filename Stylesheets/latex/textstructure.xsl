@@ -40,11 +40,6 @@
   </xd:doc>
 
 
-  <!-- Default parameter values for verse line numbering; maybe they
-do not belong here! -->
-  <xsl:param name="everyHowManyLines">5</xsl:param>
-  <xsl:param name="resetVerseLineNumbering">div1</xsl:param>
-
   <xsl:template match="tei:TEI">
     
     <xsl:if test="not($realFigures='true')">
@@ -253,13 +248,14 @@ do not belong here! -->
 </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:l</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>If verseNumbering is requested,
+ counts all the verse lines since the last container (<gi>div1</gi> by
+ default) and labels every fifth verse using a LaTeX box 3 ems wide.
+ </xd:detail>
   </xd:doc>
   <xsl:template match="tei:l">
     <xsl:choose>
       <xsl:when test="$verseNumbering">
-        <!-- First attempt: counts all verses after div1 and 
-             labels every fifth verse using a LaTeX box 3 eMs wide -->
          <xsl:variable name="id" select="generate-id()"/>
          <xsl:variable name="pos">
            <xsl:for-each select="ancestor::*[name()=$resetVerseLineNumbering]//l">

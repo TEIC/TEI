@@ -104,6 +104,17 @@ Use real name of graphics files rather than pointers
 </xsl:text>
 </xsl:template>
 
+<xd:doc type="integer" class="layout">
+When numbering poetry, how often to put in a line number
+</xd:doc>
+<xsl:param name="everyHowManyLines">5</xsl:param>
+
+<xd:doc type="string" class="layout">
+When numbering poetry, when to restart the sequence;
+this must be the name of a TEI element
+</xd:doc>
+<xsl:param name="resetVerseLineNumbering">div1</xsl:param>
+
 <xd:doc type="string" class="userpackage">
 Options to pass to the geometry package to set margins etc
 </xd:doc>
@@ -336,6 +347,8 @@ capable of dealing with UTF-8 directly.
 \par\noindent{\fontsize{11pt}{13pt}\sffamily\itshape\raggedright\selectfont\@author\hfill\TheDate}
 \vspace{18pt}
 </xsl:template>
+
+
   
 
 </xsl:stylesheet>
