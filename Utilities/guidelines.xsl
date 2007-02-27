@@ -21,23 +21,13 @@
 <xsl:import href="odd2htmlp5.xsl"/>
 <xsl:param name="lang"/>
 <xsl:param name="doclang"/>
-<xsl:param name="cssFile">tei.css</xsl:param>
-<xsl:param name="cssSecondaryFile">teic.css</xsl:param>
+<xsl:param name="cssFile">guidelines.css</xsl:param>
 
   <xsl:template name="includeCSS">
     <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
-    <link href="{$cssSecondaryFile}" media="screen" rel="stylesheet" type="text/css"/>
     <xsl:if test="not($cssPrintFile='')">
       <link rel="stylesheet" media="print" type="text/css" href="{$cssPrintFile}"/>
     </xsl:if>
-    <style>
-      p.toclist0 a.toclist { color: gray ; }
-      p.toclist0 a.toclist:hover { color: black ; }
-      p.toclist1 a.toclist {  }
-      span.toclist-this { 
-       color: black; 
-       font-weight: bold }
-    </style>
   </xsl:template>
 
 <xsl:template name="generateSubTitle">
