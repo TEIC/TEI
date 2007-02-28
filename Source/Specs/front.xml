@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -16,29 +16,20 @@ found  at the start of a document, before the main body.</desc><desc version="20
   <classes>
     <memberOf key="att.declaring"/>
   </classes>
-  <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:zeroOrMore>
-        <rng:choice>
-          <rng:ref name="model.pLike.front"/>
-          <rng:ref name="model.global"/>
-        </rng:choice>
-      </rng:zeroOrMore>
-      <rng:optional>
-        <rng:choice>
+  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+<rng:group>
+   
+    <rng:zeroOrMore>
+      <rng:choice>
+	<rng:ref name="model.frontPart"/>
+        <rng:ref name="model.pLike.front"/>
+	<rng:ref name="model.global"/>
+      </rng:choice>
+    </rng:zeroOrMore>
 
-	  <rng:oneOrMore>
-	    <rng:group>
-	      <rng:group>
-          <rng:ref name="model.frontPart"/>
-	      </rng:group>
-	      <rng:zeroOrMore>
-		<rng:ref name="model.global"/>
-		</rng:zeroOrMore>
-	    </rng:group>
-	  </rng:oneOrMore>
-
-	  <rng:oneOrMore>
+ <rng:group>
+   <rng:optional>
+        <rng:choice>
 	    <rng:group>
 	      <rng:group>
 		<rng:ref name="model.div1Like"/>
@@ -46,13 +37,11 @@ found  at the start of a document, before the main body.</desc><desc version="20
 	      <rng:zeroOrMore>
 		<rng:choice>
 		  <rng:ref name="model.frontPart"/>
-		  <rng:ref name="model.global"/>
+		  <rng:ref name="model.div1Like"/>
+ 		  <rng:ref name="model.global"/>
 		</rng:choice>
-		</rng:zeroOrMore>
+	      </rng:zeroOrMore>
 	    </rng:group>
-	  </rng:oneOrMore>
-
-	  <rng:oneOrMore>
 	    <rng:group>
 	      <rng:group>
 		<rng:ref name="model.divLike"/>
@@ -60,33 +49,24 @@ found  at the start of a document, before the main body.</desc><desc version="20
 	      <rng:zeroOrMore>
 		<rng:choice>
 		  <rng:ref name="model.frontPart"/>
-		  <rng:ref name="model.global"/>
+		  <rng:ref name="model.divLike"/>
+ 		  <rng:ref name="model.global"/>
 		</rng:choice>
 	      </rng:zeroOrMore>
 	    </rng:group>
-	  </rng:oneOrMore>
-
         </rng:choice>
-      </rng:optional>
-    </rng:group>
+  </rng:optional>
+</rng:group>
+</rng:group>
   </content>
   <exemplum>
-<?tei winita
- **
- ** The following example (a great one) uses <div type=epigraph> rather than just
- ** an <epigraph> because the latter isn't valid before a <div> inside <front>. This
- ** restriction is probably in error, but it is probably too large a deal to fix for
- ** P4, and Lou & I don't have the time to do it now anyway.
- ** See e-mail exchange 'twixt Lou & Syd of 2002-01-06 "what were you guys thinking?"
- ** -- Syd Bauman, 2002-01-06
- ?>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">      <front>
-        <div xml:lang="la" type="epigraph">
+        <epigraph>
           <quote>Nam Sibyllam quidem Cumis ego ipse oculis meis
 	  vidi in ampulla pendere, et cum illi pueri dicerent:
 	  <q xml:lang="grc">Sibylla ti weleis</q>; respondebat
 	  illa: <q xml:lang="grc">apowanein welo.</q></quote>
-        </div>
+	</epigraph>
         <div type="dedication">
           <p>For Ezra Pound <q xml:lang="it">il miglior fabbro.</q></p>
         </div>
