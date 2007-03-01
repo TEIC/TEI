@@ -748,13 +748,17 @@ sequenceRepeatable
 	    <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
 	      <rng:oneOrMore>
 		<rng:choice>
-		  <xsl:call-template name="valListChildren"/>
+		  <xsl:for-each select="tei:content">
+		    <xsl:call-template name="valListChildren"/>
+		  </xsl:for-each>
 		</rng:choice>
 	      </rng:oneOrMore>
 	    </rng:list>
 	  </xsl:when>
           <xsl:when test="tei:content/tei:valList[@type='closed']">
+	    <xsl:for-each select="tei:content">
 	      <xsl:call-template name="valListChildren"/>
+	    </xsl:for-each>
           </xsl:when>
           <xsl:when test="tei:content">
             <xsl:apply-templates select="tei:content/*"/>
@@ -1241,17 +1245,13 @@ sequenceRepeatable
 	    <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
 	      <rng:oneOrMore>
 		<rng:choice>
-		  <xsl:for-each select="tei:content">
-		    <xsl:call-template name="valListChildren"/>
-		  </xsl:for-each>
+		  <xsl:call-template name="valListChildren"/>
 		</rng:choice>
 	      </rng:oneOrMore>
 	    </rng:list>
 	  </xsl:when>
 	  <xsl:when test="tei:valList[@type='closed']">
-	    <xsl:for-each select="tei:content">
 	      <xsl:call-template name="valListChildren"/>
-	    </xsl:for-each>
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <text xmlns="http://relaxng.org/ns/structure/1.0"/>
