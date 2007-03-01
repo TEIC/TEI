@@ -744,28 +744,17 @@ sequenceRepeatable
     <xsl:variable name="Contents">
       <BLAH>
         <xsl:choose>
+	  <xsl:when test="tei:content/tei:valList[@type='closed' and @repeatable='true']">
+	    <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	      <rng:oneOrMore>
+		<rng:choice>
+		  <xsl:call-template name="valListChildren"/>
+		</rng:choice>
+	      </rng:oneOrMore>
+	    </rng:list>
+	  </xsl:when>
           <xsl:when test="tei:content/tei:valList[@type='closed']">
-            <rng:choice>
-              <xsl:for-each select="tei:content/tei:valList/tei:valItem">
-                <rng:value>
-		  <xsl:choose>
-		    <xsl:when test="tei:altIdent">
-		      <xsl:value-of select="normalize-space(tei:altIdent)"/>
-		    </xsl:when>
-		    <xsl:otherwise>
-		      <xsl:value-of select="@ident"/>
-		    </xsl:otherwise>
-		  </xsl:choose>
-                </rng:value>
-                <xsl:if test="not($oddmode='tei')">
-                  <a:documentation>
-		    <xsl:call-template name="makeDescription">
-<xsl:with-param name="includeValList">true</xsl:with-param>
-</xsl:call-template>
-                  </a:documentation>
-                </xsl:if>
-              </xsl:for-each>
-            </rng:choice>
+	      <xsl:call-template name="valListChildren"/>
           </xsl:when>
           <xsl:when test="tei:content">
             <xsl:apply-templates select="tei:content/*"/>
@@ -786,6 +775,30 @@ sequenceRepeatable
         </xsl:for-each>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="valListChildren">
+    <rng:choice>
+      <xsl:for-each select="tei:valList/tei:valItem">
+	<rng:value>
+	  <xsl:choose>
+	    <xsl:when test="tei:altIdent">
+	      <xsl:value-of select="normalize-space(tei:altIdent)"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:value-of select="@ident"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</rng:value>
+	<xsl:if test="not($oddmode='tei')">
+	  <a:documentation>
+	    <xsl:call-template name="makeDescription">
+	      <xsl:with-param name="includeValList">true</xsl:with-param>
+	    </xsl:call-template>
+	  </a:documentation>
+	</xsl:if>
+      </xsl:for-each>
+    </rng:choice>
   </xsl:template>
 
   <xsl:template match="tei:elementSpec/@ident"/>
@@ -1224,56 +1237,29 @@ sequenceRepeatable
     <xsl:choose>
       <xsl:when test="tei:datatype[rng:ref/@name='datatype.Code']">
         <xsl:choose>
-          <xsl:when test="tei:valList[@type='closed']">
-            <choice xmlns="http://relaxng.org/ns/structure/1.0">
-              <xsl:for-each select="tei:valList/tei:valItem">
-                <value xmlns="http://relaxng.org/ns/structure/1.0">
-		  <xsl:choose>
-		    <xsl:when test="tei:altIdent">
-		      <xsl:value-of select="normalize-space(tei:altIdent)"/>
-		    </xsl:when>
-		    <xsl:otherwise>
-		      <xsl:value-of select="@ident"/>
-		    </xsl:otherwise>
-		  </xsl:choose>
-                </value>
-                <xsl:if test="not($oddmode='tei')">
-                  <a:documentation>
-		    <xsl:call-template name="makeDescription">
-<xsl:with-param name="includeValList">true</xsl:with-param>
-</xsl:call-template>
-                  </a:documentation>
-                </xsl:if>
-              </xsl:for-each>
-            </choice>
-          </xsl:when>
-          <xsl:otherwise>
-            <text xmlns="http://relaxng.org/ns/structure/1.0"/>
-          </xsl:otherwise>
-        </xsl:choose>
+          <xsl:when test="tei:valList[@type='closed' and @repeatable='true']">
+	    <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	      <rng:oneOrMore>
+		<rng:choice>
+		  <xsl:for-each select="tei:content">
+		    <xsl:call-template name="valListChildren"/>
+		  </xsl:for-each>
+		</rng:choice>
+	      </rng:oneOrMore>
+	    </rng:list>
+	  </xsl:when>
+	  <xsl:when test="tei:valList[@type='closed']">
+	    <xsl:for-each select="tei:content">
+	      <xsl:call-template name="valListChildren"/>
+	    </xsl:for-each>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <text xmlns="http://relaxng.org/ns/structure/1.0"/>
+	  </xsl:otherwise>
+	</xsl:choose>
       </xsl:when>
       <xsl:when test="tei:valList[@type='closed']">
-        <choice xmlns="http://relaxng.org/ns/structure/1.0">
-          <xsl:for-each select="tei:valList/tei:valItem">
-            <value xmlns="http://relaxng.org/ns/structure/1.0">
-		  <xsl:choose>
-		    <xsl:when test="tei:altIdent">
-		      <xsl:value-of select="normalize-space(tei:altIdent)"/>
-		    </xsl:when>
-		    <xsl:otherwise>
-		      <xsl:value-of select="@ident"/>
-		    </xsl:otherwise>
-		  </xsl:choose>
-            </value>
-            <xsl:if test="not($oddmode='tei')">
-              <a:documentation>
-		<xsl:call-template name="makeDescription">
-<xsl:with-param name="includeValList">true</xsl:with-param>
-</xsl:call-template>
-              </a:documentation>
-            </xsl:if>
-          </xsl:for-each>
-        </choice>
+	<xsl:call-template name="valListChildren"/>
       </xsl:when>
       <xsl:when test="tei:datatype/rng:*">
         <xsl:apply-templates mode="forceRNG" select="tei:datatype/rng:*"/>
