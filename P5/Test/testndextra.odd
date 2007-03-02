@@ -6,7 +6,7 @@
       <fileDesc>
          <titleStmt>
             <title>TEI with setup for new names and dates</title>
-            <author>Sebastian Rahtz</author>
+            <author>Lou Burnard and Sebastian Rahtz</author>
          </titleStmt>
          <publicationStmt>
 	   <p> </p>
@@ -53,7 +53,7 @@ A place is defined, however, by its physical location. Locations may
 be specified in a number of ways: as a set of co-ordinates defining a
 point or an area on the surface of the earth, or by providing a
 description of how the place may identified, usually in terms of other
-placenames. For example, we can identify the location of the Canadian
+placeNames. For example, we can identify the location of the Canadian
 city of London, either by specifying its latitute and longitude, or by
 specifying that we mean the city called London located in the province
 called Ontario within the country called Canada. </p>
@@ -87,7 +87,7 @@ International Standard in 2007.</note> which has the names indicated:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <place xml:id="LYON1">
 <placeName notBefore="1400">Lyon</placeName>
-<placeName notafter="56BC">Lugdunum</placeName>
+<placeName notAfter="56BC">Lugdunum</placeName>
 <gml:thing xmlns:gml="http://whatever">12 14 54 23</gml:thing>
 <locale>city</locale>
 </place>
@@ -99,7 +99,7 @@ geo-political status independent of its geographic location:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <place xml:id="LYON2">
 <placeName notBefore="1400">Lyon</placeName>
-<placeName notafter="56BC">Lugdunum</placeName>
+<placeName notAfter="56BC">Lugdunum</placeName>
 <location><bloc>EU</bloc><country>France</country></location>
 <locale>city</locale>
 </place>
@@ -107,7 +107,7 @@ geo-political status independent of its geographic location:
 </p>
 
 <p>A place may be a single building, and its location may be
-specified using any of the specialized forms of placename defined
+specified using any of the specialized forms of placeName defined
 elsewhere in this chapter in combination:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -138,7 +138,7 @@ changes  its location over time, we represent it in the same way:
  <location notAfter="1245">
   <gml:something xmlns:gml="http://www.wibble">12 15 54 30</gml:something><note><bibl/></note>
  </location>
- <location notbefore="1245">
+ <location notBefore="1245">
     <gml:something xmlns:gml="http://www.wibble">12 29 54 45</gml:something>
   </location>
 </place></egXML></p>
@@ -186,10 +186,10 @@ of a city with the name of a larger administrative district in order
 to provide a complete "name" for the place, which may be tagged as
 such:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<placename>
+<placeName>
   <settlement>Paris</settlement>
   <region>Texas</region>
-</placename>
+</placeName>
 <location>
   <country>USA</country>
   <region type="state">Texas</region>
@@ -286,11 +286,11 @@ place examples from each by end of next week.
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 
 <place>
-<placeState notbefore="56BC" notAfter="800">
+<placeState notBefore="56BC" notAfter="800">
 <locale>deserted</locale>
 </placeState>
 
-<placeState notafter="56BC"> 
+<placeState notAfter="56BC"> 
 <placeName>
 <bloc>Roman Empire</bloc>
 <settlement type="city">Lugdunum</settlement>
@@ -834,6 +834,25 @@ represented as a hierarchic structure like this:
       <classSpec ident="model.placeEventLike" mode="add" type="model">
 	<desc>Objects like <gi>placeEvent</gi>s</desc>
       </classSpec>
+
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header"
+	     mode="change" usage="rec" ident="profileDesc">
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:optional>
+        <rng:ref name="creation"/>
+      </rng:optional>
+      <rng:choice>
+	<rng:zeroOrMore>
+	  <rng:ref name="model.profileDescPart"/>
+	</rng:zeroOrMore>
+	<rng:zeroOrMore>
+	  <rng:ref name="model.biblLike"/>
+	</rng:zeroOrMore>
+      </rng:choice>
+    </rng:group>
+  </content>
+</elementSpec>
     </schemaSpec>
 </div>
 </body>
