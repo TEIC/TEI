@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TEI xml:lang="en"  xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:gml="http://www.opengis.net/gml"
  xmlns:rng="http://relaxng.org/ns/structure/1.0"
  n="testndextra">
    <teiHeader>
@@ -87,7 +88,7 @@ International Standard in 2007.</note> which has the names indicated:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <place xml:id="LYON1">
 <placeName notBefore="1400">Lyon</placeName>
-<placeName notAfter="-0056>Lugdunum</placeName>
+<placeName notAfter="-0056">Lugdunum</placeName>
 <gml:thing xmlns:gml="http://whatever">12 14 54 23</gml:thing>
 <locale>city</locale>
 </place>
@@ -99,7 +100,7 @@ geo-political status independent of its geographic location:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <place xml:id="LYON2">
 <placeName notBefore="1400">Lyon</placeName>
-<placeName notAfter="-0056>Lugdunum</placeName>
+<placeName notAfter="-0056">Lugdunum</placeName>
 <location><bloc>EU</bloc><country>France</country></location>
 <locale>city</locale>
 </place>
@@ -528,6 +529,7 @@ represented as a hierarchic structure like this:
   <p>Here is the schema:</p>
     <schemaSpec ident="testndextra" start="TEI place">
       <moduleRef key="header"/>
+      <moduleRef key="linking"/>
       <moduleRef key="core"/>
       <moduleRef key="tei"/>
       <moduleRef key="namesdates"/>
@@ -632,6 +634,9 @@ represented as a hierarchic structure like this:
 	  <rng:zeroOrMore>
 	    <rng:ref name="model.placeLike"/>
 	  </rng:zeroOrMore>
+	  <rng:zeroOrMore>
+	    <rng:ref name="model.noteLike"/>
+	  </rng:zeroOrMore>
 	</content>
 	
       </elementSpec>
@@ -649,6 +654,9 @@ represented as a hierarchic structure like this:
 	    </rng:zeroOrMore>	    
 	    <rng:zeroOrMore>
 	      <rng:ref name="model.nameLike"/>
+	    </rng:zeroOrMore>
+	    <rng:zeroOrMore>
+	      <rng:ref name="model.measureLike"/>
 	    </rng:zeroOrMore>
 	  </rng:choice>
 	</content>
