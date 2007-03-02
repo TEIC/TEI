@@ -87,7 +87,7 @@ International Standard in 2007.</note> which has the names indicated:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <place xml:id="LYON1">
 <placeName notBefore="1400">Lyon</placeName>
-<placeName notAfter="56BC">Lugdunum</placeName>
+<placeName notAfter="-0056>Lugdunum</placeName>
 <gml:thing xmlns:gml="http://whatever">12 14 54 23</gml:thing>
 <locale>city</locale>
 </place>
@@ -99,7 +99,7 @@ geo-political status independent of its geographic location:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <place xml:id="LYON2">
 <placeName notBefore="1400">Lyon</placeName>
-<placeName notAfter="56BC">Lugdunum</placeName>
+<placeName notAfter="-0056>Lugdunum</placeName>
 <location><bloc>EU</bloc><country>France</country></location>
 <locale>city</locale>
 </place>
@@ -286,11 +286,11 @@ place examples from each by end of next week.
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 
 <place>
-<placeState notBefore="56BC" notAfter="800">
+<placeState notBefore="-0056" notAfter="800">
 <locale>deserted</locale>
 </placeState>
 
-<placeState notAfter="56BC"> 
+<placeState notAfter="-0056"> 
 <placeName>
 <bloc>Roman Empire</bloc>
 <settlement type="city">Lugdunum</settlement>
@@ -643,12 +643,14 @@ represented as a hierarchic structure like this:
 	  <memberOf key="model.placeStateLike"/>
 	</classes>
 	<content>
-	  <rng:oneOrMore>
-	    <rng:choice>
-	      <rng:text/>
+	  <rng:choice>
+	    <rng:zeroOrMore>
+	      <rng:ref name="anyGML"/>
+	    </rng:zeroOrMore>	    
+	    <rng:zeroOrMore>
 	      <rng:ref name="model.nameLike"/>
-	    </rng:choice>
-	  </rng:oneOrMore>
+	    </rng:zeroOrMore>
+	  </rng:choice>
 	</content>
 	<attList>
 	  <attDef ident="scheme">
@@ -771,6 +773,8 @@ represented as a hierarchic structure like this:
 	    <memberOf key="model.nameLike"/>
 	    <memberOf key="model.placeStateLike"/>
 	    <memberOf key="att.naming"/>
+	    <memberOf key="att.typed"/>
+	    <memberOf key="att.datable"/>
 	  </classes>
       </elementSpec>
 
@@ -853,6 +857,24 @@ represented as a hierarchic structure like this:
     </rng:group>
   </content>
 </elementSpec>
+
+    <macroSpec ident="anyGML" mode="add">
+     <content>
+      <element xmlns="http://relaxng.org/ns/structure/1.0">
+       <nsName ns="http://www.opengis.net/gml"/>
+       <zeroOrMore>
+        <choice>
+         <attribute>
+          <anyName/>
+         </attribute>
+         <ref name="anyGML"/>
+         <text/>
+        </choice>
+       </zeroOrMore>
+      </element>
+     </content>
+    </macroSpec>
+
     </schemaSpec>
 </div>
 </body>
