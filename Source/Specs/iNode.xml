@@ -9,15 +9,11 @@ $Author$
 <gloss>intermediate (or internal) node</gloss><gloss version="2006-10-28" xml:lang="ja">中間ノード</gloss>
 <desc>represents an intermediate (or internal) node of a tree.</desc><desc version="2006-10-28" xml:lang="ja"> 木における非終端ノードを示す．</desc>
   <content>
-    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+    <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:ref name="label"/>
+    </rng:optional>
   </content>
   <attList>
-    <attDef ident="label" usage="opt">
-	<equiv/>
-	<desc>gives a label for an intermediate node.</desc><desc version="2006-10-28" xml:lang="ja">当該中間ノードのラベルを示す．</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
-      <valDesc>A character string.</valDesc>
-    </attDef>
     <attDef ident="value" usage="rwa">
 	<equiv/>
 	<desc>provides the value of an intermediate node, which is a feature
@@ -84,7 +80,9 @@ children.</desc><desc version="2006-10-28" xml:lang="ja">当該中間ノード�
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <iNode xml:id="pt1" label="PT" children="#up1" parent="#vb1" follow="#pn1" outDegree="1"/>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <iNode xml:id="pt1" children="#up1" parent="#vb1" follow="#pn1" outDegree="1">
+	<label>PT</label>
+      </iNode>
     </egXML>
   </exemplum>
   <remarks/>

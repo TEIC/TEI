@@ -9,15 +9,11 @@ $Author$
 <gloss/>
 <desc>encodes the leaves (terminal nodes) of a tree.</desc><desc version="2006-10-28" xml:lang="ja">木構造における葉(終端ノード)を示す．</desc><desc version="2006-10-15" xml:lang="es">códifica las hojas (nodos terminales) de un árbol.</desc>
   <content>
-    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+    <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:ref name="label"/>
+    </rng:optional>
   </content>
   <attList>
-    <attDef ident="label" usage="opt">
-	<equiv/>
-	<desc>gives a label for a leaf.</desc><desc version="2006-10-28" xml:lang="ja">当該葉のラベルを示す．</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
-      <valDesc>A character string.</valDesc>
-    </attDef>
     <attDef ident="value" usage="rwa">
 	<equiv/>
 	<desc>provides the value of a leaf, which is a feature
@@ -45,7 +41,9 @@ the element which is the value of the attribute.</p>
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <leaf xml:id="peri1" label="periscope" parent="#n1"/>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <leaf xml:id="peri1" parent="#n1">
+	<label>periscope</label>
+      </leaf>
     </egXML>
   </exemplum>
   <remarks>

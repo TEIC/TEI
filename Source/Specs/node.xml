@@ -8,28 +8,15 @@ $Author$
 <equiv/>
 <gloss/>
 <desc>encodes a node, a possibly labeled point in a graph.</desc><desc version="2006-10-28" xml:lang="ja">グラフにおけるノードを示す．</desc><desc version="2006-10-15" xml:lang="es">codifica un nodo, un punto posiblemente etiquetado en un gráfo.</desc>
-  <content>
-    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:optional>
+        <rng:ref name="label"/>
+        <rng:optional>
+          <rng:ref name="label"/>
+        </rng:optional>
+      </rng:optional>
   </content>
   <attList>
-    <attDef ident="label" usage="opt">
-	<equiv/>
-	<desc>gives a label for a node.</desc><desc version="2006-10-28" xml:lang="ja">当該ノードのラベルを示す．</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
-      <valDesc>A character string.</valDesc>
-    </attDef>
-    <attDef ident="label2" usage="opt">
-	<equiv/>
-	<desc>gives a second label for a node.</desc><desc version="2006-10-28" xml:lang="ja">当該ノードの下位ラベルを示す．
-gives a second label for a node.</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
-      <valDesc>A character string.</valDesc>
-      <remarks>
-        <p>Use this attribute together with the <att>label</att>
-attribute if a transducer is being encoded whose actions are
-associated with nodes rather than with arcs.</p>
-      </remarks>
-    </attDef>
     <attDef ident="value" usage="opt">
 	<equiv/>
 	<desc>provides the value of a node, which is a feature structure or
@@ -105,10 +92,18 @@ versa if the graph is directed.</p>
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <node xml:id="t6" label="6" type="final" inDegree="2" outDegree="0"/>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <node xml:id="t6" type="final" inDegree="2" outDegree="0">
+      <label>6</label>
+    </node>
     </egXML>
   </exemplum>
-  <remarks/>
+  <remarks>
+    <p>Zero, one, or two children <gi>label</gi> elements may be
+    present. The first occurence of <gi>label</gi> provides a label
+    for the arc; the second provides a second label for the arc, and
+    should be used if a transducer is being encoded whose actions are
+    associated with nodes rather than with arcs.</p>
+  </remarks>
   <listRef>
     <ptr target="#GDGR" type="div1"/>
   </listRef>

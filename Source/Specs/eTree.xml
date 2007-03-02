@@ -12,12 +12,15 @@ ordered rooted tree structures.</desc><desc version="2006-10-28" xml:lang="ja"> 
   <classes>
     <memberOf key="model.divPart"/>
   </classes>
-  <content>
-    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:optional>
+      <rng:ref name="label"/>
+    </rng:optional>
+    <rng:zeroOrMore>
       <rng:choice>
-        <rng:ref name="eTree"/>
-        <rng:ref name="triangle"/>
-        <rng:ref name="eLeaf"/>
+	<rng:ref name="eTree"/>
+	<rng:ref name="triangle"/>
+	<rng:ref name="eLeaf"/>
       </rng:choice>
     </rng:zeroOrMore>
   </content>
@@ -38,24 +41,36 @@ element.</valDesc>
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <eTree n="ex1" label="PP">
-        <eTree label="P">
-          <eLeaf label="with"/>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <eTree n="ex1">
+	<label>PP</label>
+        <eTree>
+	  <label>P</label>
+          <eLeaf>
+	    <label>with</label>
+	  </eLeaf>
         </eTree>
-        <eTree label="NP">
-          <eTree label="Art">
-            <eLeaf label="the"/>
+        <eTree>
+	  <label>NP</label>
+          <eTree>
+	    <label>Art</label>
+            <eLeaf>
+	      <label>the</label>
+	    </eLeaf>
           </eTree>
-          <eTree label="N">
-            <eLeaf label="periscope"/>
+          <eTree>
+	    <label>N</label>
+            <eLeaf>
+	      <label>periscope</label>
+	    </eLeaf>
           </eTree>
         </eTree>
       </eTree>
     </egXML>
   </exemplum>
   <remarks>
-    <p rend="dataDesc">zero or
-more embedding trees, triangles, or embedding leafs.</p>
+    <p rend="dataDesc">an optional label followed by zero or more
+    embedding trees, triangles, or embedding leafs.</p>
   </remarks>
   <listRef>
     <ptr target="#GDAT" type="div2"/>

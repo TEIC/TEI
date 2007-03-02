@@ -10,15 +10,11 @@ $Author$
 <desc>provides explicitly for a leaf of an embedding tree, which may also
 be encoded with the eTree element.</desc><desc version="2006-10-28" xml:lang="ja"> 木構造における葉を示す．要素eTree中で使用される．</desc>
   <content>
-    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+    <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:ref name="label"/>
+    </rng:optional>
   </content>
   <attList>
-    <attDef ident="label" usage="opt">
-	<equiv/>
-	<desc>gives a label for a leaf of an embedding tree.</desc><desc version="2006-10-28" xml:lang="ja">当該葉のラベルを示す．</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
-      <valDesc>A character string.</valDesc>
-    </attDef>
     <attDef ident="value" usage="rwa">
 	<equiv/>
 	<desc>provides the value of an embedding leaf, which is a feature
@@ -29,12 +25,14 @@ element.</valDesc>
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <eLeaf label="with" value="#fswith"/>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"> <eLeaf value="#fswith">
+   <label>with</label>
+</eLeaf>
     </egXML>
   </exemplum>
   <remarks>
     <p>The <gi>eTree</gi> tag may be used if the encoder does not
-wish to distinguish by name between nonleaf  and leaf nodes in
+wish to distinguish by name between nonleaf and leaf nodes in
 embedding trees; they are distinguished by their arrangement.</p>
   </remarks>
   <listRef>

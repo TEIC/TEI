@@ -8,26 +8,15 @@ $Author$
 <equiv/>
 <gloss/>
 <desc>encodes an arc, the connection from one node to another in a graph.</desc><desc version="2006-10-28" xml:lang="ja">グラフを構成するノード間の辺を示す．</desc><desc version="2006-10-15" xml:lang="es">codifica un arco, la conexión de un nodo a otro en un grafo.</desc>
-  <content>
-    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:optional>
+        <rng:ref name="label"/>
+        <rng:optional>
+          <rng:ref name="label"/>
+        </rng:optional>
+      </rng:optional>
   </content>
   <attList>
-    <attDef ident="label" usage="opt">
-	<equiv/>
-	<desc>gives a label for an arc.</desc><desc version="2006-10-28" xml:lang="ja">当該辺のラベルを示す．</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
-      <valDesc>A character string.</valDesc>
-    </attDef>
-    <attDef ident="label2" usage="opt">
-	<equiv/>
-	<desc>gives a second label for an arc.</desc><desc version="2006-10-28" xml:lang="ja">当該辺の2番目のラベルを示す．</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
-      <valDesc>A character string.</valDesc>
-      <remarks>
-        <p>Use this attribute together with the <att>label</att>
-attribute if a transducer is being encoded.</p>
-      </remarks>
-    </attDef>
     <attDef ident="from" usage="req">
 	<equiv/>
 	<desc>gives the identifier of the node which is adjacent from this arc.</desc><desc version="2006-10-28" xml:lang="ja">当該辺が有向である場合，起点となるノードを示す．</desc>
@@ -42,15 +31,23 @@ attribute if a transducer is being encoded.</p>
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <arc label="OLD" label2="VIEUX" from="#t3" to="#t3"/>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><arc from="#t3" to="#t3">
+  <label>OLD</label>
+  <label>VIEUX</label>
+</arc>
     </egXML>
   </exemplum>
   <remarks>
-    <p>The <gi>arc</gi> element must be used if the arcs are
-labeled.  Otherwise, arcs can be encoded using the <att>adj</att>,
-<att>adjTo</att> and <att>adjFrom</att> attributes on the <gi>node</gi>
-tags in the graph.  Both <gi>arc</gi> tags and adjacency attributes can
-be used, but the resulting encoding would be highly redundant.</p>
+    <p>The <gi>arc</gi> element must be used if the arcs are labeled.
+    Otherwise, arcs can be encoded using the <att>adj</att>,
+    <att>adjTo</att> and <att>adjFrom</att> attributes on the
+    <gi>node</gi> tags in the graph. Both <gi>arc</gi> tags and
+    adjacency attributes can be used, but the resulting encoding would
+    be highly redundant.</p>
+    <p>Zero, one, or two children <gi>label</gi> elements may be
+    present. The first occurence of <gi>label</gi> provides a label
+    for the arc; the second provides a second label for the arc, and
+    should be used if a transducer is being encoded.</p>
   </remarks>
   <listRef>
     <ptr target="#GDGR"/>

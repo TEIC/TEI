@@ -10,22 +10,19 @@ $Author$
 characteristic shape when drawn.</gloss><gloss version="2006-10-28" xml:lang="ja">補助木</gloss>
 <desc>provides for an underspecified eTree, that is,
 an eTree with information left out.</desc><desc version="2006-10-28" xml:lang="ja">未定義の部分木(eTree)を示す．</desc>
-  <content>
-    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+<content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:optional>
+      <rng:ref name="label"/>
+    </rng:optional>
+    <rng:zeroOrMore>
       <rng:choice>
-        <rng:ref name="eTree"/>
-        <rng:ref name="triangle"/>
-        <rng:ref name="eLeaf"/>
+	<rng:ref name="eTree"/>
+	<rng:ref name="triangle"/>
+	<rng:ref name="eLeaf"/>
       </rng:choice>
     </rng:zeroOrMore>
   </content>
   <attList>
-    <attDef ident="label" usage="opt">
-	<equiv/>
-	<desc>gives a label for an underspecified embedding tree.</desc><desc version="2006-10-28" xml:lang="ja">当該補助木のラベルを示す．</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
-      <valDesc>A character string.</valDesc>
-    </attDef>
     <attDef ident="value" usage="rwa">
 	<equiv/>
 	<desc>provides the value of a triangle, which is the identifier of a feature
@@ -36,14 +33,17 @@ element.</valDesc>
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <triangle label="NP">
-        <eLeaf label="the periscope"/>
-      </triangle>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <triangle>
+      <label>NP</label>
+      <eLeaf>
+	<label>the periscope</label>
+      </eLeaf>
+    </triangle>
     </egXML>
   </exemplum>
   <remarks>
-    <p rend="dataDesc">An optional label or feature structure followed by zero or
-more embedding trees, triangles, or embedding leafs.</p>
+    <p rend="dataDesc">An optional label followed by zero or more
+    embedding trees, triangles, or embedding leafs.</p>
   </remarks>
   <listRef>
     <ptr target="#GDAT" type="div2"/>
