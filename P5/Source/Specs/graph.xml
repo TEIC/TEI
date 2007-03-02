@@ -12,8 +12,14 @@ connect the nodes.</desc><desc version="2006-10-28" xml:lang="ja">グラフを�
   <classes>
     <memberOf key="model.divPart"/>
   </classes>
-  <content>
-    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:optional>
+      <rng:ref name="label"/>
+      <rng:zeroOrMore>
+	<rng:ref name="model.global"/>
+      </rng:zeroOrMore>
+    </rng:optional>
+    <rng:choice>
       <rng:group>
         <rng:oneOrMore>
           <rng:ref name="node"/>
@@ -78,12 +84,6 @@ encode pointers to the ends of the arcs.  If <att>type</att> is specified as <va
 instead of the <att>adj</att> attribute.</p>
       </remarks>
     </attDef>
-    <attDef ident="label" usage="rwa">
-	<equiv/>
-	<desc>gives a label for a graph.</desc><desc version="2006-10-28" xml:lang="ja">当該グラフのラベルを示す．</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
-      <valDesc>A character string.</valDesc>
-    </attDef>
     <attDef ident="order" usage="opt">
 	<equiv/>
 	<desc>states the order of the graph, i.e., the number of its nodes.</desc><desc version="2006-10-28" xml:lang="ja">当該グラフに含まれるノード数を示す．</desc>
@@ -98,17 +98,28 @@ instead of the <att>adj</att> attribute.</p>
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"><graph xml:id="cug1" type="undirected" order="5" size="4" rend="LABEL-PLACE bottom center NODE-FRAME none ARC solid line" label="Airline Connections in Southwestern USA">
-        <node xml:id="lax" label="LAX" degree="2"/>
-        <node xml:id="lvg" label="LVG" degree="2"/>
-        <node xml:id="phx" label="PHX" degree="3"/>
-        <node xml:id="tus" label="TUS" degree="1"/>
-        <node xml:id="cib" label="CIB" degree="0"/>
-        <arc from="#lax" to="#lvg"/>
-        <arc from="#lax" to="#phx"/>
-        <arc from="#lvg" to="#phx"/>
-        <arc from="#phx" to="#tus"/>
-      </graph>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><graph xml:id="cug1" type="undirected" order="5" size="4" rend="LABEL-PLACE bottom center NODE-FRAME none ARC solid line">
+      <label>Airline Connections in Southwestern USA</label>
+      <node xml:id="lax" degree="2">
+	<label>LAX</label>
+      </node>
+      <node xml:id="lvg" degree="2">
+	<label>LVG</label>
+      </node>
+      <node xml:id="phx" degree="3">
+	<label>PHX</label>
+      </node>
+      <node xml:id="tus" degree="1">
+	<label>TUS</label>
+      </node>
+      <node xml:id="cib" degree="0">
+	<label>CIB</label>
+      </node>
+      <arc from="#lax" to="#lvg"/>
+      <arc from="#lax" to="#phx"/>
+      <arc from="#lvg" to="#phx"/>
+      <arc from="#phx" to="#tus"/>
+    </graph>
     </egXML>
   </exemplum>
 <!--  <exemplum>

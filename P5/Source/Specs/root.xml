@@ -9,15 +9,11 @@ $Author$
 <gloss>root node</gloss><gloss version="2006-10-28" xml:lang="ja">根要素</gloss>
 <desc>represents the root node of a tree.</desc><desc version="2006-10-28" xml:lang="ja"> 木の根要素を示す．</desc><desc version="2006-10-15" xml:lang="es">representa el nodo raíz de un árbol.</desc>
   <content>
-    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+    <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:ref name="label"/>
+    </rng:optional>
   </content>
   <attList>
-    <attDef ident="label" usage="rwa">
-	<equiv/>
-	<desc>gives a label for a root node.</desc><desc version="2006-10-28" xml:lang="ja">当該根要素のラベルを示す．</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
-      <valDesc>A character string.</valDesc>
-    </attDef>
     <attDef ident="value" usage="rwa">
 	<equiv/>
 	<desc>provides the value of the root, which is a feature structure or
@@ -69,7 +65,9 @@ be specified as <tag>root children=''</tag>.</p>
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <root xml:id="vp1" label="VP" children="#vb1 #pn1" outDegree="2"/>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <root xml:id="vp1" children="#vb1 #pn1" outDegree="2">
+      <label>VP</label>
+    </root>
     </egXML>
   </exemplum>
   <remarks/>

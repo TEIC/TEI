@@ -102,17 +102,28 @@ lines.
   Airline Connections in Southwestern USA</egXML></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Next is a markup of the graph, using <gi>arc</gi> elements to encode
 the arcs.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="undirected" xml:id="CUG1" label="Airline Connections in Southwestern USA" order="5" size="4">
-  <node label="LAX" xml:id="LAX" degree="2"/>
-  <node label="LVG" xml:id="LVG" degree="2"/>
-  <node label="PHX" xml:id="PHX" degree="3"/>
-  <node label="TUS" xml:id="TUS" degree="1"/>
-  <node label="CIB" xml:id="CIB" degree="0"/>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="undirected" xml:id="CUG1" order="5" size="4">
+  <label>Airline Connections in Southwestern USA</label>
+  <node xml:id="LAX" degree="2">
+    <label>LAX</label>
+  </node>
+  <node xml:id="LVG" degree="2">
+    <label>LVG</label>
+  </node>
+  <node xml:id="PHX" degree="3">
+    <label>PHX</label>
+  </node>
+  <node xml:id="TUS" degree="1">
+    <label>TUS</label>
+  </node>
+  <node xml:id="CIB" degree="0">
+    <label>CIB</label>
+  </node>
   <arc from="#LAX" to="#LVG"/>
   <arc from="#LAX" to="#PHX"/>
   <arc from="#LVG" to="#PHX"/>
   <arc from="#PHX" to="#TUS"/>
-  </graph></egXML></p>
+</graph></egXML></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">
 The <att>label</att> attribute on the <gi>graph</gi> element records a
 label for the graph; similarly, the <att>label</att> attribute on the
@@ -142,13 +153,24 @@ is to be used for undirected graphs, and the <att>adjFrom</att> and
 for the directed adjacency attributes to be used in an undirected graph,
 and vice versa.  Here is a markup of the preceding graph, using the
 <att>adj</att> attribute to represent the arcs.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="undirected" xml:id="CUG2" label="Airline Connections in Southwestern USA" order="5" size="4">
-  <node label="LAX2" xml:id="LAX2" degree="2" adj="#LVG2 #PHX2"/>
-  <node label="LVG2" xml:id="LVG2" degree="2" adj="#LAX2 #PHX2"/>
-  <node label="PHX2" xml:id="PHX2" degree="3" adj="#LAX2 #LVG2 #TUS2"/>
-  <node label="TUS2" xml:id="TUS2" degree="1" adj="#PHX2"/>
-  <node label="CIB2" xml:id="CIB2" degree="0"/>
-  </graph></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="undirected" xml:id="CUG2" order="5" size="4">
+  <label>Airline Connections in Southwestern USA</label>
+  <node xml:id="LAX2" degree="2" adj="#LVG2 #PHX2">
+    <label>LAX2</label>
+  </node>
+  <node xml:id="LVG2" degree="2" adj="#LAX2 #PHX2">
+    <label>LVG2</label>
+  </node>
+  <node xml:id="PHX2" degree="3" adj="#LAX2 #LVG2 #TUS2">
+    <label>PHX2</label>
+  </node>
+  <node xml:id="TUS2" degree="1" adj="#PHX2">
+    <label>TUS2</label>
+  </node>
+  <node xml:id="CIB2" degree="0">
+    <label>CIB2</label>
+  </node>
+</graph></egXML></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Note that each arc is represented twice in this encoding of the
 graph.  For example, the existence of the arc from LAX to LVG can be
 inferred from each of the first two <gi>node</gi> elements in the graph.
@@ -156,13 +178,24 @@ This redundancy, however, is not required:  it suffices to describe an
 arc in any one of the three places it can be described (either adjacent
 node, or in a separate <gi>arc</gi> element).  Here is a less redundant
 representation of the same graph.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="undirected" xml:id="CUG3" label="Airline Connections in Southwestern USA" order="5" size="4">
-  <node label="LAX3" xml:id="LAX3" degree="2" adj="#LVG3 #PHX3"/>
-  <node label="LVG3" xml:id="LVG3" degree="2" adj="#PHX3"/>
-  <node label="PHX3" xml:id="PHX3" degree="3" adj="#TUS3"/>
-  <node label="TUS3" xml:id="TUS3" degree="1"/>
-  <node label="CIB3" xml:id="CIB3" degree="0"/>
-  </graph></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="undirected" xml:id="CUG3" order="5" size="4">
+  <label>Airline Connections in Southwestern USA</label>
+  <node xml:id="LAX3" degree="2" adj="#LVG3 #PHX3">
+    <label>LAX3</label>
+  </node>
+  <node xml:id="LVG3" degree="2" adj="#PHX3">
+    <label>LVG3</label>
+  </node>
+  <node xml:id="PHX3" degree="3" adj="#TUS3">
+    <label>PHX3</label>
+  </node>
+  <node xml:id="TUS3" degree="1">
+    <label>TUS3</label>
+  </node>
+  <node xml:id="CIB3" degree="0">
+    <label>CIB3</label>
+  </node>
+</graph></egXML></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Although in many cases the <gi>arc</gi> element is redundant (since
 arcs can be described using the adjacency attributes of their adjacent
 nodes), it has nevertheless been included in this module, in order to
@@ -181,42 +214,85 @@ arrowheads in the following diagram.
   Selected Airline Routes in Southwestern USA]]></eg></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Here is an encoding of this graph, using the <gi>arc</gi> element to
 designate the arcs.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="directed" xml:id="RDG1" label="Selected Airline Routes in Southwestern USA" order="5" size="5">
-   <node label="LAX4" xml:id="LAX4" inDegree="1" outDegree="1"/>
-   <node label="LVG4" xml:id="LVG4" inDegree="1" outDegree="1"/>
-   <node label="PHX4" xml:id="PHX4" inDegree="2" outDegree="2"/>
-   <node label="TUS4" xml:id="TUS4" inDegree="1" outDegree="1"/>
-   <node label="CIB4" xml:id="CIB4" inDegree="0" outDegree="0"/>
-   <arc from="#LAX4" to="#LVG4"/>
-   <arc from="#LVG4" to="#PHX4"/>
-   <arc from="#PHX4" to="#LAX4"/>
-   <arc from="#PHX4" to="#TUS4"/>
-   <arc from="#TUS4" to="#PHX4"/>
-   </graph></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="directed" xml:id="RDG1" order="5" size="5">
+  <label>Selected Airline Routes in Southwestern USA</label>
+  <node xml:id="LAX4" inDegree="1" outDegree="1">
+    <label>LAX4</label>
+  </node>
+  <node xml:id="LVG4" inDegree="1" outDegree="1">
+    <label>LVG4</label>
+  </node>
+  <node xml:id="PHX4" inDegree="2" outDegree="2">
+    <label>PHX4</label>
+  </node>
+  <node xml:id="TUS4" inDegree="1" outDegree="1">
+    <label>TUS4</label>
+  </node>
+  <node xml:id="CIB4" inDegree="0" outDegree="0">
+    <label>CIB4</label>
+  </node>
+  <arc from="#LAX4" to="#LVG4"/>
+  <arc from="#LVG4" to="#PHX4"/>
+  <arc from="#PHX4" to="#LAX4"/>
+  <arc from="#PHX4" to="#TUS4"/>
+  <arc from="#TUS4" to="#PHX4"/>
+</graph></egXML></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Here is another encoding of the graph, using the <att>adjTo</att> and
 <att>adjFrom</att> attributes on nodes to designate the arcs.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="directed" xml:id="RDG2" label="Selected Airline Routes in Southwestern USA" order="5" size="5">
-   <node label="LAX5" xml:id="LAX5" inDegree="1" outDegree="1" adjTo="#LVG5" adjFrom="#PHX5"/>
-   <node label="LVG5" xml:id="LVG5" inDegree="1" outDegree="1" adjFrom="#LAX5" adjTo="#PHX5"/>
-   <node label="PHX5" xml:id="PHX5" inDegree="2" outDegree="2" adjTo="#LAX5 #TUS" adjFrom="#LVG5 #TUS5"/>
-   <node label="TUS5" xml:id="TUS5" inDegree="1" outDegree="1" adjTo="#PHX5" adjFrom="#PHX5"/>
-   <node label="CIB5" xml:id="CIB5" inDegree="0" outDegree="0"/>
-   </graph></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="directed" xml:id="RDG2" order="5" size="5">
+  <label>Selected Airline Routes in Southwestern USA</label>
+  <node xml:id="LAX5" inDegree="1" outDegree="1" adjTo="#LVG5" adjFrom="#PHX5">
+    <label>LAX5</label>
+  </node>
+  <node xml:id="LVG5" inDegree="1" outDegree="1" adjFrom="#LAX5" adjTo="#PHX5">
+    <label>LVG5</label>
+  </node>
+  <node xml:id="PHX5" inDegree="2" outDegree="2" adjTo="#LAX5 #TUS" adjFrom="#LVG5 #TUS5">
+    <label>PHX5</label>
+  </node>
+  <node xml:id="TUS5" inDegree="1" outDegree="1" adjTo="#PHX5" adjFrom="#PHX5">
+    <label>TUS5</label>
+  </node>
+  <node xml:id="CIB5" inDegree="0" outDegree="0">
+    <label>CIB5</label>
+  </node>
+</graph></egXML></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">If we wish to label the arcs, say with flight numbers, then
 <gi>arc</gi> elements must be used to carry the <att>label</att>
 attribute, as in the following example.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="directed" xml:id="RDG3" label="Selected Airline Routes in Southwestern USA" order="5" size="5">
-   <node label="LAX6" xml:id="LAX6"/>
-   <node label="LVG6" xml:id="LVG6"/>
-   <node label="PHX6" xml:id="PHX6"/>
-   <node label="TUS6" xml:id="TUS6"/>
-   <node label="CIB6" xml:id="CIB6"/>
-   <arc from="#LAX6" to="#LVG6" label="SW117"/>
-   <arc from="#LVG6" to="#PHX6" label="SW711"/>
-   <arc from="#PHX6" to="#LAX6" label="AA218"/>
-   <arc from="#PHX6" to="#TUS6" label="AW229"/>
-   <arc from="#TUS6" to="#PHX6" label="AW225"/>
-   </graph></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="directed" xml:id="RDG3" order="5" size="5">
+  <label>Selected Airline Routes in Southwestern USA</label>
+  <node xml:id="LAX6">
+    <label>LAX6</label>
+  </node>
+  <node xml:id="LVG6">
+    <label>LVG6</label>
+  </node>
+  <node xml:id="PHX6">
+    <label>PHX6</label>
+  </node>
+  <node xml:id="TUS6">
+    <label>TUS6</label>
+  </node>
+  <node xml:id="CIB6">
+    <label>CIB6</label>
+  </node>
+  <arc from="#LAX6" to="#LVG6">
+    <label>SW117</label>
+  </arc>
+  <arc from="#LVG6" to="#PHX6">
+    <label>SW711</label>
+  </arc>
+  <arc from="#PHX6" to="#LAX6">
+    <label>AA218</label>
+  </arc>
+  <arc from="#PHX6" to="#TUS6">
+    <label>AW229</label>
+  </arc>
+  <arc from="#TUS6" to="#PHX6">
+    <label>AW225</label>
+  </arc>
+</graph></egXML>
 <!-- indegree/outdegree removed at DD's suggestion --></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">The formal declarations of the <gi>graph</gi>, <gi>node</gi> and
 <gi>arc</gi> elements are as follows.
@@ -247,19 +323,32 @@ from its initial node to its final node, and concatenating the labels.
                       MEN       COME
 </eg>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<graph type="transition network" xml:id="SS8" label="(8)" order="5" size="6">
+<graph type="transition network" xml:id="SS8" order="5" size="6">
+<label>(8)</label>
    <node xml:id="Q0" inDegree="0" outDegree="1" type="initial"/>
    <node xml:id="Q1" inDegree="2" outDegree="3"/>
    <node xml:id="Q2" inDegree="1" outDegree="1"/>
    <node xml:id="Q3" inDegree="1" outDegree="1"/>
    <node xml:id="Q4" inDegree="2" outDegree="0" type="final"/>
-   <arc from="q0" to="q1" label="THE"/>
-   <arc from="q1" to="q1" label="OLD"/>
-   <arc from="q1" to="q2" label="MAN"/>
-   <arc from="q1" to="q3" label="MEN"/>
-   <arc from="q2" to="q4" label="COMES"/>
-   <arc from="q3" to="q4" label="COME"/>
-   </graph></egXML></p>
+   <arc from="q0" to="q1">
+     <label>THE</label>
+   </arc>
+   <arc from="q1" to="q1">
+     <label>OLD</label>
+   </arc>
+   <arc from="q1" to="q2">
+     <label>MAN</label>
+   </arc>
+   <arc from="q1" to="q3">
+     <label>MEN</label>
+   </arc>
+   <arc from="q2" to="q4">
+     <label>COMES</label>
+   </arc>
+   <arc from="q3" to="q4">
+     <label>COME</label>
+   </arc>
+</graph></egXML></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">A finite state transducer has two labels on each arc, and can be
 thought of as representing a mapping from one sequence of labels to
 the other.  The following example represents a transducer for
@@ -290,24 +379,68 @@ numbers, for convenience.
             VIEUX
 </eg>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="transducer" order="7" size="10">
-   <node xml:id="T0" label="0" inDegree="0" outDegree="3" type="initial"/>
-   <node xml:id="T1" label="1" inDegree="2" outDegree="1"/>
-   <node xml:id="T2" label="2" inDegree="2" outDegree="2"/>
-   <node xml:id="T3" label="3" inDegree="2" outDegree="2"/>
-   <node xml:id="T4" label="4" inDegree="1" outDegree="1"/>
-   <node xml:id="T5" label="5" inDegree="1" outDegree="1"/>
-   <node xml:id="T6" label="6" inDegree="2" outDegree="0" type="final"/>
-   <arc from="#t0" to="#t1" label="THE" label2="L'"/>
-   <arc from="#t0" to="#t2" label="THE" label2="LE"/>
-   <arc from="#t0" to="#t3" label="THE" label2="LES"/>
-   <arc from="#t1" to="#t4" label="MAN" label2="HOMME"/>
-   <arc from="#t2" to="#t1" label="OLD" label2="VIEIL"/>
-   <arc from="#t2" to="#t2" label="OLD" label2="VIEIL"/>
-   <arc from="#t3" to="#t3" label="OLD" label2="VIEUX"/>
-   <arc from="#t3" to="#t5" label="MEN" label2="HOMMES"/>
-   <arc from="#t4" to="#t6" label="COMES" label2="VIENT"/>
-   <arc from="#t5" to="#t6" label="COME" label2="VIENNENT"/>
-   </graph></egXML></p></div>
+  <node xml:id="T0" inDegree="0" outDegree="3" type="initial">
+    <label>0</label>
+  </node>
+  <node xml:id="T1" inDegree="2" outDegree="1">
+    <label>1</label>
+  </node>
+  <node xml:id="T2" inDegree="2" outDegree="2">
+    <label>2</label>
+  </node>
+  <node xml:id="T3" inDegree="2" outDegree="2">
+    <label>3</label>
+  </node>
+  <node xml:id="T4" inDegree="1" outDegree="1">
+    <label>4</label>
+  </node>
+  <node xml:id="T5" inDegree="1" outDegree="1">
+    <label>5</label>
+  </node>
+  <node xml:id="T6" inDegree="2" outDegree="0" type="final">
+    <label>6</label>
+  </node>
+  <arc from="#t0" to="#t1">
+    <label>THE</label>
+    <label>L'</label>
+  </arc>
+  <arc from="#t0" to="#t2">
+    <label>THE</label>
+    <label>LE</label>
+  </arc>
+  <arc from="#t0" to="#t3">
+    <label>THE</label>
+    <label>LES</label>
+  </arc>
+  <arc from="#t1" to="#t4">
+    <label>MAN</label>
+    <label>HOMME</label>
+  </arc>
+  <arc from="#t2" to="#t1">
+    <label>OLD</label>
+    <label>VIEIL</label>
+  </arc>
+  <arc from="#t2" to="#t2">
+    <label>OLD</label>
+    <label>VIEIL</label>
+  </arc>
+  <arc from="#t3" to="#t3">
+    <label>OLD</label>
+    <label>VIEUX</label>
+  </arc>
+  <arc from="#t3" to="#t5">
+    <label>MEN</label>
+    <label>HOMMES</label>
+  </arc>
+  <arc from="#t4" to="#t6">
+    <label>COMES</label>
+    <label>VIENT</label>
+  </arc>
+  <arc from="#t5" to="#t6">
+    <label>COME</label>
+    <label>VIENNENT</label>
+  </arc>
+</graph></egXML></p></div>
 <div type="div3" xml:id="GDFT"><head xmlns="http://www.tei-c.org/ns/1.0">Family Trees</head>
 <p xmlns="http://www.tei-c.org/ns/1.0">The next example provides an encoding a portion of a
 <soCalled>family tree</soCalled>, in which nodes are used to represent
@@ -338,32 +471,82 @@ are framed by diamonds.
          |         |           |
        Conrad     Kate        John]]></eg>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="family tree" order="13" size="12">
-  <node xml:id="KATHR" label="Katherine" value="#kr1" inDegree="0" outDegree="1"/>
-  <node xml:id="AMBER" label="Amberley" value="#ar1" inDegree="0" outDegree="1"/>
-  <node xml:id="KAR" label="K+A" inDegree="2" outDegree="3"/>
-  <node xml:id="BERTR" label="Bertrand" value="#br1" inDegree="1" outDegree="2"/>
-  <node xml:id="PETER" label="Peter" value="#pr1" inDegree="0" outDegree="1"/>
-  <node xml:id="DORAR" label="Dora" value="#dr1" inDegree="0" outDegree="1"/>
-  <node xml:id="PBR" label="P+B" inDegree="2" outDegree="1"/>
-  <node xml:id="DBR" label="D+B" inDegree="2" outDegree="2"/>
-  <node xml:id="FRANR" label="Frank" value="#fr1" inDegree="1" outDegree="0"/>
-  <node xml:id="RACHR" label="Rachel" value="#rr1" inDegree="1" outDegree="0"/>
-  <node xml:id="CONRR" label="Conrad" value="#cr1" inDegree="1" outDegree="0"/>
-  <node xml:id="KATER" label="Kate" value="#kr2" inDegree="1" outDegree="0"/>
-  <node xml:id="JOHNR" label="John" value="#jr1" inDegree="1" outDegree="0"/>
-  <arc label="Mo" from="#KathR" to="#KAR"/>
-  <arc label="Fa" from="#AmbeR" to="#KAR"/>
-  <arc label="So" from="#KAR" to="#BertR"/>
-  <arc label="So" from="#KAR" to="#FranR"/>
-  <arc label="Da" from="#KAR" to="#RachR"/>
-  <arc label="Mo" from="#PeteR" to="#PBR"/>
-  <arc label="Fa" from="#BertR" to="#PBR"/>
-  <arc label="So" from="#PBR" to="#ConrR"/>
-  <arc label="Mo" from="#DoraR" to="#DBR"/>
-  <arc label="Fa" from="#BertR" to="#DBR"/>
-  <arc label="Da" from="#DBR" to="#KateR"/>
-  <arc label="So" from="#DBR" to="#JohnR"/>
-  </graph></egXML>
+  <node xml:id="KATHR" value="#kr1" inDegree="0" outDegree="1">
+    <label>Katherine</label>
+  </node>
+  <node xml:id="AMBER" value="#ar1" inDegree="0" outDegree="1">
+    <label>Amberley</label>
+  </node>
+  <node xml:id="KAR" inDegree="2" outDegree="3">
+    <label>K+A</label>
+  </node>
+  <node xml:id="BERTR" value="#br1" inDegree="1" outDegree="2">
+    <label>Bertrand</label>
+  </node>
+  <node xml:id="PETER" value="#pr1" inDegree="0" outDegree="1">
+    <label>Peter</label>
+  </node>
+  <node xml:id="DORAR" value="#dr1" inDegree="0" outDegree="1">
+    <label>Dora</label>
+  </node>
+  <node xml:id="PBR" inDegree="2" outDegree="1">
+    <label>P+B</label>
+  </node>
+  <node xml:id="DBR" inDegree="2" outDegree="2">
+    <label>D+B</label>
+  </node>
+  <node xml:id="FRANR" value="#fr1" inDegree="1" outDegree="0">
+    <label>Frank</label>
+  </node>
+  <node xml:id="RACHR" value="#rr1" inDegree="1" outDegree="0">
+    <label>Rachel</label>
+  </node>
+  <node xml:id="CONRR" value="#cr1" inDegree="1" outDegree="0">
+    <label>Conrad</label>
+  </node>
+  <node xml:id="KATER" value="#kr2" inDegree="1" outDegree="0">
+    <label>Kate</label>
+  </node>
+  <node xml:id="JOHNR" value="#jr1" inDegree="1" outDegree="0">
+    <label>John</label>
+  </node>
+  <arc from="#KathR" to="#KAR">
+    <label>Mo</label>
+  </arc>
+  <arc from="#AmbeR" to="#KAR">
+    <label>Fa</label>
+  </arc>
+  <arc from="#KAR" to="#BertR">
+    <label>So</label>
+  </arc>
+  <arc from="#KAR" to="#FranR">
+    <label>So</label>
+  </arc>
+  <arc from="#KAR" to="#RachR">
+    <label>Da</label>
+  </arc>
+  <arc from="#PeteR" to="#PBR">
+    <label>Mo</label>
+  </arc>
+  <arc from="#BertR" to="#PBR">
+    <label>Fa</label>
+  </arc>
+  <arc from="#PBR" to="#ConrR">
+    <label>So</label>
+  </arc>
+  <arc from="#DoraR" to="#DBR">
+    <label>Mo</label>
+  </arc>
+  <arc from="#BertR" to="#DBR">
+    <label>Fa</label>
+  </arc>
+  <arc from="#DBR" to="#KateR">
+    <label>Da</label>
+  </arc>
+  <arc from="#DBR" to="#JohnR">
+    <label>So</label>
+  </arc>
+</graph></egXML>
 <!-- Partial family tree for Bertrand Russell, based on       -->
 	<!-- Pereira and Shieber, Prolog and Natural Language         -->
 	<!-- Analysis, 1987, p22                                      --></p></div>
@@ -471,23 +654,55 @@ land in) Gallachalzie</item>
 the Lordship of Knapdale, is <mentioned>in</mentioned> the Sherrifdom of Argyll</item></list>
 We encode the graph thus:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="directed" order="7" size="9">
-  <node xml:id="EARL" label="Earl of Argyll's land"/>
-  <node xml:id="GALL" label="Gallachalzie" value="#gallfs"/>
-  <node xml:id="PERT" label="Pertinents"/>
-  <node xml:id="PER1" label="Pertinents part"/>
-  <node xml:id="PER2" label="Pertinents part"/>
-  <node xml:id="KNAP" label="Lordship of Knapdale" value="#knapfs"/>
-  <node xml:id="ARGY" label="Sherrifdome of Argyll" value="#argyfs"/>
-  <arc xml:id="EARLGALL" label="INCLUDE" from="#earl" to="#gall"/>
-  <arc xml:id="EARLARGY" label="IN" from="#earl" to="#argy" exclude="#pertargy #knapargy"/>
-  <arc xml:id="EARLPERT" label="INCLUDE" from="#earl" to="#pert"/>
-  <arc xml:id="PERTPER1" label="INCLUDE" from="#pert" to="#per1"/>
-  <arc xml:id="PERTPER2" label="INCLUDE" from="#pert" to="#per2"/>
-  <arc xml:id="PERTARGY" label="IN" from="#pert" to="#argy" exclude="#earlargy #knapargy"/>
-  <arc xml:id="PER1KNAP" label="BY" from="#per1" to="#knap"/>
-  <arc xml:id="PER2KNAP" label="PART OF" from="#per2" to="#knap"/>
-  <arc xml:id="KNAPARGY" label="IN" from="#knap" to="#argy" exclude="#earlargy #pertargy"/>
-  </graph></egXML></p></div></div>
+  <node xml:id="EARL">
+    <label>Earl of Argyll's land</label>
+  </node>
+  <node xml:id="GALL" value="#gallfs">
+    <label>Gallachalzie</label>
+  </node>
+  <node xml:id="PERT">
+    <label>Pertinents</label>
+  </node>
+  <node xml:id="PER1">
+    <label>Pertinents part</label>
+  </node>
+  <node xml:id="PER2">
+    <label>Pertinents part</label>
+  </node>
+  <node xml:id="KNAP" value="#knapfs">
+    <label>Lordship of Knapdale</label>
+  </node>
+  <node xml:id="ARGY" value="#argyfs">
+    <label>Sherrifdome of Argyll</label>
+  </node>
+  <arc xml:id="EARLGALL" from="#earl" to="#gall">
+    <label>INCLUDE</label>
+  </arc>
+  <arc xml:id="EARLARGY" from="#earl" to="#argy" exclude="#pertargy #knapargy">
+    <label>IN</label>
+  </arc>
+  <arc xml:id="EARLPERT" from="#earl" to="#pert">
+    <label>INCLUDE</label>
+  </arc>
+  <arc xml:id="PERTPER1" from="#pert" to="#per1">
+    <label>INCLUDE</label>
+  </arc>
+  <arc xml:id="PERTPER2" from="#pert" to="#per2">
+    <label>INCLUDE</label>
+  </arc>
+  <arc xml:id="PERTARGY" from="#pert" to="#argy" exclude="#earlargy #knapargy">
+    <label>IN</label>
+  </arc>
+  <arc xml:id="PER1KNAP" from="#per1" to="#knap">
+    <label>BY</label>
+  </arc>
+  <arc xml:id="PER2KNAP" from="#per2" to="#knap">
+    <label>PART OF</label>
+  </arc>
+  <arc xml:id="KNAPARGY" from="#knap" to="#argy" exclude="#earlargy #pertargy">
+    <label>IN</label>
+  </arc>
+</graph></egXML></p></div></div>
 <div type="div2" xml:id="GDTR"><head xmlns="http://www.tei-c.org/ns/1.0">Trees</head>
 <p xmlns="http://www.tei-c.org/ns/1.0">A <term>tree</term> is a connected acyclic graph.  That is, it is
 possible in a tree graph to follow a path from any vertex to any other
@@ -538,21 +753,47 @@ b--'    |    |
         |
 2-------'</egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<tree n="ex1" arity="2" ord="true" order="12">
-   <root label="/" xml:id="G-DIV1" children="#PLU1 #EXP1"/>
-   <iNode label="+" xml:id="PLU1" parent="#G-DIV1" children="#EXP2 #EXP3"/>
-   <iNode label="**" xml:id="EXP1" parent="#G-DIV1" children="#PLU2 #NUM2.3"/>
-   <iNode label="**" xml:id="EXP2" parent="#PLU1" children="#VARA1 #NUM2.1"/>
-   <iNode label="**" xml:id="EXP3" parent="#PLU1" children="#VARB1 #NUM2.2"/>
-   <iNode label="+" xml:id="PLU2" parent="#EXP1" children="#VARA2 #VARB2"/>
-   <leaf label="a" xml:id="VARA1" parent="#EXP2"/>
-   <leaf label="2" xml:id="NUM2.1" parent="#EXP2"/>
-   <leaf label="b" xml:id="VARB1" parent="#EXP3"/>
-   <leaf label="2" xml:id="NUM2.2" parent="#EXP3"/>
-   <leaf label="a" xml:id="VARA2" parent="#PLU2"/>
-   <leaf label="b" xml:id="VARB2" parent="#PLU2"/>
-   <leaf label="2" xml:id="NUM2.3" parent="#EXP1"/>
-   </tree></egXML></p>
+  <tree n="ex1" arity="2" ord="true" order="12">
+    <root xml:id="G-DIV1" children="#PLU1 #EXP1">
+      <label>/</label>
+    </root>
+    <iNode xml:id="PLU1" parent="#G-DIV1" children="#EXP2 #EXP3">
+      <label>+</label>
+    </iNode>
+    <iNode xml:id="EXP1" parent="#G-DIV1" children="#PLU2 #NUM2.3">
+      <label>**</label>
+    </iNode>
+    <iNode xml:id="EXP2" parent="#PLU1" children="#VARA1 #NUM2.1">
+      <label>**</label>
+    </iNode>
+    <iNode xml:id="EXP3" parent="#PLU1" children="#VARB1 #NUM2.2">
+      <label>**</label>
+    </iNode>
+    <iNode xml:id="PLU2" parent="#EXP1" children="#VARA2 #VARB2">
+      <label>+</label>
+    </iNode>
+    <leaf xml:id="VARA1" parent="#EXP2">
+      <label>a</label>
+    </leaf>
+    <leaf xml:id="NUM2.1" parent="#EXP2">
+      <label>2</label>
+    </leaf>
+    <leaf xml:id="VARB1" parent="#EXP3">
+      <label>b</label>
+    </leaf>
+    <leaf xml:id="NUM2.2" parent="#EXP3">
+      <label>2</label>
+    </leaf>
+    <leaf xml:id="VARA2" parent="#PLU2">
+      <label>a</label>
+    </leaf>
+    <leaf xml:id="VARB2" parent="#PLU2">
+      <label>b</label>
+    </leaf>
+    <leaf xml:id="NUM2.3" parent="#EXP1">
+      <label>2</label>
+    </leaf>
+</tree></egXML></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">In this encoding, the <att>arity</att> attribute represents the
 <term>arity</term> of the tree, which is the greatest value of the
 <att>outDegree</att> attribute for any of the nodes in the tree.  If, as
@@ -567,26 +808,54 @@ equivalent formulas involving its leaves, by specifying the attribute
 elements, and the attribute <att>ord</att> as <val>partial</val> on the <gi>tree</gi>
 element, as follows.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><tree n="ex2" ord="partial" arity="2" order="13">
- <root label="/" xml:id="div1" ord="true" children="#plu1 #exp1"/>
- <iNode label="+" xml:id="plu1" ord="false" parent="#div1" children="#exp2 #exp3"/>
- <iNode label="**" xml:id="exp1" ord="true" parent="#div1" children="#plu2 #num2.3"/>
- <iNode label="**" xml:id="exp2" ord="true" parent="#plu1" children="#vara1 #num2.1"/>
- <iNode label="**" xml:id="exp3" ord="true" parent="#plu1" children="#varb1 #num2.2"/>
- <iNode label="+" xml:id="plu2" ord="false" parent="#exp1" children="#vara2 #varb2"/>
- <leaf label="a" xml:id="vara1" parent="#exp2"/>
- <leaf label="2" xml:id="num2.1" parent="#exp2"/>
- <leaf label="b" xml:id="varb1" parent="#exp3"/>
- <leaf label="2" xml:id="num2.2" parent="#exp3"/>
- <leaf label="a" xml:id="vara2" parent="#plu2"/>
- <leaf label="b" xml:id="varb2" parent="#plu2"/>
- <leaf label="2" xml:id="num2.3" parent="#exp1"/>
- </tree></egXML></p>
+  <root xml:id="div1" ord="true" children="#plu1 #exp1">
+    <label>/</label>
+  </root>
+  <iNode xml:id="plu1" ord="false" parent="#div1" children="#exp2 #exp3">
+    <label>+</label>
+  </iNode>
+  <iNode xml:id="exp1" ord="true" parent="#div1" children="#plu2 #num2.3">
+    <label>**</label>
+  </iNode>
+  <iNode xml:id="exp2" ord="true" parent="#plu1" children="#vara1 #num2.1">
+    <label>**</label>
+  </iNode>
+  <iNode xml:id="exp3" ord="true" parent="#plu1" children="#varb1 #num2.2">
+    <label>**</label>
+  </iNode>
+  <iNode xml:id="plu2" ord="false" parent="#exp1" children="#vara2 #varb2">
+    <label>+</label>
+  </iNode>
+  <leaf xml:id="vara1" parent="#exp2">
+    <label>a</label>
+  </leaf>
+  <leaf xml:id="num2.1" parent="#exp2">
+    <label>2</label>
+  </leaf>
+  <leaf xml:id="varb1" parent="#exp3">
+    <label>b</label>
+  </leaf>
+  <leaf xml:id="num2.2" parent="#exp3">
+    <label>2</label>
+  </leaf>
+  <leaf xml:id="vara2" parent="#plu2">
+    <label>a</label>
+  </leaf>
+  <leaf xml:id="varb2" parent="#plu2">
+    <label>b</label>
+  </leaf>
+  <leaf xml:id="num2.3" parent="#exp1">
+    <label>2</label>
+  </leaf>
+</tree></egXML></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">This encoding represents all of the following:
 <list type="simple">
-<item><code>((a**2)+(b**2))/((a+b)**2)</code></item>
-<item><code>((b**2)+(a**2))/((a+b)**2)</code></item>
-<item><code>((a**2)+(b**2))/((b+a)**2)</code></item>
-<item><code>((b**2)+(a**2))/((a+b)**2)</code></item></list></p>
+  <item><code>((a**2)+(b**2))/((a+b)**2)</code></item>
+  <item><code>((b**2)+(a**2))/((a+b)**2)</code></item>
+  <item><code>((a**2)+(b**2))/((b+a)**2)</code></item>
+  <item><code>((b**2)+(a**2))/((a+b)**2)</code></item>
+</list>
+</p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Linguistic phrase structure is very commonly represented by trees.
 Here is an example of phrase structure represented by an ordered tree
 with its root at the top, and a possible encoding.
@@ -597,16 +866,33 @@ with its root at the top, and a possible encoding.
      with Art     N
            |      |
           the periscope</egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><tree n="ex3" ord="true" arity="2" order="8">
-   <root xml:id="GD-PP1" children="#GD-P1 #GD-NP1" label="PP"/>
-   <iNode xml:id="GD-P1" parent="#GD-PP1" children="#GD-WITH1" label="P"/>
-   <leaf xml:id="GD-WITH1" parent="#GD-P1" label="with"/>
-   <iNode xml:id="GD-NP1" parent="#GD-PP1" children="#GD-THE1 #GD-PERI1" label="NP"/>
-   <iNode xml:id="GD-ART1" parent="#GD-NP1" children="#GD-THE1" label="Art"/>
-   <leaf xml:id="GD-THE1" parent="#GD-ART1" label="the"/>
-   <iNode xml:id="GD-N1" parent="#GD-NP1" children="#GD-PERI1" label="N"/>
-   <leaf xml:id="GD-PERI1" parent="#GD-N1" label="periscope"/>
-   </tree></egXML></p>
+	  <egXML xmlns="http://www.tei-c.org/ns/Examples"><tree n="ex3" ord="true" arity="2" order="8">
+	    <root xml:id="GD-PP1" children="#GD-P1 #GD-NP1">
+	      <label>PP</label>
+	    </root>
+	    <iNode xml:id="GD-P1" parent="#GD-PP1" children="#GD-WITH1">
+	      <label>P</label>
+	    </iNode>
+	    <leaf xml:id="GD-WITH1" parent="#GD-P1">
+	      <label>with</label>
+	    </leaf>
+	    <iNode xml:id="GD-NP1" parent="#GD-PP1" children="#GD-THE1 #GD-PERI1">
+	      <label>NP</label>
+	    </iNode>
+	    <iNode xml:id="GD-ART1" parent="#GD-NP1" children="#GD-THE1">
+	      <label>Art</label>
+	    </iNode>
+	    <leaf xml:id="GD-THE1" parent="#GD-ART1">
+	      <label>the</label>
+	    </leaf>
+	    <iNode xml:id="GD-N1" parent="#GD-NP1" children="#GD-PERI1">
+	      <label>N</label>
+	    </iNode>
+	    <leaf xml:id="GD-PERI1" parent="#GD-N1">
+	      <label>periscope</label>
+	    </leaf>
+	  </tree>
+</egXML></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Finally, here is an example of an ordered tree, in which a particular
 node which ordinarily would precede another is specified as following
 it.  In the drawing, the <code>xxx</code> symbol indicates that the arc from
@@ -618,25 +904,41 @@ VB to PT crosses the arc from VP to PN.
    VB         PN  PT
    |          |   |
   look       them up</egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><tree n="ex4" arity="2" order="8" ord="true">
-   <leaf label="look" xml:id="GD-LOOK1" parent="#GD-VB2"/>
-   <leaf label="them" xml:id="GD-THEM1" parent="#GD-PN1"/>
-   <leaf label="up" xml:id="GD-UP1" parent="#GD-PT1"/>
-   <iNode label="VB" xml:id="GD-VB2" parent="#GD-VB1" children="#GD-LOOK1"/>
-   <iNode label="PN" xml:id="GD-PN1" parent="#GD-VP1" children="#GD-THEM1"/>
-   <iNode label="PT" xml:id="GD-PT1" parent="#GD-VB1" children="#GD-UP1" follow="#GD-PN1"/>
-   <iNode label="VB" xml:id="GD-VB1" parent="#GD-VP1" children="#GD-VB2 #GD-PT1"/>
-   <root label="VP" xml:id="GD-VP1" children="#GD-VB1 #GD-PN1"/>
-   </tree></egXML></p>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples"><tree n="ex4" arity="2" order="8" ord="true">
+    <leaf xml:id="GD-LOOK1" parent="#GD-VB2">
+      <label>look</label>
+    </leaf>
+    <leaf xml:id="GD-THEM1" parent="#GD-PN1">
+      <label>them</label>
+    </leaf>
+    <leaf xml:id="GD-UP1" parent="#GD-PT1">
+      <label>up</label>
+    </leaf>
+    <iNode xml:id="GD-VB2" parent="#GD-VB1" children="#GD-LOOK1">
+      <label>VB</label>
+    </iNode>
+    <iNode xml:id="GD-PN1" parent="#GD-VP1" children="#GD-THEM1">
+      <label>PN</label>
+    </iNode>
+    <iNode xml:id="GD-PT1" parent="#GD-VB1" children="#GD-UP1" follow="#GD-PN1">
+      <label>PT</label>
+    </iNode>
+    <iNode xml:id="GD-VB1" parent="#GD-VP1" children="#GD-VB2 #GD-PT1">
+      <label>VB</label>
+    </iNode>
+    <root xml:id="GD-VP1" children="#GD-VB1 #GD-PN1">
+      <label>VP</label>
+    </root>
+</tree></egXML></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">The formal declarations of the <gi>tree</gi>, <gi>root</gi>,
 <gi>iNode</gi> and <gi>leaf</gi> elements are as follows.
 <specGrp xml:id="DGDTR" n="Trees (basic method)">
-&tree;
-&root;
-&iNode;
-&leaf;
+  &tree;
+  &root;
+  &iNode;
+  &leaf;
 </specGrp>
-										</p></div>
+</p></div>
 <div type="div2" xml:id="GDAT"><head xmlns="http://www.tei-c.org/ns/1.0">Another Tree Notation</head>
 <p xmlns="http://www.tei-c.org/ns/1.0">In this section, we present an alternative to the method of
 representing the structure of ordered rooted trees that is given in
@@ -676,13 +978,30 @@ elements, here is an encoding of the second example in section <ptr target="#GDT
      with Art     N
            |      |
           the periscope</egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><eTree n="ex1" label="PP">
-   <eTree label="P"><eLeaf label="with"/></eTree>
-   <eTree label="NP">
-      <eTree label="Art"><eLeaf label="the"/></eTree>
-      <eTree label="N"><eLeaf label="periscope"/></eTree>
-      </eTree>
-   </eTree></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><eTree n="ex1">
+  <label>PP</label>
+  <eTree>
+    <label>P</label>
+    <eLeaf>
+      <label>with</label>
+    </eLeaf>
+  </eTree>
+  <eTree>
+    <label>NP</label>
+    <eTree>
+      <label>Art</label>
+      <eLeaf>
+	<label>the</label>
+    </eLeaf>
+    </eTree>
+    <eTree>
+      <label>N</label>
+      <eLeaf>
+	<label>periscope</label>
+      </eLeaf>
+    </eTree>
+  </eTree>
+</eTree></egXML></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Next, we provide an encoding, using the <gi>triangle</gi> element, in
 which the internal structure of the <gi>eTree</gi> labeled <code>NP</code> is
 omitted.
@@ -693,10 +1012,22 @@ omitted.
      with    /    \
             /______\
           the periscope</egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><eTree n="ex2" label="PP">
-   <eTree label="P"><eLeaf label="with"/></eTree>
-   <triangle label="NP"><eLeaf label="the periscope"/></triangle>
-   </eTree></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><eTree n="ex2">
+  <label>PP</label>
+   <eTree>
+     <label>P</label>
+   <eLeaf>
+     <label>with</label>
+   </eLeaf>
+   </eTree>
+   <triangle>
+     <label>NP</label>
+     <eLeaf>
+       <label>the periscope</label>
+     </eLeaf>
+   </triangle>
+</eTree></egXML>
+</p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Ambiguity involving alternative tree structures associated with the
 same terminal sequence can be encoded relatively conveniently using a
 combination of the <att>exclude</att> and <att>copyOf</att> attributes
@@ -728,21 +1059,57 @@ sketch.
                    with Art   N      the periscope
                          |    |
                         the periscope</egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><eTree n="ex3" label="VP">
-   <eTree label="V"><eLeaf label="see"/></eTree>
-   <eTree label="NP">
-      <eTree label="Art"><eLeaf label="the"/></eTree>
-      <eTree label="N"><eLeaf label="vessel"/></eTree>
-      <eTree xml:id="GD-PPA" exclude="#GD-PPB" label="PP">
-         <eTree label="P"><eLeaf label="with"/></eTree>
-         <eTree label="NP">
-            <eTree label="Art"><eLeaf label="the"/></eTree>
-            <eTree label="N"><eLeaf label="periscope"/></eTree>
-            </eTree>
-         </eTree>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><eTree n="ex3">
+  <label>VP</label>
+  <eTree>
+    <label>V</label>
+    <eLeaf>
+      <label>see</label>
+    </eLeaf>
+  </eTree>
+  <eTree>
+    <label>NP</label>
+    <eTree>
+      <label>Art</label>
+      <eLeaf>
+	<label>the</label>
+      </eLeaf>
+    </eTree>
+    <eTree>
+      <label>N</label>
+      <eLeaf>
+	<label>vessel</label>
+      </eLeaf>
+    </eTree>
+    <eTree xml:id="GD-PPA" exclude="#GD-PPB">
+      <label>PP</label>
+      <eTree>
+	<label>P</label>
+	<eLeaf>
+	  <label>with</label>
+	</eLeaf>
       </eTree>
-   <eTree xml:id="GD-PPB" copyOf="#GD-PPA" exclude="#GD-PPA" label="PP"/>
-   </eTree></egXML></p>
+      <eTree>
+	<label>NP</label>
+	<eTree>
+	  <label>Art</label>
+	  <eLeaf>
+	    <label>the</label>
+	  </eLeaf>
+	</eTree>
+	<eTree>
+	  <label>N</label>
+	  <eLeaf>
+	    <label>periscope</label>
+	  </eLeaf>
+	</eTree>
+      </eTree>
+    </eTree>
+  </eTree>
+  <eTree xml:id="GD-PPB" copyOf="#GD-PPA" exclude="#GD-PPA">
+    <label>PP</label>
+  </eTree>
+</eTree></egXML></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">To indicate that one of the alternatives is selected, one may specify
 the <att>select</att> attribute on the highest <gi>eTree</gi> as
 either <val>#GD-PPA</val> or <val>#GD-PPB</val>; see section
@@ -774,34 +1141,71 @@ see  Spec ,-N'--,               V    ,-NP-,   P    ,-NP-,
                   the   N
                         |
                      periscope</egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><eTree n="ex4" label="VP">
-   <eTree xml:id="VBARA" exclude="#VBARB" label="V'">
-      <eTree xml:id="VA" label="V"><eLeaf label="see"/></eTree>
-      <eTree label="NP">
-         <eTree xml:id="SPEC1A" label="Spec"><eLeaf label="the"/></eTree>
-         <eTree label="N'">
-            <eTree xml:id="NBAR2A" label="N'">
-               <eTree label="N"><eLeaf label="vessel"/></eTree>
-               </eTree>
-            <eTree xml:id="PPA1" label="PP">
-               <eTree label="P"><eLeaf label="with"/></eTree>
-               <eTree label="NP">
-                  <eTree label="Spec"><eLeaf label="the"/></eTree>
-                  <eTree label="N'">
-                     <eTree label="N"><eLeaf label="periscope"/></eTree>
-                     </eTree>
-                  </eTree> </eTree> </eTree> </eTree> </eTree>
-   <eTree xml:id="VBARB" exclude="#VBARA" label="V'">
-      <eTree label="V'">
-         <eTree xml:id="VB" copyOf="#VA" label="V"/>
-         <eTree label="NP">
-            <eTree xml:id="SPEC1B" copyOf="#SPEC1A" label="Spec"/>
-            <eTree xml:id="NBAR2B" copyOf="#NBAR2A" label="N'"/>
-            </eTree>
-         </eTree>
-      <eTree xml:id="PPB" copyOf="#PPA1" label="PP"/>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><eTree n="ex4">
+  <label>VP</label>
+  <eTree xml:id="VBARA" exclude="#VBARB">
+    <label>V'</label>
+    <eTree xml:id="VA">
+      <label>V</label><eLeaf>
+      <label>see</label>
+    </eLeaf></eTree>
+    <eTree>
+      <label>NP</label>
+      <eTree xml:id="SPEC1A">
+	<label>Spec</label><eLeaf>
+	<label>the</label>
+      </eLeaf></eTree>
+      <eTree>
+	<label>N'</label>
+	<eTree xml:id="NBAR2A">
+	  <label>N'</label>
+	  <eTree>
+	    <label>N</label><eLeaf>
+	    <label>vessel</label>
+	  </eLeaf></eTree>
+	</eTree>
+	<eTree xml:id="PPA1">
+	  <label>PP</label>
+	  <eTree>
+	    <label>P</label><eLeaf>
+	    <label>with</label>
+	  </eLeaf></eTree>
+	  <eTree>
+	    <label>NP</label>
+	    <eTree>
+	      <label>Spec</label><eLeaf>
+	      <label>the</label>
+	    </eLeaf></eTree>
+	    <eTree>
+	      <label>N'</label>
+	      <eTree>
+		<label>N</label><eLeaf>
+		<label>periscope</label>
+	      </eLeaf></eTree>
+	    </eTree>
+  </eTree> </eTree> </eTree> </eTree> </eTree>
+  <eTree xml:id="VBARB" exclude="#VBARA">
+    <label>V'</label>
+    <eTree>
+      <label>V'</label>
+      <eTree xml:id="VB" copyOf="#VA">
+	<label>V</label>
       </eTree>
-   </eTree></egXML></p>
+      <eTree>
+	<label>NP</label>
+	<eTree xml:id="SPEC1B" copyOf="#SPEC1A">
+	  <label>Spec</label>
+	</eTree>
+	<eTree xml:id="NBAR2B" copyOf="#NBAR2A">
+	  <label>N'</label>
+	</eTree>
+      </eTree>
+    </eTree>
+    <eTree xml:id="PPB" copyOf="#PPA1">
+      <label>PP</label>
+    </eTree>
+  </eTree>
+</eTree></egXML></p>
 <!--
 ** changed id= of second first-generation child <eTree> from VBARA to
 ** VBARB, and exclude= of same from 'vbarb' to 'vbara'. 2001-12-23, Syd
@@ -829,33 +1233,61 @@ special theoretical constructs (<term>empty category</term> and
              |    |                   |    |
             do   what                do    t</egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><forest n="ex5" type="syntactic derivation">
-   <eTree n="Stage 1" xml:id="S1SBAR" label="S'">
-      <eTree xml:id="S1COMP" label="COMP"><eLeaf xml:id="S1E" label="e"/></eTree>
-      <eTree xml:id="S1S" label="S">
-         <eTree xml:id="S1NP1" label="NP"><eLeaf label="you"/></eTree>
-         <eTree xml:id="S1VP" label="VP">
-            <eTree xml:id="S1V" label="V"><eLeaf label="do"/></eTree>
-            <eTree xml:id="S1NP2" label="NP">
-               <eLeaf xml:id="S1WH" label="what"/>
-               </eTree>
-            </eTree>
-         </eTree>
+  <eTree n="Stage 1" xml:id="S1SBAR">
+    <label>S'</label>
+    <eTree xml:id="S1COMP">
+      <label>COMP</label><eLeaf xml:id="S1E">
+      <label>e</label>
+    </eLeaf></eTree>
+    <eTree xml:id="S1S">
+      <label>S</label>
+      <eTree xml:id="S1NP1">
+	<label>NP</label><eLeaf>
+	<label>you</label>
+      </eLeaf></eTree>
+      <eTree xml:id="S1VP">
+	<label>VP</label>
+	<eTree xml:id="S1V">
+	  <label>V</label><eLeaf>
+	  <label>do</label>
+	</eLeaf></eTree>
+	<eTree xml:id="S1NP2">
+	  <label>NP</label>
+	  <eLeaf xml:id="S1WH">
+	    <label>what</label>
+	  </eLeaf>
+	</eTree>
       </eTree>
-   <eTree n="Stage 2" xml:id="S2SBAR" corresp="#S1SBAR" label="S'">
-      <eTree xml:id="S2COMP" corresp="#S1COMP" label="COMP">
-         <eTree copyOf="#S1NP2" corresp="#S1E" label="NP"/>
-         </eTree>
-      <eTree xml:id="S2S" corresp="#s1s" label="S">
-         <eTree xml:id="S2NP1" copyOf="#S1NP1" label="NP"/>
-         <eTree xml:id="S2VP" corresp="#S1VP" label="VP">
-            <eTree xml:id="S2V" copyOf="#S1V" label="V"/>
-            <eTree xml:id="S2NP2" corresp="#S1NP2" label="NP">
-              <eLeaf corresp="#S1WH" label="t"/>
-              </eTree>
-            </eTree>
-         </eTree>
+    </eTree>
+  </eTree>
+  <eTree n="Stage 2" xml:id="S2SBAR" corresp="#S1SBAR">
+    <label>S'</label>
+    <eTree xml:id="S2COMP" corresp="#S1COMP">
+      <label>COMP</label>
+      <eTree copyOf="#S1NP2" corresp="#S1E">
+	<label>NP</label>
       </eTree>
-   </forest></egXML></p>
+    </eTree>
+    <eTree xml:id="S2S" corresp="#s1s">
+      <label>S</label>
+      <eTree xml:id="S2NP1" copyOf="#S1NP1">
+	<label>NP</label>
+      </eTree>
+      <eTree xml:id="S2VP" corresp="#S1VP">
+	<label>VP</label>
+	<eTree xml:id="S2V" copyOf="#S1V">
+	  <label>V</label>
+	</eTree>
+	<eTree xml:id="S2NP2" corresp="#S1NP2">
+	  <label>NP</label>
+	  <eLeaf corresp="#S1WH">
+	    <label>t</label>
+	  </eLeaf>
+	</eTree>
+      </eTree>
+    </eTree>
+  </eTree>
+</forest></egXML></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">In this markup, we have used <att>copyOf</att> attributes to provide
 virtual copies of elements in the tree representing the second stage of
 the derivation that also occur in the first stage, and the
