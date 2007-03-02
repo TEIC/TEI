@@ -13,42 +13,44 @@ connect the nodes.</desc><desc version="2006-10-28" xml:lang="ja">グラフを�
     <memberOf key="model.divPart"/>
   </classes>
   <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
-    <rng:optional>
-      <rng:ref name="label"/>
-      <rng:zeroOrMore>
-	<rng:ref name="model.global"/>
-      </rng:zeroOrMore>
-    </rng:optional>
-    <rng:choice>
-      <rng:group>
-        <rng:oneOrMore>
-          <rng:ref name="node"/>
-          <rng:zeroOrMore>
-            <rng:ref name="model.global"/>
-          </rng:zeroOrMore>
-        </rng:oneOrMore>
-        <rng:zeroOrMore>
-          <rng:ref name="arc"/>
-          <rng:zeroOrMore>
-            <rng:ref name="model.global"/>
-          </rng:zeroOrMore>
-        </rng:zeroOrMore>
-      </rng:group>
-      <rng:group>
-        <rng:oneOrMore>
-          <rng:ref name="arc"/>
-          <rng:zeroOrMore>
-            <rng:ref name="model.global"/>
-          </rng:zeroOrMore>
-        </rng:oneOrMore>
-        <rng:oneOrMore>
-          <rng:ref name="node"/>
-          <rng:zeroOrMore>
-            <rng:ref name="model.global"/>
-          </rng:zeroOrMore>
-        </rng:oneOrMore>
-      </rng:group>
-    </rng:choice>
+    <rng:group>
+      <rng:optional>
+	<rng:ref name="label"/>
+	<rng:zeroOrMore>
+	  <rng:ref name="model.global"/>
+	</rng:zeroOrMore>
+      </rng:optional>
+      <rng:choice>
+	<rng:group>
+	  <rng:oneOrMore>
+	    <rng:ref name="node"/>
+	    <rng:zeroOrMore>
+	      <rng:ref name="model.global"/>
+	    </rng:zeroOrMore>
+	  </rng:oneOrMore>
+	  <rng:zeroOrMore>
+	    <rng:ref name="arc"/>
+	    <rng:zeroOrMore>
+	      <rng:ref name="model.global"/>
+	    </rng:zeroOrMore>
+	  </rng:zeroOrMore>
+	</rng:group>
+	<rng:group>
+	  <rng:oneOrMore>
+	    <rng:ref name="arc"/>
+	    <rng:zeroOrMore>
+	      <rng:ref name="model.global"/>
+	    </rng:zeroOrMore>
+	  </rng:oneOrMore>
+	  <rng:oneOrMore>
+	    <rng:ref name="node"/>
+	    <rng:zeroOrMore>
+	      <rng:ref name="model.global"/>
+	    </rng:zeroOrMore>
+	  </rng:oneOrMore>
+	</rng:group>
+      </rng:choice>
+    </rng:group>
   </content>
   <attList>
     <attDef ident="type" usage="rec">
