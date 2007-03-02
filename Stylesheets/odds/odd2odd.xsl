@@ -1288,6 +1288,7 @@ every attribute and see whether the attribute has changed-->
             <xsl:for-each select="tei:valList">
               <xsl:copy>
                 <xsl:copy-of select="@type"/>
+                <xsl:copy-of select="@repeatable"/>
                 <xsl:copy-of select="*"/>
               </xsl:copy>
             </xsl:for-each>

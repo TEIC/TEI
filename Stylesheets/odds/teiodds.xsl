@@ -1258,6 +1258,15 @@ sequenceRepeatable
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:when>
+      <xsl:when test="tei:valList[@type='closed' and @repeatable='true']">
+	<rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	  <rng:oneOrMore>
+	    <rng:choice>
+	      <xsl:call-template name="valListChildren"/>
+	    </rng:choice>
+	  </rng:oneOrMore>
+	</rng:list>
+      </xsl:when>
       <xsl:when test="tei:valList[@type='closed']">
 	<xsl:call-template name="valListChildren"/>
       </xsl:when>
