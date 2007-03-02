@@ -595,4 +595,15 @@ Which HTML element to wrap each TOCs entry in.
 Which HTML element to wrap each TOC sections in.
 </xd:doc>
   <xsl:param name="tocContainerElement">div</xsl:param>
+
+
+  <xd:doc type="string" class="toc">
+Text to link back to from foot of ODD reference pages
+  </xd:doc>
+<xsl:param name="refDocFooterText">TEI Guidelines</xsl:param>
+
+  <xd:doc type="anyURI" class="toc">
+URL to link back to from foot of ODD reference pages
+  </xd:doc>
+<xsl:param name="refDocFooterURL">index.html</xsl:param>
 </xsl:stylesheet>
