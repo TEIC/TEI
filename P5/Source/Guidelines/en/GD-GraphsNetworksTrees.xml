@@ -125,9 +125,9 @@ the arcs.
   <arc from="#PHX" to="#TUS"/>
 </graph></egXML></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">
-The <att>label</att> attribute on the <gi>graph</gi> element records a
-label for the graph; similarly, the <att>label</att> attribute on the
-<gi>node</gi> elements records the labels of those nodes. The
+The first child element of <gi>graph</gi> may be a <gi>label</gi> to record a
+label for the graph; similarly, the <gi>label</gi> child of each
+<gi>node</gi> element records the labels of that node. The
 <att>order</att> and <att>size</att> attributes on the <gi>graph</gi>
 element record the number of nodes and number of arcs in the graph
 respectively; these values are optional (since they can be computed
@@ -201,9 +201,9 @@ arcs can be described using the adjacency attributes of their adjacent
 nodes), it has nevertheless been included in this module, in order to
 allow the convenient specification of identifiers, display or
 rendition information, and labels for each arc (using the attributes
-<att>xml:id</att>, <att>rend</att>, and <att>label</att>).</p>
+<att>xml:id</att>, <att>rend</att>, and a child <gi>label</gi> element).</p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Next, let us modify the preceding graph by adding directionality to
-the arcs.  Specifically, we now think of the arcs as specifying selected
+the arcs. Specifically, we now think of the arcs as specifying selected
 routes from one airport to another, as indicated by the direction of the
 arrowheads in the following diagram.
 <eg><![CDATA[+-<-LAX-<-+
@@ -258,8 +258,8 @@ designate the arcs.
   </node>
 </graph></egXML></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">If we wish to label the arcs, say with flight numbers, then
-<gi>arc</gi> elements must be used to carry the <att>label</att>
-attribute, as in the following example.
+<gi>arc</gi> elements must be used to hold the <gi>label</gi>
+elements`, as in the following example.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="directed" xml:id="RDG3" order="5" size="5">
   <label>Selected Airline Routes in Southwestern USA</label>
   <node xml:id="LAX6">
@@ -731,7 +731,11 @@ nodes, which (when its parent is ordered) it would be assumed to
 precede, giving rise to crossing arcs.  
 The elements used for the
 encoding of trees have the following descriptions and attributes.
-<specList><specDesc key="tree" atts="arity ord order"/><specDesc key="root" atts="label value children ord outDegree"/><specDesc key="iNode" atts="label value children parent ord follow outDegree"/><specDesc key="leaf" atts="label value parent follow"/></specList></p>
+<specList>
+<specDesc key="tree" atts="arity ord order"/>
+<specDesc key="root" atts="value children ord outDegree"/>
+<specDesc key="iNode" atts="value children parent ord follow outDegree"/>
+<specDesc key="leaf" atts="value parent follow"/></specList></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Here is an example of a tree.  It represents the order in which the
 operators of addition (symbolized by <code>+</code>), exponentiation
 (symbolized by <code>**</code>) and division (symbolized by <code>/</code>) are
@@ -964,11 +968,17 @@ which consists of one or more <gi>tree</gi>, <gi>eTree</gi> or
 consists of one or more <gi>forest</gi> elements.  The elements used for
 the encoding of embedding trees and the units containing them have the
 following descriptions and attributes.
-<specList><specDesc key="eTree" atts="label value"/><specDesc key="triangle" atts="label value"/><specDesc key="eLeaf" atts="label value"/><specDesc key="forest" atts="type"/><specDesc key="forestGrp" atts="type"/></specList></p>
+<specList>
+<specDesc key="eTree" atts="value"/>
+<specDesc key="triangle" atts="value"/>
+<specDesc key="eLeaf" atts="value"/>
+<specDesc key="forest" atts="type"/>
+<specDesc key="forestGrp" atts="type"/>
+</specList></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Like the <gi>root</gi>, <gi>iNode</gi> and <gi>leaf</gi> of a
 <gi>tree</gi>, the <gi>eTree</gi>, <gi>triangle</gi> and
-<gi>eLeaf</gi> elements may also have <att>label</att> and
-<att>value</att> attributes.</p>
+<gi>eLeaf</gi> elements may also have 
+<att>value</att> attributes and <gi>label</gi> children.</p>
 <p xmlns="http://www.tei-c.org/ns/1.0">To illustrate the use of the <gi>eTree</gi> and <gi>eLeaf</gi>
 elements, here is an encoding of the second example in section <ptr target="#GDTR" type="div3"/>, repeated here for convenience.
 <egXML xmlns="http://www.tei-c.org/ns/Examples">      ,---PP---,
