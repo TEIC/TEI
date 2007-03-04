@@ -662,7 +662,11 @@ represented as a hierarchic structure like this:
 	</content>
 	<attList>
 	  <attDef ident="scheme">
-	    <datatype><rng:text/></datatype>
+	    <valList type="closed" repeatable="true">
+	      <valItem ident="local"/>
+	      <valItem ident="gml"/>
+	      <valItem ident="other"/>
+	    </valList>
 	  </attDef>
 	</attList>
       </elementSpec>
@@ -846,25 +850,6 @@ represented as a hierarchic structure like this:
       <classSpec ident="model.placeEventLike" mode="add" type="model">
 	<desc>Objects like <gi>placeEvent</gi>s</desc>
       </classSpec>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header"
-	     mode="change" usage="rec" ident="profileDesc">
-  <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:optional>
-        <rng:ref name="creation"/>
-      </rng:optional>
-      <rng:choice>
-	<rng:zeroOrMore>
-	  <rng:ref name="model.profileDescPart"/>
-	</rng:zeroOrMore>
-	<rng:zeroOrMore>
-	  <rng:ref name="model.biblLike"/>
-	</rng:zeroOrMore>
-      </rng:choice>
-    </rng:group>
-  </content>
-</elementSpec>
 
     <macroSpec ident="anyGML" mode="add">
      <content>
