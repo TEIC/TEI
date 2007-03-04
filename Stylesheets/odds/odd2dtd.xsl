@@ -1367,9 +1367,6 @@
       </xsl:otherwise>
     </xsl:choose>
     <xsl:choose>
-      <xsl:when test="tei:valList[@type='closed' and @repeatable='true']">
-        <xsl:text> CDATA </xsl:text>
-      </xsl:when>
       <xsl:when test="tei:valList[@type='closed']">
         <xsl:text> (</xsl:text>
         <xsl:for-each select="tei:valList/tei:valItem">
