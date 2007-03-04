@@ -23,8 +23,11 @@
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
-      <change date="2006-10-14" who="#sbauman.emt"> Created, using
+      <change date="2007-03-02" who="#sbauman.emt"> Created, using
       tei_bare as a starting point.</change>
+      <change date="2007-03-04" who="#sbauman.emt"> Changed from
+      multiple enumeration testing to multiple occurences of any
+      datatype testing </change>
     </revisionDesc>
   </teiHeader>
   <text>
@@ -32,7 +35,7 @@
       <divGen type="toc"/>
     </front>
     <body>
-      <schemaSpec ident="testmultenu" xml:lang="en" start="TEI div">
+      <schemaSpec ident="testmultattrval" xml:lang="en" start="TEI div">
         <moduleRef key="core"/>
         <moduleRef key="tei"/>
         <moduleRef key="header"/>
@@ -58,30 +61,65 @@
         <elementSpec ident="del" mode="delete" module="core"/>
         <elementSpec ident="desc" mode="delete" module="core"/>
         <elementSpec ident="distinct" mode="change" module="core">
-          <attList>
-            <attDef ident="type" mode="change" usage="req">
-              <desc>specifies the sublanguage or register to which
-                the word or phrase&#xD; is being assigned</desc>
-              <datatype>
-                <rng:ref
-                  xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                  name="data.enumerated"/>
-              </datatype>
-	      <valList type="closed" mode="replace" repeatable="true">
-                <valItem ident="one"/>
-                <valItem ident="two"/>
-                <valItem ident="three"/>
-                <valItem ident="four"/>
-                <valItem ident="can"/>
-                <valItem ident="i"/>
-                <valItem ident="have"/>
-                <valItem ident="a"/>
-                <valItem ident="little"/>
-                <valItem ident="more"/>
-              </valList>
-            </attDef>
-          </attList>
-        </elementSpec>
+	  <attList xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	    <attDef ident="r11" usage="req">
+	      <gloss>required, min 1, max 1</gloss>
+	      <datatype minOccurs="1" maxOccurs="1"><rng:ref name="data.count"/></datatype>
+	    </attDef>
+	    <attDef ident="r12" usage="req">
+	      <gloss>required, min 1, max 2</gloss>
+	      <datatype minOccurs="1" maxOccurs="2"><rng:ref name="data.count"/></datatype>
+	    </attDef>
+	    <attDef ident="r22" usage="req">
+	      <gloss>required, min 2, max 2</gloss>
+	      <datatype minOccurs="2" maxOccurs="2"><rng:ref name="data.count"/></datatype>
+	    </attDef>
+	    <attDef ident="r01" usage="req">
+	      <gloss>required, min 0, max 1</gloss>
+	      <datatype minOccurs="0" maxOccurs="1"><rng:ref name="data.count"/></datatype>
+	    </attDef>
+	    <attDef ident="r0i" usage="req">
+	      <gloss>required, min 0, max unbounded</gloss>
+	      <datatype minOccurs="0" maxOccurs="unbounded"><rng:ref name="data.count"/></datatype>
+	    </attDef>
+	    <attDef ident="r1i" usage="req">
+	      <gloss>required, min 1, max unbounded</gloss>
+	      <datatype minOccurs="1" maxOccurs="unbounded"><rng:ref name="data.count"/></datatype>
+	    </attDef>
+	    <attDef ident="r2i" usage="req">
+	      <gloss>required, min 2, max unbounded</gloss>
+	      <datatype minOccurs="2" maxOccurs="unbounded"><rng:ref name="data.count"/></datatype>
+	    </attDef>
+	    <attDef ident="o11" usage="opt">
+	      <gloss>required, min 1, max 1</gloss>
+	      <datatype minOccurs="1" maxOccurs="1"><rng:ref name="data.count"/></datatype>
+	    </attDef>
+	    <attDef ident="o12" usage="opt">
+	      <gloss>required, min 1, max 2</gloss>
+	      <datatype minOccurs="1" maxOccurs="2"><rng:ref name="data.count"/></datatype>
+	    </attDef>
+	    <attDef ident="o22" usage="opt">
+	      <gloss>required, min 2, max 2</gloss>
+	      <datatype minOccurs="2" maxOccurs="2"><rng:ref name="data.count"/></datatype>
+	    </attDef>
+	    <attDef ident="o01" usage="opt">
+	      <gloss>required, min 0, max 1</gloss>
+	      <datatype minOccurs="0" maxOccurs="1"><rng:ref name="data.count"/></datatype>
+	    </attDef>
+	    <attDef ident="o0i" usage="opt">
+	      <gloss>required, min 0, max unbounded</gloss>
+	      <datatype minOccurs="0" maxOccurs="unbounded"><rng:ref name="data.count"/></datatype>
+	    </attDef>
+	    <attDef ident="o1i" usage="opt">
+	      <gloss>required, min 1, max unbounded</gloss>
+	      <datatype minOccurs="1" maxOccurs="unbounded"><rng:ref name="data.count"/></datatype>
+	    </attDef>
+	    <attDef ident="o2i" usage="opt">
+	      <gloss>required, min 2, max unbounded</gloss>
+	      <datatype minOccurs="2" maxOccurs="unbounded"><rng:ref name="data.count"/></datatype>
+	    </attDef>
+	  </attList>
+	</elementSpec>
         <elementSpec ident="divGen" mode="delete" module="core"/>
         <elementSpec ident="editor" mode="delete" module="core"/>
         <elementSpec ident="emph" mode="delete" module="core"/>
