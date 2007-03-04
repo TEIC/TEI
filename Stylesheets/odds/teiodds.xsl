@@ -1236,39 +1236,32 @@ sequenceRepeatable
     <xsl:text>&#10; *</xsl:text>
     <xsl:apply-templates/>
   </xsl:template>
-  <xsl:template name="attributeDatatype">
-    <xsl:variable name="this" select="@ident"/>
+
+
+  <xsl:template name="attributeData">
     <xsl:choose>
-      <xsl:when test="tei:datatype[rng:ref/@name='datatype.Code']">
-        <xsl:choose>
-          <xsl:when test="tei:valList[@type='closed' and @repeatable='true']">
-	    <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
-	      <rng:oneOrMore>
-		<rng:choice>
-		  <xsl:call-template name="valListChildren"/>
-		</rng:choice>
-	      </rng:oneOrMore>
-	    </rng:list>
-	  </xsl:when>
-	  <xsl:when test="tei:valList[@type='closed']">
-	      <xsl:call-template name="valListChildren"/>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <text xmlns="http://relaxng.org/ns/structure/1.0"/>
-	  </xsl:otherwise>
-	</xsl:choose>
-      </xsl:when>
-      <xsl:when test="tei:valList[@type='closed' and @repeatable='true']">
-	<rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
-	  <rng:oneOrMore>
-	    <rng:choice>
-	      <xsl:call-template name="valListChildren"/>
-	    </rng:choice>
-	  </rng:oneOrMore>
-	</rng:list>
-      </xsl:when>
       <xsl:when test="tei:valList[@type='closed']">
-	<xsl:call-template name="valListChildren"/>
+	<rng:choice>
+	  <xsl:for-each select="tei:valList/tei:valItem">
+	    <rng:value>
+	      <xsl:choose>
+		<xsl:when test="tei:altIdent">
+		  <xsl:value-of select="normalize-space(tei:altIdent)"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of select="@ident"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </rng:value>
+	    <xsl:if test="not($oddmode='tei')">
+	      <a:documentation>
+		<xsl:call-template name="makeDescription">
+		  <xsl:with-param name="includeValList">true</xsl:with-param>
+		</xsl:call-template>
+	      </a:documentation>
+	    </xsl:if>
+	  </xsl:for-each>
+	</rng:choice>
       </xsl:when>
       <xsl:when test="tei:datatype/rng:*">
         <xsl:apply-templates mode="forceRNG" select="tei:datatype/rng:*"/>
@@ -1278,6 +1271,7 @@ sequenceRepeatable
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template name="makeSimpleAttribute">
     <xsl:variable name="name">
       <xsl:choose>
@@ -1306,7 +1300,50 @@ sequenceRepeatable
 	  </xsl:call-template>
         </a:documentation>
       </xsl:if>
-      <xsl:call-template name="attributeDatatype"/>
+    <xsl:variable name="this" select="@ident"/>
+    <xsl:choose>
+      <xsl:when test="tei:datatype/@minOccurs=1 and
+		      tei:datatype/@maxOccurs=1">
+	<xsl:call-template name="attributeData"/>
+      </xsl:when>
+    <xsl:when test="tei:datatype/@minOccurs=2 and
+		    tei:datatype/@maxOccurs=2">
+	<rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	  <xsl:call-template name="attributeData"/>
+	  <xsl:call-template name="attributeData"/>
+	</rng:list>
+    </xsl:when>
+    <xsl:when test="tei:datatype/@minOccurs=0 and
+		    tei:datatype/@maxOccurs='unbounded'">
+      <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	<rng:zeroOrMore>
+	  <xsl:call-template name="attributeData"/>
+	</rng:zeroOrMore>
+      </rng:list>
+    </xsl:when>
+    <xsl:when test="tei:datatype/@minOccurs=1 and
+		    (tei:datatype/@maxOccurs='unbounded' or
+		    tei:datatype/@maxOccurs&gt;2)">
+      <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	<rng:oneOrMore>
+	  <xsl:call-template name="attributeData"/>
+	</rng:oneOrMore>
+      </rng:list>
+    </xsl:when>
+    <xsl:when test="tei:datatype/@minOccurs &gt; 1 and
+		    (tei:datatype/@maxOccurs='unbounded' or
+		    tei:datatype/@maxOccurs&gt;2)">
+      <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	<xsl:call-template name="attributeData"/>
+	<rng:oneOrMore>
+	  <xsl:call-template name="attributeData"/>
+	</rng:oneOrMore>
+      </rng:list>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:call-template name="attributeData"/>
+    </xsl:otherwise>
+    </xsl:choose>
     </rng:attribute>
   </xsl:template>
   <xsl:template name="makeAnAttribute">
