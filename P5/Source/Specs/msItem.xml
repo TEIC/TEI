@@ -4,32 +4,34 @@ Licensed under the GNU General Public License.
 See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="msdescription" xml:id="MSITEM" ident="msItem">
-<equiv/>
-<gloss/>
-<desc>describes an individual work or item within the intellectual 
-content of a manuscript or manuscript part. </desc><desc version="2006-10-28" xml:lang="ja">当該手書き文書の知的内容における，いち単位を示す．</desc>
+  <equiv/>
+  <gloss/>
+  <desc>describes an individual work or item within the intellectual
+  content of a manuscript or manuscript part. </desc>
+  <desc version="2006-10-28" xml:lang="ja">当該手書き文書の知的内容にお
+  ける，いち単位を示す．</desc>
   <classes>
     <memberOf key="model.msItemPart"/>
+    <memberOf key="att.msExcerpt"/>
   </classes>
   <content>
-<!--<!ELEMENT msItem  - -   (locus?, (author|respStmt|title
-     |rubric|incipit|explicit|colophon|decoNote|langUsage|listBibl
-     |q|bibl|summary|note|msItem )*)>-->
-<rng:group>
-    <rng:optional>
-      <rng:ref name="locus"/>
-    </rng:optional>
-<rng:choice>
-<rng:oneOrMore>
-<rng:ref name="model.pLike"/>
-</rng:oneOrMore>
-<rng:oneOrMore>
-<rng:choice>
-<rng:ref name="model.msItemPart"/>
-<rng:ref name="model.global"/>
-</rng:choice>
-</rng:oneOrMore>
-</rng:choice></rng:group>  </content>
+    <rng:group>
+      <rng:optional>
+	<rng:ref name="locus"/>
+      </rng:optional>
+      <rng:choice>
+	<rng:oneOrMore>
+	  <rng:ref name="model.pLike"/>
+	</rng:oneOrMore>
+	<rng:oneOrMore>
+	  <rng:choice>
+	    <rng:ref name="model.msItemPart"/>
+	    <rng:ref name="model.global"/>
+	  </rng:choice>
+	</rng:oneOrMore>
+      </rng:choice>
+    </rng:group>
+  </content>
   <attList>
     <attDef ident="class">
 	<equiv/>
@@ -40,15 +42,6 @@ item</desc><desc version="2006-10-28" xml:lang="ja">当該単位の種類を示�
       <valDesc>One or more codes, each of which is used as the identifier for
 a text classification element supplied in the TEI Header <gi>textClass</gi>
 element.</valDesc>
-    </attDef>
-    <attDef ident="defective">
-	<equiv/>
-	<gloss/>
-	<desc>indicates whether the item being described 
-is defective, i.e. incomplete through loss or damage.</desc><desc version="2006-10-28" xml:lang="ja">当該単位に問題があるかどうかを示す．</desc>
-      <datatype><rng:ref name="data.xTruthValue"/></datatype>
-      <defaultVal>false</defaultVal>
-      <valDesc>true, false, unknown, or unspecified</valDesc>
     </attDef>
   </attList>
   <exemplum>

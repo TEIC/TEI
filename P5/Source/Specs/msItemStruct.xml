@@ -3,74 +3,75 @@ Licensed under the GNU General Public License.
 See the file COPYING for details.
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="msdescription" xml:id="MSITEMSTRUCT" ident="msItemStruct">
-<equiv/>
-<gloss/>
-<desc xml:id="msitem.desc">contains a structured description for an individual work or item within the intellectual content of a manuscript or manuscript part. </desc><desc version="2006-10-28" xml:lang="ja">手書き文書の知的内容を構成する各単位の構造について示す．</desc>
+  <equiv/>
+  <gloss/>
+  <desc xml:id="msitem.desc">contains a structured description for an
+  individual work or item within the intellectual content of a
+  manuscript or manuscript part.</desc>
+  <desc version="2006-10-28" xml:lang="ja">手書き文書の知的内容を構成する各単位の構造について示す．</desc>
   <classes>
     <memberOf key="model.msItemPart"/>
+    <memberOf key="att.msExcerpt"/>
   </classes>
   <content>
-<rng:group>
-  <rng:optional>
-     <rng:ref name="locus"/>
-  </rng:optional>
-  <rng:choice>
-   <rng:oneOrMore>
-     <rng:ref name="model.pLike"/>
-   </rng:oneOrMore>
-  <rng:group>
-    <rng:zeroOrMore>
-       <rng:ref name="author"/>
-    </rng:zeroOrMore>    
-    <rng:zeroOrMore>
-       <rng:ref name="respStmt"/>
-    </rng:zeroOrMore>    
-    <rng:zeroOrMore>
-      <rng:ref name="title"/>
-    </rng:zeroOrMore>    
-    <rng:optional>
-       <rng:ref name="rubric"/>
-    </rng:optional>    
-    <rng:optional>
-       <rng:ref name="incipit"/>
-    </rng:optional>    
-    <rng:zeroOrMore>
-        <rng:ref name="msItemStruct"/>
-    </rng:zeroOrMore>
-    <rng:optional>
-        <rng:ref name="explicit"/>
-    </rng:optional>    
-    <rng:optional>
-       <rng:ref name="finalRubric"/>
-    </rng:optional>
-        <rng:zeroOrMore>
-      <rng:ref name="colophon"/>
-    </rng:zeroOrMore>    
-    <rng:zeroOrMore>
-       <rng:ref name="decoNote"/>
-    </rng:zeroOrMore>   
-    <rng:zeroOrMore>
-       <rng:ref name="listBibl"/>
-    </rng:zeroOrMore>    
-<!--<rng:zeroOrMore>
-   <rng:ref name="q"/>
-</rng:zeroOrMore>   -->
-    <rng:zeroOrMore>
-      <rng:ref name="bibl"/>
-    </rng:zeroOrMore>    
-    <rng:zeroOrMore>
-      <rng:ref name="filiation"/>
-    </rng:zeroOrMore>    
-    <rng:zeroOrMore>
-       <rng:ref name="model.noteLike"/>
-    </rng:zeroOrMore>    
-    <rng:optional>
-     <rng:ref name="textLang"/>
-    </rng:optional>   
-  </rng:group>
-</rng:choice>
-</rng:group>  
-</content>
+    <rng:group>
+      <rng:optional>
+	<rng:ref name="locus"/>
+      </rng:optional>
+      <rng:choice>
+	<rng:oneOrMore>
+	  <rng:ref name="model.pLike"/>
+	</rng:oneOrMore>
+	<rng:group>
+	  <rng:zeroOrMore>
+	    <rng:ref name="author"/>
+	  </rng:zeroOrMore>    
+	  <rng:zeroOrMore>
+	    <rng:ref name="respStmt"/>
+	  </rng:zeroOrMore>    
+	  <rng:zeroOrMore>
+	    <rng:ref name="title"/>
+	  </rng:zeroOrMore>    
+	  <rng:optional>
+	    <rng:ref name="rubric"/>
+	  </rng:optional>    
+	  <rng:optional>
+	    <rng:ref name="incipit"/>
+	  </rng:optional>    
+	  <rng:zeroOrMore>
+	    <rng:ref name="msItemStruct"/>
+	  </rng:zeroOrMore>
+	  <rng:optional>
+	    <rng:ref name="explicit"/>
+	  </rng:optional>    
+	  <rng:optional>
+	    <rng:ref name="finalRubric"/>
+	  </rng:optional>
+	  <rng:zeroOrMore>
+	    <rng:ref name="colophon"/>
+	  </rng:zeroOrMore>    
+	  <rng:zeroOrMore>
+	    <rng:ref name="decoNote"/>
+	  </rng:zeroOrMore>   
+	  <rng:zeroOrMore>
+	    <rng:ref name="listBibl"/>
+	  </rng:zeroOrMore>    
+	  <rng:zeroOrMore>
+	    <rng:ref name="bibl"/>
+	  </rng:zeroOrMore>    
+	  <rng:zeroOrMore>
+	    <rng:ref name="filiation"/>
+	  </rng:zeroOrMore>    
+	  <rng:zeroOrMore>
+	    <rng:ref name="model.noteLike"/>
+	  </rng:zeroOrMore>    
+	  <rng:optional>
+	    <rng:ref name="textLang"/>
+	  </rng:optional>   
+	</rng:group>
+      </rng:choice>
+    </rng:group>  
+  </content>
   <attList>
     <attDef ident="class">
 	<equiv/>
@@ -81,15 +82,6 @@ item</desc><desc version="2006-10-28" xml:lang="ja">当該単位のテキスト�
       <valDesc>One or more codes, each of which is used as the identifier for
 a text classification element supplied in the TEI Header <gi>textClass</gi>
 element.</valDesc>
-    </attDef>
-    <attDef ident="defective">
-	<equiv/>
-	<gloss/>
-	<desc>indicates whether the item being described 
-is defective, i.e. incomplete through loss or damage.</desc>
-      <datatype><rng:ref name="data.xTruthValue"/></datatype>
-      <defaultVal>false</defaultVal>
-      <valDesc>true, false, unknown, or unspecified</valDesc>
     </attDef>
   </attList>
   <exemplum>
