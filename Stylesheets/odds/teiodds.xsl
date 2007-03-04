@@ -1300,52 +1300,68 @@ sequenceRepeatable
 	  </xsl:call-template>
         </a:documentation>
       </xsl:if>
-    <xsl:variable name="this" select="@ident"/>
-    <xsl:choose>
-      <xsl:when test="tei:datatype/@minOccurs=1 and
-		      tei:datatype/@maxOccurs=1">
+      <xsl:variable name="minOccurs">
+	<xsl:choose>
+	  <xsl:when test="tei:datatype/@minOccurs">
+	    <xsl:value-of select="tei:datatype/@minOccurs"/>
+	  </xsl:when>
+	  <xsl:otherwise>1</xsl:otherwise>
+	</xsl:choose>
+      </xsl:variable>
+      <xsl:variable name="maxOccurs">
+	<xsl:choose>
+	  <xsl:when test="tei:datatype/@maxOccurs">
+	    <xsl:value-of select="tei:datatype/@maxOccurs"/>
+	  </xsl:when>
+	  <xsl:otherwise>1</xsl:otherwise>
+	</xsl:choose>
+      </xsl:variable>
+      <xsl:choose>
+	<xsl:when test="$minOccurs=1 and
+			$maxOccurs=1">
+	  <xsl:call-template name="attributeData"/>
+	</xsl:when>
+	<xsl:when test="$minOccurs=2 and
+			$maxOccurs=2">
+	  <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	    <xsl:call-template name="attributeData"/>
+	    <xsl:call-template name="attributeData"/>
+	  </rng:list>
+	</xsl:when>
+	<xsl:when test="$minOccurs=0 and
+			$maxOccurs='unbounded'">
+	  <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	    <rng:zeroOrMore>
+	      <xsl:call-template name="attributeData"/>
+	    </rng:zeroOrMore>
+	  </rng:list>
+	</xsl:when>
+	<xsl:when test="$minOccurs=1 and
+			($maxOccurs='unbounded' or
+			$maxOccurs&gt;2)">
+	  <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	<rng:oneOrMore>
+	  <xsl:call-template name="attributeData"/>
+	</rng:oneOrMore>
+	  </rng:list>
+	</xsl:when>
+	<xsl:when test="$minOccurs &gt; 1 and
+			($maxOccurs='unbounded' or
+			$maxOccurs&gt;2)">
+      <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
 	<xsl:call-template name="attributeData"/>
-      </xsl:when>
-    <xsl:when test="tei:datatype/@minOccurs=2 and
-		    tei:datatype/@maxOccurs=2">
-	<rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
-	  <xsl:call-template name="attributeData"/>
-	  <xsl:call-template name="attributeData"/>
-	</rng:list>
-    </xsl:when>
-    <xsl:when test="tei:datatype/@minOccurs=0 and
-		    tei:datatype/@maxOccurs='unbounded'">
-      <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
-	<rng:zeroOrMore>
-	  <xsl:call-template name="attributeData"/>
-	</rng:zeroOrMore>
-      </rng:list>
-    </xsl:when>
-    <xsl:when test="tei:datatype/@minOccurs=1 and
-		    (tei:datatype/@maxOccurs='unbounded' or
-		    tei:datatype/@maxOccurs&gt;2)">
-      <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
 	<rng:oneOrMore>
 	  <xsl:call-template name="attributeData"/>
 	</rng:oneOrMore>
       </rng:list>
-    </xsl:when>
-    <xsl:when test="tei:datatype/@minOccurs &gt; 1 and
-		    (tei:datatype/@maxOccurs='unbounded' or
-		    tei:datatype/@maxOccurs&gt;2)">
-      <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
-	<xsl:call-template name="attributeData"/>
-	<rng:oneOrMore>
+	</xsl:when>
+	<xsl:otherwise>
 	  <xsl:call-template name="attributeData"/>
-	</rng:oneOrMore>
-      </rng:list>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:call-template name="attributeData"/>
-    </xsl:otherwise>
-    </xsl:choose>
+	</xsl:otherwise>
+      </xsl:choose>
     </rng:attribute>
   </xsl:template>
+
   <xsl:template name="makeAnAttribute">
     <xsl:choose>
       <xsl:when test="@usage='req'">
