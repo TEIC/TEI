@@ -1321,13 +1321,20 @@ sequenceRepeatable
 			$maxOccurs=1">
 	  <xsl:call-template name="attributeData"/>
 	</xsl:when>
-	<xsl:when test="$minOccurs=2 and
+	<xsl:when test="$minOccurs=1 and
 			$maxOccurs=2">
 	  <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
 	    <xsl:call-template name="attributeData"/>
 	    <rng:optional>
 	      <xsl:call-template name="attributeData"/>
 	    </rng:optional>
+	  </rng:list>
+	</xsl:when>
+	<xsl:when test="$minOccurs=2 and
+			$maxOccurs=2">
+	  <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	    <xsl:call-template name="attributeData"/>
+	    <xsl:call-template name="attributeData"/>
 	  </rng:list>
 	</xsl:when>
 	<xsl:when test="$minOccurs=0 and
