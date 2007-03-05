@@ -113,11 +113,12 @@ test-sgml:
 test-bad:
 	echo Now test file with deliberate errors
 	echo JING RelaxNG...
-	-jing -t $(TESTBADFILES).rng $(TESTBADFILES).xml
-	echo RNV....
-	-xx -P $(TESTBADFILES).xml | rnv $(TESTBADFILES).rnc
-	echo JING XSD
-	-jing $(TESTBADFILES).xsd $(TESTBADFILES).xml
+	-for i in $(TESTBADFILES); do \
+	jing -t $$i.rng $$i.xml ; \
+	echo RNV.... ; \
+	xx -P $$i.xml | rnv $$i.rnc ; \
+	echo JING XSD; \
+	jing $$i.xsd $$i.xml; done
 
 
 clean:
