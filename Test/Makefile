@@ -18,6 +18,7 @@ TESTFILES= \
 	testi18n \
 	testlite \
 	testlangs \
+	testmav \
 	testminimal \
 	testms \
 	testnames \
@@ -28,7 +29,8 @@ TESTFILES= \
 	testall 
 
 TESTBADFILES= \
-	detest
+	detest \
+	testerrmav
 
 TESTDOCBOOKFILES= 
 # testdocbook1 testdocbook2 testdocbook3 testdocbook4 testdocbook5 
