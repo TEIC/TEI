@@ -227,7 +227,8 @@
       <xsl:for-each select="tei:classSpec">
         <xsl:sort select="tei:altIdent"/>
         <xsl:sort select="@ident"/>
-        <p class="toclist0">
+	<xsl:element name="{$tocElement}">
+	  <xsl:attribute name="class">toclist0</xsl:attribute>
           <a xmlns="http://www.w3.org/1999/xhtml" 
 	     class="toclist" href="#{@ident}">
             <xsl:choose>
@@ -239,13 +240,14 @@
               </xsl:otherwise>
             </xsl:choose>
           </a>
-        </p>
+	</xsl:element>
       </xsl:for-each>
       <hr/>
       <xsl:for-each select="tei:elementSpec">
         <xsl:sort select="tei:altIdent"/>
         <xsl:sort select="@ident"/>
-        <p class="toclist0">
+	<xsl:element name="{$tocElement}">
+	  <xsl:attribute name="class">toclist0</xsl:attribute>
           <a xmlns="http://www.w3.org/1999/xhtml"
 	     class="toclist" href="#{@ident}">
             <xsl:choose>
@@ -257,13 +259,14 @@
               </xsl:otherwise>
             </xsl:choose>
           </a>
-        </p>
+        </xsl:element>
       </xsl:for-each>
       <hr/>
       <xsl:for-each select="tei:macroSpec">
         <xsl:sort select="tei:altIdent"/>
         <xsl:sort select="@ident"/>
-        <p class="toclist0">
+	<xsl:element name="{$tocElement}">
+	  <xsl:attribute name="class">toclist0</xsl:attribute>
           <a xmlns="http://www.w3.org/1999/xhtml"
 	     class="toclist" href="#{@ident}">
             <xsl:choose>
@@ -275,7 +278,7 @@
               </xsl:otherwise>
             </xsl:choose>
           </a>
-        </p>
+        </xsl:element>
       </xsl:for-each>
     </xsl:for-each>
   </xsl:template>

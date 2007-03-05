@@ -139,7 +139,26 @@
           <xsl:call-template name="i18n">
             <xsl:with-param name="word">Datatype</xsl:with-param>
           </xsl:call-template>
-          <xsl:text>: </xsl:text>
+	  <xsl:variable name="minOccurs">
+	    <xsl:choose>
+	      <xsl:when test="@minOccurs">
+		<xsl:value-of select="@minOccurs"/>
+	      </xsl:when>
+	      <xsl:otherwise>1</xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:variable>
+	  <xsl:variable name="maxOccurs">
+	    <xsl:choose>
+	      <xsl:when test="@maxOccurs">
+		<xsl:value-of select="@maxOccurs"/>
+	      </xsl:when>
+	      <xsl:otherwise>1</xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:variable>
+          <xsl:text> (</xsl:text>
+	  <xsl:value-of select="$minOccurs"/>–<xsl:value-of select="$maxOccurs"/>
+          <xsl:text>)</xsl:text>
+
         </span>
         <xsl:call-template name="bitOut">
           <xsl:with-param name="grammar"/>
@@ -152,6 +171,7 @@
         </xsl:call-template>
       </td>
     </tr>
+
   </xsl:template>
 
   <xd:doc>
