@@ -1894,41 +1894,39 @@
     </xsl:choose>
   </xsl:template>
   <xd:doc>
-    <xd:short>[html] </xd:short>
+    <xd:short>[html] Process unknown rend attribute by turning it into
+    an HTML class</xd:short>
     <xd:param name="value">current value</xd:param>
     <xd:param name="rest">remaining values</xd:param>
     <xd:detail> </xd:detail>
   </xd:doc>
+
   <xsl:template name="unknownRendBlock">
     <xsl:param name="value"/>
     <xsl:param name="rest"/>
     <xsl:if test="not($value='')">
-      <xsl:message>Unknown rend attribute <xsl:value-of select="$value"/></xsl:message>
       <xsl:attribute name="class">
 	<xsl:value-of select="$value"/>
       </xsl:attribute>
       <xsl:call-template name="applyRend">
 	<xsl:with-param name="value" select="$rest"/>
-      </xsl:call-template>
+    </xsl:call-template>
     </xsl:if>
   </xsl:template>
+  
   <xd:doc>
-    <xd:short>[html] </xd:short>
+    <xd:short>[html]  Process unknown rend attribute by turning it into
+    an HTML class</xd:short>
     <xd:param name="value">value</xd:param>
     <xd:param name="rest">rest</xd:param>
     <xd:detail> </xd:detail>
   </xd:doc>
+
   <xsl:template name="unknownRendInline">
     <xsl:param name="value"/>
     <xsl:param name="rest"/>
     <xsl:if test="not($value='')">
-      <xsl:message>Unknown rend attribute <xsl:value-of
-      select="$value"/></xsl:message> 
       <span class="{$value}">
-	<xsl:if test="@id">
-	  <xsl:attribute name="id"><xsl:value-of
-	  select="@id"/></xsl:attribute>
-	</xsl:if>
 	<xsl:call-template name="applyRend">
 	  <xsl:with-param name="value" select="$rest"/>
 	</xsl:call-template>
