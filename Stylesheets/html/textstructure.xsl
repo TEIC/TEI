@@ -1797,61 +1797,78 @@ $ID: requests a particular page
       </head>
       <body>
         <xsl:attribute name="onload">
-          <xsl:text>startUp()</xsl:text>
+	  <xsl:choose>
+	    <xsl:when test="tei:text/tei:body/@onload">
+	      <xsl:copy-of select="tei:text/tei:body/@onload"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:text>startUp()</xsl:text>
+	    </xsl:otherwise>
+	  </xsl:choose>
         </xsl:attribute>
+	<xsl:copy-of select="tei:text/tei:body/@onunload"/>
         <xsl:call-template name="bodyHook"/>
         <xsl:call-template name="bodyJavascriptHook"/>
-        <!-- header -->
-        <div id="hdr">
-          <xsl:call-template name="hdr"/>
-        </div>
-        <div id="accessibility">
-          <span class="tocontent"><a href="{$REQUEST}?style=text">Text only</a>
-            | <a class="skiplinks" href="#rh-column"
-              title="Go to main page content">Skip links</a></span>
-        </div>
-        <div id="hdr2">
-          <xsl:call-template name="hdr2"/>
-        </div>
-        <xsl:if test="not($contentStructure='all' or @rend='all')">
-          <div id="hdr3">
-            <xsl:call-template name="hdr3"/>
-          </div>
-        </xsl:if>
-        <xsl:choose>
-          <xsl:when test="$contentStructure='all' or @rend='all'">
-            <div class="column-wrapper">
-              <xsl:call-template name="col1"/>
-              <xsl:call-template name="col2"/>
-              <xsl:call-template name="col3"/>
-            </div>
-          </xsl:when>
-          <xsl:when test="@rend='frontpage'">
-            <div class="column-wrapper">
-              <div id="rh-col">
-                <xsl:for-each
-                  select="descendant-or-self::tei:TEI/tei:text/tei:body">
-                  <xsl:apply-templates/>
-                </xsl:for-each>
-              </div>
-              <div id="lh-col">
-                <xsl:for-each
-                  select="descendant-or-self::tei:TEI/tei:text/tei:front">
-                  <xsl:apply-templates/>
-                </xsl:for-each>
-              </div>
-            </div>
-          </xsl:when>
-          <xsl:when test="$contentStructure='body'">
-            <xsl:call-template name="bodyLayout">
-              <xsl:with-param name="currentID" select="$currentID"/>
-            </xsl:call-template>
-          </xsl:when>
-        </xsl:choose>
+	<xsl:call-template name="mainPage"/>
         <xsl:call-template name="bodyEndHook"/>
       </body>
     </html>
   </xsl:template>
+
+  <xd:doc>
+    <xd:short>[html] the main page structure</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template name="mainPage">
+    <!-- header -->
+    <div id="hdr">
+      <xsl:call-template name="hdr"/>
+    </div>
+    <div id="accessibility">
+      <span class="tocontent"><a href="{$REQUEST}?style=text">Text only</a>
+      | <a class="skiplinks" href="#rh-column"
+      title="Go to main page content">Skip links</a></span>
+    </div>
+    <div id="hdr2">
+      <xsl:call-template name="hdr2"/>
+    </div>
+    <xsl:if test="not($contentStructure='all' or @rend='all')">
+      <div id="hdr3">
+	<xsl:call-template name="hdr3"/>
+      </div>
+    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="$contentStructure='all' or @rend='all'">
+	<div class="column-wrapper">
+	  <xsl:call-template name="col1"/>
+	  <xsl:call-template name="col2"/>
+	  <xsl:call-template name="col3"/>
+	</div>
+      </xsl:when>
+      <xsl:when test="@rend='frontpage'">
+	<div class="column-wrapper">
+	  <div id="rh-col">
+	    <xsl:for-each
+		select="descendant-or-self::tei:TEI/tei:text/tei:body">
+	      <xsl:apply-templates/>
+	    </xsl:for-each>
+	  </div>
+	  <div id="lh-col">
+	    <xsl:for-each
+		select="descendant-or-self::tei:TEI/tei:text/tei:front">
+	      <xsl:apply-templates/>
+	    </xsl:for-each>
+	  </div>
+	</div>
+      </xsl:when>
+      <xsl:when test="$contentStructure='body'">
+	<xsl:call-template name="bodyLayout">
+	  <xsl:with-param name="currentID" select="$currentID"/>
+	</xsl:call-template>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+
   <xd:doc>
     <xd:short>[html] what to do in column 1 of 3 column arrangement </xd:short>
     <xd:detail> </xd:detail>
