@@ -110,6 +110,11 @@ as a proportion of the page width.
 </xd:doc>
 <xsl:param name="tableMaxWidth">0.85</xsl:param>
 
+<xd:doc type="boolean" class="layout">
+Whether to number lines of poetry
+</xd:doc>
+<xsl:param name="verseNumbering">false</xsl:param>
+
 <xd:doc type="integer" class="layout">
 When numbering poetry, how often to put in a line number
 </xd:doc>
