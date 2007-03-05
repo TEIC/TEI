@@ -1809,7 +1809,11 @@ $ID: requests a particular page
 	<xsl:copy-of select="tei:text/tei:body/@onunload"/>
         <xsl:call-template name="bodyHook"/>
         <xsl:call-template name="bodyJavascriptHook"/>
-	<xsl:call-template name="mainPage"/>
+	<xsl:call-template name="mainPage">
+	  <xsl:with-param name="currentID">
+	    <xsl:value-of select="currentID"/>
+	  </xsl:with-param>
+	</xsl:call-template>
         <xsl:call-template name="bodyEndHook"/>
       </body>
     </html>
@@ -1820,6 +1824,7 @@ $ID: requests a particular page
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="mainPage">
+    <xsl:param name="currentID"/>
     <!-- header -->
     <div id="hdr">
       <xsl:call-template name="hdr"/>
