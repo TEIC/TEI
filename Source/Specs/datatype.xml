@@ -5,26 +5,63 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" xml:id="DATATYPE" usage="req" ident="datatype">
-<equiv/>
-<gloss/>
-<desc>specifies the declared value for an attribute, by referring to
-  any datatype defined by the chosen schema language.</desc><desc version="2006-10-28" xml:lang="ja">属性値の型を，当該スキーマ中のデータ型を参照して示す．</desc><desc version="2006-10-15" xml:lang="es">especifica el valor declarado para un atributo, refiriéndose a cualquier tipo de datos definido por el tipo de esquema escogido.</desc>
+  <equiv/>
+  <gloss/>
+  <desc>specifies the declared value for an attribute, by referring to
+  any datatype defined by the chosen schema language.</desc>
+  <desc version="2006-10-28" xml:lang="ja">属性値の型を，当該スキーマ中のデータ型を参照して示す．</desc>
+  <desc version="2006-10-15" xml:lang="es">especifica el valor
+  declarado para un atributo, refiriéndose a cualquier tipo de datos
+  definido por el tipo de esquema escogido.</desc>
   <content>
-	<rng:zeroOrMore>
-	   <rng:group>
-    <rng:ref name="macro.schemapattern"/>
-	   </rng:group>
-	</rng:zeroOrMore>
+    <rng:zeroOrMore>
+      <rng:group>
+	<rng:ref name="macro.schemapattern"/>
+      </rng:group>
+    </rng:zeroOrMore>
   </content>
-  
-  <exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples"><datatype><rng:text/></datatype>
-<datatype><rng:ref name="data.enumerated"/> </datatype>
-</egXML>
+  <attList>
+    <attDef ident="minOccurs">
+      <gloss>minimum number of occurences</gloss>
+      <desc>indicates the minimum number of times this datatype must
+      occur in the specification of the attribute being defined</desc>
+      <datatype><rng:ref name="data.count"/></datatype>
+      <defaultVal>1</defaultVal>
+    </attDef>
+    <attDef ident="maxOccurs">
+      <gloss>maximum number of occurences</gloss>
+      <desc>indicates the maximum number of times this datatype may
+      occur in the specification of the attribute being defined</desc>
+      <datatype>
+	<rng:choice>
+	  <rng:ref name="data.count"/>
+	  <rng:value>unbounded</rng:value>
+	</rng:choice>
+      </datatype>
+      <defaultVal>1</defaultVal>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><datatype><rng:data type="token"/></datatype></egXML>
   </exemplum>
-<remarks><p>In the TEI scheme, most datatypes are expressed using
-pre-defined TEI macros, which map a name in the form
-<code>data.xxxx</code> to a RelaxNG or WSD defined datatype.</p>
-</remarks>  <listRef>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><datatype><rng:ref name="data.enumerated"/></datatype></egXML>
+  </exemplum>
+  <exemplum>
+    <p>The encoding in the following example requires that the
+    attribute being defined contain at least two URIs in its value, as
+    is the case for the <att>targets</att> attribute of
+    <gi>join</gi>.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><datatype minOccurs="2" maxOccurs="unbounded">
+      <rng:ref name="data.pointer"/>
+    </datatype></egXML>
+  </exemplum>
+  <remarks>
+    <p>In the TEI scheme, most datatypes are expressed using
+    pre-defined TEI macros, which map a name in the form
+    <code>data.xxxx</code> to a RelaxNG or WSD defined datatype.</p>
+  </remarks>
+  <listRef>
     <ptr target="#DTYPES"/>
     <ptr target="#TDATT"/>
   </listRef>
