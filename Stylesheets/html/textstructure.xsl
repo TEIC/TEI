@@ -1799,7 +1799,7 @@ $ID: requests a particular page
         <xsl:attribute name="onload">
 	  <xsl:choose>
 	    <xsl:when test="tei:text/tei:body/@onload">
-	      <xsl:copy-of select="tei:text/tei:body/@onload"/>
+	      <xsl:value-of select="tei:text/tei:body/@onload"/>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:text>startUp()</xsl:text>
