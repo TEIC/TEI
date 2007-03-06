@@ -1,4 +1,4 @@
-r?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet
   exclude-result-prefixes="exsl estr edate a fo local dbk xlink xhtml rng tei teix xd"
   extension-element-prefixes="exsl estr edate saxon7 saxon6" version="1.0"

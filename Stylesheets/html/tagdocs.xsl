@@ -155,10 +155,14 @@
 	      <xsl:otherwise>1</xsl:otherwise>
 	    </xsl:choose>
 	  </xsl:variable>
-          <xsl:text> (</xsl:text>
-	  <xsl:value-of select="$minOccurs"/>–<xsl:value-of select="$maxOccurs"/>
-          <xsl:text>)</xsl:text>
-
+	  <xsl:if test="$minOccurs != 1">
+	    <xsl:text> &gt;= </xsl:text>
+	    <xsl:value-of select="$minOccurs"/>
+	  </xsl:if>
+	  <xsl:if test="$maxOccurs != 1">
+	    <xsl:text> &lt;= </xsl:text>
+	    <xsl:value-of select="$maxOccurs"/>
+	  </xsl:if>
         </span>
         <xsl:call-template name="bitOut">
           <xsl:with-param name="grammar"/>
