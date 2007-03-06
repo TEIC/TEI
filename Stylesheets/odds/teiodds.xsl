@@ -1283,9 +1283,7 @@ sequenceRepeatable
     <!-- $myMin = min( $min, 3 ) -->
     <xsl:variable name="myMin">
       <xsl:choose>
-        <xsl:when test="$min > 3" >
-          <xsl:value-of select="3"/>
-        </xsl:when>
+        <xsl:when test="$min > 3" >3</xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="$min"/>
         </xsl:otherwise>
