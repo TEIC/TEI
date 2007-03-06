@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+n<?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet
   exclude-result-prefixes="exsl estr edate a fo local rng tei teix xd html"
   extension-element-prefixes="exsl estr edate" version="1.0"
@@ -334,6 +334,9 @@
                   </xsl:call-template>
                 </xsl:for-each>
               </xsl:when>
+	      <xsl:when test="ancestor::tei:schemaSpec">
+		<!-- if the class aint here in a customization, forget it-->
+	      </xsl:when>
               <xsl:otherwise>
                 <xsl:call-template name="linkTogether">
                   <xsl:with-param name="name" select="@key"/>
