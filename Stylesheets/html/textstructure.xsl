@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+r?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet
   exclude-result-prefixes="exsl estr edate a fo local dbk xlink xhtml rng tei teix xd"
   extension-element-prefixes="exsl estr edate saxon7 saxon6" version="1.0"
@@ -1811,7 +1811,7 @@ $ID: requests a particular page
         <xsl:call-template name="bodyJavascriptHook"/>
 	<xsl:call-template name="mainPage">
 	  <xsl:with-param name="currentID">
-	    <xsl:value-of select="currentID"/>
+	    <xsl:value-of select="$currentID"/>
 	  </xsl:with-param>
 	</xsl:call-template>
         <xsl:call-template name="bodyEndHook"/>
