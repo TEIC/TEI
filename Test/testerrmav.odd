@@ -25,6 +25,10 @@
     <revisionDesc>
       <change date="2007-03-04" who="#sbauman.emt"> Created, using
       previous testmultattrval.odd as a starting point.</change>
+      <change date="2007-03-05" who="#sbauman.emt"> Changed to testing
+      only usage=opt but to use lots of combinations of
+      <att>minOccurs</att> and <att>maxOccurs</att> that should cause
+      warning messages.</change>
     </revisionDesc>
   </teiHeader>
   <text>
@@ -59,34 +63,28 @@
         <elementSpec ident="desc" mode="delete" module="core"/>
         <elementSpec ident="distinct" mode="change" module="core">
 	  <attList xmlns:rng="http://relaxng.org/ns/structure/1.0">
-	    <attDef ident="r11" usage="req">
-	      <gloss>required, min 1, max 1</gloss>
-	      <datatype minOccurs="1" maxOccurs="1"><rng:ref name="data.count"/></datatype>
-	    </attDef>
-	    <attDef ident="r12" usage="req">
-	      <gloss>required, min 1, max 2</gloss>
-	      <datatype minOccurs="1" maxOccurs="2"><rng:ref name="data.count"/></datatype>
-	    </attDef>
-	    <attDef ident="r22" usage="req">
-	      <gloss>required, min 2, max 2</gloss>
-	      <datatype minOccurs="2" maxOccurs="2"><rng:ref name="data.count"/></datatype>
-	    </attDef>
-	    <attDef ident="r01" usage="req">
-	      <gloss>required, min 0, max 1</gloss>
+	    <!-- min=0 max=1,2,3,9,* -->
+	    <attDef ident="o01" usage="opt">
+	      <gloss>optional, min 0, max 1</gloss>
 	      <datatype minOccurs="0" maxOccurs="1"><rng:ref name="data.count"/></datatype>
 	    </attDef>
-	    <attDef ident="r0i" usage="req">
-	      <gloss>required, min 0, max unbounded</gloss>
+	    <attDef ident="o02" usage="opt">
+	      <gloss>optional, min 0, max 2</gloss>
+	      <datatype minOccurs="0" maxOccurs="2"><rng:ref name="data.count"/></datatype>
+	    </attDef>
+	    <attDef ident="o03" usage="opt">
+	      <gloss>optional, min 0, max 3</gloss>
+	      <datatype minOccurs="0" maxOccurs="3"><rng:ref name="data.count"/></datatype>
+	    </attDef>
+	    <attDef ident="o09" usage="opt">
+	      <gloss>optional, min 0, max 9</gloss>
+	      <datatype minOccurs="0" maxOccurs="9"><rng:ref name="data.count"/></datatype>
+	    </attDef>
+	    <attDef ident="o0i" usage="opt">
+	      <gloss>optional, min 0, max unbounded</gloss>
 	      <datatype minOccurs="0" maxOccurs="unbounded"><rng:ref name="data.count"/></datatype>
 	    </attDef>
-	    <attDef ident="r1i" usage="req">
-	      <gloss>required, min 1, max unbounded</gloss>
-	      <datatype minOccurs="1" maxOccurs="unbounded"><rng:ref name="data.count"/></datatype>
-	    </attDef>
-	    <attDef ident="r2i" usage="req">
-	      <gloss>required, min 2, max unbounded</gloss>
-	      <datatype minOccurs="2" maxOccurs="unbounded"><rng:ref name="data.count"/></datatype>
-	    </attDef>
+	    <!-- min=1 max=1,2,3,9,* -->	    
 	    <attDef ident="o11" usage="opt">
 	      <gloss>optional, min 1, max 1</gloss>
 	      <datatype minOccurs="1" maxOccurs="1"><rng:ref name="data.count"/></datatype>
@@ -95,25 +93,51 @@
 	      <gloss>optional, min 1, max 2</gloss>
 	      <datatype minOccurs="1" maxOccurs="2"><rng:ref name="data.count"/></datatype>
 	    </attDef>
-	    <attDef ident="o22" usage="opt">
-	      <gloss>optional, min 2, max 2</gloss>
-	      <datatype minOccurs="2" maxOccurs="2"><rng:ref name="data.count"/></datatype>
+	    <attDef ident="o13" usage="opt">
+	      <gloss>optional, min 1, max 3</gloss>
+	      <datatype minOccurs="1" maxOccurs="3"><rng:ref name="data.count"/></datatype>
 	    </attDef>
-	    <attDef ident="o01" usage="opt">
-	      <gloss>optional, min 0, max 1</gloss>
-	      <datatype minOccurs="0" maxOccurs="1"><rng:ref name="data.count"/></datatype>
-	    </attDef>
-	    <attDef ident="o0i" usage="opt">
-	      <gloss>optional, min 0, max unbounded</gloss>
-	      <datatype minOccurs="0" maxOccurs="unbounded"><rng:ref name="data.count"/></datatype>
+	    <attDef ident="o19" usage="opt">
+	      <gloss>optional, min 1, max 9</gloss>
+	      <datatype minOccurs="1" maxOccurs="9"><rng:ref name="data.count"/></datatype>
 	    </attDef>
 	    <attDef ident="o1i" usage="opt">
 	      <gloss>optional, min 1, max unbounded</gloss>
 	      <datatype minOccurs="1" maxOccurs="unbounded"><rng:ref name="data.count"/></datatype>
 	    </attDef>
+	    <!-- min=2 max=2,3,9,* -->
+	    <attDef ident="o22" usage="opt">
+	      <gloss>optional, min 2, max 2</gloss>
+	      <datatype minOccurs="2" maxOccurs="2"><rng:ref name="data.count"/></datatype>
+	    </attDef>
+	    <attDef ident="o23" usage="opt">
+	      <gloss>optional, min 2, max 3</gloss>
+	      <datatype minOccurs="2" maxOccurs="3"><rng:ref name="data.count"/></datatype>
+	    </attDef>
+	    <attDef ident="o29" usage="opt">
+	      <gloss>optional, min 2, max 9</gloss>
+	      <datatype minOccurs="2" maxOccurs="9"><rng:ref name="data.count"/></datatype>
+	    </attDef>
 	    <attDef ident="o2i" usage="opt">
 	      <gloss>optional, min 2, max unbounded</gloss>
 	      <datatype minOccurs="2" maxOccurs="unbounded"><rng:ref name="data.count"/></datatype>
+	    </attDef>
+	    <!-- various min > 2 -->
+	    <attDef ident="o33" usage="opt"> 
+	      <gloss>optional, min 3, max 3</gloss>
+	      <datatype minOccurs="3" maxOccurs="3"><rng:ref name="data.count"/></datatype>
+	    </attDef>
+	    <attDef ident="o39" usage="opt">
+	      <gloss>optional, min 3, max 9</gloss>
+	      <datatype minOccurs="3" maxOccurs="9"><rng:ref name="data.count"/></datatype>
+	    </attDef>
+	    <attDef ident="o99" usage="opt">
+	      <gloss>optional, min 9, max 9</gloss>
+	      <datatype minOccurs="9" maxOccurs="9"><rng:ref name="data.count"/></datatype>
+	    </attDef>
+	    <attDef ident="o9i" usage="opt">
+	      <gloss>optional, min 9, max unbounded</gloss>
+	      <datatype minOccurs="9" maxOccurs="unbounded"><rng:ref name="data.count"/></datatype>
 	    </attDef>
 	  </attList>
 	</elementSpec>
