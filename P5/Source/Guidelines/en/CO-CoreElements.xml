@@ -1984,33 +1984,32 @@ other locations, either in the same or different XML documents, may be encoded
 using the elements <gi>ptr</gi> and <gi>ref</gi>, as discussed in this
 section. These elements both <soCalled>point</soCalled> from one
 location in a document, the place that the element itself appears, to
-another (or to several), specified by the <att>href</att> attribute.
+another (or to several), specified by the <att>target</att> attribute.
 Linkages of several other kinds are also provided for in these
 guidelines; see further chapter <ptr target="#SA"/>.
  </p>
 <p>The pointing system employed by these elements is the W3C XPointer
-mechanism. Thus the value of the <att>href</att> attribute may be as
+mechanism. Thus the value of the <att>target</att> attribute may be as
 simple as a reference to the global <att>xml:id</att> attribute that
 appears on the target element that is in the same document as the <gi>ptr</gi>
 or <gi>ref</gi>, or as complicated as a full URI with embedded
 XPointers. For example, the source of the following paragraph looks
 something like this:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>For an introductionto using XPointers, 
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>For an introduction to using XPointers, 
 see <ptr target="#SG-id"/>; for the complete XPointer specification, see
 <ptr target="http://www.w3.org/TR/xptr-framework/"/>, 
 <ptr target="http://www.w3.org/TR/xptr-element/"/>, 
 <ptr target="http://www.w3.org/TR/xptr-xmlns/"/>, and 
 <ptr target="http://www.w3.org/TR/xptr-xpointer/#xpointer(id('chum')/quote)"/>; 
-for a discussion of TEI schemes for XPointer, see below.</p></egXML>
+for a discussion of TEI schemes for XPointer, see <ptr target="#SATS"/>.</p></egXML>
  Alternatively, if no explicit link is
 to be encoded, but it is simply required to mark the phrase as a
 cross-reference, the <gi>ref</gi> element may be used without a
-<att>href</att> attribute.</p>
+<att>target</att> attribute.</p>
 <p>For an introduction to using XPointers, see <?tei winita: replace
 this PI with a <ptr/> ?>; for the complete XPointer specification, see
 <ptr target="http://www.w3.org/TR/xptr-framework/"/>, <ptr target="http://www.w3.org/TR/xptr-element/"/>, <ptr target="http://www.w3.org/TR/xptr-xmlns/"/>, and <ptr target="http://www.w3.org/TR/xptr-xpointer/"/>; for a discussion of
-TEI schemes for XPointer, see <?tei winita: replace this PI with a
-<ptr/> ?>.</p>
+TEI schemes for XPointer, see <ptr target="#SATS"/>.</p>
 <p>
 <specList><specDesc key="ptr"/><specDesc key="ref"/></specList>
  </p>
@@ -2029,7 +2028,7 @@ need not identify its target in any other way. For example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">See <ref>section 12 on page 34</ref>.</egXML>
  </p>
 <p>More usually, it will be desirable to identify the target of the
-cross-reference using the <att>href</att> attribute, so that
+cross-reference using the <att>target</att> attribute, so that
 processing software can access it directly, for example to implement a
 linkage or to generate an appropriate reference. Assuming that section
 12 in the previous example has been tagged <tag>div1 xml:id="SEC12"</tag>, the
@@ -2043,7 +2042,7 @@ reference, the <gi>ptr</gi> element would be used as follows:
  </p>
 <p>A cross-reference may point to any number of locations simultaneously,
 simply by giving more than one identifier as the value of its
-<att>href</att> attribute.  This may be particularly useful where
+<att>target</att> attribute.  This may be particularly useful where
 an analytic index is to be encoded, as in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><list>
    <item>Saints aid rejected in mel. <ptr target="#p299"/></item>
@@ -4003,7 +4002,7 @@ is fully described in section <ptr target="#HD2"/>.
 kind, should be treated in the same way as other cross-references (see
 section <ptr target="#COXR"/>).  As discussed in that section, cross
 referencing within TEI texts is in general represented by means of
-<gi>ptr</gi> or <gi>ref</gi> elements.  An <att>href</att> attribute on
+<gi>ptr</gi> or <gi>ref</gi> elements. A <att>target</att> attribute on
 these elements is used to supply an identifying value for the target of
 the cross reference, which should be, in the case of bibliographic
 elements, a bibliographic reference of some kind.  Where the form of the
