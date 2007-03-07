@@ -347,6 +347,8 @@ class roma
 				   'valList' => $_REQUEST[ 'valList' ],
 				   'added' => $_REQUEST[ 'added' ],
 				   'optional' => $_REQUEST[ 'optional' ],
+				   'maxOccurs' => $_REQUEST[ 'maxOccurs' ],
+				   'minOccurs' => $_REQUEST[ 'minOccurs' ],
 				   'closed' => $_REQUEST[ 'closed' ],
 				   'content' => $_REQUEST[ 'content' ],
 				   'defaultValue' => $_REQUEST[ 'defaultValue' ],
@@ -934,14 +936,6 @@ class roma
 	$oRootDat = $oDatatypeDom->documentElement;
 	$oRootDat = $oListDom->importNode( $oRootDat, true );
 	$oAddAttribute->appendChild( $oRootDat );
-/*
-	$oWCDom = new domDocument();
-	$oWCDom->loadXML( join( '', file( roma_xquery_server . 'w3cdatatypes.xq' ) ) ) ;
-	$oRootW3cDat = $oWCDom->documentElement;
-	$oRootW3cDat = $oListDom->importNode( $oRootW3cDat, true );
-	$oAddAttribute->appendChild( $oRootW3cDat );
-*/
-
 	
 	//attributes
 	$this->m_oRomaDom->getAttributeDomByElementInModule( $_REQUEST[ 'element' ], $_REQUEST[ 'module' ], $_REQUEST[ 'class' ],$oAtts );
