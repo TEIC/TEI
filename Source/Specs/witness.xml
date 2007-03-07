@@ -17,8 +17,11 @@ referred to by a single sigil.</desc><desc version="2006-10-28" xml:lang="ja">�
     <attDef ident="included" usage="mwa">
 	<equiv/>
 	<desc>indicates which other witnesses are included in a witness group.</desc><desc version="2006-10-28" xml:lang="ja">どの実現形が含まれるかを示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointers"/></datatype>
-      <valDesc>a blank-delimited list of sigla.</valDesc>
+      <datatype maxOccurs="unbounded"><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <valDesc>A space-delimited series of sigla; each sigil should
+      correspond to a witness, and should occur as the value of the
+      <att>xml:id</att> attribute on a <gi>witness</gi> element,
+      typically in the header of the document.</valDesc>
       <remarks>
         <p>The <att>included</att> attribute applies only in the case
 of witness groups; if no value is given,

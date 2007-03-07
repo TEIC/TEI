@@ -738,14 +738,16 @@ kinds of object:
 	Element Nodes, and Attribute nodes.</item> <!-- why not
 	comments ? -->
         <label>Node Set</label>
-	<item>A node set is a set of nodes in the XML information set  of a
-	document. In TEI Pointing applications, node sets are only
-	allowed as the result of resolving a URI when multiple URIs
-	would have been allowed where it appears, i.e. in attributes
-	which are declared as <name type="datatype">data.pointers</name> as opposed to <name type="datatype">data.pointer</name>. As  the name
-	<soCalled>set,</soCalled> implies, the individual items in a node set
-	are not ordered, and no assumptions about relative ordering of
-	items in a node set should be made.</item>
+	<item>A node set is a set of nodes in the XML information set
+	of a document. In TEI Pointing applications, node sets are
+	only allowed as the result of resolving a URI when multiple
+	URIs would have been allowed where it appears, i.e. in
+	attributes which are declared as permitting two or more <name
+	type="datatype">data.pointer</name> values as opposed to only
+	one. As the name <soCalled>set,</soCalled> implies, the
+	individual items in a node set are not ordered, and no
+	assumptions about relative ordering of items in a node set
+	should be made.</item>
         <label>Point</label>
 	<item>A Point represents a point between nodes in a document.
 	Every point is adjacent to either characters or elements, and
@@ -817,11 +819,13 @@ towards revising this draft or issuing it as a recommendation.</p>
 	  <!-- I tried "xpath1(id(fn6)/para[1])" but it didn't work in
 	       my implementations of XPath (jEdit, oXygen, IIRC) -Syd
 	       -->
-        <p xmlns="http://www.tei-c.org/ns/1.0">When a URI reference is specified as the value of an
-        attribute declared as <name type="datatype">data.pointer</name>, the result must be a
-        single node, and it is an error if the result is a node set.
+        <p xmlns="http://www.tei-c.org/ns/1.0">When a URI reference is
+        specified as the value of an attribute declared as a single
+        <name type="datatype">data.pointer</name>, the result must be
+        a single node, and it is an error if the result is a node set.
         When the URI reference is specified as the value of an
-        attribute declared as <name type="datatype">data.pointers</name>, each node in the
+        attribute declared to permit two or more <name
+        type="datatype">data.pointer</name> values, each node in the
         node set is treated as if it were the result of a separate URI
         reference.</p>
         <p xmlns="http://www.tei-c.org/ns/1.0">When an xpath is interpreted by a TEI processor, the
