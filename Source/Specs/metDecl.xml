@@ -13,28 +13,32 @@ $Author$
   pattern when this is specified as the value of a <att>met</att>,
   <att>real</att>, or <att>rhyme</att> attribute on any structural
   element of a metrical text (e.g. <gi>lg</gi>, <gi>l</gi>, or
-  <gi>seg</gi>).</desc><desc version="2006-10-28" xml:lang="ja">韻律パタンの表記法を示す．</desc>
-  <desc xml:lang="zh-tw">
-    在標記韻文所用到的結構性元素(例：<gi>行組</gi>、<gi>詩行</gi>、或<gi>強制分割</gi>)當中使用<att>格律</att>、<att>實行</att>、或<att>押韻</att>等屬性，來表示文章的韻律模式時，則在此解釋該屬性屬性值標記韻律模式的方法。</desc>
-  <desc xml:lang="fr"> L’élément Déclaration métrique <gi>metDecl</gi> décrit la méthode employée
-  pour noter un modèle métrique lorsque celui-ci est spécifié par les attributs <att>met
-  </att>, <att>real</att>, ou <att>rhyme</att>, qui s’appliquent à tout élément de la structure
-  d’un texte versifié (par exemple <gi>lg</gi>, <gi>l</gi>, ou <gi>seg</gi>).
-  </desc>
+  <gi>seg</gi>).</desc>
+  <desc version="2006-10-28" xml:lang="ja">韻律パタンの表記法を示す．</desc>
+  <desc xml:lang="zh-tw">在標記韻文所用到的結構性元素(例：<gi>行組</gi>、<gi>詩行</gi>、或
+    <gi>強制分割</gi>)當中使用<att>格律</att>、<att>實行</att>、或
+    <att>押韻</att>等屬性，來表示文章的韻律模式時，則在此解釋該屬性屬性
+    值標記韻律模式的方法。</desc>
+  <desc xml:lang="fr"> L’élément Déclaration métrique <gi>metDecl</gi>
+  décrit la méthode employée pour noter un modèle métrique lorsque
+  celui-ci est spécifié par les attributs <att>met </att>,
+  <att>real</att>, ou <att>rhyme</att>, qui s’appliquent à tout
+  élément de la structure d’un texte versifié (par exemple
+  <gi>lg</gi>, <gi>l</gi>, ou <gi>seg</gi>).</desc>
   <classes>
     <memberOf key="model.encodingPart"/>
     <memberOf key="att.declarable"/>
   </classes>
   <content>
     <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
-<rng:group>
-      <rng:ref name="macro.componentSeq"/>
-</rng:group>
-<rng:group>
-      <rng:oneOrMore>
-        <rng:ref name="metSym"/>
-      </rng:oneOrMore>
-</rng:group>
+      <rng:group>
+	<rng:ref name="macro.componentSeq"/>
+      </rng:group>
+      <rng:group>
+	<rng:oneOrMore>
+	  <rng:ref name="metSym"/>
+	</rng:oneOrMore>
+      </rng:group>
     </rng:choice>
   </content>
   <attList>
@@ -42,25 +46,35 @@ $Author$
       <equiv/>
       <desc>indicates whether the notation conveys the abstract
       metrical form, its actual prosodic realization, or the rhyme
-      scheme, or some combination thereof.</desc><desc version="2006-10-28" xml:lang="ja">当該表記法が，抽象的韻律形式，実際に出現する韻律形，押韻規則，こ
-れらの組み合わせなのかを示す．</desc>
-      <desc xml:lang="fr">indique si la notation traduit la forme métrique abstraite, sa réalisation
-      prosodique, le schéma de rime, ou une combinaison de ces différents éléments.</desc>
-      <datatype>
-        <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
-          <rng:oneOrMore>
-            <rng:choice>
-              <rng:value>met</rng:value>
-              <rng:value>real</rng:value>
-              <rng:value>rhyme</rng:value>
-            </rng:choice>
-          </rng:oneOrMore>
-        </rng:list>
+      scheme, or some combination thereof.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該表記法が，抽象的韻律
+      形式，実際に出現する韻律形，押韻規則，これらの組み合わせなのかを
+      示す．</desc>
+      <desc xml:lang="fr">indique si la notation traduit la forme
+      métrique abstraite, sa réalisation prosodique, le schéma de
+      rime, ou une combinaison de ces différents éléments.</desc>
+      <datatype minOccurs="1" maxOccurs="3">
+	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
       <defaultVal>met real</defaultVal>
-      <valDesc>One or more of the three attribute names
-      <att>met</att>, <att>real</att>, or <att>rhyme</att>, separated
-      by whitespace.</valDesc>
+      <valList>
+	<valItem ident="met">
+	  <gloss><att>met</att> attribute</gloss>
+	  <desc>declaration applies to the abstract metrical form
+	  recorded on the <att>met</att> attriubte</desc>
+	</valItem>
+	<valItem ident="real">
+	  <gloss><att>real</att> attribute</gloss>
+	  <desc>declaration applies to the actual realization of the
+	  conventional metrical structure recorded on the
+	  <att>real</att> attriubte</desc>
+	</valItem>
+	<valItem ident="met">
+	  <gloss><att>rhyme</att> attribute</gloss>
+	  <desc>declaration applies to the rhyme scheme
+	  recorded on the <att>rhyme</att> attriubte</desc>
+	</valItem>
+      </valList>
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
