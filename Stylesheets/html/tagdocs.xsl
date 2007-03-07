@@ -1151,9 +1151,8 @@
     <table class="attList">
       <tr>
         <td>
-          <xsl:text> (</xsl:text>
           <xsl:call-template name="showAttClasses"/>
-          <xsl:text>)</xsl:text>
+
           <xsl:if test=".//tei:attDef">
             <table>
               <xsl:choose>
