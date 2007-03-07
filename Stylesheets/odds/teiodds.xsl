@@ -1548,6 +1548,8 @@ sequenceRepeatable
                 </xsl:if>
               </xsl:for-each>
             </xsl:when>
+	    <xsl:when test="ancestor::tei:schemaSpec">
+	    </xsl:when>
             <xsl:otherwise>
               <xsl:value-of select="@key"/>
               <xsl:text> </xsl:text>
@@ -1566,6 +1568,8 @@ sequenceRepeatable
         <xsl:text>]</xsl:text>
       </xsl:when>
       <xsl:when test="not($clatts='')">
+      <xsl:if test="ancestor::tei:schemaSpec and key('CLASSES','att.global')">
+
         <xsl:call-template name="i18n">
           <xsl:with-param name="word">
             <xsl:choose>
@@ -1578,11 +1582,13 @@ sequenceRepeatable
             </xsl:choose>
           </xsl:with-param>
         </xsl:call-template>
+      </xsl:if>
         <xsl:text> </xsl:text>
         <xsl:text> [</xsl:text>
         <xsl:copy-of select="$clatts"/>
         <xsl:text>] </xsl:text>
       </xsl:when>
+      <xsl:when test="ancestor::tei:schemaSpec and not(key('CLASSES','att.global'))"/>
       <xsl:otherwise>
         <xsl:call-template name="i18n">
           <xsl:with-param name="word">
