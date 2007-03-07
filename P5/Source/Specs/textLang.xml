@@ -4,7 +4,7 @@ See the file COPYING for details
 $Date$
 $Author$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="TEXTLANG" ident="textLang">
+<elementSpec  xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="TEXTLANG" ident="textLang">
 <equiv/>
 <gloss/>
 <desc xml:id="textlang.desc">describes the languages and writing systems used by a
@@ -14,29 +14,36 @@ manuscript (as opposed to its description, which is described in the <gi>langUsa
     <memberOf key="model.msItemPart"/>
   </classes>
  <content>
-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+    <rng:ref name="macro.phraseSeq"/>
   </content>
   <attList>
     <attDef ident="mainLang">
-	<equiv/>
-	<gloss/>
-	<desc>supplies a code which identifies the chief language used in the manuscript.</desc><desc version="2006-10-28" xml:lang="ja">当該手書き文書で使用されている主な言語をコードで示す．</desc>
+      <equiv/>
+      <gloss/>
+      <desc>supplies a code which identifies the chief language used
+      in the manuscript.</desc><desc version="2006-10-28"
+      xml:lang="ja">当該手書き文書で使用されている主な言語をコードで示
+      す．</desc>
       <datatype>
-            <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.language"/>
+	<rng:ref name="data.language"/>
       </datatype>
-      <valDesc>a recognised language code using ISO 3066 or succesor, which may additionally be
-      documented by a  <gi>language</gi> element in the header</valDesc>
+      <valDesc>a recognised language code using ISO 3066 or succesor,
+      which may additionally be documented by a <gi>language</gi>
+      element in the header</valDesc>
     </attDef>
     <attDef ident="otherLangs">
-	<equiv/>
-	<gloss/>
-	<desc>one or more codes identifying any other languages used in the manuscript.</desc><desc version="2006-10-28" xml:lang="ja">当該手書き文書で使用されている1つ以上の言語をコードで示す．</desc>
-      <datatype>        <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
-        <rng:zeroOrMore>
-<rng:ref name="data.language"/>	</rng:zeroOrMore></rng:list></datatype>
-
-      <valDesc>a list of codes, each of which is a recognised language code using RFC 3066 or succesor, which may additionally be
-      documented by a  <gi>language</gi> element in the  header</valDesc>
+      <equiv/>
+      <gloss/>
+      <desc>one or more codes identifying any other languages used in
+      the manuscript.</desc><desc version="2006-10-28" xml:lang="ja">当
+      該手書き文書で使用されている1つ以上の言語をコードで示す．</desc>
+      <datatype minOccurs="0" maxOccurs="unbounded">
+	<rng:ref name="data.language"/>	
+      </datatype>
+      <valDesc>a list of codes, each of which is a recognised language
+      code using RFC 3066 or succesor, which may additionally be
+      documented by a <gi>language</gi> element in the
+      header</valDesc>
     </attDef>
   </attList>
   <exemplum>

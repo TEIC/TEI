@@ -7,31 +7,30 @@ as prose or by a list of <gi>langKnown</gi> elements.</desc><desc version="2006-
     <memberOf key="att.datable"/>
     <memberOf key="att.editLike"/>
   </classes>
-<content>
-   <rng:choice>
-    <rng:ref name="model.pLike"/>
-    <rng:oneOrMore>
-      <rng:ref name="langKnown"/>
-    </rng:oneOrMore>
-   </rng:choice>
- </content>
-<attList>
-<attDef ident="tags" usage="opt">
-<desc>supplies one or more valid language tags for the languages
-specified</desc><desc version="2006-10-28" xml:lang="ja">1つ以上の言語をRFC3033に従って示す．</desc>
-<datatype>
-<rng:list>
-  <rng:oneOrMore>
-  <rng:ref name="data.language"/>
-  </rng:oneOrMore>
-</rng:list>
-</datatype>
-<remarks><p>This attribute should be supplied only if the element
-contains no <gi>langKnown</gi> children. Its values are language
-    <soCalled>tags</soCalled> as defined in <ref target="http://www.ietf.org/rfc/rfc3066.txt">RFC 3066</ref> or its
-    successor</p></remarks>
-</attDef>
-</attList>
+  <content>
+    <rng:choice>
+      <rng:ref name="model.pLike"/>
+      <rng:oneOrMore>
+	<rng:ref name="langKnown"/>
+      </rng:oneOrMore>
+    </rng:choice>
+  </content>
+  <attList>
+    <attDef ident="tags" usage="opt">
+      <desc>supplies one or more valid language tags for the languages
+      specified</desc>
+      <desc version="2006-10-28" xml:lang="ja">1つ以上の言語をRFC3033に
+      従って示す．</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded">
+	<rng:ref name="data.language"/>
+      </datatype>
+      <remarks><p>This attribute should be supplied only if the
+      element contains no <gi>langKnown</gi> children. Its values are
+      language <soCalled>tags</soCalled> as defined in <ref
+      target="http://www.ietf.org/rfc/rfc3066.txt">RFC 3066</ref> or
+      its successor</p></remarks>
+    </attDef>
+  </attList>
 <exemplum>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
   <langKnowledge tags="en-GB fr"><p>British English and

@@ -43,40 +43,26 @@ $Author$
       </valList>
     </attDef>
     <attDef ident="weights" usage="opt">
-	<equiv/>
-	<desc>If <att>mode</att> is <code>excl</code>, each weight states the
-		probability that the corresponding alternative occurs.  If
-		<att>mode</att> <val>incl</val> each weight states the probability that
-		the corresponding alternative occurs given that at least one
-		of the other alternatives occurs.</desc><desc version="2006-10-28" xml:lang="ja">当該選択肢の選択度がexclの場合，各選択肢の何らかの重み付けを示す．</desc>
-      <datatype>
-        <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
-           <rng:oneOrMore>
-             <rng:ref name="data.probability"/>
-	   </rng:oneOrMore>
-	</rng:list></datatype>
-      <valDesc>a list of probability values in the range from 0 to 1.</valDesc>
+      <equiv/>
+      <desc>If <att>mode</att> is <code>excl</code>, each weight
+      states the probability that the corresponding alternative
+      occurs. If <att>mode</att> <val>incl</val> each weight states
+      the probability that the corresponding alternative occurs given
+      that at least one of the other alternatives occurs.</desc><desc
+      version="2006-10-28" xml:lang="ja">当該選択肢の選択度がexclの場合，
+      各選択肢の何らかの重み付けを示す．</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded">
+	<rng:ref  xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.probability"/>
+      </datatype>
+      <valDesc>a whitespace-separated list of probability values in
+      the range from 0 to 1.</valDesc>
       <remarks>
-        <p>If <att>mode</att> is <code>excl</code>, the sum of weights must be 1. If <att>mode</att> is <code>incl</code>, the sum of weights must
-		  be in the range from 0 to the number of alternants.</p>
+        <p>If <att>mode</att> is <code>excl</code>, the sum of weights
+        must be 1. If <att>mode</att> is <code>incl</code>, the sum of
+        weights must be in the range from 0 to the number of
+        alternants.</p>
       </remarks>
     </attDef>
-<!--    <attDef ident="wScale" usage="opt">
-	<equiv/>
-	<desc>indicates the scale used to express the value of the
-		<att>weights</att> attribute value.</desc>
-      <valList type="closed">
-        <valItem ident="perc">
-          <equiv/>
-          <gloss>indicates that the weights are expressed as percentages.</gloss>
-        </valItem>
-        <valItem ident="real">
-          <equiv/>
-          <gloss>indicates that the weights are expressed as values
-		  between 0 and 1.</gloss>
-        </valItem>
-      </valList>
-    </attDef>-->
   </attList>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">      <alt mode="excl" targets="#we.fun #we.sun" weights="0.5 0.5"/>
