@@ -139,33 +139,34 @@
           <xsl:call-template name="i18n">
             <xsl:with-param name="word">Datatype</xsl:with-param>
           </xsl:call-template>
-	</span>
-	  <xsl:variable name="minOccurs">
-	    <xsl:choose>
-	      <xsl:when test="@minOccurs">
-		<xsl:value-of select="@minOccurs"/>
-	      </xsl:when>
-	      <xsl:otherwise>1</xsl:otherwise>
-	    </xsl:choose>
-	  </xsl:variable>
-	  <xsl:variable name="maxOccurs">
-	    <xsl:choose>
-	      <xsl:when test="@maxOccurs">
-		<xsl:value-of select="@maxOccurs"/>
-	      </xsl:when>
-	      <xsl:otherwise>1</xsl:otherwise>
-	    </xsl:choose>
-	  </xsl:variable>
-	  <xsl:if test="$minOccurs != 1">
-	    <xsl:text> [n &gt;= </xsl:text>
-	    <xsl:value-of select="$minOccurs"/>
-	    <xsl:text>] </xsl:text>
-	  </xsl:if>
-	  <xsl:if test="$maxOccurs != 1">
-	    <xsl:text> [n &lt;= </xsl:text>
-	    <xsl:value-of select="$maxOccurs"/>
-	    <xsl:text>] </xsl:text>
-	  </xsl:if>
+          <xsl:text>:</xsl:text>
+        </span>
+        <xsl:variable name="minOccurs">
+          <xsl:choose>
+            <xsl:when test="@minOccurs">
+              <xsl:value-of select="@minOccurs"/>
+            </xsl:when>
+            <xsl:otherwise>1</xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="maxOccurs">
+          <xsl:choose>
+            <xsl:when test="@maxOccurs='unbounded'">
+              <xsl:text>∞</xsl:text>
+            </xsl:when>
+            <xsl:when test="@maxOccurs">
+              <xsl:value-of select="@maxOccurs"/>
+            </xsl:when>
+            <xsl:otherwise>1</xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
+        <xsl:if test="$minOccurs != 1  or  $maxOccurs != 1">
+          <xsl:text> </xsl:text>
+          <xsl:value-of select="$minOccurs"/>
+          <xsl:text>–</xsl:text>
+          <xsl:value-of select="$maxOccurs"/>
+          <xsl:text> occurrences of </xsl:text>
+        </xsl:if>
         <xsl:call-template name="bitOut">
           <xsl:with-param name="grammar"/>
           <xsl:with-param name="content">
@@ -175,6 +176,9 @@
           </xsl:with-param>
           <xsl:with-param name="element">code</xsl:with-param>
         </xsl:call-template>
+        <xsl:if test="$minOccurs != 1  or  $maxOccurs != 1">
+          <xsl:text>, separated by whitespace</xsl:text>
+        </xsl:if>
       </td>
     </tr>
 
