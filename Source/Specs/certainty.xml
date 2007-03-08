@@ -5,11 +5,14 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="certainty" xml:id="CERTAIN" usage="opt" ident="certainty">
-<equiv/>
-<gloss/>
-<desc>indicates the degree of certainty or uncertainty associated with
-some aspect of the text markup.
- </desc><desc version="2006-10-28" xml:lang="ja">マークアップの確信度を示す．</desc><desc version="2006-10-15" xml:lang="es">indica el grado de certeza o incertidumbre asociado con algún aspecto del marcado del texto.</desc>
+  <equiv/>
+  <gloss/>
+  <desc>indicates the degree of certainty or uncertainty associated
+  with some aspect of the text markup. </desc>
+  <desc version="2006-10-28" xml:lang="ja">マークアップの確信度を示す．</desc>
+  <desc version="2006-10-15" xml:lang="es">indica el grado de certeza
+  o incertidumbre asociado con algún aspecto del marcado del
+  texto.</desc>
   <classes>
     <memberOf key="model.global.meta"/>
   </classes>
@@ -18,71 +21,79 @@ some aspect of the text markup.
   </content>
   <attList>
     <attDef ident="target" usage="req">
-	<equiv/>
-	<desc>points at the elements whose markup is uncertain.</desc><desc version="2006-10-28" xml:lang="ja">確信度の対象となる要素を示す．</desc>
-        <datatype maxOccurs="unbounded"><rng:ref name="data.pointer"/></datatype>
+      <equiv/>
+      <desc>points at the elements whose markup is
+      uncertain.</desc>
+      <desc version="2006-10-28" xml:lang="ja">確信度の対象となる要素を
+      示す．</desc>
+      <datatype maxOccurs="unbounded"><rng:ref name="data.pointer"/></datatype>
       <valDesc>a series of one or more identifiers (URIs), separated by white space</valDesc>
       <exemplum>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">Elizabeth went to <persName xml:id="ESX">Essex</persName>
-   <certainty target="#ESX" locus="gi" degree="0.6"/></egXML>
+	<egXML xmlns="http://www.tei-c.org/ns/Examples">Elizabeth went to <persName xml:id="ESX">Essex</persName>
+	<certainty target="#ESX" locus="gi" degree="0.6"/></egXML>
       </exemplum>
       <remarks>
         <p>If more than one identifier is given, the
-<gi>certainty</gi> element is interpreted as applying to all.
-If no identifier is present on the element being annotated, the
-attribute should give the identifier of a <gi>ptr</gi> element which
-points at the element being annotated; for further discussion
-of this indirect pointing mechanism, see chapter <ptr target="#SA"/>.</p>
+        <gi>certainty</gi> element is interpreted as applying to all.
+        If no identifier is present on the element being annotated,
+        the attribute should give the identifier of a <gi>ptr</gi>
+        element which points at the element being annotated; for
+        further discussion of this indirect pointing mechanism, see
+        chapter <ptr target="#SA"/>.</p>
       </remarks>
     </attDef>
     <attDef ident="locus" usage="req">
 	<equiv/>
 	<desc>indicates the precise location of the uncertainty in the
-markup: applicability of the element, precise position of the
-start- or end-tag, value of a specific attribute, etc.</desc><desc version="2006-10-28" xml:lang="ja">当該確信度が指定要素の何についてのことかを示す．</desc>
-      <datatype><rng:ref name="data.enumerated"/></datatype>
-      <valList type="semi">
-        <valItem ident="gi">
-          <equiv/>
-          <gloss>uncertain whether the element used actually applies
-to the passage.</gloss>
-        </valItem>
-        <valItem ident="startloc">
-          <equiv/>
-          <gloss>start-tag may not be correctly located.</gloss>
-        </valItem>
-        <valItem ident="endloc">
-          <equiv/>
-          <gloss>end-tag may not be correctly located.</gloss>
-        </valItem>
-        <valItem ident="location">
-          <equiv/>
-          <gloss>both the start-tag and the end-tag may not
-be correctly located.</gloss>
-        </valItem>
-        <valItem ident="att.name">
-          <equiv/>
-          <gloss>the value given for the attribute
-name is uncertain.</gloss>
-        </valItem>
-        <valItem ident="transcribedContent">
-          <equiv/>
-          <gloss>the content of the element may
-not be a correct transcription of the source text.</gloss>
-        </valItem>
-        <valItem ident="suppliedContent">
-          <equiv/>
-          <gloss>the content of the element may not
-have been correctly supplied by the reader, e.g. as in the
-cases of corr and abbrev elements.</gloss>
-        </valItem>
-      </valList>
-      <remarks>
-        <p>If the name of an attribute is supplied, it must be
-  prefixed by <code>att.</code>. <!-- The <mentioned>#</mentioned> distinguishes the terms of the
-controlled vocabulary from possible collisions with attribute
-names.  Extensions to this vocabulary should also use this
-prefix.--></p>
+	markup: applicability of the element, precise position of the
+	start- or end-tag, value of a specific attribute,
+	etc.</desc>
+	<desc version="2006-10-28" xml:lang="ja">当該確信度が指定要素の
+	何についてのことかを示す．</desc>
+	<datatype><rng:ref name="data.enumerated"/></datatype>
+	<valList type="semi">
+	  <valItem ident="gi">
+	    <equiv/>
+	    <gloss>uncertain whether the element used actually applies
+	    to the passage.</gloss>
+	  </valItem>
+	  <valItem ident="startloc">
+	    <equiv/>
+	    <gloss>start-tag may not be correctly located.</gloss>
+	  </valItem>
+	  <valItem ident="endloc">
+	    <equiv/>
+	    <gloss>end-tag may not be correctly located.</gloss>
+	  </valItem>
+	  <valItem ident="location">
+	    <equiv/>
+	    <gloss>both the start-tag and the end-tag may not be
+	    correctly located.</gloss>
+	  </valItem>
+	  <valItem ident="att.name">
+	    <equiv/>
+	    <gloss>the value given for the attribute name is
+	    uncertain.</gloss>
+	  </valItem>
+	  <valItem ident="transcribedContent">
+	    <equiv/>
+	    <gloss>the content of the element may not be a correct
+	    transcription of the source text.</gloss>
+	  </valItem>
+	  <valItem ident="suppliedContent">
+	    <equiv/>
+	    <gloss>the content of the element may not have been
+	    correctly supplied by the reader, e.g. as in the cases of
+	    corr and abbrev elements.</gloss>
+	  </valItem>
+	</valList>
+	<remarks>
+	  <p>If the name of an attribute is supplied, it must be
+	  prefixed by <code>att.</code>. <!-- The
+	  <mentioned>#</mentioned> distinguishes the terms of the
+	  controlled vocabulary from possible collisions with
+	  attribute names. Extensions to this vocabulary should also
+	  use this prefix.--></p>
       </remarks>
     </attDef>
     <attDef ident="assertedValue" usage="rec">
@@ -141,37 +152,39 @@ general use.</p>
     </attDef> -->
 
     <attDef ident="given" usage="rec">
-	<equiv/>
-	<desc>indicates conditions assumed in the assignment of a
-degree of confidence.</desc><desc version="2006-10-28" xml:lang="ja">当該確信度が成立する前提条件部分を示す．</desc>
+      <equiv/>
+      <desc>indicates conditions assumed in the assignment of a degree
+      of confidence.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該確信度が成立する前提
+      条件部分を示す．</desc>
       <datatype maxOccurs="unbounded"><rng:ref name="data.pointer"/></datatype>
-      <valDesc>a characterization of the conditions which are assumed
-in the assignment of a degree of confidence.  This may be in
-prose.</valDesc>
+      <valDesc>a pointer to a characterization of the conditions which
+      are assumed in the assignment of a degree of
+      confidence.</valDesc>
       <remarks>
-        <p>A project may wish to control the vocabulary used
-in this attribute.</p>
-        <p>The envisioned typical value of this attribute would be the
-identifier of another <gi>certainty</gi> element or a list of
-such identifiers.
-It may thus be possible to
-construct probability networks by chaining <gi>certainty</gi>
-elements together.  Such networks would ultimately be grounded
-in unconditional <gi>certainty</gi> elements (with no value for
-<att>given</att>).  The semantics of this chaining would be
-understood in this way: if a <gi>certainty</gi> element is
-specified, via a reference, as the assumption, then it is not the
-attribution of uncertainty that is the assumption, but rather
-the assertion itself.  For instance, in the example above,
-the first <gi>certainty</gi> element indicates that the
-confidence in the identification of the new scribe as
-<mentioned>msm</mentioned>.  The second indicates the degree of confidence that
-<mentioned>Essex</mentioned> is a personal name, given that the new scribe is
-<mentioned>msm</mentioned>.  Note that the given in the second <gi>certainty</gi>
-element is not the assertion that the likelihood that msm is
-the new scribe is 0.6, but simply the assertion that msm is the
-new scribe; this is a recommended convention to facilitate
-building networks.</p>
+	<p>A project may wish to control the vocabulary used in this
+	attribute.</p>
+	<p>The envisioned typical value of this attribute would be the
+	identifier of another <gi>certainty</gi> element or a list of
+	such identifiers. It may thus be possible to construct
+	probability networks by chaining <gi>certainty</gi> elements
+	together. Such networks would ultimately be grounded in
+	unconditional <gi>certainty</gi> elements (with no value for
+	<att>given</att>). The semantics of this chaining would be
+	understood in this way: if a <gi>certainty</gi> element is
+	specified, via a reference, as the assumption, then it is not
+	the attribution of uncertainty that is the assumption, but
+	rather the assertion itself. For instance, in the example
+	above, the first <gi>certainty</gi> element indicates that the
+	confidence in the identification of the new scribe as
+	<mentioned>msm</mentioned>. The second indicates the degree of
+	confidence that <mentioned>Essex</mentioned> is a personal
+	name, given that the new scribe is <mentioned>msm</mentioned>.
+	Note that the given in the second <gi>certainty</gi> element
+	is not the assertion that the likelihood that msm is the new
+	scribe is 0.6, but simply the assertion that msm is the new
+	scribe; this is a recommended convention to facilitate
+	building networks.</p>
         <p>The ambitious encoder may wish to attempt complex networks
 or probability assertions, experimenting with references to
 other elements or prose assertions, and deploying feature
