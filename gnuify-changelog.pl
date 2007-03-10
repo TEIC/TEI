@@ -13,9 +13,10 @@ require 5.0;
 use strict;
 
 my %hackers = (
-    "rahtz"       => 'Sebastian Rahtz <sebastian.rahtz@oucs.ox.ac.uk>',
-    "louburnard"         => 'Lou Burnard <lou.burnard@oucs.ox.ac.uk>',
+    "rahtz"           => 'Sebastian Rahtz <sebastian.rahtz@oucs.ox.ac.uk>',
+    "louburnard"      => 'Lou Burnard <lou.burnard@oucs.ox.ac.uk>',
     "sbauman"         => 'Syd Bauman  <sbauman@brown.edu>',
+    "mlforcada"       => 'Mikel L. Forcada <mlf@ua.es>',
 );
 
 my $parse_next_line = 0;
