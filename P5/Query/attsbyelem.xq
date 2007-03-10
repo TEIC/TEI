@@ -8,23 +8,23 @@ declare function tei:atts($a as element(),$lang as xs:string) as element() {
     {$a/@usage}
     {data($a/@ident)}</name>
     <default>{data($a/tei:defaultVal)}</default>
-    <datatype>
-    {
-      string($a/tei:datatype/*)
+     { for $d in  $a/tei:datatype return
+	 <datatype>
+	    { $d/@minOccurs }
+	    { $d/@maxOccurs }
+	    { $d/* }
+         </datatype>
      }
-     </datatype>
-     {
-     for $vl in $a/tei:valList return
-     <valList>
-       {$vl/@type}	
-       {
-	for $v in $vl/tei:valList/tei:valItem return
-	<valItem>
-	   {$v/@ident}
-	</valItem>
-       }
-     </valList>	
-     }
+     {  
+      for $d in $a/tei:valList[@type='closed']  return
+       <valList>
+         {for $dv in $d/tei:valItem return
+             <valItem>
+	        { $dv/@ident }
+             </valItem>
+             }
+       </valList>
+      }
     <desc>{
     if ($a/tei:desc[@xml:lang=$lang]) then
         data($a/tei:desc[@xml:lang=$lang])

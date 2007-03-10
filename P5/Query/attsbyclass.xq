@@ -18,17 +18,23 @@ return
     {$a/@usage}
     {data($a/@ident)}</name>
     <default>{data($a/tei:defaultVal)}</default>
-    <datatype>{
-      string($a/tei:datatype/*)
-     }</datatype>
-     <valList>
-       {
-	for $v in $a/tei:valList/tei:valItem return
-	<valItem>
-	   {$v/@ident}
-	</valItem>
-       }
-     </valList>	
+     { for $d in  $a/tei:datatype 
+        return
+	 <datatype>
+	    { $d/@minOccurs }
+	    { $d/@maxOccurs }
+	    { $d/* }
+         </datatype>
+     }
+     {  
+      for $d in $a/tei:valList  return
+       <valList>
+         {for $dv in $d/tei:valItem return
+             <valItem>
+	        { $dv/@ident }
+             </valItem>
+       </valList>
+      }
     <desc>{data($Desc)}</desc>
 </att>
 }
