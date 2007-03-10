@@ -27,10 +27,13 @@ Description
   
   <xsl:template match="/">
     <p><xsl:value-of select="name(.)"/></p>
+<!--
+ for debugging 
     <pre><xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text>
-      <xsl:copy-of select="." />
+      <xsl:copy-of select="*" />
 <xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
     </pre>
+-->
     <p class="roma">
       <a>
 	<xsl:attribute name="href">
@@ -157,6 +160,7 @@ Description
 	       </td>
 	       <td class="formfield">
 		 <xsl:call-template name="contentTypes"/>
+
 	       </td>
 	     </tr>
 	     <tr>
@@ -172,72 +176,7 @@ Description
 		 </input>
 	       </td>
 	     </tr>
-	     <tr>
-	       <td class="formlabel">min.</td>
-	       <td class="formfield">
-		 <select name="minOccurs" size="1"
-			 onChanged="setChangedContent">
-		   <option value="0">
-		     <xsl:if
-			 test="string(//currentAttribute/attDef/datatype/@minOccurs)=0">
-		       <xsl:attribute name="selected">1</xsl:attribute>
-		     </xsl:if>
-		     <xsl:text>0</xsl:text>
-		   </option>
-		   <option value="1">
-		     <xsl:if
-			 test="string(//currentAttribute/attDef/datatype/@minOccurs)=1">
-		       <xsl:attribute name="selected">1</xsl:attribute>
-		     </xsl:if>
-		     <xsl:text>1</xsl:text>
-		   </option>
-		   <option value="2">
-		     <xsl:if
-			 test="string(//currentAttribute/attDef/datatype/@minOccurs)=2">
-		       <xsl:attribute name="selected">1</xsl:attribute>
-		     </xsl:if>
-		     <xsl:text>2</xsl:text>
-		   </option>
-		 </select>
-	       </td>
 
-	     </tr>
-	     <tr>
-	       <td class="formlabel">max.</td>
-	       <td class="formfield">
-		 <select name="maxOccurs" size="1"
-			 onChanged="setChangedContent">
-		   <option value="0">
-		     <xsl:if
-			 test="string(//currentAttribute/attDef/datatype/@maxOccurs)=0">
-		       <xsl:attribute name="selected">1</xsl:attribute>
-		     </xsl:if>
-		     <xsl:text>0</xsl:text>
-		   </option>
-		   <option value="1">
-		     <xsl:if
-			 test="string(//currentAttribute/attDef/datatype/@maxOccurs)=1">
-		       <xsl:attribute name="selected">1</xsl:attribute>
-		     </xsl:if>
-		     <xsl:text>1</xsl:text>
-		   </option>
-		   <option value="2">
-		     <xsl:if
-			 test="string(//currentAttribute/attDef/datatype/@maxOccurs)=2">
-		       <xsl:attribute name="selected">1</xsl:attribute>
-		     </xsl:if>
-		     <xsl:text>2</xsl:text>
-		   </option>
-		   <option value="unbounded">
-		     <xsl:if
-			 test="string(//currentAttribute/attDef/datatype/@maxOccurs)=unbounded">
-		       <xsl:attribute name="selected">1</xsl:attribute>
-		     </xsl:if>
-		     <xsl:text>unbounded</xsl:text>
-		   </option>
-		 </select>
-	       </td>
-	     </tr>
 	     <tr>
 	       <td class="formlabel">
 		 <xsl:value-of disable-output-escaping="yes"
@@ -246,7 +185,7 @@ Description
 	       <td class="formfield">
 		 <input class="radio" type="radio" name="closed" value="true">
 		   <xsl:if
-	       test="//currentAttribute/attDef/valList[@type='closed']">
+	       test="string-length(//currentAttribute/attDef/valList)&gt;0">
 		     <xsl:attribute name="checked">1</xsl:attribute>
 		   </xsl:if>
 		 </input>
@@ -254,7 +193,7 @@ Description
 		 <br/>
 		 <input class="radio" type="radio" name="closed" value="false">
 		   <xsl:if
-	       test="not(//currentAttribute/attDef/valList[@type='closed'])">
+	       test="string-length(//currentAttribute/attDef/valList)=0">
 		     <xsl:attribute name="checked">1</xsl:attribute>
 		   </xsl:if>
 		 </input>
@@ -268,11 +207,9 @@ Description
 	       </td>
 	       <td class="formfield">
 		 <input type="text" name="valList" size="53">
-		   <xsl:if test="//currentAttribute">
-		     <xsl:attribute name="value">
-		       <xsl:value-of select="//currentAttribute/attDef/valList"/>
-		     </xsl:attribute>
-		   </xsl:if>
+		   <xsl:attribute name="value">
+		     <xsl:value-of select="//currentAttribute/attDef/valList"/>
+		   </xsl:attribute>
 		 </input>
 	       </td>
 	     </tr>
@@ -321,6 +258,94 @@ Description
 	  </option>
 	</xsl:for-each>
       </select>
+
+      <xsl:variable name="currentMin">
+	<xsl:choose>
+	  <xsl:when test="string-length(//currentAttribute/attDef/datatype/@minOccurs)&gt;0">
+	    <xsl:value-of
+		select="//currentAttribute/attDef/datatype/@minOccurs"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:text>1</xsl:text>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:variable>
+      <xsl:variable name="currentMax">
+	<xsl:choose>
+	  <xsl:when test="string-length(//currentAttribute/attDef/datatype/@maxOccurs)&gt;0">
+	    <xsl:value-of
+		select="//currentAttribute/attDef/datatype/@maxOccurs"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:text>1</xsl:text>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:variable>
+
+      <xsl:text> &gt;=</xsl:text>
+      <select name="minOccurs" size="1"
+	      onChanged="setChangedContent">
+	<option value="0">
+	  <xsl:if  test="$currentMin=0">
+	    <xsl:attribute name="selected">1</xsl:attribute>
+	  </xsl:if>
+	  <xsl:text>0</xsl:text>
+	</option>
+	<option value="1">
+	  <xsl:if  test="$currentMin=1">
+	    <xsl:attribute name="selected">1</xsl:attribute>
+	  </xsl:if>
+	  <xsl:text>1</xsl:text>
+	</option>
+	<option value="2">
+	  <xsl:if  test="$currentMin=2">
+	    <xsl:attribute name="selected">1</xsl:attribute>
+	  </xsl:if>
+	  <xsl:text>2</xsl:text>
+	</option>
+      </select>
+      
+      <xsl:text> &lt;=</xsl:text>
+      <select name="maxOccurs" size="1"
+	      onChanged="setChangedContent">
+	<option value="0">
+	  <xsl:if  test="$currentMax=0">
+	    <xsl:attribute name="selected">1</xsl:attribute>
+	  </xsl:if>
+	  <xsl:text>0</xsl:text>
+	</option>
+	<option value="1">
+	  <xsl:if  test="$currentMax=1">
+	    <xsl:attribute name="selected">1</xsl:attribute>
+	  </xsl:if>
+	  <xsl:text>1</xsl:text>
+	</option>
+	<option value="2">
+	  <xsl:if  test="$currentMax=2">
+	    <xsl:attribute name="selected">1</xsl:attribute>
+	  </xsl:if>
+	  <xsl:text>2</xsl:text>
+	</option>
+	<option value="3">
+	  <xsl:if  test="$currentMax=3">
+	    <xsl:attribute name="selected">1</xsl:attribute>
+	  </xsl:if>
+	  <xsl:text>3</xsl:text>
+	</option>
+	<option value="4">
+	  <xsl:if  test="$currentMax=4">
+	    <xsl:attribute name="selected">1</xsl:attribute>
+	  </xsl:if>
+	  <xsl:text>4</xsl:text>
+	</option>
+	<option value="unbounded">
+	  <xsl:if  test="$currentMax='unbounded'">
+	    <xsl:attribute name="selected">1</xsl:attribute>
+	  </xsl:if>
+	  <xsl:text>unbounded</xsl:text>
+	</option>
+      </select>
+
     </div>
   </xsl:template>
   

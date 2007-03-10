@@ -258,6 +258,7 @@ class romaDom extends domDocument
 	    $oInclude = $oElem->appendChild( new domElement( 'include' ) );
 	    $oInclude->appendChild( new domText( $oElement->getAttribute( 'mode' ) ) );
 	      
+
 	    foreach( $oElement->childNodes as $oChild )
 	      {
 		if ( $oChild->nodeType == XML_ELEMENT_NODE )
@@ -529,6 +530,7 @@ class romaDom extends domDocument
 
 	if ( $szModule != '' && $szClass == '')
 	  {
+// I get here if I edit an attribute on an existing element
 	    @$oAttDom->loadXML( join( '', file( roma_xquery_server
 	  . 'attsbyelem.xq?lang=' . $_SESSION['docLang'] . '&name=' . $szElement ) ) );
 	    $oElement = $oAttDom->documentElement;
@@ -551,6 +553,7 @@ class romaDom extends domDocument
 	  }
 	elseif( $szClass == '' )
 	  {
+// I get here if I edit an attribute on an attribute on a new element
 	    $oAttDom->appendChild( new domElement( 'Element' ) );
 	    $oElement = $oAttDom->documentElement;
 
@@ -559,6 +562,7 @@ class romaDom extends domDocument
 	  }
 	else
 	  {
+// I get here if I look at class attributes 
 	    $oAttDom->appendChild( new domElement( 'Element' ) );
 	    $oElement = $oAttDom->documentElement;
 
@@ -576,6 +580,7 @@ class romaDom extends domDocument
 	      and @mode='change' and @ident='$szClass']/tei:attList" )->item(0);
 	  }
 
+// ok we are sitting on an element. Now check its attributes.
 	if ( is_object( $oAttList ) )
 	  {
 	    if ( $errResult && count( $oAttList->childNodes ) > 0 )
@@ -661,12 +666,18 @@ class romaDom extends domDocument
 		  {
 		    $oAtt->removeChild( $oInclude );
 		  }
-		$oAtt->appendChild( new domElement( 'include', $oChild->getAttribute( 'mode' ) ) );
+		$oAtt->appendChild( new domElement( 'include',$oChild->getAttribute( 'mode' ) ) );
+
+// look at datatype
 
 		$oAttDat = $oChild->getElementsByTagName( 'datatype' )->item(0);
 		if ( is_object( $oAttDat ) )
 		  {
+		    $oTest = $oAtt->appendChild( new domElement( 'whatever' ) );
 		    $oDataType = $oAtt->appendChild( new domElement( 'datatype' ) );
+		    $oDataType->setAttribute( 'minOccurs', $oAttDat->getAttribute( 'minOccurs' )  );
+
+  		    $oDataType->setAttribute( 'maxOccurs', $oAttDat->getAttribute( 'maxOccurs' )  );
 
 		    if ( $oAttDat->firstChild->nodeName == 'rng:text' )
 		      {
@@ -691,6 +702,7 @@ class romaDom extends domDocument
 	return $errResult;
       }
 
+// getting the currentAttribute definition 
     public function getAttributeDefinition( $szAttribute, $szElement, $szModule, $szClass,&$oDef )
       {
 	$this->getXPath( $oXPath );
@@ -724,6 +736,8 @@ class romaDom extends domDocument
 		break;
 	      case 'datatype':
 		$oNode = $oRoot->appendChild( new domElement( 'datatype' ) );
+	        $oNode->setAttribute('minOccurs',$oChild->getAttribute( 'minOccurs'));
+	        $oNode->setAttribute('maxOccurs',$oChild->getAttribute( 'maxOccurs'));
 		if ( $oChild->firstChild->nodeName == 'rng:text' )
 		  {
 		    $oNode->appendChild( new domText( 'text' ) );
@@ -1427,8 +1441,9 @@ class romaDom extends domDocument
 	      }
 	    $theContent = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'datatype' );
 	    $oContent = $oAttDef->appendChild( $theContent );
-	    
-	    
+
+	    $oContent->setAttribute('minOccurs', $aszConfig['minOccurs']);
+	    $oContent->setAttribute('maxOccurs', $aszConfig['maxOccurs']);
 	    switch ( $aszConfig[ 'content' ] )
 	      {
 	      case 'text':
