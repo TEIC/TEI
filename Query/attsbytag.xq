@@ -14,7 +14,19 @@ return
     {$a/@usage}
     {data($a/@ident)}</name>
     <default>{data($a/tei:defaultVal)}</default>
-    <datatype>{$a/tei:datatype/*}</datatype>
+
+    <datatype>
+    {
+      string($a/tei:datatype/*)
+     }</datatype>
+     <valList>
+       {
+	for $v in $a/tei:valList/tei:valItem return
+	<valItem>
+	   {$v/@ident}
+	</valItem>
+       }
+     </valList>	
     <desc>{    if ($t/tei:desc[@xml:lang=$lang]) then
         data($t/tei:desc[@xml:lang=$lang])
     else
