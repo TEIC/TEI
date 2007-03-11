@@ -22,6 +22,7 @@ TESTFILES= \
 	testminimal \
 	testms \
 	testnames \
+	testspoken \
 	testtagdocs \
 	testoucs \
 	testp4compat \
