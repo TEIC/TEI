@@ -1376,20 +1376,7 @@ every attribute and see whether the attribute has changed-->
   </xsl:template>
   <xsl:template match="tei:specGrp">
     <xsl:choose>
-      <xsl:when test="//tei:schemaSpec">
-        <tei:list>
-          <xsl:for-each select="tei:*">
-            <tei:item>Specification for <xsl:value-of
-                select="substring-before(name(.),'Spec')"/>
-              <xsl:text> </xsl:text>
-              <tei:ref target="#{@ident}">
-                <tei:ident>
-                  <xsl:value-of select="@ident"/>
-                </tei:ident>
-              </tei:ref>
-            </tei:item>
-          </xsl:for-each>
-        </tei:list>
+      <xsl:when test="ancestor::tei:schemaSpec">
       </xsl:when>
       <xsl:otherwise>
         <xsl:copy>
