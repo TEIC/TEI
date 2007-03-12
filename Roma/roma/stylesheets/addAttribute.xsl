@@ -338,6 +338,12 @@ Description
 	  </xsl:if>
 	  <xsl:text>4</xsl:text>
 	</option>
+	<option value="5">
+	  <xsl:if  test="$currentMax=5">
+	    <xsl:attribute name="selected">1</xsl:attribute>
+	  </xsl:if>
+	  <xsl:text>5</xsl:text>
+	</option>
 	<option value="unbounded">
 	  <xsl:if  test="$currentMax='unbounded'">
 	    <xsl:attribute name="selected">1</xsl:attribute>
