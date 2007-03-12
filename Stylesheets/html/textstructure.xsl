@@ -753,10 +753,10 @@ $ID: requests a particular page
   </xd:doc>
   <xsl:template match="tei:text">
     <xsl:choose>
-      <xsl:when test="../tei:TEI">
+      <xsl:when test="parent::tei:TEI">
         <xsl:apply-templates/>
       </xsl:when>
-      <xsl:when test="../tei:group">
+      <xsl:when test="parent::tei:group">
         <xsl:apply-templates/>
       </xsl:when>
       <xsl:otherwise>
@@ -1504,11 +1504,11 @@ $ID: requests a particular page
         </xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:if test="not($currentID='')">
-      <xsl:call-template name="partialFootNotes">
-        <xsl:with-param name="currentID" select="$currentID"/>
-      </xsl:call-template>
-    </xsl:if>
+
+    <xsl:call-template name="partialFootNotes">
+      <xsl:with-param name="currentID" select="$currentID"/>
+    </xsl:call-template>
+    
     <xsl:call-template name="stdfooter"/>
   </xsl:template>
   <xd:doc>

@@ -37,6 +37,7 @@
   <xsl:include href="linking.xsl"/>
   <xsl:include href="namesdates.xsl"/>
   <xsl:include href="textstructure.xsl"/>
+  <xsl:include href="textcrit.xsl"/>
   <xsl:include href="verse.xsl"/>
   <xd:doc type="string">
 Stylesheet constant setting the name of the main output file.

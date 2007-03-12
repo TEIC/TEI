@@ -625,7 +625,7 @@
             <xsl:text>indent1</xsl:text>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:text>left</xsl:text>
+            <xsl:text>l</xsl:text>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
@@ -1617,9 +1617,9 @@
   <xsl:template name="printNotes">
     <xsl:if test="ancestor-or-self::tei:TEI/tei:text/descendant::tei:note[not(@place='inline')]">
       <xsl:choose>
-        <xsl:when test="$footnoteFile='true'">
-          <xsl:variable name="BaseFile">
-            <xsl:value-of select="$masterFile"/>
+	<xsl:when test="$footnoteFile='true'">
+	  <xsl:variable name="BaseFile">
+	    <xsl:value-of select="$masterFile"/>
             <xsl:call-template name="addCorpusID"/>
           </xsl:variable>
           <xsl:call-template name="outputChunk">
@@ -1644,6 +1644,20 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:if>
+    <xsl:if
+	test="ancestor-or-self::tei:TEI/tei:text/descendant::tei:app">
+
+      <div class="notes">
+	<div class="noteHeading">
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">noteHeading</xsl:with-param>
+	  </xsl:call-template>
+	</div>
+	<xsl:apply-templates mode="printnotes"
+		 select="descendant::tei:app"/>
+      </div>
+    </xsl:if>
+
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
