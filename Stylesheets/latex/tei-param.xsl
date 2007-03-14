@@ -53,7 +53,7 @@ Logo graphics file
 <xd:doc type="string" class="output">
 URL root where referenced documents are located
 </xd:doc>
-<xsl:param name="baseURL">http://www.tei-c.org</xsl:param>
+<xsl:param name="baseURL"></xsl:param>
 
 <xd:doc type="boolean" class="output">
 Whether or not to load LaTeX packages which attempt to
