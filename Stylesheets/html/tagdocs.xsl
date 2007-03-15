@@ -1368,7 +1368,7 @@
 
   <xsl:template name="refdocFooter">
     <div style="margin: 20pt; font-weight: bold;">
-      <a href="${refDocFooterURL}">
+      <a href="{$refDocFooterURL}">
 	<xsl:value-of select="$refDocFooterText"/>
       </a>
     </div>
