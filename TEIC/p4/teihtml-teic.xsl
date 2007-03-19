@@ -81,7 +81,8 @@
   <xsl:param name="authorWord"></xsl:param>
   <xsl:param name="autoToc"></xsl:param>
   <xsl:param name="bottomNavigationPanel">true</xsl:param>
-  <xsl:param name="cssFile"><xsl:value-of select="$URLPREFIX"/>/release/xml/teip4/stylesheet/teic.css</xsl:param>
+  <xsl:param name="cssFile">/release/xml/teip4/stylesheet/tei.css</xsl:param>
+  <xsl:param name="cssSecondaryFile">/release/xml/teip4/stylesheet/teic.css</xsl:param>
   <xsl:param name="pageLayout">CSS</xsl:param>
   <xsl:param name="dateWord"></xsl:param>
   <xsl:param name="feedbackURL">http://www.tei-c.org/Consortium/TEI-contact.html</xsl:param>
@@ -95,7 +96,12 @@
   <xsl:param name="searchWords">Search this site</xsl:param>
   <xsl:param name="showTitleAuthor">1</xsl:param>
   <xsl:param name="subTocDepth">-1</xsl:param>
-  <xsl:param name="splitLevel">0</xsl:param>
+  <xsl:param name="splitLevel">
+    <xsl:choose>
+      <xsl:when test="/TEI.2/@rend='nosplit'">-1</xsl:when>
+      <xsl:otherwise>0</xsl:otherwise>
+    </xsl:choose>
+  </xsl:param>
   <xsl:param name="topNavigationPanel"></xsl:param>
   <xsl:param name="urlChunkPrefix">.ID=</xsl:param>
   <xsl:template name="copyrightStatement">Copyright TEI Consortium</xsl:template>
@@ -108,13 +114,14 @@
   <link rel="stylesheet" type="text/css" media="screen">
     <xsl:attribute name="href">
       <xsl:value-of select="$URLPREFIX"/>
-      <xsl:text>/release/xml/teip4/stylesheet/tei.css</xsl:text>
+      <xsl:value-of select="$cssFile"/>
+      <xsl:text></xsl:text>
     </xsl:attribute>
   </link>
   <link rel="stylesheet" type="text/css" media="screen">
     <xsl:attribute name="href">
       <xsl:value-of select="$URLPREFIX"/>
-      <xsl:text>/release/xml/teip4/stylesheet/teic.css</xsl:text>
+      <xsl:value-of select="$cssSecondaryFile"/>
     </xsl:attribute>
   </link>
 </xsl:template>
@@ -135,109 +142,6 @@
       <xsl:copy-of select="@*"/>
       <xsl:apply-templates/>
     </xsl:element>
-  </xsl:template>
-  
-  
-  <xsl:template match="formerrors">
-    <xsl:apply-templates select="..//error"/>
-  </xsl:template>
-  
-  <xsl:template match="error">
-    <br/>
-    <span class="form_error"><xsl:value-of select="."/></span>
-  </xsl:template>
-  
-  <xsl:template match="textfield">
-    <input 
-	type="text"
-	name="{@name|name}" 
-	value="{@value|value}" 
-	size="{@width|width}" 
-	maxlength="{@maxlength|maxlength}" />
-    <xsl:apply-templates select="error"/>
-  </xsl:template>
-  
-  <xsl:template match="password">
-    <input 
-	type="password"
-	name="{@name|name}" 
-	value="{@value|value}" 
-	size="{@width|width}" 
-	maxlength="{@maxlength|maxlength}" />
-    <xsl:apply-templates select="error"/>
-  </xsl:template>
-  
-  <xsl:template match="checkbox">
-    <input
-	type="checkbox"
-	name="{@name|name}"
-	value="{@value|value}" >
-      <xsl:if test="@checked|checked">
-	<xsl:attribute name="checked">
-	  <xsl:text>@checked|checked</xsl:text>
-	</xsl:attribute>
-      </xsl:if>
-    </input>
-    <xsl:apply-templates select="error"/>
-  </xsl:template>
-  
-  <xsl:template match="submit_button">
-    <input
-	type="submit"
-	name="{@name|name}"
-	value="{@value|value}" />
-    <xsl:apply-templates select="error"/>
-  </xsl:template>
-  
-  <xsl:template match="hidden">
-    <input
-	type="hidden"
-	name="{@name|name}"
-	value="{@value|value}" />
-  </xsl:template>
-  
-  <xsl:template match="options/option">
-    <option value="{@value|value}">
-      <xsl:if test="selected[. = 'selected'] | @selected[. = 'selected']">
-	<xsl:attribute name="selected">selected</xsl:attribute>
-      </xsl:if>
-      <xsl:value-of select="@text|text"/>
-    </option>
-  </xsl:template>
-  
-  <xsl:template match="single_select">
-    <select name="{@name|name}">
-      <xsl:if test="@size">
-	<xsl:attribute name="size"><xsl:value-of select="@size"/></xsl:attribute>
-      </xsl:if>
-      <xsl:apply-templates select="options/option"/>
-    </select>
-    <xsl:apply-templates select="error"/>
-  </xsl:template>
-  
-  <xsl:template match="multi_select">
-    <select multiple="multiple" size="5" name="{@name|name}">
-      <xsl:if test="@size">
-	<xsl:attribute name="size"><xsl:value-of select="@size"/></xsl:attribute>
-      </xsl:if>
-      <xsl:apply-templates select="options/option"/>
-    </select>
-    <xsl:apply-templates select="error"/>
-  </xsl:template>
-  
-  <xsl:template match="textarea">
-    <textarea name="{@name|name}" cols="{@cols|cols}" rows="{@rows|rows}">
-      <xsl:if test="@wrap|wrap"><xsl:attribute name="wrap">physical</xsl:attribute></xsl:if>
-      <xsl:value-of select="@value|value"/>
-      </textarea> <br />
-      <xsl:apply-templates select="error"/>
-  </xsl:template>
-  
-  <xsl:template match="form">
-    <xsl:copy>
-      <xsl:copy-of select="@*"/>
-      <xsl:apply-templates/>
-    </xsl:copy>
   </xsl:template>
   
   
