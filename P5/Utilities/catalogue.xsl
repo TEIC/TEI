@@ -384,7 +384,7 @@
     <xsl:param name="content"/>
     <exsl:document method="xml" 
 		   encoding="utf-8" 
-		   href="Module_{$name}.xml">
+		   href="modList/{$name}.xml">
       <div type="oddcatalogue">
 	<xsl:attribute name="xml:id">
 	  <xsl:value-of select="$name"/>
@@ -392,7 +392,7 @@
 	<xsl:copy-of select="$content"/>
       </div>
     </exsl:document>
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="Module_{$name}.xml"/>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="modList/{$name}.xml"/>
     
   </xsl:template>
   

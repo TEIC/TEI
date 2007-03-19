@@ -348,8 +348,9 @@ changelog:
 	cat newchanges oldchanges > ReleaseNotes/ChangeLog
 	rm newchanges oldchanges
 
+
 clean:
-	-rm -rf release Guidelines Guidelines-web Schema DTD dtd Split RomaResults *~
+	-rm -rf release Guidelines Guidelines-web Schema DTD dtd Split RomaResults *~ 
 	-rm Guidelines.??? \
 	p5examples.rng \
 	p5odds.rng \
