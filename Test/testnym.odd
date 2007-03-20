@@ -62,11 +62,11 @@ an occurrence of this name in running text might be encoded as follows:
 <forename nymKey="#N123">Tony</forename> Blair
 </egXML>
 </p>
-<p>The person identified by this particular Tony may be resolved
+<p>The person identified by this particular Tony may be indicated
 independently using the <att>key</att> attribute, either on the
 forename or on the whole name component:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<forename nymKey="#N123" key="#BLT">Tony</forename>
+  <forename nymKey="#N123" key="#BLT">Tony</forename>
 ....
 <person xml:id="BLT">
 <persName>Tony Blair</persName>
@@ -87,7 +87,8 @@ for a given nym has two orthographic variants in this way:
    </form>
 </nym>
 </egXML>
-</p><p>To provide a more complex etymological decomposition of a name, we
+</p>
+<p>To provide a more complex etymological decomposition of a name, we
 may use the existing <gi>etym</gi> element, as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><nym xml:id="XYZ">
 <form>Bogomil</form>
@@ -112,7 +113,7 @@ done by marking <gi>seg</gi> elements within the
 <!-- add example to show that Amadeus has same referents -->
 </p>
 
-<p>Alternatively, the constituents of Bogomil might be marked up as
+<p>Alternatively, each of the constituents of Bogomil might be marked up as
 nyms in their own right:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <nym xml:id="B1" type="part">
@@ -176,7 +177,6 @@ proposal described here.</p>
 	any kind</desc>
 	<classes>
 	  <memberOf key="att.typed"/>
-	  <memberOf key="model.nymLike"/>
 	</classes>
 	<content>
 	  <rng:zeroOrMore>
@@ -186,7 +186,7 @@ proposal described here.</p>
 	    <rng:ref name="model.pLike"/>
 	  </rng:zeroOrMore>
 	  <rng:zeroOrMore>
-	    <rng:ref name="model.nymLike"/>
+	    <rng:ref name="nym"/>
 	  </rng:zeroOrMore>
 	</content>
 	
@@ -215,9 +215,6 @@ proposal described here.</p>
 	</listRef>
       </elementSpec>
 
-      <classSpec ident="model.nymLike" mode="add" type="model">
-	<desc>Objects like <gi>nym</gi>s</desc>
-      </classSpec>
 
 
       <elementSpec xmlns="http://www.tei-c.org/ns/1.0"
@@ -232,24 +229,27 @@ proposal described here.</p>
 	</classes>
 	<content>
 	  <rng:oneOrMore>
-	    <rng:ref name="model.nymLike"/>
+	    <rng:choice>
+	    <rng:ref name="nym"/>
+	    <rng:ref name="listNym"/>
+	    </rng:choice>
 	  </rng:oneOrMore>
 	</content>
 	<exemplum>
 	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
-	    <listNym type="">
+	    <listNym type="floral">
+	      <nym><form>Rose</form></nym>
+	      <nym><form>Daisy</form></nym>
+	      <nym><form>Heather</form></nym>
 	    </listNym>
 	  </egXML>
 	</exemplum>
 	<remarks>
-	  <p rend="dataDesc">The type attribute may be used to distinguish lists
-	  of people of a particular type if convenient.</p>
+	  <p rend="dataDesc">The type attribute may be used to distinguish lists	  of names of a particular type if convenient.</p>
 	</remarks>
 	<listRef>
 	  <ptr target="#NDNYM"/>
 	</listRef>
       </elementSpec>
-      <!-- oyvind has some example personal names in icelandic Lind;
-	   also Greek -->
     </schemaSpec></div>
 </body></text></TEI>
