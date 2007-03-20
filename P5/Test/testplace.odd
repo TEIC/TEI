@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TEI xml:lang="en"  xmlns="http://www.tei-c.org/ns/1.0"
-xmlns:gml="http://www.opengis.net/gml"
+ xmlns:gml="http://www.opengis.net/gml"
  xmlns:rng="http://relaxng.org/ns/structure/1.0"
  n="testndextra">
    <teiHeader>
@@ -90,7 +90,13 @@ International Standard in 2007.</note> which has the names indicated:
 <place xml:id="LYON1">
 <placeName notBefore="1400">Lyon</placeName>
 <placeName notAfter="-0056">Lugdunum</placeName>
-<gml:thing xmlns:gml="http://whatever">12 14 54 23</gml:thing>
+<location><gml:Polygon>
+  <gml:exterior>
+   <gml:LinearRing>
+   45.256 -110.45 46.46 -109.48 43.84 -109.86 45.8 -109.2 45.256 -110.45
+   </gml:LinearRing>
+   </gml:exterior>
+</gml:Polygon></location>
 <locale>city</locale>
 </place>
 </egXML>
@@ -114,35 +120,43 @@ elsewhere in this chapter in combination:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <place xml:id="BG123">
-<placeName type="building">Brasserie George</placeName>
-<placeName notBefore="1945">La Victoire des Gourmands</placeName>
+<placeName type="building">Brasserie Georges</placeName>
 <location>
   <country key="#FR"/>
   <settlement type="city">Lyon</settlement>
-  <district type="arrondissement">St Georges</district>
-  <placeName type="street">Rue de Quercy</placeName>
+  <district type="arrondissement">Perrache</district>
+  <placeName type="street">Rue de la Charité</placeName>
 </location>
 <locale>Restaurant</locale>
-<note>This is known to be <name>Flaubert</name>'s favourite lunch spot
-too <bibl><title>Lives of Great Lunchers</title>, vol 999</bibl>
-</note>
 </place></egXML>
 
 </p>
 
-<p>Location and name are treated in the same way: if therefore a place
-changes  its location over time, we represent it in the same way:
+<p>Over time, a place may change its name but not its location, or its location
+and not its name, or both. These possibilities are all
+catered for in the same way, by supplying multiple <gi>placeName</gi>
+or <gi>location</gi> elements along with attributes taken from the
+att.dating class. For example, we may indicate the differing physical
+locations of Roman and modern Lyon as follows:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<place xml:id="LYON3" type="city">
- <placeName>Lyon </placeName>
- <placeName xml:lang="en">Lyons</placeName>
- <location notAfter="1245">
-  <gml:something xmlns:gml="http://www.wibble">12 15 54 30</gml:something><note><bibl/></note>
- </location>
- <location notBefore="1245">
-    <gml:something xmlns:gml="http://www.wibble">12 29 54 45</gml:something>
-  </location>
+<place xml:id="LYON2">
+<placeName notBefore="1400">Lyon</placeName>
+<placeName notAfter="-0056">Lugdunum</placeName>
+<location notAfter="-0056"><gml:Polygon>
+  <gml:exterior>
+   <gml:LinearRing>
+   45.1 -110.23 46.48 -99.08 31.74 -108.86 45.3 -78.2 42.25 -103.45
+   </gml:LinearRing>
+   </gml:exterior>
+</gml:Polygon></location>
+<location notBefore="1950"><gml:Polygon>
+  <gml:exterior>
+   <gml:LinearRing>
+   45.256 -110.45 46.46 -109.48 43.84 -109.86 45.8 -109.2 45.256 -110.45
+   </gml:LinearRing>
+   </gml:exterior>
+</gml:Polygon></location>
 </place></egXML></p>
 
 
