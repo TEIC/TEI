@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:lang="en"  xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:gml="http://www.opengis.net/gml"
+ xmlns:rng="http://relaxng.org/ns/structure/1.0"
+ n="testndextra">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Draft proposals for representation of name
+	    components </title>
+         </titleStmt>
+         <publicationStmt>
+	   <p> </p>
+	 </publicationStmt>
+         <sourceDesc>
+            <p>authored from scratch</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+<text>
+<body>
+
+<div xml:id="NDNYM"><head>Names and nyms</head>
+
+<p>So far we have discussed ways in which a name or referring string
+encountered in running text may be resolved by considering the object
+that the name refers to: in the case of a personal name, the name
+refers to a person; in the case of a place name, to a place, for
+example. The resolution of this reference is effected by means of the
+<att>key</att> attribute available to all elements which are members
+of the <ident>att.naming</ident> class, such as <gi>persName</gi> or
+<gi>placeName</gi> and their more specialized variants such as
+<gi>foreName</gi> or <gi>country</gi>. However, <emph>names</emph> can
+also be regarded as objects in their own right, irrespective of the
+objects to which they are attached, notably in onomastic studies. From
+this point of view, the names <mentioned>John</mentioned> in English,
+Jean in French, and Ivan in Russian might all be regarded as existing
+independently of any person to which they are attached, and also
+independently of any variant forms that might be attested in different
+sources (such as Jon or Johnny in English, or Jehan or Jojo in
+French). We use the term <term>nym</term> to refer to the canonical or
+normalized form of a name regarded in such a way, and provide the
+following elements to encode it:
+<specList>
+<specDesc key="listNym"/>
+<specDesc key="nym"/>
+</specList>
+</p>
+<p>Any element which is a member of the <ident>att.naming</ident>
+class may use the attribute <att>nymKey</att> to indicate the nym with
+which it corresponds. Thus, given the following <gi>nym</gi> for the
+name <mentioned>Antony</mentioned>:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<listNym>
+<nym xml:id="N123">
+  <form>Antony</form>
+</nym>
+<!-- other nym definitions here -->
+</listNym></egXML>
+an occurrence of this name in running text might be encoded as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<forename nymKey="#N123">Tony</forename> Blair
+</egXML>
+</p>
+<p>The person identified by this particular Tony may be resolved
+independently using the <att>key</att> attribute, either on the
+forename or on the whole name component:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<forename nymKey="#N123" key="#BLT">Tony</forename>
+....
+<person xml:id="BLT">
+<persName>Tony Blair</persName>
+<occupation>politician</occupation>
+</person></egXML>
+</p>
+<p>The <gi>nym</gi> element may be thought of as providing a
+specialised kind of  dictionary
+entry. It may contain any of the dictionary component elements from
+the <ident>model.entryParts</ident> class, such as <gi>form</gi>,
+<gi>etym</gi> etc.  For example, we may show that the canonical form
+for a given nym has two orthographic variants in this way:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<nym xml:id="J451">
+  <form>
+       <orth xml:lang="en-US">Ian</orth>
+       <orth xml:lang="en-x-Scots">Iain</orth>
+   </form>
+</nym>
+</egXML>
+</p><p>To provide a more complex etymological decomposition of a name, we
+may use the existing <gi>etym</gi> element, as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><nym xml:id="XYZ">
+<form>Bogomil</form>
+<etym>Means <gloss>favoured by God</gloss> from the
+<lang>Slavic</lang> elements <mentioned>bog</mentioned> 
+<gloss>God</gloss> and <mentioned>mil</mentioned>
+<gloss>favour</gloss></etym>
+</nym></egXML>
+</p>
+
+<p>Where it is necessary to mark the substructure of nyms, this may be
+done by marking <gi>seg</gi> elements within the
+<gi>form</gi>:<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<nym xml:id="ABC">
+<form>
+  <choice>
+   <seg type="morph"><seg>Bog</seg><seg>o</seg><seg>mil</seg></seg>
+   <seg type="morph"><seg>Bogo</seg><seg>mil</seg></seg>
+  </choice>
+</form>
+</nym></egXML>
+<!-- add example to show that Amadeus has same referents -->
+</p>
+
+<p>Alternatively, the constituents of Bogomil might be marked up as
+nyms in their own right:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<nym xml:id="B1" type="part">
+  <form>bog</form>
+</nym>
+<nym xml:id="M1" type="part">
+  <form>mil</form>
+</nym>
+</egXML>
+
+Within running text, a name can specify all the nyms associated with
+it:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+...<name nymKey="#B1 #M1">Bogomul</name>...
+</egXML>
+
+Within a nym, however, the attribute <att>parts</att>  is used to
+indicate the constituent parts:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<nym xml:id="BM1" parts="#B1 #M1">
+  <form>Bogomil</form>
+</nym>
+</egXML>
+</p>
+
+
+<p>The <gi>nym</gi> element may also combine a number of other
+<gi>nym</gi> elements together, where it is intended to show that they
+are all regarded as variations on the same root. Thus the different
+forms of the name John,  all being derived from the same Latin root, may be
+represented as a hierarchic structure like this:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><nym xml:id="J45">
+  <form>Iohannes</form>
+   <nym xml:id="J450">
+     <form xml:lang="en">John</form>
+   </nym>
+   <nym xml:id="J455">
+     <form xml:lang="ru">Ivan</form>
+   </nym>
+   <nym xml:id="J453">
+    <form xml:lang="fr">Jean</form>
+   </nym>
+</nym></egXML>
+</p>
+</div>
+
+<div>
+<head>Formal definitions</head>
+<p>The following example schema, called testnym,  may be used to test the 
+proposal described here.</p>
+    <schemaSpec ident="testnym" start="TEI listNym">
+      <moduleRef key="header"/>
+      <moduleRef key="core"/>
+      <moduleRef key="tei"/>
+      <moduleRef key="namesdates"/>
+      <moduleRef key="dictionaries"/>
+      <moduleRef key="textstructure"/>
+
+      <elementSpec  ident="nym" mode="add">
+	<desc>contains the definition for a canonical  name or namepart of
+	any kind</desc>
+	<classes>
+	  <memberOf key="att.typed"/>
+	  <memberOf key="model.nymLike"/>
+	</classes>
+	<content>
+	  <rng:zeroOrMore>
+	    <rng:ref  name="model.entryParts"/>
+	  </rng:zeroOrMore>
+	  <rng:zeroOrMore>
+	    <rng:ref name="model.pLike"/>
+	  </rng:zeroOrMore>
+	  <rng:zeroOrMore>
+	    <rng:ref name="model.nymLike"/>
+	  </rng:zeroOrMore>
+	</content>
+	
+	<attList>
+	  <attDef ident="parts">
+	    <desc>points to constituent nyms </desc>
+	    <datatype minOccurs="1" maxOccurs="10"><rng:ref name="data.pointer"/></datatype>
+	  </attDef>
+	</attList>
+	
+	<exemplum>
+	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	    <nym xml:id="J452">
+	      <form>
+		<orth xml:lang="en-US">Ian</orth>
+		<orth xml:lang="en-x-Scots">Iain</orth>
+	      </form>
+	  </nym></egXML>
+	  
+	</exemplum>
+	<remarks>
+	  <p/>
+	</remarks>
+	<listRef>
+	  <ptr target="#NDNYM" type="div2"/>
+	</listRef>
+      </elementSpec>
+
+      <classSpec ident="model.nymLike" mode="add" type="model">
+	<desc>Objects like <gi>nym</gi>s</desc>
+      </classSpec>
+
+
+      <elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+		   ident="listNym" >
+	<equiv/>
+	<desc>contains a list of nyms, that is, standardized names for any
+	thing. </desc>
+	<classes>
+	  <memberOf key="att.typed"/>
+	  <memberOf key="att.declarable"/>
+	  <memberOf key="model.biblLike"/>
+	</classes>
+	<content>
+	  <rng:oneOrMore>
+	    <rng:ref name="model.nymLike"/>
+	  </rng:oneOrMore>
+	</content>
+	<exemplum>
+	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	    <listNym type="">
+	    </listNym>
+	  </egXML>
+	</exemplum>
+	<remarks>
+	  <p rend="dataDesc">The type attribute may be used to distinguish lists
+	  of people of a particular type if convenient.</p>
+	</remarks>
+	<listRef>
+	  <ptr target="#NDNYM"/>
+	</listRef>
+      </elementSpec>
+      <!-- oyvind has some example personal names in icelandic Lind;
+	   also Greek -->
+    </schemaSpec></div>
+</body></text></TEI>
