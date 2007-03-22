@@ -1106,46 +1106,7 @@
         <xsl:apply-templates/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:variable name="pre">
-          <xsl:choose>
-            <xsl:when test="contains(@rend,'PRE')">
-              <xsl:choose>
-                <xsl:when test="contains(@rend,'POST')">
-                  <xsl:call-template name="getQuote">
-                    <xsl:with-param name="quote"
-                      select="normalize-space(substring-before(substring-after(@rend,'PRE'),'POST'))"
-                    />
-                  </xsl:call-template>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:call-template name="getQuote">
-                    <xsl:with-param name="quote"
-                      select="normalize-space(substring-after(@rend,'PRE'))"/>
-                  </xsl:call-template>
-                </xsl:otherwise>
-              </xsl:choose>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="$preQuote"/>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:variable>
-        <xsl:variable name="post">
-          <xsl:choose>
-            <xsl:when test="contains(@rend,'POST')">
-              <xsl:call-template name="getQuote">
-                <xsl:with-param name="quote"
-                  select="normalize-space(substring-after(@rend,'POST'))"/>
-              </xsl:call-template>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="$postQuote"/>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:variable>
-        <xsl:value-of select="$pre"/>
-        <xsl:apply-templates/>
-        <xsl:value-of select="$post"/>
+	<xsl:call-template name="makeQuote"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -1312,22 +1273,6 @@
     <p class="left">
       <xsl:apply-templates/>
     </p>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:soCalled</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:soCalled">
-    <xsl:choose>
-      <xsl:when test="@rend">
-        <xsl:call-template name="rendering"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:text>‘</xsl:text>
-        <xsl:apply-templates/>
-        <xsl:text>’</xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:space</xd:short>
@@ -2057,5 +2002,23 @@
       </xsl:when>
     </xsl:choose>
   </xsl:template>
+
+  <xd:doc>
+    <xd:short>Process elements tei:soCalled</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:soCalled">
+    <xsl:choose>
+      <xsl:when test="@rend">
+        <xsl:call-template name="rendering"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$preQuote"/>
+	<xsl:apply-templates/>
+	<xsl:value-of select="$postQuote"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
 
 </xsl:stylesheet>

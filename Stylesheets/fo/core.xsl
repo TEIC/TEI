@@ -910,15 +910,6 @@
     </fo:block>
   </xsl:template>
   <xd:doc>
-    <xd:short>Process elements  tei:soCalled</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:soCalled">
-    <xsl:text>‘</xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>’</xsl:text>
-  </xsl:template>
-  <xd:doc>
     <xd:short>Process elements  tei:term</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
@@ -1242,4 +1233,16 @@ simple, bullets, ordered, gloss, unordered
       </xsl:when>
     </xsl:choose>
   </xsl:template>
+
+  <xd:doc>
+    <xd:short>Process elements tei:soCalled</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:soCalled">
+    <xsl:value-of select="$preQuote"/>
+    <xsl:apply-templates/>
+    <xsl:value-of select="$postQuote"/>
+  </xsl:template>
+
+
 </xsl:stylesheet>
