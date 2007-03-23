@@ -170,7 +170,7 @@ test:
 	(cd Test; make XSL=${XSL})
 
 exemplars:
-	(cd Exemplars; make XSL=${XSL})
+	(cd Exemplars; make XSL=${XSL} PREFIX=${PREFIX})
 
 split:
 	(mkdir Split; cd Split; xmllint --noent --xinclude  ../${DRIVER} | xsltproc ../Utilities/divsplit.xsl -)
