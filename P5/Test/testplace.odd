@@ -119,8 +119,8 @@ specified using any of the specialized forms of placeName defined
 elsewhere in this chapter in combination:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<place xml:id="BG123">
-<placeName type="building">Brasserie Georges</placeName>
+<place type="building">
+<placeName>Brasserie Georges</placeName>
 <location>
   <country key="#FR"/>
   <settlement type="city">Lyon</settlement>
@@ -140,7 +140,7 @@ att.dating class. For example, we may indicate the differing physical
 locations of Roman and modern Lyon as follows:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<place xml:id="LYON2">
+<place xml:id="LYON3">
 <placeName notBefore="1400">Lyon</placeName>
 <placeName notAfter="-0056">Lugdunum</placeName>
 <location notAfter="-0056"><gml:Polygon>
@@ -165,24 +165,51 @@ locations of Roman and modern Lyon as follows:
 location but have no name for it:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <place xml:id="HARRYS">
-<location><gml:stuff/></location>
+<location>Junction of Park Street and Charlotte Street</location>
 <locale>fire hydrant</locale>
 </place>
-
+</egXML>
+</p>
+<p>We may even wish to treat imaginary places in the same way:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
 <place>
-<location type="dunno" key="#erewhon"/>
+<placename>Atlantis</placename>
+<location>Unknown</location>
 </place>
 </egXML></p>
 
+<p>The <gi>location</gi> element is not solely a way of naming or
+identifying a place to a greater or lesser degree of precision: it is
+used to physically locate a place whether by means of a name, a set of
+names, or a set of co-ordinates. As in the following example, a
+<gi>location</gi> sometimes resemble a set of instructions for finding
+a place, rather than a name:
 
-<p>A place may contain other places, hierarchically organized:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><place xml:id="MYF">
+<placeName notAfter="1969">Yasgur's Farm</placeName>
+<placeName notBefore="1969">Woodstock Festival Site</placeName>
+<location>
+ <distance>one mile</distance>
+ <offset>north west of</offset>
+ <settlement>Bethel</settlement>
+ <region>New York</region>
+</location>
+<location scheme="LatLong">41.687142 -74.870109</location>
+</place>
+</egXML>
+<!-- or why not have explicit <lat> and <long> elements? -->
+</p>
+
+<p>A place may contain other places. The containment relation is
+explicitly modelled in XML: thus we can say that the towns of Vilnius
+and Kaunas are both in Lithuania as follows:
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <place>
   <country>Lithuania</country>
   <country xml:lang="lt">Lietuva</country>
   <place>
        <settlement>Vilnius</settlement>
-       <location><gml:wotsit/></location>
   </place>
   <place>
        <settlement>Kaunas</settlement>
@@ -191,57 +218,43 @@ location but have no name for it:
 </egXML>
 </p>
 
-<!-- following discussion needs to go into NDplace -->
+<p>Here is a more complex example, showing the variety of names
+associated at different times ansd in different languages with a set
+of hierarchically grouped places -- the settlement of Camarthen
+Castle, within the town of Carmarthen, within the administrative county of
+Carmarthenshire, Wales.
 
-<p>The  <gi>placeName</gi> element is syntactic sugar for <gi>name
-type="place"</gi>, and therefore should contain only names or naming
-strings. But the naming of places often entails combining many other
-names:  even in Texas, the city of Paris is sometimes known as
-"Paris, Texas" for example, thus combining the name
-of a city with the name of a larger administrative district in order
-to provide a complete "name" for the place, which may be tagged as
-such:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<placeName>
-  <settlement>Paris</settlement>
-  <region>Texas</region>
-</placeName>
-<location>
-  <country>USA</country>
-  <region type="state">Texas</region>
-  <settlement type="city">Paris</settlement>
-</location>
-</egXML></p>
-
-<p>As this example also shows, all the specialised forms of the
-<gi>placeName</gi> element can take a <att>type</att> value to
-indicate more specifically the kind of location. The generic
-<gi>placeName</gi> element can also be specialised in the same way:
-for example, in the absence of a specific <gi>building</gi> element,
-we may say: <egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName
-type="building">Empire State Building</placeName> </egXML></p>
-
-<p>The <gi>location</gi> element by contrast is not solely a way of
-naming a place to a greater or lesser degree of precision: it is used
-precisely to locate a place whether by means of a name, a set of
-names, or a set of co-ordinates. As in the following example, a
-<gi>location</gi> may sometimes resemble a set of instructions for
-finding a place, rather than a name:
-
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><place xml:id="MYF">
-<placeName notAfter="1969">Yazger's Farm</placeName>
-<placeName notBefore="1969">Woodstock Festival Site</placeName>
-<location>
- <distance>two miles</distance>
- <offset>north east of</offset>
- <settlement>Woodstock</settlement>
- <region>New York</region>
-</location>
-<location><gml:thingy>12 34 56 78</gml:thingy></location>
+<place xml:id="wales" type="country">
+  <placeName xml:lang="en">Wales</placeName>
+  <placeName xml:lang="la">Wallie</placeName>
+  <placeName xml:lang="la">Wallia</placeName>
+  <placeName xml:lang="fro">Le Waleis</placeName>
+  <place xml:id="carmarthenshire" type="region" notBefore="1284">
+    <region type="county" xml:lang="en">Carmarthenshire</region>
+    <place xml:id="carmarthen" type="settlement">
+      <placeName xml:lang="en">Carmarthen</placeName>
+      <placeName xml:lang="la" notBefore="1090" notAfter="1300">Kaermerdin</placeName>
+      <placeName xml:lang="cy">Caerfyrddin</placeName>
+      <place xml:id="carmarthen_castle" type="castle">
+        <settlement>castle of Carmarthen</settlement>
+      </place>
+    </place>
+  </place>
 </place>
 </egXML>
-
 </p>
+<p>As noted previously, <gi>country</gi>, <gi>region</gi>,
+<gi>settlement</gi> are all specializations of the generic
+<gi>placename</gi> element, and may not therefore be used as
+specializations of the generic <gi>place</gi> element. If it is
+desired to distinguish amongst kinds of <emph>place</emph> this can
+only be done by means of the <att>type</att> attribute as in the above
+example. The use of values for the type attribute which correspond to
+the names of a naming element ("country", "region", "settlement") is
+recommended when appropriate but not required. 
+</p>
+
 
 <p>These elements  are specializations of the generic
 <gi>placeState</gi> element, which performs a role for <gi>place</gi>
@@ -257,33 +270,86 @@ purposes:
 <specDesc key="placeEvent"/>
 </specList>
 </p>
+
+
+<p>There is great variation in the kind of information which it might
+be desired to record about places; we therefore do not here attempt to
+enumerate the possible values which might be appropriate for the
+<att>type</att> attribute on any of these generic elements. Places
+identified in terms of their human habitation such as countries or
+cities might have <gi>placeState</gi>s such as "population",
+"administrative status" etc.; they may also have <gi>placeEvent</gi>s
+such as "foundation date" or "destruction" etc. Almost any kind of
+place is likely to have <gi>placeTrait</gi>s such as "climate",
+"terrain" etc. </p>
+
 <p>Examples include:
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><place xml:id="MRU">
-<placeName>Mauritius</placeName>
-<placeTrait type="climate">Tropical</placeTrait>
-<placeEvent type="political" notBefore="1992">became independent
-republic</placeEvent>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><place xml:id="IS">
+    <placeName xml:lang="en">Iceland</placeName>
+    <placeName xml:lang="is">Ísland</placeName>
+    <location type="lat-long">65 00 N, 18 00 W</location>
+    <placeTrait type="area">103,000 sq km</placeTrait>
+    <placeState type="gov" notBefore="1944">Constitutional
+republic</placeState>
+    <placeState type="gov" notAfter="1944">Part of the kingdom of
+<placeName key="#DK">Denmark</placeName></placeState>
+<placeEvent type="independence" date="1944-06-17"> Iceland became independent
+on 17 June 1944.</placeEvent>
 </place>
-
-
 </egXML>
 
-</p>
-<p>
-Specific things you would record depend on the kind of thing it
-is. For example, if you are recording data about cities, you might
-need elements population (state), climate (trait), foundation (state),
-area (state), administrative status (state), disaster (event). If you
-are recording data about a natural place such as a river or lake,
-there are likely to be fewer such elements, since most of the
-information will be captured as name or location information.
-direction of flow. tributaries. route, etc.  are mostly geometric;
-their effect on society. Buildings: have owners and their ownership is
-transferable; architects, builders, origins. functions. usage. events
-such as burning down or rebuilt. Capacity. Public/private. PerceivedStatus.
 
-</p></div>
+</p>
+
+<p>The <gi>relation</gi> element may be used to express relationships
+of various kinds between places, or between places and persons, in
+much the same way as it is used to express relationships between
+persons alone. For example, the islands of
+Mauritius, Réunion, and Rodrigues together form the Mascareignes Islands. One
+way of representing this is as follows:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+
+<place type="islandGroup">
+  <placeName>Mascareignes Islands</placeName>
+  <place type="island">
+    <placeName>Mauritius</placeName>
+  </place>
+  <place type="island">
+    <placeName>Rodrigues</placeName>
+  </place>
+  <place type="island">
+    <placeName>Réunion</placeName>
+  </place>
+</place>
+</egXML>
+
+but the same relationship could also be represented as follows:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><listPlace>
+  <place type="islandGroup" xml:id="MASC">
+    <placename>Mascareigne islands</placename>
+  </place>
+  <place type="island" xml:id="MRU">
+    <placeName>Mauritius</placeName>
+  </place>
+  <place type="island" xml:id="ROD">
+    <placeName>Rodrigues</placeName>
+  </place>
+  <place type="island" xml:id="REN">
+    <placeName>Réunion</placeName>
+  </place>
+  <relation type="partOf" active="#MASC" passive="#ROD #MRU #REN"/>
+</listPlace></egXML>
+</p>
+
+
+
+
+
+
+</div>
 
 <!--
 
@@ -298,105 +364,203 @@ place examples from each by end of next week.
 -->
 
 <div>
-<head>random examples not all checked</head>
+<head>Here are some more extensive examples</head>
+<p>The Protestant Cemetery in Rome:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-
-<place>
-<placeState notBefore="-0056" notAfter="800">
-<locale>deserted</locale>
-</placeState>
-
-<placeState notAfter="-0056"> 
-<placeName>
-<bloc>Roman Empire</bloc>
-<settlement type="city">Lugdunum</settlement>
-</placeName>
-<location scheme="LatLong">12 14 54 23</location>
-<locale>fort</locale>
-</placeState>
-</place>
-
-<!-- a place can simply have a name -->
-<place xml:id="LB">
-<placeName>Bacoooun</placeName>
-</place>
-
-<!-- a place can be identified as a number of geographic features -->
-<place xml:id="BE">
-<geogName>Egg Island</geogName>
- <placeDesc>
-   <geogName key="#LB">Lake Bacon</geogName>
- </placeDesc>
-</place>
-
-<!-- any component of a place can be defined by reference -->
-<place xml:id="IM">
-<placeName>
-<geogName key="#LB"/>
-<geogName>Island Mushroom</geogName>
-</placeName>
-</place>
-
-<place>
-<geogName><geog>river</geog>
-<geogName>Styx</geogName></geogName>
-<placeName key="#XX"/>
-</place>
-
-
-<!-- more complex relationships can be expressed by pointer -->
-<relation type="partOf" active="#BE" passive="#LB #CD"/>
-<relation type="owns" active="#Lord" passive="#Isl1 #Isl2"/>
-
-
-<!-- what about twinned cities -->
+          <place xmlns="http://www.tei-c.org/ns/1.0" xml:id="ProtCem">
+            <placeName>Protestant Cemetery</placeName>
+            <placeName xml:lang="en">English Cemetery</placeName>
+            <placeName type="official" xml:lang="it">Cimitero
+ Acattolico</placeName>
+            <location type="geopolitical">
+              <country>Italy</country>
+              <settlement>Rome</settlement>
+              <district>Testaccio</district>
+            </location>
+            <placeState type="address">
+              <p>
+                <address>
+                  <addrLine>Via Caio Cestio, 6</addrLine>
+                  <addrLine>00153 Roma</addrLine>
+                </address>
+              </p>
+            </placeState>
+            <location xmlns:gml="http://www.opengis.net/gml">
+              <gml:Point srsDimension="2" srsName="urn:ogc:def:crs:EPSG:6.6:4326">
+                <gml:pos>41.876143755230956 12.479267120361328</gml:pos>
+              </gml:Point>
+            </location>
+            <placeTrait>
+              <label>Description</label>
+              <p>A cemetery in Rome, located near
+   <placeName key="http://www.activitaly.it/monument/portspaolo.htm">Porta
+   San Paolo</placeName> alongside the Pyramid of <persName key="#CESTIUS">Cestius</persName>, a small-scale Egyptian-style
+   pyramid built in 30 BC as a tomb and later incorporated into the
+   section of the <placeName key="http://en.wikipedia.org/wiki/Aurelian_walls"> Aurelian
+   Walls</placeName> that borders the cemetery. Mediterranean cypress
+   trees and other foliage in the cemetery cause it to mirror the more
+   natural style of cemeteries seen in the lusher regions of northern
+   Europe. As the name of the cemetery indicates, it is the final
+   resting place of non-Catholics (not only Protestants or English
+   people).</p>
+            </placeTrait>
+            <placeEvent from="1732">
+              <p>The first recorded burial is that of
+ George Langton</p>
+            </placeEvent>
+            <place>
+              <location scheme="local" type="zone">
+                <measure unit="zone">z_A</measure>
+              </location>
+              <location scheme="local" type="box">
+                <measure unit="xywh">159.81663 59.166954 6.04424299999999 11.193909"</measure>
+              </location>
+              <location scheme="local" type="polygon">
+                <measure unit="coordpair">161.658991,70.360863 159.81663,69.619326 164.015411,59.166954 165.860873,59.906095</measure>
+              </location>
+              <placeTrait>
+                <label>Size</label>
+                <p>
+                  <measure>148cm x 96cm</measure>
+                </p>
+              </placeTrait>
+              <placeTrait key="#PLW" type="type"/>
+              <placeTrait key="#M_ST" type="material"/>
+              <placeTrait key="#c_1" type="condition"/>
+            </place>
+            <note>
+              <bibl>
+                <ptr target="http://www.dkinst-rom.dk/protcem/"/>
+              </bibl>
+              <bibl>
+                <ptr target="http://en.wikipedia.org/wiki/Protestant_Cemetery%2C_Rome"/>
+              </bibl>
+              <bibl>
+                <ptr target="http://www.protestantcemetery.it/"/>
+              </bibl>
+            </note>
+          </place>
 </egXML>
-</div>
+</p>
 
-</div>
-<!-- dont forget names of places have nyms too -->
+<p>The Empire States Building in New York
 
-
-<!-- 
-
-How to distinguish point locations from area locations? NOP
-
-How are locations defined other than by lat/long. NOP
-
-What about imaginary places ? Atlantis, Hades,  Some
-of them e.g. Camelot have had locations proposed for them. Locn not compulsory
-
-What about places on other planets, in other galaxies? e.g. Sea of
-Tranquillity has specific map references. How are stars
-etc. identified?  NOP
-
-Are places eternal? The location of the Warsaw Ghetto location still exists?
-Up to you
-
-What about relationships between places: Hotel within city within
-country. region (etc) can have key
-
-What about uncertainty: there was a place somewhere herabouts but we
-don't know where. 5 days journey to the east of Heliogabogus.
-
-This could be handled same way as currently proposed:
-
-<placeName>
-<distance>two miles</distance>
-<offset>north east of</offset>
-<placeName>Manchester</placeName>
-</placeName>
-
-and we could say it cannot have a place associated with it as it;s too vague
--->
-
-<!-- geog really should be renamed as geogFeature or somesuch; and it
-     should not be a member of att.naming since it is generic rather
-     than specific so cannot usefully have a key -->
-
-
-<div>
-
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <place xmlns="http://www.tei-c.org/ns/1.0" xml:id="ESB">
+            <placeName xml:lang="en">Empire State Building</placeName>
+            <location type="address">
+              <country>USA</country>
+              <region type="state">New York</region>
+              <settlement type="city">New York</settlement>
+              <placeName>350 Fifth Avenue</placeName>
+            </location>
+            <location type="postcode">
+              <measure unit="postcode">10118-0110</measure>
+            </location>
+            <location type="latLong">
+              <measure unit="latlong">40.7484° N 73.9858° W</measure>
+            </location>
+            <placeState>
+              <p>The Empire State Building rises to 1,250 feet (381 m)
+              at the 102nd floor, and its full structural height
+              (including broadcast antenna) reaches 1,453 feet, 8
+              9/16th inches (443 m)</p>
+            </placeState>
+            <placeState type="floorCount">
+              <p>The building is typically described as being 102
+              stories tall, although it has only 85 stories of
+              commercial and office space, with an observation deck on
+              the 86th floor. The remaining 16 stories represent the
+              spire, which supports the antenna on top.</p>
+            </placeState>
+            <placeState type="floorArea">
+              <p>The Empire State Building has a total floor area of
+              2,200,000 square feet (200,000 square metres).</p>
+            </placeState>
+            <placeState type="officialStatus" from="1931" to="1972">
+              <p>The Empire State Building was the world's tallest
+              building for a record 41 years. It was surpassed by the
+              North Tower of the <name type="place">World Trade
+              Center</name> in 1972, and the <name type="place">Sears
+              Tower</name> shortly afterwards. With the destruction of
+              the World Trade Center in the <date
+              value="2001-09-11">September 11, 2001</date> attacks,
+              the Empire State Building again became the tallest
+              building in New York City, and the second-tallest
+              building in the United States.</p>
+            </placeState>
+            <placeEvent type="construction" from="1930-03-17" to="1931-05-01">
+              <label>Construction</label>
+              <p>The Empire State Building was designed by <name
+              type="person">William Lamb</name> of the architectural
+              firm <name type="firm">Shreve, Lamb and
+              Harmon</name>. His design was influenced by the
+              perpendicular style of another architect, <name
+              type="person">Eliel Saarinen</name>. He happened to base
+              most of his design on a simple pencil. The clean,
+              soaring lines inspired him, and he modeled the building
+              after it.</p>
+              <p>The general contractors were <name
+              type="firm">Starrett Brothers and Eken</name>, and the
+              project was financed by <name type="person">John
+              J. Raskob</name> and <name type="person">Pierre
+              S. DuPont</name>. The construction company was chaired
+              by <name type="person">Alfred E. Smith</name>, a former
+              Governor of New York. Excavation of the site began on
+              <date value="1930-01-22">January 22, 1930</date>, and
+              construction on the building itself started on <date
+              value="1930-03-17">March 17</date>. The project involved
+              3400 workers, mostly immigrants from Europe, along with
+              hundreds of <name type="tribe">Mohawk nation</name> iron
+              workers. According to official accounts, five workers
+              died during the construction.</p>
+              <p>The building was officially opened on <date
+              value="1931-05-01">May 1, 1931</date> in dramatic
+              fashion, when President <name type="person">Herbert
+              Hoover</name> turned on the building's lights with the
+              push of a button from <name type="place">Washington,
+              D.C.</name></p>
+              <bibl>
+                <author>Kenneth T. Jackson</author>
+                <title level="m">The Encyclopedia of New York City</title>
+                <publisher>Yale University Press</publisher>
+                <pubPlace>New Haven, CT</pubPlace>
+                <date>1995</date>
+                <biblScope type="pages">375-376</biblScope>
+              </bibl>
+            </placeEvent>
+            <placeEvent type="accident">
+              <label>Accident</label>
+              <p>At 9:49 a.m. on Saturday <date
+              value="1945-07-28">July 28, 1945</date>, a B-25 Mitchell
+              bomber piloted by Lieutenant Colonel <name
+              type="person">William F. Smith Jr.</name> accidentally
+              crashed into the north side of the Empire State Building
+              between the 79th and 80th floors, where the offices of
+              the <name type="org">Catholic War Relief Office</name>
+              were located. One engine shot through the side opposite
+              the impact and another plummeted down an elevator
+              shaft. The fire was extinguished in 40 minutes.
+              Fourteen people were killed in the incident. Despite the
+              damage and loss of life, the building was open for
+              business on many floors on the following Monday.</p>
+              <p>Elevator operator <name type="person">Betty Lou
+              Oliver</name> survived a plunge of 75 stories inside an
+              elevator, which still stands as the Guinness World
+              Record for the longest survived elevator fall
+              recorded.</p>
+            </placeEvent>
+            <placeEvent type="popularCultural">
+              <label>Popular Culture</label>
+              <p>Perhaps the most famous popular culture
+              representation of the building is in the <date
+              value="1933">1933</date> film <title>King Kong</title>,
+              in which the title character, a giant ape, climbs to the
+              top to escape his captors.</p>
+            </placeEvent>
+          </place>
+</egXML>
+</p>
 </div>
 
 <div>
@@ -409,7 +573,6 @@ proposal described here.</p>
       <moduleRef key="tei"/>
       <moduleRef key="namesdates"/>
       <moduleRef key="textstructure"/>
-
 
       <elementSpec  ident="place" mode="add">
 	<desc>contains the definition for a place</desc>
@@ -662,7 +825,7 @@ proposal described here.</p>
 
     </schemaSpec>
 </div>
-</body>
+</div></body>
 </text>
 </TEI>
 
