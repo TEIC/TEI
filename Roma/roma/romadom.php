@@ -605,8 +605,7 @@ class romaDom extends domDocument
 		    $oDesc = $oChild->getElementsByTagName( 'desc' )->item(0);
 		    $oAttDesc = $oAtt->appendChild( new domElement( 'desc' ) );
 		    $oAttDesc->appendChild( new domText( $oDesc->nodeValue ) );
-		    
-		    $oDefault = $oChild->getElementsByTagName( 'default' )->item(0);
+		    $oDefault = $oChild->getElementsByTagName( 'defaultVal' )->item(0);
 		    $oAttDef = $oAtt->appendChild( new domElement( 'defaultVal' ) );
 		    $oAttDef->appendChild( new domText( $oDefault->nodeValue ) );
 		  }
@@ -642,14 +641,14 @@ class romaDom extends domDocument
 		    
 		    
 		    $oChildDefault = $oChild->getElementsByTagName( 'defaultVal' )->item(0);
-		    $oDefault = $oAtt->getElementsByTagName( 'default' )->item(0);
+		    $oDefault = $oAtt->getElementsByTagName( 'defaultVal' )->item(0);
 		    if ( is_object( $oDefault ) && is_object( $oChildDefault ) && $oDefault->nodeValue != $oChildDefault->nodeValue )
 		      { 
 			$oAtt->removeChild( $oDefault );
 		      }
 		    if ( is_object( $oChildDefault ) )
 		      {
-			$oAttDef = $oAtt->appendChild( new domElement( 'default' ) );
+			$oAttDef = $oAtt->appendChild( new domElement( 'defaultVal' ) );
 			$oAttDef->appendChild( new domText( $oChildDefault->nodeValue ) );
 		      }
 
@@ -1306,7 +1305,7 @@ class romaDom extends domDocument
     public function addAttribute( $aszConfig )
       {
 	$errResult = false;
-	if (! preg_match( '/^[\w\d]+$/', $aszConfig[ 'name' ] ) )
+	if (! preg_match( '/^[\w\d:-]+$/', $aszConfig[ 'name' ] ) )
 	  {
 	    $errResult = true;
 	    throw new falseTagnameException( '', $aszConfig[ 'name' ] );
@@ -1459,12 +1458,12 @@ class romaDom extends domDocument
 
 	      	    
 	    //default
-	    $oDefault = $oAttDef->getElementsByTagname( 'default' )->item(0);
+	    $oDefault = $oAttDef->getElementsByTagname( 'defaultVal' )->item(0);
 	    if ( is_object( $oDefault ) )
 	      {
 		$oAttDef->removeChild( $oDefault );
 	      }
-	    $theDefault = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'default' );
+	    $theDefault = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'defaultVal' );
 	    $oDefault = $oAttDef->appendChild( $theDefault );
 	    $oDefault->appendChild( new domText( $aszConfig[ 'defaultValue' ] ) );
 
