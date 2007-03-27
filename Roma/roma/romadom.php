@@ -1383,6 +1383,7 @@ class romaDom extends domDocument
 		    $theClassSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'classSpec' );
 		    $oClassSpec = $oSchema->appendChild( $theClassSpec );
 		    $oClassSpec->setAttribute( 'ident', $aszConfig[ 'class' ] );
+		    $oClassSpec->setAttribute( 'type', 'atts' );
 		    $oClassSpec->setAttribute( 'mode', 'change' );
 		    $oClassSpec->setAttribute( 'module', $aszConfig[ 'module' ]  );
 		  }
@@ -1573,6 +1574,7 @@ class romaDom extends domDocument
 		$oClassSpec = $oSchema->appendChild( $theClassSpec );
 		$oClassSpec->setAttribute( 'ident', $szClass );
 		$oClassSpec->setAttribute( 'mode', 'change' );
+		$oClassSpec->setAttribute( 'type', 'atts' );
 		$oClassSpec->setAttribute( 'module', $szModule );
 	      }
 
@@ -1666,6 +1668,7 @@ class romaDom extends domDocument
 		$oClassSpec->setAttribute( 'ident', $szClass );
 		$oClassSpec->setAttribute( 'module', $szModule );
 		$oClassSpec->setAttribute( 'mode', 'change' );
+		$oClassSpec->setAttribute( 'type', 'atts' );
 	      }
 
 	
@@ -1745,6 +1748,7 @@ class romaDom extends domDocument
 		    $theClassSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'classSpec' );
 		    $oClassSpec = $oSchema->appendChild( $theClassSpec );
 		    $oClassSpec->setAttribute( 'ident', $szClass );
+		    $oClassSpec->setAttribute( 'type', 'atts' );
 		    $oClassSpec->setAttribute( 'module', $szModule );
 		    $oClassSpec->setAttribute( 'mode', 'change' );
 		  }
