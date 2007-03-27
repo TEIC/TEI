@@ -91,7 +91,7 @@ associated with it at different times:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <place xml:id="LYON1">
 <placeName notBefore="1400">Lyon</placeName>
-<placeName notAfter="-0056">Lugdunum</placeName>
+<placeName notAfter="56">Lugdunum</placeName>
 <location><gml:Polygon>
   <gml:exterior>
    <gml:LinearRing>
@@ -110,7 +110,7 @@ a larger political entity, independent of its geographic location:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <place xml:id="LYON2">
 <placeName notBefore="1400">Lyon</placeName>
-<placeName notAfter="-0056">Lugdunum</placeName>
+<placeName notAfter="56">Lugdunum</placeName>
 <location><bloc>EU</bloc><country>France</country></location>
 <locale>city</locale>
 </place>
@@ -237,8 +237,8 @@ Carmarthenshire, Wales.
   <placeName xml:lang="la">Wallie</placeName>
   <placeName xml:lang="la">Wallia</placeName>
   <placeName xml:lang="fro">Le Waleis</placeName>
-  <place xml:id="carmarthenshire" type="region" notBefore="1284">
-    <region type="county" xml:lang="en">Carmarthenshire</region>
+  <place xml:id="carmarthenshire" type="region" >
+    <region type="county" xml:lang="en" notBefore="1284">Carmarthenshire</region>
     <place xml:id="carmarthen" type="settlement">
       <placeName xml:lang="en">Carmarthen</placeName>
       <placeName xml:lang="la" notBefore="1090" notAfter="1300">Kaermerdin</placeName>
@@ -295,16 +295,15 @@ place is likely to have <gi>placeTrait</gi>s such as "climate",
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><place xml:id="IS">
     <placeName xml:lang="en">Iceland</placeName>
     <placeName xml:lang="is">Ísland</placeName>
-    <location type="lat-long">65 00 N, 18 00 W</location>
-    <placeTrait type="area">103,000 sq km</placeTrait>
-    <placeState type="gov" notBefore="1944">Constitutional
-republic</placeState>
-    <placeState type="gov" notAfter="1944">Part of the kingdom of
-<placeName key="#DK">Denmark</placeName></placeState>
-<placeEvent type="independence" date="1944-06-17"> Iceland became independent
-on 17 June 1944.</placeEvent>
-</place>
-</egXML>
+    <location type="latlong">65 00 N, 18 00 W</location>
+    <placeTrait type="area"><p>103,000 sq km</p></placeTrait>
+    <placeState type="gov" notBefore="1944"><p>Constitutional
+republic</p></placeState>
+    <placeState type="gov" notAfter="1944"><p>Part of the kingdom of
+<placeName key="#DK">Denmark</placeName></p></placeState>
+<placeEvent type="independence" from="1944-06-17"><p> Iceland became independent
+on 17 June 1944.</p></placeEvent>
+</place></egXML>
 
 
 </p>
@@ -336,7 +335,7 @@ but the same relationship could also be represented as follows:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><listPlace>
   <place type="islandGroup" xml:id="MASC">
-    <placename>Mascareigne islands</placename>
+    <placeName>Mascareigne islands</placeName>
   </place>
   <place type="island" xml:id="MRU">
     <placeName>Mauritius</placeName>
@@ -590,19 +589,14 @@ proposal described here.</p>
 	</classes>
 	<content>
 	  <rng:zeroOrMore>
+	    <rng:choice>
+	      <rng:ref name="model.nameLike"/>
 	    <rng:ref name="model.placeStateLike"/>
-	  </rng:zeroOrMore>
-	  <rng:zeroOrMore>
 	    <rng:ref name="model.placeTraitLike"/>
-	  </rng:zeroOrMore>
-	  <rng:zeroOrMore>
 	    <rng:ref name="model.placeEventLike"/>
-	  </rng:zeroOrMore>
-	  <rng:zeroOrMore>
 	    <rng:ref name="model.placeLike"/>
-	  </rng:zeroOrMore>
-	  <rng:zeroOrMore>
 	    <rng:ref name="model.noteLike"/>
+	    </rng:choice>	 
 	  </rng:zeroOrMore>
 	</content>
 	
@@ -614,31 +608,30 @@ proposal described here.</p>
 </classes>
 </elementSpec>
 
+
+
       <elementSpec  ident="location" mode="add">
 	<desc>contains the location of a place</desc>
 	<classes>
 	  <memberOf key="att.typed"/>
 	  <memberOf key="model.placeStateLike"/>
+	  <memberOf key="att.datable"/>
 	</classes>
 	<content>
-	  <rng:choice>
-	    <rng:zeroOrMore>
-	      <rng:ref name="anyGML"/>
-	    </rng:zeroOrMore>	    
 	    <rng:zeroOrMore>
 	      <rng:choice>
-		<rng:ref name="model.nameLike"/>
 		<rng:text/>
+	      <rng:ref name="anyGML"/>
+	      <rng:ref name="model.nameLike"/>
+	      <rng:ref name="model.placeNamePart"/>
+	      <rng:ref name="model.measureLike"/>
 	      </rng:choice>
 	    </rng:zeroOrMore>
-	    <rng:zeroOrMore>
-	      <rng:ref name="model.measureLike"/>
-	    </rng:zeroOrMore>
-	  </rng:choice>
 	</content>
 	<attList>
 	  <attDef ident="scheme">
 	    <valList type="closed" repeatable="true">
+	      <valItem ident="latlong"/>
 	      <valItem ident="local"/>
 	      <valItem ident="gml"/>
 	      <valItem ident="other"/>
@@ -771,6 +764,7 @@ proposal described here.</p>
 	  <memberOf key="model.placeNamePart"/>
 	  <memberOf key="att.naming"/>
 	  <memberOf key="att.typed"/>
+	    <memberOf key="att.datable"/>
 	</classes>
       </elementSpec>
 
@@ -780,6 +774,7 @@ proposal described here.</p>
 	  <memberOf key="model.placeNamePart"/>
 	  <memberOf key="att.naming"/>
 	  <memberOf key="att.typed"/>
+	    <memberOf key="att.datable"/>
 	</classes>
       </elementSpec>
 
@@ -789,6 +784,7 @@ proposal described here.</p>
 	  <memberOf key="model.placeNamePart"/>
 	  <memberOf key="att.naming"/>
 	  <memberOf key="att.typed"/>
+	    <memberOf key="att.datable"/>
 	</classes>
       </elementSpec>
 
@@ -798,6 +794,7 @@ proposal described here.</p>
 	  <memberOf key="model.placeNamePart"/>
 	  <memberOf key="att.naming"/>
 	  <memberOf key="att.typed"/>
+	    <memberOf key="att.datable"/>
 	</classes>
       </elementSpec>
 
@@ -807,6 +804,7 @@ proposal described here.</p>
 	  <memberOf key="model.placeNamePart"/>
 	  <memberOf key="att.naming"/>
 	  <memberOf key="att.typed"/>
+	    <memberOf key="att.datable"/>
 	</classes>
       </elementSpec>
 
