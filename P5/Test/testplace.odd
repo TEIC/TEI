@@ -7,7 +7,7 @@
       <fileDesc>
          <titleStmt>
             <title>Draft proposals for representation of geographic information</title>
-            <author>Lou Burnard and Sebastian Rahtz</author>
+<!--            <author>Lou Burnard and Sebastian Rahtz</author>-->
          </titleStmt>
          <publicationStmt>
 	   <p> </p>
@@ -76,15 +76,17 @@ available within <gi>place</gi> for these purposes:
 known as Lugdunum. Although the modern and the Roman city are not
 physically co-extensive, they have significant areas which overlap,
 and we may therefore wish to regard them as the same place. In the
-following example, we have indicated that there is place with
-co-ordinates specified by the Geographical Markup Language being
+following example, we have defined the place <soCalled>Lyon</soCalled>
+in terms of its geographical
+co-ordinates specified using the Geographical Markup Language being
 defined by the OGC<note place="foot">The OGC is an international
 voluntary consensus standards organization whose members maintain the
 Geography Markup Language standard. The OGC coordinates with the ISO
 TC 211 standards organization to maintain consistency between OGC and
 ISO standards work. GML is in the process of being adopted as an ISO
 standard (ISO 19136) and is expected to be released as an
-International Standard in 2007.</note> which has the names indicated:
+International Standard in 2007.</note> and indicated the two names
+associated with it at different times:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <place xml:id="LYON1">
@@ -102,8 +104,9 @@ International Standard in 2007.</note> which has the names indicated:
 </egXML>
 </p>
 
-<p>Alternatively, or in addition, we may identify Lyon by its
-geo-political status independent of its geographic location:
+<p>Alternatively, or in addition, we might identify Lyon by its
+geo-political status as a settlement within a country forming part of
+a larger political entity, independent of its geographic location:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <place xml:id="LYON2">
 <placeName notBefore="1400">Lyon</placeName>
@@ -112,11 +115,15 @@ geo-political status independent of its geographic location:
 <locale>city</locale>
 </place>
 </egXML>
-</p>
+The elements <gi>bloc</gi> etc. are specialised forms of
+<gi>placeName</gi>, as discussed in <ptr target="NDPLGU"/>. </p>
 
-<p>A place may be a single building, and its location may be
-specified using any of the specialized forms of placeName defined
-elsewhere in this chapter in combination:
+<p>The <att>type</att> attribute is available  to categorize more precisely
+both the kind of place concerned, and the kind of name
+used to locate it. For example, a single building may be regarded as a
+kind of place, and a location component such as
+<soCalled>district</soCalled> may be more precisely specified as an
+<soCalled>arrondissement</soCalled> as in this example:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <place type="building">
@@ -132,8 +139,8 @@ elsewhere in this chapter in combination:
 
 </p>
 
-<p>Over time, a place may change its name but not its location, or its location
-and not its name, or both. These possibilities are all
+<p>Over time, a place may change its name but not its location, or its
+location and not its name, or both. These possibilities are all
 catered for in the same way, by supplying multiple <gi>placeName</gi>
 or <gi>location</gi> elements along with attributes taken from the
 att.dating class. For example, we may indicate the differing physical
@@ -601,6 +608,12 @@ proposal described here.</p>
 	
       </elementSpec>
 
+<elementSpec ident="locale" mode="change">
+<classes>
+<memberOf key="model.placeTraitLike"/>
+</classes>
+</elementSpec>
+
       <elementSpec  ident="location" mode="add">
 	<desc>contains the location of a place</desc>
 	<classes>
@@ -613,7 +626,10 @@ proposal described here.</p>
 	      <rng:ref name="anyGML"/>
 	    </rng:zeroOrMore>	    
 	    <rng:zeroOrMore>
-	      <rng:ref name="model.nameLike"/>
+	      <rng:choice>
+		<rng:ref name="model.nameLike"/>
+		<rng:text/>
+	      </rng:choice>
 	    </rng:zeroOrMore>
 	    <rng:zeroOrMore>
 	      <rng:ref name="model.measureLike"/>
