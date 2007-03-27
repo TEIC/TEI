@@ -824,7 +824,12 @@ sequenceRepeatable
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:desc|tei:gloss" mode="weave"/>
-  <xsl:template match="tei:desc|tei:gloss"/>
+  <xsl:template match="tei:elementSpec/tei:desc"/>
+  <xsl:template match="tei:classSpec/tei:desc"/>
+  <xsl:template match="tei:macroSpec/tei:desc"/>
+  <xsl:template match="tei:elementSpec/tei:gloss"/>
+  <xsl:template match="tei:classSpec/tei:gloss"/>
+  <xsl:template match="tei:macroSpec/tei:gloss"/>
 
   <xsl:template match="tei:index">
     <xsl:call-template name="makeAnchor">
