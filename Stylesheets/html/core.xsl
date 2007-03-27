@@ -361,6 +361,15 @@
     <xsl:text>&gt;</xsl:text>
   </xsl:template>
   <xd:doc>
+    <xd:short>Process elements  tei:gloss</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:gloss">
+    <span class="gloss">
+      <xsl:apply-templates/>
+    </span>
+  </xsl:template>
+  <xd:doc>
     <xd:short>Process elements tei:head</xd:short>
     <xd:detail>
       <p> headings etc </p>

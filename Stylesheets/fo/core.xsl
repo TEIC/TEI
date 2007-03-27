@@ -257,7 +257,7 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:gloss">
-    <xsl:apply-templates/>
+      <xsl:apply-templates/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:hi</xd:short>

@@ -200,6 +200,15 @@
     </xsl:choose>
   </xsl:template>
   <xd:doc>
+    <xd:short>Process elements  tei:gloss</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:gloss">
+    <xsl:text>\textit{</xsl:text>
+    <xsl:apply-templates/>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
+  <xd:doc>
     <xd:short>Process elements tei:hi</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
