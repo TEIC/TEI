@@ -805,6 +805,9 @@ so that is only put back in if there is some content
     <xsl:variable name="M" select="@module"/>
     <xsl:variable name="use">
       <xsl:choose>
+        <xsl:when test="@mode='add'">
+          <xsl:text>true</xsl:text>
+        </xsl:when>
         <xsl:when test="not(@module)">
           <xsl:text>true</xsl:text>
         </xsl:when>
