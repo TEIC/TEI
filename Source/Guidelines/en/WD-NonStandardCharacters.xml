@@ -6,8 +6,8 @@ $Date$
 $Author$
 -->
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="WD" n="25">
-    <head xmlns="http://www.tei-c.org/ns/1.0">Representation of non-standard characters and glyphs</head>
-    <p xmlns="http://www.tei-c.org/ns/1.0">Despite the availability of Unicode, text encoders still
+    <head>Representation of non-standard characters and glyphs</head>
+    <p>Despite the availability of Unicode, text encoders still
     sometimes find that the published repertoire of available
     characters is inadequate to their needs. This is particularly the
     case when dealing with ancient languages, for which encoding
@@ -16,13 +16,13 @@ $Author$
     The module defined by this chapter provides a mechanism to satisfy
     that need, while retaining compatibility with standards.
 </p>
-<div type="div2"><head xmlns="http://www.tei-c.org/ns/1.0">Is your journey really necessary?</head>
-    <p xmlns="http://www.tei-c.org/ns/1.0">When encoders encounter some graphical unit in a document which
+<div type="div2"><head>Is your journey really necessary?</head>
+    <p>When encoders encounter some graphical unit in a document which
     is to be represented electronically, the first issue to be
     resolved should be <q>Is this really a different character?</q> To determine
     whether a particular graphical unit <emph>is</emph> a character or
     not, see <ptr target="#D4-42"/>. </p>
-    <p xmlns="http://www.tei-c.org/ns/1.0">If the unit is indeed determined to be a character, the next
+    <p>If the unit is indeed determined to be a character, the next
     question should be <q>Has this character been encoded already?</q>
     In order to determine whether a character has been encoded,
     encoders should follow the following steps:
@@ -47,7 +47,7 @@ then you should document it. </p></item>
 pending, or whether this is indeed a new character (or if this not a
 character at all, in which case it would not be eligible for addition
 to the Unicode Standard).  </item> </list> </p>
-    <p xmlns="http://www.tei-c.org/ns/1.0">Since there are now close to 100,000 characters in Unicode,
+    <p>Since there are now close to 100,000 characters in Unicode,
     chances are good that what you need is already there, but it might
     not be easy to find, since it might have a different name in
     Unicode.  Look again, this time at other sites, for example <ptr target="http://www.eki.ee/letter"/>, which also provide searches
@@ -57,7 +57,7 @@ to the Unicode Standard).  </item> </list> </p>
     your character is definitely a digit, but the properties of the
     best match you can find for it say that it is a letter, you may
     have a character not yet defined in Unicode.  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">In general, it is advisable to avoid Unicode characters generally
+<p>In general, it is advisable to avoid Unicode characters generally
 described as presentation forms<note place="foot">Specifically,
 characters in the Unicode blocks Alphabetic Presentation Forms, Arabic
 Presentation Forms-A, Arabic Presentation Forms-B, Letterlike Symbols,
@@ -67,20 +67,20 @@ a language) then it is quite acceptable to select characters from the
 Mathematical Operators block, provided that they have the appropriate
 properties (i.e. <code>So</code>: Symbol, Other; or <code>Sm</code>:
 Symbol, Math).</p>
-    <p xmlns="http://www.tei-c.org/ns/1.0">An encoded character may be precomposed or it may be formed
+    <p>An encoded character may be precomposed or it may be formed
     from base characters and combining diacritical marks. Either will
     suffice for a character to be "found" as an encoded character. </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">If there are several possible Unicode characters to choose amongst,
+<p>If there are several possible Unicode characters to choose amongst,
 it is good practice to consult other colleagues and practitioners to
 see whether a consensus has emerged in favour of one or other of
 them. </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">If, however, no suitable form of your character seems to exist,
+<p>If, however, no suitable form of your character seems to exist,
     the next question will be: <q>Does the graphical unit in question
     represent a variant form of a known character, or does it
     represent a completely unencoded character?</q> If the character
     is determined to be missing from the Unicode Standard, it would be helpful to
     submit the new character for inclusion (see <ptr target="http://unicode.org/pending/proposals.html"/>).  </p>
-    <p xmlns="http://www.tei-c.org/ns/1.0">These guidelines will help you proceed once you have
+    <p>These guidelines will help you proceed once you have
      identified a given graphical unit as either a variant or an
      unencoded character. Determining this will require knowledge of
      the contents of the document that you have. The first case will
@@ -90,7 +90,7 @@ them. </p>
      will be discussed below (<ptr target="#D25-30"/>)
      while the problem of representing new characters will be dealt
      with in section <ptr target="#D25-40"/>.    </p>
-    <p xmlns="http://www.tei-c.org/ns/1.0">While there is some overlap between these requirements,
+    <p>While there is some overlap between these requirements,
     distinct specialized markup constructs have been created for each
     of these cases as explained in section <ptr target="#D25-20"/>
     below.  The following section will then proceed to discuss how to
@@ -115,8 +115,8 @@ them. </p>
     will be Unicode, and this mechanism will be needed only for
     characters not defined by the Unicode Standard. </p>
 -->
-<head xmlns="http://www.tei-c.org/ns/1.0">Markup constructs for representation of characters and glyphs</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">An XML document can, in principle, contain any defined Unicode
+<head>Markup constructs for representation of characters and glyphs</head>
+<p>An XML document can, in principle, contain any defined Unicode
 character. The standard allows these characters to be represented
 either directly, using an appropriate encoding (UTF-8 by defaut), or
 indirectly by means of numeric character references (NCR), such as
@@ -126,13 +126,13 @@ part of it) by adding a suitable encoding declaration. For example, if
 a document begins with the declaration <code>&lt;?xml
 encoding="iso-8859-1"?&gt;</code> any Unicode characters which are not
 in the ISO-8859-1 character set must be represented by NCRs. </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The gaiji module defined by this chapter adds a further way of
+<p>The gaiji module defined by this chapter adds a further way of
 representing specific characters and glyphs in a document. This allows
 the encoder to distinguish characters and glyphs which Unicode regards
 as identical, to add new nonstandard characters or glyphs, and to
 represent Unicode characters not available in the document encoding by
 an alternative means.</p>
-    <p xmlns="http://www.tei-c.org/ns/1.0">The mechanism provided here consists functionally of two parts:
+    <p>The mechanism provided here consists functionally of two parts:
      <list>
       <item>an element <gi>g</gi>, which serves as a proxy for new
        characters or glyphs</item>
@@ -142,12 +142,12 @@ an alternative means.</p>
        properly. </item>
      </list>
     </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">When the gaiji module is included in a schema, the
+<p>When the gaiji module is included in a schema, the
 <gi>charDesc</gi> element is added to the <ident type="class">model.encodingPart</ident>
 class, and the <gi>g</gi> element is added to the phrase class. These
 elements and their components are documented in the rest of this
 section. </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The Unicode standard defines properties for all the characters it
+<p>The Unicode standard defines properties for all the characters it
 defines in the Unicode Character Database, knowledge of which is
 usually built into text processing systems.  If the character
 represented by the <gi>g</gi> element does not exist in Unicode at
@@ -157,14 +157,14 @@ character set recognized by a given text processing system, it may
 also be convenient to have access to its properties in the same way.
 The <gi>charDesc</gi> element makes it possible to store properties
 for use by such applications in a standard way.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0"> The list of attributes (properties) for characters is modelled on
+<p> The list of attributes (properties) for characters is modelled on
 those in the Unicode Character Database, which distinguishes
 <term>normative</term> and <term>informative</term> character
 properties. Additional, non-Unicode, properties may also be supplied.
 Since the list of properties will vary with different versions of
 the Unicode Standard, there may not be an exact correspondence between them and the
 list of properties defined in these Guidelines.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Usage examples for  these elements are given below at <ptr target="#D25-30"/>
+<p>Usage examples for  these elements are given below at <ptr target="#D25-30"/>
      and  <ptr target="#D25-40"/>.
 The gaiji module itself is formally defined in section <ptr target="#WSD-DEF"/> below. It defines the following  additional
      elements:
@@ -173,7 +173,7 @@ The gaiji module itself is formally defined in section <ptr target="#WSD-DEF"/> 
 <specDesc key="g" atts="ref"/>
 </specList>
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The following elements may appear within a <gi>charDesc</gi>
+<p>The following elements may appear within a <gi>charDesc</gi>
      element:
 <specList>
 <specDesc key="desc"/>
@@ -181,7 +181,7 @@ The gaiji module itself is formally defined in section <ptr target="#WSD-DEF"/> 
 <specDesc key="glyph"/>
      </specList>
     </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>char</gi> and <gi>glyph</gi> elements have similar contents
+<p>The <gi>char</gi> and <gi>glyph</gi> elements have similar contents
 and are used in similar ways, but their functions are different.  The
 <gi>char</gi> element is provided to define a character which is not
 available in the current document character set, for whatever reason,
@@ -203,7 +203,7 @@ representation of any valid Unicode code point, including values taken
 from the <soCalled>Private Use Area</soCalled> (see further <ptr
 target="D25-50"/>).</p>
 -->
-<p xmlns="http://www.tei-c.org/ns/1.0">The Unicode Standard recommends naming conventions which must be followed strictly
+<p>The Unicode Standard recommends naming conventions which must be followed strictly
 where the intention is to annotate an existing Unicode character, and
 which should also be used as a model when creating new names for
 characters or glyphs. For convenience of processing, the following
@@ -212,7 +212,7 @@ distinct elements are proposed for naming characters and glyphs:
 <specDesc key="charName"/>
 <specDesc key="glyphName"/>
 </specList></p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Within both <gi>char</gi> and <gi>glyph</gi>, the following elements are available:
+<p>Within both <gi>char</gi> and <gi>glyph</gi>, the following elements are available:
 <specList>
 <specDesc key="gloss"/>
 <specDesc key="charProp"/>
@@ -222,7 +222,7 @@ distinct elements are proposed for naming characters and glyphs:
 <specDesc key="remarks"/>
      </specList>
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Four of these elements (<gi>gloss</gi>, <gi>desc</gi>,
+<p>Four of these elements (<gi>gloss</gi>, <gi>desc</gi>,
 <gi>graphic</gi> and <gi>remarks</gi>) are defined by other TEI
 modules, and their usage here is no different from their usage
 elsewhere. The <gi>graphic</gi> element, however, is used here only to
@@ -231,7 +231,7 @@ contain a representation of it in SVG. Several <gi>graphic</gi>
 elements may be given, for example to provide images with different
 resolution, or in different formats. The <att>type</att> attribute may
 be used to specify the type of image.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>mapping</gi> element is similar to the standard TEI
+<p>The <gi>mapping</gi> element is similar to the standard TEI
 <gi>equiv</gi> element. While the latter is used to express correspondence 
 relationships between TEI concepts or elements and those in other
 systems or ontologies, the former is used to express any kind of
@@ -257,7 +257,7 @@ for uppercase equivalences, <code>lowercase</code>  for lowercase equivalences,
 </charDesc>
 </egXML> 
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The mapping element may also be used to represent a mapping of the
+<p>The mapping element may also be used to represent a mapping of the
 character or (more likely) glyph under discussion onto a character
 from the private use area as in this example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><charDesc>
@@ -269,13 +269,13 @@ from the private use area as in this example:
 </charDesc>
 </egXML> 
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">A more precise documentation of the properties of any character or
+<p>A more precise documentation of the properties of any character or
 glyph may be supplied using the generic <gi>charProp</gi> element
 described in the next section. Despite its name, this element may be
 used for either characters or glyphs.
 </p>
-<div type="div3" xml:id="ucsprops"><head xmlns="http://www.tei-c.org/ns/1.0">Character Properties</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">The Unicode Standard documents <soCalled>ideal</soCalled> characters, defined by reference
+<div type="div3" xml:id="ucsprops"><head>Character Properties</head>
+<p>The Unicode Standard documents <soCalled>ideal</soCalled> characters, defined by reference
 to a number of <term>properties</term> (or attribute-value pairs)
 which they are said to possess. For example, a lower case letter is
 said to have the value <code>Ll</code> for the property
@@ -289,11 +289,11 @@ properties. When making such modifications however, great care should
 be taken not to over-ride standard informative properties for
 characters which exist in the Unicode Standard.<note place="foot">See further the
 Unicode technical report TR23 <ref target="http://www.unicode.org/reports/tr23/"><title>Character Property Model</title></ref></note></p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>charProp</gi> element allows an encoder to supply information
+<p>The <gi>charProp</gi> element allows an encoder to supply information
 about a character or glyph. Where the information concerned relates to
 a property which has already been identified in the Unicode Standard, encoders are
 urged to use the appropriate Unicode property name. </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The following elements are used to record character properties:
+<p>The following elements are used to record character properties:
 <specList>
 <specDesc key="unicodeName"/>
 <specDesc key="localName"/>
@@ -302,7 +302,7 @@ urged to use the appropriate Unicode property name. </p>
 For each property, the encoder must supply either a
 <gi>unicodeName</gi> or a <gi>localName</gi>, followed by a
 <gi>value</gi>. </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">For convenience, we list here some of the normative character
+<p>For convenience, we list here some of the normative character
 properties and their values. For full information, refer to chapter 4 of
 <title>The Unicode Standard</title>, or the online documentation of the Unicode Character Database.
 <list type="gloss">
@@ -440,7 +440,7 @@ Database</ref>:<list type="gloss">
 	 the text direction: it has the value <code>Y</code>
 (character is mirrored) or <code>N</code> (code is not mirrored).</item>
 	</list></p>
-<p xmlns="http://www.tei-c.org/ns/1.0">the Unicode Standard also defines a set of informative (but non-normative)
+<p>the Unicode Standard also defines a set of informative (but non-normative)
 properties for Unicode characters.  If encoders want to provide such
 properties, they may be included using the suggested Unicode name,
 tagged using the <gi>unicodeName</gi> element. However, encoders may
@@ -452,8 +452,8 @@ which are not specified by the Unicode Standard.</p>
 </div>
    </div>
    <div type="div2" xml:id="D25-30">
-    <head xmlns="http://www.tei-c.org/ns/1.0">Annotating characters</head>
-    <p xmlns="http://www.tei-c.org/ns/1.0">Annotation of a character becomes necessary when it is desired
+    <head>Annotating characters</head>
+    <p>Annotation of a character becomes necessary when it is desired
     to distinguish it on the basis of certain aspects (typically, its
     graphical appearance) only.  In a manuscript, for example, where
     distinctly different forms of the letter "r" can be recognized, it
@@ -468,7 +468,7 @@ which are not specified by the Unicode Standard.</p>
     any kind of text encoding is an abstraction and an interpretation of
     the text at hand, which will not necessarily  be useful in reproducing an exact
     facsimile of the appearance of a manuscript.</note> </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Assuming that we wish to distinguish the variant glyphs from the standard representation for the character
+<p>Assuming that we wish to distinguish the variant glyphs from the standard representation for the character
 concerned, we will need to define distinct <gi>glyph</gi> elements, one for
 each of the forms of the letter we wish to distinguish:
      <egXML xmlns="http://www.tei-c.org/ns/Examples"><charDesc>
@@ -495,7 +495,7 @@ each of the forms of the letter we wish to distinguish:
     <p>Wo<g ref="#r1">r</g>ds in this 
       manusc<g ref="#r2">r</g>ipt are sometimes
       written in a funny way.</p> </egXML></p>
-    <p xmlns="http://www.tei-c.org/ns/1.0">
+    <p>
      As can be seen in this example, the <gi>glyph</gi> element pointed
      to from the <gi>g</gi> element will be interpreted as an
      annotation on the content of the element <gi>g</gi>.  This mechanism
@@ -512,7 +512,7 @@ each of the forms of the letter we wish to distinguish:
       <code>Fi</code> ligature; the encoder may however prefer not to
       use it in order to simplify other text processing  operations,
       such as indexing).    </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">With this
+<p>With this
      markup in place, it will be possible to write programs to analyze
      the distribution of the different letters "r" as well as produce
      more <soCalled>faithful</soCalled> renderings of the original. It
@@ -522,7 +522,7 @@ each of the forms of the letter we wish to distinguish:
      <gi>g</gi> can be used, with an enumeration of different
      types and their usage documented in the TEIHeader.-->
     </p>
-    <p xmlns="http://www.tei-c.org/ns/1.0">For brevity of encoding, it may be preferred to pre-define
+    <p>For brevity of encoding, it may be preferred to pre-define
     internal entities such as the following:
      <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY r1 '<g ref="#r1">r</g>' >
 <!ENTITY r2 '<g ref="#r2">r</g>' > ]]></egXML>
@@ -530,22 +530,22 @@ which would enable the same material to be encoded as follows:
      <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>Wo&amp;r1;ds in this manusc&amp;r2;ipt are 
       sometimes written in a funny way.</p> </egXML>
     </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The same technique may be used to represent particular
+<p>The same technique may be used to represent particular
 abbreviation marks as well as to represent other characters or
 glyphs. For example, if we believe that the r-with-one-funny-stroke is
 being used as an abbreviation for <code>receipt</code>, this might be
 represented as follows:<egXML xmlns="http://www.tei-c.org/ns/Examples">
  <abbr>&amp;r1;</abbr></egXML></p>
 <!-- should become a choice element some time -->
-    <p xmlns="http://www.tei-c.org/ns/1.0">Note however that this technique employs markup objects to
+    <p>Note however that this technique employs markup objects to
     provide a link between a character in the document and some
     annotation on that character. It cannot therefore be used in
     places where such markup constructs are not allowed, notably in
     attribute values. 
     </p>   </div>
    <div type="div2" xml:id="D25-40">
-    <head xmlns="http://www.tei-c.org/ns/1.0">Adding new characters</head>
-    <p xmlns="http://www.tei-c.org/ns/1.0">The creation of additional characters for use in text encoding
+    <head>Adding new characters</head>
+    <p>The creation of additional characters for use in text encoding
     is similar to the annotation of an existing character.  The same
     element <gi>g</gi> is used to provide a link from the character
     instance in the text to the character definition in
@@ -556,7 +556,7 @@ represented as follows:<egXML xmlns="http://www.tei-c.org/ns/Examples">
     which is an area set aside for the very purpose of privately
     adding new characters to a document.  Recommendations on how to
     use such PUA characters are given in the following section.  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">In some circumstances, it may be desirable to provide a single
+<p>In some circumstances, it may be desirable to provide a single
 precomposed form of a character that is encoded in Unicode only as a
 sequence of codepoints. For example, in Medieval
 Nordic material, a character looking like a lower case letter Y with a
@@ -570,9 +570,12 @@ sequence of corrsponding Unicode codepoints: this has the drawback
 that the sequence cannot be treated as a unit of any kind once entity
 translation has taken place.  It may be translated directly into a
 locally-defined PUA character (say <code>&amp;#xE0A4</code>) for local
-processing only; the more
-portable representation <egXML xmlns="http://www.tei-c.org/ns/Examples"><g ref="#ydotacute"/></egXML>. In
-either case, the following new character definition should be supplied:
+processing only. However, the most
+portable representation is to use the <gi>g</gi> element defined by
+the module defined in this chapter: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><g
+ref="#ydotacute"/></egXML>. This makes it possible for the encoder to
+provide useful documentation for the particular character or glyph so referenced:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><char xml:id="ydotacute">
        <charName>LATIN SMALL LETTER Y WITH DOT ABOVE AND ACUTE</charName>
      <charProp>
@@ -588,7 +591,7 @@ up. It also supplies a single locally-defined property (<soCalled>entity</soCall
 character concerned, the purpose of which is
 to supply a recommended character entity name for the character. 
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Under certain circumstances, Han characters can be written
+<p>Under certain circumstances, Han characters can be written
     within a circle.  Rather than considering this as simply an aspect of the
     rendering, an encoder may wish to treat such circled characters as
     entirely distinct  derived characters. For a given character
@@ -613,7 +616,7 @@ to supply a recommended character entity name for the character.
    &amp;U+E000;
   </mapping>
  </char></egXML></p>
-<p xmlns="http://www.tei-c.org/ns/1.0">In this example, the <soCalled>circled ideograph</soCalled>
+<p>In this example, the <soCalled>circled ideograph</soCalled>
 character has been defined with two mappings, and with two
 properties. The two properties are the Unicode-defined
 character-decomposition which specifies that this is a circled
@@ -628,8 +631,8 @@ the <gi>g</gi> element. In general, however, the <gi>g</gi> element
 will be empty.</p>
    </div>
    <div type="div2" xml:id="D25-50">
-    <head xmlns="http://www.tei-c.org/ns/1.0">How to use codepoints from the Private Use Area</head>
-    <p xmlns="http://www.tei-c.org/ns/1.0">The developers of the Unicode Standard have set aside an
+    <head>How to use codepoints from the Private Use Area</head>
+    <p>The developers of the Unicode Standard have set aside an
     area of the codespace for the private use of software vendors,
     user groups or individuals.  As of this writing (Unicode 4.0),
     there are around 137,000 codepoints available in this area, which
@@ -644,7 +647,7 @@ will be empty.</p>
     receiving parties to find out what PUA characters are used in a
     document and where possible codepoint clashes with local use on
     the receiving side occurs.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">In the two previous examples, we mentioned that the variant
+<p>In the two previous examples, we mentioned that the variant
 characters concerned might well be assigned specific codepoints from
 the PUA. This might, for example, facilitate the use of a particular
 font which displays the desired character at this codepoint in the
@@ -665,13 +668,13 @@ local processing environment at the receiving site will be necessary
 to handle such characters, during which variant letters can be
 converted to hitherto unused codepoints on the basis of the
 information provided in the <gi>charDesc</gi> element.</p>
-    <p xmlns="http://www.tei-c.org/ns/1.0">This mechanism is rather weak in cases where DOM trees or
+    <p>This mechanism is rather weak in cases where DOM trees or
     parsed XML fragments are exchanged, which may increasingly be the
     case.  The best an application can do here is to treat any
     occurrence of a PUA character only in the context of the local
     document and use the properties provided through the <gi>char</gi>
     element as a handle to the character in other contexts.  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">In the fullness of time, a character may become standardized, and
+<p>In the fullness of time, a character may become standardized, and
 thus assigned a specific code point outside the PUA. Documents which
 have been encoded using the mechanism must at the least ensure that
 this changed code point is recorded within the relevant <gi>char</gi>
@@ -680,8 +683,8 @@ element; it will however normally be simpler to remove the
 elements which reference it by occurrences of the specific coded
 character. </p>
    </div>
-<div type="div2" xml:id="WSD-DEF"><head xmlns="http://www.tei-c.org/ns/1.0">Additional module defined by this section</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">The module described in this chapter makes available the following
+<div type="div2" xml:id="WSD-DEF"><head>Additional module defined by this section</head>
+<p>The module described in this chapter makes available the following
 components:
 <moduleSpec xml:id="DWD" ident="gaiji">
 <altIdent type="FPI">Character and Glyph Documentation</altIdent><desc>Character and glyph documentation</desc></moduleSpec>
@@ -689,7 +692,7 @@ components:
 The selection and combination of modules to form a TEI schema is described in
 <ptr target="#STIN"/>.
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The module is organized as follows:
+<p>The module is organized as follows:
 <specGrp>
 &g;
 &char;
