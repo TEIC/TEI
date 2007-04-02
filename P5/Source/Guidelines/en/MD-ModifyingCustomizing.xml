@@ -7,42 +7,51 @@ $Author$
 -->
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="MD" n="29"><head xmlns="http://www.tei-c.org/ns/1.0">Modifying and Customizing the TEI DTD</head>
 
-<p xmlns="http://www.tei-c.org/ns/1.0">These Guidelines provide an encoding scheme suitable for encoding a
-wide range of texts, and capable of being extended in well-defined and
-documented ways for texts that cannot be conveniently or appropriately
-encoded using what is provided.  This chapter describes how the TEI
-encoding scheme may be customized, and should be read in conjunction
-with chapter <ptr target="#TD"/>, which describes how the TEI encoding
-scheme is documented.  The modification scheme described in that
-chapter is, like the rest of the TEI scheme, independent of any
-particular schema or document type definition language. </p>
-<p xmlns="http://www.tei-c.org/ns/1.0" rend="italic">The present chapter has not been fully revised. In
+<p xmlns="http://www.tei-c.org/ns/1.0">These Guidelines provide an
+encoding scheme suitable for encoding a wide range of texts, and
+capable of being extended in well-defined and documented ways for
+texts that cannot be conveniently or appropriately encoded using what
+is provided.  This chapter describes how the TEI encoding scheme may
+be customized, and should be read in conjunction with chapter <ptr
+target="#TD"/>, which describes how a specific application of the TEI
+encoding scheme should be
+documented.  The modification scheme described in that chapter is,
+like the rest of the TEI scheme, independent of any particular schema
+or document type definition language. </p>
+
+<!--<p xmlns="http://www.tei-c.org/ns/1.0" rend="italic">The present chapter has not been fully revised. In
 particular, it
 discusses only the modification methods provided for users of XML DTD
 fragments, rather than the more powerful mechanisms now available
 using the ODD schema described in chapter <ptr target="#TD"/>. </p>
+-->
 
-<p xmlns="http://www.tei-c.org/ns/1.0">Formally speaking, these Guidelines provide both syntactic
-information about how elements and attributes may be used in
-valid documents and semantic information about what interpretation
-should be attached to given syntactic constructs. In this sense, they
-are both  a <term>document type definition</term> and a <term>document
-type declaration</term>. In the present version of the Guidelines,
-this semantic information is provided only as informal descriptive
-prose. Although the descriptions have been
-written with care, there will inevitably be cases where the intention of
-the contributors has not been conveyed with sufficient clarity to
-prevent users of the Guidelines from <soCalled>extending</soCalled> them
-in the sense of attaching slightly variant semantics to them.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Beyond this unintentional semantic extension, some of the elements
+<p>Formally speaking, these
+Guidelines provide both syntactic information about how elements and
+attributes may be used in valid documents and semantic information
+about what interpretation should be attached to given syntactic
+constructs. In this sense, they are both a <term>document type
+definition</term> and a <term>document type declaration</term>. In the
+present version of the Guidelines, this semantic information is
+provided largely as informal descriptive prose. Although the descriptions
+have been written with care, there will inevitably be cases where the
+intention of the contributors has not been conveyed with sufficient
+clarity to prevent users of the Guidelines from
+<soCalled>extending</soCalled> them in the sense of attaching slightly
+variant semantics to them.</p>
+<p>Beyond this unintentional semantic extension, some of the elements
 described can intentionally be used in a variety of ways; for example,
 the element <gi>note</gi> has an attribute <att>type</att> which
 can take on arbitrary string values, depending on how it is used in a
 document.  A new type of annotation, therefore, requires no extension to
-the TEI document type definition.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Furthermore, there are several ways for combining and extending the
+the TEI schema. On the other hand, it may be desired to constrain the
+possible values for the <att>type</att> attribute to a small set of
+possibilities. A schema modified in this way would no longer
+necessarily regard as valid the same set of documents as the corresponding
+unmodified TEI schema.</p>
+<p>Furthermore, there are several ways for combining and extending the
 existing syntactic mechanisms themselves.  Earlier chapters have
-identified these:
+identified these amongst others:
 <list type="bullets">
 <item>combining the supplied modules as described in chapter <ptr target="#ST"/>; </item>
 <item>documenting how non-standard characters are represented  in
@@ -53,37 +62,26 @@ described in chapter <ptr target="#WD"/>;</item>
 by providing one or more feature system declarations, as described in
 chapter <ptr target="#FD"/>.</item></list>
 This chapter explains how the supplied modules can be customized by
-suppressing elements, renaming elements, extending syntactic classes,
+suppressing elements, renaming elements, modifying classes of elements,
 and adding elements.  The different techniques described here have
 different effects on the level of TEI conformance to be ascribed to a
-text, as described in chapter <ptr target="#CF"/>.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The TEI scheme is designed to support modification and customization
+text, as described further in section <ptr target="#CF"/>.</p>
+<p>The TEI scheme is designed to support modification and customization
 in a documented way that can be validated by an XML processor.  Those
 wishing to modify the TEI modules must do so using <emph>only</emph> the
 mechanisms described in this chapter if the resulting documents are to
-be TEI-conformant.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The mechanisms used to instantiate the TEI modifications differ for
-different schema languages. In XML DTDs, for example, extensive use is made of
-parameter entities, so that the TEI DTD fragments
-are supplied in a <term>parameterized</term> form, in which some content
-models, element names, and entity values are  represented not
-by fixed form literals but by parameter entity references. In other
-parts of these Guidelines, the text of the DTD fragments has been
-presented in a partially <term>resolved</term> form, in which the names of
-elements are given as absolute literals
-(e.g. <mentioned>name</mentioned>, rather than
-<mentioned>%n.name;</mentioned>) for the sake of clarity of
-discussion. Content models presented elsewhere, however, are given in
-parameterized form throughout
-(e.g. <mentioned>%macro.paraContent;</mentioned>). This is because, in some cases,  the actual value of
-the parameter entity used will differ depending on which tagsets are
-in use, and also because the modification mechanisms discussed here
-depend on the ability to redefine these entities.  Software tools to
-automatically derive a fully
-resolved DTD from a parameterized version of it are widely available,
-and form a component of any validating SGML or XML parser.<note place="foot">For an example of such a tool, see the TEI pizzachef at
-<ptr target="http://www.tei-c.org/pizza.html"/>.</note></p>
-<p xmlns="http://www.tei-c.org/ns/1.0">In the absence of any modification, a collection of TEI modules
+be regarded as TEI-conformant.</p>
+<p>The mechanisms used to
+instantiate a TEI schema differ for different schema languages. In XML
+DTDs, for example, extensive use is made of parameter entities, while
+in RELAXNG schemas, extensive use is made of patterns. However, in
+either case, the names of elements and, wherever possible, their
+attributes and content models are defined indirectly. The syntax used
+to implement this indirection also varies with the schema language
+used, but the underlying  constructs in the TEI abstract model are
+given the same names. </p>
+
+<p>In the absence of any modification, a collection of TEI modules
 will behave as follows:
 <list type="ordered">
 <item>All the elements described in the relevant sections of these
@@ -93,44 +91,56 @@ will behave as follows:
 <item>The attributes of each element and the names and types of these
   attributes are as given in these Guidelines.</item>
 <item>The membership of element classes, and the resultant inheritance
-  of attributes are as given in these Guidelines.</item></list>
-The modification mechanisms allow the user to override these defaults
-in the following ways, while retaining conformance to the TEI
-Guidelines:
+of attributes and content models are as given in these
+Guidelines.</item></list> The modification mechanisms allow the user
+to override these defaults in the following ways, while retaining
+conformance to the TEI Guidelines:
 <list type="ordered">
-<item>The definition of elements may be suppressed, so deleting the
+<item>Particular elements may be suppressed, so deleting the
       associated elements from the modified schema.</item>
 <item>The name (generic identifier) associated with an element may
       be changed, while preserving the semantics of the element.  Note,
       however, that the new name may not clash with the default name of
       any element defined in these Guidelines.</item>
-<item>The global <att>TEIform</att> attribute should be used to specify
-the TEI name for such renamed elements.</item>
 <item>Those parts of the content model of an element which are specified
-      by classes may be extended by adding members to the classes.</item>
+      by class reference may be extended by adding members to the classes.</item>
 <item>Further attributes, together with their names and types, may be
-      specified for an individual element and existing attributes for an
-      individual element may be
-      renamed.  Note that the new names may not clash with names of
+      specified for an individual element or for classes of
+      elements. Again, the new names may not clash with names of
       existing attributes for the element.</item>
-<item>Further attributes, together with their names and types, may be
-      specified for the elements in a particular class and those
-      inheriting characteristics from that class.</item></list>
+<item>The characteristics inherited by one class from another class
+may be modified by modifying its class membership: all members of the
+class then
+      inherit the changed characteristics.</item>
+<item>the set of values legal for an attribute or attribute class may
+be constrained or relaxed by supplying or modifying a value list, or
+by modifying the declared datatype for it.</item> </list>
 The modification mechanisms presented in this chapter are quite general,
-and may be used to make all the types of changes just listed.  They can
+and may be used to make all the types of changes just listed.  
+
+<!--They can
 also be used to make more complete modifications of the DTD; if changes
 other than those listed above are made, however, the resulting text will
-no longer be TEI conformant.
+no longer be TEI conformant.-->
 	</p>
-<!-- revised to here LB -->
-<p xmlns="http://www.tei-c.org/ns/1.0">These Guidelines provide for user modification of the TEI DTD largely
-by using parameter entities at appropriate points in the DTD.  It
-is not absolutely essential to understand them in detail to modify the
-TEI DTD (the examples later in this chapter can be followed cookbook
-fashion), but it will probably prove helpful. An example set of
+
+<p>The recommended way of
+implementing all such modifications is by means of the ODD system
+documented in chapter <ptr target="#TD"/>; in the remainder of this
+section we give specific examples to illustrate how that system may be
+applied. An ODD processor, such as the Roma application supported by
+the TEI, or any other comparable set of stylesheets will use the
+declarations provided by an ODD to generate appropriate sets of
+declarations in a specific schema language such as RELAXNG or the XML
+DTD language.  We do not discuss in detail here how this should be
+done, since the details are schema language-specific; some background
+information about the methods used for XML DTD and RELAXNG schema
+generation is however provided in section <ptr target="#STIN"/>.
+An example set of
 modification files is provided as part of the current release: see
 further section <ptr target="#MDlite"/> below.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Parameter entities are a mechanism for allowing string substitution
+<!--
+<p>Parameter entities are a mechanism for allowing string substitution
 within markup declarations; they can thus can be used to effect
 changes in declarations.  A parameter entity, unlike an element, may
 be declared more than once in a DTD; if more than one declaration is
@@ -150,7 +160,7 @@ of parameter entities as the vehicle for effecting extensions, and for
 the separation of entity definitions from other material (to be
 defined below) that might be needed for certain modifications of the
 TEI DTD.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Local modifications are most conveniently grouped into two files,
+<p>Local modifications are most conveniently grouped into two files,
 one containing modifications to the TEI parameter entities, and the
 other containing new or changed declarations of elements and their
 attributes.  Names for these files should be specified by the
@@ -164,33 +174,37 @@ first will be needed for all of the modifications discussed below.
 The second is only required for the last type of extension
 described. The parameter entities thus defined are then referenced at
 an appropriate point in the compiling of the TEI DTD, as further
-described in section <ptr target="#STIN"/>.</p>
-<div type="div2" xml:id="MDMD"><head xmlns="http://www.tei-c.org/ns/1.0">Kinds of Modification</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">There are several kinds of modification that can be made to the TEI
+described in section </p> -->
+
+<div type="div2" xml:id="MDMD"><head>Kinds of Modification</head>
+<p>There are several kinds of modification that can be made to the TEI
 DTD as follows:
 <list type="ordered">
 <item>deletion of elements;</item>
 <item>renaming of elements;</item>
 <item>extension of classes;</item>
 <item>modification of content models or attribute lists.</item></list>
-These are described in the remaining sections of this chapter.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Each kind of modification changes the set of documents that can be
-parsed using the DTD. Each combination of the original TEI DTD
-fragments may be thought of as defining a certain set of
-documents. Each DTD resulting from a modified set of TEI DTD
-fragments allows a different set of documents to be parsed.  The set
-of documents parsed by the original DTD may be properly contained in
-the set of documents parsed by a modified DTD, or vice versa.
-Modifications that have either of these two results are called
-<term>clean modifications</term> in the remainder of the chapter.
-Alternatively, the set of documents parsed by the original DTD might
-overlap the set of documents parsed by the modified DTD with neither
-being properly contained in the other.  Modifications that have this
-result are called <term>unclean modifications</term> in the remainder
-of the chapter.</p>
-<div type="div3" xml:id="MDMDSU"><head xmlns="http://www.tei-c.org/ns/1.0">Suppressing Elements</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">The simplest way to modify the supplied tag sets is to suppress one
-or more of the supplied elements.  In the modifiable version of the
+These are described in the following  sections.</p>
+<p>Each kind of modification
+changes the set of documents that will be considered valid according
+to the resulting schema. Any combination of unchanged TEI modules may
+be thought of as defining a certain set of documents. Each schema
+resulting from a modified combination of TEI modules will define a
+different set of documents.  The set of documents valid according to
+the unmodified schema may be properly contained in the set of
+documents considered to be valid according to the modified schema, or
+vice versa.  Modifications that have either of these two results are
+called <term>clean modifications</term> in the remainder of the
+chapter.  Alternatively, the set of documents considered valid  by the original
+schema might overlap the set of documents considered valid by the modified schema with
+neither being properly contained in the other.  Modifications that
+have this result are called <term>unclean modifications</term> in the
+remainder of the section.</p>
+<div type="div3" xml:id="MDMDSU"><head>Suppressing Elements</head>
+<p>The simplest way to modify the supplied modules is to suppress one
+or more of the supplied elements.  This is simply done by setting the
+attribute <att>mode</att> to <val>delete</val> on  an
+<gi>elementDecl</gi> for the element concerned. <!-- In the modifiable version of the
 DTDs, every element declaration is enclosed by a marked section.  The
 marked section is governed by one of the keywords <val>IGNORE</val> or <val>INCLUDE</val>, which is
 provided indirectly using a parameter entity. This parameter entity
@@ -198,9 +212,9 @@ has the same name as the generic identifier of the element.  Thus, the
 declaration for the paragraph element, <gi>p</gi>, occurs within a
 marked section <soCalled>guarded</soCalled> by the parameter entity
 <ident type="pe">p</ident>:
-<eg><![CDATA[ %p; [
+<eg><![CDATA[ %p; [-->
 <!-- element and attlist declaration for p goes here   -->
-]]
+<!--]]
 ]]></eg>
 The declaration given for these <term>guard entities</term> in the
 modifiable version is <val>INCLUDE</val> in all cases.  The
@@ -213,34 +227,52 @@ the second line of the three is the content of the marked section; and
 the third line of the three is the closing of a marked section.  If
 the guard is changed to <val>IGNORE</val>, the parser will
 ignore the content of the marked section.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Thus, to delete the declaration of a generic identifier and thus
+<p>Thus, to delete the declaration of a generic identifier and thus
 suppress the element entirely, the entity that provides the guard on the
-marked section wherein the element declaration appears must simply be
-set to <val>IGNORE</val>.  For example, if the <gi>note</gi>
-element is not to be used in a particular application, the line
-<eg><![CDATA[<!ENTITY % note 'IGNORE'>]]></eg>
+marked section wherein the element declaration appears must be
+set to <val>IGNORE</val>.  -->For example, if the <gi>note</gi>
+element is not to be used in a particular application, the schema
+specification concerned will contain a declaration like the following:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="note"
+						    module="core" mode="delete"/></egXML>
+<!--<eg><![CDATA[<!ENTITY % note 'IGNORE'>]]></eg>
 should appear somewhere in the DTD prior to its reference in the guard
 around the declaration for the <gi>note</gi> element. This is achieved
 by  inserting the above declaration in the file which has its name given by the entity
-<ident type="pe">extensions-decl</ident>.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Two different cases of deleting one or more elements from the TEI
-DTD can be identified.  The first case involves deleting only elements
+<ident type="pe">extensions-decl</ident>.-->
+The <att>ident</att> attribute here supplies the canonical name of the
+element to be deleted, the <att>module</att> attribute identifies the
+module in which this element is declared, and the <att>mode</att>
+attribute specifies what is to be done with it. Note that the module
+name must be supplied explicitly, and that the schema specification in
+which this declaration appears must also contain a reference to the
+module itself. The full specification for this modified schema would thus be
+something like the following:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec
+						    ident="myModifiedSchema">
+<moduleRef ident="core"/>
+<!-- other modules used by this schema -->
+<elementSpec ident="note" module="core" mode="delete"/>
+</schemaSpec></egXML>
+</p>
+<p>Two different cases of deleting one or more elements from the TEI
+schema can be identified.  The first case involves deleting only elements
 that are optional wherever they appear in TEI documents.  Deleting these
-is clean in the sense that documents that are parseable with the modified
-DTD can also be parsed according to the original TEI DTD.  To say this
-another way, the set of documents matching the new DTD is contained in
-the set of documents matching the original DTD.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The second case involves deleting elements that are required in one
+is clean in the sense that documents that are valid with respect to the modified
+schema are also valid  according to the unmodified schema.  To say this
+another way, the set of documents matching the new schema is contained by
+the set of documents matching the original schema.</p>
+<p>The second case involves deleting elements that are required in one
 or more of their appearances in TEI documents.  Deleting these is
-unclean in that some documents that can be parsed according to the new
-DTD could not be parsed according to the original TEI DTD.  To say this
-another way, the set of documents matching the new DTD neither contains
-nor is contained in the set of documents matching the original DTD.</p></div>
-<div type="div3" xml:id="MDMDNM"><head xmlns="http://www.tei-c.org/ns/1.0">Renaming Elements</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">In the modifiable version of the TEI DTD, elements are not referred to
-directly by their generic identifiers; instead, the modifiable version
+unclean in that some documents that would be regarded as valid by the new
+schema would be regarded as invalid according to the original schema.  To say this
+another way, the set of documents matching the new schema neither contains
+nor is contained by the set of documents matching the originalschema.</p></div>
+<div type="div3" xml:id="MDMDNM"><head>Renaming Elements</head>
+<p>As noted above, elements are not referred to
+directly by their generic identifiers in the TEI schemas; <!--instead, the modifiable version
 of the DTD makes use of parameter entities that expand to the standard
-generic identifiers.  This allows renaming of elements by redefining the
+generic identifiers.  This --> thus allowing renaming of elements. <!-- by redefining the
 appropriate parameter entities.  The names of parameter entities used
 for naming are formed by taking the standard generic identifier of the
 element and attaching the string <q>n.</q> (for <q>name</q>) as a
@@ -251,50 +283,65 @@ by declarations of the following form:
 <!ENTITY % n.note     'note'>
 <!ENTITY % n.soCalled 'soCalled'>]]></eg>
 These parameter entities are all contained within a file (<ident type="file">teigis.ent</ident>) which is embedded during the compilation
-of a TEI DTD.  To change the name of an element therefore, all that
+of a TEI DTD. --> To change the name of an element, an
+<gi>altIdent</gi> element is provided within the
+<gi>elementSpec</gi>. <!-- all that
 is needed is to provide an overriding declaration for the appropriate
-parameter entity. For instance, the following declaration converts <gi>note</gi> to <gi>annotation</gi>:
+parameter entity. -->
+For instance, the following declaration converts <gi>note</gi> to <gi>annotation</gi>:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="note"
+						    module="core"
+						    mode="change">
+<altIdent>annotation</altIdent></elementSpec></egXML>
+Note that the <att>mode</att> attribute on the <gi>elementSpec</gi>
+now takes the value <val>change</val> to indicate that those parts of
+the element specification not supplied are to be inherited from the
+standard definition. The content of the <gi>altIdent</gi> element will
+be used in place of the canonical <att>ident</att> value in the schema
+generated. 
+<!--
+
 <eg><![CDATA[<!ENTITY % n.note 'annotation'>]]></eg>
 This declaration must be inserted in the file which has its name given
-by the entity <ident type="pe">extensions-decl</ident>.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Two different cases of renaming can be identified.  The first case
+by the entity <ident type="pe">extensions-decl</ident>.--></p>
+<p>Two different cases of renaming can be identified.  The first case
 involves replacing existing names with names that are otherwise unused
 in the TEI scheme.  (This can be easily checked by looking in the
 index of the Guidelines.)  Such a modification is clean in that the new
-DTD would still accepts any document accepted by the publication DTD
+schema still accepts any document accepted by the unmodified schema
 (given the appropriate renaming of elements).  The new name cannot
 possibly conflict with the generic identifier of any other element,
 since there can be no other occurrences.  To say this another way, the
-set of documents matching the new DTD is isomorphic to the set of
-documents matching the old DTD.  The example given results in a clean
+set of documents matching the new schema is isomorphic to the set of
+documents matching the old schema.  The example given results in a clean
 modification because there is no element <gi>annotation</gi>
 specified in these Guidelines.  It is also true that any document not
-using the renamed element which parses under the unmodified DTD will
-also parse under the modified DTD.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The second case involves introducing a name already used somewhere
-in a TEI tag set.  This is unclean in that it changes what an existing
+using the renamed element which is valid according to the unmodified schema will
+also be valid according to the  modified schema.</p>
+<p>The second case involves introducing a name already used somewhere
+in a TEI module.  This is unclean in that it changes what an existing
 generic identifier means.  The name in question could not be declared
-by any tag set that is used in the document, as it is syntactically
+by any module that is used in the new schema, as it is syntactically
 invalid to provide two declarations for the same element.  The new
-generic identifier might occur in some TEI tag set not currently
-included in the DTD used to parse the document.  For example, if in
+generic identifier might however occur in some TEI module not currently
+included in the schema used to parse the document.  For example, if in
 some setting the element <gi>note</gi> were assigned the new
 name <gi>fs</gi> (because, say, notes are used in some
 technical document to record functional specifications) there might be
 no immediate problem.  If however it was later decided to add the
-feature structure analysis tag set into the DTD used to parse the
-document, though, a name clash would occur. There would also be
+feature structure analysis module into the schema used to parse the
+document,  a name clash would occur. There would also be
 problems in interchanging the resulting documents without confusion.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">As a special case, consider translating all of the generic
+<p>As a special case, consider translating all of the generic
 identifiers for all elements into some other language, L.  It may be,
 for example, that the word for <q>paragraph</q> in language L begins
 with the letter <q>s</q> and that thus the paragraph element is
 renamed as <gi>s</gi>.  By the definition just given, this
 would be an unclean modification because an element <gi>s</gi>
-already exists in the TEI DTD.  However, this is clearly not a
+already exists in the TEI scheme.  However, this is clearly not a
 problem so long as all of the names are redefined at once and that no
 collisions occur in the new name space: that is, provided that the TEI
-element <gi>s</gi> is renamed as some other string.  This can be done
+element <gi>s</gi> is also renamed as some other string.  <!-- This can be done
 by a total replacement of the file that contains the entity
 declarations for the names of the elements.  This systematic
 replacement of names in the DTD must be followed by a systematic use
@@ -302,7 +349,7 @@ replacement of names in the DTD must be followed by a systematic use
 this in the terms used earlier, the set of documents matching the new
 DTD (with all names systematically changed in both the DTD and the
 documents) is isomorphic to the set of documents matching the original
-DTD with no names changed (in either the DTD or the documents).</p>
+DTD with no names changed (in either the DTD or the documents).--></p>
 
 <!--
 <p>The formal declarations of the parameter entities used for generic
@@ -330,15 +377,19 @@ defined element which usually corresponds to one TEI element (which
 would be expressed by the default value) but sometimes to another TEI
 element (which would be expressed by explicit values attached to the
 element instance).</p>--></div>
-<div type="div3" xml:id="MDMDCL"><head xmlns="http://www.tei-c.org/ns/1.0">Class Extension</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">In <ptr target="#STECCM"/>, the concept of a class of elements that
+<div type="div3" xml:id="MDMDCL"><head>Class Modification</head>
+<p>In <ptr target="#STECCM"/>, the concept of a class of elements that
 can appear in the same kinds of structural locations in a document was
 introduced.  In the RelaxNG schema fragments, a pattern is  associated
 with each named model class; in the XML DTD fragments, a parameter
 entity is used. For example, the value of the pattern (or parameter entity)
 <ident type="pe">model.biblLike</ident> in a TEI schema will be  a list of the members of the class
 <ident type="class">model.biblLike</ident>.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">In the modifiable version of the TEI DTD, an additional entity is
+<!-- not quite true... -->
+<p>This indirection makes it
+possible to add new elements to any content model, simply by adding them
+to the class referenced in the content model. <!--
+In the modifiable version of the TEI DTD, an additional entity is
 defined for each model class.  This additional entity also takes the
 name of the class, this time prefixed by the string <q>x.</q> (for
 <q>extension</q>).  The default value of these <term>x-dot
@@ -346,16 +397,29 @@ entities</term> is always the empty string.  A reference to the
 corresponding x-dot entity is always included within the replacement
 string for each m-dot entity.  This enables an encoder to add new
 members to a class simply by declaring a new value for its associated
-x-dot entity.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">For example, the class <ident type="class">model.biblLike</ident> has the three
-members <gi>bibl</gi>, <gi>biblFull</gi>, and <gi>biblStruct</gi>.
+x-dot entity.--></p>
+<p>For example, the three
+elements  <gi>bibl</gi>, <gi>biblFull</gi>, and
+<gi>biblStruct</gi> are all defined as members of the class <ident
+type="class">model.biblLike</ident>. To add a fourth member (say
+<gi>myBibl</gi>) to this class, we need to include in the
+<gi>elementSpec</gi> defining our new element a <gi>memberOf</gi>
+element which nominates the intended class:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="myBib"
+						    mode="add">
+<classes><memberOf key="model.biblLike"/></classes>
+<!-- other parts of the new declaration here --></elementSpec></egXML>
+The other parts of this declaration will typically include
+a description for the new element and information about its content
+model, as further described in <ptr target="#TD"/>.
+<!--
 Its content-model entity is defined thus:
 <eg><![CDATA[<!ENTITY % x.bibl '' >
 <!ENTITY % model.biblLike '%x.bibl; bibl | biblFull | biblStruct' >]]></eg>
 With the default value of the x-dot entity, this is the same as
 defining <ident type="class">tei.model.biblLike</ident> with the replacement text
 <code>bibl | biblFull | biblStruct</code>.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">An encoder can add an element to the class by providing a new
+<p>An encoder can add an element to the class by providing a new
 declaration for the x-dot entity.  For example, to add a new element
 called <gi>my.bib</gi>, this definition would be used:
 <eg><![CDATA[<!ENTITY % x.bibl 'my.bib |' >]]></eg>
@@ -368,25 +432,27 @@ value to <code>my.bib | bibl | biblFull |
 biblStruct</code>.  If more than one element is to be added to a
 class, the x-dot entity for the class should be redefined as a list of
 the new generic identifiers, each one (<emph>including the
-last</emph>) followed by a vertical bar.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Class extension is always clean in that the set of documents matching
-the DTD containing the extended class contains all of the documents
-matching the original DTD.  Class extension can imply either the
+last</emph>) followed by a vertical bar.--></p>
+<p>Class extension is always clean in that the set of documents matching
+the schema containing the extended class contains all of the documents
+matching the original schema.  Class extension can imply either the
 addition of an existing
 element to a pre-defined class, or the addition of a new element (as described in the next
 section) to one.</p></div>
-<div type="div3" xml:id="MDMDRM"><head xmlns="http://www.tei-c.org/ns/1.0">New content models</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">Encoders can modify the content models that specify what is
-contained in an element or set of elements defined by the TEI DTD,
+<!-- revised to here LB -->
+
+<div type="div3" xml:id="MDMDRM"><head>New content models</head>
+<p>Encoders can modify the content models that specify what is
+contained in an element or class of elements defined by a  TEI module,
 modify the attributes of existing elements, or add new elements to the
-DTD.</p> 
-<p xmlns="http://www.tei-c.org/ns/1.0">Content models or attributes for existing elements are
+schema.</p> 
+<p>Content models or attributes for existing elements are
 modified in two stages.  First, the existing declaration of the element
 must be deleted in the manner described in the first section of this
 chapter.  Second, a new declaration for the element is given.  This new
 declaration must be inserted in the file associated with the entity
 <ident type="pe">extensions</ident>.</p> 
-<p xmlns="http://www.tei-c.org/ns/1.0">For example, suppose that symbolic designations to be marked with
+<p>For example, suppose that symbolic designations to be marked with
 the element <gi>term</gi> can always be associated with a particular
 source.  While the content model of the publication version of the TEI
 DTD is acceptable, the attribute list needs to be extended.  To
@@ -401,23 +467,23 @@ addition of a new attribute.
 <!ATTLIST term               %a.global;
           type               CDATA               #IMPLIED
           source             CDATA               #IMPLIED       >]]></eg></p>
-<p xmlns="http://www.tei-c.org/ns/1.0">New elements are defined by inserting their definitions into the
+<p>New elements are defined by inserting their definitions into the
 file associated with the entity <ident type="pe">extensions</ident>.  To be usable, they must somehow
 be included in the model for some existing element.  This can be done
 either by class extension (which can now be seen to be a restricted,
 special case of the process defined here) or by redefining the
 element(s) within which the new element is to be included.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The set of documents matched by the modified DTD and the set of
+<p>The set of documents matched by the modified DTD and the set of
 documents matched by the original DTD may be related in several
 different ways.  It is certainly possible that the former could
 properly include the latter or vice versa; either of these could be
 said to be clean modifications because the set to be matched has
 become strictly larger or strictly smaller.</p> 
-<p xmlns="http://www.tei-c.org/ns/1.0">It is also possible that the set of documents matched by the
+<p>It is also possible that the set of documents matched by the
 modified DTD is different from the set matched by the original DTD and
 they may either contain some common documents or have no documents in
 common; either of these is said to be an unclean modification.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Radical revision is
+<p>Radical revision is
 possible.  It would be possible to remodel so that the
 <gi>teiHeader</gi> is not required, or so that it is required but the
 minimal components described in chapter <ptr target="#HD"/> are no
@@ -426,10 +492,11 @@ fact, the mechanism, if used in an extreme way, permits deletion of
 the entire set of TEI definitions and their replacement by an entirely
 different DTD!  Such revisions would result in documents that are not
 TEI conformant in even the broadest sense, and it is not intended that
-encoders use the mechanism in this way.</p></div></div> <div type="div2" xml:id="MDDO"><head xmlns="http://www.tei-c.org/ns/1.0">Documenting the
-Modifications</head> <p xmlns="http://www.tei-c.org/ns/1.0">When the modification mechanisms are used,
+encoders use the mechanism in this way.</p></div></div> 
+<div type="div2" xml:id="MDDO"><head>Documenting the
+Modifications</head> <p>When the modification mechanisms are used,
 their use must be documented.  There are two ways in which information
-about the modifications is recorded.</p> <p xmlns="http://www.tei-c.org/ns/1.0">The first record of the
+about the modifications is recorded.</p> <p>The first record of the
 modifications is in the use of the extension files.  The file
 associated with the entity <ident type="pe">extensions-decl</ident>
 contains the specifications of the parameter entities that are
@@ -442,18 +509,18 @@ The appropriate parameter entity specifications should be entered
 after each comment in this file.  The order of the comments
 corresponds to the order of the discussion in this chapter (roughly,
 from simple to complex).  Setting the appropriate entity to <val>IGNORE</val> for each revised element is done in the last
-section of the file.</p> <p xmlns="http://www.tei-c.org/ns/1.0">The file associated with the entity <ident type="pe">extensions</ident> should contain the DTD fragments
+section of the file.</p> <p>The file associated with the entity <ident type="pe">extensions</ident> should contain the DTD fragments
 for new and changed element definitions.  The following structure is
 recommended.
 <eg/>
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">These files give a parser sufficient information to implement
+<p>These files give a parser sufficient information to implement
 the modifications and are also useful in providing human readers with
 some indication of the changes made in the TEI DTD.  Full
 documentation of any additional or modified elements should also be
-provided, using the ancillary tag set described in chapter <ptr target="#TD"/>.</p></div>
-<div type="div2" xml:id="MDlite"><head xmlns="http://www.tei-c.org/ns/1.0">TEI Lite: an example Customization</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">Shortly after publication of the first edition of these Guidelines,
+provided, using the  module described in chapter <ptr target="#TD"/>.</p></div>
+<div type="div2" xml:id="MDlite"><head>TEI Lite: an example Customization</head>
+<p>Shortly after publication of the first edition of these Guidelines,
 as a demonstration of how the TEI encoding scheme might be adopted to
 meet 90% of the needs of 90% of the TEI user community, the TEI
 editors produced a brief tutorial defining one specific
@@ -463,7 +530,7 @@ popular and are available from the TEI web site at
 <ptr target="http://www.tei-c.org/Lite/"/>. The modification files used to
 define this view of the TEI are also included among the TEI DTD
 fragments and may be used as a model for other customizations.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The introductory tutorial on TEI Lite describes in more detail how
+<p>The introductory tutorial on TEI Lite describes in more detail how
 the tagset was defined, and the rationale underlying its selection of
 available TEI features. For the present purposes, we note that it
 required elements taken from the TEI prose base, and also from the TEI
@@ -491,7 +558,7 @@ declaration like the following:
 ** commented out 2002-02-03 by Syd as I think it is simply untrue. **
 Note that the position of this declaration is critical: it must
 precede the declarations for the two TEI extension files. --></p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The file <ident type="file">teilitex.ent</ident> consists largely of
+<p>The file <ident type="file">teilitex.ent</ident> consists largely of
 declarations like the following:
 <eg><![CDATA[<!ENTITY % TEI      'INCLUDE' >
 <!ENTITY % teiCorpus  'IGNORE' >]]></eg> 
@@ -502,7 +569,7 @@ first line above is not strictly necessary. However, its inclusion
 makes it easier for the user of this extension file to see at a glance
 which elements from the original DTD have been included and which have
 not. </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">This file also contains, at its start, 
+<p>This file also contains, at its start, 
 declarations for four  parameter entities used in defining content
 models. The first three are needed to add the new (non-TEI) elements
 declared for this customization into existing model classes:
@@ -515,7 +582,7 @@ declarations have the effect of adding the elements <gi>ident</gi>,
 model class, and adding the element <gi>eg</gi> to the <ident type="class">model.inter</ident> and <ident type="class">model.common</ident>
 classes. Without these declarations, the elements named here would not
 appear anywhere within the structure of the TEI DTD.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The entity file also redefines the <ident type="class">att.global.linking</ident> attribute class, which is used to add
+<p>The entity file also redefines the <ident type="class">att.global.linking</ident> attribute class, which is used to add
 linking attributes to all elements when the <ident type="pe">TEI.linking</ident>
 tag set is enabled. In TEI lite only a subset of the linking
 attributes, given by the following definition, is required (compare
@@ -525,19 +592,19 @@ this declaration with that in the reference section for this class):
           next               IDREF               #IMPLIED
           prev               IDREF               #IMPLIED'      >]]></eg>
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">In addition, this entity file contains declarations for a number of
+<p>In addition, this entity file contains declarations for a number of
 commonly used character entity sets (see further chapter <ptr target="#CH"/>) and graphic notations (see further section <ptr target="#FTGRA"/>). Different sets will be declared, depending on
 whether the parameter entity <ident type="pe">TEI.XML</ident> is
 specified as <val>INCLUDE</val> or <val>IGNORE</val>. The XML
 version of TEI Lite supplies Unicode definitions for these character
 entities; the SGML version supplies SDATA declarations. </p> 
-<p xmlns="http://www.tei-c.org/ns/1.0">As supplied, the following is typical of the character entity
+<p>As supplied, the following is typical of the character entity
 set declarations included for XML:
 <eg><![CDATA[<!ENTITY % ISOlat1 
     PUBLIC "-//TEI//ENTITIES Unicode values for ISO 8879 Added Latin 1//EN"
    "iso-lat1.ent">]]></eg>
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">This declaration associates the parameter entity <ident type="pe">ISOlat1</ident> with a public entity defined by the TEI with
+<p>This declaration associates the parameter entity <ident type="pe">ISOlat1</ident> with a public entity defined by the TEI with
 the formal identifier <ident type="fpi">-//TEI//ENTITIES Unicode values for ISO
 8879 Added Latin 1//EN</ident>. The user may specify the actual
 location of this entity in a number of ways: the default is to seek a
@@ -552,7 +619,7 @@ above declaration for an XML DTD might be
     PUBLIC "-//TEI//ENTITIES Unicode values for ISO 8879 Added Latin 1//EN"
    "http://www.tei-c.org/XML_Entities/iso-lat1.ent">]]></eg>
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">SGML versions for the same entity sets are also available. These have a different
+<p>SGML versions for the same entity sets are also available. These have a different
 formal public identifier, but the same default system identifier: thus, if the
 parameter entity <ident type="pe">TEI.XML</ident> has the value
 <val>IGNORE</val>, the declaration for <ident type="pe">ISOlat1</ident> will be as follows: 
@@ -560,7 +627,7 @@ parameter entity <ident type="pe">TEI.XML</ident> has the value
     PUBLIC "ISO 8879-1986//ENTITIES Added Latin 1//EN"
    "iso-lat1.ent">]]></eg>
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Again, the user can override this association by specifying a
+<p>Again, the user can override this association by specifying a
 different system identifier in the DTD subset, or in a local catalog
 file; sample entity sets for SGML are also available from the TEI web
 	  site at <ptr target="http://www.tei-c.org/ISO_Entities"/>, so
@@ -569,13 +636,13 @@ one way of modifying the above declaration for an SGML DTD might be
     PUBLIC "ISO 8879-1986//ENTITIES Added Latin 1//EN"
    "http://www.tei-c.org/ISO_Entities/iso-lat1.ent">]]></eg> 
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Following
+<p>Following
 their declaration, the parameter identifiers for these four entity sets are referenced:
 <eg>%ISOlat1;
 %ISOlat2;
 %ISOpub; %ISOnum;</eg>
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The remainder of the TEI Lite  extension entity file contains
+<p>The remainder of the TEI Lite  extension entity file contains
 declarations  for the following commonly used notations:
 <eg><![CDATA[<!NOTATION png PUBLIC
   '-//TEI//NOTATION IETF RFC2083 Portable Network Graphics//EN' >
@@ -595,7 +662,7 @@ in PNG, JPEG, TIFF, or GIF format (as further discussed in section
 required to allow for
 reference to  external SGML or WSD documents as further discussed in sections
 <ptr target="#SA"/> and <ptr target="#WD"/> respectively.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The file <ident type="file">teilitex.dtd</ident> contains
+<p>The file <ident type="file">teilitex.dtd</ident> contains
 the following declarations for the new elements listed above:
 <eg><![CDATA[<!ELEMENT %n.gi;     %om.RO; (#PCDATA)                             >
 <!ATTLIST %n.gi;             %a.global;
@@ -613,14 +680,14 @@ the following declarations for the new elements listed above:
 <!ATTLIST kw                 %a.global;          
                              type CDATA #IMPLIED                  >]]></eg>
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Note that these declarations use the same parameter entities as
+<p>Note that these declarations use the same parameter entities as
 other parts of the TEI DTD, in particular the parameter entities
 <ident type="pe">om.RR</ident> and <ident type="pe">om.RO</ident>
 which make the same extension file usable in both XML or SGML
 contexts, as further explained in section <ptr target="#STXML"/>, and
 <ident type="pe">a.global</ident>, which supplies the standard
 definition for the global attributes.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Two of the elements listed above as <soCalled>new</soCalled> are in
+<p>Two of the elements listed above as <soCalled>new</soCalled> are in
 fact already defined in the auxiliary tag set for tagset documentation
 discussed in chapter <ptr target="#TD"/>; since, however, the extension
 mechanism defined here does not allow us to include auxiliary tagsets
@@ -628,7 +695,7 @@ as such, we have simply copied the definitions for those elements
 (<gi>gi</gi> and <gi>eg</gi>) from the DTD into our extension file,
 thus allowing for them to be renamable. The other new elements are
 simply defined in the same way as any others</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">To complete the job, full tag descriptions for the  new elements added
+<p>To complete the job, full tag descriptions for the  new elements added
 should be provided. Here is a sample description for the
 <gi>ident</gi> element:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<tagDoc><gi>ident</gi>
