@@ -5,42 +5,40 @@ $Date$
 $Author$
 -->
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="atts" ident="att.datePart">
-<gloss>attributes for temporal expression</gloss>
-<desc>attributes for component elements of temporal expressions involving
-  dates and time</desc>
+  <desc>attributes for elements describing temporal expressions</desc>
   <attList xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0">
     <attDef ident="value" usage="opt">
-	<equiv/>
-	<desc>supplies the value of a date or time in a standard form.</desc><desc version="2006-10-28" xml:lang="ja">日付や時間を，標準形式で示す．</desc>
-	<datatype>
-	  <rng:ref name="data.temporal"/>
-	</datatype>
-	<valDesc>Any string representing a valid date, time, or one of a variety of combinations.</valDesc>
-	<exemplum>
-	  <p>Examples of W3C date, time, and date &amp; time formats.</p>
-	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
-	    <date value="1945-10-24">24 Oct 45</date>
-	    <date value="1996-09-24T07:25Z">September 24th, 1996 at 3:25 in the morning</date>
-	    <time value="1999-01-04T20:42-05:00">Jan 4 1999 at 8 pm</time>
-	    <time value="14:12:38">fourteen twelve and 38 seconds</time>
-	    <date value="1962-10">October of 1962</date>
-	    <date value="--06-12">June 12th</date>
-	    <date value="---01">the first of each month</date>
-	    <date value="--08">August</date>
-	    <date value="2006">MMVI</date>
-	  </egXML>
-	</exemplum>
-	<exemplum>
-	  <p>Examples of time formats with reduced precision.</p>
-	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
-	    <date value="2006-05-18T10:03+09:00">a few minutes after ten in the morning on Thu 18 May</date>
-	    <time value="03:00">3 A.M.</time>
-	    <time value="12">around noon</time>
-	  </egXML>
-	  <p>Software intended for use with W3C XML Schema datatypes
-	  may be unable to properly process times expressed with
-	  reduced precision.</p>
-	</exemplum>
+      <desc>supplies the value of a date or time in a standard form.</desc>
+      <desc version="2006-10-28" xml:lang="ja">日付や時間を，標準形式で示す．</desc>
+      <datatype>
+	<rng:ref name="data.temporal"/>
+      </datatype>
+      <valDesc>Any string representing a valid date, time, or one of a variety of combinations.</valDesc>
+      <exemplum>
+	<p>Examples of W3C date, time, and date &amp; time formats.</p>
+	<egXML xmlns="http://www.tei-c.org/ns/Examples">
+	  <date value="1945-10-24">24 Oct 45</date>
+	  <date value="1996-09-24T07:25Z">September 24th, 1996 at 3:25 in the morning</date>
+	  <time value="1999-01-04T20:42-05:00">Jan 4 1999 at 8 pm</time>
+	  <time value="14:12:38">fourteen twelve and 38 seconds</time>
+	  <date value="1962-10">October of 1962</date>
+	  <date value="--06-12">June 12th</date>
+	  <date value="---01">the first of each month</date>
+	  <date value="--08">August</date>
+	  <date value="2006">MMVI</date>
+	</egXML>
+      </exemplum>
+      <exemplum>
+	<p>Examples of time formats with reduced precision.</p>
+	<egXML xmlns="http://www.tei-c.org/ns/Examples">
+	  <date value="2006-05-18T10:03+09:00">a few minutes after ten in the morning on Thu 18 May</date>
+	  <time value="03:00">3 A.M.</time>
+	  <time value="12">around noon</time>
+	</egXML>
+	<p>Software intended for use with W3C XML Schema datatypes
+	may be unable to properly process times expressed with
+	reduced precision.</p>
+      </exemplum>
       <exemplum>
 	<p>A usage example of <gi>date</gi>.</p>
 	<egXML xmlns="http://www.tei-c.org/ns/Examples">This list
@@ -74,9 +72,6 @@ $Author$
 	  minutes &amp; seconds may be omitted — e.g.,
 	  <val>12</val> and <val>12:00</val> are permitted to indicate
 	  noon, in addition to <val>12:00:00</val>)</item>
-<!--	  <item>a duration in the format defined in the section
-	  <title>Duration / Format with designators</title> of ISO
-	  8601.</item> -->
 	</list>
 	</p>
 	<p>The value of <att>value</att> is constrained to be in one
@@ -88,80 +83,21 @@ $Author$
       </remarks>
     </attDef>
     <attDef ident="dur" usage="opt">
-      <equiv/>
       <gloss>duration</gloss>
       <desc>indicates the length of this element in time.</desc>
-      <datatype><rng:data type="duration"/></datatype>
-	<exemplum>
-	  <p>Examples of W3C durations.</p>
-	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
-	    <distance dur="PT45M">forty-five minutes</distance>
-	    <distance dur="P1DT12H">a day and a half</distance>
-	    <distance dur="P7D">a week</distance>
-	    <distance dur="PT0.02S">20 ms</distance>
-	  </egXML>
-	</exemplum>
-	<remarks>
-	  <p>If both <att>value</att> and <att>dur</att> are
-	  specified, the values should be interpreted as indicating a
-	  span of time by its starting time (or date) and duration.
-	  These Guidelines do not provide a method for expressing a
-	  time range by a duration and its ending time.</p>
-	</remarks>
+      <datatype><rng:ref name="data.duration"/></datatype>
     </attDef>
-<!--    <attDef ident="key">
-	<equiv/>
-	<desc>provides an alternative identifier for the object being named,
-		such as a database record key.</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
-      <valDesc>any string</valDesc>
-      <remarks>
-        <p>For example and discussion, see the description of the
-		  <ident>names</ident> class.</p>
-      </remarks>
-    </attDef> -->
-<!--    <attDef ident="reg">
-	<equiv/>
-	<desc>gives a normalized or regularized form of the name used.</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
-      <valDesc>Any string of characters.</valDesc>
-    </attDef>-->
-<!--    <attDef ident="type" usage="opt">
-	<equiv/>
-	<desc>characterizes the element in some sense, using any convenient
- classification scheme or typology.</desc>
-      <datatype><rng:ref name="data.word" xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
-      <valDesc>any string of characters. The range of permissible values
-is application
- dependent.</valDesc>
-    </attDef> -->
-<!--    <attDef ident="full" usage="opt">
-	<equiv/>
-	<desc>indicates whether the date element is given in full, as
-		an abbreviation or simply as an initial</desc>
-      <defaultVal>yes</defaultVal>
-      <valList type="closed">
-        <valItem ident="yes">
-          <equiv/>
-          <gloss>the temporal expression is spelled out in full.</gloss>
-        </valItem>
-        <valItem ident="abb">
-          <equiv/>
-          <gloss>the temporal expression is given in an abbreviated form.</gloss>
-        </valItem>
-        <valItem ident="init">
-          <equiv/>
-          <gloss>the temporal expression is abbreviated using the initial characters.</gloss>
-        </valItem>
-      </valList>
-    </attDef> -->
   </attList>
   <remarks>
-    <p>In providing a <soCalled>regularized</soCalled> form, no
-	  claim is made that the form in the source text is incorrect; the
-	  regularized form is simply that chosen as the main form for purposes
-	  of unifying variant forms under a single heading.
-	</p>
+    <p>If both <att>value</att> and <att>dur</att> are specified, the
+    values should be interpreted as indicating a span of time by its
+    starting time (or date) and duration. These Guidelines do not
+    provide a method for expressing a time range by a duration and its
+    ending time.</p>
+    <p>In providing a <soCalled>regularized</soCalled> form, no claim
+    is made that the form in the source text is incorrect; the
+    regularized form is simply that chosen as the main form for
+    purposes of unifying variant forms under a single heading.</p>
   </remarks>
   <listRef>
     <ptr target="#NDDATE"/>

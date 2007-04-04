@@ -5,26 +5,44 @@ $Date$
 $Author$
 -->
 <macroSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tei" type="dt" ident="data.duration">
-<gloss/>
-<desc>defines the range of attribute values available for
-representation of a duration in time</desc>
-<content>
-    <rng:data type="duration"/> 
-<!--    <rng:data type="token">
-      <rng:param name="pattern">
-         [+-]?[0-9]+(\.[0-9]*)? \s*
-	 (y((ea)?r)?|mon(th)?|w((ee)?k)?|d|h|min|s|ms|&#xB5;s|ns|ps
-      </rng:param>
-    </rng:data>
-  </rng:choice>-->
-</content>
-<remarks>
-    <p>A duration is expressed as a seqence of digit-letter pairs, preceded by the
-    letter P; the letter gives the unit and may be Y (year), M
-    (month), D (day), H (hour) M (minute) or S (second). If a duration
-    includes both hours, minutes or seconds, and days, hour or
-    minutes, the character T must be used to separate the "time" part
-    of the duration from the "day" part. This scheme is defined in ISO
-     8601.</p>
-</remarks>
+  <desc>defines the range of attribute values available for representation of a duration in time</desc>
+  <content>
+    <rng:data type="duration"/>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <time dur="PT45M">forty-five minutes</time>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <date dur="P1DT12H">a day and a half</date>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <date dur="P7D">a week</date>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <time dur="PT0.02S">20 ms</time>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>A duration is expressed as a seqence of number-letter pairs,
+    preceded by the letter P; the letter gives the unit and may be Y
+    (year), M (month), D (day), H (hour), M (minute), or S (second),
+    in that order. The numbers are all unsigned integers, except for
+    the <code>S</code> number, which may have a decimal component
+    (using <code>.</code> as the decimal point). If any number is
+    <mentioned>0</mentioned>, then that number-letter pair may be
+    omitted. If any of the H (hour), M (minute), or S (second)
+    number-letter pairs are present, then the separator <code>T</code>
+    must precede the first <soCalled>time</soCalled> number-letter
+    pair.</p>
+    <p>For complete details, see the <ref
+    target="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/#duration">W3C
+    specification</ref>.</p>
+  </remarks>
 </macroSpec>
