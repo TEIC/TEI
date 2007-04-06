@@ -9,13 +9,7 @@ $Author$
      xmlns="http://www.tei-c.org/ns/1.0">
 <head>Default Text Structure</head>
 <p>This chapter describes the default high-level structure for TEI
-documents.  <!-- The majority of the different base modules described
-in part II simply embed the framework defined in this chapter while a
-few redefine it with some minor modifications.  This chapter is
-therefore relevant to every kind of TEI document.  For further details
-on the overall structure of the TEI document type definitions, in
-particular the use of base and additional modules, see chapter <ptr
-target="#ST"/>.--> A full TEI document combines metadata describing
+documents. A full TEI document combines metadata describing
 it, represented by a <gi>teiHeader</gi> element, with the document
 itself, represented by a <gi>text</gi> element. This basic pair is
 represented by a <gi>TEI</gi> element. The <gi>teiHeader</gi> element
@@ -75,66 +69,57 @@ elements:
  </p>
 <p>The overall structure of a unitary text is:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><TEI>
-  <teiHeader>  </teiHeader>
+  <teiHeader> <!-- .... --> </teiHeader>
   <text>
     <front>
+<!-- front matter of copy text, if any, goes here -->
     </front>
     <body>
+<!-- body of copy text goes here -->
     </body>
     <back>
+<!-- back matter of copy text, if any, goes here -->
     </back>
   </text>
  </TEI></egXML></p>
 <p>The overall structure of a composite text made up of two unitary
 texts is:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><TEI>
-  <teiHeader>  </teiHeader>
+  <teiHeader>   <!-- .... --> </teiHeader>
   <text>
     <front>
+<!-- front matter for composite text -->
     </front>
     <group>
       <text>
         <front>
+<!-- front matter of first unitary text, if any -->
         </front>
         <body>
+<!-- body of first unitary text -->
         </body>
         <back>
+<!-- back matter of first unitary text, if any -->
         </back>
       </text>
       <text>
         <body>
+<!-- body of second unitary text -->
         </body>
       </text>
     </group>
     <back>
+<!-- back matter for composite text, if any -->
     </back>
   </text>
  </TEI></egXML>
  </p>
 <p>Finally, a <gi>floatingText</gi> element is provided for the case
-where one text is embedded within another without contributing to
+where one text is contained by another, but does not contribute to
 its hierarchical organization, for example because it is quoted or
-embedded within it. In the following structure for example, the
-<q>play within the play</q> structure has been represented by use of
-this element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><TEI>
-  <teiHeader>  </teiHeader>
-  <text><body>
-    <div type="act">
-      <sp> <p>Hush, the players begin...</p></sp>
-      <floatingText type="pwp">
-	<body>
-	  <div type="act">
-	  <sp><l>In Athens our tale takes place ....</l></sp>
-	  <!-- ... rest of nested act here -->
-	  </div>
-	</body>
-      </floatingText>
-      <sp><p>Now that the play is finished ...</p></sp>
-    </div>
-</body></text></TEI>
-</egXML>
-</p>
+embedded within it. This is useful in such common literary contexts as
+the <q>play within a play</q> or the narrative interrupted by (often
+deeply nested) multiple narratives. </p>
 <p>Each of these elements is further described in the following
 subsections. The elements <gi>text</gi>, <gi>body</gi>,
 <gi>group</gi>, and <gi>floatingText</gi> are
@@ -196,7 +181,7 @@ hierarchy, the largest such division being <q>div1</q>, any subdivision
 within it being <q>div2</q>, any further sub-sub-division being
 <q>div3</q> and so on.  Un-numbered divisions are simply named
 <gi>div</gi>, and allowed to nest recursively to indicate their
-hierarchic depth.  The two styles may <emph>not</emph> be combined
+hierarchic depth.  The two styles must <emph>not</emph> be combined
 within a single <gi>front</gi>, <gi>body</gi> or <gi>back</gi> element.
  </p>
 <div type="div3" xml:id="DSDIV1"><head>Un-numbered Divisions</head>
@@ -212,14 +197,18 @@ composed of two chapters, might be represented as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><body>
   <div type="part" n="1">
     <div type="chapter" n="1">
-    </div>
+      <!-- text of part 1, chapter 1 -->
+ </div>
     <div type="chapter" n="2">
+      <!-- text of part 1, chapter 2 -->
     </div>
   </div>
   <div type="part" n="2">
     <div n="1" type="chapter">
+      <!-- text of part 2, chapter 1 -->
     </div>
     <div n="2" type="chapter">
+      <!-- text of part 2, chapter 2 -->
     </div>
   </div>
 </body></egXML>
@@ -254,19 +243,24 @@ level (in this case, <gi>div4</gi>).</p>
 <p>Using this style, the body of a text containing two parts, each
 composed of two chapters, might be represented as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><body>
-  <div1 type="Part" n="1">     
-    <div2 type="Chapter" n="1">
-    </div2>     
-    <div2 type="Chapter" n="2">
-    </div2>     
+  <div1 type="part" n="1">
+    <div2 type="chapter" n="1">
+      <!-- text of part 1, chapter 1 -->
+ </div2>
+    <div2 type="chapter" n="2">
+      <!-- text of part 1, chapter 2 -->
+    </div2>
   </div1>
-  <div1 type="Part" n="2">
-    <div2 type="Chapter" n="1">
-    </div2>     
-    <div2 type="Chapter" n="2">
-    </div2> 
+  <div1 type="part" n="2">
+    <div2 n="1" type="chapter">
+      <!-- text of part 2, chapter 1 -->
+    </div2>
+    <div2 n="2" type="chapter">
+      <!-- text of part 2, chapter 2 -->
+    </div2>
   </div1>
 </body></egXML>
+
 <!-- Changed example:  the point of the div1/div0             -->
 	<!-- alternation in the body is to allow the scheme to        -->
 	<!-- handle Chapters at a consistent level with or without    -->
@@ -278,7 +272,8 @@ composed of two chapters, might be represented as follows:
 	<!-- and comments. -msm                                       -->
  </p>
 <p>Formal definitions for these elements are as follows:
-<specGrp xml:id="DDSDIVN" n="Numbered divisions">
+<specGrp xml:id="DDSDIVN" >
+<!--n="Numbered divisions"-->
 &div1;
 &div2;
 &div3;
@@ -293,7 +288,7 @@ composed of two chapters, might be represented as follows:
 element, all hierarchic subdivisions must be marked using
 either nested <gi>div</gi> elements, or <gi>div1</gi>, <gi>div2</gi> etc.
 elements nested as appropriate; the two
-styles may <emph>not</emph> be mixed.
+styles must <emph>not</emph> be mixed.
 </p>
 <p>The choice between numbered and un-numbered divisions will depend
 to some extent on the complexity of the material: un-numbered
@@ -351,6 +346,7 @@ and the <gi>p</gi> element discussed in section <ptr target="#COPA"/>.
       by the bye of Colley Cibber and others.</head>
     <p>It is a trite but true observation, that examples work more forcibly on
       the mind than precepts:  ... </p>
+<!-- remainder of chapter 1 here -->
   </div2>
   <div2 type="chapter" n="2" xml:id="JA0102">
     <head>Of Mr. Joseph Andrews, his birth, parentage, education, and great
@@ -358,7 +354,9 @@ and the <gi>p</gi> element discussed in section <ptr target="#COPA"/>.
     <p>Mr. Joseph Andrews, the hero of our ensuing history, was esteemed to
       be the only son of Gaffar and Gammar Andrews, and brother to the
       illustrious Pamela, whose virtue is at present so famous ... </p>
+<!-- remainder of chapter 2 here -->
   </div2>
+<!-- remaining chapters of Book 1 here -->
   <trailer>The end of the first Book</trailer>
 </div1> 
 <div1 type="book" n="II" xml:id="JA0200">
@@ -418,7 +416,7 @@ where material has been omitted:
   <p> ... </p>
 </div></egXML>
 The
-<gi>sampling</gi> element in the TEI Header should also be used to
+<gi>samplingDecl</gi> element in the TEI Header should also be used to
 record the principles underlying the selection of incomplete samples, as
 further described in section <ptr target="#HD52"/>.
  </p>
@@ -471,8 +469,9 @@ brief quotation, or a salutation such as one finds at the start of a
 letter.  They may also conclude with a brief trailer, byline, or
 signature. Elements which may appear in this way, either at the start
 or at the end of a text division proper, are regarded as forming a
-class, known as <term>divtop</term> or <term>divbot</term>
-respectively.
+class, known as <term>model.divWrapper</term>; a further class, known
+as <term>model.divWrapper.bottom</term> defines similar elements which
+can appear only at the end of divisions.
  </p>
 <p>The following special-purpose elements are provided to
 mark features which may appear only at the start of a division:
@@ -554,22 +553,22 @@ element may be more appropriate.
 <p>The <gi>trailer</gi> element, which can appear at the end of a
 division only, is used to mark any heading-like feature appearing in
 this position, as in this example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div1 type="book" n="I"><head>In the name of Christ here begins the
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="book" n="I"><head>In the name of Christ here begins the
     first book of the ecclesiastical history of Georgius Florentinus,
     known as Gregory, Bishop of Tours.</head>
-  <div2><head>Chapter-Headings</head>
-    <list>
-    </list>
-  </div2>
-  <div2><head>In the name of Christ here begins Book I of the history.</head>
+<div><head>Chapter Headings</head>
+<list>
+<!-- list of chapter heads omitted -->
+</list></div>
+  <div><head>In the name of Christ here begins Book I of the history.</head>
     <p>Proposing as I do ...</p>
     <p>From the Passion of our Lord until the death of Saint Martin four
       hundred and twelve years passed.</p>
     <trailer>Here ends the first Book, which covers five thousand, five
       hundred and ninety-six years from the beginning of the world down
       to the death of Saint Martin.</trailer>
-  </div2>
-</div1></egXML>
+  </div>
+</div></egXML>
  </p>
 </div>
 <div type="div3" xml:id="DSOC"><head>Openers and Closers</head>
@@ -656,8 +655,7 @@ in some hurry, as well as fright, what I must ever be,</p>
 </div></egXML>
 <!-- S. Richardson 'Clarissa', (Dent, EML, vol 1, p62,64 -->
  </p>
-<p>For further discussion of the encoding of names of persons and places
-and of dates, see section <ptr target="#CONADA"/> and chapter <ptr target="#ND"/>.
+<p>For further discussion of the encoding of dates and of names of persons and places, see section <ptr target="#CONADA"/> and chapter <ptr target="#ND"/>.
  </p></div>
 <div type="div3" xml:id="DSAE"><head>Arguments and Epigraphs</head>
 <p>The <gi>argument</gi> element may be used to encode the prefatory
@@ -723,17 +721,17 @@ following example:
 to section <ptr target="#COHQQ"/>.
  </p></div>
 <div type="div3" xml:id="DSCO"><head>Content of Textual Divisions</head>
-<p>Other than its initial sequence of <term>divtop</term> elements,
-and its closing sequence of <term>divbot</term> elements, every
+<p>Other than elements from the <term>model.divWrapper</term> or
+<term>model.divWrapper.bottom</term> classes, every
 textual division (numbered or un-numbered) consists of a sequence of
 ungrouped <term>macro.component</term> elements (see <ptr target="#STEC"/>).  
-The actual elements available will depend on the base
-module in use; in all cases, at least the component-level structural
+The actual elements available will depend on the 
+modules in use; in all cases, at least the component-level structural
 elements defined in the core will be available (paragraphs, lists,
 dramatic speeches, verse lines and line groups etc.).  If the drama
-base has been selected, then additionally the low level dramatic
+module has been selected, then additionally the low level dramatic
 structural elements (speeches or stage directions, as defined in
-chapter <ptr target="#DR"/>) will be available.  If the dictionary base
+chapter <ptr target="#DR"/>) will be available.  If the dictionary module
 is in use, then dictionary entries, related entries, etc. (as defined
 in chapter <ptr target="#DI"/>) will also be available; if the module
 for transcribed speech is in use, then utterances, pauses, vocals,
@@ -741,19 +739,13 @@ kinesics, etc., as defined in chapter <ptr target="#TSBA"/> will be
 available; and so on.
  </p>
 <p>Where a text contains low level elements from more than one
-module<!-- , two
-options are available.  The first option, selected by the
-<soCalled>mixed</soCalled> base, allows for low level structural
-elements from any or all of the selected bases--> these may appear at any point.
-<!--The second option, selected by the <soCalled>general</soCalled> base,
-allows for low level structural elements from different bases to appear
-in different textual divisions of the same text, but requires that any
-one division use elements from only one base.  For further information,
-refer to section <ptr target="#STCO"/>.-->
+module these may appear at any point; there is no requirement that
+elements from the same module be kept together.
  </p>
 <p>The elements discussed in this section are formally defined as
 follows:
-<specGrp xml:id="DDSDIVX" n="Tags for start and end of divisions">
+<specGrp xml:id="DDSDIVX">
+<!-- n="Tags for start and end of divisions"-->
 &trailer;
 &byline;
 &dateline;
@@ -767,15 +759,17 @@ follows:
 </p>
 </div> 
 </div>
-<div type="div2" xml:id="DSGRP"><head>Grouped or Floating Texts</head>
+<div type="div2" xml:id="DSGRPF"><head>Grouped and Floating Texts</head>
 <p>The <gi>group</gi> element should be used to represent a collection
 of independent texts which is to be regarded as a single unit for
 processing or other purposes.  The <gi>floatingText</gi> element
-should be used to represent an independent text appearing at an
-arbitrary point within a text but not forming part of its hierarchic
-structure. 
+should be used to represent an independent text which interrupts the
+text containing it at any point but after which the
+surrounding text resumes.
 <specList><specDesc key="group"/><specDesc key="floatingText"/></specList>
-
+</p>
+<div type="div3" xml:id="DSGRP"><head>Grouped Texts</head>
+<p>
 Examples of composite texts which should be represented using the
 <gi>group</gi> element include
 anthologies and other collections. The presence of common front matter
@@ -788,6 +782,7 @@ useful in other circumstances too.
 short stories might be encoded as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><TEI>
   <teiHeader>
+<!-- header information for the whole collection -->
   </teiHeader>
   <text>
     <front>
@@ -796,6 +791,7 @@ short stories might be encoded as follows:
         </titlePart></docTitle>
       <docImprint>First published in <title>The Strand</title>
         between July 1891 and December 1892</docImprint>
+<!-- any other front matter specific to this collection -->
     </front>
     <group>
       <text>
@@ -809,6 +805,7 @@ short stories might be encoded as follows:
         <body>
           <p>To Sherlock Holmes she is always
             <emph>the</emph> woman. ... </p>
+<!-- remainder of A Scandal in Bohemia here -->
         </body>
       </text>
       <text>
@@ -819,7 +816,7 @@ short stories might be encoded as follows:
           <byline>By A. Conan Doyle.</byline>
         </front>
         <body>
-          <p> </p>
+          <!-- text of The Red Headed League here -->
         </body>
       </text>
       <text>
@@ -831,15 +828,18 @@ short stories might be encoded as follows:
           <byline>By A. Conan Doyle.</byline>
         </front>
         <body>
-          <p><q>“To the man who loves art for its
-            own sake,&amp;cdq;</q> remarked Sherlock Holmes ...
+          <p><q>To the man who loves art for its
+            own sake,</q> remarked Sherlock Holmes ...
+
+<!-- remainder of The Copper Beeches here -->
+
             ... she is now the head of a private school
             at Walsall, where I believe that she has
             met with considerable success.</p>
         </body>
-      </text> 
+      </text> <!-- end of The Copper Beeches -->
     </group>
-  </text>  
+  </text>  <!-- end of the Adventures of Sherlock Holmes -->
 </TEI></egXML>
 <!-- Original Illustrated Sherlock Holmes (Castle Books, 1989) -->
 </p>
@@ -864,24 +864,25 @@ of fragments, taken from a different manuscript)</item></list>
  </p>
 <p>Each of the three collections published in Crashaw's lifetime has a
 reasonable claim to be considered as a text in its own right, and may
-therefore be encoded as such. It is rather more arbitrary as to whether
-the two posthumous collections should be treated as two groups,
-following the practice of the Muses Library edition. An encoder might
-elect to combine the two into a single group, or simply to treat each
-fragment as an ungrouped unitary text.
+therefore be encoded as such. It is rather more arbitrary as to
+whether the two posthumous collections should be treated as two
+groups, following the practice of the <title>Muses Library</title>
+edition. An encoder might elect to combine the two into a single
+group, or simply to treat each fragment as an ungrouped unitary text.
  </p>
-<p>The Muses Library edition reprints the whole of each of the three
-original collections, including their original front matter (title
-pages, dedications etc.). These should be encoded using the
-<gi>front</gi> element and its constituents (on which see further
-section <ptr target="#DSFRONT"/>), while the body of each collection should
-be encoded as a single <gi>group</gi> element. Each individual poem
-within the collections should be encoded as a distinct <gi>text</gi>
-element. The beginning of the whole collection would thus appear as
-follows (for further discussion of the use of the elements <gi>div</gi>
-and <gi>lg</gi> for textual subdivision of verse, see section <ptr target="#COVE"/>
-and chapter <ptr target="#VE"/>):
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><text>
+<p>The <title>Muses Library</title> edition reprints the whole of each
+of the three original collections, including their original front
+matter (title pages, dedications etc.). These should be encoded using
+the <gi>front</gi> element and its constituents (on which see further
+section <ptr target="#DSFRONT"/>), while the body of each collection
+should be encoded as a single <gi>group</gi> element. Each individual
+poem within the collections should be encoded as a distinct
+<gi>text</gi> element. The beginning of the whole collection would
+thus appear as follows (for further discussion of the use of the
+elements <gi>div</gi> and <gi>lg</gi> for textual subdivision of
+verse, see section <ptr target="#COVE"/> and chapter <ptr
+target="#VE"/>): <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><text>
   <front>
     <titlePage>
       <docTitle><titlePart>The poems of Richard Crashaw</titlePart></docTitle>
@@ -929,24 +930,29 @@ and chapter <ptr target="#VE"/>):
               <l>What bright soft thing is this</l>
               <l>Sweet Mary, thy fair eyes' expense?</l>
             </lg> </body> </text> 
+	    <!-- remaining poems of the Steps to the Temple appear
+	    here, each tagged as a distinct text element -->
       </group>  
-      <back>  </back>
+
+      <back> <!-- back matter for the Steps to the Temple -->  </back>
     </text>
-    <text> 
+    <text> <!-- start of Carmen deo Nostro -->
       <front>  </front>
       <group>
         <text>  </text>
         <text>  </text>
+	<!-- more texts here -->
       </group>
     </text>
-    <text> 
+    <text> <!-- start of The Delights of the Muses -->
       <group>
         <text>  </text>
         <text>  </text>
+	<!-- more texts here -->
       </group>
     </text>
   </group>
-  <back>  </back>
+  <back> <!-- back matter for the whole collection --> </back>
 </text></egXML>
  </p>
 <p>The <gi>group</gi> element may be used in this way to encode any kind
@@ -991,32 +997,39 @@ composite texts making up a single section of the work is likewise
 treated, together with its prefatory essay, as a single <gi>group</gi>
 within the work.  Schematically:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><text> 
+<!-- the whole anthology -->
   <front>
+<!-- title page, acknowledgments, introductory essay -->
   </front>
-  <group> 
+  <group> <!-- body of anthology starts here -->
     <group><head>The Beginnings</head>
+       <!-- sequence of texts or groups -->
     </group>
-    <group> 
-      <text>  </text>
-      <group>      
-        <text>      </text>
-        <text>      </text>
-        <text>      </text>
-      </group>     
-      <text>     
-        <front>   </front>
+    <group> <!-- The Eighteenth Century and the Grand Tour -->
+      <text> <!-- prefatory essay by editor --> </text>
+      <group> <!-- Section on Lady Mary Wortley Montagu starts -->     
+        <text> <!-- biographical notice by editor -->     </text>
+        <text>  <!-- first letter -->    </text>
+        <text>  <!-- second letter -->    </text>
+	<!-- ... -->
+      </group>     <!-- end of Montagu section -->
+      <text>     <!-- single text by Jonathan Swift starts -->
+        <front> <!-- biographical notice by editor -->  </front>
         <body>    </body>
-      </text>    
-      <group>  
-        <text>  </text>
-        <text>  </text>
-        <text>  </text>
-      </group> 
-    </group> 
+      </text>  <!-- end of Swift section -->  
+      <group>  <!-- Section on Alexander Pope starts -->
+        <text> <!-- biographical notice by editor --> </text>
+        <text>  <!-- first poem --> </text>
+        <text>  <!-- second poem --> </text>
+      </group> <!-- end of Pope section -->
+    <!-- ... -->
+    </group> <!-- end of 18th century section --> 
     <group><head>The Heyday</head>
+    <!-- texts and subgroups -->
     </group>
-  </group> 
-  <back>  </back>
+<!-- ... -->
+  </group> <!-- end of the anthology proper -->
+  <back> <!-- back matter for anthology --> </back>
 </text> </egXML>
  </p>
 <p>Note that the editor's introductory essays on each author may be
@@ -1030,13 +1043,13 @@ by Swift and one by the editor, or by treating the Montagu and Pope
 sections as <gi>text</gi> elements containing the editor's essays as
 front matter. Marked in the second way, the Pope section of the book
 would look like this:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">      <text>     
-        <front>   </front>
-        <group>
-          <text>  </text>
-          <text>  </text>
-        </group>
-      </text>    </egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><text>  <!-- Section on Alexander Pope starts -->
+        <front> <!-- biographical notice by editor --> </front>
+	<group>
+	  <text>  <!-- first poem --> </text>
+        <text>  <!-- second poem --> </text>
+      </group>
+      </text> <!-- end of Pope section-->   </egXML>
  </p>
 <p>The essays on <q>The Eighteenth Century and the Grand Tour</q> and
 other larger sections could also be tagged as <soCalled>front</soCalled>
@@ -1046,9 +1059,7 @@ elements rather than <gi>group</gi> elements.
 <p>Where, as in this case, an anthology contains different kinds of
 text (for example, mixtures of prose and drama, or transcribed speech
 and dictionary entries, or letters and verse), the elements to be
-encoded may well need to be drawn from more than one of the modules
-described in part II. <!-- In such a situation, either the mixed or
-the general base should be specified, as further described in section <ptr target="#STCO"/>.-->
+encoded will of course  be drawn from more than one  module.
 The elements provided by the core module
 described in chapter <ptr target="#CO"/> should however prove adequate
 for most simple purposes, where prose, drama, and verse are combined
@@ -1097,19 +1108,121 @@ For more information on the use of the <gi>quote</gi> and <gi>bibl</gi>
 elements, see sections <ptr target="#COHQQ"/> and <ptr target="#COBI"/>
 respectively.
  </p>
-<p>Where one or more whole texts are embedded within other texts,
-without necessarily forming a composite, the encoder may also choose
-to represent the nested structure directly. The <gi>floatingText</gi>
-element is a member of the <ident type="class">model.pLike</ident>
-class, and can thus appear within any division level element in the
-same way as a paragraph. For example, texts such as the
-<title>Decameron</title> or the <title>Arabian Nights</title> might be
-regarded as sequences of discrete texts embedded within another single
-text, the framing narrative, rather than as groups of discrete texts
-in which the fragments of framing narrative are regarded as front
-matter.
+
+</div>
+<div xml:id="DSFLT"><head>Floating Texts</head>
+<p>An important characteristic of the unitary or composite text
+structures discussed so far is that they can be regarded as forming what is
+mathematically known as a <term>tesselation</term> covering the whole
+of the available text (or text division) at each hierarchic
+level. Just as an XML document has a single root element containing
+a single tree, each node of which forms a properly nested sub-tree, so
+it seems natural to think of the internal structure of a text as
+decomposable hierarchically into subparts, each of which is a
+properly nested subtree. While this is undoubtedly true of a large
+number of documents, it is not true of all. In particular, it is not
+true of texts which are only partly  tesselated at a given level. For
+example, if a text A is contained by text B in such a way that part of
+B precedes A and part follows it, we cannot tesselate the whole of B.
+In such a case, we say that text A is a <q>floating</q> text. </p>
+
+<p>The <gi>floatingText</gi> element is a member of the <ident
+type="class">model.divPart</ident> class, and can thus appear within
+any division level element in the same way as a paragraph. For
+example, texts such as the <title>Decameron</title> or the
+<title>Arabian Nights</title> might be regarded as containing many
+floating texts embedded within another single text, the framing
+narrative, rather than as groups of discrete texts in which the
+fragments of framing narrative are regarded as front or back matter.
 </p>
-<!-- more examples and discussion needed here -->
+
+<p>As an example, we consider a 17th century text <title>The Lining to
+the <hi>Patch-Work Screen</hi></title>, by Jane Edwards. This 
+lengthy narrative contains nearly a hundred distinct <q>tales</q>
+embedded (as the title suggests) in a single patchwork. The work
+begins by introducing the central character, Galecia, but within a few pages 
+are launches into a distinct narrative, the story of Captain Manly:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<p>Galecia one Evening setting alone in her Chamber by a clear Fire,
+and a clean Hearth ...  reflected on the Providence of our
+All-wise and Gracious Creator.... </p>
+<p>She was thus ruminating, when a Gentleman enter'd the Room, the
+Door being a jar...  calling for a Candle, she beg'd a thousand
+Pardons, engaged him to sit down, and let her know, what had so long
+conceal'd him from her Correspondence.
+</p>
+<pb n="5"/>
+<floatingText><body><head>The Story of <hi>Captain Manly</hi></head>
+<p>Dear Galecia, said he, though you partly know the loose, or rather
+lewd Life that I led in my Youth; yet I can't forbear relating part of
+it to you by way of Abhorrence...
+<!-- Captain Manly's story here -->
+I had lost and spent all I had in the World; in which I verified the
+Old Proverb, That a Rolling Stone never gathers Moss,
+</p></body></floatingText>
+<pb n="37"/>
+</egXML>
+</p>
+<p>Following the conclusion of Captain Manly's tale, we are
+returned to Galecia, and almost immediately after that into two further
+stories. <!--This second story opens within a paragraph, to cope with which
+we could use the sample and part attribute discussed above for div -->
+However, the Galecia narrative returns between each of the texts,
+which is why we choose to represent them as <gi>floatingtext</gi>s:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<p>The Gentleman having finish'd his Story, Galecia waited on him to
+the Stairs-head; and at her return, casting her Eyes on the Table, she
+saw lying there an old dirty rumpled Book, and found in it the
+following story: </p>
+<floatingText><body><p> IN the time of the Holy War when
+Christians from all parts went into the Holy Land to oppose the Turks;
+Amongst these there was a certain English Knight...</p>
+<!-- rest of story here -->
+<p>The King graciously pardoned the Knight; Richard was kindly receiv'd
+into his Convent, and all things went on in good order: But from hence
+came the Proverb, We must not strike <hi>Robert</hi> for
+<hi>Richard.</hi></p></body></floatingText>
+<pb n="43"/>      
+<p>By this time Galecia's Maid brought up her Supper; after which she
+cast her Eyes again on the foresaid little Book, where she found the
+following Story, which she read through before she went to bed.
+</p>
+<floatingText><body><head>The Cause of the Moors Overrunning
+<hi>Spain</hi></head>
+<p>King ———— of Spain at his Death, committed the Government of his
+Kingdom to his Brother Don ——— till his little Son should come of
+Age ...</p>
+<p>Thus the little Story ended, without telling what Misery
+befel the King and Kingdom, by the Moors, who over ran the Country for
+many Years after.  To which, we may well apply the Proverb,
+<quote>
+  <l>Who drives the Devil's Stages,</l>
+  <l>Deserves the Devil's Wages</l>
+</quote></p>
+</body></floatingText>
+<p>The reading this Trifle of a Story detained Galecia from her Rest
+beyond her usual Hour; for she slept so sound the next Morning, that
+she did not rise, till a Lady's Footman came to tell her, that his
+Lady and another or two were coming to breakfast with her...
+</p>
+</egXML>
+</p>
+<p>In other multi-narrative texts, the individual nested tales may
+have greater significance than the framing narratives, and it may
+therefore be preferable to treat the fragments of framing narrative as
+front or back matter associated with each nested tale. This is
+commonly done, for example, in texts such as Chaucer's <title>Canterbury
+Tales</title>, where each tale is typically presented with front matter in
+which the teller of the tale is introduced, and back matter in which
+the pilgrims comment on it.</p>
+
+<p>The <gi>floatingText</gi> element should only be used for complete
+texts which form a part of the text being encoded. Where a character
+in one narrative quotes from some other text or narrative, fully or in
+part, the <gi>quote</gi> element discussed in <ptr target="#COHQQ"/>
+should be used instead. </p>
 
 </div>
 <div type="div2" xml:id="DSFRONT"><head>Front Matter</head>
@@ -1127,7 +1240,7 @@ if the original presentation of the work is of no interest, or for
 other reasons; alternatively some or all components of the front matter
 may be thought worth including with the text as components of the
 <gi>front</gi> element.<note place="foot">This decision should be recorded in the
-<gi>sampling</gi> element of the header.</note> With the exception of
+<gi>samplingDecl</gi> element of the header.</note> With the exception of
 the title page, (on which see section <ptr target="#DSTITL"/>), front
 matter should be encoded using the same elements as the rest of a text.
 As with the divisions of the text body, no other specific tags are
@@ -1141,21 +1254,21 @@ handle these values when they occur, without limiting the user to the
 values in this list.</note>
 for the <att>type</att> attribute may be used to distinguish various
 kinds of division characteristic of front matter:
-<list type="gloss"><label><term>preface</term></label>
+<list type="gloss"><label><val>preface</val></label>
 <item>A foreword or preface addressed to
     the reader in which the author or publisher explains the
-    content, purpose, or origin of the text.</item><label><term>ack</term></label>
+    content, purpose, or origin of the text.</item><label><val>ack</val></label>
 <item>A formal declaration of
     acknowledgment by the author in which persons and institutions
-    are thanked for their part in the creation of a text.</item><label><term>dedication</term></label>
+    are thanked for their part in the creation of a text.</item><label><val>dedication</val></label>
 <item>A formal offering or dedication of
-    a text to one or more persons or institutions by the author.</item><label><term>abstract</term></label>
+    a text to one or more persons or institutions by the author.</item><label><val>abstract</val></label>
 <item>A summary of the content of a text as
-    continuous prose.</item><label><term>contents</term></label>
+    continuous prose.</item><label><val>contents</val></label>
 <item>A table of contents, specifying the
     structure of a work and listing its constituents.
     The <gi>list</gi>
-    element should be used to mark its structure.</item><label><term>frontispiece</term></label>
+    element should be used to mark its structure.</item><label><val>frontispiece</val></label>
 <item>A pictorial frontispiece,
     possibly including some text.</item></list>
  </p>
@@ -1297,9 +1410,8 @@ also constitute the element class <ident type="class">model.pLike.front</ident>.
 in this class can appear within a <soCalled>minimal</soCalled>
 <gi>front</gi> element without any need to group them together and
 encode a complete title page.</p>
-<p>Encoders wishing to add new elements to either class may do so by
-modifying or redefining this parameter entity, as further described in
-chapter <ptr target="#MD"/>. Two examples of the use of these elements
+<p>Encoders wishing to add new elements to either class may do so using the
+methods described in section <ptr target="#MD"/>. Two examples of the use of these elements
 follow. First, the title page of the work discussed earlier in this
 section:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><front>
@@ -1346,7 +1458,8 @@ where necessary:
   </docImprint></titlePage></egXML></p>
 <p>Those elements in the above list which are not defined elsewhere have
 the following formal declarations:
-<specGrp xml:id="DDSTPAGE" n="Tags for title pages">
+<specGrp xml:id="DDSTPAGE" >
+<!--n="Tags for title pages"-->
 &titlePage;
 &docTitle;
 &titlePart;
@@ -1383,18 +1496,18 @@ back of a book as well as at the front.  The content model for
 <p>The following suggested values may be used for the <att>type</att>
 attribute on all division elements, in order to distinguish various
 kinds of division characteristic of back matter:
-<list type="gloss"><label><term>appendix</term></label>
+<list type="gloss"><label><val>appendix</val></label>
 <item>An ancillary self-contained section of
 a work, often providing additional but in some sense extra-canonical
-text.</item><label><term>glossary</term></label>
+text.</item><label><val>glossary</val></label>
 <item>A list of terms associated with definition texts
-(<q>glosses</q>): this should be encoded as a <gi>list type="gloss"</gi>
-(see section <ptr target="#COLI"/>).</item><label><term>notes</term></label>
+(<soCalled>glosses</soCalled>): this should be encoded as a <tag>list type="gloss"</tag>
+(see section <ptr target="#COLI"/>).</item><label><val>notes</val></label>
 <item>A section in which textual or
-other kinds of notes are gathered together.</item><label><term>bibliogr</term></label>
+other kinds of notes are gathered together.</item><label><val>bibliogr</val></label>
 <item>A list of bibliographic citations: this should be encoded
-as a <gi>listBibl</gi> (see section <ptr target="#COBI"/>).</item><label><term>index</term></label>
-<item>Any form of index to the work.</item><label><term>colophon</term></label>
+as a <gi>listBibl</gi> (see section <ptr target="#COBI"/>).</item><label><val>index</val></label>
+<item>Any form of index to the work.</item><label><val>colophon</val></label>
 <item>A statement appearing at the end of a book describing the
 conditions of its physical production.</item></list>
  </p>
@@ -1484,7 +1597,4 @@ It is organized as follows:
 <specGrpRef target="#DDSBACK"/>
 <specGrpRef target="#DDSFRONT"/>
 The selection and combination of modules to form a TEI schema is described in
-<ptr target="#STIN"/>.
-</p>
-</div> 
-</div>
+<ptr target="#STIN"/></p></div></div></div>
