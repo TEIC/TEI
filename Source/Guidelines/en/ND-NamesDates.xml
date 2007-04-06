@@ -438,8 +438,11 @@ mountains, lakes or rivers, independently of geo-political units. The
 <gi>geogName</gi> is provided to mark up such names, as an alternative
 to the <gi>placeName</gi> element discussed above. In addition to the
 usual phrase level elements, this element may include the following
-specialized  elements:
-<specList><specDesc key="geog"/><specDesc key="distance"/><specDesc key="offset"/></specList>
+specialized elements:
+<specList>
+  <specDesc key="geog"/>
+  <specDesc key="offset"/>
+</specList>
  </p>
 <p>For example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><geogName key="MIRI1" type="river">Mississippi River</geogName></egXML>
@@ -479,12 +482,11 @@ word or phrase indicating the position of the place being named in
 relation to the referent (e.g. <q>the top of</q>, <q>north of</q>). A
 distance, possibly only vaguely specified, between the referent place
 and the place being indicated may also be present (e.g. <q>10
-miles</q>, <q>near</q>).
- </p>
+miles</q>, <q>near</q>).</p>
 <p>Relative place names may be encoded using the following elements in
 combination with either a <gi>placeName</gi> or a <gi>geogName</gi>
 element.
-<specList><specDesc key="offset"/><specDesc key="distance"/></specList>
+<specList><specDesc key="offset"/><specDesc key="measure"/></specList>
 Some examples of relative place names are:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName key="NRPA1"> 
    <offset>near the top of</offset>
@@ -493,84 +495,25 @@ Some examples of relative place names are:
       <name>Sinai</name>
    </geogName>
 </placeName></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName key="NEPA1">  
-   <distance>10 miles</distance>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName>  
+   <measure>20 km</measure>
    <offset>north of</offset>
    <settlement type="city">Paris</settlement>
+</placeName></egXML> 
+If desired, the distance specified may be
+normalized using the <att>unit</att> and <att>quantity</att>
+attributes of <gi>measure</gi>:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName key="Duncan">
+  <measure unit="km" quantity="17.7">11 miles</measure>
+  <offset>Northwest of</offset>
+  <settlement type="city">Providence</settlement>, <region type="state">RI</region>
 </placeName></egXML>
-<!--
-  Where appropriate, the
-internal structure of the distance component may be tagged using the
-<gi>measure</gi> elements described in  section <ref type='div2'
-target="NDMEAS">, as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><relplace key="NRTA1">
-  <distance type="measured">
-    <measure type="length">
-      <num type="cardinal" value='2'>2</num>
-      <unit>miles</unit>
-    </measure>
-  </distance>
-  <offset reg='east'>
-    east of
-  </offset>
-  <settlement type="city">
-      Tel Aviv
-  </settlement>
-</relplace>
-]]>
-</egXML>
-<p>Some place names combine the distinctive place name
-types discussed above, for example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<![ CDATA[
-<relplace key="LIIT1">
-  <distance type="measured">
-     <measure type='length'>
-       <num type='cardinal' value='2'>2</num>
-       <unit type="area">blocks</unit>
-     </measure>
-   </distance>
-   <offset reg='west'>west of</offset>
-   <name>Little Italy</name>
-</relplace>
-]]>
-]]></egXML>
-<p>Before concluding, it is worth considering a number of
-substantive issues which need to be considered locally before
-tagging a particular document. Firstly, the tags provided here
-are sufficiently powerful to handle a wide variety of
-geographical place names whose internal structure varies
-considerably. The same flexibility, however, allows the encoder
-to treat the same geographical place name differently. Thus,
-the following variations on <q>The Mississippi River</q> are all
-valid but might make local processing different or error prone
-if all were implemented in the same document. The principal
-problem is that the keys which associate the place names with some
-particular place all refer to something slightly different:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<rs key="pln15" type='place'>
-  The Mississippi River
-</rs>
-<name key="pln15" type='place'>
-  The Mississippi River
-</name>
-<rs key="pln15" type='place'>
-The
-  <name>Mississippi
-  </name>
-  <geog>River</geog>
-</rs>
-]]>
-</egXML>
-Suffice it to say here as elsewhere in this volume, the encoder is urged
-to
-be as consistent as possible in applying encoding solutions to a
-given machine-readable text or project.
--->
  </p>
 <p>The internal structure of place names is like that of
 personal names — complex and subject to an enormous amount of variation
 across time and different cultures. The recommendations in this section
 will be adequate for a majority of users and applications. They may
-not, however, satisfy the most specialized inquiries and/or
+not, however, satisfy the most specialized inquiries or
 applications in which case it is recommended that the internal
 structure of place names be represented using feature structures (<ptr target="#FS"/>).
  </p>
@@ -584,7 +527,6 @@ follows:
 &district;
 &settlement;
 &offset;
-&distance;
 &geogName;
 &geog;
 </specGrp>
@@ -1347,10 +1289,9 @@ introduced in section <ptr target="#CONADA"/>:
 ߞ provides a mechanism for more detailed encoding of relative
 dates and times. A <term>relative temporal expression</term> describes
 a date or time with reference to some other (absolute) temporal
-expression, and thus may contain the following elements in addition to
-a <gi>date</gi> or <gi>time</gi>:
+expression, and thus may contain an <gi>offset</gi> element in addition to
+one or more <gi>date</gi> or <gi>time</gi> elements:
 <specList>
-  <specDesc key="distance"/>
   <specDesc key="offset"/>
 </specList>
 </p>
@@ -1379,9 +1320,12 @@ minutes</q>, <q>an hour</q>); and (optionally) an
 between the time or date indicated and the referent expression
 (e.g. <q>of</q> implying after, <q>before</q>, <q>after</q>).
  </p>
-<p>The elements <gi>distance</gi> (or <gi>measure</gi>) and
-<gi>offset</gi> are used to encode these last two components within a
-<gi>date</gi> or <gi>time</gi>. The absolute temporal
+<p>The <soCalled>distance</soCalled> component of a relative temporal
+expression may be encoded as a temporal element in its own right using
+either <gi>date</gi> or <gi>time</gi>, or with
+the more generic <gi>measure</gi> element. A special element,
+<gi>offset</gi>, is provided by this module for encoding the <soCalled>offset</soCalled> component
+of a relative temporal expression. The absolute temporal
 expression contained within the relative expression may be encoded
 with a <gi>date</gi> or <gi>time</gi> element; in turn, those elements may of
 course be relative, and thus contain <gi>date</gi> or <gi>time</gi> elements within themselves.
@@ -1392,7 +1336,7 @@ natural language.</p>
 <p>In the following examples, the <att>value</att> and <att>dur</att> attributes have been used
 to simplify processing of variant forms of expression:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><date value="1786-12-11">     
-   <distance dur="P14D">A fortnight</distance>
+   <date dur="P14D">A fortnight</date>
    <offset>before</offset>
    <date value="1786-12-25" type="holiday">
       Christmas 1786
@@ -1400,7 +1344,7 @@ to simplify processing of variant forms of expression:
 </date></egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">I reached the station
 <time value="14:15:00">
-  <distance dur="P30M">precisely half an hour</distance>
+  <date dur="PT30M0S">precisely half an hour</date>
   <offset>after</offset>
   <date value="13:45:00" type="occasion">the departure of the afternoon train to Boston</date>
 </time></egXML></p>
@@ -1408,7 +1352,7 @@ to simplify processing of variant forms of expression:
 used to indicate a lack of precision in the distance stated:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">In practice, festival candles are lit
 <time>  
-   <distance exact="false">just</distance>
+   <time>just</time>
    <offset>before</offset>
    <time type="occasion">sundown</time>
 </time></egXML>
@@ -1418,7 +1362,7 @@ used to show that <q>my birthday</q> and the cited date are parts of
 the same temporal expression, and hence to disambiguate the phrase
 <q>A week before my birthday on 9th December</q>:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><date value="--12-02">  
-   <distance>A week</distance>
+   <date>A week</date>
    <offset>before</offset>
    <date value="--12-09">    
       <date type="occasion">my birthday</date>
@@ -1427,12 +1371,11 @@ the same temporal expression, and hence to disambiguate the phrase
 </date></egXML>
 The alternative reading of this phrase could be encoded as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><date value="--12-09">  
-   <distance>A week</distance>
+   <date>A week</date>
    <offset>before</offset>
    <date type="occasion" value="--12-16">my birthday</date>
    on <date>9th December</date>
  </date></egXML>
-<!-- really dont want to keep distance : shd be same as measure -->
  </p>
 <p>Where more complex or ambiguous expressions are involved, and
 where it is desirable to make more explicit  the interpretive
