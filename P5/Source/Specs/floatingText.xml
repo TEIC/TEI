@@ -9,10 +9,10 @@ $Author: rahtz $
 <equiv/>
 <gloss/>
 <desc>contains a single text of any kind, whether unitary or
-composite, for example a poem or drama, a collection of essays, a novel,
-a dictionary, or a corpus sample.</desc><desc version="2006-10-28" xml:lang="ja">各種テキストを示す．複合体でも良い．</desc>
+composite, which interrupts the
+text containing it at any point and after which the surrounding text
+resumes.</desc>
   <classes>
-<!--    <memberOf key="model.inter"/>-->
     <memberOf key="model.divPart"/>
     <memberOf key="att.declaring"/>
     <memberOf key="att.typed"/>
@@ -44,32 +44,28 @@ a dictionary, or a corpus sample.</desc><desc version="2006-10-28" xml:lang="ja"
     </rng:group>
   </content>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <floatingText>
-        <front>
-          <docTitle>
-            <titlePart></titlePart>
-          </docTitle>
-        </front>
-        <body>
-        </body>
-      </floatingText>
-    </egXML>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples"><TEI>
+ 	  	   <teiHeader>  </teiHeader>
+ 	  	   <text><body>
+ 	  	     <div type="scene">
+ 	  	       <sp> <p>Hush, the players begin...</p></sp>
+ 	  	       <floatingText type="pwp">
+ 	  	         <body>
+ 	  	           <div type="act">
+ 	  	           <sp><l>In Athens our tale takes place ....</l></sp>
+ 	  	           <!-- ... rest of nested act here -->
+ 	  	           </div>
+ 	  	         </body>
+ 	  	       </floatingText>
+ 	  	       <sp><p>Now that the play is finished ...</p></sp>
+ 	  	     </div>
+ 	  	 </body></text></TEI>
+ 	  	 </egXML>
   </exemplum>
-  <exemplum>
-    <p>A floating text, like a tesselated text, may itself be
-    tesselated, as
-in the following schematic:</p>
-<egXML
-    xmlns="http://www.tei-c.org/ns/Examples"><floatingText><front/><group><text><front/><body/><back/></text><text/></group></floatingText></egXML>
-  </exemplum>
-  <remarks><p>This element should be used to represent a text
-  which is inserted at an arbitrary point within the structure of
-  another, for example as in an embedded or quoted narrative; the
-  <gi>text</gi> by contrast should be used only for the primary text
-  within a <gi>TEI</gi> element, or a constituent of a <gi>group</gi>
-  within such.</p>
+  <remarks>    <p>A floating text has the same content as any other and may thus
+    be interrupted by another floating text, or contain a group of
+    tesselated texts </p>
   </remarks>  <listRef>
-    <ptr target="#DS"/>
-    <ptr target="#CCDEF"/>
+    <ptr target="#DSFLT"/>
   </listRef>
 </elementSpec>
