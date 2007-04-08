@@ -11,15 +11,15 @@ $Author: sbauman $
       <desc>supplies the value of a date or time in a standard form.</desc>
       <desc version="2006-10-28" xml:lang="ja">日付や時間を，標準形式で示す．</desc>
       <datatype>
-	<rng:ref name="data.temporal"/>
+	<rng:ref name="data.temporal.w3c"/>
       </datatype>
       <valDesc>Any string representing a valid date, time, or one of a variety of combinations.</valDesc>
       <exemplum>
 	<p>Examples of W3C date, time, and date &amp; time formats.</p>
 	<egXML xmlns="http://www.tei-c.org/ns/Examples">
 	  <date value="1945-10-24">24 Oct 45</date>
-	  <date value="1996-09-24T07:25Z">September 24th, 1996 at 3:25 in the morning</date>
-	  <time value="1999-01-04T20:42-05:00">Jan 4 1999 at 8 pm</time>
+	  <date value="1996-09-24T07:25:00Z">September 24th, 1996 at 3:25 in the morning</date>
+	  <time value="1999-01-04T20:42:00-05:00">Jan 4 1999 at 8 pm</time>
 	  <time value="14:12:38">fourteen twelve and 38 seconds</time>
 	  <date value="1962-10">October of 1962</date>
 	  <date value="--06-12">June 12th</date>
@@ -28,7 +28,7 @@ $Author: sbauman $
 	  <date value="2006">MMVI</date>
 	</egXML>
       </exemplum>
-      <exemplum>
+      <!-- exemplum>
 	<p>Examples of time formats with reduced precision.</p>
 	<egXML xmlns="http://www.tei-c.org/ns/Examples">
 	  <date value="2006-05-18T10:03+09:00">a few minutes after ten in the morning on Thu 18 May</date>
@@ -38,7 +38,7 @@ $Author: sbauman $
 	<p>Software intended for use with W3C XML Schema datatypes
 	may be unable to properly process times expressed with
 	reduced precision.</p>
-      </exemplum>
+      </exemplum -->
       <exemplum>
 	<p>A usage example of <gi>date</gi>.</p>
 	<egXML xmlns="http://www.tei-c.org/ns/Examples">This list
@@ -48,10 +48,30 @@ $Author: sbauman $
       </exemplum>
       <exemplum>
 	<p>A usage example of <gi>time</gi>.</p>
-	<egXML xmlns="http://www.tei-c.org/ns/Examples">He likes to be
+	<!-- egXML xmlns="http://www.tei-c.org/ns/Examples">He likes to be
 	punctual. I said <q><time value="12">around noon</time></q>,
 	and he showed up at <time value="12:00:00">12 O'clock</time>
-	on the dot.</egXML>
+	on the dot.</egXML -->
+	<egXML xmlns="http://www.tei-c.org/ns/Examples">
+	  <opener>
+	    <dateline>
+	      <placeName>Dorchester, Village,</placeName>
+	      <date value="1828-03-02">March 2d. 1828.</date>
+	    </dateline>
+	    <salute>To Mrs. Cornell,</salute>
+	    Sunday
+	    <time value="12:00:00">noon.</time>
+	  </opener>
+	</egXML>
+	<p>
+	  <note type="cit">
+	    <bibl>
+	      <author><name type="person">Williams, Catherine</name></author>
+	      <title>Fall River, an authentic narrative</title>
+	      <date>1833</date>
+	    </bibl>
+	  </note>
+	</p>
       </exemplum>
       <remarks>
 	<p>The value of the <att>value</att> attribute is a string
@@ -67,19 +87,14 @@ $Author: sbauman $
 	  <item>a combined date and time in any of the standard
 	  formats described by <title>XML Schema Part 2: Datatypes
 	  Second Edition</title></item>
-	  <item>a time or combined date &amp; time in the standard
-	  format as above, but with reduced precision (the minutes or
-	  minutes &amp; seconds may be omitted — e.g.,
-	  <val>12</val> and <val>12:00</val> are permitted to indicate
-	  noon, in addition to <val>12:00:00</val>)</item>
 	</list>
 	</p>
 	<p>The value of <att>value</att> is constrained to be in one
-	of the date, time, or combined date &amp; time formats recognized by the W3C
-	<title>XML Schema Part 2: Datatypes</title> specification,
-	except that times may be expressed with reduced precision.
-	This is true whether the date component (if any) is a
-	Gregorian or a proleptic Gregorian date.</p>
+	of the date, time, or combined date &amp; time formats
+	recognized by the W3C <title>XML Schema Part 2:
+	Datatypes</title> specification. This is true whether the date
+	component (if any) is a Gregorian or a proleptic Gregorian
+	date.</p>
       </remarks>
     </attDef>
   </attList>

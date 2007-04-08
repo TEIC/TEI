@@ -1,15 +1,19 @@
 <!--Copyright 2005 TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
-$Date$
-$Author$
+$Date: 2006-10-27 22:56:06 -0700 (Fri, 27 Oct 2006) $
+$Author: rahtz $
 -->
-<macroSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tei" type="dt" ident="data.temporal">
+<macroSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" type="dt" ident="data.temporal.iso">
   <gloss/>
   <desc>defines the range of attribute values expressing a temporal
-    expression such as a date, a time, or a combination of them</desc>
+  expression such as a date, a time, or a combination of them, that
+  conform to the international standard <title>Data elements and
+  interchange formats – Information interchange – Representation of
+  dates and times</title>.</desc>
   <content>
     <rng:choice>
+      <!-- W3C -->
       <rng:data type="date"/>
       <rng:data type="gYear"/>
       <rng:data type="gMonth"/>
@@ -18,18 +22,21 @@ $Author$
       <rng:data type="gMonthDay"/>
       <rng:data type="time"/>
       <rng:data type="dateTime"/>
+      <!-- time w/ reduced precision -->
       <rng:data type="token">
 	<rng:param name="pattern">(-?[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T)?([01][0-9]|2[0-3])(:[0-5][0-9])?(Z|[+\-]((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?</rng:param>
+      </rng:data>
+      <!-- week date -->
+      <rng:data type="token">
+	<rng:param name="pattern">[0-9]{4}-W[0-9][0-9]?(-[1-7])?</rng:param>
+      </rng:data>
+      <!-- anything at all -->
+      <rng:data type="token">
+	<rng:param name="pattern">[\-0-9PRTWYMDHS/:+]+</rng:param>
       </rng:data>
     </rng:choice>
   </content>
   <remarks>
-    <p>A normalized form of temporal expression conforming to the W3C
-    <title>XML Schema Part 2: Datatypes Second Edition</title>, except
-    that times may be expressed with reduced precision (i.e., to the
-    minute or the hour). Software intended for use with W3C XML Schema
-    datatypes may be unable to properly process times expressed with
-    reduced precision.</p>
     <p>If it is likely that the value used is to be compared with
     another, then a time zone indicator should always be included, and
     only the dateTime representation should be used.</p>
