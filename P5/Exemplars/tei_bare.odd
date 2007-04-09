@@ -24,29 +24,59 @@
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
+<change date="2007-04-09" who="#LB">Added prose and reorganized
+structure to make it more document-like; changed deletion of attribute
+decls into deletion of att.declaring class; add deletes for elements
+email and floatingText added to P5 since this ODD was first created;
+considered but did not implement removal of all irrelevant datatype specs...</change>
       <change date="2006-10-14" who="#sbauman.emt"> Made valid: <list>
           <item>removed empty <att>prefix</att> attribute</item>
           <item>added required <att>type</att> attribute to
           <gi>classSpec</gi>s</item>
-        </list>. <note>Sebastian had also made the above changes.</note> Also
+        </list><!--. <note>Sebastian had also made the above changes.</note> -->Also
         removed extraneous <gi>altIdent</gi> elements, improved
         <gi>sourceDesc</gi>, changed the <att>ident</att> of <gi>schemaSpec</gi>
         to match the filename, and added this revision description. </change>
     </revisionDesc>
   </teiHeader>
   <text>
-    <front>
+<!--    <front>
       <divGen type="toc"/>
-    </front>
+    </front>-->
     <body>
       <p>This customization creates a TEI schema with the bare minimum of tags
-        to make a recognizable document. It loads the four key modules, but
-        takes out many elements.</p>
-      <schemaSpec ident="tei_bare" xml:lang="en">
-        <moduleRef key="core"/>
-        <moduleRef key="tei"/>
-        <moduleRef key="header"/>
-        <moduleRef key="textstructure"/>
+        to make a recognizable document. It combines the four basic modules, but
+removes most of the available elements and changes several attribute classes.</p>
+
+<div><head>Basic text structure</head>
+
+<p>In this very simple schema, a document may contain <gi>front</gi>,
+<gi>body</gi> and <gi>back</gi> elements as in standard TEI. However,
+within these, only the following elements are  permitted:
+<specList>
+<specDesc key="div"/>
+<specDesc key="head"/>
+<specDesc key="list"/>
+<specDesc key="p"/>
+</specList>
+</p>
+<p>The <gi>list</gi> element may contain a <gi>head</gi> followed by a
+sequence either of <gi>label</gi>-<gi>item</gi> pairs, or of
+<gi>item</gi> elements alone. </p>
+<p>The <gi>item</gi> and <gi>p</gi> elements have the same structure:
+either may  contain just text, or a mixture of text with
+<gi>list</gi>, or <gi>title</gi> elements.</p>
+<p>Similarly, the <gi>div</gi> element may contain a <gi>head</gi>,
+followed by a nested <gi>div</gi>, or one or more <gi>p</gi> elements.
+</p>
+<p>The <att>version</att> attribute on the <gi>TEI</gi> element is
+removed, as is the <att>level</att> attribute on the <gi>title</gi>
+element. Other attributes are also removed as a consequence of the
+class modifications described below.</p>
+
+<p>The following specification group deletes all the unwanted
+elements:
+<specGrp xml:id="bodydels">
         <elementSpec ident="abbr" mode="delete" module="core"/>
         <elementSpec ident="add" mode="delete" module="core"/>
         <elementSpec ident="addrLine" mode="delete" module="core"/>
@@ -69,6 +99,7 @@
         <elementSpec ident="desc" mode="delete" module="core"/>
         <elementSpec ident="distinct" mode="delete" module="core"/>
         <elementSpec ident="divGen" mode="delete" module="core"/>
+        <elementSpec ident="email" mode="delete" module="core"/>
         <elementSpec ident="editor" mode="delete" module="core"/>
         <elementSpec ident="emph" mode="delete" module="core"/>
         <elementSpec ident="equiv" mode="delete" module="core"/>
@@ -120,6 +151,63 @@
         <elementSpec ident="time" mode="delete" module="core"/>
         <elementSpec ident="timeRange" mode="delete" module="core"/>
         <elementSpec ident="unclear" mode="delete" module="core"/>
+        <elementSpec ident="argument" mode="delete" module="textstructure"/>
+        <elementSpec ident="byline" mode="delete" module="textstructure"/>
+        <elementSpec ident="closer" mode="delete" module="textstructure"/>
+        <elementSpec ident="dateline" mode="delete" module="textstructure"/>
+        <elementSpec ident="div0" mode="delete" module="textstructure"/>
+        <elementSpec ident="div1" mode="delete" module="textstructure"/>
+        <elementSpec ident="div2" mode="delete" module="textstructure"/>
+        <elementSpec ident="div3" mode="delete" module="textstructure"/>
+        <elementSpec ident="div4" mode="delete" module="textstructure"/>
+        <elementSpec ident="div5" mode="delete" module="textstructure"/>
+        <elementSpec ident="div6" mode="delete" module="textstructure"/>
+        <elementSpec ident="div7" mode="delete" module="textstructure"/>
+        <elementSpec ident="docAuthor" mode="delete" module="textstructure"/>
+        <elementSpec ident="docDate" mode="delete" module="textstructure"/>
+        <elementSpec ident="docEdition" mode="delete" module="textstructure"/>
+        <elementSpec ident="docImprint" mode="delete" module="textstructure"/>
+        <elementSpec ident="docTitle" mode="delete" module="textstructure"/>
+        <elementSpec ident="epigraph" mode="delete" module="textstructure"/>
+        <elementSpec ident="floatingText" mode="delete" module="textstructure"/>
+        <elementSpec ident="group" mode="delete" module="textstructure"/>
+        <elementSpec ident="imprimatur" mode="delete" module="textstructure"/>
+        <elementSpec ident="opener" mode="delete" module="textstructure"/>
+        <elementSpec ident="salute" mode="delete" module="textstructure"/>
+        <elementSpec ident="signed" mode="delete" module="textstructure"/>
+        <elementSpec ident="titlePage" mode="delete" module="textstructure"/>
+        <elementSpec ident="titlePart" mode="delete" module="textstructure"/>
+        <elementSpec ident="trailer" mode="delete" module="textstructure"/>
+        <elementSpec ident="title" mode="change" module="core">
+          <attList>
+            <attDef ident="level" mode="delete"/>
+          </attList>
+        </elementSpec>
+        <elementSpec ident="TEI" mode="change" module="textstructure">
+          <attList>
+            <attDef ident="version" mode="delete"/>
+          </attList>
+        </elementSpec>
+</specGrp>
+</p>
+</div>
+<div><head>Header structure</head>
+<p>A much simplified version of the TEI Header is defined, again by
+the deletion of many elements. For validity, all that is required
+within it is the <gi>fileDesc</gi>, which contains only the following elements:
+<specList>
+<specDesc key="titleStmt"/>
+<specDesc key="publicationStmt"/>
+<specDesc key="sourceDesc"/>
+</specList>
+</p>
+<p>Within the <gi>titleStmt</gi> only a <gi>title</gi> is permitted;
+within the other two elements only a <gi>p</gi> is permitted.
+The <att>default</att> attribute on the <gi>sourceDesc</gi> element is
+also removed. </p>
+<p>The following specification group deletes all the other possible
+elements from the header:
+<specGrp xml:id="hdrdels">
         <elementSpec ident="authority" mode="delete" module="header"/>
         <elementSpec ident="availability" mode="delete" module="header"/>
         <elementSpec ident="broadcast" mode="delete" module="header"/>
@@ -172,33 +260,31 @@
         <elementSpec ident="taxonomy" mode="delete" module="header"/>
         <elementSpec ident="textClass" mode="delete" module="header"/>
         <elementSpec ident="variantEncoding" mode="delete" module="header"/>
-        <elementSpec ident="argument" mode="delete" module="textstructure"/>
-        <elementSpec ident="byline" mode="delete" module="textstructure"/>
-        <elementSpec ident="closer" mode="delete" module="textstructure"/>
-        <elementSpec ident="dateline" mode="delete" module="textstructure"/>
-        <elementSpec ident="div0" mode="delete" module="textstructure"/>
-        <elementSpec ident="div1" mode="delete" module="textstructure"/>
-        <elementSpec ident="div2" mode="delete" module="textstructure"/>
-        <elementSpec ident="div3" mode="delete" module="textstructure"/>
-        <elementSpec ident="div4" mode="delete" module="textstructure"/>
-        <elementSpec ident="div5" mode="delete" module="textstructure"/>
-        <elementSpec ident="div6" mode="delete" module="textstructure"/>
-        <elementSpec ident="div7" mode="delete" module="textstructure"/>
-        <elementSpec ident="docAuthor" mode="delete" module="textstructure"/>
-        <elementSpec ident="docDate" mode="delete" module="textstructure"/>
-        <elementSpec ident="docEdition" mode="delete" module="textstructure"/>
-        <elementSpec ident="docImprint" mode="delete" module="textstructure"/>
-        <elementSpec ident="docTitle" mode="delete" module="textstructure"/>
-        <elementSpec ident="epigraph" mode="delete" module="textstructure"/>
-        <elementSpec ident="group" mode="delete" module="textstructure"/>
-        <elementSpec ident="imprimatur" mode="delete" module="textstructure"/>
-        <elementSpec ident="opener" mode="delete" module="textstructure"/>
-        <elementSpec ident="salute" mode="delete" module="textstructure"/>
-        <elementSpec ident="signed" mode="delete" module="textstructure"/>
-        <elementSpec ident="titlePage" mode="delete" module="textstructure"/>
-        <elementSpec ident="titlePart" mode="delete" module="textstructure"/>
-        <elementSpec ident="trailer" mode="delete" module="textstructure"/>
         <elementSpec ident="editionStmt" mode="delete" module="header"/>
+        <elementSpec ident="sourceDesc" mode="change" module="header">
+          <attList>
+            <attDef ident="default" mode="delete"/>
+          </attList>
+        </elementSpec>
+</specGrp>
+</p></div>
+
+<div><head>Class modifications</head>
+<p>Finally three of  the TEI attribute
+classes are simplified. The attributes xml:space, rend, and xml:base
+are removed from the att.global class, so that this now makes
+available to all elements only the following attributes:
+<classSpec atts="xml:id n xml:lang"/>
+</p>
+<p>Three un-needed attributes are removed from the  att.divLike class so that
+the <gi>div</gi> element inherits from it only
+the following attribute:
+<classSpec atts="xml:id n xml:lang"/>
+and the attribute class <ident>att.declaring</ident> is deleted
+completely, so that none of its members inherit the <att>decls</att>
+attribute defined in the unmodified TEI.</p>
+
+<specGrp xml:id="classmods">
         <classSpec ident="att.global" mode="change" module="tei" type="atts">
           <attList>
             <attDef ident="xml:space" mode="delete"/>
@@ -213,27 +299,23 @@
             <attDef ident="part" mode="delete"/>
           </attList>
         </classSpec>
-        <elementSpec ident="title" mode="change">
-          <attList>
-            <attDef ident="level" mode="delete"/>
-          </attList>
-        </elementSpec>
-        <elementSpec ident="sourceDesc" mode="change">
-          <attList>
-            <attDef ident="default" mode="delete"/>
-          </attList>
-        </elementSpec>
-        <elementSpec ident="TEI" mode="change" module="textstructure">
-          <attList>
-            <attDef ident="version" mode="delete"/>
-          </attList>
-        </elementSpec>
-        <classSpec ident="att.declaring" mode="change" module="tei" type="atts">
-          <attList>
+        <classSpec ident="att.declaring" mode="delete" module="tei" type="atts"/>
+<!--          <attList>
             <attDef ident="decls" mode="delete"/>
           </attList>
         </classSpec>
+--></specGrp></div>
+<div><head>Formal declaration</head>
+      <schemaSpec ident="tei_bare" xml:lang="en">
+        <moduleRef key="core"/>
+        <moduleRef key="tei"/>
+        <moduleRef key="header"/>
+        <moduleRef key="textstructure"/>
+	<specGrpRef target="#bodydels"/>
+	<specGrpRef target="#classmods"/>
+	<specGrpRef key="#hdrdels"/>
       </schemaSpec>
+</div>
     </body>
   </text>
 </TEI>
