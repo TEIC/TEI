@@ -16,6 +16,7 @@ a public broadcast. </desc><desc version="2006-10-28" xml:lang="ja"> 放送や�
   <desc xml:lang="fr">L’élément Enregistrement <gi>recording</gi> décrit en détail l’événement audio ou vidéo utilisé comme source de la parole, que ce soit un enregistrement direct ou une émission diffusée.</desc>
   <classes>
     <memberOf key="att.declarable"/>
+    <memberOf key="att.duration.w3c"/>
   </classes>
   <content>
     <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
@@ -45,14 +46,6 @@ a public broadcast. </desc><desc version="2006-10-28" xml:lang="ja"> 放送や�
           <gloss xml:lang="fr">enregistrement audio et vidéo</gloss>
         </valItem>
       </valList>
-    </attDef>
-    <attDef ident="dur" usage="opt">
-      <desc>the original duration of the recording. </desc>
-      <desc version="2006-10-28" xml:lang="ja">録音・録画の時間．</desc>
-      <desc xml:lang="fr">durée originale de l’enregistrement.</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.duration"/>
-      </datatype>
     </attDef>
   </attList>
   <exemplum>
@@ -160,7 +153,25 @@ a public broadcast. </desc><desc version="2006-10-28" xml:lang="ja"> 放送や�
       </recording>
     </egXML>
   </exemplum>
-  <remarks/>
+  <remarks>
+    <p>The <att>dur</att> attribute is used to indicate the original
+    duration of the recording.</p>
+<!--
+    I've put the remark above in to replicate what was here:
+     <attDef ident="dur" usage="opt">
+      <desc>the original duration of the recording. </desc>
+      <desc version="2006-10-28" xml:lang="ja">録音・録画の時間．</desc>
+      <desc xml:lang="fr">durée originale de l’enregistrement.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.duration"/>
+      </datatype>
+    </attDef>
+    I put this comment here partly because I did not want to discard
+    the Japanese & French versions. But I have to admit, this description
+    seems ambiguous to me: is it the duration of the original recording, or
+    the original duration of the recording before ... what?  - - Syd
+-->
+  </remarks>
   <listRef>
     <ptr target="#HD32"/>
     <ptr target="#CCAS2"/>

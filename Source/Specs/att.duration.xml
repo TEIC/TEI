@@ -6,26 +6,22 @@ $Author: rahtz $
 -->
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="atts" ident="att.duration">
   <desc>attributes for recording normalized temporal durations</desc>
-  <attList xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0">
-    <attDef ident="dur" usage="opt">
-      <gloss>duration</gloss>
-      <desc>indicates the length of this element in time.</desc>
-      <datatype><rng:ref name="data.duration"/></datatype>
-    </attDef>
-  </attList>
+  <desc>provides attributes for normalization of elements that contain datable events.</desc>
+  <classes>
+    <memberOf key="att.duration.w3c"/>
+    <memberOf key="att.duration.iso"/>
+  </classes>
   <remarks>
-    <p>If both <att>value</att> and <att>dur</att> are specified, the
-    values should be interpreted as indicating a span of time by its
-    starting time (or date) and duration. These Guidelines do not
-    provide a method for expressing a time range by a duration and its
-    ending time.</p>
-    <p>In providing a <soCalled>regularized</soCalled> form, no claim
-    is made that the form in the source text is incorrect; the
-    regularized form is simply that chosen as the main form for
-    purposes of unifying variant forms under a single heading.
-    </p>
+    <p>This <soCalled>superclass</soCalled> provides attributes that
+    can be used to provide normalized values of temporal information.
+    By default, the attributes from the <name
+    type="class">att.duration.w3c</name> class are provided. If the
+    module for names &amp; dates is loaded, this class also provides
+    attributes from the <name type="class">att.duration.iso</name>
+    class. In general, the possible values of attributes restricted to
+    the W3C datatypes form a subset of those values available via the
+    ISO 8601 standard. However, the greater expressiveness is rarely
+    needed, and there exists much greater software support for the W3C
+    datatypes.</p>
   </remarks>
-  <listRef>
-    <ptr target="#NDDATE"/>
-  </listRef>
 </classSpec>
