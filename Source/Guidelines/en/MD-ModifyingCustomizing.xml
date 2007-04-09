@@ -21,23 +21,25 @@ scheme without customizing or personalizing it in some way.</p>
 <p>This chapter describes how the TEI encoding scheme may be
 customized, and should be read in conjunction with chapter <ptr
 target="#TD"/>, which describes how a specific application of the TEI
-encoding scheme should be documented.  The modification scheme
+encoding scheme should be documented.  The documentation system
 described in that chapter is, like the rest of the TEI scheme,
 independent of any particular schema or document type definition
 language. </p>
 
-<p>Formally speaking, these Guidelines provide both syntactic
-information about how elements and attributes may be used in valid
-documents and semantic information about what interpretation should be
-attached to given syntactic constructs. In this sense, they are both a
+<p>Formally speaking, these Guidelines provide both syntactic rules
+about how elements and attributes may be used in valid documents and
+semantic recommendations about what interpretation should be attached
+to a given syntactic construct. In this sense, they are both a
 <term>document type definition</term> and a <term>document type
-declaration</term>. In the present version of the Guidelines, this
-semantic information is provided largely as informal descriptive
-prose. Although the descriptions have been written with care, there
-will inevitably be cases where the intention of the contributors has
-not been conveyed with sufficient clarity to prevent users of the
-Guidelines from <soCalled>extending</soCalled> them in the sense of
-attaching slightly variant semantics to them.</p>
+declaration</term>. Many (though not all) of the semantic
+recommendations are provided solely as informal descriptive prose,
+though some of them are also enforced by means of such constructs as
+datatypes (see <ptr target="#DTYPES"/>). Although the descriptions
+have been written with care, there will inevitably be cases where the
+intention of the contributors has not been conveyed with sufficient
+clarity to prevent users of the Guidelines from
+<soCalled>extending</soCalled> them in the sense of attaching slightly
+variant semantics to them.</p>
 
 <p>Beyond this unintentional semantic extension, some of the elements
 described can intentionally be used in a variety of ways; for example,
@@ -67,24 +69,24 @@ chapter <ptr target="#FD"/>.</item></list>
 <p>This section explains how the supplied modules can be customized by
 suppressing elements, renaming elements, modifying classes of
 elements, and adding elements.  The different techniques described
-here have different effects on the level of TEI conformance to be
+here may have different effects on the level of TEI conformance to be
 ascribed to a text, as described further in section <ptr
 target="#CF"/>.</p>
 
-<p>The TEI scheme is designed to support modification and customization
-in a documented way that can be validated by an XML processor.  Those
-wishing to modify the TEI modules must do so using <emph>only</emph> the
-mechanisms described in this chapter if the resulting documents are to
-be regarded as TEI-conformant.</p>
-
-<p>The mechanisms used to instantiate a TEI schema differ for
-different schema languages. In XML DTDs, for example, extensive use is
-made of parameter entities, while in RELAXNG schemas, extensive use is
-made of patterns. However, in either case, the names of elements and,
-wherever possible, their attributes and content models are defined
-indirectly. The syntax used to implement this indirection also varies
-with the schema language used, but the underlying constructs in the
-TEI abstract model are given the same names. </p>
+<p>The TEI scheme is designed to support modification and
+customization in a documented way that can be validated by an XML
+processor. This is achieved by writing a small TEI-conformant
+document, from which a appropriate processor can generate both
+human-readable documentation, and a TEI-conformant schema.  The
+mechanisms used to instantiate a TEI schema differ for different
+schema languages, and are therefore not defined here. In XML DTDs, for
+example, extensive use is made of parameter entities, while in RELAXNG
+schemas, extensive use is made of patterns. However, in either case,
+the names of elements and, wherever possible, their attributes and
+content models are defined indirectly. The syntax used to implement
+this indirection also varies with the schema language used, but the
+underlying constructs in the TEI abstract model are given the same
+names. </p>
 
 <p>In the absence of any modification, a collection of TEI modules
 will behave as follows:
@@ -136,8 +138,8 @@ RELAXNG or the XML DTD language.  We do not discuss in detail here how
 this should be done, since the details are schema language-specific;
 some background information about the methods used for XML DTD and
 RELAXNG schema generation is however provided in section <ptr
-target="#STIN"/>.  An example set of modification files is provided as
-part of the current release: see further section <ptr
+target="#STIN"/>.  Several example ODD files are also provided as
+part of the standard TEI  release: see further section <ptr
 target="#MDlite"/> below.</p>
 
 <div type="div2" xml:id="MDMD"><head>Kinds of Modification</head>
@@ -160,19 +162,27 @@ modules will define a different set of documents.  The set of
 documents valid according to the unmodified schema may be properly
 contained in the set of documents considered to be valid according to
 the modified schema, or vice versa.  Modifications that have either of
-these two results are called <term>clean modifications</term> in the
-remainder of the chapter.  Alternatively, the set of documents
-considered valid by the original schema might overlap the set of
-documents considered valid by the modified schema with neither being
-properly contained in the other.  Modifications that have this result
-are called <term>unclean modifications</term> in the remainder of the
-section.</p>
+these two results are called <term>clean modifications</term>.
+Alternatively, the set of documents considered valid by the original
+schema might overlap the set of documents considered valid by the
+modified schema with neither being properly contained in the other.
+Modifications that have this result are called <term>unclean
+modifications</term>.</p>
+
+<p>Unclean modifications are not particularly deprecated, and their
+use may often be essential to the success of a project. It is however
+essential to the successful interchange of documents that such
+modifications be clearly distinguished from clean modifications of the
+TEI. For this reason, amongst others, elements which have been modified
+in this way should generally be placed in a non-TEI namespace, as
+further discussed in <ptr target="#MDNS"/>. </p>
 
 <div type="div3" xml:id="MDMDSU"><head>Deletion of Elements</head>
+
 <p>The simplest way to modify the supplied modules is to suppress one
 or more of the supplied elements.  This is simply done by setting the
-attribute <att>mode</att> to <val>delete</val> on  an
-<gi>elementDecl</gi> for the element concerned. 
+attribute <att>mode</att> to <val>delete</val> on an
+<gi>elementDecl</gi> for the element concerned.
 </p>
 
 <p>For example, if the <gi>note</gi>
@@ -190,29 +200,28 @@ which this declaration appears must also contain a reference to the
 module itself. The full specification for a schema in which this
 modification is applied would thus be
 something like the following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="myModifiedSchema">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="mySchema">
   <moduleRef key="core"/>
   <!-- other modules used by this schema -->
   <elementSpec ident="note" module="core" mode="delete"/>
 </schemaSpec></egXML>
 </p>
 
-<p>Two different cases of deleting one or more elements from the TEI
-schema can be identified.  The first case involves deleting only
-elements that are optional wherever they appear in TEI documents.
-Deleting these is clean in the sense that documents that are valid
-with respect to the modified schema are also valid according to the
-unmodified schema.  To say this another way, the set of documents
-matching the new schema is contained by the set of documents matching
-the original schema.</p>
+<p>In most cases, deletion is a clean modification, since most
+elements are optional. Documents that are valid with respect to the
+modified schema are also valid according to the unmodified schema.  To
+say this another way, the set of documents matching the new schema is
+contained by the set of documents matching the original schema.</p>
 
-<p>The second case involves deleting elements that are required in one
-or more of their appearances in TEI documents.  Deleting these is
-unclean in that some documents that would be regarded as valid by the
-new schema would be regarded as invalid according to the original
-schema.  To say this another way, the set of documents matching the
-new schema neither contains nor is contained by the set of documents
-matching the originalschema.</p></div>
+<p>If however, the element deleted by some modification is mandatory
+within the content model of some other (undeleted) element, the result
+is an unclean modification in that some documents that would be
+regarded as valid by the new schema would be regarded as invalid
+according to the original schema.  To say this another way, the set of
+documents matching the new schema neither contains nor is contained by
+the set of documents matching the original schema.</p>
+
+</div>
 
 
 <div type="div3" xml:id="MDMDNM"><head>Renaming of Elements</head>
@@ -294,8 +303,8 @@ element <gi>s</gi> is also renamed as some other string. </p>
 <p>The content model for an element in the TEI scheme is defined by
 means of a <gi>content</gi> element within the <gi>elementSpec</gi>
 which specifies it. As shown elsewhere in these Guidelines, the
-content model is defined using RELAXNG syntax, whether or not the
-resulting schema is expressed in RELAXNG or some other schema
+content model is defined using RELAXNG syntax, whether the
+resulting schema is expressed in RELAXNG or in some other schema
 language. </p> 
 
 <p>For example, the specification for the element <gi>term</gi>
@@ -441,7 +450,7 @@ existing list, the correct value for <att>mode</att> would be
 <val>change</val>.</p>
 
 <p>As noted above, adding the new <att>type</att> attribute involves
-changing this elements class membership; we therefore discuss that in
+changing this element's class membership; we therefore discuss that in
 the next section (<ptr target="MDMDCM"/>).</p>
 
 <p>The canonical name for the new attribute is <att>source</att>, and
@@ -457,14 +466,14 @@ one of the predefined TEI datatypes (<ptr target="#DTYPES"/>).
 </p>
 
 <p>It is often desirable to constrain the possible values for an
-attribute to a greater extent than is easily permitted by simply
-supplying a TEI datatype for it. This facility is provided by the
-<gi>valList</gi> element, which can also appear as a child of the
-<gi>attDef</gi> element. Suppose for example that, rather than
-supplying them as pointers to a bibliography, all that we wish to
-indicate about the source of our examples is that each comes from one
-of three predefined sources, which we call A, B, and C, a declaration
-like the following might be appropriate:
+attribute to a greater extent than is possible by simply supplying a
+TEI datatype for it. This facility is provided by the <gi>valList</gi>
+element, which can also appear as a child of the <gi>attDef</gi>
+element. Suppose for example that, rather than supplying them as
+pointers to a bibliography, all that we wish to indicate about the
+source of our examples is that each comes from one of three predefined
+sources, which we call A, B, and C, a declaration like the following
+might be appropriate:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="eg"
 module="tagdocs" mode="change" ns="http://www.hatstand.org/ns">
@@ -496,13 +505,13 @@ predefined codes for it.</desc>
 scheme.</p>
 
 <p>The set of documents matched by a schema generated from an ODD
-modified in this way, and the set of
-documents matched by the unmodified schema  may be related in several
-different ways.  It is certainly possible that the former could
-properly include the latter or vice versa; either of these could be
-said to be clean modifications because the set to be matched has
-become strictly larger or strictly smaller. But it is more likely that
-such modifications will be unclean. </p>
+modified in this way, and the set of documents matched by the
+unmodified schema may be related in several different ways.  It is
+certainly possible that the former could properly include the latter
+or vice versa; either of these could be said to be clean modifications
+because the set to be matched has become strictly larger or strictly
+smaller. But it is more likely that such modifications will be
+unclean. </p>
 
 </div> 
 <div type="div3" xml:id="MDMDCL"><head>Class Modification</head>
@@ -541,7 +550,7 @@ inherits from its membership in some class, all that is needed is to
 remove the relevant <gi>memberOf</gi> element. For example, the
 element <gi>term</gi> defined in the core module is a member of two
 attribute classes, <ident>att.typed</ident> and <ident
-type="class">att.declaring</ident>,  inheriting the attributes
+type="class">att.declaring</ident>. It inherits the attributes
 <att>type</att> and <att>subtype</att> from the former, and the
 attribute <att>declaring</att> from the latter. To remove the last of these
 attributes from this element, we would supply a modification like the
@@ -578,22 +587,46 @@ delete the <att>n</att> attribute from the class. This in turn will
 affect the attributes inherited by all members of the class.</p>
 
 
+<p>Full details of the classes used in the TEI scheme are provided in
+chapter <ptr target="#ST"/>. Note in particular that classes are
+themselves classified: the attributes inherited by a member of
+attribute class A may come to it directly from that class, or from
+another class of which A is itself a member. For example, the class
+att.global is itself a member of the classes att.global.linking and
+att.global.analytic.  In the infrastructure module, these two classes
+are predefined as empty. However, if (for example) the linking module
+is included in a schema, a number of attributes (<att>corresp</att>,
+<att>sameAs</att>, etc) are defined as members of the
+att.global.linking class.  All elements which are members of
+att.global will then inherit these new attributes (see further section
+<ptr target="#STECAT"/>). A new attribute may thus be added to the
+global class in two ways: either by adding it to the <gi>attList</gi>
+defined within the class specification for att.global; or by defining
+a new attribute class, and changing the class membership of the
+att.global class to reference it. </p>
+
+
 <p>Such global changes should be undertaken with caution: in general
 removing existing attributes from a class will always be an unclean
-modification, while adding new ones to it is an clean modification
-because the set of documents matching the unmodified schema will
-continue to be valid against a schema derived from the modified
-specification.</p>
+modification. Adding new attribute to a class however is a clean
+modification because the set of documents matching the unmodified
+schema will continue to be valid against a schema derived from the
+modified specification (though the reverse may not be the case).</p>
 
-<!-- need something on sub classes here -->
+<p>The same mechanisms are available for modification of model
+classes. Care should be taken when modifying the model class
+membership of existing elements since model class membership is what
+determines the content model of most elements in the TEI scheme, and a
+small change may have unintended consequences.  Adding new members to
+an existing model class (discussed in the next section) is however
+usually a simple operation and is also a clean modification.  </p>
 
-<p>The same mechanism are available for modification of model classes,
-but more caution is advisable here.  </p>
-<!-- revised to here LB -->
+
 </div> 
 
 
 <div type="div3" xml:id="MDMDNE"><head>Addition of New Elements</head>
+
 <p>To add  a completely new element into a schema involves providing a complete
 element specification for it, the <gi>classes</gi> element of which
 includes a reference to at least one TEI model class. Without such a
@@ -609,36 +642,88 @@ type="class">model.biblLike</ident>. To add a fourth member (say
 element which nominates the intended class:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="myBib"
 						    mode="add" ns="http://www.hatstand.org/ns/">
-<classes><memberOf key="model.biblLike"/></classes>
-<!-- other parts of the new declaration here --></elementSpec></egXML>
-The other parts of this declaration will typically include
-a description for the new element and information about its content
-model, as further described in <ptr target="#TD"/>.
+<classes><memberOf key="model.biblLike"/></classes> <!-- other parts
+of the new declaration here --></elementSpec></egXML> The other parts
+of this declaration will typically include a description for the new
+element and information about its content model, its attributes,
+etc. as further described in <ptr target="#TD"/>.
 </p>
 </div>
 
 <div type="div2" xml:id="MDNS"><head>Modification and use of Namespaces</head>
+
 </div>
 
 <div type="div2" xml:id="MDDO"><head>Documenting the
-Modifications</head> <p>When the modification mechanisms are used,
-their use must be documented.  Full
-documentation of any additional or modified elements should also be
-provided, using the  module described in chapter <ptr
-target="#TD"/>.</p>
-<p>Radical revision is possible.  It would be possible to remodel so
-that the <gi>teiHeader</gi> is not required, or so that it is required
-but the minimal components described in chapter <ptr target="#HD"/>
-are no longer required, or so that no <gi>text</gi> element is
-required.  In fact, the mechanism, if used in an extreme way, permits
-deletion of the entire set of TEI definitions and their replacement by
-an entirely different DTD!  Such revisions would result in documents
-that are not TEI conformant in even the broadest sense, and it is not
-intended that encoders use the mechanism in this way.</p></div>
+Modifications</head> 
+
+<p>The elements used to define a TEI customisation
+(<gi>schemaSpec</gi>, <gi>moduleRef</gi>, <gi>elementSpec</gi>, etc.)
+will typically be used within a TEI document which supplies further
+information about the intended use of the new schema, the meaning and
+application of any new or modified elements within it, and so on. This
+document will typically conform to a TEI (or other) schema which
+includes the module  described in chapter <ptr target="#TD"/><note
+place="foot">This module can be used to document any XML schema, and
+has indeed been used to document several non-TEI schemas.</note></p>
+<p>Where the customization to be documented simply consists in a
+selection of modules, perhaps with some deletion of unwanted elements
+or attributes, the documentation need not go beyond specifying
+anything further. Even here however it may be considered worthwhile to
+replace some of the semantic information provided by the unmodified
+TEI specification. For example, the <gi>desc</gi> element of an
+unmodified TEI <gi>elementSpec</gi> may describe an element in terms
+more general than appropriate to a particular project, or the
+<gi>exemplum</gi> elements within it may not illustrate the project's
+actual intended usage of the element, or the <gi>remarks</gi> element
+may contain discussions of matters irrelevant to the project. These
+elements may therefore be replaced or deleted within an
+<gi>elementSpec</gi> as necessary. </p>
+
+<!-- example needed -->
+
+<p>Radical revision is possible.  It is feasible to produce a
+modification in which the <gi>teiHeader</gi> or <gi>text</gi> elements
+are not required, or in which any other rule stated in these Guidelines
+is either not enforced or not enforceable.  In fact, the mechanism, if
+used in an extreme way, permits replacement of all that the TEI has to
+say about every component of its scheme. Such revisions would result
+in documents that are not TEI conformant in even the broadest sense,
+and it is not intended that encoders use the mechanism in this
+way. We discuss exactly what is meant by the concept of <term>TEI
+conformance</term> in the next section, <ptr target="#CF"/>. </p></div>
 
 </div>
 
-<div type="div2" xml:id="MDlite"><head>TEI Lite: an example Customization</head>
+<div type="div2" xml:id="MDlite"><head>Examples of Modification </head>
+
+<!--    <div xml:id="CFCUSTEX" type="div3">-->
+
+<p>Several  examples of customizations of the TEI
+are available as part of the standard release, within the directory
+<ident>Exemplars</ident>. They include the following:
+<list type="gloss">
+          <label>tei_bare</label>
+          <item>The schema generated from this customization is the
+	  minimum needed for TEI conformance. It provides only a
+	  handful of elements. </item>
+	  <label>tei_all</label>
+          <item>The schema generated from this customization combines
+	  all available TEI modules, providing several hundred
+	  elements.</item>
+	  <label>tei_allPlus</label>
+          <item>The schema generated from this customization combines
+	  all available TEI modules with three other non-TEI
+	  vocabularies, specifically MathML, SVG, and XInclude, providing several hundred
+	  elements.</item>
+</list>
+</p>
+<p>It is unlikely that any project would wish to use any of these
+extremes unchanged. However, they form a useful starting point for
+customization, whether by removing modules from tei_all or tei_allPlus, or by
+replacing elements deleted from tei_bare. They also demonstrate how an
+ODD document may be constructed to provide a basic reference manual to
+accompany schemas generated from it.</p>
 
 <p>Shortly after publication of the first edition of these Guidelines,
 as a demonstration of how the TEI encoding scheme might be adopted to
@@ -646,22 +731,62 @@ meet 90% of the needs of 90% of the TEI user community, the TEI
 editors produced a brief tutorial defining one specific
 <soCalled>clean</soCalled> modification of the TEI scheme, which they
 called TEI Lite. This tutorial and its associated DTD became very
-popular and are available from the TEI web site at
-<ptr target="http://www.tei-c.org/Lite/"/>. The modification files used to
-define this view of the TEI are also included among the TEI DTD
-fragments and may be used as a model for other customizations.</p>
-<p>The introductory tutorial on TEI Lite describes in more detail how
-the tagset was defined, and the rationale underlying its selection of
-available TEI features. For the present purposes, we note that in
-addition to the TEI infrastructure module, it
-requires elements taken from the core, header, textstructure,  linking, analysis,and figures and
-tables modules. A small number of additional phrase-level elements not defined
-in the main TEI scheme were also needed. Finally, large number of the
-elements made available by this combination of modules were not
-needed, and should be discarded to simplify the complexity of the
-resulting schema.
+popular and are still available from the TEI web site at
+<ptr target="http://www.tei-c.org/Lite/"/>. The tutorial and
+associated schema specification is also included as one of the 
+Exemplars provided with TEI P5.
 </p>
+<p>The Exemplars provided with TEI P5 also include a customization
+file from which a schema for the validation of other customization
+files may be generated. This ODD, called tei_odd, combines the four
+basic modules with the tagdocs, dictionaries, gaiji, linking, and
+figures modules as well as including the (non-TEI) module defining the
+RELAXNG language. This enables schemas derived from this customization
+to validate examples contained within them in a number of ways,
+further described within the document.</p>
 </div>
+
+<!--
+          <label>tei_math</label>
+          <item>TEI with MathML: This TEI customization file includes
+            the minimum TEI modules as well as that for figures, in
+            which it customizes the <gi>formula</gi> element to accept
+            content from the MathML schema. </item>
+          <label>tei_minimal</label>
+          <item> TEI with Minimal Setup: This TEI customization file
+            includes only the basic four TEI modules. This contains
+            slightly more elements than tei_bare, such as all those
+            elements in the TEI Core module. </item>
+          <label>tei_ms</label>
+          <item> TEI for Manuscript Description: This TEI
+            customization file includes the minimum TEI modules likely
+            to be needed for manuscript description. </item>
+          <label>tei_speech</label>
+          <item> TEI for Transcriptions of Speech: This TEI
+            customization file includes the minimum TEI modules likely
+            to be needed for creating transcriptions of speech or
+            language corpora. </item>
+          <label>tei_svg</label>
+          <item> TEI with SVG: This TEI customization file includes
+            the minimum basic four TEI modules plus those for figures
+            and tables. It extends the the use of <gi>figure</gi>
+            element by allowing elements from the Scaleable Vector
+            Graphics (SVG) schema alongside or instead of
+            <gi>graphic</gi>. </item>
+       <label>tei_xinclude</label>
+          <item> TEI with XInclude: This TEI customization file
+            includes the minimum basic four TEI modules plus the
+              <gi>include</gi> element from the XInclude schema. This
+            example has been setup to add includes to the
+              <gi>teiHeader</gi> element and allows validation of TEI
+            documents before includes have been processed, however the
+            usual method of working would be to process includes
+            before validation. </item>
+-->
+
+
+
+
 
 <div><head>DTD stuff punted</head>
 <!--
