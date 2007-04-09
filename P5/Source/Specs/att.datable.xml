@@ -1,45 +1,26 @@
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details.
+$Date$
+$Author$
 -->
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="atts" xml:id="DATABLE" ident="att.datable">
-<desc>provides attributes for normalization of elements that contain datable events.</desc>
-  <attList>
-    <attDef ident="notBefore" usage="opt">
-	<equiv/>
-	<desc>specifies the earliest possible date for the event in
-	standard form, e.g. yyyy-mm-dd.</desc><desc version="2006-10-28" xml:lang="ja">当該事象の一番古い日付を，標準形式で示す．例えば，yyyy-mm-dd．</desc>
-	<datatype>
-	  <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.temporal.w3c"/>
-	</datatype>
-      <valDesc>Any string representing a date in a standard W3C date format</valDesc>
-    </attDef>
-    <attDef ident="notAfter" usage="opt">
-	<equiv/>
-	<desc>specifies the latest possible date for the event in
-	standard form, e.g. yyyy-mm-dd.</desc><desc version="2006-10-28" xml:lang="ja">当該事象の一番新しい日付を，標準形式で示す．例えば，yyyy-mm-dd．</desc>
-	<datatype>
-	  <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.temporal.w3c"/>
-	</datatype>
-      <valDesc>Any string representing a date in a standard W3C date format</valDesc>
-    </attDef>
-    <attDef ident="from" usage="opt">
-	<equiv/>
-	<desc>indicates the starting point of the period in standard form.</desc>
-      <datatype>
-	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.temporal.w3c"/>
-      </datatype>
-      <valDesc>A normalized form of temporal expression conforming to the W3C
-      <title>XML Schema Part 2: Datatypes Second Edition</title>.</valDesc>
-    </attDef>
-    <attDef ident="to" usage="opt">
-	<equiv/>
-	<desc>indicates the ending point of the period in standard form.</desc>
-      <datatype>
-	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.temporal.w3c"/>
-      </datatype>
-      <valDesc>A normalized form of temporal expression conforming to the W3C
-      <title>XML Schema Part 2: Datatypes Second Edition</title>.</valDesc>
-    </attDef>
-</attList>
+  <desc>provides attributes for normalization of elements that contain datable events.</desc>
+  <classes>
+    <memberOf key="att.datable.w3c"/>
+    <memberOf key="att.datable.iso"/>
+  </classes>
+  <remarks>
+    <p>This <soCalled>superclass</soCalled> provides attributes that
+    can be used to provide normalized values of temporal information.
+    By default, the attributes from the <name
+    type="class">att.datable.w3c</name> class are provided. If the
+    module for names &amp; dates is loaded, this class also provides
+    attributes from the <name type="class">att.datable.iso</name>
+    class. In general, the possible values of attributes restricted to
+    the W3C datatypes form a subset of those values available via the
+    ISO 8601 standard. However, the greater expressiveness is rarely
+    needed, and there exists much greater software support for the W3C
+    datatypes.</p>
+  </remarks>
 </classSpec>

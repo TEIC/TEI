@@ -4,7 +4,7 @@ See the file COPYING for details
 $Date: 2006-10-27 22:56:06 -0700 (Fri, 27 Oct 2006) $
 $Author: rahtz $
 -->
-<macroSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" type="dt" ident="data.temporal.iso">
+<macroSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tei" type="dt" ident="data.temporal.iso">
   <gloss/>
   <desc>defines the range of attribute values expressing a temporal
   expression such as a date, a time, or a combination of them, that
@@ -22,17 +22,23 @@ $Author: rahtz $
       <rng:data type="gMonthDay"/>
       <rng:data type="time"/>
       <rng:data type="dateTime"/>
-      <!-- time w/ reduced precision -->
+      <!-- time w/ reduced precision
       <rng:data type="token">
 	<rng:param name="pattern">(-?[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T)?([01][0-9]|2[0-3])(:[0-5][0-9])?(Z|[+\-]((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?</rng:param>
-      </rng:data>
-      <!-- week date -->
+      </rng:data> -->
+      <!-- week date 
       <rng:data type="token">
 	<rng:param name="pattern">[0-9]{4}-W[0-9][0-9]?(-[1-7])?</rng:param>
-      </rng:data>
-      <!-- anything at all -->
+      </rng:data> -->
+      <!-- any ISO 8601 format (and a lot more) -->
       <rng:data type="token">
-	<rng:param name="pattern">[\-0-9PRTWYMDHS/:+]+</rng:param>
+	<?tei winita
+	My expectation is to replace this catch-all pattern with a series
+	of patterns to match the various extended formats of 8601. The two
+	commented-out patterns above are a helpful start. Either that,
+	or if someone comes up with a real Relax NG datatype, use it.
+	:-) -- sb ?>
+	<rng:param name="pattern">[0-9.,DHMPRSTWYZ/:+\-]+</rng:param>
       </rng:data>
     </rng:choice>
   </content>
