@@ -1,474 +1,537 @@
-<!--
-Copyright TEI Consortium. 
-Licensed under the GNU General Public License. 
-See the file COPYING for details.
-$Date$
-$Author$
+<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="CF">
+
+  <head>Conformance</head>
+
+  <p>The notion of <term>TEI Conformance</term> is intended to assist
+  in the description of the 
+format and contents of a particular XML document
+    instance or set of documents. It may be found useful in such
+    situations as: <list>
+      <item>agreements for the interchange of documents among
+        researchers</item>
+      <item> agreements for the deposit of texts in, and distribution
+        of texts from, archives</item>
+      <item> describing the documents to be produced by or for a given
+        project</item>
+      <item>defining the classes of documents accepted or rejected by a
+        given piece of software</item>
+      <item>characterising the extent to which a document may be
+      re-used by some other project than that which originated it, or
+      integrated with other documents <!--reassuring funding bodies of value-for-money through the
+        potential for re-use--></item>
+    </list>
+It is not intended to provide any other evaluation, for example of the
+scholarly merit, intellectual integrity, or value for money. A
+document may be of major intellectual importance and yet not be
+TEI-conformant; a TEI conformant document may be of no scholarly value
+whatsoever.</p>
+
+<p>In this section we try to define how exactly the term <term>TEI
+Conformance</term> should be used. The terminology defined here should
+be considered normative, in the sense that users and implementors of
+the TEI Guidelines should use the phrases defined here in the senses
+given and with the usages described only. </p>
+
+<!--For example, the term
+'schema' is used throughout this chapter to refer to both DTDs
+and XML Schemas. </p>
+
+  <div type="div2">
+    <head>
+      <term>TEI Recommended Practice</term>
+    </head>
+    <p>A document 
 -->
-<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="CF" n="28"><head xmlns="http://www.tei-c.org/ns/1.0">Conformance</head>
-<note xmlns="http://www.tei-c.org/ns/1.0" place="divtop">The recommendations in this chapter are likely to be substantially revised at
-the next release.</note>
-<p xmlns="http://www.tei-c.org/ns/1.0">The notion of <term>TEI conformance</term>
-is intended as an aid in describing the
-format and contents of a particular document or set of documents.
-These concepts are expected to be useful in:
-<list type="simple">
-<item>agreements for the interchange of documents among researchers</item>
-<item>agreements for the deposit of texts in archives and their
-distribution from archives</item>
-<item>describing the documents to be produced by or for a given project</item>
-<item>defining the classes of documents accepted or rejected by a given
-piece of software</item></list></p>
-<p xmlns="http://www.tei-c.org/ns/1.0">This chapter describes the areas in which these terms are defined and
-specifies their meaning.  It also proposes other terms for related
-concepts and points out some dangers in the careless use or application
-of these terms.</p>
-<div type="div2" xml:id="CFDEFNS"><head xmlns="http://www.tei-c.org/ns/1.0">Definitions of Terms</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">The terms described here should be considered technical terms for
-users and implementors of the TEI Guidelines and should be used only in
-the senses given and with the usages described.</p>
-<div type="div3" xml:id="CFDOC"><head xmlns="http://www.tei-c.org/ns/1.0">TEI-Conformant Document</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">A document is <term>TEI-conformant</term> if it is
-either in <term>TEI local processing format</term> or in <term>TEI
-interchange format</term>.  A full description of the document should
-specify which format it is in.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The term <term>TEI conformance</term> does not apply to software:
-programs can be usefully described as <term>accepting</term> or
-<term>validating</term> TEI-conformant documents or some subset of
-TEI-conformant documents, but the TEI defines no required processing
-model against which software could be measured.  Programs are thus not
-themselves conformant or non-conformant and should not be so described.</p></div>
-<div type="div3" xml:id="CFLOCAL"><head xmlns="http://www.tei-c.org/ns/1.0">TEI Local Processing Format</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">A document is in <term>TEI local processing format</term> if
-<list type="simple">
-<item>it is a valid XML document;</item>
-<item>or, alternatively, it is a conforming SGML document with an appropriate legal SGML declaration;</item>
-<item>it uses the document type declarations provided by the TEI, either
-without modifications or with all modifications effected by inclusion
-in the DTD subset as described in section <ptr target="#DTDMOD"/>;</item>
-<item>all modifications to meaning or use of defined tags, and all new
-tags, are documented in TEI Tag Set Declarations which accompany the
-document, as defined in chapter <ptr target="#TD"/>;
-	</item>
-<item>it includes, in the TEI header, all the elements required by the
-TEI declarations for the TEI header;</item>
-<item>it contains no non-SGML, non-XML markup other than declared notations for
-graphics, tables, figures, etc.  That is, unless a declared notation is
-in use, the semantics of any content character in the document are
-exhausted by its identity as a graphic character.</item></list></p>
-<p xmlns="http://www.tei-c.org/ns/1.0">A TEI-local-processing-format document may be described as requiring
-<term>DTD extensions</term> if it modifies the TEI-supplied DTDs (or in
-the case of SGML, the
-SGML prolog) in any of the ways described  under <ptr target="#DTDMOD"/>.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The following terms are synonymous:  <term>document in TEI local
-processing format</term>, <term>TEI local-processing document</term>,
-and <term>TEI local-processing-conformant document</term>.</p></div>
-<div type="div3" xml:id="CFINT"><head xmlns="http://www.tei-c.org/ns/1.0">TEI Interchange Format</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">A document is in <term>TEI interchange format</term> if it conforms
-to the TEI local-processing format and if further:
-<list type="simple">
-<item>it is valid XML; or is SGML using either the predefined SGML
-declaration for TEI interchange documents or one
-which differs from it only in ways allowed by section <ptr target="#SGMLMOD"/>;</item>
-<item>it makes no use of any of the following SGML constructs:<note place="foot" resp="#SD">The
-definition of interchange format may be changed
-to eliminate the few remaining SGML features that are not in XML (primarily attribute
-minimization).</note>
-<list type="simple">
-<item>short references</item>
-<item>the RANK feature</item>
-<item>omission of generic identifiers in start- and end-tags<note place="foot">This
-is one of several abbreviations allowed by the SHORTTAG
-feature; the others (omission of attribute names under certain
-circumstances and omission of non-required attribute values) are
-allowed by the current release of the Guidelines, but users are
-cautioned that this may be changed at a subsequent release, in the
-interests of XML-conformance.</note></item>
-<item>keywords other than INCLUDE, IGNORE, and CDATA on a marked
-section</item></list></item>
-<item>it includes no SUBDOC subordinate document by means of an entity
-reference embedded directly within content data (SUBDOCs must be
-included by giving the entity reference as the value of an attribute);</item>
-<item>it does not provide different definitions for the same entity in
-different document types.</item></list></p>
-<p xmlns="http://www.tei-c.org/ns/1.0">A TEI-interchange-format document may be described as requiring
-<term>DTD extensions</term> if its DTD is modified in any of the ways
-described in section <ptr target="#DTDMOD"/>.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The following terms are synonymous: <term>document in TEI
-interchange format</term>, <term>TEI interchange document</term>, and
-<term>TEI interchange-conformant document</term>.</p></div>
-<div type="div3" xml:id="CFEX"><head xmlns="http://www.tei-c.org/ns/1.0">TEI Packed Interchange format</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">A document is in TEI packed interchange format with a given
-<term>transmission character set</term> and a given
-<term>transmission entity set</term> if all of the following are true:
-<list type="simple">
-<item>all separate entities in the document are packed into a single
-entity (file) in a manner conforming to ISO 9069 (SDIF) or to some
-other TEI-authorized form;</item>
-<item>all characters occurring in SGML or XML names (generic identifiers and
-attribute names) occur within the transmission character set;
-	</item>
-<item>all characters in the document content and attribute values either
-occur within the transmission character set or are represented by an
-appropriate entity reference using an entity name included in the
-transmission entity set;</item>
-<item>the transmission character and entity sets are named in the header
-of the packed file and in any  accompanying paper documentation.</item></list>
-Any
-pre-transmission processing required to convert a document to meet the
-above requirements for conformance to the  TEI-interchange-format  is
-called <term>packing</term>.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">With prior agreement between parties to an exchange, interchange
-documents may use character code set switching as defined in ISO 2022, its
-national analogues, or successor standards.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">A full description of a document in TEI packed interchange format
-<emph>must</emph> specify the transmission character set and the
-transmission entity set used in the document.</p></div>
-<div type="div3" xml:id="CFREC"><head xmlns="http://www.tei-c.org/ns/1.0">TEI Recommended Practice</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">A document follows <term>TEI recommended practice</term> if:
-<list type="simple">
-<item>it is a TEI-conformant document;</item>
-<item>wherever the guidelines say to prefer one encoding practice to
-another, the preferred practice is used;</item>
-<item>all textual features which the guidelines recommend be captured
-are in fact encoded.
-	</item></list></p></div>
-<div type="div3" xml:id="CFMOD"><head xmlns="http://www.tei-c.org/ns/1.0">TEI Abstract Model</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">A document follows the <term>TEI abstract model</term> if it tags
-the features specified in the TEI documentation and documentation, and
-their structural interrelations agree with those specified in the TEI DTDs.
-</p></div></div>
-<div type="div2" xml:id="SGMLMOD"><head xmlns="http://www.tei-c.org/ns/1.0">Modifications to TEI SGML Declaration</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">The effective SGML declaration cannot be changed when using XML.
-When using SGML, the SGML declaration for TEI interchange documents may differ
-from that provided in TEI documentation in these ways:
-<list type="simple">
-<item>the CHARSET clause must be used to define the transmission character set
-(possibly in connection with the SHUNCHAR specification in the SYNTAX clause);</item>
-<item>the CAPACITY clause may  be used to raise (but not lower) capacities;</item>
-<item>the SYNTAX clause may be used to define the SGML syntax used in
-      the document.  Notably:
-<list type="simple">
-<item>the SHUNCHAR specification within the SYNTAX clause may be used to
-restrict the transmission character set;</item>
-<item>the BASESET and DESCSET specifications within the SYNTAX
-clause must be used to describe the transmission character set;</item>
-<item>the DELIM and NAMES specifications may be used to modify the SGML
-syntax. In particular, for consistency between SGML and XML, the NAMECASE specification may 
-(perhaps even should) 
-be used to set GENERAL NO, making SGML names case-sensitive; and the DELIM specification
-may (perhaps even should) 
-be used to set NET to "/&gt;", making SGML and XML EMPTY elements compatible;</item></list></item>
-<item>in the FEATURES clause, CONCUR may be set to NO if concurrent
-markup is not used in the document.</item></list></p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The following portions of the SGML declaration may not be modified in
-TEI interchange documents:
-<list type="simple">
-<item>the CAPACITY and QUANTITY values may be increased but not decreased;</item>
-<item>the SCOPE clause may not be changed;</item>
-<item>no new FEATURES may be turned on.</item></list></p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The SGML declaration for TEI-local-format documents may be modified
-without restriction.  Some recommendations for usage are made in
-document TEI P1, but these recommendations are not normative.</p></div>
-<div type="div2" xml:id="DTDMOD"><head xmlns="http://www.tei-c.org/ns/1.0">Modifications to TEI Document Type Declarations</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">A TEI-conformant document (whether for local processing or for
-interchange) may make any change to the TEI-supplied document type
-declarations which is allowed by SGML and the controlling SGML
-declaration.  All such changes should be made (or at least it must
-be possible to make them) within the SGML DTD subset, by defining TEI
-DTD modifications files as described in chapter <ptr target="#MD"/>,
-and embedding the modification files within the DTD subset of a
-document whose document type declaration refers to the unmodified TEI
-main DTD, as in the following fragment:<!--*
-In all TEI-conformant documents, the document type name must be
-<gi>tei</gi>, followed by a digit indicating the currently released
-version number for the TEI guidelines in use.  The associated public
-or system identifier(s) should refer to a file containing the
-unmodified TEI main DTD fragment, as in the following example:
-*-->
-<eg><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN"
-                       "tei2.dtd" [
-  <!ENTITY % TEI.extensions.ent
-    PUBLIC "-//ProjectName//ENTITIES Local modifications to TEI main DTD//EN"
-           "project.ent">
-  <!ENTITY % TEI.extensions.dtd
-    PUBLIC "-//ProjectName//DTD Local element types for TEI main DTD//EN"
-           "project.dtd">
-]>]]></eg></p>
-<p xmlns="http://www.tei-c.org/ns/1.0">For reasons of convenience, it may be desirable in practice to
-create a <term>derived DTD</term> in which the local modifications
-have been integrated with the TEI main DTD in a single file.  If such
-a  one-file DTD is desired, it should be derived automatically from
-the TEI DTD and the local modifications files using appropriate
-software, rather than derived by hand-editing the TEI DTD files, as
-hand-editing increases the chances of error and inconsistency between
-the DTD modifications files and the one-file DTD. Documents in the TEI
-interchange format must use the form shown above, with a reference to
-the unmodified main TEI DTD and declarations of the local
-modifications files.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The following must remain true of the DTD after modification:
-<list type="simple">
-<item>the overall document must contain a single <gi>teiHeader</gi>
-element and a single <gi>text</gi> element, in that order; in the
-case of a corpus or collection the overall collection may have a
-<gi>teiHeader</gi> followed by a series of <gi>tei</gi> documents;</item>
-<item>the <gi>teiHeader</gi> element must include elements for:
-<list type="gloss"><label>title statement</label>
-<item>the title of the machine-readable work and the names of those
-responsible for it;</item><label>publication statement</label>
-<item>place and date of publication or distribution of the machine-readable
-document;</item><label>source description</label>
-<item>bibliographic description of the copy text or source of the
-electronic text, including at least title, author,
-        and edition.</item></list></item></list></p>
-<p xmlns="http://www.tei-c.org/ns/1.0">A TEI-conformant document may be said to require <term>DTD
-extensions</term> if it:
-<list type="simple">
-<item>defines new elements;</item>
-<item>modifies the content model, declared content, or omissibility of any
-element;</item>
-<item>adds or modifies any attribute definitions;</item>
-<item>renames any elements, attributes, or attribute values;</item>
-<item>defines any new document types;</item>
-<item>declares any non-SGML, non-XML notations.</item></list>
-Without requiring DTD extensions, therefore, any TEI document may:
-<list type="simple">
-<item>define entities and parameter entities;</item>
-<item>include processing instructions and comments in its DTD subset.</item></list>
-For local-processing purposes, a TEI document may also, without
-requiring DTD extension:
-<list type="simple">
-<item>include link type declarations etc. in its SGML prolog;</item>
-<item>define and use short reference mapping in its DTD.</item></list>
-Note that TEI interchange documents may <emph>not</emph> include link
-type or short reference declarations because the SGML declaration for
-interchange does not allow them (nor does XML).</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">It is expected that the notion of DTD extension will be particularly
-useful in describing the classes of documents accepted or
-validated by software.</p></div>
-<div type="div2" xml:id="PROCMOD"><head xmlns="http://www.tei-c.org/ns/1.0">TEI Processing Model</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">This section is included for illustrative purposes only; it does
-not restrict the processing of TEI or other documents.  It simply
-distinguishes a number of typical ways in which a project may choose
-to apply the TEI Guidelines to different kinds of processing.</p>
-<div type="div3" xml:id="PMDOC"><head xmlns="http://www.tei-c.org/ns/1.0">Document Capture and Reclamation</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">First, data might be captured by keyboarding into a locally defined
-data capture format, or by scanning into a locally defined scanner-file
-format.  From these initial forms, transducers might convert the files
-into a standard local storage format.</p></div>
-<div type="div3" xml:id="PMLOCAL"><head xmlns="http://www.tei-c.org/ns/1.0">Local Storage Format and Application Software</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">The local storage format might be the input format of some
-application program used frequently by the project.  In this case,
-transducers might be necessary to prepare data for processing by other
-applications.  Alternatively, the local storage format might be
-independent of the formats used by application programs; transducers
-would be needed to prepare data for any processing.  Such an
-independent format is useful if the local storage format needs to
-contain more information than any single application can conveniently
-handle.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The local storage format might be SGML- or XML-conformant without being
-TEI-conformant, e.g. because it uses local DTDs instead of the standard
-TEI DTDs, or because it uses a TEI local processing format.  Local
-software may be used to validate a TEI
-local-processing format, to transduce documents into the input formats
-needed by applications, and when appropriate to transform documents
-into the TEI interchange format for exchange with other sites.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Finally, the TEI interchange format may be used as a local storage
-format.  It is not expected that this will be a very common practice,
-since it is expected that most sites interested in TEI conformance
-will eventually acquire markup-aware software which have advantages of
-compactness or processing.  In the
-absence of such software, however, some projects may find the TEI
-interchange format (or perhaps a restrictive variant of it) useful,
-because such a format can be relatively easy to parse with ad hoc
-software.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Whether the local storage format is strictly TEI conformant or not,
-it may follow TEI-recommended practice in its selection of textual
-features to be marked up, in its tag names, in its documentation
-practices, etc.</p></div>
-<div type="div3" xml:id="PMRICH"><head xmlns="http://www.tei-c.org/ns/1.0">Enrichment and Other Processing</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">Over the course of the project, analysis and processing may result
-in interim results which may be incorporated into the locally stored
-copy of the text so that the interim results can be used in later
-processing.  This process of enrichment can be carried out either by
-manual editing of the documents using conventional text editors, or by
-application programs. 
-</p></div>
-<div type="div3" xml:id="PMEXP"><head xmlns="http://www.tei-c.org/ns/1.0">Data Export</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">When a document is to be exchanged with another site using the TEI
-interchange format, it must first be transduced from the local storage
-format to TEI interchange form.  If local documents are already
-TEI-conformant, this requires either no processing at all, or a
-relatively simple normalization which can be handled readily by the
-normalization facilities of most SGML parsers.  If the local storage
-form is non-SGML conformant (and not XML), some transducer must be used to transform
-it into the TEI interchange format.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The TEI-interchange-format document must then be packed for shipping
-into the TEI packed interchange format, using a packing program.  This
-program will gather the constituent parts (files) of a document into a
-single file, and ensure that the file contains no characters whose safe
-passage to the recipient of the data is endangered by the transmission
-path.  If the ultimate recipient of the document is unknown, the set of
-safe characters is very small.  The specific <term>transmission
-character set</term> however is independent of TEI conformance:  any
-convenient set may be used where both parties agree.  The packer will
-ensure that the transmission character set is properly identified.</p></div>
-<div type="div3" xml:id="PMIMP"><head xmlns="http://www.tei-c.org/ns/1.0">Data Import</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">When a document is received from another site using the TEI packed
-interchange format, it must first be unpacked into a TEI
-interchange-format document in the local character set.  It may then be
-necessary to <term>naturalize</term> it by translating it into the
-local storage format; if the local format is TEI- or SGML-conformant,
-no processing is needed (although some SGML processors may offer a
-facility for suppressing omissible markup).</p></div>
-<div type="div3" xml:id="CFPM"><head xmlns="http://www.tei-c.org/ns/1.0">TEI Conformance in the Processing Model</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">The notions of TEI interchange format and TEI packed interchange
-format are central to the exchange of documents using the TEI
-guidelines, whether the local storage format is TEI-conformant or not.
-The TEI interchange format and the TEI local-processing format may each
-be used as a local storage format, though the local storage format
-might well differ from either of these without materially affecting the
-use of TEI formats for interchange.  The TEI interchange format being
-less flexible than the local-processing format, it is expected that
-sites using SGML-conformant software may use the latter, while sites
-without such software may prefer the former.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The notion of TEI recommended practice, it is hoped, will be
-relevant to decisions about what textual features should be recorded
-during data capture and will thus affect data-capture formats and the
-transducers which render captured files into the local storage format.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The TEI abstract structure may be useful in developing local
-non-SGML markup schemes for data capture or for processing with ad hoc
-application programs.  It is strongly recommended that the TEI
-recommendations, as well as the TEI abstract structure, be used for
-such development as well.</p></div></div>
-<div type="div2" xml:id="CFASP"><head xmlns="http://www.tei-c.org/ns/1.0">Aspects of Conformance and Document Description</head>
-<div type="div3" xml:id="CFCH"><head xmlns="http://www.tei-c.org/ns/1.0">Character Sets</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">Neither the character sets used for local processing nor those used
-for transmission of interchange documents are restricted by the
-definition of TEI conformance.  For local processing, users will
-typically use the system character set of their local system or some
-modification thereof.  For exchange with known partners, users should
-choose any convenient character set; typically the most convenient is
-the set of all characters which:
-<list type="simple">
-<item>are transmitted successfully over the existing transmission link;</item>
-<item>occur in both sender's and receiver's local coded character sets.</item></list></p>
-<p xmlns="http://www.tei-c.org/ns/1.0">For blind exchange with unknown partners a conservative choice of
-transmission set is needed to ensure that characters arrive
-correctly.  How conservative the choice need be depends on the medium
-of transmission.  The <term>ISO 646 subset</term> <!-- (formerly!)
-defined in section <ptr target="CHIN"/> -->
- remains the only guaranteed safe set of characters
-for the regional and international networks most widely used, although
-larger character sets are increasingly coming into use. This is
-largely because silent and not always reversible translation between
-character sets remains a feature of transmissions across current
-disparate networks.  At the present time (1993) therefore, only the
-ISO 646 subset is recommended for fully blind interchange, although
-the full complement of ISO character sets may be used successfully in
-some subdomains.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">In transmission by disk or tape, however, no silent translation is
-likely to occur, and so larger sets may be successfully used in blind
-interchange.  The primary danger is a failure of software in the
-receiving machine to process the characters correctly; at this time
-(1991), ASCII or 94-character U.S. EBCDIC appear to represent the
-largest safe choices; other national character sets may of course be
-used if good internal documentation is also provided.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Note that the transmission character set does not associate specific
-binary encodings with the characters in the set.  In the technical
-senses, it is a character set, not a <emph>coded</emph> character set.
-This means that a document may undergo various automatic translations
-from one coded character set to another (notably, in the case of
-transmission over international networks, from ASCII to EBCDIC or vice
-versa) without leaving the <term>transmission character set</term>.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">For further discussion of the topics addressed in this section, reference
-should be made to chapter <ptr target="#IN"/>.</p></div>
-<div type="div3" xml:id="CFSD"><head xmlns="http://www.tei-c.org/ns/1.0">SGML Declaration</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">The utility of various SGML constructs is discussed in section
- 2.2 of document TEI P1 version 1.  The restrictions on SGML declarations
-and SGML usage in TEI interchange documents discussed above under <ptr target="#SGMLMOD"/>
- are derived from that discussion. In the case of XML, no SGML declaration changes
-can be made.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">No restrictions are made on SGML usage in the local processing
-format because such usage is best determined locally and has no impact
-on interchange.</p></div>
-<div type="div3" xml:id="CFDTD"><head xmlns="http://www.tei-c.org/ns/1.0">Document Type Declaration</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">The document type declaration provided by the TEI, whether in its SGML or its XML
-form, is intended to
-cover as wide a variety of document types and processing needs as
-proved feasible.  It is impossible, however, for any finite list of
-text elements to cover every need of textual research and processing.
-As a result, extension of the TEI DTD has no effect
-on strict TEI conformance, as long as certain restrictions are
-observed; these have the effect of ensuring that later users of a file
-can easily see what changes have been made to the DTDs and what the new
-tags are intended to mean.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The requirement that all new or modified tags be documented,
-however, is formally verifiable only to a limited extent.  It is
-possible for a program to verify that for every tag introduced in a DTD
-modification, a corresponding record exists in a Tag Set Declaration.
-It is impossible, however, to verify using formal means that the entry
-in the tag set declaration makes sense.  Purely formal conformance
-measures, therefore, must be supplemented with human inspection of the
-documentation.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The concept of DTD extension is introduced to allow the concise
-description of software which is designed to handle documents encoded
-using the published DTDs but which is not prepared to deal with tags
-not included there.<note place="foot">Some will regard such simplifications as useful ways of making it
-easier to develop software which accepts TEI-conformant documents;
-others will deplore the failure of such software to accept all
-TEI-conformant documents including those which extend the TEI DTD.  In
-providing the notion of <term>DTD extension</term> for describing what
-documents are and are not accepted by such software, the TEI acts in
-the belief that such software will in fact be developed; it neither
-endorses nor deplores its construction or use.</note></p>
-<p xmlns="http://www.tei-c.org/ns/1.0">All sections of the TEI DTD are subject to modification by the
-user, except that a documentary header must be provided and
-distinguished from the text itself, and that documentary header must
-include tagged elements identifying the document encoded and those
-responsible for the encoding.  This ensures that all TEI-conformant
-documents will have at least this bare minimum of accompanying
-documentation.</p></div>
-<div type="div3" xml:id="CFTAG"><head xmlns="http://www.tei-c.org/ns/1.0">Tag Usage and Feature Marking</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">The basic design principles of the TEI require the notion of
-<term>TEI conformance</term> to be applicable to existing electronic
-documents if they are translated into a proper format, without
-requiring the insertion of information not captured in the initial
-preparation of the text.<note place="foot">See document TEI PC P1 <q>The Preparation of Text Encoding
-Guidelines.</q></note></p>
-<p xmlns="http://www.tei-c.org/ns/1.0">At the same time, the TEI is charged with formulating advice to
-those engaged in the creation of new electronic texts and is required
-to distinguish what is actively recommended for general use from what
-is merely optional, provided for use by those engaged in a particular
-sort of work.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The notion of <term>TEI recommended practice</term> is introduced to
-allow the concise description of documents in which not only the
-requirements, but also the recommendations of the Guidelines are
-followed.  It is hoped that while projects to convert existing
-electronic data may content themselves with achieving TEI conformance,
-projects to produce new electronic texts will produce documents
-following TEI recommended practice.  To distinguish those projects
-which follow the TEI's recommendation to use SGML or XML markup from those
-which capture the same underlying textual features but do so using
-other markup, the notion of the <term>TEI abstract model</term> is
-introduced; it is this which another encoding can have in
-common with the TEI.</p></div>
-<div type="div3" xml:id="CFNON"><head xmlns="http://www.tei-c.org/ns/1.0">Non-SGML, non-XML Markup</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">In exchanging texts for use by others, the goal of an interchange
-format is to ensure that the information encoded in an electronic
-version of a text can be correctly understood and processed by the
-recipient as well as by the originator of the text.  To assure the
-achievement of this goal, the definition offered here of TEI
-conformance restricts markup in TEI conformant documents to SGML or XML markup
-and to other properly declared notations.  The latter are explicitly
-recommended for the encoding of tables,
-figures, etc. and so cannot reasonably be excluded.  Since they do
-place a burden on the recipient for proper processing, the use of any
-such notation is defined to fall within the class of DTD extensions.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Because of the escape clause for graphics, etc., it is in principle
-possible to create a TEI conformant document by embedding a document
-using any arbitrary markup into a driver file containing a TEI header
-and a declaration for the appropriate markup as notation.
-Though it falls within the letter, such a practice falls outside the
-spirit of TEI-conformant document interchange.</p></div></div></div>
+<!-- are there any?
+        <item> all (relevant) textual features which the guidelines
+          recommend be captured are in fact encoded. </item>
+-->
+<!--      </list>
+    </p>
+  </div>
+
+
+  <div type="div2">
+
+
+    <head>
+      <term>TEI-Conformant</term> Documents </head>
+-->
+    <p> A document is <term>TEI-Conformant</term>
+      if it: <list>
+        <item> is a well-formed XML document</item>
+        <item> is valid against a schema derived from the TEI
+          Guidelines</item>
+        <item> uses the <term>TEI Namespace</term> </item>
+	<item> conforms to the TEI abstract model </item>
+        <item> contains a <gi>teiHeader</gi> element which includes
+          elements for at least a title statement and publication</item>
+        <item> documents new customizations of the TEI schemas with a
+          valid <term>TEI ODD file</term></item>
+      </list> Each of these criteria is discussed in more detail
+      below. </p>
+<p>In addition, a TEI document is said to follow <term>TEI Recommended
+Practice</term> if: <list>
+        <item> it is a <term>TEI-Conformant</term> Document;</item>
+        <item> wherever the Guidelines prefer one encoding practice to
+          another, the preferred practice is used;</item>
+</list></p>
+
+    <div type="div3">
+      <head> Well-Formed XML and Valid Document</head>
+      <p>All <term>TEI-Conformant</term> documents must be well-formed
+        XML documents according to the the World Wide Web
+        Consortium recommendation of the <title>Extensible Markup
+          Language (XML) 1.0 (Fourth Edition)</title> or successor
+        editions found at <ref target="http://www.w3.org/TR/xml/"
+          >http://www.w3.org/TR/xml/</ref>. Additionally in order for
+        a document to be considered <term>TEI-Conformant</term> it
+        must be valid against a series of constraints
+        expressed as one or more Schema files. </p>
+    </div>
+
+    <div type="div3">
+      <head>Valid Against a TEI-Derived Schema</head>
+      <p> All <term>TEI-Conformant</term> documents must be 
+        valid against one or more Schema files which have 
+        been derived from the published TEI schema modules, combined
+	and documented in the manner described in section <ptr
+	target="#MD"/>.</p>
+<!--Guidelines. The usual manner in
+        which to achieve this is through using a <term>TEI ODD
+        file</term> as described in the chapter on Documentation
+        Elements, or a front-end which creates such a file for you. In
+        processing the <term>TEI ODD file</term>, the information
+        concerning the elements should be gathered from the 
+	TEI Guidelines. The TEI provides a
+        web-based tools and scripts which
+        can be used to generate customized schemas and also save the
+          <term>TEI ODD file</term>. For those who do not need to create
+        their own customizations, the TEI provides example
+        customizations (such as tei_all and teilite) and their
+        resulting schemas against which users can validate
+        their documents. Documents which validate against these files,
+        and meet all the other requirements, are de facto
+          <term>TEI-Conformant</term>.-->
+<p> Although the TEI attempts to
+        support XML DTDs, W3C XML Schema, and Relax NG (both compact
+        and XML formats), it does not mandate any particular schema
+	language<note place="foot">Here and elsewhere we use the word
+	<mentioned>schema</mentioned> to refer to any formal document
+	grammar, irrespective of the formalism used to represent
+	it.</note>, only that this schema should have been generated
+        from  a <term>TEI ODD file</term> which
+        references the TEI Guidelines. Documents which are
+          <term>TEI-Conformant</term> may  embed elements from
+        other namespaces and standards, as long as their relationship
+        to the TEI has been documented in the <term>TEI ODD
+        file</term> from which their schema has been generated.</p>
+    </div>
+
+    <div type="div3">
+      <head>Use of the <term>TEI Namespace</term> </head>
+
+      <p>The elements and attributes defined by the TEI Guidelines
+      constitute the <term>TEI
+        Namespace</term>, except for a few such as the <att>xml:id</att>
+        attribute which are adopted directly from the XML
+        specification. In a <term>TEI-Conformant</term> document,  all
+        unmodified elements and attributes must be in this namespace.
+        This namespace is:
+        "http://www.tei-c.org/ns/1.0/". While this in no way precludes
+        the embedding of elements from other namespaces inside a
+          <term>TEI-Conformant</term> document, their
+        relationship to the TEI must be documented in the TEI ODD
+        file and the <term>TEI Namespace</term> must not be extended with
+        additional elements or attributes. This is discussed further
+        in the section below entitled <ptr target="#CFNS"/>.</p>
+    </div>
+<div type="div3"><head>Conformance to the TEI abstract model</head>
+<p>The <term>TEI Abstract Model</term> is the conceptual schema
+instantiated by the TEI Guidelines, which define, both formally and
+informally, a set of abstract concepts such as <q>paragraph</q> or
+<q>heading</q>. It is an important condition of TEI conformance that
+elements defined in the TEI Guidelines as having one specific meaning
+should not be used with another. For example, the element <gi>l</gi>
+is defined in the TEI Guidelines as containing a line of verse. A
+schema in which it is redefined to mean a typographic line, or an
+ordered queue of objects of some kind, cannot therefore be TEI
+conformant, whatever its other properties.</p>
+<p>The semantics of elements defined in the TEI Guidelines are
+conveyed in a number of ways, ranging from formally verifiable
+datatypes to informal descriptive prose. In addition, a mapping
+between  TEI elements and concepts in other conceptual models 
+may be provided by the <gi>equiv</gi> element where this is available.
+</p>
+<p>A schema which shares equivalent concepts to those of the TEI
+conceptual model may be mappable to the TEI schema by means of such a
+mechanism. For example, the concept of paragraph, expressed in the TEI
+scheme by the <gi>p</gi> element is probably mappable to the concept
+expressed in the Docbook scheme by the <gi>para</gi> element. Such
+areas of overlap facilitate interoperability, because elements from
+one namespace may be readily integrated to those from another, but do not affect the
+definition of conformance.</p>
+      <p>A document is said to follow the <term>TEI Abstract
+          Model</term> if it encodes those features specified in the
+          TEI Guidelines, and the structural interrelations of this
+          encoding agrees with that specified in a valid schema for
+            <term>TEI-Conformant</term> documents. That is, the
+          abstract definition and markup structurally corresponds to
+          that in the TEI Guidelines even if the names of elements and
+          attributes might not. While it may be relatively easy to
+	  transform a document following the
+            <term>TEI Abstract Model</term> into a <term>TEI-Conformant</term> document, it
+          is not itself conformant.</p>
+<p>A particularly important special case of this kind of mapping is
+provided by ongoing efforts within the library community to define
+metadata interoperability standards. The relationship of the TEI
+Header to such efforts is discussed in <ptr target="#SH"/> below.</p>
+
+</div>
+
+    <div type="div3">
+      <head> Including a <gi>teiHeader</gi> element with a title and
+        publication statement</head>
+      <p>It is a long-standing requirement for any
+          <term>TEI-Conformant</term> document that it should contain a
+          <gi>teiHeader</gi> element. To be more specific a
+          <term>TEI-Conformant</term> document must contain either: <list>
+          <item> a single <gi>teiHeader</gi> element followed by a
+            single <gi>text</gi> element, in that order; or</item>
+          <item> in the case of a corpus or collection, a single
+            overall <gi>teiHeader</gi> element followed by a series of
+              <gi>TEI</gi> elements each with its own
+            <gi>teiHeader</gi></item>
+        </list> All <gi>teiHeader</gi> elements in a
+          <term>TEI-Conformant</term> document must include elements
+        for: <list type="gloss">
+          <label>Title Statement</label>
+          <item>This should include the title of the TEI document
+	  expressed using a 
+            <gi>titleStmt</gi> element.</item>
+          <label>Publication Statement</label>
+          <item>This should include the place and date of publication
+            or distribution of the TEI document, expressed using  the
+              <gi>publicationStmt</gi> element.</item>
+          <label>Source Statement</label>
+          <item>For a document derived from some previously existing
+	  document, this must include a bibliographic description of
+	  that source. For a document not so derived, this must
+	  include a brief statement that the document has no
+	  pre-existing source. In either case, this will be expressed
+	  using the <gi>sourceDesc</gi> element. </item>
+
+        </list></p>
+<!--
+      <p>Previous versions of the TEI Guidelines have mandated that
+      all <gi>teiHeader</gi> elements in <term>TEI-Conformant</term>
+      documents also contain a Source Description consisting of a
+      bibliographic description of the copy text or source for the TEI
+      Document including as a minimum the title, author and
+      edition. In a usual TEI schema this would be accomplished
+      through use of the <gi>sourceDesc</gi> element. However, in
+      recognition that many TEI-Compliant documents are created that
+      are entirely <soCalled>born digital</soCalled>, this in itself
+      is no longer a requirement for a TEI-Compliant
+      document. However, it is still recommended TEI practice to
+      include this information whenever possible and even in the case
+      of <soCalled>born digital</soCalled> documents to indicate their
+      status as such in this location. </p>-->
+
+    </div>
+
+    <div type="div3">
+      <head>A  Customization of the TEI Schema must be expressed using a Valid
+        <term>TEI ODD File</term></head>
+      <p>For any TEI conformant document, there must exist a valid
+      <term>TEI ODD file</term> which specifies which modules,
+      elements, classes, etc. are in use, and from which a TEI schema
+      can be generated to validate the document. The TEI supplies a
+      number of predefined <term>TEI Customization exemplar ODD
+      files</term> and the schemas already generated from them, (see
+      <ptr target="MDlite"/>), but most projects will typically
+      need to customize the TEI beyond what these examples
+      provide.  It is assumed, for example, that most projects will
+      customize the TEI scheme by removing those elements that are not
+      needed for the texts they are encoding, and by providing further
+      constraints on the attribute values and element content models
+      the TEI provides.  All such customizations must be specified by means of
+      a valid <term>TEI ODD</term> file. <!-- For users less confident in
+      creating <term>TEI ODD files</term>, which are TEI-Compliant
+      documents which make use of the tagdocs module described in the
+      chapter on Documentation Elements, the TEI provides a web-based
+      tools and scripts which can be used to generate customized
+      schemas and also save the <term>TEI ODD file</term>. --></p>
+
+      <p>As different sorts of customization
+      have different implications for the interchange and
+      interoperability of TEI documents, to ease communication the TEI
+      has determined a number of schema categories that TEI-Conformant
+      documents usually fall into. Although each of these categories
+      of schema can be used to validate a TEI-Conformant document, the
+      TEI has additional recommendations which help to distinguish
+      between them. These are discussed in detail below in the section
+      entitled <ptr target="#CFCATSCH"/>. </p>
+    </div>
+
+    <div xml:id="CFCATSCH" type="div3">
+      <head>Varieties of TEI Conformance</head>
+      <p>The definition of TEI conformance permits several different
+      kinds of schema of varying interchangeability. We define names
+      for some of the chief varieties here:
+
+<list type="gloss">
+          <label><term>TEI Pure Subset Schema</term></label>
+          <item>A <term>TEI Pure Subset schema</term> is one which is identical to
+            or further constrains the tei_all schema. This may
+            include: the removal of unused elements, attributes and
+            classes; the provision of attribute value lists; or the
+            further constraint of existing datatypes or content
+            models. However, a document instance which validates
+            against a <term>TEI Pure Subset schema</term> must always also validate
+            against the tei_all schema; in the terminology introduced
+	  in <ptr target="#MD"/>, it is the result of <term>clean modification</term>. </item>
+          <label><term>TEI Renaming Subset Schema</term></label>
+          <item>A <term>TEI Renaming Subset schema</term> is one which is identical
+            to or further constrains a <term>TEI Pure Subset schema</term>, but
+            which also renames existing elements, attributes, or
+            classes. A <term>TEI Renaming Subset schema</term> can also add new
+            elements, attributes or classes, if and only if an
+              <gi>equiv</gi> element in their <term>TEI ODD
+              file</term> documents an existing <term>TEI Pure Subset
+                schema</term>
+            equivalent for them. None of these changes should conflict
+            with the names of existing TEI elements, attributes or
+            classes. A document instance which validates against a <term>TEI
+            Renaming Subset schema</term> must always also validate against
+            the tei_all schema if the renamings are reversed or
+            replaced with their documented equivalents. </item>
+          <label><term>TEI Modification Schema</term></label>
+          <item> A <term>TEI Modification schema</term> is one which modifies a <term>TEI
+            Pure Subset</term> or <term>TEI Renaming Subset</term> by: changing existing
+            elements, attributes, or classes; adding existing elements
+            or attributes to members of existing classes; or changing
+            existing datatypes or content models. These changes should
+            not add new elements, attributes or classes, and all
+            changes should be documented in a <term>TEI ODD
+            file</term>. A document instance which validates against a
+            <term>TEI Modification schema</term> is not expected to validate
+            against the tei_all schema or subsets of this schema. </item>
+          <label><term>TEI Extension Schem</term>a</label>
+          <item> A <term>TEI Extension schema</term> is one which extends a <term>TEI
+            Pure Subset</term>, <term>TEI Renaming Subset</term>, or <term>TEI Modification
+            schema</term> by adding new elements, attributes, classes,
+            datatypes or content models. All new elements and
+            attributes, which are not renamings of current elements
+            and attributes, must be added in a separate namespace. The
+            relationship of any extensions to the TEI should be
+            documented in a <term>TEI ODD file</term>, additionally
+            all renamings of existing TEI elements and attributes
+            should be documented with an <gi>equiv</gi> element to an
+            existing <term>TEI Pure Subset schema</term> equivalent for them. A document
+            instance which validates against a <term>TEI Extension schema</term> is
+            not expected to validate against the tei_all schema. </item>
+          <label><term>TEI Supported Extension schema</term></label>
+          <item>A <term>TEI Supported Extension schema</term> is a special case of the
+            <term>TEI Extension schema</term>, where the extension has been created and
+            is (to some degree) supported by the TEI. This includes
+            the <term>TEI Customization Exemplars</term> detailed above. A document
+            instance which validates against a <term>TEI Supported Extension
+            schema</term> is not expected to validate against the tei_all
+            schema. </item>
+        </list>
+      </p>
+    </div>
+
+
+
+    <div type="div3">
+      <head>Non-Conformant  Customizations</head>
+      <p> In some cases those using the TEI may wish to customize the
+        TEI in a non-conformant manner. While producing
+          <term>TEI-Conformant</term> customizations is always to be
+        preferred, it is recognised there are situations where this may
+        not be possible or practical. Most of these situations are
+        entirely reasonable, and conformance, while desirable, should
+        not be confused with quality. </p><!--It may be that the customized
+        document instance is unable to meet the basic requirements for
+          <term>TEI Conformance</term>. That is, as stated above, that
+        it must:<list>
+          <item>be a well-formed and valid XML document</item>
+          <item>validate against a schema derived from the TEI
+            Guidelines</item>
+          <item>use the <term>TEI Namespace</term> only for all TEI
+            elements and attributes</item>
+          <item>contain a <gi>teiHeader</gi> element which includes
+            elements for at least a title statement and publication</item>
+          <item>document new customizations of the TEI schemas with a
+            valid <term>TEI ODD file</term></item>
+        </list>
+      </p>
+      <div type="div4">
+        <head>Data Creation, Local Storage and Processing Formats</head>-->
+        <p>It is also recognised that data destined to be in a
+        <term>TEI-Conformant</term> document may originate in a
+        variety of forms. Data might be captured by keyboarding or
+        other processing pipelines into a locally defined data
+        creation format. This may itself be a non-conformant format;
+        as may the local storage or format used internally for a
+        project, perhaps because of local processing needs. Whenever
+        possible, however, local storage in a
+        <term>TEI-Conformant</term> format is recommended as this is
+        likely to record more information than the input format for a
+        single application or processing need. It is possible that
+        there may be entirely different formats at different stages in
+        the processes of data creation, local storage and processed
+        dissemination. However, even if any of the data creation,
+        local storage or processing formats are not
+        <term>TEI-Conformant</term>, they may still follow TEI
+        recommendations in the selection of textual features to be
+        marked up, element names and content models, or additionally
+        the <term>TEI Abstract Model</term>.</p>
+<!--      </div>
+
+
+      <div type="div4"> 
+        <head><term>TEI-Based Customization</term></head>-->
+        <p>As noted above, the TEI ODD system may be used to document
+        any markup scheme, whether or not it is TEI conformant. We
+        therefore use the term <term>TEI-Based Customization</term> to
+        define an application of the <term>TEI ODD file</term> which
+        defines any non-TEI-conformant markup scheme<note
+        place="foot">Such a specification, being a TEI ODD, is ipso
+        facto TEI conformant of course</note>. A document instance
+        which validates against a <term>TEI-Based customization</term>
+        is not expected to validate against the tei_all schema or be
+        interoperable with <term>TEI-Conformant</term> documents.
+        Where such a document makes use of elements defined in the TEI
+	abstract model it may signal this fact by making use of the
+	TEI namespace for them. <!-- which validates against <term>TEI-Based
+        customization</term>is not bound by any of the requirements
+        for conformance, such as using the <term>TEI Namespace</term>
+        for TEI elements, it is hoped where possible these will be
+        followed. If existing TEI elements are used, it would be
+        recommended that they should be in the <term>TEI
+        Namespace</term>.--> </p>
+      </div>
+
+<!-- revised to here LB -->
+
+
+  <div xml:id="CFNS" type="div2">
+    <head>Namespaces and <term>TEI Conformance</term></head>
+    <p>It is a requirement of <term>TEI Conformance</term> that, in a
+        <term>TEI-Conformant</term> document, all existing TEI
+      elements and attributes are in the <term>TEI Namespace</term>:
+      "http://www.tei-c.org/ns/1.0/". Moreover,
+      <term>TEI-Conformant</term> documents must not extend the
+        <term>TEI Namespace</term> with additional elements and
+      attributes except by means of a <term>TEI Renaming Subset Schema</term>
+      produced from a <term>TEI ODD file</term> which properly
+      documents the renamed elements or attributes through the use of
+      the <gi>equiv</gi> element. Elements or attributes added to form
+      a <term>TEI Extension schema</term> must appear in a separate namespace,
+      either a user defined one or if the elements are taken from an
+      existing schema, the namespace appropriate to that schema. In a
+      <term>TEI Extension schema</term> a TEI element may have an attribute not
+      from the <term>TEI Namespace</term>, provided that the
+      expanded-name of the attribute has a non-null namespace URI. It
+      is an error for an element from the <term>TEI Namespace</term>
+      to have attributes with expanded-names which have null namespace
+      URIs (i.e. attributes with unprefixed names) other than
+      attributes defined for the element in the TEI Guidelines. A
+        <term>TEI-Conformant</term> document might have only one
+      namespace, that is the <term>TEI Namespace</term>, or it might
+      have any number of namespaces whose relationship and point of
+      attachment has been documented in a <term>TEI ODD file</term>. In choosing
+      user-defined namespaces care should be taken to avoid conflicts
+      with existing namespaces, while simultaneously indicating the
+      nature of the extension being added. </p>
+    <p>It is recognised that some processing software may find coping
+      with multiple (or any) namespaces difficult, and that as a
+      result the local storage or processing format may conflate or
+      remove namespaces. While this is regrettable, and will make
+      those document instances non-conformant, it highlights one
+      reason that any new elements, even in a separate namespace,
+      should not have identical names to existing elements. One of the
+      reasons for namespaces is to stop element name collision and so
+      the removal or conflation of namespaces should be avoided.</p>
+  </div>
+
+
+  <div type="div2">
+    <head><term>TEI Conformance</term> and <term>TEI ODD Files</term></head>
+    <p>As it is a requirement for conformance that any new
+      customizations of the TEI schemas should be documented in a
+      valid <term>TEI ODD file</term>, it is recommended practice that
+        <term>TEI-Conformant</term> document instances should indicate
+      the URI of a <term>TEI ODD file</term> from which their
+      applicable schemas have been generated. When interchanging TEI
+      documents with others, providing this ODD file (or making it
+      freely accessible on the internet) is recommended practice.
+      In many cases users may simply wish to use the schemas derived
+      from the <term>TEI Customization Exemplars</term> such as those detailed
+      above. In this case they should indicate either in prose or via
+      a URI the ODD and/or schema it validates against. Where
+      different versions of this schema have been produced, it should
+      be assumed that the document instance validates against the most
+      recent version of the schema at the date of publication recorded
+      in its header. Although the TEI attempts to support XML DTDs,
+      W3C XML Schema, and Relax NG (both compact and XML formats), it
+      does not mandate the schema language you should use, only that
+      this schema should have been generated through the use of a
+        <term>TEI ODD file</term> which references the TEI Guidelines.
+    </p>
+  </div>
+
+
+  <div type="div2">
+    <head><term>TEI Conformance</term> and Document Interchange</head>
+    <p>Although a wide variety of documents are able to be
+    <term>TEI-Conformant</term>, it should be stressed that this does
+    not in any way imply that interchange or interoperability of these
+    documents will be straightforward. While it should be mostly
+    unproblematic with documents that validate against a TEI Pure
+    Subset or TEI Renaming schema, any form of TEI Modification or
+    <term>TEI Extension</term> schema will necessarily be less
+    suitable for interchange or interoperable use. For this reason,
+    whenever it is possible it is recommended that where a local
+    storage format is validated against a <term>TEI
+    Modification</term> or <term>TEI Extension</term> schema, the
+    possibilities for transforming these forms which validate against
+    a <term>TEI Pure Subset</term> or <term>TEI Renaming</term> schema
+    should be investigated. Every care should be taken to preserve all
+    the intellectual content which resides in the incompatible markup,
+    and wherever possible the differences between the two should be
+    documented not only in the existing <term>TEI ODD file</term>, but
+    alongside project documentation. One strategy is to move
+    incompatible markup into separate files and use stand-off markup
+    to retain the information. </p>
+  </div>
+
+
+  <div type="div2">
+    <head><term>TEI Conformance</term> and Funding Bodies</head>
+    <p>The TEI is aware that some academic funding bodies view
+    <term>TEI-Conformant</term> documents as superior to
+    non-conformant TEI documents. It should be stressed to these
+    bodies that although TEI-Conformance does imply additional
+    documentation (through the <term>TEI ODD file</term>), and some
+    very basic format requirements, it should not be confused with a
+    marker of quality. It is possible that a non-conformant TEI
+    document may be of superior quality, provide more significantly
+    detailed documentation, and have been subjected to greater
+    academic scrutiny than a one which is technically
+    <term>TEI-Conformant</term>. While the TEI recommends the
+    production of documents which are <term>TEI-Conformant</term>, it
+    recognises that the goals such as textual fidelity, documentation,
+    and academic rigour are more important. Although the TEI
+    encourages these funding bodies to suggest <term>TEI
+    Conformance</term>, and in addition <term>TEI Recommended
+    Practice</term>, their prime concern should be the overall quality
+    of the documents for the funded purpose and their potential for
+    re-use.</p>
+  </div>
+
+</div>
+

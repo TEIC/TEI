@@ -170,12 +170,12 @@ Modifications that have this result are called <term>unclean
 modifications</term>.</p>
 
 <p>Unclean modifications are not particularly deprecated, and their
-use may often be essential to the success of a project. It is however
+use may often be vital to the success of a project. It is however
 essential to the successful interchange of documents that such
 modifications be clearly distinguished from clean modifications of the
-TEI. For this reason, amongst others, elements which have been modified
-in this way should generally be placed in a non-TEI namespace, as
-further discussed in <ptr target="#MDNS"/>. </p>
+TEI. For this reason, amongst others, elements which have been
+modified in this way should generally be placed in a non-TEI
+namespace, as further discussed in <ptr target="#MDNS"/>. </p>
 
 <div type="div3" xml:id="MDMDSU"><head>Deletion of Elements</head>
 
@@ -451,7 +451,7 @@ existing list, the correct value for <att>mode</att> would be
 
 <p>As noted above, adding the new <att>type</att> attribute involves
 changing this element's class membership; we therefore discuss that in
-the next section (<ptr target="MDMDCM"/>).</p>
+the next section (<ptr target="#MDMDCM"/>).</p>
 
 <p>The canonical name for the new attribute is <att>source</att>, and
 is supplied on the <att>ident</att> attribute of the <gi>attDef</gi>
@@ -651,7 +651,16 @@ etc. as further described in <ptr target="#TD"/>.
 </div>
 
 <div type="div2" xml:id="MDNS"><head>Modification and use of Namespaces</head>
-
+<list>
+<item>New elements may not be placed in the TEI namespace</item>
+<item>If new attributes are added to a TEI element, the resulting
+element must be moved out of the TEI namespace</item>
+<item>Only elements which have undergone a clean modification may
+remain in the TEI namespace</item>
+<item>If a TEI element is renamed, it may not remain in the TEI
+namespace, except that TEI namespaces are defined for systematic renaming of
+TEI elements into different languages</item>
+</list>
 </div>
 
 <div type="div2" xml:id="MDDO"><head>Documenting the
@@ -668,21 +677,21 @@ place="foot">This module can be used to document any XML schema, and
 has indeed been used to document several non-TEI schemas.</note></p>
 <p>Where the customization to be documented simply consists in a
 selection of modules, perhaps with some deletion of unwanted elements
-or attributes, the documentation need not go beyond specifying
-anything further. Even here however it may be considered worthwhile to
-replace some of the semantic information provided by the unmodified
-TEI specification. For example, the <gi>desc</gi> element of an
-unmodified TEI <gi>elementSpec</gi> may describe an element in terms
-more general than appropriate to a particular project, or the
-<gi>exemplum</gi> elements within it may not illustrate the project's
-actual intended usage of the element, or the <gi>remarks</gi> element
-may contain discussions of matters irrelevant to the project. These
-elements may therefore be replaced or deleted within an
-<gi>elementSpec</gi> as necessary. </p>
+or attributes, the documentation need not specify anything
+further. Even here however it may be considered worthwhile to replace
+some of the semantic information provided by the unmodified TEI
+specification. For example, the <gi>desc</gi> element of an unmodified
+TEI <gi>elementSpec</gi> may describe an element in terms more general
+than appropriate to a particular project, or the <gi>exemplum</gi>
+elements within it may not illustrate the project's actual intended
+usage of the element, or the <gi>remarks</gi> element may contain
+discussions of matters irrelevant to the project. These elements may
+therefore be replaced or deleted within an <gi>elementSpec</gi> as
+necessary. </p>
 
 <!-- example needed -->
 
-<p>Radical revision is possible.  It is feasible to produce a
+<p>Radical revision is also possible.  It is feasible to produce a
 modification in which the <gi>teiHeader</gi> or <gi>text</gi> elements
 are not required, or in which any other rule stated in these Guidelines
 is either not enforced or not enforceable.  In fact, the mechanism, if
@@ -788,8 +797,10 @@ further described within the document.</p>
 
 
 
-<div><head>DTD stuff punted</head>
 <!--
+
+
+<div><head>DTD stuff punted</head>
 <p>Parameter entities are a mechanism for allowing string substitution
 within markup declarations; they can thus can be used to effect
 changes in declarations.  A parameter entity, unlike an element, may
@@ -1200,5 +1211,9 @@ type="class">model.biblLike</ident>.</p>-->
 <!--<p>This indirection makes it
 possible to add new elements to any content model, simply by adding them
 to the class referenced in the content model.</p>
+
+</div
 -->
-</div></div>
+
+
+</div>
