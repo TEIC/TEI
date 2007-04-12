@@ -362,6 +362,7 @@
                       </xsl:if>
                     </xsl:for-each>
                   </xsl:when>
+		  <xsl:when test="tei:classes/tei:memberOf"/>
                   <xsl:otherwise>
                     <notAllowed xmlns="http://relaxng.org/ns/structure/1.0"/>
                   </xsl:otherwise>
