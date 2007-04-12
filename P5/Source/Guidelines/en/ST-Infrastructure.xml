@@ -60,7 +60,7 @@ RELAXNG language, or the W3C Schema language. </p>
 <p>This chapter begins by briefly characterizing each of the modules
 available in the TEI scheme. Section <ptr target="#STIN" type="div2"/>
 describes in general terms the method of constructing  a TEI schema
-in a specific schema language such as XML DTD language, RELAXNG, or
+in a specific schema language such as XML DTD language, RELAX NG, or
 W3C Schema. </p>
 
 <p>The <term>global attributes</term>, characteristics postulated of
@@ -97,7 +97,7 @@ fragments, in particular for XML DTDs. </p>
 for marking up documents of any kind. Each definition combines a prose
 description, provided within a chapter of the Guidelines and in the
 reference lists, with a formal declaration, expressed for reference by
-means of the ISO schema language RELAXNG. For convenience, each
+means of the ISO schema language RELAX NG. For convenience, each
 element is assigned to a single module: the declaration file for each
 module thus contains a set of related element declarations, typically
 for use in some specific application area, or to support a particular
@@ -110,7 +110,7 @@ schema is made by combining these fragments, each of which contains
 sets of declarations, as further described in section <ptr
 target="#STIN"/> below. </p>
 
-<p>For RELAXNG and W3C each module generates a single schema
+<p>For RELAX NG and W3C each module generates a single schema
 fragment with the same name as the module. For XML DTD fragments,
 however, some  modules generates two fragments: for example
 the <ident type="module">analysis</ident> module generates fragments
@@ -191,8 +191,8 @@ supports</item>
 invoking the DTD fragments corresponding with the schema specification
 may be produced, together with XML DTD code for any additional
 modifications</item>
-<item>for an editor using RELAXNG language, a schema referencing the
-appropriate predefined RELAXNG patterns may be produced, together
+<item>for an editor using RELAX NG language, a schema referencing the
+appropriate predefined RELAX NG patterns may be produced, together
 with any additional definitions required to support
 modifications</item>
 </list>
@@ -228,7 +228,7 @@ or W3C schema from this set of declarations, which would then be
 associated with the document instance by one of a number of different
 mechanisms, as further described in chapter <ptr target="#SG"/><!-- somewhere --> </p>
 
-<p>The same effect might be obtained by means of a RELAXNG
+<p>The same effect might be obtained by means of a RELAX NG
 schema like the following:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 include "tei.rnc" 
@@ -312,10 +312,10 @@ to their application are discussed in <ptr target="#CF"/>. These
 facilities are available for any schema language (though some
 features such as alternation of attributes are not available in all
 languages). The ODD language also makes it  possible to combine
-TEI and non-TEI modules into a single schema, but only for the RELAXNG
+TEI and non-TEI modules into a single schema, but only for the RELAX NG
 schema language.</p>
 <p>In the simplest case, all that is needed to include a non TEI
-module in a schema is to reference its RELAXNG source using the
+module in a schema is to reference its RELAX NG source using the
 <att>uri</att> attribute on <gi>moduleref</gi>. The following schema specification, for
 example, creates a schema in which declarations from the non-TEI
 module <ident>svg11.rng</ident> (defining Standard vector Graphics)
@@ -355,7 +355,7 @@ modules, the declaration for the model class model.graphicLike in the TEI module
 should be extended to include the element <gi>svg</gi> as an
 alternative. This has the effect that elements in the TEI scheme
 which define their content model in terms of that element class
-(notably <gi>figure</gi>) can now include it. A RELAXNG schema
+(notably <gi>figure</gi>) can now include it. A RELAX NG schema
 generated from such a specification can be used to validate documents
 in which the TEI <gi>figure</gi> element contains  any valid SVG
 representation of a graphic, embedded within an <gi>svg</gi> element.
@@ -539,7 +539,7 @@ order of declarations derive from the way in which the modularity of
 the TEI scheme is implemented in different schema languages. The XML
 DTD fragment implementing this TEI module make extensive use of
 <term>parameter entities</term> and <term>marked sections</term> to
-effect a kind of conditional construction; the RELAXNG schema fragment
+effect a kind of conditional construction; the RELAX NG schema fragment
 similarly predeclares a number of patterns with null
 (<soCalled>notAllowed</soCalled>) values. These techniques are further
 explained in chapter <ptr target="#SG"/>. </p>
@@ -568,7 +568,7 @@ further <ptr target="#STOVLO"/>).  </item>
 further <ptr target="#STPED"/>).</item>
 </list>
 </p>
-<p>The RELAXNG schema fragment corresponding to this module  contains simply the following:
+<p>The RELAX NG schema fragment corresponding to this module  contains simply the following:
 
 <list>
 <item>Declare default values for predeclared classes</item>
@@ -577,7 +577,7 @@ further <ptr target="#STPED"/>).</item>
 </list>
 
 </p>
-<p>This simpler structure is a consequence of the way that the RELAXNG
+<p>This simpler structure is a consequence of the way that the RELAX NG
 schema language permits declarations to be combined from different
 modules in any order, provided that the patterns defining those
 declarations are properly initialised.</p>
@@ -778,7 +778,7 @@ subclasses and superclasses, and the properties of a superclass are
 inherited by all members of its subclasses.
  </p>
 
-<p>In the RELAXNG fragments which express the TEI scheme, attribute
+<p>In the RELAX NG fragments which express the TEI scheme, attribute
 and model classes are represented by patterns whose names begin with
 <ident>att.</ident> or <ident>model.</ident> respectively. The same
 names are used in the XML DTD fragments for the parameter entities
@@ -790,7 +790,7 @@ an appropriate initial declaration for the class, so that it can
 subsequently be referenced, either by a subclass, or by someone
 wishing to extend the class with a new element. In the TEI DTD
 fragments, each class is fully defined by its associated parameter
-entity declaration; in the RELAXNG schema fragment, each class is
+entity declaration; in the RELAX NG schema fragment, each class is
 incrementally defined as each element declaration modifies the initial
 pattern provided by the TEI infrastructure module.</p>
 
@@ -905,7 +905,7 @@ portion of an ODD document. </cell><cell/></row>
 </specGrp>
 
 
-<p>In RELAXNG schema fragments, all attribute classes are defined as
+<p>In RELAX NG schema fragments, all attribute classes are defined as
 named patterns, as shown above. For each class, one pattern combining
 the class name with the suffix <code>.attributes</code> is defined,
 and for each attribute supplied by membership in the class a further
@@ -931,7 +931,7 @@ name.attributes =
  
 <p>Superclasses are implemented using the same patterns. For example,
 the class <ident type="class">att.divLike</ident>, as noted above, is
-a subclass of the module-specific class <ident type="class">att.metrical</ident>. The corresponding RELAXNG pattern
+a subclass of the module-specific class <ident type="class">att.metrical</ident>. The corresponding RELAX NG pattern
 for the subclass therefore includes a reference to the superclass, as
 shown above. In the <ident type="module">tei</ident> module, the
 pattern <ident type="pattern">att.metrical.attributes</ident> is
@@ -944,7 +944,7 @@ verse-specific attributes discussed above.</p>
 attribute class are defined by a parameter entity; member elements
 inherit their attributes by referring to this parameter entity within
 their attribute-list declaration. The parameter entities used for this
-purpose are named in the same way as the corresponding RELAXNG
+purpose are named in the same way as the corresponding RELAX NG
 patterns: they take the name of the class they define (including the
 <code>att.</code> prefix), suffixed the string
 <mentioned>attributes</mentioned>.  For example, the declaration for
@@ -1267,7 +1267,7 @@ type (i.e. texts using a specific module).
  </p>
 <p>Declarations for these module-specific element classes are included
 in a separate <ident type="module">-decls</ident> schema fragment when
-XML DTDs are used. In  RELAXNG  schema fragments, the corresponding
+XML DTDs are used. In  RELAX NG  schema fragments, the corresponding
 declarations are given at the start of the same schema fragment as the
 other declarations. </p></div>
 
@@ -1348,7 +1348,7 @@ frequently-encountered content models, or parts of content models
 components of other macros to be defined in a way that permits their
 significance to vary depending on the collection of modules in use
 (<ptr target="#STECMX"/>). In both cases, macros are implemented in
-the same way: as patterns in the RELAXNG schema fragments, and as
+the same way: as patterns in the RELAX NG schema fragments, and as
 parameter entities in the XML DTD  fragments.</p>
 
 <div type="div3" xml:id="STECST"><head>Standard Content Models</head>
@@ -1523,7 +1523,7 @@ such as
 <eg><![CDATA[<!ENTITY % p 'IGNORE' >]]></eg>
 is added earlier in the DTD than the default (see further <ptr target="#STOVLO"/>). </p>
 
-<p>In the RELAXNG schemas, every element is defined by a pattern named
+<p>In the RELAX NG schemas, every element is defined by a pattern named
 after the element. To undefine an element therefore all that is
 necessary is to add a declaration like the following:
 
@@ -1549,7 +1549,7 @@ be preserved in the entity name.
  </p>
 <p>These declarations are automatically generated by an ODD processor
 when  TEI DTD fragments are created. </p>
-<p> In the RELAXNG schemas, all elements are defined using a pattern
+<p> In the RELAX NG schemas, all elements are defined using a pattern
 with the same name as the element: for example
 <eg>
 abbr = element abbr { abbr.content, abbr.attributes }
@@ -1562,7 +1562,7 @@ abbrev = element abbr { abbr.content, abbr.attributes }
 More complex revisions, such as redefining the content of the element
 (defined by the pattern <ident type="rng">abbr.content</ident>) or its
 attributes (defined by the pattern <ident type="rng">abbr.attributes</ident>) can be accomplished in a similar
-way, using the features of the RELAXNG language. The recommended
+way, using the features of the RELAX NG language. The recommended
 method of carrying out such modifications is however to use the ODD
 language as further described in section <ptr target="#TD"/>.</p>
 </div>

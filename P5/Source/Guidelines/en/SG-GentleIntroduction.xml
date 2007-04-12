@@ -380,13 +380,13 @@ schema can be expressed in a number of different ways;
 frequently-encountered methods include the Document Type Declaration
 (DTD) language which XML inherited from SGML (DTD); the XML Schema
 language (<ptr target="http://www.w3.org/XML/Schema"/>) defined by the
-W3C; and the RELAXNG language (<ptr target="http://relaxng.org/"/>)
+W3C; and the RELAX NG language (<ptr target="http://relaxng.org/"/>)
 originally developed within the OASIS Technical Committee and now
 accepted as an ISO draft standard (ISO/IEC FDIS 19757-2 Document
 Schema Definition Language (DSDL) -- Part 2: Regular-grammar-based
-validation -- RELAX NG).  The TEI Guidelines use Relax NG internally for
+validation -- RELAX NG).  The TEI Guidelines use RELAX NG internally for
 defining TEI elements, but  schemas in the other two languages may
-also be generated.  This chapter gives examples using DTD and RELAXNG
+also be generated.  This chapter gives examples using DTD and RELAX NG
 notation.</p>
 </div></div>
 <div type="div2" xml:id="SG14"><head>Validating a document's structure</head>
@@ -427,10 +427,10 @@ interpretation of the structure and significant particularities of the
 text being encoded.</p>
 
 <div type="div3" xml:id="SG141bis"><head>An example schema</head>
-<p>A RELAXNG schema is represented by an XML element called a
+<p>A RELAX NG schema is represented by an XML element called a
 <gi>grammar</gi>, which contains a number of name declarations,
 each represented by means of a <gi>define</gi> element.  For example,
-the RELAXNG representation for our simple anthology model might begin as follows:
+the RELAX NG representation for our simple anthology model might begin as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <define name="anthology">
     <element name="anthology">
@@ -510,7 +510,7 @@ appropriate:
     </choice>
   </start>
 </grammar>]]></egXML>
-The RELAXNG language defines a set of named <term>patterns</term>
+The RELAX NG language defines a set of named <term>patterns</term>
 for each element, which link to one another. -->
 </p></div>
 <div type="div3" xml:id="SG141"><head>An example DTD</head>
@@ -814,7 +814,7 @@ more <code>IDREF</code> values, separated by one or more whitespace characters.<
 <item><code>ENTITIES</code>: The attribute value must contain one or
 more <code>ENTITY</code> values, separated by one or more whitespace characters.</item>
 </list></p>
-<p>In a RELAXNG schema, the attribute would be defined within
+<p>In a RELAX NG schema, the attribute would be defined within
 the element declaration as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<optional>
       <attribute name="id">
@@ -915,7 +915,7 @@ the identifier of the element pointed at.  This is achieved by
 the following declarations; in DTD:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ELEMENT poemRef   EMPTY                  >
 <!ATTLIST poemRef   target IDREF #REQUIRED >]]></egXML>
-and in RELAXNG:
+and in RELAX NG:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<define name="poemRef">
     <element name="poemRef">
       <attribute name="target">
