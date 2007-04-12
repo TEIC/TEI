@@ -1,0 +1,34 @@
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" 
+	     xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" usage="opt" ident="listNym">
+	<equiv/>
+	<desc>contains a list of nyms, that is, standardized names for any
+	thing. </desc>
+	<classes>
+	  <memberOf key="att.typed"/>
+	  <memberOf key="att.declarable"/>
+	  <memberOf key="model.biblLike"/>
+	</classes>
+	<content>
+	  <rng:oneOrMore>
+	    <rng:choice>
+	    <rng:ref name="nym"/>
+	    <rng:ref name="listNym"/>
+	    </rng:choice>
+	  </rng:oneOrMore>
+	</content>
+	<exemplum>
+	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	    <listNym type="floral">
+	      <nym><form>Rose</form></nym>
+	      <nym><form>Daisy</form></nym>
+	      <nym><form>Heather</form></nym>
+	    </listNym>
+	  </egXML>
+	</exemplum>
+	<remarks>
+	  <p rend="dataDesc">The type attribute may be used to distinguish lists	  of names of a particular type if convenient.</p>
+	</remarks>
+	<listRef>
+	  <ptr target="#NDNYM"/>
+	</listRef>
+      </elementSpec>
