@@ -280,7 +280,9 @@ remainder of this chapter. They are formally defined as follows:
 &particDesc;
 &settingDesc;
 </specGrp>
-<specGrpRef target="#DCCAHTD"/><specGrpRef target="#DCCAHPA"/><specGrpRef target="#DCCAHSE"/>
+<specGrpRef target="#DCCAHTD"/>
+<!--specGrpRef target="#DCCAHPA"/-->
+<specGrpRef target="#DCCAHSE"/>
 	</p>
 <!--<p>The module for language corpora will be invoked, thus
 enabling the use of these elements, if a parameter entity called
@@ -423,16 +425,18 @@ The formal declarations for these elements are given below:
 	<!-- described in chapter < xref target='MD' >.                 -->
 	<!-- some change along these lines is desirable for P4 (LB) --></p></div>
 <div type="div3" xml:id="CCAHPA"><head>The Participants Description</head>
+
 <p>The <gi>particDesc</gi> element in the <gi>profileDesc</gi> element
-provides additional information about the participants in a spoken text
-or, where this is judged appropriate, the persons named or depicted in a
-written text.  When the detailed elements provided by the Names and
-Dates module are included in a schema, this element can contain
-detailed demographic or descriptive information about individual speakers or groups of speakers,
-such as their names or other personal characteristics. Individually
-identified persons may also
-identified by a code which can then be used elsewhere within the encoded
-text, for example as the value of a <att>who</att> attribute.</p>
+provides additional information about the participants in a spoken
+text or, where this is judged appropriate, the persons named or
+depicted in a written text.  When the detailed elements provided by
+the Names and Dates module are included in a schema, this element can
+contain detailed demographic or descriptive information about
+individual speakers or groups of speakers, such as their names or
+other personal characteristics. Individually identified persons may
+also identified by a code which can then be used elsewhere within the
+encoded text, for example as the value of a <att>who</att>
+attribute.</p>
 
 <p>It should be noted that although the terms <term>speaker</term> or
 <term>participant</term> are used throughout this section, it is
@@ -484,15 +488,18 @@ described informally as follows:
     1950, of unknown occupation. Speaks French fluently.
     Socio-Economic status B2 in the PEP classification scheme.</p>
 </particDesc></egXML></p>
+
 <p>Dates and names of persons or places, if included in the prose
 description, may be encoded using either the general purpose
 <gi>date</gi>, <gi>name</gi> or <gi>rs</gi> elements discussed in
 section <ptr target="#CONA"/>, or the more specialised and detailed
-elements provided by chapter <ptr target="#ND"/>. In the latter case, the
-module for names and dates must be included in the schema along with
-that for language corpora.</p>
-<p>When this module is included, information about the participant described above might
-be provided in a more structured way as follows:
+elements provided by chapter <ptr target="#ND"/>. In the latter case,
+the module for names and dates must be included in the schema along
+with that for language corpora.</p>
+
+<p>When this module is included, information about the participant
+described above might be provided in a more structured way as follows:
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><person sex="2" age="mid">
    <birth date="1950-01-12">     
       <date>12 Jan 1950</date>
@@ -521,45 +528,27 @@ definitions for their speakers; see further section <ptr target="#DRSP"/>.</note
 </list></p></particDesc>
 </egXML></p>
 
-<!--
-<p>The elements discussed in this section are formally defined as
-follows:
-<specGrp xml:id="DCCAHPA" n="Participants description">
-&listPerson;
-&person;
-&personGrp;
-&birth;
-&death;
-&firstLang;
-&langKnown;
-&residence;
-&education;
-&affiliation;
-&nationality;
-&occupation;
-&socecStatus;
-&particLinks;
-&relation;
-</specGrp>
-</p>-->
 </div>
-<div type="div3" xml:id="CCAHSE"><head>The Setting
-Description</head> <p>The <gi>settingDesc</gi> element is used to
-describe the setting or settings in which language interaction takes
-place.  It may contain a prose description, analogous to a stage
-description at the start of a play, stating in broad terms the locale,
-or a more detailed description of a series of such settings.
-Individual settings may be associated with particular participants by
-means of the optional <att>who</att> attribute if, for example,
-participants are in different places.  This attribute identifies one
-or more individual participants or participant groups, as discussed
-earlier in section <ptr target="#CCAHPA"/>.  If this attribute is not
-specified, the setting details provided are assumed to apply to all
-participants represented in the language interaction.<note place="foot">The present proposals do not support the encoding of
-different settings for the same participant.  This is a subject for
-further work.</note></p> <p>Each distinct setting is described by
-means of a <gi>setting</gi> element, which contains either a prose
-description or a combination of the other elements listed below:
+<div type="div3" xml:id="CCAHSE">
+<head>The Setting Description</head> 
+<p>The <gi>settingDesc</gi> element is used to describe the setting or
+settings in which language interaction takes place.  It may contain a
+prose description, analogous to a stage description at the start of a
+play, stating in broad terms the locale, or a more detailed
+description of a series of such settings.  Individual settings may be
+associated with particular participants by means of the optional
+<att>who</att> attribute if, for example, participants are in
+different places.  This attribute identifies one or more individual
+participants or participant groups, as discussed earlier in section
+<ptr target="#CCAHPA"/>.  If this attribute is not specified, the
+setting details provided are assumed to apply to all participants
+represented in the language interaction. Note however that it is not
+possible to encode different settings for the same participant: a
+participant is deemed to be a person within a specific setting.</p> 
+
+<p>Each distinct setting is described by means of a <gi>setting</gi>
+element, which contains either a prose description or a combination of
+the other elements listed below:
 <specList>
 <specDesc key="setting"/>
 <specDesc key="name" atts="type"/>
@@ -616,7 +605,8 @@ definitions:
 &activity;
 </specGrp>
 </p></div></div>
-<div type="div2" xml:id="CCAS"><head>Associating Contextual Information with a Text</head>
+<div type="div2" xml:id="CCAS"><head>Associating Contextual
+Information with a Text</head>
 <p>This section discusses the assocation of the contextual information
 held in the header with the individual elements making up a TEI text or
 corpus.  Contextual information is held in elements of various kinds

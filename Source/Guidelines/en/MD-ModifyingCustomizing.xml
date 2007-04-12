@@ -340,10 +340,10 @@ xmlns:rng="http://relaxng.org/ns/structure/1.0"><rng:text/></content></elementSp
 
 <p>Because this modification changes the meaning of a TEI element, it
 is always good practice, and usually a requirement for conformance,
-that the modified element be explicitly assigned to some other
-namespace than that of the TEI. This is the function of the <att>ns</att>
-attribute on the <gi>elementSpec</gi> above; see further <ptr
-target="#MDNS"/> below.</p>
+that the modified element be explicitly assigned to
+some other namespace than that of the TEI. This is the function of the
+<att>ns</att> attribute on the <gi>elementSpec</gi> above; see further
+<ptr target="#MDNS"/> below.</p>
 <p>A change of this kind, which simplifies the possible content of an
 element by reducing its model to one of its existing components, is
 always clean, because the set of documents matched by the resulting
@@ -573,18 +573,19 @@ that we  never wish to use the <att>n</att> attribute, the simplest
 way of removing it is to supply a modified class specification for
 <ident>att.global</ident> as follows: <egXML
 xmlns="http://www.tei-c.org/ns/Examples"><classSpec ident="att.global"
-mode="change" ns="http://www.hatstand.org/ns">
-<attList mode="change">
+type="atts" mode="change">
+<attList>
 <attDef ident="n" mode="delete"/>
 </attList>
 </classSpec>
 </egXML>
-Because the <att>mode</att> attribute on the <gi>attList</gi> defining
-the attributes inherited through membership of this class has the
-value <val>change</val>, any of its existing components not specified in the
-modification above will remain unchanged. The only effect will be to
-delete the <att>n</att> attribute from the class. This in turn will
-affect the attributes inherited by all members of the class.</p>
+Because the <att>mode</att> attribute on the <gi>classSpec</gi>
+defining the attributes inherited through membership of this class has
+the value <val>change</val>, any of its existing identifiable
+components not specified in the modification above will remain
+unchanged. The only effect will therefore be to delete the <att>n</att>
+attribute from the class. This in turn will affect the attributes
+inherited by all members of the class.</p>
 
 
 <p>Full details of the classes used in the TEI scheme are provided in

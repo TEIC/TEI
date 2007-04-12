@@ -1,46 +1,49 @@
 <!--
 Copyright TEI Consortium. Licensed under the GNU General Public License. See the file COPYING for details.$Date$
 $Author$-->
-<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="ND" n="20"><head xmlns="http://www.tei-c.org/ns/1.0">Names and Dates</head>
+<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="ND"
+     n="20"><head>Names and Dates</head>
 
 <p>This chapter describes a module which may be used for the encoding
-of proper names and other phrases descriptive of persons, places,
-organizations, and also of dates and times, in a manner more detailed
-than that possible using the elements already provided for these
-purposes in the Core module described in chapter <ptr target="#CO"/>.</p>
+of proper names and other phrases descriptive of persons, places, or
+organizations, in a manner more detailed than that possible using the
+elements already provided for these purposes in the Core module
+described in chapter <ptr target="#CO"/>. It also provides elements
+for  a more detailed encoding of references to dates and times.</p>
 
 <p>In section <ptr target="#CONA"/> it was noted that the elements
-provided in the core allow the encoder to specify that a given
+provided in the core module allow the encoder to specify that a given
 text segment is a proper noun, or a <term>referring string</term>, and
 to specify the kind of object named or referred to only by supplying a
 value for the <att>type</att> attribute. The elements provided by the
 present module allow the encoder both to supply a detailed
 sub-structure for such referring strings, and also to distinguish
-explicitly between names of persons, places or organizations.</p>
-<p>Similarly, the elements provided here allow the encoder to supply a
-detailed analysis of the component parts of any expression which
-denotes a date or time, which is not possible using the elements
-described in section <ptr target="#CONADA"/>.</p>
+explicitly between names of persons, places, and organizations.</p>
 
-<p>Finally, when this module is included, elements are provided to
-represent the abstract structures, or virtual objects to which names
-or dates may be said to refer. In simple terms, where the core
-module allows one to represent a <term>name</term>, this module allows
-one further to represent a <term>personal name</term>. It also allows
-one to represent the <term>person</term> being named, and thus to
-encode biographical or other personal data for a wide range of
-applications, quite distinct from the names associated with such
-data.</p>
+<p>Additional elements are provided to represent the abstract
+structure to which a name is understood to refer and to represent the
+name itself, independently of its application. In simple terms, where
+the core module allows one simply to represent that a given piece of
+text is a <term>name</term>, this module allows one further to
+represent a <term>personal name</term>, to represent the 
+<term>person</term> being named, and to represent the <term>canonical
+name</term> being used. A similar range is provided for names of
+places and organizations. The intended application for this module is
+in  biographical or historical data, for which the additional elements
+provided for detailed tagging of dates and times may also be useful. </p>
 
 
-<p>The chapter begins by discussing elements for the
-encoding of component parts of personal names (section <ptr target="#NDPER"/>), place names (section <ptr target="#NDPLAC"/>) and
-organizational names (section <ptr target="#NDORG"/>). Elements for
-encoding personal data are discussed in section <ptr target="#NDPERS"/>. Finally, the detailed encoding of
-dates and times is described in section <ptr target="#NDDATE"/>.</p>
+<p>The chapter begins by discussing elements for the encoding of
+component parts of personal names (section <ptr target="#NDPER"/>),
+place names (section <ptr target="#NDPLAC"/>) and organizational names
+(section <ptr target="#NDORG"/>). Elements for encoding personal data
+are discussed in section <ptr target="#NDPERS"/>. Elements for
+encoding onomastic data is discussed in <ptr
+target="#NDNYM"/>. Finally,  the detailed encoding of dates and times
+is described in section <ptr target="#NDDATE"/>.</p>
 
 
-<p>The names and dates  module makes available the following
+<p>This   module makes available the following
 components:
 
 <moduleSpec xml:id="DND" ident="namesdates">
@@ -63,22 +66,23 @@ The selection and combination of modules to form a TEI schema is described in
   &data.temporal.iso;
   &data.duration.iso;
   </p>
-  <p>
-    <?tei winita this needs to be put somewhere intelligent --sb ?>
-    <specDesc key="data.temporal.iso"/>
-    <specDesc key="data.duration.iso"/>
-  </p>
-  <p>
+  <p>It contains specification groups for name components of persons,
+  places, and organizations:
     <specGrpRef target="#DNDPER"/>
     <specGrpRef target="#DNDPLAC"/>
     <specGrpRef target="#DNDORG"/>
+  </p>
+<p>It also contains specification groups for prosopographical and
+onomastical use:
+    <specGrpRef target="#DCCAHPA"/>
+    <specGrpRef target="#DNDNYM"/>
   </p>
 </specGrp>
 
 </p>
 
 
-<div type="div2" xml:id="NDPER"><head xmlns="http://www.tei-c.org/ns/1.0">Personal Names</head>
+<div type="div2" xml:id="NDPER"><head>Personal Names</head>
 <p>The core <gi>rs</gi> and <gi>name</gi> elements can distinguish
 names in a text but are insufficiently powerful to mark their internal
 components or structure. To conduct nominal record linkage or even to
@@ -95,26 +99,27 @@ related purposes:
 <specList><specDesc key="persName"/><specDesc key="surname"/><specDesc key="forename"/><specDesc key="roleName"/><specDesc key="addName"/><specDesc key="nameLink"/><specDesc key="genName"/></specList>
  </p>
 <p>As members of the <ident type="class">att.naming</ident> class, all of these
-elements share the following attribute:
-<specList><specDesc key="att.naming" atts="key"/></specList>
+elements share the following attributes:
+<specList><specDesc key="att.naming" atts="key nimkey"/></specList>
  </p>
-<p>Additionally, all of the above elements except for <gi>persName</gi>
+<p>Additionally, all of the above elements 
 are members of the class <ident type="class">att.personal</ident>, and thus
 share the following attributes:
-<specList><specDesc key="att.personal" atts="type full sort"/></specList>
+<specList><specDesc key="att.personal" atts="full sort"/></specList>
  </p>
+
 <p>The <gi>persName</gi> element may be used in preference to the
 general <gi>name</gi> element irrespective of whether or not the
 components of the personal name are also to be marked. Its
-<att>key</att> <!-- and <att>reg</att> --> attribute is used in exactly the
-same way as those on the <gi>rs</gi> and <gi>name</gi> elements (see
-section <ptr target="#CONA"/>). The tag <gi>persName</gi> is synonymous
-with the tag <tag>name type="person"</tag>, except that its
-<att>type</att> attribute allows for further subcategorization of the
-personal name itself,  for example as a <q>married</q>, <q>maiden</q>,
-<q>pen</q>, <q>pseudo</q> or <q>religious</q> name.  Consequently the
-following examples are equivalent:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">That silly man 
+<att>key</att> attribute is used in exactly the same way as those on
+the <gi>rs</gi> and <gi>name</gi> elements (see section <ptr
+target="#CONA"/>). The tag <gi>persName</gi> is synonymous with the
+tag <tag>name type="person"</tag>, except that its <att>type</att>
+attribute allows for further subcategorization of the personal name
+itself, for example as a <q>married</q>, <q>maiden</q>, <q>pen</q>,
+<q>pseudo</q> or <q>religious</q> name.  Consequently the following
+examples are equivalent: <egXML
+xmlns="http://www.tei-c.org/ns/Examples">That silly man
 <rs key="DPB1" type="person">
 David Paul Brown</rs> has suffered the furniture of
 his office to be seized the third time for rent.</egXML>
@@ -134,11 +139,11 @@ David Paul Brown</persName> has suffered ...</egXML>
 components occurring within it can be marked as such.
  </p>
 
-<p>Many cultures distinguish
-between a family or inherited <term>surname</term> and additional
-personal names, often known as <term>given names</term>. These should
-be tagged using the <gi>surname</gi> and <gi>forename</gi> elements
-respectively and may occur in any order:
+<p>Many cultures distinguish between a family or inherited
+<term>surname</term> and additional personal names, often known as
+<term>given names</term>. These should be tagged using the
+<gi>surname</gi> and <gi>forename</gi> elements respectively and may
+occur in any order:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="FDR1">  
    <surname>Roosevelt</surname>,
@@ -207,12 +212,14 @@ to distinguish a patronymic from other forenames:
    <surname sort="1">Uspensky</surname>
 </persName></egXML>
  </p>
+
 <p>This example also demonstrates the use of the <att>sort</att>
-attribute common to all members of the
-<ident type="class">model.persNamePart</ident> class; its effect is to state the
-sequence in which <gi>forename</gi> and <gi>surname</gi> elements should
-be combined when constructing a sort key for the name.
+attribute common to all members of the <ident
+type="class">model.persNamePart</ident> class; its effect is to state
+the sequence in which <gi>forename</gi> and <gi>surname</gi> elements
+should be combined when constructing a sort key for the name.
  </p>
+
 <p>Some names include generational or dynastic information, such as
  a number, or phrases such as <q>Junior</q>, or <q>the Elder</q>;
  these qualifications may also be used to distinguish similarly named
@@ -341,7 +348,9 @@ follows:
 &addName;
 &roleName;</specGrp>
 </p></div>
-<div type="div2" xml:id="NDPLAC"><head xmlns="http://www.tei-c.org/ns/1.0">Place Names</head>
+
+<div type="div2" xml:id="NDPLAC"><head>Place Names</head>
+
 <p>Like other proper nouns or noun phrases used as names, place names
 can simply be marked up with the <gi>rs</gi> element, or with the
 <gi>name</gi> element. For cartographers and historical geographers,
@@ -352,17 +361,15 @@ linguistics.  </p>
 
 <p>These Guidelines distinguish three ways of referring to places.  A
 place name (represented using the <gi>placeName</gi> element) may
-consist of one or more names for
-hierarchically-organized geo-political or administrative units (see
-section <ptr target="#NDPLGU"/>). A place  named simply in
-terms of  geographical features such
-as mountains or rivers is represented using the <gi>geogName</gi>
-element (see section <ptr target="#NDPLGF"/>). Finally, an expression
-consisting of 
-phrases expressing spatial or other kinds of relationship between
-other kinds of named place may also be regarded as a a kind of
-<gi>placename</gi> (see section
-<ptr target="#NDPLR"/>).  
+consist of one or more names for hierarchically-organized
+geo-political or administrative units (see section <ptr
+target="#NDPLGU"/>). A place named simply in terms of geographical
+features such as mountains or rivers is represented using the
+<gi>geogName</gi> element (see section <ptr
+target="#NDPLGF"/>). Finally, an expression consisting of phrases
+expressing spatial or other kinds of relationship between other kinds
+of named place may also be regarded as a a kind of <gi>placename</gi>
+(see section <ptr target="#NDPLR"/>).
 
 <specList><specDesc key="placeName"/><specDesc key="geogName"/>
 </specList>
@@ -397,7 +404,7 @@ I have proceeded to the
  </p>
 
 
-<div type="div3" xml:id="NDPLGU"><head xmlns="http://www.tei-c.org/ns/1.0">Geo-political Place Names
+<div type="div3" xml:id="NDPLGU"><head>Geo-political Place Names
  </head>
 <p>A place name may contain text with no indication of its internal structure:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName>  
@@ -441,7 +448,7 @@ present.
 <placeName><settlement type="city">Rochester</settlement></placeName>
 than any other place I know.</egXML>
  </p></div>
-<div type="div3" xml:id="NDPLGF"><head xmlns="http://www.tei-c.org/ns/1.0">Geographic Names
+<div type="div3" xml:id="NDPLGF"><head>Geographic Names
  </head>
 <p>Places may also be named in terms of geographic features such as
 mountains, lakes or rivers, independently of geo-political units. The
@@ -481,7 +488,7 @@ A more complex example, showing a variety of practices, follows:
    <rs type="gloss" xml:lang="en">sloping hill face</rs>
    <name>Eilde</name>
 </geogName></egXML></p></div>
-<div type="div3" xml:id="NDPLR"><head xmlns="http://www.tei-c.org/ns/1.0">Relative Place Names</head>
+<div type="div3" xml:id="NDPLR"><head>Relative Place Names</head>
 <p>All the place name specifications so far discussed are <term rend="noindex">absolute</term>, in the sense that they define only one
 place.  A place may however be specified in terms of its relationship
 to another place, for example <q>10 miles northeast of Paris</q> or
@@ -543,7 +550,7 @@ follows:
 </p>
 </div>
 </div>
-<div type="div2" xml:id="NDORG"><head xmlns="http://www.tei-c.org/ns/1.0">Organization names</head>
+<div type="div2" xml:id="NDORG"><head>Organization names</head>
 <p>Like names of persons or places, organization names can be marked as
 referent strings or as proper names with the <gi>rs</gi> and
 <gi>name</gi> elements.  For certain applications it may be desirable
@@ -683,7 +690,7 @@ structure notation is recommended (<ptr target="#FS"/>).
 <div type="div2" xml:id="NDPERS">
 
 
-<head xmlns="http://www.tei-c.org/ns/1.0">Biographical and Prosopographical Data</head>
+<head>Biographical and Prosopographical Data</head>
 
 <p>This module defines a number of special purpose elements which can
 be used to markup biographical and prosopographical data. We envisage
@@ -712,7 +719,7 @@ this section.</p>
 
 
 <div type="div3">
-<head xmlns="http://www.tei-c.org/ns/1.0">Basic principles</head>
+<head>Basic principles</head>
 
 <p>Information about people, of whatever type, essentially comprises a
 series of statements or assertions relating to:
@@ -755,7 +762,7 @@ or assertions of the same or any of the other types.</p>
 </div>
 
 <div type="div3">
-<head xmlns="http://www.tei-c.org/ns/1.0">The person element</head>
+<head>The person element</head>
 
 <p>Information about a person, as
 distinct from references to a person, for example by name, is grouped
@@ -842,7 +849,7 @@ From the 1st of March to sometime in April of 1857.</date>
 
 <div type="div4">
 
-<head xmlns="http://www.tei-c.org/ns/1.0">Personal Characteristics</head>
+<head>Personal Characteristics</head>
 
 
 <p>The <ident>model.persTraitLike</ident> class contains elements
@@ -951,7 +958,7 @@ way. For example.... </p>
 </div>
 
 <div type="div4">
-<head xmlns="http://www.tei-c.org/ns/1.0">Personal States</head>
+<head>Personal States</head>
 
 <p>The <ident>model.persStateLike</ident> class contains elements
 describing changeable characteristics of a
@@ -1040,7 +1047,7 @@ follows:
 </div>
 
 <div type="div4">
-<head xmlns="http://www.tei-c.org/ns/1.0">Personal Events</head>
+<head>Personal Events</head>
 
 <p>The <ident>model.persEventLike</ident> class contains elements
 describing specific events in a person's
@@ -1128,7 +1135,7 @@ of what happened, as in the following example:
 </p>
 
 </div>
-<div type="div4" xml:id="relations"><head xmlns="http://www.tei-c.org/ns/1.0">Personal Relationships</head>
+<div type="div4" xml:id="relations"><head>Personal Relationships</head>
 
 <!-- rename particLinks as personLinks ? -->
 
@@ -1243,7 +1250,7 @@ occupation and residence.</p>
 </div3>
 -->
 
-<div type="div3"><head xmlns="http://www.tei-c.org/ns/1.0">Formal definitions</head>
+<div type="div3"><head>Formal definitions</head>
 
 <p>This module populates the   <ident>model.assertLike</ident> class,
 which is a superclass of the three more specific classes discussed
@@ -1287,7 +1294,176 @@ above. <!-- The classes are defined as follows:
 
 </div>
 
-<div type="div2" xml:id="NDDATE"><head xmlns="http://www.tei-c.org/ns/1.0">Dates and Times</head>
+
+<div xml:id="NDNYM"><head>Names and nyms</head>
+
+<p>So far we have discussed ways in which a name or referring string
+encountered in running text may be resolved by considering the object
+that the name refers to: in the case of a personal name, the name
+refers to a person; in the case of a place name, to a place, for
+example. The resolution of this reference is effected by means of the
+<att>key</att> attribute available to all elements which are members
+of the <ident>att.naming</ident> class, such as <gi>persName</gi> or
+<gi>placeName</gi> and their more specialized variants such as
+<gi>foreName</gi> or <gi>country</gi>. However, <emph>names</emph> can
+also be regarded as objects in their own right, irrespective of the
+objects to which they are attached, notably in onomastic studies. From
+this point of view, the names <mentioned>John</mentioned> in English,
+Jean in French, and Ivan in Russian might all be regarded as existing
+independently of any person to which they are attached, and also
+independently of any variant forms that might be attested in different
+sources (such as Jon or Johnny in English, or Jehan or Jojo in
+French). We use the term <term>nym</term> to refer to the canonical or
+normalized form of a name regarded in such a way, and provide the
+following elements to encode it:
+<specList>
+<specDesc key="listNym"/>
+<specDesc key="nym"/>
+</specList>
+</p>
+<p>Any element which is a member of the <ident>att.naming</ident>
+class may use the attribute <att>nymKey</att> to indicate the nym with
+which it corresponds. Thus, given the following <gi>nym</gi> for the
+name <mentioned>Antony</mentioned>:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<listNym>
+<nym xml:id="N123">
+  <form>Antony</form>
+</nym>
+<!-- other nym definitions here -->
+</listNym></egXML>
+an occurrence of this name in running text might be encoded as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<forename nymKey="#N123">Tony</forename> Blair
+</egXML>
+</p>
+<p>The person identified by this particular Tony may be indicated
+independently using the <att>key</att> attribute, either on the
+forename or on the whole name component:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <forename nymKey="#N123" key="#BLT">Tony</forename>
+....
+<person xml:id="BLT">
+<persName>Tony Blair</persName>
+<occupation>politician</occupation>
+</person></egXML>
+</p>
+<p>The <gi>nym</gi> element may be thought of as providing a
+specialised kind of  dictionary
+entry. It may contain any of the dictionary component elements from
+the <ident>model.entryParts</ident> class, such as <gi>form</gi>,
+<gi>etym</gi> etc.  For example, we may show that the canonical form
+for a given nym has two orthographic variants in this way:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<nym xml:id="J451">
+  <form>
+       <orth xml:lang="en-US">Ian</orth>
+       <orth xml:lang="en-x-Scots">Iain</orth>
+   </form>
+</nym>
+</egXML>
+</p>
+<p>Because a schema intending to make use of the <gi>num</gi> or
+<gi>listNym</gi> element must include the TEI <ident
+type="module">dictionaries</ident> module as well as the
+<ident>namesdates</ident> module, many other elements are available in
+addition to <gi>form</gi>. For example,
+to provide a more complex etymological decomposition of a name, we
+might use the existing <gi>etym</gi> element, as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><nym xml:id="XYZ">
+<form>Bogomil</form>
+<etym>Means <gloss>favoured by God</gloss> from the
+<lang>Slavic</lang> elements <mentioned xml:lang="ru">bog</mentioned> 
+<gloss>God</gloss> and <mentioned xml:lang="ru">mil</mentioned>
+<gloss>favour</gloss></etym>
+</nym></egXML>
+</p>
+
+<p>Where it is necessary to mark the substructure of nyms, this might be
+done by marking <gi>seg</gi> elements within the
+<gi>form</gi>:<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<nym xml:id="ABC">
+<form>
+  <choice>
+   <seg type="morph"><seg>Bog</seg><seg>o</seg><seg>mil</seg></seg>
+   <seg type="morph"><seg>Bogo</seg><seg>mil</seg></seg>
+  </choice>
+</form>
+</nym></egXML>
+<!-- add example to show that Amadeus has same referents -->
+
+The <gi>seg</gi> element used here is provided by the TEI <ident
+type="module">linking</ident> module, which would therefore also need
+to be included in a schema built to validate such markup. Other
+possibilities for more detailed linguistic analysis are provided by
+elements included in that and the <ident
+type="module">analysis</ident> or <ident
+type="module">ISOfs</ident> modules.  
+</p>
+
+<p>Alternatively, each of the constituents of
+<mentioned>Bogomil</mentioned> might be regarded  as a nym in its own
+right:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+ <nym xml:id="B1" type="part">
+  <form>bog</form>
+ </nym>
+ <nym xml:id="M1" type="part">
+  <form>mil</form>
+ </nym>
+</egXML>
+
+Within running text, a name can specify all the nyms associated with
+it:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+...<name nymKey="#B1 #M1">Bogomul</name>...
+</egXML>
+
+Similarly, within a nym, the attribute <att>parts</att>  is used to
+indicate its constituent parts, where these have been identified as
+distinct nyms:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<nym xml:id="BM1" parts="#B1 #M1">
+  <form>Bogomil</form>
+</nym>
+</egXML>
+</p>
+
+
+<p>The <gi>nym</gi> element may also combine a number of other
+<gi>nym</gi> elements together, where it is intended to show that they
+are all regarded as variations on the same root. Thus the different
+forms of the name John,  all being derived from the same Latin root, may be
+represented as a hierarchic structure like this:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><nym xml:id="J45">
+  <form>Iohannes</form>
+   <nym xml:id="J450">
+     <form xml:lang="en">John</form>
+   </nym>
+   <nym xml:id="J455">
+     <form xml:lang="ru">Ivan</form>
+   </nym>
+   <nym xml:id="J453">
+    <form xml:lang="fr">Jean</form>
+   </nym>
+</nym></egXML>
+</p>
+
+<p>The elements descvribed in this section are formally defined as
+follows:
+<specGrp xml:id="DNDNYM">
+&nym;
+&listNym;
+</specGrp>
+As noted above, use of these elements implies that both the <ident
+type="module">dictionaries</ident> and the <ident
+type="module">namesdates</ident>  modules are included in a
+schema.</p>
+
+</div>
+
+
+<div type="div2" xml:id="NDDATE"><head>Dates and Times</head>
 <p>The following elements for the encoding of dates and times were
 introduced in section <ptr target="#CONADA"/>:
 <specList>
@@ -1313,7 +1489,7 @@ following attributes:
   <specDesc key="att.duration" select="dur"/>
 </specList>
 </p>
-<div type="div3" xml:id="NDDATER"><head xmlns="http://www.tei-c.org/ns/1.0">Relative Dates and Times
+<div type="div3" xml:id="NDDATER"><head>Relative Dates and Times
  </head>
 <p>As noted above, relative dates and times such as <q>in the Two
 Hundredth and First Year of the Republic</q>, <q>twenty minutes before
@@ -1330,21 +1506,25 @@ minutes</q>, <q>an hour</q>); and (optionally) an
 between the time or date indicated and the referent expression
 (e.g. <q>of</q> implying after, <q>before</q>, <q>after</q>).
  </p>
+
 <p>The <soCalled>distance</soCalled> component of a relative temporal
 expression may be encoded as a temporal element in its own right using
-either <gi>date</gi> or <gi>time</gi>, or with
-the more generic <gi>measure</gi> element. A special element,
-<gi>offset</gi>, is provided by this module for encoding the <soCalled>offset</soCalled> component
-of a relative temporal expression. The absolute temporal
+either <gi>date</gi> or <gi>time</gi>, or with the more generic
+<gi>measure</gi> element. A special element, <gi>offset</gi>, is
+provided by this module for encoding the <soCalled>offset</soCalled>
+component of a relative temporal expression. The absolute temporal
 expression contained within the relative expression may be encoded
-with a <gi>date</gi> or <gi>time</gi> element; in turn, those elements may of
-course be relative, and thus contain <gi>date</gi> or <gi>time</gi> elements within themselves.
-This allows for deeply nested structures such as
-<q>the third Sunday after the first Monday before Lammastide in the
-fifth year of the King's second marriage ... </q> but so does
-natural language.</p>
-<p>In the following examples, the <att>value</att> and <att>dur</att> attributes have been used
-to simplify processing of variant forms of expression:
+with a <gi>date</gi> or <gi>time</gi> element; in turn, those elements
+may of course be relative, and thus contain <gi>date</gi> or
+<gi>time</gi> elements within themselves.  This allows for deeply
+nested structures such as <q>the third Sunday after the first Monday
+before Lammastide in the fifth year of the King's second marriage
+... </q> but so does natural language.</p>
+
+<p>In the following examples, the <att>value</att> and <att>dur</att>
+attributes have been used to simplify processing of variant forms of
+expression:
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><date value="1786-12-11">     
    <date dur="P14D">A fortnight</date>
    <offset>before</offset>
@@ -1367,6 +1547,7 @@ used to indicate a lack of precision in the distance stated:
    <time type="occasion">sundown</time>
 </time></egXML>
  </p>
+
 <p>In the following example, a nested <gi>date</gi> element is
 used to show that <q>my birthday</q> and the cited date are parts of
 the same temporal expression, and hence to disambiguate the phrase
@@ -1421,7 +1602,7 @@ structure of type <val>date-analysis</val>:
 </fs></egXML>
 </p></div>
 
-<div type="div3" xml:id="NDDATEA"><head xmlns="http://www.tei-c.org/ns/1.0">Absolute Dates and Times</head>
+<div type="div3" xml:id="NDDATEA"><head>Absolute Dates and Times</head>
 <p>The following are examples of absolute temporal expressions.</p>
 <p>
   <egXML xmlns="http://www.tei-c.org/ns/Examples">The university's view of American affairs produced a stinging
@@ -1471,17 +1652,24 @@ the <gi>time</gi> element.
    a quarter of two
 </time></egXML>
  </p>
+  <p>
+    <?tei winita this needs to be put somewhere intelligent --sb ?>
+<specList>    <specDesc key="data.temporal.iso"/>
+    <specDesc key="data.duration.iso"/></specList>
+  </p>
+
 <p>The <att>value</att> and <att>dur</att>
 attributes are both used to provide a
 standardized or regularized form for the content of an element,
 conforming to a subset of the possible formats defined by the relevant
 international standard (ISO 8601) as profiled by <title>XML Schema
 Part 2: Datatypes Second Edition</title>.</p>
-<p>For example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><date value="1807-06-09">June 9th</date>
-The period is approaching which will
-terminate my present copartnership. On the <date value="1808-01-01">1st Jany.</date>
-next, it expires by its own limitation.</egXML>
+
+<p>For example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><date
+value="1807-06-09">June 9th</date> The period is approaching which
+will terminate my present copartnership. On the <date
+value="1808-01-01">1st Jany.</date> next, it expires by its own
+limitation.</egXML>
 <!-- Philadelphia Merchant: The Diary of TP Cope, 210 -->
  </p>
 </div>
