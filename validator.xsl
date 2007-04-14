@@ -11,6 +11,8 @@
   exclude-result-prefixes="exsl rng edate estr tei a pantor teix" 
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
+<xsl:include href="pointerattributes.xsl"/>
+
 <xsl:key name="IDENTS"
 	 match="tei:moduleSpec|tei:elementSpec|tei:classSpec|tei:macroSpec"   
 	 use="@ident"/>
@@ -18,6 +20,7 @@
 <xsl:key name="IDS"
 	 match="tei:*|teix:*"   
 	 use="@xml:id"/>
+
 
 <xsl:template match="text()"/>
 
@@ -102,11 +105,6 @@
 </xsl:template>
 
 
-<xsl:template match="tei:*/@target">
-  <xsl:call-template name="checklinks">
-    <xsl:with-param name="stuff" select="normalize-space(.)"/>
-  </xsl:call-template>
-</xsl:template>
 
 <xsl:template name="checklinks">
   <xsl:param name="stuff"/>
@@ -176,8 +174,72 @@
 
 <xsl:template name="Error">
   <xsl:param name="value"/>
-  <xsl:message>ERROR: <xsl:value-of select="name(.)"/>  (<xsl:call-template 
-name="loc"/>) points to non-existent <xsl:value-of select="$value"/></xsl:message>
+  <xsl:message>ERROR: <xsl:value-of 
+select="name(.)"/> points to non-existent <xsl:value-of select="$value"/> (<xsl:call-template name="loc"/>) </xsl:message>
+</xsl:template>
+
+<xsl:template name="Warning">
+  <xsl:param name="value"/>
+  <xsl:variable name="where">
+    <xsl:value-of select="name(parent::*)"/>
+    <xsl:text>@</xsl:text>
+    <xsl:value-of select="name(.)"/>
+  </xsl:variable>
+
+  <xsl:message>Warning: <xsl:value-of 
+select="$where"/> points to something I cannot find: <xsl:value-of select="$value"/>
+(<xsl:call-template name="loc"/>) 
+</xsl:message>
+</xsl:template>
+
+
+<xsl:template name="checkexamplelinks">
+  <xsl:param name="stuff"/>
+  <xsl:choose>
+    <xsl:when test="contains($stuff,' ')">
+      <xsl:variable name="This">
+	<xsl:value-of select="substring-before($stuff,' ')"/>
+      </xsl:variable>
+      <xsl:call-template name="checkThisExampleLink">
+	<xsl:with-param name="What" select="$This"/>
+      </xsl:call-template>
+      <xsl:call-template name="checkexamplelinks">
+	<xsl:with-param name="stuff">
+	  <xsl:value-of select="substring-after($stuff,' ')"/>
+	</xsl:with-param>
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:call-template name="checkThisExampleLink">
+	<xsl:with-param name="What" select="$stuff"/>
+      </xsl:call-template>
+  </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+<xsl:template name="checkThisExampleLink">
+  <xsl:param name="What"/>
+  <xsl:choose>
+      <xsl:when test="starts-with($What,'#')">
+	<xsl:variable name="N">
+	  <xsl:value-of select="substring-after($What,'#')"/>
+	</xsl:variable>
+	<xsl:choose>
+	  <xsl:when test="not(ancestor::teix:egXML//teix:*[@xml:id=$N])">
+	    <xsl:call-template name="Warning">
+	      <xsl:with-param name="value" select="$What"/>
+	    </xsl:call-template>
+	  </xsl:when>
+	</xsl:choose>
+      </xsl:when>
+      <xsl:when test="starts-with($What,'mailto:')"/>
+      <xsl:when test="starts-with($What,'http:')"/>
+      <xsl:when test="not(contains($What,'/'))">
+       <xsl:call-template name="Warning">
+	 <xsl:with-param name="value" select="$What"/>
+       </xsl:call-template>
+      </xsl:when>
+  </xsl:choose>
 </xsl:template>
 
 </xsl:stylesheet>

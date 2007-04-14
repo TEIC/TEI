@@ -161,7 +161,9 @@ valid: check
 	 | grep -v ": error: Illegal xml:lang value \"[A-Za-z][A-Za-z][A-Za-z]\"\.$$" \
 	 | grep -v ': error: unfinished element$$'
 	@echo --------- XSLT validator
+	xsltproc prevalidator.xsl ${DRIVER} > pointerattributes.xsl
 	xsltproc validator.xsl ${DRIVER}
+	rm pointerattributes.xsl
 	@echo --------- xmllint RelaxNG test REMOVED
 #	@xmllint --version
 #	-xmllint  --relaxng p5odds.rng --noent --xinclude --noout ${DRIVER}
