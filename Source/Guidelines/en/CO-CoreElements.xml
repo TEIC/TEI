@@ -1138,13 +1138,29 @@ and other programs, both <gi>sic</gi> and <gi>corr</gi> are used,
 wrapped in a <gi>choice</gi>:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">… marginal comments which indicate that the
   <choice>
-    <corr resp="#msm">dates</corr>
+    <corr>dates</corr>
     <sic>date's</sic>
   </choice> mentioned in the main body of the text are
   incorrect.</egXML>The <gi>sic</gi> and <gi>corr</gi> elements can
-  appear in either order.</p><p>Note in this example the use of the <att>resp</att>
-  attribute, inherited from <ident type="class">att.editLike</ident>
-  class, to indicate the person responsible for correction. The same
+  appear in either order.</p>
+<p>If  it is desired to indicate the person or edition responsible for
+the emendation, this might be done as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">… marginal comments which indicate that the
+  <choice>
+    <corr resp="#msm">dates</corr>
+    <sic>date's</sic>
+  </choice> mentioned in the main body of the text are
+  incorrect.
+<bibl xml:id="msm"><title>Pseudodoxia Epidemica: the book of popular
+errors</title>...</bibl></egXML>. Here the <att>resp</att> attribute
+has been used to indicate responsibility for the correction. Its value (<val>#msm</val>) is an example of the <term>pointer</term> values discussed
+  in section <ptr target="#COXR"/>; in this case, it points to a
+  bibliographic element giving the source of the correction.  It might
+  equally well be used to point to some other element, for example one
+  of a list of names supplied in the TEI header associated with the
+  text, or at some other location. The <att>resp</att> attribute is
+  available for all elements which are part of the <ident
+  type="class">att.editLike</ident> class. The same
   class makes available a  <att>cert</att> attribute,which may be used
   to indicate the degree of editorial
 confidence in a particular correction, as in the following example:
@@ -1245,7 +1261,7 @@ there <choice><orig>canot</orig><reg>cannot</reg></choice> be a greater
 	<!-- *ibid*, 37-39, for Essex to Privy Council, Sept. 29,     -->
 	<!-- 1573.  Barkley to Burghley, May 14, 1574, S.P. 63/46,    -->
 	<!-- no. 15, P.R.O."                                          -->
- </p><p>As elsewhere, the <att>resp</att> attribute should be used to specify the agency
+ </p><p>As elsewhere, the <att>resp</att> attribute may be used to specify the agency
 responsible for the regularization. <!--This may be an identifiable
 individual, for example an editor, or a descriptive phrase such as
 <mentioned>copyist</mentioned>. --> For example, in the first stanza of the Old
@@ -1257,7 +1273,7 @@ regularization in two ways, as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">vek ek þik dauðra
 <choice>
   <orig>dura</orig>
-  <reg resp="#ed">dyra</reg>
+  <reg resp="#msm">dyra</reg>
 </choice></egXML></p><p>These elements are formally defined as follows:
 <specGrp xml:id="DCOEDR" n="Editorial tags for regularization">
 &reg;
@@ -1283,10 +1299,10 @@ Each place in the text at which omission has taken place should be
 marked with a <gi>gap</gi> element, with optionally further information
 about the reason for the omission, its extent, and the person or agency
 responsible for it, as in the following examples:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><gap reason="illegible" extent="two words"/></egXML><egXML xmlns="http://www.tei-c.org/ns/Examples"><gap reason="overwriting illegible" resp="#h1" extent="8 chars"/></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><gap reason="illegible" extent="two words"/></egXML><egXML xmlns="http://www.tei-c.org/ns/Examples"><gap reason="overwriting illegible"  extent="8 chars"/></egXML></p>
 <p>The <gi>desc</gi> element may be used to supply a description of
 the material omitted, where that is considered useful:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><gap reason="sampling" resp="#pr" extent="120 lines"><desc>irrelevant commentary</desc></gap></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><gap reason="sampling"  extent="120 lines"><desc>irrelevant commentary</desc></gap></egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">… Their arrangement with respect to Jupiter and to each other was as follows:
 <gap reason="sampling" extent="2 cm x 1 col"><desc>astrological figure</desc></gap>
 That is, there were two stars on the easterly side and one to the west; …</egXML><!-- Galileo, The Starry Messenger, quoted by Tufte,          -->
@@ -1308,7 +1324,7 @@ Sometimes they are marked in a distinctive way in the source text, for
 example by brackets or insertion above the line (<term rend="noindex">supralinear</term> insertion),<index><term>additions</term><index><term>supralinear</term></index></index><index><term>insertions</term><index><term>supralinear</term></index></index><index><term>supralinear insertions</term></index> as in
 the following example, taken from a 19th century manuscript:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">The story I am going to relate is true as to its main facts,
-and as to the consequences <add place="supralinear" resp="#auth">of
+and as to the consequences <add place="supralinear">of
 these facts</add> from which this tale takes its title.</egXML>
 <!-- Mrs Gaskell, The Grey Woman, MS --></p><p>The <gi>add</gi> element should not be used to mark editorial
 changes, such as supplying a word omitted by mistake from the source
@@ -1323,7 +1339,7 @@ transcribing a partially inaudible or illegible source. Its
 <gi>gap</gi> element, to indicate the cause of uncertainty and the
 person responsible for the conjectured reading.</p><p>For example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><l>And where the sandy mountain Fenwick scald</l>
-<l><unclear reason="ink blot" resp="#LB">The</unclear> sea between
+<l><unclear reason="ink blot" >The</unclear> sea between
 yet hence his pray'r prevail'd</l></egXML>
 <!-- Marvell, Horatian ode, ms pages from Bod MS Eng Poet d.49 -->
 or from a spoken text:
@@ -1349,7 +1365,7 @@ to assist the silence. Who—what had <choice>
   <unclear cert="low">waken</unclear>
   <unclear cert="medium">waked</unclear>
 </choice> him, and where was it?</egXML>
-<note type="cit" resp="#sb">Ambrose Bierce, <title>The Boarded
+<note type="cit">Ambrose Bierce, <title>The Boarded
 Window</title>; p. 370 of my wife's 1927 First Modern Library edition
 of <title>In the Midst of Life</title>.</note></p>
 <p>Where the material affected is entirely illegible or inaudible, the
@@ -1838,7 +1854,7 @@ and of the University the Eighty-Sixth.</date></egXML>
 </p>
 <p>The <att>value</att> attribute always supplies a normalized
 representation of the date given as content of the <gi>date</gi>
-element. The format used should be a valid W3C schema datatype.<note place="foot" resp="#sdb">
+element. The format used should be a valid W3C schema datatype.<note place="foot" >
 <p>The datatypes are taken from the W3C Recommendation <title>XML Schema Part 2: Datatypes Second Edition</title>. 
 The permitted datatypes are:
 <list>
@@ -1940,7 +1956,7 @@ that which was present in the copy text.</p>
 <p>These elements are particularly useful where manuscript materials
 in which abbreviation is very frequent are being transcribed. For
 example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><l>Ex<choice><abbr type="brevigraph">&amp;per;</abbr><expan resp="#pg">per</expan></choice>ience,
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><l>Ex<choice><abbr type="brevigraph">&amp;per;</abbr><expan>per</expan></choice>ience,
 thogh noon auctoritee</l>
 <l>Were in this world, is right ynogh for me</l>
 <l>To speke of wo that is in mariage;</l></egXML>
@@ -2696,7 +2712,7 @@ there with the Lady Baussiere and her
 page, -- I have not taken the least frisk 	
 ...</p>	
 </egXML>	
-<note type="cit" resp="#LB">Sterne, Tristram Shandy, vol VI, chap XL,
+<note type="cit">Sterne, Tristram Shandy, vol VI, chap XL,
 downloaded from http://www.tristramshandyweb.it/home.htm on 12 sep 04</note>
 </p>	
 <p>The <gi>graphic</gi> and <gi>binaryObject</gi> elements  are phrase
@@ -2837,7 +2853,7 @@ for the <att>xml:id</att> attribute; this requires that the reference
 be given without internal spaces, begin with a letter or underscore,
 and contain no characters other than letters, digits, hyphens,
 underscores, full stops, and the various combining and extender
-characters.<note place="foot" resp="#sdb">For a complete list see the
+characters.<note place="foot">For a complete list see the
 <ref target="http://www.w3.org/TR/REC-xml/#NT-CombiningChar">XML
 specification</ref> productions 87 &amp; 89.</note> Unlike values for
 the <att>n</att> attribute, values for the <att>xml:id</att> attribute
@@ -4498,7 +4514,7 @@ the printed speaker attributions need to be supplemented by use of the
 <att>who</att> attribute; again, the lines are marked as complete or
 incomplete:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><stage>Enter two Centinels.
-<add place="right" resp="#unknown">Now call'd Bernardo &amp; 
+<add place="right">Now call'd Bernardo &amp; 
 Francesco.</add></stage>
 <sp who="#francisco"> <speaker>1.</speaker>
    <l part="Y">STand: who is that?</l>
