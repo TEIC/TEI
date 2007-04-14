@@ -660,27 +660,32 @@ quotation:
      dit Robert.</egXML>
 <!-- Queneau, Exercices de style (1947) p.192 -->
 To make explicit who is speaking, which is not always stated in the
-above example, the <att>who</att> attribute should be used:
+above example, the <att>who</att> attribute may be used:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Adolphe se tourna vers lui :
-<q who="Adolphe">— Alors, Albert,
+<q who="#Adolphe">— Alors, Albert,
  quoi de neuf?</q>
-<q who="Albert">— Pas grand-chose.</q>
-<q who="Robert">— Il fait beau,</q>
- dit Robert.</egXML>
+<q who="#Albert">— Pas grand-chose.</q>
+<q who="#Robert">— Il fait beau,</q>
+ dit Robert.
+<!-- .... -->
+<list type="speakers">
+<item xml:id="Adolphe"/>
+<item xml:id="Albert"/>
+<item xml:id="Robert"/>
+</list></egXML>
 <!-- should show QUOTATION declarations for these -->
-The <att>who</att> attribute is also useful as a means of supplying a
-normalized form of the speaker's name, to facilitate selection of text
-by particular speakers. As indicated above, it may be supplied whether
-or not an indication of the speaker is given explicitly in the text.
- </p>
-<p>Where investigation of <soCalled>narrative voice</soCalled> is the
-primary object of the encoding, it may be convenient to identify each
-speaker as a <term rend="noindex">participant</term> in the work, and to
-associate individual speeches with them by means of the ID/IDREF
-mechanism. See section <ptr target="#CCAHPA"/> for discussion of the
-<term>participant description</term> component of the TEI Header.
- </p>
-<p>For such analyses, it may also be useful to distinguish
+The <att>who</att> attribute may be supplied whether
+or not an indication of the speaker is given explicitly in the
+text. It may take the form (as above) of  a
+normalized form of the speaker's name, but its role is to act as a
+pointer to a location elsewhere in the text where data about each
+speaker may be supplied. The most appropriate place to place such
+information is within the  <term>participant description</term>
+component of the TEI Header, as further discussed in <ptr
+target="#CCAHPA"/> but for simple cases like the above a simple list
+of speakers located in the front or back matter of the text may
+suffice. </p>
+<p>It may also be useful to distinguish
 representations of speech from representations of thought, in modern
 printed texts often indicated by a change of typeface. The
 <att>type</att> attribute should be used for this purpose, as in this
@@ -693,10 +698,16 @@ didn't you? Eh? Eh?</q></egXML>
  </p>
 <p>Quoted matter may be embedded within quoted matter, as when one
 speaker reports the speech of another:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><q who="Wilson">Spaulding, he came down into the office just this day
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><q who="#Wilson">Spaulding, he came down into the office just this day
 eight weeks with this very paper in his hand, and he says:—
-<q who="Spaulding">I wish to the Lord, Mr. Wilson, that I was a
-red-headed man.</q></q></egXML>
+<q who="#WilsonSpaulding">I wish to the Lord, Mr. Wilson, that I was a
+red-headed man.</q></q>
+<!-- ... -->
+<list type="speakers">
+<item xml:id="Wilson">Wilson</item>
+<item xml:id="WilsonSpaulding">Spaulding reported by Wilson</item>
+...
+</list></egXML>
 <!-- A C Doyle, Red headed league (but where?) -->
  </p>
 <p>Direct speech nested in this way is treated in the same way as
@@ -4514,8 +4525,8 @@ the printed speaker attributions need to be supplemented by use of the
 <att>who</att> attribute; again, the lines are marked as complete or
 incomplete:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><stage>Enter two Centinels.
-<add place="right">Now call'd Bernardo &amp; 
-Francesco.</add></stage>
+<add place="right">Now call'd <name xml:id="barnardo">Bernardo</name> &amp; 
+<name xml:id="francisco">Francesco</name>.</add></stage>
 <sp who="#francisco"> <speaker>1.</speaker>
    <l part="Y">STand: who is that?</l>
 </sp>
@@ -4533,16 +4544,7 @@ Francesco.</add></stage>
    <l part="Y">I will: See who goes there.</l>
 </sp>
 <stage>Enter Horatio and Marcellus.</stage>
-<sp who="#horatio"> <speaker>Hor.</speaker>
-   <l part="I">Friends to this ground.</l>
-</sp>
-<sp who="#marcellus"> <speaker>Mar.</speaker>
-   <l part="F">And leegemen to the Dane,</l>
-   <l>O farewell honest souldier, who hath releeued you?</l>
-</sp>
-<sp who="#francisco"> <speaker>1.</speaker>
-   <l>Barnardo hath my place, giue you good night.</l>
-</sp></egXML>
+</egXML>
 <!-- Hamlet I.i, Q1 (edited, from old file) -->
  </p>
 <p>By contrast with the preceding examples, the following encodes an
