@@ -225,6 +225,7 @@ select="$where"/> points to something I cannot find: <xsl:value-of select="$valu
 	  <xsl:value-of select="substring-after($What,'#')"/>
 	</xsl:variable>
 	<xsl:choose>
+	  <xsl:when test="key('IDS',$N)"/>
 	  <xsl:when test="not(ancestor::teix:egXML//teix:*[@xml:id=$N])">
 	    <xsl:call-template name="Warning">
 	      <xsl:with-param name="value" select="$What"/>
