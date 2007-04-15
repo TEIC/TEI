@@ -2066,7 +2066,8 @@ need not identify its target in any other way. For example:
 <p>More usually, it will be desirable to identify the target of the
 cross-reference using the <att>target</att> attribute, so that
 processing software can access it directly, for example to implement a
-linkage or to generate an appropriate reference. Assuming that section
+linkage, to generate an appropriate reference, or to give an error
+message if it cannot be found. Assuming that section
 12 in the previous example has been tagged <tag>div1 xml:id="SEC12"</tag>, the
 same cross reference might more exactly be encoded as
 <egXML xmlns="http://www.tei-c.org/ns/Examples">See especially <ref target="#SEC12">section 12 on page 34</ref>.</egXML>
@@ -2099,15 +2100,22 @@ short-form reference), they might be tagged thus:
 systems</term>, have a long history among mathematicians, but the
 specific form of <ptr target="#fig22"/> was first
 studied extensively by Chomsky
-<ptr type="bibliog" target="#chom59"/>.</egXML>
+<ptr type="bibliog" target="#chom59"/>.
+<!-- ... -->
+<figure xml:id="fig22"><!-- ... --></figure>
+<!-- elsewhere, in the bibliography -->
+<bibl xml:id="chomy59"><!-- citation for the book referenced above --></bibl>
+</egXML> 
+</egXML>
 <!-- Dick Grune and Ceriel J. H. Jacobs, Parsing              -->
 	<!-- Techniques:  A Practical Guide (New York, London:        -->
 	<!-- Ellis Horwood, 1990), p. 24.                             -->
-Here <code>type="bibliog"</code> is used to indicate that the 
-target of the pointer should be a bibliographic
-element, and <code>target="#Chom59"</code> indicates which
-bibliographic element is actually being referred to. For further
-discussion of bibliographic references, see section <ptr target="#COBIXR"/>.
+The value <val>bibliog</val> for the <att>type</att> attribute on the
+second <gi>ptr</gi> element here might be used to indicate that the
+object being referenced here is a bibliographic entry rather than a
+simple cross reference to an illustration, as is the first
+<gi>ptr</gi>. In either case, the value of the <att>target</att>
+attribute is a pointer to some other element.
  </p><p>The <gi>ptr</gi> and <gi>ref</gi> elements have many applications in
 addition to the simple cross-referencing facilities illustrated in this
 section. In conjunction with the analytic tools discussed

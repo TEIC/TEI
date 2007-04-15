@@ -222,7 +222,7 @@ page, and might therefore be encoded as back matter:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><text>
   <body>
     <div1 type="scene">
-      <sp who="#PR">
+      <sp>
         <l part="Y">I'le deliver all,</l>
         <l>And promise you calme Seas, auspicious gales,</l>
         <l>Be free and fare thou well: please you, draw neere.</l>
@@ -233,7 +233,7 @@ page, and might therefore be encoded as back matter:
   <back>
     <epilogue>
       <head>Epilogue, spoken by Prospero.</head>
-      <sp who="#PR">
+      <sp>
         <l>Now my Charmes are all ore-throwne,</l>
         <l>And what strength I have's mine owne</l>
         <l>As you from crimes would pardon'd be,</l>
@@ -256,7 +256,7 @@ page, and might therefore be encoded as back matter:
  </p>
 <p>In many modern editions, the editors have chosen to regard
 Prospero's speech as a part of the preceding scene:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><sp who="#pr">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><sp>
   <speaker>Prospero</speaker>
   <l part="Y">I'll deliver all,</l>
   <l>And promise you calm seas, auspicious gales,</l>
@@ -649,11 +649,11 @@ is named or described, as discussed in <ptr target="#DRFAB"/> above.
    <castItem> <role xml:id="menae">Menaechmus</role> </castItem>
    <castItem> <role xml:id="penic">Peniculus</role> </castItem>
 </castList>
-<sp who="#m2"> <speaker>Menaechmus</speaker>
+<sp who="#menae"> <speaker>Menaechmus</speaker>
    <l>Responde, adulescens, quaeso, quid nomen tibist?</l> </sp>
-<sp who="#pen"> <speaker>Peniculus</speaker>
+<sp who="#penic"> <speaker>Peniculus</speaker>
    <l>Etiam derides, quasi nomen non noveris?</l> </sp>
-<sp who="#m2"> <speaker>Menaechmus</speaker>
+<sp who="#menae"> <speaker>Menaechmus</speaker>
    <l>Non edepol ego te, quot sciam, umquam ante hunc diem</l>
    <l>Vidi neque novi; ...</l> </sp></egXML>
 <!-- Plautus, Menaechmi, 498-9  --></p>
@@ -681,15 +681,18 @@ then might look like this:
    <castItem><role xml:id="menaechmus">Menaechmus</role></castItem>
    <castItem><role xml:id="peniculus">Peniculus</role></castItem>
    </castList>
-<sp who="#m2"><l>Responde, adulescens, quaeso, quid nomen tibist?</l></sp>
-<sp who="#pen"><l>Etiam derides, quasi nomen non noveris?</l></sp>
-<sp who="#m2"><l>Non edepol ego te, quot sciam, umquam ante hunc diem</l>
+<sp who="#menaechmus"><l>Responde, adulescens, quaeso, quid nomen tibist?</l></sp>
+<sp who="#peniculus"><l>Etiam derides, quasi nomen non noveris?</l></sp>
+<sp who="#menaechmus"><l>Non edepol ego te, quot sciam, umquam ante hunc diem</l>
               <l>Vidi neque novi; ...</l></sp></egXML>
 <!-- Plautus, Menaechmi, 498-9  --></p>
 <p>More than one identifier may be listed as value for the <att>who</att>
 attribute if the speech is spoken by more than one person, as in the
 following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><stage>Nano and Castrone sing</stage>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><castList>
+   <castItem><role xml:id="nan">Nano</role></castItem>
+   <castItem><role xml:id="cas">Castrone</role></castItem>
+   </castList><stage>Nano and Castrone sing</stage>
 <sp who="#nan #cas">
    <l>Fools, they are the only nation</l>
    <l>Worth men's envy or admiration</l>
@@ -787,12 +790,17 @@ as taken in different performances of the same text.</p>
 <p>The <gi>move</gi> element should be located at the position in the
 text where the move is presumed to take place.  This will often coincide
 with a stage direction, as in the following simple example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><stage type="entrance">  
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><castList>
+<castItem><role xml:id="b">Bellafronte</role></castItem></castList>
+<stage type="entrance">  
   <move who="#b" type="enter"/>
   Enter Bellafront mad.</stage></egXML></p>
 <p>The <gi>move</gi> element can however appear independently of a stage
 direction, as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><sp>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><castList>
+<castItem><role xml:id="lm">Lady Macbeth</role></castItem>
+<castItem><role xml:id="g1">First Gentleman</role></castItem><!-- ... --></castList>
+<sp who="#g1">
    <speaker>Gent.</speaker>
    <p>Neither to you, nor any one; having no witness
 to confirm my speech. <move who="#lm" type="enter" where="C"/>
@@ -840,13 +848,13 @@ elements provides one simple way of indicating where the boundaries of a
 speech and of a verse line or line group do not coincide.  The encoder
 may simply indicate that a line or line group is metrically incomplete by
 specifying the value <val>Y</val> or <val>N</val>, as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><sp who="#Face"><l part="Y">Believ't, I will.</l></sp>
-<sp who="#Subtle"><l part="Y">Thy worst. I fart at thee.</l></sp>
-<sp who="#Doll"><l>Ha' you your wits? Why gentlemen! For love —</l></sp>
-<sp who="#Face"><l part="Y">Sirrah, I'll strip you—.</l></sp>
-<sp who="#Subtle"><l part="Y">What to do? Lick figs</l>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><sp><speaker>Face</speaker><l part="Y">Believ't, I will.</l></sp>
+<sp><speaker>Subtle</speaker><l part="Y">Thy worst. I fart at thee.</l></sp>
+<sp><speaker>Doll</speaker><l>Ha' you your wits? Why gentlemen! For love —</l></sp>
+<sp><speaker>Face</speaker><l part="Y">Sirrah, I'll strip you—.</l></sp>
+<sp><speaker>Subtle</speaker><l part="Y">What to do? Lick figs</l>
   <l part="Y">Out at my—</l></sp>
-<sp who="#Face"><l part="Y">Rogue, rogue, out of all your sleights.</l></sp>
+<sp><speaker>Face</speaker><l part="Y">Rogue, rogue, out of all your sleights.</l></sp>
 </egXML>
 <!-- Jonson, Alchemist, I.1, ed Brown, p.9 -->
 	<!-- <sp who="volp">
@@ -864,13 +872,13 @@ specifying the value <val>Y</val> or <val>N</val>, as in the following example:
 consecutive in the text (though possibly interrupted by stage
 directions), the values <val>I</val> (initial), <val>M</val> (medial), and <val>F</val> (final)
 may be used to indicate how metrical lines should be reconstituted:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><sp who="#Face"><l part="I">Believ't, I will.</l></sp>
-<sp who="#Subtle"><l part="F">Thy worst. I fart at thee.</l></sp>
-<sp who="#Doll"><l>Ha' you your wits? Why gentlemen! For love —</l></sp>
-<sp who="#Face"><l part="I">Sirrah, I'll strip you—.</l></sp>
-<sp who="#Subtle"><l part="M">What to do? Lick figs</l>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><sp><speaker>Face</speaker><l part="I">Believ't, I will.</l></sp>
+<sp><speaker>Subtle</speaker><l part="F">Thy worst. I fart at thee.</l></sp>
+<sp><speaker>Doll</speaker><l>Ha' you your wits? Why gentlemen! For love —</l></sp>
+<sp><speaker>Face</speaker><l part="I">Sirrah, I'll strip you—.</l></sp>
+<sp><speaker>Subtle</speaker><l part="M">What to do? Lick figs</l>
   <l part="I">Out at my—</l></sp>
-<sp who="#Face"><l part="F">Rogue, rogue, out of all your sleights.</l></sp>
+<sp><speaker>Face</speaker><l part="F">Rogue, rogue, out of all your sleights.</l></sp>
 </egXML>
 <!-- or first, medial and last? -->
 	<!-- <egXML xmlns="http://www.tei-c.org/ns/Examples"><sp who="barnardo">
@@ -893,18 +901,18 @@ attributes is available to record this fact.  In the following example,
 an <gi>lg</gi> element is used to represent one verse of a song, which is
 divided between several voices:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><stage type="head">Song — Sir Joseph</stage>
-<sp who="#jopo">
+<sp>
   <lg type="song" part="I">
     <l>I am the monarch of the sea,</l>
     <l>The ruler of the Queen's Navee.</l>
     <l>Whose praise Great Britain loudly chants.</l>
   </lg> </sp>
-<sp who="#he">
+<sp>
   <speaker>Cousin Hebe</speaker>
   <lg type="song" part="M">
     <l>And we are his sisters and his cousins and his aunts!</l>
   </lg> </sp>
-<sp who="#rel">
+<sp>
   <speaker>Rel.</speaker>
   <lg type="song" part="F">
     <l>And we are his sisters and his cousins and his aunts!</l>
@@ -1014,13 +1022,13 @@ might be encoded as follows:
   <div2 n="5" type="scene">
     <stage>Elsinore. A room in the Castle.</stage>
     <stage type="setting">Enter Ophelia, distracted.</stage>
-    <sp who="#oph"> <speaker>Ophelia</speaker>
+    <sp> <speaker>Ophelia</speaker>
       <p>Where is the beauteous Majesty of Denmark?</p>
     </sp>
-    <sp who="#qu"> <speaker>Queen</speaker>
+    <sp> <speaker>Queen</speaker>
       <p>How now, Ophelia?</p>
     </sp>
-    <sp who="#oph"> <speaker>Ophelia</speaker>
+    <sp> <speaker>Ophelia</speaker>
       <stage>Singing</stage>
       <lg next="#Tl2" xml:id="Tl1" type="song" part="Y">
         <l>How should I your true-love know</l>
@@ -1029,10 +1037,10 @@ might be encoded as follows:
         <l>And his sandal shoon.</l>
       </lg>
     </sp>
-    <sp who="#qu"> <speaker>Queen</speaker>
+    <sp> <speaker>Queen</speaker>
       <p>Alas, sweet lady, what imports this song?</p>
     </sp>
-    <sp who="#oph"> <speaker>Ophelia</speaker>
+    <sp> <speaker>Ophelia</speaker>
       <p>Say you? Nay, pray you mark.</p>
       <stage>Sings</stage>
       <lg prev="#Tl1" xml:id="Tl2" type="song" part="Y">
@@ -1064,10 +1072,10 @@ might be encoded as follows:
     <div1 n="4" type="act">
       <div2 n="5" type="scene">
         <stage type="setting">Elsinore. A room in the Castle.</stage>
-        <sp who="#qu"> <speaker>Queen</speaker>
+        <sp> <speaker>Queen</speaker>
           <p>How now, Ophelia?</p>
         </sp>
-        <sp who="#oph"> <speaker>Ophelia</speaker>
+        <sp> <speaker>Ophelia</speaker>
           <stage type="delivery">Singing</stage>
           <lg xml:id="TL1" type="song" part="Y">
             <l>How should I your true-love know</l>
@@ -1076,10 +1084,10 @@ might be encoded as follows:
             <l>And his sandal shoon.</l>
           </lg>
         </sp>
-        <sp who="#qu"> <speaker>Queen</speaker>
+        <sp> <speaker>Queen</speaker>
           <p>Alas, sweet lady, what imports this song?</p>
         </sp>
-        <sp who="#oph"> <speaker>Ophelia</speaker>
+        <sp> <speaker>Ophelia</speaker>
           <p>Say you? Nay, pray you mark.</p>
           <stage type="delivery">Sings</stage>
           <lg xml:id="TL2" type="song" part="Y">
@@ -1115,25 +1123,25 @@ parts of a song may lead to very complex layout.</p>
 <p>One simple method of indicating the temporal alignment of speeches or
 actions is to use the <att>corresp</att> attribute discussed in
 section <ptr target="#SACS"/>, as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><sp who="#dr-m"> <speaker>Mangan</speaker>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><sp> <speaker>Mangan</speaker>
   <stage type="delivery">wildly</stage>
   <p>Look here: I'm going to take off all my clothes.</p>
   <stage type="action">he begins tearing off his coat.</stage>
 </sp>
-<sp xml:id="dr-s1" who="#dr-lu"> <speaker>Lady Utterword</speaker>
+<sp xml:id="dr-s1" > <speaker>Lady Utterword</speaker>
   <p>Mr Mangan!</p>
 </sp>
-<sp xml:id="dr-s2" who="#dr-cs"> <speaker>Captain Shotover</speaker>
+<sp xml:id="dr-s2"> <speaker>Captain Shotover</speaker>
   <p>Whats that?</p>
 </sp>
-<sp xml:id="dr-s3" who="#dr-h"> <speaker>Hector</speaker>
+<sp xml:id="dr-s3"> <speaker>Hector</speaker>
   <p>Ha! ha! Do. Do.</p>
 </sp>
-<sp xml:id="dr-s4" who="#dr-e"> <speaker>Ellie</speaker>
+<sp xml:id="dr-s4"> <speaker>Ellie</speaker>
   <p>Please dont.</p>
 </sp>
 <stage corresp="#dr-s1 #dr-s2 #dr-s3 #dr-s4" xml:id="dr-d1" type="delivery">in consternation</stage>
-<sp who="#dr-mh"> <speaker>Mrs. Hushabye</speaker>
+<sp> <speaker>Mrs. Hushabye</speaker>
   <stage type="action">catching his arm and stopping him</stage>
   <p>Alfred: for shame! Are you mad?</p>
 </sp></egXML></p>
@@ -1211,7 +1219,7 @@ George gasps. The train <hi>whistle</hi> screams.</view></egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><view>Ext. TV control van—Early morning.
 The <name>T.V. announcer</name> from the Ryan interview
 stands near the Control Van, the lake in b.g.</view>
-<sp who="#announcer"> <speaker>T.V. Announcer</speaker>
+<sp> <speaker>T.V. Announcer</speaker>
 <p>Several years ago, Jack Ryan was a highly
 successful hydroplane racer ...</p>
 </sp></egXML>
@@ -1249,7 +1257,7 @@ from the Jet Propulsion Lab ...</p>
 <view>Mix through to Wilde's drawing room. A crowd of suitably
   dressed folk are engaged in typically brilliant conversation,
   laughing affectedly and drinking champagne.</view>
-<sp who="#tj">
+<sp>
    <speaker>Prince of Wales</speaker>
    <p>My congratulations, Wilde. Your latest play is a great success.</p>
 </sp></egXML>
