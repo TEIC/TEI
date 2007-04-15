@@ -18,7 +18,7 @@ CHAPTER=$(shell find ${LANGTREE} -iname ${CHAP}*.xml)
 #XSL=http://www.tei-c.org/stylesheet/release/xml/tei
 JING=jing
 
-.PHONY: convert dtds schemas html validate valid test split oddschema exampleschema fascicule clean dist
+.PHONY: convert dtds schemas html validate valid test split oddschema exampleschema fascicule clean dist exemplars
 
 default: dtds schemas exemplars html-web validate-html
 
