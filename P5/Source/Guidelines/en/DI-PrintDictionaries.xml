@@ -90,16 +90,24 @@ $Author$
                     <moduleRef key="teiheader"/>
                     <moduleRef key="dictionaries"/>
                 </schemaSpec>
-            </egXML> and compile it to generate a full DTD, RelaxNG Schema or W3C XML Schema; </item>
-        <item>Directly include the RelaxNG schema associated with this chapter in your main schema
-            file, as follows: <eg> namespace ns1 = "http://www.tei-c.org/ns/Examples" # RELAX NG
-                grammar include "relaxng.rnc" # base TEI include "Schema/tei.rnc" # TEI modules
-                include "Schema/core.rnc" include "Schema/textstructure.rnc" include
-                "Schema/header.rnc" include "Schema/dictionaries.rnc" anyTEI = element ns1:* {
-                (attribute * { text } | text | anyTEI | macro.schemapattern)* } include
-                "Schema/tagdocs.rnc" { macro.schemapattern = text | pattern+ egXML.content = (text |
-                anyTEI | pattern )+ } include "Schema/linking.rnc" start |= elementSpec | classSpec
-                | macroSpec | div1 | div2 </eg>
+            </egXML> and compile it to generate a full DTD, RELAX NG Schema or W3C XML Schema; </item>
+        <item>Directly include the RELAX NG schema associated with this chapter in your main schema
+            file, as follows: <eg>namespace ns1 = "http://www.tei-c.org/ns/Examples" # RELAX NG grammar
+	    include "relaxng.rnc" # base TEI
+	    include "Schema/tei.rnc" # TEI modules
+	    include "Schema/core.rnc"
+	    include "Schema/textstructure.rnc"
+	    include "Schema/header.rnc"
+	    include "Schema/dictionaries.rnc"
+	    anyTEI = element ns1:* {
+	      ( attribute * { text } | text | anyTEI | macro.schemapattern )*
+	      }
+	    include "Schema/tagdocs.rnc" {
+	      macro.schemapattern = text | pattern+
+	      egXML.content = (text | anyTEI | pattern )+
+	      }
+	    include "Schema/linking.rnc"
+	    start |= elementSpec | classSpec | macroSpec | div1 | div2 </eg>
         </item>
     </list>
     <div type="div2" xml:id="DIBO">
