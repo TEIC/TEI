@@ -234,6 +234,10 @@ select="$where"/> points to something I cannot find: <xsl:value-of select="$valu
       </xsl:when>
       <xsl:when test="starts-with($What,'mailto:')"/>
       <xsl:when test="starts-with($What,'http:')"/>
+      <xsl:when test="name(.)='url' and
+		      local-name(parent::*)='graphic'"/>
+      <xsl:when test="name(.)='url' and
+		      local-name(parent::*)='fsdDecl'"/>
       <xsl:when test="name(.)='target' and
 		      local-name(parent::*)='ref'"/>
       <xsl:when test="name(.)='target' and local-name(parent::*)='ptr'"/>
