@@ -212,21 +212,22 @@ by assigning to <att>locus</att> the value
 <mentioned>transcribedContent</mentioned>.  For example, if the source is
 hard to read and so the transcription is uncertain:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">I have a <emph xml:id="CE-p3">gub</emph>.
-<certainty target="CE-p3" locus="transcribedContent" degree="0.5"/></egXML></p>
+<certainty target="#CE-p3" locus="transcribedContent" degree="0.5"/></egXML></p>
 <p>Degrees of confidence in the proper expansion of abbreviations may
 also be expressed, by using the value <mentioned>suppliedContent</mentioned>:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">You will want to use
-<choice xml:id="CE-e1"><expan>Standard
-Generalized Markup Language</expan><abbr>SGML</abbr></choice> ...
+<choice><expan  xml:id="CE-e1">Standard
+Generalized Markup Language</expan>
+<expan xml:id="CE-e4">Some Grandiose Methodology for Losers</expan><abbr>SGML</abbr></choice> ...
 <!-- ... -->
-<certainty target="CE-e1" locus="suppliedContent" degree="0.9"/></egXML></p>
+<certainty target="#CE-e1" locus="suppliedContent" degree="0.9"/></egXML></p>
 <p>The <att>assertedValue</att> attribute should be used to provide an
 alternative value for whatever aspect of the markup is in doubt:  an
 alternative generic identifier, or the identifier of an alternative starting or
 ending point, as already shown, an alternative attribute value, or
 alternative element content, as in this example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">I have a <emph xml:id="CE-P3">gub</emph>.
-<certainty target="CE-P3" locus="transcribedContent" assertedValue="gun" degree="0.8"> 
+<certainty target="#CE-P3" locus="transcribedContent" assertedValue="gun" degree="0.8"> 
   <desc>a gun makes more sense in a holdup</desc></certainty></egXML>
 Since attribute values have no internal substructure, the
 <att>assertedValue</att> attribute is useful for specifying alternative
@@ -288,12 +289,16 @@ set of elements), and <att>locus</att> indicates the particular aspect
 of the encoding of those elements for which responsibility is to be
 assigned.  The suggested values may be combined as appropriate. For example,  to
 indicate that RC is responsible for transcribing an
-illegible word, and that AR is responsible for identifying that word
+illegible word, and that PMWR is responsible for identifying that word
 as a proper noun, the text might be encoded thus:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Earnest went to old <persName xml:id="CE-p5">Saybrook</persName>.
 <!-- ... -->
-<respons target="CE-p5" locus="transcribedContent" resp="#RC"/>
-<respons target="CE-p5" locus="gi location" resp="#AR"/></egXML></p>
+<respons target="#CE-p5" locus="transcribedContent" resp="#RC"/>
+<respons target="#CE-p5" locus="gi location" resp="#PMWR"/>
+<list type="encoders">
+<item xml:id="PMWR"/>
+<item xml:id="RC"/>
+</list></egXML></p>
 <p>Some elements bear specialized <att>resp</att> or <att>agent</att>
 attributes, which have specific meanings that vary from element to
 element; the <gi>respons</gi> element should be reserved for the general
