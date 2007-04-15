@@ -20,19 +20,21 @@ within a text. </desc><desc version="2006-10-28" xml:lang="ja"> 特定タグの�
   <attList>
     <attDef ident="gi" usage="req">
       <equiv/>
-      <desc>the name (generic identifier)
-of the element indicated by the tag.</desc><desc version="2006-10-28" xml:lang="ja">タグの名前(共通識別子)．</desc>
-      <desc xml:lang="fr">nom (identifiant générique) de l’élément indiqué dans la balise.</desc>
+      <desc>the name (generic identifier) of the element indicated by
+      the tag.</desc>
+      <desc version="2006-10-28" xml:lang="ja">タグの名前(共通識別子)．</desc>
+      <desc xml:lang="fr">nom (identifiant générique) de l’élément
+      indiqué dans la balise.</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"/>
+	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"/>
       </datatype>
       <valDesc>the name of an element within the namespace indicated
       by the parent <gi>namespace</gi> element</valDesc>
     </attDef>
     <attDef ident="occurs" usage="rec">
       <equiv/>
-      <desc>specifies the number of occurrences of this element within the text.
- </desc><desc version="2006-10-28" xml:lang="ja">テキスト中における当該タグの出現番号．</desc>
+      <desc>specifies the number of occurrences of this element within the text.</desc>
+      <desc version="2006-10-28" xml:lang="ja">テキスト中における当該タグの出現番号．</desc>
       <desc xml:lang="fr">spécifie le nombre d’occurrences de cet élément dans le texte.</desc>
       <datatype>
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/>
@@ -41,10 +43,13 @@ of the element indicated by the tag.</desc><desc version="2006-10-28" xml:lang="
     </attDef>
     <attDef ident="withId" usage="rec">
       <equiv/>
-      <desc>specifies the number of occurrences of this element within the text
-which bear a distinct value for the global <att>xml:id</att> attribute. </desc><desc version="2006-10-28" xml:lang="ja">属性xml:idを持つテキスト中における当該タグの出現番号．</desc>
-      <desc xml:lang="fr">spécifie le nombre d’occurrences de cet élément dans le texte qui porte une valeur donnée pour l’attribut global <att>xml:id</att>.
-	</desc>
+      <desc>specifies the number of occurrences of this element within
+      the text which bear a distinct value for the global
+      <att>xml:id</att> attribute. </desc>
+      <desc version="2006-10-28" xml:lang="ja">属性xml:idを持つテキスト中における当該タグの出現番号．</desc>
+      <desc xml:lang="fr">spécifie le nombre d’occurrences de cet
+      élément dans le texte qui porte une valeur donnée pour
+      l’attribut global <att>xml:id</att>.</desc>
       <datatype>
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/>
       </datatype>
@@ -52,32 +57,41 @@ which bear a distinct value for the global <att>xml:id</att> attribute. </desc><
     </attDef>
     <attDef ident="render" usage="opt">
       <equiv/>
-      <desc>specifies the identifier of a <gi>rendition</gi> element which
-defines how this element is to be rendered.</desc><desc version="2006-10-28" xml:lang="ja">当該要素がどのように表現されるかを規定する要素のIDを示す．</desc>
-      <desc xml:lang="fr">spécifie l’identifiant d’un élément de restitution <gi>rendition</gi> qui définit comment cet élément doit être restitué.</desc>
+      <desc>specifies the identifier of a <gi>rendition</gi> element
+      which defines how this element is to be rendered.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該要素がどのように表現されるかを規定する要素のIDを示す．</desc>
+      <desc xml:lang="fr">spécifie l’identifiant d’un élément de
+      restitution <gi>rendition</gi> qui définit comment cet élément
+      doit être restitué.</desc>
       <datatype>
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>an identifier specified as the value of the <att>xml:id</att>
-attribute on some <gi>rendition</gi> element in the current document.</valDesc>
+      <valDesc>an identifier specified as the value of the
+      <att>xml:id</att> attribute on some <gi>rendition</gi> element
+      in the current document.</valDesc>
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"><tagsDecl>
-<rendition xml:id="it">Render using a slant or italic variant on the
-current font</rendition>
-<!-- ... -->
-      <tagUsage gi="hi" occurs="28" withId="2" render="#it">
-Used to mark English words italicised in the copy text.
-      </tagUsage><tagUsage gi="foreign" render="#it">
-Used to mark non-English words in the copy text.
-</tagUsage>
-</tagsDecl>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <tagsDecl>
+	<rendition xml:id="it">Render using a slant or italic variant
+	on the current font</rendition>
+	<!-- ... -->
+	<namespace name="http://www.tei-c.org/ns/1.0">
+	  <tagUsage gi="hi" occurs="28" withId="2" render="#it">
+	  Used to mark English words italicised in the copy text.</tagUsage>
+	  <tagUsage gi="foreign" render="#it">Used to mark non-English
+	  words in the copy text.</tagUsage>
+	  <!-- ... -->
+	</namespace>
+      </tagsDecl>
     </egXML>
   </exemplum>
   <exemplum xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <tagUsage gi="hi" occurs="28" withId="2" render="#it"> Utilisé seulement pour marquer les mots anglais en italiques dans le texte de la copie.</tagUsage>
+      <tagUsage gi="hi" occurs="28" withId="2" render="#it"> Utilisé
+      seulement pour marquer les mots anglais en italiques dans le
+      texte de la copie.</tagUsage>
     </egXML>
   </exemplum>
   <remarks/>
