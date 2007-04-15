@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -27,8 +28,8 @@ within some taxonomy or text typology.</desc><desc version="2006-10-28" xml:lang
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>A series of one or more space-separated pointers (URIs)
-      to <gi>category</gi> elements, typically in the header of the
-      current document</valDesc>
+      to <gi>category</gi> elements, typically located within a
+      <gi>taxonomy</gi> element inside a TEI header</valDesc>
     </attDef>
     <attDef ident="scheme" usage="opt">
       <equiv/>
@@ -39,12 +40,24 @@ within some taxonomy or text typology.</desc><desc version="2006-10-28" xml:lang
       <datatype>
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>identifier of the associated <gi>taxonomy</gi> element.</valDesc>
+      <valDesc>May supply the identifier of the associated <gi>taxonomy</gi> element.</valDesc>
     </attDef>
   </attList>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <catRef target="#ba #c1" scheme="#s1"/>
+      <catRef target="#news #prov #sales2" />
+<!-- elsewhere -->
+<taxonomy>
+<category xml:id="news">
+  <catDesc>Newspapers</catDesc>
+</category>
+<category xml:id="prov">
+  <catDesc>Provincial</catDesc>
+</category>
+<category xml:id="sales2">
+  <catDesc>Low to average annual sales</catDesc>
+</category>
+</taxonomy>
     </egXML>
   </exemplum>
   <remarks>
