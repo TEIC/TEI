@@ -35,6 +35,7 @@
   <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
   <xsl:param name="localsource"/>
   <xsl:key name='REFED' use="@name" match="rng:ref"/>
+  <xsl:key name='REFED' use="substring-before(@name,'_')" match="rng:ref[contains(@name,'_')]"/>
   <xsl:key name='REFED' use="@key" match="tei:memberOf"/>
   <xsl:key name='REFED' use="substring-before(@name,'.attribute')" match="tei:attRef"/>
   <xsl:key match="tei:*[@xml:id]" name="IDS" use="@xml:id"/>
