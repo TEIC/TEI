@@ -4,6 +4,7 @@ XSL=/usr/share/xml/tei/stylesheet/
 ROMAOPTS=--doc --localsource=../Source/Guidelines/${LANGUAGE}/${DRIVER}
 
 TESTFILES= \
+	testbare \
 	testchinese \
 	testcorpus \
 	testdictionaries \
