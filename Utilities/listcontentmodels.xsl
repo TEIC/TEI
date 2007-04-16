@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+** This is the stylesheet for generating EDW84, the "TEI element catalogue".
+** It reads in the Guidelines (i.e., the complete XML source), and writes 
+** out a TEI file which, in theory, if it had a DOCTYPE declaration would be
+** a valid TEI P4 Lite file which includes tables for cross-referncing 
+** elements and classes.
+** A typical static invocation would be something like the following (all on 
+** one line, double hyphen escaped with numeric character references):
+**   xmllint &#x2D;&#x2D;noent &#x2D;&#x2D;xinclude
+**   Source/Guidelines/en/guidelines-en.xml
+**   | xsltproc Utilities/listcontentmodels.xsl -
+**   | /usr/share/xml/teip4/stylesheet/teic/teihtml-teic-printable.xsl
+**   > /tmp/edw84.html 
+**
+** It was written for the 2005-09 "class" meeting in Oxford by Sebastian
+** Rahtz.
+-->
+
 <xsl:stylesheet 
      xmlns:s="http://www.ascc.net/xml/schematron" 
      xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
