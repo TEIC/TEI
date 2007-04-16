@@ -321,8 +321,8 @@
   <xsl:template match="tei:classSpec" mode="tangle">
     <xsl:variable name="c" select="@ident"/>
     <xsl:if test="$verbose='true'">
-      <xsl:message> classSpec <xsl:value-of select="@ident"/> (type
-          <xsl:value-of select="@type"/>)</xsl:message>
+      <xsl:message> classSpec <xsl:value-of 
+      select="@ident"/> (type <xsl:value-of select="@type"/>)</xsl:message>
     </xsl:if>
     <xsl:choose>
       <xsl:when test="@type='model'">

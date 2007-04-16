@@ -34,6 +34,9 @@
   <xsl:param name="verbose"/>
   <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
   <xsl:param name="localsource"/>
+  <xsl:key name='REFED' use="@name" match="rng:ref"/>
+  <xsl:key name='REFED' use="@key" match="tei:memberOf"/>
+  <xsl:key name='REFED' use="substring-before(@name,'.attribute')" match="tei:attRef"/>
   <xsl:key match="tei:*[@xml:id]" name="IDS" use="@xml:id"/>
   <xsl:key match="tei:classSpec[@type='atts' and @mode='add']"
     name="NEWATTCLASSES" use="@ident"/>
@@ -64,80 +67,66 @@
     <xsl:text>module-from-</xsl:text>
     <xsl:value-of select="//tei:schemaSpec/@ident"/>
   </xsl:variable>
+
   <xsl:template match="/">
     <xsl:apply-templates/>
   </xsl:template>
+
   <xsl:template match="tei:schemaSpec">
-    <xsl:copy>
-      <xsl:copy-of select="@*"/>
-      <xsl:if test="$verbose='true'">
-        <xsl:message>Schema <xsl:value-of select="@ident"/></xsl:message>
-      </xsl:if>
+    <xsl:variable name="compiled">
+      <xsl:copy>
+	<xsl:copy-of select="@*"/>
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Schema <xsl:value-of select="@ident"/></xsl:message>
+	</xsl:if>
       <!-- 
-it is important to process "tei" and "core" first 
-because of the order of declarations
--->
+	   it is important to process "tei" and "core" first 
+	   because of the order of declarations
+      -->
       <xsl:for-each select="tei:moduleRef[@key='tei']">
-        <xsl:call-template name="phase1"/>
+	<xsl:call-template name="phase1"/>
       </xsl:for-each>
       <xsl:for-each select="tei:moduleRef[@key='core']">
-        <xsl:call-template name="phase1"/>
+	<xsl:call-template name="phase1"/>
       </xsl:for-each>
       <xsl:for-each select="tei:moduleRef[@key]">
-        <xsl:if test="not(@key='core' or @key='tei')">
-          <xsl:call-template name="phase1"/>
-        </xsl:if>
+	<xsl:if test="not(@key='core' or @key='tei')">
+	  <xsl:call-template name="phase1"/>
+	</xsl:if>
       </xsl:for-each>
       <xsl:copy-of select="tei:moduleRef[@url]"/>
       <xsl:call-template name="phase2"/>
       <xsl:copy-of select="s:*"/>
+      </xsl:copy>
+    </xsl:variable>
+
+    <xsl:for-each select="exsl:node-set($compiled)">
+      <xsl:apply-templates mode="final"/>
+    </xsl:for-each>
+
+  </xsl:template>
+  
+  <xsl:template match="*" mode="final">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:apply-templates mode="final"/>
     </xsl:copy>
   </xsl:template>
-  <xsl:template name="phase2">
-    <xsl:if test="$verbose='true'">
-      <xsl:message>Phase 2: add elementSpec, classSpec, macroSpec</xsl:message>
-    </xsl:if>
-    <xsl:for-each select="tei:classSpec[@mode='add' or not(@mode)]">
-      <xsl:call-template name="createCopy"/>
-    </xsl:for-each>
-    <xsl:for-each select="tei:macroSpec[@mode='add' or not(@mode)]">
-      <xsl:call-template name="createCopy"/>
-    </xsl:for-each>
-    <xsl:for-each select="tei:elementSpec[@mode='add' or not(@mode)]">
-      <xsl:apply-templates mode="copy" select="."/>
-    </xsl:for-each>
-    <xsl:if test="$verbose='true'">
-      <xsl:message>Phase 2: expand specGrpRef</xsl:message>
-    </xsl:if>
-    <xsl:for-each select="tei:specGrpRef">
-      <xsl:choose>
-        <xsl:when test="starts-with(@target,'#')">
-          <xsl:for-each select="key('IDS',substring-after(@target,'#'))">
-            <xsl:for-each select="tei:classSpec[not(@mode) or @mode='add']">
-              <xsl:call-template name="createCopy"/>
-            </xsl:for-each>
-            <xsl:apply-templates mode="copy"
-              select="tei:elementSpec[not(@mode) or @mode='add']"/>
-            <xsl:for-each select="tei:macroSpec[not(@mode) or @mode='add']">
-              <xsl:call-template name="createCopy"/>
-            </xsl:for-each>
-          </xsl:for-each>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:for-each select="document(@target)/tei:specGrp">
-            <xsl:for-each select="tei:classSpec[not(@mode) or @mode='add']">
-              <xsl:call-template name="createCopy"/>
-            </xsl:for-each>
-            <xsl:apply-templates mode="copy"
-              select="tei:elementSpec[not(@mode) or @mode='add']"/>
-            <xsl:for-each select="tei:macroSpec[not(@mode) or @mode='add']">
-              <xsl:call-template name="createCopy"/>
-            </xsl:for-each>
-          </xsl:for-each>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
+  
+  <xsl:template match="tei:macroSpec|tei:classSpec" mode="final">
+<!--    <xsl:message>look at <xsl:value-of select="name(.)"/>: <xsl:value-of select="@ident"/></xsl:message>-->
+    <xsl:variable name="k" select="@ident"/>
+    <xsl:choose>
+      <xsl:when test="key('REFED',$k)">
+	<xsl:copy-of select="."/>
+      </xsl:when>
+      <xsl:otherwise>
+<!--	<xsl:message>reject <xsl:value-of select="$k"/>	</xsl:message>-->
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
+
+
   <xsl:template name="phase1">
     <!--for every module:
         for every object
@@ -191,6 +180,7 @@ because of the order of declarations
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template name="phase1a">
     <xsl:for-each select="*">
       <xsl:variable name="Current" select="."/>
@@ -233,6 +223,53 @@ because of the order of declarations
     </xsl:for-each>
   </xsl:template>
 
+
+  <xsl:template name="phase2">
+    <xsl:if test="$verbose='true'">
+      <xsl:message>Phase 2: add elementSpec, classSpec, macroSpec</xsl:message>
+    </xsl:if>
+    <xsl:for-each select="tei:classSpec[@mode='add' or not(@mode)]">
+      <xsl:call-template name="createCopy"/>
+    </xsl:for-each>
+    <xsl:for-each select="tei:macroSpec[@mode='add' or not(@mode)]">
+      <xsl:call-template name="createCopy"/>
+    </xsl:for-each>
+    <xsl:for-each select="tei:elementSpec[@mode='add' or not(@mode)]">
+      <xsl:apply-templates mode="copy" select="."/>
+    </xsl:for-each>
+    <xsl:if test="$verbose='true'">
+      <xsl:message>Phase 2: expand specGrpRef</xsl:message>
+    </xsl:if>
+    <xsl:for-each select="tei:specGrpRef">
+      <xsl:choose>
+        <xsl:when test="starts-with(@target,'#')">
+          <xsl:for-each select="key('IDS',substring-after(@target,'#'))">
+            <xsl:for-each select="tei:classSpec[not(@mode) or @mode='add']">
+              <xsl:call-template name="createCopy"/>
+            </xsl:for-each>
+            <xsl:apply-templates mode="copy"
+              select="tei:elementSpec[not(@mode) or @mode='add']"/>
+            <xsl:for-each select="tei:macroSpec[not(@mode) or @mode='add']">
+              <xsl:call-template name="createCopy"/>
+            </xsl:for-each>
+          </xsl:for-each>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:for-each select="document(@target)/tei:specGrp">
+            <xsl:for-each select="tei:classSpec[not(@mode) or @mode='add']">
+              <xsl:call-template name="createCopy"/>
+            </xsl:for-each>
+            <xsl:apply-templates mode="copy"
+              select="tei:elementSpec[not(@mode) or @mode='add']"/>
+            <xsl:for-each select="tei:macroSpec[not(@mode) or @mode='add']">
+              <xsl:call-template name="createCopy"/>
+            </xsl:for-each>
+          </xsl:for-each>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:template>
+
   <xsl:template match="@*|processing-instruction()|comment()|text()"
     mode="change">
     <xsl:copy/>
@@ -248,6 +285,11 @@ because of the order of declarations
   <xsl:template match="@*|processing-instruction()|comment()|text()" mode="copy">
     <xsl:copy/>
   </xsl:template>
+
+  <xsl:template match="tei:macroSpec|tei:classSpec" mode="copy">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
 
   <xsl:template match="tei:memberOf" mode="copy">
     <xsl:variable name="k" select="@key"/>
