@@ -287,11 +287,6 @@
     <xsl:copy/>
   </xsl:template>
 
-  <xsl:template match="tei:macroSpec|tei:classSpec" mode="copy">
-    <xsl:copy-of select="."/>
-  </xsl:template>
-
-
   <xsl:template match="tei:memberOf" mode="copy">
     <xsl:variable name="k" select="@key"/>
     <xsl:for-each select="$ODD">
