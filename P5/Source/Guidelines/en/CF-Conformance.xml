@@ -13,57 +13,57 @@
     in the description of the format and contents of a particular XML
     document instance or set of documents. It may be found useful in
     such situations as: <list>
-    <item> interchange of documents amongst different researchers or
-    users; </item>
+    <item> interchange or integration of documents amongst different
+    researchers or users; </item>
 <item>software specifications for TEI-aware processing tools; </item>
     <item> agreements for the deposit of texts in, and distribution
         of texts from, archives; </item>
     <item> specifying the form of documents to be produced by or for a given
-        project; </item>
-    <item>characterising the extent to which a document may be
+        project. </item>
+<!--    <item>characterising the extent to which a document may be
         re-used by some other project than that which originated it,
-        or integrated with other documents. </item>
+        or integrated with other documents. --></item>
   </list> It is not intended to provide any other evaluation, for
     example of scholarly merit, intellectual integrity, or value
     for money. A document may be of major intellectual importance and
-    yet not be TEI-conformant; a TEI conformant document may be of no
+    yet not be TEI Conformant; a TEI Conformant document may be of no
     scholarly value whatsoever.</p>
 
 <p>In this section we explore several aspects of conformance, and in
 particular attempt to define how the term <term>TEI Conformant</term>
 should be used. The terminology defined here should be considered
 normative: users and implementors of the TEI Guidelines should use the
-phrases <soCalled>TEI-Conformant</soCalled>,
-<soCalled>TEI-Conformable</soCalled>, and
-<soCalled>TEI-Extension</soCalled> only in the senses given and with
+phrases <soCalled>TEI Conformant</soCalled>,
+<soCalled>TEI Conformable</soCalled>, and
+<soCalled>TEI Extension</soCalled> only in the senses given and with
 the usages described. </p>
 
-<p> A document is <term>TEI-Conformant</term> if it: <list>
+<p> A document is <term>TEI Conformant</term> if it: <list>
 <item> is a well-formed XML document (<ptr target="#CFWF"/>)</item>
-<item>can be validated  against a schema derived from the TEI
-Guidelines (<ptr target="#CFVL"/>)</item>
-<item> conforms to the TEI abstract model (<ptr target="#CFAM"/>)</item>
+<item>can be validated against a <term>TEI Schema</term>, that is, a
+schema derived from the TEI Guidelines (<ptr target="#CFVL"/>)</item>
+<item> conforms to the TEI Abstract Model (<ptr target="#CFAM"/>)</item>
 <item> uses the <term>TEI Namespace</term> correctly (<ptr target="#CFNS"/>)</item>
 <!--    <item> contains a <gi>teiHeader</gi> element that includes
         elements for at least a title statement and publication
         statement</item>-->
 <item> documents the subset of the TEI scheme used to validate it,
-either implicitly or explicitly by means of a TEI-conformant <term>ODD
+either implicitly or explicitly by means of a TEI Conformant <term>ODD
 file</term> (<ptr target="#CFOD"/>)</item>
  </list> Each of these criteria is discussed in more detail below. </p>
 
-<p>A document is said to be <term>TEI-Conformable</term> if it is a
+<p>A document is said to be <term>TEI Conformable</term> if it is a
 well-formed XML document which can be transformed algorithmically and
 automatically into a TEI Conformant document without loss of
 information and by means described below.</p>
 
-<p>A document is said to use a <term>TEI-Extension</term> if it is a
+<p>A document is said to use a <term>TEI Extension</term> if it is a
 well-formed XML document which cannot be so transformed without loss
 of information, because it contains additional distinctions,
 representing concepts not present in the TEI abstract model, and
 therefore not documented in these Guidelines. </p>
 
-<p>A TEI-Conformant (or Conformable) document is said to follow
+<p>A TEI Conformant (or Conformable) document is said to follow
 <term>TEI Recommended Practice</term> if, wherever the Guidelines
 prefer one encoding practice to another, the preferred practice is
 used.</p>
@@ -83,7 +83,7 @@ representations may be considered appropriate for use in particular
 situations (for example, for data capture, or project-internal
 processing). But such alternative representations are at best
 <soCalled>TEI conformable</soCalled>, and cannot be considered in any
-way TEI conformant.</p>
+way TEI Conformant.</p>
 
 <p>Previous versions of these Guidelines used SGML as a representation
 format. With release P5, the only representation format supported
@@ -104,19 +104,21 @@ notion of a <term>valid</term> document, as being a well-formed
 document which matches a specific set of rules or syntactic
 constraints, defined by a <term>schema</term>. As noted above, TEI
 conformance implies that the schema used to determine validity of a
-given document should be derived from the present Recommendations.  
+given document should be derived from the present Guidelines,
+preferably by means of an ODD which references and documents the
+schema fragments which the Guidelines define.
 </p></div>
 
 <div type="div3" xml:id="CFVL">
   <head>Validation Constraint</head>
 
-<p>All <term>TEI-Conformant</term> documents must validate against
+<p>All <term>TEI Conformant</term> documents must validate against
 one or more  schema files that have been derived from the published TEI
 schema modules, combined and documented in the manner described in
 section <ptr target="#MD"/>. We call the formal output of this process a
-<term>TEI schema</term>. </p>
+<term>TEI Schema</term>. </p>
    
- <p>A TEI schema may be expressed in any or all of the XML DTD
+ <p>A TEI Schema may be expressed in any or all of the XML DTD
  language, W3C XML Schema, and RELAX NG (both compact and XML
  formats); the TEI does not mandate use of any particular schema
  language<note place="foot">Here and elsewhere we use the word
@@ -134,7 +136,7 @@ section <ptr target="#MD"/>. We call the formal output of this process a
 
 <p>As noted in section <ptr target="MD"/>, many varieties of TEI
 schema are possible and not all of them are necessarily
-<term>TEI-Conformant</term>; derivation from an ODD is a necessary but
+<term>TEI Conformant</term>; derivation from an ODD is a necessary but
 not a sufficient condition for this.</p>
 </div>
 
@@ -150,7 +152,10 @@ relationships, for example stating that
 <soCalled>heading</soCalled>s. These Guidelines also define classes of
 elements, which have both semantic and structural properties in
 common. Those semantic and structural properties are also a part of
-the TEI abstract model.</p>
+the TEI abstract model; the class membership of an existing TEI
+element cannot therefore be changed without changing the
+model. Elements can however be removed from a class by deletion, and
+new non-TEI elements can be added to existing TEI classes.</p>
 
 
 <div><head>Semantic constraints</head>
@@ -160,7 +165,7 @@ defined in the TEI Guidelines as having one specific meaning should
 not be used with another.  For example, the element <gi>l</gi> is
 defined in the TEI Guidelines as containing a line of verse. A schema
 in which it is redefined to mean a typographic line, or an ordered
-queue of objects of some kind, cannot therefore be TEI conformant,
+queue of objects of some kind, cannot therefore be TEI Conformant,
 whatever its other properties.</p>
 
 <p>The semantics of elements defined in the TEI Guidelines are
@@ -170,12 +175,12 @@ between TEI elements and concepts in other conceptual models may be
 provided by the <gi>equiv</gi> element where this is available. </p>
 
 <p>A schema which shares equivalent concepts to those of the TEI
-conceptual model may be mappable to the TEI schema by means of such a
+conceptual model may be mappable to the TEI Schema by means of such a
 mechanism. For example, the concept of paragraph, expressed in the TEI
 scheme by the <gi>p</gi> element is probably the same concept as that
 expressed in the Docbook scheme by the <gi>para</gi> element. In this
 respect (though not in others) a Docbook-conformant document might
-therefore be considered to be TEI-conformable. Such areas of overlap
+therefore be considered to be TEI Conformable. Such areas of overlap
 facilitate interoperability, because elements from one namespace may
 be readily integrated with those from another, but do not affect the
 definition of conformance.</p>
@@ -183,11 +188,11 @@ definition of conformance.</p>
 <p>A document is said to follow the <term>TEI Abstract Model</term> if
 it encodes those features specified in the TEI Guidelines, and the
 structural interrelations of this encoding agrees with that specified
-in a valid schema for <term>TEI-Conformant</term> documents. That is,
+in a valid schema for <term>TEI Conformant</term> documents. That is,
 the abstract definition and markup structurally corresponds to that in
 the TEI Guidelines even if the names of elements and attributes might
 not. Although it may be possible to transform a document following the
-<term>TEI Abstract Model</term> into a <term>TEI-Conformant</term>
+<term>TEI Abstract Model</term> into a <term>TEI Conformant</term>
 document, it is not itself conformant.</p>
 
 <p>A particularly important special case of this kind of mapping is
@@ -197,13 +202,12 @@ Header to such efforts is discussed in <ptr target="#SH" /> below.</p>
 </div>
 
 <div type="div3">
-<head>Mandatory components of the Abstract Model</head>
-
+<head>Mandatory components of a TEI Document</head>
 
 <p>It is a long-standing requirement for any
-    <term>TEI-Conformant</term> document that it should contain a
+    <term>TEI Conformant</term> document that it should contain a
       <gi>teiHeader</gi> element. To be more specific a
-      <term>TEI-Conformant</term> document must contain either: <list>
+      <term>TEI Conformant</term> document must contain either: <list>
       <item> a single <gi>teiHeader</gi> element followed by a single
       <gi>text</gi> element, in that order; or</item>
       <item> in the case of a corpus or collection, a single overall
@@ -211,7 +215,7 @@ Header to such efforts is discussed in <ptr target="#SH" /> below.</p>
         <gi>TEI</gi> elements each with its own
       <gi>teiHeader</gi></item>
     </list> All <gi>teiHeader</gi> elements in a
-      <term>TEI-Conformant</term> document must include elements
+      <term>TEI Conformant</term> document must include elements
       for: <list type="gloss">
       <label>Title Statement</label>
       <item>This should include the title of the TEI document
@@ -249,22 +253,22 @@ TEI markup with their own system. To meet these objectives, a TEI
 conformant document is required to make appropriate use of the TEI
 namespace.</p>
 
-<p>All elements and attributes in a TEI schema which represents
+<p>All elements and attributes in a TEI Schema which represents
 concepts from the TEI abstract model belong to the TEI namespace,
-<ident type="ns">http://www.tei-c.org/ns/1.0/</ident>, maintained by
+<ident type="ns">http://www.tei-c.org/ns/1.0</ident>, maintained by
 the TEI along with additional namespaces for language variants. A
-TEI-conformant document is required to declare the namespace for all
+TEI Conformant document is required to declare the namespace for all
 the elements it contains whether  these come from the TEI namespace or
 from other schemes. </p>
 
-<p>A TEI schema may be created which assigns TEI elements to some
-other namespace, or to no namespace at all. A document using
-such a schema must be regarded as a TEI extension and cannot be
-considered conformant, though it may be conformable. A schema which
-assigns non-TEI elements to the TEI namespace is also
-non-TEI-conformant; such practices are strongly deprecated as they may
-lead to serious difficulties for processing or interchange. For
-further detail, see <ptr target="CFNS"/>.
+<p>A TEI Schema may be created which assigns TEI elements to some
+other namespace, or to no namespace at all. A document using such a
+schema must be regarded as a TEI extension and cannot be considered
+TEI Conformant, though it may be TEI Conformable. A schema which
+introduces non-TEI elements or attributes within the TEI namespace is
+also non-TEI Conformant; such practices are strongly deprecated as
+they may lead to serious difficulties for processing or
+interchange. For further detail, see <ptr target="#CFNS"/>.
 </p>
 
 </div>
@@ -272,13 +276,13 @@ further detail, see <ptr target="CFNS"/>.
 <div type="div3" xml:id="CFOD">
   <head>Documentation Constraint</head>
 
-<p>As noted in <ptr target="CFVA"/> above, a TEI schema can only be
+<p>As noted in <ptr target="CFVA"/> above, a TEI Schema can only be
 generated from a TEI ODD, which also serves to document the semantics
-of the elements defined by it. A TEI conformant document should
+of the elements defined by it. A TEI Conformant document should
 therefore always be accompanied by (or refer to) a valid <term>TEI ODD
 file</term> specifying which modules, elements, classes, etc. are in
 use together with any modifications or renamings applied, and from
-which a TEI schema can be generated to validate the document. The TEI
+which a TEI Schema can be generated to validate the document. The TEI
 supplies a number of predefined <term>TEI Customization exemplar ODD
 files</term> and the schemas already generated from them (see <ptr
 target="#MDlite"/>), but most projects will typically need to
@@ -292,22 +296,23 @@ must be specified by means of a valid <term>TEI ODD</term> file. </p>
 <p>As different sorts of customization have different implications for
 the interchange and interoperability of TEI documents, it cannot be
 assumed that every customization will necessarily result in a schema
-that validates only TEI conformant documents. The ODD language permits
+that validates only TEI Conformant documents. The ODD language permits
 modifications which conflict with the TEI abstract model, even though
 observing this model  is a requirement for TEI conformance. The ODD
 language can in fact be used to describe many kinds of markup scheme,
 including schemes  which have nothing to do with the TEI at all. </p>
 
-<p>Equally, it is possible to construct a TEI schema which is
-identical to that derived from a given ODD without using the ODD
-scheme to document it. A schema can constructed simply by combining
-the predefined schema language fragments corresponding with the
-required set of TEI modules and other statements in the relevant
+<p>Equally, it is possible to construct a TEI Schema which is
+identical to that derived from a given TEI ODD file without using the
+ODD scheme to document it. A schema can constructed simply by
+combining the predefined schema language fragments corresponding with
+the required set of TEI modules and other statements in the relevant
 schema language. The status of such a schema with respect to the
-teiall schema cannot however be determined, in general; it may
-therefore be impossible to determine whether such a schema represents
-a clean modification or an extension. This is one reason for making the
-presence of an ODD a requirement for conformance. </p>
+<ident type="schema">tei_all</ident> schema cannot however be
+determined, in general; it may therefore be impossible to determine
+whether such a schema represents a clean modification or an
+extension. This is one reason for making the presence of a TEI ODD
+file a requirement for conformance. </p>
 
 </div>
 
@@ -318,22 +323,22 @@ presence of an ODD a requirement for conformance. </p>
 <head>Varieties of TEI Conformance</head>
 
 <p>The conformance status of a given document may be assessed by
-applying the following catechism, in the order indicated:
+answering the following questions, in the order indicated:
 <list type="ordered">
-<item>Is it a valid XML document, for which a TEI schema exists? If
-not, then the document cannot be considered TEI conformant in any
+<item>Is it a valid XML document, for which a TEI Schema exists? If
+not, then the document cannot be considered TEI Conformant in any
 sense.</item>
-<item>Is the document accompanied by a TEI-conformant ODD
+<item>Is the document accompanied by a TEI Conformant ODD
 specification describing its markup scheme and intended semantics? If
-not, then the document can only be considered TEI conformant if it
-validates against a predefined TEI schema and conforms to the TEI
+not, then the document can only be considered TEI Conformant if it
+validates against a predefined TEI Schema and conforms to the TEI
 abstract model.</item>
 <item>Does the markup in the document correctly represent the TEI
 abstract model? Though difficult to assess, this is essential to TEI
 conformance.</item>
-<item>Does the document claim that all of its elements come from a
+<item>Does the document claim that all of its elements come from
 some namespace other than the TEI (or no namespace)? If so, the
-document cannot be TEI conformant, though it may be TEI conformable.</item>
+document cannot be TEI Conformant, though it may be TEI conformable.</item>
 <item>If the document claims to use the TEI namespace, in part or
 wholly, do the elements associated with that namespace in fact belong
 to it? If not, the document cannot be TEI Conformant; if so, and if
@@ -345,43 +350,42 @@ its associated ODD specification? If so, the document is TEI
 Conformant and the schema associated with it is a
 <soCalled>clean</soCalled> modification. </item>
 <item>Is the document valid according to the schema derived from its
-associated ODD specification, but not according to TEI All? If so, the
+associated ODD specification, but not according to <ident type="schema">tei_all</ident>? If so, the
 document uses a TEI extension. </item>
 <item>Is it possible automatically to transform the document into a
-document which is valid according to TEI All, using
+document which is valid according to <ident type="schema">tei_all</ident>, using
 only information supplied in the accompanying ODD and without loss of
 information? If so, the document is TEI Conformable.</item>
 </list>
 </p>
 
-<p>In the following table, we attempt to present the same information
-as a matrix of possibilities:
+<p>In the following table, we examine some imaginary examples:
 
 <table>
 <row>
 <cell/>
-<cell>TEI conformant</cell>
+<cell>TEI Conformant</cell>
 <cell>Pseudo-TEI</cell>
 <cell>TEI conformable</cell>
 <cell>TEI Extension</cell>
 <cell>Based on TEI</cell>
 <cell>TEI Extension</cell>
 <cell>Non-TEI</cell>
-<cell>TEI conformant</cell>
+<cell>TEI Conformant</cell>
 <cell>Not TEI</cell>
 </row>
-<!--<row>
+<row>
 <cell/>
-<cell>TEI Lite</cell>
-<cell>WWP</cell>
-<cell>French TEI</cell>
-<cell>Tite</cell>
-<cell>BNC</cell>
-<cell>Epidoc</cell>
-<cell>W3C ITS</cell>
-<cell>Wendell</cell>
-<cell>Damian</cell>
-</row>-->
+<cell>A</cell>
+<cell>B </cell>
+<cell>C</cell>
+<cell>D</cell>
+<cell>E </cell>
+<cell>F</cell>
+<cell>G</cell>
+<cell>H</cell>
+<cell>J</cell>
+</row>
 <row>
 <cell>Conforms to TEI abstract model</cell>
 <cell>y</cell>
@@ -407,7 +411,7 @@ as a matrix of possibilities:
 <cell>n</cell>
 </row>
 <row>
-<cell>Uses a single non-TEI namespace or none</cell>
+<cell>Uses only non-TEI namespace(s) or none</cell>
 <cell>n</cell>
 <cell>n</cell>
 <cell>y</cell>
@@ -431,7 +435,7 @@ as a matrix of possibilities:
 <cell>y</cell>
 </row>
 <row>
-<cell>Valid as a clean subset of teiall</cell>
+<cell>Document is valid as a subset of <ident type="schema">tei_all</ident></cell>
 <cell>y</cell>
 <cell>n</cell>
 <cell>y</cell>
@@ -455,8 +459,9 @@ as a matrix of possibilities:
 <cell>y</cell>
 </row>-->
 <row>
-<cell>Schema is automatically convertible to a clean subset of teiall</cell>
-<cell>n</cell>
+<cell>Document can be converted automatically to a form which is
+valid as a subset of <ident type="schema">tei_all</ident></cell>
+<cell>[n/a]</cell>
 <cell>n</cell>
 <cell>y</cell>
 <cell>y</cell>
@@ -464,10 +469,42 @@ as a matrix of possibilities:
 <cell>n</cell>
 <cell>n</cell>
 <cell>n</cell>
-<cell>n</cell>
+<cell>[n/a]</cell>
 </row>
 </table>
-</p></div>
+</p>
+<p>We assume firstly that each sample document assessed here is a
+well-formed XML document, and that it is valid against some schema.  
+</p>
+<p>The document in column A is TEI Conformant. Its tagging follows the
+TEI Abstract Model, both as regards syntactic constraints (its
+<gi>l</gi> elements appear within <gi>div</gi> elements and not the
+reverse) and semantic constraints (its <gi>l</gi> elements appear to
+contain verse lines rather than typographic ones). All the elements
+and attributes contained within it which are defined in the TEI
+namespace are labelled as belonging to that namespace. The schema
+against which it is valid is a <soCalled>clean</soCalled> subset of
+the tei_all schema, and there is an ODD which documents exactly how it
+uses the TEI.</p>
+<p>The document in column B is not TEI Conformant. Although it is
+accompanied by a valid TEI ODD, the resulting schema includes some
+unclean modifications, and represents some concepts from the
+TEI Abstract Model using non-TEI elements. It uses the TEI namespace
+correctly to identify the TEI elements it contains, but the ODD does
+not contain enough information automatically to convert its non-TEI
+elements into TEI equivalents.</p>
+<p>The document in column C is TEI Conformable. It is almost the same
+as the document in column A, except that the names of the elements
+used are not those specified by the TEI namespace. Because the ODD
+accompanying it contains an exact mapping for each element name (using
+the <gi>altIdent</gi> element) and there are no name conflicts, it is
+possible to make an automatic conversion of this document.</p>
+<p>The document in column D is a TEI Extension. It has its own
+namespace, but assigns some elements from the TEI namespace to it. Its
+ODD defines some non-TEI elements, not included in the TEI abstract
+model, and with no TEI equivalent.</p>
+</div>
+
 
 </div>
 
@@ -483,14 +520,14 @@ as a matrix of possibilities:
         <term>TEI Pure Subset Schema</term>
       </label>
       <item>A <term>TEI Pure Subset schema</term> is one which is
-          identical to or further constrains the tei_all schema. This
+          identical to or further constrains the <ident type="schema">tei_all</ident> schema. This
           may include: the removal of unused elements, attributes, and
           classes; the provision of attribute value lists; or the
           further constraint of existing datatypes or content models. 
           A <term>TEI Pure Subset schema</term> only documents elements in
           the TEI namespace.  A document instance that validates against a
           <term>TEI Pure Subset schema</term> must always also
-          validate against the tei_all schema; in the terminology
+          validate against the <ident type="schema">tei_all</ident> schema; in the terminology
           introduced in <ptr target="#MDMD"/>, it is the result of
           <term>clean modification</term>. </item>
       <label>
@@ -506,7 +543,7 @@ as a matrix of possibilities:
           existing TEI elements, attributes or classes and to ensure
           this they should be in a user-defined namespace. A document instance that
           validates against a <term>TEI Renaming Subset schema</term>
-          must always also validate against the tei_all schema if the
+          must always also validate against the <ident type="schema">tei_all</ident> schema if the
           renamings are reversed or replaced with their documented
           equivalents from the TEI namespace. </item>
       <label>
@@ -524,7 +561,7 @@ as a matrix of possibilities:
           <ptr target="#MDMD"/>) have been been made should be
           placed in a user-defined namespace. A document instance that
           validates against a <term>TEI Modification schema</term> is
-          not expected to validate against the tei_all schema or
+          not expected to validate against the <ident type="schema">tei_all</ident> schema or
           subsets of this schema. </item>
       <label>
         <term>TEI Extension Schema</term>
@@ -544,7 +581,7 @@ as a matrix of possibilities:
           user-defined namespace. A document
           instance that validates against a <term>TEI Extension
           schema</term> is not expected to validate against the
-          tei_all schema. </item>
+          <ident type="schema">tei_all</ident> schema. </item>
       <label>
         <term>TEI Supported Extension schema</term>
       </label>
@@ -555,7 +592,7 @@ as a matrix of possibilities:
             Customization Exemplars</term> detailed above (see <ptr
             target="#MDlite"/>. A document instance that validates
           against a <term>TEI Supported Extension schema</term> is not
-          expected to validate against the tei_all schema. </item>
+          expected to validate against the <ident type="schema">tei_all</ident> schema. </item>
     </list>
   </p>
 </div>
@@ -566,41 +603,41 @@ as a matrix of possibilities:
   <head>Non-Conformant Customizations</head>
   <p> In some cases those using the TEI may wish to customize the
       TEI in a non-conformant manner. While producing
-      <term>TEI-Conformant</term> customizations is always to be
+      <term>TEI Conformant</term> customizations is always to be
       preferred, it is recognised there are situations where this may
       not be possible or practical. Most of these situations are
       entirely reasonable, and conformance, while desirable, should
       not be confused with quality. </p>
   <p>It is also recognised that data destined to be in a
-      <term>TEI-Conformant</term> document may originate in a
+      <term>TEI Conformant</term> document may originate in a
       variety of forms. Data might be captured by keyboarding or other
       processing pipelines into a locally defined data creation
       format. This may itself be a non-conformant format; as may the
       local storage or format used internally for a project because of
       local processing needs. Whenever possible, however, local
-      storage in a <term>TEI-Conformant</term> format is recommended
+      storage in a <term>TEI Conformant</term> format is recommended
       as this is likely to record more information than the input
       format for a single application or processing need. It is
       possible that there may be entirely different formats at
       different stages in the processes of data creation, local
       storage and processed dissemination. However, even if any of the
       data creation, local storage or processing formats are not
-      <term>TEI-Conformant</term>, they may still follow TEI
+      <term>TEI Conformant</term>, they may still follow TEI
       recommendations in the selection of textual features to be
       marked up, element names and content models, or additionally the
       <term>TEI Abstract Model</term>.</p>
     
   <p>As noted above, the TEI ODD system may be used to document any
-      markup scheme, whether or not it is TEI conformant. We therefore
+      markup scheme, whether or not it is TEI Conformant. We therefore
       use the term <term>TEI-Based Customization</term> to define an
       application of a valid <term>TEI ODD file</term> that defines any
-      non-TEI-conformant markup scheme<note place="foot">Such a
-        specification, being a TEI ODD, is ipso facto TEI conformant
+      non-TEI Conformant markup scheme<note place="foot">Such a
+        specification, being a TEI ODD, is ipso facto TEI Conformant
         of course</note>.        
       A document instance that validates against a
       <term>TEI-Based customization </term> is not expected to
-      validate against the tei_all schema or be interoperable with
-      <term>TEI-Conformant</term> documents. Where such a document
+      validate against the <ident type="schema">tei_all</ident> schema or be interoperable with
+      <term>TEI Conformant</term> documents. Where such a document
       makes use of elements defined in the TEI abstract model it may
       signal this fact by making use of the TEI namespace for them.      
   </p>
@@ -609,10 +646,10 @@ as a matrix of possibilities:
 <div type="div2" xml:id="CFNS">
   <head>Namespaces and <term>TEI Conformance</term></head>
   <p>It is a requirement of <term>TEI Conformance</term> that, in a
-      <term>TEI-Conformant</term> document, all existing TEI
+      <term>TEI Conformant</term> document, all existing TEI
       elements and attributes be in the <term>TEI Namespace</term>:
       "http://www.tei-c.org/ns/1.0/". Moreover,
-    <term>TEI-Conformant</term> documents must not extend the
+    <term>TEI Conformant</term> documents must not extend the
       <term>TEI Namespace</term> with additional elements and
       attributes. All new elements or attributes
        must appear in a separate namespace, either a user-defined one or if the
@@ -625,7 +662,7 @@ as a matrix of possibilities:
       attributes with expanded-names which have null namespace URIs
       (i.e. attributes with unprefixed names) other than attributes
       defined for the element in the TEI Guidelines. A
-      <term>TEI-Conformant</term> document might have only one
+      <term>TEI Conformant</term> document might have only one
       namespace, that is the <term>TEI Namespace</term>, or it might
       have any number of namespaces whose relationship and point of
       attachment has been documented in a valid <term>TEI ODD file</term>.
@@ -648,9 +685,9 @@ as a matrix of possibilities:
 <div type="div2">
   <head><term>TEI Conformance</term> and <term>TEI ODD Files</term></head>
   <p>As it is a requirement for conformance that any new
-      customizations of the TEI schemas should be documented in a
+      customizations of the TEI Schemas should be documented in a
       valid <term>TEI ODD file</term>, it is recommended practice that
-      <term>TEI-Conformant</term> document instances should indicate
+      <term>TEI Conformant</term> document instances should indicate
       the URI of a <term>TEI ODD file</term> from which their
       applicable schemas have been generated. When interchanging TEI
       documents with others, providing this ODD file (or making it
@@ -674,7 +711,7 @@ as a matrix of possibilities:
 <div type="div2">
   <head><term>TEI Conformance</term> and Document Interchange</head>
   <p>Although a wide variety of documents are able to be
-      <term>TEI-Conformant</term>, it should be stressed that this
+      <term>TEI Conformant</term>, it should be stressed that this
       does not in any way imply that interchange or interoperability
       of these documents will be straightforward. While it should be
       mostly unproblematic with documents that validate against a TEI
@@ -699,17 +736,17 @@ as a matrix of possibilities:
 <div type="div2">
   <head><term>TEI Conformance</term> and Funding Bodies</head>
   <p>The TEI is aware that some academic funding bodies view
-      <term>TEI-Conformant</term> documents as superior to
+      <term>TEI Conformant</term> documents as superior to
       non-conformant TEI documents. It should be stressed to these
-      bodies that although TEI-Conformance does imply additional
+      bodies that although TEI Conformance does imply additional
       documentation (through the <term>TEI ODD file</term>), and some
       very basic format requirements, it should not be confused with a
       marker of quality. It is possible that a non-conformant TEI
       document may be of superior quality, provide more significantly
       detailed documentation, and have been subjected to greater
       academic scrutiny than one which is technically
-      <term>TEI-Conformant</term>. While the TEI recommends the
-      production of documents which are <term>TEI-Conformant</term>,
+      <term>TEI Conformant</term>. While the TEI recommends the
+      production of documents which are <term>TEI Conformant</term>,
       it recognises that the goals such as textual fidelity,
       documentation, and academic rigour are more important. Although
       the TEI encourages these funding bodies to suggest <term>TEI
