@@ -7,7 +7,9 @@
     xmlns:rng="http://relaxng.org/ns/structure/1.0"
     xmlns:tei="http://www.tei-c.org/ns/1.0" 
     xmlns:teix="http://www.tei-c.org/ns/Examples"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    exclude-result-prefixes="xlink xhtml dbk rng tei teix" 
+>
   <xsl:param name="startBold">&lt;span class="element"&gt;</xsl:param>
   <xsl:param name="endBold">&lt;/span&gt;</xsl:param>
   <xsl:param name="startItalic">&lt;span class="attribute"&gt;</xsl:param>
@@ -383,8 +385,18 @@
     <xsl:when test="namespace-uri()='http://www.w3.org/1999/xlink'">
       <xsl:text>xlink:</xsl:text>
     </xsl:when>
+<!--
+    <xsl:otherwise>
+    <xsl:for-each select="namespace::*">
+      <xsl:if test="not(name(.)='')">
+	  <xsl:value-of select="name(.)"/>
+	  <xsl:text>:</xsl:text>
+      </xsl:if>
+    </xsl:for-each>
+    </xsl:otherwise>
+-->
   </xsl:choose>
-  <xsl:value-of select="local-name(.)"/>
+  <xsl:value-of select="name(.)"/>
   <xsl:value-of disable-output-escaping="yes" select="$endItalic"/>
   <xsl:text>="</xsl:text>
      <xsl:apply-templates select="." mode="attributetext"/>
@@ -404,12 +416,13 @@
       <xsl:variable name="ns" select="."/>
       <xsl:choose>
 	<xsl:when test="contains($list,$ns)"/>
+	<xsl:when test=".='http://relaxng.org/ns/structure/1.0'"/>
 	<xsl:when test=".='http://www.tei-c.org/ns/Examples'"/>
 	<xsl:when test="name(.)=''"/>
 	<xsl:when test=".='http://www.w3.org/XML/1998/namespace'"/>
 	<xsl:otherwise>
 	  <xsl:call-template name="lineBreak"/>
-	  <xsl:text>  </xsl:text>
+	  <xsl:text>&#160;&#160;&#160;</xsl:text>
 	  <xsl:text>xmlns:</xsl:text>
 	  <xsl:value-of select="name(.)"/>
 	  <xsl:text>="</xsl:text>
