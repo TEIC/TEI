@@ -5,8 +5,8 @@ See the file COPYING for details.
 $Date$
 $Author$
 -->
-<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="MD"
-     n="29">
+<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="MD">
+
 <head>Personalization and Customization</head>
 
 <p xmlns="http://www.tei-c.org/ns/1.0">These Guidelines provide an
@@ -18,7 +18,7 @@ is likely to be necessary in any given project.  Furthermore, the TEI
 scheme may be extended in well-defined and documented ways for texts
 that cannot be conveniently or appropriately encoded using what is
 provided.  For these reasons, it is almost impossible to use the TEI
-scheme without customizing or personalizing it in some way.</p>
+scheme without customizing or personalizing it in some way. </p>
 
 <p>This chapter describes how the TEI encoding scheme may be
 customized, and should be read in conjunction with chapter <ptr
@@ -79,7 +79,7 @@ chapter <ptr target="#FD"/>.</item></list>
 suppressing elements, modifying classes of elements, adding elements,
 and renaming elements.  Documents which validate against an
 application of the TEI scheme which has been customized in this way
-may or may not be considered <soCalled>TEI conformantM</soCalled>, as
+may or may not be considered <soCalled>TEI conformant</soCalled>, as
 further discussed in section <ptr target="#CF"/>.</p>
 
 <p>The TEI scheme is designed to support modification and
@@ -157,7 +157,7 @@ part of the standard TEI  release: see further section <ptr
 target="#MDlite"/> below.</p>
 
 <div type="div2" xml:id="MDMD"><head>Kinds of Modification</head>
-<p>For ease of discussion, we identify the following different kind of
+<p>For ease of discussion, we distinguish the following different kind of
 modification:
 <list type="ordered">
 <item>deletion of elements;</item><!-- <ptr target="#MDMDSU"/>-->
@@ -180,8 +180,8 @@ modification</term> to describe a modification which regards as valid
 a subset of the documents considered valid by the same combination of
 TEI modules unmodified. Alternatively, the set of documents considered
 valid by the original schema might be disjoint from the set of
-documents considered valid by the modified schema with neither being
-properly contained in the other.  Modifications that have this result
+documents considered valid by the modified schema, with neither being
+properly contained by the other.  Modifications that have this result
 are called <term>unclean modifications</term>. Despite this
 terminology, unclean modifications are not particularly deprecated,
 and their use may often be vital to the success of a project. The
@@ -230,13 +230,15 @@ modified schema are also valid according to the unmodified schema.  To
 say this another way, the set of documents matching the new schema is
 contained by the set of documents matching the original schema.</p>
 
-<p>If however, the element deleted by some modification is mandatory
+<p>If however the element deleted by some modification is mandatory
 within the content model of some other (undeleted) element, the result
-is an unclean modification in that some documents that would be
+is an unclean modification because some documents that would be
 regarded as valid by the new schema would be regarded as invalid
-according to the original schema.  To say this another way, the set of
-documents matching the new schema neither contains nor is contained by
-the set of documents matching the original schema.</p>
+according to the original schema.  If an element is defined as having
+some other specific element as a mandatory child, removing that child
+would break the TEI abstract model (<ptr target="#CFAM"/>), though the
+parent of a mandatory child can of course be removed safely if it is
+itself optional.</p>
 
 </div>
 
@@ -353,13 +355,12 @@ the following:
   </content>
 </egXML>
 
-This indicates that the content model contains declarations 
-taken from the RELAX NG namespace, and that it consists of a reference
-to a pattern called <ident
-type="macro">macro.phraseSeq</ident>. Further examination shows that
-this pattern in turn expands to a starred alternation of text with
-references to three other classes (<ident
-type="class">model.gLike</ident>, <ident
+This indicates that the content model contains declarations taken from
+the RELAX NG namespace, and that it consists of a reference to a
+pattern called <ident type="macro">macro.phraseSeq</ident>. Further
+examination shows that this pattern in turn expands to a starred
+alternation of text (<code>rng:text</code>) with references to three
+other classes (<ident type="class">model.gLike</ident>, <ident
 type="class">model.phrase</ident>, or <ident
 type="class">model.global</ident>). For some particular application it
 might be preferable to insist that <gi>term</gi> elements should only
@@ -413,12 +414,13 @@ matching the schema which results from such changes is likely to be
 disjoint with the set of documents matching the unmodified schema, and
 such changes are therefore regarded as unclean. When content models
 are changed or extended, care should be taken to respect the existing
-semantics of the element concerned, as stated in the Guidelines. For
+semantics of the element concerned as stated in the Guidelines. For
 example, the element <gi>l</gi> is defined as containing a line of
 verse. It would not therefore make sense to redefine its content model
 so that it could also include members of the class <ident
 type="class">model.pLike</ident>: such a modification although
-syntactically feasible would not be regarded as TEI conformant. </p>
+syntactically feasible would not be regarded as TEI conformant because
+it breaks the TEI abstract model. </p>
 
 </div>
 
@@ -460,9 +462,9 @@ therefore need to add not only an <gi>attDef</gi> element to define
 the new attribute, but also an <gi>attList</gi> to hold it. </p>
 <p>We begin by  adding the new <att>source</att> attribute:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="eg"
-module="tagdocs" mode="change" ns="http://www.hatstand.org/ns">
+module="tagdocs" mode="change" >
 <attList>
-<attDef ident="source" mode="add">
+<attDef ident="source" mode="add" ns="http://www.hatstand.org/ns">
 <desc>specifies the source of an example by pointing to a
 single bibliographic reference for it</desc>
 <datatype maxOccurs="1"
@@ -474,14 +476,19 @@ single bibliographic reference for it</desc>
 </p>
 <p>The value supplied for the <att>mode</att> attribute on the
 <gi>attDef</gi> element is <val>add</val>; if this attribute already
-existed on the element we are modifying this should generate an
-error, since a specification cannot have more than one attribute of
-the same name. If the attribute is already present, we can  replace the whole of the
-existing declaration by supplying  <val>replace</val> as the value for
-for <att>mode</att>; alternatively, we can change some parts of an
+existed on the element we are modifying this should generate an error,
+since a specification cannot have more than one attribute of the same
+name. If the attribute is already present, we can replace the whole of
+the existing declaration by supplying <val>replace</val> as the value
+for for <att>mode</att>; alternatively, we can change some parts of an
 existing declaration only by supplying just the new parts, and setting
-<val>change</val> as the value for
-<att>mode</att>.</p>
+<val>change</val> as the value for <att>mode</att>.</p>
+
+<p>Because the new attribute does not form part of the TEI namespace,
+we specify its namespace on the <gi>attDef</gi>; this is recommended
+practice when namespaces are in use. See further <ptr
+target="#MDNS"/>.
+
 
 <p>As noted above, adding the new <att>type</att> attribute involves
 changing this element's class membership; we therefore discuss that in
@@ -510,9 +517,9 @@ sources, which we call A, B, and C. A declaration like the following
 might be appropriate:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="eg"
-module="tagdocs" mode="change" ns="http://www.hatstand.org/ns">
+module="tagdocs" mode="change" >
 <attList>
-<attDef ident="source">
+<attDef ident="source" ns="http://www.hatstand.org/ns" mode="add">
 <desc>specifies the source of an example by supplying one of three
 predefined codes for it.</desc>
 <datatype maxOccurs="1"
@@ -602,7 +609,7 @@ for all members of the class (as opposed to specific members of that
 class), it is also possible to  modify the class specification itself. For
 example, the class <ident type="class">att.global</ident> defines
 several attributes which are available for all elements, notably
-<att>id</att>, <att>n</att>, <att>rend</att> and others. If we decide
+<att>xml:id</att>, <att>n</att>, <att>rend</att> and others. If we decide
 that we  never wish to use the <att>n</att> attribute, the simplest
 way of removing it is to supply a modified class specification for
 <ident type="class">att.global</ident> as follows: <egXML
@@ -627,26 +634,28 @@ chapter <ptr target="#ST"/>. Note in particular that classes are
 themselves classified: the attributes inherited by a member of
 attribute class A may come to it directly from that class, or from
 another class of which A is itself a member. For example, the class
-att.global is itself a member of the classes att.global.linking and
-att.global.analytic.  In the infrastructure module, these two classes
-are predefined as empty. However, if (for example) the linking module
-is included in a schema, a number of attributes (<att>corresp</att>,
-<att>sameAs</att>, etc) are defined as members of the
-att.global.linking class.  All elements which are members of
-att.global will then inherit these new attributes (see further section
-<ptr target="#STECAT"/>). A new attribute may thus be added to the
-global class in two ways: either by adding it to the <gi>attList</gi>
-defined within the class specification for att.global; or by defining
-a new attribute class, and changing the class membership of the
-att.global class to reference it. </p>
+<ident type="class">att.global</ident> is itself a member of the
+classes <ident type="class">att.global.linking</ident> and <ident
+type="class">att.global.analytic</ident>.  By default, these two
+classes are predefined as empty. However, if (for example) the <ident
+type="module">linking</ident> module is included in a schema, a number
+of attributes (<att>corresp</att>, <att>sameAs</att>, etc) are defined
+as members of the <ident type="class">att.global.linking</ident>
+class.  All elements which are members of <ident
+type="class">att.global</ident> will then inherit these new attributes
+(see further section <ptr target="#STECAT"/>). A new attribute may
+thus be added to the global class in two ways: either by adding it to
+the <gi>attList</gi> defined within the class specification for
+att.global; or by defining a new attribute class, and changing the
+class membership of the att.global class to reference it. </p>
 
 
 <p>Such global changes should be undertaken with caution: in general
-removing existing attributes from a class will always be an unclean
-modification. Adding new attribute to a class however is a clean
-modification because the set of documents matching the unmodified
-schema will continue to be valid against a schema derived from the
-modified specification (though the reverse may not be the case).</p>
+removing existing non-mandatory attributes from a class will always be
+a clean modification, in the same way as removing non-mandatory
+elements.  Adding a new attribute to a class however is a
+clean modification only if the new attribute is labelled as belonging
+to some namespace other than the TEI.</p>
 
 <p>The same mechanisms are available for modification of model
 classes. Care should be taken when modifying the model class
@@ -711,7 +720,7 @@ xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="p"
 mode="change">
 
 <attList>
-<attDef ident="topic" mode="add" ns="http://www.myspace.org/">
+<attDef ident="topic" mode="add" ns="http://www.hatstand.org/ns">
 <desc>indicates the topic of a TEI paragraph</desc>
 </attDef>
 </attList>
@@ -720,15 +729,16 @@ mode="change">
 indicate clearly the status of this attribute:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div
-						    xmlns="http://www.tei-c.org/ns/1.0" xmlns:my="http://www.myspace.org">
+						    xmlns="http://www.tei-c.org/ns/1.0" xmlns:my="http://www.hatstand.org/ns">
 <!-- ... -->
 <p n="12" my:topic="rabbits">Flopsy, Mopsy, Cotton Tail and
 Peter...</p>
 </div></egXML></p>
-<p>Since <att>topic</att> is explicitly labelled as belonging to something other
-than the TEI namespace, we regard the modification which
-introduced it as clean. A namespace-aware processor will regard this
-document as valid according to the unmodified schema.<note
+
+<p>Since <att>topic</att> is explicitly labelled as belonging to
+something other than the TEI namespace, we regard the modification
+which introduced it as clean. A namespace-aware processor will regard
+this document as valid according to the unmodified schema.<note
 place="foot">Namespace support does not exist in the DTD language, and
 therefore these techniques are available only to users of more modern
 schema languages such as RELAX NG or W3C schema.</note></p>
