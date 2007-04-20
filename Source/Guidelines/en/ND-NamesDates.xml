@@ -97,7 +97,8 @@ share the following attributes:
 <p>The <gi>persName</gi> element may be used in preference to the
 general <gi>name</gi> element irrespective of whether or not the
 components of the personal name are also to be marked. Its
-<att>key</att> attribute is used in exactly the same way as those on
+<att>key</att> attribute can be used to provide a linkage between the
+name and the person named, in exactly the same way as  on
 the <gi>rs</gi> and <gi>name</gi> elements (see section <ptr
 target="#CONA"/>).  The tag <gi>persName</gi> is synonymous with the
 tag <tag>name type="person"</tag>, except that its <att>type</att>
@@ -145,17 +146,15 @@ example:
    <forename type="middle">Delano</forename>
    <surname>Roosevelt</surname>
 </persName></egXML>
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="MRT1"> 
    <forename type="given">Margaret</forename>
-   <forename type="abbrev">Maggie</forename>
    <forename type="unused">Hilda</forename>
    <surname type="maiden">Roberts</surname>
    <surname type="married">Thatcher</surname>
 </persName></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="MUAL1" type="religious"> 
-   <forename>Muhammad</forename>
-   <surname>Ali</surname>
-</persName></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="MUAL1"
+							  type="religious">Muhammad Ali</persName></egXML>
 In the following two examples the <att>type</att> attribute of the
 <gi>surname</gi> element is used to indicate so-called
 double-barrelled or hyphenated surnames:
@@ -168,6 +167,15 @@ double-barrelled or hyphenated surnames:
    <surname type="combine">St John Stevas</surname>
 </persName></egXML>
 </p>
+<p>The <att>full</att> attribute may be used to indicate whether a
+name is an abbreviation, initials,  or given in full:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName> 
+   <forename full="abb">Maggie</forename>
+   <surname>Thatcher</surname>
+</persName></egXML>
+
+</p>
+
 <p>In most cases, patronymics should be treated as forenames, thus:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">... but it remained for
 <persName>   
@@ -184,6 +192,12 @@ requires surnames), it may be tagged as such:
 <surname>Jonsson</surname></persName>
 acknowledged the artificiality of the procedure...</egXML>
 <!-- Clover, p. 77.                                           -->
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><s><persName><foreName>
+Peter</foreName> <surname>son of Herbert</surname></persName> gives the king 40 m. for 
+having custody of the land and heir of <persName><forename>John</forename> <surname>son of Hugh</surname></persName>...</s></egXML>
+<!-- <bibl>C 60/16 Fine Roll 6 HENRY III (28 October 1221-27 October 1222),
+ membrane 5, entry 154<bibl>-->
+
 In the following example, the <att>type</att> attribute is used
 to distinguish a patronymic from other forenames:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="pn9">  
@@ -192,6 +206,8 @@ to distinguish a patronymic from other forenames:
    <surname sort="1">Uspensky</surname>
 </persName></egXML>
 </p>
+
+
 <p>This example also demonstrates the use of the <att>sort</att>
 attribute common to all members of the <ident type="class">model.persNamePart</ident> class; its effect is to state the sequence in which <gi>forename</gi> and <gi>surname</gi> elements
 should be combined when constructing a sort key for the name.
@@ -340,10 +356,10 @@ of named place may also be regarded as a kind of <gi>placeName</gi>
 <specList><specDesc key="placeName"/><specDesc key="geogName"/>
 </specList>
 </p>
-<p>As members of the <ident type="class">att.naming</ident> class, all these
-elements share the following attribute:
-<specList><specDesc key="att.naming" atts="key"/></specList>
- </p>
+<p>As members of the <ident type="class">att.naming</ident> class, all of these
+elements share the following attributes:
+<specList><specDesc key="att.naming" atts="key nymKey"/></specList>
+</p>
 <p>Like the <gi>persName</gi> element discussed in section <ptr target="#NDPER"/>, the <gi>placeName</gi> element may be regarded
 simply as an abbreviation for the tags <tag>name type="place"</tag> or
 <tag>rs type="place"</tag>. The following encodings are thus
@@ -735,7 +751,7 @@ of information.</p>
 <p>All the elements in these three classes belong to the attribute
 class <ident type="class">att.datable</ident>, which provides the following
 attributes:
-<specList><specDesc key="att.datable"/></specList>
+<specList><specDesc key="att.datable" atts="notBefore notAfter from to"/></specList>
 <!--
 <ident>dateValue</ident>, to indicate an exact date,
 <ident>from</ident> and <ident>to</ident>, to indicate a specific date
@@ -746,20 +762,22 @@ state or event. The value of each of these is a date in standard format
 as defined by <title>XML Schema Part 2: Datatypes Second Edition</title>,
 i.e. YYYY-MM-DD. -->
 These attributes can be combined in various
-ways. Consider, for example, the following:
+ways to provide additional nuances. Consider, for example, the following:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<date value="1857-03-15">15 March 1857.</date> 
+<birth>15 March 1857.</birth> 
 </egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<date notBefore="1857-03-01" notAfter="1857-04-30">Sometime in March or April of 1857.</date> 
+<birth notBefore="1857-03-01" notAfter="1857-04-30">Some time in March or April of 1857.</birth> 
 </egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<date from="1857-03-01" to="1857-04-30">In March and April of 1857.</date> 
+<residence from="1857-03-01" to="1857-04-30">In March and April of 1857.</residence> 
 </egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<date from="1857-03-01" notAfter="1857-04-30">From the 1st of March to sometime in April of 1857.</date>
+<residence from="1857-03-01" notAfter="1857-04-30">From the 1st of March to
+some time in April of 1857.</residence>
 </egXML>
 </p>
+<!-- need reference to something on date normalization issues here -->
 <div type="div4">
 <head>Personal Characteristics</head>
  <p>The <ident type="class">model.persTraitLike</ident> class contains elements
@@ -782,8 +800,12 @@ All, apart from <gi>langKnowledge</gi>, have a content model of <ident type="cla
 </p>
 <p>The <gi>langKnowledge</gi> element contains either paragraphs or a
  number of <gi>langKnown</gi> elements; both take a <att>tag</att>
- (or <att>tags</att>) attribute, which provides the standard code
-for the language as defined in RFC 3066 or its successor, while
+ (or <att>tags</att>) attribute, which provides a standard code or
+ <soCalled>tag</soCalled> for the language, as discussed in <ptr
+ target="#CHSH"/>. Such tags are defined by RFC 4646<note
+place="foot">For additional information on language codes see the discussion at
+<ptr target="http://www.iana.org/assignments/language-subtag-registry"/> and
+<ptr target="http://www.w3.org/International/articles/language-tags/Overview.en.php"/></note>,
 <gi>langKnown</gi> also has a <att>level</att> attribute to
 indicate the level of the person's competence in the language. It is
 thus possible either to say:
@@ -862,7 +884,7 @@ residence, or name. Members of
 the class comprise the following specific elements:
 <specList>
 <specDesc key="persName"/>
-<specDesc key="relation"/>
+<!--specDesc key="relation"/-->
 <specDesc key="occupation"/>
 <specDesc key="residence"/>
 <specDesc key="affiliation"/>
@@ -901,7 +923,16 @@ can be given, and in any order:
 </person>
 </egXML>
 </p>
-<!-- examples of other elements please! -->
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<person xml:id="simon_son_of_richard2">
+<persName>Simon, Richard son of</persName>, 
+<residence><placeName><region>Essex</region></placeName></residence>
+<floruit notBefore="1219" notAfter="1223">1219-1223</floruit>
+</person>
+</egXML>
+
+
 <p>In addition to these specific elements the class contains a generic
 element called <gi>persState</gi>.
 <specList>
@@ -941,11 +972,13 @@ class comprise the following  elements:
 <specDesc key="persEvent"/>
 </specList>
 Only two specific elements (<gi>birth</gi> and <gi>death</gi>) are
-proposed.  The generic element <gi>persEvent</gi> has the same content
-model as <gi>persState</gi> and <gi>persTrait</gi> and is used in the
-same way, to describe any event in the life of an individual. </p>
+proposed.  The generic element <gi>persEvent</gi> has a similar content
+model to that of <gi>persState</gi> and <gi>persTrait</gi>; the chief
+difference being that it can include a <gi>placeName</gi> element to
+identify the name of the place where the event odcurred. It is used 
+to describe any event in the life of an individual. </p>
 <p>In the example below the event is the wedding of Jane Burdon to the
-English writer, designer and socialist William Morris.
+English writer, designer, and socialist William Morris.
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <persEvent type="marriage">
     <label>Marriage</label>
@@ -1298,7 +1331,7 @@ represented as a hierarchic structure like this:
 </p>
 <p>The elements described in this section are formally defined as
 follows:
-<specGrp xml:id="DNDNYM">
+<specGrp xml:id="DNDNYM" n="Canonical names">
 &nym;
 &listNym;
 </specGrp>
@@ -1326,8 +1359,8 @@ one or more <gi>date</gi> or <gi>time</gi> elements:
    type="class">att.duration</name> classes <gi>date</gi> and <gi>time</gi> share the
 following attributes:
 <specList>
-  <specDesc key="att.dateTime" select="value"/>
-  <specDesc key="att.duration" select="dur"/>
+  <specDesc key="att.dateTime" atts="value"/>
+  <specDesc key="att.duration" atts="dur"/>
 </specList>
 </p>
 <div type="div3" xml:id="NDDATER"><head>Relative Dates and Times
@@ -1412,8 +1445,10 @@ Review</title> of August 1850, referring to the summer holiday known
 in Glasgow simply as <q>the Fair</q>:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Not only is the city, <date ana="#gf50">during the Fair</date>, a horrible nucleus of immorality and wickedness; it sends our multitudes to pollute and demoralize the country.</egXML>
 </p>
-<p>For the definition of the <att>ana</att> attribute, see chapter <ptr target="#AI"/> (in particular <ptr target="#AITTS"/>).  It is used here to link the temporal phrase with an
-interpretation of it. Like most traditional fairs and market days, the
+<p>For the definition of the <att>ana</att> attribute, see chapter
+<ptr target="#AI"/> (in particular <ptr target="#AIATTS"/>).  It is
+used here to link the temporal phrase with an interpretation of it. 
+Like most traditional fairs and market days, the
 Glasgow Fair was established by local custom and could vary from year
 to year.  Consequently, in order to provide such an interpretation, it
 is necessary to drawn upon additional information which may or may not
