@@ -1935,7 +1935,8 @@ $ID: requests a particular page
 	    </a>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <a id="rh-column"/>
+	    <a id="rh-column"><xsl:comment>real top </xsl:comment></a>
+
 	  </xsl:otherwise>
 	</xsl:choose>
 	<div id="rh-col-top">
