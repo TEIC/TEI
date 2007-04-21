@@ -21,9 +21,11 @@
 <xsl:import href="odd2htmlp5.xsl"/>
 <xsl:param name="lang"/>
 <xsl:param name="doclang"/>
-<xsl:param name="cssFile">../../../guidelines.css</xsl:param>
+<xsl:param name="cssFile">/Guidelines/guidelines.css</xsl:param>
 <xsl:param name="STDOUT">true</xsl:param>
 <xsl:param name="urlChunkPrefix">.ID=</xsl:param>
+<xsl:param name="homeLabel">TEI P5 Guidelines source</xsl:param>
+<xsl:param name="homeURL">/Guidelines/index.xml</xsl:param>
 
   <xsl:template name="includeCSS">
     <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
@@ -86,6 +88,24 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template name="crumbPath">
+    <div class="breadcrumb">
+      <xsl:call-template name="preBreadCrumbPath"/>
+      <ul class="breadcrumb">
+        <li class="breadcrumb-first">
+          <a class="breadcrumb" href="{$homeURL}" target="_top">
+            <xsl:value-of select="$homeLabel"/>
+          </a>
+        </li>
+        <xsl:call-template name="walkTree">
+          <xsl:with-param name="path">
+            <xsl:value-of select="substring-after($REQUEST,'/cocoon/Guidelines/')"/>
+          </xsl:with-param>
+          <xsl:with-param name="class">breadcrumb</xsl:with-param>
+        </xsl:call-template>
+      </ul>
+    </div>
+  </xsl:template>
 
 
 </xsl:stylesheet>

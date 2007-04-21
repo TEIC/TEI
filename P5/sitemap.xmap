@@ -64,6 +64,10 @@
 		<map:serialize encoding="UTF-8" type="xhtml"/>
 	  </map:match>
 
+	  <map:match pattern="/">
+		<map:redirect-to uri="cocoon:/{1}/index.xml"/>
+	  </map:match>
+
 	  <map:match pattern="**/">
 	    <map:select type="resource-exists">
 	      <map:when test="{1}/index.xml">
@@ -335,6 +339,9 @@
 	   </map:match>
 
 	   <map:match pattern="**Makefile">
+	    <map:read src="{1}Makefile" mime-type="text/plain"/>
+	   </map:match>
+	   <map:match pattern="**ChangeLog">
 	    <map:read src="{1}Makefile" mime-type="text/plain"/>
 	   </map:match>
 
