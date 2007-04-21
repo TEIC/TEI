@@ -233,6 +233,8 @@ dist-source:
 	Source  \
 	TEI-glow.png \
 	Utilities   \
+	sitemap.xmap \
+	index.xml \
 	VERSION  \
 	fasc-head.xml \
 	fasc-tail.xml \
