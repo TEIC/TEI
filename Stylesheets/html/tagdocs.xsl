@@ -1267,7 +1267,7 @@
     </xsl:if>
 
       </xsl:when>
-      <xsl:when test="$splitLevel=-1">
+      <xsl:when test="$splitLevel=-1 or $STDOUT='true'">
         <h2>
 	  <xsl:call-template name="makeAnchor">
 	    <xsl:with-param name="name">

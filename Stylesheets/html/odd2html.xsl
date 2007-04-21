@@ -399,7 +399,7 @@
 <xsl:template name="oddTocEntry">
     <xsl:variable name="loc">
       <xsl:choose>
-      <xsl:when test="$splitLevel=-1">
+      <xsl:when test="$splitLevel=-1 or $STDOUT='true'">
 	<xsl:text>#</xsl:text>
 	<xsl:value-of select="@ident"/>
       </xsl:when>

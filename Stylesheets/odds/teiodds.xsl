@@ -1736,6 +1736,22 @@ select="$makeDecls"/></xsl:message>
               <xsl:value-of select="$name"/>
             </a>
           </xsl:when>
+          <xsl:when test="key('IDENTS',$name) and $STDOUT='true'">
+            <a class="link_element"
+	       xmlns="http://www.w3.org/1999/xhtml">
+	      <xsl:attribute name="href">
+		<xsl:call-template name="getSpecURL">
+		  <xsl:with-param name="name">
+		    <xsl:value-of select="$name"/>
+		  </xsl:with-param>
+		  <xsl:with-param name="type">
+		    <xsl:value-of select="substring-before(local-name(),'Spec')"/>
+		  </xsl:with-param>
+		</xsl:call-template>
+	      </xsl:attribute>
+	      <xsl:value-of select="$name"/>
+            </a>
+          </xsl:when>
           <xsl:when test="key('IDENTS',$name)">
             <a class="link_element" href="ref-{$name}{$outputSuffix}"
               xmlns="http://www.w3.org/1999/xhtml">
@@ -1766,38 +1782,32 @@ select="$makeDecls"/></xsl:message>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template name="generateParents">
-    <xsl:param name="what"/>
-    <xsl:variable name="mums">
-      <mums>
-        <xsl:for-each select="document('dtdcat.xml')">
-          <xsl:for-each select="key('ELEMENTPARENTS',$what)">
-            <mum>
-              <xsl:value-of select="../@id|../@xml:id"/>
-            </mum>
-          </xsl:for-each>
-        </xsl:for-each>
-      </mums>
-    </xsl:variable>
-    <xsl:variable name="mums2">
-      <mums>
-        <xsl:for-each select="exsl:node-set($mums)/mums/mum">
-          <xsl:sort select="."/>
-          <mum>
-            <xsl:value-of select="."/>
-          </mum>
-        </xsl:for-each>
-      </mums>
-    </xsl:variable>
-    <xsl:for-each select="exsl:node-set($mums2)/mums/mum">
-      <xsl:if test="not(. = preceding-sibling::mum)">
-        <xsl:value-of select="."/>
-        <xsl:text> </xsl:text>
-      </xsl:if>
-    </xsl:for-each>
-  </xsl:template>
   <xsl:template name="linkStyle"/>
 
+  <xsl:template name="getSpecURL">
+    <xsl:param name="name"/>
+    <xsl:param name="type"/>
+    <xsl:choose>
+      <xsl:when test="$type='macro'">
+	<xsl:for-each select="key('IDS','REFENT')">
+	  <xsl:apply-templates mode="generateLink" select="."/>
+	</xsl:for-each>
+      </xsl:when>
+      <xsl:when test="$type='element'">
+	<xsl:for-each select="key('IDS','REFTAG')">
+	  <xsl:apply-templates mode="generateLink" select="."/>
+	</xsl:for-each>
+      </xsl:when>
+      <xsl:when test="$type='class'">
+	<xsl:for-each select="key('IDS','REFCLA')">
+	  <xsl:apply-templates mode="generateLink" select="."/>
+	</xsl:for-each>
+      </xsl:when>
+    </xsl:choose>		  
+    <xsl:text>#</xsl:text>
+    <xsl:value-of select="$name"/>
+  </xsl:template>
+  
   <xsl:template name="linkTogether">
     <xsl:param name="name"/>
     <xsl:param name="reftext"/>
@@ -1858,27 +1868,50 @@ select="$makeDecls"/></xsl:message>
           <xsl:value-of select="$link"/>
         </a>
       </xsl:when>
+      <xsl:when test="$oddmode='html' and $STDOUT='true'">
+	<a class="link_odd" xmlns="http://www.w3.org/1999/xhtml">
+	  <xsl:attribute name="href">
+	    <xsl:for-each select="key('IDENTS',$partialname)">
+	    <xsl:call-template name="getSpecURL">
+	      <xsl:with-param name="name">
+		<xsl:value-of select="$partialname"/>
+	      </xsl:with-param>
+	      <xsl:with-param name="type">
+		<xsl:value-of select="substring-before(local-name(),'Spec')"/>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	    </xsl:for-each>
+	  </xsl:attribute>
+          <xsl:value-of select="$link"/>
+        </a>
+      </xsl:when>
+
+
       <xsl:when test="$oddmode='html'">
         <a class="link_odd" href="{concat('ref-',$partialname,'.html')}"
           xmlns="http://www.w3.org/1999/xhtml">
           <xsl:value-of select="$link"/>
         </a>
       </xsl:when>
+
       <xsl:when test="$oddmode='pdf'">
         <fo:inline>
           <xsl:value-of select="$link"/>
         </fo:inline>
       </xsl:when>
+
       <xsl:when test="$oddmode='tei'">
         <tei:ref target="#{$partialname}">
           <xsl:value-of select="$link"/>
         </tei:ref>
       </xsl:when>
+
       <xsl:otherwise>
         <xsl:value-of select="$link"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template name="makeTagsetInfo">
     <xsl:value-of select="@module"/>
     <xsl:if test="$verbose='true'">
@@ -1886,6 +1919,7 @@ select="$makeDecls"/></xsl:message>
           select="@module"/></xsl:message>
     </xsl:if>
   </xsl:template>
+
   <xsl:template name="processSchemaFragment">
     <xsl:param name="filename"/>
     <xsl:variable name="secnum">
