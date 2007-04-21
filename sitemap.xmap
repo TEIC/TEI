@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+    <map:components>
+    <map:generators default="file">
+      <map:generator name="xquery" logger="sitemap.generator.xquery"
+		     src="org.exist.cocoon.XQueryGenerator"/>
+    </map:generators>
+      <map:transformers default="xslt"/>
+      <map:transformer name="xslt"
+        src="org.apache.cocoon.transformation.TraxTransformer"/>
+	<map:transformer name="xslt-with-parameters"
+	  src="org.apache.cocoon.transformation.TraxTransformer">
+	  <use-request-parameters>true</use-request-parameters>
+	</map:transformer>
+      <map:readers default="resource"/>
+      <map:serializers default="html">
+	<map:serializer name="uhtml"         
+  	src="org.apache.cocoon.serialization.HTMLSerializer"
+  	mime-type="text/html">
+  	<encoding>UTF-8</encoding>
+	</map:serializer>
+      </map:serializers>
+      <map:selectors default="request">
+          <map:selector name="request"
+            src="org.apache.cocoon.selection.RequestSelector"/>
+      </map:selectors>
+      <map:matchers default="wildcard"/>
+      <map:actions default="request">
+        <map:action name="request"
+           src="org.apache.cocoon.acting.RequestParamAction"/>
+        <map:action name="session-validator"
+           src="org.apache.cocoon.acting.SessionValidatorAction"/>
+        <map:action name="session-invalidator"
+           src="org.apache.cocoon.acting.SessionInvalidatorAction"/>
+        <map:action name="authenticator"
+           src="org.apache.cocoon.acting.DatabaseAuthenticatorAction"/>
+        <map:action name="insert"
+           src="org.apache.cocoon.acting.DatabaseAddAction"/>
+        <map:action name="delete"
+           src="org.apache.cocoon.acting.DatabaseDeleteAction"/>
+        <map:action name="update"
+           src="org.apache.cocoon.acting.DatabaseUpdateAction"/>
+        <map:action name="validator"
+           src="org.apache.cocoon.acting.FormValidatorAction"/>
+      </map:actions>
+
+      <map:pipes default="caching">
+	<map:pipe name="caching"
+		  src="org.apache.cocoon.components.pipeline.impl.CachingProcessingPipeline"/>
+	<map:pipe name="noncaching"
+		  src="org.apache.cocoon.components.pipeline.impl.NonCachingProcessingPipeline"/>
+      </map:pipes>
+    </map:components>
+    
+    <!-- define the Cocoon processing pipelines -->
+    <map:pipelines>
+      
+      <map:pipeline>
+	  <map:match pattern="">
+		<map:generate type="directory" src="{1}"/>
+		<map:transform
+		    src="Utilities/directory2html.xsl"/>
+		<map:serialize encoding="UTF-8" type="xhtml"/>
+	  </map:match>
+
+	  <map:match pattern="**/">
+	    <map:select type="resource-exists">
+	      <map:when test="{1}/index.xml">
+		<map:redirect-to uri="cocoon:/{1}/index.xml"/>
+	      </map:when>
+	      <map:when test="{1}/index.html">
+		  <map:read src="{1}/index.html" mime-type="text/html"/>
+	      </map:when>
+	      <map:otherwise>
+		<map:generate type="directory" src="{1}"/>
+		<map:transform
+		    src="Utilities/directory2html.xsl"/>
+		<map:serialize encoding="UTF-8" type="xhtml"/>
+	      </map:otherwise>
+	    </map:select>
+	  </map:match>
+
+	  <!-- ordinary XML files -->
+	  <map:match pattern="**.xml">
+	    <map:select type="request">
+	      <map:parameter name="parameter-name" value="style"/>
+	      <map:when test="printable">
+	        <map:generate src="{1}.xml"/>
+		<map:transform src="Utilities/guidelines-print.xsl">
+		  <map:parameter name="REQUEST" value="{request:requestURI}"/>
+		</map:transform>
+		<map:serialize encoding="UTF-8" type="xhtml"/>
+	      </map:when>
+	      <map:when test="raw">
+		<map:read src="{1}.xml" mime-type="text/xml"/>
+	      </map:when>
+	      <map:when test="screen">
+	        <map:generate src="{1}.xml"/>
+  	         <map:transform src="Utilities/guidelines-web.xsl">	
+		  <map:parameter name="serverName" value="{request:serverName}"/>
+		  <map:parameter name="serverPort" value="{request:serverPort}"/>
+		  <map:parameter name="REQUEST" value="{request:requestURI}"/>
+		</map:transform>
+		<map:serialize encoding="UTF-8" type="xhtml"/>
+	      </map:when>
+	      <map:otherwise>
+	        <map:generate src="{1}.xml"/>
+		<map:transform src="Utilities/guidelines-web.xsl">
+		  <map:parameter name="REQUEST" value="{request:requestURI}"/>
+		  <map:parameter name="serverName" value="{request:serverName}"/>
+		  <map:parameter name="serverPort" value="{request:serverPort}"/>
+		</map:transform>
+		<map:serialize encoding="UTF-8" type="xhtml"/>
+	      </map:otherwise>
+	    </map:select>
+	  </map:match>
+
+	  <!-- respond to requests of form index.xml.ID=foo -->
+	  
+	  <map:match pattern="**.xml.ID=*">
+	    <map:select type="request">
+	      <map:parameter name="parameter-name" value="style"/>
+	      <map:when test="printable">
+	        <map:generate src="{1}.xml"/>
+		<map:transform src="Utilities/guidelines-print.xsl">
+		  <map:parameter name="ID" value="{2}"/>
+		  <map:parameter name="REQUEST" value="{request:requestURI}"/>
+		</map:transform>
+		<map:serialize encoding="UTF-8" type="xhtml"/>
+	      </map:when>
+	      <map:when test="raw">
+		<map:read src="{1}.xml" mime-type="text/xml"/>
+	      </map:when>
+	      <map:when test="screen">
+	        <map:generate src="{1}.xml"/>
+  	    <map:transform src="Utilities/guidelines-web.xsl">
+		  <map:parameter name="ID" value="{2}"/>
+		  <map:parameter name="REQUEST"
+				 value="{request:requestURI}"/>
+		  <map:parameter name="serverName" value="{request:serverName}"/>
+		  <map:parameter name="serverPort" value="{request:serverPort}"/>
+		</map:transform>
+		<map:serialize encoding="UTF-8" type="xhtml"/>
+	      </map:when>
+	      <map:otherwise>
+	        <map:generate src="{1}.xml"/>
+		<map:transform src="Utilities/guidelines-web.xsl">
+		  <map:parameter name="REQUEST" value="{request:requestURI}"/>
+		  <map:parameter name="serverName" value="{request:serverName}"/>
+		  <map:parameter name="serverPort" value="{request:serverPort}"/>
+		  <map:parameter name="ID" value="{2}"/>
+		</map:transform>
+		<map:serialize encoding="UTF-8" type="xhtml"/>
+	      </map:otherwise>
+	    </map:select>
+	  </map:match>
+	  
+<!-- XHTML direct -->
+	    <map:match pattern="**.xhtml">
+		  <map:read src="{1}.xhtml" mime-type="application/xhtml+xml"/>
+	    </map:match>
+
+	    <!-- for HTML requests, check if an XML file exists -->
+
+
+
+	    <map:match pattern="*.html">
+	      <map:select type="resource-exists">
+		<map:when test="{1}.xml">
+		  <map:redirect-to uri="cocoon:/{1}.xml"/>
+		</map:when>
+		<map:otherwise>
+		  <map:read src="{1}.html" mime-type="text/html"/>
+		</map:otherwise>
+ 	     </map:select>
+	    </map:match>
+
+	    <map:match pattern="**/*.html">
+	      <map:select type="resource-exists">
+		<map:when test="{1}/{2}.xml">
+		  <map:redirect-to uri="cocoon:/{1}/{2}.xml"/>
+		</map:when>
+		<map:otherwise>
+		  <map:read src="{1}/{2}.html" mime-type="text/html"/>
+		</map:otherwise>
+ 	     </map:select>
+	    </map:match>
+
+
+	  <!-- just hand back most other things-->
+	    <map:match pattern="**.pdf">
+	      <map:read src="{1}.pdf" mime-type="application/pdf"/>
+	   </map:match>
+	   
+	   <map:match pattern="**.doc">
+	    <map:read src="{1}.doc" mime-type="application/doc"/>
+	   </map:match>
+	   
+	   <map:match pattern="**.odp">
+	    <map:read src="{1}.odp" mime-type="application/odp"/>
+	   </map:match>
+
+	   <map:match pattern="**.sxw">
+	    <map:read src="{1}.sxw" mime-type="application/sxw"/>
+	   </map:match>
+
+	   <map:match pattern="**.sxi">
+	    <map:read src="{1}.sxi" mime-type="application/sxi"/>
+	   </map:match>
+
+	   <map:match pattern="**.odd">
+	    <map:read src="{1}.odd" mime-type="text/plain"/>
+	   </map:match>
+
+	   <map:match pattern="**.xsd">
+	    <map:read src="{1}.xsd" mime-type="text/plain"/>
+	   </map:match>
+
+	   <map:match pattern="**.rnc">
+	    <map:read src="{1}.rnc" mime-type="text/plain"/>
+	   </map:match>
+
+	   <map:match pattern="**.rng">
+	    <map:read src="{1}.rng" mime-type="text/plain"/>
+	   </map:match>
+
+	   <map:match pattern="**.ent">
+	    <map:read src="{1}.ent" mime-type="text/plain"/>
+	   </map:match>
+
+	   <map:match pattern="**.dtd">
+	    <map:read src="{1}.dtd" mime-type="text/plain"/>
+	   </map:match>
+
+	   <map:match pattern="**.sh">
+	    <map:read src="{1}.sh" mime-type="text/plain"/>
+	   </map:match>
+
+	   <map:match pattern="**/ChangeLog">
+	    <map:read src="{1}/ChangeLog" mime-type="text/plain"/>
+	   </map:match>
+	   <map:match pattern="**.sh">
+	    <map:read src="{1}.sh" mime-type="text/plain"/>
+	   </map:match>
+	   <map:match pattern="**.txt">
+	    <map:read src="{1}.txt" mime-type="text/plain"/>
+	   </map:match>
+
+	   <map:match pattern="**.xsl">
+	      <map:read src="{1}.xsl" mime-type="text/plain"/>
+	   </map:match>
+
+	   <map:match pattern="**.rss">
+	    <map:read src="{1}.rss" mime-type="text/plain"/>
+	   </map:match>
+
+	   <map:match pattern="**.rtf">
+	    <map:read src="{1}.rtf" mime-type="application/rtf"/>
+	   </map:match>
+
+	   <map:match pattern="**.sgm">
+	    <map:read src="{1}.sgm" mime-type="application/sgml"/>
+	   </map:match>
+
+	   <map:match pattern="**.fo">
+	    <map:read src="{1}.fo" mime-type="text/plain"/>
+	   </map:match>
+
+	   <map:match pattern="**.dat">
+	    <map:read src="{1}.dat" mime-type="text/plain"/>
+	   </map:match>
+
+	   <map:match pattern="**.wsd">
+	    <map:read src="{1}.wsd" mime-type="text/plain"/>
+	   </map:match>
+
+	   <map:match pattern="**.gml">
+	    <map:read src="{1}.gml" mime-type="text/plain"/>
+	   </map:match>
+
+	   <map:match pattern="**.tei">
+	    <map:read src="{1}.tei" mime-type="application/sgml"/>
+	   </map:match>
+
+	   <map:match pattern="**.ppt">
+	    <map:read src="{1}.ppt" mime-type="application/ppt"/>
+	   </map:match>
+
+	   <map:match pattern="**.css">
+	    <map:read src="{1}.css" mime-type="text/css"/>
+	   </map:match>
+
+	   <map:match pattern="**.gif">
+	      <map:read src="{1}.gif" mime-type="image/gif"/>
+	   </map:match>
+
+	   <map:match pattern="**.ico">
+	      <map:read src="{1}.ico" mime-type="image/x-icon"/>
+	   </map:match>
+
+	   <map:match pattern="**.png">
+	      <map:read src="{1}.png" mime-type="image/png"/>
+	   </map:match>
+
+	   <map:match pattern="**.jpg">
+	      <map:read src="{1}.jpg" mime-type="image/jpg"/>
+	   </map:match>
+
+	   <map:match pattern="**.mp3">
+	      <map:read src="{1}.mp3" mime-type="audio/mpeg"/>
+	   </map:match>
+
+	   <map:match pattern="**.zip">
+	      <map:read src="{1}.zip" mime-type="application/zip"/>
+	   </map:match>
+
+	   <map:match pattern="**.jar">
+	      <map:read src="{1}.jar" mime-type="application/java-archive"/>
+	   </map:match>
+
+	   <map:match pattern="**.exe">
+	      <map:read src="{1}.exe" mime-type="application/x-msdos-program"/>
+	   </map:match>
+
+	   <map:match pattern="**.tar.gz">
+	      <map:read src="{1}.tar.gz" mime-type="application/x-gtar"/>
+	   </map:match>
+
+	   <map:match pattern="**.js">
+	      <map:read src="{1}.js" mime-type="text/javascript"/>
+	   </map:match>
+	   <map:match pattern="**.swf">
+	      <map:read src="{1}.swf" mime-type="application/x-shockwave-flash"/>
+	   </map:match>
+
+	   <map:match pattern="**Makefile">
+	    <map:read src="{1}Makefile" mime-type="text/plain"/>
+	   </map:match>
+
+
+        </map:pipeline>
+
+    </map:pipelines>
+</map:sitemap>
+        
+
+
+
+
