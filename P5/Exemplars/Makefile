@@ -15,6 +15,7 @@ schemas: names
 
 names:
 	xsltproc ../Utilities/makenames.xsl  ../Source/Guidelines/${LANGUAGE}/${DRIVER} > names.xml
+	xsltproc ../Utilities/makeexnames.xsl  ../Source/Guidelines/${LANGUAGE}/${DRIVER} > exnames.xml
 
 
 dist: schemas

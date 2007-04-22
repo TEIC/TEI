@@ -17,6 +17,7 @@ CHAPTER=$(shell find ${LANGTREE} -iname ${CHAP}*.xml)
 #XSL=../Stylesheets/release/tei-xsl/p5
 #XSL=http://www.tei-c.org/stylesheet/release/xml/tei
 JING=jing
+ONVDL=onvdl
 
 .PHONY: convert dtds schemas html validate valid test split oddschema exampleschema fascicule clean dist exemplars
 
@@ -146,9 +147,8 @@ valid: check
 	-xmllint --noent --xinclude ${DRIVER} > Source.xml
 	-rnv -v p5odds.rnc Source.xml
 	rm Source.xml
-	@echo --------- nrl
-#	In addition to erroneously reporting xml:lang= 3-letter
-#	values, jing seems to report an "unfinished element" every
+	@echo --------- nvdl
+#	onvdl seems to report an "unfinished element" every
 #	time a required child element from another namespace occurs
 #	in the instance. In our case, this happens every time there
 #	is an <egXML> child of <exemplum>. Since the error message is
@@ -157,9 +157,10 @@ valid: check
 #	required to make it finished) we end up throwing out all such
 #	messages via the grep -v command so we're not annoyed by the
 #	over 800 that are not really problems.
-	-jing p5nrl.xml ${DRIVER} \
-	 | grep -v ": error: Illegal xml:lang value \"[A-Za-z][A-Za-z][A-Za-z]\"\.$$" \
+	-${ONVDL} p5.nvdl ${DRIVER} \
 	 | grep -v ': error: unfinished element$$'
+	@echo --------- Schematron
+	-${JING} p5.sch ${DRIVER} 
 	@echo --------- XSLT validator
 	xsltproc prevalidator.xsl ${DRIVER} > pointerattributes.xsl
 	xsltproc validator.xsl ${DRIVER}
