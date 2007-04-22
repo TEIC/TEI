@@ -5,8 +5,8 @@ See the file COPYING for details.
 $Date$
 $Author$
 -->
-<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="AI" n="15"><head xmlns="http://www.tei-c.org/ns/1.0">Simple Analytic Mechanisms</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">This chapter describes a module for associating simple analyses and
+<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="AI" n="15"><head>Simple Analytic Mechanisms</head>
+<p>This chapter describes a module for associating simple analyses and
 interpretations with text elements.  We use the term
 <term>analysis</term> here to refer to any kind of semantic or
 syntactic interpretation which an encoder wishes to attach to all or
@@ -17,13 +17,13 @@ structure (such as <q>theme</q>, <q>reconciliation</q> etc.). The
 mechanisms presented in this chapter offer simpler but less powerful
 than those described in chapter <ptr target="#FS"/>.
 	</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Section <ptr target="#AILC"/> introduces a module for characterizing
+<p>Section <ptr target="#AILC"/> introduces a module for characterizing
 text segments according to the familiar linguistic categories of
 <term>sentence</term> or <term>s-unit</term>, <term>clause</term>,
 <term>phrase</term>, <term>word</term>, <term>morpheme</term>, and
 <term>character</term>. These elements represent special cases of the
 generic <gi>seg</gi> element described in section <ptr target="#SASE"/>.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Section <ptr target="#AIATTS"/> introduces an additional global
+<p>Section <ptr target="#AIATTS"/> introduces an additional global
 attribute which allows passages of text to be associated with
 specialised elements representing their interpretation. 
 These <soCalled>interpretative</soCalled> elements (<gi>span</gi> and
@@ -35,11 +35,11 @@ however, with SGML or XML attributes and their values, which are similar in
 concept but distinct in their formal definitions.</note> each such pair
 being linked to one or more stretches of text, either directly, in the
 case of spans, or indirectly, in the case of interpretations.</p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Finally section <ptr target="#AILA"/> revisits the topic of linguistic
+<p>Finally section <ptr target="#AILA"/> revisits the topic of linguistic
 analysis, and illustrates how these interpretative mechanisms may be
 used to associate simple linguistic analysis with text segments.</p>
 
-<p xmlns="http://www.tei-c.org/ns/1.0">This module makes available the following components:
+<p>This module makes available the following components:
 <!--<moduleSpec xml:id="DAIENT" type="decls"
 	    ident="analysis-decl">
 <altIdent type="FPI">Class declarations for Analysis and Interpretation</altIdent>
@@ -51,14 +51,14 @@ used to associate simple linguistic analysis with text segments.</p>
 The selection and combination of modules to form a TEI schema is described in
 <ptr target="#STIN"/>.
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The module is organized as follows:
+<p>The module is organized as follows:
 
 <specGrpRef target="#DAIGA"/>
 <specGrpRef target="#DAISP"/>
 <specGrpRef target="#DAILC"/>
 </p>
-<div type="div2" xml:id="AILC"><head xmlns="http://www.tei-c.org/ns/1.0">Linguistic Segment Categories</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">In this section we introduce specialized <term>linguistic segment
+<div type="div2" xml:id="AILC"><head>Linguistic Segment Categories</head>
+<p>In this section we introduce specialized <term>linguistic segment
 category</term> elements which may be used to represent the segmentation of
 a text into the traditional linguistic categories of
 <term>sentence</term>, <term>clause</term>, <term>phrase</term>,
@@ -67,11 +67,11 @@ a text into the traditional linguistic categories of
 <specList><specDesc key="s"/><specDesc key="cl"/><specDesc key="phr"/><specDesc key="w" atts="lemma"/>
 <specDesc key="m" atts="baseForm"/><specDesc key="c"/></specList>
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">As members of the <ident type="class">att.segLike</ident> class, these
+<p>As members of the <ident type="class">att.segLike</ident> class, these
 elements share the following attributes:
 <specList><specDesc key="att.segLike" atts="type function"/></specList>
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>s</gi> element may be used simply to segment a text
+<p>The <gi>s</gi> element may be used simply to segment a text
 end-to-end  into a series of non-overlapping segments, referred to here
 and elsewhere as <term>s-units</term>, or <term>sentences</term>.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p> 
@@ -97,7 +97,7 @@ and <gi>phr</gi> elements , which  can be thought of as short for
 <tag>seg type="clause"</tag> and <tag>seg type="phrase"</tag>,
 respectively.
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>s</gi> element may be further subdivided into
+<p>The <gi>s</gi> element may be further subdivided into
 <term>clauses</term>, marked with the <gi>cl</gi> element,
 as in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>
@@ -120,11 +120,11 @@ as in the following example:
   </s>
 </p></egXML>
 <note type="cit"><bibl>Defoe, <title>Journal of the Plague Year</title></bibl></note></p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Clauses may be further divided into <gi>phr</gi> elements in the same
+<p>Clauses may be further divided into <gi>phr</gi> elements in the same
 way. A text may be segmented directly into clauses, or into
 phrases, with no need to include segmentation at a higher level as well.
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">For verse texts, the overlapping of metrical and syntactic structure
+<p>For verse texts, the overlapping of metrical and syntactic structure
 requires that special care be given to representing both using an
 element hierarchy. One simple approach is to split the syntactic phrases
 into fragments when they cross verse boundaries, reuniting them 
@@ -148,7 +148,7 @@ attributes defined in the additional module for linking (chapter <ptr target="#S
    <cl prev="#c4" xml:id="c6" part="F">Had spoiled his nice new rattle.</cl></cl></l></egXML>
 Other methods are also possible; for discussion, see chapter <ptr target="#NH"/>.
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The <att>type</att> attribute on linguistic segment categories can
+<p>The <att>type</att> attribute on linguistic segment categories can
 be used to provide additional interpretative information about the
 category. The <att>function</att> attribute on the <gi>cl</gi> and
 <gi>phr</gi> elements can be used to provide additional information
@@ -159,7 +159,7 @@ documented in the <gi>segmentation</gi> element of the
 A general approach to the encoding of linguistic categories assigned to
 parts of a text is discussed in section <ptr target="#AILA"/> below.
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Using traditional terminology, these attributes provide a convenient
+<p>Using traditional terminology, these attributes provide a convenient
 way of specifying, for example, that the clause <mentioned>from whence it
 came</mentioned> is a relative clause modifying another, or that  the
 phrase <mentioned>by the U.S. Supreme Court</mentioned> is a prepositional
@@ -171,7 +171,7 @@ post-modifier:
 <phr>was outlawed</phr>
 <phr type="PP" function="postmodifier-agent">by the U.S. Supreme Court.</phr></egXML>
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Segmentation into clauses and phrases can, of course, be combined.
+<p>Segmentation into clauses and phrases can, of course, be combined.
 Such detailed encodings as the following may require careful
 formatting if they are to be easily readable however.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>
@@ -224,13 +224,13 @@ formatting if they are to be easily readable however.
 	<phr type="NP" function="complement">a sentence in state prison
 	<phr type="PP" function="complement">for possession of marijuana</phr>
 </phr></phr></cl></cl></s>.</p></egXML></p>
-<p xmlns="http://www.tei-c.org/ns/1.0">This style of markup, however, introduces spurious new lines and
+<p>This style of markup, however, introduces spurious new lines and
 blanks into the text, which could make restoring the text to its
 original layout problematic. If the original layout is important, the
 original line breaks and font shifts should be recorded using
 <gi>lb</gi> elements, the global <att>rend</att> attribute, etc.
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>w</gi>, <gi>m</gi> and <gi>c</gi> elements are also
+<p>The <gi>w</gi>, <gi>m</gi> and <gi>c</gi> elements are also
 identical in meaning to the <gi>seg</gi> element with a <att>type</att>
 attribute of <q>w</q>, <q>m</q>, or <q>c</q>, and may occur wherever
 <gi>seg</gi> is permitted to occur. However, they have more  restricted
@@ -243,7 +243,7 @@ contain  only a single character. Consequently, while <gi>m</gi> et al. can
 be translated directly into typed <gi>seg</gi> elements, the reverse is
 not necessarily the case.
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The restriction on the content of the <gi>w</gi> attribute in
+<p>The restriction on the content of the <gi>w</gi> attribute in
 particular requires that a certain care must be exercised when using it,
 especially in relation to the use of other tags that one may think of as
 <term>word level</term>, but which are in fact defined as <term>phrase
@@ -255,7 +255,7 @@ not, since the <gi>mentioned</gi> element is not part of the content
 model of the <gi>w</gi> element:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><mentioned><w>grandiloquent</w></mentioned></egXML>
 <eg><![CDATA[<w><mentioned>grandiloquent</mentioned></w>]]></eg></p>
-<p xmlns="http://www.tei-c.org/ns/1.0">On the other hand, both of the following encodings <emph>are</emph>
+<p>On the other hand, both of the following encodings <emph>are</emph>
 legitimate:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><mentioned>
    <phr>grandiloquent speech</phr>
@@ -267,7 +267,7 @@ The first encoding describes the citing of a phrase. The second
 describes a phrase which consists of something mentioned.
 <!-- added following brief plug for otherwise  unsung attributes -->
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>w</gi> and <gi>m</gi> elements carry additional attributes
+<p>The <gi>w</gi> and <gi>m</gi> elements carry additional attributes
 which may be of use in many indexing or analytic applications. The 
 <att>lemma</att> attribute may be used to specify  the
 <term>lemma</term>, that is the head- or base- form of an
@@ -288,7 +288,7 @@ a transformed morpheme:
    <m type="suffix">able</m>
 </w></egXML>
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>w</gi>, <gi>m</gi>, and <gi>c</gi> elements can be used
+<p>The <gi>w</gi>, <gi>m</gi>, and <gi>c</gi> elements can be used
 together to give a fairly detailed low-level grammatical analysis of
 text. For example, consider the following segmentation of the English
 S-unit <mentioned>I didn't do it</mentioned>.
@@ -302,14 +302,14 @@ S-unit <mentioned>I didn't do it</mentioned>.
 <c>.</c></egXML>
 <!-- shouldn't we attribute this to Bart Simpson? :-) -->
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">This segmentation, crude as it is, succeeds in representing the idea
+<p>This segmentation, crude as it is, succeeds in representing the idea
 that <mentioned>did</mentioned> occurs as a word inside the word
 <mentioned>didn't</mentioned>. A further advantage of segmenting the text down
 to this level is that it becomes relatively simple to associate each
 such segment with a more detailed formal analysis. 
 This matter is taken up in detail in section <ptr target="#AILA"/>. 
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>s</gi>, <gi>cl</gi>, <gi>phr</gi>, <gi>w</gi>, <gi>m</gi>,
+<p>The <gi>s</gi>, <gi>cl</gi>, <gi>phr</gi>, <gi>w</gi>, <gi>m</gi>,
 and <gi>c</gi> elements are formally declared as follows:
 <specGrp xml:id="DAILC" n="Linguistic Segment Categories">
 &s;
@@ -321,8 +321,8 @@ and <gi>c</gi> elements are formally declared as follows:
 </specGrp>
 </p>
 </div>
-<div type="div2" xml:id="AIATTS"><head xmlns="http://www.tei-c.org/ns/1.0">Global Attributes for Simple Analyses</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">When the module described by this chapter is selected, an
+<div type="div2" xml:id="AIATTS"><head>Global Attributes for Simple Analyses</head>
+<p>When the module described by this chapter is selected, an
 additional attribute is defined for all elements:
 <specList><specDesc key="att.global.analytic" atts="ana"/></specList>
 The <att>ana</att> attribute may be specified for any element.
@@ -333,22 +333,22 @@ or some other interpretative element such as <gi>note</gi>, on which
 see section <ptr target="#CONO"/> or <gi>fs</gi>,
 on which see chapter <ptr target="#FS"/>.
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The <att>ana</att> attribute is formally declared as follows:
+<p>The <att>ana</att> attribute is formally declared as follows:
 <specGrp xml:id="DAIGA" n="Global attribute for analysis">
 &att.global.analytic;
     </specGrp>
 </p></div>
-<div type="div2" xml:id="AISP"><head xmlns="http://www.tei-c.org/ns/1.0">Spans and Interpretations</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">The simplest mechanisms for attaching analytic notes in some
+<div type="div2" xml:id="AISP"><head>Spans and Interpretations</head>
+<p>The simplest mechanisms for attaching analytic notes in some
 structured vocabulary to particular passages of text are provided by the
 <gi>span</gi> and <gi>interp</gi> elements, and their associated
 grouping elements <gi>spanGrp</gi> and <gi>interpGrp</gi>.
 <specList><specDesc key="span"/><specDesc key="spanGrp"/><specDesc key="interp"/><specDesc key="interpGrp"/></specList>
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">These elements are all members of the class <ident type="class">att.interpLike</ident>, and thus share the following attributes:
+<p>These elements are all members of the class <ident type="class">att.interpLike</ident>, and thus share the following attributes:
 <specList><specDesc key="att.interpLike" atts="resp type inst"/></specList>
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The <att>type</att>  attribute of the
+<p>The <att>type</att>  attribute of the
 <gi>span</gi> and <gi>interp</gi> elements may be used to indicate
 that the annotations are of specific types, for example thematic or
 structural. The annotation itself is supplied as the content of the
@@ -384,27 +384,27 @@ an example of the <gi>span</gi> element.
   forwards and out, the whole process stopped; and <emph rend="italic">that</emph> was <soCalled rend="dquo">the
   moment</soCalled> which it was impossible to remember
   afterwards.</s>
-<span resp="#DTL" from="#MaQp1s2p114s3" to="#MaQp1s2p114s5">the moment</span>
+<span from="#MaQp1s2p114s3" to="#MaQp1s2p114s5">the moment</span>
 <s xml:id="MaQp1s2p114s6">For during that space of time (which was
   timeless) she understood quite finally her smallness, the
   unimportance of humanity.</s>
 </p></egXML>
 <note type="cit"><bibl>Doris Lessing, <title>Martha Quest</title>, 1952, p52-53</bibl></note>
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>span</gi> element may, as in this example, be placed in the
+<p>The <gi>span</gi> element may, as in this example, be placed in the
 text near the textual span it is associated with. Alternatively, it  may be placed
 elsewhere in the same or a different document. Where several
 <gi>span</gi> or <gi>interp</gi> elements share the same attributes,
 for example having the same responsibility or type, it may be
 convenient to group them within a <gi>spanGrp</gi> element as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><spanGrp resp="#DTL">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><spanGrp>
   <span from="#MaQp1s2p114s3" to="#MaQp1s2p114s5">the moment</span>
   <!-- other spans identified by DTL here -->
 </spanGrp></egXML>
 <!-- As may be seen, the <att>type</att> attribute may be omitted in order to
 associate a span of text simply with a descriptive name.-->
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Spans may also be used to represent structural divisions within 
+<p>Spans may also be used to represent structural divisions within 
 a narrative, particularly when these do not coincide with the
 structure implied by the element structure. Consider the following narrative:
 <q rend="display">
@@ -449,7 +449,7 @@ But Sigurd was the most outstanding of all, and everyone who knows about
 the old days says he was the most outstanding of men and the noblest of
 all the warrior kings.</p></q>
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">A structural analysis of this text, dividing it into narrative units
+<p>A structural analysis of this text, dividing it into narrative units
 in a pattern shared with other texts from the same literature, might
 look like this:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p xml:id="P1">
@@ -469,14 +469,14 @@ look like this:
 <p xml:id="P4">Sigmund and all his sons were tall ... </p>
 <spanGrp resp="#TMA" type="narrative-structure">
  <span from="#S1" to="#S3">introduction</span>
- <span from="#S4a">conflict</span>
- <span from="#S4b">climax</span>
+ <span from="#S4A">conflict</span>
+ <span from="#S4B">climax</span>
  <span from="#S5" to="#S17">revenge</span>
  <span from="#EOS17">reconciliation</span>
  <span from="#P2" to="#P4">aftermath</span>
 </spanGrp></egXML>
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Note the use of an empty <gi>anchor</gi> element to provide a target for
+<p>Note the use of an empty <gi>anchor</gi> element to provide a target for
 the <soCalled>reconciliation</soCalled> unit which is normally part of
 the narrative pattern but which is not realized in the text shown.
  </p>
@@ -485,7 +485,7 @@ the narrative pattern but which is not realized in the text shown.
 together inside a <gi>spanGrp</gi> element, with the values of the
 common attribute(s) inherited from the higher element, as follows.
  -->
-<p xmlns="http://www.tei-c.org/ns/1.0">The same analysis may be expressed with the <gi>interp</gi> element
+<p>The same analysis may be expressed with the <gi>interp</gi> element
 instead of the <gi>span</gi> element; this element provide attributes
 for recording an interpretive category and its value, as well as the
 identity of the interpreter, but does not itself indicate which passage
@@ -497,7 +497,7 @@ pointing from the text to the <gi>interp</gi> element with the
 pointing at both text and interpretation from a <gi>link</gi> element,
 as described in chapter <ptr target="#SA" type="div1"/>.
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">To encode the first example above using <gi>interp</gi>, it is
+<p>To encode the first example above using <gi>interp</gi>, it is
 necessary to create a text element which contains — or corresponds to
 — the the third, fourth, and fifth orthographic sentences (S-units) in
 the paragraph.  This can be done either with the <att>seg</att> element,
@@ -515,9 +515,9 @@ element can then be associated with the <gi>interp</gi> element using the
 </seg>
 <s xml:id="MarQp1s2p114s6">For during that space of time ... </s>
 </p>
-<interp xml:id="moment" resp="#DTL">the moment</interp></egXML>
+<interp xml:id="moment">the moment</interp></egXML>
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The second example above can be recoded using <gi>interp</gi> and
+<p>The second example above can be recoded using <gi>interp</gi> and
 <gi>interpGrp</gi> tags in a similar manner. The interpretation
 itself can be expressed in an <gi>interpGrp</gi> element, which would
 replace the <gi>spanGrp</gi> in the example shown above:
@@ -530,7 +530,7 @@ replace the <gi>spanGrp</gi> in the example shown above:
         <interp xml:id="AFTERM">aftermath</interp>
 </interpGrp></egXML>
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Any of these <gi>interp</gi> elements may be linked to the text either
+<p>Any of these <gi>interp</gi> elements may be linked to the text either
 by means of the <att>ana</att> attribute, or by means of <gi>link</gi>
 elements.  Using the <att>ana</att> attribute (on <gi>seg</gi> elements
 introduced specifically for this purpose), the text would be encoded as
@@ -554,7 +554,7 @@ follows:
 <p xml:id="PP4">Sigmund and all his sons were tall ... </p>
 <join xml:id="PP2-PP4" targets="#PP2 #PP3 #PP4" ana="#AFTERM"/></egXML>
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The linkage may also be accomplished using a <gi>linkGrp</gi> element,
+<p>The linkage may also be accomplished using a <gi>linkGrp</gi> element,
 whose content is a set of <gi>link</gi> elements which point to each
 interpretive element and its corresponding text unit.  This method does
 not require the use of the <att>ana</att> attribute on the text
@@ -562,13 +562,13 @@ units.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><linkGrp targFunc="text interpretation">
   <link targets="#INTRO    #SS1-SS3"/>
   <link targets="#CONFLICT #SS4A"/>
-  <link targets="#CLIMAX   #SS4b"/>
+  <link targets="#CLIMAX   #SS4B"/>
   <link targets="#REVENGE  #SS5-SS17"/>
   <link targets="#RECONCIL #NIL1"/>
-  <link targets="#AFTERM   #P2-P4"/>
+  <link targets="#AFTERM   #PP2-PP4"/>
 </linkGrp></egXML>
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">One obvious advantage of using <gi>interp</gi> rather than
+<p>One obvious advantage of using <gi>interp</gi> rather than
 <gi>span</gi> elements for the Sigmund text is that the <gi>interp</gi>
 elements can be reused for marking up other texts in the same document,
 whereas the <gi>span</gi> elements cannot.  Another is that the
@@ -579,7 +579,7 @@ creation of special text elements not otherwise needed (e.g. the
 <gi>seg</gi> and the <gi>join</gi> in the revised encoding of the text),
 whereas the the use of <gi>span</gi> elements does not.
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The formal declarations for the <gi>span</gi>, <gi>spanGrp</gi>,
+<p>The formal declarations for the <gi>span</gi>, <gi>spanGrp</gi>,
 <gi>interp</gi> and <gi>interpGrp</gi> elements are:
 <specGrp xml:id="DAISP" n="Spans">
 &span;
@@ -589,8 +589,8 @@ whereas the the use of <gi>span</gi> elements does not.
 </specGrp>
 </p>
 </div>
-<div type="div2" xml:id="AILA"><head xmlns="http://www.tei-c.org/ns/1.0">Linguistic Annotation</head>
-<p xmlns="http://www.tei-c.org/ns/1.0">By <term>linguistic annotation</term> we mean here any annotation
+<div type="div2" xml:id="AILA"><head>Linguistic Annotation</head>
+<p>By <term>linguistic annotation</term> we mean here any annotation
 determined by an analysis of linguistic features of the text, excluding
 as borderline cases both the formal structural properties of the text
 (e.g. its division into chapters or paragraphs) and descriptive
@@ -602,7 +602,7 @@ the various chapters of Part III.  The contextual
 properties of a TEI text are fully documented in the TEI Header, which
 is discussed in chapter <ptr target="#HD"/>, and in section <ptr target="#CCAH"/>.
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Other forms of linguistic annotation may be applied at a number of
+<p>Other forms of linguistic annotation may be applied at a number of
 levels in a text.  A code (such as a word-class or part-of-speech
 code) may be associated with each word or token, or with groups of such
 tokens, which may be continuous, discontinuous or nested.  A code may
@@ -614,7 +614,7 @@ to place the annotated part of the text somewhere within a narrowly
 linguistic or discoursal domain of analysis, or within a more general
 semantic field, or any combination drawn from these and other domains.
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The manner by which such annotations are generated and attached to
+<p>The manner by which such annotations are generated and attached to
 the text may be entirely automatic, entirely manual or a mixture.  The
 ease and accuracy with which analysis may be automated may vary with the
 level at which the annotation is attached.  The method employed should
@@ -625,7 +625,7 @@ different annotation methods, the <att>decls</att>
 attribute may be used to indicate the fact, as further
 discussed in section <ptr target="#CCAS"/>.
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">As one example of such types of analysis, consider the following
+<p>As one example of such types of analysis, consider the following
 sentence, taken from the Lancaster/IBM Treebank
 Project.<note place="foot">See <bibl><author>G. N. Leech and R. G. Garside</author>
 <title level="a">Running a Grammar Factory,</title> in
@@ -639,7 +639,7 @@ University of Lancaster's Unit for Computer Research on the English
 Language.
  </note>
  <q rend="display">The victim's friends told police that Kruger drove
-into the quarry and never surfaced.</q> </p> <p xmlns="http://www.tei-c.org/ns/1.0">Our discussion focuses
+into the quarry and never surfaced.</q> </p> <p>Our discussion focuses
 on the way that this sentence might be analysed using the Claws system
 developed at the University of Lancaster, but exactly the same
 principles may be applied to a wide variety of other systems.<note place="foot">For the word-class tagging method used by Claws see
@@ -686,7 +686,7 @@ Then the sample sentence will be processed as if it began:
 <eg>The[definite article] 
 victim[singular noun]'s[genitive suffix] ...</eg>
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">It would be more useful if the replacement texts for each entity
+<p>It would be more useful if the replacement texts for each entity
 were a code of some significance to a particular analysis program.  If
 the codes are considered to be <term>atomic</term>, then one of the
 mechanisms based on the <gi>interp</gi> element described in section <ptr target="#AISP"/>
@@ -698,7 +698,7 @@ compositionality may be most clearly expressed using a mechanism based
 on the <gi>fs</gi> element defined in chapter <ptr target="#FS"/>.  <!--For a
 detailed example, see <ptr target="#F"SIL"/>.-->
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">One such replacement for the word-class entity references above
+<p>One such replacement for the word-class entity references above
 is a set of empty <gi>ptr</gi> elements bearing <att>target</att>
 attributes as described in section <ptr target="#COXR"/>.  The required
 entity definitions would look as follows.
@@ -707,26 +707,26 @@ entity definitions would look as follows.
 <!ENTITY   GEN  "<ptr target='GEN'/>">
 <!-- ... -->]]></eg>
 Then the text would be expanded to read:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><s>The <ptr target="#AT"/> victim <ptr target="#NN1"/>'s <ptr target="#GEN"/>
-friends <ptr target="#NN2"/> told <ptr target="#VVD"/> police
-<ptr target="#NN2"/> that <ptr target="#CST"/> Krueger <ptr target="#NP1"/>
-drove <ptr target="#VVD"/> into <ptr target="#II"/> the <ptr target="#AT"/>
-quarry <ptr target="#NN1"/> and <ptr target="#CC"/> never <ptr target="#RR"/>
-surfaced <ptr target="#VVD"/>.<ptr target="#PUN"/>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><s>The <ptr target="#at"/> victim <ptr target="#nn1"/>'s <ptr target="#gen"/>
+friends <ptr target="#nn2"/> told <ptr target="#vvd"/> police
+<ptr target="#nn2"/> that <ptr target="#cst"/> Krueger <ptr target="#np1"/>
+drove <ptr target="#vvd"/> into <ptr target="#ii"/> the <ptr target="#at"/>
+quarry <ptr target="#nn1"/> and <ptr target="#cc"/> never <ptr target="#rr"/>
+surfaced <ptr target="#vvd"/>.<ptr target="#pun"/>
 </s></egXML>
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The <gi>ptr</gi> elements are designed to point to elements with
+<p>The <gi>ptr</gi> elements are designed to point to elements with
 unique identifiers.  But we have yet to specify what those elements are.
 Suppose we say that they are <gi>interp</gi> elements whose values are the
 same as their identifiers.  That is, we provide an <gi>interpGrp</gi>
 element as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><interpGrp type="word_classes">
-   <interp xml:id="at">article</interp>
-   <interp xml:id="nn1">noun sing</interp>
-   <interp xml:id="gen">genitive</interp>
+   <interp xml:id="_AT">article</interp>
+   <interp xml:id="_NN1">noun sing</interp>
+   <interp xml:id="_GEN">genitive</interp>
 </interpGrp></egXML>
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Although common practice, this (or any similar) method of relating
+<p>Although common practice, this (or any similar) method of relating
 text to interpretation is seriously flawed.  The interpretations are
 related not to text elements, but to points in the text, namely those
 that are occupied by the <gi>ptr</gi> elements.  In order to relate the
@@ -742,7 +742,7 @@ it does not work with texts with additional markup, for example
 the convention fails for any markup in which interpretations are
 intended to be associated with nested text elements.
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">None of these difficulties arise if the text is fully segmented, using
+<p>None of these difficulties arise if the text is fully segmented, using
 the linguistic segment elements described in section <ptr target="#AILC"/>,
 and the <att>ana</att> attribute to point to the interpretations
 that are associated with each such segment, as follows:
@@ -765,7 +765,7 @@ that are associated with each such segment, as follows:
    <c ana="#pun">.</c>
 </s></egXML>
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Analysis into phrase and clause elements can be superimposed on the
+<p>Analysis into phrase and clause elements can be superimposed on the
 word and morpheme tagging in the preceding illustration. For example,
 Claws provides the following constituent analysis of the sample sentence
 (the word class codes have been deleted):
@@ -773,7 +773,7 @@ Claws provides the following constituent analysis of the sample sentence
 [Fn that [N Krueger N] [V [V&amp; drove [P into [N the quarry N]P]V&amp;]
 and [V+ never surfaced V+]V]Fn]V]</eg>
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Treating the labels on the brackets as phrase or clause
+<p>Treating the labels on the brackets as phrase or clause
 interpretations, this analysis of the structure of the example sentence
 can be combined with the word class analysis and represented as follows
 (the symbol <val>V&amp;</val> representing the first part of a coordinate
@@ -820,13 +820,13 @@ second part, has been replaced by <val>V2</val>).
    <c ana="#pun">.</c>
 </s></egXML>
  </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">A representation using the <gi>linkGrp</gi> element can be obtained by
+<p>A representation using the <gi>linkGrp</gi> element can be obtained by
 supplying each linguistic segment with its own <att>xml:id</att> attribute,
 removing its <att>ana</att> attribute, and putting each
 segment-interpretation pair into a <gi>link</gi> element inside the
 <gi>linkGrp</gi> element.
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">Each linguistic segment so far discussed has been well-behaved with
+<p>Each linguistic segment so far discussed has been well-behaved with
 respect to the basic document hierarchy, having only a single parent.
 Moreover, the segmentation has been complete, in that each part of the
 text is accounted for by some segment at each level of analysis, without
@@ -839,16 +839,16 @@ all depend to a greater or lesser degree on the ability to associate a
 unique identifier with any element in a TEI-conformant text, and then to
 specify that identifier as the target of a pointing element of some kind.
 </p>
-<p xmlns="http://www.tei-c.org/ns/1.0">The mechanisms proposed in this chapter may also be used to encode
+<p>The mechanisms proposed in this chapter may also be used to encode
 analyses of an entirely different kind, for example discourse function.
 Here is an application of the span technique to record details of a sales
 transaction in a spoken text.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><u xml:id="u1" who="#p1">Can I have ten oranges and a kilo of bananas please?</u>
-<u xml:id="u2" who="#p2">Yes, anything else?</u>
-<u xml:id="u3" who="#p1">No thanks.</u>
-<u xml:id="u4" who="#p2">That'll be dollar forty.</u>
-<u xml:id="u5" who="#p1">Two dollars</u>
-<u xml:id="u6" who="#p1">Sixty, eighty, two dollars. Thank you.</u>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><u xml:id="u1">Can I have ten oranges and a kilo of bananas please?</u>
+<u xml:id="u2">Yes, anything else?</u>
+<u xml:id="u3">No thanks.</u>
+<u xml:id="u4">That'll be dollar forty.</u>
+<u xml:id="u5">Two dollars</u>
+<u xml:id="u6">Sixty, eighty, two dollars. Thank you.</u>
 <spanGrp type="transactions">
    <span from="#u1">sale request</span>
    <span from="#u2" to="#u3">sale compliance</span>
