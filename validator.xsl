@@ -226,11 +226,13 @@ select="$where"/> points to something I cannot find: <xsl:value-of select="$valu
 	</xsl:variable>
 	<xsl:choose>
 	  <xsl:when test="key('IDS',$N)"/>
+<!--
 	  <xsl:when test="not(ancestor::teix:egXML//teix:*[@xml:id=$N])">
 	    <xsl:call-template name="Warning">
 	      <xsl:with-param name="value" select="$What"/>
 	    </xsl:call-template>
 	  </xsl:when>
+-->
 	</xsl:choose>
       </xsl:when>
       <xsl:when test="starts-with($What,'mailto:')"/>
@@ -241,7 +243,9 @@ select="$where"/> points to something I cannot find: <xsl:value-of select="$valu
 		      local-name(parent::*)='fsdDecl'"/>
       <xsl:when test="name(.)='target' and
 		      local-name(parent::*)='ref'"/>
-      <xsl:when test="name(.)='target' and local-name(parent::*)='ptr'"/>
+      <xsl:when test="name(.)='target' and
+		      local-name(parent::*)='ptr'"/>
+      <xsl:when test="name(.)='url' and local-name(parent::*)='graphic'"/>
       <xsl:when test="not(contains($What,'/'))">
        <xsl:call-template name="Warning">
 	 <xsl:with-param name="value" select="$What"/>

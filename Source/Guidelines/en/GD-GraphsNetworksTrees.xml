@@ -11,7 +11,7 @@ among informational units because they help readers to visualize those
 relations and hence to understand them better.  Two general types of
 graphical representations may be distinguished.
 <list type="bullets">
-				<item>Graphs, in the strictly mathematical sense, consist
+  <item>Graphs, in the strictly mathematical sense, consist
 of points, often called <term>nodes</term> or
 <term>vertices</term>, and connections among them, called
 <term>arcs</term>, or under certain conditions,
@@ -22,7 +22,7 @@ directly below.  Trees are dealt with separately in
 sections <ptr target="#GDTR"/> and
 <ptr target="#GDAT"/>.<note place="foot">The treatment here is largely based on the
 characterizations of graph types in <bibl><author>Gary Chartrand and
-Linda Lesniak</author> <title>Graphs and Digraphs</title>
+Linda Lesniak</author>, <title>Graphs and Digraphs</title>
 (Menlo Park, CA: Wadsworth, 1986).</bibl></note></item>
 <item><term>Charts</term>, which typically plot data in two or more
 dimensions, including plots with orthogonal or radial axes, bar charts,
@@ -444,14 +444,14 @@ numbers, for convenience.
 </graph></egXML></p></div>
 <div type="div3" xml:id="GDFT"><head xmlns="http://www.tei-c.org/ns/1.0">Family Trees</head>
 <p>The next example provides an encoding a portion of a
-<soCalled>family tree</soCalled>, in which nodes are used to represent
+family tree, in which nodes are used to represent
 individuals, and parents of individuals, and arcs are used to
 represent common parentage and descent links.  Let us suppose,
 further, that information about individuals is contained in feature
 structures, which are contained in feature-structure libraries
-elsewhere in the document (see <ptr target="#FSFL"/>).  We can use the
+elsewhere (see <ptr target="#FSFL"/>).  We can use the
 <att>value</att> attribute on <gi>node</gi> elements to point to those
-feature structures.  Assume that, in some particular representation of
+feature structures.  In this particular representation of
 the graph, nodes representing females are framed by circles, nodes
 representing males are framed by boxes, and nodes representing parents
 are framed by diamonds.
@@ -658,7 +658,7 @@ We encode the graph thus:
   <node xml:id="EARL">
     <label>Earl of Argyll's land</label>
   </node>
-  <node xml:id="GALL" value="#gallfs">
+  <node xml:id="GALL" value="http://www.people/scots#gall">
     <label>Gallachalzie</label>
   </node>
   <node xml:id="PERT">
@@ -670,37 +670,37 @@ We encode the graph thus:
   <node xml:id="PER2">
     <label>Pertinents part</label>
   </node>
-  <node xml:id="KNAP" value="#knapfs">
+  <node xml:id="KNAP" value="http://www.people/scots#knapfs">
     <label>Lordship of Knapdale</label>
   </node>
-  <node xml:id="ARGY" value="#argyfs">
+  <node xml:id="ARGY" value="http://www.people/scots#argyfs">
     <label>Sherrifdome of Argyll</label>
   </node>
-  <arc xml:id="EARLGALL" from="#earl" to="#gall">
+  <arc xml:id="EARLGALL" from="#EARL" to="#GALL">
     <label>INCLUDE</label>
   </arc>
-  <arc xml:id="EARLARGY" from="#earl" to="#argy" exclude="#pertargy #knapargy">
+  <arc xml:id="EARLARGY" from="#EARL" to="#ARGY" exclude="#PERTARGY #KNAPARGY">
     <label>IN</label>
   </arc>
-  <arc xml:id="EARLPERT" from="#earl" to="#pert">
+  <arc xml:id="EARLPERT" from="#EARL" to="#PERT">
     <label>INCLUDE</label>
   </arc>
-  <arc xml:id="PERTPER1" from="#pert" to="#per1">
+  <arc xml:id="PERTPER1" from="#PERT" to="#PER1">
     <label>INCLUDE</label>
   </arc>
-  <arc xml:id="PERTPER2" from="#pert" to="#per2">
+  <arc xml:id="PERTPER2" from="#PERT" to="#PER2">
     <label>INCLUDE</label>
   </arc>
-  <arc xml:id="PERTARGY" from="#pert" to="#argy" exclude="#earlargy #knapargy">
+  <arc xml:id="PERTARGY" from="#PERT" to="#ARGY" exclude="#EARLARGY #KNAPARGY">
     <label>IN</label>
   </arc>
-  <arc xml:id="PER1KNAP" from="#per1" to="#knap">
+  <arc xml:id="PER1KNAP" from="#PER1" to="#KNAP">
     <label>BY</label>
   </arc>
-  <arc xml:id="PER2KNAP" from="#per2" to="#knap">
+  <arc xml:id="PER2KNAP" from="#PER2" to="#KNAP">
     <label>PART OF</label>
   </arc>
-  <arc xml:id="KNAPARGY" from="#knap" to="#argy" exclude="#earlargy #pertargy">
+  <arc xml:id="KNAPARGY" from="#KNAP" to="#ARGY" exclude="#EARLARGY #PERTARGY">
     <label>IN</label>
   </arc>
 </graph></egXML></p></div></div>
@@ -946,13 +946,13 @@ VB to PT crosses the arc from VP to PN.
 </p></div>
 <div type="div2" xml:id="GDAT"><head xmlns="http://www.tei-c.org/ns/1.0">Another Tree Notation</head>
 <p>In this section, we present an alternative to the method of
-representing the structure of ordered rooted trees that is given in
+representing the structure of ordered rooted trees given in
 section <ptr target="#GDTR" type="div3"/>, which is based on the observation
 that any node of such a tree can be thought of as the root of the
 subtree that it dominates.  Thus subtrees can be thought of as the same
 type as the trees they are embedded in, hence the designation
 <gi>eTree</gi>, for <term>embedding tree</term>.  Whereas in a
-<gi>tree</gi>, the relationship among the parts is indicated by the
+<gi>tree</gi> the relationship among the parts is indicated by the
 <att>children</att> attribute, and by the names of the elements
 <gi>root</gi>, <gi>iNode</gi> and <gi>leaf</gi>, the relationship among
 the parts of an <gi>eTree</gi> is indicated simply by the arrangement of
@@ -961,8 +961,8 @@ distinguish the terminal elements of an <gi>eTree</gi> by means of the
 empty <gi>eLeaf</gi> element, though its use is not required; the
 <gi>eTree</gi> element can also be used to identify the terminal nodes
 of <gi>eTree</gi> elements.  We also provide a <gi>triangle</gi>
-element, which can be thought of as an <term>underspecified</term>
-<gi>eTree</gi>, that is an <gi>eTree</gi> in which certain information
+element, which can be thought of as an underspecified
+<gi>eTree</gi>, i.e. an <gi>eTree</gi> in which certain information
 has been left out.  In addition, we provide a <gi>forest</gi> element,
 which consists of one or more <gi>tree</gi>, <gi>eTree</gi> or
 <gi>triangle</gi> elements, and a <gi>forestGrp</gi> element, which
@@ -1130,7 +1130,8 @@ examples like <mentioned>see the man with the periscope</mentioned>, the
 representations may be more complicated than this.  For example,
 adopting a version of the <term>X-bar</term> theory of phrase structure
 originated by Jackendoff,<note place="foot"><bibl>R. Jackendoff, 
-<title>X-Bar Syntax</title>, 1977</bibl></note> the
+<title>X-Bar Syntax: A study of phrase structure</title>, 
+in Linguistic Inquiry Monograph 2, 1977, </bibl></note> the
 attachment of a modifier may require the creation of an intermediate
 node which is not required when the attachment is not made, as shown in
 the following diagram.  A possible encoding of this ambiguous structure
