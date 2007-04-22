@@ -172,19 +172,21 @@ new elements are involved:
 <specDesc key="fsDescr"/>
 <specDesc key="fDecl"/>
 <specDesc key="fsConstraints"/></specList></p>
-<p>Feature declarations and feature structure constraints are described
-in the next two sections of this chapter.  Note that the specification
-of similar <gi>fsDecl</gi> elements can be simplified by devising an
-inheritance hierarchy for the feature structure types.  Each
-<gi>fsDecl</gi> may name a <att>baseType</att> from which it inherits
-feature declarations and constraints.  For instance, suppose that
-<tag>fsDecl type="Basic"</tag> contains <tag>fDecl name="One"</tag> and
-<tag>fDecl name="Two"</tag>, and that <tag>fsDecl type="Derived"
-baseType="Basic"</tag> contains just <tag>fDecl name="Three"</tag>.  Then
-any instance of <tag>fs type="Derived"</tag> may include all three
-features.  This is because <tag>fsDecl type="Derived"</tag> inherits the
-two feature declarations from <tag>fsDecl type="Basic"</tag> when it
-specifies a <att>baseType</att> of <val>Basic</val>.</p>
+<p>Feature declarations and feature structure constraints are
+described in the next two sections of this chapter.  Note that the
+specification of similar <gi>fsDecl</gi> elements can be simplified by
+devising an inheritance hierarchy for the feature structure types.
+Each <gi>fsDecl</gi> element  may specify one or more
+<soCalled>basetypes</soCalled>from
+which it inherits feature declarations and constraints, using the  <att>baseTypes</att> attribute.  For instance,
+suppose that <tag>fsDecl type="Basic"</tag> contains <tag>fDecl
+name="One"</tag> and <tag>fDecl name="Two"</tag>, and that <tag>fsDecl
+type="Derived" baseTypes="Basic"</tag> contains just <tag>fDecl
+name="Three"</tag>.  Then any instance of <tag>fs type="Derived"</tag>
+may include all three features.  This is because <tag>fsDecl
+type="Derived"</tag> inherits the two feature declarations from
+<tag>fsDecl type="Basic"</tag> when it specifies a <att>baseTypes</att>
+of <val>Basic</val>.</p>
 <p>The following sample shows the overall structure of a complete FSD:
  <egXML xmlns="http://www.tei-c.org/ns/Examples">
   <teifsd>
