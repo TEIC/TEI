@@ -749,9 +749,10 @@ specific elements for  common types of biographical
 information, and a generic element for other, user-defined, types
 of information.</p> 
 <p>All the elements in these three classes belong to the attribute
-class <ident type="class">att.datable</ident>, which provides the following
-attributes:
-<specList><specDesc key="att.datable" atts="notBefore notAfter from to"/></specList>
+class <name type="class">att.datable</name>, which, as a superclass
+of <name type="class">att.datable.w3c</name> provides the
+following attributes:
+<specList><specDesc key="att.datable.w3c" atts="notBefore notAfter from to"/></specList>
 <!--
 <ident>dateValue</ident>, to indicate an exact date,
 <ident>from</ident> and <ident>to</ident>, to indicate a specific date
@@ -777,6 +778,8 @@ ways to provide additional nuances. Consider, for example, the following:
 some time in April of 1857.</residence>
 </egXML>
 </p>
+<p>More specialized standard date formats may also be used, about
+which see <ptr target="#NDDATEISO"/>.</p>
 <!-- need reference to something on date normalization issues here -->
 <div type="div4">
 <head>Personal Characteristics</head>
@@ -1356,11 +1359,13 @@ one or more <gi>date</gi> or <gi>time</gi> elements:
 </specList>
 </p>
 <p>As members of the <name type="class">att.dateTime</name> and <name
-   type="class">att.duration</name> classes <gi>date</gi> and <gi>time</gi> share the
-following attributes:
+type="class">att.duration</name> classes, which in turn are members of
+<name type="class">att.dateTime.w3c</name> and <name
+type="class">att.duration.w3c</name> respectively, the <gi>date</gi>
+and <gi>time</gi> elements share the following attributes:
 <specList>
-  <specDesc key="att.dateTime" atts="value"/>
-  <specDesc key="att.duration" atts="dur"/>
+  <specDesc key="att.dateTime.w3c" atts="value"/>
+  <specDesc key="att.duration.w3c" atts="dur"/>
 </specList>
 </p>
 <div type="div3" xml:id="NDDATER"><head>Relative Dates and Times
@@ -1509,11 +1514,32 @@ the <gi>time</gi> element.
 <time xml:lang="en-US" type="descriptive" value="13:45:00-05:00"> a quarter of two
 </time></egXML>
  </p>
- <p>
+</div>
+<div type="div3" xml:id="NDDATEISO"><head>More Expressive Normalizations</head>
     <!-- <?tei winita this needs to be put somewhere intelligent sb ?>-->
-<specList><specDesc key="data.temporal.iso"/>
-    <specDesc key="data.duration.iso"/></specList>
+<p>The attributes for normalization of dates and times so far
+described use a standard format defined by <title>XML Schema Part 2:
+Datatypes Second Edition</title>. This format is widely accepted and
+has significant software support. It is essentially a profile of ISO
+8601 <title>Data elements and interchange formats — Information
+interchange — Representation of dates and times</title>. The ISO
+standard provides formats not available in the W3C recommendation. For
+example, the capability to refer to a date by its ordinal date or week
+date, or to a calendar week. In cases where it is desirable to use
+these more specialized formats, this module provides a corresponding
+additional class of attributes for them:
+<specList>
+  <specDesc key="att.datable.iso" atts="notBefore-iso notAfter-iso from-iso to-iso"/>
+  <specDesc key="att.duration.iso"/>
+  <specDesc key="att.dateTime.iso"/>
+</specList>
+These attributes rely on the following datatype macros:
+<specList>
+  <specDesc key="data.temporal.iso"/>
+  <specDesc key="data.duration.iso"/>
+</specList>
  </p>
+<?tei winita I'd like to keep this lovely example, but not sure where to put it yet sb ?>
 <p>The <att>value</att> and <att>dur</att>
 attributes are both used to provide a
 standardized or regularized form for the content of an element,
