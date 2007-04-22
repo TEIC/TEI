@@ -513,6 +513,18 @@
               <xsl:text>#</xsl:text>
               <xsl:value-of select="$name"/>
             </xsl:when>
+	    <xsl:when test="$STDOUT='true'">
+	      <xsl:for-each select="key('IDENTS',$name)">
+		<xsl:call-template name="getSpecURL">
+		  <xsl:with-param name="name">
+		    <xsl:value-of select="$name"/>
+		  </xsl:with-param>
+		  <xsl:with-param name="type">
+		    <xsl:value-of select="substring-before(local-name(),'Spec')"/>
+		  </xsl:with-param>
+		</xsl:call-template>
+	      </xsl:for-each>
+	    </xsl:when>
             <xsl:otherwise>
               <xsl:text>ref-</xsl:text>
               <xsl:value-of select="$name"/>
@@ -1216,6 +1228,18 @@
             <xsl:text>#</xsl:text>
             <xsl:value-of select="$name"/>
           </xsl:when>
+	  <xsl:when test="$STDOUT='true'">
+	    <xsl:for-each select="key('IDENTS',$name)">
+	      <xsl:call-template name="getSpecURL">
+		<xsl:with-param name="name">
+		  <xsl:value-of select="$name"/>
+		</xsl:with-param>
+		<xsl:with-param name="type">
+		  <xsl:value-of select="substring-before(local-name(),'Spec')"/>
+		</xsl:with-param>
+	      </xsl:call-template>
+	      </xsl:for-each>
+	  </xsl:when>
           <xsl:otherwise>
             <xsl:text>ref-</xsl:text>
             <xsl:value-of select="$name"/>
