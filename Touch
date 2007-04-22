@@ -1,10 +1,10 @@
 #!/bin/sh
 cd ..
-touch changed
+touch /tmp/changed
 /usr/bin/svn -q update P5 Stylesheets
-find P5 Stylesheets -newer changed > /tmp/changed.files
+find P5 Stylesheets -newer /tmp/changed | grep -v .svn > /tmp/changed.files
 if test -s /tmp/changed.files 
 then 
  touch P5/Utilities/guidelines-web.xsl
 fi
-rm /tmp/changed.files
+rm /tmp/changed.files /tmp/changed
