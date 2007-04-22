@@ -5,10 +5,16 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="spoken" xml:id="WRITING" usage="rec" ident="writing">
-<equiv/>
-<gloss>Writing</gloss><gloss version="2006-10-28" xml:lang="ja">書き起こし</gloss>
-<desc>a passage of written text revealed to participants in the course
-of a spoken text.</desc><desc version="2006-10-28" xml:lang="ja"> 発話されたテキストに関する書き起こしを示す．</desc><desc version="2006-10-15" xml:lang="es">un pasaje de texto escrito revelado a los participantes durante el transcurso de un texto hablado.</desc>
+  <equiv/>
+  <gloss>Writing</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">書き起こし</gloss>
+  <desc>a passage of written text revealed to participants in the
+  course of a spoken text.</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 発話されたテキストに関する
+  書き起こしを示す．</desc>
+  <desc version="2006-10-15" xml:lang="es">un pasaje de texto escrito
+  revelado a los participantes durante el transcurso de un texto
+  hablado.</desc>
   <classes>
     <memberOf key="model.divPart.spoken"/>
     <memberOf key="att.ascribed"/>
@@ -17,56 +23,36 @@ of a spoken text.</desc><desc version="2006-10-28" xml:lang="ja"> 発話され�
     <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
   </content>
   <attList>
-<!--    <attDef ident="who" usage="rwa">
-	<equiv/>
-	<desc>supplies an identifier for the participant who reveals or
-    creates the writing, if any.
-    Its value is the identifier of a <tag>participant</tag>
-    or <tag>participant.grp</tag> element in the TEI header.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
-      <valDesc>Must identify a participant or participant group within the
-       TEI Header</valDesc>
-      <remarks/>
-    </attDef>
--->
     <attDef ident="type" usage="opt">
-	<equiv/>
-	<desc>categorizes the kind of writing in some way, for example
-      as a subtitle, noticeboard etc.</desc><desc version="2006-10-28" xml:lang="ja">当該書き起こしの種類を示す．</desc>
+      <equiv/>
+      <desc>categorizes the kind of writing in some way, for example
+      as a subtitle, noticeboard etc.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該書き起こしの種類を示す．</desc>
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
-      <valDesc>Open list</valDesc>
-      <remarks/>
     </attDef>
     <attDef ident="script" usage="opt">
 	<equiv/>
 	<desc>points to a bibliographic citation in the header giving
-      a full description of the source or script of the writing.</desc><desc version="2006-10-28" xml:lang="ja">当該書き起こしで使われている文字を示す．</desc>
+	a full description of the source or script of the
+	writing.</desc>
+	<desc version="2006-10-28" xml:lang="ja">当該書き起こしで使われ
+	ている文字を示す．</desc>
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.code"/></datatype>
-      <valDesc>Must be a valid identifier for a
-      <!--<tag>script.decl</tag>--> bibliographic
-     element in the TEI header</valDesc>
-      <remarks/>
+      <valDesc>Must be a valid identifier for a bibliographic element
+      in the TEI header</valDesc>
     </attDef>
     <attDef ident="gradual" usage="opt">
 	<equiv/>
 	<desc>indicates whether the writing is revealed all at once or
-        gradually.</desc><desc version="2006-10-28" xml:lang="ja">当該書き起こしは，一度に見られるものか，少しずつ見られるものかを
-示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.truthValue"/></datatype>
-      <valList type="closed">
-        <valItem ident="true">
-          <equiv/>
-          <gloss>the writing is revealed gradually.</gloss><gloss version="2006-10-28" xml:lang="ja">(徐々に見られる．)</gloss>
-        </valItem>
-        <valItem ident="false">
-          <equiv/>
-          <gloss>the writing is revealed all at once.</gloss><gloss version="2006-10-28" xml:lang="ja">(一度に見られる．)</gloss>
-        </valItem>
-        <valItem ident="unknown">
-          <equiv/>
-          <gloss>unknown or unmarked.</gloss><gloss version="2006-10-28" xml:lang="ja">(不明または記録されていない．)</gloss>
-        </valItem>
-      </valList>
+	gradually.</desc>
+	<desc version="2006-10-28" xml:lang="ja">当該書き起こしは，一度
+	に見られるものか，少しずつ見られるものかを示す．</desc>
+	<datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.xTruthValue"/></datatype>
+	<remarks>
+	  <p>The value <val>true</val> indicates the writing is
+	  revealed gradually; the value <val>false</val> that the
+	  writing is revealed all at once.</p>
+	</remarks>
       <remarks/>
     </attDef>
   </attList>

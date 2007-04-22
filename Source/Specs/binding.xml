@@ -5,41 +5,34 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="BINDING" ident="binding">
-<equiv/>
-<gloss/>
-<desc xml:id="binding.desc">contains a description of one binding, i.e. type of covering, boards, etc. applied to a manuscript</desc><desc version="2006-10-28" xml:lang="ja">1つの冊子に関する情報を示す．例えば，カバーの種類，表紙など．
-手書きものも含む．</desc><desc version="2006-10-15" xml:lang="es">contiene una descripción de una encuadernación, es decir el tipo de cubierta, etc., aplicados a un manuscrito</desc>
+  <equiv/>
+  <gloss/>
+  <desc xml:id="binding.desc">contains a description of one binding, i.e. type of covering, boards, etc. applied to a manuscript</desc><desc version="2006-10-28" xml:lang="ja">1つの冊子に関する情報を示す．例えば，カバーの種類，表紙など．
+  手書きものも含む．</desc><desc version="2006-10-15" xml:lang="es">contiene una descripción de una encuadernación, es decir el tipo de cubierta, etc., aplicados a un manuscrito</desc>
   <classes>
     <memberOf key="att.datable"/>
   </classes>
   <content>
-<rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-<rng:choice>
-<rng:ref name="model.pLike"/>
-<rng:ref name="decoNote"/>
-</rng:choice>
-</rng:oneOrMore>
+    <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+	<rng:ref name="model.pLike"/>
+	<rng:ref name="decoNote"/>
+      </rng:choice>
+    </rng:oneOrMore>
   </content>
   <attList>
     <attDef ident="contemporary">
-	<equiv/>
-	<gloss/>
-	<desc>specifies whether or not the binding is contemporary with the majority of its contents</desc><desc version="2006-10-28" xml:lang="ja">当該冊子は，内容の大部分と同時代のものかどうか．</desc>
+      <equiv/>
+      <gloss/>
+      <desc>specifies whether or not the binding is contemporary with the majority of its contents</desc><desc version="2006-10-28" xml:lang="ja">当該冊子は，内容の大部分と同時代のものかどうか．</desc>
       <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.xTruthValue"/></datatype>
-      <valList>
-        <valItem ident="true">
-          <equiv/>
-          <gloss>the binding is contemporaneous with its contents</gloss>
-        </valItem>
-        <valItem ident="false">
-          <equiv/>
-          <gloss>the binding is not contemporaneous with its contents</gloss>
-        </valItem>
-        <valItem ident="unknown">
-          <equiv/>
-          <gloss>the date of either binding or manuscript is unknown</gloss>
-        </valItem>
-      </valList>
+      <remarks>
+	<p>The value <val>true</val> indicates that the binding is
+	contemporaneous with its contents; the value <val>false</val>
+	that it is not. The value <val>unknown</val> should be used
+	when the date of either binding or manuscript is
+	unknown</p>
+      </remarks>
     </attDef>
   </attList>
   <exemplum>

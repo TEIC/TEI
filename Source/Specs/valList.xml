@@ -9,17 +9,39 @@ $Author$
 <gloss>value list</gloss><gloss version="2006-10-28" xml:lang="ja">値リスト</gloss>
 <desc>contains one or more <gi>valItem</gi> elements defining possible
   values for an attribute.</desc><desc version="2006-10-28" xml:lang="ja"> 1つ以上の要素valItemを示す．</desc>
-  <content>
+  <content xmlns:sch="http://www.ascc.net/xml/schematron">
     <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:ref name="valItem"/>
     </rng:oneOrMore>
+    <sch:pattern name="enumeration">
+      <sch:rule context="tei:valList[@type='closed']">
+	<!-- This is a pretty complicated test. -->
+	<!-- What we're trying to match is cases when the attribute -->
+	<!-- we are currently defining (which has a closed value -->
+	<!-- or we wouldn't be here) has a <datatype> of -->
+	<!-- data.enumerated, but does *not* specify a particular -->
+	<!-- range of values with minOccurs= or maxOccurs=. -->
+	<sch:report test="preceding-sibling::tei:datatype[
+			  (not(@minOccurs) or @minOccurs=1 or @minOccurs=0)
+			  and
+			  (not(@maxOccurs) or @maxOccurs=1)]/rng:ref[
+			  @name='data.enumerated']">
+	It is not necessary to specify a datatype with a closed value list </sch:report>
+	<sch:report test="preceding-sibling::tei:datatype/rng:ref[@name!='data.enumerated']"
+		    > Datatypes other than data.enumerated should not be used with closed value lists
+	</sch:report>
+      </sch:rule>
+      <sch:rule context="tei:valList[not(@type) or @type!='closed']">
+	<sch:assert test="preceding-sibling::tei:datatype/rng:ref[@name='data.enumerated']"
+		    > Open value lists must be associated with data.enumerated </sch:assert>
+      </sch:rule>
+  </sch:pattern>
   </content>
   <attList>
     <attDef ident="mode" usage="opt">
 	<equiv/>
 	<desc>specifies the effect of this declaration on its parent
     module.</desc><desc version="2006-10-28" xml:lang="ja">当該宣言が親要素に与える影響を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
       <defaultVal>add</defaultVal>
       <valList type="closed">
 	<valItem ident="add">
