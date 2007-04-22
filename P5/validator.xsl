@@ -18,7 +18,11 @@
 	 use="@ident"/>
 
 <xsl:key name="IDS"
-	 match="tei:*|teix:*"   
+	 match="tei:*"   
+	 use="@xml:id"/>
+
+<xsl:key name="EXIDS"
+	 match="teix:*"   
 	 use="@xml:id"/>
 
 
@@ -133,21 +137,22 @@
 <xsl:template name="checkThisLink">
   <xsl:param name="What"/>
   <xsl:choose>
-      <xsl:when test="starts-with($What,'#')">
-	<xsl:choose>
-	  <xsl:when test="not(key('IDS',substring-after($What,'#')))">
-	    <xsl:call-template name="Error">
-	      <xsl:with-param name="value" select="$What"/>
-	    </xsl:call-template>
-	  </xsl:when>
-	</xsl:choose>
-      </xsl:when>
-      <xsl:when test="starts-with($What,'mailto:')"/>
-      <xsl:when test="starts-with($What,'http:')"/>
+    <xsl:when test="starts-with($What,'#')">
+      <xsl:choose>
+	<xsl:when test="key('IDS',substring-after($What,'#'))"/>
+	<xsl:otherwise>
+	  <xsl:call-template name="Error">
+	    <xsl:with-param name="value" select="$What"/>
+	  </xsl:call-template>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:when>
+    <xsl:when test="starts-with($What,'mailto:')"/>
+    <xsl:when test="starts-with($What,'http:')"/>
       <xsl:when test="not(contains($What,'/')) and
-		    not(key('@IDS',$What))">
-       <xsl:call-template name="Error">
-	 <xsl:with-param name="value" select="$What"/>
+		      not(key('@IDS',$What))">
+	<xsl:call-template name="Error">
+	  <xsl:with-param name="value" select="$What"/>
        </xsl:call-template>
       </xsl:when>
   </xsl:choose>
@@ -220,23 +225,28 @@ select="$where"/> points to something I cannot find: <xsl:value-of select="$valu
 <xsl:template name="checkThisExampleLink">
   <xsl:param name="What"/>
   <xsl:choose>
-      <xsl:when test="starts-with($What,'#')">
-	<xsl:variable name="N">
-	  <xsl:value-of select="substring-after($What,'#')"/>
-	</xsl:variable>
-	<xsl:choose>
-	  <xsl:when test="key('IDS',$N)"/>
-<!--
-	  <xsl:when test="not(ancestor::teix:egXML//teix:*[@xml:id=$N])">
+    <xsl:when test="starts-with($What,'#')">
+      <xsl:variable name="N">
+	<xsl:value-of select="substring-after($What,'#')"/>
+      </xsl:variable>
+      <xsl:choose>
+	<xsl:when test="key('EXIDS',$N)"/>
+	<!--
+	    <xsl:when test="not(ancestor::teix:egXML//teix:*[@xml:id=$N])">
 	    <xsl:call-template name="Warning">
-	      <xsl:with-param name="value" select="$What"/>
+	    <xsl:with-param name="value" select="$What"/>
 	    </xsl:call-template>
-	  </xsl:when>
--->
-	</xsl:choose>
-      </xsl:when>
-      <xsl:when test="starts-with($What,'mailto:')"/>
-      <xsl:when test="starts-with($What,'http:')"/>
+	    </xsl:when>
+	-->
+	<xsl:otherwise>
+	    <xsl:call-template name="Warning">
+	    <xsl:with-param name="value" select="$What"/>
+	    </xsl:call-template>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:when>
+    <xsl:when test="starts-with($What,'mailto:')"/>
+    <xsl:when test="starts-with($What,'http:')"/>
       <xsl:when test="name(.)='url' and
 		      local-name(parent::*)='graphic'"/>
       <xsl:when test="name(.)='url' and
