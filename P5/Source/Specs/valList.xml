@@ -18,22 +18,23 @@ $Author$
 	<!-- This is a pretty complicated test. -->
 	<!-- What we're trying to match is cases when the attribute -->
 	<!-- we are currently defining (which has a closed value -->
-	<!-- or we wouldn't be here) has a <datatype> of -->
-	<!-- data.enumerated, but does *not* specify a particular -->
+	<!-- list or we wouldn't be here) has a <datatype> of -->
+	<!-- data.enumerated, but does *not* specify a non-default -->
 	<!-- range of values with minOccurs= or maxOccurs=. -->
 	<sch:report test="preceding-sibling::tei:datatype[
-			  (not(@minOccurs) or @minOccurs=1 or @minOccurs=0)
-			  and
-			  (not(@maxOccurs) or @maxOccurs=1)]/rng:ref[
-			  @name='data.enumerated']">
-	It is not necessary to specify a datatype with a closed value list </sch:report>
+			    (not(@minOccurs) or @minOccurs=1 or @minOccurs=0)
+			    and
+			    (not(@maxOccurs) or @maxOccurs=1)
+			  ]
+			  /rng:ref[@name='data.enumerated']"
+	>It is not necessary to specify a datatype with a closed value list </sch:report>
 	<sch:report test="preceding-sibling::tei:datatype/rng:ref[@name!='data.enumerated']"
-		    > Datatypes other than data.enumerated should not be used with closed value lists
+		    >Datatypes other than data.enumerated should not be used with closed value lists
 	</sch:report>
       </sch:rule>
       <sch:rule context="tei:valList[not(@type) or @type!='closed']">
 	<sch:assert test="preceding-sibling::tei:datatype/rng:ref[@name='data.enumerated']"
-		    > Open value lists must be associated with data.enumerated </sch:assert>
+		    >Open value lists must be associated with data.enumerated </sch:assert>
       </sch:rule>
   </sch:pattern>
   </content>
