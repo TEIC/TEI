@@ -285,7 +285,10 @@ their parents, recorded in 1987, and discussed in
 <title>CHAT Manual</title>
 ([Pittsburgh]: Dept of Psychology, Carnegie-Mellon University,
 1988), pp. 87ff.</bibl></note>
-Each utterance is encoded using a <gi>u</gi> element (see section <ptr target="#TSBAUT"/>). Pauses marked by the transcriber are indicated
+Each utterance is encoded using a <gi>u</gi> element (see section <ptr
+target="#TSBAUT"/>). The speakers are defined using the
+<gi>listPerson</gi> element discussed in <ptr target="#NDPERSE"/> and each is
+given a unique identifier also used to identify their speech. Pauses marked by the transcriber are indicated
 using the <gi>pause</gi> element (see section <ptr target="#TSBAPA"/>).
 Non-verbal vocal effects such as the child's meowing are indicated
 either with orthographic transcriptions or with the <gi>vocal</gi>
@@ -303,7 +306,13 @@ elements (see section <ptr target="#TSBAVO"/>).
   <kinesic><desc>shows Father the cat</desc></kinesic> </u>
 <u trans="pause" who="#fat">thats <pause/> darling</u>
 <u who="#mar">no <emph>mine</emph> isnt old
-mine is just um a little dirty</u></egXML>
+mine is just um a little dirty</u>
+<!-- ... -->
+<listPerson>
+<person xml:id="mar"><!-- ... --></person>
+<person xml:id="ros"><!-- ... --></person>
+<person xml:id="fat"><!-- ... --></person>
+</listPerson></egXML>
 <!-- from MacWhinney 88, 87, cited by SJ --></p>
 <p>This example also uses some elements common to all TEI texts,
 notably the <gi>reg</gi> tag for editorial regularization. The special
@@ -336,10 +345,7 @@ header (see section <ptr target="#CCAHPA"/>). Where utterances cannot be
 attributed with confidence to any particular participant or group of
 participants, the encoder may choose to define
 <soCalled>participants</soCalled> such as <ident type="var">all</ident> or
-<ident type="var">various</ident>. For example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#A">           </u>
-<u who="#A #B">  </u>
-<u who="#ALL"> </u></egXML></p>
+<ident type="var">various</ident>. </p>
 <p>The <att>trans</att> attribute is provided as a means of
 characterizing the transition from one utterance to the next at a
 simpler level of detail than that provided by the temporal alignment
@@ -449,7 +455,16 @@ conversation analysis,</title> Cambridge University Press,
 <u who="#kim">I'll get it</u>
 <u who="#tom">I used to <vocal><desc>cough</desc></vocal> smoke a lot</u>
 <u who="#bob"><vocal><desc>sniffs</desc></vocal>He thinks he's tough</u>
-<vocal who="#ann"><desc>snorts</desc></vocal></egXML>
+<vocal who="#ann"><desc>snorts</desc></vocal>
+<!-- ... -->
+<listPerson>
+<person xml:id="ann"><!-- ... --></person>
+<person xml:id="kim"><!-- ... --></person>
+<person xml:id="tom"><!-- ... --></person>
+<person xml:id="bob"><!-- ... --></person>
+</listPerson>
+
+</egXML>
 Note that Ann's snorting could equally well be encoded as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#ann">
    <vocal><desc>snorts</desc></vocal>
@@ -520,9 +535,9 @@ utterances for the same speaker, unless changed by a new shift for the
 same feature in the same speaker.  Intervening utterances by other
 speakers do not normally carry the same feature.
 For example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#lb"><shift feature="loud" new="f"/>Elizabeth</u>
-<u who="#eb">Yes</u>
-<u who="#lb"><shift feature="loud" new="normal"/>Come and try this <pause/>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><u><shift feature="loud" new="f"/>Elizabeth</u>
+<u>Yes</u>
+<u><shift feature="loud" new="normal"/>Come and try this <pause/>
      <shift feature="loud" new="ff"/>come on</u></egXML>
 In this example, the word <mentioned>Elizabeth</mentioned> is spoken loudly, the
 words <mentioned>Yes</mentioned> and <mentioned>Come and try this</mentioned> with
@@ -690,12 +705,12 @@ prosodically (an entity reference <code>&amp;stress;</code>
 has been used to mark the position immediately following the syllable
 bearing the primary accent or stress), and may be thought of as
 <soCalled>tone units</soCalled>.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#m1">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><u>
    <seg>we went to the pub yesterday</seg>
    <pause/>
    <seg>there was no one there</seg>
 </u>
-<u who="#f1">
+<u>
    <seg>although its an old ide&amp;stress;a</seg>
    <seg>it hasnt been on the mar&amp;stress;ket very long</seg>
 </u></egXML>
@@ -770,6 +785,12 @@ playscript:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Jane: Have you read Vanity Fair?
 Stig: Yes
 Lou: (nods vigorously)</egXML>
+To encode this, we first define the participants:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><listPerson>
+<person xml:id="stig"> ... </person>
+<person xml:id="lou"> ... </person>
+<person xml:id="jane"> ... </person>
+</listPerson></egXML>
 Let us assume that Stig and Lou respond to Jane's question before she
 has finished asking it — a fairly normal situation in spontaneous
 speech.  The simplest way of representing this <term>overlap</term>
@@ -778,7 +799,7 @@ would be to use the <att>trans</att> attribute previously discussed:
 <u trans="overlap" who="#stig">yes</u>
 </egXML>
 However, this does not allow us to indicate either the extent to which
-Jane's utterance is overlapped, nor does it show that there are in
+Stig's utterance is overlapped, nor does it show that there are in
 fact three things which are synchronous:  the end of Jane's utterance,
 Stig's whole utterance, and Lou's kinesic.  To overcome these problems,
 more sophisticated techniques, employing the mechanisms for pointing and
@@ -901,7 +922,13 @@ Such conventions have the drawback that they are hard to generalize or
 to extend beyond the very simple case presented here.  Their reliance on
 the accidentals of physical layout may also make them difficult to
 transport and to process computationally.  These Guidelines recommend
-one of the courses described in what follows:</p>
+the following mechanisms to encode this.</p>
+<p>As before, we begin by defining codes for the speakers:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><listPerson>
+<person xml:id="tom"><!-- ... --></person>
+<person xml:id="bob"><!-- ... --></person>
+</listPerson>
+</egXML></p>
 <p>Where the whole of one or another utterance is to be synchronized,
 the <att>start</att> and <att>end</att> attributes may be used:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#tom">I used to smoke <anchor xml:id="TS-p10"/> a lot more than this
@@ -970,9 +997,9 @@ into the text:
    <when synch="#TSa1 #TSb1 #TSc1" xml:id="TSp1"/>
    <when synch="#TSa2 #TSc2" xml:id="TSp2"/>
 </timeline>
-<u who="#TSa">this is <anchor xml:id="TSa1"/> my <anchor xml:id="TSa2"/> turn</u>
-<u xml:id="TSb1" who="#TSb">balderdash</u>
-<u xml:id="TSc1" who="#TSc"> no <anchor xml:id="TSc2"/> it's mine</u></egXML></p></div>
+<u who="#A">this is <anchor xml:id="TSa1"/> my <anchor xml:id="TSa2"/> turn</u>
+<u who="#B">balderdash</u>
+<u who="#C"> no <anchor xml:id="TSc2"/> it's mine</u></egXML></p></div>
 <div type="div3" xml:id="TSREG"><head>Regularization of Word Forms</head>
 <p>When speech is transcribed using ordinary orthographic notation, as
 is customary, some compromise must be made between the sounds produced
@@ -1071,6 +1098,10 @@ to a conventional punctuation mark.
    <u who="#aj">
       Yes thats fine. <unclear>just as soon as it comes in we'll send
       you a postcard&amp;lf;</unclear> </u>
+<listPerson>
+<person xml:id="cwn">Customer WN</person>
+<person xml:id="aj">Assistant K</person>
+</listPerson>
 </div></egXML>
 <!-- Recoded from Gavioli and Mansfield: The PIXI Corpora     -->
 	<!-- (Bologna, 1990, CLUEB), p74                              --></p>
@@ -1123,7 +1154,7 @@ word, the elements <gi>corr</gi> or <gi>sic</gi> embedded within a
 <gi>choice</gi> element may be used to indicate
 both the original and a corrected form of it:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<choice><corr resp="#dd">SCSI</corr><sic>skuzzy</sic></choice>
+<choice><corr>SCSI</corr><sic>skuzzy</sic></choice>
 </egXML>
 These elements are further discussed in section <ptr target="#COEDCOR"/>.
 <!-- delete following scandinavian para? -->
