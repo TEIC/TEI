@@ -580,8 +580,7 @@ given scope
       pointer that is specified as a <term>bare name</term> fragment
       identifier alone acts as a pointer to an element in the current
       document, as in the following example.
-      <egXML xmlns="http://www.tei-c.org/ns/Examples"><div
-							  type="section" xml:id="sect106">...</div>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="section" xml:id="sect106"><!-- ... --></div>
 <div type="section" n="107" xml:id="sect107">
   <head>Limitations on exclusive rights: Fair use</head>
   <p>Notwithstanding the provisions of
@@ -1913,11 +1912,10 @@ alignment, as shown next (for further discussion of the handling of
 kind might be represented by using the <gi>gloss</gi> and <gi>term</gi>
 mechanism described in section <ptr target="#COHQU"/>. The third kind of
 alignment might be represented using pointers embedded within the
-texts, for example: 
+texts, for example:
 <eg><![CDATA[...
-      <seg xml:id="e9803">where a <ref n="2" target="#P982">Student</ref>,</seg>
-...
-      <seg xml:id="l9803">ubi <ref n="2" target="#P982">Studiosus</ref>,</seg>
+<seg xml:id="e9803">where a <ref n="2" target="#p982">Student</ref>,</seg>
+<seg xml:id="l9803">ubi <ref n="2" target="#p982">Studiosus</ref>,</seg>
 ...]]></eg>
 
 We choose however to use
@@ -2664,7 +2662,7 @@ are <term>mutually exclusive</term>. We say that the elements are in
 of them is present. The elements that are in alternation may also be
 called <term>alternants</term>.</p>
 <p>The need to mark exclusive alternation arises frequently in text
-encoding. A common situation is one in which it can determined that
+encoding. A common situation is one in which it can be determined that
 exactly one of several different words appears in a given location, but
 it cannot be determined which one. One way to mark such an exclusive
 alternation is to use the linking attribute <att>exclude</att>. Having
@@ -2819,10 +2817,10 @@ perhaps within a <tag>linkGrp</tag>. </note>
   <link type="exclusive_alternation" targets="#we.had.fun #we.had.sun"/>
 </div></egXML></p>
 <p>Now we define the specialized linking element <gi>alt</gi>, making
-it a member of the pointer class of elements, and assigning it a
-<att>excl</att> (for <mentioned>mutually exclusive</mentioned>)
-attribute, which can have either of the values <val>Y</val> or <val>N</val>. Then the
-following equivalence holds:
+it a member of the class <name type="class">att.pointing</name>, and
+assigning it a <att>mode</att> attribute, which can have either of the
+values <val>excl</val> (for exclusive) or <val>incl</val> (for
+inclusive). Then the following equivalence holds:
 <eg><![CDATA[<alt mode="excl"/> = <link type="exclusive alternation"/>]]></eg></p>
 <p>The
 preceding <tag>link</tag> may therefore be recoded as the following
