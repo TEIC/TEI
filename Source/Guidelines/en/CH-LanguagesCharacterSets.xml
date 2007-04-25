@@ -515,21 +515,21 @@ Identifiers in the Markup Context</title><ptr target="http://xml.coverpages.org/
    anything but <soCalled>readable</soCalled> and it is all too easy
    for the wrong character to be entered in error and retained
    undetected. </p>
-   <p>The second form of reference is a <term>Character Entity Reference</term>
-   (though, as explained below, this should not be taken to imply
-   that such entities constitute a <soCalled>type</soCalled> that could be
-   distinctively recognised by a processing system). Character
-   entity references can (and indeed should) have names whose
-   significance is apparent to humans, but each and every entity
-   name has to be associated with its replacement (which as
-   explained below should be a character value, possibly in the
-   form of a NCR) via a formal declaration in the document's
-   internal or external subset. For a large number of characters
-   defined by Unicode and commonly used in documents, there are ISO
-   entity sets declaring mnemonic names which should be used
+   <p>The second form of reference is a <term>Character Entity
+   Reference</term> (CER), though, as explained below, this should not
+   be taken to imply that such entities constitute a
+   <soCalled>type</soCalled> that could be distinctively recognised by
+   a processing system. Character entity references can (and indeed
+   should) have names whose significance is apparent to humans, but
+   each and every entity name has to be associated with its
+   replacement (which as explained below should be a character value,
+   possibly in the form of a NCR) via a formal declaration in the
+   document's internal or external subset. For a large number of
+   characters defined by Unicode and commonly used in documents, there
+   are ISO entity sets declaring mnemonic names which should be used
    wherever feasible: XML compatible character entity declarations
    using ISO names and suitable for inclusion into the subset are
-   available on the TEI websites.</p>
+   available on the TEI website<note place="foot"><ptr target="http://www.tei-c.org/XML_Entities/"/></note>.</p>
    <p>Where characters are not defined in Unicode and so have to be
    assigned both a local code-point and a local entity name of the
    project's choosing (see <ptr target="#D4-45-2"/> below) it is highly desirable to
@@ -698,7 +698,7 @@ Identifiers in the Markup Context</title><ptr target="http://xml.coverpages.org/
    such software is freely available and easy to use.</p> 
   </div> 
   <div type="div4" xml:id="D4-45-2"> 
-   <head><!--4.5.2 -->Non Unicode characters in XML documents</head> 
+   <head><!--4.5.2 -->Non-Unicode characters in XML documents</head> 
    <p>In the cases considered in the preceding section, there was a
    suitable Unicode code-point corresponding to each abstract
    character contained in the non-Unicode character set of the
@@ -753,70 +753,68 @@ Identifiers in the Markup Context</title><ptr target="http://xml.coverpages.org/
    some way defective (in which case the parser signals a fatal
    error and stops.)    </p> 
    <p>Though for explanatory convenience much XML-related
-   documentation, including these Guidelines, refers specifically
-   to Character Entities and Character Entity References, a
-   character entity in XML is not a distinct <soCalled>type</soCalled> in the sense
-   that <soCalled>type</soCalled> is understood in Computer Science terminology, for
-   example when referring to the type of an attribute. Hence there
-   is no way in which editing or other software can check that the
-   replacement to be inserted is indeed a single character or its
-   equivalent rather than an arbitrary chunk of text, possibly
-   including markup. A character entity is simply a general entity
-   whose replacement text happens to be declared as a character
+   documentation, including these Guidelines, refers specifically to
+   Character Entities and Character Entity References, a character
+   entity in XML is not a distinct <soCalled>type</soCalled> in the
+   sense that <soCalled>type</soCalled> is understood in Computer
+   Science terminology, for example when referring to the type of an
+   attribute. Hence there is no way in which editing or other software
+   can check that the replacement to be inserted is indeed a single
+   character or its equivalent rather than an arbitrary chunk of text,
+   possibly including markup. A character entity is simply a general
+   entity whose replacement text happens to be declared as a character
    value or a NCR representing that value. This has two important
-   consequences if it is proposed to use such an entity reference
-   to stand for a character that has no Unicode equivalent. First,
-   the entity name reference will disappear at an early stage in
-   the parse and be replaced by the declared value of the entity,
-   so that no processing which requires access in the parsed
-   document to the entity reference as originally entered is
-   possible. Secondly, if a character entity is to be used as a
-   true equivalent to a normal character, and consequently be
-   employed at all points in a document where a single character
-   could legitimately occur (apart from in element and attribute
-   names, where no references of any kind are allowed) then it is
-   essential that its replacement value indeed be pure character
-   data. If the replacement value of the entity were to contain any
-   markup, or a processing instruction, there would be many places
-   in a document where simple character data would be legitimate,
-   but where the substitution of markup or some other replacement
-   could cause the document to become invalid or malformed.
-   Taken together, these considerations mean that the transparent
-   use of a CER to stand for a non-Unicode character in an XML
-   document is simply not possible. <!-- Either such use of CER's
+   consequences if it is proposed to use such an entity reference to
+   stand for a character that has no Unicode equivalent. First, the
+   entity name reference will disappear at an early stage in the parse
+   and be replaced by the declared value of the entity, so that no
+   processing which requires access in the parsed document to the
+   entity reference as originally entered is possible. Secondly, if a
+   character entity is to be used as a true equivalent to a normal
+   character, and consequently be employed at all points in a document
+   where a single character could legitimately occur (apart from in
+   element and attribute names, where no references of any kind are
+   allowed) then it is essential that its replacement value indeed be
+   pure character data. If the replacement value of the entity were to
+   contain any markup, or a processing instruction, there would be
+   many places in a document where simple character data would be
+   legitimate, but where the substitution of markup or some other
+   replacement could cause the document to become invalid or
+   malformed.  Taken together, these considerations mean that the
+   transparent use of a CER to stand for a non-Unicode character in an
+   XML document is simply not possible. <!-- Either such use of CER's
    must be made with considerable circumspection and in the
    expectation of occasionally irksome workarounds, or the project
-   concerned must employ SGML, with concomitant availability of
-   SDATA, for its encoding needs. --> <!-- need some prose here
-   that talks about the new no-text-in-attributes version of the
-   Guidelines once that is available --></p> <!-- <p>Where a
-   project wishes to use XML and to encode at character level
-   abstract characters for which there is no public Unicode
-   encoding, there is no alternative to making use of Unicode's
-   Private Use Areas and assigning to the characters concerned code
-   points from one or more of those areas. Even if the project's
-   encoders intend always to input and edit the characters concerned
-   using Character Entity References, the character entities
-   concerned must be declared in such a way that they resolve to PUA
-   code points, because in the initial stage of all processing the
-   parser will insist on converting entity references to the PUA
-   values, as already outlined. It is of course essential that the
-   assignment of PUA values, including the creation of entity names,
-   identifying descriptions and any normative semantic metadata, be
-   carefully thought out and meticulously documented: suggestions of
-   good practice and references to further sources of advice are
-   given in 25 Writing System Declaration. That chapter also
-   contains further details and advice on the implications of PUA
-   use for document interchange. In brief, special care is required
-   when preparing and receiving such documents in a process of
-   exchange. In a document intended for exchange, abstract
+   concerned must employ SGML, with concomitant availability of SDATA,
+   for its encoding needs. --> <!-- need some prose here that talks
+   about the new no-text-in-attributes version of the Guidelines once
+   that is available --></p> <!-- <p>Where a project wishes to use XML
+   and to encode at character level abstract characters for which
+   there is no public Unicode encoding, there is no alternative to
+   making use of Unicode's Private Use Areas and assigning to the
+   characters concerned code points from one or more of those
+   areas. Even if the project's encoders intend always to input and
+   edit the characters concerned using Character Entity References,
+   the character entities concerned must be declared in such a way
+   that they resolve to PUA code points, because in the initial stage
+   of all processing the parser will insist on converting entity
+   references to the PUA values, as already outlined. It is of course
+   essential that the assignment of PUA values, including the creation
+   of entity names, identifying descriptions and any normative
+   semantic metadata, be carefully thought out and meticulously
+   documented: suggestions of good practice and references to further
+   sources of advice are given in 25 Writing System Declaration. That
+   chapter also contains further details and advice on the
+   implications of PUA use for document interchange. In brief, special
+   care is required when preparing and receiving such documents in a
+   process of exchange. In a document intended for exchange, abstract
    characters to which PUA code points have been assigned for local
    processing purposes should always be represented by character
    entity references, whose declarations should in turn be provided
-   and documented as part of a WSD. For the receiving end,  25
-   Writing System Declaration also contains  recommendations for
-   handling incoming documents in ways that manage any potential
-   clash of PUA assignments between exchanging projects </p> -->
+   and documented as part of a WSD. For the receiving end, 25 Writing
+   System Declaration also contains recommendations for handling
+   incoming documents in ways that manage any potential clash of PUA
+   assignments between exchanging projects </p> -->
   </div> 
   </div>
   <div type="div3" xml:id="D4-46"> 
@@ -1134,9 +1132,10 @@ Identifiers in the Markup Context</title><ptr target="http://xml.coverpages.org/
     computers) in two separate bytes, the order in which those
     bytes are stored becomes important. This is dependent on the
     underlying hardware. In the realm of desktop computing,
-    Macintosh machines, for example, store (on disk as well as in
+non-Intel    Macintosh machines, for example, store (on disk as well as in
     memory) byte pairs representing 16-bit integers with the
-    higher-value byte first, whereas PCs using Intel processors
+    higher-value byte first, whereas PCs and more recent Macintosh
+    systems using Intel processors
     store the bytes in the reverse order (this is often referred to
     with Swiftian nomenclature as <term>big-endian</term> versus <term>little-endian</term>
     byte order). This means that if a semantically identical plain
