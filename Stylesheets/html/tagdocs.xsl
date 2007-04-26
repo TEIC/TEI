@@ -533,6 +533,11 @@
           </xsl:choose>
         </xsl:attribute>
         <xsl:value-of select="$name"/>
+	<xsl:for-each select="key('IDENTS',$name)">
+	  <xsl:if test="tei:content/rng:empty">
+	    <xsl:text>/</xsl:text>
+	  </xsl:if>
+	</xsl:for-each>
       </a>
       <xsl:if test="self::tei:elementSpec">&gt;</xsl:if>
     </b>
@@ -1102,7 +1107,13 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="teix:egXML">
-    <div class="pre">
+    <div>
+      <xsl:attribute name="class">
+	<xsl:text>pre</xsl:text>
+	<xsl:if test="not(*)">
+	  <xsl:text> cdata</xsl:text>
+	</xsl:if>
+      </xsl:attribute>
       <xsl:apply-templates mode="verbatim"/>
     </div>
   </xsl:template>

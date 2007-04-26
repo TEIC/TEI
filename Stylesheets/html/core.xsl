@@ -278,7 +278,12 @@
   <xsl:template match="tei:eg">
     <div>
       <xsl:if test="$cssFile">
-        <xsl:attribute name="class">pre_eg</xsl:attribute>
+        <xsl:attribute name="class">
+	  <xsl:text>pre_eg</xsl:text>
+	  <xsl:if test="not(*)">
+	  <xsl:text> cdata</xsl:text>
+	  </xsl:if>
+	</xsl:attribute>
       </xsl:if>
       <xsl:apply-templates/>
     </div>
@@ -814,7 +819,9 @@
         <xsl:call-template name="rendering"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:apply-templates/>
+	<span class="mentioned">
+	  <xsl:apply-templates/>
+	</span>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

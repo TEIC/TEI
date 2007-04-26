@@ -982,11 +982,7 @@ select="$makeDecls"/></xsl:message>
     </xsl:for-each>
 -->
   </xsl:template>
-  <xsl:template match="tei:mentioned">
-    <xsl:text>‘</xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>’</xsl:text>
-  </xsl:template>
+
   <xsl:template match="tei:moduleRef" mode="tangle">
     <xsl:variable name="This" select="@key"/>
     <xsl:if test="$verbose='true'">

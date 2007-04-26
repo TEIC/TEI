@@ -368,13 +368,17 @@
     <xsl:variable name="Alt">
       <xsl:choose>
         <xsl:when test="tei:figDesc">
-          <xsl:value-of select="tei:figDesc//text()"/>
+          <xsl:for-each select="tei:figDesc">
+	    <xsl:apply-templates mode="plain"/>
+	  </xsl:for-each>
         </xsl:when>
         <xsl:when test="tei:head">
           <xsl:value-of select="tei:head/text()"/>
         </xsl:when>
         <xsl:when test="parent::tei:figure/tei:figDesc">
-          <xsl:value-of select="parent::tei:figure/tei:figDesc//text()"/>
+          <xsl:for-each select="parent::tei:figure/tei:figDesc">
+	    <xsl:apply-templates mode="plain"/>
+	  </xsl:for-each>
         </xsl:when>
         <xsl:when test="parent::tei:figure/tei:head">
           <xsl:value-of select="parent::tei:figure/tei:head/text()"/>

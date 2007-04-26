@@ -396,7 +396,7 @@
     </xsl:otherwise>
 -->
   </xsl:choose>
-  <xsl:value-of select="name(.)"/>
+  <xsl:value-of select="local-name(.)"/>
   <xsl:value-of disable-output-escaping="yes" select="$endItalic"/>
   <xsl:text>="</xsl:text>
      <xsl:apply-templates select="." mode="attributetext"/>

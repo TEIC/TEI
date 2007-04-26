@@ -230,7 +230,7 @@
       contents</xd:short>
     <xd:param name="minimal">false</xd:param>
     <xd:detail>This is a wrapper around the "header" template which ensures that
-      some text is returned; if all else fails, the element name of
+      some text is returned; if all else fails, the element name is
     used.</xd:detail>
   </xd:doc>
   <xsl:template name="headerLink">

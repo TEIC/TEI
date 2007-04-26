@@ -299,10 +299,10 @@
   <xsl:template match="tei:ptr" mode="weave">
     <xsl:choose>
       <xsl:when test="parent::tei:listRef">
-	<xsl:choose>
-	<xsl:when test="starts-with(@target,'#') and key('IDS',substring-after(@target,'#'))">
 	<tr><td><xsl:comment>pointer</xsl:comment></td>
 	<td colspan="2" class="wovenodd-col2">
+	<xsl:choose>
+	<xsl:when test="starts-with(@target,'#') and key('IDS',substring-after(@target,'#'))">
 	  <xsl:call-template name="makeInternalLink">
 	    <xsl:with-param name="target"
 			    select="substring-after(@target,'#')"/>
@@ -315,17 +315,18 @@
 	      </xsl:call-template>
 	    </xsl:with-param>
 	  </xsl:call-template>
-	</td>
-	</tr>
+	</xsl:when>
+	<xsl:when test="starts-with(@target,'#')">
+            <xsl:text>«</xsl:text>
+	    <xsl:value-of select="@target"/>
+	    <xsl:text>»</xsl:text>
 	</xsl:when>
 	<xsl:otherwise>
-	  <tr><td><xsl:comment>pointer</xsl:comment></td>
-	  <td colspan="2" class="wovenodd-col2">
 	    <xsl:apply-imports/>
-	  </td>
-	  </tr>
 	</xsl:otherwise>
 	</xsl:choose>
+	</td>
+	</tr>
       </xsl:when>
       <xsl:otherwise>
         <xsl:apply-imports/>
