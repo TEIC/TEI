@@ -20,7 +20,7 @@ electronic data sets.</p>
 <p>Every TEI-conformant text must carry such a set of descriptions,
 prefixed to it and encoded as described in this chapter.  The set is
 known as the <term>TEI header</term>, tagged <gi>teiHeader</gi>,
-and it has four major parts:
+and  has four major parts:
 <list type="bullets">
 <item>a <term>file description</term>, tagged <gi>fileDesc</gi>,
 containing a full bibliographical description of the computer file
@@ -32,7 +32,7 @@ as referring to the whole entity or document described by the header,
 even when this is stored in several distinct operating system files.
 The file description also includes information about the
 source or sources from which the electronic document was derived.  The TEI
-elements used to encode a file description are described in section <ptr target="#HD2"/>
+elements used to encode the file description are described in section <ptr target="#HD2"/>
  below.
 </item>
 <item>an <term>encoding description</term>, tagged <gi>encodingDesc</gi>,
@@ -66,7 +66,7 @@ description are described in section <ptr target="#HD6"/> below.</item></list>
 very simple one.  Some application areas (for example, the construction
 of language corpora and the transcription of spoken texts) may require
 more specialized and detailed information than others.  The present
-proposals therefore define both a <term>core</term> set of elements,
+proposals therefore define both a <term>core</term> set of elements
 (all of which may be used without formality in any TEI header) and
 some additional elements which become available within the header as
 the result of including additional specialized modules within the
@@ -75,23 +75,23 @@ schema. When the module for language corpora (described in  chapter
 elements are available, as further detailed in that chapter. 
 </p>
 <p>The next section of the present chapter briefly introduces the
-overall structure of the header, and the kinds of data it may contain.
+overall structure of the header and the kinds of data it may contain.
 This is followed by a detailed description of all the constituent
 elements which may be used in the core header.  Section <ptr target="#HD7"/>, at the end of the present chapter, discusses the
-recommended content of a minimal TEI header, and its relation to
-standard library cataloguing practices.  Recommendations relevant to the
+recommended content of a minimal TEI header and its relation to
+standard library cataloguing practices.  <!-- Recommendations relevant to the
 use of TEI headers as free-standing documents, for interchange among
 libraries, data archives, and similar institutions may be found in
-chapter <ptr target="#SH"/>.</p>
+chapter <ptr target="#SH"/>.--></p>
 <div type="div2" xml:id="HD1"><head>Organization of the TEI Header</head>
 <div type="div3" xml:id="HD11"><head>The TEI Header and Its Components</head>
-<p>The <gi>teiHeader</gi> element should be clearly distinguished both
+<p>The <gi>teiHeader</gi> element should be clearly distinguished <!--both
 from the <term>prolog</term>, which comprises either the XML declaration or the SGML declaration,
-and the document type declaration (see chapter <ptr target="#SG"/>); and
+and the document type declaration (see chapter <ptr target="#SG"/>); and-->
 from the <term>front matter</term> of the text itself (for which see
 section <ptr target="#DSFRONT"/>). A composite text, such as a corpus or
 collection, may contain several headers, as further discussed below.  In
-the usual case however, a TEI-conformant text will contain a single
+the usual case, however, a TEI-conformant text will contain a single
 <gi>teiHeader</gi> element, followed by a single <gi>text</gi> element.</p>
 <p>The header element has the following description:
 <specList><specDesc key="teiHeader" atts="type"/></specList>
@@ -115,12 +115,11 @@ while a minimal header takes the form:
 </teiHeader></egXML>
 </p>
 <p>In the case of language corpora or collections, it may be
-desirable to record header information either at the level of individual
-components in the corpus or collection, or once for all at the level of
-the corpus or collection itself, or at both levels.  More details
+desirable to record header information either at the level of the individual
+components in the corpus or collection, or at the level of
+the corpus or collection itself (more details
 concerning the tagging of composite texts are given in section <ptr target="#CC"/>, which should be read in conjunction with the current
-chapter.  An optional <att>type</att> attribute may also be supplied on
-the <gi>teiHeader</gi> element to indicate whether the header applies
+chapter). The <att>type</att> attribute may be used to indicate whether the header applies
 to a corpus or a single text.  A corpus may thus take the form:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><teiCorpus>
    <teiHeader type="corpus">
@@ -198,23 +197,23 @@ encoder to choose whether or not the information concerned should be
 presented in a structured form or in prose.
 </item><label>declarations </label>
 <item>Elements whose names end with the suffix
-<mentioned>Decl</mentioned> (e.g.  <gi>subjectDecl</gi>, <gi>refsDecl</gi>)
-enclose information about specific encoding practices applied in the
-electronic text; often these practices are described in coded form.
-Typically, such information takes the form of a series of declarations,
-identifying a code with some more complex structure or description.  A
-declaration which applies to more than one text or division of a text
-need not be repeated in the header of each such text.  Instead, the
-<att>decls</att> attribute of each text (or subdivision of the text) to
-which the declaration applies may be used to supply a cross
-reference to it, as further described in section <ptr target="#CCAS"/>.
+<mentioned>Decl</mentioned> (e.g.  <gi>subjectDecl</gi>,
+<gi>refsDecl</gi>) enclose information about specific encoding
+practices applied in the electronic text; often these practices are
+described in coded form.  Typically, such information takes the form
+of a series of declarations, identifying a code with some more complex
+structure or description.  A declaration which applies to more than
+one text or division of a text need not be repeated in the header of
+each such text or subdivision.  Instead, the <att>decls</att>
+attribute of each text (or subdivision of the text) to which the
+declaration applies may be used to supply a cross reference to it, as
+further described in section <ptr target="#CCAS"/>.
 </item><label>descriptions </label>
-<item>Elements whose name end with the suffix
-<mentioned>Desc</mentioned> (e.g.  <gi>settingDesc</gi>, <gi>projectDesc</gi>)
-contain a prose description, possibly organized under some specific
-headings by suggested sub-elements, but not necessarily so.
-</item></list>
-</p></div></div>
+<item>Elements whose names end with the suffix
+<mentioned>Desc</mentioned> (e.g.  <gi>settingDesc</gi>,
+<gi>projectDesc</gi>) contain a prose description, possibly, but not
+necessarily, organized under some specific headings by suggested
+sub-elements.  </item></list> </p></div></div>
 <div type="div2" xml:id="HD2"><head>The File Description</head>
 <p>This section describes the <gi>fileDesc</gi> element, which is the
 first component of the <gi>teiHeader</gi> element.
@@ -230,8 +229,8 @@ occurring elsewhere in the header, and also in the text itself, are
 derived from the same model (on bibliographic citations in general, see
 further section <ptr target="#COBI"/>).  See further section <ptr target="#HD8"/>.
 </p>
-<p>The bibliographic description of the electronic text (not its
-source) is given in the mandatory <gi>fileDesc</gi> element:
+<p>The bibliographic description of an electronic text should be
+supplied by the  mandatory <gi>fileDesc</gi> element:
 <specList><specDesc key="fileDesc"/></specList>
 </p>
 <p>The <gi>fileDesc</gi> element contains three mandatory elements and
@@ -286,7 +285,7 @@ for it:
 </p>
 <p>The <gi>title</gi> element contains the chief name of the
 file, including any alternative title or subtitles it may have.
-It may be repeated, if the file has more than one title,
+It may be repeated, if the file has more than one title
 (perhaps in different languages) and takes whatever form is
 considered appropriate by its creator.  Where the electronic work
 is derived from an existing source text, it is strongly
@@ -329,10 +328,10 @@ documentation.
 <p>The specialized elements <gi>author</gi>, <gi>sponsor</gi>,
 <gi>funder</gi>, and <gi>principal</gi>, and the more general
 <gi>respStmt</gi> provide the <term>statements of responsibility</term>
-which identify the persons responsible for the intellectual or artistic
+which identify the person(s) responsible for the intellectual or artistic
 content of an item and any corporate bodies from which it emanates.
 </p>
-<p>Any number of statements of responsibility may occur within the title
+<p>Any number of such statements may occur within the title
 statement.  At a minimum, identify the author of the text and the
 creator of the machine-readable file.  If the bibliographic description
 is for a corpus, identify the creator of the corpus.  These
@@ -395,8 +394,7 @@ constituents is as follows:
 &sponsor;
 &funder;
 &principal;
-<p>The TITLE, AUTHOR, NAME, RESPSTMT, and RESP elements are
-declared in file teicore2.dtd, not here.</p></specGrp>
+</specGrp>
 </p></div>
 <div type="div3" xml:id="HD22"><head>The Edition Statement</head>
 <p>The <gi>editionStmt</gi> element is the second component of the
@@ -406,43 +404,47 @@ It contains either phrases or more specialized elements identifying the
 edition and those responsible for it:
 <specList><specDesc key="edition"/><specDesc key="respStmt"/><specDesc key="name"/><specDesc key="resp"/></specList>
 </p>
-<p>For printed texts, the word <mentioned>edition</mentioned> applies to the set
-of all the identical copies of an item produced from one master copy and
-issued by a particular publishing agency or a group of such agencies.  A
-change in the identity of the distributing body or bodies does not
-normally constitute a change of edition, while a change in the master
-copy does.
+<p>For printed texts, the word <mentioned>edition</mentioned> applies
+to the set of all the identical copies of an item produced from one
+master copy and issued by a particular publishing agency or a group of
+such agencies.  A change in the identity of the distributing body or
+bodies does not normally constitute a change of edition, while a
+change in the master copy does.
 </p>
-<p>For electronic texts, the notion of a <soCalled>master copy</soCalled> is not
-entirely appropriate, since they are far more easily copied and modified
-than printed ones; nonetheless the term <mentioned>edition</mentioned> may be used
-for a particular state of a machine-readable text at which substantive
-changes are made and fixed.  Synonymous terms used in these Guidelines
-are <mentioned>version,</mentioned> <mentioned>level,</mentioned> and <mentioned>release</mentioned>.  The words
-<mentioned>revision</mentioned> and <mentioned>update</mentioned>, by contrast, are used for minor
-changes to a file which do not amount to a new edition.
+<p>For electronic texts, the notion of a <soCalled>master
+copy</soCalled> is not entirely appropriate, since they are far more
+easily copied and modified than printed ones; nonetheless the term
+<mentioned>edition</mentioned> may be used for a particular state of a
+machine-readable text at which substantive changes are made and fixed.
+Synonymous terms used in these Guidelines are
+<mentioned>version</mentioned>, <mentioned>level</mentioned>, and
+<mentioned>release</mentioned>.  The words
+<mentioned>revision</mentioned> and <mentioned>update</mentioned>, by
+contrast, are used for minor changes to a file which do not amount to
+a new edition.
 </p>
+
 <p>No simple rule can specify how <soCalled>substantive</soCalled>
-changes have to be before they are regarded as producing a new edition,
-rather than a simple update.  The general principle proposed here is
-that the production of a new edition entails a significant change in the
-intellectual content of the file, rather than its encoding or
-appearance.  The addition of analytic coding to a text would thus
-constitute a new edition, while automatic conversion from one coded
-representation to another would not.  Changes relating to the character
-code or physical storage details, corrections of misspellings, simple
-changes in the arrangement of the contents and changes in the output
-format do not normally constitute a new edition.  The addition of new
-information (e.g. a linguistic analysis expressed in part-of-speech
-tagging, sound or graphics, referential links to external datasets)
-almost always does constitute a new edition.
+changes have to be before they are regarded as producing a new
+edition, rather than a simple update.  The general principle proposed
+here is that the production of a new edition entails a significant
+change in the intellectual content of the file, rather than its
+encoding or appearance.  The addition of analytic coding to a text
+would thus constitute a new edition, while automatic conversion from
+one coded representation to another would not.  Changes relating to
+the character code or physical storage details, corrections of
+misspellings, simple changes in the arrangement of the contents and
+changes in the output format do not normally constitute a new edition,
+whereas the addition of new information (e.g. a linguistic analysis
+expressed in part-of-speech tagging, sound or graphics, referential
+links to external datasets) almost always does.
 </p>
-<p>Clearly, there are always border line cases and the matter is
-somewhat arbitrary.  The simplest rule is:  if you think that your file
-is a new edition, then call it such.
-An edition statement is optional for the first release of a
-machine-readable file; it is mandatory for each later release,
-though this requirement cannot be enforced by the parser.
+<p>Clearly, there will always be borderline cases and the matter is
+somewhat arbitrary.  The simplest rule is: if you think that your file
+is a new edition, then call it such.  An edition statement is optional
+for the first release of a machine-readable file; it is mandatory for
+each later release, though this requirement cannot be enforced by the
+parser.
 </p>
 <p>Note that <emph>all</emph> changes in a file, whether or not they are
 regarded as constituting a new edition or simply a new revision, should
@@ -682,7 +684,7 @@ fiction, westerns, and detective stories</q>. These should be
 formally described within the <gi>profileDesc</gi> element
 (section <ptr target="#HD4"/>).</item>
 <item>summary description providing a factual, non-evaluative
-account of the subject content of the file.  E.g. <q>Transcribes
+account of the subject content of the file: e.g. <q>Transcribes
 interviews on general topics with native speakers of English in
 17 cities during the spring and summer of 1963.</q> These should
 also be formally described within the <gi>profileDesc</gi> element
@@ -712,7 +714,7 @@ way, rather than as specialized bibliographic notes.</item></list>
 potentially significant details about the file and its features, e.g.:
 <list type="bullets">
 <item>dates, when they are relevant to the content or condition of the
-computer file:  e.g.  <q>manual dated 1983,</q> <q>Interview wave I:
+computer file:  e.g.  <q>manual dated 1983</q>,  <q>Interview wave I:
 Apr. 1989; wave II: Jan. 1990</q></item>
 <item>names of persons or bodies connected with the technical production,
 administration, or consulting functions of the effort which produced
@@ -1262,7 +1264,7 @@ used to supply a count of the number of occurrences of this
 </tagUsage></egXML>
 This indicates that the <gi>hi</gi> element appears a total of 28 times
 in the <gi>text</gi> element in question, and that the encoder has used
-it to mark italicised English phrases only.</p>
+it to mark italicised English words only.</p>
 <p>The <att>withId</att> attribute may optionally be used to specify how
 many of the occurrences of the element in question bear a value for the
 global <att>xml:id</att> attribute, as in the following example:
@@ -1288,8 +1290,7 @@ document, as identified by some conforming processor.
 <p>The <gi>refsDecl</gi> element is the fifth of the nine optional
 subdivisions of the <gi>encodingDesc</gi> element. It is used to
 document the way in which any standard referencing scheme built into
-the encoding works, either as a series of prose paragraphs or by
-using the following specialized elements:
+the encoding works. It may contain either  a series of prose paragraphs or the following specialized elements:
 <specList>
 <specDesc key="refsDecl" atts="doctype"/>
 <specDesc key="cRefPattern"/>
@@ -1315,8 +1316,8 @@ used within a single <gi>refsDecl</gi> element.</p>
 header if more than one canonical reference scheme is to be used in
 the same document, but the current proposals do not check for mutual
 inconsistency. A reference declaration can only describe the
-referencing system applicable to a single document type; if therefore
-concurrent document types are in use (as discussed in section <ptr target="#CORS"/>), a <gi>refsDecl</gi> element must be supplied for
+referencing system applicable to a single document; if therefore
+several referencing systems are in use (as discussed in section <ptr target="#CORS"/>), a <gi>refsDecl</gi> element must be supplied for
 each; the <att>doctype</att> attribute should be used to specify the
 document type to which the declaration relates.</p>
 <div type="div4" xml:id="HD54P"><head>Prose Method</head>
@@ -1687,7 +1688,7 @@ represented by the following elements:
 </specList>
 These elements are further described in the remainder of this section.</p>
 <p>Three other elements may also appear within the <gi>profileDesc</gi>
-element, when the
+element when the
 corpus module is in use:
 <specList>
 <specDesc key="textDesc"/>
@@ -1696,7 +1697,7 @@ corpus module is in use:
 </specList>
 For descriptions of these elements, see section <ptr target="#CCAH" type="div1"/>.</p>
 <p>Finally, the following element can appear in the <gi>profileDesc</gi>
-element, when the module  for transcription of primary
+element when the module  for transcription of primary
 sources is selected:
 <specList>
 <specDesc key="handList"/>
@@ -2261,5 +2262,7 @@ has however now been withdrawn, pending substantial revision.  The
 international standard which covers the same area is ISO 690:1987.
 Other relevant standards include BS 1629:1989, BS 5605:1978, and BS
 6371:1983.
-</item></list></p></div>
+</item></list></p>
+</div>
+
 	</div>

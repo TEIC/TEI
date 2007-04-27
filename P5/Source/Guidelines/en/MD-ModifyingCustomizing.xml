@@ -56,7 +56,7 @@ desired to constrain the possible values for the <att>type</att>
 attribute to a small set of possibilities. A schema modified in this
 way would no longer necessarily regard as valid the same set of
 documents as the corresponding unmodified TEI schema, but would remain
-faithful the same conceptual model.</p>
+faithful to the same conceptual model.</p>
 
 <!--
 
@@ -187,6 +187,10 @@ terminology, unclean modifications are not particularly deprecated,
 and their use may often be vital to the success of a project. The
 concept is introduced solely to distinguish  the effects of different
 kinds of modification.</p>
+<p>Cleanliness can only be assessed with reference to elements in the
+TEI namespace. </p>
+
+
 <!--It is
 however essential to the successful interchange of documents that such
 modifications be clearly distinguished from clean modifications of the
@@ -199,7 +203,7 @@ namespace, as further discussed in <ptr target="#MDNS"/>. </p>-->
 <p>The simplest way to modify the supplied modules is to suppress one
 or more of the supplied elements.  This is simply done by setting the
 attribute <att>mode</att> to <val>delete</val> on an
-<gi>elementDecl</gi> for the element concerned.
+<gi>elementSpec</gi> for the element concerned.
 </p>
 
 <p>For example, if the <gi>note</gi>
@@ -284,7 +288,8 @@ elements used are not placed in the TEI namespace but either use a
 null namespace or some user defined namespace, as further discussed in
 <ptr target="#MDNS"/>; if this is not the case, care must be taken to
 avoid name collision between the new name and all existing TEI
-names.</p>
+names. Furthermore, unclean modifications which do not specify a namespace are not
+conformant (see further <ptr target="#MD"/>) </p>
 
 <p>The TEI provides a systematic set of renamings into languages other
 than English. These all use a language-specific namespace.</p>
@@ -358,7 +363,7 @@ the following:
 This indicates that the content model contains declarations taken from
 the RELAX NG namespace, and that it consists of a reference to a
 pattern called <ident type="macro">macro.phraseSeq</ident>. Further
-examination shows that this pattern in turn expands to a starred
+examination shows that this pattern in turn expands to an optional repeatable
 alternation of text (<code>rng:text</code>) with references to three
 other classes (<ident type="class">model.gLike</ident>, <ident
 type="class">model.phrase</ident>, or <ident
@@ -371,14 +376,13 @@ has no way of referencing non-Unicode characters.</note> This could be
 achieved simply by supplying a specification for <gi>term</gi> like
 the following: <egXML rend="full"
 xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="term"
-module="core" mode="change" ns="http://hatstand.org/ns"> <content
+module="core" mode="change" > <content
 xmlns:rng="http://relaxng.org/ns/structure/1.0"><rng:text/></content></elementSpec></egXML>
 </p>
 
-<p>Because this modification changes the meaning of a TEI element, it
-is good practice to assign the element to some other namespace than
-that of the TEI. This is the function of the <att>ns</att> attribute
-on the <gi>elementSpec</gi> above; see further <ptr target="#MDNS"/>
+<p>This is a clean modification which does not change the meaning of a
+TEI element; there is therefore no need to assign the element to some other namespace than
+that of the TEI, though it may be considered good practice; see further <ptr target="#MDNS"/>
 below. </p>
 <p>A change of this kind, which simplifies the possible content of an
 element by reducing its model to one of its existing components, is
@@ -403,8 +407,8 @@ the members of the class referenced. Thus, a content model which
 refers to the model class <ident type="class">model.phrase</ident>
 will generate a content model in which any one of the members of that
 class is equally acceptable. It is also possible to reference
-predefined content model fragments based on classes, such as <q>a
-starred alternation of all members of a class</q>, <q>a sequence
+predefined content model fragments based on classes, such as <q>an
+optional repeatable alternation of all members of a class</q>, <q>a sequence
 containing no more than one of each member of the class</q>, etc. as
 described further in <ptr target="#TDCLA"/>. </p>
 
@@ -480,13 +484,12 @@ existed on the element we are modifying this should generate an error,
 since a specification cannot have more than one attribute of the same
 name. If the attribute is already present, we can replace the whole of
 the existing declaration by supplying <val>replace</val> as the value
-for for <att>mode</att>; alternatively, we can change some parts of an
+for <att>mode</att>; alternatively, we can change some parts of an
 existing declaration only by supplying just the new parts, and setting
 <val>change</val> as the value for <att>mode</att>.</p>
 
-<p>Because the new attribute does not form part of the TEI namespace,
-we specify its namespace on the <gi>attDef</gi>; this is recommended
-practice when namespaces are in use. See further <ptr
+<p>Because the new attribute is not defined by  the TEI,
+we must specify a namespace for it on the <gi>attDef</gi>; see further <ptr
 target="#MDNS"/>.</p>
 
 
@@ -519,7 +522,7 @@ might be appropriate:
 <egXML rend="full" xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="eg"
 module="tagdocs" mode="change" >
 <attList>
-<attDef ident="source" ns="http://www.hatstand.org/ns" mode="add">
+<attDef ident="source" ns="http://example.com/ns" mode="add">
 <desc>specifies the source of an example by supplying one of three
 predefined codes for it.</desc>
 <datatype maxOccurs="1"
@@ -544,6 +547,8 @@ predefined codes for it.</desc>
 <p>The same technique may be used to replace or extend the
 <gi>valList</gi> supplied as part of any attribute in the TEI
 scheme.</p>
+
+<!-- following para uses diff meaning for clean acc. Birnbaum -->
 
 <p>The set of documents matched by a schema generated from an ODD
 modified in this way, and the set of documents matched by the
@@ -578,7 +583,7 @@ these declarations must be preserved. The modification which adds a
 <att>type</att> attribute to the <gi>element</gi> therefore looks like
 this:
 <egXML rend="full" xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="eg"
-module="tagdocs" mode="change" ns="http://www.hatstand.org/ns">
+module="tagdocs" mode="change" ns="http://example.com/ns">
   <classes>
     <memberOf key="model.common"/>
     <memberOf key="model.graphicLike"/>
@@ -597,7 +602,7 @@ attribute <att>declaring</att> from the latter. To remove the last of these
 attributes from this element, we would supply a modification like the
 following: <egXML rend="full"
 xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="term"
-module="core" mode="change" ns="http://hatstand.org/ns">
+module="core" mode="change" ns="http://example.com/ns">
   <classes>
     <memberOf key="model.emphLike"/>
     <memberOf key="att.typed"/>
@@ -653,7 +658,7 @@ class membership of the att.global class to reference it. </p>
 <p>Such global changes should be undertaken with caution: in general
 removing existing non-mandatory attributes from a class will always be
 a clean modification, in the same way as removing non-mandatory
-elements.  Adding a new attribute to a class however is a
+elements.  Adding a new attribute to a class however can be a
 clean modification only if the new attribute is labelled as belonging
 to some namespace other than the TEI.</p>
 
@@ -684,8 +689,8 @@ type="class">model.biblLike</ident>. To add a fourth member (say
 <gi>myBibl</gi>) to this class, we need to include in the
 <gi>elementSpec</gi> defining our new element a <gi>memberOf</gi>
 element which nominates the intended class:
-<egXML rend="full" xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="myBib"
-						    mode="add" ns="http://www.hatstand.org/ns/">
+<egXML rend="full" xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="myBibl"
+						    mode="add" ns="http://www.example.com/ns/">
 <classes><memberOf key="model.biblLike"/></classes> <!-- other parts
 of the new declaration here --></elementSpec></egXML> The other parts
 of this declaration will typically include a description for the new
@@ -700,9 +705,13 @@ etc. as further described in <ptr target="#TD"/>.
 
 <p>All the elements defined in the TEI scheme are labelled as
 belonging to a single <term>namespace</term>, maintained by the TEI
-and with the URI <val>http://www.tei-c.org/ns/1.0</val>. Only elements
-and attributes which are unmodified or which have undergone a clean
+and with the URI <val>http://www.tei-c.org/ns/1.0</val><note
+place="foot">This is not strictly the case, since the element
+<gi>egXML</gi> used to represent TEI examples is in its own namespace,
+<val>http://www.tei-c.org/ns/Examples</val></note>. Only elements
+ which are unmodified or which have undergone a clean
 modification may use this namespace. </p>
+
 <p>This implies that any other modification (including a renaming or
 reversible modification) must either specify a different namespace or
 specify no namespace at all. The <att>ns</att> attribute is provided
@@ -712,15 +721,14 @@ on elements <gi>schemaSpec</gi>, <gi>elementSpec</gi>, and
 <att>topic</att> to the existing TEI element <gi>p</gi>.  In the
 absence of namespace considerations, this would be an unclean
 modification, since <gi>p</gi> does not currently have such an
-attribute. We cannot claim that the attribute is part of the TEI
-namespace, and the most appropriate action would probably therefore be
-to define it as belonging to a new namespace by a declaration such as
-the following: <egXML rend="full"
+attribute. The most appropriate action is to explicitly attach the new
+attribute to a new namespace by a declaration such as the following:
+<egXML rend="full"
 xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="p"
 mode="change">
 
 <attList>
-<attDef ident="topic" mode="add" ns="http://www.hatstand.org/ns">
+<attDef ident="topic" mode="add" ns="http://www.example.com/ns">
 <desc>indicates the topic of a TEI paragraph</desc>
 </attDef>
 </attList>
@@ -729,7 +737,7 @@ mode="change">
 indicate clearly the status of this attribute:
 
 <egXML rend="full" xmlns="http://www.tei-c.org/ns/Examples">
-  <div xmlns:my="http://www.hatstand.org/ns">
+  <div xmlns:my="http://www.example.com/ns">
 <!-- ... -->
 <p n="12" my:topic="rabbits">Flopsy, Mopsy, Cottontail and
 Peter...</p>
