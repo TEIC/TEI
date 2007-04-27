@@ -749,7 +749,7 @@ The notes statement has the following formal definition:
 </div>
 <div type="div3" xml:id="HD3"><head>The Source Description</head>
 <p>The <gi>sourceDesc</gi> element is the seventh and final component of
-the <gi>fileDesc</gi> element.  It is a mandatory element, and is used to
+the <gi>fileDesc</gi> element.  It is a mandatory element and is used to
 record details of the source or sources from which a computer file is
 derived.  This might be a printed text or manuscript, another computer
 file, an audio or video recording of some kind, or a combination of
@@ -825,8 +825,8 @@ within a <gi>biblFull</gi> element
 <item>A's <gi>profileDesc</gi> should be
 copied into B's, in principle unchanged.
  </item><label>encodingDesc</label>
-<item>A's coding practice may or (more likely) may not be the
-same as B's. Since the object of the coding description is to
+<item>A's encoding practice may or (more likely) may not be the
+same as B's. Since the object of the encoding description is to
 define the relationship between the current file and its source,
 in principle only changes in encoding practice between A and B
 need be documented in B. The relationship between A and its
@@ -1090,7 +1090,7 @@ specialized elements:
 </specList>
 These elements are all members of the TEI <ident type="class">model.editorialDeclPart</ident>
 class. Where an encoder wishes to record an editorial policy not
-specified above, they may do so by adding a new element to this
+specified above, this may be done by adding a new element to this
 class, using the mechanisms discussed in chapter <ptr target="#MD"/>.</p><p>Some of these policy elements carry attributes to support automated processing
 of certain well-defined editorial decisions; all of them contain a prose
 description of the editorial principles adopted with respect to the
@@ -1134,7 +1134,7 @@ described in section <ptr target="#CONADA"/> has been used,
 in what format are its values presented?</item><label><gi>interpretation</gi></label>
 <item>Has any analytic or <soCalled>interpretive</soCalled> information
 been provided — that is, information which is felt to be non-obvious,
-contentious, or subject to disagreement? If so, how was it generated?
+or potentially contentious? If so, how was it generated?
 How was it encoded? If feature-structure analysis has been used, are
 <gi>fsdDecl</gi> elements (section <ptr target="#HDFSD"/>) present?</item></list></p>
 <p>Any information about the editorial principles applied not falling
@@ -1153,7 +1153,7 @@ the text in the first instance. A simple example follows:
       WordPerfect spelling checker.</p>
   </correction>
   <normalization source="http://www.dict.sztaki.hu/webster">
-    <p>All words converted to Modern American spelling using
+    <p>All words converted to Modern American spelling following
       Websters 9th Collegiate dictionary.</p>
   </normalization>
   <quotation marks="all" form="std">
@@ -1743,7 +1743,7 @@ information should be recorded in the <gi>charDesc</gi> element in
 the encoding description (see further <ptr target="#WD"/>). 
 <specList>
 <specDesc key="langUsage"/>
-<specDesc key="language" atts="usage"/>
+<specDesc key="language" atts="usage ident"/>
 </specList></p>
 <p>A <gi>language</gi> element may be supplied for each different
 language used in a document. If used, its <att>ident</att> attribute
@@ -1813,7 +1813,7 @@ The last of these may be particularly important for dealing with
 existing corpora or collections, both as a means of avoiding the expense
 or inconvenience of reclassification and as a means of documenting
 the organizing principles of such materials.</p>
-<p>The following tags are provided for this purpose:
+<p>The following elements are provided for this purpose:
 <specList>
 <specDesc key="keywords" atts="scheme"/>
 <specDesc key="classCode" atts="scheme"/>
@@ -2007,7 +2007,7 @@ follows:<specGrp xml:id="D226" n="The Revision Description">&revisionDesc;
 <p>The TEI header allows for the provision of a very large amount of
 information concerning the text itself, its source, encodings
 and revisions of it, as well as a wealth of descriptive information
-such as the languages it uses and the situation within which it
+such as the languages it uses and the situation(s) in which it
 was produced, the setting and identity of participants within it.
 This diversity and richness reflects the diversity of uses to which
 it is envisaged that electronic texts conforming to these Guidelines
@@ -2033,7 +2033,7 @@ recommended, level of encoding for the bibliographic information held by
 the TEI header.
 </p>
 <p>Supplying only the minimal level of encoding required, the
-TEI header of a single printed text might look like the following
+TEI header of a single text might look like the following
 example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
   <fileDesc>
