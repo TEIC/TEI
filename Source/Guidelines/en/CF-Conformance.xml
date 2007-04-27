@@ -5,7 +5,14 @@
   - the phrase 'Valid TEI ODD file' is used but we don't really define
   what  this means in the section about it, nor where in the header
   to point to the ODD.
-  - 
+
+conformant -> 
+conformable ->
+extension ->
+
+clean ->
+unclean ->
+
   -->
 <head>Conformance</head>
 
@@ -47,9 +54,9 @@ schema derived from the TEI Guidelines (<ptr target="#CFVL"/>)</item>
 <!--    <item> contains a <gi>teiHeader</gi> element that includes
         elements for at least a title statement and publication
         statement</item>-->
-<item> documents the subset of the TEI scheme used to validate it,
-either implicitly or explicitly by means of a TEI Conformant <term>ODD
-file</term> (<ptr target="#CFOD"/>)</item>
+<item> is documented by means of a TEI Conformant <term>ODD
+file</term> (<ptr target="#CFOD"/>) which refers to the
+TEI Guidelines </item>
  </list> Each of these criteria is discussed in more detail below. </p>
 
 <p>A document is said to be <term>TEI Conformable</term> if it is a
@@ -84,7 +91,8 @@ situations (for example, for data capture, or project-internal
 processing). But such alternative representations are at best
 <soCalled>TEI conformable</soCalled>, and cannot be considered in any
 way TEI Conformant.</p>
-
+<!-- reference to namespace wellformedness shd be added according to
+Conal -->
 <p>Previous versions of these Guidelines used SGML as a representation
 format. With release P5, the only representation format supported
 by these Guidelines becomes valid XML; legacy documents in SGML format
@@ -113,8 +121,8 @@ schema fragments which the Guidelines define.
   <head>Validation Constraint</head>
 
 <p>All <term>TEI Conformant</term> documents must validate against
-one or more  schema files that have been derived from the published TEI
-schema modules, combined and documented in the manner described in
+a schema file that has been derived from the published TEI
+Guidelines, combined and documented in the manner described in
 section <ptr target="#MD"/>. We call the formal output of this process a
 <term>TEI Schema</term>. </p>
    
@@ -128,19 +136,27 @@ section <ptr target="#MD"/>. We call the formal output of this process a
  file</term> that references the TEI Guidelines. Some of what is
  syntactically possible using the ODD formalism cannot be represented
  by all schema languages; and there are some features of some schema
- languages which have no counterpart in ODD. As far as possible,
- however, these Guidelines avoid reliance on features which cannot be
- represented in all schema languages; exceptions to this general rule
- are documented in chapters <ptr target="#TD"/> and <ref>chapter on
- ODD processes to be supplied</ref>.</p>
+ languages which have no counterpart in ODD. No schema language fully
+ captures all the constraints implied by conformance to the TEI
+ abstract model. A document which is valid according to a TEI schema represented
+using one schema language may not be valid against the same schema
+expressed in other languages; in particular the DTD language does not
+support namespaces.  Features <!--As far as possible,
+ however, these Guidelines avoid reliance on features --> which cannot be
+ represented in all schema languages <!--; exceptions to this general
+ rule --> are documented in chapters <ptr target="#TD"/> and <ref>chapter on
+ ODD processes to be supplied</ref>. </p>
 
 <p>As noted in section <ptr target="#MD"/>, many varieties of TEI
 schema are possible and not all of them are necessarily
 <term>TEI Conformant</term>; derivation from an ODD is a necessary but
 not a sufficient condition for this.</p>
+
+
 </div>
 
 <div type="div3" xml:id="CFAM">
+
 <head>Conformance to the TEI Abstract Model</head>
 
 <p>The <term>TEI Abstract Model</term> is the conceptual schema
@@ -152,7 +168,7 @@ relationships, for example stating that
 <soCalled>heading</soCalled>s. These Guidelines also define classes of
 elements, which have both semantic and structural properties in
 common. Those semantic and structural properties are also a part of
-the TEI abstract model; the class membership of an existing TEI
+the TEI abstract model; <!-- not quite --> the class membership of an existing TEI
 element cannot therefore be changed without changing the
 model. Elements can however be removed from a class by deletion, and
 new non-TEI elements can be added to existing TEI classes.</p>
@@ -195,11 +211,11 @@ not. Although it may be possible to transform a document following the
 <term>TEI Abstract Model</term> into a <term>TEI Conformant</term>
 document, it is not itself conformant.</p>
 
-<p>A particularly important special case of this kind of mapping is
+<!--<p>A particularly important special case of this kind of mapping is
 provided by ongoing efforts within the library community to define
 metadata interoperability standards. The relationship of the TEI
 Header to such efforts is discussed in <ptr target="#SH" /> below.</p>
-</div>
+--></div>
 
 <div type="div3">
 <head>Mandatory components of a TEI Document</head>
@@ -253,7 +269,7 @@ TEI markup with their own system. To meet these objectives, a TEI
 conformant document is required to make appropriate use of the TEI
 namespace.</p>
 
-<p>All elements and attributes in a TEI Schema which represents
+<p>All elements in a TEI Schema which represents
 concepts from the TEI abstract model belong to the TEI namespace,
 <ident type="ns">http://www.tei-c.org/ns/1.0</ident>, maintained by
 the TEI along with additional namespaces for language variants. A
@@ -347,8 +363,8 @@ other namespaces, then the document may be TEI Conformant.</item>
 <item>Is the document valid according to a schema made by combining
 all TEI modules as well as valid according to the schema derived from
 its associated ODD specification? If so, the document is TEI
-Conformant and the schema associated with it is a
-<soCalled>clean</soCalled> modification. </item>
+Conformant. <!-- and the schema associated with it is a
+<soCalled>clean</soCalled> modification--></item>
 <item>Is the document valid according to the schema derived from its
 associated ODD specification, but not according to <ident type="schema">tei_all</ident>? If so, the
 document uses a TEI extension. </item>
