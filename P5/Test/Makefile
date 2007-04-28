@@ -22,6 +22,7 @@ TESTFILES= \
 	testmav \
 	testminimal \
 	testms \
+	testns \
 	testnames \
 	testspoken \
 	testtagdocs \

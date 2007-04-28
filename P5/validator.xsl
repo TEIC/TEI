@@ -192,8 +192,8 @@ select="name(.)"/> points to non-existent <xsl:value-of select="$value"/> (<xsl:
   </xsl:variable>
 
   <xsl:message>Warning: <xsl:value-of 
-select="$where"/> points to something I cannot find: <xsl:value-of select="$value"/>
-(<xsl:call-template name="loc"/>) 
+select="$where"/> points to something I cannot find: <xsl:value-of
+select="$value"/> (<xsl:call-template name="loc"/>) 
 </xsl:message>
 </xsl:template>
 
