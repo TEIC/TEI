@@ -1034,6 +1034,33 @@
       </xsl:otherwise>
     </xsl:choose>
       <xsl:text>&gt;</xsl:text>
+      <xsl:choose>
+      <xsl:when test="@ns=''"/>
+      <xsl:when test="@ns">
+	<xsl:text>&#10;&lt;!ATTLIST </xsl:text>
+	<xsl:value-of select="$ename"/>
+	<xsl:text> xmlns CDATA "</xsl:text>
+	<xsl:value-of select="@ns"/>
+	<xsl:text>"</xsl:text>
+	<xsl:text>&gt;</xsl:text>
+      </xsl:when>
+      <xsl:when test="ancestor::tei:schemaSpec/@ns=''"/>
+      <xsl:when test="ancestor::tei:schemaSpec/@ns">
+	<xsl:text>&#10;&lt;!ATTLIST </xsl:text>
+	<xsl:value-of select="$ename"/>
+	<xsl:text> xmlns CDATA "</xsl:text>
+	<xsl:value-of select="ancestor::tei:schemaSpec/@ns"/>
+	<xsl:text>"</xsl:text>
+	<xsl:text>&gt;</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text>&#10;&lt;!ATTLIST </xsl:text>
+	<xsl:value-of select="$ename"/>
+	<xsl:text> xmlns CDATA "http://www.tei-c.org/ns/1.0"</xsl:text>
+      <xsl:text>&gt;</xsl:text>
+      </xsl:otherwise>
+      </xsl:choose>
+
     <xsl:variable name="maybeatts">
     <xsl:if test="$parameterize='true' and $TEIC='true'">
       <xsl:text>&#10; %att.global.attributes;</xsl:text>
