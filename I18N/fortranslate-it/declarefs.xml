@@ -1,0 +1,223 @@
+<moduleSpec xmlns="http://www.tei-c.org/ns/1.0" ident="declarefs">
+  <elementSpec ident="teifsd" module="declarefs">
+
+<gloss>feature system declaration</gloss><gloss xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</gloss>
+<desc>contains a feature system declaration.</desc><desc xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</desc>
+  
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="fsDecl" module="declarefs">
+
+<gloss>feature structure declaration</gloss><gloss xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</gloss>
+<desc>declares one type of feature structure.</desc><desc xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</desc>
+  
+  <attList>
+    <attDef ident="type" usage="req">
+	
+	<desc>gives a name for the type of feature structure being declared.</desc><desc xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</desc>
+      
+      <valDesc>any convenient string of characters.</valDesc><valDesc xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</valDesc>
+      
+      
+    </attDef>
+    <attDef ident="baseTypes" usage="opt">
+	
+
+	<desc>gives the name of one or more typed feature structures
+	from which this type inherits feature specifications and
+	constraints; if this type includes a feature specification
+	with the same name as that of any of those specified by this
+	attribute, or if more than one specification of the same name
+	is inherited, then the set of possible values is defined by
+	unification. Similarly, the set of constraints applicable is
+	derived by combining those specified explicitly within this
+	element with those implied by the <att>baseTypes</att>
+	attribute. When no <att>baseType</att> is specified, no
+	feature specification or constraint is inherited.</desc><desc xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</desc>
+
+      
+      <valDesc>any convenient string for use as a name.</valDesc><valDesc xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</valDesc>
+      
+      
+    </attDef>
+  </attList>
+  
+  
+</elementSpec>
+  <elementSpec ident="fsDescr" module="declarefs">
+
+<gloss>feature system description (in FSD)</gloss><gloss xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</gloss>
+<desc>describes in prose what is represented by the type of feature
+structure declared in the enclosing fsDecl.</desc><desc xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</desc>
+  
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="fDecl" module="declarefs">
+
+<gloss>feature declaration</gloss><gloss xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</gloss>
+<desc>declares a single feature, specifying its name, organization,
+range of allowed values, and optionally its default value.</desc><desc xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</desc>
+  
+  <attList>
+    <attDef ident="name" usage="req">
+	
+	<desc>indicates the name of the feature being declared; matches the
+<att>name</att> attribute of <gi>f</gi> elements in the text.</desc><desc xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</desc>
+      
+      <valDesc>any string of characters</valDesc><valDesc xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</valDesc>
+      
+      
+    </attDef>
+    <attDef usage="opt" ident="optional">
+	
+	<desc>indicates whether or not the value of this feature may
+	be present.</desc><desc xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</desc>
+      
+
+      
+      
+    </attDef>
+
+
+    <attDef ident="org" usage="opt">
+	
+	<desc>specifies the organizing discipline of the feature value.</desc><desc xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</desc>
+      
+      <valList type="closed">
+        <valItem ident="unit">
+          
+          <gloss>unitary atomic value</gloss><gloss xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</gloss>
+        </valItem>
+        <valItem ident="set">
+          
+          <gloss>set value (unordered, no duplicates)</gloss><gloss xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</gloss>
+        </valItem>
+        <valItem ident="bag">
+          
+          <gloss>bag value (unordered, may have duplicates)</gloss><gloss xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</gloss>
+        </valItem>
+        <valItem ident="list">
+          
+          <gloss>list value (ordered, may have duplicates)</gloss><gloss xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</gloss>
+        </valItem>
+      </valList>
+      
+      
+    </attDef>
+  </attList>
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="fDescr" module="declarefs">
+
+<gloss>feature description (in FSD)</gloss><gloss xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</gloss>
+<desc>describes in prose what is represented by the feature being
+declared and its values.</desc><desc xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</desc>
+  
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="vRange" module="declarefs">
+
+<gloss>value range</gloss><gloss xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</gloss>
+<desc>defines the range of allowed values for a feature, in the form of
+an fs, vAlt, or primitive value;
+for the value of an f to be valid, it must be
+subsumed by the specified range; if the f
+contains multiple values (as sanctioned by the org attribute),
+then each value must be subsumed by the vRange.</desc><desc xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</desc>
+  
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="vDefault" module="declarefs">
+
+<gloss>value default</gloss><gloss xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</gloss>
+<desc>declares the default value to be supplied when a feature structure
+does not contain an instance of f for this name; if
+unconditional, it is specified as one (or, depending on the value of
+the org attribute of the enclosing fDecl) more
+fs elements or primitive values;
+if conditional, it is specified as
+one or more if elements; if no default is specified, or no
+condition matches, the value none is assumed.</desc><desc xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</desc>
+  
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="if" module="declarefs">
+
+<gloss/><gloss xml:lang="it" notBefore="2007-01-21"/>
+<desc>defines a conditional default value for a feature; the condition
+is specified as a feature structure, and is met if it
+subsumes the feature structure in the text for which a
+default value is sought.</desc><desc xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</desc>
+  
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="then" module="declarefs">
+
+<gloss/><gloss xml:lang="it" notBefore="2007-01-21"/>
+<desc>separates the condition from the default in an if, or
+the antecedent and the consequent in a cond element.</desc><desc xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</desc>
+  
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="fsConstraints" module="declarefs">
+
+<gloss>feature-structure constraints</gloss><gloss xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</gloss>
+<desc>specifies constraints on the content of well formed feature
+structures.</desc><desc xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</desc>
+  
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="cond" module="declarefs">
+
+<gloss>conditional feature-structure constraint</gloss><gloss xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</gloss>
+<desc>defines a conditional feature-structure constraint; the consequent
+and the antecedent are specified as feature structures or
+feature-structure groups; the constraint is satisfied if both the
+antecedent and the consequent subsume a given feature
+structure, or if the antecedent does not.</desc><desc xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</desc>
+  
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="bicond" module="declarefs">
+
+<gloss>bi-conditional feature-structure constraint</gloss><gloss xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</gloss>
+<desc>defines a biconditional feature-structure constraint; both
+consequent and antecedent are specified as feature structures or groups
+of feature structures; the constraint is satisfied if both
+subsume a given feature structure, or if both do not.</desc><desc xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</desc>
+  
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="iff" module="declarefs">
+
+<gloss/><gloss xml:lang="it" notBefore="2007-01-21"/>
+<desc>separates the condition from the consequence in a bicond
+element.</desc><desc xml:lang="it" notBefore="2007-01-21">TO BE TRANSLATED</desc>
+  
+  
+  
+  
+</elementSpec>
+</moduleSpec>
