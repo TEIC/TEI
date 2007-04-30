@@ -75,7 +75,7 @@ html-web: check
 	        --stringparam doclang $$i \
 	    Utilities/guidelines.xsl - ; \
 	cp guidelines.css TEI-glow.png Guidelines-web/$$i/html/ ; \
-	cp ${SOURCETREE}/Images/* Guidelines-web/$$i/html/ ; \
+	cp -r ${SOURCETREE}/Images Guidelines-web/$$i/html/ ; \
 	(cd Guidelines-web/$$i/html; for i in *.html; do perl -i ../../../Utilities/cleanrnc.pl $$i;done); \
 	(cd Guidelines-web/$$i/html; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' guidelines.css); \
 	done
@@ -105,7 +105,7 @@ html:check subset
 	    Utilities/guidelines-print.xsl \
 	    ${DRIVER} 
 	-cp guidelines.css Guidelines
-	-cp ${SOURCETREE}/Images/* Guidelines/
+	-cp -r ${SOURCETREE}/Images Guidelines/
 	(cd Guidelines; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
 	(cd Guidelines; perl -p -i -e 's+ xmlns:html="http://www.w3.org/1999/xhtml"++' index.html)
 	-xmllint --noout --valid Guidelines/index.html
@@ -123,7 +123,7 @@ pdf: xml
 	which ${LATEX} || exit 1
 	xsltproc Utilities/guidelines-latex.xsl Guidelines.xml \
 	> Guidelines.tex
-	cp Source/Images/*.png .
+	cp -r Source/Images .
 	-${LATEX} -interaction=nonstopmode Guidelines
 	-${LATEX} -interaction=nonstopmode Guidelines
 	for i in Source/Images/*.png; do rm `basename $$i`;done
