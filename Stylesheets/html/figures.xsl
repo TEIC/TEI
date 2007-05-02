@@ -75,6 +75,11 @@
               <xsl:value-of select="substring-after(.,'class:')"/>
             </xsl:attribute>
           </xsl:when>
+          <xsl:when test="name(.)='rend' and starts-with(.,'style=')">
+            <xsl:attribute name="style">
+              <xsl:value-of select="substring-after(.,'style=')"/>
+            </xsl:attribute>
+          </xsl:when>
           <xsl:when test="name(.)='rend'">
             <xsl:attribute name="class">
               <xsl:value-of select="."/>
