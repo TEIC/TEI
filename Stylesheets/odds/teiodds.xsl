@@ -661,6 +661,9 @@ select="$makeDecls"/></xsl:message>
         <Wrapper>
           <xsl:variable name="name">
             <xsl:choose>
+	      <xsl:when test= "tei:altIdent=@ident">
+		<xsl:value-of select="@ident"/>
+	      </xsl:when>
               <xsl:when test="tei:altIdent">
                 <xsl:value-of select="normalize-space(tei:altIdent)"/>
               </xsl:when>
@@ -830,6 +833,9 @@ select="$makeDecls"/></xsl:message>
       <xsl:for-each select="tei:valList/tei:valItem">
 	<rng:value>
 	  <xsl:choose>
+	    <xsl:when test= "tei:altIdent=@ident">
+	      <xsl:value-of select="@ident"/>
+	    </xsl:when>
 	    <xsl:when test="tei:altIdent">
 	      <xsl:value-of select="normalize-space(tei:altIdent)"/>
 	    </xsl:when>
@@ -1290,6 +1296,9 @@ select="$makeDecls"/></xsl:message>
 	  <xsl:for-each select="tei:valList/tei:valItem">
 	    <rng:value>
 	      <xsl:choose>
+		<xsl:when test= "tei:altIdent=@ident">
+		  <xsl:value-of select="@ident"/>
+		</xsl:when>
 		<xsl:when test="tei:altIdent">
 		  <xsl:value-of select="normalize-space(tei:altIdent)"/>
 		</xsl:when>
@@ -1366,6 +1375,9 @@ select="$makeDecls"/></xsl:message>
   <xsl:template name="makeSimpleAttribute">
     <xsl:variable name="name">
       <xsl:choose>
+	<xsl:when test= "tei:altIdent=@ident">
+	  <xsl:value-of select="@ident"/>
+	</xsl:when>
         <xsl:when test="tei:altIdent">
           <xsl:value-of select="normalize-space(tei:altIdent)"/>
         </xsl:when>
@@ -2245,6 +2257,9 @@ select="$makeDecls"/></xsl:message>
 	  <xsl:number/>
 	  <xsl:text>] </xsl:text>
 	  <xsl:choose>
+	    <xsl:when test= "tei:altIdent=@ident">
+	      <xsl:value-of select="@ident"/>
+	    </xsl:when>
 	    <xsl:when test="tei:altIdent">
 	      <xsl:value-of select="normalize-space(tei:altIdent)"/>
 	    </xsl:when>
@@ -2274,6 +2289,9 @@ select="$makeDecls"/></xsl:message>
 	  <xsl:number/>
 	  <xsl:text>] </xsl:text>
 	  <xsl:choose>
+	    <xsl:when test= "tei:altIdent=@ident">
+	      <xsl:value-of select="@ident"/>
+	    </xsl:when>
 	    <xsl:when test="tei:altIdent">
 	      <xsl:value-of select="normalize-space(tei:altIdent)"/>
 	    </xsl:when>

@@ -430,6 +430,9 @@
           <xsl:text>%NS;</xsl:text>
         </xsl:if>
         <xsl:choose>
+	  <xsl:when test= "tei:altIdent=@ident">
+            <xsl:value-of select="@ident"/>
+	  </xsl:when>
           <xsl:when test="tei:altIdent">
             <xsl:value-of select="tei:altIdent"/>
           </xsl:when>
@@ -852,6 +855,9 @@
             <xsl:when test="key('ELEMENTS',@name)">
               <xsl:for-each select="key('ELEMENTS',@name)">
                 <xsl:choose>
+		  <xsl:when test= "tei:altIdent=@ident">
+		    <xsl:value-of select="@ident"/>
+		  </xsl:when>
                   <xsl:when test="tei:altIdent">
                     <xsl:value-of select="normalize-space(tei:altIdent)"/>
                   </xsl:when>
@@ -974,6 +980,9 @@
 	    <xsl:when test="@ns='http://www.w3.org/1999/xhtml'">
 	      <xsl:text>html:</xsl:text>
               <xsl:value-of select="@ident"/>
+	    </xsl:when>
+	    <xsl:when test= "tei:altIdent=@ident">
+	      <xsl:value-of select="@ident"/>
 	    </xsl:when>
             <xsl:when test="tei:altIdent">
               <xsl:value-of select="normalize-space(tei:altIdent)"/>
@@ -1274,6 +1283,9 @@
                   </xsl:when>
                   <xsl:when test="key('ELEMENTS',@ident)">
                     <xsl:choose>
+		      <xsl:when test= "tei:altIdent=@ident">
+			<xsl:value-of select="@ident"/>
+		      </xsl:when>
                       <xsl:when test="tei:altIdent">
                         <xsl:value-of select="normalize-space(tei:altIdent)"/>
                       </xsl:when>
@@ -1386,6 +1398,9 @@
       </xsl:when>
     </xsl:choose>
     <xsl:choose>
+      <xsl:when test= "tei:altIdent=@ident">
+	<xsl:value-of select="@ident"/>
+      </xsl:when>
       <xsl:when test="tei:altIdent">
         <xsl:value-of select="normalize-space(tei:altIdent)"/>
       </xsl:when>
