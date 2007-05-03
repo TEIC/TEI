@@ -17,7 +17,7 @@ return
     <name>
     {$a/@usage}
     {data($a/@ident)}</name>
-    <defaultVal>{data($a/tei:defaultVal)}</default>
+    <defaultVal>{data($a/tei:defaultVal)}</defaultVal>
      { for $d in  $a/tei:datatype 
         return
 	 <datatype>
