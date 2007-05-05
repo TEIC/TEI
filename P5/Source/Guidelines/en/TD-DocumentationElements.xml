@@ -971,11 +971,14 @@ original specification and in the new specification supplied above:
 replace all children elements of the original specification with the 
 the children elements of the new specification, and thus (in this
 example) to delete all of them except <gi>content</gi>. </p>
+
 <p>A schema may not contain more than two declarations for any given
 component. The value of the <att>mode</att> attribute is used to
 determine exactly how the second declaration (and its constituents)
-should be combined with the first. The
- following table summarizes how a processor should resolve duplicate declarations:
+should be combined with the first. The following table summarizes how
+a processor should resolve duplicate declarations; the term
+<term>identifiable</term> refers to those elements which can have a
+<att>mode</att> attribute:
 <table>
 <row role="label">
 <cell>mode value</cell>
@@ -1011,13 +1014,15 @@ mode; ignore existing children</cell>
 <row>
 <cell>change</cell>
 <cell>yes</cell>
-<cell>replace existing declaration; process new children in replace
-mode; retain existing (unreplaced) children</cell>
+<cell>process identifiable children according to their modes;
+process unidentifiable children in replace mode; 
+retain existing children where no replacement or change
+is provided </cell>
 </row>
 <row>
 <cell>delete</cell>
 <cell>no</cell>
-<cell><!--remove existing declaration; -->ignore the current declaration and its children</cell>
+<cell>raise error</cell>
 </row>
 <row>
 <cell>delete</cell>
