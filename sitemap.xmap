@@ -89,6 +89,13 @@
 	  <map:match pattern="**.xml">
 	    <map:select type="request">
 	      <map:parameter name="parameter-name" value="style"/>
+	      <map:when test="xml">
+	        <map:generate src="{1}.xml"/>
+		<map:serialize encoding="UTF-8" type="xml"/>
+	      </map:when>
+	      <map:when test="raw">
+		<map:read src="{1}.xml" mime-type="text/xml"/>
+	      </map:when>
 	      <map:when test="printable">
 	        <map:generate src="{1}.xml"/>
 		<map:transform src="Utilities/guidelines-print.xsl">
