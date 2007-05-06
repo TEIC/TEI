@@ -1,0 +1,1802 @@
+
+<!--
+DTD Generated 2007-05-06T10:55:29Z. 
+-->
+
+<!-- start datatypes -->
+
+<!ENTITY % data.certainty '(high|medium|low|unknown)' >
+
+<!ENTITY % data.numeric ' CDATA' >
+
+<!ENTITY % data.count ' CDATA' >
+
+<!ENTITY % data.temporal ' CDATA' >
+
+<!ENTITY % data.truthValue ' CDATA' >
+
+<!ENTITY % data.language ' CDATA' >
+
+<!ENTITY % data.namespace ' CDATA' >
+
+<!ENTITY % data.outputMeasurement ' CDATA' >
+
+<!ENTITY % data.pattern ' CDATA' >
+
+<!ENTITY % data.pointer ' CDATA' >
+
+<!ENTITY % data.code ' CDATA' >
+
+<!ENTITY % data.enumerated ' CDATA' >
+
+<!ENTITY % data.key ' CDATA' >
+
+<!ENTITY % data.word ' CDATA' >
+
+<!ENTITY % data.name ' CDATA' >
+
+<!-- end datatypes -->
+
+<!--predeclared classes -->
+
+<!ENTITY % model.datePart ""> 
+<!ENTITY % model.datePart_sequence ""> 
+<!ENTITY % model.datePart_sequenceOptional ""> 
+<!ENTITY % model.datePart_sequenceOptionalRepeatable ""> 
+<!ENTITY % model.datePart_sequenceRepeatable ""> 
+<!ENTITY % att.global.linking.attributes ''>
+<!ENTITY % att.pointing.attributes ''>
+<!--end of predeclared classes -->
+
+<!ENTITY % att.ascribed.attribute.who '
+who CDATA  #IMPLIED'>
+
+<!ENTITY % att.datable.attribute.notBefore '
+notBefore %data.temporal;  #IMPLIED'>
+
+<!ENTITY % att.datable.attribute.notAfter '
+notAfter %data.temporal;  #IMPLIED'>
+
+<!ENTITY % att.datable.attribute.from '
+from %data.temporal;  #IMPLIED'>
+
+<!ENTITY % att.datable.attribute.to '
+to %data.temporal;  #IMPLIED'>
+
+<!ENTITY % att.datePart.attribute.value '
+value %data.temporal;  #IMPLIED'>
+
+<!ENTITY % att.datePart.attribute.dur '
+dur CDATA #IMPLIED'>
+
+<!ENTITY % att.declaring.attribute.decls '
+decls CDATA  #IMPLIED'>
+
+<!ENTITY % att.divLike.attribute.type '
+type %data.enumerated;  #IMPLIED'>
+
+<!ENTITY % att.global.attribute.xmlspace '
+xml:space (default|preserve) #IMPLIED'>
+
+<!ENTITY % att.global.attribute.xmlid '
+xml:id ID #IMPLIED'>
+
+<!ENTITY % att.global.attribute.n '
+n CDATA  #IMPLIED'>
+
+<!ENTITY % att.global.attribute.xmllang '
+xml:lang %data.language;  #IMPLIED'>
+
+<!ENTITY % att.global.attribute.rend '
+rend CDATA  #IMPLIED'>
+
+<!ENTITY % att.global.attribute.xmlbase '
+xml:base %data.pointer;  #IMPLIED'>
+
+<!ENTITY % att.naming.attribute.key '
+key %data.key;  #IMPLIED'>
+
+<!ENTITY % att.placement.attribute.place '
+place %data.enumerated;  #IMPLIED'>
+
+<!ENTITY % att.tableDecoration.attribute.role '
+role %data.enumerated;  "data" '>
+
+<!ENTITY % att.tableDecoration.attribute.rows '
+rows %data.count;  "1" '>
+
+<!ENTITY % att.tableDecoration.attribute.cols '
+cols %data.count;  "1" '>
+
+<!ENTITY % att.translatable.attribute.version '
+version %data.word;  #IMPLIED'>
+
+<!ENTITY % att.typed.attribute.type '
+type %data.word;  #IMPLIED'>
+
+<!ENTITY % model.nameLike.agent "name"> 
+<!ENTITY % model.nameLike.agent_sequence "name"> 
+<!ENTITY % model.nameLike.agent_sequenceOptional "name?"> 
+<!ENTITY % model.nameLike.agent_sequenceOptionalRepeatable "name*"> 
+<!ENTITY % model.nameLike.agent_sequenceRepeatable "name+"> 
+<!ENTITY % model.segLike "seg"> 
+<!ENTITY % model.segLike_sequence "seg"> 
+<!ENTITY % model.segLike_sequenceOptional "seg?"> 
+<!ENTITY % model.segLike_sequenceOptionalRepeatable "seg*"> 
+<!ENTITY % model.segLike_sequenceRepeatable "seg+"> 
+<!ENTITY % model.hiLike "foreign | hi | title | b | i | ul | sub | sup | smcap"> 
+<!ENTITY % model.hiLike_sequence "foreign, hi, title, b, i, ul, sub, sup, smcap"> 
+<!ENTITY % model.hiLike_sequenceOptional "foreign?, hi?, title?, b?, i?, ul?, sub?, sup?, smcap?"> 
+<!ENTITY % model.hiLike_sequenceOptionalRepeatable "foreign*, hi*, title*, b*, i*, ul*, sub*, sup*, smcap*"> 
+<!ENTITY % model.hiLike_sequenceRepeatable "foreign+, hi+, title+, b+, i+, ul+, sub+, sup+, smcap+"> 
+<!ENTITY % model.dateLike "date | time"> 
+<!ENTITY % model.dateLike_sequence "date, time"> 
+<!ENTITY % model.dateLike_sequenceOptional "date?, time?"> 
+<!ENTITY % model.dateLike_sequenceOptionalRepeatable "date*, time*"> 
+<!ENTITY % model.dateLike_sequenceRepeatable "date+, time+"> 
+<!ENTITY % model.measureLike "num"> 
+<!ENTITY % model.measureLike_sequence "num"> 
+<!ENTITY % model.measureLike_sequenceOptional "num?"> 
+<!ENTITY % model.measureLike_sequenceOptionalRepeatable "num*"> 
+<!ENTITY % model.measureLike_sequenceRepeatable "num+"> 
+<!ENTITY % model.graphicLike "graphic | formula"> 
+<!ENTITY % model.graphicLike_sequence "graphic, formula"> 
+<!ENTITY % model.graphicLike_sequenceOptional "graphic?, formula?"> 
+<!ENTITY % model.graphicLike_sequenceOptionalRepeatable "graphic*, formula*"> 
+<!ENTITY % model.graphicLike_sequenceRepeatable "graphic+, formula+"> 
+<!ENTITY % model.pPart.edit "unclear | abbr"> 
+<!ENTITY % model.pPart.edit_sequence "unclear, abbr"> 
+<!ENTITY % model.pPart.edit_sequenceOptional "unclear?, abbr?"> 
+<!ENTITY % model.pPart.edit_sequenceOptionalRepeatable "unclear*, abbr*"> 
+<!ENTITY % model.pPart.edit_sequenceRepeatable "unclear+, abbr+"> 
+<!ENTITY % model.ptrLike "ptr | ref"> 
+<!ENTITY % model.ptrLike_sequence "ptr, ref"> 
+<!ENTITY % model.ptrLike_sequenceOptional "ptr?, ref?"> 
+<!ENTITY % model.ptrLike_sequenceOptionalRepeatable "ptr*, ref*"> 
+<!ENTITY % model.ptrLike_sequenceRepeatable "ptr+, ref+"> 
+<!ENTITY % model.milestoneLike "milestone | pb | lb | cb | cols"> 
+<!ENTITY % model.milestoneLike_sequence "milestone, pb, lb, cb, cols"> 
+<!ENTITY % model.milestoneLike_sequenceOptional "milestone?, pb?, lb?, cb?, cols?"> 
+<!ENTITY % model.milestoneLike_sequenceOptionalRepeatable "milestone*, pb*, lb*, cb*, cols*"> 
+<!ENTITY % model.milestoneLike_sequenceRepeatable "milestone+, pb+, lb+, cb+, cols+"> 
+<!ENTITY % model.gLike ""> 
+<!ENTITY % model.gLike_sequence ""> 
+<!ENTITY % model.gLike_sequenceOptional ""> 
+<!ENTITY % model.gLike_sequenceOptionalRepeatable ""> 
+<!ENTITY % model.gLike_sequenceRepeatable ""> 
+<!ENTITY % model.qLike "q | cit"> 
+<!ENTITY % model.qLike_sequence "q, cit"> 
+<!ENTITY % model.qLike_sequenceOptional "q?, cit?"> 
+<!ENTITY % model.qLike_sequenceOptionalRepeatable "q*, cit*"> 
+<!ENTITY % model.qLike_sequenceRepeatable "q+, cit+"> 
+<!ENTITY % model.biblLike "bibl"> 
+<!ENTITY % model.biblLike_sequence "bibl"> 
+<!ENTITY % model.biblLike_sequenceOptional "bibl?"> 
+<!ENTITY % model.biblLike_sequenceOptionalRepeatable "bibl*"> 
+<!ENTITY % model.biblLike_sequenceRepeatable "bibl+"> 
+<!ENTITY % model.listLike "list | listBibl"> 
+<!ENTITY % model.listLike_sequence "list, listBibl"> 
+<!ENTITY % model.listLike_sequenceOptional "list?, listBibl?"> 
+<!ENTITY % model.listLike_sequenceOptionalRepeatable "list*, listBibl*"> 
+<!ENTITY % model.listLike_sequenceRepeatable "list+, listBibl+"> 
+<!ENTITY % model.noteLike "note"> 
+<!ENTITY % model.noteLike_sequence "note"> 
+<!ENTITY % model.noteLike_sequenceOptional "note?"> 
+<!ENTITY % model.noteLike_sequenceOptionalRepeatable "note*"> 
+<!ENTITY % model.noteLike_sequenceRepeatable "note+"> 
+<!ENTITY % model.stageLike "stage"> 
+<!ENTITY % model.stageLike_sequence "stage"> 
+<!ENTITY % model.stageLike_sequenceOptional "stage?"> 
+<!ENTITY % model.stageLike_sequenceOptionalRepeatable "stage*"> 
+<!ENTITY % model.stageLike_sequenceRepeatable "stage+"> 
+<!ENTITY % model.global.edit "gap"> 
+<!ENTITY % model.global.edit_sequence "gap"> 
+<!ENTITY % model.global.edit_sequenceOptional "gap?"> 
+<!ENTITY % model.global.edit_sequenceOptionalRepeatable "gap*"> 
+<!ENTITY % model.global.edit_sequenceRepeatable "gap+"> 
+<!ENTITY % model.divPart "p | l | lg | sp | ab"> 
+<!ENTITY % model.divPart_sequence "p, l, lg, sp, ab"> 
+<!ENTITY % model.divPart_sequenceOptional "p?, l?, lg?, sp?, ab?"> 
+<!ENTITY % model.divPart_sequenceOptionalRepeatable "p*, l*, lg*, sp*, ab*"> 
+<!ENTITY % model.divPart_sequenceRepeatable "p+, l+, lg+, sp+, ab+"> 
+<!ENTITY % model.blockLike "seg"> 
+<!ENTITY % model.blockLike_sequence "seg"> 
+<!ENTITY % model.blockLike_sequenceOptional "seg?"> 
+<!ENTITY % model.blockLike_sequenceOptionalRepeatable "seg*"> 
+<!ENTITY % model.blockLike_sequenceRepeatable "seg+"> 
+<!ENTITY % model.pLike "p | ab"> 
+<!ENTITY % model.pLike_sequence "p, ab"> 
+<!ENTITY % model.pLike_sequenceOptional "p?, ab?"> 
+<!ENTITY % model.pLike_sequenceOptionalRepeatable "p*, ab*"> 
+<!ENTITY % model.pLike_sequenceRepeatable "p+, ab+"> 
+<!ENTITY % model.assertLike ""> 
+<!ENTITY % model.assertLike_sequence ""> 
+<!ENTITY % model.assertLike_sequenceOptional ""> 
+<!ENTITY % model.assertLike_sequenceOptionalRepeatable ""> 
+<!ENTITY % model.assertLike_sequenceRepeatable ""> 
+<!ENTITY % model.personPart "bibl"> 
+<!ENTITY % model.personPart_sequence "bibl"> 
+<!ENTITY % model.personPart_sequenceOptional "bibl?"> 
+<!ENTITY % model.personPart_sequenceOptionalRepeatable "bibl*"> 
+<!ENTITY % model.personPart_sequenceRepeatable "bibl+"> 
+<!ENTITY % model.publicationStmtPart "address | date | publisher | pubPlace | distributor | authority | idno | availability"> 
+<!ENTITY % model.publicationStmtPart_sequence "address, date, publisher, pubPlace, distributor, authority, idno, availability"> 
+<!ENTITY % model.publicationStmtPart_sequenceOptional "address?, date?, publisher?, pubPlace?, distributor?, authority?, idno?, availability?"> 
+<!ENTITY % model.publicationStmtPart_sequenceOptionalRepeatable "address*, date*, publisher*, pubPlace*, distributor*, authority*, idno*, availability*"> 
+<!ENTITY % model.publicationStmtPart_sequenceRepeatable "address+, date+, publisher+, pubPlace+, distributor+, authority+, idno+, availability+"> 
+<!ENTITY % model.glossLike "desc"> 
+<!ENTITY % model.glossLike_sequence "desc"> 
+<!ENTITY % model.glossLike_sequenceOptional "desc?"> 
+<!ENTITY % model.glossLike_sequenceOptionalRepeatable "desc*"> 
+<!ENTITY % model.glossLike_sequenceRepeatable "desc+"> 
+<!ENTITY % model.quoteLike ""> 
+<!ENTITY % model.quoteLike_sequence ""> 
+<!ENTITY % model.quoteLike_sequenceOptional ""> 
+<!ENTITY % model.quoteLike_sequenceOptionalRepeatable ""> 
+<!ENTITY % model.quoteLike_sequenceRepeatable ""> 
+<!ENTITY % model.respLike "author | editor | respStmt"> 
+<!ENTITY % model.respLike_sequence "author, editor, respStmt"> 
+<!ENTITY % model.respLike_sequenceOptional "author?, editor?, respStmt?"> 
+<!ENTITY % model.respLike_sequenceOptionalRepeatable "author*, editor*, respStmt*"> 
+<!ENTITY % model.respLike_sequenceRepeatable "author+, editor+, respStmt+"> 
+<!ENTITY % model.divWrapper.bottom "trailer | closer | signed"> 
+<!ENTITY % model.divWrapper.bottom_sequence "trailer, closer, signed"> 
+<!ENTITY % model.divWrapper.bottom_sequenceOptional "trailer?, closer?, signed?"> 
+<!ENTITY % model.divWrapper.bottom_sequenceOptionalRepeatable "trailer*, closer*, signed*"> 
+<!ENTITY % model.divWrapper.bottom_sequenceRepeatable "trailer+, closer+, signed+"> 
+<!ENTITY % model.divWrapper "head | byline | dateline | argument | epigraph | opener | salute | docAuthor | docDate"> 
+<!ENTITY % model.divWrapper_sequence "head, byline, dateline, argument, epigraph, opener, salute, docAuthor, docDate"> 
+<!ENTITY % model.divWrapper_sequenceOptional "head?, byline?, dateline?, argument?, epigraph?, opener?, salute?, docAuthor?, docDate?"> 
+<!ENTITY % model.divWrapper_sequenceOptionalRepeatable "head*, byline*, dateline*, argument*, epigraph*, opener*, salute*, docAuthor*, docDate*"> 
+<!ENTITY % model.divWrapper_sequenceRepeatable "head+, byline+, dateline+, argument+, epigraph+, opener+, salute+, docAuthor+, docDate+"> 
+<!ENTITY % model.pLike.front "head | byline | argument | epigraph | docTitle | titlePart | docAuthor | docEdition | docImprint | docDate"> 
+<!ENTITY % model.pLike.front_sequence "head, byline, argument, epigraph, docTitle, titlePart, docAuthor, docEdition, docImprint, docDate"> 
+<!ENTITY % model.pLike.front_sequenceOptional "head?, byline?, argument?, epigraph?, docTitle?, titlePart?, docAuthor?, docEdition?, docImprint?, docDate?"> 
+<!ENTITY % model.pLike.front_sequenceOptionalRepeatable "head*, byline*, argument*, epigraph*, docTitle*, titlePart*, docAuthor*, docEdition*, docImprint*, docDate*"> 
+<!ENTITY % model.pLike.front_sequenceRepeatable "head+, byline+, argument+, epigraph+, docTitle+, titlePart+, docAuthor+, docEdition+, docImprint+, docDate+"> 
+<!ENTITY % model.titlepagePart "graphic | byline | epigraph | docTitle | titlePart | docAuthor | docEdition | docImprint | docDate | figure | ornament"> 
+<!ENTITY % model.titlepagePart_sequence "graphic, byline, epigraph, docTitle, titlePart, docAuthor, docEdition, docImprint, docDate, figure, ornament"> 
+<!ENTITY % model.titlepagePart_sequenceOptional "graphic?, byline?, epigraph?, docTitle?, titlePart?, docAuthor?, docEdition?, docImprint?, docDate?, figure?, ornament?"> 
+<!ENTITY % model.titlepagePart_sequenceOptionalRepeatable "graphic*, byline*, epigraph*, docTitle*, titlePart*, docAuthor*, docEdition*, docImprint*, docDate*, figure*, ornament*"> 
+<!ENTITY % model.titlepagePart_sequenceRepeatable "graphic+, byline+, epigraph+, docTitle+, titlePart+, docAuthor+, docEdition+, docImprint+, docDate+, figure+, ornament+"> 
+<!ENTITY % model.msItemPart "%model.respLike; | bibl | listBibl | title"> 
+<!ENTITY % model.msItemPart_sequence "%model.respLike;, bibl, listBibl, title"> 
+<!ENTITY % model.msItemPart_sequenceOptional "%model.respLike;?, bibl?, listBibl?, title?"> 
+<!ENTITY % model.msItemPart_sequenceOptionalRepeatable "%model.respLike;*, bibl*, listBibl*, title*"> 
+<!ENTITY % model.msItemPart_sequenceRepeatable "%model.respLike;+, bibl+, listBibl+, title+"> 
+<!ENTITY % model.choicePart "unclear | abbr | seg"> 
+<!ENTITY % model.choicePart_sequence "unclear, abbr, seg"> 
+<!ENTITY % model.choicePart_sequenceOptional "unclear?, abbr?, seg?"> 
+<!ENTITY % model.choicePart_sequenceOptionalRepeatable "unclear*, abbr*, seg*"> 
+<!ENTITY % model.choicePart_sequenceRepeatable "unclear+, abbr+, seg+"> 
+<!ENTITY % model.lLike "l"> 
+<!ENTITY % model.lLike_sequence "l"> 
+<!ENTITY % model.lLike_sequenceOptional "l?"> 
+<!ENTITY % model.lLike_sequenceOptionalRepeatable "l*"> 
+<!ENTITY % model.lLike_sequenceRepeatable "l+"> 
+<!ENTITY % model.recordingPart "%model.dateLike; | respStmt"> 
+<!ENTITY % model.recordingPart_sequence "%model.dateLike;, respStmt"> 
+<!ENTITY % model.recordingPart_sequenceOptional "%model.dateLike;?, respStmt?"> 
+<!ENTITY % model.recordingPart_sequenceOptionalRepeatable "%model.dateLike;*, respStmt*"> 
+<!ENTITY % model.recordingPart_sequenceRepeatable "%model.dateLike;+, respStmt+"> 
+<!ENTITY % model.imprintPart "publisher | biblScope | pubPlace"> 
+<!ENTITY % model.imprintPart_sequence "publisher, biblScope, pubPlace"> 
+<!ENTITY % model.imprintPart_sequenceOptional "publisher?, biblScope?, pubPlace?"> 
+<!ENTITY % model.imprintPart_sequenceOptionalRepeatable "publisher*, biblScope*, pubPlace*"> 
+<!ENTITY % model.imprintPart_sequenceRepeatable "publisher+, biblScope+, pubPlace+"> 
+<!ENTITY % model.catDescPart ""> 
+<!ENTITY % model.catDescPart_sequence ""> 
+<!ENTITY % model.catDescPart_sequenceOptional ""> 
+<!ENTITY % model.catDescPart_sequenceOptionalRepeatable ""> 
+<!ENTITY % model.catDescPart_sequenceRepeatable ""> 
+<!ENTITY % model.addressLike "email | address"> 
+<!ENTITY % model.addressLike_sequence "email, address"> 
+<!ENTITY % model.addressLike_sequenceOptional "email?, address?"> 
+<!ENTITY % model.addressLike_sequenceOptionalRepeatable "email*, address*"> 
+<!ENTITY % model.addressLike_sequenceRepeatable "email+, address+"> 
+<!ENTITY % model.nameLike "%model.nameLike.agent;"> 
+<!ENTITY % model.nameLike_sequence "%model.nameLike.agent;"> 
+<!ENTITY % model.nameLike_sequenceOptional "%model.nameLike.agent;?"> 
+<!ENTITY % model.nameLike_sequenceOptionalRepeatable "%model.nameLike.agent;*"> 
+<!ENTITY % model.nameLike_sequenceRepeatable "%model.nameLike.agent;+"> 
+<!ENTITY % model.global "%model.milestoneLike; | %model.noteLike; | %model.global.edit;"> 
+<!ENTITY % model.global_sequence "%model.milestoneLike;, %model.noteLike;, %model.global.edit;"> 
+<!ENTITY % model.global_sequenceOptional "%model.milestoneLike;?, %model.noteLike;?, %model.global.edit;?"> 
+<!ENTITY % model.global_sequenceOptionalRepeatable "%model.milestoneLike;*, %model.noteLike;*, %model.global.edit;*"> 
+<!ENTITY % model.global_sequenceRepeatable "%model.milestoneLike;+, %model.noteLike;+, %model.global.edit;+"> 
+<!ENTITY % model.featureVal ""> 
+<!ENTITY % model.featureVal_sequence ""> 
+<!ENTITY % model.featureVal_sequenceOptional ""> 
+<!ENTITY % model.featureVal_sequenceOptionalRepeatable ""> 
+<!ENTITY % model.featureVal_sequenceRepeatable ""> 
+<!ENTITY % model.common "%model.qLike; | %model.biblLike; | %model.listLike; | %model.divPart; | label | table | figure | ornament"> 
+<!ENTITY % model.common_sequence "%model.qLike;, %model.biblLike;, %model.listLike;, %model.divPart;, label, table, figure, ornament"> 
+<!ENTITY % model.common_sequenceOptional "%model.qLike;?, %model.biblLike;?, %model.listLike;?, %model.divPart;?, label?, table?, figure?, ornament?"> 
+<!ENTITY % model.common_sequenceOptionalRepeatable "%model.qLike;*, %model.biblLike;*, %model.listLike;*, %model.divPart;*, label*, table*, figure*, ornament*"> 
+<!ENTITY % model.common_sequenceRepeatable "%model.qLike;+, %model.biblLike;+, %model.listLike;+, %model.divPart;+, label+, table+, figure+, ornament+"> 
+<!ENTITY % model.biblPart "%model.respLike; | %model.imprintPart; | edition | extent | distributor | idno"> 
+<!ENTITY % model.biblPart_sequence "%model.respLike;, %model.imprintPart;, edition, extent, distributor, idno"> 
+<!ENTITY % model.biblPart_sequenceOptional "%model.respLike;?, %model.imprintPart;?, edition?, extent?, distributor?, idno?"> 
+<!ENTITY % model.biblPart_sequenceOptionalRepeatable "%model.respLike;*, %model.imprintPart;*, edition*, extent*, distributor*, idno*"> 
+<!ENTITY % model.biblPart_sequenceRepeatable "%model.respLike;+, %model.imprintPart;+, edition+, extent+, distributor+, idno+"> 
+<!ENTITY % model.datePart ""> 
+<!ENTITY % model.datePart_sequence ""> 
+<!ENTITY % model.datePart_sequenceOptional ""> 
+<!ENTITY % model.datePart_sequenceOptionalRepeatable ""> 
+<!ENTITY % model.datePart_sequenceRepeatable ""> 
+<!ENTITY % model.frontPart "titlePage"> 
+<!ENTITY % model.frontPart_sequence "titlePage"> 
+<!ENTITY % model.frontPart_sequenceOptional "titlePage?"> 
+<!ENTITY % model.frontPart_sequenceOptionalRepeatable "titlePage*"> 
+<!ENTITY % model.frontPart_sequenceRepeatable "titlePage+"> 
+<!ENTITY % model.addrPart "%model.nameLike; | addrLine"> 
+<!ENTITY % model.addrPart_sequence "%model.nameLike;, addrLine"> 
+<!ENTITY % model.addrPart_sequenceOptional "%model.nameLike;?, addrLine?"> 
+<!ENTITY % model.addrPart_sequenceOptionalRepeatable "%model.nameLike;*, addrLine*"> 
+<!ENTITY % model.addrPart_sequenceRepeatable "%model.nameLike;+, addrLine+"> 
+<!ENTITY % model.pPart.data "%model.dateLike; | %model.measureLike; | %model.addressLike; | %model.nameLike;"> 
+<!ENTITY % model.pPart.data_sequence "%model.dateLike;, %model.measureLike;, %model.addressLike;, %model.nameLike;"> 
+<!ENTITY % model.pPart.data_sequenceOptional "%model.dateLike;?, %model.measureLike;?, %model.addressLike;?, %model.nameLike;?"> 
+<!ENTITY % model.pPart.data_sequenceOptionalRepeatable "%model.dateLike;*, %model.measureLike;*, %model.addressLike;*, %model.nameLike;*"> 
+<!ENTITY % model.pPart.data_sequenceRepeatable "%model.dateLike;+, %model.measureLike;+, %model.addressLike;+, %model.nameLike;+"> 
+<!ENTITY % model.inter "%model.qLike; | %model.biblLike; | %model.listLike; | %model.stageLike; | label | text | table | figure | ornament"> 
+<!ENTITY % model.inter_sequence "%model.qLike;, %model.biblLike;, %model.listLike;, %model.stageLike;, label, text, table, figure, ornament"> 
+<!ENTITY % model.inter_sequenceOptional "%model.qLike;?, %model.biblLike;?, %model.listLike;?, %model.stageLike;?, label?, text?, table?, figure?, ornament?"> 
+<!ENTITY % model.inter_sequenceOptionalRepeatable "%model.qLike;*, %model.biblLike;*, %model.listLike;*, %model.stageLike;*, label*, text*, table*, figure*, ornament*"> 
+<!ENTITY % model.inter_sequenceRepeatable "%model.qLike;+, %model.biblLike;+, %model.listLike;+, %model.stageLike;+, label+, text+, table+, figure+, ornament+"> 
+<!ENTITY % model.phrase "%model.segLike; | %model.hiLike; | %model.graphicLike; | %model.pPart.edit; | %model.ptrLike; | %model.pPart.data;"> 
+<!ENTITY % model.phrase_sequence "%model.segLike;, %model.hiLike;, %model.graphicLike;, %model.pPart.edit;, %model.ptrLike;, %model.pPart.data;"> 
+<!ENTITY % model.phrase_sequenceOptional "%model.segLike;?, %model.hiLike;?, %model.graphicLike;?, %model.pPart.edit;?, %model.ptrLike;?, %model.pPart.data;?"> 
+<!ENTITY % model.phrase_sequenceOptionalRepeatable "%model.segLike;*, %model.hiLike;*, %model.graphicLike;*, %model.pPart.edit;*, %model.ptrLike;*, %model.pPart.data;*"> 
+<!ENTITY % model.phrase_sequenceRepeatable "%model.segLike;+, %model.hiLike;+, %model.graphicLike;+, %model.pPart.edit;+, %model.ptrLike;+, %model.pPart.data;+"> 
+<!ENTITY % model.divLike ""> 
+<!ENTITY % model.divLike_sequence ""> 
+<!ENTITY % model.divLike_sequenceOptional ""> 
+<!ENTITY % model.divLike_sequenceOptionalRepeatable ""> 
+<!ENTITY % model.divLike_sequenceRepeatable ""> 
+<!ENTITY % model.divGenLike ""> 
+<!ENTITY % model.divGenLike_sequence ""> 
+<!ENTITY % model.divGenLike_sequenceOptional ""> 
+<!ENTITY % model.divGenLike_sequenceOptionalRepeatable ""> 
+<!ENTITY % model.divGenLike_sequenceRepeatable ""> 
+<!ENTITY % model.div1Like "div1"> 
+<!ENTITY % model.div1Like_sequence "div1"> 
+<!ENTITY % model.div1Like_sequenceOptional "div1?"> 
+<!ENTITY % model.div1Like_sequenceOptionalRepeatable "div1*"> 
+<!ENTITY % model.div1Like_sequenceRepeatable "div1+"> 
+<!ENTITY % model.div2Like "div2"> 
+<!ENTITY % model.div2Like_sequence "div2"> 
+<!ENTITY % model.div2Like_sequenceOptional "div2?"> 
+<!ENTITY % model.div2Like_sequenceOptionalRepeatable "div2*"> 
+<!ENTITY % model.div2Like_sequenceRepeatable "div2+"> 
+<!ENTITY % model.div3Like "div3"> 
+<!ENTITY % model.div3Like_sequence "div3"> 
+<!ENTITY % model.div3Like_sequenceOptional "div3?"> 
+<!ENTITY % model.div3Like_sequenceOptionalRepeatable "div3*"> 
+<!ENTITY % model.div3Like_sequenceRepeatable "div3+"> 
+<!ENTITY % model.div4Like "div4"> 
+<!ENTITY % model.div4Like_sequence "div4"> 
+<!ENTITY % model.div4Like_sequenceOptional "div4?"> 
+<!ENTITY % model.div4Like_sequenceOptionalRepeatable "div4*"> 
+<!ENTITY % model.div4Like_sequenceRepeatable "div4+"> 
+<!ENTITY % model.div5Like "div5"> 
+<!ENTITY % model.div5Like_sequence "div5"> 
+<!ENTITY % model.div5Like_sequenceOptional "div5?"> 
+<!ENTITY % model.div5Like_sequenceOptionalRepeatable "div5*"> 
+<!ENTITY % model.div5Like_sequenceRepeatable "div5+"> 
+<!ENTITY % model.div6Like "div6"> 
+<!ENTITY % model.div6Like_sequence "div6"> 
+<!ENTITY % model.div6Like_sequenceOptional "div6?"> 
+<!ENTITY % model.div6Like_sequenceOptionalRepeatable "div6*"> 
+<!ENTITY % model.div6Like_sequenceRepeatable "div6+"> 
+<!ENTITY % model.div7Like "div7"> 
+<!ENTITY % model.div7Like_sequence "div7"> 
+<!ENTITY % model.div7Like_sequenceOptional "div7?"> 
+<!ENTITY % model.div7Like_sequenceOptionalRepeatable "div7*"> 
+<!ENTITY % model.div7Like_sequenceRepeatable "div7+"> 
+<!ENTITY % model.headerPart "encodingDesc | profileDesc"> 
+<!ENTITY % model.headerPart_sequence "encodingDesc, profileDesc"> 
+<!ENTITY % model.headerPart_sequenceOptional "encodingDesc?, profileDesc?"> 
+<!ENTITY % model.headerPart_sequenceOptionalRepeatable "encodingDesc*, profileDesc*"> 
+<!ENTITY % model.headerPart_sequenceRepeatable "encodingDesc+, profileDesc+"> 
+<!ENTITY % model.sourceDescPart ""> 
+<!ENTITY % model.sourceDescPart_sequence ""> 
+<!ENTITY % model.sourceDescPart_sequenceOptional ""> 
+<!ENTITY % model.sourceDescPart_sequenceOptionalRepeatable ""> 
+<!ENTITY % model.sourceDescPart_sequenceRepeatable ""> 
+<!ENTITY % model.encodingPart "projectDesc | samplingDecl | editorialDecl | refsDecl | classDecl"> 
+<!ENTITY % model.encodingPart_sequence "projectDesc, samplingDecl, editorialDecl, refsDecl, classDecl"> 
+<!ENTITY % model.encodingPart_sequenceOptional "projectDesc?, samplingDecl?, editorialDecl?, refsDecl?, classDecl?"> 
+<!ENTITY % model.encodingPart_sequenceOptionalRepeatable "projectDesc*, samplingDecl*, editorialDecl*, refsDecl*, classDecl*"> 
+<!ENTITY % model.encodingPart_sequenceRepeatable "projectDesc+, samplingDecl+, editorialDecl+, refsDecl+, classDecl+"> 
+<!ENTITY % model.editorialDeclPart ""> 
+<!ENTITY % model.editorialDeclPart_sequence ""> 
+<!ENTITY % model.editorialDeclPart_sequenceOptional ""> 
+<!ENTITY % model.editorialDeclPart_sequenceOptionalRepeatable ""> 
+<!ENTITY % model.editorialDeclPart_sequenceRepeatable ""> 
+<!ENTITY % model.profileDescPart "langUsage | textClass"> 
+<!ENTITY % model.profileDescPart_sequence "langUsage, textClass"> 
+<!ENTITY % model.profileDescPart_sequenceOptional "langUsage?, textClass?"> 
+<!ENTITY % model.profileDescPart_sequenceOptionalRepeatable "langUsage*, textClass*"> 
+<!ENTITY % model.profileDescPart_sequenceRepeatable "langUsage+, textClass+"> 
+<!ENTITY % att.pointing.attribute.type '
+type %data.word;  #IMPLIED'>
+
+<!ENTITY % att.pointing.attribute.evaluate '
+evaluate (all|one|none) #IMPLIED'>
+
+<!-- start predeclared patterns -->
+
+<!-- start rest of patterns -->
+
+<!ENTITY % macro.component '(%model.common;)' >
+
+<!ENTITY % macro.componentSeq '((%macro.component;) | (%model.global;))*' >
+
+<!ENTITY % macro.paraContent '( #PCDATA | _DUMMY_model.gLike | %model.phrase; | %model.inter; | %model.global;)*' >
+
+<!ENTITY % macro.phraseSeq '( #PCDATA | _DUMMY_model.gLike | %model.phrase; | %model.global;)*' >
+
+<!ENTITY % macro.specialPara '( #PCDATA | _DUMMY_model.gLike | %model.phrase; | %model.inter; | %model.divPart; | %model.global;)*' >
+
+<!ENTITY % macro.fileDescPart '(titleStmt,editionStmt?,extent?,publicationStmt,seriesStmt?,notesStmt?)' >
+
+<!ENTITY % macro.glossSeq '(desc*)' >
+
+<!-- end patterns -->
+
+<!-- start elements -->
+
+<!--doc:(TEI document) contains a single TEI-conformant document,
+comprising a TEI header and a text, either in isolation or as part of a
+teiCorpus element. -->
+<!ELEMENT TEI (teiHeader,text)>
+<!ATTLIST TEI
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+xmlns %data.pointer;  "http://www.tei-c.org/ns/1.0" 
+version CDATA "5.0"  >
+<!--doc:(anonymous block) contains any arbitrary component-level unit of text, acting as
+an anonymous container for phrase or inter level elements analogous to, but
+without the semantic baggage of, a paragraph. -->
+<!ELEMENT ab %macro.paraContent;>
+<!ATTLIST ab
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.typed.attribute.type;
+part (Y|N|I|M|F) "N"  >
+<!--doc:(abbreviation) contains an abbreviation of any sort. -->
+<!ELEMENT abbr %macro.phraseSeq;>
+<!ATTLIST abbr
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+type %data.enumerated;  #IMPLIED >
+<!--doc:contains one line of a postal address. -->
+<!ELEMENT addrLine %macro.phraseSeq;>
+<!ATTLIST addrLine
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:contains a postal  address, for example of a
+publisher, an organization, or an individual. -->
+<!ELEMENT address ((%model.global;)*,((%model.addrPart;),(%model.global;)*)+)>
+<!ATTLIST address
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:A formal list or prose description of the topics addressed by
+	a subdivision of a text. -->
+<!ELEMENT argument ((%model.global;)*,(head,(%model.global;)*)?,(%macro.component;,(%model.global;)*)+)>
+<!ATTLIST argument
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:in a bibliographic reference, contains the name of the author(s),
+personal or corporate,
+of a work; the primary statement of responsibility for any
+bibliographic item. -->
+<!ELEMENT author %macro.phraseSeq;>
+<!ATTLIST author
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(release authority) supplies the name of a person or other agency responsible for
+  making an electronic file available, other than a publisher or
+  distributor. -->
+<!ELEMENT authority %macro.phraseSeq;>
+<!ATTLIST authority
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:supplies information about the availability of a text, for
+  example any restrictions on its use or distribution, its copyright
+  status, etc. -->
+<!ELEMENT availability (%model.pLike;)+>
+<!ATTLIST availability
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+status (free|unknown|restricted) "unknown"  >
+<!--doc:(bold) for capturing typographical feature: bold glyphs. -->
+<!ELEMENT b %macro.paraContent;>
+<!--doc:(back matter) contains any appendixes, etc. following the main part of a
+text. -->
+<!ELEMENT back ((%model.frontPart; | %model.global; | %model.divWrapper;)*,((_DUMMY_model.divLike,(%model.global; | %model.frontPart;)*)+ | ((%model.div1Like;),(%model.global; | %model.frontPart;)*)+)?,(%model.divWrapper.bottom;)*)>
+<!ATTLIST back
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.declaring.attribute.decls; >
+<!--doc:(bibliographic citation) contains a loosely-structured bibliographic citation of which
+the sub-components may or may not be explicitly tagged. -->
+<!ELEMENT bibl ( #PCDATA | _DUMMY_model.gLike | %model.hiLike; | %model.pPart.data; | %model.pPart.edit; | %model.segLike; | %model.ptrLike; | %model.biblPart; | %model.global;)*>
+<!ATTLIST bibl
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(scope of citation) defines the scope of a bibliographic reference, for example as a
+list of pagenumbers, or a named subdivision of a larger work. -->
+<!ELEMENT biblScope %macro.phraseSeq;>
+<!ATTLIST biblScope
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+type %data.enumerated;  #IMPLIED >
+<!--doc:(text body) contains the whole body of a single unitary text, excluding any front or back matter. -->
+<!ELEMENT body ((%model.global;)*,((%model.divWrapper;),(%model.global; | %model.divWrapper;)*)?,(_DUMMY_model.divGenLike,(%model.global; | _DUMMY_model.divGenLike)*)?,((_DUMMY_model.divLike,(%model.global; | _DUMMY_model.divGenLike)*)+ | ((%model.div1Like;),(%model.global; | _DUMMY_model.divGenLike)*)+ | (((%macro.component;),(%model.global;)*)+,((_DUMMY_model.divLike,(%model.global; | _DUMMY_model.divGenLike)*)+ | ((%model.div1Like;),(%model.global; | _DUMMY_model.divGenLike)*)+)?)),((%model.divWrapper.bottom;),(%model.global;)*)*)>
+<!ATTLIST body
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.declaring.attribute.decls; >
+<!--doc:contains the primary statement of responsibility given for a work
+on its title page or at the head or end of the work. -->
+<!ELEMENT byline ( #PCDATA | _DUMMY_model.gLike | %model.phrase; | docAuthor | %model.global;)*>
+<!ATTLIST byline
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(defines how to convert a canonical reference into a URI) specifies an expression and replacement pattern for
+  tranforming a canonical reference into a URI -->
+<!ELEMENT cRefPattern (%model.pLike;)*>
+<!ATTLIST cRefPattern
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+matchPattern %data.pattern;  #REQUIRED
+replacementPattern CDATA #REQUIRED >
+<!--doc:(category description) describes some category within a taxonomy
+or text typology, either in the form of a brief prose description
+or in terms of the situational parameters used by the TEI
+formal textDesc. -->
+<!ELEMENT catDesc ( #PCDATA | %model.phrase; | _DUMMY_model.catDescPart)*>
+<!ATTLIST catDesc
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(category reference) specifies one or more defined categories
+within some taxonomy or text typology. -->
+<!ELEMENT catRef EMPTY>
+<!ATTLIST catRef
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+target CDATA  #REQUIRED
+scheme %data.pointer;  #IMPLIED >
+<!--doc:(category) contains an individual descriptive category, possibly nested
+within a superordinate category, within a user-defined taxonomy. -->
+<!ELEMENT category ((catDesc | %model.glossLike;),category*)>
+<!ATTLIST category
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(column break) marks the boundary between one column of a text and the next
+in a standard reference system. -->
+<!ELEMENT cb EMPTY>
+<!ATTLIST cb
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ed %data.code;  #IMPLIED >
+<!--doc:contains one cell of a table. -->
+<!ELEMENT cell %macro.paraContent;>
+<!ATTLIST cell
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.tableDecoration.attribute.role;
+ %att.tableDecoration.attribute.rows;
+ %att.tableDecoration.attribute.cols; >
+<!--doc:summarizes a particular change or correction made
+to a particular version of an electronic text which is
+shared between several researchers. -->
+<!ELEMENT change %macro.specialPara;>
+<!ATTLIST change
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.ascribed.attribute.who;
+date %data.temporal;  #IMPLIED >
+<!--doc:A quotation from some other document, together with a
+  bibliographic reference to its source. -->
+<!ELEMENT cit (_DUMMY_model.quoteLike | %model.biblLike; | %model.ptrLike; | %model.global;)+>
+<!ATTLIST cit
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:contains the classification code used for this text in some
+standard classification system. -->
+<!ELEMENT classCode %macro.phraseSeq;>
+<!ATTLIST classCode
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+scheme %data.pointer;  #REQUIRED >
+<!--doc:(classification declarations) contains one or more taxonomies defining any classificatory
+codes used elsewhere in the text. -->
+<!ELEMENT classDecl (taxonomy)+>
+<!ATTLIST classDecl
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:groups together dateline, byline, salutation, and similar
+phrases appearing as a final group at the end of a
+division, especially of a letter. -->
+<!ELEMENT closer ( #PCDATA | _DUMMY_model.gLike | signed | dateline | salute | %model.phrase; | %model.global;)*>
+<!ATTLIST closer
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(columns) with the "n" attribute (denoting new number of columns) is
+       used to mark where a document changes columnar layout. -->
+<!ELEMENT cols EMPTY>
+<!ATTLIST cols
+ed %data.code;  #IMPLIED >
+<!--doc:contains information about the creation of a text. -->
+<!ELEMENT creation %macro.phraseSeq;>
+<!ATTLIST creation
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:contains a date in any format. -->
+<!ELEMENT date ( #PCDATA | _DUMMY_model.gLike | _DUMMY_model.datePart | %model.phrase; | %model.global;)*>
+<!ATTLIST date
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.datePart.attribute.value;
+ %att.datePart.attribute.dur;
+ %att.datable.attribute.notBefore;
+ %att.datable.attribute.notAfter;
+ %att.datable.attribute.from;
+ %att.datable.attribute.to;
+ %att.typed.attribute.type;
+calendar %data.enumerated;  #IMPLIED
+precision %data.certainty;  #IMPLIED >
+<!--doc:contains a brief description of the place, date, time, etc. of
+	production of a letter, newspaper story, or other work, prefixed or
+	suffixed to it as a kind of heading or trailer. -->
+<!ELEMENT dateline %macro.phraseSeq;>
+<!ATTLIST dateline
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(description) contains a brief description of the purpose and application for
+an element, attribute, or attribute value. -->
+<!ELEMENT desc %macro.paraContent;>
+<!ATTLIST desc
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.translatable.attribute.version; >
+<!--doc:supplies the name of a person or other agency responsible for the
+distribution of a text. -->
+<!ELEMENT distributor %macro.phraseSeq;>
+<!ATTLIST distributor
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(level-1 text division) contains a first-level subdivision of the front, body, or back
+of a text. -->
+<!ELEMENT div1 ((%model.divWrapper; | %model.global;)*,(((%model.div2Like; | _DUMMY_model.divGenLike),(%model.global;)*)+ | ((%macro.component;,(%model.global;)*)+,((%model.div2Like; | _DUMMY_model.divGenLike),(%model.global;)*)*)),((%model.divWrapper; | %model.divWrapper.bottom;),(%model.global;)*)*)>
+<!ATTLIST div1
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.divLike.attribute.type;
+ %att.declaring.attribute.decls; >
+<!--doc:(level-2 text division) contains a second-level subdivision of the front, body, or back of a
+ text. -->
+<!ELEMENT div2 ((%model.divWrapper; | %model.global;)*,(((%model.div3Like; | _DUMMY_model.divGenLike),(%model.global;)*)+ | ((%macro.component;,(%model.global;)*)+,((%model.div3Like; | _DUMMY_model.divGenLike),(%model.global;)*)*)),((%model.divWrapper; | %model.divWrapper.bottom;),(%model.global;)*)*)>
+<!ATTLIST div2
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.divLike.attribute.type;
+ %att.declaring.attribute.decls; >
+<!--doc:(level-3 text division) contains a third-level subdivision of the front, body, or back of a
+ text. -->
+<!ELEMENT div3 ((%model.divWrapper; | %model.global;)*,(((%model.div4Like; | _DUMMY_model.divGenLike),(%model.global;)*)+ | ((%macro.component;,(%model.global;)*)+,((%model.div4Like; | _DUMMY_model.divGenLike),(%model.global;)*)*)),((%model.divWrapper; | %model.divWrapper.bottom;),(%model.global;)*)*)>
+<!ATTLIST div3
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.divLike.attribute.type;
+ %att.declaring.attribute.decls; >
+<!--doc:(level-4 text division) contains a fourth-level subdivision of the front, body, or back of a
+ text. -->
+<!ELEMENT div4 ((%model.divWrapper; | %model.global;)*,(((%model.div5Like; | _DUMMY_model.divGenLike),(%model.global;)*)+ | ((%macro.component;,(%model.global;)*)+,((%model.div5Like; | _DUMMY_model.divGenLike),(%model.global;)*)*)),((%model.divWrapper; | %model.divWrapper.bottom;),(%model.global;)*)*)>
+<!ATTLIST div4
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.divLike.attribute.type;
+ %att.declaring.attribute.decls; >
+<!--doc:(level-5 text division) contains a fifth-level subdivision of the front, body, or back of a
+ text. -->
+<!ELEMENT div5 ((%model.divWrapper; | %model.global;)*,(((%model.div6Like; | _DUMMY_model.divGenLike),(%model.global;)*)+ | ((%macro.component;,(%model.global;)*)+,((%model.div6Like; | _DUMMY_model.divGenLike),(%model.global;)*)*)),((%model.divWrapper; | %model.divWrapper.bottom;),(%model.global;)*)*)>
+<!ATTLIST div5
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.divLike.attribute.type;
+ %att.declaring.attribute.decls; >
+<!--doc:(level-6 text division) contains a sixth-level subdivision of the front, body, or back of a
+ text. -->
+<!ELEMENT div6 ((%model.divWrapper; | %model.global;)*,(((%model.div7Like; | _DUMMY_model.divGenLike),(%model.global;)*)+ | ((%macro.component;,(%model.global;)*)+,((%model.div7Like; | _DUMMY_model.divGenLike),(%model.global;)*)*)),((%model.divWrapper; | %model.divWrapper.bottom;),(%model.global;)*)*)>
+<!ATTLIST div6
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.divLike.attribute.type;
+ %att.declaring.attribute.decls; >
+<!--doc:(level-7 text division) contains the smallest possible subdivision of the front, body or
+back of a text, larger than a paragraph. -->
+<!ELEMENT div7 ((%model.divWrapper; | %model.global;)*,(%macro.component;,(%model.global;)*)+,((%model.divWrapper; | %model.divWrapper.bottom;),(%model.global;)*)*)>
+<!ATTLIST div7
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.divLike.attribute.type;
+ %att.declaring.attribute.decls; >
+<!--doc:(document author) contains the name of the author of the document, as given on the
+title page (often but not always contained in a byline). -->
+<!ELEMENT docAuthor %macro.phraseSeq;>
+<!ATTLIST docAuthor
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(document date) contains the date of a document, as given
+(usually) on a title page. -->
+<!ELEMENT docDate %macro.phraseSeq;>
+<!ATTLIST docDate
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+value %data.temporal;  #IMPLIED >
+<!--doc:(document edition) contains an edition statement as presented on a title page of a
+document. -->
+<!ELEMENT docEdition %macro.paraContent;>
+<!ATTLIST docEdition
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(document imprint) contains the imprint statement (place and date of publication,
+publisher name), as given
+(usually) at the foot of a title page. -->
+<!ELEMENT docImprint ( #PCDATA | _DUMMY_model.gLike | %model.phrase; | pubPlace | docDate | publisher | %model.global;)*>
+<!ATTLIST docImprint
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(document title) contains the title of a document, including all its
+constituents, as given on a title page. -->
+<!ELEMENT docTitle ((%model.global;)*,(titlePart,(%model.global;)*)+)>
+<!ATTLIST docTitle
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(Edition) describes the particularities of one edition of a text. -->
+<!ELEMENT edition %macro.phraseSeq;>
+<!ATTLIST edition
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(edition statement) groups information relating to one edition of a text. -->
+<!ELEMENT editionStmt ((%model.pLike;)+ | (edition,respStmt*))>
+<!ATTLIST editionStmt
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:secondary statement of responsibility for a
+bibliographic item, for example the name of an individual, institution
+or organization, (or of several such) acting as editor, compiler,
+translator, etc. -->
+<!ELEMENT editor %macro.phraseSeq;>
+<!ATTLIST editor
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+role %data.enumerated;  "editor"  >
+<!--doc:(editorial practice declaration) provides details of editorial principles and practices applied
+during the encoding of a text. -->
+<!ELEMENT editorialDecl ((%model.pLike;)+ | _DUMMY_model.editorialDeclPart+)>
+<!ATTLIST editorialDecl
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:contains an e-mail address identifying a location to which
+e-mail messages can be delivered. -->
+<!ELEMENT email %macro.phraseSeq;>
+<!ATTLIST email
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(Encoding description) documents the relationship between an electronic text and the
+source or sources from which it was derived. -->
+<!ELEMENT encodingDesc (%model.encodingPart; | %model.pLike;)+>
+<!ATTLIST encodingDesc
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(epigraph) contains a quotation, anonymous or attributed, appearing at
+the start of a section or chapter, or on a title page. -->
+<!ELEMENT epigraph %macro.componentSeq;>
+<!ATTLIST epigraph
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:describes the approximate size of a text as stored on
+some carrier medium, whether digital or non-digital, specified in any convenient units. -->
+<!ELEMENT extent %macro.phraseSeq;>
+<!ATTLIST extent
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:contains a block containing graphics, illustrations, or figures. -->
+<!ELEMENT figure (%model.pLike; | %model.global; | figure | %model.graphicLike; | head)*>
+<!ATTLIST figure
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(File Description) contains a full bibliographic description of an electronic
+file. -->
+<!ELEMENT fileDesc (%macro.fileDescPart;,sourceDesc+)>
+<!ATTLIST fileDesc
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(foreign) identifies a word or phrase as belonging to some language other
+than that of the surrounding text. -->
+<!ELEMENT foreign %macro.phraseSeq;>
+<!ATTLIST foreign
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:contains a mathematical or other formula. -->
+<!ELEMENT formula  (#PCDATA)>
+<!ATTLIST formula
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+notation %data.code;  #IMPLIED >
+<!--doc:(front matter) contains any prefatory matter (headers,
+title page, prefaces, dedications, etc.)
+found  at the start of a document, before the main body. -->
+<!ELEMENT front ((%model.frontPart; | %model.pLike.front; | %model.global;)*,(((%model.div1Like;),(%model.frontPart; | %model.div1Like; | %model.global;)*) | (_DUMMY_model.divLike,(%model.frontPart; | _DUMMY_model.divLike | %model.global;)*))?)>
+<!ATTLIST front
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.declaring.attribute.decls; >
+<!--doc:(Funding body) specifies the name of an individual, institution, or organization
+responsible for the funding of a project or text. -->
+<!ELEMENT funder %macro.phraseSeq;>
+<!ATTLIST funder
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(omitted material) indicates a point where material has been omitted in a
+transcription, whether for editorial reasons described in the TEI
+header, as part of sampling practice, or because the material is
+illegible or inaudible. -->
+<!ELEMENT gap %macro.glossSeq;>
+<!ATTLIST gap
+reason CDATA  #IMPLIED
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:indicates the location of an inline graphic, illustration, or figure. -->
+<!ELEMENT graphic EMPTY>
+<!ATTLIST graphic
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+width %data.outputMeasurement;  #IMPLIED
+height %data.outputMeasurement;  #IMPLIED
+scale %data.numeric;  #IMPLIED
+url %data.pointer;  #IMPLIED
+mimeType %data.word;  #IMPLIED >
+<!--doc:contains the body of a composite text, grouping together a
+sequence of distinct texts (or groups of such texts) which are regarded
+as a unit for some purpose, for example the collected works of an
+author, a sequence of prose essays, etc. -->
+<!ELEMENT group ((%model.divWrapper; | %model.global;)*,((text | group),(text | group | %model.global;)*),(%model.divWrapper.bottom;)*)>
+<!ATTLIST group
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.declaring.attribute.decls; >
+<!--doc:(heading) contains any type of heading, for example the title of a section,
+or the heading of a list, glossary, manuscript description, etc. -->
+<!ELEMENT head %macro.paraContent;>
+<!ATTLIST head
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+type %data.enumerated;  #IMPLIED >
+<!--doc:(highlighted) marks a word or phrase as graphically distinct from the
+surrounding text, for reasons concerning which no claim is
+made. -->
+<!ELEMENT hi %macro.paraContent;>
+<!ATTLIST hi
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(italics) for capturing typographical feature: italicized glyphs.
+       -->
+<!ELEMENT i %macro.paraContent;>
+<!--doc:(identifying number) supplies any standard or non-standard number used to identify a
+bibliographic item. -->
+<!ELEMENT idno  (#PCDATA)>
+<!ATTLIST idno
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+type %data.enumerated;  #IMPLIED >
+<!--doc:contains one
+component of a list. -->
+<!ELEMENT item %macro.specialPara;>
+<!ATTLIST item
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:contains a list of keywords or phrases identifying the topic or
+nature of a text. -->
+<!ELEMENT keywords (list)>
+<!ATTLIST keywords
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+scheme %data.pointer;  #REQUIRED >
+<!--doc:(verse line) contains a single, possibly incomplete, line of verse. -->
+<!ELEMENT l %macro.paraContent;>
+<!ATTLIST l
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+part (Y|N|I|M|F) "N"  >
+<!--doc:contains the label associated with an item in a list; in
+glossaries, marks the term being defined. -->
+<!ELEMENT label %macro.phraseSeq;>
+<!ATTLIST label
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(language usage) describes the languages, sublanguages, registers, dialects etc.
+represented within a text. -->
+<!ELEMENT langUsage (language)+>
+<!ATTLIST langUsage
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:characterizes a single language or sublanguage used within a
+  text. -->
+<!ELEMENT language %macro.phraseSeq;>
+<!ATTLIST language
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ident %data.language;  #REQUIRED
+usage CDATA #IMPLIED >
+<!--doc:(line break) marks the start of a new (typographic) line in some
+edition or version of a text. -->
+<!ELEMENT lb EMPTY>
+<!ATTLIST lb
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ed %data.code;  #IMPLIED >
+<!--doc:(line group) contains a group of verse lines functioning as a formal unit,
+e.g. a stanza, refrain, verse paragraph, etc. -->
+<!ELEMENT lg ((%model.divWrapper; | %model.global;)*,(%model.lLike; | lg),(%model.lLike; | lg | %model.global;)*,((%model.divWrapper.bottom;),(%model.global;)*)*)>
+<!ATTLIST lg
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.divLike.attribute.type; >
+<!--doc:contains any sequence of items organized as a list. -->
+<!ELEMENT list (((%model.divWrapper;) | (%model.global;))*,((item,(%model.global;)*)+ | (label,(%model.global;)*,item,(%model.global;)*)+),((%model.divWrapper.bottom;),(%model.global;)*)*)>
+<!ATTLIST list
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+type %data.enumerated;  "simple"  >
+<!--doc:(citation list) contains a list of bibliographic citations of any kind. -->
+<!ELEMENT listBibl (((%model.divWrapper;) | (%model.global;))*,((%model.biblLike;),(%model.global;)*)+,((%model.divWrapper.bottom;),(%model.global;)*)*)>
+<!ATTLIST listBibl
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:marks a boundary point separating  any kind of section of a text, as indicated by
+changes in a standard reference system, where the section is not
+represented by a structural element. -->
+<!ELEMENT milestone EMPTY>
+<!ATTLIST milestone
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ed %data.code;  #IMPLIED
+unit %data.enumerated;  #REQUIRED >
+<!--doc:(name, proper noun) contains a proper noun or noun phrase. -->
+<!ELEMENT name %macro.phraseSeq;>
+<!ATTLIST name
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.naming.attribute.key;
+type %data.enumerated;  #IMPLIED >
+<!--doc:supplies the formal name of the namespace to which the elements
+documented by its children belong. -->
+<!ELEMENT namespace (tagUsage)+>
+<!ATTLIST namespace
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+name %data.namespace;  #REQUIRED >
+<!--doc:contains a note or annotation. -->
+<!ELEMENT note %macro.specialPara;>
+<!ATTLIST note
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.placement.attribute.place;
+type %data.enumerated;  #IMPLIED
+resp %data.pointer;  #IMPLIED
+anchored (true|false) "true" 
+target CDATA  #IMPLIED
+targetEnd CDATA  #IMPLIED >
+<!--doc:(Notes statement) collects together any notes providing information about a text
+additional to that recorded in other parts of the bibliographic
+description. -->
+<!ELEMENT notesStmt (%model.noteLike;)+>
+<!ATTLIST notesStmt
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(number) contains a number, written in any form. -->
+<!ELEMENT num %macro.phraseSeq;>
+<!ATTLIST num
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+type %data.enumerated;  #IMPLIED
+value %data.numeric;  #IMPLIED >
+<!--doc:groups together dateline, byline, salutation, and similar
+phrases appearing as a preliminary group at the start of a
+division, especially of a letter. -->
+<!ELEMENT opener ( #PCDATA | _DUMMY_model.gLike | %model.phrase; | argument | byline | dateline | epigraph | salute | signed | %model.global;)*>
+<!ATTLIST opener
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:for capturing typographical feature: printer's ornament, horizontal
+       line, strings of asterisks or periods, etc, indicating an informal
+       division that does not call for a new <div> element. If a
+       horizontal rule or printer's ornament, use appropriate "type" attribute
+       and leave the element empy; if the ornament can be represented with
+       characters, set "type" value to "characters" and include these in the
+       element. -->
+<!ELEMENT ornament  (#PCDATA)>
+<!ATTLIST ornament
+ %att.typed.attribute.type; >
+<!--doc:(paragraph) marks paragraphs in prose. -->
+<!ELEMENT p %macro.paraContent;>
+<!ATTLIST p
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(page break) marks the boundary between one page of a text and the next
+in a standard reference system. -->
+<!ELEMENT pb EMPTY>
+<!ATTLIST pb
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ed %data.code;  #IMPLIED >
+<!--doc:(principal researcher) supplies the name of the principal researcher responsible for the
+creation of an electronic text. -->
+<!ELEMENT principal %macro.phraseSeq;>
+<!ATTLIST principal
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(text-profile description) provides a detailed description of non-bibliographic aspects of a
+text, specifically the languages and sublanguages used, the situation in
+which it was produced, the participants and their setting. -->
+<!ELEMENT profileDesc (creation?,(%model.profileDescPart;)*)>
+<!ATTLIST profileDesc
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(project description) describes in detail the aim or purpose for which an electronic
+file was encoded, together with any other relevant information
+concerning the process by which it was assembled or collected. -->
+<!ELEMENT projectDesc (%model.pLike;)+>
+<!ATTLIST projectDesc
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:defines a pointer to another location. -->
+<!ELEMENT ptr EMPTY>
+<!ATTLIST ptr
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.pointing.attribute.type;
+ %att.pointing.attribute.evaluate;
+ %att.declaring.attribute.decls;
+target CDATA  #REQUIRED
+cRef CDATA  #IMPLIED >
+<!--doc:contains the name of the place where a bibliographic item was
+published. -->
+<!ELEMENT pubPlace %macro.phraseSeq;>
+<!ATTLIST pubPlace
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.naming.attribute.key; >
+<!--doc:(publication statement) groups information concerning the publication or distribution
+of an electronic or other text. -->
+<!ELEMENT publicationStmt ((%model.pLike;)+ | (%model.publicationStmtPart;)+)>
+<!ATTLIST publicationStmt
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:provides the name of the organization responsible for
+the publication or distribution of a bibliographic item. -->
+<!ELEMENT publisher %macro.phraseSeq;>
+<!ATTLIST publisher
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(quoted speech, thought, or writing) contains material which is
+marked as (ostensibly) quoted from elsewhere; in narrative, this element is used to mark direct or
+indirect speech; in dictionaries, it ay be used to mark
+real or contrived examples of usage; in manuscript descriptions or
+other metadata, to mark extracts quoted from the source being documented. -->
+<!ELEMENT q %macro.specialPara;>
+<!ATTLIST q
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.ascribed.attribute.who;
+type %data.enumerated;  #IMPLIED
+direct (true|false|unknown) "unknown"  >
+<!--doc:defines a reference to another location, possibly
+  modified by additional text or comment. -->
+<!ELEMENT ref %macro.paraContent;>
+<!ATTLIST ref
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.pointing.attribute.type;
+ %att.pointing.attribute.evaluate;
+ %att.declaring.attribute.decls;
+target CDATA  #IMPLIED
+cRef CDATA  #IMPLIED >
+<!--doc:(references declaration) specifies how canonical references are constructed for this
+  text. -->
+<!ELEMENT refsDecl ((%model.pLike;)+ | cRefPattern+)>
+<!ATTLIST refsDecl
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+doctype %data.name;  "TEI"  >
+<!--doc:(rendition) supplies information about the intended rendition of one or more
+elements. -->
+<!ELEMENT rendition %macro.paraContent;>
+<!ATTLIST rendition
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:contains a phrase describing the nature of a person's
+  intellectual responsibility. -->
+<!ELEMENT resp %macro.phraseSeq;>
+<!ATTLIST resp
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(statement of responsibility) supplies a statement of responsibility for someone responsible
+  for the intellectual content of a text, edition, recording, or
+  series, where the specialized elements for authors, editors, etc. do
+  not suffice or do not apply. -->
+<!ELEMENT respStmt ((resp+,(%model.nameLike.agent;)+) | ((%model.nameLike.agent;)+,resp+))>
+<!ATTLIST respStmt
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(revision description) summarizes the revision history for a file. -->
+<!ELEMENT revisionDesc (list | change+)>
+<!ATTLIST revisionDesc
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:contains one row of a table. -->
+<!ELEMENT row ((cell | table),(%model.global;)*)+>
+<!ATTLIST row
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.tableDecoration.attribute.role;
+ %att.tableDecoration.attribute.rows;
+ %att.tableDecoration.attribute.cols; >
+<!--doc:(salutation) contains a salutation or greeting prefixed to a foreword,
+dedicatory epistle, or other division of a text, or the
+salutation in the closing of a letter, preface, etc. -->
+<!ELEMENT salute %macro.phraseSeq;>
+<!ATTLIST salute
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(sampling declaration) contains a prose description of the rationale and methods used
+in sampling texts in the creation of a corpus or collection. -->
+<!ELEMENT samplingDecl (%model.pLike;)+>
+<!ATTLIST samplingDecl
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(arbitrary segment) contains any arbitrary phrase-level unit of text (including
+other seg elements). -->
+<!ELEMENT seg %macro.paraContent;>
+<!ATTLIST seg
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+subtype %data.word;  #IMPLIED >
+<!--doc:(series statement) groups information about the series, if any, to which
+a publication belongs. -->
+<!ELEMENT seriesStmt ((%model.pLike;)+ | (title+,(idno | respStmt)*))>
+<!ATTLIST seriesStmt
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(signature) contains the closing salutation, etc., appended to a foreword,
+dedicatory epistle, or other division of a text. -->
+<!ELEMENT signed %macro.phraseSeq;>
+<!ATTLIST signed
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(smallcaps) for capturing typographical feature: glyphs in small
+       capitals. -->
+<!ELEMENT smcap %macro.paraContent;>
+<!--doc:supplies a description of the source text(s) from
+which an electronic text was derived or generated. -->
+<!ELEMENT sourceDesc ((%model.pLike;)+ | listBibl | (%model.biblLike; | _DUMMY_model.sourceDescPart)+)>
+<!ATTLIST sourceDesc
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(speech) An individual speech in a performance text, or a passage
+	  presented as such in a prose or verse text. -->
+<!ELEMENT sp ((%model.global;)*,(speaker,(%model.global;)*)?,((%model.lLike; | lg | %model.pLike; | %model.blockLike; | %model.stageLike;),(%model.global;)*)+)>
+<!ATTLIST sp
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.ascribed.attribute.who; >
+<!--doc:A specialized form of heading or label, giving the name of
+one or more speakers in a dramatic text or fragment. -->
+<!ELEMENT speaker %macro.phraseSeq;>
+<!ATTLIST speaker
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:specifies the name of a sponsoring organization or
+institution. -->
+<!ELEMENT sponsor %macro.phraseSeq;>
+<!ATTLIST sponsor
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(stage direction) contains any kind of stage direction within a dramatic text or
+fragment. -->
+<!ELEMENT stage %macro.specialPara;>
+<!ATTLIST stage
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+type %data.enumerated;  #IMPLIED >
+<!--doc:(subscript) for capturing typographical feature: subscript glyphs.
+       -->
+<!ELEMENT sub %macro.paraContent;>
+<!--doc:(superscript) for capturing typographical feature: superscript
+       glyphs.  -->
+<!ELEMENT sup %macro.paraContent;>
+<!--doc:contains text displayed in tabular form, in
+rows and columns. -->
+<!ELEMENT table ((head | %model.global;)*,(row,(%model.global;)*)+)>
+<!ATTLIST table
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+rows %data.count;  #IMPLIED
+cols %data.count;  #IMPLIED >
+<!--doc:(tag usage) supplies information about the usage of a specific element
+within a text. -->
+<!ELEMENT tagUsage %macro.paraContent;>
+<!ATTLIST tagUsage
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+gi %data.name;  #REQUIRED
+occurs %data.count;  #IMPLIED
+withId %data.count;  #IMPLIED
+render %data.pointer;  #IMPLIED >
+<!--doc:(taxonomy) defines a typology used to classify texts either implicitly, by
+means of a bibliographic citation, or explicitly by a structured
+taxonomy. -->
+<!ELEMENT taxonomy ((%model.glossLike;)* | category+ | ((%model.biblLike;),category*))>
+<!ATTLIST taxonomy
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(TEI Header) supplies the descriptive and declarative information making
+	up an electronic title page prefixed to every TEI-conformant
+	text. -->
+<!ELEMENT teiHeader (fileDesc,(%model.headerPart;)*,revisionDesc?)>
+<!ATTLIST teiHeader
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+type %data.enumerated;  "text"  >
+<!--doc:contains a single text of any kind, whether unitary or
+composite, for example a poem or drama, a collection of essays, a novel,
+a dictionary, or a corpus sample. -->
+<!ELEMENT text ((%model.global;)*,(front,(%model.global;)*)?,(body | group),(%model.global;)*,(back,(%model.global;)*)?)>
+<!ATTLIST text
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.declaring.attribute.decls; >
+<!--doc:(text classification) groups information which describes the nature or topic of a text
+in terms of a standard classification scheme, thesaurus, etc. -->
+<!ELEMENT textClass (classCode | catRef | keywords)*>
+<!ATTLIST textClass
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:contains a phrase defining a time of day in any format. -->
+<!ELEMENT time ( #PCDATA | _DUMMY_model.gLike | _DUMMY_model.datePart | %model.phrase; | %model.global;)*>
+<!ATTLIST time
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+ %att.datePart.attribute.value;
+ %att.datePart.attribute.dur;
+ %att.datable.attribute.notBefore;
+ %att.datable.attribute.notAfter;
+ %att.datable.attribute.from;
+ %att.datable.attribute.to;
+ %att.typed.attribute.type; >
+<!--doc:contains the full title of a work of any kind. -->
+<!ELEMENT title %macro.paraContent;>
+<!ATTLIST title
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+level (a|m|j|s|u) #IMPLIED
+type %data.enumerated;  #IMPLIED >
+<!--doc:(title page) contains the title page of a text, appearing within the front
+or back matter. -->
+<!ELEMENT titlePage ((%model.global;)*,(%model.titlepagePart;),(%model.titlepagePart; | %model.global;)*)>
+<!ATTLIST titlePage
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+type %data.enumerated;  #IMPLIED >
+<!--doc:(title part) contains a subsection or division of the title of a work, as
+indicated on a title page. -->
+<!ELEMENT titlePart %macro.paraContent;>
+<!ATTLIST titlePart
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase;
+type %data.enumerated;  "main"  >
+<!--doc:(title statement) groups information about the title of a work and those
+responsible for its intellectual content. -->
+<!ELEMENT titleStmt (title+,(author | editor | sponsor | funder | principal | respStmt)*)>
+<!ATTLIST titleStmt
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(trailer) contains a closing title or footer appearing at the end of
+a division of a text. -->
+<!ELEMENT trailer %macro.phraseSeq;>
+<!ATTLIST trailer
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!--doc:(underline) for capturing typographical feature: underlined glyphs.
+       -->
+<!ELEMENT ul %macro.paraContent;>
+<!--doc:contains a word, phrase, or passage which cannot be transcribed
+with certainty because it is illegible or inaudible in the source. -->
+<!ELEMENT unclear %macro.paraContent;>
+<!ATTLIST unclear
+reason CDATA  #IMPLIED
+ %att.global.attribute.xmlspace;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.rend;
+ %att.global.attribute.xmlbase; >
+<!-- end elements -->
