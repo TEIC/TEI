@@ -111,6 +111,7 @@
     </xsl:choose>
   </xsl:variable>
 
+
   <xsl:template name="generateDoc">
     <xsl:choose>
       <xsl:when test="string-length($doclang)&gt;0">
@@ -125,6 +126,7 @@
     </xsl:choose>
   </xsl:template>
 
+
   <xsl:template match="processing-instruction()">
     <xsl:if test="name(.) = 'odds'">
       <xsl:choose>
@@ -133,6 +135,7 @@
       </xsl:choose>
     </xsl:if>
   </xsl:template>
+
 
   <xsl:template match="*" mode="literal">
     <xsl:text>&#10;</xsl:text>
@@ -165,6 +168,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template match="rng:ref">
     <xsl:choose>
       <xsl:when
@@ -189,12 +193,14 @@
     </xsl:choose>
   </xsl:template>
 
+
   <xsl:template match="rng:*">
     <xsl:copy>
       <xsl:copy-of select="@*"/>
       <xsl:apply-templates select="rng:*|tei:*|text()|comment()"/>
     </xsl:copy>
   </xsl:template>
+
 
   <xsl:template match="rng:zeroOrMore">
     <xsl:choose>
@@ -214,6 +220,7 @@
     </xsl:choose>
   </xsl:template>
 
+
   <xsl:template match="rng:choice">
     <xsl:choose>
       <xsl:when test="count(rng:*)=1">
@@ -227,6 +234,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
 
   <xsl:template match="rng:group">
     <!-- check if this group is identical to the last -->
@@ -260,6 +268,7 @@
     </xsl:choose>
   </xsl:template>
 
+
   <xsl:template match="rng:*" mode="decomposed">
     <xsl:value-of select="local-name(.)"/>
     <xsl:for-each select="@*">
@@ -269,10 +278,13 @@
     <xsl:apply-templates mode="decomposed"/>
   </xsl:template>
 
+
   <xsl:template match="tei:*" mode="tangle"/>
+
   <xsl:template match="tei:attRef" mode="tangle">
     <ref name="{@name}" xmlns="http://relaxng.org/ns/structure/1.0"/>
   </xsl:template>
+
   <xsl:template match="tei:attDef" mode="tangle">
     <xsl:param name="element"/>
     <xsl:variable name="I">
@@ -292,6 +304,7 @@
       </xsl:choose>
     </xsl:if>
   </xsl:template>
+
   <xsl:template match="tei:attList" mode="tangle">
     <xsl:param name="element"/>
     <xsl:choose>
@@ -313,10 +326,12 @@
     </xsl:choose>
   </xsl:template>
 
+
   <xsl:template match="tei:author">
     <xsl:apply-templates/>
     <xsl:text>, </xsl:text>
   </xsl:template>
+
 
   <xsl:template match="tei:classSpec" mode="tangle">
     <xsl:variable name="c" select="@ident"/>
@@ -380,6 +395,7 @@
       </xsl:when>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template match="tei:classSpec" mode="processModel">
     <xsl:param name="declare">false</xsl:param>
     <xsl:if test="$verbose='true'">
@@ -411,6 +427,7 @@
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
+
 
 <xsl:template name="processClassDefinition">
   <xsl:param name="type"/>
@@ -448,6 +465,7 @@
   </xsl:choose>
 </xsl:template>
   
+
 <xsl:template name="makeClassDefinition">
   <xsl:param name="type"/>
   <xsl:param name="declare"/>
@@ -584,6 +602,7 @@ select="$makeDecls"/></xsl:message>
 </xsl:template>
 
 
+
 <xsl:template name="findUses">
   <xsl:param name="pattern"/>
   <xsl:param name="class"/>
@@ -605,15 +624,19 @@ select="$makeDecls"/></xsl:message>
   </xsl:choose>
 </xsl:template>
 
+
 <xsl:template match="tei:classSpec" mode="tangleadd">
   <xsl:apply-templates mode="tangleadd"/>
 </xsl:template>
 
+
 <xsl:template match="tei:classSpec/@ident"/>
+
 
 <xsl:template match="tei:classSpec|tei:elementSpec|tei:macroSpec" mode="weave">
   <xsl:call-template name="refdoc"/>
 </xsl:template>
+
 
 <xsl:template match="tei:code">
   <xsl:call-template name="typewriter">
@@ -623,11 +646,14 @@ select="$makeDecls"/></xsl:message>
   </xsl:call-template>
 </xsl:template>
 
+
 <xsl:template match="text()" mode="doc">
   <xsl:value-of select="."/>
 </xsl:template>
 
+
 <xsl:template match="tei:desc" mode="tangle"/>
+
 
 <xsl:template match="tei:divGen[@type='classcat']">
     <xsl:apply-templates mode="weave" select="key('CLASSDOCS',1)">
@@ -635,11 +661,13 @@ select="$makeDecls"/></xsl:message>
     </xsl:apply-templates>
   </xsl:template>
 
+
   <xsl:template match="tei:divGen[@type='macrocat']">
     <xsl:apply-templates mode="weave" select="key('MACRODOCS',1)">
       <xsl:sort select="@ident"/>
     </xsl:apply-templates>
   </xsl:template>
+
 
   <xsl:template match="tei:divGen[@type='tagcat']">
     <xsl:apply-templates mode="weave" select="key('ELEMENTDOCS',1)">
@@ -647,7 +675,9 @@ select="$makeDecls"/></xsl:message>
     </xsl:apply-templates>
   </xsl:template>
 
+
   <xsl:template match="tei:editor"><xsl:apply-templates/>: </xsl:template>
+
 
   <xsl:template match="tei:elementSpec" mode="tangle">
     <xsl:if test="$verbose='true'">
@@ -739,6 +769,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
+
   <xsl:template name="summarizeAttributes">
     <xsl:for-each select=".//tei:attDef">x</xsl:for-each>
     <xsl:for-each select="tei:classes/tei:memberOf">
@@ -747,6 +778,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:for-each>
     </xsl:for-each>
   </xsl:template>
+
   <xsl:template name="defineAttributes">
     <xsl:variable name="name" select="@ident"/>
     <xsl:if test="$parameterize='true'">
@@ -787,6 +819,7 @@ select="$makeDecls"/></xsl:message>
     </xsl:choose>
 -->
   </xsl:template>
+
   <xsl:template name="defineContent">
     <xsl:variable name="Contents">
       <BLAH>
@@ -828,6 +861,7 @@ select="$makeDecls"/></xsl:message>
     </xsl:choose>
   </xsl:template>
 
+
   <xsl:template name="valListChildren">
     <rng:choice>
       <xsl:for-each select="tei:valList/tei:valItem">
@@ -855,12 +889,14 @@ select="$makeDecls"/></xsl:message>
     </rng:choice>
   </xsl:template>
 
+
   <xsl:template match="tei:elementSpec/@ident"/>
 
   <xd:doc>
     <xd:short>Process elements tei:exemplum</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
+
   <xsl:template match="tei:exemplum" mode="weave">
     <xsl:if test="teix:egXML/* or teix:egXML/text() or text()">
       <xsl:apply-templates select="." mode="doc"/>
@@ -873,19 +909,28 @@ select="$makeDecls"/></xsl:message>
     needed.</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
+
   <xsl:template match="tei:desc|tei:gloss" mode="weave"/>
+
   <xsl:template match="tei:elementSpec/tei:desc"/>
+
   <xsl:template match="tei:classSpec/tei:desc"/>
+
   <xsl:template match="tei:macroSpec/tei:desc"/>
+
   <xsl:template match="tei:elementSpec/tei:gloss"/>
+
   <xsl:template match="tei:classSpec/tei:gloss"/>
+
   <xsl:template match="tei:macroSpec/tei:gloss"/>
+
 
   <xsl:template match="tei:index">
     <xsl:call-template name="makeAnchor">
       <xsl:with-param name="name">IDX-<xsl:number level="any"/></xsl:with-param>
     </xsl:call-template>
   </xsl:template>
+
 
   <xsl:template match="tei:macroSpec" mode="tangle">
     <xsl:param name="msection"/>
@@ -968,8 +1013,11 @@ select="$makeDecls"/></xsl:message>
     </xsl:choose>
   </xsl:template>
 
+
   <xsl:template match="tei:macroSpec/@ident"/>
+
   <xsl:template match="tei:macroSpec/content/rng:*"/>
+
   <xsl:template match="tei:memberOf" mode="tangleModel">
 <!--
     <xsl:variable name="owner">
@@ -988,6 +1036,7 @@ select="$makeDecls"/></xsl:message>
     </xsl:for-each>
 -->
   </xsl:template>
+
 
   <xsl:template match="tei:moduleRef" mode="tangle">
     <xsl:variable name="This" select="@key"/>
@@ -1040,10 +1089,12 @@ select="$makeDecls"/></xsl:message>
     </xsl:call-template>
   </xsl:template>
 
+
   <xsl:template match="@*|text()|comment()|processing-instruction"
     mode="expandRNG">
     <xsl:copy/>
   </xsl:template>
+
 
   <xsl:template match="*" mode="expandRNG">
     <xsl:choose>
@@ -1072,7 +1123,9 @@ select="$makeDecls"/></xsl:message>
     </xsl:choose>
   </xsl:template>
 
+
   <xsl:template match="tei:remarks" mode="tangle"/>
+
 
   <xsl:template match="tei:remarks" mode="weave">
     <xsl:variable name="documentationLanguage">
@@ -1107,6 +1160,7 @@ select="$makeDecls"/></xsl:message>
     </xsl:choose>
   </xsl:template>
 
+
   <xsl:template match="tei:specGrp" mode="ok">
     <xsl:param name="filename"/>
     <xsl:if test="$verbose='true'">
@@ -1117,6 +1171,7 @@ select="$makeDecls"/></xsl:message>
       <xsl:with-param name="filename" select="$filename"/>
     </xsl:call-template>
   </xsl:template>
+
   <xsl:template match="tei:tag">
     <xsl:call-template name="typewriter">
       <xsl:with-param name="text">
@@ -1126,6 +1181,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
+
   <xsl:template match="tei:title">
     <xsl:choose>
       <xsl:when test="parent::tei:titleStmt">
@@ -1144,6 +1200,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template match="token" mode="commentline">
     <xsl:call-template name="italicize">
       <xsl:with-param name="text">
@@ -1164,6 +1221,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:choose>
     </xsl:if>
   </xsl:template>
+
   <xsl:template match="token" mode="normalline">
     <xsl:choose>
       <xsl:when test="contains(.,'&lt;!--')">
@@ -1196,6 +1254,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template match="token" mode="verbatimline">
     <xsl:call-template name="breakline"/>
     <xsl:if test="following-sibling::token">
@@ -1204,6 +1263,7 @@ select="$makeDecls"/></xsl:message>
         select="following-sibling::token[1]"/>
     </xsl:if>
   </xsl:template>
+
   <xsl:template match="token" mode="word">
     <xsl:param name="len"/>
     <xsl:choose>
@@ -1228,6 +1288,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template name="breakline">
     <xsl:choose>
       <xsl:when test="string-length(.)&lt;$wrapLength">
@@ -1241,6 +1302,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template name="compositeNumber">
     <xsl:choose>
       <xsl:when test="ancestor::tei:div0">
@@ -1270,23 +1332,28 @@ select="$makeDecls"/></xsl:message>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template name="copyright">
     <xsl:apply-templates mode="copyrighttext"
       select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability"
     />
   </xsl:template>
+
   <xsl:template match="tei:p" mode="copyrighttext">
     <xsl:text>&#10;</xsl:text>
     <xsl:apply-templates/>
   </xsl:template>
+
   <xsl:template match="tei:list" mode="copyrighttext">
     <xsl:text>&#10;</xsl:text>
     <xsl:apply-templates/>
   </xsl:template>
+
   <xsl:template match="tei:item" mode="copyrighttext">
     <xsl:text>&#10; *</xsl:text>
     <xsl:apply-templates/>
   </xsl:template>
+
 
 
   <xsl:template name="attributeData">
@@ -1317,6 +1384,42 @@ select="$makeDecls"/></xsl:message>
 	  </xsl:for-each>
 	</rng:choice>
       </xsl:when>
+      <xsl:when test="tei:valList[@type='semi']">
+	<rng:choice>
+	  <xsl:for-each select="tei:valList/tei:valItem">
+	    <rng:value>
+	      <xsl:choose>
+		<xsl:when test= "tei:altIdent=@ident">
+		  <xsl:value-of select="@ident"/>
+		</xsl:when>
+		<xsl:when test="tei:altIdent">
+		  <xsl:value-of select="normalize-space(tei:altIdent)"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of select="@ident"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </rng:value>
+	    <xsl:if test="not($oddmode='tei')">
+	      <a:documentation>
+		<xsl:call-template name="makeDescription">
+		  <xsl:with-param name="includeValList">true</xsl:with-param>
+		</xsl:call-template>
+	      </a:documentation>
+	    </xsl:if>
+	  </xsl:for-each>
+	  <xsl:choose>
+	    <xsl:when
+		test="tei:datatype/rng:ref[@name='data.enumerated']">
+	      <rng:data type="token"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:apply-templates mode="forceRNG"
+				   select="tei:datatype/rng:*"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</rng:choice>
+      </xsl:when>
       <xsl:when test="tei:datatype/rng:*">
         <xsl:apply-templates mode="forceRNG" select="tei:datatype/rng:*"/>
       </xsl:when>
@@ -1331,6 +1434,7 @@ select="$makeDecls"/></xsl:message>
   <!-- big <choose> that handles minOccurs= and maxOccurs= runs -->
   <!-- into values of those attributes that it doesn't know how -->
   <!-- to handle properly. -->
+
   <xsl:template name="occursOutOfBounds">
     <xsl:param name="min"/>
     <xsl:param name="max"/>
@@ -1372,6 +1476,7 @@ select="$makeDecls"/></xsl:message>
     </rng:list>
   </xsl:template>
   
+
   <xsl:template name="makeSimpleAttribute">
     <xsl:variable name="name">
       <xsl:choose>
@@ -1536,6 +1641,7 @@ select="$makeDecls"/></xsl:message>
     </rng:attribute>
   </xsl:template>
 
+
   <xsl:template name="makeAnAttribute">
     <xsl:choose>
       <xsl:when test="@usage='req'">
@@ -1551,6 +1657,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template name="generateClassParents">
     <xsl:choose>
       <xsl:when test="not(tei:classes)"> (none) </xsl:when>
@@ -1581,6 +1688,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
 
   <xsl:template name="showAttClasses">
     <xsl:param name="minimal">false</xsl:param>
@@ -1663,6 +1771,7 @@ select="$makeDecls"/></xsl:message>
     </xsl:choose>
   </xsl:template>
 
+
   <xsl:template name="generateMembers">
     <xsl:variable name="this" select="@ident"/>
     <xsl:choose>
@@ -1723,6 +1832,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
+
 
   <xsl:template name="showElement">
     <xsl:param name="name"/>
@@ -1790,7 +1900,9 @@ select="$makeDecls"/></xsl:message>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template name="linkStyle"/>
+
 
   <xsl:template name="getSpecURL">
     <xsl:param name="name"/>
@@ -1816,6 +1928,7 @@ select="$makeDecls"/></xsl:message>
     <xsl:value-of select="$name"/>
   </xsl:template>
   
+
   <xsl:template name="linkTogether">
     <xsl:param name="name"/>
     <xsl:param name="reftext"/>
@@ -1920,6 +2033,7 @@ select="$makeDecls"/></xsl:message>
     </xsl:choose>
   </xsl:template>
 
+
   <xsl:template name="makeTagsetInfo">
     <xsl:value-of select="@module"/>
     <xsl:if test="$verbose='true'">
@@ -1927,6 +2041,7 @@ select="$makeDecls"/></xsl:message>
           select="@module"/></xsl:message>
     </xsl:if>
   </xsl:template>
+
 
   <xsl:template name="processSchemaFragment">
     <xsl:param name="filename"/>
@@ -1952,6 +2067,7 @@ select="$makeDecls"/></xsl:message>
 	</xsl:if>
     -->
   </xsl:template>
+
   <xsl:template name="processSpecDesc">
     <xsl:variable name="name">
       <xsl:value-of select="@key"/>
@@ -1996,6 +2112,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template name="processatts">
     <xsl:param name="values"/>
     <xsl:if test="not($values = '')">
@@ -2005,6 +2122,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:call-template>
     </xsl:if>
   </xsl:template>
+
   <xsl:template name="sectionNumber">
     <xsl:for-each
       select="(ancestor::tei:div1|ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4)[last()]">
@@ -2016,20 +2134,26 @@ select="$makeDecls"/></xsl:message>
         level="multiple"/>
     </xsl:for-each>
   </xsl:template>
+
   <xsl:template name="make-ns-declaration">
     <xsl:param name="is-default"/>
     <xsl:param name="prefix"/>
     <xsl:param name="uri"/>
   </xsl:template>
 
+
   <xsl:template name="inhnamespace"/>
+
 
   <xsl:template match="s:*"/>
 
+
   <xsl:template match="tei:altIdent"/>
+
   <xsl:template match="a:*">
     <xsl:copy-of select="."/>
   </xsl:template>
+
   <xsl:template match="tei:classSpec" mode="processDefaultAtts">
     <xsl:if test="$verbose='true'">
       <xsl:message> .. default attribute settings for <xsl:value-of
@@ -2051,6 +2175,7 @@ select="$makeDecls"/></xsl:message>
        I don't see why this is necessary, but xsltproc gets
        it wrong otherwise. I suspect a bug there somewhere.
   -->
+
   <xsl:template match="*" mode="forceRNG">
     <xsl:element name="{local-name(.)}"
       xmlns="http://relaxng.org/ns/structure/1.0">
@@ -2058,6 +2183,7 @@ select="$makeDecls"/></xsl:message>
       <xsl:apply-templates mode="forceRNG"/>
     </xsl:element>
   </xsl:template>
+
 
   <xsl:template match="rng:ref" mode="forceRNG">
     <xsl:choose>
@@ -2094,11 +2220,15 @@ select="$makeDecls"/></xsl:message>
     <xd:short>Process elements tei:schemaSpec</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
+
   <xsl:template match="tei:schemaSpec">
     <xsl:call-template name="processSchemaFragment"/>
   </xsl:template>
+
   <xsl:template name="typewriter"/>
+
   <xsl:template name="refdoc"/>
+
   <xsl:template name="generateOutput">
     <xsl:param name="body"/>
     <xsl:param name="suffix"/>
@@ -2142,6 +2272,7 @@ select="$makeDecls"/></xsl:message>
     </xsl:choose>
   </xsl:template>
 
+
   <xsl:template name="showDate">
     <xsl:variable name="processor">
       <xsl:value-of select="system-property('xsl:vendor')"/>
@@ -2157,6 +2288,7 @@ select="$makeDecls"/></xsl:message>
       <xsl:otherwise> (unknown date) </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
 
 
   <xsl:template name="makeDescription">
@@ -2311,6 +2443,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
+
 
   <xsl:template name="findLanguage">
     <xsl:choose>
