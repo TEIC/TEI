@@ -28,6 +28,7 @@ TESTFILES= \
 	testtagdocs \
 	testoucs \
 	testp4compat \
+	testtite \
 	tripReport \
 	testall 
 
