@@ -1417,15 +1417,6 @@
         </xsl:for-each>
         <xsl:text>)</xsl:text>
       </xsl:when>
-      <xsl:when test="tei:valList[@type='semi']">
-        <xsl:text> (</xsl:text>
-        <xsl:for-each select="tei:valList/tei:valItem">
-          <xsl:value-of select="@ident"/>
-	  <xsl:text> |</xsl:text>
-        </xsl:for-each>
-	<xsl:text> CDATA </xsl:text>
-        <xsl:text>)</xsl:text>
-      </xsl:when>
       <xsl:when test="tei:datatype/@minOccurs or tei:datatype/@maxOccurs">
         <xsl:text> CDATA </xsl:text>
       </xsl:when>
