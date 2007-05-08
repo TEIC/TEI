@@ -703,7 +703,7 @@ select="$makeDecls"/></xsl:message>
             </xsl:choose>
           </xsl:variable>
           <xsl:choose>
-            <xsl:when test="tei:content/notAllowed">
+            <xsl:when test="tei:content/rng:notAllowed">
               <define name="{$patternPrefixText}{@ident}"
                 xmlns="http://relaxng.org/ns/structure/1.0">
                 <notAllowed xmlns="http://relaxng.org/ns/structure/1.0"/>
@@ -990,7 +990,7 @@ select="$makeDecls"/></xsl:message>
                   </xsl:when>
                   <xsl:when test="$entCount=0">
                     <rng:choice>
-                      <notAllowed xmlns="http://relaxng.org/ns/structure/1.0"/>
+                      <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
                     </rng:choice>
                   </xsl:when>
                   <xsl:when test="$entCount=1">
