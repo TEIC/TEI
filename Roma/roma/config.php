@@ -24,6 +24,6 @@ define( 'roma_localStylesheetDir', 'roma/stylesheets' );
 define( 'roma_templateDir', 'roma/templates' );
 define( 'roma_resource_path', 'roma/res' );
 define ('roma_local_p5','file:///tmp/p5subset.xml');
-define ('roma_version','2.8');
+define ('roma_version','2.9');
 define ('roma_date','2007-03-10');
 </script>

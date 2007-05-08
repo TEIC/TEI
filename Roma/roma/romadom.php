@@ -893,6 +893,7 @@ class romaDom extends domDocument
 	case 'de'    : $szLanguage='de'; break;
 	case 'it'    : $szLanguage='it'; break;
 	case 'zh-tw' : $szLanguage='zh-tw'; break;
+	case 'es' :    $szLanguage='es'; break;
 	case 'zh'    : $szLanguage='zh-tw'; break;
 	case 'ja'    : $szLanguage='ja'; break;
 	case 'ru'    : $szLanguage='ru'; break;
