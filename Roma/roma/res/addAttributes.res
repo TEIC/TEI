@@ -15,10 +15,6 @@ form_className=Class name
 
 
 
-
-
-
-
 [fr]
 helpmessage=Création d'attributs
 headline=Création d'attributs
@@ -149,3 +145,16 @@ form_valList=Lista dei valori
 form_className=Nome classe
 
 
+
+[es]
+helpmessage=Cada atributo debe ser añadido separadamente. Elige cuidadosamente los data type (tipo de datos).
+headline=Añadir algún atributo
+form_headline=Añade algún atributo
+form_name=Nombre del atributo
+form_optional=¿Opcional?
+form_closed=¿Lista cerrada?
+form_contents=Contenidos
+form_defaultValue=Valor predefinido
+form_description=Descripción
+form_valList=Lista de valores
+form_className=Nombre de clase

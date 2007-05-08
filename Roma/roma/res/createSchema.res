@@ -88,3 +88,12 @@ headline= Creazione dello schema
 
 form_headline= Crea il tuo schema
 form_output=Quale formato preferisci?
+
+
+
+[es]
+helpmessage=Puede elegir entre construir el esquema en Relax, en W3C o en DTD
+headline= Momento de crear el esquema 
+
+form_headline= Crea tu esquema
+form_output=¿Qué formato prefieres?

@@ -123,3 +123,16 @@ form_language=Lingua
 form_author=Autore
 form_description=Descrizione
 form_prefix=Prefisso per nomi di pattern TEI nello schema
+
+
+[es]
+helpmessage=Esta ventana te permite elegir los parámetros globales
+headline=Selección de parámetros
+
+form_headline=Selecciona los parámetros
+form_title=Título
+form_filename=Nombre del archivo
+form_language=Lengua
+form_author=Autor
+form_description=Descripción
+form_prefix=Prefijo para los nombres de los patrones TEI en el esquema

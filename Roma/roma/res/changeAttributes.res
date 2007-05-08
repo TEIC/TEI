@@ -131,3 +131,15 @@ form_description=Descrizione
 form_valList=Lista dei valori
 
 
+
+[es]
+helpmessage=Es posible eliminar los atributos o modificar los data type (tipo d datos)
+headline=Modificar los atributos
+
+form_headline=Modificar un atributo
+form_name=Nombre del atributo
+form_optional=¿Opcional?
+form_contents=Contenido
+form_defaultValue=Valor predefinido
+form_description=Descripción
+form_valList=Lista de valores

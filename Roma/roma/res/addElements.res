@@ -106,3 +106,13 @@ form_attributeClasses=Classi di attributi
 form_contents=Contenuto
 form_description=Descrizione
 
+[es]
+helpmessage=Una vez enviado este módulo, será posible añadir otros atributos.
+headline=Añadir un elemento
+
+form_headline=Definición del nuevo elemento
+form_name=Nombre
+form_modelClasses=Clase de modelo
+form_attributeClasses=Clase de atributos
+form_contents=Contenido
+form_description=Descripción

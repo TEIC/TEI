@@ -104,3 +104,12 @@ form_language=Personalizza lingua
 form_doclanguage=Lingua della documentazione
 form_clearCustomization=Annulla personalizza (torna all'inglese)
 
+
+[es]
+helpmessage=Elige una lengua
+headline=Selección de la lengua
+
+form_headline=¿Quieres que los componentes TEI en el esquema se visualicen en otra lengua?
+form_language=Personaliza la lengua 
+form_doclanguage=Lengua de la documentación
+form_clearCustomization=Anular la personalización (de nuevo formato en inglés)

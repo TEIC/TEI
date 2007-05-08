@@ -91,3 +91,9 @@ form_output=Quale formato preferisci?
 
 
 
+[es]
+helpmessage=Ahora es posible crear una documentación de referencia para su personalización
+headline=¿Documentación?
+
+form_headline=Creación de la documentación
+form_output=¿Qué formato prefiere?

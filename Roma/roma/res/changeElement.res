@@ -123,5 +123,14 @@ form_contents=Contenuto
 form_description=Descrizione
 
 
+[es]
+helpmessage=Este módulo permite crear un nuevo elemento o modificar uno ya existente
+headline=Modificación de un elemento
 
+form_headline=Definición de un nuevo elemento
+form_name=Nombre
+form_modelClasses=Clases de modelo
+form_attributeClasses=Clases de atributos
+form_contents=Contenido
+form_description=Descripción
 

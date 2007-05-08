@@ -150,3 +150,19 @@ form_description=Descrizione
 form_attributes=Attributi
 form_delete=Elimina
 form_changeAttributes=Modifica attributi
+
+
+[es]
+helpmessage=Elementos que has definido para tu esquema
+headline=Elementos añadidos
+
+form_headline=Lista de los elementos añadidos
+form_add=Añadir nuevo elemento
+form_changeElement=Modificar elemento
+form_include=Incluir
+form_exclude=Excluir
+form_tagName=Nombre etiqueta
+form_description=Descripción
+form_attributes=Atributos
+form_delete=Elimina
+form_changeAttributes=Modificar atributos

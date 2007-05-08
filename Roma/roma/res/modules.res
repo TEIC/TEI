@@ -170,3 +170,21 @@ form_add=Aggiungi
 form_remove=Rimuovi
 
 selectedModules_headline=Lista dei moduli selezionati
+
+
+
+
+
+[es]
+helpmessage=Presiona "Añadir" para inserir el módulo en el esquema, o bien presiona sobre el nombre del módulo para modificar el contenido
+headline=Módulos
+
+form_headline=Lista de módulos TEI
+form_moduleName=Nombre del módulo
+form_description=Breve descripción
+form_changes=Modificar
+form_changed=Modificado
+form_add=Añadir
+form_remove=Cancelar
+
+selectedModules_headline=Lista de los módulos seleccionados

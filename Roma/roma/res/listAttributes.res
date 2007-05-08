@@ -14,11 +14,6 @@ form_delete=Delete
 
 
 
-
-
-
-
-
 [fr]
 helpmessage=Ajoutons des attributs
 headline=Attributs supplémentaires
@@ -31,11 +26,6 @@ form_exclude=Exclure
 form_tagName=Nom de balise
 form_description=Description
 form_delete=Supprimer
-
-
-
-
-
 
 
 
@@ -148,3 +138,18 @@ form_exclude=Escludi
 form_tagName=Nome tag
 form_description=Descrizione
 form_delete=Elimina
+
+
+
+[es]
+helpmessage=Atributos disponibles para esta clase o elemento 
+headline=Atributos añadidos
+
+form_headline=Lista de atributos
+form_add=Añadir nuevos atributos
+form_changeAttribute=Modificar atributo
+form_include=Incluir
+form_exclude=Excluir
+form_tagName=Nombre de la etiqueta
+form_description=Descripción
+form_delete=Eliminar

@@ -86,9 +86,6 @@ form_attributes=Attribut
 form_changeAttributes=ändraAttribut
 
 
-
-
-
 [ja]
 helpmessage=変更したいTEIクラスを選択して下さい。クラス名をクリックすると解説が表示されます。
 headline=属性クラスの変更
@@ -113,3 +110,12 @@ form_changeAttributes=modificaAttributi
 
 
 
+[es]
+helpmessage=Seleciona una clase TEI a modificar. Presiona sobre el nombre para visualizar la documentación
+headline=Modificación de las clases de atributo
+
+form_headline=Lista de las clases de atributo
+form_className=Nombre de clase
+form_description=Descripción
+form_attributes=Atributos
+form_changeAttributes=Modificación de atributos

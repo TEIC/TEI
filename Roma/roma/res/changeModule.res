@@ -133,3 +133,14 @@ form_changeAttributes=Modifica attributi
 
 
 
+[es]
+helpmessage=Selecciona los elementos a incluir de este módulo. Presiona sobre "Excluir" para excluirlos, o sobre "Incluir" para incluirlos todos de nuevo
+headline=Modificación del módulo
+
+form_headline=Lista de los elementos del módulo:
+form_include=Incluir
+form_exclude=Excluir
+form_tagName=Nombre de la etiqueta
+form_description=Descripción
+form_attributes=Atributos
+form_changeAttributes=Modificación de atributos

@@ -162,3 +162,19 @@ language=Lingua
 schema=Schema
 documentation=Documentazione
 searchtei=Interroga database TEI 
+
+
+[es]
+helpmessage=
+title=Como crear validadores para TEI
+save=Guardar configuración personal
+help=Ayuda
+customize=Personalizar
+new=Nuevo
+addelements=Añadir elemento
+changeclasses=Cambiar clase
+modules=Módulos
+language=Lengua
+schema=Esquema
+documentation=Documentación
+searchtei=Buscar en la base TEI 
