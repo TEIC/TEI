@@ -416,9 +416,11 @@
 	  -->
           <xsl:when test="$foEngine='passivetex'"> </xsl:when>
           <xsl:otherwise>
-            <fo:inline linefeed-treatment="preserve">
-              <xsl:text>&#10;</xsl:text>
-            </fo:inline>
+	    <fo:inline  linefeed-treatment="preserve"
+			white-space-treatment="preserve" 
+			white-space-collapse="false">
+	      <xsl:text>&#xA;</xsl:text>
+	    </fo:inline>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:when>
@@ -636,6 +638,26 @@
         </fo:block>
       </xsl:when>
       <xsl:otherwise>
+	<xsl:choose>
+	  <xsl:when test="parent::tei:item">
+	    <fo:block>
+	      <xsl:call-template name="makeFootnote"/>
+	    </fo:block>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:call-template name="makeFootnote"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xd:doc>
+    <xd:short>Create a footnote</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+    
+  <xsl:template name="makeFootnote">
         <xsl:variable name="FootID">
           <xsl:choose>
             <xsl:when test="@n">
@@ -673,13 +695,14 @@
             </fo:block>
           </fo:footnote-body>
         </fo:footnote>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
+</xsl:template>
+
+
   <xd:doc>
     <xd:short>Process element  tei:p</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
+
   <xsl:template match="tei:p">
     <fo:block>
       <xsl:if test="preceding-sibling::tei:p">

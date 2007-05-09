@@ -316,7 +316,7 @@ there are no bookmarks or other such features. Possible values are
   <xd:doc type="boolean" class="style">
 Make &lt;lb&gt; active (ie cause a line break)
 </xd:doc>
-  <xsl:param name="activeLinebreaks">false</xsl:param>
+  <xsl:param name="activeLinebreaks">true</xsl:param>
   <xd:doc type="string" class="style">
 Alignment of text (ie justified or ragged)
 </xd:doc>

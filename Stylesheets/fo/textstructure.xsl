@@ -70,7 +70,11 @@
         <xsl:apply-templates/>
       </xsl:when>
       <xsl:otherwise>
-        <fo:page-sequence format="{$formatBackpage}" text-align="{$alignment}" hyphenate="{$hyphenate}" language="{$language}">
+        <fo:page-sequence 
+	    format="{$formatBackpage}"
+	    text-align="{$alignment}"
+	    hyphenate="{$hyphenate}" 
+	    language="{$language}">
           <xsl:call-template name="choosePageMaster">
             <xsl:with-param name="where">
               <xsl:value-of select="$backMulticolumns"/>
@@ -357,7 +361,7 @@
             <fo:static-content flow-name="xsl-region-after">
               <fo:block/>
             </fo:static-content>
-            <fo:flow font-family="{$bodyFont}">
+            <fo:flow flow-name="xsl-region-body"  font-family="{$bodyFont}">
               <xsl:call-template name="Header"/>
             </fo:flow>
           </fo:page-sequence>
@@ -405,7 +409,7 @@
         </xsl:choose>
       </xsl:attribute>
       <xsl:call-template name="grouptextStatic"/>
-      <fo:flow font-family="{$bodyFont}">
+      <fo:flow  flow-name="xsl-region-body" font-family="{$bodyFont}">
         <xsl:call-template name="textTitle">
           <xsl:with-param name="N" select="$N"/>
         </xsl:call-template>
@@ -751,7 +755,7 @@
         <xsl:with-param name="runeven">even page running head</xsl:with-param>
         <xsl:with-param name="runodd"> odd page running head</xsl:with-param>
       </xsl:call-template>
-      <fo:flow font-family="{$bodyFont}">
+      <fo:flow  flow-name="xsl-region-body" font-family="{$bodyFont}">
         <fo:block text-align="center">
           <xsl:attribute name="font-size">
             <xsl:value-of select="$tocSize"/>
