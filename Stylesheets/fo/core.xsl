@@ -416,11 +416,14 @@
 	  -->
           <xsl:when test="$foEngine='passivetex'"> </xsl:when>
           <xsl:otherwise>
+	    <fo:block/>
+	    <!--
 	    <fo:inline  linefeed-treatment="preserve"
 			white-space-treatment="preserve" 
 			white-space-collapse="false">
 	      <xsl:text>&#xA;</xsl:text>
 	    </fo:inline>
+	    -->
           </xsl:otherwise>
         </xsl:choose>
       </xsl:when>
