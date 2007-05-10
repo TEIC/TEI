@@ -38,7 +38,6 @@ class romaDom extends domDocument
 	$oTemp->appendChild( $oTEI );
 	$oTEI->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'xml:lang', 'en' );
 
-	$oTeiHeader = $oTEI->appendChild( new domElement( 'teiHeader' ) );
 
 	$oFileDesc = $oTeiHeader->appendChild( new domElement( 'fileDesc' ) );
 
@@ -1876,10 +1875,18 @@ class romaDom extends domDocument
     public function setCustomizationAuthor( $szAuthor )
       {
 	$this->getXPath( $oXPath );
-	$oAuthor = $oXPath->query( "/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author" )->item(0);
-	if ( $oAuthor->hasChildNodes() )
-	  $oAuthor->removeChild( $oAuthor->firstChild );
-	$oAuthor->appendChild( new domText ( $szAuthor ) );
+	$oAuthor = $oXPath->query("/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author")->item(0);
+	if ( is_object( $oAuthor ) ) {
+   	 if ( $oAuthor->hasChildNodes() )
+	   $oAuthor->removeChild( $oAuthor->firstChild );
+	 }
+	else
+	{
+ 	 $oTitleS = $oXPath->query("/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt")->item(0);
+  	 $oAuthor = $oTitleS->appendChild( new domElement( 'author' ) );
+	}
+	 $oAuthor->appendChild( new domText ( $szAuthor ) );
+
       }
 
     public function setCustomizationFilename( $szFilename )
