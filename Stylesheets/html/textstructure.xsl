@@ -1173,13 +1173,6 @@ $ID: requests a particular page
   <xsl:template name="includeCSS">
     <xsl:choose>
       <xsl:when test="$cssFile = ''"/>
-      <xsl:when test="$cssFileInclude='true'">
-	<style>
-	  <include xmlns="http://www.w3.org/2001/XInclude"
-		   href="{$cssFile}" 
-		   parse="text"/>
-	</style>
-      </xsl:when>
       <xsl:otherwise>
 	<link href="{$cssFile}" rel="stylesheet" type="text/css"/>
       </xsl:otherwise>
