@@ -105,6 +105,11 @@ Use real name of graphics files rather than pointers
 </xsl:template>
 
 <xd:doc type="float" class="layout">
+When processing a "pb" element, decide what to generate: "active" generates a page break; "visible" genrates a bracketed number (with scissors), and "bracketsonly" generates a bracketed number (without scissors).
+</xd:doc>
+<xsl:param name="pagebreakStyle"></xsl:param>
+
+<xd:doc type="float" class="layout">
 When making a table, what width must be constrained to fit,
 as a proportion of the page width.
 </xd:doc>
