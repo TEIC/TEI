@@ -6,11 +6,16 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="core" xml:id="DIVGEN" usage="opt" ident="divGen">
-<equiv/>
-<gloss>automatically generated text division</gloss><gloss version="2006-10-28" xml:lang="ja">自動的に生成されるテキスト分割</gloss>
-<desc>indicates the location at which a textual division generated
-automatically by a text-processing application is to appear.</desc><desc version="2006-10-28" xml:lang="ja"> テキスト処理により自動的に制裁さ
-れたテキスト区切の場所．</desc><desc version="2006-10-15" xml:lang="es">indica el lugar donde debe aparecer una división de texto generada automáticamente por una aplicación de procesamiento de texto.</desc>
+  <equiv/>
+  <gloss>automatically generated text division</gloss>
+  <gloss version="2007-05-04" xml:lang="es">división de texto generada automáticamente</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">自動的に生成されるテキスト分割</gloss>
+  <desc>indicates the location at which a textual division generated
+automatically by a text-processing application is to appear.</desc>
+  <desc version="2007-05-04" xml:lang="es">indica la localización en la cual aparece una división textual generada automáticamente por la aplicación  de un procesamiento de texto.</desc>
+  <desc version="2006-10-28" xml:lang="ja"> テキスト処理により自動的に制裁さ
+れたテキスト区切の場所．</desc>
+  <desc version="2006-10-15" xml:lang="es">indica el lugar donde debe aparecer una división de texto generada automáticamente por una aplicación de procesamiento de texto.</desc>
   <classes>
     <memberOf key="model.frontPart"/>
     <memberOf key="model.divGenLike"/>
@@ -18,31 +23,40 @@ automatically by a text-processing application is to appear.</desc><desc version
   <content>
 <!--    <rng:empty
      xmlns:rng="http://relaxng.org/ns/structure/1.0"/>-->
-   <rng:zeroOrMore><rng:ref name="model.divWrapper"/>
-   </rng:zeroOrMore>
+    <rng:zeroOrMore>
+      <rng:ref name="model.divWrapper"/>
+    </rng:zeroOrMore>
   </content>
   <attList>
     <attDef ident="type" usage="opt">
-	<equiv/>
-	<desc>specifies what type of generated text division (e.g. index,
-table of contents, etc.) is to appear.</desc><desc version="2006-10-28" xml:lang="ja">生成されたテキスト区切の種類．例えば，インデックス，目次，など．</desc>
-      <datatype><rng:ref name="data.enumerated"/></datatype>
+      <equiv/>
+      <desc>specifies what type of generated text division (e.g. index,
+table of contents, etc.) is to appear.</desc>
+      <desc version="2007-05-04" xml:lang="es">especifica que tipo de divisón de texto generada aparece (p.ej. índice, tabla de contenidos, etc.)</desc>
+      <desc version="2006-10-28" xml:lang="ja">生成されたテキスト区切の種類．例えば，インデックス，目次，など．</desc>
+      <datatype>
+        <rng:ref name="data.enumerated"/>
+      </datatype>
       <valList type="open">
         <valItem ident="index">
           <equiv/>
           <gloss>an index is to be generated and inserted at this point.</gloss>
+          <gloss version="2007-05-04" xml:lang="es">un índice se genera y se insiere en ese punto.</gloss>
         </valItem>
         <valItem ident="toc">
           <equiv/>
           <gloss>a table of contents</gloss>
+          <gloss version="2007-05-04" xml:lang="es">una tabla de contenidos.</gloss>
         </valItem>
         <valItem ident="figlist">
           <equiv/>
           <gloss>a list of figures</gloss>
+          <gloss version="2007-05-04" xml:lang="es">una lista de cifras.</gloss>
         </valItem>
         <valItem ident="tablist">
           <equiv/>
           <gloss>a list of tables</gloss>
+          <gloss version="2007-05-04" xml:lang="es">una lista de tablas.</gloss>
         </valItem>
       </valList>
       <remarks>
@@ -80,20 +94,35 @@ software to generate an index and insert it in the appropriate place in
 the output.  The example below assumes that the <att>indexName</att>
 attribute on <gi>index</gi> elements in the text has been used to specify index
 entries for the two generated indexes, named NAMES and THINGS:</p>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<back><div1 type="backmat"><head>Bibliography</head>
-<listBibl><bibl/></listBibl></div1>
-<div1 type="backmat"><head>Indices</head>
-<divGen n="Index Nominum" type="NAMES"/>
-<divGen n="Index Rerum" type="THINGS"/></div1></back></egXML>
-</exemplum>
-  <exemplum><p>Another use for <gi>divGen</gi> is to specify the
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <back>
+        <div1 type="backmat">
+          <head>Bibliography</head>
+          <listBibl>
+            <bibl/>
+          </listBibl>
+        </div1>
+        <div1 type="backmat">
+          <head>Indices</head>
+          <divGen n="Index Nominum" type="NAMES"/>
+          <divGen n="Index Rerum" type="THINGS"/>
+        </div1>
+      </back>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <p>Another use for <gi>divGen</gi> is to specify the
 location of an automatically produced table of contents:</p>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<front><!--<titlePage>...</titlePage>-->
-<divGen type="toc"/>
-<div><head>Preface</head>
-<p> ... </p></div></front></egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <front>
+<!--<titlePage>...</titlePage>-->
+        <divGen type="toc"/>
+        <div>
+          <head>Preface</head>
+          <p> ... </p>
+        </div>
+      </front>
+    </egXML>
   </exemplum>
   <remarks>
     <p>This element is intended primarily for use in document

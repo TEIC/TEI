@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -5,36 +6,43 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="TEICORP2" usage="mwa" ident="teiCorpus">
-<equiv/>
-<gloss>TEI corpus</gloss><gloss version="2006-10-28" xml:lang="ja">TEIコーパス</gloss>
-<desc>contains the whole of a TEI encoded corpus, comprising a
+  <equiv/>
+  <gloss>TEI corpus</gloss>
+  <gloss version="2007-05-04" xml:lang="es">corpus TEI</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">TEIコーパス</gloss>
+  <desc>contains the whole of a TEI encoded corpus, comprising a
 single corpus header and one or more TEI elements, each containing
-a single text header and a text.</desc><desc version="2006-10-28" xml:lang="ja"> TEI準拠のコーパス全体を含む要素．要素teiHeaderを1つ
+a single text header and a text.</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene la totalidad de un corpus TEI codificado, comprendiendo un único encabezado y uno o más elementos TEI, cada uno de los cuales tiene a su vez un único encabezado y un texto.</desc>
+  <desc version="2006-10-28" xml:lang="ja"> TEI準拠のコーパス全体を含む要素．要素teiHeaderを1つ
 と，要素TEIを1つ以上含む．要素TEIには，要素teiHeaderを1つと，要素
 textを1つ含む．</desc>
   <content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:ref name="teiHeader"/>
       <rng:oneOrMore>
-	<rng:choice>
-	  <rng:ref name="TEI"/>
-	  <rng:ref name="teiCorpus"/>
-	</rng:choice>
+        <rng:choice>
+          <rng:ref name="TEI"/>
+          <rng:ref name="teiCorpus"/>
+        </rng:choice>
       </rng:oneOrMore>
     </rng:group>
   </content>
   <attList>
     <attDef ident="version" usage="opt">
-	<equiv/>
-	<desc>The version of the TEI scheme</desc>
-	<datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="decimal"/></datatype>
-	<defaultVal>5.0</defaultVal>
+      <equiv/>
+      <desc>The version of the TEI scheme</desc>
+      <desc version="2007-05-04" xml:lang="es">La versión del esquema TEI</desc>
+      <datatype>
+        <rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="decimal"/>
+      </datatype>
+      <defaultVal>5.0</defaultVal>
       <valDesc>A number identifying the version of the TEI guidelines</valDesc>
     </attDef>
   </attList>
-
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <teiCorpus>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <teiCorpus>
         <teiHeader>
 <!-- header for corpus -->
         </teiHeader>

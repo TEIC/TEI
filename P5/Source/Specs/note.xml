@@ -6,7 +6,9 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="NOTE" usage="rec" ident="note">
-  <desc>contains a note or annotation.</desc><desc version="2006-10-28" xml:lang="ja">注釈・コメント．</desc>
+  <desc>contains a note or annotation.</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene una nota o aclaración</desc>
+  <desc version="2006-10-28" xml:lang="ja">注釈・コメント．</desc>
   <classes>
     <memberOf key="model.noteLike"/>
 <!--    <memberOf key="model.biblPart"/>
@@ -20,19 +22,25 @@ $Author$
   </content>
   <attList>
     <attDef ident="type" usage="opt">
-	<equiv/>
-	<desc>describes the type of note.</desc><desc version="2006-10-28" xml:lang="ja">注釈・コメントの種類．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <equiv/>
+      <desc>describes the type of note.</desc>
+      <desc version="2007-05-04" xml:lang="es">describe el tipo de notas</desc>
+      <desc version="2006-10-28" xml:lang="ja">注釈・コメントの種類．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
       <valDesc>Values can be taken from any convenient typology of annotation
 suitable to the work in hand;  e.g. annotation, gloss, citation,
 digression, preliminary, temporary</valDesc>
     </attDef>
     <attDef ident="resp" usage="rwa">
-	<equiv/>
-	<desc>indicates who is responsible for the annotation: author,
-	editor, translator, etc.</desc><desc version="2006-10-28" xml:lang="ja">当該注釈・コメントを書いた人．著者，編集者，翻訳者など．</desc>
+      <equiv/>
+      <desc>indicates who is responsible for the annotation: author,
+	editor, translator, etc.</desc>
+      <desc version="2007-05-04" xml:lang="es">indica quien es el responsable de una nota: autor, editor, traductor, etc.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該注釈・コメントを書いた人．著者，編集者，翻訳者など．</desc>
       <datatype>
-	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>a pointer to one of the identifiers declared in the
       document header, associated with a person asserted as
@@ -45,10 +53,14 @@ digression, preliminary, temporary</valDesc>
       </remarks>
     </attDef>
     <attDef ident="anchored" usage="opt">
-	<equiv/>
-	<desc>indicates whether the copy text shows the exact place of reference
-for the note.</desc><desc version="2006-10-28" xml:lang="ja">当該注釈がある場所への参照は，正確にその場所を示しているかどうか．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <equiv/>
+      <desc>indicates whether the copy text shows the exact place of reference
+for the note.</desc>
+      <desc version="2007-05-04" xml:lang="es">indica si el texto de copia muestra el lugar exacto de referencia para una nota.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該注釈がある場所への参照は，正確にその場所を示しているかどうか．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
       <defaultVal>true</defaultVal>
       <remarks>
         <p>In modern texts, notes are usually anchored by means of
@@ -66,11 +78,13 @@ for the note.</desc><desc version="2006-10-28" xml:lang="ja">当該注釈があ�
       </remarks>
     </attDef>
     <attDef ident="target" usage="rwa">
-	<equiv/>
-	<desc>indicates the point (or points) of attachment for a note, or the beginning of
-the span to which the note is attached.</desc><desc version="2006-10-28" xml:lang="ja">当該注釈・コメントの場所や，開始点を示す．</desc>
+      <equiv/>
+      <desc>indicates the point (or points) of attachment for a note, or the beginning of
+the span to which the note is attached.</desc>
+      <desc version="2007-05-04" xml:lang="es">indica el punto (o puntos) de inclusión de una nota, o el inicio del periodo al cual esta nota está unida.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該注釈・コメントの場所や，開始点を示す．</desc>
       <datatype maxOccurs="unbounded">
-	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>reference to the <att>xml:id</att>s of element(s) which begin at
 the location in question (e.g. the <att>xml:id</att> of an <gi>anchor</gi>
@@ -86,11 +100,15 @@ given <att>xml:id</att> values to be pointed at.</p>
       </remarks>
     </attDef>
     <attDef ident="targetEnd" usage="rwa">
-	<equiv/>
-	<desc>points to the end of the span to which the note is attached, if
-the note is not embedded in the text at that point.</desc><desc version="2006-10-28" xml:lang="ja">当該注釈・コメントの終了点を示す．(当該注釈が注釈先の場所に埋め込
+      <equiv/>
+      <desc>points to the end of the span to which the note is attached, if
+the note is not embedded in the text at that point.</desc>
+      <desc version="2007-05-04" xml:lang="es">indica el final de un periodo al cual una nota está enlazada, si la nota no está insertada en ese punto del texto.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該注釈・コメントの終了点を示す．(当該注釈が注釈先の場所に埋め込
 まれていない場合)</desc>
-      <datatype maxOccurs="unbounded"><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
       <valDesc>reference to the <att>xml:id</att>(s) of element(s) which
 <emph>end</emph> at the location(s)
 in question, or to an empty element at

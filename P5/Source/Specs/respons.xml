@@ -6,10 +6,14 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="certainty" xml:id="RESPONS" usage="opt" ident="respons">
-<equiv/>
-<gloss>responsibility</gloss><gloss version="2006-10-28" xml:lang="ja">責任者</gloss>
-<desc>identifies the individual(s) responsible for some aspect of the
-markup of particular element(s).</desc><desc version="2006-10-28" xml:lang="ja"> 当該要素によるマークアップを決めた責任者を示す．</desc>
+  <equiv/>
+  <gloss>responsibility</gloss>
+  <gloss version="2007-05-04" xml:lang="es">responsabilidad</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">責任者</gloss>
+  <desc>identifies the individual(s) responsible for some aspect of the
+markup of particular element(s).</desc>
+  <desc version="2007-05-04" xml:lang="es">Identifica la responsabilidad individual/es de algún aspecto del marcaje de un elemento/s particular.</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 当該要素によるマークアップを決めた責任者を示す．</desc>
   <classes>
     <memberOf key="model.global.meta"/>
   </classes>
@@ -18,11 +22,15 @@ markup of particular element(s).</desc><desc version="2006-10-28" xml:lang="ja">
   </content>
   <attList>
     <attDef ident="target" usage="req">
-	<equiv/>
-	<desc>gives the identifier(s) of the element(s) for which some
+      <equiv/>
+      <desc>gives the identifier(s) of the element(s) for which some
 aspect of the responsibility is being
-assigned.</desc><desc version="2006-10-28" xml:lang="ja">責任対象となる要素の識別子を示す．</desc>
-      <datatype maxOccurs="unbounded"><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+assigned.</desc>
+      <desc version="2007-05-04" xml:lang="es">proporciona el identificador/es del elemeto/s por el cual un aspecto de la responsabilidad está siendo asignado.</desc>
+      <desc version="2006-10-28" xml:lang="ja">責任対象となる要素の識別子を示す．</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
       <valDesc>one or more valid
 identifiers, separated by white space.</valDesc>
       <remarks>
@@ -30,45 +38,56 @@ identifiers, separated by white space.</valDesc>
       </remarks>
     </attDef>
     <attDef ident="locus" usage="req">
-	<equiv/>
-	<desc>indicates the specific aspect of the markup for which
-responsibility is being assigned.</desc><desc version="2006-10-28" xml:lang="ja">当該責任が要素の何についてのことかを示す．</desc>
-      <datatype minOccurs="1" maxOccurs="unbounded"><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <equiv/>
+      <desc>indicates the specific aspect of the markup for which
+responsibility is being assigned.</desc>
+      <desc version="2007-05-04" xml:lang="es">indica el aspecto específico del marcaje por el cual la responsabilidad está siendo asignada</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該責任が要素の何についてのことかを示す．</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
       <valList type="semi">
         <valItem ident="gi">
           <equiv/>
           <gloss>responsibility for the claim that the element is of the
 type indicated by the markup</gloss>
+          <gloss version="2007-05-04" xml:lang="es">responsabilidad por la necesidad que un elemento sea del tipo indicado por el marcaje</gloss>
         </valItem>
         <valItem ident="location">
           <equiv/>
           <gloss>responsibility for the claim that the element
 begins and ends where indicated</gloss>
+          <gloss version="2007-05-04" xml:lang="es">responsabilidad por la necesidad que un elemento empiece y acabe donde se indica.</gloss>
         </valItem>
         <valItem ident="startloc">
           <equiv/>
           <gloss>responsibility for the claim that the element
 begins where indicated</gloss>
+          <gloss version="2007-05-04" xml:lang="es">responsabilidad por la necesidad que un elemento empiece donde se indica.</gloss>
         </valItem>
         <valItem ident="endloc">
           <equiv/>
           <gloss>responsibility for the claim that the element
 ends where indicated</gloss>
+          <gloss version="2007-05-04" xml:lang="es">responsabilidad por la necesidad que un elemento acabe donde se indica.</gloss>
         </valItem>
         <valItem ident="attrName">
           <equiv/>
           <gloss>responsibility for the claim that the
 name attribute has the value given in the markup</gloss>
+          <gloss version="2007-05-04" xml:lang="es">responsabilidad por la necesidad que el nombre del atributo tenga el valor dado en el marcaje.</gloss>
         </valItem>
         <valItem ident="transcribedContent">
           <equiv/>
           <gloss>responsibility for the transcription of
 the element content</gloss>
+          <gloss version="2007-05-04" xml:lang="es">responsabilidad por la transcripción del contenido del elemento.</gloss>
         </valItem>
         <valItem ident="suppliedContent">
           <equiv/>
           <gloss>responsibility for the contents supplied by
 the encoder (corrections, expansions of abbreviations, etc.)</gloss>
+          <gloss version="2007-05-04" xml:lang="es">responsabilidad por los contenidos proporcionados por el codificador (correcciones, ampliaciones o abreviaturas)</gloss>
         </valItem>
       </valList>
       <remarks>
@@ -76,11 +95,13 @@ the encoder (corrections, expansions of abbreviations, etc.)</gloss>
       </remarks>
     </attDef>
     <attDef ident="resp" usage="req">
-	<equiv/>
-	<desc>identifies the individual or agency responsible for the indicated
-aspect of the electronic text.</desc><desc version="2006-10-28" xml:lang="ja">当該責任を持つ個人または団体を示す．</desc>      
+      <equiv/>
+      <desc>identifies the individual or agency responsible for the indicated
+aspect of the electronic text.</desc>
+      <desc version="2007-05-04" xml:lang="es">indentifica el individuo o grupo responsable del aspecto indicado en un texto electrónico.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該責任を持つ個人または団体を示す．</desc>
       <datatype>
-	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>a pointer to one of the identifiers declared in the
       document header, associated with a person asserted as
@@ -92,12 +113,13 @@ aspect of the electronic text.</desc><desc version="2006-10-28" xml:lang="ja">�
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"><respons target="#p1" locus="gi location" resp="#encoder1"/>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <respons target="#p1" locus="gi location" resp="#encoder1"/>
       <respons target="#p2" locus="rend" resp="#encoder2"/>
-<list type="encoders">
-<item xml:id="encoder1"/>
-<item xml:id="encoder2"/>
-</list>
+      <list type="encoders">
+        <item xml:id="encoder1"/>
+        <item xml:id="encoder2"/>
+      </list>
     </egXML>
   </exemplum>
   <remarks>

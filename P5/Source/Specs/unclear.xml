@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -5,10 +6,13 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="UNCLEAR" usage="opt" ident="unclear">
-<equiv/>
-<gloss/>
-<desc>contains a word, phrase, or passage which cannot be transcribed
-with certainty because it is illegible or inaudible in the source.</desc><desc version="2006-06-05" xml:lang="zh-tw">標記在來源文本中因為難以辨認或聽懂而無法確實轉錄的單字、詞彙、或段落。</desc><desc version="2006-10-28" xml:lang="ja">元資料からは，判読できないまたは聞き取れないなどの理由から，確信
+  <equiv/>
+  <gloss/>
+  <desc>contains a word, phrase, or passage which cannot be transcribed
+with certainty because it is illegible or inaudible in the source.</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene una palabra, frase o pasaje que no puede ser transcita con certeza, ya que en la fuente es ilegible o incomprensible.</desc>
+  <desc version="2006-06-05" xml:lang="zh-tw">標記在來源文本中因為難以辨認或聽懂而無法確實轉錄的單字、詞彙、或段落。</desc>
+  <desc version="2006-10-28" xml:lang="ja">元資料からは，判読できないまたは聞き取れないなどの理由から，確信
 を持って転記できない場所を示す．</desc>
   <classes>
     <memberOf key="model.pPart.transcriptional"/>
@@ -20,9 +24,14 @@ with certainty because it is illegible or inaudible in the source.</desc><desc v
   </content>
   <attList>
     <attDef ident="reason" usage="opt">
-	<equiv/>
-	<desc>indicates why the material is hard to transcribe.</desc><desc version="2006-06-05" xml:lang="zh-tw">說明資料難以轉錄的原因。</desc><desc version="2006-10-28" xml:lang="ja">当該部分が，転記できない理由．</desc>
-      <datatype maxOccurs="unbounded"><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/></datatype>
+      <equiv/>
+      <desc>indicates why the material is hard to transcribe.</desc>
+      <desc version="2007-05-04" xml:lang="es">indica por qué el material es difícl de transcribir. </desc>
+      <desc version="2006-06-05" xml:lang="zh-tw">說明資料難以轉錄的原因。</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該部分が，転記できない理由．</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+      </datatype>
       <valDesc>any phrase describing the difficulty, e.g. <mentioned>faded</mentioned>,
 <mentioned>ambient noise</mentioned>, <mentioned>passing truck</mentioned>, <mentioned>ill formed</mentioned>,
 <mentioned>eccentric ductus</mentioned>.</valDesc>
@@ -54,12 +63,17 @@ of the text contained within the <gi>unclear</gi> element.</desc>
       </exemplum>
     </attDef>-->
     <attDef ident="hand" usage="opt">
-	<equiv/>
-	<desc>Where the difficulty in transcription arises from action
+      <equiv/>
+      <desc>Where the difficulty in transcription arises from action
 (partial deletion, etc.) assignable to an identifiable hand, signifies
-the hand responsible for the action.</desc><desc version="2006-06-05" xml:lang="zh-tw">若轉錄困難是由身分明確的執行者所造成(例如部分刪除)，則在此表明執行者的身分。</desc><desc version="2006-10-28" xml:lang="ja">転記の困難が，部分的な削除といった行為によるもので，その場所が，
+the hand responsible for the action.</desc>
+      <desc version="2007-05-04" xml:lang="es">donde surge la dificultat en la transcripción por una acción (cancelación parcial, etc.) que se puede asignar a una mano identificable, significa la mano responsable de dicha acción. </desc>
+      <desc version="2006-06-05" xml:lang="zh-tw">若轉錄困難是由身分明確的執行者所造成(例如部分刪除)，則在此表明執行者的身分。</desc>
+      <desc version="2006-10-28" xml:lang="ja">転記の困難が，部分的な削除といった行為によるもので，その場所が，
 特定の筆跡によるものである場合に，その筆跡を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
       <valDesc>must be one of the hand identifiers declared in the document
 header (see section <ptr target="#PHDH"/>).</valDesc>
       <exemplum>
@@ -67,16 +81,33 @@ header (see section <ptr target="#PHDH"/>).</valDesc>
       </exemplum>
     </attDef>
     <attDef ident="agent" usage="opt">
-	<equiv/>
-	<desc>Where the difficulty in transcription arises from
- damage, categorizes the cause of the damage, if it can be identified.</desc><desc version="2006-06-05" xml:lang="zh-tw">若因為內容遭受損毀而引起轉錄困難，且可辨別出損毀的導因，則在此加以說明。</desc><desc version="2006-10-28" xml:lang="ja">転記の困難が，損傷による場合，その損傷の種類を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
-<valList type="open">
-  <valItem ident="rubbing"><gloss>damage results from rubbing of the
-  leaf edges</gloss><gloss version="2006-06-05" xml:lang="zh-tw">損毀是起因於書頁邊緣摩擦受損</gloss></valItem>
-<valItem ident="mildew"><gloss>damage results from mildew on the leaf surface</gloss><gloss version="2006-06-05" xml:lang="zh-tw">損毀是起因於書頁表面發霉</gloss></valItem>
-<valItem ident="smoke"><gloss>damage results from smoke</gloss><gloss version="2006-06-05" xml:lang="zh-tw">損毀是起因於煙燻</gloss></valItem>
-</valList>
+      <equiv/>
+      <desc>Where the difficulty in transcription arises from
+ damage, categorizes the cause of the damage, if it can be identified.</desc>
+      <desc version="2007-05-04" xml:lang="es">donde surge la dificultad en la transcripción a causa de un daño, categoriza, si puede ser identificada, la causa de tal daño.</desc>
+      <desc version="2006-06-05" xml:lang="zh-tw">若因為內容遭受損毀而引起轉錄困難，且可辨別出損毀的導因，則在此加以說明。</desc>
+      <desc version="2006-10-28" xml:lang="ja">転記の困難が，損傷による場合，その損傷の種類を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valList type="open">
+        <valItem ident="rubbing">
+          <gloss>damage results from rubbing of the
+  leaf edges</gloss>
+          <gloss version="2007-05-04" xml:lang="es">daño resultante del roce de los bordes de las páginas.</gloss>
+          <gloss version="2006-06-05" xml:lang="zh-tw">損毀是起因於書頁邊緣摩擦受損</gloss>
+        </valItem>
+        <valItem ident="mildew">
+          <gloss>damage results from mildew on the leaf surface</gloss>
+          <gloss version="2007-05-04" xml:lang="es">daño provocado por la presencia de moho en la superficie del folio.</gloss>
+          <gloss version="2006-06-05" xml:lang="zh-tw">損毀是起因於書頁表面發霉</gloss>
+        </valItem>
+        <valItem ident="smoke">
+          <gloss>damage results from smoke</gloss>
+          <gloss version="2007-05-04" xml:lang="es">daño causado por el humo.</gloss>
+          <gloss version="2006-06-05" xml:lang="zh-tw">損毀是起因於煙燻</gloss>
+        </valItem>
+      </valList>
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>

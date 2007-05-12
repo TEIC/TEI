@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -9,6 +10,7 @@ $Author$
   <gloss/>
   <desc>indicates the degree of certainty or uncertainty associated
   with some aspect of the text markup. </desc>
+  <desc version="2007-05-04" xml:lang="es">Indica el grado de certeza o incertidumbre asociado a algun aspecto del marcaje de texto.</desc>
   <desc version="2006-10-28" xml:lang="ja">マークアップの確信度を示す．</desc>
   <desc version="2006-10-15" xml:lang="es">indica el grado de certeza
   o incertidumbre asociado con algún aspecto del marcado del
@@ -24,12 +26,15 @@ $Author$
       <equiv/>
       <desc>points at the elements whose markup is
       uncertain.</desc>
+      <desc version="2007-05-04" xml:lang="es">señala los elementos cuyo marcaje es incierto.</desc>
       <desc version="2006-10-28" xml:lang="ja">確信度の対象となる要素を
       示す．</desc>
-      <datatype maxOccurs="unbounded"><rng:ref name="data.pointer"/></datatype>
+      <datatype maxOccurs="unbounded">
+        <rng:ref name="data.pointer"/>
+      </datatype>
       <valDesc>a series of one or more identifiers (URIs), separated by white space</valDesc>
       <exemplum>
-	<egXML xmlns="http://www.tei-c.org/ns/Examples">Elizabeth went to <persName xml:id="ESX">Essex</persName>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">Elizabeth went to <persName xml:id="ESX">Essex</persName>
 	<certainty target="#ESX" locus="gi" degree="0.6"/></egXML>
       </exemplum>
       <remarks>
@@ -43,77 +48,101 @@ $Author$
       </remarks>
     </attDef>
     <attDef ident="locus" usage="req">
-	<equiv/>
-	<desc>indicates the precise location of the uncertainty in the
+      <equiv/>
+      <desc>indicates the precise location of the uncertainty in the
 	markup: applicability of the element, precise position of the
 	start- or end-tag, value of a specific attribute,
 	etc.</desc>
-	<desc version="2006-10-28" xml:lang="ja">当該確信度が指定要素の
+      <desc version="2007-05-04" xml:lang="es">indica la posición precisa de la incertidumbre en el marcaje: aplicabilidad del elemento, posición precisa del comienzo y del final de la etiqueta, valor de un atributo específico, etc.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該確信度が指定要素の
 	何についてのことかを示す．</desc>
-	<datatype><rng:ref name="data.enumerated"/></datatype>
-	<valList type="semi">
-	  <valItem ident="gi">
-	    <equiv/>
-	    <gloss>uncertain whether the element used actually applies
+      <datatype>
+        <rng:ref name="data.enumerated"/>
+      </datatype>
+      <valList type="semi">
+        <valItem ident="gi">
+          <equiv/>
+          <gloss>uncertain whether the element used actually applies
 	    to the passage.</gloss>
-	  </valItem>
-	  <valItem ident="startloc">
-	    <equiv/>
-	    <gloss>start-tag may not be correctly located.</gloss>
-	  </valItem>
-	  <valItem ident="endloc">
-	    <equiv/>
-	    <gloss>end-tag may not be correctly located.</gloss>
-	  </valItem>
-	  <valItem ident="location">
-	    <equiv/>
-	    <gloss>both the start-tag and the end-tag may not be
+          <gloss version="2007-05-13" xml:lang="es">it is uncertain whether the element used actually applies to the passage.</gloss>
+          <gloss version="2007-05-04" xml:lang="es">es incierto si el elemento usado realmente se aplica al pasaje...</gloss>
+        </valItem>
+        <valItem ident="startloc">
+          <equiv/>
+          <gloss>start-tag may not be correctly located.</gloss>
+          <gloss version="2007-05-04" xml:lang="es">el comienzo de la etiqueta puede no estar situado correctamente.</gloss>
+        </valItem>
+        <valItem ident="endloc">
+          <equiv/>
+          <gloss>end-tag may not be correctly located.</gloss>
+          <gloss version="2007-05-04" xml:lang="es">el final de la etiqueta puede no estar situado correctamente.</gloss>
+        </valItem>
+        <valItem ident="location">
+          <equiv/>
+          <gloss>both the start-tag and the end-tag may not be
 	    correctly located.</gloss>
-	  </valItem>
-	  <valItem ident="attrName">
-	    <equiv/>
-	    <gloss>the value given for the attribute name is
+          <gloss version="2007-05-04" xml:lang="es">ambos, el comienzo y el final de la etiqueta pueden no estar situados correctamente.</gloss>
+        </valItem>
+        <valItem ident="attrName">
+          <equiv/>
+          <gloss>the value given for the attribute name is
 	    uncertain.</gloss>
-	  </valItem>
-	  <valItem ident="transcribedContent">
-	    <equiv/>
-	    <gloss>the content of the element may not be a correct
+          <gloss version="2007-05-04" xml:lang="es">el valor dado para el nombre del atributo es incierto.</gloss>
+        </valItem>
+        <valItem ident="transcribedContent">
+          <equiv/>
+          <gloss>the content of the element may not be a correct
 	    transcription of the source text.</gloss>
-	  </valItem>
-	  <valItem ident="suppliedContent">
-	    <equiv/>
-	    <gloss>the content of the element may not have been
+          <gloss version="2007-05-04" xml:lang="es">el contenido del elemento puede no ser una transcripción correcta del texto fuente.</gloss>
+        </valItem>
+        <valItem ident="suppliedContent">
+          <equiv/>
+          <gloss>the content of the element may not have been
 	    correctly supplied by the reader, e.g. as in the cases of
 	    corr and abbrev elements.</gloss>
-	  </valItem>
-	</valList>
-	<remarks>
-	  <p>If the name of an attribute is supplied, it must be
+          <gloss version="2007-05-04" xml:lang="es">el contenido del elemento puede no haber sido proporcionado correctamente por el lector, p.ej. como en los casos de los elementos corr y abbrev.</gloss>
+        </valItem>
+      </valList>
+      <remarks>
+        <p>If the name of an attribute is supplied, it must be
 	  prefixed by <code>att.</code>.</p>
       </remarks>
     </attDef>
     <attDef ident="assertedValue" usage="rec">
-	<equiv/>
-	<desc>provides an alternative value for the aspect of the markup in
+      <equiv/>
+      <desc>provides an alternative value for the aspect of the markup in
 question—an alternative generic identifier, transcription,
 or attribute value, or the identifier of an <gi>anchor</gi> element (to
 indicate an alternative starting or ending location).  If an
 <att>assertedValue</att> is given, the confidence level specified by
 <att>degree</att> applies to the alternative markup specified by
 <att>assertedValue</att>; if none is given, it applies to the markup
-in the text.</desc><desc version="2006-10-28" xml:lang="ja">確信度に依存して，選択可能性のある代替値を示す．</desc>
-      <datatype><rng:choice>
-<rng:ref name="data.pointer"/>
-<rng:ref name="data.name"/>
-<rng:ref name="data.word"/>
-</rng:choice></datatype>
+in the text.</desc>
+      <desc version="2007-05-04" xml:lang="es">proporciona un valor alternativo para
+          el aspecto del marcaje en cuestion, un identificador
+          genérico alternativo, transcripción, o valor de atributo, o
+          de identificador de un elemento <gi>anchor</gi> (para
+          indicar una posición de comienzo y fin alternativa). Si un
+          <att>assertedValue</att> viene dado, el nivel de confianza
+          especificado por <att>degree</att> se aplica al marcaje
+          alternativo especificado por <att>assertedValue</att>; si no
+          viene dado ninguno, se aplica al marcaje en el texto.</desc>
+      <desc version="2006-10-28" xml:lang="ja">確信度に依存して，選択可能性のある代替値を示す．</desc>
+      <datatype>
+        <rng:choice>
+          <rng:ref name="data.pointer"/>
+          <rng:ref name="data.name"/>
+          <rng:ref name="data.word"/>
+        </rng:choice>
+      </datatype>
       <valDesc>generic identifier, attribute value, location (e.g.
 indicated by a reference to an <gi>anchor</gi> element or to an
 <gi>ptr</gi> element), or other appropriate alternative
 value.</valDesc>
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-   <certainty target="#ESX" locus="gi" assertedValue="place" degree="0.2"/></egXML>
+          <certainty target="#ESX" locus="gi" assertedValue="place" degree="0.2"/>
+        </egXML>
       </exemplum>
       <remarks>
         <p>This attribute makes it possible to indicate the
@@ -146,21 +175,23 @@ not possible to suggest such a controlled vocabulary for
 general use.</p>
       </remarks>
     </attDef> -->
-
     <attDef ident="given" usage="rec">
       <equiv/>
       <desc>indicates conditions assumed in the assignment of a degree
       of confidence.</desc>
+      <desc version="2007-05-04" xml:lang="es">indica las condiciones asumidas en la asignación de un grado de confianza </desc>
       <desc version="2006-10-28" xml:lang="ja">当該確信度が成立する前提
       条件部分を示す．</desc>
-      <datatype maxOccurs="unbounded"><rng:ref name="data.pointer"/></datatype>
+      <datatype maxOccurs="unbounded">
+        <rng:ref name="data.pointer"/>
+      </datatype>
       <valDesc>a pointer to a characterization of the conditions which
       are assumed in the assignment of a degree of
       confidence.</valDesc>
       <remarks>
-	<p>A project may wish to control the vocabulary used in this
+        <p>A project may wish to control the vocabulary used in this
 	attribute.</p>
-	<p>The envisioned typical value of this attribute would be the
+        <p>The envisioned typical value of this attribute would be the
 	identifier of another <gi>certainty</gi> element or a list of
 	such identifiers. It may thus be possible to construct
 	probability networks by chaining <gi>certainty</gi> elements
@@ -191,15 +222,19 @@ ambiguity-free system for indicating certainty.</p>
       </remarks>
     </attDef>
     <attDef ident="degree" usage="opt">
-	<equiv/>
-	<desc>indicates the degree of confidence assigned to the aspect
-of the markup named by the <att>locus</att> attribute.</desc><desc version="2006-10-28" xml:lang="ja">当該確信度の程度を示す．</desc>
-      <datatype><rng:ref name="data.probability"/></datatype>
+      <equiv/>
+      <desc>indicates the degree of confidence assigned to the aspect
+of the markup named by the <att>locus</att> attribute.</desc>
+      <desc version="2007-05-04" xml:lang="es">indica el grado de confianza asignado al aspecto del marcaje llamado por el atributo <att>locus</att></desc>
+      <desc version="2006-10-28" xml:lang="ja">当該確信度の程度を示す．</desc>
+      <datatype>
+        <rng:ref name="data.probability"/>
+      </datatype>
     </attDef>
   </attList>
   <exemplum>
     <p>(For discussion of this example, see section <ptr target="#CECECE"/>)</p>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Earnest went to <anchor xml:id="A1"/> old
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">Earnest went to <anchor xml:id="A1"/> old
 <persName xml:id="SYB">Saybrook</persName>.
 <certainty xml:id="c1" target="#SYB" locus="gi" degree="0.6"/>
 <certainty target="#SYB" locus="startloc" given="#c1" degree="0.9"/>
