@@ -6,10 +6,15 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" xml:id="DIV6" usage="rwa" ident="div6">
-<equiv/>
-<gloss>level-6 text division</gloss><gloss version="2006-10-28" xml:lang="ja">レベル6テキスト区分</gloss>
-<desc>contains a sixth-level subdivision of the front, body, or back of a
- text.</desc><desc version="2006-10-28" xml:lang="ja"> レベル5より小さい部分を示す．</desc><desc version="2006-10-15" xml:lang="es">contiene una subdivisión de sexto nivel de los preliminares, cuerpo, o anexos de un texto.</desc>
+  <equiv/>
+  <gloss>level-6 text division</gloss>
+  <gloss version="2007-01-21" xml:lang="it">partizione testuale di livello 6</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">レベル6テキスト区分</gloss>
+  <desc>contains a sixth-level subdivision of the front, body, or back of a
+ text.</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene una sezione di sesto livello del peritesto iniziale, del corpo del testo, o del peritesto finale</desc>
+  <desc version="2006-10-28" xml:lang="ja"> レベル5より小さい部分を示す．</desc>
+  <desc version="2006-10-15" xml:lang="es">contiene una subdivisión de sexto nivel de los preliminares, cuerpo, o anexos de un texto.</desc>
   <classes>
     <memberOf key="att.divLike"/>
     <memberOf key="att.declaring"/>
@@ -23,25 +28,9 @@ $Author$
           <rng:ref name="model.global"/>
         </rng:choice>
       </rng:zeroOrMore>
-<rng:optional>
-      <rng:choice>
-        <rng:oneOrMore>
-          <rng:choice>
-            <rng:ref name="model.div7Like"/>
-            <rng:ref name="model.divGenLike"/>
-          </rng:choice>
-          <rng:zeroOrMore>
-            <rng:ref name="model.global"/>
-          </rng:zeroOrMore>
-        </rng:oneOrMore>
-        <rng:group>
+      <rng:optional>
+        <rng:choice>
           <rng:oneOrMore>
-            <rng:ref name="macro.component"/>
-            <rng:zeroOrMore>
-              <rng:ref name="model.global"/>
-            </rng:zeroOrMore>
-          </rng:oneOrMore>
-          <rng:zeroOrMore>
             <rng:choice>
               <rng:ref name="model.div7Like"/>
               <rng:ref name="model.divGenLike"/>
@@ -49,19 +38,35 @@ $Author$
             <rng:zeroOrMore>
               <rng:ref name="model.global"/>
             </rng:zeroOrMore>
+          </rng:oneOrMore>
+          <rng:group>
+            <rng:oneOrMore>
+              <rng:ref name="macro.component"/>
+              <rng:zeroOrMore>
+                <rng:ref name="model.global"/>
+              </rng:zeroOrMore>
+            </rng:oneOrMore>
+            <rng:zeroOrMore>
+              <rng:choice>
+                <rng:ref name="model.div7Like"/>
+                <rng:ref name="model.divGenLike"/>
+              </rng:choice>
+              <rng:zeroOrMore>
+                <rng:ref name="model.global"/>
+              </rng:zeroOrMore>
+            </rng:zeroOrMore>
+          </rng:group>
+        </rng:choice>
+        <rng:zeroOrMore>
+          <rng:choice>
+            <rng:ref name="model.divWrapper"/>
+            <rng:ref name="model.divWrapper.bottom"/>
+          </rng:choice>
+          <rng:zeroOrMore>
+            <rng:ref name="model.global"/>
           </rng:zeroOrMore>
-        </rng:group>
-      </rng:choice>
-      <rng:zeroOrMore>
-	<rng:choice>
-	  <rng:ref name="model.divWrapper"/>
-	  <rng:ref name="model.divWrapper.bottom"/>
-	</rng:choice>
-	<rng:zeroOrMore>
-	  <rng:ref name="model.global"/>
-	</rng:zeroOrMore>
-      </rng:zeroOrMore>
-</rng:optional>
+        </rng:zeroOrMore>
+      </rng:optional>
     </rng:group>
   </content>
   <exemplum>

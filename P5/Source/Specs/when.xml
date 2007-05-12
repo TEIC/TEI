@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -5,18 +6,26 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" xml:id="WHEN" usage="opt" ident="when">
-<equiv/>
-<gloss>when</gloss><gloss version="2006-10-28" xml:lang="ja">時点</gloss>
-<desc>indicates a point in time either relative to other elements in the
-same timeline tag, or absolutely.</desc><desc version="2006-10-28" xml:lang="ja"> 要素timeline中にある時点を示す．</desc>
+  <equiv/>
+  <gloss>when</gloss>
+  <gloss version="2007-01-21" xml:lang="it">quando</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">時点</gloss>
+  <desc>indicates a point in time either relative to other elements in the
+same timeline tag, or absolutely.</desc>
+  <desc version="2007-01-21" xml:lang="it">fornisce un'indicazione temporale in termini relativi, rispetto ad altri elementi determinati sulla stessa scala temporale, o in termini assoluti</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 要素timeline中にある時点を示す．</desc>
   <content>
     <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
   </content>
   <attList>
     <attDef ident="absolute" usage="rwa">
-	<equiv/>
-	<desc>supplies an absolute value for the time.</desc><desc version="2006-10-28" xml:lang="ja">当該時点の絶対時間を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.temporal.w3c"/></datatype>
+      <equiv/>
+      <desc>supplies an absolute value for the time.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica un valore temporale assoluto</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該時点の絶対時間を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.temporal.w3c"/>
+      </datatype>
       <valDesc>Times may be given in standard form, as specified in the
 Encoding Declarations section of the header.</valDesc>
       <remarks>
@@ -25,31 +34,52 @@ Encoding Declarations section of the header.</valDesc>
       </remarks>
     </attDef>
     <attDef ident="unit" usage="rwa">
-	<equiv/>
-	<desc>specifies the unit of time in which the  <att>interval</att>
-value is expressed, if this is not inherited from the parent <gi>timeLine</gi>.</desc><desc version="2006-10-28" xml:lang="ja">当該時点で使用される時間幅の単位を示す．指定がない場合は，要素
+      <equiv/>
+      <desc>specifies the unit of time in which the  <att>interval</att>
+value is expressed, if this is not inherited from the parent <gi>timeLine</gi>.</desc>
+      <desc version="2007-01-21" xml:lang="it">specifica l'unità temporale nel quale è espresso l'attributo  <att>interval</att>, se questo non è ereditato dal genitore <gi>timeLine</gi></desc>
+      <desc version="2006-10-28" xml:lang="ja">当該時点で使用される時間幅の単位を示す．指定がない場合は，要素
 timelineの値を継承する．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
       <valList type="semi">
-<valItem ident="s"><gloss>seconds</gloss></valItem>
-<valItem ident="ms"><gloss>milliseconds</gloss></valItem>
-<valItem ident="m"><gloss>minutes</gloss></valItem>
-<valItem ident="h"><gloss>hours</gloss></valItem>
-<valItem ident="d"><gloss>days</gloss></valItem>
+        <valItem ident="s">
+          <gloss>seconds</gloss>
+          <gloss version="2007-01-21" xml:lang="it">secondi</gloss>
+        </valItem>
+        <valItem ident="ms">
+          <gloss>milliseconds</gloss>
+          <gloss version="2007-01-21" xml:lang="it">millesimi di secondo</gloss>
+        </valItem>
+        <valItem ident="m">
+          <gloss>minutes</gloss>
+          <gloss version="2007-01-21" xml:lang="it">minuti</gloss>
+        </valItem>
+        <valItem ident="h">
+          <gloss>hours</gloss>
+          <gloss version="2007-01-21" xml:lang="it">ore</gloss>
+        </valItem>
+        <valItem ident="d">
+          <gloss>days</gloss>
+          <gloss version="2007-01-21" xml:lang="it">giorni</gloss>
+        </valItem>
       </valList>
 <!--<valDesc>a semi-closed list of recognized time units such as
 <mentioned>millisecond</mentioned>, <mentioned>second</mentioned>, <mentioned>minute</mentioned></valDesc>-->
     </attDef>
     <attDef ident="interval" usage="rwa">
-	<equiv/>
-	<desc>specifies the numeric portion of a time interval</desc><desc version="2006-10-28" xml:lang="ja">時間幅を数値で示す．</desc>
-      <datatype xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0">
-	<rng:choice>
-	  <rng:data type="float">
-	    <rng:param name="minExclusive">0</rng:param>
-	  </rng:data>
-	  <rng:value>unknown</rng:value>
-	</rng:choice>
+      <equiv/>
+      <desc>specifies the numeric portion of a time interval</desc>
+      <desc version="2007-01-21" xml:lang="it">indica la componente numerica di un intervallo temporale</desc>
+      <desc version="2006-10-28" xml:lang="ja">時間幅を数値で示す．</desc>
+      <datatype xmlns:rng="http://relaxng.org/ns/structure/1.0">
+        <rng:choice>
+          <rng:data type="float">
+            <rng:param name="minExclusive">0</rng:param>
+          </rng:data>
+          <rng:value>unknown</rng:value>
+        </rng:choice>
       </datatype>
       <valDesc>a positive number, or the special value
       <val>unknown</val>.</valDesc>
@@ -59,11 +89,15 @@ timelineの値を継承する．</desc>
       </remarks>
     </attDef>
     <attDef ident="since" usage="rwa">
-	<equiv/>
-	<desc>identifies the reference point for determining the time of the
+      <equiv/>
+      <desc>identifies the reference point for determining the time of the
 current <gi>when</gi> element, which is obtained by adding the interval to the
-time of the reference point.</desc><desc version="2006-10-28" xml:lang="ja">当該時点を決める参照地点を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+time of the reference point.</desc>
+      <desc version="2007-01-21" xml:lang="it">identifica il punto di riferimento per la determinazione del valore temporale dell'elemento <gi>when</gi> corrente, ottenuto aggiungendo l'intervallo al punto di riferimento temporale</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該時点を決める参照地点を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
       <valDesc>Should point to another <gi>when</gi> element in the same
 <gi>timeline</gi>.</valDesc>
       <remarks>
@@ -75,7 +109,8 @@ the origin of the enclosing <gi>timeline</gi>
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <when xml:id="TW3" interval="20" since="#w2"/>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <when xml:id="TW3" interval="20" since="#w2"/>
     </egXML>
   </exemplum>
   <remarks>

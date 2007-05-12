@@ -6,12 +6,14 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="transcr" xml:id="SUPPLIED" usage="opt" ident="supplied">
-<equiv/>
-<gloss/>
-<desc>signifies text supplied by the transcriber or editor in place
+  <equiv/>
+  <gloss/>
+  <desc>signifies text supplied by the transcriber or editor in place
 of text which cannot be read, either because of physical damage or
 loss in the original or because it is illegible for any
-reason.</desc><desc version="2006-10-28" xml:lang="ja">転記者や編者によって付加されたテキストを示す．元々は，判読できな
+reason.</desc>
+  <desc version="2007-01-21" xml:lang="it">indica porzioni di testo inserite dal trascrittore o dal revisore al posto di porzioni di testo illegibili per danneggiamento, lacune nell'originale o altri motivi</desc>
+  <desc version="2006-10-28" xml:lang="ja">転記者や編者によって付加されたテキストを示す．元々は，判読できな
 い，破損しているなどの場所で，相当の理由がありテキストが付加され
 た場合である．</desc>
   <classes>
@@ -23,40 +25,65 @@ reason.</desc><desc version="2006-10-28" xml:lang="ja">転記者や編者によ�
   </content>
   <attList>
     <attDef ident="reason" usage="opt">
-	<equiv/>
-	<desc>indicates why the text has had to be supplied.</desc><desc version="2006-10-28" xml:lang="ja">当該テキストが付加された理由を示す．</desc>
-      <datatype maxOccurs="unbounded"><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/></datatype>
+      <equiv/>
+      <desc>indicates why the text has had to be supplied.</desc>
+      <desc version="2007-01-21" xml:lang="it">spiega i motivi di tale inserimento</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該テキストが付加された理由を示す．</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+      </datatype>
       <valDesc>any phrase describing the difficulty, e.g.
 <mentioned>overbinding</mentioned>, <mentioned>faded ink</mentioned>, <mentioned>lost folio</mentioned>, <mentioned>omitted
 in original</mentioned>.</valDesc>
     </attDef>
     <attDef ident="hand" usage="opt">
-	<equiv/>
-	<desc>where the presumed loss of text leading to the supplying of
+      <equiv/>
+      <desc>where the presumed loss of text leading to the supplying of
 text arises from action (partial deletion, etc.) assignable to an
-identifiable hand, signifies the hand responsible for the action.</desc><desc version="2006-10-28" xml:lang="ja">当該テキストの筆致と思われるものを示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+identifiable hand, signifies the hand responsible for the action.</desc>
+      <desc version="2007-01-21" xml:lang="it">nel caso in cui la perdita di testo che giustifica l'inserimento derivi da un'azione (cancellazione parziale, ecc.) riconducibile a una mano identificabile, indica la mano responsabile di tale azione</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該テキストの筆致と思われるものを示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
       <valDesc>must be one of the hand identifiers declared in the document
 header (see section <ptr target="#PHDH"/>).</valDesc>
     </attDef>
     <attDef ident="agent" usage="opt">
-	<equiv/>
-	<desc>In the case of text which has been supplied  because of damage, categorizes the cause of the damage, if it can be identified.</desc><desc version="2006-10-28" xml:lang="ja">当該テキストが，損傷によって失われていた場合，その原因を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
-<valList type="open">
-  <valItem ident="rubbing"><gloss>damage results from rubbing of the
-  leaf edges</gloss></valItem>
-<valItem ident="mildew"><gloss>damage results from mildew on the leaf surface</gloss></valItem>
-<valItem ident="smoke"><gloss>damage results from smoke</gloss></valItem>
-</valList>
+      <equiv/>
+      <desc>In the case of text which has been supplied  because of damage, categorizes the cause of the damage, if it can be identified.</desc>
+      <desc version="2007-01-21" xml:lang="it">in caso di inserimento per dannegiamento indica la causa di quest'ultimo, se identificabile</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該テキストが，損傷によって失われていた場合，その原因を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valList type="open">
+        <valItem ident="rubbing">
+          <gloss>damage results from rubbing of the
+  leaf edges</gloss>
+          <gloss version="2007-01-21" xml:lang="it">dannegiamento per sfregamento dei margini del foglio</gloss>
+        </valItem>
+        <valItem ident="mildew">
+          <gloss>damage results from mildew on the leaf surface</gloss>
+          <gloss version="2007-01-21" xml:lang="it">danneggiamento per muffa sulla superficie del foglio</gloss>
+        </valItem>
+        <valItem ident="smoke">
+          <gloss>damage results from smoke</gloss>
+          <gloss version="2007-01-21" xml:lang="it">danneggiamento per fumo</gloss>
+        </valItem>
+      </valList>
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
     </attDef>
     <attDef ident="source" usage="opt">
-	<equiv/>
-	<desc>states the source of the supplied text.</desc><desc version="2006-10-28" xml:lang="ja">当該テキストの元資料を示す．</desc>
-      <datatype maxOccurs="unbounded"><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/></datatype>
+      <equiv/>
+      <desc>states the source of the supplied text.</desc>
+      <desc version="2007-01-21" xml:lang="it">dichiara la fonte del testo a disposizione</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該テキストの元資料を示す．</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+      </datatype>
       <valDesc>any string of characters identifying the source of the
       supplied text. This might be the sigil for a manuscript, or a
       particular edition, or the transcriber or editor's own initials,

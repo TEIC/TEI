@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details.
@@ -6,6 +7,7 @@ See the file COPYING for details.
   <desc xml:id="mscontents.desc">describes the intellectual content of
   a manuscript or manuscript part, either as a series of paragraphs or
   as a series of structured manuscript items.</desc>
+  <desc version="2007-01-21" xml:lang="it">descrive il contenuto intellettuale di un manoscritto o di una sua parte tramite una serie di paragrafi o brani del manoscritto</desc>
   <desc version="2006-10-28" xml:lang="ja">当該手書き文書の，知的内容を
   示す．一連の段落または一連の要素miitemから成る．</desc>
   <classes>
@@ -14,31 +16,35 @@ See the file COPYING for details.
   <content>
     <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:oneOrMore>
-	<rng:ref name="model.pLike"/>
+        <rng:ref name="model.pLike"/>
       </rng:oneOrMore>
       <rng:group>
-	<rng:optional>
-	  <rng:ref name="summary"/>
-	</rng:optional>
-	<rng:optional>
-	  <rng:ref name="textLang"/>
-	</rng:optional>
-	<rng:oneOrMore>
-	  <rng:choice>
-	    <rng:ref name="msItem"/>
-	    <rng:ref name="msItemStruct"/>
-	  </rng:choice>
-	</rng:oneOrMore>
+        <rng:optional>
+          <rng:ref name="summary"/>
+        </rng:optional>
+        <rng:optional>
+          <rng:ref name="textLang"/>
+        </rng:optional>
+        <rng:oneOrMore>
+          <rng:choice>
+            <rng:ref name="msItem"/>
+            <rng:ref name="msItemStruct"/>
+          </rng:choice>
+        </rng:oneOrMore>
       </rng:group>
     </rng:choice>
   </content>
   <attList>
     <attDef ident="class">
-	<equiv/>
-	<gloss/>
-	<desc>identifies the text types or classifications applicable
-	to this object.</desc><desc version="2006-10-28" xml:lang="ja">当該内容の種類を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.code"/></datatype>
+      <equiv/>
+      <gloss/>
+      <desc>identifies the text types or classifications applicable
+	to this object.</desc>
+      <desc version="2007-01-21" xml:lang="it">identifica la tipologia testuale o altre classificazioni applicabili all'oggetto in questione</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該内容の種類を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.code"/>
+      </datatype>
       <valDesc>One or more codes, each of which is used as the identifier for
 a text classification element supplied in the TEI Header <gi>textClass</gi>
 element.</valDesc>
@@ -46,33 +52,64 @@ element.</valDesc>
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0"><msContents>
-<p>A collection of Lollard sermons</p>
-</msContents></egXML>
-</exemplum>
-<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0"><msContents>
-<msItem n="1"><locus>fols. 5r-7v</locus>
-<title>An ABC</title> 
-<bibl><title>IMEV</title> <biblScope>239</biblScope></bibl></msItem>
-<msItem n="2"><locus>fols. 7v-8v</locus>
-<title xml:lang="FR">Lenvoy de Chaucer a Scogan</title>
-<bibl><title>IMEV</title>
-<biblScope>3747</biblScope></bibl></msItem>
-<msItem n="3"><locus>fol. 8v</locus><title>Truth</title> 
-<bibl><title>IMEV</title> <biblScope>809</biblScope></bibl></msItem>
-<msItem n="4"><locus>fols. 8v-10v</locus>
-<title>Birds Praise of Love</title>
-<bibl><title>IMEV</title> <biblScope>1506</biblScope></bibl></msItem>
-<msItem n="5"><locus>fols. 10v-11v</locus>
-<title xml:lang="LA">De amico ad amicam</title>
-<title xml:lang="LA">Responcio</title> 
-<bibl><title>IMEV</title> <biblScope>16 &amp; 19</biblScope></bibl></msItem>
-<msItem n="6"><locus>fols. 14r-126v</locus>
-<title>Troilus and Criseyde</title> 
-<note>Bk. 1:71-Bk. 5:1701, with additional losses due to
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <msContents>
+        <p>A collection of Lollard sermons</p>
+      </msContents>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <msContents>
+        <msItem n="1">
+          <locus>fols. 5r-7v</locus>
+          <title>An ABC</title>
+          <bibl>
+            <title>IMEV</title>
+            <biblScope>239</biblScope>
+          </bibl>
+        </msItem>
+        <msItem n="2">
+          <locus>fols. 7v-8v</locus>
+          <title xml:lang="FR">Lenvoy de Chaucer a Scogan</title>
+          <bibl>
+            <title>IMEV</title>
+            <biblScope>3747</biblScope>
+          </bibl>
+        </msItem>
+        <msItem n="3">
+          <locus>fol. 8v</locus>
+          <title>Truth</title>
+          <bibl>
+            <title>IMEV</title>
+            <biblScope>809</biblScope>
+          </bibl>
+        </msItem>
+        <msItem n="4">
+          <locus>fols. 8v-10v</locus>
+          <title>Birds Praise of Love</title>
+          <bibl>
+            <title>IMEV</title>
+            <biblScope>1506</biblScope>
+          </bibl>
+        </msItem>
+        <msItem n="5">
+          <locus>fols. 10v-11v</locus>
+          <title xml:lang="LA">De amico ad amicam</title>
+          <title xml:lang="LA">Responcio</title>
+          <bibl>
+            <title>IMEV</title>
+            <biblScope>16 &amp; 19</biblScope>
+          </bibl>
+        </msItem>
+        <msItem n="6">
+          <locus>fols. 14r-126v</locus>
+          <title>Troilus and Criseyde</title>
+          <note>Bk. 1:71-Bk. 5:1701, with additional losses due to
 mutilation throughout</note>
-</msItem>
-</msContents></egXML>
+        </msItem>
+      </msContents>
+    </egXML>
   </exemplum>
   <listRef>
     <ptr target="#msco"/>

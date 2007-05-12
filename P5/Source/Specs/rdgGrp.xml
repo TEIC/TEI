@@ -6,11 +6,14 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textcrit" xml:id="RDGGRP" usage="opt" ident="rdgGrp">
-<equiv/>
-<gloss>reading group</gloss>
-<desc>within a textual variation,
+  <equiv/>
+  <gloss>reading group</gloss>
+  <gloss version="2007-01-21" xml:lang="it">gruppo di letture</gloss>
+  <desc>within a textual variation,
 groups two or more readings perceived to have a genetic
-relationship or other affinity.</desc><desc version="2006-10-28" xml:lang="ja">読みをまとめる．</desc>
+relationship or other affinity.</desc>
+  <desc version="2007-01-21" xml:lang="it">all'interno di una variante testuale raggruppa due o più letture considerate imparentate o affini</desc>
+  <desc version="2006-10-28" xml:lang="ja">読みをまとめる．</desc>
   <classes>
     <memberOf key="att.textCritical"/>
   </classes>
@@ -44,7 +47,7 @@ relationship or other affinity.</desc><desc version="2006-10-28" xml:lang="ja">�
     </rng:group>-->
 <!-- restored original(post P3, pre P4) corrected form of content
      model  LB Dec 04 -->
-  <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:oneOrMore>
         <rng:choice>
           <rng:group>
@@ -53,30 +56,31 @@ relationship or other affinity.</desc><desc version="2006-10-28" xml:lang="ja">�
               <rng:ref name="wit"/>
             </rng:optional>
           </rng:group>
-    <rng:zeroOrMore>
-          <rng:group>
-            <rng:optional>
+          <rng:zeroOrMore>
+            <rng:group>
+              <rng:optional>
+                <rng:group>
+                  <rng:ref name="lem"/>
+                  <rng:optional>
+                    <rng:ref name="wit"/>
+                  </rng:optional>
+                </rng:group>
+              </rng:optional>
               <rng:group>
-                <rng:ref name="lem"/>
+                <rng:ref name="model.rdgLike"/>
                 <rng:optional>
                   <rng:ref name="wit"/>
                 </rng:optional>
               </rng:group>
-            </rng:optional>
-            <rng:group>
-              <rng:ref name="model.rdgLike"/>
-              <rng:optional>
-              <rng:ref name="wit"/>
-              </rng:optional>
-              </rng:group>
-	  </rng:group>
-    </rng:zeroOrMore>
+            </rng:group>
+          </rng:zeroOrMore>
         </rng:choice>
       </rng:oneOrMore>
     </rng:group>
   </content>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <app>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <app>
         <lem wit="#El #Ra2">though</lem>
         <rdgGrp type="orthographic">
           <rdg wit="#Hg">thogh</rdg>

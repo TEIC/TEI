@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -7,13 +8,16 @@ $Author$
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" predeclare="true" module="linking" xml:id="POINTER" type="atts" ident="att.pointing">
   <desc>defines a set of attributes used by all elements which point
   to other elements by means of one or more URI references.</desc>
+  <desc version="2007-01-21" xml:lang="it">definisce un insieme di attributi usati da tutti gli elementi che puntano ad altri elementi tramite uno o più URI</desc>
   <attList>
     <attDef ident="type" usage="opt">
       <equiv/>
       <desc>categorizes the pointer in some respect, using any
-      convenient set of categories.</desc><desc version="2006-10-28" xml:lang="ja">当該ポインタの種類を示す．</desc>
+      convenient set of categories.</desc>
+      <desc version="2007-01-21" xml:lang="it">fornisce una classificazione per il puntatore utilizzando una tassonomia funzionale</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該ポインタの種類を示す．</desc>
       <datatype>
-	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
       </datatype>
       <valDesc>Any string of XML name characters. The type should
       indicate the intended function of the pointer, or the rhetorical
@@ -22,25 +26,33 @@ $Author$
     <attDef ident="evaluate" usage="opt">
       <equiv/>
       <desc>specifies the intended meaning when the target of a
-      pointer is itself a pointer.</desc><desc version="2006-10-28" xml:lang="ja">当該ポインタの参照先がポインタである場合，その意味を示す．</desc>
+      pointer is itself a pointer.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica il significato previsto quando la destinazione di un puntatore è essa stessa un puntatore</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該ポインタの参照先がポインタである場合，その意味を示す．</desc>
       <valList type="closed">
-	<valItem ident="all">
-	  <equiv/>
-	  <gloss>if the element pointed to is itself a pointer, then
+        <valItem ident="all">
+          <equiv/>
+          <gloss>if the element pointed to is itself a pointer, then
 	  the target of that pointer will be taken, and so on, until
-	  an element is found which is not a pointer.</gloss><gloss version="2006-10-28" xml:lang="ja">(非ポインタにたどり着くまで，参照先を探す．)</gloss>
+	  an element is found which is not a pointer.</gloss>
+          <gloss version="2007-01-21" xml:lang="it">se l'elemento puntato è esso stesso un puntatore, allora sarà presa la destinazione di quel puntatore e così via fino a trovare un elemento che non è un puntatore</gloss>
+          <gloss version="2006-10-28" xml:lang="ja">(非ポインタにたどり着くまで，参照先を探す．)</gloss>
         </valItem>
         <valItem ident="one">
           <equiv/>
-	  <gloss>if the element pointed to is itself a pointer, then
+          <gloss>if the element pointed to is itself a pointer, then
 	  its target (whether a pointer or not) is taken as the target
-	  of this pointer.</gloss><gloss version="2006-10-28" xml:lang="ja">(当該ポインタが参照するポインタの参照先を探す．)</gloss>
+	  of this pointer.</gloss>
+          <gloss version="2007-01-21" xml:lang="it">se l'elemento puntato è esso stesso un puntatore, allora la sua destinazione (che sia un puntatore o meno) è presa come destinazione del puntatore</gloss>
+          <gloss version="2006-10-28" xml:lang="ja">(当該ポインタが参照するポインタの参照先を探す．)</gloss>
         </valItem>
         <valItem ident="none">
           <equiv/>
-	  <gloss>no further evaluation of targets is carried out
+          <gloss>no further evaluation of targets is carried out
 	  beyond that needed to find the element specified in the
-	  pointer's target.</gloss><gloss version="2006-10-28" xml:lang="ja">(当該ポインタが参照するポインタを探す．)</gloss>
+	  pointer's target.</gloss>
+          <gloss version="2007-01-21" xml:lang="it">non viene condotta altra valutazione delle destinazioni se non quella necessaria a rintracciare l'elemento specificato nella destinazione del puntatore</gloss>
+          <gloss version="2006-10-28" xml:lang="ja">(当該ポインタが参照するポインタを探す．)</gloss>
         </valItem>
       </valList>
       <remarks>

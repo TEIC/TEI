@@ -1,19 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
 $Date$
 $Author$
 -->
-<elementSpec  xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="TEXTLANG" ident="textLang">
-<equiv/>
-<gloss/>
-<desc xml:id="textlang.desc">describes the languages and writing systems used by a
-manuscript (as opposed to its description, which is described in the <gi>langUsage</gi> element)</desc><desc version="2006-10-28" xml:lang="ja">当該手書き文字で使用されている言語や書記システムを示す．これは要
+<elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="TEXTLANG" ident="textLang">
+  <equiv/>
+  <gloss/>
+  <desc xml:id="textlang.desc">describes the languages and writing systems used by a
+manuscript (as opposed to its description, which is described in the <gi>langUsage</gi> element)</desc>
+  <desc version="2007-01-21" xml:lang="it">descrive le lingue e i sistemi di scrittura usati da un manoscritto (da non confondere con la descrizione contenuta nell'elemento <gi>langUsage</gi></desc>
+  <desc version="2006-10-28" xml:lang="ja">当該手書き文字で使用されている言語や書記システムを示す．これは要
 素langUsageと対応する．</desc>
   <classes>
     <memberOf key="model.msItemPart"/>
   </classes>
- <content>
+  <content>
     <rng:ref name="macro.phraseSeq"/>
   </content>
   <attList>
@@ -21,11 +24,12 @@ manuscript (as opposed to its description, which is described in the <gi>langUsa
       <equiv/>
       <gloss/>
       <desc>supplies a code which identifies the chief language used
-      in the manuscript.</desc><desc version="2006-10-28"
-      xml:lang="ja">当該手書き文書で使用されている主な言語をコードで示
+      in the manuscript.</desc>
+      <desc version="2007-01-21" xml:lang="it">assegna un codice che identifica la lingua principale utilizzata nel manoscritto</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該手書き文書で使用されている主な言語をコードで示
       す．</desc>
       <datatype>
-	<rng:ref name="data.language"/>
+        <rng:ref name="data.language"/>
       </datatype>
       <valDesc>a recognised language code using ISO 3066 or succesor,
       which may additionally be documented by a <gi>language</gi>
@@ -35,10 +39,12 @@ manuscript (as opposed to its description, which is described in the <gi>langUsa
       <equiv/>
       <gloss/>
       <desc>one or more codes identifying any other languages used in
-      the manuscript.</desc><desc version="2006-10-28" xml:lang="ja">当
+      the manuscript.</desc>
+      <desc version="2007-01-21" xml:lang="it">uno o più codici che identificano eventuali altre lingue utilizzate nel manoscritto</desc>
+      <desc version="2006-10-28" xml:lang="ja">当
       該手書き文書で使用されている1つ以上の言語をコードで示す．</desc>
       <datatype minOccurs="0" maxOccurs="unbounded">
-	<rng:ref name="data.language"/>	
+        <rng:ref name="data.language"/>
       </datatype>
       <valDesc>a list of codes, each of which is a recognised language
       code using RFC 3066 or succesor, which may additionally be
@@ -47,8 +53,10 @@ manuscript (as opposed to its description, which is described in the <gi>langUsa
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0"><textLang mainLang="en" otherLangs="la">
-Predominantly in English with Latin glosses</textLang></egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <textLang mainLang="en" otherLangs="la">
+Predominantly in English with Latin glosses</textLang>
+    </egXML>
   </exemplum>
   <listRef>
     <ptr target="#mslangs"/>

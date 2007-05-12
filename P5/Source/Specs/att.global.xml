@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -7,6 +8,7 @@ $Author$
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" xml:id="GLOBAL" type="atts" ident="att.global">
   <desc>provides a set of attributes common to all elements in the TEI
   encoding scheme.</desc>
+  <desc version="2007-01-21" xml:lang="it">stabilisce un insieme di attributi comuni a tutti gli elementi dello schema di codifica TEI</desc>
   <classes>
     <memberOf key="att.global.linking"/>
     <memberOf key="att.global.analytic"/>
@@ -15,13 +17,15 @@ $Author$
     <attDef ident="xml:space" usage="opt">
       <equiv/>
       <desc>signals an intention that white space should be 
-      preserved by applications</desc><desc version="2006-10-28" xml:lang="ja">空白文字類をアプリケーションがどう解釈するかを示す．</desc>
+      preserved by applications</desc>
+      <desc version="2007-01-21" xml:lang="it">segnala la volontà di far sì che la spaziatura sia mantenuta da qualsivoglia applicazione.</desc>
+      <desc version="2006-10-28" xml:lang="ja">空白文字類をアプリケーションがどう解釈するかを示す．</desc>
       <valList type="closed">
-	<valItem ident="default"/>
-	<valItem ident="preserve"/>
+        <valItem ident="default"/>
+        <valItem ident="preserve"/>
       </valList>
       <remarks>
-      <p>The <ref target="http://www.w3.org/TR/REC-xml/#sec-white-space"> XML
+        <p>The <ref target="http://www.w3.org/TR/REC-xml/#sec-white-space"> XML
       specification</ref> provides further guidance on the use of this
       attribute.</p>
       </remarks>
@@ -29,9 +33,11 @@ $Author$
     <attDef ident="xml:id" usage="opt">
       <equiv/>
       <desc>provides a unique identifier for the element bearing the
-      attribute.</desc><desc version="2006-10-28" xml:lang="ja">当該要素にユニークなIDを与える．</desc>
+      attribute.</desc>
+      <desc version="2007-01-21" xml:lang="it">assegna un identificatore unico all'elemento a cui è associato l'attributo</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該要素にユニークなIDを与える．</desc>
       <datatype>
-	<rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="ID"/>
+        <rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="ID"/>
       </datatype>
       <valDesc>any valid XML identifier .</valDesc>
       <remarks>
@@ -42,16 +48,20 @@ $Author$
     <attDef ident="n" usage="opt">
       <equiv/>
       <desc>gives a number (or other label) for an element, which is
-      not necessarily unique within the document.</desc><desc version="2006-10-28" xml:lang="ja">当該要素に数値やラベルを与える．これは当該文書中でユニー
+      not necessarily unique within the document.</desc>
+      <desc version="2007-01-21" xml:lang="it">assegna un numero (o altra etichetta) a un elemento che non è necessariamente unico all'interno del documento</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該要素に数値やラベルを与える．これは当該文書中でユニー
 クである必要はない．</desc>
-      <datatype maxOccurs="unbounded" xmlns:rng="http://relaxng.org/ns/structure/1.0"><rng:ref name="data.word"/></datatype>
+      <datatype xmlns:rng="http://relaxng.org/ns/structure/1.0" maxOccurs="unbounded">
+        <rng:ref name="data.word"/>
+      </datatype>
       <valDesc>any string of characters; often, but not necessarily,
       numeric.</valDesc>
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
       <remarks>
-	<p>The <att>n</att> attribute may be used to specify the
+        <p>The <att>n</att> attribute may be used to specify the
 	numbering of chapters, sections, list items, etc.; it may also
 	be used in the specification of a standard reference system
 	for the text.</p>
@@ -61,8 +71,13 @@ $Author$
       <equiv/>
       <desc>indicates the language of the element content using the
       codes from <ref target="http://www.ietf.org/rfc/rfc3066.txt">RFC
-      3066</ref></desc><desc version="2006-10-28" xml:lang="ja">当該要素の内容で使用されている言語を，RFC3006に従って示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.language"/></datatype>
+      3066</ref></desc>
+      <desc version="2007-01-21" xml:lang="it">indica la lingua del contenuto dell'elemento utilizzando i codici tratti da <ref target="http://www.ietf.org/rfc/rfc3066.txt">RFC
+      3066</ref></desc>
+      <desc version="2006-10-28" xml:lang="ja">当該要素の内容で使用されている言語を，RFC3006に従って示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.language"/>
+      </datatype>
       <valDesc>The value must conform to RFC 3066 or its succesor. If
       the value is a private use code (i.e., starts with
       <code>x-</code>) it should, and if not it may, match the value
@@ -76,27 +91,34 @@ $Author$
       </remarks>
     </attDef>
     <attDef ident="rend" usage="opt">
-	<equiv/>
-	<desc>indicates how the element in question was rendered or
-	presented in the source text.</desc><desc version="2006-10-28" xml:lang="ja">当該要素が，元資料においてどのように表示されていたのかを示す．</desc>
-      <datatype maxOccurs="unbounded"><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/></datatype>
+      <equiv/>
+      <desc>indicates how the element in question was rendered or
+	presented in the source text.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica come l'elemento in questione è stato reso o rappresentato nel testo originario</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該要素が，元資料においてどのように表示されていたのかを示す．</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+      </datatype>
       <valDesc>any string of characters; if the typographic rendition
       of a text is to be systematically recorded, a systematic set of
       values for the <att>rend</att> attribute should be
       defined.</valDesc>
       <exemplum>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"><head rend="align(center) slant(upright) case(allcaps)">
-  <lb/>To The
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <head rend="align(center) slant(upright) case(allcaps)"><lb/>To The
   <lb/>Duchesse
   <lb/>of
   <lb/>Newcastle,
   <lb/>On Her
   <lb/><hi rend="case(mixed)">New Blazing-World</hi>.
-</head></egXML>
-        <p><note type="cit">From the forward by William Newcastle in
+</head>
+        </egXML>
+        <p>
+          <note type="cit">From the forward by William Newcastle in
         Margaret Cavendish, Duchess of Newcastle's <title>The
         description of a new world, called the blazing-world</title>,
-        WWP TR00253</note></p>
+        WWP TR00253</note>
+        </p>
       </exemplum>
       <remarks>
         <p>These Guidelines make no binding recommendations for the
@@ -112,35 +134,45 @@ $Author$
       <equiv/>
       <desc>provides a base URI reference with which applications can
       resolve relative URI references into absolute URI
-      references.</desc><desc version="2006-10-28" xml:lang="ja">相対URIから絶対URIを構成する際に必要なベースURIを示す．</desc>
+      references.</desc>
+      <desc version="2007-01-21" xml:lang="it">assegna un riferimento URI di base grazie al quale eventuali applicazioni possono analizzare riferimenti URI relativi come riferimenti URI assoluti</desc>
+      <desc version="2006-10-28" xml:lang="ja">相対URIから絶対URIを構成する際に必要なベースURIを示す．</desc>
       <datatype>
-	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>any syntactically valid URI reference.</valDesc>
       <exemplum>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="bibl">
-  <head>Bibliography</head>
-  <listBibl xml:base="http://www.lib.ucdavis.edu/BWRP/Works/">
-    <bibl n="1">
-      <author><name>Landon, Letitia Elizabeth</name></author>
-      <ref target="LandLVowOf.sgm">
-	<title>The Vow of the Peacock</title>
-      </ref>
-    </bibl>
-    <bibl n="2">
-      <author><name>Compton, Margaret Clephane</name></author>
-      <ref target="NortMIrene.sgm">
-	<title>Irene, a Poem in Six Cantos</title>
-      </ref>
-    </bibl>
-    <bibl n="3">
-      <author><name>Taylor, Jane</name></author>
-      <ref target="TaylJEssay.sgm">
-	<title>Essays in Rhyme on Morals and Manners</title>
-      </ref>
-    </bibl>
-  </listBibl>
-</div></egXML>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <div type="bibl">
+            <head>Bibliography</head>
+            <listBibl xml:base="http://www.lib.ucdavis.edu/BWRP/Works/">
+              <bibl n="1">
+                <author>
+                  <name>Landon, Letitia Elizabeth</name>
+                </author>
+                <ref target="LandLVowOf.sgm">
+                  <title>The Vow of the Peacock</title>
+                </ref>
+              </bibl>
+              <bibl n="2">
+                <author>
+                  <name>Compton, Margaret Clephane</name>
+                </author>
+                <ref target="NortMIrene.sgm">
+                  <title>Irene, a Poem in Six Cantos</title>
+                </ref>
+              </bibl>
+              <bibl n="3">
+                <author>
+                  <name>Taylor, Jane</name>
+                </author>
+                <ref target="TaylJEssay.sgm">
+                  <title>Essays in Rhyme on Morals and Manners</title>
+                </ref>
+              </bibl>
+            </listBibl>
+          </div>
+        </egXML>
       </exemplum>
       <remarks>
       </remarks>

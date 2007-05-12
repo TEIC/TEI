@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -5,9 +6,12 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="transcr" xml:id="DAMAGE" usage="opt" ident="damage">
-<equiv/>
-<gloss/>
-<desc>contains an area of damage to the text witness.</desc><desc version="2006-10-28" xml:lang="ja">損傷部分を示す．</desc><desc version="2006-10-15" xml:lang="es">contiene un área de daño al testigo de texto.</desc>
+  <equiv/>
+  <gloss/>
+  <desc>contains an area of damage to the text witness.</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene l'area visibile del danneggiamento al testimone</desc>
+  <desc version="2006-10-28" xml:lang="ja">損傷部分を示す．</desc>
+  <desc version="2006-10-15" xml:lang="es">contiene un área de daño al testigo de texto.</desc>
   <classes>
     <memberOf key="model.pPart.transcriptional"/>
     <memberOf key="att.editLike"/>
@@ -17,9 +21,13 @@ $Author$
   </content>
   <attList>
     <attDef ident="type" usage="opt">
-	<equiv/>
-	<desc>classifies the damage according to any convenient typology.</desc><desc version="2006-10-28" xml:lang="ja">当該損傷の種類を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <equiv/>
+      <desc>classifies the damage according to any convenient typology.</desc>
+      <desc version="2007-01-21" xml:lang="it">classifica il danneggiamento in base a una tipologia funzionale</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該損傷の種類を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
       <valDesc>any phrase describing the damage, e.g. <mentioned>faded</mentioned>,
 <mentioned>overbound</mentioned>, <mentioned>water</mentioned>, <mentioned>charred with loss of paper</mentioned>.</valDesc>
       <exemplum>
@@ -27,13 +35,17 @@ $Author$
       </exemplum>
     </attDef>
     <attDef ident="extent" usage="opt">
-	<equiv/>
-	<desc>indicates approximately how much text is in the damaged area,
+      <equiv/>
+      <desc>indicates approximately how much text is in the damaged area,
 in letters, minims, inches, or any appropriate unit, where this
 cannot be deduced from the contents of the tag.  For example, the
 damage may span structural divisions in the text so that the tag must
-then be empty of content.</desc><desc version="2006-10-28" xml:lang="ja">当該損傷の量を示す．例えば，文字数，インチなどの単位を使用する．</desc>
-      <datatype maxOccurs="unbounded"><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/></datatype>
+then be empty of content.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica in lettere, uncini, pollici, o altre unità di misura quanto testo, approsimativamente, si trovi nell'area danneggiata, quando questo non è deducibile dal contenuto del marcatore; per esempio se il danno abraccia diverse partizioni testuali il marcatore sarà privo di contenuto</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該損傷の量を示す．例えば，文字数，インチなどの単位を使用する．</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+      </datatype>
       <valDesc>any measurement phrase, e.g. <mentioned>25 letters</mentioned>, <mentioned>2 × 3
 inches</mentioned>.</valDesc>
       <exemplum>
@@ -53,12 +65,17 @@ aspect of the text's creation, transcription, editing, or encoding
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
     </attDef>
--->    <attDef ident="hand" usage="opt">
-	<equiv/>
-	<desc>In the case of damage (deliberate defacement, etc.) assignable
+-->
+    <attDef ident="hand" usage="opt">
+      <equiv/>
+      <desc>In the case of damage (deliberate defacement, etc.) assignable
 to an identifiable hand, signifies the hand responsible for the
-damage.</desc><desc version="2006-10-28" xml:lang="ja">当該損傷部分の書き手が特定できる場合，それを示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+damage.</desc>
+      <desc version="2007-01-21" xml:lang="it">in caso di danneggiamento (volontario o meno) riconducibile a una mano identificabile, indica la mano responsabile del danneggiamento</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該損傷部分の書き手が特定できる場合，それを示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
       <valDesc>must be one of the hand identifiers declared in the document
 header (see section <ptr target="#PHDH"/>).</valDesc>
       <exemplum>
@@ -66,30 +83,47 @@ header (see section <ptr target="#PHDH"/>).</valDesc>
       </exemplum>
     </attDef>
     <attDef ident="agent" usage="opt">
-	<equiv/>
-	<desc>categorizes the cause of the damage, if it can be identified.</desc><desc version="2006-10-28" xml:lang="ja">当該損傷の原因の分類を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
-<valList type="open">
-  <valItem ident="rubbing"><gloss>damage results from rubbing of the
-  leaf edges</gloss></valItem>
-<valItem ident="mildew"><gloss>damage results from mildew on the leaf surface</gloss></valItem>
-<valItem ident="smoke"><gloss>damage results from smoke</gloss></valItem>
-</valList>
+      <equiv/>
+      <desc>categorizes the cause of the damage, if it can be identified.</desc>
+      <desc version="2007-01-21" xml:lang="it">classifica la causa del danneggiamento, se rintracciabile</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該損傷の原因の分類を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valList type="open">
+        <valItem ident="rubbing">
+          <gloss>damage results from rubbing of the
+  leaf edges</gloss>
+          <gloss version="2007-01-21" xml:lang="it">danneggiamento per sfregamento dei margini del foglio</gloss>
+        </valItem>
+        <valItem ident="mildew">
+          <gloss>damage results from mildew on the leaf surface</gloss>
+          <gloss version="2007-01-21" xml:lang="it">danneggiamento per muffa sulla superficie del foglio</gloss>
+        </valItem>
+        <valItem ident="smoke">
+          <gloss>damage results from smoke</gloss>
+          <gloss version="2007-01-21" xml:lang="it">danneggiamento per fumo</gloss>
+        </valItem>
+      </valList>
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
     </attDef>
     <attDef ident="degree" usage="opt">
-	<equiv/>
-	<desc>Signifies the degree of damage according to a convenient scale.
+      <equiv/>
+      <desc>Signifies the degree of damage according to a convenient scale.
 The <gi>damage</gi> tag with the <att>degree</att> attribute should
 only be used where the text may be read with some confidence; text
-supplied from other sources should be tagged as <gi>supplied</gi>.</desc><desc version="2006-10-28" xml:lang="ja">当該損傷部分にあったテキストが確信できる場合，その損傷の程度を示す．</desc>
+supplied from other sources should be tagged as <gi>supplied</gi>.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica l'entità del danneggiamento misurato in base a una scala funzionale; il marcatore <gi>damage</gi> con l'attributo <att>degree</att> dovranno essere utilizzati solo se il testo può essere letto con una certa sicurezza; i testi derivanti da altre fonti andranno marcati come 
+<gi>supplied</gi></desc>
+      <desc version="2006-10-28" xml:lang="ja">当該損傷部分にあったテキストが確信できる場合，その損傷の程度を示す．</desc>
       <datatype>
-         <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
-         <rng:ref name="data.probability"/>
-         <rng:ref name="data.certainty"/>
-         </rng:choice></datatype>
+        <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+          <rng:ref name="data.probability"/>
+          <rng:ref name="data.certainty"/>
+        </rng:choice>
+      </datatype>
       <valDesc>an alphanumeric categorization of the degree of damage, as
 <mentioned>0.4</mentioned>.</valDesc>
       <exemplum>

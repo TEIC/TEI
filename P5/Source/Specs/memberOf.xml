@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -5,27 +6,35 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="MEMBEROF" ident="memberOf">
-<equiv/>
-<desc>specifies  class membership of the parent element or class.</desc><desc version="2006-10-28" xml:lang="ja">親要素や親クラスを示す．</desc>
+  <equiv/>
+  <desc>specifies  class membership of the parent element or class.</desc>
+  <desc version="2007-01-21" xml:lang="it">specifica l'appartenenza a una classe dell'elemento o classe genitori</desc>
+  <desc version="2006-10-28" xml:lang="ja">親要素や親クラスを示す．</desc>
   <classes/>
   <content>
     <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.xtext"/>
   </content>
-  <attList>  
+  <attList>
     <attDef ident="key">
-	<gloss>a name</gloss>
-	<desc>specifies the identifier for a class of which the documented
- element or class is a member or subclass</desc><desc version="2006-10-28" xml:lang="ja">(名前) 当該要素やクラスの親要素や親クラスを指定する．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"/></datatype>
+      <gloss>a name</gloss>
+      <gloss version="2007-01-21" xml:lang="it">nome</gloss>
+      <desc>specifies the identifier for a class of which the documented
+ element or class is a member or subclass</desc>
+      <desc version="2007-01-21" xml:lang="it">indica l'identificatore di una classe di cui l'elemento o classe indicati sono un membro o una sottoclasse</desc>
+      <desc version="2006-10-28" xml:lang="ja">(名前) 当該要素やクラスの親要素や親クラスを指定する．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"/>
+      </datatype>
     </attDef>
   </attList>
-  <remarks><p>Elements or classes which are members of multiple
+  <remarks>
+    <p>Elements or classes which are members of multiple
   (unrelated) 
 classes will have more than one <gi>memberOf</gi> element, grouped by
   a <gi>classes</gi> element. If an element is a member of a class C1,
   which is itself a subclass of a class C2, there is no need to state
   this, other than in the documentation for class C1. </p>
-<p>Any additional comment or explanation of the class membership may
+    <p>Any additional comment or explanation of the class membership may
   be provided as content for this element.</p>
-</remarks>
+  </remarks>
 </elementSpec>

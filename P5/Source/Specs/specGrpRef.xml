@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -5,10 +6,14 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" xml:id="SPECGRPREF" ident="specGrpRef">
-<equiv/>
-<gloss>reference to a specification group</gloss><gloss version="2006-10-28" xml:lang="ja">規定集への参照</gloss>
-<desc>indicates that the  declarations contained by the
-  <gi>specGrp</gi> referenced should be inserted at this point.</desc><desc version="2006-10-28" xml:lang="ja"> 要素specGrpを参照する．</desc>
+  <equiv/>
+  <gloss>reference to a specification group</gloss>
+  <gloss version="2007-01-21" xml:lang="it">riferimento a gruppo di istruzioni</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">規定集への参照</gloss>
+  <desc>indicates that the  declarations contained by the
+  <gi>specGrp</gi> referenced should be inserted at this point.</desc>
+  <desc version="2007-01-21" xml:lang="it">indica il punto in cui devono essere inserite le dichiarazioni contenute nello <gi>specGrp</gi> indicato</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 要素specGrpを参照する．</desc>
   <classes>
     <memberOf key="model.oddRef"/>
   </classes>
@@ -16,13 +21,18 @@ $Author$
     <rng:empty/>
   </content>
   <attList>
-  <attDef ident="target" usage="req">
-	<desc>points at the specification group  which logically belongs here.</desc><desc version="2006-10-28" xml:lang="ja">参照する要素specGrpの場所を示す．</desc>
-   <datatype><rng:ref name="data.pointer"/></datatype>
-  </attDef>
-</attList>
+    <attDef ident="target" usage="req">
+      <desc>points at the specification group  which logically belongs here.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica il gruppo di istruzioni che per logica corrisponde al punto in questione</desc>
+      <desc version="2006-10-28" xml:lang="ja">参照する要素specGrpの場所を示す．</desc>
+      <datatype>
+        <rng:ref name="data.pointer"/>
+      </datatype>
+    </attDef>
+  </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>This part of
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <p>This part of
     the module  contains declarations for names of persons, places,
     and organisations:
     <specGrpRef target="#names.pers"/>
@@ -30,18 +40,18 @@ $Author$
     <specGrpRef target="#names.org"/>
   </p>
 <!-- elsewhere -->
-    <specGrp xml:id="names.pers">
-      <!--... -->
-    </specGrp>
+      <specGrp xml:id="names.pers">
+<!--... -->
+      </specGrp>
 <!-- elsewhere -->
-    <specGrp xml:id="names.place">
-      <!--... -->
-    </specGrp>
+      <specGrp xml:id="names.place">
+<!--... -->
+      </specGrp>
 <!-- elsewhere -->
-    <specGrp xml:id="names.org">
-      <!--... -->
-    </specGrp>
-</egXML>
+      <specGrp xml:id="names.org">
+<!--... -->
+      </specGrp>
+    </egXML>
   </exemplum>
   <remarks>
     <p>In ODD documentation processing, a <gi>specGrpRef</gi> usually

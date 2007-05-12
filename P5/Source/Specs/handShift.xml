@@ -6,11 +6,17 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="transcr" xml:id="HANDSHFT" usage="rec" ident="handShift">
-<equiv/>
-<gloss/>
-<desc>marks the beginning of a sequence of text written in a new
-hand, or the beginning of a scribal stint.</desc><desc version="2006-10-28" xml:lang="ja">筆致何かが変化する場所を示す．例えば，筆致，スタイル，インク，特
-徴など．</desc><desc version="2006-10-15" xml:lang="es">marca el principio de una secuencia de texto escrito con una nueva caligrafía,
+  <equiv/>
+  <gloss/>
+  <desc>marks the beginning of a sequence of text written in a new
+hand, or the beginning of a scribal stint.</desc>
+  <desc version="2007-05-13" xml:lang="it">marks the beginning of a sequence of text written in a new
+hand, or of a change in the scribe, writing style, ink or character
+of the document hand.</desc>
+  <desc version="2007-01-21" xml:lang="it">segnala l'inizio di una porzione di testo attribuibile ad un'altra mano o riconducibile a un cambio di redattore, stile di scrittura, inchiostro o carattere</desc>
+  <desc version="2006-10-28" xml:lang="ja">筆致何かが変化する場所を示す．例えば，筆致，スタイル，インク，特
+徴など．</desc>
+  <desc version="2006-10-15" xml:lang="es">marca el principio de una secuencia de texto escrito con una nueva caligrafía,
  o un cambio de escriba, estilo de escritura, tinta o carácter de la caligrafía del documento.
 		</desc>
   <classes>
@@ -22,9 +28,13 @@ hand, or the beginning of a scribal stint.</desc><desc version="2006-10-28" xml:
   </content>
   <attList>
     <attDef ident="new" usage="req">
-	<equiv/>
-	<desc>identifies the new hand.</desc><desc version="2006-10-28" xml:lang="ja">当該ヶ所から現れる新しい筆致を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.code"/></datatype>
+      <equiv/>
+      <desc>identifies the new hand.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica la nuova mano</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該ヶ所から現れる新しい筆致を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.code"/>
+      </datatype>
       <valDesc>must be one of the hand identifiers declared in the document
 header (see section <ptr target="#PHDH"/>).</valDesc>
       <exemplum>
@@ -42,10 +52,14 @@ header (see section <ptr target="#PHDH"/>).</valDesc>
       </exemplum>
     </attDef>-->
     <attDef ident="style" usage="opt">
-	<equiv/>
-	<desc>indicates recognized
-writing styles.</desc><desc version="2006-10-28" xml:lang="ja">スタイルを示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <equiv/>
+      <desc>indicates recognized
+writing styles.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica stili di scrittura riconoscibili</desc>
+      <desc version="2006-10-28" xml:lang="ja">スタイルを示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
       <valDesc>Any
 descriptive name such as <mentioned>secretary</mentioned>,
 <mentioned>copperplate</mentioned>, <mentioned>Chancery</mentioned>, <mentioned>Italian</mentioned>, etc.</valDesc>
@@ -54,37 +68,57 @@ descriptive name such as <mentioned>secretary</mentioned>,
       </exemplum>
     </attDef>
     <attDef ident="ink" usage="opt">
-	<equiv/>
-	<desc>describes tint or type
-of ink, e.g. <mentioned>brown</mentioned>.  May also be used to indicate the writing medium, e.g. <mentioned>pencil</mentioned></desc><desc version="2006-10-28" xml:lang="ja">色合いを示す．例えば，茶色など．または筆記素材について示す．例えば，
+      <equiv/>
+      <desc>describes tint or type
+of ink, e.g. <mentioned>brown</mentioned>.  May also be used to indicate the writing medium, e.g. <mentioned>pencil</mentioned></desc>
+      <desc version="2007-05-13" xml:lang="it">describes tint or type
+of ink, e.g. <mentioned>brown</mentioned>.  May also be used to indicate the writing medium, e.g. <mentioned>pencil</mentioned>,</desc>
+      <desc version="2007-01-21" xml:lang="it">descrive la tinta o il tipo di inchiostro, per esempio <mentioned>marrone</mentioned>; può essere inoltre utilizzato per indicare gli strumenti di scrittura, per esempio <mentioned>matita</mentioned></desc>
+      <desc version="2006-10-28" xml:lang="ja">色合いを示す．例えば，茶色など．または筆記素材について示す．例えば，
 鉛筆，インクなど．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
     </attDef>
     <attDef ident="writing" usage="opt">
-	<equiv/>
-	<desc>describes other characteristics of the hand,
-particularly those related to the quality of the writing.</desc><desc version="2006-10-28" xml:lang="ja">追加の特徴を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
-<valList type="open">
-<valItem ident="shaky"><gloss>handwriting is shaky</gloss>
-</valItem>
-<valItem ident="thick"><gloss>strokes are unusually thick</gloss>
-</valItem>
-<valItem ident="regular"><gloss>writing is regular</gloss>
-</valItem>
-</valList>
+      <equiv/>
+      <desc>describes other characteristics of the hand,
+particularly those related to the quality of the writing.</desc>
+      <desc version="2007-01-21" xml:lang="it">descrive ulteriori caratteristiche della mano, soprattutto legate alla qualità della scrittura</desc>
+      <desc version="2006-10-28" xml:lang="ja">追加の特徴を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valList type="open">
+        <valItem ident="shaky">
+          <gloss>handwriting is shaky</gloss>
+          <gloss version="2007-01-21" xml:lang="it">la calligrafia è indecisa</gloss>
+        </valItem>
+        <valItem ident="thick">
+          <gloss>strokes are unusually thick</gloss>
+          <gloss version="2007-01-21" xml:lang="it">i tratti sono insolitamente spessi</gloss>
+        </valItem>
+        <valItem ident="regular">
+          <gloss>writing is regular</gloss>
+          <gloss version="2007-01-21" xml:lang="it">la scrittura è regolare</gloss>
+        </valItem>
+      </valList>
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
     </attDef>
     <attDef ident="resp" usage="rec">
-	<equiv/>
-	<desc>signifies the editor or transcriber responsible for identifying
-the change of hand.</desc><desc version="2006-10-28" xml:lang="ja">筆致の変化を特定した責任者を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.code"/></datatype>
+      <equiv/>
+      <desc>signifies the editor or transcriber responsible for identifying
+the change of hand.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica chi (curatore o trascrittore) ha identificato il cambiamento di redattore</desc>
+      <desc version="2006-10-28" xml:lang="ja">筆致の変化を特定した責任者を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.code"/>
+      </datatype>
       <valDesc>must be one of the identifiers declared in the document
 header, associated with a person asserted as responsible for some
 aspect of the text's creation, transcription, editing, or encoding

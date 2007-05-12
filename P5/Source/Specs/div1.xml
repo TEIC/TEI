@@ -6,11 +6,19 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" xml:id="DIV1" usage="rwa" ident="div1">
-<equiv/>
-<gloss>level-1 text division</gloss><gloss version="2006-10-28" xml:lang="ja">レベル1テキスト区分</gloss>
-<desc>contains a first-level subdivision of the front, body, or back
-of a text.</desc><desc version="2006-10-28" xml:lang="ja"> レベル0より小さい部分を示す．レベル0が無け
-れば最大の部分になる．</desc><desc version="2007-02-10" xml:lang="es">contiene una subdivisión de primer nivel de los preliminares, cuerpo, o anexos de un texto.
+  <equiv/>
+  <gloss>level-1 text division</gloss>
+  <gloss version="2007-01-21" xml:lang="it">partizione testuale di livello 1</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">レベル1テキスト区分</gloss>
+  <desc>contains a first-level subdivision of the front, body, or back
+of a text.</desc>
+  <desc version="2007-05-13" xml:lang="it">contains a first-level subdivision of the front, body, or back
+of a text (the largest, if
+div0 is not used, the second largest if it is).</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene una sezione di primo livello del peritesto iniziale, del corpo del testo, o del peritesto finale (la più ampia, se div0 non è usato, altrimenti la seconda in ordine gerarchico)</desc>
+  <desc version="2006-10-28" xml:lang="ja"> レベル0より小さい部分を示す．レベル0が無け
+れば最大の部分になる．</desc>
+  <desc version="2007-02-10" xml:lang="es">contiene una subdivisión de primer nivel de los preliminares, cuerpo, o anexos de un texto.
 		</desc>
   <classes>
     <memberOf key="att.divLike"/>
@@ -25,26 +33,9 @@ of a text.</desc><desc version="2006-10-28" xml:lang="ja"> レベル0より小�
           <rng:ref name="model.global"/>
         </rng:choice>
       </rng:zeroOrMore>
-
-<rng:optional>
-      <rng:choice>
-        <rng:oneOrMore>
-          <rng:choice>
-            <rng:ref name="model.div2Like"/>
-            <rng:ref name="model.divGenLike"/>
-          </rng:choice>
-          <rng:zeroOrMore>
-            <rng:ref name="model.global"/>
-          </rng:zeroOrMore>
-        </rng:oneOrMore>
-        <rng:group>
+      <rng:optional>
+        <rng:choice>
           <rng:oneOrMore>
-            <rng:ref name="macro.component"/>
-            <rng:zeroOrMore>
-              <rng:ref name="model.global"/>
-            </rng:zeroOrMore>
-          </rng:oneOrMore>
-          <rng:zeroOrMore>
             <rng:choice>
               <rng:ref name="model.div2Like"/>
               <rng:ref name="model.divGenLike"/>
@@ -52,24 +43,40 @@ of a text.</desc><desc version="2006-10-28" xml:lang="ja"> レベル0より小�
             <rng:zeroOrMore>
               <rng:ref name="model.global"/>
             </rng:zeroOrMore>
+          </rng:oneOrMore>
+          <rng:group>
+            <rng:oneOrMore>
+              <rng:ref name="macro.component"/>
+              <rng:zeroOrMore>
+                <rng:ref name="model.global"/>
+              </rng:zeroOrMore>
+            </rng:oneOrMore>
+            <rng:zeroOrMore>
+              <rng:choice>
+                <rng:ref name="model.div2Like"/>
+                <rng:ref name="model.divGenLike"/>
+              </rng:choice>
+              <rng:zeroOrMore>
+                <rng:ref name="model.global"/>
+              </rng:zeroOrMore>
+            </rng:zeroOrMore>
+          </rng:group>
+        </rng:choice>
+        <rng:zeroOrMore>
+          <rng:choice>
+            <rng:ref name="model.divWrapper"/>
+            <rng:ref name="model.divWrapper.bottom"/>
+          </rng:choice>
+          <rng:zeroOrMore>
+            <rng:ref name="model.global"/>
           </rng:zeroOrMore>
-        </rng:group>
-      </rng:choice>
-      <rng:zeroOrMore>
-	<rng:choice>
-	  <rng:ref name="model.divWrapper"/>
-	  <rng:ref name="model.divWrapper.bottom"/>
-	</rng:choice>
-	<rng:zeroOrMore>
-	  <rng:ref name="model.global"/>
-	</rng:zeroOrMore>
-      </rng:zeroOrMore>
-
-</rng:optional>
+        </rng:zeroOrMore>
+      </rng:optional>
     </rng:group>
   </content>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <div1 xml:id="levi" n="I" type="part">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <div1 xml:id="levi" n="I" type="part">
         <head>Part I: Of Man </head>
         <div2 xml:id="levi1" n="1" type="chapter">
           <head>Chap. I. Of Sense </head>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -5,70 +6,89 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="nets" xml:id="TREE" usage="rwa" ident="tree">
-<equiv/>
-<gloss/>
-<desc>encodes a tree, which is made up of a root, internal nodes,
-leaves, and arcs from root to leaves.</desc><desc version="2006-10-28" xml:lang="ja">木構造を示す．</desc><desc version="2006-10-15" xml:lang="es">codifica un árbol, compuesto de una raíz, nodos interiores, hojas, y arcos de la raíz a las hojas.</desc>
+  <equiv/>
+  <gloss/>
+  <desc>encodes a tree, which is made up of a root, internal nodes,
+leaves, and arcs from root to leaves.</desc>
+  <desc version="2007-01-21" xml:lang="it">codifica un albero, che è costituito da radice, nodi interni, foglie, e archi che collegano radice e foglie</desc>
+  <desc version="2006-10-28" xml:lang="ja">木構造を示す．</desc>
+  <desc version="2006-10-15" xml:lang="es">codifica un árbol, compuesto de una raíz, nodos interiores, hojas, y arcos de la raíz a las hojas.</desc>
   <classes>
     <memberOf key="model.divPart"/>
   </classes>
   <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
     <rng:group>
       <rng:optional>
-	<rng:ref name="label"/>
+        <rng:ref name="label"/>
       </rng:optional>
       <rng:group>
-	<rng:zeroOrMore>
-	  <rng:choice>
-	    <rng:ref name="leaf"/>
-	    <rng:ref name="iNode"/>
-	  </rng:choice>
-	</rng:zeroOrMore>
-	<rng:ref name="root"/>
-	<rng:zeroOrMore>
-	  <rng:choice>
-	    <rng:ref name="leaf"/>
-	    <rng:ref name="iNode"/>
-	  </rng:choice>
-	</rng:zeroOrMore>
+        <rng:zeroOrMore>
+          <rng:choice>
+            <rng:ref name="leaf"/>
+            <rng:ref name="iNode"/>
+          </rng:choice>
+        </rng:zeroOrMore>
+        <rng:ref name="root"/>
+        <rng:zeroOrMore>
+          <rng:choice>
+            <rng:ref name="leaf"/>
+            <rng:ref name="iNode"/>
+          </rng:choice>
+        </rng:zeroOrMore>
       </rng:group>
     </rng:group>
   </content>
   <attList>
     <attDef ident="arity" usage="opt">
-	<equiv/>
-	<desc>gives the maximum number of children of the root and internal
-nodes of the tree.</desc><desc version="2006-10-28" xml:lang="ja">当該木の子要素の最大数を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/></datatype>
+      <equiv/>
+      <desc>gives the maximum number of children of the root and internal
+nodes of the tree.</desc>
+      <desc version="2007-01-21" xml:lang="it">stabilisce il numero massimo di figli della radice e dei nodi interni dell'albero</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該木の子要素の最大数を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/>
+      </datatype>
       <valDesc>A nonnegative integer.</valDesc>
     </attDef>
     <attDef ident="ord" usage="req">
-	<equiv/>
-	<desc>indicates whether or not the tree is ordered, or if it is
-partially ordered.</desc><desc version="2006-10-28" xml:lang="ja">順序付であるかどうかを示す．</desc>
+      <equiv/>
+      <desc>indicates whether or not the tree is ordered, or if it is
+partially ordered.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica se l'albero è ordinato o parzialmente ordinato</desc>
+      <desc version="2006-10-28" xml:lang="ja">順序付であるかどうかを示す．</desc>
       <defaultVal>true</defaultVal>
-      <!-- cant be boolean because we hjave to allow for partial ordering -->
+<!-- cant be boolean because we hjave to allow for partial ordering -->
       <valList type="closed">
         <valItem ident="true">
           <equiv/>
-          <gloss>indicates that all of the branching nodes of the tree are ordered.</gloss><gloss version="2006-10-28" xml:lang="ja">(当該木の子要素は順序付である．)</gloss>
+          <gloss>indicates that all of the branching nodes of the tree are ordered.</gloss>
+          <gloss version="2007-01-21" xml:lang="it">indica che tutti i nodi ramo dell'albero sono ordinati</gloss>
+          <gloss version="2006-10-28" xml:lang="ja">(当該木の子要素は順序付である．)</gloss>
         </valItem>
         <valItem ident="partial">
           <equiv/>
           <gloss>indicates that some of the branching nodes of the tree are ordered
-and some are unordered.</gloss><gloss version="2006-10-28" xml:lang="ja">(当該木の子要素の一部は，順序付である．)</gloss>
+and some are unordered.</gloss>
+          <gloss version="2007-01-21" xml:lang="it">indica che alcuni dei nodi ramo dell'albero sono ordinati e che altri non lo sono</gloss>
+          <gloss version="2006-10-28" xml:lang="ja">(当該木の子要素の一部は，順序付である．)</gloss>
         </valItem>
         <valItem ident="false">
           <equiv/>
           <gloss>indicates that all of the branching nodes of the tree are
-unordered.</gloss><gloss version="2006-10-28" xml:lang="ja">(当該木の子要素は順序付でない．)</gloss>
+unordered.</gloss>
+          <gloss version="2007-01-21" xml:lang="it">indica che tutti i nodi ramo dell'albero non sono ordinati</gloss>
+          <gloss version="2006-10-28" xml:lang="ja">(当該木の子要素は順序付でない．)</gloss>
         </valItem>
       </valList>
     </attDef>
     <attDef ident="order" usage="opt">
-	<equiv/>
-	<desc>gives the order of the tree, i.e., the number of its nodes.</desc><desc version="2006-10-28" xml:lang="ja">当該木の順番を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/></datatype>
+      <equiv/>
+      <desc>gives the order of the tree, i.e., the number of its nodes.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica l'ordine dell'albero, cioè il numero dei suoi nodi</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該木の順番を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/>
+      </datatype>
       <valDesc>A nonnegative integer.</valDesc>
       <remarks>
         <p>The size of a tree is always one less than its order, hence
@@ -78,46 +98,47 @@ attribute.</p>
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <tree n="ex2" arity="2" ord="partial" order="13">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <tree n="ex2" arity="2" ord="partial" order="13">
         <root xml:id="G-div1" children="#G-plu1 #G-exp1" ord="true">
-	  <label>/</label>
-	</root>
+          <label>/</label>
+        </root>
         <iNode xml:id="G-plu1" children="#G-exp2 #G-exp3" parent="#G-div1" ord="false">
-	  <label>+</label>
-	</iNode>
-	<iNode xml:id="G-exp1" children="#G-plu2 #G-num2.3" parent="#G-div1" ord="true">
-	  <label>**</label>
-	</iNode>
-	<iNode xml:id="G-exp2" children="#G-vara1 #G-num2.1" parent="#G-plu1" ord="true">
-	  <label>**</label>
-	</iNode>
-	<iNode xml:id="G-exp3" children="#G-varb1 #G-num2.2" parent="#G-plu1" ord="true">
-	  <label>**</label>
-	</iNode>
-	<iNode xml:id="G-plu2" children="#G-vara2 #G-varb2" parent="#G-exp1" ord="false">
-	  <label>+</label>
-	</iNode>
-	<leaf xml:id="G-vara1" parent="#G-exp2">
-	  <label>a</label>
-	</leaf>
-	<leaf xml:id="G-num2.1" parent="#G-exp2">
-	  <label>2</label>
-	</leaf>
-	<leaf xml:id="G-varb1" parent="#G-exp3">
-	  <label>b</label>
-	</leaf>
-	<leaf xml:id="G-num2.2" parent="#G-exp3">
-	  <label>2</label>
-	</leaf>
-	<leaf xml:id="G-vara2" parent="#G-plu2">
-	  <label>a</label>
-	</leaf>
-	<leaf xml:id="G-varb2" parent="#G-plu2">
-	  <label>b</label>
-	</leaf>
-	<leaf xml:id="G-num2.3" parent="#G-exp1">
-	  <label>2</label>
-	</leaf>
+          <label>+</label>
+        </iNode>
+        <iNode xml:id="G-exp1" children="#G-plu2 #G-num2.3" parent="#G-div1" ord="true">
+          <label>**</label>
+        </iNode>
+        <iNode xml:id="G-exp2" children="#G-vara1 #G-num2.1" parent="#G-plu1" ord="true">
+          <label>**</label>
+        </iNode>
+        <iNode xml:id="G-exp3" children="#G-varb1 #G-num2.2" parent="#G-plu1" ord="true">
+          <label>**</label>
+        </iNode>
+        <iNode xml:id="G-plu2" children="#G-vara2 #G-varb2" parent="#G-exp1" ord="false">
+          <label>+</label>
+        </iNode>
+        <leaf xml:id="G-vara1" parent="#G-exp2">
+          <label>a</label>
+        </leaf>
+        <leaf xml:id="G-num2.1" parent="#G-exp2">
+          <label>2</label>
+        </leaf>
+        <leaf xml:id="G-varb1" parent="#G-exp3">
+          <label>b</label>
+        </leaf>
+        <leaf xml:id="G-num2.2" parent="#G-exp3">
+          <label>2</label>
+        </leaf>
+        <leaf xml:id="G-vara2" parent="#G-plu2">
+          <label>a</label>
+        </leaf>
+        <leaf xml:id="G-varb2" parent="#G-plu2">
+          <label>b</label>
+        </leaf>
+        <leaf xml:id="G-num2.3" parent="#G-exp1">
+          <label>2</label>
+        </leaf>
       </tree>
     </egXML>
   </exemplum>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -5,74 +6,84 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="nets" xml:id="GRAPH" usage="rwa" ident="graph">
-<equiv/>
-<gloss/>
-<desc>encodes a graph, which is a collection of nodes, and arcs which
-connect the nodes.</desc><desc version="2006-10-28" xml:lang="ja">グラフを示す．</desc>
+  <equiv/>
+  <gloss/>
+  <desc>encodes a graph, which is a collection of nodes, and arcs which
+connect the nodes.</desc>
+  <desc version="2007-01-21" xml:lang="it">codifica un grafo, cioè una raccolta di nodi e archi che collegano i nodi</desc>
+  <desc version="2006-10-28" xml:lang="ja">グラフを示す．</desc>
   <classes>
     <memberOf key="model.divPart"/>
   </classes>
   <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
     <rng:group>
       <rng:optional>
-	<rng:ref name="label"/>
-	<rng:zeroOrMore>
-	  <rng:ref name="model.global"/>
-	</rng:zeroOrMore>
+        <rng:ref name="label"/>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
       </rng:optional>
       <rng:choice>
-	<rng:group>
-	  <rng:oneOrMore>
-	    <rng:ref name="node"/>
-	    <rng:zeroOrMore>
-	      <rng:ref name="model.global"/>
-	    </rng:zeroOrMore>
-	  </rng:oneOrMore>
-	  <rng:zeroOrMore>
-	    <rng:ref name="arc"/>
-	    <rng:zeroOrMore>
-	      <rng:ref name="model.global"/>
-	    </rng:zeroOrMore>
-	  </rng:zeroOrMore>
-	</rng:group>
-	<rng:group>
-	  <rng:oneOrMore>
-	    <rng:ref name="arc"/>
-	    <rng:zeroOrMore>
-	      <rng:ref name="model.global"/>
-	    </rng:zeroOrMore>
-	  </rng:oneOrMore>
-	  <rng:oneOrMore>
-	    <rng:ref name="node"/>
-	    <rng:zeroOrMore>
-	      <rng:ref name="model.global"/>
-	    </rng:zeroOrMore>
-	  </rng:oneOrMore>
-	</rng:group>
+        <rng:group>
+          <rng:oneOrMore>
+            <rng:ref name="node"/>
+            <rng:zeroOrMore>
+              <rng:ref name="model.global"/>
+            </rng:zeroOrMore>
+          </rng:oneOrMore>
+          <rng:zeroOrMore>
+            <rng:ref name="arc"/>
+            <rng:zeroOrMore>
+              <rng:ref name="model.global"/>
+            </rng:zeroOrMore>
+          </rng:zeroOrMore>
+        </rng:group>
+        <rng:group>
+          <rng:oneOrMore>
+            <rng:ref name="arc"/>
+            <rng:zeroOrMore>
+              <rng:ref name="model.global"/>
+            </rng:zeroOrMore>
+          </rng:oneOrMore>
+          <rng:oneOrMore>
+            <rng:ref name="node"/>
+            <rng:zeroOrMore>
+              <rng:ref name="model.global"/>
+            </rng:zeroOrMore>
+          </rng:oneOrMore>
+        </rng:group>
       </rng:choice>
     </rng:group>
   </content>
   <attList>
     <attDef ident="type" usage="rec">
-	<equiv/>
-	<desc>describes the type of graph.</desc><desc version="2006-10-28" xml:lang="ja">当該グラフの種類を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <equiv/>
+      <desc>describes the type of graph.</desc>
+      <desc version="2007-01-21" xml:lang="it">descrive il tipo di grafo</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該グラフの種類を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
       <valList type="semi">
         <valItem ident="undirected">
           <equiv/>
           <gloss>undirected graph</gloss>
+          <gloss version="2007-01-21" xml:lang="it">grafo non orientato</gloss>
         </valItem>
         <valItem ident="directed">
           <equiv/>
           <gloss>directed graph</gloss>
+          <gloss version="2007-01-21" xml:lang="it">grafo orientato</gloss>
         </valItem>
         <valItem ident="transitionNetwork">
           <equiv/>
           <gloss>a directed graph with distinguished initial and final nodes</gloss>
+          <gloss version="2007-01-21" xml:lang="it">grafo orientato con nodi finale e iniziale distinti.</gloss>
         </valItem>
         <valItem ident="transducer">
           <equiv/>
           <gloss>a transition network with up to two labels on each arc</gloss>
+          <gloss version="2007-01-21" xml:lang="it">rete di transizione con un massimo di due etichette per arco</gloss>
         </valItem>
       </valList>
       <remarks>
@@ -87,41 +98,50 @@ instead of the <att>adj</att> attribute.</p>
       </remarks>
     </attDef>
     <attDef ident="order" usage="opt">
-	<equiv/>
-	<desc>states the order of the graph, i.e., the number of its nodes.</desc><desc version="2006-10-28" xml:lang="ja">当該グラフに含まれるノード数を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/></datatype>
+      <equiv/>
+      <desc>states the order of the graph, i.e., the number of its nodes.</desc>
+      <desc version="2007-01-21" xml:lang="it">definisce l'ordine del grafo, cioè il numero dei suoi nodi</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該グラフに含まれるノード数を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/>
+      </datatype>
       <valDesc>A positive integer.</valDesc>
     </attDef>
     <attDef ident="size" usage="opt">
-	<equiv/>
-	<desc>states the size of the graph, i.e., the number of its arcs.</desc><desc version="2006-10-28" xml:lang="ja">当該グラフに含まれる辺数を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/></datatype>
+      <equiv/>
+      <desc>states the size of the graph, i.e., the number of its arcs.</desc>
+      <desc version="2007-01-21" xml:lang="it">definisce la dimensione del grafo, cioè il numero dei suoi archi</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該グラフに含まれる辺数を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/>
+      </datatype>
       <valDesc>A non-negative integer.</valDesc>
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"><graph xml:id="cug1" type="undirected" order="5" size="4" rend="LABEL-PLACE bottom center NODE-FRAME none ARC solid line">
-      <label>Airline Connections in Southwestern USA</label>
-      <node xml:id="lax" degree="2">
-	<label>LAX</label>
-      </node>
-      <node xml:id="lvg" degree="2">
-	<label>LVG</label>
-      </node>
-      <node xml:id="phx" degree="3">
-	<label>PHX</label>
-      </node>
-      <node xml:id="tus" degree="1">
-	<label>TUS</label>
-      </node>
-      <node xml:id="cib" degree="0">
-	<label>CIB</label>
-      </node>
-      <arc from="#lax" to="#lvg"/>
-      <arc from="#lax" to="#phx"/>
-      <arc from="#lvg" to="#phx"/>
-      <arc from="#phx" to="#tus"/>
-    </graph>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <graph xml:id="cug1" type="undirected" order="5" size="4" rend="LABEL-PLACE bottom center NODE-FRAME none ARC solid line">
+        <label>Airline Connections in Southwestern USA</label>
+        <node xml:id="lax" degree="2">
+          <label>LAX</label>
+        </node>
+        <node xml:id="lvg" degree="2">
+          <label>LVG</label>
+        </node>
+        <node xml:id="phx" degree="3">
+          <label>PHX</label>
+        </node>
+        <node xml:id="tus" degree="1">
+          <label>TUS</label>
+        </node>
+        <node xml:id="cib" degree="0">
+          <label>CIB</label>
+        </node>
+        <arc from="#lax" to="#lvg"/>
+        <arc from="#lax" to="#phx"/>
+        <arc from="#lvg" to="#phx"/>
+        <arc from="#phx" to="#tus"/>
+      </graph>
     </egXML>
   </exemplum>
 <!--  <exemplum>

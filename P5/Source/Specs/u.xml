@@ -6,10 +6,14 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="spoken" xml:id="U" usage="req" ident="u">
-<equiv/>
-<gloss>utterance</gloss><gloss version="2006-10-28" xml:lang="ja">発話</gloss>
-<desc>a stretch of speech usually preceded and followed by
-silence or by a change of speaker.</desc><desc version="2006-10-28" xml:lang="ja"> 沈黙の後または話者交代後の発話を示す．</desc>
+  <equiv/>
+  <gloss>utterance</gloss>
+  <gloss version="2007-01-21" xml:lang="it">enunciato</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">発話</gloss>
+  <desc>a stretch of speech usually preceded and followed by
+silence or by a change of speaker.</desc>
+  <desc version="2007-01-21" xml:lang="it">porzione di parlato solitamente preceduta e seguita da un silenzio o da un cambio di parlante</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 沈黙の後または話者交代後の発話を示す．</desc>
   <classes>
     <memberOf key="att.timed"/>
     <memberOf key="model.divPart.spoken"/>
@@ -20,7 +24,7 @@ silence or by a change of speaker.</desc><desc version="2006-10-28" xml:lang="ja
     <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:choice>
         <rng:text/>
-	<rng:ref name="model.gLike"/>
+        <rng:ref name="model.gLike"/>
         <rng:ref name="model.phrase"/>
         <rng:ref name="model.divPart.spoken"/>
         <rng:ref name="model.global"/>
@@ -29,26 +33,36 @@ silence or by a change of speaker.</desc><desc version="2006-10-28" xml:lang="ja
   </content>
   <attList>
     <attDef ident="trans" usage="opt">
-	<equiv/>
-	<desc>indicates the nature of the transition between this utterance
-          and the previous one.</desc><desc version="2006-10-28" xml:lang="ja">当該交替の具合を示す．</desc>
+      <equiv/>
+      <desc>indicates the nature of the transition between this utterance
+          and the previous one.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica la natura del passaggio tra questo enunciato e il precedente</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該交替の具合を示す．</desc>
       <defaultVal>smooth</defaultVal>
       <valList type="closed">
         <valItem ident="smooth">
           <equiv/>
-          <gloss>this  utterance begins without unusual pause or rapidity.</gloss><gloss version="2006-10-28" xml:lang="ja">(交替は，変な間や急くことなくスムーズに行われた．)</gloss>
+          <gloss>this  utterance begins without unusual pause or rapidity.</gloss>
+          <gloss version="2007-01-21" xml:lang="it">l'enunciato comincia senza pause o accelerazioni insolite</gloss>
+          <gloss version="2006-10-28" xml:lang="ja">(交替は，変な間や急くことなくスムーズに行われた．)</gloss>
         </valItem>
         <valItem ident="latching">
           <equiv/>
-          <gloss>this utterance begins with a markedly shorter pause than normal.</gloss><gloss version="2006-10-28" xml:lang="ja">(交替は，いつもより短い間に続いて行われた．)</gloss>
+          <gloss>this utterance begins with a markedly shorter pause than normal.</gloss>
+          <gloss version="2007-01-21" xml:lang="it">l'enunciato comincia con una pausa nettamente più breve del normale</gloss>
+          <gloss version="2006-10-28" xml:lang="ja">(交替は，いつもより短い間に続いて行われた．)</gloss>
         </valItem>
         <valItem ident="overlap">
           <equiv/>
-          <gloss>this utterance begins before the previous one has finished.</gloss><gloss version="2006-10-28" xml:lang="ja">(前の発話が終わる前に，交替が始まった．)</gloss>
+          <gloss>this utterance begins before the previous one has finished.</gloss>
+          <gloss version="2007-01-21" xml:lang="it">l'enunciato comincia prima che sia terminato quello precedente</gloss>
+          <gloss version="2006-10-28" xml:lang="ja">(前の発話が終わる前に，交替が始まった．)</gloss>
         </valItem>
         <valItem ident="pause">
           <equiv/>
-          <gloss>this utterance begins after a noticeable pause.</gloss><gloss version="2006-10-28" xml:lang="ja">(はっきりとした間の後に，交替が始まった．)</gloss>
+          <gloss>this utterance begins after a noticeable pause.</gloss>
+          <gloss version="2007-01-21" xml:lang="it">l'enunciato comincia con una pausa notevolmente lunga</gloss>
+          <gloss version="2006-10-28" xml:lang="ja">(はっきりとした間の後に，交替が始まった．)</gloss>
         </valItem>
       </valList>
       <remarks/>
@@ -64,12 +78,14 @@ silence or by a change of speaker.</desc><desc version="2006-10-28" xml:lang="ja
     </attDef>-->
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <u who="#spkr1">if did you set</u>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <u who="#spkr1">if did you set</u>
       <u trans="latching" who="#spkr2">well Joe and I set it between us</u>
-<list type="speakers">
-<item xml:id="spkr1"/>
-<item xml:id="spkr2"/>
-</list>    </egXML>
+      <list type="speakers">
+        <item xml:id="spkr1"/>
+        <item xml:id="spkr2"/>
+      </list>
+    </egXML>
   </exemplum>
   <remarks>
     <p rend="dataDesc">prose and a mixture of speech

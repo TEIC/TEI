@@ -6,9 +6,13 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="nets" xml:id="INODE" usage="rwa" ident="iNode">
-<equiv/>
-<gloss>intermediate (or internal) node</gloss><gloss version="2006-10-28" xml:lang="ja">中間ノード</gloss>
-<desc>represents an intermediate (or internal) node of a tree.</desc><desc version="2006-10-28" xml:lang="ja"> 木における非終端ノードを示す．</desc>
+  <equiv/>
+  <gloss>intermediate (or internal) node</gloss>
+  <gloss version="2007-01-21" xml:lang="it">nodo intermedio (o interno)</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">中間ノード</gloss>
+  <desc>represents an intermediate (or internal) node of a tree.</desc>
+  <desc version="2007-01-21" xml:lang="it">rappresenta un nodo intermedio (o interno) di un albero</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 木における非終端ノードを示す．</desc>
   <content>
     <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:ref name="label"/>
@@ -16,47 +20,66 @@ $Author$
   </content>
   <attList>
     <attDef ident="value" usage="rwa">
-	<equiv/>
-	<desc>provides the value of an intermediate node, which is a feature
-structure or other analytic element.</desc><desc version="2006-10-28" xml:lang="ja">当該中間ノードの値を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <equiv/>
+      <desc>provides the value of an intermediate node, which is a feature
+structure or other analytic element.</desc>
+      <desc version="2007-01-21" xml:lang="it">assegna a un nodo intermedio un valore, che può essere una struttura di tratti o altro elemento di analisi</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該中間ノードの値を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
       <valDesc>A valid identifier of a feature structure or other analytic
 element.</valDesc>
     </attDef>
     <attDef ident="children" usage="req">
-	<equiv/>
-	<desc>provides a list of identifiers of the elements which are the children of
-the intermediate node.</desc><desc version="2006-10-28" xml:lang="ja">当該中間ノードの子要素の識別子を示す．</desc>
-      <datatype maxOccurs="unbounded"><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <equiv/>
+      <desc>provides a list of identifiers of the elements which are the children of
+the intermediate node.</desc>
+      <desc version="2007-01-21" xml:lang="it">fornisce una lista di identificatori degli elementi figli del nodo intermedio</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該中間ノードの子要素の識別子を示す．</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
       <valDesc>A list of identifiers.</valDesc>
     </attDef>
     <attDef ident="parent" usage="opt">
-	<equiv/>
-	<desc>provides the identifier of the element which is the parent of this node.</desc><desc version="2006-10-28" xml:lang="ja">当該中間ノードの親要素の識別子を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <equiv/>
+      <desc>provides the identifier of the element which is the parent of this node.</desc>
+      <desc version="2007-01-21" xml:lang="it">assegna un identificatore all'elemento genitore del nodo</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該中間ノードの親要素の識別子を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
       <valDesc>The identifier of the parent node.</valDesc>
     </attDef>
     <attDef ident="ord" usage="opt">
       <equiv/>
       <desc>indicates whether or not the internal node is ordered.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica se il nodo interno è ordinato o meno</desc>
       <desc version="2006-10-28" xml:lang="ja">当該中間ノードは，順序付かどうかを示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.xTruthValue"/></datatype>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.xTruthValue"/>
+      </datatype>
       <remarks>
-	<p>The value <val>true</val> indicates that the children of
+        <p>The value <val>true</val> indicates that the children of
 	the intermediate node are ordered, whereas <val>false</val>
 	indicates the are unordered.</p>
-	<p>Use if and only if <att>ord</att> is specified as
+        <p>Use if and only if <att>ord</att> is specified as
 	<val>partial</val> on the <gi>tree</gi> element and the
 	intermediate node has more than one child.</p>
-	<?tei winita Schematron rule?>
+<?tei winita Schematron rule?>
       </remarks>
     </attDef>
     <attDef ident="follow" usage="rwa">
-	<equiv/>
-	<desc>provides an identifier of
+      <equiv/>
+      <desc>provides an identifier of
 the element which this node
-follows.</desc><desc version="2006-10-28" xml:lang="ja">当該中間ノードの姉要素相当の識別子を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+follows.</desc>
+      <desc version="2007-01-21" xml:lang="it">assegna un identificatore all'elemento che precede il nodo</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該中間ノードの姉要素相当の識別子を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
       <valDesc>The identifier of another intermediate node or leaf of the tree.</valDesc>
       <remarks>
         <p>If the tree is unordered or partially ordered, this attribute
@@ -65,10 +88,14 @@ and the element which is the value of the attribute.</p>
       </remarks>
     </attDef>
     <attDef ident="outDegree" usage="opt">
-	<equiv/>
-	<desc>gives the out degree of an intermediate node, the number of its
-children.</desc><desc version="2006-10-28" xml:lang="ja">当該中間ノードの子要素数を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/></datatype>
+      <equiv/>
+      <desc>gives the out degree of an intermediate node, the number of its
+children.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica il grado in uscita di un nodo intermedio, cioè il numero dei suoi figli</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該中間ノードの子要素数を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/>
+      </datatype>
       <valDesc>A nonnegative integer.</valDesc>
       <remarks>
         <p>The in degree of an intermediate node is always 1.</p>
@@ -76,9 +103,9 @@ children.</desc><desc version="2006-10-28" xml:lang="ja">当該中間ノード�
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <iNode xml:id="pt1" children="#GD-UP1" parent="#GD-VB1" follow="#GD-PN1" outDegree="1">
-	<label>PT</label>
+        <label>PT</label>
       </iNode>
     </egXML>
   </exemplum>

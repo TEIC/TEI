@@ -1,26 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
 $Date$
 $Author$
 -->
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" xml:id="PTRGROUP" type="atts" ident="att.pointing.group"  xmlns:rng="http://relaxng.org/ns/structure/1.0">
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="linking" xml:id="PTRGROUP" type="atts" ident="att.pointing.group">
   <desc>defines a set of attributes common to all elements which
   enclose groups of pointer elements.</desc>
-  <classes> <memberOf key="att.pointing"/> </classes>
+  <desc version="2007-01-21" xml:lang="it">definisce un insieme di attributi comuni a tutti gli elementi che includono gruppi di puntatori</desc>
+  <classes>
+    <memberOf key="att.pointing"/>
+  </classes>
   <attList>
     <attDef ident="domains" usage="opt">
       <equiv/>
       <desc>optionally specifies the identifiers of the elements
       within which all elements indicated by the contents of this
-      element lie.</desc><desc version="2006-10-28" xml:lang="ja">当該要素で参照される要素の識別子を示す．</desc>
+      element lie.</desc>
+      <desc version="2007-01-21" xml:lang="it">stabilisce facoltativamente gli identificatori di elementi all'interno dei quali si trovano tutti gli elementi indicati dai contenuti dell'elemento in questione</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該要素で参照される要素の識別子を示す．</desc>
       <datatype minOccurs="1" maxOccurs="unbounded">
-	<rng:ref name="data.name"/>
+        <rng:ref name="data.name"/>
       </datatype>
       <valDesc>a list of at least two generic identifier names,
       separated by whitespace.</valDesc>
       <remarks>
-	<p>If this attribute is supplied every element specified as a
+        <p>If this attribute is supplied every element specified as a
 	target must be contained within the element or elements
 	named by it. An application may choose whether or not to
 	report failures to satisfy this constraint as errors, but may
@@ -33,11 +39,14 @@ $Author$
       <equiv/>
       <desc>describes the function of each of the values of the
       <att>targets</att> attribute of the enclosed <gi>link</gi>,
-      <gi>join</gi> or <gi>alt</gi> tags.</desc><desc version="2006-10-28" xml:lang="ja">属性targetsの属性値の働きを示す．</desc>
+      <gi>join</gi> or <gi>alt</gi> tags.</desc>
+      <desc version="2007-01-21" xml:lang="it">descrive la funzione di ognuno dei valori dell'attributo <att>targets</att> dei marcatori corrispondenti <gi>link</gi>,
+      <gi>join</gi> o <gi>alt</gi></desc>
+      <desc version="2006-10-28" xml:lang="ja">属性targetsの属性値の働きを示す．</desc>
       <datatype minOccurs="1" maxOccurs="unbounded">
-	<rng:ref name="data.word"/>
+        <rng:ref name="data.word"/>
       </datatype>
-      <valDesc>a list of at least two valid names, separated by whitespace.</valDesc>      
+      <valDesc>a list of at least two valid names, separated by whitespace.</valDesc>
       <remarks>
         <p>The number of separate values must match the number of
         values in the <att>targets</att> attribute in the enclosed

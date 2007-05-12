@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -5,53 +6,57 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="SPECGRP" ident="specGrp">
-<equiv/>
-<gloss>specification group</gloss><gloss version="2006-10-28" xml:lang="ja">規定集</gloss>
-<desc>contains any convenient grouping of specifications for use within
-  the current module.</desc><desc version="2006-10-28" xml:lang="ja"> 当該モジュールにある規定をまとめる．</desc>
+  <equiv/>
+  <gloss>specification group</gloss>
+  <gloss version="2007-01-21" xml:lang="it">gruppo di istruzioni</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">規定集</gloss>
+  <desc>contains any convenient grouping of specifications for use within
+  the current module.</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene un qualsiasi raggruppamento funzionale di istruzioni per l'uso all'interno del modulo corrente</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 当該モジュールにある規定をまとめる．</desc>
   <classes>
     <memberOf key="model.oddDecl"/>
   </classes>
   <content>
     <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:choice>
-	<rng:ref name="model.oddDecl"/>
-	<rng:ref name="model.oddRef"/>
-	<rng:ref name="model.divPart"/>
+        <rng:ref name="model.oddDecl"/>
+        <rng:ref name="model.oddRef"/>
+        <rng:ref name="model.divPart"/>
       </rng:choice>
     </rng:zeroOrMore>
   </content>
-  
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"><specGrp xml:id="xDAILC">
-<elementSpec ident="s">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <specGrp xml:id="xDAILC">
+        <elementSpec ident="s">
 <!-- ... -->
-</elementSpec>
-<elementSpec ident="cl">
+        </elementSpec>
+        <elementSpec ident="cl">
 <!-- ... -->
-</elementSpec>
-<elementSpec ident="w">
+        </elementSpec>
+        <elementSpec ident="w">
 <!-- ... -->
-</elementSpec>
-<elementSpec ident="m">
+        </elementSpec>
+        <elementSpec ident="m">
 <!-- ... -->
-</elementSpec>
-<elementSpec ident="c">
+        </elementSpec>
+        <elementSpec ident="c">
 <!-- ... -->
-</elementSpec>
-</specGrp>
-</egXML>
-<p>This specification group with identifier <ident>xDAILC</ident>
+        </elementSpec>
+      </specGrp>
+    </egXML>
+    <p>This specification group with identifier <ident>xDAILC</ident>
 contains specifications for the elements
 <gi>s</gi>,<gi>cl</gi>,<gi>w</gi>, etc.</p>
   </exemplum>
   <remarks>
-<p>A specification group is referenced by means of its <att>xml:id</att>
+    <p>A specification group is referenced by means of its <att>xml:id</att>
   attribute. The declarations it contains may be included in a
   <gi>module</gi> element only by reference (using a
   <gi>specGrpRef</gi> element): it may not be nested within a
   <gi>module</gi> element. </p>
-<p>Different ODD processors may generate 
+    <p>Different ODD processors may generate 
   representations of the specifications contained by a
   <gi>specGrp</gi> in different concrete syntaxes. For P5 the intention
   is to generate modules using both XML and RELAX NG, and to use only
