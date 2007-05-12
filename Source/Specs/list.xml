@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -5,34 +6,37 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="LIST" usage="rwa" ident="list">
-<equiv/>
-<gloss/>
-<desc>contains any sequence of items organized as a list.</desc><desc version="2006-06-05" xml:lang="zh-tw">包含以列表方式呈現的任何連續項目。</desc><desc version="2006-10-28" xml:lang="ja">リスト構造のような，一連の項目を持つもの．</desc>
+  <equiv/>
+  <gloss/>
+  <desc>contains any sequence of items organized as a list.</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene cualquier secuencia de ítems o elementos organizados en una lista.</desc>
+  <desc version="2006-06-05" xml:lang="zh-tw">包含以列表方式呈現的任何連續項目。</desc>
+  <desc version="2006-10-28" xml:lang="ja">リスト構造のような，一連の項目を持つもの．</desc>
   <classes>
     <memberOf key="model.listLike"/>
   </classes>
-  <content xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0">
+  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
     <rng:group>
       <rng:zeroOrMore>
-	<rng:choice>
-	  <rng:group>
-	    <rng:ref name="model.divWrapper"/>
-	  </rng:group>
-	  <rng:group>
-	    <rng:ref name="model.global"/>
-	  </rng:group>
-	</rng:choice>
+        <rng:choice>
+          <rng:group>
+            <rng:ref name="model.divWrapper"/>
+          </rng:group>
+          <rng:group>
+            <rng:ref name="model.global"/>
+          </rng:group>
+        </rng:choice>
       </rng:zeroOrMore>
       <rng:choice>
-	<rng:oneOrMore>
-	  <rng:ref name="item"/>
-	  <rng:zeroOrMore>
-	    <rng:ref name="model.global"/>
-	  </rng:zeroOrMore>
-	</rng:oneOrMore>
-	<rng:group>
-	  <rng:optional>
-	    <rng:ref name="headLabel"/>
+        <rng:oneOrMore>
+          <rng:ref name="item"/>
+          <rng:zeroOrMore>
+            <rng:ref name="model.global"/>
+          </rng:zeroOrMore>
+        </rng:oneOrMore>
+        <rng:group>
+          <rng:optional>
+            <rng:ref name="headLabel"/>
 <!-- 	    <rng:zeroOrMore>
 	      <rng:ref name="model.global"/>
 	    </rng:zeroOrMore> -->
@@ -46,65 +50,78 @@ $Author$
 <!-- I haven't fixed this particular instance yet, because we hope to-->
 <!-- completely revamp the content of <list>, anyway, hopefully-->
 <!-- removing the special-purpose <headItem> and <headLabel>. -Syd -->
-	  </rng:optional>
-	  <rng:optional>
-	    <rng:ref name="headItem"/>
+          </rng:optional>
+          <rng:optional>
+            <rng:ref name="headItem"/>
 <!--	    <rng:zeroOrMore>
 	      <rng:ref name="model.global"/>
 	    </rng:zeroOrMore> -->
-	  </rng:optional>
-	  <rng:oneOrMore>
-	    <rng:ref name="label"/>
-	    <rng:zeroOrMore>
-	      <rng:ref name="model.global"/>
-	    </rng:zeroOrMore>
-	    <rng:ref name="item"/>
-	    <rng:zeroOrMore>
-	      <rng:ref name="model.global"/>
-	    </rng:zeroOrMore>
-	  </rng:oneOrMore>
-	</rng:group>
+          </rng:optional>
+          <rng:oneOrMore>
+            <rng:ref name="label"/>
+            <rng:zeroOrMore>
+              <rng:ref name="model.global"/>
+            </rng:zeroOrMore>
+            <rng:ref name="item"/>
+            <rng:zeroOrMore>
+              <rng:ref name="model.global"/>
+            </rng:zeroOrMore>
+          </rng:oneOrMore>
+        </rng:group>
       </rng:choice>
       <rng:zeroOrMore>
-	<rng:group>
-	  <rng:group>
-	    <rng:ref name="model.divWrapper.bottom"/>
-	  </rng:group>
-	  <rng:zeroOrMore>
-	    <rng:ref name="model.global"/>
-	  </rng:zeroOrMore>
-	</rng:group>
+        <rng:group>
+          <rng:group>
+            <rng:ref name="model.divWrapper.bottom"/>
+          </rng:group>
+          <rng:zeroOrMore>
+            <rng:ref name="model.global"/>
+          </rng:zeroOrMore>
+        </rng:group>
       </rng:zeroOrMore>
     </rng:group>
   </content>
   <attList>
     <attDef ident="type" usage="opt">
-	<equiv/>
-	<desc>describes the form of the list.</desc><desc version="2006-06-05" xml:lang="zh-tw">描述列表的形式。</desc><desc version="2006-10-28" xml:lang="ja">当該リストの形を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <equiv/>
+      <desc>describes the form of the list.</desc>
+      <desc version="2007-05-04" xml:lang="es">describe la composición de una lista.</desc>
+      <desc version="2006-06-05" xml:lang="zh-tw">描述列表的形式。</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該リストの形を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
       <defaultVal>simple</defaultVal>
       <valList type="semi">
         <valItem ident="ordered">
           <equiv/>
           <gloss>list items are numbered or lettered.
-    </gloss><gloss version="2006-06-05" xml:lang="zh-tw">列表項目以數字或字母依順序排列。</gloss>
+    </gloss>
+          <gloss version="2007-05-04" xml:lang="es">ítems de lista numerados.</gloss>
+          <gloss version="2006-06-05" xml:lang="zh-tw">列表項目以數字或字母依順序排列。</gloss>
         </valItem>
         <valItem ident="bulleted">
           <equiv/>
           <gloss>list items are marked with a
 bullet or other typographic device.
-    </gloss><gloss version="2006-06-05" xml:lang="zh-tw">列表項目以黑點或其他印刷符號排列。</gloss>
+    </gloss>
+          <gloss version="2007-05-04" xml:lang="es">los ítems de la lista están marcados con un punto u otro recurso tipográfico.</gloss>
+          <gloss version="2006-06-05" xml:lang="zh-tw">列表項目以黑點或其他印刷符號排列。</gloss>
         </valItem>
         <valItem ident="simple">
           <equiv/>
           <gloss>list items are not numbered or bulleted.
-    </gloss><gloss version="2006-06-05" xml:lang="zh-tw">列表項目的排列沒有用數字或任何其他符號作標記。</gloss>
+    </gloss>
+          <gloss version="2007-05-04" xml:lang="es">los ítems de la lista no están ni numerados ni introducidos por un recurso tipográfico.</gloss>
+          <gloss version="2006-06-05" xml:lang="zh-tw">列表項目的排列沒有用數字或任何其他符號作標記。</gloss>
         </valItem>
         <valItem ident="gloss">
           <equiv/>
           <gloss>each list item glosses some term or
 concept, which is given by a label element preceding
-the list item.</gloss><gloss version="2006-06-05" xml:lang="zh-tw">各列表項目為一個字詞下註解，每個項目之前並帶有標籤元素。</gloss>
+the list item.</gloss>
+          <gloss version="2007-05-04" xml:lang="es">cada ítem de la lista glosa algún término o concepto que ha sido dado por un elemento que precede la lista.</gloss>
+          <gloss version="2006-06-05" xml:lang="zh-tw">各列表項目為一個字詞下註解，每個項目之前並帶有標籤元素。</gloss>
         </valItem>
       </valList>
       <exemplum>
@@ -118,7 +135,8 @@ type="gloss"</tag>; this is however a semantic error.</p>
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <list type="ordered">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <list type="ordered">
         <item>a butcher</item>
         <item>a baker</item>
         <item>a candlestick maker, with
@@ -131,7 +149,11 @@ type="gloss"</tag>; this is however a semantic error.</p>
     <p>The following example treats the short numbered clauses of
 Anglo-Saxon legal codes as lists of items.  The text is from an
 ordinance of King Athelstan (924–939):</p>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div1 type="section"><head>Athelstan's Ordinance</head><list type="ordered"><item n="1">Concerning thieves.  First, that no thief is to be
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <div1 type="section">
+        <head>Athelstan's Ordinance</head>
+        <list type="ordered">
+          <item n="1">Concerning thieves.  First, that no thief is to be
      spared who is caught with the stolen goods, [if he is] over
      twelve years and [if the value of the goods is] over eightpence.
     <list type="ordered"><item n="1.1">And if anyone does spare one, he is to pay for the
@@ -145,14 +167,16 @@ ordinance of King Athelstan (924–939):</p>
       with his wergild, or to bring him back there.</item><item n="1.5">And if he steals after that, they are to pay
       for him with his wergild, whether to the king or to him
       to whom it rightly belongs; and everyone of those who
-      supported  him is to pay 120 shillings to  the king as a fine.</item></list></item><item n="2">Concerning lordless men.  And we pronounced about these
+      supported  him is to pay 120 shillings to  the king as a fine.</item></list></item>
+          <item n="2">Concerning lordless men.  And we pronounced about these
    lordless men, from whom no justice can be obtained, that one
    should order their kindred to fetch back such a person to justice
    and to find him a lord in public meeting.
    <list type="ordered"><item n="2.1">And if they then will not, or cannot, produce him on
       that appointed day, he is then to be a fugitive afterwards, and
       he who encounters him is to strike him down as a thief.</item><item n="2.2">And he who harbours him after that, is to pay for him
-      with his wergild or to clear himself by an oath of that amount.</item></list></item><item n="3">Concerning the refusal of justice.  The lord who
+      with his wergild or to clear himself by an oath of that amount.</item></list></item>
+          <item n="3">Concerning the refusal of justice.  The lord who
     refuses justice and upholds his guilty man, so that the king is
     appealed to, is to repay the value of the goods and 120 shillings
     to the king; and he who appeals to the king before he demands
@@ -163,17 +187,22 @@ ordinance of King Athelstan (924–939):</p>
       and be liable to his wergild on the first occasionp if he does it
       more often, he is to be liable to pay all that he owns.</item><item n="3.2">And likewise any of the king's treasurers or of our
       reeves, who has been an accessory of thieves who have committed
-      theft, is to liable to the same.</item></list></item><item n="4">Concerning treachery to a lord.  And we have pronounced
+      theft, is to liable to the same.</item></list></item>
+          <item n="4">Concerning treachery to a lord.  And we have pronounced
    concerning treachery to a lord, that he [who is accused] is to
    forfeit his life if he cannot deny it or is afterwards convicted
-   at the three-fold ordeal.</item></list></div1></egXML>
-<p>Note that nested lists have been used so the tagging mirrors the
+   at the three-fold ordeal.</item>
+        </list>
+      </div1>
+    </egXML>
+    <p>Note that nested lists have been used so the tagging mirrors the
 structure indicated by the two-level numbering of the clauses.
 The clauses could have been treated as a one-level list with
 irregular numbering, if desired.</p>
   </exemplum>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <p>These decrees, most blessed Pope Hadrian, we propounded in the
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <p>These decrees, most blessed Pope Hadrian, we propounded in the
 public council ... and they confirmed them in our hand in your
 stead with the sign of the Holy Cross, and afterwards inscribed
 with a careful pen on the paper of this page, affixing thus the

@@ -9,49 +9,57 @@ $Author$
   <equiv/>
   <gloss/>
   <desc>defines a reference to another location, possibly
-  modified by additional text or comment.</desc><desc version="2006-10-28" xml:lang="ja">他の場所への参照を示す．これにより，付加的なテキストやコメントで
+  modified by additional text or comment.</desc>
+  <desc version="2007-05-04" xml:lang="es">define una referencia a otra localización, posiblemente modificada por un texto o comentario adicional.</desc>
+  <desc version="2006-10-28" xml:lang="ja">他の場所への参照を示す．これにより，付加的なテキストやコメントで
 修飾される．</desc>
   <classes>
     <memberOf key="model.ptrLike"/>
     <memberOf key="att.pointing"/>
     <memberOf key="att.declaring"/>
   </classes>
-<content>
-  <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
-</content>
-<attList org="choice">
-  <attDef ident="target" usage="opt">
-    <equiv/>
-    <desc>specifies the destination of the reference by supplying one
-    or more URI References</desc><desc version="2006-10-28" xml:lang="ja">1つ以上のURIによって当該参照先が示される．</desc>
-    <datatype maxOccurs="unbounded">
-      <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-    </datatype>
-    <valDesc>One or more syntactically valid URI references, separated
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
+  </content>
+  <attList org="choice">
+    <attDef ident="target" usage="opt">
+      <equiv/>
+      <desc>specifies the destination of the reference by supplying one
+    or more URI References</desc>
+      <desc version="2007-05-04" xml:lang="es">especifica la destinación de una referencia proporcionando una o más referencias URI.</desc>
+      <desc version="2006-10-28" xml:lang="ja">1つ以上のURIによって当該参照先が示される．</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>One or more syntactically valid URI references, separated
     by white space. Because whitespace is used to separate URIs, no
     whitespace is permitted inside a single URI. If a whitespace
     character is required in a URI, it should be escaped with the
     normal mechanism, e.g. <code>TEI%20Consortium</code>.</valDesc>
-  </attDef>
+    </attDef>
     <attDef ident="cRef" usage="opt">
       <equiv/>
       <desc>specifies the destination of the reference by supplying a
       canonical reference from a scheme defined in a <gi>refsDecl</gi>
-      element in the TEI header</desc><desc version="2006-10-28" xml:lang="ja">当該参照先を，当該プロジェクトで使用されている参照方法で示す．こ
+      element in the TEI header</desc>
+      <desc version="2007-05-04" xml:lang="es">especifica el destino de la referencia mediante una referencia canónica de un esquema definido en un elemento <gi>refsDecl</gi> en el encabezado TEI.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該参照先を，当該プロジェクトで使用されている参照方法で示す．こ
 の参照方法は，TEIヘダーにあるrefsDecl要素で定義されている．</desc>
-      <datatype maxOccurs="unbounded"><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/></datatype>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+      </datatype>
       <valDesc>the result of applying the algorithm for the resolution
       of canonical references (described in section <ptr target="#SACR"/>) should be a valid URI reference to the
       intended target</valDesc>
       <remarks>
-	<p>The <gi>refsDecl</gi> to use may be indicated with the
+        <p>The <gi>refsDecl</gi> to use may be indicated with the
 	<att>decls</att> attribute.</p>
-	<p>Currently these Guidelines only provide for a single
+        <p>Currently these Guidelines only provide for a single
 	canonical reference to be encoded on any given <gi>ref</gi>
 	element.</p>
       </remarks>
     </attDef>
-</attList>
+  </attList>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples"><ref target="http://www.natcorp.ox.ac.uk/Texts/A02.xml#s2">
 See especially the second sentence</ref>

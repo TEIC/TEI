@@ -8,7 +8,9 @@ $Author$
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="PTR" usage="opt" ident="ptr">
   <equiv/>
   <gloss/>
-  <desc>defines a pointer to another location.</desc><desc version="2006-10-28" xml:lang="ja">他の場所を示すポインター．</desc>
+  <desc>defines a pointer to another location.</desc>
+  <desc version="2007-05-04" xml:lang="es">define un señalizador a otra localización.</desc>
+  <desc version="2006-10-28" xml:lang="ja">他の場所を示すポインター．</desc>
   <classes>
     <memberOf key="model.ptrLike"/>
     <memberOf key="att.pointing"/>
@@ -21,9 +23,11 @@ $Author$
     <attDef ident="target" usage="req">
       <equiv/>
       <desc>specifies the destination of the pointer by supplying one or
-      more URI References</desc><desc version="2006-10-28" xml:lang="ja">当該ポインターが示す場所を,1つ以上のURLで示す．</desc>
+      more URI References</desc>
+      <desc version="2007-05-04" xml:lang="es">especifica la destinación del señalizador proporcionando una o más referencias URI.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該ポインターが示す場所を,1つ以上のURLで示す．</desc>
       <datatype maxOccurs="unbounded">
-	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>One or more syntactically valid URI references,
       separated by white space. Because whitespace is used to separate
@@ -36,24 +40,29 @@ $Author$
       <equiv/>
       <desc>specifies the destination of the pointer by supplying a
       canonical reference from a scheme defined in a <gi>refsDecl</gi>
-      element in the TEI header</desc><desc version="2006-10-28" xml:lang="ja">当該ポインターが示す場所を，当該プロジェクトで使用されている参照
+      element in the TEI header</desc>
+      <desc version="2007-05-04" xml:lang="es">especifica la destinación de un señalizador proporcionando una referencia canónica de un esquema definido en un elemento <gi>refsDecl</gi> en el encabezado TEI. </desc>
+      <desc version="2006-10-28" xml:lang="ja">当該ポインターが示す場所を，当該プロジェクトで使用されている参照
 方法で示す．この参照方法は，TEIヘダーにあるrefsDecl要素で定義されて
 いる．</desc>
-      <datatype maxOccurs="unbounded"><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/></datatype>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+      </datatype>
       <valDesc>the result of applying the algorithm for the resolution
       of canonical references (described in section <ptr target="#SACR"/>) should be a valid URI reference to the
       intended target</valDesc>
       <remarks>
-	<p>The <gi>refsDecl</gi> to use may be indicated with the
+        <p>The <gi>refsDecl</gi> to use may be indicated with the
 	<att>decls</att> attribute.</p>
-	<p>Currently these Guidelines only provide for a single
+        <p>Currently these Guidelines only provide for a single
 	canonical reference to be encoded on any given <gi>ptr</gi>
 	element.</p>
       </remarks>
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <ptr target="#p143 #p144"/>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <ptr target="#p143 #p144"/>
       <ptr target="http://www.tei-c.org"/>
     </egXML>
   </exemplum>

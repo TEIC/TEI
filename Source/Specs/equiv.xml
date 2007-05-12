@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -5,68 +6,87 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="EQUIV" usage="opt" ident="equiv">
-<equiv/>
-<gloss/><gloss version="2006-10-28" xml:lang="ja">同等</gloss>
-<desc>specifies a component which is considered equivalent to the
-  parent element, either by co-reference, or by external link.</desc><desc version="2006-10-28" xml:lang="ja">親要素と同等な要素． 相互参照や外部リンクで関連を示す．</desc>
-
+  <equiv/>
+  <gloss/>
+  <gloss version="2006-10-28" xml:lang="ja">同等</gloss>
+  <desc>specifies a component which is considered equivalent to the
+  parent element, either by co-reference, or by external link.</desc>
+  <desc version="2007-05-04" xml:lang="es">especifica un componente que se considera equivalente al elemento padre, o por co-referencias o por algún enlace externo.</desc>
+  <desc version="2006-10-28" xml:lang="ja">親要素と同等な要素． 相互参照や外部リンクで関連を示す．</desc>
   <classes>
     <memberOf key="model.glossLike"/>
   </classes>
-
   <content>
     <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
   </content>
   <attList>
     <attDef ident="name" usage="opt">
-	<desc>names the underlying concept of which the parent is a
-  representation</desc><desc version="2006-10-28" xml:lang="ja">親要素の意義を表す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"/></datatype>
+      <desc>names the underlying concept of which the parent is a
+  representation</desc>
+      <desc version="2007-05-04" xml:lang="es">especifica el concepto subyacente cuyo padre es una representación.</desc>
+      <desc version="2006-10-28" xml:lang="ja">親要素の意義を表す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"/>
+      </datatype>
       <valDesc>any name</valDesc>
     </attDef>
     <attDef ident="uri" usage="opt">
-	<desc>references the underlying concept of which the parent is a
-  representation by means of some external identifier</desc><desc version="2006-10-28" xml:lang="ja">外部識別子によって親要素の意義を表す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <desc>references the underlying concept of which the parent is a
+  representation by means of some external identifier</desc>
+      <desc version="2007-05-04" xml:lang="es">referencia el concepto subyacente del cual padre es una representación mediante algún identificador externo</desc>
+      <desc version="2006-10-28" xml:lang="ja">外部識別子によって親要素の意義を表す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
       <valDesc>a URI</valDesc>
     </attDef>
     <attDef ident="filter" usage="opt">
-	<desc>references an external script which contains a method to
+      <desc>references an external script which contains a method to
 transform instances of this element to canonical TEI
-	</desc><desc version="2006-10-28" xml:lang="ja">当該要素のインスタンスをTEI正規化する外部スクリプトへの参照を示す．</desc>
-      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="anyURI"/></datatype>
+	</desc>
+      <desc version="2007-05-04" xml:lang="es">referencia un guión externo que contiene un método para transformar ejemplos de este elemento a TEI canónico.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該要素のインスタンスをTEI正規化する外部スクリプトへの参照を示す．</desc>
+      <datatype>
+        <rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="anyURI"/>
+      </datatype>
       <valDesc>a URI</valDesc>
     </attDef>
     <attDef ident="mimeType" usage="opt">
-	<desc>MIME type of external filter script</desc><desc version="2006-10-28" xml:lang="ja">外部スクリプトのMIMEタイプ．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/></datatype>
+      <desc>MIME type of external filter script</desc>
+      <desc version="2007-05-04" xml:lang="es">tipo de MIME de guión de filtro externo</desc>
+      <desc version="2006-10-28" xml:lang="ja">外部スクリプトのMIMEタイプ．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+      </datatype>
       <valDesc>a URI</valDesc>
     </attDef>
   </attList>
   <exemplum>
-<p>The following example declares that the <gi>bo</gi> element is
+    <p>The following example declares that the <gi>bo</gi> element is
   conceptually equivalent to the markup construct <tag>hi
   rend='bold'</tag>, and that an external definition of this concept
   is available from the URI indicated</p>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="hi" mode="change">
-<equiv name="BOLD"/>
-<desc>bold typography</desc>
-<attList>
-<attDef ident="rend">
-<valList>
-<valItem ident="bold">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <elementSpec ident="hi" mode="change">
+        <equiv name="BOLD"/>
+        <desc>bold typography</desc>
+        <attList>
+          <attDef ident="rend">
+            <valList>
+              <valItem ident="bold">
 </valItem>
-</valList>
-</attDef>
-</attList>
-</elementSpec>
-<elementSpec ident="bo" mode="add">
-<equiv name="BOLD" uri="http://www.typesrus.com/bold"/>
-</elementSpec>
+            </valList>
+          </attDef>
+        </attList>
+      </elementSpec>
+      <elementSpec ident="bo" mode="add">
+        <equiv name="BOLD" uri="http://www.typesrus.com/bold"/>
+      </elementSpec>
     </egXML>
   </exemplum>
   <remarks>
-    <p/></remarks>
+    <p/>
+  </remarks>
   <listRef>
     <ptr target="#TDTAG"/>
     <ptr target="#TDATT"/>
