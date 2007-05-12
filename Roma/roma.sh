@@ -33,19 +33,19 @@ makeODD()
 
 makeRelax() 
 {
-    echo "2. make Relax NG from compiled ODD"
+    echo "2. make RELAX NG from compiled ODD"
     xsltproc $PATTERN $DEBUG $LANGUAGE $DOCLANG --stringparam TEIC $TEIC \
              --stringparam outputDir $RESULTS       \
              $TEIXSLDIR/odds/odd2relax.xsl $N.compiled.odd
     (cd $RESULTS; \
-    echo "3. make Relax NG compact from XML"; \
+    echo "3. make RELAX NG compact from XML"; \
     trang $N.rng $N.rnc  || die " trang conversion to RNC fails"; \
     xmllint --format $N.rng > $$.xml; mv $$.xml $N.rng )
  }
 
 makeXSD()
 {
-    echo "4. make XSD from Relax NG"
+    echo "4. make XSD from RELAX NG"
     (cd $RESULTS; \
     trang  -o disable-abstract-elements $N.rng $N.xsd || die " trang fails";\
     test -f xml.xsd && perl -p -i -e 's+\"xml.xsd\"+\"http://www.w3.org/2004/10/xml.xsd\"+' $N.xsd)
@@ -118,10 +118,10 @@ echo "  --doc              # create expanded documented ODD (TEI Lite XML)"
 echo "  --lang=LANG        # language for names of attrbutes and elements"
 echo "  --doclang=LANG     # language for documentation"
 echo "  --dochtml          # create HTML version of doc"
-echo "  --patternprefix=STRING # prefix relax patterns with STRING"
+echo "  --patternprefix=STRING # prefix RELAX NG patterns with STRING"
 echo "  --docpdf           # create PDF version of doc"
 echo "  --nodtd            # suppress DTD creation"
-echo "  --norelax          # suppress RelaxNG creation"
+echo "  --norelax          # suppress RELAX NG creation"
 echo "  --noxsd            # suppress W3C XML Schema creation"
 echo "  --noteic           # suppress TEI-specific features"
 echo "  --debug            # leave temporary files, etc."
