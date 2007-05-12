@@ -1,49 +1,41 @@
 #!/bin/sh
-#for i in Guidelines/en/*
-#do
-# X=`basename $i`
-# (cd Guidelines/fr; ln -s ../en/$X $X)
-#done
-#rm Guidelines/fr/HD.xml
-#mv french/hd.odd Guidelines/fr/HD.xml
-#for i in Guidelines/fr/HD.xml
-#do
-# sed -f ents.sed $i > tmp
-# mv tmp $i
-#done
-
 #
-# try to avoid running in wrong directory
-# Typically this should be run with
-#   cd [Sourceforge:tei]/[path]/P5
-#   ./Utilities/mergeLang
-# 
-wd=$(pwd)
-if [ "${wd##/*/}" != "P5" ]; then
-    echo "$0 is intended to be run from a P5 working directory, which would typically be named P5;"
-    echo "continue? (y or n)"
-    read CONTINUE
-    if [ "$CONTINUE" != "y" ]; then
-	echo "aborting"
-	exit 13
-    fi
+# exit if this is not P5 source
+if [ -f Source/Specs/TEI.xml ]
+then
+ echo merge language script
+else
+ echo This is not P5 source. Exit
+ exit 1
 fi
 
-for i in Source/Chapters/fr/*.xml
-do
- N=`xsltproc getident.xsl $i`
- echo french for $i to $N
-    xsltproc --stringparam newLang fr --stringparam newFile $i \
-    mergeLang.xsl Source/Specs/$N.xml \
-	| xmllint --format --encode utf-8 - > tmp
-    mv tmp Source/Specs/$N.xml
+while test $# -gt 0; do
+  case $1 in
+    --lang=*)  language=`echo $1 | sed 's/.*=//'`;;
+     *) if test "$1" = "${1#--}" ; then 
+	   break
+	else
+	   echo "WARNING: Unrecognized option '$1' ignored"
+	   echo "For usage syntax issue $0 --help"
+	fi ;;
+  esac
+  shift
 done
 
-for i in Source/Chapters/zh/*.xml
+X=`(cd ../I18N/results-$language; pwd)`
+for i in $X/*.xml
 do
- N=`xsltproc getident.xsl $i`
- echo chinese for $i to $N
-    xsltproc --stringparam newLang zh-tw --stringparam newFile $i \
-    mergeLang.xsl Source/Specs/$N.xml | xmllint --format --encode utf-8 - > tmp
+ for N in `xsltproc Utilities/getident.xsl $i`
+ do
+ echo do language $language from $i to $N
+ if [ -f Source/Specs/$N.xml ]
+ then
+    xsltproc --stringparam newLang $language --stringparam newFile $i \
+    Utilities/mergeLang.xsl Source/Specs/$N.xml \
+	| xmllint --format --encode utf-8 - > tmp
     mv tmp Source/Specs/$N.xml
+ else
+   echo WARNING: no file Source/Specs/$N.xml 
+ fi
+ done
 done
