@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -5,17 +6,19 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="msdescription" xml:id="MSIDENTIFIER" ident="msIdentifier">
-<equiv/>
-<gloss/>
-<desc xml:id="msidentifier.desc">contains the information required to identify
-the  manuscript being described. </desc><desc version="2006-10-28" xml:lang="ja">当該手書き文書を特定する情報を示す．</desc>
+  <equiv/>
+  <gloss/>
+  <desc xml:id="msidentifier.desc">contains the information required to identify
+the  manuscript being described. </desc>
+  <desc version="2007-01-21" xml:lang="it">contiene l'informazione necessaria a identificare il manoscritto esaminato</desc>
+  <desc version="2006-10-28" xml:lang="ja">当該手書き文書を特定する情報を示す．</desc>
   <classes>
     <memberOf key="model.biblPart"/>
   </classes>
   <content>
-<rng:group>
-<rng:choice>
-<rng:group>
+    <rng:group>
+      <rng:choice>
+        <rng:group>
 <!--    <rng:optional>
       <rng:ref name="country"/>
     </rng:optional>
@@ -24,35 +27,36 @@ the  manuscript being described. </desc><desc version="2006-10-28" xml:lang="ja"
     </rng:optional>
     <rng:ref name="settlement"/>
 -->
-<rng:ref name="model.placeNamePart_sequenceOptional"/>
-    <rng:optional>
-      <rng:ref name="institution"/>
-    </rng:optional>
-    <rng:ref name="repository"/>
-    <rng:optional>
-      <rng:ref name="collection"/>
-    </rng:optional>
-    <rng:optional><rng:ref name="idno"/></rng:optional>
-</rng:group>
-<rng:ref name="msName"/>
-</rng:choice>
-
-    <rng:zeroOrMore>
-     <rng:choice>
-      <rng:ref name="altIdentifier"/>
-      <rng:ref name="msName"/>
-     </rng:choice>
-    </rng:zeroOrMore>
-</rng:group>
+          <rng:ref name="model.placeNamePart_sequenceOptional"/>
+          <rng:optional>
+            <rng:ref name="institution"/>
+          </rng:optional>
+          <rng:ref name="repository"/>
+          <rng:optional>
+            <rng:ref name="collection"/>
+          </rng:optional>
+          <rng:optional>
+            <rng:ref name="idno"/>
+          </rng:optional>
+        </rng:group>
+        <rng:ref name="msName"/>
+      </rng:choice>
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="altIdentifier"/>
+          <rng:ref name="msName"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+    </rng:group>
   </content>
-  
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"><msIdentifier>
-<settlement>San Marino</settlement>
-<repository>Huntington Library</repository>
-<idno>MS.El.26.C.9</idno>
-</msIdentifier>
-</egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <msIdentifier>
+        <settlement>San Marino</settlement>
+        <repository>Huntington Library</repository>
+        <idno>MS.El.26.C.9</idno>
+      </msIdentifier>
+    </egXML>
   </exemplum>
   <listRef>
     <ptr target="#msid"/>

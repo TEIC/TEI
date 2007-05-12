@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -5,41 +6,50 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" xml:id="CONTENT" usage="opt" ident="content">
-<equiv/>
-<gloss>schema declaration</gloss><gloss version="2006-10-28" xml:lang="ja">スキーマ宣言</gloss>
-<desc>contains the text of a declaration for the schema
-documented.</desc><desc version="2006-10-28" xml:lang="ja"> 当該スキーマの宣言を示す．</desc><desc version="2006-10-15" xml:lang="es">contiene el texto de una declaración para el esquema documentado.</desc>
+  <equiv/>
+  <gloss>schema declaration</gloss>
+  <gloss version="2007-01-21" xml:lang="it">dichiarazione dello schema</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">スキーマ宣言</gloss>
+  <desc>contains the text of a declaration for the schema
+documented.</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene il testo di una dichiarazione dello schema utilizzato</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 当該スキーマの宣言を示す．</desc>
+  <desc version="2006-10-15" xml:lang="es">contiene el texto de una declaración para el esquema documentado.</desc>
   <content>
-   <rng:zeroOrMore>
-    <rng:choice>
-      <rng:ref name="macro.schemapattern"/>
-      <rng:ref name="valList"/>
-    </rng:choice>
-   </rng:zeroOrMore>
+    <rng:zeroOrMore>
+      <rng:choice>
+        <rng:ref name="macro.schemapattern"/>
+        <rng:ref name="valList"/>
+      </rng:choice>
+    </rng:zeroOrMore>
   </content>
   <exemplum>
     <p>This content model allows either a sequence of paragraphs or a
     series of msItem elements optionally preceded by a summary: </p>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
-<rng:choice>
-    <rng:oneOrMore>
-      <rng:ref name="model.pLike"/>
-    </rng:oneOrMore>
-    <rng:group>
-      <rng:optional>
-        <rng:ref name="summary"/>
-      </rng:optional>
-    <rng:oneOrMore>
-      <rng:ref name="msItem"/>
-     </rng:oneOrMore>
-    </rng:group>
-</rng:choice>
-</content>
-</egXML>  </exemplum>
-<remarks><p>As the example shows, content models in P5 may be expressed using
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <content>
+        <rng:choice>
+          <rng:oneOrMore>
+            <rng:ref name="model.pLike"/>
+          </rng:oneOrMore>
+          <rng:group>
+            <rng:optional>
+              <rng:ref name="summary"/>
+            </rng:optional>
+            <rng:oneOrMore>
+              <rng:ref name="msItem"/>
+            </rng:oneOrMore>
+          </rng:group>
+        </rng:choice>
+      </content>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>As the example shows, content models in P5 may be expressed using
 the RelaxNG syntax directly. More exactly, they are defined using the pattern
 <code>macro.schemapattern</code>. Alternatively, a content model may be
-expressed using the TEI <gi>valList</gi> element. </p></remarks>
+expressed using the TEI <gi>valList</gi> element. </p>
+  </remarks>
   <listRef>
     <ptr target="#TDTAG"/>
   </listRef>

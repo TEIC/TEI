@@ -6,36 +6,47 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="nets" xml:id="ARC" usage="opt" ident="arc">
-<equiv/>
-<gloss/>
-<desc>encodes an arc, the connection from one node to another in a graph.</desc><desc version="2006-10-28" xml:lang="ja">グラフを構成するノード間の辺を示す．</desc><desc version="2006-10-15" xml:lang="es">codifica un arco, la conexión de un nodo a otro en un grafo.</desc>
+  <equiv/>
+  <gloss/>
+  <desc>encodes an arc, the connection from one node to another in a graph.</desc>
+  <desc version="2007-01-21" xml:lang="it">codifica un arco, cioè il collegamento tra un nodo e l'altro all'interno di un grafo</desc>
+  <desc version="2006-10-28" xml:lang="ja">グラフを構成するノード間の辺を示す．</desc>
+  <desc version="2006-10-15" xml:lang="es">codifica un arco, la conexión de un nodo a otro en un grafo.</desc>
   <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:optional>
+      <rng:ref name="label"/>
       <rng:optional>
         <rng:ref name="label"/>
-        <rng:optional>
-          <rng:ref name="label"/>
-        </rng:optional>
       </rng:optional>
+    </rng:optional>
   </content>
   <attList>
     <attDef ident="from" usage="req">
-	<equiv/>
-	<desc>gives the identifier of the node which is adjacent from this arc.</desc><desc version="2006-10-28" xml:lang="ja">当該辺が有向である場合，起点となるノードを示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <equiv/>
+      <desc>gives the identifier of the node which is adjacent from this arc.</desc>
+      <desc version="2007-01-21" xml:lang="it">assegna un identificatore al nodo non adiacente all'arco</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該辺が有向である場合，起点となるノードを示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
       <valDesc>The identifier of a node.</valDesc>
     </attDef>
     <attDef ident="to" usage="req">
-	<equiv/>
-	<desc>gives the identifier of the node which is adjacent to this arc.</desc><desc version="2006-10-28" xml:lang="ja">当該辺が有効である場合，終点となるノードを示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <equiv/>
+      <desc>gives the identifier of the node which is adjacent to this arc.</desc>
+      <desc version="2007-01-21" xml:lang="it">assegna un identificatore al nodo adiacente all'arco</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該辺が有効である場合，終点となるノードを示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
       <valDesc>The identifier of a node.</valDesc>
     </attDef>
   </attList>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <arc from="#T3" to="#T3">
-	<label>OLD</label>
-	<label>VIEUX</label>
+        <label>OLD</label>
+        <label>VIEUX</label>
       </arc>
     </egXML>
   </exemplum>

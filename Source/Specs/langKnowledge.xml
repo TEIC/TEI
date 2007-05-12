@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" ident="langKnowledge">
-<desc>summarizes the state of a person's linguistic knowledge, either
-as prose or by a list of <gi>langKnown</gi> elements.</desc><desc version="2006-10-28" xml:lang="ja">当該人物の言語に関する知識を，自由記述または要素langKnownで示す．</desc>
-<classes>
+  <desc>summarizes the state of a person's linguistic knowledge, either
+as prose or by a list of <gi>langKnown</gi> elements.</desc>
+  <desc version="2007-01-21" xml:lang="it">riassume la conoscenza linguistica di una persona in forma descrittiva o tramite una lista di elementi <gi>langKnown</gi></desc>
+  <desc version="2006-10-28" xml:lang="ja">当該人物の言語に関する知識を，自由記述または要素langKnownで示す．</desc>
+  <classes>
     <memberOf key="model.persTraitLike"/>
     <memberOf key="att.datable"/>
     <memberOf key="att.editLike"/>
@@ -11,7 +13,7 @@ as prose or by a list of <gi>langKnown</gi> elements.</desc><desc version="2006-
     <rng:choice>
       <rng:ref name="model.pLike"/>
       <rng:oneOrMore>
-	<rng:ref name="langKnown"/>
+        <rng:ref name="langKnown"/>
       </rng:oneOrMore>
     </rng:choice>
   </content>
@@ -19,28 +21,34 @@ as prose or by a list of <gi>langKnown</gi> elements.</desc><desc version="2006-
     <attDef ident="tags" usage="opt">
       <desc>supplies one or more valid language tags for the languages
       specified</desc>
+      <desc version="2007-01-21" xml:lang="it">assegna uno o più marcatori validi alle lingue indicate</desc>
       <desc version="2006-10-28" xml:lang="ja">1つ以上の言語をRFC3033に
       従って示す．</desc>
       <datatype minOccurs="1" maxOccurs="unbounded">
-	<rng:ref name="data.language"/>
+        <rng:ref name="data.language"/>
       </datatype>
-      <remarks><p>This attribute should be supplied only if the
+      <remarks>
+        <p>This attribute should be supplied only if the
       element contains no <gi>langKnown</gi> children. Its values are
-      language <soCalled>tags</soCalled> as defined in <ref
-      target="http://www.rfc-editor.org/rfc/rfc4646.txt">RFC 4646</ref> or
-      its successor</p></remarks>
+      language <soCalled>tags</soCalled> as defined in <ref target="http://www.rfc-editor.org/rfc/rfc4646.txt">RFC 4646</ref> or
+      its successor</p>
+      </remarks>
     </attDef>
   </attList>
-<exemplum>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-  <langKnowledge tags="en-GB fr"><p>British English and
-  French</p></langKnowledge>
-</egXML></exemplum>
-<exemplum>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-  <langKnowledge>
-   <langKnown tag="en-GB" level="H">British English</langKnown>
-   <langKnown tag="fr" level="M">French</langKnown>
-  </langKnowledge>
-</egXML></exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <langKnowledge tags="en-GB fr">
+        <p>British English and
+  French</p>
+      </langKnowledge>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <langKnowledge>
+        <langKnown tag="en-GB" level="H">British English</langKnown>
+        <langKnown tag="fr" level="M">French</langKnown>
+      </langKnowledge>
+    </egXML>
+  </exemplum>
 </elementSpec>

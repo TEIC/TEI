@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -5,43 +6,45 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="msdescription" xml:id="MSPART" ident="msPart">
-<equiv/>
-<gloss/>
-<desc xml:id="mspart.desc">contains information about an originally
-distinct manuscript or part of a manuscript, now forming part of a composite manuscript.</desc><desc version="2006-10-28" xml:lang="ja">元々は独立して別にあった手書き文書に関する情報を示す．</desc>
+  <equiv/>
+  <gloss/>
+  <desc xml:id="mspart.desc">contains information about an originally
+distinct manuscript or part of a manuscript, now forming part of a composite manuscript.</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene informazioni relative a un manoscritto o parte di manoscritto originariamente distinti ma attualmente parte di un manoscritto composito</desc>
+  <desc version="2006-10-28" xml:lang="ja">元々は独立して別にあった手書き文書に関する情報を示す．</desc>
   <content>
 <!--<!ELEMENT msPart  - -  (idno?, msHeading?, msContents?, 
                  physDesc?, history?,  additional?, 
                  msPart*)> -->
-<rng:group>
-<rng:ref name="altIdentifier"/>
-<rng:zeroOrMore>
-<rng:ref name="head"/>
-</rng:zeroOrMore>
-<rng:choice>
-<rng:oneOrMore>
-<rng:ref name="model.pLike"/>
-</rng:oneOrMore>
-<rng:group>
-<rng:optional>
-<rng:ref name="msContents"/>
-</rng:optional>
-<rng:optional>
-<rng:ref name="physDesc"/>
-</rng:optional>
-<rng:optional>
-<rng:ref name="history"/>
-</rng:optional>
-<rng:optional>
-<rng:ref name="additional"/>
-</rng:optional>
-<rng:zeroOrMore>
-<rng:ref name="msPart"/>
-</rng:zeroOrMore>
-</rng:group>
-</rng:choice>
-</rng:group>  </content>
-  
+    <rng:group>
+      <rng:ref name="altIdentifier"/>
+      <rng:zeroOrMore>
+        <rng:ref name="head"/>
+      </rng:zeroOrMore>
+      <rng:choice>
+        <rng:oneOrMore>
+          <rng:ref name="model.pLike"/>
+        </rng:oneOrMore>
+        <rng:group>
+          <rng:optional>
+            <rng:ref name="msContents"/>
+          </rng:optional>
+          <rng:optional>
+            <rng:ref name="physDesc"/>
+          </rng:optional>
+          <rng:optional>
+            <rng:ref name="history"/>
+          </rng:optional>
+          <rng:optional>
+            <rng:ref name="additional"/>
+          </rng:optional>
+          <rng:zeroOrMore>
+            <rng:ref name="msPart"/>
+          </rng:zeroOrMore>
+        </rng:group>
+      </rng:choice>
+    </rng:group>
+  </content>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
   </exemplum>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -6,13 +7,17 @@ $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" xml:id="PERSGRP" usage="opt" ident="personGrp">
   <equiv/>
-  <gloss>personal group</gloss><gloss version="2006-10-28" xml:lang="ja">個人グループ</gloss>
+  <gloss>personal group</gloss>
+  <gloss version="2007-01-21" xml:lang="it">gruppo di persone</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">個人グループ</gloss>
   <desc>describes a group of individuals treated as a single person for
-  analytic purposes.</desc><desc version="2006-10-28" xml:lang="ja"> 複数人から成るグループではあるが，一人の人物として
+  analytic purposes.</desc>
+  <desc version="2007-01-21" xml:lang="it">descrive un gruppo di soggetti considerati come unica persona a fini analitici</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 複数人から成るグループではあるが，一人の人物として
 扱われるものを示す．</desc>
-<classes>
-<memberOf key="model.personLike"/>
-</classes>
+  <classes>
+    <memberOf key="model.personLike"/>
+  </classes>
   <content>
     <rng:choice>
       <rng:oneOrMore>
@@ -25,32 +30,46 @@ $Author$
   </content>
   <attList>
     <attDef ident="role" usage="opt">
-	<equiv/>
-	<desc>specifies the role of this group of participants in the
-        interaction.</desc><desc version="2006-10-28" xml:lang="ja">当該グループの役割を示す．</desc>
-      <datatype><rng:ref name="data.code"/></datatype>
+      <equiv/>
+      <desc>specifies the role of this group of participants in the
+        interaction.</desc>
+      <desc version="2007-01-21" xml:lang="it">specifica il ruolo del gruppo di partecipanti all'interazione</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該グループの役割を示す．</desc>
+      <datatype>
+        <rng:ref name="data.code"/>
+      </datatype>
       <valDesc>a set of keywords to be defined</valDesc>
     </attDef>
     <attDef ident="sex" usage="opt">
-	<equiv/>
-	<desc>specifies the sex of the participant group.</desc><desc version="2006-10-28" xml:lang="ja">当該グループの性別を示す．</desc>
+      <equiv/>
+      <desc>specifies the sex of the participant group.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica il sesso del gruppo di partecipanti</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該グループの性別を示す．</desc>
       <datatype>
-	<rng:choice>
-	  <rng:ref name="data.sex"/>
-	  <rng:value>mixed</rng:value>
-	</rng:choice>
+        <rng:choice>
+          <rng:ref name="data.sex"/>
+          <rng:value>mixed</rng:value>
+        </rng:choice>
       </datatype>
     </attDef>
     <attDef ident="age" usage="opt">
-	<equiv/>
-	<desc>specifies the age group of the participants.</desc><desc version="2006-10-28" xml:lang="ja">当該グループの年齢層を示す．</desc>
-      <datatype><rng:ref name="data.word"/></datatype>
+      <equiv/>
+      <desc>specifies the age group of the participants.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica la fascia di età del gruppo di partecipanti</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該グループの年齢層を示す．</desc>
+      <datatype>
+        <rng:ref name="data.word"/>
+      </datatype>
       <valDesc>suggested values are to be supplied</valDesc>
     </attDef>
     <attDef ident="size" usage="opt">
-	<equiv/>
-	<desc>specifies the size or approximate size of the group.</desc><desc version="2006-10-28" xml:lang="ja">当該グループの大まかな規模を示す．</desc>
-      <datatype maxOccurs="unbounded"><rng:ref name="data.word"/></datatype>
+      <equiv/>
+      <desc>specifies the size or approximate size of the group.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica le dimensioni (anche approssimative) del gruppo</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該グループの大まかな規模を示す．</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref name="data.word"/>
+      </datatype>
       <valDesc>may contain a number and an indication of accuracy, e.g. <mentioned>approx 200</mentioned></valDesc>
     </attDef>
   </attList>

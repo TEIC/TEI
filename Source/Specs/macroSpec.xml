@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -5,52 +6,70 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="MACROSPEC" usage="opt" ident="macroSpec">
-<equiv/>
-<gloss/>
-<desc>documents the function and implementation of a pattern. </desc><desc version="2006-10-28" xml:lang="ja">要素定義や属性定義の解説を示す．</desc>
-<classes>
-<memberOf key="model.oddDecl"/>
-<memberOf key="att.identified"/>
-</classes>
+  <equiv/>
+  <gloss/>
+  <desc>documents the function and implementation of a pattern. </desc>
+  <desc version="2007-01-21" xml:lang="it">documenta la funzione e l'applicazione di un pattern</desc>
+  <desc version="2006-10-28" xml:lang="ja">要素定義や属性定義の解説を示す．</desc>
+  <classes>
+    <memberOf key="model.oddDecl"/>
+    <memberOf key="att.identified"/>
+  </classes>
   <content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:ref name="macro.glossSeq"/>
 <!-- why one or more? -->
       <rng:oneOrMore>
-	<rng:choice>
-	  <rng:ref name="stringVal"/>
-	  <rng:ref name="content"/>
-	</rng:choice>
+        <rng:choice>
+          <rng:ref name="stringVal"/>
+          <rng:ref name="content"/>
+        </rng:choice>
       </rng:oneOrMore>
-      <rng:zeroOrMore><rng:ref name="exemplum"/></rng:zeroOrMore>
-      <rng:zeroOrMore><rng:ref name="remarks"/></rng:zeroOrMore>
-      <rng:zeroOrMore><rng:ref name="listRef"/></rng:zeroOrMore>
+      <rng:zeroOrMore>
+        <rng:ref name="exemplum"/>
+      </rng:zeroOrMore>
+      <rng:zeroOrMore>
+        <rng:ref name="remarks"/>
+      </rng:zeroOrMore>
+      <rng:zeroOrMore>
+        <rng:ref name="listRef"/>
+      </rng:zeroOrMore>
     </rng:group>
   </content>
   <attList>
     <attDef ident="type" usage="opt">
-	<equiv/>
-	<desc>indicates which type of entity should be generated, when an ODD
-	processor is generating a module using SGML syntax.</desc><desc version="2006-10-28" xml:lang="ja">ODD処理系がSGML準拠のモジュールを生成する際，エンティティの種類を
+      <equiv/>
+      <desc>indicates which type of entity should be generated, when an ODD
+	processor is generating a module using SGML syntax.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica quale tipo di entità deve essere generata quando un processore ODD genera un modulo utilizzando la sintassi SGML</desc>
+      <desc version="2006-10-28" xml:lang="ja">ODD処理系がSGML準拠のモジュールを生成する際，エンティティの種類を
 示す．</desc>
       <valList type="closed">
         <valItem ident="pe">
           <equiv/>
-          <gloss>parameter entity</gloss><gloss version="2006-10-28" xml:lang="ja">(パラメータエンティティ) </gloss>
+          <gloss>parameter entity</gloss>
+          <gloss version="2007-01-21" xml:lang="it">entità parametro</gloss>
+          <gloss version="2006-10-28" xml:lang="ja">(パラメータエンティティ) </gloss>
         </valItem>
         <valItem ident="epe">
           <equiv/>
-          <gloss>element parameter entity</gloss><gloss version="2006-10-28" xml:lang="ja">(要素パラメータエンティティ) </gloss>
+          <gloss>element parameter entity</gloss>
+          <gloss version="2007-01-21" xml:lang="it">entità parametro di elemento</gloss>
+          <gloss version="2006-10-28" xml:lang="ja">(要素パラメータエンティティ) </gloss>
         </valItem>
         <valItem ident="ge">
           <equiv/>
-          <gloss>general entity</gloss><gloss version="2006-10-28" xml:lang="ja">(一般エンティティ) </gloss>
+          <gloss>general entity</gloss>
+          <gloss version="2007-01-21" xml:lang="it">entità generale</gloss>
+          <gloss version="2006-10-28" xml:lang="ja">(一般エンティティ) </gloss>
         </valItem>
         <valItem ident="dt">
           <equiv/>
-          <gloss>datatype entity</gloss><gloss version="2006-10-28" xml:lang="ja">(データ型エンティティ) </gloss>
+          <gloss>datatype entity</gloss>
+          <gloss version="2007-01-21" xml:lang="it">entità tipo di dati</gloss>
+          <gloss version="2006-10-28" xml:lang="ja">(データ型エンティティ) </gloss>
         </valItem>
-</valList>
-</attDef>
-</attList>
+      </valList>
+    </attDef>
+  </attList>
 </elementSpec>

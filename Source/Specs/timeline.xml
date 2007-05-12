@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -5,10 +6,14 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" xml:id="TIMELINE" usage="opt" ident="timeline">
-<equiv/>
-<gloss>timeline</gloss><gloss version="2006-10-28" xml:lang="ja">時間軸</gloss>
-<desc>provides a set of ordered points in time which can be linked to
-elements of a spoken text to create a temporal alignment of that text.</desc><desc version="2006-10-28" xml:lang="ja"> 参照される時間軸を示す．例えば，発話されたテキストから参
+  <equiv/>
+  <gloss>timeline</gloss>
+  <gloss version="2007-01-21" xml:lang="it">scala temporale</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">時間軸</gloss>
+  <desc>provides a set of ordered points in time which can be linked to
+elements of a spoken text to create a temporal alignment of that text.</desc>
+  <desc version="2007-01-21" xml:lang="it">indica una serie di punti ordinati temporalmente i quali possono essere collegati agli elementi di un testo parlato al fine di ottenere un allineamento temporale del testo stesso</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 参照される時間軸を示す．例えば，発話されたテキストから参
 照される．</desc>
   <classes>
     <memberOf key="model.global.meta"/>
@@ -20,10 +25,14 @@ elements of a spoken text to create a temporal alignment of that text.</desc><de
   </content>
   <attList>
     <attDef ident="origin" usage="req">
-	<equiv/>
-	<desc>designates the origin of the timeline, i.e. the time at which it
-begins.</desc><desc version="2006-10-28" xml:lang="ja">当該時間軸の始点を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <equiv/>
+      <desc>designates the origin of the timeline, i.e. the time at which it
+begins.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica l'origine della scala temporale, cioè il momento in cui ha inizio</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該時間軸の始点を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
       <valDesc>must point either to one of the <gi>when</gi> elements in
       its content, or to another <gi>timeline</gi> element.</valDesc>
       <remarks>
@@ -35,30 +44,51 @@ night of the murder</mentioned> or <mentioned>unknown</mentioned>.--></p>
       </remarks>
     </attDef>
     <attDef ident="unit" usage="rwa">
-	<equiv/>
-	<desc>specifies the unit of time corresponding to the
+      <equiv/>
+      <desc>specifies the unit of time corresponding to the
 	<att>interval</att> value of the timeline or of its
-	constituent points in time.</desc><desc version="2006-10-28" xml:lang="ja">当該時間軸で使用される時間の単位を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+	constituent points in time.</desc>
+      <desc version="2007-01-21" xml:lang="it">specifica l'unità temporale corrispondente al valore dell'attributo <att>interval</att> della scala temporale o dei suoi punti costitutivi</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該時間軸で使用される時間の単位を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
       <valList type="semi">
-	<valItem ident="d"> <gloss>days</gloss></valItem>
-	<valItem ident="h"> <gloss>hours</gloss></valItem>
-	<valItem ident="m"> <gloss>minutes</gloss></valItem>
-	<valItem ident="s"> <gloss>seconds</gloss></valItem>
-	<valItem ident="ms"><gloss>milliseconds</gloss></valItem>
+        <valItem ident="d">
+          <gloss>days</gloss>
+          <gloss version="2007-01-21" xml:lang="it">giorni</gloss>
+        </valItem>
+        <valItem ident="h">
+          <gloss>hours</gloss>
+          <gloss version="2007-01-21" xml:lang="it">ore</gloss>
+        </valItem>
+        <valItem ident="m">
+          <gloss>minutes</gloss>
+          <gloss version="2007-01-21" xml:lang="it">minuti</gloss>
+        </valItem>
+        <valItem ident="s">
+          <gloss>seconds</gloss>
+          <gloss version="2007-01-21" xml:lang="it">secondi</gloss>
+        </valItem>
+        <valItem ident="ms">
+          <gloss>milliseconds</gloss>
+          <gloss version="2007-01-21" xml:lang="it">millesimi di secondo</gloss>
+        </valItem>
       </valList>
     </attDef>
     <attDef ident="interval" usage="opt">
-	<equiv/>
-	<desc>specifies the numeric portion of a time interval</desc><desc version="2006-10-28" xml:lang="ja">時間幅を数値で示す．</desc>
-      <datatype xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0">
-	<rng:choice>
-	  <rng:data type="float">
-	    <rng:param name="minExclusive">0</rng:param>
-	  </rng:data>
-	  <rng:value>regular</rng:value>
-	  <rng:value>irregular</rng:value>
-	</rng:choice>
+      <equiv/>
+      <desc>specifies the numeric portion of a time interval</desc>
+      <desc version="2007-01-21" xml:lang="it">indica la componente numerica di un intervallo temporale</desc>
+      <desc version="2006-10-28" xml:lang="ja">時間幅を数値で示す．</desc>
+      <datatype xmlns:rng="http://relaxng.org/ns/structure/1.0">
+        <rng:choice>
+          <rng:data type="float">
+            <rng:param name="minExclusive">0</rng:param>
+          </rng:data>
+          <rng:value>regular</rng:value>
+          <rng:value>irregular</rng:value>
+        </rng:choice>
       </datatype>
       <valDesc>a positive number, or one of the two special values
       <val>irregular</val> or <val>regular</val>.</valDesc>
@@ -75,7 +105,8 @@ night of the murder</mentioned> or <mentioned>unknown</mentioned>.--></p>
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <timeline xml:id="TL01" origin="#TL-w0" unit="ms">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <timeline xml:id="TL01" origin="#TL-w0" unit="ms">
         <when xml:id="TL-w0" absolute="11:30:00"/>
         <when xml:id="TL-w1" interval="unknown" since="#TL-w0"/>
         <when xml:id="TL-w2" interval="100" since="#TL-w1"/>

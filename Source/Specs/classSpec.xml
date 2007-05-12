@@ -6,12 +6,15 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" xml:id="CLASSSPEC" usage="rwa" ident="classSpec">
-<equiv/>
-<gloss/>
-<desc>contains reference information for a TEI element class; 
+  <equiv/>
+  <gloss/>
+  <desc>contains reference information for a TEI element class; 
 that is a group of 
   elements which appear together in  content models, or 
-  which share some common attribute, or both.</desc><desc version="2006-10-28" xml:lang="ja">TEI要素クラスへの参照情報を示す．</desc><desc version="2006-10-15" xml:lang="es">contiene información de referencia sobre una clase de elementos TEI; éstas son grupos de elementos que aparecen juntos
+  which share some common attribute, or both.</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene informazioni relative a una classe di elementi TEI, cioè un gruppo di elementi che compaiono insieme in modelli di contenuto, oppure che hanno alcuni attributi in comune, o entrambe le cose</desc>
+  <desc version="2006-10-28" xml:lang="ja">TEI要素クラスへの参照情報を示す．</desc>
+  <desc version="2006-10-15" xml:lang="es">contiene información de referencia sobre una clase de elementos TEI; éstas son grupos de elementos que aparecen juntos
  en los modelos de contenidos, o qué comparten algún atributo común, o ambas cosas a la vez.
 		</desc>
   <classes>
@@ -19,70 +22,88 @@ that is a group of
     <memberOf key="att.identified"/>
   </classes>
   <content>
-  <rng:group>
-    <rng:ref name="macro.glossSeq"/>
-    <rng:optional><rng:ref name="classes"/></rng:optional>
-    <rng:optional><rng:ref name="attList"/></rng:optional>
-    <rng:zeroOrMore><rng:ref name="exemplum"/></rng:zeroOrMore>
-    <rng:zeroOrMore><rng:ref name="remarks"/></rng:zeroOrMore>
-    <rng:zeroOrMore><rng:ref name="listRef"/></rng:zeroOrMore>
-  </rng:group>
+    <rng:group>
+      <rng:ref name="macro.glossSeq"/>
+      <rng:optional>
+        <rng:ref name="classes"/>
+      </rng:optional>
+      <rng:optional>
+        <rng:ref name="attList"/>
+      </rng:optional>
+      <rng:zeroOrMore>
+        <rng:ref name="exemplum"/>
+      </rng:zeroOrMore>
+      <rng:zeroOrMore>
+        <rng:ref name="remarks"/>
+      </rng:zeroOrMore>
+      <rng:zeroOrMore>
+        <rng:ref name="listRef"/>
+      </rng:zeroOrMore>
+    </rng:group>
   </content>
   <attList>
     <attDef ident="type" usage="req">
-	<equiv/>
-	<desc>indicates whether this is a model class or an attribute class</desc><desc version="2006-10-28" xml:lang="ja">当該クラスがモデルクラスか属性クラスかを示す．</desc>
+      <equiv/>
+      <desc>indicates whether this is a model class or an attribute class</desc>
+      <desc version="2007-01-21" xml:lang="it">indica se si tratta di una classe di modelli o di attributi</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該クラスがモデルクラスか属性クラスかを示す．</desc>
       <valList type="closed">
         <valItem ident="model">
           <equiv/>
-          <desc>members of this class appear in the same  content models</desc><desc version="2006-10-28" xml:lang="ja">(内容モデルクラス)</desc>
+          <desc>members of this class appear in the same  content models</desc>
+          <desc version="2006-10-28" xml:lang="ja">(内容モデルクラス)</desc>
         </valItem>
         <valItem ident="atts">
           <equiv/>
-          <desc>members of this class share common attributes</desc><desc version="2006-10-28" xml:lang="ja">(属性クラス)</desc>
+          <desc>members of this class share common attributes</desc>
+          <desc version="2006-10-28" xml:lang="ja">(属性クラス)</desc>
         </valItem>
       </valList>
     </attDef>
     <attDef ident="generate" usage="opt">
-	<desc>indicates which alternation and sequence instantiations
+      <desc>indicates which alternation and sequence instantiations
 	of a model class should be created. By default, all variations
-	are provided.</desc><desc version="2006-10-28" xml:lang="ja">モデルクラスが複数項目から構成されているかどうかを示す．</desc>
-	<datatype maxOccurs="5">
-	  <rng:ref name="data.enumerated"/>
-	</datatype>
-	<valList type="closed">
-	  <valItem ident="alternation">
-	    <desc>members of the class are alternatives</desc>
-	  </valItem>
-	  <valItem ident="sequence">
-	    <desc>members of the class are to be provided in sequence</desc>
-	  </valItem>
-	  <valItem ident="sequenceOptional">
-	    <desc>members of the class may be provided, in sequence,
+	are provided.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica quale alternanza e quali tipi di sequenza stabilire per una classe di modelli; di norma sono indicate tutte le variazioni</desc>
+      <desc version="2006-10-28" xml:lang="ja">モデルクラスが複数項目から構成されているかどうかを示す．</desc>
+      <datatype maxOccurs="5">
+        <rng:ref name="data.enumerated"/>
+      </datatype>
+      <valList type="closed">
+        <valItem ident="alternation">
+          <desc>members of the class are alternatives</desc>
+        </valItem>
+        <valItem ident="sequence">
+          <desc>members of the class are to be provided in sequence</desc>
+        </valItem>
+        <valItem ident="sequenceOptional">
+          <desc>members of the class may be provided, in sequence,
 	    but are optional</desc>
-	  </valItem>
-	  <valItem ident="sequenceOptionalRepeatable">
-	    <desc>members of the class may be provided one or more
+        </valItem>
+        <valItem ident="sequenceOptionalRepeatable">
+          <desc>members of the class may be provided one or more
 	    times, in sequence, but are optional. </desc>
-	  </valItem>
-	  <valItem ident="sequenceRepeatable">
-	    <desc>members of the class may be provided one or more times, in sequence</desc>
-	  </valItem>
+        </valItem>
+        <valItem ident="sequenceRepeatable">
+          <desc>members of the class may be provided one or more times, in sequence</desc>
+        </valItem>
       </valList>
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"><classSpec 
-module="tei" type="model" ident="model.segLike">
-<desc>groups elements used for arbitrary segmentation. </desc>
-  <classes>
-    <memberOf key="model.phrase"/>
-  </classes>
-  <remarks>
-    <p>The principles on which segmentation is carried out, and
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <classSpec module="tei" type="model" ident="model.segLike">
+        <desc>groups elements used for arbitrary segmentation. </desc>
+        <classes>
+          <memberOf key="model.phrase"/>
+        </classes>
+        <remarks>
+          <p>The principles on which segmentation is carried out, and
 any special codes or attribute values used, should be defined explicitly
 in the <gi>segmentation</gi> element of the <gi>encodingDesc</gi> within
 the associated TEI header.</p>
-  </remarks>
-</classSpec>
-    </egXML></exemplum></elementSpec>
+        </remarks>
+      </classSpec>
+    </egXML>
+  </exemplum>
+</elementSpec>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -5,41 +6,54 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="ATT" ident="att">
-<equiv/>
-<gloss>attribute</gloss><gloss version="2006-10-28" xml:lang="ja">属性</gloss>
-<desc>contains the name of an attribute appearing within running text.</desc><desc version="2006-10-28" xml:lang="ja"> 属性の名前を示す．</desc><desc version="2006-10-15" xml:lang="es">contiene el nombre de un atributo que aparece dentro de texto corriente.</desc>
+  <equiv/>
+  <gloss>attribute</gloss>
+  <gloss version="2007-01-21" xml:lang="it">attributo</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">属性</gloss>
+  <desc>contains the name of an attribute appearing within running text.</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene il nome di un attributo che compare all'interno del testo</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 属性の名前を示す．</desc>
+  <desc version="2006-10-15" xml:lang="es">contiene el nombre de un atributo que aparece dentro de texto corriente.</desc>
   <classes>
     <memberOf key="model.xmlPhrase"/>
   </classes>
-  <content xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0">
+  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
     <rng:text/>
 <!--    <rng:ref name="data.name"/> temporarily reverted to 'text' until-->
 <!--    Sebastian can fix odd2dtd.xsl -->
   </content>
   <attList>
     <attDef ident="scheme" usage="opt">
-	<equiv/>
-	<desc>supplies an identifier for  the scheme in which this name is defined.</desc><desc version="2006-10-28" xml:lang="ja">当該名前が規定されているスキーマ中のIDを示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <equiv/>
+      <desc>supplies an identifier for  the scheme in which this name is defined.</desc>
+      <desc version="2007-01-21" xml:lang="it">assegna un identificatore allo schema nel quale è definito tale nome</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該名前が規定されているスキーマ中のIDを示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
       <defaultVal>TEI</defaultVal>
       <valList type="open">
         <valItem ident="TEI">
           <equiv/>
           <gloss>this attribute is part of the TEI scheme.</gloss>
+          <gloss version="2007-01-21" xml:lang="it">l'attributo è parte dello schema TEI</gloss>
         </valItem>
         <valItem ident="DBK">
           <equiv/>
           <gloss>this attribute is  part of the Docbook scheme.</gloss>
+          <gloss version="2007-01-21" xml:lang="it">l'attributo è parte dello schema Docbook</gloss>
         </valItem>
         <valItem ident="XX">
           <equiv/>
           <gloss>this attribute is  part of an unknown scheme.</gloss>
+          <gloss version="2007-01-21" xml:lang="it">l'attributo è parte di uno schema sconosciuto</gloss>
         </valItem>
       </valList>
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>The TEI defines four <soCalled>global</soCalled> attributes;
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <p>The TEI defines four <soCalled>global</soCalled> attributes;
     their names are <att>xml:id</att>, <att>rend</att>,
     <att>xml:lang</att> and <att>n</att>.
     <att scheme="XX">type</att> is not among them.</p>

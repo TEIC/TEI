@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -5,80 +6,116 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="ELEMENTSPEC" usage="opt" ident="elementSpec">
-<equiv/>
-<gloss/>
-<desc>documents the structure, content, and purpose of a single
-element type.</desc><desc version="2006-10-28" xml:lang="ja">要素の構造，内容，属性，目的などを示す．</desc>
+  <equiv/>
+  <gloss/>
+  <desc>documents the structure, content, and purpose of a single
+element type.</desc>
+  <desc version="2007-01-21" xml:lang="it">documenta struttura, contenuto e scopo di un unico tipo di elemento</desc>
+  <desc version="2006-10-28" xml:lang="ja">要素の構造，内容，属性，目的などを示す．</desc>
   <classes>
-<memberOf key="model.oddDecl"/>
-<memberOf key="att.identified"/></classes>
+    <memberOf key="model.oddDecl"/>
+    <memberOf key="att.identified"/>
+  </classes>
   <content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:ref name="macro.glossSeq"/>
-      <rng:optional><rng:ref name="classes"/></rng:optional>
-      <rng:optional><rng:ref name="content"/></rng:optional>
-      <rng:optional><rng:ref name="attList"/></rng:optional>
-      <rng:zeroOrMore><rng:ref name="exemplum"/></rng:zeroOrMore>
-      <rng:zeroOrMore><rng:ref name="remarks"/></rng:zeroOrMore>
-      <rng:zeroOrMore><rng:ref name="listRef"/></rng:zeroOrMore>
+      <rng:optional>
+        <rng:ref name="classes"/>
+      </rng:optional>
+      <rng:optional>
+        <rng:ref name="content"/>
+      </rng:optional>
+      <rng:optional>
+        <rng:ref name="attList"/>
+      </rng:optional>
+      <rng:zeroOrMore>
+        <rng:ref name="exemplum"/>
+      </rng:zeroOrMore>
+      <rng:zeroOrMore>
+        <rng:ref name="remarks"/>
+      </rng:zeroOrMore>
+      <rng:zeroOrMore>
+        <rng:ref name="listRef"/>
+      </rng:zeroOrMore>
     </rng:group>
   </content>
   <attList>
     <attDef ident="ns" usage="opt">
-	<equiv/>
-	<gloss>namespace</gloss>
-	<desc>specifies the namespace to which this element belongs</desc><desc version="2006-10-28" xml:lang="ja">(名前空間) 当該要素が属する名前空間を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.namespace"/></datatype>
+      <equiv/>
+      <gloss>namespace</gloss>
+      <gloss version="2007-01-21" xml:lang="it">spazio del nome</gloss>
+      <desc>specifies the namespace to which this element belongs</desc>
+      <desc version="2007-01-21" xml:lang="it">indica lo spazio del nome al quale appartiene tale elemento</desc>
+      <desc version="2006-10-28" xml:lang="ja">(名前空間) 当該要素が属する名前空間を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.namespace"/>
+      </datatype>
       <defaultVal>http://www.tei-c.org/ns/1.0</defaultVal>
     </attDef>
     <attDef ident="usage" usage="opt">
-	<equiv/>
-	<desc>specifies the optionality of an attribute or element. </desc><desc version="2006-10-28" xml:lang="ja">要素や属性の必須度を示す．</desc>
+      <equiv/>
+      <desc>specifies the optionality of an attribute or element. </desc>
+      <desc version="2007-01-21" xml:lang="it">indica il carattere facoltativo di un attributo o elemento</desc>
+      <desc version="2006-10-28" xml:lang="ja">要素や属性の必須度を示す．</desc>
       <defaultVal>opt</defaultVal>
       <valList type="closed">
-	<valItem ident="req">
-	  <equiv/>
-          <gloss>required</gloss><gloss version="2006-10-28" xml:lang="ja">(必須) </gloss>
+        <valItem ident="req">
+          <equiv/>
+          <gloss>required</gloss>
+          <gloss version="2007-01-21" xml:lang="it">richiesto</gloss>
+          <gloss version="2006-10-28" xml:lang="ja">(必須) </gloss>
         </valItem>
         <valItem ident="mwa">
           <equiv/>
-          <gloss>mandatory when applicable</gloss><gloss version="2006-10-28" xml:lang="ja">(利用できる場合は必須)</gloss>
+          <gloss>mandatory when applicable</gloss>
+          <gloss version="2007-01-21" xml:lang="it">obbligatorio se rilevante</gloss>
+          <gloss version="2006-10-28" xml:lang="ja">(利用できる場合は必須)</gloss>
         </valItem>
         <valItem ident="rec">
           <equiv/>
-          <gloss>recommended</gloss><gloss version="2006-10-28" xml:lang="ja">(推奨) </gloss>
+          <gloss>recommended</gloss>
+          <gloss version="2007-01-21" xml:lang="it">consigliato</gloss>
+          <gloss version="2006-10-28" xml:lang="ja">(推奨) </gloss>
         </valItem>
         <valItem ident="rwa">
           <equiv/>
-          <gloss>recommended when applicable</gloss><gloss version="2006-10-28" xml:lang="ja">(利用できる場合は推奨)</gloss>
+          <gloss>recommended when applicable</gloss>
+          <gloss version="2007-01-21" xml:lang="it">consigliato se rilevante</gloss>
+          <gloss version="2006-10-28" xml:lang="ja">(利用できる場合は推奨)</gloss>
         </valItem>
         <valItem ident="opt">
           <equiv/>
-          <gloss>optional</gloss><gloss version="2006-10-28" xml:lang="ja">(選択的) </gloss>
+          <gloss>optional</gloss>
+          <gloss version="2007-01-21" xml:lang="it">facoltativo</gloss>
+          <gloss version="2006-10-28" xml:lang="ja">(選択的) </gloss>
         </valItem>
       </valList>
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"><elementSpec module="tagdocs" xml:id="Code" usage="mwa" ident="code">
-  <equiv/>
-  <gloss/>
-  <desc>contains literal code</desc>
-  <classes>
-    <memberOf key="model.emphLike"/>
-  </classes>
-  <content>
-    <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
-  </content>
-  <attList>
-    <attDef ident="type" usage="opt">
-      <equiv/>
-      <desc>the language of the code</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
-    </attDef>
-  </attList>
-</elementSpec>
-    </egXML></exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <elementSpec module="tagdocs" xml:id="Code" usage="mwa" ident="code">
+        <equiv/>
+        <gloss/>
+        <desc>contains literal code</desc>
+        <classes>
+          <memberOf key="model.emphLike"/>
+        </classes>
+        <content>
+          <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+        </content>
+        <attList>
+          <attDef ident="type" usage="opt">
+            <equiv/>
+            <desc>the language of the code</desc>
+            <datatype>
+              <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+            </datatype>
+          </attDef>
+        </attList>
+      </elementSpec>
+    </egXML>
+  </exemplum>
   <listRef>
     <ptr target="#TDTAG"/>
     <ptr target="#TD"/>

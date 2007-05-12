@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -5,33 +6,41 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="nets" xml:id="ETREE" usage="opt" ident="eTree">
-<equiv/>
-<gloss>embedding tree</gloss><gloss version="2006-10-28" xml:lang="ja">部分木</gloss>
-<desc>provides an alternative to tree element for representing
-ordered rooted tree structures.</desc><desc version="2006-10-28" xml:lang="ja"> 木構造における部分木を示す．</desc>
+  <equiv/>
+  <gloss>embedding tree</gloss>
+  <gloss version="2007-01-21" xml:lang="it">albero integrato</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">部分木</gloss>
+  <desc>provides an alternative to tree element for representing
+ordered rooted tree structures.</desc>
+  <desc version="2007-01-21" xml:lang="it">rapresenta un'alternativa all'elemento albero per la rappresentazione di strutture del tipo albero radicato ordinato</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 木構造における部分木を示す．</desc>
   <classes>
     <memberOf key="model.divPart"/>
   </classes>
   <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
     <rng:group>
       <rng:optional>
-	<rng:ref name="label"/>
+        <rng:ref name="label"/>
       </rng:optional>
       <rng:zeroOrMore>
-	<rng:choice>
-	  <rng:ref name="eTree"/>
-	  <rng:ref name="triangle"/>
-	  <rng:ref name="eLeaf"/>
-	</rng:choice>
+        <rng:choice>
+          <rng:ref name="eTree"/>
+          <rng:ref name="triangle"/>
+          <rng:ref name="eLeaf"/>
+        </rng:choice>
       </rng:zeroOrMore>
     </rng:group>
   </content>
   <attList>
     <attDef ident="value" usage="rwa">
-	<equiv/>
-	<desc>provides the value of an embedding tree, which is a feature
-structure or other analytic element.</desc><desc version="2006-10-28" xml:lang="ja">当該部分木の値を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <equiv/>
+      <desc>provides the value of an embedding tree, which is a feature
+structure or other analytic element.</desc>
+      <desc version="2007-01-21" xml:lang="it">assegna all'albero integrato un valore, che può essere una struttura di tratti o altro elemento di analisi</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該部分木の値を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
       <valDesc>A valid identifier of a feature structure or other analytic
 element.</valDesc>
     </attDef>
@@ -39,26 +48,26 @@ element.</valDesc>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <eTree n="ex1">
-	<label>PP</label>
+        <label>PP</label>
         <eTree>
-	  <label>P</label>
+          <label>P</label>
           <eLeaf>
-	    <label>with</label>
-	  </eLeaf>
+            <label>with</label>
+          </eLeaf>
         </eTree>
         <eTree>
-	  <label>NP</label>
+          <label>NP</label>
           <eTree>
-	    <label>Art</label>
+            <label>Art</label>
             <eLeaf>
-	      <label>the</label>
-	    </eLeaf>
+              <label>the</label>
+            </eLeaf>
           </eTree>
           <eTree>
-	    <label>N</label>
+            <label>N</label>
             <eLeaf>
-	      <label>periscope</label>
-	    </eLeaf>
+              <label>periscope</label>
+            </eLeaf>
           </eTree>
         </eTree>
       </eTree>

@@ -10,6 +10,7 @@ $Author$
   <gloss/>
   <desc>specifies the declared value for an attribute, by referring to
   any datatype defined by the chosen schema language.</desc>
+  <desc version="2007-01-21" xml:lang="it">indica il valore dichiarato di un attributo facendo riferimento a un qualsiasi tipo di dati definito nel linguaggio scelto per lo schema</desc>
   <desc version="2006-10-28" xml:lang="ja">属性値の型を，当該スキーマ中のデータ型を参照して示す．</desc>
   <desc version="2006-10-15" xml:lang="es">especifica el valor
   declarado para un atributo, refiriéndose a cualquier tipo de datos
@@ -17,7 +18,7 @@ $Author$
   <content>
     <rng:zeroOrMore>
       <rng:group>
-	<rng:ref name="macro.schemapattern"/>
+        <rng:ref name="macro.schemapattern"/>
       </rng:group>
     </rng:zeroOrMore>
   </content>
@@ -26,7 +27,9 @@ $Author$
       <gloss>minimum number of occurences</gloss>
       <desc>indicates the minimum number of times this datatype may
       occur in the specification of the attribute being defined</desc>
-      <datatype><rng:ref name="data.count"/></datatype>
+      <datatype>
+        <rng:ref name="data.count"/>
+      </datatype>
       <defaultVal>1</defaultVal>
     </attDef>
     <attDef ident="maxOccurs">
@@ -34,28 +37,38 @@ $Author$
       <desc>indicates the maximum number of times this datatype may
       occur in the specification of the attribute being defined</desc>
       <datatype>
-	<rng:choice>
-	  <rng:ref name="data.count"/>
-	  <rng:value>unbounded</rng:value>
-	</rng:choice>
+        <rng:choice>
+          <rng:ref name="data.count"/>
+          <rng:value>unbounded</rng:value>
+        </rng:choice>
       </datatype>
       <defaultVal>1</defaultVal>
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"><datatype><rng:data type="token"/></datatype></egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <datatype>
+        <rng:data type="token"/>
+      </datatype>
+    </egXML>
   </exemplum>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"><datatype><rng:ref name="data.enumerated"/></datatype></egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <datatype>
+        <rng:ref name="data.enumerated"/>
+      </datatype>
+    </egXML>
   </exemplum>
   <exemplum>
     <p>The encoding in the following example requires that the
     attribute being defined contain at least two URIs in its value, as
     is the case for the <att>targets</att> attribute of
     <gi>join</gi>.</p>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"><datatype minOccurs="2" maxOccurs="unbounded">
-      <rng:ref name="data.pointer"/>
-    </datatype></egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <datatype minOccurs="2" maxOccurs="unbounded">
+        <rng:ref name="data.pointer"/>
+      </datatype>
+    </egXML>
   </exemplum>
   <remarks>
     <p>In the TEI scheme, most datatypes are expressed using
