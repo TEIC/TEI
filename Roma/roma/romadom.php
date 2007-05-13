@@ -38,6 +38,7 @@ class romaDom extends domDocument
 	$oTemp->appendChild( $oTEI );
 	$oTEI->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'xml:lang', 'en' );
 
+        $oTeiHeader = $oTEI->appendChild( new domElement( 'teiHeader' ) );
 
 	$oFileDesc = $oTeiHeader->appendChild( new domElement( 'fileDesc' ) );
 
@@ -591,6 +592,7 @@ class romaDom extends domDocument
 
 	    foreach ( $oAttList->childNodes as $oChild )
 	      {
+   	        if ($oChild->nodeType != XML_ELEMENT_NODE) { continue; }
 		$oAtt = $oAttXPath->query( "/Element/att[child::name[node()='" . $oChild->getAttribute( 'ident' ) . "']]" )->item(0);
 		if ( ( $szModule != '' && ! is_object( $oAtt ) ) || $szModule == '' ) //if attribute was added
 		  { 
@@ -1885,8 +1887,7 @@ class romaDom extends domDocument
  	 $oTitleS = $oXPath->query("/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt")->item(0);
   	 $oAuthor = $oTitleS->appendChild( new domElement( 'author' ) );
 	}
-	 $oAuthor->appendChild( new domText ( $szAuthor ) );
-
+        $oAuthor->appendChild( new domText ( $szAuthor ) );
       }
 
     public function setCustomizationFilename( $szFilename )
