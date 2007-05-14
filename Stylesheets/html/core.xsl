@@ -2035,4 +2035,16 @@
   </xsl:template>
 
 
+  <xd:doc>
+    <xd:short>Copy all attributes in HTML namespace</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template name="htmlAttributes">
+    <xsl:for-each select="@html:*">
+      <xsl:attribute name="{local-name(.)}">
+	<xsl:value-of select="."/>
+      </xsl:attribute>
+    </xsl:for-each>
+  </xsl:template>
+
 </xsl:stylesheet>

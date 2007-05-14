@@ -438,6 +438,7 @@
       </xsl:when>
       <xsl:otherwise>
         <a>
+	  <xsl:call-template name="htmlAttributes"/>
           <xsl:attribute name="class">
             <xsl:choose>
               <xsl:when test="@rend">
