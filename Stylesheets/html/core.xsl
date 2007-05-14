@@ -683,10 +683,8 @@
   </xd:doc>
   <xsl:template match="tei:list">
     <xsl:if test="tei:head">
-      <p>
-        <em>
-          <xsl:apply-templates select="tei:head"/>
-        </em>
+      <p class="listhead">
+      <xsl:apply-templates select="head"/>
       </p>
     </xsl:if>
     <xsl:choose>
