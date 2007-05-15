@@ -1108,10 +1108,6 @@ within particular structures (like <gi>analytic</gi>,
 found in normal running text, however, are assigned  to
 one or the other of these classes.
  </p>
-<p>Some <term>macro.component</term> elements (e.g. <gi>p</gi> or
-<gi>note</gi>) are common to all modules, while others are unique
-to individual modules.  
-</p>
 </div>
 
 <div type="div3" xml:id="STECLO"><head>Low-Level Element Classes</head>
@@ -1351,14 +1347,10 @@ model classes are provided to specify these:
 <div type="div2" xml:id="STmacros"><head>Macros</head>
 
 <p>The <ident type="module">tei</ident> module also declares a number
-of <term>macros</term>, which are used for two distinct purposes in the
-TEI scheme. Firstly, macros are used to stand for
+of <term>macros</term>, which are used to stand for
 frequently-encountered content models, or parts of content models
-(<ptr target="#STECST"/>); secondly, they are used to enable some
-components of other macros to be defined in a way that permits their
-significance to vary depending on the collection of modules in use
-(<ptr target="#STECMX"/>). In both cases, macros are implemented in
-the same way: as patterns in the RELAX NG schema fragments, and as
+(<ptr target="#STECST"/>). Macros are implemented
+as patterns in the RELAX NG schema fragments, and as
 parameter entities in the XML DTD  fragments.</p>
 
 <div type="div3" xml:id="STECST"><head>Standard Content Models</head>
@@ -1366,7 +1358,6 @@ parameter entities in the XML DTD  fragments.</p>
 frequently-encountered content models to help achieve consistency among
 different elements.
 <specList>
-<specDesc key="macro.component"/>
 <specDesc key="macro.componentSeq"/>
 <specDesc key="macro.fileDescPart"/>
 <specDesc key="macro.glossSeq"/>
@@ -1382,23 +1373,7 @@ different elements.
 
 
 
-<p>The component part macros reference the special purpose
-<soCalled>mix-in</soCalled> macros <!-- ; the latter must therefore be
-declared first:-->
-
-<!--
-<specGrp xml:id="DSTECMX" n="Definition of components for combined bases">
-<p>Default declarations for the mix-ins used in the definition of macro.component</p>
-&drmixxx.odd; 
-&tsmixxx.odd;
-&dimixxx.odd;
-</specGrp>
--->
-(see further <ptr target="#STECMX"/>). They are declared as follows:
-
-<!-- specGrpRef target="#DSTECMX"/--> 
 <specGrp>
-&macro.component;
 &macro.componentSeq;
 &macro.paraContent;
 &macro.limitedContent;
@@ -1410,43 +1385,8 @@ declared first:-->
 &macro.glossSeq;
 
 </specGrp>
- </p></div>
-
-<div type="div3" xml:id="STECMX"><head>Module-specific Components</head>
-
-<p>The macro <ident type="macro">macro.component</ident> is defined as
-the concatenation of a number of other macros and its actual meaning
-will differ, depending on which modules are in use. This effect is
-achieved by indirection; the macro value refers to the following
-special-purpose macros:
-
-<specList>
-<specDesc key="mix.dictionaries"/>
-<specDesc key="mix.drama"/>
-<specDesc key="mix.spoken"/>
-</specList></p>
-
-<p>These <soCalled>mix-in</soCalled> macros are defined differently in
-different modules. In the <ident type="module">tei</ident> module,
-they are all defined as the null string. In the modules after which
-they are named, however, each one references a class of elements
-defined by that module which are to be mixed into the component macro,
-but only if the module in question is included.</p>
-
-<p>For example, when the drama module is included in a schema, the
-macro <ident>mix.drama</ident> references the class
-<code>model.divPart.stage</code>, so that members of that class will
-be included when  <ident>macro.component.seq</ident> is evaluated.
-</p>
-<!-- cannot yet face explaining why there is an | in the dtd version
-and not the relaxng one -->
-
-<p>
-</p>
-</div>
-
-</div>
-
+ </div>
+ </div>
 
 <div type="div2" xml:id="STPE"><head>TEI DTD-specific mechanisms</head>
 
