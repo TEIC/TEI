@@ -125,6 +125,7 @@ echo "  --norelax          # suppress RELAX NG creation"
 echo "  --noxsd            # suppress W3C XML Schema creation"
 echo "  --noteic           # suppress TEI-specific features"
 echo "  --debug            # leave temporary files, etc."
+echo "  --compile          # create compiled file odd"
 exit 1
 }
 
@@ -137,6 +138,7 @@ TEIC=true
 DOCFLAGS=
 doclang=
 lang=
+compile=false
 debug=false
 dtd=true
 relax=true
@@ -162,6 +164,7 @@ while test $# -gt 0; do
     --noteic)      TEIC=false;;
     --patternprefix=*) PATTERNPREFIX=`echo $1 | sed 's/.*=//'`;;
     --debug)       debug=true;;
+    --compile)     compile=true;dtd=false;xsd=false;doc=false;relax=false;;
     --help)        usageMsg;;
      *) if test "$1" = "${1#--}" ; then 
 	   break
@@ -205,8 +208,14 @@ if $debug
 then
     DEBUG=" --stringparam verbose true"
 else
-    DEBUG=" "
+    if $compile
+	then
+	DEBUG=" --stringparam stripped true"
+    else
+	DEBUG=" "
+    fi
 fi
+
 
 if test "x$doclang" = "x"
 then
@@ -259,7 +268,7 @@ then
     fi
 fi
 $dochtml && makeHTMLDOC
-$debug || rm  $N.compiled.odd
+$compile || $debug || rm  $N.compiled.odd
 test -f subset.xsl && rm subset.xsl
 test -f tei$$.xml && rm tei$$.xml
 D=`date "+%Y-%m-%d %H:%M:%S.%N"`
