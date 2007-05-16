@@ -32,8 +32,10 @@
   <xsl:output encoding="utf-8" indent="yes"/>
   <xsl:param name="TEIC">false</xsl:param>
   <xsl:param name="verbose"/>
+  <xsl:param name="stripped">false</xsl:param>
   <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
   <xsl:param name="localsource"/>
+  <xsl:key name="MACROS" use="@ident" match="tei:macroSpec"/>
   <xsl:key name='REFED' use="@name" match="rng:ref"/>
   <xsl:key name='REFED' use="substring-before(@name,'_')" match="rng:ref[contains(@name,'_')]"/>
   <xsl:key name='REFED' use="@key" match="tei:memberOf"/>
@@ -107,6 +109,23 @@
 
   </xsl:template>
   
+  <xsl:template match="rng:ref" mode="final">
+    <xsl:variable name="N">
+      <xsl:value-of select="@name"/>
+    </xsl:variable>
+    <xsl:choose>
+    <xsl:when test="starts-with($N,'macro.') and
+		    $stripped='true'">
+      <xsl:for-each select="key('MACROS',$N)/tei:content/*">
+	<xsl:call-template name="simplifyRelax"/>
+      </xsl:for-each>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:copy-of select="."/>      
+    </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <xsl:template match="*" mode="final">
     <xsl:copy>
       <xsl:copy-of select="@*"/>
@@ -114,8 +133,7 @@
     </xsl:copy>
   </xsl:template>
   
-  <xsl:template match="tei:macroSpec|tei:classSpec" mode="final">
-<!--    <xsl:message>look at <xsl:value-of select="name(.)"/>: <xsl:value-of select="@ident"/></xsl:message>-->
+  <xsl:template match="tei:classSpec" mode="final">
     <xsl:variable name="k" select="@ident"/>
     <xsl:choose>
       <xsl:when test="key('REFED',$k)">
@@ -127,6 +145,19 @@
     </xsl:choose>
   </xsl:template>
 
+
+  <xsl:template match="tei:macroSpec" mode="final">
+    <xsl:variable name="k" select="@ident"/>
+    <xsl:choose>
+      <xsl:when test="$stripped='true' and starts-with(@ident,'macro.')"/>
+      <xsl:when test="key('REFED',$k)">
+	<xsl:copy-of select="."/>
+      </xsl:when>
+      <xsl:otherwise>
+<!--	<xsl:message>reject <xsl:value-of select="$k"/>	</xsl:message>-->
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
   <xsl:template name="phase1">
     <!--for every module:
@@ -325,9 +356,11 @@
       </xsl:if>
       <xsl:apply-templates mode="copy" select="@*"/>
       <xsl:copy-of select="tei:altIdent"/>
-      <xsl:copy-of select="tei:equiv"/>
-      <xsl:copy-of select="tei:gloss"/>
-      <xsl:copy-of select="tei:desc"/>
+      <xsl:if test="$stripped='false'">
+	<xsl:copy-of select="tei:equiv"/>
+	<xsl:copy-of select="tei:gloss"/>
+	<xsl:copy-of select="tei:desc"/>
+      </xsl:if>
       <xsl:copy-of select="tei:classes"/>
       <xsl:apply-templates mode="copy" select="tei:content"/>
       <attList xmlns="http://www.tei-c.org/ns/1.0">
@@ -362,9 +395,11 @@
           </xsl:otherwise>
         </xsl:choose>
       </attList>
-      <xsl:copy-of select="tei:exemplum"/>
-      <xsl:copy-of select="tei:remarks"/>
-      <xsl:copy-of select="tei:listRef"/>
+      <xsl:if test="$stripped='false'">
+	<xsl:copy-of select="tei:exemplum"/>
+	<xsl:copy-of select="tei:remarks"/>
+	<xsl:copy-of select="tei:listRef"/>
+      </xsl:if>
     </xsl:copy>
   </xsl:template>
   <xsl:template match="tei:elementSpec" mode="change">
@@ -406,6 +441,7 @@ for change individually.
             </xsl:otherwise>
           </xsl:choose>
           <xsl:choose>
+	    <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:desc">
               <xsl:copy-of select="tei:desc"/>
             </xsl:when>
@@ -461,6 +497,7 @@ for change individually.
           </tei:attList>
           <!-- exemplum, remarks and listRef are either replacements or not -->
           <xsl:choose>
+	    <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:exemplum">
               <xsl:copy-of select="tei:exemplum"/>
             </xsl:when>
@@ -471,6 +508,7 @@ for change individually.
             </xsl:otherwise>
           </xsl:choose>
           <xsl:choose>
+	    <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:remarks">
               <xsl:copy-of select="tei:remarks"/>
             </xsl:when>
@@ -512,6 +550,7 @@ If so, use them as is.
           <xsl:copy-of select="tei:altIdent"/>
           <!-- equiv, gloss, desc trio -->
           <xsl:choose>
+	    <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:equiv">
               <xsl:copy-of select="tei:equiv"/>
             </xsl:when>
@@ -532,6 +571,7 @@ If so, use them as is.
             </xsl:otherwise>
           </xsl:choose>
           <xsl:choose>
+	    <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:desc">
               <xsl:copy-of select="tei:desc"/>
             </xsl:when>
@@ -564,6 +604,7 @@ If so, use them as is.
           </xsl:choose>
           <!-- exemplum, remarks and listRef are either replacements or not -->
           <xsl:choose>
+	    <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:exemplum">
               <xsl:copy-of select="tei:exemplum"/>
             </xsl:when>
@@ -584,6 +625,7 @@ If so, use them as is.
             </xsl:otherwise>
           </xsl:choose>
           <xsl:choose>
+	    <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:listRef">
               <xsl:copy-of select="tei:listRef"/>
             </xsl:when>
@@ -613,6 +655,7 @@ If so, use them as is.
 <!-- context is now a classSpec in change mode in the ODD spec -->
           <!-- description -->
           <xsl:choose>
+	    <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:desc">
               <xsl:copy-of select="tei:desc"/>
             </xsl:when>
@@ -663,13 +706,13 @@ If so, use them as is.
   <xsl:template
     match="rng:choice|rng:list|rng:group|rng:oneOrMore|rng:optional|rng:zeroOrMore"
     mode="copy">
-    <xsl:call-template name="simplifyRelax">
-      <xsl:with-param name="element">
-        <xsl:value-of select="local-name(.)"/>
-      </xsl:with-param>
-    </xsl:call-template>
+    <xsl:call-template name="simplifyRelax"/>
   </xsl:template>
+
   <xsl:template name="simplifyRelax">
+    <xsl:variable name="element">
+      <xsl:value-of select="local-name(.)"/>
+    </xsl:variable>
     <!-- 
 for each Relax NG content model,
 remove reference to any elements which have been
@@ -677,7 +720,6 @@ deleted, or to classes which are empty.
 This may make the container empty,
 so that is only put back in if there is some content
 -->
-    <xsl:param name="element"/>
     <xsl:variable name="contents">
       <WHAT>
         <xsl:for-each select="rng:*|processing-instruction()">
@@ -685,52 +727,52 @@ so that is only put back in if there is some content
             <xsl:when test="self::processing-instruction()">
               <xsl:copy-of select="."/>
             </xsl:when>
-            <xsl:when test="local-name(.)='element'">
+            <xsl:when test="self::rng:element">
               <element xmlns="http://relaxng.org/ns/structure/1.0">
                 <xsl:copy-of select="@*"/>
                 <xsl:apply-templates mode="copy"/>
               </element>
             </xsl:when>
-            <xsl:when test="local-name(.)='name'">
+            <xsl:when test="self::rng:name">
               <name xmlns="http://relaxng.org/ns/structure/1.0">
                 <xsl:copy-of select="@*"/>
                 <xsl:apply-templates mode="copy"/>
               </name>
             </xsl:when>
-            <xsl:when test="local-name(.)='attribute'">
+            <xsl:when test="self::rng:attribute">
               <attribute xmlns="http://relaxng.org/ns/structure/1.0">
                 <xsl:copy-of select="@*"/>
                 <xsl:apply-templates mode="copy"/>
               </attribute>
             </xsl:when>
-            <xsl:when test="local-name(.)='data'">
+            <xsl:when test="self::rng:data">
               <data xmlns="http://relaxng.org/ns/structure/1.0">
                 <xsl:copy-of select="@*"/>
                 <xsl:apply-templates mode="copy"/>
               </data>
             </xsl:when>
-            <xsl:when test="local-name(.)='text'">
+            <xsl:when test="self::rng:text">
               <text xmlns="http://relaxng.org/ns/structure/1.0"/>
             </xsl:when>
-            <xsl:when test="local-name(.)='value'">
+            <xsl:when test="self::rng:value">
               <value xmlns="http://relaxng.org/ns/structure/1.0">
                 <xsl:apply-templates/>
               </value>
             </xsl:when>
-            <xsl:when test="local-name(.)='ref'">
+            <xsl:when test="self::rng:ref">
               <xsl:variable name="N" select="@name"/>
-              <xsl:for-each select="$ODD">
-                <xsl:if test="not(key('DELETE',$N))">
+	      <xsl:for-each select="$ODD">
+		<xsl:choose>
+		  <xsl:when test="key('DELETE',$N)"/>
+		  <xsl:otherwise>
+
                   <ref name="{$N}" xmlns="http://relaxng.org/ns/structure/1.0"/>
-                </xsl:if>
+		  </xsl:otherwise>
+		</xsl:choose>
               </xsl:for-each>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:call-template name="simplifyRelax">
-                <xsl:with-param name="element">
-                  <xsl:value-of select="local-name(.)"/>
-                </xsl:with-param>
-              </xsl:call-template>
+              <xsl:call-template name="simplifyRelax"/>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:for-each>
@@ -1135,7 +1177,16 @@ every attribute and see whether the attribute has changed-->
 	<tei:attDef ident="{$att}">
 	  <xsl:copy-of select="@ns"/>
 	  <xsl:copy-of select="@usage"/>
-	  <xsl:copy-of select="tei:*"/>
+	  <xsl:for-each select="tei:*">
+	    <xsl:choose>
+	      <xsl:when test="$stripped='true' and self::tei:desc"/>
+	      <xsl:when test="$stripped='true' and self::tei:gloss"/>
+	      <xsl:when test="$stripped='true' and self::tei:exemplum"/>
+	      <xsl:otherwise>
+		<xsl:copy-of select="."/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:for-each>
 	</tei:attDef>
       </xsl:for-each>
     </xsl:when>
@@ -1271,6 +1322,7 @@ every attribute and see whether the attribute has changed-->
         </xsl:if>
         <!-- equiv, gloss, desc trio -->
         <xsl:choose>
+	  <xsl:when test="$stripped='true'"/>
           <xsl:when test="tei:equiv">
             <xsl:copy-of select="tei:equiv"/>
           </xsl:when>
@@ -1291,6 +1343,7 @@ every attribute and see whether the attribute has changed-->
           </xsl:otherwise>
         </xsl:choose>
         <xsl:choose>
+	  <xsl:when test="$stripped='true'"/>
           <xsl:when test="tei:desc">
             <xsl:copy-of select="tei:desc"/>
           </xsl:when>
@@ -1369,6 +1422,7 @@ every attribute and see whether the attribute has changed-->
                           </xsl:otherwise>
                         </xsl:choose>
                         <xsl:choose>
+			  <xsl:when test="$stripped='true'"/>
                           <xsl:when test="tei:desc">
                             <xsl:copy-of select="tei:desc"/>
                           </xsl:when>
@@ -1393,6 +1447,7 @@ every attribute and see whether the attribute has changed-->
           </xsl:when>
         </xsl:choose>
         <xsl:choose>
+	  <xsl:when test="$stripped='true'"/>
           <xsl:when test="tei:exemplum">
             <xsl:copy-of select="tei:exemplum"/>
           </xsl:when>
@@ -1403,6 +1458,7 @@ every attribute and see whether the attribute has changed-->
           </xsl:otherwise>
         </xsl:choose>
         <xsl:choose>
+	  <xsl:when test="$stripped='true'"/>
           <xsl:when test="tei:remarks">
             <xsl:copy-of select="tei:remarks"/>
           </xsl:when>
@@ -1444,9 +1500,11 @@ every attribute and see whether the attribute has changed-->
       <xsl:copy>
         <xsl:apply-templates mode="copy" select="@*"/>
         <xsl:copy-of select="tei:altIdent"/>
-        <xsl:copy-of select="tei:equiv"/>
-        <xsl:copy-of select="tei:gloss"/>
-        <xsl:copy-of select="tei:desc"/>
+	<xsl:if test="$stripped='false'">
+	  <xsl:copy-of select="tei:equiv"/>
+	  <xsl:copy-of select="tei:gloss"/>
+	  <xsl:copy-of select="tei:desc"/>
+	</xsl:if>
         <xsl:copy-of select="tei:classes"/>
         <xsl:apply-templates mode="copy" select="tei:content"/>
         <tei:attList>
@@ -1467,9 +1525,11 @@ every attribute and see whether the attribute has changed-->
           <xsl:apply-templates select="tei:attList"/>
           <xsl:comment>5.</xsl:comment>
         </tei:attList>
-        <xsl:copy-of select="tei:exemplum"/>
-        <xsl:copy-of select="tei:remarks"/>
-        <xsl:copy-of select="tei:listRef"/>
+	<xsl:if test="$stripped='false'">
+	  <xsl:copy-of select="tei:exemplum"/>
+	  <xsl:copy-of select="tei:remarks"/>
+	  <xsl:copy-of select="tei:listRef"/>
+	</xsl:if>
       </xsl:copy>
     </xsl:if>
   </xsl:template>

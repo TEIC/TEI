@@ -170,27 +170,19 @@
   </xsl:template>
 
   <xsl:template match="rng:ref">
-    <xsl:choose>
-      <xsl:when
-        test="starts-with(@name,'mix.') and not(key('IDENTS',@name))"/>
-      <!--	<empty  xmlns="http://relaxng.org/ns/structure/1.0"/>
-      </xsl:when>	-->
-      <xsl:otherwise>
-        <xsl:copy>
-          <xsl:attribute name="name">
-	    <xsl:choose>
-	      <xsl:when test="key('IDENTS',@name)">
-		<xsl:value-of select="$patternPrefixText"/>
-	      </xsl:when>
-	      <xsl:when test="key('IDENTS',substring-before(@name,'_'))">
-		<xsl:value-of select="$patternPrefixText"/>
-	      </xsl:when>
-	    </xsl:choose>
-            <xsl:value-of select="@name"/>
-          </xsl:attribute>
-        </xsl:copy>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:copy>
+      <xsl:attribute name="name">
+	<xsl:choose>
+	  <xsl:when test="key('IDENTS',@name)">
+	    <xsl:value-of select="$patternPrefixText"/>
+	  </xsl:when>
+	  <xsl:when test="key('IDENTS',substring-before(@name,'_'))">
+	    <xsl:value-of select="$patternPrefixText"/>
+	  </xsl:when>
+	</xsl:choose>
+	<xsl:value-of select="@name"/>
+      </xsl:attribute>
+    </xsl:copy>
   </xsl:template>
 
 
