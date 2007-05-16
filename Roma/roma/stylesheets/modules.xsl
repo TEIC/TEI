@@ -76,6 +76,14 @@ Description
  </xsl:template>
  
  <xsl:template name="processListModules">
+   <xsl:variable name="language">
+     <xsl:choose>
+       <xsl:when test="$lang=''">en</xsl:when>
+       <xsl:otherwise>
+	 <xsl:value-of select="$lang"/>
+       </xsl:otherwise>
+     </xsl:choose>
+   </xsl:variable>
    <xsl:for-each select=".//teiModulesList/teiModule">
      <xsl:variable name="currentModule"><xsl:value-of
      select="moduleName"/></xsl:variable>
@@ -101,7 +109,7 @@ Description
 	 <a target="_new">
 	   <xsl:attribute name="href">
 	     <xsl:text>/release/doc/tei-p5-doc/</xsl:text>
-	     <xsl:value-of select="$lang"/>
+	     <xsl:value-of select="$language"/>
 	     <xsl:text>/html/</xsl:text>
 	     <xsl:value-of select="moduleChapter"/>
 	     <xsl:text>.html</xsl:text>

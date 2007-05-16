@@ -3,6 +3,8 @@
 require_once( 'roma/roma.php' );
 
 
+$_SESSION['docLang'] = 'en';
+
 switch( $_REQUEST[ 'option' ] )
   {
     case 'upload':

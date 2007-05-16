@@ -38,7 +38,7 @@ class romaDom extends domDocument
 	$oTemp->appendChild( $oTEI );
 	$oTEI->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'xml:lang', 'en' );
 
-        $oTeiHeader = $oTEI->appendChild( new domElement( 'teiHeader' ) );
+	$oTeiHeader = $oTEI->appendChild( new domElement( 'teiHeader' ) );
 
 	$oFileDesc = $oTeiHeader->appendChild( new domElement( 'fileDesc' ) );
 
@@ -69,6 +69,7 @@ class romaDom extends domDocument
 
 	$oSchema = $oBody->appendChild( new domElement( 'schemaSpec' ) );
 	$oSchema->setAttribute( 'ident', 'myTei' );
+	$oSchema->setAttribute('docLang', 'en' );
 	$oSchema->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'xml:lang', 'en' );
 
 	$this->loadXML( $oTemp->SaveXML() );
