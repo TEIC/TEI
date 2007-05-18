@@ -136,7 +136,7 @@
   <xsl:template match="tei:classSpec" mode="final">
     <xsl:variable name="k" select="@ident"/>
     <xsl:choose>
-      <xsl:when test="key('REFED',$k)">
+      <xsl:when test="key('REFED',$k) or $stripped='true'">
 	<xsl:copy-of select="."/>
       </xsl:when>
       <xsl:otherwise>
@@ -704,7 +704,7 @@ If so, use them as is.
   </xsl:template>
 
   <xsl:template
-    match="rng:choice|rng:list|rng:group|rng:oneOrMore|rng:optional|rng:zeroOrMore"
+    match="rng:choice|rng:list|rng:group|rng:optional|rng:oneOrMore|rng:zeroOrMore"
     mode="copy">
     <xsl:call-template name="simplifyRelax"/>
   </xsl:template>
@@ -763,10 +763,14 @@ so that is only put back in if there is some content
               <xsl:variable name="N" select="@name"/>
 	      <xsl:for-each select="$ODD">
 		<xsl:choose>
+		  <xsl:when test="$stripped='true'">
+		    <ref name="{$N}"
+			 xmlns="http://relaxng.org/ns/structure/1.0"/>
+		  </xsl:when>
 		  <xsl:when test="key('DELETE',$N)"/>
 		  <xsl:otherwise>
-
-                  <ref name="{$N}" xmlns="http://relaxng.org/ns/structure/1.0"/>
+		    
+		    <ref name="{$N}" xmlns="http://relaxng.org/ns/structure/1.0"/>
 		  </xsl:otherwise>
 		</xsl:choose>
               </xsl:for-each>
@@ -784,6 +788,7 @@ so that is only put back in if there is some content
       </xsl:for-each>
     </xsl:variable>
     <xsl:choose>
+
       <xsl:when
         test="$entCount=1 and local-name(exsl:node-set($contents)/WHAT/*)=$element">
         <xsl:copy-of select="exsl:node-set($contents)/WHAT/node()"/>
@@ -802,7 +807,7 @@ so that is only put back in if there is some content
         test="self::rng:zeroOrMore/rng:ref/@name='model.global'
 		and preceding-sibling::rng:*[1][self::rng:zeroOrMore/rng:ref/@name='model.global']"/>
 
-      <xsl:when test="$entCount&gt;0">
+      <xsl:when test="$entCount&gt;0 or $stripped='true'">
         <xsl:element name="{$element}"
           xmlns="http://relaxng.org/ns/structure/1.0">
           <xsl:copy-of select="exsl:node-set($contents)/WHAT/node()"/>
