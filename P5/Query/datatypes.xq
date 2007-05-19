@@ -5,6 +5,9 @@ declare namespace rng="http://relaxng.org/ns/structure/1.0";
 for $t in collection("/db/TEI")//tei:macroSpec[@type='dt']
 order by $t/@ident
 return
-<dataType><dataName>{data($t/@ident)}</dataName><dataDesc>{$t/tei:desc}</dataDesc></dataType>
+ <dataType>
+  <dataName>{data($t/@ident)}</dataName>
+  <dataDesc>{$t/tei:desc}</dataDesc>
+ </dataType>
 }
 </dataList>
