@@ -1069,7 +1069,9 @@ the text) to which the sampling declaration applies may be used to
 supply a cross reference to it, as further described in section <ptr target="#CCAS"/>.	
 This element has the following formal declaration:
 <specGrp xml:id="D2252" n="The sampling declaration">&samplingDecl;</specGrp></p></div>
-<div type="div3" xml:id="HD53"><head>The Editorial Practices Declaration</head>
+
+<div type="div3" xml:id="HD53">
+<head>The Editorial Practices Declaration</head>
 <p>The <gi>editorialDecl</gi> element is the third of the nine optional
 subdivisions of the <gi>encodingDesc</gi> element.  It is used to
 provide details of the editorial practices applied during the encoding
@@ -1077,66 +1079,113 @@ of a text.
 <specList>
 <specDesc key="editorialDecl"/>
 </specList>
-It may contain a prose description only, or one or more of the following
-specialized elements:
+
+It may contain a prose description only, or one or more of a set of
+specialized elements, members of the TEI <ident
+type="class">model.editorialDeclPart</ident> class. Where an encoder
+wishes to record an editorial policy not specified above, this may be
+done by adding a new element to this class, using the mechanisms
+discussed in chapter <ptr target="#MD"/>.</p>
+
+<p>Some of these policy elements carry attributes to support automated
+processing of certain well-defined editorial decisions; all of them
+contain a prose description of the editorial principles adopted with
+respect to the particular feature concerned.  Examples of the kinds of
+questions which these descriptions are intended to answer are given in
+the list below.
+
+<list type="gloss">
+<label><gi>correction</gi></label>
+<item>
 <specList>
 <specDesc key="correction" atts="status method"/>
-<specDesc key="normalization" atts="source method"/>
-<specDesc key="quotation" atts="marks form"/>
-<specDesc key="hyphenation" atts="eol"/>
-<specDesc key="segmentation"/>
-<specDesc key="stdVals"/>
-<specDesc key="interpretation"/>
 </specList>
-These elements are all members of the TEI <ident type="class">model.editorialDeclPart</ident>
-class. Where an encoder wishes to record an editorial policy not
-specified above, this may be done by adding a new element to this
-class, using the mechanisms discussed in chapter <ptr target="#MD"/>.</p><p>Some of these policy elements carry attributes to support automated processing
-of certain well-defined editorial decisions; all of them contain a prose
-description of the editorial principles adopted with respect to the
-particular feature concerned.  Examples of the kinds of questions which
-these descriptions are intended to answer are listed below, in the same
-order as the list above. 
-<list type="gloss"><label><gi>correction</gi></label>
-<item>Was the text corrected during or after data capture?  If
+<p>
+Was the text corrected during or after data capture?  If
 so, were corrections made silently or are they marked using the
 tags described in section <ptr target="#COED"/>?  What principles
 have been adopted with respect to omissions, truncations, dubious
-corrections, alternate readings, false starts, repetitions, etc.?</item><label><gi>normalization</gi></label>
-<item>Was the text normalized, for example by regularizing any
+corrections, alternate readings, false starts, repetitions,
+etc.?</p></item>
+
+<label><gi>normalization</gi></label>
+<item>
+<specList>
+<specDesc key="normalization" atts="source method"/>
+</specList>
+<p>
+Was the text normalized, for example by regularizing any
 non-standard spellings, dialect forms, etc.?  If so, were normalizations
 performed silently or are they marked using the tags described in
 section <ptr target="#COED"/>?
 What authority was used for the regularization?  Also, what principles
 were used when normalizing dates or numbers to provide the standard
 values for the <att>value</att> attribute described in sections <ptr target="#CONANU"/> and <ptr target="#CONADA"/>	
-and what format used for them?</item><label><gi>quotation</gi></label>
-<item>How were quotation marks processed?  Are apostrophes and quotation
+and what format used for them?</p></item>
+
+<label><gi>quotation</gi></label>
+<item>
+<specList>
+<specDesc key="quotation" atts="marks form"/>
+</specList>
+<p>
+How were quotation marks processed?  Are apostrophes and quotation
 marks distinguished?  How?  Are quotation marks retained as content in
 the text or replaced by markup?  Was the <att>rendition</att> attribute
 used to record the specific appearance of any quotation marks removed
 from the text?  Are there any special conventions regarding for example
 the use of single or double quotation marks when nested?  Is the file
-consistent in its practice or has this not been checked?</item><label><gi>hyphenation</gi></label>
-<item>Does the encoding distinguish <soCalled>soft</soCalled> and
+consistent in its practice or has this not been checked?</p></item>
+
+<label><gi>hyphenation</gi></label>
+<item>
+<specList>
+<specDesc key="hyphenation" atts="eol"/>
+</specList>
+<p>
+Does the encoding distinguish <soCalled>soft</soCalled> and
 <soCalled>hard</soCalled> hyphens?
 What principle has been adopted with respect to end-of-line hyphenation
 where source lineation has not been retained?  Have soft hyphens been
 silently removed, and if so what is the effect on lineation and
-pagination?</item><label><gi>segmentation</gi></label>
-<item>How is the text segmented?  If
+pagination?</p></item>
+
+<label><gi>segmentation</gi></label>
+<item>
+<specList>
+<specDesc key="segmentation"/>
+</specList>
+<p>
+How is the text segmented?  If
 <gi>s</gi> or <gi>seg</gi> segmentation units have been used to divide
 up the text for analysis, how are they marked and how was the
-segmentation arrived at?</item><label><gi>stdVals</gi></label>
-<item>What standardization methods underlie any standardized values
+segmentation arrived at?</p></item>
+
+<label><gi>stdVals</gi></label>
+<item>
+<specList>
+<specDesc key="stdVals"/>
+</specList>
+<p>
+What standardization methods underlie any standardized values
 supplied for numeric values or dates?  If the <att>value</att> attribute
 described in section <ptr target="#CONADA"/> has been used,
-in what format are its values presented?</item><label><gi>interpretation</gi></label>
-<item>Has any analytic or <soCalled>interpretive</soCalled> information
+in what format are its values presented?</p></item>
+
+<label><gi>interpretation</gi></label>
+<item>
+<specList>
+<specDesc key="interpretation"/>
+</specList>
+<p>
+Has any analytic or <soCalled>interpretive</soCalled> information
 been provided — that is, information which is felt to be non-obvious,
 or potentially contentious? If so, how was it generated?
 How was it encoded? If feature-structure analysis has been used, are
-<gi>fsdDecl</gi> elements (section <ptr target="#HDFSD"/>) present?</item></list></p>
+<gi>fsdDecl</gi> elements (section <ptr target="#HDFSD"/>)
+present?</p></item>
+</list></p>
+
 <p>Any information about the editorial principles applied not falling
 under one of the above headings should be recorded in a distinct list
 of items.  Experience shows that a full record should be kept of
