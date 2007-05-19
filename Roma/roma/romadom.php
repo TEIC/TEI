@@ -1462,37 +1462,39 @@ class romaDom extends domDocument
 
 	      	    
 	    //default
-	    $oDefault = $oAttDef->getElementsByTagname( 'defaultVal' )->item(0);
-	    if ( is_object( $oDefault ) )
+	    if ($aszConfig[ 'defaultValue' ] != '') {
+	     $oDefault = $oAttDef->getElementsByTagname( 'defaultVal' )->item(0);
+  	     if ( is_object( $oDefault ) )
 	      {
 		$oAttDef->removeChild( $oDefault );
 	      }
-	    $theDefault = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'defaultVal' );
-	    $oDefault = $oAttDef->appendChild( $theDefault );
-	    $oDefault->appendChild( new domText( $aszConfig[ 'defaultValue' ] ) );
-
+	     $theDefault = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'defaultVal' );
+	     $oDefault = $oAttDef->appendChild( $theDefault );
+	     $oDefault->appendChild( new domText( $aszConfig[ 'defaultValue' ] ) );
+	    }
 	    //valList
-	    $oValList = $oAttDef->getElementsByTagname( 'valList' )->item(0);
-	    if ( is_object( $oValList ) )
+	    if ($aszConfig[ 'valList' ] != '') {
+	     $oValList = $oAttDef->getElementsByTagname( 'valList' )->item(0);
+	     if ( is_object( $oValList ) )
 	      {
 		$oAttDef->removeChild( $oValList );
 	      }
-	    $aszValList = explode( ',', $aszConfig[ 'valList' ] );
-	    $theValList = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'valList' );
-	    $oValList = $oAttDef->appendChild( $theValList );
-	    if ( $aszConfig[ 'closed' ] == 'true' )
+	     $aszValList = explode( ',', $aszConfig[ 'valList' ] );
+	     $theValList = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'valList' );
+	     $oValList = $oAttDef->appendChild( $theValList );
+	     if ( $aszConfig[ 'closed' ] == 'true' )
 	      {
 		$oValList->setAttribute( 'type', 'closed' );
 	      }
-	    else
+	     else
 	      {
 		$oValList->setAttribute( 'type', 'open' );
 	      }
-    	    if ( $aszConfig[ 'added' ] != 'true' )
+    	     if ( $aszConfig[ 'added' ] != 'true' )
 	     {
 		 $oValList->setAttribute( 'mode', 'replace' );	
 		 }
-	    if ( is_array( $aszValList ) )
+	     if ( is_array( $aszValList ) )
 	      {
 		foreach( $aszValList as $szValue )
 		  {
@@ -1504,8 +1506,8 @@ class romaDom extends domDocument
 			$oValItem->setAttribute( 'ident', $szValue );
 		      }
 		  }
-	      }
-
+	        }
+	     }
 	  }
 	return $errResult;
 
