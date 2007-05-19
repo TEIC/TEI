@@ -765,12 +765,20 @@ bibliographic citation, using one of the following elements:
 <specList>
 <specDesc key="bibl"/>
 <!--specDesc key="biblItem"/-->
-<specDesc key="biblFull"/>
 <specDesc key="biblStruct"/>
 <specDesc key="listBibl"/>
 </specList>
 These elements are described in more detail in section <ptr target="#COBI"/>
 .</p>
+<p>When the header describes a text derived from some pre-existing
+TEI-conformant or other digital document, it may be simpler to use the
+following element:
+<specList>
+<specDesc key="biblFull"/>
+</specList>
+since this is designed specifically for documents derived from texts
+which were <soCalled>born digital</soCalled>, as further discussed in
+section <ptr target="#HD31"/>.</p>
 <p>When the header describes a transcription of spoken material, the
 <gi>sourceDesc</gi> element may also include the following
 special-purpose elements, intended for cases where an electronic text
@@ -805,6 +813,7 @@ of the above elements, as in the following examples:
 <specGrp xml:id="D223" n="The source description">
 &model.sourceDescPart;
 &sourceDesc;
+&biblFull;
 <specGrpRef target="#D2231"/>
 </specGrp>
  </p></div>
@@ -820,10 +829,10 @@ header for B in slightly differing ways, as listed below:
 <item>A's file description should be copied into the
 <gi>sourceDesc</gi> section of B's file description, enclosed
 within a <gi>biblFull</gi> element
-(see section <ptr target="#COBI"/>).
  </item><label>profileDesc</label>
 <item>A's <gi>profileDesc</gi> should be
-copied into B's, in principle unchanged.
+copied into B's, in principle unchanged; it may however be expanded by
+project-specific information relating to B.
  </item><label>encodingDesc</label>
 <item>A's encoding practice may or (more likely) may not be the
 same as B's. Since the object of the encoding description is to
