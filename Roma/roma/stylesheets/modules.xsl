@@ -56,7 +56,7 @@ Description
 
 
 <xsl:template name="processSelectedModules">
-   <xsl:for-each select=".//selectedModules/module">
+   <xsl:for-each select=".//selectedModules/module[not(.='tei')]">
      <xsl:variable name="thisModule"><xsl:value-of select="."/></xsl:variable>
      <tr>
        <td>
@@ -84,7 +84,7 @@ Description
        </xsl:otherwise>
      </xsl:choose>
    </xsl:variable>
-   <xsl:for-each select=".//teiModulesList/teiModule">
+   <xsl:for-each select=".//teiModulesList/teiModule[not(moduleName='tei')]">
      <xsl:variable name="currentModule"><xsl:value-of
      select="moduleName"/></xsl:variable>
      <tr>
