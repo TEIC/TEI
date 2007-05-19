@@ -1,0 +1,210 @@
+<moduleSpec xmlns="http://www.tei-c.org/ns/1.0" ident="certainty">
+  <elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="certainty" module="certainty">
+
+    <gloss/>
+    <gloss xml:lang="es" notBefore="2007-05-04"/>
+    <desc>indicates the degree of certainty or uncertainty associated with some aspect of the text
+      markup. </desc>
+    <desc xml:lang="es" notBefore="2007-05-04">Indica el grado de certeza o incertidumbre asociado a algun aspecto del marcaje de texto.</desc>
+
+
+
+
+    <attList>
+      <attDef ident="target" usage="req">
+
+        <desc>points at the elements whose markup is uncertain.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">señala los elementos cuyo marcaje es incierto.</desc>
+
+
+        <valDesc>a series of one or more identifiers (URIs), separated by white space</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">una serie de uno o más identificadores (URIs), separados por un espacio blanco</valDesc>
+
+
+      </attDef>
+      <attDef ident="locus" usage="req">
+
+        <desc>indicates the precise location of the uncertainty in the markup: applicability of the
+          element, precise position of the start- or end-tag, value of a specific attribute, etc.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">indica la posición precisa de la incertidumbre en el marcaje: aplicabilidad del elemento, posición precisa del comienzo y del final de la etiqueta, valor de un atributo específico, etc.</desc>
+
+
+        <valList type="semi">
+          <valItem ident="gi">
+
+            <gloss>it is uncertain whether the element used actually applies to the passage.</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">es incierto si el elemento usado realmente se aplica al pasaje...</gloss>
+          </valItem>
+          <valItem ident="startloc">
+
+            <gloss>start-tag may not be correctly located.</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">el comienzo de la etiqueta puede no estar situado correctamente.</gloss>
+          </valItem>
+          <valItem ident="endloc">
+
+            <gloss>end-tag may not be correctly located.</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">el final de la etiqueta puede no estar situado correctamente.</gloss>
+          </valItem>
+          <valItem ident="location">
+
+            <gloss>both the start-tag and the end-tag may not be correctly located.</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">ambos, el comienzo y el final de la etiqueta pueden no estar situados correctamente.</gloss>
+          </valItem>
+          <valItem ident="attrName">
+
+            <gloss>the value given for the attribute name is uncertain.</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">el valor dado para el nombre del atributo es incierto.</gloss>
+          </valItem>
+          <valItem ident="transcribedContent">
+
+            <gloss>the content of the element may not be a correct transcription of the source text.</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">el contenido del elemento puede no ser una transcripción correcta del texto fuente.</gloss>
+          </valItem>
+          <valItem ident="suppliedContent">
+
+            <gloss>the content of the element may not have been correctly supplied by the reader,
+              e.g. as in the cases of corr and abbrev elements.</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">el contenido del elemento puede no haber sido proporcionado correctamente por el lector, p.ej. como en los casos de los elementos corr y abbrev.</gloss>
+          </valItem>
+        </valList>
+
+      </attDef>
+      <attDef ident="assertedValue" usage="rec">
+
+        <desc>provides an alternative value for the aspect of the
+          markup in question—an alternative generic identifier,
+          transcription, or attribute value, or the identifier of an
+          <gi>anchor</gi> element (to indicate an alternative starting
+          or ending location). If an <att>assertedValue</att> is
+          given, the confidence level specified by <att>degree</att>
+          applies to the alternative markup specified by
+          <att>assertedValue</att>; if none is given, it applies to
+          the markup in the text.</desc> <desc xml:lang="es"
+          notBefore="2007-05-04">proporciona un valor alternativo para
+          el aspecto del marcaje en cuestion, un identificador
+          genérico alternativo, transcripción, o valor de atributo, o
+          de identificador de un elemento <gi>anchor</gi> (para
+          indicar una posición de comienzo y fin alternativa). Si un
+          <att>assertedValue</att> viene dado, el nivel de confianza
+          especificado por <att>degree</att> se aplica al marcaje
+          alternativo especificado por <att>assertedValue</att>; si no
+          viene dado ninguno, se aplica al marcaje en el texto.</desc>
+
+        <valDesc>generic identifier, attribute value, location (e.g. indicated by a reference to an
+            <gi>anchor</gi> element or to an <gi>ptr</gi> element), or other appropriate alternative
+          value.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">identificador genérico, valor de atributo, localización (p.ej. indicada mediante una referencia a un elemento <gi>anchor</gi> o a un elemento <gi>ptr</gi>), u otro valor alternativo apropiado.</valDesc>
+
+
+      </attDef>
+
+
+      <attDef ident="given" usage="rec">
+
+        <desc>indicates conditions assumed in the assignment of a degree of confidence.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">indica las condiciones asumidas en la asignación de un grado de confianza </desc>
+
+
+        <valDesc>a pointer to a characterization of the conditions which are assumed in the
+          assignment of a degree of confidence.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">indicación para la caracterización de las condiciones que se asumen en la asignación de un grado de confianza</valDesc>
+
+      </attDef>
+      <attDef ident="degree" usage="opt">
+
+        <desc>indicates the degree of confidence assigned to the aspect of the markup named by the
+            <att>locus</att> attribute.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">indica el grado de confianza asignado al aspecto del marcaje llamado por el atributo <att>locus</att></desc>
+
+      </attDef>
+    </attList>
+
+
+
+  </elementSpec>
+  <elementSpec ident="respons" module="certainty">
+
+    <gloss>responsibility</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">responsabilidad</gloss>
+    <desc>identifies the individual(s) responsible for some aspect of the markup of particular
+      element(s).</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">Identifica la responsabilidad individual/es de algún aspecto del marcaje de un elemento/s particular.</desc>
+
+
+    <attList>
+      <attDef ident="target" usage="req">
+
+        <desc>gives the identifier(s) of the element(s) for which some aspect of the responsibility
+          is being assigned.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">proporciona el identificador/es del elemeto/s por el cual un aspecto de la responsabilidad está siendo asignado.</desc>
+
+        <valDesc>one or more valid identifiers, separated by white space.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">uno o más identificadores válidos, separados por un espacio en blanco.</valDesc>
+
+      </attDef>
+      <attDef ident="locus" usage="req">
+
+        <desc>indicates the specific aspect of the markup for which responsibility is being
+          assigned.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">indica el aspecto específico del marcaje por el cual la responsabilidad está siendo asignada</desc>
+
+        <valList type="semi">
+          <valItem ident="gi">
+
+            <gloss>responsibility for the claim that the element is of the type indicated by the
+              markup</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">responsabilidad por la necesidad que un elemento sea del tipo indicado por el marcaje</gloss>
+          </valItem>
+          <valItem ident="location">
+
+            <gloss>responsibility for the claim that the element begins and ends where indicated</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">responsabilidad por la necesidad que un elemento empiece y acabe donde se indica.</gloss>
+          </valItem>
+          <valItem ident="startloc">
+
+            <gloss>responsibility for the claim that the element begins where indicated</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">responsabilidad por la necesidad que un elemento empiece donde se indica.</gloss>
+          </valItem>
+          <valItem ident="endloc">
+
+            <gloss>responsibility for the claim that the element ends where indicated</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">responsabilidad por la necesidad que un elemento acabe donde se indica.</gloss>
+          </valItem>
+          <valItem ident="attrName">
+
+            <gloss>responsibility for the claim that the name attribute has the value given in the
+              markup</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">responsabilidad por la necesidad que el nombre del atributo tenga el valor dado en el marcaje.</gloss>
+          </valItem>
+          <valItem ident="transcribedContent">
+
+            <gloss>responsibility for the transcription of the element content</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">responsabilidad por la transcripción del contenido del elemento.</gloss>
+          </valItem>
+          <valItem ident="suppliedContent">
+
+            <gloss>responsibility for the contents supplied by the encoder (corrections, expansions
+              of abbreviations, etc.)</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">responsabilidad por los contenidos proporcionados por el codificador (correcciones, ampliaciones o abreviaturas)</gloss>
+          </valItem>
+        </valList>
+
+      </attDef>
+      <attDef ident="resp" usage="req">
+
+        <desc>identifies the individual or agency responsible for the indicated aspect of the
+          electronic text.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">indentifica el individuo o grupo responsable del aspecto indicado en un texto electrónico.</desc>
+
+        <valDesc>a pointer to one of the identifiers declared in the document header, associated
+          with a person asserted as responsible for some aspect of the text's creation,
+          transcription, editing, or encoding</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">un señalador de uno de los identificadores declarados en el encabezado del documento, asociado con la persona declarada responsable de algún aspecto de la creación del texto, transcripción, edición o codificación. </valDesc>
+
+      </attDef>
+    </attList>
+
+
+
+  </elementSpec>
+</moduleSpec>
