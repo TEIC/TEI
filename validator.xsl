@@ -185,9 +185,6 @@ select="name(.)"/> points to non-existent <xsl:value-of select="$value"/> (<xsl:
 
 <xsl:template name="Warning">
   <xsl:param name="value"/>
-</xsl:template>
-<xsl:template name="oldWarning">
-  <xsl:param name="value"/>
   <xsl:variable name="where">
     <xsl:value-of select="name(parent::*)"/>
     <xsl:text>@</xsl:text>
