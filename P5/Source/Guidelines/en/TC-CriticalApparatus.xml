@@ -575,17 +575,17 @@ sigla for all the witnesses named in the apparatus.  For example, the
 witnesses referenced by the examples of this
 chapter might simply be listed  thus:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><witList>
-   <witness xml:id="Chi3">    </witness>
-   <witness xml:id="Ha4">   </witness>
-   <witness xml:id="Ju">   </witness>
-   <witness xml:id="K">   </witness>
-   <witness xml:id="Kl">   </witness>
-   <witness xml:id="Ld1">   </witness>
-   <witness xml:id="Mu">   </witness>
-   <witness xml:id="Kb">   </witness>
-   <witness xml:id="Kv">   </witness>
-   <witness xml:id="Wa">   </witness>
-   <witness xml:id="X">   </witness>
+   <witness xml:id="Chi3"/>
+   <witness xml:id="Ha4"/>
+   <witness xml:id="Ju"/> 
+   <witness xml:id="K"/>  
+   <witness xml:id="Kl"/> 
+   <witness xml:id="Ld1"/> 
+   <witness xml:id="Mu"/>  
+   <witness xml:id="Kb"/>  
+   <witness xml:id="Kv"/>  
+   <witness xml:id="Wa"/>  
+   <witness xml:id="X"/>   
 </witList></egXML></p>
 <p>It is more helpful, however, for witness lists to be somewhat
 more informative:  each <gi>witness</gi> element should contain at
@@ -635,31 +635,41 @@ commentary for each witness :
 </witList></egXML></p>
 <p>It is common, in text-critical work, to refer to frequently occurring
 groups of witnesses by means of a single common sigil.  Such sigla may
-be documented as pseudo-witnesses in their own right by including, in
-the witness list, a <gi>witness</gi> element giving the sigil for the group
-and listing the other witnesses included in the group in the value of
-the <att>included</att> attribute.  In this example, the group of
+be documented as pseudo-witnesses in their own right by including a
+nested witness list within 
+the witness list, which uses the sigil for the group as its
+identifier, and supplies a fuller name for the group in its optional child
+<gi>head</gi> element, before
+ listing the other witnesses contained by the group. <!-- In this example, the group of
 manuscripts of the <title>Canterbury Tales</title> which make up <soCalled>Constant
-Group c</soCalled> are themselves first allocated sigla in individual
+Group C</soCalled> are themselves first allocated sigla in individual
 <gi>witness</gi> elements, and then those sigla are given as the
-<att>included</att> value of a further <gi>witness</gi> element.  All the
-manuscripts of this group may thereafter be referred to as <val>#c</val>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><witList>
+<att>included</att> value of a further <gi>witness</gi> element. --> 
+For example, the Constance Group C of mss comprising witnesses Cp, La,
+and S12, might be represented as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><witList xml:id="C">
+   <head>Constant Group C</head>
    <witness xml:id="Cp">Corpus Christi Oxford MS 198</witness>
    <witness xml:id="La">British Library Lansdowne 851</witness>
    <witness xml:id="Sl2">British Library Sloane MS 1686</witness>
-   <witness xml:id="c" included="#Cp #La #Sl2">Constant Group c</witness>
 </witList></egXML>
+<!--   <witness xml:id="c" included="#Cp #La #Sl2">Constant Group c</witness>-->
 That the reading <mentioned>Experiment</mentioned> occurs in all three manuscripts
 can now be indicated simply as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><rdg wit="#c">Experiment</rdg></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><rdg wit="#C">Experiment</rdg></egXML>
 <!-- What happens if both 'c' and 'La' are given, on two      -->
 	<!-- different readings?  Needs clarification for next        -->
 	<!-- revision.  Allow single-ms readings to override a        -->
 	<!-- group?  What, then, about groups of groups, or about     -->
 	<!-- overlapping groups?  Perhaps better to say that 'c'      -->
 	<!-- *always* is the same as 'Cp La Sl2', with no             -->
-	<!-- exceptions.  (msm)                                       --></p>
+	<!-- exceptions.  (msm)
+	-->
+Note that a single witness cannot  appear more than once in a witness list,
+and therefore cannot be assigned to more than one group of witnesses.
+</p>
+
+
 <p>Situations commonly arise where there are many more or less
 fragmentary witnesses, such that there may be quite distinct groups of
 witnesses for different parts of a text or collection of texts.  One may

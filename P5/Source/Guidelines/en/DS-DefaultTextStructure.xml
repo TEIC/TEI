@@ -1299,27 +1299,46 @@ in the next example, this time containing a table of contents, which
 contains a <gi>list</gi> element (as described in section 
 <ptr target="#COLI"/>).  Note the use of the <gi>ptr</gi> element to provide
 page-references:  the implication here is that the target identifiers
-supplied (P1, P68 etc.) may correspond with identifiers used either for
-<gi>div</gi> elements representing chapters of the text, or for
-<gi>pb</gi> elements marking page divisions of the text.  (For the
-<gi>ptr</gi> element, see <ptr target="#COXR"/>.)  Alternatively,
-the literal page numbers present in the source text might be
-transcribed, but they are likely to be of little direct use in work with
-the electronic text.
+supplied (fish1, fish2 etc.) will correspond with identifiers used  for
+the <gi>div</gi> elements containing chapters of the text itself. (For the
+<gi>ptr</gi> element, see <ptr target="#COXR"/>.)  
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="contents">
   <head>Contents</head>
   <list>
 	<item>Introduction, or How I stopped Worrying and Learned to Love
-	  Interpretation <ptr target="#P1"/></item>
+	  Interpretation <ptr target="#fish1"/></item>
 	<item>
 	  <list>
 		<head>Part One: Literature in the Reader</head>
 		<item n="1">Literature in the Reader: Affective Stylistics
-		  <ptr target="#P21"/></item>
+		  <ptr target="#fish2"/></item>
 		<item n="2">What is Stylistics and Why Are They Saying Such
-		  Terrible Things About It? <ptr target="#P68"/></item>
+		  Terrible Things About It? <ptr target="#fish3"/></item>
 	  </list></item></list>
-  </div></egXML>
+  </div>
+<div xml:id="fish1"><head>Introduction</head>
+...
+</div>
+<div xml:id="fish2"><head>Literature in the Reader</head>
+....
+</div>
+<div xml:id="fish3"><head>What is stylistics?</head>
+....
+</div>
+</egXML>
+Alternatively, the pointers in the index might link to the page breaks
+at which a chapter begins, assuming that these have been included in
+the markup:
+<egXML	 xmlns="http://www.tei-c.org/ns/Examples">...
+	<item n="1">Literature in the Reader: Affective Stylistics
+		  <ref target="#fish-p24">24</ref></item>
+...
+<div type="chapter"><head>Literature in the Reader</head>
+<pb xml:id="fish-p24"/>
+...
+</div>
+...
+</egXML>
  </p>
 <p>The following example uses numbered divisions to mark up the front
 matter of a medieval text. 
@@ -1521,22 +1540,34 @@ transcription):
   <head>Index</head>
   <list type="index">
   <item>Actors, public, paid for the contempt attending
-    their profession, <ptr target="#P209"/></item>
+    their profession, <ref>263</ref></item>
   <item>Africa, cause assigned for the barbarous state of
-    the interior parts of that continent, <ptr target="#P125"/></item>
+    the interior parts of that continent, <ref>125</ref></item>
   <item>Agriculture
     <list type="indexentry">
-    <item>ancient policy of Europe unfavourable to, <ptr target="#P371"/></item>
-    <item>artificers necessary to carry it on, <ptr target="#P481"/></item>
-    <item>cattle and tillage mutually improve each other, <ptr target="#P325"/></item>
+    <item>ancient policy of Europe unfavourable to, <ref>371</ref></item>
+    <item>artificers necessary to carry it on, <ref>481</ref></item>
+    <item>cattle and tillage mutually improve each other, <ref>325</ref></item>
     <item>wealth arising from more solid than that which proceeds
-    from commerce <ptr target="#P520"/></item>
+    from commerce <ref>520</ref></item>
     </list></item>
-  <item>Alehouses, not the efficient cause of drunkenness, <ptr target="#P461"/></item>
+  <item>Alehouses, not the efficient cause of drunkenness, <ref>461</ref></item>
   </list>
 </div>
 </back></egXML>
-<!-- Smith, Wealth of Nations, 1776; index to vol 1 --></p>
+<!-- Smith, Wealth of Nations, 1776; index to vol 1 -->
+Note that if the page breaks in the original source have also been
+explicitly encoded, and given identifiers, the references to them in the
+above index can more usefully be recorded as links. For example,
+assuming that the encoding of page 461 of the original source starts
+like this:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><pb xml:id="P461"/></egXML>
+then the last item above might be encoded more usefully in either
+of the following forms:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">  <item>Alehouses, not
+the efficient cause of drunkenness, <ref target="#P461">461</ref></item>
+  <item>Alehouses, not the efficient cause of drunkenness, <ptr target="#P461"/></item>
+</egXML></p>
 <p>Next, a back-matter division in epistolary form:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><back>  
   <div type="letter">
