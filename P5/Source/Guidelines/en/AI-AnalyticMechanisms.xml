@@ -650,15 +650,45 @@ Humanities</title> 17 (1983): 139–50.</bibl>
 For an overview of the system see <bibl><author>R. G. Garside,
 G. N. Leech, and G. R. Sampson</author> <title>The Computational
 Analysis of English: a Corpus-Based Approach</title> (Oxford: Oxford
-University Press, 1991).</bibl></note>
+University Press, 1991).</bibl>. The example sentence was processed
+using an online version of the CLAWS tagger at <ptr
+target="http://http://www.comp.lancs.ac.uk/ucrel/claws/trial.html"/> </note>
 Output from the system consists of a segmented and tokenized version
 of the text, in which word class codes have been associated with each
-token.  For our example sentence, we might conveniently represent
-these codes using entity references:<note place="foot">We have
-replaced the Claws code <val>$</val> for the
-<mentioned>'s</mentioned> morpheme by <val>GEN</val>, as
-in the tag set used by the British National Corpus, and the code <val>.</val> for the
-final full stop by <val>PUN</val>.</note>
+token. CLAWS offers outputs in a variety of non-XML and XML format:
+for example, the simplest format for the sample sentence would be:
+<eg>
+The_AT0 victim_NN1 's_POS friends_NN2 told_VVD police_NN2 that_CJT Kruger_NP0 
+drove_VVD into_PRP the_AT0 quarry_NN1 and_CJC never_AV0 surfaced_VVD ._. 
+</eg>
+</p>
+<p>This may be easily transformed into an equivalent (but non TEI)
+form:
+
+<egXML  xmlns="http://www.tei-c.org/ns/Examples" ><s><w pos="AT0">The</w> <w pos="NN1">victim</w> 
+<w pos="POS">'s</w> <w pos="NN2">friends</w> 
+<w pos="VVD">told</w> <w pos="NN2">police</w> 
+<w pos="CJT">that</w> <w pos="NP0">Kruger</w> 
+<w pos="VVD">drove</w> <w pos="PRP">into</w> 
+<w pos="AT0">the</w> <w pos="NN1">quarry</w> 
+<w pos="CJC">and</w> <w pos="AV0">never</w> 
+<w pos="VVD">surfaced</w> <w pos=".">.</w></s></egXML> 
+
+The names used for the attribute values here have some significance
+for the human reader (<val>AT</val> for <term>article</term>,
+<val>NN1</val> for <term>singular noun</term>, <val>NN2</val> for
+<term>plural noun</term>, etc.) but they are arbitrary codes.  If the
+codes are considered to be <term>atomic</term>, then one of the
+mechanisms based on the <gi>interp</gi> element described in section
+<ptr target="#AISP"/> is sufficient.  If the codes are considered to
+be compositional (for example that <val>NN1</val> and <val>NN2</val>
+have something in common, namely their <term>noun-ness</term>, which
+they do not share with, say, <val>VVD</val>), then this
+compositionality may be most clearly expressed using a mechanism based
+on the <gi>fs</gi> element defined in chapter <ptr target="#FS"/>.
+
+
+<!--
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><s>The&amp;AT; victim&amp;NN1;'s&amp;GEN; friends&amp;NN2; told&amp;VVD; police&amp;NN2;
 that&amp;CST; Krueger&amp;NP1;  drove&amp;VVD; into&amp;II; the&amp;AT;
 quarry&amp;NN1;  and&amp;CC;  never&amp;RR; surfaced&amp;VVD;.&amp;PUN;</s></egXML>
@@ -675,13 +705,13 @@ the output.
 <eg><![CDATA[<!ENTITY AT "">
 <!ENTITY NN1 "">
 <!ENTITY GEN "">
-<!-- ... -->]]></eg>
+<!- - ... - ->]]></eg>
 Alternatively, suppose the entity set in use follows the following
 pattern:
 <eg><![CDATA[<!ENTITY AT  "[definite article]">
 <!ENTITY NN1 "[singular noun]">
 <!ENTITY GEN "[genitive suffix]">
-<!-- ... -->]]></eg>
+<!- - ... - ->]]></eg>
 Then the sample sentence will be processed as if it began:
 <eg>The[definite article] 
 victim[singular noun]'s[genitive suffix] ...</eg>
@@ -695,8 +725,7 @@ compositional (for example that <val>NN1</val> and <val>NN2</val>
 have something in common, namely their <term>noun-ness</term>, which
 they do not share with, say, <val>VVD</val>), then this
 compositionality may be most clearly expressed using a mechanism based
-on the <gi>fs</gi> element defined in chapter <ptr target="#FS"/>.  <!--For a
-detailed example, see <ptr target="#F"SIL"/>.-->
+on the <gi>fs</gi> element defined in chapter <ptr target="#FS"/>.  
  </p>
 <p>One such replacement for the word-class entity references above
 is a set of empty <gi>ptr</gi> elements bearing <att>target</att>
@@ -705,7 +734,7 @@ entity definitions would look as follows.
 <eg><![CDATA[<!ENTITY   AT   "<ptr target='AT'/>" >
 <!ENTITY   NN1  "<ptr target='NN1'/>">
 <!ENTITY   GEN  "<ptr target='GEN'/>">
-<!-- ... -->]]></eg>
+<!- - ... - ->]]></eg>
 Then the text would be expanded to read:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><s>The <ptr target="#at"/> victim <ptr target="#nn1"/>'s <ptr target="#gen"/>
 friends <ptr target="#nn2"/> told <ptr target="#vvd"/> police
@@ -741,28 +770,21 @@ it does not work with texts with additional markup, for example
 <gi>ptr</gi> elements that are used for some other purpose.  In addition,
 the convention fails for any markup in which interpretations are
 intended to be associated with nested text elements.
- </p>
+ </p>-->
+</p>
 <p>None of these difficulties arise if the text is fully segmented, using
 the linguistic segment elements described in section <ptr target="#AILC"/>,
 and the <att>ana</att> attribute to point to the interpretations
 that are associated with each such segment, as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><s type="sentence">
-   <w ana="#at">The</w>
-   <w ana="#nn1">victim</w>
-   <m ana="#gen">'s</m>
-   <w ana="#nn2">friends</w>
-   <w ana="#vvd">told</w>
-   <w ana="#nn2">police</w>
-   <w ana="#cst">that</w>
-   <w ana="#np1">Krueger</w>
-   <w ana="#vvd">drove</w>
-   <w ana="#ii">into</w>
-   <w ana="#at">the</w>
-   <w ana="#nn1">quarry</w>
-   <w ana="#cc">and</w>
-   <w ana="#rr">never</w>
-   <w ana="#vvd">surfaced</w>
-   <c ana="#pun">.</c>
+   <w ana="#AT">The</w>
+   <w ana="#NN1">victim</w>
+   <m ana="#GEN">'s</m>
+   <w ana="#NN2">friends</w>
+   <w ana="#VVD">told</w>
+   <w ana="#NN2">police</w>
+<!-- ... -->
+   <c ana="#period">.</c>
 </s></egXML>
  </p>
 <p>Analysis into phrase and clause elements can be superimposed on the
