@@ -14,7 +14,7 @@ makeODD()
     if test "x$lang" = "x"
     then
 	xmllint --noent --xinclude $ODD \
-	    | xsltproc -o $N.compiled.odd $LANGUAGE $DOCLANG --stringparam TEIC $TEIC \
+	    | xsltproc -o $RESULTS/$N.compiled.odd $LANGUAGE $DOCLANG --stringparam TEIC $TEIC \
 	    --stringparam TEISERVER $TEISERVER  \
 	    --stringparam localsource "$LOCAL"  \
 	    $DEBUG  $TEIXSLDIR/odds/odd2odd.xsl -
@@ -26,7 +26,7 @@ makeODD()
 	    --stringparam TEISERVER $TEISERVER  \
 	    --stringparam localsource "$LOCAL"  \
 	   $DEBUG  $TEIXSLDIR/odds/odd2odd.xsl - \
-	    | xsltproc -o $N.compiled.odd $DEBUG $LANGUAGE $DOCLANG --stringparam TEISERVER $TEISERVER  \
+	    | xsltproc -o $RESULTS/$N.compiled.odd $DEBUG $LANGUAGE $DOCLANG --stringparam TEISERVER $TEISERVER  \
 	    $TEIXSLDIR/odds/translate-odd.xsl - 
     fi
 }
@@ -62,7 +62,7 @@ makeDTD()
 makeHTMLDOC() 
 {
     echo "8. make HTML documentation"
-    xsltproc 	-o $N.doc.html $DEBUG  $LANGUAGE $DOCLANG --stringparam TEIC $TEIC \
+    xsltproc 	-o $RESULTS/$N.doc.html $DEBUG  $LANGUAGE $DOCLANG --stringparam TEIC $TEIC \
 	--stringparam STDOUT true \
 	--stringparam splitLevel -1 \
 	$DOCFLAGS $TEIXSLDIR/html/odd2html.xsl $N.compiled.odd
@@ -73,7 +73,7 @@ makePDFDOC()
 {
     echo "7. make PDF documentation"
     xsltproc $DEBUG $LANGUAGE $DOCLANG --stringparam TEIC $TEIC \
-	-o $N.doc.tex \
+	-o $RESULTS/$N.doc.tex \
 	$TEIXSLDIR/latex/tei.xsl $N.doc.xml
     pdflatex $N.doc.tex
     echo created $N.doc.pdf and $N.doc.tex 
@@ -85,7 +85,7 @@ makeXMLDOC()
     xsltproc $DEBUG $LANGUAGE $DOCLANG --stringparam TEISERVER $TEISERVER  \
 	--stringparam localsource "$LOCAL"  \
 	--stringparam TEIC $TEIC \
-	-o $N.doc.xml \
+	-o $RESULTS/$N.doc.xml \
 	$TEIXSLDIR/odds/odd2lite.xsl $N.compiled.odd 
     echo created $N.doc.xml 
 }
