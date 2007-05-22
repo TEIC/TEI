@@ -659,141 +659,64 @@ token. CLAWS offers outputs in a variety of non-XML and XML format:
 for example, the simplest format for the sample sentence would be:
 <eg>
 The_AT0 victim_NN1 's_POS friends_NN2 told_VVD police_NN2 that_CJT Kruger_NP0 
-drove_VVD into_PRP the_AT0 quarry_NN1 and_CJC never_AV0 surfaced_VVD ._. 
+drove_VVD into_PRP the_AT0 quarry_NN1 and_CJC never_AV0 surfaced_VVD
 </eg>
 </p>
-<p>This may be easily transformed into an equivalent (but non TEI)
-form:
+<p>This may be easily transformed into an equivalent TEI XML representation:
 
-<egXML  xmlns="http://www.tei-c.org/ns/Examples" ><s><w pos="AT0">The</w> <w pos="NN1">victim</w> 
-<w pos="POS">'s</w> <w pos="NN2">friends</w> 
-<w pos="VVD">told</w> <w pos="NN2">police</w> 
-<w pos="CJT">that</w> <w pos="NP0">Kruger</w> 
-<w pos="VVD">drove</w> <w pos="PRP">into</w> 
-<w pos="AT0">the</w> <w pos="NN1">quarry</w> 
-<w pos="CJC">and</w> <w pos="AV0">never</w> 
-<w pos="VVD">surfaced</w> <w pos=".">.</w></s></egXML> 
+<egXML  xmlns="http://www.tei-c.org/ns/Examples" ><s><w
+							 ana="#AT0">The</w> 
+<w ana="#NN1">victim</w> 
+<w ana="#POS">'s</w> <w ana="#NN2">friends</w> 
+<w ana="#VVD">told</w> <w ana="#NN2">police</w> 
+<w ana="#CJT">that</w> <w ana="#NP0">Kruger</w> 
+<w ana="#VVD">drove</w> <w ana="#PRP">into</w> 
+<w ana="#AT0">the</w> <w ana="#NN1">quarry</w> 
+<w ana="#CJC">and</w> <w ana="#AV0">never</w> 
+<w ana="#VVD">surfaced</w></s></egXML> 
 
-The names used for the attribute values here have some significance
-for the human reader (<val>AT</val> for <term>article</term>,
-<val>NN1</val> for <term>singular noun</term>, <val>NN2</val> for
-<term>plural noun</term>, etc.) but they are arbitrary codes.  If the
-codes are considered to be <term>atomic</term>, then one of the
-mechanisms based on the <gi>interp</gi> element described in section
-<ptr target="#AISP"/> is sufficient.  If the codes are considered to
+Although the names used for the attribute values here may have some
+significance for the human reader (<val>AT0</val> for
+<term>article</term>, <val>NN1</val> for <term>singular noun</term>,
+<val>NN2</val> for <term>plural noun</term>, etc.) they are
+arbitrary codes, used in this case as pointers to other elements which
+define their significance more precisely.  If the codes are considered
+to be <term>atomic</term>, then the <gi>interp</gi> element described
+in section <ptr target="#AISP"/> might be used to supply brief definitions
+in the header:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<interpGrp type="POS codes">
+ <interp xml:id="AT0">Definite article</interp>
+ <interp xml:id="AV0">Adverb</interp>
+ <interp xml:id="CJC">Conjunction</interp>
+ <interp xml:id="CJT">Relative that</interp>
+ <interp xml:id="NN1">Noun singular</interp>
+ <interp xml:id="NN2">Noun plural</interp>
+ <interp xml:id="NP0">Proper noun</interp>
+ <interp xml:id="POS">Genitive marker</interp>
+ <interp xml:id="PRP">Preposition</interp>
+ <interp xml:id="VVD">Verb past tense</interp>
+</interpGrp>
+</egXML> 
+
+If the codes are considered to
 be compositional (for example that <val>NN1</val> and <val>NN2</val>
 have something in common, namely their <term>noun-ness</term>, which
 they do not share with, say, <val>VVD</val>), then this
 compositionality may be most clearly expressed using a mechanism based
 on the <gi>fs</gi> element defined in chapter <ptr target="#FS"/>.
-
-
-<!--
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><s>The&amp;AT; victim&amp;NN1;'s&amp;GEN; friends&amp;NN2; told&amp;VVD; police&amp;NN2;
-that&amp;CST; Krueger&amp;NP1;  drove&amp;VVD; into&amp;II; the&amp;AT;
-quarry&amp;NN1;  and&amp;CC;  never&amp;RR; surfaced&amp;VVD;.&amp;PUN;</s></egXML>
-The names used for these entity references have some significance for
-the human reader (<val>AT</val> for <term>article</term>,
-<val>NN1</val> for <term>singular noun</term>, <val>NN2</val> for
-<term>plural noun</term>, etc.), but their representation in the
-output from a system processing the document may be adjusted by
-modifying the entity declarations to suit the convenience of whatever
-analytic software is to be used.  For example, if a parser
-operating on this sentence uses a set of entity declarations in the
-following form, then the word class tags will simply disappear from
-the output.
-<eg><![CDATA[<!ENTITY AT "">
-<!ENTITY NN1 "">
-<!ENTITY GEN "">
-<!- - ... - ->]]></eg>
-Alternatively, suppose the entity set in use follows the following
-pattern:
-<eg><![CDATA[<!ENTITY AT  "[definite article]">
-<!ENTITY NN1 "[singular noun]">
-<!ENTITY GEN "[genitive suffix]">
-<!- - ... - ->]]></eg>
-Then the sample sentence will be processed as if it began:
-<eg>The[definite article] 
-victim[singular noun]'s[genitive suffix] ...</eg>
- </p>
-<p>It would be more useful if the replacement texts for each entity
-were a code of some significance to a particular analysis program.  If
-the codes are considered to be <term>atomic</term>, then one of the
-mechanisms based on the <gi>interp</gi> element described in section <ptr target="#AISP"/>
- is sufficient.  If the codes are considered to be
-compositional (for example that <val>NN1</val> and <val>NN2</val>
-have something in common, namely their <term>noun-ness</term>, which
-they do not share with, say, <val>VVD</val>), then this
-compositionality may be most clearly expressed using a mechanism based
-on the <gi>fs</gi> element defined in chapter <ptr target="#FS"/>.  
- </p>
-<p>One such replacement for the word-class entity references above
-is a set of empty <gi>ptr</gi> elements bearing <att>target</att>
-attributes as described in section <ptr target="#COXR"/>.  The required
-entity definitions would look as follows.
-<eg><![CDATA[<!ENTITY   AT   "<ptr target='AT'/>" >
-<!ENTITY   NN1  "<ptr target='NN1'/>">
-<!ENTITY   GEN  "<ptr target='GEN'/>">
-<!- - ... - ->]]></eg>
-Then the text would be expanded to read:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><s>The <ptr target="#at"/> victim <ptr target="#nn1"/>'s <ptr target="#gen"/>
-friends <ptr target="#nn2"/> told <ptr target="#vvd"/> police
-<ptr target="#nn2"/> that <ptr target="#cst"/> Krueger <ptr target="#np1"/>
-drove <ptr target="#vvd"/> into <ptr target="#ii"/> the <ptr target="#at"/>
-quarry <ptr target="#nn1"/> and <ptr target="#cc"/> never <ptr target="#rr"/>
-surfaced <ptr target="#vvd"/>.<ptr target="#pun"/>
-</s></egXML>
- </p>
-<p>The <gi>ptr</gi> elements are designed to point to elements with
-unique identifiers.  But we have yet to specify what those elements are.
-Suppose we say that they are <gi>interp</gi> elements whose values are the
-same as their identifiers.  That is, we provide an <gi>interpGrp</gi>
-element as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><interpGrp type="word_classes">
-   <interp xml:id="_AT">article</interp>
-   <interp xml:id="_NN1">noun sing</interp>
-   <interp xml:id="_GEN">genitive</interp>
-</interpGrp></egXML>
 </p>
-<p>Although common practice, this (or any similar) method of relating
-text to interpretation is seriously flawed.  The interpretations are
-related not to text elements, but to points in the text, namely those
-that are occupied by the <gi>ptr</gi> elements.  In order to relate the
-interpretation to the appropriate text units, a uniform convention needs
-to be applied; for example, that an interpretation relates to all the
-text material preceding the <gi>ptr</gi> element that points to it up to
-the immediately preceding <gi>ptr</gi>, or up to the <gi>s</gi> that
-delimits the S-unit containing that <gi>ptr</gi> element, whichever is
-nearer.  While this convention works with texts that are marked up
-solely with <gi>ptr</gi> elements that point to interpretation elements,
-it does not work with texts with additional markup, for example
-<gi>ptr</gi> elements that are used for some other purpose.  In addition,
-the convention fails for any markup in which interpretations are
-intended to be associated with nested text elements.
- </p>-->
-</p>
-<p>None of these difficulties arise if the text is fully segmented, using
-the linguistic segment elements described in section <ptr target="#AILC"/>,
-and the <att>ana</att> attribute to point to the interpretations
-that are associated with each such segment, as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><s type="sentence">
-   <w ana="#AT">The</w>
-   <w ana="#NN1">victim</w>
-   <m ana="#GEN">'s</m>
-   <w ana="#NN2">friends</w>
-   <w ana="#VVD">told</w>
-   <w ana="#NN2">police</w>
-<!-- ... -->
-   <c ana="#period">.</c>
-</s></egXML>
- </p>
-<p>Analysis into phrase and clause elements can be superimposed on the
+<p>This approach requires the text to be fully segmented, using the
+linguistic segment elements described in section <ptr
+target="#AILC"/>, so that the scope of the <att>ana</att> attribute
+used to point to each interpretation is clearly defined. However,
+analysis into phrase and clause elements can be superimposed on the
 word and morpheme tagging in the preceding illustration. For example,
-Claws provides the following constituent analysis of the sample sentence
-(the word class codes have been deleted):
-<eg>[N [G The victim's G] friends N] [V told [N police N] 
-[Fn that [N Krueger N] [V [V&amp; drove [P into [N the quarry N]P]V&amp;]
-and [V+ never surfaced V+]V]Fn]V]</eg>
+Claws provides the following constituent analysis of the sample
+sentence (the word class codes have been deleted): <eg>[N [G The
+victim's G] friends N] [V told [N police N] [Fn that [N Krueger N] [V
+[V&amp; drove [P into [N the quarry N]P]V&amp;] and [V+ never surfaced
+V+]V]Fn]V]</eg>
  </p>
 <p>Treating the labels on the brackets as phrase or clause
 interpretations, this analysis of the structure of the example sentence
@@ -804,37 +727,37 @@ second part, has been replaced by <val>V2</val>).
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><s type="sentence">
    <phr ana="#n">  
       <phr ana="#g">    
-         <w ana="#at">The</w>
-         <w ana="#nn1">victim</w>
-         <m ana="#gen">'s</m>
+         <w ana="#AT">The</w>
+         <w ana="#NN1">victim</w>
+         <m ana="#GEN">'s</m>
       </phr>
-      <w ana="#nn2">friends</w>
+      <w ana="#NN2">friends</w>
    </phr>
    <phr ana="#v">  
-      <w ana="#vvd">told</w>
+      <w ana="#VVD">told</w>
       <phr ana="#n">
-         <w ana="#nn2">police</w>
+         <w ana="#NN2">police</w>
       </phr>
       <cl ana="#fn">    
-         <w ana="#cst">that</w>
+         <w ana="#CJT">that</w>
          <phr ana="#n">
-            <w ana="#np1">Krueger</w>
+            <w ana="#NP1">Krueger</w>
          </phr>
          <phr ana="#v">      
             <phr ana="#v1">        
-               <w ana="#vvd">drove</w>
+               <w ana="#VVD">drove</w>
                <phr ana="#p">          
-                  <w ana="#ii">into</w>
+                  <w ana="#PRP">into</w>
                   <phr ana="#n">            
-                     <w ana="#at">the</w>
-                     <w ana="#nn1">quarry</w>
+                     <w ana="#AT0">the</w>
+                     <w ana="#NN1">quarry</w>
                   </phr>
                </phr>
             </phr>
-            <w ana="#cc">and</w>
+            <w ana="#CJC">and</w>
             <phr ana="#v2">        
-               <w ana="#rr">never</w>
-               <w ana="#vvd">surfaced</w>
+               <w ana="#AV0">never</w>
+               <w ana="#VVD">surfaced</w>
             </phr>
          </phr>
       </cl>
@@ -842,11 +765,50 @@ second part, has been replaced by <val>V2</val>).
    <c ana="#pun">.</c>
 </s></egXML>
  </p>
-<p>A representation using the <gi>linkGrp</gi> element can be obtained by
-supplying each linguistic segment with its own <att>xml:id</att> attribute,
-removing its <att>ana</att> attribute, and putting each
-segment-interpretation pair into a <gi>link</gi> element inside the
-<gi>linkGrp</gi> element.
+<p>This approach requires the definition of further <gi>interp</gi>
+(or <gi>fs</gi>) elements to provide targets for the pointers used to
+represent the constituent analysis:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<interpGrp type="constituentFunction">
+ <interp xml:id="v2">co-ordinate  continuation</interp>
+ <interp xml:id="v">verbal</interp>
+ <interp xml:id="n">nominal</interp>
+ <interp xml:id="g">genitive</interp>
+ <interp xml:id="fn">finite clause</interp>
+ <interp xml:id="p">prepositional</interp>
+ <interp xml:id="v1">co-ordinate  start</interp>
+</interpGrp>
+</egXML></p>
+
+<p>Alternatively, a <soCalled>stand-off</soCalled> representation for
+these analyses might be created using the <gi>linkGrp</gi> element.
+In this case, each linguistic segment must be supplied with its own
+<att>xml:id</att> attribute:
+
+<egXML  xmlns="http://www.tei-c.org/ns/Examples" ><s>
+<w xml:id="word-1">The</w> 
+<w xml:id="word-2">victim</w> 
+<w xml:id="word-3">'s</w> <w xml:id="word-4">friends</w> 
+<w xml:id="word-5">told</w> <w xml:id="word-6">police</w> 
+<w xml:id="word-7">that</w> <w xml:id="word-8">Kruger</w> 
+<w xml:id="word-9">drove</w> <w xml:id="word10">into</w> 
+<w xml:id="word11">the</w> <w xml:id="word12">quarry</w> 
+<w xml:id="word13">and</w> <w xml:id="word14">never</w> 
+<w xml:id="word15">surfaced</w></s></egXML> 
+
+Each segment-interpretation pair may now be represented by means of a
+<gi>link</gi> element inside an appropriate <gi>linkGrp</gi> element:
+<egXML  xmlns="http://www.tei-c.org/ns/Examples" ><linkGrp
+						      type="POS-annotation">
+<link targets="#word-1 #AT0"/>
+<link targets="#word-2 #NN1"/>
+<link targets="#word-3 #POS"/>
+<link targets="#word-4 #NN2"/>
+<link targets="#word-5 #VVD"/>
+<link targets="#word-6 #NN2"/>
+<!--... -->
+</linkGrp>
+</egXML>
 </p>
 <p>Each linguistic segment so far discussed has been well-behaved with
 respect to the basic document hierarchy, having only a single parent.
