@@ -192,7 +192,7 @@
         </div>
         <div class="slidebottom">
 	  <div class="slidebottom-image">
-	    <img id="logo" src="{$logoFile}" width="{$logoWidth}" height="${logoHeight}" alt="logo"/>
+	    <img id="logo" src="{$logoFile}" width="{$logoWidth}" height="{$logoHeight}" alt="logo"/>
 	  </div>
 	  <div class="slidebottom-text">
 	    <xsl:variable name="next"><xsl:value-of select="$masterFile"/>1</xsl:variable>
