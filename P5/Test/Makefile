@@ -24,6 +24,7 @@ TESTFILES= \
 	testms \
 	testns \
 	testnames \
+	testrend \
 	testspoken \
 	testtagdocs \
 	testoucs \
