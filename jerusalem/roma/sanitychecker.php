@@ -1,5 +1,7 @@
 <?php
 
+define("JERUSALEM_HTDOCS", "/home/tei/jerusalem_htdocs/");
+
 class SanityChecker {
 
 private $COMPUTING = array();
@@ -14,18 +16,22 @@ private $PARENTS;
 public function __construct($dom_customization) {
 	$this->loadProgressBar();
 	$this->FILE_TMP_NAME = md5(time());
-	$fp = fopen("/usr/local/www/roma/tmp/".$this->FILE_TMP_NAME.".odd", "w");
+	$fp = fopen(JERUSALEM_HTDOCS."tmp/".$this->FILE_TMP_NAME.".odd", "w");
 	fwrite($fp, $dom_customization->saveXML());
 	fclose($fp);
 	$this->updateProgressBar(3);
-	exec("/usr/bin/roma --compile /usr/local/www/roma/tmp/".$this->FILE_TMP_NAME.".odd /");
-	$xml_input = implode("", file("/usr/local/www/roma/tmp/".$this->FILE_TMP_NAME.".odd.compiled"));
+	exec("/usr/bin/roma --compile ".JERUSALEM_HTDOCS."tmp/".$this->FILE_TMP_NAME.".odd /");
+	$xml_input = implode("", file(JERUSALEM_HTDOCS."tmp/".$this->FILE_TMP_NAME.".odd.compiled"));
 	$this->DOM = new romaDom($xml_input);
 	$this->updateProgressBar(10);
 	$this->DOM->getXPath($xpath);
 	$this->ALL_ELEMENTS = $xpath->query("//tei:elementSpec");
 	$this->ALL_CLASSES = $xpath->query("//tei:classSpec");
 	$this->PARENTS = array();
+}
+
+private function deleteTemporary() {
+	exec("rm ".JERUSALEM_HTDOCS."tmp/*.odd");
 }
 
 private function remove_sequences_from_classnames($class) {
@@ -262,7 +268,7 @@ $this->getParentItem($element);
 		case "ref": {
 			$this->DOM->getXPath($xpath);
 			if($this->isClass($element->getAttribute("name"))) {
-				$el = $xpath->query("//tei:classSpec[@ident='".$element->getAttribute("name")."']")->item(0);	
+				$el = $xpath->query("//tei:classSpec[@ident='".$this->remove_sequences_from_classnames($element->getAttribute("name"))."']")->item(0);	
 			} else if ($this->isElement($element->getAttribute("name"))) {
 				$el = $xpath->query("//tei:elementSpec[@ident='".$element->getAttribute("name")."']")->item(0);
 			} else {
