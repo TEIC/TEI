@@ -7,7 +7,7 @@ default:
 	"-sOutputFile=graph$$i.pdf" \
 	-c .setpdfwrite -f graph$$i.eps;\
 	gs -dSAFER \
-	-q -dNOPAUSE -dBATCH -sDEVICE=jpeg -r200 -dEPSCrop \
+	-q -dNOPAUSE -dBATCH -sDEVICE=jpeg -r150 -dEPSCrop \
 	"-sOutputFile=graph$$i.jpg" \
 	-f graph$$i.eps;\
 	done
