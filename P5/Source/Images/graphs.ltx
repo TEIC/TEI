@@ -1,0 +1,449 @@
+\documentclass[12pt]{article}
+\usepackage{times,comment}
+\pagestyle{empty}
+\usepackage{pst-all}
+\begin{document}
+\sffamily
+\newcommand{\Thing}[2][]{\Tr[#1]{\psframebox[linestyle=solid]{#2}}}
+\def\Leaf#1{\Tr{\psframebox{\emph{#1}}}}
+\def\N#1{\psframebox[linewidth=0pt]{#1}}
+\psset{xbbl=12pt,xbbr=12pt,xbbd=12pt,xbbh=12pt}
+\begin{comment}
+.---LAX---.
+|         |
+LVG-------PHX---TUS    CIB
+\end{comment}
+\color{white}\fbox{\color{black}\begin{psmatrix}
+& \psframebox{LAX} &\\ 
+\psframebox{LVG}&&\psframebox{PHX} &\psframebox{TUS} &\psframebox{CIB}
+\ncangle[armA=0,angleA=180,angleB=90,ref=l]{1,2}{2,1}
+\ncangle[armA=0,angleB=90,ref=r]{1,2}{2,3}
+\ncline{2,1}{2,3}
+\ncline{2,3}{2,4}
+\end{psmatrix}}
+\newpage
+\begin{comment}
+          +-<-LAX-<-+
+          |         |
+         LVG--->---PHX--->---TUS   CIB
+                    |         |
+                    +----<----+
+\end{comment}
+\color{white}\fbox{\color{black}\begin{psmatrix}
+& \psframebox{LAX} &\\ 
+\psframebox{LVG}&&\psframebox{PHX} &\psframebox{TUS} &\psframebox{CIB}
+\ncangle[arrows=->,armA=0,angleA=180,angleB=90,ref=l]{1,2}{2,1}
+\ncangle[armA=0,arrows=<-,angleB=90,ref=r]{1,2}{2,3}
+\ncline[arrows=->]{2,1}{2,3}
+\ncline[arrows=->]{2,3}{2,4}
+\ncangles[angleA=270,angleB=270,arrows=->]{2,4}{2,3}
+\end{psmatrix}}
+\newpage
+\begin{comment}
+             OLD      MAN      COMES
+            +->-+   +-->----o---->---+
+            |   |   |                |
+            \   /   |                |
+        THE  \ /    |                |
+(8)   o-->----o-----+                o
+                    |                |
+                    |                |
+                    |                |
+                    +-->----o---->---+
+                      MEN       COME
+\end{comment}
+\color{white}\fbox{\color{black}
+\begin{psmatrix}[colsep=2cm]
+\psset{armA=0}
+{ }&{ }&{ }&\N{o}&{ }\\
+{ }&\N{o}&{ }&{ }&\N{o}\\
+{ }&{ }&{ }&\N{o}&{ }\\
+\ncline{2,1}{2,2}^{The}
+\ncline{2,2}{2,3}
+\nccircle[arrows=<-]{2,2}{.5}^{Old}
+%\ncangle[arrows=->,angleA=270,angleB=180]{2,3}{1,4}\naput{Man}
+%\ncangle[arrows=->,angleB=270]{1,4}{2,5}\naput{Comes}
+%\ncangle[arrows=->,angleA=90,angleB=180]{2,3}{3,4}\nbput{Men}
+%\ncangle[arrows=->,angleB=90]{3,4}{2,5}\nbput{Come}
+\ncarc[arrows=->,arcangle=40]{2,3}{1,4}\naput{Man}
+\ncarc[arrows=->,arcangle=40]{1,4}{2,5}\naput{Comes}
+\ncarc[arrows=->,arcangle=-40]{2,3}{3,4}\nbput{Men}
+\ncarc[arrows=->,arcangle=-40]{3,4}{2,5}\nbput{Come}
+\end{psmatrix}}
+\newpage
+\begin{comment}
+         THE         MAN      COMES
+      +--->---1------->-----4--->---+
+      |   L'  |     HOMME     VIENT |
+      |       |                     |
+      |    OLD|VIEIL                |
+      |       |                     |
+      | THE   |                     |
+(8)   0-->----2                     6
+      |  LE  / \                    |
+      |     /   \                   |
+      |    /     \                  |
+      |    | OLD |                  |
+      |    +-->--+                  |
+      |     VIEIL                   |
+      |  THE        MEN       COME  |
+      +--->---3------>----5---->----+
+         LES / \   HOMMES   VIENNENT
+            /   \
+           /     \
+           | OLD |
+           +-->--+
+            VIEUX
+\end{comment}
+\color{white}\fbox{\color{black}\begin{psmatrix}[rowsep=2cm,colsep=3cm]
+{ }&\N{1}&\N{4}&{ }\\
+\N{0}&\N{2}&{ }&\N{6}\\
+{ }&\N{3}&\N{5}&{ }\\
+\ncarc[arrows=->,arcangle=40]{2,1}{1,2}\naput{The}\nbput{L'}
+\ncline{2,2}{1,2}\naput{Old}\nbput{Vieil}
+\ncline[arrows=->]{2,1}{2,2}\naput{The}\nbput{Le}
+\ncline[arrows=->]{1,2}{1,3}\naput{Man}\nbput{Homme}
+\ncarc[arrows=->,arcangle=-40]{2,1}{3,2}\naput{The}\nbput{Les}
+\ncline[arrows=->]{3,2}{3,3}\naput{Men}\nbput{Hommes}
+\ncarc[arrows=->,arcangle=40]{1,3}{2,4}\naput{Comes}\nbput{Vient}
+\ncarc[arrows=->,arcangle=-40]{3,3}{2,4}\naput{Come}\nbput{Viennent}
+\nccircle[arrows=->,angleA=180]{3,2}{.5}\naput{Old}\nbput{Vieux}
+\nccircle[arrows=->,angleA=180]{2,2}{.5}\naput{Old}\nbput{Vieil}
+\end{psmatrix}}
+\newpage
+\begin{comment}
+                            Mo     Fa
+                  Katherine->--K+A--<-Amberley
+                                |
+                        So      |    Da
+                   +----<-------+----->----+
+                   |            | So       |
+                Bertrand        +->-+    Rachel
+                   |                |
+                   |              Frank
+         Mo     Fa | Fa     Mo
+   Peter->--P+B--<-+->--D+B--<-Dora
+             |           |
+          So |        Da | So
+         +-<-+     +--<--+-->--+
+         |         |           |
+       Conrad     Kate        John
+\end{comment}
+\color{white}\fbox{\color{black}\bgroup
+\psset{arrows=->}
+\pstree{%
+\TR{\begin{psmatrix}
+  \psovalbox{Katherine}&\psdiabox{K+A}&\psframebox{Amberley}
+  \ncline[arrows=->]{1,1}{1,2}\naput{\emph{Mo}}
+  \ncline[arrows=->]{1,3}{1,2}\nbput{\emph{Fa}}
+ \end{psmatrix}}
+  }
+  {
+  \pstree{\Tr{\psframebox{\textbf{Bertrand}}}\tbput{\emph{So}}}
+   {
+   \pstree{\Tr{\begin{psmatrix}
+   \psovalbox{Peter}&\psdiabox{P+B}&{}
+   \end{psmatrix}\ncline[arrows=->]{1,1}{1,2}\naput{\emph{Mo}}}\taput{\emph{Fa}}}{\Tr{\psframebox{Conrad}}\naput{\emph{So}}}
+   \pstree{\Tr{\begin{psmatrix}
+    {}&\psdiabox{D+B}&\psovalbox{Dora}\ncline[arrows=->]{1,3}{1,2}\nbput{\emph{Mo}}\end{psmatrix}
+  }\taput{\emph{Fa}}}{\Tr{\psovalbox{Kate}}\nbput{\emph{Da}}
+                           \Tr{\psframebox{John}}\naput{\emph{So}}}
+   }\naput{\emph{So}}
+  \Tr{\psovalbox{Rachel}}\naput{\emph{Da}}   
+  \Tr{\psframebox{Frank}}\naput{\emph{So}}
+  }
+\egroup}
+\newpage
+\begin{comment}
+              Earl of Argyll's land
+            (land described in sasine)
+                      | | |
+      ,-<-INCLUDE--<--' + '->-INCLUDE---> Pertinents
+      |                 :                  :  |   |
+ Gallachalzie          IN  ...<..IN..<.....:  |   |
+                        :  :                  |   |
+                        :  :             INCLUDE INCLUDE
+                        :  :              |           |
+                        :  :   (part of pertinents)  (part)
+                        :  :              |           |
+                        :  :              BY         PART OF
+                        :  :              |           |
+                        :  :          Lordship of Knapdale
+                        :  :                   :
+                        :  :  ...<.IN..<.......:
+                        :  :  :
+                Sherrifdom of Argyll
+\end{comment}
+\color{white}\fbox{\color{black}\begin{psmatrix}[colsep=1pt]
+{}&\psframebox[linestyle=none]{\parbox{1.5in}{{\centering Earl of Argyll's land\\(land described in sasine)}}}&{}\\
+\psframebox[linestyle=none]{Gallachalzie}&{~}&{}&\psframebox[linestyle=none]{Pertinents}&{}\\
+{}&{}&\psframebox[linestyle=none]{(part of pertinents)}&{}&{}\psframebox[linestyle=none]{(part)}\\
+{}&{}&{}&\psframebox[linestyle=none]{Lordship of Knapdale}&{}\\
+{}&\psframebox[linestyle=none]{Sherrifdom of Argyll}&{}&{}&{}\\
+\ncline[arrows=->]{1,2}{2,1}\nbput{INCLUDE}
+\ncline[offsetA=-10pt,offsetB=-10pt,linestyle=dotted]{1,2}{5,2}\nbput{IN}
+\ncline[arrows=->]{1,2}{2,4}\naput{INCLUDE}
+\ncline{2,4}{3,3}\nbput{INCLUDE}
+\ncline{2,4}{3,5}\naput{INCLUDE}
+\ncline{3,3}{4,4}\nbput{BY}
+\ncline{3,5}{4,4}\naput{PART OF}
+\ncline[arrows=->,linestyle=dotted]{4,4}{5,2}\naput{IN}
+\ncline[linestyle=dotted]{2,4}{2,2}
+\ncline[arrows=->,linestyle=dotted]{2,2}{5,2}\naput{IN}
+\end{psmatrix}}
+\newpage
+\begin{comment}
+a--,
+   |-**-,
+2--'    |
+        |-+--,
+b--,    |    |
+   |-**-'    |
+2--'         |
+             |-/
+a--,         |
+   |-+--,    |
+b--'    |    |
+        |-**-'
+        |
+2-------'
+\end{comment}
+\color{white}\fbox{\color{black}\pstree[treemode=L]{\Thing{/}}
+{
+ \pstree{\Thing{+}}{
+    \pstree{\Thing{**}}{\Leaf{a}\Leaf{2}} 
+    \pstree{\Thing{**}}{\Leaf{b}\Leaf{2}} 
+   }
+ \pstree{\Thing{**}}{
+    \pstree{\Thing{+}}{\Leaf{a}\Leaf{b}} 
+    \Leaf{2}
+   }
+}}
+\newpage
+\begin{comment}
+      ,---PP---,
+      |        |
+      P    ,--NP--,
+      |    |      |
+     with Art     N
+           |      |
+          the periscope
+\end{comment}
+\color{white}\fbox{\color{black}\pstree{\Thing{PP}}
+ {
+   \pstree{\Thing{P}}{\Leaf{with}}
+   \pstree{\Thing{NP}}
+     {
+       \pstree{\Thing{Art}}{\Leaf{the}}
+       \pstree{\Thing{N}}{\Leaf{periscope}}
+     }
+     }}
+\newpage
+\begin{comment}
+       ,--VP--,
+       |      |
+   ,--VB-----xxx--,
+   |          |   |
+   VB         PN  PT
+   |          |   |
+  look       them up
+\end{comment}
+\color{white}\fbox{\color{black}\pstree{\Thing{VP}}
+ {
+  \pstree{\Thing{VB}}
+   {
+   \pstree{\Thing{VB}}{\Leaf{look}}
+   }
+  \pstree{\Thing{xxx}}
+  {
+    \pstree{\Thing{PN}}{\Leaf{them}}
+    \pstree{\Thing{PT}}{\Leaf{up}}
+  }
+ }}
+\newpage
+\begin{comment}
+      ,---PP---,
+      |        |
+      P    ,--NP--,
+      |    |      |
+     with Art     N
+           |      |
+          the periscope
+\end{comment}
+\color{white}\fbox{\color{black}\pstree{\Thing{PP}}
+{
+  \pstree{\Thing{P}}{\Leaf{with}}
+  \pstree{\Thing{NP}}{
+      \pstree{\Thing{Art}}{\Leaf{the}}
+      \pstree{\Thing{N}}{\Leaf{periscope}}
+      }
+}}
+\newpage
+\begin{comment}
+      ,---PP----,
+      |         |
+      P        NP
+      |       /  \
+     with    /    \
+            /______\
+          the periscope
+\end{comment}
+\color{white}\fbox{\color{black}\pstree{\Thing{PP}}
+{
+ \pstree{\Thing{P}}{\Leaf{with}}
+ \pstree{\Thing{NP}}{\Leaf{the periscope}}
+}}
+\newpage
+\begin{comment}
+      ,--------VP....................
+      |        |                    :
+      V   ,----NP.......         ,--PP--,
+      |   |    |       :         |      |
+     see Art   N    ,--PP--,     P    ,-NP-,
+          |    |    |      |     |    |    |
+         the vessel P    ,-NP-, with Art   N
+                    |    |    |       |    |
+                   with Art   N      the periscope
+                         |    |
+                        the periscope
+\end{comment}
+\color{white}\fbox{\color{black}\pstree[linestyle=none]{\Thing[name=VP]{VP}}
+{
+ \pstree[linestyle=solid]{\Thing[name=V]{V}}{\Leaf{see}}
+ \pstree{\Thing[name=NP]{NP}}{
+     \pstree[linestyle=solid]{\Thing[name=Art]{Art}}{\Leaf{the}}
+     \pstree[linestyle=solid]{\Thing[name=N]{N}}{\Leaf{vessel}}
+     \pstree[linestyle=solid]{\Thing[name=PP2]{PP}}
+     {
+       \pstree{\Thing{P}}{\Leaf{with}}
+       \pstree{\Thing{NP}}
+       {
+	 \pstree{\Thing{Art}}{\Leaf{the}}
+         \pstree{\Thing{N}}{\Leaf{periscope}}
+	 }
+       }
+   }
+ \pstree[linestyle=solid]{\Thing[name=PP]{PP}}
+ {
+   \pstree{\Thing{P}}{\Leaf{with}}
+   \pstree{\Thing{NP}}
+   {
+     \pstree{\Thing{Art}}{\Leaf{the}}
+     \pstree{\Thing{N}}{\Leaf{periscope}}
+     }
+   }
+}
+\ncline{VP}{V}
+\ncline{VP}{NP}
+\ncline[linestyle=dotted]{VP}{PP}
+\ncline{NP}{Art}
+\ncline{NP}{N}
+\ncline[linestyle=dotted]{NP}{PP2}}
+\newpage
+\begin{comment}
+    ..............VP......................
+    :                                    :
+ ,--V'--,                          ,-----V'------,
+ |      |                          |             |
+ V    ,-NP--,                   ,--V'--,      ,--PP--,
+ |    |     |                   |      |      |      |
+see  Spec ,-N'--,               V    ,-NP-,   P    ,-NP-,
+      |   |     |               |    |    |   |    |    |
+     the  N'  ,-PP---,         see  Spec  N' with Spec  N'
+          |   |      |               |    |        |    |
+          N   P    ,-NP-,           the   N       the   N
+          |   |    |    |                 |             |
+      vessel with Spec  N'             vessel        periscope
+                   |    |
+                  the   N
+                        |
+                     periscope
+\end{comment}
+\color{white}\fbox{\color{black}\pstree[linestyle=dotted,levelsep=30pt,treesep=0.5cm]{\Thing{VP}}
+{
+ \pstree[linestyle=solid]{\Thing{V'}}
+  {
+   \pstree{\Thing{V}}{\Leaf{see}}
+   \pstree{\Thing{NP}}
+     {
+      \pstree{\Thing{Spec}}{\Leaf{the}}
+      \pstree{\Thing{N'}}
+        {
+	  \pstree{\Thing{N'}}{\pstree{\Thing{N}}{\Leaf{vessel}}}
+	  \pstree{\Thing{PP}}{
+	      \pstree{\Thing{P}}{\Leaf{with}}
+	      \pstree{\Thing{NP}}
+	        {
+   	          \pstree{\Thing{Spec}}{\Leaf{the}}
+		  \pstree{\Thing{N'}}{\pstree{\Thing{N}}{\Leaf{periscope}}}
+		}
+	    }
+	}
+     }
+  }
+ \pstree[linestyle=solid]{\Thing{V'}}
+  {
+    \pstree{\Thing{V'}}
+    {
+     \pstree{\Thing{V}}
+     {
+       \Leaf{see}
+     }
+     \pstree{\Thing{NP}}
+     {
+       \pstree{\Thing{Spec}}{\Leaf{the}}
+       \pstree{\Thing{N'}}{\pstree{\Thing{N}}{\Leaf{vessel}}}
+     }
+    }
+    \pstree{\Thing{PP}}
+    {
+       \pstree{\Thing{P}}{\Leaf{with}}
+       \pstree{\Thing{NP}}
+       {
+        \pstree{\Thing{Spec}}{\Leaf{the}}
+        \pstree{\Thing{N'}}{\pstree{\Thing{N}}{\Leaf{periscope}}}
+	 }
+    }
+  }
+}}
+\newpage
+\begin{comment}
+     ,--S'--,                 ,--S'--,
+     |      |                 |      |
+    COMP ,--S--,             COMP ,--S--,
+     |   |     |              |   |     |
+     e   NP  ,-VP-,           NP  NP  ,-VP-,
+         |   |    |           |   |   |    |
+        you  V    NP        what you  V    NP
+             |    |                   |    |
+            do   what                do    t
+\end{comment}
+\color{white}\fbox{\color{black}\begin{psmatrix}
+\pstree{\Thing{S'}}
+{
+  \pstree{\Thing{COMP}}{\Leaf{e}}
+  \pstree{\Thing{S}}
+  {
+   \pstree{\Thing{NP}}{\Leaf{you}}
+   \pstree{\Thing{VP}}{
+     \pstree{\Thing{V}}{\Leaf{do}}
+     \pstree{\Thing{NP}}{\Leaf{what}}
+     }
+  }
+}
+&
+\pstree{\Thing{S'}}
+{
+  \pstree{\Thing{COMP}}{\pstree{\Thing{NP}}{\Leaf{what}}}
+  \pstree{\Thing{S}}
+  {
+   \pstree{\Thing{NP}}{\Leaf{you}}
+   \pstree{\Thing{VP}}{
+     \pstree{\Thing{V}}{\Leaf{do}}
+     \pstree{\Thing{NP}}{\Leaf{t}}
+     }
+  }
+}
+\\
+\end{psmatrix}}
+\end{document}
