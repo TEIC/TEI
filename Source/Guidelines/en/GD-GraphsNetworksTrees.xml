@@ -207,7 +207,8 @@ rendition information, and labels for each arc (using the attributes
 the arcs. Specifically, we now think of the arcs as specifying selected
 routes from one airport to another, as indicated by the direction of the
 arrowheads in the following diagram.
-<eg><![CDATA[+-<-LAX-<-+
+<eg><![CDATA[
+          +-<-LAX-<-+
           |         |
          LVG--->---PHX--->---TUS   CIB
                     |         |
@@ -311,7 +312,8 @@ nodes (or <term>states</term>) of the network are distinguished.  It can
 be understood as accepting the set of strings obtained by traversing it
 from its initial node to its final node, and concatenating the labels.
 <!-- Noam Chomsky, Syntactic Structures, 1957, p19, ex8 -->
-<eg>             OLD      MAN      COMES
+<eg> 
+            OLD      MAN      COMES
             +->-+   +-->----o---->---+
             |   |   |                |
             \   /   |                |
@@ -356,7 +358,8 @@ the other.  The following example represents a transducer for
 translating the English strings accepted by the network in the
 preceding example into French.  The nodes have been annotated with
 numbers, for convenience.
-<eg>         THE         MAN      COMES
+<eg>
+         THE         MAN      COMES
       +--->---1------->-----4--->---+
       |   L'  |     HOMME     VIENT |
       |       |                     |
@@ -452,10 +455,11 @@ structures, which are contained in feature-structure libraries
 elsewhere (see <ptr target="#FSFL"/>).  We can use the
 <att>value</att> attribute on <gi>node</gi> elements to point to those
 feature structures.  In this particular representation of
-the graph, nodes representing females are framed by circles, nodes
+the graph, nodes representing females are framed by ovals, nodes
 representing males are framed by boxes, and nodes representing parents
 are framed by diamonds.
-<eg><![CDATA[                            Mo     Fa
+<eg><![CDATA[
+                            Mo     Fa
                   Katherine->--K+A--<-Amberley
                                 |
                         So      |    Da
@@ -624,7 +628,8 @@ described in chapter <ptr target="#FS"/>.</note></p>
 the dotted lines in the graph indicate the mutually exclusive arcs; in
 the encoding, we use the <att>exclude</att> attribute to indicate those
 arcs.
-<eg><![CDATA[              Earl of Argyll's land
+<eg><![CDATA[
+              Earl of Argyll's land
             (land described in sasine)
                       | | |
       ,-<-INCLUDE--<--' + '->-INCLUDE---> Pertinents
@@ -642,8 +647,6 @@ arcs.
                         :  :  ...<.IN..<.......:
                         :  :  :
                 Sherrifdom of Argyll]]></eg>
-<!-- why are some lines dotted? and no rend even supplied here for -->
-	<!-- me to delete! -->
 The graph formalizes the following relationships:
 <list type="bullets">
 <item>the Earl of Argyll's land <mentioned>includes</mentioned> (the parcel of
@@ -743,7 +746,8 @@ operators of addition (symbolized by <code>+</code>), exponentiation
 applied in evaluating the arithmetic formula <code>((a**2)+(b**2))/((a+b)**2) </code>.
 In drawing the graph, the root is placed on the far right, and
 directionality is presumed to be to the left.
-<egXML xmlns="http://www.tei-c.org/ns/Examples">a--,
+<eg>
+a--,
    |-**-,
 2--'    |
         |-+--,
@@ -756,7 +760,7 @@ a--,         |
 b--'    |    |
         |-**-'
         |
-2-------'</egXML>
+2-------'</eg>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
   <tree n="ex1" arity="2" ord="true" order="12">
     <root xml:id="G-DIV1" children="#PLU1 #EXP1">
@@ -864,13 +868,15 @@ element, as follows.
 <p>Linguistic phrase structure is very commonly represented by trees.
 Here is an example of phrase structure represented by an ordered tree
 with its root at the top, and a possible encoding.
-<egXML xmlns="http://www.tei-c.org/ns/Examples">      ,---PP---,
+<eg>  
+      ,---PP---,
       |        |
       P    ,--NP--,
       |    |      |
      with Art     N
            |      |
-          the periscope</egXML>
+          the periscope
+</eg>
 	  <egXML xmlns="http://www.tei-c.org/ns/Examples"><tree n="ex3" ord="true" arity="2" order="8">
 	    <root xml:id="GD-PP1" children="#GD-P1 #GD-NP1">
 	      <label>PP</label>
@@ -902,13 +908,14 @@ with its root at the top, and a possible encoding.
 node which ordinarily would precede another is specified as following
 it.  In the drawing, the <code>xxx</code> symbol indicates that the arc from
 VB to PT crosses the arc from VP to PN.
-<egXML xmlns="http://www.tei-c.org/ns/Examples">       ,--VP--,
+<eg>
+       ,--VP--,
        |      |
    ,--VB-----xxx--,
    |          |   |
    VB         PN  PT
    |          |   |
-  look       them up</egXML>
+  look       them up</eg>
   <egXML xmlns="http://www.tei-c.org/ns/Examples"><tree n="ex4" arity="2" order="8" ord="true">
     <leaf xml:id="GD-LOOK1" parent="#GD-VB2">
       <label>look</label>
@@ -982,13 +989,14 @@ following descriptions and attributes.
 <att>value</att> attributes and <gi>label</gi> children.</p>
 <p>To illustrate the use of the <gi>eTree</gi> and <gi>eLeaf</gi>
 elements, here is an encoding of the second example in section <ptr target="#GDTR" type="div3"/>, repeated here for convenience.
-<egXML xmlns="http://www.tei-c.org/ns/Examples">      ,---PP---,
+<eg>
+      ,---PP---,
       |        |
       P    ,--NP--,
       |    |      |
      with Art     N
            |      |
-          the periscope</egXML>
+          the periscope</eg>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><eTree n="ex1">
   <label>PP</label>
   <eTree>
@@ -1016,13 +1024,14 @@ elements, here is an encoding of the second example in section <ptr target="#GDT
 <p>Next, we provide an encoding, using the <gi>triangle</gi> element, in
 which the internal structure of the <gi>eTree</gi> labeled <code>NP</code> is
 omitted.
-<egXML xmlns="http://www.tei-c.org/ns/Examples">      ,---PP----,
+<eg>
+      ,---PP----,
       |         |
       P        NP
       |       /  \
      with    /    \
             /______\
-          the periscope</egXML>
+          the periscope</eg>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><eTree n="ex2">
   <label>PP</label>
    <eTree>
@@ -1059,7 +1068,8 @@ vessel</mentioned>.  This ambiguity is indicated in the sketch of the
 ambiguous tree by means of the dotted-line arcs.  The markup using the
 <att>copyOf</att> and <att>exclude</att> attributes follows the
 sketch.
-<egXML xmlns="http://www.tei-c.org/ns/Examples">      ,--------VP....................
+<eg>
+      ,--------VP....................
       |        |                    :
       V   ,----NP.......         ,--PP--,
       |   |    |       :         |      |
@@ -1069,7 +1079,7 @@ sketch.
                     |    |    |       |    |
                    with Art   N      the periscope
                          |    |
-                        the periscope</egXML>
+                        the periscope</eg>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><eTree n="ex3">
   <label>VP</label>
   <eTree>
@@ -1136,7 +1146,8 @@ attachment of a modifier may require the creation of an intermediate
 node which is not required when the attachment is not made, as shown in
 the following diagram.  A possible encoding of this ambiguous structure
 immediately follows the diagram.
-<egXML xmlns="http://www.tei-c.org/ns/Examples">    ..............VP......................
+<eg>
+    ..............VP......................
     :                                    :
  ,--V'--,                          ,-----V'------,
  |      |                          |             |
@@ -1152,7 +1163,7 @@ see  Spec ,-N'--,               V    ,-NP-,   P    ,-NP-,
                    |    |
                   the   N
                         |
-                     periscope</egXML>
+                     periscope</eg>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><eTree n="ex4">
   <label>VP</label>
   <eTree xml:id="VBARA" exclude="#VBARB">
@@ -1235,7 +1246,8 @@ what</mentioned>.<note place="foot">The symbols
 <code>e</code> and <code>t</code> denote
 special theoretical constructs (<term>empty category</term> and
 <term>trace</term> respectively), which need not concern us here.</note>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">     ,--S'--,                 ,--S'--,
+<eg>
+     ,--S'--,                 ,--S'--,
      |      |                 |      |
     COMP ,--S--,             COMP ,--S--,
      |   |     |              |   |     |
@@ -1243,7 +1255,7 @@ special theoretical constructs (<term>empty category</term> and
          |   |    |           |   |   |    |
         you  V    NP        what you  V    NP
              |    |                   |    |
-            do   what                do    t</egXML>
+            do   what                do    t</eg>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><forest n="ex5" type="derivation-syntactic">
   <eTree n="Stage 1" xml:id="S1SBAR">
     <label>S'</label>
