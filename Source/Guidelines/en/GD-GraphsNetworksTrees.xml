@@ -90,17 +90,14 @@ node in the graph; any graph that is not connected is said to be
 which the nodes are annotated with three-letter codes for airports, and
 the arcs connecting the nodes are represented by horizontal and vertical
 lines, with 90 degree bends used simply to avoid having to draw diagonal
-lines.
+lines.</p>
 <!--      LAX: Los Angeles                                    -->
 	<!--      LVG: Las Vegas                                      -->
 	<!--      PHX: Phoenix                                        -->
 	<!--      TUS: Tucson                                         -->
 	<!--      CIB: Seven Cities of Cibola                         -->
-<eg>          
-.---LAX---.
-|         |
-LVG-------PHX---TUS    CIB
-Airline Connections in Southwestern USA</eg></p>
+<p><graphic url="Images/graph1.jpg"/></p>
+
 <p>Next is a markup of the graph, using <gi>arc</gi> elements to encode
 the arcs.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="undirected" xml:id="CUG1" order="5" size="4">
@@ -206,14 +203,8 @@ rendition information, and labels for each arc (using the attributes
 <p>Next, let us modify the preceding graph by adding directionality to
 the arcs. Specifically, we now think of the arcs as specifying selected
 routes from one airport to another, as indicated by the direction of the
-arrowheads in the following diagram.
-<eg><![CDATA[
-          +-<-LAX-<-+
-          |         |
-         LVG--->---PHX--->---TUS   CIB
-                    |         |
-                    +----<----+
-  Selected Airline Routes in Southwestern USA]]></eg></p>
+arrowheads in the following diagram.</p>
+<p><graphic url="Images/graph2.jpg"/></p>
 <p>Here is an encoding of this graph, using the <gi>arc</gi> element to
 designate the arcs.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="directed" xml:id="RDG1" order="5" size="5">
@@ -311,20 +302,8 @@ the following example, the <term>initial</term> and <term>final</term>
 nodes (or <term>states</term>) of the network are distinguished.  It can
 be understood as accepting the set of strings obtained by traversing it
 from its initial node to its final node, and concatenating the labels.
-<!-- Noam Chomsky, Syntactic Structures, 1957, p19, ex8 -->
-<eg> 
-            OLD      MAN      COMES
-            +->-+   +-->----o---->---+
-            |   |   |                |
-            \   /   |                |
-        THE  \ /    |                |
-(8)   o-->----o-----+                o
-                    |                |
-                    |                |
-                    |                |
-                    +-->----o---->---+
-                      MEN       COME
-</eg>
+<!-- Noam Chomsky, Syntactic Structures, 1957, p19, ex8 --></p>
+<p><graphic url="Images/graph3.jpg"/>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <graph type="network-transition" xml:id="SS8" order="5" size="6">
 <label>(8)</label>
@@ -357,31 +336,8 @@ thought of as representing a mapping from one sequence of labels to
 the other.  The following example represents a transducer for
 translating the English strings accepted by the network in the
 preceding example into French.  The nodes have been annotated with
-numbers, for convenience.
-<eg>
-         THE         MAN      COMES
-      +--->---1------->-----4--->---+
-      |   L'  |     HOMME     VIENT |
-      |       |                     |
-      |    OLD|VIEIL                |
-      |       |                     |
-      | THE   |                     |
-(8)   0-->----2                     6
-      |  LE  / \                    |
-      |     /   \                   |
-      |    /     \                  |
-      |    | OLD |                  |
-      |    +-->--+                  |
-      |     VIEIL                   |
-      |  THE        MEN       COME  |
-      +--->---3------>----5---->----+
-         LES / \   HOMMES   VIENNENT
-            /   \
-           /     \
-           | OLD |
-           +-->--+
-            VIEUX
-</eg>
+numbers, for convenience.</p>
+<p><graphic url="Images/graph4.jpg"/>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="transducer" order="7" size="10">
   <node xml:id="T0" inDegree="0" outDegree="3" type="initial">
     <label>0</label>
@@ -458,23 +414,8 @@ feature structures.  In this particular representation of
 the graph, nodes representing females are framed by ovals, nodes
 representing males are framed by boxes, and nodes representing parents
 are framed by diamonds.
-<eg><![CDATA[
-                            Mo     Fa
-                  Katherine->--K+A--<-Amberley
-                                |
-                        So      |    Da
-                   +----<-------+----->----+
-                   |            | So       |
-                Bertrand        +->-+    Rachel
-                   |                |
-                   |              Frank
-         Mo     Fa | Fa     Mo
-   Peter->--P+B--<-+->--D+B--<-Dora
-             |           |
-          So |        Da | So
-         +-<-+     +--<--+-->--+
-         |         |           |
-       Conrad     Kate        John]]></eg>
+</p>
+<p><graphic url="Images/graph5.jpg"/>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="family_tree" order="13" size="12">
   <node xml:id="KATHR" value="http://example.com/russell-fs/tei/kr1" inDegree="0" outDegree="1">
     <label>Katherine</label>
@@ -628,25 +569,8 @@ described in chapter <ptr target="#FS"/>.</note></p>
 the dotted lines in the graph indicate the mutually exclusive arcs; in
 the encoding, we use the <att>exclude</att> attribute to indicate those
 arcs.
-<eg><![CDATA[
-              Earl of Argyll's land
-            (land described in sasine)
-                      | | |
-      ,-<-INCLUDE--<--' + '->-INCLUDE---> Pertinents
-      |                 :                  :  |   |
- Gallachalzie          IN  ...<..IN..<.....:  |   |
-                        :  :                  |   |
-                        :  :             INCLUDE INCLUDE
-                        :  :              |           |
-                        :  :   (part of pertinents)  (part)
-                        :  :              |           |
-                        :  :              BY         PART OF
-                        :  :              |           |
-                        :  :          Lordship of Knapdale
-                        :  :                   :
-                        :  :  ...<.IN..<.......:
-                        :  :  :
-                Sherrifdom of Argyll]]></eg>
+</p>
+<p><graphic url="Images/graph6.jpg"/>
 The graph formalizes the following relationships:
 <list type="bullets">
 <item>the Earl of Argyll's land <mentioned>includes</mentioned> (the parcel of
@@ -746,21 +670,8 @@ operators of addition (symbolized by <code>+</code>), exponentiation
 applied in evaluating the arithmetic formula <code>((a**2)+(b**2))/((a+b)**2) </code>.
 In drawing the graph, the root is placed on the far right, and
 directionality is presumed to be to the left.
-<eg>
-a--,
-   |-**-,
-2--'    |
-        |-+--,
-b--,    |    |
-   |-**-'    |
-2--'         |
-             |-/
-a--,         |
-   |-+--,    |
-b--'    |    |
-        |-**-'
-        |
-2-------'</eg>
+</p>
+<p><graphic url="Images/graph7.jpg"/>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
   <tree n="ex1" arity="2" ord="true" order="12">
     <root xml:id="G-DIV1" children="#PLU1 #EXP1">
@@ -868,15 +779,8 @@ element, as follows.
 <p>Linguistic phrase structure is very commonly represented by trees.
 Here is an example of phrase structure represented by an ordered tree
 with its root at the top, and a possible encoding.
-<eg>  
-      ,---PP---,
-      |        |
-      P    ,--NP--,
-      |    |      |
-     with Art     N
-           |      |
-          the periscope
-</eg>
+</p>
+<p><graphic url="Images/graph8.jpg"/>
 	  <egXML xmlns="http://www.tei-c.org/ns/Examples"><tree n="ex3" ord="true" arity="2" order="8">
 	    <root xml:id="GD-PP1" children="#GD-P1 #GD-NP1">
 	      <label>PP</label>
@@ -908,14 +812,8 @@ with its root at the top, and a possible encoding.
 node which ordinarily would precede another is specified as following
 it.  In the drawing, the <code>xxx</code> symbol indicates that the arc from
 VB to PT crosses the arc from VP to PN.
-<eg>
-       ,--VP--,
-       |      |
-   ,--VB-----xxx--,
-   |          |   |
-   VB         PN  PT
-   |          |   |
-  look       them up</eg>
+</p>
+<p><graphic url="Images/graph9.jpg"/>
   <egXML xmlns="http://www.tei-c.org/ns/Examples"><tree n="ex4" arity="2" order="8" ord="true">
     <leaf xml:id="GD-LOOK1" parent="#GD-VB2">
       <label>look</label>
@@ -989,14 +887,8 @@ following descriptions and attributes.
 <att>value</att> attributes and <gi>label</gi> children.</p>
 <p>To illustrate the use of the <gi>eTree</gi> and <gi>eLeaf</gi>
 elements, here is an encoding of the second example in section <ptr target="#GDTR" type="div3"/>, repeated here for convenience.
-<eg>
-      ,---PP---,
-      |        |
-      P    ,--NP--,
-      |    |      |
-     with Art     N
-           |      |
-          the periscope</eg>
+</p>
+<p><graphic url="Images/graph10.jpg"/>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><eTree n="ex1">
   <label>PP</label>
   <eTree>
@@ -1024,14 +916,8 @@ elements, here is an encoding of the second example in section <ptr target="#GDT
 <p>Next, we provide an encoding, using the <gi>triangle</gi> element, in
 which the internal structure of the <gi>eTree</gi> labeled <code>NP</code> is
 omitted.
-<eg>
-      ,---PP----,
-      |         |
-      P        NP
-      |       /  \
-     with    /    \
-            /______\
-          the periscope</eg>
+</p>
+<p><graphic url="Images/graph11.jpg"/>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><eTree n="ex2">
   <label>PP</label>
    <eTree>
@@ -1068,18 +954,8 @@ vessel</mentioned>.  This ambiguity is indicated in the sketch of the
 ambiguous tree by means of the dotted-line arcs.  The markup using the
 <att>copyOf</att> and <att>exclude</att> attributes follows the
 sketch.
-<eg>
-      ,--------VP....................
-      |        |                    :
-      V   ,----NP.......         ,--PP--,
-      |   |    |       :         |      |
-     see Art   N    ,--PP--,     P    ,-NP-,
-          |    |    |      |     |    |    |
-         the vessel P    ,-NP-, with Art   N
-                    |    |    |       |    |
-                   with Art   N      the periscope
-                         |    |
-                        the periscope</eg>
+</p>
+<p><graphic url="Images/graph12.jpg"/>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><eTree n="ex3">
   <label>VP</label>
   <eTree>
@@ -1146,24 +1022,8 @@ attachment of a modifier may require the creation of an intermediate
 node which is not required when the attachment is not made, as shown in
 the following diagram.  A possible encoding of this ambiguous structure
 immediately follows the diagram.
-<eg>
-    ..............VP......................
-    :                                    :
- ,--V'--,                          ,-----V'------,
- |      |                          |             |
- V    ,-NP--,                   ,--V'--,      ,--PP--,
- |    |     |                   |      |      |      |
-see  Spec ,-N'--,               V    ,-NP-,   P    ,-NP-,
-      |   |     |               |    |    |   |    |    |
-     the  N'  ,-PP---,         see  Spec  N' with Spec  N'
-          |   |      |               |    |        |    |
-          N   P    ,-NP-,           the   N       the   N
-          |   |    |    |                 |             |
-      vessel with Spec  N'             vessel        periscope
-                   |    |
-                  the   N
-                        |
-                     periscope</eg>
+</p>
+<p><graphic url="Images/graph13.jpg"/>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><eTree n="ex4">
   <label>VP</label>
   <eTree xml:id="VBARA" exclude="#VBARB">
@@ -1246,16 +1106,8 @@ what</mentioned>.<note place="foot">The symbols
 <code>e</code> and <code>t</code> denote
 special theoretical constructs (<term>empty category</term> and
 <term>trace</term> respectively), which need not concern us here.</note>
-<eg>
-     ,--S'--,                 ,--S'--,
-     |      |                 |      |
-    COMP ,--S--,             COMP ,--S--,
-     |   |     |              |   |     |
-     e   NP  ,-VP-,           NP  NP  ,-VP-,
-         |   |    |           |   |   |    |
-        you  V    NP        what you  V    NP
-             |    |                   |    |
-            do   what                do    t</eg>
+</p>
+<p><graphic url="Images/graph14.jpg"/>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><forest n="ex5" type="derivation-syntactic">
   <eTree n="Stage 1" xml:id="S1SBAR">
     <label>S'</label>
