@@ -30,9 +30,10 @@ function addError(el_name, prepend, in_bold, append) {
 
 	var dots = document.createTextNode(': ');
 
-	var element_name = document.createElement('b');
+	var element_name = document.createElement('a');
 	element_name.appendChild(document.createTextNode(el_name));
-	element_name.setAttribute('style', 'color: #aa8888');
+	element_name.setAttribute('style', 'color: #aa8888; font-weight: bold');
+	element_name.setAttribute('href', 'http://localhost:8080/exist/Query/tag.xq?name='+el_name);
 
 	var bolded_text = document.createElement('b');
 	bolded_text.appendChild(document.createTextNode(in_bold));
@@ -57,9 +58,10 @@ function addWarning(el_name, prepend, in_bold, append) {
 
 	var dots = document.createTextNode(': ');
 
-	var element_name = document.createElement('b');
+	var element_name = document.createElement('a');
 	element_name.appendChild(document.createTextNode(el_name));
-	element_name.setAttribute('style', 'color: #aa8888');
+	element_name.setAttribute('style', 'color: #aa8888; font-weight: bold');
+	element_name.setAttribute('href', 'http://localhost:8080/exist/Query/tag.xq?name='+el_name);
 
 	var bolded_text = document.createElement('b');
 	bolded_text.appendChild(document.createTextNode(in_bold));

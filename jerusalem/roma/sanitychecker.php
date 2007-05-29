@@ -20,7 +20,7 @@ public function __construct($dom_customization) {
 	fwrite($fp, $dom_customization->saveXML());
 	fclose($fp);
 	$this->updateProgressBar(3);
-	exec("/usr/bin/roma --compile ".JERUSALEM_HTDOCS."tmp/".$this->FILE_TMP_NAME.".odd /");
+	exec("/usr/bin/roma --xsl=/home/tei/sourceforge/trunk/Stylesheets --localsource=/home/tei/sourceforge/trunk/P5/Source/Guidelines/en/guidelines-en.xml --compile ".JERUSALEM_HTDOCS."tmp/".$this->FILE_TMP_NAME.".odd /");
 	$xml_input = implode("", file(JERUSALEM_HTDOCS."tmp/".$this->FILE_TMP_NAME.".odd.compiled"));
 	$this->DOM = new romaDom($xml_input);
 	$this->updateProgressBar(10);
