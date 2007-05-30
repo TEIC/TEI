@@ -68,7 +68,7 @@ available within <gi>place</gi> for these purposes:
 <specList>
 <specDesc key="placeName"/>
 <specDesc key="location"/> 
-<specDesc key="locale"/>
+<!--specDesc key="locale"/-->
 </specList>
 </p>
 
@@ -201,7 +201,7 @@ a place, rather than a name:
  <settlement>Bethel</settlement>
  <region>New York</region>
 </location>
-<location scheme="LatLong">41.687142 -74.870109</location>
+<location scheme="latlong">41.687142 -74.870109</location>
 </place>
 </egXML>
 <!-- or why not have explicit <lat> and <long> elements? -->
@@ -209,7 +209,7 @@ a place, rather than a name:
 
 <p>A place may contain other places. The containment relation is
 explicitly modelled in XML: thus we can say that the towns of Vilnius
-and Kaunas are both in Lithuania as follows:
+and Kaunas are both in a place called Lithuania as follows:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <place>
@@ -225,14 +225,21 @@ and Kaunas are both in Lithuania as follows:
 </egXML>
 </p>
 
+<p>This does not, however, imply that Vilnius and Kaunas are the
+only places constituting Lithuania; only that they are within it. A
+separate <gi>place</gi> element may indicate that it is a part of
+Lithuania by supplying a <gi>relation</gi> element, as discussed
+below (<ptr target=""/>).</p>
+
 <p>Here is a more complex example, showing the variety of names
-associated at different times ansd in different languages with a set
+associated at different times and in different languages with a set
 of hierarchically grouped places -- the settlement of Camarthen
 Castle, within the town of Carmarthen, within the administrative county of
 Carmarthenshire, Wales.
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <place xml:id="wales" type="country">
+  <placeName xml:lang="cy">Cymru</placeName>
   <placeName xml:lang="en">Wales</placeName>
   <placeName xml:lang="la">Wallie</placeName>
   <placeName xml:lang="la">Wallia</placeName>
@@ -262,15 +269,17 @@ the names of a naming element ("country", "region", "settlement") is
 recommended when appropriate but not required. 
 </p>
 
+<!-- introduce use of listPlace -->
 
-<p>These elements  are specializations of the generic
+
+<p>These elements are specializations of the generic
 <gi>placeState</gi> element, which performs a role for <gi>place</gi>
-elements analogous to that performed for <gi>person</gi> elements by the
-<gi>persState</gi> element. Also like people, places may
-be said to have traits (characteristics such as climate,
-geographic type etc.); we may also wish to record specific events
-about places, such as their foundation or destruction. The following generic elements are  available  for these
-purposes:
+elements analogous to that performed for <gi>person</gi> elements by
+the <gi>persState</gi> element. Also like people, places may be said
+to have traits (characteristics such as climate, geographic type
+etc.); we may also wish to record specific events about places, such
+as their foundation or destruction. The following generic elements are
+available for these purposes:
 <specList>
 <specDesc key="placeState"/>
 <specDesc key="placeTrait"/>
@@ -334,20 +343,38 @@ way of representing this is as follows:
 but the same relationship could also be represented as follows:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><listPlace>
-  <place type="islandGroup" xml:id="MASC">
-    <placeName>Mascareigne islands</placeName>
+  <place type="country" xml:id="FRA">
+    <placeName>France</placeName>
   </place>
-  <place type="island" xml:id="MRU">
+
+<place xml:id="MASC">
+  <placeName>Mascareigne islands</placeName>
+  <listPlace type="island" >
+  <place xml:id="MRU">
     <placeName>Mauritius</placeName>
   </place>
-  <place type="island" xml:id="ROD">
+  <place  xml:id="ROD">
     <placeName>Rodrigues</placeName>
   </place>
-  <place type="island" xml:id="REN">
+  <place  xml:id="REN">
     <placeName>Réunion</placeName>
   </place>
-  <relation type="partOf" active="#MASC" passive="#ROD #MRU #REN"/>
-</listPlace></egXML>
+  </listPlace>
+  <listPlace type="attol">
+    <place>
+      <placeName>La roche qui pleure</placeName>
+    </place>
+    <place>
+      <placeName>Ile aux cerfs</placeName>
+    </place>
+  </listPlace>
+</place>  
+  </listPlace>
+  <relation type="contains" active="#MASC" passive="#ROD #MRU #REN"/>
+
+  <relation type="partOf" active="#REN" passive="#FRA #MASC"/>
+</listPlace>
+</egXML>
 </p>
 
 
@@ -383,14 +410,18 @@ place examples from each by end of next week.
               <settlement>Rome</settlement>
               <district>Testaccio</district>
             </location>
-            <placeState type="address">
+
+<!--            <placeState type="address">
               <p>
                 <address>
                   <addrLine>Via Caio Cestio, 6</addrLine>
                   <addrLine>00153 Roma</addrLine>
                 </address>
               </p>
-            </placeState>
+            </placeState> shd be a location -->
+    
+            <location scheme="postcode">I 00153</location>
+
             <location xmlns:gml="http://www.opengis.net/gml">
               <gml:Point srsDimension="2" srsName="urn:ogc:def:crs:EPSG:6.6:4326">
                 <gml:pos>41.876143755230956 12.479267120361328</gml:pos>
@@ -460,11 +491,11 @@ place examples from each by end of next week.
               <settlement type="city">New York</settlement>
               <placeName>350 Fifth Avenue</placeName>
             </location>
-            <location type="postcode">
-              <measure unit="postcode">10118-0110</measure>
+            <location scheme="postcode">
+              US 10118-0110
             </location>
-            <location type="latLong">
-              <measure unit="latlong">40.7484° N 73.9858° W</measure>
+            <location scheme="latLong">
+              40.7484 -73.9858
             </location>
             <placeState>
               <p>The Empire State Building rises to 1,250 feet (381 m)
@@ -616,6 +647,7 @@ proposal described here.</p>
 	  <memberOf key="att.typed"/>
 	  <memberOf key="model.placeStateLike"/>
 	  <memberOf key="att.datable"/>
+	  <memberOf key="att.editLike"/>
 	</classes>
 	<content>
 	    <rng:zeroOrMore>
@@ -630,10 +662,13 @@ proposal described here.</p>
 	</content>
 	<attList>
 	  <attDef ident="scheme">
-	    <valList type="closed" repeatable="true">
-	      <valItem ident="latlong"/>
+	    <desc>defines how the content of the element should be
+	    interpreted in the case where it is given as text only</desc> 
+	    <valList type="closed" repeatable="false">
+	      <valItem ident="latlong"><desc>
+		a pair of numbers to be interpreted as latitude followed by
+		longitude according to a specified datum, by default WGS84</desc></valItem>
 	      <valItem ident="local"/>
-	      <valItem ident="gml"/>
 	      <valItem ident="other"/>
 	    </valList>
 	  </attDef>
@@ -760,6 +795,7 @@ proposal described here.</p>
 	    <memberOf key="att.naming"/>
 	    <memberOf key="att.typed"/>
 	    <memberOf key="att.datable"/>
+	    <memberOf key="att.editLike"/>
 	  </classes>
       </elementSpec>
 
