@@ -14,7 +14,7 @@ makeODD()
     if test "x$lang" = "x"
     then
 	xmllint --noent --xinclude $ODD \
-	    | xsltproc -o $RESULTS/$N.compiled.odd $LANGUAGE $DOCLANG --stringparam TEIC $TEIC \
+	    | xsltproc -o $RESULTS/$ODD.compiled $LANGUAGE $DOCLANG --stringparam TEIC $TEIC \
 	    --stringparam TEISERVER $TEISERVER  \
 	    --stringparam localsource "$LOCAL"  \
 	    $DEBUG  $TEIXSLDIR/odds/odd2odd.xsl -
@@ -26,7 +26,7 @@ makeODD()
 	    --stringparam TEISERVER $TEISERVER  \
 	    --stringparam localsource "$LOCAL"  \
 	   $DEBUG  $TEIXSLDIR/odds/odd2odd.xsl - \
-	    | xsltproc -o $RESULTS/$N.compiled.odd $DEBUG $LANGUAGE $DOCLANG --stringparam TEISERVER $TEISERVER  \
+	    | xsltproc -o $RESULTS/$ODD.compiled $DEBUG $LANGUAGE $DOCLANG --stringparam TEISERVER $TEISERVER  \
 	    $TEIXSLDIR/odds/translate-odd.xsl - 
     fi
 }
@@ -36,7 +36,7 @@ makeRelax()
     echo "2. make RELAX NG from compiled ODD"
     xsltproc $PATTERN $DEBUG $LANGUAGE $DOCLANG --stringparam TEIC $TEIC \
              --stringparam outputDir $RESULTS       \
-             $TEIXSLDIR/odds/odd2relax.xsl $RESULTS/$N.compiled.odd
+             $TEIXSLDIR/odds/odd2relax.xsl $RESULTS/$ODD.compiled
     (cd $RESULTS; \
     echo "3. make RELAX NG compact from XML"; \
     trang $N.rng $N.rnc  || die " trang conversion to RNC fails"; \
@@ -56,7 +56,7 @@ makeDTD()
     echo "5. make DTD from compiled ODD"
     xsltproc  $DEBUG $LANGUAGE $DOCLANG --stringparam TEIC $TEIC \
             --stringparam outputDir $RESULTS       \
-            $TEIXSLDIR/odds/odd2dtd.xsl $RESULTS/$N.compiled.odd
+            $TEIXSLDIR/odds/odd2dtd.xsl $RESULTS/$ODD.compiled
 }
 
 makeHTMLDOC() 
@@ -65,7 +65,7 @@ makeHTMLDOC()
     xsltproc 	-o $RESULTS/$N.doc.html $DEBUG  $LANGUAGE $DOCLANG --stringparam TEIC $TEIC \
 	--stringparam STDOUT true \
 	--stringparam splitLevel -1 \
-	$DOCFLAGS $TEIXSLDIR/html/odd2html.xsl $RESULTS/$N.compiled.odd
+	$DOCFLAGS $TEIXSLDIR/html/odd2html.xsl $RESULTS/$ODD.compiled
     echo created $N.doc.html 
 }
 
@@ -86,7 +86,7 @@ makeXMLDOC()
 	--stringparam localsource "$LOCAL"  \
 	--stringparam TEIC $TEIC \
 	-o $RESULTS/$N.doc.xml \
-	$TEIXSLDIR/odds/odd2lite.xsl $RESULTS/$N.compiled.odd 
+	$TEIXSLDIR/odds/odd2lite.xsl $RESULTS/$ODD.compiled 
     echo created $N.doc.xml 
 }
 
@@ -268,7 +268,7 @@ then
     fi
 fi
 $dochtml && makeHTMLDOC
-$compile || $debug || rm  $RESULTS/$N.compiled.odd
+$compile || $debug || rm  $RESULTS/$ODD.compiled
 test -f subset.xsl && rm subset.xsl
 test -f tei$$.xml && rm tei$$.xml
 D=`date "+%Y-%m-%d %H:%M:%S.%N"`
