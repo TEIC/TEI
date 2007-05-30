@@ -1,0 +1,321 @@
+<moduleSpec xmlns="http://www.tei-c.org/ns/1.0" ident="iso-fs">
+  <elementSpec ident="fs" module="iso-fs">
+
+    <gloss>Feature structure</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">Estructura de rasgo</gloss>
+    <desc>represents a <term>feature structure</term>, that is, a collection of feature-value pairs
+      organized as a structural unit.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">representa una <term>feature structure (estructura de rasgos)</term>, es decir, un conjunto de pares de valores de rasgos organizados como una unidad estructural.</desc>
+
+
+    <attList>
+      <attDef ident="type" usage="rwa">
+
+        <desc>specifies the type of the feature structure.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">especifica el tipo de estructura de rasgo.</desc>
+
+        <valDesc>Character string, e.g. <term>word structure</term>.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">serie de caracteres, p.ej. <term>word structure (estructura de palabra)</term>. </valDesc>
+      </attDef>
+      <attDef ident="feats" usage="opt">
+
+        <desc>references the feature-value specifications making up this feature structure.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">indica las especificaciones de valor de rasgo que constituyen esta estructura de
+rasgo.</desc>
+
+        <valDesc>one or more identifiers of <gi>f</gi> elements.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">uno o más identificadores de elementos <gi>f</gi>.</valDesc>
+
+      </attDef>
+    </attList>
+
+
+  </elementSpec>
+  <elementSpec ident="f" module="iso-fs">
+
+    <gloss>Feature</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">Rasgo</gloss>
+    <desc>represents a <term>feature value specification</term>, that is, the association of a name
+      with a value of any of several different types.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">representa una <term>feature value specification (especificación de valor de rasgo)</term>, es decir, la asociación de un nombre con un valor de cualquier de los diferentes tipos.</desc>
+
+
+    <attList>
+      <attDef ident="name" usage="req">
+
+        <desc>provides a name for the feature.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">proporciona un nombre para un rasgo.</desc>
+
+        <valDesc>Any name.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">cualquier nombre.</valDesc>
+      </attDef>
+      <attDef ident="fVal" usage="opt">
+
+        <desc>references any element which can be used to represent the value of a feature.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">indica cualquier elemento que puede ser usado para representar el valor de un rasgo.</desc>
+
+        <valDesc>the identifier of an element representing a feature value</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">el identificador de un elemento que representa un valor de rasgo.</valDesc>
+
+      </attDef>
+    </attList>
+
+
+
+  </elementSpec>
+  <elementSpec ident="binary" module="iso-fs">
+
+    <gloss>binary value</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">valor binario</gloss>
+    <desc>represents the value part of a feature-value specification which can contain either of
+      exactly two possible values.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">representa la parte del valor de una especificación de valor de rasgo que puede contener cualquier de los dos valores posibles.</desc>
+
+
+    <attList>
+      <attDef ident="value" usage="req">
+
+        <desc>supplies a binary value.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">proporciona un valor binario</desc>
+
+        <valDesc>a string representing a binary value (true or false, 0 or 1) .</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">serie que representa un valor binario (verdadero o falso, 0 o 1).</valDesc>
+      </attDef>
+    </attList>
+
+
+
+  </elementSpec>
+  <elementSpec ident="symbol" module="iso-fs">
+
+    <gloss>Symbolic value</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">valor simbólico</gloss>
+    <desc>represents the value part of a feature-value specification which contains one of a finite
+      list of symbols.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">representa la parte del valor de una especificación de valor de rasgo que contiene uno de una lista finita de símbolos.</desc>
+
+
+    <attList>
+      <attDef ident="value" usage="req">
+
+        <desc>supplies the symbolic value for the feature, one of a finite list that may be
+          specified in a feature declaration.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">proporciona el valor simbólico para un rasgo, uno de una lista finita que puede ser especificada en una declaración de rasgo.</desc>
+
+        <valDesc>A string, e.g. <term>feminine</term>.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">una serie, p.ej.<term>feminino</term>.  </valDesc>
+      </attDef>
+    </attList>
+
+
+  </elementSpec>
+  <elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="numeric" module="iso-fs">
+
+    <gloss>Numeric value</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">valor numérico</gloss>
+    <desc>represents the value part of a feature-value specification which contains a numeric value
+      or range.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">representa la parte del valor de una especificación de valor de rasgo que contiene un valor numérico o de intervalo.</desc>
+
+
+    <attList>
+      <attDef ident="value" usage="req">
+
+        <desc>supplies a lower bound for the numeric value represented, and also (if <att>max</att>
+          is not supplied) its upper bound.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">proporciona el límite inferior para el valor numérico representado, y también (si no se proporciona <att>max</att>) su límite superior. </desc>
+
+        <valDesc>A real number or integer.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">un número real o entero</valDesc>
+      </attDef>
+      <attDef ident="max" usage="opt">
+
+        <desc>supplies an upper bound for the numeric value represented.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">proporciona el límite superior para el valor numérico representado.</desc>
+
+        <valDesc>A real number or integer.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">un número real o entero.</valDesc>
+      </attDef>
+      <attDef ident="trunc" usage="opt">
+
+        <desc>specifies whether the value represented should be truncated to give an integer value.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">especifica si el valor representado debe ser truncado para dar un valor entero.</desc>
+
+      </attDef>
+    </attList>
+
+
+
+  </elementSpec>
+  <elementSpec ident="string" module="iso-fs">
+
+    <gloss>String value</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">valor de serie</gloss>
+    <desc>represents the value part of a feature-value specification which contains a string.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">representa la parte del valor de una especificación de valor de rasgo que contiene una serie.</desc>
+
+
+
+
+  </elementSpec>
+  <elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="vLabel" module="iso-fs">
+
+    <gloss>value label</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">etiqueta de valor</gloss>
+    <desc>represents the value part of a feature-value specification which appears at more than one
+      point in a feature structure</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">representa la parte del valor de una especificación de valor de rasgo que aparece más de en un punto en una estructura de rasgo.</desc>
+
+
+    <attList>
+      <attDef ident="name" usage="req">
+
+        <desc>supplies a name for the sharing point.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">proporciona un nombre para un punto de división.</desc>
+
+        <valDesc>An identifying name.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">un nombre identificativo.</valDesc>
+      </attDef>
+    </attList>
+
+  </elementSpec>
+  <elementSpec ident="vColl" module="iso-fs">
+
+    <gloss>collection of values</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">grupo de valores</gloss>
+    <desc>represents the value part of a feature-value specification which contains multiple values
+      organized as a set, bag, or list.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">representa la parte del valor de una especificación de valor de rasgo que contiene valores múltiples organizados como un conjunto, o una lista, etc. </desc>
+
+
+    <attList>
+      <attDef ident="org" usage="rwa">
+
+        <desc>indicates organization of given value or values as set, bag or list.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">indica la organización del valor o valores dados como conjunto o lista.</desc>
+        <valList type="closed">
+          <valItem ident="set">
+
+            <gloss>indicates that the given values are organized as a set. </gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">indica que los valores dados se organizan como un conjunto.</gloss>
+          </valItem>
+          <valItem ident="bag">
+
+            <gloss>indicates that the given values are organized as a bag (multiset). </gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">indica que los valores dados se organizan como un multiconjunto.</gloss>
+          </valItem>
+          <valItem ident="list">
+
+            <gloss>indicates that the given values are organized as a list.</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">indica que los valores dados se organizan como una lista.</gloss>
+          </valItem>
+        </valList>
+
+      </attDef>
+    </attList>
+
+
+
+  </elementSpec>
+  <elementSpec ident="default" module="iso-fs">
+
+    <gloss>Default feature value</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">valor de rasgo predeterminado.</gloss>
+    <desc>represents the value part of a feature-value specification which contains a defaulted
+      value.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">representa la parte del valor de una especificación de valor de rasgo que contiene un valor predeterminado.</desc>
+
+
+
+
+  </elementSpec>
+  <elementSpec ident="vAlt" module="iso-fs">
+
+    <gloss>Value alternation</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">alternancia de valor</gloss>
+    <desc>represents the value part of a feature-value specification which contains a set of values,
+      only one of which can be valid.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">representa la parte del valor de una especificación de valor de rasgo que contiene un conjunto de valores, de los cuales sólo uno puede ser válido.</desc>
+
+
+
+
+  </elementSpec>
+  <elementSpec ident="vNot" module="iso-fs">
+
+    <gloss>Value negation</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">negación de valor</gloss>
+    <desc>represents a feature value which is the negation of its content.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">representa un valor de rasgo que es la negación de su contenido.</desc>
+
+
+
+
+
+  </elementSpec>
+  <elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="vMerge" module="iso-fs">
+
+    <gloss>Merged collection of values</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">conjunto fusionado de valores</gloss>
+    <desc>represents a feature value which is the result of merging together the feature values
+      contained by its children, using the organization specified by the <att>org</att> attribute.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">representa un valor de rasgo que es el resultado de la fusión de los valores de rasgo
+contenidos por sus hijos, considerando la organización especificada por el atributo de <att>org</att>.</desc>
+
+
+    <attList>
+      <attDef ident="org" usage="rwa">
+
+        <desc>indicates the organization of the resulting merged values as set, bag or list.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">indica que la organización resultante de la fusión de valores se muestra como un conjunto, multiconjunto o como una lista.</desc>
+        <valList type="closed">
+          <valItem ident="set">
+
+            <gloss>indicates that the resulting values are organized as a set.</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">indica que los valores resultantes se organizan como un conjunto.</gloss>
+          </valItem>
+          <valItem ident="bag">
+
+            <gloss>indicates that the resulting values are organized as a bag (multiset). </gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">indica que los valores resultantes se organizan como un multiconjunto.</gloss>
+          </valItem>
+          <valItem ident="list">
+
+            <gloss>indicates that the resulting values are organized as a list.</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">indica que los valores resultantes se organizan como una lista.</gloss>
+          </valItem>
+        </valList>
+      </attDef>
+    </attList>
+
+
+  </elementSpec>
+  <elementSpec ident="fLib" module="iso-fs">
+
+    <gloss>Feature library</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">biblioteca de rasgos</gloss>
+    <desc>assembles a library of feature elements.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">agrupa una biblioteca de elementos de rasgo.</desc>
+
+
+
+
+
+
+
+  </elementSpec>
+  <elementSpec ident="fvLib" module="iso-fs">
+
+    <gloss>Feature-value library</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">biblioteca de valores de rasgo</gloss>
+    <desc>assembles a library of reusable feature value elements (including complete feature
+      structures).</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">reúne una biblioteca de elementos de valor de rasgo reutilizables (incluyendo estructuras de rasgo completas).</desc>
+
+
+
+
+
+
+  </elementSpec>
+</moduleSpec>

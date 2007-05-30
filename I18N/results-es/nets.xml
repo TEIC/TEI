@@ -1,0 +1,503 @@
+<moduleSpec xmlns="http://www.tei-c.org/ns/1.0" ident="nets">
+  <elementSpec ident="graph" module="nets">
+
+    <gloss/>
+    <gloss xml:lang="es" notBefore="2007-05-04"/>
+    <desc>encodes a graph, which is a collection of nodes, and arcs which connect the nodes.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">codifica un gráfico, es decir un conjunto de nodos y arcos que conectan los nodos.</desc>
+
+
+    <attList>
+      <attDef ident="type" usage="rec">
+
+        <desc>describes the type of graph.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">describe el tipo de gráfico</desc>
+
+        <valList type="semi">
+          <valItem ident="undirected">
+
+            <gloss>undirected graph</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">gráfico no orientado</gloss>
+          </valItem>
+          <valItem ident="directed">
+
+            <gloss>directed graph</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">gráfico orientado</gloss>
+          </valItem>
+          <valItem ident="transitionNetwork">
+
+            <gloss>a directed graph with distinguished initial and final nodes</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">gráfo orientado con nodos finales e iniciales distintos.</gloss>
+          </valItem>
+          <valItem ident="transducer">
+
+            <gloss>a transition network with up to two labels on each arc</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">red de transición con un máximo de dos etiquetas por arco.</gloss>
+          </valItem>
+        </valList>
+
+      </attDef>
+      <attDef ident="order" usage="opt">
+
+        <desc>states the order of the graph, i.e., the number of its nodes.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">define el orden del gráfico, es decir, el número de sus nodos.</desc>
+
+        <valDesc>A positive integer.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">número entero positivo.</valDesc>
+      </attDef>
+      <attDef ident="size" usage="opt">
+
+        <desc>states the size of the graph, i.e., the number of its arcs.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">define la dimensión del gráfico, es decir, el número de sus arcos.</desc>
+
+        <valDesc>A non-negative integer.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">número entero no negativo.</valDesc>
+      </attDef>
+    </attList>
+
+
+
+
+  </elementSpec>
+  <elementSpec ident="node" module="nets">
+
+    <gloss/>
+    <gloss xml:lang="es" notBefore="2007-05-04"/>
+    <desc>encodes a node, a possibly labeled point in a graph.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">codifica un nodo, un punto en un gráfico al que se le puede proporiconar una etiqueta.</desc>
+
+    <attList>
+      <attDef ident="value" usage="opt">
+
+        <desc>provides the value of a node, which is a feature structure or other analytic element.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">proporciona el valor de un nodo, que puede ser una estructura de rasgos u otro elemento de análisis.</desc>
+
+        <valDesc>A valid identifier.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">identificador válido</valDesc>
+      </attDef>
+      <attDef ident="type" usage="opt">
+
+        <desc>provides a type for a node.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">define un tipo de nodo.</desc>
+
+        <valList type="semi">
+          <valItem ident="initial">
+
+            <gloss>initial node in a transition network</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">nodo inicial en un red de transición</gloss>
+          </valItem>
+          <valItem ident="final">
+
+            <gloss>final node in a transition network</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">nodo final en un red de transición</gloss>
+          </valItem>
+        </valList>
+      </attDef>
+      <attDef ident="adjTo" usage="rwa">
+
+        <desc>gives the identifiers of the nodes which are adjacent to the current node.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">proporciona los identificadores a los nodos adyacentes al nodo corriente.</desc>
+
+        <valDesc>A list of identifiers.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">lista de identificadores</valDesc>
+      </attDef>
+      <attDef ident="adjFrom" usage="rwa">
+
+        <desc>gives the identifiers of the nodes which are adjacent from the current node.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">proporciona los identificadores a los nodos adyacentes al nodo corriente.</desc>
+
+        <valDesc>A list of identifiers.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">lista de identificadores</valDesc>
+      </attDef>
+      <attDef ident="adj" usage="rwa">
+
+        <desc>gives the identifiers of the nodes which are both adjacent to and adjacent from the
+          current node.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">proporciona los identificadores a los nodos adyacentes al nodo corriente.</desc>
+
+        <valDesc>A list of identifiers.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">lista de identificadores</valDesc>
+
+      </attDef>
+      <attDef ident="inDegree" usage="opt">
+
+        <desc>gives the in degree of the node, the number of nodes which are adjacent from the given
+          node.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">indica el grado de entrada del nodo, es decir, el número de los nodos no adyacentes al nodo dado.</desc>
+
+        <valDesc>A non-negative integer.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">número entero no negativo</valDesc>
+      </attDef>
+      <attDef ident="outDegree" usage="opt">
+
+        <desc>gives the out degree of the node, the number of nodes which are adjacent to the given
+          node.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">indica el grado de salida del nodo, es decir, el número de los nodos no adyacentes al nodo dado.</desc>
+
+        <valDesc>A non-negative integer.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">número entero no negativo</valDesc>
+      </attDef>
+      <attDef ident="degree" usage="opt">
+
+        <desc>gives the degree of the node, the number of arcs with which the node is incident.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">define el grado del nodo, es decir,  el número de los arcos incidentes al nodo</desc>
+
+        <valDesc>A non-negative integer.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">número entero no negativo</valDesc>
+
+      </attDef>
+    </attList>
+
+
+
+  </elementSpec>
+  <elementSpec ident="arc" module="nets">
+
+    <gloss/>
+    <gloss xml:lang="es" notBefore="2007-05-04"/>
+    <desc>encodes an arc, the connection from one node to another in a graph.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">codifica un arco, es decir, la conexión entre un nodo y otro al interno de un gráfico</desc>
+
+    <attList>
+      <attDef ident="from" usage="req">
+
+        <desc>gives the identifier of the node which is adjacent from this arc.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">proporciona el identificador al nodo adyacente al nodo corriente.</desc>
+
+        <valDesc>The identifier of a node.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">el identificador de un nodo</valDesc>
+      </attDef>
+      <attDef ident="to" usage="req">
+
+        <desc>gives the identifier of the node which is adjacent to this arc.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">proporciona el identificador al nodo adyacente al nodo corriente.</desc>
+
+        <valDesc>The identifier of a node.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">el identificador de un nodo</valDesc>
+      </attDef>
+    </attList>
+
+
+
+  </elementSpec>
+  <elementSpec ident="tree" module="nets">
+
+    <gloss/>
+    <gloss xml:lang="es" notBefore="2007-05-04"/>
+    <desc>encodes a tree, which is made up of a root, internal nodes, leaves, and arcs from root to
+      leaves.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">codifica un árbol, que se constituye de raíz, nodos internos, hojas, y arcos que conectan raíz y hojas.</desc>
+
+
+    <attList>
+      <attDef ident="arity" usage="opt">
+
+        <desc>gives the maximum number of children of the root and internal nodes of the tree.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">establece el número máximo de hijos (descendientes) de la raíz y de los nodos internos del árbol.</desc>
+
+        <valDesc>A nonnegative integer.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">un número entero no negativo</valDesc>
+      </attDef>
+      <attDef ident="ord" usage="req">
+
+        <desc>indicates whether or not the tree is ordered, or if it is partially ordered.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">indica si el árbol es o no ordenado, o si es parcialmente ordenado. </desc>
+
+
+        <valList type="closed">
+          <valItem ident="true">
+
+            <gloss>indicates that all of the branching nodes of the tree are ordered.</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">indica que todos los nodos ramas del árbol estan ordenados</gloss>
+          </valItem>
+          <valItem ident="partial">
+
+            <gloss>indicates that some of the branching nodes of the tree are ordered and some are
+              unordered.</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">indica que algunos de los nodos ramas del árbol estan ordenados y otros no lo estan.</gloss>
+          </valItem>
+          <valItem ident="false">
+
+            <gloss>indicates that all of the branching nodes of the tree are unordered.</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">indica que todos los nodos ramas del árbol estan desordenados</gloss>
+          </valItem>
+        </valList>
+      </attDef>
+      <attDef ident="order" usage="opt">
+
+        <desc>gives the order of the tree, i.e., the number of its nodes.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">proporciona el orden del árbol, es decir, el número de los nodos.</desc>
+
+        <valDesc>A nonnegative integer.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">número entero no negativo</valDesc>
+
+      </attDef>
+    </attList>
+
+
+
+  </elementSpec>
+  <elementSpec ident="root" module="nets">
+
+    <gloss>root node</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">nodo raíz</gloss>
+    <desc>represents the root node of a tree.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">representa el nodo raíz de un árbol.</desc>
+
+    <attList>
+      <attDef ident="value" usage="rwa">
+
+        <desc>provides the value of the root, which is a feature structure or other analytic
+          element.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">proporciona el valor de la raíz, que puede ser una estructura de rasgos u otro elemento de análisis. </desc>
+
+        <valDesc>A valid identifier of a feature structure or other analytic element.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">un identificador válido de una estructura de rasgos u otro elemento de análisis.</valDesc>
+      </attDef>
+      <attDef ident="children" usage="req">
+
+        <desc>provides a list of identifiers of the elements which are the children of the root
+          node.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">proporciona una lista de identificadores de elementos que son hijos (descendientes) de la raíz.</desc>
+
+        <valDesc>A list of valid identifiers.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">una lista de identificadores válidos.</valDesc>
+
+      </attDef>
+      <attDef ident="ord" usage="rwa">
+
+        <desc>indicates whether or not the root is ordered.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">indica si la raíz es o no ordenada.</desc>
+
+
+      </attDef>
+      <attDef ident="outDegree" usage="opt">
+
+        <desc>gives the out degree of the root, the number of its children.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">indica el grado en salida de la raíz, es decir, el número de hijos de esta.</desc>
+
+        <valDesc>A nonnegative integer.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">un número entero no negativo.</valDesc>
+
+      </attDef>
+    </attList>
+
+
+
+  </elementSpec>
+  <elementSpec ident="iNode" module="nets">
+
+    <gloss>intermediate (or internal) node</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">nodo intermedio (o interno)</gloss>
+    <desc>represents an intermediate (or internal) node of a tree.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">representa un nodo intermedio (o interno) de un árbol.</desc>
+
+    <attList>
+      <attDef ident="value" usage="rwa">
+
+        <desc>provides the value of an intermediate node, which is a feature structure or other
+          analytic element.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">proporciona el valor de un nodo intermedio, que puede ser una estructura de rasgos u otro elemento de análisis.</desc>
+
+        <valDesc>A valid identifier of a feature structure or other analytic element.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">un indentificador válido de una estructura de rasgos u otro elemento de análisis.</valDesc>
+      </attDef>
+      <attDef ident="children" usage="req">
+
+        <desc>provides a list of identifiers of the elements which are the children of the
+          intermediate node.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">proporciona una lista de identificadores de elementos que son hijos de un nodo intermedio.</desc>
+
+        <valDesc>A list of identifiers.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">una lista de identificadores</valDesc>
+      </attDef>
+      <attDef ident="parent" usage="opt">
+
+        <desc>provides the identifier of the element which is the parent of this node.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">proporciona el identificador del elemento padre de un nodo dado.</desc>
+
+        <valDesc>The identifier of the parent node.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">identificador del nodo padre</valDesc>
+      </attDef>
+      <attDef ident="ord" usage="opt">
+
+        <desc>indicates whether or not the internal node is ordered.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">indica si el nodo interno está ordenado o no.</desc>
+
+
+
+      </attDef>
+      <attDef ident="follow" usage="rwa">
+
+        <desc>provides an identifier of the element which this node follows.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">proporciona un identificador al elemento que precede al nodo.</desc>
+
+        <valDesc>The identifier of another intermediate node or leaf of the tree.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">el identificador de otro nodo intermedio o de otra hoja del árbol.</valDesc>
+
+      </attDef>
+      <attDef ident="outDegree" usage="opt">
+
+        <desc>gives the out degree of an intermediate node, the number of its children.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">indica el grado de salida del nodo intermedio, es decir, el número de sus hijos.</desc>
+
+        <valDesc>A nonnegative integer.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">un número entero no negativo.</valDesc>
+
+      </attDef>
+    </attList>
+
+
+
+  </elementSpec>
+  <elementSpec ident="leaf" module="nets">
+
+    <gloss/>
+    <gloss xml:lang="es" notBefore="2007-05-04"/>
+    <desc>encodes the leaves (terminal nodes) of a tree.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">codifica las hojas (nodos terminales) de un árbol.</desc>
+
+    <attList>
+      <attDef ident="value" usage="rwa">
+
+        <desc>provides a pointer to a feature structure or other analytic element.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">proporciona un identificador de una estructura de rasgos u otro elemento de análisis.</desc>
+
+        <valDesc>A valid identifier of a feature structure or other analytic element.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">un identificador válido para una estructura de rasgos u otro elemento de análisis. </valDesc>
+      </attDef>
+      <attDef ident="parent" usage="opt">
+
+        <desc>provides the identifier of parent of a leaf.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">proporciona el identificador que es padre de una hoja.</desc>
+
+        <valDesc>The identifier of the parent node.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">el identificador del nodo padre.</valDesc>
+      </attDef>
+      <attDef ident="follow" usage="rwa">
+
+        <desc>provides an identifier of an element which this leaf follows.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">proporciona un identificador al elemento que precede a la hoja.</desc>
+
+        <valDesc>The identifier of another intermediate node or leaf of the tree.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">identificador de otro nodo intermedio o de otra hoja del árbol.</valDesc>
+
+      </attDef>
+    </attList>
+
+
+
+  </elementSpec>
+  <elementSpec ident="eTree" module="nets">
+
+    <gloss>embedding tree</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">árbol integrado</gloss>
+    <desc>provides an alternative to tree element for representing ordered rooted tree structures.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">representa una alternativa al elemento árbol para la representación de estructuras del tipo árbol enraizado ordenado</desc>
+
+
+    <attList>
+      <attDef ident="value" usage="rwa">
+
+        <desc>provides the value of an embedding tree, which is a feature structure or other
+          analytic element.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">adscribe al árbol integrado un valor, que puede ser una estructura de rasgos u otro elemento de análisis.</desc>
+
+        <valDesc>A valid identifier of a feature structure or other analytic element.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">un identificador válido de una estructura de rasgos u otro elemento de análisis.</valDesc>
+      </attDef>
+    </attList>
+
+
+
+  </elementSpec>
+  <elementSpec ident="triangle" module="nets">
+
+    <gloss>Underspecified embedding tree, so called because of its characteristic shape when drawn.</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">árbol integrado insuficientemente especificado, llamado así a causa de la forma característica que asume cuando se diseña.</gloss>
+
+    <desc>Provides for an underspecified eTree, that is, an eTree with information left out.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">define un eTree insuficientemente especificado, es decir, un eTree con algunas informaciones excluidas.</desc>
+
+ 
+    <attList>
+      <attDef ident="value" usage="rwa">
+
+        <desc>provides the value of a triangle, which is the identifier of a feature structure or
+          other analytic element.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">asigna al triángulo un valor, que puede ser el identificador de una estructura de rasgos u otro elemento de análisis.</desc>
+
+        <valDesc>A valid identifier of a feature structure or other analytic element.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">un identificador válido de una estructura de rasgos u otro elemento de análisis.</valDesc>
+      </attDef>
+    </attList>
+
+
+
+  </elementSpec>
+  <elementSpec ident="eLeaf" module="nets">
+
+    <gloss>Leaf of an embedding tree.</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">hoja de un árbol integrado.</gloss>
+    <desc>provides explicitly for a leaf of an embedding tree, which may also be encoded with the
+      eTree element.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">proporciona explícitamente una hoja de un árbol integrado, que puede ser codificado también con el elemento eTree.</desc>
+
+    <attList>
+      <attDef ident="value" usage="rwa">
+
+        <desc>provides the value of an embedding leaf, which is a feature structure or other
+          analytic element.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04"> </desc>
+
+        <valDesc>A valid identifier of a feature structure or other analytic element.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">un identificador válido de una estructura de rasgos u otro elemento de análisis.</valDesc>
+      </attDef>
+    </attList>
+
+
+
+  </elementSpec>
+  <elementSpec ident="forest" module="nets">
+
+    <gloss/>
+    <gloss xml:lang="es" notBefore="2007-05-04"/>
+    <desc>provides for groups of rooted trees.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">define grupos de árboles enraizados.</desc>
+
+    <attList>
+      <attDef ident="type" usage="opt">
+
+        <desc>identifies the type of the forest.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">identifica el tipo de bosque</desc>
+
+        <valDesc>A character string.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">serie de caracteres</valDesc>
+      </attDef>
+    </attList>
+
+
+
+  </elementSpec>
+  <elementSpec ident="forestGrp" module="nets">
+
+    <gloss>Forest group</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">grupo de bosques</gloss>
+    <desc>provides for groups of forests.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">define un grupo de bosques </desc>
+
+    <attList>
+      <attDef ident="type" usage="opt">
+
+        <desc>identifies the type of the forest group.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">identifica el tipo de grupo de bosque</desc>
+
+        <valDesc>A character string.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">serie de caracteres</valDesc>
+      </attDef>
+    </attList>
+
+
+
+  </elementSpec>
+</moduleSpec>
