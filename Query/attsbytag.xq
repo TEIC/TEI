@@ -31,10 +31,10 @@ return
              }
        </valList>
       }
-    <desc>{    if ($t/tei:desc[@xml:lang=$lang]) then
-        data($t/tei:desc[@xml:lang=$lang])
+    <desc>{    if ($a/tei:desc[@xml:lang=$lang]) then
+        data($a/tei:desc[@xml:lang=$lang])
     else
-        data($t/tei:desc[not(@xml:lang)])
+        data($a/tei:desc[not(@xml:lang)])
 	}</desc>
 </att>
 }
