@@ -7,6 +7,7 @@ $Date$
 $Author$
 -->
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="SG">
+
 <head>A Gentle Introduction to XML</head>
 
 <p>The encoding scheme defined by these Guidelines is formulated as an
@@ -16,12 +17,13 @@ Language (XML) 1.0</title>, available from <ptr
 target="http://www.w3.org/TR/REC-xml"/></note> XML is widely-used for
 the definition of device-independent, system-independent methods of
 storing and processing texts in electronic form. It is derived from an
-earlier ISO standard called SGML, in which the TEI Guidelines were
-originally formulated.  In the present chapter we introduce informally
-the basic concepts underlying such markup languages and attempt to
-explain to the reader encountering them for the first time how they
-are actually used in the TEI scheme. For a more technical account of
-TEI practice see chapter <ptr target="#CF"/> in the Guidelines.</p>
+earlier ISO standard called SGML (Standard Generalized Markup
+Language), in which the TEI Guidelines were originally formulated.  In
+the present chapter we introduce informally the basic concepts
+underlying such markup languages and attempt to explain to the reader
+encountering them for the first time how they are actually used in the
+TEI scheme. For a more technical account of TEI practice see chapter
+<ptr target="#CF"/> in the Guidelines.</p>
 
 <p>Formally speaking, XML is a <term>metalanguage</term>, that is, a
 language used to describe other languages, in this case,
@@ -379,17 +381,19 @@ statement may be provided by an additional document known as a
 <term>schema</term> or <term>document type declaration</term>. A
 schema can be expressed in a number of different ways;
 frequently-encountered methods include the Document Type Declaration
-(DTD) language which XML inherited from SGML (DTD); the XML Schema
-language (<ptr target="http://www.w3.org/XML/Schema"/>) defined by the
-W3C; and the RELAX NG language (<ptr target="http://relaxng.org/"/>)
-originally developed within the OASIS Technical Committee and now
-accepted as an ISO draft standard (ISO/IEC FDIS 19757-2 Document
-Schema Definition Language (DSDL) -- Part 2: Regular-grammar-based
-validation -- RELAX NG).  The TEI Guidelines use RELAX NG internally for
-defining TEI elements, but  schemas in the other two languages may
-also be generated.  This chapter gives examples using DTD and RELAX NG
-notation.</p>
+(DTD) language which XML inherited from SGML; the XML Schema language
+(<ptr target="http://www.w3.org/XML/Schema"/>) defined by the W3C; and
+the RELAX NG language (<ptr target="http://relaxng.org/"/>) originally
+developed within the OASIS Technical Committee and now accepted as an
+ISO draft standard (ISO/IEC FDIS 19757-2 Document Schema Definition
+Language (DSDL) -- Part 2: Regular-grammar-based validation -- RELAX
+NG).  The TEI Guidelines use RELAX NG internally for defining TEI
+elements, but schemas in the other two languages may also be
+generated.  In this chapter, and throughout these Guidelines, we give
+examples using the <soCalled>compact syntax</soCalled> of RELAX
+NG.</p>
 </div></div>
+
 <div type="div2" xml:id="SG14"><head>Validating a document's structure</head>
 
 <p>In creating a DTD or Schema, the document
@@ -458,7 +462,7 @@ the RELAX NG representation for our simple anthology model might begin as follow
 name, and then within that provides a content model definition, using
 concepts which will be explained further below. 
 RELAXNG can also be expressed  using a compact, non-XML,
-syntax which is used throughout the Guidelines: using that, the above
+syntax which is used throughout these Guidelines: using that, the above
 declarations would appear as follows:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
@@ -466,54 +470,8 @@ anthology = element anthology { poem+ }
 poem = element poem { title?, stanza+ }
 # more definitions here
 ]]></egXML>
-
-<!--
-For a simple model of a poem, the following schema would be
-appropriate:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<grammar xmlns="http://relaxng.org/ns/structure/1.0">
-  <define name="anthology">
-    <element name="anthology">
-      <oneOrMore>
-        <ref name="poem"/>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="poem">
-    <element name="poem">
-      <optional>
-        <ref name="title"/>
-      </optional>
-      <oneOrMore>
-        <ref name="stanza"/>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="title">
-    <element name="title">
-      <text/>
-    </element>
-  </define>
-  <define name="stanza">
-    <element name="stanza">
-      <oneOrMore>
-        <ref name="line"/>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="line">
-    <element name="line">
-      <text/>
-    </element>
-  </define>
-  <start>
-    <choice>
-      <ref name="anthology"/>
-    </choice>
-  </start>
-</grammar>]]></egXML>
-The RELAX NG language defines a set of named <term>patterns</term>
-for each element, which link to one another. -->
 </p></div>
+<!-- here -->
 <div type="div3" xml:id="SG141"><head>An example DTD</head>
 <p>A DTD is expressed as a set of declarative statements.
 It  uses a
