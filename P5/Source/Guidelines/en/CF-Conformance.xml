@@ -51,24 +51,30 @@ the usages described. </p>
 schema derived from the TEI Guidelines (<ptr target="#CFVL"/>)</item>
 <item> conforms to the TEI Abstract Model (<ptr target="#CFAM"/>)</item>
 <item> uses the <term>TEI Namespace</term> correctly (<ptr target="#CFNS"/>)</item>
-<!--    <item> contains a <gi>teiHeader</gi> element that includes
-        elements for at least a title statement and publication
-        statement</item>-->
 <item> is documented by means of a TEI Conformant <term>ODD
 file</term> (<ptr target="#CFOD"/>) which refers to the
 TEI Guidelines </item>
  </list> Each of these criteria is discussed in more detail below. </p>
 
-<p>A document is said to be <term>TEI Conformable</term> if it is a
+
+<p>A document is also said to be <term>TEI Conformant</term> if it is a
 well-formed XML document which can be transformed algorithmically and
-automatically into a TEI Conformant document without loss of
-information and by means described below.</p>
+automatically into a TEI Conformant document as defined above without loss of
+information. The terms  <term>algorithmically conformant</term> or <term>TEI
+conformable</term>  may be used to distinguish documents exhibiting
+these kinds of conformance from others.</p>
 
 <p>A document is said to use a <term>TEI Extension</term> if it is a
-well-formed XML document which cannot be so transformed without loss
-of information, because it contains additional distinctions,
-representing concepts not present in the TEI abstract model, and
-therefore not documented in these Guidelines. </p>
+well-formed XML document which is valid against a TEI Schema which
+contains additional distinctions, representing concepts not present in
+the TEI abstract model, and therefore not documented in these
+Guidelines. Such a document cannot, in general, be algorithmically
+conformant since it cannot be automatically transformed without loss
+of information. However, since one of the goals of the TEI is to
+support extensions and modifications, it should not be assumed that
+TEI Conformance precludes TEI Extension: an extension which is
+expressed by means of the recommended mechanisms is also a TEI
+document.</p>
 
 <p>A TEI Conformant (or Conformable) document is said to follow
 <term>TEI Recommended Practice</term> if, wherever the Guidelines
@@ -97,7 +103,9 @@ Conal -->
 format. With release P5, the only representation format supported
 by these Guidelines becomes valid XML; legacy documents in SGML format
 should therefore be converted using appropriate software.</p>
-
+<p>A TEI conformant document must use the TEI namespace, and therefore
+must also include an XML-conformant namespace declaration, as defined
+below (<ptr target="#CFNM"/>).</p> 
 <p>The use of XML greatly reduces the need to consider hardware or
 software differences between processing environments when exchanging
 data. No special packing or interchange format is required for an XML
@@ -138,19 +146,17 @@ section <ptr target="#MD"/>. We call the formal output of this process a
  by all schema languages; and there are some features of some schema
  languages which have no counterpart in ODD. No schema language fully
  captures all the constraints implied by conformance to the TEI
- abstract model. A document which is valid according to a TEI schema represented
-using one schema language may not be valid against the same schema
-expressed in other languages; in particular the DTD language does not
-support namespaces.  Features <!--As far as possible,
- however, these Guidelines avoid reliance on features --> which cannot be
- represented in all schema languages <!--; exceptions to this general
- rule --> are documented in chapters <ptr target="#TD"/> and <ref>chapter on
- ODD processes to be supplied</ref>. </p>
+ abstract model. A document which is valid according to a TEI schema
+ represented using one schema language may not be valid against the
+ same schema expressed in other languages; in particular the DTD
+ language does not support namespaces.  Features which cannot be
+ represented in all schema languages are documented in chapters <ptr
+ target="#TD"/> and <ptr target="#IM"/>. </p>
 
 <p>As noted in section <ptr target="#MD"/>, many varieties of TEI
-schema are possible and not all of them are necessarily
-<term>TEI Conformant</term>; derivation from an ODD is a necessary but
-not a sufficient condition for this.</p>
+schema are possible and not all of them are necessarily <term>TEI
+Conformant</term>; derivation from an ODD is a necessary but not a
+sufficient condition for this.</p>
 
 
 </div>
@@ -354,7 +360,7 @@ abstract model? Though difficult to assess, this is essential to TEI
 conformance.</item>
 <item>Does the document claim that all of its elements come from
 some namespace other than the TEI (or no namespace)? If so, the
-document cannot be TEI Conformant, though it may be TEI conformable.</item>
+document cannot be TEI Conformant, though it may be TEI Conformable.</item>
 <item>If the document claims to use the TEI namespace, in part or
 wholly, do the elements associated with that namespace in fact belong
 to it? If not, the document cannot be TEI Conformant; if so, and if
