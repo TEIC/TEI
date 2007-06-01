@@ -21,7 +21,7 @@ any user of these Guidelines. </p>
 <term>modules</term>, each of which declares particular XML elements
 and their attributes. Part of an element's declaration includes its
 assignment to one or more element <term>classes</term>. Modules, and
-their contents, may be combined more less freely to form a
+their contents, may be combined more or less freely to form a
 <term>schema</term> appropriate to a particular set of
 requirements. It is also possible to add new elements which reference
 existing classes or elements to a schema, as it is to remove existing
@@ -52,7 +52,8 @@ elements from the module described in chapter <ptr target="#TD"/>: we
 refer to such a document informally as an <term>ODD</term> document,
 from the abbreviation <q>One Document Does it all</q>. Stylesheets for
 maintaining and processing ODD documents are maintained by the TEI,
-and these Guidelines are also maintained as an ODD. An ODD document
+and these Guidelines are also maintained as an ODD. As further
+discussed in <ptr target="#IM"/>, an ODD document
 can be processed to generate a schema expressed using any of the three
 schema languages currently in wide use: the XML DTD language, the ISO
 RELAXNG language, or the W3C Schema language. </p>
@@ -171,18 +172,20 @@ chapter <ptr target="#CF"/>.  Local systems may allow their schema or
 DTD to be implicit, but for interchange purposes the schema associated
 with a document <emph>must</emph> be made explicit. </p>
 
-<p>A TEI-conformant schema is a specific combination of TEI modules, possibly
-also including additional declarations that add or
-change the element and attribute declarations contained by each
-module. The TEI provides an application-independent
-way of specifying the components of a TEI schema by means of the
-<gi>schemaSpec</gi> element defined in chapter <ptr target="#TD"/>
-element, but it may also be supplied using schema definition
-mechanisms specific to a particular schema language. The process of
-assembling a usable schema, which a running
-XML system such as a validating editor might use, may thus be carried
-out in several different ways:
+<p>A TEI-conformant schema is a specific combination of TEI modules,
+possibly also including additional declarations that modify the
+element and attribute declarations contained by each module. The TEI
+provides an application-independent way of specifying a TEI schema by
+means of the <gi>schemaSpec</gi> element defined in chapter <ptr
+target="#TD"/>. The same system may also be used to specify a schema
+which extends the TEI by adding new elements explicitly, or by
+reference to other XML vocabularies. In either case, the specification
+may be processed to generate a formal schema, expressed in a variety
+of specific schema languages, such as XML DTD language, RELAXNG, or
+W3C Schema. These output schemas can then be used by an XML processor
+such as a validator or editor to validate documents.</p>
 
+<!--
 <list>
 <item>the ODD specification may be processed to generate
 a schema document in whichever schema language the editor
@@ -205,8 +208,14 @@ to supply no more than a complete ODD specification along with the
 documents.
 </p>
 
-<div type="div3"><head>A simple customization</head>
 
+
+
+-->
+
+<!-- foregoing removed at behest of DB and berlin council mtg -->
+
+<div type="div3"><head>A simple customization</head>
 <p>The simplest customization of the TEI scheme combines just the
 four recommended modules mentioned above. In ODD format, it
 looks like this:
@@ -226,8 +235,11 @@ root element, is specified by means of the <att>start</att> attribute.
 An ODD processor will generate an appropriate XML DTD, or relaxNG
 or W3C schema from this set of declarations, which would then be
 associated with the document instance by one of a number of different
-mechanisms, as further described in chapter <ptr target="#SG"/><!-- somewhere --> </p>
-
+mechanisms, as further described in chapter <ptr target="#SG"/><!-- somewhere --> 
+Further information about the processing of an ODD specification is
+given in <ptr target="#MI"/>.
+</p>
+<!--
 <p>The same effect might be obtained by means of a RELAX NG
 schema like the following:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -250,20 +262,20 @@ PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei.dtd" [
 This uses an indirect method of nominating the DTD schema fragments
 from which the DTD is to be constructed, based on the use of parameter
 entities, as further discussed in section <ptr target="#STPE"/>.
-</p>
+</p> -->
 </div>
 <div type="div3"><head>A larger customization</head>
 <!-- does this belong here? -->
-<p>In much of the discussion elsewhere in these Guidelines, it is
-generally assumed for clarity of exposition that a text is a unitary
-object for which only one module is necessary.  It is not uncommon,
-however, for a text to combine different kinds of object, or for an
-encoder to wish to enrich their encoding with elements drawn from many
-different modules.  Examples include:
-
+<p>These Guidelines introduce each of the modules making up the TEI
+scheme one by one, and therefore, for clarity of exposition, each
+chapter tends to focus on elements drawn from a single module. In reality, of
+course, the markup of a text  will draw on elements taken from many
+different modules, partly because texts are heterogenous objects, and
+partly because encoders have different goals. Some examples of this
+heterogeneity include:
 <list type="bullets">
-<item>when the text is a collection of other texts, which do not all use
-the same module:  e.g. an anthology of prose, verse, and drama</item>
+<item>when the text is a collection of other texts of different types
+e.g. an anthology of prose, verse, and drama</item>
 <item>when the text contains other smaller, embedded texts:  e.g. a poem
 or song included in a prose narrative</item>
 <item>when some sections of the text are written in one form, and others
@@ -282,14 +294,11 @@ documents, sharing a common TEI header (see chapter <ptr target="#CC"/>)</item>
 backmatter with a
 group of collected texts,
 themselves possibly composite (see section <ptr target="#DSGRP"/>)</item>
-<item>a notion of <term>embedded text</term>
-which allows one narrative to be embedded within another: this is
-accomplished by defining the <gi>text</gi> element to be a member of
-the class of elements which can appear within or between text
-components such as paragraphs, as described
-briefly at the conclusion of section <ptr target="#DSGRP"/>)</item></list></p>
-<p>The following element specification for example allows for any mixture of
-the low level structural tags defined in the prose, drama and dictionary
+<item>an element for the representation of  <term>embedded
+texts</term>, where one narrative appears top
+<soCalled>float</soCalled> within another (see section <ptr target="#DSFLT"/>)</item></list></p>
+<p>The following schema specification for example allows for any mixture of
+the elements from the prose, drama and dictionary
  modules:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="TEI-Moby" start="TEI">
   <moduleRef key="tei"/>
@@ -306,22 +315,24 @@ the low level structural tags defined in the prose, drama and dictionary
 <p>As noted above, a schema which is expressed in the ODD language may
 modify the declarations contained by the TEI  modules it embeds, for
 example to add new element declarations, or to change almost any
-property of the elements declared. The elements used for this purpose
-are documented in <ptr target="#TD"/>, and conformance rules relating
+property of the elements declared. Detailed discussion of the kind of
+modification possible in this way is provided in <ptr target="#MD"/>
+and conformance rules relating
 to their application are discussed in <ptr target="#CF"/>. These
 facilities are available for any schema language (though some
 features such as alternation of attributes are not available in all
 languages). The ODD language also makes it  possible to combine
 TEI and non-TEI modules into a single schema, but only for the RELAX NG
 schema language.</p>
+
 <p>In the simplest case, all that is needed to include a non TEI
-module in a schema is to reference its RELAX NG source using the
-<att>uri</att> attribute on <gi>moduleref</gi>. The following schema specification, for
-example, creates a schema in which declarations from the non-TEI
-module <ident>svg11.rng</ident> (defining Standard vector Graphics)
-are included. To avoid any risk of name clashes, the schema specifies
-that all TEI patterns generated should be prefixed by the string
-"TEI_".
+module in a schema is to reference its RELAXNG source using the
+<att>url</att> attribute on <gi>moduleref</gi>. The following schema
+specification, for example, creates a schema in which declarations
+from the non-TEI module <ident>svg11.rng</ident> (defining Standard
+vector Graphics) are included. To avoid any risk of name clashes, the
+schema specifies that all TEI patterns generated should be prefixed by
+the string "TEI_".
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
     <schemaSpec prefix="tei_" ident="testsvg" start="TEI svg">
       <moduleRef key="header"/>
@@ -393,17 +404,15 @@ instructions ...</p></egXML>
 <!-- Merchant of Venice, I.ii, speech 5 (Portia)              -->
 </p>
   <p>The values of <att>xml:id</att> attributes must be legal
-	<ident type="kw">names</ident> with respect to the SGML declaration in
-	force. For XML documents this means that an <att>xml:id</att> value
-	must begin with a letter (as defined in the World Wide Web
-	Consortium's XML Recommendation) or the underscore charcter
+	<ident type="kw">names</ident>, as defined in the World Wide Web
+	Consortium's XML Recommendation. This means that they must
+	begin with a letter,  or the underscore charcter
 	(<q>_</q>), and contain no characters other than letters, digits,
 	hyphens, underscores, full
 	stops, and certain combining and extension characters.<note place="foot">The colon is also by default a
-	valid name character; however, it is reserved for a specific
-	purpose in XML (to indicate namespace prefixes), and is not
-	therefore generally recommended by these Guidelines, for
-	compatability reasons.</note></p>
+	valid name character; however, it has a  specific
+	purpose in XML (to indicate namespace prefixes), and may not
+	therefore be used in any other way within a name.</note></p>
   <p>In XML names (and thus the values of <att>xml:id</att> in an XML TEI
 	document) upper and lower case letters are distinguished, and
 	thus <mentioned>partTime</mentioned> and
@@ -542,7 +551,7 @@ DTD fragment implementing this TEI module make extensive use of
 effect a kind of conditional construction; the RELAX NG schema fragment
 similarly predeclares a number of patterns with null
 (<soCalled>notAllowed</soCalled>) values. These techniques are further
-explained in chapter <ptr target="#SG"/>. </p>
+explained in chapter <ptr target="#MI"/>. </p>
 
 <p>Some components of the infrastructure module are automatically
 generated by the ODD processor. Most of these are needed only for the XML
@@ -554,8 +563,8 @@ further <ptr target="#STPEGI"/>).</item>
 <item>Embed any user-supplied entity declarations (see
 further <ptr target="#STOVLO"/>).</item>
 <item>Embed all available datatype macro declarations (see <ptr target="#DTYPES"/>)</item>
-<item>Declare TEI.XML marked section to permit SGML support (see
-further <ptr target="#STXML"/>). </item>
+<!--<item>Declare TEI.XML marked section to permit SGML support (see
+further <ptr target="#STXML"/>). </item>-->
 <item>Embed all <soCalled>pre-declared</soCalled>  class and
 macro declarations</item>
 <item>Embed all other globally available class declarations </item>
@@ -1389,7 +1398,8 @@ different elements.
  </div>
 
 <div type="div2" xml:id="STPE"><head>TEI DTD-specific mechanisms</head>
-
+<!-- most of this material should move, either to new section MI or to
+     the Dustbin of History LB 1-6-7-->
 <p>The TEI DTD fragments use parameter entities for several purposes:
 <list type="bullets">
 <item>as a way of implementing attribute classes</item>
@@ -1495,7 +1505,8 @@ the string <q>n.</q> as a prefix.  Thus the standard generic
 identifiers for paragraphs, notes, and quotations, <gi>p</gi>,
 <gi>note</gi>, and <gi>q</gi> are defined by declarations of the
 following form: <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % n.p "p">
-<!ENTITY % n.pb "pb"> <!ENTITY % n.persName "persName">]]></egXML>
+<!ENTITY % n.pb "pb"> 
+<!ENTITY % n.persName "persName">]]></egXML>
 Since all names in the TEI DTD are case-sensitive, the specific mix of
 upper and lower case letters in the standard generic identifier must
 be preserved in the entity name.

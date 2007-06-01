@@ -913,17 +913,8 @@ the former might begin as follows:
   rend='bold'</tag>, and that an external definition of this concept
   is available from the URI indicated:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-  <elementSpec ident="hi" mode="change">
-    <attList>
-      <attDef ident="rend">
-	<valList>
-	  <valItem ident="bold">
-	    <equiv name="BOLD"/>
-	    <desc>bold typography</desc>
-	  </valItem>
-	</valList>
-      </attDef>
-    </attList>
+  <elementSpec ident="bo" >
+<!-- this example needs updating for current state of equiv -->
 </elementSpec></egXML></p>
 <p>The <gi>altIdent</gi> element is used to provide an alternative name
 for an object, for example using a different
@@ -1077,7 +1068,7 @@ intervention. Because these requirements are common to many of the
 elements discussed in this section, they are provided by an attribute
 class, called <ident type="class">att.editLike</ident>. All  members of this
 class carry the following optional attributes:
-<specList><specDesc key="att.editLike"/></specList> 
+<specList><specDesc key="att.editLike" atts="cert resp evidence"/></specList> 
 </p>
 <p>Many of the elements discussed here (specifically <gi>sic</gi>, <gi>corr</gi>,
 <gi>reg</gi>, <gi>orig</gi>, <gi>unclear</gi>, <gi>add</gi>, and
@@ -1558,7 +1549,7 @@ alternative forms of name for the entity in question. </p>
 
 
 <p>This use should be distinguished from the use of a nested
-<att>reg</att> (regularization) element to provide the standard form
+<gi>reg</gi> (regularization) element to provide the standard form
 of a referring string, as in this example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>My personal life during
 the administration of <rs key="POJA1" type="person">Col. Polk
 (<reg>Polk, James K.</reg>)</rs> has but poorly compensated me for the
@@ -3021,37 +3012,38 @@ used, the elements which can bear standard reference identifiers, and
 the method for constructing standard reference identifiers, should all
 be declared in the header as described in section <ptr target="#HD54"/>.
  </p>
-<p>When the hierarchy of the encoded document and that of the
+<!-- <p>When the hierarchy of the encoded document and that of the
 reference system differ (e.g. for reference systems based on page and
 line numbers) or when more than one reference system is to be encoded,
 the encoder of an SGML (but not XML) TEI text may choose to represent the alternative reference system(s)
 as elements in one or more concurrent document hierarchies.  For an
-introduction to the concept of concurrent hierarchies, see <!--the
-discussion of the <code type="kw">CONCUR</code> feature in --> section <ptr target="#SG152" type="div1"/>.  For further discussion of this and other
+introduction to the concept of concurrent hierarchies, see section <ptr target="#SG152" type="div1"/>.  For further discussion of this and other
 mechanisms, see chapter <ptr target="#NH"/>.
- </p></div>
-<div type="div3" xml:id="CORS5"><head>Milestone Tags</head><p>Often concurrent markup is not a viable method because the document is XML, 
-the available SGML
-parser does not support the <ident type="kw">CONCUR</ident> feature, or
-the desired reference
-system does not correspond to any particular structural hierarchy. In
-these cases it is often desirable to mark up changes in the reference system by using
-one or more of the following <term>milestone</term> elements:
-<specList><specDesc key="milestone"/><specDesc key="pb"/><specDesc key="lb"/><specDesc key="cb"/></specList>
+ </p>--></div>
+<div type="div3" xml:id="CORS5"><head>Milestone Tags</head><p>Where
+the desired reference system does not correspond to any particular
+structural hierarchy, or the document exhibits multiple hierarchies
+(as further discussed in <ptr target="#NH"/>), simpler though less
+expressive methods may be necessary. In such  cases the simplest
+solution may be just to mark up changes in the reference system where
+they occur, by using one or
+more of the following <term>milestone</term> elements:
+<specList><specDesc key="milestone"/><specDesc key="pb"/><specDesc
+key="lb"/><specDesc key="cb"/></specList>
  </p>
 <p>These elements simply mark the points in a text at which some
 category in a reference system changes.  They have no content but
 subdivide the text into regions, rather in the same way as milestones
-divide a road into segments.  The elements <gi>pb</gi>, <gi>cb</gi>,
-and <gi>lb</gi> are provided to mark specific types of milestone,
-namely page, column, and line boundaries, as further described in
-chapter <ptr target="#PH" type="div1"/>.  The global <att>n</att> attribute is
-used in each case to provide a value for the value (for example, the
-page or line number).  Validation of a reference
-system based on <gi>milestone</gi> tags is not directly provided by SGML or XML 
-parsers, so it will be the
-responsibility of the encoder or the application software to ensure
-that milestone tags occur in a correct order.</p>
+mark points along a road, thus implicitly dividing it into segments.
+The elements <gi>pb</gi>, <gi>cb</gi>, and <gi>lb</gi> are provided to
+mark specific types of milestone, namely page, column, and line
+boundaries, as further described in chapter <ptr target="#PH"
+type="div1"/>.  The global <att>n</att> attribute is used in each case
+to provide a value for the value (for example, the page or line
+number).  Since it is not structural, validation of a reference system
+based on <gi>milestone</gi>s cannot be checked by an XML parser, so it
+will be the responsibility of the encoder or the application software
+to ensure that they are given in the correct order.</p>
 <p>Milestone tags may be useful where a text has two competing
 structures. For example, many English novels were first published as
 serial works, individual parts of which do not always contain a whole
@@ -4650,8 +4642,8 @@ were dialogue in a play.  The following example is taken  from a 19th century
 </p></div></div>
  <div type="div2" xml:id="COOV"><head>Overview of the Core Module </head>
 <p>All the elements described in this chapter
-(except for those tags designed to be used in concurrent markup
-streams, which are available in SGML only) are provided by the
+<!--(except for those tags designed to be used in concurrent markup
+streams, which are available in SGML only) -->are provided by the
 <ident type="module">Common Core</ident> module.
 <moduleSpec xml:id="DCO" ident="core">
 <altIdent type="FPI">Common Core</altIdent>
