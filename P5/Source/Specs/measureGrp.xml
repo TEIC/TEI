@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date: 2007-05-13 00:28:35 +0100 (Sun, 13 May 2007) $
+$Author: rahtz $
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="measureGrp">
+  <equiv/>
+  <gloss/>
+  <desc>contains a group of dimensional specifications which relate to
+  the same object, for example the height and width of a manuscript page</desc>
+  <classes>
+    <memberOf key="att.measured"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="model.measureLike"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:ref name="model.measureLike"/>
+        <rng:ref name="text"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+<!--  <attList>
+    <attDef ident="type">
+      <equiv/>
+      <gloss/>
+      <desc>indicates which aspect of the object is being measured. </desc>
+      <desc version="2007-01-21" xml:lang="it">indica quale aspetto dell'oggetto viene misurato</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該計測対象の種類を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valList type="open">
+        <valItem ident="leaves">
+          <equiv/>
+          <gloss>dimensions relate to one or more leaves (e.g. a single leaf, a
+gathering, or a separately bound part)</gloss>
+          <gloss version="2007-01-21" xml:lang="it">le dimensioni si riferiscono a uno o più fogli (per esempio un foglio, una raccolta, o una parte rilegata separatamente)</gloss>
+        </valItem>
+        <valItem ident="ruled">
+          <equiv/>
+          <gloss>dimensions relate to the area of a leaf which has been ruled in
+preparation for writing.</gloss>
+          <gloss version="2007-01-21" xml:lang="it">le dimensioni si riferiscono alla porzione di un foglio sulla quale sono state disegnate delle righe al fine di scriverci</gloss>
+        </valItem>
+        <valItem ident="pricked">
+          <equiv/>
+          <gloss>dimensions relate to the area of a leaf which has been pricked
+out in preparation for ruling (used where this differs significantly
+from the ruled area, or where the ruling is not measurable).</gloss>
+          <gloss version="2007-01-21" xml:lang="it">le dimensioni si riferiscono alla porzione di un foglio sulla quale è stata indicata la posizione dei fori da praticare al fine di imprimervi delle righe (si usa quando la porzione da rigare è molto diversa da quella già rigata o quando la rigatura non è misurabile)</gloss>
+        </valItem>
+        <valItem ident="written">
+          <equiv/>
+          <gloss>dimensions relate to the area of a leaf which has been written,
+with the height measured from the top of the minims on the top line of
+writing, to the bottom of the minims on the bottom line of writing.</gloss>
+          <gloss version="2007-01-21" xml:lang="it">le dimensioni si riferiscono ad un'area del foglio su cui è stato scritto e la cui altezza è misurata dalla cima degli uncini sulla prima riga scritta fino al fondo degli uncini sull'ultima riga scritta</gloss>
+        </valItem>
+        <valItem ident="miniatures">
+          <equiv/>
+          <gloss>dimensions relate to the miniatures within the manuscript</gloss>
+          <gloss version="2007-01-21" xml:lang="it">le dimensioni si riferiscono alle miniature contenute nel manoscritto</gloss>
+        </valItem>
+        <valItem ident="binding">
+          <equiv/>
+          <gloss>dimensions relate to the binding in which the codex or manuscript is contained</gloss>
+          <gloss version="2007-01-21" xml:lang="it">le dimensioni si riferiscono alla rilegatura nella quale è contenuto il codice o manoscritto</gloss>
+        </valItem>
+        <valItem ident="box">
+          <equiv/>
+          <gloss>dimensions relate to the box or other container in which  the
+manuscript is stored.</gloss>
+          <gloss version="2007-01-21" xml:lang="it">le dimensioni si riferiscono alla scatola o ad altro contenitore nel quale è custodito il manoscritto</gloss>
+        </valItem>
+      </valList>
+    </attDef>
+  </attList>-->
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <measureGrp type="leaves" unit="mm">
+        <height scope="range">157-160</height>
+        <width extent="105"/>
+      </measureGrp>
+      <measureGrp type="ruledArea" unit="mm">
+        <height scope="most" extent="90"/>
+        <width scope="most" extent="48"/>
+      </measureGrp>
+      <measureGrp type="box" unit="in">
+        <height extent="12"/>
+        <width extent="10"/>
+        <depth extent="6"/>
+      </measureGrp>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#msdim"/>
+  </listRef>
+</elementSpec>

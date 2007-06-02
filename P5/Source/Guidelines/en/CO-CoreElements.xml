@@ -1155,7 +1155,7 @@ the emendation, this might be done as follows:
   incorrect.
 <bibl xml:id="PsEp"><title>Pseudodoxia Epidemica: the book of popular
 errors</title>...</bibl></egXML>. Here the <att>resp</att> attribute
-has been used to indicate responsibility for the correction. Its value (<val>#msm</val>) is an example of the <term>pointer</term> values discussed
+has been used to indicate responsibility for the correction. Its value (<val>#MSM</val>) is an example of the <term>pointer</term> values discussed
   in section <ptr target="#COXR"/>; in this case, it points to a
   bibliographic element giving the source of the correction.  It might
   equally well be used to point to some other element, for example one
@@ -1275,7 +1275,7 @@ regularization in two ways, as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">vek ek þik dauðra
 <choice>
   <orig>dura</orig>
-  <reg resp="#msm">dyra</reg>
+  <reg resp="#MSM">dyra</reg>
 </choice></egXML></p><p>These elements are formally defined as follows:
 <specGrp xml:id="DCOEDR" n="Editorial tags for regularization">
 &reg;
@@ -1287,7 +1287,7 @@ have been omitted from, added to, or marked for deletion from, a text.
 Like the other editorial elements, they allow for a wide range of
 editorial practices: 
 <specList>
-  <specDesc key="gap" atts="reason extent"/>
+  <specDesc key="gap" atts="reason"/>
   <specDesc key="unclear" atts="reason"/>
   <specDesc key="add"/>
   <specDesc key="del"/>
@@ -1683,11 +1683,12 @@ described as follows:
 </div>
 <div type="div3" xml:id="CONANU"><head>Numbers and
 Measures</head>
-<p>This section describes two elements provided for the simple encoding
-of numbers and measures and gives some indication of circumstances in
+<p>This section describes elements provided for the simple encoding
+of numbers and measurements and gives some indication of circumstances in
 which this may usefully be done.  The following phrase level elements
 are provided for this purpose:
-<specList><specDesc key="num" atts="type value"/><specDesc key="measure" atts="type"/></specList>
+<specList><specDesc key="num" atts="type value"/><specDesc
+key="measure" atts="type"/><specDesc key="measureGrp"/></specList>
  </p>
 <p>Like names or abbreviations, numbers can occur virtually anywhere in
 a text.  Numbers are special in that they can be written with either
@@ -1717,7 +1718,7 @@ standardized way of representing a numerical value.
 
 <p>In its fullest form, a measure consists of a number, a phrase
 expressing units of measure and a phrase expressing the commodity
-being measured, but not all of these components need be present in
+being measured, though not all of these components need be present in
 every case. It may be helpful to distinguish measures from surrounding
 text for two reasons. Firstly, a measure may be expressed using a
 particular notation or system of abbreviations which the encoder does
@@ -1749,56 +1750,55 @@ lexical:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>...the sum of
 <measure type="currency">12s 6d</measure>...</p></egXML>
-
 </p>
-<p>In general, only the numeric part of a measure can be reliably
-normalized. This may be done using the  <gi>num</gi> element:
-
+<p>In general, normalization of a measure will require specification
+of one or more  of its  three parts: the quantity, the units,
+and possibly also the commodity being measured. This is accomplished
+by supplying values for the three attributes <att>extent</att>,
+<att>unit</att> and <att>commodity</att>, which are supplied by the
+<ident>att.measured</ident> class:
+<specList>
+<specDesc key="att.measured" atts="extent unit commodity"/>
+</specList>
+With these attributes, the measurement of Celia's neck may be
+specified in a normalized form:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<measure><num value="13.75">13¾</num>"</measure>
+<measure extent="13.75" unit="in">13¾"</measure>
 </egXML>
-
-No special facilities are provided in the core module for normalizing other
-parts of a measure. The general-purpose <gi>reg</gi> element may be
-used:
-
+Such techniques are particularly useful when representing historical
+data such as inventories:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<measure><num value="13.75">13</num><reg>inches</reg></measure>
-</egXML>
-
-As elsewhere, the <gi>choice</gi> element may be used to indicate both
-the original and its normalized form:
-
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<measure><num value="13.75">13</num><choice><orig>"</orig><reg>inches</reg></choice></measure>
-</egXML>
-
-No direct way of mapping the content of a measure to its equivalent in other
-units is provided. Such mappings, being matters of interpretation, are
-best  treated using the analytical mechanisms discussed in
-chapters  <ptr target="#AI"/> and <ptr target="#FS"/>.  <!--
 <list>
-  <item><measure  type="volume">         
-        <num value="2">ii</num> bags hops
-        </measure>
+  <item><measure  type="volume" extent="2" unit="bag"
+		  commodity="hops"> ii bags hops </measure>
   </item>
-  <item><measure  type="volume">         
-        <num value="6">six</num> trusses Woolen and linen goods
-        </measure>
+  <item><measure  type="volume" extent="6" unit="truss" commodity="cloth">         six trusses Woolen and linen goods </measure>
   </item>
-  <item><measure  type="weight">
+  <item><measure  type="weight" extent="5" unit="ton" commodity="coal">
         5 tonnes coale
        </measure>
   </item>
 </list></egXML>-->
 <!-- Gloucester Port Books -->
- </p> <!-- measure is not a member of naming and any normalisn must be
- done by value -->
-
+ </p> 
+<p>The <gi>measureGrp</gi> element is provided as a means of grouping
+several related measurements together, either because the measurement
+involves several dimensions (for example height and width) or to
+avoid the need to repeat all the normalizing attributes:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<measureGrp type="volume" unit="in">
+<measure type="height" extent="14">xiv</measure>
+<measure type="width" extent="5">v</measure>
+<measure type="depth" extent="10">x</measure>
+</measureGrp>
+</egXML>
+<!-- better example needed -->
+</p>
 <p>These elements are formally defined as follows:
 <specGrp xml:id="DCONU" n="Numbers and measures">
 &num;
 &measure;
+&measureGrp;
 </specGrp>
  </p></div>
 <div type="div3" xml:id="CONADA"><head>Dates and Times</head>
@@ -1856,7 +1856,8 @@ and of the University the Eighty-Sixth.</date></egXML>
 </p>
 <p>The <att>value</att> attribute always supplies a normalized
 representation of the date given as content of the <gi>date</gi>
-element. The format used should be a valid W3C schema datatype.<note place="foot" >
+element. The format used should be a valid W3C schema datatype.
+<note place="foot" >
 <p>The datatypes are taken from the W3C Recommendation <title>XML Schema Part 2: Datatypes Second Edition</title>. 
 The permitted datatypes are:
 <list>
@@ -1869,13 +1870,13 @@ The permitted datatypes are:
 <item><ref target="http://www.w3.org/TR/xmlschema-2/#time">time</ref></item>
 <item><ref target="http://www.w3.org/TR/xmlschema-2/#dateTime">dateTime</ref></item>
 </list>
-</p><p>There
+</p><p>There 
 is one exception: these Guidelines permit a time to be expressed as only a number of hours, or as a number of hours and minutes,
-as per ISO 8601:2004 section 4.2.2.3 and 4.3.3.
-(The W3C <name type="datatype">time</name> and <name type="datatype">dateTime</name> 
-datatypes require that the minutes and seconds be explicitly expressed.) This capability
-is necessary for the normalized representation of humanities data. However, some software may not be
-able to properly process (e.g., sort) a time value that does not have seconds.</p></note>
+as per ISO 8601:2004 section 4.2.2.3 and 4.3.3. 
+The W3C <name type="datatype">time</name> and <name type="datatype">dateTime</name> 
+datatypes require that the minutes and seconds be included in the
+normalized value if they are to be correctly processed for example
+when sorting.</p></note>
 Some typical examples follow:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><date value="2001">The
 year 2001</date>
