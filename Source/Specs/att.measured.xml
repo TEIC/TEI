@@ -5,8 +5,11 @@ See the file COPYING for details
 $Date$
 $Author$
 -->
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="atts" xml:id="MEASURED" ident="att.measured">
-  <desc>provides attributes which qualify a measurement of some kind.</desc>
+<classSpec xmlns="http://www.tei-c.org/ns/1.0"
+	   xmlns:rng="http://relaxng.org/ns/structure/1.0"  module="tei" type="atts"  ident="att.measured">
+  <desc>provides attributes for any kind of measurement, for example
+  to provide a normalized form, or otherwise qualify the measurement
+  given as content of the element concerned.</desc>
   <desc version="2007-05-04" xml:lang="es">proporciona atributos que califican una determinata medición.</desc>
   <desc version="2007-01-21" xml:lang="it">assegna degli attributi che qualificano una determinata misurazione</desc>
   <attList>
@@ -17,7 +20,7 @@ $Author$
       <desc version="2007-01-21" xml:lang="it">specifica le unità usate per la misurazione</desc>
       <desc version="2006-10-28" xml:lang="ja">当該数値の単位を示す．</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+        <rng:ref name="data.enumerated"/>
       </datatype>
       <valList type="semi">
         <valItem ident="cm">
@@ -35,10 +38,38 @@ $Author$
           <gloss version="2007-05-04" xml:lang="es">pulgadas</gloss>
           <gloss version="2007-01-21" xml:lang="it">pollici</gloss>
         </valItem>
+	<valItem ident="lines">
+	  <gloss>lines of text</gloss>
+	</valItem>
+	<valItem ident="chars">
+	  <gloss>characters of text</gloss>
+	</valItem>
       </valList>
       <remarks>
-        <p/>
+        <p>The unit should normally be named using the standard
+        abbreviation for an SI unit (see further <ptr
+        target="http://www.bipm.org/en/si/"/>; <ptr
+        target="http://physics.nist.gov/cuu/Units/"/>). However,
+        encoders may also specify measurements using informally
+        defined units such as "lines" or "characters".</p>
       </remarks>
+    </attDef>
+<attDef ident="extent">
+<desc>specifies the size of the measurement in the units specified</desc>
+      <datatype>
+        <rng:ref name="data.numeric"/>
+      </datatype>
+</attDef>
+    <attDef ident="commodity" usage="opt">
+      <equiv/>
+      <desc>indicates the substance that is being measured where this
+      affects the meaning of the measurement</desc>
+      <desc version="2007-05-04" xml:lang="es">indica la substancia que está siendo medida.</desc>
+      <desc version="2007-01-21" xml:lang="it">identifica la sostanza misurata</desc>
+      <desc version="2006-10-28" xml:lang="ja">計測される対象を示す．</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref name="data.word"/>
+      </datatype>
     </attDef>
     <attDef ident="scope" usage="opt">
       <equiv/>

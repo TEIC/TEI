@@ -18,7 +18,7 @@ other comparable encoding scheme, even though it contains some aspects
 which are specific to the TEI and may not be generally applicable.</p>
 <p>An overview of the kind of processing environment envisaged for the
 module described by this chapter may be helpful. In the remainder of
-this chapter we refer to software which provides such as a processing
+this chapter we refer to software which provides such a processing
 environment as an <term>ODD processor</term><note place="foot">ODD is
 short for <q>One Document Does it all</q>, and was the name invented
 by the original TEI Editors for the predecessor of the system
@@ -455,7 +455,7 @@ or, equivalently:
 <eg><![CDATA[<p>The <gi>term</gi> element may be used 
 to mark any technical term, thus :
 <eg><![CDATA[
-  This <term>recursion</term> is 
+  This &lt;term>recursion&lt;/term> is 
   giving me a headache.]]&gt;</eg>
 ]]></eg>
 </p>
@@ -717,8 +717,8 @@ the reference material in these Guidelines.
  </p>
 <p>In the following example, the <att>org</att> attribute is used to
 indicate that instances of the element concerned may bear  either a <att>bar</att>
-attribute or a <gi>baz</gi> attribute, but not both. The
-<att>bax</att> element is always available:
+attribute or a <att>baz</att> attribute, but not both. The
+<att>bax</att> attribute is always available:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><attList>
 <attDef ident="bax">
   <!-- ... -->
@@ -785,7 +785,7 @@ attribute on the class declaration, and also on the name used to reference the c
 <p>The default and usual behaviour is to replace the class
 reference by an alternated list of all the current members of the
 class. For example, suppose that  the members of the class
-<ident>model.hiLike</ident> are elements  <gi>hi</gi>,  <gi>it</gi>,
+<ident type="class">model.hiLike</ident> are elements  <gi>hi</gi>,  <gi>it</gi>,
 and <gi>bo</gi>. Then a content model such as
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
   <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
@@ -802,7 +802,7 @@ would be equivalent to the explicit content model:
 </rng:zeroOrMore></content></egXML> and would generate, in DTD
 language, a model such as <code>(hi|it|bo)*</code>. However, if the <att>generate</att>
 attribute on the <gi>classSpec</gi>
-defining <gi>model.hiLike</gi> had the value <val>sequence</val>, a
+defining <ident type="class">model.hiLike</ident> had the value <val>sequence</val>, a
 content model referencing the class as
 <code>model.hiLike_sequence</code> would be equivalent   to the
 following explicit content model:
@@ -824,7 +824,7 @@ model.hiLike_sequenceOptional) would be equivalent to:
 language, a model such as <code>(hi?,it?,bo?)*</code>.</p>
 <p>The repeatability of members of a class may also be specified
 independently, using the same mechanism. For example, a value
-of<val>sequenceRepeatable</val> for the <att>generate</att> attribute would be equivalent to:
+of <val>sequenceRepeatable</val> for the <att>generate</att> attribute would be equivalent to:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
   <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
      <rng:oneOrMore><rng:ref name="hi"/></rng:oneOrMore>
@@ -843,8 +843,9 @@ language, a model such as <code>(hi*,it*,bo*)*</code>.</p>
 <p>The generate attribute may specify more than one possible value.
 for example a value of <val>sequence alternates</val> would make
 available both a content model such as  <code>(hi,it,bo)*</code>,
-which would be referenced as <ident>model.hiLike_sequence</ident>, and a content
-model such as <code>(hi|it|bo)*</code>, which would be referenced as <ident>model.hiLike_alternates</ident>.</p>
+which would be referenced as <ident type="class">model.hiLike_sequence</ident>, and a content
+model such as <code>(hi|it|bo)*</code>, which would be referenced as
+<ident type="class">model.hiLike_alternates</ident>.</p>
 <p>The sequence in which members of a class appear in a content model when one of the
 sequence options is used is that in which the elements are declared. </p>
 
