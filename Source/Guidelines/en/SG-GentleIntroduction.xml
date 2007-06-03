@@ -443,55 +443,70 @@ schema generated from them is expressed. <note place="foot">See further
 <ptr target="#TD"/> and <ptr target="#IM"/>. In practice, the only
 part of  a TEI element specification not expressed using TEI-defined
 syntax is the content model for an element, which is expressed  using the  RELAX NG
-schema language for reasons of processing convenience.</note>
+schema language for reasons of processing convenience. RELAX NG uses
+its own XML vocabulary to define content models, which is adopted by
+the TEI for the same purpose. </note>
 In what follows, for ease of comprehension and exposition, we will
 use the RELAX NG compact syntax for illustration; the reader should
 bear in mind that analogous concepts are expressed differently in
 other schema languages. </p>
 <p>The following  schema might be used to validate our example poem:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
-anthology = element anthology { poem+ }
-poem = element poem { heading?, stanza+ }
-stanza = element stanza {line+}
-heading = element heading { text }
-line = element line { text }
-start = anthology]]></egXML>
+anthology_p = element anthology { poem_p+ }
+poem_p = element poem { heading_p?, stanza_p+ }
+stanza_p = element stanza {line_p+}
+heading_p = element heading { text }
+line_p = element line { text }
+start = anthology_p
+]]></egXML>
 </p>
-<p>Each of these six lines declares a named <term>pattern</term>: the
-word to the left of the equals sign is the name, and the material
-following it declares a meaning for the pattern. Some words in this
-syntax have a special significance — <q>start</q> and <q>element</q>
-in this example — 
-but mostly names can be freely chosen.   The first five
-declarations here are all of the same type: each associates an element
-declaration with a named pattern. The
+<p>Note that this is not the only way in which a RELAX NG schema might be
+written<note place="foot">For a good tutorial introduction to RELAX
+NG, see <bibl>Eric van der Vlist <title>RELAX NG</title> O'Reilly, 2004</bibl></note>; we have adopted this idiom however because it matches that
+used throughout the rest of the Guidelines.  </p>
+<p>A RELAX NG schema defines a number of named <term>patterns</term>: in
+the example above, the
+word to the left of the equals sign is the pattern's name, and the material
+following it declares a meaning for the pattern. Patterns may also be of
+particular types; the ones which interest us here are called
+<term>element patterns</term> and <term>attribute patterns</term>. In
+this example we see definitions for four element patterns. Note that
+we have used similar names for the pattern and the element which
+the pattern describes: so, for example, the line <code>anthology_p =
+element anthology { poem_p+ }</code> defines an element pattern called
+<code>anthology_p</code>, the value of which defines an element 
+called <code>anthology</code>. These naming conventions are however
+unimportant; we could even have used the same name for the pattern as
+for the element, since the two are syntactically quite distinct. The
 name, or <term>generic identifier</term> of the element follows the
 word <q>element</q>, and the <term>content
 model</term> for the element is given within the curly braces
 following that.  Each of these parts is discussed further below.
 </p>
 <div type="div4" xml:id="SG141x"><head>Generic identifier</head>
-<p>Following the word <q>element</q> each pattern declaration gives  the generic
-identifier (often abbreviated to GI) of the element which is being
-declared, for example <mentioned>poem</mentioned>,
+<p>Following the word <q>element</q> each pattern declaration gives
+the generic identifier (often abbreviated to GI) of the element which
+is being defined, for example <mentioned>poem</mentioned>,
 <mentioned>heading</mentioned>, etc.  A GI may contain alphabetic
 characters, digits, hyphens, underscore characters, or fullstops, and
-must begin with a letter.<note place="foot">In XML,
-a single colon may also appear in a GI, where it has a special
-significance related to the use of <term>namespaces</term>, as further
-discussed in section <ptr target="#SGname"/>. The
-characters defined by Unicode as <term>combining characters</term> and
-as <term>extenders</term> are also permitted.</note>  In general, uppercase and lowercase letters
-are regarded as distinct characters: an element with the GI
-<gi>foo</gi> is <emph>not</emph> the same as an element with the GI
-<gi>Foo</gi>: the root element of a TEI-conformant document is thus
-<gi>TEI</gi>, <emph>not </emph> <gi>tei</gi>.</p></div>
+must begin with a letter.<note place="foot">In XML, a single colon may
+also appear in a GI, where it has a special significance related to
+the use of <term>namespaces</term>, as further discussed in section
+<ptr target="#SGname"/>. The characters defined by Unicode as
+<term>combining characters</term> and as <term>extenders</term> are
+also permitted.</note> Uppercase and lowercase letters are
+quite distinct: an element with the GI <gi>foo</gi>
+is <emph>not</emph> the same as an element with the GI <gi>Foo</gi>;
+the root element of a TEI-conformant document is  <gi>TEI</gi>,
+<emph>not </emph> <gi>tei</gi>.</p></div>
 <div type="div4" xml:id="SG143"><head>Content model</head>
 <p>The second part of each declaration, enclosed in curly braces, is
 called the <term>content model</term> of the element being defined, because it
-specifies what may legitimately be contained within it.  Contents
-are specified either in terms of other elements or using special
-reserved words.  There are several such reserved words, of which by
+specifies what may legitimately be contained within it.  In RELAX NG,
+the content model is defined in terms of other patterns, either by
+embedding them, or (as in our examples above) by naming or referring
+to them.  The RELAX NG compact syntax also uses a small number of
+reserved words to identify other possible contents for an element, of which by
 far the most commonly encountered is <code>text</code>, as in this
 example: it means that the element being defined may contain any valid
 character data, but no elements.  If an XML declaration is thought of as a structure
@@ -506,15 +521,15 @@ models say <code>text</code> only and name no embedded elements.</p></div>
 <p>The declaration for <gi>stanza</gi> in the example above states
 that a stanza consists of one or more lines.  It uses an
 <term>occurrence indicator</term> (the plus sign) to indicate how many
-times the element named in its content model may occur.  There are
+times the pattern named in its content model may occur.  There are
 three occurrence indicators: the plus sign, the question mark, and the
 asterisk or star.  The plus sign means that there may be one or more
-occurrences of the element concerned; the question mark means that
+occurrences of the pattern concerned; the question mark means that
 there may be at most one and possibly no occurrence; the star means
-that the element concerned may either be absent or appear one or more
+that the pattern concerned may either be absent or appear one or more
 times.  Thus, if the content model for <gi>stanza</gi> were
-<code>(line*)</code>, stanzas with no lines would be possible as well
-as those with more than one line.  If it were <code>(line?)</code>,
+<code>{line_p*}</code>, stanzas with no lines would be possible as well
+as those with more than one line.  If it were <code>{line_p?}</code>,
 again empty stanzas would be countenanced, but no stanza could have
 more than a single line.  The declaration for <gi>poem</gi> in the
 example above thus states that a <gi>poem</gi> cannot have more than
@@ -522,9 +537,9 @@ one heading, but may have none, and that it must have at least one
 <gi>stanza</gi> and may have several.
 </p></div>
 <div type="div4" xml:id="SG145"><head>Connectors</head>
-<p>The content model <code>(heading?, stanza+)</code> contains more than
+<p>The content model <code>{heading_p?, stanza_p+}</code> contains more than
 one component, and thus needs additionally to specify the order in
-which these elements (<gi>heading</gi> and <gi>stanza</gi>) may appear.
+which these patterns (<gi>heading_p</gi> and <gi>stanza_p</gi>) may appear.
 This ordering is determined by the <term>connector</term> (the comma)
 used between its components.  There are two possible connectors: the
 comma, representing sequence, and the vertical bar, representing
@@ -533,52 +548,57 @@ bar, then a <gi>poem</gi> would consist of either a heading or just
 stanzas – but not both!</p></div>
 <div type="div4" xml:id="SG146"><head>Model groups</head>
 <p>In our example so far, the components of each content model have
-been either single elements or <code>text</code>.  It is quite
+been either single patterns or <code>text</code>.  It is quite
 permissible however to define content models in which the components
-are lists of elements, combined by connectors.  Such lists, known as
-<term>model groups</term>, may also be modified by occurrence
-indicators and themselves combined by connectors.  To demonstrate
-these facilities, let us now expand our example to include
-non-stanzaic types of verse.  For the sake of demonstration, we will
-categorize poems as one of <term>stanzaic</term>,
-<term>couplets</term>, or <term>blank</term> (or
-<term>stichic</term>).  A blank-verse poem consists simply of lines
-(we ignore the possibility of verse paragraphs for the moment)<note place="foot">It will not have escaped the astute reader that the fact
-that verse paragraphs need not start on a line boundary seriously
-complicates the issue; see further section <ptr target="#SG152"/>.</note> so no additional elements need be defined for
-it.  A couplet is defined as a <gi>firstLine</gi> followed by a
-<gi>secondLine</gi>.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[couplet = element couplet {firstLine, secondLine}]]></egXML>
+are lists of patterns, combined by connectors.  Such lists may also be
+modified by occurrence indicators and themselves combined by
+connectors.  To demonstrate these facilities, let us now expand our
+example to include non-stanzaic types of verse.  For the sake of
+demonstration, we will categorize poems as one of
+<term>stanzaic</term>, <term>couplets</term>, or <term>blank</term>
+(or <term>stichic</term>).  A blank-verse poem consists simply of
+lines (we ignore the possibility of verse paragraphs for the
+moment)<note place="foot">It will not have escaped the astute reader
+that the fact that verse paragraphs need not start on a line boundary
+seriously complicates the issue; see further section <ptr
+target="#SG152"/>.</note> so no additional elements need be defined
+for it.  A couplet is defined as a <gi>firstLine</gi> followed by a
+<gi>secondLine</gi>.  <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[couplet_p = element
+couplet {firstLine_p, secondLine_p}]]></egXML>
 <!-- Can't believe it's a good idea to use as an example -->
 	<!-- something we would never do ourselves.              -->
 	<!-- Why not define SONNET, OCTET, QUATRAIN, SESTET?     --></p>
-<p>The elements <gi>firstLine</gi> and <gi>secondLine</gi> (which are
-distinguished to enable studies of rhyme scheme, for example) have
-exactly the same content model as the existing <gi>line</gi>
-element; we will therefore add the following two
-lines to our example schema:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[firstLine =
-element firstLine  {text}
-secondLine = element secondLine  {text}]]></egXML>
-Next, we can change the declaration for the <gi>poem</gi> element 
-to include all three possibilities:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[ poem =
-element poem { heading?, (stanza+ | couplet+ | line+) }]]></egXML>
-That is, a poem consists of an optional heading, followed by one or
-several stanzas, or one or several couplets, or one or several lines.
-Note the difference between this declaration and the following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[poem = element poem  {heading?, (stanza | couplet | line)+ }]]></egXML>
-The second version, by applying the occurrence indicator to the group
-rather than to each element within it, would allow for a single poem to
-contain a mixture of stanzas, couplets, or lines.</p>
-<p>A model group can contain <code>text</code> as well as named elements: this
-combination, known as <term>mixed content</term>, allows for elements
-in which the sub-components appear with intervening stretches of
-character data. For example, if we wished to mark place names wherever
-they appear inside our verse lines, then, assuming we have also added a suitable declaration for the
-<gi>name</gi> element, we could change the
-definition for <gi>line</gi> to
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[line = element line  (text | name )* }]]></egXML>
+<p>The patterns firstLine_p and secondLine_p define elements
+<gi>firstLine</gi> and <gi>secondLine</gi> (which are distinguished to
+enable studies of rhyme scheme, for example); these will have exactly
+the same content model as the existing <gi>line</gi> element; we will
+therefore add the following two lines to our example schema: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[firstLine = element
+firstLine {text} 
+secondLine = element secondLine {text}]]></egXML>
+Next, we can change the declaration for the <gi>poem</gi> element to
+include all three possibilities: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[ poem_p = element poem
+{ heading_p?, (stanza_p+ | couplet_p+ | line_p+) }]]></egXML> That is, a poem
+consists of an optional heading, followed by one or several stanzas,
+or one or several couplets, or one or several lines.  Note the
+difference between this declaration and the following: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[poem_p = element poem
+{heading_p?, (stanza_p | couplet_p | line_p)+ }]]></egXML> The second version,
+by applying the occurrence indicator to the group rather than to each
+element within it, would allow for a single poem to contain a mixture
+of stanzas, couplets, or lines.</p>
+<p>A group of this kind can contain <code>text</code> as well as named
+elements: this combination, known as <term>mixed content</term>,
+allows for elements in which the sub-components appear with
+intervening stretches of character data. For example, if we wished to
+mark place names wherever they appear inside our verse lines, then,
+assuming we have also added a pattern for  the
+<gi>name</gi> element, we could change the definition for
+<gi>line</gi> to <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[line_p = element line
+(text | name_p )* }]]></egXML>
 </p>
 <p>XML places several constraints on the way that mixed
 content models may be defined. In brief, if <code>text</code> appears with other
@@ -595,11 +615,11 @@ consider the case of stanzaic verse in which a refrain or chorus
 appears.  Like a stanza, a refrain consists of repetitions of the line element.
 A refrain can
 appear at the start of a poem only, or as an optional addition
-following each stanza.  This could be expressed by a content model such
+following each stanza.  This could be expressed by a pattern such
 as the following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[refrain = element refrain {line+}
-poem = element poem   {heading?, ( line+ | (refrain?, (stanza,
-refrain?)+ )) }]]></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[refrain_p = element refrain {line_p+}
+poem_p = element poem   {heading_p?, ( line_p+ | (refrain_p?, (stanza_p,
+refrain_p?)+ )) }]]></egXML>
 That is, a poem consists of an optional heading, followed by either
 a sequence of lines, or an un-named group, which starts with an
 optional refrain, followed by one of more occurrences of another group,
@@ -613,8 +633,8 @@ in a poem, if it is not composed simply of lines, and that if there is
 both a heading and a stanza they must appear in that order.</p>
 <p>Note that the apparent complexity of this model derives from the
 constraints expressed informally above. A simpler model, such as
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[poem =
-element poem {heading?, (line|refrain|stanza)+ }]]></egXML> would not enforce any of them, and would therefore permit
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[poem_p =
+element poem {heading_p?, (line_p|refrain_p|stanza_p)+ }]]></egXML> would not enforce any of them, and would therefore permit
 such anomalies as a poem consisting only of refrains, or an arbitrary mixture of
 lines and refrains.</p>
 </div>
@@ -687,7 +707,7 @@ end-tag may not contain an attribute-value specification, since it
 would be redundant.</p>
 <p>The order in which attribute-value pairs are supplied inside a tag
 has no significance; they must however be separated by at least one
-whitespace (blank, newline, or tab) character. In XML, the value part
+whitespace (blank, newline, or tab) character. The value part
 must always be given inside matching quotation marks, either single or
 double.</p>
 <p>For example: <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -708,87 +728,67 @@ special case in that, by convention, it is always used to supply a
 unique value to identify a particular element occurrence, which may be
 used for cross reference purposes, as discussed further below.</p>
 <div type="div3"><head>Declaring attributes</head>
-<p>Like elements, attributes are declared in the XML DTD
-or schema.  As well as specifying its name and the element to
+<p>Like elements, attributes are declared in the schema.  As well as specifying its name and the element to
 which it is to be attached, it is possible to specify (within limits)
 what kind of value is acceptable for an attribute and a default
 value.</p>
-<p>The following DTD declarations could be used to define the two attributes
-we have supplied above for the <gi>poem</gi> element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ATTLIST poem
-          id       ID                              #IMPLIED
-          status   (draft | revised | published)   "draft"        >]]></egXML></p>
-<p>The declaration begins with the symbol <code>ATTLIST</code>, which
-introduces an <term>attribute list specification</term>. This first
-specifies the element concerned, <gi>poem</gi> in this
-example. Following this name is a series of
-rows, one for each attribute being declared, each containing three
-parts.<note place="foot">These parts are conventionally lined up in
-rows for human readability; the parser only requires that there be
-some kind of whitespace between them.</note>  These specify the name
-of the attribute, the type of value it takes, and a default value
-respectively.</p>
 
-<p>The second part of an attribute specification can take one of two
-forms, both illustrated above.  The first case uses one of a number of
-special keywords to declare what kind of value an attribute may take.
-In the example above, the special keyword <code>ID</code> is used to
-indicate that the attribute <att>xml:id</att> will be used to supply a
-unique identifying value for each poem instance (see further the
-discussion in section <ptr target="#SG-id"/>).  Possible keywords
-include:<list>
-<item><code>CDATA</code>: the attribute value may contain any valid character data,
-including spaces or punctuation marks; even tags may be included in
-the value, but they will not be recognized by the XML parser, and will
-not be processed as tags normally are.</item>
-<item><code>NMTOKEN</code>: the attribute value must contain only those characters that are valid within a name or a generic identifier.</item>
-<item><code>NMTOKENS</code>: the attribute value must contain one or more <code>NMTOKEN</code> values separated by one or more whitespace characters.</item>
-<item><code>ID</code>: the attribute value must be a single word starting with an alphabetic character, which can be used as a unique identifier (i.e. a given value can only be used once as the value for any <code>ID</code> attribute).</item>
-<item><code>IDREF</code>: The attribute value must contain a single word, which has been used as a unique identifier on  some
-other element.</item>
-<item><code>IDREFS</code>: The attribute value must contain one or
-more <code>IDREF</code> values, separated by one or more whitespace characters.</item>
-<item><code>ENTITY</code>: The attribute value must contain a <code>NMTOKEN</code> value which has previously been declared to be the name of some XML <term>entity</term> (<ptr target="#SG17"/>).</item>
-<item><code>ENTITIES</code>: The attribute value must contain one or
-more <code>ENTITY</code> values, separated by one or more whitespace characters.</item>
-</list></p>
-<p>In a RELAX NG schema, the attribute would be defined within
-the element declaration as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<optional>
-      <attribute name="id">
-        <data type="ID"/>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="status" a:defaultValue="draft">
-        <choice>
-          <value>draft</value>
-          <value>revised</value>
-          <value>published</value>
-        </choice>
-      </attribute>
-    </optional>]]></egXML></p>
+<p>In the compact syntax of RELAX NG, an attribute is defined by means
+of an attribute pattern, like the following: 
+
+<egXML
+    xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[att.status =
+    attribute status {"draft" | "revised" | "published"}]]></egXML>
+
+This defines a new pattern, called att.poemStatus, whose value is an
+attribute named <att>status</att>; the value (or content) of this
+attribute may be any one of the strings presented above. This
+definition must be included or referenced within the definition for
+every element to which the attribute is attached. We therefore
+modify the definition for the poem_p given above as follows:
+
+<eg><![CDATA[poem_p = element poem {att.poemStatus, heading_p?, stanza_p+}
+]]></eg>
+
+In RELAX NG, an element pattern may be defined as a combination of
+attribute patterns and element patterns, as shown above. Attribute
+patterns can also be grouped and alternated in the same way as element
+patterns, though this particular feature is not widely used in the TEI
+scheme, since it is not available to the same extent in all schema languages.
+
+</p>
+
+<p>Instead of supplying a list of explicit values, an attribute
+pattern can specify that the attribute must have a value of a
+particular type, for example a text string, a numeric value, a
+normalized date, etc. This is accomplished by supplying a pattern
+which references a <term>datatype</term>.</p>
+
 </div>
 <div type="div3"><head>Attribute names</head>
-<p>Attribute names (<att>xml:id</att> and <att>status</att> in
-this example) are subject to the same restrictions as other names in
-XML; they need not be unique across the whole DTD or schema, however, but only
-within the list of attributes for a given element.</p></div>
+<p>Attribute names are subject to the same restrictions as other names
+in XML; they need not be unique across the whole schema,
+however, but only within the list of attributes for a given
+element.</p></div>
 <div type="div3"><head>Attribute values</head>
-<p>In the examples above, a list of the possible values for the
+<p>In the example above, a list of the possible values for the
 <att>status</att> attribute has been supplied.  This means that a
 parser can check that no <gi>poem</gi> is defined for which the
 <att>status</att> attribute does not have one of <val>draft</val>,
 <val>revised</val>, or <val>published</val> as its value.
-Alternatively, a parser would have accepted almost any unbroken string
+With a definition such as 
+<egXML
+    xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[att.status =
+    attribute status {text}]]></egXML>
+a parser would have accepted almost any unbroken string
 of characters (<code>status="awful"</code>,
-<code>status="awe-ful"</code>, or <code>status="12345678"</code>) if
-it had been a <code>NMTOKEN</code>; or almost any string at all
-(<code>status="anything goes"</code> or <code>status = "well, ALMOST
-anything"</code>) if it were <code>CDATA</code>.  Sometimes, of
+<code>status="awe-ful"</code>, or <code>status="12345678"</code>) as
+valid for this attribute.  Sometimes, of
 course, the set of possible values cannot be pre-defined.  Where it
 can, as in this case, it is generally better to do so.</p> </div>
-<div type="div3"><head>Default value</head> <p>The last piece of information in
+<!--
+<div type="div3"><head>Default value</head> 
+<p>The last piece of information in
 each attribute declaration specifies how a parser should interpret the
 absence of the attribute concerned.  This can be done by supplying one
 of the special keywords listed below, or (as in this case) by
@@ -804,36 +804,31 @@ declaration above were rewritten in DTD language as
 then poems which appear in the anthology simply tagged <tag>poem</tag>
 would be reported as erroneously tagged, as would any for which some
 value other than <val>draft,</val> <val>published,</val> or
-<val>revised</val> were supplied.</p></div>
-<div type="div3" xml:id="SG-id"><head><code>ID</code> and <code>IDREF</code> attributes</head>
+<val>revised</val> were supplied.</p></div> -->
+
+<div type="div3" xml:id="SG-id"><head>Pointing  attributes</head>
 <p>It is sometimes necessary to refer to an occurrence of one textual
 element from within another, an obvious example being phrases such as
 <q>see note 6</q> or <q>as discussed in chapter 5</q>.  When a text is
-being produced the actual numbers associated with the notes or chapters
-may not be certain.  If we are using descriptive markup, such
+being produced the actual numbers associated with the notes or
+chapters may not be certain.  If we are using descriptive markup, such
 things as page or chapter numbers, being entirely matters of
 presentation, will not in any case be present in the marked up text:
 they will be assigned by whatever processor is operating on the text
 (and may indeed differ in different applications).  XML therefore
-provides a special mechanism by which any element occurrence may be
-given a special identifier, a kind of label, which may be used to refer
-to it from anywhere  else within the same text.  The cross-reference
-itself is regarded as an element occurrence of a specific kind, which
-must also be declared in the DTD or schema.  In each case, the identifying label
-(which may be arbitrary) is supplied as the value of a special
-attribute.</p>
+predefines an attribute which may be used to provide any element
+occurrence with a special identifier, a kind of label, which may be
+used to refer to it from anywhere else: since it is defined in the XML
+namespace, the name of this attribute is <att>xml:id</att> and it is
+used throughout the TEI schema. Because it is intended to act as an
+identifier, its values must be unique within a given document. The
+cross-reference itself will be supplied by an element bearing an
+attribute of a specific kind, which must also be declared in the
+schema. </p>
 <p>Suppose, for example, we wish to include a reference within
 the notes on one poem that refers to another poem.  We will
 first need to provide some way of attaching a label to each
-poem:  this is done in the DTD language by defining an attribute for the
-<gi>poem</gi> element, as suggested above.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ATTLIST poem
-          id       ID     #IMPLIED >]]></egXML></p>
-
-<p>Here we define an attribute <att>xml:id</att>, the value of which
-must be of type <code>ID</code>.  It is not required that any
-attribute of type <code>ID</code> have the name <att>xml:id</att> as
-well; it is however a useful convention almost universally observed.
+poem:  this is easily done using the <att>xml:id</att> attribute.
 Note that not every poem need carry an <att>xml:id</att> attribute and
 the parser may safely ignore the lack of one in those which do not.
 Only poems to which we intend to refer need use this attribute; for
@@ -850,155 +845,52 @@ identifier, for example:
 itself.  This will not have any content – it is only a
 pointer – but it has an attribute, the value of which will be
 the identifier of the element pointed at.  This is achieved by
-the following declarations; in DTD:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ELEMENT poemRef   EMPTY                  >
-<!ATTLIST poemRef   target IDREF #REQUIRED >]]></egXML>
-and in RELAX NG:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<define name="poemRef">
-    <element name="poemRef">
-      <attribute name="target">
-	<data type="IDREF"/>
-      </attribute>
-      <empty/>
-    </element>
-  </define>]]></egXML>
+the following definition:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+poemRef_p = element poemRef {
+  att.target = attribute target {data.URI},
+  empty}
+></egXML>
 </p>
-<p>The <gi>poemRef</gi> element has a special content model
-because it has no content.  It has a single attribute called <att>target</att>.  The
-value of this attribute must be of type <code>IDREF</code> (the keyword used for
-cross reference pointers of this type); furthermore, because the
-default value is required, it must be supplied on each
+<p>The <gi>poemRef</gi> element has  no content, but a  single attribute called <att>target</att>.  The
+value of this attribute must be a pointer like a web reference of type
+<code>data.URI</code> ; furthermore, because there is no indication of
+optionality on the attribute pattern, it must be supplied on each
 occurrence — a <gi>poemRef</gi> with no referent is an impossibility.</p>
 <p>With these declarations in force, we can now encode a reference to
 the poem whose <att>xml:id</att> attribute specifies that its identifier
 is <val>Rose</val> as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[Blake's poem on the sick rose 
-<poemRef target='Rose'/> ...]]></egXML>
+<poemRef target='#Rose'/> ...]]></egXML>
 In this example, we have used the special syntax defined by XML for
 representing empty elements in which the end-tag and the start-tag are
 combined into a single tag.  XML also permits representation of empty
 elements by an immediately adjacent start- and end-tag, thus <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<poemRef
 target="#Rose"></poemRef>]]></egXML></p>
 
-<p>When an XML parser encounters this empty element it will simply
-check that an element exists with the identifier <code>Rose</code>.
-Different XML processors could take any number of additional actions:
+<p>A processor may  take any number of actions
+once it has followed a link encoded in this way:
 a formatter might construct an exact page and line reference for the
 location of the poem in the current document and insert it, or just
 quote the poem's title or first lines.  A hypertext style processor
 might use this element as a signal to activate a link to the poem
 being referred to.  The purpose of the XML markup is simply to
 indicate that a cross reference exists: it does not determine what the
-processor is to do with it.</p></div></div>
+processor is to do with it.</p></div>
 
-<div type="div2" xml:id="SG17"><head>Entities</head>
-<p>The aspects of XML discussed so far are all concerned with the
-markup of structural elements within a document.  XML also provides a
-simple and flexible method of encoding and naming arbitrary parts of
-the actual content of a document in a portable way.  In XML the word
-<term>entity</term> has a special sense: it means a named part of a
-marked up document, irrespective of any structural considerations.  An
-entity might be a string of characters or a whole file of text.
-Entities can only be declared in a DTD, in the same way as elements or
-attributes, and they are included in a document using a construction
-known as an <term>entity reference</term>. In the schema, they can
-only be declared in a DTD subset (see section <ptr target="#SG182"/>)
-in the document itself.</p>
+<div type="div2"><head>Other components of an XML document</head> 
+<p>In addition to the elements and attributes so far discussed, an XML
+document can contain a few other formally distinct things. An XML
+document may contain arbitrary signals or flags for use when the
+document is processed in a particular way by some class of processor:
+a common example in document production is the need to force a
+formatter to start a new page at some specific point in a document:
+such flags are called <term>processing instructions</term>. An XML
+document may also contain instances of elements which are defined in
+some other DTD than the one declared in its <code>DOCTYPE</code>
+declaration, or (more generally) from some other
+<term>namespace</term>.</p>
 
-<div type="div3" xml:id="SG-ents"><head>Entity declarations</head>
-<p>Like all other declarations, an  entity declaration begins with a special keyword, in this case the word <ident type="kw">ENTITY</ident>, followed by the name of the entity to be declared, and the value to be used when it is referenced in the document. For example, the following declaration
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY tei "Text Encoding Initiative">]]></egXML>
-defines an entity whose name is <ident type="ge" rend="noindex">tei</ident> and
-whose value is the string <code>Text Encoding Initiative</code>. This is an
-instance of an <term>entity declaration</term>, which declares an
-<term>internal entity</term>.  The following declaration, by contrast,
-declares an <term>external entity</term> (sometimes called, loosely, a
-<term>system entity</term>):
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY ChapTwo SYSTEM "p4chap2.xml">]]></egXML>
-
-This defines an external entity whose name is <ident rend="noindex"
-type="ge">ChapTwo</ident> and whose value is the text associated with
-the system identifier — in this case, the system identifier is the
-name of an operating system file and the replacement text of the
-entity is the contents of the file.  However, XML does not require
-system identifiers to be operating-system file names.<note
-place="foot">In general, an external entity can be any data source
-available to the XML processor: files, results of database queries,
-results of calls to system functions, web pages — anything at
-all. System identifiers can use any method to name an entity which the
-XML parser's interface to its operating environment can use to elicit
-data from the environment.</note> We might define the same entity as
-referring to a web page: <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY ChapTwo
-SYSTEM "http://www.tei-c.org/P4X/p4chap2.xml">]]></egXML>
-</p>
-<p>System identifiers are, by their nature, system dependent; in the
-interests of data portability, therefore, XML provides another way of
-declaring external entities, shown here:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY p3.sg PUBLIC
-"-//TEI//TEXT Guidelines Chapter on XML//EN" "p4chap2.xml">]]></egXML>
-Here, the keyword <code>SYSTEM</code> has been replaced by the keyword
-<code>PUBLIC</code>, and the system identifier has been preceded by a
-special string known as a <term>formal public identifier</term>.
-Although public identifiers can (in principle) take virtually any
-form; it is usual to use the form shown above, in which the delimiters
-<mentioned>//</mentioned> divide the identifier into the following
-parts: <list type="gloss"><label>TEI</label> <item>indicates the owner
-of this public identifier (often but not necessarily the owner of the
-data in question); the preceding <mentioned>-</mentioned> signals that
-this particular owner identifier is not registered with ISO (a
-<mentioned>+</mentioned> would imply that one could find out the full
-name and address of the owner from the official registry of owner
-identifiers)</item> <label>TEXT</label> <item>is a keyword indicating
-the nature of the entity: other legal values are <code>DOCUMENT</code>
-(for full XML documents), <code>DTD</code> (for document type
-declarations), <code>ELEMENTS</code> (for sets of element
-declarations), <code>ENTITIES</code> (for sets of entity
-declarations), <code>NOTATION</code> (for notation definitions), and a
-number of others which are less frequently needed and will not be
-discussed here.</item> <label>Guidelines Chapter on XML</label>
-<item>gives a descriptive name to the entity.</item><label>EN</label>
-<item>is the ISO language code for the human language in which the
-entity is written.</item></list>
-</p>
-<p>Public identifiers help make XML documents less dependent on
-particular computer systems, by making it possible to confine the
-mapping between entity names and system identifiers to a single
-place. As with other such techniques, they require XML systems to
-provide mechanisms for mapping from the public identifiers to file
-identifiers or other system identifiers: such a mapping is typically
-provided by an additional component known as a <term>catalog
-file</term> (<ptr target="#SGPATANC"/>).</p>
-   </div>
-<div type="div3" xml:id="SG-er"><head>Entity references</head>
-<p>Once an entity has been declared it may be referenced anywhere
-within a document. This is done by supplying its name prefixed with
-the ampersand character and followed by the semicolon.</p>
-<p>When an XML parser encounters such an <term>entity
-reference</term>, it immediately substitutes the value declared for
-the entity name. Thus, the passage <code>The work of the &amp;tei; has
-only just begun</code> will be interpreted by an XML processor exactly
-as if it read <code>The work of the Text Encoding Initiative has only
-just begun</code>. In the case of an external entity, it is, of
-course, the contents of the operating system file which are
-substituted, so that the passage <code>The following text has been
-suppressed: &amp;ChapTwo;</code> will be expanded to include the whole
-of whatever the system finds in the file <ident rend="noindex" type="file">p4chap2.xml</ident>.</p>
-<p>This obviously saves typing, and simplifies the task of maintaining
-consistency in a set of documents.  If the printing of a complex
-document is to be done at many sites, the document body itself might use
-an entity reference, such as <code>&amp;site;</code>, wherever
-the name of the site is required.  Different entity declarations could
-then be used at different sites to supply the appropriate string to be
-substituted for this name, with no need to change the text of the
-document itself.</p>
-<p>In XML documents, two special entities are predefined, with the
-names <ident type="ge">amp</ident> and <ident
-type="ge">lt</ident>. These are available without declaration, so that
-the ampersand character or less-than sign can be represented in a text
-without their being confused with the start of an entity reference or
-a tag respectively.</p>
-</div>
 <div type="div3" xml:id="SG-cer"><head>Character references</head>
 <p>As mentioned above, XML documents all use the same internal
 character encoding. Since not all computer systems currently support
@@ -1031,6 +923,13 @@ xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY eacute
 that, for an XML document which embeds this entity set in its DTD, a
 non-Unicode enabled input system may also represent this character by
 the entity reference <code>&amp;eacute;</code>.</p>
+<p>In XML documents, two special entities are predefined, with the
+names <ident type="ge">amp</ident> and <ident
+type="ge">lt</ident>. These are available without declaration, so that
+the ampersand character or less-than sign can be represented in a text
+without their being confused with the start of an entity reference or
+a tag respectively.</p>
+
 <p>This <term>string substitution</term> mechanism has many other
 applications. Suppose, for example, that we wish to encode the use of ligatures
 in early printed texts.  The ligatured form of
@@ -1051,252 +950,11 @@ requires as the expansion.</p>
 <p>More detailed discussion of this and related character encoding
 issues is provided in chapter <ptr target="#CH"/> of the
 Guidelines.</p></div>
-<div type="div3" xml:id="SG-ue"><head>Unparsed entities and Notations</head>
-<p>An XML entity may contain non-textual information such as pictures,
-video, or sound in digitized form. Such objects can be embedded in a
-document by reference in exactly the same way as any other external
-entity. When such entities are declared, however, it is essential to
-indicate that they contain data which an XML parser or processor
-cannot handle in the same way as the surrounding data — it is no
-use trying to process entities contain pictures or sound as if they
-contain text! This is accomplished by including an additional keyword
-in the declaration of such entities, as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY fig1 SYSTEM "figure1.png" NDATA png>]]></egXML>
- </p>
-<p>The keyword <ident type="kw">NDATA</ident> indicates that this external entity is
-<term>unparsed</term>: it contains non-XML data which an XML parser
-should ignore. It is followed by an additional name (<code>png</code>
-in the example above) which identifies the <term>notation</term> used
-for this data, that is, the set of conventions which a processor must
-understand in order to process the data correctly. XML may itself be
-thought of as a notation, which is implied for all external entities
-not otherwise labelled. Notations should be declared in a DTD along with
-everything else: for the DTD in which the above declaration appears, a
-notation declaration like the following would also be appropriate:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!NOTATION png PUBLIC
-    '-//TEI//NOTATION IETF RFC2083 Portable Network Graphics//EN'>]]></egXML>
-This gives a formal public identifier for the place where the notation
-<code>png</code> is defined.</p>
-<p>More detailed discussion of external unparsed entities and of
-recommended graphics notations are given in section <ptr target="#FTGRA"/> of the Guidelines.</p></div>
-<div type="div3" xml:id="SG-pe"><head>Parameter entities</head>
-<p>A special form of entities, <term>parameter entities</term>, may be
-used within XML markup declarations; these differ from the entities
-discussed above (which technically are known as <term>general
-entities</term>) in two ways:
-<list type="bullets">
-<item>Parameter entities are used <emph>only</emph> within XML markup
-declarations; they may not appear  within the document
-itself.</item>
-<item>Parameter entity references are delimited by percent sign and semicolon,
-rather than by ampersand and semicolon.</item></list>
-</p> 
-<p>Declarations for parameter entities take the same form as those for
-general entities, but insert a percent sign between the keyword
-<code>ENTITY</code> and the name of the entity itself.  Whitespace characters
-(blanks, tabs, or line breaks) must occur on both sides of the percent
-sign.  For example, an internal parameter entity named <ident type="pe">a.global</ident> might be declared with the  expansion
-<code>id ID #REQUIRED  rend CDATA #IMPLIED</code> as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % a.global 
-         'id ID #REQUIRED  rend CDATA #IMPLIED'>]]></egXML>
-</p>
-<p>With this declaration at the start of a DTD, the task (for example) of declaring
-attributes consistently on all elements within a DTD becomes much
-simpler: all that is needed is to reference the parameter entity, as
-in this example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ATTLIST myElement %a.global;
-                    another CDATA #IMPLIED >]]></egXML>
-since the attribute list  for <tag>myElement</tag> will now be
-understood to contain whatever list of attribute definitions was
-declared as the value for the parameter entity <ident type="pe">a.global</ident>, followed by the definition for an
-attribute called <att>another</att>.</p>
-<p>Moreover, if we wish to change the global attributes
-or add another, all we need do is provide a new declaration for <ident type="pe">a.global</ident> in the DTD. We do not even need to modify
-the existing declaration, but simply ensure that the new one precedes
-the old one in the DTD being processed. This is because of one very significant aspect of entity
-declarations not mentioned above: if a declaration is given for the
-same entity more than once, then only the first declaration is
-applicable. If, for example, an XML processor finds the following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY switch "UP"> 
-<!-- several other declarations -->
-<!ENTITY switch "DOWN">
-<!ENTITY switch "SIDEWAYS">
-<!-- .... -->
-The switch is &switch;]]></egXML>
-then the entity reference at the end (assumed to be inside a document)
-will be resolved as the string "UP" because that is the first
-declaration encountered. This rule applies equally to general entities
-and parameter entities, and has important consequences for the TEI
-scheme. The TEI DTD makes extensive use of parameter
-entities to control the selection of different tag sets. They are also used to control the behaviour of conditional marked sections, as further discussed in section <ptr target="#SG-cond"/> below.</p></div></div>
-<div type="div2" xml:id="SG17BIS"><head>Marked sections</head>
-<p>It is occasionally necessary to mark some portion of an XML
-document for special treatment.  Within the body of a document, it is
-often convenient to be able to mark some portion as containing XML
-markup which is to be ignored. Within a DTD, it is often convenient to
-mark certain parts to be included or excluded in specific
-circumstances. To deal with the former situation, XML defines a
-construct known as a <term>CDATA marked section</term>; to deal with
-the latter, a syntactically similar construct known as a
-<term>conditional marked section</term> may be used.</p>
-<p>Most users of the TEI encoding scheme will never need to use marked
-sections, and may safely skip the remainder of this discussion.  The
-TEI DTD makes extensive use of conditional marked sections, however,
-and this section should be read carefully by anyone wishing to follow
-in detail the discussions in chapter <ptr target="#ST"/> of the
-Guidelines.</p>
-<div type="div3" xml:id="SG-cond"><head>CDATA marked section</head>
-<p>A <code>CDATA</code> marked section is delimited by two rather
-arcane sequences of characters: its start is marked by the string
-<code>&lt;![CDATA[</code>, and its end by the string
-<code>]]&gt;</code>. Note that spaces are not permitted within either
-string.</p>
-<p>Within a <code>CDATA</code> marked section any strings of characters which look
-like XML tags or entity references will not be recognized as such by
-the XML parser: they are thus a very useful way of including examples
-of XML tagging within a document itself written in XML. For example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>The
-<gi>term</gi> element may be used to mark any technical
-term: <eg>&lt;![CDATA[ This &lt;term&gt;recursion&lt;/term&gt;
-is giving me a headache. ]]&gt;</eg></p></egXML>
-</p>
-<p>In this extract from a document describing the way that an XML
-element called <gi>term</gi> may be used, the cited example (tagged
-with a <gi>eg</gi> element) includes an instance of the <gi>term</gi>
-element which will not be recognised as such, but simply as a string
-of characters, because it is contained by a marked section.</p>
-<p>A similar effect can be achieved by simply replacing the angle
-brackets by entity references, but this makes the text somewhat
-unreadable in its native XML form if the example is of any length:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>The <gi>term</gi> element may
-  be used to mark any technical term: <eg>This &amp;lt;term&amp;gt;recursion&amp;lt;/term&amp;gt; is giving me a headache.
-</eg></p>
-</egXML>
-</p>
-</div>
-<div type="div3" xml:id="SG-cms"><head>Conditional marked section</head>
-<p>The <code>CDATA</code> marked section is a special case of the more
-general <term>marked section</term> construct. Within the body of a
-DTD (but not within the body of a document), two other kinds of marked
-section are possible: an <code>IGNORE</code> marked section, and an
-<code>INCLUDE</code> marked section. As the names suggest, material
-within an <code>IGNORE</code> marked section is ignored during
-processing, while material within an <code>INCLUDE</code> marked
-section is included. These can be used to include and exclude portions
-of a DTD selectively, so as to adjust it to relevant
-circumstances.</p>
-<p>Suppose, for example, that we want to allow for poems which contain
-either only stanzas, or only couplets. A content model to enforce this
-rule is easy to define, but it does require us to to declare both
-possibilities — we must provide declarations for both
-<gi>stanza</gi> and <gi>line</gi> elements, even though in a given
-document we know that only one will appear. An alternative approach
-might be to provide two different declarations for <gi>poem</gi>, as
-follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
-<![INCLUDE[ <!ELEMENT poem (stanza+)> 
-<!ELEMENT stanza (line+)> ]]
-<![IGNORE[ <!ELEMENT poem (couplet+)> 
-<!ELEMENT couplet (line,line)> ]]
-]]></egXML>
-The first declaration here will be the one used, since it is within an
-<code>INCLUDE</code> marked section. The second one will be ignored. To swap
-around, we change <code>INCLUDE</code> to <code>IGNORE</code>, and vice-versa.</p>
-<p>The literal keywords <code>INCLUDE</code> and <code>IGNORE</code>,
-however, are not much use in adjusting a DTD or a document to a user's
-requirements.  If modifying a DTD to match user requirements involves
-editing the text manually (changing <code>IGNORE</code> to
-<code>INCLUDE</code> as appropriate), it is probably just as easy to
-add or delete the affected parts of the DTD directly. However, the
-<code>IGNORE</code> and <code>INCLUDE</code> keywords need not be
-given as literal values; they can also be represented by a parameter
-entity reference.</p>
-<p>In the following DTD example, we have replaced the keywords by
-references to two parameter entities:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
-<![%stanzas;[
-   <!ELEMENT poem (stanza+)> 
-   <!ELEMENT stanza (line+)> 
-   <!ENTITY couplets "IGNORE">
-]]
-<![%couplets;[
-   <!ELEMENT poem (couplet+)> 
-   <!ELEMENT couplet (line,line)> 
-]]
-]]></egXML>
-The exact meaning of this will depend on the values of the parameter
-entities <ident type="pe">stanzas</ident> and <ident type="pe">couplets</ident> when the
-DTD is processed. When parameter entities are used in this way to
-control marked sections in a DTD, the  DTD file must
-contain default declarations for them.  If the user wishes to override
-any of the
-defaults, all that needs to be done is to supply a new declaration and
-ensure that it will be processed before the existing default. The
-easiest way of doing this is to supply it within a special part of the
-DTD known as the <term>DTD subset</term>.<note place="foot">This is
-explained in more detail in section <ptr target="#SG182"/> below; the
-key point for our present purposes is that declarations in the DTD
-subset are always read before those in the external DTD file, and, as
-mentioned above in section <ptr target="#SG-pe"/>, the first
-declaration of a given entity is the one which counts.</note></p>
-<p>With the following default declarations, poems will consist only of
-stanzas and the second set of declarations will be ignored:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % stanzas "INCLUDE">
-<![%stanzas;[
-   <!ELEMENT poem (stanza+)> 
-   <!ELEMENT stanza (line+)> 
-   <!ENTITY % couplets "IGNORE">
-]]<![CDATA[>
-<!ENTITY % couplets "INCLUDE">
-<![%couplets;[
-   <!ELEMENT poem (couplet+)> 
-   <!ELEMENT couplet (line,line)> 
-]]
-]]></egXML>
-This works because, although there are two declarations for the
-parameter entity <ident type="pe">couplets</ident>, only the first is
-effective. It declares the parameter entity <ident type="pe">couplets</ident> to
-have the value <code>IGNORE</code>, and so the declarations within the
-second conditional marked section are ignored. Suppose however that a
-declaration for <ident type="pe">stanzas</ident> giving it the value
-<code>IGNORE</code> were processed before this part of the DTD. In
-that event, only the second declaration for the entity
-<ident type="pe">couplets</ident> would be effective, since all the declarations
-within the conditional marked section governed by
-<ident type="pe">stanzas</ident> would be ignored.</p>
-<p>Variations on this technique are used to control how the various
-parts of a TEI DTD are constructed. For example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
-<!ENTITY % TEI.prose 'INCLUDE'>
-<!ENTITY % extensions SYSTEM 'mystuff.dtd'>
-]]></egXML>
-These declarations have two effects: they activate a section of the
-DTD containing declarations relevant to prose and they add into the
-DTD whatever additional declarations are held in the external file
-<ident type="file">mystuff.dtd</ident>. In the standard DTD files,
-there is a marked section controlled by the parameter entity <ident
-type="pe">TEI.prose</ident>, the default value of which is
-<code>IGNORE</code>, and there is also a reference to the parameter
-entity <ident type="pe">extensions</ident>, the default value for
-which is the null string. The declarations cited above over-ride both
-these defaults: the declarations within the marked section controlled
-by the parameter entity <ident type="pe">TEI.prose</ident> are thus
-made active; and the reference to the <ident
-type="pe">extensions</ident> parameter entity is replaced by the
-content of the file <ident
-type="file">mystuff.dtd</ident>.</p></div></div>
 
-<div type="div2"><head>Other components of an XML document</head> 
-<p>In addition to the elements and entities so far discussed, an XML
-document can contain a few other formally distinct things. An XML
-document may contain arbitrary signals or flags for use when the
-document is processed in a particular way by some class of processor:
-a common example in document production is the need to force a
-formatter to start a new page at some specific point in a document:
-such flags are called <term>processing instructions</term>. An XML
-document may also contain instances of elements which are defined in
-some other DTD than the one declared in its <code>DOCTYPE</code>
-declaration, or (more generally) from some other
-<term>namespace</term>.</p>
+
+</div>
+
+
 <div type="div3" xml:id="SG-pi"><head>Processing instructions</head>
 <p>Although one of the aims of using XML is to remove any information
 specific to the processing of a document from the document itself, it
@@ -1607,3 +1265,340 @@ Catalog files in both SGML Open and XML formats are distributed along
 with the current TEI DTDs.</p>
 </div></div>
 </div>
+<!--
+<div type="div2" xml:id="SG17"><head>Entities</head>
+<p>The aspects of XML discussed so far are all concerned with the
+markup of structural elements within a document.  XML also provides a
+simple and flexible method of encoding and naming arbitrary parts of
+the actual content of a document in a portable way.  In XML the word
+<term>entity</term> has a special sense: it means a named part of a
+marked up document, irrespective of any structural considerations.  An
+entity might be a string of characters or a whole file of text.
+Entities can only be declared in a DTD, in the same way as elements or
+attributes, and they are included in a document using a construction
+known as an <term>entity reference</term>. In the schema, they can
+only be declared in a DTD subset (see section <ptr target="#SG182"/>)
+in the document itself.</p>
+
+<div type="div3" xml:id="SG-ents"><head>Entity declarations</head>
+<p>Like all other declarations, an  entity declaration begins with a special keyword, in this case the word <ident type="kw">ENTITY</ident>, followed by the name of the entity to be declared, and the value to be used when it is referenced in the document. For example, the following declaration
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY tei "Text Encoding Initiative">]]></egXML>
+defines an entity whose name is <ident type="ge" rend="noindex">tei</ident> and
+whose value is the string <code>Text Encoding Initiative</code>. This is an
+instance of an <term>entity declaration</term>, which declares an
+<term>internal entity</term>.  The following declaration, by contrast,
+declares an <term>external entity</term> (sometimes called, loosely, a
+<term>system entity</term>):
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY ChapTwo SYSTEM "p4chap2.xml">]]></egXML>
+
+This defines an external entity whose name is <ident rend="noindex"
+type="ge">ChapTwo</ident> and whose value is the text associated with
+the system identifier — in this case, the system identifier is the
+name of an operating system file and the replacement text of the
+entity is the contents of the file.  However, XML does not require
+system identifiers to be operating-system file names.<note
+place="foot">In general, an external entity can be any data source
+available to the XML processor: files, results of database queries,
+results of calls to system functions, web pages — anything at
+all. System identifiers can use any method to name an entity which the
+XML parser's interface to its operating environment can use to elicit
+data from the environment.</note> We might define the same entity as
+referring to a web page: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY ChapTwo
+SYSTEM "http://www.tei-c.org/P4X/p4chap2.xml">]]></egXML>
+</p>
+<p>System identifiers are, by their nature, system dependent; in the
+interests of data portability, therefore, XML provides another way of
+declaring external entities, shown here:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY p3.sg PUBLIC
+"-//TEI//TEXT Guidelines Chapter on XML//EN" "p4chap2.xml">]]></egXML>
+Here, the keyword <code>SYSTEM</code> has been replaced by the keyword
+<code>PUBLIC</code>, and the system identifier has been preceded by a
+special string known as a <term>formal public identifier</term>.
+Although public identifiers can (in principle) take virtually any
+form; it is usual to use the form shown above, in which the delimiters
+<mentioned>//</mentioned> divide the identifier into the following
+parts: <list type="gloss"><label>TEI</label> <item>indicates the owner
+of this public identifier (often but not necessarily the owner of the
+data in question); the preceding <mentioned>-</mentioned> signals that
+this particular owner identifier is not registered with ISO (a
+<mentioned>+</mentioned> would imply that one could find out the full
+name and address of the owner from the official registry of owner
+identifiers)</item> <label>TEXT</label> <item>is a keyword indicating
+the nature of the entity: other legal values are <code>DOCUMENT</code>
+(for full XML documents), <code>DTD</code> (for document type
+declarations), <code>ELEMENTS</code> (for sets of element
+declarations), <code>ENTITIES</code> (for sets of entity
+declarations), <code>NOTATION</code> (for notation definitions), and a
+number of others which are less frequently needed and will not be
+discussed here.</item> <label>Guidelines Chapter on XML</label>
+<item>gives a descriptive name to the entity.</item><label>EN</label>
+<item>is the ISO language code for the human language in which the
+entity is written.</item></list>
+</p>
+<p>Public identifiers help make XML documents less dependent on
+particular computer systems, by making it possible to confine the
+mapping between entity names and system identifiers to a single
+place. As with other such techniques, they require XML systems to
+provide mechanisms for mapping from the public identifiers to file
+identifiers or other system identifiers: such a mapping is typically
+provided by an additional component known as a <term>catalog
+file</term> (<ptr target="#SGPATANC"/>).</p>
+   </div>
+<div type="div3" xml:id="SG-er"><head>Entity references</head>
+<p>Once an entity has been declared it may be referenced anywhere
+within a document. This is done by supplying its name prefixed with
+the ampersand character and followed by the semicolon.</p>
+<p>When an XML parser encounters such an <term>entity
+reference</term>, it immediately substitutes the value declared for
+the entity name. Thus, the passage <code>The work of the &amp;tei; has
+only just begun</code> will be interpreted by an XML processor exactly
+as if it read <code>The work of the Text Encoding Initiative has only
+just begun</code>. In the case of an external entity, it is, of
+course, the contents of the operating system file which are
+substituted, so that the passage <code>The following text has been
+suppressed: &amp;ChapTwo;</code> will be expanded to include the whole
+of whatever the system finds in the file <ident rend="noindex" type="file">p4chap2.xml</ident>.</p>
+<p>This obviously saves typing, and simplifies the task of maintaining
+consistency in a set of documents.  If the printing of a complex
+document is to be done at many sites, the document body itself might use
+an entity reference, such as <code>&amp;site;</code>, wherever
+the name of the site is required.  Different entity declarations could
+then be used at different sites to supply the appropriate string to be
+substituted for this name, with no need to change the text of the
+document itself.</p>
+</div>
+<div type="div3" xml:id="SG-ue"><head>Unparsed entities and Notations</head>
+<p>An XML entity may contain non-textual information such as pictures,
+video, or sound in digitized form. Such objects can be embedded in a
+document by reference in exactly the same way as any other external
+entity. When such entities are declared, however, it is essential to
+indicate that they contain data which an XML parser or processor
+cannot handle in the same way as the surrounding data — it is no
+use trying to process entities contain pictures or sound as if they
+contain text! This is accomplished by including an additional keyword
+in the declaration of such entities, as in the following example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY fig1 SYSTEM "figure1.png" NDATA png>]]></egXML>
+ </p>
+<p>The keyword <ident type="kw">NDATA</ident> indicates that this external entity is
+<term>unparsed</term>: it contains non-XML data which an XML parser
+should ignore. It is followed by an additional name (<code>png</code>
+in the example above) which identifies the <term>notation</term> used
+for this data, that is, the set of conventions which a processor must
+understand in order to process the data correctly. XML may itself be
+thought of as a notation, which is implied for all external entities
+not otherwise labelled. Notations should be declared in a DTD along with
+everything else: for the DTD in which the above declaration appears, a
+notation declaration like the following would also be appropriate:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!NOTATION png PUBLIC
+    '-//TEI//NOTATION IETF RFC2083 Portable Network Graphics//EN'>]]></egXML>
+This gives a formal public identifier for the place where the notation
+<code>png</code> is defined.</p>
+<p>More detailed discussion of external unparsed entities and of
+recommended graphics notations are given in section <ptr target="#FTGRA"/> of the Guidelines.</p></div>
+<div type="div3" xml:id="SG-pe"><head>Parameter entities</head>
+<p>A special form of entities, <term>parameter entities</term>, may be
+used within XML markup declarations; these differ from the entities
+discussed above (which technically are known as <term>general
+entities</term>) in two ways:
+<list type="bullets">
+<item>Parameter entities are used <emph>only</emph> within XML markup
+declarations; they may not appear  within the document
+itself.</item>
+<item>Parameter entity references are delimited by percent sign and semicolon,
+rather than by ampersand and semicolon.</item></list>
+</p> 
+<p>Declarations for parameter entities take the same form as those for
+general entities, but insert a percent sign between the keyword
+<code>ENTITY</code> and the name of the entity itself.  Whitespace characters
+(blanks, tabs, or line breaks) must occur on both sides of the percent
+sign.  For example, an internal parameter entity named <ident type="pe">a.global</ident> might be declared with the  expansion
+<code>id ID #REQUIRED  rend CDATA #IMPLIED</code> as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % a.global 
+         'id ID #REQUIRED  rend CDATA #IMPLIED'>]]></egXML>
+</p>
+<p>With this declaration at the start of a DTD, the task (for example) of declaring
+attributes consistently on all elements within a DTD becomes much
+simpler: all that is needed is to reference the parameter entity, as
+in this example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ATTLIST myElement %a.global;
+                    another CDATA #IMPLIED >]]></egXML>
+since the attribute list  for <tag>myElement</tag> will now be
+understood to contain whatever list of attribute definitions was
+declared as the value for the parameter entity <ident type="pe">a.global</ident>, followed by the definition for an
+attribute called <att>another</att>.</p>
+<p>Moreover, if we wish to change the global attributes
+or add another, all we need do is provide a new declaration for <ident type="pe">a.global</ident> in the DTD. We do not even need to modify
+the existing declaration, but simply ensure that the new one precedes
+the old one in the DTD being processed. This is because of one very significant aspect of entity
+declarations not mentioned above: if a declaration is given for the
+same entity more than once, then only the first declaration is
+applicable. If, for example, an XML processor finds the following:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY switch "UP"> 
+<! - - several other declarations - ->
+<!ENTITY switch "DOWN">
+<!ENTITY switch "SIDEWAYS">
+<!- - .... - ->
+The switch is &switch;]]></egXML>
+then the entity reference at the end (assumed to be inside a document)
+will be resolved as the string "UP" because that is the first
+declaration encountered. This rule applies equally to general entities
+and parameter entities, and has important consequences for the TEI
+scheme. The TEI DTD makes extensive use of parameter
+entities to control the selection of different tag sets. They are also used to control the behaviour of conditional marked sections, as further discussed in section <ptr target="#SG-cond"/> below.</p></div></div>
+<div type="div2" xml:id="SG17BIS"><head>Marked sections</head>
+<p>It is occasionally necessary to mark some portion of an XML
+document for special treatment.  Within the body of a document, it is
+often convenient to be able to mark some portion as containing XML
+markup which is to be ignored. Within a DTD, it is often convenient to
+mark certain parts to be included or excluded in specific
+circumstances. To deal with the former situation, XML defines a
+construct known as a <term>CDATA marked section</term>; to deal with
+the latter, a syntactically similar construct known as a
+<term>conditional marked section</term> may be used.</p>
+<p>Most users of the TEI encoding scheme will never need to use marked
+sections, and may safely skip the remainder of this discussion.  The
+TEI DTD makes extensive use of conditional marked sections, however,
+and this section should be read carefully by anyone wishing to follow
+in detail the discussions in chapter <ptr target="#ST"/> of the
+Guidelines.</p>
+<div type="div3" xml:id="SG-cond"><head>CDATA marked section</head>
+<p>A <code>CDATA</code> marked section is delimited by two rather
+arcane sequences of characters: its start is marked by the string
+<code>&lt;![CDATA[</code>, and its end by the string
+<code>]]&gt;</code>. Note that spaces are not permitted within either
+string.</p>
+<p>Within a <code>CDATA</code> marked section any strings of characters which look
+like XML tags or entity references will not be recognized as such by
+the XML parser: they are thus a very useful way of including examples
+of XML tagging within a document itself written in XML. For example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>The
+<gi>term</gi> element may be used to mark any technical
+term: <eg>&lt;![CDATA[ This &lt;term&gt;recursion&lt;/term&gt;
+is giving me a headache. ]]&gt;</eg></p></egXML>
+</p>
+<p>In this extract from a document describing the way that an XML
+element called <gi>term</gi> may be used, the cited example (tagged
+with a <gi>eg</gi> element) includes an instance of the <gi>term</gi>
+element which will not be recognised as such, but simply as a string
+of characters, because it is contained by a marked section.</p>
+<p>A similar effect can be achieved by simply replacing the angle
+brackets by entity references, but this makes the text somewhat
+unreadable in its native XML form if the example is of any length:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>The <gi>term</gi> element may
+  be used to mark any technical term: <eg>This &amp;lt;term&amp;gt;recursion&amp;lt;/term&amp;gt; is giving me a headache.
+</eg></p>
+</egXML>
+</p>
+</div>
+<div type="div3" xml:id="SG-cms"><head>Conditional marked section</head>
+<p>The <code>CDATA</code> marked section is a special case of the more
+general <term>marked section</term> construct. Within the body of a
+DTD (but not within the body of a document), two other kinds of marked
+section are possible: an <code>IGNORE</code> marked section, and an
+<code>INCLUDE</code> marked section. As the names suggest, material
+within an <code>IGNORE</code> marked section is ignored during
+processing, while material within an <code>INCLUDE</code> marked
+section is included. These can be used to include and exclude portions
+of a DTD selectively, so as to adjust it to relevant
+circumstances.</p>
+<p>Suppose, for example, that we want to allow for poems which contain
+either only stanzas, or only couplets. A content model to enforce this
+rule is easy to define, but it does require us to to declare both
+possibilities — we must provide declarations for both
+<gi>stanza</gi> and <gi>line</gi> elements, even though in a given
+document we know that only one will appear. An alternative approach
+might be to provide two different declarations for <gi>poem</gi>, as
+follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+<![INCLUDE[ <!ELEMENT poem (stanza+)> 
+<!ELEMENT stanza (line+)> ]]
+<![IGNORE[ <!ELEMENT poem (couplet+)> 
+<!ELEMENT couplet (line,line)> ]]
+]]></egXML>
+The first declaration here will be the one used, since it is within an
+<code>INCLUDE</code> marked section. The second one will be ignored. To swap
+around, we change <code>INCLUDE</code> to <code>IGNORE</code>, and vice-versa.</p>
+<p>The literal keywords <code>INCLUDE</code> and <code>IGNORE</code>,
+however, are not much use in adjusting a DTD or a document to a user's
+requirements.  If modifying a DTD to match user requirements involves
+editing the text manually (changing <code>IGNORE</code> to
+<code>INCLUDE</code> as appropriate), it is probably just as easy to
+add or delete the affected parts of the DTD directly. However, the
+<code>IGNORE</code> and <code>INCLUDE</code> keywords need not be
+given as literal values; they can also be represented by a parameter
+entity reference.</p>
+<p>In the following DTD example, we have replaced the keywords by
+references to two parameter entities:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+<![%stanzas;[
+   <!ELEMENT poem (stanza+)> 
+   <!ELEMENT stanza (line+)> 
+   <!ENTITY couplets "IGNORE">
+]]
+<![%couplets;[
+   <!ELEMENT poem (couplet+)> 
+   <!ELEMENT couplet (line,line)> 
+]]
+]]></egXML>
+The exact meaning of this will depend on the values of the parameter
+entities <ident type="pe">stanzas</ident> and <ident type="pe">couplets</ident> when the
+DTD is processed. When parameter entities are used in this way to
+control marked sections in a DTD, the  DTD file must
+contain default declarations for them.  If the user wishes to override
+any of the
+defaults, all that needs to be done is to supply a new declaration and
+ensure that it will be processed before the existing default. The
+easiest way of doing this is to supply it within a special part of the
+DTD known as the <term>DTD subset</term>.<note place="foot">This is
+explained in more detail in section <ptr target="#SG182"/> below; the
+key point for our present purposes is that declarations in the DTD
+subset are always read before those in the external DTD file, and, as
+mentioned above in section <ptr target="#SG-pe"/>, the first
+declaration of a given entity is the one which counts.</note></p>
+<p>With the following default declarations, poems will consist only of
+stanzas and the second set of declarations will be ignored:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % stanzas "INCLUDE">
+<![%stanzas;[
+   <!ELEMENT poem (stanza+)> 
+   <!ELEMENT stanza (line+)> 
+   <!ENTITY % couplets "IGNORE">
+]]<![CDATA[>
+<!ENTITY % couplets "INCLUDE">
+<![%couplets;[
+   <!ELEMENT poem (couplet+)> 
+   <!ELEMENT couplet (line,line)> 
+]]
+]]></egXML>
+This works because, although there are two declarations for the
+parameter entity <ident type="pe">couplets</ident>, only the first is
+effective. It declares the parameter entity <ident type="pe">couplets</ident> to
+have the value <code>IGNORE</code>, and so the declarations within the
+second conditional marked section are ignored. Suppose however that a
+declaration for <ident type="pe">stanzas</ident> giving it the value
+<code>IGNORE</code> were processed before this part of the DTD. In
+that event, only the second declaration for the entity
+<ident type="pe">couplets</ident> would be effective, since all the declarations
+within the conditional marked section governed by
+<ident type="pe">stanzas</ident> would be ignored.</p>
+<p>Variations on this technique are used to control how the various
+parts of a TEI DTD are constructed. For example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+<!ENTITY % TEI.prose 'INCLUDE'>
+<!ENTITY % extensions SYSTEM 'mystuff.dtd'>
+]]></egXML>
+These declarations have two effects: they activate a section of the
+DTD containing declarations relevant to prose and they add into the
+DTD whatever additional declarations are held in the external file
+<ident type="file">mystuff.dtd</ident>. In the standard DTD files,
+there is a marked section controlled by the parameter entity <ident
+type="pe">TEI.prose</ident>, the default value of which is
+<code>IGNORE</code>, and there is also a reference to the parameter
+entity <ident type="pe">extensions</ident>, the default value for
+which is the null string. The declarations cited above over-ride both
+these defaults: the declarations within the marked section controlled
+by the parameter entity <ident type="pe">TEI.prose</ident> are thus
+made active; and the reference to the <ident
+type="pe">extensions</ident> parameter entity is replaced by the
+content of the file <ident
+type="file">mystuff.dtd</ident>.</p></div></div>
+-->
