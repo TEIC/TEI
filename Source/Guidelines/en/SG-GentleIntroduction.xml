@@ -16,16 +16,16 @@ place="foot">World Wide Web Consortium: <title>Extensible Markup
 Language (XML) 1.0</title>, available from <ptr
 target="http://www.w3.org/TR/REC-xml"/></note> XML is widely-used for
 the definition of device-independent, system-independent methods of
-storing and processing texts in electronic form. It is derived from an
-earlier ISO standard called SGML (Standard Generalized Markup
-Language), in which the TEI Guidelines were originally formulated.  In
-the present chapter we introduce informally the basic concepts
-underlying such markup languages and attempt to explain to the reader
-encountering them for the first time how they are actually used in the
-TEI scheme. For a more technical account of TEI practice see chapter
-<ptr target="#CF"/> in the Guidelines.</p>
+storing and processing texts in electronic form. It is now also the
+interchange and communication format used by the a large number of
+applications on the World Wide Web. In the present chapter we
+introduce informally its basic concepts and attempt to explain to the
+reader encountering them for the first time how they are actually used
+in the TEI scheme. More detailed technical accounts of TEI practice in
+this respect are provided in chapters <ptr target="#USE"/> <ptr
+target="#ST"/> and <ptr target="#TD"/> of these Guidelines.</p>
 
-<p>Formally speaking, XML is a <term>metalanguage</term>, that is, a
+<p>Strictly speaking, XML is a <term>metalanguage</term>, that is, a
 language used to describe other languages, in this case,
 <term>markup</term> languages.  Historically, the word
 <term>markup</term> has been used to describe annotation or other
@@ -55,42 +55,43 @@ conjectural or implicit, a process of directing the user as to how the
 content of the text should be (or has been) interpreted.</p>
 
 <p>By <term>markup language</term> we mean a set of markup conventions
-used together for encoding texts.  A markup language must specify what
-markup is allowed, what markup is required, how markup is to be
-distinguished from text, and what the markup means.  XML provides the
-means for doing the first three; documentation such as these
-Guidelines is required for the last.</p>
+used together for encoding texts.  A markup language must specify how
+markup is to be distinguished from text, what markup is allowed, what
+markup is required, and what the markup means.  XML provides the means
+for doing the first three; documentation such as these Guidelines is
+required for the last.</p>
 
 <p>The present chapter attempts to give an informal introduction to
 those parts of XML of which a proper understanding is necessary to
 make best use of these Guidelines. The interested reader should also
-consult one or more of the dozens of excellent introductory text books
-or web sites now available on the subject<note place="foot">See for
+consult one or more of the many excellent introductory text books
+and web sites now available on the subject<note place="foot">See for
 example....</note>.</p>
 
 <div type="div2" xml:id="SG11"><head>What's special about XML?</head>
 
-<p>Three characteristics of XML seem to us to make it unlike other markup languages: 
+<p>Three characteristics of XML distinguish bit from other markup languages: 
 <list>
 <item>its emphasis on descriptive rather than
 procedural markup;</item>
-<item>its notion of documwents as instances of a <term>document type</term>;</item>
+<item>its notion of documents as instances of a <term>document type</term>;</item>
 <item>its independence of any one hardware or software
 system.</item></list> These three aspects are discussed briefly below,
-and then in more depth in sections <ptr target="#SG13"/> and <ptr target="#SG17"/>.</p>
+and then in more depth in the remainder of this chapter.</p>
 
-<p>The markup language with which XML is most frequently compared,
-however, is HTML, the language in which web pages had always been
-written until XML began to replace it. Compared with HTML, XML has
+<p>XML is frequently compared with
+HTML, the language in which web pages had always been
+written until XML began to replace it. which shares some of the above characteristics. Compared with HTML, XML has
 some other important characteristics:
 
-<list><item>XML is extensible: it does not consist of a fixed set of
+<list><item>XML is <hi>extensible</hi>: it does not consist of a fixed set of
 tags;</item>
-<item>XML documents must be well-formed according to a defined
+<item>XML documents must be <hi>well-formed</hi> according to a defined
 syntax;</item>
-<item>an XML document can be formally validated against a schema of
+<item>an XML document can be formally <hi>validated</hi> against a schema of
 some kind;</item>
-<item>XML is more interested in the meaning of data than in its presentation.</item></list></p>
+<item>XML is more interested in the meaning of data than in its
+presentation.</item></list> </p>
 
 <div type="div3" xml:id="SG111"><head>Descriptive markup</head>
 <p>In a descriptive markup system, the markup codes used do little
@@ -146,14 +147,14 @@ would a sequence of paragraphs followed by an abstract, whatever other
 report-like characteristics these might have for the human reader.</p>
 <p>If documents are of known types, a special purpose program (called
 a <term>parser</term>), once provided with an unambiguous definition
-of a document's type, can check that any  document claiming to be of 
+of a document type, can check that any  document claiming to be of 
 that type does in fact conform to the specification. A parser
 can check that all and only elements specified for a particular
 document type are present, that they are combined in appropriate ways,
 correctly ordered and so forth.  More significantly, different
 documents of the same type can be processed in a uniform way. Programs
 can be written which take advantage of the knowledge encapsulated in
-the document structure information, and which can thus behave in a
+the document type information, and which can thus behave in a
 more <soCalled>intelligent</soCalled> fashion.</p></div>
 <div type="div3" xml:id="SG113"><head>Data independence</head>
 <p>A basic design goal of XML is to ensure that documents encoded
@@ -164,8 +165,8 @@ the third feature addresses it at the level of the strings of data
 characters of which documents are composed.  All XML documents,
 whatever language or writing system they employ, use the same
 underlying character encoding (that is, the same method of
-representing the graphic forms making up a particular writing system
-as binary data).<note place="foot">See <title>Extensible Markup
+representing as binary data those graphic forms making up a particular writing system
+).<note place="foot">See <title>Extensible Markup
 Language (XML) 1.0</title>, available from <ptr
 target="http://www.w3.org/TR/REC-xml"/>, Section 2.2
 Characters.</note> This encoding is defined by an international
@@ -173,23 +174,18 @@ standard,<note place="foot">ISO/IEC 10646-1993 <title>Information
 Technology — Universal Multiple-Octet Coded Character Set</title>
 (UCS)</note> which is implemented by a universal character set
 maintained by an industry group called the Unicode Consortium, and
-known as Unicode;<note place="foot">See <ptr
-target="http://www.unicode.org/"/></note> this provides a standardised
+known as Unicode.<note place="foot">See <ptr
+target="http://www.unicode.org/"/></note>  The Unicode standard provides a standardised
 way of representing any of the thousands of discrete symbols making up
 the world's writing systems, past and present.</p>
 <p>For technical and historical reasons which need not concern us, it
-is often necessary to translate texts encoded as Unicode into some
-smaller or less general encoding scheme. XML uses a general purpose
+is sometimes necessary to translate texts encoded as Unicode into (or
+out of) some other encoding system. XML uses a general purpose
 <term>string substitution</term> mechanism for this purpose, inherited
 from SGML (which predates the availability of Unicode). In simple
 terms, this mechanism allows for the indirect representation of
 arbitrary parts of a document (be they single characters, character
-strings, or whole files) within it. One obvious application for this
-mechanism is to ensure consistency of nomenclature; another, more
-significant one, is to counter the notorious inability of different
-computer systems to understand each other's character sets, or of any
-one system to provide all the graphic characters needed for a
-particular application. The strings defined by this
+strings, or whole files) within it. The strings defined by this
 string-substitution mechanism are called <term>entities</term> and
 they are discussed in section <ptr target="#SG17"/>.</p></div></div>
 <div type="div2" xml:id="SG12"><head>Textual structure</head>
@@ -232,7 +228,7 @@ the physical organization of the book and the logical structure of the
 work it contains.  Many great works (Sterne's <title>Tristram
 Shandy</title> for example) cannot be fully appreciated without an
 awareness of the interplay between narrative units (such as chapters or
-paragraphs) and page divisions.  For many types of research, it is the
+paragraphs) and presentational ones (such as page divisions).  For many types of research, it is the
 interplay between different levels of analysis which is crucial:  the
 extent to which syntactic structure and narrative structure mesh, or
 fail to mesh, for example, or the extent to which phonological
@@ -270,7 +266,7 @@ element must be explicitly marked or tagged in some way.  This is done
 by inserting a tag at the beginning of the element (a
 <term>start-tag</term>) and another at its end (an
 <term>end-tag</term>). The start- and end-tag pair are used to bracket
-off the element occurrences within the running text, in rather the
+off element occurrences within the running text, in rather the
 same way as different types of parentheses or quotation marks are used
 in conventional punctuation. For example, a quotation element in a
 text might be tagged as follows:
@@ -286,7 +282,12 @@ corresponding end-tag is <tag>/quote</tag>.<note place="foot">Because
 the opening angle bracket has this special function in an XML
 document, special steps must be taken to use that character for other
 purposes (for example, as the mathematical less-than operator); see
-further section <ptr target="#SG-er"/>.</note></p></div>
+further section <ptr target="#SG-er"/>.</note> The material between
+the start-tag and the end-tag (the string of words <q>This is the
+silliest stuff that ere I heard of</q> in the example above) is known as the <term>content</term> of
+the element. Sometimes there may be nothing between the start and the
+end-tag; in this case the two may optionally be merged together into a single
+composite tag with the solidus at the end, like this: <tag>quote/</tag>. </p></div>
 <div type="div3" xml:id="SG132"><head>Content models:  an example</head>
 <p>An element may be <term>empty</term>, that is, it may have no
 content at all, or it may contain just a sequence of characters with
@@ -295,19 +296,18 @@ elements of one type will be <term>embedded</term> (contained entirely)
 within elements of a different type.</p>
 <p>To illustrate this, we will consider a very simple structural
 model. Let us assume that we wish to identify within an anthology
-only poems, their titles, and the stanzas and lines of which they are
+only poems, their headings, and the stanzas and lines of which they are
 composed. In XML terms, our <term>document type</term> is the
 <term>anthology</term>, and it consists of a series of
 <term>poem</term>s. Each poem has embedded within it one element, a
-<term>title</term>, and several occurrences of another, a
+<term>heading</term>, and several occurrences of another, a
 <term>stanza</term>, each stanza having embedded within it a number of
 <term>line</term> elements. Fully marked up, a text conforming to
 this model might appear as follows:<note place="foot">The example is
 taken from William Blake's <title>Songs of innocence and
-experience</title> (1794). The markup is designed for illustrative
-purposes and is not TEI-conformant.</note>
+experience</title> (1794).</note>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<anthology>
-  <poem><title>The SICK ROSE</title>
+  <poem><heading>The SICK ROSE</heading>
     <stanza>
       <line>O Rose thou art sick.</line>
       <line>The invisible worm,</line>
@@ -325,31 +325,31 @@ purposes and is not TEI-conformant.</note>
 </anthology>]]></egXML></p>
 <p>It should be stressed that this example does <emph>not</emph> use
 the same names as are proposed for corresponding elements elsewhere
-in these Guidelines: the above is <emph>not</emph> a valid TEI document.
-It will however serve as an introduction to the basic notions of XML.
+in these Guidelines: the above is  thus <emph>not</emph> a valid TEI
+document<note place="foot">The element names here have been chosen for
+clarity of exposition; there is however a TEI element corresponding to
+each, so that this example may be regarded as TEI conformable in the
+sense that this term is defined in chapter <ptr target="#CF"/></note>. It will however serve as an introduction to the basic notions of XML.
 Whitespace and line breaks have been added to the example for the
 sake of visual clarity only; they have no particular significance in the
 XML encoding itself.  Also, the line
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><!-- more poems go here    --></egXML>
 is an XML <term>comment</term> and is not treated as part of the text.</p>
 <p>As it stands, the above example is what is known as a
-<term>well-formed</term> XML document: to achieve this status, an XML
-document must obey the following simple rules:
+<term>well-formed</term> XML document because it obeys the following simple rules:
 <list>
-<item>there should be a single element (start- and end- tag pair)
-which encloses the whole document: this is known as the <term>root
+<item>there is a single element
+enclosing the whole document: this is known as the <term>root
 element</term> (<gi>anthology</gi> in our case);</item>
-<item>each element should be completely contained by the root element,
-or by an element which is so contained; elements may not partially
+<item>each element is completely contained by the root element,
+or by an element which is so contained; elements do not partially
 overlap one another;</item>
-<item>the tags marking the start and end of each element must always
-be present. <note place="foot">This is not strictly true for empty
-elements, for which start- and end-tags can be combined, as further discussed below.</note></item>
+<item>a tag explicitly marks the start and end of each element.</item>
 </list>
 </p>
 <p>An XML document which is well-formed can be processed in a number
 of useful ways.  A simple indexing program could extract only the
-relevant text elements in order to make a list of titles, first lines,
+relevant text elements in order to make a list of headings, first lines,
 or words used in the poem text; a simple formatting program could
 insert blank lines between stanzas, perhaps indenting the first line
 of each, or inserting a stanza number.  Different parts of each poem
@@ -369,7 +369,7 @@ to move word processor files around.</p>
 what might be useful in marking up a document. It might well be useful
 if, in the process of preparing our digital anthology, a computer
 system could check some basic rules about how stanzas, lines, and
-titles can sensibly co-occur in a document. It would be even more
+headings can sensibly co-occur in a document. It would be even more
 useful if the system could check that stanzas are always tagged
 <tag>stanza</tag> and not occasionally <tag>canto</tag> or
 <tag>Stanza</tag>.  An XML document in which such rules have been
@@ -378,44 +378,48 @@ ability to perform such validation is one of the key advantages of
 using XML. To carry this out, some way of formally stating the
 criteria for successful validation is necessary: in XML this formal
 statement may be provided by an additional document known as a
-<term>schema</term> or <term>document type declaration</term>. A
-schema can be expressed in a number of different ways;
-frequently-encountered methods include the Document Type Declaration
-(DTD) language which XML inherited from SGML; the XML Schema language
-(<ptr target="http://www.w3.org/XML/Schema"/>) defined by the W3C; and
-the RELAX NG language (<ptr target="http://relaxng.org/"/>) originally
-developed within the OASIS Technical Committee and now accepted as an
-ISO draft standard (ISO/IEC FDIS 19757-2 Document Schema Definition
-Language (DSDL) -- Part 2: Regular-grammar-based validation -- RELAX
-NG).  The TEI Guidelines use RELAX NG internally for defining TEI
-elements, but schemas in the other two languages may also be
-generated.  In this chapter, and throughout these Guidelines, we give
+<term>schema</term><note type="foot">The older terms <term>document
+type declaration</term> or <term>document type definition</term>, both
+abbreviated as DTD, may also be encountered. Throughout these
+Guidelines we use the term <term>schema</term> for any kind of formal
+document grammar.</note> A schema can be expressed in a number of
+different ways; frequently-encountered methods include the Document
+Type Declaration (DTD) language which XML inherited from SGML; the XML
+Schema language (<ptr target="http://www.w3.org/XML/Schema"/>) defined
+by the W3C; and the RELAX NG language (<ptr
+target="http://relaxng.org/"/>) originally developed within the OASIS
+Technical Committee and now accepted as an ISO draft standard <note
+place="foot">ISO/IEC FDIS 19757-2 Document Schema Definition Language
+(DSDL) -- Part 2: Regular-grammar-based validation -- RELAX
+NG</note>).  In this chapter, and throughout these Guidelines, we give
 examples using the <soCalled>compact syntax</soCalled> of RELAX
 NG.</p>
 </div></div>
 
 <div type="div2" xml:id="SG14"><head>Validating a document's structure</head>
 
-<p>In creating a DTD or Schema, the document
-designer may be as lax or as restrictive as the occasion warrants.  A
-balance must be struck between the convenience of following simple
-rules and the complexity of handling real texts. This is particularly
-the case when the rules being defined relate to texts which already
-exist: the designer may have only the haziest of notions as to an
-ancient text's original purpose or meaning and hence find it very
-difficult to specify consistent rules about its structure.  On the
-other hand, where a new text is being prepared to an exact
-specification, for example for entry into a textual database of some
-kind, the more precisely stated the rules, the better they can be
-enforced.  Even in the case where an existing text is being marked up,
-it may be beneficial to define a restrictive set of rules relating to
-one particular view or hypothesis about the text – if only as a
-means of testing the usefulness of that view or hypothesis.  It is
+<p>The design of a schema may be as lax or as restrictive as the
+occasion warrants.  A balance must be struck between the convenience
+of following simple rules and the complexity of handling real
+texts. This is particularly the case when the rules being defined
+relate to texts which already exist: the designer may have only the
+haziest of notions as to an ancient text's original purpose or meaning
+and hence find it very difficult to specify consistent rules about its
+structure.  On the other hand, where a new text is being prepared to
+an exact specification, for example for entry into a textual database
+of some kind, the more precisely stated the rules, the better they can
+be enforced.  Even in the case where an existing text is being marked
+up, it may be beneficial to define a restrictive set of rules relating
+to one particular view or hypothesis about the text – if only as a
+means of testing the usefulness of that view or hypothesis.  A schema
+designed for use by a small project or team is likely to take a
+different position on such issues than one intended for use by a large
+possibly fragmented community. It is
 important to remember that every document type declaration results
 from an interpretation of a text.  There is no single schema which
 encompasses any kind of absolute truth about a text, although it may
-be convenient to privilege some schemas above others for particular types
-of analysis.</p>
+be convenient to privilege some schemas above others for particular
+types of analysis.</p>
 
 <p>XML is widely used in environments where uniformity of document
 structure is a major desideratum.  In the production of technical
@@ -432,74 +436,45 @@ interpretation of the structure and significant particularities of the
 text being encoded.</p>
 
 <div type="div3" xml:id="SG141bis"><head>An example schema</head>
-<p>A RELAX NG schema is represented by an XML element called a
-<gi>grammar</gi>, which contains a number of name declarations,
-each represented by means of a <gi>define</gi> element.  For example,
-the RELAX NG representation for our simple anthology model might begin as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<grammar xmlns="http://relaxng.org/ns/structure/1.0">
-  <define name="anthology">
-    <element name="anthology">
-      <oneOrMore>
-        <ref name="poem"/>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="poem">
-    <element name="poem">
-      <optional>
-        <ref name="title"/>
-      </optional>
-      <oneOrMore>
-        <ref name="stanza"/>
-      </oneOrMore>
-    </element>
-  </define>
-<!-- more definitions here -->.
-</grammar>]]></egXML>
-</p>
-<p>These declarations create  definitions for a set of named patterns (<q>anthology</q> and
-<q>poem</q>), each of which refers to an element definition of the same
-name, and then within that provides a content model definition, using
-concepts which will be explained further below. 
-RELAXNG can also be expressed  using a compact, non-XML,
-syntax which is used throughout these Guidelines: using that, the above
-declarations would appear as follows:
-
+<p>As noted above, a given schema may be expressed in many different
+languages. The specifications within these Guidelines are expressed in
+a way that is largely independent of the specific language in which a
+schema generated from them is expressed. <note place="foot">See further
+<ptr target="#TD"/> and <ptr target="#IM"/>. In practice, the only
+part of  a TEI element specification not expressed using TEI-defined
+syntax is the content model for an element, which is expressed  using the  RELAX NG
+schema language for reasons of processing convenience.</note>
+In what follows, for ease of comprehension and exposition, we will
+use the RELAX NG compact syntax for illustration; the reader should
+bear in mind that analogous concepts are expressed differently in
+other schema languages. </p>
+<p>The following  schema might be used to validate our example poem:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
 anthology = element anthology { poem+ }
-poem = element poem { title?, stanza+ }
-# more definitions here
-]]></egXML>
-</p></div>
-<!-- here -->
-<div type="div3" xml:id="SG141"><head>An example DTD</head>
-<p>A DTD is expressed as a set of declarative statements.
-It  uses a
-special purpose syntax which we introduce informally below.
-For our simple model of a poem, the following declarations
-would be appropriate:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ELEMENT anthology     (poem+)>
-<!ELEMENT poem          (title?, stanza+)>
-<!ELEMENT title         (#PCDATA) >
-<!ELEMENT stanza        (line+)   >
-<!ELEMENT line          (#PCDATA) >]]></egXML>
-These five lines are examples of formal XML element declarations.  A
-declaration, like an element, is delimited by angle brackets; the
-first character following the opening bracket must be an exclamation
-mark, followed immediately by one of a small set of XML-defined
-keywords, specifying the kind of object being declared.  The five
-declarations above are all of the same type: each begins with an
-<code>ELEMENT</code> keyword, indicating that it declares an element,
-in the technical sense defined above.  Each consists of two parts: a
-name, or <term>generic identifier</term> and a <term>content
-model</term>.  Each of these parts is discussed further below.
-Components of the declaration are separated by <term>whitespace</term>
-characters, that is one or more blanks, tabs or newlines.</p>
+poem = element poem { heading?, stanza+ }
+stanza = element stanza {line+}
+heading = element heading { text }
+line = element line { text }
+start = anthology]]></egXML>
+</p>
+<p>Each of these six lines declares a named <term>pattern</term>: the
+word to the left of the equals sign is the name, and the material
+following it declares a meaning for the pattern. Some words in this
+syntax have a special significance — <q>start</q> and <q>element</q>
+in this example — 
+but mostly names can be freely chosen.   The first five
+declarations here are all of the same type: each associates an element
+declaration with a named pattern. The
+name, or <term>generic identifier</term> of the element follows the
+word <q>element</q>, and the <term>content
+model</term> for the element is given within the curly braces
+following that.  Each of these parts is discussed further below.
+</p>
 <div type="div4" xml:id="SG141x"><head>Generic identifier</head>
-<p>The first part of each declaration above gives the generic
+<p>Following the word <q>element</q> each pattern declaration gives  the generic
 identifier (often abbreviated to GI) of the element which is being
 declared, for example <mentioned>poem</mentioned>,
-<mentioned>title</mentioned>, etc.  A GI may contain alphabetic
+<mentioned>heading</mentioned>, etc.  A GI may contain alphabetic
 characters, digits, hyphens, underscore characters, or fullstops, and
 must begin with a letter.<note place="foot">In XML,
 a single colon may also appear in a GI, where it has a special
@@ -512,22 +487,21 @@ are regarded as distinct characters: an element with the GI
 <gi>Foo</gi>: the root element of a TEI-conformant document is thus
 <gi>TEI</gi>, <emph>not </emph> <gi>tei</gi>.</p></div>
 <div type="div4" xml:id="SG143"><head>Content model</head>
-<p>The second part of each declaration, enclosed in parentheses, is
+<p>The second part of each declaration, enclosed in curly braces, is
 called the <term>content model</term> of the element being defined, because it
 specifies what may legitimately be contained within it.  Contents
 are specified either in terms of other elements or using special
 reserved words.  There are several such reserved words, of which by
-far the most commonly encountered is <code>#PCDATA</code>, as in this example.
-This is an abbreviation for <gloss>parsed character data</gloss>, and
-it means that the element being defined may contain any valid
-character data (but no elements).  If an XML declaration is thought of as a structure
+far the most commonly encountered is <code>text</code>, as in this
+example: it means that the element being defined may contain any valid
+character data, but no elements.  If an XML declaration is thought of as a structure
 like a family tree, with a single ancestor at the top (in our case,
 this would be <tag>anthology</tag>), then almost always, following the
 branches of the tree downwards (for example, from <gi>anthology</gi>
 to <gi>poem</gi> to <gi>stanza</gi> to <gi>line</gi> and
-<gi>title</gi>) will lead eventually to <code>#PCDATA</code>. In our example,
-<gi>title</gi> and <gi>line</gi> are so defined, since their content
-models say <code>#PCDATA</code> only and name no embedded elements.</p></div>
+<gi>heading</gi>) will lead eventually to <code>text</code>. In our example,
+<gi>heading</gi> and <gi>line</gi> are so defined, since their content
+models say <code>text</code> only and name no embedded elements.</p></div>
 <div type="div4" xml:id="SG144"><head>Occurrence indicators</head>
 <p>The declaration for <gi>stanza</gi> in the example above states
 that a stanza consists of one or more lines.  It uses an
@@ -544,22 +518,22 @@ as those with more than one line.  If it were <code>(line?)</code>,
 again empty stanzas would be countenanced, but no stanza could have
 more than a single line.  The declaration for <gi>poem</gi> in the
 example above thus states that a <gi>poem</gi> cannot have more than
-one title, but may have none, and that it must have at least one
+one heading, but may have none, and that it must have at least one
 <gi>stanza</gi> and may have several.
 </p></div>
 <div type="div4" xml:id="SG145"><head>Connectors</head>
-<p>The content model <code>(title?, stanza+)</code> contains more than
+<p>The content model <code>(heading?, stanza+)</code> contains more than
 one component, and thus needs additionally to specify the order in
-which these elements (<gi>title</gi> and <gi>stanza</gi>) may appear.
+which these elements (<gi>heading</gi> and <gi>stanza</gi>) may appear.
 This ordering is determined by the <term>connector</term> (the comma)
 used between its components.  There are two possible connectors: the
 comma, representing sequence, and the vertical bar, representing
 alternation.  If the comma in this example were replaced by a vertical
-bar, then a <gi>poem</gi> would consist of either a title or just
+bar, then a <gi>poem</gi> would consist of either a heading or just
 stanzas – but not both!</p></div>
 <div type="div4" xml:id="SG146"><head>Model groups</head>
 <p>In our example so far, the components of each content model have
-been either single elements or <code>#PCDATA</code>.  It is quite
+been either single elements or <code>text</code>.  It is quite
 permissible however to define content models in which the components
 are lists of elements, combined by connectors.  Such lists, known as
 <term>model groups</term>, may also be modified by occurrence
@@ -574,7 +548,7 @@ that verse paragraphs need not start on a line boundary seriously
 complicates the issue; see further section <ptr target="#SG152"/>.</note> so no additional elements need be defined for
 it.  A couplet is defined as a <gi>firstLine</gi> followed by a
 <gi>secondLine</gi>.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ELEMENT couplet (firstLine, secondLine) >]]></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[couplet = element couplet {firstLine, secondLine}]]></egXML>
 <!-- Can't believe it's a good idea to use as an example -->
 	<!-- something we would never do ourselves.              -->
 	<!-- Why not define SONNET, OCTET, QUATRAIN, SESTET?     --></p>
@@ -582,30 +556,32 @@ it.  A couplet is defined as a <gi>firstLine</gi> followed by a
 distinguished to enable studies of rhyme scheme, for example) have
 exactly the same content model as the existing <gi>line</gi>
 element; we will therefore add the following two
-lines to our example DTD:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ELEMENT firstLine  (#PCDATA)>
-<!ELEMENT secondLine (#PCDATA)>]]></egXML>
+lines to our example schema:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[firstLine =
+element firstLine  {text}
+secondLine = element secondLine  {text}]]></egXML>
 Next, we can change the declaration for the <gi>poem</gi> element 
 to include all three possibilities:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ELEMENT poem  (title?, (stanza+ | couplet+ | line+) ) >]]></egXML>
-That is, a poem consists of an optional title, followed by one or
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[ poem =
+element poem { heading?, (stanza+ | couplet+ | line+) }]]></egXML>
+That is, a poem consists of an optional heading, followed by one or
 several stanzas, or one or several couplets, or one or several lines.
 Note the difference between this declaration and the following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ELEMENT poem  (title?, (stanza | couplet | line)+ ) >]]></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[poem = element poem  {heading?, (stanza | couplet | line)+ }]]></egXML>
 The second version, by applying the occurrence indicator to the group
 rather than to each element within it, would allow for a single poem to
 contain a mixture of stanzas, couplets, or lines.</p>
-<p>A model group can contain <code>#PCDATA</code> as well as named elements: this
+<p>A model group can contain <code>text</code> as well as named elements: this
 combination, known as <term>mixed content</term>, allows for elements
 in which the sub-components appear with intervening stretches of
 character data. For example, if we wished to mark place names wherever
 they appear inside our verse lines, then, assuming we have also added a suitable declaration for the
 <gi>name</gi> element, we could change the
 definition for <gi>line</gi> to
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ELEMENT line  (#PCDATA | name )* >]]></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[line = element line  (text | name )* }]]></egXML>
 </p>
 <p>XML places several constraints on the way that mixed
-content models may be defined. In brief, if <code>#PCDATA</code> appears with other
+content models may be defined. In brief, if <code>text</code> appears with other
 elements in a
 content model: it must always appear as the first option in an
 alternation; it may appear once only, and in the outermost model
@@ -621,9 +597,10 @@ A refrain can
 appear at the start of a poem only, or as an optional addition
 following each stanza.  This could be expressed by a content model such
 as the following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ELEMENT refrain (line+)>
-<!ELEMENT poem   (title?, ( line+ | (refrain?, (stanza, refrain?)+ ))) >]]></egXML>
-That is, a poem consists of an optional title, followed by either
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[refrain = element refrain {line+}
+poem = element poem   {heading?, ( line+ | (refrain?, (stanza,
+refrain?)+ )) }]]></egXML>
+That is, a poem consists of an optional heading, followed by either
 a sequence of lines, or an un-named group, which starts with an
 optional refrain, followed by one of more occurrences of another group,
 each member of which is composed of a stanza followed by an optional
@@ -633,9 +610,11 @@ stanza - refrain</mentioned>.  The sequence <mentioned>refrain - refrain - stanz
   stanza</mentioned> does not, however, and neither does the sequence <mentioned>stanza - refrain - refrain - stanza.</mentioned>  Among other conditions made explicit by this
 content model are the requirements that at least one stanza must appear
 in a poem, if it is not composed simply of lines, and that if there is
-both a title and a stanza they must appear in that order.</p>
+both a heading and a stanza they must appear in that order.</p>
 <p>Note that the apparent complexity of this model derives from the
-constraints expressed informally above. A simpler model, such as <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ELEMENT poem   (title?, (line|refrain|stanza)+ ) >]]></egXML> would not enforce any of them, and would therefore permit
+constraints expressed informally above. A simpler model, such as
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[poem =
+element poem {heading?, (line|refrain|stanza)+ }]]></egXML> would not enforce any of them, and would therefore permit
 such anomalies as a poem consisting only of refrains, or an arbitrary mixture of
 lines and refrains.</p>
 </div>
