@@ -114,11 +114,12 @@ typically in a distinct document called a <term>stylesheet</term>,
 though it may do much more than simply define the rendition or visual
 appearance of a document.<note place="foot">We do not here discuss in
 any detail the ways that a style sheet can be used or defined, nor do
-we discuss the popular W3C Stylesheet Languages. See <ptr
+we discuss the popular W3C Stylesheet Languages XSLT and CSS. See <ptr
 target="http://www.w3.org/TR/xsl"/> for the Extensible Stylesheet
 Language (XSL), and <ptr target="http://www.w3.org/TR/xslt"/> for the
-XSL Transformations (XSLT) Language.</note></p>
-<!-- add a reference to CSS -->
+XSL Transformations (XSLT) Language; see <ptr
+target="http://www.w3.org/Style/CSS/"/> for the Cascading Style Sheet Language.</note></p>
+
 <p>When descriptive markup is used, the same document can
 readily be processed in many different ways, using only those parts of
 it which are considered relevant.  For example, a content analysis
@@ -203,7 +204,7 @@ sentence of the second paragraph in chapter ten</q>; <q>canto 10, line
 subdivide a text into meaningful fragments for analytic purposes
 (<q>is the average sentence length of section 2 different from that of
 section 5?</q> <q>how many paragraphs separate each occurrence of the
-word <mentioned>nature</mentioned>?</q> <q>how many pages?</q>).
+word <mentioned>nature</mentioned>?  how many pages?</q>).
 Other structural units are more clearly analytic, in that they
 characterize a section of a text.  A dramatic text might regard each
 speech by a different character as a unit of one kind, and stage
@@ -365,35 +366,51 @@ transported from one computer to another and processed by any program
 (or person) capable of making sense of the tags embedded within it
 with no need for the sort of transformations and translations needed
 to move word processor files around.</p>
-<p>However, well-formedness alone is not enough for the full range of
-what might be useful in marking up a document. It might well be useful
-if, in the process of preparing our digital anthology, a computer
-system could check some basic rules about how stanzas, lines, and
-headings can sensibly co-occur in a document. It would be even more
-useful if the system could check that stanzas are always tagged
-<tag>stanza</tag> and not occasionally <tag>canto</tag> or
-<tag>Stanza</tag>.  An XML document in which such rules have been
-checked is technically known as a <term>valid</term> document, and the
-ability to perform such validation is one of the key advantages of
-using XML. To carry this out, some way of formally stating the
-criteria for successful validation is necessary: in XML this formal
-statement may be provided by an additional document known as a
-<term>schema</term><note type="foot">The older terms <term>document
-type declaration</term> or <term>document type definition</term>, both
-abbreviated as DTD, may also be encountered. Throughout these
-Guidelines we use the term <term>schema</term> for any kind of formal
-document grammar.</note> A schema can be expressed in a number of
-different ways; frequently-encountered methods include the Document
-Type Declaration (DTD) language which XML inherited from SGML; the XML
-Schema language (<ptr target="http://www.w3.org/XML/Schema"/>) defined
-by the W3C; and the RELAX NG language (<ptr
-target="http://relaxng.org/"/>) originally developed within the OASIS
-Technical Committee and now accepted as an ISO draft standard <note
-place="foot">ISO/IEC FDIS 19757-2 Document Schema Definition Language
-(DSDL) -- Part 2: Regular-grammar-based validation -- RELAX
-NG</note>).  In this chapter, and throughout these Guidelines, we give
-examples using the <soCalled>compact syntax</soCalled> of RELAX
-NG.</p>
+
+<p>As we noted above, one of the attractions of XML is that it enables
+us to make up our own names for the elements rather than requiring us
+always to use names pre-defined by other agencies. Clearly, however,
+if we wish to exchange our poems with other markup experts, or
+integrate poems others have marked up into our anthology, we will need
+to know a bit more about the names used for the tags. The means that
+XML provides for this is called a <term>namespace</term>, and we
+discuss it further below. In our simple example, the tags just contain
+a simple name. As we shall see, it is also possible to use tags which
+include a <term>qualified name</term>, that is, a name with an
+optional prefix which identifies a set of names to which it
+belongs. For example, if I define an element <gi>line</gi> and you
+also define an element <gi>line</gi> and we wish to share data, it may
+be useful to distinguish the two in our marked up texts. We would do
+this by including a <term>namespace prefix</term> within the markup,
+for example like this:
+<egXML 
+xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<my:line>This is one of my lines</my:line>
+<!-- ... -->
+<you:line>This is one of your lines</you:line>]]></egXML>
+This is particularly important if we have different definitions of
+what a "line" is, of course, but there are many occasions when it is useful to
+distinguish groups of tags belonging to different <soCalled>markup
+vocabularies</soCalled>.</p>
+<p>Namespaces allow us to represent the fact that a name belongs to a
+group of names, but don't allow us to do much more by way of checking
+the integrity or accuracy of our tagging. Simple well-formedness alone
+is not enough for the full range of what might be useful in marking up
+a document. It might well be useful if, in the process of preparing
+our digital anthology, a computer system could check some basic rules
+about how stanzas, lines, and headings can sensibly co-occur in a
+document. It would be even more useful if the system could check that
+stanzas are always tagged <tag>stanza</tag> and not occasionally
+<tag>canto</tag> or <tag>Stanza</tag>.  An XML document in which such
+rules have been checked is technically known as a <term>valid</term>
+document, and the ability to perform such validation is one of the key
+advantages of using XML. To carry this out, some way of formally
+stating the criteria for successful validation is necessary: in XML
+this formal statement may be provided by an additional document known
+as a <term>schema</term><note type="foot">The older terms
+<term>document type declaration</term> or <term>document type
+definition</term>, both abbreviated as DTD, may also be
+encountered. Throughout these Guidelines we use the term
+<term>schema</term> for any kind of formal document grammar.</note> </p>
 </div></div>
 
 <div type="div2" xml:id="SG14"><head>Validating a document's structure</head>
@@ -436,20 +453,28 @@ interpretation of the structure and significant particularities of the
 text being encoded.</p>
 
 <div type="div3" xml:id="SG141bis"><head>An example schema</head>
-<p>As noted above, a given schema may be expressed in many different
-languages. The specifications within these Guidelines are expressed in
-a way that is largely independent of the specific language in which a
-schema generated from them is expressed. <note place="foot">See further
-<ptr target="#TD"/> and <ptr target="#IM"/>. In practice, the only
-part of  a TEI element specification not expressed using TEI-defined
-syntax is the content model for an element, which is expressed  using the  RELAX NG
-schema language for reasons of processing convenience. RELAX NG uses
-its own XML vocabulary to define content models, which is adopted by
-the TEI for the same purpose. </note>
-In what follows, for ease of comprehension and exposition, we will
-use the RELAX NG compact syntax for illustration; the reader should
-bear in mind that analogous concepts are expressed differently in
-other schema languages. </p>
+<p>A schema can be expressed in a number of different ways;
+frequently-encountered methods include the Document Type Declaration
+(DTD) language which XML inherited from SGML; the XML Schema language
+(<ptr target="http://www.w3.org/XML/Schema"/>) defined by the W3C; and
+the RELAX NG language (<ptr target="http://relaxng.org/"/>) originally
+developed within the OASIS Technical Committee and now accepted as an
+ISO draft standard <note place="foot">ISO/IEC FDIS 19757-2 Document
+Schema Definition Language (DSDL) -- Part 2: Regular-grammar-based
+validation -- RELAX NG</note>).  In this chapter, and throughout these
+Guidelines, we give examples using the <soCalled>compact
+syntax</soCalled> of RELAX NG, but the specifications within these
+Guidelines are expressed in a way that is largely independent of the
+specific language in which a schema generated from them is
+expressed. <note place="foot">See further <ptr target="#TD"/> and <ptr
+target="#IM"/>. In practice, the only part of a TEI element
+specification not expressed using TEI-defined syntax is the content
+model for an element, which is expressed using the RELAX NG schema
+language for reasons of processing convenience. RELAX NG uses its own
+XML vocabulary to define content models, which is adopted by the TEI
+for the same purpose. </note> Although we will use the RELAX NG compact syntax
+for illustration in what follows, the reader should bear in mind that analogous
+concepts are expressed differently in other schema languages. </p>
 <p>The following  schema might be used to validate our example poem:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
 anthology_p = element anthology { poem_p+ }
@@ -460,10 +485,13 @@ line_p = element line { text }
 start = anthology_p
 ]]></egXML>
 </p>
-<p>Note that this is not the only way in which a RELAX NG schema might be
-written<note place="foot">For a good tutorial introduction to RELAX
-NG, see <bibl>Eric van der Vlist <title>RELAX NG</title> O'Reilly, 2004</bibl></note>; we have adopted this idiom however because it matches that
-used throughout the rest of the Guidelines.  </p>
+
+<p>Note that this is not the only way in which a RELAX NG schema might
+be written<note place="foot">For a good tutorial introduction to RELAX
+NG, see <bibl>Eric van der Vlist <title>RELAX NG</title> O'Reilly,
+2004</bibl></note>; we have adopted this idiom however because it
+matches that used throughout the rest of the Guidelines.  </p>
+
 <p>A RELAX NG schema defines a number of named <term>patterns</term>: in
 the example above, the
 word to the left of the equals sign is the pattern's name, and the material
@@ -740,14 +768,14 @@ of an attribute pattern, like the following:
     xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[att.status =
     attribute status {"draft" | "revised" | "published"}]]></egXML>
 
-This defines a new pattern, called att.poemStatus, whose value is an
+This defines a new pattern, called att.status, whose value is an
 attribute named <att>status</att>; the value (or content) of this
 attribute may be any one of the strings presented above. This
 definition must be included or referenced within the definition for
 every element to which the attribute is attached. We therefore
 modify the definition for the poem_p given above as follows:
 
-<eg><![CDATA[poem_p = element poem {att.poemStatus, heading_p?, stanza_p+}
+<eg><![CDATA[poem_p = element poem {att.status, heading_p?, stanza_p+}
 ]]></eg>
 
 In RELAX NG, an element pattern may be defined as a combination of
@@ -762,7 +790,8 @@ scheme, since it is not available to the same extent in all schema languages.
 pattern can specify that the attribute must have a value of a
 particular type, for example a text string, a numeric value, a
 normalized date, etc. This is accomplished by supplying a pattern
-which references a <term>datatype</term>.</p>
+which references a <term>datatype</term> (see further <ptr
+target="#SG-dtypes"/>)</p>
 
 </div>
 <div type="div3"><head>Attribute names</head>
@@ -770,7 +799,7 @@ which references a <term>datatype</term>.</p>
 in XML; they need not be unique across the whole schema,
 however, but only within the list of attributes for a given
 element.</p></div>
-<div type="div3"><head>Attribute values</head>
+<div type="div3" xml:id="SG-dtypes"><head>Attribute values</head>
 <p>In the example above, a list of the possible values for the
 <att>status</att> attribute has been supplied.  This means that a
 parser can check that no <gi>poem</gi> is defined for which the
@@ -785,29 +814,38 @@ of characters (<code>status="awful"</code>,
 <code>status="awe-ful"</code>, or <code>status="12345678"</code>) as
 valid for this attribute.  Sometimes, of
 course, the set of possible values cannot be pre-defined.  Where it
-can, as in this case, it is generally better to do so.</p> </div>
-<!--
-<div type="div3"><head>Default value</head> 
-<p>The last piece of information in
-each attribute declaration specifies how a parser should interpret the
-absence of the attribute concerned.  This can be done by supplying one
-of the special keywords listed below, or (as in this case) by
-supplying a specific value which is then regarded as the value for
-every element which does not supply a value for the attribute
-concerned.  Using the example above, if a poem is simply tagged
-<tag>poem</tag>, the parser will treat it exactly as if it were tagged
-<tag>poem status="draft"</tag>.  Alternatively, it is possible to
-specify a default value for an attribute. Thus, if the attribute
-declaration above were rewritten in DTD language as
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ATTLIST poem   id ID #IMPLIED 
-                 status (draft | revised | published) #REQUIRED >]]></egXML>
-then poems which appear in the anthology simply tagged <tag>poem</tag>
-would be reported as erroneously tagged, as would any for which some
-value other than <val>draft,</val> <val>published,</val> or
-<val>revised</val> were supplied.</p></div> -->
+can, as in this case, it is generally better to do so.</p> 
 
-<div type="div3" xml:id="SG-id"><head>Pointing  attributes</head>
-<p>It is sometimes necessary to refer to an occurrence of one textual
+<p>Schema languages vary widely in the extent to which they support
+validation of attribute values. Some languages predefine a small set
+of possibilities. Others allow the schema designer to specify a
+<soCalled>library</soCalled> of possible datatypes, against which
+individual attributes may be validated. A
+<soCalled>datatype</soCalled> might be something fairly general (any
+positive integer), something very specific or idiosyncratic (any
+four-character string ending with "T"), or somewhere between the
+two. In the RELAX NG schemas used by the TEI, patterns have been
+defined for about half a dozen datatypes, which are for the most part
+taken from the W3C  datatype library (reference need). In addition to
+the two possibilities already mentioned — plain text or an explicit
+list of possible strings — other datatypes likely to be
+encountered include the following:
+<list type="gloss">
+<label>boolean</label>
+<item>values must be either true or false</item>
+<label>numeric</label>
+<item>values must represent a numeric quantity  of some
+kind</item>
+<label>date</label>
+<item>values must represent a possible date and time in some calendar</item>
+</list></p>
+<p>Two further datatypes of particular usefulness in managing XML documents
+are commonly  known as <code>ID</code> — for identifier —  and
+<code>URI</code>  — for Universal Resource Indicator, or pointer for
+short. These are discussed in the next section.</p>
+</div>
+<div xml:id="SG-id"><head>Identifiers and Indicators</head>
+<p>It is often necessary to refer to an occurrence of one textual
 element from within another, an obvious example being phrases such as
 <q>see note 6</q> or <q>as discussed in chapter 5</q>.  When a text is
 being produced the actual numbers associated with the notes or
@@ -849,36 +887,41 @@ the following definition:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
 poemRef_p = element poemRef {
   att.target = attribute target {data.URI},
-  empty}
-></egXML>
+  empty}]]></egXML>
 </p>
-<p>The <gi>poemRef</gi> element has  no content, but a  single attribute called <att>target</att>.  The
-value of this attribute must be a pointer like a web reference of type
-<code>data.URI</code> ; furthermore, because there is no indication of
-optionality on the attribute pattern, it must be supplied on each
-occurrence — a <gi>poemRef</gi> with no referent is an impossibility.</p>
+
+<p>The <gi>poemRef</gi> element has no content, but a single attribute
+called <att>target</att>.  The value of this attribute must be a
+pointer like a web reference of type <code>data.URI</code> ;
+furthermore, because there is no indication of optionality on the
+attribute pattern, it must be supplied on each occurrence — a
+<gi>poemRef</gi> with no referent is an impossibility.</p>
+
 <p>With these declarations in force, we can now encode a reference to
-the poem whose <att>xml:id</att> attribute specifies that its identifier
-is <val>Rose</val> as follows:
+the poem whose <att>xml:id</att> attribute specifies that its
+identifier is <val>Rose</val> as follows:
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[Blake's poem on the sick rose 
 <poemRef target='#Rose'/> ...]]></egXML>
+
 In this example, we have used the special syntax defined by XML for
 representing empty elements in which the end-tag and the start-tag are
-combined into a single tag.  XML also permits representation of empty
+combined into a single tag.  (XML also permits representation of empty
 elements by an immediately adjacent start- and end-tag, thus <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<poemRef
-target="#Rose"></poemRef>]]></egXML></p>
+target="#Rose"></poemRef>]]></egXML>)</p>
 
-<p>A processor may  take any number of actions
-once it has followed a link encoded in this way:
-a formatter might construct an exact page and line reference for the
-location of the poem in the current document and insert it, or just
-quote the poem's title or first lines.  A hypertext style processor
-might use this element as a signal to activate a link to the poem
-being referred to.  The purpose of the XML markup is simply to
-indicate that a cross reference exists: it does not determine what the
-processor is to do with it.</p></div>
+<p>A processor may take any number of actions when it encounters a
+link encoded in this way: a formatter might construct an exact page
+and line reference for the location of the poem in the current
+document and insert it, or just quote the poem's title or first lines.
+A hypertext style processor might use this element as a signal to
+activate a link to the poem being referred to.  The purpose of the XML
+markup is simply to indicate that a cross reference exists: it does
+not determine what the processor is to do with it.</p></div>
+</div>
 
 <div type="div2"><head>Other components of an XML document</head> 
+
 <p>In addition to the elements and attributes so far discussed, an XML
 document can contain a few other formally distinct things. An XML
 document may contain arbitrary signals or flags for use when the
@@ -1072,7 +1115,7 @@ document:
   </body>
 </text>]]></egXML></p>
 </div>
-</div>
+
 <div type="div2" xml:id="SG18"><head>Putting it all together</head>
 <p>An XML conformant document has a number of parts, not all of which
 have been discussed in this chapter, and many of which the user of these
@@ -1602,3 +1645,24 @@ type="pe">extensions</ident> parameter entity is replaced by the
 content of the file <ident
 type="file">mystuff.dtd</ident>.</p></div></div>
 -->
+
+<!--
+<div type="div3"><head>Default value</head> 
+<p>The last piece of information in
+each attribute declaration specifies how a parser should interpret the
+absence of the attribute concerned.  This can be done by supplying one
+of the special keywords listed below, or (as in this case) by
+supplying a specific value which is then regarded as the value for
+every element which does not supply a value for the attribute
+concerned.  Using the example above, if a poem is simply tagged
+<tag>poem</tag>, the parser will treat it exactly as if it were tagged
+<tag>poem status="draft"</tag>.  Alternatively, it is possible to
+specify a default value for an attribute. Thus, if the attribute
+declaration above were rewritten in DTD language as
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ATTLIST poem   id ID #IMPLIED 
+                 status (draft | revised | published) #REQUIRED >]]></egXML>
+then poems which appear in the anthology simply tagged <tag>poem</tag>
+would be reported as erroneously tagged, as would any for which some
+value other than <val>draft,</val> <val>published,</val> or
+<val>revised</val> were supplied.</p></div> -->
+
