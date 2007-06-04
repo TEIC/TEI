@@ -1,4 +1,3 @@
-<!-- lack of stuff on relaxng -->
 <!--
 Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
@@ -602,9 +601,9 @@ couplet {firstLine_p, secondLine_p}]]></egXML>
 enable studies of rhyme scheme, for example); these will have exactly
 the same content model as the existing <gi>line</gi> element; we will
 therefore add the following two lines to our example schema: <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[firstLine = element
-firstLine {text} 
-secondLine = element secondLine {text}]]></egXML>
+xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[firstLine_p =
+element firstLine {text} 
+secondLine_p = element secondLine {text}]]></egXML>
 Next, we can change the declaration for the <gi>poem</gi> element to
 include all three possibilities: <egXML
 xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[ poem_p = element poem
@@ -625,8 +624,8 @@ mark place names wherever they appear inside our verse lines, then,
 assuming we have also added a pattern for  the
 <gi>name</gi> element, we could change the definition for
 <gi>line</gi> to <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[line_p = element line
-(text | name_p )* }]]></egXML>
+xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[line_p = element
+line { (text | name_p )* }]]></egXML>
 </p>
 <p>XML places several constraints on the way that mixed
 content models may be defined. In brief, if <code>text</code> appears with other
@@ -769,20 +768,33 @@ of an attribute pattern, like the following:
     attribute status {"draft" | "revised" | "published"}]]></egXML>
 
 This defines a new pattern, called att.status, whose value is an
-attribute named <att>status</att>; the value (or content) of this
-attribute may be any one of the strings presented above. This
-definition must be included or referenced within the definition for
-every element to which the attribute is attached. We therefore
-modify the definition for the poem_p given above as follows:
+attribute named <att>status</att>. Attribute names are subject to the
+same restrictions as other names in XML; they need not be unique
+across the whole schema, however, but only within the list of
+attributes for a given element.</p>
 
-<eg><![CDATA[poem_p = element poem {att.status, heading_p?, stanza_p+}
+<p>A pattern defining the possible values for this
+attribute is given within the curly braces, in just the same way as a
+content model is given for an element pattern. In this case, the
+attribute's value must be one of the  strings presented above. </p>
+
+<p>The attribute pattern definition must be included or referenced
+within the definition for every element to which the attribute is
+attached. We therefore modify the definition for the poem_p given
+above as follows:
+
+<eg><![CDATA[poem_p = element poem {att.status?, heading_p?, stanza_p+}
 ]]></eg>
 
 In RELAX NG, an element pattern may be defined as a combination of
 attribute patterns and element patterns, as shown above. Attribute
 patterns can also be grouped and alternated in the same way as element
 patterns, though this particular feature is not widely used in the TEI
-scheme, since it is not available to the same extent in all schema languages.
+scheme, since it is not available to the same extent in all schema
+languages. Because a question mark follows the reference to the
+att.status pattern, a document in which the status attribute is not specified
+will still be valid; without this occurrence indicator the status
+attribute would be required. 
 
 </p>
 
@@ -790,15 +802,11 @@ scheme, since it is not available to the same extent in all schema languages.
 pattern can specify that the attribute must have a value of a
 particular type, for example a text string, a numeric value, a
 normalized date, etc. This is accomplished by supplying a pattern
-which references a <term>datatype</term> (see further <ptr
-target="#SG-dtypes"/>)</p>
+which references a <term>datatype</term>, as discussed in the next
+section.</p>
 
 </div>
-<div type="div3"><head>Attribute names</head>
-<p>Attribute names are subject to the same restrictions as other names
-in XML; they need not be unique across the whole schema,
-however, but only within the list of attributes for a given
-element.</p></div>
+
 <div type="div3" xml:id="SG-dtypes"><head>Attribute values</head>
 <p>In the example above, a list of the possible values for the
 <att>status</att> attribute has been supplied.  This means that a
@@ -929,70 +937,67 @@ document is processed in a particular way by some class of processor:
 a common example in document production is the need to force a
 formatter to start a new page at some specific point in a document:
 such flags are called <term>processing instructions</term>. An XML
-document may also contain instances of elements which are defined in
-some other DTD than the one declared in its <code>DOCTYPE</code>
-declaration, or (more generally) from some other
-<term>namespace</term>.</p>
+document may also contain references to predefined strings of data
+which a validator must resolve before attempting to validate the
+document's structure; these are called <term>entity references</term>;
+these may be useful to provide <soCalled>boiler plate</soCalled> text
+or to represent character data which cannot easily be keyboarded. And,
+as noted earlier, an XML document may also contain instances of
+elements taken from some other <term>namespace</term>. We discuss each
+of these three cases in the rest of this section.</p>
 
 <div type="div3" xml:id="SG-cer"><head>Character references</head>
 <p>As mentioned above, XML documents all use the same internal
 character encoding. Since not all computer systems currently support
 this encoding directly, a special form of entity reference is defined
 which can be used to represent individual characters from the Unicode
-character set in a portable way by simply representing their numeric
+character set in a portable way by providing  their numeric
 value, in decimal or hexadecimal notation.</p>
 <p>For example, the character <mentioned>é</mentioned> is represented
 within an XML document as the Unicode character with hexadecimal value
 <code>00E9</code>. If such a document is being prepared on (or
-exported to) a system using a different character set, say ISO 646, in
+exported to) a system using a different character set in
 which this character is not available, it may instead be represented
 by the character entity reference <code>&amp;#x00E9;</code> (the x
 indicating that what follows is a hexadecimal value) or
 <code>&amp;#0233;</code>. Entity references of this type do not need
-to be predefined in XML, since the underlying character encoding for
+to be predefined, since the underlying character encoding for
 XML is always the same.</p>
-<p>To aid legibility however, it is common practice instead to use a
-mnemonic name (such as <code>eacute</code>) for such character
-references, and to map these to the appropriate Unicode value by means
-of entity declarations of exactly the same type as those already
-discussed. Standard mnemonic names have been defined by ISO for the
-characters in most widely-used writing systems, and grouped together
-into widely-available <term>entity sets</term>. The standard
-<soCalled>ISO lat1</soCalled> entity set, for example, includes a
-declaration like the following for the character
-<mentioned>é</mentioned>: <egXML
+<p>To aid legibility however, it is also possible to use a mnemonic
+name (such as <code>eacute</code>) for such character references,
+provided that each such name is mapped to the required Unicode value
+by means of a construct known as an <term>entity
+declaration</term>. There is also a small set of mnemonic
+character entity references which do not have to be declared because
+they form part of the definition of XML. These are the names used for
+characters such as the ampersand and less-than sign, which could not
+easily otherwise be included in an XML document without ambiguity.</p>
+<p>A reference to a named character entity, whether predefined or not,
+takes the form of an ampersand, followed by the name, followed by a
+semicolon. For example an XML document containing the string
+<q>T&amp;C</q> might be encoded as <code>T&amp;amp;C</code>. Other
+predefined character entities include <code>&amp;lt;</code> (&lt;) and
+<code>&amp;apos;</code> (&apos;). </p>
+<p>For other named character entities, a set of entity declarations
+must be provided to an XML processor before the document referring to
+them can validated. The declaration itself uses a
+non-XML syntax inherited from SGML; for example, to define an entity
+named <ident>eacute</ident> with the replacement value é, the
+declaration would have the following form:
+<egXML
 xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY eacute
-"&#x00E9;"> <!-- LATIN SMALL LETTER E WITH ACUTE -->]]></egXML> so
-that, for an XML document which embeds this entity set in its DTD, a
-non-Unicode enabled input system may also represent this character by
-the entity reference <code>&amp;eacute;</code>.</p>
-<p>In XML documents, two special entities are predefined, with the
-names <ident type="ge">amp</ident> and <ident
-type="ge">lt</ident>. These are available without declaration, so that
-the ampersand character or less-than sign can be represented in a text
-without their being confused with the start of an entity reference or
-a tag respectively.</p>
-
-<p>This <term>string substitution</term> mechanism has many other
-applications. Suppose, for example, that we wish to encode the use of ligatures
-in early printed texts.  The ligatured form of
-<mentioned>ct</mentioned> might be distinguished from the
-non-ligatured form by encoding it as <code>&amp;ctlig;</code>
-rather than <code>ct</code>.  Other special typographic features such
-as leafstops or rules could equally well be represented by mnemonic
-entity references in the text.  When processing such texts, an entity
-declaration would be added giving the desired representation for such
-textual elements.  If, for example, ligatured letters are of no
-interest, we would simply add a declaration such as
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY ctlig "ct" >]]></egXML>
-and the distinction present in the source document would be removed.
-If, on the other hand, a formatting program capable of representing
-ligatured characters is to be used, we might replace the entity
-declaration to give whatever sequence of characters such a program
-requires as the expansion.</p>
-<p>More detailed discussion of this and related character encoding
-issues is provided in chapter <ptr target="#CH"/> of the
-Guidelines.</p></div>
+"é">]]></egXML> 
+</p>
+<p>Entities of this kind are useful also for  <term>string
+substitution</term> purposes, where the same text needs to be repeated
+uniformly throughout a text. For example, if a declaration such as 
+<egXML
+xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY TEI
+"Text Encoding Initiative">]]></egXML> 
+is included with a document, then references such as
+<code>&amp;TEI;</code> may be used within it, each of which will be
+expanded in the same way and replaced by the string "Text Encoding
+Initiative" before the text is validated.</p>
 
 
 </div>
@@ -1026,13 +1031,13 @@ the closing character-sequence <code>?&gt;</code>.
 </p>
 </div>
 <div type="div3" xml:id="SGname"><head>Namespaces</head>
-<p>A valid XML document necessarily specifies the DTD in which its
+<p>A valid XML document necessarily specifies the schema in which its
 constituent elements are defined. However, a well-formed XML document
-is not required to specify its DTD — indeed, it may not even have a
-DTD; it would still be useful to indicate that the element names used
+is not required to specify its schema — indeed, it may not even have a
+schema; it would still be useful to indicate that the element names used
 in it have some defined provenance. Furthermore, it might be desirable
 to include in a document elements which are defined (possibly
-differently) in different DTDs. A cabinet-maker's DTD might well
+differently) in different schemas. A cabinet-maker's schema might well
 define an element called <gi>table</gi> with very different
 characteristics from those of a documentalist's.</p>
 <p>The concept of <term>namespace</term> was introduced into the XML
@@ -1042,17 +1047,17 @@ namespace may be thought of as analogous to the lexicon of that
 language. Just as a document can contain words taken from different
 languages, so a well-formed XML document can include elements taken
 from different namespaces. Note however that because a document can
-only specify a single DTD, elements which belong to namespaces other
-than that defined by the DTD will appear to be illegal to a simple XML
+only specify a single schema, elements which belong to namespaces other
+than that defined by the schema will appear to be illegal to a simple XML
 validator: documents which use namespaces require special handling by
-such processors. Like a DTD, a namespace contains a list of valid element
-names; unlike a DTD, a namespace also has a distinctive
+such processors. Like a schema, a namespace contains a list of valid element
+names; unlike a schema, a namespace also has a distinctive
 <term>prefix</term> and  an identifying <term>name</term>.</p>
-<p>Suppose for example that we wish to extend our simple verse DTD to
+<p>Suppose for example that we wish to extend our simple verse schema to
 include markup of wordclass information such as
 <soCalled>noun</soCalled>, <soCalled>verb</soCalled>, etc. Suppose
-further that a DTD already exists in which all the tags we wish to use
-have been defined. We could (of course) simply combine the two DTDs to
+further that a schema already exists in which all the tags we wish to use
+have been defined. We could (of course) simply combine the two schemas to
 form a new one, but this may not be practicable: for example, there
 might be an element defined with the same name but different meanings
 in each schema. Instead, we supply the <term>prefix</term> associated
@@ -1060,16 +1065,11 @@ with the grammatical schema's namespace (<code>gram</code>, for example) on each
 element which is taken from that namespace, as in the following
 example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<line xmlns:gram="http://www.gram.org">
-      <gram:aux>Shall</gram:aux>
-      <gram:pron>I</gram:pron>
-      <gram:verb>compare</gram:verb>
-      <gram:pron>thee</gram:pron>
-      <gram:prep>to</gram:prep>
-      <gram:art>a</gram:art>
-      <gram:noun>summer</gram:noun>
-      's
-      <gram:noun>day</gram:noun>
-      ?
+      <gram:itj>O</gram:itj>
+      <gram:nom>Rose</gram:nom
+      <gram:pron>thou</gram:pron>
+      <gram:aux>art</gram:aux >
+      <gram:adj>sick</gram:adj >
 </line>]]></egXML>
 </p>
 <p>In this example, the elements <gi>aux</gi>, <gi>pron</gi>, etc. are
@@ -1115,7 +1115,7 @@ document:
   </body>
 </text>]]></egXML></p>
 </div>
-
+</div>
 <div type="div2" xml:id="SG18"><head>Putting it all together</head>
 <p>An XML conformant document has a number of parts, not all of which
 have been discussed in this chapter, and many of which the user of these
@@ -1154,7 +1154,7 @@ represented as character entity references (<ptr target="#SG-cer"/>).
 </div>
 <div type="div3" xml:id="SG182"><head>The <code>DOCTYPE</code> declaration</head>
 <p>An XML file which is valid (as opposed to simply well-formed) can
-specify a DTD against which its content is to be validated. This is
+specify a schema against which its content is to be validated. This is
 the function of the <code>DOCTYPE</code> declaration. If you use
 schemas, the particular schema you wish to validate a document against
 is usually specified externally.</p>
@@ -1162,7 +1162,7 @@ is usually specified externally.</p>
 <code>DOCTYPE</code> keyword, at least two parts: the name of the root
 element for the associated document, and a set of declarations for all
 the elements, attributes, notations, entities, etc. which together
-define the document type declaration (DTD) of that document. Note,
+define the document type declaration (schema) of that document. Note,
 incidentally, that the root element name (and hence the
 <code>DOCTYPE</code> name) may be that of any element whose
 declaration is supplied in this set. The declarations may be supplied
@@ -1178,7 +1178,7 @@ by a combination of the two.
 <myDoc n="1">
   <p>This is an instance of a "my.doc" document</p>
 </myDoc>]]></egXML>
-Note that the required declarations are enclosed within square brackets inside the <code>DOCTYPE</code> declaration: this part of the declaration is technically known as the <term>DTD subset</term>.</p>
+Note that the required declarations are enclosed within square brackets inside the <code>DOCTYPE</code> declaration: this part of the declaration is technically known as the <term>schema subset</term>.</p>
 <p>More usually, however, the required  declarations  will be held in a
 separate entity and invoked by reference, as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE myDoc SYSTEM "myDoc.dtd" []>
@@ -1191,7 +1191,7 @@ entity containing the required declarations and that used to define
 any other system entity (see <ptr target="#SG-ents"/>). The square
 brackets may be supplied even though they enclose nothing, as in this
 example, or they may be omitted.</p>
-<p>Next, we present a case where declarations are given both within the DTD subset and by reference to an external entity:
+<p>Next, we present a case where declarations are given both within the schema subset and by reference to an external entity:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE myDoc SYSTEM "myDoc.dtd" [
   <!ENTITY tla "three letter acronym">]>
 <myDoc>
@@ -1199,10 +1199,10 @@ example, or they may be omitted.</p>
   <p>It is surprisingly free of &tla;s.</p>
 </myDoc>]]></egXML>
 </p>
-<p>Any kind of declaration may be added to a DTD subset; as we have
-already seen (<ptr target="#SG-cms"/>), this is the mechanism by which the TEI DTD is
+<p>Any kind of declaration may be added to a schema subset; as we have
+already seen (<ptr target="#SG-cms"/>), this is the mechanism by which the TEI schema is
 customized. 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI PUBLIC "-//TEI P3//DTD Main Document Type//EN" "tei2.dtd" [
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI PUBLIC "-//TEI P3//schema Main Document Type//EN" "tei2.dtd" [
   <!ENTITY % TEI.prose 'INCLUDE'>
   <!ENTITY % TEI.XML   'INCLUDE'>
   <!ENTITY tla "Three Letter Acronym">
@@ -1218,15 +1218,15 @@ customized.
 </TEI>]]></egXML>
 
 When, as here, the document type declaration in force includes both
-the contents of the DTD subset, and the contents of some external
+the contents of the schema subset, and the contents of some external
 entity (in the case above, whatever file is specified by the
 <code>PUBLIC</code> identifier given, <ident
-type="file">tei2.dtd</ident> by default), declarations in the DTD
+type="file">tei2.dtd</ident> by default), declarations in the schema
 subset are always carried out first.  As noted above, (<ptr
 target="#SG-pe"/>), the order is important, because in XML only the
 first declaration of an entity counts.  In the above example,
 therefore, the declaration of the entity <ident type="ge">tla</ident>
-in the DTD subset takes precedence over any declaration of the same
+in the schema subset takes precedence over any declaration of the same
 entity in the file <ident type="file">tei2.dtd</ident>.  Similarly,
 the declaration for <ident type="pe">x.phrase</ident> takes precedence
 over the existing declaration for that entity in the TEI dtd. It is
@@ -1242,10 +1242,10 @@ error.</p></div>
 contains only text, markup, and entity references, and thus may
 not contain any new declarations.
 A convenient way of building up large documents in a modular fashion
-might be to use the DTD subset to declare entities for the individual
+might be to use the schema subset to declare entities for the individual
 pieces or modules, thus:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI 
-          PUBLIC "-//TEI P4//DTD Main Document Type//EN"
+          PUBLIC "-//TEI P4//schema Main Document Type//EN"
 		         "tei2.dtd" [
    <!ENTITY % TEI.prose "INCLUDE">
    <!ENTITY % TEI.XML "INCLUDE">
@@ -1265,7 +1265,7 @@ pieces or modules, thus:
   </text>
 </TEI>]]></egXML></p>
 
-<p>In this example, the TEI DTD has been extended by entity
+<p>In this example, the TEI schema has been extended by entity
 declarations for each chapter of some document.  The first two are
 external entities referring to the file in which the text of
 particular chapters is to be found; the third a dummy, indicating that
@@ -1288,7 +1288,7 @@ described here.</p>
 
 <p>To assist in this process many systems take advantage of an
 additional <term>catalog file</term>, the chief function of which is
-to associate the formal public identifiers used in a document or DTD
+to associate the formal public identifiers used in a document or schema
 with specific system entities, over-riding any default
 association. One widely used format for such catalog files was defined
 by an industry group originally known as SGML Open, and such files are
@@ -1305,7 +1305,7 @@ specification, also produced by OASIS is available from their site at
 <ptr
 target="http://www.oasis-open.org/committees/entity/spec.html"/>.</note>
 Catalog files in both SGML Open and XML formats are distributed along
-with the current TEI DTDs.</p>
+with the current TEI schemas.</p>
 </div></div>
 </div>
 <!--
