@@ -81,7 +81,7 @@ system.</item></list> These three aspects are discussed briefly below,
 and then in more depth in the remainder of this chapter.</p>
 
 <p>XML is frequently compared with HTML, the language in which web
-pages had always been written until XML began to replace it, and which
+pages are generally written, and which
 shares some of the above characteristics. Compared with HTML, however,
 XML has some other important features:
 
@@ -399,7 +399,7 @@ for this is called a <term>namespace</term>. In our simple example,
 the tags just contain a simple name. As we shall see, it is also
 possible to use tags which include a <term>qualified name</term>, that
 is, a name with an optional prefix which identifies the set of names to
-which it belongs. For example, if I define an element <gi>line</gi>
+which it belongs. For example, if we define an element <gi>line</gi>
 and you also define an element <gi>line</gi> and we wish to share
 data, it may be useful to distinguish the two in our marked up
 texts. We would do this by including a <term>namespace prefix</term>
@@ -532,7 +532,7 @@ element anthology { poem_p+ }</code> defines an element pattern called
 called <code>anthology</code>. These naming conventions are however
 unimportant; we could even have used the same name for the pattern as
 for the element, since the two are syntactically quite distinct. The
-name, or <term>generic identifier</term> of the element follows the
+name, or <term>generic identifier</term>, of the element follows the
 word <q>element</q>, and the <term>content
 model</term> for the element is given within the curly braces
 following that.  Each of these parts is discussed further below.
@@ -735,10 +735,10 @@ close to the abstract model implicit in most XML processing
 systems. Most such systems now use a standardized way of accessing
 parts of an XML document known as <term>XPath</term>.<note
 place="foot">The official specification is at <ptr
-target="http://www.w3.org/TR/XPath"/>;  many
+target="http://www.w3.org/TR/xpath"/>;  many
 introductory tutorials are available in the XML references cited above
 and elsewhere on the web: good beginners' tutorials include <ptr
-target="http://www.w3schools.com/XPath/default.asp"/> and <ptr
+target="http://www.w3schools.com/xpath/default.asp"/> and <ptr
 target="http://www.zvon.org/xxl/XPathTutorial/"/>, the latter being
 available in several languages.</note> XPath gives us a
 non-graphical way of referring to any part of an XML document: for
@@ -840,7 +840,7 @@ unique value to identify a particular element occurrence, which may be
 used for cross reference purposes, as discussed further below (<ptr
 target="#SG-id"/>)</p>
 
-<div type="div3"><head>Declaring attributes</head>
+<div type="div3" xml:id="SG-att"><head>Declaring attributes</head>
 
 <p>Attributes are declared in a schema in the same way as elements.
 As well as specifying its name and the element to which it is to be
@@ -913,9 +913,9 @@ add their own definitions, possibly of great complexity. A
 <soCalled>datatype</soCalled> might be something fairly general (any
 positive integer), something very specific or idiosyncratic (any
 four-character string ending with "T"), or somewhere between the
-two. In the RELAX NG schemas used by the TEI, patterns have been
+two. In the RELAX NG schemas used by the TEI, general patterns have been
 defined for about half a dozen datatypes (see further <ptr
-target="#DTYPES"/>. In addition to the two possibilities already
+target="#DTYPES"/>). In addition to the two possibilities already
 mentioned — plain text or an explicit list of possible strings — 
 other datatypes likely to be encountered include the following:
 <list type="gloss">
@@ -974,13 +974,13 @@ the identifier of the element pointed at.  This is achieved by
 the following definition:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
 poemRef_p = element poemRef {
-  att.target = attribute target {data.URI},
+  att.target = attribute target {anyURI},
   empty}]]></egXML>
 </p>
 
 <p>The <gi>poemRef</gi> element has no content, but a single attribute
 called <att>target</att>.  The value of this attribute must be a
-pointer like a web reference of type <code>data.URI</code> ;
+pointer like a web reference of type <code>anyURI</code> ;
 furthermore, because there is no indication of optionality on the
 attribute pattern, it must be supplied on each occurrence — a
 <gi>poemRef</gi> with no referent is an impossibility.</p>
@@ -1024,7 +1024,8 @@ att.url = attribute graphic {anyURI}]]></eg>
 With these additions to the schema, we can now represent the location
 of the illustration within our text like this:
 <eg><![CDATA[<poem><graphic
-url="http://en.wikisource.org/wiki/Image:Blake_sick_rose.jpg"/>]]></eg>
+url="http://en.wikisource.org/wiki/Image:Blake_sick_rose.jpg"/>
+</poem>]]></eg>
 </p>
 <p>Attributes form part of the structure of an XML document in the
 same way as elements, and can therefore be accessed using XPath. For
@@ -1139,8 +1140,9 @@ sequence of characters, not including the closing character-sequence
 <code>?&gt;</code>.
 </p>
 
-<p>A specialised form of processing instruction, known as the
-<term>XML declaration</term> can be supplied at the beginning of an
+<p>A construct which looks like a processing instruction
+(but is not) is the
+<term>XML declaration</term> which can be supplied at the beginning of an
 XML document, for example: <eg><![CDATA[<?xml version="1.0"
 encoding="iso-8859-1"?>]]></eg> The XML declaration specifies the version
 number of the XML Recommendation applicable to the document it
@@ -1226,11 +1228,11 @@ Although a namespace name usually uses the URI (Uniform Resource
 Identifier) syntax, it is not  treated as an online address
 and an XML processor regards it just as a string: a long name for the
 namespace.</p>
-<p>The xmlns attribute can also be used to associate a short prefix
+<p>The <att>xmlns</att> attribute can also be used to associate a short prefix
 name with the namespace it defines. This is very useful if we want to
 mingle elements from different namespaces within the same document,
 since the prefix can be attached to any element, over-riding the
-implicit namespace for itself and its children:
+implicit namespace for itself (but not its children):
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
 <anthology xmlns="http://www.example.net/anthology/ns"
 	   xmlns:svg="http://www.w3.org/2000/svg">
@@ -1328,12 +1330,12 @@ take very different positions on all of these topics, since none of
 them is explicitly addressed in the XML specification itself. Consequently
 the best answer is likely to be specific to a particular software
 environment and schema language. Since this chapter is concerned with
-XML considered independently of its processing environment we do not
-address them in any detail here.</p> 
+XML considered independently of its processing environment we only
+address them in summary detail here.</p> 
 
 <div type="div3" xml:id="SG-ass1"><head>Associating entity definitions with a document
 instance</head>
-<p>In <ptr target="SG-cer"/> we introduced the syntax used for the
+<p>In <ptr target="#SG-cer"/> we introduced the syntax used for the
 definition of named character entities such as <code>eacute</code>
 which XML inherited from SGML. Different schema languages vary in the
 ways in which a collection of such definitions may be made available
@@ -1348,7 +1350,7 @@ subset of those facilities recognized by all schema languages.</p>
 <p>Here is an example  DOCTYPE statement which we might consider
 prefixing to the final version of our anthology:
 <eg><![CDATA[<!DOCTYPE anthology [
-<!ENTITY mdash "—">
+<!ENTITY mdash "&#2014;">
 <!ENTITY legalese "This document is available under a Creative Commons
 Share and Enjoy Licence">
 ]>]]></eg>
@@ -1450,15 +1452,14 @@ amongst them. For example, if the document also contained a directive:
 type="text/css" media="mobile"?>]]></eg>a different stylesheet
 called <code>anthology_m.css</code> would be used when rendering the
 document on a handheld device such as a mobile phone.</p>
-<p>Although most modern web browsers support most of CSS and much of
-XSLT, coverage for specific features varies amongst them. Taking
-advantage of all the features of the XSLT stylesheet language will
-usually imply use of a standalone processor such as xsltproc.</p>
+<p>Most modern web browsers support CSS (although the extent
+of their implementation varies), and some of them
+support XSLT.</p>
 
 <div type="div3"><head>Content validation</head>
 
 <p>As we noted above, most schema languages provide some degree of
-datatype validation for attribute values (<ptr target="SG-"/>). They
+datatype validation for attribute values (<ptr target="#SG-ATT"/>). They
 vary greatly however in the validation facilities they offer for the
 content of elements, other than the syntactic constraints already
 discussed. Thus, while we may very easily check that our
