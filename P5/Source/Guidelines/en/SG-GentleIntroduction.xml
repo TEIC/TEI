@@ -66,8 +66,8 @@ required for the last.</p>
 those parts of XML of which a proper understanding is necessary to
 make best use of these Guidelines. The interested reader should also
 consult one or more of the many excellent introductory text books
-and web sites now available on the subject<note place="foot">See for
-example....</note>.</p>
+and web sites now available on the subject.<note place="foot">See for
+example....</note></p>
 
 <div type="div2" xml:id="SG11"><head>What's special about XML?</head>
 
@@ -349,10 +349,10 @@ experience</title> (1794).</note>
 <p>It should be stressed that this example does <emph>not</emph> use
 the same names as are proposed for corresponding elements elsewhere
 in these Guidelines: the above is  thus <emph>not</emph> a valid TEI
-document<note place="foot">The element names here have been chosen for
+document.<note place="foot">The element names here have been chosen for
 clarity of exposition; there is however a TEI element corresponding to
 each, so that this example may be regarded as TEI conformable in the
-sense that this term is defined in chapter <ptr target="#CF"/></note>. It will however serve as an introduction to the basic notions of XML.
+sense that this term is defined in chapter <ptr target="#CF"/></note> It will however serve as an introduction to the basic notions of XML.
 Whitespace and line breaks have been added to the example for the
 sake of visual clarity only; they have no particular significance in the
 XML encoding itself.  Also, the line
@@ -430,7 +430,7 @@ document, and the ability to perform such validation is one of the key
 advantages of using XML. To carry this out, some way of formally
 stating the criteria for successful validation is necessary: in XML
 this formal statement is provided by an additional document known
-as a <term>schema</term><note type="foot">The older terms
+as a <term>schema</term>.<note type="foot">The older terms
 <term>document type declaration</term> or <term>document type
 definition</term>, both abbreviated as DTD, may also be
 encountered. Throughout these Guidelines we use the term
@@ -484,15 +484,15 @@ frequently-encountered methods include the Document Type Declaration
 (DTD) language which XML inherited from SGML; the XML Schema language
 (<ptr target="http://www.w3.org/XML/Schema"/>) defined by the W3C; and
 the RELAX NG language (<ptr target="http://relaxng.org/"/>) originally
-developed within the OASIS Technical Committee and now accepted as an
-ISO draft standard <note place="foot">ISO/IEC FDIS 19757-2 Document
+developed within the OASIS Technical Committee and now an
+ISO standard<note place="foot">ISO/IEC FDIS 19757-2 Document
 Schema Definition Language (DSDL) -- Part 2: Regular-grammar-based
 validation -- RELAX NG</note>).  In this chapter, and throughout these
 Guidelines, we give examples using the <soCalled>compact
 syntax</soCalled> of RELAX NG, but the specifications within these
 Guidelines are expressed in a way that is largely independent of the
 specific language in which a schema generated from them is
-expressed. <note place="foot">See further <ptr target="#TD"/> and <ptr
+expressed.<note place="foot">See further <ptr target="#TD"/> and <ptr
 target="#IM"/>. In practice, the only part of a TEI element
 specification not expressed using TEI-defined syntax is the content
 model for an element, which is expressed using the RELAX NG schema
@@ -513,9 +513,9 @@ start = anthology_p
 </p>
 
 <p>Note that this is not the only way in which a RELAX NG schema might
-be written<note place="foot">For a good tutorial introduction to RELAX
+be written;<note place="foot">For a good tutorial introduction to RELAX
 NG, see <bibl>Eric van der Vlist <title>RELAX NG</title> O'Reilly,
-2004</bibl></note>; we have adopted this idiom however because it
+2004</bibl></note> we have adopted this idiom however because it
 matches that used throughout the rest of the Guidelines.  </p>
 
 <p>A RELAX NG schema defines a number of named <term>patterns</term>: in
@@ -733,31 +733,31 @@ stanzas and the second a single stanza,  by a tree structure like the following 
 <p>This graphic representation of the structure of an XML document is
 close to the abstract model implicit in most XML processing
 systems. Most such systems now use a standardized way of accessing
-parts of an XML document known as <term>Xpath</term><note
+parts of an XML document known as <term>XPath</term>.<note
 place="foot">The official specification is at <ptr
-target="http://www.w3.org/TR/xpath"/>;  many
+target="http://www.w3.org/TR/XPath"/>;  many
 introductory tutorials are available in the XML references cited above
 and elsewhere on the web: good beginners' tutorials include <ptr
-target="http://www.w3schools.com/xpath/default.asp"/> and <ptr
+target="http://www.w3schools.com/XPath/default.asp"/> and <ptr
 target="http://www.zvon.org/xxl/XPathTutorial/"/>, the latter being
-available in several languages.</note> Xpath gives us a
+available in several languages.</note> XPath gives us a
 non-graphical way of referring to any part of an XML document: for
 example, we might refer to the last line of Blake's poem as
 <code>anthology/poem[1]/stanza[2]/line[8]</code>. The square brackets
 here indicate a numerical selection: we are talking about the eighth
 line in the second stanza of the first poem in the anthology. If we
-left out all the square-bracketted selections, the corresponding Xpath
+left out all the square-bracketted selections, the corresponding XPath
 expression would reference all lines contained by stanzas contained by
-poems contained by anthologies. An Xpath expression can return any
+poems contained by anthologies. An XPath expression can return any
 collection of elements: for example, the expression
 <code>anthology/poem</code> refers to all poems in an anthology and
 the expression <code>anthology/poem/heading</code> refers to all their headings. </p>
-<p>The solidus within an xpath expression behaves in much the same way
+<p>The solidus within an XPath expression behaves in much the same way
 as the solidus or back slash does in a filename specification: it
 indicates that the item to the left directly contains the item to the
-right of it. In xpath it is also possible to indicate that any number
+right of it. In XPath it is also possible to indicate that any number
 of other items may intervene by repeating the solidus. For example,
-the xpath expression <code>anthology/poem//line[1]</code> will refer
+the XPath expression <code>anthology/poem//line[1]</code> will refer
 to the first line of each poem in the anthology, irrespective of
 whether or not it is in a stanza.</p>
 
@@ -1027,11 +1027,11 @@ of the illustration within our text like this:
 url="http://en.wikisource.org/wiki/Image:Blake_sick_rose.jpg"/>]]></eg>
 </p>
 <p>Attributes form part of the structure of an XML document in the
-same way as elements, and can therefore be accessed using Xpath. For
+same way as elements, and can therefore be accessed using XPath. For
 example, to refer to all the poems in our anthology whose
 <att>status</att> attribute has the value <code>draft</code>, we might
-use an xpath such as <code>anthology/poem[@status='draft']</code>. To
-find the headings of all such poems, we would use the Xpath
+use an XPath such as <code>anthology/poem[@status='draft']</code>. To
+find the headings of all such poems, we would use the XPath
 <code>anthology/poem[@status='draft']/heading</code>. </p>
 </div>
 </div>
@@ -1189,7 +1189,7 @@ in the same way.</p>
 <p>Fortunately we do not need to invent a schema for the
 representation of graphical components such as diagrams: it already
 exists in the shape of the Scalable Vector Graphics (SVG) language
-defined by the W3C. <note type="foot">The W3C Recommendation is
+defined by the W3C.<note type="foot">The W3C Recommendation is
 defined at <ptr target="http://www.w3.org/Graphics/SVG/"/></note> SVG
 is a widely used and rich XML vocabulary for representing all kinds of
 two-dimensional graphics which is also well supported by existing
@@ -1359,9 +1359,9 @@ to these entities will be expanded to the character string
 given. Thus, wherever in the document instance the string
 <code>&amp;legalese;</code> appears, it will be replaced by the
 formulation above. This makes life a little easier for those
-keyboarding our anthology. <note place="foot">And indeed for those
+keyboarding our anthology.<note place="foot">And indeed for those
 responsible for deciding the licencing conditions if they change their
-minds later.</note>The word <code>anthology</code> following the string
+minds later.</note> The word <code>anthology</code> following the string
 DOCTYPE in this example is, of course, the name of the root element of
 the document to which this declaration is prefixed; however, only an XML
 DTD processor will take note of this fact. </p></div>
@@ -1375,7 +1375,7 @@ RELAX NG therefore no facility for associating a particular schema
 with a particular instance exists: the task is regarded as a specific
 case of the more general issues addressed by the general architectural
 framework within which RELAX NG is defined: the ISO draft standard for
-Document Schema Definition Languages (DSDL) <note place="foot">DSDL is
+Document Schema Definition Languages (DSDL).<note place="foot">DSDL is
 a project of ISO/IEC JTC 1/SC 34 WG 1, the object of which is to
 <q>bring together different validation-related tasks and expressions
 to form a single extensible framework that allows technologies to work
@@ -1413,7 +1413,7 @@ here.</p>
 kind of pointer element to refer to the resources which need to be
 assembled, in exactly the same way as we proposed for the illustration
 in our anthology. The W3C Recommendation <title>XML Inclusions
-</title> (XInclude) <note place="foot"><ptr
+</title> (XInclude)<note place="foot"><ptr
 target="http://www.w3.org/TR/xinclude/"/></note> defines a generic mechanism
 for this purpose, which is supported by an increasing number of XML
 processors.  </p></div>
@@ -1485,7 +1485,7 @@ is a pattern matching (rather than a grammar-based) language which
 allows us to test the components of a specific document against
 templates which express constraints such as those mentioned above.</p>
 
-<p>Like other XML processors, Schematron uses  Xpath to identify parts
+<p>Like other XML processors, Schematron uses  XPath to identify parts
 of an XML document; in addition it provides elements which describe
 assertions to be tested and conditions which must be validated, as
 well as elements to report the results of the test. </p>
