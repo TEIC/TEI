@@ -38,6 +38,10 @@
    </sourceDesc>
   </fileDesc>
   <revisionDesc>
+   <change date="2007-06-07" who="SPQR">Added equiv for ornament and
+   cols,
+and changed prose about ornament to use @rend</change>
+   <change date="2007-05-08" who="SPQR">Added equiv the hi-like objects</change>
    <change date="2007-01-23" who="PJT">Modified available attributes for
     <gi>gap</gi>, <gi>unclear</gi>; added <att>ed</att> attribute to
     <gi>cols</gi>.</change>
@@ -78,22 +82,25 @@
      relevant elements) and schemas in either W3C Schema, RelaxNG, or XML DTD.
      The <ref target="http://www.tei-c.org/Roma/">Roma web tool</ref> can
      generate all of these.</p>
-    <p> Tite-encoded documents are TEI documents, and the Tite standard, with
-     the exception of convenience elements (<gi>b</gi>, <gi>i</gi>, <gi>ul</gi>,
-      <gi>sup</gi>, <gi>sub</gi>, and <gi>smcap</gi>, all of which are easily
-     converted back to canonical TEI) and two added elements (<gi>cols</gi> and
-      <gi>ornament</gi>), is a pure subset of the TEI. That is, it was created
-     primarily by <emph>removing</emph> elements and attributes from the TEI,
-     and not from extensive <emph>modification</emph>. Thus as part of the TEI
-     family, Tite inherits TEI semantics, and ambiguity in this specification
-     should be resolved with reference to TEI Guidelines. What makes Tite
-     distinct is that where the TEI in general is famously tolerant of multiple
-     methods of encoding a given feature, Tite seeks uniformity of encoding
-     through constraint, constraint via its stripped-down tag set and via this
-     specification.</p>
-    <p>Tite can be used to encode printed prose, poetry, drama, newspapers, and
-     anything else which can be described with the basic TEI building-blocks of
-     divisions, paragraphs, line groups, and speeches.</p>
+    <p> Tite-encoded documents are TEI documents, and the Tite
+    standard, with the exception of convenience elements (<gi>b</gi>,
+    <gi>i</gi>, <gi>ul</gi>, <gi>sup</gi>, <gi>sub</gi>,
+    <gi>smcap</gi>, <gi>cols</gi> and <gi>ornament</gi> all of which
+    can be converted back to canonical TEI), is a pure subset of the
+    TEI. That is, it was created primarily by <emph>removing</emph>
+    elements and attributes from the TEI, and not from extensive
+    <emph>modification</emph>. Thus as part of the TEI family, Tite
+    inherits TEI semantics, and ambiguity in this specification should
+    be resolved with reference to TEI Guidelines. What makes Tite
+    distinct is that where the TEI in general is famously tolerant of
+    multiple methods of encoding a given feature, Tite seeks
+    uniformity of encoding through constraint, constraint via its
+    stripped-down tag set and via this specification.</p>
+
+    <p>Tite can be used to encode printed prose, poetry, drama,
+    newspapers, and anything else which can be described with the
+    basic TEI building-blocks of divisions, paragraphs, line groups,
+    and speeches.</p>
     <p> A note on terms: I use <term>document</term> to refer generally to the
      item (book, pamphlet, newspaper, etc.) to be encoded and <term>text</term>
      as either linguistic material (as opposed to graphic or imagistic) or a
@@ -871,7 +878,9 @@ Whilst some of their sad friends
        <rng:ref name="macro.paraContent"/>
       </content>
      </elementSpec>
-     <elementSpec ident="cols" mode="add" ns="http://www.tei-c.org/ns/tite/1.0">
+     <elementSpec ident="cols" mode="add"
+		  ns="http://www.tei-c.org/ns/tite/1.0">
+       <equiv filter="tite-acdc.xsl" mimeType="text/xsl" name="cols"/>
       <desc>(columns) with the "n" attribute (denoting new number of columns) is
        used to mark where a document changes columnar layout.</desc>
       <classes>
@@ -887,27 +896,23 @@ Whilst some of their sad friends
         <datatype>
          <rng:ref name="data.code"/>
         </datatype>
-        <!--<default value=""/>
-  <valList type="open"/>-->
        </attDef>
       </attList>
      </elementSpec>
-     <elementSpec ident="ornament" mode="add" ns="http://www.tei-c.org/ns/tite/1.0">
-      <desc>for capturing typographical feature: printer's ornament, horizontal
-       line, strings of asterisks or periods, etc, indicating an informal
-       division that does not call for a new &lt;div&gt; element. If a
-       horizontal rule or printer's ornament, use appropriate "type" attribute
-       and leave the element empy; if the ornament can be represented with
-       characters, set "type" value to "characters" and include these in the
-       element.</desc>
+     <elementSpec ident="ornament" mode="add"
+		  ns="http://www.tei-c.org/ns/tite/1.0">
+       <equiv filter="tite-acdc.xsl" mimeType="text/xsl" name="ornament"/>
+      <desc>for capturing typographical feature: printer's ornament,
+      horizontal line, strings of asterisks or periods, etc,
+      indicating an informal division that does not call for a new
+      <gi>div</gi> element. If a horizontal rule or printer's
+      ornament, use appropriate <att>rend</att> attribute and leave
+      the element empy; if the ornament can be represented with
+      characters, include these in the element.</desc>
       <classes>
-       <!-- 
-  ornament appears where figure can appear
-  -->
        <memberOf key="model.inter"/>
        <memberOf key="model.titlepagePart"/>
        <memberOf key="model.common"/>
-       <memberOf key="att.typed"/>
       </classes>
       <content>
        <rng:text/>
