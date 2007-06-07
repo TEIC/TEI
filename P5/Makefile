@@ -219,9 +219,11 @@ fascicule: subset
 	  ${XSL}/odds/odd2lite.xsl ${FASCFILE}
 	-perl Utilities/cleanrnc.pl FASC-${CHAP}-lite.xml \
 	  | xsltproc ${XSL}/teic/teilatex-teic.xsl - > FASC-${CHAP}.tex
+	ln -s Source/Images Images
 	-TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-${CHAP} 
 	-TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-${CHAP}
 	mv ${FASCFILE} ./
+	rm Images
 
 dist: clean dist-source dist-schema dist-doc dist-test dist-database dist-exemplars
 

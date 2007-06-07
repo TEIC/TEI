@@ -14,7 +14,6 @@ $R :=
 {for $i in collection("/db/TEI")//(tei:elementSpec|tei:classSpec|tei:macroSpec)[@ident=$query]
     return
 <MODULE_RESULT>
-
 	<U>http://tei.oucs.ox.ac.uk/Query/tag.xq?name={data($i/@ident)}</U>
 	<Title>
 	  {name($i)}: {data($i/@ident)}
