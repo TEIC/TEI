@@ -1,5 +1,6 @@
 PREFIX=/usr
 BIN=${PREFIX}/bin
+DOCODDS=teitite teilite
 LANGUAGE=en
 DRIVER=guidelines-${LANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
@@ -34,8 +35,10 @@ dist: schemas
 	cp *.odd ../release/tei-p5-exemplars/share/xml/tei/custom/odd
 	cp *names.xml ../release/tei-p5-exemplars/share/xml/tei/custom/odd
 	cp *.rnc *.rng *.mod ../release/tei-p5-exemplars/share/xml/tei/custom/schema/relaxng
-	cp *.doc.html ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/html
-	cp *.doc.xml  ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/xml
+	for i in ${DOCODDS}; do  \
+	cp $$i.doc.html ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/html ; \
+	cp $$i.doc.xml  ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/xml ; \
+	done
 	cp ../catalog.p5.custom ../release/tei-p5-exemplars/share/xml/tei/custom/schema/catalog.xml
 	(cd ../release; 	\
 	ln -s tei-p5-exemplars tei-p5-exemplars-`cat ../VERSION` ; \
