@@ -48,4 +48,34 @@
   </hi>
 </xsl:template>
 
+<xsl:template name="ornament">
+  <figure place="inline">
+    <xsl:apply-templates 
+	select="@*"/>
+    <xsl:choose>
+      <xsl:when test="*">
+	<xsl:apply-templates 
+	    select="*|comment()|processing-instruction"/>  
+      </xsl:when>
+      <xsl:when test="string-length(.)&gt;0">
+	<p>
+	<xsl:apply-templates 
+	    select="text()|comment()|processing-instruction"/>  
+	</p>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:apply-templates 
+	    select="comment()|processing-instruction"/>  
+      </xsl:otherwise>
+    </xsl:choose>
+  </figure>
+</xsl:template>
+
+<xsl:template name="cols">
+  <milestone unit="cols">
+    <xsl:apply-templates 
+	select="@*|*|text()|comment()|processing-instruction"/>  
+  </milestone>
+</xsl:template>
+
 </xsl:stylesheet>
