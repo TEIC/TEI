@@ -66,8 +66,13 @@ required for the last.</p>
 those parts of XML of which a proper understanding is necessary to
 make best use of these Guidelines. The interested reader should also
 consult one or more of the many excellent introductory text books
-and web sites now available on the subject.<note place="foot">See for
-example....</note></p>
+and web sites now available on the subject.<note place="foot">New
+textbooks about XML appear at regular intervals and to select any one
+of them would be invidious. A useful list of pointers to introductory
+websites is available from <ptr
+target="http://www.xml.org/xml/resources_focus_beginnerguide.shtml"/>;
+recommended online course include <ptr
+target="http://www.w3schools.com/xml/default.asp"/> and <ptr target="http://www.ibm.com/developerworks/edu/x-dw-xmlintro-i.html"/> </note></p>
 
 <div type="div2" xml:id="SG11"><head>What's special about XML?</head>
 
@@ -186,10 +191,10 @@ Technology — Universal Multiple-Octet Coded Character Set</title>
 maintained by an industry group called the Unicode Consortium, and
 known as Unicode.<note place="foot">See <ptr
 target="http://www.unicode.org/"/></note> The Unicode standard
-provides a standardised way of representing any of the thousands of
+provides a standardised way of representing any of the many thousands of
 discrete symbols making up the world's writing systems, past and
-present.</p>
-
+present. </p>
+<!--
 <p>For technical and historical reasons which need not concern us, it
 is sometimes necessary to translate texts encoded as Unicode into (or
 out of) some other encoding system. XML uses a general purpose
@@ -199,7 +204,13 @@ terms, this mechanism allows for the indirect representation of
 arbitrary parts of a document (be they single characters, character
 strings, or whole files) by means of predefined names, known as
 <term>entity references</term>; see further <ptr
-target="#SG-er"/>.</p>
+target="#SG-er"/>.</p>-->
+
+<p>Most modern computing systems now support Unicode directly; for
+those which do not, XML provides a mechanism for the indirect
+representation of single characters or character strings by means of
+predefined names, known as <term>entity references</term>; see further
+<ptr target="#SG-er"/></p>
 </div>
 </div>
 <div type="div2" xml:id="SG12"><head>Textual structures</head>
@@ -212,7 +223,7 @@ printed, sequences of prose and verse might be divided into volumes,
 gatherings, and pages.</p>
 
 <p>Structural units of this kind are most often used to identify
-specific locations or reference points within a text (<q>the third
+specific locations or refer to points within a text (<q>the third
 sentence of the second paragraph in chapter ten</q>; <q>canto 10, line
 1234</q>; <q>page 412</q>, etc.)  but they may also be used to
 subdivide a text into meaningful fragments for analytic purposes
@@ -352,7 +363,7 @@ in these Guidelines: the above is  thus <emph>not</emph> a valid TEI
 document.<note place="foot">The element names here have been chosen for
 clarity of exposition; there is however a TEI element corresponding to
 each, so that this example may be regarded as TEI conformable in the
-sense that this term is defined in chapter <ptr target="#CF"/></note> It will however serve as an introduction to the basic notions of XML.
+sense that this term is defined in <ptr target="#CF"/></note> It will however serve as an introduction to the basic notions of XML.
 Whitespace and line breaks have been added to the example for the
 sake of visual clarity only; they have no particular significance in the
 XML encoding itself.  Also, the line
@@ -399,16 +410,18 @@ for this is called a <term>namespace</term>. In our simple example,
 the tags just contain a simple name. As we shall see, it is also
 possible to use tags which include a <term>qualified name</term>, that
 is, a name with an optional prefix which identifies the set of names to
-which it belongs. For example, if we define an element <gi>line</gi>
-and you also define an element <gi>line</gi> and we wish to share
-data, it may be useful to distinguish the two in our marked up
-texts. We would do this by including a <term>namespace prefix</term>
+which it belongs. For example, if one person defines an element <gi>line</gi>
+and another person also defines an element <gi>line</gi> possibly with
+a different meaning, when they wish to share
+data they will find it necessary to distinguish the two <q>line</q>
+components in their marked up
+texts. This is achieved by including a <term>namespace prefix</term>
 within the markup, for example like this: <eg><![CDATA[
 <my:line>This is one of my lines</my:line> 
   <!-- ... --> 
 <you:line>This is one of your lines</you:line>]]></eg> 
 This feature is particularly important if we have
-different definitions of what a "line" is, of course, but there are
+different definitions of what a <soCalled>line</soCalled> is, of course, but there are
 many occasions when it is useful to distinguish groups of tags
 belonging to different <soCalled>markup vocabularies</soCalled>; we
 discuss this further below (<ptr target="#SGname"/>). One particularly
@@ -518,24 +531,28 @@ NG, see <bibl>Eric van der Vlist <title>RELAX NG</title> O'Reilly,
 2004</bibl></note> we have adopted this idiom however because it
 matches that used throughout the rest of the Guidelines.  </p>
 
-<p>A RELAX NG schema defines a number of named <term>patterns</term>: in
-the example above, the
-word to the left of the equals sign is the pattern's name, and the material
-following it declares a meaning for the pattern. Patterns may also be of
-particular types; the ones which interest us here are called
-<term>element patterns</term> and <term>attribute patterns</term>. In
-this example we see definitions for four element patterns. Note that
-we have used similar names for the pattern and the element which
-the pattern describes: so, for example, the line <code>anthology_p =
-element anthology { poem_p+ }</code> defines an element pattern called
-<code>anthology_p</code>, the value of which defines an element 
-called <code>anthology</code>. These naming conventions are however
+<p>A RELAX NG schema expresses rules about the possible structure of a
+document in terms of <term>patterns</term>; that is, it defines a
+number of named patterns each of which acts as a kind of template
+against which an input document can be matched. The meaning of a
+pattern is expressed in a schema by reference to other patterns, or to
+a small number of built-in fundamental concepts, as we shall see. In
+the example above, the word to the left of the equals sign is the
+pattern's name, and the material following it declares a meaning for
+the pattern. Patterns may also be of particular types; the ones which
+interest us here are called <term>element patterns</term> and
+<term>attribute patterns</term>. In this example we see definitions
+for four element patterns. Note that we have used similar names for
+the pattern and the element which the pattern describes: so, for
+example, the line <code>anthology_p = element anthology {poem_p+}</code> defines an element pattern called <code>anthology_p</code>,
+the value of which defines an element called
+<code>anthology</code>. These naming conventions are however
 unimportant; we could even have used the same name for the pattern as
 for the element, since the two are syntactically quite distinct. The
 name, or <term>generic identifier</term>, of the element follows the
-word <q>element</q>, and the <term>content
-model</term> for the element is given within the curly braces
-following that.  Each of these parts is discussed further below.
+word <q>element</q>, and the <term>content model</term> for the
+element is given within the curly braces following that.  Each of
+these parts is discussed further below.
 </p>
 <p>The last line of the schema above tells a RELAX NG validator which
 element (or elements) in a document can be used as the root element:
@@ -548,7 +565,7 @@ simplifies the processing task by providing an <q>entry point</q>.</p>
 the generic identifier (often abbreviated to GI) of the element which
 is being defined, for example <mentioned>poem</mentioned>,
 <mentioned>heading</mentioned>, etc.  A GI may contain alphabetic
-characters, digits, hyphens, underscore characters, or fullstops, and
+characters, digits, hyphens, underscore characters, or fullstops, but
 must begin with a letter.<note place="foot">In XML, a single colon may
 also appear in a GI, where it has a special significance related to
 the use of <term>namespaces</term>, as further discussed in section
@@ -747,8 +764,8 @@ example, we might refer to the last line of Blake's poem as
 here indicate a numerical selection: we are talking about the eighth
 line in the second stanza of the first poem in the anthology. If we
 left out all the square-bracketted selections, the corresponding XPath
-expression would reference all lines contained by stanzas contained by
-poems contained by anthologies. An XPath expression can return any
+expression would refer to all lines contained by stanzas contained by
+poems contained by anthologies. An XPath expression can refer to any
 collection of elements: for example, the expression
 <code>anthology/poem</code> refers to all poems in an anthology and
 the expression <code>anthology/poem/heading</code> refers to all their headings. </p>
@@ -764,23 +781,23 @@ whether or not it is in a stanza.</p>
 <p>Clearly, there are many such trees that might be drawn to describe
 the structure of this or other anthologies.  Some of them might be
 representable as further subdivisions of this tree: for example, we
-might subdivide the lines into individual words, since no word crosses
-a line boundary. Surprisingly perhaps, this grossly simplified view of
-what text is (memorably termed an <term>ordered hierarchy of content
-objects</term> (OHCO) view of text by Renear <foreign>et
-al</foreign>)<note place="foot">See <bibl>Renear, A., Mylonas, E.,
-Durand, D. <title level="a">Refining our notion of what text really
-is: the problem of overlapping hierarchies</title> in Ide and Hockey,
-eds., <title>Research in Humanities Computing</title>, OUP,
-1996</bibl>.</note> turns out to be very effective for a large number
-of purposes. It is not however adequate for the full complexity of
-real textual structures, for which more complex mechanisms need to be
-employed.  For there are many other trees that might be drawn which do
-<emph>not</emph> fit within this tree.  We might, for example, be
-interested in syntactic structures — which rarely respect the
-formal boundaries of verse.  Or, to take a simpler example, we might
-want to represent the pagination of different editions of the same
-text.</p>
+might subdivide the lines into individual words, since in our simple
+example no word crosses a line boundary. Surprisingly perhaps, this
+grossly simplified view of what text is (memorably termed an
+<term>ordered hierarchy of content objects</term> (OHCO) view of text
+by Renear <foreign>et al.</foreign><note place="foot">See
+<bibl>Renear, A., Mylonas, E., Durand, D. <title level="a">Refining
+our notion of what text really is: the problem of overlapping
+hierarchies</title> in Ide and Hockey, eds., <title>Research in
+Humanities Computing</title>, OUP, 1996</bibl>.</note>) turns out to be
+very effective for a large number of purposes. It is not however
+adequate for the full complexity of real textual structures, for which
+more complex mechanisms need to be employed.  For there are many other
+trees that might be drawn which do <emph>not</emph> fit within this
+tree.  We might, for example, be interested in syntactic structures — 
+which rarely respect the formal boundaries of verse.  Or, to take a
+simpler example, we might want to represent the pagination of
+different editions of the same text.</p>
 
 <p>In the OHCO model of text, representation of cases where different
 elements overlap so that several different trees may be identified in
@@ -809,7 +826,7 @@ could refer to particular element occurrences from elsewhere within a
 document.  Attributes are useful in precisely such circumstances.</p>
 <p>Although different elements may have attributes with the same name,
 (for example, in the TEI scheme, every element is defined as having an
-attribute named <att>rend</att>), they are always regarded as
+attribute named <att>n</att>), they are always regarded as
 different, and may have different values assigned to them.  If an
 element has been defined as having attributes, the attribute values
 are supplied in the document instance as <term>attribute-value
@@ -891,7 +908,7 @@ will still be valid; without this occurrence indicator the
 pattern can specify that the attribute must have a value of a
 particular type, for example a text string, a numeric value, a
 normalized date, etc. This is accomplished by supplying a pattern
-which references a <term>datatype</term>. In the example above,
+which refers to a <term>datatype</term>. In the example above,
 because a list of acceptable values is predefined, a parser can check
 that no <gi>poem</gi> is defined for which the <att>status</att>
 attribute does not have one of <val>draft</val>, <val>revised</val>,
@@ -934,7 +951,7 @@ are commonly  known as <code>ID</code> — for identifier —  and
 <code>URI</code>  — for Universal Resource Indicator, or pointer for
 short. These are discussed in the next section.</p>
 </div>
-<div xml:id="SG-id"><head>Identifiers and Indicators</head>
+<div xml:id="SG-id"><head>Identifiers and indicators</head>
 <p>It is often necessary to refer to an occurrence of one textual
 element from within another, an obvious example being phrases such as
 <q>see note 6</q> or <q>as discussed in chapter 5</q>.  When a text is
@@ -982,7 +999,14 @@ poemRef_p = element poemRef {
 
 <p>The <gi>poemRef</gi> element has no content, but a single attribute
 called <att>target</att>.  The value of this attribute must be a
-pointer like a web reference of type <code>anyURI</code> ;
+pointer or web reference of type <code>anyURI</code>;<note
+place="foot">The word <q>anyURI</q> is a predefined name, used in
+schema languages to mean that any <term>Uniform Resource
+Identifier</term> (URI) may be supplied here. The accepted syntax for
+URIs is an Internet Standard, defined in  <ptr
+target="http://tools.ietf.org/html/rfc3986"/>. <code>anyURI</code>
+is  one of the <term>datatypes</term> defined by the W3C
+Schema datatype library.</note>
 furthermore, because there is no indication of optionality on the
 attribute pattern, it must be supplied on each occurrence — a
 <gi>poemRef</gi> with no referent is an impossibility.</p>
@@ -1452,7 +1476,7 @@ options are available to specify how a web browser should select
 amongst them. For example, if the document also contained a directive:
 <eg><![CDATA[<?xml-stylesheet href="anthology_m.css"
 type="text/css" media="mobile"?>]]></eg>a different stylesheet
-called <code>anthology_m.css</code> would be used when rendering the
+called <code>anthology_m.css</code> could be used when rendering the
 document on a handheld device such as a mobile phone.</p>
 <p>Most modern web browsers support CSS (although the extent
 of their implementation varies), and some of them
