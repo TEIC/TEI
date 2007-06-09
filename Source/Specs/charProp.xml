@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -5,38 +6,46 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="gaiji" xml:id="CHARPROP" ident="charProp">
-<equiv/>
-<gloss>character property</gloss><gloss version="2006-10-28" xml:lang="ja">文字特性</gloss>
-<desc>provides a name and value for some property of the parent
-character or glyph. </desc><desc version="2006-10-28" xml:lang="ja"> 当該文字やグリフの特性を示す．</desc><desc version="2006-10-15" xml:lang="es">proporciona un nombre y valor para alguna propiedad del carácter o glifo padre.</desc>
-<classes><memberOf key="att.typed"/></classes>
-<content>
+  <equiv/>
+  <gloss>character property</gloss>
+  <gloss version="2007-05-04" xml:lang="es">propiedad de carácter</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">文字特性</gloss>
+  <desc>provides a name and value for some property of the parent
+character or glyph. </desc>
+  <desc version="2007-05-04" xml:lang="es">proporciona un nombre y un valor para alguna propiedad del carácter o pictograma del
+padre.</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 当該文字やグリフの特性を示す．</desc>
+  <classes>
+    <memberOf key="att.typed"/>
+  </classes>
+  <content>
 <!-- ((unicodeName|localName), value) -->
-<rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-<rng:choice>
-<rng:ref name="unicodeName"/>
-<rng:ref name="localName"/>
-</rng:choice>
-<rng:ref name="value"/>
-</rng:group>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:ref name="unicodeName"/>
+        <rng:ref name="localName"/>
+      </rng:choice>
+      <rng:ref name="value"/>
+    </rng:group>
 <!--s:assert> some schematron rules here</s:assert-->
-</content>
-  
-<exemplum>
+  </content>
+  <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-  <charProp>
-    <unicodeName>character-decomposition-mapping</unicodeName>
-    <value>circle</value>
-  </charProp>
-  <charProp>
-   <localName>daikanwa</localName>
-   <value>36</value>
-  </charProp>
-    </egXML></exemplum>
-<remarks>
-<p>If the property is a Unicode Normative Property, then its
+      <charProp>
+        <unicodeName>character-decomposition-mapping</unicodeName>
+        <value>circle</value>
+      </charProp>
+      <charProp>
+        <localName>daikanwa</localName>
+        <value>36</value>
+      </charProp>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>If the property is a Unicode Normative Property, then its
 <gi>unicodeName</gi> must be supplied. Otherwise, its name must be
 specied by means of a <gi>localname</gi>.</p>
-<p>At a later release, additional constraints will be defined on
-possible value/name combinations using Schematron rules</p></remarks>
+    <p>At a later release, additional constraints will be defined on
+possible value/name combinations using Schematron rules</p>
+  </remarks>
 </elementSpec>

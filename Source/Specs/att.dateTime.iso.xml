@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -6,45 +7,46 @@ $Author: sbauman $
 -->
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" xml:id="DATETIMEISO" predeclare="true" type="atts" ident="att.dateTime.iso">
   <desc>attributes for recording normalized temporal expressions using the ISO 8601 standard</desc>
-  <attList xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0">
+  <desc version="2007-05-04" xml:lang="es">atributos para codificar expresiones temporales normalizadas usando el estándard ISO 8601.</desc>
+  <attList xmlns:rng="http://relaxng.org/ns/structure/1.0">
     <attDef ident="value-iso" usage="opt">
       <desc>supplies the value of a date or time in a standard form.</desc>
+      <desc version="2007-05-04" xml:lang="es">indica el valor de una fecha o una hora en un formato estándard.</desc>
       <desc version="2006-10-28" xml:lang="ja">日付や時間を，標準形式で示す．</desc>
       <datatype>
-	<rng:ref name="data.temporal.iso"/>
+        <rng:ref name="data.temporal.iso"/>
       </datatype>
       <valDesc>Any string representing a valid date, time, or one of a variety of combinations.</valDesc>
       <exemplum>
-	<p>The following are examples of ISO date, time, and date
+        <p>The following are examples of ISO date, time, and date
 	&amp; time formats that are <emph>not</emph> valid W3C format
 	normalizations.</p>
-	<egXML xmlns="http://www.tei-c.org/ns/Examples">
-	  <date value-iso="1996-09-24T07:25+00">Sept. 24th, 1996 at 3:25 in the morning</date>
-	  <date value-iso="1996-09-24T03:25-04">Sept. 24th, 1996 at 3:25 in the morning</date>
-	  <time value-iso="1999-01-04T20:42-05">4 Jan 1999 at 8:42 pm</time>
-	  <time value-iso="1999-W01-1T20,70-05">4 Jan 1999 at 8:42 pm</time>
-	  <date value-iso="2006-05-18T10:03">a few minutes after ten in the morning on Thu 18 May</date>
-	  <time value-iso="03:00">3 A.M.</time>
-	  <time value-iso="14">around two</time>
-	  <time value-iso="15,5">half past three</time>
-	</egXML>
-	<p>All of the examples of <att>value</att> in the <ref
-	target="#DATETIMEW3C">att.dateTime.w3c</ref> attribute
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <date value-iso="1996-09-24T07:25+00">Sept. 24th, 1996 at 3:25 in the morning</date>
+          <date value-iso="1996-09-24T03:25-04">Sept. 24th, 1996 at 3:25 in the morning</date>
+          <time value-iso="1999-01-04T20:42-05">4 Jan 1999 at 8:42 pm</time>
+          <time value-iso="1999-W01-1T20,70-05">4 Jan 1999 at 8:42 pm</time>
+          <date value-iso="2006-05-18T10:03">a few minutes after ten in the morning on Thu 18 May</date>
+          <time value-iso="03:00">3 A.M.</time>
+          <time value-iso="14">around two</time>
+          <time value-iso="15,5">half past three</time>
+        </egXML>
+        <p>All of the examples of <att>value</att> in the <ref target="#DATETIMEW3C">att.dateTime.w3c</ref> attribute
 	class are also valid with respect to this attribute.</p>
       </exemplum>
       <exemplum>
-	<egXML xmlns="http://www.tei-c.org/ns/Examples">He likes to be
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">He likes to be
 	punctual. I said <q><time value-iso="12">around noon</time></q>,
 	and he showed up at <time value-iso="12:00:00">12 O'clock</time>
 	on the dot.</egXML>
-	<p>The second occurence of <gi>time</gi> could have been
+        <p>The second occurence of <gi>time</gi> could have been
 	encoded with the <att>value</att> attribute, as
 	<val>12:00:00</val> is a valid time with respect to the W3C
 	<title>XML Schema Part 2: Datatypes</title> specification. The
 	first occurence could not.</p>
       </exemplum>
       <remarks>
-	<p>The value of <att>value-iso</att> should be the normalized
+        <p>The value of <att>value-iso</att> should be the normalized
 	representation of the date, time, or combined date &amp; time
 	in one of the formats specified in ISO 8601. The
 	<att>calendar</att> attribute, if present, describes the
@@ -59,13 +61,9 @@ $Author: sbauman $
     <p>If both <att>value-iso</att> and <att>dur-iso</att> are
     specified, the values should be interpreted as indicating a span
     of time by its starting time (or date) and duration. That is,
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <date value-iso="2007-06-01" dur-iso="P8D"/>
-    </egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><date value-iso="2007-06-01" dur-iso="P8D"/></egXML>
     indicates the same time period as
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <date value-iso="2007-06-01/P8D"/>
-    </egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><date value-iso="2007-06-01/P8D"/></egXML>
     </p>
     <p>In providing a <soCalled>regularized</soCalled> form, no claim
     is made that the form in the source text is incorrect; the
