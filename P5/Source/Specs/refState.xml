@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date: 2006-10-28 06:56:06 +0100 (Sat, 28 Oct 2006) $
+$Author: rahtz $
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header"  usage="opt" ident="refState">
+  <equiv/>
+  <gloss/>
+  <gloss xml:lang="zh-tw">分界狀態</gloss>
+  <gloss xml:lang="fr">État d'une variable</gloss>
+  <desc>specifies one component of a canonical reference defined by
+the milestone method.</desc><desc version="2006-10-28" xml:lang="ja">要素milestoneが示す参照のいち要素を示す．</desc>
+  <desc xml:lang="zh-tw">標明分界方法所定義的權威參照標準裡其中一個組件。</desc>
+  <desc xml:lang="fr">L’élément État d'une variable <gi>refState</gi> précise un composant d’une référence canonique définie par la méthode du bornage.</desc>
+  <content>
+    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+  </content>
+  <attList>
+    <attDef ident="ed" usage="opt">
+      <equiv/>
+      <desc>indicates which edition or version the milestone applies to.</desc><desc version="2006-10-28" xml:lang="ja">当該milestone要素が示す，版を示す．</desc>
+      <desc xml:lang="fr">indique à quelle édition ou version la borne s’applique.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.code"/>
+      </datatype>
+      <valDesc>Any string of characters; usually a siglum conventionally used
+for the edition.</valDesc>
+      <remarks>
+        <p>If <att>ed</att> is not specified, then any milestone
+tag with an appropriate <att>unit</att> attribute will be selected.</p>
+      </remarks>
+      <remarks xml:lang="fr">
+        <p>Si l'attribut <att>ed</att> n'est pas précisé, une balise <gi>milestone</gi>quelconque avec l'attribut <att>unit</att> approprié sera sélectionnée.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="unit" usage="req">
+      <equiv/>
+      <desc>indicates what kind of state is changing at this milestone.</desc><desc version="2006-10-28" xml:lang="ja">当該milestone要素が示す，状態の種類を示す．</desc>
+      <desc xml:lang="fr">indique l’état du changement de cette borne.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valList type="semi">
+        <valItem ident="page">
+          <equiv/>
+          <gloss>page breaks in the reference edition.
+    </gloss>
+          <gloss xml:lang="fr">sauts de page dans l'édition de référence.</gloss>
+        </valItem>
+        <valItem ident="column">
+          <equiv/>
+          <gloss>column breaks.
+    </gloss>
+          <gloss xml:lang="fr">sauts de colonne.</gloss>
+        </valItem>
+        <valItem ident="line">
+          <equiv/>
+          <gloss>line breaks.
+    </gloss>
+          <gloss xml:lang="fr">sauts de ligne.</gloss>
+        </valItem>
+        <valItem ident="book">
+          <equiv/>
+          <gloss>any units termed book, liber, etc.
+    </gloss>
+          <gloss xml:lang="fr">toute unité appelée livre, liber, etc.</gloss>
+        </valItem>
+        <valItem ident="poem">
+          <equiv/>
+          <gloss>individual poems in a collection.
+    </gloss>
+          <gloss xml:lang="fr">poèmes isolés dans un recueil.</gloss>
+        </valItem>
+        <valItem ident="canto">
+          <equiv/>
+          <gloss>cantos or other major sections of a poem.
+    </gloss>
+          <gloss xml:lang="fr">chants ou autres sections importantes d'un poème.</gloss>
+        </valItem>
+        <valItem ident="stanza">
+          <equiv/>
+          <gloss>stanzas within a poem, book, or canto.
+    </gloss>
+          <gloss xml:lang="fr">strophes dans un poème, un livre ou un chant.</gloss>
+        </valItem>
+        <valItem ident="act">
+          <equiv/>
+          <gloss>acts within a play.
+    </gloss>
+          <gloss xml:lang="fr">actes dans une pièce de théâtre.</gloss>
+        </valItem>
+        <valItem ident="scene">
+          <equiv/>
+          <gloss>scenes within a play or act.
+    </gloss>
+          <gloss xml:lang="fr">scènes dans une pièce de théâtre ou un acte.</gloss>
+        </valItem>
+        <valItem ident="section">
+          <equiv/>
+          <gloss>sections of any kind.
+    </gloss>
+          <gloss xml:lang="fr">n'importe quelle section.</gloss>
+        </valItem>
+        <valItem ident="absent">
+          <equiv/>
+          <gloss>passages not present in the reference edition.</gloss>
+          <gloss xml:lang="fr">passages absents de l'édition de référence.</gloss>
+        </valItem>
+      </valList>
+      <remarks/>
+    </attDef>
+    <attDef ident="length" usage="opt">
+      <equiv/>
+      <desc>specifies the fixed length of the reference component.</desc><desc version="2006-10-28" xml:lang="ja">参照要素の固定長を示す．</desc>
+      <desc xml:lang="fr">précise la longueur fixe du composant de la référence.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/>
+      </datatype>
+      <valDesc>Should be a positive integer; if no value is provided,
+    the length is unlimited and goes to the next delimiter or to the
+    end of the value.</valDesc>
+      <remarks>
+        <p>When constructing a reference, if the reference component
+  found is of numeric type, the length
+  is made up by inserting leading zeros; if it is not, by inserting
+  trailing blanks. In either case, reference components are truncated
+  if necessary at the right hand side.
+  </p>
+        <p>When seeking a reference, the length indicates the
+  number of characters which should be compared. Values longer than
+  this will be regarded as matching, if they start correctly. </p>
+      </remarks>
+      <remarks xml:lang="fr">
+        <p>Quand on construit une référence, si le composant de la référence est numérique, on introduit des zéros à gauche pour parvenir à la longueur souhaitée ; s'il n'est pas numérique, on insère des espaces à la fin de la référence. Dans les deux cas, les composants de la référence sont tronqués à droite si nécessaire.</p>
+        <p>Quand on recherche une référence, la longueur indique le nombre de caractères à comparer. Les valeurs plus longues sont considérées comme correspondant au critère, si elles commencent par les bons caractères.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="delim" usage="opt">
+      <equiv/>
+      <desc>supplies a delimiting string following the reference
+          component.</desc><desc version="2006-10-28" xml:lang="ja">参照のデリミタを示す．
+          component.</desc>
+      <desc xml:lang="fr">fournit une chaîne de caractères délimitante après le composant de la référence.</desc>
+      <datatype>
+        <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+      </datatype>
+      <valDesc>If a single space is used it is interpreted as
+          whitespace.</valDesc>
+      <remarks/>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <refState unit="book" delim=":"/>
+      <refState unit="line" length="4"/>
+    </egXML>
+  </exemplum>
+  <remarks/>
+  <listRef>
+    <ptr target="#HD54M"/>
+    <ptr target="#HD54"/>
+  </listRef>
+</elementSpec>

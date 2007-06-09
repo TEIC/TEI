@@ -169,9 +169,9 @@ case, the mechanisms discussed in chapters <ptr target="#SA"/> and
 <item>pauses</item>
 <item>vocalized but non-lexical phenomena such as coughs</item>
 <item>kinesic (non-verbal, non-lexical) phenomena such as gestures</item>
-<item>entirely non-linguistic events occurring during and possibly
+<item>entirely non-linguistic incidents occurring during and possibly
 influencing the course of speech</item>
-<item>writing, regarded as a special class of event in that it can
+<item>writing, regarded as a special class of incident in that it can
 be transcribed, for example captions or overheads displayed during
 a lecture</item>
 <item>shifts or changes in vocal quality</item></list>
@@ -181,7 +181,7 @@ discussed in section <ptr target="#TSBA"/> below.
  </p>
 <p>An utterance (tagged <gi>u</gi>) may contain lexical items
 interspersed with pauses and non-lexical vocal sounds; during an
-utterance, non-linguistic events may occur and written materials may be
+utterance, non-linguistic incidents may occur and written materials may be
 presented.  The <gi>u</gi> element can thus contain any of the other
 elements listed, interspersed with a transcription of the lexical items
 of the utterance; the other elements may all appear between utterances
@@ -248,7 +248,7 @@ section <ptr target="#CCAS"/>).
 <div type="div2" xml:id="TSBA"><head>Elements Unique to Spoken Texts</head>
 <p>The following elements characterize spoken texts, transcribed
 according to these Guidelines:
-<specList><specDesc key="u"/><specDesc key="pause"/><specDesc key="vocal"/><specDesc key="kinesic"/><specDesc key="event"/><specDesc key="writing"/><specDesc key="shift"/></specList>
+<specList><specDesc key="u"/><specDesc key="pause"/><specDesc key="vocal"/><specDesc key="kinesic"/><specDesc key="incident"/><specDesc key="writing"/><specDesc key="shift"/></specList>
  </p>
 <p>These elements are all members of the <ident type="class">att.ascribed</ident> class, from which they inherit the
 <att>who</att> attribute:
@@ -261,11 +261,11 @@ according to these Guidelines:
 speech using the features <ident type="feature">eventive</ident>, <ident type="feature">communicative</ident>, <ident type="feature">anthropophonic</ident> (for sounds produced by the human
 vocal apparatus), and <ident type="feature">lexical</ident>:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">         eventive  communicative  anthropophonic  lexical
-event       +             -              -           -
+incident       +             -              -           -
 kinesic     +             +              -           -
 vocal       +             +              +           -
 utterance   +             +              +           +</egXML>
-The differences are not always clear-cut.  Among <term rend="noindex">events</term> might be included actions like slamming
+The differences are not always clear-cut.  Among <term rend="noindex">incidents</term> might be included actions like slamming
 the door, which can certainly be communicative.  <term rend="noindex">Vocals</term> include coughing and sneezing, which
 are<index><term>vocal events</term><index><term>in
 transcription of speech</term></index></index> usually
@@ -291,13 +291,13 @@ given a unique identifier also used to identify their speech. Pauses marked by t
 using the <gi>pause</gi> element (see section <ptr target="#TSBAPA"/>).
 Non-verbal vocal effects such as the child's meowing are indicated
 either with orthographic transcriptions or with the <gi>vocal</gi>
-element, and entirely non-linguistic but significant events such as
-the sound of the toy cat are represented by the <gi>event</gi>
+element, and entirely non-linguistic but significant incidents such as
+the sound of the toy cat are represented by the <gi>incident</gi>
 elements (see section <ptr target="#TSBAVO"/>).
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#mar">you never <pause/> take this cat for show&amp;sp;and&amp;sp;tell
 <pause/> meow meow</u>
 <u who="#ros">yeah well I dont want to</u>
-<event><desc>toy cat has bell in tail which continues to make a tinkling sound</desc></event>
+<incident><desc>toy cat has bell in tail which continues to make a tinkling sound</desc></incident>
 <vocal who="#mar"><desc>meows</desc></vocal>
 <u who="#ros">because it is so old</u>
 <u who="#mar">how <choice><orig>bout</orig><reg>about</reg></choice>
@@ -385,9 +385,9 @@ utterance is used to indicate that its script is S1, rather than the
 default.  Alternatively, the embedded utterance might be regarded as a
 new (non-nested) one.  It might also be encoded using the
 <gi>writing</gi> element described in section <ptr target="#TSBAVO"/>
-below, or the <gi>event</gi> element described in section <ptr target="#TSBAVO"/>, without transcribing the read material:
+below, or the <gi>incident</gi> element described in section <ptr target="#TSBAVO"/>, without transcribing the read material:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#a">Listen to
-this <event><desc>reads aloud from newspaper</desc></event>
+this <incident><desc>reads aloud from newspaper</desc></incident>
  what nonsense</u></egXML>
  </p></div>
 <div type="div3" xml:id="TSBAPA"><head>Pause</head>
@@ -411,20 +411,20 @@ and discussed informally below should be used.  Note that the
 used to characterize the degree of pausing between (but not within)
 utterances.
  </p></div>
-<div type="div3" xml:id="TSBAVO"><head>Vocal, Kinesic, Event</head>
+<div type="div3" xml:id="TSBAVO"><head>Vocal, Kinesic, Incident</head>
 <p>These three empty elements are used to indicate the presence of
 non-transcribed semi-lexical or non-lexical phenomena either between or
 within utterances.
-<specList><specDesc key="vocal"/><specDesc key="kinesic"/><specDesc key="event"/></specList>
+<specList><specDesc key="vocal"/><specDesc key="kinesic"/><specDesc key="incident"/></specList>
  </p>
 <p>The <att>who</att> attribute should be used to specify the person or
-group responsible for a vocal, kinesic or event which is contained
+group responsible for a vocal, kinesic or incident which is contained
 within an utterance, if this differs from that of the enclosing
-utterance.  The attribute must be supplied for a vocal, kinesic or event
+utterance.  The attribute must be supplied for a vocal, kinesic or incident
 which is not contained within an utterance.
  </p>
 <p>The <att>iterated</att> attribute may be used to indicate that the
-vocal, kinesic or event is repeated, for example <val>laughter</val> as opposed to <val>laugh</val>.
+vocal, kinesic or incident is repeated, for example <val>laughter</val> as opposed to <val>laugh</val>.
 These should both be distinguished from <val>laughing</val>,
 where what is being encoded is a shift in voice quality.  For this last
 case, the <gi>shift</gi> element discussed in section <ptr target="#TSSASH"/> should be used.
@@ -450,7 +450,7 @@ for all basic categories, the definition should be made clear in the
 conversation analysis,</title> Cambridge University Press,
 1984</bibl>).
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#jan">This is just delicious</u>
-<event><desc>telephone rings</desc></event>
+<incident><desc>telephone rings</desc></incident>
 <u who="#ann">I'll get it</u>
 <u who="#tom">I used to <vocal><desc>cough</desc></vocal> smoke a lot</u>
 <u who="#bob"><vocal><desc>sniffs</desc></vocal>He thinks he's tough</u>
@@ -470,7 +470,7 @@ Note that Ann's snorting could equally well be encoded as follows:
    <vocal><desc>snorts</desc></vocal>
 </u></egXML>
  </p>
-<p>The extent to which encoding of events or kinesics is included in a
+<p>The extent to which encoding of incidents or kinesics is included in a
 transcription will depend entirely on the purpose for which the
 transcription was made.  As elsewhere, this will depend on the
 particular research agenda and the extent to which their presence is
@@ -498,7 +498,7 @@ encoded as follows:
 <div type="div3" xml:id="TSBATI"><head>Temporal Information</head>
 <p>In addition to the global attributes <att>n</att>,
 <att>xml:id</att>, and <att>xml:lang</att>, utterances, vocals,
-pauses, kinesics, events, and writing elements may all take a common
+pauses, kinesics, incidents, and writing elements may all take a common
 set of attributes providing information about their position in time.
 For this reason, these elements are regarded as forming a
 <term>class</term>, referred to here as <name
@@ -634,7 +634,7 @@ defined as follows:
 &pause;
 &vocal;
 &kinesic;
-&event;
+&incident;
 &writing;
 &shift;
 </specGrp>

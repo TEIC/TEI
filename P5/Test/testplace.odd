@@ -229,7 +229,7 @@ and Kaunas are both in a place called Lithuania as follows:
 only places constituting Lithuania; only that they are within it. A
 separate <gi>place</gi> element may indicate that it is a part of
 Lithuania by supplying a <gi>relation</gi> element, as discussed
-below (<ptr target=""/>).</p>
+below (<ptr target="#place-rel"/>).</p>
 
 <p>Here is a more complex example, showing the variety of names
 associated at different times and in different languages with a set
@@ -273,17 +273,17 @@ recommended when appropriate but not required.
 
 
 <p>These elements are specializations of the generic
-<gi>placeState</gi> element, which performs a role for <gi>place</gi>
-elements analogous to that performed for <gi>person</gi> elements by
-the <gi>persState</gi> element. Also like people, places may be said
+<gi>state</gi> element, which performs a role for <gi>place</gi>
+elements analogous to that it performs for <gi>person</gi> elements.
+Also like people, places may be said
 to have traits (characteristics such as climate, geographic type
 etc.); we may also wish to record specific events about places, such
 as their foundation or destruction. The following generic elements are
 available for these purposes:
 <specList>
-<specDesc key="placeState"/>
-<specDesc key="placeTrait"/>
-<specDesc key="placeEvent"/>
+<specDesc key="state"/>
+<specDesc key="trait"/>
+<specDesc key="event"/>
 </specList>
 </p>
 
@@ -293,10 +293,10 @@ be desired to record about places; we therefore do not here attempt to
 enumerate the possible values which might be appropriate for the
 <att>type</att> attribute on any of these generic elements. Places
 identified in terms of their human habitation such as countries or
-cities might have <gi>placeState</gi>s such as "population",
-"administrative status" etc.; they may also have <gi>placeEvent</gi>s
+cities might have <gi>state</gi>s such as "population",
+"administrative status" etc.; they may also have <gi>event</gi>s
 such as "foundation date" or "destruction" etc. Almost any kind of
-place is likely to have <gi>placeTrait</gi>s such as "climate",
+place is likely to have <gi>trait</gi>s such as "climate",
 "terrain" etc. </p>
 
 <p>Examples include:
@@ -305,18 +305,18 @@ place is likely to have <gi>placeTrait</gi>s such as "climate",
     <placeName xml:lang="en">Iceland</placeName>
     <placeName xml:lang="is">Ísland</placeName>
     <location type="latlong">65 00 N, 18 00 W</location>
-    <placeTrait type="area"><p>103,000 sq km</p></placeTrait>
-    <placeState type="gov" notBefore="1944"><p>Constitutional
-republic</p></placeState>
-    <placeState type="gov" notAfter="1944"><p>Part of the kingdom of
-<placeName key="#DK">Denmark</placeName></p></placeState>
+    <trait type="area"><p>103,000 sq km</p></trait>
+    <state type="gov" notBefore="1944"><p>Constitutional
+republic</p></state>
+    <state type="gov" notAfter="1944"><p>Part of the kingdom of
+<placeName key="#DK">Denmark</placeName></p></state>
 <placeEvent type="independence" from="1944-06-17"><p> Iceland became independent
 on 17 June 1944.</p></placeEvent>
 </place></egXML>
 
 
 </p>
-
+<div xml:id ="place-rel">
 <p>The <gi>relation</gi> element may be used to express relationships
 of various kinds between places, or between places and persons, in
 much the same way as it is used to express relationships between
@@ -373,13 +373,13 @@ but the same relationship could also be represented as follows:
   <relation type="contains" active="#MASC" passive="#ROD #MRU #REN"/>
 
   <relation type="partOf" active="#REN" passive="#FRA #MASC"/>
-</listPlace>
+
 </egXML>
 </p>
 
 
 
-
+</div>
 
 
 </div>
@@ -411,14 +411,14 @@ place examples from each by end of next week.
               <district>Testaccio</district>
             </location>
 
-<!--            <placeState type="address">
+<!--            <state type="address">
               <p>
                 <address>
                   <addrLine>Via Caio Cestio, 6</addrLine>
                   <addrLine>00153 Roma</addrLine>
                 </address>
               </p>
-            </placeState> shd be a location -->
+            </state> shd be a location -->
     
             <location scheme="postcode">I 00153</location>
 
@@ -427,7 +427,7 @@ place examples from each by end of next week.
                 <gml:pos>41.876143755230956 12.479267120361328</gml:pos>
               </gml:Point>
             </location>
-            <placeTrait>
+            <trait>
               <label>Description</label>
               <p>A cemetery in Rome, located near
    <placeName key="http://www.activitaly.it/monument/portspaolo.htm">Porta
@@ -440,7 +440,7 @@ place examples from each by end of next week.
    Europe. As the name of the cemetery indicates, it is the final
    resting place of non-Catholics (not only Protestants or English
    people).</p>
-            </placeTrait>
+            </trait>
             <placeEvent from="1732">
               <p>The first recorded burial is that of
  George Langton</p>
@@ -455,15 +455,15 @@ place examples from each by end of next week.
               <location scheme="local" type="polygon">
                 <measure unit="coordpair">161.658991,70.360863 159.81663,69.619326 164.015411,59.166954 165.860873,59.906095</measure>
               </location>
-              <placeTrait>
+              <trait>
                 <label>Size</label>
                 <p>
                   <measure>148cm x 96cm</measure>
                 </p>
-              </placeTrait>
-              <placeTrait key="#PLW" type="type"/>
-              <placeTrait key="#M_ST" type="material"/>
-              <placeTrait key="#c_1" type="condition"/>
+              </trait>
+              <trait key="#PLW" type="type"/>
+              <trait key="#M_ST" type="material"/>
+              <trait key="#c_1" type="condition"/>
             </place>
             <note>
               <bibl>
@@ -497,24 +497,24 @@ place examples from each by end of next week.
             <location scheme="latLong">
               40.7484 -73.9858
             </location>
-            <placeState>
+            <state>
               <p>The Empire State Building rises to 1,250 feet (381 m)
               at the 102nd floor, and its full structural height
               (including broadcast antenna) reaches 1,453 feet, 8
               9/16th inches (443 m)</p>
-            </placeState>
-            <placeState type="floorCount">
+            </state>
+            <state type="floorCount">
               <p>The building is typically described as being 102
               stories tall, although it has only 85 stories of
               commercial and office space, with an observation deck on
               the 86th floor. The remaining 16 stories represent the
               spire, which supports the antenna on top.</p>
-            </placeState>
-            <placeState type="floorArea">
+            </state>
+            <state type="floorArea">
               <p>The Empire State Building has a total floor area of
               2,200,000 square feet (200,000 square metres).</p>
-            </placeState>
-            <placeState type="officialStatus" from="1931" to="1972">
+            </state>
+            <state type="officialStatus" from="1931" to="1972">
               <p>The Empire State Building was the world's tallest
               building for a record 41 years. It was surpassed by the
               North Tower of the <name type="place">World Trade
@@ -525,7 +525,7 @@ place examples from each by end of next week.
               the Empire State Building again became the tallest
               building in New York City, and the second-tallest
               building in the United States.</p>
-            </placeState>
+            </state>
             <placeEvent type="construction" from="1930-03-17" to="1931-05-01">
               <label>Construction</label>
               <p>The Empire State Building was designed by <name
@@ -622,8 +622,8 @@ proposal described here.</p>
 	  <rng:zeroOrMore>
 	    <rng:choice>
 	      <rng:ref name="model.nameLike"/>
-	    <rng:ref name="model.placeStateLike"/>
-	    <rng:ref name="model.placeTraitLike"/>
+	    <rng:ref name="model.stateLike"/>
+	    <rng:ref name="model.traitLike"/>
 	    <rng:ref name="model.placeEventLike"/>
 	    <rng:ref name="model.placeLike"/>
 	    <rng:ref name="model.noteLike"/>
@@ -635,7 +635,7 @@ proposal described here.</p>
 
 <elementSpec ident="locale" mode="change">
 <classes>
-<memberOf key="model.placeTraitLike"/>
+<memberOf key="model.traitLike"/>
 </classes>
 </elementSpec>
 
@@ -645,7 +645,7 @@ proposal described here.</p>
 	<desc>contains the location of a place</desc>
 	<classes>
 	  <memberOf key="att.typed"/>
-	  <memberOf key="model.placeStateLike"/>
+	  <memberOf key="model.stateLike"/>
 	  <memberOf key="att.datable"/>
 	  <memberOf key="att.editLike"/>
 	</classes>
@@ -675,14 +675,14 @@ proposal described here.</p>
 	</attList>
       </elementSpec>
 
-      <elementSpec  ident="placeTrait" mode="add">
+      <elementSpec  ident="trait" mode="add">
 	<desc>a trait of a place</desc>
 	<classes>
 	  <memberOf key="att.datable"/>
 	  <memberOf key="att.editLike"/>
 	  <memberOf key="att.naming"/>
 	  <memberOf key="att.typed"/>
-	  <memberOf key="model.placeTraitLike"/>
+	  <memberOf key="model.traitLike"/>
 	</classes>
 	<content>
 	  <rng:group>
@@ -706,14 +706,14 @@ proposal described here.</p>
 
       </elementSpec>
 
-      <elementSpec  ident="placeState" mode="add">
+      <elementSpec  ident="state" mode="add">
 	<desc>a State of a place</desc>
 	<classes>
 	  <memberOf key="att.datable"/>
 	  <memberOf key="att.editLike"/>
 	  <memberOf key="att.naming"/>
 	  <memberOf key="att.typed"/>
-	  <memberOf key="model.placeStateLike"/>
+	  <memberOf key="model.stateLike"/>
 	</classes>
 	<content>
 	  <rng:group>
@@ -853,10 +853,10 @@ proposal described here.</p>
 	<desc>Objects like <gi>place</gi>s</desc>
       </classSpec>
       <classSpec ident="model.placeTraitLike" mode="add" type="model">
-	<desc>Objects like <gi>placeTrait</gi>s</desc>
+	<desc>Objects like <gi>trait</gi>s</desc>
       </classSpec>
       <classSpec ident="model.placeStateLike" mode="add" type="model">
-	<desc>Objects like <gi>placeState</gi>s</desc>
+	<desc>Objects like <gi>state</gi>s</desc>
       </classSpec>
       <classSpec ident="model.placeEventLike" mode="add" type="model">
 	<desc>Objects like <gi>placeEvent</gi>s</desc>
@@ -881,7 +881,114 @@ proposal described here.</p>
 
     </schemaSpec>
 </div>
-</div></body>
+</div>
+
+<div type="div2" xml:id="NDORG"><head>Organizational names</head>
+<p>Like names of persons or places, organization names can be marked as
+referent strings or as proper names with the <gi>rs</gi> and
+<gi>name</gi> elements.  For certain applications it may be desirable
+to mark the component parts of an organization. In some historical and
+social science studies, for example, the component parts of an
+organization names may  help to  characterize
+the organization in terms of its geographical location, ownership,
+likely number of employees, management structure etc.  
+
+The elements
+discussed in this section are recommended for this purpose and include:
+<specList><specDesc key="orgName" atts="type key ref"/></specList>
+</p>
+<p>The <gi>orgName</gi> element may be used to mark up any form of
+organizational name, that is, a name which applies to an organization
+rather than an individual person or place.It is a
+special case of a <gi>name</gi> and thus of an <gi>rs</gi> element.
+Consequently, the following examples are synonymous, though the last is
+preferred:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
+interest was agitated in the <rs key="PAS1" type="org">Pennsyla. Abolition Society</rs>.</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
+interest was agitated in the  <rs key="PAS1" type="org">
+<name>Pennsyla. Abolition Society</name></rs>.</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
+interest was agitated in the 
+<name key="PAS1" type="org">Pennsyla. Abolition 
+Society</name>.</egXML>  
+<egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
+interest was agitated in the <orgName type="voluntary" key="PAS1">Pennsyla. Abolition Society</orgName></egXML>
+<!-- From the Diary of Thomas Pym Cope -->
+Like the <gi>rs</gi> and <gi>name</gi> elements, the <gi>orgName</gi>
+element has a <att>key</att> attribute with which an external
+identifier such as a database key can be assigned to the organization
+name, and also a <att>ref</att> attribute which can be used to point
+directly to an <gi>org</gi> element containing information about the
+organization itself (see further <ptr target="#ND-org"/>).  Its
+<att>type</att> attribute should be used to characterize the name,
+for example as an acronym:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">Mr Frost will be able to earn an extra fee from 
+<orgName type="acronym">BSkyB</orgName>
+rather than the
+<orgName  type="acronym">BBC</orgName>
+</egXML>
+
+as a phrase:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+The feeling in <country>Canada</country> is one of strong aversion to
+the <orgName type="phrase">United States Government</orgName>, and of
+predilection for self-government under the <orgName type="phrase">English Crown</orgName></egXML>
+<!-- Anthony Trollope, North America, Penguin ed., 51 -->
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<orgName>The Justified Ancients of Mu Mu</orgName>
+</egXML>
+
+or as a composite of other kinds of name:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<orgName type="partnerNames">
+         <surname>Ernst</surname>&amp;<surname>Young</surname>
+</orgName></egXML>
+ </p>
+<p>The names making up an organization names are not always
+personal. They may also include place names: 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">A spokesman from 
+<orgName type="regional">
+  <orgName>IBM</orgName>
+  <country>UK</country>
+</orgName> said ... 
+</egXML>
+or role names:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">THE TICKET which you will receive herewith has been formed by
+the <orgName>Democratic Whig <name type="role">party</name>
+</orgName> after the most careful deliberation,
+with a reference to all the great objects of NATIONAL, STATE,
+COUNTY and CITY concern, and with a single eye to the <hi>Welfare and Best Interests of the Community</hi>.</egXML>
+</p>
+<p>As indicated above, organizational names may also be specified hierarchically
+particularly where the named organization is itself a department
+or a branch of a larger organizational entity.  <q>The
+Department of Modern History, Glasgow University</q> is an
+example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><orgName>  
+   <name type="org">Department of Modern History</name>
+   <orgName><name type="city">Glasgow</name>
+            <name type="role">University</name>
+   </orgName>
+</orgName></egXML>
+</p>
+<p>The formal declaration of the elements discussed in this section include:
+<specGrp xml:id="DNDORG" n="Organization names">
+&orgName;
+<!--&orgTitle;
+&orgType;
+&orgDivn;--></specGrp>
+</p>
+</div>	
+<div xml:id="ND-org"><head>Organizational data</head>
+
+
+
+</div>
+
+</body>
 </text>
 </TEI>
 
