@@ -1352,7 +1352,7 @@ the encoding works. It may contain either  a series of prose paragraphs or the f
 <specList>
 <specDesc key="refsDecl" atts="doctype"/>
 <specDesc key="cRefPattern"/>
-<specDesc key="state"/>
+<specDesc key="refState"/>
 </specList>
 Note that not all possible referencing schemes are equally easily
 supported by current software systems.  A choice must be made between
@@ -1422,12 +1422,12 @@ discussed in the previous section, but in the cases where it applies,
 it provides a somewhat simpler notation.</p>
 <p>A reference based on milestone tags concatenates the values specified
 by one or more such tags.  Since each tag marks the point at which a
-value changes, it may be regarded as specifying the <term>state</term>
+value changes, it may be regarded as specifying the <term>refState</term>
 of a variable.  A reference declaration using this method therefore
 specifies the individual components of the canonical reference as a
-sequence of <gi>state</gi> elements:
+sequence of <gi>refState</gi> elements:
 <specList>
-<specDesc key="state" atts="ed unit delim length"/>
+<specDesc key="refState" atts="ed unit delim length"/>
 </specList></p>
 <p>For example, the reference <q>Matthew 12:34</q> might be thought of
 as representing the state of three variables: the <ident type="var">book</ident> variable
@@ -1451,7 +1451,7 @@ section.  The other attributes are used to determine which instances of
 <gi>milestone</gi> tags in the text are to be checked for state-changes.
 A state-change is signalled whenever a new <gi>milestone</gi> tag is
 found with <att>unit</att> and, optionally, <att>ed</att> attributes
-identical to those of the <gi>state</gi> element in question.  The value
+identical to those of the <gi>refState</gi> element in question.  The value
 for the new state may be given explicitly by the <att>n</att> attribute
 on the <gi>milestone</gi> element, or it may be implied, if the
 <att>n</att> attribute is not specified.</p>
@@ -1460,8 +1460,8 @@ the <mentioned>xx</mentioned> represents the page number in the first edition, a
 <mentioned>yyy</mentioned> the line number within this page, a reference system
 declaration such as the following would be appropriate:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><refsDecl>
-   <state ed="first" unit="page" length="2" delim="."/>
-   <state ed="first" unit="line" length="3"/>
+   <refState ed="first" unit="page" length="2" delim="."/>
+   <refState ed="first" unit="line" length="3"/>
 </refsDecl></egXML>
 This implies that milestone tags of the form
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><milestone n="II" ed="first" unit="page"/>
@@ -1483,7 +1483,7 @@ follows:
  <specGrp xml:id="D2254" n="The reference scheme declaration">
   &refsDecl;
   &cRefPattern;
-  &state;
+  &refState;
 </specGrp></p><p>A reference system declaration which applies to more than one text or
 division of a text need not be repeated in the header of each such text.
 Instead, the <att>decls</att> attribute of each text (or subdivision of
