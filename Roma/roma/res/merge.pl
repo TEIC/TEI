@@ -17,11 +17,12 @@ if ($FILE eq '') {
     exit(1);
 }
 my $f = $LANG . "/" . $FILE;
-open N, $f or die "cannot open " . $f;
+open N, "<:utf8", $f or die "cannot open " . $f;
 while (<N>) {
     if (/\[/) {
 	($thislang) = /.*\[(.*)\]/;
     }
+    elsif (/^$/) {}
     else
     {
 	$translations{$thislang} .= $_;
@@ -29,17 +30,20 @@ while (<N>) {
 }
 close N;
 
-open N,$FILE or print "cannot open " . $FILE;
+open N,"<:utf8", $FILE or print "cannot open " . $FILE;
 while (<N>) {
     if (/\[/) {
 	($thislang) = /.*\[(.*)\]/;
     }
+    elsif (/^$/) {}
     else
     {
 	$Old{$thislang} .= $_;
     }
 }
-foreach  (keys %Old) {
+
+binmode( STDOUT, ':utf8' );
+foreach  (sort keys %Old) {
     if ($_ ne $LANG) {
 	print "[" . $_ . "]\n";
 	print $Old{$_};
