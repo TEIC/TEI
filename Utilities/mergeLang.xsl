@@ -47,6 +47,7 @@
 
   <xsl:param name="newFile"/>
   <xsl:param name="newLang"/>
+  <xsl:param name="overwrite">false</xsl:param>
 
   <xsl:output encoding="utf-8" indent="yes"/>
 
@@ -55,6 +56,11 @@
   <xsl:variable name="New" select="document($newFile)"/>
 
   <xsl:template match="/">
+<xsl:message>
+Language: <xsl:value-of select="$newLang"/>
+File: <xsl:value-of select="$newFile"/>
+Overwrite: <xsl:value-of select="$overwrite"/>
+</xsl:message>
     <xsl:apply-templates/>
   </xsl:template>
 
@@ -70,7 +76,17 @@
 </xsl:template>
 
 <xsl:template match="tei:gloss">
-  <xsl:copy-of select="."/>
+  <xsl:choose>
+    <xsl:when test="not(@xml:lang)">
+      <xsl:copy-of select="."/>
+    </xsl:when>
+    <xsl:when test="$overwrite='false'">
+      <xsl:copy-of select="."/>
+    </xsl:when>
+    <xsl:when test="not(@xml:lang=$newLang)">
+      <xsl:copy-of select="."/>
+    </xsl:when>
+  </xsl:choose>
   <xsl:if test="not(preceding-sibling::tei:gloss)">
 
     <xsl:variable name="this">
@@ -132,7 +148,17 @@
 </xsl:template>
 
 <xsl:template match="tei:desc">
-  <xsl:copy-of select="."/>
+  <xsl:choose>
+    <xsl:when test="not(@xml:lang)">
+      <xsl:copy-of select="."/>
+    </xsl:when>
+    <xsl:when test="$overwrite='false'">
+      <xsl:copy-of select="."/>
+    </xsl:when>
+    <xsl:when test="not(@xml:lang=$newLang)">
+      <xsl:copy-of select="."/>
+    </xsl:when>
+  </xsl:choose>
   <xsl:if test="not(preceding-sibling::tei:desc)">
     <xsl:variable name="this">
       <xsl:value-of select="normalize-space(.)"/>
@@ -181,7 +207,17 @@
 </xsl:template>
 
 <xsl:template match="tei:remarks">
-  <xsl:copy-of select="."/>
+  <xsl:choose>
+    <xsl:when test="not(@xml:lang)">
+      <xsl:copy-of select="."/>
+    </xsl:when>
+    <xsl:when test="$overwrite='false'">
+      <xsl:copy-of select="."/>
+    </xsl:when>
+    <xsl:when test="not(@xml:lang=$newLang)">
+      <xsl:copy-of select="."/>
+    </xsl:when>
+  </xsl:choose>
   <xsl:if test="not(preceding-sibling::tei:remarks)">
     <xsl:variable name="this">
       <xsl:value-of select="normalize-space(.)"/>
@@ -206,7 +242,17 @@
 </xsl:template>
 
 <xsl:template match="tei:exemplum">
-  <xsl:copy-of select="."/>
+  <xsl:choose>
+    <xsl:when test="not(@xml:lang)">
+      <xsl:copy-of select="."/>
+    </xsl:when>
+    <xsl:when test="$overwrite='false'">
+      <xsl:copy-of select="."/>
+    </xsl:when>
+    <xsl:when test="not(@xml:lang=$newLang)">
+      <xsl:copy-of select="."/>
+    </xsl:when>
+  </xsl:choose>
   <xsl:if test="not(preceding-sibling::tei:exemplum)">
   <xsl:variable name="this">
     <xsl:value-of select="normalize-space(.)"/>
