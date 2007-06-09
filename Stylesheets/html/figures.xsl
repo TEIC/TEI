@@ -127,7 +127,7 @@
   </xd:doc>
   <xsl:template match="tei:figure">
     <xsl:choose>
-      <xsl:when test="@rend='inline'">
+      <xsl:when test="@rend='inline' or @place='inline'">
 	<xsl:call-template name="showGraphic"/>
       </xsl:when>
       <xsl:otherwise>

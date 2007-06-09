@@ -180,7 +180,7 @@
   </xd:doc>
   <xsl:template name="makeFigureStart">
     <xsl:choose>
-      <xsl:when test="@rend='display' or tei:head or tei:p">
+      <xsl:when test="@rend='display' or not(@place='inline') or tei:head or tei:p">
         <xsl:text>\begin{figure}[htbp]
       </xsl:text>
       </xsl:when>
