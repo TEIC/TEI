@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -5,29 +6,39 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" xml:id="F" usage="rwa" ident="f">
-<equiv/>
-<gloss>Feature</gloss><gloss version="2006-10-28" xml:lang="ja">素性</gloss>
-<desc>represents a <term>feature value specification</term>, that
-  is, the association of a name with a value of any of several different types.</desc><desc version="2006-10-28" xml:lang="ja"> 定義される素性を示す．</desc>
+  <equiv/>
+  <gloss>Feature</gloss>
+  <gloss version="2007-05-04" xml:lang="es">Rasgo</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">素性</gloss>
+  <desc>represents a <term>feature value specification</term>, that
+  is, the association of a name with a value of any of several different types.</desc>
+  <desc version="2007-05-04" xml:lang="es">representa una <term>feature value specification (especificación de valor de rasgo)</term>, es decir, la asociación de un nombre con un valor de cualquier de los diferentes tipos.</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 定義される素性を示す．</desc>
   <content>
-      <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-          <ref name="model.featureVal"/>
-      </zeroOrMore>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="model.featureVal"/>
+    </zeroOrMore>
   </content>
 <!-- need to express constraint that if there is no content then the
 fVal attribute must be non-null -->
   <attList>
     <attDef ident="name" usage="req">
-	<equiv/>
-	<desc>provides a name for the feature.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"/></datatype>
+      <equiv/>
+      <desc>provides a name for the feature.</desc>
+      <desc version="2007-05-04" xml:lang="es">proporciona un nombre para un rasgo.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"/>
+      </datatype>
       <valDesc>Any name.</valDesc>
     </attDef>
     <attDef ident="fVal" usage="opt">
-	<equiv/>
-	<desc>references any element which can be used to represent the
+      <equiv/>
+      <desc>references any element which can be used to represent the
   value of a feature.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <desc version="2007-05-04" xml:lang="es">indica cualquier elemento que puede ser usado para representar el valor de un rasgo.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
       <valDesc>the  identifier of an element representing
 a  feature value</valDesc>
       <remarks>
@@ -36,7 +47,8 @@ a  feature value</valDesc>
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <f name="gender">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <f name="gender">
         <symbol value="feminine"/>
       </f>
     </egXML>

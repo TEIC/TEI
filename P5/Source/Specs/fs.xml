@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -5,31 +6,44 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" xml:id="FSTAG" usage="rwa" ident="fs">
-<equiv/>
-<gloss>Feature structure</gloss><gloss version="2006-10-28" xml:lang="ja">素性構造</gloss>
-<desc>represents a <term>feature structure</term>, that is, a
+  <equiv/>
+  <gloss>Feature structure</gloss>
+  <gloss version="2007-05-04" xml:lang="es">Estructura de rasgo</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">素性構造</gloss>
+  <desc>represents a <term>feature structure</term>, that is, a
   collection of feature-value pairs organized as a
-structural unit.</desc><desc version="2006-10-28" xml:lang="ja"> 素性構造を示す．</desc><desc version="2006-10-15" xml:lang="es">representa una estructura de rasgos, es decir, una colección de pares de rasgo-valor organizados como una unidad estructural.</desc>
+structural unit.</desc>
+  <desc version="2007-05-04" xml:lang="es">representa una <term>feature structure (estructura de rasgos)</term>, es decir, un conjunto de pares de valores de rasgos organizados como una unidad estructural.</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 素性構造を示す．</desc>
   <classes>
     <memberOf key="model.complexVal"/>
-    <memberOf key="model.global.meta"/> 
-</classes>
+    <memberOf key="model.global.meta"/>
+  </classes>
   <content>
     <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-        <rng:ref name="f"/>
+      <rng:ref name="f"/>
     </rng:zeroOrMore>
   </content>
   <attList>
     <attDef ident="type" usage="rwa">
-	<equiv/>
-	<desc>specifies the type of the feature structure.</desc><desc version="2006-10-28" xml:lang="ja">当該素性構造の種類を示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <equiv/>
+      <desc>specifies the type of the feature structure.</desc>
+      <desc version="2007-05-04" xml:lang="es">especifica el tipo de estructura de rasgo.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該素性構造の種類を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
       <valDesc>Character string, e.g. <term>word structure</term>.</valDesc>
     </attDef>
     <attDef ident="feats" usage="opt">
-	<equiv/>
-	<desc>references the feature-value specifications making up this feature structure.</desc><desc version="2006-10-28" xml:lang="ja">当該素性構造を構成する素性値定義を示す．</desc>
-      <datatype maxOccurs="unbounded"><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <equiv/>
+      <desc>references the feature-value specifications making up this feature structure.</desc>
+      <desc version="2007-05-04" xml:lang="es">indica las especificaciones de valor de rasgo que constituyen esta estructura de
+rasgo.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該素性構造を構成する素性値定義を示す．</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
       <valDesc>one or more identifiers of <gi>f</gi> elements.</valDesc>
       <remarks>
         <p>May be used either instead of having features as content, or in
@@ -39,7 +53,8 @@ structural unit.</desc><desc version="2006-10-28" xml:lang="ja"> 素性構造を
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <fs type="agreement_structure">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <fs type="agreement_structure">
         <f name="person">
           <symbol value="third"/>
         </f>

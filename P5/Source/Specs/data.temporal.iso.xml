@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright 2005 TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -11,9 +12,10 @@ $Author: rahtz $
   conform to the international standard <title>Data elements and
   interchange formats – Information interchange – Representation of
   dates and times</title>.</desc>
+  <desc version="2007-05-04" xml:lang="es">define la gama de valores de atributos que expresan una expresión temporal como una fecha, una hora, o una combinación de estas, de acuerdo a un estándard internacional <title>Elementos de datos y formatos de intercambio - Intercambio de información – Representación de fechas y horas</title>. </desc>
   <content>
     <rng:choice>
-      <!-- W3C -->
+<!-- W3C -->
       <rng:data type="date"/>
       <rng:data type="gYear"/>
       <rng:data type="gMonth"/>
@@ -22,23 +24,23 @@ $Author: rahtz $
       <rng:data type="gMonthDay"/>
       <rng:data type="time"/>
       <rng:data type="dateTime"/>
-      <!-- time w/ reduced precision
+<!-- time w/ reduced precision
       <rng:data type="token">
 	<rng:param name="pattern">(-?[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T)?([01][0-9]|2[0-3])(:[0-5][0-9])?(Z|[+\-]((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?</rng:param>
       </rng:data> -->
-      <!-- week date 
+<!-- week date 
       <rng:data type="token">
 	<rng:param name="pattern">[0-9]{4}-W[0-9][0-9]?(-[1-7])?</rng:param>
       </rng:data> -->
-      <!-- any ISO 8601 format (and a lot more) -->
+<!-- any ISO 8601 format (and a lot more) -->
       <rng:data type="token">
-	<?tei winita
+<?tei winita
 	My expectation is to replace this catch-all pattern with a series
 	of patterns to match the various extended formats of 8601. The two
 	commented-out patterns above are a helpful start. Either that,
 	or if someone comes up with a real RELAX NG datatype, use it.
 	:-) -- sb ?>
-	<rng:param name="pattern">[0-9.,DHMPRSTWYZ/:+\-]+</rng:param>
+        <rng:param name="pattern">[0-9.,DHMPRSTWYZ/:+\-]+</rng:param>
       </rng:data>
     </rng:choice>
   </content>
