@@ -4,7 +4,9 @@
 Roma Stylesheet
 
 #######################################
-author: Bernevig Ioan <i.bernevig@gmail.com>
+author: Arno Mittelbach <arno-oss@mittelbach-online.de>
+version: 0.9
+date: 10.06.2004
 
 #######################################
 Description
@@ -25,6 +27,13 @@ Description
   
   <xsl:template match="/">
     <p><xsl:value-of select="name(.)"/></p>
+<!--
+ for debugging 
+    <pre><xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text>
+      <xsl:copy-of select="*" />
+<xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
+    </pre>
+-->
     <p class="roma">
       <a>
 	<xsl:attribute name="href">
