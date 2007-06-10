@@ -28,7 +28,7 @@
 
 <head>Places</head>
 
-<p>In section X of the Guidelines, we discuss various ways of naming
+<p>In <ptr target="#NDPLAC"/> we discuss various ways of naming
 places such as towns, countries etc. In much the same way as these
 guidelines distinguish between the encoding of names for people and
 the encoding of other data about people, so they also distinguish
@@ -68,7 +68,6 @@ available within <gi>place</gi> for these purposes:
 <specList>
 <specDesc key="placeName"/>
 <specDesc key="location"/> 
-<!--specDesc key="locale"/-->
 </specList>
 </p>
 
@@ -88,8 +87,7 @@ standard (ISO 19136) and is expected to be released as an
 International Standard in 2007.</note> and indicated the two names
 associated with it at different times:
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<place xml:id="LYON1">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><place xml:id="LYON1">
 <placeName notBefore="1400">Lyon</placeName>
 <placeName notAfter="56">Lugdunum</placeName>
 <location><gml:Polygon>
@@ -118,18 +116,19 @@ a larger political entity, independent of its geographic location:
 The elements <gi>bloc</gi> etc. are specialised forms of
 <gi>placeName</gi>, as discussed in <ptr target="NDPLGU"/>. </p>
 
-<p>The <att>type</att> attribute is available  to categorize more precisely
-both the kind of place concerned, and the kind of name
-used to locate it. For example, a single building may be regarded as a
-kind of place, and a location component such as
-<soCalled>district</soCalled> may be more precisely specified as an
-<soCalled>arrondissement</soCalled> as in this example:
+<p>The <att>type</att> attribute is available to categorize more
+precisely both the kind of place concerned, and the kind of name used
+to locate it. For example, a single building or a street may both be
+regarded as a kind of place, just as a part of a <gi>location</gi>
+called a <soCalled>district</soCalled> may also be more precisely
+specified as an <soCalled>arrondissement</soCalled> as in this
+example:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <place type="building">
 <placeName>Brasserie Georges</placeName>
 <location>
-  <country key="#FR"/>
+  <country key="FR"/>
   <settlement type="city">Lyon</settlement>
   <district type="arrondissement">Perrache</district>
   <placeName type="street">Rue de la Charité</placeName>
@@ -777,6 +776,7 @@ proposal described here.</p>
 	  <memberOf key="att.typed"/>
 	  <memberOf key="att.declarable"/>
 	  <memberOf key="model.biblLike"/>
+	  <memberOf key="model.placeLike"/>
 	</classes>
 	<content>
 	  <rng:oneOrMore>
