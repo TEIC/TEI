@@ -86,6 +86,7 @@ class romaDom extends domDocument
     public function getXPath( &$oXPath )
       {
         $oXPath = new domxpath( $this );
+	$oXPath->registerNamespace( 'rng', 'http://relaxng.org/ns/structure/1.0' );
 	$oXPath->registerNamespace( 'tei', 'http://www.tei-c.org/ns/1.0' );
       }
 
@@ -896,6 +897,7 @@ class romaDom extends domDocument
 	case 'it'    : $szLanguage='it'; break;
 	case 'zh-tw' : $szLanguage='zh-tw'; break;
 	case 'es' :    $szLanguage='es'; break;
+	case 'pt' :    $szLanguage='pt'; break;
 	case 'zh'    : $szLanguage='zh-tw'; break;
 	case 'ja'    : $szLanguage='ja'; break;
 	case 'ru'    : $szLanguage='ru'; break;
@@ -2419,6 +2421,19 @@ class romaDom extends domDocument
 	    $this->updateProgressBar( '100' );
 	return $szError;
       }
+
+	public function processSanityCheck() {
+		$checker = new SanityChecker($this);
+		$checker->pass1();
+		$checker->pass2();
+		/*$this->loadProgressBar();
+		$this->updateProgressBar( '30' );
+		$this->sanityCheckAddWarning("Foo");
+		sleep(1);$this->updateProgressBar( '50' );
+		$this->sanityCheckAddError("Bar");
+		sleep(1);$this->updateProgressBar( '70' );
+		$this->sanityCheckAddError("foo again");*/
+	}
 
   }
 
