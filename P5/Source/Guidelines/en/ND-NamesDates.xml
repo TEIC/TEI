@@ -2,6 +2,7 @@
 Copyright TEI Consortium. Licensed under the GNU General Public License. See the file COPYING for details.$Date$
 $Author$-->
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="ND" n="20"><head>Names and Dates</head>
+
 <p>This chapter describes a module which may be used for the encoding
 of proper names and other phrases descriptive of persons, places, or
 organizations, in a manner more detailed than that possible using the
@@ -106,7 +107,7 @@ as  explained in <ptr target="#SAXP"/>:
 direct link is required: for example because resolution of the reference is
 carried out by some local convention, or because the encoder judges
 that no such resolution is necessary. As an example of the first case,
-consider a project might maintain its own local database system
+a project might maintain its own local database system
 containing canonical information about persons and places, each entry
 in which is accessed by means of some system-specific identifier
 constructed in a project-specific way from the value supplied for the
@@ -120,6 +121,14 @@ it is probably  unnecessary for an encoder to expand further:
 I never fly from <name key="LHR" type="place">Heathrow Airport</name>
 to <name key="FR" type="place">France</name></egXML>
 </p>
+
+<p>Members of the <ident>att.naming</ident> class also inherit the following
+attributes from the <ident>att.editLike</ident> class:
+<specList><specDesc key="att.editLike" atts="resp cert"/></specList>
+This enables an encoder to record the agency responsible for a given
+assertion (for example, the name) and the confidence placed in that
+assertion by the encoder. Examples are given below.</p>
+<!-- or maybe they should be here -->
 </div>
 
 <div type="div2" xml:id="NDPER"><head>Personal Names</head>
@@ -567,46 +576,55 @@ follows:
 </div>
 
 <div type="div2" xml:id="NDORG"><head>Organizational names</head>
-<p>Like names of persons or places, organization names can be marked
-as referring strings or as proper names with the <gi>rs</gi> or
-<gi>name</gi> elements respectively.  For certain applications it may
-be desirable to mark the component parts of an organization. In some
-historical and social science studies, for example, the component
-parts of an organization names may help to characterize the
-organization in terms of its geographical location, ownership, likely
-number of employees, management structure etc.
+<p>In these Guidelines, we use the term <q>organization</q> for any
+named collection of people regarded as a single unit. Typical examples
+include businesses or institutions such as <soCalled>Harvard
+College</soCalled> or <soCalled>the BBC</soCalled>, but also racial or
+ethnic groupings or political factions where these are regarded as
+forming a single agency such as <soCalled>the Scythians</soCalled> or
+<soCalled>the Militant Tendency</soCalled>. Giving a loosely-defined
+group of individuals a name often (and notoriously) serves a
+particular political or social agenda and an analysis of the way such
+phrases are constructed and used may therefore be of considerable
+importance to the social historian, even where the objective existence
+of an <q>organization</q> in this sense is harder to demonstrate than
+that of (say) a named person. In the case of business or other
+formally constituted institutions, the component parts of an
+organizational name may help to characterize the organization in terms
+of its perceived geographical location, ownership, likely number of
+employees, management structure etc.</p>
 
-The element <gi>orgName</gi> is provided  for this purpose:
-<specList><specDesc key="orgName"/></specList>
+<p>Like names of persons or places, organizational names can be marked
+up as referring strings or as proper names with the <gi>rs</gi> or
+<gi>name</gi> elements respectively.  The element <gi>orgName</gi> is
+provided for use where it is desired to distinguish organizational
+names more explicitly.  <specList><specDesc key="orgName"/></specList>
 This element is a member of the same attribute classes as
 <gi>persName</gi>, and therefore carries the following attributes:
 <specList><specDesc key="att.naming" atts="key ref"/></specList>
 </p>
 <p>The <gi>orgName</gi> element may be used to mark up any form of
-organizational name, that is, a name which applies to an organization
-rather than an individual person or place.It is a
-special case of a <gi>name</gi> and thus of an <gi>rs</gi> element.
-Consequently, the following examples are synonymous, though the last is
-preferred:
+organizational name:  
 <egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
-interest was agitated in the <rs key="PAS1" type="org">Pennsyla. Abolition Society</rs>.</egXML>
+interest was agitated in the <orgName type="voluntary" key="PAS1">Pennsyla. Abolition Society</orgName></egXML>
+<!-- From the Diary of Thomas Pym Cope -->
+This encoding is equivalent to, but more specific than, ether of the
+following representations:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
 interest was agitated in the  <rs key="PAS1" type="org">
 <name>Pennsyla. Abolition Society</name></rs>.</egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
 interest was agitated in the 
 <name key="PAS1" type="org">Pennsyla. Abolition 
-Society</name>.</egXML>  
-<egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
-interest was agitated in the <orgName type="voluntary" key="PAS1">Pennsyla. Abolition Society</orgName></egXML>
-<!-- From the Diary of Thomas Pym Cope -->
-Like the <gi>rs</gi> and <gi>name</gi> elements, the <gi>orgName</gi>
+Society</name>.</egXML>
+As shown above, like the <gi>rs</gi> and <gi>name</gi> elements, the <gi>orgName</gi>
 element has a <att>key</att> attribute with which an external
 identifier such as a database key can be assigned to the organization
 name, and also a <att>ref</att> attribute which can be used to point
 directly to an <gi>org</gi> element containing information about the
 organization itself (see further <ptr target="#ND-org"/>).  Its
-<att>type</att> attribute should be used to characterize the name,
+<att>type</att> attribute should be used to characterize the name
+(rather than the organization),
 for example as an acronym:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Mr Frost will be able to earn an extra fee from 
 <orgName type="acronym">BSkyB</orgName>
@@ -1410,6 +1428,9 @@ type="module">namesdates</ident>  modules are included in a
 schema.</p>
 </div>
 <div type="div2" xml:id="NDGEOG"><head>Geographical Information</head>
+
+
+
 </div>
 <div type="div2" xml:id="ND-org"><head>Organizational Information</head>
 </div>

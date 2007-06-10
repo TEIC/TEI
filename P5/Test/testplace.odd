@@ -87,9 +87,9 @@ standard (ISO 19136) and is expected to be released as an
 International Standard in 2007.</note> and indicated the two names
 associated with it at different times:
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><place xml:id="LYON1">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><place xml:id="LYON1" type="city">
 <placeName notBefore="1400">Lyon</placeName>
-<placeName notAfter="56">Lugdunum</placeName>
+<placeName notAfter="0056">Lugdunum</placeName>
 <location><gml:Polygon>
   <gml:exterior>
    <gml:LinearRing>
@@ -97,7 +97,6 @@ associated with it at different times:
    </gml:LinearRing>
    </gml:exterior>
 </gml:Polygon></location>
-<locale>city</locale>
 </place>
 </egXML>
 </p>
@@ -108,9 +107,8 @@ a larger political entity, independent of its geographic location:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <place xml:id="LYON2">
 <placeName notBefore="1400">Lyon</placeName>
-<placeName notAfter="56">Lugdunum</placeName>
+<placeName notAfter="0056">Lugdunum</placeName>
 <location><bloc>EU</bloc><country>France</country></location>
-<locale>city</locale>
 </place>
 </egXML>
 The elements <gi>bloc</gi> etc. are specialised forms of
@@ -133,7 +131,6 @@ example:
   <district type="arrondissement">Perrache</district>
   <placeName type="street">Rue de la Charité</placeName>
 </location>
-<locale>Restaurant</locale>
 </place></egXML>
 
 </p>
@@ -168,11 +165,10 @@ locations of Roman and modern Lyon as follows:
 
 
 <p>We may know very little about a place: for example, we may know its
-location but have no name for it:
+location and the type of object found there, but have no name for it:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<place xml:id="HARRYS">
+<place xml:id="HARRYS" type="fireHydrant">
 <location>Junction of Park Street and Charlotte Street</location>
-<locale>fire hydrant</locale>
 </place>
 </egXML>
 </p>
@@ -200,14 +196,36 @@ a place, rather than a name:
  <settlement>Bethel</settlement>
  <region>New York</region>
 </location>
-<location scheme="latlong">41.687142 -74.870109</location>
 </place>
 </egXML>
 <!-- or why not have explicit <lat> and <long> elements? -->
 </p>
+<p>The simplest method of specifying a location is however by means of
+its geographic co-ordinates. There are a number of different schemes
+available for specifying the reference frame for the co-ordinate system, as also for
+the representation of latitude and longitude. The default recommended
+by these Guidelines is to supply a string containing two real numbers
+according to the 1984 World Geodetic System (WGS84) system; this is the system currently used by
+most GPS applications which TEI users are likely to
+encounter. <note place="foot">The most recent revision of this standard
+is known as the Earth Gravity Model 1996.</note>
 
-<p>A place may contain other places. The containment relation is
-explicitly modelled in XML: thus we can say that the towns of Vilnius
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<location scheme="latlong">41.687142 -74.870109</location>
+</egXML>
+</p>
+<p>If the string within a <gi>location</gi> element uses some other
+geodetic system, the <att>scheme</att> attribute should indicate this
+by taking the value <val>other</val>.</p>
+
+<p>A <gi>bibl</gi> element may be used within <gi>location</gi> to
+indicate the source of the location information.</p>
+
+<!-- example needed -->
+
+
+<p>A place may contain other places. This containment relation can be
+directly modelled in XML: thus we can say that the towns of Vilnius
 and Kaunas are both in a place called Lithuania as follows:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -224,11 +242,41 @@ and Kaunas are both in a place called Lithuania as follows:
 </egXML>
 </p>
 
-<p>This does not, however, imply that Vilnius and Kaunas are the
+<p>This does not, of course, imply that Vilnius and Kaunas are the
 only places constituting Lithuania; only that they are within it. A
 separate <gi>place</gi> element may indicate that it is a part of
 Lithuania by supplying a <gi>relation</gi> element, as discussed
 below (<ptr target="#place-rel"/>).</p>
+
+<p>As a further example, the islands of
+Mauritius, Réunion, and Rodrigues are collectively known as the Mascarene
+Islands. Grouped together with Mauritius there are also several smaller
+offshore islands, with rather picturesque French names. One
+way of representing this is as follows:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><place type="islandGroup">
+  <placeName>Mascarene Islands</placeName>
+  <placeName>Mascarenhas Archipelago</placeName>
+  <place type="island">
+    <placeName>Mauritius</placeName>
+    <listPlace type="offshoreIslands">
+     <place>
+      <placeName>La roche qui pleure</placeName>
+     </place>
+     <place>
+      <placeName>Ile aux cerfs</placeName>
+    </place>
+   </listPlace>
+  </place>
+  <place type="island">
+    <placeName>Rodrigues</placeName>
+  </place>
+  <place type="island">
+    <placeName>Réunion</placeName>
+  </place>
+</place>
+</egXML>
+</p>
 
 <p>Here is a more complex example, showing the variety of names
 associated at different times and in different languages with a set
@@ -259,129 +307,155 @@ Carmarthenshire, Wales.
 </p>
 <p>As noted previously, <gi>country</gi>, <gi>region</gi>,
 <gi>settlement</gi> are all specializations of the generic
-<gi>placename</gi> element, and may not therefore be used as
-specializations of the generic <gi>place</gi> element. If it is
+<gi>placename</gi> element; they are not 
+specializations of the <gi>place</gi> element. If it is
 desired to distinguish amongst kinds of <emph>place</emph> this can
 only be done by means of the <att>type</att> attribute as in the above
-example. The use of values for the type attribute which correspond to
+example. <!-- The use of values for the type attribute which correspond to
 the names of a naming element ("country", "region", "settlement") is
-recommended when appropriate but not required. 
-</p>
+recommended when appropriate but not required. (removed this sentence
+as it is pretty incomprehensible) --></p>
+
 
 <!-- introduce use of listPlace -->
 
 
-<p>These elements are specializations of the generic
-<gi>state</gi> element, which performs a role for <gi>place</gi>
-elements analogous to that it performs for <gi>person</gi> elements.
-Also like people, places may be said
-to have traits (characteristics such as climate, geographic type
-etc.); we may also wish to record specific events about places, such
-as their foundation or destruction. The following generic elements are
-available for these purposes:
+<div><head>States, traits, and events</head>
+<p>There are many different kinds of information which it might be
+considered useful to record for a place in addition to its name and
+location, and the categories selected are likely to be very
+project-specific. As with persons therefore these Guidelines make no
+claim to comprehensiveness in this context. Instead, this module
+defines generic <gi>state</gi>, <gi>trait</gi>, and <gi>event</gi>
+elements, each of which may be customized for particular needs by
+means of their <att>type</att> attribute. These are complemented by
+small number of predefined elements of general utility:
 <specList>
-<specDesc key="state"/>
-<specDesc key="trait"/>
-<specDesc key="event"/>
+<specDesc key="population"/>
+<specDesc key="climate"/>
+<specDesc key="terrain"/>
 </specList>
 </p>
-
-
-<p>There is great variation in the kind of information which it might
-be desired to record about places; we therefore do not here attempt to
+<p>The first of these is a specialization of the generic
+<gi>state</gi> element; while the second two are specializations of
+the generic <gi>trait</gi> element. The generic <gi>event</gi> element
+may be used for almost any kind of event in the life of a place; no
+specialized version of this element is proposed, nor do we attempt to
 enumerate the possible values which might be appropriate for the
-<att>type</att> attribute on any of these generic elements. Places
-identified in terms of their human habitation such as countries or
-cities might have <gi>state</gi>s such as "population",
-"administrative status" etc.; they may also have <gi>event</gi>s
-such as "foundation date" or "destruction" etc. Almost any kind of
-place is likely to have <gi>trait</gi>s such as "climate",
-"terrain" etc. </p>
+<att>type</att> attribute on any of these generic elements. </p>
 
-<p>Examples include:
+<p>Here is an example, showing how the specific and generic elements
+may be combined:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><place xml:id="IS">
     <placeName xml:lang="en">Iceland</placeName>
     <placeName xml:lang="is">Ísland</placeName>
     <location type="latlong">65 00 N, 18 00 W</location>
-    <trait type="area"><p>103,000 sq km</p></trait>
-    <state type="gov" notBefore="1944"><p>Constitutional
+    <terrain><label>area</label><p>103,000 sq km</p></terrain>
+    <state type="governance" notBefore="1944"><p>Constitutional
 republic</p></state>
-    <state type="gov" notAfter="1944"><p>Part of the kingdom of
+    <state type="governance" notAfter="1944"><p>Part of the kingdom of
 <placeName key="#DK">Denmark</placeName></p></state>
-<placeEvent type="independence" from="1944-06-17"><p> Iceland became independent
-on 17 June 1944.</p></placeEvent>
+<event type="governance" from="1944-06-17"><label>Independence</label><p> Iceland became independent
+on 17 June 1944.</p></event>
 </place></egXML>
-
-
 </p>
-<div xml:id ="place-rel">
-<p>The <gi>relation</gi> element may be used to express relationships
+
+
+<p>Like <gi>place</gi> elements, <gi>state</gi> and <gi>trait</gi>
+elements, and others of the same class, can be nested hierarchically
+within each other. When this is done, values for the <att>type</att>
+attribute are to be understood as cumulatively inherited, as elsewhere
+in the TEI scheme (for example on <gi>category</gi> or
+<gi>linkGrp</gi>). In the following example, the outermost
+<gi>population</gi> element concerns the squirrel population between
+the dates given. This is then broken down into red and gray squirrel
+populations, and within that into male and female:
+
+<eg><![CDATA[<population type="squirrel" notBefore="1901" notAfter="1902-01-11" resp="#strabo">
+  <population type="red" when="1901-01-10">
+      <population type="female">12</population>
+      <population type="male">15</population>
+   </population>
+   <population type="gray" when="1902-01-10" cert="high" >
+      <population type="female">23</population>
+      <population type="male" cert="low" resp="#biber">45</population>
+   </population>
+</population>
+]]></eg> 
+The dating  and responsibility attributes here behave
+slightly differently from the <att>type</att> attribute:
+responsibility is not an additive property, and therefore an element
+either states it explicitly, or inherits it from its nearest
+ancestor. Dating is slightly different again, in that a child element
+may specify a date more precisely than its parent, as in the example
+above</p>
+
+<p>Events may also be subdivided into other events. For example, a two
+part meeting might be represented as follows:
+<eg><![CDATA[
+<event type="meeting" date="2007-05-29">
+  <event type="preamble" notAfter="T13:00">first part</event>  <event
+  type="conclusions" notBefore="T13:00">second part</event>
+</event>
+]]></eg>
+</p>
+
+</div>
+
+<div xml:id ="place-rel"><head>Relations between places</head>
+<p>The <gi>relation</gi> element may also be used to express relationships
 of various kinds between places, or between places and persons, in
 much the same way as it is used to express relationships between
-persons alone. For example, the islands of
-Mauritius, Réunion, and Rodrigues together form the Mascareignes Islands. One
-way of representing this is as follows:
-
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-
-<place type="islandGroup">
-  <placeName>Mascareignes Islands</placeName>
-  <place type="island">
-    <placeName>Mauritius</placeName>
-  </place>
-  <place type="island">
-    <placeName>Rodrigues</placeName>
-  </place>
-  <place type="island">
-    <placeName>Réunion</placeName>
-  </place>
-</place>
-</egXML>
-
-but the same relationship could also be represented as follows:
+persons alone.  Returning to the Mascarene Islands example cited above,
+we might define the island group and its constituents
+separately, but indicate the relationship by means of a
+<gi>relation</gi> element: 
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><listPlace>
-  <place type="country" xml:id="FRA">
-    <placeName>France</placeName>
-  </place>
+
+<relation name="contains" active="#MASC" passive="#ROD #MRU #REN"/>
 
 <place xml:id="MASC">
-  <placeName>Mascareigne islands</placeName>
-  <listPlace type="island" >
-  <place xml:id="MRU">
+  <placeName>Mascarene islands</placeName>
+  <placeName>Mascarenhas Archipelago</placeName>
+</place>
+
+<place xml:id="MRU">
     <placeName>Mauritius</placeName>
-  </place>
-  <place  xml:id="ROD">
+<!-- ... -->
+ </place>
+
+<place  xml:id="ROD">
     <placeName>Rodrigues</placeName>
   </place>
+
   <place  xml:id="REN">
     <placeName>Réunion</placeName>
   </place>
-  </listPlace>
-  <listPlace type="attol">
-    <place>
-      <placeName>La roche qui pleure</placeName>
-    </place>
-    <place>
-      <placeName>Ile aux cerfs</placeName>
-    </place>
-  </listPlace>
-</place>  
-  </listPlace>
-  <relation type="contains" active="#MASC" passive="#ROD #MRU #REN"/>
 
-  <relation type="partOf" active="#REN" passive="#FRA #MASC"/>
-
+  </listPlace>
+</egXML>
+</p><p>This <soCalled>stand off</soCalled> style of representation has the
+advantage that we can now also represent the fact that a place may be
+<q>part of</q> more than one other place; for example, Réunion is part
+of France, as well as part of the Mascarenes. If we add a declaration
+for France to the list above:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><place type="country" xml:id="FRA">
+    <placeName>France</placeName>
+  </place>
+</egXML> we can now nodel this dual allegiance by means of a
+<gi>relation</gi> element:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <relation name="partOf" active="#REN" passive="#FRA #MASC"/>
 </egXML>
 </p>
 
 
-
 </div>
 
 
-</div>
+<div>
 
 <!--
 
@@ -395,7 +469,6 @@ TT: Lithuania
 place examples from each by end of next week.
 -->
 
-<div>
 <head>Here are some more extensive examples</head>
 <p>The Protestant Cemetery in Rome:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -621,8 +694,8 @@ proposal described here.</p>
 	  <rng:zeroOrMore>
 	    <rng:choice>
 	      <rng:ref name="model.nameLike"/>
-	    <rng:ref name="model.stateLike"/>
-	    <rng:ref name="model.traitLike"/>
+	    <rng:ref name="model.placeStateLike"/>
+	    <rng:ref name="model.placeTraitLike"/>
 	    <rng:ref name="model.placeEventLike"/>
 	    <rng:ref name="model.placeLike"/>
 	    <rng:ref name="model.noteLike"/>
@@ -632,19 +705,12 @@ proposal described here.</p>
 	
       </elementSpec>
 
-<elementSpec ident="locale" mode="change">
-<classes>
-<memberOf key="model.traitLike"/>
-</classes>
-</elementSpec>
-
-
 
       <elementSpec  ident="location" mode="add">
 	<desc>contains the location of a place</desc>
 	<classes>
 	  <memberOf key="att.typed"/>
-	  <memberOf key="model.stateLike"/>
+	  <memberOf key="model.placeTraitLike"/>
 	  <memberOf key="att.datable"/>
 	  <memberOf key="att.editLike"/>
 	</classes>
@@ -660,10 +726,10 @@ proposal described here.</p>
 	    </rng:zeroOrMore>
 	</content>
 	<attList>
-	  <attDef ident="scheme">
+	  <attDef ident="scheme" >
 	    <desc>defines how the content of the element should be
 	    interpreted in the case where it is given as text only</desc> 
-	    <valList type="closed" repeatable="false">
+	    <valList type="closed" >
 	      <valItem ident="latlong"><desc>
 		a pair of numbers to be interpreted as latitude followed by
 		longitude according to a specified datum, by default WGS84</desc></valItem>
@@ -674,14 +740,17 @@ proposal described here.</p>
 	</attList>
       </elementSpec>
 
-      <elementSpec  ident="trait" mode="add">
-	<desc>a trait of a place</desc>
+
+
+
+ <elementSpec  ident="terrain" mode="add">
+	<desc>contains information about the physical terrain of a place</desc>
 	<classes>
 	  <memberOf key="att.datable"/>
 	  <memberOf key="att.editLike"/>
 	  <memberOf key="att.naming"/>
 	  <memberOf key="att.typed"/>
-	  <memberOf key="model.traitLike"/>
+	  <memberOf key="model.placeTraitLike"/>
 	</classes>
 	<content>
 	  <rng:group>
@@ -702,17 +771,16 @@ proposal described here.</p>
 	    </rng:zeroOrMore>
 	  </rng:group>
 	</content>
-
       </elementSpec>
 
-      <elementSpec  ident="state" mode="add">
-	<desc>a State of a place</desc>
+ <elementSpec  ident="climate" mode="add">
+	<desc>contains information about the usual climate of a place</desc>
 	<classes>
 	  <memberOf key="att.datable"/>
 	  <memberOf key="att.editLike"/>
 	  <memberOf key="att.naming"/>
 	  <memberOf key="att.typed"/>
-	  <memberOf key="model.stateLike"/>
+	  <memberOf key="model.placeTraitLike"/>
 	</classes>
 	<content>
 	  <rng:group>
@@ -733,9 +801,38 @@ proposal described here.</p>
 	    </rng:zeroOrMore>
 	  </rng:group>
 	</content>
-
       </elementSpec>
 
+      <elementSpec  ident="population" mode="add">
+	<desc>contains information about the population of a given place</desc>
+	<classes>
+	  <memberOf key="att.datable"/>
+	  <memberOf key="att.editLike"/>
+	  <memberOf key="att.naming"/>
+	  <memberOf key="att.typed"/>
+	  <memberOf key="model.placeStateLike"/>
+	</classes>
+	<content>
+	  <rng:group>
+	    <rng:optional>
+	      <rng:ref name="label"/>
+	    </rng:optional>
+	    <rng:optional>
+	      <rng:ref name="model.dateLike"/>
+	    </rng:optional>
+	    <rng:zeroOrMore>
+	      <rng:ref name="model.pLike"/>
+	    </rng:zeroOrMore>
+	    <rng:zeroOrMore>
+	      <rng:choice>
+		<rng:ref name="model.noteLike"/>
+		<rng:ref name="model.biblLike"/>
+	      </rng:choice>
+	    </rng:zeroOrMore>
+	  </rng:group>
+	</content>
+      </elementSpec>
+<!--
       <elementSpec  ident="placeEvent" mode="add">
 	<desc>a event of a place</desc>
 	<classes>
@@ -766,7 +863,7 @@ proposal described here.</p>
 	</content>
 
       </elementSpec>
-
+-->
       <elementSpec ident="listPlace" mode="add">
 	<equiv/>
 	<desc>contains a list of places, optionally followed by a list
@@ -849,6 +946,40 @@ proposal described here.</p>
 	</classes>
       </elementSpec>
 
+
+<elementSpec ident="trait" mode="change" module="namesdates">
+  <classes>
+    <memberOf key="att.datable"/>
+    <memberOf key="att.editLike"/>
+    <memberOf key="att.naming"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="model.persTraitLike"/>
+    <memberOf key="model.placeTraitLike"/>
+  </classes>
+</elementSpec>
+
+<elementSpec ident="state" mode="change" module="namesdates">
+  <classes>
+    <memberOf key="att.datable"/>
+    <memberOf key="att.editLike"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="att.naming"/>
+    <memberOf key="model.placeStateLike"/>
+  </classes>
+</elementSpec>
+
+<elementSpec ident="event" mode="change" module="namesdates">
+  <classes>
+    <memberOf key="att.datable"/>
+    <memberOf key="att.editLike"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="att.naming"/>
+    <memberOf key="model.persEventLike"/>
+    <memberOf key="model.placeEventLike"/>
+  </classes>
+</elementSpec>
+
+
       <classSpec ident="model.placeLike" mode="add" type="model">
 	<desc>Objects like <gi>place</gi>s</desc>
       </classSpec>
@@ -861,6 +992,9 @@ proposal described here.</p>
       <classSpec ident="model.placeEventLike" mode="add" type="model">
 	<desc>Objects like <gi>placeEvent</gi>s</desc>
       </classSpec>
+
+
+
 
     <macroSpec ident="anyGML" mode="add">
      <content>
@@ -883,112 +1017,14 @@ proposal described here.</p>
 </div>
 </div>
 
-<div type="div2" xml:id="NDORG"><head>Organizational names</head>
-<p>Like names of persons or places, organization names can be marked as
-referent strings or as proper names with the <gi>rs</gi> and
-<gi>name</gi> elements.  For certain applications it may be desirable
-to mark the component parts of an organization. In some historical and
-social science studies, for example, the component parts of an
-organization names may  help to  characterize
-the organization in terms of its geographical location, ownership,
-likely number of employees, management structure etc.  
 
-The elements
-discussed in this section are recommended for this purpose and include:
-<specList><specDesc key="orgName" atts="type key ref"/></specList>
-</p>
-<p>The <gi>orgName</gi> element may be used to mark up any form of
-organizational name, that is, a name which applies to an organization
-rather than an individual person or place.It is a
-special case of a <gi>name</gi> and thus of an <gi>rs</gi> element.
-Consequently, the following examples are synonymous, though the last is
-preferred:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
-interest was agitated in the <rs key="PAS1" type="org">Pennsyla. Abolition Society</rs>.</egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
-interest was agitated in the  <rs key="PAS1" type="org">
-<name>Pennsyla. Abolition Society</name></rs>.</egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
-interest was agitated in the 
-<name key="PAS1" type="org">Pennsyla. Abolition 
-Society</name>.</egXML>  
-<egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
-interest was agitated in the <orgName type="voluntary" key="PAS1">Pennsyla. Abolition Society</orgName></egXML>
-<!-- From the Diary of Thomas Pym Cope -->
-Like the <gi>rs</gi> and <gi>name</gi> elements, the <gi>orgName</gi>
-element has a <att>key</att> attribute with which an external
-identifier such as a database key can be assigned to the organization
-name, and also a <att>ref</att> attribute which can be used to point
-directly to an <gi>org</gi> element containing information about the
-organization itself (see further <ptr target="#ND-org"/>).  Its
-<att>type</att> attribute should be used to characterize the name,
-for example as an acronym:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Mr Frost will be able to earn an extra fee from 
-<orgName type="acronym">BSkyB</orgName>
-rather than the
-<orgName  type="acronym">BBC</orgName>
-</egXML>
-
-as a phrase:
-
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-The feeling in <country>Canada</country> is one of strong aversion to
-the <orgName type="phrase">United States Government</orgName>, and of
-predilection for self-government under the <orgName type="phrase">English Crown</orgName></egXML>
-<!-- Anthony Trollope, North America, Penguin ed., 51 -->
-
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<orgName>The Justified Ancients of Mu Mu</orgName>
-</egXML>
-
-or as a composite of other kinds of name:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<orgName type="partnerNames">
-         <surname>Ernst</surname>&amp;<surname>Young</surname>
-</orgName></egXML>
- </p>
-<p>The names making up an organization names are not always
-personal. They may also include place names: 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">A spokesman from 
-<orgName type="regional">
-  <orgName>IBM</orgName>
-  <country>UK</country>
-</orgName> said ... 
-</egXML>
-or role names:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">THE TICKET which you will receive herewith has been formed by
-the <orgName>Democratic Whig <name type="role">party</name>
-</orgName> after the most careful deliberation,
-with a reference to all the great objects of NATIONAL, STATE,
-COUNTY and CITY concern, and with a single eye to the <hi>Welfare and Best Interests of the Community</hi>.</egXML>
-</p>
-<p>As indicated above, organizational names may also be specified hierarchically
-particularly where the named organization is itself a department
-or a branch of a larger organizational entity.  <q>The
-Department of Modern History, Glasgow University</q> is an
-example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><orgName>  
-   <name type="org">Department of Modern History</name>
-   <orgName><name type="city">Glasgow</name>
-            <name type="role">University</name>
-   </orgName>
-</orgName></egXML>
-</p>
-<p>The formal declaration of the elements discussed in this section include:
-<specGrp xml:id="DNDORG" n="Organization names">
-&orgName;
-<!--&orgTitle;
-&orgType;
-&orgDivn;--></specGrp>
-</p>
-</div>	
 <div xml:id="ND-org"><head>Organizational data</head>
 
 
 
 </div>
 
-</body>
+</div></body>
 </text>
 </TEI>
 
