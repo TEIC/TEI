@@ -1519,6 +1519,7 @@ class roma
 
 	foreach( $_REQUEST as $key => $value )
 	  {
+
 	    if ( substr( $key, 0, 8 ) == 'element_' && $value == 'exclude' )
 	      {
 	        $this->m_oRomaDom->removeElementFromModule( substr( $key, 8 ), $_REQUEST[ 'module' ] );
@@ -1534,6 +1535,8 @@ class roma
 		   $errResult = true;
 		 }
 	     }
+	   elseif ( substr( $key, 0, 11 ) == 'elementName')
+	      { }
 	   else
 	     {
 	        $this->m_oRomaDom->includeElementInModule( substr( $key, 8 ), $_REQUEST[ 'module' ] );

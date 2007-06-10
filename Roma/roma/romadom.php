@@ -1112,7 +1112,8 @@ class romaDom extends domDocument
 	
 	if ( is_object( $oElementSpec ) )
 	  {
-	    $oElementSpec ->parentNode->removeChild($oElementSpec);
+	  $oElementSpec ->parentNode->removeChild($oElementSpec);
+//      error_log ( "ADD " . $szElement . "\n",3,'/tmp/romalog' );
 	  }
       }
 
