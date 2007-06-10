@@ -1,59 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--Copyright TEI Consortium. 
-Licensed under the GNU General Public License. 
-See the file COPYING for details
-$Date$
-$Author$
--->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="spoken" xml:id="EVENT" usage="rec" ident="event">
-  <equiv/>
-<!--gloss>Event</gloss-->
-  <gloss version="2006-10-28" xml:lang="ja">事態</gloss>
-  <gloss version="2007-05-13" xml:lang="it">Event</gloss>
-  <gloss version="2007-01-21" xml:lang="it">evento</gloss>
-  <desc>any phenomenon or occurrence, not necessarily vocalized or
-communicative, for example incidental noises or other events affecting
-communication.</desc>
-  <desc version="2007-05-04" xml:lang="es">cualquier fenómeno o evento no necesariamente vocal o comunicativo, como ruidos accidentales u otros fenómenos que inciden en la comunicación en acto.</desc>
-  <desc version="2007-01-21" xml:lang="it">qualsiasi fenomeno o evento non necessariamente vocale o comunicativo, come rumori accidentali o altri fenomeni che incidano sulla comunicazione in atto</desc>
-  <desc version="2006-10-28" xml:lang="ja"> 発話状況を示す．言語活動に限らない．例えば，周囲の雑音やコ
-ミュニケーションに影響する事態など．</desc>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" ident="event">
+  <desc>contains a description of a particular event of significance in
+the life of  a person.</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene la descripción de un evento significativo en la vida de una persona.</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene la descrizione di un evento significativo nella vita di una persona</desc>
+  <desc version="2006-10-28" xml:lang="ja">人物の人生における特定の事態についてします．</desc>
   <classes>
-    <memberOf key="model.divPart.spoken"/>
-    <memberOf key="att.timed"/>
-    <memberOf key="att.ascribed"/>
+    <memberOf key="att.datable"/>
+    <memberOf key="att.editLike"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="att.naming"/>
+    <memberOf key="model.persEventLike"/>
   </classes>
   <content>
-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.glossSeq"/>
+    <rng:group>
+      <rng:optional>
+        <rng:ref name="label"/>
+      </rng:optional>
+      <rng:optional>
+        <rng:ref name="model.dateLike"/>
+      </rng:optional>
+      <rng:optional>
+        <rng:ref name="placeName"/>
+      </rng:optional>
+      <rng:zeroOrMore>
+        <rng:ref name="model.pLike"/>
+      </rng:zeroOrMore>
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="model.noteLike"/>
+          <rng:ref name="model.biblLike"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+    </rng:group>
   </content>
-  <attList>
-    <attDef ident="iterated" usage="opt">
-      <equiv/>
-      <desc>indicates whether or not the phenomenon is repeated.</desc>
-      <desc version="2007-05-04" xml:lang="es">indica si el fenómeno es eventual o si se repite.</desc>
-      <desc version="2007-01-21" xml:lang="it">indica l'eventuale ripetizione del fenomeno</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.xTruthValue"/>
-      </datatype>
-      <defaultVal>false</defaultVal>
-      <remarks>
-        <p>The value <val>true</val> indicates the phenomenon is
-	repeated, whereas the value <val>false</val> indicates that it
-	is atomic.</p>
-      </remarks>
-    </attDef>
-  </attList>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <event>
-        <desc>ceiling collapses</desc>
-      </event>
+      <person>
+        <event type="mat">
+          <label>matriculation</label>
+          <date value="1972-10-12">12 Oct 1972</date>
+        </event>
+        <event type="grad">
+          <label>graduation</label>
+          <date>23 June 1975</date>
+        </event>
+      </person>
     </egXML>
   </exemplum>
-  <remarks/>
-  <listRef>
-    <ptr target="#TSBAFD"/>
-    <ptr target="#TSBA"/>
-    <ptr target="#TSBAVO"/>
-  </listRef>
 </elementSpec>

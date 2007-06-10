@@ -17,21 +17,24 @@ $Author$
   <desc version="2006-10-28" xml:lang="ja"> 組織の名前を示す．</desc>
   <classes>
     <memberOf key="model.nameLike.agent"/>
+    <memberOf key="att.datable"/>
+    <memberOf key="att.editLike"/>
+    <memberOf key="att.personal"/>
+    <memberOf key="att.typed"/>
   </classes>
   <content>
     <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:choice>
         <rng:text/>
         <rng:ref name="model.gLike"/>
-        <rng:ref name="orgTitle"/>
-        <rng:ref name="orgType"/>
-        <rng:ref name="orgDivn"/>
-        <rng:ref name="model.phrase"/>
+	<rng:ref name="model.persNamePart"/>
+	<rng:ref name="model.placeNamePart"/>
         <rng:ref name="model.global"/>
+        <rng:ref name="model.phrase"/>
       </rng:choice>
     </rng:zeroOrMore>
   </content>
-  <attList>
+<!--  <attList>
     <attDef ident="type" usage="mwa">
       <equiv/>
       <desc>more fully describes the organization indicated in the
@@ -93,12 +96,12 @@ $Author$
         heading.</p>
       </remarks>
     </attDef>
-  </attList>
+  </attList>-->
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
 interest was agitated in the 
-<orgName key="PAS1" type="voluntary" reg="Pennsylvania Abolition Society">
-Pennsyla. Abolition Society</orgName>....</egXML>
+<orgName key="PAS1" type="voluntary">
+  <placeName key="PEN">Pennsyla.</placeName> Abolition Society</orgName>....</egXML>
   </exemplum>
   <remarks/>
   <listRef>
