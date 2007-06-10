@@ -12,6 +12,9 @@ language=Sprachen
 schema=Schema
 documentation=Dokumentation
 searchtei=Suche in der TEI Database
+sanitycheck=Sanity Checker
+workingon=You are currently working on
+
 
 
 [en]
@@ -28,6 +31,8 @@ language=Language
 schema=Schema
 documentation=Documentation
 searchtei=Search TEI database
+sanitycheck=Sanity Checker
+workingon=You are currently working on
 
 
 [es]
@@ -44,6 +49,8 @@ language=Lengua
 schema=Esquema
 documentation=Documentación
 searchtei=Buscar en la base TEI 
+sanitycheck=Sanity Checker
+workingon=You are currently working on
 
 [fr]
 helpmessage=
@@ -59,6 +66,8 @@ language=Langage
 schema=Schéma
 documentation=Documentation
 searchtei=Rechercher base TEI
+sanitycheck=Sanity Checker
+workingon=You are currently working on
 
 
 [it]
@@ -75,6 +84,8 @@ language=Lingua
 schema=Schema
 documentation=Documentazione
 searchtei=Interroga database TEI 
+sanitycheck=Sanity Checker
+workingon=You are currently working on
 
 
 [ja]
@@ -91,6 +102,8 @@ language=言語
 schema=スキーマ
 documentation=ドキュメント
 searchtei=TEIデータベースの検索
+sanitycheck=Sanity Checker
+workingon=You are currently working on
 
 
 [ru]
@@ -107,6 +120,8 @@ language=Язык
 schema=Схема
 documentation=Документация
 searchtei=Поиск в базе данных TEI
+sanitycheck=Sanity Checker
+workingon=You are currently working on
 
 
 [sw]
@@ -123,6 +138,8 @@ language=Språk
 schema=Schema
 documentation=Dokumentation
 searchtei=Sök i TEI databasen
+sanitycheck=Sanity Checker
+workingon=You are currently working on
 
 
 [zh-tw]
@@ -139,6 +156,8 @@ language=語言
 schema=建立文件模型
 documentation=建立說明檔
 searchtei=檢索TEI
+sanitycheck=Sanity Checker
+workingon=You are currently working on
 
 
 [pt]
@@ -155,5 +174,7 @@ language=Língua
 schema=Esquema
 documentation=Documentaçao
 searchtei=Procurar na base de dados TEI 
+sanitycheck=Sanity Checker
+workingon=You are currently working on
 
 
