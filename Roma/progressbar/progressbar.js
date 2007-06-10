@@ -19,3 +19,65 @@ function setPgb(pgbID, pgbValue)
         lblObj.innerHTML = pgbValue + '%'; // change the label value
       }
   }
+
+function addError(el_name, prepend, in_bold, append) {
+	var div = document.getElementById("error_div");
+	var newdiv = document.createElement('div');
+	newdiv.setAttribute('style', 'width: 600px; margin: 1px; background: darkred; font-size: 12px');
+	
+	var error_bold = document.createElement('b');
+	error_bold.appendChild(document.createTextNode('Error'));
+
+	var dots = document.createTextNode(': ');
+
+	var element_name = document.createElement('a');
+	element_name.appendChild(document.createTextNode(el_name));
+	element_name.setAttribute('style', 'color: #aa8888; font-weight: bold');
+	element_name.setAttribute('href', 'http://localhost:8080/exist/Query/tag.xq?name='+el_name);
+
+	var bolded_text = document.createElement('b');
+	bolded_text.appendChild(document.createTextNode(in_bold));
+
+	newdiv.appendChild(error_bold);
+	newdiv.appendChild(dots);
+	newdiv.appendChild(element_name);
+	newdiv.appendChild(document.createTextNode(prepend));
+	newdiv.appendChild(bolded_text);
+	newdiv.appendChild(document.createTextNode(append));
+
+	div.appendChild(newdiv);
+}
+
+function addWarning(el_name, prepend, in_bold, append) {
+	var div = document.getElementById("error_div");
+	var newdiv = document.createElement('div');
+	newdiv.setAttribute('style', 'width: 600px; margin: 1px; background: darkgreen; font-size: 12px');
+	
+	var error_bold = document.createElement('b');
+	error_bold.appendChild(document.createTextNode('Warning'));
+
+	var dots = document.createTextNode(': ');
+
+	var element_name = document.createElement('a');
+	element_name.appendChild(document.createTextNode(el_name));
+	element_name.setAttribute('style', 'color: #aa8888; font-weight: bold');
+	element_name.setAttribute('href', 'http://localhost:8080/exist/Query/tag.xq?name='+el_name);
+
+	var bolded_text = document.createElement('b');
+	bolded_text.appendChild(document.createTextNode(in_bold));
+
+	newdiv.appendChild(error_bold);
+	newdiv.appendChild(dots);
+	newdiv.appendChild(element_name);
+	newdiv.appendChild(document.createTextNode(prepend));
+	newdiv.appendChild(bolded_text);
+	newdiv.appendChild(document.createTextNode(append));
+
+	div.appendChild(newdiv);
+}
+
+function schemaBroken(schema_broken_text) {
+	div = document.getElementById("schema_broken_div");
+	var sc = document.createTextNode(schema_broken_text);
+	div.appendChild(sc);
+}
