@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" ident="event">
-  <desc>contains a description of a particular event of significance in
-the life of  a person.</desc>
+  <desc>contains data relating to any kind of significant event in the
+   life of  a person, place, or organization.</desc>
   <desc version="2007-05-04" xml:lang="es">contiene la descripción de un evento significativo en la vida de una persona.</desc>
   <desc version="2007-01-21" xml:lang="it">contiene la descrizione di un evento significativo nella vita di una persona</desc>
   <desc version="2006-10-28" xml:lang="ja">人物の人生における特定の事態についてします．</desc>
@@ -11,6 +11,7 @@ the life of  a person.</desc>
     <memberOf key="att.typed"/>
     <memberOf key="att.naming"/>
     <memberOf key="model.persEventLike"/>
+<!--    <memberOf key="model.placeEventLike"/>-->
   </classes>
   <content>
 <rng:choice>
@@ -19,12 +20,9 @@ the life of  a person.</desc>
       <rng:optional>
         <rng:ref name="label"/>
       </rng:optional>
-      <rng:optional>
-        <rng:ref name="model.dateLike"/>
-      </rng:optional>
-      <rng:optional>
+<!--      <rng:optional>
         <rng:ref name="placeName"/>
-      </rng:optional>
+      </rng:optional>-->
       <rng:zeroOrMore>
         <rng:ref name="model.pLike"/>
       </rng:zeroOrMore>
@@ -36,16 +34,23 @@ the life of  a person.</desc>
       </rng:zeroOrMore>
     </rng:group>
 </rng:choice>  </content>
+<attList>
+  <attDef ident="where" usage="opt">
+    <desc>indicates the location of an event by pointing to a <gi>place</gi> element</desc> 
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>any valid URI</valDesc>
+ </attDef>
+</attList>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <person>
-        <event type="mat">
+        <event type="mat" when="1972-10-12">
           <label>matriculation</label>
-          <date value="1972-10-12">12 Oct 1972</date>
         </event>
-        <event type="grad">
+        <event type="grad" when="1975-06-23">
           <label>graduation</label>
-          <date>23 June 1975</date>
         </event>
       </person>
     </egXML>
