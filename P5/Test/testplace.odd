@@ -502,7 +502,7 @@ proposal described here.</p>
 	  <memberOf key="att.editLike"/>
 	</classes>
 	<content>
-	    <rng:zeroOrMore>
+	<rng:group>    <rng:zeroOrMore>
 	      <rng:choice>
 		<rng:text/>
 	      <rng:ref name="anyGML"/>
@@ -511,7 +511,13 @@ proposal described here.</p>
 	      <rng:ref name="model.measureLike"/>
 	      </rng:choice>
 	    </rng:zeroOrMore>
-	</content>
+	    <rng:zeroOrMore>
+	      <rng:choice>
+		<rng:ref name="model.noteLike"/>
+		<rng:ref name="model.biblLike"/>
+	      </rng:choice>
+	    </rng:zeroOrMore>
+	</rng:group>		</content>
 	<attList>
 	  <attDef ident="scheme" >
 	    <desc>defines how the content of the element should be
