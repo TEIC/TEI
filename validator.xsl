@@ -63,6 +63,8 @@
   </xsl:if>
 </xsl:template>
 -->
+
+<!-- moduleRef must point to something -->
 <xsl:template match="tei:memberOf|tei:moduleRef">
      <xsl:if test="not(key('IDENTS',@key))">
        <xsl:call-template name="Error">
@@ -71,6 +73,7 @@
      </xsl:if>
 </xsl:template>
 
+<!-- specDesc must point to something -->
 <xsl:template match="tei:specDesc">
     <xsl:choose>
      <xsl:when test="key('IDENTS',@key)">
@@ -87,6 +90,7 @@
      </xsl:otherwise>
     </xsl:choose>
 </xsl:template>
+
 
 <xsl:template name="checkAtts">
   <xsl:param name="a"/>
@@ -231,6 +235,11 @@ select="$value"/> (<xsl:call-template name="loc"/>)
       </xsl:variable>
       <xsl:choose>
 	<xsl:when test="key('EXIDS',$N)"/>
+	<xsl:when test="key('IDS',$N)">
+	  <xsl:call-template name="Warning">
+	    <xsl:with-param name="value" select="$What"/>
+	  </xsl:call-template>
+	</xsl:when>
 	<!--
 	    <xsl:when test="not(ancestor::teix:egXML//teix:*[@xml:id=$N])">
 	    <xsl:call-template name="Warning">

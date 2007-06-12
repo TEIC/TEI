@@ -63,7 +63,7 @@
       <text>
 	<body>
 	  <p>The sections in this document summarize all the TEI
-	  modules as of October 2006, showing the elements, classes
+	  modules, showing the elements, classes
 	  and macros defined. </p>
 	  <xsl:for-each select="//tei:moduleSpec">
 	    <xsl:sort select="@ident"/>
@@ -152,7 +152,7 @@
 		      </xsl:attribute>
 		      <row role="label">
 			<cell>Name</cell>
-			<cell></cell>
+<!--			<cell></cell>-->
 			<cell>Members</cell>
 			<cell>Attributes</cell>
 		      </row>
@@ -171,9 +171,11 @@
 			      <xsl:value-of select="@ident"/>
 			    </ref>
 			  </cell>
+<!--
 			  <cell>
 			    <ref target="http://localhost/TV/draw.php?nt={@ident}">pic</ref>
 			  </cell>
+-->
 			  <cell >
 			    <xsl:variable name="ID" select="@ident"/>
 			    <xsl:for-each select="key('CLASSREFS',@ident)">
@@ -213,7 +215,7 @@
 		      </xsl:attribute>
 		      <row role="label">
 			<cell>Name</cell>
-			<cell></cell>
+<!--			<cell></cell>-->
 			<cell>Description</cell>
 			<cell>Classes</cell>
 			<cell>Used in</cell>
@@ -233,9 +235,11 @@
 			      <xsl:value-of select="@ident"/>
 			    </ref>
 			  </cell>
+<!--
 			  <cell>
 			    <ref target="http://localhost/TV/draw.php?nt={@ident}">pic</ref>
 			  </cell>
+-->
 			  <cell><xsl:value-of select="normalize-space(tei:desc)"/></cell>
 			  <cell><xsl:for-each select="tei:classes">
 			    <xsl:for-each select="tei:memberOf">

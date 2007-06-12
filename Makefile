@@ -356,6 +356,11 @@ changelog:
 	rm newchanges oldchanges
 
 
+catalogue:
+	xsltproc -o catalogue.xml Utilities/catalogue.xsl ${DRIVER}
+	xsltproc --xinclude ${XSL}/html/tei.xsl  catalogue.xml > catalogue.html
+	echo Made catalogue.html
+
 clean:
 	-rm -rf release Guidelines Guidelines-web Schema DTD dtd Split RomaResults *~ 
 	-rm Guidelines.??? \
@@ -367,5 +372,6 @@ clean:
 	(cd Test; make clean)
 	(cd Exemplars; make clean)
 	rm -rf FASC-*
+	rm -rf catalogue.* modlist
 
 

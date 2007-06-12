@@ -5,7 +5,8 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:XSL="http://www.w3.org/1999/xsl/TransformAlias" >
 
-  
+<!-- make list  of attributes of which refer to data.pointer,
+so that we can check them -->
 <xsl:namespace-alias stylesheet-prefix="XSL" result-prefix="xsl"/>
 <xsl:output indent="yes"/>
 <xsl:key name="MEMBERS" 
