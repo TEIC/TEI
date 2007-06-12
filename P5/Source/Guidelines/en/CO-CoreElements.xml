@@ -1813,13 +1813,13 @@ to identify them:
    <specDesc key="time"/>
  </specList>
 These elements have some additional attributes by virtue of being
-members of the <name type="class">att.dateTime</name> and <name
+members of the <name type="class">att.datable</name> and <name
 type="class">att.duration</name> classes which, in turn, are members
-of the <name type="class">att.dateTime.w3c</name> and <name
+of the <name type="class">att.datable.w3c</name> and <name
 type="class">att.duration.w3c</name> classes. In particular, the
-<att>value</att> attribute will be discussed here:
+<att>when</att> attribute will be discussed here:
 <specList>
- <specDesc key="att.dateTime.w3c" atts="value"/>
+ <specDesc key="att.datable.w3c" atts="when"/>
 </specList>
 </p>
 <p>Dates can occur virtually anywhere in a text, but in some contexts
@@ -1850,8 +1850,8 @@ expression is required, the techniques described in chapter <ptr target="#ND"/> 
 <p>The <att>value</att> attribute is a useful way of normalizing or
  disambiguating  dates and times which can appear in many formats, as
  the following examples show: 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><date value="1980-02-12">12/2/1980</date></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Given on the <date value="1977-06-12">Twelfth Day of June
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><date when="1980-02-12">12/2/1980</date></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">Given on the <date when="1977-06-12">Twelfth Day of June
 in the Year of Our Lord One Thousand Nine Hundred and
 Seventy-seven of the Republic the Two Hundredth and first
 and of the University the Eighty-Sixth.</date></egXML>
@@ -1880,15 +1880,15 @@ datatypes require that the minutes and seconds be included in the
 normalized value if they are to be correctly processed for example
 when sorting.</p></note>
 Some typical examples follow:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><date value="2001">The
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><date when="2001">The
 year 2001</date>
-<date value="2001-09">September 2001</date>
-<date value="2001-09-11">11 Sept 01</date>
-<date value="--09-11">9/11</date>
-<date value="--09">September</date>
-<date value="---11">Eleventh of the month</date>
-<time value="08:48:00">8:48</time>
-<date value="2001-09-11T12:48:00">Sept 11th, 12 minutes before 9 am</date>
+<date when="2001-09">September 2001</date>
+<date when="2001-09-11">11 Sept 01</date>
+<date when="--09-11">9/11</date>
+<date when="--09">September</date>
+<date when="---11">Eleventh of the month</date>
+<time when="08:48:00">8:48</time>
+<date when="2001-09-11T12:48:00">Sept 11th, 12 minutes before 9 am</date>
 </egXML>Note in the last example the use of a normalized representation for
 the date string which includes a time: this example could thus equally
 well be tagged using the <gi>time</gi> element. 
@@ -1901,7 +1901,7 @@ somehow very important.</p></egXML>
 <!-- Woolf, Mrs Dalloway, p. 65 --><egXML xmlns="http://www.tei-c.org/ns/Examples"><p>The Eddic poems are preserved in a unique
 manuscript (Codex Regius 2365) from <date notBefore="1250" notAfter="1300">the second half of the thirteenth
 century</date>, and <title>Hervarar
-saga</title> dates from <date value="1300">around 1300</date>.</p></egXML>
+saga</title> dates from <date when="1300">around 1300</date>.</p></egXML>
 <!-- T. M. Andersson, A Preface to the Nibelungenlied         -->
 	<!-- (Stanford:  Stanford University Press, 1987) p. 4        -->
 </p>
@@ -3890,7 +3890,7 @@ reports:
          <publisher>
 	   National Institute of Standards and Technology
 	 </publisher>
-         <date value="1992-01">January 1992</date>
+         <date when="1992-01">January 1992</date>
       </imprint>
       <extent>19 pp.</extent>
    </monogr>
@@ -3906,7 +3906,7 @@ and with dissertations:
       <imprint>
          <publisher>Dept. of Computer Science, Stanford Univ.</publisher>
          <pubPlace>Stanford, CA</pubPlace>
-         <date value="1971-06">June 1971</date>
+         <date when="1971-06">June 1971</date>
       </imprint>
    </monogr>
 </biblStruct></egXML>
@@ -3978,7 +3978,7 @@ element describing the issue in which it appeared will typically contain
       <imprint>
          <pubPlace>London</pubPlace>
          <publisher>Society of Genealogists</publisher>
-         <date value="1968">1968</date>
+         <date when="1968">1968</date>
       </imprint>
       <biblScope type="volume">vol. 1</biblScope>
       <biblScope type="pages">pp. 155–167.</biblScope>
@@ -4013,7 +4013,7 @@ both the following are legal examples:
       <title level="j">Computers and the Humanities</title>
       <imprint>
          <biblScope>25.6</biblScope>
-         <date value="1991-12">(December, 1991):</date>
+         <date when="1991-12">(December, 1991):</date>
          <biblScope>377–380</biblScope>
       </imprint>
    </monogr>
