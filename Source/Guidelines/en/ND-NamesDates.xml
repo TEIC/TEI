@@ -60,7 +60,6 @@ The selection and combination of modules to form a TEI schema is described in
   &att.personal;    
   &model.placeNamePart;    
   &att.datable.iso; 
-  &att.dateTime.iso; 
   &att.duration.iso; 
   &data.temporal.iso;
   &data.duration.iso;
@@ -1448,13 +1447,13 @@ one or more <gi>date</gi> or <gi>time</gi> elements:
   <specDesc key="offset"/>
 </specList>
 </p>
-<p>As members of the <name type="class">att.dateTime</name> and <name
+<p>As members of the <name type="class">att.datable</name> and <name
 type="class">att.duration</name> classes, which in turn are members of
-<name type="class">att.dateTime.w3c</name> and <name
+<name type="class">att.datable.w3c</name> and <name
 type="class">att.duration.w3c</name> respectively, the <gi>date</gi>
 and <gi>time</gi> elements share the following attributes:
 <specList>
-  <specDesc key="att.dateTime.w3c" atts="value"/>
+  <specDesc key="att.datable.w3c" atts="when"/>
   <specDesc key="att.duration.w3c" atts="dur"/>
 </specList>
 </p>
@@ -1488,18 +1487,18 @@ may of course be relative, and thus contain <gi>date</gi> or
 nested structures such as <q>the third Sunday after the first Monday
 before Lammastide in the fifth year of the King's second marriage
 ... </q> but so does natural language.</p>
-<p>In the following examples, the <att>value</att> and <att>dur</att>
+<p>In the following examples, the <att>when</att> and <att>dur</att>
 attributes have been used to simplify processing of variant forms of
 expression:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><date value="1786-12-11">     
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><date when="1786-12-11">     
    <date dur="P14D">A fortnight</date>
    <offset>before</offset>
-   <date value="1786-12-25" type="holiday">Christmas 1786</date>
+   <date when="1786-12-25" type="holiday">Christmas 1786</date>
 </date></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">I reached the station <time value="14:15:00">
+<egXML xmlns="http://www.tei-c.org/ns/Examples">I reached the station <time when="14:15:00">
   <date dur="PT30M0S">precisely half an hour</date>
   <offset>after</offset>
-  <date value="13:45:00" type="occasion">the departure of the afternoon train to Boston</date>
+  <date when="13:45:00" type="occasion">the departure of the afternoon train to Boston</date>
 </time></egXML></p>
 <!-- AC: <att>exact</att> is not an attribute of <gi>date</gi> and it wasn't in the example anyway, so I have commented out the following: <p>In the following example, the <att>exact</att> attribute has been
 used to indicate a lack of precision in the distance stated:
@@ -1514,19 +1513,19 @@ used to indicate a lack of precision in the distance stated:
 used to show that <q>my birthday</q> and the cited date are parts of
 the same temporal expression, and hence to disambiguate the phrase
 <q>A week before my birthday on 9th December</q>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><date value="--12-02">  
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><date when="--12-02">  
    <date>A week</date>
    <offset>before</offset>
-   <date value="--12-09">    
+   <date when="--12-09">    
       <date type="occasion">my birthday</date>
       on <date>9th December</date>
    </date>
 </date></egXML>
 The alternative reading of this phrase could be encoded as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><date value="--12-09">  
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><date when="--12-09">  
    <date>A week</date>
    <offset>before</offset>
-   <date type="occasion" value="--12-16">my birthday</date>
+   <date type="occasion" when="--12-16">my birthday</date>
    on <date>9th December</date>
  </date></egXML>
  </p>
@@ -1564,15 +1563,15 @@ structure of type <val>date-analysis</val>:
 <p>The following are examples of absolute temporal expressions.</p>
 <p>
   <egXML xmlns="http://www.tei-c.org/ns/Examples">The university's view of American affairs produced a stinging attack by Edmund Burke in the Commons debate of
-<date value="1775-10-26">26 October 1775</date></egXML>
+<date when="1775-10-26">26 October 1775</date></egXML>
 <!-- The History of the University of Oxford, vol v, 178 -->
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><date value="1993-05-14">Friday, 14 May 1993</date></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><date when="1993-05-14">Friday, 14 May 1993</date></egXML>
 <!-- the headline on the Independent Newspaper on that day -->
 </p>
 <p>It may be useful to categorize a temporal expression which is given in terms of a named event, such as a public holiday for dates, or a named time such as <q>tea time</q> or
 <q>matins</q>:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">In New York,
-<date type="occasion" value="--01-01">New Years Day</date> is the quietest of holidays, <date value="--07-04" type="occasion">Independence Day</date> the most turbulent.</egXML>
+<date type="occasion" when="--01-01">New Years Day</date> is the quietest of holidays, <date when="--07-04" type="occasion">Independence Day</date> the most turbulent.</egXML>
 </p>
 <!-- Example needs to be re-worked 
 <p>These components may be applied to dates using any calendar system
@@ -1598,10 +1597,10 @@ in terms of seconds, minutes, hours, or of well defined events
 (e.g. <q>noon</q>, <q>sunset</q>) may similarly be represented using
 the <gi>time</gi> element.
 <egXML xmlns="http://www.tei-c.org/ns/Examples">The train leaves for Boston at
-<time type="24hour" value="13:45:00">13:45</time></egXML>
+<time type="24hour" when="13:45:00">13:45</time></egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">At <time type="occasion">sunset</time> we walked to the beach.</egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">The train leaves for Boston at
-<time xml:lang="en-US" type="descriptive" value="13:45:00-05:00"> a quarter of two
+<time xml:lang="en-US" type="descriptive" when="13:45:00-05:00"> a quarter of two
 </time></egXML>
  </p>
 </div>
@@ -1619,9 +1618,8 @@ date, or to a calendar week. In cases where it is desirable to use
 these more specialized formats, this module provides a corresponding
 additional class of attributes for them:
 <specList>
-  <specDesc key="att.dateTime.iso" atts="value-iso"/>
+  <specDesc key="att.datable.iso" atts="when-iso notBefore-iso notAfter-iso from-iso to-iso"/>
   <specDesc key="att.duration.iso" atts="dur-iso"/>
-  <specDesc key="att.datable.iso" atts="notBefore-iso notAfter-iso from-iso to-iso"/>
 </specList>
 These attributes rely on the following datatype macros:
 <specList>
@@ -1630,16 +1628,16 @@ These attributes rely on the following datatype macros:
 </specList>
  </p>
 <?tei winita I'd like to keep this lovely example, but not sure where to put it yet sb ?>
-<p>The <att>value</att> and <att>dur</att>
+<p>The <att>when</att> and <att>dur</att>
 attributes are both used to provide a
 standardized or regularized form for the content of an element,
 conforming to a subset of the possible formats defined by the relevant
 international standard (ISO 8601) as profiled by <title>XML Schema
 Part 2: Datatypes Second Edition</title>.</p>
 <p>For example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><date
-value="1807-06-09">June 9th</date> The period is approaching which
+when="1807-06-09">June 9th</date> The period is approaching which
 will terminate my present copartnership. On the <date
-value="1808-01-01">1st Jany.</date> next, it expires by its own
+when="1808-01-01">1st Jany.</date> next, it expires by its own
 limitation.</egXML>
 <!-- Philadelphia Merchant: The Diary of TP Cope, 210 -->
  </p>
