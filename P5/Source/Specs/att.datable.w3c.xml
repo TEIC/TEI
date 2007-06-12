@@ -11,6 +11,14 @@ $Author: sbauman $
   <desc version="2007-05-04" xml:lang="es">proporciona atributos para
   la normalización de elementos que contienen eventos datables.</desc>
   <attList>
+    <attDef ident="period" usage="opt">
+      <desc>supplies a pointer to some location defining a named
+      period of time within which the datable item is understood to
+      have occurred.</desc>
+      <datatype>
+	<rng:data type="anyURI"/>
+      </datatype>
+    </attDef>
     <attDef ident="when" usage="opt">
       <desc>supplies the value of a date or time in a standard form.</desc>
       <desc version="2007-05-04" xml:lang="es">proporciona el valor de
@@ -30,9 +38,11 @@ $Author: sbauman $
           <time when="14:12:38">fourteen twelve and 38 seconds</time>
           <date when="1962-10">October of 1962</date>
           <date when="--06-12">June 12th</date>
-          <date when="---01">the first of each month</date>
+          <date when="---01">the first of the month</date>
           <date when="--08">August</date>
           <date when="2006">MMVI</date>
+	  <date when="0056">56 AD</date>
+	  <date when="-0056">56 BC</date>
         </egXML>
       </exemplum>
       <exemplum>
@@ -52,7 +62,7 @@ $Author: sbauman $
           Sunday <time when="12:00:00">noon.</time>
 	  </opener>
         </egXML>
-        <p>
+<!--        <p>
           <note type="cit">
             <bibl>
               <author>
@@ -62,7 +72,7 @@ $Author: sbauman $
               <date>1833</date>
             </bibl>
           </note>
-        </p>
+        </p>-->
       </exemplum>
       <remarks>
         <p>The value of the <att>when</att> attribute is a string
