@@ -12,8 +12,8 @@ language=Sprachen
 schema=Schema
 documentation=Dokumentation
 searchtei=Suche in der TEI Database
-sanitycheck=Sanity Checker
-workingon=You are currently working on
+sanitycheck=Plausibilitätstest
+workingon=Sie arbeiten im Moment an
 
 
 
@@ -66,8 +66,8 @@ language=Langage
 schema=Schéma
 documentation=Documentation
 searchtei=Rechercher base TEI
-sanitycheck=Sanity Checker
-workingon=You are currently working on
+sanitycheck=Vérificateur de cohérence
+workingon=Vous travaillez sur 
 
 
 [it]
@@ -84,8 +84,8 @@ language=Lingua
 schema=Schema
 documentation=Documentazione
 searchtei=Interroga database TEI 
-sanitycheck=Sanity Checker
-workingon=You are currently working on
+sanitycheck=Ispettore di coerenza 
+workingon=Lavorate su
 
 
 [ja]
@@ -102,8 +102,8 @@ language=言語
 schema=スキーマ
 documentation=ドキュメント
 searchtei=TEIデータベースの検索
-sanitycheck=Sanity Checker
-workingon=You are currently working on
+sanitycheck=スキーマの精神鑑定
+workingon=現在は...で作業しています。
 
 
 [ru]
@@ -156,8 +156,8 @@ language=語言
 schema=建立文件模型
 documentation=建立說明檔
 searchtei=檢索TEI
-sanitycheck=Sanity Checker
-workingon=You are currently working on
+sanitycheck=精神正常檢查器
+workingon=你正在從事
 
 
 [pt]
@@ -174,7 +174,7 @@ language=Língua
 schema=Esquema
 documentation=Documentaçao
 searchtei=Procurar na base de dados TEI 
-sanitycheck=Sanity Checker
-workingon=You are currently working on
+sanitycheck=Verifique 
+workingon=De momento está a trabalhar com
 
 

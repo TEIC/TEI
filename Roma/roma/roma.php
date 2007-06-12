@@ -84,6 +84,10 @@ require_once( 'parser/parser.php' );
 // Customization file.
 require_once( 'roma/romadom.php' );
 
+
+// sanity checker (Ioan Bernevig)
+require_once( 'roma/sanitychecker.php' );
+
 // Handles Notams
 require_once( 'notam/notamHandler.php' );
 
@@ -517,6 +521,9 @@ class roma
             case roma_mode_main:
               $this->processMain( $szOutput );
 	      break;
+	    case roma_sanity_check:
+              $this->processSanityCheck( $szOutput );
+	      break;
   	    case roma_mode_customizeCustomization:
 	    default;
 	      $this->processCustomizeCustomization( $szOutput );
@@ -640,6 +647,39 @@ class roma
 
 	$this->appendOutput( $szOutput );
       }
+
+    /**
+     * The sanity check is provided here
+    */
+    private function processSanityCheck( &$szOutput )
+      {
+	$szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
+	$szSchemTem = join( '', file(  roma_templateDir . '/sanityCheck.tem' ) );
+	$this->getParser( $oParser );
+	
+	$oSchemaParser = new parser();
+	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
+	$this->m_oRomaDom->getCustomizationTitle( $szTitle );
+	$oSchemaParser->addReplacement( 'lang', $szLanguage );
+	$oParser->addReplacement( 'doclang', $_SESSION['docLang'] );
+	$oSchemaParser->addReplacement( 'output', $_REQUEST[ 'output' ] );
+
+	$oSchemaParser->Parse( $szSchemTem, $szSchema );
+	$oParser->addReplacement( 'lang', $szLanguage );
+	$oParser->addReplacement( 'doclang', $_SESSION['docLang'] );
+	$oParser->addReplacement( 'mode', 'main' );
+	$oParser->addReplacement( 'view', 'sanitycheck' );
+	$oParser->addReplacement( 'title', $szTitle );
+	$oParser->addReplacement( 'template', $szSchema );
+	$oParser->Parse( $szTemplate, $szOutput );
+
+	//$this->appendOutput( $szOutput );
+	echo($szOutput);
+	$this->m_oRomaDom->processSanityCheck();
+	exit(0);
+      }
+
+
 
 
     /**
