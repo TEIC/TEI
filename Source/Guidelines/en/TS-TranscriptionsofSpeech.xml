@@ -646,31 +646,14 @@ Guidelines:
 <list type="simple">
 <item>segmentation below the utterance level</item>
 <item>synchronization and overlap</item>
-<item>regularization of orthography</item></list>
-The elements discussed here are not provided by the module for
-spoken texts.  Some of them are included in the core module and others are contained in the 
-modules for linking and for analysis respectively.  To enable these modules, the appropriate parameter entities must be declared in the
-document type declaration subset, as described in section <ptr
-target="#STIN"/>.  
+<item>regularization of orthography</item></list> The elements
+discussed here are not provided by the module for spoken texts.  Some
+of them are included in the core module and others are contained in
+the modules for linking and for analysis respectively.  The selection
+of modules and their combination to define a TEI schema is discussed
+in section <ptr target="#STIN"/>.
 
-<!--For example, if a transcript using the  module
-defined in this chapter additionally wishes to make use of the
-<gi>timeline</gi> element, then the following declarations would be
-necessary:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei2.dtd" [
-      <!ENTITY % TEI.XML      'INCLUDE'>
-      <!ENTITY % TEI.spoken   'INCLUDE'>
-      <!ENTITY % TEI.linking  'INCLUDE'>
- ]>]]></egXML>
-If the complex segmentation elements defined in the module
-for analysis were also required, the following declarations would be
-needed:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei2.dtd" [
-      <!ENTITY % TEI.XML      'INCLUDE'>
-      <!ENTITY % TEI.spoken   'INCLUDE'>
-      <!ENTITY % TEI.linking  'INCLUDE'>
-      <!ENTITY % TEI.analysis 'INCLUDE'>
- ]>]]></egXML>-->
+
 <!-- I still think it's completely bonkers not to define timeline here. LB --></p>
 <div type="div3" xml:id="TSSASE"><head>Segmentation</head>
 <p>For some analytic purposes it may be desirable to subdivide the
@@ -701,7 +684,7 @@ the <gi>editorialDecl</gi> element in the TEI header (see <ptr target="#HD53"/>)
 to a notion of syntactic completeness not necessarily marked by the
 speech, although in this case a pause has been recorded between the two
 sentence-like units.  In the second, the segments are defined
-prosodically (an entity reference <code>&amp;stress;</code>
+prosodically (an acute accent 
 has been used to mark the position immediately following the syllable
 bearing the primary accent or stress), and may be thought of as
 <soCalled>tone units</soCalled>.
@@ -711,8 +694,8 @@ bearing the primary accent or stress), and may be thought of as
    <seg>there was no one there</seg>
 </u>
 <u>
-   <seg>although its an old ide&amp;stress;a</seg>
-   <seg>it hasnt been on the mar&amp;stress;ket very long</seg>
+   <seg>although its an old ide´a</seg>
+   <seg>it hasnt been on the mar´ket very long</seg>
 </u></egXML>
 <!-- examples from J Payne NERC Report -->
 In either case, the <gi>segmentation</gi> element in the header of the
@@ -760,9 +743,10 @@ depends.</p>
 <p>This example also uses the core elements <gi>gap</gi> and
 <gi>del</gi> to mark editorial decisions concerning matter completely
 omitted from the transcript (because of inaudibility), and words which
-have been transcribed but which the transcriber considers may be
-deleted, respectively.  See further section <ptr target="#COED"/> for a
-discussion of these and related elements.</p>
+have been transcribed but which the transcriber wishes to exclude from
+the segment because they are repeated, respectively.  See
+section <ptr target="#COED"/> for a discussion of these and related
+elements.</p>
 <p>It is often the case that the desired segmentation does not respect
 utterance boundaries; for example, syntactic units may cross utterance
 boundaries.  For a detailed discussion of this problem, and the various
