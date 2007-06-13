@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:gml="http://www.opengis.net/gml"
+     xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="en" n="testndextra">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+	<title>Draft proposals for representation of geographic information</title>
+      </titleStmt>
+      <publicationStmt>
+	<p> </p>
+      </publicationStmt>
+      <sourceDesc>
+	<p>authored from scratch</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <schemaSpec prefix="tei_" ident="testplace-kml" start="TEI">
+	<moduleRef url="kml22.rng"/>
+	<moduleRef key="header"/>
+	<moduleRef key="core"/>
+	<moduleRef key="tei"/>
+	<moduleRef key="namesdates"/>
+	<moduleRef key="textstructure"/>
+	<moduleRef key="corpus"/>
+	<elementSpec ident="place" mode="add">
+	  <desc>contains data about a geographic location</desc>
+	  <classes>
+	    <memberOf key="att.typed"/>
+	    <memberOf key="model.placeLike"/>
+	  </classes>
+	  <content  xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	    <rng:choice>
+	      <rng:group>
+		<rng:zeroOrMore>
+		  <rng:ref name="model.headLike"/>
+		</rng:zeroOrMore>
+		<rng:oneOrMore>
+		  <rng:ref name="model.pLike"/>
+		</rng:oneOrMore>
+		<rng:zeroOrMore>
+		  <rng:ref name="model.placeLike"/>
+		</rng:zeroOrMore>
+	      </rng:group>
+	      <rng:zeroOrMore>
+		<rng:choice>
+		  <rng:ref name="model.placeStateLike"/>
+		  <rng:ref name="model.placeTraitLike"/>
+		  <rng:ref name="model.placeEventLike"/>
+		  <rng:ref name="model.placeLike"/>
+		</rng:choice>
+	      </rng:zeroOrMore>
+	    </rng:choice>
+	    <rng:zeroOrMore>
+	      <rng:choice>
+		<rng:ref name="model.noteLike"/>
+		<rng:ref name="model.biblLike"/>
+	      </rng:choice>
+	    </rng:zeroOrMore>
+	  </content>
+	</elementSpec>
+	
+	<elementSpec ident="location" mode="add">
+	  <desc>defines the location of a place as a set of
+	  geographical co-ordinates, in terms of a other named
+	  geo-political entities, or as an address </desc>
+	  <classes>
+	    <memberOf key="att.typed"/>
+	    <memberOf key="model.placeTraitLike"/>
+	    <memberOf key="att.datable"/>
+	    <memberOf key="att.editLike"/>
+	  </classes>
+	  <content>
+	    <rng:zeroOrMore>
+	      <rng:choice>
+		<rng:text/>
+		<rng:ref name="anyGML"/>
+		<rng:ref name="model.placeNamePart"/>
+		<rng:ref name="model.measureLike"/>
+		<rng:ref name="model.addressLike"/>
+		<rng:ref name="model.noteLike"/>
+		<rng:ref name="model.biblLike"/>
+	      </rng:choice>
+	    </rng:zeroOrMore>
+	  </content>
+	  <attList>
+	    <attDef ident="scheme">
+	      <desc>defines how the content of the element should be
+	      interpreted in the case where it is given as text
+	      only</desc>
+	      <valList type="closed">
+		<valItem ident="latlong">
+		  <desc> a pair of numbers to be interpreted as
+		  latitude followed by longitude according to a
+		  specified datum, by default WGS84</desc>
+		</valItem>
+		<valItem ident="local">
+		  <desc>the value supplied is to be interpreted
+		  according to local convention</desc>
+		</valItem>
+		<valItem ident="other">
+		  <desc>the value supplies is descriptive text</desc>
+		</valItem>
+	      </valList>
+	    </attDef>
+	  </attList>
+	</elementSpec>
+	<elementSpec ident="terrain" mode="add">
+	  <desc>contains information about the physical terrain of a
+	  place</desc>
+	  <classes>
+	    <memberOf key="att.datable"/>
+	    <memberOf key="att.editLike"/>
+	    <memberOf key="att.naming"/>
+	    <memberOf key="att.typed"/>
+	    <memberOf key="model.placeTraitLike"/>
+	  </classes>
+	  <content>
+	    <rng:choice>
+	      <rng:oneOrMore>
+		<rng:ref name="terrain"/>
+	      </rng:oneOrMore>
+	      <rng:group>
+		<rng:zeroOrMore>
+		  <rng:ref name="head"/>
+		</rng:zeroOrMore>
+		<rng:oneOrMore>
+		  <rng:ref name="model.pLike"/>
+		</rng:oneOrMore>
+		<rng:zeroOrMore>
+		  <rng:choice>
+		    <rng:ref name="model.noteLike"/>
+		    <rng:ref name="model.biblLike"/>
+		  </rng:choice>
+		</rng:zeroOrMore>
+	      </rng:group>
+	      <rng:group>
+		<rng:oneOrMore>
+		  <rng:choice>
+		    <rng:ref name="model.labelLike"/>
+		    <rng:ref name="model.noteLike"/>
+		    <rng:ref name="model.biblLike"/>
+		  </rng:choice>
+		</rng:oneOrMore>
+	      </rng:group>
+	    </rng:choice>
+	  </content>
+	</elementSpec>
+	<elementSpec ident="climate" mode="add">
+	  <desc>contains information about the usual climate of a place</desc>
+	  <classes>
+	    <memberOf key="att.datable"/>
+	    <memberOf key="att.editLike"/>
+	    <memberOf key="att.naming"/>
+	    <memberOf key="att.typed"/>
+	    <memberOf key="model.placeTraitLike"/>
+	  </classes>
+	  <content>
+	    <rng:choice>
+	      <rng:oneOrMore>
+		<rng:ref name="climate"/>
+	      </rng:oneOrMore>
+	      <rng:group>
+		<rng:zeroOrMore>
+		  <rng:ref name="head"/>
+		</rng:zeroOrMore>
+		<rng:oneOrMore>
+		  <rng:ref name="model.pLike"/>
+		</rng:oneOrMore>
+		<rng:zeroOrMore>
+		  <rng:choice>
+		    <rng:ref name="model.noteLike"/>
+		    <rng:ref name="model.biblLike"/>
+		  </rng:choice>
+		</rng:zeroOrMore>
+	      </rng:group>
+	      <rng:group>
+		<rng:oneOrMore>
+		  <rng:choice>
+		    <rng:ref name="model.labelLike"/>
+		    <rng:ref name="model.noteLike"/>
+		    <rng:ref name="model.biblLike"/>
+		  </rng:choice>
+		</rng:oneOrMore>
+	      </rng:group>
+	    </rng:choice>
+	  </content>
+	</elementSpec>
+	<elementSpec ident="population" mode="add">
+	  <desc>contains information about the population of a given
+	  place</desc>
+	  <classes>
+	    <memberOf key="att.datable"/>
+	    <memberOf key="att.editLike"/>
+	    <memberOf key="att.naming"/>
+	    <memberOf key="att.typed"/>
+	    <memberOf key="model.placeStateLike"/>
+	  </classes>
+	  <content>
+	    <rng:choice>
+	      <rng:oneOrMore>
+		<rng:ref name="population"/>
+	      </rng:oneOrMore>
+	      <rng:group>
+		<rng:zeroOrMore>
+		  <rng:ref name="head"/>
+		</rng:zeroOrMore>
+		<rng:oneOrMore>
+		  <rng:ref name="model.pLike"/>
+		</rng:oneOrMore>
+		<rng:zeroOrMore>
+		  <rng:choice>
+		    <rng:ref name="model.noteLike"/>
+		    <rng:ref name="model.biblLike"/>
+		  </rng:choice>
+		</rng:zeroOrMore>
+	      </rng:group>
+	      <rng:group>
+		<rng:oneOrMore>
+		  <rng:choice>
+		    <rng:ref name="model.labelLike"/>
+		    <rng:ref name="model.noteLike"/>
+		    <rng:ref name="model.biblLike"/>
+		  </rng:choice>
+		</rng:oneOrMore>
+	      </rng:group>
+	    </rng:choice>
+	  </content>
+	</elementSpec>
+	<elementSpec ident="listPlace" mode="add">
+	  <equiv/>
+	  <desc>contains a list of places, optionally followed by a
+	  list of relationships (other than containment) defined
+	  amongst them. </desc>
+	  <classes>
+	    <memberOf key="att.typed"/>
+	    <memberOf key="att.declarable"/>
+	    <memberOf key="model.biblLike"/>
+	    <memberOf key="model.placeLike"/>
+	  </classes>
+	  <content>
+	    <rng:group>
+	      <rng:oneOrMore>
+		<rng:ref name="model.placeLike"/>
+	      </rng:oneOrMore>
+	      <rng:zeroOrMore>
+		<rng:ref name="relation"/>
+	      </rng:zeroOrMore>
+	    </rng:group>
+	  </content>
+	</elementSpec>
+	
+	<classSpec ident="model.placeLike" mode="add" type="model">
+	  <desc>Objects like <gi>place</gi>s</desc>
+	</classSpec>
+	
+	<classSpec ident="model.placeTraitLike" mode="change" type="model">
+	  <desc>Objects like <gi>trait</gi>s</desc>
+	</classSpec>
+	
+	<classSpec ident="model.placeEventLike" mode="add" type="model">
+	  <desc>Objects like <gi>placeEvent</gi>s</desc>
+	</classSpec>	
+
+	<macroSpec type="pe" ident="anyGML" mode="add">
+	  <content>
+	    <choice xmlns="http://relaxng.org/ns/structure/1.0">
+	      <ref name="StyleMap"/>
+	      <ref name="Lod"/>
+	      <ref name="LineStyle"/>
+	      <ref name="Style"/>
+	      <ref name="TimeSpan"/>
+	      <ref name="Camera"/>
+	      <ref name="MultiGeometry"/>
+	      <ref name="ResourceMap"/>
+	      <ref name="PhotoOverlay"/>
+	      <ref name="LatLonAltBox"/>
+	      <ref name="Scale"/>
+	      <ref name="Region"/>
+	      <ref name="AbstractView"/>
+	      <ref name="TimeStamp"/>
+	      <ref name="LatLonBox"/>
+	      <ref name="Document"/>
+	      <ref name="TimePrimitive"/>
+	      <ref name="Link"/>
+	      <ref name="styleUrl"/>
+	      <ref name="Feature"/>
+	      <ref name="Icon"/>
+	      <ref name="Object"/>
+	      <ref name="LabelStyle"/>
+	      <ref name="Orientation"/>
+	      <ref name="BalloonStyle"/>
+	      <ref name="Model"/>
+	      <ref name="LinearRing"/>
+	      <ref name="GroundOverlay"/>
+	      <ref name="NetworkLink"/>
+	      <ref name="kml"/>
+	      <ref name="ScreenOverlay"/>
+	      <ref name="LookAt"/>
+	      <ref name="Polygon"/>
+	      <ref name="Point"/>
+	      <ref name="PolyStyle"/>
+	      <ref name="IconStyle"/>
+	      <ref name="StyleSelector"/>
+	      <ref name="Geometry"/>
+	      <ref name="Folder"/>
+	      <ref name="LineString"/>
+	      <ref name="Location"/>
+	      <ref name="ListStyle"/>
+	      <ref name="Placemark"/>
+	    </choice>
+	  </content>
+	</macroSpec>
+	<elementSpec ident="event" mode="change" module="namesdates">
+	  <classes>
+	    <memberOf key="att.datable"/>
+	    <memberOf key="att.editLike"/>
+	    <memberOf key="att.typed"/>
+	    <memberOf key="att.naming"/>
+	    <memberOf key="model.persEventLike"/>
+	    <memberOf key="model.placeEventLike"/>
+	  </classes>
+	</elementSpec>
+      </schemaSpec>
+    </body>
+  </text>
+</TEI>

@@ -473,18 +473,34 @@ as it is pretty incomprehensible) --></p>
         <memberOf key="att.typed"/>
         <memberOf key="model.placeLike"/>
       </classes>
-      <content>
-        <rng:zeroOrMore>
-<rng:choice>
-  <rng:ref name="model.placeStateLike"/>
-  <rng:ref name="model.placeTraitLike"/>
-  <rng:ref name="model.placeEventLike"/>
-  <rng:ref name="model.placeLike"/>
-  <rng:ref name="model.noteLike"/>
-</rng:choice>
-        </rng:zeroOrMore>
+      <content  xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	<rng:choice>
+	  <rng:group>
+	    <rng:oneOrMore>
+	      <rng:ref name="model.pLike"/>
+	    </rng:oneOrMore>
+	    <rng:zeroOrMore>
+	      <rng:ref name="model.placeLike"/>
+	    </rng:zeroOrMore>
+	  </rng:group>
+	  <rng:zeroOrMore>
+	    <rng:choice>
+	      <rng:ref name="model.placeStateLike"/>
+	      <rng:ref name="model.placeTraitLike"/>
+	      <rng:ref name="model.placeEventLike"/>
+	      <rng:ref name="model.placeLike"/>
+	    </rng:choice>
+	  </rng:zeroOrMore>
+	</rng:choice>
+	<rng:zeroOrMore>
+	    <rng:choice>
+	      <rng:ref name="model.noteLike"/>
+	      <rng:ref name="model.biblLike"/>
+	    </rng:choice>
+	</rng:zeroOrMore>
       </content>
     </elementSpec>
+
     <elementSpec ident="location" mode="add">
       <desc>defines the location of a place as a set of geographical co-ordinates, in
         terms of a other named geo-political entities, or as an address </desc>
@@ -496,16 +512,16 @@ as it is pretty incomprehensible) --></p>
       </classes>
       <content>
         <rng:zeroOrMore>
-<rng:choice>
-  <rng:text/>
-  <rng:ref name="anyGML"/>
-  <rng:ref name="model.placeNamePart"/>
-  <rng:ref name="model.measureLike"/>
-  <rng:ref name="model.addressLike"/>
-  <rng:ref name="model.noteLike"/>
-  <rng:ref name="model.biblLike"/>
-</rng:choice>
-        </rng:zeroOrMore>
+	  <rng:choice>
+	    <rng:text/>
+	    <rng:ref name="anyGML"/>
+	    <rng:ref name="model.placeNamePart"/>
+	    <rng:ref name="model.measureLike"/>
+	    <rng:ref name="model.addressLike"/>
+	    <rng:ref name="model.noteLike"/>
+	    <rng:ref name="model.biblLike"/>
+	  </rng:choice>
+	</rng:zeroOrMore>
       </content>
       <attList>
         <attDef ident="scheme">
@@ -887,15 +903,19 @@ as it is pretty incomprehensible) --></p>
     <classSpec ident="model.placeLike" mode="add" type="model">
       <desc>Objects like <gi>place</gi>s</desc>
     </classSpec>
-    <classSpec ident="model.placeTraitLike" mode="add" type="model">
+
+    <classSpec ident="model.placeTraitLike" mode="change" type="model">
       <desc>Objects like <gi>trait</gi>s</desc>
     </classSpec>
+<!--
     <classSpec ident="model.placeStateLike" mode="add" type="model">
       <desc>Objects like <gi>state</gi>s</desc>
     </classSpec>
+-->
     <classSpec ident="model.placeEventLike" mode="add" type="model">
       <desc>Objects like <gi>placeEvent</gi>s</desc>
     </classSpec>
+
 <!--
     <classSpec ident="model.labelLike" mode="add" type="model">
       <desc>Descriptive elements</desc>
@@ -941,6 +961,16 @@ as it is pretty incomprehensible) --></p>
         </element>
       </content>
     </macroSpec>
+    <elementSpec ident="event" mode="change" module="namesdates">
+      <classes>
+        <memberOf key="att.datable"/>
+        <memberOf key="att.editLike"/>
+        <memberOf key="att.typed"/>
+        <memberOf key="att.naming"/>
+        <memberOf key="model.persEventLike"/>
+        <memberOf key="model.placeEventLike"/>
+      </classes>
+    </elementSpec>
   </schemaSpec>
 </div>
         </div>
