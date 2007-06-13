@@ -1,0 +1,1466 @@
+<?xml version="1.0"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" ns="http://earth.google.com/kml/2.2" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <define name="ScreenOverlay">
+        <ref name="anonymous44"/>
+    </define>
+    <define name="anonymous0">
+        <element name="Region">
+            <ref name="anonymous2"/>
+            <interleave>
+                <ref name="LatLonAltBox"/>
+                <optional>
+                    <ref name="Lod"/>
+                </optional>
+            </interleave>
+        </element>
+    </define>
+    <define name="Orientation">
+        <ref name="anonymous26"/>
+    </define>
+    <define name="IconStyle">
+        <ref name="anonymous22"/>
+    </define>
+    <define name="anonymous1">
+        <ref name="anonymous6"/>
+        <optional>
+            <element name="color">
+                    <ref name="color"/>
+                </element>
+        </optional>
+        <optional>
+            <element name="drawOrder">
+                    <ref name="int"/>
+                </element>
+        </optional>
+        <optional>
+            <ref name="Icon"/>
+        </optional>
+    </define>
+    <define name="anonymous2">
+        <group>
+            <optional>
+                <attribute name="targetId">
+                    <data type="NCName"/>
+                </attribute>
+            </optional>
+            <optional>
+                <attribute name="id">
+                    <data type="ID"/>
+                </attribute>
+            </optional>
+        </group>
+    </define>
+    <define name="PhotoOverlay">
+        <ref name="anonymous28"/>
+    </define>
+    <define name="anonymous3">
+        <ref name="anonymous2"/>
+    </define>
+    <define name="anonymous4">
+        <element name="Model">
+            <ref name="anonymous33"/>
+            <optional>
+                <element name="altitudeMode">
+                    <ref name="altitudeModeEnum"/>
+                </element>
+            </optional>
+            <optional>
+                <ref name="Location"/>
+            </optional>
+            <optional>
+                <ref name="Orientation"/>
+            </optional>
+            <optional>
+                <ref name="Scale"/>
+            </optional>
+            <optional>
+                <ref name="Link"/>
+            </optional>
+            <optional>
+                <ref name="ResourceMap"/>
+            </optional>
+        </element>
+    </define>
+    <define name="SnippetType">
+        <group>
+            <optional>
+                <attribute name="maxLines">
+                    <data type="int"/>
+                </attribute>
+            </optional>
+            <data type="string"/>
+        </group>
+        <empty/>
+    </define>
+    <define name="anonymous5">
+        <element name="NetworkLink">
+            <ref name="anonymous6"/>
+            <optional>
+                <element name="refreshVisibility">
+                    <ref name="boolean"/>
+                </element>
+            </optional>
+            <optional>
+                <element name="flyToView">
+                    <ref name="boolean"/>
+                </element>
+            </optional>
+            <optional>
+                <choice>
+                    <ref name="Link"/>
+                    <element name="Url">
+                        <ref name="LinkType"/>
+                    </element>
+                </choice>
+            </optional>
+        </element>
+    </define>
+    <define name="anonymous6">
+        <ref name="anonymous2"/>
+        <optional>
+            <element name="name">
+                    <ref name="string"/>
+                </element>
+        </optional>
+        <optional>
+            <element name="visibility">
+                    <ref name="boolean"/>
+                </element>
+        </optional>
+        <optional>
+            <element name="open">
+                    <ref name="boolean"/>
+                </element>
+        </optional>
+        <optional>
+            <element name="address">
+                    <ref name="string"/>
+                </element>
+        </optional>
+        <optional>
+            <element name="phoneNumber">
+                    <ref name="string"/>
+                </element>
+        </optional>
+        <optional>
+            <element name="Snippet">
+                    <ref name="SnippetType"/>
+                </element>
+        </optional>
+        <optional>
+            <element name="description">
+                    <ref name="string"/>
+                </element>
+        </optional>
+        <optional>
+            <ref name="AbstractView"/>
+        </optional>
+        <optional>
+            <ref name="TimePrimitive"/>
+        </optional>
+        <optional>
+            <ref name="styleUrl"/>
+        </optional>
+        <zeroOrMore>
+            <ref name="StyleSelector"/>
+        </zeroOrMore>
+        <optional>
+            <ref name="Region"/>
+        </optional>
+        <optional>
+            <element name="Metadata">
+                    <ref name="anymeta"/>
+                </element>
+        </optional>
+        <optional>
+            <ref name="author"/>
+        </optional>
+        <optional>
+            <ref name="link"/>
+        </optional>
+    </define>
+    <define name="anonymous7">
+        <element name="Point">
+            <ref name="anonymous33"/>
+            <ref name="geometryElements"/>
+            <ref name="coordinates"/>
+        </element>
+    </define>
+    <define name="Object">
+        <choice>
+            <ref name="anonymous12"/>
+            <ref name="anonymous20"/>
+            <ref name="anonymous29"/>
+            <ref name="anonymous18"/>
+            <ref name="anonymous0"/>
+            <ref name="anonymous31"/>
+            <ref name="anonymous23"/>
+            <ref name="anonymous35"/>
+            <ref name="anonymous34"/>
+            <ref name="anonymous26"/>
+            <ref name="anonymous17"/>
+            <ref name="anonymous15"/>
+            <ref name="anonymous22"/>
+            <ref name="anonymous32"/>
+            <ref name="anonymous37"/>
+        </choice>
+    </define>
+    <define name="email">
+        <element>
+                <name ns="http://www.w3.org/2005/Atom">email</name>
+                <data type="string">
+                    <param name="pattern">.+@.+</param>
+                </data>
+            </element>
+    </define>
+    <define name="anonymous8">
+        <element name="TimeStamp">
+            <ref name="anonymous36"/>
+            <element name="when">
+                <ref name="dateTimeType"/>
+            </element>
+        </element>
+    </define>
+    <define name="author">
+        <element>
+                <name ns="http://www.w3.org/2005/Atom">author</name>
+                <zeroOrMore>
+                    <choice>
+                        <ref name="name"/>
+                        <ref name="uri"/>
+                        <ref name="email"/>
+                    </choice>
+                </zeroOrMore>
+            </element>
+    </define>
+    <define name="anonymous9">
+        <element name="MultiGeometry">
+            <ref name="anonymous33"/>
+            <oneOrMore>
+                <ref name="Geometry"/>
+            </oneOrMore>
+        </element>
+    </define>
+    <define name="kml">
+        <element name="kml">
+                <interleave>
+                    <optional>
+                        <element name="NetworkLinkControl">
+                            <interleave>
+                                <optional>
+                                    <element name="minRefreshPeriod">
+                                    <ref name="float"/>
+                                    </element>
+                                </optional>
+                                <optional>
+                                    <element name="maxSessionLength">
+                                    <ref name="float"/>
+                                    </element>
+                                </optional>
+                                <optional>
+                                    <element name="cookie">
+                                    <ref name="string"/>
+                                    </element>
+                                </optional>
+                                <optional>
+                                    <element name="message">
+                                    <ref name="string"/>
+                                    </element>
+                                </optional>
+                                <optional>
+                                    <element name="linkName">
+                                    <ref name="string"/>
+                                    </element>
+                                </optional>
+                                <optional>
+                                    <element name="linkDescription">
+                                    <ref name="string"/>
+                                    </element>
+                                </optional>
+                                <optional>
+                                    <element name="linkSnippet">
+                                    <ref name="SnippetType"/>
+                                    </element>
+                                </optional>
+                                <optional>
+                                    <element name="expires">
+                                    <ref name="dateTimeType"/>
+                                    </element>
+                                </optional>
+                                <optional>
+                                    <element name="Update">
+                                    <element name="targetHref">
+                                    <ref name="anyURI"/>
+                                    </element>
+                                    <oneOrMore>
+                                    <choice>
+                                    <element name="Create">
+                                    <ref name="Folder"/>
+                                    </element>
+                                    <empty/>
+                                    <element name="Delete">
+                                    <zeroOrMore>
+                                    <ref name="Feature"/>
+                                    </zeroOrMore>
+                                    </element>
+                                    <element name="Change">
+                                    <oneOrMore>
+                                    <choice>
+                                    <ref name="Object"/>
+                                    <empty/>
+                                    <ref name="Feature"/>
+                                    <ref name="Geometry"/>
+                                    <ref name="StyleSelector"/>
+                                    <ref name="TimePrimitive"/>
+                                    <ref name="AbstractView"/>
+                                    </choice>
+                                    </oneOrMore>
+                                    </element>
+                                    <element name="Replace">
+                                    <optional>
+                                    <ref name="Feature"/>
+                                    </optional>
+                                    </element>
+                                    </choice>
+                                    </oneOrMore>
+                                    </element>
+                                </optional>
+                                <optional>
+                                    <ref name="AbstractView"/>
+                                </optional>
+                            </interleave>
+                        </element>
+                    </optional>
+                    <optional>
+                        <ref name="Feature"/>
+                    </optional>
+                </interleave>
+            </element>
+    </define>
+    <define name="LookAt">
+        <ref name="anonymous25"/>
+    </define>
+    <define name="name">
+        <element>
+                <name ns="http://www.w3.org/2005/Atom">name</name>
+                <ref name="string"/>
+            </element>
+    </define>
+    <define name="anonymous10">
+        <element name="TimeSpan">
+            <ref name="anonymous36"/>
+            <optional>
+                <element name="begin">
+                    <ref name="dateTimeType"/>
+                </element>
+            </optional>
+            <optional>
+                <element name="end">
+                    <ref name="dateTimeType"/>
+                </element>
+            </optional>
+        </element>
+    </define>
+    <define name="anonymous11">
+        <element name="Style">
+            <ref name="anonymous3"/>
+            <optional>
+                <ref name="IconStyle"/>
+            </optional>
+            <optional>
+                <ref name="LabelStyle"/>
+            </optional>
+            <optional>
+                <ref name="LineStyle"/>
+            </optional>
+            <optional>
+                <ref name="PolyStyle"/>
+            </optional>
+            <optional>
+                <ref name="BalloonStyle"/>
+            </optional>
+            <optional>
+                <ref name="ListStyle"/>
+            </optional>
+        </element>
+    </define>
+    <define name="anonymous12">
+        <element name="Lod">
+            <ref name="anonymous2"/>
+            <interleave>
+                <optional>
+                    <element name="minLodPixels">
+                        <ref name="float"/>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="maxLodPixels">
+                        <ref name="float"/>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="minFadeExtent">
+                        <ref name="float"/>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="maxFadeExtent">
+                        <ref name="float"/>
+                    </element>
+                </optional>
+            </interleave>
+        </element>
+    </define>
+    <define name="anonymous13">
+        <element name="LineString">
+            <ref name="anonymous33"/>
+            <ref name="geometryElements"/>
+            <ref name="coordinates"/>
+        </element>
+    </define>
+    <define name="StyleSelector">
+        <choice>
+            <ref name="anonymous14"/>
+            <ref name="anonymous11"/>
+        </choice>
+    </define>
+    <define name="LatLonBox">
+        <ref name="anonymous31"/>
+    </define>
+    <define name="Folder">
+        <ref name="anonymous30"/>
+    </define>
+    <define name="angle180">
+        <data type="double">
+            <param name="minInclusive">-180.0</param>
+            <param name="maxInclusive">180.0</param>
+        </data>
+    </define>
+    <define name="Model">
+        <ref name="anonymous4"/>
+    </define>
+    <define name="ListStyle">
+        <ref name="anonymous37"/>
+    </define>
+    <define name="LinearRingType">
+        <group>
+            <ref name="anonymous33"/>
+            <ref name="geometryElements"/>
+            <ref name="coordinates"/>
+        </group>
+        <empty/>
+    </define>
+    <define name="TimeSpan">
+        <ref name="anonymous10"/>
+    </define>
+    <define name="BalloonStyle">
+        <ref name="anonymous17"/>
+    </define>
+    <define name="angle360">
+        <data type="double">
+            <param name="minInclusive">-360.0</param>
+            <param name="maxInclusive">360.0</param>
+        </data>
+    </define>
+    <define name="anonymous14">
+        <element name="StyleMap">
+            <ref name="anonymous3"/>
+            <oneOrMore>
+                <element name="Pair">
+                    <interleave>
+                        <element name="key">
+                            <choice>
+                                <value type="string">highlight</value>
+                                <value type="string">normal</value>
+                            </choice>
+                        </element>
+                        <ref name="styleUrl"/>
+                    </interleave>
+                </element>
+            </oneOrMore>
+        </element>
+    </define>
+    <define name="TimePrimitive">
+        <choice>
+            <ref name="anonymous10"/>
+            <ref name="anonymous8"/>
+        </choice>
+    </define>
+    <define name="Document">
+        <ref name="anonymous43"/>
+    </define>
+    <define name="boolean">
+        <data type="boolean"/>
+    </define>
+    <define name="anonymous15">
+        <element name="PolyStyle">
+            <ref name="anonymous16"/>
+            <optional>
+                <element name="fill">
+                    <ref name="boolean"/>
+                </element>
+            </optional>
+            <optional>
+                <element name="outline">
+                    <ref name="boolean"/>
+                </element>
+            </optional>
+        </element>
+    </define>
+    <define name="Point">
+        <ref name="anonymous7"/>
+    </define>
+    <define name="Link">
+        <ref name="anonymous23"/>
+    </define>
+    <define name="LineStyle">
+        <ref name="anonymous20"/>
+    </define>
+    <define name="PolyStyle">
+        <ref name="anonymous15"/>
+    </define>
+    <define name="Feature">
+        <choice>
+            <ref name="anonymous28"/>
+            <ref name="anonymous43"/>
+            <ref name="anonymous38"/>
+            <ref name="anonymous5"/>
+            <ref name="anonymous44"/>
+            <ref name="anonymous30"/>
+            <ref name="anonymous19"/>
+        </choice>
+    </define>
+    <define name="anonymous16">
+        <ref name="anonymous2"/>
+        <optional>
+            <element name="color">
+                    <ref name="color"/>
+                </element>
+        </optional>
+        <optional>
+            <element name="colorMode">
+                    <choice>
+                        <value type="string">normal</value>
+                        <value type="string">random</value>
+                    </choice>
+                </element>
+        </optional>
+    </define>
+    <define name="StyleMap">
+        <ref name="anonymous14"/>
+    </define>
+    <define name="uri">
+        <element>
+                <name ns="http://www.w3.org/2005/Atom">uri</name>
+                <ref name="string"/>
+            </element>
+    </define>
+    <define name="dateTimeType">
+        <choice>
+            <data type="dateTime"/>
+            <data type="date"/>
+            <data type="gYearMonth"/>
+            <data type="gYear"/>
+        </choice>
+    </define>
+    <define name="anonymous17">
+        <element name="BalloonStyle">
+            <ref name="anonymous2"/>
+            <choice>
+                <element name="color">
+                    <ref name="color"/>
+                </element>
+                <empty/>
+                <element name="bgColor">
+                    <ref name="color"/>
+                </element>
+            </choice>
+            <optional>
+                <element name="textColor">
+                    <ref name="color"/>
+                </element>
+            </optional>
+            <optional>
+                <element name="text">
+                    <ref name="string"/>
+                </element>
+            </optional>
+        </element>
+    </define>
+    <define name="anonymous18">
+        <element name="Scale">
+            <ref name="anonymous2"/>
+            <interleave>
+                <optional>
+                    <element name="x">
+                        <ref name="double"/>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="y">
+                        <ref name="double"/>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="z">
+                        <ref name="double"/>
+                    </element>
+                </optional>
+            </interleave>
+        </element>
+    </define>
+    <define name="anonymous19">
+        <element name="Placemark">
+            <ref name="anonymous6"/>
+            <optional>
+                <ref name="Geometry"/>
+            </optional>
+        </element>
+    </define>
+    <define name="anonymous20">
+        <element name="LineStyle">
+            <ref name="anonymous16"/>
+            <optional>
+                <element name="width">
+                    <ref name="float"/>
+                </element>
+            </optional>
+        </element>
+    </define>
+    <define name="ResourceMap">
+        <ref name="anonymous29"/>
+    </define>
+    <define name="LatLonAltBox">
+        <element name="LatLonAltBox">
+                <ref name="anonymous39"/>
+                <optional>
+                    <element name="minAltitude">
+                        <ref name="double"/>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="maxAltitude">
+                        <ref name="double"/>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="altitudeMode">
+                        <ref name="altitudeModeEnum"/>
+                    </element>
+                </optional>
+            </element>
+    </define>
+    <define name="int">
+        <data type="int"/>
+    </define>
+    <define name="altitudeModeEnum">
+        <choice>
+            <value type="string">relativeToGround</value>
+            <value type="string">absolute</value>
+            <value type="string">clampToGround</value>
+        </choice>
+    </define>
+    <define name="anonymous21">
+        <element name="Camera">
+            <ref name="anonymous41"/>
+            <optional>
+                <element name="longitude">
+                    <ref name="angle180"/>
+                </element>
+            </optional>
+            <optional>
+                <element name="latitude">
+                    <ref name="angle90"/>
+                </element>
+            </optional>
+            <optional>
+                <element name="altitude">
+                    <ref name="double"/>
+                </element>
+            </optional>
+            <optional>
+                <element name="heading">
+                    <ref name="angle360"/>
+                </element>
+            </optional>
+            <optional>
+                <element name="tilt">
+                    <data type="double">
+                        <param name="minInclusive">0.0</param>
+                        <param name="maxInclusive">180.0</param>
+                    </data>
+                </element>
+            </optional>
+            <optional>
+                <element name="roll">
+                    <ref name="angle180"/>
+                </element>
+            </optional>
+            <optional>
+                <element name="altitudeMode">
+                    <ref name="altitudeModeEnum"/>
+                </element>
+            </optional>
+        </element>
+    </define>
+    <define name="boundaryType">
+        <element name="LinearRing">
+                <ref name="LinearRingType"/>
+            </element>
+        <empty/>
+    </define>
+    <define name="Scale">
+        <ref name="anonymous18"/>
+    </define>
+    <define name="NetworkLink">
+        <ref name="anonymous5"/>
+    </define>
+    <define name="anonymous22">
+        <element name="IconStyle">
+            <ref name="anonymous16"/>
+            <optional>
+                <element name="scale">
+                    <ref name="float"/>
+                </element>
+            </optional>
+            <optional>
+                <element name="heading">
+                    <ref name="float"/>
+                </element>
+            </optional>
+            <optional>
+                <element name="Icon">
+                    <ref name="anonymous40"/>
+                </element>
+            </optional>
+            <optional>
+                <element name="hotSpot">
+                    <ref name="vec2Type"/>
+                </element>
+            </optional>
+        </element>
+    </define>
+    <define name="color">
+        <data type="hexBinary">
+            <param name="length">4</param>
+        </data>
+    </define>
+    <define name="vec2Type">
+        <group>
+            <optional>
+                <attribute name="yunits">
+                    <choice>
+                        <value type="string">insetPixels</value>
+                        <value type="string">pixels</value>
+                        <value type="string">fraction</value>
+                    </choice>
+                </attribute>
+            </optional>
+            <optional>
+                <attribute name="xunits">
+                    <choice>
+                        <value type="string">insetPixels</value>
+                        <value type="string">pixels</value>
+                        <value type="string">fraction</value>
+                    </choice>
+                </attribute>
+            </optional>
+            <optional>
+                <attribute name="y">
+                    <data type="double"/>
+                </attribute>
+            </optional>
+            <optional>
+                <attribute name="x">
+                    <data type="double"/>
+                </attribute>
+            </optional>
+        </group>
+        <empty/>
+    </define>
+    <define name="anonymous23">
+        <element name="Link">
+            <ref name="LinkType"/>
+        </element>
+    </define>
+    <define name="anonymous25">
+        <element name="LookAt">
+            <ref name="anonymous41"/>
+            <interleave>
+                <optional>
+                    <element name="longitude">
+                        <ref name="angle180"/>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="latitude">
+                        <ref name="angle90"/>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="altitude">
+                        <ref name="double"/>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="heading">
+                        <ref name="angle360"/>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="tilt">
+                        <data type="double">
+                            <param name="minInclusive">0.0</param>
+                            <param name="maxInclusive">90.0</param>
+                        </data>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="range">
+                        <ref name="double"/>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="altitudeMode">
+                        <ref name="altitudeModeEnum"/>
+                    </element>
+                </optional>
+            </interleave>
+        </element>
+    </define>
+    <define name="anonymous24">
+        <element name="LinearRing">
+            <ref name="LinearRingType"/>
+        </element>
+    </define>
+    <define name="angle90">
+        <data type="double">
+            <param name="minInclusive">-90.0</param>
+            <param name="maxInclusive">90.0</param>
+        </data>
+    </define>
+    <define name="anonymous27">
+        <element name="Polygon">
+            <ref name="anonymous33"/>
+            <ref name="geometryElements"/>
+            <optional>
+                <element name="outerBoundaryIs">
+                    <ref name="boundaryType"/>
+                </element>
+            </optional>
+            <zeroOrMore>
+                <element name="innerBoundaryIs">
+                    <ref name="boundaryType"/>
+                </element>
+            </zeroOrMore>
+        </element>
+    </define>
+    <define name="anonymous26">
+        <element name="Orientation">
+            <ref name="anonymous2"/>
+            <interleave>
+                <optional>
+                    <element name="heading">
+                        <ref name="angle360"/>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="tilt">
+                        <ref name="angle360"/>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="roll">
+                        <ref name="angle360"/>
+                    </element>
+                </optional>
+            </interleave>
+        </element>
+    </define>
+    <define name="float">
+        <data type="float"/>
+    </define>
+    <define name="LinearRing">
+        <ref name="anonymous24"/>
+    </define>
+    <define name="anonymous28">
+        <element name="PhotoOverlay">
+            <ref name="anonymous1"/>
+            <optional>
+                <element name="shape">
+                    <choice>
+                        <value type="string">cylinder</value>
+                        <value type="string">rectangle</value>
+                        <value type="string">sphere</value>
+                    </choice>
+                </element>
+            </optional>
+            <optional>
+                <element name="ViewVolume">
+                    <optional>
+                        <element name="distance">
+                            <ref name="double"/>
+                        </element>
+                    </optional>
+                    <optional>
+                        <element name="leftFov">
+                            <ref name="angle180"/>
+                        </element>
+                    </optional>
+                    <optional>
+                        <element name="rightFov">
+                            <ref name="angle180"/>
+                        </element>
+                    </optional>
+                    <optional>
+                        <element name="bottomFov">
+                            <ref name="angle90"/>
+                        </element>
+                    </optional>
+                    <optional>
+                        <element name="topFov">
+                            <ref name="angle90"/>
+                        </element>
+                    </optional>
+                </element>
+            </optional>
+            <optional>
+                <element name="roll">
+                    <ref name="angle180"/>
+                </element>
+            </optional>
+            <optional>
+                <ref name="Point"/>
+            </optional>
+            <optional>
+                <element name="ImagePyramid">
+                    <optional>
+                        <element name="tileSize">
+                            <ref name="int"/>
+                        </element>
+                    </optional>
+                    <optional>
+                        <element name="width">
+                            <ref name="int"/>
+                        </element>
+                    </optional>
+                    <optional>
+                        <element name="height">
+                            <ref name="int"/>
+                        </element>
+                    </optional>
+                </element>
+            </optional>
+        </element>
+    </define>
+    <define name="link">
+        <element>
+                <name ns="http://www.w3.org/2005/Atom">link</name>
+                <optional>
+                    <attribute name="length"/>
+                </optional>
+                <optional>
+                    <attribute name="title"/>
+                </optional>
+                <optional>
+                    <attribute name="hreflang">
+                        <data type="string">
+                            <param name="pattern">[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*</param>
+                        </data>
+                    </attribute>
+                </optional>
+                <optional>
+                    <attribute name="type">
+                        <data type="string">
+                            <param name="pattern">.+/.+</param>
+                        </data>
+                    </attribute>
+                </optional>
+                <optional>
+                    <attribute name="rel"/>
+                </optional>
+                <attribute name="href"/>
+            </element>
+    </define>
+    <define name="geometryElements">
+        <optional>
+            <element name="extrude">
+                    <ref name="boolean"/>
+                </element>
+        </optional>
+        <optional>
+            <element name="tessellate">
+                    <ref name="boolean"/>
+                </element>
+        </optional>
+        <optional>
+            <element name="altitudeMode">
+                    <ref name="altitudeModeEnum"/>
+                </element>
+        </optional>
+    </define>
+    <define name="anonymous29">
+        <element name="ResourceMap">
+            <ref name="anonymous2"/>
+            <zeroOrMore>
+                <element name="Alias">
+                    <ref name="anonymous2"/>
+                    <interleave>
+                        <optional>
+                            <element name="targetHref">
+                                <ref name="anyURI"/>
+                            </element>
+                        </optional>
+                        <optional>
+                            <element name="sourceHref">
+                                <ref name="anyURI"/>
+                            </element>
+                        </optional>
+                    </interleave>
+                </element>
+            </zeroOrMore>
+        </element>
+    </define>
+    <define name="anonymous30">
+        <element name="Folder">
+            <ref name="anonymous42"/>
+            <zeroOrMore>
+                <ref name="Feature"/>
+            </zeroOrMore>
+        </element>
+    </define>
+    <define name="Camera">
+        <ref name="anonymous21"/>
+    </define>
+    <define name="anonymous31">
+        <element name="LatLonBox">
+            <ref name="anonymous39"/>
+        </element>
+    </define>
+    <define name="LineString">
+        <ref name="anonymous13"/>
+    </define>
+    <define name="AbstractView">
+        <choice>
+            <ref name="anonymous21"/>
+            <ref name="anonymous25"/>
+        </choice>
+    </define>
+    <define name="anymeta">
+        <choice>
+            <element>
+                <anyName>
+                    <except>
+                        <name ns="http://www.w3.org/2005/Atom">email</name>
+                        <name ns="http://www.w3.org/2005/Atom">uri</name>
+                        <name ns="http://www.w3.org/2005/Atom">link</name>
+                        <name ns="http://www.w3.org/2005/Atom">author</name>
+                        <name ns="http://www.w3.org/2005/Atom">name</name>
+                        <name>Point</name>
+                        <name>LatLonAltBox</name>
+                        <name>Geometry</name>
+                        <name>TimePrimitive</name>
+                        <name>Feature</name>
+                        <name>BalloonStyle</name>
+                        <name>IconStyle</name>
+                        <name>LinearRing</name>
+                        <name>Scale</name>
+                        <name>Polygon</name>
+                        <name>PhotoOverlay</name>
+                        <name>NetworkLink</name>
+                        <name>Link</name>
+                        <name>Style</name>
+                        <name>TimeStamp</name>
+                        <name>PolyStyle</name>
+                        <name>Document</name>
+                        <name>LatLonBox</name>
+                        <name>MultiGeometry</name>
+                        <name>styleUrl</name>
+                        <name>Icon</name>
+                        <name>LineString</name>
+                        <name>Region</name>
+                        <name>Lod</name>
+                        <name>LookAt</name>
+                        <name>Object</name>
+                        <name>ResourceMap</name>
+                        <name>Orientation</name>
+                        <name>coordinates</name>
+                        <name>AbstractView</name>
+                        <name>ListStyle</name>
+                        <name>ScreenOverlay</name>
+                        <name>StyleSelector</name>
+                        <name>GroundOverlay</name>
+                        <name>Folder</name>
+                        <name>Model</name>
+                        <name>TimeSpan</name>
+                        <name>Camera</name>
+                        <name>StyleMap</name>
+                        <name>Location</name>
+                        <name>LineStyle</name>
+                        <name>Placemark</name>
+                        <name>kml</name>
+                        <name>LabelStyle</name>
+                    </except>
+                </anyName>
+                <mixed>
+                    <zeroOrMore>
+                        <choice>
+                            <attribute>
+                                <anyName/>
+                            </attribute>
+                            <ref name="anymeta"/>
+                        </choice>
+                    </zeroOrMore>
+                </mixed>
+            </element>
+            <ref name="StyleMap"/>
+            <ref name="Lod"/>
+            <ref name="LineStyle"/>
+            <ref name="Style"/>
+            <ref name="TimeSpan"/>
+            <ref name="Camera"/>
+            <ref name="MultiGeometry"/>
+            <ref name="ResourceMap"/>
+            <ref name="PhotoOverlay"/>
+            <ref name="LatLonAltBox"/>
+            <ref name="Scale"/>
+            <ref name="Region"/>
+            <ref name="AbstractView"/>
+            <ref name="TimeStamp"/>
+            <ref name="LatLonBox"/>
+            <ref name="Document"/>
+            <ref name="TimePrimitive"/>
+            <ref name="Link"/>
+            <ref name="styleUrl"/>
+            <ref name="Feature"/>
+            <ref name="Icon"/>
+            <ref name="Object"/>
+            <ref name="LabelStyle"/>
+            <ref name="Orientation"/>
+            <ref name="BalloonStyle"/>
+            <ref name="Model"/>
+            <ref name="LinearRing"/>
+            <ref name="GroundOverlay"/>
+            <ref name="NetworkLink"/>
+            <ref name="kml"/>
+            <ref name="ScreenOverlay"/>
+            <ref name="LookAt"/>
+            <ref name="Polygon"/>
+            <ref name="Point"/>
+            <ref name="PolyStyle"/>
+            <ref name="IconStyle"/>
+            <ref name="StyleSelector"/>
+            <ref name="Geometry"/>
+            <ref name="Folder"/>
+            <ref name="LineString"/>
+            <ref name="Location"/>
+            <ref name="ListStyle"/>
+            <ref name="Placemark"/>
+            <ref name="coordinates"/>
+            <ref name="uri"/>
+            <ref name="link"/>
+            <ref name="email"/>
+            <ref name="name"/>
+            <ref name="author"/>
+        </choice>
+    </define>
+    <define name="anonymous32">
+        <element name="Location">
+            <ref name="anonymous2"/>
+            <interleave>
+                <optional>
+                    <element name="longitude">
+                        <ref name="angle180"/>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="latitude">
+                        <ref name="angle90"/>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="altitude">
+                        <ref name="double"/>
+                    </element>
+                </optional>
+            </interleave>
+        </element>
+    </define>
+    <define name="LabelStyle">
+        <ref name="anonymous34"/>
+    </define>
+    <define name="Polygon">
+        <ref name="anonymous27"/>
+    </define>
+    <define name="Placemark">
+        <ref name="anonymous19"/>
+    </define>
+    <define name="anonymous33">
+        <ref name="anonymous2"/>
+    </define>
+    <define name="Style">
+        <ref name="anonymous11"/>
+    </define>
+    <define name="MultiGeometry">
+        <ref name="anonymous9"/>
+    </define>
+    <define name="anonymous34">
+        <element name="LabelStyle">
+            <ref name="anonymous16"/>
+            <optional>
+                <element name="scale">
+                    <ref name="float"/>
+                </element>
+            </optional>
+        </element>
+    </define>
+    <define name="styleUrl">
+        <element name="styleUrl">
+                <ref name="anyURI"/>
+            </element>
+    </define>
+    <define name="TimeStamp">
+        <ref name="anonymous8"/>
+    </define>
+    <define name="Region">
+        <ref name="anonymous0"/>
+    </define>
+    <define name="anonymous35">
+        <element name="Icon">
+            <ref name="LinkType"/>
+        </element>
+    </define>
+    <define name="anonymous36">
+        <ref name="anonymous2"/>
+    </define>
+    <define name="Location">
+        <ref name="anonymous32"/>
+    </define>
+    <define name="string">
+        <data type="string"/>
+    </define>
+    <define name="anonymous37">
+        <element name="ListStyle">
+            <ref name="anonymous2"/>
+            <optional>
+                <element name="listItemType">
+                    <choice>
+                        <value type="string">radioFolder</value>
+                        <value type="string">checkHideChildren</value>
+                        <value type="string">checkOffOnly</value>
+                        <value type="string">check</value>
+                    </choice>
+                </element>
+            </optional>
+            <optional>
+                <element name="bgColor">
+                    <ref name="color"/>
+                </element>
+            </optional>
+            <zeroOrMore>
+                <element name="ItemIcon">
+                    <ref name="anonymous2"/>
+                    <zeroOrMore>
+                        <element name="state">
+                            <list>
+                                <zeroOrMore>
+                                    <choice>
+                                    <value type="string">open</value>
+                                    <value type="string">fetching2</value>
+                                    <value type="string">closed</value>
+                                    <value type="string">fetching1</value>
+                                    <value type="string">fetching0</value>
+                                    <value type="string">error</value>
+                                    </choice>
+                                </zeroOrMore>
+                            </list>
+                        </element>
+                    </zeroOrMore>
+                    <element name="href">
+                        <ref name="anyURI"/>
+                    </element>
+                </element>
+            </zeroOrMore>
+        </element>
+    </define>
+    <define name="anyURI">
+        <data type="anyURI"/>
+    </define>
+    <define name="Geometry">
+        <choice>
+            <ref name="anonymous9"/>
+            <ref name="anonymous4"/>
+            <ref name="anonymous24"/>
+            <ref name="anonymous27"/>
+            <ref name="anonymous7"/>
+            <ref name="anonymous13"/>
+        </choice>
+    </define>
+    <define name="anonymous38">
+        <element name="GroundOverlay">
+            <ref name="anonymous1"/>
+            <optional>
+                <element name="altitude">
+                    <ref name="double"/>
+                </element>
+            </optional>
+            <optional>
+                <element name="altitudeMode">
+                    <ref name="altitudeModeEnum"/>
+                </element>
+            </optional>
+            <optional>
+                <ref name="LatLonBox"/>
+            </optional>
+        </element>
+    </define>
+    <define name="double">
+        <data type="double"/>
+    </define>
+    <define name="Icon">
+        <ref name="anonymous35"/>
+    </define>
+    <define name="LinkType">
+        <group>
+            <ref name="anonymous40"/>
+            <optional>
+                <element name="refreshMode">
+                        <choice>
+                            <value type="string">onExpire</value>
+                            <value type="string">onChange</value>
+                            <value type="string">onInterval</value>
+                        </choice>
+                    </element>
+            </optional>
+            <optional>
+                <element name="refreshInterval">
+                        <ref name="float"/>
+                    </element>
+            </optional>
+            <optional>
+                <element name="viewRefreshMode">
+                        <choice>
+                            <value type="string">never</value>
+                            <value type="string">onRequest</value>
+                            <value type="string">onStop</value>
+                            <value type="string">onRegion</value>
+                        </choice>
+                    </element>
+            </optional>
+            <optional>
+                <element name="viewRefreshTime">
+                        <ref name="float"/>
+                    </element>
+            </optional>
+            <optional>
+                <element name="viewBoundScale">
+                        <ref name="float"/>
+                    </element>
+            </optional>
+            <optional>
+                <element name="viewFormat">
+                        <ref name="string"/>
+                    </element>
+            </optional>
+            <optional>
+                <element name="httpQuery">
+                        <ref name="string"/>
+                    </element>
+            </optional>
+        </group>
+        <empty/>
+    </define>
+    <define name="anonymous39">
+        <ref name="anonymous2"/>
+        <optional>
+            <element name="north">
+                    <ref name="angle180"/>
+                </element>
+        </optional>
+        <optional>
+            <element name="south">
+                    <ref name="angle180"/>
+                </element>
+        </optional>
+        <optional>
+            <element name="east">
+                    <ref name="angle180"/>
+                </element>
+        </optional>
+        <optional>
+            <element name="west">
+                    <ref name="angle180"/>
+                </element>
+        </optional>
+        <optional>
+            <element name="rotation">
+                    <ref name="angle180"/>
+                </element>
+        </optional>
+    </define>
+    <define name="anonymous40">
+        <ref name="anonymous2"/>
+        <element name="href">
+                <ref name="anyURI"/>
+            </element>
+    </define>
+    <define name="anonymous42">
+        <ref name="anonymous6"/>
+    </define>
+    <define name="anonymous41">
+        <ref name="anonymous2"/>
+    </define>
+    <define name="Lod">
+        <ref name="anonymous12"/>
+    </define>
+    <define name="GroundOverlay">
+        <ref name="anonymous38"/>
+    </define>
+    <define name="coordinates">
+        <element name="coordinates">
+                <list>
+                    <zeroOrMore>
+                        <data type="string"/>
+                    </zeroOrMore>
+                </list>
+            </element>
+    </define>
+    <define name="anonymous44">
+        <element name="ScreenOverlay">
+            <ref name="anonymous1"/>
+            <optional>
+                <element name="overlayXY">
+                    <ref name="vec2Type"/>
+                </element>
+            </optional>
+            <optional>
+                <element name="screenXY">
+                    <ref name="vec2Type"/>
+                </element>
+            </optional>
+            <optional>
+                <element name="rotationXY">
+                    <ref name="vec2Type"/>
+                </element>
+            </optional>
+            <optional>
+                <element name="size">
+                    <ref name="vec2Type"/>
+                </element>
+            </optional>
+            <optional>
+                <element name="rotation">
+                    <ref name="float"/>
+                </element>
+            </optional>
+        </element>
+    </define>
+    <define name="anonymous43">
+        <element name="Document">
+            <ref name="anonymous42"/>
+            <zeroOrMore>
+                <ref name="Feature"/>
+            </zeroOrMore>
+        </element>
+    </define>
+</grammar>
