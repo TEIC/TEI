@@ -11,27 +11,40 @@ attributed to a person or place.</desc>
     <memberOf key="att.naming"/>
     <memberOf key="att.typed"/>
     <memberOf key="model.persTraitLike"/>
+        <memberOf key="model.placeTraitLike"/>
   </classes>
-  <content>
-    <rng:choice>
-
-<rng:oneOrMore>      <rng:ref name="trait"/>
-</rng:oneOrMore>
-     <rng:group>
-      <rng:optional>
-        <rng:ref name="label"/>
-      </rng:optional>
-      <rng:zeroOrMore>
-        <rng:ref name="model.pLike"/>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
+      <content>
         <rng:choice>
-          <rng:ref name="model.noteLike"/>
-          <rng:ref name="model.biblLike"/>
+<rng:oneOrMore>
+  <rng:ref name="trait"/>
+</rng:oneOrMore>
+<rng:group>
+  <rng:zeroOrMore>
+    <rng:ref name="head"/>
+  </rng:zeroOrMore>
+
+  <rng:oneOrMore>
+    <rng:ref name="model.pLike"/>
+  </rng:oneOrMore>
+  <rng:zeroOrMore>
+    <rng:choice>
+      <rng:ref name="model.noteLike"/>
+      <rng:ref name="model.biblLike"/>
+    </rng:choice>
+  </rng:zeroOrMore>
+</rng:group>
+<rng:group>
+  <rng:zeroOrMore>
+    <rng:choice>
+      <rng:ref name="model.labelLike"/>
+      <rng:ref name="model.noteLike"/>
+      <rng:ref name="model.biblLike"/>
+    </rng:choice>
+  </rng:zeroOrMore>
+</rng:group>
         </rng:choice>
-      </rng:zeroOrMore>
-    </rng:group>
-    </rng:choice> </content>
+      </content>
+
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <trait cert="high" type="social" from="1987-01-01" to="1997-12-31">
