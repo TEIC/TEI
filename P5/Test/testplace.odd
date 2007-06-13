@@ -19,928 +19,933 @@
       <div xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0"
         xmlns:gml="http://www.opengis.net/gml">
         <div xmlns="http://www.tei-c.org/ns/1.0" type="div2" xml:id="NDX">
-          <head>Places</head>
-          <p>In <ptr target="#NDPLAC"/> we discuss various ways of naming places such as towns,
-            countries etc. In much the same way as these guidelines distinguish between the encoding
-            of names for people and the encoding of other data about people, so they also
-            distinguish between the encoding of names for places and the encoding of other data
-            about places. In this section we present elements which may be used to record in a
-            structured way data about places of any kind which might be named or referenced within a
-            text. Such data may be useful as a way of normalising or standardizing references to
-            particular places, as the raw material for a gazeteer or similar reference document
-            associated with a particular text or set of texts, or in conjunction with any form of
-            geographical information system.</p>
-          <p>The following elements are provided for this purpose: <specList>
-              <specDesc key="listPlace"/>
-              <specDesc key="place"/>
-            </specList>
-          </p>
-          <p>A <gi>place</gi> element will usually contain at least one, and possibly several,
-              <gi>placeName</gi>-like elements indicating the names associated with it, by different
-            people, in different languages, or at different times. A place is defined, however, by
-            its physical location. Locations may be specified in a number of ways: as a set of
-            co-ordinates defining a point or an area on the surface of the earth, or by providing a
-            description of how the place may be found, usually in terms of other placeNames. For
-            example, we can identify the location of the Canadian city of London, either by
-            specifying its latitute and longitude, or by specifying that we mean the city called
-            London located in the province called Ontario within the country called Canada. </p>
-          <p>In addition we may wish to supply a brief characterization of the place identified, for
-            example to state that it is a city, an administrative area such as a country, or a
-            landmark of some kind such as a monument or a battlefield. If our typology of places is
-            simple, the open ended <att>type</att> attribute is the easiest way to represent it: so
-            we might say <tag>place type="city"</tag>, <gi>place type="battlefield"</gi> etc. </p>
-          <p>Within the <gi>place</gi> element, the following elements may be used to provide more
-            information about specific aspects of the place in a structured form: <specList>
-              <specDesc key="placeName"/>
-              <specDesc key="location"/>
-              <specDesc key="listPlace"/>
-              <specDesc key="place"/>
-            </specList>
-          </p>
-          <p> For example, the modern city of Lyon in France was in Roman times known as Lugdunum.
-            Although the modern and the Roman city are not physically co-extensive, they have
-            significant areas which overlap, and we may therefore wish to regard them as the same
-            place, while supplying both names with an indication of the time period during which
-            each was current. </p>
-          <p>The simplest method of specifying a location is by means of its geographic
-            co-ordinates. There are a number of different schemes available for specifying the
-            reference frame for the co-ordinate system, as also for the representation of latitude
-            and longitude. The default recommended by these Guidelines is to supply a string
-            containing two real numbers according to the 1984 World Geodetic System (WGS84) system;
-            this is the system currently used by most GPS applications which TEI users are likely to
-            encounter. <note place="foot">The most recent revision of this standard is known as the
-              Earth Gravity Model 1996.</note>We might therefore record the information about the
-            place known as <soCalled>Lyon</soCalled> as follows: <egXML
-              xmlns="http://www.tei-c.org/ns/Examples">
-              <place xml:id="LYON1" type="city">
-                <placeName notBefore="1400">Lyon</placeName>
-                <placeName notAfter="0056">Lugdunum</placeName>
-                <location scheme="latlong">41.687142 -74.870109</location>
-              </place>
-            </egXML>
-          </p>
-          <div>
-            <head>Varieties of location</head>
-            <p>In the following example, we have defined the place <soCalled>Lyon</soCalled> in
-              terms of its geographical co-ordinates specified using the Geographical Markup
-              Language being defined by the OGC<note place="foot">The OGC is an international
-                voluntary consensus standards organization whose members maintain the Geography
-                Markup Language standard. The OGC coordinates with the ISO TC 211 standards
-                organization to maintain consistency between OGC and ISO standards work. GML is in
-                the process of being adopted as an ISO standard (ISO 19136) and is expected to be
-                released as an International Standard in 2007.</note> and indicated the two names
-              associated with it at different times: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                <place type="city">
-                  <placeName notBefore="1400">Lyon</placeName>
-                  <placeName notAfter="0056">Lugdunum</placeName>
-                  <location>
-                    <gml:Polygon>
-                      <gml:exterior>
-                        <gml:LinearRing> 45.256 -110.45 46.46 -109.48 43.84 -109.86 45.8 -109.2
-                          45.256 -110.45 </gml:LinearRing>
-                      </gml:exterior>
-                    </gml:Polygon>
-                  </location>
-                </place>
-              </egXML>
-            </p>
-            <p>Alternatively, or in addition, we might identify Lyon by its geo-political status as
-              a settlement within a country forming part of a larger political entity, independent
-              of its geographic location: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                <place xml:id="LYON2">
-                  <placeName notBefore="1400">Lyon</placeName>
-                  <placeName notAfter="0056">Lugdunum</placeName>
-                  <location>
-                    <bloc>EU</bloc>
-                    <country>France</country>
-                  </location>
-                </place>
-              </egXML> The elements <gi>bloc</gi> etc. are specialised forms of <gi>placeName</gi>,
-              as discussed in <ptr target="NDPLGU"/>. </p>
-            <p>The <att>type</att> attribute is available to categorize more precisely both the kind
-              of place concerned, and the kind of name used to locate it. For example, a single
-              building or a street may both be regarded as a kind of place, just as a part of a
-                <gi>location</gi> called a <soCalled>district</soCalled> may also be more precisely
-              specified as an <soCalled>arrondissement</soCalled> as in this example: <egXML
-                xmlns="http://www.tei-c.org/ns/Examples">
-                <place type="building">
-                  <placeName>Brasserie Georges</placeName>
-                  <location>
-                    <country key="FR"/>
-                    <settlement type="city">Lyon</settlement>
-                    <district type="arrondissement">Perrache</district>
-                    <placeName type="street">Rue de la Charité</placeName>
-                  </location>
-                </place>
-              </egXML>
-            </p>
-            <p>Over time, a place may change its name but not its location, or its location and not
-              its name, or both. These possibilities are all catered for in the same way, by
-              supplying multiple <gi>placeName</gi> or <gi>location</gi> elements along with
-              attributes taken from the att.dating class. For example, we may indicate the differing
-              physical locations of Roman and modern Lyon as follows: <egXML
-                xmlns="http://www.tei-c.org/ns/Examples">
-                <place xml:id="LYON3">
-                  <placeName notBefore="1400">Lyon</placeName>
-                  <placeName notAfter="-0056">Lugdunum</placeName>
-                  <location notAfter="-0056">
-                    <gml:Polygon>
-                      <gml:exterior>
-                        <gml:LinearRing> 45.1 -110.23 46.48 -99.08 31.74 -108.86 45.3 -78.2 42.25
-                          -103.45 </gml:LinearRing>
-                      </gml:exterior>
-                    </gml:Polygon>
-                  </location>
-                  <location notBefore="1950">
-                    <gml:Polygon>
-                      <gml:exterior>
-                        <gml:LinearRing> 45.256 -110.45 46.46 -109.48 43.84 -109.86 45.8 -109.2
-                          45.256 -110.45 </gml:LinearRing>
-                      </gml:exterior>
-                    </gml:Polygon>
-                  </location>
-                </place>
-              </egXML></p>
-            <p>We may know very little about a place: for example, we may know its location and the
-              type of object found there, but have no name for it: <egXML
-                xmlns="http://www.tei-c.org/ns/Examples">
-                <place xml:id="HARRYS" type="fireHydrant">
-                  <location>Junction of Park Street and Charlotte Street</location>
-                </place>
-              </egXML>
-            </p>
-            <p>We may even wish to treat imaginary places in the same way: <egXML
-                xmlns="http://www.tei-c.org/ns/Examples">
-                <place>
-                  <placeName>Atlantis</placeName>
-                  <location>
-                    <offset>beyond</offset>
-                    <placeName>The Pillars of <persName>Hercules</persName></placeName>
-                  </location>
-                </place>
-              </egXML></p>
-            <p>The <gi>location</gi> element may thus identify a place to a greater or lesser degree
-              of precision, using a variety of means: a name, a set of names, or a set of
-              co-ordinates. A <gi>location</gi> sometimes resemble a set of instructions for finding
-              a place, rather than a name: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                <place xml:id="MYF">
-                  <placeName notAfter="1969">Yasgur's Farm</placeName>
-                  <placeName notBefore="1969">Woodstock Festival Site</placeName>
-                  <location>
-                    <measure>one mile</measure>
-                    <offset>north west of</offset>
-                    <settlement>Bethel</settlement>
-                    <region>New York</region>
-                  </location>
-                </place>
-              </egXML>
-              <!-- or why not have explicit <lat> and <long> elements? -->
-            </p>
-            <p>The element <gi>address</gi> may also be used to identify a location in terms of its
-              postal or other address: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                <place type="cemetery">
-                  <placeName>Protestant Cemetery</placeName>
-                  <placeName type="official" xml:lang="it">Cimitero Acattolico</placeName>
-                  <location type="geopolitical">
-                    <country>Italy</country>
-                    <settlement>Rome</settlement>
-                    <district>Testaccio</district>
-                  </location>
-                  <location type="address">
-                    <address><addrLine>Via Caio Cestio, 6</addrLine><addrLine>00153 Roma</addrLine></address>
-                  </location>
-                </place>
-              </egXML> When, as here, the same place is given multiple locations, the
-              <att>type</att> attribute should be used to characterize the kind of location, as a
-              means of indicating that these are alternative ways of identifying the same place,
-              rather than that place is spread across several locations. </p>
-            <p>If the string within a <gi>location</gi> element uses some other geodetic system, the
-                <att>scheme</att> attribute should indicate this by taking the value
-              <val>other</val>.</p>
-            <p>A <gi>bibl</gi> element may be used within <gi>location</gi> to indicate the source
-              of the location information.</p>
-            <!-- example needed -->
-          </div>
-          <div>
-            <head>Multiple places</head>
-            <p>A place may contain other places. This containment relation can be directly modelled
-              in XML: thus we can say that the towns of Vilnius and Kaunas are both in a place
-              called Lithuania (or Lietuva) as follows: <egXML
-                xmlns="http://www.tei-c.org/ns/Examples">
-                <place>
-                  <country>Lithuania</country>
-                  <country xml:lang="lt">Lietuva</country>
-                  <place>
-                    <settlement>Vilnius</settlement>
-                  </place>
-                  <place>
-                    <settlement>Kaunas</settlement>
-                  </place>
-                </place>
-              </egXML>
-            </p>
-            <p>This does not, of course, imply that Vilnius and Kaunas are the only places
-              constituting Lithuania; only that they are within it. A separate <gi>place</gi>
-              element may indicate that it is a part of Lithuania by supplying a <gi>relation</gi>
-              element, as discussed below (<ptr target="#place-rel"/>).</p>
-            <p>As a further example, the islands of Mauritius, Réunion, and Rodrigues are
-              collectively known as the Mascarene Islands. Grouped together with Mauritius there are
-              also several smaller offshore islands, with rather picturesque French names. One way
-              of representing this is as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                <place type="islandGroup">
-                  <placeName>Mascarene Islands</placeName>
-                  <placeName>Mascarenhas Archipelago</placeName>
-                  <place type="island">
-                    <placeName>Mauritius</placeName>
-                    <listPlace type="offshoreIslands">
-                      <place>
-                        <placeName>La roche qui pleure</placeName>
-                      </place>
-                      <place>
-                        <placeName>Ile aux cerfs</placeName>
-                      </place>
-                    </listPlace>
-                  </place>
-                  <place type="island">
-                    <placeName>Rodrigues</placeName>
-                  </place>
-                  <place type="island">
-                    <placeName>Réunion</placeName>
-                  </place>
-                </place>
-              </egXML>
-            </p>
-            <p>Here is a more complex example, showing the variety of names associated at different
-              times and in different languages with a set of hierarchically grouped places -- the
-              settlement of Camarthen Castle, within the town of Carmarthen, within the
-              administrative county of Carmarthenshire, Wales. <egXML
-                xmlns="http://www.tei-c.org/ns/Examples">
-                <place xml:id="wales" type="country">
-                  <placeName xml:lang="cy">Cymru</placeName>
-                  <placeName xml:lang="en">Wales</placeName>
-                  <placeName xml:lang="la">Wallie</placeName>
-                  <placeName xml:lang="la">Wallia</placeName>
-                  <placeName xml:lang="fro">Le Waleis</placeName>
-                  <place xml:id="carmarthenshire" type="region">
-                    <region type="county" xml:lang="en" notBefore="1284">Carmarthenshire</region>
-                    <place xml:id="carmarthen" type="settlement">
-                      <placeName xml:lang="en">Carmarthen</placeName>
-                      <placeName xml:lang="la" notBefore="1090" notAfter="1300">Kaermerdin</placeName>
-                      <placeName xml:lang="cy">Caerfyrddin</placeName>
-                      <place xml:id="carmarthen_castle" type="castle">
-                        <settlement>castle of Carmarthen</settlement>
-                      </place>
-                    </place>
-                  </place>
-                </place>
-              </egXML>
-            </p>
-            <p>As noted previously, <gi>country</gi>, <gi>region</gi>, <gi>settlement</gi> are all
-              specializations of the generic <gi>placename</gi> element; they are not
-              specializations of the <gi>place</gi> element. If it is desired to distinguish amongst
-              kinds of <emph>place</emph> this can only be done by means of the <att>type</att>
-              attribute as in the above example.
-              <!-- The use of values for the type attribute which correspond to
+<head>Places</head>
+<p>In <ptr target="#NDPLAC"/> we discuss various ways of naming places such as towns,
+  countries etc. In much the same way as these guidelines distinguish between the encoding
+  of names for people and the encoding of other data about people, so they also
+  distinguish between the encoding of names for places and the encoding of other data
+  about places. In this section we present elements which may be used to record in a
+  structured way data about places of any kind which might be named or referenced within a
+  text. Such data may be useful as a way of normalising or standardizing references to
+  particular places, as the raw material for a gazeteer or similar reference document
+  associated with a particular text or set of texts, or in conjunction with any form of
+  geographical information system.</p>
+<p>The following elements are provided for this purpose: <specList>
+    <specDesc key="listPlace"/>
+    <specDesc key="place"/>
+  </specList>
+</p>
+<p>A <gi>place</gi> element will usually contain at least one, and possibly several,
+    <gi>placeName</gi>-like elements indicating the names associated with it, by different
+  people, in different languages, or at different times. A place is defined, however, by
+  its physical location. Locations may be specified in a number of ways: as a set of
+  co-ordinates defining a point or an area on the surface of the earth, or by providing a
+  description of how the place may be found, usually in terms of other placeNames. For
+  example, we can identify the location of the Canadian city of London, either by
+  specifying its latitute and longitude, or by specifying that we mean the city called
+  London located in the province called Ontario within the country called Canada. </p>
+<p>In addition we may wish to supply a brief characterization of the place identified, for
+  example to state that it is a city, an administrative area such as a country, or a
+  landmark of some kind such as a monument or a battlefield. If our typology of places is
+  simple, the open ended <att>type</att> attribute is the easiest way to represent it: so
+  we might say <tag>place type="city"</tag>, <gi>place type="battlefield"</gi> etc. </p>
+<p>Within the <gi>place</gi> element, the following elements may be used to provide more
+  information about specific aspects of the place in a structured form: <specList>
+    <specDesc key="placeName"/>
+    <specDesc key="location"/>
+    <specDesc key="listPlace"/>
+    <specDesc key="place"/>
+  </specList>
+</p>
+<p> For example, the modern city of Lyon in France was in Roman times known as Lugdunum.
+  Although the modern and the Roman city are not physically co-extensive, they have
+  significant areas which overlap, and we may therefore wish to regard them as the same
+  place, while supplying both names with an indication of the time period during which
+  each was current. </p>
+<p>The simplest method of specifying a location is by means of its geographic
+  co-ordinates. There are a number of different schemes available for specifying the
+  reference frame for the co-ordinate system, as also for the representation of latitude
+  and longitude. The default recommended by these Guidelines is to supply a string
+  containing two real numbers according to the 1984 World Geodetic System (WGS84) system;
+  this is the system currently used by most GPS applications which TEI users are likely to
+  encounter. <note place="foot">The most recent revision of this standard is known as the
+    Earth Gravity Model 1996.</note>We might therefore record the information about the
+  place known as <soCalled>Lyon</soCalled> as follows: <egXML
+    xmlns="http://www.tei-c.org/ns/Examples">
+    <place xml:id="LYON1" type="city">
+      <placeName notBefore="1400">Lyon</placeName>
+      <placeName notAfter="0056">Lugdunum</placeName>
+      <location scheme="latlong">41.687142 -74.870109</location>
+    </place>
+  </egXML>
+</p>
+<div>
+  <head>Varieties of location</head>
+  <p>In the following example, we have defined the place <soCalled>Lyon</soCalled> in
+    terms of its geographical co-ordinates specified using the Geographical Markup
+    Language being defined by the OGC<note place="foot">The OGC is an international
+      voluntary consensus standards organization whose members maintain the Geography
+      Markup Language standard. The OGC coordinates with the ISO TC 211 standards
+      organization to maintain consistency between OGC and ISO standards work. GML is in
+      the process of being adopted as an ISO standard (ISO 19136) and is expected to be
+      released as an International Standard in 2007.</note> and indicated the two names
+    associated with it at different times: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <place type="city">
+        <placeName notBefore="1400">Lyon</placeName>
+        <placeName notAfter="0056">Lugdunum</placeName>
+        <location>
+<gml:Polygon>
+  <gml:exterior>
+    <gml:LinearRing> 45.256 -110.45 46.46 -109.48 43.84 -109.86 45.8 -109.2
+      45.256 -110.45 </gml:LinearRing>
+  </gml:exterior>
+</gml:Polygon>
+        </location>
+      </place>
+    </egXML>
+  </p>
+  <p>Alternatively, or in addition, we might identify Lyon by its geo-political status as
+    a settlement within a country forming part of a larger political entity, independent
+    of its geographic location: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <place xml:id="LYON2">
+        <placeName notBefore="1400">Lyon</placeName>
+        <placeName notAfter="0056">Lugdunum</placeName>
+        <location>
+        <bloc>EU</bloc>
+          <country>France</country>
+        </location>
+      </place>
+    </egXML> The elements <gi>bloc</gi> etc. are specialised forms of <gi>placeName</gi>,
+    as discussed in <ptr target="NDPLGU"/>. </p>
+  <p>The <att>type</att> attribute is available to categorize more precisely both the kind
+    of place concerned, and the kind of name used to locate it. For example, a single
+    building or a street may both be regarded as a kind of place, just as a part of a
+      <gi>location</gi> called a <soCalled>district</soCalled> may also be more precisely
+    specified as an <soCalled>arrondissement</soCalled> as in this example: <egXML
+      xmlns="http://www.tei-c.org/ns/Examples">
+      <place type="building">
+        <placeName>Brasserie Georges</placeName>
+        <location>
+<country key="FR"/>
+<settlement type="city">Lyon</settlement>
+<district type="arrondissement">Perrache</district>
+<placeName type="street">Rue de la Charité</placeName>
+        </location>
+      </place>
+    </egXML>
+  </p>
+  <p>Over time, a place may change its name but not its location, or its location and not
+    its name, or both. These possibilities are all catered for in the same way, by
+    supplying multiple <gi>placeName</gi> or <gi>location</gi> elements along with
+    attributes taken from the att.dating class. For example, we may indicate the differing
+    physical locations of Roman and modern Lyon as follows: <egXML
+      xmlns="http://www.tei-c.org/ns/Examples">
+      <place xml:id="LYON3">
+        <placeName notBefore="1400">Lyon</placeName>
+        <placeName notAfter="-0056">Lugdunum</placeName>
+        <location notAfter="-0056">
+<gml:Polygon>
+  <gml:exterior>
+    <gml:LinearRing> 45.1 -110.23 46.48 -99.08 31.74 -108.86 45.3 -78.2 42.25
+      -103.45 </gml:LinearRing>
+  </gml:exterior>
+</gml:Polygon>
+        </location>
+        <location notBefore="1950">
+<gml:Polygon>
+  <gml:exterior>
+    <gml:LinearRing> 45.256 -110.45 46.46 -109.48 43.84 -109.86 45.8 -109.2
+      45.256 -110.45 </gml:LinearRing>
+  </gml:exterior>
+</gml:Polygon>
+        </location>
+      </place>
+    </egXML></p>
+  <p>We may know very little about a place: for example, we may know its location and the
+    type of object found there, but have no name for it: <egXML
+      xmlns="http://www.tei-c.org/ns/Examples">
+      <place xml:id="HARRYS" type="fireHydrant">
+        <location>Junction of Park Street and Charlotte Street</location>
+      </place>
+    </egXML>
+  </p>
+  <p>We may even wish to treat imaginary places in the same way: <egXML
+      xmlns="http://www.tei-c.org/ns/Examples">
+      <place>
+        <placeName>Atlantis</placeName>
+        <location>
+<offset>beyond</offset>
+<placeName>The Pillars of <persName>Hercules</persName></placeName>
+        </location>
+      </place>
+    </egXML></p>
+  <p>The <gi>location</gi> element may thus identify a place to a greater or lesser degree
+    of precision, using a variety of means: a name, a set of names, or a set of
+    co-ordinates. A <gi>location</gi> sometimes resemble a set of instructions for finding
+    a place, rather than a name: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <place xml:id="MYF">
+        <placeName notAfter="1969">Yasgur's Farm</placeName>
+        <placeName notBefore="1969">Woodstock Festival Site</placeName>
+        <location>
+<measure>one mile</measure>
+<offset>north west of</offset>
+<settlement>Bethel</settlement>
+<region>New York</region>
+        </location>
+      </place>
+    </egXML>
+    <!-- or why not have explicit <lat> and <long> elements? -->
+  </p>
+  <p>The element <gi>address</gi> may also be used to identify a location in terms of its
+    postal or other address: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <place type="cemetery">
+        <placeName>Protestant Cemetery</placeName>
+        <placeName type="official" xml:lang="it">Cimitero Acattolico</placeName>
+        <location type="geopolitical">
+<country>Italy</country>
+<settlement>Rome</settlement>
+<district>Testaccio</district>
+        </location>
+        <location type="address">
+<address><addrLine>Via Caio Cestio, 6</addrLine><addrLine>00153 Roma</addrLine></address>
+        </location>
+      </place>
+    </egXML> When, as here, the same place is given multiple locations, the
+    <att>type</att> attribute should be used to characterize the kind of location, as a
+    means of indicating that these are alternative ways of identifying the same place,
+    rather than that place is spread across several locations. </p>
+  <p>If the string within a <gi>location</gi> element uses some other geodetic system, the
+      <att>scheme</att> attribute should indicate this by taking the value
+    <val>other</val>.</p>
+  <p>A <gi>bibl</gi> element may be used within <gi>location</gi> to indicate the source
+    of the location information.</p>
+  <!-- example needed -->
+</div>
+<div>
+  <head>Multiple places</head>
+  <p>A place may contain other places. This containment relation can be directly modelled
+    in XML: thus we can say that the towns of Vilnius and Kaunas are both in a place
+    called Lithuania (or Lietuva) as follows: <egXML
+      xmlns="http://www.tei-c.org/ns/Examples">
+      <place>
+        <country>Lithuania</country>
+        <country xml:lang="lt">Lietuva</country>
+        <place>
+<settlement>Vilnius</settlement>
+        </place>
+        <place>
+<settlement>Kaunas</settlement>
+        </place>
+      </place>
+    </egXML>
+  </p>
+  <p>This does not, of course, imply that Vilnius and Kaunas are the only places
+    constituting Lithuania; only that they are within it. A separate <gi>place</gi>
+    element may indicate that it is a part of Lithuania by supplying a <gi>relation</gi>
+    element, as discussed below (<ptr target="#place-rel"/>).</p>
+  <p>As a further example, the islands of Mauritius, Réunion, and Rodrigues are
+    collectively known as the Mascarene Islands. Grouped together with Mauritius there are
+    also several smaller offshore islands, with rather picturesque French names. One way
+    of representing this is as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <place type="islandGroup">
+        <placeName>Mascarene Islands</placeName>
+        <placeName>Mascarenhas Archipelago</placeName>
+        <place type="island">
+<placeName>Mauritius</placeName>
+<listPlace type="offshoreIslands">
+  <place>
+    <placeName>La roche qui pleure</placeName>
+  </place>
+  <place>
+    <placeName>Ile aux cerfs</placeName>
+  </place>
+</listPlace>
+        </place>
+        <place type="island">
+<placeName>Rodrigues</placeName>
+        </place>
+        <place type="island">
+<placeName>Réunion</placeName>
+        </place>
+      </place>
+    </egXML>
+  </p>
+  <p>Here is a more complex example, showing the variety of names associated at different
+    times and in different languages with a set of hierarchically grouped places -- the
+    settlement of Camarthen Castle, within the town of Carmarthen, within the
+    administrative county of Carmarthenshire, Wales. <egXML
+      xmlns="http://www.tei-c.org/ns/Examples">
+      <place xml:id="wales" type="country">
+        <placeName xml:lang="cy">Cymru</placeName>
+        <placeName xml:lang="en">Wales</placeName>
+        <placeName xml:lang="la">Wallie</placeName>
+        <placeName xml:lang="la">Wallia</placeName>
+        <placeName xml:lang="fro">Le Waleis</placeName>
+        <place xml:id="carmarthenshire" type="region">
+<region type="county" xml:lang="en" notBefore="1284">Carmarthenshire</region>
+<place xml:id="carmarthen" type="settlement">
+  <placeName xml:lang="en">Carmarthen</placeName>
+  <placeName xml:lang="la" notBefore="1090" notAfter="1300">Kaermerdin</placeName>
+  <placeName xml:lang="cy">Caerfyrddin</placeName>
+  <place xml:id="carmarthen_castle" type="castle">
+    <settlement>castle of Carmarthen</settlement>
+  </place>
+</place>
+        </place>
+      </place>
+    </egXML>
+  </p>
+  <p>As noted previously, <gi>country</gi>, <gi>region</gi>, <gi>settlement</gi> are all
+    specializations of the generic <gi>placename</gi> element; they are not
+    specializations of the <gi>place</gi> element. If it is desired to distinguish amongst
+    kinds of <emph>place</emph> this can only be done by means of the <att>type</att>
+    attribute as in the above example.
+    <!-- The use of values for the type attribute which correspond to
 the names of a naming element ("country", "region", "settlement") is
 recommended when appropriate but not required. (removed this sentence
 as it is pretty incomprehensible) --></p>
-            <p>This use of multiple <gi>place</gi> elements should be distinguished from the
-              (possibly simpler) case where a number of places with some property in common are
-              being grouped together for convenience, for example, in a gazeteer. The
-              <gi>listPlace</gi> element is provided as a means of grouping places together where
-              there is no implication that the grouped elements constitute a distinct place. For
-              example: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                <place type="county">
-                  <placeName>Herefordshire</placeName>
-                  <listPlace type="villages">
-                    <place>
-                      <placeName>Abbey Dore</placeName>
-                      <location>51.969604 -2.893146</location>
-                    </place>
-                    <place>
-                      <placeName>Acton Beauchamp</placeName>
-                    </place>
-                    <!-- etc -->
-                  </listPlace>
-                  <listPlace type="towns">
-                    <place>
-                      <placeName>Hereford</placeName>
-                    </place>
-                    <place>
-                      <placeName>Leominster</placeName>
-                    </place>
-                    <!-- etc  -->
-                  </listPlace>
-                </place>
-              </egXML>
-            </p>
-          </div>
-          <div>
-            <head>States, traits, and events</head>
-            <p>There are many different kinds of information which it might be considered useful to
-              record for a place in addition to its name and location, and the categories selected
-              are likely to be very project-specific. As with persons therefore these Guidelines
-              make no claim to comprehensiveness in this context. Instead, the generic
-              <gi>state</gi>, <gi>trait</gi>, and <gi>event</gi> elements defined by this module
-              should be used. Each of these may be customized for particular needs by means of their
-                <att>type</att> attribute. These are complemented by a small number of predefined
-              elements of general utility: <specList>
-                <specDesc key="population"/>
-                <specDesc key="climate"/>
-                <specDesc key="terrain"/>
-              </specList>
-            </p>
-            <p>The first of these is a specialization of the generic <gi>state</gi> element; while
-              the second two are specializations of the generic <gi>trait</gi> element. The generic
-                <gi>event</gi> element may be used for almost any kind of event in the life of a
-              place; no specialized version of this element is proposed, nor do we attempt to
-              enumerate the possible values which might be appropriate for the <att>type</att>
-              attribute on any of these generic elements. </p>
-            <p>Here is an example, showing how the specific and generic elements may be combined:
-                <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                <place xml:id="IS">
-                  <placeName xml:lang="en">Iceland</placeName>
-                  <placeName xml:lang="is">Ísland</placeName>
-                  <location type="other">65 00 N, 18 00 W</location>
-                  <terrain>
-                    <label>area</label>
-                    <p>103,000 sq km</p>
-                  </terrain>
-                  <state type="governance" notBefore="1944">
-                    <p>Constitutional republic</p>
-                  </state>
-                  <state type="governance" notAfter="1944">
-                    <p>Part of the kingdom of <placeName key="#DK">Denmark</placeName></p>
-                  </state>
-                  <event type="governance" from="1944-06-17">
-                    <label>Independence</label>
-                    <p> Iceland became independent on 17 June 1944.</p>
-                  </event>
-                </place>
-              </egXML>
-            </p>
-            <p>Like <gi>place</gi> elements, <gi>state</gi> and <gi>trait</gi> elements, and others
-              of the same class, can be nested hierarchically within each other. When this is done,
-              values for the <att>type</att> attribute are to be understood as cumulatively
-              inherited, as elsewhere in the TEI scheme (for example on <gi>category</gi> or
-                <gi>linkGrp</gi>). In the following example, the outermost <gi>population</gi>
-              element concerns the squirrel population between the dates given. This is then broken
-              down into red and gray squirrel populations, and within that into male and female:
-                <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                <population type="squirrel" notBefore="1901" notAfter="1902-01-11" resp="#strabo">
-                  <population type="red" when="1901-01-10">
-                    <population type="female">12</population>
-                    <population type="male">15</population>
-                  </population>
-                  <population type="gray" when="1902-01-10" cert="high">
-                    <population type="female">23</population>
-                    <population type="male" cert="low" resp="#biber">45</population>
-                  </population>
-                </population>
-              </egXML> The dating and responsibility attributes here behave slightly differently
-              from the <att>type</att> attribute: responsibility is not an additive property, and
-              therefore an element either states it explicitly, or inherits it from its nearest
-              ancestor. Dating is slightly different again, in that a child element may specify a
-              date more precisely than its parent, as in the example above</p>
-            <p>Events may also be subdivided into other events. For example, a two part meeting
-              might be represented as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                <event type="meeting" date="2007-05-29">
-                  <event type="preamble" notAfter="13:00">
-                    <desc>first part</desc>
-                  </event>
-                  <event type="conclusions" notBefore="13:00">
-                    <desc>second part</desc>
-                  </event>
-                </event>
-              </egXML>
-            </p>
-          </div>
-          <div xml:id="place-rel">
-            <head>Relations between places</head>
-            <p>The <gi>relation</gi> element may also be used to express relationships of various
-              kinds between places, or between places and persons, in much the same way as it is
-              used to express relationships between persons alone. Returning to the Mascarene
-              Islands example cited above, we might define the island group and its constituents
-              separately, but indicate the relationship by means of a <gi>relation</gi> element:
-                <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                <listPlace>
-                  <place xml:id="MASC">
-                    <placeName>Mascarene islands</placeName>
-                    <placeName>Mascarenhas Archipelago</placeName>
-                  </place>
-                  <place xml:id="MRU">
-                    <placeName>Mauritius</placeName>
-                    <!-- ... -->
-                  </place>
-                  <place xml:id="ROD">
-                    <placeName>Rodrigues</placeName>
-                  </place>
-                  <place xml:id="REN">
-                    <placeName>Réunion</placeName>
-                  </place>
-                  <relation name="contains" active="#MASC" passive="#ROD #MRU #REN"/>
-                </listPlace>
-              </egXML>
-            </p>
-            <p>This <soCalled>stand off</soCalled> style of representation has the advantage that we
-              can now also represent the fact that a place may be <q>part of</q> more than one other
-              place; for example, Réunion is part of France, as well as part of the Mascarenes. If
-              we add a declaration for France to the list above: <egXML
-                xmlns="http://www.tei-c.org/ns/Examples">
-                <place type="country" xml:id="FRA">
-                  <placeName>France</placeName>
-                </place>
-              </egXML> we can now model this dual allegiance by means of a <gi>relation</gi>
-              element: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                <relation name="partOf" active="#REN" passive="#FRA #MASC"/>
-              </egXML>
-            </p>
-          </div>
-          <div>
-            <head>Formal definitions</head>
-            <p>The following example schema, called testplace, may be used to test the proposal
-              described here.</p>
-            <schemaSpec ident="testplace" start="TEI listPlace">
-              <moduleRef key="header"/>
-              <moduleRef key="core"/>
-              <moduleRef key="tei"/>
-              <moduleRef key="namesdates"/>
-              <moduleRef key="textstructure"/>
-              <moduleRef key="corpus"/>
-              <elementSpec ident="place" mode="add">
-                <desc>contains data about a geographic location</desc>
-                <classes>
-                  <memberOf key="att.typed"/>
-                  <memberOf key="model.placeLike"/>
-                </classes>
-                <content>
-                  <rng:zeroOrMore>
-                    <rng:choice>
-                      <rng:ref name="model.placeStateLike"/>
-                      <rng:ref name="model.placeTraitLike"/>
-                      <rng:ref name="model.placeEventLike"/>
-                      <rng:ref name="model.placeLike"/>
-                      <rng:ref name="model.noteLike"/>
-                    </rng:choice>
-                  </rng:zeroOrMore>
-                </content>
-              </elementSpec>
-              <elementSpec ident="location" mode="add">
-                <desc>defines the location of a place as a set of geographical co-ordinates, in
-                  terms of a other named geo-political entities, or as an address </desc>
-                <classes>
-                  <memberOf key="att.typed"/>
-                  <memberOf key="model.placeTraitLike"/>
-                  <memberOf key="att.datable"/>
-                  <memberOf key="att.editLike"/>
-                </classes>
-                <content>
-                  <rng:zeroOrMore>
-                    <rng:choice>
-                      <rng:text/>
-                      <rng:ref name="anyGML"/>
-                      <rng:ref name="model.placeNamePart"/>
-                      <rng:ref name="model.measureLike"/>
-                      <rng:ref name="model.addressLike"/>
-                      <rng:ref name="model.noteLike"/>
-                      <rng:ref name="model.biblLike"/>
-                    </rng:choice>
-                  </rng:zeroOrMore>
-                </content>
-                <attList>
-                  <attDef ident="scheme">
-                    <desc>defines how the content of the element should be interpreted in the case
-                      where it is given as text only</desc>
-                    <valList type="closed">
-                      <valItem ident="latlong">
-                        <desc> a pair of numbers to be interpreted as latitude followed by longitude
-                          according to a specified datum, by default WGS84</desc>
-                      </valItem>
-                      <valItem ident="local">
-                        <desc>the value supplied is to be interpreted according to local
-                        convention</desc>
-                      </valItem>
-                      <valItem ident="other">
-                        <desc>the value supplies is descriptive text</desc>
-                      </valItem>
-                    </valList>
-                  </attDef>
-                </attList>
-              </elementSpec>
-              <elementSpec ident="terrain" mode="add">
-                <desc>contains information about the physical terrain of a place</desc>
-                <classes>
-                  <memberOf key="att.datable"/>
-                  <memberOf key="att.editLike"/>
-                  <memberOf key="att.naming"/>
-                  <memberOf key="att.typed"/>
-                  <memberOf key="model.placeTraitLike"/>
-                </classes>
-                <content>
-                  <rng:choice>
-                    <rng:oneOrMore>
-                      <rng:ref name="terrain"/>
-                    </rng:oneOrMore>
-                    <rng:group>
-                      <rng:zeroOrMore>
-                        <rng:ref name="head"/>
-                      </rng:zeroOrMore>
-                      <rng:oneOrMore>
-                        <rng:ref name="model.pLike"/>
-                      </rng:oneOrMore>
-                      <rng:zeroOrMore>
-                        <rng:choice>
-                          <rng:ref name="model.noteLike"/>
-                          <rng:ref name="model.biblLike"/>
-                        </rng:choice>
-                      </rng:zeroOrMore>
-                    </rng:group>
-                    <rng:group>
-                      <rng:oneOrMore>
-                        <rng:choice>
-                          <rng:ref name="model.labelLike"/>
-                          <rng:ref name="model.noteLike"/>
-                          <rng:ref name="model.biblLike"/>
-                        </rng:choice>
-                      </rng:oneOrMore>
-                    </rng:group>
-                  </rng:choice>
-                </content>
-              </elementSpec>
-              <elementSpec ident="climate" mode="add">
-                <desc>contains information about the usual climate of a place</desc>
-                <classes>
-                  <memberOf key="att.datable"/>
-                  <memberOf key="att.editLike"/>
-                  <memberOf key="att.naming"/>
-                  <memberOf key="att.typed"/>
-                  <memberOf key="model.placeTraitLike"/>
-                </classes>
-                <content>
-                  <rng:choice>
-                    <rng:oneOrMore>
-                      <rng:ref name="climate"/>
-                    </rng:oneOrMore>
-                    <rng:group>
-                      <rng:zeroOrMore>
-                        <rng:ref name="head"/>
-                      </rng:zeroOrMore>
-                      <rng:oneOrMore>
-                        <rng:ref name="model.pLike"/>
-                      </rng:oneOrMore>
-                      <rng:zeroOrMore>
-                        <rng:choice>
-                          <rng:ref name="model.noteLike"/>
-                          <rng:ref name="model.biblLike"/>
-                        </rng:choice>
-                      </rng:zeroOrMore>
-                    </rng:group>
-                    <rng:group>
-                      <rng:oneOrMore>
-                        <rng:choice>
-                          <rng:ref name="model.labelLike"/>
-                          <rng:ref name="model.noteLike"/>
-                          <rng:ref name="model.biblLike"/>
-                        </rng:choice>
-                      </rng:oneOrMore>
-                    </rng:group>
-                  </rng:choice>
-                </content>
-              </elementSpec>
-              <elementSpec ident="population" mode="add">
-                <desc>contains information about the population of a given place</desc>
-                <classes>
-                  <memberOf key="att.datable"/>
-                  <memberOf key="att.editLike"/>
-                  <memberOf key="att.naming"/>
-                  <memberOf key="att.typed"/>
-                  <memberOf key="model.placeStateLike"/>
-                </classes>
-                <content>
-                  <rng:choice>
-                    <rng:oneOrMore>
-                      <rng:ref name="population"/>
-                    </rng:oneOrMore>
-                    <rng:group>
-                      <rng:zeroOrMore>
-                        <rng:ref name="head"/>
-                      </rng:zeroOrMore>
-                      <rng:oneOrMore>
-                        <rng:ref name="model.pLike"/>
-                      </rng:oneOrMore>
-                      <rng:zeroOrMore>
-                        <rng:choice>
-                          <rng:ref name="model.noteLike"/>
-                          <rng:ref name="model.biblLike"/>
-                        </rng:choice>
-                      </rng:zeroOrMore>
-                    </rng:group>
-                    <rng:group>
-                      <rng:oneOrMore>
-                        <rng:choice>
-                          <rng:ref name="model.labelLike"/>
-                          <rng:ref name="model.noteLike"/>
-                          <rng:ref name="model.biblLike"/>
-                        </rng:choice>
-                      </rng:oneOrMore>
-                    </rng:group>
-                  </rng:choice>
-                </content>
-              </elementSpec>
-              <elementSpec ident="listPlace" mode="add">
-                <equiv/>
-                <desc>contains a list of places, optionally followed by a list of relationships
-                  (other than containment) defined amongst them. </desc>
-                <classes>
-                  <memberOf key="att.typed"/>
-                  <memberOf key="att.declarable"/>
-                  <memberOf key="model.biblLike"/>
-                  <memberOf key="model.placeLike"/>
-                </classes>
-                <content>
-                  <rng:group>
-                    <rng:oneOrMore>
-                      <rng:ref name="model.placeLike"/>
-                    </rng:oneOrMore>
-                    <rng:zeroOrMore>
-                      <rng:ref name="relation"/>
-                    </rng:zeroOrMore>
-                  </rng:group>
-                </content>
-              </elementSpec>
-              <elementSpec module="namesdates" mode="change" ident="orgName">
-                <content>
-                  <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-                    <rng:choice>
-                      <rng:text/>
-                      <rng:ref name="model.gLike"/>
-                      <rng:ref name="model.persNamePart"/>
-                      <rng:ref name="model.global"/>
-                      <rng:ref name="model.phrase"/>
-                    </rng:choice>
-                  </rng:zeroOrMore>
-                </content>
-              </elementSpec>
-              <elementSpec module="namesdates" mode="change" ident="placeName">
-                <classes>
-                  <memberOf key="model.placeStateLike"/>
-                  <memberOf key="model.placeNamePart"/>
-                  <memberOf key="att.naming"/>
-                  <memberOf key="att.typed"/>
-                  <memberOf key="att.datable"/>
-                  <memberOf key="att.editLike"/>
-                </classes>
-                <content>
-                  <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-                    <rng:choice>
-                      <rng:text/>
-                      <rng:ref name="model.gLike"/>
-                      <rng:ref name="model.phrase"/>
-                      <rng:ref name="model.global"/>
-                    </rng:choice>
-                  </rng:zeroOrMore>
-                </content>
-              </elementSpec>
-              <elementSpec module="namesdates" mode="change" ident="geog">
-                <classes>
-                  <memberOf key="model.placeStateLike"/>
-                  <memberOf key="model.placeNamePart"/>
-                  <memberOf key="att.naming"/>
-                  <memberOf key="att.typed"/>
-                  <memberOf key="att.datable"/>
-                </classes>
-              </elementSpec>
-              <elementSpec module="namesdates" mode="change" ident="bloc">
-                <classes>
-                  <memberOf key="model.placeStateLike"/>
-                  <memberOf key="model.placeNamePart"/>
-                  <memberOf key="att.naming"/>
-                  <memberOf key="att.typed"/>
-                  <memberOf key="att.datable"/>
-                </classes>
-              </elementSpec>
-              <elementSpec module="namesdates" mode="change" ident="region">
-                <classes>
-                  <memberOf key="model.placeStateLike"/>
-                  <memberOf key="model.placeNamePart"/>
-                  <memberOf key="att.naming"/>
-                  <memberOf key="att.typed"/>
-                  <memberOf key="att.datable"/>
-                </classes>
-              </elementSpec>
-              <elementSpec module="namesdates" mode="change" ident="country">
-                <classes>
-                  <memberOf key="model.placeStateLike"/>
-                  <memberOf key="model.placeNamePart"/>
-                  <memberOf key="att.naming"/>
-                  <memberOf key="att.typed"/>
-                  <memberOf key="att.datable"/>
-                </classes>
-              </elementSpec>
-              <elementSpec module="namesdates" mode="change" ident="settlement">
-                <classes>
-                  <memberOf key="model.placeStateLike"/>
-                  <memberOf key="model.placeNamePart"/>
-                  <memberOf key="att.naming"/>
-                  <memberOf key="att.typed"/>
-                  <memberOf key="att.datable"/>
-                </classes>
-              </elementSpec>
-              <elementSpec module="namesdates" mode="change" ident="district">
-                <classes>
-                  <memberOf key="model.placeStateLike"/>
-                  <memberOf key="model.placeNamePart"/>
-                  <memberOf key="att.naming"/>
-                  <memberOf key="att.typed"/>
-                  <memberOf key="att.datable"/>
-                </classes>
-              </elementSpec>
-              <elementSpec ident="trait" mode="change" module="namesdates">
-                <classes>
-                  <memberOf key="att.datable"/>
-                  <memberOf key="att.editLike"/>
-                  <memberOf key="att.naming"/>
-                  <memberOf key="att.typed"/>
-                  <memberOf key="model.persTraitLike"/>
-                  <memberOf key="model.placeTraitLike"/>
-                </classes>
-                <content>
-                  <rng:choice>
-                    <rng:oneOrMore>
-                      <rng:ref name="trait"/>
-                    </rng:oneOrMore>
-                    <rng:group>
-                      <rng:oneOrMore>
-                        <rng:ref name="model.pLike"/>
-                      </rng:oneOrMore>
-                      <rng:zeroOrMore>
-                        <rng:choice>
-                          <rng:ref name="model.noteLike"/>
-                          <rng:ref name="model.biblLike"/>
-                        </rng:choice>
-                      </rng:zeroOrMore>
-                    </rng:group>
-                    <rng:group>
-                      <rng:zeroOrMore>
-                        <rng:choice>
-                          <rng:ref name="model.labelLike"/>
-                          <rng:ref name="model.noteLike"/>
-                          <rng:ref name="model.biblLike"/>
-                        </rng:choice>
-                      </rng:zeroOrMore>
-                    </rng:group>
-                  </rng:choice>
-                </content>
-              </elementSpec>
-              <elementSpec ident="state" mode="change" module="namesdates">
-                <classes>
-                  <memberOf key="att.datable"/>
-                  <memberOf key="att.editLike"/>
-                  <memberOf key="att.typed"/>
-                  <memberOf key="att.naming"/>
-                  <memberOf key="model.placeStateLike"/>
-                </classes>
-                <content>
-                  <rng:choice>
-                    <rng:oneOrMore>
-                      <rng:ref name="state"/>
-                    </rng:oneOrMore>
-                    <rng:group>
-                      <rng:oneOrMore>
-                        <rng:ref name="model.pLike"/>
-                      </rng:oneOrMore>
-                      <rng:zeroOrMore>
-                        <rng:choice>
-                          <rng:ref name="model.noteLike"/>
-                          <rng:ref name="model.biblLike"/>
-                        </rng:choice>
-                      </rng:zeroOrMore>
-                    </rng:group>
-                    <rng:group>
-                      <rng:zeroOrMore>
-                        <rng:choice>
-                          <rng:ref name="model.labelLike"/>
-                          <rng:ref name="model.noteLike"/>
-                          <rng:ref name="model.biblLike"/>
-                        </rng:choice>
-                      </rng:zeroOrMore>
-                    </rng:group>
-                  </rng:choice>
-                </content>
-              </elementSpec>
-              <elementSpec ident="event" mode="change" module="namesdates">
-                <classes>
-                  <memberOf key="att.datable"/>
-                  <memberOf key="att.editLike"/>
-                  <memberOf key="att.typed"/>
-                  <memberOf key="att.naming"/>
-                  <memberOf key="model.persEventLike"/>
-                  <memberOf key="model.placeEventLike"/>
-                </classes>
-                <content>
-                  <rng:choice>
-                    <rng:oneOrMore>
-                      <rng:ref name="event"/>
-                    </rng:oneOrMore>
-                    <rng:group>
-                      <rng:zeroOrMore>
-                        <rng:ref name="head"/>
-                      </rng:zeroOrMore>
-                      <rng:oneOrMore>
-                        <rng:ref name="model.pLike"/>
-                      </rng:oneOrMore>
-                      <rng:zeroOrMore>
-                        <rng:choice>
-                          <rng:ref name="model.noteLike"/>
-                          <rng:ref name="model.biblLike"/>
-                        </rng:choice>
-                      </rng:zeroOrMore>
-                    </rng:group>
-                    <rng:group>
-                      <rng:zeroOrMore>
-                        <rng:choice>
-                          <rng:ref name="model.labelLike"/>
-                          <rng:ref name="model.noteLike"/>
-                          <rng:ref name="model.biblLike"/>
-                        </rng:choice>
-                      </rng:zeroOrMore>
-                    </rng:group>
-                  </rng:choice>
-                </content>
-              </elementSpec>
-              <elementSpec ident="label" module="core" mode="change">
-                <classes>
-                  <memberOf key="model.inter"/>
-                  <memberOf key="model.common"/>
-                  <memberOf key="model.labelLike"/>
-                </classes>
-              </elementSpec>
-              <elementSpec ident="desc" module="core" mode="change">
-                <classes>
-                  <memberOf key="model.glossLike"/>
-                  <memberOf key="att.translatable"/>
-                  <memberOf key="model.labelLike"/>
-                </classes>
-              </elementSpec>
-              <classSpec ident="model.placeLike" mode="add" type="model">
-                <desc>Objects like <gi>place</gi>s</desc>
-              </classSpec>
-              <classSpec ident="model.placeTraitLike" mode="add" type="model">
-                <desc>Objects like <gi>trait</gi>s</desc>
-              </classSpec>
-              <classSpec ident="model.placeStateLike" mode="add" type="model">
-                <desc>Objects like <gi>state</gi>s</desc>
-              </classSpec>
-              <classSpec ident="model.placeEventLike" mode="add" type="model">
-                <desc>Objects like <gi>placeEvent</gi>s</desc>
-              </classSpec>
-              <classSpec ident="model.labelLike" mode="add" type="model">
-                <desc>Descriptive elements</desc>
-              </classSpec>
-              <classSpec module="tei" type="model" ident="model.placeNamePart" mode="change">
-                <classes>
-                  <memberOf key="model.nameLike"/>
-                </classes>
-              </classSpec>
-              <elementSpec ident="offset" module="namesdates" mode="change">
-                <classes>
-                  <memberOf key="model.placeNamePart"/>
-                  <memberOf key="att.typed"/>
-                </classes>
-              </elementSpec>
-              <elementSpec ident="geogName" module="namesdates" mode="change">
-                <content>
-                  <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-                    <rng:choice>
-                      <rng:text/>
-                      <rng:ref name="model.gLike"/>
-                      <rng:ref name="model.nameLike"/>
-                      <rng:ref name="model.global"/>
-                    </rng:choice>
-                  </rng:zeroOrMore>
-                </content>
-              </elementSpec>
-              <macroSpec type="pe" ident="anyGML" mode="add">
-                <content>
-                  <element xmlns="http://relaxng.org/ns/structure/1.0">
-                    <nsName ns="http://www.opengis.net/gml"/>
-                    <zeroOrMore>
-                      <choice>
-                        <attribute>
-                          <anyName/>
-                        </attribute>
-                        <ref name="anyGML"/>
-                        <text/>
-                      </choice>
-                    </zeroOrMore>
-                  </element>
-                </content>
-              </macroSpec>
-            </schemaSpec>
-          </div>
+  <p>This use of multiple <gi>place</gi> elements should be distinguished from the
+    (possibly simpler) case where a number of places with some property in common are
+    being grouped together for convenience, for example, in a gazeteer. The
+    <gi>listPlace</gi> element is provided as a means of grouping places together where
+    there is no implication that the grouped elements constitute a distinct place. For
+    example: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <place type="county">
+        <placeName>Herefordshire</placeName>
+        <listPlace type="villages">
+<place>
+  <placeName>Abbey Dore</placeName>
+  <location>51.969604 -2.893146</location>
+</place>
+<place>
+  <placeName>Acton Beauchamp</placeName>
+</place>
+<!-- etc -->
+        </listPlace>
+        <listPlace type="towns">
+<place>
+  <placeName>Hereford</placeName>
+</place>
+<place>
+  <placeName>Leominster</placeName>
+</place>
+<!-- etc  -->
+        </listPlace>
+      </place>
+    </egXML>
+  </p>
+</div>
+<div>
+  <head>States, traits, and events</head>
+  <p>There are many different kinds of information which it might be considered useful to
+    record for a place in addition to its name and location, and the categories selected
+    are likely to be very project-specific. As with persons therefore these Guidelines
+    make no claim to comprehensiveness in this context. Instead, the generic
+    <gi>state</gi>, <gi>trait</gi>, and <gi>event</gi> elements defined by this module
+    should be used. Each of these may be customized for particular needs by means of their
+      <att>type</att> attribute. These are complemented by a small number of predefined
+    elements of general utility: <specList>
+      <specDesc key="population"/>
+      <specDesc key="climate"/>
+      <specDesc key="terrain"/>
+    </specList>
+  </p>
+  <p>The first of these is a specialization of the generic <gi>state</gi> element; while
+    the second two are specializations of the generic <gi>trait</gi> element. The generic
+      <gi>event</gi> element may be used for almost any kind of event in the life of a
+    place; no specialized version of this element is proposed, nor do we attempt to
+    enumerate the possible values which might be appropriate for the <att>type</att>
+    attribute on any of these generic elements. </p>
+  <p>Here is an example, showing how the specific and generic elements may be combined:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <place xml:id="IS">
+        <placeName xml:lang="en">Iceland</placeName>
+        <placeName xml:lang="is">Ísland</placeName>
+        <location type="other">65 00 N, 18 00 W</location>
+        <terrain>
+<label>area</label>
+<p>103,000 sq km</p>
+        </terrain>
+        <state type="governance" notBefore="1944">
+<p>Constitutional republic</p>
+        </state>
+        <state type="governance" notAfter="1944">
+<p>Part of the kingdom of <placeName key="#DK">Denmark</placeName></p>
+        </state>
+        <event type="governance" from="1944-06-17">
+<label>Independence</label>
+<p> Iceland became independent on 17 June 1944.</p>
+        </event>
+      </place>
+    </egXML>
+  </p>
+  <p>Like <gi>place</gi> elements, <gi>state</gi> and <gi>trait</gi> elements, and others
+    of the same class, can be nested hierarchically within each other. When this is done,
+    values for the <att>type</att> attribute are to be understood as cumulatively
+    inherited, as elsewhere in the TEI scheme (for example on <gi>category</gi> or
+      <gi>linkGrp</gi>). In the following example, the outermost <gi>population</gi>
+    element concerns the squirrel population between the dates given. This is then broken
+    down into red and gray squirrel populations, and within that into male and female:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <population type="squirrel" notBefore="1901" notAfter="1902-01-11" resp="#strabo">
+        <population type="red" when="1901-01-10">
+<population type="female">12</population>
+<population type="male">15</population>
+        </population>
+        <population type="gray" when="1902-01-10" cert="high">
+<population type="female">23</population>
+<population type="male" cert="low" resp="#biber">45</population>
+        </population>
+      </population>
+    </egXML> The dating and responsibility attributes here behave slightly differently
+    from the <att>type</att> attribute: responsibility is not an additive property, and
+    therefore an element either states it explicitly, or inherits it from its nearest
+    ancestor. Dating is slightly different again, in that a child element may specify a
+    date more precisely than its parent, as in the example above</p>
+  <p>Events may also be subdivided into other events. For example, a two part meeting
+    might be represented as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <event type="meeting" date="2007-05-29">
+        <event type="preamble" notAfter="13:00">
+<desc>first part</desc>
+        </event>
+        <event type="conclusions" notBefore="13:00">
+<desc>second part</desc>
+        </event>
+      </event>
+    </egXML>
+  </p>
+</div>
+<div xml:id="place-rel">
+  <head>Relations between places</head>
+  <p>The <gi>relation</gi> element may also be used to express relationships of various
+    kinds between places, or between places and persons, in much the same way as it is
+    used to express relationships between persons alone. Returning to the Mascarene
+    Islands example cited above, we might define the island group and its constituents
+    separately, but indicate the relationship by means of a <gi>relation</gi> element:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <listPlace>
+        <place xml:id="MASC">
+<placeName>Mascarene islands</placeName>
+<placeName>Mascarenhas Archipelago</placeName>
+        </place>
+        <place xml:id="MRU">
+<placeName>Mauritius</placeName>
+<!-- ... -->
+        </place>
+        <place xml:id="ROD">
+<placeName>Rodrigues</placeName>
+        </place>
+        <place xml:id="REN">
+<placeName>Réunion</placeName>
+        </place>
+        <relation name="contains" active="#MASC" passive="#ROD #MRU #REN"/>
+      </listPlace>
+    </egXML>
+  </p>
+  <p>This <soCalled>stand off</soCalled> style of representation has the advantage that we
+    can now also represent the fact that a place may be <q>part of</q> more than one other
+    place; for example, Réunion is part of France, as well as part of the Mascarenes. If
+    we add a declaration for France to the list above: <egXML
+      xmlns="http://www.tei-c.org/ns/Examples">
+      <place type="country" xml:id="FRA">
+        <placeName>France</placeName>
+      </place>
+    </egXML> we can now model this dual allegiance by means of a <gi>relation</gi>
+    element: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <relation name="partOf" active="#REN" passive="#FRA #MASC"/>
+    </egXML>
+  </p>
+</div>
+<div>
+  <head>Formal definitions</head>
+  <p>The following example schema, called testplace, may be used to test the proposal
+    described here.</p>
+  <schemaSpec ident="testplace" start="TEI listPlace">
+    <moduleRef key="header"/>
+    <moduleRef key="core"/>
+    <moduleRef key="tei"/>
+    <moduleRef key="namesdates"/>
+    <moduleRef key="textstructure"/>
+    <moduleRef key="corpus"/>
+    <elementSpec ident="place" mode="add">
+      <desc>contains data about a geographic location</desc>
+      <classes>
+        <memberOf key="att.typed"/>
+        <memberOf key="model.placeLike"/>
+      </classes>
+      <content>
+        <rng:zeroOrMore>
+<rng:choice>
+  <rng:ref name="model.placeStateLike"/>
+  <rng:ref name="model.placeTraitLike"/>
+  <rng:ref name="model.placeEventLike"/>
+  <rng:ref name="model.placeLike"/>
+  <rng:ref name="model.noteLike"/>
+</rng:choice>
+        </rng:zeroOrMore>
+      </content>
+    </elementSpec>
+    <elementSpec ident="location" mode="add">
+      <desc>defines the location of a place as a set of geographical co-ordinates, in
+        terms of a other named geo-political entities, or as an address </desc>
+      <classes>
+        <memberOf key="att.typed"/>
+        <memberOf key="model.placeTraitLike"/>
+        <memberOf key="att.datable"/>
+        <memberOf key="att.editLike"/>
+      </classes>
+      <content>
+        <rng:zeroOrMore>
+<rng:choice>
+  <rng:text/>
+  <rng:ref name="anyGML"/>
+  <rng:ref name="model.placeNamePart"/>
+  <rng:ref name="model.measureLike"/>
+  <rng:ref name="model.addressLike"/>
+  <rng:ref name="model.noteLike"/>
+  <rng:ref name="model.biblLike"/>
+</rng:choice>
+        </rng:zeroOrMore>
+      </content>
+      <attList>
+        <attDef ident="scheme">
+<desc>defines how the content of the element should be interpreted in the case
+  where it is given as text only</desc>
+<valList type="closed">
+  <valItem ident="latlong">
+    <desc> a pair of numbers to be interpreted as latitude followed by longitude
+      according to a specified datum, by default WGS84</desc>
+  </valItem>
+  <valItem ident="local">
+    <desc>the value supplied is to be interpreted according to local
+    convention</desc>
+  </valItem>
+  <valItem ident="other">
+    <desc>the value supplies is descriptive text</desc>
+  </valItem>
+</valList>
+        </attDef>
+      </attList>
+    </elementSpec>
+    <elementSpec ident="terrain" mode="add">
+      <desc>contains information about the physical terrain of a place</desc>
+      <classes>
+        <memberOf key="att.datable"/>
+        <memberOf key="att.editLike"/>
+        <memberOf key="att.naming"/>
+        <memberOf key="att.typed"/>
+        <memberOf key="model.placeTraitLike"/>
+      </classes>
+      <content>
+        <rng:choice>
+<rng:oneOrMore>
+  <rng:ref name="terrain"/>
+</rng:oneOrMore>
+<rng:group>
+  <rng:zeroOrMore>
+    <rng:ref name="head"/>
+  </rng:zeroOrMore>
+  <rng:oneOrMore>
+    <rng:ref name="model.pLike"/>
+  </rng:oneOrMore>
+  <rng:zeroOrMore>
+    <rng:choice>
+      <rng:ref name="model.noteLike"/>
+      <rng:ref name="model.biblLike"/>
+    </rng:choice>
+  </rng:zeroOrMore>
+</rng:group>
+<rng:group>
+  <rng:oneOrMore>
+    <rng:choice>
+      <rng:ref name="model.labelLike"/>
+      <rng:ref name="model.noteLike"/>
+      <rng:ref name="model.biblLike"/>
+    </rng:choice>
+  </rng:oneOrMore>
+</rng:group>
+        </rng:choice>
+      </content>
+    </elementSpec>
+    <elementSpec ident="climate" mode="add">
+      <desc>contains information about the usual climate of a place</desc>
+      <classes>
+        <memberOf key="att.datable"/>
+        <memberOf key="att.editLike"/>
+        <memberOf key="att.naming"/>
+        <memberOf key="att.typed"/>
+        <memberOf key="model.placeTraitLike"/>
+      </classes>
+      <content>
+        <rng:choice>
+<rng:oneOrMore>
+  <rng:ref name="climate"/>
+</rng:oneOrMore>
+<rng:group>
+  <rng:zeroOrMore>
+    <rng:ref name="head"/>
+  </rng:zeroOrMore>
+  <rng:oneOrMore>
+    <rng:ref name="model.pLike"/>
+  </rng:oneOrMore>
+  <rng:zeroOrMore>
+    <rng:choice>
+      <rng:ref name="model.noteLike"/>
+      <rng:ref name="model.biblLike"/>
+    </rng:choice>
+  </rng:zeroOrMore>
+</rng:group>
+<rng:group>
+  <rng:oneOrMore>
+    <rng:choice>
+      <rng:ref name="model.labelLike"/>
+      <rng:ref name="model.noteLike"/>
+      <rng:ref name="model.biblLike"/>
+    </rng:choice>
+  </rng:oneOrMore>
+</rng:group>
+        </rng:choice>
+      </content>
+    </elementSpec>
+    <elementSpec ident="population" mode="add">
+      <desc>contains information about the population of a given place</desc>
+      <classes>
+        <memberOf key="att.datable"/>
+        <memberOf key="att.editLike"/>
+        <memberOf key="att.naming"/>
+        <memberOf key="att.typed"/>
+        <memberOf key="model.placeStateLike"/>
+      </classes>
+      <content>
+        <rng:choice>
+<rng:oneOrMore>
+  <rng:ref name="population"/>
+</rng:oneOrMore>
+<rng:group>
+  <rng:zeroOrMore>
+    <rng:ref name="head"/>
+  </rng:zeroOrMore>
+  <rng:oneOrMore>
+    <rng:ref name="model.pLike"/>
+  </rng:oneOrMore>
+  <rng:zeroOrMore>
+    <rng:choice>
+      <rng:ref name="model.noteLike"/>
+      <rng:ref name="model.biblLike"/>
+    </rng:choice>
+  </rng:zeroOrMore>
+</rng:group>
+<rng:group>
+  <rng:oneOrMore>
+    <rng:choice>
+      <rng:ref name="model.labelLike"/>
+      <rng:ref name="model.noteLike"/>
+      <rng:ref name="model.biblLike"/>
+    </rng:choice>
+  </rng:oneOrMore>
+</rng:group>
+        </rng:choice>
+      </content>
+    </elementSpec>
+    <elementSpec ident="listPlace" mode="add">
+      <equiv/>
+      <desc>contains a list of places, optionally followed by a list of relationships
+        (other than containment) defined amongst them. </desc>
+      <classes>
+        <memberOf key="att.typed"/>
+        <memberOf key="att.declarable"/>
+        <memberOf key="model.biblLike"/>
+        <memberOf key="model.placeLike"/>
+      </classes>
+      <content>
+        <rng:group>
+<rng:oneOrMore>
+  <rng:ref name="model.placeLike"/>
+</rng:oneOrMore>
+<rng:zeroOrMore>
+  <rng:ref name="relation"/>
+</rng:zeroOrMore>
+        </rng:group>
+      </content>
+    </elementSpec>
+<!--
+    <elementSpec module="namesdates" mode="change" ident="orgName">
+      <content>
+        <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+<rng:choice>
+  <rng:text/>
+  <rng:ref name="model.gLike"/>
+  <rng:ref name="model.persNamePart"/>
+  <rng:ref name="model.global"/>
+  <rng:ref name="model.phrase"/>
+</rng:choice>
+        </rng:zeroOrMore>
+      </content>
+    </elementSpec>
+    <elementSpec module="namesdates" mode="change" ident="placeName">
+      <classes>
+        <memberOf key="model.placeStateLike"/>
+        <memberOf key="model.placeNamePart"/>
+        <memberOf key="att.naming"/>
+        <memberOf key="att.typed"/>
+        <memberOf key="att.datable"/>
+        <memberOf key="att.editLike"/>
+      </classes>
+      <content>
+        <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+<rng:choice>
+  <rng:text/>
+  <rng:ref name="model.gLike"/>
+  <rng:ref name="model.phrase"/>
+  <rng:ref name="model.global"/>
+</rng:choice>
+        </rng:zeroOrMore>
+      </content>
+    </elementSpec>
+    <elementSpec module="namesdates" mode="change" ident="geog">
+      <classes>
+            <memberOf key="model.placeStateLike"/>
+        <memberOf key="model.placeNamePart"/>
+        <memberOf key="att.naming"/>
+        <memberOf key="att.typed"/>
+        <memberOf key="att.datable"/>
+  </classes>
+    </elementSpec>
+    <elementSpec module="namesdates" mode="change" ident="bloc">
+      <classes>
+        <memberOf key="model.placeStateLike"/>
+        <memberOf key="model.placeNamePart"/>
+        <memberOf key="att.naming"/>
+        <memberOf key="att.typed"/>
+        <memberOf key="att.datable"/>
+      </classes>
+    </elementSpec>
+    <elementSpec module="namesdates" mode="change" ident="region">
+      <classes>
+        <memberOf key="model.placeStateLike"/>
+        <memberOf key="model.placeNamePart"/>
+        <memberOf key="att.naming"/>
+        <memberOf key="att.typed"/>
+        <memberOf key="att.datable"/>
+      </classes>
+    </elementSpec>
+    <elementSpec module="namesdates" mode="change" ident="country">
+      <classes>
+        <memberOf key="model.placeStateLike"/>
+        <memberOf key="model.placeNamePart"/>
+        <memberOf key="att.naming"/>
+        <memberOf key="att.typed"/>
+        <memberOf key="att.datable"/>
+      </classes>
+    </elementSpec>
+    <elementSpec module="namesdates" mode="change" ident="settlement">
+      <classes>
+        <memberOf key="model.placeStateLike"/>
+        <memberOf key="model.placeNamePart"/>
+        <memberOf key="att.naming"/>
+        <memberOf key="att.typed"/>
+        <memberOf key="att.datable"/>
+      </classes>
+    </elementSpec>
+    <elementSpec module="namesdates" mode="change" ident="district">
+      <classes>
+        <memberOf key="model.placeStateLike"/>
+        <memberOf key="model.placeNamePart"/>
+        <memberOf key="att.naming"/>
+        <memberOf key="att.typed"/>
+        <memberOf key="att.datable"/>
+      </classes>
+    </elementSpec>
+    <elementSpec ident="trait" mode="change" module="namesdates">
+      <classes>
+        <memberOf key="att.datable"/>
+        <memberOf key="att.editLike"/>
+        <memberOf key="att.naming"/>
+        <memberOf key="att.typed"/>
+        <memberOf key="model.persTraitLike"/>
+        <memberOf key="model.placeTraitLike"/>
+      </classes>
+      <content>
+        <rng:choice>
+<rng:oneOrMore>
+  <rng:ref name="trait"/>
+</rng:oneOrMore>
+<rng:group>
+  <rng:oneOrMore>
+    <rng:ref name="model.pLike"/>
+  </rng:oneOrMore>
+  <rng:zeroOrMore>
+    <rng:choice>
+      <rng:ref name="model.noteLike"/>
+      <rng:ref name="model.biblLike"/>
+    </rng:choice>
+  </rng:zeroOrMore>
+</rng:group>
+<rng:group>
+  <rng:zeroOrMore>
+    <rng:choice>
+      <rng:ref name="model.labelLike"/>
+      <rng:ref name="model.noteLike"/>
+      <rng:ref name="model.biblLike"/>
+    </rng:choice>
+  </rng:zeroOrMore>
+</rng:group>
+        </rng:choice>
+      </content>
+    </elementSpec>
+    <elementSpec ident="state" mode="change" module="namesdates">
+      <classes>
+        <memberOf key="att.datable"/>
+        <memberOf key="att.editLike"/>
+        <memberOf key="att.typed"/>
+        <memberOf key="att.naming"/>
+        <memberOf key="model.placeStateLike"/>
+      </classes>
+      <content>
+        <rng:choice>
+<rng:oneOrMore>
+  <rng:ref name="state"/>
+</rng:oneOrMore>
+<rng:group>
+  <rng:oneOrMore>
+    <rng:ref name="model.pLike"/>
+  </rng:oneOrMore>
+  <rng:zeroOrMore>
+    <rng:choice>
+      <rng:ref name="model.noteLike"/>
+      <rng:ref name="model.biblLike"/>
+    </rng:choice>
+  </rng:zeroOrMore>
+</rng:group>
+<rng:group>
+  <rng:zeroOrMore>
+    <rng:choice>
+      <rng:ref name="model.labelLike"/>
+      <rng:ref name="model.noteLike"/>
+      <rng:ref name="model.biblLike"/>
+    </rng:choice>
+  </rng:zeroOrMore>
+</rng:group>
+        </rng:choice>
+      </content>
+    </elementSpec>
+    <elementSpec ident="event" mode="change" module="namesdates">
+      <classes>
+        <memberOf key="att.datable"/>
+        <memberOf key="att.editLike"/>
+        <memberOf key="att.typed"/>
+        <memberOf key="att.naming"/>
+        <memberOf key="model.persEventLike"/>
+        <memberOf key="model.placeEventLike"/>
+      </classes>
+      <content>
+        <rng:choice>
+<rng:oneOrMore>
+  <rng:ref name="event"/>
+</rng:oneOrMore>
+<rng:group>
+  <rng:zeroOrMore>
+    <rng:ref name="head"/>
+  </rng:zeroOrMore>
+  <rng:oneOrMore>
+    <rng:ref name="model.pLike"/>
+  </rng:oneOrMore>
+  <rng:zeroOrMore>
+    <rng:choice>
+      <rng:ref name="model.noteLike"/>
+      <rng:ref name="model.biblLike"/>
+    </rng:choice>
+  </rng:zeroOrMore>
+</rng:group>
+<rng:group>
+  <rng:zeroOrMore>
+    <rng:choice>
+      <rng:ref name="model.labelLike"/>
+      <rng:ref name="model.noteLike"/>
+      <rng:ref name="model.biblLike"/>
+    </rng:choice>
+  </rng:zeroOrMore>
+</rng:group>
+        </rng:choice>
+      </content>
+    </elementSpec>
+    <elementSpec ident="label" module="core" mode="change">
+      <classes>
+        <memberOf key="model.inter"/>
+        <memberOf key="model.common"/>
+        <memberOf key="model.labelLike"/>
+      </classes>
+    </elementSpec>
+    <elementSpec ident="desc" module="core" mode="change">
+      <classes>
+        <memberOf key="model.glossLike"/>
+        <memberOf key="att.translatable"/>
+        <memberOf key="model.labelLike"/>
+      </classes>
+    </elementSpec>
+-->
+    <classSpec ident="model.placeLike" mode="add" type="model">
+      <desc>Objects like <gi>place</gi>s</desc>
+    </classSpec>
+    <classSpec ident="model.placeTraitLike" mode="add" type="model">
+      <desc>Objects like <gi>trait</gi>s</desc>
+    </classSpec>
+    <classSpec ident="model.placeStateLike" mode="add" type="model">
+      <desc>Objects like <gi>state</gi>s</desc>
+    </classSpec>
+    <classSpec ident="model.placeEventLike" mode="add" type="model">
+      <desc>Objects like <gi>placeEvent</gi>s</desc>
+    </classSpec>
+<!--
+    <classSpec ident="model.labelLike" mode="add" type="model">
+      <desc>Descriptive elements</desc>
+    </classSpec>
+
+ <classSpec module="tei" type="model" ident="model.placeNamePart" mode="change">
+      <classes>
+        <memberOf key="model.nameLike"/>
+      </classes>
+    </classSpec>
+    <elementSpec ident="offset" module="namesdates" mode="change">
+      <classes>
+        <memberOf key="model.placeNamePart"/>
+        <memberOf key="att.typed"/>
+      </classes>
+    </elementSpec>
+    <elementSpec ident="geogName" module="namesdates" mode="change">
+      <content>
+        <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+<rng:choice>
+  <rng:text/>
+  <rng:ref name="model.gLike"/>
+  <rng:ref name="model.nameLike"/>
+  <rng:ref name="model.global"/>
+</rng:choice>
+        </rng:zeroOrMore>
+      </content>
+    </elementSpec>-->
+
+    <macroSpec type="pe" ident="anyGML" mode="add">
+      <content>
+        <element xmlns="http://relaxng.org/ns/structure/1.0">
+<nsName ns="http://www.opengis.net/gml"/>
+<zeroOrMore>
+  <choice>
+    <attribute>
+      <anyName/>
+    </attribute>
+    <ref name="anyGML"/>
+    <text/>
+  </choice>
+</zeroOrMore>
+        </element>
+      </content>
+    </macroSpec>
+  </schemaSpec>
+</div>
         </div>
         <div xml:id="ND-org">
-          <head>Organizational data</head>
+<head>Organizational data</head>
         </div>
       </div>
     </body>
