@@ -8,9 +8,9 @@
  xmlns:exsl="http://exslt.org/common"
  version="1.0">
 
-<xsl:param name="translang">it</xsl:param>
+<xsl:param name="translang">fr</xsl:param>
 
-<xsl:param name="transdate">2007-01-21</xsl:param>
+<xsl:param name="transdate">2007-06-12</xsl:param>
 
 <xsl:key name="MOD" match="tei:moduleSpec" use="'1'"/>
 <xsl:output method="xml"/>
