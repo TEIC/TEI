@@ -44,7 +44,7 @@ of complex transcriptional information in ways not here anticipated.
 </p>
 <p>It should be noted that this chapter focuses primarily upon
 problems associated with the transcription of manuscript materials,
-and that consequently problems of codicology other matters peculiar to
+and that consequently problems of codicology and other matters peculiar to
 early printed materials are not specifically addressed
 here. Nevertheless, many of the recommendations presented may —
 mutatis mutandis — also be applied in the encoding of printed
@@ -230,7 +230,6 @@ I was welbeloued</egXML>
 Observe that the <att>cert</att> and <att>resp</att> attributes may be
 used with the <gi>expan</gi> element only to indicate respectively
 confidence in the content of the element (i.e. the expansion), and
-confidence in the
 responsibility for suggesting this expansion. </p>
 <p>The <gi>choice</gi> element may be used to indicate that the
 proposed expansion is one way of encoding what might equally well be
@@ -475,19 +474,19 @@ marked:
    <delSpan rend="vertical strike" spanTo="#delend01"/>
    Tis moonlight <del>upon</del> <add>over</add> Oman's sky</l>
 <l n="2">Her isles of pearl look lovelily<anchor xml:id="delend01"/></l></egXML></p>
-<p>The text deleted must be at least partially legible, in order for the
-encoder to be able to transcribe it.  If it is not legible at all, the
-<gi>gap</gi> element should be used to signal that the text was not transcribed,
-because it could not be; the <att>reason</att> attribute
-can give the cause of the omission from the transcription as
-<q>deletion, illegible</q>.  The <gi>gap</gi> element may optionally be
-enclosed by a <gi>del</gi> element, if it is thought useful to record
-the deletion explicitly using this element.  If the deleted text is
-partially legible, the <gi>unclear</gi> element described in section <ptr target="#PHDA"/>
- should be used to signal the areas of text which
-cannot be read with confidence; it too may be enclosed within a
-<gi>del</gi> element.  See further section <ptr target="#PHOM"/> and
-section <ptr target="#PHDA"/>.</p>
+<p>The text deleted must be at least partially legible, in order for
+the encoder to be able to transcribe it.  If it is not legible at all,
+the <gi>gap</gi> element should be used to signal that the text was
+not transcribed, because it could not be; the <att>reason</att>
+attribute can give the cause of the omission from the transcription as
+<q>deletion, illegible</q>.  <!-- The <gi>gap</gi> element may optionally
+be enclosed by a <gi>del</gi> element, if it is thought useful to
+record the deletion explicitly using this element.-->  If the deleted
+text is partially legible, the <gi>unclear</gi> element described in
+section <ptr target="#PHDA"/> should be used to signal the areas of
+text which cannot be read with confidence; it too may be enclosed
+within a <gi>del</gi> element.  See further section <ptr
+target="#PHOM"/> and section <ptr target="#PHDA"/>.</p>
 <p>The elements <gi>add</gi>, <gi>del</gi>, and <gi>gap</gi> are defined
 in the Common Core module and are available in all TEI documents.  The
 elements <gi>addSpan</gi> and <gi>delSpan</gi> have the following formal
@@ -762,19 +761,15 @@ giving the same identifier.
 <specList>
 <specDesc key="hand"/><specDesc key="handList"/>
 <specDesc key="handShift"/></specList>
-</p><p>The attributes <att>old</att> and <att>new</att> on the
-<gi>handShift</gi> element refer to the order of the text in the
-transcription:  <q>old</q> is the material before the
-<gi>handShift</gi>, <q>new</q> the material following.  This will
+</p><p>The  <att>new</att> attribute on the
+<gi>handShift</gi> element is used to indicate the hand applicable to
+the material following the <gi>handShift</gi>.  This will
 ordinarily, but not necessarily, be the order in which the material was
-originally written.  Neither attribute is required but both are
-recommended where there is a new hand, as opposed to a new writing style
-in the one hand.  The <att>writing</att> attribute will be most often
+originally written.  The <att>writing</att> attribute will be most often
 used to encode descriptive shifts which the transcriber perceives within
-a manuscript and which may or may not be associated with or denote
-changes in scribe or content.  The particular values encoded will depend
-upon the needs of the transcriber. Where many values are to be encoded,
-feature structures provide an alternative means of encoding these. <!-- might be better to allow for
+a manuscript but which are not judged to indicate a change of hand.   The particular values encoded will depend
+upon the needs of the transcriber. <!-- Where many values are to be encoded,
+feature structures provide an alternative means of encoding these. --><!-- might be better to allow for
 nested desc?-->  </p>
 <p>A single hand may employ different writing styles and inks within a
 document, or may change character.  For example, the writing style might
