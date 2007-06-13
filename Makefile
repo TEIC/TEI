@@ -372,6 +372,6 @@ clean:
 	(cd Test; make clean)
 	(cd Exemplars; make clean)
 	rm -rf FASC-*
-	rm -rf catalogue.* modlist
+	rm -rf catalogue.* modList
 
 

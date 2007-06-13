@@ -181,6 +181,12 @@
     </xsl:for-each>
 </xsl:template>
 
+<xsl:template name="Remark">
+  <xsl:param name="value"/>
+  <xsl:message>Remark: <xsl:value-of 
+select="name(.)"/> points to ID not in my namespace: <xsl:value-of select="$value"/> (<xsl:call-template name="loc"/>) </xsl:message>
+</xsl:template>
+
 <xsl:template name="Error">
   <xsl:param name="value"/>
   <xsl:message>ERROR: <xsl:value-of 
@@ -236,7 +242,7 @@ select="$value"/> (<xsl:call-template name="loc"/>)
       <xsl:choose>
 	<xsl:when test="key('EXIDS',$N)"/>
 	<xsl:when test="key('IDS',$N)">
-	  <xsl:call-template name="Warning">
+	  <xsl:call-template name="Remark">
 	    <xsl:with-param name="value" select="$What"/>
 	  </xsl:call-template>
 	</xsl:when>
