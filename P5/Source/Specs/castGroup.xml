@@ -6,24 +6,25 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="drama" xml:id="CASTGRP" usage="opt" ident="castGroup">
-<equiv/>
-<gloss>Cast list grouping</gloss><gloss version="2006-10-28" xml:lang="ja">出演者リスト</gloss>
-<desc>groups one or more individual castItem
-elements within a cast list.</desc><desc version="2006-10-28" xml:lang="ja">出演者をまとめる．</desc><desc version="2006-10-15" xml:lang="es">agrupa uno o más elementos pers (castItem) individuales dentro de una lista de personajes.</desc>
+  <equiv/>
+  <gloss>Cast list grouping</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">出演者リスト</gloss>
+  <desc>groups one or more individual castItem
+elements within a cast list.</desc>
+  <desc version="2006-10-28" xml:lang="ja">出演者をまとめる．</desc>
   <content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:zeroOrMore>
-	<rng:choice>
-        <rng:ref name="model.global"/>
-	<rng:ref name="model.headLike"/>
-	</rng:choice>
-        </rng:zeroOrMore>
-
+        <rng:choice>
+          <rng:ref name="model.global"/>
+          <rng:ref name="model.headLike"/>
+        </rng:choice>
+      </rng:zeroOrMore>
       <rng:oneOrMore>
         <rng:choice>
           <rng:ref name="castItem"/>
           <rng:ref name="castGroup"/>
-	  <rng:ref name="roleDesc"/>
+          <rng:ref name="roleDesc"/>
         </rng:choice>
         <rng:zeroOrMore>
           <rng:ref name="model.global"/>
@@ -38,7 +39,8 @@ elements within a cast list.</desc><desc version="2006-10-28" xml:lang="ja">出�
     </rng:group>
   </content>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <castGroup rend="braced">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <castGroup rend="braced">
         <castItem>
           <role>Walter</role>
           <actor>Mr Frank Hall</actor>
@@ -55,7 +57,7 @@ elements within a cast list.</desc><desc version="2006-10-28" xml:lang="ja">出�
     <p>The <att>rend</att> attribute may be used, as here, to indicate
 whether the grouping is indicated by a brace, white space, font change,
 etc. </p>
-<p>Note that in this example the role description <q>friends of
+    <p>Note that in this example the role description <q>friends of
 Mathias</q> is understood to apply to both roles equally. </p>
   </remarks>
   <listRef>
