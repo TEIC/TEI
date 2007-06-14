@@ -343,10 +343,8 @@
   <xsl:template match="tei:macroSpec/@mode" mode="copy"/>
   <xsl:template match="tei:classSpec/@mode" mode="copy"/>
   <xsl:template match="tei:elementSpec/@mode" mode="change"/>
+
   <xsl:template match="tei:elementSpec" mode="copy">
-    <xsl:variable name="elementName">
-      <xsl:value-of select="@ident"/>
-    </xsl:variable>
     <xsl:variable name="orig" select="."/>
     <xsl:copy>
       <xsl:if test="not(@module)">
@@ -364,34 +362,23 @@
       <xsl:copy-of select="tei:classes"/>
       <xsl:apply-templates mode="copy" select="tei:content"/>
       <attList xmlns="http://www.tei-c.org/ns/1.0">
-        <xsl:if test="not(@ns) or @ns='http://www.tei-c.org/ns/1.0'">
-          <xsl:call-template name="classAttributes">
-            <xsl:with-param name="elementName" select="$elementName"/>
-            <xsl:with-param name="className" select="'att.global'"/>
-          </xsl:call-template>
-        </xsl:if>
-        <xsl:for-each select="tei:classes/tei:memberOf">
-          <xsl:call-template name="classAttributes">
-            <xsl:with-param name="elementName" select="$elementName"/>
-            <xsl:with-param name="className" select="@key"/>
-          </xsl:call-template>
-        </xsl:for-each>
-        <xsl:choose>
-          <xsl:when test="tei:attList">
-            <xsl:for-each select="tei:attList">
-              <xsl:copy>
-                <xsl:copy-of select="@*"/>
+	<xsl:call-template name="addClassAttsToCopy"/>
+	<xsl:choose>
+	  <xsl:when test="tei:attList[@org='choice']">
+	    <xsl:for-each select="tei:attList">
+	      <xsl:copy>
+		<xsl:copy-of select="@*"/>
                 <xsl:copy-of select="tei:attDef[@mode='add' or not(@mode)]"/>
-                <xsl:copy-of select="tei:attRef"/>
-                <xsl:copy-of select="tei:attList"/>
-              </xsl:copy>
-            </xsl:for-each>
+		<xsl:copy-of select="tei:attRef"/>
+		<xsl:copy-of select="tei:attList"/>
+	      </xsl:copy>
+	    </xsl:for-each>
           </xsl:when>
-          <xsl:otherwise>
-            <xsl:copy-of
-              select="tei:attList/tei:attDef[@mode='add' or not(@mode)]"/>
-            <xsl:copy-of select="tei:attList/tei:attRef"/>
-            <xsl:copy-of select="tei:attList/tei:attList"/>
+	  <xsl:otherwise>
+	    <xsl:copy-of
+		select="tei:attList/tei:attDef[@mode='add' or not(@mode)]"/>
+	    <xsl:copy-of select="tei:attList/tei:attRef"/>
+	    <xsl:copy-of select="tei:attList/tei:attList"/>
           </xsl:otherwise>
         </xsl:choose>
       </attList>
@@ -402,6 +389,22 @@
       </xsl:if>
     </xsl:copy>
   </xsl:template>
+
+  <xsl:template name="addClassAttsToCopy">
+    <xsl:if test="not(@ns) or @ns='http://www.tei-c.org/ns/1.0'">
+      <xsl:call-template name="classAttributes">
+	<xsl:with-param name="elementName" select="@ident"/>
+	<xsl:with-param name="className" select="'att.global'"/>
+      </xsl:call-template>
+    </xsl:if>
+    <xsl:for-each select="tei:classes/tei:memberOf">
+      <xsl:call-template name="classAttributes">
+	<xsl:with-param name="elementName" select="@ident"/>
+	<xsl:with-param name="className" select="@key"/>
+      </xsl:call-template>
+    </xsl:for-each>
+  </xsl:template>
+
   <xsl:template match="tei:elementSpec" mode="change">
     <xsl:variable name="elementName">
       <xsl:value-of select="@ident"/>

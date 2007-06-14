@@ -301,15 +301,23 @@
     <xsl:param name="element"/>
     <xsl:choose>
       <xsl:when test="count(*)=0"/>
+      <xsl:when test="@org='group' and
+		      parent::tei:attList[@org='choice']">
+	<rng:group>
+	  <xsl:apply-templates mode="tangle" select="tei:*">
+	    <xsl:with-param name="element" select="$element"/>
+	  </xsl:apply-templates>
+	</rng:group>
+      </xsl:when>
+
       <xsl:when test="@org='choice'">
-        <rng:optional>
           <rng:choice>
             <xsl:apply-templates mode="tangle" select="tei:*">
               <xsl:with-param name="element" select="$element"/>
             </xsl:apply-templates>
           </rng:choice>
-        </rng:optional>
       </xsl:when>
+
       <xsl:otherwise>
         <xsl:apply-templates mode="tangle" select="tei:*">
           <xsl:with-param name="element" select="$element"/>
@@ -1639,9 +1647,11 @@ select="$makeDecls"/></xsl:message>
       <xsl:when test="@usage='req'">
         <xsl:call-template name="makeSimpleAttribute"/>
       </xsl:when>
+<!--
       <xsl:when test="parent::tei:attList[@org='choice']">
         <xsl:call-template name="makeSimpleAttribute"/>
       </xsl:when>
+-->
       <xsl:otherwise>
         <rng:optional>
           <xsl:call-template name="makeSimpleAttribute"/>
