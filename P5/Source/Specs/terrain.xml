@@ -1,0 +1,43 @@
+<elementSpec ident="terrain" module="namesdates" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+ <desc>contains information about the physical terrain of a place</desc>
+      <classes>
+        <memberOf key="att.datable"/>
+        <memberOf key="att.editLike"/>
+        <memberOf key="att.naming"/>
+        <memberOf key="att.typed"/>
+        <memberOf key="model.placeTraitLike"/>
+      </classes>
+      <content>
+<rng:group>
+  <rng:zeroOrMore>
+    <rng:ref name="model.headLike"/>
+  </rng:zeroOrMore>
+<rng:choice>
+
+<rng:group>
+  <rng:oneOrMore>
+    <rng:ref name="model.pLike"/>
+  </rng:oneOrMore>
+</rng:group>
+<rng:group>
+  <rng:oneOrMore>
+      <rng:ref name="model.labelLike"/>
+  </rng:oneOrMore>
+</rng:group>
+</rng:choice>
+
+<rng:zeroOrMore>
+    <rng:choice>
+      <rng:ref name="model.noteLike"/>
+      <rng:ref name="model.biblLike"/>
+    </rng:choice>
+  </rng:zeroOrMore>
+
+<rng:zeroOrMore>
+  <rng:ref name="terrain"/>
+</rng:zeroOrMore>
+
+</rng:group>
+
+      </content>
+</elementSpec>
