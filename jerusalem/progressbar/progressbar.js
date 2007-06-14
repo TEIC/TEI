@@ -23,7 +23,7 @@ function setPgb(pgbID, pgbValue)
 function addError(el_name, prepend, in_bold, append) {
 	var div = document.getElementById("error_div");
 	var newdiv = document.createElement('div');
-	newdiv.setAttribute('style', 'width: 600px; margin: 1px; background: darkred; font-size: 12px');
+	newdiv.setAttribute('style', 'width: 600px; margin: 1px; background: #ff6666; font-size: 12px');
 	
 	var error_bold = document.createElement('b');
 	error_bold.appendChild(document.createTextNode('Error'));
@@ -32,11 +32,13 @@ function addError(el_name, prepend, in_bold, append) {
 
 	var element_name = document.createElement('a');
 	element_name.appendChild(document.createTextNode(el_name));
-	element_name.setAttribute('style', 'color: #aa8888; font-weight: bold');
+	element_name.setAttribute('style', 'color: black; font-weight: bold');
 	element_name.setAttribute('href', 'http://localhost:8080/exist/Query/tag.xq?name='+el_name);
 
-	var bolded_text = document.createElement('b');
+	var bolded_text = document.createElement('a');
 	bolded_text.appendChild(document.createTextNode(in_bold));
+	bolded_text.setAttribute('style', 'color: black; font-weight: bold');
+	bolded_text.setAttribute('href', 'http://localhost:8080/exist/Query/tag.xq?name='+in_bold);
 
 	newdiv.appendChild(error_bold);
 	newdiv.appendChild(dots);
@@ -51,7 +53,7 @@ function addError(el_name, prepend, in_bold, append) {
 function addWarning(el_name, prepend, in_bold, append) {
 	var div = document.getElementById("error_div");
 	var newdiv = document.createElement('div');
-	newdiv.setAttribute('style', 'width: 600px; margin: 1px; background: darkgreen; font-size: 12px');
+	newdiv.setAttribute('style', 'width: 600px; margin: 1px; background: lightgreen; font-size: 12px');
 	
 	var error_bold = document.createElement('b');
 	error_bold.appendChild(document.createTextNode('Warning'));
@@ -60,11 +62,13 @@ function addWarning(el_name, prepend, in_bold, append) {
 
 	var element_name = document.createElement('a');
 	element_name.appendChild(document.createTextNode(el_name));
-	element_name.setAttribute('style', 'color: #aa8888; font-weight: bold');
+	element_name.setAttribute('style', 'color: black; font-weight: bold');
 	element_name.setAttribute('href', 'http://localhost:8080/exist/Query/tag.xq?name='+el_name);
 
-	var bolded_text = document.createElement('b');
+	var bolded_text = document.createElement('a');
 	bolded_text.appendChild(document.createTextNode(in_bold));
+	bolded_text.setAttribute('style', 'color: black; font-weight: bold');
+	bolded_text.setAttribute('href', 'http://localhost:8080/exist/Query/tag.xq?name='+in_bold);
 
 	newdiv.appendChild(error_bold);
 	newdiv.appendChild(dots);
