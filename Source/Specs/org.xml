@@ -5,7 +5,8 @@ See the file COPYING for details
 $Date: 2007-06-12 14:45:06 +0100 (Tue, 12 Jun 2007) $
 $Author: sbauman $
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" usage="opt" ident="org">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" usage="opt" ident="org">
   <equiv/>
   <gloss/>
   <desc>provides information about an identifiable organization such
@@ -13,14 +14,78 @@ $Author: sbauman $
   <classes>
     <memberOf key="model.personLike"/>
   </classes>
-  <content>
-    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <content>
+
+	    <rng:zeroOrMore>
+	      <rng:ref name="model.headLike"/>
+	    </rng:zeroOrMore>
+
+      <rng:choice>
+	  <rng:group>
+	    <rng:zeroOrMore>
+	      <rng:ref name="model.pLike"/>
+	    </rng:zeroOrMore>
+	  </rng:group>
+	  <rng:zeroOrMore>
+	    <rng:choice>
+	      <rng:ref name="model.labelLike"/>
+	      <rng:ref name="model.nameLike"/>
+	      <rng:ref name="model.persTraitLike"/>
+	      <rng:ref name="model.persEventLike"/>
+	    </rng:choice>
+	  </rng:zeroOrMore>
+	</rng:choice>
+	
+       <rng:zeroOrMore>
+	    <rng:choice>
+	      <rng:ref name="model.noteLike"/>
+	      <rng:ref name="model.biblLike"/>
+	    </rng:choice>
+	</rng:zeroOrMore>
+
+        <rng:zeroOrMore>
+	      <rng:ref name="model.personLike"/>
+	</rng:zeroOrMore>
+	
+      </content>
+    <rng:group>
+      <rng:zeroOrMore>
+        <rng:ref name="model.headLike"/>
+      </rng:zeroOrMore>
+      <rng:choice>
+        <rng:group>
+          <rng:oneOrMore>
+            <rng:ref name="model.pLike"/>
+          </rng:oneOrMore>
+        </rng:group>
+        <rng:group>
+          <rng:oneOrMore>
+	    <rng:choice>
+            <rng:ref name="model.labelLike"/>
+	    <rng:ref name="model.assertLike"/>
+	    </rng:choice>
+          </rng:oneOrMore>
+        </rng:group>
+      </rng:choice>
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="model.noteLike"/>
+          <rng:ref name="model.biblLike"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+      <rng:zeroOrMore>
+        <rng:ref name="org"/>
+      </rng:zeroOrMore>
+    </rng:group>
+  </content>
+
+    <rng:choice >
       <rng:oneOrMore>
         <rng:ref name="model.pLike"/>
       </rng:oneOrMore>
       <rng:zeroOrMore>
         <rng:choice>
-          <rng:ref name="model.personPart"/>
+          <rng:ref name="orgName"/>
           <rng:ref name="model.global"/>
         </rng:choice>
       </rng:zeroOrMore>
