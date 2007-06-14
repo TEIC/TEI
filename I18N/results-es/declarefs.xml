@@ -1,0 +1,247 @@
+<moduleSpec xmlns="http://www.tei-c.org/ns/1.0" ident="declarefs">
+  <elementSpec ident="teifsd" module="declarefs">
+
+    <gloss>feature system declaration</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">declaración de sistema de rasgo</gloss>
+    <desc>contains a feature system declaration.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">contiene una declaración de sistema de rasgo</desc>
+
+
+
+
+  </elementSpec>
+  <elementSpec ident="fsDecl" module="declarefs">
+
+    <gloss>feature structure declaration</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">declaración de estructura de rasgo</gloss>
+    <desc>declares one type of feature structure.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">declara un tipo de estructura de rasgo</desc>
+
+    <attList>
+      <attDef ident="type" usage="req">
+
+        <desc>gives a name for the type of feature structure being declared.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">proporciona un nombre para el tipo de estructura de rasgo que está siendo declarada.</desc>
+
+        <valDesc>any convenient string of characters.</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">cualquier serie de caracteres adecuada</valDesc>
+
+
+      </attDef>
+      <attDef ident="baseTypes" usage="opt">
+
+
+        <desc>gives the name of one or more typed feature structures from which this type inherits
+          feature specifications and constraints; if this type includes a feature specification with
+          the same name as that of any of those specified by this attribute, or if more than one
+          specification of the same name is inherited, then the set of possible values is defined by
+          unification. Similarly, the set of constraints applicable is derived by combining those
+          specified explicitly within this element with those implied by the <att>baseTypes</att>
+          attribute. When no <att>baseType</att> is specified, no feature specification or
+          constraint is inherited.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">proporciona el nombre de una o más estructura de rasgo dadas, de las cuales este tipo hereda especificaciones de rasgo y restricciones; si este tipo incluye una especificación de rasgo con el mismo nombre que las especificadas por este atributo, o si más de una especificación con el mismo nombre se hereda, entonces el conjunto de posibles valores se definen por la unión de estas. De la misma manera, el conjunto de restricciones aplicable se deriva de la combinación de las restricciones especificadas explícitamente dentro de este elemento con aquellas referidas por el atributo <att>baseTypes</att>. Cuando no se especifica ningún <att>baseType</att>, no se hereda ninguna especificación de rasgo o restricción.</desc>
+
+
+        <valDesc>one or more names as defined by the <ref
+            target="http://www.w3.org/TR/REC-xml/#dt-name">W3C XML Specification</ref></valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">uno o más nombres definidos según <ref target="http://www.w3.org/TR/REC-xml/#dt-name">W3C XML Specification</ref></valDesc>
+
+
+      </attDef>
+    </attList>
+
+
+  </elementSpec>
+  <elementSpec ident="fsDescr" module="declarefs">
+
+    <gloss>feature system description (in FSD)</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">descripción de sistema de rasgo (en FSD)</gloss>
+    <desc>describes in prose what is represented by the type of feature structure declared in the
+      enclosing fsDecl.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">describe en prosa qué se representa mediante el tipo de estructura de rasgo declarado en la fsDecl.</desc>
+
+
+
+
+  </elementSpec>
+  <elementSpec ident="fDecl" module="declarefs">
+
+    <gloss>feature declaration</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">declaración de rasgo</gloss>
+    <desc>declares a single feature, specifying its name, organization, range of allowed values, and
+      optionally its default value.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">declara un único rasgo, indicando su nombre, organización, gama de valores posibles y, opcionalmente, su valor predeterminado.</desc>
+
+    <attList>
+      <attDef ident="name" usage="req">
+
+        <desc>indicates the name of the feature being declared; matches the <att>name</att>
+          attribute of <gi>f</gi> elements in the text.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">indica el nombre del rasgo que está siendo declarado; combina el atributo <att>name</att> de elementos <gi>f</gi> en el texto.</desc>
+
+        <valDesc>any string of characters</valDesc>
+        <valDesc xml:lang="es" notBefore="2007-05-04">cualquier serie de caracteres</valDesc>
+
+
+      </attDef>
+      <attDef usage="opt" ident="optional">
+
+        <desc>indicates whether or not the value of this feature may be present.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">indica si el valor del rasgo debe estar presente o no.</desc>
+
+
+
+
+      </attDef>
+
+
+      <attDef ident="org" usage="opt">
+
+        <desc>specifies the organizing discipline of the feature value.</desc>
+        <desc xml:lang="es" notBefore="2007-05-04">especifica la disciplina organizativa del valor de rasgo.</desc>
+
+        <valList type="closed">
+          <valItem ident="unit">
+
+            <gloss>unitary atomic value</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">valor aislado unitario</gloss>
+          </valItem>
+          <valItem ident="set">
+
+            <gloss>set value (unordered, no duplicates)</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">valor de conjunto (desordenado, no duplicado)</gloss>
+          </valItem>
+          <valItem ident="bag">
+
+            <gloss>bag value (unordered, may have duplicates)</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">valor de multiconjunto (desordenado, puede ser duplicado)</gloss>
+          </valItem>
+          <valItem ident="list">
+
+            <gloss>list value (ordered, may have duplicates)</gloss>
+            <gloss xml:lang="es" notBefore="2007-05-04">valor de lista (ordenado, puede ser duplicado)</gloss>
+          </valItem>
+        </valList>
+
+
+      </attDef>
+    </attList>
+
+
+
+  </elementSpec>
+  <elementSpec ident="fDescr" module="declarefs">
+
+    <gloss>feature description (in FSD)</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">descripción de rasgo (en FSD)</gloss>
+    <desc>describes in prose what is represented by the feature being declared and its values.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">describe en prosa qué respresenta el rasgo que se declara y sus valores.</desc>
+
+
+
+
+  </elementSpec>
+  <elementSpec ident="vRange" module="declarefs">
+
+    <gloss>value range</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">gama de valores</gloss>
+    <desc>defines the range of allowed values for a feature, in the form of an fs, vAlt, or
+      primitive value; for the value of an f to be valid, it must be subsumed by the specified
+      range; if the f contains multiple values (as sanctioned by the org attribute), then each value
+      must be subsumed by the vRange.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">define la gama de valores posibles para un rasgo, en forma de una estructura de rasgo, vAlt, o valor primitivo;  para que el valor de un rasgo sea válido, este debe ser incluido en la gama especificada; si el rasgo contiene valores múltiples (como restringidos por el atributo org), entonces cada valor debe ser incluido por el vRange.</desc>
+
+
+
+
+  </elementSpec>
+  <elementSpec ident="vDefault" module="declarefs">
+
+    <gloss>value default</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">valor predeterminado</gloss>
+    <desc>declares the default value to be supplied when a feature structure does not contain an
+      instance of f for this name; if unconditional, it is specified as one (or, depending on the
+      value of the org attribute of the enclosing fDecl) more fs elements or primitive values; if
+      conditional, it is specified as one or more if elements; if no default is specified, or no
+      condition matches, the value none is assumed.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">declara el valor predeterminado que se aplica cuando una estructura de rasgo no contiene un valor de f para este nombre; si es incondicional, se especifica como uno (según el valor del atributo org de la fDecl) o más elementos fs o como valores primitivos; si es condicional, se especifica como uno o más elementos; si no hay un valor predeterminado, o no hay ninguna condición combinada, no se asume ningún valor.</desc>
+
+
+
+
+  </elementSpec>
+  <elementSpec ident="if" module="declarefs">
+
+    <gloss/>
+    <gloss xml:lang="es" notBefore="2007-05-04"/>
+    <desc>defines a conditional default value for a feature; the condition is specified as a feature
+      structure, and is met if it subsumes the feature structure in the text for which a default
+      value is sought.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">define un valor predeterminado condicional para un rasgo; la condición se especifica como una estructura de rasgo, y se da si la estructura de rasgo se incluye en el texto para el que un valor predeterminado se ha dado. </desc>
+
+
+
+
+  </elementSpec>
+  <elementSpec ident="then" module="declarefs">
+
+    <gloss/>
+    <gloss xml:lang="es" notBefore="2007-05-04"/>
+    <desc>separates the condition from the default in an if, or the antecedent and the consequent in
+      a cond element.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">separa la condición del valor predeterminado, o el antecedento y el resultante en un elemento cond.</desc>
+
+
+
+
+  </elementSpec>
+  <elementSpec ident="fsConstraints" module="declarefs">
+
+    <gloss>feature-structure constraints</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">restricciones de la estructura de rasgo.</gloss>
+    <desc>specifies constraints on the content of well formed feature structures.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">especifica restricciones para el contenido de estructuras de rasgo bien formadas.</desc>
+
+
+
+
+  </elementSpec>
+  <elementSpec ident="cond" module="declarefs">
+
+    <gloss>conditional feature-structure constraint</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">restricciones de estructura de rasgo condicional</gloss>
+    <desc>defines a conditional feature-structure constraint; the consequent and the antecedent are
+      specified as feature structures or feature-structure groups; the constraint is satisfied if
+      both the antecedent and the consequent subsume a given feature structure, or if the antecedent
+      does not.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">define una restricción de estructura de rasgo condicional; el resultante y el antecedente se especifican como estructuras de rasgo o grupos de estructuras de rasgo; la restricción se cumple tanto si tanto el antecedente como el resultante incluyen una estructura de rasgo dada, o si el antecedente no lo hace.</desc>
+
+
+
+
+  </elementSpec>
+  <elementSpec ident="bicond" module="declarefs">
+
+    <gloss>bi-conditional feature-structure constraint</gloss>
+    <gloss xml:lang="es" notBefore="2007-05-04">restricciones de estructura de rasgo bicondicional</gloss>
+    <desc>defines a biconditional feature-structure constraint; both consequent and antecedent are
+      specified as feature structures or groups of feature structures; the constraint is satisfied
+      if both subsume a given feature structure, or if both do not.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">define una restricción de estructura de rasgo bicondicional; tanto el resultante como el antecedente se especifican como estructuras de rasgos o grupos de estructuras de rasgos; la restricción se cumple si ambos se dan en la estructura de rasgo o si no se da ninguno de ellos.</desc>
+
+
+
+
+  </elementSpec>
+  <elementSpec ident="iff" module="declarefs">
+
+    <gloss/>
+    <gloss xml:lang="es" notBefore="2007-05-04"/>
+    <desc>separates the condition from the consequence in a bicond element.</desc>
+    <desc xml:lang="es" notBefore="2007-05-04">separa la condicion de la consecuencia en un elemento bicond.</desc>
+
+
+
+
+  </elementSpec>
+</moduleSpec>
