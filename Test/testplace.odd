@@ -565,7 +565,7 @@ as it is pretty incomprehensible) --></p>
 </rng:oneOrMore>
 <rng:group>
   <rng:zeroOrMore>
-    <rng:ref name="head"/>
+    <rng:ref name="model.headLike"/>
   </rng:zeroOrMore>
   <rng:oneOrMore>
     <rng:ref name="model.pLike"/>
@@ -605,7 +605,7 @@ as it is pretty incomprehensible) --></p>
 </rng:oneOrMore>
 <rng:group>
   <rng:zeroOrMore>
-    <rng:ref name="head"/>
+    <rng:ref name="model.headLike"/>
   </rng:zeroOrMore>
   <rng:oneOrMore>
     <rng:ref name="model.pLike"/>
@@ -645,7 +645,7 @@ as it is pretty incomprehensible) --></p>
 </rng:oneOrMore>
 <rng:group>
   <rng:zeroOrMore>
-    <rng:ref name="head"/>
+    <rng:ref name="model.headLike"/>
   </rng:zeroOrMore>
   <rng:oneOrMore>
     <rng:ref name="model.pLike"/>
@@ -690,266 +690,9 @@ as it is pretty incomprehensible) --></p>
         </rng:group>
       </content>
     </elementSpec>
-<!--
-    <elementSpec module="namesdates" mode="change" ident="orgName">
-      <content>
-        <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-<rng:choice>
-  <rng:text/>
-  <rng:ref name="model.gLike"/>
-  <rng:ref name="model.persNamePart"/>
-  <rng:ref name="model.global"/>
-  <rng:ref name="model.phrase"/>
-</rng:choice>
-        </rng:zeroOrMore>
-      </content>
-    </elementSpec>
-    <elementSpec module="namesdates" mode="change" ident="placeName">
-      <classes>
-        <memberOf key="model.placeStateLike"/>
-        <memberOf key="model.placeNamePart"/>
-        <memberOf key="att.naming"/>
-        <memberOf key="att.typed"/>
-        <memberOf key="att.datable"/>
-        <memberOf key="att.editLike"/>
-      </classes>
-      <content>
-        <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-<rng:choice>
-  <rng:text/>
-  <rng:ref name="model.gLike"/>
-  <rng:ref name="model.phrase"/>
-  <rng:ref name="model.global"/>
-</rng:choice>
-        </rng:zeroOrMore>
-      </content>
-    </elementSpec>
-    <elementSpec module="namesdates" mode="change" ident="geog">
-      <classes>
-            <memberOf key="model.placeStateLike"/>
-        <memberOf key="model.placeNamePart"/>
-        <memberOf key="att.naming"/>
-        <memberOf key="att.typed"/>
-        <memberOf key="att.datable"/>
-  </classes>
-    </elementSpec>
-    <elementSpec module="namesdates" mode="change" ident="bloc">
-      <classes>
-        <memberOf key="model.placeStateLike"/>
-        <memberOf key="model.placeNamePart"/>
-        <memberOf key="att.naming"/>
-        <memberOf key="att.typed"/>
-        <memberOf key="att.datable"/>
-      </classes>
-    </elementSpec>
-    <elementSpec module="namesdates" mode="change" ident="region">
-      <classes>
-        <memberOf key="model.placeStateLike"/>
-        <memberOf key="model.placeNamePart"/>
-        <memberOf key="att.naming"/>
-        <memberOf key="att.typed"/>
-        <memberOf key="att.datable"/>
-      </classes>
-    </elementSpec>
-    <elementSpec module="namesdates" mode="change" ident="country">
-      <classes>
-        <memberOf key="model.placeStateLike"/>
-        <memberOf key="model.placeNamePart"/>
-        <memberOf key="att.naming"/>
-        <memberOf key="att.typed"/>
-        <memberOf key="att.datable"/>
-      </classes>
-    </elementSpec>
-    <elementSpec module="namesdates" mode="change" ident="settlement">
-      <classes>
-        <memberOf key="model.placeStateLike"/>
-        <memberOf key="model.placeNamePart"/>
-        <memberOf key="att.naming"/>
-        <memberOf key="att.typed"/>
-        <memberOf key="att.datable"/>
-      </classes>
-    </elementSpec>
-    <elementSpec module="namesdates" mode="change" ident="district">
-      <classes>
-        <memberOf key="model.placeStateLike"/>
-        <memberOf key="model.placeNamePart"/>
-        <memberOf key="att.naming"/>
-        <memberOf key="att.typed"/>
-        <memberOf key="att.datable"/>
-      </classes>
-    </elementSpec>
-    <elementSpec ident="trait" mode="change" module="namesdates">
-      <classes>
-        <memberOf key="att.datable"/>
-        <memberOf key="att.editLike"/>
-        <memberOf key="att.naming"/>
-        <memberOf key="att.typed"/>
-        <memberOf key="model.persTraitLike"/>
-        <memberOf key="model.placeTraitLike"/>
-      </classes>
-      <content>
-        <rng:choice>
-<rng:oneOrMore>
-  <rng:ref name="trait"/>
-</rng:oneOrMore>
-<rng:group>
-  <rng:oneOrMore>
-    <rng:ref name="model.pLike"/>
-  </rng:oneOrMore>
-  <rng:zeroOrMore>
-    <rng:choice>
-      <rng:ref name="model.noteLike"/>
-      <rng:ref name="model.biblLike"/>
-    </rng:choice>
-  </rng:zeroOrMore>
-</rng:group>
-<rng:group>
-  <rng:zeroOrMore>
-    <rng:choice>
-      <rng:ref name="model.labelLike"/>
-      <rng:ref name="model.noteLike"/>
-      <rng:ref name="model.biblLike"/>
-    </rng:choice>
-  </rng:zeroOrMore>
-</rng:group>
-        </rng:choice>
-      </content>
-    </elementSpec>
-    <elementSpec ident="state" mode="change" module="namesdates">
-      <classes>
-        <memberOf key="att.datable"/>
-        <memberOf key="att.editLike"/>
-        <memberOf key="att.typed"/>
-        <memberOf key="att.naming"/>
-        <memberOf key="model.placeStateLike"/>
-      </classes>
-      <content>
-        <rng:choice>
-<rng:oneOrMore>
-  <rng:ref name="state"/>
-</rng:oneOrMore>
-<rng:group>
-  <rng:oneOrMore>
-    <rng:ref name="model.pLike"/>
-  </rng:oneOrMore>
-  <rng:zeroOrMore>
-    <rng:choice>
-      <rng:ref name="model.noteLike"/>
-      <rng:ref name="model.biblLike"/>
-    </rng:choice>
-  </rng:zeroOrMore>
-</rng:group>
-<rng:group>
-  <rng:zeroOrMore>
-    <rng:choice>
-      <rng:ref name="model.labelLike"/>
-      <rng:ref name="model.noteLike"/>
-      <rng:ref name="model.biblLike"/>
-    </rng:choice>
-  </rng:zeroOrMore>
-</rng:group>
-        </rng:choice>
-      </content>
-    </elementSpec>
-    <elementSpec ident="event" mode="change" module="namesdates">
-      <classes>
-        <memberOf key="att.datable"/>
-        <memberOf key="att.editLike"/>
-        <memberOf key="att.typed"/>
-        <memberOf key="att.naming"/>
-        <memberOf key="model.persEventLike"/>
-        <memberOf key="model.placeEventLike"/>
-      </classes>
-      <content>
-        <rng:choice>
-<rng:oneOrMore>
-  <rng:ref name="event"/>
-</rng:oneOrMore>
-<rng:group>
-  <rng:zeroOrMore>
-    <rng:ref name="head"/>
-  </rng:zeroOrMore>
-  <rng:oneOrMore>
-    <rng:ref name="model.pLike"/>
-  </rng:oneOrMore>
-  <rng:zeroOrMore>
-    <rng:choice>
-      <rng:ref name="model.noteLike"/>
-      <rng:ref name="model.biblLike"/>
-    </rng:choice>
-  </rng:zeroOrMore>
-</rng:group>
-<rng:group>
-  <rng:zeroOrMore>
-    <rng:choice>
-      <rng:ref name="model.labelLike"/>
-      <rng:ref name="model.noteLike"/>
-      <rng:ref name="model.biblLike"/>
-    </rng:choice>
-  </rng:zeroOrMore>
-</rng:group>
-        </rng:choice>
-      </content>
-    </elementSpec>
-    <elementSpec ident="label" module="core" mode="change">
-      <classes>
-        <memberOf key="model.inter"/>
-        <memberOf key="model.common"/>
-        <memberOf key="model.labelLike"/>
-      </classes>
-    </elementSpec>
-    <elementSpec ident="desc" module="core" mode="change">
-      <classes>
-        <memberOf key="model.glossLike"/>
-        <memberOf key="att.translatable"/>
-        <memberOf key="model.labelLike"/>
-      </classes>
-    </elementSpec>
--->
     <classSpec ident="model.placeLike" mode="add" type="model">
       <desc>Objects like <gi>place</gi>s</desc>
     </classSpec>
-<!--
-    <classSpec ident="model.placeTraitLike" mode="change" type="model">
-      <desc>Objects like <gi>trait</gi>s</desc>
-    </classSpec>
-
-    <classSpec ident="model.placeStateLike" mode="add" type="model">
-      <desc>Objects like <gi>state</gi>s</desc>
-    </classSpec>
-
-    <classSpec ident="model.placeEventLike" mode="add" type="model">
-      <desc>Objects like <gi>placeEvent</gi>s</desc>
-    </classSpec>
--->
-<!--
-    <classSpec ident="model.labelLike" mode="add" type="model">
-      <desc>Descriptive elements</desc>
-    </classSpec>
-
- <classSpec module="tei" type="model" ident="model.placeNamePart" mode="change">
-      <classes>
-        <memberOf key="model.nameLike"/>
-      </classes>
-    </classSpec>
-    <elementSpec ident="offset" module="namesdates" mode="change">
-      <classes>
-        <memberOf key="model.placeNamePart"/>
-        <memberOf key="att.typed"/>
-      </classes>
-    </elementSpec>
-    <elementSpec ident="geogName" module="namesdates" mode="change">
-      <content>
-        <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-<rng:choice>
-  <rng:text/>
-  <rng:ref name="model.gLike"/>
-  <rng:ref name="model.nameLike"/>
-  <rng:ref name="model.global"/>
-</rng:choice>
-        </rng:zeroOrMore>
-      </content>
-    </elementSpec>-->
 
     <macroSpec type="pe" ident="anyGML" mode="add">
       <content>
@@ -968,23 +711,120 @@ as it is pretty incomprehensible) --></p>
       </content>
     </macroSpec>
 
-<!--
-    <elementSpec ident="event" mode="change" module="namesdates">
-      <classes>
-        <memberOf key="att.datable"/>
-        <memberOf key="att.editLike"/>
-        <memberOf key="att.typed"/>
-        <memberOf key="att.naming"/>
-        <memberOf key="model.persEventLike"/>
-        <memberOf key="model.placeEventLike"/>
-      </classes>
-    </elementSpec>
--->
-
   </schemaSpec>
 
 </div>
         </div>
+<div type="div2" xml:id="NDORG"><head>Organizational names</head>
+<p>In these Guidelines, we use the term <q>organization</q> for any
+named collection of people regarded as a single unit. Typical examples
+include businesses or institutions such as <soCalled>Harvard
+College</soCalled> or <soCalled>the BBC</soCalled>, but also racial or
+ethnic groupings or political factions where these are regarded as
+forming a single agency such as <soCalled>the Scythians</soCalled> or
+<soCalled>the Militant Tendency</soCalled>. Giving a loosely-defined
+group of individuals a name often (and notoriously) serves a
+particular political or social agenda and an analysis of the way such
+phrases are constructed and used may therefore be of considerable
+importance to the social historian, even where the objective existence
+of an <q>organization</q> in this sense is harder to demonstrate than
+that of (say) a named person. In the case of business or other
+formally constituted institutions, the component parts of an
+organizational name may help to characterize the organization in terms
+of its perceived geographical location, ownership, likely number of
+employees, management structure etc.</p>
+
+<p>Like names of persons or places, organizational names can be marked
+up as referring strings or as proper names with the <gi>rs</gi> or
+<gi>name</gi> elements respectively.  The element <gi>orgName</gi> is
+provided for use where it is desired to distinguish organizational
+names more explicitly.  <specList><specDesc key="orgName"/></specList>
+This element is a member of the same attribute classes as
+<gi>persName</gi>, and therefore carries the following attributes:
+<specList><specDesc key="att.naming" atts="key ref"/></specList>
+</p>
+<p>The <gi>orgName</gi> element may be used to mark up any form of
+organizational name:  
+<egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
+interest was agitated in the <orgName type="voluntary" key="PAS1">Pennsyla. Abolition Society</orgName></egXML>
+<!-- From the Diary of Thomas Pym Cope -->
+This encoding is equivalent to, but more specific than, ether of the
+following representations:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
+interest was agitated in the  <rs key="PAS1" type="org">
+<name>Pennsyla. Abolition Society</name></rs>.</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
+interest was agitated in the 
+<name key="PAS1" type="org">Pennsyla. Abolition 
+Society</name>.</egXML>
+As shown above, like the <gi>rs</gi> and <gi>name</gi> elements, the <gi>orgName</gi>
+element has a <att>key</att> attribute with which an external
+identifier such as a database key can be assigned to the organization
+name, and also a <att>ref</att> attribute which can be used to point
+directly to an <gi>org</gi> element containing information about the
+organization itself (see further <ptr target="#ND-org"/>).  Its
+<att>type</att> attribute should be used to characterize the name
+(rather than the organization),
+for example as an acronym:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">Mr Frost will be able to earn an extra fee from 
+<orgName type="acronym">BSkyB</orgName>
+rather than the
+<orgName  type="acronym">BBC</orgName>
+</egXML>
+
+as a phrase:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+The feeling in <country>Canada</country> is one of strong aversion to
+the <orgName type="phrase">United States Government</orgName>, and of
+predilection for self-government under the <orgName type="phrase">English Crown</orgName></egXML>
+<!-- Anthony Trollope, North America, Penguin ed., 51 -->
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<orgName>The Justified Ancients of Mu Mu</orgName>
+</egXML>
+
+or as a composite of other kinds of name:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<orgName type="partnerNames">
+   <surname>Ernst</surname>&amp;<surname>Young</surname>
+</orgName></egXML>
+ </p>
+<p>The names making up an organization names are not always
+personal. They may also include place names: 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">A spokesman from 
+<orgName type="regional">
+  <orgName>IBM</orgName>
+  <country>UK</country>
+</orgName> said ... 
+</egXML>
+or role names:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">THE TICKET which you will receive herewith has been formed by
+the <orgName>Democratic Whig <name type="role">party</name>
+</orgName> after the most careful deliberation,
+with a reference to all the great objects of NATIONAL, STATE,
+COUNTY and CITY concern, and with a single eye to the <hi>Welfare and Best Interests of the Community</hi>.</egXML>
+</p>
+<p>As indicated above, organizational names may also be specified hierarchically
+particularly where the named organization is itself a department
+or a branch of a larger organizational entity.  <q>The
+Department of Modern History, Glasgow University</q> is an
+example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><orgName>  
+   <orgName>Department of Modern History</orgName>
+   <orgName><name type="city">Glasgow</name>
+            <name type="role">University</name>
+   </orgName>
+</orgName></egXML>
+</p>
+<p>The formal declaration of the elements discussed in this section include:
+<specGrp xml:id="DNDORG" n="Organization names">
+<!-- &orgName;-->
+</specGrp>
+</p>
+</div>	
+
+
         <div xml:id="ND-org">
 <head>Organizational data</head>
         </div>
