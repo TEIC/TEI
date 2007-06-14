@@ -6,9 +6,11 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="drama" xml:id="MOVE" usage="opt" ident="move">
-<equiv/>
-<gloss>Movement</gloss><gloss version="2006-10-28" xml:lang="ja">動作</gloss>
-<desc>marks the actual entrance or exit of one or more characters on stage.</desc><desc version="2006-10-28" xml:lang="ja"> 舞台上の役者が採る動きを示す．</desc><desc version="2006-10-15" xml:lang="es">marca la verdadera entrada o salida de uno o más personajes en escena.</desc>
+  <equiv/>
+  <gloss>Movement</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">動作</gloss>
+  <desc>marks the actual entrance or exit of one or more characters on stage.</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 舞台上の役者が採る動きを示す．</desc>
   <classes>
     <memberOf key="model.stageLike"/>
     <memberOf key="att.ascribed"/>
@@ -18,9 +20,12 @@ $Author$
   </content>
   <attList>
     <attDef ident="type" usage="opt">
-	<equiv/>
-	<desc>characterizes the movement, for example as an entrance or exit.</desc><desc version="2006-10-28" xml:lang="ja">当該動作の分類を示す．例えば，入り，出，など．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <equiv/>
+      <desc>characterizes the movement, for example as an entrance or exit.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該動作の分類を示す．例えば，入り，出，など．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
       <valList type="semi">
         <valItem ident="entrance">
           <equiv/>
@@ -37,10 +42,11 @@ $Author$
       </valList>
     </attDef>
     <attDef ident="where" usage="opt">
-	<equiv/>
-	<desc>specifies the direction of a stage movement.</desc><desc version="2006-10-28" xml:lang="ja">当該動作の方向を示す．</desc>
+      <equiv/>
+      <desc>specifies the direction of a stage movement.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該動作の方向を示す．</desc>
       <datatype minOccurs="1" maxOccurs="unbounded">
-	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
       <valList type="open">
         <valItem ident="L">
@@ -65,10 +71,13 @@ $Author$
       </remarks>
     </attDef>
     <attDef ident="perf" usage="opt">
-	<equiv/>
-	<desc>identifies the performance or performances in which this movement
-		occurred as specified.</desc><desc version="2006-10-28" xml:lang="ja">当該動作の演技を示す．</desc>
-      <datatype maxOccurs="unbounded"><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <equiv/>
+      <desc>identifies the performance or performances in which this movement
+		occurred as specified.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該動作の演技を示す．</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
       <valDesc>The references are derived from the <att>xml:id</att> attribute
 		on a <gi>performance</gi> element.</valDesc>
     </attDef>
@@ -76,15 +85,16 @@ $Author$
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <performance xml:id="perf1">
-      <p>First performance</p>
-      <castList>
-	<castItem><role xml:id="bellaf">Bellafront</role></castItem>
-	<!-- ... -->
-      </castList>
+        <p>First performance</p>
+        <castList>
+          <castItem>
+            <role xml:id="bellaf">Bellafront</role>
+          </castItem>
+<!-- ... -->
+        </castList>
       </performance>
-      <!-- ... -->
-      <stage type="entrance">
-	<move who="#bellaf" type="enter" where="L" perf="#perf1"/>
+<!-- ... -->
+      <stage type="entrance"><move who="#bellaf" type="enter" where="L" perf="#perf1"/>
       Enter Bellafront mad.</stage>
     </egXML>
   </exemplum>

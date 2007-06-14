@@ -6,201 +6,186 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" xml:id="RE" usage="opt" ident="re">
-<equiv/>
-<gloss>related entry</gloss><gloss version="2006-10-28" xml:lang="ja">関連項目</gloss>
-<desc>contains a dictionary entry for a lexical item related to the headword, such as a compound
-        phrase or derived form, embedded inside a larger entry.</desc><desc version="2006-10-28" xml:lang="ja"> 見出し語と関連する項目を示す．例えば，見出し語が複合語
+  <equiv/>
+  <gloss>related entry</gloss>
+  <gloss version="2007-05-04" xml:lang="es">entrada relativa</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">関連項目</gloss>
+  <desc>contains a dictionary entry for a lexical item related to the headword, such as a compound
+        phrase or derived form, embedded inside a larger entry.</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene una entrada de diccionario para un elemento léxico relativo al lema, como p.ej. un sintagma compuesto o una forma derivada, y que se incluye en un entrada mayor.</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 見出し語と関連する項目を示す．例えば，見出し語が複合語
 や派生語の場合．</desc>
-    <classes>
-        <memberOf key="model.entryParts.top"/>
-        <memberOf key="model.entryParts"/>
-        <memberOf key="att.lexicographic"/>
-    </classes>
-    <content>
-        <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-            <rng:choice>
-                <rng:text/>
-<rng:ref name="model.gLike"/>
-                <rng:ref name="sense"/>
-                <rng:ref name="model.entryParts.top"/>
-                <rng:ref name="model.phrase"/>
-                <rng:ref name="model.global"/>
-            </rng:choice>
-        </rng:zeroOrMore>
-    </content>
-    <attList>
-        <attDef ident="type" usage="opt">
-	<equiv/>
-	<desc>classifies the related entry according to any convenient typology.</desc><desc version="2006-10-28" xml:lang="ja">当該関連項目の分類を示す．</desc>
-            <datatype>
-	      <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
-            </datatype>
-            <valDesc>any string of XML name characters</valDesc>
-            <exemplum>
-                <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
-            </exemplum>
-        </attDef>
-    </attList>
-    <exemplum>
-        <p>The following example from<bibl>
-                <title>Webster's New Collegiate Dictionary</title> (Springfield, Mass.: G. &amp;
+  <classes>
+    <memberOf key="model.entryParts.top"/>
+    <memberOf key="model.entryParts"/>
+    <memberOf key="att.lexicographic"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+        <rng:ref name="model.gLike"/>
+        <rng:ref name="sense"/>
+        <rng:ref name="model.entryParts.top"/>
+        <rng:ref name="model.phrase"/>
+        <rng:ref name="model.global"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <attList>
+    <attDef ident="type" usage="opt">
+      <equiv/>
+      <desc>classifies the related entry according to any convenient typology.</desc>
+      <desc version="2007-05-04" xml:lang="es">clasifica la entrada relativa de acuerdo a una tipología funcional.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該関連項目の分類を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+      </datatype>
+      <valDesc>any string of XML name characters</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+  </attList>
+  <exemplum>
+    <p>The following example from<bibl><title>Webster's New Collegiate Dictionary</title> (Springfield, Mass.: G. &amp;
                 C. Merriam Company, 1975)</bibl> shows a single related entry for which no
             definition is given, since its meaning is held to be readily derivable from the root entry:</p>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-            <entry>
-                <form>
-                    <orth>neu·ral</orth>
-                    <pron>&amp;STRESSn(y)&amp;udotr-əl</pron>
-                </form>
-                <gramGrp>
-                    <pos>adj</pos>
-                </gramGrp>
-                <sense n="1">
-                    <def>of, relating to, or affecting a nerve or the nervous system</def>
-                </sense>
-                <sense n="2"> ... </sense>
-                <re>
-                    <form>
-                        <orth>neurally</orth>
-                        <pron extent="suffix">-ə-lē</pron>
-                    </form>
-                    <gramGrp>
-                        <pos>adv</pos>
-                    </gramGrp>
-                </re>
-            </entry>
-        </egXML>
-    </exemplum>
-    <exemplum>
-        <p>The following example from <bibl>
-                <title>Diccionario de la Universidad de Chicago Inglés-Español y
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <entry>
+        <form>
+          <orth>neu·ral</orth>
+          <pron>&amp;STRESSn(y)&amp;udotr-əl</pron>
+        </form>
+        <gramGrp>
+          <pos>adj</pos>
+        </gramGrp>
+        <sense n="1">
+          <def>of, relating to, or affecting a nerve or the nervous system</def>
+        </sense>
+        <sense n="2"> ... </sense>
+        <re>
+          <form>
+            <orth>neurally</orth>
+            <pron extent="suffix">-ə-lē</pron>
+          </form>
+          <gramGrp>
+            <pos>adv</pos>
+          </gramGrp>
+        </re>
+      </entry>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <p>The following example from <bibl><title>Diccionario de la Universidad de Chicago Inglés-Español y
                 Español-Inglés</title> / <title>The University of Chicago Spanish
                 Dictionary</title>, Fourth Edition, compiled by Carlos Castillo and Otto F. Bond
                 (Chicago: University of Chicago Press, 1987)</bibl> shows a number of related
-            entries embedded in the main entry. The original entry resembles the following:<q rend="display">
-                <hi rend="bold">abeja</hi> [a·bé·xa]<hi rend="it">f.</hi>
+            entries embedded in the main entry. The original entry resembles the following:<q rend="display"><hi rend="bold">abeja</hi> [a·bé·xa]<hi rend="it">f.</hi>
                     bee;<hi rend="bold">abejera</hi>
                     [a·be·xé·ra]<hi rend="it">f.</hi>
                     beehive;<hi rend="bold">abejón</hi>
                     [a·be·xóon]<hi rend="it">m.</hi> drone; bumblebee;<hi rend="bold">abejorro</hi> [a·be·xó·rro]<hi rend="it">m.</hi> bumble bee.</q> One encoding for this entry would be:</p>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-            <entry>
-                <form>
-                    <orth>abeja</orth>
-                </form>
-                <gramGrp>
-                    <gen>f. </gen>
-                </gramGrp>
-                <sense n="1.">
-                    <usg type="domain"> (ento.) </usg>
-                    <def> bee </def>. </sense>
-                <sense n="2.">
-                    <def> busy bee, hard worker </def>. </sense>
-                <sense n="3.">
-                    <usg orig="A." type="domain"> (astron.) </usg>, <def> Musca </def> — </sense>
-                <re>
-                    <form>
-                        <orth orig="a. albanila"> abeja albanila </orth>, </form>
-                    <sense>
-                        <def>mason bee</def>;</sense>
-                </re>
-                <re>
-                    <form>
-                        <orth orig="a. carpintera"> abeja carpintera </orth>, </form>
-                    <sense>
-                        <def>carpenter bee </def>;</sense>
-                </re>
-                <re>
-                    <form>
-                        <orth xml:id="re-o3" orig="a. reina or maestra"> abeja reina </orth>
-                        <orth mergedin="#re-o4"> abeja maestra </orth>
-                    </form>
-                    <sense>
-                        <def> queen bee </def>;</sense>
-                </re>
-                <re>
-                    <form>
-                        <orth xml:id="re-o4" orig="a. neutra or obrera"> abeja neutra </orth>
-                        <orth mergedin="#re-o3"> abeja obrera </orth>
-                    </form>
-                    <sense>
-                        <def>worker bee</def>.</sense>
-                </re>
-            </entry>
-        </egXML>
-        <!-- 
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <entry>
+        <form>
+          <orth>abeja</orth>
+        </form>
+        <gramGrp>
+          <gen>f. </gen>
+        </gramGrp>
+        <sense n="1."><usg type="domain"> (ento.) </usg><def> bee </def>. </sense>
+        <sense n="2."><def> busy bee, hard worker </def>. </sense>
+        <sense n="3."><usg orig="A." type="domain"> (astron.) </usg>, <def> Musca </def> — </sense>
+        <re>
+          <form><orth orig="a. albanila"> abeja albanila </orth>, </form>
+          <sense><def>mason bee</def>;</sense>
+        </re>
+        <re>
+          <form><orth orig="a. carpintera"> abeja carpintera </orth>, </form>
+          <sense><def>carpenter bee </def>;</sense>
+        </re>
+        <re>
+          <form>
+            <orth xml:id="re-o3" orig="a. reina or maestra"> abeja reina </orth>
+            <orth mergedin="#re-o4"> abeja maestra </orth>
+          </form>
+          <sense><def> queen bee </def>;</sense>
+        </re>
+        <re>
+          <form>
+            <orth xml:id="re-o4" orig="a. neutra or obrera"> abeja neutra </orth>
+            <orth mergedin="#re-o3"> abeja obrera </orth>
+          </form>
+          <sense><def>worker bee</def>.</sense>
+        </re>
+      </entry>
+    </egXML>
+<!-- 
  ** In the above example I moved the <gramGrp> out of the <form>, so
  ** that it is now the right-hand sibling of the first <form>, rather
  ** than its child. I did this because <gramGrp> is not a valid child
  ** of <form>, but I'm not sure it's correct. &mdash; Syd, 2002-01-06
  -->
 <!-- Also did the same for the below example &mdash; Syd, 2004-12-15 -->
-    </exemplum>
-    <exemplum>
-        <p>In the much larger Simon &amp; Schuster Spanish-English dictionary,<note place="foot">
-                <bibl>Tana de Gámez, ed., <title>Simon and Schuster's International
-                    Dictionary</title> (New York: Simon and Schuster, 1973).</bibl>
-            </note> these derived forms of <mentioned>abeja</mentioned> are treated as separate main
+  </exemplum>
+  <exemplum>
+    <p>In the much larger Simon &amp; Schuster Spanish-English dictionary,<note place="foot"><bibl>Tana de Gámez, ed., <title>Simon and Schuster's International
+                    Dictionary</title> (New York: Simon and Schuster, 1973).</bibl></note> these derived forms of <mentioned>abeja</mentioned> are treated as separate main
             entries, but there are other embedded phrases shown as<gi>re</gi>s in its main entry for
                 <mentioned>abeja</mentioned>:<q rend="display">abeja, f. 1. (ento.) bee. 2. busy
                 bee, hard worker. 3. (astron.) A., Musca. — a. albanila, mason bee; a.
                 carpintera, carpenter bee; a. reina or maestra, queen bee; a. neutra or obrera,
                 worker bee.</q> This entry may be encoded thus:</p>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-	  <entry>
-	    <form>
-	      <orth> abeja </orth>
-	    </form>
-	    <gramGrp>
-	      <gen> f. </gen>
-	    </gramGrp>
-	    <sense n="1.">
-	      <usg type="domain"> (ento.) </usg>
-	      <def> bee </def>.
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <entry>
+        <form>
+          <orth> abeja </orth>
+        </form>
+        <gramGrp>
+          <gen> f. </gen>
+        </gramGrp>
+        <sense n="1."><usg type="domain"> (ento.) </usg><def> bee </def>.
 	    </sense>
-	    <sense n="2.">
-	    <def> busy bee, hard worker </def>. </sense>
-	    <sense n="3.">
-	      <usg orig="A." type="domain"> (astron.) </usg>, <def> Musca </def> —
+        <sense n="2."><def> busy bee, hard worker </def>. </sense>
+        <sense n="3."><usg orig="A." type="domain"> (astron.) </usg>, <def> Musca </def> —
 	    </sense>
-	    <re>
-	      <form>
-		<orth orig="a. albanila"> abeja albanila </orth>,
+        <re>
+          <form><orth orig="a. albanila"> abeja albanila </orth>,
 	      </form>
-	      <sense> <def> mason bee </def>; </sense>
-	    </re>
-	    <re>
-	      <form>
-		<orth orig="a. carpintera"> abeja carpintera </orth>,
+          <sense><def> mason bee </def>; </sense>
+        </re>
+        <re>
+          <form><orth orig="a. carpintera"> abeja carpintera </orth>,
 	      </form>
-	      <sense> <def> carpenter bee </def>; </sense>
-	    </re>
-	    <re>
-	      <form>
-		<orth xml:id="re-o1" orig="a. reina or maestra"> abeja reina </orth>
-		<orth mergedin="#re-o1"> abeja maestra </orth>
-	      </form>
-	      <sense> <def> queen bee </def>; </sense>
-	    </re>
-	    <re>
-	      <form>
-		<orth xml:id="re-o2" orig="a. neutra or obrera"> abeja neutra </orth>
-		<orth mergedin="#re-o2"> abeja obrera </orth>
-	      </form>
-	      <sense> <def> worker bee </def> . </sense>
-	    </re>
-	  </entry>
-        </egXML>
-    </exemplum>
-    <remarks>
-        <p rend="dataDesc">May contain character data mixed with any other elements defined in the
+          <sense><def> carpenter bee </def>; </sense>
+        </re>
+        <re>
+          <form>
+            <orth xml:id="re-o1" orig="a. reina or maestra"> abeja reina </orth>
+            <orth mergedin="#re-o1"> abeja maestra </orth>
+          </form>
+          <sense><def> queen bee </def>; </sense>
+        </re>
+        <re>
+          <form>
+            <orth xml:id="re-o2" orig="a. neutra or obrera"> abeja neutra </orth>
+            <orth mergedin="#re-o2"> abeja obrera </orth>
+          </form>
+          <sense><def> worker bee </def> . </sense>
+        </re>
+      </entry>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">May contain character data mixed with any other elements defined in the
             dictionary tag set.</p>
-        <p>Identical in sub-elements to an <gi>entry</gi> tag, and used where a dictionary has
+    <p>Identical in sub-elements to an <gi>entry</gi> tag, and used where a dictionary has
             embedded information inside one entry which could have formed a separate entry. Some
             authorities distinguish related entries, run-on entries, and various other types of
             degenerate entries; no such typology is attempted here.</p>
-    </remarks>
-    <listRef>
-        <ptr target="#DITPRE" type="div2"/>
-    </listRef>
+  </remarks>
+  <listRef>
+    <ptr target="#DITPRE" type="div2"/>
+  </listRef>
 </elementSpec>

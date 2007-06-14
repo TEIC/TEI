@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -5,80 +6,95 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" xml:id="FORM" usage="rec" ident="form">
-<equiv/>
-<gloss>form information group</gloss><gloss version="2006-10-28" xml:lang="ja">形態</gloss>
-<desc>groups all the information on the written and spoken forms of one headword.</desc><desc version="2006-10-28" xml:lang="ja"> 見出し語の記述または発話された形態の情報を示す．</desc><desc version="2006-10-15" xml:lang="es">agrupa toda la información sobre las formas escritas y orales de un vocablo.</desc>
-    <classes>
-        <memberOf key="model.entryParts.top"/>
-        <memberOf key="model.entryParts"/>
-        <memberOf key="model.formPart"/>
-        <memberOf key="att.lexicographic"/>
-    </classes>
-    <content>
-        <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-            <rng:choice>
-                <rng:text/>
-<rng:ref name="model.gLike"/>
-                <rng:ref name="model.phrase"/>
-                <rng:ref name="model.inter"/>
-                <rng:ref name="model.formPart"/>
-                <rng:ref name="model.global"/>
-            </rng:choice>
-        </rng:zeroOrMore>
-    </content>
-    <attList>
-        <attDef ident="type" usage="opt">
-	<equiv/>
-	<desc>classifies form as simple, compound, etc.</desc><desc version="2006-10-28" xml:lang="ja">当該形態の分類を示す．例えば，単純形，複合形など．</desc>
-            <datatype>
-	      <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-            </datatype>
-            <valList type="semi">
-                <valItem ident="simple">
-                    <equiv/>
-                    <gloss>single free lexical item</gloss>
-                </valItem>
-                <valItem ident="lemma">
-                    <equiv/>
-                    <gloss>the headword itself</gloss>
-                </valItem>
-                <valItem ident="variant">
-                    <equiv/>
-                    <gloss>a variant form</gloss>
-                </valItem>
-                <valItem ident="compound">
-                    <equiv/>
-                    <gloss>word formed from simple lexical items</gloss>
-                </valItem>
-                <valItem ident="derivative">
-                    <equiv/>
-                    <gloss>word derived from headword</gloss>
-                </valItem>
-                <valItem ident="inflected">
-                    <equiv/>
-                    <gloss>word in other than usual dictionary form</gloss>
-                </valItem>
-                <valItem ident="phrase">
-                    <equiv/>
-                    <gloss>multiple-word lexical item</gloss>
-                </valItem>
-            </valList>
-            <exemplum>
-                <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
-            </exemplum>
-        </attDef>
-    </attList>
-    <exemplum>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-            <form>
-                <orth>zaptié</orth>
-                <orth>zaptyé</orth>
-            </form>
-        </egXML> <p>(from TLFi)</p> </exemplum>
-    <remarks>
-        <p/>
-    </remarks>
-    <listRef>
-        <ptr target="#DITPFO" type="div2"/>
-    </listRef>
+  <equiv/>
+  <gloss>form information group</gloss>
+  <gloss version="2007-05-04" xml:lang="es">grupo de información de forma</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">形態</gloss>
+  <desc>groups all the information on the written and spoken forms of one headword.</desc>
+  <desc version="2007-05-04" xml:lang="es">agrupa toda la información relativa a la forma oral y escrita de una palabra.</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 見出し語の記述または発話された形態の情報を示す．</desc>
+  <classes>
+    <memberOf key="model.entryParts.top"/>
+    <memberOf key="model.entryParts"/>
+    <memberOf key="model.formPart"/>
+    <memberOf key="att.lexicographic"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+        <rng:ref name="model.gLike"/>
+        <rng:ref name="model.phrase"/>
+        <rng:ref name="model.inter"/>
+        <rng:ref name="model.formPart"/>
+        <rng:ref name="model.global"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <attList>
+    <attDef ident="type" usage="opt">
+      <equiv/>
+      <desc>classifies form as simple, compound, etc.</desc>
+      <desc version="2007-05-04" xml:lang="es">clasifica la forma como simple, compuesta, etc.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該形態の分類を示す．例えば，単純形，複合形など．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valList type="semi">
+        <valItem ident="simple">
+          <equiv/>
+          <gloss>single free lexical item</gloss>
+          <gloss version="2007-05-04" xml:lang="es">único elemento léxico</gloss>
+        </valItem>
+        <valItem ident="lemma">
+          <equiv/>
+          <gloss>the headword itself</gloss>
+          <gloss version="2007-05-04" xml:lang="es">la entrada misma</gloss>
+        </valItem>
+        <valItem ident="variant">
+          <equiv/>
+          <gloss>a variant form</gloss>
+          <gloss version="2007-05-04" xml:lang="es">una forma secundaria de la entrada</gloss>
+        </valItem>
+        <valItem ident="compound">
+          <equiv/>
+          <gloss>word formed from simple lexical items</gloss>
+          <gloss version="2007-05-04" xml:lang="es">palabra formada por unidades léxicas sencillas</gloss>
+        </valItem>
+        <valItem ident="derivative">
+          <equiv/>
+          <gloss>word derived from headword</gloss>
+          <gloss version="2007-05-04" xml:lang="es">palabra derivada del lema de la entrada</gloss>
+        </valItem>
+        <valItem ident="inflected">
+          <equiv/>
+          <gloss>word in other than usual dictionary form</gloss>
+          <gloss version="2007-05-04" xml:lang="es">palabra en otra forma habitual de diccionario</gloss>
+        </valItem>
+        <valItem ident="phrase">
+          <equiv/>
+          <gloss>multiple-word lexical item</gloss>
+          <gloss version="2007-05-04" xml:lang="es">unidad léxica multipalabra</gloss>
+        </valItem>
+      </valList>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <form>
+        <orth>zaptié</orth>
+        <orth>zaptyé</orth>
+      </form>
+    </egXML>
+    <p>(from TLFi)</p>
+  </exemplum>
+  <remarks>
+    <p/>
+  </remarks>
+  <listRef>
+    <ptr target="#DITPFO" type="div2"/>
+  </listRef>
 </elementSpec>
