@@ -1602,7 +1602,7 @@ as it is pretty incomprehensible) --></p>
         <placeName xml:lang="is">Ísland</placeName>
         <location type="other">65 00 N, 18 00 W</location>
         <terrain>
-             <p>Area: 103,000 sq km</p>
+             <desc>Area: 103,000 sq km</desc>
         </terrain>
         <state type="governance" notBefore="1944">
 <p>Constitutional republic</p>
@@ -1626,12 +1626,12 @@ as it is pretty incomprehensible) --></p>
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <population type="squirrel" notBefore="1901" notAfter="1902-01-11" resp="#strabo">
         <population type="red" when="1901-01-10">
-<population type="female">12</population>
-<population type="male">15</population>
+<population type="female"><desc>12</desc></population>
+<population type="male"><desc>15</desc></population>
         </population>
         <population type="gray" when="1902-01-10" cert="high">
-<population type="female">23</population>
-<population type="male" cert="low" resp="#biber">45</population>
+<population type="female"><desc>23</desc></population>
+<population type="male" cert="low" resp="#biber"><desc>45</desc></population>
         </population>
       </population>
     </egXML> The dating and responsibility attributes here behave slightly differently
@@ -1641,12 +1641,13 @@ as it is pretty incomprehensible) --></p>
     date more precisely than its parent, as in the example above</p>
   <p>Events may also be subdivided into other events. For example, a two part meeting
     might be represented as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <event type="meeting" date="2007-05-29">
-        <event type="preamble" notAfter="13:00">
-<desc>first part</desc>
+      <event type="meeting" when="2007-05-29">
+	<desc>All day meeting to resolve content models</desc>
+        <event type="preamble" notAfter="13:00:00">
+	  <desc>first part</desc>
         </event>
-        <event type="conclusions" notBefore="13:00">
-<desc>second part</desc>
+        <event type="conclusions" notBefore="13:00:00">
+	  <desc>second part</desc>
         </event>
       </event>
     </egXML>
@@ -2172,10 +2173,9 @@ limitation.</egXML>
  </p>
 </div>
 </div>
-
+<div><head>Formal specification</head>
 <p>The module is organized as follows:
 <specGrp>
-  <p>This module  defines the following :
   &macro.anyGML;
   &model.persNamePart;    
   &att.personal;    
@@ -2185,7 +2185,7 @@ limitation.</egXML>
   &att.duration.iso; 
   &data.temporal.iso;
   &data.duration.iso;
-  </p>
+
   <p>It contains specification groups for name components of persons,
   places, and organizations:
     <specGrpRef target="#DNDPER"/>
@@ -2197,6 +2197,6 @@ limitation.</egXML>
 </p>
 </specGrp>
 </p>
-
+</div>
 
 </div></div>
