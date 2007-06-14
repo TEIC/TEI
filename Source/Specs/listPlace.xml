@@ -1,0 +1,22 @@
+
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" usage="opt" ident="listPlace">
+      <desc>contains a list of places, optionally followed by a list
+      of relationships (other than containment) defined amongst
+      them. </desc>
+      <classes>
+        <memberOf key="att.typed"/>
+        <memberOf key="att.declarable"/>
+        <memberOf key="model.biblLike"/>
+        <memberOf key="model.placeLike"/>
+      </classes>
+      <content>
+        <rng:group>
+<rng:oneOrMore>
+  <rng:ref name="model.placeLike"/>
+</rng:oneOrMore>
+<rng:zeroOrMore>
+  <rng:ref name="relation"/>
+</rng:zeroOrMore>
+        </rng:group>
+      </content>
+    </elementSpec>

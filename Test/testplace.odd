@@ -457,265 +457,10 @@ as it is pretty incomprehensible) --></p>
     </egXML>
   </p>
 </div>
-<div>
-  <head>Formal definitions</head>
-  <p>The following example schema, called testplace, may be used to test the proposal
-    described here.</p>
-  <schemaSpec ident="testplace" start="TEI listPlace">
-    <moduleRef key="header"/>
-    <moduleRef key="core"/>
-    <moduleRef key="tei"/>
-    <moduleRef key="namesdates"/>
-    <moduleRef key="textstructure"/>
-    <moduleRef key="corpus"/>
-
-    <elementSpec ident="place" mode="add">
-      <desc>contains data about a geographic location</desc>
-      <classes>
-        <memberOf key="att.typed"/>
-        <memberOf key="model.placeLike"/>
-      </classes>
-      <content  xmlns:rng="http://relaxng.org/ns/structure/1.0">
-	<rng:choice>
-	  <rng:group>
-	    <rng:zeroOrMore>
-	      <rng:ref name="model.headLike"/>
-	    </rng:zeroOrMore>
-	    <rng:oneOrMore>
-	      <rng:ref name="model.pLike"/>
-	    </rng:oneOrMore>
-	    <rng:zeroOrMore>
-	      <rng:ref name="model.placeLike"/>
-	    </rng:zeroOrMore>
-	  </rng:group>
-	  <rng:zeroOrMore>
-	    <rng:choice>
-	      <rng:ref name="model.labelLike"/>
-	      <rng:ref name="model.placeStateLike"/>
-	      <rng:ref name="model.placeTraitLike"/>
-	      <rng:ref name="model.placeEventLike"/>
-	      <rng:ref name="model.placeLike"/>
-	    </rng:choice>
-	  </rng:zeroOrMore>
-	</rng:choice>
-	<rng:zeroOrMore>
-	    <rng:choice>
-	      <rng:ref name="model.noteLike"/>
-	      <rng:ref name="model.biblLike"/>
-	    </rng:choice>
-	</rng:zeroOrMore>
-      </content>
-    </elementSpec>
-
-    <elementSpec ident="location" mode="add">
-      <desc>defines the location of a place as a set of geographical co-ordinates, in
-        terms of a other named geo-political entities, or as an address </desc>
-      <classes>
-        <memberOf key="att.typed"/>
-        <memberOf key="model.placeTraitLike"/>
-        <memberOf key="att.datable"/>
-        <memberOf key="att.editLike"/>
-      </classes>
-      <content>
-        <rng:zeroOrMore>
-	  <rng:choice>
-	    <rng:text/>
-	    <rng:ref name="anyGML"/>
-	    <rng:ref name="model.placeNamePart"/>
-	    <rng:ref name="model.measureLike"/>
-	    <rng:ref name="model.addressLike"/>
-	    <rng:ref name="model.noteLike"/>
-	    <rng:ref name="model.biblLike"/>
-	  </rng:choice>
-	</rng:zeroOrMore>
-      </content>
-      <attList>
-        <attDef ident="scheme">
-<desc>defines how the content of the element should be interpreted in the case
-  where it is given as text only</desc>
-<valList type="closed">
-  <valItem ident="latlong">
-    <desc> a pair of numbers to be interpreted as latitude followed by longitude
-      according to a specified datum, by default WGS84</desc>
-  </valItem>
-  <valItem ident="local">
-    <desc>the value supplied is to be interpreted according to local
-    convention</desc>
-  </valItem>
-  <valItem ident="other">
-    <desc>the value supplies is descriptive text</desc>
-  </valItem>
-</valList>
-        </attDef>
-      </attList>
-    </elementSpec>
-    <elementSpec ident="terrain" mode="add">
-      <desc>contains information about the physical terrain of a place</desc>
-      <classes>
-        <memberOf key="att.datable"/>
-        <memberOf key="att.editLike"/>
-        <memberOf key="att.naming"/>
-        <memberOf key="att.typed"/>
-        <memberOf key="model.placeTraitLike"/>
-      </classes>
-      <content>
-        <rng:choice>
-<rng:oneOrMore>
-  <rng:ref name="terrain"/>
-</rng:oneOrMore>
-<rng:group>
-  <rng:zeroOrMore>
-    <rng:ref name="model.headLike"/>
-  </rng:zeroOrMore>
-  <rng:oneOrMore>
-    <rng:ref name="model.pLike"/>
-  </rng:oneOrMore>
-  <rng:zeroOrMore>
-    <rng:choice>
-      <rng:ref name="model.noteLike"/>
-      <rng:ref name="model.biblLike"/>
-    </rng:choice>
-  </rng:zeroOrMore>
-</rng:group>
-<rng:group>
-  <rng:oneOrMore>
-    <rng:choice>
-      <rng:ref name="model.labelLike"/>
-      <rng:ref name="model.noteLike"/>
-      <rng:ref name="model.biblLike"/>
-    </rng:choice>
-  </rng:oneOrMore>
-</rng:group>
-        </rng:choice>
-      </content>
-    </elementSpec>
-    <elementSpec ident="climate" mode="add">
-      <desc>contains information about the usual climate of a place</desc>
-      <classes>
-        <memberOf key="att.datable"/>
-        <memberOf key="att.editLike"/>
-        <memberOf key="att.naming"/>
-        <memberOf key="att.typed"/>
-        <memberOf key="model.placeTraitLike"/>
-      </classes>
-      <content>
-        <rng:choice>
-<rng:oneOrMore>
-  <rng:ref name="climate"/>
-</rng:oneOrMore>
-<rng:group>
-  <rng:zeroOrMore>
-    <rng:ref name="model.headLike"/>
-  </rng:zeroOrMore>
-  <rng:oneOrMore>
-    <rng:ref name="model.pLike"/>
-  </rng:oneOrMore>
-  <rng:zeroOrMore>
-    <rng:choice>
-      <rng:ref name="model.noteLike"/>
-      <rng:ref name="model.biblLike"/>
-    </rng:choice>
-  </rng:zeroOrMore>
-</rng:group>
-<rng:group>
-  <rng:oneOrMore>
-    <rng:choice>
-      <rng:ref name="model.labelLike"/>
-      <rng:ref name="model.noteLike"/>
-      <rng:ref name="model.biblLike"/>
-    </rng:choice>
-  </rng:oneOrMore>
-</rng:group>
-        </rng:choice>
-      </content>
-    </elementSpec>
-    <elementSpec ident="population" mode="add">
-      <desc>contains information about the population of a given place</desc>
-      <classes>
-        <memberOf key="att.datable"/>
-        <memberOf key="att.editLike"/>
-        <memberOf key="att.naming"/>
-        <memberOf key="att.typed"/>
-        <memberOf key="model.placeStateLike"/>
-      </classes>
-      <content>
-        <rng:choice>
-<rng:oneOrMore>
-  <rng:ref name="population"/>
-</rng:oneOrMore>
-<rng:group>
-  <rng:zeroOrMore>
-    <rng:ref name="model.headLike"/>
-  </rng:zeroOrMore>
-  <rng:oneOrMore>
-    <rng:ref name="model.pLike"/>
-  </rng:oneOrMore>
-  <rng:zeroOrMore>
-    <rng:choice>
-      <rng:ref name="model.noteLike"/>
-      <rng:ref name="model.biblLike"/>
-    </rng:choice>
-  </rng:zeroOrMore>
-</rng:group>
-<rng:group>
-  <rng:oneOrMore>
-    <rng:choice>
-      <rng:ref name="model.labelLike"/>
-      <rng:ref name="model.noteLike"/>
-      <rng:ref name="model.biblLike"/>
-    </rng:choice>
-  </rng:oneOrMore>
-</rng:group>
-        </rng:choice>
-      </content>
-    </elementSpec>
-    <elementSpec ident="listPlace" mode="add">
-      <equiv/>
-      <desc>contains a list of places, optionally followed by a list of relationships
-        (other than containment) defined amongst them. </desc>
-      <classes>
-        <memberOf key="att.typed"/>
-        <memberOf key="att.declarable"/>
-        <memberOf key="model.biblLike"/>
-        <memberOf key="model.placeLike"/>
-      </classes>
-      <content>
-        <rng:group>
-<rng:oneOrMore>
-  <rng:ref name="model.placeLike"/>
-</rng:oneOrMore>
-<rng:zeroOrMore>
-  <rng:ref name="relation"/>
-</rng:zeroOrMore>
-        </rng:group>
-      </content>
-    </elementSpec>
-    <classSpec ident="model.placeLike" mode="add" type="model">
-      <desc>Objects like <gi>place</gi>s</desc>
-    </classSpec>
-
-    <macroSpec type="pe" ident="anyGML" mode="add">
-      <content>
-        <element xmlns="http://relaxng.org/ns/structure/1.0">
-<nsName ns="http://www.opengis.net/gml"/>
-<zeroOrMore>
-  <choice>
-    <attribute>
-      <anyName/>
-    </attribute>
-    <ref name="anyGML"/>
-    <text/>
-  </choice>
-</zeroOrMore>
-        </element>
-      </content>
-    </macroSpec>
-
-  </schemaSpec>
-
-</div>
         </div>
+
 <div type="div2" xml:id="NDORG"><head>Organizational names</head>
+
 <p>In these Guidelines, we use the term <q>organization</q> for any
 named collection of people regarded as a single unit. Typical examples
 include businesses or institutions such as <soCalled>Harvard
@@ -748,7 +493,7 @@ organizational name:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
 interest was agitated in the <orgName type="voluntary" key="PAS1">Pennsyla. Abolition Society</orgName></egXML>
 <!-- From the Diary of Thomas Pym Cope -->
-This encoding is equivalent to, but more specific than, ether of the
+This encoding is equivalent to, but more specific than, either of the
 following representations:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
 interest was agitated in the  <rs key="PAS1" type="org">
@@ -764,15 +509,15 @@ name, and also a <att>ref</att> attribute which can be used to point
 directly to an <gi>org</gi> element containing information about the
 organization itself (see further <ptr target="#ND-org"/>).  Its
 <att>type</att> attribute should be used to characterize the name
-(rather than the organization),
-for example as an acronym:
+(rather than the organization). An organizational name may take the
+form of an acronym:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Mr Frost will be able to earn an extra fee from 
 <orgName type="acronym">BSkyB</orgName>
 rather than the
 <orgName  type="acronym">BBC</orgName>
 </egXML>
 
-as a phrase:
+An organizational name is also often found as a phrase:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 The feeling in <country>Canada</country> is one of strong aversion to
@@ -783,8 +528,9 @@ predilection for self-government under the <orgName type="phrase">English Crown<
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <orgName>The Justified Ancients of Mu Mu</orgName>
 </egXML>
-
-or as a composite of other kinds of name:
+</p>
+<p>Within such phrases, it may be useful to identify name components,
+as for other kinds of name:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <orgName type="partnerNames">
    <surname>Ernst</surname>&amp;<surname>Young</surname>
@@ -805,9 +551,10 @@ the <orgName>Democratic Whig <name type="role">party</name>
 with a reference to all the great objects of NATIONAL, STATE,
 COUNTY and CITY concern, and with a single eye to the <hi>Welfare and Best Interests of the Community</hi>.</egXML>
 </p>
-<p>As indicated above, organizational names may also be specified hierarchically
-particularly where the named organization is itself a department
-or a branch of a larger organizational entity.  <q>The
+
+<p>As indicated above, organizational names may also be specified 
+hierarchically, for example where the named organization forms part of
+a larger organizational entity.  <q>The
 Department of Modern History, Glasgow University</q> is an
 example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><orgName>  
@@ -823,10 +570,87 @@ example:
 </specGrp>
 </p>
 </div>	
+<div xml:id="ND-org"> <head>Organizational data</head>
+<p>The <gi>org</gi> and <gi>listOrg</gi> elements are used to store
+data about an organization such as its preferred name, its locations,
+or key persons within it. These elements are intended to be used in a
+way analogous to the <gi>place</gi> and <gi>person</gi> elements
+discussed elsewhere in this chapter, that is to provide as a unique
+wrapper element for information about an entity, distinct from
+references to that entity which are typically encoded using a naming
+element suich as <gi>name type="org"</gi> or <gi>orgName</gi>. The
+content of a naming element will represent the way an organization is
+named in a given context; the content of an <gi>org</gi> represents
+the information known to the encoder about that organization, gathered
+together in a single place, and independent of its textual realization.
+</p>
+<p>An organization is not the same thing as a list of people because
+it has an identity of its own. That identity may be expressed solely
+in the existence of a name (for example <q>The Scythians</q>), but is
+likely to consist in the combination of that name with a number of
+events, traits, or states which are considered to apply to the
+organization itself, rather than any of its members. For example, a
+sports team might be defined in terms of its membership (a
+<gi>listPerson</gi>), its fixtures (a <gi>listEvent</gi>), its
+geographical affiliation (a <gi>placeName</gi>), or any combination of
+these. It will also have properties which may be used to categorize it
+in some way such as the kind of sport played, whether the team is
+amateur or professional, and so on: these are probably best dealt with
+by means of the <att>type</att> attribute. However, it is the name of
+the sports team alone which identifies it. </p>
+<p>The content model for <gi>org</gi> therefore permits any mixture of
+generic <gi>state</gi>, <gi>trait</gi>, or <gi>event</gi> elements,
+and requires only the presence of the <gi>orgName</gi> element
+described in <ptr target="#NDORG"/>.</p>
+<p>In other respects, the <gi>org</gi> element is used in much the
+same way as <gi>place</gi> or <gi>person</gi>. An organization may
+have different names at different times:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><org><orgName
+							 notAfter="1960">The Silver Beetles</orgName>
+<orgName from="1960-08">The Beatles</orgName></org></egXML>  
+</p>
+<p>The names of the people making up an organization can also change
+over time, (if they are known at all). For example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><org><orgName
+							 notAfter="1960">The Silver Beetles</orgName>
+<orgName notBefore="1960">The Beatles</orgName>
+<state type="membership" from="1960-08" to="1962-05">
+<desc><persName>John Lennon</persName>
+<persName>Paul McCartney</persName>
+<persName>George Harrison</persName>
+<persName>Stuart Sutcliffe</persName>
+<persName>Pete Best</persName>
+</desc></state>
+<state type="membership" notBefore="1963">
+<desc><persName>John Lennon</persName>
+<persName>Paul McCartney</persName>
+<persName>George Harrison</persName>
+<persName>Ringo Starr</persName>
+</desc></state>
+</org></egXML>  
+</p>
+<p>An <gi>org</gi> may contain subordinate <gi>org</gi>:
 
-
-        <div xml:id="ND-org">
-<head>Organizational data</head>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><org>
+  <orgName>Oxford University Computing Services</orgName>
+  <org>
+     <orgName>Information and Support Group</orgName>
+  </org>
+  <org>
+     <orgName>Infrastructure Group</orgName>
+     <org>
+       <orgName>Networking Team</orgName>
+     </org>
+     <org>
+       <orgName>System Development Team</orgName>
+     </org>
+  </org>
+  <org>
+     <orgName>Learning Technologies Group</orgName>
+  </org>
+</org>
+</egXML>
+</p>
         </div>
       </div>
     </body>

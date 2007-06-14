@@ -15,35 +15,37 @@
   </classes>
 
       <content>
-        <rng:choice>
-<rng:oneOrMore>
-  <rng:ref name="event"/>
-</rng:oneOrMore>
 <rng:group>
   <rng:zeroOrMore>
     <rng:ref name="model.headLike"/>
   </rng:zeroOrMore>
+<rng:choice>
+
+<rng:group>
   <rng:oneOrMore>
     <rng:ref name="model.pLike"/>
   </rng:oneOrMore>
-  <rng:zeroOrMore>
-    <rng:choice>
-      <rng:ref name="model.noteLike"/>
-      <rng:ref name="model.biblLike"/>
-    </rng:choice>
-  </rng:zeroOrMore>
 </rng:group>
 <rng:group>
-  <rng:zeroOrMore>
-    <rng:choice>
+  <rng:oneOrMore>
       <rng:ref name="model.labelLike"/>
+  </rng:oneOrMore>
+</rng:group>
+</rng:choice>
+
+<rng:zeroOrMore>
+    <rng:choice>
       <rng:ref name="model.noteLike"/>
       <rng:ref name="model.biblLike"/>
     </rng:choice>
   </rng:zeroOrMore>
+
+<rng:zeroOrMore>
+  <rng:ref name="event"/>
+</rng:zeroOrMore>
+
 </rng:group>
-        </rng:choice>
-      </content>
+</content>
 
 <attList>
   <attDef ident="where" usage="opt">

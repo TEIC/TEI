@@ -1,0 +1,45 @@
+<elementSpec ident="location" module="namesdates" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+
+  <desc>defines the location of a place as a set of geographical
+  co-ordinates, in terms of a other named geo-political entities,
+  or as an address </desc>
+
+  <classes>
+<memberOf key="att.typed"/>
+<memberOf key="model.placeTraitLike"/>
+<memberOf key="att.datable"/>
+<memberOf key="att.editLike"/>
+  </classes>
+  <content>
+<rng:zeroOrMore>
+  <rng:choice>
+    <rng:text/>
+    <rng:ref name="anyGML"/>
+    <rng:ref name="model.placeNamePart"/>
+    <rng:ref name="model.measureLike"/>
+    <rng:ref name="model.addressLike"/>
+    <rng:ref name="model.noteLike"/>
+    <rng:ref name="model.biblLike"/>
+</rng:choice>
+</rng:zeroOrMore>
+  </content>
+  <attList>
+<attDef ident="scheme">
+<desc>defines how the content of the element should be interpreted in the case
+  where it is given as text only</desc>
+<valList type="closed">
+  <valItem ident="latlong">
+<desc> a pair of numbers to be interpreted as latitude followed by longitude
+  according to a specified datum, by default WGS84</desc>
+  </valItem>
+  <valItem ident="local">
+<desc>the value supplied is to be interpreted according to local
+convention</desc>
+  </valItem>
+  <valItem ident="other">
+<desc>the value supplies is descriptive text</desc>
+  </valItem>
+</valList>
+</attDef>
+  </attList>
+</elementSpec>
