@@ -15,6 +15,7 @@ $Author$
   <desc version="2006-10-28" xml:lang="ja">親要素と同等な要素． 相互参照や外部リンクで関連を示す．</desc>
   <classes>
     <memberOf key="model.glossLike"/>
+    <memberOf key="att.internetMedia"/>
   </classes>
   <content>
     <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
@@ -51,15 +52,6 @@ transform instances of this element to canonical TEI
       </datatype>
       <valDesc>a URI</valDesc>
     </attDef>
-    <attDef ident="mimeType" usage="opt">
-      <desc>MIME type of external filter script</desc>
-      <desc version="2007-05-04" xml:lang="es">tipo de MIME de guión de filtro externo</desc>
-      <desc version="2006-10-28" xml:lang="ja">外部スクリプトのMIMEタイプ．</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
-      </datatype>
-      <valDesc>a URI</valDesc>
-    </attDef>
   </attList>
   <exemplum>
     <p>The following example declares that the <gi>bo</gi> element is
@@ -73,8 +65,7 @@ transform instances of this element to canonical TEI
         <attList>
           <attDef ident="rend">
             <valList>
-              <valItem ident="bold">
-</valItem>
+              <valItem ident="bold"/>
             </valList>
           </attDef>
         </attList>
@@ -85,7 +76,9 @@ transform instances of this element to canonical TEI
     </egXML>
   </exemplum>
   <remarks>
-    <p/>
+    <p>The <att>mimeType</att> attribute should be used to supply the
+    MIME media type of the filter script specified by the
+    <att>filter</att> attribute.</p>
   </remarks>
   <listRef>
     <ptr target="#TDTAG"/>
