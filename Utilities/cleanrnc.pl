@@ -1,5 +1,10 @@
+#!/usr/bin/perl
+$clean=0;
 while (<>) {
- if (/^namespace may /) { print; }
+ if (/<pre/) { $clean=1; print; }
+ elsif (/<\/pre/) { $clean=0; print; }
+ elsif ($clean eq 0) { print; }
+ elsif (/^namespace may /) { print; }
  elsif (/namespaces/) { print; }
  elsif (/namespace</) { print; }
  elsif (/^namespace by /) { print; }
