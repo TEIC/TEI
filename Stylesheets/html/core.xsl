@@ -2040,10 +2040,12 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="htmlAttributes">
-    <xsl:for-each select="@html:*">
+    <xsl:for-each select="@*">
+      <xsl:if test="namespace-uri(.)='http://www.w3.org/1999/xhtml'">
       <xsl:attribute name="{local-name(.)}">
 	<xsl:value-of select="."/>
       </xsl:attribute>
+      </xsl:if>
     </xsl:for-each>
   </xsl:template>
 
