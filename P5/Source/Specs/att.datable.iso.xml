@@ -5,11 +5,13 @@ See the file COPYING for details.
 $Date: 2007-04-03 21:25:45 -0400 (Tue, 03 Apr 2007) $
 $Author: sbauman $
 -->
-<classSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" xml:id="DATABLEISO" type="atts" predeclare="true" ident="att.datable.iso">
+<classSpec  xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" xml:id="DATABLEISO" type="atts" predeclare="true" ident="att.datable.iso">
   <desc>provides attributes for normalization of elements that contain
   datable events using the ISO 8601 standard.</desc>
-  <desc version="2007-05-04" xml:lang="es">proporciona atributos para la normalización de elementos que contienen eventos datables usando el estándard ISO 8601.</desc>
-  <attList>
+  <desc version="2007-05-04" xml:lang="es">proporciona atributos para
+  la normalización de elementos que contienen eventos datables usando
+  el estándard ISO 8601.</desc>
+  <attList org="choice">
     <attDef ident="when-iso" usage="opt">
       <desc>supplies the value of a date or time in a standard form.</desc>
       <desc version="2006-10-28" xml:lang="ja">日付や時間を，標準形式で示す．</desc>
@@ -57,45 +59,47 @@ $Author: sbauman $
 	calendar.</p>
       </remarks>
     </attDef>
-    <attDef ident="notBefore-iso" usage="opt">
-      <equiv/>
-      <desc>specifies the earliest possible date for the event in
+    <attList org="group">
+      <attDef ident="notBefore-iso" usage="opt">
+	<equiv/>
+	<desc>specifies the earliest possible date for the event in
 	standard form, e.g. yyyy-mm-dd.</desc>
-      <desc version="2007-05-04" xml:lang="es">indica la fecha más temprana posible para un evento en un formato estándard, p.ej. aaaa-mm-dd.</desc>
-      <desc version="2006-10-28" xml:lang="ja">当該事象の一番古い日付を，標準形式で示す．例えば，yyyy-mm-dd．</desc>
-      <datatype>
-        <rng:ref name="data.temporal.iso"/>
-      </datatype>
-      <valDesc>A normalized form of temporal expression conforming ISO 8601.</valDesc>
-    </attDef>
-    <attDef ident="notAfter-iso" usage="opt">
-      <equiv/>
-      <desc>specifies the latest possible date for the event in
+	<desc version="2007-05-04" xml:lang="es">indica la fecha más temprana posible para un evento en un formato estándard, p.ej. aaaa-mm-dd.</desc>
+	<desc version="2006-10-28" xml:lang="ja">当該事象の一番古い日付を，標準形式で示す．例えば，yyyy-mm-dd．</desc>
+	<datatype>
+	  <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.temporal.iso"/>
+	</datatype>
+	<valDesc>A normalized form of temporal expression conforming ISO 8601.</valDesc>
+      </attDef>
+      <attDef ident="notAfter-iso" usage="opt">
+	<equiv/>
+	<desc>specifies the latest possible date for the event in
 	standard form, e.g. yyyy-mm-dd.</desc>
-      <desc version="2007-05-04" xml:lang="es">indica la fecha más tardana posible para un evento en un formato estándard, p.ej. aaaa-mm-dd.</desc>
-      <desc version="2006-10-28" xml:lang="ja">当該事象の一番新しい日付を，標準形式で示す．例えば，yyyy-mm-dd．</desc>
-      <datatype>
-        <rng:ref name="data.temporal.iso"/>
-      </datatype>
-      <valDesc>A normalized form of temporal expression conforming ISO 8601.</valDesc>
-    </attDef>
-    <attDef ident="from-iso" usage="opt">
-      <equiv/>
-      <desc>indicates the starting point of the period in standard form.</desc>
-      <desc version="2007-05-04" xml:lang="es">indica el punto de inicio de un periodo de tiempo en formato estándard.</desc>
-      <datatype>
-        <rng:ref name="data.temporal.iso"/>
-      </datatype>
-      <valDesc>A normalized form of temporal expression conforming ISO 8601.</valDesc>
-    </attDef>
-    <attDef ident="to-iso" usage="opt">
-      <equiv/>
-      <desc>indicates the ending point of the period in standard form.</desc>
-      <datatype>
-        <rng:ref name="data.temporal.iso"/>
-      </datatype>
-      <valDesc>A normalized form of temporal expression conforming ISO 8601.</valDesc>
-    </attDef>
+	<desc version="2007-05-04" xml:lang="es">indica la fecha más tardana posible para un evento en un formato estándard, p.ej. aaaa-mm-dd.</desc>
+	<desc version="2006-10-28" xml:lang="ja">当該事象の一番新しい日付を，標準形式で示す．例えば，yyyy-mm-dd．</desc>
+	<datatype>
+	  <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.temporal.iso"/>
+	</datatype>
+	<valDesc>A normalized form of temporal expression conforming ISO 8601.</valDesc>
+      </attDef>
+      <attDef ident="from-iso" usage="opt">
+	<equiv/>
+	<desc>indicates the starting point of the period in standard form.</desc>
+	<desc version="2007-05-04" xml:lang="es">indica el punto de inicio de un periodo de tiempo en formato estándard.</desc>
+	<datatype>
+	  <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.temporal.iso"/>
+	</datatype>
+	<valDesc>A normalized form of temporal expression conforming ISO 8601.</valDesc>
+      </attDef>
+      <attDef ident="to-iso" usage="opt">
+	<equiv/>
+	<desc>indicates the ending point of the period in standard form.</desc>
+	<datatype>
+	  <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.temporal.iso"/>
+	</datatype>
+	<valDesc>A normalized form of temporal expression conforming ISO 8601.</valDesc>
+      </attDef>
+    </attList>
   </attList>
   <remarks>
     <p>If both <att>when-iso</att> and <att>dur-iso</att> are
