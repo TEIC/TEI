@@ -14,7 +14,7 @@
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
-      <change date="2007-03-26">drafted from ODD and other samples</change>
+      <change when="2007-03-26">drafted from ODD and other samples</change>
     </revisionDesc>
   </teiHeader>
   <text>
@@ -25,7 +25,7 @@
           <place xml:id="LYON1" type="city">
             <placeName notBefore="1400">Lyon</placeName>
             <placeName notAfter="0056">Lugdunum</placeName>
-            <location>
+            <location><geo>
               <gml:Polygon xmlns:gml="http://www.opengis.net/gml">
                 <gml:exterior>
                   <gml:LinearRing>
@@ -33,6 +33,7 @@
    </gml:LinearRing>
                 </gml:exterior>
               </gml:Polygon>
+	      </geo>
             </location>
           </place>
           <place xml:id="LYON2">
@@ -56,6 +57,7 @@
             <placeName notBefore="1400">Lyon</placeName>
             <placeName notAfter="-0056">Lugdunum</placeName>
             <location notAfter="-0056">
+	      <geo>
               <gml:Polygon  xmlns:gml="http://www.opengis.net/gml">
                 <gml:exterior>
                   <gml:LinearRing>
@@ -63,8 +65,10 @@
    </gml:LinearRing>
                 </gml:exterior>
               </gml:Polygon>
+	      </geo>
             </location>
             <location notBefore="1950">
+	      <geo>
               <gml:Polygon  xmlns:gml="http://www.opengis.net/gml">
                 <gml:exterior>
                   <gml:LinearRing>
@@ -72,16 +76,19 @@
    </gml:LinearRing>
                 </gml:exterior>
               </gml:Polygon>
+	      </geo>
             </location>
           </place>
           <place xml:id="HARRYS" type="fireHydrant">
-            <location>Junction of Park Street and Charlotte Street</location>
+            <location>
+	      <desc>Junction of Park Street and Charlotte Street</desc>
+	    </location>
           </place>
           <place>
             <placeName>Atlantis</placeName>
             <location>
               <offset>beneath</offset>
-              <placeName>the Atlantic <geog>Ocean</geog></placeName>
+              <placeName>the Atlantic <geogFeat>Ocean</geogFeat></placeName>
             </location>
           </place>
           <place xml:id="MYF">
@@ -95,7 +102,9 @@
             </location>
           </place>
           <place>
-            <location scheme="latlong">41.687142 -74.870109</location>
+            <location>
+	      <measure>41.687142 -74.870109</measure>
+	    </location>
           </place>
           <place>
             <country>Lithuania</country>
@@ -149,7 +158,9 @@
           <place xml:id="IS">
             <placeName xml:lang="en">Iceland</placeName>
             <placeName xml:lang="is">Ísland</placeName>
-            <location type="latlong">65 00 N, 18 00 W</location>
+            <location type="latlong">
+	      <measure>65 00 N, 18 00 W</measure>
+	    </location>
             <terrain>
               <label>area</label>
               <desc>103,000 sq km</desc>
@@ -189,6 +200,7 @@ on 17 June 1944.</desc>
               </population>
             </population>
             <event type="meeting" when="2007-05-29">
+	      <label>The minutes of the management committee</label>
               <event type="preamble" notAfter="13:00:00">
                 <desc>first part</desc>
               </event>
@@ -221,11 +233,13 @@ on 17 June 1944.</desc>
                 <addrLine>00153 Roma</addrLine>
               </address>
             </location>
-            <location scheme="other">I 00153</location>
+            <location scheme="other"><measure>I 00153</measure></location>
             <location xmlns:gml="http://www.opengis.net/gml">
+	      <geo>
               <gml:Point srsDimension="2" srsName="urn:ogc:def:crs:EPSG:6.6:4326">
                 <gml:pos>41.876143755230956 12.479267120361328</gml:pos>
               </gml:Point>
+	      </geo>
             </location>
             <trait type="description">
               <p>A cemetery in Rome, located near
@@ -244,6 +258,18 @@ on 17 June 1944.</desc>
               <p>The first recorded burial is that of
  George Langton</p>
             </event>
+            <note>
+              <bibl>
+                <ptr target="http://www.dkinst-rom.dk/protcem/"/>
+              </bibl>
+              <bibl>
+                <ptr target="http://en.wikipedia.org/wiki/Protestant_Cemetery%2C_Rome"/>
+              </bibl>
+              <bibl>
+                <ptr target="http://www.protestantcemetery.it/"/>
+              </bibl>
+            </note>
+
             <place>
               <location scheme="local" type="zone">
                 <measure unit="zone">z_A</measure>
@@ -265,17 +291,6 @@ on 17 June 1944.</desc>
               <trait key="#M_ST" type="material"/>
               <trait key="#c_1" type="condition"/>
             </place>
-            <note>
-              <bibl>
-                <ptr target="http://www.dkinst-rom.dk/protcem/"/>
-              </bibl>
-              <bibl>
-                <ptr target="http://en.wikipedia.org/wiki/Protestant_Cemetery%2C_Rome"/>
-              </bibl>
-              <bibl>
-                <ptr target="http://www.protestantcemetery.it/"/>
-              </bibl>
-            </note>
           </place>
 <!-- from MJD -->
           <place xmlns="http://www.tei-c.org/ns/1.0" xml:id="ESB">
@@ -287,10 +302,10 @@ on 17 June 1944.</desc>
               <placeName>350 Fifth Avenue</placeName>
             </location>
             <location scheme="other">
-              US 10118-0110
+	      <measure>US 10118-0110</measure>
             </location>
             <location scheme="latlong">
-              40.7484 -73.9858
+              <measure>40.7484 -73.9858</measure>
             </location>
             <state>
               <p>The Empire State Building rises to 1,250 feet (381 m)
@@ -415,6 +430,14 @@ municipality for brevity.
             <event notBefore="1973">
               <p>Reorganisation from County to Regional Municipality</p>
             </event>
+              <note>Kitchener-Waterloo (K-W) is an unofficial but ubiquitous
+        name for the area in Ontario, Canada consisting of the twin
+        cities of Kitchener and Waterloo, approximately 100 kilometres
+        west of Toronto. The two cities grew into each other decades
+        ago and their shared boundary cuts through streets, backyards
+        and houses. While the term is used by local residents,
+        Kitchener and Waterloo are separate cities and not a single
+        municipal entity.</note>
             <place>
               <placeName notBefore="1916">
                 <choice>
@@ -481,14 +504,6 @@ municipality for brevity.
                   <p>Incorporated as a city</p>
                 </trait>
               </place>
-              <note>Kitchener-Waterloo (K-W) is an unofficial but ubiquitous
-        name for the area in Ontario, Canada consisting of the twin
-        cities of Kitchener and Waterloo, approximately 100 kilometres
-        west of Toronto. The two cities grew into each other decades
-        ago and their shared boundary cuts through streets, backyards
-        and houses. While the term is used by local residents,
-        Kitchener and Waterloo are separate cities and not a single
-        municipal entity.</note>
             </place>
 <!-- The regional municipality of waterloo is made up of other
       places including: Cambridge, and the townships of Wellesley,
@@ -508,7 +523,7 @@ to model as a place. Not by me, at least.
             <placeName xml:lang="he-Hebr">צִיּוֹן</placeName>
             <placeName xml:lang="he-Latn">tziyyon</placeName>
             <location><country ref="#place2"/>
-            near
+            <offset>near</offset>
             <settlement key="place3"/>
             <!-- Is this right? Depends on the order of elements...-->
         </location>
@@ -534,6 +549,7 @@ another, not existing political entity. Maybe it's not the same place at all?</n
             <placeName>Zion<note>Used in this meaning by some groups only.</note></placeName>
 <!-- No idea which political statements I make here, this may be Greater Israel for all I know. I'm not sure about the use of GML here. -->
             <location>
+	      <geo>
               <gml:MultiPolygon srsName="EPSG:4326"  xmlns:gml="http://www.opengis.net/gml">
                 <gml:polygonMember>
                   <gml:Polygon>
@@ -587,6 +603,7 @@ another, not existing political entity. Maybe it's not the same place at all?</n
                   </gml:Polygon>
                 </gml:polygonMember>
               </gml:MultiPolygon>
+	      </geo>
             </location>
           </place>
 <!-- How to model the relationship between Israel and Palestine? I don't KNOW that relationship. It's not the same, but still the same. 
@@ -611,16 +628,20 @@ another, not existing political entity. Maybe it's not the same place at all?</n
 	<gloss>a Polish or Czech duke</gloss>
      <mentioned>Vratislav</mentioned>
   </etym>-->
-            <location type="latlong">51 07 N, 17 02 W</location>
+            <location type="latlong">
+	      <measure>51 07 N, 17 02 W</measure>
+	    </location>
             <trait type="area">
               <p>292.82 sq km</p>
             </trait>
             <location>
+	      <geo>
               <Polygon xmlns="http://www.opengis.net/gml">
                 <exterior xmlns="http://www.opengis.net/gml">
                   <LinearRing xmlns="http://www.opengis.net/gml"> 45.256 -110.45 46.46 -109.48 43.84 -109.86 45.8 -109.2 45.256 -110.45 </LinearRing>
                 </exterior>
               </Polygon>
+	      </geo>
             </location>
             <location>
               <bloc>EU</bloc>
