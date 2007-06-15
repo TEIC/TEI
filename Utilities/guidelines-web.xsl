@@ -21,11 +21,11 @@
 <xsl:import href="odd2htmlp5.xsl"/>
 <xsl:param name="lang"/>
 <xsl:param name="doclang"/>
-<xsl:param name="cssFile">../guidelines-web.css</xsl:param>
+<xsl:param name="cssFile">/Guidelines/guidelines-web.css</xsl:param>
 <xsl:param name="STDOUT">true</xsl:param>
 <xsl:param name="urlChunkPrefix">.ID=</xsl:param>
 <xsl:param name="homeLabel">TEI P5 Guidelines source</xsl:param>
-<xsl:param name="homeURL">/Guidelines/en/index.xml</xsl:param>
+<xsl:param name="homeURL">/Guidelines/index.xml</xsl:param>
 
   <xsl:template name="includeCSS">
     <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
