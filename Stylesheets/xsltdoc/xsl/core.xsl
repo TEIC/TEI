@@ -50,7 +50,7 @@
     <xsl:param as="element()" name="config" tunnel="yes"/>
     <xsl:variable name="targetDirUriAbs"
       select="util:normalizeFolder(resolve-uri(if( $targetDir ) then $targetDir else concat(util:getFolder(base-uri(/)), 'xsltdoc/'), base-uri(/) ))"/>
-    <xsl:variable as="xs:anyURI" name="sourceRootUriAbs"
+    <xsl:variable as="xs:string" name="sourceRootUriAbs"
       select="util:getFolder(base-uri(/))"/>
     <xsl:message>Generate documentation in: <xsl:value-of
         select="$targetDirUriAbs"/></xsl:message>
@@ -457,7 +457,7 @@
   </xd:doc>
   <xsl:template as="element()*" name="buildStylesheetPagelist">
     <xsl:param as="xs:anyURI" name="stylesheetUri" select="base-uri(.)"/>
-    <xsl:param as="xs:anyURI" name="rootUri"/>
+    <xsl:param as="xs:string" name="rootUri"/>
     <xsl:param as="xs:anyURI" name="targetUri"/>
     <xsl:variable name="srcUriAbs" select="util:normalizeUri($stylesheetUri)"/>
     <xsl:variable name="srcDirAbs" select="util:getFolder($srcUriAbs)"/>
