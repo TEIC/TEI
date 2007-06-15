@@ -624,24 +624,30 @@ geographic feature being named, the <gi>name</gi> element will generally
 also be used to mark the associated proper noun or noun phrase:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><geogName key="MIRI1" type="river">    
    <name>Mississippi</name>
-   <geog>River</geog>
+   <geogFeat>River</geogFeat>
 </geogName></egXML>
 A more complex example, showing a variety of practices, follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">The isolated ridge separates two great corridors which run from <name key="GLCO1" type="place">Glencoe</name> into
 <geogName key="GLET1" type="glen">
-   <geog>Glen</geog>
+   <geogFeat>Glen</geogFeat>
    <name>Etive</name>
 </geogName>, the
 <geogName key="LAGA1" type="hill">  
-   <geog xml:lang="gd">Lairig</geog> 
-   <rs type="gloss" xml:lang="en">sloping hill face</rs>
+   <geogFeat xml:lang="gd">Lairig</geogFeat> 
    <name>Gartain</name>
 </geogName> and the
 <geogName key="LAEI1" type="hill">  
-   <geog xml:lang="gd">Lairig</geog> 
-   <rs type="gloss" xml:lang="en">sloping hill face</rs>
+   <geogFeat xml:lang="gd">Lairig</geogFeat> 
    <name>Eilde</name>
-</geogName></egXML></p></div>
+</geogName></egXML></p>
+<p>The Gaelic word <mentioned>lairig</mentioned> may be glossed as
+<gloss>sloping hill face</gloss>. The most efficient way of including
+this information in the above encoding would be to create a separate
+<gi>nym</gi> element for this component of the name and then point to
+it using the <att>nymRef</att> attribute, as further discussed in <ptr
+target="#NDNYM"/>. 
+</p>
+</div>
 <div type="div3" xml:id="NDPLR"><head>Relative Place Names</head>
 <p>All the place name specifications so far discussed are <term rend="noindex">absolute</term>, in the sense that they define only one
 place.  A place may however be specified in terms of its relationship
@@ -662,7 +668,7 @@ Some examples of relative place names are:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName key="NRPA1"> 
    <offset>near the top of</offset>
    <geogName>     
-      <geog>Mount</geog>
+      <geogFeat>Mount</geogFeat>
       <name>Sinai</name>
    </geogName>
 </placeName></egXML>
@@ -1291,6 +1297,7 @@ over time, (if they are known at all). For example:
   information about specific aspects of the place in a structured form: <specList>
     <specDesc key="placeName"/>
     <specDesc key="location"/>
+    <specDesc key="geo"/>
     <specDesc key="listPlace"/>
     <specDesc key="place"/>
   </specList>
@@ -1300,26 +1307,48 @@ over time, (if they are known at all). For example:
   significant areas which overlap, and we may therefore wish to regard them as the same
   place, while supplying both names with an indication of the time period during which
   each was current. </p>
-<p>The simplest method of specifying a location is by means of its geographic
-  co-ordinates. There are a number of different schemes available for specifying the
-  reference frame for the co-ordinate system, as also for the representation of latitude
-  and longitude. The default recommended by these Guidelines is to supply a string
-  containing two real numbers according to the 1984 World Geodetic System (WGS84) system;
-  this is the system currently used by most GPS applications which TEI users are likely to
-  encounter. <note place="foot">The most recent revision of this standard is known as the
-    Earth Gravity Model 1996.</note>We might therefore record the information about the
-  place known as <soCalled>Lyon</soCalled> as follows: <egXML
-    xmlns="http://www.tei-c.org/ns/Examples">
+<p>The simplest method of specifying a location is by means of its
+geographic co-ordinates, supplied within the <gi>geo</gi>
+element. This may be used to supply  any kind of positional
+information, using any of the many different geodetic systems
+available. There are many different schemes available for specifying the
+reference frame (the <soCalled>datum</soCalled>) for the co-ordinate system, as also for the
+representation of latitude and longitude. The default recommended by
+these Guidelines is to supply a string containing two real numbers
+according to the 1984 World Geodetic System (WGS84) system; this is
+the system currently used by most GPS applications which TEI users are
+likely to encounter. <note place="foot">The most recent revision of
+this standard is known as the Earth Gravity Model 1996.</note>We might
+therefore record the information about the place known as
+<soCalled>Lyon</soCalled> as follows: <egXML
+xmlns="http://www.tei-c.org/ns/Examples">
     <place xml:id="LYON1" type="city">
       <placeName notBefore="1400">Lyon</placeName>
       <placeName notAfter="0056">Lugdunum</placeName>
-      <location scheme="latlong">41.687142 -74.870109</location>
+      <location><geo>41.687142 -74.870109</geo></location>
     </place>
   </egXML>
 </p>
 <div>
   <head>Varieties of location</head>
-  <p>In the following example, we have defined the place <soCalled>Lyon</soCalled> in
+  <p>A location may be specified in one or more of the following ways:
+<list type="ordered">
+<item>by supplying a  string representing its co-ordinates in some
+standardized way within a <gi>geo</gi> element</item>
+<item>by supplying one or more place name component elements
+(e.g. <gi>country</gi>, <gi>settlement</gi> etc.)  to place it  within
+a geo-political context</item>
+<item>by supplying a postal address, e.g. using the <gi>address</gi>
+element</item>
+<item>by supplying a brief textual description, e.g. using the
+<gi>desc</gi> element</item>
+<item>by using a non-TEI XML vocabulary such as the Geographical Markup
+    Language</item>
+</list>
+We give examples of all of these methods in the remainder of this
+  section.</p>
+
+<p>In the following example, we have defined the place <soCalled>Lyon</soCalled> in
     terms of its geographical co-ordinates specified using the Geographical Markup
     Language being defined by the OGC<note place="foot">The OGC is an international
       voluntary consensus standards organization whose members maintain the Geography
@@ -1944,6 +1973,24 @@ represented as a hierarchic structure like this:
    </nym>
 </nym></egXML>
 </p>
+<p>The <gi>nym</gi> element may be used for components of geographical
+or organizational names as well. For example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<geogName key="LAEI1" type="hill">  
+   <geogFeat xml:lang="gd" nymRef="#LAIRG">Lairig</geogFeat> 
+   <name>Eilde</name>
+</geogName>
+...
+
+<nym xml:id="LAIRG">
+  <form xml:lang="gd">lairig</form>
+<gloss>sloping hill face</gloss>
+</nym>
+...
+
+</egXML>
+</p>
+
 <p>The elements described in this section are formally defined as
 follows:
 <specGrp xml:id="DNDNYM" n="Canonical names">
