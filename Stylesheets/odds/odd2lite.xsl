@@ -16,6 +16,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:import href="teiodds.xsl"/>
   <xsl:import href="../common/tei.xsl"/>
+  <xsl:import href="../common/verbatim.xsl"/>
   <xd:doc type="stylesheet">
     <xd:short> TEI stylesheet for making TEI Lite XML from ODD </xd:short>
     <xd:detail> This library is free software; you can redistribute it and/or
@@ -416,7 +417,7 @@
 	  <xsl:text>&gt; </xsl:text>
 	</tei:hi>
       </xsl:when>
-      <xsl:otherwise>>
+      <xsl:otherwise>
 	<tei:hi>
 	  <xsl:call-template name="identifyMe"/>
 	</tei:hi>
@@ -705,8 +706,8 @@
     </tei:p>
   </xsl:template>
   <xsl:template name="Literal">
-    <tei:eg>
-      <xsl:apply-templates mode="literal"/>
+    <tei:eg type="literal">
+      <xsl:apply-templates mode="verbatim"/>
     </tei:eg>
   </xsl:template>
   <xsl:template name="bitOut">
@@ -865,13 +866,15 @@
     <xsl:param name="text"/>
     <xsl:param name="startnewline">false</xsl:param>
     <xsl:param name="autowrap">false</xsl:param>
-    <tei:eg>
+    <tei:eg type="verbatim">
       <xsl:if test="not($label='')">
         <xsl:attribute name="n">
           <xsl:value-of select="$label"/>
         </xsl:attribute>
       </xsl:if>
-      <xsl:if test="$startnewline='true'">
+      <xsl:apply-templates mode="verbatim"/>
+    </tei:eg>
+<!--      <xsl:if test="$startnewline='true'">
         <xsl:text>&#10;</xsl:text>
       </xsl:if>
       <xsl:choose>
@@ -883,7 +886,7 @@
           <xsl:apply-templates mode="normalline" select="$lines[1]"/>
         </xsl:otherwise>
       </xsl:choose>
-    </tei:eg>
+-->
   </xsl:template>
   <xsl:template name="makeInternalLink">
     <xsl:param name="ptr"/>

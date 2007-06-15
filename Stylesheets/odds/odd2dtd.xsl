@@ -1162,8 +1162,7 @@
       <xsl:message> moduleRef to <xsl:value-of select="@key"/>
       </xsl:message>
     </xsl:if>
-    <xsl:text>&#10;&lt;!ENTITY </xsl:text>
-    <xsl:text>%</xsl:text>
+    <xsl:text>&#10;&lt;!ENTITY %</xsl:text>
     <xsl:text> file.</xsl:text>
     <xsl:value-of select="@key"/>
     <xsl:text> </xsl:text>

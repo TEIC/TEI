@@ -418,6 +418,7 @@
 	<xsl:when test="contains($list,$ns)"/>
 	<xsl:when test=".='http://relaxng.org/ns/structure/1.0'"/>
 	<xsl:when test=".='http://www.tei-c.org/ns/Examples'"/>
+	<xsl:when test=".='http://relaxng.org/ns/compatibility/annotations/1.0'"/>
 	<xsl:when test="name(.)=''"/>
 	<xsl:when test=".='http://www.w3.org/XML/1998/namespace'"/>
 	<xsl:otherwise>

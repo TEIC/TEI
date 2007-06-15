@@ -1067,9 +1067,11 @@
         </xsl:call-template>
         <xsl:text>:</xsl:text>
       </xsl:when>
+<!--
       <xsl:when test="$is-attr or $has-default-ns">
         <xsl:text>inh:</xsl:text>
       </xsl:when>
+-->
     </xsl:choose>
     <xsl:value-of select="$name"/>
   </xsl:template>
