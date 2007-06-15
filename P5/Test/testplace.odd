@@ -652,6 +652,37 @@ over time, (if they are known at all). For example:
 </egXML>
 </p>
         </div>
+
+  <head>Formal definitions</head>
+  <p>The following example schema, called testplace, may be used to test the proposal
+    described here.</p>
+  <schemaSpec ident="testplace" start="TEI listPlace">
+    <moduleRef key="header"/>
+    <moduleRef key="core"/>
+    <moduleRef key="tei"/>
+    <moduleRef key="namesdates"/>
+    <moduleRef key="textstructure"/>
+    <moduleRef key="corpus"/>
+    <macroSpec type="pe" ident="anyGML" mode="add">
+      <content>
+        <element xmlns="http://relaxng.org/ns/structure/1.0">
+<nsName ns="http://www.opengis.net/gml"/>
+<zeroOrMore>
+  <choice>
+    <attribute>
+      <anyName/>
+    </attribute>
+    <ref name="anyGML"/>
+    <text/>
+  </choice>
+</zeroOrMore>
+        </element>
+      </content>
+    </macroSpec>
+
+</schemaSpec>
+
+
       </div>
     </body>
   </text>

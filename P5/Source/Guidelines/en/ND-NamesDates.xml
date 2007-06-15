@@ -3,7 +3,7 @@ Copyright TEI Consortium. Licensed under the GNU General Public License. See the
 $Author$-->
 
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="ND"
-xmlns:gml="http://www.opengis.net/gml" n="20">
+ n="20">
 
 <head>Historical data</head>
 
@@ -612,14 +612,14 @@ to the <gi>placeName</gi> element discussed above. In addition to the
 usual phrase level elements, this element may include the following
 specialized elements:
 <specList>
-  <specDesc key="geog"/>
+  <specDesc key="geogFeat"/>
   <specDesc key="offset"/>
 </specList>
 </p>
 <p>For example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><geogName key="MIRI1" type="river">Mississippi River</geogName></egXML>
 </p>
-<p>Where the <gi>geog</gi> element is used to characterize the kind of
+<p>Where the <gi>geogFeat</gi> element is used to characterize the kind of
 geographic feature being named, the <gi>name</gi> element will generally
 also be used to mark the associated proper noun or noun phrase:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><geogName key="MIRI1" type="river">    
@@ -705,7 +705,7 @@ follows:
 &settlement;
 &offset;
 &geogName;
-&geog;
+&geogFeat;
 </specGrp>
 </p>
 </div>
@@ -944,11 +944,12 @@ added as new types of trait:
 </div>
 <div type="div4">
 <head>Personal States</head>
- <p>The <ident type="class">model.persStateLike</ident> class contains elements
-describing changeable characteristics of a
-person which have a definite duration, for example occupation,
-residence, or name. Members of
-the class comprise the following specific elements:
+
+ <p>The <ident type="class">model.persStateLike</ident> class contains
+ elements describing changeable characteristics of a person which have
+ a definite duration, for example occupation, residence, or
+ name. Members of the class comprise the following specific elements:
+
 <specList>
 <specDesc key="persName"/>
 <!--specDesc key="relation"/-->
@@ -1309,18 +1310,19 @@ over time, (if they are known at all). For example:
   each was current. </p>
 <p>The simplest method of specifying a location is by means of its
 geographic co-ordinates, supplied within the <gi>geo</gi>
-element. This may be used to supply  any kind of positional
-information, using any of the many different geodetic systems
-available. There are many different schemes available for specifying the
-reference frame (the <soCalled>datum</soCalled>) for the co-ordinate system, as also for the
-representation of latitude and longitude. The default recommended by
-these Guidelines is to supply a string containing two real numbers
-according to the 1984 World Geodetic System (WGS84) system; this is
-the system currently used by most GPS applications which TEI users are
-likely to encounter. <note place="foot">The most recent revision of
-this standard is known as the Earth Gravity Model 1996.</note>We might
-therefore record the information about the place known as
-<soCalled>Lyon</soCalled> as follows: <egXML
+element. This may be used to supply any kind of positional
+information, using one of the many different geodetic systems
+available. Such systems vary in their format, in their scope or
+coverage, and more fundamentally in the reference frame (the
+<soCalled>datum</soCalled>) used for the co-ordinate system
+itself. The default recommended by these Guidelines is to supply a
+string containing two real numbers which indicate latitude and
+longitude according to the 1984 World Geodetic System (WGS84) system;
+this is the system currently used by most GPS applications which TEI
+users are likely to encounter. <note place="foot">The most recent
+revision of this standard is known as the Earth Gravity Model
+1996.</note>We might therefore record the information about the place
+known as <soCalled>Lyon</soCalled> as follows: <egXML
 xmlns="http://www.tei-c.org/ns/Examples">
     <place xml:id="LYON1" type="city">
       <placeName notBefore="1400">Lyon</placeName>
@@ -1334,7 +1336,7 @@ xmlns="http://www.tei-c.org/ns/Examples">
   <p>A location may be specified in one or more of the following ways:
 <list type="ordered">
 <item>by supplying a  string representing its co-ordinates in some
-standardized way within a <gi>geo</gi> element</item>
+standardized way within a <gi>geo</gi> element, as show above</item>
 <item>by supplying one or more place name component elements
 (e.g. <gi>country</gi>, <gi>settlement</gi> etc.)  to place it  within
 a geo-political context</item>
@@ -1347,33 +1349,9 @@ element</item>
 </list>
 We give examples of all of these methods in the remainder of this
   section.</p>
-
-<p>In the following example, we have defined the place <soCalled>Lyon</soCalled> in
-    terms of its geographical co-ordinates specified using the Geographical Markup
-    Language being defined by the OGC<note place="foot">The OGC is an international
-      voluntary consensus standards organization whose members maintain the Geography
-      Markup Language standard. The OGC coordinates with the ISO TC 211 standards
-      organization to maintain consistency between OGC and ISO standards work. GML is in
-      the process of being adopted as an ISO standard (ISO 19136) and is expected to be
-      released as an International Standard in 2007.</note> and indicated the two names
-    associated with it at different times: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <place type="city">
-        <placeName notBefore="1400">Lyon</placeName>
-        <placeName notAfter="0056">Lugdunum</placeName>
-        <location>
-<gml:Polygon>
-  <gml:exterior>
-    <gml:LinearRing> 45.256 -110.45 46.46 -109.48 43.84 -109.86 45.8 -109.2
-      45.256 -110.45 </gml:LinearRing>
-  </gml:exterior>
-</gml:Polygon>
-        </location>
-      </place>
-    </egXML>
-  </p>
-  <p>Alternatively, or in addition, we might identify Lyon by its geo-political status as
-    a settlement within a country forming part of a larger political entity, independent
-    of its geographic location: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <p>Identifying Lyon by its geo-political status as
+    a settlement within a country forming part of a larger political
+    entity, we might represent the place as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <place xml:id="LYON2">
         <placeName notBefore="1400">Lyon</placeName>
         <placeName notAfter="0056">Lugdunum</placeName>
@@ -1384,11 +1362,9 @@ We give examples of all of these methods in the remainder of this
       </place>
     </egXML> The elements <gi>bloc</gi> etc. are specialised forms of <gi>placeName</gi>,
     as discussed in <ptr target="#NDPLGU"/>. </p>
-  <p>The <att>type</att> attribute is available to categorize more precisely both the kind
-    of place concerned, and the kind of name used to locate it. For example, a single
-    building or a street may both be regarded as a kind of place, just as a part of a
-      <gi>location</gi> called a <soCalled>district</soCalled> may also be more precisely
-    specified as an <soCalled>arrondissement</soCalled> as in this example: <egXML
+<p>We may use the same procedure to represent the location of smaller
+places, such as a street or even an individual building:
+ <egXML
       xmlns="http://www.tei-c.org/ns/Examples">
       <place type="building">
         <placeName>Brasserie Georges</placeName>
@@ -1400,8 +1376,117 @@ We give examples of all of these methods in the remainder of this
         </location>
       </place>
     </egXML>
+Note the use of the <att>type</att> attribute to categorize more
+precisely both the kind of place concerned (a building) and the kind
+of name used to locate it, for example by characterizing the generic
+<gi>district</gi> as an <soCalled>arrondissement</soCalled> </p>
+
+<p>We may even wish to treat imaginary places in the same way: <egXML
+      xmlns="http://www.tei-c.org/ns/Examples">
+      <place>
+        <placeName>Atlantis</placeName>
+        <location>
+<offset>beyond</offset>
+<placeName>The Pillars of <persName>Hercules</persName></placeName>
+        </location>
+      </place>
+    </egXML></p>
+
+<p>A <gi>location</gi> sometimes resemble a set of instructions for finding
+    a place, rather than a name: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <place xml:id="MYF">
+        <placeName notAfter="1969">Yasgur's Farm</placeName>
+        <placeName notBefore="1969">Woodstock Festival Site</placeName>
+        <location>
+<measure>one mile</measure>
+<offset>north west of</offset>
+<settlement>Bethel</settlement>
+<region>New York</region>
+        </location>
+      </place>
+    </egXML>
   </p>
-  <p>Over time, a place may change its name but not its location, or its location and not
+  <p>The element <gi>address</gi> may also be used to identify a location in terms of its
+    postal or other address: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <place type="cemetery">
+        <placeName>Protestant Cemetery</placeName>
+        <placeName type="official" xml:lang="it">Cimitero Acattolico</placeName>
+        <location type="geopolitical">
+<country>Italy</country>
+<settlement>Rome</settlement>
+<district>Testaccio</district>
+        </location>
+        <location type="address">
+<address><addrLine>Via Caio Cestio, 6</addrLine><addrLine>00153 Roma</addrLine></address>
+        </location>
+      </place>
+    </egXML> When, as here, the same place is given multiple locations, the
+    <att>type</att> attribute should be used to characterize the kind of location, as a
+    means of indicating that these are alternative ways of identifying the same place,
+    rather than that place is spread across several locations. </p>
+
+  <p>The <gi>location</gi> element may thus identify a place to a greater or lesser degree
+    of precision, using a variety of means: a name, a set of names, or a set of
+    co-ordinates. The <gi>geo</gi> element introduced earlier is by
+    default understood to supply a value expressed in a specific (and
+    widely used) notation; this may be modified in two ways. </p>
+<p>Firstly, the <att>datum</att> attribute on <gi>geo</gi> may be used
+to indicate that the content of the element should be interpreted in
+some other way. The following values are permitted for this attribute
+by the current version of these Guidelines:
+<list type="gloss">
+<label><code>WGS84</code></label>
+<item> a pair of numbers to be interpreted as latitude followed by longitude
+  according to the World Geodetic System.</item>
+<label><code>OSGB36</code></label>
+<item>the value supplied is to be interpreted as a British National Grid
+Reference.</item>
+<label><code>ED50</code></label>
+<item>the value supplied is to be interpreted as latitude followed by
+longitude according to European Datum co-ordinate system.</item>
+<label><code>other</code></label>
+<item>the value supplied uses some project-specific or
+internally-defined system.</item>
+</list></p>
+<p>Secondly, the element <gi>geo</gi> may be redefined to contain
+markup from a different XML vocabulary which is specifically designed
+to represent this kind of information. This technique is used
+throughout the Guidelines where specialized markup is required, for
+example to embed mathematical expressions or vector graphics, and is
+further described and exemplified in <ptr target="#MDlite"/>. For
+geographic information, suitable non-TEI vocabularies include:
+<list>
+<item>  the Geographical Markup
+    Language (GML) being defined by the OGC<note place="foot">The OGC is an international
+      voluntary consensus standards organization whose members maintain the Geography
+      Markup Language standard. The OGC coordinates with the ISO TC 211 standards
+      organization to maintain consistency between OGC and ISO standards work. GML is in
+      the process of being adopted as an ISO standard (ISO 19136) and is expected to be
+      released as an International Standard in 2007.</note> </item>
+<item> the Keyhole Markup Language (KML) now used by Google Maps<note
+place="foot">See <ptr
+target="http://code.google.com/apis/kml/documentation/index.html"/></note> 
+</item>
+</list>
+</p>
+<p>In the following example, we have defined the place
+<soCalled>Lyon</soCalled> using GML  and indicated the two names
+    associated with it at different times: <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[      <place type="city">
+        <placeName notBefore="1400">Lyon</placeName>
+        <placeName notAfter="0056">Lugdunum</placeName>
+        <location>
+<gml:Polygon>
+  <gml:exterior>
+    <gml:LinearRing> 45.256 -110.45 46.46 -109.48 43.84 -109.86 45.8 -109.2
+      45.256 -110.45 </gml:LinearRing>
+  </gml:exterior>
+</gml:Polygon>
+        </location>
+      </place>
+]]>    </egXML>
+  </p>
+<!-- redo this example in KML please -->
+<!--  <p>Over time, a place may change its name but not its location, or its location and not
     its name, or both. These possibilities are all catered for in the same way, by
     supplying multiple <gi>placeName</gi> or <gi>location</gi> elements along with
     attributes taken from the att.dating class. For example, we may indicate the differing
@@ -1428,62 +1513,9 @@ We give examples of all of these methods in the remainder of this
         </location>
       </place>
     </egXML></p>
-  <p>We may know very little about a place: for example, we may know its location and the
-    type of object found there, but have no name for it: <egXML
-      xmlns="http://www.tei-c.org/ns/Examples">
-      <place xml:id="HARRYS" type="fireHydrant">
-        <location>Junction of Park Street and Charlotte Street</location>
-      </place>
-    </egXML>
-  </p>
-  <p>We may even wish to treat imaginary places in the same way: <egXML
-      xmlns="http://www.tei-c.org/ns/Examples">
-      <place>
-        <placeName>Atlantis</placeName>
-        <location>
-<offset>beyond</offset>
-<placeName>The Pillars of <persName>Hercules</persName></placeName>
-        </location>
-      </place>
-    </egXML></p>
-  <p>The <gi>location</gi> element may thus identify a place to a greater or lesser degree
-    of precision, using a variety of means: a name, a set of names, or a set of
-    co-ordinates. A <gi>location</gi> sometimes resemble a set of instructions for finding
-    a place, rather than a name: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <place xml:id="MYF">
-        <placeName notAfter="1969">Yasgur's Farm</placeName>
-        <placeName notBefore="1969">Woodstock Festival Site</placeName>
-        <location>
-<measure>one mile</measure>
-<offset>north west of</offset>
-<settlement>Bethel</settlement>
-<region>New York</region>
-        </location>
-      </place>
-    </egXML>
-    <!-- or why not have explicit <lat> and <long> elements? -->
-  </p>
-  <p>The element <gi>address</gi> may also be used to identify a location in terms of its
-    postal or other address: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <place type="cemetery">
-        <placeName>Protestant Cemetery</placeName>
-        <placeName type="official" xml:lang="it">Cimitero Acattolico</placeName>
-        <location type="geopolitical">
-<country>Italy</country>
-<settlement>Rome</settlement>
-<district>Testaccio</district>
-        </location>
-        <location type="address">
-<address><addrLine>Via Caio Cestio, 6</addrLine><addrLine>00153 Roma</addrLine></address>
-        </location>
-      </place>
-    </egXML> When, as here, the same place is given multiple locations, the
-    <att>type</att> attribute should be used to characterize the kind of location, as a
-    means of indicating that these are alternative ways of identifying the same place,
-    rather than that place is spread across several locations. </p>
-  <p>If the string within a <gi>location</gi> element uses some other geodetic system, the
-      <att>scheme</att> attribute should indicate this by taking the value
-    <val>other</val>.</p>
+
+-->
+
   <p>A <gi>bibl</gi> element may be used within <gi>location</gi> to indicate the source
     of the location information.</p>
   <!-- example needed -->
@@ -1583,7 +1615,7 @@ as it is pretty incomprehensible) --></p>
         <listPlace type="villages">
 <place>
   <placeName>Abbey Dore</placeName>
-  <location>51.969604 -2.893146</location>
+  <location><geo>51.969604 -2.893146</geo></location>
 </place>
 <place>
   <placeName>Acton Beauchamp</placeName>
@@ -1629,7 +1661,7 @@ as it is pretty incomprehensible) --></p>
       <place xml:id="IS">
         <placeName xml:lang="en">Iceland</placeName>
         <placeName xml:lang="is">Ísland</placeName>
-        <location type="other">65 00 N, 18 00 W</location>
+        <location><geo>65.00 -18.00</geo></location>
         <terrain>
              <desc>Area: 103,000 sq km</desc>
         </terrain>
@@ -1802,6 +1834,7 @@ occupation and residence.</p>
 &event;
 &faith;
 &floruit;
+&geo;
 &langKnowledge;
 &langKnown;
 &listOrg;
@@ -1984,7 +2017,7 @@ or organizational names as well. For example:
 
 <nym xml:id="LAIRG">
   <form xml:lang="gd">lairig</form>
-<gloss>sloping hill face</gloss>
+  <def>sloping hill face</def>
 </nym>
 ...
 
@@ -2218,7 +2251,7 @@ limitation.</egXML>
 <div><head>Formal specification</head>
 <p>The module is organized as follows:
 <specGrp>
-  &macro.anyGML;
+<!--  &macro.anyGML; -->
   &model.persNamePart;    
   &model.orgStateLike;    
   &att.personal;    
