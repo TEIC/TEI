@@ -22,7 +22,20 @@
       <div>
         <head>Examples from the chapter</head>
         <listPlace>
-
+          <place xml:id="LYON1" type="city">
+            <placeName notBefore="1400">Lyon</placeName>
+            <placeName notAfter="0056">Lugdunum</placeName>
+            <location><geo>
+              <gml:Polygon xmlns:gml="http://www.opengis.net/gml">
+                <gml:exterior>
+                  <gml:LinearRing>
+   45.256 -110.45 46.46 -109.48 43.84 -109.86 45.8 -109.2 45.256 -110.45
+   </gml:LinearRing>
+                </gml:exterior>
+              </gml:Polygon>
+	      </geo>
+            </location>
+          </place>
           <place xml:id="LYON2">
             <placeName notBefore="1400">Lyon</placeName>
             <placeName notAfter="0056">Lugdunum</placeName>
@@ -40,7 +53,32 @@
               <placeName type="street">Rue de la Charité</placeName>
             </location>
           </place>
-
+          <place xml:id="LYON3">
+            <placeName notBefore="1400">Lyon</placeName>
+            <placeName notAfter="-0056">Lugdunum</placeName>
+            <location notAfter="-0056">
+	      <geo>
+              <gml:Polygon  xmlns:gml="http://www.opengis.net/gml">
+                <gml:exterior>
+                  <gml:LinearRing>
+   45.1 -110.23 46.48 -99.08 31.74 -108.86 45.3 -78.2 42.25 -103.45
+   </gml:LinearRing>
+                </gml:exterior>
+              </gml:Polygon>
+	      </geo>
+            </location>
+            <location notBefore="1950">
+	      <geo>
+              <gml:Polygon  xmlns:gml="http://www.opengis.net/gml">
+                <gml:exterior>
+                  <gml:LinearRing>
+   45.256 -110.45 46.46 -109.48 43.84 -109.86 45.8 -109.2 45.256 -110.45
+   </gml:LinearRing>
+                </gml:exterior>
+              </gml:Polygon>
+	      </geo>
+            </location>
+          </place>
           <place xml:id="HARRYS" type="fireHydrant">
             <location>
 	      <desc>Junction of Park Street and Charlotte Street</desc>
@@ -178,6 +216,83 @@ on 17 June 1944.</desc>
       <div>
         <head>Examples supplied by others</head>
         <listPlace>
+<!-- from spqr: a well known cemetry -->
+          <place xmlns="http://www.tei-c.org/ns/1.0" xml:id="ProtCem">
+            <placeName>Protestant Cemetery</placeName>
+            <placeName xml:lang="en">English Cemetery</placeName>
+            <placeName type="official" xml:lang="it">Cimitero
+ Acattolico</placeName>
+            <location type="geopolitical">
+              <country>Italy</country>
+              <settlement>Rome</settlement>
+              <district>Testaccio</district>
+            </location>
+            <location type="address">
+              <address>
+                <addrLine>Via Caio Cestio, 6</addrLine>
+                <addrLine>00153 Roma</addrLine>
+              </address>
+            </location>
+            <location scheme="other"><measure>I 00153</measure></location>
+            <location xmlns:gml="http://www.opengis.net/gml">
+	      <geo>
+              <gml:Point srsDimension="2" srsName="urn:ogc:def:crs:EPSG:6.6:4326">
+                <gml:pos>41.876143755230956 12.479267120361328</gml:pos>
+              </gml:Point>
+	      </geo>
+            </location>
+            <trait type="description">
+              <p>A cemetery in Rome, located near
+   <placeName key="http://www.activitaly.it/monument/portspaolo.htm">Porta
+   San Paolo</placeName> alongside the Pyramid of <persName key="#CESTIUS">Cestius</persName>, a small-scale Egyptian-style
+   pyramid built in 30 BC as a tomb and later incorporated into the
+   section of the <placeName key="http://en.wikipedia.org/wiki/Aurelian_walls"> Aurelian
+   Walls</placeName> that borders the cemetery. Mediterranean cypress
+   trees and other foliage in the cemetery cause it to mirror the more
+   natural style of cemeteries seen in the lusher regions of northern
+   Europe. As the name of the cemetery indicates, it is the final
+   resting place of non-Catholics (not only Protestants or English
+   people).</p>
+            </trait>
+            <event from="1732">
+              <p>The first recorded burial is that of
+ George Langton</p>
+            </event>
+            <note>
+              <bibl>
+                <ptr target="http://www.dkinst-rom.dk/protcem/"/>
+              </bibl>
+              <bibl>
+                <ptr target="http://en.wikipedia.org/wiki/Protestant_Cemetery%2C_Rome"/>
+              </bibl>
+              <bibl>
+                <ptr target="http://www.protestantcemetery.it/"/>
+              </bibl>
+            </note>
+
+            <place>
+              <location scheme="local" type="zone">
+                <measure unit="zone">z_A</measure>
+              </location>
+              <location scheme="local" type="box">
+                <measure unit="xywh">159.81663 59.166954 6.04424299999999 11.193909"</measure>
+              </location>
+              <location scheme="local" type="polygon">
+                <measure unit="coordpair">161.658991,70.360863 159.81663,69.619326 164.015411,59.166954 165.860873,59.906095</measure>
+              </location>
+              <trait>
+                <label>Size</label>
+                <desc>
+                  <measure>148cm x 96cm</measure>
+                </desc>
+<!-- surely we can do better than this ? -->
+              </trait>
+              <trait key="#PLW" type="type"/>
+              <trait key="#M_ST" type="material"/>
+              <trait key="#c_1" type="condition"/>
+            </place>
+          </place>
+<!-- from MJD -->
           <place xmlns="http://www.tei-c.org/ns/1.0" xml:id="ESB">
             <placeName xml:lang="en">Empire State Building</placeName>
             <location type="address">
@@ -423,7 +538,74 @@ as such. I solved it someway here, but I think we talked about a p
 or note element as one direct child of place. Or is this the locale element?</p>
             </state>
           </place>
-
+          <place xml:id="place2" type="country">
+            <placeName type="Official" notBefore="1948">Israel</placeName>
+            <placeName type="unofficial" xml:id="name1" notAfter="1948">Israel</placeName>
+<!--The last two lines is supposed to show the change from unofficial to official name in 1948, but I'm not sure it's clear this way-->
+            <placeName>Palestine<note>This name is used partly overlapping with
+    <placeName ref="#name1"/>, but it is used for
+another, not existing political entity. Maybe it's not the same place at all?</note></placeName>
+            <placeName notAfter="1948">Palestine</placeName>
+            <placeName>Zion<note>Used in this meaning by some groups only.</note></placeName>
+<!-- No idea which political statements I make here, this may be Greater Israel for all I know. I'm not sure about the use of GML here. -->
+            <location>
+	      <geo>
+              <gml:MultiPolygon srsName="EPSG:4326"  xmlns:gml="http://www.opengis.net/gml">
+                <gml:polygonMember>
+                  <gml:Polygon>
+                    <gml:outerBoundaryIs>
+                      <gml:LinearRing>
+                        <gml:coordinates> 32.990981,32.884955
+  33.038396,32.914120 33.235864,33.052710
+  33.473835,33.241313 33.483339,33.250765
+  33.580159,33.347055 33.759681,33.524921
+  33.783646,33.514299 33.933659,33.447805
+  34.994837,33.118699 35.067907,33.094767
+  35.068590,33.094549 35.100324,33.093508
+  35.100827,33.093609 35.102427,33.075900
+  35.088054,33.018054 35.078890,32.986936
+  35.072081,32.954436 35.077672,32.892581
+  35.073190,32.872772 35.061663,32.849163
+  35.034163,32.823191 35.014999,32.815418
+  34.989018,32.834791 34.953190,32.823400
+  34.945545,32.767081 34.939163,32.713336
+  34.895554,32.510272 34.872499,32.419718
+  34.868327,32.407491 34.834163,32.290836
+  34.802799,32.192363 34.797772,32.178054
+  34.778881,32.125545 34.732772,32.014445
+  34.730827,32.003609 34.708327,31.947636
+  34.669999,31.875000 34.586109,31.726945
+  34.553890,31.683891 34.511109,31.626391
+  34.495281,31.603336 34.490545,31.596100
+  34.482636,31.583054 34.455827,31.549718
+  34.401109,31.489163 34.276109,31.373881
+  34.248054,31.349718 34.217421,31.323964
+  33.891322,31.585824 33.751242,31.746038
+  33.722787,31.785865 33.034257,32.829212
+  32.990981,32.884955 </gml:coordinates>
+                      </gml:LinearRing>
+                    </gml:outerBoundaryIs>
+                  </gml:Polygon>
+                </gml:polygonMember>
+                <gml:polygonMember>
+                  <gml:Polygon>
+                    <gml:outerBoundaryIs>
+                      <gml:LinearRing>
+                        <gml:coordinates> 34.903800,29.486709
+  34.938045,29.523327 34.962563,29.551464
+  34.965827,29.549164 34.979981,29.545755
+  34.978172,29.542588 34.966514,29.519090
+  34.933619,29.466837 34.921211,29.453380
+  34.904195,29.486131 34.903800,29.486709
+</gml:coordinates>
+                      </gml:LinearRing>
+                    </gml:outerBoundaryIs>
+                  </gml:Polygon>
+                </gml:polygonMember>
+              </gml:MultiPolygon>
+	      </geo>
+            </location>
+          </place>
 <!-- How to model the relationship between Israel and Palestine? I don't KNOW that relationship. It's not the same, but still the same. 
     And what about the relationship between Israel as an idea and Israel as a state... and so on. -->
           <place xml:id="place3" type="settlement">
@@ -434,7 +616,68 @@ or note element as one direct child of place. Or is this the locale element?</p>
 <!-- from Tadeusz
 
 -->
-
+          <place xml:id="Wrocław">
+            <placeName xml:lang="pl">Wrocław</placeName>
+            <placeName xml:lang="de">Breslau</placeName>
+            <placeName xml:lang="la">Wratislavia</placeName>
+            <placeName xml:lang="la">Vratislavia</placeName>
+            <placeName xml:lang="cs">Vratislav</placeName>
+<!--  <etym>Means
+    <gloss>founded by a</gloss>
+     <lang>Slavic</lang>
+	<gloss>a Polish or Czech duke</gloss>
+     <mentioned>Vratislav</mentioned>
+  </etym>-->
+            <location type="latlong">
+	      <measure>51 07 N, 17 02 W</measure>
+	    </location>
+            <trait type="area">
+              <p>292.82 sq km</p>
+            </trait>
+            <location>
+	      <geo>
+              <Polygon xmlns="http://www.opengis.net/gml">
+                <exterior xmlns="http://www.opengis.net/gml">
+                  <LinearRing xmlns="http://www.opengis.net/gml"> 45.256 -110.45 46.46 -109.48 43.84 -109.86 45.8 -109.2 45.256 -110.45 </LinearRing>
+                </exterior>
+              </Polygon>
+	      </geo>
+            </location>
+            <location>
+              <bloc>EU</bloc>
+              <country>Poland</country>
+            </location>
+            <state type="officialStatus" from="1000" to="1335">
+              <p>
+      Administratively the city (and the region) belongs to the Polish kingdom.
+    </p>
+            </state>
+            <state type="officialStatus" from="1335" to="1526">
+              <p>
+      Administratively the city (and the region) belongs to Bohemia.
+    </p>
+            </state>
+            <state type="officialStatus" from="1526" to="1710">
+              <p>
+      Administratively the city (and the region) belongs to the Austro-Hungarian Empire.
+    </p>
+            </state>
+            <state type="officialStatus" from="1710" to="1945">
+              <p>
+      Administratively the city (and the region) belongs to Prussia, later to the German Reich.
+    </p>
+            </state>
+            <state type="officialStatus" from="1945">
+              <p>
+      Administratively the city (and the region) belongs to the Republic of Poland.
+    </p>
+            </state>
+            <state type="popularCultural">
+              <p>
+       There are five larger rivers flowing through the city, and the huge number of bridges of various type (around 200) in the city leads to various associations with other places in Europe like that, for example Venice, Amsterdam, or St. Petersburg.
+      </p>
+            </state>
+          </place>
         </listPlace>
         <p><placeName ref="#place1">Zion</placeName> (Hebrew: <placeName xml:lang="he-Hebr" ref="#place1">צִיּוֹן</placeName>, <placeName xml:lang="he-Latn" ref="#place1">tziyyon</placeName>; Tiberian vocalization: <placeName xml:lang="he-Latn" ref="#place1">tsiyyôn</placeName>; transliterated
         <placeName ref="#place1">Zion</placeName> or <placeName ref="#place1">Sion</placeName>) is a term that most often designates the land of <placeName ref="#place2">Israel</placeName> and its capital <placeName ref="#place3">Jerusalem</placeName>. The word is found in texts dating back almost three

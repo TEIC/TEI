@@ -25,6 +25,8 @@ TESTFILES= \
 	testns \
 	testnames \
 	testplace \
+	testplace-gml \
+	testplace-kml \
 	testrend \
 	testspoken \
 	testtagdocs \
