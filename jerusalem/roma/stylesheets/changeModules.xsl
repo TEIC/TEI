@@ -61,10 +61,20 @@ Description
 	  <xsl:attribute name="class">error</xsl:attribute>
 	</xsl:if>
 	<td>
-	  <a>
+	  <a onmouseover="javascript:document.getElementById('{$currentElement}_utils').style.display=''"
+		onmouseout="javascript:document.getElementById('{$currentElement}_utils').style.display='none'">
 	    <xsl:attribute name="href">?mode=changeElement&amp;element=<xsl:value-of select="$currentElement"/>&amp;module=<xsl:value-of select="$module"/></xsl:attribute>
 	    <xsl:value-of select="$currentElement"/>
 	  </a>
+	  <div id="{$currentElement}_utils" style="padding: 5px; border: 1px solid gray; background: #DDDDFF; display: none; width: 150px; font-size: 10px"
+	  onmouseover="javascript:document.getElementById('{$currentElement}_utils').style.display=''"
+	  onmouseout="javascript:document.getElementById('{$currentElement}_utils').style.display='none'">
+	    Element <b><xsl:value-of select="$currentElement"/></b><br/>
+	    - <a href="#" onclick="javascript:window.open('tei_space/childs.php?element={$currentElement}', '{$currentElement} childs', 'directories=no,scrollbars=yes,width=400, height=300,toolbar=no,status=no,menubar=no,location=no')" style="color: black; text-decoration: none" onmouseover="this.style.color='red'" onmouseout="this.style.color='black'">Possible children in TEI space</a><br />
+	    - <a href="#" onclick="javascript:window.open('tei_space/parents.php?element={$currentElement}', '{$currentElement} parents', 'directories=no,scrollbars=yes,width=400, height=300,toolbar=no,status=no,menubar=no,location=no')" style="color: black; text-decoration: none" onmouseover="this.style.color='red'" onmouseout="this.style.color='black'">Possible parents in TEI space</a><br />
+	    - <a href="#" onclick="javascript:window.open('tei_space/model_classes.php?element={$currentElement}', '{$currentElement} parents', 'directories=no,scrollbars=yes,width=400, height=300,toolbar=no,status=no,menubar=no,location=no')" style="color: black; text-decoration: none" onmouseover="this.style.color='red'" onmouseout="this.style.color='black'">Model class</a><br />
+	    - <a href="#" onclick="javascript:window.open('tei_space/attributes.php?element={$currentElement}', '{$currentElement} parents', 'directories=no,scrollbars=yes,width=500, height=400,toolbar=no,status=no,menubar=no,location=no')" style="color: black; text-decoration: none" onmouseover="this.style.color='red'" onmouseout="this.style.color='black'">Attributes</a>
+	  </div>
 	</td> 
 	<td>
 	  <input class="radio" type="radio" value="include">
