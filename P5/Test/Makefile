@@ -25,9 +25,6 @@ TESTFILES= \
 	testns \
 	testnames \
 	testplace \
-	testplace-gml \
-	testplace-kml \
-	testrend \
 	testspoken \
 	testtagdocs \
 	testoucs \
@@ -47,6 +44,9 @@ TESTSPECIALFILES= \
 	testallplus \
 	testsvg  \
 	testodds \
+	testplace-gml \
+	testplace-kml \
+	testrend \
 	testmathml 
 
 default: schemas test
@@ -103,8 +103,8 @@ test-xerces:
 
 
 test-dtd:
-	echo xmllint DTD ...except testodds ....
-	-for i in `echo $(TESTFILES) | sed 's/testodds//'`; do echo $$i: ; xmllint --dropdtd $$i.xml | xmllint --noout --dtdvalid $$i.dtd -; done
+	echo xmllint DTD 
+	-for i in `echo $(TESTFILES)`; do echo $$i: ; xmllint --dropdtd $$i.xml | xmllint --noout --dtdvalid $$i.dtd -; done
 
 
 # testall, testp4compat, testodds have no DOCTYPE
