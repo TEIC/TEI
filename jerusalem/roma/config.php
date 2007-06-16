@@ -3,7 +3,8 @@
 // Programm calls
 //
 // Defines how to call trang
-define( 'roma_trang', 'java -jar /home/ioan/bin/trang-20030619/trang.jar' );
+define( 'roma_trang', 'trang');
+//java -jar /home/ioan/bin/trang-20030619/trang.jar' );
 
 // Defines how to call fop
 define( 'roma_fop', 'fop' );
