@@ -34,7 +34,6 @@ dtds: check
 	--stringparam lang ${LANGUAGE} \
 	--stringparam TEIC true \
 	${XSL}/odds/odd2dtd.xsl -
-	(cd DTD; ln -s tei.dtd tei2.dtd)
 	#for i in DTD/* ; do perl -i Utilities/cleandtd.pl $$i; done	
 
 schemas:check
