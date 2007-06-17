@@ -110,7 +110,7 @@ html:check subset
 	-xmllint --noout --valid Guidelines/index.html
 
 xml: check subset 
-	xmllint --noent --xinclude ${DRIVER} | perl Utilities/cleanrnc.pl | \
+	xmllint --noent --xinclude ${DRIVER} |  \
 	xsltproc  -o Guidelines.xml \
 	--stringparam displayMode rnc  \
 	${XSL}/odds/odd2lite.xsl -
