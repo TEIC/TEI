@@ -39,7 +39,7 @@
     <xsl:if test="not($cssPrintFile='')">
       <link rel="stylesheet" media="print" type="text/css" href="{$cssPrintFile}"/>
     </xsl:if>
-    <style>
+    <style type="text/css">
 body{
  background-color: white;
  color: black;
