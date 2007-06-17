@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:lang="en"  xmlns="http://www.tei-c.org/ns/1.0"
+ xmlns:rng="http://relaxng.org/ns/structure/1.0"
+ n="testappinfo">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>TEI with appInfo setup</title>
+            <author>Martin Holmes and Sebastian Rahtz</author>
+         </titleStmt>
+         <publicationStmt>
+	   <p> </p>
+	 </publicationStmt>
+         <sourceDesc>
+            <p>authored from scratch</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+<text>
+<body>
+<divGen type="toc"/>
+<div>
+<head>My appInfo Schema</head>
+<p>The minutes of the TEI Council meeting in April 2007 record
+<quote>
+A new <gi>tei:appInfo</gi> element will be created that is a member of
+<name type="class">model.encodingPart</name>, which contains one or
+more occurrences of a new element, <gi>application</gi> that can be
+used by programs to record information intended for other
+programs. The content of <gi>application</gi>, like <gi>egXML</gi>,
+must be well-formed XML, but no further constraints are placed on it
+at this time. It is a future work item to develop a mechanism to
+associate an <gi>application</gi> with an actual particular
+program.</quote>
+</p>
+  <p>Here is the schema:</p>
+    <schemaSpec ident="testappinfo" start="TEI">
+      <moduleRef key="header"/>
+      <moduleRef key="core"/>
+      <moduleRef key="tei"/>
+      <moduleRef key="textstructure"/>
+      <elementSpec ident="appInfo" mode="add">
+	    <gloss>application information</gloss>
+	    <desc>records information about an application which has
+	    edited the TEI file. </desc>
+	<classes>
+	  <memberOf key="model.encodingPart"/>
+	</classes>
+	<content>
+	  <rng:oneOrMore>
+	    <rng:ref name="model.applicationLike"/>
+	  </rng:oneOrMore>
+	</content>
+	<remarks><p>The main purposes of this element are: 1) to allow an
+	application to discover that it has previously
+	opened/edited a file, and what version of itself was used
+	to do that; 2) to show (through a date) which
+	application last edited the file to allow for diagnosis of
+	any problems that might have been caused by that
+	application; 3) to allow users to discover information
+	about an application used to edit the file; 4) to allow
+	the application to declare an interest in elements of
+	the file which it has edited, so that other applications
+	or human editors may be more wary of making changes to
+	those sections of the file. The <att>xml:id</att> attribute should be
+	used to store a string which uniquely identifies the
+	application and its major version number (for example,
+	<hi>ImageMarkupTool1</hi>) and applications should ensure that
+	only one such tag appears in the file for any given major
+	version of the application.</p></remarks>
+      </elementSpec>
+
+      <classSpec ident="model.applicationLike" mode="add" type="model">
+	<desc>Elements used to record information about software
+	applications which have acted upon the current TEI document.</desc>
+      </classSpec>
+
+      <elementSpec ident="application" mode="add">
+	<gloss>detail about an authoring/editing application</gloss>
+	<desc>provide information about an application which has acted
+	upon the document. 	                    </desc>
+	<classes>
+	  <memberOf key="att.typed"/>
+	  <memberOf key="att.datable"/>
+	  <memberOf key="att.editLike"/>
+	  <memberOf key="model.applicationLike"/>
+	</classes>
+	<content>
+	  <rng:zeroOrMore>
+	    <rng:ref name="macro.phraseSeq"/>
+	  </rng:zeroOrMore>
+	</content>
+	<exemplum>
+	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	    <appInfo>
+	      <application  xml:id="ImageMarkupTool1" notAfter="2006-06-01">
+		<ptr target="#imtAnnotationCategories"/>
+		<ptr target="#imtAnnotatedImage"/>
+	      </application>
+	    </appInfo>
+	  </egXML>
+	  <p>This example shows an appInfo tag describing an
+	  application called the Image Markup Tool, 
+	  which has declared an interest in two sections of the file,
+	  and which last saved the file on June 6 2006.</p>
+	</exemplum>
+	
+      </elementSpec>
+    </schemaSpec>
+</div>
+</body>
+</text>
+</TEI>
