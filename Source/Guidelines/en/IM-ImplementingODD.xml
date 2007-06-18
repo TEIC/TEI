@@ -15,25 +15,311 @@ and application of the elements documented in chapter <ptr
 target="#TD"/>, since it is believed that these may have application
 beyond the areas directly addressed by the TEI.</p>
 
-<div>
-  <head>Process stages</head>
-<p>The processing tools used to generate these guidelines
+<p>The processing system used to generate these guidelines
 operate in two stages:
 <list type="ordered">
   <item>application of changes and additions in an ODD schema specification
-(as described in <ptr target="#MD"/>) to the main TEI Guidelines
+(as described in <ptr target="#MD"/>) to the main TEI Guidelines source
 through a process of selection,  merging and deletion</item>
 <item>conversion of the resulting unified ODD to the desired output</item>
 </list>
 An ODD processor is not mandated to work in this way, but it is a
 convenient way to simplify the second part of the work.</p>
-</div>
+
 <div>
-<head>Generating documentation</head>
+<head>Making a unified ODD</head>
+<p>Merging an ODD specification with the master TEI source
+is driven by a <gi>schemaSpec</gi> element, which specifies
+the name and default namespace of the result. The content
+can be of four types:
+<list type="ordered">
+<item><gi>moduleRef</gi> elements which refer to components
+of the TEI, using the <att>key</att> attribute. This reference
+must be satisfied by some means, such as reading an XML
+file with the TEI source, or looking up the reference
+in an XML database; whatever means is used, it should return a stream
+of XML containing the elements, classes and macros belonging to the
+specified module. These elements can then be checked against overrides in
+the <gi>schemaSpec</gi> being processed.
+</item>
+ <item><gi>moduleRef</gi> elements which refer to external
+schemas written in RELAX NG, using the <att>url</att> attribute.
+These will remain untouched, and passed directly to the output
+schema when that is created.
+</item>
+<item><gi>elementSpec</gi>, <gi>classSpec</gi> or <gi>macroSpec</gi>
+elements; these must have a <att>mode</att> attribute which determines
+how they will be processed.<note>We do not here say what happens in
+case of errors; a specification in <val>add</val> mode which is also
+present in an imported module should obviously be flagged as an
+error.</note> If the value of <att>mode</att> is <val>add</val>, then
+the object can simply be copied to the output, but if it is
+<val>change</val>, <val>delete</val>, or <val>replace</val>, then it
+will be looked at in the next stage.</item>
+<item><gi>specGrpRef</gi> pointers to <gi>specGrp</gi> groups
+elsewhere in this, or another, document; the pointer should be
+followed, and <gi>elementSpec</gi>, <gi>classSpec</gi> or
+<gi>macroSpec</gi> elements in the <gi>specGrp</gi> be processed as
+described in the previous item.</item>
+</list>
+Other documentation elements will use normal TEI markup.</p>
+
+<p>Each object obtained from the TEI sources using <gi>moduleRef</gi>
+must be checked against objects in the current <gi>schemaSpec</gi>
+according to the following rules:
+<list type="ordered">
+<item>if there is an object with the same value for the
+<att>ident</att> attribute, and a <att>mode</att> value of
+<att>delete</att>,
+then the object from the module is ignored</item>
+<item>if there is an object with the same value for the
+<att>ident</att> attribute, and a <att>mode</att> value of
+<att>replace</att>,
+then the object from the module is ignored, and the one
+from the <gi>schemaSpec</gi> used in its place</item>
+<item>if there is an object with the same value for the
+<att>ident</att> attribute, and a <att>mode</att> value of
+<att>change</att>,
+then the two objects must be merged, as described below</item>
+<item>otherwise, the object from the module is copied to the result</item>
+</list>
+</p>
+
+<p>To merge two objects with the same <att>ident</att>,
+each component (attributes and child elements) must be
+looked at, recursively. They can be of four types:
+<list type="ordered">
+<item>objects which can only occur once (attributes,
+and <gi>altIdent</gi>,
+<gi>content</gi>, and <gi>classes</gi> elements) are taken from the
+latest specification (i.e. the one in the <gi>schemaSpec</gi>)
+if present there.</item>
+<item>listing objects (<gi>attList</gi>, <gi>valList</gi> and <gi>listRef</gi>)
+should be copied, and their children processed</item>
+<item>objects which can occur multiple times, but have
+no identification
+(<gi>equiv</gi>, <gi>desc</gi>, <gi>gloss</gi>, <gi>exemplum</gi>,
+<gi>remarks</gi>, <gi>listRef</gi> in elements and macros,
+and <gi>datatype</gi> and <gi>defaultVal</gi> in attributes), should
+be copied from both the source and the ODD schema, and all included
+in the output</item>
+<item>identifiable objects (i.e. those with an <att>ident</att>
+attribute, <gi>attDef</gi> and <gi>valItem</gi>) should
+be processed according to these same rules</item>
+</list>
+</p>
+<p>A special problem arises with elements which are members of
+attribute classes, as they are permitted to override attributes
+inherited from a class. For example, consider this simple element:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<elementSpec ident="p">
+  <classes>
+    <memberOf key="att.typed"/>
+  </classes>
+  <content>
+  <!--…-->
+  </content>
+</elementSpec>
+</egXML>
+The affect of the <val>att.typed</val> class is to provide <gi>p</gi>
+with a <att>type</att> attribute and a <att>subtype</att>
+attribute. If
+we wish <gi>p</gi> <emph>not</emph> to have <att>subtype</att>, we
+could extend the specification in our schema as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<elementSpec ident="p">
+  <classes>
+    <memberOf key="att.typed"/>
+  </classes>
+  <content>
+  <!--… -->
+  </content>
+  <attList>
+    <attDef ident="subtype" mode="delete"/>
+  </attList>
+</elementSpec>
+</egXML>
+This means that when we process <code><![CDATA[<memberOf
+key="att.typed"/>]]></code>, we have to look up that class, examine
+each attribute which in defines turn, and see if there is an override
+in the schema specification. If the modification is of the attribute
+class itself, we can proceed as usual; if, however, the modification
+is at the element level, we delete the class reference and add a
+series of <gi>attRef</gi> elements to the element, one for each
+attribute inherited from the class. Since attribute classes can
+themselves be members of other attribute classes, membership must be
+followed recursively.</p>
+
+<p>We should also consider carefully the effect of the concatenation
+of unidentifiable components. An original may have
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<elementSpec ident="p">
+  <desc>marks paragraphs in prose.</desc>
+  <!--…-->
+</elementSpec>
+</egXML>
+which would usefully be extended with this:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<elementSpec ident="p" mode="change">
+  <desc xml:lang="es">marca párrafos en prosa.</desc>
+  <!--…-->
+</elementSpec>
+</egXML>
+to provide an alternate description in another language, but
+nothing prevents you supplying <gi>desc</gi> several times
+in the same language, and subsequent applications will have to 
+decide what that may mean. Multiple examples, possibly
+in different languages, are easier to deal with. Note that
+since the <gi>exemplum</gi> element is not identifiable, 
+examples can only be deleted by supplying an entire new
+<gi>elementSpec</gi> in <val>replace</val> mode.</p>
+
+<p>When processing the content models of elements, and the content of
+macros, the processor has to decide whether to take account of deleted
+elements.<note>The carthago program behind the PizzaChef application,
+written by Michael Sperberg-McQueen for TEI P3 and P4, went to very
+great efforts to get this right. The tools behind the P5 Roma
+application are not as sophisticated.</note> A content model like this:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<elementSpec ident="person">
+  <!--…-->
+  <content>
+    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:oneOrMore>
+        <rng:ref name="model.pLike"/>
+      </rng:oneOrMore>
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="model.personPart"/>
+          <rng:ref name="model.global"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+    </rng:choice>
+  </content>
+  <!--…-->
+</elementSpec>
+</egXML>
+probably requires no special treatment, as everything is expressed
+in terms of model classes; if <val>model.personPart</val> is
+empty, the <gi>choice</gi> is simply <att>model.global</att>. An
+ODD processor may choose to simplify that by removing the wrapper
+RELAX NG <gi>choice</gi> element. However, if that <gi>choice</gi>
+is itself inside an <gi>zeroOrMore</gi> inside a <gi>group</gi>, 
+the simplifying process may be harder, and we may leave the resolution
+to a later stage. If an element refers directly an element child, like
+this:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<elementSpec ident="figure">
+  <!--…-->
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:ref name="model.pLike"/>
+        <rng:ref name="model.global"/>
+        <rng:ref name="figure"/>
+        <rng:ref name="figDesc"/>
+        <rng:ref name="model.graphicLike"/>
+        <rng:ref name="model.headLike"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <!--…-->
+</elementSpec>
+</egXML>
+and <gi>figDesc</gi> has been deleted,<note>Note that deletion of some
+elements, if they are not optional in the original specification, will
+cause the schema specification to be not suitable for validating TEI
+Documents, since they break the TEI abstract model; conformance topics
+are addressed in more detail in <ptr target="#CF"/>.</note> it will be
+necessary to remove up that reference, or the resulting schema will be
+invalid.  Surrounding constructs, such as a <gi>zeroOrMore</gi>, may have
+to be consequentially removed too.</p>
+
+<p>The result of the endeavours above will be a new
+<gi>schemaSpec</gi> which contains a flat set of element, class and
+macro specifications, along with any <gi>moduleRef</gi>
+elements with <att>url</att> attributes identifying external
+schemas.</p>
+
 </div>
 
 <div>
 <head>Generating schemas</head>
+<p>Assuming that we have resolved any modifications, as outlined in
+the previous section, making a schema is four-fold task:
+<list type="ordered">
+<item>collect all datatype and other macro specifications at the start
+of the output schema</item>
+<item>declare all classes</item>
+<item>process all elements</item>
+<item>process any any <gi>moduleRef</gi>
+elements with <att>url</att> attributes identifying external
+schemas</item>
+</list>
+However, there are a a number of obstacles to overcome along the
+way.</p>
+
+<p>Firstly, we have to decide which sort of schema we are going to
+create. The TEI sources, using RELAX NG to express content models, are 
+slightly biased towards this language, and adopt the following
+tactics:
+<list>
+<item>A RELAX NG schema is generated most easily, by generating
+wrappers around the content models direct from ODD</item>
+<item>A DTD schema is generated by converting the RELAX NG
+content models to DTD language, often simplifying it to 
+allow for the less-sophisticated output language</item>
+<item>A W3C Schema schema is created by generating a RELAX NG schema
+and then using James Clark's trang application.</item>
+</list>
+</p>
+
+<p>Secondly, we have to decide how to deal with any missing
+components. For example, consider this (simplified) model
+for <gi>sp</gi>:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<elementSpec ident="sp">
+  <!--…-->
+  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:zeroOrMore>
+      <rng:ref name="model.global"/>
+    </rng:zeroOrMore>
+    <rng:optional>
+      <rng:ref name="speaker"/>
+      <rng:zeroOrMore>
+	<rng:ref name="model.global"/>
+      </rng:zeroOrMore>
+    </rng:optional>
+  </content>
+  <!--…-->
+</elementSpec>
+</egXML>
+which proposes anything from the global model class, followed
+by some <gi>speaker</gi> elements, followed by 
+anything from the global model class. What happens if <gi>speaker</gi>
+is gone? We would end up with the equivalent of this:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<elementSpec ident="sp">
+  <!--…-->
+  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:zeroOrMore>
+      <rng:ref name="model.global"/>
+    </rng:zeroOrMore>
+    <rng:zeroOrMore>
+      <rng:ref name="model.global"/>
+    </rng:zeroOrMore>
+  </content>
+  <!--…-->
+</elementSpec>
+</egXML>
+a construct which is illegal in DTD and W3C schema languages,
+since for a given member of <val>model.global</val> we cannot
+be sure which rule is being used. RELAX NG has no problem with it.
+</p>
+</div>
+
+<div>
+<head>Generating documentation</head>
 </div>
 
 <div>
