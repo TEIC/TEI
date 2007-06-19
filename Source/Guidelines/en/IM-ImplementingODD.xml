@@ -15,16 +15,16 @@ and application of the elements documented in chapter <ptr
 target="#TD"/>, since it is believed that these may have application
 beyond the areas directly addressed by the TEI.</p>
 
-<p>The processing system used to generate these guidelines
-operate in two stages:
+<p>An ODD processing system  has two tasks to undertake:
 <list type="ordered">
   <item>application of changes and additions in an ODD customization
-(as described in <ptr target="#MD"/>) to the main TEI P5 ODD specification
+(as described in <ptr target="#MD"/>) to the TEI P5 ODD specification
 through a process of selection,  merging and deletion</item>
 <item>conversion of the resulting unified ODD to the desired output</item>
 </list>
-An ODD processor is not mandated to work in this way, but it is a
-convenient way to simplify the second part of the work.</p>
+An ODD processor is not mandated to do these two stages in sequence,
+but it can be a convenient way to simplify the second part of the
+work; this is how the tools used for the TEI Guidelines work.</p>
 
 <div>
 <head>Making a unified ODD</head>
@@ -33,6 +33,25 @@ is driven by a <gi>schemaSpec</gi> element, which specifies
 the name and default namespace of the result. The content
 can be of four types:
 <list type="ordered">
+<item><gi>elementSpec</gi>, <gi>classSpec</gi> or <gi>macroSpec</gi>
+elements; these must have a <att>mode</att> attribute which determines
+how they will be processed.<note>We do not here say what happens in
+case of errors; a specification in <val>add</val> mode which is also
+present in an imported module should obviously be flagged as an
+error.</note> If the value of <att>mode</att> is <val>add</val>, then
+the object is simply copied to the output, but if it is
+<val>change</val>, <val>delete</val>, or <val>replace</val>, then it
+will be looked at by other parts of the process.</item>
+
+<item><gi>specGrpRef</gi> pointers to <gi>specGrp</gi> groups
+elsewhere in this, or another, document. A <gi>specGrp</gi> is used to
+hold chunks of ODD markup at the points in documentation where they
+are discussed, rather than being forced to put them all inside
+<gi>schemaSpec</gi>. The pointer to any such groups should be
+followed, and <gi>elementSpec</gi>, <gi>classSpec</gi> or
+<gi>macroSpec</gi> elements in the <gi>specGrp</gi> be processed as
+described in the previous item.</item>
+
 <item><gi>moduleRef</gi> elements which refer to components
 of the TEI, using the <att>key</att> attribute. This reference
 must be satisfied by some means, such as reading an XML
@@ -40,44 +59,31 @@ file with the TEI ODD specification, or looking up the reference
 in an XML database; whatever means is used, it should return a stream
 of XML containing the elements, classes and macros belonging to the
 specified module. These elements can then be checked against overrides in
-the <gi>schemaSpec</gi> being processed.
-</item>
- <item><gi>moduleRef</gi> elements which refer to external
+the <gi>schemaSpec</gi> being processed.</item>
+
+<item><gi>moduleRef</gi> elements which refer to external
 schemas written in RELAX NG, using the <att>url</att> attribute.
 These will remain untouched, and passed directly to the output
 schema when that is created.
 </item>
-<item><gi>elementSpec</gi>, <gi>classSpec</gi> or <gi>macroSpec</gi>
-elements; these must have a <att>mode</att> attribute which determines
-how they will be processed.<note>We do not here say what happens in
-case of errors; a specification in <val>add</val> mode which is also
-present in an imported module should obviously be flagged as an
-error.</note> If the value of <att>mode</att> is <val>add</val>, then
-the object can simply be copied to the output, but if it is
-<val>change</val>, <val>delete</val>, or <val>replace</val>, then it
-will be looked at in the next stage.</item>
-<item><gi>specGrpRef</gi> pointers to <gi>specGrp</gi> groups
-elsewhere in this, or another, document; the pointer should be
-followed, and <gi>elementSpec</gi>, <gi>classSpec</gi> or
-<gi>macroSpec</gi> elements in the <gi>specGrp</gi> be processed as
-described in the previous item.</item>
 </list>
-Other documentation elements will use normal TEI markup.</p>
+</p>
 
 <p>Each object obtained from the TEI ODD specification using
 <gi>moduleRef</gi> must be checked against objects in the
 customization <gi>schemaSpec</gi> according to the following rules:
 <list type="ordered">
-<item>if there is an object with the same value for the
+<item>if there is an object  in the ODD customization with the same value for the
 <att>ident</att> attribute, and a <att>mode</att> value of
 <att>delete</att>,
 then the object from the module is ignored</item>
-<item>if there is an object with the same value for the
+<item>if there is an object  in the ODD customization with the same value for the
 <att>ident</att> attribute, and a <att>mode</att> value of
 <att>replace</att>,
 then the object from the module is ignored, and the one
-from the <gi>schemaSpec</gi> used in its place</item>
-<item>if there is an object with the same value for the
+from the ODD customization is used in its place</item>
+<item>if there is an object  in the ODD customization
+with the same value for the
 <att>ident</att> attribute, and a <att>mode</att> value of
 <att>change</att>,
 then the two objects must be merged, as described below</item>
@@ -89,22 +95,28 @@ then the two objects must be merged, as described below</item>
 each component (attributes and child elements) must be
 looked at, recursively. They can be of four types:
 <list type="ordered">
+
 <item>objects which can only occur once (attributes,
 and <gi>altIdent</gi>,
 <gi>content</gi>, and <gi>classes</gi> elements) are taken from the
-latest specification (i.e. the one in the <gi>schemaSpec</gi>)
-if present there.</item>
-<item>listing objects (<gi>attList</gi>, <gi>valList</gi> and <gi>listRef</gi>)
-should be copied, and their children processed</item>
+ODD customization if present there, otherwise from the TEI ODD
+specifification.
+</item>
+
+<item>grouping objects (<gi>attList</gi>, <gi>valList</gi>)
+are copied, and their children processed using these rules</item>
+
 <item>objects which can occur multiple times, but have no
 identification (<gi>equiv</gi>, <gi>desc</gi>, <gi>gloss</gi>,
 <gi>exemplum</gi>, <gi>remarks</gi>, <gi>listRef</gi> in elements and
 macros, and <gi>datatype</gi> and <gi>defaultVal</gi> in attributes),
 should be copied from both the TEI ODD specification and the ODD
 customization, and all included in the output</item>
-<item>identifiable objects (i.e. those with an <att>ident</att>
-attribute, <gi>attDef</gi> and <gi>valItem</gi>) should
-be processed according to these same rules</item>
+
+<item>identified objects (i.e. those with an <att>ident</att>
+attribute, i.e. <gi>attDef</gi> and <gi>valItem</gi>) 
+are processed according to their <att>mode</att> attribute, following
+the rules in this list.</item>
 </list>
 </p>
 <p>A special problem arises with elements which are members of
@@ -123,7 +135,7 @@ inherited from a class. For example, consider this simple element:
 The affect of the <val>att.typed</val> class is to provide <gi>p</gi>
 with a <att>type</att> attribute and a <att>subtype</att>
 attribute. If
-we wish <gi>p</gi> <emph>not</emph> to have <att>subtype</att>, we
+we wish <gi>p</gi> to <emph>not</emph> have <att>subtype</att>, we
 could extend the customization in our schema as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec ident="p">
@@ -164,10 +176,12 @@ which would usefully be extended with this:
   <!--…-->
 </elementSpec>
 </egXML>
-to provide an alternate description in another language, but
-nothing prevents you supplying <gi>desc</gi> several times
+to provide an alternate description in another language.
+Nothing prevents the user from supplying <gi>desc</gi> several times
 in the same language, and subsequent applications will have to 
-decide what that may mean. Multiple examples, possibly
+decide what that may mean. 
+
+Multiple examples, possibly
 in different languages, are easier to deal with. Note that
 since the <gi>exemplum</gi> element is not identifiable, 
 examples can only be deleted by supplying an entire new
@@ -229,9 +243,9 @@ elements, if they are not optional in the original specification, will
 cause the schema specification to be not suitable for validating TEI
 Documents, since they break the TEI abstract model; conformance topics
 are addressed in more detail in <ptr target="#CF"/>.</note> it will be
-necessary to remove up that reference, or the resulting schema will be
-invalid.  Surrounding constructs, such as a <gi>zeroOrMore</gi>, may have
-to be consequentially removed too.</p>
+necessary to remove that reference, or the resulting schema will be
+invalid.  Surrounding constructs, such as a <gi>zeroOrMore</gi>, may
+also have to be consequentially removed.</p>
 
 <p>The result of the endeavours above will be a new
 <gi>schemaSpec</gi> which contains a flat set of element, class and
@@ -250,29 +264,123 @@ the previous section, making a schema is four-fold task:
 of the output schema</item>
 <item>declare all classes</item>
 <item>process all elements</item>
-<item>process any any <gi>moduleRef</gi>
-elements with <att>url</att> attributes identifying external
-schemas</item>
+<item>process any <gi>moduleRef</gi>
+elements with a <att>url</att> attribute identifying an external
+schema</item>
 </list>
 However, there are a a number of obstacles to overcome along the
 way.</p>
 
-<p>Firstly, we must decide which sort of schema is going to
-create. The TEI ODD specification, using RELAX NG to express content
-models, is slightly biased towards this language, and adopt the
-following tactics:
+<p>Firstly, a decision must be made about which schema languaged is
+going to be used. The TEI ODD specification, using RELAX NG to express
+content models, is slightly biased towards this language, and the
+processing of these Guidelines adopts the following tactics:
 <list>
-<item>A RELAX NG schema is generated most easily, by generating
-wrappers around the content models direct from ODD</item>
+<item>A RELAX NG schema is generated by creating 
+wrappers around the content models direct from the ODD specification</item>
 <item>A DTD schema is generated by converting the RELAX NG
 content models to DTD language, often simplifying it to 
 allow for the less-sophisticated output language</item>
 <item>A W3C Schema schema is created by generating a RELAX NG schema
 and then using James Clark's trang application.</item>
 </list>
-</p>
+Other projects may decide to follow a different route, perhaps
+implementing a direct ODD to W3C Schema translator.</p>
 
-<p>Secondly, the problem of missing
+<p>Secondly, it is possible to create two rather
+different styles of schema. On the one hand, the schema
+can try to maintain all the flexibility of ODD by using the
+facilities of the schema language for parameterization; on the other,
+it can remove all customization features and produce a flat result
+no suitable for further manipulation. The TEI project generates both
+styles
+of schema; the first as a set of schema fragments in DTD and RELAX NG
+languages, which can be included as modules in other schemas, and 
+customized further; the second as the output from the Roma processors,
+which produce single file schemas in as simple a style as
+possible.</p>
+
+<p>The difference between the schema styles may be illustrated by
+considering this ODD specification:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<elementSpec module="drama" ident="performance">
+  <!--..-->
+  <classes>
+    <memberOf key="model.frontPart.drama"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="model.divWrapper"/>
+          <rng:ref name="model.global"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+      <rng:oneOrMore>
+        <rng:group>
+          <rng:ref name="model.common"/>
+        </rng:group>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:oneOrMore>
+      <rng:zeroOrMore>
+        <rng:group>
+          <rng:ref name="model.divWrapper.bottom"/>
+        </rng:group>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:zeroOrMore>
+    </rng:group>
+  </content>
+</elementSpec>
+</egXML>
+A simple rendering to RELAX NG produces this:
+<eg>
+performance =
+ element performance { 
+  (model.divWrapper | model.global)*,
+  (model.common, model.global*)+,
+  (model.divWrapper.bottom, model.global*)*
+  att.global.attribute.xmlspace,
+  att.global.attribute.xmlid,
+  att.global.attribute.n,
+  att.global.attribute.xmllang,
+  att.global.attribute.rend,
+  att.global.attribute.xmlbase,
+  att.global.linking.attribute.corresp,
+  att.global.linking.attribute.synch,
+  att.global.linking.attribute.sameAs,
+  att.global.linking.attribute.copyOf,
+  att.global.linking.attribute.next,
+  att.global.linking.attribute.prev,
+  att.global.linking.attribute.exclude,
+  att.global.linking.attribute.select
+}
+</eg>
+In this, the knowledge that the attributes such as <att>n</att> and
+<att>rend</att> come from the global attribute class is lost, and
+there is easy way for another  schema to modify the element. A
+parameterized version may look this this:
+<eg>
+performance =
+  element performance { performance.content, performance.attributes }
+performance.content =
+  (model.divWrapper | model.global)*,
+  (model.common, model.global*)+,
+  (model.divWrapper.bottom, model.global*)*
+performance.attributes = att.global.attributes, empty
+</eg>
+Here, the class attributes are provided with a pointer (allowing
+for redefinition of the class), and the attributes are separated from
+the content model, allowing either to be overridden.</p>
+<p>In the remainder of these chapter, the terms 
+<term>simple schema</term> are <term>parameterized schema</term>
+are used to distinguish the two schema types. An ODD processor
+is not mandated to support both.</p>
+
+<p>Lastly, the problem of missing
 components must be resolved. For example, consider this (simplified) model
 for <gi>sp</gi>:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -292,10 +400,10 @@ for <gi>sp</gi>:
   <!--…-->
 </elementSpec>
 </egXML>
-which proposes anything from the global model class, followed
-by some <gi>speaker</gi> elements, followed by 
-anything from the global model class. What happens if <gi>speaker</gi>
-is gone? The following would result:
+This proposes anything from the global model class, followed by some
+<gi>speaker</gi> elements, followed by anything from the global model
+class. What happens if <gi>speaker</gi> is gone? The following would
+result:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec ident="sp">
   <!--…-->
@@ -312,8 +420,180 @@ is gone? The following would result:
 </egXML>
 which is illegal in DTD and W3C schema languages,
 since for a given member of <val>model.global</val> it is impossible to
-be sure which rule is being used. RELAX NG has no problem with it.
+be sure which rule is being used. RELAX NG does not need to know
+which rule has fired, and so avoids the problem.</p>
+</div>
+
+<div>
+<head>Naming and documenting in generated schemas</head>
+<p>When processing class, element or macro specifications, there are
+three general rules:
+<list type="ordered">
+<item>If a RELAX NG pattern or DTD parameter entity
+is being created, its name is the value of
+the <att>ident</att> attribute, prefixed by the value of any
+<att>prefix</att> attribute on <gi>schemaSpec</gi>. This allows for
+external schemas to be mixed in which have elements of the same names
+as the TEI. 
+</item>
+
+<item>If an element or attribute is being created, its default name is
+the value of the <att>ident</att> attribute, but if there is an
+<gi>altIdent</gi> child, the value of that is used instead.
+Thus
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<elementSpec ident="sp">
+ <!--...-->
+</elementSpec>
+</egXML>
+may generate a RELAX NG pattern like this:
+<eg>
+ tei_sp = element sp { ... }
+</eg>
+Referring strings have to be adjusted accordingly.
+</item>
+
+<item>Where appropriate, the documentation strings in <gi>gloss</gi>
+and <gi>desc</gi> should be copied into the generated schema. If there
+is only one use of the element, it should be used regardless, but if
+there
+are several with different values of <att>xml:lang</att>, a locale
+indication in the processing environment should be used to decide
+which to use. For example, 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<elementSpec module="core" ident="head">
+  <equiv/>
+  <gloss>heading</gloss>
+  <gloss xml:lang="es">encabezamiento</gloss>
+  <gloss xml:lang="zh-tw">標題</gloss>
+  <gloss xml:lang="ja">表題</gloss>
+<!-- ... -->
+</elementSpec>
+</egXML>
+might generate a RELAX NG schema fragment like the following, if the
+locale is determined to be Chinese:
+<eg>
+head =
+  ## 標題
+  element head { head.content, head.attributes }
+</eg>
+</item>
+</list>
 </p>
+</div>
+
+<div>
+<head>Making a RELAX NG schema</head>
+
+<p>To create a RELAX NG schema, the processor
+will process every <gi>macroSpec</gi>,
+<gi>classSpec</gi> and <gi>elementSpec</gi> in turn. </p>
+
+<div>
+<head>Macros</head>
+<p>An ODD macro
+generates a RELAX NG pattern, so
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<macroSpec module="tei" type="pe" ident="macro.phraseSeq">
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+        <rng:ref name="model.gLike"/>
+        <rng:ref name="model.phrase"/>
+        <rng:ref name="model.global"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+</macroSpec>
+</egXML>
+produces
+<eg>
+macro.phraseSeq = (text | model.gLike | model.phrase | model.global)*
+</eg>
+Note that for the purpose of these Guidelines, we show the RELAX NG
+output in compact format; the ODD specification stores it in more
+verbose XML format, but the two are interchangeable.</p>
+
+</div>
+
+<div>
+<head>Classes</head>
+<p>An ODD model class generates a RELAX NG alternation pattern listing 
+all the members of the class present in the ODD. So this
+example
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<classSpec module="tei" type="model" ident="model.measureLike">
+<!-- ... -->
+</classSpec>
+</egXML>
+may produce, for a given customization:
+<eg>
+model.measureLike = num | measure | measureGrp
+</eg>
+if the elements <gi>num</gi>, <gi>measure</gi> and <gi>measureGrp</gi>
+are included. Depending on the value of the <att>generate</att>
+attribute on the <gi>classSpec</gi>, it may also generate a set
+of sequence as well as alternation patterns. Thus if we load another
+module with some more elements in this class, we may also generate:
+<eg>
+model.measureLike_sequence =
+  num, measure, measureGrp, height, depth, width, geo
+model.measureLike_sequenceOptional =
+  num?, measure?, measureGrp?, height?, depth?, width?, geo?
+model.measureLike_sequenceOptionalRepeatable =
+  num*, measure*, measureGrp*, height*, depth*, width*, geo*
+model.measureLike_sequenceRepeatable =
+  num+, measure+, measureGrp+, height+, depth+, width+, geo+
+</eg>
+where the pattern name is created by appending an underscore and the
+name of the generation sequence to the class name.
+</p>
+
+<p>Attribute classes work by producing a pattern containing
+definitions of the appropriate attributes. So
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<classSpec module="verse" type="atts" ident="att.enjamb">
+  <attList>
+    <attDef ident="enjamb" usage="opt">
+      <!-- ... -->
+    </attDef>
+  </attList>
+</classSpec>
+</egXML>
+produces
+<eg>
+att.enjamb.attributes = att.enjamb.attribute.enjamb
+att.enjamb.attribute.enjamb =
+  attribute enjamb { data.enumerated }?
+</eg>
+Since the processor may have expanded the attribute
+classes already, separate patterns are generated
+for each attribute in the class as well as one for
+the class itself. This allows an element to refer directly
+to a member of a class.
+</p>
+</div>
+
+<div>
+<head>Elements</head>
+</div>
+
+</div>
+
+
+<div>
+<head>Making a DTD</head>
+<div>
+<head>Macros</head>
+</div>
+<div>
+<head>Classes</head>
+</div>
+<div>
+<head>Elements</head>
+</div>
+
 </div>
 
 <div>
@@ -322,6 +602,197 @@ be sure which rule is being used. RELAX NG has no problem with it.
 
 <div>
 <head>Validation tools for other processors</head>
+
+</div>
+
+
+<div xml:id="STPE">
+<head>Using TEI parameterized schema fragments</head>
+<p>The TEI parameterized DTD and RELAX NG
+fragments make use parameter entities and patterns for
+several purposes. In this section we describe their interface for
+the user. </p>
+
+<div type="div3" xml:id="STPED"><head>Selection of schema fragments</head>
+
+<p>Special-purpose parameter entities are used to specify which
+modules are to be combined into a TEI DTD. They take the form
+<val>TEI.xxxxx</val> where <code>xxxx</code> is the name of the module
+as given in table <ptr target="#tab-mods"/> in <ptr
+target="#STMA"/>. For example, the parameter entity <ident
+type="pe">TEI.linking</ident> is used to define whether or not to
+include the module <ident type="module">linking</ident>. All such
+parameter entities are declared by default with the value
+<val>IGNORE</val>: to select a module, therefore, the encoder declares
+the appropriate parameter entities with the value <val>INCLUDE</val>.
+</p>
+
+<p>The parameter entity concerned is used as the keyword controlling a
+conditional marked section in the DTD fragment generated by the <ident
+type="module">tei</ident> module. The declarations for each DTD
+fragment constituting the module are contained within such marked
+sections. For example, the parameter entity <ident
+type="pe">TEI.linking</ident> appears twice in <ident
+type="file">tei.dtd</ident>, once for the <ident
+type="frag">linking-decl</ident> schema fragment:
+<eg><![CDATA[
+<!ENTITY % TEI.linking 'IGNORE' >
+<![%TEI.linking;[
+<!ENTITY % file.linking-decl PUBLIC '-//TEI P5//ENTITIES Linking, Segmentation, and Alignment//EN' 'linking-decl.dtd' >
+%file.linking-decl;
+]]&gt;]]></eg>
+and once for the <ident type="frag">linking</ident> schema fragment:
+<eg><![CDATA[
+<![%TEI.linking;[
+<!ENTITY % file.linking PUBLIC '-//TEI P5//ELEMENTS Linking, Segmentation, and Alignment//EN' 'linking.dtd' >
+%file.linking;
+]]&gt;]]></eg>
+
+If TEI.linking has its default value of IGNORE, neither declaration
+has any effect. If however it has the value INCLUDE, then the content
+of each marked section is acted upon: the parameter entities <ident
+type="pe">file.linking</ident> and <ident
+type="pe">file.linking-decl</ident> are referenced, which has the
+effect of embedding the content of the files they represent at the
+appropriate point in the DTD. </p>
+
+<p>The RELAX NG schema fragments are combined in a wrapper schema
+using the standard include mechanism.</p>
+</div>
+
+
+<div type="div3" xml:id="STPEEX">
+<head>Inclusion and exclusion of Elements</head>
+
+<p>The TEI DTD fragments also use marked sections and parameter entity
+references to allow users to exclude the definitions of individual
+elements, in order either to make the elements illegal in a document
+or to allow the element to be redefined. The parameter entities used
+for this purpose have exactly the same name as the generic identifier
+of the element concerned.  The default definition for these parameter
+entities is <val>INCLUDE</val> but they may be changed to
+<val>IGNORE</val> in order to exclude the standard element and
+attribute definition list declarations from the DTD.
+ </p>
+
+<p>The declarations for the element <gi>p</gi>, for example, are
+preceded by a definition for a parameter entity with the name
+<ident rend="noindex" type="ge">p</ident> and contained within a marked
+section whose keyword is
+given as <code>%p;</code>:
+<eg><![CDATA[<!ENTITY % p 'INCLUDE' >
+<![ %p; [
+       <!-- element and attribute list declaration for p here -->
+]]]]></eg></p><p>These parameter entities are defined immediately preceding the
+element whose declarations they control; because their names are
+completely regular, they are not documented further.
+ </p>
+<p>To define a DTD in which the element <gi>p</gi> is excluded
+therefore, the entity <ident rend="noindex" type="pe">p</ident> needs
+to be redefined as <val>IGNORE</val> by ensuring that a declaration
+such as
+<eg><![CDATA[<!ENTITY % p 'IGNORE' >]]></eg>
+is added earlier in the DTD than the default (see further <ptr target="#STOVLO"/>). </p>
+
+<p>Similarly, in the parameterized RELAX NG schemas, every element is
+defined by a pattern named after the element. To undefine an element
+therefore all that is necessary is to add a declaration like the
+following:
+<eg> p = notAllowed </eg>
+</p></div>
+
+<div type="div3" xml:id="STPEGI"><head>Changing the names of 
+generic identifiers</head>
+
+<p>In the TEI DTD fragments, elements are not referred to directly by
+their generic identifiers; instead, the DTD fragments refer to
+parameter entities which expand to the standard generic identifiers.
+This allows users to rename elements by redefining the appropriate
+parameter entity.  Parameter entities used for this purpose are formed
+by taking the standard generic identifier of the element and attaching
+the string <q>n.</q> as a prefix.  Thus the standard generic
+identifiers for paragraphs, notes, and quotations, <gi>p</gi>,
+<gi>note</gi>, and <gi>q</gi> are defined by declarations of the
+following form: <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % n.p "p">
+<!ENTITY % n.pb "pb"> 
+<!ENTITY % n.persName "persName">]]></egXML>
+Since all names in the TEI DTD are case-sensitive, the specific mix of
+upper and lower case letters in the standard generic identifier must
+be preserved in the entity name.
+ </p>
+
+<p>These declarations are automatically generated by an ODD processor
+when TEI DTD fragments are created. </p>
+
+<p> In the RELAX NG schemas, all elements are defined using a pattern
+with the same name as the element: for example
+<eg>
+abbr = element abbr { abbr.content, abbr.attributes }
+</eg>
+The easiest way of renaming the element is thus simply to rewrite
+the pattern with a different element name; any references use the
+pattern, not the element, name.
+<eg>
+abbr = element abbrev { abbr.content, abbr.attributes }
+</eg>
+More complex revisions, such as redefining the content of the element
+(defined by the pattern <ident type="rng">abbr.content</ident>) or its
+attributes (defined by the pattern <ident
+type="rng">abbr.attributes</ident>) can be accomplished in a similar
+way, using the features of the RELAX NG language. The recommended
+method of carrying out such modifications is however to use the ODD
+language as further described in section <ptr target="#TD"/>.</p>
+</div>
+
+
+<div type="div3" xml:id="STOVLO"><head>Embedding local modifications
+(DTD only)</head>
+
+<p>Any local modifications to a DTD (i.e. changes to a schema other than simple
+inclusion or exclusion of modules) are made by declarations stored in
+one of two local extension files, one containing modifications to the
+TEI parameter entities, and the other new or changed declarations of
+elements and their attributes.  Entity declarations must be made
+which associate the names of these two files with the appropriate
+parameter entity so that the declarations they contain can be embedded
+within the TEI DTD at an appropriate point.</p>
+
+<p>The following entities are referred to by the main
+<ident type="file">tei.dtd</ident> file to embed portions of the TEI DTD fragments
+or locally developed extensions.
+<list type="gloss"><label><ident type="pe">TEI.extensions.ent</ident></label>
+<item>identifies a local file containing
+extensions to the TEI parameter entities</item>
+<label><ident type="pe">TEI.extensions.dtd</ident></label>
+<item>identifies a local file containing
+extensions to the TEI module</item>
+</list></p>
+<p>For example, if the relevant files are called <ident rend="noindex" type="file">project.ent</ident> and <ident rend="noindex" type="file">project.dtd</ident>, then declarations like the following
+would be appropriate:
+<eg><![CDATA[<!ENTITY % TEI.extensions.ent SYSTEM 'project.ent' >
+<!ENTITY % TEI.extensions.dtd SYSTEM 'project.dtd' >]]></eg></p>
+
+<p>When an entity is declared more than once, the first declaration is
+binding and the others are ignored.  The local modifications to
+parameter entities should therefore be handled before the standard
+parameter entities themselves are declared in <ident type="file">tei.dtd</ident>.  The entity <ident type="pe">TEI.extensions.ent</ident> is referred to before any TEI
+declarations are handled, to allow the user's declarations to take
+priority.  If the user does not provide a <ident type="pe">TEI.extensions.ent</ident> entity, the entity will be expanded
+to the empty string.</p>
+<p>For example the encoder might wish to add two phrase-level elements
+<gi>it</gi> and <gi>bd</gi>, perhaps as synonyms for
+<tag>hi rend='italics'</tag> and <tag>hi rend='bold'</tag>.  As
+described in chapter <ptr target="#MD"/>, this involves two distinct steps:
+one to define the new elements, and the other to ensure that they are
+placed into the TEI document structure at the right place.  We deal with
+the second first, by specifying the element class to which the new
+elements should be attached.  To do this, the parameter entity
+<ident type="pe">x.phrase</ident> should be modified to include the two
+new generic identifiers.  The file containing local declarations of the
+standard parameter entities will thus contain a declaration of the
+following form:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % x.phrase 'it | bd |' >]]></egXML></p>
+</div>
 
 </div>
 
