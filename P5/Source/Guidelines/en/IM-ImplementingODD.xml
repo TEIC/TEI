@@ -19,7 +19,7 @@ beyond the areas directly addressed by the TEI.</p>
 operate in two stages:
 <list type="ordered">
   <item>application of changes and additions in an ODD customization
-(as described in <ptr target="#MD"/>) to the main TEI Guidelines source
+(as described in <ptr target="#MD"/>) to the main TEI P5 ODD specification
 through a process of selection,  merging and deletion</item>
 <item>conversion of the resulting unified ODD to the desired output</item>
 </list>
@@ -28,7 +28,7 @@ convenient way to simplify the second part of the work.</p>
 
 <div>
 <head>Making a unified ODD</head>
-<p>Merging an ODD customization with the master TEI source
+<p>Merging an ODD customization with the  TEI P5 ODD specification
 is driven by a <gi>schemaSpec</gi> element, which specifies
 the name and default namespace of the result. The content
 can be of four types:
@@ -36,7 +36,7 @@ can be of four types:
 <item><gi>moduleRef</gi> elements which refer to components
 of the TEI, using the <att>key</att> attribute. This reference
 must be satisfied by some means, such as reading an XML
-file with the TEI source, or looking up the reference
+file with the TEI ODD specification, or looking up the reference
 in an XML database; whatever means is used, it should return a stream
 of XML containing the elements, classes and macros belonging to the
 specified module. These elements can then be checked against overrides in
@@ -64,9 +64,9 @@ described in the previous item.</item>
 </list>
 Other documentation elements will use normal TEI markup.</p>
 
-<p>Each object obtained from the TEI sources using <gi>moduleRef</gi>
-must be checked against objects in the current <gi>schemaSpec</gi>
-according to the following rules:
+<p>Each object obtained from the TEI ODD specification using
+<gi>moduleRef</gi> must be checked against objects in the
+customization <gi>schemaSpec</gi> according to the following rules:
 <list type="ordered">
 <item>if there is an object with the same value for the
 <att>ident</att> attribute, and a <att>mode</att> value of
@@ -96,13 +96,12 @@ latest specification (i.e. the one in the <gi>schemaSpec</gi>)
 if present there.</item>
 <item>listing objects (<gi>attList</gi>, <gi>valList</gi> and <gi>listRef</gi>)
 should be copied, and their children processed</item>
-<item>objects which can occur multiple times, but have
-no identification
-(<gi>equiv</gi>, <gi>desc</gi>, <gi>gloss</gi>, <gi>exemplum</gi>,
-<gi>remarks</gi>, <gi>listRef</gi> in elements and macros,
-and <gi>datatype</gi> and <gi>defaultVal</gi> in attributes), should
-be copied from both the source and the ODD schema, and all included
-in the output</item>
+<item>objects which can occur multiple times, but have no
+identification (<gi>equiv</gi>, <gi>desc</gi>, <gi>gloss</gi>,
+<gi>exemplum</gi>, <gi>remarks</gi>, <gi>listRef</gi> in elements and
+macros, and <gi>datatype</gi> and <gi>defaultVal</gi> in attributes),
+should be copied from both the TEI ODD specification and the ODD
+customization, and all included in the output</item>
 <item>identifiable objects (i.e. those with an <att>ident</att>
 attribute, <gi>attDef</gi> and <gi>valItem</gi>) should
 be processed according to these same rules</item>
@@ -259,9 +258,9 @@ However, there are a a number of obstacles to overcome along the
 way.</p>
 
 <p>Firstly, we must decide which sort of schema is going to
-create. The TEI sources, using RELAX NG to express content models, are 
-slightly biased towards this language, and adopt the following
-tactics:
+create. The TEI ODD specification, using RELAX NG to express content
+models, is slightly biased towards this language, and adopt the
+following tactics:
 <list>
 <item>A RELAX NG schema is generated most easily, by generating
 wrappers around the content models direct from ODD</item>
