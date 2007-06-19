@@ -18,7 +18,7 @@ beyond the areas directly addressed by the TEI.</p>
 <p>The processing system used to generate these guidelines
 operate in two stages:
 <list type="ordered">
-  <item>application of changes and additions in an ODD schema specification
+  <item>application of changes and additions in an ODD customization
 (as described in <ptr target="#MD"/>) to the main TEI Guidelines source
 through a process of selection,  merging and deletion</item>
 <item>conversion of the resulting unified ODD to the desired output</item>
@@ -28,7 +28,7 @@ convenient way to simplify the second part of the work.</p>
 
 <div>
 <head>Making a unified ODD</head>
-<p>Merging an ODD specification with the master TEI source
+<p>Merging an ODD customization with the master TEI source
 is driven by a <gi>schemaSpec</gi> element, which specifies
 the name and default namespace of the result. The content
 can be of four types:
@@ -125,7 +125,7 @@ The affect of the <val>att.typed</val> class is to provide <gi>p</gi>
 with a <att>type</att> attribute and a <att>subtype</att>
 attribute. If
 we wish <gi>p</gi> <emph>not</emph> to have <att>subtype</att>, we
-could extend the specification in our schema as follows:
+could extend the customization in our schema as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec ident="p">
   <classes>
@@ -139,19 +139,19 @@ could extend the specification in our schema as follows:
   </attList>
 </elementSpec>
 </egXML>
-This means that when we process <code><![CDATA[<memberOf
-key="att.typed"/>]]></code>, we have to look up that class, examine
-each attribute which in defines turn, and see if there is an override
-in the schema specification. If the modification is of the attribute
-class itself, we can proceed as usual; if, however, the modification
-is at the element level, we delete the class reference and add a
-series of <gi>attRef</gi> elements to the element, one for each
-attribute inherited from the class. Since attribute classes can
+This means that when <code><![CDATA[<memberOf
+key="att.typed"/>]]></code> is processed, that class is looked up,
+each attribute which it defines is examined in turn, and an override
+is looked for in the schema customization. If the modification is of
+the attribute class itself, work proceeds as usual; if, however, the
+modification is at the element level, the class reference is deleted
+and a series of <gi>attRef</gi> elements is assed to the element, one for
+each attribute inherited from the class. Since attribute classes can
 themselves be members of other attribute classes, membership must be
 followed recursively.</p>
 
-<p>We should also consider carefully the effect of the concatenation
-of unidentifiable components. An original may have
+<p>The effect of the concatenation of unidentifiable components should
+be considered carefully. An original may have
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec ident="p">
   <desc>marks paragraphs in prose.</desc>
@@ -199,15 +199,14 @@ application are not as sophisticated.</note> A content model like this:
   <!--…-->
 </elementSpec>
 </egXML>
-probably requires no special treatment, as everything is expressed
-in terms of model classes; if <val>model.personPart</val> is
-empty, the <gi>choice</gi> is simply <att>model.global</att>. An
-ODD processor may choose to simplify that by removing the wrapper
-RELAX NG <gi>choice</gi> element. However, if that <gi>choice</gi>
-is itself inside an <gi>zeroOrMore</gi> inside a <gi>group</gi>, 
-the simplifying process may be harder, and we may leave the resolution
-to a later stage. If an element refers directly an element child, like
-this:
+probably requires no special treatment, as everything is expressed in
+terms of model classes; if <val>model.personPart</val> is empty, the
+<gi>choice</gi> is simply <att>model.global</att>. An ODD processor
+may choose to simplify that by removing the wrapper RELAX NG
+<gi>choice</gi> element. However, if that <gi>choice</gi> is itself
+inside an <gi>zeroOrMore</gi> inside a <gi>group</gi>, the simplifying
+process may be harder, and the resolution is left to a later stage. If
+an element refers directly an element child, like this:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec ident="figure">
   <!--…-->
@@ -245,7 +244,7 @@ schemas.</p>
 
 <div>
 <head>Generating schemas</head>
-<p>Assuming that we have resolved any modifications, as outlined in
+<p>Assuming that any modifications have been resolved, as outlined in
 the previous section, making a schema is four-fold task:
 <list type="ordered">
 <item>collect all datatype and other macro specifications at the start
@@ -259,7 +258,7 @@ schemas</item>
 However, there are a a number of obstacles to overcome along the
 way.</p>
 
-<p>Firstly, we have to decide which sort of schema we are going to
+<p>Firstly, we must decide which sort of schema is going to
 create. The TEI sources, using RELAX NG to express content models, are 
 slightly biased towards this language, and adopt the following
 tactics:
@@ -274,8 +273,8 @@ and then using James Clark's trang application.</item>
 </list>
 </p>
 
-<p>Secondly, we have to decide how to deal with any missing
-components. For example, consider this (simplified) model
+<p>Secondly, the problem of missing
+components must be resolved. For example, consider this (simplified) model
 for <gi>sp</gi>:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec ident="sp">
@@ -297,7 +296,7 @@ for <gi>sp</gi>:
 which proposes anything from the global model class, followed
 by some <gi>speaker</gi> elements, followed by 
 anything from the global model class. What happens if <gi>speaker</gi>
-is gone? We would end up with the equivalent of this:
+is gone? The following would result:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec ident="sp">
   <!--…-->
@@ -312,8 +311,8 @@ is gone? We would end up with the equivalent of this:
   <!--…-->
 </elementSpec>
 </egXML>
-a construct which is illegal in DTD and W3C schema languages,
-since for a given member of <val>model.global</val> we cannot
+which is illegal in DTD and W3C schema languages,
+since for a given member of <val>model.global</val> it is impossible to
 be sure which rule is being used. RELAX NG has no problem with it.
 </p>
 </div>
