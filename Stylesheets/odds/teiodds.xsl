@@ -736,6 +736,12 @@ select="$makeDecls"/></xsl:message>
                         <xsl:call-template name="defineAttributes"/>
                       </xsl:if>
                     </xsl:when>
+                    <xsl:when test="$parameterize='false'">
+                      <xsl:call-template name="defineContent"/>
+                      <xsl:if test="not($Attributes='') or $TEIC='true'">
+                        <xsl:call-template name="defineAttributes"/>
+                      </xsl:if>
+                    </xsl:when>
                     <xsl:otherwise>
                       <ref name="{$patternPrefixText}{@ident}.content"
                         xmlns="http://relaxng.org/ns/structure/1.0"/>
@@ -747,7 +753,7 @@ select="$makeDecls"/></xsl:message>
                   </xsl:choose>
                 </element>
               </define>
-              <xsl:if test="$simplify='false'">
+              <xsl:if test="$simplify='false' or $parameterize='false'">
                 <define name="{$patternPrefixText}{@ident}.content"
                   xmlns="http://relaxng.org/ns/structure/1.0">
                   <xsl:call-template name="defineContent"/>
