@@ -76,24 +76,45 @@ program.</quote>
       </classSpec>
 
       <elementSpec ident="application" mode="add">
-	<gloss>detail about an authoring/editing application</gloss>
-	<desc>provide information about an application which has acted
+	<desc>provides information about an application which has acted
 	upon the document. 	                    </desc>
 	<classes>
 	  <memberOf key="att.typed"/>
 	  <memberOf key="att.datable"/>
-	  <memberOf key="att.editLike"/>
 	  <memberOf key="model.applicationLike"/>
 	</classes>
 	<content>
+	  <rng:oneOrMore>
+	    <rng:ref name="model.labelLike"/>
+	  </rng:oneOrMore>
 	  <rng:zeroOrMore>
-	    <rng:ref name="macro.phraseSeq"/>
+	    <rng:ref name="model.ptrLike"/>
 	  </rng:zeroOrMore>
 	</content>
+	<attList>
+	  <attDef ident="ident" usage="req">
+	    <desc>Supplies an identifier for the application, independent of
+	    its version number or display name.</desc>
+	    <datatype>
+	      <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="version" usage="req">
+	    <desc>Supplies a version number for the application, independent of
+	    its identifier or display name.</desc>
+	    <datatype>
+	      <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+	    </datatype>
+	  </attDef>
+	</attList>
 	<exemplum>
 	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
 	    <appInfo>
-	      <application  xml:id="ImageMarkupTool1" notAfter="2006-06-01">
+	      <application  version="1.5"
+			    ident="ImageMarkupTool1"
+			    notAfter="2006-06-01">
+		<label>Image Markup Tool</label>
 		<ptr target="#imtAnnotationCategories"/>
 		<ptr target="#imtAnnotatedImage"/>
 	      </application>
