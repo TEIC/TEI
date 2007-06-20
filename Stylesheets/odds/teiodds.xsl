@@ -38,7 +38,6 @@
     Public Doctype of output file(s).
   </xd:doc>
   <xsl:param name="outputDir"/>
-  <xsl:param name="simplify">false</xsl:param>
   <xsl:param name="localsource"/>
   <xsl:param name="lang"/>
   <xsl:param name="doclang"/>
@@ -730,12 +729,6 @@ select="$makeDecls"/></xsl:message>
                     </a:documentation>
                   </xsl:if>
                   <xsl:choose>
-                    <xsl:when test="$simplify='true'">
-                      <xsl:call-template name="defineContent"/>
-                      <xsl:if test="not($Attributes='') or $TEIC='true'">
-                        <xsl:call-template name="defineAttributes"/>
-                      </xsl:if>
-                    </xsl:when>
                     <xsl:when test="$parameterize='false'">
                       <xsl:call-template name="defineContent"/>
                       <xsl:if test="not($Attributes='') or $TEIC='true'">
@@ -752,23 +745,21 @@ select="$makeDecls"/></xsl:message>
                     </xsl:otherwise>
                   </xsl:choose>
                 </element>
-              </define>
-              <xsl:if test="$simplify='false' or $parameterize='true'">
-                <define name="{$patternPrefixText}{@ident}.content"
-                  xmlns="http://relaxng.org/ns/structure/1.0">
-                  <xsl:call-template name="defineContent"/>
-                </define>
-                <xsl:if test="not($Attributes='') or $TEIC='true'">
-                  <define name="{$patternPrefixText}{@ident}.attributes"
-                    xmlns="http://relaxng.org/ns/structure/1.0">
-                    <xsl:call-template name="defineAttributes"/>
-                  </define>
-                </xsl:if>
-              </xsl:if>
-              <xsl:if test="$parameterize='true'">
-                <xsl:apply-templates mode="tangleModel"
-                  select="tei:classes/tei:memberOf"/>
-              </xsl:if>
+	      </define>
+             <xsl:if test="$parameterize='true'">
+	       <define name="{$patternPrefixText}{@ident}.content"
+		       xmlns="http://relaxng.org/ns/structure/1.0">
+		 <xsl:call-template name="defineContent"/>
+	       </define>
+	       <xsl:if test="not($Attributes='') or $TEIC='true'">
+		 <define name="{$patternPrefixText}{@ident}.attributes"
+			 xmlns="http://relaxng.org/ns/structure/1.0">
+		   <xsl:call-template name="defineAttributes"/>
+		 </define>
+	       </xsl:if>
+	       <xsl:apply-templates mode="tangleModel"
+				    select="tei:classes/tei:memberOf"/>
+	     </xsl:if>
             </xsl:otherwise>
           </xsl:choose>
         </Wrapper>
