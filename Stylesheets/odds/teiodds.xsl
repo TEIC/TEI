@@ -753,7 +753,7 @@ select="$makeDecls"/></xsl:message>
                   </xsl:choose>
                 </element>
               </define>
-              <xsl:if test="$simplify='false' or $parameterize='false'">
+              <xsl:if test="$simplify='false' or $parameterize='true'">
                 <define name="{$patternPrefixText}{@ident}.content"
                   xmlns="http://relaxng.org/ns/structure/1.0">
                   <xsl:call-template name="defineContent"/>
