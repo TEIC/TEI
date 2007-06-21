@@ -1,6 +1,7 @@
 LANGUAGE=en
 OTHERLANGUAGES=fr
 LATEX=pdflatex
+XELATEX=xelatex
 VERBOSE=
 PREFIX=/usr
 TEISERVER=http://tei.oucs.ox.ac.uk/Query/
@@ -119,12 +120,12 @@ xml: check subset
 
 pdf: xml
 	@echo Checking you have a running ${LATEX} before trying to make PDF...
-	which ${LATEX} || exit 1
+	which ${XELATEX} || exit 1
 	xsltproc Utilities/guidelines-latex.xsl Guidelines.xml \
 	> Guidelines.tex
 	cp -r Source/Images .
-	-${LATEX} -interaction=nonstopmode Guidelines
-	-${LATEX} -interaction=nonstopmode Guidelines
+	-${XELATEX} -interaction=nonstopmode Guidelines
+	-${XELATEX} -interaction=nonstopmode Guidelines
 	for i in Source/Images/*.png; do rm `basename $$i`;done
 
 validate: schemas oddschema exampleschema valid 
