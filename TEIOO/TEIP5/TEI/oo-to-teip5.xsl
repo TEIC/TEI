@@ -184,7 +184,7 @@ draw:plugin | draw:text-box | text:footnote-body | text:section"
       <profileDesc>
         <langUsage>
           <language>
-            <xsl:attribute name="id">
+            <xsl:attribute name="ident">
               <xsl:value-of select="/office:document/office:meta/dc:language"/>
             </xsl:attribute>
             <xsl:value-of select="/office:document/office:meta/dc:language"/>
@@ -732,7 +732,7 @@ draw:plugin | draw:text-box | text:footnote-body | text:section"
   <xsl:template match="table:table">
     <table rend="frame">
       <xsl:if test="@table:name">
-        <xsl:attribute name="id">
+        <xsl:attribute name="xml:id">
           <xsl:value-of select="@table:name"/>
         </xsl:attribute>
       </xsl:if>
@@ -962,7 +962,7 @@ draw:plugin | draw:text-box | text:footnote-body | text:section"
 
   <xsl:template name="id.attribute">
     <xsl:if test="child::text:reference-mark-start">
-      <xsl:attribute name="id">
+      <xsl:attribute name="xml:id">
         <xsl:value-of select="child::text:reference-mark-start/@text:style-name"
         />
       </xsl:attribute>
@@ -981,36 +981,17 @@ reference-ref text means that xreflabel and endterm are lost -->
     </xsl:comment>
   </xsl:template>
 
-  <xsl:template match="text:alphabetical-index-mark-start">
-    <indexterm>
-      <xsl:attribute name="class">
-        <xsl:text disable-output-escaping="yes">startofrange</xsl:text>
-      </xsl:attribute>
-      <xsl:attribute name="id">
-        <xsl:value-of select="@text:id"/>
-      </xsl:attribute>
-      <!--<xsl:if test='@text:key1">-->
-      <primary>
-        <xsl:value-of select="@text:key1"/>
-      </primary>
-      <!--</xsl:if>-->
-      <xsl:if test="@text:key2">
-        <secondary>
-          <xsl:value-of select="@text:key2"/>
-        </secondary>
+  <xsl:template match="text:alphabetical-index-mark">
+    <index>
+      <xsl:if test="@text:id">
+	<xsl:attribute name="xml:id">
+	  <xsl:value-of select="@text:id"/>
+	</xsl:attribute>
       </xsl:if>
-    </indexterm>
-  </xsl:template>
-
-  <xsl:template match="text:alphabetical-index-mark-end">
-    <indexterm>
-      <xsl:attribute name="startref">
-        <xsl:value-of select="@text:id"/>
-      </xsl:attribute>
-      <xsl:attribute name="class">
-        <xsl:text disable-output-escaping="yes">endofrange</xsl:text>
-      </xsl:attribute>
-    </indexterm>
+      <term>
+	<xsl:value-of select="@text:string-value"/>
+      </term>
+    </index>
   </xsl:template>
 
   <xsl:template match="text:alphabetical-index">
@@ -1024,23 +1005,39 @@ reference-ref text means that xreflabel and endterm are lost -->
 
   <xsl:template match="text:index-body">
     <xsl:for-each select="text:p[@text:style-name = 'Index 1']">
-      <indexentry>
-        <primaryie>
+      <index>
+        <term>
           <xsl:value-of select="."/>
-        </primaryie>
+        </term>
         <xsl:if test="key('secondary_children', generate-id())">
-          <secondaryie>
+          <index>
+	    <term>
             <xsl:value-of select="key('secondary_children', generate-id())"/>
-          </secondaryie>
+	    </term>
+	  </index>
         </xsl:if>
-      </indexentry>
+      </index>
     </xsl:for-each>
   </xsl:template>
+
+  <xsl:template match="text:bookmark-ref">
+    <ref target="#{@text:ref-name}" type="{@text:reference-format}">
+      <xsl:apply-templates/>
+    </ref>
+  </xsl:template>
+
+  <xsl:template match="text:bookmark-start">
+    <anchor>
+      <xsl:attribute name="xml:id">
+	<xsl:value-of select="@text:name"/>
+      </xsl:attribute>
+    </anchor>
+  </xsl:template>
+
   <!--
 These seem to have no obvious translation
 -->
 
-  <xsl:template match="text:bookmark-start"/>
 
   <xsl:template match="text:bookmark-end"/>
 
