@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet
-  exclude-result-prefixes="exsl estr rng edate teix fo a tei s xd xs"
+  exclude-result-prefixes="exsl estr rng edate teix fo a tei s xd xs html"
   extension-element-prefixes="edate exsl estr" version="1.0"
+  xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:edate="http://exslt.org/dates-and-times"
   xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common"
@@ -1772,28 +1773,26 @@ select="$makeDecls"/></xsl:message>
 
 
   <xsl:template name="generateMembers">
+    <xsl:param name="depth">1</xsl:param>
     <xsl:variable name="this" select="@ident"/>
     <xsl:choose>
       <xsl:when test="key('CLASSMEMBERS',$this)">
+	<span class="showmembers{$depth}" xmlns="http://www.w3.org/1999/xhtml">
+	<xsl:if test="$depth &gt; 1"> [</xsl:if>
         <xsl:for-each select="key('CLASSMEMBERS',$this)">
           <xsl:sort select="@ident"/>
+	  <xsl:text> </xsl:text>
           <xsl:call-template name="linkTogether">
             <xsl:with-param name="name" select="@ident"/>
           </xsl:call-template>
-          <xsl:text>  </xsl:text>
-          <xsl:if test="count(key('CLASSMEMBERS',@ident))&gt;0">
-            <xsl:text>  [</xsl:text>
-            <xsl:variable name="Key" select="@ident"/>
-            <xsl:for-each select="key('CLASSMEMBERS',@ident)">
-              <xsl:sort select="@ident"/>
-              <xsl:call-template name="showElement">
-                <xsl:with-param name="name" select="@ident"/>
-              </xsl:call-template>
-              <xsl:text>  </xsl:text>
-            </xsl:for-each>
-            <xsl:text>] </xsl:text>
-          </xsl:if>
-        </xsl:for-each>
+	  <xsl:call-template name="generateMembers">
+	    <xsl:with-param name="depth">
+	      <xsl:value-of select="$depth + 1"/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:for-each>
+	<xsl:if test="$depth &gt; 1">] </xsl:if>
+	</span>
       </xsl:when>
       <xsl:when test="$lookupDatabase='true'">
         <xsl:choose>
