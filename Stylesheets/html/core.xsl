@@ -333,7 +333,9 @@
         <xsl:call-template name="rendering"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:apply-templates/>
+	<span class="foreign">
+	      <xsl:apply-templates/>
+	</span>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -1590,6 +1592,7 @@
             </xsl:with-param>
           </xsl:call-template>
         </xsl:when>
+	<xsl:when test="$splitLevel &gt;-1"/>
         <xsl:otherwise>
           <div class="notes">
             <div class="noteHeading">
