@@ -1592,7 +1592,7 @@
             </xsl:with-param>
           </xsl:call-template>
         </xsl:when>
-	<xsl:when test="$splitLevel &gt;-1"/>
+	<xsl:when test="$splitLevel &gt;-1 and $ID=''"/>
         <xsl:otherwise>
           <div class="notes">
             <div class="noteHeading">
