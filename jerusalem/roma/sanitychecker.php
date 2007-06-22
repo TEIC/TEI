@@ -1,7 +1,21 @@
 <?php
 
+/**
+ *Bernevig Ioan
+ *i.bernevig@gmail.com 
+ *Juin 2007
+ **/  
+
+/**
+ *Les constantes
+ *JERUSALEM_HTDOCS : le dossier où se trouvent les fichiers constituant le site
+ *ROMA_SYSTEM : l'emplacement de l'outil binaire roma
+ *Ces deux chemins doivent être de préférence absolus
+ *Pour une utilisation sans la base de données, eXist, decommenter la ligne suivante en modifiant biensur les chemins
+ * define("ROMA_SYSTEM", "/usr/bin/roma --xsl=/home/tei/sourceforge/trunk/Stylesheets --localsource=/home/tei/sourceforge/trunk/P5/Source/Guidelines/en/guidelines-en.xml")
+ *Par défaut, l'outil Roma en ligne de commande utilise la base de données eXist tei.oucs.ox.ac.uk ! 
+ **/
 define("JERUSALEM_HTDOCS", "/home/tei/jerusalem/");
-//define("ROMA_SYSTEM", "/usr/bin/roma --xsl=/home/tei/sourceforge/trunk/Stylesheets --localsource=/home/tei/sourceforge/trunk/P5/Source/Guidelines/en/guidelines-en.xml")
 define("ROMA_SYSTEM", "/usr/bin/roma");
 
 /**
@@ -9,7 +23,16 @@ define("ROMA_SYSTEM", "/usr/bin/roma");
  Elle se construit à partir d'un arbre DOM qui correspond au fichier ODD de personnalisation
  **/
 class SanityChecker {
-
+/**
+ *COMPUTING    : tableau contenant les noms des éléments en cours de vérification
+ *RESULTS      : tableau contenant les noms des éléments dont on connaît le résultat
+ *DOM          : objet DOM qui représente le fichier flat ODD en mémoire
+ *FILE_TMP_NAME: le nom temporaire du fichier ODD sur le disque dur
+ *ALL_ELEMENTS : liste de tous les elements dans le schema (même ceux non joignables)
+ *ALL_CLASSES  : liste de toutes les classes
+ *PGB_CURRENT  : avancement actuel de la barre de progression
+ *PARENTS      : tableau associant à chaque nom d'élément le "dernier parent connu"
+ **/         
 private $COMPUTING = array();
 private $RESULTS = array();
 private $DOM;
@@ -50,7 +73,7 @@ private function deleteTemporary() {
 
 /**
  Fonction qui enlève les spécifications des séquences dans les noms des classes
- On se sert pour retrouver le nom de la classe dans une référence qui port des précisions sur le type de séquence.
+ On se sert pour retrouver le nom de la classe dans une référence qui porte des précisions sur le type de séquence.
  **/
 private function remove_sequences_from_classnames($class) {
 	if(ereg('_sequence', $class)) {
