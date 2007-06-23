@@ -281,6 +281,7 @@ composed of two chapters, might be represented as follows:
 &div5;
 &div6;
 &div7;
+&divGen;
 </specGrp>
  </p></div>
 <div type="div3" xml:id="DSDIV3"><head>Numbered or Un-numbered?</head>
@@ -1225,10 +1226,46 @@ in one narrative quotes from some other text or narrative, fully or in
 part, the <gi>quote</gi> element discussed in <ptr target="#COHQQ"/>
 should be used instead. </p>
 
-</div></div>
+</div>
+
+<div><head>Virtual divisions</head>
+<p>Where the whole of a division can be automatically generated from
+the remainder of a document, an encoder may prefer not to represent it
+explicitly but instead simply mark its location by means of a
+processing instruction, or by using the special purpose
+<gi>divGen</gi> element:
+<specList><specDesc key="divGen"/></specList>
+</p>
+<p>For example, if the table of contents (toc) for a given work is simply
+derived by copying  the first <gi>head</gi> element from each
+<gi>div</gi> element in a text, it might be more easily encoded as
+follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><divGen
+type="toc"/></egXML>
+Similarly, in a digital edition combining a transcribed version
+of some text with a translated version of it, it may be desired to
+represent  the transcript, the translation, and an aligned version of
+the two as three distinct divisions. This could be achieved by an
+encoding like the following:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div><!-- transcript
+							  here--></div>
+<div><!-- translation here --></div>
+<divGen
+type="alignment"/></egXML>
+The  processing to be carried out when a <gi>divGen</gi> element
+is rendered will be determined by the stylesheet in force; its
+function is simply to identify the location at which the virtual
+division is located, and also to provide information for the
+stylesheet about the kind of division to be generated. As such it may
+be regarded as a special kind of processing instruction, and could
+equally well be represented by one.</p>
+
+</div>
+
+
 <div type="div2" xml:id="DSFRONT"><head>Front Matter</head>
 <p>By <term>front matter</term> we mean distinct sections of a text
-(usually, but not exclusively, a printed one), prefixed to it by way of
+(usually, but not necessarily, a printed one), prefixed to it by way of
 introduction or identification as a part of its production. Features
 such as title pages or prefaces are clear examples; a less definite
 case might be the prologue attached to a play.  The front matter of an
@@ -1387,7 +1424,12 @@ unusual in modern books such as the initial prayer:
   </div1>
 </front></egXML>
 <!-- Cloud of Unknowing, ed Phyllis Hodgson, EETS, 1944 -->
- </p></div>
+ </p>
+<p>If, however, the table of contents can be automatically generated
+from the remainder of the text, it may be preferable simply to mark
+its presence, either by means of an empty  <gi>divGen</gi> element or
+by using an appropriate processing instruction.</p>
+</div>
 <div type="div2" xml:id="DSTITL"><head>Title Pages</head>
 <p>Detailed analysis of the title page and other
 <term>preliminaries</term> of older printed books and manuscripts is of
