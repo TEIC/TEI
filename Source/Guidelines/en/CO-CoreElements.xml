@@ -2393,11 +2393,7 @@ specify the topics or themes of a text.  The empty <gi>span</gi> element
 is provided for such applications; it is available only when the
 module for simple analysis is selected (see section <ptr target="#AISP"/>).
  </p>
-<p>The formal declarations for the <gi>note</gi> element is this:
-<specGrp xml:id="DCONO" n="Annotation">
-&note;
-<specGrpRef target="#DCONOIX"/></specGrp>	
- </p></div>
+</div>
 <div type="div3" xml:id="CONOIX"><head>Index Entries</head>
 <p>The indexing of scholarly texts is a skilled activity, involving
 substantial amounts of human judgment and analysis. It should not therefore be
@@ -2486,11 +2482,12 @@ any way by analytic software, but their main purpose is to facilitate
 the generation of an index for a printed version of the text. The
 headwords to be used when making up this index are given by the
 <gi>term</gi> elements within the <gi>index</gi>
-element, while the location of the generated index
-may be specified by the <gi>divGen</gi> element.
-<specList><specDesc key="term"/>
-<specDesc key="divGen"/></specList>
-</p>
+element. The location of the generated index
+might be specified by means of a processing instruction within the
+text, such as the following (the exact form of the PI is of course
+dependent on the application software in use):
+<eg><![CDATA[<?tei indexplacement ?>]]></eg>
+Alternatively, the special purpose  <gi>divGen</gi> element might be used.</p>
 <p>In the simplest case, a single headword is supplied  by
 an  <gi>term</gi> elements contained by an
 <gi>index</gi> element:
@@ -2679,14 +2676,14 @@ phase for an auto-generated index.</p>
 </div>
 <div type="div4"><head>Declarations</head>
 <p>The formal declaration for these elements is as follows.
-The <gi>index</gi> element is a member of the element class
-<ident type="class">model.global.meta</ident> and may thus be used
+The <gi>index</gi> element is a member of the
+<ident type="class">model.global.meta</ident> class and may thus be used
 anywhere within the <gi>text</gi> element.
-<specGrp xml:id="DCONOIX" n="Index Entries">
+<specGrp xml:id="DCONO" n="Annotation">
+&note;
 &index;
-&divGen;
-</specGrp>
-</p> </div>
+</specGrp>	
+ </p></div>
 </div>
 </div>
 <div type="div2" xml:id="COGR"><head>Graphics and other non-textual components</head>
