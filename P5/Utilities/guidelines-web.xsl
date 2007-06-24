@@ -23,6 +23,7 @@
 <xsl:param name="doclang"/>
 <xsl:param name="cssFile">/Guidelines/guidelines-web.css</xsl:param>
 <xsl:param name="STDOUT">true</xsl:param>
+<xsl:param name="displayMode">both</xsl:param>
 <xsl:param name="urlChunkPrefix">.ID=</xsl:param>
 <xsl:param name="homeLabel">TEI P5 Guidelines source</xsl:param>
 <xsl:param name="homeURL">/Guidelines/index.xml</xsl:param>
