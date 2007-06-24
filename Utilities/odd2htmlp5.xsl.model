@@ -29,6 +29,7 @@
   <xsl:param name="bottomNavigationPanel">true</xsl:param>
   <xsl:param name="cssFile">http://www.tei-c.org/stylesheet/tei.css</xsl:param>
   <xsl:param name="dateWord"></xsl:param>
+  <xsl:param name="footnoteBackLink">true</xsl:param>
   <xsl:param name="displayMode">rnc</xsl:param>
   <xsl:param name="feedbackURL">http://www.tei-c.org/Consortium/contact.xml</xsl:param>
   <xsl:param name="feedbackWords">Contact</xsl:param>
@@ -110,60 +111,6 @@
       <xsl:apply-templates/>
     </div>
   </xsl:template>
-  
-  <xsl:template match="tei:note" mode="printnotes">
-    <xsl:param name="root"/>
-      <xsl:if test="not(ancestor::tei:bibl)">
-      <xsl:variable name="identifier">
-	<xsl:number level="any"/>
-      </xsl:variable>
-      <div class="note">
-	<a id="{concat('Note',$identifier)}">
-          <xsl:value-of select="$identifier"/>
-          <xsl:text>.</xsl:text>
-        </a>
-	<xsl:apply-templates/>
-      </div>
-    </xsl:if>
-  </xsl:template>
-  
-  <xsl:template match="tei:note">
-    <xsl:choose>
-      <xsl:when test="ancestor::bibl">
-	(<xsl:apply-templates/>)
-      </xsl:when>
-      
-      <xsl:when test="@place='display'">
-        <blockquote>
-          <p>
-            NOTE 
-            <xsl:number level="any"/>:
-            <xsl:apply-templates/>
-          </p>
-      </blockquote>
-      </xsl:when>
-      
-      <xsl:when test="@place='divtop'">
-	<blockquote>
-          <p>
-            <i>
-              <xsl:apply-templates/>
-            </i>
-          </p>
-        </blockquote>
-      </xsl:when>
-      
-      <xsl:otherwise>
-	<xsl:variable name="identifier">
-	  <xsl:number level="any"/>
-	</xsl:variable>
-	<a class="notelink" 
-	   href="#{concat('Note',$identifier)}">
-	<sup><xsl:value-of select="$identifier"/></sup></a>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  
   
   <xsl:template match="tei:revisionDesc//tei:date">
     <xsl:apply-templates/>
