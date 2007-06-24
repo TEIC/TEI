@@ -70,7 +70,7 @@ html-web: check
 	xmllint --noent --xinclude ${SOURCETREE}/Guidelines/$$i/guidelines-$$i.xml \
 	| xsltproc ${VERBOSE} \
 		--stringparam outputDir Guidelines-web/$$i/html \
-		--stringparam displayMode rnc \
+		--stringparam displayMode both \
 	        --stringparam lang $$i \
 	        --stringparam doclang $$i \
 	    Utilities/guidelines.xsl - ; \

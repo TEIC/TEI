@@ -424,4 +424,27 @@
 <xsl:comment>no nav </xsl:comment>
 </xsl:template>
 
+<xsl:template name="javascriptHook">
+  <script type="text/javascript">
+    <xsl:text disable-output-escaping="yes">
+      function togglerelax (el) {
+      var pre = el.parentNode; 
+      var div = pre.parentNode; 
+      for (j=0;j&lt;div.childNodes.length;j++)
+      {
+      if (div.childNodes[j].nodeType != 1) continue;
+      if (div.childNodes[j].nodeName != 'PRE') continue;
+      var thisone=div.childNodes[j];
+      var state=thisone.style.display;
+      if (state == 'block')
+        {  thisone.style.display='none'; }
+       else
+        {  thisone.style.display='block';}
+       }
+      }
+	
+  </xsl:text>
+</script>
+  </xsl:template>
+
 </xsl:stylesheet>
