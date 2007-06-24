@@ -39,17 +39,17 @@
 </xsl:template>
 
   
- <xsl:template name="pageTableHeader">
-    <xsl:param name="mode"/>
-	<table width="100%" border="0">
-	  <tr>
-	    <td height="100" class="bgimage" onClick="window.location='{$homeURL}'" cellpadding="0">
-	      <h1 class="maintitle"><xsl:call-template name="generateTitle"/></h1>
-	      <h2 class="subtitle"><xsl:call-template name="generateSubTitle"/></h2>
-	    </td>
-	  </tr>
-	</table>
- </xsl:template>
+<xsl:template name="pageTableHeader">
+  <xsl:param name="mode"/>
+  <table width="100%" border="0">
+    <tr>
+      <td height="100" class="bgimage" onClick="window.location='{$homeURL}'" cellpadding="0">
+	<h1 class="maintitle"><xsl:call-template name="generateTitle"/></h1>
+	<h2 class="subtitle"><xsl:call-template name="generateSubTitle"/></h2>
+      </td>
+    </tr>
+  </table>
+</xsl:template>
 
 <xsl:template name="printLink"/>
 
@@ -68,23 +68,23 @@
       </xsl:call-template>
     </xsl:variable>
     <xsl:choose>
-     <xsl:when test="string-length($local)&gt;0">
-       <xsl:value-of select="$local"/>
-     </xsl:when>
-     <xsl:otherwise>
-       <xsl:for-each select="document('/usr/share/xml/tei/stylesheet/i18n.xml',document(''))">
-	 <xsl:choose>
-	   <xsl:when
-	       test="key('KEYS',normalize-space($word))/text[@xml:lang=$documentationLanguage]">
-	     <xsl:value-of
-		 select="key('KEYS',normalize-space($word))/text[@xml:lang=$documentationLanguage]"/>
-	   </xsl:when>
-	   <xsl:otherwise>
-	     <xsl:value-of select="$word"/>
-	   </xsl:otherwise>
-	 </xsl:choose>
-       </xsl:for-each>
-     </xsl:otherwise>
+      <xsl:when test="string-length($local)&gt;0">
+	<xsl:value-of select="$local"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:for-each select="document('/usr/share/xml/tei/stylesheet/i18n.xml',document(''))">
+	  <xsl:choose>
+	    <xsl:when
+		test="key('KEYS',normalize-space($word))/text[@xml:lang=$documentationLanguage]">
+	      <xsl:value-of
+		  select="key('KEYS',normalize-space($word))/text[@xml:lang=$documentationLanguage]"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:value-of select="$word"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
@@ -106,7 +106,6 @@
       </ul>
     </div>
   </xsl:template>
-
 
 </xsl:stylesheet>
 
