@@ -41,10 +41,16 @@ CSS class for links derived from &lt;xptr&gt;
 CSS class for links derived from &lt;xref&gt;
 </xd:doc>
   <xsl:param name="class_xref">xref</xsl:param>
+
   <xd:doc type="boolean" class="layout">
 Number footnotes consecutively
 </xd:doc>
   <xsl:param name="consecutiveFootnoteNumbers">false</xsl:param>
+
+  <xd:doc type="boolean" class="layout">
+Link back from footnotes to reference
+</xd:doc>
+  <xsl:param name="footnoteBackLink">false</xsl:param>
 
   <xd:doc type="boolean" class="cssFileInclude">
 Whether to include CSS by reference or by XInclusion

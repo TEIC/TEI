@@ -951,6 +951,9 @@
         </blockquote>
       </xsl:when>
       <xsl:when test="@place='foot' or @place='end'">
+	<xsl:call-template name="makeAnchor">
+	  <xsl:with-param name="name" select="concat($identifier,'_return')"/>
+	</xsl:call-template>
         <xsl:choose>
           <xsl:when test="$footnoteFile='true'">
             <a class="notelink" href="{$masterFile}-notes.html#{$identifier}">
@@ -1000,16 +1003,21 @@
             <xsl:value-of select="$parent"/></xsl:message>
       </xsl:if>
       <div class="note">
-	  <xsl:call-template name="makeAnchor">
-	    <xsl:with-param name="name" select="$identifier"/>
-	  </xsl:call-template>
-	  <span class="noteLabel">
-	    <xsl:call-template name="noteN"/>
-	    <xsl:text>. </xsl:text>
-	  </span>
+	<xsl:call-template name="makeAnchor">
+	  <xsl:with-param name="name" select="$identifier"/>
+	</xsl:call-template>
+	<span class="noteLabel">
+	  <xsl:call-template name="noteN"/>
+	  <xsl:text>. </xsl:text>
+	</span>
 	<span class="noteBody">
 	  <xsl:apply-templates/>
 	</span>
+	<xsl:if test="$footnoteBackLink= 'true'">
+	  <xsl:text> </xsl:text>
+	  <a class="link_return"
+	     href="#{concat($identifier,'_return')}">&#8629;</a>
+	</xsl:if>
       </div>
     </xsl:if>
   </xsl:template>
@@ -1592,7 +1600,7 @@
             </xsl:with-param>
           </xsl:call-template>
         </xsl:when>
-	<xsl:when test="$splitLevel &gt;-1 and $ID=''"/>
+	<xsl:when test="$splitLevel &gt;-1 and $ID='' and $STDOUT='true'"/>
         <xsl:otherwise>
           <div class="notes">
             <div class="noteHeading">
