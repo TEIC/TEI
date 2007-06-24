@@ -373,7 +373,7 @@ draw:plugin | draw:text-box | text:footnote-body | text:section"
       </xsl:otherwise>
     </xsl:choose>
 
-    <!-- outupt </div> -->
+    <!-- output </div> -->
     <xsl:if test="$current = 1">
       <xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
     </xsl:if>
@@ -390,6 +390,7 @@ draw:plugin | draw:text-box | text:footnote-body | text:section"
 
   <xsl:template match="text:p[@text:style-name]">
     <xsl:choose>
+      <xsl:when test="not(node())"/>
       <xsl:when test="@text:style-name='Document Title'">
         <title>
           <xsl:apply-templates/>
@@ -443,10 +444,9 @@ draw:plugin | draw:text-box | text:footnote-body | text:section"
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="office:annotation/text:p">'> <note>
-      <remark>
+  <xsl:template match="office:annotation/text:p">
+    <note>
         <xsl:apply-templates/>
-      </remark>
     </note>
   </xsl:template>
 
@@ -852,7 +852,15 @@ draw:plugin | draw:text-box | text:footnote-body | text:section"
         <xsl:when test="@text:note-class='endnote'">
           <xsl:attribute name="place">end</xsl:attribute>
         </xsl:when>
+        <xsl:when test="@text:note-class='footnote'">
+          <xsl:attribute name="place">foot</xsl:attribute>
+        </xsl:when>
       </xsl:choose>
+      <xsl:if test="text:note-citation">
+	<xsl:attribute name="n">
+	  <xsl:value-of select="text:note-citation"/>
+	</xsl:attribute>
+      </xsl:if>
       <xsl:apply-templates/>
     </note>
   </xsl:template>
@@ -988,9 +996,23 @@ reference-ref text means that xreflabel and endterm are lost -->
 	  <xsl:value-of select="@text:id"/>
 	</xsl:attribute>
       </xsl:if>
-      <term>
-	<xsl:value-of select="@text:string-value"/>
-      </term>
+      <xsl:choose>
+	<xsl:when test="@text:key1">
+	  <term>
+	    <xsl:value-of select="@text:key1"/>
+	  </term>
+	  <index>
+	    <term>
+	      <xsl:value-of select="@text:string-value"/>
+	    </term>
+	  </index>
+	</xsl:when>
+	<xsl:otherwise>
+	  <term>
+	    <xsl:value-of select="@text:string-value"/>
+	  </term>
+	</xsl:otherwise>
+      </xsl:choose>
     </index>
   </xsl:template>
 
