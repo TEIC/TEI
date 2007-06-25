@@ -545,9 +545,9 @@ public function pass3() {
 	$this->DOM->getXPath($xpath);
 	echo '<table><tr><td><pre>';
   print_r($this->COMPUTING);
-  echo '</pre></td><td>'
+  echo '</pre></td><td>';
   print_r($this->RESULTS);
-  echo '</td></tr></table>'
+  echo '</td></tr></table>';
  	$this->updateProgressBar(100);
 	return $res;
 }
