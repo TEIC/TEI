@@ -528,14 +528,37 @@ public function pass2() {
 	$res = true;
 	$this->DOM->getXPath($xpath);
 	foreach($this->ALL_ELEMENTS as $element) {
-		if(!isset($this->RESULTS[$element->getAttribute("ident")])) {
+		if(!isset($this->COMPUTING[$element->getAttribute("ident")])) {
 			$res = false;
 			$this->sanityCheckAddWarning($element->getAttribute("ident"), " is not reacheable from root", "", "");
 		}
 	}
-	$this->updateProgressBar(100);
+	$this->updateProgressBar(95);
 	return $res;
 }
+
+/**
+ *Est-ce qu'il y a des cas où les éléments bouclent sur eux-mêmes
+ **/
+public function pass3() {
+	$res = true;
+	$this->DOM->getXPath($xpath);
+	foreach($this->COMPUTING as $c_element => $c_valeur) {
+	  $existe = false;
+		foreach($this->RESULTS as $r_element => $r_valeur) {
+      if($r_element == $c_element) {
+        $existe = true;
+      }    
+    }
+    if(!$existe) {
+      $res = false;
+      $this->sanityCheckAddWarning($c_element, " is looping on itself", "", "");
+    }
+		}
+	}
+	$this->updateProgressBar(100);
+	return $res;
+} 
 
 }
 
