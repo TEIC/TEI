@@ -30,8 +30,8 @@ class SanityChecker {
  *FILE_TMP_NAME: le nom temporaire du fichier ODD sur le disque dur
  *ALL_ELEMENTS : liste de tous les elements dans le schema (même ceux non joignables)
  *ALL_CLASSES  : liste de toutes les classes
- *PGB_CURRENT  : avancement actuel de la barre de progression
  *PARENTS      : tableau associant à chaque nom d'élément le "dernier parent connu"
+ *SCEH         : sanity checker error handler 
  **/         
 private $COMPUTING = array();
 private $RESULTS = array();
@@ -39,24 +39,24 @@ private $DOM;
 private $FILE_TMP_NAME;
 private $ALL_ELEMENTS;
 private $ALL_CLASSES;
-private $PGB_CURRENT;
 private $PARENTS;
+private $SCEH;
 
 /**
  La fonction constructeur
  Elle prend en paramètre l'arbre DOM du fichier de personnalisation ODD et le transforme en un arbre FLAT ODD
  **/
 public function __construct($dom_customization) {
-	$this->loadProgressBar();
+  $this->SCEH = new SanityCheckerErrorHandler($this);
 	$this->FILE_TMP_NAME = md5(time());
 	$fp = fopen(JERUSALEM_HTDOCS."tmp/".$this->FILE_TMP_NAME.".odd", "w");
 	fwrite($fp, $dom_customization->saveXML());
 	fclose($fp);
-	$this->updateProgressBar(3);
+	$this->SCEH->updateProgressBar(3);
 	exec(ROMA_SYSTEM." --compile ".JERUSALEM_HTDOCS."tmp/".$this->FILE_TMP_NAME.".odd /");
 	$xml_input = implode("", file(JERUSALEM_HTDOCS."tmp/".$this->FILE_TMP_NAME.".odd.compiled"));
 	$this->DOM = new romaDom($xml_input);
-	$this->updateProgressBar(10);
+	$this->SCEH->updateProgressBar(10);
 	$this->DOM->getXPath($xpath);
 	$this->ALL_ELEMENTS = $xpath->query("//tei:elementSpec");
 	$this->ALL_CLASSES = $xpath->query("//tei:classSpec");
@@ -290,7 +290,7 @@ $this->getParentItem($element);
 		return $this->RESULTS[$ident];
 	}
 	if(!$this->computingProgress($ident)) {
-		$this->increaseProgressBar();
+		$this->SCEH->increaseProgressBar();
 		//echo "verifElement: name=$name"; if($element->getAttribute("ident") != "") echo ", @ident=$ident"; if($element->getAttribute("name") != "") echo ", @name=".$element->getAttribute("name"); echo "\n";
 		switch($name) {
 		case "elementSpec": {
@@ -305,7 +305,7 @@ $this->getParentItem($element);
 			}
 			$this->computingStop($ident);
 			if($broken) {
-				if(!$this->computingProgress($ident) && $ident != $this->getElementName($faulty)) $this->sanityCheckAddError($ident, " has NO VALID CONTENT because ".$this->getElementName($faulty)." neither and is used in ", $this->getElementName($parent), "");
+				if(!$this->computingProgress($ident) && $ident != $this->getElementName($faulty)) $this->SCEH->addError('Error', $ident, $this->getElementName($parent), 'has NO VALID CONTENT because '.$this->getElementName($faulty).' neither');
 				//$this->RESULTS[$ident] = false;
 				return false;
 			}
@@ -330,12 +330,12 @@ $this->getParentItem($element);
 			}
 			$this->computingStop($ident);
 			if($count == 0) {
-				if(!$this->computingProgress($this->getElementName($element))) $this->sanityCheckAddWarning($ident, " is EMPTY  and is used in ", $this->getParentItem($parent)->getAttribute("ident"), "");
+				if(!$this->computingProgress($this->getElementName($element))) $this->SCEH->addError('Warning', $ident, $this->getParentItem($parent)->getAttribute("ident"), 'is empty');
 				//$this->RESULTS[$ident] = false;
 				return false;
 			}
 			if(($sequence == "sequence" || $sequence == "sequenceRepeatable") && $sequence_broken) {
-				if(!$this->computingProgress($this->getElementName($element))) $this->sanityCheckAddWarning("$ident sequence is broken");
+				if(!$this->computingProgress($this->getElementName($element))) $this->SCEH->addError('Error', $ident, '', 'sequence broken');
 				//$this->RESULTS[$ident] = false;
 				return false;
 			}
@@ -351,9 +351,9 @@ $this->getParentItem($element);
 			}
 			if($broken) {
 				if($this->inOptionnality($this->addRecursion($recursion, $element))) {
-					if(!$this->computingProgress($this->getElementName($element))) $this->sanityCheckAddWarning($this->getElementName($this->getParentItem($parent)), " group broken ", "", "");
+					if(!$this->computingProgress($this->getElementName($element))) $this->SCEH->addError('Warning', $this->getElementName($this->getParentItem($parent)), '', 'group broken' );
 				} else {
-					if(!$this->computingProgress($this->getElementName($element))) $this->sanityCheckAddError($this->getElementName($this->getParentItem($parent)), " group broken ", "", "");
+					if(!$this->computingProgress($this->getElementName($element))) $this->SCEH->addError('Error', $this->getElementName($this->getParentItem($parent)), '', 'group broken' );
 				}
 				return false;
 			}
@@ -366,7 +366,7 @@ $this->getParentItem($element);
 				else $faulty = $content_item;
 			}
 			if($count == 0) {
-				if(!$this->computingProgress($this->getElementName($element))) $this->sanityCheckAddError($this->getElementName($faulty), " is required at least once in ", $this->getElementName($this->getParentItem($parent)), " !");
+				if(!$this->computingProgress($this->getElementName($element))) $this->SCEH->addError('Error', $this->getElementName($faulty), $this->getElementName($this->getParentItem($parent)), 'is required at least once' );
 				return false;
 			}
 			break;
@@ -409,9 +409,9 @@ $this->getParentItem($element);
 				$el = $xpath->query("//tei:elementSpec[@ident='".$element->getAttribute("name")."']")->item(0);
 			} else {
 				if($this->inOptionnality($this->addRecursion($recursion, $element))) {
-					$this->sanityCheckAddWarning($element->getAttribute("name"), " does NOT EXIST  and is used in ", $this->getParentItem($element)->getAttribute("ident"), ". It could be in ".$this->getParentItem($element)->getAttribute("module")." module.");
+				  $this->SCEH->addError('Warning', $element->getAttribute("name"), $this->getParentItem($element)->getAttribute("ident"), 'does not exist');
 				} else {
-					$this->sanityCheckAddError($element->getAttribute("name"), " does NOT EXIST  and is used in ", $this->getParentItem($element)->getAttribute("ident"), ". It could be in ".$this->getParentItem($element)->getAttribute("module")." module.");
+					$this->SCEH->addError('Error', $element->getAttribute("name"), $this->getParentItem($element)->getAttribute("ident"), 'does not exist');
 				}
 				return false;
 			}
@@ -430,71 +430,6 @@ $this->getParentItem($element);
 	} else {
 		return false;
 	}
-}
-
-/**
- Charge la barre de progression
- **/
-public function loadProgressBar() {
-	echo '<script type="text/javascript">';
-	echo "showPgb();";
-	echo '</script>';
-	flush();
-}
-
-/**
- Met à jour le curseur de la barre de progression
- **/
-public function updateProgressBar($nPercentage) {
-	echo '<script type="text/javascript">';
-	echo "setPgb('pgbMain', '{$nPercentage}');";
-	echo '</script>';
-	flush();
-	$this->PGB_CURRENT = $nPercentage;
-}
-
-/**
- Incrémente de 1 la barre de progresion
- **/
-public function increaseProgressBar() {
-	$min = 10;
-	$max = 100;
-	$current = $this->PGB_CURRENT;
-	$nb_el = $this->ALL_ELEMENTS->length;
-	$nb_class = $this->ALL_CLASSES->length;
-	$verified = count($this->RESULTS);
-	$state = round(($verified/($nb_el+$nb_class))*($max-$min)) + $min;
-	$this->updateProgressBar($state);
-}
-
-/**
- Ajoute un message d'erreur
- **/
-private function sanityCheckAddError($el_name, $prepend, $bold, $append) {
-	echo '<script type="text/javascript">';
-	echo "addError('".$el_name."', '".$prepend."', '".$bold."', '".$append."');";
-	echo '</script>';
-	flush();
-}
-
-/**
- Ajoute un avertissement
- **/
-private function sanityCheckAddWarning($el_name, $prepend, $bold, $append) {
-	echo '<script type="text/javascript">';
-	echo "addWarning('".$el_name."', '".$prepend."', '".$bold."', '".$append."');";
-	echo '</script>';
-	flush();
-}
-
-/**
- Ajoute le message qui dit que le schéma est invalide
- **/
-private function sanityCheckSchemaBroken() {
-	echo '<script type="text/javascript">';
-	echo "schemaBroken('Schema is broken !');";
-	echo '</script>';
-	flush();
 }
 
 /**
@@ -530,10 +465,10 @@ public function pass2() {
 	foreach($this->ALL_ELEMENTS as $element) {
 		if(!isset($this->COMPUTING[$element->getAttribute("ident")])) {
 			$res = false;
-			$this->sanityCheckAddWarning($element->getAttribute("ident"), " is not reacheable from root", "", "");
+			$this->SCEH->addError('Warning', $ident, '', 'is not reacheable from root');
 		}
 	}
-	$this->updateProgressBar(95);
+	$this->SCEH->updateProgressBar(95);
 	return $res;
 }
 
@@ -550,7 +485,7 @@ public function pass3() {
   arsort($this->RESULTS);
   print_r($this->RESULTS);
   echo '</pre></td></tr></table>';
- 	$this->updateProgressBar(100);
+ 	$this->SCEH->updateProgressBar(100);
 	return $res;
 }
 

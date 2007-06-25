@@ -84,6 +84,8 @@ require_once( 'parser/parser.php' );
 // Customization file.
 require_once( 'roma/romadom.php' );
 
+//sanity chercker files
+require_once( 'roma/sanitychecker_errorhandler.php' );
 require_once( 'roma/sanitychecker.php' );
 
 // Handles Notams
