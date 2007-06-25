@@ -543,7 +543,7 @@ public function pass2() {
 public function pass3() {
 	$res = true;
 	$this->DOM->getXPath($xpath);
-	echo '<table><tr><td><pre>'
+	echo '<table><tr><td><pre>';
   print_r($this->COMPUTING);
   echo '</pre></td><td>'
   print_r($this->RESULTS);
