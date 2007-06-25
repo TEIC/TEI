@@ -77,8 +77,8 @@ class SanityCheckerErrorHandler {
   	$min = 10;
   	$max = 100;
   	$current = $this->PGB_CURRENT;
-  	$nb_el = $this->$sc->ALL_ELEMENTS->length;
-  	$nb_class = $this->sc->ALL_CLASSES->length;
+  	if(isset($this->$sc->ALL_ELEMENTS)) $nb_el = $this->$sc->ALL_ELEMENTS->length;
+  	if(isset($this->$sc->ALL_CLASSES)) $nb_class = $this->sc->ALL_CLASSES->length;
   	$verified = count($this->sc->RESULTS);
   	$state = round(($verified/($nb_el+$nb_class))*($max-$min)) + $min;
   	$this->updateProgressBar($state);
