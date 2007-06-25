@@ -34,11 +34,11 @@ class SanityChecker {
  *SCEH         : sanity checker error handler 
  **/         
 private $COMPUTING = array();
-private $RESULTS = array();
+public $RESULTS = array();
 private $DOM;
 private $FILE_TMP_NAME;
-private $ALL_ELEMENTS;
-private $ALL_CLASSES;
+public $ALL_ELEMENTS;
+public $ALL_CLASSES;
 private $PARENTS;
 private $SCEH;
 
@@ -486,6 +486,7 @@ public function pass3() {
   print_r($this->RESULTS);
   echo '</pre></td></tr></table>';
  	$this->SCEH->updateProgressBar(100);
+ 	$this->SCEH->debug();
 	return $res;
 }
 
