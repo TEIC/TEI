@@ -52,7 +52,9 @@
   <xsl:key match="tei:macroSpec" name="MACROS" use="@ident"/>
   <xsl:key match="tei:elementSpec" name="ELEMENTS" use="@ident"/>
   <xsl:key match="tei:classSpec" name="CLASSES" use="@ident"/>
-  <xsl:key match="rng:ref" name="CLASSREFS" use="@name"/>
+  <xsl:key match="tei:elementSpec/tei:content//rng:ref" name="REFS" use="@name"/>
+  <xsl:key match="tei:macroSpec/tei:content//rng:ref" name="MACROREFS"
+	   use="@name"/>
   <xsl:key match="tei:elementSpec|tei:classSpec" name="CLASSMEMBERS"
     use="tei:classes/tei:memberOf/@key"/>
   <xsl:key match="tei:elementSpec|tei:classSpec|tei:macroSpec" name="IDENTS"
@@ -67,6 +69,7 @@
   <xsl:key match="tei:classSpec" name="ClassModule" use="@module"/>
   <xsl:key match="tei:macroSpec" name="MacroModule" use="@module"/>
   <xsl:key match="tei:moduleSpec" name="Modules" use="1"/>
+  <xsl:key match="tei:moduleSpec" name="MODULES" use="@ident"/>
   <xsl:key match="tei:classSpec[@predeclare='true']" name="predeclaredClasses"
     use="1"/>
   <xsl:key match="tei:macroSpec[@predeclare='true']" name="PredeclareMacros"
@@ -608,7 +611,7 @@ select="$makeDecls"/></xsl:message>
   <xsl:param name="class"/>
   <xsl:choose>
     <xsl:when test="not(ancestor::tei:schemaSpec)">x</xsl:when>
-    <xsl:when test="key('CLASSREFS',concat($class,$pattern))">x</xsl:when>
+    <xsl:when test="key('REFS',concat($class,$pattern))">x</xsl:when>
     <xsl:when test="not($pattern='')"></xsl:when>
     <xsl:when test="tei:classes/tei:memberOf">
       <xsl:for-each select="tei:classes/tei:memberOf">
@@ -1774,24 +1777,26 @@ select="$makeDecls"/></xsl:message>
 
   <xsl:template name="generateMembers">
     <xsl:param name="depth">1</xsl:param>
+    <xsl:param name="me"></xsl:param>
     <xsl:variable name="this" select="@ident"/>
     <xsl:choose>
+      <xsl:when test="$this=$me"/>
       <xsl:when test="key('CLASSMEMBERS',$this)">
 	<span class="showmembers{$depth}" xmlns="http://www.w3.org/1999/xhtml">
-	<xsl:if test="$depth &gt; 1"> [</xsl:if>
-        <xsl:for-each select="key('CLASSMEMBERS',$this)">
-          <xsl:sort select="@ident"/>
-	  <xsl:text> </xsl:text>
-          <xsl:call-template name="linkTogether">
-            <xsl:with-param name="name" select="@ident"/>
-          </xsl:call-template>
-	  <xsl:call-template name="generateMembers">
-	    <xsl:with-param name="depth">
-	      <xsl:value-of select="$depth + 1"/>
-	    </xsl:with-param>
-	  </xsl:call-template>
-	</xsl:for-each>
-	<xsl:if test="$depth &gt; 1">] </xsl:if>
+	  <xsl:if test="$depth &gt; 1"> [</xsl:if>
+	  <xsl:for-each select="key('CLASSMEMBERS',$this)">
+	    <xsl:sort select="@ident"/>
+	    <xsl:text> </xsl:text>
+	    <xsl:call-template name="linkTogether">
+	      <xsl:with-param name="name" select="@ident"/>
+	    </xsl:call-template>
+	    <xsl:call-template name="generateMembers">
+	      <xsl:with-param name="depth">
+		<xsl:value-of select="$depth + 1"/>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:for-each>
+	  <xsl:if test="$depth &gt; 1">] </xsl:if>
 	</span>
       </xsl:when>
       <xsl:when test="$lookupDatabase='true'">
@@ -1831,6 +1836,67 @@ select="$makeDecls"/></xsl:message>
     </xsl:choose>
   </xsl:template>
 
+
+
+  <xsl:template name="generateParents">
+    <xsl:variable name="p">
+      <p>
+	<xsl:call-template name="generateParentsByElement"/>
+	<xsl:call-template name="generateParentsByMacro"/>
+	<xsl:call-template name="generateParentsByClass"/>
+      </p>
+    </xsl:variable>
+
+    <span class="parent" xmlns="http://www.w3.org/1999/xhtml">
+      <xsl:for-each select="exsl:node-set($p)/p//html:a">
+	<xsl:sort select="."/>
+	<xsl:if
+	    test="not(text()=preceding::html:a/text())">
+	  <xsl:copy-of select="."/>
+	  <xsl:text> </xsl:text>
+	</xsl:if>
+      </xsl:for-each>
+    </span>
+
+  </xsl:template>
+
+  <xsl:template name="generateParentsByElement">
+    <xsl:variable name="this" select="@ident"/>
+    <xsl:for-each
+	select="key('REFS',$this)/ancestor::tei:elementSpec">
+      <xsl:call-template name="linkTogether">
+	<xsl:with-param name="name" select="@ident"/>
+      </xsl:call-template>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template name="generateParentsByMacro">
+    <xsl:variable name="this" select="@ident"/>
+    <xsl:for-each
+	select="key('MACROREFS',$this)/ancestor::tei:macroSpec">
+      <xsl:for-each select="key('REFS',@ident)/ancestor::tei:elementSpec">
+	<xsl:call-template name="linkTogether">
+	  <xsl:with-param name="name" select="@ident"/>
+	</xsl:call-template>
+      </xsl:for-each>
+      <xsl:call-template name="generateParentsByMacro"/>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template name="generateParentsByClass">
+    <xsl:variable name="this" select="@ident"/>
+    <xsl:for-each select="tei:classes/tei:memberOf">
+      <xsl:for-each select="key('CLASSES',@key)">
+	<xsl:for-each select="key('REFS',@ident)/ancestor::tei:elementSpec">
+	  <xsl:call-template name="linkTogether">
+	    <xsl:with-param name="name" select="@ident"/>
+	  </xsl:call-template>
+	</xsl:for-each>
+	<xsl:call-template name="generateParentsByClass"/>
+	<xsl:call-template name="generateParentsByMacro"/>
+      </xsl:for-each>
+    </xsl:for-each>
+  </xsl:template>
 
   <xsl:template name="showElement">
     <xsl:param name="name"/>
@@ -2034,6 +2100,19 @@ select="$makeDecls"/></xsl:message>
 
   <xsl:template name="makeTagsetInfo">
     <xsl:value-of select="@module"/>
+    <xsl:for-each
+	select="key('MODULES',@module)/ancestor::tei:div[last()]">
+      <xsl:text> — </xsl:text>
+      <xsl:call-template name="makeLink">
+	<xsl:with-param name="class">link_ptr</xsl:with-param>
+	<xsl:with-param name="name">
+	  <xsl:value-of select="@ident"/>
+	</xsl:with-param>
+	<xsl:with-param name="text">
+	  <xsl:value-of select="tei:head"/>
+	</xsl:with-param>
+      </xsl:call-template>
+    </xsl:for-each>
     <xsl:if test="$verbose='true'">
       <xsl:message> tagset <xsl:value-of select="@xml:id"/>: <xsl:value-of
           select="@module"/></xsl:message>

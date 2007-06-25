@@ -286,16 +286,19 @@
 	</td>
       </tr>
     </xsl:if>
-    <xsl:apply-templates mode="weave"/>
-    <!--
-  <tr>
-    <td valign="top">Member of classes</td>
-    <td colspan="2" class="wovenodd-col2">
-      <xsl:call-template name="generateClassParents"/>
-      &#160;
-    </td>
-  </tr>
--->
+    <xsl:if test="@module">
+      <xsl:call-template name="moduleInfo"/>
+    </xsl:if>
+    <xsl:if test="@type='model'">
+    <tr>
+      <td valign="top"  class="wovenodd-col1">
+        <span class="label">Used by</span>
+      </td>
+      <td colspan="2" class="wovenodd-col2">
+        <xsl:call-template name="generateParents"/>
+      </td>
+    </tr>
+    </xsl:if>
     <tr>
       <td valign="top"  class="wovenodd-col1">
         <span class="label">
@@ -308,9 +311,7 @@
         <xsl:call-template name="generateMembers"/>
       </td>
     </tr>
-    <xsl:if test="@module">
-      <xsl:call-template name="HTMLmakeTagsetInfo"/>
-    </xsl:if>
+    <xsl:apply-templates mode="weave"/>
   </xsl:template>
 
   <xd:doc>
@@ -434,11 +435,21 @@
         </td>
       </tr>
     </xsl:if>
-    <xsl:apply-templates mode="weave"/>
     <xsl:if test="@module">
-      <xsl:call-template name="HTMLmakeTagsetInfo"/>
+      <xsl:call-template name="moduleInfo"/>
     </xsl:if>
+    <tr>
+      <td valign="top"  class="wovenodd-col1">
+        <span class="label">Parents</span>
+      </td>
+      <td colspan="2" class="wovenodd-col2">
+        <xsl:call-template name="generateParents"/>
+      </td>
+    </tr>
+
+    <xsl:apply-templates mode="weave"/>
   </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements tei:elementSpec/tei:content</xd:short>
     <xd:detail> </xd:detail>
@@ -739,10 +750,21 @@
 	<xsl:call-template name="makeDescription"/>
       </td>
     </tr>
-    <xsl:apply-templates mode="weave"/>
+
     <xsl:if test="@module">
-      <xsl:call-template name="HTMLmakeTagsetInfo"/>
+      <xsl:call-template name="moduleInfo"/>
     </xsl:if>
+
+    <tr>
+      <td valign="top"  class="wovenodd-col1">
+        <span class="label">Used by</span>
+      </td>
+      <td colspan="2" class="wovenodd-col2">
+        <xsl:call-template name="generateParents"/>
+      </td>
+    </tr>
+
+    <xsl:apply-templates mode="weave"/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:macroSpec/tei:content</xd:short>
@@ -1121,7 +1143,7 @@
     <xd:short>[html] </xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template name="HTMLmakeTagsetInfo">
+  <xsl:template name="moduleInfo">
     <tr>
       <td valign="top">
         <span class="label">
