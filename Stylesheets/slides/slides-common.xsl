@@ -99,7 +99,9 @@
       <xsl:value-of select="local-name(.)"/>
       <xsl:value-of disable-output-escaping="yes" select="$endAttribute"/>
       <xsl:text>="</xsl:text>
+      <xsl:value-of disable-output-escaping="yes" select="$startAttributeValue"/>
       <xsl:value-of select="."/>
+      <xsl:value-of disable-output-escaping="yes" select="$endAttributeValue"/>
       <xsl:text>"</xsl:text>
     </xsl:for-each>
     <xsl:choose>

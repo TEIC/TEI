@@ -19,10 +19,12 @@
   <xsl:param name="startNamespace">\color{red}</xsl:param>
   <xsl:param name="startElement">\textbf{</xsl:param>
   <xsl:param name="startAttribute">\textit{</xsl:param>
+  <xsl:param name="startAttributeValue">\textrm{</xsl:param>
   <xsl:param name="startComment">\textsf{</xsl:param>
   <xsl:param name="endElement">}</xsl:param>
   <xsl:param name="endComment">}</xsl:param>
   <xsl:param name="endAttribute">}</xsl:param>
+  <xsl:param name="endAttributeValue">}</xsl:param>
   <xsl:param name="endNamespace"/>
   <xsl:param name="spaceCharacter">\hspace*{1em}</xsl:param>
   <xd:doc type="stylesheet">

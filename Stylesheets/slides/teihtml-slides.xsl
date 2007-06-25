@@ -49,14 +49,6 @@
   <xsl:param name="logoFile">logo.png</xsl:param>
   <xsl:param name="logoWidth">60</xsl:param>
   <xsl:param name="logoHeight">60</xsl:param>
-  <xsl:param name="startElement">&lt;span class="element"&gt;</xsl:param>
-  <xsl:param name="endElement">&lt;/span&gt;</xsl:param>
-  <xsl:param name="startAttribute">&lt;span class="attribute"&gt;</xsl:param>
-  <xsl:param name="endAttribute">&lt;/span&gt;</xsl:param>
-  <xsl:param name="startNamespace">&lt;span class="namespace"&gt;</xsl:param>
-  <xsl:param name="endNamespace">&lt;/span&gt;</xsl:param>
-  <xsl:param name="startComment">&lt;span class="comment"&gt;</xsl:param>
-  <xsl:param name="endComment">&lt;/span&gt;</xsl:param>
   <xsl:param name="spaceCharacter">&#xA0;</xsl:param>
   <xsl:template name="lineBreak">
     <xsl:param name="id"/>

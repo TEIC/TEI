@@ -35,6 +35,8 @@
   </xd:doc>
   <xsl:param name="startAttribute"/>
   <xsl:param name="endAttribute"/>
+  <xsl:param name="startAttributeValue"/>
+  <xsl:param name="endAttributeValue"/>
   <xsl:param name="startComment"/>
   <xsl:param name="endComment"/>
   <xsl:param name="startElement"/>

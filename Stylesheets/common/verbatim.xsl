@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+><?xml version="1.0"?>
 <xsl:stylesheet 
     version="1.0" 
     xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -16,6 +16,8 @@
   <xsl:param name="endElement">&lt;/span&gt;</xsl:param>
   <xsl:param name="startAttribute">&lt;span class="attribute"&gt;</xsl:param>
   <xsl:param name="endAttribute">&lt;/span&gt;</xsl:param>
+  <xsl:param name="startAttributeValue">&lt;span class="attributevalue"&gt;</xsl:param>
+  <xsl:param name="endAttributeValue">&lt;/span&gt;</xsl:param>
   <xsl:param name="startNamespace">&lt;span class="namespace""&gt;</xsl:param>
   <xsl:param name="endNameSpace">&lt;/span&gt;</xsl:param>
 
@@ -404,7 +406,9 @@
   <xsl:value-of select="local-name(.)"/>
   <xsl:value-of disable-output-escaping="yes" select="$endAttribute"/>
   <xsl:text>="</xsl:text>
-     <xsl:apply-templates select="." mode="attributetext"/>
+  <xsl:value-of disable-output-escaping="yes" select="$startAttributeValue"/>
+  <xsl:apply-templates select="." mode="attributetext"/>
+  <xsl:value-of disable-output-escaping="yes" select="$endAttributeValue"/>
   <xsl:text>"</xsl:text>
 </xsl:template>
 
