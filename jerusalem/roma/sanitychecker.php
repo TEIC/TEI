@@ -330,7 +330,7 @@ $this->getParentItem($element);
 			}
 			$this->computingStop($ident);
 			if($count == 0) {
-				if(!$this->computingProgress($this->getElementName($element))) $this->sanityCheckAddWarning($ident, " is EMPTY  and is used in ", "", $this->getParentItem($parent)->getAttribute("ident"));
+				if(!$this->computingProgress($this->getElementName($element))) $this->sanityCheckAddWarning($ident, " is EMPTY  and is used in ", $this->getParentItem($parent)->getAttribute("ident"), "");
 				//$this->RESULTS[$ident] = false;
 				return false;
 			}
