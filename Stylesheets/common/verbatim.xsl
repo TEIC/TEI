@@ -14,12 +14,14 @@
   <xsl:param name="endComment">&lt;/span&gt;</xsl:param>
   <xsl:param name="startElement">&lt;span class="element"&gt;</xsl:param>
   <xsl:param name="endElement">&lt;/span&gt;</xsl:param>
+  <xsl:param name="startElementName">&lt;span class="elementname"&gt;</xsl:param>
+  <xsl:param name="endElementName">&lt;/span&gt;</xsl:param>
   <xsl:param name="startAttribute">&lt;span class="attribute"&gt;</xsl:param>
   <xsl:param name="endAttribute">&lt;/span&gt;</xsl:param>
   <xsl:param name="startAttributeValue">&lt;span class="attributevalue"&gt;</xsl:param>
   <xsl:param name="endAttributeValue">&lt;/span&gt;</xsl:param>
   <xsl:param name="startNamespace">&lt;span class="namespace""&gt;</xsl:param>
-  <xsl:param name="endNameSpace">&lt;/span&gt;</xsl:param>
+  <xsl:param name="endNamespace">&lt;/span&gt;</xsl:param>
 
   <xsl:param name="spaceCharacter">&#xA0;</xsl:param>
   <xsl:param name="showNamespaceDecls">true</xsl:param>
@@ -137,75 +139,9 @@
 
     <xsl:value-of disable-output-escaping="yes" select="$startElement"/>
     <xsl:text>&lt;</xsl:text>
-    <xsl:choose>
-	  <xsl:when
-	      test="namespace-uri()='http://docbook.org/ns/docbook'">
-	    <xsl:text>dbk:</xsl:text>
-	    <xsl:value-of select="local-name(.)"/>
-	  </xsl:when>
-	  <xsl:when
-	      test="namespace-uri()='http://www.w3.org/2001/XMLSchema'">
-	    <xsl:text>xsd:</xsl:text>
-	    <xsl:value-of select="local-name(.)"/>
-	  </xsl:when>
-	  <xsl:when
-	      test="namespace-uri()='http://www.ascc.net/xml/schematron'">
-	    <xsl:text>sch:</xsl:text>
-	    <xsl:value-of select="local-name(.)"/>
-	  </xsl:when>
-	  <xsl:when
-	      test="namespace-uri()='http://www.w3.org/1998/Math/MathML'">
-	    <xsl:text>m:</xsl:text>
-	    <xsl:value-of select="local-name(.)"/>
-	  </xsl:when>
-	  <xsl:when
-	      test="namespace-uri()='http://www.w3.org/1999/xhtml'">
-	    <xsl:text>xhtml:</xsl:text>
-	    <xsl:value-of select="local-name(.)"/>
-	  </xsl:when>
-	  <xsl:when
-	      test="namespace-uri()='http://www.w3.org/1999/xlink'">
-	    <xsl:text>xlink:</xsl:text>
-	    <xsl:value-of select="local-name(.)"/>
-	  </xsl:when>
-      <xsl:when test="namespace-uri()='http://relaxng.org/ns/structure/1.0'">
-        <xsl:text>rng:</xsl:text>
-        <xsl:value-of select="local-name(.)"/>
-      </xsl:when>
-      <xsl:when test="namespace-uri()='http://www.w3.org/2005/11/its'">
-        <xsl:text>its:</xsl:text>
-        <xsl:value-of select="local-name(.)"/>
-      </xsl:when>
-      <xsl:when test="namespace-uri()='http://www.w3.org/1999/XSL/Transform'">
-        <xsl:value-of disable-output-escaping="yes" select="$startNamespace"/>
-        <xsl:text>xsl:</xsl:text>
-        <xsl:value-of select="local-name(.)"/>
-        <xsl:value-of disable-output-escaping="yes" select="$endNameSpace"/>
-      </xsl:when>
-      <xsl:when
-	  test="namespace-uri()='http://www.tei-c.org/ns/Examples'">
-	<xsl:value-of select="local-name(.)"/>
-      </xsl:when>
-      <xsl:when
-	  test="namespace-uri()='http://www.w3.org/2005/Atom'">
-	<xsl:text>atom:</xsl:text>
-	<xsl:value-of select="local-name(.)"/>
-      </xsl:when>
-      <xsl:when
-	  test="namespace-uri()='http://purl.org/rss/1.0/modules/event/'">
-	<xsl:text>ev:</xsl:text>
-	<xsl:value-of select="local-name(.)"/>
-      </xsl:when>
-      <xsl:when test="not(namespace-uri()='')">
-        <xsl:value-of select="local-name(.)"/>
-	<xsl:text> xmlns="</xsl:text>
-	<xsl:value-of select="namespace-uri()"/>
-	<xsl:text>"</xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="local-name(.)"/>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:call-template name="makeElementName">
+      <xsl:with-param name="start">true</xsl:with-param>
+    </xsl:call-template>
     <xsl:apply-templates select="@*" mode="verbatim"/>
     <xsl:if test="$showNamespaceDecls='true' or parent::teix:egXML[@rend='full']">
       <xsl:choose>
@@ -256,7 +192,7 @@
             <xsl:value-of disable-output-escaping="yes" select="$startNamespace"/>
 	  <xsl:text>   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" </xsl:text>
             <xsl:value-of disable-output-escaping="yes"
-			  select="$endNameSpace"/>
+			  select="$endNamespace"/>
           <xsl:call-template name="lineBreak"/>
     </xsl:if>
 -->
@@ -289,66 +225,9 @@
         </xsl:choose>
         <xsl:value-of disable-output-escaping="yes" select="$startElement"/>
         <xsl:text>&lt;/</xsl:text>
-        <xsl:choose>
-	  <xsl:when
-	      test="namespace-uri()='http://docbook.org/ns/docbook'">
-	    <xsl:text>dbk:</xsl:text>
-	    <xsl:value-of select="local-name(.)"/>
-	  </xsl:when>
-	  <xsl:when
-	      test="namespace-uri()='http://www.w3.org/2001/XMLSchema'">
-	    <xsl:text>xsd:</xsl:text>
-	    <xsl:value-of select="local-name(.)"/>
-	  </xsl:when>
-	  <xsl:when
-	      test="namespace-uri()='http://www.ascc.net/xml/schematron'">
-	    <xsl:text>sch:</xsl:text>
-	    <xsl:value-of select="local-name(.)"/>
-	  </xsl:when>
-	  <xsl:when
-	      test="namespace-uri()='http://www.w3.org/1998/Math/MathML'">
-	    <xsl:text>m:</xsl:text>
-	    <xsl:value-of select="local-name(.)"/>
-	  </xsl:when>
-	  <xsl:when
-	      test="namespace-uri()='http://www.w3.org/1999/xhtml'">
-	    <xsl:text>xhtml:</xsl:text>
-	    <xsl:value-of select="local-name(.)"/>
-	  </xsl:when>
-	  <xsl:when
-	      test="namespace-uri()='http://www.w3.org/1999/xlink'">
-	    <xsl:text>xlink:</xsl:text>
-	    <xsl:value-of select="local-name(.)"/>
-	  </xsl:when>
-
-          <xsl:when test="namespace-uri()='http://relaxng.org/ns/structure/1.0'">
-            <xsl:text>rng:</xsl:text>
-            <xsl:value-of select="local-name(.)"/>
-          </xsl:when>
-          <xsl:when test="namespace-uri()='http://www.w3.org/2005/11/its'">
-            <xsl:text>its:</xsl:text>
-            <xsl:value-of select="local-name(.)"/>
-          </xsl:when>
-          <xsl:when test="namespace-uri()='http://www.w3.org/1999/XSL/Transform'">
-            <xsl:value-of disable-output-escaping="yes" select="$startNamespace"/>
-            <xsl:text>xsl:</xsl:text>
-            <xsl:value-of select="local-name(.)"/>
-            <xsl:value-of disable-output-escaping="yes" select="$endNameSpace"/>
-          </xsl:when>
-          <xsl:when
-	      test="namespace-uri()='http://www.w3.org/2005/Atom'">
-            <xsl:text>atom:</xsl:text>
-            <xsl:value-of select="local-name(.)"/>
-	  </xsl:when>
-          <xsl:when
-	      test="namespace-uri()='http://purl.org/rss/1.0/modules/event/'">
-            <xsl:text>ev:</xsl:text>
-            <xsl:value-of select="local-name(.)"/>
-	  </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="local-name(.)"/>
-          </xsl:otherwise>
-        </xsl:choose>
+	<xsl:call-template name="makeElementName">
+	  <xsl:with-param name="start">false</xsl:with-param>
+	</xsl:call-template>
         <xsl:text>&gt;</xsl:text>
         <xsl:value-of disable-output-escaping="yes" select="$endElement"/>
       </xsl:when>
@@ -359,7 +238,167 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template name="makeIndent">
+
+  <xsl:template name="makeElementName">
+    <xsl:param name="start"/>
+    <xsl:choose>
+
+      <xsl:when
+	  test="namespace-uri()='http://docbook.org/ns/docbook'">
+	<xsl:value-of disable-output-escaping="yes" select="$startNamespace"/>
+	<xsl:text>dbk:</xsl:text>
+	<xsl:value-of disable-output-escaping="yes" select="$endNamespace"/>
+	<xsl:value-of disable-output-escaping="yes" select="$startElementName"/>
+	<xsl:value-of select="local-name(.)"/>
+	<xsl:value-of disable-output-escaping="yes" select="$endElementName"/>
+      </xsl:when>
+
+      <xsl:when
+	  test="namespace-uri()='http://www.w3.org/2001/XMLSchema'">
+	<xsl:value-of disable-output-escaping="yes" select="$startNamespace"/>
+	<xsl:text>xsd:</xsl:text>
+	<xsl:value-of disable-output-escaping="yes"
+		      select="$endNamespace"/>
+	<xsl:value-of disable-output-escaping="yes" select="$startElementName"/>
+	
+	<xsl:value-of select="local-name(.)"/>
+	<xsl:value-of disable-output-escaping="yes" select="$endElementName"/>
+	
+      </xsl:when>
+
+      <xsl:when
+	  test="namespace-uri()='http://www.ascc.net/xml/schematron'">
+	<xsl:value-of disable-output-escaping="yes" select="$startNamespace"/>
+	<xsl:text>sch:</xsl:text>
+	<xsl:value-of disable-output-escaping="yes"
+		      select="$endNamespace"/>
+	<xsl:value-of disable-output-escaping="yes" select="$startElementName"/>
+	
+	<xsl:value-of select="local-name(.)"/>
+	<xsl:value-of disable-output-escaping="yes" select="$endElementName"/>
+	
+      </xsl:when>
+
+      <xsl:when
+	  test="namespace-uri()='http://www.w3.org/1998/Math/MathML'">
+	<xsl:value-of disable-output-escaping="yes" select="$startNamespace"/>
+	<xsl:text>m:</xsl:text>
+	<xsl:value-of disable-output-escaping="yes"
+		      select="$endNamespace"/>
+	<xsl:value-of disable-output-escaping="yes" select="$startElementName"/>
+	
+	<xsl:value-of select="local-name(.)"/>
+	<xsl:value-of disable-output-escaping="yes" select="$endElementName"/>
+	
+      </xsl:when>
+
+      <xsl:when
+	  test="namespace-uri()='http://www.w3.org/1999/xhtml'">
+	<xsl:value-of disable-output-escaping="yes" select="$startNamespace"/>
+	<xsl:text>xhtml:</xsl:text>
+	<xsl:value-of disable-output-escaping="yes"
+		      select="$endNamespace"/>
+	<xsl:value-of disable-output-escaping="yes" select="$startElementName"/>
+	
+	<xsl:value-of select="local-name(.)"/>
+	<xsl:value-of disable-output-escaping="yes" select="$endElementName"/>
+	
+      </xsl:when>
+
+      <xsl:when
+	  test="namespace-uri()='http://www.w3.org/1999/xlink'">
+	<xsl:value-of disable-output-escaping="yes" select="$startNamespace"/>
+	<xsl:text>xlink:</xsl:text>
+	<xsl:value-of disable-output-escaping="yes"
+		      select="$endNamespace"/>
+	<xsl:value-of disable-output-escaping="yes" select="$startElementName"/>
+	
+	<xsl:value-of select="local-name(.)"/>
+	<xsl:value-of disable-output-escaping="yes" select="$endElementName"/>
+	
+      </xsl:when>
+
+      <xsl:when
+	  test="namespace-uri()='http://relaxng.org/ns/structure/1.0'">
+	<xsl:value-of disable-output-escaping="yes" select="$startNamespace"/>
+	<xsl:text>rng:</xsl:text>
+	<xsl:value-of disable-output-escaping="yes"
+		      select="$endNamespace"/>
+	<xsl:value-of disable-output-escaping="yes" select="$startElementName"/>
+	<xsl:value-of select="local-name(.)"/>
+	<xsl:value-of disable-output-escaping="yes" select="$endElementName"/>
+	
+      </xsl:when>
+
+      <xsl:when
+	  test="namespace-uri()='http://www.w3.org/2005/11/its'">
+	<xsl:value-of disable-output-escaping="yes" select="$startNamespace"/>
+	<xsl:text>its:</xsl:text>
+	<xsl:value-of disable-output-escaping="yes"
+		      select="$endNamespace"/>
+	<xsl:value-of disable-output-escaping="yes" select="$startElementName"/>
+	<xsl:value-of select="local-name(.)"/>
+	<xsl:value-of disable-output-escaping="yes" select="$endElementName"/>
+      </xsl:when>
+
+      <xsl:when test="namespace-uri()='http://www.w3.org/1999/XSL/Transform'">
+        <xsl:value-of disable-output-escaping="yes" select="$startNamespace"/>
+        <xsl:text>xsl:</xsl:text>
+        <xsl:value-of select="local-name(.)"/>
+        <xsl:value-of disable-output-escaping="yes" select="$endNamespace"/>
+      </xsl:when>
+
+      <xsl:when
+	  test="namespace-uri()='http://www.tei-c.org/ns/Examples'">
+	<xsl:value-of disable-output-escaping="yes" select="$startElementName"/>
+	<xsl:value-of select="local-name(.)"/>
+	<xsl:value-of disable-output-escaping="yes" select="$endElementName"/>
+      </xsl:when>
+
+      <xsl:when
+	  test="namespace-uri()='http://www.w3.org/2005/Atom'">
+	<xsl:value-of disable-output-escaping="yes" select="$startNamespace"/>
+	<xsl:text>atom:</xsl:text>
+	<xsl:value-of disable-output-escaping="yes"
+		      select="$endNamespace"/>
+	<xsl:value-of disable-output-escaping="yes" select="$startElementName"/>
+	<xsl:value-of select="local-name(.)"/>
+	    <xsl:value-of disable-output-escaping="yes" select="$endElementName"/>
+      </xsl:when>
+
+      <xsl:when
+	  test="namespace-uri()='http://purl.org/rss/1.0/modules/event/'">
+	<xsl:value-of disable-output-escaping="yes" select="$startNamespace"/>
+	<xsl:text>ev:</xsl:text>
+	<xsl:value-of disable-output-escaping="yes"
+		      select="$endNamespace"/>
+	<xsl:value-of disable-output-escaping="yes" select="$startElementName"/>
+	<xsl:value-of select="local-name(.)"/>
+	<xsl:value-of disable-output-escaping="yes" select="$endElementName"/>
+	
+      </xsl:when>
+
+      <xsl:when test="not(namespace-uri()='')">
+	<xsl:value-of disable-output-escaping="yes" select="$startElementName"/>
+	<xsl:value-of select="local-name(.)"/>
+	<xsl:value-of disable-output-escaping="yes" select="$endElementName"/>
+	<xsl:if test="$start='true'">
+	  <xsl:text> xmlns="</xsl:text>
+	  <xsl:value-of select="namespace-uri()"/>
+	  <xsl:text>"</xsl:text>
+	</xsl:if>
+      </xsl:when>
+
+      <xsl:otherwise>
+	<xsl:value-of disable-output-escaping="yes" select="$startElementName"/>
+	<xsl:value-of select="local-name(.)"/>
+	<xsl:value-of disable-output-escaping="yes" select="$endElementName"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+
+    <xsl:template name="makeIndent">
     <xsl:for-each select="ancestor::*[not(namespace-uri()='http://www.tei-c.org/ns/1.0')]">
       <xsl:value-of select="$spaceCharacter"/>
     </xsl:for-each>

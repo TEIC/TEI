@@ -41,6 +41,8 @@
   <xsl:param name="endComment"/>
   <xsl:param name="startElement"/>
   <xsl:param name="endElement"/>
+  <xsl:param name="startElementName"/>
+  <xsl:param name="endElementName"/>
   <xsl:param name="startNamespace"/>
   <xsl:param name="endNamespace"/>
   <xsl:param name="spaceCharacter"> </xsl:param>
