@@ -1389,6 +1389,7 @@
 		<meta http-equiv="Content-Type" 
 		      content="application/xhtml+xml; charset=utf-8"/>
                 <xsl:call-template name="includeJavascript"/>
+                <xsl:call-template name="javascriptHook"/>
               </head>
               <body id="TOP">
                 <xsl:attribute name="onload">
@@ -1505,6 +1506,62 @@
         <xsl:value-of select="$text"/>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+
+<!-- pretty printing of RNC -->
+
+  <xsl:template match="nc" mode="keep">
+    <span class="rnc_nc"><xsl:value-of select="."/></span>
+  </xsl:template>
+
+  <xsl:template match="declaration" mode="keep">
+    <span class="rnc_decl"><xsl:value-of select="."/></span>
+  </xsl:template>
+
+  <xsl:template match="prefix" mode="keep">
+    <span class="rnc_prefix"><xsl:value-of select="."/></span>
+  </xsl:template>
+
+  <xsl:template match="param" mode="keep">
+    <span class="rnc_param"><xsl:value-of select="."/></span>
+  </xsl:template>
+
+  <xsl:template match="op" mode="keep">
+    <xsl:value-of select="translate (., ' ', '&#160;')"/>
+  </xsl:template>
+
+  <xsl:template match="atom" mode="keep">
+    <span class="rnc_atom"><xsl:value-of select="."/></span>
+  </xsl:template>
+
+  <xsl:template match="t" mode="keep">
+    <xsl:choose>
+      <xsl:when test=". = '[' or . = ']'">
+	<span class="rnc_annot"><xsl:value-of select="."/></span>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="."/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="doc" mode="keep">
+    <span class="rnc_comment"><xsl:value-of select="."/></span>
+  </xsl:template>
+
+  <xsl:template match="annot" mode="keep">
+    <span class="rnc_annot"><xsl:value-of select="."/></span>
+  </xsl:template>
+
+  <xsl:template match="type" mode="keep">
+    <span class="rnc_type"><xsl:value-of select="."/></span>
+  </xsl:template>
+
+  <xsl:template match="keyword" mode="keep">
+    <span class="rnc_keyword">
+      <xsl:value-of select="."/>
+    </span>
   </xsl:template>
 
 </xsl:stylesheet>
