@@ -233,25 +233,49 @@ example:
    <forename type="first">Franklin</forename>
    <forename type="middle">Delano</forename>
    <surname>Roosevelt</surname>
-</persName></egXML>
-
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName> 
+</persName>
+<persName> 
    <forename type="given">Margaret</forename>
    <forename type="unused">Hilda</forename>
    <surname type="maiden">Roberts</surname>
    <surname type="married">Thatcher</surname>
-</persName></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName type="religious">Muhammad Ali</persName></egXML>
-In the following two examples the <att>type</att> attribute of the
-<gi>surname</gi> element is used to indicate so-called
-double-barrelled or hyphenated surnames:
+</persName>
+<persName type="religious">Muhammad Ali</persName>
+<persName>   
+   <forename>Norman</forename>
+   <surname type="complex">St John Stevas</surname>
+</persName>
+</egXML>
+Values for the <att>type</att> attribute are not constrained, and may
+be chosen as appropriate to the encoding needs of the project. They
+may be
+used to distinguish different kinds of forename or surname, as well as
+to indicate the function a name component fills within the whole. In
+this example, we indicate that a surname is toponymic, and also point
+to the specific  place name from which it is derived:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<persName>
+   <forename>Johan</forename>
+  <surname type="toponymic" ref="#dystvold">
+      Dystvold
+   </surname>
+ </persName>
+<!-- ... -->
+<placeName xml:id="dystvold">Dystvold</placeName>
+</egXML>
+</p>
+
+<p>The value <val>complex</val> was suggested above for the not
+uncommon case where the whole of a surname is composed of several
+other surname elements. These nested surnames may be individually
+tagged as well, together with appropriate type values:
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><persName>  
    <forename>Kara</forename>
-   <surname type="combine">Hattersley-Smith</surname>
-</persName></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName>   
-   <forename>Norman</forename>
-   <surname type="combine">St John Stevas</surname>
+   <surname type="complex">
+    <surname type="paternal">Hattersley</surname>-
+    <surname type="maternal">Smith</surname>
+   </surname>
 </persName></egXML>
 </p>
 <p>The <att>full</att> attribute may be used to indicate whether a
@@ -370,14 +394,6 @@ Note, however, that the <term>role</term> a person has in a given context (such 
    <addName type="honorific">Grandma</addName>
    <surname>Moses</surname>
 </persName></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="MRSRO1">
-   <addName type="honorific">Mrs</addName>
-   <surname>Robinson</surname>
-</persName></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="STAU1">
-   <roleName type="office">Saint</roleName>
-   <forename>Augustine</forename>
-</persName></egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="SLWICL1">
    <roleName type="office">President</roleName>
    <forename>Bill</forename>
@@ -488,8 +504,8 @@ or as a composite of other kinds of name:
    <surname>Ernst</surname>&amp;<surname>Young</surname>
 </orgName></egXML>
  </p>
-<p>The names making up an organization names are not always
-personal. They may also include place names: 
+<p>The components of an an organization's name are not always
+personal names. They may also include place names: 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">A spokesman from 
 <orgName type="regional">
   <orgName>IBM</orgName>
@@ -546,7 +562,8 @@ features such as mountains or rivers is represented using the
 <gi>geogName</gi> element (see section <ptr
 target="#NDPLGF"/>).  Finally, an expression consisting of phrases
 expressing spatial or other kinds of relationship between other kinds
-of named place may also be regarded as a kind of <gi>placeName</gi>
+of named place may itself be regarded as a way of referring to a
+place, and hence as a kind of named place 
 (see section <ptr target="#NDPLR"/>).
 <specList><specDesc key="placeName"/><specDesc key="geogName"/>
 </specList>
@@ -627,7 +644,7 @@ usual phrase level elements, this element may include the following
 specialized elements:
 <specList>
   <specDesc key="geogFeat"/>
-  <specDesc key="offset"/>
+<!--  <specDesc key="offset"/>-->
 </specList>
 </p>
 <p>For example:
@@ -842,10 +859,10 @@ specific elements for  common types of biographical
 information, and a generic element for other, user-defined, types
 of information.</p> 
 <p>All the elements in these three classes belong to the attribute
-class <name type="class">att.datable</name>, which, as a superclass
-of <name type="class">att.datable.w3c</name> provides the
+class <name type="class">att.datable</name>, which <!--, as a subclass
+of <name type="class">att.datable.w3c</name> --> provides the
 following attributes:
-<specList><specDesc key="att.datable.w3c" atts="when notBefore notAfter from to"/></specList>
+<specList><specDesc key="att.datable" atts="when notBefore notAfter from to"/></specList>
 as discussed in <ptr target="#NDATTS"/> above. </p>
 <div type="div4">
 <head>Personal Characteristics</head>
@@ -1009,7 +1026,7 @@ can be given, and in any order:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
   <person xml:id="simon_son_of_richard2">
-    <persName>Simon, Richard son of</persName>
+    <persName>Simon, son of Richard</persName>
     <residence><placeName><region>Essex</region></placeName></residence>
     <floruit notBefore="1219" notAfter="1223">1219-1223</floruit>
   </person>
@@ -1069,9 +1086,13 @@ model to that of <gi>state</gi> and <gi>trait</gi>; the chief
 difference being that it can include a <gi>placeName</gi> element to
 identify the name of the place where the event ocurred. It is used 
 to describe any event in the life of an individual. </p>
-<p>In the example below the event is the wedding of Jane Burdon to the
-English writer, designer, and socialist William Morris. The example
-assumes that the 
+<p>In the following example, we give a brief summary of the wedding of Jane Burden to the
+English writer, designer, and socialist William Morris, encoded as an
+<gi>event</gi> element embedded within the <gi>person</gi> element
+used to record data about Morris, though we could equally well have embedded
+the event within the <gi>person</gi> element for Burden, or have given
+it as a freestanding <gi>event</gi> independent of either
+<gi>person</gi> element:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <person xml:id="WM">
 <!-- ... -->
@@ -1212,12 +1233,19 @@ P5, P6, and P7.</item></list></p>
 <div xml:id="ND-org"> <head>Organizational data</head>
 <p>The <gi>org</gi> and <gi>listOrg</gi> elements are used to store
 data about an organization such as its preferred name, its locations,
-or key persons within it. These elements are intended to be used in a
+or key persons within it. 
+
+<specList>
+<specDesc key="org"/>
+<specDesc key="listOrg"/>
+</specList>
+
+These elements are intended to be used in a
 way analogous to the <gi>place</gi> and <gi>person</gi> elements
 discussed elsewhere in this chapter, that is to provide as a unique
 wrapper element for information about an entity, distinct from
 references to that entity which are typically encoded using a naming
-element suich as <gi>name type="org"</gi> or <gi>orgName</gi>. The
+element such as <gi>name type="org"</gi> or <gi>orgName</gi>. The
 content of a naming element will represent the way an organization is
 named in a given context; the content of an <gi>org</gi> represents
 the information known to the encoder about that organization, gathered
@@ -1459,24 +1487,14 @@ of name used to locate it, for example by characterizing the generic
     co-ordinates. The <gi>geo</gi> element introduced earlier is by
     default understood to supply a value expressed in a specific (and
     widely used) notation; this may be modified in two ways. </p>
-<p>Firstly, the <att>datum</att> attribute on <gi>geo</gi> may be used
-to indicate that the content of the element should be interpreted in
-some other way. The following values are permitted for this attribute
-by the current version of these Guidelines:
-<list type="gloss">
-<label><code>WGS84</code></label>
-<item> a pair of numbers to be interpreted as latitude followed by longitude
-  according to the World Geodetic System.</item>
-<label><code>OSGB36</code></label>
-<item>the value supplied is to be interpreted as a British National Grid
-Reference.</item>
-<label><code>ED50</code></label>
-<item>the value supplied is to be interpreted as latitude followed by
-longitude according to European Datum co-ordinate system.</item>
-<label><code>other</code></label>
-<item>the value supplied uses some project-specific or
-internally-defined system.</item>
-</list></p>
+<p>Firstly,  the content of the <gi>geo</gi> element should be interpreted in
+some other way, that is, according to some different geodetic
+system. By default, a standard known as the World Geodetic System
+(WGS) is employed; the following element is provided to indicate
+(within the header of a document) a different notation, or one based
+on a different datum, has been employed:
+<specList><specDesc key="geoDecl" atts="datum"/></specList>
+ </p>
 <p>Secondly, the element <gi>geo</gi> may be redefined to contain
 markup from a different XML vocabulary which is specifically designed
 to represent this kind of information. This technique is used
@@ -1864,6 +1882,7 @@ occupation and residence.</p>
 &faith;
 &floruit;
 &geo;
+&geoDecl;
 &langKnowledge;
 &langKnown;
 &listOrg;
@@ -2130,9 +2149,9 @@ expression:
    <date when="1786-12-25" type="holiday">Christmas 1786</date>
 </date></egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">I reached the station <time when="14:15:00">
-  <date dur="PT30M0S">precisely half an hour</date>
+  <time dur="PT30M0S">precisely half an hour</time>
   <offset>after</offset>
-  <date when="13:45:00" type="occasion">the departure of the afternoon train to Boston</date>
+  <time when="13:45:00" type="occasion">the departure of the afternoon train to Boston</time>
 </time></egXML></p>
 <!-- AC: <att>exact</att> is not an attribute of <gi>date</gi> and it wasn't in the example anyway, so I have commented out the following: <p>In the following example, the <att>exact</att> attribute has been
 used to indicate a lack of precision in the distance stated:
