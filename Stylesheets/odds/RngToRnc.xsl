@@ -650,7 +650,9 @@
           </xsl:when>
           <xsl:otherwise>
             <xsl:call-template name="make-block">
-              <xsl:with-param name="head" select="$head"/>
+              <xsl:with-param name="head">
+		<xsl:copy-of select="$head"/>
+	      </xsl:with-param>
               <xsl:with-param name="body">
                 <xsl:choose>
                   <xsl:when test="@name">
@@ -1388,6 +1390,14 @@
   </xsl:template>
   <xsl:template name="make-body-from-r-t-f">
     <xsl:param name="schema"/>
+<!--
+<xsl:comment>
+Schema:
+	    <xsl:apply-templates mode="verbatim"
+				 select="exsl:node-set($schema)/*"/>
+
+</xsl:comment>
+-->
     <xsl:for-each select="exsl:node-set ($schema)">
       <xsl:call-template name="make-body"/>
     </xsl:for-each>
