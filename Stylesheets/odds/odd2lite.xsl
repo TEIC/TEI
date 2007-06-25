@@ -323,7 +323,7 @@
       <xsl:text>: </xsl:text>
       <xsl:call-template name="generateMembers"/>
     </tei:p>
-    <xsl:call-template name="HTMLmakeTagsetInfo"/>
+    <xsl:call-template name="moduleInfo"/>
   </xsl:template>
   <xsl:template match="tei:classes" mode="weave">
     <xsl:if test="tei:memberOf">
@@ -383,7 +383,7 @@
       </tei:p>
     </xsl:if>
     <xsl:apply-templates mode="weave"/>
-    <xsl:call-template name="HTMLmakeTagsetInfo"/>
+    <xsl:call-template name="moduleInfo"/>
   </xsl:template>
   <xsl:template match="tei:elementSpec/tei:content" mode="weave">
     <tei:p>
@@ -513,7 +513,7 @@
 
   <xsl:template match="tei:macroSpec" mode="weavebody">
     <xsl:apply-templates mode="weave"/>
-    <xsl:call-template name="HTMLmakeTagsetInfo"/>
+    <xsl:call-template name="moduleInfo"/>
   </xsl:template>
   <xsl:template match="tei:macroSpec/tei:content" mode="weave">
     <tei:p>
@@ -700,7 +700,7 @@
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
-  <xsl:template name="HTMLmakeTagsetInfo">
+  <xsl:template name="moduleInfo">
     <tei:p>
       <tei:hi>
         <xsl:call-template name="i18n">
