@@ -8,14 +8,17 @@
     xmlns:tei="http://www.tei-c.org/ns/1.0" 
     xmlns:teix="http://www.tei-c.org/ns/Examples"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    exclude-result-prefixes="xlink xhtml dbk rng tei teix" 
->
-  <xsl:param name="startBold">&lt;span class="element"&gt;</xsl:param>
-  <xsl:param name="endBold">&lt;/span&gt;</xsl:param>
-  <xsl:param name="startItalic">&lt;span class="attribute"&gt;</xsl:param>
-  <xsl:param name="endItalic">&lt;/span&gt;</xsl:param>
-  <xsl:param name="startRed">&lt;span style="color:red"&gt;</xsl:param>
-  <xsl:param name="endRed">&lt;/span&gt;</xsl:param>
+    exclude-result-prefixes="xlink xhtml dbk rng tei teix" >
+
+  <xsl:param name="startComment">&lt;span class="comment"&gt;</xsl:param>
+  <xsl:param name="endComment">&lt;/span&gt;</xsl:param>
+  <xsl:param name="startElement">&lt;span class="element"&gt;</xsl:param>
+  <xsl:param name="endElement">&lt;/span&gt;</xsl:param>
+  <xsl:param name="startAttribute">&lt;span class="attribute"&gt;</xsl:param>
+  <xsl:param name="endAttribute">&lt;/span&gt;</xsl:param>
+  <xsl:param name="startNamespace">&lt;span class="namespace""&gt;</xsl:param>
+  <xsl:param name="endNameSpace">&lt;/span&gt;</xsl:param>
+
   <xsl:param name="spaceCharacter">&#xA0;</xsl:param>
   <xsl:param name="showNamespaceDecls">true</xsl:param>
   <xsl:key name="Namespaces" match="*[ancestor::teix:egXML]" use="namespace-uri()"/>
@@ -60,9 +63,11 @@
 
   <xsl:template match="comment()" mode="verbatim">
     <xsl:call-template name="lineBreak"/>
+    <xsl:value-of  disable-output-escaping="yes" select="$startComment"/>
     <xsl:text>&lt;!--</xsl:text>
     <xsl:value-of select="."/>
     <xsl:text>--&gt;</xsl:text>
+    <xsl:value-of  disable-output-escaping="yes" select="$endComment"/>
   </xsl:template>
 
   <xsl:template name="wraptext">
@@ -128,7 +133,7 @@
       </xsl:otherwise>
     </xsl:choose>
 
-    <xsl:value-of disable-output-escaping="yes" select="$startBold"/>
+    <xsl:value-of disable-output-escaping="yes" select="$startElement"/>
     <xsl:text>&lt;</xsl:text>
     <xsl:choose>
 	  <xsl:when
@@ -170,10 +175,10 @@
         <xsl:value-of select="local-name(.)"/>
       </xsl:when>
       <xsl:when test="namespace-uri()='http://www.w3.org/1999/XSL/Transform'">
-        <xsl:value-of disable-output-escaping="yes" select="$startRed"/>
+        <xsl:value-of disable-output-escaping="yes" select="$startNamespace"/>
         <xsl:text>xsl:</xsl:text>
         <xsl:value-of select="local-name(.)"/>
-        <xsl:value-of disable-output-escaping="yes" select="$endRed"/>
+        <xsl:value-of disable-output-escaping="yes" select="$endNameSpace"/>
       </xsl:when>
       <xsl:when
 	  test="namespace-uri()='http://www.tei-c.org/ns/Examples'">
@@ -246,10 +251,10 @@
 
     <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/1999/XSL/Transform']">
           <xsl:call-template name="lineBreak"/>
-            <xsl:value-of disable-output-escaping="yes" select="$startRed"/>
+            <xsl:value-of disable-output-escaping="yes" select="$startNamespace"/>
 	  <xsl:text>   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" </xsl:text>
             <xsl:value-of disable-output-escaping="yes"
-			  select="$endRed"/>
+			  select="$endNameSpace"/>
           <xsl:call-template name="lineBreak"/>
     </xsl:if>
 -->
@@ -258,7 +263,7 @@
     <xsl:choose>
       <xsl:when test="child::node()">
         <xsl:text>&gt;</xsl:text>
-        <xsl:value-of disable-output-escaping="yes" select="$endBold"/>
+        <xsl:value-of disable-output-escaping="yes" select="$endElement"/>
         <xsl:apply-templates mode="verbatim"/>
         <xsl:choose>
           <xsl:when test="child::node()[last()]/self::text()[normalize-space(.)='']">
@@ -280,7 +285,7 @@
             <xsl:call-template name="makeIndent"/>
           </xsl:when>
         </xsl:choose>
-        <xsl:value-of disable-output-escaping="yes" select="$startBold"/>
+        <xsl:value-of disable-output-escaping="yes" select="$startElement"/>
         <xsl:text>&lt;/</xsl:text>
         <xsl:choose>
 	  <xsl:when
@@ -323,10 +328,10 @@
             <xsl:value-of select="local-name(.)"/>
           </xsl:when>
           <xsl:when test="namespace-uri()='http://www.w3.org/1999/XSL/Transform'">
-            <xsl:value-of disable-output-escaping="yes" select="$startRed"/>
+            <xsl:value-of disable-output-escaping="yes" select="$startNamespace"/>
             <xsl:text>xsl:</xsl:text>
             <xsl:value-of select="local-name(.)"/>
-            <xsl:value-of disable-output-escaping="yes" select="$endRed"/>
+            <xsl:value-of disable-output-escaping="yes" select="$endNameSpace"/>
           </xsl:when>
           <xsl:when
 	      test="namespace-uri()='http://www.w3.org/2005/Atom'">
@@ -343,11 +348,11 @@
           </xsl:otherwise>
         </xsl:choose>
         <xsl:text>&gt;</xsl:text>
-        <xsl:value-of disable-output-escaping="yes" select="$endBold"/>
+        <xsl:value-of disable-output-escaping="yes" select="$endElement"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:text>/&gt;</xsl:text>
-        <xsl:value-of disable-output-escaping="yes" select="$endBold"/>
+        <xsl:value-of disable-output-escaping="yes" select="$endElement"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -373,7 +378,7 @@
     <xsl:call-template name="makeIndent"/>
   </xsl:if>
   <xsl:text>&#xA0;</xsl:text>
-  <xsl:value-of disable-output-escaping="yes" select="$startItalic"/>
+  <xsl:value-of disable-output-escaping="yes" select="$startAttribute"/>
   <xsl:choose>
     <xsl:when test="namespace-uri()='http://www.w3.org/2005/11/its'">
       <xsl:text>its:</xsl:text>
@@ -397,7 +402,7 @@
 -->
   </xsl:choose>
   <xsl:value-of select="local-name(.)"/>
-  <xsl:value-of disable-output-escaping="yes" select="$endItalic"/>
+  <xsl:value-of disable-output-escaping="yes" select="$endAttribute"/>
   <xsl:text>="</xsl:text>
      <xsl:apply-templates select="." mode="attributetext"/>
   <xsl:text>"</xsl:text>

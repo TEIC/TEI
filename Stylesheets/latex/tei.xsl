@@ -16,12 +16,14 @@
   <xsl:include href="textstructure.xsl"/>
   <xsl:include href="verse.xsl"/>
 
-  <xsl:param name="startRed">\color{red}</xsl:param>
-  <xsl:param name="endRed"/>
-  <xsl:param name="startBold">\textbf{</xsl:param>
-  <xsl:param name="startItalic">\textit{</xsl:param>
-  <xsl:param name="endBold">}</xsl:param>
-  <xsl:param name="endItalic">}</xsl:param>
+  <xsl:param name="startNamespace">\color{red}</xsl:param>
+  <xsl:param name="startElement">\textbf{</xsl:param>
+  <xsl:param name="startAttribute">\textit{</xsl:param>
+  <xsl:param name="startComment">\textsf{</xsl:param>
+  <xsl:param name="endElement">}</xsl:param>
+  <xsl:param name="endComment">}</xsl:param>
+  <xsl:param name="endAttribute">}</xsl:param>
+  <xsl:param name="endNamespace"/>
   <xsl:param name="spaceCharacter">\hspace*{1em}</xsl:param>
   <xd:doc type="stylesheet">
     <xd:short>

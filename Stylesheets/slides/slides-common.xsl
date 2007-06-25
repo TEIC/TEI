@@ -73,31 +73,31 @@
       </xsl:otherwise>
     </xsl:choose>
     <xsl:text>&lt;</xsl:text>
-    <xsl:value-of disable-output-escaping="yes" select="$startBold"/>
+    <xsl:value-of disable-output-escaping="yes" select="$startElement"/>
     <xsl:choose>
       <xsl:when test="namespace-uri()='http://relaxng.org/ns/structure/1.0'">
         <xsl:text>rng:</xsl:text>
         <xsl:value-of select="local-name(.)"/>
       </xsl:when>
       <xsl:when test="namespace-uri()='http://www.w3.org/1999/XSL/Transform'">
-        <xsl:value-of disable-output-escaping="yes" select="$startRed"/>
+        <xsl:value-of disable-output-escaping="yes" select="$startNamespace"/>
         <xsl:text>xsl:</xsl:text>
         <xsl:value-of select="local-name(.)"/>
-        <xsl:value-of disable-output-escaping="yes" select="$endRed"/>
+        <xsl:value-of disable-output-escaping="yes" select="$endNamespace"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="local-name(.)"/>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:value-of disable-output-escaping="yes" select="$endBold"/>
+    <xsl:value-of disable-output-escaping="yes" select="$endElement"/>
     <xsl:for-each select="@*">
       <xsl:text>&#xA0;</xsl:text>
-      <xsl:value-of disable-output-escaping="yes" select="$startItalic"/>
+      <xsl:value-of disable-output-escaping="yes" select="$startAttribute"/>
       <xsl:if test="namespace-uri()='http://relaxng.org/ns/structure/1.0'">
         <xsl:text>xml:</xsl:text>
       </xsl:if>
       <xsl:value-of select="local-name(.)"/>
-      <xsl:value-of disable-output-escaping="yes" select="$endItalic"/>
+      <xsl:value-of disable-output-escaping="yes" select="$endAttribute"/>
       <xsl:text>="</xsl:text>
       <xsl:value-of select="."/>
       <xsl:text>"</xsl:text>
@@ -127,23 +127,23 @@
           </xsl:when>
         </xsl:choose>
         <xsl:text>&lt;/</xsl:text>
-        <xsl:value-of disable-output-escaping="yes" select="$startBold"/>
+        <xsl:value-of disable-output-escaping="yes" select="$startElement"/>
         <xsl:choose>
           <xsl:when test="namespace-uri()='http://relaxng.org/ns/structure/1.0'">
             <xsl:text>rng:</xsl:text>
             <xsl:value-of select="local-name(.)"/>
           </xsl:when>
           <xsl:when test="namespace-uri()='http://www.w3.org/1999/XSL/Transform'">
-            <xsl:value-of disable-output-escaping="yes" select="$startRed"/>
+            <xsl:value-of disable-output-escaping="yes" select="$startNamespace"/>
             <xsl:text>xsl:</xsl:text>
             <xsl:value-of select="local-name(.)"/>
-            <xsl:value-of disable-output-escaping="yes" select="$endRed"/>
+            <xsl:value-of disable-output-escaping="yes" select="$endNamesapce"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:value-of select="local-name(.)"/>
           </xsl:otherwise>
         </xsl:choose>
-        <xsl:value-of disable-output-escaping="yes" select="$endBold"/>
+        <xsl:value-of disable-output-escaping="yes" select="$endElement"/>
         <xsl:text>&gt;</xsl:text>
       </xsl:when>
       <xsl:otherwise>

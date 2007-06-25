@@ -33,12 +33,14 @@
     <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2005, TEI Consortium</xd:copyright>
   </xd:doc>
-  <xsl:param name="startRed"/>
-  <xsl:param name="endRed"/>
-  <xsl:param name="startBold"/>
-  <xsl:param name="startItalic"/>
-  <xsl:param name="endBold"/>
-  <xsl:param name="endItalic"/>
+  <xsl:param name="startAttribute"/>
+  <xsl:param name="endAttribute"/>
+  <xsl:param name="startComment"/>
+  <xsl:param name="endComment"/>
+  <xsl:param name="startElement"/>
+  <xsl:param name="endElement"/>
+  <xsl:param name="startNamespace"/>
+  <xsl:param name="endNamespace"/>
   <xsl:param name="spaceCharacter"> </xsl:param>
   <xsl:template name="lineBreak">
     <xsl:param name="id"/>
