@@ -554,11 +554,10 @@ public function pass3() {
       $res = false;
       $this->sanityCheckAddWarning($c_element, " is looping on itself", "", "");
     }
-		}
 	}
 	$this->updateProgressBar(100);
 	return $res;
-} 
+}
 
 }
 
