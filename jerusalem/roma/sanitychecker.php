@@ -543,19 +543,9 @@ public function pass2() {
 public function pass3() {
 	$res = true;
 	$this->DOM->getXPath($xpath);
-	foreach($this->COMPUTING as $c_element => $c_valeur) {
-	  $existe = false;
-		foreach($this->RESULTS as $r_element => $r_valeur) {
-      if($r_element == $c_element) {
-        $existe = true;
-      }    
-    }
-    if(!$existe) {
-      $res = false;
-      $this->sanityCheckAddWarning($c_element, " is looping on itself", "", "");
-    }
-	}
-	$this->updateProgressBar(100);
+  print_r($this->COMPUTING);
+  print_r($this->RESULTS);
+ 	$this->updateProgressBar(100);
 	return $res;
 }
 
