@@ -306,7 +306,7 @@ $this->getParentItem($element);
 			$this->computingStop($ident);
 			if($broken) {
 				if(!$this->computingProgress($ident) && $ident != $this->getElementName($faulty)) $this->sanityCheckAddError($ident, " has NO VALID CONTENT because ".$this->getElementName($faulty)." neither and is used in ", $this->getElementName($parent), "");
-				//$this->RESULTS[$ident] = false;
+				$this->RESULTS[$ident] = false;
 				return false;
 			}
 			break;
@@ -331,12 +331,12 @@ $this->getParentItem($element);
 			$this->computingStop($ident);
 			if($count == 0) {
 				if(!$this->computingProgress($this->getElementName($element))) $this->sanityCheckAddWarning($ident, " is EMPTY  and is used in ", "", $this->getParentItem($parent)->getAttribute("ident"));
-				//$this->RESULTS[$ident] = false;
+				$this->RESULTS[$ident] = false;
 				return false;
 			}
 			if(($sequence == "sequence" || $sequence == "sequenceRepeatable") && $sequence_broken) {
 				if(!$this->computingProgress($this->getElementName($element))) $this->sanityCheckAddWarning("$ident sequence is broken");
-				//$this->RESULTS[$ident] = false;
+				$this->RESULTS[$ident] = false;
 				return false;
 			}
 			break;
@@ -544,9 +544,9 @@ public function pass3() {
 	$res = true;
 	$this->DOM->getXPath($xpath);
 	echo '<table><tr><td><pre>';
-  print_r(array_sort($this->COMPUTING));
+  print_r(arsort($this->COMPUTING));
   echo '</pre></td><td><pre>';
-  print_r(array_sort($this->RESULTS));
+  print_r(arsort($this->RESULTS));
   echo '</pre></td></tr></table>';
  	$this->updateProgressBar(100);
 	return $res;
