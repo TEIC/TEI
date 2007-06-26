@@ -51,7 +51,8 @@
   <xsl:key match="tei:*" name="LOCALIDENTS" use="@ident"/>
   <xsl:key match="tei:macroSpec" name="MACROS" use="@ident"/>
   <xsl:key match="tei:elementSpec" name="ELEMENTS" use="@ident"/>
-  <xsl:key match="tei:classSpec" name="CLASSES" use="@ident"/>
+  <xsl:key match="tei:classSpec" name="CLASSES" use="@ident"/> 
+  <xsl:key match="rng:ref" name="CLASSREFS" use="@name"/>
   <xsl:key match="tei:elementSpec/tei:content//rng:ref" name="REFS" use="@name"/>
   <xsl:key match="tei:macroSpec/tei:content//rng:ref" name="MACROREFS"
 	   use="@name"/>
@@ -611,7 +612,7 @@ select="$makeDecls"/></xsl:message>
   <xsl:param name="class"/>
   <xsl:choose>
     <xsl:when test="not(ancestor::tei:schemaSpec)">x</xsl:when>
-    <xsl:when test="key('REFS',concat($class,$pattern))">x</xsl:when>
+    <xsl:when test="key('CLASSREFS',concat($class,$pattern))">x</xsl:when>
     <xsl:when test="not($pattern='')"></xsl:when>
     <xsl:when test="tei:classes/tei:memberOf">
       <xsl:for-each select="tei:classes/tei:memberOf">
