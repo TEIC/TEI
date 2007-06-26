@@ -659,12 +659,10 @@
   <xsl:template match="tei:exemplum" mode="doc">
     <xsl:choose>
       <xsl:when test="parent::tei:attDef">
-	<span class="label">
 	  <xsl:call-template name="i18n">
 	    <xsl:with-param name="word">Example</xsl:with-param>
 	  </xsl:call-template>
-	  <xsl:text>: </xsl:text>
-	</span>
+	  <xsl:text> </xsl:text>
 	<xsl:apply-templates/>
       </xsl:when>
       <xsl:otherwise>
