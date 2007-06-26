@@ -45,14 +45,12 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <tr>
-      <td class="attDef">
-        <xsl:value-of select="$name"/>
-      </td>
-      <td colspan="2">
+    <dt>
+      <xsl:value-of select="$name"/>
+    </dt>
+    <dd>
 	<xsl:call-template name="makeDescription"/>
-      </td>
-    </tr>
+    </dd>
     <xsl:apply-templates select="valList"/>
   </xsl:template>
   <xd:doc>
@@ -70,23 +68,22 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <tr>
-      <td class="attDef">
+    <dt>
+
         <xsl:value-of select="$name"/>
-      </td>
-      <td colspan="2">
+    </dt>
+    <dd>
 	<xsl:call-template name="makeDescription"/>
-      </td>
-    </tr>
-    <tr>
-      <td/>
-      <td>
-        <span class="label">
-          <xsl:call-template name="i18n">
-            <xsl:with-param name="word">Status</xsl:with-param>
-          </xsl:call-template>
-          <xsl:text>: </xsl:text>
-        </span>
+	<dl>
+	  <dt>
+	    <span class="label">
+	      <xsl:call-template name="i18n">
+		<xsl:with-param name="word">Status</xsl:with-param>
+	      </xsl:call-template>
+	      <xsl:text>: </xsl:text>
+	    </span>
+	  </dt>
+	  <dd>
         <xsl:choose>
           <xsl:when test="@usage='mwa'">
             <xsl:call-template name="i18n">
@@ -123,24 +120,26 @@
             </xsl:call-template>
 	  </xsl:otherwise>
         </xsl:choose>
-      </td>
-    </tr>
+	  </dd>
+	</dl>
     <xsl:apply-templates mode="weave"/>
+    </dd>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:attDef/tei:datatype</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:attDef/tei:datatype" mode="weave" >
-    <tr>
-      <td/>
-      <td colspan="2" >
+    <dl>
+    <dt>
         <span class="label">
           <xsl:call-template name="i18n">
             <xsl:with-param name="word">Datatype</xsl:with-param>
           </xsl:call-template>
           <xsl:text>:</xsl:text>
         </span>
+    </dt>
+    <dd>
         <xsl:variable name="minOccurs">
           <xsl:choose>
             <xsl:when test="@minOccurs">
@@ -179,8 +178,8 @@
         <xsl:if test="$minOccurs != 1  or  $maxOccurs != 1">
           <xsl:text>separated by whitespace</xsl:text>
         </xsl:if>
-      </td>
-    </tr>
+    </dd>
+    </dl>
 
   </xsl:template>
 
@@ -190,12 +189,7 @@
   </xd:doc>
 
   <xsl:template match="tei:attDef/tei:remarks" mode="doc" >
-    <tr>
-      <td/>
-      <td>
-	<xsl:apply-templates/>
-      </td>
-    </tr>
+    <xsl:apply-templates/>
   </xsl:template>
   
   <xd:doc>
@@ -294,10 +288,10 @@
     </xsl:if>
     <xsl:if test="@type='model'">
     <tr>
-      <td   class="wovenodd-col1">
+      <td class="wovenodd-col1">
         <span class="label">Used by</span>
       </td>
-      <td colspan="2" class="wovenodd-col2">
+      <td  class="wovenodd-col2">
         <xsl:call-template name="generateParents"/>
       </td>
     </tr>
@@ -310,7 +304,7 @@
           </xsl:call-template>
         </span>
       </td>
-      <td colspan="2" class="wovenodd-col2">
+      <td class="wovenodd-col2">
         <xsl:call-template name="generateMembers"/>
       </td>
     </tr>
@@ -370,18 +364,18 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:defaultVal" mode="weave" >
-    <tr>
-      <td/>
-      <td colspan="2" >
+    <dl>
+      <dt>
         <span class="label">
           <xsl:call-template name="i18n">
             <xsl:with-param name="word">Default</xsl:with-param>
           </xsl:call-template>
         </span>
-        <xsl:text>: </xsl:text>
+      </dt>
+      <dd>
         <xsl:apply-templates/>
-      </td>
-    </tr>
+      </dd>
+    </dl>
   </xsl:template>
 
   <xd:doc>
@@ -448,7 +442,7 @@
       <td   class="wovenodd-col1">
         <span class="label">Parents</span>
       </td>
-      <td colspan="2" class="wovenodd-col2">
+      <td class="wovenodd-col2">
         <xsl:call-template name="generateParents"/>
       </td>
     </tr>
@@ -475,14 +469,14 @@
       </xsl:choose>
     </xsl:variable>
     <tr>
-      <td   class="wovenodd-col1">
+      <td class="wovenodd-col1">
         <span class="label">
           <xsl:call-template name="i18n">
             <xsl:with-param name="word">Declaration</xsl:with-param>
           </xsl:call-template>
         </span>
       </td>
-      <td colspan="2" class="wovenodd-col2">
+      <td class="wovenodd-col2">
         <xsl:call-template name="bitOut">
           <xsl:with-param name="grammar"/>
           <xsl:with-param name="content">
@@ -572,19 +566,19 @@
       </xsl:when>
       <xsl:when test="$atts=''"/>
       <xsl:when test="string-length($atts)&gt;0">
-        <table class="attList">
-          <xsl:variable name="HERE" select="."/>
-          <xsl:call-template name="splitAttTokens">
-            <xsl:with-param name="HERE" select="$HERE"/>
-            <xsl:with-param name="atts" select="$atts"/>
-          </xsl:call-template>
-        </table>
+	
+	<xsl:variable name="HERE" select="."/>
+	<xsl:call-template name="splitAttTokens">
+	  <xsl:with-param name="HERE" select="$HERE"/>
+	  <xsl:with-param name="atts" select="$atts"/>
+	</xsl:call-template>
+
       </xsl:when>
       <xsl:otherwise>
         <xsl:if test="tei:attList//tei:attDef">
-          <table class="attList">
-            <xsl:apply-templates mode="summary" select="tei:attList//tei:attDef"/>
-          </table>
+	<dl>
+	  <xsl:apply-templates mode="summary" select="tei:attList//tei:attDef"/>
+	</dl>
         </xsl:if>
         <xsl:call-template name="showAttClasses">
           <xsl:with-param name="minimal">true</xsl:with-param>
@@ -661,7 +655,7 @@
             </xsl:otherwise>
           </xsl:choose>
       </td>
-      <td colspan="2">
+      <td >
 	<xsl:call-template name="makeDescription"/>
       </td>
     </tr>
@@ -673,18 +667,13 @@
   <xsl:template match="tei:exemplum" mode="doc">
     <xsl:choose>
       <xsl:when test="parent::tei:attDef">
-	<tr>
-	  <td/>
-	  <td colspan="2" >
-	    <span class="label">
-	      <xsl:call-template name="i18n">
-		<xsl:with-param name="word">Example</xsl:with-param>
-	      </xsl:call-template>
-	      <xsl:text>: </xsl:text>
-	    </span>
-	    <xsl:apply-templates/>
-	  </td>
-	</tr>
+	<span class="label">
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Example</xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:text>: </xsl:text>
+	</span>
+	<xsl:apply-templates/>
       </xsl:when>
       <xsl:otherwise>
 	<tr>
@@ -695,7 +684,7 @@
           </xsl:call-template>
 	    </span>
 	  </td>
-	  <td colspan="2" class="wovenodd-col2">
+	  <td class="wovenodd-col2">
 	    <xsl:apply-templates/>
 	  </td>
 	</tr>
@@ -771,7 +760,7 @@
       <td   class="wovenodd-col1">
         <span class="label">Used by</span>
       </td>
-      <td colspan="2" class="wovenodd-col2">
+      <td class="wovenodd-col2">
         <xsl:call-template name="generateParents"/>
       </td>
     </tr>
@@ -793,7 +782,7 @@
           </xsl:call-template>
         </span>
       </td>
-      <td colspan="2" class="wovenodd-col2">
+      <td class="wovenodd-col2">
         <xsl:call-template name="bitOut">
           <xsl:with-param name="grammar">true</xsl:with-param>
           <xsl:with-param name="content">
@@ -898,14 +887,14 @@
   <xsl:template match="tei:remarks" mode="doc">
     <xsl:if test="string-length(.)&gt;0">
       <tr>
-	<td >
+	<td class="wovenodd-col1">
 	  <span class="label">
 	    <xsl:call-template name="i18n">
 	      <xsl:with-param name="word">Note</xsl:with-param>
           </xsl:call-template>
 	  </span>
 	</td>
-	<td colspan="2" class="wovenodd-col2">
+	<td class="wovenodd-col2">
 	  <xsl:comment> </xsl:comment>
 	  <xsl:apply-templates/>
 	</td>
@@ -1032,18 +1021,19 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:valDesc" mode="weave">
-    <tr>
-      <td/>
-      <td>
+    <dl>
+      <dt>
         <span class="label">
           <xsl:call-template name="i18n">
             <xsl:with-param name="word">Values</xsl:with-param>
           </xsl:call-template>
           <xsl:text>: </xsl:text>
         </span>
+      </dt>
+      <dd>
         <xsl:apply-templates/>
-      </td>
-    </tr>
+      </dd>
+    </dl>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:val</xd:short>
@@ -1091,7 +1081,7 @@
         </xsl:call-template>:</xsl:when>
       <xsl:otherwise>Values are:</xsl:otherwise>
     </xsl:choose>
-    <table class="valList">
+    <dl>
       <xsl:for-each select="tei:valItem">
         <xsl:variable name="name">
           <xsl:choose>
@@ -1103,18 +1093,14 @@
             </xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
-        <tr>
-          <td >
-            <b>
-              <xsl:value-of select="$name"/>
-            </b>
-          </td>
-          <td >
-	    <xsl:call-template name="makeDescription"/>
-          </td>
-        </tr>
+	<dt>
+	  <xsl:value-of select="$name"/>
+	</dt>
+	<dd>
+	  <xsl:call-template name="makeDescription"/>
+	</dd>
       </xsl:for-each>
-    </table>
+    </dl>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:valList</xd:short>
@@ -1166,7 +1152,7 @@
           </xsl:call-template>
         </span>
       </td>
-      <td colspan="2" class="wovenodd-col2">
+      <td class="wovenodd-col2">
         <xsl:call-template name="makeTagsetInfo"/>
       </td>
     </tr>
@@ -1238,26 +1224,19 @@
   </xd:doc>
   <xsl:template name="displayAttList">
     <xsl:param name="mode"/>
-    <table class="attList">
-      <tr>
-        <td>
-          <xsl:call-template name="showAttClasses"/>
-
-          <xsl:if test=".//tei:attDef">
-            <table>
-              <xsl:choose>
-                <xsl:when test="$mode='all'">
-                  <xsl:apply-templates/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:apply-templates mode="summary"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </table>
-	  </xsl:if>
-        </td>
-      </tr>
-    </table>
+      <xsl:call-template name="showAttClasses"/>      
+      <xsl:if test=".//tei:attDef">
+	<dl>
+	<xsl:choose>
+	  <xsl:when test="$mode='all'">
+	    <xsl:apply-templates/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:apply-templates mode="summary"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+	</dl>
+      </xsl:if>
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
