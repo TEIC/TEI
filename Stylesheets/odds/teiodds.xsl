@@ -1839,6 +1839,7 @@ select="$makeDecls"/></xsl:message>
 
 
   <xsl:template name="generateParents">
+  <!--
     <xsl:variable name="p">
       <p>
 	<xsl:call-template name="generateParentsByElement"/>
@@ -1857,43 +1858,68 @@ select="$makeDecls"/></xsl:message>
 	</xsl:if>
       </xsl:for-each>
     </span>
-
+   -->
+  <span class="parent" xmlns="http://www.w3.org/1999/xhtml">
+    <xsl:call-template name="generateParentsByElement"/>
+    <xsl:call-template name="generateParentsByMacro"/>
+    <xsl:call-template name="generateParentsByClass"/>
+  </span>
   </xsl:template>
 
   <xsl:template name="generateParentsByElement">
     <xsl:variable name="this" select="@ident"/>
     <xsl:for-each
 	select="key('REFS',$this)/ancestor::tei:elementSpec">
-      <xsl:call-template name="linkTogether">
-	<xsl:with-param name="name" select="@ident"/>
-      </xsl:call-template>
+      <span class="elementname">
+	<xsl:call-template name="linkTogether">
+	  <xsl:with-param name="name" select="@ident"/>
+	</xsl:call-template>
+      </span>
+      <xsl:text> </xsl:text>
     </xsl:for-each>
   </xsl:template>
 
   <xsl:template name="generateParentsByMacro">
     <xsl:variable name="this" select="@ident"/>
-    <xsl:for-each
-	select="key('MACROREFS',$this)/ancestor::tei:macroSpec">
+    <xsl:if test="key('MACROREFS',$this)">
+      <xsl:for-each
+	  select="key('MACROREFS',$this)/ancestor::tei:macroSpec">
+      <xsl:text> |  </xsl:text>
+	<xsl:call-template name="linkTogether">
+	  <xsl:with-param name="name" select="@ident"/>
+	</xsl:call-template>
+	<xsl:text> </xsl:text>
+      </xsl:for-each>
+    </xsl:if>
+<!--
       <xsl:for-each select="key('REFS',@ident)/ancestor::tei:elementSpec">
 	<xsl:call-template name="linkTogether">
 	  <xsl:with-param name="name" select="@ident"/>
 	</xsl:call-template>
       </xsl:for-each>
       <xsl:call-template name="generateParentsByMacro"/>
-    </xsl:for-each>
+-->
   </xsl:template>
 
   <xsl:template name="generateParentsByClass">
     <xsl:variable name="this" select="@ident"/>
     <xsl:for-each select="tei:classes/tei:memberOf">
       <xsl:for-each select="key('CLASSES',@key)">
-	<xsl:for-each select="key('REFS',@ident)/ancestor::tei:elementSpec">
-	  <xsl:call-template name="linkTogether">
-	    <xsl:with-param name="name" select="@ident"/>
-	  </xsl:call-template>
-	</xsl:for-each>
-	<xsl:call-template name="generateParentsByClass"/>
-	<xsl:call-template name="generateParentsByMacro"/>
+	<xsl:if test="@type='model'">
+	  <xsl:text> | </xsl:text>
+	    <xsl:call-template name="linkTogether">
+	      <xsl:with-param name="name" select="@ident"/>
+	    </xsl:call-template>
+	</xsl:if>
+	<!--
+	  <xsl:for-each select="key('REFS',@ident)/ancestor::tei:elementSpec">
+	    <xsl:call-template name="linkTogether">
+	      <xsl:with-param name="name" select="@ident"/>
+	    </xsl:call-template>
+	  </xsl:for-each>
+	    <xsl:call-template name="generateParentsByClass"/>
+	    <xsl:call-template name="generateParentsByMacro"/>
+	-->
       </xsl:for-each>
     </xsl:for-each>
   </xsl:template>
