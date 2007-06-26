@@ -8,11 +8,13 @@ $Author$
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="CIT" usage="opt" ident="cit">
   <equiv/>
   <gloss/>
-  <desc>A quotation from some other document, together with a
-  bibliographic reference to its source.</desc>
-  <desc version="2007-05-04" xml:lang="es">Una cita de algún otro documento junto a la referencia bibliográfica a la fuente.</desc>
-  <desc version="2006-06-05" xml:lang="zh-tw">從其他文件中引用的內容，並包含引用來源的書目參照資料。</desc>
-  <desc version="2006-10-28" xml:lang="ja">多文書からの引用．元資料への書誌参照情報も含む．</desc>
+  <desc>A quotation from some other document, together with a bibliographic reference to its source.
+    In a dictionary it may contain an example text with at least one occurrence of the word form,
+    used in the sense being described, or a translation of the headword or an example. </desc>
+  <desc version="2007-05-04" xml:lang="es">[To be revised] Una cita de algún otro documento junto a la referencia
+    bibliográfica a la fuente.</desc>
+  <desc version="2006-06-05" xml:lang="zh-tw">[To be revised] 從其他文件中引用的內容，並包含引用來源的書目參照資料。</desc>
+  <desc version="2006-10-28" xml:lang="ja">[To be revised] 多文書からの引用．元資料への書誌参照情報も含む．</desc>
   <classes>
     <memberOf key="model.qLike"/>
   </classes>
@@ -26,19 +28,44 @@ $Author$
       </rng:choice>
     </rng:oneOrMore>
   </content>
+  <attList>
+    <attDef ident="type" usage="opt">
+      <equiv/>
+      <desc>further indicates the contextual role of the quotation. Possible values may be 'translation', 'example', etc.</desc>
+      <datatype/>
+      <valDesc/>
+    </attDef>
+  </attList>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <cit>
-        <quote>and the breath of the whale is frequently attended with such
-  an insupportable smell, as to bring on disorder of the
-  brain.</quote>
+        <quote>and the breath of the whale is frequently attended with such an insupportable smell,
+          as to bring on disorder of the brain.</quote>
         <bibl>Ulloa's South America</bibl>
       </cit>
     </egXML>
   </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <entry>
+        <form>
+          <orth>horrifier</orth>
+        </form>
+        <cit type="translation" xml:lang='en'>
+          <q>to horrify</q>
+        </cit>
+        <cit type="example">
+          <q>elle était horrifiée par la dépense</q>
+          <cit type="translation" xml:lang='en'>
+            <q>she was horrified at the expense.</q>
+          </cit>
+        </cit>
+      </entry>
+    </egXML>
+  </exemplum>
   <remarks>
-    <p rend="dataDesc">Must contain a single quote and a single
-    bibliographic reference in either order</p>
+    <p rend="dataDesc">Must contain a single quote and a single bibliographic reference in either
+      order</p>
   </remarks>
   <listRef>
     <ptr target="#COHQQ"/>
