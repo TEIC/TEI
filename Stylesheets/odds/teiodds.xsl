@@ -1787,8 +1787,21 @@ select="$makeDecls"/></xsl:message>
 	  <xsl:for-each select="key('CLASSMEMBERS',$this)">
 	    <xsl:sort select="@ident"/>
 	    <xsl:text> </xsl:text>
+	    <xsl:variable name="cl">
+	      <xsl:choose>
+		<xsl:when test="self::tei:elementSpec">
+		  <xsl:text>link_odd_element</xsl:text>
+		</xsl:when>
+		<xsl:when test="self::tei:classSpec">
+		  <xsl:text>link_odd_class</xsl:text>
+		</xsl:when>
+	      </xsl:choose>
+	    </xsl:variable>
 	    <xsl:call-template name="linkTogether">
 	      <xsl:with-param name="name" select="@ident"/>
+	      <xsl:with-param     name="class">
+		<xsl:value-of select="$cl"/>
+	      </xsl:with-param>
 	    </xsl:call-template>
 	    <xsl:call-template name="generateMembers">
 	      <xsl:with-param name="depth">
@@ -1870,11 +1883,10 @@ select="$makeDecls"/></xsl:message>
     <xsl:variable name="this" select="@ident"/>
     <xsl:for-each
 	select="key('REFS',$this)/ancestor::tei:elementSpec">
-      <span  xmlns="http://www.w3.org/1999/xhtml" class="elementLink">
 	<xsl:call-template name="linkTogether">
 	  <xsl:with-param name="name" select="@ident"/>
+	  <xsl:with-param name="class">link_odd_element</xsl:with-param>
 	</xsl:call-template>
-      </span>
       <xsl:text> </xsl:text>
     </xsl:for-each>
   </xsl:template>
@@ -1884,9 +1896,10 @@ select="$makeDecls"/></xsl:message>
     <xsl:if test="key('MACROREFS',$this)">
       <xsl:for-each
 	  select="key('MACROREFS',$this)/ancestor::tei:macroSpec">
-      <xsl:text> |  </xsl:text>
+      <xsl:text>  </xsl:text>
 	<xsl:call-template name="linkTogether">
 	  <xsl:with-param name="name" select="@ident"/>
+	  <xsl:with-param name="class">link_odd_macro</xsl:with-param>
 	</xsl:call-template>
 	<xsl:text> </xsl:text>
       </xsl:for-each>
@@ -1906,9 +1919,10 @@ select="$makeDecls"/></xsl:message>
     <xsl:for-each select="tei:classes/tei:memberOf">
       <xsl:for-each select="key('CLASSES',@key)">
 	<xsl:if test="@type='model'">
-	  <xsl:text> | </xsl:text>
+	  <xsl:text> </xsl:text>
 	    <xsl:call-template name="linkTogether">
 	      <xsl:with-param name="name" select="@ident"/>
+	      <xsl:with-param name="class">link_odd_class</xsl:with-param>
 	    </xsl:call-template>
 	</xsl:if>
 	<!--
@@ -2022,6 +2036,7 @@ select="$makeDecls"/></xsl:message>
   <xsl:template name="linkTogether">
     <xsl:param name="name"/>
     <xsl:param name="reftext"/>
+    <xsl:param name="class">link_odd</xsl:param>
     <xsl:variable name="documentationLanguage">
       <xsl:call-template name="generateDoc"/>
     </xsl:variable>
@@ -2075,12 +2090,12 @@ select="$makeDecls"/></xsl:message>
         </xsl:choose>
       </xsl:when>
       <xsl:when test="$oddmode='html' and $splitLevel=-1">
-        <a class="link_odd" href="#{$partialname}" xmlns="http://www.w3.org/1999/xhtml">
+        <a class="{$class}" href="#{$partialname}" xmlns="http://www.w3.org/1999/xhtml">
           <xsl:value-of select="$link"/>
         </a>
       </xsl:when>
       <xsl:when test="$oddmode='html' and $STDOUT='true'">
-	<a class="link_odd" xmlns="http://www.w3.org/1999/xhtml">
+	<a class="{$class}" xmlns="http://www.w3.org/1999/xhtml">
 	  <xsl:attribute name="href">
 	    <xsl:for-each select="key('IDENTS',$partialname)">
 	    <xsl:call-template name="getSpecURL">
@@ -2099,7 +2114,7 @@ select="$makeDecls"/></xsl:message>
 
 
       <xsl:when test="$oddmode='html'">
-        <a class="link_odd" href="{concat('ref-',$partialname,'.html')}"
+        <a class="{$class}" href="{concat('ref-',$partialname,'.html')}"
           xmlns="http://www.w3.org/1999/xhtml">
           <xsl:value-of select="$link"/>
         </a>
@@ -2132,7 +2147,7 @@ select="$makeDecls"/></xsl:message>
       <xsl:call-template name="makeLink">
 	<xsl:with-param name="class">link_ptr</xsl:with-param>
 	<xsl:with-param name="name">
-	  <xsl:value-of select="@ident"/>
+	  <xsl:value-of select="@xml:id"/>
 	</xsl:with-param>
 	<xsl:with-param name="text">
 	  <xsl:value-of select="tei:head"/>
