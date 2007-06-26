@@ -74,7 +74,7 @@ html-web: check
 	        --stringparam lang $$i \
 	        --stringparam doclang $$i \
 	    Utilities/guidelines.xsl - ; \
-	cp guidelines.css TEI-glow.png Guidelines-web/$$i/html/ ; \
+	cp rightarrow.gif guidelines.css TEI-glow.png Guidelines-web/$$i/html/ ; \
 	cp -r ${SOURCETREE}/Images Guidelines-web/$$i/html/ ; \
 	(cd Guidelines-web/$$i/html; for i in *.html; do perl -i ../../../Utilities/cleanrnc.pl $$i;done); \
 	(cd Guidelines-web/$$i/html; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' guidelines.css); \
