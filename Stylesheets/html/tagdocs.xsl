@@ -420,13 +420,17 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <p><xsl:call-template name="makeDescription"/></p>
+    <p><xsl:call-template name="makeDescription"/>
     <xsl:if test="tei:listRef">
-      <p>
-	<xsl:apply-templates select="tei:listRef/tei:ptr" mode="weave"/>
-      </p>
+      <xsl:text> </xsl:text>
+      <xsl:for-each select="tei:listRef/tei:ptr">
+	<xsl:if test="following-sibling::tei:ptr">
+	  <xsl:text> </xsl:text>
+	</xsl:if>
+	<xsl:apply-templates select="." mode="weave"/>
+      </xsl:for-each>
     </xsl:if>
-
+    </p>
     <table border="1" class="wovenodd">
     <xsl:if test="not(tei:attList)">
       <tr>
@@ -753,12 +757,18 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <p><xsl:call-template name="makeDescription"/></p>
+
+    <p><xsl:call-template name="makeDescription"/>
     <xsl:if test="tei:listRef">
-      <p>
-	<xsl:apply-templates select="tei:listRef/tei:ptr" mode="weave"/>
-      </p>
+      <xsl:text> </xsl:text>
+      <xsl:for-each select="tei:listRef/tei:ptr">
+	<xsl:if test="following-sibling::tei:ptr">
+	  <xsl:text> </xsl:text>
+	</xsl:if>
+	<xsl:apply-templates select="." mode="weave"/>
+      </xsl:for-each>
     </xsl:if>
+    </p>
 
     <table border="1" class="wovenodd">
     <xsl:if test="@module">
