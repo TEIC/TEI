@@ -312,9 +312,9 @@
 	  </xsl:call-template>
 	</xsl:when>
 	<xsl:when test="starts-with(@target,'#')">
-            <xsl:text>«</xsl:text>
-	    <xsl:value-of select="@target"/>
-	    <xsl:text>»</xsl:text>
+	  <xsl:text>«</xsl:text>
+	  <xsl:value-of select="@target"/>
+	  <xsl:text>»</xsl:text>
 	</xsl:when>
 	<xsl:otherwise>
 	    <xsl:apply-imports/>
