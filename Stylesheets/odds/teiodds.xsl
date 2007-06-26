@@ -2146,14 +2146,10 @@ select="$makeDecls"/></xsl:message>
       <xsl:text> — </xsl:text>
         <xsl:call-template name="makeInternalLink">
           <xsl:with-param name="target" select="@xml:id"/>
-          <xsl:with-param name="ptr">ptr</xsl:with-param>
+          <xsl:with-param name="ptr">true</xsl:with-param>
           <xsl:with-param name="dest">
-            <xsl:call-template name="generateEndLink">
-              <xsl:with-param name="where">
-                <xsl:value-of select="@xml:id"/>
-              </xsl:with-param>
-            </xsl:call-template>
-          </xsl:with-param>
+            <xsl:value-of select="tei:head"/>
+	  </xsl:with-param>
         </xsl:call-template>
     </xsl:for-each>
     <xsl:if test="$verbose='true'">
