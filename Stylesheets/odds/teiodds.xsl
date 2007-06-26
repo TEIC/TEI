@@ -1870,7 +1870,7 @@ select="$makeDecls"/></xsl:message>
     <xsl:variable name="this" select="@ident"/>
     <xsl:for-each
 	select="key('REFS',$this)/ancestor::tei:elementSpec">
-      <span class="elementname">
+      <span  xmlns="http://www.w3.org/1999/xhtml" class="elementLink">
 	<xsl:call-template name="linkTogether">
 	  <xsl:with-param name="name" select="@ident"/>
 	</xsl:call-template>
