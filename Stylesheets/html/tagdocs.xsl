@@ -50,8 +50,8 @@
     </dt>
     <dd>
 	<xsl:call-template name="makeDescription"/>
+	<xsl:apply-templates select="valList"/>
     </dd>
-    <xsl:apply-templates select="valList"/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:attDef</xd:short>
@@ -74,14 +74,12 @@
     </dt>
     <dd>
 	<xsl:call-template name="makeDescription"/>
-	<dl>
+	<dl class="attdef">
 	  <dt>
-	    <span class="label">
-	      <xsl:call-template name="i18n">
-		<xsl:with-param name="word">Status</xsl:with-param>
-	      </xsl:call-template>
-	      <xsl:text>: </xsl:text>
-	    </span>
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">Status</xsl:with-param>
+	    </xsl:call-template>
+	    <xsl:text> </xsl:text>
 	  </dt>
 	  <dd>
         <xsl:choose>
@@ -121,8 +119,8 @@
 	  </xsl:otherwise>
         </xsl:choose>
 	  </dd>
+	  <xsl:apply-templates mode="weave"/>
 	</dl>
-    <xsl:apply-templates mode="weave"/>
     </dd>
   </xsl:template>
   <xd:doc>
@@ -130,14 +128,11 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:attDef/tei:datatype" mode="weave" >
-    <dl>
     <dt>
-        <span class="label">
-          <xsl:call-template name="i18n">
-            <xsl:with-param name="word">Datatype</xsl:with-param>
-          </xsl:call-template>
-          <xsl:text>:</xsl:text>
-        </span>
+      <xsl:call-template name="i18n">
+	<xsl:with-param name="word">Datatype</xsl:with-param>
+      </xsl:call-template>
+      <xsl:text> </xsl:text>
     </dt>
     <dd>
         <xsl:variable name="minOccurs">
@@ -179,7 +174,6 @@
           <xsl:text>separated by whitespace</xsl:text>
         </xsl:if>
     </dd>
-    </dl>
 
   </xsl:template>
 
@@ -364,18 +358,16 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:defaultVal" mode="weave" >
-    <dl>
+
       <dt>
-        <span class="label">
-          <xsl:call-template name="i18n">
+	<xsl:call-template name="i18n">
             <xsl:with-param name="word">Default</xsl:with-param>
-          </xsl:call-template>
-        </span>
+	</xsl:call-template>
       </dt>
       <dd>
         <xsl:apply-templates/>
       </dd>
-    </dl>
+
   </xsl:template>
 
   <xd:doc>
@@ -1021,19 +1013,17 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:valDesc" mode="weave">
-    <dl>
+
       <dt>
-        <span class="label">
           <xsl:call-template name="i18n">
             <xsl:with-param name="word">Values</xsl:with-param>
           </xsl:call-template>
-          <xsl:text>: </xsl:text>
-        </span>
+          <xsl:text> </xsl:text>
       </dt>
       <dd>
         <xsl:apply-templates/>
       </dd>
-    </dl>
+
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:val</xd:short>
@@ -1069,6 +1059,8 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:valList" mode="contents">
+
+      <dt>
     <xsl:choose>
       <xsl:when test="@type='semi'"><xsl:call-template name="i18n">
           <xsl:with-param name="word">Suggested values include</xsl:with-param>
@@ -1081,48 +1073,37 @@
         </xsl:call-template>:</xsl:when>
       <xsl:otherwise>Values are:</xsl:otherwise>
     </xsl:choose>
-    <dl>
-      <xsl:for-each select="tei:valItem">
-        <xsl:variable name="name">
-          <xsl:choose>
-            <xsl:when test="tei:altIdent">
-              <xsl:value-of select="tei:altIdent"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="@ident"/>
-            </xsl:otherwise>
+      </dt>
+      <dd>
+	<dl class="valList">
+	  <xsl:for-each select="tei:valItem">
+	    <xsl:variable name="name">
+	      <xsl:choose>
+		<xsl:when test="tei:altIdent">
+		  <xsl:value-of select="tei:altIdent"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of select="@ident"/>
+		</xsl:otherwise>
           </xsl:choose>
-        </xsl:variable>
-	<dt>
-	  <xsl:value-of select="$name"/>
-	</dt>
-	<dd>
-	  <xsl:call-template name="makeDescription"/>
-	</dd>
-      </xsl:for-each>
-    </dl>
+	    </xsl:variable>
+	    <dt>
+	      <xsl:value-of select="$name"/>
+	    </dt>
+	    <dd>
+	      <xsl:call-template name="makeDescription"/>
+	    </dd>
+	  </xsl:for-each>
+	</dl>
+      </dd>
+
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:valList</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:valList" mode="weave">
-    <xsl:choose>
-      <xsl:when
-        test="ancestor::tei:elementSpec or ancestor::tei:classSpec or ancestor::tei:macroSpec">
-        <tr>
-          <td>
-            <xsl:comment> </xsl:comment>
-          </td>
-          <td >
-            <xsl:apply-templates mode="contents" select="."/>
-          </td>
-        </tr>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:apply-templates mode="contents" select="."/>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:apply-templates mode="contents" select="."/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements teix:egXML</xd:short>
