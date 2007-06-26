@@ -33,7 +33,7 @@ class SanityChecker {
  *PARENTS      : tableau associant à chaque nom d'élément le "dernier parent connu"
  *SCEH         : sanity checker error handler 
  **/         
-private $COMPUTING = array();
+public $COMPUTING = array();
 public $RESULTS = array();
 private $DOM;
 private $FILE_TMP_NAME;
@@ -47,7 +47,7 @@ private $SCEH;
  Elle prend en paramètre l'arbre DOM du fichier de personnalisation ODD et le transforme en un arbre FLAT ODD
  **/
 public function __construct($dom_customization) {
-  $this->SCEH = new SanityCheckerErrorHandler($this);
+	$this->SCEH = new SanityCheckerErrorHandler($this);
 	$this->FILE_TMP_NAME = md5(time());
 	$fp = fopen(JERUSALEM_HTDOCS."tmp/".$this->FILE_TMP_NAME.".odd", "w");
 	fwrite($fp, $dom_customization->saveXML());
@@ -449,9 +449,10 @@ public function pass1() {
 		if(!$this->verifElem($tmp, $root_node, array())) $schema_broken = true;
 	}
 	if($schema_broken) {
-		$this->sanityCheckSchemaBroken();
+		$this->SCEH->sanityCheckSchemaBroken();
 		return true;
 	} else {
+		$this->SCEH->sanityCheckSchemaOk();
 		return false;
 	}
 }
@@ -465,7 +466,7 @@ public function pass2() {
 	foreach($this->ALL_ELEMENTS as $element) {
 		if(!isset($this->COMPUTING[$element->getAttribute("ident")])) {
 			$res = false;
-			$this->SCEH->addError('Warning', $ident, '', 'is not reacheable from root');
+			$this->SCEH->addError('Warning', $element->getAttribute("ident"), '', 'is not reacheable from root');
 		}
 	}
 	$this->SCEH->updateProgressBar(95);
@@ -474,20 +475,30 @@ public function pass2() {
 
 /**
  *Est-ce qu'il y a des cas où les éléments bouclent sur eux-mêmes
+ *Un élément boucle sur lui même si
+ * - il exist dans COMPUTING
+ * - il n'existe pas dans RESULTS
+ * - il n'existe pas dans la liste d'erreurs
  **/
 public function pass3() {
-	$res = true;
+/*	$res = true;
 	$this->DOM->getXPath($xpath);
-	echo '<table><tr><td><pre>';
-  arsort($this->COMPUTING);
-  print_r($this->COMPUTING);
-  echo '</pre></td><td><pre>';
-  arsort($this->RESULTS);
-  print_r($this->RESULTS);
-  echo '</pre></td></tr></table>';
- 	$this->SCEH->updateProgressBar(100);
- 	$this->SCEH->debug();
+	foreach($this->COMPUTING as $item => $valeur) {
+		if(!isset($this->RESULTS[Erro$item])) {
+			$existe = false;
+			foreach($this->SCEH->ERRORS as $error) {
+				if($error['element'] == $item) $existe = true;
+			}
+			if(!$existe) $this->SCEH->addError('Error', $item, '', 'is looping');
+		}
+	}
+*/
+	$this->SCEH->updateProgressBar(100);
 	return $res;
+}
+
+public function showErrors() {
+	$this->SCEH->showErrors_2();
 }
 
 }

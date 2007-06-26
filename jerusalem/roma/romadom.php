@@ -2427,13 +2427,7 @@ class romaDom extends domDocument
 		$checker->pass1();
 		$checker->pass2();
 		$checker->pass3();
-		/*$this->loadProgressBar();
-		$this->updateProgressBar( '30' );
-		$this->sanityCheckAddWarning("Foo");
-		sleep(1);$this->updateProgressBar( '50' );
-		$this->sanityCheckAddError("Bar");
-		sleep(1);$this->updateProgressBar( '70' );
-		$this->sanityCheckAddError("foo again");*/
+		$checker->showErrors();
 	}
 
   }
