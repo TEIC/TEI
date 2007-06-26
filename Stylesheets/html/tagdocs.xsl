@@ -268,11 +268,8 @@
 
     <p><xsl:call-template name="makeDescription"/>
     <xsl:if test="tei:listRef">
-      <xsl:text> </xsl:text>
       <xsl:for-each select="tei:listRef/tei:ptr">
-	<xsl:if test="following-sibling::tei:ptr">
-	  <xsl:text> </xsl:text>
-	</xsl:if>
+	<xsl:text> </xsl:text>
 	<xsl:apply-templates select="." mode="weave"/>
       </xsl:for-each>
     </xsl:if>
@@ -422,11 +419,8 @@
     </xsl:variable>
     <p><xsl:call-template name="makeDescription"/>
     <xsl:if test="tei:listRef">
-      <xsl:text> </xsl:text>
       <xsl:for-each select="tei:listRef/tei:ptr">
-	<xsl:if test="following-sibling::tei:ptr">
-	  <xsl:text> </xsl:text>
-	</xsl:if>
+	<xsl:text> </xsl:text>
 	<xsl:apply-templates select="." mode="weave"/>
       </xsl:for-each>
     </xsl:if>
@@ -760,11 +754,8 @@
 
     <p><xsl:call-template name="makeDescription"/>
     <xsl:if test="tei:listRef">
-      <xsl:text> </xsl:text>
       <xsl:for-each select="tei:listRef/tei:ptr">
-	<xsl:if test="following-sibling::tei:ptr">
-	  <xsl:text> </xsl:text>
-	</xsl:if>
+	<xsl:text> </xsl:text>
 	<xsl:apply-templates select="." mode="weave"/>
       </xsl:for-each>
     </xsl:if>
