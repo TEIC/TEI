@@ -77,7 +77,7 @@ class SanityCheckerErrorHandler {
   	$min = 10;
   	$max = 100;
   	$current = $this->PGB_CURRENT;
-  	if(is_object($this->sc) && is_object($this->sc->ALL_ELEMENTS)) {}
+  	if(is_object($this->sc) && is_object($this->sc->ALL_ELEMENTS)) {
   	 $nb_el = $this->$sc->ALL_ELEMENTS->length;
   	 $nb_class = $this->sc->ALL_CLASSES->length;
   	}
