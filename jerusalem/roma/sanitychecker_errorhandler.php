@@ -22,9 +22,9 @@ class SanityCheckerErrorHandler {
   /**
    *Le constructeur
    **/     
-  public function __construct($sc) {
+  public function __construct($a) {
   	$this->ERRORS = array();
-  	$this->sc = $sc;
+  	$this->sc = $a;
   	$this->loadProgressBar();
   }
   
@@ -77,10 +77,10 @@ class SanityCheckerErrorHandler {
   	$min = 10;
   	$max = 100;
   	$current = $this->PGB_CURRENT;
-  	if(isset($this->$sc->ALL_ELEMENTS)) $nb_el = $this->$sc->ALL_ELEMENTS->length;
-  	if(isset($this->$sc->ALL_CLASSES)) $nb_class = $this->sc->ALL_CLASSES->length;
+  	$nb_el = $this->$sc->ALL_ELEMENTS->length;
+  	$nb_class = $this->sc->ALL_CLASSES->length;
   	$verified = count($this->sc->RESULTS);
-  	$state = round(($verified/($nb_el+$nb_class))*($max-$min)) + $min;
+  	$state = @round(($verified/($nb_el+$nb_class))*($max-$min)) + $min;
   	$this->updateProgressBar($state);
   }
   
