@@ -134,7 +134,7 @@
   <xsl:template match="tei:attDef/tei:datatype" mode="weave" >
     <tr>
       <td/>
-      <td colspan="2" valign="top">
+      <td colspan="2" >
         <span class="label">
           <xsl:call-template name="i18n">
             <xsl:with-param name="word">Datatype</xsl:with-param>
@@ -213,7 +213,7 @@
   </xd:doc>
   <xsl:template match="tei:attList" mode="weave">
     <tr>
-      <td valign="top" class="wovenodd-col1">
+      <td  class="wovenodd-col1">
         <span class="label">
           <xsl:call-template name="i18n">
             <xsl:with-param name="word">Attributes</xsl:with-param>
@@ -277,14 +277,14 @@
     <table border="1" class="wovenodd">
     <xsl:if test="@generate">
       <tr>
-	<td>
+	<td   class="wovenodd-col1">
 	  <xsl:call-template name="i18n">
             <xsl:with-param name="word">
 	      <xsl:text>Classes defined</xsl:text>
 	    </xsl:with-param>
 	  </xsl:call-template>
 	</td>
-	<td>
+	<td   class="wovenodd-col2">
 	  <xsl:value-of select="@generate"/>
 	</td>
       </tr>
@@ -294,7 +294,7 @@
     </xsl:if>
     <xsl:if test="@type='model'">
     <tr>
-      <td valign="top"  class="wovenodd-col1">
+      <td   class="wovenodd-col1">
         <span class="label">Used by</span>
       </td>
       <td colspan="2" class="wovenodd-col2">
@@ -303,7 +303,7 @@
     </tr>
     </xsl:if>
     <tr>
-      <td valign="top"  class="wovenodd-col1">
+      <td   class="wovenodd-col1">
         <span class="label">
           <xsl:call-template name="i18n">
             <xsl:with-param name="word">Members</xsl:with-param>
@@ -326,7 +326,7 @@
 <!--
     <xsl:if test="tei:memberOf">
       <tr>
-        <td valign="top"  class="wovenodd-col1">
+        <td   class="wovenodd-col1">
           <span class="label">
             <xsl:call-template name="i18n">
               <xsl:with-param name="word">Class</xsl:with-param>
@@ -372,7 +372,7 @@
   <xsl:template match="tei:defaultVal" mode="weave" >
     <tr>
       <td/>
-      <td colspan="2" valign="top">
+      <td colspan="2" >
         <span class="label">
           <xsl:call-template name="i18n">
             <xsl:with-param name="word">Default</xsl:with-param>
@@ -428,7 +428,7 @@
     <table border="1" class="wovenodd">
     <xsl:if test="not(tei:attList)">
       <tr>
-        <td valign="top">
+        <td  class="wovenodd-col1">
           <span class="label">
             <xsl:call-template name="i18n">
               <xsl:with-param name="word">Attributes</xsl:with-param>
@@ -436,7 +436,7 @@
             <xsl:text>: </xsl:text>
           </span>
         </td>
-        <td>
+        <td class="wovenodd-col2">
           <xsl:call-template name="showAttClasses"/>
         </td>
       </tr>
@@ -445,7 +445,7 @@
       <xsl:call-template name="moduleInfo"/>
     </xsl:if>
     <tr>
-      <td valign="top"  class="wovenodd-col1">
+      <td   class="wovenodd-col1">
         <span class="label">Parents</span>
       </td>
       <td colspan="2" class="wovenodd-col2">
@@ -475,7 +475,7 @@
       </xsl:choose>
     </xsl:variable>
     <tr>
-      <td valign="top"  class="wovenodd-col1">
+      <td   class="wovenodd-col1">
         <span class="label">
           <xsl:call-template name="i18n">
             <xsl:with-param name="word">Declaration</xsl:with-param>
@@ -675,7 +675,7 @@
       <xsl:when test="parent::tei:attDef">
 	<tr>
 	  <td/>
-	  <td colspan="2" valign="top">
+	  <td colspan="2" >
 	    <span class="label">
 	      <xsl:call-template name="i18n">
 		<xsl:with-param name="word">Example</xsl:with-param>
@@ -688,7 +688,7 @@
       </xsl:when>
       <xsl:otherwise>
 	<tr>
-	  <td valign="top">
+	  <td  class="wovenodd-col1">
 	    <span class="label">
 	      <xsl:call-template name="i18n">
 		<xsl:with-param name="word">Example</xsl:with-param>
@@ -768,7 +768,7 @@
 
     <xsl:if test="@type='pe'">
     <tr>
-      <td valign="top"  class="wovenodd-col1">
+      <td   class="wovenodd-col1">
         <span class="label">Used by</span>
       </td>
       <td colspan="2" class="wovenodd-col2">
@@ -786,7 +786,7 @@
   </xd:doc>
   <xsl:template match="tei:macroSpec/tei:content" mode="weave">
     <tr>
-      <td valign="top">
+      <td  class="wovenodd-col1">
         <span class="label">
           <xsl:call-template name="i18n">
             <xsl:with-param name="word">Declaration</xsl:with-param>
@@ -898,7 +898,7 @@
   <xsl:template match="tei:remarks" mode="doc">
     <xsl:if test="string-length(.)&gt;0">
       <tr>
-	<td valign="top">
+	<td >
 	  <span class="label">
 	    <xsl:call-template name="i18n">
 	      <xsl:with-param name="word">Note</xsl:with-param>
@@ -1104,12 +1104,12 @@
           </xsl:choose>
         </xsl:variable>
         <tr>
-          <td valign="top">
+          <td >
             <b>
               <xsl:value-of select="$name"/>
             </b>
           </td>
-          <td valign="top">
+          <td >
 	    <xsl:call-template name="makeDescription"/>
           </td>
         </tr>
@@ -1128,7 +1128,7 @@
           <td>
             <xsl:comment> </xsl:comment>
           </td>
-          <td valign="top">
+          <td >
             <xsl:apply-templates mode="contents" select="."/>
           </td>
         </tr>
@@ -1159,7 +1159,7 @@
   </xd:doc>
   <xsl:template name="moduleInfo">
     <tr>
-      <td valign="top">
+      <td  class="wovenodd-col1">
         <span class="label">
           <xsl:call-template name="i18n">
             <xsl:with-param name="word">Module</xsl:with-param>
