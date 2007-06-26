@@ -319,6 +319,7 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:classes" mode="weave">
+<!--
     <xsl:if test="tei:memberOf">
       <tr>
         <td valign="top"  class="wovenodd-col1">
@@ -346,7 +347,6 @@
                 </xsl:for-each>
               </xsl:when>
 	      <xsl:when test="ancestor::tei:schemaSpec">
-		<!-- if the class aint here in a customization, forget it-->
 	      </xsl:when>
               <xsl:otherwise>
                 <xsl:call-template name="linkTogether">
@@ -359,6 +359,7 @@
         </td>
       </tr>
     </xsl:if>
+-->
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:defaultVal</xd:short>
