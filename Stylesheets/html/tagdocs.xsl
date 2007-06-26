@@ -177,7 +177,7 @@
           <xsl:with-param name="element">code</xsl:with-param>
         </xsl:call-template>
         <xsl:if test="$minOccurs != 1  or  $maxOccurs != 1">
-          <xsl:text>, separated by whitespace</xsl:text>
+          <xsl:text>separated by whitespace</xsl:text>
         </xsl:if>
       </td>
     </tr>
@@ -265,20 +265,26 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <tr>
-      <td class="classSpec">
-        <xsl:value-of select="$name"/>
-      </td>
-      <td colspan="2" class="wovenodd-col2">
-	<xsl:call-template name="makeDescription"/>
-      </td>
-    </tr>
+
+    <p><xsl:call-template name="makeDescription"/>
+    <xsl:if test="tei:listRef">
+      <xsl:text> </xsl:text>
+      <xsl:for-each select="tei:listRef/tei:ptr">
+	<xsl:if test="following-sibling::tei:ptr">
+	  <xsl:text> </xsl:text>
+	</xsl:if>
+	<xsl:apply-templates select="." mode="weave"/>
+      </xsl:for-each>
+    </xsl:if>
+    </p>
+    <table border="1" class="wovenodd">
     <xsl:if test="@generate">
       <tr>
 	<td>
 	  <xsl:call-template name="i18n">
-            <xsl:with-param name="word">Classes
-	    defined</xsl:with-param>
+            <xsl:with-param name="word">
+	      <xsl:text>Classes defined</xsl:text>
+	    </xsl:with-param>
 	  </xsl:call-template>
 	</td>
 	<td>
@@ -312,6 +318,7 @@
       </td>
     </tr>
     <xsl:apply-templates mode="weave"/>
+    </table>
   </xsl:template>
 
   <xd:doc>
@@ -413,14 +420,14 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <tr>
-      <td class="elementSpec">
-        <xsl:value-of select="$name"/>
-      </td>
-      <td colspan="2" class="wovenodd-col2">
-	<xsl:call-template name="makeDescription"/>
-      </td>
-    </tr>
+    <p><xsl:call-template name="makeDescription"/></p>
+    <xsl:if test="tei:listRef">
+      <p>
+	<xsl:apply-templates select="tei:listRef/tei:ptr" mode="weave"/>
+      </p>
+    </xsl:if>
+
+    <table border="1" class="wovenodd">
     <xsl:if test="not(tei:attList)">
       <tr>
         <td valign="top">
@@ -449,6 +456,9 @@
     </tr>
 
     <xsl:apply-templates mode="weave"/>
+
+    </table>
+
   </xsl:template>
 
   <xd:doc>
@@ -743,15 +753,14 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <tr>
-      <td class="macroSpec">
-        <xsl:value-of select="$name"/>
-      </td>
-      <td colspan="2" class="wovenodd-col2">
-	<xsl:call-template name="makeDescription"/>
-      </td>
-    </tr>
+    <p><xsl:call-template name="makeDescription"/></p>
+    <xsl:if test="tei:listRef">
+      <p>
+	<xsl:apply-templates select="tei:listRef/tei:ptr" mode="weave"/>
+      </p>
+    </xsl:if>
 
+    <table border="1" class="wovenodd">
     <xsl:if test="@module">
       <xsl:call-template name="moduleInfo"/>
     </xsl:if>
@@ -766,7 +775,9 @@
     </tr>
 
     <xsl:apply-templates mode="weave"/>
+    </table>
   </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements tei:macroSpec/tei:content</xd:short>
     <xd:detail> </xd:detail>
@@ -1359,9 +1370,7 @@
 	  </xsl:call-template>
           <xsl:value-of select="$name"/>
         </h2>
-        <table border="1" class="wovenodd">
-          <xsl:apply-templates mode="weavebody" select="."/>
-        </table>
+	<xsl:apply-templates mode="weavebody" select="."/>
       </xsl:when>
       <xsl:otherwise> [<a href="ref-{@ident}{$outputSuffix}">
           <xsl:value-of select="$name"/>
@@ -1432,9 +1441,7 @@
 		      <xsl:value-of select="@ident"/>
 		    </xsl:with-param>
 		  </xsl:call-template>
-                  <table border="1" class="wovenodd">
-                    <xsl:apply-templates mode="weavebody" select="."/>
-                  </table>
+		  <xsl:apply-templates mode="weavebody" select="."/>
                 </div>
 		<xsl:call-template name="refdocFooter"/>
               </body>

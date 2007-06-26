@@ -287,10 +287,7 @@
     <xd:short>Process elements tei:listRef</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:listRef" mode="weave">
-	  <xsl:apply-templates mode="weave"/>
-  </xsl:template>
-
+  <xsl:template match="tei:listRef" mode="weave"/>
 
   <xd:doc>
     <xd:short>Process elements tei:ptr</xd:short>
@@ -299,8 +296,6 @@
   <xsl:template match="tei:ptr" mode="weave">
     <xsl:choose>
       <xsl:when test="parent::tei:listRef">
-	<tr><td><xsl:comment>pointer</xsl:comment></td>
-	<td colspan="2" class="wovenodd-col2">
 	<xsl:choose>
 	<xsl:when test="starts-with(@target,'#') and key('IDS',substring-after(@target,'#'))">
 	  <xsl:call-template name="makeInternalLink">
@@ -325,8 +320,6 @@
 	    <xsl:apply-imports/>
 	</xsl:otherwise>
 	</xsl:choose>
-	</td>
-	</tr>
       </xsl:when>
       <xsl:otherwise>
         <xsl:apply-imports/>
