@@ -766,6 +766,7 @@
       <xsl:call-template name="moduleInfo"/>
     </xsl:if>
 
+    <xsl:if test="@type='pe'">
     <tr>
       <td valign="top"  class="wovenodd-col1">
         <span class="label">Used by</span>
@@ -774,7 +775,7 @@
         <xsl:call-template name="generateParents"/>
       </td>
     </tr>
-
+    </xsl:if>
     <xsl:apply-templates mode="weave"/>
     </table>
   </xsl:template>
