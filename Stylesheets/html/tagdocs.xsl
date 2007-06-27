@@ -1090,11 +1090,10 @@
 	    </xsl:variable>
 	    <tr>
 	    <td class="odd_label">
-
+	      <xsl:value-of select="$name"/>
 	      <xsl:if test="@ident=../../tei:defaultVal">
 		<xsl:text>*</xsl:text>
 	      </xsl:if>
-	      <xsl:value-of select="$name"/>
 	    </td>
 	    <td class="odd_value">
 	      <xsl:call-template name="makeDescription"/>
