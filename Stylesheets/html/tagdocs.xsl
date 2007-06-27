@@ -207,22 +207,7 @@
     <xd:short>Process elements tei:attList</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:attList" mode="weave">
-    <tr>
-      <td  class="wovenodd-col1">
-        <span class="label">
-          <xsl:call-template name="i18n">
-            <xsl:with-param name="word">Attributes</xsl:with-param>
-          </xsl:call-template>
-        </span>
-      </td>
-      <td class="wovenodd-col2">
-        <xsl:call-template name="displayAttList">
-          <xsl:with-param name="mode">all</xsl:with-param>
-        </xsl:call-template>
-      </td>
-    </tr>
-  </xsl:template>
+  <xsl:template match="tei:attList" mode="weave"/>
   <xd:doc>
     <xd:short>Process elements tei:classSpec</xd:short>
     <xd:detail> </xd:detail>
@@ -312,6 +297,31 @@
         <xsl:call-template name="generateMembers"/>
       </td>
     </tr>
+    <xsl:if test="@type='atts'">
+    <tr>
+      <td  class="wovenodd-col1">
+        <span class="label">
+          <xsl:call-template name="i18n">
+            <xsl:with-param name="word">Attributes</xsl:with-param>
+          </xsl:call-template>
+        </span>
+      </td>
+      <td class="wovenodd-col2">
+	<xsl:choose>
+	  <xsl:when test="not(tei:attList)">
+	    <xsl:call-template name="showAttClasses"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:for-each select="tei:attList">
+	      <xsl:call-template name="displayAttList">
+		<xsl:with-param name="mode">all</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:for-each>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </td>
+    </tr>
+    </xsl:if>
     <xsl:apply-templates mode="weave"/>
     </table>
   </xsl:template>
@@ -412,21 +422,6 @@
     </xsl:if>
     </p>
     <table border="1" class="wovenodd">
-    <xsl:if test="not(tei:attList)">
-      <tr>
-        <td  class="wovenodd-col1">
-          <span class="label">
-            <xsl:call-template name="i18n">
-              <xsl:with-param name="word">Attributes</xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>: </xsl:text>
-          </span>
-        </td>
-        <td class="wovenodd-col2">
-          <xsl:call-template name="showAttClasses"/>
-        </td>
-      </tr>
-    </xsl:if>
     <xsl:if test="@module">
       <xsl:call-template name="moduleInfo"/>
     </xsl:if>
@@ -439,6 +434,29 @@
       </td>
     </tr>
 
+    <tr>
+      <td  class="wovenodd-col1">
+        <span class="label">
+          <xsl:call-template name="i18n">
+            <xsl:with-param name="word">Attributes</xsl:with-param>
+          </xsl:call-template>
+        </span>
+      </td>
+      <td class="wovenodd-col2">
+	<xsl:choose>
+	  <xsl:when test="not(tei:attList)">
+	    <xsl:call-template name="showAttClasses"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:for-each select="tei:attList">
+	      <xsl:call-template name="displayAttList">
+		<xsl:with-param name="mode">all</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:for-each>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </td>
+    </tr>
     <xsl:apply-templates mode="weave"/>
 
     </table>
