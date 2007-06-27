@@ -403,7 +403,8 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <p><xsl:call-template name="makeDescription"/>
+    <p>&lt;<xsl:value-of select="$name"/>&gt; 
+    <xsl:call-template name="makeDescription"/>
     <xsl:if test="tei:listRef">
       <xsl:for-each select="tei:listRef/tei:ptr">
 	<xsl:text> </xsl:text>
