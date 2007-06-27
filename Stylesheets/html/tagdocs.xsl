@@ -45,13 +45,16 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <dt>
+    <tr>
+      <td class="odd_label">
       <xsl:value-of select="$name"/>
-    </dt>
-    <dd>
+      </td>
+      <td class="odd_value">
+
 	<xsl:call-template name="makeDescription"/>
 	<xsl:apply-templates select="valList"/>
-    </dd>
+      </td>
+    </tr>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:attDef</xd:short>
@@ -68,20 +71,21 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <dt>
-
+    <tr>
+      <td class="odd_label">
         <xsl:value-of select="$name"/>
-    </dt>
-    <dd>
+      </td>
+      <td class="odd_value">
 	<xsl:call-template name="makeDescription"/>
-	<dl class="attdef">
-	  <dt>
+	<table class="attDef">
+	  <tr>
+	  <td class="odd_label">
 	    <xsl:call-template name="i18n">
 	      <xsl:with-param name="word">Status</xsl:with-param>
 	    </xsl:call-template>
 	    <xsl:text> </xsl:text>
-	  </dt>
-	  <dd>
+	  </td>
+	  <td class="odd_value">
         <xsl:choose>
           <xsl:when test="@usage='mwa'">
             <xsl:call-template name="i18n">
@@ -118,23 +122,26 @@
             </xsl:call-template>
 	  </xsl:otherwise>
         </xsl:choose>
-	  </dd>
+	  </td>
 	  <xsl:apply-templates mode="weave"/>
-	</dl>
-    </dd>
+	  </tr>
+	</table>
+      </td>
+    </tr>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:attDef/tei:datatype</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:attDef/tei:datatype" mode="weave" >
-    <dt>
+    <tr>
+    <td class="odd_label"> 
       <xsl:call-template name="i18n">
 	<xsl:with-param name="word">Datatype</xsl:with-param>
       </xsl:call-template>
       <xsl:text> </xsl:text>
-    </dt>
-    <dd>
+    </td>
+    <td class="odd_value">
         <xsl:variable name="minOccurs">
           <xsl:choose>
             <xsl:when test="@minOccurs">
@@ -173,7 +180,8 @@
         <xsl:if test="$minOccurs != 1  or  $maxOccurs != 1">
           <xsl:text>separated by whitespace</xsl:text>
         </xsl:if>
-    </dd>
+    </td>
+    </tr>
 
   </xsl:template>
 
@@ -254,7 +262,9 @@
       </xsl:choose>
     </xsl:variable>
 
-    <p><xsl:call-template name="makeDescription"/>
+    <p><xsl:value-of select="$name"/>
+    <xsl:text> </xsl:text>
+    <xsl:call-template name="makeDescription"/>
     <xsl:if test="tei:listRef">
       <xsl:for-each select="tei:listRef/tei:ptr">
 	<xsl:text> </xsl:text>
@@ -357,18 +367,7 @@
     <xd:short>Process elements tei:defaultVal</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:defaultVal" mode="weave" >
-
-      <dt>
-	<xsl:call-template name="i18n">
-            <xsl:with-param name="word">Default</xsl:with-param>
-	</xsl:call-template>
-      </dt>
-      <dd>
-        <xsl:apply-templates/>
-      </dd>
-
-  </xsl:template>
+  <xsl:template match="tei:defaultVal" mode="weave" />
 
   <xd:doc>
     <xd:short>Process elements tei:elementSpec</xd:short>
@@ -512,7 +511,6 @@
       </xsl:choose>
     </xsl:variable>
     <b>
-      <xsl:if test="self::tei:elementSpec">&lt;</xsl:if>
       <a>
         <xsl:attribute name="href">
           <xsl:choose>
@@ -546,7 +544,6 @@
 	  </xsl:if>
 	</xsl:for-each>
       </a>
-      <xsl:if test="self::tei:elementSpec">&gt;</xsl:if>
     </b>
     <xsl:text> </xsl:text>
     <xsl:call-template name="makeDescription"/>
@@ -569,9 +566,9 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:if test="tei:attList//tei:attDef">
-	<dl>
+	<table class="attList">>
 	  <xsl:apply-templates mode="summary" select="tei:attList//tei:attDef"/>
-	</dl>
+	</table>
         </xsl:if>
         <xsl:call-template name="showAttClasses">
           <xsl:with-param name="minimal">true</xsl:with-param>
@@ -732,13 +729,16 @@
       </xsl:choose>
     </xsl:variable>
 
-    <p><xsl:call-template name="makeDescription"/>
-    <xsl:if test="tei:listRef">
-      <xsl:for-each select="tei:listRef/tei:ptr">
-	<xsl:text> </xsl:text>
-	<xsl:apply-templates select="." mode="weave"/>
-      </xsl:for-each>
-    </xsl:if>
+    <p>
+      <xsl:value-of select="$name"/>
+      <xsl:text> </xsl:text>
+      <xsl:call-template name="makeDescription"/>
+      <xsl:if test="tei:listRef">
+	<xsl:for-each select="tei:listRef/tei:ptr">
+	  <xsl:text> </xsl:text>
+	  <xsl:apply-templates select="." mode="weave"/>
+	</xsl:for-each>
+      </xsl:if>
     </p>
 
     <table border="1" class="wovenodd">
@@ -1012,18 +1012,19 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:valDesc" mode="weave">
-
-      <dt>
+    <tr>
+      <td class="odd_label">
           <xsl:call-template name="i18n">
-            <xsl:with-param name="word">Values</xsl:with-param>
-          </xsl:call-template>
-          <xsl:text> </xsl:text>
-      </dt>
-      <dd>
-        <xsl:apply-templates/>
-      </dd>
-
+	    <xsl:with-param name="word">Values</xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:text> </xsl:text>
+      </td>
+      <td class="attribute">
+	<xsl:apply-templates/>
+      </td>
+    </tr>
   </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements tei:val</xd:short>
     <xd:detail> </xd:detail>
@@ -1059,7 +1060,8 @@
   </xd:doc>
   <xsl:template match="tei:valList" mode="contents">
 
-      <dt>
+    <tr>
+      <td class="odd_label">
     <xsl:choose>
       <xsl:when test="@type='semi'"><xsl:call-template name="i18n">
           <xsl:with-param name="word">Suggested values include</xsl:with-param>
@@ -1072,9 +1074,9 @@
         </xsl:call-template>:</xsl:when>
       <xsl:otherwise>Values are:</xsl:otherwise>
     </xsl:choose>
-      </dt>
-      <dd>
-	<dl class="valList">
+      </td>
+      <td class="odd_value">
+	<table class="valList">
 	  <xsl:for-each select="tei:valItem">
 	    <xsl:variable name="name">
 	      <xsl:choose>
@@ -1086,17 +1088,24 @@
 		</xsl:otherwise>
           </xsl:choose>
 	    </xsl:variable>
-	    <dt>
-	      <xsl:value-of select="$name"/>
-	    </dt>
-	    <dd>
-	      <xsl:call-template name="makeDescription"/>
-	    </dd>
-	  </xsl:for-each>
-	</dl>
-      </dd>
+	    <tr>
+	    <td class="odd_label">
 
+	      <xsl:if test="@ident=../../tei:defaultVal">
+		<xsl:text>*</xsl:text>
+	      </xsl:if>
+	      <xsl:value-of select="$name"/>
+	    </td>
+	    <td class="odd_value">
+	      <xsl:call-template name="makeDescription"/>
+	    </td>
+	    </tr>
+	  </xsl:for-each>
+	</table>
+      </td>
+    </tr>
   </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements tei:valList</xd:short>
     <xd:detail> </xd:detail>
@@ -1144,6 +1153,7 @@
     <xd:param name="element">element</xd:param>
     <xd:detail> </xd:detail>
   </xd:doc>
+
   <xsl:template name="bitOut">
     <xsl:param name="grammar"/>
     <xsl:param name="content"/>
@@ -1151,13 +1161,13 @@
     <xsl:choose>
       <xsl:when test="$displayMode='both'">
 	<div class="displayRelax">
+	  <span class="displayRelax"
+		onclick="togglerelax(this)">RNG</span>
 	  <pre class="eg_rng" style="display:none">
- 	    <span class="displayRelax" onclick="togglerelax(this)">RNC</span>
 	    <xsl:apply-templates mode="verbatim"
 				 select="exsl:node-set($content)/*/*"/>
 	  </pre>
 	  <pre class="eg_rnc" style="display:block">
-	  <span class="displayRelax" onclick="togglerelax(this)">RNG</span>
 	  <xsl:call-template name="make-body-from-r-t-f">
 	    <xsl:with-param name="schema">
 	      <xsl:for-each select="exsl:node-set($content)/*">
@@ -1206,7 +1216,7 @@
     <xsl:param name="mode"/>
       <xsl:call-template name="showAttClasses"/>      
       <xsl:if test=".//tei:attDef">
-	<dl>
+	<table class="attList">
 	<xsl:choose>
 	  <xsl:when test="$mode='all'">
 	    <xsl:apply-templates/>
@@ -1215,7 +1225,7 @@
 	    <xsl:apply-templates mode="summary"/>
 	  </xsl:otherwise>
 	</xsl:choose>
-	</dl>
+	</table>
       </xsl:if>
   </xsl:template>
   <xd:doc>
@@ -1302,16 +1312,7 @@
       </xsl:choose>
     </xsl:variable>
     <xsl:variable name="name">
-      <xsl:choose>
-        <xsl:when test="local-name(.)='elementSpec'">
-          <xsl:text>&lt;</xsl:text>
-          <xsl:value-of select="$objectname"/>
-          <xsl:text>&gt;</xsl:text>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="$objectname"/>
-        </xsl:otherwise>
-      </xsl:choose>
+      <xsl:value-of select="$objectname"/>
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="self::tei:classSpec and not(@ident='att.global') and

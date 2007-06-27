@@ -66,7 +66,9 @@
   </xsl:template>
 
   <xsl:template match="comment()" mode="verbatim">
-    <xsl:call-template name="lineBreak"/>
+    <xsl:call-template name="lineBreak">
+      <xsl:with-param name="id">21</xsl:with-param>
+    </xsl:call-template>
     <xsl:value-of  disable-output-escaping="yes" select="$startComment"/>
     <xsl:text>&lt;!--</xsl:text>
     <xsl:value-of select="."/>
@@ -102,6 +104,7 @@
 
   <xsl:template match="*" mode="verbatim">
     <xsl:choose>
+      <xsl:when test="parent::xhtml:Wrapper"/>
       <xsl:when test="not(parent::*)  or parent::teix:egXML">
 	<xsl:choose>
 	  <xsl:when test="preceding-sibling::*">
@@ -470,7 +473,9 @@
 	<xsl:when test="name(.)=''"/>
 	<xsl:when test=".='http://www.w3.org/XML/1998/namespace'"/>
 	<xsl:otherwise>
-	  <xsl:call-template name="lineBreak"/>
+	  <xsl:call-template name="lineBreak">
+	    <xsl:with-param name="id">22</xsl:with-param>
+	  </xsl:call-template>
 	  <xsl:text>&#160;&#160;&#160;</xsl:text>
 	  <xsl:text>xmlns:</xsl:text>
 	  <xsl:value-of select="name(.)"/>
