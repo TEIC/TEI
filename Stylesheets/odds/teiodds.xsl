@@ -1884,6 +1884,7 @@ select="$makeDecls"/></xsl:message>
     <xsl:variable name="this" select="@ident"/>
     <xsl:for-each
 	select="key('REFS',$this)/ancestor::tei:elementSpec">
+      <xsl:sort select="@ident"/>
 	<xsl:call-template name="linkTogether">
 	  <xsl:with-param name="name" select="@ident"/>
 	  <xsl:with-param name="class">link_odd_element</xsl:with-param>
@@ -1897,6 +1898,7 @@ select="$makeDecls"/></xsl:message>
     <xsl:if test="key('MACROREFS',$this)">
       <xsl:for-each
 	  select="key('MACROREFS',$this)/ancestor::tei:macroSpec">
+	<xsl:sort select="@ident"/>
       <xsl:text>  </xsl:text>
 	<xsl:call-template name="linkTogether">
 	  <xsl:with-param name="name" select="@ident"/>
@@ -1919,6 +1921,7 @@ select="$makeDecls"/></xsl:message>
     <xsl:variable name="this" select="@ident"/>
     <xsl:for-each select="tei:classes/tei:memberOf">
       <xsl:for-each select="key('CLASSES',@key)">
+	<xsl:sort select="@ident"/>
 	<xsl:if test="@type='model'">
 	  <xsl:text> </xsl:text>
 	    <xsl:call-template name="linkTogether">
