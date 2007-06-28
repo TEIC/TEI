@@ -1109,12 +1109,18 @@
 	    <tr>
 	    <td class="odd_label">
 	      <xsl:value-of select="$name"/>
-	      <xsl:if test="@ident=../../tei:defaultVal">
-		<xsl:text>*</xsl:text>
-	      </xsl:if>
 	    </td>
 	    <td class="odd_value">
 	      <xsl:call-template name="makeDescription"/>
+	      <xsl:if test="@ident=../../tei:defaultVal">
+		<span class="defaultVal">
+		  <xsl:text> [</xsl:text>
+		  <xsl:call-template name="i18n">
+		    <xsl:with-param name="word">Default</xsl:with-param>
+		  </xsl:call-template>
+		  <xsl:text>]</xsl:text>
+		</span>
+	      </xsl:if>
 	    </td>
 	    </tr>
 	  </xsl:for-each>
