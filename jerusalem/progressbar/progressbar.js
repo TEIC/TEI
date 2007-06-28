@@ -23,7 +23,7 @@ function setPgb(pgbID, pgbValue)
 function addError(el_name, prepend, in_bold, append) {
 	var div = document.getElementById("error_div");
 	var newdiv = document.createElement('div');
-	newdiv.setAttribute('style', 'width: 600px; margin: 1px; background: #ff6666; font-size: 12px');
+	newdiv.setAttribute('style', 'width: 610px; margin: 1px; background: #ff6666; font-size: 12px; margin: 5px');
 	
 	var error_bold = document.createElement('b');
 	error_bold.appendChild(document.createTextNode('Error'));
@@ -53,7 +53,7 @@ function addError(el_name, prepend, in_bold, append) {
 function addWarning(el_name, prepend, in_bold, append) {
 	var div = document.getElementById("error_div");
 	var newdiv = document.createElement('div');
-	newdiv.setAttribute('style', 'width: 600px; margin: 1px; background: lightgreen; font-size: 12px');
+	newdiv.setAttribute('style', 'width: 610px; margin: 1px; background: lightgreen; font-size: 12px; margin: 5px');
 	
 	var error_bold = document.createElement('b');
 	error_bold.appendChild(document.createTextNode('Warning'));
@@ -100,10 +100,10 @@ function addElementContainer(el_name) {
 function addElementContainerError(used, element, problem) {
 	var div = document.getElementById('element_'+used);
 	var newdiv = document.createElement('div');
-	newdiv.setAttribute('style', 'width: 590px; margin: 1px; background: #ddddff font-size: 12px; padding-left: 20px');
+	newdiv.setAttribute('style', 'width: 590px; margin: 1px; font-weight: bold; color: red; font-size: 12px; padding-left: 20px');
 	var element_name = document.createElement('a');
 	element_name.appendChild(document.createTextNode(element));
-	element_name.setAttribute('style', 'color: black; font-weight: bold');
+	element_name.setAttribute('style', 'font-weight: bold; font-weight: bold; color: red;');
 	element_name.setAttribute('href', 'http://tei.oucs.ox.ac.uk/Query/tag.xq?name='+element);
 	newdiv.appendChild(element_name);
 	newdiv.appendChild(document.createTextNode(' ' + problem));

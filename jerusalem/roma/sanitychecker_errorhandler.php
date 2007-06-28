@@ -70,7 +70,8 @@ class SanityCheckerErrorHandler {
 			$problem = array_unique($problem);
 			$bold = ' ';
 			for($i=0; $i<count($used_in);$i++) {
-				if($i != count($used_in) - 1) {
+				
+				if($i != count($used_in) - 1 && $used_in[$i] != '') {
 					$bold .= $used_in[$i] . ', ';
 				} else {
 					$bold .= $used_in[$i];
@@ -93,6 +94,15 @@ class SanityCheckerErrorHandler {
 	 *Fonction qui affiche toutes les erreurs
 	 **/
 	public function showErrors_2() {
+		foreach($this->ERRORS as $error) {
+			if($error['used_in'] == '') {
+				if($error['type'] == 'Error') {
+					$this->sanityCheckAddError($error['element'], $error['problem'], '', '');
+				} else {
+					$this->sanityCheckAddWarning($error['element'], $error['problem'], '', '');
+				}
+			}
+		}
 		$used_items = array();
 		foreach($this->ERRORS as $error) if($error['used_in'] != '') $used_items[] = $error['used_in'];
 		$used_items = array_unique($used_items);
@@ -108,15 +118,6 @@ class SanityCheckerErrorHandler {
 					}
 				} else {
 					$not_shown[] = $error;
-				}
-			}
-		}
-		foreach($this->ERRORS as $error) {
-			if($error['used_in'] == '') {
-				if($error['type'] == 'Error') {
-					$this->sanityCheckAddError($error['element'], $error['problem'], '', '');
-				} else {
-					$this->sanityCheckAddWarning($error['element'], $error['problem'], '', '');
 				}
 			}
 		}
