@@ -15,8 +15,8 @@
  * define("ROMA_SYSTEM", "/usr/bin/roma --xsl=/home/tei/sourceforge/trunk/Stylesheets --localsource=/home/tei/sourceforge/trunk/P5/Source/Guidelines/en/guidelines-en.xml")
  *Par défaut, l'outil Roma en ligne de commande utilise la base de données eXist tei.oucs.ox.ac.uk ! 
  **/
-define("JERUSALEM_HTDOCS", "/home/tei/jerusalem_htdocs/");
-define("ROMA_SYSTEM", "/usr/bin/roma --xsl=/home/tei/sourceforge/trunk/Stylesheets --localsource=/home/tei/sourceforge/trunk/P5/Source/Guidelines/en/guidelines-en.xml");
+define("JERUSALEM_HTDOCS", "/home/tei/jerusalem/");
+define("ROMA_SYSTEM", "/usr/bin/roma");
 
 /**
  La classe SanityChecker vérifie la cohérence d'un schéma TEI.
