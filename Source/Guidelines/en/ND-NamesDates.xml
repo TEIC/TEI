@@ -22,16 +22,16 @@ explicitly between names of persons, places, and organizations.</p>
 
 <p>This module also provides elements for the representation of
 information about the person, place, or organization to which a given
-name is understood to refer and to represent the
-name itself, independently of its application. In simple terms, where
-the core module allows one simply to represent that a given piece of
-text is a <term>name</term>, this module allows one further to
-represent a <term>personal name</term>, to represent the 
-<term>person</term> being named, and to represent the <term>canonical
-name</term> being used.  A similar range is provided for names of
-places and organizations. The intended application for this module is
-in  biographical, historical, or geographical data systems, where
-these are to be integrated with encoded texts.</p>
+name is understood to refer and to represent the name itself,
+independently of its application. In simple terms, where the core
+module allows one simply to represent that a given piece of text is a
+<term>name</term>, this module allows one further to represent a
+<term>personal name</term>, to represent the <term>person</term> being
+named, and to represent the <term>canonical name</term> being used.  A
+similar range is provided for names of places and organizations. The
+intended application for this module is in biographical, historical,
+or geographical data systems such as gazeteers and biographical
+databases, where these are to be integrated with encoded texts.</p>
 
 <p>The chapter begins by discussing attributes common to many of the
 elements discussed in the remaining parts of the chapter (<ptr
@@ -81,7 +81,7 @@ a direct link such as a URI to indicate the location of canonical
 information about the referent. For example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">That silly man
 <name ref="#DPB1" type="person">David Paul Brown</name> has suffered ...</egXML>
-This encoding requires that there exist somewhere in the same document
+This encoding requires that there exist somewhere 
 a <gi>person</gi> element with the identifier <code>DBP1</code>, which
 will contain canonical information about this particular person,
 marked up using the elements discussed in <ptr target="#NDPERS"/>
@@ -134,7 +134,7 @@ from to"/></specList>
 These attributes can be combined in various
 ways to provide additional nuances. Consider, for example, the following:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<birth>15 March 1857.</birth> 
+<birth when="1857-03-15">15 March 1857.</birth> 
 </egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <birth notBefore="1857-03-01" notAfter="1857-04-30">Some time 
@@ -384,7 +384,14 @@ for this attribute for names in the Western European tradition follow:
  <item>Military rank such as <mentioned>Colonel</mentioned>.</item><label><val>epithet</val></label>
 <item>A traditional descriptive phrase
 or nick-name such as <mentioned>The Hammer</mentioned>, <mentioned>The Great</mentioned>, etc.</item></list>
-Note, however, that the <term>role</term> a person has in a given context (such as <mentioned>witness</mentioned>, <mentioned>defendant</mentioned>, etc. in a legal document) should not be encoded using the <gi>roleName</gi> element, since this is intended to describe the role of this part of the name, not the role of the person bearing the name.</p>
+Note, however, that the <term>role</term> a person has in a given
+context (such as <mentioned>witness</mentioned>,
+<mentioned>defendant</mentioned>, etc. in a legal document) should not
+be encoded using the <gi>roleName</gi> element, since this is intended
+to describe the role of this part of the name, not the role of the
+person bearing the name. Information about roles, occupations, etc. of
+a person are encoded within the <gi>person</gi> element discussed
+below in <ptr target="#NDPERS"/>. </p>
 <p>Here are some further examples of the usage of these elements:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="PGK1">
    <roleName type="nobility">Princess</roleName>
@@ -710,7 +717,7 @@ Some examples of relative place names are:
    <settlement type="city">Paris</settlement>
 </placeName></egXML> 
 If desired, the distance specified may be
-normalized using the <att>unit</att> and <att>quantity</att>
+normalized using the <att>unit</att> and <att>extent</att>
 attributes of <gi>measure</gi>:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName key="Duncan">
   <measure unit="km" extent="17.7">11 miles</measure>
@@ -815,9 +822,17 @@ or assertions of the same or any of the other types.</p>
 </div>
  <div type="div3" xml:id="NDPERSE">
 <head>The person element</head>
-<p>Information about a person, as distinct from references to a person, for example by name, is grouped together within a <gi>person</gi> element. A <gi>listPerson</gi>
-element is used to group such descriptions together, and optionally to
-describe relationships amongst the people listed.
+<p>Information about a person, as distinct from references to a
+person, for example by name, is grouped together within a
+<gi>person</gi> element. Information about a group of people regarded
+as a single entity (for example <q>the audience</q> of a performance)
+may be encoded using the <gi>personGrp</gi> element. Note however that
+information about a group of people with a distinct identity (for
+example a named theatrical troupe) should be recorded using the
+<gi>org</gi> element described in section <ptr target="#ND-org"/>
+below. A <gi>listPerson</gi> element is used to group such
+descriptions together, and optionally to describe relationships
+amongst the people listed.
 <specList>
 <specDesc key="person"/>
 <specDesc key="personGrp"/>
@@ -827,7 +842,7 @@ describe relationships amongst the people listed.
 </p>
 
 <p>One or more <gi>listPerson</gi> elements may be supplied within the
-<gi>particDesc</gi> (participant description) element inside the
+<gi>particDesc</gi> (participant description) element in the
 <gi>profileDesc</gi> element of a TEI Header (see <ptr
 target="#HD4"/>).  Like bibliographic lists, however, the
 <gi>listPerson</gi> can also appear within the body of a text.</p>
@@ -920,12 +935,13 @@ or
 <specDesc key="trait"/>
 </specList>
 This element can be used to extend the range of information supplied
-about an individual's personal traits. It can contain an optional
+about an individual's personal traits. It may contain an optional
 <gi>label</gi> element, used to provide a human-readable
-specification for the category of trait or feature concerned, followed
-by a <gi>date</gi> element, followed by the
-description of the feature itself supplied within one or more
-<gi>p</gi> elements, following which there may be added one or more
+specification for the category of trait or feature concerned and a
+description of the feature itself supplied within a <gi>desc</gi>
+element. These may be followed by or one or more
+<gi>p</gi> elements supplying more detailed information about the
+trait. In either case, these may be followed by one or more
  notes or bibliographical references. The <att>type</att> and
  <att>key</att> attributes are available on the <gi>persTrait</gi>
 element to indicate a fuller definition of the combination of feature
@@ -1084,7 +1100,7 @@ Only two specific elements (<gi>birth</gi> and <gi>death</gi>) are
 proposed.  The generic element <gi>event</gi> has a similar content
 model to that of <gi>state</gi> and <gi>trait</gi>; the chief
 difference being that it can include a <gi>placeName</gi> element to
-identify the name of the place where the event ocurred. It is used 
+identify the name of the place where the event occurred. It is used 
 to describe any event in the life of an individual. </p>
 <p>In the following example, we give a brief summary of the wedding of Jane Burden to the
 English writer, designer, and socialist William Morris, encoded as an
@@ -1240,18 +1256,18 @@ or key persons within it.
 <specDesc key="listOrg"/>
 </specList>
 
-These elements are intended to be used in a
-way analogous to the <gi>place</gi> and <gi>person</gi> elements
-discussed elsewhere in this chapter, that is to provide as a unique
-wrapper element for information about an entity, distinct from
-references to that entity which are typically encoded using a naming
-element such as <gi>name type="org"</gi> or <gi>orgName</gi>. The
-content of a naming element will represent the way an organization is
-named in a given context; the content of an <gi>org</gi> represents
-the information known to the encoder about that organization, gathered
-together in a single place, and independent of its textual realization.
+These elements are intended to be used in a way analogous to the
+<gi>place</gi> and <gi>person</gi> elements discussed elsewhere in
+this chapter, that is to provide as a unique wrapper element for
+information about an entity, distinct from references to that entity
+which are typically encoded using a naming element such as <gi>name
+type="org"</gi> or <gi>orgName</gi>. The content of a naming element
+will represent the way an organization is named in a given context;
+the content of an <gi>org</gi> represents the information known to the
+encoder about that organization, gathered together in a single place,
+and independent of its textual realization.
 </p>
-<p>An organization is not the same thing as a list of people because
+<p>An organization is not the same thing as a list or group of people because
 it has an identity of its own. That identity may be expressed solely
 in the existence of a name (for example <q>The Scythians</q>), but is
 likely to consist in the combination of that name with a number of
@@ -1296,7 +1312,7 @@ over time, (if they are known at all). For example:
 </desc></state>
 </org></egXML>  
 </p>
-<p>An <gi>org</gi> may contain subordinate <gi>org</gi>:
+<p>An <gi>org</gi> may contain subordinate <gi>org</gi>s:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><org>
   <orgName>Oxford University Computing Services</orgName>
@@ -1318,6 +1334,7 @@ over time, (if they are known at all). For example:
 </org>
 </egXML>
 </p>
+
         </div>
 
 <div type="div2" xml:id="NDGEOG"><head>Places</head>
@@ -1346,11 +1363,13 @@ over time, (if they are known at all). For example:
   example, we can identify the location of the Canadian city of London, either by
   specifying its latitute and longitude, or by specifying that we mean the city called
   London located in the province called Ontario within the country called Canada. </p>
-<p>In addition we may wish to supply a brief characterization of the place identified, for
-  example to state that it is a city, an administrative area such as a country, or a
-  landmark of some kind such as a monument or a battlefield. If our typology of places is
-  simple, the open ended <att>type</att> attribute is the easiest way to represent it: so
-  we might say <tag>place type="city"</tag>, <gi>place type="battlefield"</gi> etc. </p>
+<p>In addition we may wish to supply a brief characterization of the
+place identified, for example to state that it is a city, an
+administrative area such as a country, or a landmark of some kind such
+as a monument or a battlefield. If our typology of places is simple,
+the open ended <att>type</att> attribute is the easiest way to
+represent it: so we might say <tag>place type="city"</tag>, <tag>place
+type="battlefield"</tag> etc. </p>
 <p>Within the <gi>place</gi> element, the following elements may be used to provide more
   information about specific aspects of the place in a structured form: <specList>
     <specDesc key="placeName"/>
@@ -1376,7 +1395,8 @@ itself. The default recommended by these Guidelines is to supply a
 string containing two real numbers which indicate latitude and
 longitude according to the 1984 World Geodetic System (WGS84) system;
 this is the system currently used by most GPS applications which TEI
-users are likely to encounter. <note place="foot">The most recent
+users are likely to encounter. <note place="foot">See <ptr
+target="http://earth-info.nga.mil/GandG/wgs84/index.html"/>. The most recent
 revision of this standard is known as the Earth Gravity Model
 1996.</note>We might therefore record the information about the place
 known as <soCalled>Lyon</soCalled> as follows: <egXML
@@ -1436,7 +1456,7 @@ places, such as a street or even an individual building:
 Note the use of the <att>type</att> attribute to categorize more
 precisely both the kind of place concerned (a building) and the kind
 of name used to locate it, for example by characterizing the generic
-<gi>district</gi> as an <soCalled>arrondissement</soCalled> </p>
+<gi>district</gi> as an <soCalled>arrondissement</soCalled>. </p>
 
 <p>We may even wish to treat imaginary places in the same way: <egXML
       xmlns="http://www.tei-c.org/ns/Examples">
@@ -1792,11 +1812,12 @@ as it is pretty incomprehensible) --></p>
       </listPlace>
     </egXML>
   </p>
-  <p>This <soCalled>stand off</soCalled> style of representation has the advantage that we
-    can now also represent the fact that a place may be <q>part of</q> more than one other
-    place; for example, Réunion is part of France, as well as part of the Mascarenes. If
-    we add a declaration for France to the list above: <egXML
-      xmlns="http://www.tei-c.org/ns/Examples">
+  <p>This <soCalled>stand off</soCalled> style of representation has
+  the advantage that we can now also represent the fact that a place
+  may be a <q>part of</q> more than one other place; for example,
+  Réunion is part of France, as well as part of the Mascarenes. If we
+  add a declaration for France to the list above: <egXML
+  xmlns="http://www.tei-c.org/ns/Examples">
       <place type="country" xml:id="FRA">
         <placeName>France</placeName>
       </place>
