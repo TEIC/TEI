@@ -916,7 +916,9 @@
   </xd:doc>
   <xsl:template match="tei:specDesc">
     <li>
-      <xsl:call-template name="processSpecDesc"/>
+      <table>
+	<xsl:call-template name="processSpecDesc"/>
+      </table>
     </li>
   </xsl:template>
   <xd:doc>
