@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <div xml:id="IM" xmlns="http://www.tei-c.org/ns/1.0">
 <head>Implementation of an ODD System</head>
 <p>This chapter specifies how a processing system may take advantage
@@ -192,7 +193,8 @@ macros, the processor has to decide whether to take account of deleted
 elements.<note>The carthago program behind the PizzaChef application,
 written by Michael Sperberg-McQueen for TEI P3 and P4, went to very
 great efforts to get this right. The tools behind the P5 Roma
-application are not as sophisticated.</note> A content model like this:
+application are not as sophisticated, partly because the RELAX NG
+language is more forgiving than DTDs.</note> A content model like this:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec ident="person">
   <!--…-->
@@ -258,20 +260,16 @@ schemas.</p>
 <div>
 <head>Generating schemas</head>
 <p>Assuming that any modifications have been resolved, as outlined in
-the previous section, making a schema is four-fold task:
-<list type="ordered">
-<item>collect all datatype and other macro specifications at the start
-of the output schema</item>
-<item>declare all classes</item>
-<item>process all elements</item>
-<item>process any <gi>moduleRef</gi>
-elements with a <att>url</att> attribute identifying an external
-schema</item>
-</list>
-However, there are a a number of obstacles to overcome along the
-way.</p>
+the previous section, making a schema is four-fold task. Firsly, we
+must collect all datatype and other macro specifications, and declare
+them at the start of the output schema. Secondly, we must declare all
+classes. Thirdly, we declare the elements. Lastly, we process any
+<gi>moduleRef</gi> elements with a <att>url</att> attribute
+identifying an external schema. Working in this order giving the best
+chance of working with all the schema languages. However, there are a
+a number of obstacles to overcome along the way.</p>
 
-<p>Firstly, a decision must be made about which schema languaged is
+<p>Firstly, a decision must be made about which schema language is
 going to be used. The TEI ODD specification, using RELAX NG to express
 content models, is slightly biased towards this language, and the
 processing of these Guidelines adopts the following tactics:
@@ -287,18 +285,16 @@ and then using James Clark's trang application.</item>
 Other projects may decide to follow a different route, perhaps
 implementing a direct ODD to W3C Schema translator.</p>
 
-<p>Secondly, it is possible to create two rather
-different styles of schema. On the one hand, the schema
-can try to maintain all the flexibility of ODD by using the
-facilities of the schema language for parameterization; on the other,
-it can remove all customization features and produce a flat result
-no suitable for further manipulation. The TEI project generates both
-styles
-of schema; the first as a set of schema fragments in DTD and RELAX NG
-languages, which can be included as modules in other schemas, and 
-customized further; the second as the output from the Roma processors,
-which produce single file schemas in as simple a style as
-possible.</p>
+<p>Secondly, it is possible to create two rather different styles of
+schema. On the one hand, the schema can try to maintain all the
+flexibility of ODD by using the facilities of the schema language for
+parameterization; on the other, it can remove all customization
+features and produce a flat result which is not suitable for further
+manipulation. The TEI project generates both styles of schema; the
+first as a set of schema fragments in DTD and RELAX NG languages,
+which can be included as modules in other schemas, and customized
+further; the second as the output from the Roma processors, which
+produce single file schemas in as simple a style as possible.</p>
 
 <p>The difference between the schema styles may be illustrated by
 considering this ODD specification:
@@ -434,17 +430,15 @@ is being created, its name is the value of
 the <att>ident</att> attribute, prefixed by the value of any
 <att>prefix</att> attribute on <gi>schemaSpec</gi>. This allows for
 external schemas to be mixed in which have elements of the same names
-as the TEI. 
-</item>
-
-<item>If an element or attribute is being created, its default name is
-the value of the <att>ident</att> attribute, but if there is an
-<gi>altIdent</gi> child, the value of that is used instead.
+as the TEI, if <att>prefix</att> is given a value of
+e.g. <val>tei_</val>. 
 Thus
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<elementSpec ident="sp">
- <!--...-->
-</elementSpec>
+<schemaSpec ident="test" prefix="tei_">
+  <elementSpec ident="sp">
+    <!--...-->
+  </elementSpec>
+</schemaSpec>
 </egXML>
 may generate a RELAX NG pattern like this:
 <eg>
@@ -453,9 +447,14 @@ may generate a RELAX NG pattern like this:
 Referring strings have to be adjusted accordingly.
 </item>
 
+<item>If an element or attribute is being created, its default name is
+the value of the <att>ident</att> attribute, but if there is an
+<gi>altIdent</gi> child, the value of that is used instead.
+</item>
+
 <item>Where appropriate, the documentation strings in <gi>gloss</gi>
 and <gi>desc</gi> should be copied into the generated schema. If there
-is only one use of the element, it should be used regardless, but if
+is only one use of these elements, they should be used regardless, but if
 there
 are several with different values of <att>xml:lang</att>, a locale
 indication in the processing environment should be used to decide
@@ -481,21 +480,23 @@ head =
 </list>
 </p>
 <p>In addition, there are four conventions about
-naming patterns; ODD processors need not follow them,
-but  those reading the schemas generated by the TEO
-project will find it necessary to understand them.
+naming patterns relating to classes; ODD processors need not follow them,
+but  those reading the schemas generated by the TEI
+project will find it necessary to understand them:
 <list type="ordered">
 <item>when a pattern for  attribute class  is created,
-it should be named after the model class identifier (as above)
-suffixed by <code>.attributes</code></item>
+it is named after the model class identifier (as above)
+suffixed by <code>.attributes</code>
+(e.g. <code>att.editLike.attributes</code>).
+</item>
 <item>when a pattern for  an attribute attribute class  is created,
-it should be named after the model class identifer (as above)
+it is named after the model class identifer (as above)
 suffixed by <code>.attribute.</code> and then the identifier
-of the attribute.</item>
+of the attribute (e.g. <code>att.editLike.attribute.resp</code>).</item>
 <item>when a parameterized schema is created, each
-element should generate patterns for its attributes and its contents
+element generates patterns for its attributes and its contents
 separately, suffixing respectively <code>.attributes</code>
-and <code>.contents</code></item>
+and <code>.contents</code> to the element name.</item>
 </list>
 </p>
 </div>
@@ -504,13 +505,14 @@ and <code>.contents</code></item>
 <head>Making a RELAX NG schema</head>
 
 <p>To create a RELAX NG schema, the processor
-will process every <gi>macroSpec</gi>,
-<gi>classSpec</gi> and <gi>elementSpec</gi> in turn. </p>
+processes every <gi>macroSpec</gi>,
+<gi>classSpec</gi> and <gi>elementSpec</gi> in turn, creating
+a RELAX NG pattern for each, using the naming conventions listed above. </p>
 
 <div>
 <head>Macros</head>
 <p>An ODD macro
-generates a RELAX NG pattern, so
+generates a corresponding RELAX NG pattern. Thus
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <macroSpec module="tei" type="pe" ident="macro.phraseSeq">
   <content>
@@ -526,13 +528,21 @@ generates a RELAX NG pattern, so
 </macroSpec>
 </egXML>
 produces
-<eg>
-macro.phraseSeq = (text | model.gLike | model.phrase | model.global)*
-</eg>
-Note that for the purpose of these Guidelines, we show the RELAX NG
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <define xmlns="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq">
+    <rng:zeroOrMore>
+      <rng:choice>
+        <rng:text/>
+        <rng:ref name="model.gLike"/>
+        <rng:ref name="model.phrase"/>
+        <rng:ref name="model.global"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </define>
+</egXML>
+Note that for the purpose of these Guidelines, we usually show the RELAX NG
 output in compact format; the ODD specification stores it in more
 verbose XML format, but the two are interchangeable.</p>
-
 </div>
 
 <div>
@@ -546,24 +556,63 @@ example
 </classSpec>
 </egXML>
 may produce, for a given customization:
-<eg>
-model.measureLike = num | measure | measureGrp
-</eg>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <define xmlns="http://relaxng.org/ns/structure/1.0" name="model.measureLike">
+    <rng:choice>
+      <ref name="num"/>
+      <ref name="measure"/>
+      <ref name="measureGrp"/>
+    </rng:choice>
+  </define>
+</egXML>
 if the elements <gi>num</gi>, <gi>measure</gi> and <gi>measureGrp</gi>
 are included. Depending on the value of the <att>generate</att>
 attribute on the <gi>classSpec</gi>, it may also generate a set
-of sequence as well as alternation patterns. Thus if we load another
-module with some more elements in this class, we may also generate:
-<eg>
-model.measureLike_sequence =
-  num, measure, measureGrp, height, depth, width, geo
-model.measureLike_sequenceOptional =
-  num?, measure?, measureGrp?, height?, depth?, width?, geo?
-model.measureLike_sequenceOptionalRepeatable =
-  num*, measure*, measureGrp*, height*, depth*, width*, geo*
-model.measureLike_sequenceRepeatable =
-  num+, measure+, measureGrp+, height+, depth+, width+, geo+
-</eg>
+of sequences as well as alternation patterns. Thus we may also
+generate the <ident>sequence</ident>, 
+<ident>sequenceOptional</ident>,  
+<ident>sequenceRepeatable</ident>,  and 
+<ident>sequenceOptionalRepeatable</ident> patterns:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <define xmlns="http://relaxng.org/ns/structure/1.0" name="model.measureLike_sequence">
+    <ref name="num"/>
+    <ref name="measure"/>
+    <ref name="measureGrp"/>
+  </define>
+  <define xmlns="http://relaxng.org/ns/structure/1.0" name="model.measureLike_sequenceOptional">
+    <optional>
+      <ref name="num"/>
+    </optional>
+    <optional>
+      <ref name="measure"/>
+    </optional>
+    <optional>
+      <ref name="measureGrp"/>
+    </optional>
+  </define>
+  <define xmlns="http://relaxng.org/ns/structure/1.0" name="model.measureLike_sequenceOptionalRepeatable">
+    <zeroOrMore>
+      <ref name="num"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="measure"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="measureGrp"/>
+    </zeroOrMore>
+  </define>
+  <define xmlns="http://relaxng.org/ns/structure/1.0" name="model.measureLike_sequenceRepeatable">
+    <oneOrMore>
+      <ref name="num"/>
+    </oneOrMore>
+    <oneOrMore>
+      <ref name="measure"/>
+    </oneOrMore>
+    <oneOrMore>
+      <ref name="measureGrp"/>
+    </oneOrMore>
+  </define>
+</egXML>
 where the pattern name is created by appending an underscore and the
 name of the generation sequence to the class name.
 </p>
@@ -574,23 +623,64 @@ definitions of the appropriate attributes. So
 <classSpec module="verse" type="atts" ident="att.enjamb">
   <attList>
     <attDef ident="enjamb" usage="opt">
-      <!-- ... -->
+      <equiv/>
+      <desc>indicates that the end of a verse line is marked by enjambement.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valList type="open">
+        <valItem ident="no">
+          <equiv/>
+          <desc>the line is end-stopped
+	  </desc>
+        </valItem>
+        <valItem ident="yes">
+          <equiv/>
+          <desc>the line in question runs on into the next
+    </desc>
+        </valItem>
+        <valItem ident="weak">
+          <equiv/>
+          <desc>the line is weakly enjambed
+    </desc>
+        </valItem>
+        <valItem ident="strong">
+          <equiv/>
+          <desc>the line is strongly enjambed</desc>
+        </valItem>
+      </valList>
     </attDef>
   </attList>
 </classSpec>
 </egXML>
 produces
-<eg>
-att.enjamb.attributes = att.enjamb.attribute.enjamb
-att.enjamb.attribute.enjamb =
-  attribute enjamb { data.enumerated }?
-</eg>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <define xmlns="http://relaxng.org/ns/structure/1.0" name="att.enjamb.attributes">
+    <ref name="att.enjamb.attribute.enjamb"/>
+    <empty/>
+  </define>
+  <define xmlns="http://relaxng.org/ns/structure/1.0" name="att.enjamb.attribute.enjamb">
+    <rng:optional>
+      <rng:attribute name="enjamb">
+        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates that the end of a verse line is marked by enjambement.
+Sample values include: 1] no; 2] yes; 3] weak; 4] strong</a:documentation>
+        <ref name="data.enumerated"/>
+      </rng:attribute>
+    </rng:optional>
+  </define>
+</egXML>
 Since the processor may have expanded the attribute
 classes already, separate patterns are generated
 for each attribute in the class as well as one for
 the class itself. This allows an element to refer directly
-to a member of a class.
-</p>
+to a member of a class. Notice that the <gi>desc</gi> element
+is used to add a <gi>documentation</gi> element to the schema,
+which some editors use to provide help during composition. The 
+<gi>desc</gi> elements in the <gi>valList</gi> are used to create
+the human-readable sentence <quote>Sample values include: 1] no; 2]
+yes; 3] weak; 4] strong</quote>. Naturally, this sort of use
+of the documentation elements is not mandatory, and other ODD
+processors may ignore them when creating schemas.</p>
 </div>
 
 <div>
