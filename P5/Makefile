@@ -61,7 +61,10 @@ schemas:check
 	xmllint --noent --xinclude ${DRIVER} | xsltproc Utilities/extract-sch.xsl - > p5.sch
 
 html-web: check
-	perl -p -e "s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+" Utilities/odd2htmlp5.xsl.model > Utilities/odd2htmlp5.xsl
+	perl -p -e \
+		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
+		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
+		Utilities/odd2htmlp5.xsl.model > Utilities/odd2htmlp5.xsl
 	-rm -rf Guidelines-web
 	-mkdir Guidelines-web
 	for i in ${LANGUAGE} ${OTHERLANGUAGES} ; do \
