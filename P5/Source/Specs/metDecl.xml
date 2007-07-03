@@ -32,14 +32,15 @@ $Author$
   </classes>
   <content>
     <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:group>
-        <rng:ref name="macro.componentSeq"/>
-      </rng:group>
-      <rng:group>
-        <rng:oneOrMore>
-          <rng:ref name="metSym"/>
-        </rng:oneOrMore>
-      </rng:group>
+      <rng:oneOrMore>
+	<rng:choice>
+	  <rng:ref name="model.pLike"/>
+	  <rng:ref name="model.noteLike"/>
+	</rng:choice>
+      </rng:oneOrMore>
+      <rng:oneOrMore>
+	<rng:ref name="metSym"/>
+      </rng:oneOrMore>
     </rng:choice>
   </content>
   <attList>
@@ -110,7 +111,6 @@ $Author$
       World Wide Web Consortium's <title>XML Schema Part 2: Datatypes
       Second Edition</title>, <ref target="http://www.w3.org/TR/xmlschema-2/#regexs">Appendix
       F</ref></valDesc>
-      <remarks/>
     </attDef>
   </attList>
   <exemplum>
