@@ -21,8 +21,13 @@ the start of a section or chapter, or on a title page. </desc>
     <memberOf key="model.titlepagePart"/>
     <memberOf key="model.pLike.front"/>
   </classes>
-  <content>
-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.componentSeq"/>
+  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:zeroOrMore>
+      <rng:choice>
+        <rng:ref name="model.common"/>
+        <rng:ref name="model.global"/>
+      </rng:choice>
+    </rng:zeroOrMore>
   </content>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -37,7 +42,6 @@ the start of a section or chapter, or on a title page. </desc>
       </epigraph>
     </egXML>
   </exemplum>
-  <remarks/>
   <listRef>
     <ptr target="#DSCO"/>
     <ptr target="#DSDTB"/>
