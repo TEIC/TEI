@@ -227,6 +227,16 @@ on the OED examples, and state the responsibility for the expansion:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">For alle the while that I had
 good<expan resp="#mp" cert="high">e</expan>
 I was welbeloued</egXML>
+The value supplied for the <att>resp</att> attribute may point to any
+other element. The intention is that it should indicate in one
+place the name of the editor responsible for this and possibly other
+interventions; an appropriate element therefore might be a
+<gi>respStmt</gi> element in the header like the following:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<respStmt xml:id="mp">
+<resp>Editorial emendations</resp>
+<name>Malcom Parks</name>
+</respStmt></egXML>.  
 Observe that the <att>cert</att> and <att>resp</att> attributes may be
 used with the <gi>expan</gi> element only to indicate respectively
 confidence in the content of the element (i.e. the expansion), and
@@ -348,7 +358,7 @@ transcription but also alongside another conjecture:
 <app>
   <rdg wit="#Hg">wight</rdg>
   <rdg wit="#Ln #Ry2 #Ld" resp="#ETD"> <corr>wright</corr> </rdg>
-  <rdg wit="#Gg" resp="#PR"> <corr>wyf</corr> </rdg>
+  <rdg wit="#Gg" resp="#mp"> <corr>wyf</corr> </rdg>
 </app></egXML></p>
 <p>Observe that no <att>resp</att> attribute is necessary for the base
 transcription:  by default, responsibility is assigned to the scholar(s)
@@ -826,7 +836,18 @@ inserted by James is tagged as an <gi>add</gi>, and the consequent
 editorial correction of <mentioned>One</mentioned> to <mentioned>one</mentioned> treated
 separately:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><add place="supralinear" resp="#FB" hand="#WJ">But</add>
-<choice><sic>One</sic><corr resp="#FB">one</corr></choice> must have lived ...</egXML>
+<choice><sic>One</sic><corr resp="#FB">one</corr></choice> must have
+lived ...
+<!-- elsewhere -->
+<respStmt xml:id="FB">
+<resp>editorial changes</resp>
+<name>Fredson Bowers</name>
+</respStmt>
+<respStmt xml:id="WJ">
+<resp>authorial changes</resp>
+<name>William James</name>
+</respStmt>
+</egXML>
 As in this example, <att>hand</att> should be reserved for indicating
 the hand of any form of marking—here, addition but also deletion,
 correction, annotation, underlining, etc.—within the primary text
