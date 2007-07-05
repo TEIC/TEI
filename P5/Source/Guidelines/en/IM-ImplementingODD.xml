@@ -529,7 +529,7 @@ generates a corresponding RELAX NG pattern. Thus
 </egXML>
 produces
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-  <rng:define xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq">
+  <define xmlns="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq">
     <zeroOrMore>
       <choice>
         <text/>
@@ -538,7 +538,7 @@ produces
         <ref name="model.global"/>
       </choice>
     </zeroOrMore>
-  </rng:define>
+  </define>
 </egXML>
 Note that for the purpose of these Guidelines, we usually show the RELAX NG
 output in compact format; the ODD specification stores it in more
@@ -557,13 +557,13 @@ example
 </egXML>
 may produce, for a given customization:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-  <rng:define xmlns:rng="http://relaxng.org/ns/structure/1.0" name="model.measureLike">
+  <define xmlns="http://relaxng.org/ns/structure/1.0" name="model.measureLike">
     <choice>
-      <rng:ref name="num"/>
-      <rng:ref name="measure"/>
-      <rng:ref name="measureGrp"/>
+      <ref name="num"/>
+      <ref name="measure"/>
+      <ref name="measureGrp"/>
     </choice>
-  </rng:define>
+  </define>
 </egXML>
 if the elements <gi>num</gi>, <gi>measure</gi> and <gi>measureGrp</gi>
 are included. Depending on the value of the <att>generate</att>
@@ -659,15 +659,15 @@ produces
     <ref name="att.enjamb.attribute.enjamb"/>
     <empty/>
   </define>
-  <rng:define xmlns:rng="http://relaxng.org/ns/structure/1.0" name="att.enjamb.attribute.enjamb">
+  <define xmlns="http://relaxng.org/ns/structure/1.0" name="att.enjamb.attribute.enjamb">
     <optional>
       <attribute name="enjamb">
         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates that the end of a verse line is marked by enjambement.
 Sample values include: 1] no; 2] yes; 3] weak; 4] strong</a:documentation>
-        <rng:ref name="data.enumerated"/>
+        <ref name="data.enumerated"/>
       </attribute>
     </optional>
-  </rng:define>
+  </define>
 </egXML>
 Since the processor may have expanded the attribute
 classes already, separate patterns are generated
