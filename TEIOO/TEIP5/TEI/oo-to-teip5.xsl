@@ -59,26 +59,37 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
   <xsl:key
-    match="text:p | text:alphabetical-index
-| table:table | text:span | office:annotation | text:ordered-list
-| text:list | text:footnote | text:a | text:list-item |
-draw:plugin | draw:text-box | text:footnote-body | text:section"
     name="headchildren"
+    match="text:p | text:alphabetical-index | table:table | text:span
+	   | office:annotation | text:ordered-list | text:list |
+	   text:footnote | text:a | text:list-item | draw:plugin |
+	   draw:text-box | text:footnote-body | text:section" 
     use="generate-id((..|preceding-sibling::text:h[@text:outline-level='1']|preceding-sibling::text:h[@text:outline-level='2']|preceding-sibling::text:h[@text:outline-level='3']|preceding-sibling::text:h[@text:outline-level='4']|preceding-sibling::text:h[@text:outline-level='5'])[last()])"/>
 
-  <xsl:key match="text:h[@text:outline-level='2']" name="children"
+  <xsl:key match="text:h[@text:outline-level='2']" name="children1"
     use="generate-id(preceding-sibling::text:h[@text:outline-level='1'][1])"/>
 
-  <xsl:key match="text:h[@text:outline-level='3']" name="children"
+  <xsl:key match="text:h[@text:outline-level='3']" name="children2"
     use="generate-id(preceding-sibling::text:h[@text:outline-level='2' or
 @text:outline-level='1'][1])"/>
 
-  <xsl:key match="text:h[@text:outline-level='4']" name="children"
+  <xsl:key match="text:h[@text:outline-level='4']" name="children3"
     use="generate-id(preceding-sibling::text:h[@text:outline-level='3' or
 @text:outline-level='2' or @text:outline-level='1'][1])"/>
 
-  <xsl:key match="text:h[@text:outline-level='5']" name="children"
+  <xsl:key match="text:h[@text:outline-level='5']" name="children4"
     use="generate-id(preceding-sibling::text:h[@text:outline-level='4' or
+@text:outline-level='3' or @text:outline-level='2' or @text:outline-level='1'][1])"/>
+
+  <xsl:key match="text:h[@text:outline-level='6']" name="children5"
+    use="generate-id(preceding-sibling::text:h[@text:outline-level='5'
+	 or @text:outline-level='4' or
+@text:outline-level='3' or @text:outline-level='2' or @text:outline-level='1'][1])"/>
+
+  <xsl:key match="text:h[@text:outline-level='7']" name="children6"
+    use="generate-id(preceding-sibling::text:h[@text:outline-level='6'
+	 or @text:outline-level='5'
+	 or @text:outline-level='4' or
 @text:outline-level='3' or @text:outline-level='2' or @text:outline-level='1'][1])"/>
 
   <xsl:key match="text:p[@text:style-name='Index 2']" name="secondary_children"
@@ -176,9 +187,11 @@ draw:plugin | draw:text-box | text:footnote-body | text:section"
           <authority/>
         </publicationStmt>
         <sourceDesc>
-          <p><xsl:apply-templates
-              select="/office:document/office:meta/meta:generator"/>Written by
-            OpenOffice</p>
+          <p>
+	    <xsl:apply-templates
+              select="/office:document/office:meta/meta:generator"/>
+	    <xsl:text>Written by OpenOffice</xsl:text>
+	  </p>
         </sourceDesc>
       </fileDesc>
       <profileDesc>
@@ -205,18 +218,15 @@ draw:plugin | draw:text-box | text:footnote-body | text:section"
         </xsl:if>
       </profileDesc>
       <revisionDesc>
-        <change>
-          <date>
-            <xsl:apply-templates select="/office:document/office:meta/dc:date"/>
-          </date>
-          <respStmt>
-            <name>
-              <xsl:apply-templates
-                select="/office:document/office:meta/dc:creator"/>
-            </name>
-          </respStmt>
-          <item>revision</item>
-        </change>
+	<change>
+	  <name>
+	    <xsl:apply-templates
+		select="/office:document/office:meta/dc:creator"/>
+	  </name>
+	  <date>
+	    <xsl:apply-templates select="/office:document/office:meta/dc:date"/>
+	  </date>
+	</change>
       </revisionDesc>
     </teiHeader>
   </xsl:template>
@@ -231,7 +241,8 @@ draw:plugin | draw:text-box | text:footnote-body | text:section"
 
   <xsl:template match="office:text">
     <body>
-      <xsl:apply-templates select="key('headchildren', generate-id())"/>
+      <xsl:apply-templates select="key('headchildren',
+				   generate-id())"/>
       <xsl:choose>
         <xsl:when test="text:h[@text:outline-level='1']">
           <xsl:apply-templates select="text:h[@text:outline-level='1']"/>
@@ -242,8 +253,19 @@ draw:plugin | draw:text-box | text:footnote-body | text:section"
         <xsl:when test="text:h[@text:outline-level='3']">
           <xsl:apply-templates select="text:h[@text:outline-level='3']"/>
         </xsl:when>
+        <xsl:when test="text:h[@text:outline-level='4']">
+          <xsl:apply-templates select="text:h[@text:outline-level='4']"/>
+        </xsl:when>
+        <xsl:when test="text:h[@text:outline-level='5']">
+          <xsl:apply-templates select="text:h[@text:outline-level='5']"/>
+        </xsl:when>
+        <xsl:when test="text:h[@text:outline-level='6']">
+          <xsl:apply-templates select="text:h[@text:outline-level='6']"/>
+        </xsl:when>
+        <xsl:when test="text:h[@text:outline-level='7']">
+          <xsl:apply-templates select="text:h[@text:outline-level='7']"/>
+        </xsl:when>
       </xsl:choose>
-
       <!-- output <div> to catchup and close document -->
       <xsl:call-template name="closedivloop">
         <xsl:with-param name="repeat"
@@ -293,13 +315,17 @@ draw:plugin | draw:text-box | text:footnote-body | text:section"
       <xsl:when test=".='Abstract'">
         <div type="abstract">
           <xsl:apply-templates select="key('headchildren', generate-id())"/>
-          <xsl:apply-templates select="key('children', generate-id())"/>
+          <xsl:apply-templates select="key('children1', generate-id())"/>
         </div>
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="make-section">
-          <xsl:with-param name="current" select="@text:outline-level"/>
-          <xsl:with-param name="prev" select="1"/>
+          <xsl:with-param name="current">
+	    <xsl:value-of select="@text:outline-level"/>
+	  </xsl:with-param>
+          <xsl:with-param name="prev">
+	    <xsl:text>1</xsl:text>
+	  </xsl:with-param>
         </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
@@ -307,12 +333,15 @@ draw:plugin | draw:text-box | text:footnote-body | text:section"
 
 
   <xsl:template
-    match="text:h[@text:outline-level='2'] | text:h[@text:outline-level='3']| text:h[@text:outline-level='4'] | text:h[@text:outline-level='5']">
+    match="text:h[@text:outline-level='2'] |
+	   text:h[@text:outline-level='3'] | 
+	   text:h[@text:outline-level='4'] | 
+	   text:h[@text:outline-level='5']">
     <xsl:variable name="level">
       <xsl:value-of select="@text:outline-level"/>
     </xsl:variable>
     <xsl:variable name="prelevel">
-      <xsl:value-of select="preceding::text:h[$level][1]/@text:outline-level "/>
+      <xsl:value-of select="preceding::text:h[1]/@text:outline-level "/>
     </xsl:variable>
     <xsl:if test="not($level &gt; $prelevel)">
       <xsl:call-template name="closedivloop">
@@ -332,7 +361,7 @@ draw:plugin | draw:text-box | text:footnote-body | text:section"
 
   <xsl:template name="closedivloop">
     <xsl:param name="repeat">0</xsl:param>
-    <xsl:if test="number($repeat) >= 1">
+    <xsl:if test="$repeat >= 1">
       <xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
       <xsl:call-template name="closedivloop">
         <xsl:with-param name="repeat" select="$repeat - 1"/>
@@ -369,11 +398,35 @@ draw:plugin | draw:text-box | text:footnote-body | text:section"
             <xsl:apply-templates select="."/>
           </xsl:if>
         </xsl:for-each>
-        <xsl:apply-templates select="key('children', generate-id())"/>
+	<xsl:choose>
+	  <xsl:when test="$current=1">
+	    <xsl:apply-templates select="key('children1',
+					 generate-id())"/>
+	  </xsl:when>
+	  <xsl:when test="$current=2">
+	    <xsl:apply-templates select="key('children2',
+					 generate-id())"/>
+	  </xsl:when>
+	  <xsl:when test="$current=3">
+	    <xsl:apply-templates select="key('children3',
+					 generate-id())"/>
+	  </xsl:when>
+	  <xsl:when test="$current=4">
+	    <xsl:apply-templates select="key('children4',
+					 generate-id())"/>
+	  </xsl:when>
+	  <xsl:when test="$current=5">
+	    <xsl:apply-templates select="key('children5',
+					 generate-id())"/>
+	  </xsl:when>
+	  <xsl:when test="$current=6">
+	    <xsl:apply-templates select="key('children6',
+					 generate-id())"/>
+	  </xsl:when>
+	</xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
 
-    <!-- output </div> -->
     <xsl:if test="$current = 1">
       <xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
     </xsl:if>
@@ -391,6 +444,9 @@ draw:plugin | draw:text-box | text:footnote-body | text:section"
   <xsl:template match="text:p[@text:style-name]">
     <xsl:choose>
       <xsl:when test="not(node())"/>
+      <xsl:when test="parent::text:note-body">
+          <xsl:apply-templates/>
+      </xsl:when>
       <xsl:when test="@text:style-name='Document Title'">
         <title>
           <xsl:apply-templates/>
@@ -436,6 +492,7 @@ draw:plugin | draw:text-box | text:footnote-body | text:section"
           <xsl:apply-templates/>
         </Output>
       </xsl:when>
+      <xsl:when test="normalize-space(.)=''"/>
       <xsl:otherwise>
         <p>
           <xsl:apply-templates/>
@@ -839,10 +896,6 @@ draw:plugin | draw:text-box | text:footnote-body | text:section"
   <xsl:template match="text:note-citation"/>
 
   <xsl:template match="text:note-body">
-    <xsl:apply-templates/>
-  </xsl:template>
-
-  <xsl:template match="text:note-body/text:p">
     <xsl:apply-templates/>
   </xsl:template>
 
