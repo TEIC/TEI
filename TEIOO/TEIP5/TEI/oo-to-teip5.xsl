@@ -435,6 +435,13 @@
       </xsl:otherwise>
     </xsl:choose>
 
+
+    <xsl:if test="$current=1 and following-sibling::text:h[@text:outline-level=1]">
+      <xsl:text disable-output-escaping="yes">&lt;/div</xsl:text>
+      <xsl:value-of select="$current"/>
+      <xsl:text disable-output-escaping="yes">&gt;</xsl:text>
+    </xsl:if>
+
   </xsl:template>
 
   <!-- special case paragraphs -->
