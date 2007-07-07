@@ -374,7 +374,10 @@
   <xsl:template name="make-section">
     <xsl:param name="current"/>
     <xsl:param name="prev"/>
-    <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+    <xsl:text disable-output-escaping="yes">&lt;div</xsl:text>
+    <xsl:text> type="div</xsl:text>
+    <xsl:value-of select="$current"/>
+    <xsl:text disable-output-escaping="yes">"&gt;</xsl:text>
 
     <xsl:call-template name="id.attribute"/>
 
