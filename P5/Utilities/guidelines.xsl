@@ -21,7 +21,9 @@
 <xsl:import href="odd2htmlp5.xsl"/>
 <xsl:param name="lang"/>
 <xsl:param name="doclang"/>
+<xsl:param name="footnoteFile">false</xsl:param>
 <xsl:param name="cssFile">guidelines.css</xsl:param>
+<xsl:param name="displayMode">both</xsl:param>
 
   <xsl:template name="includeCSS">
     <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
