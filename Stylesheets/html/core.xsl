@@ -1600,7 +1600,22 @@
             </xsl:with-param>
           </xsl:call-template>
         </xsl:when>
-	<xsl:when test="$splitLevel &gt;-1 and $ID='' and $STDOUT='true'"/>
+	<xsl:when test="$splitLevel &gt;-1 and $ID='' and
+			$STDOUT='true'"/>
+	<xsl:when test="$splitLevel &gt;-1 and self::tei:text">
+          <div class="notes text">
+            <div class="noteHeading">
+              <xsl:call-template name="i18n">
+                <xsl:with-param name="word">noteHeading</xsl:with-param>
+              </xsl:call-template>
+            </div>
+            <xsl:for-each
+              select="descendant::tei:note[not(@place='inline') and
+	      not(ancestor::tei:div)]">
+	      <xsl:apply-templates mode="printnotes" select="."/>
+	    </xsl:for-each>
+          </div>
+	</xsl:when>
         <xsl:otherwise>
           <div class="notes">
             <div class="noteHeading">
