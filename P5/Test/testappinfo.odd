@@ -62,12 +62,11 @@ program.</quote>
 	the application to declare an interest in elements of
 	the file which it has edited, so that other applications
 	or human editors may be more wary of making changes to
-	those sections of the file. The <att>xml:id</att> attribute should be
-	used to store a string which uniquely identifies the
+	those sections of the file. The <att>ident</att> and 
+	<att>version</att> attributes should be
+	used to uniquely identifie the
 	application and its major version number (for example,
-	<hi>ImageMarkupTool1</hi>) and applications should ensure that
-	only one such tag appears in the file for any given major
-	version of the application.</p></remarks>
+	<hi>ImageMarkupTool 1.0</hi>).</p></remarks>
       </elementSpec>
 
       <classSpec ident="model.applicationLike" mode="add" type="model">
@@ -84,19 +83,21 @@ program.</quote>
 	  <memberOf key="model.applicationLike"/>
 	</classes>
 	<content>
-	  <rng:oneOrMore>
-	    <rng:ref name="model.labelLike"/>
-	  </rng:oneOrMore>
-	  <rng:zeroOrMore>
-	    <rng:ref name="model.ptrLike"/>
-	  </rng:zeroOrMore>
+	  <rng:group>
+	    <rng:oneOrMore>
+	      <rng:ref name="model.labelLike"/>
+	    </rng:oneOrMore>
+	    <rng:zeroOrMore>
+	      <rng:ref name="model.ptrLike"/>
+	    </rng:zeroOrMore>
+	  </rng:group>
 	</content>
 	<attList>
 	  <attDef ident="ident" usage="req">
 	    <desc>Supplies an identifier for the application, independent of
 	    its version number or display name.</desc>
 	    <datatype>
-	      <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+	      <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"/>
 	    </datatype>
 	  </attDef>
 	  
@@ -105,7 +106,8 @@ program.</quote>
 	    its identifier or display name.</desc>
 	    <datatype xmlns:rng="http://relaxng.org/ns/structure/1.0">
 	      <rng:data type="token">
-		 <rng:param name="pattern">([\d]+[a-z]*[\d]*(\.[\d]+[a-z]*[\d]*){0,3})"</rng:param>  
+		 <rng:param 
+name="pattern">[\d]+[a-z]*[\d]*(\.[\d]+[a-z]*[\d]*){0,3}</rng:param>  
 	      </rng:data>
 <!--Explanation from Martin:
 
