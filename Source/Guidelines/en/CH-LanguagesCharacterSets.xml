@@ -67,144 +67,223 @@ available for extending beyond it, which are more fully discussed in
 
 <div type="div2" xml:id="CHSH"><head>Language identification</head>
   <p>Identification of the language a document or part thereof is
- written in is a crucial requirement for many envisioned usages of
- an electronic document. The TEI therefore accomodates this need in the
-following way:<list>
- <item>A global attribute <att>xml:lang</att> is defined for all TEI
- elements. Its value identifies the language used.</item>
- <item>The TEI Header has a section set aside for the information
- about the languages used in a document: see further <ptr
- target="#HD41"/>.</item>
-</list></p>
+  written in is a crucial requirement for many envisioned usages of
+  an electronic document. The TEI accomodates this in the
+  following way:
+  <list>
+    <item>A global attribute <att>xml:lang</att> is defined for all
+    TEI elements. Its value identifies the language used.</item>
+    <item>The TEI Header has a section set aside for the information
+    about the languages used in a document: see further <ptr
+    target="#HD41"/>.</item>
+  </list></p>
  <p>The value of the attribute <att>xml:lang</att> identifies the
-language using a coded value. For maximal compatibility with
-existing processes, modelling this value in the following way is
-recommended (this parallels the modelling of <att>xml:lang</att>):
-<?tei winita needs to be updated to RFC 4646 ?>
-<list>
- <item>The identifier for the language should be constructed as in RFC
- 3066<note place="foot"><bibl><editor>Phillips,
- Addison.</editor><editor>Davis, Mark</editor>, <title>Tags for
- Identifying Languages</title><date>2006-09</date> <ptr
- target="http://www.rfc-editor.org/rfc/rfc4646.txt"/> </bibl></note>
- or its successor. This <emph rend="bold">same</emph> identifier has
- to be used to identify the correspodnig <gi>language</gi> element in
- the TEI header, if one is present.</item>
-</list>
- </p>
- <p>RFC 3066 is an Internet draft, titled <title>Tags for Identifying
- Languages</title> which proposes the following mechanism for constructing an
- identifier (tag) for languages as
- administered by the Internet Assigned Numbers Authority  (IANA). The
- tag is
- assembled this tag from a sequence of subtags separated by the
- hyphen (-, U+002D) character.  It gives the language (possibly
- further identified with a sublanguage), a script and a region for
- this language, each possibly followed by a variant subtag.
-<list>
-<item>The identifier consists of at least one <soCalled>primary</soCalled> subtag,
- it may be followed by one or more <soCalled>extended</soCalled> subtags. </item>
-<item>Languages are identified by a language subtag, which may be
-a two letter code taken from ISO 639-1 or a three letter code
-taken from ISO 639-2. </item>
-<item>ISO 639-2 reserves for private use codes in the range 'qaa' to
-      'qtz'. These codes should be used for non-registered language
-      subtags.</item>
-<item>A single letter primary subtag "x"  indicates that
-the whole language tag is privately used.</item>
-<item>Extended language subtags must begin with the letter "s".
- They must follow the primary subtag and precede subtags that do
- define other properties of the language.  The order is significant.</item>
-<item>4 character subtags are interpreted as script identifiers
- taken from ISO 15924</item>
-<item>Region subtags can be either two letter country codes taken
- from ISO 3166 (with exceptions) or 3 digit codes from the UN
- Standard Country Codes for Statistical Use.</item>
-<item>Variant subtags may follow any of the above, but must
- precede private use extensions.</item>
-<item>Private use extensions are separated from the other subtags
- by the single letter subtag "x", which must be followed by at
- least one subtag.  They might consist of several subtags
- separated with "-", but may not exceed a length of 32 characters.</item>
-</list>
-<list>
- <head>Examples of language tags, mostly taken from RFC 3066</head>
- <item><list>
- <head>Simple language code</head>
- <item>de (German)</item>
- <item>ja (Japanese)</item>
- <item>zh (Chinese)</item>
-</list>
+ language using a coded value. The value of this attribute should
+ identify the language, possibly including the script used to
+ represent the language and the regional dialect, that is used in the
+ content of the element on which it is specified.
+ <list>
+ <item>The identifier for the language should be constructed as in BCP 47.
+ <note place="foot">
+   <ref target="ftp://ftp.rfc-editor.org/in-notes/bcp/bcp47.txt">Best
+   Current Practice 47</ref> currently comprises two separate recommendations:
+ <bibl>
+   <editor>Addison Phillips</editor>
+   <editor>Mark Davis</editor>
+   <idno>IETF RFC 4646</idno>
+   <title>Tags for Identifying Languages</title>
+   <date>2006-09</date>
+ </bibl>, and a companion recommendation 
+ <bibl>
+   <editor>Addison Phillips</editor>
+   <editor>Mark Davis</editor>
+   <idno>IETF RFC 4647</idno>
+   <title>Matching of Language Tags</title>
+   <date>2006-09</date>
+ </bibl>. Over time, other IETF documents may succeed RFC 4646 and RFC
+ 4647 as the best current practice.</note>
+ <note place="foot">The W3C Internationalization Activity has published a useful
+ introduction to BCP 47, <ref
+ target="http://www.w3.org/International/articles/language-tags/Overview.en.php">Language
+ tags in HTML and XML</ref>.</note>
  </item>
- <item><list>
- <head>Language code plus Script code</head>
- <item>zh-Hant (Traditional Chinese)</item>
- <item>en-Latn (English written in Latin script)</item>
- <item>sr-Cyrl (Serbian written with Cyrillic script)</item>
-</list>
-</item>
- <item><list>
- <head>Language-Script-Region</head>
- <item>zh-Hans-CN (Simplified Chinese for the PRC)</item>
- <item>sr-Latn-891 (Serbian, Latin script, Serbia and Montenegro)</item>
-</list>
-</item>
- <item><list>
- <head>Language-Region</head>
- <item>zh-SG (Chinese for Singapore)</item>
- <item>de-DE (German for Germany)</item>
-</list></item>
- <item><list>
- <head>Other</head>
- <item>zh-CN (Chinese in China, no script given)</item>
- <item>zh-Latn (Chinese transcribed in the Latin script)</item>
-</list>
- </item>
- <item><list>
- <head>Extended:</head>
- <item>de-CH-x-phonebook (phonebook collation for Swiss German)</item>
- <item>zh-s-nan (the Southern Min language of the macrolanguage Chinese)</item>
- <item>zh-s-nan-Hans-CN (the Southern Min language of the macrolanguage Chinese as spoken in China written in simplified Characters)</item>
- <item>zh-Latn-x-pinyin (Chinese transcribed in the Latin script
- using the Pinyin system)</item>
-</list>
-</item>
-</list>
-It should be noted that capitalization given here follows established
-convention (e.g. capital letters for country codes, small letters
-for language codes), but RFC 3066 does not ascribe any meaning to
-differences in capitalization.
- </p>
-
- <p>As can be seen, both RFC 3066 and ISO 639-2 provide extensions
- that can be employed by private convention.  The constructs mentioned
- above can thus be used to generate identifiers for any language, past
- and present, in any used in any area of the world.  If such private
- extensions are used within the context of the TEI, they should be
- documented within the <gi>language</gi> element of the TEI header,
- which might also provide a prose description of the language
- described by the language tag.</p>
-
-<p>While language, region and script can be adequately identified
-using this mechanism, there is only very rough provision to express a
-dimension of time for the language of a document; those codes provided
-(e.g. "grc" for "Greek, Ancient (to 1453)" in ISO 639-2) might not
-reflect the segments appropriate for a text at hand. Text encoders
-might express the time window of the language used in the document by
-means of the extension mechanism defined in RFC 3066 and relate that
-to a <gi>date</gi> element in the corresponding <gi>language</gi>
-section of the TEI header. </p>
-<p>Equivalences to language identifiers by other authorities can be
- given in the <gi>language</gi> section as well, but no formal
-mechanism for doing so has been defined.</p>
+ <item>If a corresponding <gi>language</gi> element is present in the
+ TEI header, then this <emph rend="bold">same</emph> identifier should
+ be used to identify said <gi>language</gi> element via its
+ <att>ident</att> attribute.</item>
+</list></p>
+ <p>One of the components of BCP 47 is RFC 4646, <title>Tags for
+ Identifying Languages</title>. It proposes the following mechanism
+ for constructing an identifier (tag) for languages as administered by
+ the Internet Assigned Numbers Authority (IANA). The tag is assembled
+ from a sequence of components or <term>subtags</term> separated by
+ the hyphen character (<mentioned>-</mentioned>, U+002D). The tag is
+ made of the following subtags, in the following order. Every subtag
+ except the first is optional. If present, each occurs only once,
+ except the fourth and fifth components (variant and extension), which
+ are repeatable.
+ <list type="gloss">
+   <label>language</label>
+   <item>The IANA-registered code for the language. This is almost
+   always the same as the ISO 639 2-letter language code if there is
+   one. It is recommended that this code be written in lower case.</item>
+   <label>script</label>
+   <item>The ISO 15924 code for the script. These codes consist of 4
+   letters, and it is recommended they be written with an initial
+   capital, the other three letters in lower case. The IETF recommends
+   this code be omitted unless it is necessary to make a distinction
+   you need.</item>
+   <label>region</label>
+   <item>Either an ISO 3166 country code or a UN M.49 region code that
+   is registered with IANA (not all such codes are registered, e.g. UN
+   codes for economic groupings or codes for countries for which there
+   is already an ISO 3166 2-letter code are not registered). The
+   former consist of 2 letters, and it is recommended they be written
+   in upper case. The latter consist of 3 digits.</item>
+   <label>variant</label>
+   <item>An IANA-registered variation. These codes <quote
+   rend="quoted">are used to indicate additional, well-recognized
+   variations that define a language or its dialects that are not
+   covered by other available subtags</quote>.<!-- RFC 4646, sect
+   2.2.5 --></item>
+   <label>extension</label>
+   <item>An extension has the format of a single letter followed by a
+   hyphen followed by additional subtags. These exist to allow for
+   future extension to BCP 47, but as of this writing no such
+   extensions are in use.</item>
+   <label>private use</label>
+   <item>An extension that uses the initial subtag of the single
+   letter <mentioned>x</mentioned> (i.e., starts with <code>x-</code>)
+   has no meaning except as negotiated among the parties involved.
+   These should be used with great care, since they interfere with the
+   interoperability that use of RFC 4646 is intended to promote. In
+   order for a document that makes use of these subtags to be TEI
+   conformant, a corresponding <gi>language</gi> element must be
+   present in the TEI header.</item>
+ </list></p>
+ <p>There are two exceptions to the above format. First, there are
+ language tags in the IANA registry that do not match the syntax of
+ RFC 4646, but are present because they have been
+ <soCalled>grandfathered</soCalled> from previous specifications.
+ There are just over thirty of these, of which eight have new
+ recommended values which should be used instead. E.g., while it is
+ still permissible to code the Navajo language as
+ <code>i-navajo</code>, the preferrred coding is <code>nv</code>.</p>
+ <p>Second, an entire language tag can consist of only a private use
+ subtag. These tags start with <code>x-</code>, and do not need to
+ follow any further rules established by the IETF and endorsed by
+ these Guidelines, but rather only need follow the rules agreed upon
+ by the parties involved in the creation and consumption of the
+ documents that make use of these tags. But, like all language tags
+ that make use of private use subtags, the language in question must
+ be documented in a corresponding <gi>language</gi> element in the TEI
+ header.</p>
 <p>
- The scope of the language identification is extending to the whole
- subtree of the document anchored at the element that carries the
- <att>xml:lang</att> attribute, including all elements and all
- attributes where a language might apply.<note place="foot">This will exclude all
- attributes where a non-textual data type has been specified, for
- example tokens, boolean values or predefined value lists.</note>
+ <list>
+   <head>Examples of language tags, mostly taken from RFC 3066</head>
+   <item><list>
+     <head>Simple language code</head>
+     <item>de (German)</item>
+     <item>ja (Japanese)</item>
+     <item>zh (Chinese)</item>
+   </list>
+   </item>
+   <item><list>
+     <head>Language code plus Script code</head>
+     <item>zh-Hant (Traditional Chinese)</item>
+     <item>en-Latn (English written in Latin script)</item>
+     <item>sr-Cyrl (Serbian written with Cyrillic script)</item>
+   </list>
+   </item>
+   <item><list>
+     <head>Language-Script-Region</head>
+     <item>zh-Hans-CN (Simplified Chinese for the PRC)</item>
+     <item>sr-Latn-891 (Serbian, Latin script, Serbia and Montenegro)</item>
+   </list>
+   </item>
+   <item><list>
+     <head>Language-Region</head>
+     <item>zh-SG (Chinese for Singapore)</item>
+     <item>de-DE (German for Germany)</item>
+   </list></item>
+   <item><list>
+     <head>Other</head>
+     <item>zh-CN (Chinese in China, no script given)</item>
+     <item>zh-Latn (Chinese transcribed in the Latin script)</item>
+   </list>
+   </item>
+   <item><list>
+     <head>Private use</head>
+     <item>x-mb (an invented language)</item>
+     <item>de-CH-x-phonebook (phonebook collation for Swiss German)</item>
+     <item>zh-Latn-x-pinyin (Chinese transcribed in the Latin script
+     using the Pinyin system)</item>
+   </list>
+   </item>
+ </list>
+It should be noted that capitalization given here follows established
+convention (e.g. upper case letters for country codes, lower case for
+language codes), but BCP 47 does not ascribe any meaning to
+differences in capitalization.</p>
+
+ <p>Because this system is extensible, the constructs mentioned above
+ can be used to generate identifiers for any language, past or
+ present, from any area of the world. If private extensions (i.e.,
+ tags that have <code>x-</code> subtags) are used within the context
+ of the TEI, they should be documented within a <gi>language</gi>
+ element of the TEI header, which may provide a prose description of
+ the language described by the language tag.</p>
+
+ <p>While language, script, and region can be adequately identified
+ using this mechanism, there is only very rough provision to express a
+ dimension of time for the language of a document; those codes
+ provided (e.g. <code>grc</code> for <q>Greek, Ancient (to 1453)</q>)
+ might not reflect the segments appropriate for a text at hand. One
+ mechanism for expressing the time window of a language is to use a
+ private use subtag and a TEI <gi>language</gi> element which includes
+ a <gi>date</gi>, as in the following example.
+
+ <eg><![CDATA[<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en-US">
+
+<!-- in the TEI header -->
+<language ident="en-US">Modern U.S. English</language>
+<language ident="en-US-x-colonial">U.S. English as spoken during
+the <date notAfter="1776">colonial period</date></language>
+
+<!-- in the body of the text -->
+<quote xml:lang="en-US-x-colonial">... you are upon your Passage or upon
+the Coast as you may think proper to draw up some more Particular
+&amp; General orders for the well Conducting &amp; Security of our
+Interest onboard yr Brigg that is in Particular to appoint &amp;
+Authorise any of your Officers onboard or Such other persons as you
+may think proper to take the Command of our Vessel &amp; Cargo and
+to follow your orders In Case anything shod happen to you as shold
+render you InCapable of doing the Buisness of the Voyage &amp; in
+genl to remove any officer onboard &amp;appoint any other officer
+or officers to act in yr sted during the voyage in which Case You'l
+order the Vessel to first touch at Barbadoes, from the Coast, where
+she may meet our more Particular Instructions for the better
+Government of the Voyage</quote>
+
+<!-- ... -->
+</TEI>]]>
+ </eg><!-- I took this from the XML source to http://pike.services.brown.edu/repository/repoman.php?verb=render&metsid=1157642129999104&view=tei_image&style=xml&id=1161047278689476.xml -->
 </p>
+
+ <p>Equivalences to language identifiers by other authorities can be
+ given in the <gi>language</gi> section as well, but no formal
+ mechanism for doing so has been defined.</p>
+
+ <p>The scope of the language identification extends to the whole
+ subtree of the document anchored at the element that carries the
+ <att>xml:lang</att> attribute, unless overridden with an instance of
+ <att>xml:lang</att> on a descendant element within that subtree. This
+ scope includes both element content and the values of
+ <soCalled>textual</soCalled> attributes, i.e. those attributes to
+ which a language might apply.<note place="foot">Currently this
+ encompasses only the <att>expand</att>, <att>norm</att>,
+ <att>split</att>, <att>value</att>, and <att>orig</att> attributes of
+ the <name type="class">att.lexicographic</name> class.</note></p>
 <!--
   <listBibl>
 <head>References</head>
