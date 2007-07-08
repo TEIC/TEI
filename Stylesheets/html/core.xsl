@@ -686,7 +686,7 @@
   <xsl:template match="tei:list">
     <xsl:if test="tei:head">
       <p class="listhead">
-      <xsl:apply-templates select="head"/>
+	<xsl:apply-templates select="tei:head"/>
       </p>
     </xsl:if>
     <xsl:choose>
