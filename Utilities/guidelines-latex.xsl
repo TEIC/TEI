@@ -30,32 +30,6 @@
 </xsl:template>
 
 
-<xsl:template match="tei:div0">
-  <xsl:apply-templates/>
-</xsl:template>
-
-<xsl:template match="tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-    <xsl:variable name="depth">
-      <xsl:apply-templates select="." mode="depth"/>
-    </xsl:variable>
-  <div>
-    <xsl:call-template name="divClassAttribute">
-      <xsl:with-param name="depth" select="$depth"/>
-    </xsl:call-template>
-    <xsl:call-template name="doDivBody">
-      <xsl:with-param name="Type" select="$depth"/>
-    </xsl:call-template>
-  </div>
-</xsl:template>
-
-<xsl:template match="tei:div1">
-    <xsl:variable name="depth">
-      <xsl:apply-templates select="." mode="depth"/>
-    </xsl:variable>
-  <xsl:call-template name="makeDivPage">
-    <xsl:with-param name="depth" select="$depth"/>
-  </xsl:call-template>
-</xsl:template>  
 
 </xsl:stylesheet>
 
