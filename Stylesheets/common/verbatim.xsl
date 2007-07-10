@@ -20,7 +20,7 @@
   <xsl:param name="endAttribute">&lt;/span&gt;</xsl:param>
   <xsl:param name="startAttributeValue">&lt;span class="attributevalue"&gt;</xsl:param>
   <xsl:param name="endAttributeValue">&lt;/span&gt;</xsl:param>
-  <xsl:param name="startNamespace">&lt;span class="namespace""&gt;</xsl:param>
+  <xsl:param name="startNamespace">&lt;span class="namespace"&gt;</xsl:param>
   <xsl:param name="endNamespace">&lt;/span&gt;</xsl:param>
 
   <xsl:param name="spaceCharacter">&#xA0;</xsl:param>

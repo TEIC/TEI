@@ -380,6 +380,15 @@
   <xsl:template match="tei:defaultVal" mode="weave" />
 
   <xd:doc>
+    <xd:short>Process elements tei:desc</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:desc">
+    <xsl:text>fires</xsl:text>
+    <xsl:apply-templates/>
+  </xsl:template>
+
+  <xd:doc>
     <xd:short>Process elements tei:elementSpec</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>

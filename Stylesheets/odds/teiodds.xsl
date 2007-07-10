@@ -2503,7 +2503,7 @@ select="$makeDecls"/></xsl:message>
 	      <xsl:call-template name="findLanguage"/>
 	    </xsl:variable>
 	    <xsl:if test="contains($langs,concat($currentLang,' '))">
-	      <xsl:value-of select="."/>
+	      <xsl:apply-templates select="."/>
 	    </xsl:if>
 	  </xsl:for-each>
 	</xsl:variable>
