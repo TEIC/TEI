@@ -4,26 +4,23 @@
 <p>This chapter specifies how a processing system may take advantage
 of the markup specification elements documented in chapter <ptr
 target="#TD"/> of these Guidelines in order to produce
-<list type="ordered">
-<item>project specific user documentation</item>
-<item>schemas in one or more schema languages</item>
-<item>validation tools for other processors</item>
-</list>
-</p>
+project specific user documentation, 
+schemas in one or more schema languages, and 
+validation tools for other processors.</p>
+
 <p>The specifications in this chapter are illustrative but not
 normative. Its function is to further illustrate the intended scope
 and application of the elements documented in chapter <ptr
 target="#TD"/>, since it is believed that these may have application
 beyond the areas directly addressed by the TEI.</p>
 
-<p>An ODD processing system  has two tasks to undertake:
-<list type="ordered">
-  <item>application of changes and additions in an ODD customization
+<p>An ODD processing system  has two tasks to undertake.
+Firstly, the application of changes and additions in an ODD customization
 (as described in <ptr target="#MD"/>) to the TEI P5 ODD specification
-through a process of selection,  merging and deletion</item>
-<item>conversion of the resulting unified ODD to the desired output</item>
-</list>
-An ODD processor is not mandated to do these two stages in sequence,
+through a process of selection,  merging and deletion. Secondly,
+the conversion of the resulting unified ODD to the desired output.</p>
+
+<p>An ODD processor is not mandated to do these two stages in sequence,
 but that can be a convenient way to simplify the second part of the
 work; this is how the tools used for the TEI Guidelines work.</p>
 
@@ -512,7 +509,8 @@ a RELAX NG pattern for each, using the naming conventions listed above. </p>
 <div>
 <head>Macros</head>
 <p>An ODD macro
-generates a corresponding RELAX NG pattern. Thus
+generates a corresponding RELAX NG pattern simply by copying the body
+of the <gi>content</gi> element. Thus
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <macroSpec module="tei" type="pe" ident="macro.phraseSeq">
   <content>
@@ -540,7 +538,7 @@ produces
     </zeroOrMore>
   </define>
 </egXML>
-Note that for the purpose of these Guidelines, we usually show the RELAX NG
+Note that in much of these Guidelines, we show the RELAX NG
 output in compact format; the ODD specification stores it in more
 verbose XML format, but the two are interchangeable.</p>
 </div>
@@ -678,13 +676,19 @@ is used to add a <gi>documentation</gi> element to the schema,
 which some editors use to provide help during composition. The 
 <gi>desc</gi> elements in the <gi>valList</gi> are used to create
 the human-readable sentence <quote>Sample values include: 1] no; 2]
-yes; 3] weak; 4] strong</quote>. Naturally, this sort of use
+yes; 3] weak; 4] strong</quote> Naturally, this sort of use
 of the documentation elements is not mandatory, and other ODD
 processors may ignore them when creating schemas.</p>
 </div>
 
 <div>
 <head>Elements</head>
+<p>An <gi>elementSpec</gi> produces a RELAX NG specification in two
+parts; firstly, it must generate a <gi>define</gi>
+pattern by which other elements
+can refer to it, and then secondly it must generate an
+<gi>element</gi>
+with the content model and attributes. </p>
 </div>
 
 </div>
