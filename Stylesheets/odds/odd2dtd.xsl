@@ -1004,8 +1004,9 @@
     </xsl:variable>
     <xsl:text>&#10;&lt;!--doc:</xsl:text>
     <xsl:call-template name="makeDescription">
-<xsl:with-param name="includeValList">true</xsl:with-param>
-</xsl:call-template>
+      <xsl:with-param name="includeValList">true</xsl:with-param>
+      <xsl:with-param name="coded">false</xsl:with-param>
+    </xsl:call-template>
     <xsl:text> --&gt;
 &lt;!ELEMENT </xsl:text>
     <xsl:value-of select="$ename"/>

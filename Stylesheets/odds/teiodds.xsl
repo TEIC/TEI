@@ -729,7 +729,9 @@ select="$makeDecls"/></xsl:message>
                   <xsl:if test="not($oddmode='tei')">
                     <a:documentation>
 		      <xsl:call-template name="makeDescription">
-			<xsl:with-param name="includeValList">true</xsl:with-param>
+			<xsl:with-param
+			    name="includeValList">true</xsl:with-param>
+			<xsl:with-param name="coded">false</xsl:with-param>
 		      </xsl:call-template>
                     </a:documentation>
                   </xsl:if>
@@ -883,7 +885,9 @@ select="$makeDecls"/></xsl:message>
 	<xsl:if test="not($oddmode='tei')">
 	  <a:documentation>
 	    <xsl:call-template name="makeDescription">
-	      <xsl:with-param name="includeValList">true</xsl:with-param>
+	      <xsl:with-param
+		  name="includeValList">true</xsl:with-param>
+	      <xsl:with-param name="coded">false</xsl:with-param>
 	    </xsl:call-template>
 	  </a:documentation>
 	</xsl:if>
@@ -1379,7 +1383,9 @@ select="$makeDecls"/></xsl:message>
 	    <xsl:if test="not($oddmode='tei')">
 	      <a:documentation>
 		<xsl:call-template name="makeDescription">
-		  <xsl:with-param name="includeValList">true</xsl:with-param>
+		  <xsl:with-param
+		      name="includeValList">true</xsl:with-param>
+		  <xsl:with-param name="coded">false</xsl:with-param>
 		</xsl:call-template>
 	      </a:documentation>
 	    </xsl:if>
@@ -1405,7 +1411,9 @@ select="$makeDecls"/></xsl:message>
 	    <xsl:if test="not($oddmode='tei')">
 	      <a:documentation>
 		<xsl:call-template name="makeDescription">
-		  <xsl:with-param name="includeValList">true</xsl:with-param>
+		  <xsl:with-param
+		      name="includeValList">true</xsl:with-param>
+		  <xsl:with-param name="coded">false</xsl:with-param>
 		</xsl:call-template>
 	      </a:documentation>
 	    </xsl:if>
@@ -1506,7 +1514,9 @@ select="$makeDecls"/></xsl:message>
       <xsl:if test="not($oddmode='tei')">
         <a:documentation>
 	  <xsl:call-template name="makeDescription">
-	    <xsl:with-param name="includeValList">true</xsl:with-param>
+	    <xsl:with-param
+		name="includeValList">true</xsl:with-param>
+	    <xsl:with-param name="coded">false</xsl:with-param>
 	  </xsl:call-template>
         </a:documentation>
       </xsl:if>
@@ -2437,6 +2447,7 @@ select="$makeDecls"/></xsl:message>
 
   <xsl:template name="makeDescription">
     <xsl:param name="includeValList">false</xsl:param>
+    <xsl:param name="coded">true</xsl:param>
     <xsl:variable name="documentationLanguage">
       <xsl:call-template name="generateDoc"/>
     </xsl:variable>
@@ -2488,6 +2499,7 @@ select="$makeDecls"/></xsl:message>
 
     </xsl:choose>
 <!-- now the description -->
+
     <xsl:choose>
       <xsl:when test="not(tei:desc)"/>
       <xsl:when test="count(tei:desc)=1">
@@ -2503,15 +2515,16 @@ select="$makeDecls"/></xsl:message>
 	      <xsl:call-template name="findLanguage"/>
 	    </xsl:variable>
 	    <xsl:if test="contains($langs,concat($currentLang,' '))">
-	      <xsl:apply-templates select="."/>
+	      <xsl:apply-templates />
 	    </xsl:if>
 	  </xsl:for-each>
 	</xsl:variable>
 	<xsl:choose>
 	  <xsl:when test="$D='' and tei:desc[not(@xml:lang)]">
-	    <xsl:text>(</xsl:text>
-	      <xsl:apply-templates select="tei:desc[not(@xml:lang)]"/>
-	      <xsl:text>) </xsl:text>
+	    <xsl:apply-templates select="tei:desc[not(@xml:lang)]"/>
+	  </xsl:when>
+	  <xsl:when test="$coded='false'">
+	    <xsl:value-of select="$D"/>
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <xsl:copy-of select="$D"/>
@@ -2519,6 +2532,16 @@ select="$makeDecls"/></xsl:message>
 	</xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
+
+<!--    <xsl:choose>
+      <xsl:when test="$coded='true'">
+	<xsl:copy-of select="$Desc"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$Desc"/>
+      </xsl:otherwise>
+    </xsl:choose>
+-->
     <xsl:choose>
       <xsl:when test="$includeValList='false'"/>
       <xsl:when test="tei:valList[@type='open']">
