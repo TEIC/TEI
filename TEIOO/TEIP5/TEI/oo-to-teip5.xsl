@@ -267,9 +267,16 @@
         </xsl:when>
       </xsl:choose>
       <!-- output <div>s to catch up and close document -->
+
       <xsl:call-template name="closedivloop">
-        <xsl:with-param name="repeat"
-          select="text:h[@text:outline-level][last()]/@text:outline-level"/>
+        <xsl:with-param name="start">
+	  <xsl:value-of
+	      select="text:h[@text:outline-level][last()]/@text:outline-level"/>
+	</xsl:with-param>
+        <xsl:with-param name="repeat">
+	  <xsl:value-of
+	      select="text:h[@text:outline-level][last()]/@text:outline-level"/>
+	</xsl:with-param>
       </xsl:call-template>
     </body>
   </xsl:template>
@@ -319,14 +326,28 @@
         </div1>
       </xsl:when>
       <xsl:otherwise>
+	<xsl:variable name="level">
+	  <xsl:value-of select="@text:outline-level"/>
+	</xsl:variable>
+	<xsl:variable name="prelevel">
+	  <xsl:value-of select="preceding::text:h[1]/@text:outline-level "/>
+	</xsl:variable>
+	<xsl:if test="preceding-sibling::text:h">
+	  <xsl:call-template name="closedivloop">
+	    <xsl:with-param name="start">
+	      <xsl:value-of select="$prelevel"/>
+	    </xsl:with-param>
+	    <xsl:with-param name="repeat" select="$prelevel - $level + 1"/>
+	  </xsl:call-template>
+	</xsl:if>
         <xsl:call-template name="make-section">
           <xsl:with-param name="current">
 	    <xsl:value-of select="@text:outline-level"/>
 	  </xsl:with-param>
           <xsl:with-param name="prev">
-	    <xsl:text>1</xsl:text>
+	    <xsl:value-of select="preceding::text:h[1]/@text:outline-level "/>
 	  </xsl:with-param>
-        </xsl:call-template>
+	</xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -345,6 +366,9 @@
     </xsl:variable>
     <xsl:if test="not($level &gt; $prelevel)">
       <xsl:call-template name="closedivloop">
+        <xsl:with-param name="start">
+	  <xsl:value-of select="$prelevel"/>
+	</xsl:with-param>
         <xsl:with-param name="repeat" select="$prelevel - $level + 1"/>
       </xsl:call-template>
     </xsl:if>
@@ -364,13 +388,19 @@
 
 
   <xsl:template name="closedivloop">
-    <xsl:param name="repeat">0</xsl:param>
+    <xsl:param name="repeat"/>
+    <xsl:param name="start"/>
     <xsl:if test="$repeat >= 1">
       <xsl:text disable-output-escaping="yes">&lt;/div</xsl:text>
-      <xsl:value-of select="$repeat"/>
+      <xsl:value-of select="$start"/>
       <xsl:text disable-output-escaping="yes">&gt;</xsl:text>
       <xsl:call-template name="closedivloop">
-        <xsl:with-param name="repeat" select="$repeat - 1"/>
+        <xsl:with-param name="start">
+	  <xsl:value-of select="$start - 1"/>
+	</xsl:with-param>
+        <xsl:with-param name="repeat">
+	  <xsl:value-of select="$repeat - 1"/>
+	</xsl:with-param>
       </xsl:call-template>
     </xsl:if>
   </xsl:template>
@@ -385,7 +415,6 @@
     <xsl:text disable-output-escaping="yes">&gt;</xsl:text>
 
     <xsl:call-template name="id.attribute"/>
-
     <xsl:choose>
       <xsl:when test="$current &gt; $prev+1">
         <head/>
@@ -435,12 +464,6 @@
       </xsl:otherwise>
     </xsl:choose>
 
-
-    <xsl:if test="$current=1 and following-sibling::text:h[@text:outline-level=1]">
-      <xsl:text disable-output-escaping="yes">&lt;/div</xsl:text>
-      <xsl:value-of select="$current"/>
-      <xsl:text disable-output-escaping="yes">&gt;</xsl:text>
-    </xsl:if>
 
   </xsl:template>
 
