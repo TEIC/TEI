@@ -1563,7 +1563,20 @@ select="$makeDecls"/></xsl:message>
             </rng:optional>
           </rng:list>
         </xsl:when>
-        <xsl:when test="$minOccurs=0 and $maxOccurs > 2">
+        <xsl:when test="$minOccurs=0 and $maxOccurs=3">
+          <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
+            <rng:optional>
+              <xsl:call-template name="attributeData"/>
+            </rng:optional>
+            <rng:optional>
+              <xsl:call-template name="attributeData"/>
+            </rng:optional>
+            <rng:optional>
+              <xsl:call-template name="attributeData"/>
+            </rng:optional>
+          </rng:list>
+        </xsl:when>
+        <xsl:when test="$minOccurs=0 and $maxOccurs > 3">
           <xsl:call-template name="occursOutOfBounds">
             <xsl:with-param name="min"><xsl:value-of select="$minOccurs"/></xsl:with-param>
             <xsl:with-param name="max"><xsl:value-of select="$maxOccurs"/></xsl:with-param>
@@ -1587,7 +1600,18 @@ select="$makeDecls"/></xsl:message>
             </rng:optional>
           </rng:list>
         </xsl:when>
-        <xsl:when test="$minOccurs=1 and $maxOccurs > 2">
+        <xsl:when test="$minOccurs=1 and $maxOccurs=3">
+          <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
+            <xsl:call-template name="attributeData"/>
+            <rng:optional>
+              <xsl:call-template name="attributeData"/>
+            </rng:optional>
+            <rng:optional>
+              <xsl:call-template name="attributeData"/>
+            </rng:optional>
+          </rng:list>
+        </xsl:when>
+        <xsl:when test="$minOccurs=1 and $maxOccurs > 3">
           <xsl:call-template name="occursOutOfBounds">
             <xsl:with-param name="min"><xsl:value-of select="$minOccurs"/></xsl:with-param>
             <xsl:with-param name="max"><xsl:value-of select="$maxOccurs"/></xsl:with-param>
@@ -2467,10 +2491,10 @@ select="$makeDecls"/></xsl:message>
     <xsl:choose>
       <xsl:when test="not(tei:desc)"/>
       <xsl:when test="count(tei:desc)=1">
-	<xsl:value-of select="tei:desc"/>
+	<xsl:apply-templates select="tei:desc"/>
       </xsl:when>
       <xsl:when test="tei:desc[@xml:lang=$firstLang]">
-	<xsl:value-of select="tei:desc[@xml:lang=$firstLang]"/>
+	<xsl:apply-templates select="tei:desc[@xml:lang=$firstLang]"/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:variable name="D">
@@ -2486,7 +2510,7 @@ select="$makeDecls"/></xsl:message>
 	<xsl:choose>
 	  <xsl:when test="$D='' and tei:desc[not(@xml:lang)]">
 	    <xsl:text>(</xsl:text>
-	      <xsl:value-of select="tei:desc[not(@xml:lang)]"/>
+	      <xsl:apply-templates select="tei:desc[not(@xml:lang)]"/>
 	      <xsl:text>) </xsl:text>
 	  </xsl:when>
 	  <xsl:otherwise>
