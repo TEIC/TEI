@@ -572,15 +572,25 @@ the apparatus for the second line of the poem (Diet.1.2).</p>
 &wit;
 </specGrp></p></div>
 <div type="div4" xml:id="TCAPWL"><head >The Witness List</head>
-<p>In the front matter of the edition, a list of all witnesses may be
-given if desired, in the form of a witness list, held within a
-<gi>witList</gi> element.  This witness list must contain a series of
-<gi>witness</gi> elements.  Each <gi>witness</gi> element should
-contain text describing that witness in detail and may also supply, as
-the value of its <att>xml:id</att> attribute, a specific sigil
-(siglum) or identifier, which can then be used elsewhere to reference this
-particular witness.
-<specList><specDesc key="witList"/><specDesc key="witness"/></specList></p>
+<p>A list of all identified witnesses should normally be supplied in
+the front matter of the edition, or in the <gi>sourceDesc</gi> element
+of its header. This may be given either as a simple bibliographic
+list, using the <gi>listBibl</gi> element described in <ptr
+target="#COBI"/>, or as  a <gi>witList</gi> element, which 
+contains a series of <gi>witness</gi> elements.  Each <gi>witness</gi>
+element may contain a brief characterisation of the witness, given as
+one or more prose paragraphs. If more detailed information about
+a manuscript witness is available, it should be represented using the
+<gi>msDesc</gi> element provided by the <ident>msdescription</ident>
+module; a <gi>msDesc</gi> may appear within a <gi>listBibl</gi>. </p>
+<p>Whether information about a particular witness is supplied by
+means of a <gi>bibl</gi>, <gi>msDesc</gi>, or <gi>witness</gi>
+element, a unique sigil (siglum) for this source should always be
+supplied,  using the global <att>xml:id</att> attribute. This
+identifier can then be used
+elsewhere to refer to this particular witness.  <specList><specDesc
+key="witList"/><specDesc key="witness"/><specDesc
+key="msDesc"/><specDesc key="bibl"/><specDesc key="listBibl"/></specList></p>
 <p>The minimal information provided by a witness list is thus the set of
 sigla for all the witnesses named in the apparatus.  For example, the
 witnesses referenced by the examples of this
@@ -613,8 +623,7 @@ citation, as in the following examples:
 </witList></egXML>
 As the last example shows, the witness description here may complement
 the short characterisation provided with a reference to a full
-description of the manuscript supplied elsewhere using the
-<gi>msDesc</gi> element discussed in chapter <ptr target="#MS"/>. Alternatively, it may contains a whole paragraph of
+description of the manuscript supplied elsewhere. Alternatively, it may contains a whole paragraph of
 commentary for each witness :
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><witList>
    <witness xml:id="A">die sog. <soCalled>Kleine (oder alte)
@@ -644,7 +653,16 @@ commentary for each witness :
       bzw. unbekannten Dichtern, ein Marienlobpreis und eine
       Minnelehre.)</witness>
 </witList></egXML></p>
-<p>It is common, in text-critical work, to refer to frequently occurring
+
+<p>It would however generally be preferable to represent such detailed
+information using an appropriately structured <gi>msDesc</gi> element,
+as discussed in chapter <ptr target="#MS"/>. Note also that if the
+witnesses being recorded are not manuscripts but printed works, it
+may be preferable to document them using the standard <gi>bibl</gi> or
+<gi>biblStruct</gi> elements described in <ptr target="#COBI"/>.
+<!-- insert Carmen's example here -->
+</p>
+<p>In text-critical work it is customary to refer to frequently occurring
 groups of witnesses by means of a single common sigil.  Such sigla may
 be documented as pseudo-witnesses in their own right by including a
 nested witness list within 
@@ -683,13 +701,14 @@ and therefore cannot be assigned to more than one group of witnesses.
 
 <p>Situations commonly arise where there are many more or less
 fragmentary witnesses, such that there may be quite distinct groups of
-witnesses for different parts of a text or collection of texts.  One may
-treat this with distinct <gi>witList</gi> elements for each different
-part.  Alternatively, one may have a single <gi>witList</gi> element at
-the beginning of the file listing all the witnesses, partial and
-complete, for the text, with the attestation of fragmentary witnesses
-indicated within the apparatus by use of the <gi>witStart</gi>
-and <gi>witEnd</gi> elements described in section <ptr target="#TCAPMI"/>.</p>
+witnesses for different parts of a text or collection of texts.  One
+may treat this with distinct <gi>witList</gi> elements for each
+different part.  Alternatively, one may have a single <gi>witList</gi>
+element at the beginning of the file or in its header listing all the
+witnesses, partial and complete, for the text, with the attestation of
+fragmentary witnesses indicated within the apparatus by use of the
+<gi>witStart</gi> and <gi>witEnd</gi> elements described in section
+<ptr target="#TCAPMI"/>.</p>
 <p>If a witness list is provided, it may be unnecessary to give, in each
 apparatus entry, an exhaustive list of the witnesses which agree with
 the base text.  An application program can — in principle — compare
