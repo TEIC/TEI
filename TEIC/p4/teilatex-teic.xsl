@@ -134,7 +134,7 @@ For further information on the TEI see \texttt{http://www.tei-c.org/}
 
 \fancyfoot[RO]{\TheFullDate\hfill}
 \fancyfoot[CO]{}
-\fancyfoot[LO]{http://www.tei-c.rog<xsl:value-of select="$REQUEST"/>}
+\fancyfoot[LO]{http://www.tei-c.org<xsl:value-of select="$REQUEST"/>}
 \fancyfoot[LE]{\TheFullDate}
 \fancyfoot[CE]{}
 \fancyfoot[RE]{http://www.tei-c.org<xsl:value-of select="$REQUEST"/>\hfill}
