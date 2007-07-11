@@ -64,33 +64,70 @@
 	   | office:annotation | text:ordered-list | text:list |
 	   text:footnote | text:a | text:list-item | draw:plugin |
 	   draw:text-box | text:footnote-body | text:section" 
-    use="generate-id((..|preceding-sibling::text:h[@text:outline-level='1']|preceding-sibling::text:h[@text:outline-level='2']|preceding-sibling::text:h[@text:outline-level='3']|preceding-sibling::text:h[@text:outline-level='4']|preceding-sibling::text:h[@text:outline-level='5'])[last()])"/>
+    use="generate-id((..|preceding-sibling::text:h[@text:outline-level])[last()])"/>
 
   <xsl:key match="text:h[@text:outline-level='2']" name="children1"
     use="generate-id(preceding-sibling::text:h[@text:outline-level='1'][1])"/>
 
   <xsl:key match="text:h[@text:outline-level='3']" name="children2"
-    use="generate-id(preceding-sibling::text:h[@text:outline-level='2' or
-@text:outline-level='1'][1])"/>
+    use="generate-id(preceding-sibling::text:h[@text:outline-level='2' 
+	 or @text:outline-level='1'][1])"/>
 
   <xsl:key match="text:h[@text:outline-level='4']" name="children3"
-    use="generate-id(preceding-sibling::text:h[@text:outline-level='3' or
-@text:outline-level='2' or @text:outline-level='1'][1])"/>
+    use="generate-id(preceding-sibling::text:h[@text:outline-level='3' 
+	 or @text:outline-level='2' 
+	 or @text:outline-level='1'][1])"/>
 
   <xsl:key match="text:h[@text:outline-level='5']" name="children4"
-    use="generate-id(preceding-sibling::text:h[@text:outline-level='4' or
-@text:outline-level='3' or @text:outline-level='2' or @text:outline-level='1'][1])"/>
+    use="generate-id(preceding-sibling::text:h[@text:outline-level='4' 
+	 or @text:outline-level='3' 
+	 or @text:outline-level='2' 
+	 or @text:outline-level='1'][1])"/>
 
   <xsl:key match="text:h[@text:outline-level='6']" name="children5"
     use="generate-id(preceding-sibling::text:h[@text:outline-level='5'
-	 or @text:outline-level='4' or
-@text:outline-level='3' or @text:outline-level='2' or @text:outline-level='1'][1])"/>
+	 or @text:outline-level='4' 
+	 or @text:outline-level='3' 
+	 or @text:outline-level='2' 
+	 or @text:outline-level='1'][1])"/>
 
   <xsl:key match="text:h[@text:outline-level='7']" name="children6"
     use="generate-id(preceding-sibling::text:h[@text:outline-level='6'
 	 or @text:outline-level='5'
-	 or @text:outline-level='4' or
-@text:outline-level='3' or @text:outline-level='2' or @text:outline-level='1'][1])"/>
+	 or @text:outline-level='4' 
+	 or @text:outline-level='3' 
+	 or @text:outline-level='2' 
+	 or @text:outline-level='1'][1])"/>
+
+  <xsl:key match="text:h[@text:outline-level='8']" name="children7"
+    use="generate-id(preceding-sibling::text:h[@text:outline-level='7'
+	 or @text:outline-level='5'
+	 or @text:outline-level='6'
+	 or @text:outline-level='4' 
+	 or @text:outline-level='3' 
+	 or @text:outline-level='2' 
+	 or @text:outline-level='1'][1])"/>
+
+  <xsl:key match="text:h[@text:outline-level='9']" name="children8"
+    use="generate-id(preceding-sibling::text:h[@text:outline-level='8'
+	 or @text:outline-level='7'
+	 or @text:outline-level='6'
+	 or @text:outline-level='5'
+	 or @text:outline-level='4' 
+	 or @text:outline-level='3' 
+	 or @text:outline-level='2' 
+	 or @text:outline-level='1'][1])"/>
+
+  <xsl:key match="text:h[@text:outline-level='10']" name="children9"
+    use="generate-id(preceding-sibling::text:h[@text:outline-level='9'
+	 or @text:outline-level='8'
+	 or @text:outline-level='7'
+	 or @text:outline-level='6'
+	 or @text:outline-level='5'
+	 or @text:outline-level='4' 
+	 or @text:outline-level='3' 
+	 or @text:outline-level='2' 
+	 or @text:outline-level='1'][1])"/>
 
   <xsl:key match="text:p[@text:style-name='Index 2']" name="secondary_children"
     use="generate-id(preceding-sibling::text:p[@text:style-name='Index 1'][1])"/>
@@ -266,7 +303,6 @@
           <xsl:apply-templates select="text:h[@text:outline-level='7']"/>
         </xsl:when>
       </xsl:choose>
-      <!-- output <div>s to catch up and close document -->
 
       <xsl:call-template name="closedivloop">
         <xsl:with-param name="start">
@@ -291,9 +327,9 @@
         </div>
       </xsl:when>
       <xsl:when test="@text:style-name='Appendix'">
-        <div1>
+        <div type="appendix">
           <xsl:apply-templates/>
-        </div1>
+        </div>
       </xsl:when>
       <xsl:otherwise>
         <xsl:variable name="sectvar">
@@ -320,10 +356,10 @@
   <xsl:template match="text:h[@text:outline-level='1']">
     <xsl:choose>
       <xsl:when test=".='Abstract'">
-        <div1 type="abstract">
+        <div type="abstract">
           <xsl:apply-templates select="key('headchildren', generate-id())"/>
           <xsl:apply-templates select="key('children1', generate-id())"/>
-        </div1>
+        </div>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:variable name="level">
@@ -357,7 +393,12 @@
     match="text:h[@text:outline-level='2'] |
 	   text:h[@text:outline-level='3'] | 
 	   text:h[@text:outline-level='4'] | 
-	   text:h[@text:outline-level='5']">
+	   text:h[@text:outline-level='5'] | 
+	   text:h[@text:outline-level='6'] | 
+	   text:h[@text:outline-level='7'] | 
+	   text:h[@text:outline-level='8'] | 
+	   text:h[@text:outline-level='9'] | 
+	   text:h[@text:outline-level='10']">
     <xsl:variable name="level">
       <xsl:value-of select="@text:outline-level"/>
     </xsl:variable>
@@ -392,7 +433,7 @@
     <xsl:param name="start"/>
     <xsl:if test="$repeat >= 1">
       <xsl:text disable-output-escaping="yes">&lt;/div</xsl:text>
-      <xsl:value-of select="$start"/>
+      <!--      <xsl:value-of select="$start"/>-->
       <xsl:text disable-output-escaping="yes">&gt;</xsl:text>
       <xsl:call-template name="closedivloop">
         <xsl:with-param name="start">
@@ -411,10 +452,11 @@
     <xsl:param name="current"/>
     <xsl:param name="prev"/>
     <xsl:text disable-output-escaping="yes">&lt;div</xsl:text>
+    <xsl:text> type=&quot;div</xsl:text>
     <xsl:value-of select="$current"/>
+    <xsl:text>&quot;</xsl:text>
+    <xsl:call-template name="id.attribute.literal"/>
     <xsl:text disable-output-escaping="yes">&gt;</xsl:text>
-
-    <xsl:call-template name="id.attribute"/>
     <xsl:choose>
       <xsl:when test="$current &gt; $prev+1">
         <head/>
@@ -458,6 +500,22 @@
 	  </xsl:when>
 	  <xsl:when test="$current=6">
 	    <xsl:apply-templates select="key('children6',
+					 generate-id())"/>
+	  </xsl:when>
+	  <xsl:when test="$current=7">
+	    <xsl:apply-templates select="key('children7',
+					 generate-id())"/>
+	  </xsl:when>
+	  <xsl:when test="$current=8">
+	    <xsl:apply-templates select="key('children8',
+					 generate-id())"/>
+	  </xsl:when>
+	  <xsl:when test="$current=9">
+	    <xsl:apply-templates select="key('children9',
+					 generate-id())"/>
+	  </xsl:when>
+	  <xsl:when test="$current=10">
+	    <xsl:apply-templates select="key('children10',
 					 generate-id())"/>
 	  </xsl:when>
 	</xsl:choose>
@@ -1055,6 +1113,15 @@
     <ptr target="{@text:ref-name}"/>
   </xsl:template>
 
+  <xsl:template name="id.attribute.literal">
+    <xsl:if test="child::text:reference-mark-start">
+      <xsl:text> xml:id=&quot;</xsl:text>
+        <xsl:value-of select="child::text:reference-mark-start/@text:style-name"
+        />
+	<xsl:text>&quot;</xsl:text>
+    </xsl:if>
+  </xsl:template>
+
   <xsl:template name="id.attribute">
     <xsl:if test="child::text:reference-mark-start">
       <xsl:attribute name="xml:id">
@@ -1062,8 +1129,6 @@
         />
       </xsl:attribute>
     </xsl:if>
-    <!-- Constraints imposed by OOo method of displaying
-reference-ref text means that xreflabel and endterm are lost -->
   </xsl:template>
 
   <xsl:template match="text:reference-mark-start"/>
