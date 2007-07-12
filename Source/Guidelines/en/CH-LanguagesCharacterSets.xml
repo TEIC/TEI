@@ -51,7 +51,11 @@ version of these Guidelines. At that time, it was essential to
 explicitly document the characters and encoded character sets used by
 almost any digital resource if it was to have any chance of being
 usable across different computer platforms or environments, but this
-is no longer the case. With the availability of the Unicode standard,
+is no longer the case. With the availability of &tus;<note place="foot"><bibl>&tusbook;
+<author><name type="organization">The Unicode Consortium</name></author>
+<publisher>Addison-Wesley Professional</publisher>
+<ref target="http://www.unicode.org/">http://www.unicode.org/</ref>
+</bibl></note>,
 almost 100,000 different characters representing almost all of the world's
 current writing systems are available and usable in any XML processing
 environment without formality. Nevertheless, however large the number
@@ -126,20 +130,29 @@ available for extending beyond it, which are more fully discussed in
    <label>language</label>
    <item>The IANA-registered code for the language. This is almost
    always the same as the ISO 639 2-letter language code if there is
-   one. It is recommended that this code be written in lower case.</item>
+   one. The list of available registered language subtags can be found
+   at <ptr
+   target="http://www.iana.org/assignments/language-subtag-registry"/>.
+   It is recommended that this code be written in lower case.</item>
    <label>script</label>
    <item>The ISO 15924 code for the script. These codes consist of 4
    letters, and it is recommended they be written with an initial
-   capital, the other three letters in lower case. The IETF recommends
-   this code be omitted unless it is necessary to make a distinction
-   you need.</item>
+   capital, the other three letters in lower case. The canonical list
+   of codes is maintained by the Unicode Consortium, and is available
+   at <ptr target="http://unicode.org/iso15924/iso15924-codes.html"/>.
+   The IETF recommends this code be omitted unless it is necessary to
+   make a distinction you need.</item>
    <label>region</label>
    <item>Either an ISO 3166 country code or a UN M.49 region code that
    is registered with IANA (not all such codes are registered, e.g. UN
    codes for economic groupings or codes for countries for which there
    is already an ISO 3166 2-letter code are not registered). The
    former consist of 2 letters, and it is recommended they be written
-   in upper case. The latter consist of 3 digits.</item>
+   in upper case. The list of codes can be found at <ptr
+   target="http://www.iso.org/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/index.html"/>.
+   The latter consist of 3 digits; the list of codes can be found at
+   <ptr
+   target="http://unstats.un.org/unsd/methods/m49/m49.htm"/>.</item>
    <label>variant</label>
    <item>An IANA-registered variation. These codes <quote
    rend="quoted">are used to indicate additional, well-recognized
@@ -162,12 +175,13 @@ available for extending beyond it, which are more fully discussed in
    present in the TEI header.</item>
  </list></p>
  <p>There are two exceptions to the above format. First, there are
- language tags in the IANA registry that do not match the syntax of
- RFC 4646, but are present because they have been
- <soCalled>grandfathered</soCalled> from previous specifications.
- There are just over thirty of these, of which eight have new
- recommended values which should be used instead. E.g., while it is
- still permissible to code the Navajo language as
+ language tags in the <ref
+ target="http://www.iana.org/assignments/language-subtag-registry">IANA
+ registry</ref> that do not match the syntax of RFC 4646, but are
+ present because they have been <soCalled>grandfathered</soCalled>
+ from previous specifications. There are just over thirty of these, of
+ which eight have new recommended values which should be used instead.
+ E.g., while it is still permissible to code the Navajo language as
  <code>i-navajo</code>, the preferrred coding is <code>nv</code>.</p>
  <p>Second, an entire language tag can consist of only a private use
  subtag. These tags start with <code>x-</code>, and do not need to
@@ -405,7 +419,7 @@ Identifiers in the Markup Context</title><ptr target="http://xml.coverpages.org/
     storey</soCalled> version (as in <ref target="#fig1">figure
     1</ref> in the examples from ArialRegular or Andale Mono Regular).
     We say that the single and double-storey symbols both represent
-    one and the same the same <emph rend="bold">abstract
+    one and the same <emph rend="bold">abstract
     character</emph> <mentioned>a</mentioned> using two different
     <emph rend="bold">glyphs</emph>. Similarly, an uppercase
     <mentioned>A</mentioned> in a serif typeface has additional
@@ -531,7 +545,7 @@ Identifiers in the Markup Context</title><ptr target="http://xml.coverpages.org/
    (hyphenation for example) require attention to both kinds of
    feature, but in general the kind of text encoding described in
    these Guidelines tends to focus on content rather than
-   appearance (see further <ref>6.3 Highlighting and Quotation</ref>). </p> 
+   appearance (see further <ptr target="#COHQ"/>). </p> 
    <p> An encoder wishing to record information about which glyphs
    are present in a given document may do so at either or both of
    two levels:  
@@ -542,26 +556,24 @@ Identifiers in the Markup Context</title><ptr target="http://xml.coverpages.org/
     appropriate elements and/or attributes</item> 
    </list> </p> 
    <p>The encoding practice adopted may be guided by, among other
-   things, an assessment of the most  frequent uses to which the
-   encoded text will be put. For example, if recognition of
-   identical characters represented by a variety of glyphs is the
-   main priority, it may be advisable to represent the glyph
-   variations at markup level, so that the character value can be
-   immediately exposed to the indexing and retrieval software.
-   Plainly, an encoding project will need to consider such issues
-   carefully and embody the outcome of their deliberations in local
-   manuals of procedure to ensure encoding consistency. Using
-   Unicode code points to represent glyph information requires that
-   such choices be documented in the TEI Header. Such documentation
-   does cannot of itself guarantee proper display of the desired
-   glyph but at least makes the intention of the encoder
-   discoverable.</p> 
+   things, an assessment of the most frequent uses to which the
+   encoded text will be put. For example, if recognition of identical
+   characters represented by a variety of glyphs is the main priority,
+   it may be advisable to represent the glyph variations at markup
+   level, so that the character value can be immediately exposed to
+   the indexing and retrieval software. Plainly, an encoding project
+   will need to consider such issues carefully and embody the outcome
+   of their deliberations in local manuals of procedure to ensure
+   encoding consistency. Using Unicode code points to represent glyph
+   information requires that such choices be documented in the TEI
+   Header. Such documentation cannot guarantee proper display of the
+   desired glyph, but at least makes the intention of the encoder
+   discoverable.</p>
    <p>At present the Unicode Standard does not offer detailed
    specifications for the encoding of glyph variations. These
-   Guidelines do give some recommendations; some discussion of
-   related matters is given in <ref>Chapter 18 Transcription of Primary Sources</ref>,
-   and  <ref>Chapter 25 Representation of non-standard Characters and Glyphs</ref> offers some features for the definition of variant
-   glyphs. </p> 
+   Guidelines do give some recommendations: there is some discussion
+   of related matters <ptr target="#PH"/>, and <ptr target="#WD"/>
+   offers some features for the definition of variant glyphs.</p>
   </div> 
   <div type="div3" xml:id="D4-44"> 
 <head><!--4.4. -->Entry of characters.</head>    
@@ -623,7 +635,7 @@ Identifiers in the Markup Context</title><ptr target="http://xml.coverpages.org/
    consult one another when devising entity names. The TEI mailing
    list may provide a suitable first point of contact for such
    consultations. Further advice on the matter of locally-defined
-   characters is contained in <ref>Chapter 25 Representation of non-standard Characters and Glyphs.</ref> </p>
+   characters is contained in <ptr target="#WD"/>.</p>
   </div>
   <div type="div3" xml:id="D4-45a">
    <head>Output of characters</head>
@@ -903,47 +915,46 @@ Identifiers in the Markup Context</title><ptr target="http://xml.coverpages.org/
    <p>The principles of Unicode are judiciously tempered with
    pragmatism. This means, among other things, that the actual
    repertoire of characters which the standard encodes, especially
-   those parts dating from its earlier days, include a number of
-   items which on a strict interpretation of the Unicode
-   Consortium's theoretical approach should not have been regarded
-   as abstract characters in their own right. Some of these
-   characters are grouped<!--, almost quarantined,--> together into a
-   code-point regions assigned to  <term>compatibility characters</term>.
-   Ligatures are a case in point. Ligatures (.e.g. the joining of
-   adjacent lower-case letters <q>s</q> and <q>t</q> or <q>f</q> and <q>i</q> in Latin
-   scripts, whether produced by a scribal practice of not lifting
-   the pen between strokes or dictated by the aesthetics of a type
-   design) are representational features with no added semantic
-   value beyond that of the two letters they unite (though for
-   historians of typography their presence and form in a given
-   edition may be of scholarly significance). However, by the time
-   the Unicode standard was first being debated, it had become
-   common practice to include single glyphs representing the more
-   common ligatures in the  repertoires of some typesetting devices
-   and high-end printers, and for the coded character sets built
-   into those devices to use a single code point for such glyphs,
-   even though they represent two distinct abstract characters. So
-   as to increase the acceptance of Unicode among the makers and
-   users of such devices, it was agreed that some such
-   pseudo-characters should be incorporated into the standard.
-   Nevertheless, if a project requires the presence of such
+   those parts dating from its earlier days, include a number of items
+   which on a strict interpretation of the Unicode Consortium's
+   theoretical approach should not have been regarded as abstract
+   characters in their own right. Some of these characters are
+   grouped<!--, almost quarantined,--> together into a code-point
+   regions assigned to <term>compatibility characters</term>.
+   Ligatures are a case in point. Ligatures (e.g. the joining of
+   adjacent lower-case letters <q>s</q> and <q>t</q> or <q>f</q> and
+   <q>i</q> in Latin scripts, whether produced by a scribal practice
+   of not lifting the pen between strokes or dictated by the
+   aesthetics of a type design) are representational features with no
+   added semantic value beyond that of the two letters they unite
+   (though for palaeographers and historians of typography their
+   presence and form in a given manuscript or edition may be of
+   scholarly significance). However, by the time the Unicode standard
+   was first being debated, it had become common practice to include
+   single glyphs representing the more common ligatures in the
+   repertoires of some typesetting devices and high-end printers, and
+   for the coded character sets built into those devices to use a
+   single code point for such glyphs, even though they represent two
+   distinct abstract characters. So as to increase the acceptance of
+   Unicode among the makers and users of such devices, it was agreed
+   that some such pseudo-characters should be incorporated into the
+   standard. Nevertheless, if a project requires the presence of such
    ligatured forms to be encoded, this should normally be done via
-   markup, not by the use of a compatibility character. That way,
-   the presence of the ligature can still be identified (and if
-   desired, rendered visually) where appropriate, but indexing and
-   retrieval software will treat the code-points in the document as
-   a simple sequential occurrence of the two constituent characters
-   concerned and so correctly align their semantics with
-   non-ligatured equivalents. Such ligatures should not be confused
-   with digraphs (usually) indicating diphthongs, as in the French
-   word "cœur". Digraphs are atomic orthographic units
-   representing abstract characters in their own right, not purely
-   glyphic amalgamations, and indexing and retrieval software must
-   treat them as such. Where a digraph occurs in a source text, it
-   should normally be encoded using the appropriate code-point for
-   the single abstract character which it indeed represents, either
-   by direct entry of the character concerned of through the
-   appropriate CER or NCR. </p> </div> 
+   markup, not by the use of a compatibility character. That way, the
+   presence of the ligature can still be identified (and if desired,
+   rendered visually) where appropriate, but indexing and retrieval
+   software will treat the code-points in the document as a simple
+   sequential occurrence of the two constituent characters concerned
+   and so correctly align their semantics with non-ligatured
+   equivalents. Such ligatures should not be confused with digraphs
+   (usually) indicating diphthongs, as in the French word "cœur".
+   Digraphs are atomic orthographic units representing abstract
+   characters in their own right, not purely glyphic amalgamations,
+   and indexing and retrieval software must treat them as such. Where
+   a digraph occurs in a source text, it should normally be encoded
+   using the appropriate code-point for the single abstract character
+   which it indeed represents, either by direct entry of the character
+   concerned of through the appropriate CER or NCR. </p> </div>
   <div type="div4" xml:id="D4-46-2"> 
    <head><!--4.6.2 -->Precomposed and combining characters and
    normalization</head>    <p>The treatment of characters with
