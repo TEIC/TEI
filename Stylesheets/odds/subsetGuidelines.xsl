@@ -69,7 +69,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
       <xsl:apply-templates select="tei:*[@mode='add']"/>
     </tei:div>
   </xsl:template>
-  <xsl:template match="tei:moduleRef">
+  <xsl:template match="tei:moduleRef[@key]">
     <xsl:variable name="test" select="@key"/>
     <xsl:call-template name="findNames">
       <xsl:with-param name="modname">

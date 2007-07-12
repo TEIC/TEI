@@ -82,8 +82,11 @@
       <xsl:apply-templates/>
     </tei:hi>
   </xsl:template>
-  <xsl:template match="tei:moduleRef">
+  <xsl:template match="tei:moduleRef[@key]">
     <tei:ptr target="#{@key}"/>
+  </xsl:template>
+  <xsl:template match="tei:moduleRef[@url]">
+    <tei:ptr target="{@url}"/>
   </xsl:template>
   <xsl:template match="tei:elementSpec">
     <xsl:choose>

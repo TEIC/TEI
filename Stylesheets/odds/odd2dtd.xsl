@@ -1158,7 +1158,8 @@
       <xsl:text>.attributes;</xsl:text>
     </xsl:if>
   </xsl:template>
-  <xsl:template match="tei:moduleRef" mode="tangle">
+
+  <xsl:template match="tei:moduleRef[@key]" mode="tangle">
     <xsl:if test="$verbose='true'">
       <xsl:message> moduleRef to <xsl:value-of select="@key"/>
       </xsl:message>
