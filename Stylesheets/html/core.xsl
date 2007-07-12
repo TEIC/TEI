@@ -2006,6 +2006,16 @@
         </xsl:attribute>
       </xsl:when>
     </xsl:choose>
+    <xsl:choose>
+    <xsl:when test="@id">
+      <xsl:copy-of select="@id"/>
+    </xsl:when>
+    <xsl:when test="@xml:id">
+      <xsl:attribute name="id">
+	<xsl:value-of select="@xml:id"/>
+      </xsl:attribute>
+    </xsl:when>
+    </xsl:choose>
   </xsl:template>
 
   <xd:doc>
