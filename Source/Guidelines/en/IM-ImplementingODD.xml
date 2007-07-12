@@ -1102,11 +1102,11 @@ one to define the new elements, and the other to ensure that they are
 placed into the TEI document structure at the right place.  We deal with
 the second first, by specifying the element class to which the new
 elements should be attached.  To do this, the parameter entity
-<ident type="pe">x.phrase</ident> should be modified to include the two
+<ident type="pe">macro.phraseSeq</ident> should be modified to include the two
 new generic identifiers.  The file containing local declarations of the
 standard parameter entities will thus contain a declaration of the
 following form:
-<eg><![CDATA[<!ENTITY % x.phrase 'it | bd |' >]]></eg></p>
+<eg><![CDATA[<!ENTITY % macro.phraseSeq 'it | bd |' >]]></eg></p>
 </div>
 
 </div>
@@ -1533,7 +1533,7 @@ customized.
   <!ENTITY % TEI.prose 'INCLUDE'>
   <!ENTITY % TEI.XML   'INCLUDE'>
   <!ENTITY tla "Three Letter Acronym">
-  <!ENTITY % x.phrase  'myTag|'>	 
+  <!ENTITY % macro.phraseSeq  'myTag|'>	 
   <!ELEMENT myTag (#PCDATA)    >
   <!- - any other special-purpose declarations or
        re-declarations go  here  - ->
@@ -1555,7 +1555,7 @@ first declaration of an entity counts.  In the above example,
 therefore, the declaration of the entity <ident type="ge">tla</ident>
 in the schema subset takes precedence over any declaration of the same
 entity in the file <ident type="file">tei2.dtd</ident>.  Similarly,
-the declaration for <ident type="pe">x.phrase</ident> takes precedence
+the declaration for <ident type="pe">macro.phraseSeq</ident> takes precedence
 over the existing declaration for that entity in the TEI dtd. It is
 perfectly legal for entities to be declared more than once; elements,
 by contrast, may not be declared more than once; if a declaration for
