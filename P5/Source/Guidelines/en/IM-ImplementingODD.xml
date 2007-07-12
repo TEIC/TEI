@@ -24,7 +24,7 @@ the conversion of the resulting unified ODD to the desired output.</p>
 but that can be a convenient way to simplify the second part of the
 work; this is how the tools used for the TEI Guidelines work.</p>
 
-<div>
+<div xml:id="IM-unified">
 <head>Making a unified ODD</head>
 <p>Merging an ODD customization with the  TEI P5 ODD specification
 is driven by a <gi>schemaSpec</gi> element, which specifies
@@ -150,8 +150,9 @@ could extend the customization in our schema as follows:
 </egXML>
 This means that when <code><![CDATA[<memberOf
 key="att.typed"/>]]></code> is processed, that class is looked up,
-each attribute which it defines is examined in turn, and an override
-is looked for in the schema customization. If the modification is of
+each attribute which it defines is examined in turn, and
+the customization is searched for  an override. 
+If the modification is of
 the attribute class itself, work proceeds as usual; if, however, the
 modification is at the element level, the class reference is deleted
 and a series of <gi>attRef</gi> elements is added to the element, one for
@@ -426,7 +427,7 @@ be sure which rule is being used. RELAX NG does not need to know
 which rule has fired, and so avoids the problem.</p>
 </div>
 
-<div>
+<div xml:id="IM-naming">
 <head>Naming and documenting in generated schemas</head>
 <p>When processing class, element or macro specifications, there are
 three general rules:
@@ -706,7 +707,7 @@ in the namespace
 attribute on the RELAX NG <gi>attribute</gi>. The body of the
 attribute is taken from the <gi>datatype</gi> child, unless there is a
 supporting <gi>valList</gi> with a <att>type</att> value of
-<q>closed</q>. In that case a RELAX NG <gi>choice</gi> is created,
+<val>closed</val>. In that case a RELAX NG <gi>choice</gi> is created,
 listing the allowed values. Thus the following attribute definition
 <egXML  xmlns="http://www.tei-c.org/ns/Examples">
   <attDef ident="full" usage="opt">
@@ -771,7 +772,7 @@ attribute classes, described above.</p>
 </div>
 
 
-<div>
+<div xml:id="IM-makeDTD">
 <head>Making a DTD</head>
 <p>Generation of DTDs largely follows the same pattern
 as RELAX NG generation, with one important exception — <hi>the order
@@ -784,9 +785,9 @@ declared in the right order. A processor
 must therefore work in the following order:
 <list type="ordered">
 <item>declare all model classes which have a <att>predeclare</att>
-value of <q>true</q></item>
+value of <val>true</val></item>
 <item>declare all macros  which have a <att>predeclare</att>
-value of <q>true</q></item>
+value of <val>true</val></item>
 <item>declare all other classes</item>
 <item>declare the modules (if DTD fragments are being
 constructed)</item>
@@ -795,7 +796,7 @@ constructed)</item>
 </list>
 The implementor who avoids careful study of this issue
 will come to grief.</p>
-<p>Let us consider two complete examples. Firstly, a simple
+<p>Let us consider a complete example, a simple
 element with no attributes of its own:
 <egXML  xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec module="namesdates" ident="faith">
@@ -834,7 +835,8 @@ a <att>xmlns</att> declaration for the element.
 </p>
 
 <p>A simpler rendition for a flattened DTD generated
-from a customization will result in  the following:
+from a customization will result in  the following, with no
+containing marked section, and no parameterized name:
 <eg>
 &lt;!ELEMENT faith %macro.phraseSeq;>
 &lt;!ATTLIST faith xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -863,18 +865,57 @@ from a customization will result in  the following:
  %att.datable.w3c.attribute.from;
  %att.datable.w3c.attribute.to;>
 </eg>
-</p>
+Here the attributes from classes have been expanded into
+individual entity references.</p>
 </div>
 
 <div>
 <head>Generating documentation</head>
+<p>In Donald Knuth's terminology of literate programming,
+the previous sections have dealt with process of <term>tangle</term>;
+to generate documentation, we now turn to the specification of
+<term>weave</term>.</p>
+
+<p>An ODD customization may consist largely of general documentation
+and examples, which will be processed as normal, but in addition
+it will contain a <gi>schemaSpec</gi> and possibly some
+<gi>specGrp</gi>
+fragments.</p>
+<p> The generated documentation may  be of two forms. On the one hand,
+we may document the customization itself, ie the elements which
+specify the difference between this and the full TEI. Alternatively,
+we may generate reference documentation for the complete subset of the
+TEI which results from applying the customization. The TEI Roma tools
+take the latter approach, and operate on the result of the first
+stage processing described in <ptr target="#IM-unified"/>.</p>
+
+<p>Generating reference documentation for <gi>elementSpec</gi>
+<gi>classSpec</gi> and <gi>macroSpec</gi> elements is largely
+dependent on the design of the preferred output. Some applications
+may, for example, want to turn all names of objects into hyperlinks,
+show lists of class members, or present lists of attributes as tables,
+lists, or inline prose.  Another technique implemented in these
+Guidelines is to show lists of potential <soCalled>parents</soCalled>
+for each element, by tracing which other elements have them as
+possible members of their content models.</p>
+<p>One model of display is shown in Figure <ptr target="#ref-faith"/>,
+corresponding to the <gi>faith</gi> element shown in section
+<ptr target="#IM-makeDTD"/>.</p>
+<figure xml:id="ref-faith">
+<graphic url="Images/ref-faith.png"/>
+<head>Example reference documentation for <gi>faith</gi></head>
+</figure>
+
 </div>
 
+<!-- not sure what was intended here -->
+
+<!--
 <div>
 <head>Validation tools for other processors</head>
 
 </div>
-
+-->
 
 <div xml:id="STPE">
 <head>Using TEI parameterized schema fragments</head>
@@ -981,22 +1022,24 @@ parameter entities which expand to the standard generic identifiers.
 This allows users to rename elements by redefining the appropriate
 parameter entity.  Parameter entities used for this purpose are formed
 by taking the standard generic identifier of the element and attaching
-the string <q>n.</q> as a prefix.  Thus the standard generic
+the string <val>n.</val> as a prefix.  Thus the standard generic
 identifiers for paragraphs, notes, and quotations, <gi>p</gi>,
 <gi>note</gi>, and <gi>q</gi> are defined by declarations of the
-following form: <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % n.p "p">
+following form: 
+<eg><![CDATA[<!ENTITY % n.p "p">
 <!ENTITY % n.pb "pb"> 
-<!ENTITY % n.persName "persName">]]></egXML>
+<!ENTITY % n.persName "persName">]]></eg>
 Since all names in the TEI DTD are case-sensitive, the specific mix of
 upper and lower case letters in the standard generic identifier must
 be preserved in the entity name.
  </p>
 
-<p>These declarations are automatically generated by an ODD processor
+<p>These declarations are generated by an ODD processor
 when TEI DTD fragments are created. </p>
 
-<p> In the RELAX NG schemas, all elements are defined using a pattern
-with the same name as the element: for example
+<p> In the RELAX NG schemas, all elements normally defined using a
+pattern with the same name as the element (as described in <ptr
+target="#IM-naming"/>): for example
 <eg>
 abbr = element abbr { abbr.content, abbr.attributes }
 </eg>
@@ -1062,7 +1105,7 @@ elements should be attached.  To do this, the parameter entity
 new generic identifiers.  The file containing local declarations of the
 standard parameter entities will thus contain a declaration of the
 following form:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % x.phrase 'it | bd |' >]]></egXML></p>
+<eg><![CDATA[<!ENTITY % x.phrase 'it | bd |' >]]></eg></p>
 </div>
 
 </div>
