@@ -384,7 +384,6 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:desc">
-    <xsl:text>fires</xsl:text>
     <xsl:apply-templates/>
   </xsl:template>
 
