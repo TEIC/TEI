@@ -16,7 +16,9 @@ The FSD serves three purposes:
 feature names and feature values and give a prose description as to what
 each represents.</item>
 <item>It provides a mechanism by which the encoder can define
-constraints on what it means to be a well-formed feature structure.
+constraints not only what it means to be a well-formed feature
+structure, but also <hi>valid</hi> feature structure, relative to a given
+theory stated in typed feature logic.
 These constraints may involve constraints on the range of a feature
 value, constraints on what features are valid within certain types of
 feature structures, or constraints that prevent the co-occurrence of
@@ -25,24 +27,47 @@ certain feature-value pairs.</item>
 intended interpretation of underspecified feature structures.  This
 involves defining default values (whether literal or computed) for
 missing features.</item></list></p>
-<p>The scheme described in this chapter may be used to document any 
-feature structure system, but is primarily intended for use with the 
-feature structure representation defined by these
-Guidelines both in earlier versions (P3 or P4), and in the present
-draft in chapter <ptr target="#FS"/>, which is also a candidate
-for international standardization as ISO DIS 24610 (part one). Part two of
-that standard, which will address validation mechanisms such as
-that described in this chapter, is currently in preparation by a
-joint ISO/TEI Working Group reporting to ISO TC 37/SC4. </p>
-<p>As a component of an interchange standard for encoded text, the FSD
+<p>The scheme described in this chapter may be used to document any
+feature structure system, but is primarily intended for use with the
+feature structure representation defined by the ISO 24610-1:2006
+standard, which corresponds with the recommendations presented in
+these Guidelines, <ptr target="#FS"/>. This chapter relies upon, but
+does not reproduce, formal definitions and descriptions presented more
+thoroughly in the ISO standard, which should be consulted in case of
+ambiguity or uncertainty. </p>
+<p>The FSD
 serves an important function in documenting precisely what the encoder
-intended by the system of feature structure markup used in the encoded
-text.  As application software is developed which makes use of encoded
-texts, the FSD will also become an important resource that will allow
-software to validate the feature structure markup in a text and to infer
-the full interpretation of underspecified feature structures.</p>
-<p>This chapter begins by describing how the encoded text uses header
-information to make links to any associated FSDs.  The second, third, and
+intended by the system of feature structure markup used in an XML-encoded
+text.  The FSD is also an important
+resource which standardizes the rules of inference used by software to
+validate the feature structure
+markup in a text, and to infer the full interpretation of
+underspecified feature structures.</p>
+<p>The reader should be aware, however, that there are a number of
+terminological mismatches between the present standard and
+conventional practice in both formal logic and practical linguistic
+applications of typed feature structures.  In particular, what shall
+be called an <soCalled>interpretation</soCalled> of a feature
+structure here is not an interpretation in the model-theoretic sense,
+but is instead a minimally informative (or equivalently, most general)
+extension <!--(see <ptr target="#subsumpSec"/>)--> of that feature structure
+that is consistent with a set of constraints declared by an FSD.  In
+linguistic application, such a system of constraints is the principal
+means by which the grammar of some natural language is expressed.
+There is, however, a great deal of disagreement as to what, if any,
+model-theoretic interpretation feature structures have in such
+applications.  This status of this formal kind of interpretation is
+not germane to the present standard.  The term,
+<soCalled>valid</soCalled>, normally appeals to a notion of formal
+semantics as well, but is merely used here to describe what is in fact
+a purely syntactic state of well-formedness in the sense defined by
+the logic of typed feature structures itself, as distinct from and in
+addition to the <soCalled>well-formedness</soCalled> that pertains at
+the level of this encoding standard <!--(see <ptr target="#wfSec"/>)-->.
+</p>
+
+<p>We begin by describing how an encoded text is associated with one
+or more FSDs.  The second, third, and
 fourth sections describe the overall structure of an FSD and give
 details of how to encode its parts.  The final section offers a full
 example.<note place="foot">A fuller discussion of the reasoning behind FSDs
@@ -124,7 +149,7 @@ structures of types <val>entry</val> and <val>subentry</val> is to
 be found in the entity at the URL <ident>Lexicon.fsd</ident>.
 </p>
 <p>The current recommendations provide no way of enforcing uniqueness
-of the <att>type</att> values for the <gi>fsdDecl</gi> element, nor of
+of the <att>type</att> values among <gi>fsdDecl</gi> elements, nor of
 requiring that every <att>type</att> value specified on a <gi>fs</gi>
 element be also declared on an <gi>fsdDecl</gi> element. Encoders
 requiring such constraints (which might have some obvious utility in
@@ -145,6 +170,14 @@ with the standard tei, header, and core modules, as well as the iso-fs
 module discussed in chapter <ptr target="#FS"/>. The selection and
 combination of modules to form a TEI schema is described in <ptr target="#STIN"/>.</p>
 
+<p>Broadly speaking, an FSD consists of one or more feature structure
+declarations (<gi>fsDecl</gi>), one or more feature definitions
+(<gi>fDecl</gi>), and zero or more feature structure constraints
+(<gi>cond</gi> and/or <gi>bicond</gi>).  Feature definitions and
+feature structure constraints occur only within the scope of
+feature structure declarations.
+</p>
+
 <p>The module is organized as follows:
 <specGrpRef target="#DFDFSD2"/>
 <specGrpRef target="#DFDX"/>
@@ -152,20 +185,21 @@ combination of modules to form a TEI schema is described in <ptr target="#STIN"/
 </p>
 </div>
 <div type="div2" xml:id="FDOV"><head>The Overall Structure of a Feature System Declaration</head>
-<p>A feature system declaration is encoded as a document of type
-<gi>teifsd</gi>.  It has two parts:  an obligatory header (which
-provides bibliographic information for the file) and a set of feature
-structure declarations (each of which defines one type of feature
-structure).  Each feature structure declaration in turn has three parts:
-an optional description (which gives a prose comment on what that type
-of feature structure encodes), an obligatory set of feature declarations
-(which specify range constraints and default values for the features in
-that type of structure), and optional feature structure constraints
-(which specify co-occurrence restrictions on feature values).  The
-header is encoded as a <gi>teiHeader</gi>, just as for any TEI
-document; see chapter <ptr target="#HD"/>.  The other components listed
-above are unique to feature system declarations.  Thus, the following
-new elements are involved:
+<p>A feature system declaration is encoded by means of a
+<gi>teifsd</gi> element.  Apart from its global attributes, this has
+two parts: an obligatory header (which provides bibliographic
+information for the file) and a set of feature structure declarations
+(each of which defines one type of feature structure).  Each feature
+structure declaration in turn has three parts: an optional description
+(which gives a prose comment on what that type of feature structure
+encodes), an obligatory set of feature declarations (which specify
+range constraints and default values for the features in that type of
+structure), and optional feature structure constraints (which specify
+co-occurrence restrictions on feature values).  The header is encoded
+as a <gi>teiHeader</gi>, just as for any TEI document; see chapter
+<ptr target="#HD"/>.  The other components listed above are unique to
+feature system declarations.  Thus, the following new elements are
+involved:
 <specList>
 <specDesc key="teifsd"/>
 <specDesc key="fsDecl"/>
@@ -176,16 +210,17 @@ new elements are involved:
 described in the next two sections of this chapter.  Note that the
 specification of similar <gi>fsDecl</gi> elements can be simplified by
 devising an inheritance hierarchy for the feature structure types.
-Each <gi>fsDecl</gi> element  may specify one or more
+Each <gi>fsDecl</gi> element  may name one or more
 <soCalled>basetypes</soCalled>from
-which it inherits feature declarations and constraints, using the  <att>baseTypes</att> attribute.  For instance,
+which it inherits feature declarations and constraints (these are
+often called <soCalled>supertypes</soCalled>). For instance,
 suppose that <tag>fsDecl type="Basic"</tag> contains <tag>fDecl
 name="One"</tag> and <tag>fDecl name="Two"</tag>, and that <tag>fsDecl
 type="Derived" baseTypes="Basic"</tag> contains just <tag>fDecl
 name="Three"</tag>.  Then any instance of <tag>fs type="Derived"</tag>
-may include all three features.  This is because <tag>fsDecl
+must include all three features.  This is because <tag>fsDecl
 type="Derived"</tag> inherits the two feature declarations from
-<tag>fsDecl type="Basic"</tag> when it specifies a <att>baseTypes</att>
+<tag>fsDecl type="Basic"</tag> when it specifies a base type
 of <val>Basic</val>.</p>
 <p>The following sample shows the overall structure of a complete FSD:
  <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -209,38 +244,101 @@ of <val>Basic</val>.</p>
            <!-- Declare another type of feature structure -->
      </fsDecl>
   </teifsd></egXML></p>
+
+<p>The attribute <att>baseTypes</att> gives the name of one or more types
+from which this type inherits feature specifications and constraints;
+if this type includes a feature specification with the same name as
+one inherited from any of the types specified by this attribute, or if
+more than one specification of the same name is inherited, then the
+possible values of that feature is determined by unification.
+Similarly, the set of constraints applicable is derived by conjoining
+those specified explicitly within this element with those implied by
+the baseTypes attribute. When no base type is specified, no feature
+specification or constraint is inherited.
+</p>
+<p>Although the present standard does provide for default feature values,
+feature inheritance is defined to be monotonic.
+</p><p>
+The process of combining constraints may result in a contradiction,
+for example if two specifications for the same feature specify
+disjoint ranges of values, and at least one such specification is
+mandatory. In such a case, there is no valid feature structure of the
+type being defined.
+</p><p>
+Every type specified by <att>baseTypes</att> must be a single word which
+is a legal XML name; for example, they cannot include whitespace or
+begin with digits.  Multiple base types are separated with spaces,
+e.g. <tag>fsDecl type="Sub" baseTypes="Super1 Super2"</tag>.
+</p>
 <p>The formal definition of the <gi>teifsd</gi> and its components is as follows:
 <specGrp xml:id="DFDFSD2" n="Feature System Declaration">
 &teifsd;
 &fsDecl;&fsDescr;
 </specGrp>
 </p>
+
+
+
 </div>
 <div type="div2" xml:id="FDFD"><head>Feature Declarations</head>
 <p>Each feature is declared in an <gi>fDecl</gi> element whose
 <att>name</att> attribute identifies the feature being declared; this
 matches the <att>name</att> attribute of the <gi>f</gi> elements it
-declares.  An <gi>fDecl</gi> also has an <att>org</att> attribute
+declares.  
+<!--
+An <gi>fDecl</gi> also has an <att>org</att> attribute
 which declares the organizing principle for the values of the
 <gi>f</gi> elements it declares.  That is, the value may be a 
 <val>unit</val> (a single value), a 
 <val>set</val> (in which the order is not significant and
 there are no duplicates), a <val>bag</val> (in which
 the order is not significant but duplicates are allowed), or a <val>list</val> (in which the order is significant).  (See
-definition of <att>org</att> attribute of <gi>f</gi> in section <ptr target="#FSSS"/>.)  An <gi>fDecl</gi> has three parts: an optional
+definition of <att>org</att> attribute of <gi>f</gi> in section <ptr
+target="#FSSS"/>.)  -->
+
+An <gi>fDecl</gi> has three parts: an optional
 prose description (which should explain what the feature and its
 values represent), an obligatory range specification (which declares
 what values the feature is allowed to have), and an optional default
 specification (which declares what default value should be supplied
-when the named feature does not appear in an <gi>fs</gi>).  A single
+when the named feature does not appear in an <gi>fs</gi>). 
+If, in a feature
+structure, a feature:
+<list><item> is not optional (i.e., is obligatory),</item>
+<item> has no value provided, or the value <gi>default</gi> is
+provided (see <ref target="#FSBO">ISO 24610-1, Subclause 5.10, Default Values</ref>, and</item>
+<item> either has no default specified, or has conditional defaults,
+none of the conditions on which is met,</item>
+</list>
+then the value of this feature in the feature structure's most
+general valid extension is the most general value provided in its
+<gi>vRange</gi>, in the case of a unit organization, or the
+singleton set, bag or list containing that element, in the case of a
+complex organization.  If the feature:
+<list><item> is optional,</item>
+<item> has no value provided, or the value <gi>default</gi> is
+provided, and</item>
+<item> either has a default specified, or has conditional defaults,
+one of the conditions on which is met,</item>
+</list>
+then this feature does have a value in the feature structure's most
+general valid extension when it exists, namely the default value that
+pertains.
+</p>
+<p>It is possible that a feature structure will not have a valid
+extension because the default value that pertains to a feature is not
+consistent with that feature's declared range.  Additional tools
+are required for the enforcement of such criteria.
+</p>
+<!-- A single
 unconditional default value may be specified, or multiple conditional
 values.  If no default is specified, or if none of the conditions is
 met, then the default value is <gi>none</gi>; in other words, the
 feature is not applicable (see section <ptr target="#FSBO"/> for a
-discussion of the <gi>none</gi> element).</p>
+discussion of the <gi>none</gi> element).</p>-->
 <p>The following elements are  used in feature system declarations:
 <specList>
-<specDesc key="fDecl" atts="name org"/>
+<specDesc key="fDecl" atts="name org optional"/>
 <specDesc key="fDescr"/>
 <specDesc key="vRange"/>
 <specDesc key="vDefault"/>
@@ -251,17 +349,21 @@ conditions for supplying default values is based on the operation of
 <term>subsumption</term>.  Subsumption is a standard operation in
 feature-structure-based formalisms.  Informally, a feature structure
 <emph>fs</emph> subsumes all feature structures that are at least as
-informative as itself; that is, all feature structures that specify at
-least as many features as <emph>fs</emph> with values at least as
-informative as those given in <emph>fs</emph> (Pereira 1987:6; see also
-Shieber 1986:14–16).<note place="foot"><bibl>Fernando C. N. Pereira, <title>Grammars and logics of partial
+informative as itself; that is, all feature structures that
+specify all of the feature values that FS does with values that are
+subsumed by the values that FS has, and that have all of the
+re-entrancies that FS does. (Carpenter 1992).<note place="foot"> See
+also <bibl>Fernando C. N. Pereira, <title>Grammars and logics of partial
 information</title>, SRI International Technical Note 420 (Menlo
 Park, CA: SRI International, 1987)</bibl>, and
 <bibl>Stuart Shieber, <title>An Introduction to Unification-based
 Approaches to Grammar</title>, CSLI Lecture Notes 4 (Palo Alto,
 CA: Center for the Study of Language and Information,
 1986).</bibl></note>
-A more formal definition requires that we first define the notion of
+A more formal definition is provided in ISO 24610-1:2006 <!-- <ptr
+target="#reviewSec"/>-->. </p>
+
+<!-- requires that we first define the notion of
 <q>domain of a feature structure.</q> A feature structure can be viewed
 as a partial function that maps features onto values; when viewed in
 this way, the domain of a feature structure is the set of top-level
@@ -272,7 +374,7 @@ structures).  We can now offer a more precise definition:
      is a subset of the domain of <emph>fs′</emph>, and for every
      feature <emph>f</emph> in the domain of <emph>fs</emph>, the
      value of <emph>f</emph> in <emph>fs</emph> subsumes the value
-     of <emph>f</emph> in <emph>fs′</emph>.</q></p>
+     of <emph>f</emph> in <emph>fs′</emph>.</q></p>-->
 <p>Following the spirit of the informal definition above, we can extend
 subsumption in a straightforward way to cover alternation, negation,
 special primitive values, and the use of attributes in the markup.
@@ -282,10 +384,11 @@ of a value <val>v</val> (represented by means of the
 subsumes any value that is not <val>v</val>; for
 example <code>&lt;vNot&gt;&lt;numeric value='0'/&gt;&lt;/vNot&gt;</code> subsumes any
 numeric value other than zero.
-The value <tag>binary value="true"</tag> subsumes any value that is in
+<!--The value <tag>binary value="true"</tag> subsumes any value that is in
 the range of a feature, and the value <tag>binary value="false"</tag>
-subsumes any value that is not.  The value <tag>fs
-type="X"/</tag> subsumes any feature structure of type <val>X</val>.
+subsumes any value that is not.  --> The value <tag>fs
+type="X"/</tag> subsumes any feature structure of type <val>X</val>,
+even if it is not valid.
 </p>
 <!-- restore discussion of subsumption removed from old FS here? -->
 <p>As an example of feature declarations, consider the following extract
@@ -319,14 +422,14 @@ be encoded as follows:
   <vDefault><binary value="false"/></vDefault>
 </fDecl></egXML></p>
 <p>The value range is specified as an alternation (more precisely, an
-exclusive disjunction), which can be reporesented by  the
-<gi>binary</gi> feature value.  <!--of <gi>plus/</gi> and <gi>minus/</gi>.-->  That is,
+exclusive disjunction), which can be represented by  the
+<gi>binary</gi> feature value.   That is,
 the value must be either true or false, but cannot be both or neither.</p>
 <p>The CONJ feature indicates the surface form of the conjunction used
 in a construction.  The ~ in the default rule (see FSD 2 above)
 represents negation.  This means that by default the feature is not
-applicable, in other words, no conjunction is taking place.  This
-corresponds to the simple value <gi>none</gi><!--; see section <ptr target="#FSBO"/>-->.  Note that this is distinct from the NIL value allowed in
+applicable, in other words, no conjunction is taking place.  Note that
+CONJ not being present  is distinct from CONJ being present but having the NIL value allowed in
 the value range.  In their analysis, NIL means that the phenomenon of
 conjunction is taking place but there is no explicit conjunction in the
 surface form of the sentence.  The feature declaration for this feature
@@ -349,18 +452,22 @@ would be encoded as follows:
 </fDecl></egXML>
  <!-- binary was "none" -->
 Note that the <gi>vDefault</gi> is not strictly necessary in this case,
-since <gi>none</gi> is the value assumed in the absence of a default
-specification.</p>
+since the binary value of <val>false</val> only serves to convey the
+information that the feature has no other legitimate value.
+</p>
+
 <p>The COMP feature indicates the surface form of the complementizer
 used in a construction.  In value range, it is analogous to CONJ.
 However, its default rule (see FSD 9 above) is conditional.  It says
-that if the verb form is infinitival (the VFORM feature is not mentioned
-in the rule since it is the only feature that can take INF as a value),
-and the construction has a subject, then a <mentioned>for</mentioned> complement
-must be used.  For instance, to make John the subject of the infinitive
-in <mentioned>It is necessary to go,</mentioned> a <mentioned>for</mentioned> complement
-must be used; that is, <mentioned>It is necessary for John to go.</mentioned>
+that if the verb form is infinitival (the VFORM feature is not
+mentioned in the rule since it is the only feature that can take INF
+as a value), and the construction has a subject, then a
+<mentioned>for</mentioned> complement must be used.  For instance, to
+make John the subject of the infinitive in <mentioned>It is necessary
+to go,</mentioned> a <mentioned>for</mentioned> complement must be
+used; that is, <mentioned>It is necessary for John to go.</mentioned>
 The feature declaration for this feature would be encoded as follows:
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fDecl name="COMP">
    <fDescr>surface form of the complementizer</fDescr>
    <vRange>
@@ -406,7 +513,8 @@ subsumes any string that is not the empty
 string.</p>
 <p>The formal definition for feature declarations follows.  Note that
 the class <ident type="class">model.featureVal</ident> includes all possible
-single feature values, including a <gi>vAlt</gi>.
+single feature values, including  feature structures, alternations
+(<gi>vAlt</gi>) and complex collections (<gi>vColl</gi>).
 <specGrp xml:id="DFDX" n="Feature definitions">
 &fDecl;&fDescr;&vRange;&vDefault;&if;&then;
 </specGrp></p></div>
@@ -424,11 +532,25 @@ structure is valid only if it meets all the constraints.  The
 boolean logic which succeeds when both the antecedent and consequent are
 true, or whenever the antecedent is false.  The <gi>bicond</gi> element
 encodes the biconditional (if and only if) operation of boolean logic.
-It succeeds only when both antecedent and consequent are true, or both
-are false.  In feature structure constraints the antecedent and
+It succeeds only when the corresponding
+if-then conditionals in both directions are true. <!--It succeeds only when both antecedent and consequent are true, or both
+are false. --> In feature structure constraints the antecedent and
 consequent are expressed as feature structures; they are considered true
-if they <term rend="noindex">subsume</term><index><term>subsumption</term><index><term>of feature structures</term></index></index>
-(see section <ptr target="#FDFD"/>) the target feature structure.  The
+if they <term rend="noindex">subsume</term><!--<index><term>subsumption</term><index><term>of feature structures</term></index></index>-->
+(see section <ptr target="#FDFD"/>) the feature structure in question, but in the
+case of consequents, this truth is asserted rather than simply
+tested.  That is to say, a conditional is enforced by determining that
+the antecedent does not (and will never) subsume the given feature
+structure, or by determining that the antecedent does subsume the
+given feature structure, and then unifying the consequent with it (the
+result of which, if successful, will be subsumed by the consequent).
+In practice, the enforcement of such constraints can result in
+periods in which the truth of a constraint with respect to a given
+feature structure is simply not known; in this case, the constraint
+must be persistently monitored as the feature structure becomes more
+informative until either its truth value is determined or computation
+fails for some other reason.</p>
+<p> The
 following elements make up the <gi>fsConstraints</gi> part of an FSD:
 <specList><specDesc key="fsConstraints"/><specDesc key="cond"/><specDesc key="bicond"/><specDesc key="then"/><specDesc key="iff"/></specList></p>
 <p>For an example of feature structure constraints, consider the
@@ -462,9 +584,9 @@ BAR='0'.  That is,
 </bicond></egXML></p>
 <!-- <binary> was <any>-->
 <p>The final constraint says that if a construction has a BAR value of 1
-(i.e., it is a phrase), then the SUBCAT feature is irrelevant (~).
+(i.e., it is a phrase), then the SUBCAT feature should be absent (~).
 This is not biconditional, since there are other instances under which
-the SUBCAT feature is irrelevant.  That is,
+the SUBCAT feature is inappropriate.  That is,
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><cond>
    <fs><f name="BAR"><symbol value="1"/></f></fs>
   <then/>
