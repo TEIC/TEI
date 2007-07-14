@@ -904,30 +904,33 @@ All, apart from <gi>langKnowledge</gi>, have a content model of <ident type="cla
 exemplifying here too? -->
 </p>
 <p>The <gi>langKnowledge</gi> element contains either paragraphs or a
- number of <gi>langKnown</gi> elements; both take a <att>tag</att>
- (or <att>tags</att>) attribute, which provides a standard code or
- <soCalled>tag</soCalled> for the language, as discussed in <ptr
- target="#CHSH"/>. Such tags are defined by RFC 4646<note
-place="foot">For additional information on language codes see the discussion at
-<ptr target="http://www.iana.org/assignments/language-subtag-registry"/> and
-<ptr target="http://www.w3.org/International/articles/language-tags/Overview.en.php"/></note>,
-<gi>langKnown</gi> also has a <att>level</att> attribute to
-indicate the level of the person's competence in the language. It is
-thus possible either to say:
+number of <gi>langKnown</gi> elements; it may take a <att>tags</att>
+attribute, which provides one or more standard codes or
+<soCalled>tag</soCalled>s for the languages. The <gi>langKnown</gi>
+element must have a <att>tag</att> attribute, which indicates the
+language with the same kind of <soCalled>language tag</soCalled>.
+These <soCalled>language tags</soCalled> are discussed in detail in
+<ptr target="#CHSH"/>.</p>
+<p>Furthermore, the <gi>langKnown</gi> element also has a
+<att>level</att> attribute to indicate the level of the person's
+competence in the language. It is thus possible either to say:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<langKnowledge tags="ff fr wo en"><p>Speaks fluent Fulani, Wolof and French. Some knowledge of English.</p></langKnowledge>
+<langKnowledge tags="ff fr wo en"><p>Speaks fluent Fulani, Wolof, and French. Some knowledge of English.</p></langKnowledge>
 </egXML>
 or
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <langKnowledge>
-    <langKnown level="fluent" tag="ff">Fulani</langKnown>
-    <langKnown level="fluent" tag="wo">Wolof</langKnown>
-    <langKnown level="fluent" tag="fr">French</langKnown>
-    <langKnown level="basic" tag="en">English</langKnown>
+    <langKnown level="#fluent" tag="ff">Fulani</langKnown>
+    <langKnown level="#fluent" tag="wo">Wolof</langKnown>
+    <langKnown level="#fluent" tag="fr">French</langKnown>
+    <langKnown level="#basic" tag="en">English</langKnown>
 </langKnowledge>
 </egXML>
 </p>
- <p>The <gi>sex</gi> element carries a <att>value</att> attribute to give the ISO 5218:1977 values, i.e. <val>1</val> for male, <val>2</val> for female, <val>9</val> for non-applicable and <val>0</val> for unknown.
+ <p>The <gi>sex</gi> element carries a <att>value</att> attribute to
+ give the ISO 5218:1977 values, i.e. <val>1</val> for male,
+ <val>2</val> for female, <val>9</val> for non-applicable, and
+ <val>0</val> for unknown.
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <sex value="2">female</sex>
 </egXML>

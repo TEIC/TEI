@@ -15,9 +15,82 @@ $Author$
   </content>
   <remarks>
     <p>The values for this attribute are language
-      <soCalled>tags</soCalled> as defined in <ref
-	target="http://tools.ietf.org/html/bcp47">BCP 47</ref>. Examples
-      include
+    <soCalled>tags</soCalled> as defined in <ref
+    target="http://tools.ietf.org/html/bcp47">BCP 47</ref>. Currently
+    BCP comprises RFC 4646 and RFC 4647; over time, other IETF
+    documents may succeed these as the best current practice.</p>
+    <p>A <soCalled>language tag</soCalled>, per BCP 47, is assembled
+    from a sequence of components or <term>subtags</term> separated by
+    the hyphen character (<mentioned>-</mentioned>, U+002D). The tag
+    is made of the following subtags, in the following order. Every
+    subtag except the first is optional. If present, each occurs only
+    once, except the fourth and fifth components (variant and
+    extension), which are repeatable.
+    <list type="gloss">
+      <label>language</label>
+      <item>The IANA-registered code for the language. This is almost
+      always the same as the ISO 639 2-letter language code if there
+      is one. The list of available registered language subtags can be
+      found at <ptr
+      target="http://www.iana.org/assignments/language-subtag-registry"/>.
+      It is recommended that this code be written in lower
+      case.</item>
+      <label>script</label>
+      <item>The ISO 15924 code for the script. These codes consist of
+      4 letters, and it is recommended they be written with an initial
+      capital, the other three letters in lower case. The canonical
+      list of codes is maintained by the Unicode Consortium, and is
+      available at <ptr
+      target="http://unicode.org/iso15924/iso15924-codes.html"/>. The
+      IETF recommends this code be omitted unless it is necessary to
+      make a distinction you need.</item>
+      <label>region</label>
+      <item>Either an ISO 3166 country code or a UN M.49 region code
+      that is registered with IANA (not all such codes are registered,
+      e.g. UN codes for economic groupings or codes for countries for
+      which there is already an ISO 3166 2-letter code are not
+      registered). The former consist of 2 letters, and it is
+      recommended they be written in upper case. The list of codes can
+      be found at <ptr
+      target="http://www.iso.org/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/index.html"/>.
+      The latter consist of 3 digits; the list of codes can be found
+      at <ptr
+      target="http://unstats.un.org/unsd/methods/m49/m49.htm"/>.</item>
+      <label>variant</label>
+      <item>An IANA-registered variation. These codes <quote
+      rend="quoted">are used to indicate additional, well-recognized
+      variations that define a language or its dialects that are not
+      covered by other available subtags</quote>.<!-- RFC 4646, sect
+      2.2.5 --></item>
+      <label>extension</label>
+      <item>An extension has the format of a single letter followed by
+      a hyphen followed by additional subtags. These exist to allow
+      for future extension to BCP 47, but as of this writing no such
+      extensions are in use.</item>
+      <label>private use</label>
+      <item>An extension that uses the initial subtag of the single
+      letter <mentioned>x</mentioned> (i.e., starts with
+      <code>x-</code>) has no meaning except as negotiated among the
+      parties involved. These should be used with great care, since
+      they interfere with the interoperability that use of RFC 4646 is
+      intended to promote. In order for a document that makes use of
+      these subtags to be TEI conformant, a corresponding
+      <gi>language</gi> element must be present in the TEI
+      header.</item>
+ </list></p>
+ <p>There are two exceptions to the above format. First, there are
+ language tags in the <ref
+ target="http://www.iana.org/assignments/language-subtag-registry">IANA
+ registry</ref> that do not match the above syntax, but are present
+ because they have been <soCalled>grandfathered</soCalled> from
+ previous specifications.</p>
+ <p>Second, an entire language tag can consist of only a private use
+ subtag. These tags start with <code>x-</code>, and do not need to
+ follow any further rules established by the IETF and endorsed by
+ these Guidelines. Like all language tags that make use of private use
+ subtags, the language in question must be documented in a
+ corresponding <gi>language</gi> element in the TEI header.</p>
+ <p>Examples include
       <list type="gloss">
 	<label><val>sn</val></label> <item>Shona</item>
 	<label><val>zh-TW</val></label> <item>Taiwanese</item>
@@ -28,5 +101,9 @@ $Author$
 	<label><val>es-419</val></label> <item>Spanish as spoken in Latin America</item>
       </list>
     </p>
+      <p>The W3C Internationalization Activity has published a useful
+ introduction to BCP 47, <ref
+ target="http://www.w3.org/International/articles/language-tags/Overview.en.php">Language
+ tags in HTML and XML</ref>.</p>
   </remarks>
 </macroSpec>
