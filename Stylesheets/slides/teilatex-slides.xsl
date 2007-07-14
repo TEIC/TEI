@@ -38,90 +38,177 @@ XSL LaTeX stylesheet to make slides
 \let\endfoot\relax
 \let\endlastfoot\relax
 </xsl:template>
+
   <xsl:template name="latexLayout">
 \date{<xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition/tei:date"/>}
 \institute{<xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:authority"/>}
 <xsl:if test="not($latexLogo='')">
-\pgfdeclareimage[height=.5cm]{logo}{FIG0}
+\pgfdeclareimage[height=1cm]{logo}{<xsl:value-of select="$latexLogo"/>}
 \logo{\pgfuseimage{logo}}
 </xsl:if>
 </xsl:template>
-  <xsl:template name="latexBegin">
-\frame{\maketitle}
 
-<xsl:if test=".//tei:div0">
-  \begin{frame} \frametitle{Outline} 
+<xsl:template name="latexBegin">
+\frame{\maketitle}
+</xsl:template>
+
+<xsl:template match="tei:divGen[@type='toc']">
+  \begin{frame} 
+  \frametitle{Outline} 
   \tableofcontents
   \end{frame}
-</xsl:if>
 </xsl:template>
-  <xsl:template match="tei:div/tei:head"/>
-  <xsl:template match="tei:div0/tei:head"/>
-  <xsl:template match="tei:div1/tei:head"/>
-  <xsl:template match="tei:div0">
-  \section{<xsl:for-each select="tei:head"><xsl:apply-templates/></xsl:for-each>}
-  \begin{frame} 
-  \frametitle{<xsl:for-each select="tei:head"><xsl:apply-templates/></xsl:for-each>}
-  <xsl:choose><xsl:when test="tei:*[not(local-name(.)='div1')]"><xsl:apply-templates select="tei:*[not(local-name(.)='div1')]"/></xsl:when><xsl:otherwise>
-      {\Huge&#x2026;}
-    </xsl:otherwise></xsl:choose>
-  \end{frame}
-  <xsl:apply-templates select="tei:div1"/>
+
+<xsl:template match="tei:div/tei:head"/>
+<xsl:template match="tei:div0/tei:head"/>
+<xsl:template match="tei:div1/tei:head"/>
+<xsl:template match="tei:div2/tei:head"/>
+
+<xsl:template match="tei:div0">
+ <xsl:call-template name="makeOuterFrame"/>
 </xsl:template>
-  <xsl:template match="tei:div|tei:div1">
-\begin{frame}<xsl:choose><xsl:when test="@rend='fragile'">[fragile]</xsl:when><xsl:when test=".//tei:eg">[fragile]</xsl:when><xsl:when test=".//tei:Output">[fragile]</xsl:when><xsl:when test=".//tei:Screen">[fragile]</xsl:when><xsl:when test=".//teix:egXML">[fragile]</xsl:when></xsl:choose>
-<xsl:text>&#10;</xsl:text>
-  \frametitle{<xsl:for-each select="tei:head"><xsl:apply-templates/></xsl:for-each>}
-  <xsl:apply-templates/>
-\end{frame}
+
+<xsl:template match="tei:div1">
+  <xsl:choose>
+    <xsl:when test="parent::tei:div0">
+      <xsl:call-template name="makeFrame"/>
+    </xsl:when>
+    <xsl:when test="tei:div2">
+      <xsl:call-template name="makeOuterFrame"/>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:call-template name="makeFrame"/>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
-  <xsl:template name="makePic">
-    <xsl:if test="@xml:id">\hypertarget{<xsl:value-of select="@xml:id"/>}{}</xsl:if>
-    <xsl:text>\includegraphics[</xsl:text>
-    <xsl:call-template name="graphicsAttributes">
-      <xsl:with-param name="mode">latex</xsl:with-param>
-    </xsl:call-template>
-    <xsl:if test="not(@width) and not (@height) and not(@scale)">
-      <xsl:text>width=\textwidth</xsl:text>
-    </xsl:if>
-    <xsl:text>]{</xsl:text>
-    <xsl:choose>
-      <xsl:when test="@url">
-        <xsl:value-of select="@url"/>
-      </xsl:when>
-      <xsl:when test="@entity">
-        <xsl:value-of select="unparsed-entity-uri(@entity)"/>
-      </xsl:when>
-    </xsl:choose>
-    <xsl:text>}</xsl:text>
-  </xsl:template>
-  <xsl:template match="tei:hi[not(@rend)]">
-    <xsl:text>\alert{</xsl:text>
+
+<xsl:template match="tei:div2|tei:div3">
+  <xsl:call-template name="makeFrame"/>
+</xsl:template>
+
+<xsl:template match="tei:div">
+  <xsl:choose>
+    <xsl:when test="tei:div and parent::tei:body">
+      <xsl:call-template name="makeOuterFrame"/>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:call-template name="makeFrame"/>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+<xsl:template name="makeOuterFrame">
+  <xsl:text>&#10;\section{</xsl:text>
+  <xsl:for-each select="tei:head">
     <xsl:apply-templates/>
-    <xsl:text>}</xsl:text>
+  </xsl:for-each>
+   <xsl:text>}</xsl:text>
+  <xsl:text>&#10;\begin{frame} 
+  \frametitle{</xsl:text>
+    <xsl:for-each select="tei:head">
+      <xsl:apply-templates/>
+      </xsl:for-each>
+      <xsl:text>}</xsl:text>
+      <xsl:choose>
+	<xsl:when test="tei:*[not(starts-with(local-name(.),'div'))]">
+	  <xsl:apply-templates
+	      select="tei:*[not(starts-with(local-name(.),'div'))]"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:text>{\Huge&#x2026;}</xsl:text>
+	</xsl:otherwise>
+      </xsl:choose>
+      <xsl:text>&#10;\end{frame}&#10;</xsl:text>
+      <xsl:apply-templates select="tei:div1|tei:div2|tei:div"/>
   </xsl:template>
-  <xsl:template match="tei:item[@rend='pause']">
-\item <xsl:apply-templates/>\pause
+
+<xsl:template name="makeFrame">
+  <xsl:text>&#10;\begin{frame}</xsl:text>
+  <xsl:choose>
+    <xsl:when test="@rend='fragile'">
+      <xsl:text>[fragile]</xsl:text>
+    </xsl:when>
+    <xsl:when test=".//tei:eg">
+      <xsl:text>[fragile]</xsl:text>
+    </xsl:when>
+    <xsl:when test=".//tei:Output">
+      <xsl:text>[fragile]</xsl:text>
+    </xsl:when>
+    <xsl:when test=".//tei:Screen">
+      <xsl:text>[fragile]</xsl:text>
+    </xsl:when>
+    <xsl:when test=".//teix:egXML">
+      <xsl:text>[fragile]</xsl:text>
+    </xsl:when>
+  </xsl:choose>
+  <xsl:text>&#10;\frametitle{</xsl:text>
+  <xsl:for-each select="tei:head">
+    <xsl:apply-templates/>
+  </xsl:for-each>
+  <xsl:text>}</xsl:text>
+  <xsl:apply-templates/>
+  <xsl:text>&#10;\end{frame}&#10;</xsl:text>
 </xsl:template>
-  <xsl:template match="tei:eg">
-\begin{Verbatim}[fontsize=\scriptsize,frame=single,fillcolor=\color{yellow}]
-<xsl:apply-templates mode="eg"/>
-\end{Verbatim}
+
+<xsl:template name="makePic">
+  <xsl:if test="@xml:id">
+    <xsl:text>\hypertarget{</xsl:text>
+    <xsl:value-of select="@xml:id"/>
+    <xsl:text>}{}</xsl:text>
+  </xsl:if>
+  <xsl:text>\includegraphics[</xsl:text>
+  <xsl:call-template name="graphicsAttributes">
+    <xsl:with-param name="mode">latex</xsl:with-param>
+  </xsl:call-template>
+  <xsl:if test="not(@width) and not (@height) and not(@scale)">
+    <xsl:text>width=\textwidth</xsl:text>
+  </xsl:if>
+  <xsl:text>]{</xsl:text>
+  <xsl:choose>
+    <xsl:when test="@url">
+      <xsl:value-of select="@url"/>
+    </xsl:when>
+    <xsl:when test="@entity">
+      <xsl:value-of select="unparsed-entity-uri(@entity)"/>
+    </xsl:when>
+  </xsl:choose>
+  <xsl:text>}</xsl:text>
 </xsl:template>
-  <xsl:template match="teix:egXML">
-\begin{scriptsize}
-\bgroup
-\ttfamily\mbox{}
-<xsl:apply-templates mode="verbatim"/>
-\egroup
-\end{scriptsize}
+
+<xsl:template match="tei:hi[not(@rend)]">
+  <xsl:text>\alert{</xsl:text>
+  <xsl:apply-templates/>
+  <xsl:text>}</xsl:text>
 </xsl:template>
-  <xsl:template match="tei:table">
-\par  
-\begin{scriptsize}
-\begin{longtable}
-<xsl:call-template name="makeTable"/>
-\end{longtable}
-\end{scriptsize}
+
+<xsl:template match="tei:item[@rend='pause']">
+  <xsl:text>\item </xsl:text>
+  <xsl:apply-templates/>
+  <xsl:text>\pause </xsl:text>
 </xsl:template>
+
+<xsl:template match="tei:eg">
+  <xsl:text>\begin{Verbatim}[fontsize=\scriptsize,frame=single,fillcolor=\color{yellow}]</xsl:text>
+  <xsl:apply-templates mode="eg"/>
+  <xsl:text>\end{Verbatim}</xsl:text>
+</xsl:template>
+
+<xsl:template match="teix:egXML">
+  <xsl:text>\begin{scriptsize}
+  \bgroup
+  \ttfamily\mbox{}</xsl:text>
+  <xsl:apply-templates mode="verbatim"/>
+  <xsl:text>\egroup
+  \end{scriptsize}</xsl:text>
+</xsl:template>
+
+<xsl:template match="tei:table">
+  <xsl:text>\par  
+  \begin{scriptsize}
+  \begin{longtable}</xsl:text>
+  <xsl:call-template name="makeTable"/>
+  <xsl:text>\end{longtable}
+  \end{scriptsize}</xsl:text>
+</xsl:template>
+
 </xsl:stylesheet>
