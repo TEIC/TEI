@@ -1,7 +1,5 @@
 #!/usr/bin/env perl
 #
-# $Header$
-#
 # Copyright 2005 Syd Bauman and Text Encoding Initiative Consortium.
 # Some rights reserved. For complete copyleft notice, see block
 # comment at the end of this file.
@@ -14,9 +12,9 @@
 # 
 # where:
 # * --patternprefix=STRING provides an optional prefix string that is
-# *                        prefixed to all patterns in the schema.
-# *                        I.e., This should be the same string that
-# *                        has just been handed to roma.sh.
+#                          prefixed to all patterns in the schema.
+#                          I.e., This should be the same string that
+#                          has just been handed to roma.sh.
 # * input, always from STDIN, should be a Roma-generated RelaxNG
 #          compact syntax file.
 # * output, always to STDOUT, will be the same file with much prettier
