@@ -15,6 +15,7 @@
   <xsl:include href="tagdocs.xsl"/>
   <xsl:include href="textstructure.xsl"/>
   <xsl:include href="verse.xsl"/>
+  <xsl:include href="textcrit.xsl"/>
 
   <xsl:param name="startNamespace">\color{red}</xsl:param>
   <xsl:param name="startElement">{</xsl:param>
