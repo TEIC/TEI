@@ -1614,10 +1614,13 @@ target="http://code.google.com/apis/kml/documentation/index.html"/></note>
     constituting Lithuania; only that they are within it. A separate <gi>place</gi>
     element may indicate that it is a part of Lithuania by supplying a <gi>relation</gi>
     element, as discussed below (<ptr target="#place-rel"/>).</p>
-  <p>As a further example, the islands of Mauritius, Réunion, and Rodrigues are
-    collectively known as the Mascarene Islands. Grouped together with Mauritius there are
-    also several smaller offshore islands, with rather picturesque French names. One way
-    of representing this is as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <p>As a further example, the islands of Mauritius, Réunion, and
+  Rodrigues are collectively known as the Mascarene Islands. Grouped
+  together with Mauritius there are also several smaller offshore
+  islands, with rather picturesque French names. These offshore
+  islands do not however constitute an identifiable place as a
+  whole. One way of representing this is as follows: <egXML
+  xmlns="http://www.tei-c.org/ns/Examples">
       <place type="islandGroup">
         <placeName>Mascarene Islands</placeName>
         <placeName>Mascarenhas Archipelago</placeName>
@@ -1676,12 +1679,14 @@ target="http://code.google.com/apis/kml/documentation/index.html"/></note>
 the names of a naming element ("country", "region", "settlement") is
 recommended when appropriate but not required. (removed this sentence
 as it is pretty incomprehensible) --></p>
-  <p>This use of multiple <gi>place</gi> elements should be distinguished from the
-    (possibly simpler) case where a number of places with some property in common are
-    being grouped together for convenience, for example, in a gazetteer. The
-    <gi>listPlace</gi> element is provided as a means of grouping places together where
-    there is no implication that the grouped elements constitute a distinct place. For
-    example: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+  
+<p>This use of multiple <gi>place</gi> elements should be
+distinguished from the (possibly simpler) case where a number of
+places with some property in common are being grouped together for
+convenience, for example, in a gazetteer. The <gi>listPlace</gi>
+element is provided as a means of grouping places together where there
+is no implication that the grouped elements constitute a distinct
+place. For example: <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <place type="county">
         <placeName>Herefordshire</placeName>
         <listPlace type="villages">
@@ -1709,25 +1714,30 @@ as it is pretty incomprehensible) --></p>
 </div>
 <div>
   <head>States, traits, and events</head>
-  <p>There are many different kinds of information which it might be considered useful to
-    record for a place in addition to its name and location, and the categories selected
-    are likely to be very project-specific. As with persons therefore these Guidelines
-    make no claim to comprehensiveness in this context. Instead, the generic
-    <gi>state</gi>, <gi>trait</gi>, and <gi>event</gi> elements defined by this module
-    should be used. Each of these may be customized for particular needs by means of their
-      <att>type</att> attribute. These are complemented by a small number of predefined
-    elements of general utility: <specList>
+
+  <p>There are many different kinds of information which it might be
+  considered useful to record for a place in addition to its name and
+  location, and the categories selected are likely to be very
+  project-specific. As with persons therefore these Guidelines make no
+  claim to comprehensiveness in this context. Instead, the generic
+  <gi>state</gi>, <gi>trait</gi>, and <gi>event</gi> elements defined
+  by this module should be used. Each of these may be customized for
+  particular needs by means of their <att>type</att> attribute. These
+  are complemented by a small number of predefined elements of general
+  utility: <specList>
       <specDesc key="population"/>
       <specDesc key="climate"/>
       <specDesc key="terrain"/>
     </specList>
   </p>
-  <p>The first of these is a specialization of the generic <gi>state</gi> element; while
-    the second two are specializations of the generic <gi>trait</gi> element. The generic
-      <gi>event</gi> element may be used for almost any kind of event in the life of a
-    place; no specialized version of this element is proposed, nor do we attempt to
-    enumerate the possible values which might be appropriate for the <att>type</att>
-    attribute on any of these generic elements. </p>
+  
+<p>The first of these is a specialization of the generic
+<gi>state</gi> element; while the second two are specializations of
+the generic <gi>trait</gi> element. The generic <gi>event</gi> element
+may be used for almost any kind of event in the life of a place; no
+specialized version of this element is proposed, nor do we attempt to
+enumerate the possible values which might be appropriate for the
+<att>type</att> attribute on any of these generic elements. </p>
   <p>Here is an example, showing how the specific and generic elements may be combined:
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <place xml:id="IS">
@@ -1753,13 +1763,16 @@ as it is pretty incomprehensible) --></p>
       </place>
     </egXML>
   </p>
-  <p>Like <gi>place</gi> elements, <gi>state</gi> and <gi>trait</gi> elements, and others
-    of the same class, can be nested hierarchically within each other. When this is done,
-    values for the <att>type</att> attribute are to be understood as cumulatively
-    inherited, as elsewhere in the TEI scheme (for example on <gi>category</gi> or
-      <gi>linkGrp</gi>). In the following example, the outermost <gi>population</gi>
-    element concerns the squirrel population between the dates given. This is then broken
-    down into red and gray squirrel populations, and within that into male and female:
+  
+<p>Like <gi>place</gi> elements, <gi>state</gi> and <gi>trait</gi>
+elements, and others of the same class, can be nested hierarchically
+within each other. When this is done, values for the <att>type</att>
+attribute are to be understood as cumulatively inherited, as elsewhere
+in the TEI scheme (for example on <gi>category</gi> or
+<gi>linkGrp</gi>). In the following example, the outermost
+<gi>population</gi> element concerns the squirrel population between
+the dates given. This is then broken down into red and gray squirrel
+populations, and within that into male and female:
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <population type="squirrel" notBefore="1901" notAfter="1902-01-11" resp="#strabo">
         <population type="red" when="1901-01-10">
@@ -1771,13 +1784,17 @@ as it is pretty incomprehensible) --></p>
 <population type="male" cert="low" resp="#biber"><desc>45</desc></population>
         </population>
       </population>
-    </egXML> The dating and responsibility attributes here behave slightly differently
-    from the <att>type</att> attribute: responsibility is not an additive property, and
-    therefore an element either states it explicitly, or inherits it from its nearest
-    ancestor. Dating is slightly different again, in that a child element may specify a
-    date more precisely than its parent, as in the example above</p>
-  <p>Events may also be subdivided into other events. For example, a two part meeting
-    might be represented as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    </egXML> The dating and responsibility attributes here behave
+    slightly differently from the <att>type</att> attribute:
+    responsibility is not an additive property, and therefore an
+    element either states it explicitly, or inherits it from its
+    nearest ancestor. Dating is slightly different again, in that a
+    child element may specify a date more precisely than its parent,
+    as in the example above</p>
+ 
+ <p>Events may also be subdivided into other events. For example, a
+ two part meeting might be represented as follows: <egXML
+ xmlns="http://www.tei-c.org/ns/Examples">
       <event type="meeting" when="2007-05-29">
 	<desc>All day meeting to resolve content models</desc>
         <event type="preamble" notAfter="13:00:00">
@@ -1792,11 +1809,14 @@ as it is pretty incomprehensible) --></p>
 </div>
 <div xml:id="place-rel">
   <head>Relations between places</head>
-  <p>The <gi>relation</gi> element may also be used to express relationships of various
-    kinds between places, or between places and persons, in much the same way as it is
-    used to express relationships between persons alone. Returning to the Mascarene
-    Islands example cited above, we might define the island group and its constituents
-    separately, but indicate the relationship by means of a <gi>relation</gi> element:
+  
+<p>The <gi>relation</gi> element may also be used to express
+relationships of various kinds between places, or between places and
+persons, in much the same way as it is used to express relationships
+between persons alone. Returning to the Mascarene Islands example
+cited above, we might define the island group and its constituents
+separately, but indicate the relationship by means of a
+<gi>relation</gi> element:
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <listPlace>
         <place xml:id="MASC">
@@ -1817,12 +1837,13 @@ as it is pretty incomprehensible) --></p>
       </listPlace>
     </egXML>
   </p>
-  <p>This <soCalled>stand off</soCalled> style of representation has
-  the advantage that we can now also represent the fact that a place
-  may be a <q>part of</q> more than one other place; for example,
-  Réunion is part of France, as well as part of the Mascarenes. If we
-  add a declaration for France to the list above: <egXML
-  xmlns="http://www.tei-c.org/ns/Examples">
+  
+<p>This <soCalled>stand off</soCalled> style of representation has the
+advantage that we can now also represent the fact that a place may be
+a <q>part of</q> more than one other place; for example, Réunion is
+part of France, as well as part of the Mascarenes. If we add a
+declaration for France to the list above: <egXML
+xmlns="http://www.tei-c.org/ns/Examples">
       <place type="country" xml:id="FRA">
         <placeName>France</placeName>
       </place>
