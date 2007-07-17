@@ -218,7 +218,7 @@ sub-elements.  </item></list> </p></div></div>
 <p>This section describes the <gi>fileDesc</gi> element, which is the
 first component of the <gi>teiHeader</gi> element.
 </p>
-<p>The bibliographic description of a machine-readable text
+<p>The bibliographic description of a machine-readable or digital text
 resembles in structure that of a book, an article, or any other kind of
 textual object.  The file description element of the TEI header has
 therefore been closely modelled on existing standards in library
@@ -284,15 +284,14 @@ for it:
 <specList><specDesc key="title"/><specDesc key="author"/><specDesc key="sponsor"/><specDesc key="funder"/><specDesc key="principal"/><specDesc key="respStmt"/><specDesc key="resp"/><specDesc key="name"/></specList>
 </p>
 <p>The <gi>title</gi> element contains the chief name of the
-file, including any alternative title or subtitles it may have.
-It may be repeated, if the file has more than one title
+electronic work, including any alternative title or subtitles it may have.
+It may be repeated, if the work has more than one title
 (perhaps in different languages) and takes whatever form is
 considered appropriate by its creator. Where the electronic work
 is derived from an existing source text, it is strongly
-recommended that the title for the former should also be derived
-from the latter; further it is recommended that the title of the
-electronic work should be clearly distinguishable
-that of the existing source text by the addition of a phrase such as <q>: an electronic
+recommended that the title for the former should be derived
+from the latter, but clearly distinguishable from it, for example
+by the addition of a phrase such as <q>: an electronic
 transcription</q> or <q>a digital edition</q>. <!--
 For example, do not call the computer file <q>A
 Sanskrit-English Dictionary, based upon the St. Petersburg
@@ -305,19 +304,20 @@ introduce one of the following phrases:
 <item>[title of source]:  a machine readable transcription.</item>
 <item>[title of source]:  electronic edition.</item>
 <item>A machine readable version of:  [title of source].</item></list>-->
-This will distinguish the computer file from the source text in
+This will distinguish the electronic work from the source text in
 citations and in catalogues which contain descriptions of both types of
 material.
 </p>
-<p>The computer file will almost certainly have an external name (its
+<p>The electronic work will also have oan external name (its
 <soCalled>filename</soCalled> or <soCalled>data set name</soCalled>) or reference number on the
 computer system where it resides at any time.  This name is likely to
 change frequently, as new copies of the file are made on the computer
 system.  Its form is entirely dependent on the particular computer
 system in use and thus cannot always easily be transferred from one
-system to another.  For these reasons, these Guidelines strongly
+system to another.  Moreover, a given work may be composed of many
+files. For these reasons, these Guidelines strongly
 recommend that such names should <emph>not</emph> be used as the
-<gi>title</gi> for any computer file.
+<gi>title</gi> for any electronic work.
 </p>
 <p>Helpful guidance on the formulation of useful descriptive titles in
 difficult cases may be found in the Anglo-American Cataloguing
@@ -328,18 +328,20 @@ Ottawa:  Canadian Library Association, 1978).</bibl></note>
 (AACR 2), chapter 25, or in equivalent national-level bibliographical
 documentation.
 </p>
-<p>The specialized elements <gi>author</gi>, <gi>sponsor</gi>,
-<gi>funder</gi>, and <gi>principal</gi>, and the more general
-<gi>respStmt</gi> provide the <term>statements of responsibility</term>
-which identify the person(s) responsible for the intellectual or artistic
-content of an item and any corporate bodies from which it emanates.
+<p>The elements <gi>author</gi>, <gi>sponsor</gi>, <gi>funder</gi>,
+and <gi>principal</gi>, are specializations of the more general
+<gi>respStmt</gi> element. These elements are used to provide the
+<term>statements of responsibility</term> which identify the person(s)
+responsible for the intellectual or artistic content of an item and
+any corporate bodies from which it emanates.
 </p>
 <p>Any number of such statements may occur within the title
-statement.  At a minimum, identify the author of the text and the
-creator of the machine-readable file.  If the bibliographic description
-is for a corpus, identify the creator of the corpus.  These
+statement.  At a minimum, identify the author of the text and (where
+appropriate) the
+creator of the file.  If the bibliographic description
+is for a corpus, identify the creator of the corpus.  <!-- These
 identifications are mandatory when applicable, though not enforceable by
-the parser.  Optionally include also names of others involved in
+the parser.-->  Optionally include also names of others involved in
 the transcription or elaboration of the text, sponsors, and funding
 agencies.  The name of the person responsible for physical data input
 need not normally be recorded, unless that person is also intellectually
@@ -484,7 +486,6 @@ see section <ptr target="#COBI"/>.</p>
 </respStmt>
 </editionStmt></egXML>
 The formal definition of the <gi>editionStmt</gi> element is as follows:
-<!-- removed file attrib since it was confusing dtdGen LB, 20 may 01 -->
 <specGrp xml:id="D2222" n="The edition statement">
 &editionStmt;
 &edition;
