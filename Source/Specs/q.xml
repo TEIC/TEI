@@ -1,25 +1,21 @@
 <!--Copyright TEI Consortium. 
-Licensed under the GNU General Public License. 
-See the file COPYING for details
-$Date$
-$Author$
+    Licensed under the GNU General Public License. 
+    See the file COPYING for details
+    $Date$
+    $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="Q" usage="opt" ident="q">
-  <equiv/>
-  <gloss>quoted speech, thought, or writing</gloss>
-  <gloss version="2007-05-04" xml:lang="es">discurso citado, pensado o escrito</gloss>
-  <gloss version="2006-10-28" xml:lang="ja">引用された発話・考え・文章</gloss>
-  <desc>contains material which is
-marked as (ostensibly) quoted from elsewhere; in narrative, this element is used to mark direct or
-indirect speech; in dictionaries, it may be used to mark
-real or contrived examples of usage; in manuscript descriptions or
-other metadata, to mark extracts quoted from the source being documented.</desc>
-  <desc version="2007-05-04" xml:lang="es">contiene material que se marca como (ostensiblemente) citado de cualquier otro sitio: en la narrativa, este elemento se usa para marcar discursos en estilo directo o indirecto; en diccionarios puede usarse para marcar ejemplos reales o ideados de uso; en descripciones de manuscritos u otros metadatos, para marcar extractos citados de la fuente que se documenta. </desc>
-  <desc version="2006-10-28" xml:lang="ja">明示的に引用されているものを示す．例
-えば，話法における直接・間接話法部分を示したり，辞書における用例を示
-したり，手書きものやメタデータにおいて抜粋を示したりするのに使用される．</desc>
+  <gloss>separated from the surrounding text with quotation
+  marks</gloss>
+  <desc>contains material which is marked as (ostensibly)
+  being somehow different than the surrounding text, for any
+  one of a variety of reasons including, but not limited to:
+  direct speech or thought, technical terms or jargon,
+  authorial distance, quotations from elsewhere, and passages
+  that are mentioned not used.</desc>
   <classes>
     <memberOf key="model.qLike"/>
+    <memberOf key="model.hiLike"/>
     <memberOf key="att.ascribed"/>
   </classes>
   <content>
@@ -27,73 +23,53 @@ other metadata, to mark extracts quoted from the source being documented.</desc>
   </content>
   <attList>
     <attDef ident="type" usage="rwa">
-      <equiv/>
-      <desc>may be used to indicate whether the quoted matter is spoken
-or thought, or to characterize it more finely.</desc>
-      <desc version="2007-05-04" xml:lang="es">Puede usarse para indicar si el material citado es hablado o pensado, o para caracterizarlo con más precisión.</desc>
-      <desc version="2006-10-28" xml:lang="ja">当該引用部分が，発話か，考えか，またまより特定される何かかといっ
-た分類を示す．</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
-      <valList type="open">
-        <valItem ident="spoken">
-          <equiv/>
-          <desc>representation of direct speech, usually
-marked by quotation marks.</desc>
-        </valItem>
-        <valItem ident="thought">
-          <equiv/>
-          <desc>representation of thought, e.g. internal monologue.</desc>
-        </valItem>
-        <valItem ident="written">
-          <equiv/>
-          <desc>quotation from a written source.</desc>
-        </valItem>
-      </valList>
-    </attDef>
-<!-- commented out 2007-04-21 by Syd; really should stay until it is-->
-<!-- moved to be an attribute of soon-to-come <said> element, but in-->
-<!-- the meantime it is causing an error due to the <valList> with-->
-<!-- a non-enumerated datatype
-   <attDef ident="direct" usage="rwa">
-	<equiv/>
-	<desc>may be used to indicate whether the quoted matter is regarded
-as direct or indirect speech.</desc><desc version="2006-10-28" xml:lang="ja">話法の場合に，それが直接話法か間接話法かを示す．</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.xTruthValue"/></datatype>
-      <defaultVal>unknown</defaultVal>
-      <valList type="closed">
-        <valItem ident="true">
-          <equiv/>
-          <desc>speech or thought is represented directly.</desc><desc version="2006-10-28" xml:lang="ja">(発話か考えが，直接的に書かれている場合．) </desc>
-        </valItem>
-        <valItem ident="false">
-          <equiv/>
-          <desc>speech or thought is represented indirectly,
-e.g. by use of a marked verbal aspect.</desc><desc version="2006-10-28" xml:lang="ja">(発話か考えが，間接的に書かれている場合．)</desc>
-        </valItem>
-	<valItem ident="inapplicable">
-	  <desc>quoted matter is not speech</desc>
+      <desc>may be used to indicate whether the offset passage is spoken
+      or thought, or to characterize it more finely.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
+      <valList type="semi">
+	<valItem ident="spoken">
+	  <desc>representation of speech</desc>
 	</valItem>
-        <valItem ident="unknown">
-          <equiv/>
-          <desc>no claim is made.</desc><desc version="2006-10-28" xml:lang="ja">(区別が必要ない場合) </desc>
-        </valItem>
+	<valItem ident="thought">
+	  <desc>representation of thought, e.g. internal monologue</desc>
+	</valItem>
+	<valItem ident="written">
+	  <desc>quotation from a written source</desc>
+	</valItem>
+	<valItem ident="soCalled">
+	  <desc>authorial distance</desc>
+	</valItem>
+	<valItem ident="foreign">
+	  <gloss>foreign words</gloss>
+	</valItem>
+	<valItem ident="distinct">
+	  <gloss>linguistically distinct</gloss>
+	</valItem>
+	<valItem ident="term">
+	  <gloss>technical term</gloss>
+	</valItem>
+	<valItem ident="emph">
+	  <gloss>rhetorically emphasized</gloss>
+	</valItem>
+	<valItem ident="mentioned">
+	  <desc>refering to itself, not its normal
+	  referant</desc>
+	</valItem>
       </valList>
-    </attDef> -->
-<!--    <attDef ident="who" usage="rwa">
-	<equiv/>
-	<desc>identifies the speaker of a piece of direct speech.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Key"/></datatype>
-      <valDesc>may be an idref</valDesc>
     </attDef>
--->
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">And so, as Tiny Tim observed,
-<q type="speech">God Bless Us, Every One!</q></egXML>
-<!-- C Dickens, Xmas Carol, p 166 -->
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">It is spelled <q>T&#x00FC;bingen</q> &#x2014; to enter
+    the letter <q>u</q> with an umlat hold down the <q>option</q> key and press <q>0 0 f c</q></egXML>
   </exemplum>
+  <remarks>
+    <p>May be used to indicate that a passage is distinguished
+    from the surrounding text by quotation marks for reasons
+    concerning which no claim is made. When used in this
+    manner, <gi>q</gi> may be thought of as syntactic sugar
+    for <gi>hi</gi> with a value of <att>rend</att> that
+    indicates the use of quotation marks.</p>
+  </remarks>
   <listRef>
     <ptr target="#COHQQ"/>
   </listRef>
