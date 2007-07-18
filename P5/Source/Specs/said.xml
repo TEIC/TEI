@@ -1,0 +1,80 @@
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date: 2007-07-02 23:09:41 -0400 (Mon, 02 Jul 2007) $
+$Author: sbauman $
+-->
+<elementSpec module="core" ident="said" usage="opt"
+	     xmlns="http://www.tei-c.org/ns/1.0"
+	     xmlns:rng="http://relaxng.org/ns/structure/1.0">
+  <gloss>speech or thought</gloss>
+  <desc>indicates passages thought or spoken aloud, whether
+  explicitly indicated in the source or not, whether direct
+  or indicrectly reported, whether by real people or
+  fictional characters.</desc>
+  <classes>
+    <memberOf key="model.qLike"/>
+    <memberOf key="att.ascribed"/>
+  </classes>
+  <content>
+    <rng:ref name="macro.specialPara"/>
+  </content>
+  <attList>
+    <attDef ident="aloud" usage="rwa">
+      <desc>may be used to indicate whether the quoted matter
+      is regarded as having been vocalized or signed.</desc>
+      <datatype><rng:ref name="data.xTruthValue"/></datatype>
+      <defaultVal>unknown</defaultVal>
+      <remarks>
+	<p>The value <val>true</val> indicates the encoded passage was
+	expressed outwardly (whether spoken, signed, sung, screamed,
+	chanted, etc.); the value <val>false</val> indicates that the
+	encoded passage was thought, but not outwardly expressed.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="direct" usage="rwa">
+      <desc>may be used to indicate whether the quoted matter is regarded
+      as direct or indirect speech.</desc>
+      <desc version="2006-10-28" xml:lang="ja">話法の場合に，それが直
+      接話法か間接話法かを示す．</desc>
+      <datatype><rng:ref name="data.xTruthValue"/></datatype>
+      <defaultVal>true</defaultVal>
+      <remarks>
+	<p>The value <val>true</val> indicates the speech or thought
+	is represented directly; the value <val>false</val> that
+	speech or thought is represented indirectly, e.g. by use of a
+	marked verbal aspect.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <p><said>Our minstrel here will warm the old man's heart
+      with song, dazzle him with jewels and gold</said>, a
+      troublemaker simpered. <said>He'll trample on the Duke's
+      camellias, spill his wine, and blunt his sword, and say
+      his name begins with X, and in the end the Duke will
+      say, <said>Take Saralinda, with my blessing, O lordly
+      Prince of Rags and Tags, O rider of the
+      sun!</said></said></p>
+    </egXML><!-- The 13 Clocks, near end of chapter I -->
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <p><said aloud="true" rend="pre(“) post(”)">Hmmm</said>,
+      said a small voice in his ear. <said aloud="true"
+      rend="pre(“) post(”)">Difficult. Very difficult.
+      Plenty of courage, I see. Not a bad mind either. there's talent, oh
+      my goodness, yes — and a nice thirst to prove yourself, now that's
+      interesting. … So where shall I put you?</said></p>
+      <p>Harry gripped the edges of the stool and thought,
+      <said aloud="false" rend="italic">Not Slytherin, not
+      Slytherin</said>.</p>
+    </egXML><!-- Harry Potter and the Sorcerer's Stone,
+		 chapter 7 "The Sorting Hat"; p. 121 of the first
+		 Scholastic trade paperback edition -->
+  </exemplum>
+  <listRef>
+    <ptr target="#COHQQ"/>
+  </listRef>
+</elementSpec>

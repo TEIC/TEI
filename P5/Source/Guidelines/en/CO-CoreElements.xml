@@ -556,253 +556,274 @@ element <gi>note</gi> described in section <ptr target="#CONO"/>, or the
 &distinct;
 </specGrp>
  </p></div></div>
-<div type="div3" xml:id="COHQQ"><head>Quotation</head>
-<p>This section discusses the following elements, all of which are often
-rendered by the use of quotation marks:
-<specList><specDesc key="q"/><specDesc key="quote"/>
-<specDesc key="cit"/>
-<specDesc key="mentioned"/>
-<specDesc key="soCalled"/>
-</specList>
+ <div type="div3" xml:id="COHQQ"><head>Quotation</head>
+ <p>This section discusses the following elements, all of which are often
+ rendered by the use of quotation marks:
+ <specList>
+   <specDesc key="said"/>
+   <specDesc key="quote"/>
+   <specDesc key="cit"/>
+   <specDesc key="mentioned"/>
+   <specDesc key="soCalled"/>
+   <specDesc key="q"/>
+ </specList>
  </p>
-<p>One form of presentational variation found particularly frequently in
-written and printed texts is the use of quotation marks. As with the
-typographic variations discussed in the preceding section, it is
-generally helpful to separate the encoding of the underlying textual
-feature (for example, a quotation or a piece of direct speech) from the
-encoding of its rendering (for example, the use of a particular style of
-quotation marks).
- </p>
-<p>The most common and important use of quotation marks is, of course,
-to mark <term>quotation</term>, by which we mean simply any part of the
-text attributed by the author or narrator to some agency other than the
-narrative voice. Typical examples include passages cited from other
-works, for which the element <gi>quote</gi> may be used, and words or
-phrases attributed to other voices within the current work, for which
-the element <gi>q</gi> may be used. If this distinction between
-intra-textual and inter-textual voices cannot be made reliably, or is
-not of interest, then all quoted matter may simply be marked using the
-<gi>q</gi> tag. The editorial policy in this respect should be stated
-in the encoding description of the TEI Header. The <gi>soCalled</gi>
-element is used for cases where the author or narrator distances him or
-herself from the words in question without however attributing them to
-any other voice in particular.
- </p>
-<p>Quotation may be rendered by changes in type face, by special
-punctuation marks (single or double or angled quotes, dashes, etc.) and
-by layout (indented paragraphs, etc.). If these characteristics are of
-interest, an appropriate value for the <att>rend</att> attribute should
-be given, to record how the <gi>q</gi> or <gi>quote</gi> element is
-rendered. For discussion of suggested values for this attribute, see
-below.
-  </p>
-<p>Quotation marks themselves may, like other punctuation marks, be
-felt for some purposes to be worth retaining within a text, quite
-independently of their description by the <att>rend</att> attribute.
-Where this is done, either an appropriate entity reference may be
-chosen from the standard ISO entity sets defined by ISO 8879,<note place="foot">ISO
-8879-1986 (E) Annex D.4; see Goldfarb, p. 502. XML versions are
-available at <ptr target="http://www.tei-c.org/Entity_Sets/Unicode/iso-tech.ent"/>.</note>
-or the character code points may be entered either directly or as
-numeric character references. An entity reference has the advantage
-that the entity may be redefined as null when the punctuation is to be
-ignored for some analytic purpose. Well-known ambiguities, such as
-whether the character ' represents an apostrophe or a closing single
-quotation mark, or whether the character " represents an opening or
-closing double quotation mark may all be resolved by the use of
-appropriate entity references, as discussed in section <ptr target="#COPU"/>.</p>
-<p>Alternatively, the encoder may suppress all quotation marks, possibly
-recording their form using the <att>rend</att> attribute. Where this is
-done, the following list of entity names (taken from the public entity
-sets <ident type="entset">ISOpub</ident> and <ident type="entset">ISOnum</ident>) may be found useful to describe
-quotation-mark styles common in European and American typesetting:
-<!-- list restored under (mild) protest and with one necessary  -->
-	<!-- addition                                     LB, oct 92    -->
-<list type="gloss"><label>ldquo  </label>
-<item>double inverted comma (shaped like 66, superscript)</item><label>lsquo  </label>
-<item>single inverted comma (shaped like 6, superscript)</item><label>rdquo  </label>
-<item>double apostrophe (shaped like 99, superscript)</item><label>rsquo  </label>
-<item>single apostrophe (shaped like 9, superscript)</item><label>ldquor </label>
-<item>double comma (shaped like 99, printed on base line)</item><label>lsquor </label>
-<item>single comma (shaped like 9, printed on base line)</item><label>laquo  </label>
-<item>double guillemet open to the right</item><label>lsaquo </label>
-<item>single guillemet open to the right</item><label>raquo  </label>
-<item>double guillemet open to the left</item><label>rsaquo </label>
-<item>single guillemet open to the left</item><label>mdash  </label>
-<item>dash the width of a lowercase <mentioned>m</mentioned></item></list>
-<!-- J.Lavagnino suggests revisiting the issue of mdash in    -->
-	<!-- P4:  perhaps this is too print-centered?  (msm)          -->
-These may be used in the <att>rend</att> attribute to show how the
-quotation was opened and closed. For example, if the words
-<mentioned>pre</mentioned> and <mentioned>post</mentioned> are used to indicate
-preceding and following punctuation, then the following example would
-describe a conventional American book printed using single quotation
-marks:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><q rend="PRE lsquo POST rsquo">Who-e debel
-you?</q> — he at last said — 
-<q rend="PRE lsquo POST rsquo">you no speak-e,
-damme, I kill-e.</q>  And so saying,
-the lighted tomahawk began flourishing
-about me in the dark.</egXML>
-<!-- Melville, Moby Dick (but where?) -->
-The following example demonstrates alternative policies which may be
-adopted with respect to encoding of the punctuation used to mark
-quotation:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Adolphe se tourna vers lui :
-<q>— Alors, Albert, quoi de neuf?</q>
-   <q>— Pas grand-chose.</q>
-   <q>— Il fait beau,</q> dit Robert.</egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Adolphe se tourna vers lui :
-<q rend="PRE mdash">Alors, 
-     Albert, quoi de neuf ?</q>
-   <q rend="PRE mdash">Pas grand-chose.</q>
-   <q rend="PRE mdash">Il fait beau,</q>
-     dit Robert.</egXML>
-<!-- Queneau, Exercices de style (1947) p.192 -->
-To make explicit who is speaking, which is not always stated in the
-above example, the <att>who</att> attribute may be used:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Adolphe se tourna vers lui :
-<q who="#Adolphe">— Alors, Albert,
- quoi de neuf?</q>
-<q who="#Albert">— Pas grand-chose.</q>
-<q who="#Robert">— Il fait beau,</q>
+ <p>One form of presentational variation found particularly frequently in
+ written and printed texts is the use of quotation marks. As with the
+ typographic variations discussed in the preceding section, it is
+ generally helpful to separate the encoding of the underlying textual
+ feature (for example, a quotation or a piece of direct speech) from the
+ encoding of its rendering (for example, the use of a particular style of
+ quotation marks).</p>
+ <p>The most common and important use of quotation marks is, of
+ course, to mark <term>quotation</term>, by which we mean simply
+ any part of the text attributed by the author or narrator to
+ some agency other than the narrative voice. Typical examples
+ include passages cited from other works, for which the element
+ <gi>quote</gi> may be used, and words or phrases spoken or
+ thought by people or characters within the current work, for
+ which the element <gi>said</gi> may be used. The
+ <gi>soCalled</gi> element is used for cases where the author or
+ narrator distances him or herself from the words in question
+ without however attributing them to any other voice in
+ particular.</p>
+ <p>If the distinction among the various reasons why a passage is
+ offset from surrounding text cannot be made reliably, or is not
+ of interest, then all quoted matter may simply be marked using
+ the <gi>q</gi> element. The editorial policy in this respect
+ should be stated in the encoding description of the TEI
+ Header.</p>
+ <p>Quotation may be rendered by changes in type face, by special
+ punctuation marks (single or double or angled quotes, dashes,
+ etc.) and by layout (indented paragraphs, etc.). If these
+ characteristics are of interest, an appropriate value for the
+ <att>rend</att> attribute should be given, to record how the
+ <gi>said</gi> or <gi>quote</gi> element is rendered. For
+ discussion of suggested values for this attribute, see
+ below.</p>
+ <p>Quotation marks themselves may, like other punctuation marks, be
+ felt for some purposes to be worth retaining within a text, quite
+ independently of their description by the <att>rend</att> attribute.
+ Where this is done, either an appropriate entity reference may be
+ chosen from the standard ISO entity sets defined by ISO 8879,<note place="foot">ISO
+ 8879-1986 (E) Annex D.4; see Goldfarb, p. 502. XML versions are
+ available at <ptr target="http://www.tei-c.org/Entity_Sets/Unicode/iso-tech.ent"/>.</note>
+ or the character code points may be entered either directly or as
+ numeric character references. An entity reference has the advantage
+ that the entity may be redefined as null when the punctuation is to be
+ ignored for some analytic purpose. Well-known ambiguities, such as
+ whether the character ' represents an apostrophe or a closing single
+ quotation mark, or whether the character " represents an opening or
+ closing double quotation mark may all be resolved by the use of
+ appropriate entity references, as discussed in section <ptr target="#COPU"/>.</p>
+ <p>Alternatively, the encoder may suppress all quotation marks, possibly
+ recording their form using the <att>rend</att> attribute. Where this is
+ done, the following list of entity names (taken from the public entity
+ sets <ident type="entset">ISOpub</ident> and <ident type="entset">ISOnum</ident>) may be found useful to describe
+ quotation-mark styles common in European and American typesetting:
+ <!-- list restored under (mild) protest and with one necessary  -->
+ <!-- addition                                     LB, oct 92    -->
+ <list type="gloss">
+   <label>ldquo</label>
+   <item>double inverted comma (shaped like 66, superscript)</item>
+   <label>lsquo</label>
+   <item>single inverted comma (shaped like 6, superscript)</item>
+   <label>rdquo</label>
+   <item>double apostrophe (shaped like 99, superscript)</item>
+   <label>rsquo</label>
+   <item>single apostrophe (shaped like 9, superscript)</item>
+   <label>ldquor</label>
+   <item>double comma (shaped like 99, printed on base line)</item>
+   <label>lsquor</label>
+   <item>single comma (shaped like 9, printed on base line)</item>
+   <label>laquo</label>
+   <item>double guillemet open to the right</item>
+   <label>lsaquo</label>
+   <item>single guillemet open to the right</item>
+   <label>raquo</label>
+   <item>double guillemet open to the left</item>
+   <label>rsaquo</label>
+   <item>single guillemet open to the left</item>
+   <label>mdash</label>
+   <item>dash the width of an uppercase <mentioned>M</mentioned></item>
+ </list>
+ <!-- J.Lavagnino suggests revisiting the issue of mdash in    -->
+ <!-- P4:  perhaps this is too print-centered?  (msm)          -->
+ These may be used in the <att>rend</att> attribute to show how the
+ quotation was opened and closed. For example, if the words
+ <mentioned>pre</mentioned> and <mentioned>post</mentioned> are used to indicate
+ preceding and following punctuation, then the following example would
+ describe a conventional American book printed using single quotation
+ marks:
+ <egXML xmlns="http://www.tei-c.org/ns/Examples"><said rend="PRE lsquo POST rsquo">Who-e debel
+ you?</said> — he at last said — 
+ <said rend="PRE lsquo POST rsquo">you no speak-e,
+ damme, I kill-e.</said>  And so saying,
+ the lighted tomahawk began flourishing
+ about me in the dark.</egXML>
+ <!-- Melville, Moby Dick (but where?) -->
+ The following example demonstrates alternative policies which may be
+ adopted with respect to encoding of the punctuation used to mark
+ quotation:
+ <egXML xmlns="http://www.tei-c.org/ns/Examples">Adolphe se tourna vers lui :
+ <said>— Alors, Albert, quoi de neuf?</said>
+ <said>— Pas grand-chose.</said>
+ <said>— Il fait beau,</said> dit Robert.</egXML>
+ <egXML xmlns="http://www.tei-c.org/ns/Examples">Adolphe se tourna vers lui :
+ <said rend="PRE mdash">Alors, 
+ Albert, quoi de neuf ?</said>
+ <said rend="PRE mdash">Pas grand-chose.</said>
+ <said rend="PRE mdash">Il fait beau,</said>
+ dit Robert.</egXML>
+ <!-- Queneau, Exercices de style (1947) p.192 -->
+ To make explicit who is speaking, which is not always stated in the
+ above example, the <att>who</att> attribute may be used:
+ <egXML xmlns="http://www.tei-c.org/ns/Examples">Adolphe se tourna vers lui :
+ <said who="#Adolphe">— Alors, Albert,
+ quoi de neuf?</said>
+ <said who="#Albert">— Pas grand-chose.</said>
+ <said who="#Robert">— Il fait beau,</said>
  dit Robert.
-<!-- .... -->
-<list type="speakers">
-<item xml:id="Adolphe"/>
-<item xml:id="Albert"/>
-<item xml:id="Robert"/>
-</list></egXML>
-<!-- should show QUOTATION declarations for these -->
-The <att>who</att> attribute may be supplied whether
-or not an indication of the speaker is given explicitly in the
-text. It may take the form (as above) of  a
-normalized form of the speaker's name, but its role is to act as a
-pointer to a location elsewhere in the text where data about each
-speaker may be supplied. The most appropriate place to place such
-information is within the  <term>participant description</term>
-component of the TEI Header, as further discussed in <ptr
-target="#CCAHPA"/> but for simple cases like the above a simple list
-of speakers located in the front or back matter of the text may
-suffice. </p>
-<p>It may also be useful to distinguish
-representations of speech from representations of thought, in modern
-printed texts often indicated by a change of typeface. The
-<att>type</att> attribute should be used for this purpose, as in this
-example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><q type="speech">Oh yes,</q> said Henry, <q type="speech">I mean
-Gordon Macrae, for example…</q> <q type="thought">Jungian
-Analyst with Winebox! That's what you called him, you callous bastard,
-didn't you? Eh? Eh?</q></egXML>
-<!-- N Williams, The Wimbledon Poisoner, p 204 -->
+ <!-- .... -->
+ <list type="speakers">
+   <item xml:id="Adolphe"/>
+   <item xml:id="Albert"/>
+   <item xml:id="Robert"/>
+ </list></egXML>
+ <!-- should show QUOTATION declarations for these -->
+ The <att>who</att> attribute may be supplied whether
+ or not an indication of the speaker is given explicitly in the
+ text. It may take the form (as above) of  a
+ normalized form of the speaker's name, but its role is to act as a
+ pointer to a location elsewhere in the text where data about each
+ speaker may be supplied. The most appropriate place to place such
+ information is within the <term>participant description</term>
+ component of the TEI Header, as further discussed in <ptr
+ target="#CCAHPA"/> but for simple cases like the above a simple list
+ of speakers located in the front or back matter of the text may
+ suffice.</p>
+ <p>It may also be useful to distinguish
+ representations of speech from representations of thought, in modern
+ printed texts often indicated by a change of typeface. The
+ <att>aloud</att> attribute is provided for this purpose, as in this
+ example:
+ <egXML xmlns="http://www.tei-c.org/ns/Examples"><said aloud="true">Oh yes,</said> said Henry, <said aloud="false">I mean
+ Gordon Macrae, for example…</said> <said aloud="false">Jungian
+ Analyst with Winebox! That's what you called him, you callous bastard,
+ didn't you? Eh? Eh?</said></egXML>
+ <!-- N Williams, The Wimbledon Poisoner, p 204 -->
  </p>
-<p>Quoted matter may be embedded within quoted matter, as when one
-speaker reports the speech of another:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><q who="#Wilson">Spaulding, he came down into the office just this day
-eight weeks with this very paper in his hand, and he says:—
-<q who="#WilsonSpaulding">I wish to the Lord, Mr. Wilson, that I was a
-red-headed man.</q></q>
-<!-- ... -->
-<list type="speakers">
-<item xml:id="Wilson">Wilson</item>
-<item xml:id="WilsonSpaulding">Spaulding reported by Wilson</item>
-<!-- ...-->
-</list></egXML>
-<!-- A C Doyle, Red headed league (but where?) -->
+ <p>Quoted matter may be embedded within quoted matter, as when one
+ speaker reports the speech of another:
+ <egXML xmlns="http://www.tei-c.org/ns/Examples"><said who="#Wilson">Spaulding, he came down into the office just this day
+ eight weeks with this very paper in his hand, and he says:—
+ <said who="#WilsonSpaulding">I wish to the Lord, Mr. Wilson, that I was a
+ red-headed man.</said></said>
+ <!-- ... -->
+ <list type="speakers">
+   <item xml:id="Wilson">Wilson</item>
+   <item xml:id="WilsonSpaulding">Spaulding reported by Wilson</item>
+   <!-- ...-->
+ </list></egXML>
+ <!-- A C Doyle, Red headed league (but where?) -->
  </p>
-<p>Direct speech nested in this way is treated in the same way as
-elsewhere:  a change of rendition may occur, but the same
-element should be used. An encoder may however choose to distinguish
-between direct speech which contains quotations from extra-textual
-matter and direct speech itself, as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p><q>The Lord! The Lord! It is Sakya Muni himself,</q> the lama half
-  sobbed; and under his breath began the wonderful Buddhist
-  invocation:-<q>
-    <quote>
-      <l>To Him the Way — the Law — Apart —</l>
-      <l>Whom Maya held beneath her heart</l>
-      <l>Ananda's Lord — the Bodhisat</l>
-    </quote>
-  And He is here! The Most Excellent Law is here also. My
-  pilgrimage is well begun. And what work! What work!</q>
-</p></egXML> 
-<!-- R.Kipling, Kim, Macmillan, 1917(1901) p9 -->
+ <p>Direct speech nested in this way is treated in the same way as
+ elsewhere: a change of rendition may occur, but the same
+ element should be used. An encoder may however choose to distinguish
+ between direct speech which contains quotations from extra-textual
+ matter and direct speech itself, as in the following example:
+ <egXML xmlns="http://www.tei-c.org/ns/Examples"><p><said>The Lord! The Lord! It is Sakya Muni himself,</said> the lama half
+ sobbed; and under his breath began the wonderful Buddhist
+ invocation:-<said>
+ <quote>
+   <l>To Him the Way — the Law — Apart —</l>
+   <l>Whom Maya held beneath her heart</l>
+   <l>Ananda's Lord — the Bodhisat</l>
+ </quote>
+ And He is here! The Most Excellent Law is here also. My
+ pilgrimage is well begun. And what work! What work!</said>
+ </p></egXML> 
+ <!-- R.Kipling, Kim, Macmillan, 1917(1901) p9 -->
  </p>
-<p>Quotations from other works are often accompanied by a reference to
-their source. The <gi>cit</gi> element may be used to group together
-the quotation and its associated bibliographic reference, which should
-be encoded using the elements for bibliographic references discussed in
-section <ptr target="#COBI"/>, as in the following example.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div xml:id="mm01" type="chapter">
-<head>Chapter 1</head>
-<epigraph><cit>
-   <quote>
-      <l>Since I can do no good because a woman</l>
-      <l>Reach constantly at something that is near it.</l>
-   </quote>
-   <bibl>
-      <title>The Maid's Tragedy</title>
-      <author>Beaumont and Fletcher</author>
-   </bibl>
-</cit></epigraph>
-<p>Miss Brooke had that kind of beauty which seems to be thrown into
-relief by poor dress...</p>
-</div></egXML>
-<!-- G. Eliot, Middlemarch, p 1 -->
-	<!-- apostrophe added to "Maid's" as per J. Lav, who says     -->
-	<!-- Penguin has it. (msm)                                    -->
-Like other bibliographic references, the citation attached to a
-quotation may be represented simply by a pointer, as in this example:
+ <p>Quotations from other works are often accompanied by a reference to
+ their source. The <gi>cit</gi> element may be used to group together
+ the quotation and its associated bibliographic reference, which should
+ be encoded using the elements for bibliographic references discussed in
+ section <ptr target="#COBI"/>, as in the following example.
+ <egXML xmlns="http://www.tei-c.org/ns/Examples"><div xml:id="mm01" type="chapter">
+   <head>Chapter 1</head>
+   <epigraph><cit>
+     <quote>
+       <l>Since I can do no good because a woman</l>
+       <l>Reach constantly at something that is near it.</l>
+     </quote>
+     <bibl>
+       <title>The Maid's Tragedy</title>
+       <author>Beaumont and Fletcher</author>
+     </bibl>
+   </cit></epigraph>
+   <p>Miss Brooke had that kind of beauty which seems to be thrown into
+   relief by poor dress...</p>
+ </div></egXML>
+ <!-- G. Eliot, Middlemarch, p 1 -->
+ <!-- apostrophe added to "Maid's" as per J. Lav, who says     -->
+ <!-- Penguin has it. (msm)                                    -->
+ Like other bibliographic references, the citation attached to a
+ quotation may be represented simply by a pointer, as in this example:
  <egXML xmlns="http://www.tei-c.org/ns/Examples">Lexicography has shown little sign of being affected by the
-work of followers of J.R. Firth, probably best summarized
-in his slogan, <cit>
-    <quote>You shall know a word by the company it keeps.</quote>
-    <ref>(Firth, 1957)</ref>
-</cit></egXML>
-<!-- Hanks, in Looking Up, ed Sinclair, (1987) p.121 -->
-Unlike most of the other elements discussed in this chapter, direct
-speech and quotations may frequently contain other high-level elements
-such as paragraphs or verse lines, as well as being themselves contained
-by such elements.  Three possible solutions exist for this well-known
-structural problem:
-<list type="bullets">
-<item>the quotation is broken into segments, each of which
-is entirely contained within a paragraph</item>
-<item>the quotation is marked up as part of a concurrent but
-independent hierarchy</item>
-<item>the quotation boundaries are represented by empty milestone
-tags</item></list>
-For further discussion, and several examples, see chapter <ptr target="#NH"/>.</p><p>Finally, in this section, the element <gi>soCalled</gi> is provided
-for all cases in which quotation marks are used to distance the quoted
-text from the narrator or speaker. Common examples include the
-<soCalled>scare</soCalled> quotes often found in newspaper headlines and
-advertising copy, where the effect is to cast doubts on the veracity of
-an assertion:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><head>PM dodges <soCalled>election threat</soCalled> in interview</head></egXML>
-<!-- The Guardian, p2, 26 Oct 1992  --></p><p>The same element should be used to mark a variety of special ironic
-usages.  Some further examples follow:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">He hated <soCalled>good</soCalled> books.</egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><soCalled>Croissants</soCalled> indeed! toast not good enough for you?</egXML>
-<!-- some "real" examples would be better -->
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Although Chomsky's
-decision that all NL sentences are finite objects was never justified
-by arguments from the attested properties of NLs, it did have a
-certain <soCalled>social</soCalled> justification. It was commonly
-assumed in works on logic until fairly recently that the notion
-<mentioned>language</mentioned> is necessarily restricted to finite
-strings.</egXML>
-<!-- Langendoen and Postal, Vastness of NLs, p. 24 note 12.        -->
+ work of followers of J.R. Firth, probably best summarized
+ in his slogan, <cit>
+ <quote>You shall know a word by the company it keeps.</quote>
+ <ref>(Firth, 1957)</ref>
+ </cit></egXML>
+ <!-- Hanks, in Looking Up, ed Sinclair, (1987) p.121 -->
+ Unlike most of the other elements discussed in this chapter, direct
+ speech and quotations may frequently contain other high-level elements
+ such as paragraphs or verse lines, as well as being themselves contained
+ by such elements. Three possible solutions exist for this well-known
+ structural problem:
+ <list type="bullets">
+   <item>the quotation is broken into segments, each of which is
+   entirely contained within a paragraph</item>
+   <item>the quotation is marked up using stand-off markup</item>
+   <item>the quotation boundaries are represented by empty
+   segment boundary delimiter elements</item>
+ </list>
+ For further discussion, and several examples, see chapter <ptr target="#NH"/>.</p>
+ <p>Finally, in this section, the element <gi>soCalled</gi> is provided
+ for all cases in which quotation marks are used to distance the quoted
+ text from the narrator or speaker. Common examples include the
+ <soCalled>scare</soCalled> quotes often found in newspaper headlines and
+ advertising copy, where the effect is to cast doubts on the veracity of
+ an assertion:
+ <egXML xmlns="http://www.tei-c.org/ns/Examples"><head>PM dodges <soCalled>election threat</soCalled> in interview</head></egXML>
+ <!-- The Guardian, p2, 26 Oct 1992  --></p>
+ <p>The same element should be used to mark a variety of special ironic
+ usages. Some further examples follow:
+ <egXML xmlns="http://www.tei-c.org/ns/Examples">He hated <soCalled>good</soCalled> books.</egXML>
+ <egXML xmlns="http://www.tei-c.org/ns/Examples"><soCalled>Croissants</soCalled> indeed! toast not good enough for you?</egXML>
+ <!-- some "real" examples would be better -->
+ <egXML xmlns="http://www.tei-c.org/ns/Examples">Although Chomsky's
+ decision that all NL sentences are finite objects was never justified
+ by arguments from the attested properties of NLs, it did have a
+ certain <soCalled>social</soCalled> justification. It was commonly
+ assumed in works on logic until fairly recently that the notion
+ <mentioned>language</mentioned> is necessarily restricted to finite
+ strings.</egXML>
+ <!-- Langendoen and Postal, Vastness of NLs, p. 24 note 12.        -->
  </p>
-<p>The elements discussed in this section are formally defined as
-follows:
-<specGrp xml:id="DCOHQQ" n="Quotation">
-&q;
-&quote;
-&cit;
-&mentioned;
-&soCalled;
-</specGrp>
-	</p></div><div type="div3" xml:id="COHQU"><head>Terms, Glosses, Equivalents and Descriptions</head>
+ <p>The elements discussed in this section are formally defined as
+ follows:
+ <specGrp xml:id="DCOHQQ" n="Quotation">
+   &said;
+   &quote;
+   &q;
+   &cit;
+   &mentioned;
+   &soCalled;
+ </specGrp>
+	</p></div>
+<div type="div3" xml:id="COHQU"><head>Terms, Glosses, Equivalents and Descriptions</head>
 <p>This section describes a set of textual elements which are
 used to provide a gloss, alternate identification or description of
 something.</p>
