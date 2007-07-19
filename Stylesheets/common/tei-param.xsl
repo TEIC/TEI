@@ -37,7 +37,7 @@
   <xsl:param name="graphicsSuffix">.png</xsl:param>
   <xd:doc class="figures" type="decimal"> Scaling of imported graphics</xd:doc>
   <xsl:param name="standardScale">1</xsl:param>
-  <xd:doc class="headings" type="boolean"> Construct a heading (eg "Heading")
+  <xd:doc class="headings" type="boolean"> Construct a heading 
     for &lt;div&gt; elements with no &lt;head&gt;</xd:doc>
   <xsl:param name="autoHead"/>
   <xd:doc class="headings">
@@ -53,7 +53,9 @@
       <xsl:when test="@type">
         <xsl:value-of select="@type"/>
       </xsl:when>
-      <xsl:otherwise>Heading</xsl:otherwise>
+      <xsl:otherwise>
+	<xsl:text> </xsl:text>
+     </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   <xd:doc class="headings" type="string"> Punctuation to insert after a section
