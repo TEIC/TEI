@@ -528,7 +528,9 @@ $ID: requests a particular page
     <xsl:variable name="divlevel" select="count(ancestor::tei:div)"/>
     <xsl:element name="h{$divlevel + $divOffset}">
       <xsl:call-template name="makeAnchor"/>
-      <xsl:call-template name="header"/>
+      <xsl:call-template name="header">
+	<xsl:with-param name="plain">false</xsl:with-param>
+      </xsl:call-template>
     </xsl:element>
     <xsl:apply-templates/>
   </xsl:template>
@@ -891,7 +893,9 @@ $ID: requests a particular page
               <xsl:if test="$xhtml='false'">
                 <a name="{$ident}"/>
               </xsl:if>
-              <xsl:call-template name="header"/>
+              <xsl:call-template name="header">
+		<xsl:with-param name="plain">false</xsl:with-param>
+	      </xsl:call-template>
             </xsl:element>
           </xsl:if>
           <xsl:apply-templates select="tei:text/tei:body"/>
@@ -910,7 +914,9 @@ $ID: requests a particular page
             <xsl:if test="$xhtml='false'">
               <a name="{$ident}"/>
             </xsl:if>
-            <xsl:call-template name="header"/>
+            <xsl:call-template name="header">
+	      <xsl:with-param name="plain">false</xsl:with-param>
+	    </xsl:call-template>
           </xsl:element>
         </xsl:if>
         <xsl:apply-templates select="tei:text/tei:body"/>
@@ -936,7 +942,9 @@ $ID: requests a particular page
               <xsl:if test="$xhtml='false'">
                 <a name="{$ident}"/>
               </xsl:if>
-              <xsl:call-template name="header"/>
+              <xsl:call-template name="header">
+		<xsl:with-param name="plain">false</xsl:with-param>
+	      </xsl:call-template>
             </xsl:element>
           </xsl:if>
           <xsl:apply-templates/>
@@ -956,7 +964,9 @@ $ID: requests a particular page
             <xsl:if test="$xhtml='false'">
               <a name="{$ident}"/>
             </xsl:if>
-            <xsl:call-template name="header"/>
+            <xsl:call-template name="header">
+	      <xsl:with-param name="plain">false</xsl:with-param>
+	    </xsl:call-template>
           </xsl:element>
         </xsl:if>
         <xsl:apply-templates/>

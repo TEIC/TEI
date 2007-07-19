@@ -353,7 +353,9 @@
   <xsl:template name="slidebody">
     <div class="slidetop">
       <div class="slidetitle">
-        <xsl:call-template name="header"/>
+        <xsl:call-template name="header">
+	  <xsl:with-param name="plain">false</xsl:with-param>
+	</xsl:call-template>
       </div>
       <xsl:if test="$splitLevel &gt;-1">
         <div class="xref">

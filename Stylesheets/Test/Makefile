@@ -1,5 +1,5 @@
 VERSION=`cat ../VERSION`
-default: test testp4 test2 test3
+default: test testp4 test4 test3
 
 test:
 	xsltproc -o dummy --stringparam verbose true ../release/tei-xsl/p5/html/tei.xsl test.xml

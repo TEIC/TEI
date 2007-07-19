@@ -43,13 +43,6 @@
     <xsl:apply-templates/>
   </xsl:template>
   <xd:doc>
-    <xd:short>Process elements  tei:*</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:*" mode="plain">
-    <xsl:apply-templates/>
-  </xsl:template>
-  <xd:doc>
     <xd:short>Process elements  tei:TEI</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
@@ -594,9 +587,6 @@
     <xd:short>Process elements  text()</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="text()" mode="plain">
-    <xsl:value-of select="normalize-space(.)"/>
-  </xsl:template>
   <xd:doc>
     <xd:short>[fo] </xd:short>
     <xd:detail> </xd:detail>

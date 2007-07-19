@@ -146,6 +146,7 @@
   <xsl:template name="header">
     <xsl:param name="minimal">false</xsl:param>
     <xsl:param name="toc"/>
+    <xsl:param name="plain">true</xsl:param>
     <xsl:variable name="depth">
       <xsl:apply-templates mode="depth" select="."/>
     </xsl:variable>
@@ -210,7 +211,7 @@
                   <xsl:call-template name="autoMakeHead"/>
                 </xsl:when>
                 <xsl:otherwise>
-                  <xsl:apply-templates mode="plain" select="tei:head"/>
+                  <xsl:apply-templates mode="plainheader" select="tei:head"/>
                 </xsl:otherwise>
               </xsl:choose>
             </xsl:with-param>
@@ -219,8 +220,11 @@
         <xsl:when test="$autoHead='true'">
           <xsl:call-template name="autoMakeHead"/>
         </xsl:when>
+        <xsl:when test="$plain='true'">
+          <xsl:apply-templates select="tei:head" mode="plain"/>
+        </xsl:when>
         <xsl:otherwise>
-          <xsl:apply-templates mode="plain" select="tei:head"/>
+          <xsl:apply-templates select="tei:head"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:if>

@@ -392,11 +392,11 @@
     <xd:short>Process elements tei:head</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:head" mode="plain">
+  <xsl:template match="tei:head" mode="plainheader">
     <xsl:if test="preceding-sibling::tei:head">
       <xsl:text> </xsl:text>
     </xsl:if>
-    <xsl:apply-templates mode="plain"/>
+    <xsl:apply-templates/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:hi</xd:short>

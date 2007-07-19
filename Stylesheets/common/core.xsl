@@ -22,16 +22,16 @@
     <xd:copyright>2005, TEI Consortium</xd:copyright>
   </xd:doc>
   <xd:doc>
-    <xd:short>Process elements tei:*</xd:short>
+    <xd:short>Process all elements in depth</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:*" mode="depth">99</xsl:template>
   <xd:doc>
-    <xd:short>Process elements tei:*</xd:short>
+    <xd:short>Process all elements in plain mode</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:*" mode="plain">
-    <xsl:apply-templates/>
+    <xsl:apply-templates mode="plain"/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process tei:sic</xd:short>
