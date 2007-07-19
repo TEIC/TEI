@@ -91,7 +91,7 @@ html-web-beta: check
 	-rm -rf Guidelines-web-beta
 	-mkdir Guidelines-web-beta
 	for i in ${LANGUAGE} ${OTHERLANGUAGES} ; do \
-	echo making HTML Guidelines for language $$i ; \
+	echo making beta HTML Guidelines for language $$i ; \
 	mkdir -p Guidelines-web-beta/$$i/html; \
 	xmllint --noent --xinclude ${SOURCETREE}/Guidelines/$$i/guidelines-$$i.xml \
 	| xsltproc ${VERBOSE} \
