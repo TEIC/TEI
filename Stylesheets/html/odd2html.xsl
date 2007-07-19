@@ -177,7 +177,7 @@
           </xsl:call-template>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:apply-templates mode="plainheader" select="tei:head"/>
+          <xsl:apply-templates mode="plain" select="tei:head"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:if>

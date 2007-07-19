@@ -354,7 +354,7 @@
     <div class="slidetop">
       <div class="slidetitle">
         <xsl:call-template name="header">
-	  <xsl:with-param name="plain">false</xsl:with-param>
+	  <xsl:with-param name="display">full</xsl:with-param>
 	</xsl:call-template>
       </div>
       <xsl:if test="$splitLevel &gt;-1">

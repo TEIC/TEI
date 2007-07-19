@@ -33,6 +33,11 @@
   <xsl:template match="tei:*" mode="plain">
     <xsl:apply-templates mode="plain"/>
   </xsl:template>
+  <xsl:template match="tei:note" mode="plain"/>
+  <xsl:template match="tei:app" mode="plain"/>
+  <xsl:template match="tei:pb" mode="plain"/>
+  <xsl:template match="tei:lb" mode="plain"/>
+  <xsl:template match="tei:ptr" mode="plain"/>
   <xd:doc>
     <xd:short>Process tei:sic</xd:short>
     <xd:detail> </xd:detail>

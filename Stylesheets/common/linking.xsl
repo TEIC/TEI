@@ -110,6 +110,7 @@
     <xsl:param name="minimal">false</xsl:param>
     <xsl:call-template name="header">
       <xsl:with-param name="minimal" select="$minimal"/>
+      <xsl:with-param name="display">plain</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
   <xd:doc>
@@ -146,7 +147,7 @@
   <xsl:template name="header">
     <xsl:param name="minimal">false</xsl:param>
     <xsl:param name="toc"/>
-    <xsl:param name="plain">true</xsl:param>
+    <xsl:param name="display">full</xsl:param>
     <xsl:variable name="depth">
       <xsl:apply-templates mode="depth" select="."/>
     </xsl:variable>
@@ -211,7 +212,9 @@
                   <xsl:call-template name="autoMakeHead"/>
                 </xsl:when>
                 <xsl:otherwise>
-                  <xsl:apply-templates mode="plainheader" select="tei:head"/>
+		  <xsl:for-each select="tei:head">
+		    <xsl:apply-templates mode="plain"/>
+		  </xsl:for-each>
                 </xsl:otherwise>
               </xsl:choose>
             </xsl:with-param>
@@ -220,11 +223,20 @@
         <xsl:when test="$autoHead='true'">
           <xsl:call-template name="autoMakeHead"/>
         </xsl:when>
-        <xsl:when test="$plain='true'">
-          <xsl:apply-templates select="tei:head" mode="plain"/>
+        <xsl:when test="$display='plain'">
+          <xsl:for-each select="tei:head">
+	    <xsl:apply-templates mode="plain"/>
+	  </xsl:for-each>
+        </xsl:when>
+        <xsl:when test="$display='simple'">
+          <xsl:for-each select="tei:head">
+	    <xsl:apply-templates mode="plain"/>
+	  </xsl:for-each>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:apply-templates select="tei:head"/>
+          <xsl:for-each select="tei:head">
+	    <xsl:apply-templates/>
+	  </xsl:for-each>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:if>
@@ -242,6 +254,7 @@
     <xsl:variable name="Text">
       <xsl:call-template name="header">
         <xsl:with-param name="minimal" select="$minimalCrossRef"/>
+	<xsl:with-param name="display">plain</xsl:with-param>
       </xsl:call-template>
     </xsl:variable>
     <xsl:choose>

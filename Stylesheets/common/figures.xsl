@@ -70,7 +70,7 @@
         <xsl:number level="any"/>
         <xsl:if test="tei:head">
           <xsl:text>. </xsl:text>
-          <xsl:apply-templates select="tei:head"/>
+          <xsl:apply-templates mode="plain" select="tei:head"/>
         </xsl:if>
       </xsl:when>
       <xsl:otherwise>

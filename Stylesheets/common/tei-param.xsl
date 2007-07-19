@@ -48,7 +48,7 @@
   <xsl:template name="autoMakeHead">
     <xsl:choose>
       <xsl:when test="tei:head">
-        <xsl:apply-templates mode="plainheader" select="tei:head"/>
+        <xsl:apply-templates mode="plain" select="tei:head"/>
       </xsl:when>
       <xsl:when test="@type">
         <xsl:value-of select="@type"/>

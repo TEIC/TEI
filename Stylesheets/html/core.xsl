@@ -78,6 +78,7 @@
         <xsl:call-template name="header">
           <xsl:with-param name="toc" select="$pointer"/>
           <xsl:with-param name="minimal">false</xsl:with-param>
+	  <xsl:with-param name="display">plain</xsl:with-param>
         </xsl:call-template>
         <xsl:if test="$thislevel &lt; $Depth">
           <xsl:call-template name="continuedToc"/>
@@ -389,14 +390,14 @@
     </xsl:if>
   </xsl:template>
   <xd:doc>
-    <xd:short>Process elements tei:head</xd:short>
+    <xd:short>Process element tei:head in plain mode</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:head" mode="plainheader">
+  <xsl:template match="tei:head" mode="plain">
     <xsl:if test="preceding-sibling::tei:head">
       <xsl:text> </xsl:text>
     </xsl:if>
-    <xsl:apply-templates/>
+    <xsl:apply-templates mode="plain"/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:hi</xd:short>

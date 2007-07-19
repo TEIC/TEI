@@ -529,7 +529,7 @@ $ID: requests a particular page
     <xsl:element name="h{$divlevel + $divOffset}">
       <xsl:call-template name="makeAnchor"/>
       <xsl:call-template name="header">
-	<xsl:with-param name="plain">false</xsl:with-param>
+	<xsl:with-param name="display">full</xsl:with-param>
       </xsl:call-template>
     </xsl:element>
     <xsl:apply-templates/>
@@ -894,7 +894,7 @@ $ID: requests a particular page
                 <a name="{$ident}"/>
               </xsl:if>
               <xsl:call-template name="header">
-		<xsl:with-param name="plain">false</xsl:with-param>
+		<xsl:with-param name="display">full</xsl:with-param>
 	      </xsl:call-template>
             </xsl:element>
           </xsl:if>
@@ -915,7 +915,7 @@ $ID: requests a particular page
               <a name="{$ident}"/>
             </xsl:if>
             <xsl:call-template name="header">
-	      <xsl:with-param name="plain">false</xsl:with-param>
+	      <xsl:with-param name="display">full</xsl:with-param>
 	    </xsl:call-template>
           </xsl:element>
         </xsl:if>
@@ -943,7 +943,7 @@ $ID: requests a particular page
                 <a name="{$ident}"/>
               </xsl:if>
               <xsl:call-template name="header">
-		<xsl:with-param name="plain">false</xsl:with-param>
+		<xsl:with-param name="display">full</xsl:with-param>
 	      </xsl:call-template>
             </xsl:element>
           </xsl:if>
@@ -965,7 +965,7 @@ $ID: requests a particular page
               <a name="{$ident}"/>
             </xsl:if>
             <xsl:call-template name="header">
-	      <xsl:with-param name="plain">false</xsl:with-param>
+	      <xsl:with-param name="display">full</xsl:with-param>
 	    </xsl:call-template>
           </xsl:element>
         </xsl:if>
@@ -2380,7 +2380,9 @@ $ID: requests a particular page
                   <xsl:value-of select="$class_subtoc"/>
                 </xsl:with-param>
                 <xsl:with-param name="body">
-                  <xsl:call-template name="header"/>
+                  <xsl:call-template name="header">
+		    <xsl:with-param name="display">simple</xsl:with-param>
+		  </xsl:call-template>
                 </xsl:with-param>
               </xsl:call-template>
             </li>
@@ -2519,7 +2521,9 @@ $ID: requests a particular page
       <xsl:choose>
         <xsl:when test="generate-id(.)=$id">
           <span class="toclist-this">
-            <xsl:call-template name="header"/>
+            <xsl:call-template name="header">
+	      <xsl:with-param name="display">simple</xsl:with-param>
+	    </xsl:call-template>
           </span>
         </xsl:when>
         <xsl:otherwise>
@@ -2537,7 +2541,9 @@ $ID: requests a particular page
             <xsl:attribute name="href">
               <xsl:apply-templates mode="generateLink" select="."/>
             </xsl:attribute>
-            <xsl:call-template name="header"/>
+            <xsl:call-template name="header">
+	      <xsl:with-param name="display">simple</xsl:with-param>
+	    </xsl:call-template>
           </a>
         </xsl:otherwise>
       </xsl:choose>

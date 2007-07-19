@@ -105,6 +105,7 @@
             </xsl:attribute>
             <xsl:call-template name="header">
               <xsl:with-param name="minimal">false</xsl:with-param>
+	      <xsl:with-param name="display">plain</xsl:with-param>
             </xsl:call-template>
           </a>
         </li>
