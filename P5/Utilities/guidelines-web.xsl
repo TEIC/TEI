@@ -18,7 +18,7 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   
-<xsl:import href="odd2htmlp5.xsl.model"/>
+<xsl:include href="odd2htmlp5.xsl.model"/>
 <xsl:param name="lang"/>
 <xsl:param name="doclang"/>
 <xsl:param name="cssFile">/Guidelines/guidelines-web.css</xsl:param>

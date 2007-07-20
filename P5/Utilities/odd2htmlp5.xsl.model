@@ -72,23 +72,7 @@
     <meta name="DC.Creator.Address" content="tei@oucs.ox.ac.uk"/>
   </xsl:template>
   
-  
-  <xsl:template match="processing-instruction()">
-    <!--
-	<xsl:if test="name(.) = 'tei'">
-	<xsl:choose>
-	<xsl:when test="starts-with(.,'winita')">
-	<p>
-	<span style="color: red">NOTE: the following example 
-	may not have been converted to XML yet!</span>
-	</p>
-	</xsl:when>
-	</xsl:choose>
-	</xsl:if>
-    -->
-  </xsl:template>
-  
-
+  <xsl:template match="processing-instruction()"/>
  
   <xsl:template match="tei:docAuthor">
     <div class="center">
@@ -139,233 +123,6 @@
   </xsl:template>
   
 
-<!--
-  <xsl:template name="calculateNumber">
-    <xsl:param name="numbersuffix"/>
-    <xsl:choose>
-      <xsl:when test="self::tei:TEI">
-	<xsl:value-of select="tei:teiHeader//tei:title"/>
-      </xsl:when>
-      <xsl:when test="self::tei:div">
-	<xsl:choose>
-	  <xsl:when test="ancestor::tei:front">
-	    <xsl:if test="not($numberFrontHeadings='')">
-	      <xsl:number format="{$numberFrontHeadings}" 
-			  level="multiple" 
-			  from="tei:front" 
-			  count="tei:div"/>
-	      <xsl:value-of select="$numbersuffix"/>
-	    </xsl:if>
-	  </xsl:when>
-	  <xsl:when test="ancestor::tei:back">
-	    <xsl:if test="not($numberBackHeadings='')">
-	      <xsl:call-template name="i18n">
-		<xsl:with-param name="word">appendixWords</xsl:with-param>
-	      </xsl:call-template>
-	      <xsl:text> </xsl:text>
-	      <xsl:number format="{$numberBackHeadings}" 
-			  level="multiple" 
-			  from="tei:back" 
-			  count="tei:div"/>
-	      <xsl:value-of select="$numbersuffix"/>
-	    </xsl:if>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:number format="{$numberBodyHeadings}" 
-			level="multiple" 
-			from="tei:body" 
-			count="tei:div"/>
-	    <xsl:value-of select="$numbersuffix"/>
-	  </xsl:otherwise>
-	</xsl:choose>
-	
-      </xsl:when>
-
-    </xsl:choose>
-  </xsl:template>
-  
-  
-  <xsl:template name="linkListContents">
-    <xsl:param name="style"/>
-    <xsl:variable name="thisname">
-      <xsl:value-of select="local-name()"/>
-    </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="$thisname='TEI'">
-        <xsl:for-each select="tei:text/tei:front/tei:div/tei:div">
-	    <xsl:variable name="pointer">
-	      <xsl:apply-templates mode="generateLink" select="."/>
-	    </xsl:variable>
-	    <p class="{$style}">
-	      <a class="{$style}" href="{$pointer}">
-	      <xsl:call-template name="header"/></a>
-	    </p>
-	  </xsl:for-each>
-	  <hr/>
-        <xsl:for-each select="tei:text/tei:body/tei:div/tei:div">
-          <xsl:variable name="pointer">
-            <xsl:apply-templates mode="generateLink" select="."/>
-          </xsl:variable>
-          <p class="{$style}">
-            <a class="{$style}" href="{$pointer}">
-              <xsl:call-template name="header"/></a>
-            </p>
-          </xsl:for-each>
-	<xsl:for-each select="tei:text/tei:back">
-	  <hr/>
-	  <xsl:for-each select="tei:div/tei:div">
-	    <xsl:variable name="pointer">
-	      <xsl:apply-templates mode="generateLink" select="."/>
-	    </xsl:variable>
-	    <p class="{$style}">
-	      <a class="{$style}" href="{$pointer}">
-	      <xsl:call-template name="header"/></a>
-	    </p>
-	  </xsl:for-each>
-	</xsl:for-each>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:variable name="BaseFile">
-	  <xsl:value-of select="$masterFile"/>
-	</xsl:variable>
-	<p class="{$style}">
-	  <a class="{$style}" href="{$BaseFile}.html">
-	  <xsl:value-of select="$homeLabel"/></a>
-	</p>
-	<hr/>
-	<xsl:for-each select="ancestor::tei:div">
-	  <p class="{$style}">
-	    <a class="{$style}">
-	      <xsl:attribute name="href">
-		<xsl:apply-templates mode="generateLink" select="."/>
-	      </xsl:attribute>
-	      <xsl:call-template name="header"/>
-	    </a>
-	  </p>
-	  <hr/>
-	</xsl:for-each>
-	
-	
-	<p class="{$style}">
-	  <a class="{$style}">
-	    <xsl:attribute name="href">
-	      <xsl:apply-templates mode="generateLink" select="."/>
-	    </xsl:attribute>
-	    <xsl:call-template name="header"/>
-	</a></p>
-	
-	<xsl:for-each select="tei:div">
-	  <p class="{$style}-sub"><a class="{$style}-sub">
-	    <xsl:attribute name="href">
-	      <xsl:apply-templates mode="generateLink" select="."/>
-	    </xsl:attribute>
-	    <xsl:call-template name="header"/>
-	  </a></p>
-	</xsl:for-each>
-	
-	
-	<hr/>
-	<xsl:for-each select="preceding-sibling::tei:div">
-	  <p class="{$style}">
-	    <a class="{$style}">
-	      <xsl:attribute name="href">
-		<xsl:apply-templates mode="generateLink" select="."/>
-	      </xsl:attribute>
-	      <xsl:call-template name="header"/>
-	  </a></p>
-	</xsl:for-each>
-	
-	<p class="{$style}-this">
-	  <a class="{$style}-this">
-	    <xsl:attribute name="href">
-	      <xsl:apply-templates mode="generateLink" select="."/>
-	    </xsl:attribute>
-	    <xsl:call-template name="header"/>
-	  </a>
-	</p>
-	
-	<xsl:for-each select="following-sibling::tei:div">
-	  <p class="{$style}">
-	    <a class="{$style}">
-	      <xsl:attribute name="href">
-		<xsl:apply-templates mode="generateLink" select="."/>
-	      </xsl:attribute>
-	      <xsl:call-template name="header"/>
-	    </a>
-	  </p>
-	</xsl:for-each>
-      </xsl:otherwise>
-    </xsl:choose>
-    <xsl:if test="$splitLevel=-1">
-      <xsl:call-template name="listSpecs"/>
-    </xsl:if>
-  </xsl:template>
-  
-  <xsl:template name="maintoc"> 
-    <xsl:param name="force"/>
-    <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:front">
-      <ul class="toc{$force}">
-        <xsl:apply-templates
-          select="tei:div/tei:div" mode="maketoc">
-          <xsl:with-param name="forcedepth" select="$force"/>
-	</xsl:apply-templates>
-      </ul>
-    </xsl:for-each>
-    
-    <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:body">
-      <ul class="toc{$force}">
-        <xsl:apply-templates 
-          select="tei:div/tei:div" mode="maketoc">
-          <xsl:with-param name="forcedepth" select="$force"/>
-        </xsl:apply-templates>
-      </ul>
-    </xsl:for-each>
-    
-    <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:back">
-      <ul class="toc{$force}">
-        <xsl:apply-templates 
-          select="tei:div/tei:div" mode="maketoc">
-          <xsl:with-param name="forcedepth" select="$force"/>
-        </xsl:apply-templates>
-      </ul>
-    </xsl:for-each>
-  </xsl:template>
-  
-  <xsl:template name="xrefpanel">
-    <xsl:param name="homepage"/>
-    <xsl:param name="mode"/>
-    
-    <p class="{$alignNavigationPanel}">
-      
-      <xsl:variable name="Parent">
-	<xsl:call-template name="locateParent"/>
-	<xsl:text>.html</xsl:text>
-      </xsl:variable>
-      <xsl:choose>
-	<xsl:when test="$Parent = '.html'">
-	  <xsl:call-template name="upLink">
-	    <xsl:with-param name="up" select="$homepage"/>
-	    <xsl:with-param name="title">
-	      <xsl:call-template name="contentsWord"/>
-	    </xsl:with-param>
-	  </xsl:call-template>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:call-template name="generateUpLink"/>
-	</xsl:otherwise>
-      </xsl:choose>
-
-      <xsl:call-template name="previousLink">
-        <xsl:with-param name="previous" select="preceding-sibling::tei:div[1]"/>
-      </xsl:call-template>
-
-      <xsl:call-template name="nextLink">
-        <xsl:with-param name="next" select="following-sibling::tei:div[1]"/>
-      </xsl:call-template>
-
-    </p>
-  </xsl:template>
--->
 
 <xsl:template name="hdr2">
 <xsl:comment>no nav </xsl:comment>
@@ -403,5 +160,13 @@
   </xsl:text>
 </script>
   </xsl:template>
+
+  <xsl:template name="preAddressHook">
+    <div style="border: solid red 1pt">
+      <xsl:text>Generated: </xsl:text>
+      <xsl:call-template name="whatsTheDate"/>
+    </div>
+  </xsl:template>
+
 
 </xsl:stylesheet>
