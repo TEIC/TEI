@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id$ -->
-<grammar ns="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+<grammar 
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+    ns="http://relaxng.org/ns/structure/1.0" 
+    xmlns="http://relaxng.org/ns/structure/1.0" 
+    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <define name="pattern">
+    <optional>
+      <ref name="anyDoc"/>
+    </optional>
     <choice>
       <element name="element">
         <attribute name="name">
@@ -21,6 +28,9 @@
         <attribute name="name">
           <data type="QName"/>
         </attribute>
+        <optional>
+          <ref name="anyAttDoc"/>
+        </optional>
         <optional>
           <ref name="pattern"/>
         </optional>
@@ -121,7 +131,33 @@
         </zeroOrMore>
       </element>
     </choice>
+    <optional>
+      <ref name="anyDoc"/>
+    </optional>
   </define>
+
+<define name="anyDoc">
+      <element>
+       <nsName ns="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+       <zeroOrMore>
+        <choice>
+         <attribute>
+          <anyName/>
+         </attribute>
+         <ref name="anyDoc"/>
+         <text/>
+        </choice>
+       </zeroOrMore>
+      </element>
+</define>
+
+<define name="anyAttDoc">
+  <attribute name="defaultValue"
+	     ns="http://relaxng.org/ns/compatibility/annotations/1.0">
+    <text/>
+  </attribute>
+</define>
+
   <define name="param">
     <element name="param">
       <attribute name="name">
