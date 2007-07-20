@@ -10,7 +10,7 @@
 **   xmllint &#x2D;&#x2D;noent &#x2D;&#x2D;xinclude
 **   Source/Guidelines/en/guidelines-en.xml
 **   | xsltproc Utilities/listcontentmodels.xsl -
-**   | /usr/share/xml/teip4/stylesheet/teic/teihtml-teic-printable.xsl
+**   | xsltproc /usr/share/xml/teip4/stylesheet/teic/teihtml-teic-printable.xsl -
 **   > /tmp/edw84.html 
 **
 ** It was written for the 2005-09 "class" meeting in Oxford by Sebastian

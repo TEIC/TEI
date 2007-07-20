@@ -12,7 +12,7 @@ $Author$
   <gloss version="2007-01-21" xml:lang="it">peritesto finale</gloss>
   <gloss version="2006-10-28" xml:lang="ja">後付</gloss>
   <desc>contains any appendixes, etc. following the main part of a
-text.</desc>
+    text.</desc>
   <desc version="2007-05-04" xml:lang="es">contiene cualquier tipo de apéndice, etc. que aparece detrás del texto.</desc>
   <desc version="2007-01-21" xml:lang="it">contiene qualsiasi appendice che segua il testo vero e proprio</desc>
   <desc version="2006-10-28" xml:lang="ja"> 本文の後に続く付録などを示す．</desc>
@@ -22,44 +22,44 @@ text.</desc>
   <content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:zeroOrMore>
-        <rng:choice>
-          <rng:ref name="model.frontPart"/>
-          <rng:ref name="model.global"/>
-          <rng:ref name="model.divWrapper"/>
-        </rng:choice>
+	<rng:choice>
+	  <rng:ref name="model.frontPart"/>
+	  <rng:ref name="model.global"/>
+	  <rng:ref name="model.divTop"/>
+	</rng:choice>
       </rng:zeroOrMore>
-      <rng:optional>
-        <rng:choice>
-          <rng:oneOrMore>
-            <rng:group>
-              <rng:group>
-                <rng:ref name="model.divLike"/>
-              </rng:group>
-              <rng:zeroOrMore>
-                <rng:choice>
-                  <rng:ref name="model.global"/>
-                  <rng:ref name="model.frontPart"/>
-                </rng:choice>
-              </rng:zeroOrMore>
-            </rng:group>
-          </rng:oneOrMore>
-          <rng:oneOrMore>
-            <rng:group>
-              <rng:group>
-                <rng:ref name="model.div1Like"/>
-              </rng:group>
-              <rng:zeroOrMore>
-                <rng:choice>
-                  <rng:ref name="model.global"/>
-                  <rng:ref name="model.frontPart"/>
-                </rng:choice>
-              </rng:zeroOrMore>
-            </rng:group>
-          </rng:oneOrMore>
-        </rng:choice>
-      </rng:optional>
+      <rng:choice>
+	<rng:oneOrMore>
+	  <rng:group>
+	    <rng:ref name="model.common"/>
+	  </rng:group>
+	  <rng:zeroOrMore>
+	    <rng:ref name="model.global"/>
+	  </rng:zeroOrMore>
+	</rng:oneOrMore>
+	<rng:oneOrMore>
+	  <rng:ref name="model.divLike"/>
+	  <rng:zeroOrMore>
+	    <rng:choice>
+	      <rng:ref name="model.global"/>
+	      <rng:ref name="model.frontPart"/>
+	    </rng:choice>
+	  </rng:zeroOrMore>
+	</rng:oneOrMore>
+	<rng:oneOrMore>
+	  <rng:group>
+	    <rng:ref name="model.div1Like"/>
+	  </rng:group>
+	  <rng:zeroOrMore>
+	    <rng:choice>
+	      <rng:ref name="model.global"/>
+	      <rng:ref name="model.frontPart"/>
+	    </rng:choice>
+	  </rng:zeroOrMore>
+	</rng:oneOrMore>
+      </rng:choice>
       <rng:zeroOrMore>
-        <rng:ref name="model.divWrapper.bottom"/>
+	<rng:ref name="model.divBottom"/>
       </rng:zeroOrMore>
     </rng:group>
   </content>
@@ -69,35 +69,35 @@ text.</desc>
         <div1 type="appendix">
           <head>The Golden Dream or, the Ingenuous Confession</head>
           <p>To shew the Depravity of human Nature
-      </p>
+	  </p>
         </div1>
         <div1 type="epistle">
           <head>A letter from the Printer, which he desires 
-        may be inserted</head>
+	    may be inserted</head>
           <salute>Sir.</salute>
           <p>I have done with your Copy, so you may return 
-          it to the Vatican, if you please
-      </p>
+	    it to the Vatican, if you please
+	  </p>
         </div1>
         <div1 type="advert">
           <head>The Books usually read by the Scholars 
-       of Mrs Two-Shoes are these and are sold at Mr 
-       Newbery's at the Bible and Sun in St Paul's
-       Church-yard.</head>
+	    of Mrs Two-Shoes are these and are sold at Mr 
+	    Newbery's at the Bible and Sun in St Paul's
+	    Church-yard.</head>
           <list>
             <item n="1">The Christmas Box, Price 1d.</item>
             <item n="2">The History of Giles Gingerbread, 1d.</item>
             <item n="42">A Curious Collection of Travels, selected 
-          from the Writers of all Nations, 10 Vol, Pr. bound 1l.</item>
+	      from the Writers of all Nations, 10 Vol, Pr. bound 1l.</item>
           </list>
         </div1>
         <div1 type="advert">
           <head><hi rend="center">By the KING's Royal Patent,</hi>
-         Are sold by J. NEWBERY, at the Bible and Sun in 
-         St. Paul's Church-Yard.</head>
+	    Are sold by J. NEWBERY, at the Bible and Sun in 
+	    St. Paul's Church-Yard.</head>
           <list>
             <item n="1">Dr. James's Powders for Fevers, the 
-           Small-Pox, Measles, Colds, &amp;c. 2s. 6d</item>
+	      Small-Pox, Measles, Colds, &amp;c. 2s. 6d</item>
             <item n="2">Dr. Hooper's Female Pills, 1s.</item>
           </list>
         </div1>
@@ -106,8 +106,8 @@ text.</desc>
   </exemplum>
   <remarks>
     <p>The content model of back matter is identical to
-that of front matter, reflecting the facts of cultural
-history.</p>
+      that of front matter, reflecting the facts of cultural
+      history.</p>
   </remarks>
   <listRef>
     <ptr target="#DSBACK"/>

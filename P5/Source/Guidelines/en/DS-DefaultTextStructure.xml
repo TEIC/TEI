@@ -467,34 +467,49 @@ small.
 <p>The divisions of any kind of text may sometimes begin with a brief
 heading or descriptive title, with or without a byline, an epigraph or
 brief quotation, or a salutation such as one finds at the start of a
-letter.  They may also conclude with a brief trailer, byline, or
-signature. Elements which may appear in this way, either at the start
-or at the end of a text division proper, are regarded as forming a
-class, known as <term>model.divWrapper</term>; a further class, known
-as <term>model.divWrapper.bottom</term> defines similar elements which
-can appear only at the end of divisions.
+letter. They may also conclude with a brief trailer, byline, or
+signature. Many of these (e.g. a byline) may appear either at the
+start or at the end of a text division proper; these elements are
+regarded as forming a class, known as <name
+type="class">model.divWrapper</name>; two further classes, known as
+<name type="class">model.divTop</name> and <name
+type="class">model.divBottom</name> define similar elements which can
+appear only near the start or end of divisions, respectively.
  </p>
 <p>The following special-purpose elements are provided to
 mark features which may appear only at the start of a division:
 <specList>
-<specDesc key="head" atts="type"/>
-<specDesc key="epigraph"/>
-<specDesc key="argument"/>
-<specDesc key="opener"/>
+  <specDesc key="head" atts="type"/>
+  <specDesc key="salute"/>
+  <specDesc key="opener"/>
 </specList>
 For further details of the <gi>head</gi> element, see section <ptr target="#DSHD"/>; 
 for <gi>epigraph</gi> and <gi>argument</gi>, see section
-<ptr target="#DSAE"/>; for <gi>opener</gi>, see section <ptr target="#DSOC"/>.
- </p>
+<ptr target="#DSAE"/>; for <gi>opener</gi>, see section <ptr target="#DSOC"/>.</p>
 <p>The following special-purpose elements are provided to mark features
 which may appear only at the end of a division:
 <specList>
-<specDesc key="trailer"/>
-<specDesc key="closer"/>
+  <specDesc key="closer"/>
+  <specDesc key="signed"/>
+  <specDesc key="trailer"/>
+  <!-- specDesc key="postscript"/ -->
 </specList>
 For further details of the <gi>trailer</gi> element, see section <ptr target="#DSHD"/>; 
-for the <gi>closer</gi> element, section <ptr target="#DSOC"/>.
-</p>
+for the <gi>closer</gi> element, section <ptr target="#DSOC"/>.</p>
+<p>The following special-purpose elements are provided to mark
+features which may appear either at the start or at the end a
+division:
+<specList>
+  <specDesc key="argument"/>
+  <specDesc key="byline"/>
+  <specDesc key="dateline"/>
+  <specDesc key="docAuthor"/>
+  <specDesc key="docDate"/>
+  <specDesc key="epigraph"/>
+</specList>
+For further details of the <gi>head</gi> element, see section <ptr target="#DSHD"/>; 
+for <gi>epigraph</gi> and <gi>argument</gi>, see section
+<ptr target="#DSAE"/>; for <gi>opener</gi>, see section <ptr target="#DSOC"/>.</p>
 <div type="div3" xml:id="DSHD"><head>Headings and Trailers</head>
 <p>The <gi>head</gi> element is used to identify a heading prefixed to
 the start of any textual division, at any level. A given division may
@@ -722,23 +737,24 @@ following example:
 to section <ptr target="#COHQQ"/>.
  </p></div>
 <div type="div3" xml:id="DSCO"><head>Content of Textual Divisions</head>
-<p>Other than elements from the <term>model.divWrapper</term> or
-<term>model.divWrapper.bottom</term> classes, every
-textual division (numbered or un-numbered) consists of a sequence of
-ungrouped <term>macro.component</term> elements (see <ptr target="#STEC"/>).  
-The actual elements available will depend on the 
+<p>Other than elements from the <name
+type="class">model.divWrapper</name>, <name
+type="class">model.divTop</name>, or <name
+type="class">model.divBottom</name> classes, every textual division
+(numbered or un-numbered) consists of a sequence of ungrouped <name
+type="macro">macro.component</name> elements (see <ptr
+target="#STEC"/>). The actual elements available will depend on the
 modules in use; in all cases, at least the component-level structural
 elements defined in the core will be available (paragraphs, lists,
-dramatic speeches, verse lines and line groups etc.).  If the drama
+dramatic speeches, verse lines and line groups etc.). If the drama
 module has been selected, then additionally the low level dramatic
 structural elements (speeches or stage directions, as defined in
-chapter <ptr target="#DR"/>) will be available.  If the dictionary module
-is in use, then dictionary entries, related entries, etc. (as defined
-in chapter <ptr target="#DI"/>) will also be available; if the module
-for transcribed speech is in use, then utterances, pauses, vocals,
-kinesics, etc., as defined in chapter <ptr target="#TSBA"/> will be
-available; and so on.
- </p>
+chapter <ptr target="#DR"/>) will be available. If the dictionary
+module is in use, then dictionary entries, related entries, etc. (as
+defined in chapter <ptr target="#DI"/>) will also be available; if the
+module for transcribed speech is in use, then utterances, pauses,
+vocals, kinesics, etc., as defined in chapter <ptr target="#TSBA"/>
+will be available; and so on.</p>
 <p>Where a text contains low level elements from more than one
 module these may appear at any point; there is no requirement that
 elements from the same module be kept together.
@@ -1128,8 +1144,8 @@ example, if a text A is contained by text B in such a way that part of
 B precedes A and part follows it, we cannot tesselate the whole of B.
 In such a case, we say that text A is a <q>floating</q> text. </p>
 
-<p>The <gi>floatingText</gi> element is a member of the <ident
-type="class">model.divPart</ident> class, and can thus appear within
+<p>The <gi>floatingText</gi> element is a member of the <name
+type="class">model.divPart</name> class, and can thus appear within
 any division level element in the same way as a paragraph. For
 example, texts such as the <title>Decameron</title> or the
 <title>Arabian Nights</title> might be regarded as containing many
