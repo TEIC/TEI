@@ -5,23 +5,30 @@
     ns="http://relaxng.org/ns/structure/1.0" 
     xmlns="http://relaxng.org/ns/structure/1.0" 
     datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-  <define name="pattern">
+  <define name="extrapattern">
     <optional>
       <ref name="anyDoc"/>
     </optional>
+    <ref name="pattern"/>
+    <optional>
+      <ref name="anyDoc"/>
+    </optional>
+  </define>
+
+  <define name="pattern">
     <choice>
       <element name="element">
         <attribute name="name">
           <data type="QName"/>
         </attribute>
         <oneOrMore>
-          <ref name="pattern"/>
+          <ref name="extrapattern"/>
         </oneOrMore>
       </element>
       <element name="element">
         <ref name="nameClass"/>
         <oneOrMore>
-          <ref name="pattern"/>
+          <ref name="extrapattern"/>
         </oneOrMore>
       </element>
       <element name="attribute">
@@ -32,53 +39,53 @@
           <ref name="anyAttDoc"/>
         </optional>
         <optional>
-          <ref name="pattern"/>
+          <ref name="extrapattern"/>
         </optional>
       </element>
       <element name="attribute">
         <ref name="nameClass"/>
         <optional>
-          <ref name="pattern"/>
+          <ref name="extrapattern"/>
         </optional>
       </element>
       <element name="group">
         <oneOrMore>
-          <ref name="pattern"/>
+          <ref name="extrapattern"/>
         </oneOrMore>
       </element>
       <element name="interleave">
         <oneOrMore>
-          <ref name="pattern"/>
+          <ref name="extrapattern"/>
         </oneOrMore>
       </element>
       <element name="choice">
         <oneOrMore>
-          <ref name="pattern"/>
+          <ref name="extrapattern"/>
         </oneOrMore>
       </element>
       <element name="optional">
         <oneOrMore>
-          <ref name="pattern"/>
+          <ref name="extrapattern"/>
         </oneOrMore>
       </element>
       <element name="zeroOrMore">
         <oneOrMore>
-          <ref name="pattern"/>
+          <ref name="extrapattern"/>
         </oneOrMore>
       </element>
       <element name="oneOrMore">
         <oneOrMore>
-          <ref name="pattern"/>
+          <ref name="extrapattern"/>
         </oneOrMore>
       </element>
       <element name="list">
         <oneOrMore>
-          <ref name="pattern"/>
+          <ref name="extrapattern"/>
         </oneOrMore>
       </element>
       <element name="mixed">
         <oneOrMore>
-          <ref name="pattern"/>
+          <ref name="extrapattern"/>
         </oneOrMore>
       </element>
       <element name="ref">
@@ -113,7 +120,7 @@
           <ref name="param"/>
         </zeroOrMore>
         <optional>
-          <ref name="exceptPattern"/>
+          <ref name="exceptExtrapattern"/>
         </optional>
       </element>
       <element name="notAllowed">
@@ -131,9 +138,6 @@
         </zeroOrMore>
       </element>
     </choice>
-    <optional>
-      <ref name="anyDoc"/>
-    </optional>
   </define>
 
 <define name="anyDoc">
@@ -166,10 +170,10 @@
       <data type="string"/>
     </element>
   </define>
-  <define name="exceptPattern">
+  <define name="exceptExtrapattern">
     <element name="except">
       <oneOrMore>
-        <ref name="pattern"/>
+        <ref name="extrapattern"/>
       </oneOrMore>
     </element>
   </define>
@@ -210,7 +214,7 @@
           <ref name="method"/>
         </attribute>
       </optional>
-      <ref name="pattern"/>
+      <ref name="extrapattern"/>
     </element>
   </define>
   <define name="define">
@@ -224,7 +228,7 @@
         </attribute>
       </optional>
       <oneOrMore>
-        <ref name="pattern"/>
+        <ref name="extrapattern"/>
       </oneOrMore>
     </element>
   </define>
