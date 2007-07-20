@@ -30,10 +30,12 @@
 
   <xd:doc>
     <xd:short>Process element app</xd:short>
-    <xd:detail>Process lem and rdg within app; first, first, rudimentary attempt. Sends lots of information
-    to a footnote</xd:detail>
+    <xd:detail>Process tei:lem and tei:rdg within tei:app; first, first, rudimentary attempt. Sends lots of information
+    to a footnote. If a tei:lem is not found, the first tei:rdg is used as the base text.</xd:detail>
   </xd:doc>
-  <xsl:template match="tei:app"> <!-- Still needs a lot of work MLF 20070716 -->
+  <xsl:template match="tei:app"> <!-- Still needs a lot of work MLF 20070721 -->
+  <xsl:choose>
+  <xsl:when test="tei:lem">
     <xsl:value-of select="tei:lem"/>
     <xsl:text>\footnote{</xsl:text><xsl:call-template name="i18n">
                 <xsl:with-param name="word">asfoundin</xsl:with-param>
@@ -48,6 +50,24 @@
     <xsl:text>(</xsl:text><xsl:value-of select="substring-after(./@wit,'#')"/><xsl:text>);</xsl:text>
     </xsl:for-each>
     <xsl:text>}</xsl:text>
+  </xsl:when>
+  <xsl:otherwise>
+   <xsl:value-of select="tei:rdg[1]"/> <!-- Select first reading in the absence of tei:lem -->
+    <xsl:text>\footnote{</xsl:text><xsl:call-template name="i18n">
+                <xsl:with-param name="word">asfoundin</xsl:with-param>
+                </xsl:call-template><xsl:text> </xsl:text>
+    <xsl:value-of select="tei:rdg[1]/@wit"/><xsl:text>. </xsl:text>
+                <xsl:call-template name="i18n">
+                <xsl:with-param name="word">otherreadings</xsl:with-param>
+                </xsl:call-template><xsl:text>: </xsl:text>
+    <xsl:for-each select="tei:rdg[position()>1]">
+     
+    <xsl:text>\emph{</xsl:text><xsl:value-of select="."/><xsl:text>} </xsl:text>
+    <xsl:text>(</xsl:text><xsl:value-of select="substring-after(./@wit,'#')"/><xsl:text>);</xsl:text>
+    </xsl:for-each>
+    <xsl:text>}</xsl:text>
+  </xsl:otherwise>
+  </xsl:choose>
   </xsl:template>
 
 </xsl:stylesheet>
