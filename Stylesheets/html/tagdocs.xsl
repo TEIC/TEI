@@ -1438,7 +1438,7 @@
 		  </xsl:call-template>
 		  <xsl:apply-templates mode="weavebody" select="."/>
                 </div>
-		<xsl:call-template name="refdocFooter"/>
+		<xsl:call-template name="stdfooter"/>
               </body>
             </html>
           </xsl:with-param>
@@ -1453,6 +1453,7 @@
   </xd:doc>
 
   <xsl:template name="refdocFooter">
+    <xsl:call-template name="preAddressHook"/>
     <div style="margin: 20pt; font-weight: bold;">
       <a href="{$refDocFooterURL}">
 	<xsl:value-of select="$refDocFooterText"/>
