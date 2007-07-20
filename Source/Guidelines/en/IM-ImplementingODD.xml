@@ -307,7 +307,7 @@ produce single file schemas in as simple a style as possible.</p>
 considering this ODD specification:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec module="drama" ident="performance">
-  <!--..-->
+  <!-- ... -->
   <classes>
     <memberOf key="model.frontPart.drama"/>
   </classes>
@@ -315,7 +315,7 @@ considering this ODD specification:
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:zeroOrMore>
         <rng:choice>
-          <rng:ref name="model.divWrapper"/>
+          <rng:ref name="model.divTop"/>
           <rng:ref name="model.global"/>
         </rng:choice>
       </rng:zeroOrMore>
@@ -328,24 +328,23 @@ considering this ODD specification:
         </rng:zeroOrMore>
       </rng:oneOrMore>
       <rng:zeroOrMore>
-        <rng:group>
-          <rng:ref name="model.divWrapper.bottom"/>
-        </rng:group>
+        <rng:ref name="model.divBottom"/>
         <rng:zeroOrMore>
           <rng:ref name="model.global"/>
         </rng:zeroOrMore>
       </rng:zeroOrMore>
     </rng:group>
   </content>
+  <!-- ... -->
 </elementSpec>
 </egXML>
 A simple rendering to RELAX NG produces this:
 <eg>
 performance =
  element performance { 
-  (model.divWrapper | model.global)*,
+  (model.divTop | model.global)*,
   (model.common, model.global*)+,
-  (model.divWrapper.bottom, model.global*)*
+  (model.divBottom, model.global*)*
   att.global.attribute.xmlspace,
   att.global.attribute.xmlid,
   att.global.attribute.n,
@@ -370,9 +369,9 @@ parameterized version may look this this:
 performance =
   element performance { performance.content, performance.attributes }
 performance.content =
-  (model.divWrapper | model.global)*,
+  (model.divTop | model.global)*,
   (model.common, model.global*)+,
-  (model.divWrapper.bottom, model.global*)*
+  (model.divBottom, model.global*)*
 performance.attributes = att.global.attributes, empty
 </eg>
 Here, the class attributes are provided with a pointer (allowing
