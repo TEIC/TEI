@@ -1,0 +1,34 @@
+Compiled by Brett Zamir <brettz9@YAHOO.COM>
+
+1) "id" should now be "xml:id", though it should become "ident" if inside of <lang>.
+2)  As with <TEI.2> changing to <TEI>, if you were using <teiCorpus.2>, that should now just be <teiCorpus>
+3) There is no "TEIform" attribute.
+4) <dateRange> is changed to <date> (its "from" and "to" attributes are transferred over).
+5) For all of these attributes, each value within them (separated by a space) should be preceded by a hash mark ("#"):
+ana|active|adj|adjFrom|adjTo|children|children|class|code|code|copyOf|corresp|decls|domains|end|exclude|fVal|feats|follow|from|hand|inst|langKey|location|mergedin|new|next|old|origin|otherLangs|parent|passive|perf|prev|render|resp|sameAs|scheme|script|select|since|start|synch|target|targetEnd|to|to|value|value|who
+6) The "url" attribute should be changed to "target"
+7) The "doc" attribute should be changed to "target" and its value changed to the URI of the unparsed entity that it references.
+8)  The "lang" attribute should be changed to "xml:lang"
+9) <xref> should be changed to <ref> and <xptr> to <ptr>
+10) Any <figure> with a "url" attribute should be changed to <figure><graphic>URI attr. value</graphic>...(transfer over any other content already in figure here)...</figure>
+11) Any <figure> which has a "doc" attribute, should be changed to <figure><graphic url="URI of the unparsed entity referred to previously by the "doc" attribute">...(The value of the "doc" attribute)...</graphic> ...(transfer over any other content already in figure here)... </figure>
+12) The <langUsage> element should be removed entirely.
+13) To <publicationStmt> should be added: <availability><p>Licensed under <ptr target="http://creativecommons.org/licenses/by-sa/2.0/uk/"/></p></availability>
+14) Every <corr> with a "sic" attribute should be changed to:
+   <choice><corr>...(Former text inside of corr goes here)...</corr><sic>...(value of the "sic" attribute now goes here instead)...</sic></choice>
+15) Every <sic> with a "corr" attribute should be:
+   <choice><corr>...(Value of the corr attribute goes here)...</corr><sic>...(text inside of <sic> now goes here instead)...</sic></choice>
+16) Every <abbr> with a "expan" attribute or <expan> with an "abbr" attribute should be change dot:
+   <choice><abbr>......</abbr><expan>......</expan></choice>
+17)  Change the <change>'s "date" attribute to a "when" attribute.
+18) Change <event> to <incident>
+19) Change <state> to <refState>
+20) Don't use the default attributes from the P4 DTD.
+21) For inside of the <change> element,
+   a) <date>'s value should be added as a "when" attribute to the enclosing <change> .
+   b) any <resp> inside of <respStmt> inside of <change> should be changed to the "who" attribute of the enclosing <change>
+   c) any <name> inside of <respStmt> inside of <change> should be changed into:
+        <p><name></name></p>  where the content inside of <name> is the value it was in the <name> element before, but also with each <item> (inside of the <change>) having its content placed here (and no longer being contained within <item>).
+
+
+
