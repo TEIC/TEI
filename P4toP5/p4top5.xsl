@@ -10,7 +10,7 @@
        
        Sebastian Rahtz <sebastian.rahtz@oucs.ox.ac.uk>
        
-       $Date: 2007/07/20 $  $Id: //TEI/web/P5/p4top5.xsl#14 $
+       $LastChangedDate$
        
        Copyright 2007 TEI Consortium
        
