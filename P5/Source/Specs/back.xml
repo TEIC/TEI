@@ -19,48 +19,51 @@ $Author$
   <classes>
     <memberOf key="att.declaring"/>
   </classes>
-  <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:group>
       <rng:zeroOrMore>
-	<rng:choice>
-	  <rng:ref name="model.frontPart"/>
-	  <rng:ref name="model.global"/>
-	  <rng:ref name="model.divTop"/>
-	</rng:choice>
+        <rng:choice>
+          <rng:ref name="model.frontPart"/>
+          <rng:ref name="model.pLike.front"/>
+          <rng:ref name="model.global"/>
+        </rng:choice>
       </rng:zeroOrMore>
-      <rng:choice>
-	<rng:oneOrMore>
-	  <rng:group>
-	    <rng:ref name="model.common"/>
-	  </rng:group>
-	  <rng:zeroOrMore>
-	    <rng:ref name="model.global"/>
-	  </rng:zeroOrMore>
-	</rng:oneOrMore>
-	<rng:oneOrMore>
-	  <rng:ref name="model.divLike"/>
-	  <rng:zeroOrMore>
-	    <rng:choice>
-	      <rng:ref name="model.global"/>
-	      <rng:ref name="model.frontPart"/>
-	    </rng:choice>
-	  </rng:zeroOrMore>
-	</rng:oneOrMore>
-	<rng:oneOrMore>
-	  <rng:group>
-	    <rng:ref name="model.div1Like"/>
-	  </rng:group>
-	  <rng:zeroOrMore>
-	    <rng:choice>
-	      <rng:ref name="model.global"/>
-	      <rng:ref name="model.frontPart"/>
-	    </rng:choice>
-	  </rng:zeroOrMore>
-	</rng:oneOrMore>
-      </rng:choice>
-      <rng:zeroOrMore>
-	<rng:ref name="model.divBottom"/>
-      </rng:zeroOrMore>
+      <rng:group>
+        <rng:optional>
+          <rng:choice>
+            <rng:group>
+              <rng:group>
+                <rng:ref name="model.div1Like"/>
+              </rng:group>
+              <rng:zeroOrMore>
+                <rng:choice>
+                  <rng:ref name="model.frontPart"/>
+                  <rng:ref name="model.div1Like"/>
+                  <rng:ref name="model.global"/>
+                </rng:choice>
+              </rng:zeroOrMore>
+              <rng:zeroOrMore>
+		<rng:ref name="model.divBottom"/>
+	      </rng:zeroOrMore>
+            </rng:group>
+            <rng:group>
+              <rng:group>
+                <rng:ref name="model.divLike"/>
+              </rng:group>
+              <rng:zeroOrMore>
+                <rng:choice>
+                  <rng:ref name="model.frontPart"/>
+                  <rng:ref name="model.divLike"/>
+                  <rng:ref name="model.global"/>
+                </rng:choice>
+              </rng:zeroOrMore>
+              <rng:zeroOrMore>
+		<rng:ref name="model.divBottom"/>
+	      </rng:zeroOrMore>
+            </rng:group>
+          </rng:choice>
+        </rng:optional>
+      </rng:group>
     </rng:group>
   </content>
   <exemplum>
