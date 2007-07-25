@@ -278,10 +278,7 @@
       </xsl:otherwise>
     </xsl:choose>
     <xsl:text>}&#10;</xsl:text>
-    <xsl:choose>
-      <xsl:when test="ancestor::tei:table or @rend='display'"> \hline </xsl:when>
-      <xsl:otherwise> \hline\endfoot\hline\endlastfoot </xsl:otherwise>
-    </xsl:choose>
+    <xsl:call-template name="tableHline"/>
     <xsl:choose>
       <xsl:when test="tei:head and not(@rend='display')">
         <xsl:if test="not(ancestor::tei:table)">
@@ -304,6 +301,14 @@
       <xsl:text>\\ \hline </xsl:text>
     </xsl:if>
   </xsl:template>
+
+<xsl:template name="tableHline">
+    <xsl:choose>
+      <xsl:when test="ancestor::tei:table or @rend='display'"> \hline </xsl:when>
+      <xsl:otherwise> \hline\endfoot\hline\endlastfoot </xsl:otherwise>
+    </xsl:choose>
+</xsl:template>
+
   <xd:doc>
     <xd:short>[latex] </xd:short>
     <xd:detail> </xd:detail>

@@ -715,7 +715,7 @@
     </tei:p>
   </xsl:template>
   <xsl:template name="Literal">
-    <tei:eg type="literal">
+    <tei:eg rend="literal">
       <xsl:apply-templates mode="verbatim"/>
     </tei:eg>
   </xsl:template>
@@ -875,7 +875,7 @@
     <xsl:param name="text"/>
     <xsl:param name="startnewline">false</xsl:param>
     <xsl:param name="autowrap">false</xsl:param>
-    <tei:eg type="verbatim">
+    <tei:eg rend="verbatim">
       <xsl:if test="not($label='')">
         <xsl:attribute name="n">
           <xsl:value-of select="$label"/>

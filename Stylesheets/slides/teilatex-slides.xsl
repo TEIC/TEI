@@ -27,6 +27,7 @@ XSL LaTeX stylesheet to make slides
   </xsl:template>
   <xsl:template name="latexPackages">
 \usepackage{colortbl}
+\usepackage{longtable}
 \usetheme{<xsl:value-of select="$beamerClass"/>}
 \usepackage{times}
 \usepackage{fancyvrb}
@@ -188,7 +189,7 @@ XSL LaTeX stylesheet to make slides
 </xsl:template>
 
 <xsl:template match="tei:eg">
-  <xsl:text>\begin{Verbatim}[fontsize=\scriptsize,frame=single,fillcolor=\color{yellow}]</xsl:text>
+  <xsl:text>\begin{Verbatim}[fontsize=\scriptsize,frame=single,fillcolor=\color{yellow}]&#10;</xsl:text>
   <xsl:apply-templates mode="eg"/>
   <xsl:text>\end{Verbatim}</xsl:text>
 </xsl:template>
@@ -202,6 +203,7 @@ XSL LaTeX stylesheet to make slides
   \end{scriptsize}</xsl:text>
 </xsl:template>
 
+
 <xsl:template match="tei:table">
   <xsl:text>\par  
   \begin{scriptsize}
@@ -210,5 +212,17 @@ XSL LaTeX stylesheet to make slides
   <xsl:text>\end{longtable}
   \end{scriptsize}</xsl:text>
 </xsl:template>
+
+  <xsl:template name="makeFigureStart">
+    \noindent
+  </xsl:template>
+
+  <xsl:template name="makeFigureEnd">
+  </xsl:template>
+
+<xsl:template name="tableHline">
+<xsl:text> \hline </xsl:text>
+</xsl:template>
+
 
 </xsl:stylesheet>
