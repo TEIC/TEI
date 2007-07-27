@@ -18,7 +18,6 @@ Description
 <xsl:param name="module"/>
 <xsl:param name="lang"/>
 <xsl:param name="TEISERVER">http://tei.oucs.ox.ac.uk/Query/</xsl:param>
-
   <xsl:template match="/">
   <p class="roma">
     <a href="?mode=main">
