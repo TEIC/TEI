@@ -1009,6 +1009,7 @@ it may contain elements from the following list, in the order given:
 <specDesc key="fsdDecl"/>
 <specDesc key="metDecl"/>
 <specDesc key="variantEncoding"/>
+<specDesc key="appInfo"/>
 </specList>
 Each of these elements is further described and formally defined
 in the appropriate section below. The encoding description itself
@@ -1024,6 +1025,7 @@ is defined as follows:
 <specGrpRef target="#D2256"/>
 <specGrpRef target="#D2258"/>
 <specGrpRef target="#DHDVAR"/>
+<specGrpRef target="#DHDAPP"/>
 </specGrp></p>
 <div type="div3" xml:id="HD51"><head>The Project Description</head>
 <p>The <gi>projectDesc</gi> element is the first of the nine optional
@@ -1716,7 +1718,7 @@ encoding of verse, see section <ptr target="#VEME"/>.</p>
 &metSym;
 </specGrp></p></div>
 <div type="div3" xml:id="HDVAR"><head>The Variant-Encoding Method Element</head>
-<p>The <gi>variantEncoding</gi> element is the last of the nine optional
+<p>The <gi>variantEncoding</gi> element is almost the last of the optional
 subdivisions of the <gi>encodingDesc</gi> element.  It is used to
 document the method used to encode textual variants in the text, as
 discussed in section <ptr target="#TCAPLK"/>.
@@ -1725,7 +1727,43 @@ discussed in section <ptr target="#TCAPLK"/>.
 </specList></p>
 <p>Its formal declaration is as follows:
 <specGrp xml:id="DHDVAR" n="VariantEncodingDeclaration">&variantEncoding;
-</specGrp></p></div></div>
+</specGrp></p></div>
+
+<div type="div3" xml:id="HDAPP">
+<head>The Application Information Element</head>
+<p>The <gi>appInfo</gi> element is the final
+subdivision of the <gi>encodingDesc</gi> element.</p>
+
+<p>The main purposes of this element are: to allow an
+  application to discover that it has previously
+  opened/edited a file, and what version of itself was used
+  to do that; to show (through a date) which
+  application last edited the file to allow for diagnosis of
+  any problems that might have been caused by that
+  application;  to allow users to discover information
+  about an application used to edit the file; and, finally, to allow
+  the application to declare an interest in elements of
+  the file which it has edited, so that other applications
+  or human editors may be more wary of making changes to
+  those sections of the file. </p>
+
+<p>Each <gi>application</gi> child of <gi>appInfo</gi> identifies the
+current state of one software application with regard to the current
+file.  The <att>ident</att> and <att>version</att> attributes should
+be used to uniquely identify the application and its major version
+number (for example, <val>ImageMarkupTool 1.5</val>). It is not
+intended that an application should add a new <gi>application</gi>
+each time it touches the file.</p>
+<p><specList>
+<specDesc key="appInfo"/>
+</specList></p>
+<p>Its formal declaration is as follows:
+<specGrp xml:id="DHDAPP" >
+&appInfo;
+&application;
+&model.applicationLike;
+</specGrp></p></div>
+</div>
 <div type="div2" xml:id="HD4"><head>The Profile Description</head>
 <p>The <gi>profileDesc</gi> element is the third major subdivision of
 the TEI Header. It is an optional element, the purpose of which is to
