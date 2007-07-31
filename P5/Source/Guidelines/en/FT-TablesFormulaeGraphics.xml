@@ -536,8 +536,8 @@ descriptive heading or title for the graphic itself as in this
 example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><figure><graphic url="Fig1.pdf"/><head>Figure One: The View from the
 Bridge</head></figure></egXML></p>
 <p>Figures are often accompanied not only by a title or heading, but
-by a paragraph or so of commentary or caption.  One or more <gi>p</gi>
-elements following the <gi>head</gi> may be used to transcribe any
+by a paragraph or so of commentary or caption. One or more <gi>p</gi> or <gi>ab</gi>
+elements <!-- following the <gi>head</gi> --> may be used to transcribe any
 caption or discussion of the figure in the source:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><figure><graphic url="pullman.png"/>
   <head>Above:</head>
@@ -576,20 +576,40 @@ represented within the graphic, and the <gi>figure</gi> element
 embedded within it.  The choice will depend to a large degree on the
 encoder's understanding of the relationship between the graphic and
 the surrounding text.</p>
+<p>A figure which is internally divided, or contains sub-figures, may
+be encoded with nested <gi>figure</gi> elements, as in the following example.
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <figure n="6.45">
+    <figure n="a">
+      <graphic url="./figs/6.45a.png"/>
+      <ab type="caption">Parallel</ab>
+    </figure>
+    <figure n="b">
+      <graphic url="./figs/6.45b.png"/>
+      <ab type="caption">Perspective</ab>
+    </figure>
+    <ab type="caption">The two canonical view volumes, for the (a) parallel
+    and (b) perspective projections. Note that -z is to the right.</ab>
+  </figure>
+</egXML>
+<!-- Foley, van Dam, Feiner, & Hughes. _Computer Graphics: Principles and Practice_, 2nd ed., p. 259 -->
+</p>
 <p>Like any other element in the TEI scheme, figures may be given
-identifiers so that they can be aligned with other elements, and linked
-to or from them, as described in chapter <ptr target="#SA"/>.  Some common
-examples are discussed briefly here;  full information is provided in
-that chapter.</p>
+identifiers so that they can be aligned with other elements, and
+linked to or from them, as described in chapter <ptr target="#SA"/>.
+Some common examples are discussed briefly here; full information is
+provided in that chapter.</p>
 <p>It is often desirable to maintain two versions of an image in an
-electronic file:  one a low resolution or <soCalled>thumbnail</soCalled>
-version which, when selected by the user, causes the other, high
-resolution, version to be accessed.  In TEI terms, the thumbnail image
-acts as a <term>reference</term> to the other.  Referring to the example
-above, we will assume that the entity <ident>Fig1th</ident> contains a thumbnail
-version of the full Fig1.  We can now embed a reference to that
-image using the simple <gi>ref</gi> element discussed in section <ptr target="#COXR"/>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><ref target="#IM1">Click here
+electronic file: one a low resolution or
+<soCalled>thumbnail</soCalled> version which, when selected by the
+user, causes the other, high resolution, version to be accessed. In
+TEI terms, the thumbnail image acts as a <term>reference</term> to the
+other. Referring to the example above, we will assume that the entity
+<ident>Fig1th</ident> contains a thumbnail version of the full Fig1.
+We can now embed a reference to that image using the simple
+<gi>ref</gi> element discussed in section <ptr target="#COXR"/>:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><ref
+target="#IM1">Click here
   <graphic url="fig1th.png"/>
   for enlightenment
 </ref>
