@@ -6,7 +6,7 @@ $Date$
 $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="HANDDESC" ident="handDesc">
-  <gloss>handwriting description</gloss>
+  <gloss>description of hands</gloss>
   <desc xml:id="script.desc">contains a description of all the different kinds of writing  used in a manuscript.</desc>
   <desc version="2007-05-04" xml:lang="es">contiene una descripción de todos los diferentes tipos de escritura usados en un manuscrito.</desc>
   <desc version="2007-01-21" xml:lang="it">contiene una descrizione dei diversi tipi di scrittura usati in un manoscritto</desc>
@@ -15,8 +15,10 @@ $Author$
     <memberOf key="model.physDescPart"/>
   </classes>
   <content>
-<!--<!ELEMENT msWriting  - -  ((handDesc|p)+)>-->
     <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:optional>
+	<rng:ref name="handList"/>
+      </rng:optional>
       <rng:choice>
         <rng:ref name="handNote"/>
         <rng:ref name="model.pLike"/>
