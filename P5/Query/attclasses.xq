@@ -4,8 +4,7 @@ declare namespace rng="http://relaxng.org/ns/structure/1.0";
 {
 let $lang := request:get-parameter("lang", "en")
 for $t in
-collection("/db/TEI")//tei:classSpec[@type='atts' and not(@ident='tei.global'
-or @ident='tei.TEIform')]
+collection("/db/TEI")//tei:classSpec[@type='atts' and not(@ident='att.global')]
 let $Desc:=
     if ($t/tei:desc[@xml:lang=$lang]) then
         $t/tei:desc[@xml:lang=$lang]
