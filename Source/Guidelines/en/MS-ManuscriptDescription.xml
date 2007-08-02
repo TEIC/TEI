@@ -117,7 +117,7 @@ the 15th century</origDate> in <origPlace>Pembrokeshire, Wales</origPlace>.
 Mutilated at beginning and end; contains A431-I1092 in the Riverside 
 edition numbering.</p>
 <p><material>Parchment</material>; 136 folios: 
-<measureGrp><height extent="280"/><width extent="190"/></measureGrp>. 
+<dimensions><height>280</height><width>190</width></dimensions>. 
 Twenty-three quires of eight, of which only nine are not defective, 
 and a final (defective) quire of six. Margined and ruled with crayon 
 through fol. 51v, thereafter in drypoint. Single columns of 38-74 
@@ -155,8 +155,8 @@ Riverside edition numbering.</note>
 <objectDesc form="codex">
 <supportDesc material="perg">
 <support><p>Parchment.</p></support>
-<extent>136 folios: <measureGrp unit="mm"><height extent="280"/>
-<width>190</width></measureGrp></extent>
+<extent>136 folios: <dimensions><height>280</height>
+<width>190</width></dimensions></extent>
 <collation>
 <p>Twenty-three quires of eight, of which only nine are not defective, 
 and a final (defective) quire of six.</p>
@@ -200,7 +200,7 @@ and elsewhere in the document. These elements are listed below in
 alphabetical order:
 <specList>
 <specDesc key="catchwords"/>
-<!--specDesc key="dimensions"/-->
+<specDesc key="dimensions"/>
 <specDesc key="heraldry"/>
 <specDesc key="locus"/>
 <specDesc key="material"/>
@@ -292,8 +292,13 @@ Bibliotheca J. Richard D.M.</stamp></p></binding>
 </div>
 <div type="div3" xml:id="msdim">
 <head>Dimensions</head>
-<p>The <gi>measureGrp</gi> element can be used to specify the
-dimensions of  some aspect of the manuscript. It will normally occur within the
+<p>The <gi>dimensions</gi> element can be used to specify the size of
+some aspect of the manuscript, and thus may be thought of as a
+specialized form of the existing TEI <gi>measure</gi> element.
+<specList>
+<specDesc key="dimensions" atts="type"/>
+</specList></p>
+<p>The <gi>dimensions</gi> element will normally occur within the
 element describing the particular feature or aspect of a manuscript
 whose dimensions are being given; thus the size of the leaves would be
 specified within the <gi>support</gi> or <gi>extent</gi> element (part
@@ -301,33 +306,33 @@ of the <gi>physDesc</gi> element discussed in <ptr target="#msph1"/>),
 while the dimensions of other specific parts of a manuscript, such as
 accompanying materials, binding, etc., would be given in other parts
 of the description, as appropriate. </p>
-<p>Individual measurements may be supplied within the
-<gi>measureGrp</gi> using the generic <gi>measure</gi>
-element discussed in <ptr target="#CONANU"/>. Alternatively, when this module is included in a schema, the following three elements are available within the <gi>dimensions</gi> element:
+<p>The following three elements are available within the <gi>dimensions</gi> element:
 <specList>
 <specDesc key="height"/>
 <specDesc key="width"/>
 <specDesc key="depth"/>
 </specList>
 </p>
-<p>Like the generic <gi>measure</gi> element, these elements are all members of the <ident type="class">att.measured</ident>
- class, from which they inherit the following attributes, amongst others:
-<specList><specDesc key="att.measured" atts="unit extent scope">
+<p>These three elements, as well as <gi>dimensions</gi> itself, are
+all members of the <ident type="class">att.dimensions</ident> class,
+and thus all carry the following attributes: <specList><specDesc
+key="att.dimensions" atts="unit scope quantity">
 </specDesc></specList></p>
-<p>These elements must be given in the order specified, but groups of
-them may be repeated as often as necessary, with appropriate values for their attributes to
-indicate the nature and scope of the measurement concerned. For
-example, in the following case the leaf size and ruled space of
-the leaves of the manuscript are specified:
+<p>Each of these elements, if present, must be given in the order
+specified. The <gi>dimensions</gi> element may be repeated as often as
+necessary, with appropriate attribute values to indicate the nature
+and scope of the measurement concerned. For example, in the following
+case the leaf size and ruled space of the leaves of the manuscript are
+specified:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<measureGrp type="leaves" unit="mm">
+<dimensions type="leaves" unit="mm">
  <height scope="range">157-160</height>
- <width extent="105"/>
-</measureGrp>
-<measureGrp type="ruled" unit="mm">
- <height scope="most" extent="90"/>
- <width scope="most" extent="48"/>
-</measureGrp>
+ <width>105</width>
+</dimensions>
+<dimensions type="ruled" unit="mm">
+ <height scope="most">90</height>
+ <width scope="most">48</width>
+</dimensions>
 </egXML>
 This indicates that for most leaves of the manuscript being described
 the ruled space is 90 mm high and 48 mm wide, while the leaves throughout 
@@ -509,6 +514,7 @@ racchiudono l'inizio dell'epistolario di Paolino.</p>
 <p>The additional phrase-level elements are formally defined as follows:
 <specGrp xml:id="xphrase.def">
 &catchwords;
+&dimensions;
 &height;
 &depth;
 &width;
@@ -1276,22 +1282,22 @@ leaves a manuscript contains, as in the following example:
 <extent>ii + 97 + ii</extent>
 </egXML>
 Information regarding the size of the leaves may be
-specifically marked using the phrase level <gi>measureGrp</gi>
+specifically marked using the phrase level <gi>dimensions</gi>
 element, as in the following example, or left as plain prose.
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <extent>ii + 321 leaves 
-<measureGrp unit="mm">
-<height extent="350"/>
-<width extent="270"/>
-</measureGrp>
+<dimensions unit="cm">
+<height>35</height>
+<width>27</width>
+</dimensions>
 </extent>
 </egXML></p>
 <p>Alternatively, the generic <gi>measure</gi> element might be used within <gi>extent</gi>, as in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <extent>
-  <measure type="leaves" unit="count" extent="10">10 Bl.</measure>
-  <measure type="height" extent="37" unit="cm">37</measure> x
-  <measure type="width" extent="29" unit="cm">29</measure> cm
+  <measure type="leaves" unit="count" quantity="10">10 Bl.</measure>
+  <measure type="height" quantity="37" unit="cm">37</measure> x
+  <measure type="width" quantity="29" unit="cm">29</measure> cm
 </extent>
 </egXML></p>
 
@@ -2091,7 +2097,7 @@ The selection and combination of modules to form a TEI schema is described in
 
 <p>Here is an overview of the declarations documented by this chapter:
 <specGrp>
-<!-- &att.measured; -->
+&att.dimensions;
 <!--&att.datable;-->
 <specGrpRef target="#msdesc.def"/>
 <specGrpRef target="#xphrase.def"/>
