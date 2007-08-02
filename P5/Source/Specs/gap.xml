@@ -12,7 +12,6 @@ illegible or inaudible.</desc>
   <classes>
     <memberOf key="model.global.edit"/>
     <memberOf key="att.editLike"/>
-    <memberOf key="att.measured"/>
   </classes>
   <content>
     <rng:ref name="macro.glossSeq"/>
@@ -20,13 +19,19 @@ illegible or inaudible.</desc>
   <attList>
     <attDef ident="reason" usage="opt">
       <equiv/>
-      <desc>gives the reason for omission.  Sample values include
-<mentioned>sampling</mentioned>, <mentioned>illegible</mentioned>, <mentioned>inaudible</mentioned>,
-<mentioned>irrelevant</mentioned>, <mentioned>cancelled</mentioned>, <mentioned>cancelled and illegible</mentioned>.</desc>
-      <desc version="2007-05-04" xml:lang="es">declara la causa de la omisión. Los valores de muestra incluyen <mentioned>sampling (ejemplificación)</mentioned>, <mentioned>illegible (ilegible)</mentioned>, <mentioned>inaudible (inaudible)</mentioned>, <mentioned>irrelevant (irrelevante)</mentioned>, <mentioned>cancelled (cancelado)</mentioned>,
-            <mentioned>cancelled and illegible (cancelado e ilegible)</mentioned>.</desc>
-      <desc version="2006-10-28" xml:lang="ja">欠落の理由．判読できない，聞き取れない，不適切，取り消しの指示が
-あるなど．</desc>
+      <desc>gives the reason for omission. Sample values include
+      <val>sampling</val>, <val>illegible</val>, <val>inaudible</val>,
+      <val>irrelevant</val>, <val>cancelled</val>, <val>cancelled and
+      illegible</val>.</desc>
+      <desc version="2007-05-04" xml:lang="es">declara la causa de la
+      omisión. Los valores de muestra incluyen <val>sampling
+      (ejemplificación)</val>, <val>illegible (ilegible)</val>,
+      <val>inaudible (inaudible)</val>, <val>irrelevant
+      (irrelevante)</val>, <val>cancelled (cancelado)</val>,
+      <val>cancelled and illegible (cancelado e
+      ilegible)</val>.</desc>
+      <desc version="2006-10-28" xml:lang="ja">欠落の理由．判読できない，
+      聞き取れない，不適切，取り消しの指示があるなど．</desc>
       <datatype maxOccurs="unbounded">
         <rng:ref name="data.word"/>
       </datatype>
@@ -90,40 +95,81 @@ signifies the causative agent.</desc>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
     </attDef>-->
-<!--    <attDef ident="extent" usage="opt">
-      <equiv/>
-      <desc>indicates approximately how much text has been omitted from the
-transcription, in letters, minims, inches, or any appropriate unit,
-either because of editorial policy or because a deletion, damage, or
-other cause has rendered transcription impossible.</desc>
+<attDef ident="extent" usage="opt">
+      <desc>indicates approximately how much text has been omitted
+      from the transcription (using the unit specified on the
+      <att>unit</att> attribute), either because of editorial policy
+      or because a deletion, damage, or other cause has rendered
+      transcription impossible.</desc>
       <desc version="2007-05-04" xml:lang="es">indica aproximadamente en letras, pulgadas o en alguna otra unidad funcional, cuánto texto ha sido omitido en la transcripción, bien por razones editoriales o bien a causa de una supresión, daño u otra causa que haya provocado que la transcripción sea imposible. </desc>
       <desc version="2006-10-28" xml:lang="ja">転記の際，編集上の基準に従った結果として，または削除，損傷などの
 理由により転記が困難であったために，どの程度のテキストを省略した
 のか，文字，インチ，などの単位を使い，その概算を記述する．</desc>
-      <datatype maxOccurs="unbounded">
-        <rng:ref name="data.word"/>
+      <datatype>
+        <rng:ref name="data.numeric"/>
       </datatype>
-      <valDesc>any string of characters</valDesc>
-      <exemplum>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
-      </exemplum>
       <remarks>
         <p>It is possible, but not always necessary, to provide
 measurements precise to the millimeter or even to the printer's
 point. The degree of precision attempted will vary with the purpose
 of the encoding and the nature of the material.</p>
       </remarks>
-    </attDef>-->
+    </attDef>
+    <attDef ident="unit" usage="opt">
+      <equiv/>
+      <desc>names the unit used for describing the extent of the gap</desc>
+      <desc version="2007-05-04" xml:lang="es">especifica las unidades usadas para la medición.</desc>
+      <desc version="2007-01-21" xml:lang="it">specifica le unità usate per la misurazione</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該数値の単位を示す．</desc>
+      <datatype>
+        <rng:ref name="data.enumerated"/>
+      </datatype>
+      <valList type="semi">
+        <valItem ident="lines">
+          <desc>lines of text</desc>
+        </valItem>
+        <valItem ident="chars">
+	  <gloss>characters</gloss>
+          <desc>characters of text</desc>
+        </valItem>
+	<valItem ident="pages">
+	  <desc>pages, i.e. one side of a leaf</desc>
+	</valItem>
+        <valItem ident="cm">
+          <gloss>centimetres</gloss>
+          <gloss version="2007-05-04" xml:lang="es">centímetros</gloss>
+          <gloss version="2007-01-21" xml:lang="it">centimetri</gloss>
+        </valItem>
+        <valItem ident="mm">
+          <gloss>millimetres</gloss>
+          <gloss version="2007-05-04" xml:lang="es">milímetros</gloss>
+          <gloss version="2007-01-21" xml:lang="it">millimetri</gloss>
+        </valItem>
+        <valItem ident="in">
+          <gloss>inches</gloss>
+          <gloss version="2007-05-04" xml:lang="es">pulgadas</gloss>
+          <gloss version="2007-01-21" xml:lang="it">pollici</gloss>
+        </valItem>
+      </valList>
+    </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <gap extent="4" unit="chars" reason="illegible"/>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <gap extent="1" unit="essay" reason="sampling"/>
+    </egXML>
   </exemplum>
   <remarks>
-    <p>The <gi>gap</gi>,  <gi>unclear</gi>, and <gi>del</gi> core 
-tag elements may be closely allied in use with the <gi>damage</gi>
-and <gi>supplied</gi> elements, available when using the additional
-tagset for transcription of primary sources.  See section <ptr target="#PHCOMB"/> for discussion of which element is appropriate for
-which circumstance.</p>
+    <p>The <gi>gap</gi>, <gi>unclear</gi>, and <gi>del</gi> core tag
+    elements may be closely allied in use with the <gi>damage</gi> and
+    <gi>supplied</gi> elements, available when using the additional
+    tagset for transcription of primary sources. See section <ptr
+    target="#PHCOMB"/> for discussion of which element is appropriate
+    for which circumstance.</p>
   </remarks>
   <listRef>
     <ptr target="#COEDADD" type="div1"/>
