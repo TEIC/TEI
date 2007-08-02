@@ -4,14 +4,8 @@ See the file COPYING for details
 $Date$
 $Author$
 -->
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tei" type="atts" ident="att.measured">
-  <desc>provides attributes for any kind of measurement, for example
-  to provide a normalized form, or otherwise qualify the measurement
-  given as content of the element concerned.</desc>
-  <desc version="2007-06-14" xml:lang="es">provides attributes which qualify a measurement of some kind.</desc>
-  <desc version="2007-05-04" xml:lang="es">proporciona atributos que califican una determinata medición.</desc>
-  <desc version="2007-06-14" xml:lang="it">provides attributes which qualify a measurement of some kind.</desc>
-  <desc version="2007-01-21" xml:lang="it">assegna degli attributi che qualificano una determinata misurazione</desc>
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tei" type="atts" ident="att.dimensions">
+  <desc>provides attributes for a measurement of linear length.</desc>
   <attList>
     <attDef ident="unit" usage="opt">
       <equiv/>
@@ -46,32 +40,17 @@ $Author$
           <desc>characters of text</desc>
         </valItem>
       </valList>
-      <remarks>
-        <p>The unit should normally be named using the standard
-        abbreviation for an SI unit (see further <ptr target="http://www.bipm.org/en/si/"/>; <ptr target="http://physics.nist.gov/cuu/Units/"/>). However,
-        encoders may also specify measurements using informally
-        defined units such as "lines" or "characters".</p>
-      </remarks>
     </attDef>
-    <attDef ident="extent">
-      <desc>specifies the size of the measurement in the units specified</desc>
+    <attDef ident="quantity">
+      <desc>specifies the length in the units specified</desc>
       <datatype>
         <rng:ref name="data.numeric"/>
-      </datatype>
-    </attDef>
-    <attDef ident="commodity" usage="opt">
-      <equiv/>
-      <desc>indicates the substance that is being measured where this
-      affects the meaning of the measurement</desc>
-      <desc version="2006-10-28" xml:lang="ja">計測される対象を示す．</desc>
-      <datatype maxOccurs="unbounded">
-        <rng:ref name="data.word"/>
       </datatype>
     </attDef>
     <attDef ident="scope" usage="opt">
       <equiv/>
       <desc>specifies the applicability of this measurement, where
-   more than one object is being measured.</desc>
+      more than one object is being measured.</desc>
       <desc version="2007-05-04" xml:lang="es">especifica la aplicabilidad de esta medición, en los casos en que se mida más de un objeto. </desc>
       <desc version="2007-01-21" xml:lang="it">indica l'applicabilità della misurazione, laddove venga misurato più di un oggetto</desc>
       <desc version="2006-10-28" xml:lang="ja">対象物が複数合った場合に，当該数値の適応範囲を示す．</desc>
@@ -98,9 +77,6 @@ $Author$
           <desc version="2007-01-21" xml:lang="it">la misurazione fa riferimento solo ai casi specificati</desc>
         </valItem>
       </valList>
-      <remarks>
-        <p/>
-      </remarks>
     </attDef>
   </attList>
 </classSpec>
