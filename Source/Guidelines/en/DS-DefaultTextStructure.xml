@@ -467,7 +467,7 @@ small.
 <p>The divisions of any kind of text may sometimes begin with a brief
 heading or descriptive title, with or without a byline, an epigraph or
 brief quotation, or a salutation such as one finds at the start of a
-letter. They may also conclude with a brief trailer, byline, or
+letter. They may also conclude with a brief trailer, byline, postscript, or
 signature. Many of these (e.g. a byline) may appear either at the
 start or at the end of a text division proper; these elements are
 regarded as forming a class, known as <name
@@ -492,10 +492,12 @@ which may appear only at the end of a division:
   <specDesc key="closer"/>
   <specDesc key="signed"/>
   <specDesc key="trailer"/>
-  <!-- specDesc key="postscript"/ -->
+  <specDesc key="postscript"/>
 </specList>
-For further details of the <gi>trailer</gi> element, see section <ptr target="#DSHD"/>; 
-for the <gi>closer</gi> element, section <ptr target="#DSOC"/>.</p>
+For further details of the <gi>trailer</gi> element, see section <ptr
+target="#DSHD"/>; for the <gi>closer</gi> and <gi>signed</gi>
+elements, section <ptr target="#DSOC"/>; for the <gi>postscript</gi>
+element, section <ptr target="#DSAE"/>.</p>
 <p>The following special-purpose elements are provided to mark
 features which may appear either at the start or at the end a
 division:
@@ -673,7 +675,7 @@ in some hurry, as well as fright, what I must ever be,</p>
  </p>
 <p>For further discussion of the encoding of dates and of names of persons and places, see section <ptr target="#CONADA"/> and chapter <ptr target="#ND"/>.
  </p></div>
-<div type="div3" xml:id="DSAE"><head>Arguments and Epigraphs</head>
+<div type="div3" xml:id="DSAE"><head>Arguments, Epigraphs, and Postscripts</head>
 <p>The <gi>argument</gi> element may be used to encode the prefatory
 list of topics sometimes found at the start of a chapter or
 other division.  It is most conveniently encoded as a list, since this
@@ -735,7 +737,49 @@ following example:
  </p>
 <p>For discussion of quotations appearing other than as epigraphs refer
 to section <ptr target="#COHQQ"/>.
- </p></div>
+ </p><p>A <term>postscript</term> is a passage added after the signature of
+a letter or, less frequently, the main portion of the body of a book,
+article, or essay. In English a postscript is often abbreviated as
+<mentioned>P.S.</mentioned> or <mentioned>PS</mentioned>, and
+postscripts are often introduced by labels with one of these
+abbreviations, as in the following example.
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+       <div type="letter">
+        <opener>
+          <dateline>
+            <placeName>Newport</placeName>
+            <date when="1761-05-27">May ye 27th 1761</date>
+          </dateline>
+          <salute>Gentlemen</salute>
+        </opener>
+        <p>Capt Stoddard's Business
+          <lb/>calling him to Providence, have
+          <lb/>got him to look at Hopkins brigantine
+          <lb/>&amp; if can agree to Purchase her, shall
+          <lb/>be much oblig'd for your further
+          <lb/>assistance herein, &amp; will acquiesce with
+          <lb/>whatever you &amp; he shall Contract
+          <lb/>for — I Thank you for your
+          <lb/><unclear>Line</unclear> respecting the brigantine &amp; Beg
+          <lb/>leave to Recommend the Bearer
+          <lb/>to you for your advice &amp; Friendship
+          <lb/>in this matter</p>
+        <closer>
+          <salute>I am  your most  humble servant</salute>
+          <signed>Joseph Wanton Jr</signed>
+        </closer>
+        <postscript>
+	  <label>P.S.</label>
+          <p>I have Mollases, Sugar,
+          <lb/>Coffee &amp; Rum, which
+          <lb/>will Exchange with you
+          <lb/>for Candles or Oyl</p>
+        </postscript>
+      </div>
+</egXML>
+<!-- adapted from sajc000021.xml, which does not seem to be available on the website (http://dl.lib.brown.edu/slaveryandjustice/) -->
+</p>
+</div>
 <div type="div3" xml:id="DSCO"><head>Content of Textual Divisions</head>
 <p>Other than elements from the <name
 type="class">model.divWrapper</name>, <name
@@ -757,8 +801,7 @@ vocals, kinesics, etc., as defined in chapter <ptr target="#TSBA"/>
 will be available; and so on.</p>
 <p>Where a text contains low level elements from more than one
 module these may appear at any point; there is no requirement that
-elements from the same module be kept together.
- </p>
+elements from the same module be kept together.</p>
 <p>The elements discussed in this section are formally defined as
 follows:
 <specGrp xml:id="DDSDIVX">
@@ -772,6 +815,7 @@ follows:
 &closer;
 &salute;
 &signed;
+&postscript;
 </specGrp>
 </p>
 </div> 
