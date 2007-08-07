@@ -70,6 +70,7 @@ html-web: check
 	for i in ${LANGUAGE} ${OTHERLANGUAGES} ; do \
 	echo making HTML Guidelines for language $$i ; \
 	mkdir -p Guidelines-web/$$i/html; \
+	cp rightarrow.gif guidelines.css TEI-glow.png Guidelines-web/$$i/html/ ; \
 	xmllint --noent --xinclude ${SOURCETREE}/Guidelines/$$i/guidelines-$$i.xml \
 	| xsltproc ${VERBOSE} \
 		--stringparam outputDir Guidelines-web/$$i/html \
@@ -77,7 +78,6 @@ html-web: check
 	        --stringparam lang $$i \
 	        --stringparam doclang $$i \
 	    Utilities/guidelines.xsl - ; \
-	cp rightarrow.gif guidelines.css TEI-glow.png Guidelines-web/$$i/html/ ; \
 	cp -r ${SOURCETREE}/Images Guidelines-web/$$i/html/ ; \
 	(cd Guidelines-web/$$i/html; for i in *.html; do perl -i ../../../Utilities/cleanrnc.pl $$i;done); \
 	(cd Guidelines-web/$$i/html; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' guidelines.css); \
@@ -93,6 +93,7 @@ html-web-beta: check
 	for i in ${LANGUAGE} ${OTHERLANGUAGES} ; do \
 	echo making beta HTML Guidelines for language $$i ; \
 	mkdir -p Guidelines-web-beta/$$i/html; \
+	cp rightarrow.gif guidelines-beta.css TEI-glow.png Guidelines-web-beta/$$i/html/ ; \
 	xmllint --noent --xinclude ${SOURCETREE}/Guidelines/$$i/guidelines-$$i.xml \
 	| xsltproc ${VERBOSE} \
 		--stringparam outputDir Guidelines-web-beta/$$i/html \
@@ -100,7 +101,6 @@ html-web-beta: check
 	        --stringparam lang $$i \
 	        --stringparam doclang $$i \
 	    Utilities/guidelines-beta.xsl - ; \
-	cp rightarrow.gif guidelines-beta.css TEI-glow.png Guidelines-web-beta/$$i/html/ ; \
 	cp -r ${SOURCETREE}/Images Guidelines-web-beta/$$i/html/ ; \
 	(cd Guidelines-web-beta/$$i/html; for i in *.html; do perl -i ../../../Utilities/cleanrnc.pl $$i;done); \
 	(cd Guidelines-web-beta/$$i/html; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' guidelines-beta.css); \
