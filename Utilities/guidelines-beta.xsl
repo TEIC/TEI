@@ -150,46 +150,108 @@
       </xsl:text>
     </script>
   </xsl:template>
-  
-  
-        
-<!--
 
-  <xsl:template name="javascriptHook">
-    <script type="text/javascript">
-      <xsl:text disable-output-escaping="yes">
-        function togglerelax (el) {
-        if (el.innerHTML == '&lt;button&gt;Display RNC&lt;/button&gt;') {
-        el.innerHTML = '&lt;button&gt;Display RNG&lt;/button&gt;';
-        }
-        else
-        {
-        el.innerHTML = '&lt;button&gt;Display RNC&lt;/button&gt;';
-        }
-        var div = el.parentNode; 
-        for (j=0;j&lt;div.childNodes.length;j++)
-        {
-        if (div.childNodes[j].nodeType != 1) continue;
-        if (div.childNodes[j].nodeName != 'PRE') continue;
-        var thisone=div.childNodes[j];
-        var state=thisone.style.display;
-        if (state == 'block')
-        {  
-        thisone.style.display='none'; 
-        }
-        else
-        {  
-        thisone.style.display='block';
-        }
-        }
-        }
-        
-      </xsl:text>
-    </script>
+
+
+<!-- JC Edit: Add permalinks to H2 need to overwrite the entire
+blasted template for main content  -->
+  
+  
+  
+  <xsl:template name="mainFrame">
+    <xsl:param name="currentID"/>
+    <xsl:choose>
+      <xsl:when test="$currentID='current'">
+        <xsl:apply-templates/>
+      </xsl:when>
+      <xsl:when test="$currentID='' and $splitLevel=-1">
+        <xsl:apply-templates/>
+      </xsl:when>
+      <xsl:when test="$currentID='' and $virtualPages='true'">
+        <xsl:apply-templates/>
+      </xsl:when>
+      <xsl:when test="self::teiCorpus.2">
+        <xsl:call-template name="corpusBody"/>
+      </xsl:when>
+      <xsl:when test="$currentID=''">
+        <!-- we need to locate the first interesting object in the file, ie
+          the first grandchild of <text > -->
+        <xsl:for-each
+          select=" descendant-or-self::tei:TEI/tei:text/tei:*[1]/*[1]">
+          <xsl:apply-templates mode="paging" select="."/>
+          <xsl:if test="$autoToc='true'">
+            <xsl:if test="following-sibling::tei:div/tei:head">
+              <xsl:call-template name="contentsHeading"/>
+              <ul class="toc">
+                <xsl:apply-templates mode="maketoc"
+                  select="following-sibling::tei:div">
+                  <xsl:with-param name="forcedepth" select="'0'"/>
+                </xsl:apply-templates>
+              </ul>
+            </xsl:if>
+          </xsl:if>
+        </xsl:for-each>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:choose>
+          <xsl:when test="count(key('IDS',$currentID))&gt;0">
+            <xsl:for-each select="key('IDS',$currentID)">
+  
+              <!-- JC edit making permalinks add @id to html:h2 and
+                then html:a to point to it.  
+                 -->
+              
+              <h2 id="{$currentID}">
+                <xsl:apply-templates mode="xref" select="."/>  
+                <a href="#{$currentID}" class="permalink"> &#x00B6;</a>
+              </h2>
+              <xsl:call-template name="doDivBody"/>
+              <xsl:if test="$bottomNavigationPanel='true'">
+                <xsl:call-template name="xrefpanel">
+                  <xsl:with-param name="homepage"
+                    select="concat($masterFile,$standardSuffix)"/>
+                  <xsl:with-param name="mode" select="local-name(.)"/>
+                </xsl:call-template>
+              </xsl:if>
+            </xsl:for-each>
+          </xsl:when>
+          <xsl:otherwise>
+            <!-- the passed ID is a pseudo-XPath expression
+              which starts below TEI/tei:text.
+              The real XPath syntax is changed to avoid problems
+            -->
+            <xsl:choose>
+              <xsl:when test="ancestor-or-self::tei:TEI/tei:group/tei:text">
+                <xsl:apply-templates mode="xpath"
+                  select="ancestor-or-self::tei:TEI/tei:group/tei:text">
+                  <xsl:with-param name="xpath" select="$currentID"/>
+                </xsl:apply-templates>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:apply-templates mode="xpath"
+                  select="ancestor-or-self::tei:TEI/tei:text">
+                  <xsl:with-param name="xpath" select="$currentID"/>
+                </xsl:apply-templates>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:otherwise>
+    </xsl:choose>
+    
+    <xsl:call-template name="partialFootNotes">
+      <xsl:with-param name="currentID" select="$currentID"/>
+    </xsl:call-template>
+    
+    <xsl:call-template name="stdfooter"/>
   </xsl:template>
   
-       --> 
+  
+  
+  
 
+  
+       
 
 </xsl:stylesheet>
 
