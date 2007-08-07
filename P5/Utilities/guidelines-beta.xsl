@@ -197,7 +197,7 @@ blasted template for main content  -->
           <xsl:when test="count(key('IDS',$currentID))&gt;0">
             <xsl:for-each select="key('IDS',$currentID)">
   
-              <!-- JC edit making permalinks add @id to html:h2 and
+              <!-- JC edit: making permalinks add @id to html:h2 and
                 then html:a to point to it.  
                  -->
               
@@ -245,6 +245,66 @@ blasted template for main content  -->
     
     <xsl:call-template name="stdfooter"/>
   </xsl:template>
+  
+  
+  <!-- JC edit: Making permalinks at lower div levels-->
+  <xsl:template name="doDivBody">
+    <xsl:param name="Type"/>
+    <xsl:call-template name="startDivHook"/>
+    <xsl:variable name="ident">
+      <xsl:apply-templates mode="ident" select="."/>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="parent::tei:div/@rend='multicol'">
+        <td valign="top">
+          <xsl:if test="not($Type = '')">
+            <xsl:element name="h{$Type + $divOffset}">
+              <xsl:if test="$xhtml='false'">
+                <a name="{$ident}"/>
+              </xsl:if>
+              <xsl:call-template name="header">
+                <xsl:with-param name="display">full</xsl:with-param>
+              </xsl:call-template>
+            </xsl:element>
+          </xsl:if>
+          <xsl:apply-templates/>
+        </td>
+      </xsl:when>
+      <xsl:when test="@rend='multicol'">
+        <xsl:apply-templates select="*[not(local-name(.)='div')]"/>
+        <table>
+          <tr>
+            <xsl:apply-templates select="tei:div"/>
+          </tr>
+        </table>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:if test="not($Type = '')">
+          <xsl:element name="h{$Type + $divOffset}">
+            <!-- JC Edit: adding id attribute -->
+            <xsl:attribute name="id" ><xsl:value-of select="$ident"/></xsl:attribute>
+            <xsl:if test="$xhtml='false'">
+              <a name="{$ident}"/>
+            </xsl:if>
+            <xsl:call-template name="header">
+              <xsl:with-param name="display">full</xsl:with-param>
+            </xsl:call-template>
+            <!-- JC Edit: adding in permalink -->
+            <a href="#{$ident}" class="permalink"> &#x00B6;</a>
+          </xsl:element>
+        </xsl:if>
+        <xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
