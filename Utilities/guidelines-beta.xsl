@@ -203,7 +203,8 @@ blasted template for main content  -->
               
               <h2 id="{$currentID}">
                 <xsl:apply-templates mode="xref" select="."/>  
-                <a href="#{$currentID}" class="permalink"> &#x00B6;</a>
+                <a href="#{$currentID}" class="permalink" title="Link to this
+                  section"> &#x00B6;</a>
               </h2>
               <xsl:call-template name="doDivBody"/>
               <xsl:if test="$bottomNavigationPanel='true'">
@@ -290,7 +291,8 @@ blasted template for main content  -->
               <xsl:with-param name="display">full</xsl:with-param>
             </xsl:call-template>
             <!-- JC Edit: adding in permalink -->
-            <a href="#{$ident}" class="permalink"> &#x00B6;</a>
+            <a href="#{$ident}" class="permalink" title="Link to this
+              section"> &#x00B6;</a>
           </xsl:element>
         </xsl:if>
         <xsl:apply-templates/>
