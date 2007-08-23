@@ -312,7 +312,17 @@ $Author$
       explicit indication of which beginning corresponds with which end (or
       vice-versa) is necessary.</p>
     <p>This example is an extract from the lyrics of a common children's
-      clapping game. Here the example is encoded using paired segment boundary
+      clapping game.
+<quote rend="display">
+  <l>Hello operator,</l>
+  <l>Please give me Number 9,</l>
+  <l>And if you disconnect me,</l>
+  <l>I'll kick you in the &hellip;</l>
+  <l>Behind the fridgerator</l>
+  <l>There was a piece of glass,</l>
+</quote>
+<!-- or perhaps "What did you think that you were going to get away with that?" -->
+Here the example is encoded using paired segment boundary
       delimiter elements, in this case <gi>ml</gi> for <gloss>metrical
       line</gloss>. <eg><![CDATA[<ml xml:id="L21s" corresp="#L21e" delimit="start">Hello operator,<ml xml:id="L21e" corresp="#L21s" delimit="end">
 <ml xml:id="L22s" corresp="#L22e" delimit="start">Please give me Number 9,<ml xml:id="L22e" corresp="#L22s" delimit="end">
@@ -320,14 +330,19 @@ $Author$
 <ml xml:id="L24s" corresp="#L24e" delimit="start">I'll kick you in the
 <ml xml:id="L25s" corresp="#L25e" delimit="start">Behind<ml xml:id="L24e" corresp="#L24s" delimit="end"> the fridgerator<ml xml:id="L25e" corresp="#L25s" delimit="end">
 <ml xml:id="L26s" corresp="#L26e" delimit="start">There was a piece of glass,<ml xml:id="L26e" corresp="#L26s" delimit="end">]]></eg></p>
-    <p>Here is a short example of an ambiguous newspaper headline in which it is
-      desired to record the phrases of both possible readings. The encoding
-      demonstrates the use of paired segment-boundary elements. Each
-      end-boundary indicates its corresponding start-boundary, but the
-      start-boundaries do not indicate their ends.<eg><![CDATA[<start type="phr" xml:id="phrase01"/><start type="phr" xml:id="phraseA"/>Broadway<end type="phr" corresp="#phraseA"/>
-<start type="phr" xml:id="phraseB"/>hit<end type="phr" corresp="#phrase01"/>
-<start type="phr" xml:id="phrase02"/>and
-run<end type="phr" corresp="#phraseB"/><end type="phr" corresp="#phrase02"/>]]></eg></p>
+    <p>Here is a short example of an ambiguous newspaper headline
+    <q>Broadway hit and run</q> in which it is desired to record the
+    phrases of both possible readings (<q>Broadway hit</q> &amp;
+    <q>and run</q>; and <q>Broadway</q> &amp; <q>hit and run</q>). The
+    encoding demonstrates the use of paired segment-boundary elements.
+    Each end-boundary indicates its corresponding start-boundary, but
+    the start-boundaries do not indicate their
+    ends.<eg><![CDATA[<start type="phr" xml:id="phrase01"/><start
+    type="phr" xml:id="phraseA"/>Broadway<end type="phr"
+    corresp="#phraseA"/> <start type="phr" xml:id="phraseB"/>hit<end
+    type="phr" corresp="#phrase01"/> <start type="phr"
+    xml:id="phrase02"/>and run<end type="phr" corresp="#phraseB"/><end
+    type="phr" corresp="#phrase02"/>]]></eg></p>
     <p>COLT is an interesting variant of the paired segment boundary delimiter
       technique. The two differences are <list type="ordered">
         <item>the type of element used as the empty segment boundary delimiter
