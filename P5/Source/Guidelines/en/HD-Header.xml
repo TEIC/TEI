@@ -92,7 +92,8 @@ from the <term>front matter</term> of the text itself (for which see
 section <ptr target="#DSFRONT"/>). A composite text, such as a corpus or
 collection, may contain several headers, as further discussed below.  In
 the usual case, however, a TEI-conformant text will contain a single
-<gi>teiHeader</gi> element, followed by a single <gi>text</gi> element.</p>
+<gi>teiHeader</gi> element, followed by a single <gi>text</gi> element.
+<!-- mentioning of facsimile --></p>
 <p>The header element has the following description:
 <specList><specDesc key="teiHeader" atts="type"/></specList>
 </p>
@@ -101,17 +102,17 @@ components:
 <specList><specDesc key="fileDesc"/><specDesc key="encodingDesc"/><specDesc key="profileDesc"/><specDesc key="revisionDesc"/></specList>
 </p>
 <p>Of these, only the <gi>fileDesc</gi> element is required in all TEI
-headers; the others are optional.  The full form of a TEI header is
+headers; the others are optional.  The top level elements in the full form of a TEI header are
 thus:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
-    <fileDesc>  </fileDesc>
-    <encodingDesc>  </encodingDesc>
-    <profileDesc>  </profileDesc>
-    <revisionDesc>  </revisionDesc>
+    <fileDesc> <!-- ... --></fileDesc>
+    <encodingDesc> <!-- ... --></encodingDesc>
+    <profileDesc> <!-- ... --></profileDesc>
+    <revisionDesc> <!-- ... --></revisionDesc>
 </teiHeader></egXML>
 while a minimal header takes the form:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
-    <fileDesc>  </fileDesc>
+    <fileDesc> <!-- ... --></fileDesc>
 </teiHeader></egXML>
 </p>
 <p>In the case of language corpora or collections, it may be
@@ -123,15 +124,19 @@ chapter). The <att>type</att> attribute may be used to indicate whether the head
 to a corpus or a single text.  A corpus may thus take the form:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><teiCorpus>
    <teiHeader type="corpus">
+     <!-- corpus-level metadata here -->
    </teiHeader>
    <TEI>
-      <teiHeader type="text">
+      <teiHeader type="text"> 
+          <!-- metadata specific to this text here -->
       </teiHeader>
-      <text>  </text>
+      <text> <!-- ... --></text>
    </TEI>
    <TEI>
-      <teiHeader type="text">  </teiHeader>
-      <text>  </text>
+      <teiHeader type="text"> 
+                  <!-- metadata specific to this text here -->
+      </teiHeader>
+      <text> <!-- ... --></text>
    </TEI>
 </teiCorpus></egXML>
 <!-- left this in for now, but I dont think it's very helpful (LB) -->
@@ -244,23 +249,24 @@ are listed below in the order in which they must be given within the
 following structure:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
     <fileDesc>
-         <titleStmt>  </titleStmt>
-         <editionStmt>  </editionStmt>
-         <extent>  </extent>
-         <publicationStmt>  </publicationStmt>
-         <seriesStmt>  </seriesStmt>
-         <notesStmt>  </notesStmt>
-         <sourceDesc>  </sourceDesc>
+         <titleStmt> <!-- ... --></titleStmt>
+         <editionStmt> <!-- ... --></editionStmt>
+         <extent> <!-- ... --></extent>
+         <publicationStmt> <!-- ... --></publicationStmt>
+         <seriesStmt> <!-- ... --></seriesStmt>
+         <notesStmt> <!-- ... --></notesStmt>
+         <sourceDesc>..</sourceDesc>
     </fileDesc>
 </teiHeader></egXML>
 Several of these elements may be omitted; a minimal file description has
 the following structure:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
     <fileDesc>
-         <titleStmt>  </titleStmt>
-         <publicationStmt>  </publicationStmt>
-         <sourceDesc>  </sourceDesc>
+         <titleStmt> <!-- ... --></titleStmt>
+         <publicationStmt> <!-- ... --></publicationStmt>
+         <sourceDesc> <!-- ... --></sourceDesc>
     </fileDesc>
+    <!-- other optional parts of the header here -->
 </teiHeader></egXML>
 </p>
 <p>The <gi>fileDesc</gi> itself has the following formal definition:
@@ -534,18 +540,23 @@ words or sentences, citations, paragraphs)</item>
 <item>in terms of any convenient physical units (for example,
 blocks, disks, tapes)</item></list>
 </p>
+<p>The use of standard abbreviations for units of quantity is
+recommended where applicable, here as elsewhere (see <ptr target="http://physics.nist.gov/cuu/Units/binary.html"/>).</p>
 <p>Examples:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><extent>between 1 16-bit MB and 2 16-bit MB</extent>
 <extent>4.2 MiB</extent>
 <extent>4532 bytes</extent>
 <extent>3200 sentences</extent>
-<extent>5 3.5" High Density Diskettes</extent></egXML>
+<extent>5 90 mm High Density Diskettes</extent></egXML>
 <!--
 ** These examples and the list above have *got* to be fixed, and TEI
 ** should advise use of standard symbols ala NIST
 ** (http://physics.nist.gov/cuu/Units/binary.html)
 ** Syd, 2001-12-23
--->
+
+** to me, 4.2 MiB looks exceedingly silly.  I think we could very well do with 4.2 MB CW 2007-08-10 
+
+added reference to SI units and changed some (LB 23 aug 07 ) -->
 	<!-- removed file attrib since it was confusing dtdGen LB, 20 may 01 -->
 The <gi>extent</gi> element has the following formal declaration:
 <specGrp xml:id="D2223" n="The extent statement">
@@ -1028,7 +1039,7 @@ is defined as follows:
 <specGrpRef target="#DHDAPP"/>
 </specGrp></p>
 <div type="div3" xml:id="HD51"><head>The Project Description</head>
-<p>The <gi>projectDesc</gi> element is the first of the nine optional
+<p>The <gi>projectDesc</gi> element is the first of the ten optional
 subdivisions of the <gi>encodingDesc</gi> element.  It may be used to
 describe, in prose, the purpose for which the electronic file was
 encoded, together with any other relevant information concerning the
@@ -1049,7 +1060,7 @@ has been followed rather than another.
 <p>This element has the following formal declaration:
 <specGrp xml:id="D2251" n="The project description">&projectDesc;</specGrp></p></div>
 <div type="div3" xml:id="HD52"><head>The Sampling Declaration</head>
-<p>The <gi>samplingDecl</gi> element is the second of the nine optional
+<p>The <gi>samplingDecl</gi> element is the second of the ten optional
 subdivisions of the <gi>encodingDesc</gi> element.  It contains a prose
 description of the rationale and methods used in sampling texts, for
 example to create a representative corpus.
@@ -1087,7 +1098,7 @@ This element has the following formal declaration:
 
 <div type="div3" xml:id="HD53">
 <head>The Editorial Practices Declaration</head>
-<p>The <gi>editorialDecl</gi> element is the third of the nine optional
+<p>The <gi>editorialDecl</gi> element is the third of the ten optional
 subdivisions of the <gi>encodingDesc</gi> element.  It is used to
 provide details of the editorial practices applied during the encoding
 of a text.
@@ -1146,11 +1157,10 @@ them?</p></item>
 <p>
 How were quotation marks processed?  Are apostrophes and quotation
 marks distinguished?  How?  Are quotation marks retained as content in
-the text or replaced by markup?  Was the <att>rendition</att> attribute
-used to record the specific appearance of any quotation marks removed
-from the text?  Are there any special conventions regarding for example
-the use of single or double quotation marks when nested?  Is the file
-consistent in its practice or has this not been checked?</p></item>
+the text or replaced by markup?  Are there any special conventions
+regarding for example the use of single or double quotation marks when
+nested?  Is the file consistent in its practice or has this not been
+checked?</p></item>
 
 <label><gi>hyphenation</gi></label>
 <item>
@@ -1181,14 +1191,20 @@ segmentation arrived at?</p></item>
 <specList>
 <specDesc key="stdVals"/>
 </specList>
-<p>What standardization methods underlie any standardized values
+<p>In most cases, attributes bearing standardized values (such as the
+<att>when</att> or <att>when-iso</att> attribute on dates) should
+conform to a defined W3C or ISO
+datatype. In cases where this is not appropriate, this element may be
+used to describe the standardization methods underlying the values
+supplied.  <!-- any standardized values
 supplied for numeric values? If the <att>value</att> attribute
 described in section <ptr target="#CONANU"/> has been used, in what
 format are its values presented? If the <att>when</att>,
 <att>when-iso</att>, or similar attributes described in sections <ptr
 target="#CONADA"/> and <ptr target="#NDDATE"/> has been used, are the
-values given supposed to be match a subset of the formats
-available?</p></item>
+values given supposed to match a subset of the formats
+available?--></p></item>
+
 
 <label><gi>interpretation</gi></label>
 <item>
@@ -1219,7 +1235,7 @@ the text in the first instance. A simple example follows:
     <p>Errors in transcription controlled by using the
       WordPerfect spelling checker.</p>
   </correction>
-  <normalization source="http://www.dict.sztaki.hu/webster">
+  <normalization source="http://szotar.sztaki.hu/webster/">
     <p>All words converted to Modern American spelling following
       Websters 9th Collegiate dictionary.</p>
   </normalization>
@@ -1249,7 +1265,7 @@ be used to supply a cross reference to it, as further described in
 section <ptr target="#CCAS"/>.
 	</p></div>
 <div type="div3" xml:id="HD57"><head>The Tagging Declaration</head>
-<p>The <gi>tagsDecl</gi> element is the fourth of the nine optional
+<p>The <gi>tagsDecl</gi> element is the fourth of the ten optional
 subdivisions of the <gi>encodingDesc</gi> element.  It is used to record
 the following information about the tagging used within a particular
 text:
@@ -1354,7 +1370,7 @@ document, as identified by some conforming processor.
 &namespace;
 &rendition;</specGrp></p></div>
 <div type="div3" xml:id="HD54"><head>The Reference System Declaration</head>
-<p>The <gi>refsDecl</gi> element is the fifth of the nine optional
+<p>The <gi>refsDecl</gi> element is the fifth of the ten optional
 subdivisions of the <gi>encodingDesc</gi> element. It is used to
 document the way in which any standard referencing scheme built into
 the encoding works. It may contain either  a series of prose paragraphs or the following specialized elements:
@@ -1500,7 +1516,7 @@ the text) to which the declaration applies may be used to supply a cross
 reference to it, as further described in section <ptr target="#CCAS"/>.</p>
 </div></div>
 <div type="div3" xml:id="HD55"><head>The Classification Declaration</head>
-<p>The <gi>classDecl</gi> element is the sixth of the nine optional
+<p>The <gi>classDecl</gi> element is the sixth of the ten optional
 subdivisions of the <gi>encodingDesc</gi> element.  It is used to group
 together definitions or sources for any descriptive classification
 schemes used by other parts of the header.  Each such scheme is
@@ -1570,7 +1586,7 @@ defined above.
 &taxonomy;
 &category;
 &catDesc;
-</specGrp></p></div><div type="div3" xml:id="HDFSD"><head>The Feature System Declaration</head><p>The <gi>fsdDecl</gi> element is the seventh of the nine optional
+</specGrp></p></div><div type="div3" xml:id="HDFSD"><head>The Feature System Declaration</head><p>The <gi>fsdDecl</gi> element is the seventh of the ten optional
 subdivisions of the <gi>encodingDesc</gi> element.  It is used to
 associate a <term>feature system declaration</term>  (as defined in
 chapter <ptr target="#FD"/>) with any analytic <term>feature
@@ -1618,8 +1634,8 @@ referenced by the <gi>graphic</gi> element. For example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
    <fileDesc>  </fileDesc>
    <encodingDesc>
-      <fsdDecl type="myA1" url="http://fsd.com/myFeatures/"/>
-      <fsdDecl type="myA2" url="http://fsd.com/myFeatures/"/>
+      <fsdDecl type="myA1" url="http://example.com/FSD/myFeatures/"/>
+      <fsdDecl type="myA2" url="http://example.com/FSD/myFeatures/"/>
    </encodingDesc>
 </teiHeader></egXML>
 This header would be attached to a text in which feature structures of
@@ -1632,7 +1648,7 @@ and feature system declarations are provided in chapters <ptr target="#FS"/> and
 <specGrp xml:id="D2256" n="The FSD declaration">&fsdDecl;
 </specGrp></p></div>
 <div type="div3" xml:id="HDMN"><head>The Metrical Declaration Element</head>
-<p>The <gi>metDecl</gi> element is the eighth of the nine optional
+<p>The <gi>metDecl</gi> element is the eighth of the ten optional
 subdivisions of the <gi>encodingDesc</gi> element.  It is used to
 document any metrical notation scheme used in the text, as further
 discussed in section <ptr target="#VEME"/>. It consists either of
@@ -1718,7 +1734,7 @@ encoding of verse, see section <ptr target="#VEME"/>.</p>
 &metSym;
 </specGrp></p></div>
 <div type="div3" xml:id="HDVAR"><head>The Variant-Encoding Method Element</head>
-<p>The <gi>variantEncoding</gi> element is almost the last of the optional
+<p>The <gi>variantEncoding</gi> element is the ninth of the ten optional
 subdivisions of the <gi>encodingDesc</gi> element.  It is used to
 document the method used to encode textual variants in the text, as
 discussed in section <ptr target="#TCAPLK"/>.
@@ -1731,10 +1747,10 @@ discussed in section <ptr target="#TCAPLK"/>.
 
 <div type="div3" xml:id="HDAPP">
 <head>The Application Information Element</head>
-<p>The <gi>appInfo</gi> element is the final
+<p>The <gi>appInfo</gi> element is the last of the ten optional
 subdivision of the <gi>encodingDesc</gi> element.</p>
 
-<p>The main purposes of this element are: to allow an
+<p>This element may be used for such purposes as: to allow an
   application to discover that it has previously
   opened/edited a file, and what version of itself was used
   to do that; to show (through a date) which
@@ -1966,10 +1982,10 @@ pointer of any kind, either to some element in the current document as
 in the <gi>keywords</gi> element above, or to some canonical source
 for the scheme, as in the following example: <egXML
 xmlns="http://www.tei-c.org/ns/Examples"><classCode
-scheme="http://www.udc.org">005.756</classCode> <classCode
+scheme="http://www.example.com/udc">005.756</classCode> <classCode
 scheme="#lc">QA76.9</classCode></egXML>
 <!-- subject classifications from Date, Guide to SQL Std      -->
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><classCode scheme="http://www.udc.org">820.285</classCode>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><classCode scheme="http://www.example.com/udc">820.285</classCode>
 </egXML>
 <!-- subject classifications from Potter, Lit Comp & Lit Crit --></p>
 <p>The <gi>catRef</gi> element categorizes an individual text by
@@ -1990,11 +2006,11 @@ may be supplied to specify the taxonomy to which the categories
 identified by the target attribute belong, if this is not adequately
 conveyed by the  resource pointed to. For example,
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><catRef target="#b.a4
-#b.d2" scheme="http://www.browncorpus.org"/>
-<catRef target="http://www.suc.org#A45"/></egXML>
+#b.d2" scheme="http://www.example.com/browncorpus"/>
+<catRef target="http://www.example.com/SUC/#A45"/></egXML>
 Here the same text has been classified as of categories <val>b.a4</val> and
 <val>b.d2</val> within the Brown classification scheme (presumed to be
-available from <ident type="file">http://www.browncorpus.org</ident>), and as of category
+available from <ident type="file">http://www.example.com/browncorpus</ident>), and as of category
 <q>A45</q> within the SUC classification scheme documented at the URL given.</p>
 
 <p>The distinction between the <gi>catRef</gi> and <gi>classCode</gi>
