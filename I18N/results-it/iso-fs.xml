@@ -1,0 +1,212 @@
+<moduleSpec xmlns="http://www.tei-c.org/ns/1.0" ident="iso-fs">
+  <elementSpec ident="fs" module="iso-fs">
+    <gloss>Feature structure</gloss>
+    <gloss xml:lang="it" notBefore="2007-01-21">struttura dei tratti</gloss>
+    <desc>represents a <term>feature structure</term>, that is, a collection of feature-value pairs
+      organized as a structural unit.</desc>
+    <desc xml:lang="it" notBefore="2007-01-21">rappresenta una <term>feature structure</term>, cioè una raccolta di coppie di valori tratti organizzata come una unità strutturale.</desc>
+    <attList>
+      <attDef ident="type" usage="rwa">
+        <desc>specifies the type of the feature structure.</desc>
+        <desc xml:lang="it" notBefore="2007-01-21">specifica il tipo di struttura dei tratti</desc>
+        <valDesc>Character string, e.g. <term>word structure</term>.</valDesc>
+        <valDesc xml:lang="it" notBefore="2007-01-21">una stringa di caratteri, ad esmpio <term>word structure</term>.</valDesc>
+      </attDef>
+      <attDef ident="feats" usage="opt">
+        <desc>references the feature-value specifications making up this feature structure.</desc>
+        <desc xml:lang="it" notBefore="2007-01-21">indica le specifiche del valore dei tratti che formano questa struttura.</desc>
+        <valDesc>one or more identifiers of <gi>f</gi> elements.</valDesc>
+        <valDesc xml:lang="it" notBefore="2007-01-21">uno o più identificatori di elementi <gi>f</gi>.</valDesc>
+      </attDef>
+    </attList>
+  </elementSpec>
+  <elementSpec ident="f" module="iso-fs">
+    <gloss>Feature</gloss>
+    <gloss xml:lang="it" notBefore="2007-01-21">un tratto</gloss>
+    <desc>represents a <term>feature value specification</term>, that is, the association of a name
+      with a value of any of several different types.</desc>
+    <desc xml:lang="it" notBefore="2007-01-21">rappresenta una <term>feature value specification</term>, cioè l'associazione di un nome con il valore di uno qualsiasi di diversi tratti.</desc>
+    <attList>
+      <attDef ident="name" usage="req">
+        <desc>provides a name for the feature.</desc>
+        <desc xml:lang="it" notBefore="2007-01-21">fornisce il nome del tratto.</desc>
+        <valDesc>Any name.</valDesc>
+        <valDesc xml:lang="it" notBefore="2007-01-21">Un qualsiasi nome.</valDesc>
+      </attDef>
+      <attDef ident="fVal" usage="opt">
+        <desc>references any element which can be used to represent the value of a feature.</desc>
+        <desc xml:lang="it" notBefore="2007-01-21">indica un qualsiasi elemento che può essere usato come valore di un tratto.</desc>
+        <valDesc>the identifier of an element representing a feature value</valDesc>
+        <valDesc xml:lang="it" notBefore="2007-01-21">l'identificatore di un elemento che rappresenta il valore di un tratto.</valDesc>
+      </attDef>
+    </attList>
+  </elementSpec>
+  <elementSpec ident="binary" module="iso-fs">
+    <gloss>binary value</gloss>
+    <gloss xml:lang="it" notBefore="2007-01-21">un valore binario</gloss>
+    <desc>represents the value part of a feature-value specification which can contain either of
+      exactly two possible values.</desc>
+    <desc xml:lang="it" notBefore="2007-01-21">rappresenta la parte di valore di una specifica del valore dei tratti che può contenere uno di soltanto due possibili valori.</desc>
+    <attList>
+      <attDef ident="value" usage="req">
+        <desc>supplies a binary value.</desc>
+        <desc xml:lang="it" notBefore="2007-01-21">fornisce un valore binario.</desc>
+        <valDesc>a string representing a binary value (true or false, 0 or 1) .</valDesc>
+        <valDesc xml:lang="it" notBefore="2007-01-21">una stringa che rappresenta un valore binario (vero o falso, 0 o 1).</valDesc>
+      </attDef>
+    </attList>
+  </elementSpec>
+  <elementSpec ident="symbol" module="iso-fs">
+    <gloss>Symbolic value</gloss>
+    <gloss xml:lang="it" notBefore="2007-01-21">valore simbolico</gloss>
+    <desc>represents the value part of a feature-value specification which contains one of a finite
+      list of symbols.</desc>
+    <desc xml:lang="it" notBefore="2007-01-21">rappresenta la parte di valore di una specifica del valore dei tratti che contiene un simbolo da una lista chiusa di simboli.</desc>
+    <attList>
+      <attDef ident="value" usage="req">
+        <desc>supplies the symbolic value for the feature, one of a finite list that may be
+          specified in a feature declaration.</desc>
+        <desc xml:lang="it" notBefore="2007-01-21">fornisce il valore simbolico del tratto, un valore da una lista che può essere specigicata in una dichiarazione di tratti.</desc>
+        <valDesc>A string, e.g. <term>feminine</term>.</valDesc>
+        <valDesc xml:lang="it" notBefore="2007-01-21">una stringa, ad esempio <term>feminine</term>.</valDesc>
+      </attDef>
+    </attList>
+  </elementSpec>
+  <elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0"
+    ident="numeric" module="iso-fs">
+    <gloss>Numeric value</gloss>
+    <gloss xml:lang="it" notBefore="2007-01-21">un valore numerico</gloss>
+    <desc>represents the value part of a feature-value specification which contains a numeric value
+      or range.</desc>
+    <desc xml:lang="it" notBefore="2007-01-21">rappresenta la parte di valore di una specifica del valore dei tratti che contiene un valore o una gamma di valori numerici.</desc>
+    <attList>
+      <attDef ident="value" usage="req">
+        <desc>supplies a lower bound for the numeric value represented, and also (if <att>max</att>
+          is not supplied) its upper bound.</desc>
+        <desc xml:lang="it" notBefore="2007-01-21">fornisce un limite inferiore al valore numerico rappresentato e anche (qualora l'attributo <att>maz</att> non sia presente) il limite superiore.</desc>
+        <valDesc>A real number or integer.</valDesc>
+        <valDesc xml:lang="it" notBefore="2007-01-21">Un numero reale o intero.</valDesc>
+      </attDef>
+      <attDef ident="max" usage="opt">
+        <desc>supplies an upper bound for the numeric value represented.</desc>
+        <desc xml:lang="it" notBefore="2007-01-21">fornisce un superiore inferiore al valore numerico rappresentato.</desc>
+        <valDesc>A real number or integer.</valDesc>
+        <valDesc xml:lang="it" notBefore="2007-01-21">Un numero reale o intero.</valDesc>
+      </attDef>
+      <attDef ident="trunc" usage="opt">
+        <desc>specifies whether the value represented should be truncated to give an integer value.</desc>
+        <desc xml:lang="it" notBefore="2007-01-21">indica se il valore rappresentato debba essere troncato per ottenere un numero intero.</desc>
+      </attDef>
+    </attList>
+  </elementSpec>
+  <elementSpec ident="string" module="iso-fs">
+    <gloss>String value</gloss>
+    <gloss xml:lang="it" notBefore="2007-01-21">una stringa</gloss>
+    <desc>represents the value part of a feature-value specification which contains a string.</desc>
+    <desc xml:lang="it" notBefore="2007-01-21">rappresenta la parte di valore di una specifica del valore dei tratti che contiene una stringa.</desc>
+  </elementSpec>
+  <elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0"
+    ident="vLabel" module="iso-fs">
+    <gloss>value label</gloss>
+    <gloss xml:lang="it" notBefore="2007-01-21">un'etichetta</gloss>
+    <desc>represents the value part of a feature-value specification which appears at more than one
+      point in a feature structure</desc>
+    <desc xml:lang="it" notBefore="2007-01-21">rappresenta la parte di valore di una specifica del valore dei tratti che compare in più di un punto nella struttura dei tratti.</desc>
+    <attList>
+      <attDef ident="name" usage="req">
+        <desc>supplies a name for the sharing point.</desc>
+        <desc xml:lang="it" notBefore="2007-01-21">fornisce un nome per il punto di condivisione.</desc>
+        <valDesc>An identifying name.</valDesc>
+        <valDesc xml:lang="it" notBefore="2007-01-21">un qualsiasi nome identificativo.</valDesc>
+      </attDef>
+    </attList>
+  </elementSpec>
+  <elementSpec ident="vColl" module="iso-fs">
+    <gloss>collection of values</gloss>
+    <gloss xml:lang="it" notBefore="2007-01-21">raccolta di valori</gloss>
+    <desc>represents the value part of a feature-value specification which contains multiple values
+      organized as a set, bag, or list.</desc>
+    <desc xml:lang="it" notBefore="2007-01-21">rappresenta la parte di valore di una specifica del valore dei tratti che contiene valori multipli organizzati in un insieme, borsa, o lista.</desc>
+    <attList>
+      <attDef ident="org" usage="rwa">
+        <desc>indicates organization of given value or values as set, bag or list.</desc>
+        <desc xml:lang="it" notBefore="2007-01-21">indica il tipo di organizzazione di un dato valore come insieme, borsa o lista.</desc>
+        <valList type="closed">
+          <valItem ident="set">
+            <gloss>indicates that the given values are organized as a set. </gloss>
+            <gloss xml:lang="it" notBefore="2007-01-21">indica che i valori dati sono organizzati in un insieme.</gloss>
+          </valItem>
+          <valItem ident="bag">
+            <gloss>indicates that the given values are organized as a bag (multiset). </gloss>
+            <gloss xml:lang="it" notBefore="2007-01-21">indica che i valori dati sono organizzati in una borsa (insieme multiplo).</gloss>
+          </valItem>
+          <valItem ident="list">
+            <gloss>indicates that the given values are organized as a list.</gloss>
+            <gloss xml:lang="it" notBefore="2007-01-21">indica che i valori dati sono organizzati secondo una lista.</gloss>
+          </valItem>
+        </valList>
+      </attDef>
+    </attList>
+  </elementSpec>
+  <elementSpec ident="default" module="iso-fs">
+    <gloss>Default feature value</gloss>
+    <gloss xml:lang="it" notBefore="2007-01-21">un valore del tratto predefinito</gloss>
+    <desc>represents the value part of a feature-value specification which contains a defaulted
+      value.</desc>
+    <desc xml:lang="it" notBefore="2007-01-21">rappresenta la parte di valore di una specifica del valore dei tratti che contiene un valore predefinito.</desc>
+  </elementSpec>
+  <elementSpec ident="vAlt" module="iso-fs">
+    <gloss>Value alternation</gloss>
+    <gloss xml:lang="it" notBefore="2007-01-21">un'alterazione del valore</gloss>
+    <desc>represents the value part of a feature-value specification which contains a set of values,
+      only one of which can be valid.</desc>
+    <desc xml:lang="it" notBefore="2007-01-21">rappresenta la parte di valore di una specifica del valore dei tratti che contiene un insieme di valori, dei quali uno solo può essere valido.</desc>
+  </elementSpec>
+  <elementSpec ident="vNot" module="iso-fs">
+    <gloss>Value negation</gloss>
+    <gloss xml:lang="it" notBefore="2007-01-21">una negazione del valore</gloss>
+    <desc>represents a feature value which is the negation of its content.</desc>
+    <desc xml:lang="it" notBefore="2007-01-21">rappresenta un valore del tratto che è la negazione del suo contenuto.</desc>
+  </elementSpec>
+  <elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0"
+    ident="vMerge" module="iso-fs">
+    <gloss>Merged collection of values</gloss>
+    <gloss xml:lang="it" notBefore="2007-01-21">una raccolta unificata di valori </gloss>
+    <desc>represents a feature value which is the result of merging together the feature values
+      contained by its children, using the organization specified by the <att>org</att> attribute.</desc>
+    <desc xml:lang="it" notBefore="2007-01-21">rappresenta un volre di un tratto che risulta dalla fusione dei vaolri dei tratti contenuti dai figli, usando l'organizzazione specificata dall'attributo <att>org</att>.</desc>
+    <attList>
+      <attDef ident="org" usage="rwa">
+        <desc>indicates the organization of the resulting merged values as set, bag or list.</desc>
+        <desc xml:lang="it" notBefore="2007-01-21">indica l'organizzazione dei valori risultanti dall'unificazione in un insieme, borsa o lista.</desc>
+        <valList type="closed">
+          <valItem ident="set">
+            <gloss>indicates that the resulting values are organized as a set.</gloss>
+            <gloss xml:lang="it" notBefore="2007-01-21">indica che i valori risultanti dall'unificazione sono organizzati in un inseime.</gloss>
+          </valItem>
+          <valItem ident="bag">
+            <gloss>indicates that the resulting values are organized as a bag (multiset). </gloss>
+            <gloss xml:lang="it" notBefore="2007-01-21">indica che i valori risultanti dall'unificazione sono organizzati in una borsa (insieme multiplo).</gloss>
+          </valItem>
+          <valItem ident="list">
+            <gloss>indicates that the resulting values are organized as a list.</gloss>
+            <gloss xml:lang="it" notBefore="2007-01-21">indica che i valori risultanti dall'unificazione sono organizzati secondo una lista.</gloss>
+          </valItem>
+        </valList>
+      </attDef>
+    </attList>
+  </elementSpec>
+  <elementSpec ident="fLib" module="iso-fs">
+    <gloss>Feature library</gloss>
+    <gloss xml:lang="it" notBefore="2007-01-21">biblioteca dei tratti</gloss>
+    <desc>assembles a library of feature elements.</desc>
+    <desc xml:lang="it" notBefore="2007-01-21">raccoglie una bilbioteca degli elementi dei tratti.</desc>
+  </elementSpec>
+  <elementSpec ident="fvLib" module="iso-fs">
+    <gloss>Feature-value library</gloss>
+    <gloss xml:lang="it" notBefore="2007-01-21">una biblioteca dei valori dei tratti</gloss>
+    <desc>assembles a library of reusable feature value elements (including complete feature
+      structures).</desc>
+    <desc xml:lang="it" notBefore="2007-01-21">raccoglie una biblioteca degli elementi dei valori dei tratti riutilizzabili (incluse le strutture complete dei tratti).</desc>
+  </elementSpec>
+</moduleSpec>
