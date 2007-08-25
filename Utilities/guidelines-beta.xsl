@@ -121,6 +121,7 @@
   <xsl:template name="javascriptHook">
     <script type="text/javascript">
       <xsl:text disable-output-escaping="yes">
+	&lt;![CDATA[
         function togglerelax (el) {
         if (el.innerHTML == 'Display RNC') {
         el.innerHTML = 'Display RNG';
@@ -146,7 +147,7 @@
         }
         }
         }
-        
+	]]&gt;
       </xsl:text>
     </script>
   </xsl:template>
