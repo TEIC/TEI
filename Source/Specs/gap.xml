@@ -1,11 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="core" xml:id="GAP" usage="opt" ident="gap">
   <equiv/>
   <gloss version="2007-05-04" xml:lang="es">material omitido</gloss>
+  <gloss version="2007-08-25" xml:lang="it">omitted material</gloss>
+  <gloss version="2007-01-21" xml:lang="it">materiale omesso</gloss>
   <gloss version="2006-10-28" xml:lang="ja">欠落</gloss>
   <desc>indicates a point where material has been omitted in a
 transcription, whether for editorial reasons described in the TEI
 header, as part of sampling practice, or because the material is
 illegible or inaudible.</desc>
+  <desc version="2007-01-21" xml:lang="it">indica un punto in cui del materiale è stato omesso dalla trascrizione, sia per ragioni editoriali descritte nell'intestazione TEI, come pratica di campionatura, sia perché il materiale è illegibile o incomprensibile.</desc>
   <desc version="2007-05-04" xml:lang="es">indicada un punto donde algún material ha sido omitido en una transcripción, bien por criterios de edición descritos en el cabezado TEI, bien como parte de una práctica habitual, o bien porqué el material es ilegible o incomprensible.</desc>
   <desc version="2006-10-28" xml:lang="ja"> TEIヘダーに記載されている編集上の理由で，または，判別不可
  能であるために，転記の際に欠落しているものの場所を示す．</desc>
@@ -23,6 +27,7 @@ illegible or inaudible.</desc>
       <val>sampling</val>, <val>illegible</val>, <val>inaudible</val>,
       <val>irrelevant</val>, <val>cancelled</val>, <val>cancelled and
       illegible</val>.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica il motivo dell'omisione. Fra i valori possibili ci sono <mentioned>campionatura</mentioned>, <mentioned>illegibile</mentioned>, <mentioned>incomprensibile</mentioned>, <mentioned>irrilevante</mentioned>, <mentioned>cancellato</mentioned>, <mentioned>cancellato e illegibile</mentioned>.</desc>
       <desc version="2007-05-04" xml:lang="es">declara la causa de la
       omisión. Los valores de muestra incluyen <val>sampling
       (ejemplificación)</val>, <val>illegible (ilegible)</val>,
@@ -45,6 +50,7 @@ illegible or inaudible.</desc>
       <desc>in the case of text omitted from the transcription because of
 deliberate deletion by an identifiable hand, signifies the hand which
 made the deletion.</desc>
+      <desc version="2007-01-21" xml:lang="it">nel caso in cui il testo sia stato volontariamente omesso dalla trascrizione da una mano identificabile, indica la mano autrice dell'omissione</desc>
       <desc version="2007-05-04" xml:lang="es">en el caso de texto omitido en la transcripción a causa de una supresión deliberada por una mano identidicada, indica la mano que ha ejecutado la omisión.</desc>
       <desc version="2006-10-28" xml:lang="ja">転記の際，判読できない手書きの部分を，熟考の上でテキストを省略し
 た場合，その理由を記述する．</desc>
@@ -60,6 +66,7 @@ header (see section <ptr target="#PHDH"/>).</valDesc>
     <attDef ident="agent" usage="opt">
       <equiv/>
       <desc>In the case of text omitted because of damage, categorizes the cause of the damage, if it can be identified.</desc>
+      <desc version="2007-01-21" xml:lang="it">nel caso in cui il testo sia stato omesse a causa di danneggiamento, indica la causa del danno qualora possa essere identificata.</desc>
       <desc version="2007-05-04" xml:lang="es">En el caso de texto omitido a causa de algún daño, identifica (si es posible) la causa de tal daño.</desc>
       <desc version="2006-10-28" xml:lang="ja">転記の際，破損のために省略した場合，その破損の種類を記述する．</desc>
       <datatype>
@@ -95,12 +102,14 @@ signifies the causative agent.</desc>
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
     </attDef>-->
-<attDef ident="extent" usage="opt">
+    <attDef ident="extent" usage="opt">
       <desc>indicates approximately how much text has been omitted
       from the transcription (using the unit specified on the
       <att>unit</att> attribute), either because of editorial policy
       or because a deletion, damage, or other cause has rendered
       transcription impossible.</desc>
+      <desc version="2007-08-25" xml:lang="it">indicates approximately how much text has been omitted from the transcription, in letters, minims, inches, or any appropriate unit, either because of editorial policy or because a deletion, damage, or other cause has rendered transcription impossible.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica approssimativamente la quantità di testo omessa dalla trascrizione in lettere, uncini, pollici, o altre unità di misura,sia a causa di politica editoriale sia a causa di danneggiamento, o per altre cause che hanno impossibilitato la trascrizione.</desc>
       <desc version="2007-05-04" xml:lang="es">indica aproximadamente en letras, pulgadas o en alguna otra unidad funcional, cuánto texto ha sido omitido en la transcripción, bien por razones editoriales o bien a causa de una supresión, daño u otra causa que haya provocado que la transcripción sea imposible. </desc>
       <desc version="2006-10-28" xml:lang="ja">転記の際，編集上の基準に従った結果として，または削除，損傷などの
 理由により転記が困難であったために，どの程度のテキストを省略した
@@ -119,7 +128,6 @@ of the encoding and the nature of the material.</p>
       <equiv/>
       <desc>names the unit used for describing the extent of the gap</desc>
       <desc version="2007-05-04" xml:lang="es">especifica las unidades usadas para la medición.</desc>
-      <desc version="2007-01-21" xml:lang="it">specifica le unità usate per la misurazione</desc>
       <desc version="2006-10-28" xml:lang="ja">当該数値の単位を示す．</desc>
       <datatype>
         <rng:ref name="data.enumerated"/>
@@ -129,26 +137,23 @@ of the encoding and the nature of the material.</p>
           <desc>lines of text</desc>
         </valItem>
         <valItem ident="chars">
-	  <gloss>characters</gloss>
+          <gloss>characters</gloss>
           <desc>characters of text</desc>
         </valItem>
-	<valItem ident="pages">
-	  <desc>pages, i.e. one side of a leaf</desc>
-	</valItem>
+        <valItem ident="pages">
+          <desc>pages, i.e. one side of a leaf</desc>
+        </valItem>
         <valItem ident="cm">
           <gloss>centimetres</gloss>
           <gloss version="2007-05-04" xml:lang="es">centímetros</gloss>
-          <gloss version="2007-01-21" xml:lang="it">centimetri</gloss>
         </valItem>
         <valItem ident="mm">
           <gloss>millimetres</gloss>
           <gloss version="2007-05-04" xml:lang="es">milímetros</gloss>
-          <gloss version="2007-01-21" xml:lang="it">millimetri</gloss>
         </valItem>
         <valItem ident="in">
           <gloss>inches</gloss>
           <gloss version="2007-05-04" xml:lang="es">pulgadas</gloss>
-          <gloss version="2007-01-21" xml:lang="it">pollici</gloss>
         </valItem>
       </valList>
     </attDef>
@@ -167,8 +172,7 @@ of the encoding and the nature of the material.</p>
     <p>The <gi>gap</gi>, <gi>unclear</gi>, and <gi>del</gi> core tag
     elements may be closely allied in use with the <gi>damage</gi> and
     <gi>supplied</gi> elements, available when using the additional
-    tagset for transcription of primary sources. See section <ptr
-    target="#PHCOMB"/> for discussion of which element is appropriate
+    tagset for transcription of primary sources. See section <ptr target="#PHCOMB"/> for discussion of which element is appropriate
     for which circumstance.</p>
   </remarks>
   <listRef>

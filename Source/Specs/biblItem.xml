@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -6,9 +7,13 @@ $Author$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="BIBLITEM" usage="opt" ident="biblItem">
   <equiv/>
-  <gloss>bibliographic citation</gloss><gloss version="2006-10-28" xml:lang="ja">書誌情報の引用</gloss>
+  <gloss>bibliographic citation</gloss>
+  <gloss version="2007-01-21" xml:lang="it">citazione bibliografica</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">書誌情報の引用</gloss>
   <desc>contains a bibliographic citation in which only bibliographic
-  subelements appear.</desc><desc version="2006-10-28" xml:lang="ja"> 引用書誌情報に関する下位要素を含む，書誌情報の引用．</desc>
+  subelements appear.</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene una citazione bibliografica nella quale compaiono solamente altri elementi bibliografici</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 引用書誌情報に関する下位要素を含む，書誌情報の引用．</desc>
   <classes>
     <memberOf key="model.biblLike"/>
     <memberOf key="att.declarable"/>
@@ -17,106 +22,115 @@ $Author$
   <content>
     <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:choice>
-	<rng:ref name="title"/> <!-- not part of biblPart as it is in hiLike -->
-	<rng:ref name="biblItem"/>
-	<rng:ref name="imprint"/> <!-- not part of biblPart anymore -->
-	<rng:ref name="model.nameLike"/>
-	<rng:ref name="model.biblPart"/>
-	<rng:ref name="model.dateLike"/>
+        <rng:ref name="title"/>
+<!-- not part of biblPart as it is in hiLike -->
+        <rng:ref name="biblItem"/>
+        <rng:ref name="imprint"/>
+<!-- not part of biblPart anymore -->
+        <rng:ref name="model.nameLike"/>
+        <rng:ref name="model.biblPart"/>
+        <rng:ref name="model.dateLike"/>
       </rng:choice>
     </rng:oneOrMore>
   </content>
   <attList>
     <attDef ident="form" usage="opt">
       <equiv/>
-      <desc>indicates the physical form of the object of this bibliographic entry.</desc><desc version="2006-10-28" xml:lang="ja">当該書誌情報が対象とするものの，物理的な状態を記述する．</desc>
+      <desc>indicates the physical form of the object of this bibliographic entry.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica la forma fisica dell'oggetto della citazione bibliografica</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該書誌情報が対象とするものの，物理的な状態を記述する．</desc>
       <datatype xmlns:rng="http://relaxng.org/ns/structure/1.0">
-	<rng:ref name="data.word"/>
+        <rng:ref name="data.word"/>
       </datatype>
       <valList type="open">
-	<valItem ident="book.hardcover">
-	  <equiv/>
-	  <desc/>
-	</valItem>
-	<valItem ident="book.paperback">
-	  <equiv/>
-	  <desc/>
-	</valItem>
-	<valItem ident="video.VHS">
-	  <equiv/>
-	  <desc/>
-	</valItem>
-	<valItem ident="video.DVD">
-	  <equiv/>
-	  <desc/>
-	</valItem>
-	<valItem ident="audio.casette">
-	  <equiv/>
-	  <desc/>
-	</valItem>
-	<valItem ident="audio.CD">
-	  <equiv/>
-	  <desc/>
-	</valItem>
+        <valItem ident="book.hardcover">
+          <equiv/>
+          <desc/>
+        </valItem>
+        <valItem ident="book.paperback">
+          <equiv/>
+          <desc/>
+        </valItem>
+        <valItem ident="video.VHS">
+          <equiv/>
+          <desc/>
+        </valItem>
+        <valItem ident="video.DVD">
+          <equiv/>
+          <desc/>
+        </valItem>
+        <valItem ident="audio.casette">
+          <equiv/>
+          <desc/>
+        </valItem>
+        <valItem ident="audio.CD">
+          <equiv/>
+          <desc/>
+        </valItem>
       </valList>
     </attDef>
     <attDef ident="status" usage="opt">
       <equiv/>
-      <desc>indicates the publication status of the object of this bibliographic entry.</desc><desc version="2006-10-28" xml:lang="ja">当該書誌情報が対象とするものの，出版状態を記述する．</desc>
+      <desc>indicates the publication status of the object of this bibliographic entry.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica lo stato di pubblicazione dell'oggetto della citazione bibliografica.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該書誌情報が対象とするものの，出版状態を記述する．</desc>
       <valList type="open">
-	<valItem ident="manuscript">
-	  <desc>the item is a manuscript</desc>
-	</valItem>
-	<valItem ident="forthcoming">
-	  <desc>the item is being published, but has not been released yet</desc>
-	</valItem>
-	<valItem ident="inPrint">
-	  <desc>the item is currently being published</desc>
-	</valItem>
+        <valItem ident="manuscript">
+          <desc>the item is a manuscript</desc>
+        </valItem>
+        <valItem ident="forthcoming">
+          <desc>the item is being published, but has not been released yet</desc>
+        </valItem>
+        <valItem ident="inPrint">
+          <desc>the item is currently being published</desc>
+        </valItem>
       </valList>
     </attDef>
     <attDef ident="role" usage="opt">
       <equiv/>
       <desc>indicates the relationship of this bibliographic entry to
-      that of its parent <gi>bibl</gi> or <gi>biblItem</gi>.</desc><desc version="2006-10-28" xml:lang="ja">親要素bibl, biblItemとの関係を示す．</desc>
+      that of its parent <gi>bibl</gi> or <gi>biblItem</gi>.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica la relazione di quasta citazione bibliografica con qualla genitore <gi>bibl</gi> o <gi>biblItem</gi>.</desc>
+      <desc version="2006-10-28" xml:lang="ja">親要素bibl, biblItemとの関係を示す．</desc>
       <valList type="open">
-	<valItem ident="host">
-	  <desc>this bibliographic item has a host relationship to
+        <valItem ident="host">
+          <desc>this bibliographic item has a host relationship to
 	  the item encoded in the parent <gi>bibl</gi> or <gi>biblItem</gi>; e.g., this item is the
 	  magazine in which the article described by the parent <gi>bibl</gi> or <gi>biblItem</gi>
 	  appeared.</desc>
-	</valItem>
-	<valItem ident="original">
-	  <desc>the item is original source</desc>
-	</valItem>
-	<valItem ident="workReviewed">
-	  <desc>this bibliographic item was reviewed in the ancestor work</desc>
-	</valItem>
-	<valItem ident="edition">
-	  <desc>indicates that this entry contains separate
+        </valItem>
+        <valItem ident="original">
+          <desc>the item is original source</desc>
+        </valItem>
+        <valItem ident="workReviewed">
+          <desc>this bibliographic item was reviewed in the ancestor work</desc>
+        </valItem>
+        <valItem ident="edition">
+          <desc>indicates that this entry contains separate
 	  information for a particular edition of the parent <gi>bibl</gi> or <gi>biblItem</gi></desc>
-	</valItem>
-	<valItem ident="basedOn">
-	  <desc>indicates that the parent <gi>bibl</gi> or <gi>biblItem</gi> is the base work from which this one was
+        </valItem>
+        <valItem ident="basedOn">
+          <desc>indicates that the parent <gi>bibl</gi> or <gi>biblItem</gi> is the base work from which this one was
 	  derived</desc>
-	</valItem>
-	<valItem ident="referencedBy">
-	  <desc>indicates that the element is a reference for the work in question</desc>
-	</valItem>
-	<valItem ident="copyOf">
-	  <desc>indicates that this entry is for a facsimile of that
+        </valItem>
+        <valItem ident="referencedBy">
+          <desc>indicates that the element is a reference for the work in question</desc>
+        </valItem>
+        <valItem ident="copyOf">
+          <desc>indicates that this entry is for a facsimile of that
 	  which is referred to by the parent <gi>bibl</gi> or <gi>biblItem</gi></desc>
-	</valItem>
+        </valItem>
       </valList>
     </attDef>
   </attList>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <biblItem>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <biblItem>
         <author>Blain, Virginia</author>
         <author>Clements, Patricia</author>
         <author>Grundy, Isobel</author>
         <title level="m">The Feminist Companion to Literature in English</title>
-	<title level="m" type="subordinate">Women Writers from the
+        <title level="m" type="subordinate">Women Writers from the
 	  Middle Ages to the Present</title>
         <edition>first edition</edition>
         <imprint>
@@ -128,25 +142,26 @@ $Author$
     </egXML>
   </exemplum>
   <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">      <biblItem>
-	<title level="a">Changes in physical examination caused by use
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <biblItem>
+        <title level="a">Changes in physical examination caused by use
 	  of spinal immobilization</title>
-	<author>March, Juan A. MD</author>
-	<author>Ausband, Stephen C. MD</author>
-	<author>Brown, Lawrence H. EMT-P</author>
-	<biblScope type="pages">421–424</biblScope>
-	<biblItem role="host">
-	  <title level="j">Prehospital Emergency Care</title>
-	  <biblScope type="volume">6</biblScope>
-	  <biblScope type="issue">4</biblScope>
-	  <date>October/December 2002</date>
-	  <publisher>Hanley &amp; Belfus</publisher>
-	  <editor>Menegazzi, James J. PhD</editor>
-	</biblItem>
+        <author>March, Juan A. MD</author>
+        <author>Ausband, Stephen C. MD</author>
+        <author>Brown, Lawrence H. EMT-P</author>
+        <biblScope type="pages">421–424</biblScope>
+        <biblItem role="host">
+          <title level="j">Prehospital Emergency Care</title>
+          <biblScope type="volume">6</biblScope>
+          <biblScope type="issue">4</biblScope>
+          <date>October/December 2002</date>
+          <publisher>Hanley &amp; Belfus</publisher>
+          <editor>Menegazzi, James J. PhD</editor>
+        </biblItem>
       </biblItem>
     </egXML>
   </exemplum>
-    <remarks/>
+  <remarks/>
   <listRef>
     <ptr target="#COBITY"/>
     <ptr target="#HD3"/>
