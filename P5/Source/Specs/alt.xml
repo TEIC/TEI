@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -7,12 +8,12 @@ $Author$
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" xml:id="ALT" usage="opt" ident="alt">
   <equiv/>
   <gloss>alternation</gloss>
-  <gloss version="2007-05-04" xml:lang="es">alternancia</gloss>
   <gloss version="2007-01-21" xml:lang="it">alternanza</gloss>
+  <gloss version="2007-05-04" xml:lang="es">alternancia</gloss>
   <gloss version="2006-10-28" xml:lang="ja">代替</gloss>
   <desc>identifies an alternation or a set of choices among elements or passages.</desc>
-  <desc version="2007-05-04" xml:lang="es">identifica una alternancia o una serie de elecciones entre los elementos o los pasajes de texto.</desc>
   <desc version="2007-01-21" xml:lang="it">identifica un'alternanza o una serie di scelte tra gli elementi o le porzioni di testo</desc>
+  <desc version="2007-05-04" xml:lang="es">identifica una alternancia o una serie de elecciones entre los elementos o los pasajes de texto.</desc>
   <desc version="2006-10-28" xml:lang="ja"> 要素などが選択的である場合のいち選択肢を示す．</desc>
   <classes>
     <memberOf key="att.pointing"/>
@@ -25,8 +26,8 @@ $Author$
     <attDef ident="targets" usage="req">
       <equiv/>
       <desc>specifies the identifiers of the alternative elements or passages.</desc>
-      <desc version="2007-05-04" xml:lang="es">indica los identificadores de elementos o pasajes de texto alternativos.</desc>
       <desc version="2007-01-21" xml:lang="it">indica gli identificatori di elementi e porzioni testuali alternativi</desc>
+      <desc version="2007-05-04" xml:lang="es">indica los identificadores de elementos o pasajes de texto alternativos.</desc>
       <desc version="2006-10-28" xml:lang="ja">当該選択肢の識別子を示す．</desc>
       <datatype minOccurs="2" maxOccurs="unbounded">
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
@@ -38,24 +39,28 @@ $Author$
     <attDef ident="mode" usage="rec">
       <equiv/>
       <desc>states whether the alternations gathered in this collection are exclusive or inclusive.</desc>
-      <desc version="2007-05-04" xml:lang="es">declara si las alternativas contenidas en el conjunto son exclusivas o inclusivas.</desc>
       <desc version="2007-01-21" xml:lang="it">dichiara se le alternative contenute nell'insieme sono esclusive o inclusive</desc>
+      <desc version="2007-05-04" xml:lang="es">declara si las alternativas contenidas en el conjunto son exclusivas o inclusivas.</desc>
       <desc version="2006-10-28" xml:lang="ja">示された選択肢の選択度を示す．</desc>
       <valList type="closed">
         <valItem ident="excl">
           <gloss>exclusive</gloss>
+          <gloss version="2007-08-25" xml:lang="it">indicates that the alternation is exclusive, i.e. that
+		  at most one of the alternatives occurs.</gloss>
+          <gloss version="2007-01-21" xml:lang="it">indica che l'alternanza è esclusiva, cioè che compare solo una delle possibili alternative</gloss>
           <desc>indicates that the alternation is exclusive, i.e. that
 		  at most one of the alternatives occurs.</desc>
           <desc version="2007-05-04" xml:lang="es">indica que la alternancia es exclusiva, es decir, que aparece sólo una de las posibles alternativas.</desc>
-          <desc version="2007-01-21" xml:lang="it">indica che l'alternanza è esclusiva, cioè che compare solo una delle possibili alternative</desc>
           <desc version="2006-10-28" xml:lang="ja">(たかだかひとつしか選択できない．)</desc>
         </valItem>
         <valItem ident="incl">
           <gloss>inclusive</gloss>
+          <gloss version="2007-08-25" xml:lang="it">indicates that the alternation is not exclusive, i.e. that
+		  one or more of the alternatives occur.</gloss>
+          <gloss version="2007-01-21" xml:lang="it">indica che l'alternanza non è esclusiva, cioè che possono comparire più alternative</gloss>
           <desc>indicates that the alternation is not exclusive, i.e. that
 		  one or more of the alternatives occur.</desc>
           <desc version="2007-05-04" xml:lang="es">indica que la alternancia no es exclusiva, es decir, que pueden aparecer una o más alternativas de las posibles.</desc>
-          <desc version="2007-01-21" xml:lang="it">indica che l'alternanza non è esclusiva, cioè che possono comparire più alternative</desc>
           <desc version="2006-10-28" xml:lang="ja">(複数を選択できる．)</desc>
         </valItem>
       </valList>
@@ -67,13 +72,13 @@ $Author$
       occurs. If <att>mode</att> is <val>incl</val> each weight states
       the probability that the corresponding alternative occurs given
       that at least one of the other alternatives occurs.</desc>
-      <desc version="2007-05-04" xml:lang="es">si el atributo <att>mode</att> es <code>excl</code>, cada peso representa la probabilidad de que aparezca la alternativa correspondiente; si el atributo <att>mode</att> es <val>incl</val>, cada peso representa la probabilidad de que aparezca la alternativa correspondiente a condición que aparezca al menos otra de las posibles alternativas.</desc>
-      <desc version="2007-06-14" xml:lang="it">If <att>mode</att> is <code>excl</code>, each weight states the
+      <desc version="2007-08-25" xml:lang="it">If <att>mode</att> is <code>excl</code>, each weight states the
 		probability that the corresponding alternative occurs.  If
 		<att>mode</att> <val>incl</val> each weight states the probability that
 		the corresponding alternative occurs given that at least one
 		of the other alternatives occurs.</desc>
       <desc version="2007-01-21" xml:lang="it">se l'attributo <att>mode</att> è <code>excl</code>, ogni peso rappresenta la probabilità che compaia l'alternativa corrispondente; se l'attributo <att>mode</att> è <val>incl</val> ogni peso rappresenta la probabilità che compaia l'alternativa corrispondente a patto che compaia almeno un'altra delle possibili alternative</desc>
+      <desc version="2007-05-04" xml:lang="es">si el atributo <att>mode</att> es <code>excl</code>, cada peso representa la probabilidad de que aparezca la alternativa correspondiente; si el atributo <att>mode</att> es <val>incl</val>, cada peso representa la probabilidad de que aparezca la alternativa correspondiente a condición que aparezca al menos otra de las posibles alternativas.</desc>
       <desc version="2006-10-28" xml:lang="ja">当該選択肢の選択度がexclの場合，
       各選択肢の何らかの重み付けを示す．</desc>
       <datatype minOccurs="1" maxOccurs="unbounded">
