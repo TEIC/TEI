@@ -95,11 +95,6 @@ in the same way as described in sections <ptr target="#DSFRONT"/> and
 <gi>graphic</gi> elements, each of which identifies an image file:
 
 <egXML  xmlns="http://www.tei-c.org/ns/Examples">
-<teiHeader>
-  <fileDesc><titleStmt><title>Four pages from ... </title></titleStmt>
-  </fileDesc>
-  <!-- other components of the TEI Header -->
-</teiHeader>
 <facsimile>
   <graphic url="page1.png"/>
   <graphic url="page2.png"/>
@@ -174,7 +169,7 @@ two. The simplest way of encoding this would be to use  a
 
 <egXML  xmlns="http://www.tei-c.org/ns/Examples">
 <TEI>
-<teiHeader> ...</teiHeader>
+<teiHeader> <!-- ... --> </teiHeader>
 <facsimile>
   <graphic xml:id="Page2" url="page2.png"/>
   <!-- more graphics here -->
@@ -280,83 +275,148 @@ surface which is to be aligned with a particular text element. The
 <att>box</att> attribute is used to supply the co-ordinates of a
 zone. </p>
 
-<p>For example, suppose we have an image of page 157 recto from Ms
-Bodley 340. A single <gi>surface</gi> element is defined for this
-page, and a co-ordinate scale defined for it<note place="foot">A
-co-ordinate scale may be thought of as a grid superimposed on a
-rectangular space. Rectangular areas of the grid are defined as four
-numbers a b c d: the first two identify the grid point which is at the
-upper left corner of the rectangle; the second two give the grid point
-located at the lower right corner of the rectangle. The grid point a b
-is understood to be the point which is located a points from the
-origin along the x (horizontal) axis, and b points from the origin
-along the y (vertical) axis.</note> which is 48 units wide and 96
-units high.  It contains a <gi>graphic</gi> element pointing to the
-image: <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
-<surface box="0 0 48 96">
-  <graphic url="bod340_157r.pjg"/>
+<p>In the following example, we discuss a hypothetical digital edition
+of an early 16th century French work, Charles de Bouelles
+<title>Geometrie Pratique</title>. In this edition, each page has been
+digitized as a separate file: for example, recto page 49 is stored in
+a file called <ident>Boulles-49r.gif</ident>. In the
+<gi>facsimile</gi> element used to contain the whole set of pages, we
+define a 
+<gi>surface</gi> element  for this page, to which we attach a co-ordinate
+scale running from 0 to 48 in the x (horizontal) axis, and 0 to 96 in
+the y (vertical) axis. <note place="foot">A co-ordinate scale may be
+thought of as a grid superimposed on a rectangular space. Rectangular
+areas of the grid are defined as four numbers a b c d: the first two
+identify the grid point which is at the upper left corner of the
+rectangle; the second two give the grid point located at the lower
+right corner of the rectangle. The grid point a b is understood to be
+the point which is located a points from the origin along the x
+(horizontal) axis, and b points from the origin along the y (vertical)
+axis.</note>  No units need be specified; the relationship between
+this scale and the physical size of the original page is not relevant
+to the encoding. However, in practice, it will usually be convenient
+if the scale is expressed in terms of the pixel resolution of the
+digital image itself.  </p>
+<p>The <gi>surface</gi> element  contains a
+<gi>graphic</gi> element pointing to the image: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+<surface box="0 0 200 300">
+  <graphic url="Boulles-49r.gif"/>
 </surface>
-</facsimile></egXML>
-Now further suppose that we wish to identify a number of zones within
-this page, for example the four indicated in <ptr
-target="facs-fig1.jpg"/>. One zone surrounds the decorated capital,
-one the rubric, one the first line, and one the whole of the lower
-part of the page. Each of these  will be represented by a
-distinct <gi>zone</gi> element, given within the <gi>surface</gi>
+</facsimile></egXML> We can now identify distinct zones within the
+page image using the co-ordinate scale defined for this surface. In
+<ptr target="#facs-fig1"/> we show the upper part of the page, with
+boxes indicating four such zones. Each of these will be represented by
+a  <gi>zone</gi> element, given within the <gi>surface</gi>
 element already defined, and specified in terms of the same
-co-ordinate system.
-<egXML  xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
-<surface box="0 0 48 96">
-  <graphic url="bod340_157r.pjg"/>
-  <zone box="0 2 4 4"/> 
-  <zone box="1 3 4 40"/> 
-  <zone box="2 3 3 40"/> 
-  <zone box="0 0 5 40"/> 
+co-ordinate system. 
+<figure xml:id="facs-fig1">
+  <graphic url="../../Images/facs-fig1.png"/>
+</figure>
+The following encoding defines each of the four zones identified in
+the figure.
+ <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+<surface box="0 0 200 300">
+  <graphic url="Boulles-49r.gif"/>
+  <zone box="25 25 180 60"/> 
+    <!-- contains the title -->
+  <zone box="28 75 175 178"/> 
+    <!-- contains the paragraph in italics -->
+  <zone box="105 76 175 160"/> 
+    <!-- contains the figure -->
+  <zone box="45 125 60 130"/>
+    <!-- contains the word "pendans" -->
 </surface>
 </facsimile></egXML> 
 Note that the location of each zone is defined
 independently but using the same co-ordinate system, so that they may
-overlap freely.</p>
+overlap freely. Zones need not  nest within each other; they must
+however be rectangular.</p>
 <p>Generally, a <gi>zone</gi> element will be empty, as in the above
 example. However, it is also possible to include within it a
 further <gi>graphic</gi> element, if for example a detailed image is
 available. Since all <gi>zone</gi> elements use the same co-ordinate
 system (that defined by their parent <gi>surface</gi>, there is no
 need to demonstrate enclosure of one zone within another by means of
-nesting. To continue the current example, supposing that
-<ident>bod340_157r_ic.png</ident> contains  an
-additional image of the illuminated capital, we might represent the
-fact as follows:
-<egXML  xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
-<surface xml:id="f157r" box="0 0 48 96">
-  <graphic url="bod340_157r.jpg"/>
-  <zone xml:id="f157rCapE" box="0 2 4 4">
-    <graphic url="bod340_157r_ic.png"/>
+nesting. To continue the current example, supposing that we have an
+additional image called 
+<ident>Boulles49r-detail.png</ident> containing  an
+additional image of the figure in the third zone above, we might
+encode that zone as follows:
+<egXML  xmlns="http://www.tei-c.org/ns/Examples">
+  <zone box="105 76 175 160"> 
+    <graphic url="Boulles49r-detail.png"/>
   </zone>
-  <zone xml:id="f157rRubr" box="1 3 4 40"/> 
-  <zone xml:id="f157rL1" box="2 3 3 40"/> 
-  <zone xml:id="f157rPara" box="0 0 5 40"/> 
+</egXML>
+</p>
+<p>Now suppose that we wish to align a transcription of this page
+with the zones identified above. The first step is to give each
+relevant part of the facsimile an identifier:
+
+ <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+<surface xml:id="B49r" box="0 0 200 300">
+  <graphic url="Boulles-49r.gif"/>
+  <zone xml:id="B49rHead" box="25 25 180 60"/> 
+    <!-- contains the title -->
+  <zone xml:id="B49rPara2" box="28 75 175 178"/> 
+    <!-- contains the paragraph in italics -->
+  <zone xml:id="B49rFig1" box="105 76 175 160"/> 
+    <!-- contains the figure -->
+  <zone xml:id="B49rW457" box="45 125 60 130"/>
+    <!-- contains the word "pendans" -->
 </surface>
 </facsimile></egXML> 
-Note that we have now also given each zone an identifier. This is, of
-course, so that the corresponding part of the transcribed text may point to the
-relevant zone:
+The alignment between transcription and image is made, as usual, by
+means of the <att>facs</att> attribute:
 <egXML  xmlns="http://www.tei-c.org/ns/Examples">
-<div>...
-<pb facs="#f157r"/>
-<!-- ... -->
-Amen</div>
-<div facs="#f157rPara">
- <head type="rubric" facs="#157rRubr">Domenica post paser</head>
-  <p>
-  <lb facs="#f157rL1"/>
-     <c facs="#f157rCapE">E</c>fter þær hælender blah blah I cant 
-  <lb/>   
-     read this help they only taught me old english in print form
-....</p>
+<pb facs="#B49r"/>
+<fw>De Geometrie 49</fw>
+<head facs="#B49rHead">
+DU SON ET ACCORD DES CLOCHES ET <lb/> des alleures des chevaulx,
+chariotz &amp; charges, des fontaines:&amp; <lb/> encyclie du monde,
+&amp; de la dimension du corps humain.</head>
+<head>Chapitre septiesme</head>
+<div n="1">
+<p>Le son &amp; accord des cloches pendans en ung mesme <lb/> axe, est
+faict en contraires parties.</p>
+<p rend="it" facs="#B49rPara2">LEs cloches ont quasi fi<lb/>gures de rondes
+pyra<lb/>mides imperfaictes &amp; <lb/> irregulieres: &amp; leur
+accord se <lb/> fait par reigle geometrique. Com<lb/>me si les deux
+cloches C &amp; D <lb/> sont <w facs="#B49rW457">pendans</w> à ung
+mesme axe <lb/> ou essieu A B: je dis que leur ac<lb/>cord se fera en
+co<expan>n</expan>traires parties<lb/> co<expan>m</expan>me voyez icy
+figuré. Car qua<expan>n</expan>d <lb/> lune sera en hault, laultre
+declinera embas. Aultrement si elles decli<lb/>nent toutes deux
+ensembles en une mesme partie, elles seront discord, <lb/> &amp; sera
+leur sonnerie mal plaisante à oyr.<figure facs="#B49rFig1"><graphic
+url="Boulles49r-detail.png"/> </figure></p>
 </div>
 </egXML>
 </p>
+<p>Further discussion of the principals underlying the encoding
+choices made in the above transcription are provided in the remainder
+of this chapter. </p>
+
+<p>It is also possible to point in the other direction, from a
+<gi>surface</gi> or <gi>zone</gi> to the corresponding text. This is
+the function of the <att>start</att> attribute, which supplies the
+identifier of the element containing the transcribed text found within
+the surface or zone concerned. Thus, another way of linking this page
+with its transcription would be simply <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+<surface start="#PB49R" >
+  <graphic url="Boulles-49r.gif"/>
+</surface>
+</facsimile>
+<text>
+<!-- ... -->
+<pb xml:id="PB49R"/>
+<fw>De Geometrie 49</fw>
+<!-- ... -->
+</text>
+ </egXML></p>
 
 <p>The elements and classes defined by this section are formally
 defined as follows:
@@ -396,8 +456,7 @@ manuscript hand, etc. (section <ptr target="#PHPH"/>)</item>
 catch-words, and the like (section <ptr target="#PHSK"/>)</item></list></p>
 <p>These recommendations are not intended to meet every
 transcriptional circumstance likely to be faced by any scholar.
-Rather, they should be regarded as a base which can be elaborated if
-necessary by different scholars in different disciplines<!-- , with
+Rather, they should be regarded as a base which can be elaborated if necessary by different scholars in different disciplines<!-- , with
 distinct scholarly domains eventually developing their own document
 types.  In time, the feature structure notation developed in chapter
 <ptr target="#FS"/>, may also permit scholars to tailor the encoding
