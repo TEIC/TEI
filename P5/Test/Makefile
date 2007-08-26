@@ -17,19 +17,20 @@ TESTFILES= \
 	testfs \
 	testglobals \
 	testi18n \
-	testlite \
 	testlangs \
+	testlite \
 	testmav \
 	testminimal \
 	testms \
-	testns \
 	testnames \
+	testns \
+	testoucs \
+	testp4compat \
 	testplace \
 	testspoken \
 	testtagdocs \
-	testoucs \
-	testp4compat \
 	testtite \
+	testtranscr \
 	tripReport \
 	testall 
 
