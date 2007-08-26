@@ -381,9 +381,10 @@ class <ident type="class">att.global</ident>, to which all elements
 belong; for further discussion of attribute classes and ways in which
 attributes may be inherited and over-ridden, see section <ptr target="#STECAT"/>.</note> <specList><specDesc key="att.global" atts="xml:id n xml:lang rend"/></specList>
  </p>
-<p>Some modules (e.g. those for terminology, linking, and analysis)
-define other global attributes; these are documented in the appropriate
-chapters of Part III and Part IV.  See also section <ptr target="#STECAT"/>.
+<p>Some modules (e.g. those for transcription, linking, and analysis)
+define other global attributes; these additional attributes are
+documented along with the module concerned; see also section <ptr
+target="#STECAT"/>.
  </p>
 <p>Any TEI element may be given values for <att>xml:id</att>, <att>n</att>,
 <att>xml:lang</att>, <att>rend</att>, simply by
@@ -838,15 +839,17 @@ classes will not be available unless the module concerned is included
 in a schema. </p>
 
 <p>Note that some modules define classes which are superclasses of a
-globally-defined class (typically <ident type="class">att.global</ident>).  For example, the global attribute
-class <ident type="class">att.divLike</ident> makes attributes
-<att>org</att>, <att>uniform</att>, and <att>sample</att> available,
-while the <ident type="class">att.metrical</ident> class, which is
-specific to the <ident type="module">verse</ident> module, provides
-attributes <att>met</att>, <att>real</att>, and
+globally-defined class<!-- (typically <ident
+type="class">att.global</ident>)-->.  For example, the global
+attribute class <ident type="class">att.divLike</ident> makes
+attributes <att>org</att>, <att>uniform</att>, and <att>sample</att>
+available, while the <ident type="class">att.metrical</ident> class,
+which is specific to the <ident type="module">verse</ident> module,
+provides attributes <att>met</att>, <att>real</att>, and
 <att>rhyme</att>. Because <ident type="class">att.metrical</ident> is
 defined as a superclass of <ident type="class">att.divLike</ident>,
-all six of these attributes are available to <ident type="class">att.metrical</ident> elements; the att.metrical
+all six of these attributes are available to <ident
+type="class">att.metrical</ident> elements; the att.metrical
 declaration adds its three attributes to the three already defined by
 att.divLike when the <ident type="module">verse</ident> module is
 included in a schema. If, however, this module is not included in a
@@ -869,7 +872,7 @@ only the three attributes first mentioned. </p>
 <row><cell>att.duration</cell><cell>provides attributes for normalization of elements that contain temporal durations.</cell><cell>att.duration.w3c  att.duration.iso</cell></row>
 <row><cell>att.duration.w3c</cell><cell>provides attributes for normalization of elements that contain temporal durations.</cell><cell/></row>
 <row><cell>att.editLike</cell><cell>provides attributes describing the nature of a encoded scholarly intervention or interpretation of any kind.</cell><cell/></row>
-<row><cell>att.global</cell><cell>provides a set of attributes common to all elements in the TEI encoding scheme.</cell><cell>att.global.linking  att.global.analytic  </cell></row>
+<row><cell>att.global</cell><cell>provides a set of attributes common to all elements in the TEI encoding scheme.</cell><cell>att.global.linking  att.global.analytic  att.global.facs</cell></row>
 <row><cell>att.internetMedia</cell><cell>provides attributes for specifying the type of a computer resource using a standard taxonomy</cell></row>
 <row><cell>att.interpLike</cell><cell>provides attributes for elements which represent a formal analysis or interpretation.</cell><cell/></row>
 <row><cell>att.measurement</cell><cell>provides attributes to represent a regularized or normalized measurement.</cell><cell/></row>
@@ -1339,6 +1342,7 @@ models; most are relevant only when certain modules are selected
 
 <div type="div3" xml:id="STECSD">
 <head>Structural divisions</head>
+
 <p>The structure of a text body is often divided into sections;
 model classes are provided to specify these:
 
