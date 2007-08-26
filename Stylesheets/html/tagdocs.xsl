@@ -47,10 +47,9 @@
     </xsl:variable>
     <tr>
       <td class="odd_label">
-      <xsl:value-of select="$name"/>
+	<xsl:value-of select="$name"/>
       </td>
       <td class="odd_value">
-
 	<xsl:call-template name="makeDescription"/>
 	<xsl:apply-templates select="valList"/>
       </td>
@@ -79,52 +78,51 @@
 	<xsl:call-template name="makeDescription"/>
 	<table class="attDef">
 	  <tr>
-	  <td class="odd_label">
-	    <xsl:call-template name="i18n">
-	      <xsl:with-param name="word">Status</xsl:with-param>
-	    </xsl:call-template>
-	    <xsl:text> </xsl:text>
-	  </td>
-	  <td class="odd_value">
-        <xsl:choose>
-          <xsl:when test="@usage='mwa'">
-            <xsl:call-template name="i18n">
-              <xsl:with-param name="word">Mandatory when
-              applicable</xsl:with-param>
-            </xsl:call-template>
-          </xsl:when>
-          <xsl:when test="@usage='opt'">
-            <xsl:call-template name="i18n">
-              <xsl:with-param name="word">Optional</xsl:with-param>
-            </xsl:call-template>
-          </xsl:when>
-          <xsl:when test="@usage='rec'">
-            <xsl:call-template name="i18n">
-              <xsl:with-param name="word">Recommended</xsl:with-param>
-            </xsl:call-template>
-          </xsl:when>
-          <xsl:when test="@usage='req'">
-            <b>
-              <xsl:call-template name="i18n">
-                <xsl:with-param name="word">Required</xsl:with-param>
-              </xsl:call-template>
-            </b>
-          </xsl:when>
-          <xsl:when test="@usage='rwa'">
-            <xsl:call-template name="i18n">
-              <xsl:with-param name="word">Required when
-              applicable</xsl:with-param>
-            </xsl:call-template>
-          </xsl:when>
-	  <xsl:otherwise>
-            <xsl:call-template name="i18n">
-              <xsl:with-param name="word">Optional</xsl:with-param>
-            </xsl:call-template>
-	  </xsl:otherwise>
-        </xsl:choose>
-	  </td>
-	  <xsl:apply-templates mode="weave"/>
+	    <td class="odd_label">
+	      <xsl:call-template name="i18n">
+		<xsl:with-param name="word">Status</xsl:with-param>
+	      </xsl:call-template>
+	      <xsl:text> </xsl:text>
+	    </td>
+	    <td class="odd_value">
+	      <xsl:choose>
+		<xsl:when test="@usage='mwa'">
+		  <xsl:call-template name="i18n">
+		    <xsl:with-param name="word">Mandatory when applicable</xsl:with-param>
+		  </xsl:call-template>
+		</xsl:when>
+		<xsl:when test="@usage='opt'">
+		  <xsl:call-template name="i18n">
+		    <xsl:with-param name="word">Optional</xsl:with-param>
+		  </xsl:call-template>
+		</xsl:when>
+		<xsl:when test="@usage='rec'">
+		  <xsl:call-template name="i18n">
+		    <xsl:with-param name="word">Recommended</xsl:with-param>
+		  </xsl:call-template>
+		</xsl:when>
+		<xsl:when test="@usage='req'">
+		  <b>
+		    <xsl:call-template name="i18n">
+		      <xsl:with-param name="word">Required</xsl:with-param>
+		    </xsl:call-template>
+		  </b>
+		</xsl:when>
+		<xsl:when test="@usage='rwa'">
+		  <xsl:call-template name="i18n">
+		    <xsl:with-param name="word">Required when
+		    applicable</xsl:with-param>
+		  </xsl:call-template>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:call-template name="i18n">
+		    <xsl:with-param name="word">Optional</xsl:with-param>
+		  </xsl:call-template>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </td>
 	  </tr>
+	  <xsl:apply-templates mode="weave"/>
 	</table>
       </td>
     </tr>
@@ -185,15 +183,6 @@
 
   </xsl:template>
 
-  <xd:doc>
-    <xd:short>Process elements tei:attDef/tei:remarks</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-
-  <xsl:template match="tei:attDef/tei:remarks" mode="doc" >
-    <xsl:apply-templates/>
-  </xsl:template>
-  
   <xd:doc>
     <xd:short>Process elements tei:attList</xd:short>
     <xd:detail> </xd:detail>
@@ -582,17 +571,17 @@
       </xsl:when>
       <xsl:when test="$atts=''"/>
       <xsl:when test="string-length($atts)&gt;0">
-	
-	<xsl:variable name="HERE" select="."/>
-	<xsl:call-template name="splitAttTokens">
-	  <xsl:with-param name="HERE" select="$HERE"/>
-	  <xsl:with-param name="atts" select="$atts"/>
-	</xsl:call-template>
-
+	<table class="specDesc">
+	  <xsl:variable name="HERE" select="."/>
+	  <xsl:call-template name="splitAttTokens">
+	    <xsl:with-param name="HERE" select="$HERE"/>
+	    <xsl:with-param name="atts" select="$atts"/>
+	  </xsl:call-template>
+	</table>
       </xsl:when>
       <xsl:otherwise>
         <xsl:if test="tei:attList//tei:attDef">
-	<table class="attList">>
+	<table class="attList">
 	  <xsl:apply-templates mode="summary" select="tei:attList//tei:attDef"/>
 	</table>
         </xsl:if>
@@ -683,11 +672,11 @@
   <xsl:template match="tei:exemplum" mode="doc">
     <xsl:choose>
       <xsl:when test="parent::tei:attDef">
-	  <xsl:call-template name="i18n">
-	    <xsl:with-param name="word">Example</xsl:with-param>
-	  </xsl:call-template>
-	  <xsl:text> </xsl:text>
-	<xsl:apply-templates/>
+	<tr>
+	  <td colspan="2">
+	    <xsl:apply-templates/>
+	  </td>
+	</tr>
       </xsl:when>
       <xsl:otherwise>
 	<tr>
@@ -924,9 +913,7 @@
   </xd:doc>
   <xsl:template match="tei:specDesc">
     <li>
-      <table class="specDesc">
-	<xsl:call-template name="processSpecDesc"/>
-      </table>
+      <xsl:call-template name="processSpecDesc"/>
     </li>
   </xsl:template>
   <xd:doc>
@@ -1087,56 +1074,55 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:valList" mode="contents">
-
     <tr>
-      <td class="odd_label">
-    <xsl:choose>
-      <xsl:when test="@type='semi'"><xsl:call-template name="i18n">
-          <xsl:with-param name="word">Suggested values include</xsl:with-param>
-        </xsl:call-template>:</xsl:when>
-      <xsl:when test="@type='open'"><xsl:call-template name="i18n">
-          <xsl:with-param name="word">Sample values include</xsl:with-param>
-        </xsl:call-template>:</xsl:when>
-      <xsl:when test="@type='closed'"><xsl:call-template name="i18n">
-          <xsl:with-param name="word">Legal values are</xsl:with-param>
-        </xsl:call-template>:</xsl:when>
-      <xsl:otherwise>Values are:</xsl:otherwise>
-    </xsl:choose>
-      </td>
-      <td class="odd_value">
-	<table class="valList">
-	  <xsl:for-each select="tei:valItem">
-	    <xsl:variable name="name">
-	      <xsl:choose>
-		<xsl:when test="tei:altIdent">
-		  <xsl:value-of select="tei:altIdent"/>
-		</xsl:when>
-		<xsl:otherwise>
-		  <xsl:value-of select="@ident"/>
-		</xsl:otherwise>
-          </xsl:choose>
-	    </xsl:variable>
-	    <tr>
-	    <td class="odd_label">
-	      <xsl:value-of select="$name"/>
-	    </td>
-	    <td class="odd_value">
-	      <xsl:call-template name="makeDescription"/>
-	      <xsl:if test="@ident=../../tei:defaultVal">
-		<span class="defaultVal">
-		  <xsl:text> [</xsl:text>
-		  <xsl:call-template name="i18n">
-		    <xsl:with-param name="word">Default</xsl:with-param>
-		  </xsl:call-template>
-		  <xsl:text>]</xsl:text>
-		</span>
-	      </xsl:if>
-	    </td>
-	    </tr>
-	  </xsl:for-each>
-	</table>
-      </td>
-    </tr>
+	<td class="odd_label">
+	  <xsl:choose>
+	    <xsl:when test="@type='semi'"><xsl:call-template name="i18n">
+	      <xsl:with-param name="word">Suggested values include</xsl:with-param>
+	    </xsl:call-template>:</xsl:when>
+	    <xsl:when test="@type='open'"><xsl:call-template name="i18n">
+	      <xsl:with-param name="word">Sample values include</xsl:with-param>
+	    </xsl:call-template>:</xsl:when>
+	    <xsl:when test="@type='closed'"><xsl:call-template name="i18n">
+	      <xsl:with-param name="word">Legal values are</xsl:with-param>
+	    </xsl:call-template>:</xsl:when>
+	    <xsl:otherwise>Values are:</xsl:otherwise>
+	  </xsl:choose>
+	</td>
+	<td class="odd_value">
+	  <table class="valList">
+	    <xsl:for-each select="tei:valItem">
+	      <xsl:variable name="name">
+		<xsl:choose>
+		  <xsl:when test="tei:altIdent">
+		    <xsl:value-of select="tei:altIdent"/>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <xsl:value-of select="@ident"/>
+		  </xsl:otherwise>
+		</xsl:choose>
+	      </xsl:variable>
+	      <tr>
+		<td class="odd_label">
+		  <xsl:value-of select="$name"/>
+		</td>
+		<td class="odd_value">
+		  <xsl:call-template name="makeDescription"/>
+		  <xsl:if test="@ident=../../tei:defaultVal">
+		    <span class="defaultVal">
+		      <xsl:text> [</xsl:text>
+		      <xsl:call-template name="i18n">
+			<xsl:with-param name="word">Default</xsl:with-param>
+		      </xsl:call-template>
+		      <xsl:text>]</xsl:text>
+		    </span>
+		  </xsl:if>
+		</td>
+	      </tr>
+	    </xsl:for-each>
+	  </table>
+	</td>
+      </tr>
   </xsl:template>
 
   <xd:doc>

@@ -946,7 +946,7 @@
 	    </xsl:otherwise>
 	  </xsl:choose>
 	  </xsl:attribute>  
-        <p>
+	  <p>
             <xsl:apply-templates/>
           </p>
         </blockquote>
@@ -1011,9 +1011,9 @@
 	  <xsl:call-template name="noteN"/>
 	  <xsl:text>. </xsl:text>
 	</span>
-	<span class="noteBody">
+	<div class="noteBody">
 	  <xsl:apply-templates/>
-	</span>
+	</div>
 	<xsl:if test="$footnoteBackLink= 'true'">
 	  <xsl:text> </xsl:text>
 	  <a class="link_return"
@@ -1052,6 +1052,9 @@
           <xsl:text>div</xsl:text>
         </xsl:when>
         <xsl:when test="parent::tei:p">
+          <xsl:text>div</xsl:text>
+        </xsl:when>
+        <xsl:when test="parent::tei:remarks">
           <xsl:text>div</xsl:text>
         </xsl:when>
         <xsl:otherwise>
@@ -1199,7 +1202,7 @@
           </span>
         </xsl:if>
       </xsl:when>
-      <xsl:when test="parent::tei:p">
+      <xsl:when test="parent::tei:p or parent::tei:note">
 	<div class="blockquote">
 	  <xsl:apply-templates/>
 	</div>
@@ -1585,7 +1588,7 @@
   </xsl:template>
 
   <xsl:template name="printNotes">
-    <xsl:if test="ancestor-or-self::tei:TEI/tei:text/descendant::tei:note[not(@place='inline')]">
+    <xsl:if test="ancestor-or-self::tei:TEI/tei:text/descendant::tei:note[@place='foot' or @place='end']">
       <xsl:choose>
 	<xsl:when test="$footnoteFile='true'">
 	  <xsl:variable name="BaseFile">
@@ -1611,7 +1614,7 @@
               </xsl:call-template>
             </div>
             <xsl:for-each
-              select="descendant::tei:note[not(@place='inline') and
+              select="descendant::tei:note[(@place='foot' or @place='end') and
 	      not(ancestor::tei:div)]">
 	      <xsl:apply-templates mode="printnotes" select="."/>
 	    </xsl:for-each>
@@ -1625,7 +1628,7 @@
               </xsl:call-template>
             </div>
             <xsl:apply-templates mode="printnotes"
-              select="descendant::tei:note[not(@place='inline')]"/>
+              select="descendant::tei:note[@place='foot' or @place='end']"/>
           </div>
         </xsl:otherwise>
       </xsl:choose>
@@ -1989,6 +1992,7 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="rendToClass">
+    <xsl:param name="id">true</xsl:param>
     <xsl:param name="default"/>
     <xsl:choose>
       <xsl:when test="@rend and starts-with(@rend,'class:')">
@@ -2007,16 +2011,18 @@
         </xsl:attribute>
       </xsl:when>
     </xsl:choose>
-    <xsl:choose>
-    <xsl:when test="@id">
-      <xsl:copy-of select="@id"/>
-    </xsl:when>
-    <xsl:when test="@xml:id">
-      <xsl:attribute name="id">
-	<xsl:value-of select="@xml:id"/>
-      </xsl:attribute>
-    </xsl:when>
-    </xsl:choose>
+    <xsl:if test="$id='true'">
+      <xsl:choose>
+	<xsl:when test="@id">
+	  <xsl:copy-of select="@id"/>
+	</xsl:when>
+	<xsl:when test="@xml:id">
+	  <xsl:attribute name="id">
+	    <xsl:value-of select="@xml:id"/>
+	  </xsl:attribute>
+	</xsl:when>
+      </xsl:choose>
+    </xsl:if>
   </xsl:template>
 
   <xd:doc>

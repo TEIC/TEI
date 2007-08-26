@@ -254,7 +254,9 @@
       </xsl:attribute>
       <xsl:call-template name="makeAnchor"/>
       <table>
-        <xsl:call-template name="rendToClass"/>
+        <xsl:call-template name="rendToClass">
+	  <xsl:with-param name="id">false</xsl:with-param>
+	</xsl:call-template>
         <xsl:if test="@rend='frame' or @rend='rules'">
           <xsl:attribute name="rules">all</xsl:attribute>
           <xsl:attribute name="border">1</xsl:attribute>
