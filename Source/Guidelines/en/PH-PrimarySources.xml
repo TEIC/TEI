@@ -1,58 +1,34 @@
-<!--
+[<!--
 Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details.
 $Date$
 $Author$
 -->
-<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="PH" n="18"><head xmlns="http://www.tei-c.org/ns/1.0">Transcription of Primary Sources</head>
+<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="PH" n="18"><head xmlns="http://www.tei-c.org/ns/1.0">Representation of Primary Sources</head>
 
 <p>This chapter defines a module intended for use in the
-transcription of primary sources, in particular manuscripts, and
-describes how some elements defined in the Common Core module should
-be used for this work.  It is expected that this module will also be
-useful in the preparation of critical editions, but the module defined
-here is distinct from that defined in chapter <ptr target="#TC"/>, and
-may be used independently of it.
-</p>
-<p>Scholars may wish to record information concerning individual
-readings of letters, words or larger units, both within transcriptions
-and within editions.  They may also wish to include other editorial
-material within transcriptions, such as comments on the status or
-possible origin of particular readings, corrections, or text supplied to
-fill lacunae.  Further, it is customary in transcriptions to
-register certain features of the source, such as ornamentation,
-underlining, deletion, areas of damage and lacunae. This chapter
-indicates means to record such information:
-<list type="bullets">
-<item>first, the problem of recording editorial or other alterations to
-the text, such as expansion of abbreviations, corrections, conjectures,
-etc. (section <ptr target="#PHCH"/>)</item>
-<item>then, methods of describing important extra-linguistic phenomena
-in the source: unusual spaces, lines, page and line breaks, change of
-manuscript hand, etc. (section <ptr target="#PHPH"/>)</item>
-<item>finally, a method of recording material such as running heads,
-catch-words, and the like (section <ptr target="#PHSK"/>)</item></list></p>
-<p>These recommendations are not intended to meet every
-transcriptional circumstance likely to be faced by any scholar.
-Rather, they should be regarded as a base which can be elaborated if
-necessary by different scholars in different disciplines, with
-distinct scholarly domains eventually developing their own document
-types.  In time, the feature structure notation developed in chapter
-<ptr target="#FS"/>, may also permit scholars to tailor the encoding
-of complex transcriptional information in ways not here anticipated.
+representation of primary sources, in particular manuscripts or other
+unique instances of written materials. Section <ptr target="#FAX"/>
+provides elements for the encoding of digital facsimiles or images of
+such materials, while the remainder of the chapter discusses ways of
+encoding detailed transcriptions of such materials. It is expected
+that this module will also be useful in the preparation of critical
+editions, but the module defined here is distinct from that defined in
+chapter <ptr target="#TC"/>, and may be used independently of
+it. Detailed metadata relating to primary sources of any kind may be
+recorded using the elements defined by the manuscript description
+module discussed in chapter <ptr target="#MS"/>, but again the present
+module may be used independently if such data is not required.
 </p>
 <p>It should be noted that this chapter focuses primarily upon
-problems associated with the transcription of manuscript materials,
+problems associated with manuscript materials,
 and that consequently problems of codicology and other matters peculiar to
 early printed materials are not specifically addressed
 here. Nevertheless, many of the recommendations presented may —
 mutatis mutandis — also be applied in the encoding of printed
-matter. We are conscious that a great deal of work remains to done in
-these areas, and that the encoder will need to take even more
-individual responsibility than usual in applying the recommendations
-of this chapter in such contexts, but believe that these
-recommendations form a good basis for such future work.</p>
+matter or indeed any form of  written source, including
+monumental inscriptions.</p>
 <p>Many of the descriptions below use terms like
 <soCalled>scribe</soCalled>, <soCalled>author</soCalled>,
 <soCalled>editor</soCalled>,
@@ -67,7 +43,371 @@ interpretation of the markup should be adjusted appropriately.
 Many of the elements defined here apply (within limits) also in
 cases of printed materials, so <soCalled>compositor</soCalled>, etc.,
 may also be understood as applying where appropriate.</p>
-<p>As a rule, all elements which may be used in the course of a
+
+
+
+<div xml:id="FAX">
+<head>Digital Facsimiles</head>
+
+<p>These Guidelines are mostly concerned with the preparation of
+digital texts, in which a pre-existing text is transcribed or
+otherwise converted into character form, and marked up in
+XML. However, it is also very common practice to make a different form
+of <soCalled>digital text</soCalled>, which is instead composed of
+digital images of the original source, typically one per page, or
+other written surface. We call such a resource a <term>digital
+facsimile</term>. A digital facsimile may, in the simplest case, just
+consist of a collection of images, with some metadata to identify them
+and the source materials portrayed. It may sometimes contain a
+variety of images of the same source pages, for example of different
+resolutions, or of different kinds. And it may also be complemented by
+a trancribed or encoded version of the original source, which may be
+linked to the page images. In this section we present elements
+designed to support these various possibilities and discuss the
+associated mechanisms provided by these Guidelines.</p>
+
+<p>The following elements are used to represent components of a
+digital facsimile:
+<specList>
+<specDesc key="facsimile"/>
+<specDesc key="surface"/>
+<specDesc key="zone"/>
+</specList>
+</p>
+
+<p>The <gi>facsimile</gi> element is used to represent a digital
+facsimile. It appears within a TEI document along with, or instead of,
+the <gi>text</gi> element introduced in section <ptr
+target="#DS"/>. When this module is selected therefore, a
+legal TEI document may thus comprise any of the following:-
+<list>
+<item>a TEI Header and a text element</item>
+<item>a TEI Header and a facsimile element</item>
+<item>a TEI Header, a facsimile element, and a text element</item>
+</list>
+</p>
+<p>Like the <gi>text</gi> element, a <gi>facsimile</gi> element may
+also contain an optional <gi>front</gi> or <gi>back</gi> element, used
+in the same way as described in sections <ptr target="#DSFRONT"/> and
+<ptr target="#DSBACK"/>. </p>
+  
+<p>In the simplest case, a facsimile just contains a series of
+<gi>graphic</gi> elements, each of which identifies an image file:
+
+<egXML  xmlns="http://www.tei-c.org/ns/Examples">
+<teiHeader>
+  <fileDesc><titleStmt><title>Four pages from ... </title></titleStmt>
+  </fileDesc>
+  <!-- other components of the TEI Header -->
+</teiHeader>
+<facsimile>
+  <graphic url="page1.png"/>
+  <graphic url="page2.png"/>
+  <graphic url="page3.png"/>
+  <graphic url="page4.png"/>
+</facsimile>
+</egXML>
+
+If desired, the <gi>binaryObject</gi> element described in <ptr
+target="#COGR"/> can be used instead of a <gi>graphic</gi></p>
+
+<p>In this simple case, the four page images are understood to
+represent the complete facsimile, and are to be read in the sequence
+given. Suppose, however, that the second page of this particular work
+is available both as an ordinary photograph and as an infra-red
+image. The <gi>surface</gi> element may be used to indicate that there
+are two image files corresponding with the same area of the work:
+
+<egXML  xmlns="http://www.tei-c.org/ns/Examples">
+<facsimile>
+  <graphic url="page1.png"/>
+  <surface>
+   <graphic url="page2.png"/>
+   <graphic url="page2-ir.png"/>
+  </surface>
+  <graphic url="page3.png"/>
+  <graphic url="page4.png"/>
+</facsimile>
+</egXML>
+</p>
+
+<p>When this module is included in a schema, the class
+<ident>att.global</ident> is extended to include a new pointer
+attribute <att>facs</att>. This attribute may be used to associate any
+element in a transcribed text with an image of it, by means of the
+usual pointing mechanism. For example, suppose that the page
+represented by the graphic <ident>page1.png</ident> contains text
+which is encoded as a <gi>div</gi> element in the <gi>text</gi>
+element corresponding with this <gi>facsimile</gi>. We can represent
+the alignment as follows:
+<egXML  xmlns="http://www.tei-c.org/ns/Examples">
+<TEI>
+<teiHeader> ...</teiHeader>
+<facsimile>
+  <graphic xml:id="Page1" url="page1.png"/>
+  <!-- more graphics here -->
+</facsimile>
+<text>
+  <div facs="#Page1">
+    <!-- text contained on page 1 is encoded here -->
+  </div>
+</text>
+</TEI>  
+</egXML>
+</p>
+
+<p>This very simple encoding implies that the images and the
+structural encoding correspond — that is, that all and only the text
+contained by the <gi>div</gi> element is represented in the graphic
+(and vice versa). Of course, in real life this will rarely be the
+case, particularly when the source in question is a printed book or
+codex. For this reason, these Guidelines recommend the use of empty
+milestone elements to delimit the boundary points of the stretches of
+encoded text which correspond with an image. </p>
+
+<p>For example, suppose that page 2 of some source is represented by
+the graphic in <ident>page2.png</ident>, and that this page contains
+the end of chapter one of a novel, and the start of chapter
+two. The simplest way of encoding this would be to use  a
+<gi>pb</gi> milestone tag to indicate where the page changes:
+
+
+<egXML  xmlns="http://www.tei-c.org/ns/Examples">
+<TEI>
+<teiHeader> ...</teiHeader>
+<facsimile>
+  <graphic xml:id="Page2" url="page2.png"/>
+  <!-- more graphics here -->
+</facsimile>
+<text>
+  <div><head>Chapter one</head>
+  <p>.....</p>
+  <p> ...
+    <pb n="234" facs="#Page2"/>
+  </p>
+  </div>
+  <div><head>Chapter two</head>
+  <p>.....</p>
+  <!-- etc -->
+  </div>
+</text>
+</TEI>  
+</egXML>
+</p>
+
+<p>Other milestone elements may be used in the same way. In the
+following example, each image corresponds to a column in a manuscript
+scroll:
+
+<egXML  xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+  <graphic xml:id="col1" url="column1.png"/>
+  <graphic xml:id="col2" url="column2.png"/>
+  <!-- more graphics here -->
+</facsimile>
+<text>
+  <cb n="1" facs="#col1"/>
+  <div>
+  <p>.....</p>
+  <p> ...
+  <cb n="2" facs="#col2"/>
+  </p>
+  </div>
+</text>
+</egXML>
+</p>
+
+<p>If a facsimile contains only one image per page or column (or
+similar unit), and no more complex mapping between text and image is
+envisaged, then it may be preferred to use the <att>facs</att>
+attribute to point directly to the graphic resource itself, rather
+than to a <gi>graphic</gi> or other element within a
+<gi>facsimile</gi>:
+
+<egXML  xmlns="http://www.tei-c.org/ns/Examples">
+<TEI>
+<teiHeader> ...</teiHeader>
+<text>
+  <pb facs="page1.png"/>
+    <!-- text contained on page 1 is encoded here -->
+  <pb facs="page2.png"/>
+    <!-- text contained on page 2 is encoded here -->
+</text>
+</TEI>  
+</egXML>
+
+The value of the 
+<att>facs</att> attribute can be any URI, and may thus indicate
+graphic elements directly without their being included in a
+<gi>facsimile</gi> element:
+
+<egXML  xmlns="http://www.tei-c.org/ns/Examples">
+  <pb facs="http://example.com/myImages/page1.png"/>
+</egXML>
+This approach is not generally recommended, since it does not scale
+well and may lead to interchange problems, but may be found
+appropriate for very simple applications. </p>
+
+<p>In the more general case, an encoder may wish to record arbitrary
+planar co-ordinates of textual elements on any kind of written surface
+and to link such elements with digital facsimile images of
+them. Typical applications include the provision of full text search
+in <soCalled>digital facsimile editions</soCalled>, and ways of
+annotating graphics, for example so as to identify individuals
+appearing in a group portraits and link them to data about the person
+represented. To support such requirements a more complex encoding is
+necessary, for which the elements <gi>surface</gi> and <gi>zone</gi>
+are provided.</p>
+
+
+<p>The <gi>surface</gi> element mentioned above may be used to
+represent any physical surface forming part of the source
+material. This might be a sheet of paper or parchment, a face of a
+monument, a billboard, a scroll, or indeed any two-dimensional
+surface, of any size. The actual dimensions of the object represented
+need not be documented; the <gi>surface</gi> element defines a
+co-ordinate space with its own dimensions.
+</p>
+
+<p>A <gi>surface</gi> may contain one or more <gi>graphic</gi>
+elements, each providing a graphic representation of the same
+co-ordinate space, as already indicated. It may also contain one or
+more <gi>zone</gi> elements, each of which represents a rectangular
+region or <term>bounding box</term> within the planar space
+represented by its parent <gi>surface</gi> element. This provides a
+unit of analysis which may be used to define any rectangular region of
+interest, such as a detail or illustration, or some part of the
+surface which is to be aligned with a particular text element. The
+<att>box</att> attribute is used to supply the co-ordinates of a
+zone. </p>
+
+<p>For example, suppose we have an image of page 157 recto from Ms
+Bodley 340. A single <gi>surface</gi> element is defined for this
+page, and a co-ordinate scale defined for it<note place="foot">A
+co-ordinate scale may be thought of as a grid superimposed on a
+rectangular space. Rectangular areas of the grid are defined as four
+numbers a b c d: the first two identify the grid point which is at the
+upper left corner of the rectangle; the second two give the grid point
+located at the lower right corner of the rectangle. The grid point a b
+is understood to be the point which is located a points from the
+origin along the x (horizontal) axis, and b points from the origin
+along the y (vertical) axis.</note> which is 48 units wide and 96
+units high.  It contains a <gi>graphic</gi> element pointing to the
+image: <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+<surface box="0 0 48 96">
+  <graphic url="bod340_157r.pjg"/>
+</surface>
+</facsimile></egXML>
+Now further suppose that we wish to identify a number of zones within
+this page, for example the four indicated in <ptr
+target="facs-fig1.jpg"/>. One zone surrounds the decorated capital,
+one the rubric, one the first line, and one the whole of the lower
+part of the page. Each of these  will be represented by a
+distinct <gi>zone</gi> element, given within the <gi>surface</gi>
+element already defined, and specified in terms of the same
+co-ordinate system.
+<egXML  xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+<surface box="0 0 48 96">
+  <graphic url="bod340_157r.pjg"/>
+  <zone box="0 2 4 4"/> 
+  <zone box="1 3 4 40"/> 
+  <zone box="2 3 3 40"/> 
+  <zone box="0 0 5 40"/> 
+</surface>
+</facsimile></egXML> 
+Note that the location of each zone is defined
+independently but using the same co-ordinate system, so that they may
+overlap freely.</p>
+<p>Generally, a <gi>zone</gi> element will be empty, as in the above
+example. However, it is also possible to include within it a
+further <gi>graphic</gi> element, if for example a detailed image is
+available. Since all <gi>zone</gi> elements use the same co-ordinate
+system (that defined by their parent <gi>surface</gi>, there is no
+need to demonstrate enclosure of one zone within another by means of
+nesting. To continue the current example, supposing that
+<ident>bod340_157r_ic.png</ident> contains  an
+additional image of the illuminated capital, we might represent the
+fact as follows:
+<egXML  xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+<surface xml:id="f157r" box="0 0 48 96">
+  <graphic url="bod340_157r.jpg"/>
+  <zone xml:id="f157rCapE" box="0 2 4 4">
+    <graphic url="bod340_157r_ic.png"/>
+  </zone>
+  <zone xml:id="f157rRubr" box="1 3 4 40"/> 
+  <zone xml:id="f157rL1" box="2 3 3 40"/> 
+  <zone xml:id="f157rPara" box="0 0 5 40"/> 
+</surface>
+</facsimile></egXML> 
+Note that we have now also given each zone an identifier. This is, of
+course, so that the corresponding part of the transcribed text may point to the
+relevant zone:
+<egXML  xmlns="http://www.tei-c.org/ns/Examples">
+<div>...
+<pb facs="#f157r"/>
+<!-- ... -->
+Amen</div>
+<div facs="#f157rPara">
+ <head type="rubric" facs="#157rRubr">Domenica post paser</head>
+  <p>
+  <lb facs="#f157rL1"/>
+     <c facs="#f157rCapE">E</c>fter þær hælender blah blah I cant 
+  <lb/>   
+     read this help they only taught me old english in print form
+....</p>
+</div>
+</egXML>
+</p>
+
+<p>The elements and classes defined by this section are formally
+defined as follows:
+<specGrp xml:id="DPFACS">
+&facsimile;
+&att.global.facs;
+&surface;
+&att.coordinated;
+&zone;
+&model.resourceLike;
+</specGrp>
+</p>
+
+</div>
+
+
+<div><head>Scope of Transcriptions</head>
+
+<p>When transcribing a primary source, scholars may wish to record
+information concerning individual readings of letters, words or larger
+units, whether the object is simply a <soCalled>neutral</soCalled>
+transcription or a critical edition.  In either case they  may also
+wish to include other editorial material, such
+as comments on the status or possible origin of particular readings,
+corrections, or text supplied to fill lacunae.  Further, it is
+customary in transcriptions to register certain features of the
+source, such as ornamentation, underlining, deletion, areas of damage
+and lacunae. This chapter provides ways of encoding such information:
+<list type="bullets">
+<item>first, the problem of recording editorial or other alterations to
+the text, such as expansion of abbreviations, corrections, conjectures,
+etc. (section <ptr target="#PHCH"/>)</item>
+<item>then, methods of describing important extra-linguistic phenomena
+in the source: unusual spaces, lines, page and line breaks, change of
+manuscript hand, etc. (section <ptr target="#PHPH"/>)</item>
+<item>finally, a method of recording material such as running heads,
+catch-words, and the like (section <ptr target="#PHSK"/>)</item></list></p>
+<p>These recommendations are not intended to meet every
+transcriptional circumstance likely to be faced by any scholar.
+Rather, they should be regarded as a base which can be elaborated if
+necessary by different scholars in different disciplines<!-- , with
+distinct scholarly domains eventually developing their own document
+types.  In time, the feature structure notation developed in chapter
+<ptr target="#FS"/>, may also permit scholars to tailor the encoding
+of complex transcriptional information in ways not here anticipated-->.
+ <!-- We are conscious that a great deal of work remains to done in
+these areas, and that the encoder will need to take even more
+individual responsibility than usual in applying the recommendations
+of this chapter in such contexts, but believe that these
+recommendations form a good basis for such future work.-->
+</p><p>As a rule, all elements which may be used in the course of a
 transcription of a single witness may also be used in a critical
 apparatus, i.e. within the elements proposed in chapter <ptr target="#TC"/>.
 This can generally be achieved by nesting a
@@ -89,6 +429,7 @@ The selection and combination of modules to form a TEI schema is described in
 <ptr target="#STIN"/>.
 </p>
 <p>The module is organized as follows:
+<specGrpRef target="#DPFACS"/>
 <specGrpRef target="#DTCAD"/>
 <specGrpRef target="#DPHCD"/>
 <specGrpRef target="#DPHOM"/>
@@ -106,6 +447,7 @@ for members of the class:
 &editph.cla;
     </module></p>
 -->
+</div>
 <div type="div2" xml:id="PHCH"><head>Altered, Corrected, and Erroneous Texts</head>
 <p>In the detailed transcription of any source, it may prove necessary
 to record various types of actual or potential alteration of the text:
