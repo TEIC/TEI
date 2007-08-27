@@ -148,6 +148,14 @@ Display figures.
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="xrefHook"/>
+
+  <xd:doc class="hook">
+    <xd:short>[html] Hook where HTML can be inserted when making
+     a h1/h2/h3 etc title</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template name="sectionHeadHook"/>
+
   <xd:doc class="i18n">
     <xd:short>[html] Make a copyright claim</xd:short>
     <xd:detail> </xd:detail>

@@ -240,6 +240,7 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:if>
+    <xsl:call-template name="sectionHeadHook"/>
   </xsl:template>
   <xd:doc>
     <xd:short>[common] Making a heading for something, and making sure it has
