@@ -271,7 +271,15 @@ first child <gi>graphic</gi> element of the <gi>surface</gi>. </p>
 <p>A <gi>surface</gi> may  also contain one or more <gi>zone</gi>
 elements, each of which represents a rectangular region or
 <term>bounding box</term> within the co-ordinate space defined by the
-parent <gi>surface</gi> element. This provides a unit of analysis
+parent <gi>surface</gi> element<note place="foot">The co-ordinate space may be
+thought of as a grid superimposed on a rectangular space. Rectangular
+areas of the grid are defined as four numbers a b c d: the first two
+identify the grid point which is at the upper left corner of the
+rectangle; the second two give the grid point located at the lower
+right corner of the rectangle. The grid point a b is understood to be
+the point which is located a points from the origin along the x
+(horizontal) axis, and b points from the origin along the y (vertical)
+axis.</note>. This provides a unit of analysis
 which may be used to define any rectangular region of interest, such
 as a detail or illustration, or some part of the surface which is to
 be aligned with a particular text element. If the image being mapped
@@ -281,31 +289,62 @@ the <gi>surface</gi> element may also need to define a zone of
 interest. The <att>box</att>
 attribute is used to supply the co-ordinates of a zone. </p>
 
-
+<p>For example, consider the following figure <figure><head>Relation
+between page, surface, and zone</head> <graphic
+url="Images/facs-fig-2.png"/></figure> This is an image of a two page
+spread from a manuscript in the Badische Landesbibliothek,
+Karlsruhe. We have no information as to the dimensions of the original object,
+but the  low resolution image displayed here contains 500 pixels
+horizontally and 321 pixels vertically. For convenience, we might map
+each pixel to one cell of the grid defined by the surface element used
+to contain the graphic:
+ <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+<surface xMax="500" yMax="321">
+  <graphic url="http://commons.wikimedia.org/wiki/Image:Handschrift.karlsruhe.blb.jpg"/>
+</surface></facsimile></egXML>
+The mapping need not however be one-to-one; it might be convenient to
+define a more delicate grid, to enable us to address much smaller
+parts of the image. This can be done simply by supplying appropriate
+values for <att>xMax</att> and <att>yMax</att>: setting these to 1000
+and 641 respectively for example would map each pixel to two grid
+points in the co-ordinate space.</p>
+<p>Since this image contains more than one page however, and has not been
+cropped, it might be better to define two distinct surfaces, one for
+each page. In this case, each surface would additionally need to
+specify a bounding box:
+ <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+<surface xMax="500" yMax="321" box="50 20 210 180">
+<!-- left hand page -->
+  <graphic url="http://commons.wikimedia.org/wiki/Image:Handschrift.karlsruhe.blb.jpg"/>
+</surface>
+<surface xMax="500" yMax="321" box="240 25 400 280">
+<!-- right hand page -->
+  <graphic url="http://commons.wikimedia.org/wiki/Image:Handschrift.karlsruhe.blb.jpg"/>
+</surface></facsimile></egXML>
+</p>
+<p>To select parts of each surface, we use a zone element. For
+example, to define the written part of the left hand page:
+ <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+<surface xMax="500" yMax="321" box="50 20 210 180">
+<!-- left hand page -->
+  <graphic url="http://commons.wikimedia.org/wiki/Image:Handschrift.karlsruhe.blb.jpg"/>
+<zone box="90 40 200 225"/>
+</surface>
+</facsimile></egXML>
+</p>
 
 <p>In the following example, we discuss a hypothetical digital edition
 of an early 16th century French work, Charles de Bouelles
 <title>Geometrie Pratique</title>. In this edition, each page has been
 digitized as a separate file: for example, recto page 49 is stored in
-a file called <ident>Boulles-49r.png</ident>. In the
+a file called <ident>Boulles-49r.png</ident>.  In the
 <gi>facsimile</gi> element used to contain the whole set of pages, we
-define a 
-<gi>surface</gi> element  for this page, to which we attach a co-ordinate
-scale running from 0 to 200 in the x (horizontal) axis, and 0 to 300 in
-the y (vertical) axis. <note place="foot">A co-ordinate scale may be
-thought of as a grid superimposed on a rectangular space. Rectangular
-areas of the grid are defined as four numbers a b c d: the first two
-identify the grid point which is at the upper left corner of the
-rectangle; the second two give the grid point located at the lower
-right corner of the rectangle. The grid point a b is understood to be
-the point which is located a points from the origin along the x
-(horizontal) axis, and b points from the origin along the y (vertical)
-axis.</note>  No units need be specified; the relationship between
-this scale and the physical size of the original page is not relevant
-to the encoding. However, in practice, it will usually be convenient
-if the scale is expressed in terms of the pixel resolution of the
-digital image itself.  </p>
-<p>The <gi>surface</gi> element  contains a
+define a <gi>surface</gi> element for this page, to which we attach a
+co-ordinate scale running from 0 to 200 in the x (horizontal) axis,
+and 0 to 300 in the y (vertical) axis.  The <gi>surface</gi> element  contains a
 <gi>graphic</gi> element pointing to the image: <egXML
 xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 <surface xMax="200" yMax="300">
@@ -319,6 +358,7 @@ a  <gi>zone</gi> element, given within the <gi>surface</gi>
 element already defined, and specified in terms of the same
 co-ordinate system. 
 <figure xml:id="facs-fig1">
+  <head>Zones within a surface</head>
   <graphic url="Images/facs-fig1.png"/>
 </figure>
 The following encoding defines each of the four zones identified in
