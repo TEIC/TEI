@@ -26,7 +26,7 @@
         </oneOrMore>
 	<optional>
 	  <attribute name="ns">
-	    <text/>
+	    <data type="anyURI"/>	  
 	  </attribute>
 	</optional>
       </element>
@@ -40,6 +40,11 @@
         <attribute name="name">
           <data type="QName"/>
         </attribute>
+        <optional>
+	  <attribute name="ns">
+	    <data type="anyURI"/>	  
+	  </attribute>
+	</optional>
         <optional>
           <ref name="anyAttDoc"/>
         </optional>
@@ -138,6 +143,14 @@
         <empty/>
       </element>
       <element name="grammar">
+	<optional>
+	  <attribute name="datatypeLibrary">
+	    <data type="anyURI"/>	  
+	  </attribute>
+	</optional>
+	<attribute name="ns">
+          <data type="anyURI"/>	  
+	</attribute>
         <zeroOrMore>
           <ref name="grammarContent"/>
         </zeroOrMore>
@@ -146,18 +159,20 @@
   </define>
 
 <define name="anyDoc">
-      <element>
-       <nsName ns="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-       <zeroOrMore>
-        <choice>
-         <attribute>
-          <anyName/>
-         </attribute>
-         <ref name="anyDoc"/>
-         <text/>
-        </choice>
-       </zeroOrMore>
-      </element>
+  <element>
+    <nsName ns="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+    <optional>
+      <attribute name="ns">
+	<data type="anyURI"/>	  
+      </attribute>
+    </optional>
+    <zeroOrMore>
+      <choice>
+	<ref name="anyDoc"/>
+	<text/>
+      </choice>
+    </zeroOrMore>
+  </element>
 </define>
 
 <define name="anyAttDoc">
@@ -254,6 +269,11 @@
         </optional>
       </element>
       <element name="nsName">
+        <optional>
+	  <attribute name="ns">
+	    <data type="anyURI"/>	  
+	  </attribute>
+	</optional>
         <optional>
           <ref name="exceptNameClass"/>
         </optional>
