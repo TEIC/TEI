@@ -143,7 +143,8 @@
       </xsl:for-each>
     </dl>
   </xsl:template>
-  <xsl:template name="header">
+
+  <xsl:template name="header_for_odd2html">
     <xsl:param name="minimal">false</xsl:param>
     <xsl:param name="toc"/>
     <xsl:variable name="depth">

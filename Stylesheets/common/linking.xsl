@@ -140,8 +140,10 @@
   </xsl:template>
   <xd:doc>
     <xd:short>[common] Making a heading for something</xd:short>
-    <xd:param name="minimal">false</xd:param>
-    <xd:param name="toc">toc</xd:param>
+    <xd:param name="minimal">whether to display headings</xd:param>
+    <xd:param name="toc">whether this is making a TOC entry</xd:param>
+    <xd:param name="display">detail of display (full, simple, plain), ie
+    whether markup is followed</xd:param>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="header">
@@ -240,7 +242,9 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:if>
-    <xsl:call-template name="sectionHeadHook"/>
+    <xsl:if test="$toc=''">
+      <xsl:call-template name="sectionHeadHook"/>
+    </xsl:if>
   </xsl:template>
   <xd:doc>
     <xd:short>[common] Making a heading for something, and making sure it has
