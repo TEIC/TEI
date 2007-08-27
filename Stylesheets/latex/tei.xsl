@@ -14,6 +14,7 @@
   <xsl:include href="namesdates.xsl"/>
   <xsl:include href="tagdocs.xsl"/>
   <xsl:include href="textstructure.xsl"/>
+  <xsl:include href="transcr.xsl"/>
   <xsl:include href="verse.xsl"/>
   <xsl:include href="textcrit.xsl"/>
 
@@ -54,7 +55,7 @@
       </xd:detail>
     <xd:author>See AUTHORS</xd:author>
     <xd:cvsId>$Id$</xd:cvsId>
-    <xd:copyright>2005, TEI Consortium</xd:copyright>
+    <xd:copyright>2007, TEI Consortium</xd:copyright>
   </xd:doc>
   <xsl:variable name="docClass">
     <xsl:choose>

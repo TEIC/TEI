@@ -37,7 +37,7 @@
       </xd:detail>
     <xd:author>See AUTHORS</xd:author>
     <xd:cvsId>$Id$</xd:cvsId>
-    <xd:copyright>2005, TEI Consortium</xd:copyright>
+    <xd:copyright>2007, TEI Consortium</xd:copyright>
   </xd:doc>
   <xsl:output encoding="utf-8" method="xml" doctype-public="-//W3C//DTD XHTML 1.1//EN"/>
   <xsl:param name="outputEncoding">utf-8</xsl:param>

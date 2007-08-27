@@ -25,7 +25,7 @@
       </xd:detail>
     <xd:author>See AUTHORS</xd:author>
     <xd:cvsId>$Id$</xd:cvsId>
-    <xd:copyright>2005, TEI Consortium</xd:copyright>
+    <xd:copyright>2007, TEI Consortium</xd:copyright>
   </xd:doc>
   <xd:doc>
     <xd:short>Process elements  * in inner mode</xd:short>

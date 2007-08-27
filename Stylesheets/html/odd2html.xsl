@@ -37,7 +37,7 @@
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </xd:detail>
     <xd:author>See AUTHORS</xd:author>
     <xd:cvsId>$Id: odd2html.xsl 1994 2007-01-27 20:38:30Z rahtz $</xd:cvsId>
-    <xd:copyright>2005, TEI Consortium</xd:copyright>
+    <xd:copyright>2007, TEI Consortium</xd:copyright>
   </xd:doc>
   <xsl:key match="tei:*" name="NameToID" use="@ident"/>
   <xsl:param name="oddmode">html</xsl:param>

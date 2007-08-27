@@ -26,7 +26,7 @@
       </xd:detail>
     <xd:author>See AUTHORS</xd:author>
     <xd:cvsId>$Id$</xd:cvsId>
-    <xd:copyright>2005, TEI Consortium</xd:copyright>
+    <xd:copyright>2007, TEI Consortium</xd:copyright>
   </xd:doc>
   <xsl:include href="core.xsl"/>
   <xsl:include href="corpus.xsl"/>
@@ -38,6 +38,7 @@
   <xsl:include href="namesdates.xsl"/>
   <xsl:include href="textstructure.xsl"/>
   <xsl:include href="textcrit.xsl"/>
+  <xsl:include href="transcr.xsl"/>
   <xsl:include href="verse.xsl"/>
   <xd:doc type="string">
 Stylesheet constant setting the name of the main output file.
