@@ -59,6 +59,7 @@ document.tooltip.visibility="hidden"
     <map name="facs-{generate-id()}">
       <xsl:for-each select="tei:zone[not(tei:graphic)]">
 	<area 
+	    href="#"
 	    onMouseout="hidetip()"
 	    shape="rect">
 <!-- coords wants left, top, right, bottom -->
@@ -68,15 +69,14 @@ document.tooltip.visibility="hidden"
 	  <xsl:attribute name="onMouseOver">
 	    <xsl:text>showtip(this,event,'</xsl:text>
 	    <xsl:for-each select="key('REFS',concat('#',@xml:id))">
-<xsl:message>looking at <xsl:value-of select="name(.)"/>: 	      <xsl:value-of select="."/></xsl:message>
-	      <xsl:value-of select="."/>
+	      <xsl:value-of select="normalize-space(.)"/>
 	    </xsl:for-each>
 	    <xsl:text>')</xsl:text>
 	  </xsl:attribute>
       </area>
       </xsl:for-each>
     </map>    
-    <img src="{tei:graphic/@url}"  usemap="#facs-{generate-id()}"/>
+    <img width="{@xMax}" height="{@yMax}" src="{tei:graphic/@url}"  usemap="#facs-{generate-id()}"/>
   </xsl:for-each>
 </xsl:template>
 
