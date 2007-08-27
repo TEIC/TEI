@@ -55,8 +55,8 @@ document.tooltip.visibility="hidden"
 ]]></xsl:with-param></xsl:call-template>
 
   <div id="tooltip" style="position:absolute;visibility:hidden"></div>
-  <xsl:for-each select="/tei:TEI/tei:facsimile[last()]/tei:surface">
-    <map name="facs">
+  <xsl:for-each select="/tei:TEI/tei:facsimile[.//tei:zone]/tei:surface">
+    <map name="facs-{generate-id()}">
       <xsl:for-each select="tei:zone[not(tei:graphic)]">
 	<area 
 	    onMouseout="hidetip()"
@@ -68,6 +68,7 @@ document.tooltip.visibility="hidden"
 	  <xsl:attribute name="onMouseOver">
 	    <xsl:text>showtip(this,event,'</xsl:text>
 	    <xsl:for-each select="key('REFS',concat('#',@xml:id))">
+<xsl:message>looking at <xsl:value-of select="name(.)"/>: 	      <xsl:value-of select="."/></xsl:message>
 	      <xsl:value-of select="."/>
 	    </xsl:for-each>
 	    <xsl:text>')</xsl:text>
@@ -75,7 +76,7 @@ document.tooltip.visibility="hidden"
       </area>
       </xsl:for-each>
     </map>    
-    <img src="{tei:graphic/@url}"  usemap="#facs"/>
+    <img src="{tei:graphic/@url}"  usemap="#facs-{generate-id()}"/>
   </xsl:for-each>
 </xsl:template>
 
