@@ -152,169 +152,17 @@
     </script>
   </xsl:template>
 
-
-
-<!-- JC Edit: Add permalinks to H2 need to overwrite the entire
-blasted template for main content  -->
   
-  
-  
-  <xsl:template name="mainFrame">
-    <xsl:param name="currentID"/>
-    <xsl:choose>
-      <xsl:when test="$currentID='current'">
-        <xsl:apply-templates/>
-      </xsl:when>
-      <xsl:when test="$currentID='' and $splitLevel=-1">
-        <xsl:apply-templates/>
-      </xsl:when>
-      <xsl:when test="$currentID='' and $virtualPages='true'">
-        <xsl:apply-templates/>
-      </xsl:when>
-      <xsl:when test="self::teiCorpus.2">
-        <xsl:call-template name="corpusBody"/>
-      </xsl:when>
-      <xsl:when test="$currentID=''">
-        <!-- we need to locate the first interesting object in the file, ie
-          the first grandchild of <text > -->
-        <xsl:for-each
-          select=" descendant-or-self::tei:TEI/tei:text/tei:*[1]/*[1]">
-          <xsl:apply-templates mode="paging" select="."/>
-          <xsl:if test="$autoToc='true'">
-            <xsl:if test="following-sibling::tei:div/tei:head">
-              <xsl:call-template name="contentsHeading"/>
-              <ul class="toc">
-                <xsl:apply-templates mode="maketoc"
-                  select="following-sibling::tei:div">
-                  <xsl:with-param name="forcedepth" select="'0'"/>
-                </xsl:apply-templates>
-              </ul>
-            </xsl:if>
-          </xsl:if>
-        </xsl:for-each>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:choose>
-          <xsl:when test="count(key('IDS',$currentID))&gt;0">
-            <xsl:for-each select="key('IDS',$currentID)">
-  
-              <!-- JC edit: making permalinks add @id to html:h2 and
-                then html:a to point to it.  
-                 -->
-              
-              <h2 id="{$currentID}">
-                <xsl:apply-templates mode="xref" select="."/>  
-                <a href="#{$currentID}" class="permalink" title="Link to this
-                  section"> &#x00B6;</a>
-              </h2>
-              <xsl:call-template name="doDivBody"/>
-              <xsl:if test="$bottomNavigationPanel='true'">
-                <xsl:call-template name="xrefpanel">
-                  <xsl:with-param name="homepage"
-                    select="concat($masterFile,$standardSuffix)"/>
-                  <xsl:with-param name="mode" select="local-name(.)"/>
-                </xsl:call-template>
-              </xsl:if>
-            </xsl:for-each>
-          </xsl:when>
-          <xsl:otherwise>
-            <!-- the passed ID is a pseudo-XPath expression
-              which starts below TEI/tei:text.
-              The real XPath syntax is changed to avoid problems
-            -->
-            <xsl:choose>
-              <xsl:when test="ancestor-or-self::tei:TEI/tei:group/tei:text">
-                <xsl:apply-templates mode="xpath"
-                  select="ancestor-or-self::tei:TEI/tei:group/tei:text">
-                  <xsl:with-param name="xpath" select="$currentID"/>
-                </xsl:apply-templates>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:apply-templates mode="xpath"
-                  select="ancestor-or-self::tei:TEI/tei:text">
-                  <xsl:with-param name="xpath" select="$currentID"/>
-                </xsl:apply-templates>
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:otherwise>
-    </xsl:choose>
-    
-    <xsl:call-template name="partialFootNotes">
-      <xsl:with-param name="currentID" select="$currentID"/>
-    </xsl:call-template>
-    
-    <xsl:call-template name="stdfooter"/>
-  </xsl:template>
-  
-  
-  <!-- JC edit: Making permalinks at lower div levels-->
-  <xsl:template name="doDivBody">
-    <xsl:param name="Type"/>
-    <xsl:call-template name="startDivHook"/>
+  <xsl:template name="sectionHeadHook">
     <xsl:variable name="ident">
-      <xsl:apply-templates mode="ident" select="."/>
+          <xsl:apply-templates mode="ident" select="."/>
     </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="parent::tei:div/@rend='multicol'">
-        <td valign="top">
-          <xsl:if test="not($Type = '')">
-            <xsl:element name="h{$Type + $divOffset}">
-              <xsl:if test="$xhtml='false'">
-                <a name="{$ident}"/>
-              </xsl:if>
-              <xsl:call-template name="header">
-                <xsl:with-param name="display">full</xsl:with-param>
-              </xsl:call-template>
-            </xsl:element>
-          </xsl:if>
-          <xsl:apply-templates/>
-        </td>
-      </xsl:when>
-      <xsl:when test="@rend='multicol'">
-        <xsl:apply-templates select="*[not(local-name(.)='div')]"/>
-        <table>
-          <tr>
-            <xsl:apply-templates select="tei:div"/>
-          </tr>
-        </table>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:if test="not($Type = '')">
-          <xsl:element name="h{$Type + $divOffset}">
-            <!-- JC Edit: adding id attribute -->
-            <xsl:attribute name="id" ><xsl:value-of select="$ident"/></xsl:attribute>
-            <xsl:if test="$xhtml='false'">
-              <a name="{$ident}"/>
-            </xsl:if>
-            <xsl:call-template name="header">
-              <xsl:with-param name="display">full</xsl:with-param>
-            </xsl:call-template>
-            <!-- JC Edit: adding in permalink -->
-            <a href="#{$ident}" class="permalink" title="Link to this
-              section"> &#x00B6;</a>
-          </xsl:element>
-        </xsl:if>
-        <xsl:apply-templates/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
-  
-       
+    <a href="#{$ident}" 
+       class="permalink" 
+       title="Link to this section"> &#x00B6;</a>
+  </xsl:template>  
+   
+    
 
 </xsl:stylesheet>
 
