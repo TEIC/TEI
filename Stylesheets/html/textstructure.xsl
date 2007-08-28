@@ -58,6 +58,7 @@
           test="not(preceding-sibling::tei:*) or preceding-sibling::tei:titlePage">
           <h2>
             <xsl:apply-templates mode="xref" select="."/>
+	    <xsl:call-template name="sectionHeadHook"/>
           </h2>
           <xsl:call-template name="doDivBody"/>
           <xsl:if test="$bottomNavigationPanel='true'">
@@ -306,6 +307,7 @@ $ID: requests a particular page
             test="starts-with(local-name(),'div') and      $pageLayout='Table'      or      $pageLayout='CSS'">
             <h2>
               <xsl:apply-templates mode="xref" select="."/>
+	      <xsl:call-template name="sectionHeadHook"/>
             </h2>
             <xsl:call-template name="doDivBody"/>
             <xsl:if test="$bottomNavigationPanel='true'">
@@ -338,6 +340,7 @@ $ID: requests a particular page
 		</div>
                 <h2>
                   <xsl:apply-templates mode="xref" select="."/>
+		  <xsl:call-template name="sectionHeadHook"/>
                 </h2>
                 <xsl:apply-templates/>
                 <xsl:call-template name="printNotes"/>
@@ -531,6 +534,7 @@ $ID: requests a particular page
       <xsl:call-template name="header">
 	<xsl:with-param name="display">full</xsl:with-param>
       </xsl:call-template>
+      <xsl:call-template name="sectionHeadHook"/>
     </xsl:element>
     <xsl:apply-templates/>
   </xsl:template>
@@ -896,6 +900,7 @@ $ID: requests a particular page
               <xsl:call-template name="header">
 		<xsl:with-param name="display">full</xsl:with-param>
 	      </xsl:call-template>
+	      <xsl:call-template name="sectionHeadHook"/>
             </xsl:element>
           </xsl:if>
           <xsl:apply-templates select="tei:text/tei:body"/>
@@ -917,6 +922,7 @@ $ID: requests a particular page
             <xsl:call-template name="header">
 	      <xsl:with-param name="display">full</xsl:with-param>
 	    </xsl:call-template>
+	    <xsl:call-template name="sectionHeadHook"/>
           </xsl:element>
         </xsl:if>
         <xsl:apply-templates select="tei:text/tei:body"/>
@@ -945,6 +951,7 @@ $ID: requests a particular page
               <xsl:call-template name="header">
 		<xsl:with-param name="display">full</xsl:with-param>
 	      </xsl:call-template>
+	      <xsl:call-template name="sectionHeadHook"/>
             </xsl:element>
           </xsl:if>
           <xsl:apply-templates/>
@@ -967,6 +974,7 @@ $ID: requests a particular page
             <xsl:call-template name="header">
 	      <xsl:with-param name="display">full</xsl:with-param>
 	    </xsl:call-template>
+	    <xsl:call-template name="sectionHeadHook"/>
           </xsl:element>
         </xsl:if>
         <xsl:apply-templates/>
@@ -1473,6 +1481,7 @@ $ID: requests a particular page
             <xsl:for-each select="key('IDS',$currentID)">
               <h2>
                 <xsl:apply-templates mode="xref" select="."/>
+		<xsl:call-template name="sectionHeadHook"/>
               </h2>
               <xsl:call-template name="doDivBody"/>
               <xsl:if test="$bottomNavigationPanel='true'">

@@ -242,9 +242,6 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:if>
-    <xsl:if test="$toc=''">
-      <xsl:call-template name="sectionHeadHook"/>
-    </xsl:if>
   </xsl:template>
   <xd:doc>
     <xd:short>[common] Making a heading for something, and making sure it has
