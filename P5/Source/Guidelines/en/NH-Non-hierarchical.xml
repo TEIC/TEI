@@ -355,13 +355,8 @@ Here the example is encoded using paired segment boundary
       TEI <gi>l</gi> element is used, only without content so that it functions
       not as a container for the metrical line, but just as an indication of the
       start and end of the metrical line. This is possible because each element
-      which allows text content (also called mixed content), i.e. all elements
-      which can be affected by overlap, can also have no content at all.<note>
-        This holds when using XML DTDs as a document grammar, or when using
-          the TEI schemas. It is possible to write schemas in other languages
-          (notably RELAX NG and W3C Schema) for which an element that has text
-          content may not be empty.
-      </note> Therefore all relevant elements can be used as empty segment
+      which allows text content (also called mixed content) in the TEI scheme, i.e. all elements
+      which can be affected by overlap, can also have no content at all.<note place="foot">Using RELAX NG or the W3C Schema language it is possible to declare that an element may contain text content but must not be empty, however the TEI currently has no such elements.</note> Therefore all relevant elements can be used as empty segment
       boundary delimiter elements. However, it is still necessary to use an
       attribute to indicate whether a segment boundary delimiter element is a
       start-boundary or an end-boundary. Furthermore, when using the same
@@ -377,11 +372,9 @@ Here the example is encoded using paired segment boundary
           or start-tag is, by co-reference; i.e. the element whose
           <att>sID</att> value matches the current element's <att>eID</att>
           value is its start-tag</item>
-      </list>. <note>
-        This method has been introduced in the markup literature under
+      </list>. <note place="foot">This method has been introduced in the markup literature under
           various names, e.g. Trojan milestones, HORSE markup, and CLIX. It has
-          been described in detail by DeRose (2004).
-      </note>
+          been described in detail by DeRose (2004).</note>
     </p>
     <p>Besides the already mentioned non-need to introduce new, somehow
       artificial elements, this special use of empty elements has the advantage
@@ -415,7 +408,7 @@ run<phr eID="phraseB"/><phr eID="phrase02"/>]]></eg></p>
     <p>The information contained in the attribute names <att>sID</att> and
         <att>eID</att> is included implicitly: the first element of a matching
       pair is the start element, the other empty element plays the role of a
-      closing element.<note>
+      closing element.<note place="foot">
         However, the use of the <att>sID</att> and <att>eID</att> attributes
           allow for some kind of validation, e.g. it can be prohibited that
           empty elements used as an end-tag have attributes normally given with
@@ -431,7 +424,7 @@ run<phr eID="phraseB"/><phr eID="phrase02"/>]]></eg></p>
       This makes it impossible for standard validation software to provide the
       same kind of validation possible elsewhere in the encoding. When using
       grammar based schema languages it is not possible to define a content
-      model for the range limited by empty elements.<note>
+      model for the range limited by empty elements.<note place="foot">
         Grammar based schema languages (e.g. DTD, W3C Schema, and
 	RELAX NG)
           are used to define markup languages (e.g. XHTML or TEI). Rule-based
