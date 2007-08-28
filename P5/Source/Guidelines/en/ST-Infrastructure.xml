@@ -7,25 +7,32 @@ $Author$
 -->
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="ST" n="3">
 
-<head>The TEI infrastructure</head>
+<head>The TEI Infrastructure</head>
 
 <p>This chapter describes the infrastructure for the encoding scheme
 defined by these Guidelines.  It introduces the conceptual framework
 within which the following chapters are to be understood, and
-describes the technical means by which that conceptual framework is
+introduces the means by which that conceptual framework is
 implemented.  It assumes some familiarity with XML and XML schemas
 (see chapter <ptr target="#SG"/>) but is intended to be accessible to
-any user of these Guidelines. </p>
+any user of these Guidelines. Other chapters supply further technical
+details, in particular chapter <ptr target="#TD"/> which describes the
+XML schema used to express the Guidelines themselves, and chapter <ptr
+target="#USE"/> which combines a discussion of modification and
+conformance issues with a description of the intended behaviour of an
+ODD processor; these chapters should be read by anyone intending to
+implement a new TEI-based system. </p>
 
 <p>The TEI encoding scheme consists of a number of
 <term>modules</term>, each of which declares particular XML elements
 and their attributes. Part of an element's declaration includes its
-assignment to one or more element <term>classes</term>. Modules, and
-their contents, may be combined more or less freely to form a
-<term>schema</term> appropriate to a particular set of
-requirements. It is also possible to add new elements which reference
-existing classes or elements to a schema, as it is to remove existing
-elements from a schema.
+assignment to one or more element <term>classes</term>. This
+indirection gives the TEI system much of its strength and its
+flexibility. Modules, and their contents, may be combined more or less
+freely to form a <term>schema</term> appropriate to a particular set
+of requirements. It is also easy to add new elements which
+reference existing classes or elements to a schema, as it is to remove
+existing elements from a schema.
 	</p>
 
 <p>In principle, a TEI schema may be constructed using any combination
@@ -36,11 +43,12 @@ chapter is of this kind because it defines classes, macros, and
 datatypes which are used by all other modules. The <ident
 type="module">core</ident> module, defined in chapter <ptr
 target="#CO"/> contains declarations for elements and attributes which
-are likely to be needed in almost any kind of documents, and is
+are likely to be needed in almost any kind of document, and is
 therefore recommended for global use. The <ident
 type="module">header</ident> module defined in chapter <ptr
-target="#HD"/> provides declarations for metadata elements and
-attributes required for TEI conformance, while the <ident
+target="#HD"/> provides declarations for the metadata elements and
+attributes constituting the TEI Header, a component which is required
+for TEI conformance, while the <ident
 type="module">textstructure</ident> module defined in chapter <ptr
 target="#DS"/> declares basic structural elements needed for the
 encoding of almost any text-like object. Most schemas will therefore
@@ -53,12 +61,18 @@ refer to such a document informally as an <term>ODD</term> document,
 from the abbreviation <q>One Document Does it all</q>. Stylesheets for
 maintaining and processing ODD documents are maintained by the TEI,
 and these Guidelines are also maintained as an ODD. As further
-discussed in <ptr target="#IM"/>, an ODD document
-can be processed to generate a schema expressed using any of the three
-schema languages currently in wide use: the XML DTD language, the ISO
-RELAXNG language, or the W3C Schema language. </p>
+discussed in <ptr target="#IM"/>, an ODD document can be processed to
+generate a schema expressed using any of the three schema languages
+currently in wide use: the XML DTD language, the ISO RELAXNG language,
+or the W3C Schema language. </p>
 
-<p>This chapter begins by briefly characterizing each of the modules
+<p>The bulk of this chapter describes the TEI infrastructure module
+itself. Although it may be skipped at a first reading, an
+understanding of the topics addressed here is essential for anyone
+planning to take full advantage of the TEI customization techniques
+described in chapter <ptr target="#MD"/>. </p>
+
+<p>The chapter begins by briefly characterizing each of the modules
 available in the TEI scheme. Section <ptr target="#STIN" type="div2"/>
 describes in general terms the method of constructing  a TEI schema
 in a specific schema language such as XML DTD language, RELAX NG, or
@@ -68,14 +82,9 @@ W3C Schema. </p>
 every element  in the encoding scheme, are discussed in section 
 <ptr target="#STGA" type="div2"/>.</p>
 
-<p>The bulk of the chapter describes the TEI infrastructure
-module itself. Although it may be skipped at a first reading, an
-understanding of the topics addressed here is essential for anyone
-planning to take full advantage of the TEI customization techniques
-described in chapter <ptr target="#MD"/>. </p>
 
-<p>In particular, the infrastructure module provides the following
-components of the TEI encoding scheme:
+<p>The next and largest part of the chapter introduces the three
+fundamental components of the TEI infrastructure:
 <list>
 <item>declarations for all 
 <term>element classes</term> used to define groups of elements and
@@ -86,23 +95,17 @@ range of legal values for TEI attributes (section <ptr target="#DTYPES"/>)</item
 commonly used content models (section <ptr target="#STmacros"/>)</item>
 </list>
 </p>
-
-<p>Finally, in section <ptr target="#STPE"/>, the chapter describes
-the implementation methods used to generate TEI conformant schema
-fragments, in particular for XML DTDs. </p>
-
+<!-- STPE is now a part of IM -->
 
 <div type="div2" xml:id="STMA"><head>TEI modules</head>
 
-<p>These Guidelines define a large number of elements and attributes
-for marking up documents of any kind. Each definition combines a prose
+<p>These Guidelines define several hundred elements and attributes for
+marking up documents of any kind. Each definition combines a prose
 description, provided within a chapter of the Guidelines and in the
 reference lists, with a formal declaration, expressed for reference by
 means of the ISO schema language RELAX NG. For convenience, each
-element is assigned to a single module: the declaration file for each
-module thus contains a set of related element declarations, typically
-for use in some specific application area, or to support a particular
-kind of usage.
+element is assigned to a single module, typically for use in some
+specific application area, or to support a particular kind of usage.
  </p>
 
 <p>Corresponding with each module, the TEI provides a <term>schema
@@ -111,23 +114,23 @@ schema is made by combining these fragments, each of which contains
 sets of declarations, as further described in section <ptr
 target="#STIN"/> below. </p>
 
-<p>For RELAX NG and W3C each module generates a single schema
-fragment with the same name as the module. For XML DTD fragments,
-however, some  modules generates two fragments: for example
-the <ident type="module">analysis</ident> module generates fragments
-called <ident type="schemafrag">analysis-decl</ident> and <ident type="schemafrag">analysis</ident>. This is because the declarations
-they contain are needed at different points in the creation of
-an XML DTD. The fragment suffixed <ident>-decls</ident> will
-typically contain additional class or macro declarations that
-complement those provided by the present chapter; for technical
-reasons, these must be available separately from the additional
-element and attribute declarations contained by the main fragment.  </p>
+<p>For RELAX NG and W3C each module generates a single schema fragment
+with the same name as the module. For XML DTD fragments, however, some
+modules generates two fragments: for example the <ident
+type="module">analysis</ident> module generates fragments called
+<ident type="schemafrag">analysis-decl</ident> and <ident
+type="schemafrag">analysis</ident>. This is because the declarations
+they contain are needed at different points in the creation of an XML
+DTD. The fragment suffixed <ident>-decls</ident> will typically
+contain additional class or macro declarations that complement those
+provided by the present chapter; for technical reasons, these must be
+available separately from the additional element and attribute
+declarations contained by the main fragment.  </p>
+
 <p>The following table lists the modules defined by the
 current release of the Guidelines:
 
 <!-- table can be re-autogenerated from modules.xsl LB 20-xii-05 -->
-
-
 
 <table xml:id="tab-mods">
 <row role="label">
@@ -161,6 +164,8 @@ current release of the Guidelines:
 </table>
 
 </p></div>
+
+<!-- prose check to here LB 28 aug -->
 
 <div type="div2" xml:id="STIN"><head>Defining a TEI schema</head>
 
@@ -1198,6 +1203,7 @@ these classes refer only to elements:
 &model.global.edit;
 
 &model.divPart;
+&model.stageLike;
 &model.blockLike;
 &model.pLike; 
 
