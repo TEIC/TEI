@@ -60,7 +60,10 @@ facsimile</term>. A digital facsimile may, in the simplest case, just
 consist of a collection of images, with some metadata to identify them
 and the source materials portrayed. It may sometimes contain a
 variety of images of the same source pages, for example of different
-resolutions, or of different kinds. And it may also be complemented by
+resolutions, or of different kinds. Such a collection may form part of
+any kind of document, for example a commentary of a codicological or
+paeleographic nature, where there is a need to align explanatory text
+with image data. And it may also be complemented by
 a trancribed or encoded version of the original source, which may be
 linked to the page images. In this section we present elements
 designed to support these various possibilities and discuss the
@@ -104,7 +107,9 @@ in the same way as described in sections <ptr target="#DSFRONT"/> and
 </egXML>
 
 If desired, the <gi>binaryObject</gi> element described in <ptr
-target="#COGR"/> can be used instead of a <gi>graphic</gi></p>
+target="#COGR"/> (or any other element from the
+<ident>model.graphicLike</ident> class) can be used instead of a
+<gi>graphic</gi></p>
 
 <p>In this simple case, the four page images are understood to
 represent the complete facsimile, and are to be read in the sequence
@@ -125,7 +130,10 @@ same area of the work:
   <graphic url="page4.png"/>
 </facsimile>
 </egXML>
-</p>
+
+Note that the two images for page two here should represent exactly
+the same area of the written surface: if this is not the case, other
+markup described below, would be necessary. </p>
 
 <p>When this module is included in a schema, the class
 <ident>att.global</ident> is extended to include a new pointer
@@ -255,7 +263,7 @@ are provided.</p>
 <p>The <gi>surface</gi> element mentioned above may be used to
 represent any physical surface forming part of the source
 material. This might be a sheet of paper or parchment, a face of a
-monument, a billboard, a scroll, or indeed any two-dimensional
+monument, a billboard, a membrane of a scroll, or indeed any two-dimensional
 surface, of any size. The actual dimensions of the object represented
 are not documented by the <gi>surface</gi> element; it defines a
 co-ordinate space with its own dimensions.
@@ -289,7 +297,11 @@ represents something outside the written part of the surface (for
 example a binding or the surface of a desk on which the page rests),
 the <gi>surface</gi> element may also need to define a zone of
 interest. The <att>box</att>
-attribute is used to supply the co-ordinates of a zone. </p>
+attribute is used to supply the co-ordinates of a zone. Note that this
+mechanism does not provide any way of addressing a non-rectangular
+area; if this is needed, the more powerful mechanisms provided by the
+Standard Vector Graphics language should be used to define an
+overlay, as further discussed in <ptr target="#SACXSA"/>. </p>
 
 <p>For example, consider the following figure <figure><head>Relation
 between page, surface, and zone</head> <graphic
@@ -340,14 +352,17 @@ xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 
 <p>In the following example, we discuss a hypothetical digital edition
 of an early 16th century French work, Charles de Bouelles
-<title>Geometrie Pratique</title>. In this edition, each page has been
-digitized as a separate file: for example, recto page 49 is stored in
-a file called <ident>Boulles-49r.png</ident>.  In the
+<title>Geometrie Pratique</title><note place="foot">The image is taken
+from the collection at <ptr
+target="http://ancilla.unice.fr/Illustr.html"/>, digitized from a copy
+in the Bibliothèque Municipale de Lyon</note>. In this edition, each
+page has been digitized as a separate file: for example, recto page 49
+is stored in a file called <ident>Boulles-49r.png</ident>.  In the
 <gi>facsimile</gi> element used to contain the whole set of pages, we
 define a <gi>surface</gi> element for this page, to which we attach a
 co-ordinate scale running from 0 to 200 in the x (horizontal) axis,
-and 0 to 300 in the y (vertical) axis.  The <gi>surface</gi> element  contains a
-<gi>graphic</gi> element pointing to the image: <egXML
+and 0 to 300 in the y (vertical) axis.  The <gi>surface</gi> element
+contains a <gi>graphic</gi> element pointing to the image: <egXML
 xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 <surface xMax="200" yMax="300">
   <graphic url="Boulles-49r.png"/>
@@ -382,7 +397,7 @@ xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 Note that the location of each zone is defined
 independently but using the same co-ordinate system, so that they may
 overlap freely. Zones need not  nest within each other; they must
-however be rectangular.</p>
+however be rectangular, as previously noted.</p>
 <p>Generally, a <gi>zone</gi> element will be empty, as in the above
 example. However, it is also possible to include within it a
 further <gi>graphic</gi> element, if for example a detailed image is
@@ -560,31 +575,36 @@ for members of the class:
 <div type="div2" xml:id="PHCH"><head>Altered, Corrected, and Erroneous Texts</head>
 <p>In the detailed transcription of any source, it may prove necessary
 to record various types of actual or potential alteration of the text:
-expansion of abbreviations, correction of the text (either by author, 
-scribe, or later hand, or by previous or current editors or scholars), addition, deletion, or
-substitution of material, and the like.  The sections below describe how
-such phenomena may be encoded using either elements defined in the core
-module (defined in chapter <ptr target="#CO"/>) or specialized elements
-available only when the module described in this chapter is
-available.</p>
+expansion of abbreviations, correction of the text (either by author,
+scribe, or later hand, or by previous or current editors or scholars),
+addition, deletion, or substitution of material, and the like.  The
+sections below describe how such phenomena may be encoded using either
+elements defined in the core module (defined in chapter <ptr
+target="#CO"/>) or specialized elements available only when the module
+described in this chapter is available.</p>
 <!-- add and del for things added and removed
      supplied by later editor  (add suppress, or use gap) -> ed for
      emendation in general (DO, MD, LB to discuss) -->
 
-<div type="div3" xml:id="PHCO"><head>Use of Core Tags for Transcriptional Work</head>
+<div type="div3" xml:id="PHCO">
+<head>Core elements for Transcriptional Work</head>
 <p>In transcribing individual sources 
-of any type, encoders may record their corrections, normalizations,
+of any type, encoders may record corrections, normalizations,
 expansions of abbreviations, additions, and omissions
 using the elements described in section <ptr target="#COED"/>.
 Those particularly relevant to this chapter include:
-<specList><specDesc key="abbr"/><specDesc key="expan"/><specDesc key="sic"/><specDesc key="corr"/><specDesc key="add"/><specDesc key="del"/><specDesc key="hi"/><specDesc key="gap"/></specList>
+<specList><specDesc key="abbr"/><specDesc key="expan"/><specDesc
+key="sic"/><specDesc key="corr"/><specDesc key="add"/><specDesc
+key="del"/><specDesc key="hi"/><specDesc key="gap"/><specDesc key="choice"/></specList>
 	</p>
-
-<p>When the module for transcription of primary sources is selected,
-these elements all gain two specialized attributes for specifying who
-is responsible for certain aspects of the interpretation and markup,
-and the certainty attributed to the interpretation:
-<specList><specDesc key="model.pPart.edit"/></specList>
+<p>Several of these elements bear additional attributes for specifying who
+is responsible for the  interpretation represented by the markup,
+and the certainty associated with it. In addition, some
+of them bear an attribute allowing the markup to be categorised by
+type. 
+<specList><specDesc key="att.editLike" />
+    <specDesc key="att.typed"/>
+</specList>
 The specific aspect of the markup described by these attributes differs
 on different elements; for further discussion, see the relevant sections
 below, especially section <ptr target="#PHHR"/>.</p>
@@ -595,7 +615,9 @@ elements are given, and of their extension by linkage with the
 <gi>note</gi>, <gi>respons</gi>, and <gi>certainty</gi> elements. Where the
 core elements do not satisfy the needs of scholarly transcription,
 additional elements are defined.</p></div>
+
 <div type="div3" xml:id="PHAB"><head>Abbreviation and Expansion</head>
+
 <p>The writing of manuscripts by hand lends itself to the use of
 abbreviation to shorten scribal labour. Commonly occurring letters,
 groups of letters, words or even whole phrases, may be represented by
@@ -609,7 +631,16 @@ page: thus, a <q>p with a bar through the descender</q>, a
 <q>superscript hook</q>, a <q>macron</q>. One may also interpret the
 abbreviation in terms of the letter or letters it is seen as standing
 for: thus, <q>per</q>, <q>re</q>, <q>n</q>. Both of these views are
-supported by these Guidelines. The entity reference system allows the
+supported by these Guidelines. </p>
+<p>In many cases the glyph found in the manuscript source also exists
+in the Unicode character set: for example <!-- ? -->. In cases where
+it does not, these Guidelines recommend use of the <gi>g</gi> element
+provided by the <ident type="module">gaiji</ident> module described in
+chapter <ptr target="#WD"/>. This module allows the encoder great
+flexibility both in processing and in documenting non-standard
+characters or glyphs, including the ability to provide detailed
+documentation and images for them.
+<!--The entity reference system allows the
 encoder to declare whatever entities are needed, using entity names
 like <ident type="ge">p-underbar</ident>, <ident type="ge">sup-hook</ident>, or <ident type="ge">macron</ident>.
 Furthermore, each entity reference may be linked to an image of the
@@ -618,44 +649,70 @@ text's appearance. Alternatively, the encoder may transcribe the
 letter or letters he or she believes the abbreviation stands for, as
 the content of an <gi>expan</gi> element: thus
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><expan>per</expan> <expan>re</expan> <expan>n</expan></egXML>
+-->
+
 </p>
 <p>These two methods of coding abbreviation may also be combined. An
 encoder may record, for any abbreviation, both the sequence of letters
 or marks which constitutes it, and its sense, that is, the letter or
 letters for which it is believed to stand. For example, the
-abbreviations of <mentioned>euery persone</mentioned> in the following
+in the following
 fragment<note place="foot">From <bibl><title level="a">The Manere of
 Good Lyuynge</title>, fol 126v of Bodleian MS Laud Misc. 517, plate
 8(ii) in <title>English Cursive Book Hands 1250–1500</title> by
-M. B. Parkes (Clarendon Press: Oxford, 1969)</bibl>.</note> may be
-expanded in transcription:  
-<eg><![CDATA[eu<expan>er</expan>y
-<expan>per</expan>sone that
-loketh after heuen hath a place in this ladder]]></eg>
-Alternatively, the encoding may represent only the fact of abbreviation:
-<eg><![CDATA[eu<abbr>&er;</abbr>y
-<abbr >&p-underbar;</abbr>sone that
-loketh after heuen hath a place in this ladder]]></eg></p>
-<!-- removed resp="#mp" as not relevant for now LB -->
-<p>The choice between the <gi>expan</gi> and <gi>abbr</gi>
-elements is left to the encoder. As a rule, the <gi>abbr</gi> element
-should be preferred where it is wished to signify that the content of
-the element is an abbreviation, without necessarily indicating what the
-abbreviation may stand for. The <gi>expan</gi> element should be used
-where it is wished to signify that the content of the element is an
-expanded text, without necessarily indicating the abbreviation used in
-the original. The decision as to which (<gi>abbr</gi> or
-<gi>expan</gi>) to use may vary from abbreviation to abbreviation; there
-is no requirement that the one system be used throughout a
-transcription. However, processing may be simplified if one only of
-these is used throughout a transcription. The choice is likely to be a
-matter of editorial policy, which might be applied consistently
-throughout. If the highest priority is to transcribe the text
-literatim, while indicating the presence of abbreviations, the choice
-will be to use <gi>abbr</gi> throughout. If the highest priority is to
-present a reading transcription, while indicating that some letters or
-words are expansions of abbreviations, the choice will be to use
-<gi>expan</gi> throughout.</p>
+M. B. Parkes (Clarendon Press: Oxford, 1969)</bibl>.</note>, the
+phrase <mentioned>euery persone</mentioned> is represented by a
+sequence of characters which may be transcribed directly, using the
+<gi>g</gi> element to indicate the two brevigraphs it contains as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">eu<g ref="#er"/>y
+<g ref="#per"/>sone that
+loketh after heuen hath a place in this ladder</egXML>
+The transcriber may also wish to indicate that these particular characters
+are abbreviations, by using the <gi>abbr</gi> element:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">eu<abbr><g ref="#er"/></abbr>y
+<abbr><g ref="#per"/></abbr>sone ... </egXML>
+Alternatively, the transcriber may choose silently to expand these
+abbreviations, using the <gi>expan</gi> element:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><expan>euery</expan>
+<expan>persone</expan> ... </egXML>
+</p>
+<p>When the module defined by this chapter is in use, the special
+purpose <gi>ex</gi> (for editorial expansion)
+element is available to mark those parts of an expansion which are
+editorially supplied, where this can be determined.
+<specList>
+<specDesc key="ex"/></specList>
+Using this element,
+a transcriber may choose simply to supply the letters
+which the brevigraphs represent:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">eu<ex>er</ex>y
+<ex>per</ex>sone ...</egXML>
+or, perhaps more usefully, to mark their location within an
+<gi>expan</gi> element:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><expan>eu<ex>er</ex>y</expan>
+ <expan><ex>per</ex>sone</expan> ...</egXML>
+</p>
+<p>As implied in the preceding discussion, making decisions about
+which of these various methods of representing abbreviation to use
+will form an important part of an encoder's practice. As a rule, the
+<gi>abbr</gi> element should be preferred where it is wished to
+signify that the content of the element is an abbreviation, without
+necessarily indicating what the abbreviation may stand for. The
+<gi>ex</gi> element should be used where it is wished to signify that
+the content of the element is not present in the source but has been
+supplied by the transcriber, without necessarily indicating the
+abbreviation used in the original. The decision as to which course of
+action is appropriate may vary from abbreviation to abbreviation;
+there is no requirement that the one system be used throughout a
+transcription, although doing so will generally simplify
+processing. The choice is likely to be a matter of editorial policy.
+If the highest priority is to transcribe the text literatim, while
+indicating the presence of abbreviations, the choice will be to use
+<gi>abbr</gi> throughout. If the highest priority is to present a
+reading transcription, while indicating that some letters or words are
+not actually present in the original, the choice will be to use
+<gi>ex</gi> or <gi>expan</gi>
+throughout.</p>
 <p>Further information may be attached to instances of these elements by
 the <gi>note</gi> element, on which see section <ptr target="#CONO"/>, and
 by use of the <att>resp</att> and <att>cert</att> attributes. In this
@@ -664,23 +721,21 @@ instance from the English <title>Brut</title>,<note place="foot">On fol
 a note is attached to an editorial expansion of the tail on the final d
 of <mentioned>good</mentioned> to <mentioned>goode</mentioned>:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">For alle the while that I had
-good<expan xml:id="exp01">e</expan>
+good<ex xml:id="exp01">e</ex>
 I was welbeloued</egXML>
  <!--  abbr="&#x027d;" -->
-Then the note:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><note target="#exp01">The stroke added to 
-the final d could signify the plural ending (-es, -is, -ys&gt;)
-but the singular <hi rend="it">good</hi> was used with the meaning
-<q>property</q>, <q>wealth</q>, at this time (v. examples
-quoted in OED, sb. Good, C. 7, b, c, d and 8 spec.)</note></egXML>
-The editor might declare a degree of certainty for this expansion, based
-on the OED examples, and state the responsibility for the expansion:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">For alle the while that I had
-good<expan resp="#mp" cert="high">e</expan>
-I was welbeloued</egXML>
-The value supplied for the <att>resp</att> attribute may point to any
-other element. The intention is that it should indicate in one
-place the name of the editor responsible for this and possibly other
+Then the note: <egXML xmlns="http://www.tei-c.org/ns/Examples"><note
+target="#exp01">The stroke added to the final d could signify the
+plural ending (-es, -is, -ys&gt;) but the singular <hi
+rend="it">good</hi> was used with the meaning <q>property</q>,
+<q>wealth</q>, at this time (v. examples quoted in OED, sb. Good,
+C. 7, b, c, d and 8 spec.)</note></egXML> The editor might declare a
+degree of certainty for this expansion, based on the OED examples, and
+state the responsibility for the expansion: <egXML
+xmlns="http://www.tei-c.org/ns/Examples">For alle the while that I had
+good<ex resp="#mp" cert="high">e</ex > I was welbeloued</egXML> The
+value supplied for the <att>resp</att> attribute should point to the
+name of the editor responsible for this and possibly other
 interventions; an appropriate element therefore might be a
 <gi>respStmt</gi> element in the header like the following:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -688,15 +743,15 @@ interventions; an appropriate element therefore might be a
 <resp>Editorial emendations</resp>
 <name>Malcom Parks</name>
 </respStmt></egXML>.  
-Observe that the <att>cert</att> and <att>resp</att> attributes may be
-used with the <gi>expan</gi> element only to indicate respectively
+Observe that the <att>cert</att> and <att>resp</att> attributes are
+used with the <gi>ex</gi> element only to indicate
 confidence in the content of the element (i.e. the expansion), and
-responsibility for suggesting this expansion. </p>
+responsibility for suggesting this expansion  respectively. </p>
 <p>The <gi>choice</gi> element may be used to indicate that the
 proposed expansion is one way of encoding what might equally well be
 represented as an abbreviation, represented by the hooked D, as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">For alle the while that I had
-good<choice><abbr>ɽ</abbr><expan resp="#mp" cert="high">e</expan></choice>
+good<choice><abbr>ɽ</abbr><ex resp="#mp" cert="high">e</ex></choice>
 I was welbeloued</egXML>
 If it is desired to express aspects of certainty and responsibility for
 some other aspect of the use of these elements, then the mechanisms
@@ -707,22 +762,28 @@ recorded, multiple notes may be supplied. It may also be appropriate
 to use the markup for critical apparatus; an example is given in
 section <ptr target="#TCTR"/>.</p>
 </div>
+
+<!-- to here LB 29/8 -->
+
 <div type="div3" xml:id="PHCC"><head>Correction and Conjecture</head>
-<p>The <gi>sic</gi>, <gi>corr</gi>, and <gi>choice</gi> elements, defined in the Common Core module
-may be used to register authorial or scribal corrections within a
-witness. For example, in the manuscript of William James's <title>A
-Pluralistic Universe</title>, edited by Fredson Bowers (Cambridge:
-Harvard University Press, 1977) a sentence first written
-<q rend="display">One must have lived longer with this system,
-to appreciate its advantages.</q>
-has been modified by James to begin <q>But one must ...</q>, without the
-inital capital O having been reduced to lowercase. This non-standard
-orthography could be recorded thus:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">But <sic>One</sic> must have lived ...</egXML>
-or corrected:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">But <corr>one</corr> must have lived ...</egXML>
-or the two possibilities might be represented as a choice:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">But <choice><sic>One</sic><corr>one</corr></choice> must have lived ...</egXML></p>
+
+<p>The <gi>sic</gi>, <gi>corr</gi>, and <gi>choice</gi> elements,
+defined in the <ident type="module">core</ident> module may be used to
+indicate any corrections introduced when transcribing a witness. For
+example, in the manuscript of William James's <title>A Pluralistic
+Universe</title>, edited by Fredson Bowers (Cambridge: Harvard
+University Press, 1977) a sentence first written <q rend="display">One
+must have lived longer with this system, to appreciate its
+advantages.</q> has been modified by James to begin <q>But One must
+...</q>, without the inital capital O having been reduced to
+lowercase. This non-standard orthography could be recorded thus:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">But <sic>One</sic>
+must have lived ...</egXML> or corrected: <egXML
+xmlns="http://www.tei-c.org/ns/Examples">But <corr>one</corr> must
+have lived ...</egXML> or the two possibilities might be represented
+as a choice: <egXML xmlns="http://www.tei-c.org/ns/Examples">But
+<choice><sic>One</sic><corr>one</corr></choice> must have lived
+...</egXML></p>
 <p>In this example from Albertus Magnus,<note place="foot"><title>De
 Nutrimento et Nutribili, Tractatus 1</title>, fol 217r col b of Merton
 College Oxford MS O.2.1 (Parkes pl. 16).</note>
@@ -731,24 +792,17 @@ both a manuscript error <mentioned>angues</mentioned> and its correction
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Nos autem iam ostendimus quod nutrimentum
 et <choice><sic>angues</sic><corr>augens</corr></choice>.</egXML>
 </p> 
-<!-- dropped example for the moment, pending clarification of when to -->
-	<!-- use supplied etc,. LB -->
-	<!--
-In this example, from George Moore's draft of additional materials for
+<p>When the correction provided by the transcriber takes the form of
+an addition, the <gi>supplied</gi> element discussed below should be
+used. In this example, from George Moore's draft of additional materials for
 <q>Memoirs of My Dead Life</q>,<note place="foot">In Pierpont Morgan MA
   3421, from <title>British Literary Manuscripts/Series II:  from 1800
   to 1914</title>, by V. Klinkenborg, H.Cahoon and C. Ryskamp (New York:
   Pierpont Morgan Library, 1981).</note>
 the transcriber supplies the word <mentioned>we</mentioned> omitted by the author:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">You see that I avoid the word create for we
-create nothing <sic corr="we"/> develope.</egXML>
-Or with reverse use of the <gi>corr</gi> element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">You see that I avoid the word create for we
-create nothing <corr sic="">we</corr> develope.</egXML>
-(N.B. when the additional tag set defined in this chapter is selected,
-the <gi>supplied</gi> element should normally be used in preference
-to <gi>sic</gi> or <gi>corr</gi> for such supplied text.)</p>
--->
+create nothing <supplied>we</supplied> develope.</egXML>
+</p>
 <p>As with <gi>expan</gi> and <gi>abbr</gi>, the
 choice as to whether to record simply that there is an apparent error,
 or simply that a correction has been applied, or to record both
@@ -953,6 +1007,7 @@ in the Common Core module and are available in all TEI documents.  The
 elements <gi>addSpan</gi> and <gi>delSpan</gi> have the following formal
 declarations:
 <specGrp xml:id="DTCAD" n="Added and Deleted Spans">
+&ex;
 &addSpan;
 &delSpan;
 </specGrp></p></div>
