@@ -372,25 +372,34 @@ elements <gi>pause</gi>, <gi>vocal</gi>, <gi>shift</gi> and
 is regarded as being produced by that speaker only, while a pause
 between utterances applies to all speakers.
  </p>
-<p>Occasionally, an utterance may contain other utterances, for example
-where there is a change in the script associated with it.  This may
-occur when a speaker changes script in mid-utterance.  For example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#a">Listen to this
-    <u decls="#s1" who="#a">The government is confident, he
-    said, that the current economic problems will be
-    completely overcome by June</u>
- what nonsense</u></egXML>
-Here speaker A's own utterance contains a second nested utterance, which
-is read from a newspaper.  The <att>decls</att> attribute on the nested
-utterance is used to indicate that its script is S1, rather than the
-default.  Alternatively, the embedded utterance might be regarded as a
-new (non-nested) one.  It might also be encoded using the
-<gi>writing</gi> element described in section <ptr target="#TSBAVO"/>
-below, or the <gi>incident</gi> element described in section <ptr target="#TSBAVO"/>, without transcribing the read material:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#a">Listen to
-this <incident><desc>reads aloud from newspaper</desc></incident>
- what nonsense</u></egXML>
- </p></div>
+<p>Occasionally, an utterance may seem to contain other utterances,
+for example where one speaker interrupts himself,  or 
+when another speaker produces a <soCalled>back channel</soCalled>
+while they are still speaking.  The present version of these
+Guidelines does not support nesting of one <gi>u</gi> element within
+another. The transcriber must therefore decide whether such
+interruptions constitute a change of utterance, or whether other
+elements may be used. In the case of self-interruption, the
+<gi>shift</gi> element may be used to show that the speaker has
+changed the quality of their speech:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><u
+who="#a">Listen to this <shift new="reading"/>The government is
+confident, he said, that the current economic problems will be
+completely overcome by June<shift/> what nonsense</u></egXML> 
+Alternatively the <gi>incident</gi> element described in section <ptr
+target="#TSBAVO"/> might be used, without transcribing the read material: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><u who="#a">Listen to this
+<incident><desc>reads aloud from newspaper</desc></incident> what
+nonsense</u></egXML> 
+</p>
+<p>Often, back channelling is only semi-lexicalized and may therefore be
+represented using the <gi>vocal</gi> element:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><u
+who="#a">So what could I have done <vocal
+who="#b"><desc>tut-tutting</desc></vocal> about it anyway?</u></egXML>
+Where this is not possible, it is simplest to regard the back channel
+as a distinct utterance.</p>
+</div>
 <div type="div3" xml:id="TSBAPA"><head>Pause</head>
 <p>The <gi>pause</gi> empty element is used to indicate a perceived
 pause, either between or within utterances.
