@@ -1937,6 +1937,33 @@ class romaDom extends domDocument
     // --- Little Helpers
     // #####################################################################
 
+    protected function getOddDom( &$oDOC )
+      {
+	$oXSL = new domDocument();
+	$oXSL->load( roma_StylesheetDir . '/odds/odd2odd.xsl' );
+	$oProc = new XsltProcessor();
+	$oProc->importStylesheet( $oXSL );
+	$oProc->setParameter( null, 'TEISERVER', roma_xquery_server);
+//DEBUG	$oProc->setParameter( null, 'localsource', roma_local_p5);
+	$oProc->setParameter( null, 'TEIC', 'true');
+	$this->getOddLanguage( $szOddLanguage );
+        if ($szOddLanguage=='en') 
+     	  { 
+	  $oDOC = $oProc->transformToDoc( $this ); }
+	else
+	   {
+              $oXSL2 = new domDocument();
+              $oXSL2->load( roma_StylesheetDir . '/odds/translate-odd.xsl' );
+              $oProc2 = new XsltProcessor();
+ 	      $oProc2->setParameter( null, 'TEIC', 'true');	
+//DEBUG	      $oProc2->setParameter( null, 'localsource', roma_local_p5);
+              $oProc2->setParameter( null, 'TEISERVER', roma_xquery_server);
+              $oProc2->setParameter( null, 'lang', $szOddLanguage );
+              $oProc2->importStylesheet( $oXSL2 );
+              $oDOC = $oProc2->transformToDoc($oProc->transformToDoc($this )); 
+	 }
+      }
+
     protected function getDocDom( &$oDOC )
       {
 	$oXSL = new domDocument();

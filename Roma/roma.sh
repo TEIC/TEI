@@ -61,33 +61,30 @@ makeDTD()
 
 makeHTMLDOC() 
 {
-    echo "8. make HTML documentation"
+    echo "8. make HTML documentation $N.doc.html "
     xsltproc 	-o $RESULTS/$N.doc.html $DEBUG  $LANGUAGE $DOCLANG --stringparam TEIC $TEIC \
 	--stringparam STDOUT true \
 	--stringparam splitLevel -1 \
 	$DOCFLAGS $TEIXSLDIR/html/odd2html.xsl $RESULTS/$ODD.compiled
-    echo created $N.doc.html 
 }
 
 makePDFDOC() 
 {
-    echo "7. make PDF documentation"
+    echo "7. make PDF documentation $N.doc.pdf and $N.doc.tex "
     xsltproc $DEBUG $LANGUAGE $DOCLANG --stringparam TEIC $TEIC \
 	-o $RESULTS/$N.doc.tex \
 	$TEIXSLDIR/latex/tei.xsl $N.doc.xml
     pdflatex $N.doc.tex
-    echo created $N.doc.pdf and $N.doc.tex 
 }
 
 makeXMLDOC() 
 {
-    echo "6. make expanded documented ODD"
+    echo "6. make expanded documented ODD $N.doc.xml "
     xsltproc $DEBUG $LANGUAGE $DOCLANG --stringparam TEISERVER $TEISERVER  \
 	--stringparam localsource "$LOCAL"  \
 	--stringparam TEIC $TEIC \
 	-o $RESULTS/$N.doc.xml \
 	$TEIXSLDIR/odds/odd2lite.xsl $RESULTS/$ODD.compiled 
-    echo created $N.doc.xml 
 }
 
 
