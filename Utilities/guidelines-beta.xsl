@@ -22,7 +22,7 @@
 <xsl:param name="lang"/>
 <xsl:param name="doclang"/>
 <xsl:param name="footnoteFile">false</xsl:param>
-<xsl:param name="topNavigationPanel">true</xsl:param>
+<xsl:param name="autoToc">false</xsl:param>
 <xsl:param name="cssFile">guidelines-beta.css</xsl:param>
 <xsl:param name="displayMode">both</xsl:param>
 
@@ -38,18 +38,6 @@
 </xsl:template>
 
   
- <xsl:template name="pageTableHeader">
-    <xsl:param name="mode"/>
-	<table width="100%" border="0">
-	  <tr>
-	    <td height="100" class="bgimage" onClick="window.location='{$homeURL}'" cellpadding="0">
-	      <h1 class="maintitle"><xsl:call-template name="generateTitle"/></h1>
-	      <h2 class="subtitle"><xsl:call-template name="generateSubTitle"/></h2>
-	    </td>
-	  </tr>
-	</table>
- </xsl:template>
-
 <xsl:template name="printLink"/>
 
 
@@ -199,12 +187,16 @@
     </div>
 
     <div id="onecol" class="main-content">
-      <xsl:call-template name="rh-col-bottom">
-	<xsl:with-param name="currentID" select="$currentID"/>
-      </xsl:call-template>
+    <xsl:call-template name="mainFrame">
+      <xsl:with-param name="currentID" select="$currentID"/>
+      <xsl:with-param name="minimal">true</xsl:with-param>
+    </xsl:call-template>
+    <xsl:if test="$currentID=''">
+      <xsl:call-template name="mainTOC"/>
+    </xsl:if>
+    <xsl:call-template name="stdfooter"/>
+
     </div>
-    
-    
   </xsl:template>
 
 </xsl:stylesheet>
