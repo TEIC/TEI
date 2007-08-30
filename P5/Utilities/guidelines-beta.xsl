@@ -152,7 +152,7 @@
   </xsl:template>  
    
   <xsl:template name="startDivHook">
-      <table style="float:right; border: 1pt solid red;font-size: small;width: 20%">
+      <table class="miniTOC">
 	<tr>
 	  <td>
 	    <xsl:call-template name="previousLink"/>
