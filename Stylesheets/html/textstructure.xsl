@@ -1113,6 +1113,7 @@ $ID: requests a particular page
     </xsl:variable>
     <xsl:variable name="BaseFile">
       <xsl:value-of select="$masterFile"/>
+      <xsl:value-of select="$standardSuffix"/>
       <xsl:call-template name="addCorpusID"/>
     </xsl:variable>
     <xsl:choose>
