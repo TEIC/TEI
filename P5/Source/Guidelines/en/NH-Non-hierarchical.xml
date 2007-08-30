@@ -155,7 +155,7 @@ $Author$
 	    <l>Erlegt er, die andern entweichen.</l>
 	  </lg></egXML>
     </p>
-    <p>An encoding of the second passage above with respect to the vocal view
+    <p>An encoding of the same passage by Schiller with respect to the vocal view
       follows.
       <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de"><p>
   <q>Was wollt ihr?</q> ruft er, für Schrecken bleich, 
@@ -166,7 +166,7 @@ $Author$
   Und drei mit gewaltigen Streichen
   Erlegt er, die andern entweichen.
 </p></egXML>
-      Of course, this view does not make sense for the Italian poem, which does
+      Of course, the vocal view is not useful for the Italian poem, which does
       not contain direct discourse.</p>
     <p>A third annotation marks up linguistic categories, particularly the
       sentences. Focusing on the linguistic structure, the first stanza can be
@@ -204,6 +204,9 @@ $Author$
       content of the annotations is identical, the very text can serve as a
       means for linking the different annotations.
       <?sb2aw Should we be showing how this is done? ?></p>
+      <p>It is possible to use multiple encodings to represent
+      non-hierarichical structures using the TEI schemas with or
+      without customization.</p>
   </div>
   <div type="div2" xml:id="NHRM">
     <head>Remodeling of the document class</head>
@@ -227,54 +230,78 @@ $Author$
       document type.</p>
     <p>Even if such an annotation were valid, many overlapping structures exist
       which cannot be annotated in this way. This can be seen in the first
-      example: the sentence <mentioned xml:lang="it">E l'orma dell'acqua è
-        l'alba sulla riva.</mentioned> ends in the middle of line 2. Thus there
+      example: the sentence <quote xml:lang="it">E l'orma dell'acqua è
+        l'alba sulla riva.</quote> ends in the middle of line 2. Thus there
       is neither a line which contains a whole sentence nor a sentence which
       contains a whole line.</p>
+      <p>In some cases it may be possible to customize the TEI such
+      that multiple annotations could be encoded in a single
+      hierarchy. In general, however, such customizations will violate
+      the TEI abstract model (described in <ptr target="#CFAM"/>), and
+      thus will validate non-conformant documents.</p>
   </div>
   <div type="div2" xml:id="NHBM">
     <head>Boundary Marking with Empty Elements</head>
-    <p>Usually a span of text, or a <soCalled>content object</soCalled>, is
-      annotated by encoding it as an XML element which has a start-tag at the
-      beginning of the span and an end-tag at the end. It is possible to encode a
-      span of text using an empty tag at the beginning and another empty tag at
-      the end. The empty tags used at each end are called <term>segment boundary
-        elements</term>. There are several variations on this method of
-      encoding: <list type="gloss">
+    <p>Usually a span of text, or a <soCalled>content
+    object</soCalled>, is annotated by encoding it as an XML element
+    which has a start-tag at the beginning of the span and an end-tag
+    at the end. It is possible to encode a span of text using an empty
+    element at the beginning and another empty element at the end. The
+    empty elements used at each end are called <term>segment boundary
+    elements</term> or <term>segment boundary delimiters</term>. There
+    are several variations on this method of encoding:
+      <list type="gloss">
         <label>Segment-Boundary Elements</label>
-        <item>All segment boundary delimiter elements are of the same generic
-          type (e.g., <gi>boundary</gi>). The type of textual feature being
-          encoded, and whether any given tag is the start or end of said
-          feature, is encoded in attribute values (e.g., a <att>type</att>
-          attribute may be used to indicate the textual feature, and a
-            <att>position</att> attribute might take the values <val>start</val>
-          and <val>end</val>).</item>
+        <item>All segment boundary delimiter elements are of the same
+        generic type (e.g., <gi>boundary</gi>). The type of textual
+        feature being encoded, and whether any given tag is the start
+        or end of said feature, is encoded in attribute values (e.g.,
+        a <att>type</att> attribute may be used to indicate the
+        textual feature, and a <att>position</att> attribute might
+        take the values <val>start</val> and <val>end</val>). The TEI
+        may be customized (using the methods described in <ptr
+        target="#MD"/>) to support this method of encoding
+        non-hierarchical structures.</item>
         <label>Paired Segment-Boundary Elements</label>
-        <item>The name of the segment-boundary elements reflect whether they
-          indicate the beginning of a passage or the end. E.g.,
-            <gi>boundary-start</gi> and <gi>boundary-end</gi>. As with single
-          empty segment-boundary elements, the type of feature being annotated
-          is indicated with an attribute.</item>
+        <item>The name of the segment-boundary elements reflect
+        whether they indicate the beginning of a passage or the end.
+        E.g., <gi>boundary-start</gi> and <gi>boundary-end</gi>. As
+        with single empty segment-boundary elements, the type of
+        feature being annotated is indicated with an attribute. The
+        TEI may be customized (using the methods described in <ptr
+        target="#MD"/>) to support this method of encoding
+        non-hierarchical structures.</item>
         <label>Typed Segment-Boundary Delimiters</label>
-        <item>The name of the segment-boundary elements reflect the type of
-          feature being annotated; whether any given segment-boundary element
-          indicates the beginning or the end of a span of text is indicated with
-          an attribute. E.g., <gi>q-boundary</gi> and <gi>speech-boundary</gi>.</item>
+        <item>The name of the segment-boundary elements reflect the
+        type of feature being annotated; whether any given
+        segment-boundary element indicates the beginning or the end of
+        a span of text is indicated with an attribute. E.g.,
+        <gi>q-boundary</gi> and <gi>speech-boundary</gi>. The TEI may
+        be customized (using the methods described in <ptr
+        target="#MD"/>) to support this method of encoding
+        non-hierarchical structures.</item>
         <label>Paired Typed Segment-Boundary Delimiters</label>
-        <item>The name of the segment-boundary elements reflect both the type of
-          feature being annotated and whether the beginning or end of such a
-          feature is being indicated. E.g. <gi>speech-boundary-start</gi>.</item>
+        <item>The name of the segment-boundary elements reflect both
+        the type of feature being annotated and whether the beginning
+        or end of such a feature is being indicated. E.g.
+        <gi>speech-boundary-start</gi>. The TEI may be customized
+        (using the methods described in <ptr target="#MD"/>) to
+        support this method of encoding non-hierarchical
+        structures.</item>
         <label>Co-referenced Overlap Terminus</label>
-        <item>Referred to as <soCalled>COLT</soCalled> markup, this is a special
-          case of typed segment-boundary delimiters in which the type of element
-          used is exactly the same as the type of element that would have been
-          used if there were not an overlap problem. E.g., instead of
-            <gi>q-boundary</gi> and <gi>speech-boundary</gi>, the normal
-          elements <gi>q</gi> and <gi>speech</gi> would be used as empty
-          elements, with special attributes to indicate which is the beginning
-          and which is the end. Furthermore, each empty element that marks the
-          beginning is explicitly linked to the empty element that marks the
-          end, and vice-versa.</item>
+        <item>Referred to as <soCalled>COLT</soCalled> markup, this is
+        a special case of typed segment-boundary delimiters in which
+        the type of element used is exactly the same as the type of
+        element that would have been used if there were not an overlap
+        problem. E.g., instead of <gi>q-boundary</gi> and
+        <gi>speech-boundary</gi>, the normal elements <gi>q</gi> and
+        <gi>speech</gi> would be used as empty elements, with special
+        attributes to indicate which is the beginning and which is the
+        end. Furthermore, each empty element that marks the beginning
+        is explicitly linked to the empty element that marks the end,
+        and vice-versa. The TEI may be customized (using the methods
+        described in <ptr target="#MD"/>) to support this method of
+        encoding non-hierarchical structures.</item>
       </list></p>
     <p>For example, if sentences are marked using (user-defined) empty elements
         <gi>sb</gi> and <gi>se</gi>, the empty elements mark the beginning and
