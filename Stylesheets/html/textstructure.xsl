@@ -535,7 +535,7 @@ $ID: requests a particular page
         <xsl:with-param name="word">tocWords</xsl:with-param>
       </xsl:call-template>
     </h2>
-    <xsl:call-template name="maintoc"/>
+    <xsl:call-template name="mainTOC"/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:div[@type='canto']</xd:short>
@@ -1565,7 +1565,7 @@ $ID: requests a particular page
           <xsl:with-param name="word">tocWords</xsl:with-param>
         </xsl:call-template>
       </h2>
-      <xsl:call-template name="maintoc"/>
+      <xsl:call-template name="mainTOC"/>
     </xsl:if>
     <xsl:choose>
       <xsl:when test="tei:text/tei:group">
@@ -1585,7 +1585,7 @@ $ID: requests a particular page
     <xd:param name="force">force</xd:param>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template name="maintoc">
+  <xsl:template name="mainTOC">
     <xsl:param name="force"/>
     <xsl:if test="$tocFront">
       <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:front">
@@ -2183,7 +2183,7 @@ $ID: requests a particular page
           <xsl:with-param name="word">tocWords</xsl:with-param>
         </xsl:call-template>
       </h2>
-      <xsl:call-template name="maintoc"/>
+      <xsl:call-template name="mainTOC"/>
     </xsl:if>
     <!-- main text -->
     <xsl:choose>

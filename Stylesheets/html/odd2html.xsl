@@ -357,7 +357,7 @@
 
 <xsl:template match="tei:divGen[@type='toc']">
 
-<xsl:call-template name="maintoc"/>
+<xsl:call-template name="mainTOC"/>
 
 <div><b>Classes:</b>
   <div class="oddToc">
