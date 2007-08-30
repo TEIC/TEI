@@ -88,23 +88,25 @@ html-web-beta: check
 		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
 		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
 		Utilities/odd2htmlp5.xsl.model > Utilities/odd2htmlp5.xsl
-	-rm -rf Guidelines-web-beta
-	-mkdir Guidelines-web-beta
+	-rm -rf Guidelines-web-beta-tmp
+	-mkdir Guidelines-web-beta-tmp
 	for i in ${LANGUAGE} ${OTHERLANGUAGES} ; do \
 	echo making beta HTML Guidelines for language $$i ; \
-	mkdir -p Guidelines-web-beta/$$i/html; \
-	cp rightarrow.gif guidelines-beta.css TEI-glow.png Guidelines-web-beta/$$i/html/ ; \
+	mkdir -p Guidelines-web-beta-tmp/$$i/html; \
+	cp rightarrow.gif guidelines-beta.css TEI-glow.png Guidelines-web-beta-tmp/$$i/html/ ; \
 	xmllint --noent --xinclude ${SOURCETREE}/Guidelines/$$i/guidelines-$$i.xml \
 	| xsltproc ${VERBOSE} \
-		--stringparam outputDir Guidelines-web-beta/$$i/html \
+		--stringparam outputDir Guidelines-web-beta-tmp/$$i/html \
 		--stringparam displayMode both \
 	        --stringparam lang $$i \
 	        --stringparam doclang $$i \
 	    Utilities/guidelines-beta.xsl - ; \
-	cp -r ${SOURCETREE}/Images Guidelines-web-beta/$$i/html/ ; \
-	(cd Guidelines-web-beta/$$i/html; for i in *.html; do perl -i ../../../Utilities/cleanrnc.pl $$i;done); \
-	(cd Guidelines-web-beta/$$i/html; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' guidelines-beta.css); \
-	done
+	cp -r ${SOURCETREE}/Images Guidelines-web-beta-tmp/$$i/html/ ; \
+	(cd Guidelines-web-beta-tmp/$$i/html; for i in *.html; do perl -i ../../../Utilities/cleanrnc.pl $$i;done); \
+	(cd Guidelines-web-beta-tmp/$$i/html; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' guidelines-beta.css); \
+	done; 
+	-rm -rf Guidelines-web-beta
+	-mv Guidelines-web-beta-tmp Guidelines-web-beta
 
 validate-html:
 	for i in ${LANGUAGE} ${OTHERLANGUAGES} ; do \
