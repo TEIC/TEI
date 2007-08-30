@@ -60,6 +60,13 @@
             <xsl:apply-templates mode="xref" select="."/>
 	    <xsl:call-template name="sectionHeadHook"/>
           </h2>
+          <xsl:if test="$topNavigationPanel='true'">
+            <xsl:call-template name="xrefpanel">
+              <xsl:with-param name="homepage"
+                select="concat($masterFile,$standardSuffix)"/>
+              <xsl:with-param name="mode" select="local-name(.)"/>
+            </xsl:call-template>
+          </xsl:if>
           <xsl:call-template name="doDivBody"/>
           <xsl:if test="$bottomNavigationPanel='true'">
             <xsl:call-template name="xrefpanel">
@@ -309,6 +316,13 @@ $ID: requests a particular page
               <xsl:apply-templates mode="xref" select="."/>
 	      <xsl:call-template name="sectionHeadHook"/>
             </h2>
+	    <xsl:if test="$topNavigationPanel='true'">
+	      <xsl:call-template name="xrefpanel">
+		<xsl:with-param name="homepage"
+				select="concat($masterFile,$standardSuffix)"/>
+		<xsl:with-param name="mode" select="local-name(.)"/>
+	      </xsl:call-template>
+	    </xsl:if>
             <xsl:call-template name="doDivBody"/>
             <xsl:if test="$bottomNavigationPanel='true'">
               <xsl:call-template name="xrefpanel">
@@ -1484,6 +1498,13 @@ $ID: requests a particular page
                 <xsl:apply-templates mode="xref" select="."/>
 		<xsl:call-template name="sectionHeadHook"/>
               </h2>
+	      <xsl:if test="$topNavigationPanel='true'">
+		<xsl:call-template name="xrefpanel">
+		  <xsl:with-param name="homepage"
+				  select="concat($masterFile,$standardSuffix)"/>
+		  <xsl:with-param name="mode" select="local-name(.)"/>
+		</xsl:call-template>
+	      </xsl:if>
               <xsl:call-template name="doDivBody"/>
               <xsl:if test="$bottomNavigationPanel='true'">
                 <xsl:call-template name="xrefpanel">
@@ -2321,14 +2342,6 @@ $ID: requests a particular page
       </xsl:when>
       <xsl:otherwise>
 	<xsl:call-template name="makeHTMLHeading">
-	  <xsl:with-param name="class">subtitle</xsl:with-param>
-	  <xsl:with-param name="text">
-          <xsl:call-template name="generateTitle"/>
-	  </xsl:with-param>
-	  <xsl:with-param name="level">2</xsl:with-param>
-	</xsl:call-template>
-	
-	<xsl:call-template name="makeHTMLHeading">
 	  <xsl:with-param name="class">maintitle</xsl:with-param>
 	  <xsl:with-param name="text">
 	    <xsl:value-of select="$title"/>
@@ -2336,6 +2349,14 @@ $ID: requests a particular page
 	  <xsl:with-param name="level">1</xsl:with-param>
 	</xsl:call-template>
 
+	<xsl:call-template name="makeHTMLHeading">
+	  <xsl:with-param name="class">subtitle</xsl:with-param>
+	  <xsl:with-param name="text">
+          <xsl:call-template name="generateTitle"/>
+	  </xsl:with-param>
+	  <xsl:with-param name="level">2</xsl:with-param>
+	</xsl:call-template>
+	
         <xsl:if test="$showTitleAuthor='true'">
           <xsl:if test="$verbose='true'">
             <xsl:message>displaying author and date</xsl:message>
