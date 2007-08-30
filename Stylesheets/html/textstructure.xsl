@@ -1443,6 +1443,7 @@ $ID: requests a particular page
   </xd:doc>
   <xsl:template name="mainFrame">
     <xsl:param name="currentID"/>
+    <xsl:param name="minimal">false</xsl:param>
     <xsl:choose>
       <xsl:when test="$currentID='current'">
         <xsl:apply-templates/>
@@ -1520,8 +1521,9 @@ $ID: requests a particular page
     <xsl:call-template name="partialFootNotes">
       <xsl:with-param name="currentID" select="$currentID"/>
     </xsl:call-template>
-    
-    <xsl:call-template name="stdfooter"/>
+    <xsl:if test="$minimal='false'">
+      <xsl:call-template name="stdfooter"/>
+    </xsl:if>
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
