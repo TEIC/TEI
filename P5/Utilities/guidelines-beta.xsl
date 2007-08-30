@@ -22,6 +22,7 @@
 <xsl:param name="lang"/>
 <xsl:param name="doclang"/>
 <xsl:param name="footnoteFile">false</xsl:param>
+<xsl:param name="topNavigationPanel">true</xsl:param>
 <xsl:param name="cssFile">guidelines-beta.css</xsl:param>
 <xsl:param name="displayMode">both</xsl:param>
 
@@ -120,7 +121,7 @@
   
   <xsl:template name="javascriptHook">
     <script type="text/javascript">
-<xsl:comment>
+      <xsl:comment>
       <xsl:text disable-output-escaping="yes">
         function togglerelax (el) {
         if (el.innerHTML == 'Display RNC') {
@@ -148,7 +149,7 @@
         }
         }
       </xsl:text>
-</xsl:comment>
+      </xsl:comment>
     </script>
   </xsl:template>
 
@@ -162,8 +163,48 @@
        title="Link to this section"> &#x00B6;</a>
   </xsl:template>  
    
+  <xsl:template name="startDivHook">
+      <table style="float:right; border: 1pt solid red;font-size: small;width: 20%">
+	<tr>
+	  <td>
+	    <xsl:call-template name="previousLink"/>
+	    <xsl:call-template name="generateUpLink"/>
+	    <xsl:call-template name="nextLink"/>
+	  </td>
+	</tr>
+	<xsl:if test="not(parent::tei:div) and child::tei:div">  
+	  <tr>
+	    <td>
+	      <xsl:call-template name="subtoc"/>
+	    </td>
+	  </tr>
+	</xsl:if>
+      </table>
+
+  </xsl:template>
     
 
+  <xsl:template name="mainPage">
+    <xsl:param name="currentID"/>
+    <div id="hdr">
+      <xsl:call-template name="hdr"/>
+    </div>
+    <div id="accessibility">
+      <span class="tocontent"><a href="{$REQUEST}?style=text">Text only</a>
+      | <a class="skiplinks" href="#rh-column"
+      title="Go to main page content">Skip links</a></span>
+    </div>
+    <div id="hdr2">
+      <xsl:call-template name="hdr2"/>
+    </div>
+
+    <div id="onecol" class="main-content">
+      <xsl:call-template name="rh-col-bottom">
+	<xsl:with-param name="currentID" select="$currentID"/>
+      </xsl:call-template>
+    </div>
+    
+    
+  </xsl:template>
+
 </xsl:stylesheet>
-
-
