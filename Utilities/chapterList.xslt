@@ -16,26 +16,28 @@
 
   
   <xsl:template match="/">
-    <!-- only process <div1>s; ignore everything else -->
-    <xsl:apply-templates select="/tei:TEI/tei:text/tei:body/tei:div0/tei:div1"/>
+    <!-- only process top-level <div>s; ignore everything else -->
+    <xsl:apply-templates select="/tei:TEI/tei:text/tei:*/tei:div"/>
   </xsl:template>
   
-  <xsl:template match="/tei:TEI/tei:text/tei:body/tei:div0/tei:div1">
+  <xsl:template match="/tei:TEI/tei:text/tei:*/tei:div">
     <!-- When we hit a <div1>, remember it's position and ... -->
     <xsl:variable name="num" select="position()"/>
     <!-- ... write out information about it. -->
     <xsl:text>The </xsl:text>
-    <!-- if this <div1> comes before the 10th, output a blank so -->
+    <!-- if this <div> comes before the 10th, output a blank so -->
     <!-- that things line up nicer -->
     <xsl:if test="$num&lt;10"><xsl:text> </xsl:text></xsl:if>
-    <!-- write out the ordinal number of this <div1> -->
+    <!-- write out the ordinal number of this <div> -->
     <xsl:choose>
       <xsl:when test="$num=1">1st</xsl:when>
       <xsl:when test="$num=2">2nd</xsl:when>
       <xsl:when test="$num=3">3rd</xsl:when>
       <xsl:otherwise><xsl:value-of select="$num"/><xsl:text>th</xsl:text></xsl:otherwise>
     </xsl:choose>
-    <xsl:text> &lt;div1> (</xsl:text>
+    <xsl:text> top-level &lt;div> (a child of </xsl:text>
+    <xsl:value-of select="local-name(parent::node())"/>
+    <xsl:text> with id=</xsl:text>
     <!-- in parens put the it's unique identifier, i.e. that which used -->
     <!-- to be its filename -->
     <xsl:value-of select="@xml:id"/>
