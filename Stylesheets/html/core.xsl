@@ -1011,9 +1011,9 @@
 	  <xsl:call-template name="noteN"/>
 	  <xsl:text>. </xsl:text>
 	</span>
-	<div class="noteBody">
+	<span class="noteBody">
 	  <xsl:apply-templates/>
-	</div>
+	</span>
 	<xsl:if test="$footnoteBackLink= 'true'">
 	  <xsl:text> </xsl:text>
 	  <a class="link_return"
