@@ -21,6 +21,7 @@
 <xsl:import href="odd2htmlp5.xsl"/>
 <xsl:param name="lang"/>
 <xsl:param name="doclang"/>
+<xsl:param name="splitLevel">0</xsl:param>
 <xsl:param name="footnoteFile">false</xsl:param>
 <xsl:param name="autoToc">false</xsl:param>
 <xsl:param name="numberFrontHeadings">true</xsl:param>
@@ -150,9 +151,11 @@
   </xsl:template>  
    
   <xsl:template name="startDivHook">
-      <table class="miniTOC">
+    <table class="miniTOC">
 	<tr>
 	  <td>
+	    <a class="navigation" href="index.html">Home</a>
+
 	    <xsl:for-each select="ancestor::tei:div">
 	      <div>
 		<xsl:attribute name="style">
@@ -224,7 +227,7 @@
 
   <xsl:template name="numberFrontDiv">
       <xsl:number
-	  format="A.1.1.1.1"
+	  format="I.1.1.1.1"
 	  count="tei:div"
 	  level="multiple"/>
   </xsl:template>
