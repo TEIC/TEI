@@ -23,6 +23,7 @@
 <xsl:param name="doclang"/>
 <xsl:param name="footnoteFile">false</xsl:param>
 <xsl:param name="autoToc">false</xsl:param>
+<xsl:param name="numberFrontHeadings">true</xsl:param>
 <xsl:param name="cssFile">guidelines-beta.css</xsl:param>
 <xsl:param name="displayMode">both</xsl:param>
 
@@ -48,10 +49,7 @@
 <xsl:template match="/div">
 </xsl:template>  
 
-
-
-
-  <xsl:template name="bitOut">
+<xsl:template name="bitOut">
     <xsl:param name="grammar"/>
     <xsl:param name="content"/>
     <xsl:param name="element">pre</xsl:param>
@@ -155,45 +153,36 @@
       <table class="miniTOC">
 	<tr>
 	  <td>
-<xsl:for-each select="ancestor::tei:div">
-  <a class="UP">
-    <xsl:attribute name="href">
-      <xsl:apply-templates mode="generateLink" select="."/>
-    </xsl:attribute>
-    <xsl:call-template name="headerLink">
-      <xsl:with-param name="minimal" select="$minimalCrossRef"/>
-    </xsl:call-template>
-  </a><br/>
-</xsl:for-each>
-
-<xsl:if test="following-sibling::tei:div">
-<br/>Next:  <xsl:for-each select="following-sibling::tei:div[1]">
-    <a class="NEXT">
-      <xsl:attribute name="href">
-        <xsl:apply-templates mode="generateLink" select="."/>
-      </xsl:attribute>
-      <xsl:call-template name="headerLink">
-        <xsl:with-param name="minimal" select="$minimalCrossRef"/>
-      </xsl:call-template>
-    </a>
-  </xsl:for-each>
-</xsl:if>
-
-<xsl:if test="preceding-sibling::tei:div">
-<br/>Previous  <xsl:for-each select="preceding-sibling::tei:div[1]">
-    <a class="PREVIOUS">
-      <xsl:attribute name="href">
-        <xsl:apply-templates mode="generateLink" select="."/>
-      </xsl:attribute>
-      <xsl:call-template name="headerLink">
-        <xsl:with-param name="minimal" select="$minimalCrossRef"/>
-      </xsl:call-template>
-    </a>
-  </xsl:for-each>
-</xsl:if>
-
+	    <xsl:for-each select="ancestor::tei:div">
+	      <div>
+		<xsl:attribute name="style">
+		  <xsl:text>margin-left:</xsl:text>
+		  <xsl:value-of select="count(ancestor::tei:div)"/>
+		  <xsl:text>em;</xsl:text>
+		</xsl:attribute>
+		<a class="UP">
+		<xsl:attribute name="href">
+		  <xsl:apply-templates mode="generateLink" select="."/>
+		</xsl:attribute>
+		<xsl:call-template name="headerLink">
+		  <xsl:with-param name="minimal" select="$minimalCrossRef"/>
+		</xsl:call-template>
+		</a>
+	      </div>
+	    </xsl:for-each>
 	  </td>
 	</tr>
+	<tr>
+	  <td>
+	    <xsl:call-template name="previousLink"/>
+	  </td>
+	</tr>
+	<tr>
+	  <td>
+	    <xsl:call-template name="nextLink"/>
+	  </td>
+	</tr>
+
 	<xsl:if test="not(parent::tei:div) and child::tei:div">  
 	  <tr>
 	    <td>
@@ -231,6 +220,13 @@
     <xsl:call-template name="stdfooter"/>
 
     </div>
+  </xsl:template>
+
+  <xsl:template name="numberFrontDiv">
+      <xsl:number
+	  format="A.1.1.1.1"
+	  count="tei:div"
+	  level="multiple"/>
   </xsl:template>
 
 </xsl:stylesheet>
