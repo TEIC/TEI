@@ -155,9 +155,43 @@
       <table class="miniTOC">
 	<tr>
 	  <td>
-	    <xsl:call-template name="previousLink"/>
-	    <xsl:call-template name="generateUpLink"/>
-	    <xsl:call-template name="nextLink"/>
+<xsl:for-each select="ancestor::tei:div">
+  <a class="UP">
+    <xsl:attribute name="href">
+      <xsl:apply-templates mode="generateLink" select="."/>
+    </xsl:attribute>
+    <xsl:call-template name="headerLink">
+      <xsl:with-param name="minimal" select="$minimalCrossRef"/>
+    </xsl:call-template>
+  </a><br/>
+</xsl:for-each>
+
+<xsl:if test="following-sibling::tei:div">
+<br/>Next:  <xsl:for-each select="following-sibling::tei:div[1]">
+    <a class="NEXT">
+      <xsl:attribute name="href">
+        <xsl:apply-templates mode="generateLink" select="."/>
+      </xsl:attribute>
+      <xsl:call-template name="headerLink">
+        <xsl:with-param name="minimal" select="$minimalCrossRef"/>
+      </xsl:call-template>
+    </a>
+  </xsl:for-each>
+</xsl:if>
+
+<xsl:if test="preceding-sibling::tei:div">
+<br/>Previous  <xsl:for-each select="preceding-sibling::tei:div[1]">
+    <a class="PREVIOUS">
+      <xsl:attribute name="href">
+        <xsl:apply-templates mode="generateLink" select="."/>
+      </xsl:attribute>
+      <xsl:call-template name="headerLink">
+        <xsl:with-param name="minimal" select="$minimalCrossRef"/>
+      </xsl:call-template>
+    </a>
+  </xsl:for-each>
+</xsl:if>
+
 	  </td>
 	</tr>
 	<xsl:if test="not(parent::tei:div) and child::tei:div">  
