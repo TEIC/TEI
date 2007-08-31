@@ -1125,7 +1125,7 @@ $ID: requests a particular page
       </xsl:when>
       <xsl:when test="$myName = 'div'">
         <xsl:call-template name="upLink">
-          <xsl:with-param name="up" select="ancestor::tei:div[last()]"/>
+          <xsl:with-param name="up" select="ancestor::tei:div[1]"/>
         </xsl:call-template>
       </xsl:when>
       <xsl:when test="$myName='div0'">
