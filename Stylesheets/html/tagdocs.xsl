@@ -651,14 +651,15 @@
   <xsl:template name="showAnAttribute">
     <tr>
       <td class="Attribute">
-          <xsl:choose>
-            <xsl:when test="tei:altIdent">
-              <xsl:value-of select="tei:altIdent"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="@ident"/>
-            </xsl:otherwise>
-          </xsl:choose>
+	<xsl:text>@</xsl:text>
+	<xsl:choose>
+	  <xsl:when test="tei:altIdent">
+	    <xsl:value-of select="tei:altIdent"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="@ident"/>
+	  </xsl:otherwise>
+	</xsl:choose>
       </td>
       <td >
 	<xsl:call-template name="makeDescription"/>
@@ -1417,6 +1418,8 @@
                   </xsl:call-template>
                 </div>
                 <div>
+		  <xsl:call-template name="startDivHook"/>
+
 		  <xsl:call-template name="makeAnchor">
 		    <xsl:with-param name="name">
 		      <xsl:value-of select="@ident"/>

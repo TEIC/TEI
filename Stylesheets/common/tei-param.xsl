@@ -134,11 +134,9 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="numberFrontDiv">
-    <xsl:if test="not($numberFrontHeadings='')">
       <xsl:number
         count="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
         level="multiple"/>
-    </xsl:if>
   </xsl:template>
   <xd:doc class="numbering" type="boolean"> Automatically number figures in
     front matter</xd:doc>
