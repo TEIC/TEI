@@ -216,33 +216,42 @@ $ID: requests a particular page
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:*" mode="generateNextLink">
-    <span class="nextLink"><xsl:text> </xsl:text><xsl:call-template name="i18n">
-        <xsl:with-param name="word">nextWord</xsl:with-param>
-      </xsl:call-template>: </span>
-      <a class="navigation">
-	<xsl:if test="$virtualPages='true'">
-	  <xsl:attribute name="onclick">
-	    <xsl:text>switchDiv('</xsl:text>
-	    <xsl:apply-templates mode="ident" select="."/>
-	    <xsl:text>');return false</xsl:text>
-	  </xsl:attribute>
-	</xsl:if>
+    <span class="nextLink">
+      <xsl:text> </xsl:text>
+      <xsl:call-template name="i18n">
+	<xsl:with-param name="word">nextWord</xsl:with-param>
+      </xsl:call-template>
+      <xsl:call-template name="navInterSep"/>
+    </span>
+    <a class="navigation">
+      <xsl:if test="$virtualPages='true'">
+	<xsl:attribute name="onclick">
+	  <xsl:text>switchDiv('</xsl:text>
+	  <xsl:apply-templates mode="ident" select="."/>
+	  <xsl:text>');return false</xsl:text>
+	</xsl:attribute>
+      </xsl:if>
       <xsl:attribute name="href">
-        <xsl:apply-templates mode="generateLink" select="."/>
+	<xsl:apply-templates mode="generateLink" select="."/>
       </xsl:attribute>
       <xsl:call-template name="headerLink">
-        <xsl:with-param name="minimal" select="$minimalCrossRef"/>
+	<xsl:with-param name="minimal" select="$minimalCrossRef"/>
       </xsl:call-template>
     </a>
   </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements tei:*</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:*" mode="generatePreviousLink">
-    <span class="previousLink"><xsl:text> </xsl:text><xsl:call-template name="i18n">
+    <span class="previousLink">
+      <xsl:text> </xsl:text>
+      <xsl:call-template name="i18n">
         <xsl:with-param name="word">previousWord</xsl:with-param>
-      </xsl:call-template>: </span>
+      </xsl:call-template>
+      <xsl:call-template name="navInterSep"/>
+    </span>
     <a class="navigation">
       <xsl:if test="$virtualPages='true'">
         <xsl:attribute name="onclick">
@@ -2620,9 +2629,13 @@ $ID: requests a particular page
     <xsl:param name="up"/>
     <xsl:param name="title"/>
     <xsl:if test="$up">
-      <span class="upLink"><xsl:text> </xsl:text><xsl:call-template name="i18n">
+      <span class="upLink">
+	<xsl:text> </xsl:text>
+	<xsl:call-template name="i18n">
           <xsl:with-param name="word">upWord</xsl:with-param>
-        </xsl:call-template>: </span>
+        </xsl:call-template>
+	<xsl:call-template name="navInterSep"/>
+	</span>
       <a class="navigation">
         <xsl:choose>
           <xsl:when test="$title">

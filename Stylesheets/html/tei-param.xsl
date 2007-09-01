@@ -613,4 +613,8 @@ Text to link back to from foot of ODD reference pages
 URL to link back to from foot of ODD reference pages
   </xd:doc>
 <xsl:param name="refDocFooterURL">index.html</xsl:param>
+
+<xsl:template name="navInterSep">
+  <xsl:text>: </xsl:text>
+</xsl:template>
 </xsl:stylesheet>
