@@ -651,7 +651,7 @@
   <xsl:template name="showAnAttribute">
     <tr>
       <td class="Attribute">
-	<xsl:text>@</xsl:text>
+	<span class="att">
 	<xsl:choose>
 	  <xsl:when test="tei:altIdent">
 	    <xsl:value-of select="tei:altIdent"/>
@@ -660,6 +660,7 @@
 	    <xsl:value-of select="@ident"/>
 	  </xsl:otherwise>
 	</xsl:choose>
+       </span>
       </td>
       <td >
 	<xsl:call-template name="makeDescription"/>
