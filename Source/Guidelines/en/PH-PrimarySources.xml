@@ -595,26 +595,21 @@ using the elements described in section <ptr target="#COED"/>.
 Those particularly relevant to this chapter include:
 <specList><specDesc key="abbr"/><specDesc key="expan"/><specDesc
 key="sic"/><specDesc key="corr"/><specDesc key="add"/><specDesc
-key="del"/><specDesc key="hi"/><specDesc key="gap"/><specDesc key="choice"/></specList>
+key="del"/><specDesc key="gap"/><specDesc key="choice"/></specList>
 	</p>
 <p>Several of these elements bear additional attributes for specifying who
 is responsible for the  interpretation represented by the markup,
 and the certainty associated with it. In addition, some
 of them bear an attribute allowing the markup to be categorised by
 type. 
-<specList><specDesc key="att.editLike" />
-    <specDesc key="att.typed"/>
+<specList><specDesc key="att.editLike" atts="cert resp source"/>
+    <specDesc key="att.typed" atts="type subtype"/>
 </specList>
 The specific aspect of the markup described by these attributes differs
 on different elements; for further discussion, see the relevant sections
 below, especially section <ptr target="#PHHR"/>.</p>
 <p>The following sections describe how the core elements just named may
-be used in the transcription of primary source materials. Examples of
-more complex application in scholarly transcriptions of these core
-elements are given, and of their extension by linkage with the
-<gi>note</gi>, <gi>respons</gi>, and <gi>certainty</gi> elements. Where the
-core elements do not satisfy the needs of scholarly transcription,
-additional elements are defined.</p></div>
+be used in the transcription of primary source materials. </p></div>
 
 <div type="div3" xml:id="PHAB"><head>Abbreviation and Expansion</head>
 
@@ -937,6 +932,40 @@ done but requires customization of the TEI system using techniques
 described in <ptr target="#MD"/>, in particular <ptr
 target="#MDMAL"/>, which should be consulted for further information
 on this topic.</p>
+<p>When making a correction in a source which forms part of a textual
+tradition attested by many witnesses, a textual editor will
+sometimes use a reading from one witness to correct the reading of the
+source text. In the general case, encoding this is best done using the
+mechanisms described in the module for textual criticism described in
+chapter <ptr target="#MD"/>. However, for simple cases, the
+<att>source</att> attribute of the <gi>corr</gi> attribute may
+suffice. In the passage from Chaucer's
+<title>Wife of Bath's Tale</title> mentioned above, Parkes proposes to
+emend the problematic word <mentioned>wight</mentioned> to
+<mentioned>wyf</mentioned> which is the reading found in the Cambridge
+manuscript Gg.1. 27. This may be simply represented as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+And of so parfit wis a 
+<choice><sic>wight</sic><corr resp="#mp" source="#Gg">wyf</corr></choice>
+ywroght?</egXML>
+The value of the <att>source</att> attribute here is, like the value
+of the <att>resp</att> attribute, a pointer, in this case indicating
+the manuscript used as a witness. Elsewhere in the transcribed text, a
+list of witnesses used in this text will be given, one of which has an
+identifier <code>Gg</code>. Each witness will be represented either by
+a <gi>witness</gi> element (see <ptr target="#TCAPLL"/>) or more fully
+by a <gi>msDesc</gi> element (see <ptr target="#MS"/>) :
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<msDesc xml:id="Gg">
+      <msIdentifier>
+        <settlement>Cambridge</settlement>
+        <repository>University Library</repository>
+        <idno>Gg.1. 27</idno>
+      </msIdentifier>
+<!-- further description of the manuscript here -->
+</msDesc></egXML>
+</p>
+
 <!-- here LB -->
 <p>The <gi>app</gi> element described in chapter <ptr target="#TC"/>
 provides a way of representing a number of alternative corrections, as
@@ -958,7 +987,9 @@ conjectures are held within <gi>corr</gi> elements, contained within the
 responsibility for each correction is attached to the outer
 <gi>rdg</gi>, and inherited by the inner <gi>corr</gi> element. Note
 too that the support for these conjectures in other manuscripts can be
-noted in the <att>wit</att> attribute in the <gi>rdg</gi> element.</p>
+noted in the <att>wit</att> attribute in the <gi>rdg</gi> element;
+this functions in exactly the same way as the <att>source</att>
+attribute mentioned above.</p>
 <p>The <att>cert</att> and <att>resp</att> attributes may be used with
 the <gi>corr</gi> element only to indicate respectively confidence in
 the content of the element (i.e. the correction), and confidence in the
@@ -982,7 +1013,7 @@ certainty and responsibility in the context of
 transcription.</p></div>
 
 <div type="div3" xml:id="PHAD"><head>Additions and Deletions</head>
-<p>Additions and deletions to a text may be described using the
+<p>Additions and deletions in a source text may be described using the
 following elements:
 <specList>
   <specDesc key="add"/>
@@ -994,11 +1025,11 @@ Of these, <gi>add</gi> and <gi>del</gi> are included in the core tag
 set, while <gi>addSpan</gi> and <gi>delSpan</gi> are available only when
 using the module defined in this chapter.</p>
 <p>As described in section <ptr target="#COED"/>, the <gi>add</gi> element
-indicating material added may be used to signify manuscript additions or
-insertions, be they authorial or scribal. In the autograph manuscript
+indicating material added may be used to signify any manuscript
+addition observed in the text, whether it is considered to be authorial or scribal. In the autograph manuscript
 of Max Beerbohm's <title>The Golden Drugget</title>,<note place="foot">In
   Pierpont Morgan MA 3391 (Klinkenborg 123).</note>
-the author's addition of "do ever" may be recorded as follows, with the
+the author's addition of <mentioned>do ever</mentioned> may be recorded as follows, with the
 <att>hand</att> attribute indicating that the addition was Beerbohm's
 by referencing a <gi>hand</gi> element defined elsewhere in the document:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Some things are best at first sight. Others — and
@@ -1036,8 +1067,8 @@ characteristics may conveniently be recorded as attributes of the
 <gi>add</gi> or <gi>del</gi> element. The specific attributes required
 may be added to the formal declaration of these elements by using the
 techniques described in chapter <ptr target="#MD"/>.</p>
-<p>The <gi>add</gi> and <gi>del</gi> elements defined in the core tag
-set available in all TEI documents will suffice for describing typically
+<p>The <gi>add</gi> and <gi>del</gi> elements defined in the core module
+suffice for describing typically
 brief additions and deletions in the text being transcribed. On
 occasion, it will be necessary to record an addition or deletion which
 crosses a structural boundary in the text being encoded, for example the
@@ -1052,17 +1083,17 @@ insertion of a gathering containing four neo-Eddic poems into
 <!-- added clarificatory sentence -->
 A <gi>hand</gi> element is
 first declared, within the header of the document, to associate
-the identifier <ident>heol</ident> with Helgi. In the body of the
+the identifier <val>heol</val> with Helgi. In the body of the
 text, an <gi>addSpan</gi> element
 is placed to mark the beginning of the span of added text.  The
 <att>hand</att> attribute ascribes the responsibility for the addition
-to the manuscript to Helgi, and the <att>to</att> attribute declares the
+to the manuscript to Helgi, and the <att>spanTo</att> attribute declares the
 identifier for the anchor which marks the end of the added text:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><hand xml:id="heol" n="Helgi Ólafsson"/>
 <addSpan n="added gathering" hand="#heol" spanTo="#p025"/>
 <anchor xml:id="p025"/>
 </egXML></p>
-<p>In this example of the use of the <gi>delSpan</gi> element, a full
+<p>In the following example of the use of the <gi>delSpan</gi> element, a full
 two lines of Thomas Moore's autograph of the second version of
 <title>Lalla Rookh</title><note place="foot">In Pierpont Morgan MA 310,
 (Klinkenborg 23).</note> are marked for omission by vertical
@@ -1071,7 +1102,7 @@ strike-through. The two lines cross the structural line division marked
 <gi>del</gi> element, since it would have to span the <gi>l</gi> marker.
 The lines also themselves include a further deletion and addition.  The
 <gi>delSpan</gi> element indicates the begining of the span marked for
-deletion, with the <att>to</att> attribute giving the identifier
+deletion, with the <att>spanTo</att> attribute giving the identifier
 <val>#delend01</val> for an <gi>anchor</gi> element which marks the end of the span of text so
 marked:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><l n="1">
@@ -1091,15 +1122,7 @@ section <ptr target="#PHDA"/> should be used to signal the areas of
 text which cannot be read with confidence; it too may be enclosed
 within a <gi>del</gi> element.  See further section <ptr
 target="#PHOM"/> and section <ptr target="#PHDA"/>.</p>
-<p>The elements <gi>add</gi>, <gi>del</gi>, and <gi>gap</gi> are defined
-in the Common Core module and are available in all TEI documents.  The
-elements <gi>addSpan</gi> and <gi>delSpan</gi> have the following formal
-declarations:
-<specGrp xml:id="DTCAD" n="Added and Deleted Spans">
-&ex;
-&addSpan;
-&delSpan;
-</specGrp></p></div>
+</div>
 <div type="div3" xml:id="PHSU"><head>Substitutions</head>
 <p>Substitution of one word or phrase for another is
 perhaps the most common of all phenomena requiring special treatment
@@ -1273,11 +1296,7 @@ encoded:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">For I hate this
 <restore hand="#dhl" means="marginalStetNote"><del>my</del></restore>
 body</egXML></p>
-<p>The <gi>restore</gi> element is defined as follows:
-<specGrp xml:id="DPHCD" n="Cancelled Deletions">
-&restore;
-</specGrp>
-	</p></div>
+	</div>
 <div type="div3" xml:id="PHOM"><head>Text Omitted from or Supplied in the Transcription</head>
 <p>Where text is not transcribed, whether because of damage to the
 original, or because it is illegible, or because of editorial policy,
@@ -1320,11 +1339,7 @@ humble Servt</supplied> Sydney Smith</egXML>
 Both <gi>gap</gi> and <gi>supplied</gi> may be used in combination with
 <gi>unclear</gi>, <gi>damage</gi>, and other elements; for
 discussion, see section <ptr target="#PHCOMB"/>.</p>
-<p>As noted, <gi>gap</gi> is defined in the Common Core module.  The
-<gi>supplied</gi> element is declared thus:
-<specGrp xml:id="DPHOM" n="Supplied Text">
-&supplied;
-</specGrp></p></div></div>
+</div></div>
 <div type="div2" xml:id="PHPH"><head>Non-Linguistic Phenomena in the Source</head>
 <p>This section describes methods for recording a number of
 non-linguistic characteristics of the source text which are often of
@@ -1416,12 +1431,7 @@ for the <att>ink</att> attribute on the <gi>handShift</gi> element:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><l>When wolde the cat dwelle in his ynne</l>
 <handShift new="#h2" ink="black"/>
 <l>And if the cattes skynne be slyk and gaye</l></egXML></p>
-<p>These elements are declared as follows:
-<specGrp xml:id="DPHHD" n="Hand Shifts">
-&hand;
-&handShift;
-&handList;
-</specGrp></p></div>
+</div>
 <div type="div3" xml:id="PHHR"><head>Hand, Responsibility, and Certainty Attributes</head>
 <p>The <att>hand</att> and <att>resp</att> attributes have similar, but
 not identical, meanings.  Observe their distinctive uses in the
@@ -1626,11 +1636,7 @@ his att<unclear>ention</unclear></egXML>
 The <att>cert</att> attribute on the <gi>unclear</gi> element may be
 used to indicate the level of editorial confidence in the reading
 contained within it.</p>
-<p>The <gi>damage</gi> element is defined formally as follows:
-<specGrp xml:id="DPHDA" n="Damage and Illegiblity">
-&damage;
-</specGrp>
-The <gi>unclear</gi> element is defined in section <ptr target="#COED"/>.</p></div>
+</div>
 <div type="div3" xml:id="PHCOMB"><head>Use of the Gap, Del, Damage, Unclear and Supplied Tags in Combination</head>
 <p>The <gi>gap</gi>, <gi>damage</gi>, <gi>unclear</gi>,
 <gi>supplied</gi>, and <gi>del</gi> elements may be closely allied in
@@ -1739,10 +1745,7 @@ value of the <att>reason</att> attribute.  The source of the supplied
 text is shown by the value of the <att>source</att> attribute as the
 Hengwrt manuscript; the transcriber responsible for supplying the text
 is ES.
-The <gi>space</gi> element is formally defined thus:
-<specGrp xml:id="DPHSP" n="Spaces in the source">
-&space;
-</specGrp>	</p></div>
+</p></div>
 <div type="div3" xml:id="PHLN"><head>Lines</head>
 <p>The most common form of marking of text in manuscripts is by lines
 written under, beside or through the text.  The lines themselves may be
@@ -1852,11 +1855,7 @@ respectively.</p>
 <!-- Donne, Poems 1633, p. 29 -->
 	<!-- [Need several examples, all fuller than this one.     -->
 	<!-- Take from DOSL materials? -MSM]                          --></p>
-<p>The formal declaration for the <gi>fw</gi> element is
-this:
-<specGrp xml:id="DTCHD" n="Headers and footers">
-&fw;
-</specGrp></p></div>
+</div>
 <div type="div2" xml:id="PHTRXX"><head>Other Primary Source Features not Covered in These Guidelines</head>
 <p>We repeat the advice given at the beginning of this chapter, that
 these recommendations are not intended to meet every transcriptional
@@ -1869,4 +1868,39 @@ medium of the inscribing implement, the layout of the inscription upon
 the material, the organisation of the carrier materials themselves (as
 quiring, collation, etc.), authorial instructions or scribal markup,
 etc.  Some of these issues may be covered in future editions of these
-guidelines.</p></div></div>
+guidelines.</p></div>
+<div><head>Formal declarations for transcriptional elements</head>
+<p>The elements provided by this module are formally  declared as
+follows:
+<specGrp xml:id="DTCAD" n="Added and Deleted Spans">
+&ex;
+&addSpan;
+&delSpan;
+</specGrp>
+<specGrp xml:id="DPHCD" n="Cancelled Deletions">
+&restore;
+</specGrp>
+<specGrp xml:id="DPHOM" n="Supplied Text">
+&supplied;
+</specGrp>
+<specGrp xml:id="DPHHD" n="Hand Shifts">
+&hand;
+&handShift;
+&handList;
+</specGrp>
+<specGrp xml:id="DPHDA" n="Damage and Illegiblity">
+&damage;
+</specGrp>
+<specGrp xml:id="DPHSP" n="Spaces in the source">
+&space;
+</specGrp>
+<specGrp xml:id="DTCHD" n="Headers and footers">
+&fw;
+</specGrp>
+
+
+
+
+</p>
+</div>
+</div>
