@@ -26,6 +26,7 @@
 <xsl:param name="autoToc">false</xsl:param>
 <xsl:param name="numberFrontHeadings">true</xsl:param>
 <xsl:param name="cssFile">guidelines-beta.css</xsl:param>
+<xsl:param name="cssPrintFile">guidelines-print-beta.css</xsl:param>
 <xsl:param name="displayMode">both</xsl:param>
 
   <xsl:template name="includeCSS">
@@ -145,12 +146,15 @@
     <xsl:variable name="ident">
           <xsl:apply-templates mode="ident" select="."/>
     </xsl:variable>
+    <span class="permalink">
     <a href="#{$ident}" 
        class="permalink" 
        title="Link to this section"> &#x00B6;</a>
+    </span>
   </xsl:template>  
    
   <xsl:template name="startDivHook">
+    <xsl:if test="not(parent::tei:div) or not(local-name(preceding::*[1])='head')">
     <table class="miniTOC">
 	<tr>
 	  <td>
@@ -160,7 +164,7 @@
 	      <div>
 		<xsl:attribute name="style">
 		  <xsl:text>margin-left:</xsl:text>
-		  <xsl:value-of select="count(ancestor::tei:div)"/>
+		  <xsl:value-of select="count(ancestor::tei:div) + 1"/>
 		  <xsl:text>em;</xsl:text>
 		</xsl:attribute>
 		<a class="UP">
@@ -194,7 +198,7 @@
 	  </tr>
 	</xsl:if>
       </table>
-
+    </xsl:if>
   </xsl:template>
     
 
@@ -226,10 +230,37 @@
   </xsl:template>
 
   <xsl:template name="numberFrontDiv">
+    <xsl:if test="count(ancestor::tei:div)&lt;1">
       <xsl:number
-	  format="I.1.1.1.1"
+	  format="i.i"
 	  count="tei:div"
 	  level="multiple"/>
+    </xsl:if>
   </xsl:template>
+
+  <xsl:template name="myi18n">
+    <xsl:param name="word"/>
+    <xsl:choose>
+      <xsl:when test="$word='previousWord'">
+	<span class="icon">
+	  <xsl:text>&#8656; </xsl:text>
+	</span>
+      </xsl:when>
+      <xsl:when test="$word='contentsWord'">
+	<xsl:text> </xsl:text>
+      </xsl:when>
+      <xsl:when test="$word='tocWords'">
+	<xsl:text> </xsl:text>
+      </xsl:when>
+      <xsl:when test="$word='nextWord'">
+	<span class="icon">
+	  <xsl:text>&#8658; </xsl:text>
+	</span>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+
+<xsl:template name="navInterSep">
+</xsl:template>
 
 </xsl:stylesheet>
