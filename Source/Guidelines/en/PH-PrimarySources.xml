@@ -764,13 +764,13 @@ to use the markup for critical apparatus; an example is given in
 section <ptr target="#TCTR"/>.</p>
 </div>
 
-<!-- to here LB 29/8 -->
 
 <div type="div3" xml:id="PHCC"><head>Correction and Conjecture</head>
 
 <p>The <gi>sic</gi>, <gi>corr</gi>, and <gi>choice</gi> elements,
-defined in the <ident type="module">core</ident> module may be used to
-indicate any corrections introduced when transcribing a witness. For
+defined in the <ident type="module">core</ident> module should be used to
+indicate passages deemed in need of correction, or actually corrected,
+during the  transcription of a source. For
 example, in the manuscript of William James's <title>A Pluralistic
 Universe</title>, edited by Fredson Bowers (Cambridge: Harvard
 University Press, 1977) a sentence first written <q rend="display">One
@@ -785,7 +785,7 @@ have lived ...</egXML> or the two possibilities might be represented
 as a choice: <egXML xmlns="http://www.tei-c.org/ns/Examples">But
 <choice><sic>One</sic><corr>one</corr></choice> must have lived
 ...</egXML></p>
-<p>In this example from Albertus Magnus,<note place="foot"><title>De
+<p>Similarly, in this example from Albertus Magnus,<note place="foot"><title>De
 Nutrimento et Nutribili, Tractatus 1</title>, fol 217r col b of Merton
 College Oxford MS O.2.1 (Parkes pl. 16).</note>
 both a manuscript error <mentioned>angues</mentioned> and its correction
@@ -793,10 +793,20 @@ both a manuscript error <mentioned>angues</mentioned> and its correction
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Nos autem iam ostendimus quod nutrimentum
 et <choice><sic>angues</sic><corr>augens</corr></choice>.</egXML>
 </p> 
-<p>When the correction provided by the transcriber takes the form of
-an addition, the <gi>supplied</gi> element discussed below should be
-used. In this example, from George Moore's draft of additional materials for
-<q>Memoirs of My Dead Life</q>,<note place="foot">In Pierpont Morgan MA
+<p>Note that the <gi>corr</gi> element is used to provide a corrected
+form which is <emph>not</emph> present in the source; in the case of a
+correction made in the source itself, whether scribal, authorial, or
+by some other hand, the <gi>add</gi>, <gi>del</gi>
+and <gi>subst</gi> elements described in <ptr target="#PHAD"/> should be
+used.</p>
+<p>The <gi>sic</gi> element is used to mark passages considered by the
+transcriber to be erroneous; in such cases, the <gi>corr</gi> element
+indicates the transcriber's correction of them. Where the transcriber
+considers that one or more words have been erroneously omitted in the
+original source and corrects this omission, the <gi>supplied</gi> element discussed in <ptr
+target="#PHOM"/> should be used in preference to <gi>corr</gi>. Thus,
+in the following example, from George Moore's draft of additional materials for
+<title>Memoirs of My Dead Life</title>,<note place="foot">In Pierpont Morgan MA
   3421, from <title>British Literary Manuscripts/Series II:  from 1800
   to 1914</title>, by V. Klinkenborg, H.Cahoon and C. Ryskamp (New York:
   Pierpont Morgan Library, 1981).</note>
@@ -808,7 +818,7 @@ create nothing <supplied>we</supplied> develope.</egXML>
 choice as to whether to record simply that there is an apparent error,
 or simply that a correction has been applied, or to record both
 possible readings within a  <gi>choice</gi> element is
-left to the encoder. The choice is likely to be a matter of editorial policy,
+left to the encoder. The decision is likely to be a matter of editorial policy,
 which might be applied consistently throughout or decided case by case.
 If the highest priority is to present an uncorrected transcription while
 noting perceived errors in the original, the choice will typically
@@ -816,51 +826,125 @@ be to use only <gi>sic</gi> throughout. If the highest priority is to
 present a reading transcription, while indicating that perceived errors
 in the original have been corrected, the choice will be to use
 only <gi>corr</gi> throughout.</p>
+
 <p>Further information may be attached to instances of these elements by
 the <gi>note</gi> element and <att>resp</att> and <att>cert</att>
-attributes. Here, two separate corrections in Dudo of S. Quentin<note place="foot"><title>De moribus et actis primorum Normannie ducum</title>,
-in fol 4v of British Library MS Harley 3742, Parkes pl 6(i).</note>
-are assigned the same note. First the correction is represented within
-a <gi>choice</gi> element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">quamuis <choice xml:id="sic01"><sic>mens</sic><corr>iners</corr></choice> que nutu dei
-gesta sunt ... unde esset uiriliter
-<choice xml:id="sic02"><corr>uegetata</corr><sic>negata</sic></choice></egXML>
-then the note, linked to the <att>xml:id</att> of the two <gi>choice</gi> elements
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><note target="#sic01 #sic02">Substitution of a more
-familiar word which resembles graphically what the
-scribe should be copying but which
-does not make sense in the context.</note></egXML></p>
-<p>The <att>cert</att> attribute may also be used with the <gi>corr</gi>
-element to signify the conjectural status of a particular editorial
-reading, with the <att>resp</att> attribute used to identify the scholar
-responsible for the conjecture by pointing to them. For example,
-assuming that some element in the header or elsewhere exists to identify
-Donaldson himself, then editorial confidence
-in E. Talbot Donaldson's emendation of the Hengwrt manuscript reading
-<mentioned>wight</mentioned> to <mentioned>wright</mentioned> in line 117 of Chaucer's
-<title>The Wife of Bath's Prologue</title> may be marked as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<!-- ... --> <name xml:id="ETD">E Talbot Donaldson</name> <!-- ... -->
-Telle me also, to what conclusioun
+attributes. Instances of these elements may also be classified
+according to any convenient typology using the <att>type</att>
+attribute. </p>
+<p>For example, consider the following encoding of an
+emendation in the  Hengwrt manuscript proposed by  E. Talbot
+Donaldson: 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">Telle me also, to what conclusioun
 Were membres maad, of generacioun
 And of so parfit wis a 
-<choice xml:id="corr117"><sic>wight</sic><corr resp="#ETD" cert="medium">wright</corr></choice>
+<choice xml:id="corr117"><sic>wight</sic><corr>wright</corr></choice>
 ywroght?
-</egXML>
-The editor might also conveniently add a note referring to Donaldson's
-discussion of this passage:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><note target="#corr117">This emendation of the Hengwrt copy text,
+<!-- ... -->
+<note target="#corr117">This emendation of the Hengwrt copy text,
 based on a Latin source and on the reading of three late
 and usually unauthoritative manuscripts, was proposed
 by E. Talbot Donaldson in <bibl><title>Speculum</title> 40 (1965)
-626–33.</bibl></note></egXML></p>
-<p>Alternative corrections within a transcription of a single witness
-may be held within an <gi>app</gi> structure, in the same way that
-alternative expansions are so grouped in the example given in section
-<ptr target="#TCTR"/>. Here, Donaldson's conjectured emendation of the
-Hengwrt manuscript may be recorded not only alongside the editorial
-transcription but also alongside another conjecture:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">And of so parfit wis a
+626–33.</bibl></note>
+</egXML>
+The <gi>note</gi> element discussed in <ptr target="#CONO"/> may be
+used to give a more detailed discussion of the motivation for or scope
+of a correction. If linked by means of a pointer (as in this example)
+it may be located anywhere convenient within the transcription;
+typically all detailed notes will be collected together in a separate
+<gi>div</gi> element in the <gi>back</gi>. Alternatively, the pointer
+may be omitted, and the <gi>note</gi> placed immediately adjacent to
+the element being annotated. The advantage of the former solution  is
+that it permits the same annotation to refer to several corrections. </p>
+<p>The attribute <att>cert</att> may be used to indicate the
+degree of confidence ascribed by the encoder to the proposed
+emendation on a broad scale: high, medium, or low. The attribute
+<att>resp</att> is used to indicate who is responsible for the
+proposed emendation. Its value is a pointer, which will typically
+indicate a <gi>respStmt</gi> or <gi>name</gi> element in the header of the transcribed
+document, but can point anywhere, for example to some online authority
+file. Using these two attributes, we the <gi>corr</gi> element
+presented above might usefully be enhanced as follows:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<!-- somewhere in the header ... --> 
+<name xml:id="ETD">E Talbot Donaldson</name> 
+<!-- ... -->
+And of so parfit wis a 
+<choice><sic>wight</sic><corr resp="#ETD" cert="medium">wright</corr></choice>
+ywroght?
+</egXML></p>
+
+<p>As remarked above, where the same annotation applies to several
+corrections, this may be represented by supplying multiple pointers on the
+note. Consider for example such
+corrections as the following, in Dudo of S. Quentin<note
+place="foot"><title>De moribus et actis primorum Normannie
+ducum</title>, fol 4v of British Library MS Harley 3742, Parkes pl
+6(i).</note>. Parkes cites two cases in this manuscript of the same
+phenomenon: 
+<egXML
+xmlns="http://www.tei-c.org/ns/Examples">quamuis <choice xml:id="sic-1"><sic>mens</sic><corr>iners</corr></choice> que nutu dei
+gesta sunt ... unde esset uiriliter <choice xml:id="sic-2"><corr>uegetata</corr><sic>negata</sic></choice></egXML>
+which may be described as follows:
+<egXML
+xmlns="http://www.tei-c.org/ns/Examples"><note target="#sic-1 #sic-2">Substitution of a more familiar word which resembles
+graphically what the scribe should be copying but which does not make
+sense in the context.</note></egXML>
+</p>
+<p>The <att>target</att> attribute on the <gi>note</gi> element
+indicates the <gi>choice</gi> elements which exemplify this kind of
+scribal error. This necessitates the addition of an identifier to each
+<gi>choice</gi> element. However, if the number of corrections is large
+and the number of notes is small, it may well be both more practical
+and  more appropriate to
+regard the collection of annotations as constituting a typology and
+then use the <att>type</att> attribute. Suppose that the note given
+above is one of half a dozen possible kinds of corrected phenomena
+identified in a given text; others might include, say, <q>repetition
+of a word from the preceding line</q>, etc. The <att>type</att>
+attribute on the <gi>choice</gi> element can be used to specify an
+arbitrary code for the particular kind of correction (or other
+editorial intervention) identified within it. This code can be chosen
+freely and is not treated as a pointer. 
+<egXML
+xmlns="http://www.tei-c.org/ns/Examples">quamuis <choice type="graphSubs"><sic>mens</sic><corr>iners</corr></choice> que nutu dei
+gesta sunt ... unde esset uiriliter <choice type="graphSubs"><corr>uegetata</corr><sic>negata</sic></choice></egXML>
+In addition, the conscientious encoder will provide documentation
+explaining the circumstances in which particular codes are judged
+appropriate. A suitable location for this might be within the
+<gi>correction</gi> element of the <gi>encodingDesc</gi> of the
+header, which might include a <gi>list</gi> such as the following:
+<egXML
+xmlns="http://www.tei-c.org/ns/Examples">
+<correction>
+<p>The following codes are used to categorise corrections identified
+in this transcription:
+<list type="gloss">
+<label>graphSubs</label>
+<item>Substitution of a more familiar word which resembles
+graphically what the scribe should be copying but which does not make
+sense in the context.</item>
+<!-- ... -->
+</list></p></correction></egXML>
+A <att>subtype</att> attribute may be used in conjunction with the
+<att>type</att> for subclassification purposes: the above examples
+might thus be represented as <gi>choice type="substitution"
+subtype="graphicResemblence"</gi> for example. </p>
+<p>For a given project, it may well be desirable to limit the possible
+values for the <att>type</att> or <gi>subtype</gi> attributes automatically. This is easily
+done but requires customization of the TEI system using techniques
+described in <ptr target="#MD"/>, in particular <ptr
+target="#MDMAL"/>, which should be consulted for further information
+on this topic.</p>
+<!-- here LB -->
+<p>The <gi>app</gi> element described in chapter <ptr target="#TC"/>
+provides a way of representing a number of alternative corrections, as
+in a conventional critical edition. Using this element, Donaldson's
+conjectured emendation of the Hengwrt manuscript may be recorded not
+only alongside the editorial transcription but also alongside another
+conjecture: <egXML xmlns="http://www.tei-c.org/ns/Examples">And of so
+parfit wis a
 <app>
   <rdg wit="#Hg">wight</rdg>
   <rdg wit="#Ln #Ry2 #Ld" resp="#ETD"> <corr>wright</corr> </rdg>
@@ -889,10 +973,14 @@ follows:
 <sic corr="wright" resp="#etd" cert="70">wight</sic>
 ywroght?</egXML>
 --> 
-If it is desired to express aspects of certainty and responsibility for
-some other aspect of the use of these elements, then the mechanisms
-discussed in chapter <ptr target="#CE"/> should be used. See also <ptr target="#PHHR"/> for discussion of the issues of certainty and
-responsibility in the context of transcription.</p></div>
+
+If it is desired to express aspects of certainty and responsibility
+for some other aspect of the use of these elements, then the
+mechanisms discussed in chapter <ptr target="#CE"/> should be
+used. See also <ptr target="#PHHR"/> for discussion of the issues of
+certainty and responsibility in the context of
+transcription.</p></div>
+
 <div type="div3" xml:id="PHAD"><head>Additions and Deletions</head>
 <p>Additions and deletions to a text may be described using the
 following elements:
