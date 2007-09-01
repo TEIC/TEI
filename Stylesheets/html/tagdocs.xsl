@@ -525,7 +525,7 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <b>
+    <span class="specList-{local-name(.)}">
       <a>
         <xsl:attribute name="href">
           <xsl:choose>
@@ -559,7 +559,7 @@
 	  </xsl:if>
 	</xsl:for-each>
       </a>
-    </b>
+    </span>
     <xsl:text> </xsl:text>
     <xsl:call-template name="makeDescription"/>
     <xsl:choose>
