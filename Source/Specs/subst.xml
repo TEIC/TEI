@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date:  $
+
+$Id:  $
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="transcr" ident="subst">
+  <gloss>substitution</gloss>
+  <desc>groups one or more deletions with one or more additions when
+  the combination is to be regarded as a single intervention in the text.</desc>
+  <classes>
+    <memberOf key="model.pPart.editorial"/>
+    <memberOf key="att.transcriptional"/>
+  </classes>
+  <content>
+    <rng:oneOrMore>
+      <rng:choice>
+        <rng:ref name="del"/>
+        <rng:ref name="delSpan"/>
+      </rng:choice>
+    </rng:oneOrMore>
+    <rng:oneOrMore>
+      <rng:choice>
+        <rng:ref name="add"/>
+        <rng:ref name="addSpan"/>
+      </rng:choice>
+    </rng:oneOrMore>
+  </content>
+</elementSpec>

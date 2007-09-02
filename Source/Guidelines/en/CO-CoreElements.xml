@@ -823,7 +823,7 @@ element <gi>note</gi> described in section <ptr target="#CONO"/>, or the
    &soCalled;
  </specGrp>
 	</p></div>
-<div type="div3" xml:id="COHQU"><head>Terms, Glosses, Equivalents, and Descriptions</head>
+<div type="div3" xml:id="COHQU"><head>Terms, Glosses, Equivalents and Descriptions</head>
 <p>This section describes a set of textual elements which are
 used to provide a gloss, alternate identification or description of
 something.</p>
@@ -1126,8 +1126,8 @@ omissions</item></list></p>
 transcriptional and editorial work is given in chapter <ptr target="#PH"/>.</p>
 <div type="div3" xml:id="COEDCOR"><head>Apparent Errors</head>
 <p>When the copy text is manifestly faulty, an encoder or transcriber
-may elect simply to correct it without comment. For scholarly
-purposes, it will often be more generally useful to record both the
+may elect simply to correct it without comment, although for scholarly
+purposes it will often be more generally useful to record both the
 correction and the original state of the text. The elements described
 here enable all three approaches, and allows the last to be done is
 such a way as make it easy for software to present
@@ -1170,18 +1170,24 @@ wrapped in a <gi>choice</gi>:
 the emendation, this might be done as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">… marginal comments which indicate that the
   <choice>
-    <corr resp="#PsEp">dates</corr>
+    <corr resp="#msm">dates</corr>
     <sic>date's</sic>
   </choice> mentioned in the main body of the text are
   incorrect.
-<bibl xml:id="PsEp"><title>Pseudodoxia Epidemica: the book of popular
-errors</title>...</bibl></egXML>. Here the <att>resp</att> attribute
+<!-- within the header for this document ... -->
+<respStmt>
+<resp>editor</resp>
+<name xml:id="msm">C.M. Sperberg McQueen</name>
+</respStmt>
+</egXML>. Here the <att>resp</att> attribute
 has been used to indicate responsibility for the correction. Its value (<val>#MSM</val>) is an example of the <term>pointer</term> values discussed
   in section <ptr target="#COXR"/>; in this case, it points to a
-  bibliographic element giving the source of the correction.  It might
-  equally well be used to point to some other element, for example one
-  of a list of names supplied in the TEI header associated with the
-  text, or at some other location. The <att>resp</att> attribute is
+  <gi>name</gi> element within the TEI Header, but any element might be
+  indicated in this way, including for example a <gi>person</gi>
+  element (if the module described in <ptr target="#ND"/> has been
+  included), or one of the bibliographic elements described <ptr
+  target="#COBI"/>, if the correction has been taken from some other
+  source. The <att>resp</att> attribute is
   available for all elements which are part of the <ident
   type="class">att.editLike</ident> class. The same
   class makes available a  <att>cert</att> attribute,which may be used
@@ -1196,20 +1202,28 @@ uncertainty is expressed concerning a commonly-accepted emendation:-->
 That grew the more by reaping</egXML>
 <!-- Antony and Cleopatra, Act 5, scene 2 -->
 See further the discussion in section <ptr target="#PHCC"/>.</p>
-<p>Where the correction takes the form of adding text, the encoder
-must choose whether to use the <gi>corr</gi> (or <gi>sic</gi>) tag,
-the <gi>add</gi> tag (see section <ptr target="#COEDADD"/> below), or
-the more detailed facilities provided by the primary source
-description module described in chapter <ptr target="#PH"/>. The
+<p>Where, as here,  the correction takes the form of adding text not otherwise
+present in the text being encoded, the encoder
+should use the <gi>corr</gi> element. Where the correction is present
+in the text being encoded, and consists of some combination of visible
+additions and deletions, the elements <gi>add</gi> or <gi>del</gi>
+should be used: see further section <ptr target="#COEDADD"/>
+below. Where the correction takes the form of addition of material not
+present in the original because of physical damage or illegibility,
+the <gi>supplied</gi> element may be used. Where the
+<soCalled>correction</soCalled> is simply a matter of 
+expanding an abbreviation the <gi>ex</gi> element may be used. These
+and other elements to support the detailed encoding of  authorial or scribal
+interventions of this kind are all provided by the module described in
+chapter <ptr target="#PH"/>. 
+
+<!-- The
 following discussion may be helpful when making this decision:
 <list type="simple">
 <item>where the correction is an addition by a scribe or author
 in a manuscript or other primary source (typescript, proof or galley,
-etc.) then either <gi>corr</gi> (or <gi>sic</gi>) or <gi>add</gi> might be
-appropriate, depending on the circumstances. The <gi>add</gi> tag is
-more expressive, and may convey information on just how the addition
-was performed (hand, place, etc.) which the <gi>corr</gi> tag cannot.
-See further the discussion in section <ptr target="#PHSU"/>.</item>
+etc.) the  <gi>add</gi> element should be used.
+See further the discussion in section <ptr target="#PHAD"/>.</item>
 <item>where the correction is an addition by a transcriber or editor,
 correcting a perceived deficiency in the text but in circumstances where
 there is no clearly assertable reason for the deficiency (as a
@@ -1222,7 +1236,12 @@ damage to the page) which the encoder wishes to record, or when
 supplying text from a parallel version of the text, the
 <gi>supplied</gi> element provided by the primary
 source description module should be used (see section <ptr target="#PHCC"/>).</item>
-</list></p><p>The formal definition of these elements is as follows:
+</list>-->
+
+<!-- removed the foregoing cos it is at best inconsistent and at
+worst WRONG -->
+
+</p><p>The formal definition of these elements is as follows:
 <specGrp xml:id="DCOEDC" n="Editorial tags for correction">
 &sic;
 &corr;
@@ -1342,8 +1361,8 @@ That is, there were two stars on the easterly side and one to the west; …</egX
 where words or phrases have been added or deleted in the copy text.
 They are not appropriate where longer passages have been added or
 deleted, which span several elements; for these, the elements
-<gi>addSpan</gi> and <gi>delSpan</gi>, or other mechanisms described in
-chapter <ptr target="#PH"/> must be used.</p>
+<gi>addSpan</gi> and <gi>delSpan</gi> described in
+chapter <ptr target="#PHAD"/> must be used.</p>
 <p>Additions to a text may be recorded for a number of reasons.
 Sometimes they are marked in a distinctive way in the source text, for
 example by brackets or insertion above the line (<term rend="noindex">supralinear</term> insertion),<index><term>additions</term><index><term>supralinear</term></index></index><index><term>insertions</term><index><term>supralinear</term></index></index><index><term>supralinear insertions</term></index> as in
@@ -1423,19 +1442,19 @@ splendour of Corinthian white and gold</l></egXML>
 <!-- The Waste Land. a facsimile and transcript... edited by -->
 	<!-- Valerie Eliot. Faber, 1971. p.37 -->
 <!-- the preceding example had del and add wrapped in a choice: that's
-definite nonsense, but it;s not clear what the combining element
+definite nonsense, but it's not clear what the combining element
 should be LB 14 dec 04 -->
  </p>
 <p>The <gi>del</gi> element should not be used where the deletion is
 such that material cannot be read with confidence, or read at all, or
 where the material has been omitted by the transcriber or editor for
-some other reason. Where the material cannot be read with confidence
-following deletion, the <gi>unclear</gi> tag should be used with the
+some other reason. Where the material deleted cannot be read with
+confidence, the <gi>unclear</gi> tag should be used with the
 <att>reason</att> attribute indicating that the difficulty of
 transcription is due to deletion. Where material has been omitted by
 the transcriber or editor, this may be indicated by use of the
-<gi>corr</gi> (or <gi>sic</gi>) and <gi>gap</gi> elements. Observe that
-the distinction between recommended uses of the <gi>del</gi>,
+ <gi>gap</gi> element. <!-- Observe
+that the distinction between recommended uses of the <gi>del</gi>,
 <gi>corr</gi>, and <gi>gap</gi> tags parallels the distinction drawn
 between the <gi>add</gi>, <gi>corr</gi>, and <gi>supplied</gi> tags in
 section <ptr target="#COEDCOR"/> and section <ptr target="#PHCC"/>:
@@ -1463,7 +1482,10 @@ and hence the deletion of text. Neither the <gi>del</gi> nor
 <gi>corr</gi> tag should be used in these cases.</item></list>
  </p><p>For any detailed transcription of a manuscript or typescript with
 more than trivial amounts of alteration, the reader should consult
-chapter <ptr target="#TC"/>, and chapter <ptr target="#PH"/>.</p><p>These elements are formally defined as follows:
+chapter <ptr target="#TC"/>, and chapter <ptr target="#PH"/>.</p>
+-->
+</p>
+<p>These elements are formally defined as follows:
 <specGrp xml:id="DCOEDA" n="Other editorial tags">
 &gap;
 &add;
@@ -1936,7 +1958,7 @@ it should specify the equivalent date in the Gregorian calendar. </p>
 &time;
 </specGrp>
  </p></div>
-<div type="div3" xml:id="CONAAB"><head>Abbreviations and their Expansions</head>
+<div type="div3" xml:id="CONAAB"><head>Abbreviations and Their Expansions</head>
 <p>It is sometimes desirable to mark abbreviations in the copy text,
 whether to trigger special processing for them, to provide the full form
 of the word or phrase abbreviated, or to allow for different possible
@@ -2425,7 +2447,7 @@ text search. The role of an index is to provide access via
 keywords and phrases which are not necessarily present in the text
 itself, but must be added by the skill of the indexer. 
 </p>
-<div type="div4" xml:id="CONOIXpre"><head>Pre-existing Indexes</head>
+<div type="div4" xml:id="CONOIXpre"><head>Pre-existing indexes</head>
 <p>When encoding a pre-existing text, therefore, if such an index
 is present it may be advisable to retain it along with the text,
 rather than attempt to generate it automatically. Elements discussed
@@ -2479,7 +2501,7 @@ similar methods may also be used to encode a table of contents, as
 further exemplified in section <ptr target="#DSFRONT"/>.
 </p>
 </div>
-<div type="div4" xml:id="CONOIXgen"><head>Auto-generated Indexes</head>
+<div type="div4" xml:id="CONOIXgen"><head>Auto-generated indexes</head>
 <p>It can also be useful, however, to generate a new index from a
 machine-readable text, whether the text is being written for the first time
 with the tags here defined, or as an addition to a text transcribed from
@@ -2710,7 +2732,7 @@ anywhere within the <gi>text</gi> element.
  </p></div>
 </div>
 </div>
-<div type="div2" xml:id="COGR"><head>Graphics and Other Non-textual Components</head>
+<div type="div2" xml:id="COGR"><head>Graphics and other non-textual components</head>
 <p>Graphics, such as illustrations or diagrams, appear in many
 different kinds of text, and often with different purposes. In some
 cases, the graphic is an integral part of a text (indeed, some texts —
@@ -4063,7 +4085,7 @@ statements for the series (e.g. the name and affiliation of the editor,
 as in the example in section <ptr target="#COBICOL"/>) may be tagged
 <gi>editor</gi> or <gi>respStmt</gi>.
  </p></div>
-<div type="div4" xml:id="COBIRI"><head>Related Items</head>
+<div type="div4" xml:id="COBIRI"><head>Related items</head>
 
 <p>In bibliographic parlance, a <term>related item</term> is any
 bibliographic item which though related to that being defined is
