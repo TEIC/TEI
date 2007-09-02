@@ -241,7 +241,7 @@ $ID: requests a particular page
   </xsl:template>
 
   <xd:doc>
-    <xd:short>Process elements tei:*</xd:short>
+    <xd:short>Process elements looking for something to link to backwards</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:*" mode="generatePreviousLink">
@@ -2158,7 +2158,7 @@ $ID: requests a particular page
       <xsl:when
         test="parent::tei:back/preceding-sibling::tei:body/tei:div[tei:head or $autoHead='true']">
         <xsl:apply-templates mode="generatePreviousLink"
-          select="parent::tei:front/preceding-sibling::tei:body/tei:div[last()]"/>
+          select="parent::tei:body/preceding-sibling::tei:body/tei:div[last()]"/>
       </xsl:when>
       <xsl:when
         test="$myName='div0' and preceding-sibling::tei:div0[tei:head or $autoHead='true']">
