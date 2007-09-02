@@ -481,6 +481,7 @@
           <xsl:value-of select="$n"/>
         </xsl:when>
         <xsl:otherwise>
+	  <xsl:for-each select="$top">
           <xsl:call-template name="linkTogether">
             <xsl:with-param name="name">
               <xsl:value-of select="$me"/>
@@ -489,6 +490,7 @@
               <xsl:value-of select="$n"/>
             </xsl:with-param>
           </xsl:call-template>
+	  </xsl:for-each>
         </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
