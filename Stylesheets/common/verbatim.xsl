@@ -114,9 +114,9 @@
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <xsl:call-template name="newLine"/>
+        <!-- <xsl:call-template name="makeIndent"/>-->
 	  </xsl:otherwise>
 	</xsl:choose>
-        <xsl:call-template name="makeIndent"/>
       </xsl:when>
       <xsl:when test="not(preceding-sibling::node())">
 	<xsl:call-template name="lineBreak">
