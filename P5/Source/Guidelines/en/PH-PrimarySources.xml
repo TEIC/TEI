@@ -9,17 +9,17 @@ $Author$
 
 <p>This chapter defines a module intended for use in the
 representation of primary sources, in particular manuscripts or other
-unique instances of written materials. Section <ptr target="#PHFAX"/>
-provides elements for the encoding of digital facsimiles or images of
-such materials, while the remainder of the chapter discusses ways of
-encoding detailed transcriptions of such materials. It is expected
-that this module will also be useful in the preparation of critical
-editions, but the module defined here is distinct from that defined in
-chapter <ptr target="#TC"/>, and may be used independently of
-it. Detailed metadata relating to primary sources of any kind may be
-recorded using the elements defined by the manuscript description
-module discussed in chapter <ptr target="#MS"/>, but again the present
-module may be used independently if such data is not required.
+written materials. Section <ptr target="#PHFAX"/> provides elements
+for the encoding of digital facsimiles or images of such materials,
+while the remainder of the chapter discusses ways of encoding detailed
+transcriptions of such materials. It is expected that this module will
+also be useful in the preparation of critical editions, but the module
+defined here is distinct from that defined in chapter <ptr
+target="#TC"/>, and may be used independently of it. Detailed metadata
+relating to primary sources of any kind may be recorded using the
+elements defined by the manuscript description module discussed in
+chapter <ptr target="#MS"/>, but again the present module may be used
+independently if such data is not required.
 </p>
 <p>It should be noted that this chapter focuses primarily upon
 problems associated with manuscript materials,
@@ -650,25 +650,24 @@ the content of an <gi>expan</gi> element: thus
 <p>These two methods of coding abbreviation may also be combined. An
 encoder may record, for any abbreviation, both the sequence of letters
 or marks which constitutes it, and its sense, that is, the letter or
-letters for which it is believed to stand. For example, the
-in the following
-fragment<note place="foot">From <bibl><title level="a">The Manere of
-Good Lyuynge</title>, fol 126v of Bodleian MS Laud Misc. 517, plate
-8(ii) in <title>English Cursive Book Hands 1250–1500</title> by
-M. B. Parkes (Clarendon Press: Oxford, 1969)</bibl>.</note>, the
-phrase <mentioned>euery persone</mentioned> is represented by a
-sequence of characters which may be transcribed directly, using the
-<gi>g</gi> element to indicate the two brevigraphs it contains as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">eu<g ref="#er"/>y
-<g ref="#per"/>sone that
-loketh after heuen hath a place in this ladder</egXML>
-The transcriber may also wish to indicate that these particular characters
-are abbreviations, by using the <gi>abbr</gi> element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">eu<abbr><g ref="#er"/></abbr>y
-<abbr><g ref="#per"/></abbr>sone ... </egXML>
+letters for which it is believed to stand. For example, in the
+following fragment<note place="foot">From <bibl><title level="a">The
+Manere of Good Lyuynge</title>, fol 126v of Bodleian MS Laud
+Misc. 517, plate 8(ii) in <title>English Cursive Book Hands 1250–
+1500</title> by M. B. Parkes (Clarendon Press: Oxford,
+1969)</bibl>.</note>, the phrase <mentioned>euery persone</mentioned>
+is represented by a sequence of characters which may be transcribed
+directly, using the <gi>g</gi> element to indicate the two brevigraphs
+it contains as follows: <egXML
+xmlns="http://www.tei-c.org/ns/Examples">eu<g ref="#er"/>y <g
+ref="#per"/>sone that loketh after heuen hath a place in this
+ladder</egXML> The transcriber may also wish to indicate that these
+particular characters are abbreviations, by using the <gi>abbr</gi>
+element: <egXML xmlns="http://www.tei-c.org/ns/Examples">eu<abbr><g
+ref="#er"/></abbr>y <abbr><g ref="#per"/></abbr>sone ... </egXML>
 Alternatively, the transcriber may choose silently to expand these
-abbreviations, using the <gi>expan</gi> element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><expan>euery</expan>
+abbreviations, using the <gi>expan</gi> element: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><expan>euery</expan>
 <expan>persone</expan> ... </egXML>
 </p>
 <p>When the module defined by this chapter is in use, the special
@@ -930,7 +929,7 @@ subtype="graphicResemblence"</gi> for example. </p>
 values for the <att>type</att> or <gi>subtype</gi> attributes automatically. This is easily
 done but requires customization of the TEI system using techniques
 described in <ptr target="#MD"/>, in particular <ptr
-target="#MDMAL"/>, which should be consulted for further information
+target="#MDMDAL"/>, which should be consulted for further information
 on this topic.</p>
 <p>When making a correction in a source which forms part of a textual
 tradition attested by many witnesses, a textual editor will
@@ -966,66 +965,84 @@ by a <gi>msDesc</gi> element (see <ptr target="#MS"/>) :
 </msDesc></egXML>
 </p>
 
-<!-- here LB -->
 <p>The <gi>app</gi> element described in chapter <ptr target="#TC"/>
-provides a way of representing a number of alternative corrections, as
-in a conventional critical edition. Using this element, Donaldson's
-conjectured emendation of the Hengwrt manuscript may be recorded not
-only alongside the editorial transcription but also alongside another
-conjecture: <egXML xmlns="http://www.tei-c.org/ns/Examples">And of so
+provides a more powerful way of representing all three possible
+readings in parallel: <egXML xmlns="http://www.tei-c.org/ns/Examples">And of so
 parfit wis a
 <app>
   <rdg wit="#Hg">wight</rdg>
-  <rdg wit="#Ln #Ry2 #Ld" resp="#ETD"> <corr>wright</corr> </rdg>
-  <rdg wit="#Gg" resp="#mp"> <corr>wyf</corr> </rdg>
+  <rdg wit="#Ln #Ry2 #Ld">wright</rdg>
+  <rdg wit="#Gg">wyf</rdg>
 </app></egXML></p>
-<p>Observe that no <att>resp</att> attribute is necessary for the base
-transcription:  by default, responsibility is assigned to the scholar(s)
-responsible for the transcription, as identified in the TEI header.  The
-conjectures are held within <gi>corr</gi> elements, contained within the
-<gi>rdg</gi> elements. The <att>resp</att> attribute identifying
-responsibility for each correction is attached to the outer
-<gi>rdg</gi>, and inherited by the inner <gi>corr</gi> element. Note
-too that the support for these conjectures in other manuscripts can be
-noted in the <att>wit</att> attribute in the <gi>rdg</gi> element;
-this functions in exactly the same way as the <att>source</att>
-attribute mentioned above.</p>
-<p>The <att>cert</att> and <att>resp</att> attributes may be used with
-the <gi>corr</gi> element only to indicate respectively confidence in
-the content of the element (i.e. the correction), and confidence in the
-responsibility for suggesting this correction or conjecture. <!-- In the
-case of the use of these attributes with the <gi>sic</gi> element, the
-<att>cert</att> and <att>resp</att> attributes are defined as indicating
-respectively confidence in the conjecture held in the <att>corr</att>
-attribute and the responsibility for suggesting this conjecture. The
-above example could be encoded using the <gi>sic</gi> element as
-follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">And of so parfit wis a
-<sic corr="wright" resp="#etd" cert="70">wight</sic>
-ywroght?</egXML>
---> 
+<p>This encoding simply records the three readings found in the
+various traditions, and gives (by means of the <att>wit</att>
+attribute) an indication of the witnesses supporting each. If the
+<att>resp</att> attribute were supplied on the <gi>rdg</gi> element,
+it would indicate the person responsible for asserting that the
+manuscript indicated has this reading, which is not quite the same as
+the person responsible for asserting that this reading should
+be used to correct the others. Editorial intervention elements such as
+<gi>corr</gi> can however be nested within a <gi>rdg</gi> to provide
+this additional information:
 
-If it is desired to express aspects of certainty and responsibility
+ <egXML xmlns="http://www.tei-c.org/ns/Examples">And of so
+parfit wis a
+<app>
+  <rdg wit="#Hg">wight</rdg>
+  <rdg wit="#Ln #Ry2 #Ld"><corr resp="#ETD">wright</corr></rdg>
+  <rdg wit="#Gg"><corr resp="mp">wyf</corr></rdg>
+</app></egXML>
+
+This encoding asserts that the reading <mentioned>wyf</mentioned>
+found in Gg is regarded as a correction by Parkes. </p>
+
+<p>Like the <att>resp</att> attribute, the <att>cert</att> attribute
+may be used with both <gi>corr</gi> and <gi>rdg</gi> elements. When
+used on the <gi>rdg</gi> element, these attributes indicate confidence
+in and responsibility for identifying the reading within the sources
+specified; when used on the <gi>corr</gi> element they indicate
+confidence in and responsibility for the use of the reading to correct
+the base text. If no other source is indicated (either by the
+<att>source</att> attribute, or by the <att>wit</att> attribute of a
+parent <gi>rdg</gi>), the reading supplied within a <gi>corr</gi> has
+been provided by the person indicated by the <att>resp</att>
+attribute.
+</p>
+
+<p>If it is desired to express aspects of certainty and responsibility
 for some other aspect of the use of these elements, then the
-mechanisms discussed in chapter <ptr target="#CE"/> should be
-used. See also <ptr target="#PHHR"/> for discussion of the issues of
-certainty and responsibility in the context of
+mechanisms discussed in chapter <ptr target="#CE"/> may be found
+useful. See also <ptr target="#PHHR"/> for further discussion of the
+issues of certainty and responsibility in the context of
 transcription.</p></div>
 
 <div type="div3" xml:id="PHAD"><head>Additions and Deletions</head>
-<p>Additions and deletions in a source text may be described using the
-following elements:
+
+<p>Additions and deletions observed in a source text may be described
+using the following elements:
 <specList>
   <specDesc key="add"/>
   <specDesc key="addSpan"/>
   <specDesc key="del"/>
   <specDesc key="delSpan"/>
 </specList>
-Of these, <gi>add</gi> and <gi>del</gi> are included in the core tag
-set, while <gi>addSpan</gi> and <gi>delSpan</gi> are available only when
-using the module defined in this chapter.</p>
+Of these, <gi>add</gi> and <gi>del</gi> are included in the core
+module, while <gi>addSpan</gi> and <gi>delSpan</gi> are available only
+when using the module defined in this chapter. </p>
+
+<p>Further characteristics of each addition and deletion, such as the
+hand used, its effect (complete or incomplete, for example), or its
+position in  a sequence of such operations may conveniently be recorded as attributes of these
+elements, all of which are members of
+the <ident type="class">att.transcriptional</ident> class:
+<specList>
+<specDesc key="att.transcriptional" atts="seq status hand"/>
+</specList>
+</p>
+
+
 <p>As described in section <ptr target="#COED"/>, the <gi>add</gi> element
-indicating material added may be used to signify any manuscript
+is used to record any manuscript
 addition observed in the text, whether it is considered to be authorial or scribal. In the autograph manuscript
 of Max Beerbohm's <title>The Golden Drugget</title>,<note place="foot">In
   Pierpont Morgan MA 3391 (Klinkenborg 123).</note>
@@ -1037,13 +1054,13 @@ here is one of them — <add hand="#mb">do ever</add>
 improve by recognition ....
 <hand xml:id="mb" scribe="Max Beerbohm holograph"/>
 </egXML>
-Similarly, the <gi>del</gi> element indicating material deleted may be
-used to signify manuscript deletions. In the autograph manuscript of D.
+Similarly, the <gi>del</gi> element is
+used to record manuscript deletions. In the autograph manuscript of D.
 H. Lawrence's <title>Eloi, Eloi, lama sabachthani</title><note place="foot">In Pierpont
 Morgan MA 1892, (Klinkenborg 129).</note>, the author's deletion of
-<mentioned>my</mentioned> may be recorded as follows. As well as the
-<att>hand</att> attribute indicating that the deletion was Lawrence's,
-the <att>rend</att> attribute indicates that the deletion was by
+<mentioned>my</mentioned> may be recorded as follows. In this case,  the
+<att>hand</att> attribute indicating that the deletion was Lawrence's
+is complemented by a  <att>rend</att> attribute indicating that the deletion was by
 strike-through:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">For I hate this <del rend="strikethrough" hand="#dhl">my</del> body,
 which is so dear to me
@@ -1051,8 +1068,7 @@ which is so dear to me
 <hand xml:id="dhl" scribe="holograph"/>
 </egXML>
 If deletions are classified systematically, the <att>type</att>
-attribute should normally
-be used to indicate the classification; when they
+attribute may be useful to indicate the classification; when they
 are classified by the manner in which they were effected, or by their
 appearance, however,
 this will lead to a certain arbitrariness in deciding
@@ -1061,54 +1077,125 @@ to hold the information. In general, it is recommended that the
 <att>rend</att> attribute be used for description of the appearance
 or method of deletion, and that the <att>type</att> attribute be
 reserved for higher level or more abstract classifications.</p>
-<p>Further characteristics of the addition and deletion, e.g. the date,
-or ink, may be needed for detailed transcription of manuscripts. Such
-characteristics may conveniently be recorded as attributes of the
-<gi>add</gi> or <gi>del</gi> element. The specific attributes required
-may be added to the formal declaration of these elements by using the
-techniques described in chapter <ptr target="#MD"/>.</p>
+
+<p>The <att>place</att> attribute is also available to indicate the
+location of an addition. For example, in the following line from the typescript of Eliot's
+<title>The Waste Land</title><note place="foot"></note>, the word
+<mentioned>foe</mentioned> is crossed out, and the word
+<mentioned>friend</mentioned> is written in the right margin,
+together with an insertion mark. <figure>
+<graphic url="Images/PHfigEliot-1.png"/></figure>
+This line might be encoded as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+"Oh keep the Dog far hence, that's <del>foe</del> to men, 
+<add place="margin">friend</add></egXML>
+The deletion and the addition in this example are in the same hand,
+presumably Eliot's. Other deletions in the typescript are in different
+hands and done in different ways: for example, at the start of the same
+passage: <figure><graphic url="Images/PHfigEliot-2.png"/></figure>
+The first two lines of this passage might be
+encoded as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<l><add place="above">Unreal</add><del rend="overtyped">Terrible</del> City<del resp="#EP">,</del> I have sometimes seen
+and see</l>
+<l>Under the brown fog of <del resp="#EP" rend="box">your</del> winter
+dawn...</l></egXML>
+The typescript originally read <q>Terrible City</q>: the first word
+was then overtyped with xs to delete it, and the word
+<mentioned>Unreal</mentioned> typed above the deletion. Two further
+deletions here are attributed to Pound (EP): the comma following
+<mentioned>City</mentioned>, and the word <mentioned>your</mentioned>;
+the latter deletion being marked by a box drawn around it rather than by
+a line through it. </p>
+<p>An encoder may also wish to indicate that an addition replaces a
+specific deletion, that is to encode a substitution as a single
+intervention in the text. This may be achieved by grouping the
+addition and deletion together within a <gi>subst</gi> element:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+"Oh keep the Dog far hence, that's 
+<subst><del>foe</del><add place="margin">friend</add></subst> to men, 
+</egXML>
+The use of this element, and the use of the <att>seq</att> attribute to indicate the
+order in which interventions such as deletions are believed to have
+occurred, are  further discussed in section <ptr target="#PHSU"/> below.
+</p>
+
 <p>The <gi>add</gi> and <gi>del</gi> elements defined in the core module
-suffice for describing typically
-brief additions and deletions in the text being transcribed. On
-occasion, it will be necessary to record an addition or deletion which
-crosses a structural boundary in the text being encoded, for example the
-addition or deletion from a manuscript of a section containing several
-distinct structural subdivisions, such as poems or prose items. These
-are most conveniently encoded using the <gi>addSpan</gi> and
-<gi>delSpan</gi> elements, available in the module defined
-in this chapter. In this example of the use of <gi>addSpan</gi>, the
+suffice only for the description of additions and deletions which fit
+within the structure of the text being transcribed, that is, which
+each deletion or addition is completely contained by the structural
+element (paragraph, line, division) within which it occurs. Where this
+is not the case, for example because an individual addition or deletion
+involves  several
+distinct structural subdivisions, such as poems or prose items, or
+otherwise
+crosses a structural boundary in the text being encoded, special
+treatment is needed. The <gi>addSpan</gi> and
+<gi>delSpan</gi> elements are provided by this  module for that
+purpose. (For a general discussion of the issue see further <ptr
+target="#NH"/>).</p>
+
+<p>In this example of the use of <gi>addSpan</gi>, the
 insertion of a gathering containing four neo-Eddic poems into
 <title>Landsbókasafn</title><note place="foot">In Reykjavík, Lbs 1562 4to</note> by Helgi
 Ólafsson is recorded as follows.  
 <!-- added clarificatory sentence -->
-A <gi>hand</gi> element is
-first declared, within the header of the document, to associate
-the identifier <val>heol</val> with Helgi. In the body of the
-text, an <gi>addSpan</gi> element
-is placed to mark the beginning of the span of added text.  The
-<att>hand</att> attribute ascribes the responsibility for the addition
-to the manuscript to Helgi, and the <att>spanTo</att> attribute declares the
-identifier for the anchor which marks the end of the added text:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><hand xml:id="heol" n="Helgi Ólafsson"/>
+A <gi>hand</gi> element is first declared, within the header of the
+document, to associate the identifier <val>heol</val> with Helgi. Each
+of the added poems is encoded as a distinct <gi>div</gi> element. In
+the body of the text, an <gi>addSpan</gi> element is placed to mark
+the beginning of the span of added text, and an <gi>anchor</gi> is
+used to mark its end.  The <att>hand</att> attribute on the
+<gi>addSpan</gi> element ascribes responsibility for the addition to
+the manuscript to Helgi, and the <att>spanTo</att> attribute points to
+theend of the added text:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><hand xml:id="heol"
+n="Helgi Ólafsson"/>
+<!-- ... -->
+<body>
+<div><!-- text here --></div>
 <addSpan n="added gathering" hand="#heol" spanTo="#p025"/>
+<div><!-- text of first added poem here --></div>
+<div><!-- text of second added poem here --></div>
+<div><!-- text of third added poem here --></div>
+<div><!-- text of fourth added poem here --></div>
 <anchor xml:id="p025"/>
+<div><!-- more text here --></div></body>
 </egXML></p>
-<p>In the following example of the use of the <gi>delSpan</gi> element, a full
-two lines of Thomas Moore's autograph of the second version of
+<p>The <gi>delSpan</gi> element is used in the same way. For example,
+in the Eliot typescript mentioned above, there are several occasions
+where sequences of whole lines are marked for deletion, either by boxes or by being
+struck out. If the encoder is marking up individual verse lines with
+the <gi>l</gi> element, such deletions are problematic: deletion of
+two consecutive lines should be regarded as a single deletion, but the
+<gi>del</gi> element must be properly nested within a single
+<gi>l</gi> element. The <gi>delSpan</gi> element solves this problem:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<l>Flowed up the hill and down King William Street,</l>
+<delSpan spanTo="#EPdelEnd" resp="#EP" rend="strikethrough"/>
+<l>To where Saint Mary Woolnoth kept the time,</l>
+<l>With a dead sound on the final stroke of nine.</l>
+<anchor xml:id="EPdelEnd"/>
+<l>There I saw one I knew, and stopped him, crying "Stetson!</l>...
+</egXML>
+</p>
+<p>It is often the case that deletions and additions may themselves contain other
+deletions and additions. For example, in
+ Thomas Moore's autograph of the second version of
 <title>Lalla Rookh</title><note place="foot">In Pierpont Morgan MA 310,
-(Klinkenborg 23).</note> are marked for omission by vertical
-strike-through. The two lines cross the structural line division marked
-<tag>l n='2'</tag>, so it would not be possible to use a single
-<gi>del</gi> element, since it would have to span the <gi>l</gi> marker.
-The lines also themselves include a further deletion and addition.  The
-<gi>delSpan</gi> element indicates the begining of the span marked for
-deletion, with the <att>spanTo</att> attribute giving the identifier
-<val>#delend01</val> for an <gi>anchor</gi> element which marks the end of the span of text so
-marked:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><l n="1">
-   <delSpan rend="vertical strike" spanTo="#delend01"/>
+(Klinkenborg 23).</note> two lines are marked for omission by vertical
+strike-through. Within the first of the two lines, the word
+<mentioned>upon</mentioned> has also been struck out, and the word
+<mentioned>over</mentioned> has been added: 
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><l>
+   <delSpan rend="verticalStrike" spanTo="#delend01"/>
    Tis moonlight <del>upon</del> <add>over</add> Oman's sky</l>
-<l n="2">Her isles of pearl look lovelily<anchor xml:id="delend01"/></l></egXML></p>
+<l>Her isles of pearl look lovelily<anchor
+xml:id="delend01"/></l></egXML>
+In this case the <gi>anchor</gi> and <gi>delSpan</gi> have been
+placed within the structural elements (the <gi>l</gi>s) rather than
+between, as in the previous example. This is to indicate that
+placement of these empty elements is arbitrary.  </p>
 <p>The text deleted must be at least partially legible, in order for
 the encoder to be able to transcribe it.  If it is not legible at all,
 the <gi>gap</gi> element should be used to signal that the text was
@@ -1118,12 +1205,13 @@ attribute can give the cause of the omission from the transcription as
 be enclosed by a <gi>del</gi> element, if it is thought useful to
 record the deletion explicitly using this element.-->  If the deleted
 text is partially legible, the <gi>unclear</gi> element described in
-section <ptr target="#PHDA"/> should be used to signal the areas of
-text which cannot be read with confidence; it too may be enclosed
-within a <gi>del</gi> element.  See further section <ptr
+section <ptr target="#PHDA"/> may be used to indicate areas of
+text which cannot be read with confidence. See further section <ptr
 target="#PHOM"/> and section <ptr target="#PHDA"/>.</p>
 </div>
+
 <div type="div3" xml:id="PHSU"><head>Substitutions</head>
+
 <p>Substitution of one word or phrase for another is
 perhaps the most common of all phenomena requiring special treatment
 in transcription of primary textual sources.
@@ -1132,10 +1220,35 @@ deletion of one word and its replacement by another written above it by
 the same hand at the one time; the deletion and replacement may be done
 by different hands at different times; there may be a long chain of
 substitutions on the one stretch of text, with uncertainty as to the
-order of substitution and as to the final reading.</p>
-<p>Three different methods may be used to express substitution of one
+order of substitution and as to which of many possible readings should be preferred.</p>
+<p>As we have shown, the simplest method of recording a substitution
+is simply to record both the addition and the deletion. However, when
+the module defined by this chapter is in use, an additional element is
+available to indicate that the encoder believes the addition and the
+deletion to be part of the same intervention: a substitution.
+<specList>
+<specDesc key="subst"/>
+</specList>
+Using this element, the example at the end of the last section might
+be encoded as follows:
+en by means<egXML xmlns="http://www.tei-c.org/ns/Examples"><l>
+   <delSpan rend="verticalStrike" spanTo="#delend02"/>
+   Tis moonlight <subst><del>upon</del><add>over</add></subst> Oman's sky</l>
+<l>Her isles of pearl look lovelily<anchor
+xml:id="delend02"/></l></egXML>
+Since the purpose of this element is solely to group its child elements
+together, the order in which they are presented is not significant. By
+convention, however, deletion precedes addition. This may be
+over-ridden by means of the <att>seq</att> attribute, which is of
+particular usefulness when a sequence of deletions and additions
+occurs.
+</p>
+<p>For example, 
+
+<!--
+Three different methods may be used to express substitution of one
 stretch of text by another:
-<list type="bullets">
+y<list type="bullets">
 <item>the <gi>sic</gi> and <gi>corr</gi> elements, either individually
 to encode a single substitution or nested to encode a sequence of
 substitutions;</item>
@@ -1237,9 +1350,10 @@ benefits.  In making such decisions, it should however be kept in mind
 that the capabilities of software at the time a project begins will often
 be wholly irrelevant when the project is completed some years later.</p>
 <p>The Lawrence example above shows the three methods used for encoding
-a single substitution of one reading for another.  <!--The same three
-methods may also be used to encode longer sequences of substitutions.-->
-In the example from William James, first written out by James as <q>One
+a single substitution of one reading for another.  The same three
+-->
+if this method is  used to encode a longer sequence of substitutions.
+Returning to the example from William James, in a passage first written out by James as <q>One
 must have lived longer with this system, to appreciate its
 advantages</q> the word <mentioned>this</mentioned> is first replaced by
 <mentioned>such a</mentioned> and this is then replaced by <mentioned>a</mentioned>.
@@ -1254,16 +1368,56 @@ nesting of <gi>corr</gi> elements:
 <corr sic="such a">a</corr></corr> system,
 to appreciate its advantages.</egXML></p>
 -->
-It may be encoded using the second method, with the two changes being
-treated as a sequence of additions and deletions:
+This may be encoded as follows, representing the two changes
+ as a sequence of additions and deletions:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">One must have lived longer with
-<del>this</del> <del><add>such a</add></del>
-<add>a</add> system, to appreciate its advantages.</egXML>
+<subst><del seq="1">this</del> <del seq="2"><add seq="1">such a</add></del>
+<add seq="2">a</add></subst> system, to appreciate its advantages.</egXML>
 Note the nesting of an <gi>add</gi> element within a <gi>del</gi> to
-record text first added, then deleted in the source.</p>
-<p>It may be encoded using the third method, with each reading in the
-series contained in a <gi>rdg</gi> element within an <gi>app</gi>
-structure:
+record text first added, then deleted in the source. The numbers
+assigned by the <att>seq</att> attribute may be used to identify the
+order in which the various additions and deletions are believed by the
+encoder to have been carried out, and thus provide a simple method of
+supporting the kind of  <soCalled>genetic</soCalled> textual
+criticism typified by (for example) Hans Walther Gabler's work on the reconstruction of the <q>overlay</q> levels of
+implicit in the  manuscripts of James Joyce's <title>Ulysses</title>. 
+</p>
+<p>As a more complex example, consider the following passage in one of
+the manuscripts of Wilfred Owen's <title>Dulce et decorum
+est</title><note place="foot">Reproduced here from the British Library
+online copy at <ptr target="http://www.bl.uk/learning/images/changing/new/large4964.html"/></note>:
+<figure><graphic url="Images/PHowen.png"/></figure>
+This passage might be encoded as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<l><del>Deaf even</del> Drunk with fatigue ; deaf even to the
+hoots</l>
+<l>Of <subst><del seq="1" status="partial">tired, outstripped
+Five-Nines</del><del seq="3"><add seq="2">gas
+shells</add></del><add seq="3">gas shells dropping
+softly</add></subst> that dropped behind.</l></egXML>
+In this representation, 
+<list>
+<item>the words <mentioned>Deaf even</mentioned> in the first line are simply marked as
+a deletion</item>
+<item>all the changes in the second line are treated as a single
+substitution, with three distinct phases:
+<list type="ordered">
+<item>the words <mentioned>tired, outstripped Five-Nines</mentioned>
+are deleted (the <att>status</att> attribute indicates that this
+deletion is partial because the last three letters of
+<mentioned>outstripped</mentioned> and the first two of
+<mentioned>Five</mentioned> are not actually cancelled)</item>
+<item>the word <mentioned>gas-shells</mentioned> is added</item>
+<item>the word  <mentioned>gas-shells</mentioned> is deleted and the
+words <mentioned>dropping softly</mentioned> added.</item>
+</list></item></list>
+</p>
+<p>The <gi>app</gi> element presented in chapter <ptr target="#TC"/>
+provides similar facilities, by treating each state of the text as a
+distinct reading. The <gi>rdg</gi> element has a <att>varSeq</att>
+attribute which may be used in the same way as the
+<att>seq</att> attribute to indicate the preferred sequence. The James
+example above might thus be represented as follows: 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">One must have lived longer with
   <app>
     <rdg varSeq="1"><del>this</del></rdg>
@@ -1271,7 +1425,7 @@ structure:
     <rdg varSeq="3"><add>a</add></rdg>
   </app>
 system, to appreciate its advantages.</egXML>
-The three encodings of this slightly more complex example illustrate the
+<!--The three encodings of this slightly more complex example illustrate the
 general truth that the more information involving substitutions there is
 to be encoded, the clearer become the advantages of the use of the
 <gi>app</gi> method over the other two methods.  As a rule, it is
@@ -1280,7 +1434,12 @@ substitutions of any complexity.  It is also desirable that the one
 method be used throughout any one transcription.  Accordingly, the
 <gi>app</gi> method is recommended for text critical transcription of
 primary textual materials requiring encoding of instances of other than
-straightforward substitution.</p></div>
+straightforward substitution.--></p></div>
+
+<!-- tohere LB -->
+
+
+
 <div type="div3" xml:id="PHCD"><head>Cancellation of Deletions and Other Markings</head>
 <p>An author or scribe may mark a word or phrase in some way, and then
 on reflection decide to cancel the marking.  For example, text may be
@@ -1296,6 +1455,7 @@ encoded:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">For I hate this
 <restore hand="#dhl" means="marginalStetNote"><del>my</del></restore>
 body</egXML></p>
+
 	</div>
 <div type="div3" xml:id="PHOM"><head>Text Omitted from or Supplied in the Transcription</head>
 <p>Where text is not transcribed, whether because of damage to the
@@ -1876,6 +2036,7 @@ follows:
 &ex;
 &addSpan;
 &delSpan;
+&subst;
 </specGrp>
 <specGrp xml:id="DPHCD" n="Cancelled Deletions">
 &restore;
