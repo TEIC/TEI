@@ -263,4 +263,21 @@
 <xsl:template name="navInterSep">
 </xsl:template>
 
+  <xsl:template match="tei:specGrp">
+    <div class="specgrp">
+      <xsl:call-template name="makeAnchor"/>
+      <xsl:if test="@n">
+	<b>
+	  <xsl:value-of select="@n"/>
+	</b>
+      </xsl:if>
+      <dl>
+        <xsl:apply-templates/>
+      </dl>
+    </div>
+  </xsl:template>
+
+  <xsl:template match="tei:specGrpRef">
+  </xsl:template>
+
 </xsl:stylesheet>
