@@ -1621,15 +1621,17 @@
           </div>
 	</xsl:when>
         <xsl:otherwise>
-          <div class="notes">
-            <div class="noteHeading">
-              <xsl:call-template name="i18n">
-                <xsl:with-param name="word">noteHeading</xsl:with-param>
-              </xsl:call-template>
-            </div>
-            <xsl:apply-templates mode="printnotes"
-              select="descendant::tei:note[@place='foot' or @place='end']"/>
-          </div>
+	  <xsl:if test="descendant::tei:note[@place='foot' or @place='end']">
+	    <div class="notes">
+	      <div class="noteHeading">
+		<xsl:call-template name="i18n">
+		  <xsl:with-param name="word">noteHeading</xsl:with-param>
+		</xsl:call-template>
+	      </div>
+	      <xsl:apply-templates mode="printnotes"
+				   select="descendant::tei:note[@place='foot' or @place='end']"/>
+	    </div>
+	  </xsl:if>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:if>
