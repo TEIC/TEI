@@ -236,7 +236,8 @@
       </xsl:choose>
     </xsl:variable>
 
-    <p><xsl:value-of select="$name"/>
+    <p>
+	<span class="specName"><xsl:value-of select="$name"/></span>
     <xsl:text> </xsl:text>
     <xsl:call-template name="makeDescription"/>
     <xsl:if test="tei:listRef">
@@ -409,7 +410,8 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <p>&lt;<xsl:value-of select="$name"/>&gt; 
+    <p><span class="specName">&lt;<xsl:value-of select="$name"/>&gt;</span>
+    <xsl:text> </xsl:text>
     <xsl:call-template name="makeDescription"/>
     <xsl:if test="tei:listRef">
       <xsl:for-each select="tei:listRef/tei:ptr">
@@ -746,8 +748,9 @@
       </xsl:choose>
     </xsl:variable>
 
-    <p>
+    <p><span class="specName">
       <xsl:value-of select="$name"/>
+	</span>
       <xsl:text> </xsl:text>
       <xsl:call-template name="makeDescription"/>
       <xsl:if test="tei:listRef">
