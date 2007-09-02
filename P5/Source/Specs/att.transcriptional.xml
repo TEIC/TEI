@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date: 2007-09-01 20:51:26 +0100 (Sat, 01 Sep 2007) $
+
+$Id: att.editLike.xml 3048 2007-09-01 19:51:26Z louburnard $
+-->
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="atts" ident="att.transcriptional">
+  <desc>provides attributes specific to elements encoding authorial or
+  scribal intervention in a text when
+  transcribing manuscript or similar sources.</desc>
+<classes>
+<memberOf key="att.editLike"/>
+</classes>
+  <attList>
+
+    <attDef ident="hand" usage="opt">
+      <desc>signifies the hand of the agent which made the intervention.</desc>
+      <desc version="2007-08-25" xml:lang="it">signifies the hand of the agent which made the addition or
+      performed the deletion</desc>
+      <desc version="2007-01-21" xml:lang="it">indica il responsabile dell'aggiunta o della cancellazione</desc>
+      <desc version="2007-05-04" xml:lang="es">indica el responsable de la adición o de la omisión.</desc>
+      <desc version="2006-10-28" xml:lang="ja">追加・削除を行った主体の筆跡を特定する．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>must refer to a <gi>hand</gi> element, typically
+      declared in the document header (see section <ptr target="#PHDH"/>).</valDesc>
+    </attDef>
+
+    <attDef ident="status" usage="opt">
+      <desc>indicates the effect of the intervention, for example in
+      the case of a deletion, strikeouts
+      which include too much or too little text, or in the case of an
+      addition, an insertion which duplicates some of the text
+      already present.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <defaultVal>unremarkable</defaultVal>
+<!--      <valDesc>any description of flaws in the marking of a deletion, e.g.
+      <val>excess left</val>, <val>excess right</val>, <val>short left</val>, <val>short
+      right</val>.</valDesc> -->
+      <valList type="open">
+        <valItem ident="duplicate">
+          <desc>all of the text indicated as an addition duplicates
+	  some text that is in the original, whether the duplication
+	  is word-for-word or less exact.</desc>
+        </valItem>
+        <valItem ident="duplicate-partial">
+          <desc>part of the text indicated as an addition duplicates
+	  some text that is in the original</desc>
+        </valItem>
+        <valItem ident="excessStart">
+          <desc>some text at the beginning of the deletion is marked
+          as deleted even though it clearly should not be
+          deleted.</desc>
+        </valItem>
+        <valItem ident="excessEnd">
+          <desc>some text at the end of the deletion is marked as
+          deleted even though it clearly should not be
+          deleted.</desc>
+        </valItem>
+        <valItem ident="shortStart">
+          <desc>some text at the beginning of the deletion is not
+          marked as deleted even though it clearly should be.</desc>
+        </valItem>
+        <valItem ident="shortEnd">
+          <desc>some text at the end of the deletion is not marked as
+          deleted even though it clearly should be.</desc>
+        </valItem>
+	<valItem ident="partial">
+	  <desc>some text in the deletion is not marked as deleted
+	  even though it clearly should be.</desc>
+	</valItem>
+        <valItem ident="unremarkable">
+          <desc>the deletion is not faulty.</desc>
+        </valItem>
+      </valList>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+      <remarks>
+        <p>Status information on each deletion is needed rather rarely
+	except in critical editions from authorial manuscripts; status
+	information on additions is even less common.</p>
+        <p>Marking a deletion or addition as faulty is inescapably an
+        interpretive act; the usual test applied in practice is the
+	linguistic acceptability of the text with and without the
+        letters or words in question.</p>
+      </remarks>
+    </attDef>
+
+    <attDef ident="seq" usage="mwa">
+      <gloss>sequence</gloss>
+      <desc>assigns a sequence number related to the order in which
+      the encoded features carrying this attribute are believed to have occurred.</desc>
+      <datatype maxOccurs="1">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/>
+      </datatype>
+    </attDef>
+
+  </attList>
+  <listRef>
+    <ptr target="#ST"/>
+  </listRef>
+</classSpec>
