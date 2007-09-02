@@ -1,8 +1,9 @@
 <xsl:stylesheet
-  exclude-result-prefixes="xlink dbk rng tei teix xhtml a edate estr html pantor xd xs xsl"
+  exclude-result-prefixes="xlink dbk rng tei teix xhtml a edate estr html pantor xd xs xsl fo"
   extension-element-prefixes="exsl estr edate" 
   version="1.0"
   xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:fo="http://www.w3.org/1999/XSL/Format"
   xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:dbk="http://docbook.org/ns/docbook"
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -278,5 +279,6 @@
 
   <xsl:template match="tei:specGrpRef">
   </xsl:template>
+
 
 </xsl:stylesheet>
