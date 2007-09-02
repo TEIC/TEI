@@ -282,4 +282,29 @@
 
  <xsl:template match="a:documentation" mode="verbatim"/>
 
+<xsl:template name="pageHeader">
+    <xsl:param name="mode"/>
+	<xsl:call-template name="makeHTMLHeading">
+	  <xsl:with-param name="class">title</xsl:with-param>
+	  <xsl:with-param name="text">
+	    <xsl:call-template name="generateTitle"/>
+	  </xsl:with-param>
+	  <xsl:with-param name="level">1</xsl:with-param>
+	</xsl:call-template>
+
+	<xsl:call-template name="makeHTMLHeading">
+	  <xsl:with-param name="class">subtitle</xsl:with-param>
+	  <xsl:with-param name="text">
+	    <xsl:call-template name="generateSubTitle"/>
+	  </xsl:with-param>
+	  <xsl:with-param name="level">2</xsl:with-param>
+	</xsl:call-template>
+	
+  </xsl:template>
+
+  <xsl:template name="stdheader">
+    <xsl:param name="title" select="'(no title)'"/>
+    <xsl:call-template name="pageHeader"/>
+  </xsl:template>
+
 </xsl:stylesheet>
