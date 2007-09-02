@@ -280,5 +280,6 @@
   <xsl:template match="tei:specGrpRef">
   </xsl:template>
 
+ <xsl:template match="a:documentation" mode="verbatim"/>
 
 </xsl:stylesheet>
