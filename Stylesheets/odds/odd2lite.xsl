@@ -987,13 +987,6 @@
   <xsl:template match="tei:schemaSpec">
     <xsl:call-template name="processSchemaFragment"/>
   </xsl:template>
-  <xsl:template name="linkIt">
-    <xsl:param name="x"/>
-    <xsl:param name="y"/>
-    <tei:ref target="{$x}">
-      <xsl:value-of select="$y"/>
-    </tei:ref>
-  </xsl:template>
 
   <xsl:template match="tei:divGen[@type='classcat']">
     <xsl:apply-templates mode="weave" select="key('CLASSDOCS',1)">

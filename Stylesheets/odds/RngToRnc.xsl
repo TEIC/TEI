@@ -1485,14 +1485,6 @@ select="count(key('IDENTS',$me))"/></xsl:for-each></xsl:message>
       </xsl:choose>
     </xsl:for-each>
   </xsl:template>
-  <xsl:template name="linkIt">
-    <xsl:param name="x"/>
-    <xsl:param name="y"/>
-    <a href="{$x}">
-      <xsl:value-of select="$y"/>
-    </a>
-  </xsl:template>
-
 
 
 </xsl:transform>
