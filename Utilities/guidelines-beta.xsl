@@ -246,11 +246,10 @@
 	  <xsl:text>&#8656; </xsl:text>
 	</span>
       </xsl:when>
-      <xsl:when test="$word='contentsWord'">
-	<xsl:text> </xsl:text>
-      </xsl:when>
-      <xsl:when test="$word='tocWords'">
-	<xsl:text> </xsl:text>
+      <xsl:when test="$word='upWord'">
+	<span class="icon">
+	  <xsl:text>&#8657; </xsl:text>
+	</span>
       </xsl:when>
       <xsl:when test="$word='nextWord'">
 	<span class="icon">
