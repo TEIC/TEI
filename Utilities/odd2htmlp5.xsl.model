@@ -162,12 +162,49 @@
 </script>
   </xsl:template>
 
-  <xsl:template name="preAddressHook">
-    <div style="border: solid red 1pt">
-      <xsl:text>Generated: </xsl:text>
-      <xsl:call-template name="whatsTheDate"/>
+  <xsl:template name="stdfooter">
+    <xsl:param name="style" select="'plain'"/>
+    <xsl:variable name="date">
+      <xsl:call-template name="generateDate"/>
+    </xsl:variable>
+    <xsl:variable name="author">
+      <xsl:call-template name="generateAuthor"/>
+    </xsl:variable>
+    <div class="stdfooter">
+      <hr/>
+      <xsl:if test="$linkPanel='true'">
+        <div class="footer">
+          <xsl:if test="not($parentURL='')"><a class="{$style}"
+              href="{$parentURL}" target="_top">
+              <xsl:value-of select="$parentWords"/>
+            </a> | </xsl:if>
+          <a class="{$style}" href="{$homeURL}" target="_top">
+            <xsl:value-of select="$homeWords"/>
+          </a>
+          <xsl:if test="$searchURL"> | <a class="{$style}" href="{$searchURL}"
+              target="_top">
+              <xsl:call-template name="searchWords"/>
+            </a>
+          </xsl:if>
+          <xsl:if test="$feedbackURL"> | <a class="{$style}" href="{$feedbackURL}"
+              target="_top">
+              <xsl:call-template name="feedbackWords"/>
+            </a>
+          </xsl:if>
+        </div>
+        <hr/>
+      </xsl:if>
+      <address>
+        <xsl:call-template name="copyrightStatement"/>
+	<br/>
+	<xsl:text>Generated: </xsl:text> 
+	<xsl:call-template name="whatsTheDate"/>
+    </div>
+
+
+
+      </address>
     </div>
   </xsl:template>
-
 
 </xsl:stylesheet>
