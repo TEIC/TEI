@@ -545,33 +545,6 @@ record variant readings in an individual witness by use of the apparatus
 mechanisms <gi>app</gi> and <gi>rdg</gi>.  This is discussed in
 section <ptr target="#TCTR"/>.
 	</p>
-<p>This module makes available the following components:
-
-<moduleSpec xml:id="DPH" ident="transcr"><altIdent type="FPI">Transcription of Primary Sources</altIdent><desc>Transcription of primary sources</desc></moduleSpec><!--publicID:  -//TEI P5//ELEMENTS Additional Element Set for Transcription of Primary Sources//EN-->
-
-
-The selection and combination of modules to form a TEI schema is described in
-<ptr target="#STIN"/>.
-</p>
-<p>The module is organized as follows:
-<specGrpRef target="#DPFACS"/>
-<specGrpRef target="#DTCAD"/>
-<specGrpRef target="#DPHCD"/>
-<specGrpRef target="#DPHOM"/>
-<specGrpRef target="#DPHHD"/>
-<specGrpRef target="#DPHDA"/>
-<specGrpRef target="#DPHSP"/>
-<specGrpRef target="#DTCHD"/>
-</p>
-<!-- this extension never referenced by DTD, so removed -->
-<!--
-<p>This tag set modifies the element class
-<ident type="class">model.pPart.edit</ident> by declaring two extra attributes
-for members of the class:
-<module xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:id="DPHENT" n="Attributes for Transcription of Primary Sources" ident="transcr-decl" type="decls"><publicID>-//TEI P5//ENTITIES Element Classes for Transcription of Primary Sources//EN</publicID>
-&editph.cla;
-    </module></p>
--->
 </div>
 <div type="div2" xml:id="PHCH"><head>Altered, Corrected, and Erroneous Texts</head>
 <p>In the detailed transcription of any source, it may prove necessary
@@ -594,15 +567,22 @@ of any type, encoders may record corrections, normalizations,
 expansions of abbreviations, additions, and omissions
 using the elements described in section <ptr target="#COED"/>.
 Those particularly relevant to this chapter include:
-<specList><specDesc key="abbr"/><specDesc key="expan"/><specDesc
-key="sic"/><specDesc key="corr"/><specDesc key="add"/><specDesc
-key="del"/><specDesc key="gap"/><specDesc key="choice"/></specList>
+<specList>
+<specDesc key="abbr"/>
+<specDesc key="add"/>
+<specDesc key="choice"/>
+<specDesc key="corr"/>
+<specDesc key="del"/>
+<specDesc key="expan"/>
+<specDesc key="gap"/>
+<specDesc key="sic"/>
+</specList>
 	</p>
 <p>Several of these elements bear additional attributes for specifying who
 is responsible for the  interpretation represented by the markup,
 and the certainty associated with it. In addition, some
 of them bear an attribute allowing the markup to be categorised by
-type. 
+type and source. 
 <specList><specDesc key="att.editLike" atts="cert resp source"/>
     <specDesc key="att.typed" atts="type subtype"/>
 </specList>
@@ -636,17 +616,6 @@ chapter <ptr target="#WD"/>. This module allows the encoder great
 flexibility both in processing and in documenting non-standard
 characters or glyphs, including the ability to provide detailed
 documentation and images for them.
-<!--The entity reference system allows the
-encoder to declare whatever entities are needed, using entity names
-like <ident type="ge">p-underbar</ident>, <ident type="ge">sup-hook</ident>, or <ident type="ge">macron</ident>.
-Furthermore, each entity reference may be linked to an image of the
-abbreviation itself, so that the reader might see a rendering of the
-text's appearance. Alternatively, the encoder may transcribe the
-letter or letters he or she believes the abbreviation stands for, as
-the content of an <gi>expan</gi> element: thus
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><expan>per</expan> <expan>re</expan> <expan>n</expan></egXML>
--->
-
 </p>
 <p>These two methods of coding abbreviation may also be combined. An
 encoder may record, for any abbreviation, both the sequence of letters
@@ -749,10 +718,12 @@ represented as an abbreviation, represented by the hooked D, as follows:
 <choice><sic>good<abbr>ɽ</abbr></sic>
 <expan resp="#mp" cert="high">good<ex>e</ex></expan></choice>
 I was welbeloued</egXML>
-If it is desired to express aspects of certainty and responsibility for
-some other aspect of the use of these elements, then the mechanisms
-discussed in chapter <ptr target="#CE"/> should be used. See also <ptr target="#PHHR"/> for discussion of the issues of certainty and
-responsibility in the context of transcription.</p>
+If it is desired to express aspects of certainty and responsibility
+for some other aspect of the use of these elements, then the
+mechanisms discussed in chapter <ptr target="#CE"/> should be
+used. See also <ptr target="#PHHR"/> for discussion of the issues of
+certainty and responsibility in the context of transcription.</p>
+
 <p>If more than one expansion for the same abbreviation is to be
 recorded, multiple notes may be supplied. It may also be appropriate
 to use the markup for critical apparatus; an example is given in
@@ -1459,7 +1430,7 @@ circles, lines, or arrows to indicate transposition of material from
 one point in the text to another. No specific markup for this
 phenomenon is proposed at this time. Such cases are most simply
 encoded as additions at the point of insertion and deletions at the
-point of encirclement. </p>
+point of encirclement or other marking. </p>
 </div>
 
 <div type="div3" xml:id="PHOM">
@@ -1471,7 +1442,8 @@ where text not present in the source is supplied (whether
 conjecturally or from other witnesses) to fill an apparent gap in the
 text, it should be marked using the <gi>supplied</gi> element provided
 by the module defined in this chapter.
-<specList><specDesc key="gap" atts="reason hand agent"/><specDesc key="supplied" atts="reason hand agent source"/></specList></p>
+<specList><specDesc key="gap" atts="reason hand agent"/>
+<specDesc key="supplied" atts="reason source"/></specList></p>
 <p>By its nature, the <gi>gap</gi> element has no content.  It
 marks a point in the text where nothing at all can be read, whether because
 of  authorial or scribal erasure, physical damage, or any other form
@@ -1481,8 +1453,7 @@ convenient units, where
 this can be determined.  For example, in
 the Beerbohm manuscript of <title>The Golden Drugget</title> cited
 above, the author has erased a passage amounting about 10 cm in length
-by inking
-over it completely:
+by inking over it completely:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Others <gap
 reason="cancelled" hand="#mb" extent="10" unit="cm"/>—and
 here is one of them...</egXML></p>
@@ -1508,10 +1479,6 @@ contains text provided by the encoder and not attested in the
 source. This is not however a correction, since no error is
 necessarily present in the original; for that reason a different
 element <gi>supplied</gi> should be used.
-<specList>
-<specDesc key="supplied"/>
-</specList>
-
 If another (imaginary) copy of the letter above preserved the
 signature as reading <q>I am dear Sir your very humble Servt Sydney
 Smith</q>, the text illegible in the autograph might be supplied in
@@ -1553,17 +1520,13 @@ without there being any association of that hand with any specific
 tagged document feature.  -->The <gi>handList</gi> and <gi>hand</gi>
 elements are used in the TEI header (in the <gi>profileDesc</gi>
 element) to define each unique hand or scribe distinguished by the
-encoder in the document.  One such element must appear within the header
-for each hand distinguished in the text, and each such element should
-bear a distinct identifier as the value of its global
-<att>xml:id</att> attribute.<!-- note place="foot">In earlier version of these Guidelines an attribute
-<ident>hand</ident> was used on the <gi>hand</gi> element to carry
-the same information as the existing <att>xml:id</att> attribute. The <att>hand</att> attribute is
-retained in the current version of these Guidelines only for backwards compatibility and will be removed at the next release.</note-->
-Each location where a change
-of hands occurs may then be marked in the text by the empty
-<gi>handShift</gi> element, which specifies the hand concerned by
-giving the same identifier.
+encoder in the document.  One such element must appear within the
+header for each hand distinguished in the text, and each such element
+should bear a distinct identifier as the value of its global
+<att>xml:id</att> attribute.  Each location where a change of hands
+occurs may then be marked in the text by the empty <gi>handShift</gi>
+element, which specifies the hand concerned by giving the same
+identifier.
 <specList>
 <specDesc key="hand" atts="style ink writing" /><specDesc key="handList"/>
 <specDesc key="handShift"/></specList>
@@ -1574,9 +1537,7 @@ ordinarily, but not necessarily, be the order in which the material was
 originally written.  The <att>writing</att> attribute will be most often
 used to encode descriptive shifts which the transcriber perceives within
 a manuscript but which are not judged to indicate a change of hand.   The particular values encoded will depend
-upon the needs of the transcriber. <!-- Where many values are to be encoded,
-feature structures provide an alternative means of encoding these. --><!-- might be better to allow for
-nested desc?-->  </p>
+upon the needs of the transcriber. </p>
 <p>A single hand may employ different writing styles and inks within a
 document, or may change character.  For example, the writing style might
 shift from <q>anglicana</q> to <q>secretary</q>, or the ink from blue to
@@ -1585,14 +1546,14 @@ be indicated by assigning a new value to the appropriate attribute
 within the <gi>handShift</gi> element.  It is for the encoder to
 decide whether a change in these properties of the writing style is so
 marked as to require treatment as a distinct hand.</p> 
-<p> As might be
-expected, one hand may employ
-different renditions within the one writing style, for example medieval
-scribes often indicate a structural division by emboldening all the words
-within a line.  These should be indicated by use of the <att>rend</att>
-attribute on an element, in the same manner as underlining, emboldening,
-font shifts, etc., in transcription of a printed text, rather than by
-introducing a new <gi>handShift</gi> element.</p>
+
+<p> As might be expected, one hand may employ different renditions
+within the one writing style, for example medieval scribes often
+indicate a structural division by emboldening all the words within a
+line.  These should be indicated by use of the <att>rend</att>
+attribute on an element, in the same manner as underlining,
+emboldening, font shifts, etc. are represented in transcription of a printed text,
+rather than by introducing a new <gi>handShift</gi> element.</p>
 <p>In this example<note place="foot">From the Wiltshire Record Office,
 Dean of Sarum Churchwardens' presentments, 1731, Hurst; the
 transcription was provided by Donald A. Spaeth.</note> the encoder has
@@ -1608,7 +1569,7 @@ declarations, included in the TEI Header for this document.<!-- msDesc
     </handList>
   </profileDesc>
  </egXML>
-<!-- teiheader def will need to be modified PR   --></p>
+</p>
 <p>Then the change of hand is indicated in the text:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><handShift new="#h1" resp="#das"/>... and that good Order Decency and regular worship
 may be once more introduced and Established in this
@@ -1667,10 +1628,10 @@ attribute indicates who is responsible for supplying the
 intellectual content of the correction reported in the transcription:
 here, Bowers' correction of <q>One</q> to <q>one</q>. In the case of a
 deletion, the <att>resp</att> attribute will similarly indicate who
-responsibility for identifying or categorising the deletion itself,
+bears responsibility for identifying or categorising the deletion itself,
 while other attributes (<att>hand</att> most obviously) attribute
 responsibility for the deletion itself.</p>
-<!-- tohere LB -->
+
 <p>As these examples show, the field of application of the
 <att>resp</att> attributes varies from element to element.  In some
 cases, it applies to the content of the element (<gi>corr</gi>
@@ -1708,6 +1669,7 @@ editorial responsibility for and certainty concerning the content,
 attributes and application of a particular element, the more general
 mechanisms for representing certainty and responsibility described in
 chapter <ptr target="#CE"/> should be used.</p>
+<!--
 <p>The fields of reference of the <att>resp</att> and <att>cert</att>
 attributes for each element have been chosen to enable what are felt as
 the most frequent likely statements an encoder may wish to make
@@ -1722,6 +1684,7 @@ the <att>resp</att> and <att>cert</att> attributes given in these
 <title>Guidelines</title>.  Use of the <att>resp</att> and
 <att>cert</att> in interchange documents in ways not here defined may
 lead to unpredictable results.</p>
+-->
 <p>It should be noted that the certainty and responsibility mechanisms
 described in chapter <ptr target="#CE"/> replicate all the functions of the
 <att>resp</att> and <att>cert</att> attributes on particular elements.
@@ -1767,46 +1730,84 @@ introduced previously in this chapter. </p>
 
 <div type="div3" xml:id="PHDA"><head>Damage, Illegibility, and Supplied Text</head>
 <p>The <gi>gap</gi> and <gi>supplied</gi> elements described above
-(section <ptr target="#PHOM"/>) should be used with appropriate attributes
-where the degree of damage or illegibility in a text is such that
-nothing can be read and the text must be either omitted or supplied
-either conjecturally or from one or more other sources.  In many cases, however,
-despite damage or illegibility, the text may yet be read with reasonable
-confidence.  In these cases, the following elements should be used:
-<specList><specDesc key="damage" atts="type  hand agent degree extent"/><specDesc key="unclear" atts="reason  hand agent"/></specList></p>
+(section <ptr target="#PHOM"/>) should be used with appropriate
+attributes where the degree of damage or illegibility in a text is
+such that nothing can be read and the text must be either omitted or
+supplied conjecturally or from one or more other sources.  In many
+cases, however, despite damage or illegibility, the text may yet be
+read with reasonable confidence.  In these cases, the following
+elements should be used: <specList>
+<specDesc key="damage"/>
+<specDesc key="damageSpan" atts="spanTo"/>
+</specList>
+As members of the class <ident
+type="class">att.damaged</ident>, these elements  bear
+the following attributes
+<specList>
+<specDesc key="att.damaged" atts="extent hand agent degree group"/>
+</specList>
+</p>
 <p>The following examples refer to the recto of folio 5 of the unique
 manuscript of the Elder Edda.<note place="foot">Codex Regius, ed.  L. F.
 A. Wimmer and F. Jónsson (Copenhagen 1891).</note> Here, the
 manuscript of <title>Vóluspá</title> has been damaged
 through irregular rubbing so that letters in various places are obscured
-and in some cases cannot be read at all.  The existence of the damage
-may be registered in general for this leaf by use of the <gi>damage</gi>
-element.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><damage extent="whole leaf" agent="rubbing"> ... </damage></egXML>
-However, in fact the damage crosses structural divisions, so the
-<gi>damage</gi> element does not nest properly within the containing
-<gi>div</gi> elements.  The simplest method to solve this problem is to
-split the element into two fragments, one within each structural
-division:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>
-  <pb n="5r"/>
-  <damage agent="rubbing" extent="whole leaf">
-  </damage>
+and in some cases cannot be read at all.  
 </p>
-<p>
-  <damage agent="rubbing" extent="whole leaf">
-  </damage>
-  <pb n="5v"/>
-</p></egXML>
-For other techniques of handling non-nesting information, see chapter
-<ptr target="#NH"/>.</p>
 <p>In the first line of this leaf, the transcriber may believe that the
 last three letters of <mentioned>daga</mentioned> can be read clearly despite
 the damage:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">um aldr d<damage>aga</damage> yndisniota</egXML></p>
-<p>Alternatively, the letters in question may be only imperfectly
-legible on account of the damage; this state of affairs may be indicated
-simply by using the <gi>unclear</gi> element:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">um aldr
+d<damage>aga</damage> yndisniota</egXML>
+</p>
+<p>If, as is often the case,  the damage crosses structural divisions, so
+that the <gi>damage</gi> element cannot be  nested properly within the containing
+<gi>div</gi> elements, the <gi>damageSpan</gi> element may be used, in
+the same way as the <gi>delSpan</gi> and <gi>addSpan</gi> elements
+discussed in section <ptr target="#PHAD"/>.  
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>
+<!-- ... -->
+  <pb n="5r"/>
+  <damageSpan agent="rubbing" extent="whole leaf" spanTo="#damageEnd"/>
+</p>
+<p> .... </p>
+<p> ....
+  <pb n="5v" xml:id="damageEnd"/>
+</p></egXML>
+Note that in this example the <att>spanTo</att> element points to the
+next <gi>pb</gi> element rather than to an inserted <gi>anchor</gi>
+element, since the whole of the leaf (the text between the two
+<gi>pb</gi> elements has sustained damage. For other techniques of handling non-nesting information, see chapter
+<ptr target="#NH"/>.</p>
+<p>If, as is also likely, the damage affects several disjoint parts of
+the text, each such part must be marked with a separate
+<gi>damage</gi> or <gi>damageSpan</gi> element. To indicate that each of these is to be
+regarded as forming part of the same damaged area, the <att>group</att>
+attribute may be used as in the following example. In this (imaginary)
+text of Fitzgerald's translation from Omar Khayam, 
+water damage has affected an area covering parts of several lines
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><l>
+The Moving Finger wri<damage agent="water" group="1">es; and</damage> having writ,</l>
+<l>Moves <damage agent="water" group="1">on: nor all your</damage> Piety nor Wit</l>
+<l><damageSpan agent="water" group="1" spanTo="#washOut"/>Shall lure it back to cancel half a Line,</l>
+<l>Nor all your Tears wash <anchor xml:id="washOout"/> out a Word of it</l>
+</egXML>
+</p>
+<p>A more general solution to this problem is provided by the
+<gi>join</gi> element discussed in <ptr target="#SAAG"/> which may be
+used to link together arbitrary elements of any kind in the
+transcription. Where, as here, several phenomena of illegibility and conjecture
+all result from the one cause, an area of damage to the text — rubbing
+at various points — which is not continuous in the text, affecting it
+at irregular points, the <gi>join</gi> element may be
+used to indicate which tagged features are part of the same physical
+phenomenon. </p>
+
+<p>If the damage has been so severe as to render parts of the text
+only  imperfectly
+legible, the  <gi>unclear</gi> element should be used to mark the
+fact. Returning to the Eddic example above, an encoder less confident
+in the <mentioned>daga</mentioned> reading, may indicate this as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">um aldr d<unclear reason="damage">aga</unclear> yndisniota</egXML></p>
 <p>If it is desired to supply more information about the kind of
 damage, it is also possible to nest an <gi>unclear</gi> element within
@@ -1814,25 +1815,19 @@ the <gi>damage</gi> element:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">um aldr d<damage agent="rubbing"><unclear>aga</unclear></damage> yndisniota</egXML></p>
 <p>Alternatively, the transcriber may not feel able to read the last
 three letters of <mentioned>daga</mentioned> but may wish to supply them by
-conjecture. Note the use of the <att>source</att> attribute to assign
+conjecture. Note the use of the <att>resp</att> attribute to assign
 the conjecture to Finnur Jónsson:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">um aldr d<supplied reason="rubbing" source="FJ">aga</supplied> yndisniota</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">um aldr d<supplied reason="rubbing" resp="#FJ">aga</supplied> yndisniota</egXML>
 The <gi>supplied</gi> element may if desired be enclosed within a
 <gi>damage</gi> element:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">um aldr d<damage agent="rubbing"><supplied source="FJ">aga</supplied></damage> yndisniota</egXML></p>
 <p>Contrast the use of <gi>gap</gi> in the next line, where the
 transcriber believes that four letters cannot be read at all because
 of the damage:
-<eg><![CDATA[&Thorn;ar k&hook-o;mr inn dimmi dreki fliugandi na&thorn;r frann
-ne&thorn;an <gap reason="illegible" agent="rubbing" extent="4"/>]]></eg>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">þar komr inn dimmi dreki fliugandi naþr frann
+neþan <gap reason="illegible" agent="rubbing" extent="4"/></egXML>
 As with <gi>supplied</gi>, this <gi>gap</gi> might be enclosed by a
 <gi>damage</gi> element.</p>
-<p>In these examples, various phenomena of illegibility and conjecture
-all result from the one cause, an area of damage to the text — rubbing
-at various points — which is not continuous in the text, affecting it
-at irregular points.  In these cases, the <gi>join</gi> element may be
-used to indicate which tagged features are part of the same physical
-phenomenon.  (See chapter <ptr target="#SA"/> for more details.)</p>
 <p>The above examples record imperfect legibility due to damage.  When
 imperfect legibility is due to some other reason (typically because the
 handwriting is ill-formed), the <gi>unclear</gi> element should be used
@@ -1891,7 +1886,7 @@ surround the whole area  with the <gi>del</gi> element (for deletion; or
 the <gi>delSpan</gi> element where it crosses a structural boundary); or
 the <gi>damage</gi> element (for damage).  Text within the damaged area
 which can be read with perfect confidence needs no further tagging.
-Text within the damaged area which can not be read with perfect
+Text within the damaged area which cannot be read with perfect
 confidence may be surrounded with the <gi>unclear</gi> element.  Places
 within the damaged area where the text has been rendered completely
 illegible and no text is supplied by the editor may be marked with
@@ -1933,6 +1928,8 @@ deletion was made from  a passage which had earlier been added:
 <del>eventually</del> to the text.</add></egXML></item>
 </list></p></div>
 </div>
+
+
 <div><head>Aspects of Layout</head>
 <p>Finally in this chapter we present elements which may be used to
 capture aspects of the layout of material on a page where this is
@@ -1940,13 +1937,14 @@ considered important.  Methods for recording page breaks, column breaks, and lin
 source are described in section <ptr target="#COXR"/>.
 </p>
 <div type="div3" xml:id="PHSP"><head>Space</head>
-<p>The presence of significant space in the text being transcribed may
-be indicated by the <gi>space</gi> element.  The author or scribe may
+<p>The author or scribe may
 have left space for a word, or for an initial capital, and for some
 reason the word or capital was never supplied and the space left empty.
-This element should not be used to mark normal inter-word space or the
-like.
-<specList><specDesc key="space" atts="resp"/></specList></p>
+The presence of significant space in the text being transcribed may
+be indicated by the <gi>space</gi> element.  
+<specList><specDesc key="space" atts="resp"/></specList>
+Note that this element should not be used to mark normal inter-word space or the
+like. </p>
 <p>In line 694 of Chaucer's <title>Wife of Bath's Prologue</title> in
 the Holkham manuscript the scribe has left a space for a word where
 other manuscripts read <mentioned>preestes</mentioned>:
@@ -2009,8 +2007,8 @@ the letters to Mr Boyd</hi>
 <desc>may begin with previous word</desc>
 </certainty></egXML></p>
 <p>Where the area of text marked overlaps other areas of text, for
-example crossing a structural division, one of the span mechanisms
-outlined in these Guidelines may be used.  Where the line is thought to
+example crossing a structural division, one of the spanning mechanisms
+mentioned above must be used; for example where the line is thought to
 mark a deletion, the <gi>delSpan</gi> element may be used.  Where it is
 desired simply to record the marking of a span of text in circumstances
 where it is not possible to surround the text with a <gi>hi</gi>
@@ -2087,35 +2085,48 @@ quiring, collation, etc.), authorial instructions or scribal markup,
 etc.  Some of these issues may be covered in future editions of these
 guidelines.</p></div>
 <div><head>Formal declarations for transcriptional elements</head>
+
+<p>This chapter declares the <ident type="module">transcr</ident>
+module, which makes available the following components:
+
+<moduleSpec xml:id="DPH" ident="transcr"><altIdent type="FPI">Transcription of Primary Sources</altIdent><desc>Transcription of primary sources</desc></moduleSpec><!--publicID:  -//TEI P5//ELEMENTS Additional Element Set for Transcription of Primary Sources//EN-->
+
+The selection and combination of modules to form a TEI schema is described in
+<ptr target="#STIN"/>.
+</p>
 <p>The elements provided by this module are formally  declared as
 follows:
-<specGrp xml:id="DTCAD" n="Added and Deleted Spans">
-&ex;
+<specGrp xml:id="DTCHD" n="Headers and footers">
 &addSpan;
+&damage;
+&damageSpan;
 &delSpan;
-&subst;
-</specGrp>
-<specGrp xml:id="DPHCD" n="Cancelled Deletions">
+&ex;
+&fw;
+&hand;
+&handList;
+&handShift;
 &restore;
-</specGrp>
-<specGrp xml:id="DPHOM" n="Supplied Text">
+&space;
+&subst;
 &supplied;
 </specGrp>
-<specGrp xml:id="DPHHD" n="Hand Shifts">
-&hand;
-&handShift;
-&handList;
-</specGrp>
-<specGrp xml:id="DPHDA" n="Damage and Illegiblity">
-&damage;
-</specGrp>
-<specGrp xml:id="DPHSP" n="Spaces in the source">
-&space;
-</specGrp>
-<specGrp xml:id="DTCHD" n="Headers and footers">
-&fw;
-</specGrp>
 
+<!--
+</specGrp>
+</specGrp>
+</specGrp>
+</specGrp>
+</specGrp>
+</specGrp>
+</specGrp>
+<specGrp xml:id="DPHCD" n="Cancelled Deletions">
+<specGrp xml:id="DPHDA" n="Damage and Illegiblity">
+<specGrp xml:id="DPHHD" n="Hand Shifts">
+<specGrp xml:id="DPHOM" n="Supplied Text">
+<specGrp xml:id="DPHSP" n="Spaces in the source">
+<specGrp xml:id="DTCAD" n="Added and Deleted Spans">
+-->
 
 
 

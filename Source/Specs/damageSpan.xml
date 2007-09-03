@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date: 2007-09-02 22:01:12 +0100 (Sun, 02 Sep 2007) $
+
+$Id: delSpan.xml 3062 2007-09-02 21:01:12Z louburnard $
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="transcr" usage="opt" ident="damageSpan">
+  <gloss>damaged span of text</gloss>
+  <desc>marks the beginning of a longer sequence of text which is
+  damaged in some way but still legible.</desc>
+  <classes>
+    <memberOf key="model.global.edit"/>
+<!--    <memberOf key="att.editLike"/>-->
+    <memberOf key="att.damaged"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="att.spanning"/>
+  </classes>
+  <content xmlns:s="http://www.ascc.net/xml/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0">
+    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+    <s:pattern name="spanTo_required">
+      <s:rule context="tei:delSpan">
+        <s:assert test="@spanTo">The spanTo= attribute of <s:name/> is required.</s:assert>
+      </s:rule>
+    </s:pattern>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <p>Paragraph partially damaged.  This is the undamaged
+portion <damageSpan spanTo="#a34"/>and this the damaged
+portion of the paragraph.</p>
+      <p>This paragraph is entirely damaged.</p>
+      <p>Paragraph partially damaged; in the middle of this
+paragraph the damage ends and the anchor point marks
+the start of the  <anchor xml:id="a34"/> undamaged part of the text. ...</p>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>Both the beginning and ending of the damaged sequence must be
+    marked: the beginning by the <gi>delSpan</gi> element, the ending
+    by the target of the <att>spanTo</att> attribute: if no other
+    element available, the <gi>anchor</gi> element may be used for
+    this purpose .</p>
+    <p>The damaged text must be at least partially legible, in order
+    for the encoder to be able to transcribe it. If it is not legible
+    at all, the <gi>damageSpan</gi> element should not be used. Rather, the
+    <gi>gap</gi> or <gi>unclear</gi> element should be employed, with the value of the <att>reason</att> attribute
+    giving the cause. See further sections <ptr target="#PHDA"/> and
+ <ptr target="#PHCOMB"/>.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#PHDA"/>
+  </listRef>
+</elementSpec>
