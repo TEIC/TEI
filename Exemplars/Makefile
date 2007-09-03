@@ -1,6 +1,6 @@
 PREFIX=/usr
 BIN=${PREFIX}/bin
-DOCODDS=teitite teilite
+DOCODDS=tei_tite teilite
 LANGUAGE=en
 DRIVER=guidelines-${LANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
