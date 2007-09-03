@@ -830,17 +830,16 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:moduleSpec">
-    <div><hr/><strong>
-        <xsl:call-template name="i18n">
-          <xsl:with-param name="word">Module</xsl:with-param>
-        </xsl:call-template>
-      </strong>
+    <div class="moduleSpec">
+      <span class="moduleSpecHead">
+      <xsl:call-template name="i18n">
+	<xsl:with-param name="word">Module</xsl:with-param>
+      </xsl:call-template>
       <xsl:text> </xsl:text>
-      <em>
-	<xsl:value-of select="@ident"/>
-      </em>
+      <xsl:value-of select="@ident"/>
       <xsl:text>: </xsl:text>
       <xsl:call-template name="makeDescription"/>
+      </span>
       <ul>
 	<xsl:if test="key('ElementModule',@ident)">
 	  <li>
@@ -888,7 +887,6 @@
 	  </li>
 	</xsl:if>
       </ul>
-      <hr/>
     </div>
   </xsl:template>
   <xd:doc>

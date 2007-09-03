@@ -650,18 +650,18 @@ $ID: requests a particular page
       <!-- 2. we are at or above splitting level, 
 	   so start a new page  -->
       <xsl:when
-        test="$depth &lt;= $splitLevel and parent::tei:front         and $splitFrontmatter='true'">
+        test="$depth &lt;= $splitLevel and ancestor::tei:front         and $splitFrontmatter='true'">
         <xsl:call-template name="makeDivPage">
           <xsl:with-param name="depth" select="$depth"/>
         </xsl:call-template>
       </xsl:when>
       <xsl:when
-        test="$depth &lt;= $splitLevel and parent::tei:back and $splitBackmatter='true'">
+        test="$depth &lt;= $splitLevel and ancestor::tei:back and $splitBackmatter='true'">
         <xsl:call-template name="makeDivPage">
           <xsl:with-param name="depth" select="$depth"/>
         </xsl:call-template>
       </xsl:when>
-      <xsl:when test="$depth &lt;= $splitLevel and parent::tei:body">
+      <xsl:when test="$depth &lt;= $splitLevel and ancestor::tei:body">
         <xsl:call-template name="makeDivPage">
           <xsl:with-param name="depth" select="$depth"/>
         </xsl:call-template>
@@ -1713,8 +1713,7 @@ $ID: requests a particular page
       </xsl:when>
       <xsl:when test="element-available('exsl:document')">
         <xsl:if test="$verbose='true'">
-          <xsl:message>Opening <xsl:value-of select="$outName"/> with
-            exsl:document</xsl:message>
+          <xsl:message>Opening <xsl:value-of select="$outName"/> with exsl:document</xsl:message>
         </xsl:if>
         <xsl:if test="element-available('exsl:document')">
           <exsl:document doctype-public="{$doctypePublic}"
