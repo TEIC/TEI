@@ -1606,7 +1606,9 @@
         </xsl:when>
 	<xsl:when test="$splitLevel &gt;-1 and $ID='' and
 			$STDOUT='true'"/>
-	<xsl:when test="$splitLevel &gt;-1 and self::tei:text">
+
+	<xsl:when test="$splitLevel &gt;-1 and self::tei:text"/>
+<!--
           <div class="notes text">
             <div class="noteHeading">
               <xsl:call-template name="i18n">
@@ -1620,6 +1622,7 @@
 	    </xsl:for-each>
           </div>
 	</xsl:when>
+-->
         <xsl:otherwise>
 	  <xsl:if test="descendant::tei:note[@place='foot' or @place='end']">
 	    <div class="notes">
@@ -1628,8 +1631,9 @@
 		  <xsl:with-param name="word">noteHeading</xsl:with-param>
 		</xsl:call-template>
 	      </div>
-	      <xsl:apply-templates mode="printnotes"
-				   select="descendant::tei:note[@place='foot' or @place='end']"/>
+	      <xsl:apply-templates 
+		  mode="printnotes"
+		  select="descendant::tei:note[@place='foot' or @place='end']"/>
 	    </div>
 	  </xsl:if>
         </xsl:otherwise>

@@ -207,6 +207,8 @@
             </xsl:with-param>
             <xsl:with-param name="class">
               <xsl:value-of select="$class_toc"/>
+	      <xsl:text> </xsl:text>
+              <xsl:value-of select="concat($class_toc,'_',$depth)"/>
             </xsl:with-param>
             <xsl:with-param name="body">
               <xsl:choose>
