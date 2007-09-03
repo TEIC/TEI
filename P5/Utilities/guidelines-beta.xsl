@@ -167,6 +167,7 @@
 		  <xsl:value-of select="count(ancestor::tei:div) + 1"/>
 		  <xsl:text>em;</xsl:text>
 		</xsl:attribute>
+		<xsl:text>&#x21B3;</xsl:text>
 		<a class="UP">
 		<xsl:attribute name="href">
 		  <xsl:apply-templates mode="generateLink" select="."/>
@@ -222,6 +223,12 @@
       <xsl:with-param name="minimal">true</xsl:with-param>
     </xsl:call-template>
     <xsl:if test="$currentID=''">
+      <h2>Summary Table of Contents</h2>
+      <xsl:call-template name="mainTOC">
+	<xsl:with-param name="force">0</xsl:with-param>
+      </xsl:call-template>
+
+      <h2>Full Table of Contents</h2>
       <xsl:call-template name="mainTOC"/>
     </xsl:if>
     <xsl:call-template name="stdfooter"/>
@@ -306,4 +313,14 @@
     <xsl:call-template name="pageHeader"/>
   </xsl:template>
 
+  <xsl:template match="tei:titlePage">
+    <div class="titlePage">
+  <h1>
+    <xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
+  </h1>
+  <h2>
+    <xsl:value-of select="tei:docAuthor"/>
+  </h2>
+    </div>
+  </xsl:template>
 </xsl:stylesheet>
