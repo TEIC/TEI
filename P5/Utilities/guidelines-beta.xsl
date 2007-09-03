@@ -60,8 +60,7 @@
       <xsl:when test="$displayMode='both'">
         <div class="displayRelax">
           <button class="displayRelax"
-            onclick="togglerelax(this)">Display
-              RNG</button>
+            onclick="togglerelax(this)">Display RNG</button>
           <pre class="eg_rng" style="display:none">
             <xsl:apply-templates mode="verbatim"
               select="exsl:node-set($content)/*/*"/>
