@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date: 2007-09-01 17:15:32 +0100 (Sat, 01 Sep 2007) $
+
+$Id: att.typed.xml 3046 2007-09-01 16:15:32Z louburnard $
+-->
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei"  type="atts" ident="att.damaged">
+  <desc>provides attributes describing the nature of any physical
+  damage affecting a reading</desc>
+
+  <attList>
+    <attDef ident="extent" usage="opt">
+      <equiv/>
+      <desc>indicates approximately how much text is in the damaged area,
+in letters, minims, inches, or any appropriate unit, where this
+cannot be deduced from the contents of the tag.  </desc>
+      <desc version="2007-01-21" xml:lang="it">indica in lettere, uncini, pollici, o altre unità di misura quanto testo, approsimativamente, si trovi nell'area danneggiata, quando questo non è deducibile dal contenuto del marcatore; per esempio se il danno abraccia diverse partizioni testuali il marcatore sarà privo di contenuto</desc>
+      <desc version="2007-05-04" xml:lang="es">indica en letras, pulgadas o cualquier otra unidad de medida cuanto texto, aproximadamente, se encontraba en la área dañada, cuando esto no se deduce del contenido de la etiqueta; p.ej. si el daño abraza diversas partes textuales la etiqueta estará vacía de contenido.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該損傷の量を示す．例えば，文字数，インチなどの単位を使用する．</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+      </datatype>
+      <valDesc>any measurement phrase, e.g. <mentioned>25 letters</mentioned>, <mentioned>2 × 3
+inches</mentioned>.</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+<!--    <attDef ident="resp" usage="opt">
+	<equiv/>
+	<desc>indicates the individual responsible for identifying the area
+of damage.</desc>
+      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/></datatype>
+      <valDesc>must be one of the identifiers declared in the document
+header, associated with a person asserted as responsible for some
+aspect of the text's creation, transcription, editing, or encoding
+(see chapter <ptr target="#CE"/>).</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+-->
+    <attDef ident="hand" usage="opt">
+      <equiv/>
+      <desc>In the case of damage (deliberate defacement, etc.) assignable
+to an identifiable hand, signifies the hand responsible for the
+damage.</desc>
+      <desc version="2007-01-21" xml:lang="it">in caso di danneggiamento (volontario o meno) riconducibile a una mano identificabile, indica la mano responsabile del danneggiamento</desc>
+      <desc version="2007-05-04" xml:lang="es">en el caso de daño (deliberado o no) adscribible a una mano identificable, indica la mano responsable del daño.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該損傷部分の書き手が特定できる場合，それを示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>must be one of the hand identifiers declared in the document
+header (see section <ptr target="#PHDH"/>).</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+    <attDef ident="agent" usage="opt">
+      <equiv/>
+      <desc>categorizes the cause of the damage, if it can be identified.</desc>
+      <desc version="2007-01-21" xml:lang="it">classifica la causa del danneggiamento, se rintracciabile</desc>
+      <desc version="2007-05-04" xml:lang="es">categoriza la causa del daño, si esta puede ser identificada.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該損傷の原因の分類を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valList type="open">
+        <valItem ident="rubbing">
+          <desc>damage results from rubbing of the
+  leaf edges</desc>
+          <desc version="2007-05-04" xml:lang="es">el daño se deriva por el roce de los márgenes de los folios</desc>
+        </valItem>
+        <valItem ident="mildew">
+          <desc>damage results from mildew on the leaf surface</desc>
+          <desc version="2007-05-04" xml:lang="es">daño resultante de la presencia de moho en la superficie del folio</desc>
+        </valItem>
+        <valItem ident="smoke">
+          <desc>damage results from smoke</desc>
+          <desc version="2007-05-04" xml:lang="es">daños provocados por el humo</desc>
+        </valItem>
+      </valList>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+    </attDef>
+    <attDef ident="degree" usage="opt">
+      <equiv/>
+      <desc>Signifies the degree of damage according to a convenient scale.
+The <gi>damage</gi> tag with the <att>degree</att> attribute should
+only be used where the text may be read with some confidence; text
+supplied from other sources should be tagged as <gi>supplied</gi>.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica l'entità del danneggiamento misurato in base a una scala funzionale; il marcatore <gi>damage</gi> con l'attributo <att>degree</att> dovranno essere utilizzati solo se il testo può essere letto con una certa sicurezza; i testi derivanti da altre fonti andranno marcati come 
+<gi>supplied</gi></desc>
+      <desc version="2007-05-04" xml:lang="es">&gt;indica el grado del daño medido en base a una escala funcional; la etiqueta <gi>damage (daño)</gi> con el atributo <att>degree (grado)</att> deberán utilizarse sólo si el texto puede ser leído con una cierta certeza; los textos proporcionados por otras fuentes serán etiquetados como <gi>supplied (suplente)</gi></desc>
+      <desc version="2006-10-28" xml:lang="ja">当該損傷部分にあったテキストが確信できる場合，その損傷の程度を示す．</desc>
+      <datatype>
+        <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+          <rng:ref name="data.probability"/>
+          <rng:ref name="data.certainty"/>
+        </rng:choice>
+      </datatype>
+      <valDesc>an alphanumeric categorization of the degree of damage, as
+<mentioned>0.4</mentioned>.</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+      <remarks>
+        <p>The <gi>damage</gi> tag with the <att>degree</att>
+attribute should only be used where the text may be read with
+confidence despite the damage.  It is appropriate where it is desired
+to record the fact of damage, though this has not affected the
+readability of the text (as may be the case with weathered
+inscriptional materials).  Where the damage has rendered the text
+more or less illegible either the <gi>unclear</gi> tag (for partial
+illegibility) or the <gi>gap</gi> tag (for complete illegibility,
+with no text supplied) should be used, with the information
+concerning the damage given in the attribute values of these tags.
+See section <ptr target="#PHCOMB"/> for discussion of the use of these
+tags in particular circumstances.</p>
+      </remarks>
+    </attDef>
+
+    <attDef ident="group" usage="mwa">
+      <desc>assigns an arbitrary number to each stretch of damage
+      regarded as forming part of the same physical phenomenon.</desc>
+      <datatype maxOccurs="1">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/>
+      </datatype>
+    </attDef>
+
+  </attList>
+  <listRef>
+    <ptr target="#STECAT"/>
+  </listRef>
+</classSpec>
