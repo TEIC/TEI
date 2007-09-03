@@ -1215,15 +1215,15 @@ target="#PHOM"/> and section <ptr target="#PHDA"/>.</p>
 
 <div type="div3" xml:id="PHSU"><head>Substitutions</head>
 
-<p>Substitution of one word or phrase for another is
-perhaps the most common of all phenomena requiring special treatment
-in transcription of primary textual sources.
-It may be simply one word overwriting another, or
-deletion of one word and its replacement by another written above it by
-the same hand at the one time; the deletion and replacement may be done
-by different hands at different times; there may be a long chain of
-substitutions on the one stretch of text, with uncertainty as to the
-order of substitution and as to which of many possible readings should be preferred.</p>
+<p>Substitution of one word or phrase for another is perhaps the most
+common of all phenomena requiring special treatment in transcription
+of primary textual sources.  It may be simply one word overwriting
+another, or deletion of one word and its replacement by another
+written above it by the same hand at the one time; the deletion and
+replacement may be done by different hands at different times; there
+may be a long chain of substitutions on the one stretch of text, with
+uncertainty as to the order of substitution and as to which of many
+possible readings should be preferred.</p>
 <p>As we have shown, the simplest method of recording a substitution
 is simply to record both the addition and the deletion. However, when
 the module defined by this chapter is in use, an additional element is
@@ -1454,23 +1454,35 @@ encoded:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">For I hate this
 <restore hand="#dhl" means="marginalStetNote"><del>my</del></restore>
 body</egXML></p>
+<p>Another feature commonly encountered in manuscripts is the use of
+circles, lines, or arrows to indicate transposition of material from
+one point in the text to another. No specific markup for this
+phenomenon is proposed at this time. Such cases are most simply
+encoded as additions at the point of insertion and deletions at the
+point of encirclement. </p>
 </div>
 
-<div type="div3" xml:id="PHOM"><head>Text Omitted from or Supplied in the Transcription</head>
+<div type="div3" xml:id="PHOM">
+<head>Text Omitted from or Supplied in the Transcription</head>
 <p>Where text is not transcribed, whether because of damage to the
-original, or because it is illegible, or because of editorial policy,
+original, or because it is illegible, or for some other reason such as editorial policy,
 the <gi>gap</gi> core element should be used to register the omission;
 where text not present in the source is supplied (whether
 conjecturally or from other witnesses) to fill an apparent gap in the
 text, it should be marked using the <gi>supplied</gi> element provided
 by the module defined in this chapter.
 <specList><specDesc key="gap" atts="reason hand agent"/><specDesc key="supplied" atts="reason hand agent source"/></specList></p>
-<p>By its nature, the <gi>gap</gi> element must have no content.  It
-should be used wherever an authorial or scribal erasure is so
-successful, or the text is so illegible, that nothing can be read.  In
+<p>By its nature, the <gi>gap</gi> element has no content.  It
+marks a point in the text where nothing at all can be read, whether because
+of  authorial or scribal erasure, physical damage, or any other form
+of  illegibility.  Its attributes allow the encoder to specify the
+amount of text which is illegible in this way at this point, using any
+convenient units, where
+this can be determined.  For example, in
 the Beerbohm manuscript of <title>The Golden Drugget</title> cited
-above, for example, the author has erased several passages by inking
-them over completely:
+above, the author has erased a passage amounting about 10 cm in length
+by inking
+over it completely:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Others <gap
 reason="cancelled" hand="#mb" extent="10" unit="cm"/>—and
 here is one of them...</egXML></p>
@@ -1478,17 +1490,28 @@ here is one of them...</egXML></p>
 library,<note place="foot">(Klinkenborg 11)</note> three words in the signature are quite illegible:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">I am dr Sr yr <gap
 reason="illegible" extent="3" unit="word"/>Sydney Smith</egXML>
-It is possible, but not always necessary, to provide measurements
-precise to the millimeter or even to the printer's point.  The degree of
-precision attempted will vary with the purpose of the encoding and the
-nature of the material.</p>
-<p>In cases where there is damage, or a degree of illegibility, but the
-text is nevertheless legible and is transcribed, the <gi>gap</gi>
-element should not be used.  Instead, the passage should be marked using
-one or more of the elements <gi>damage</gi> and <gi>unclear</gi>, which
+
+The degree of
+precision attempted when measuring the size of a gap will vary with the purpose of the encoding and the
+nature of the material: no particular recommendation is made here.</p>
+
+<p>As noted above, the <gi>gap</gi> element should only be used where
+text has not been transcribed; if partially legible text has been
+transcribed, one of the elements <gi>damage</gi> and <gi>unclear</gi>
+should be used instead. These elements 
 are described in section <ptr target="#PHDA"/>.</p>
-<p>If the source text is completely illegible or missing, and new text
-is supplied to fill the gap, it should be marked as <gi>supplied</gi>.
+
+<p>If the source text is completely illegible or missing, an encoder
+may sometimes wish to supply new (conjectural) material to replace it.
+This conjectural reading is analogous to a correction in that it
+contains text provided by the encoder and not attested in the
+source. This is not however a correction, since no error is
+necessarily present in the original; for that reason a different
+element <gi>supplied</gi> should be used.
+<specList>
+<specDesc key="supplied"/>
+</specList>
+
 If another (imaginary) copy of the letter above preserved the
 signature as reading <q>I am dear Sir your very humble Servt Sydney
 Smith</q>, the text illegible in the autograph might be supplied in
@@ -1506,37 +1529,28 @@ the encoder (or whoever is indicated by the value of the
 <gi>unclear</gi>, <gi>damage</gi>, and other elements; for discussion,
 see section <ptr target="#PHCOMB"/>.</p>
 </div></div>
-<!-- tohere LB -->
 
-
-
-
-
-<div type="div2" xml:id="PHPH"><head>Non-Linguistic Phenomena in the Source</head>
-<p>This section describes methods for recording a number of
-non-linguistic characteristics of the source text which are often of
-particular interest in the transcription of primary sources:  points at
+<div type="div2" xml:id="PHPH"><head>Hands and Responsibility</head>
+<p>This section discusses in more detail the representation of aspects
+of responsibility perceived or to be recorded for the writing of a
+primary source. These include points at
 which one scribe takes over from another, or at which ink, pen, or other
-characteristics of the writing change; points at which the source is
-damaged or imperfectly legible; and unusual spaces or lines in the
-source.  A discussion of the usage of the <att>hand</att>,
+characteristics of the writing change. A discussion of the usage of the <att>hand</att>,
 <att>resp</att>, and <att>cert</att> attributes is also included.
-Methods for recording page breaks, column breaks, and line breaks in the
-source are described in section <ptr target="#COXR"/>.</p>
+</p>
 <div type="div3" xml:id="PHDH"><head>Document Hands</head>
 <p>For many text-critical purposes it is important to signal the person
 responsible (the <term>hand</term>) for the writing of a whole document, a
 stretch of text within a document, or a particular feature within the
-document.  The hand may be of a known and named scribe or author, as
-<mentioned>DHL</mentioned>, or may be described by an anonymous formula, as <mentioned>hand
-one</mentioned>.  Where the hand is associated with a particular feature tagged
-within a document, this may be indicated by the value of the
-<att>hand</att> attribute on that feature.  The examples given above of
+document.  A hand, as the name supplies, need not necessarily be identified with a
+particular  known (or unknown)  scribe or author; it may simply
+indicate a particular combination of writing features recognized 
+within one or more documents. The examples given above of
 the use of the <att>hand</att> attribute with coding of additions and
 deletions illustrate this. </p>
-<p>In other cases, it may be necessary to identify a document hand
+<p><!--In other cases, it may be necessary to identify a document hand
 without there being any association of that hand with any specific
-tagged document feature.  The <gi>handList</gi> and <gi>hand</gi>
+tagged document feature.  -->The <gi>handList</gi> and <gi>hand</gi>
 elements are used in the TEI header (in the <gi>profileDesc</gi>
 element) to define each unique hand or scribe distinguished by the
 encoder in the document.  One such element must appear within the header
@@ -1551,7 +1565,7 @@ of hands occurs may then be marked in the text by the empty
 <gi>handShift</gi> element, which specifies the hand concerned by
 giving the same identifier.
 <specList>
-<specDesc key="hand"/><specDesc key="handList"/>
+<specDesc key="hand" atts="style ink writing" /><specDesc key="handList"/>
 <specDesc key="handShift"/></specList>
 </p><p>The  <att>new</att> attribute on the
 <gi>handShift</gi> element is used to indicate the hand applicable to
@@ -1568,17 +1582,24 @@ document, or may change character.  For example, the writing style might
 shift from <q>anglicana</q> to <q>secretary</q>, or the ink from blue to
 brown, or the character of the hand may change.  Any such changes should
 be indicated by assigning a new value to the appropriate attribute
-within the <gi>handShift</gi> element.  The one hand may employ
+within the <gi>handShift</gi> element.  It is for the encoder to
+decide whether a change in these properties of the writing style is so
+marked as to require treatment as a distinct hand.</p> 
+<p> As might be
+expected, one hand may employ
 different renditions within the one writing style, for example medieval
-scribes indicating a structural division by emboldening all the words
+scribes often indicate a structural division by emboldening all the words
 within a line.  These should be indicated by use of the <att>rend</att>
 attribute on an element, in the same manner as underlining, emboldening,
 font shifts, etc., in transcription of a printed text, rather than by
 introducing a new <gi>handShift</gi> element.</p>
 <p>In this example<note place="foot">From the Wiltshire Record Office,
 Dean of Sarum Churchwardens' presentments, 1731, Hurst; the
-transcription was provided by Donald A. Spaeth.</note> first the
-document hands are declared in the header:
+transcription was provided by Donald A. Spaeth.</note> the encoder has
+identified two distinct hands within the document. These are given
+identifiers <val>h1</val> and <val>h2</val> by the following
+declarations, included in the TEI Header for this document.<!-- msDesc
+? -->
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
    <profileDesc>
     <handList>
@@ -1632,21 +1653,28 @@ being transcribed.  The scribal or authorial responsibility for this
 marking may be inferred from the value of the <att>hand</att> attribute.
 The value of the <att>hand</att> attribute should be one of the hand
 identifiers declared in the document header (see section <ptr target="#PHDH"/>).</p>
-<p>As in this example, the <att>resp</att> on a particular element
-should be used only to indicate the particular aspect of responsibility
-defined in these <title>Guidelines</title> as appropriate to the
-<att>resp</att> attribute for that element.  In the case of the
-<gi>add</gi> element, the <att>resp</att> attribute is defined as
-signifying the responsibility for identifying the hand of the
-addition:  here, Bowers' identification of the hand as that of William
-James.  In the case of the <gi>corr</gi> element, the <att>resp</att>
-attribute is defined as signifying the responsibility for supplying the
+<p>The <att>resp</att> attribute, by contrast, 
+indicate the person responsible for deciding to apply the element
+carrying it to this part of the text, and hence has a slightly
+different interpretation.  In the case of the
+<gi>add</gi> element, for example, the <att>resp</att> attribute will
+indicate  the responsibility for identifying that the addition is
+indeed an addition, and also (if the <att>hand</att> attribute is
+supplied) to which hand it should be attributed. In this case, 
+Bowers is credited with  identifying the hand as that of William
+James. In the case of the <gi>corr</gi> element, the <att>resp</att>
+attribute indicates who is responsible for supplying the
 intellectual content of the correction reported in the transcription:
-here, Bowers' correction of <q>One</q> to <q>one</q>.</p>
+here, Bowers' correction of <q>One</q> to <q>one</q>. In the case of a
+deletion, the <att>resp</att> attribute will similarly indicate who
+responsibility for identifying or categorising the deletion itself,
+while other attributes (<att>hand</att> most obviously) attribute
+responsibility for the deletion itself.</p>
+<!-- tohere LB -->
 <p>As these examples show, the field of application of the
 <att>resp</att> attributes varies from element to element.  In some
-cases, it applies to the content of the element (<gi>corr</gi> and
-<gi>expan</gi>); in others it applies to the value of a particular
+cases, it applies to the content of the element (<gi>corr</gi>
+<gi>ex</gi> and <gi>supplied</gi>); in others it applies to the value of a particular
 attribute (<gi>sic</gi>, <gi>abbr</gi>, <gi>del</gi>, etc.).  In all
 cases where both the <att>cert</att> and <att>resp</att> attributes are
 defined for a particular element, the two attributes refer to the same
@@ -1726,7 +1754,17 @@ unwilling to specify so precisely the domain of the certainty or
 responsibility.  In these cases, the <gi>note</gi> element may be used
 with the <att>type</att> attribute set to <q>cert</q> or <q>resp</q>
 and the content of the note giving a prose description of the state of
-affairs.</p></div>
+affairs.</p></div></div>
+
+<div><head>Damage and Conjecture</head>
+<p>The carrier medium of a primary source may often sustain physical
+damage which makes parts of it hard or impossible to read. We have
+already In this section we discuss  elements which may be used to
+represent such situations and give recommendations about how these
+should be used in conjunction with the other related elements
+introduced previously in this chapter. </p>
+
+
 <div type="div3" xml:id="PHDA"><head>Damage, Illegibility, and Supplied Text</head>
 <p>The <gi>gap</gi> and <gi>supplied</gi> elements described above
 (section <ptr target="#PHOM"/>) should be used with appropriate attributes
@@ -1894,6 +1932,13 @@ deletion was made from  a passage which had earlier been added:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><add>This sentence was added
 <del>eventually</del> to the text.</add></egXML></item>
 </list></p></div>
+</div>
+<div><head>Aspects of Layout</head>
+<p>Finally in this chapter we present elements which may be used to
+capture aspects of the layout of material on a page where this is
+considered important.  Methods for recording page breaks, column breaks, and line breaks in the
+source are described in section <ptr target="#COXR"/>.
+</p>
 <div type="div3" xml:id="PHSP"><head>Space</head>
 <p>The presence of significant space in the text being transcribed may
 be indicated by the <gi>space</gi> element.  The author or scribe may
