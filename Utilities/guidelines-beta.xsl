@@ -237,7 +237,7 @@
   </xsl:template>
 
   <xsl:template name="numberFrontDiv">
-    <xsl:if test="count(ancestor::tei:div)&lt;1">
+    <xsl:if test="count(ancestor::tei:div)&lt;2">
       <xsl:number
 	  format="i.i"
 	  count="tei:div"
