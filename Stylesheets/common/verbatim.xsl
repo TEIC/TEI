@@ -464,6 +464,9 @@
         <xsl:when test="contains(.,'.attributes')">
           <xsl:value-of select="substring-before(.,'.attributes')"/>
         </xsl:when>
+        <xsl:when test="contains(.,'.content')">
+          <xsl:value-of select="substring-before(.,'.content')"/>
+        </xsl:when>
         <xsl:when test="contains(.,'.attribute.')">
           <xsl:value-of select="substring-before(.,'.attribute.')"/>
         </xsl:when>
@@ -473,26 +476,26 @@
       </xsl:choose>
     </xsl:variable>
     <xsl:variable name="n" select="."/>
-      <xsl:choose>
-        <xsl:when test="contains($n,'.content')">
-          <xsl:value-of select="$n"/>
-        </xsl:when>
-        <xsl:when test="contains($n,'.attributes')">
-          <xsl:value-of select="$n"/>
-        </xsl:when>
-        <xsl:otherwise>
-	  <xsl:for-each select="$top">
-          <xsl:call-template name="linkTogether">
-            <xsl:with-param name="name">
-              <xsl:value-of select="$me"/>
-            </xsl:with-param>
-            <xsl:with-param name="reftext">
-              <xsl:value-of select="$n"/>
-            </xsl:with-param>
-          </xsl:call-template>
-	  </xsl:for-each>
-        </xsl:otherwise>
-      </xsl:choose>
+    <xsl:choose>
+      <xsl:when test="contains(.,'.localattributes')">
+	<xsl:value-of select="$n"/>
+      </xsl:when>
+      <xsl:when test="contains(.,'.content')">
+	<xsl:value-of select="$n"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:for-each select="$top">
+	  <xsl:call-template name="linkTogether">
+	    <xsl:with-param name="name">
+	      <xsl:value-of select="$me"/>
+	    </xsl:with-param>
+	    <xsl:with-param name="reftext">
+	      <xsl:value-of select="$n"/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
 <xsl:template match="text()|comment()|processing-instruction()" mode="ns"/>

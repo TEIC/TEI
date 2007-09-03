@@ -63,7 +63,14 @@
      transformation, see RngToRncXml.xsl.
 
      +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<xsl:transform xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exsl="http://exslt.org/common" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" version="1.0" extension-element-prefixes="exsl" exclude-result-prefixes="rng a">
+<xsl:transform 
+    xmlns:rng="http://relaxng.org/ns/structure/1.0" 
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+    xmlns:exsl="http://exslt.org/common" 
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" 
+    version="1.0" 
+    extension-element-prefixes="exsl" 
+    exclude-result-prefixes="rng a">
   <xsl:param name="top"/>
 <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!-- Parameters -->
@@ -1450,6 +1457,9 @@ Schema:
         <xsl:when test="contains(@name,'.attributes')">
           <xsl:value-of select="substring-before(@name,'.attributes')"/>
         </xsl:when>
+        <xsl:when test="contains(@name,'.content')">
+          <xsl:value-of select="substring-before(.,'.content')"/>
+        </xsl:when>
         <xsl:when test="contains(@name,'.attribute.')">
           <xsl:value-of select="substring-before(@name,'.attribute.')"/>
         </xsl:when>
@@ -1464,26 +1474,26 @@ Schema:
 select="count(key('IDENTS',$me))"/></xsl:for-each></xsl:message>
 -->
     <xsl:variable name="n" select="@name"/>
-    <xsl:for-each select="$top">
-      <xsl:choose>
-        <xsl:when test="contains($n,'.content')">
-          <xsl:value-of select="$n"/>
-        </xsl:when>
-        <xsl:when test="contains($n,'.attributes')">
-          <xsl:value-of select="$n"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:call-template name="linkTogether">
-            <xsl:with-param name="name">
-              <xsl:value-of select="$me"/>
-            </xsl:with-param>
-            <xsl:with-param name="reftext">
-              <xsl:value-of select="$n"/>
-            </xsl:with-param>
-          </xsl:call-template>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
+    <xsl:choose>
+      <xsl:when test="contains(.,'.localattributes')">
+	<xsl:value-of select="$n"/>
+      </xsl:when>
+      <xsl:when test="contains(@name,'.content')">
+	<xsl:value-of select="$n"/>
+      </xsl:when>
+      <xsl:otherwise>
+      <xsl:for-each select="$top">
+	<xsl:call-template name="linkTogether">
+	  <xsl:with-param name="name">
+	    <xsl:value-of select="$me"/>
+	  </xsl:with-param>
+	  <xsl:with-param name="reftext">
+	    <xsl:value-of select="$n"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
 
