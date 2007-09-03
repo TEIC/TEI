@@ -99,6 +99,7 @@ html-web-beta: check
 		--stringparam outputDir Guidelines-web-beta-tmp/$$i/html \
 		--stringparam displayMode both \
 	        --stringparam lang $$i \
+		--stringparam verbose true \
 	        --stringparam doclang $$i \
 	    Utilities/guidelines-beta.xsl - ; \
 	cp -r ${SOURCETREE}/Images Guidelines-web-beta-tmp/$$i/html/ ; \
