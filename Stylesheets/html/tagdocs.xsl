@@ -849,6 +849,7 @@
 	    <xsl:text>: </xsl:text>
 	    <xsl:for-each
 		select="key('ElementModule',@ident)">
+	      <xsl:sort select="@ident"/>
 	      <xsl:call-template name="linkTogether">
 		<xsl:with-param name="name" select="@ident"/>
 	      </xsl:call-template>
@@ -864,6 +865,7 @@
 	    <xsl:text>: </xsl:text>
 	    <xsl:for-each
 		select="key('ClassModule',@ident)">
+	      <xsl:sort select="@ident"/>
 	      <xsl:call-template name="linkTogether">
 		<xsl:with-param name="name" select="@ident"/>
 	      </xsl:call-template>
@@ -879,6 +881,7 @@
 	    <xsl:text>: </xsl:text>
 	    <xsl:for-each
               select="key('MacroModule',@ident)">
+	      <xsl:sort select="@ident"/>
 	      <xsl:call-template name="linkTogether">
 		<xsl:with-param name="name" select="@ident"/>
 	      </xsl:call-template>
