@@ -1600,7 +1600,7 @@ $ID: requests a particular page
       <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:front">
         <xsl:if
           test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-          <ul class="toc{$force}">
+          <ul class="toc{$force} toc_front">
             <xsl:apply-templates mode="maketoc"
               select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
               <xsl:with-param name="forcedepth" select="$force"/>
@@ -1612,7 +1612,7 @@ $ID: requests a particular page
     <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:body">
       <xsl:if
         test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-        <ul class="toc{$force}">
+        <ul class="toc{$force}  toc_body">
           <xsl:apply-templates mode="maketoc"
             select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
             <xsl:with-param name="forcedepth" select="$force"/>
@@ -1624,7 +1624,7 @@ $ID: requests a particular page
       <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:back">
         <xsl:if
           test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-          <ul class="toc{$force}">
+          <ul class="toc{$force} toc_back">
             <xsl:apply-templates mode="maketoc"
               select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
               <xsl:with-param name="forcedepth" select="$force"/>
