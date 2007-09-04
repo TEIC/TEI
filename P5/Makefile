@@ -93,7 +93,7 @@ html-web-beta: check
 	for i in ${LANGUAGE} ${OTHERLANGUAGES} ; do \
 	echo making beta HTML Guidelines for language $$i ; \
 	mkdir -p Guidelines-web-beta-tmp/$$i/html; \
-	cp rightarrow.gif guidelines-beta.css TEI-glow.png Guidelines-web-beta-tmp/$$i/html/ ; \
+	cp rightarrow.gif guidelines-beta.css guidelines-print-beta.css TEI-glow.png Guidelines-web-beta-tmp/$$i/html/ ; \
 	xmllint --noent --xinclude ${SOURCETREE}/Guidelines/$$i/guidelines-$$i.xml \
 	| xsltproc ${VERBOSE} \
 		--stringparam outputDir Guidelines-web-beta-tmp/$$i/html \
