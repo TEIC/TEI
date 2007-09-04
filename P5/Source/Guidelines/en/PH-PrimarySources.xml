@@ -631,38 +631,68 @@ directly, using the <gi>g</gi> element to indicate the two brevigraphs
 it contains as follows: <egXML
 xmlns="http://www.tei-c.org/ns/Examples">eu<g ref="#er"/>y <g
 ref="#per"/>sone that loketh after heuen hath a place in this
-ladder</egXML> The transcriber may also wish to indicate that these
-particular characters are abbreviations, by using the <gi>abbr</gi>
-element: <egXML xmlns="http://www.tei-c.org/ns/Examples">eu<abbr><g
-ref="#er"/></abbr>y <abbr><g ref="#per"/></abbr>sone ... </egXML>
+ladder</egXML> The transcriber may also wish to indicate that, because
+of the
+presence of these 
+particular characters, the two words are actually abbreviations, by using the <gi>abbr</gi>
+element: <egXML xmlns="http://www.tei-c.org/ns/Examples"><abbr>eu<g
+ref="#er"/>y</abbr> <abbr><g ref="#per"/>sone</abbr> ... </egXML>
 Alternatively, the transcriber may choose silently to expand these
 abbreviations, using the <gi>expan</gi> element: <egXML
 xmlns="http://www.tei-c.org/ns/Examples"><expan>euery</expan>
-<expan>persone</expan> ... </egXML>
+<expan>persone</expan> ... </egXML> And, of course, the
+<gi>choice</gi> element can be used to show that one encoding is an
+alternmatoive for the other:
+<egXML
+xmlns="http://www.tei-c.org/ns/Examples"><choice><abbr>eu<g
+ref="#er"/>y</abbr><expan>euery</expan></choice></egXML>
 </p>
-<p>When the module defined by this chapter is in use, the special
-purpose <gi>ex</gi> (for editorial expansion)
-element is available to mark those parts of an expansion which are
-editorially supplied, where this can be determined.
+<p>When abbreviated forms such as these are expanded, two processes
+are carried out: some characters not present in the abbreviation are
+added (always), and some characters or glyphs present in the
+abbreviation are omitted or replaced (often). For example, when the
+abbreviation <mentioned>Dr.</mentioned> is expanded to
+<mentioned>Doctor</mentioned>, the dot in the abbreviation is removed,
+and the letters <mentioned>octo</mentioned> are added. 
+Where detailed markup of abbreviated
+words is required, these two aspects may be marked up explicitly,
+using the following elements:
 <specList>
-<specDesc key="ex"/></specList>
-Using this element,
-a transcriber may choose simply to supply the letters
-which the brevigraphs represent:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">eu<ex>er</ex>y
-<ex>per</ex>sone ...</egXML>
-or, perhaps more usefully, to mark their location within an
-<gi>expan</gi> element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><expan>eu<ex>er</ex>y</expan>
- <expan><ex>per</ex>sone</expan> ...</egXML>
+<specDesc key="ex"/>
+<specDesc key="am"/>
+</specList>
+Using these elements,
+a transcriber may indicate the status of the individual letters or signs within both the abbreviation and the
+expansion. The <gi>am</gi> element surrounds characters or signs such
+as tittles or tildes, used to indicate the presence of an
+abbreviation, which are typically removed or replaced by other
+characters  in
+the expanded form of the abbreviation:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><abbr>eu<am><g
+ref="#er"/></am>y</abbr> <abbr><am><g ref="#per"/></am>sone</abbr> ... </egXML>
+while the <gi>ex</gi> element may be used to indicate those characters
+within the expansion which are not present in the abbreviated
+form. <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><expan>eu<ex>er</ex>y</expan>
+<expan><ex>per</ex>sone</expan> ... </egXML> 
+The content of the <gi>abbr</gi> element should usually include the
+whole of the abbreviated word, while the <gi>expan</gi> element should
+include the whole of its expansion. If this is not considered
+necessary, the <gi>am</gi> and <gi>ex</gi> elements may be used within
+a <gi>choice</gi> element,
+as in this example:
+<egXML
+xmlns="http://www.tei-c.org/ns/Examples">eu<choice><am><g
+ref="#er"/></am><ex>er</ex></choice>y 
+<choice><am><g ref="#per"/></am><ex>per</ex></choice>sone ... </egXML> 
 </p>
 <p>As implied in the preceding discussion, making decisions about
 which of these various methods of representing abbreviation to use
 will form an important part of an encoder's practice. As a rule, the
-<gi>abbr</gi> element should be preferred where it is wished to
+<gi>abbr</gi> and <gi>am</gi> elements should be preferred where it is wished to
 signify that the content of the element is an abbreviation, without
 necessarily indicating what the abbreviation may stand for. The
-<gi>ex</gi> element should be used where it is wished to signify that
+<gi>ex</gi> and <gi>expan</gi> elements should be used where it is wished to signify that
 the content of the element is not present in the source but has been
 supplied by the transcriber, without necessarily indicating the
 abbreviation used in the original. The decision as to which course of
@@ -672,7 +702,7 @@ transcription, although doing so will generally simplify
 processing. The choice is likely to be a matter of editorial policy.
 If the highest priority is to transcribe the text literatim, while
 indicating the presence of abbreviations, the choice will be to use
-<gi>abbr</gi> throughout. If the highest priority is to present a
+<gi>abbr</gi> or <gi>am</gi> throughout. If the highest priority is to present a
 reading transcription, while indicating that some letters or words are
 not actually present in the original, the choice will be to use
 <gi>ex</gi> or <gi>expan</gi>
@@ -2106,6 +2136,7 @@ follows:
 &hand;
 &handList;
 &handShift;
+&om;
 &restore;
 &space;
 &subst;
