@@ -1588,9 +1588,9 @@
   </xsl:template>
 
   <xsl:template name="printNotes">
-    <xsl:if test="ancestor-or-self::tei:TEI/tei:text/descendant::tei:note[@place='foot' or @place='end']">
       <xsl:choose>
-	<xsl:when test="$footnoteFile='true'">
+	<xsl:when test="$footnoteFile='true' and ancestor-or-self::tei:TEI/tei:text/descendant::tei:note[@place='foot' or @place='end']">
+">
 	  <xsl:variable name="BaseFile">
 	    <xsl:value-of select="$masterFile"/>
             <xsl:call-template name="addCorpusID"/>
@@ -1608,21 +1608,57 @@
 			$STDOUT='true'"/>
 
 	<xsl:when test="$splitLevel &gt;-1 and self::tei:text"/>
-<!--
-          <div class="notes text">
-            <div class="noteHeading">
-              <xsl:call-template name="i18n">
-                <xsl:with-param name="word">noteHeading</xsl:with-param>
-              </xsl:call-template>
-            </div>
-            <xsl:for-each
-              select="descendant::tei:note[(@place='foot' or @place='end') and
-	      not(ancestor::tei:div)]">
-	      <xsl:apply-templates mode="printnotes" select="."/>
+	<!--
+	    <div class="notes text">
+	    <div class="noteHeading">
+	    <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">noteHeading</xsl:with-param>
+	    </xsl:call-template>
+	    </div>
+	    <xsl:for-each
+	    select="descendant::tei:note[(@place='foot' or @place='end') and
+	    not(ancestor::tei:div)]">
+	    <xsl:apply-templates mode="printnotes" select="."/>
 	    </xsl:for-each>
-          </div>
+	    </div>
+	    </xsl:when>
+	-->
+	
+	<xsl:when test="self::tei:div">
+	  <xsl:variable name="depth">
+	    <xsl:apply-templates mode="depth" select="."/>
+	  </xsl:variable>
+	  <xsl:choose>
+	    <xsl:when test="$depth &lt; $splitLevel ">
+	  <xsl:if test="child::*[not(self::tei:div)]/descendant::tei:note[@place='foot' or @place='end']">
+	    <div class="notes">
+	      <div class="noteHeading">
+		<xsl:call-template name="i18n">
+		  <xsl:with-param name="word">noteHeading</xsl:with-param>
+		</xsl:call-template>
+	      </div>
+	      <xsl:apply-templates 
+		  mode="printnotes"
+		  select="child::*[not(self::tei:div)]/descendant::tei:note[@place='foot' or @place='end']"/>
+	    </div>
+	  </xsl:if>
+	    </xsl:when>
+	    <xsl:otherwise>
+	  <xsl:if test="descendant::tei:note[@place='foot' or @place='end']">
+	    <div class="notes">
+	      <div class="noteHeading">
+		<xsl:call-template name="i18n">
+		  <xsl:with-param name="word">noteHeading</xsl:with-param>
+		</xsl:call-template>
+	      </div>
+	      <xsl:apply-templates 
+		  mode="printnotes"
+		  select="descendant::tei:note[@place='foot' or @place='end']"/>
+	    </div>
+	  </xsl:if>
+	    </xsl:otherwise>
+	  </xsl:choose>
 	</xsl:when>
--->
         <xsl:otherwise>
 	  <xsl:if test="descendant::tei:note[@place='foot' or @place='end']">
 	    <div class="notes">
@@ -1636,9 +1672,8 @@
 		  select="descendant::tei:note[@place='foot' or @place='end']"/>
 	    </div>
 	  </xsl:if>
-        </xsl:otherwise>
+	</xsl:otherwise>
       </xsl:choose>
-    </xsl:if>
     <xsl:if
 	test="ancestor-or-self::tei:TEI/tei:text/descendant::tei:app">
 
