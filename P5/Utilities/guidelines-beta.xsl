@@ -22,7 +22,7 @@
 <xsl:import href="odd2htmlp5.xsl"/>
 <xsl:param name="lang"/>
 <xsl:param name="doclang"/>
-<xsl:param name="splitLevel">1</xsl:param>
+<xsl:param name="splitLevel">0</xsl:param>
 <xsl:param name="footnoteFile">false</xsl:param>
 <xsl:param name="autoToc">false</xsl:param>
 <xsl:param name="numberFrontHeadings">true</xsl:param>
@@ -270,6 +270,7 @@
 </xsl:template>
 
   <xsl:template match="tei:specGrp">
+<!--
     <div class="specgrp">
       <xsl:call-template name="makeAnchor"/>
       <xsl:if test="@n">
@@ -281,6 +282,7 @@
         <xsl:apply-templates/>
       </dl>
     </div>
+-->
   </xsl:template>
 
   <xsl:template match="tei:specGrpRef">
