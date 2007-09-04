@@ -957,14 +957,18 @@
 	</xsl:call-template>
         <xsl:choose>
           <xsl:when test="$footnoteFile='true'">
-            <a class="notelink" href="{$masterFile}-notes.html#{$identifier}">
+            <a class="notelink" 
+	       title="Go to note"
+	       href="{$masterFile}-notes.html#{$identifier}">
               <sup>
                 <xsl:call-template name="noteN"/>
               </sup>
             </a>
           </xsl:when>
           <xsl:otherwise>
-            <a class="notelink" href="#{$identifier}">
+            <a class="notelink" 
+	       title="Go to note"
+	       href="#{$identifier}">
               <sup>
                 <xsl:call-template name="noteN"/>
               </sup>
@@ -1018,6 +1022,7 @@
 	<xsl:if test="$footnoteBackLink= 'true'">
 	  <xsl:text> </xsl:text>
 	  <a class="link_return"
+	     title="Go back to text"
 	     href="#{concat($identifier,'_return')}">&#8629;</a>
 	</xsl:if>
       </div>
