@@ -111,6 +111,32 @@
     <script type="text/javascript">
       <xsl:comment>
       <xsl:text disable-output-escaping="yes">
+    function toggleTOC (el) {
+        if (el.innerHTML == 'Display Full Contents') {
+        el.innerHTML = 'Display Summary Contents';
+        }
+        else
+        {
+        el.innerHTML = 'Display Full Contents';
+        }
+        var div = el.parentNode; 
+        for (j=0;j&lt;div.childNodes.length;j++)
+        {
+        if (div.childNodes[j].nodeType != 1) continue;
+        if (div.childNodes[j].nodeName != 'DIV') continue;
+        var thisone=div.childNodes[j];
+        var state=thisone.style.display;
+        if (state == 'block')
+        {  
+        thisone.style.display='none'; 
+        }
+        else
+        {  
+        thisone.style.display='block';
+        }
+        }
+        }
+
         function togglerelax (el) {
         if (el.innerHTML == 'Display RNC') {
         el.innerHTML = 'Display RNG';
@@ -223,13 +249,20 @@
       <xsl:with-param name="minimal">true</xsl:with-param>
     </xsl:call-template>
     <xsl:if test="$currentID=''">
-      <h2>Summary Table of Contents</h2>
-      <xsl:call-template name="mainTOC">
-	<xsl:with-param name="force">0</xsl:with-param>
-      </xsl:call-template>
-
-      <h2>Full Table of Contents</h2>
-      <xsl:call-template name="mainTOC"/>
+      <div class="togglingTOCs">
+	<button class="displayRelax"
+		onclick="toggleTOC(this)">Display Full Contents</button>
+	<div style="display: block" class="toggleTOC_summary">
+	  <h2>Summary Table of Contents</h2>
+	  <xsl:call-template name="mainTOC">
+	    <xsl:with-param name="force">0</xsl:with-param>
+	  </xsl:call-template>
+	</div>
+	<div style="display: none"  class="toggleTOC_full">	
+	  <h2>Full Table of Contents</h2>
+	  <xsl:call-template name="mainTOC"/>
+	</div>
+      </div>
     </xsl:if>
     <xsl:call-template name="stdfooter"/>
 
