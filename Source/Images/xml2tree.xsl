@@ -11,7 +11,7 @@
 \pagestyle{empty}
 \usepackage{pst-all}
 \renewcommand{\psedge}{\ncangle}
-\psset{xbbd=1in,angleB=-180,angleA=0,levelsep=90pt,armA=1in,treemode=R, treesep=6pt}
+\psset{arrows=->,xbbd=1in,angleB=-180,angleA=0,levelsep=90pt,armA=1in,treemode=R, treesep=6pt}
 %\psset{angleB=90,angleA=-90,levelsep=42pt,armB=14pt}
 \def\XX#1{\Tr[ref=l]{\psframebox[fillstyle=solid,fillcolor=lightgray]{#1}}}
 \begin{document}
