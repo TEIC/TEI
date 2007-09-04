@@ -1000,8 +1000,9 @@
         <xsl:call-template name="locateParentdiv"/>
       </xsl:variable>
       <xsl:if test="$verbose='true'">
-        <xsl:message>Note <xsl:value-of select="$identifier"/> with parent
-            <xsl:value-of select="$parent"/></xsl:message>
+        <xsl:message>Note <xsl:value-of select="$identifier"/>
+	<xsl:text> with parent </xsl:text>
+	<xsl:value-of select="$parent"/></xsl:message>
       </xsl:if>
       <div class="note">
 	<xsl:call-template name="makeAnchor">
