@@ -184,8 +184,8 @@
     <table class="miniTOC">
 	<tr>
 	  <td>
-	    <a class="navigation" href="index.html">Home</a>
-
+	    <a class="navigation" href="index.html">Home</a> |
+	    <a class="navigation" href="index-toc.html">Table of contents</a> 
 	    <xsl:for-each select="ancestor::tei:div">
 	      <div>
 		<xsl:attribute name="style">
@@ -244,25 +244,85 @@
     </div>
 
     <div id="onecol" class="main-content">
-    <xsl:call-template name="mainFrame">
-      <xsl:with-param name="currentID" select="$currentID"/>
-      <xsl:with-param name="minimal">true</xsl:with-param>
-    </xsl:call-template>
-    <xsl:if test="$currentID=''">
-      <div class="togglingTOCs">
-	<button class="displayRelax"
-		onclick="toggleTOC(this)">Display Full Contents</button>
-	<div style="display: block" class="toggleTOC_summary">
-	  <h2>Summary Table of Contents</h2>
-	  <xsl:call-template name="mainTOC">
-	    <xsl:with-param name="force">0</xsl:with-param>
-	  </xsl:call-template>
-	</div>
-	<div style="display: none"  class="toggleTOC_full">	
-	  <h2>Full Table of Contents</h2>
-	  <xsl:call-template name="mainTOC"/>
-	</div>
-      </div>
+      <xsl:call-template name="mainFrame">
+	<xsl:with-param name="currentID" select="$currentID"/>
+	<xsl:with-param name="minimal">true</xsl:with-param>
+      </xsl:call-template>
+      <xsl:if test="$currentID=''">
+	<ul>
+	  <li><a href="index-toc.html">Table of Contents</a></li>
+	  <li><a href="SG.html">Gentle Introduction to XML</a></li>
+	  <li><a href="REFTAG.html">Catalogue of elements</a></li>
+	  <li><a href="USE.html">Using the TEI</a></li>
+	</ul>
+	  <xsl:variable name="name">
+	    TEI Guidelines TOC
+	  </xsl:variable>
+	<xsl:call-template name="outputChunk">
+	  <xsl:with-param name="ident">
+	    <xsl:text>index-toc</xsl:text>
+	  </xsl:with-param>
+	  <xsl:with-param name="content">
+            <html>
+              <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (7) </xsl:comment>
+              <head>
+                <title>
+		  <xsl:value-of select="$name"/>
+                </title>
+		<xsl:choose>
+		  <xsl:when test="$cssFile = ''"/>
+		  <xsl:when test="$cssFileInclude='true'">
+		    <style>
+		      <include xmlns="http://www.w3.org/2001/XInclude"
+			  href="{$cssFile}" 
+			  parse="text"/>
+		    </style>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
+		  </xsl:otherwise>
+		</xsl:choose>
+                <xsl:if test="not($cssSecondaryFile = '')">
+                  <link href="{$cssSecondaryFile}" rel="stylesheet" type="text/css"/>
+                </xsl:if>
+		<meta name="generator" content="Text Encoding Initiative Consortium XSLT stylesheets"/>
+		<meta name="DC.Title" content="{$name}"/>
+		<meta http-equiv="Content-Type" 
+		      content="application/xhtml+xml; charset=utf-8"/>
+                <xsl:call-template name="includeJavascript"/>
+                <xsl:call-template name="javascriptHook"/>
+              </head>
+              <body id="TOP">
+                <xsl:attribute name="onload">
+                  <xsl:text>startUp()</xsl:text>
+                </xsl:attribute>
+                <xsl:call-template name="bodyHook"/>
+                <div id="hdr">
+                  <xsl:call-template name="stdheader">
+                    <xsl:with-param name="title">
+                      <xsl:value-of select="$name"/>
+                    </xsl:with-param>
+                  </xsl:call-template>
+                </div>
+
+	    <div class="togglingTOCs">
+	      <button class="displayRelax"
+		      onclick="toggleTOC(this)">Display Full Contents</button>
+	      <div style="display: block" class="toggleTOC_summary">
+		<h2>Summary Table of Contents</h2>
+		<xsl:call-template name="mainTOC">
+		  <xsl:with-param name="force">0</xsl:with-param>
+		</xsl:call-template>
+	      </div>
+	      <div style="display: none"  class="toggleTOC_full">	
+		<h2>Full Table of Contents</h2>
+		<xsl:call-template name="mainTOC"/>
+	      </div>
+	    </div>
+	      </body>
+	    </html>
+	  </xsl:with-param>
+	</xsl:call-template>
     </xsl:if>
     <xsl:call-template name="stdfooter"/>
 
