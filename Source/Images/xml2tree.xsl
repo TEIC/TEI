@@ -11,9 +11,9 @@
 \pagestyle{empty}
 \usepackage{pst-all}
 \renewcommand{\psedge}{\ncangle}
-%\psset{angleB=-180,angleA=0,levelsep=120pt,treemode=R}
-\psset{angleB=90,angleA=-90,levelsep=36pt,armB=14pt}
-\def\XX#1{\Tr{\psframebox{#1}}}
+\psset{xbbd=1in,angleB=-180,angleA=0,levelsep=90pt,armA=1in,treemode=R, treesep=6pt}
+%\psset{angleB=90,angleA=-90,levelsep=42pt,armB=14pt}
+\def\XX#1{\Tr[ref=l]{\psframebox[fillstyle=solid,fillcolor=lightgray]{#1}}}
 \begin{document}
 \color{white}\fbox{\color{black}{<xsl:apply-templates select="*"/>}}
 \end{document}
@@ -22,7 +22,16 @@
 <xsl:template match="*">
   <xsl:choose>
     <xsl:when test="*">
-  <xsl:text>&#10;\pstree{\XX{</xsl:text>
+  <xsl:text>&#10;\pstree</xsl:text>
+  <xsl:variable name="longones">
+    <xsl:for-each select="*">
+      <xsl:if test="string-length(local-name(.))&gt;12">x</xsl:if>
+    </xsl:for-each>
+  </xsl:variable>
+  <xsl:if test="string-length($longones)&gt;0">
+    <xsl:text>[levelsep=150pt]</xsl:text>
+  </xsl:if>
+  <xsl:text>{\XX{</xsl:text>
   <xsl:call-template name="name"/>
   <xsl:text>}}</xsl:text>
   <xsl:text>{</xsl:text>
@@ -38,12 +47,17 @@
 </xsl:template>
 
 <xsl:template name="name">
-  <xsl:text>\textbf{</xsl:text>
+  <xsl:variable name="n">
   <xsl:value-of select="local-name()"/>
+  </xsl:variable>
+  <xsl:text>\textbf{</xsl:text>
+  <xsl:value-of select="$n"/>
   <xsl:text>}</xsl:text>
-  <xsl:if test="@n">
-    <xsl:text> </xsl:text>
-    <xsl:value-of select="@n"/>
+  <xsl:if test="ancestor::*">
+<!--count(parent::*/*[local-name()=$n])&gt;1 -->
+    <xsl:text>{}\textsuperscript{</xsl:text>
+    <xsl:number/>
+    <xsl:text>}</xsl:text>
   </xsl:if>
 </xsl:template>
 </xsl:stylesheet>
