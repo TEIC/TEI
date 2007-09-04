@@ -44,7 +44,16 @@ XSL LaTeX stylesheet to make slides
 \date{<xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition/tei:date"/>}
 \institute{<xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:authority"/>}
 <xsl:if test="not($latexLogo='')">
-\pgfdeclareimage[height=1cm]{logo}{<xsl:value-of select="$latexLogo"/>}
+<xsl:text>\pgfdeclareimage[height=1cm]{logo}{</xsl:text>
+<xsl:choose>
+  <xsl:when test="$realFigures='true'">
+    <xsl:value-of select="$latexLogo"/>}
+  </xsl:when>
+  <xsl:otherwise>
+    <xsl:text>FIG0</xsl:text>
+  </xsl:otherwise>
+</xsl:choose>
+<xsl:text>}</xsl:text>
 \logo{\pgfuseimage{logo}}
 </xsl:if>
 </xsl:template>
