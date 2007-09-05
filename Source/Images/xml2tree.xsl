@@ -55,9 +55,9 @@
   <xsl:text>}</xsl:text>
   <xsl:if test="ancestor::*">
 <!--count(parent::*/*[local-name()=$n])&gt;1 -->
-    <xsl:text>{}\textsuperscript{</xsl:text>
+    <xsl:text>[</xsl:text>
     <xsl:number/>
-    <xsl:text>}</xsl:text>
+    <xsl:text>]</xsl:text>
   </xsl:if>
 </xsl:template>
 </xsl:stylesheet>
