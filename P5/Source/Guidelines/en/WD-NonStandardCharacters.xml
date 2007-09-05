@@ -136,14 +136,14 @@ an alternative means.</p>
      <list>
       <item>an element <gi>g</gi>, which serves as a proxy for new
        characters or glyphs</item>
-      <item>an element <gi>charDesc</gi>, which serves as a container
+      <item>an element <gi>charDecl</gi>, which serves as a container
        for information about this character. Such information is
        needed to identify and process this character
        properly. </item>
      </list>
     </p>
 <p>When the gaiji module is included in a schema, the
-<gi>charDesc</gi> element is added to the <ident type="class">model.encodingPart</ident>
+<gi>charDecl</gi> element is added to the <ident type="class">model.encodingPart</ident>
 class, and the <gi>g</gi> element is added to the phrase class. These
 elements and their components are documented in the rest of this
 section. </p>
@@ -155,7 +155,7 @@ all, its properties are not available. If the character represented is
 an existing Unicode character, but is not available in the document
 character set recognized by a given text processing system, it may
 also be convenient to have access to its properties in the same way.
-The <gi>charDesc</gi> element makes it possible to store properties
+The <gi>charDecl</gi> element makes it possible to store properties
 for use by such applications in a standard way.</p>
 <p> The list of attributes (properties) for characters is modelled on
 those in the Unicode Character Database, which distinguishes
@@ -169,11 +169,11 @@ list of properties defined in these Guidelines.</p>
 The gaiji module itself is formally defined in section <ptr target="#WSD-DEF"/> below. It defines the following  additional
      elements:
 <specList>
-<specDesc key="charDesc"/>
+<specDesc key="charDecl"/>
 <specDesc key="g" atts="ref"/>
 </specList>
 </p>
-<p>The following elements may appear within a <gi>charDesc</gi>
+<p>The following elements may appear within a <gi>charDecl</gi>
      element:
 <specList>
 <specDesc key="desc"/>
@@ -245,7 +245,7 @@ as <code>exact</code> for exact equivalences, <code>uppercase</code>
 for uppercase equivalences, <code>lowercase</code>  for lowercase equivalences,
 <code>standardized</code> for standardized forms,  and
 <code>simplified</code>  for simplified characters, etc., as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><charDesc>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><charDecl>
 <char xml:id="aenl">
 <charName>LATIN LETTER ENLARGED SMALL A</charName>
 <charProp>
@@ -254,19 +254,19 @@ for uppercase equivalences, <code>lowercase</code>  for lowercase equivalences,
 </charProp>
 <mapping type="standardized">a</mapping>
 </char>
-</charDesc>
+</charDecl>
 </egXML> 
 </p>
 <p>The mapping element may also be used to represent a mapping of the
 character or (more likely) glyph under discussion onto a character
 from the private use area as in this example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><charDesc>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><charDecl>
 <glyph xml:id="z103">
 <glyphName>LATIN LETTER Z WITH TWO STROKES</glyphName>
 <mapping type="standardized">Z</mapping>
 <mapping type="PUA">U+E304</mapping>
 </glyph>
-</charDesc>
+</charDecl>
 </egXML> 
 </p>
 <p>A more precise documentation of the properties of any character or
@@ -471,7 +471,7 @@ which are not specified by the Unicode Standard.</p>
 <p>Assuming that we wish to distinguish the variant glyphs from the standard representation for the character
 concerned, we will need to define distinct <gi>glyph</gi> elements, one for
 each of the forms of the letter we wish to distinguish:
-     <egXML xmlns="http://www.tei-c.org/ns/Examples"><charDesc>
+     <egXML xmlns="http://www.tei-c.org/ns/Examples"><charDecl>
   <glyph xml:id="r1">
   <glyphName>LATIN SMALL LETTER R WITH ONE FUNNY STROKE</glyphName>
    <charProp>
@@ -488,7 +488,7 @@ each of the forms of the letter we wish to distinguish:
    </charProp>
    <graphic url="r2img.png"/>
  </glyph>
-</charDesc> </egXML>
+</charDecl> </egXML>
      With these definitions in place, occurrences of these two special
      "r"s in the text can be annotated using the element <gi>g</gi>:
      <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -549,7 +549,7 @@ represented as follows:<egXML xmlns="http://www.tei-c.org/ns/Examples">
     is similar to the annotation of an existing character.  The same
     element <gi>g</gi> is used to provide a link from the character
     instance in the text to the character definition in
-    <gi>charDesc</gi> element. The main difference is that the
+    <gi>charDecl</gi> element. The main difference is that the
     <gi>g</gi> element now points to a <gi>char</gi> element.  The
     element <gi>g</gi> itself will generally be empty, but could
     contain a codepoint from the Private Use Area (PUA) of the Unicode Standard,
@@ -667,7 +667,7 @@ that reason, it is to be expected that a further translation into the
 local processing environment at the receiving site will be necessary
 to handle such characters, during which variant letters can be
 converted to hitherto unused codepoints on the basis of the
-information provided in the <gi>charDesc</gi> element.</p>
+information provided in the <gi>charDecl</gi> element.</p>
     <p>This mechanism is rather weak in cases where DOM trees or
     parsed XML fragments are exchanged, which may increasingly be the
     case.  The best an application can do here is to treat any
@@ -698,7 +698,7 @@ The selection and combination of modules to form a TEI schema is described in
 &char;
 &charName;
 &charProp;
-&charDesc;
+&charDecl;
 &glyph;
 &glyphName;
 &localName;
