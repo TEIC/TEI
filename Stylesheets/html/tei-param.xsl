@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" exclude-result-prefixes="tei xd" version="1.0">
+<xsl:stylesheet 
+    xmlns:xd="http://www.pnp-software.com/XSLTdoc" 
+    xmlns:tei="http://www.tei-c.org/ns/1.0" 
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+    exclude-result-prefixes="tei xd" 
+    version="1.0">
   <xd:doc type="stylesheet">
     <xd:short>
     TEI stylesheet customization module for HTML output.</xd:short>
