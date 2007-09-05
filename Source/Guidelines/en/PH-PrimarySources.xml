@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details.
 $Date$
-$Id$
+$Id $
 -->
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="PH" n="18"><head xmlns="http://www.tei-c.org/ns/1.0">Representation of Primary Sources</head>
 
@@ -1031,7 +1030,14 @@ using the following elements:
 </specList>
 Of these, <gi>add</gi> and <gi>del</gi> are included in the core
 module, while <gi>addSpan</gi> and <gi>delSpan</gi> are available only
-when using the module defined in this chapter. </p>
+when using the module defined in this chapter. These particular elements
+are members of the <ident type="class">att.spanning</ident> class,
+from which they inherit the following attribute:
+<specList>
+<specDesc key="att.spanning" atts="spanTo"/>
+</specList>
+
+</p>
 
 <p>Further characteristics of each addition and deletion, such as the
 hand used, its effect (complete or incomplete, for example), or its
@@ -1474,7 +1480,7 @@ conjecturally or from other witnesses) to fill an apparent gap in the
 text, it should be marked using the <gi>supplied</gi> element provided
 by the module defined in this chapter.
 <specList><specDesc key="gap" atts="reason hand agent"/>
-<specDesc key="supplied" atts="reason source"/></specList></p>
+<specDesc key="supplied" atts="reason"/></specList></p>
 <p>By its nature, the <gi>gap</gi> element has no content.  It
 marks a point in the text where nothing at all can be read, whether because
 of  authorial or scribal erasure, physical damage, or any other form
@@ -1769,13 +1775,18 @@ cases, however, despite damage or illegibility, the text may yet be
 read with reasonable confidence.  In these cases, the following
 elements should be used: <specList>
 <specDesc key="damage"/>
-<specDesc key="damageSpan" atts="spanTo"/>
+<specDesc key="damageSpan"/>
 </specList>
 As members of the class <ident
 type="class">att.damaged</ident>, these elements  bear
 the following attributes
 <specList>
 <specDesc key="att.damaged" atts="extent hand agent degree group"/>
+</specList>
+As a member of the <ident type="class">att.spanning</ident> class,
+<gi>damageSpan</gi> inherits  the following additional attribute:
+<specList>
+<specDesc key="att.spanning" atts="spanTo"/>
 </specList>
 </p>
 <p>The following examples refer to the recto of folio 5 of the unique
