@@ -911,8 +911,8 @@ mutilation throughout</note>
 <specDesc key="rubric"/>
 <specDesc key="incipit"/>
 <specDesc key="quote"/>
-<specDesc key="msItem"/>
-<specDesc key="msItemStruct"/>
+<!-- <specDesc key="msItem"/>
+<specDesc key="msItemStruct"/>-->
 <specDesc key="explicit"/>
 <specDesc key="finalRubric"/>
 <specDesc key="colophon"/>
@@ -926,21 +926,30 @@ mutilation throughout</note>
 <p>In addition, a <gi>msItemStruct</gi> may contain nested
 <gi>msItemStruct</gi> elements, just as an <gi>msItem</gi> may contain
 nested <gi>msItem</gi> elements.</p>
-<p>The difference between <gi>msItem</gi> and <gi>msItemStruct</gi> is
+<p>The main difference between <gi>msItem</gi> and <gi>msItemStruct</gi> is
 that in the former, the order and number of child elements is not
 constrained; any element, in other words, may be given in any order,
-and repeated as often as necessary. In the latter, however, the
-subelements, if used, must be given in the order specified above; they
-may be repeated, with the exception of <gi>rubric</gi>,
+and repeated as often as is judged necessary. In the latter, however, the
+subelements, if used, must be given in the order specified above and
+only some of  they
+may be repeated; specifically,  <gi>rubric</gi>,
 <gi>finalRubric</gi>.  <gi>incipit</gi>, <gi>textLang</gi> and
-<gi>explicit</gi>, each of which can appear only once. Neither
+<gi>explicit</gi> can appear only once.</p>
+<p>While  neither
 <gi>msItem</gi> nor <gi>msItemStruct</gi> may contain untagged running
-text, although <gi>msItem</gi> may contain one or more <gi>p</gi>
-elements as an unstructured alternative to the possible components
-listed above.  <gi>msItem</gi> and <gi>msItemStruct</gi> elements may
+text, both permit an unstructured description to be provided in the
+form of  one
+or more paragraphs of text. They differ in this respect also: if
+paragraphs are supplied as the content of an <gi>msItem</gi>, then
+none of the other component elements listed above is permitted; in the
+<gi>msItemStruct</gi> case, however, paragraphs may appear anywhere in
+as an alternative to any of the component elements listed above. 
+</p>
+<p>As noted above, both
+<gi>msItem</gi> and <gi>msItemStruct</gi> elements may
 also nest, where a number of separate items in a manuscript are
 grouped under a single title or rubric, as is the case, for example,
-with a work like <mentioned>The Canterbury Tales</mentioned>.</p>
+with a work like <title>The Canterbury Tales</title>.</p>
 <p>A <att>defective</att> attribute is available on
 <gi>msContents</gi>, <gi>msItem</gi>, and <gi>msItemStruct</gi>, and
 on the specialized elements for <gi>incipit</gi> and
@@ -956,16 +965,20 @@ manuscript containing four fragments of a single work:
 <msItem defective="true"><locus from="1r" to="9v">1r-9v</locus>
 <title>Knýtlinga saga</title>
 <msItem n="1.1"><locus from="1r:1" to="2v:30">1r:1-2v:30</locus>
-<incipit defective="true">dan<expan>n</expan>a a 
-engl<expan>an</expan>di</incipit>
-<explicit defective="true">en meðan har<expan>aldr</expan> 
-hein hafði k<expan>onung</expan>r v<expan>er</expan>it 
-yf<expan>ir</expan> danmork</explicit>
+<incipit defective="true">dan<ex>n</ex>a a 
+engl<ex>an</ex>di</incipit>
+<explicit defective="true">en meðan <expan>haraldr</expan> 
+hein hafði k<ex>onung</exr v<am><g ref="#er"/></am>it 
+yf<ex>ir</ex> danmork</explicit>
 </msItem>
 <!-- msItems 1.2 to 1.4 -->
 </msItem>
 </msContents>
 </egXML></p>
+<p>The specialised elements <gi>ex</gi>, <gi>am</gi>, and
+<gi>expan</gi> used in the above example are further discussed in
+section <ptr target="#PHAB"/>; they are available  only when the <ident
+type="module">transcr</ident> module defined by that chapter is selected. </p>
 </div>
 <div type="div3" xml:id="msat"><head>Authors and Titles</head>
 <p>The <gi>title</gi> element should be used to supply a regularized
@@ -980,16 +993,12 @@ designation of the contents, then a <soCalled>supplied</soCalled>
 title can be given, e.g. <mentioned>missal</mentioned>, in which case
 the <att>type</att> attribute on the <gi>title</gi> should be given
 the value <code>supplied</code>.</p>
-<p>The <gi>author</gi> element, if used, should generally
+<p>The <gi>author</gi> element, if used, should always
 contain the normalized form of an author's name, irrespective of how
 (or whether) this form of the name is cited in the manuscript. If it
 is desired to retain the form of the author's name as given in the
 manuscript, this may be tagged as a distinct <gi>name</gi> element,
-nested within the <gi>author</gi> element with the
-normalized form of the name on its <att>reg</att>
-attribute. Alternatively, the normalized form of the name may be
-supplied as the value of a <att>reg</att> attribute on the 
-<gi>author</gi> element.</p>
+within the text at the point where it occurs. </p>
 <!-- an example would be nice here -->
 <p>Note that the <att>key</att> attribute can also be used, as on
 names in general, to specify the identifier of a <gi>person</gi>
@@ -1111,24 +1120,14 @@ the form of a simple note, as in the following example:
 </egXML></p>
 <p>Where, for validation and indexing purposes, it is thought
 convenient to add keywords identifying the particular languages used,
-the <att>mainLang</att> attribute may be used, as in the following
-example:
+the <att>mainLang</att> attribute may be used. This attribute takes
+the same range of values as the global <att>xml:lang</att> attribute,
+on which see further <ptr target="#CHSH"/>. In the following
+example a manuscript written chiefly in Old Church Slavonic is described:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<textLang mainLang="OCS">Old Church Slavonic, written in Cyrillic 
-script.</textLang>
+<textLang mainLang="OCS">Old Church Slavonic</textLang>
 </egXML></p>
-<p>For this example to be valid, the identifier <ident>OCS</ident>
-must also be predefined as the value of the <att>xml:id</att> attribute
-on a <gi>language</gi> element in the TEI header associated with this
-description.
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<langUsage>
-<language ident="OCS">Old Church Slavonic, written in Cyrillic script.</language>
-<!-- other languages used or referenced in the manuscript description -->
-</langUsage>
-</egXML>
 <!-- here I would like to add the these two attributes are also available on msContents -->
-</p>
 <p>A manuscript item will sometimes contain material in more than one language. The 
 <att>mainLang</att> attribute should be used only for the chief language. 
 Other languages used may be specified using the <att>otherLangs</att>
@@ -1140,24 +1139,19 @@ Slavonic, with some Russian and Greek material</textLang>
 </p>
 <p>Since Old Church Slavonic may be written in either
 Cyrillic or Glagolitic scripts, and even occasionally in both within the
-same manuscript, it might be preferable to define identifiers which make
-the distinction explicit. In such a case, the following <gi>textLang</gi>
-element might be preferred:
+same manuscript, it might be preferable to use a more explicit
+identifier:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<textLang otherLangs="OCS-CYR OCS-GLA">Old Church Slavonic, 
-written in Cyrillic and Glagolitic scripts.</textLang>
-</egXML>
-and the following declarations might then be supplied in the <gi>langUsage</gi>
-element of the associated TEI Header:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<langUsage>
-<language ident="OCS-CYR">
-Old Church Slavonic, written in Cyrillic script.</language>
-<language ident="OCS-GLA">
-Old Church Slavonic, written in Glagolitic script.</language>
-<!-- other languages used or referenced in the manuscript description -->
-</langUsage>
+<textLang mainLang="OCS-cyrs">Old Church Slavonic in Cyrillic script</textLang>
 </egXML></p>
+<p>The form and scope of language identifiers recommended by these
+Guidelines is based on the IANA standard described at <ptr
+target="#CHSH"/> and should be followed throughout. Where additional 
+detail is needed correctly  to describe a language, or to discuss its
+deployment in a given text, this should be done using the
+<gi>langUsage</gi> element in the TEI Header, within which
+individual <gi>language</gi> elements document the languages
+used: see <ptr target="#HD41"/>.  </p>
 <p>Note that the <gi>language</gi> element defines a particular
 combination of human language and writing system. Only one
 <gi>language</gi> element may be supplied for each such
@@ -1306,7 +1300,7 @@ element, as in the following example, or left as plain prose.
 <p>Alternatively, the generic <gi>measure</gi> element might be used within <gi>extent</gi>, as in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <extent>
-  <measure type="leaves" unit="count" quantity="10">10 Bl.</measure>
+  <measure type="composition" unit="leaf" quantity="10">10 Bl.</measure>
   <measure type="height" quantity="37" unit="cm">37</measure> x
   <measure type="width" quantity="29" unit="cm">29</measure> cm
 </extent>
@@ -2023,7 +2017,9 @@ Note the use of the specialized form of title (<term>general material designatio
 <p>At a later revision, the content of the <gi>surrogates</gi> element
 is likely to be expanded to include elements more specifically
 intended to provide detailed information such as technical details of
-the process by which a digital or photographic image was made.</p>
+the process by which a digital or photographic image was made. For
+information about the inclusion of digital facsimile images within a
+TEI document, refer also to <ptr target="#PHFAX"/>. </p>
 <p>The <gi>surrogates</gi> element is formally defined as follows:
 <specGrp xml:id="surrogates.def">
 &surrogates;
