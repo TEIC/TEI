@@ -3,7 +3,7 @@ Copyright TEI Consortium.
 Licensed under the GNU General Public License. 
 See the file COPYING for details.
 $Date$
-$Id$
+$Id $
 -->
 <div type="div1" xml:id="MS"  xmlns="http://www.tei-c.org/ns/1.0">
 <head>Manuscript Description</head>
@@ -17,25 +17,24 @@ cataloguers and scholars working with medieval manuscripts in the
 European tradition, the scheme presented here is general enough that
 it can also be extended to other traditions and materials, and is
 potentially useful for any kind of inscribed artefact.</p>
-
-<p>The scheme described here is also intended to accommodate the needs
-of many different classes of encoders. On the one hand, encoders may
-be engaged in <term>retrospective conversion</term> of existing
-detailed descriptions and catalogues into machine tractable form; on
-the other, they may be engaged in cataloguing <foreign>ex
-nihilo</foreign>, that is, creating new detailed descriptions for
-materials never before catalogued. Some may be primarily concerned to
+<p>The scheme described here is also intended to accommodate the needs of
+many different classes of encoders. On the one hand, encoders may be
+engaged in <term>retrospective conversion</term> of existing detailed
+descriptions and catalogues into machine tractable form; on the other,
+they may be engaged in cataloguing <foreign>ex nihilo</foreign>, that
+is, creating new detailed descriptions for materials never before
+catalogued. Some may be primarily concerned to
 represent accurately the description itself, as opposed to the ideas
 and interpretations the description represents; others may have
-entirely opposite priorities. At one extreme, a project may simply
-wish to capture an existing catalogue in a form that can be displayed
-on the web, and which can be searched for literal strings, or for such
-features such as titles, authors and dates; at the other, a project
-may wish to create in highly structured and encoded form a detailed
-database of information about the physical characteristics, history,
-interpretation, etc. of the material, able to support practitioners of
-<term>quantitative codicology</term> as well as librarians.</p>
-
+entirely opposite priorities. At one
+extreme, a project may simply wish to capture an existing catalogue in
+a form that can be displayed on the web, and which can be searched for
+literal strings, or for such features such as titles, authors and
+dates; at the other, a project may wish to create in highly structured
+and encoded form a detailed database of information about the physical
+characteristics, history, interpretation, etc. of the material, able
+to support practitioners of <term>quantitative codicology</term> as
+well as librarians.</p>
 <p>To cater for this diversity, here as elsewhere, these Guidelines
 propose a flexible approach, in which encoders must choose for
 themselves the degree of prescription appropriate to their needs, and
@@ -47,12 +46,14 @@ differing degrees.</p>
 <p>The <gi>msDesc</gi> element will normally appear within the
 <gi>sourceDesc</gi> element of the header of a TEI conformant
 document, where the document being encoded is a digital representation
-of some manuscript original, whether as a transcription, as a
-collection of digital images (see further <ptr target="#PHFAX"/>), or as some combination of the
-two. However, in cases where the document being encoded is essentially a
-collection of manuscript descriptions, the <gi>msDesc</gi>
-element may be used in the same way as the bibliographic elements (<gi>bibl</gi> <gi>biblStruct</gi>, and <gi>biblItem</gi>) making up the TEI element
-class <ident type="class">model.biblLike</ident>. These typically appear within the
+of some manuscript original, whether as an encoded transcription, as a
+collection of digital images (as described in <ptr target="#PHFAX"/>),
+or as some combination of the two. However, in cases where the
+document being encoded is essentially a collection of manuscript
+descriptions, the <gi>msDesc</gi> element may be used in the same way
+as the bibliographic elements (<gi>bibl</gi> <gi>biblStruct</gi>, and
+<gi>biblItem</gi>) making up the TEI element class <ident
+type="class">model.biblLike</ident>. These typically appear within the
 <gi>listBibl</gi> element.
 <specList>
 <specDesc key="msDesc"/>
@@ -341,7 +342,7 @@ are between 157 and 160 mm in height and 105 mm in width.</p>
 <div type="div3" xml:id="msloc"><head>References to Locations within a Manuscript</head>
 <p>The <gi>locus</gi> element is a specialized form of the <gi>ref</gi> element.
 <specList>
-<specDesc key="locus" atts="from to scheme target"/>
+<specDesc key="locus" atts="from to scheme"/>
 </specList></p>
 <p>The <gi>locus</gi> element is used to specify the location in the
 manuscript occupied by the element within which it appears. If, for
@@ -371,36 +372,29 @@ element, as in the following revision of the above example:
 <title>Apocalypsis beati Ioannis Apostoli</title>
 </msItem>
 </egXML></p>
-<p>The <att>targets</att> attribute may be used to associate a
-<gi>locus</gi> element with one or more other elements in the
-current document, which should contain either a transcription of the
-location indicated, or images of it, as in the following example:
+<p>When the <ident type="module">trans</ident> module described in
+chapter <ptr target="#PH"/> is included in a schema, an additional
+attribute <att>facs</att> is available, which may be used to  associate a
+<gi>locus</gi> element with a digitized image, as in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <decoDesc>
-<p>Most of the main body of the book (up to <locus>fol. 
-182v</locus>) was painted and decorated in one style, having links in 
-style and iconography with the school of Maître François, although 
-several of the miniatures in this section have been damaged and 
+<p>Several of the miniatures in this section have been damaged and 
 overpainted at a later date (e.g. the figure of Christ on 
-<locus targets="http://www.images.fr#F33R">fol. 33r</locus>; the face of the 
-Shepherdess on <locus targets="http://www.images.fr#F59V">fol. 59v</locus>, 
+<locus targets="http://www.example.com/images.fr#F33R">fol. 33r</locus>; the face of the 
+Shepherdess on <locus targets="http://www.example.com/images.fr#F59V">fol. 59v</locus>, 
 etc.).</p>
 </decoDesc>
 </egXML>
-The reference <val>#txt182</val> in this example is assumed to
-reference the section of the manuscript <q>up to fol. 182v</q> which
-has been transcribed elsewhere in the current document; the references
-<val>http://www.images.fr#F33R</val> and
-<val>http://www.images.fr#F59V</val> link to images of the
-relevant pages, held presumably in an image archive.</p>
+Here, the <att>facs</att> attribute uses a URI reference to point directly to images of the
+relevant pages, held presumably in an image archive not forming part
+of the resource containing the manuscript description in question. In
+the case where such images do form part of a single virtual document,
+along with transcriptions and metadata, the methods described in <ptr
+target="#PHFACS"/> should be used in preference.</p>
 <!-- removed reference to more than one foliation, which lacked an example; should one be found it might be nice to add it. -->
 </div>
 <div type="div3" xml:id="msnames">
 <head>Names of Persons, Places, and Organizations</head>
-<!--<p>The standard TEI <gi>name</gi> element has an attribute
-<att>type</att>, to indicate the type of name (e.g. personal name, place-name
-etc.), <att>reg</att>, to provide a regularized form of the name, and <att>key</att>, to provide an identifying code or key for it. 
--->
 <p>The standard TEI element <gi>name</gi> may be used to identify
 names of any kind occurring within a description:
 <specList>
@@ -408,29 +402,46 @@ names of any kind occurring within a description:
 </specList>
 As further discussed in <ptr target="#CONARS"/>, this element is a member of
 the TEI class <ident type="class">att.naming</ident>, from which it
-inherits the  <att>key</att> attribute:
-<specList><specDesc key="att.naming"/></specList>
+inherits the  following attributes:
+<specList><specDesc key="att.naming" atts="key ref"/></specList>
 </p>
 <p>Here are some examples of the use of the <gi>name</gi> element:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <name type="person">Thomas Hoccleve</name>
 <name type="place">Villingaholt</name>
 <name type="org">Vetus Latina Institut</name>
-<name type="person" key="HOC001">Occleve</name>
+<name type="person" ref="#HOC001">Occleve</name>
 </egXML></p>
 <p>Note that the <gi>name</gi> element is defined as providing
-information about a <emph>name</emph>, not the person, place, or organization to which that name refers. In the last example above, the <att>key</att> attribute is used to
+information about a <emph>name</emph>, not the person, place, or organization to which that name refers. In the last example above, the <att>ref</att> attribute is used to
 associate the name with a more detailed description of the person
-named, provided elsewhere using the standard TEI element <gi>person</gi>.
-<specList>
+named. This is provided by means of the <gi>person</gi> element, which
+becomes available when the <ident type="module">namesdates</ident>
+module described in chapter <ptr target="#ND"/> is include in a schema.
+<!--<specList>
 <specDesc key="person"/>
-</specList>
-In order for this second Hoccleve example to be valid, a
-<gi>person</gi> element must be provided which has the value
-<code>HOCCL1</code> for its <att>xml:id</att> attribute; the same
+</specList>-->
+Note that an instance of the 
+<gi>person</gi> element must be provided for each distinct
+<att>ref</att> value specified. In the example above, the value
+<val>HOCCL1</val> must be found as the <att>xml:id</att> attribute of
+some <gi>person</gi>; the same
 value will be used as the <att>key</att> attribute of every reference
 to Hoccleve in the document (however spelled), but there will only be
 one <gi>person</gi> element with this identifier.</p>
+<p>Alternatively, the <att>key</att> attribute may be used to supply
+an unique identifying code for the person referenced by the name
+independently of both the existence of  a <gi>person</gi> element and
+the use of the standard URI reference mechanism. If, for example, a
+project maintains as its authority file some non-digital resource, or
+uses  a database which cannot readily be
+integrated with other digital resources for this purpose, the unique
+codes used by such <soCalled>offline</soCalled> resources may be used
+as values for the <att>key</att> attribute. Although such practices clearly
+reduce the interchangeability of the resulting encoded texts, they may
+be judged more convenient or practical in certain situations.
+</p>
+
 <p>All the <gi>person</gi> elements referenced by a particular
 document set should be collected together within a <gi>listPerson</gi>
 <!-- need xref -->
@@ -439,9 +450,11 @@ of prosopography for all the people referenced by the set of
 manuscripts being described, in much the same way as a
 <gi>listBibl</gi> element in the back matter may be used to hold
 bibliographic information for all the works referenced.</p>
-<p>Similar mechanisms may be used to create and maintain canonical
-lists of places or organizations, but no specific elements are defined
-for this purpose.</p>
+
+<p>When the <ident type="module">namesdates</ident> module described
+in chapter <ptr target="#ND#"/> is included in a schema, similar mechanisms are used to maintain and reference canonical
+lists of places or organizations, as further discussed in sections
+<ptr target="#NDPLAC"/> and <ptr target="#NDORG"/> respectively. </p>
 </div>
 <div type="div3" xml:id="msmisc">
 <head>Catchwords, Signatures, Secundo Folio</head>
@@ -480,14 +493,16 @@ in a later hand, for quire 13 (f. 89), "6", in a later hand, for quire
 16 (f. 113).</signatures>
 </egXML></p>
 <p>The <gi>secFol</gi> element (for <soCalled>secundo
-folio</soCalled>) is used to record the opening word or words of the
-second leaf of a manuscript. Since these words differ from one copy of
+folio</soCalled>) is used to record an identifying phrase (also
+called <foreign>dictio probatoria</foreign>)  taken from a
+specific known point in a codex (for example the first few words on
+the second leaf). Since these words will differ from one copy of
 a text to another, the practice originated in the middle ages of using
 them when cataloguing a manuscript in order to distinguish individual
 copies of a work in a way which its opening words could not.
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<secFol>(ando-)ssene in una villa</secFol>
-</egXML><!-- better example needed --></p></div>
+<secFol>(ando-)ssene in una villa</secFol><!-- better example needed -->
+</egXML></p></div>
 <div type="div3" xml:id="mshera">
 <head>Heraldry</head><!-- rename as armsDesc? -->
 <p>Descriptions of heraldic arms, supporters, devices, and mottos may
@@ -765,11 +780,11 @@ parts of the same entity.
 </egXML></p>
 
 <p>As mentioned above, the smallest possible description is one that
-contains only the element <gi>msIdentifier</gi>; internally to that
-element, the three subelements <gi>settlement</gi>,
-<gi>repository</gi>, and <gi>idno</gi> are required, since they
-provide what is, by common consent, the minimum amount of information
-necessary to identify a manuscript.</p>
+contains only the element <gi>msIdentifier</gi>; good practice in all
+but exceptional circumstances requires the presence within it of the
+three subelements <gi>settlement</gi>, <gi>repository</gi>, and
+<gi>idno</gi>, since they provide what is, by common consent, the
+minimum amount of information necessary to identify a manuscript.</p>
 
 <p>The <gi>msIdentifier</gi> element and its constituents are formally
 defined as follows:
@@ -908,28 +923,30 @@ mutilation throughout</note>
 <specDesc key="note" atts="type"/>
 <specDesc key="textLang"/>
 </specList></p>
+<p>In addition, a <gi>msItemStruct</gi> may contain nested
+<gi>msItemStruct</gi> elements, just as an <gi>msItem</gi> may contain
+nested <gi>msItem</gi> elements.</p>
 <p>The difference between <gi>msItem</gi> and <gi>msItemStruct</gi> is
 that in the former, the order and number of child elements is not
 constrained; any element, in other words, may be given in any order,
 and repeated as often as necessary. In the latter, however, the
 subelements, if used, must be given in the order specified above; they
 may be repeated, with the exception of <gi>rubric</gi>,
-<gi>incipit</gi>, and <gi>explicit</gi>, each of which can appear only
-once. Neither <gi>msItem</gi> nor <gi>msItemStruct</gi> may contain 
-untagged running text, although <gi>msItem</gi> may contain one or
-more <gi>p</gi>
+<gi>finalRubric</gi>.  <gi>incipit</gi>, <gi>textLang</gi> and
+<gi>explicit</gi>, each of which can appear only once. Neither
+<gi>msItem</gi> nor <gi>msItemStruct</gi> may contain untagged running
+text, although <gi>msItem</gi> may contain one or more <gi>p</gi>
 elements as an unstructured alternative to the possible components
-listed above.  <gi>msItem</gi> and
-<gi>msItemStruct</gi> elements may also nest, where a number of
-separate items in a manuscript are grouped under a single title or
-rubric, as is the case, for example, with a work like <mentioned>The
-Canterbury Tales</mentioned>.</p>
+listed above.  <gi>msItem</gi> and <gi>msItemStruct</gi> elements may
+also nest, where a number of separate items in a manuscript are
+grouped under a single title or rubric, as is the case, for example,
+with a work like <mentioned>The Canterbury Tales</mentioned>.</p>
 <p>A <att>defective</att> attribute is available on
 <gi>msContents</gi>, <gi>msItem</gi>, and <gi>msItemStruct</gi>, and
 on the specialized elements for <gi>incipit</gi> and
 <gi>explicit</gi>, with possible values of <code>true</code>,
 <code>false</code>, <code>unknown</code>, or
-<code>inapplicable</code>. This can be used for example for collections
+<code>unspecified</code>. This can be used for example for collections
 of fragments, where each fragment is given as a separate
 <gi>msItem</gi> and the first and last words of each transcribed as
 defective incipits and explicits, as in the following example, a
@@ -1383,7 +1400,7 @@ layout is regular. The value <code>NA</code> (not-applicable) should
 be used for cases where the layout is either very irregular, or where
 it cannot be characterized simply in terms of lines and columns, for
 example, where blocks of commentary and text are arranged in a regular
-but complex pattern on each page.</p>
+but complex pattern on each page</p>
 <p>The following examples indicate the range of possibilities:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <layout ruledLines="25 32">
