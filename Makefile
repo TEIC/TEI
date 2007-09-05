@@ -65,23 +65,25 @@ html-web: check
 		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
 		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
 		Utilities/odd2htmlp5.xsl.model > Utilities/odd2htmlp5.xsl
-	-rm -rf Guidelines-web
-	-mkdir Guidelines-web
+	-rm -rf Guidelines-web-tmp
+	-mkdir Guidelines-web-tmp
 	for i in ${LANGUAGE} ${OTHERLANGUAGES} ; do \
 	echo making HTML Guidelines for language $$i ; \
-	mkdir -p Guidelines-web/$$i/html; \
-	cp rightarrow.gif guidelines.css TEI-glow.png Guidelines-web/$$i/html/ ; \
+	mkdir -p Guidelines-web-tmp/$$i/html; \
+	cp rightarrow.gif guidelines.css TEI-glow.png Guidelines-web-tmp/$$i/html/ ; \
 	xmllint --noent --xinclude ${SOURCETREE}/Guidelines/$$i/guidelines-$$i.xml \
 	| xsltproc ${VERBOSE} \
-		--stringparam outputDir Guidelines-web/$$i/html \
+		--stringparam outputDir Guidelines-web-tmp/$$i/html \
 		--stringparam displayMode both \
 	        --stringparam lang $$i \
 	        --stringparam doclang $$i \
 	    Utilities/guidelines.xsl - ; \
-	cp -r ${SOURCETREE}/Images Guidelines-web/$$i/html/ ; \
-	(cd Guidelines-web/$$i/html; for i in *.html; do perl -i ../../../Utilities/cleanrnc.pl $$i;done); \
-	(cd Guidelines-web/$$i/html; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' guidelines.css); \
+	cp -r ${SOURCETREE}/Images Guidelines-web-tmp/$$i/html/ ; \
+	(cd Guidelines-web-tmp/$$i/html; for i in *.html; do perl -i ../../../Utilities/cleanrnc.pl $$i;done); \
+	(cd Guidelines-web-tmp/$$i/html; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' guidelines.css); \
 	done
+	-rm -rf Guidelines-web
+	-mv Guidelines-web-tmp Guidelines-web
 
 html-web-beta: check
 	perl -p -e \
