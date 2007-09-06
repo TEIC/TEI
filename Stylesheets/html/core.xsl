@@ -221,6 +221,23 @@
     </tr>
   </xsl:template>
   <xd:doc>
+    <xd:short>Process element tei:choice</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:choice">
+    <xsl:choose>
+      <xsl:when test="tei:abbr and tei:expan">
+	<xsl:apply-template select="tei:expan"/>
+	<xsl:text> (</xsl:text>
+	<xsl:apply-template select="tei:abbr"/>
+	<xsl:text>)</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  <xd:doc>
     <xd:short>Process element tei:cit</xd:short>
     <xd:detail>
       <p> quoting </p>
@@ -515,6 +532,7 @@
     <xsl:if
       test="not(following-sibling::tei:item) and preceding-sibling::tei:item">
       and </xsl:if>
+    <xsl:text>&#2022;</xsl:text>
     <xsl:apply-templates/>
   </xsl:template>
   <xd:doc>
@@ -739,7 +757,7 @@
         </table>
       </xsl:when>
       <xsl:when test="@type='inline'">
-        <xsl:if test="not(item)">None</xsl:if>
+	<!--<xsl:if test="not(tei:item)">None</xsl:if>-->
         <xsl:apply-templates mode="inline" select="tei:item"/>
       </xsl:when>
       <xsl:when test="@type='runin'">
