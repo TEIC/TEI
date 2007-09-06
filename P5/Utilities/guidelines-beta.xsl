@@ -418,4 +418,73 @@
   </h2>
     </div>
   </xsl:template>
+  
+  
+  
+  <!-- JC: Putting element and desc into table -->
+  <xsl:template match="tei:elementSpec" mode="weavebody">
+    <xsl:variable name="name">
+      <xsl:choose>
+        <xsl:when test="tei:altIdent">
+          <xsl:value-of select="tei:altIdent"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="@ident"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <table border="1" class="wovenodd">
+      <tr>
+        <td   class="wovenodd-col2" colspan="2">
+          <span class="label">&lt;<xsl:value-of
+            select="$name"/>&gt; </span>   
+      <xsl:call-template name="makeDescription"/>
+      <xsl:if test="tei:listRef">
+        <xsl:for-each select="tei:listRef/tei:ptr">
+          <xsl:text> </xsl:text>
+          <xsl:apply-templates select="." mode="weave"/>
+        </xsl:for-each>
+      </xsl:if></td></tr>
+      <xsl:if test="@module">
+        <xsl:call-template name="moduleInfo"/>
+      </xsl:if>
+      <tr>
+        <td   class="wovenodd-col1">
+          <span class="label">Parents</span>
+        </td>
+        <td class="wovenodd-col2">
+          <xsl:call-template name="generateParents"/>
+        </td>
+      </tr>
+      
+      <tr>
+        <td  class="wovenodd-col1">
+          <span class="label">
+            <xsl:call-template name="i18n">
+              <xsl:with-param name="word">Attributes</xsl:with-param>
+            </xsl:call-template>
+          </span>
+        </td>
+        <td class="wovenodd-col2">
+          <xsl:choose>
+            <xsl:when test="not(tei:attList)">
+              <xsl:call-template name="showAttClasses"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:for-each select="tei:attList">
+                <xsl:call-template name="displayAttList">
+                  <xsl:with-param name="mode">all</xsl:with-param>
+                </xsl:call-template>
+              </xsl:for-each>
+            </xsl:otherwise>
+          </xsl:choose>
+        </td>
+      </tr>
+      <xsl:apply-templates mode="weave"/>
+      
+    </table>
+    
+  </xsl:template>
+  
+  
 </xsl:stylesheet>
