@@ -122,6 +122,17 @@ validate-html:
 	 done); \
 	done
 
+validate-html-beta:
+	for i in ${LANGUAGE} ${OTHERLANGUAGES} ; do \
+	(cd Guidelines-web-beta/$$i/html;\
+	 for i in *.html; do \
+	echo validate $$i; \
+	xmllint --dropdtd $$i > z_$$i; \
+	$(JING) -c ../../../xhtml.rnc z_$$i; \
+	 rm z_$$i;\
+	 done); \
+	done
+
 html:check subset
 	-rm -rf Guidelines
 	-mkdir Guidelines
