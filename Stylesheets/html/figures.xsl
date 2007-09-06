@@ -190,7 +190,7 @@
 		  <xsl:text>. </xsl:text>
 		</xsl:when>
 	      </xsl:choose>
-	      <xsl:apply-templates select="tei:head"/>
+	      <xsl:apply-templates select="tei:head" mode="ok"/>
 	    </div>
 	  </xsl:if>
 	</div>
