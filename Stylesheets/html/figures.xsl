@@ -432,9 +432,9 @@
 	  <xsl:for-each select="self::tei:figure|parent::tei:figure">
 	    <xsl:number count="tei:figure[tei:head]" level="any"/>
 	  </xsl:for-each>
-	  <xsl:text>file </xsl:text>
+	  <xsl:text> </xsl:text>
 	  <xsl:value-of select="$File"/>
-	  <xsl:text>[</xsl:text>
+	  <xsl:text> [</xsl:text>
 	  <xsl:value-of select="$Alt"/>
 	  <xsl:text>] </xsl:text>
 	</p>
