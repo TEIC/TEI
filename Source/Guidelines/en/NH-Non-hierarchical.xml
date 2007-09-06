@@ -259,7 +259,7 @@ $Id$
         target="#MD"/>) to support this method of encoding
         non-hierarchical structures.</item>
         <label>Paired Segment-Boundary Elements</label>
-        <item>The name of the segment-boundary elements reflect
+        <item>The names of the segment-boundary elements reflect
         whether they indicate the beginning of a passage or the end.
         E.g., <gi>boundary-start</gi> and <gi>boundary-end</gi>. As
         with single empty segment-boundary elements, the type of
@@ -268,7 +268,7 @@ $Id$
         target="#MD"/>) to support this method of encoding
         non-hierarchical structures.</item>
         <label>Typed Segment-Boundary Delimiters</label>
-        <item>The name of the segment-boundary elements reflect the
+        <item>The name of the segment-boundary elements reflects the
         type of feature being annotated; whether any given
         segment-boundary element indicates the beginning or the end of
         a span of text is indicated with an attribute. E.g.,
@@ -277,7 +277,7 @@ $Id$
         target="#MD"/>) to support this method of encoding
         non-hierarchical structures.</item>
         <label>Paired Typed Segment-Boundary Delimiters</label>
-        <item>The name of the segment-boundary elements reflect both
+        <item>The names of the segment-boundary elements reflect both
         the type of feature being annotated and whether the beginning
         or end of such a feature is being indicated. E.g.
         <gi>speech-boundary-start</gi>. The TEI may be customized
@@ -347,12 +347,25 @@ $Id$
 <!-- or perhaps "What did you think that you were going to get away with that?" -->
 Here the example is encoded using paired segment boundary
       delimiter elements, in this case <gi>ml</gi> for <gloss>metrical
-      line</gloss>. <eg><![CDATA[<ml xml:id="L21s" corresp="#L21e" delimit="start">Hello operator,<ml xml:id="L21e" corresp="#L21s" delimit="end">
-<ml xml:id="L22s" corresp="#L22e" delimit="start">Please give me Number 9,<ml xml:id="L22e" corresp="#L22s" delimit="end">
-<ml xml:id="L23s" corresp="#L23e" delimit="start">And if you disconnect me,<ml xml:id="L23e" corresp="#L23s" delimit="end">
-<ml xml:id="L24s" corresp="#L24e" delimit="start">I'll kick you in the
-<ml xml:id="L25s" corresp="#L25e" delimit="start">Behind<ml xml:id="L24e" corresp="#L24s" delimit="end"> the fridgerator<ml xml:id="L25e" corresp="#L25s" delimit="end">
-<ml xml:id="L26s" corresp="#L26e" delimit="start">There was a piece of glass,<ml xml:id="L26e" corresp="#L26s" delimit="end">]]></eg></p>
+      line</gloss>. <eg><![CDATA[<ml delimit="start"
+    xml:id="L21s"
+    corresp="#L21e">Hello operator,<ml delimit="end" xml:id="L21e" corresp="#L21s">
+<ml delimit="start"
+    xml:id="L22s"
+    corresp="#L22e">Please give me Number 9,<ml delimit="end" xml:id="L22e" corresp="#L22s">
+<ml delimit="start"
+    xml:id="L23s"
+    corresp="#L23e">And if you disconnect me,<ml delimit="end" xml:id="L23e" corresp="#L23s">
+<ml delimit="start"
+    xml:id="L24s"
+    corresp="#L24e">I'll kick you in the
+<ml delimit="start"
+    xml:id="L25s"
+    corresp="#L25e">Behind<ml delimit="end" xml:id="L24e" corresp="#L24s">
+    the fridgerator<ml delimit="end" xml:id="L25e" corresp="#L25s">
+<ml delimit="start"
+    xml:id="L26s"
+    corresp="#L26e">There was a piece of glass,<ml delimit="end" xml:id="L26e" corresp="#L26s">]]></eg></p>
     <p>Here is a short example of an ambiguous newspaper headline
     <q>Broadway hit and run</q> in which it is desired to record the
     phrases of both possible readings (<q>Broadway hit</q> &amp;
@@ -387,7 +400,7 @@ Here the example is encoded using paired segment boundary
       delimiter it is advisable to use an attribute other than the general
       purpose <att>corresp</att> attribute to indicate the corresponding start-
       or end-tag. Thus in COLT the <att>sID</att> and <att>eID</att> attributes
-      are used for both of these purposes: <list type="inline">
+      are used for both of these purposes: <list>
         <item>the name of the attribute informs users (and programs) for which
           kind of tag the empty element is substituting: <att>sID</att> for
           start-tag and <att>eID</att> for end tag</item>
@@ -395,16 +408,19 @@ Here the example is encoded using paired segment boundary
           or start-tag is, by co-reference; i.e. the element whose
           <att>sID</att> value matches the current element's <att>eID</att>
           value is its start-tag</item>
-      </list>. <note place="foot">This method has been introduced in the markup literature under
-          various names, e.g. Trojan milestones, HORSE markup, and CLIX. It has
-          been described in detail by DeRose (2004).</note>
+      </list>. 
+      <note place="foot">This method has been introduced in the markup
+      literature under various names, e.g. Trojan milestones, HORSE
+      markup, and CLIX. It has been described in detail by <bibl><ref
+      target="http://www.mulberrytech.com/Extreme/Proceedings/html/2004/DeRose01/EML2004DeRose01.html">DeRose,
+      2004</ref></bibl>.</note>
     </p>
     <p>Besides the already mentioned non-need to introduce new, somehow
       artificial elements, this special use of empty elements has the advantage
-      that they use the same element name as the normal container elements. This
-      has at least two positive consequences: <list type="inline">
+      that it uses the same element name as the normal container elements. This
+      has at least two positive consequences: <list>
         <item>the human reader of the markup immediately knows what the segment
-          boundary stands for and </item>
+          boundary stands for and</item>
         <item>the segment boundary element has exactly the same attribute
           definition as the container element</item>
       </list>.</p>
@@ -652,7 +668,7 @@ run<phr eID="phraseB"/><phr eID="phrase02"/>]]></eg></p>
             <item>Remodeling of the document class </item>
             <item>Boundary marking with empty elements </item>
           </list> The choice of a solution depends on a number of specifics:
-            <list type="inline">
+            <list>
             <item>the number of different views and potential hierarchies</item>
             <item>the amount of overlap</item>
             <item>how much, if any, customization is required</item>
