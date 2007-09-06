@@ -487,4 +487,9 @@
   </xsl:template>
   
   
+  <xsl:template match="tei:hi[@rend='math']">
+      <span class="math">
+        <xsl:apply-templates/>
+      </span>
+  </xsl:template>
 </xsl:stylesheet>
