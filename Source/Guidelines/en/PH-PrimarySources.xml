@@ -21,30 +21,30 @@ elements defined by the manuscript description module discussed in
 chapter <ptr target="#MS"/>, but again the present module may be used
 independently if such data is not required.
 </p>
-<p>It should be noted that this chapter focuses primarily upon
-problems associated with manuscript materials,
-and that consequently problems of codicology and other matters peculiar to
-early printed materials are not specifically addressed
-here. Nevertheless, many of the recommendations presented may —
-mutatis mutandis — also be applied in the encoding of printed
-matter or indeed any form of  written source, including
-monumental inscriptions.</p>
-<p>Many of the descriptions below use terms like
+<p>It should be noted that, as elsewhere in these Guidelines,  this
+chapter places more emphasis on the problems of representing the
+textual components of a document than on those relating to the
+description of the document's physical characteristics such as the
+carrier medium or physical construction. These aspects, of particular
+importance in codicology and the bibliographic study of incunables,
+are touched on in the chapter on Manuscript Description (<ptr
+target="#MS"/>) and also form the subject of ongoing work in the TEI
+Physical Bibliography workgroup.</p>
+
+<p>Although this chapter discusses manuscript materials more
+frequently than other forms of written text, most of the
+recommendations presented are equally applicable <foreign>mutatis
+mutandis</foreign> in the encoding of printed matter or indeed any
+form of written source, including monumental inscriptions. Similarly,
+where in the following descriptions terms such as
 <soCalled>scribe</soCalled>, <soCalled>author</soCalled>,
-<soCalled>editor</soCalled>,
-<soCalled>annotator</soCalled>,
-<soCalled>corrector</soCalled>,
-<soCalled>transcriber</soCalled>,
-and <soCalled>encoder</soCalled>, to make
-clear how they apply in cases where these roles are distinct.  To the
-extent that these roles are not distinct (for example, in authorial
-manuscripts where the author and the scribe are the same person) the
-interpretation of the markup should be adjusted appropriately.
-Many of the elements defined here apply (within limits) also in
-cases of printed materials, so <soCalled>compositor</soCalled>, etc.,
-may also be understood as applying where appropriate.</p>
-
-
+<soCalled>editor</soCalled>, <soCalled>annotator</soCalled> or
+<soCalled>corrector</soCalled> are used, these may be re-interpreted
+in terms more appropriate to the medium being transcribed. In printed
+material, for example, the <soCalled>compositor</soCalled> plays a
+role analogous to the <soCalled>scribe</soCalled>, while in an
+authorial manuscript, the author and the scribe are the same person.
+</p>
 
 <div xml:id="PHFAX">
 <head>Digital Facsimiles</head>
@@ -64,7 +64,7 @@ resolutions, or of different kinds. Such a collection may form part of
 any kind of document, for example a commentary of a codicological or
 paeleographic nature, where there is a need to align explanatory text
 with image data. And it may also be complemented by
-a trancribed or encoded version of the original source, which may be
+a transcribed or encoded version of the original source, which may be
 linked to the page images. In this section we present elements
 designed to support these various possibilities and discuss the
 associated mechanisms provided by these Guidelines.</p>
@@ -278,31 +278,32 @@ units in which these dimensions are measured are not significant: the
 object is to define a grid superimposed on the image indicated by the
 first child <gi>graphic</gi> element of the <gi>surface</gi>. </p>
 
-<p>A <gi>surface</gi> may  also contain one or more <gi>zone</gi>
+<p>A <gi>surface</gi> may also contain one or more <gi>zone</gi>
 elements, each of which represents a rectangular region or
 <term>bounding box</term> within the co-ordinate space defined by the
-parent <gi>surface</gi> element<note place="foot">The co-ordinate space may be
-thought of as a grid superimposed on a rectangular space. Rectangular
-areas of the grid are defined as four numbers <hi rend="math">a b c d</hi>: the first two
-identify the grid point which is at the upper left corner of the
-rectangle; the second two give the grid point located at the lower
-right corner of the rectangle. The grid point <hi rend="math">a b</hi> is understood to be
-the point which is located a points from the origin along the <hi rend="math">x</hi>
-(horizontal) axis, and <hi rend="math">b</hi> points from the origin
-along the <hi rend="math">y</hi> (vertical)
-axis.</note>. This provides a unit of analysis
-which may be used to define any rectangular region of interest, such
-as a detail or illustration, or some part of the surface which is to
-be aligned with a particular text element. If the image being mapped
-represents something outside the written part of the surface (for
-example a binding or the surface of a desk on which the page rests),
-the <gi>surface</gi> element may also need to define a zone of
-interest. The <att>box</att>
-attribute is used to supply the co-ordinates of a zone. Note that this
-mechanism does not provide any way of addressing a non-rectangular
-area; if this is needed, the more powerful mechanisms provided by the
-Standard Vector Graphics language should be used to define an
-overlay, as further discussed in <ptr target="#SACSXA"/>. </p>
+parent <gi>surface</gi> element<note place="foot">The co-ordinate
+space may be thought of as a grid superimposed on a rectangular
+space. Rectangular areas of the grid are defined as four numbers <hi
+rend="math">a b c d</hi>: the first two identify the grid point which
+is at the upper left corner of the rectangle; the second two give the
+grid point located at the lower right corner of the rectangle. The
+grid point <hi rend="math">a b</hi> is understood to be the point
+which is located <hi rend="math">a</hi> points from the origin along
+the <hi rend="math">x</hi> (horizontal) axis, and <hi
+rend="math">b</hi> points from the origin along the <hi
+rend="math">y</hi> (vertical) axis.</note>. This provides a unit of
+analysis which may be used to define any rectangular region of
+interest, such as a detail or illustration, or some part of the
+surface which is to be aligned with a particular text element. If the
+image being mapped represents something outside the written area of
+the surface (for example a binding or the surface of a desk on which
+the page rests), the <gi>surface</gi> element may also need to define
+a zone of interest. The <att>box</att> attribute is used to supply the
+co-ordinates of a zone. Note that this mechanism does not provide any
+way of addressing a non-rectangular area; if this is needed, the more
+powerful mechanisms provided by the Standard Vector Graphics language
+should be used to define an overlay, as further discussed in <ptr
+target="#SACSXA"/>. </p>
 
 <p>For example, consider the following figure <figure><head>Relation
 between page, surface, and zone</head> <graphic
@@ -322,15 +323,15 @@ The mapping need not however be one-to-one; it might be convenient to
 define a more delicate grid, to enable us to address much smaller
 parts of the image. This can be done simply by supplying appropriate
 values for <att>xMax</att> and <att>yMax</att>: setting these to 1000
-and 641 respectively for example would map each pixel to two grid
+and 642 respectively for example would map each pixel to two grid
 points in the co-ordinate space.</p>
 <p>Since this image contains more than one page however, and has not been
 cropped, it might be better to define two distinct surfaces, one for
-each page. In this case, each surface would additionally need to
+each page, including its illuminated margins. In this case, each surface would additionally need to
 specify a bounding box:
  <egXML
 xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
-<surface xMax="500" yMax="321" box="50 20 210 180">
+<surface xMax="500" yMax="321" box="50 20 210 280">
 <!-- left hand page -->
   <graphic url="http://commons.wikimedia.org/wiki/Image:Handschrift.karlsruhe.blb.jpg"/>
 </surface>
@@ -403,7 +404,7 @@ however be rectangular, as previously noted.</p>
 example. However, it is also possible to include within it a
 further <gi>graphic</gi> element, if for example a detailed image is
 available. Since all <gi>zone</gi> elements use the same co-ordinate
-system (that defined by their parent <gi>surface</gi>, there is no
+system (that defined by their parent <gi>surface</gi>), there is no
 need to demonstrate enclosure of one zone within another by means of
 nesting. To continue the current example, supposing that we have an
 additional image called 
@@ -609,13 +610,18 @@ abbreviation in terms of the letter or letters it is seen as standing
 for: thus, <q>per</q>, <q>re</q>, <q>n</q>. Both of these views are
 supported by these Guidelines. </p>
 <p>In many cases the glyph found in the manuscript source also exists
-in the Unicode character set: for example <!-- ? -->. In cases where
-it does not, these Guidelines recommend use of the <gi>g</gi> element
-provided by the <ident type="module">gaiji</ident> module described in
-chapter <ptr target="#WD"/>. This module allows the encoder great
-flexibility both in processing and in documenting non-standard
-characters or glyphs, including the ability to provide detailed
-documentation and images for them.
+in the Unicode character set: for example the common Latin brevigraph
+&#x204a;, standing for <mentioned>et</mentioned> and often known as
+the <soCalled>Tironian et</soCalled> can be directly represented in
+any XML document as the Unicode character with code point
+<val>x204A</val> (see further <ptr target="#SG-er"/> and <ptr
+target="#CHSH"/>). In cases where it does not, these Guidelines
+recommend use of the <gi>g</gi> element provided by the <ident
+type="module">gaiji</ident> module described in chapter <ptr
+target="#WD"/>. This module allows the encoder great flexibility both
+in processing and in documenting non-standard characters or glyphs,
+including the ability to provide detailed documentation and images for
+them.
 </p>
 <p>These two methods of coding abbreviation may also be combined. An
 encoder may record, for any abbreviation, both the sequence of letters
@@ -899,13 +905,20 @@ then use the <att>type</att> attribute. Suppose that the note given
 above is one of half a dozen possible kinds of corrected phenomena
 identified in a given text; others might include, say, <q>repetition
 of a word from the preceding line</q>, etc. The <att>type</att>
-attribute on the <gi>choice</gi> element can be used to specify an
+attribute on the <gi>corr</gi> element can be used to specify an
 arbitrary code for the particular kind of correction (or other
 editorial intervention) identified within it. This code can be chosen
 freely and is not treated as a pointer. 
 <egXML
-xmlns="http://www.tei-c.org/ns/Examples">quamuis <choice type="graphSubs"><sic>mens</sic><corr>iners</corr></choice> que nutu dei
-gesta sunt ... unde esset uiriliter <choice type="graphSubs"><corr>uegetata</corr><sic>negata</sic></choice></egXML>
+xmlns="http://www.tei-c.org/ns/Examples">quamuis
+<choice><sic>mens</sic><corr  type="graphSubs">iners</corr></choice> que nutu dei
+gesta sunt ... unde esset uiriliter <choice><corr type="graphSubs">uegetata</corr><sic>negata</sic></choice></egXML>
+Note that this encoding might be extended to include a range of
+possible corrections:
+<egXML
+xmlns="http://www.tei-c.org/ns/Examples">quamuis
+<choice><sic>mens</sic><corr type="graphSubs">iners</corr><corr type="reversal">inres</corr></choice> que nutu dei
+gesta sunt ...</egXML>
 In addition, the conscientious encoder will provide documentation
 explaining the circumstances in which particular codes are judged
 appropriate. A suitable location for this might be within the
@@ -936,9 +949,9 @@ on this topic.</p>
 <p>When making a correction in a source which forms part of a textual
 tradition attested by many witnesses, a textual editor will
 sometimes use a reading from one witness to correct the reading of the
-source text. In the general case, encoding this is best done using the
-mechanisms described in the module for textual criticism described in
-chapter <ptr target="#MD"/>. However, for simple cases, the
+source text. In the general case, such encoding is best achieved with  the
+mechanisms provided by the module for textual criticism described in
+chapter <ptr target="#TC"/>. However, for simple cases, the
 <att>source</att> attribute of the <gi>corr</gi> attribute may
 suffice. In the passage from Chaucer's
 <title>Wife of Bath's Tale</title> mentioned above, Parkes proposes to
@@ -981,8 +994,8 @@ various traditions, and gives (by means of the <att>wit</att>
 attribute) an indication of the witnesses supporting each. If the
 <att>resp</att> attribute were supplied on the <gi>rdg</gi> element,
 it would indicate the person responsible for asserting that the
-manuscript indicated has this reading, which is not quite the same as
-the person responsible for asserting that this reading should
+manuscript indicated has this reading, who is not necessarily the same
+as the person responsible for asserting that this reading should
 be used to correct the others. Editorial intervention elements such as
 <gi>corr</gi> can however be nested within a <gi>rdg</gi> to provide
 this additional information:
@@ -1161,7 +1174,7 @@ used to mark its end.  The <att>hand</att> attribute on the
 the manuscript to Helgi, and the <att>spanTo</att> attribute points to
 theend of the added text:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><hand xml:id="heol"
-n="Helgi Ólafsson"/>
+scribe="HelgiÓlafsson"/>
 <!-- ... -->
 <body>
 <div><!-- text here --></div>
@@ -1453,14 +1466,20 @@ on reflection decide to cancel the marking.  For example, text may be
 marked for deletion and the deletion then cancelled, thus restoring the
 deleted text.  Such cancellation may be indicated by the
 <gi>restore</gi> element:
-<specList><specDesc key="restore" atts="type  hand "/></specList></p>
+<specList><specDesc key="restore"/></specList></p>
+<p>This element bears the same attributes as the other transcriptional
+elements. These may be used to supply further information such as
+the hand in which the restoration is carried out, the type of
+restoration, and the person
+rsponsible for identifying the restoration as such, in the same way as
+elsewhere. </p>
 <p>Presume that Lawrence decided to restore <mentioned>my</mentioned> to the
 phrase of <title>Eloi, Eloi, lama sabachthani</title> first written
 <q>For I hate this my body</q>, with the <mentioned>my</mentioned> first deleted
 then restored by writing <q>stet</q> in the margin.  This may be
 encoded:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">For I hate this
-<restore hand="#dhl" means="marginalStetNote"><del>my</del></restore>
+<restore hand="#dhl" type="marginalStetNote"><del>my</del></restore>
 body</egXML></p>
 <p>Another feature commonly encountered in manuscripts is the use of
 circles, lines, or arrows to indicate transposition of material from
@@ -1671,8 +1690,8 @@ responsibility for the deletion itself.</p>
 
 <p>As these examples show, the field of application of the
 <att>resp</att> attributes varies from element to element.  In some
-cases, it applies to the content of the element (<gi>corr</gi>
-<gi>ex</gi> and <gi>supplied</gi>); in others it applies to the value of a particular
+cases, it applies to the content of the element (<gi>corr</gi>, 
+<gi>ex</gi>, and <gi>supplied</gi>); in others it applies to the value of a particular
 attribute (<gi>sic</gi>, <gi>abbr</gi>, <gi>del</gi>, etc.).  In all
 cases where both the <att>cert</att> and <att>resp</att> attributes are
 defined for a particular element, the two attributes refer to the same
@@ -1700,7 +1719,7 @@ responsibility for identifying the hand of the addition.  It may also be
 that one editor may make an electronic transcription of another editor's
 printed transcription of a manuscript text — here, one will wish to
 assign layers of responsibility, so as to allow the reader to determine
-exactly what in the final machine-readable transcription was the
+exactly what in the final transcription was the
 responsibility of each editor.  In these complex cases of divided
 editorial responsibility for and certainty concerning the content,
 attributes and application of a particular element, the more general
@@ -1832,7 +1851,7 @@ water damage has affected an area covering parts of several lines
 The Moving Finger wri<damage agent="water" group="1">es; and</damage> having writ,</l>
 <l>Moves <damage agent="water" group="1">on: nor all your</damage> Piety nor Wit</l>
 <l><damageSpan agent="water" group="1" spanTo="#washOut"/>Shall lure it back to cancel half a Line,</l>
-<l>Nor all your Tears wash <anchor xml:id="washOout"/> out a Word of it</l>
+<l>Nor all your Tears wash <anchor xml:id="washOut"/> out a Word of it</l>
 </egXML>
 </p>
 <p>A more general solution to this problem is provided by the
@@ -1867,7 +1886,7 @@ The <gi>supplied</gi> element may if desired be enclosed within a
 transcriber believes that four letters cannot be read at all because
 of the damage:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">þar komr inn dimmi dreki fliugandi naþr frann
-neþan <gap reason="illegible" agent="rubbing" extent="4"/></egXML>
+neþan <gap reason="illegible" agent="rubbing" extent="4" unit="letters"/></egXML>
 As with <gi>supplied</gi>, this <gi>gap</gi> might be enclosed by a
 <gi>damage</gi> element.</p>
 <p>The above examples record imperfect legibility due to damage.  When
@@ -1976,7 +1995,7 @@ deletion was made from  a passage which had earlier been added:
 <p>Finally in this chapter we present elements which may be used to
 capture aspects of the layout of material on a page where this is
 considered important.  Methods for recording page breaks, column breaks, and line breaks in the
-source are described in section <ptr target="#COXR"/>.
+source are described in section <ptr target="#CORS"/>.
 </p>
 <div type="div3" xml:id="PHSP"><head>Space</head>
 <p>The author or scribe may
@@ -2068,7 +2087,9 @@ manuscripts of Chaucer's <title>Wife of Bath's Prologue</title> lines
 has written <mentioned>nota</mentioned>.</p>
 <p>At the lowest level, all such features could be captured by use of
 the <gi>note</gi> element, containing a prose description of the
-manuscript at this point.  It is not yet clear how best to mark up such
+manuscript at this point, enhanced by a link to a visual
+representation (or facsimile) of the feature in question.  
+It is not yet clear how best to mark up such
 phenomena so as to
 obtain more usefully structured encodings.  For example,
 in the Chaucer example just cited, one may wish to record that the
