@@ -227,9 +227,9 @@
   <xsl:template match="tei:choice">
     <xsl:choose>
       <xsl:when test="tei:abbr and tei:expan">
-	<xsl:apply-template select="tei:expan"/>
+	<xsl:apply-templates select="tei:expan"/>
 	<xsl:text> (</xsl:text>
-	<xsl:apply-template select="tei:abbr"/>
+	<xsl:apply-templates select="tei:abbr"/>
 	<xsl:text>)</xsl:text>
       </xsl:when>
       <xsl:otherwise>
