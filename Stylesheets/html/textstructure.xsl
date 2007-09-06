@@ -889,7 +889,12 @@ $ID: requests a particular page
       <xsl:call-template name="preBreadCrumbPath"/>
       <ul class="breadcrumb">
         <li class="breadcrumb-first">
-          <a class="breadcrumb" href="{$homeURL}" target="_top">
+          <a class="breadcrumb" href="{$homeURL}">
+	    <xsl:if test="not($xhtml='true')">
+	      <xsl:attribute name="target">
+		<xsl:text>_top</xsl:text>
+	      </xsl:attribute>
+	    </xsl:if>
             <xsl:value-of select="$homeLabel"/>
           </a>
         </li>
@@ -2223,19 +2228,38 @@ $ID: requests a particular page
       <xsl:if test="$linkPanel='true'">
         <div class="footer">
           <xsl:if test="not($parentURL='')"><a class="{$style}"
-              href="{$parentURL}" target="_top">
+              href="{$parentURL}">
+	    <xsl:if test="not($xhtml='true')">
+	      <xsl:attribute name="target">
+		<xsl:text>_top</xsl:text>
+	      </xsl:attribute>
+	    </xsl:if>
               <xsl:value-of select="$parentWords"/>
             </a> | </xsl:if>
-          <a class="{$style}" href="{$homeURL}" target="_top">
+          <a class="{$style}" href="{$homeURL}">
+	    <xsl:if test="not($xhtml='true')">
+	      <xsl:attribute name="target">
+		<xsl:text>_top</xsl:text>
+	      </xsl:attribute>
+	    </xsl:if>
             <xsl:value-of select="$homeWords"/>
           </a>
-          <xsl:if test="$searchURL"> | <a class="{$style}" href="{$searchURL}"
-              target="_top">
+          <xsl:if test="$searchURL"> | <a class="{$style}"
+	  href="{$searchURL}">
+	    <xsl:if test="not($xhtml='true')">
+	      <xsl:attribute name="target">
+		<xsl:text>_top</xsl:text>
+	      </xsl:attribute>
+	    </xsl:if>
               <xsl:call-template name="searchWords"/>
             </a>
           </xsl:if>
-          <xsl:if test="$feedbackURL"> | <a class="{$style}" href="{$feedbackURL}"
-              target="_top">
+          <xsl:if test="$feedbackURL"> | <a class="{$style}" href="{$feedbackURL}">
+	    <xsl:if test="not($xhtml='true')">
+	      <xsl:attribute name="target">
+		<xsl:text>_top</xsl:text>
+	      </xsl:attribute>
+	    </xsl:if>
               <xsl:call-template name="feedbackWords"/>
             </a>
           </xsl:if>
@@ -2275,7 +2299,12 @@ $ID: requests a particular page
     </xsl:variable>
     <xsl:if test="$linkPanel='true'">
       <div class="footer">
-        <a class="{$style}" target="_top">
+        <a class="{$style}">
+	    <xsl:if test="not($xhtml='true')">
+	      <xsl:attribute name="target">
+		<xsl:text>_top</xsl:text>
+	      </xsl:attribute>
+	    </xsl:if>
           <xsl:attribute name="href">
             <xsl:value-of select="concat($BaseFile,$standardSuffix)"/>
             <xsl:text>?style=printable</xsl:text>
@@ -2286,7 +2315,12 @@ $ID: requests a particular page
       <hr/>
       <div class="footer">
         <xsl:if test="$searchURL">
-          <a class="{$style}" href="{$searchURL}" target="_top">
+          <a class="{$style}" href="{$searchURL}">
+	    <xsl:if test="not($xhtml='true')">
+	      <xsl:attribute name="target">
+		<xsl:text>_top</xsl:text>
+	      </xsl:attribute>
+	    </xsl:if>
             <xsl:call-template name="searchWords"/>
           </a>
         </xsl:if>
@@ -2295,7 +2329,12 @@ $ID: requests a particular page
           <xsl:text>&#10;</xsl:text>
           <br/>
           <xsl:text>&#10;</xsl:text>
-          <a class="{$style}" href="{$feedbackURL}" target="_top">
+          <a class="{$style}" href="{$feedbackURL}">
+	    <xsl:if test="not($xhtml='true')">
+	      <xsl:attribute name="target">
+		<xsl:text>_top</xsl:text>
+	      </xsl:attribute>
+	    </xsl:if>
             <xsl:call-template name="feedbackWords"/>
           </a>
         </xsl:if>
@@ -2454,7 +2493,12 @@ $ID: requests a particular page
           <tr class="summaryline">
             <td align="right" class="summarycell" valign="top">
               <b>
-                <a class="nolink" target="_top">
+                <a class="nolink">
+		  <xsl:if test="not($xhtml='true')">
+		    <xsl:attribute name="target">
+		      <xsl:text>_top</xsl:text>
+		    </xsl:attribute>
+		  </xsl:if>
                   <xsl:attribute name="href">
                     <xsl:apply-templates mode="generateLink" select="."/>
                   </xsl:attribute>
@@ -2686,7 +2730,12 @@ $ID: requests a particular page
                 <xsl:value-of select="$current"/>
               </xsl:when>
               <xsl:otherwise>
-                <a class="{$class}" target="_top">
+                <a class="{$class}">
+		  <xsl:if test="not($xhtml='true')">
+		    <xsl:attribute name="target">
+		      <xsl:text>_top</xsl:text>
+		    </xsl:attribute>
+		  </xsl:if>
                   <xsl:attribute name="href"><xsl:value-of select="$whole"
                       />/<xsl:value-of select="$current"/><xsl:text>/</xsl:text></xsl:attribute>
                   <xsl:value-of select="$current"/>
@@ -2708,8 +2757,13 @@ $ID: requests a particular page
         <xsl:if test="not($path='index.xsp' or $path='index.xml')">
           <xsl:call-template name="aCrumb">
             <xsl:with-param name="crumbBody">
-              <a class="{$class}" target="_top">
-                <xsl:attribute name="href"><xsl:value-of select="$whole"
+              <a class="{$class}">
+		<xsl:if test="not($xhtml='true')">
+		  <xsl:attribute name="target">
+		    <xsl:text>_top</xsl:text>
+		  </xsl:attribute>
+		</xsl:if>
+		<xsl:attribute name="href"><xsl:value-of select="$whole"
                     />/<xsl:value-of select="$path"/></xsl:attribute>
                 <xsl:value-of select="$path"/>
               </a>
