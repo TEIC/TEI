@@ -505,7 +505,7 @@
       </xsl:choose>
     </xsl:variable>
     <h2>&lt;<xsl:value-of select="$name"/><xsl:if test="tei:content/rng:empty"><xsl:text>/</xsl:text></xsl:if>&gt; </h2>
-    <table border="1" class="wovenodd">
+    <table class="wovenodd">
       <tr>
         <td class="wovenodd-col2" colspan="2">
           <span class="label">&lt;<xsl:value-of select="$name"
