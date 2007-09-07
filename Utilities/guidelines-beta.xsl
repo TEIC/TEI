@@ -273,9 +273,15 @@
             </li>
             <li><a href="http://www.tei-c.org/Council/tcw06.xml">Getting the most recent version
               (<a href="http://tei.svn.sourceforge.net/viewvc/tei/">Sourceforge Subversion Repository</a>)</a></li>
+            <li>
+              <a
+                href="http://sourceforge.net/tracker/?group_id=106328&amp;func=browse">Bug
+                Reports, Feature Requests, etc.</a>
+            </li>
+            
           </ul>
         </div>
-        <div>
+        <div style="float:right;">
           <h3>Some Popular Sections</h3>
           <ul>
             <li>
