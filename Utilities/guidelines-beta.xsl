@@ -253,7 +253,7 @@
         <xsl:with-param name="minimal">true</xsl:with-param>
       </xsl:call-template>
       <xsl:if test="$currentID=''">
-        <div style="float:left; margin:2%;">
+        <div style="float:left; margin:4%;">
           <h3>Versions of the Guidelines</h3>
           <ul>
             <li>
@@ -285,7 +285,7 @@
             
           </ul>
         </div>
-        <div style="float:left; margin:2%;">
+        <div style="float:left; margin:4%;">
           <h3>Some Popular Sections</h3>
           <ul>
             <li>
