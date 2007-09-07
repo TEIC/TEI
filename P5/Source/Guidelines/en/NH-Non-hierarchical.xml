@@ -243,18 +243,25 @@ $Id$
     which has a start-tag at the beginning of the span and an end-tag
     at the end. It is possible to encode a span of text using an empty
     element at the beginning and another empty element at the end. The
-    empty elements used at each end are called <term>segment boundary
-    elements</term> or <term>segment boundary delimiters</term>. There
+    empty elements used at each end are called <term>segment-boundary
+    elements</term> or <term>segment-boundary delimiters</term>. There
     are several variations on this method of encoding:
       <list type="gloss">
         <label>Segment-Boundary Elements</label>
-        <item>All segment boundary delimiter elements are of the same
+        <item>All segment-boundary delimiter elements are of the same
         generic type (e.g., <gi>boundary</gi>). The type of textual
         feature being encoded, and whether any given tag is the start
         or end of said feature, is encoded in attribute values (e.g.,
         a <att>type</att> attribute may be used to indicate the
         textual feature, and a <att>position</att> attribute might
-        take the values <val>start</val> and <val>end</val>). The TEI
+        take the values <val>start</val> and <val>end</val>). 
+<eg xml:lang="it"><![CDATA[<lg type="stanza">
+  <l><boundary type="s" position="start"/>E l'orma dell'acqua è l'alba</l>
+  <l>sulla riva.<boundary type="s" position="end"/>
+    <boundary type="s" position="start"/>Si esauriva in me</l>
+  <l>il supplizio della sabbia,</l>
+  <l>a batticuore, spaziando la notte.<boundary type="s" position="end"/></l>
+</lg>]]></eg> The TEI
         may be customized (using the methods described in <ptr
         target="#MD"/>) to support this method of encoding
         non-hierarchical structures.</item>
@@ -263,7 +270,14 @@ $Id$
         whether they indicate the beginning of a passage or the end.
         E.g., <gi>boundary-start</gi> and <gi>boundary-end</gi>. As
         with single empty segment-boundary elements, the type of
-        feature being annotated is indicated with an attribute. The
+        feature being annotated is indicated with an attribute.
+	<eg xml:lang="it"><![CDATA[<lg type="stanza">
+  <l><boundary-start type="s"/>E l'orma dell'acqua è l'alba</l>
+  <l>sulla riva.<boundary-end type="s"/>
+    <boundary-start type="s"/>Si esauriva in me</l>
+  <l>il supplizio della sabbia,</l>
+  <l>a batticuore, spaziando la notte.<boundary-end type="s"/></l>
+</lg>]]></eg> The
         TEI may be customized (using the methods described in <ptr
         target="#MD"/>) to support this method of encoding
         non-hierarchical structures.</item>
@@ -272,7 +286,14 @@ $Id$
         type of feature being annotated; whether any given
         segment-boundary element indicates the beginning or the end of
         a span of text is indicated with an attribute. E.g.,
-        <gi>q-boundary</gi> and <gi>speech-boundary</gi>. The TEI may
+        <gi>q-boundary</gi> and <gi>speech-boundary</gi>. 
+	<eg xml:lang="it"><![CDATA[<lg type="stanza">
+  <l><s-boundary position="start"/>E l'orma dell'acqua è l'alba</l>
+  <l>sulla riva.<s-boundary position="end"/>
+    <s-boundary position="start"/>Si esauriva in me</l>
+  <l>il supplizio della sabbia,</l>
+  <l>a batticuore, spaziando la notte.<s-boundary position="end"/></l>
+</lg>]]></eg> The TEI may
         be customized (using the methods described in <ptr
         target="#MD"/>) to support this method of encoding
         non-hierarchical structures.</item>
@@ -280,7 +301,14 @@ $Id$
         <item>The names of the segment-boundary elements reflect both
         the type of feature being annotated and whether the beginning
         or end of such a feature is being indicated. E.g.
-        <gi>speech-boundary-start</gi>. The TEI may be customized
+        <gi>speech-boundary-start</gi>. 
+<eg xml:lang="it"><![CDATA[<lg type="stanza">
+  <l><s-boundary-start/>E l'orma dell'acqua è l'alba</l>
+  <l>sulla riva.<s-boundary-end/>
+    <s-boundary-start/>Si esauriva in me</l>
+  <l>il supplizio della sabbia,</l>
+  <l>a batticuore, spaziando la notte.<s-boundary-end/></l>
+</lg>]]></eg> The TEI may be customized
         (using the methods described in <ptr target="#MD"/>) to
         support this method of encoding non-hierarchical
         structures.</item>
@@ -295,7 +323,14 @@ $Id$
         attributes to indicate which is the beginning and which is the
         end. Furthermore, each empty element that marks the beginning
         is explicitly linked to the empty element that marks the end,
-        and vice-versa. The TEI may be customized (using the methods
+        and vice-versa. 
+	<eg xml:lang="it"><![CDATA[<lg type="stanza">
+  <l><s sID="sent01"/>E l'orma dell'acqua è l'alba</l>
+  <l>sulla riva.<s eID="sent01"/>
+    <s sID="sent02"/>Si esauriva in me</l>
+  <l>il supplizio della sabbia,</l>
+  <l>a batticuore, spaziando la notte.<s eID="sent02"/></l>
+</lg>]]></eg> The TEI may be customized (using the methods
         described in <ptr target="#MD"/>) to support this method of
         encoding non-hierarchical structures.</item>
       </list></p>
@@ -345,7 +380,7 @@ $Id$
   <l>There was a piece of glass,</l>
 </quote>
 <!-- or perhaps "What did you think that you were going to get away with that?" -->
-Here the example is encoded using paired segment boundary
+Here the example is encoded using paired segment-boundary
       delimiter elements, in this case <gi>ml</gi> for <gloss>metrical
       line</gloss>. <eg><![CDATA[<ml delimit="start"
     xml:id="L21s"
@@ -379,24 +414,23 @@ Here the example is encoded using paired segment boundary
     type="phr" corresp="#phrase01"/> <start type="phr"
     xml:id="phrase02"/>and run<end type="phr" corresp="#phraseB"/><end
     type="phr" corresp="#phrase02"/>]]></eg></p>
-    <p>COLT is an interesting variant of the paired segment boundary delimiter
+    <p>COLT is an interesting variant of the typed segment-boundary delimiter
       technique. The two differences are <list type="ordered">
-        <item>the type of element used as the empty segment boundary delimiter
+        <item>the type of element used as the empty segment-boundary delimiter
           element is the same element that would normally be used to encode the
           feature if there were no overlap problem; and</item>
-        <item>each segment boundary that marks the beginning of a passage is
-          explicitly linked to the segment boundary element that marks its end,
+        <item>each segment-boundary that marks the beginning of a passage is
+          explicitly linked to the segment-boundary element that marks its end,
           and vice-versa.</item>
       </list> So instead of using <gi>ml</gi> in the above example, the normal
       TEI <gi>l</gi> element is used, only without content so that it functions
       not as a container for the metrical line, but just as an indication of the
       start and end of the metrical line. This is possible because each element
       which allows text content (also called mixed content) in the TEI scheme, i.e. all elements
-      which can be affected by overlap, can also have no content at all.<note place="foot">Using RELAX NG or the W3C Schema language it is possible to declare that an element may contain text content but must not be empty, however the TEI currently has no such elements.</note> Therefore all relevant elements can be used as empty segment
-      boundary delimiter elements. However, it is still necessary to use an
-      attribute to indicate whether a segment boundary delimiter element is a
+      which can be affected by overlap, can also have no content at all.<note place="foot">Using RELAX NG or the W3C Schema language it is possible to declare that an element may contain text content but must not be empty, however the TEI currently has no such elements.</note> Therefore all relevant elements can be used as empty segment-boundary delimiter elements. However, it is still necessary to use an
+      attribute to indicate whether a segment-boundary delimiter element is a
       start-boundary or an end-boundary. Furthermore, when using the same
-      element both in its normal role as a container and as a segment boundary
+      element both in its normal role as a container and as a segment-boundary
       delimiter it is advisable to use an attribute other than the general
       purpose <att>corresp</att> attribute to indicate the corresponding start-
       or end-tag. Thus in COLT the <att>sID</att> and <att>eID</att> attributes
@@ -418,10 +452,9 @@ Here the example is encoded using paired segment boundary
     <p>Besides the already mentioned non-need to introduce new, somehow
       artificial elements, this special use of empty elements has the advantage
       that it uses the same element name as the normal container elements. This
-      has at least two positive consequences: <list>
-        <item>the human reader of the markup immediately knows what the segment
-          boundary stands for and</item>
-        <item>the segment boundary element has exactly the same attribute
+      has at least two positive consequences: <list type="inline">
+        <item>the human reader of the markup immediately knows what the segment-boundary stands for and</item>
+        <item>the segment-boundary element has exactly the same attribute
           definition as the container element</item>
       </list>.</p>
     <p>Here is the same ambiguous newspaper headline as above encoded with COLT
@@ -431,7 +464,7 @@ Here the example is encoded using paired segment boundary
 run<phr eID="phraseB"/><phr eID="phrase02"/>]]></eg></p>
     <p>The example that follows again shows two views of the stanza of
       Quasimodo's poem, the linguistic and the metrical view. The element
-      <gi>s</gi> is used as an empty element and serves as a segment boundary
+      <gi>s</gi> is used as an empty element and serves as a segment-boundary
       delimiter: </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="it"><lg type="stanza">
 	    <l><s xml:id="sb1" corresp="#se1"/>E l'orma dell'acqua è l'alba</l>
@@ -442,7 +475,7 @@ run<phr eID="phraseB"/><phr eID="phrase02"/>]]></eg></p>
 	  </lg></egXML>
     <p>Together with the use of the attributes <att>xml:id</att> and
         <att>corresp</att> this allows not only for using all of the relevant
-      TEI-elements as segment boundary delimiters, but also to do so without
+      TEI-elements as segment-boundary delimiters, but also to do so without
       introducing attributes. </p>
     <p>The information contained in the attribute names <att>sID</att> and
         <att>eID</att> is included implicitly: the first element of a matching
@@ -453,7 +486,7 @@ run<phr eID="phraseB"/><phr eID="phrase02"/>]]></eg></p>
           empty elements used as an end-tag have attributes normally given with
           a start tag. (see Bauman 2005) 
       </note></p>
-    <p>Despite their advantages, segment boundary delimiters incur the
+    <p>Despite their advantages, segment-boundary delimiters incur the
       disadvantage of cumbersome processing: since the elements of the analysis
       (e.g. the sentences in the poems) are not uniformly represented by nodes
       in the document tree, they must be reconstituted by software in an ad hoc
@@ -663,12 +696,12 @@ run<phr eID="phraseB"/><phr eID="phrase02"/>]]></eg></p>
       different solutions may be approriate.</p>
     <list>
       <item>
-        <p>For editing purposes the following solutions may be most appropriate:<list>
+        <p>For editing purposes the following solutions may be most appropriate:<list type="inline">
             <item>Multiple encodings of the same information </item>
             <item>Remodeling of the document class </item>
             <item>Boundary marking with empty elements </item>
           </list> The choice of a solution depends on a number of specifics:
-            <list>
+            <list type="inline">
             <item>the number of different views and potential hierarchies</item>
             <item>the amount of overlap</item>
             <item>how much, if any, customization is required</item>
