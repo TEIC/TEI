@@ -624,4 +624,32 @@
     </xsl:if>
   </xsl:template>
 
+
+  <xsl:template name="makeHTMLHeading">
+    <xsl:param name="text"/>
+    <xsl:param name="class">title</xsl:param>
+    <xsl:param name="level">1</xsl:param>
+    <xsl:if test="not($text='')">
+      <xsl:choose>
+        <xsl:when test="$level='1'">
+          <xsl:element name="h1">
+            <xsl:attribute name="class">
+              <xsl:value-of select="$class"/>
+            </xsl:attribute>
+            <a href="index.html"><xsl:value-of select="$text"/></a>
+          </xsl:element>
+          </xsl:when>
+          <xsl:otherwise>
+      <xsl:element name="h{$level}">
+        <xsl:attribute name="class">
+          <xsl:value-of select="$class"/>
+        </xsl:attribute>
+        <xsl:value-of select="$text"/>
+      </xsl:element>
+        </xsl:otherwise>
+        </xsl:choose>
+    </xsl:if>
+  </xsl:template>
+  
+
 </xsl:stylesheet>
