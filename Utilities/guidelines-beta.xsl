@@ -271,6 +271,8 @@
                 href="http://books.lulu.com/content/123WeHaveNotSubmittedThemYetSorry/"
                 >Print Version</a>
             </li>
+            <li><a href="http://www.tei-c.org/Council/tcw06.xml">Getting the most recent version
+              (<a href="http://tei.svn.sourceforge.net/viewvc/tei/">Sourceforge Subversion Repository</a>)</a></li>
           </ul>
         </div>
         <div>
