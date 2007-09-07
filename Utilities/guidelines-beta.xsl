@@ -438,7 +438,9 @@
       <tr>
         <td   class="wovenodd-col2" colspan="2">
           <span class="label">&lt;<xsl:value-of
-            select="$name"/>&gt; </span>   
+            select="$name"/><xsl:if test="tei:content/rng:empty">
+              <xsl:text>/</xsl:text>
+              &gt; </span>   
       <xsl:call-template name="makeDescription"/>
       <xsl:if test="tei:listRef">
         <xsl:for-each select="tei:listRef/tei:ptr">
