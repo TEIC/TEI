@@ -92,22 +92,20 @@ html-web-beta: check
 		Utilities/odd2htmlp5.xsl.model > Utilities/odd2htmlp5.xsl
 	-rm -rf Guidelines-web-beta-tmp
 	-mkdir Guidelines-web-beta-tmp
-	for i in ${LANGUAGE} ${OTHERLANGUAGES} ; do \
-	echo making beta HTML Guidelines for language $$i ; \
-	mkdir -p Guidelines-web-beta-tmp/$$i/html; \
-	cp rightarrow.gif guidelines-beta.css guidelines-print-beta.css TEI-glow.png Guidelines-web-beta-tmp/$$i/html/ ; \
-	xmllint --noent --xinclude ${SOURCETREE}/Guidelines/$$i/guidelines-$$i.xml \
-	| xsltproc ${VERBOSE} \
-		--stringparam outputDir Guidelines-web-beta-tmp/$$i/html \
+	echo making beta HTML Guidelines for language ${LANGUAGE}
+	mkdir -p Guidelines-web-beta-tmp/${LANGUAGE}/html
+	cp rightarrow.gif guidelines-beta.css guidelines-print-beta.css TEI-glow.png Guidelines-web-beta-tmp/${LANGUAGE}/html/ 
+	xmllint -o freddy.xml --noent --xinclude ${SOURCETREE}/Guidelines/${LANGUAGE}/guidelines-${LANGUAGE}.xml 
+	xsltproc ${VERBOSE} \
+		--stringparam outputDir Guidelines-web-beta-tmp/${LANGUAGE}/html \
 		--stringparam displayMode both \
-	        --stringparam lang $$i \
-		--stringparam verbose true \
-	        --stringparam doclang $$i \
-	    Utilities/guidelines-beta.xsl - ; \
-	cp -r ${SOURCETREE}/Images Guidelines-web-beta-tmp/$$i/html/ ; \
-	(cd Guidelines-web-beta-tmp/$$i/html; for i in *.html; do perl -i ../../../Utilities/cleanrnc.pl $$i;done); \
-	(cd Guidelines-web-beta-tmp/$$i/html; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' guidelines-beta.css); \
-	done; 
+	        --stringparam lang ${LANGUAGE} \
+	        --stringparam doclang ${LANGUAGE} \
+	    Utilities/guidelines-beta.xsl freddy.xml 
+	rm freddy.xml
+	cp -r ${SOURCETREE}/Images Guidelines-web-beta-tmp/${LANGUAGE}/html/
+	(cd Guidelines-web-beta-tmp/${LANGUAGE}/html; for i in *.html; do perl -i ../../../Utilities/cleanrnc.pl $$i;done)
+	(cd Guidelines-web-beta-tmp/${LANGUAGE}/html; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' guidelines-beta.css)
 	-rm -rf Guidelines-web-beta
 	-mv Guidelines-web-beta-tmp Guidelines-web-beta
 
