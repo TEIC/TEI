@@ -24,12 +24,12 @@
 <xsl:param name="doclang"/>
 <xsl:param name="splitLevel">0</xsl:param>
 <xsl:param name="footnoteFile">false</xsl:param>
-<xsl:param name="autoToc">false</xsl:param>
+<xsl:param name="auto">false</xsl:param>
 <xsl:param name="numberFrontHeadings">true</xsl:param>
 <xsl:param name="cssFile">guidelines-beta.css</xsl:param>
 <xsl:param name="cssPrintFile">guidelines-print-beta.css</xsl:param>
 <xsl:param name="displayMode">both</xsl:param>
-  <xsl:param name="homepage">index-toc.html</xsl:param>
+  <xsl:param name="homepage">index-.html</xsl:param>
 
   <xsl:template name="includeCSS">
     <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
@@ -532,7 +532,7 @@
   </xsl:for-each>
     </div>
   <xsl:if test="$tocBack">
-    <div class="toc_back"">
+    <div class="toc_back">
     <h3>Back Matter</h3>
     <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:back">
       <xsl:if
