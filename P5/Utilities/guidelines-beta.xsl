@@ -318,7 +318,8 @@
 		<h2>Full Table of Contents</h2>
 		<xsl:call-template name="mainTOC"/>
 	      </div>
-	    </div>
+</div>
+                <xsl:call-template name="stdfooter"/>
 	      </body>
 	    </html>
 	  </xsl:with-param>
