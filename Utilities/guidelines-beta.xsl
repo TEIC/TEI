@@ -496,7 +496,6 @@
         <xsl:apply-templates/>
       </span>
   </xsl:template>
-</xsl:stylesheet>
 
 
 <!-- JC Adding headings -->
@@ -544,4 +543,5 @@
   </xsl:if>
 </xsl:template>
 
+</xsl:stylesheet>
 
