@@ -271,8 +271,12 @@
                 href="http://books.lulu.com/content/123WeHaveNotSubmittedThemYetSorry/"
                 >Hardcopy Printed Version</a>
             </li>
-            <li><a href="http://www.tei-c.org/Council/tcw06.xml">Getting the most recent version
-              (<a href="http://tei.svn.sourceforge.net/viewvc/tei/">Sourceforge Subversion Repository</a>)</a></li>
+            <li><a
+              href="http://www.tei-c.org/Council/tcw06.xml">Getting
+              the most recent version</a></li>
+            <li><a
+              href="http://tei.svn.sourceforge.net/viewvc/tei/">Sourceforge
+              Subversion Repository</a></li>
             <li>
               <a
                 href="http://sourceforge.net/tracker/?group_id=106328&amp;func=browse">Bug
