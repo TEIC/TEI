@@ -29,6 +29,7 @@
 <xsl:param name="cssFile">guidelines-beta.css</xsl:param>
 <xsl:param name="cssPrintFile">guidelines-print-beta.css</xsl:param>
 <xsl:param name="displayMode">both</xsl:param>
+  <xsl:param name="homepage">index-toc.html</xsl:param>
 
   <xsl:template name="includeCSS">
     <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
