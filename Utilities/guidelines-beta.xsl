@@ -299,14 +299,13 @@
                 </xsl:attribute>
                 <xsl:call-template name="bodyHook"/>
                 <div id="hdr">
-                  <xsl:call-template name="stdheader">
+                  <a href="index.html"><xsl:call-template name="stdheader">
                     <xsl:with-param name="title">
                       <xsl:value-of select="$name"/>
                     </xsl:with-param>
-                  </xsl:call-template>
-                </div>
-
-	    <div class="togglingTOCs">
+                  </xsl:call-template></a>
+                 </div>
+<div class="togglingTOCs">
 	      <button class="displayRelax"
 		      onclick="toggleTOC(this)">Display Full Contents</button>
 	      <div style="display: block" class="toggleTOC_summary">
@@ -412,7 +411,10 @@
   <xsl:template match="tei:titlePage">
     <div class="titlePage">
   <h1>
-    <xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
+  <!--  <xsl:value-of
+    select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
+  -->
+    <xsl:apply-templates select="tei:docTitle/tei:titlePart/tei:title"/>
   </h1>
   <h2>
     <xsl:value-of select="tei:docAuthor"/>
@@ -438,8 +440,7 @@
       <tr>
         <td   class="wovenodd-col2" colspan="2">
           <span class="label">&lt;<xsl:value-of
-            select="$name"/><xsl:if test="tei:content/rng:empty">
-              <xsl:text>/</xsl:text></xsl:if>&gt; </span>   
+            select="$name"/><xsl:if test="tei:content/rng:empty"><xsl:text>/</xsl:text></xsl:if>&gt; </span>   
       <xsl:call-template name="makeDescription"/>
       <xsl:if test="tei:listRef">
         <xsl:for-each select="tei:listRef/tei:ptr">
