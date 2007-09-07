@@ -502,6 +502,7 @@
 <xsl:template name="mainTOC">
   <xsl:param name="force"/>
   <xsl:if test="$tocFront">
+    <div class="toc_front">
     <h3>Front Matter</h3>
     <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:front">
       <xsl:if
@@ -514,9 +515,11 @@
         </ul>
       </xsl:if>
     </xsl:for-each>
+    </div>
   </xsl:if>
-  <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:body">
+  <div class="toc_body">
     <h3>Text Body</h3>
+  <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:body">
     <xsl:if
       test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
       <ul class="toc{$force}  toc_body">
@@ -527,7 +530,9 @@
       </ul>
     </xsl:if>
   </xsl:for-each>
+    </div>
   <xsl:if test="$tocBack">
+    <div class="toc_back"">
     <h3>Back Matter</h3>
     <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:back">
       <xsl:if
@@ -540,6 +545,7 @@
         </ul>
       </xsl:if>
     </xsl:for-each>
+      </div>
   </xsl:if>
 </xsl:template>
 
