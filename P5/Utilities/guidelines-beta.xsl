@@ -253,7 +253,7 @@
         <xsl:with-param name="minimal">true</xsl:with-param>
       </xsl:call-template>
       <xsl:if test="$currentID=''">
-        <div>
+        <div style="float:left;">
           <h3>Versions of the Guidelines</h3>
           <ul>
             <li>
@@ -269,7 +269,7 @@
             <li>
               <a
                 href="http://books.lulu.com/content/123WeHaveNotSubmittedThemYetSorry/"
-                >Print Version</a>
+                >Hardcopy Printed Version</a>
             </li>
             <li><a href="http://www.tei-c.org/Council/tcw06.xml">Getting the most recent version
               (<a href="http://tei.svn.sourceforge.net/viewvc/tei/">Sourceforge Subversion Repository</a>)</a></li>
@@ -281,7 +281,7 @@
             
           </ul>
         </div>
-        <div style="float:right;">
+        <div style="float:left;">
           <h3>Some Popular Sections</h3>
           <ul>
             <li>
