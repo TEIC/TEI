@@ -409,6 +409,9 @@
           <xsl:value-of select="@ident"/>
         </xsl:otherwise>
       </xsl:choose>
+      <xsl:if test="tei:content/rng:empty">
+	<xsl:text>/</xsl:text>
+      </xsl:if>
     </xsl:variable>
     <p><span class="specName">&lt;<xsl:value-of select="$name"/>&gt;</span>
     <xsl:text> </xsl:text>
