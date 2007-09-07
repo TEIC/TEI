@@ -187,7 +187,7 @@
           <td>
             <a class="navigation" href="index.html">Home</a> | <a
               class="navigation" href="index-toc.html">Table of
-              contents</a>
+              Contents</a>
             <xsl:for-each select="ancestor::tei:div">
               <div>
                 <xsl:attribute name="style">
@@ -253,7 +253,7 @@
         <xsl:with-param name="minimal">true</xsl:with-param>
       </xsl:call-template>
       <xsl:if test="$currentID=''">
-        <div style="float:left;">
+        <div style="float:left; margin:2%;">
           <h3>Versions of the Guidelines</h3>
           <ul>
             <li>
@@ -285,7 +285,7 @@
             
           </ul>
         </div>
-        <div style="float:left;">
+        <div style="float:left; margin:2%;">
           <h3>Some Popular Sections</h3>
           <ul>
             <li>
