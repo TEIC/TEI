@@ -1364,9 +1364,13 @@
         </h2>
 	<xsl:apply-templates mode="weavebody" select="."/>
       </xsl:when>
-      <xsl:otherwise> [<a href="ref-{@ident}{$outputSuffix}">
+      <xsl:otherwise> 
+	<span class="refDocLink">
+	  <a href="ref-{@ident}{$outputSuffix}">
           <xsl:value-of select="$name"/>
-        </a>] <xsl:variable name="BaseFile">
+        </a>
+	</span>
+	<xsl:variable name="BaseFile">
           <xsl:value-of select="$masterFile"/>
           <xsl:if test="ancestor::tei:teiCorpus">
             <xsl:text>-</xsl:text>
