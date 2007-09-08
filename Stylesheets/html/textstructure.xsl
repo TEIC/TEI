@@ -2678,27 +2678,27 @@ $ID: requests a particular page
           <xsl:with-param name="word">upWord</xsl:with-param>
         </xsl:call-template>
 	<xsl:call-template name="navInterSep"/>
-	<a class="navigation">
-	  <xsl:choose>
-	    <xsl:when test="$title">
-	      <xsl:attribute name="href">
-		<xsl:value-of select="$up"/>
-	      </xsl:attribute>
-	      <xsl:value-of select="$title"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:attribute name="href">
-		<xsl:apply-templates mode="generateLink" select="$up"/>
-	      </xsl:attribute>
-	      <xsl:for-each select="$up">
-		<xsl:call-template name="headerLink">
-		  <xsl:with-param name="minimal" select="$minimalCrossRef"/>
-		</xsl:call-template>
-	      </xsl:for-each>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</a>
       </span>
+      <a class="navigation">
+	<xsl:choose>
+	  <xsl:when test="$title">
+	    <xsl:attribute name="href">
+	      <xsl:value-of select="$up"/>
+	    </xsl:attribute>
+	    <xsl:value-of select="$title"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:attribute name="href">
+	      <xsl:apply-templates mode="generateLink" select="$up"/>
+	    </xsl:attribute>
+	    <xsl:for-each select="$up">
+	      <xsl:call-template name="headerLink">
+		<xsl:with-param name="minimal" select="$minimalCrossRef"/>
+	      </xsl:call-template>
+	    </xsl:for-each>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </a>
     </xsl:if>
   </xsl:template>
   <xd:doc>
