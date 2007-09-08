@@ -366,24 +366,22 @@
   <xd:doc>
     <xd:short>Process elements tei:gi</xd:short>
     <xd:detail>
-      <p> special purpose </p>
+      <p> special purpose </p >
     </xd:detail>
   </xd:doc>
   <xsl:template match="tei:gi">
-    <code>
-      <xsl:text>&lt;</xsl:text>
+    <span class="gi">
       <xsl:apply-templates/>
-      <xsl:text>&gt;</xsl:text>
-    </code>
+    </span>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:gi</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:gi" mode="plain">
-    <xsl:text>&lt;</xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>&gt;</xsl:text>
+    <span class="gi">
+      <xsl:apply-templates/>
+    </span>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:gloss</xd:short>

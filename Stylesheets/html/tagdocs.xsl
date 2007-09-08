@@ -47,7 +47,9 @@
     </xsl:variable>
     <tr>
       <td class="odd_label">
-	<xsl:value-of select="$name"/>
+	<span class="att">
+	  <xsl:value-of select="$name"/>
+	</span>
       </td>
       <td class="odd_value">
 	<xsl:call-template name="makeDescription"/>
@@ -72,7 +74,9 @@
     </xsl:variable>
     <tr>
       <td class="odd_label">
-        <xsl:value-of select="$name"/>
+	<span class="att">
+	  <xsl:value-of select="$name"/>
+	</span>
       </td>
       <td class="odd_value">
 	<xsl:call-template name="makeDescription"/>
@@ -1073,9 +1077,7 @@
   </xd:doc>
   <xsl:template match="tei:tag">
     <span class="tag">
-      <xsl:text>&lt;</xsl:text>
       <xsl:apply-templates/>
-      <xsl:text>&gt;</xsl:text>
     </span>
   </xsl:template>
   <xd:doc>
