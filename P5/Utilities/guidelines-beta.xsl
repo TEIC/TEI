@@ -30,6 +30,20 @@
   <xsl:param name="cssPrintFile">guidelines-print-beta.css</xsl:param>
   <xsl:param name="displayMode">both</xsl:param>
 
+  <xsl:key name="CLASS-MODULE" match="tei:classSpec"
+	   use="@module"/>
+  <xsl:key name="ELEMENT-MODULE" match="tei:elementSpec"
+	   use="@module"/>
+  <xsl:key name="MACRO-MODULE" match="tei:macroSpec"
+	   use="@module"/>
+
+  <xsl:key name="CLASS-ALPHA" match="tei:classSpec"
+	   use="substring(@ident,1,1)"/>
+  <xsl:key name="ELEMENT-ALPHA" match="tei:elementSpec"
+	   use="substring(@ident,1,1)"/>
+  <xsl:key name="MACRO-ALPHA" match="tei:macroSpec"
+	   use="substring(@ident,1,1)"/>
+
 
   <xsl:template name="includeCSS">
     <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
@@ -651,5 +665,54 @@
     </xsl:if>
   </xsl:template>
   
+
+<xsl:template match="tei:divGen[@type='classcat']">
+  <xsl:variable name="letter">
+    <xsl:value-of select="substring(@ident,1,1,"/>
+  </xsl:variable>
+  <xsl:for-each select="key('CLASSDOCS',1)">
+    <xsl:sort select="substring(@ident,1,1,"/>
+    <xsl:if
+	test="generate-id(.)=generate-id(key('CLASS-ALPHA',$letter)[1])">
+      <div id='class-{$letter}'>
+      <h2><xsl:value-of select="$letter"/></h2>
+      <xsl:apply-templates mode="weave"
+			   select="key('CLASS-ALPHA',$letter)">
+	<xsl:sort select="@ident"/>
+      </xsl:apply-templates>
+      </div>
+    </xsl:if>
+  </xsl:for-each>
+
+  <xsl:for-each select="key('CLASSDOCS',1)">
+    <xsl:sort select="@module"/>
+    <xsl:if
+	test="generate-id(.)=generate-id(key('CLASS-MODULE',@module)[1])">
+      <div id='class-{@module}'>
+      <h2><xsl:value-of select="@module"/></h2>
+      <xsl:apply-templates mode="weave"
+			   select="key('CLASS-MODULE',@module)">
+	<xsl:sort select="@ident"/>
+      </xsl:apply-templates>
+      </div>
+    </xsl:if>
+  </xsl:for-each>
+
+</xsl:template>
+
+
+<xsl:template match="tei:divGen[@type='macrocat']">
+  <xsl:apply-templates mode="weave" select="key('MACRODOCS',1)">
+    <xsl:sort select="@ident"/>
+  </xsl:apply-templates>
+</xsl:template>
+
+
+<xsl:template match="tei:divGen[@type='tagcat']">
+  <xsl:apply-templates mode="weave" select="key('ELEMENTDOCS',1)">
+    <xsl:sort select="@ident"/>
+  </xsl:apply-templates>
+</xsl:template>
+
 
 </xsl:stylesheet>
