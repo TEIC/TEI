@@ -535,7 +535,7 @@
 	    <xsl:if test="tei:content/rng:empty">
               <xsl:text>/</xsl:text>
             </xsl:if>
-	    <xsl:text>&gt;</xsl:text>
+	    <xsl:text>&gt; </xsl:text>
 	  </span>
           <xsl:call-template name="makeDescription"/>
           <xsl:if test="tei:listRef">
