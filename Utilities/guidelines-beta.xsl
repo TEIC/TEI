@@ -518,14 +518,25 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <h2>&lt;<xsl:value-of select="$name"/><xsl:if test="tei:content/rng:empty"><xsl:text>/</xsl:text></xsl:if>&gt; </h2>
+    <h2>
+      <xsl:text>&lt;</xsl:text>
+      <xsl:value-of select="$name"/>
+      <xsl:if test="tei:content/rng:empty">
+	<xsl:text>/</xsl:text>
+      </xsl:if>
+      <xsl:text>&gt;</xsl:text> 
+    </h2>
     <table class="wovenodd" border="1">
       <tr>
         <td class="wovenodd-col2" colspan="2">
-          <span class="label">&lt;<xsl:value-of select="$name"
-              /><xsl:if test="tei:content/rng:empty">
+          <span class="label">
+	    <xsl:text>&lt;</xsl:text>
+	    <xsl:value-of select="$name"/>
+	    <xsl:if test="tei:content/rng:empty">
               <xsl:text>/</xsl:text>
-            </xsl:if>&gt; </span>
+            </xsl:if>
+	    <xsl:text>&gt;</xsl:text>
+	  </span>
           <xsl:call-template name="makeDescription"/>
           <xsl:if test="tei:listRef">
             <xsl:for-each select="tei:listRef/tei:ptr">
@@ -667,29 +678,21 @@
   
 
 <xsl:template match="tei:divGen[@type='classcat']">
-  <xsl:variable name="letter">
-    <xsl:value-of select="substring(@ident,1,1,"/>
-  </xsl:variable>
-  <xsl:for-each select="key('CLASSDOCS',1)">
-    <xsl:sort select="substring(@ident,1,1,"/>
-    <xsl:if
-	test="generate-id(.)=generate-id(key('CLASS-ALPHA',$letter)[1])">
-      <div id='class-{$letter}'>
-      <h2><xsl:value-of select="$letter"/></h2>
-      <xsl:apply-templates mode="weave"
-			   select="key('CLASS-ALPHA',$letter)">
-	<xsl:sort select="@ident"/>
-      </xsl:apply-templates>
-      </div>
-    </xsl:if>
-  </xsl:for-each>
+  <h3>Alphabetical list</h3>
+  <xsl:apply-templates mode="weave" select="key('CLASSDOCS',1)">
+    <xsl:sort select="@ident"/>
+  </xsl:apply-templates>
 
   <xsl:for-each select="key('CLASSDOCS',1)">
     <xsl:sort select="@module"/>
     <xsl:if
 	test="generate-id(.)=generate-id(key('CLASS-MODULE',@module)[1])">
       <div id='class-{@module}'>
-      <h2><xsl:value-of select="@module"/></h2>
+      <h3>
+	<xsl:for-each select="key('MODULES',@module)">
+	  <xsl:value-of select="tei:desc"/>
+	</xsl:for-each>
+      </h3>
       <xsl:apply-templates mode="weave"
 			   select="key('CLASS-MODULE',@module)">
 	<xsl:sort select="@ident"/>
@@ -702,17 +705,90 @@
 
 
 <xsl:template match="tei:divGen[@type='macrocat']">
+
+  <h3>Alphabetical list</h3>
   <xsl:apply-templates mode="weave" select="key('MACRODOCS',1)">
     <xsl:sort select="@ident"/>
   </xsl:apply-templates>
+
+  <xsl:for-each select="key('MACRODOCS',1)">
+    <xsl:sort select="@module"/>
+    <xsl:if
+	test="generate-id(.)=generate-id(key('MACRO-MODULE',@module)[1])">
+      <div id='macro-{@module}'>
+      <h3>
+	<xsl:for-each select="key('MODULES',@module)">
+	  <xsl:value-of select="tei:desc"/>
+	</xsl:for-each>
+      </h3>
+      <xsl:apply-templates mode="weave"
+			   select="key('MACRO-MODULE',@module)">
+	<xsl:sort select="@ident"/>
+      </xsl:apply-templates>
+      </div>
+    </xsl:if>
+  </xsl:for-each>
 </xsl:template>
 
 
 <xsl:template match="tei:divGen[@type='tagcat']">
-  <xsl:apply-templates mode="weave" select="key('ELEMENTDOCS',1)">
-    <xsl:sort select="@ident"/>
-  </xsl:apply-templates>
+  <xsl:for-each select="key('ELEMENTDOCS',1)">
+    <xsl:sort select="translate(@ident,$uc,$lc)"/>
+    <xsl:variable name="letter">
+      <xsl:value-of select="substring(@ident,1,1)"/>
+    </xsl:variable>
+    <xsl:if
+	test="generate-id(.)=generate-id(key('ELEMENT-ALPHA',$letter)[1])">
+      <div id='element-{$letter}'>
+      <h3><xsl:value-of select="$letter"/></h3>
+      <xsl:apply-templates mode="weave"
+			   select="key('ELEMENT-ALPHA',$letter)">
+	<xsl:sort select="@ident"/>
+      </xsl:apply-templates>
+      </div>
+    </xsl:if>
+  </xsl:for-each>
+
+  <xsl:for-each select="key('ELEMENTDOCS',1)">
+    <xsl:sort select="@module"/>
+    <xsl:if
+	test="generate-id(.)=generate-id(key('ELEMENT-MODULE',@module)[1])">
+      <div id='element-{@module}'>
+      <h3>
+	<xsl:for-each select="key('MODULES',@module)">
+	  <xsl:value-of select="tei:desc"/>
+	</xsl:for-each>
+      </h3>
+      <xsl:apply-templates mode="weave"
+			   select="key('ELEMENT-MODULE',@module)">
+	<xsl:sort select="@ident"/>
+      </xsl:apply-templates>
+      </div>
+    </xsl:if>
+  </xsl:for-each>
 </xsl:template>
+
+  <xsl:template match="tei:gi">
+    <xsl:choose>
+      <xsl:when test="key('ELEMENTS',.)">
+	<xsl:for-each select="key('ELEMENTS',.)">
+	  <a href="ref-{@ident}.html">
+	    <span class="gi">
+	      <xsl:value-of select="@ident"/>
+	      <xsl:if test="tei:content/rng:empty">
+		<xsl:text>/</xsl:text>
+	      </xsl:if>	 
+	    </span>
+	  </a>
+	</xsl:for-each>
+      </xsl:when>
+      <xsl:otherwise>
+	<span class="gi">
+	  <xsl:apply-templates/>
+	</span>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
 
 </xsl:stylesheet>
