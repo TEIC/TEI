@@ -126,6 +126,57 @@
     <script type="text/javascript">
       <xsl:comment>
         <xsl:text disable-output-escaping="yes">
+states=new Array()
+states[0]="element-a"
+states[1]="element-b"
+states[2]="element-c"
+states[3]="element-d"
+states[4]="element-e"
+states[5]="element-f"
+states[6]="element-g"
+states[7]="element-h"
+states[8]="element-i"
+states[9]="element-j"
+states[10]="element-k"
+states[11]="element-l"
+states[12]="element-m"
+states[13]="element-n"
+states[14]="element-o"
+states[15]="element-p"
+states[16]="element-q"
+states[17]="element-r"
+states[18]="element-s"
+states[19]="element-t"
+states[20]="element-u"
+states[21]="element-v"
+states[22]="element-w"
+states[23]="element-x"
+states[24]="element-y"
+states[25]="element-z"
+states[26]="element-T"
+
+function startUp() {
+ hideallExcept('');
+}
+function hideallExcept(elm) {
+for (var i = 0; i &lt; states.length; i++) {
+var layer = document.getElementById(states[i]);
+if (elm!= states[i]) {
+layer.style.display = "none";
+}
+else {
+layer.style.display = "block";
+}
+}
+}
+function showall() {
+
+for (var i = 0; i &lt; states.length; i++) {
+var layer = document.getElementById(states[i]);
+layer.style.display = "block";
+
+}
+}
     function toggleTOC (el) {
         if (el.innerHTML == 'Display Full Contents') {
         el.innerHTML = 'Display Summary Contents';
@@ -732,6 +783,97 @@
 
 
 <xsl:template match="tei:divGen[@type='tagcat']">
+  <div id="azindex">
+      <p id="top">Click on a letter to go to that section of the A
+      to Z.</p>
+    <ul class="index">     
+      <li>
+	<a onclick="hideallExcept('a');" href="#">a</a>
+      </li>
+      <li>
+	<a onclick="hideallExcept('b');" href="#">b</a>
+      </li>
+      <li>
+	<a onclick="hideallExcept('c');" href="#">c</a>
+      </li>
+      <li>
+	<a onclick="hideallExcept('d');" href="#">d</a>
+      </li>
+      <li>
+	<a onclick="hideallExcept('e');" href="#">e</a>
+      </li>
+      <li>
+	<a onclick="hideallExcept('f');" href="#">f</a>
+      </li>
+      <li>
+	<a onclick="hideallExcept('g');" href="#">g</a>
+      </li>
+      <li>
+	<a onclick="hideallExcept('h');" href="#">h</a>
+      </li>
+      <li>
+	<a onclick="hideallExcept('i');" href="#">i</a>
+      </li>
+      <li>
+	<a onclick="hideallExcept('j');" href="#">j</a>
+      </li>
+      <li>
+	<a onclick="hideallExcept('k');" href="#">k</a>
+      </li>
+      <li>
+	<a onclick="hideallExcept('l');" href="#">l</a>
+      </li>
+      <li>
+	<a onclick="hideallExcept('m');" href="#">m</a>
+      </li>
+      
+      <li>
+	<a onclick="hideallExcept('n');" href="#">n</a>
+      </li>
+      <li>
+	<a onclick="hideallExcept('o');" href="#">o</a>
+      </li>
+      <li>
+	<a onclick="hideallExcept('p');" href="#">p</a>
+      </li>
+      <li>
+	<a onclick="hideallExcept('q');" href="#">q</a>
+      </li>
+      <li>
+	<a onclick="hideallExcept('r');" href="#">r</a>
+      </li>
+      <li>
+	<a onclick="hideallExcept('s');" href="#">s</a>
+      </li>
+      <li>
+	<a onclick="hideallExcept('t');" href="#">t</a>
+      </li>
+      <li>
+	<a onclick="hideallExcept('T');" href="#">T</a>
+      </li>
+      <li>
+	<a onclick="hideallExcept('u');" href="#">u</a>
+      </li>
+      <li>
+	<a onclick="hideallExcept('v');" href="#">v</a>
+      </li>
+      <li>
+	<a onclick="hideallExcept('w');" href="#">w</a>
+      </li>
+      <li>
+	<a onclick="hideallExcept('x');" href="#">x</a>
+      </li>
+      <li>
+	<a onclick="hideallExcept('y');" href="#">y</a>
+      </li>
+      <li>
+	<a onclick="hideallExcept('z');" href="#">z</a>
+      </li>
+      <li class="showall">
+	<a onclick="showall();" href="#">Show All</a>
+      </li>
+    </ul>
+  </div>
   <xsl:for-each select="key('ELEMENTDOCS',1)">
     <xsl:sort select="translate(@ident,$uc,$lc)"/>
     <xsl:variable name="letter">
@@ -740,11 +882,17 @@
     <xsl:if
 	test="generate-id(.)=generate-id(key('ELEMENT-ALPHA',$letter)[1])">
       <div id='element-{$letter}'>
-      <h3><xsl:value-of select="$letter"/></h3>
-      <xsl:apply-templates mode="weave"
-			   select="key('ELEMENT-ALPHA',$letter)">
-	<xsl:sort select="@ident"/>
-      </xsl:apply-templates>
+	<span class="atozHead">
+	  <xsl:value-of select="$letter"/>
+	</span>
+	<ul class="atoz">
+	  <xsl:for-each select="key('ELEMENT-ALPHA',$letter)">
+	  <xsl:sort select="@ident"/>
+	  <li>
+	    <xsl:apply-templates select="." mode="weave"/>
+	  </li>
+	</xsl:for-each>
+	</ul>
       </div>
     </xsl:if>
   </xsl:for-each>
@@ -753,7 +901,7 @@
     <xsl:sort select="@module"/>
     <xsl:if
 	test="generate-id(.)=generate-id(key('ELEMENT-MODULE',@module)[1])">
-      <div id='element-{@module}'>
+      <div>
       <h3>
 	<xsl:for-each select="key('MODULES',@module)">
 	  <xsl:value-of select="tei:desc"/>
