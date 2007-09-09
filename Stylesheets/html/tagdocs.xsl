@@ -1369,6 +1369,7 @@
 	  <a href="ref-{@ident}{$outputSuffix}">
           <xsl:value-of select="$name"/>
         </a>
+	<xsl:text> </xsl:text>
 	</span>
 	<xsl:variable name="BaseFile">
           <xsl:value-of select="$masterFile"/>
