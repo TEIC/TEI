@@ -328,11 +328,13 @@ layer.style.display = "block";
             <li>
               <a href="guidelines.pdf">One single PDF file </a>
             </li>
+<!--
             <li>
               <a
                 href="http://books.lulu.com/content/123WeHaveNotSubmittedThemYetSorry/"
                 >Hardcopy Printed Version</a>
             </li>
+-->
             <li><a
               href="http://www.tei-c.org/Council/tcw06.xml">Getting
               the most recent version</a></li>
@@ -366,12 +368,14 @@ layer.style.display = "block";
               <a href="CO.html">Elements Available in All TEI
                 Documents</a>
             </li>
+<!--
             <li>
               <a href="DS.html">Default Text Structure</a>
             </li>
             <li>
               <a href="ND.html">Names, Dates, People, and Places</a>
             </li>
+-->
             <li>
               <a href="REFCLA.html">Appendix A: Classes</a>
             </li>
@@ -381,9 +385,11 @@ layer.style.display = "block";
             <li>
               <a href="USE.html">Using the TEI</a>
             </li>
+<!--
             <li>
               <a href="BIB.html">Bibliography</a>
             </li>
+-->
           </ul>
         </div>
         <xsl:variable name="name"> TEI Guidelines TOC </xsl:variable>
@@ -393,7 +399,7 @@ layer.style.display = "block";
           </xsl:with-param>
           <xsl:with-param name="content">
             <html>
-              <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (7) </xsl:comment>
+              <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (99) </xsl:comment>
               <head>
                 <title>
                   <xsl:value-of select="$name"/>
@@ -492,21 +498,7 @@ layer.style.display = "block";
 
   <xsl:template name="navInterSep"> </xsl:template>
 
-  <xsl:template match="tei:specGrp">
-    <!--
-    <div class="specgrp">
-      <xsl:call-template name="makeAnchor"/>
-      <xsl:if test="@n">
-	<b>
-	  <xsl:value-of select="@n"/>
-	</b>
-      </xsl:if>
-      <dl>
-        <xsl:apply-templates/>
-      </dl>
-    </div>
--->
-  </xsl:template>
+  <xsl:template match="tei:specGrp"/>
 
   <xsl:template match="tei:specGrpRef"> </xsl:template>
 
@@ -603,6 +595,15 @@ layer.style.display = "block";
         </td>
         <td class="wovenodd-col2">
           <xsl:call-template name="generateParents"/>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="wovenodd-col1">
+          <span class="label">Children</span>
+        </td>
+        <td class="wovenodd-col2">
+          <xsl:call-template name="generateChildren"/>
         </td>
       </tr>
 
@@ -900,7 +901,7 @@ layer.style.display = "block";
       <div>
       <h3>
 	<xsl:for-each select="key('MODULES',@module)">
-	  <xsl:value-of select="tei:ident"/>
+	  <xsl:value-of select="@ident"/>
 	  <xsl:text>: </xsl:text>
 	  <xsl:value-of select="tei:desc"/>
 	</xsl:for-each>
@@ -936,5 +937,65 @@ layer.style.display = "block";
     </xsl:choose>
   </xsl:template>
 
+<xsl:template name="generateChildren">
+  <xsl:variable name="name" select="@ident"/>
+  <xsl:variable name="Children">
+    <Children xmlns="">
+      <xsl:for-each select="tei:content">
+	<xsl:call-template name="followRef"/>
+      </xsl:for-each>
+    </Children>
+  </xsl:variable>
+  <xsl:for-each select="exsl:node-set($Children)/Children">
+    <xsl:for-each select="Element">
+      <xsl:sort select="@name"/>
+      <xsl:variable name="me">
+	<xsl:value-of select="@name"/>
+      </xsl:variable>
+      <xsl:if test="not(preceding-sibling::Element/@name=$me)">
+	<a href="ref-{$me}.html">
+	  <xsl:value-of select="$me"/>
+	</a>
+	<xsl:if test="not(@module='core')">
+	  <sup><xsl:value-of select="@module"/></sup>
+	</xsl:if>
+	<xsl:text> </xsl:text>
+      </xsl:if>
+    </xsl:for-each>
+  </xsl:for-each>
+</xsl:template>
+
+<xsl:template name="followRef">
+  <xsl:for-each select=".//rng:ref">
+    <xsl:for-each select="key('IDENTS',@name)">
+      <xsl:choose>
+	<xsl:when test="self::tei:elementSpec">
+	  <Element  xmlns="" name="{@ident}" module="{@module}"/>
+	</xsl:when>
+	<xsl:when test="self::tei:macroSpec">
+	  <xsl:for-each select="tei:content">
+	    <xsl:call-template name="followRef"/>
+	  </xsl:for-each>
+	</xsl:when>
+	<xsl:when test="self::tei:classSpec">
+	  <xsl:call-template name="followMembers"/>
+	</xsl:when>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:for-each>
+</xsl:template>
+
+<xsl:template name="followMembers">
+  <xsl:for-each select="key('CLASSMEMBERS',@ident)">
+    <xsl:choose>
+      <xsl:when test="self::tei:elementSpec">
+	<Element xmlns="" name="{@ident}" module="{@module}"/>
+      </xsl:when>
+      <xsl:when test="self::tei:classSpec">
+	<xsl:call-template name="followMembers"/>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:for-each>
+</xsl:template>
 
 </xsl:stylesheet>
