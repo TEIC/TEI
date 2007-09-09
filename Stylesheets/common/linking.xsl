@@ -172,9 +172,9 @@
       <xsl:when test="ancestor::tei:front">
         <xsl:if test="not($numberFrontHeadings='')">
           <xsl:call-template name="numberFrontDiv">
-	    <xsl:with-template name="minimal">
+	    <xsl:with-param name="minimal">
 	      <xsl:value-of select="$minimal"/>
-	    </xsl:with-template>
+	    </xsl:with-param>
 	  </xsl:call-template>
         </xsl:if>
       </xsl:when>
