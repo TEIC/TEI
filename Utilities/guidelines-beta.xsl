@@ -782,8 +782,8 @@ layer.style.display = "block";
 
 <xsl:template match="tei:divGen[@type='tagcat']">
   <div id="azindex">
-    <p id="top">Click on a letter to go to that section of the A
-      to Z.</p>
+    <p id="top">Elements sorted
+  alphabetically, starting with:</p>
       <ul class="index">     
     <li>
 	<a onclick="hideallExcept('element-a');" href="#">a</a>
