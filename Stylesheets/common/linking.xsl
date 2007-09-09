@@ -171,10 +171,11 @@
       </xsl:when>
       <xsl:when test="ancestor::tei:front">
         <xsl:if test="not($numberFrontHeadings='')">
-          <xsl:call-template name="numberFrontDiv"/>
-          <xsl:if test="$minimal='false'">
-            <xsl:value-of select="$numberSpacer"/>
-          </xsl:if>
+          <xsl:call-template name="numberFrontDiv">
+	    <xsl:with-template name="minimal">
+	      <xsl:value-of select="$minimal"/>
+	    </xsl:with-template>
+	  </xsl:call-template>
         </xsl:if>
       </xsl:when>
       <xsl:when test="$numberHeadings ='true'">

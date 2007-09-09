@@ -406,7 +406,10 @@
     <xsl:param name="ptr"/>
     <xsl:param name="dest"/>
     <xsl:param name="body"/>
-    <xsl:param name="class">link_<xsl:value-of select="local-name(.)"/></xsl:param>
+    <xsl:param name="class">
+      <xsl:text>link_</xsl:text>
+      <xsl:value-of select="local-name(.)"/>
+    </xsl:param>
     <xsl:variable name="W">
       <xsl:choose>
         <xsl:when test="$target">
@@ -456,8 +459,8 @@
                 <xsl:value-of select="$dest"/>
               </xsl:when>
               <xsl:otherwise>
-                <xsl:apply-templates mode="generateLink" select="key('IDS',$W)"
-                />
+                <xsl:apply-templates mode="generateLink" 
+				     select="key('IDS',$W)"/>
               </xsl:otherwise>
             </xsl:choose>
           </xsl:attribute>
