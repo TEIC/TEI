@@ -95,14 +95,13 @@ html-web-beta: check
 	echo making beta HTML Guidelines for language ${LANGUAGE}
 	mkdir -p Guidelines-web-beta-tmp/${LANGUAGE}/html
 	cp rightarrow.gif guidelines-beta.css guidelines-print-beta.css TEI-glow.png Guidelines-web-beta-tmp/${LANGUAGE}/html/ 
-	xmllint -o freddy.xml --noent --xinclude ${SOURCETREE}/Guidelines/${LANGUAGE}/guidelines-${LANGUAGE}.xml 
+	xmllint  --noent --xinclude ${SOURCETREE}/Guidelines/${LANGUAGE}/guidelines-${LANGUAGE}.xml | \
 	xsltproc ${VERBOSE} \
 		--stringparam outputDir Guidelines-web-beta-tmp/${LANGUAGE}/html \
 		--stringparam displayMode both \
 	        --stringparam lang ${LANGUAGE} \
 	        --stringparam doclang ${LANGUAGE} \
-	    Utilities/guidelines-beta.xsl freddy.xml 
-	rm freddy.xml
+	    Utilities/guidelines-beta.xsl -
 	cp -r ${SOURCETREE}/Images Guidelines-web-beta-tmp/${LANGUAGE}/html/
 	(cd Guidelines-web-beta-tmp/${LANGUAGE}/html; for i in *.html; do perl -i ../../../Utilities/cleanrnc.pl $$i;done)
 	(cd Guidelines-web-beta-tmp/${LANGUAGE}/html; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' guidelines-beta.css)
