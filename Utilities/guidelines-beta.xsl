@@ -480,12 +480,17 @@ function showByMod() {
     </div>
   </xsl:template>
 
+
   <xsl:template name="numberFrontDiv">
+    <xsl:param name="minimal"/>
     <xsl:if test="count(ancestor::tei:div)&lt;2">
       <xsl:number count="tei:div" format="i.i" level="multiple"/>
+      <xsl:if test="$minimal='false'">
+	<xsl:value-of select="$numberSpacer"/>
+      </xsl:if>
     </xsl:if>
-  </xsl:template>
 
+  </xsl:template>
   <xsl:template name="myi18n">
     <xsl:param name="word"/>
     <xsl:choose>
