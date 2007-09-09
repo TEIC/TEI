@@ -153,6 +153,7 @@ states[25]="element-z"
 function startUp() {
  hideallExcept('');
 }
+
 function hideallExcept(elm) {
 for (var i = 0; i &lt; states.length; i++) {
  var layer;
@@ -165,6 +166,9 @@ for (var i = 0; i &lt; states.length; i++) {
       }
   }
  }
+ var mod = document.getElementById('elembymod');
+ mod.style.display = "none";
+
 }
 function showall() {
 
@@ -174,6 +178,13 @@ layer.style.display = "block";
 
 }
 }
+
+function showByMod() {
+  hideallExcept('');
+  var mod = document.getElementById('elembymod');
+  mod.style.display = "block";
+}
+
     function toggleTOC (el) {
         if (el.innerHTML == 'Display Full Contents') {
         el.innerHTML = 'Display Summary Contents';
@@ -783,7 +794,7 @@ layer.style.display = "block";
 <xsl:template match="tei:divGen[@type='tagcat']">
   <div id="azindex">
     <p id="top">Elements sorted
-  alphabetically, starting with:</p>
+    alphabetically, starting with:</p>
       <ul class="index">     
     <li>
 	<a onclick="hideallExcept('element-a');" href="#">a</a>
@@ -867,12 +878,15 @@ layer.style.display = "block";
       <li class="showall">
 	<a onclick="showall();" href="#">Show All</a>
       </li>
+      <li class="showall">
+	<a onclick="showByMod();" href="#">Show by Module</a>
+      </li>
     </ul>
   </div>
 
   <br clear="both"/>
 
-  <xsl:for-each select="key('ELEMENTDOCS',1)">
+    <xsl:for-each select="key('ELEMENTDOCS',1)">
     <xsl:sort select="translate(@ident,$uc,$lc)"/>
     <xsl:variable name="letter">
       <xsl:value-of select="substring(@ident,1,1)"/>
@@ -894,25 +908,27 @@ layer.style.display = "block";
     </xsl:if>
   </xsl:for-each>
 
-  <xsl:for-each select="key('ELEMENTDOCS',1)">
-    <xsl:sort select="@module"/>
-    <xsl:if
-	test="generate-id(.)=generate-id(key('ELEMENT-MODULE',@module)[1])">
-      <div>
-      <h3>
-	<xsl:for-each select="key('MODULES',@module)">
-	  <xsl:value-of select="@ident"/>
-	  <xsl:text>: </xsl:text>
-	  <xsl:value-of select="tei:desc"/>
-	</xsl:for-each>
-      </h3>
-      <xsl:apply-templates mode="weave"
-			   select="key('ELEMENT-MODULE',@module)">
-	<xsl:sort select="@ident"/>
-      </xsl:apply-templates>
-      </div>
-    </xsl:if>
-  </xsl:for-each>
+  <div id="elembymod">
+    <xsl:for-each select="key('ELEMENTDOCS',1)">
+      <xsl:sort select="@module"/>
+      <xsl:if
+	  test="generate-id(.)=generate-id(key('ELEMENT-MODULE',@module)[1])">
+	<div>
+	  <h3>
+	    <xsl:for-each select="key('MODULES',@module)">
+	      <xsl:value-of select="@ident"/>
+	      <xsl:text>: </xsl:text>
+	      <xsl:value-of select="tei:desc"/>
+	    </xsl:for-each>
+	  </h3>
+	  <xsl:apply-templates mode="weave"
+			       select="key('ELEMENT-MODULE',@module)">
+	    <xsl:sort select="@ident"/>
+	  </xsl:apply-templates>
+	</div>
+      </xsl:if>
+    </xsl:for-each>
+  </div>
 </xsl:template>
 
   <xsl:template match="tei:gi">
@@ -956,9 +972,7 @@ layer.style.display = "block";
 	<a href="ref-{$me}.html">
 	  <xsl:value-of select="$me"/>
 	</a>
-	<xsl:if test="not(@module='core')">
-	  <sup><xsl:value-of select="@module"/></sup>
-	</xsl:if>
+	<sup><xsl:value-of select="@module"/></sup>
 	<xsl:text> </xsl:text>
       </xsl:if>
     </xsl:for-each>
