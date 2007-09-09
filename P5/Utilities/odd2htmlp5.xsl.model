@@ -191,9 +191,14 @@
         <hr/>
       </xsl:if>
       <address>
-        <xsl:call-template name="copyrightStatement"/>
+        <xsl:call-template name="copyrightStatement"/>. 
+        <xsl:text>Licensed under the GPL. 
+        Copying and redistribution is permitted and encouraged. </xsl:text>
 	<br/>
-	<xsl:text>Generated: </xsl:text> 
+        <xsl:text>Version </xsl:text>
+        <xsl:value-of 
+select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
+        <xsl:text>. This page generated on </xsl:text> 
 	<xsl:call-template name="whatsTheDate"/>
 
     </address>
