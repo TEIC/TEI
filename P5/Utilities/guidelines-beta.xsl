@@ -750,6 +750,8 @@ function showByMod() {
       <div id='class-{@module}'>
       <h3>
 	<xsl:for-each select="key('MODULES',@module)">
+	  <xsl:value-of select="@ident"/>
+	  <xsl:text>: </xsl:text>
 	  <xsl:value-of select="tei:desc"/>
 	</xsl:for-each>
       </h3>
@@ -778,6 +780,8 @@ function showByMod() {
       <div id='macro-{@module}'>
       <h3>
 	<xsl:for-each select="key('MODULES',@module)">
+	  <xsl:value-of select="@ident"/>
+	  <xsl:text>: </xsl:text>
 	  <xsl:value-of select="tei:desc"/>
 	</xsl:for-each>
       </h3>
