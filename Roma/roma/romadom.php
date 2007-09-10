@@ -1875,9 +1875,17 @@ class romaDom extends domDocument
       {
 	$this->getXPath( $oXPath );
 	$oP = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p" )->item(0);
-	if ( $oP->hasChildNodes() )
+	if ( is_object( $oP ) ) {
+  	 if ( $oP->hasChildNodes() ) {
 	  $oP->removeChild( $oP->firstChild );
-	$oP->appendChild( new domText ( stripslashes($szDescription) ) );
+	  }
+	  }
+	else
+	   {
+	   $oBody = $oXPath->query( "/tei:TEI/tei:text/tei:body" )->item(0);
+	   $oP = $oBody->appendChild( new domElement( 'p' ) );
+	   }
+	 $oP->appendChild( new domText ( stripslashes($szDescription) ) );
       }
 
     public function setCustomizationAuthor( $szAuthor )
