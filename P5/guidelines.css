@@ -100,33 +100,27 @@ Free Software Foundation, Inc.,
    text-decoration: none
 }
    
-body.simple {
-   color: #000000;
-   background-color: #FFFFFF;
-   margin-left: 1em;
-   margin-right: 1em;
-   margin: 10pt;
-}
-
 body{
    color: #000000;
    background-color: #FFFFFF;
    margin-left: 1em;
    margin-right: 1em;
    padding:0;
+   font-family: Arial,Helvetica,sans-serif;	
 }
 
 /* tables for reference display */
 table.wovenodd {
- width: 100%;
- table-layout: fixed;
+ width: 75%; 
+/*table-layout: fixed; */
+float:left;
 }
 td.wovenodd-col1 {
-   width: 10%;
+width:15%;
    vertical-align: top;
 }
 td.wovenodd-col2 {
-   width: 90%;
+width:60%;
 }
 
 table.attList {
@@ -135,12 +129,12 @@ table.attList {
  margin: 0pt;
  padding: 0pt;
 }
-table.attList td.odd_label {
+td.odd_label {
    vertical-align: top;	
    width: 15%;
    font-weight: bold;
 }
-table.attList td.odd_value {
+td.odd_value {
    vertical-align: top;	
    width: 85%;
 }
@@ -177,8 +171,12 @@ table.valList td.odd_value {
 
 table.specDesc td.Attribute {
   font-weight: bold;
+   vertical-align: top;	
 }
 
+table.specDesc {
+ margin-left: 1em;
+}
 td p { 
    margin-top: 0pt;
    margin-bottom: 2pt;
@@ -188,9 +186,10 @@ td p {
 #accessibility {
 }
 #hdr {
-   width: auto;margin: 0px;
-   padding-top: 10pt;
-   padding-bottom: 30pt;
+   width: auto;
+   margin: 0px;
+   padding-top: 5pt;
+   padding-bottom: 5pt;
    border: 0px;
    color: yellow;
    background: url("TEI-glow.png");
@@ -234,7 +233,8 @@ td p {
 h1 {
    font-weight: bold;
    font-size: x-large;
-   color: #223377
+   color: #223377;
+   clear:left;
 }
    
    
@@ -243,23 +243,27 @@ h2 {
    margin-top: 20pt;
    font-weight: bold;
    font-family: Arial,Helvetica,sans-serif;
-   color: #223377
+   color: #223377;
+
 }
    
 h3 {
    font-size: larger;
-   color: #C63904;
+   color: #223377;
    font-weight: bold;
    font-family: Arial,Helvetica,sans-serif;
-   font-style: italic
+   font-style: italic;
+
 }
   
 h4,h5,h6 {
    font-size: 100%;
+   color: #223377;
+   
    } 
    
 h1.maintitle {
-   color: #222E44;
+   color: #223377;
    margin-left: 100px;
    font-family: Arial,Helvetica,sans-serif;
    font-weight: bold;
@@ -268,6 +272,7 @@ h1.maintitle {
 
 h1.title {
    margin-left: 100px;
+   color: #223377;
    font-family: Arial,Helvetica,sans-serif;
    font-weight: bold;
    bottom: 5px;
@@ -427,7 +432,7 @@ a.inlinetoc-sub:visited,a.inlinetoc-sub:link {
    color: #9F9F9F
 }
    
-.label {
+span.label {
  font-weight: bold;
 }
    
@@ -447,22 +452,49 @@ div.inlinteoc {
 
 div.cdata{
  white-space: pre;
+clear:both;
 }
 
 pre,div.pre,div.pre_eg,pre.eg,div.eg {
  padding: 4pt;
- border: 1pt solid black;
+ border: 1px solid black;
  font-family: monospace ;
- background-color: #ffffcc;  
+ background-color: #ffffe9;  
  margin-bottom: 4pt;
  margin-top: 4pt;
+clear:both;
 }
-span.att { font-family: monospace; }
+
+span.tag:before { content: "<"; }
+span.tag:after { content: ">"; }
+
+span.gi,span.tag {
+	 font-family: monospace; 
+}
+span.gi:before { content: "<"; }
+span.gi:after { content: ">"; }
+
+span.att { 
+	 font-family: monospace; 
+	 font-weight:bold;
+	 font-size:120%;
+}
 span.att:before { content: "@"; }
 
-
-
 /* toc */
+
+div.toggleTOC_summary div.toc_front {float:right;}
+div.toggleTOC_summary div.toc_body { float:left;}
+div.toggleTOC_summary div.toc_back {float: right;}
+
+li.toc {
+  list-style: none;
+}
+
+a.toc_0 {
+  font-weight: bold; 
+}
+
 div.toclist0 {
    margin-left: 0.5em; 
    margin-top: 1pt; 
@@ -518,6 +550,10 @@ div.noteHeading {
    font-size: larger;
    font-weight: bold;
 }
+div.noteBody {
+  display:inline;
+}
+
 
 div.note {
    margin-left: 1em; 
@@ -557,11 +593,9 @@ div.letter {
 }
 /* title page */
 div.titlePage {
-   border-top: 2pt solid #000000;
-   border-bottom: 2pt solid #000000;
-   padding-top: 6pt;
-   padding-bottom: 6pt;
-   font-size: 200%;
+   padding: 2px;
+   margin: 2px;
+   font-size: 120%;
    background-color: lightgray;
    text-align: center;
 }
@@ -584,14 +618,9 @@ div.byline {
 div.dateline{
    text-align: right;
 }
-/* verse */
-div.lg {
-   margin-left: 10px;
-}
-
 div.centerbold {
     text-align:center;
-    padding: 20pt;
+    padding: 10pt;
     font-weight: bold;
 }
 div.center {
@@ -691,15 +720,14 @@ span.foreign {
    font-style: italic;
 }
 
-span.displayRelax {
+button.displayRelax {
  margin-right: 2px;
  margin-top: 2px;
- font-size: smaller;
- border: solid red 1pt;
- background-color: black;
- color: white;
+ font-size: 70%;
+ /* border: solid grey 1pt;
+ background-color: lightgrey;
+ color: white;*/
  float: right;
- font-weight:bold;
  cursor: pointer;	
 }
 
@@ -735,7 +763,7 @@ td.elementSpec,span.elementname {
 }
 
 span.attribute {
-    color: #006400;
+    color: #600;
 }
 span.attributevalue {
     color: black;
@@ -782,4 +810,211 @@ span.rnc_keyword {
 }
 span.defaultVal {
   font-weight: bold;
+}
+span.permalink {
+  display:inline;
+}
+a.permalink {
+   text-decoration:none; 
+   font-weight:normal; 
+   color:#DDDDDD; 
+   font-size:70%;
+}
+a.permalink:hover {
+   text-decoration:none; 
+   font-weight:normal;
+   color:#777777; 
+   font-size:70%;
+}
+
+ul.subtoc {
+  padding-left: 1em;
+}
+
+hr {clear:both;}
+
+table.miniTOC {
+ margin-left:1%;
+ margin-top:1%;
+ margin-bottom:1%;
+ float:right; 
+ background-color: #eef;
+ border: 1px dotted #040;
+ font-size: 70%;
+ width: 20%;
+ padding: 1%;
+ clear: right;
+
+}
+
+span.icon {
+ font-style: normal;
+ font-weight: bold;
+ font-size: large;
+}
+a.notelink sup {
+  vertical-align: top;
+  font-size: 70%;
+}
+
+div.moduleSpec {
+   padding: 1px;
+   margin: 1px;
+   background-color: lightgray;
+   clear:right;
+}
+
+span.moduleSpecHead {
+   font-style: italic;
+}
+
+ul.specList li {
+ list-style: none;
+}
+.specList-macroSpec {
+ font-weight: bold; 
+}
+.specList-elementSpec {
+ font-weight: bold; 
+}
+.specList-elementSpec:before { content: "<"; }
+.specList-elementSpec:after { content: ">"; }
+.specList-classSpec {
+ font-weight: bold; 
+}
+
+span.specName { 
+   color: #223377;
+ font-weight: bold;
+}
+
+/* paragraphs */
+p, div.p {
+ margin-top: 0.3em;
+}
+span.math {
+ font-style: italic;
+}
+
+code {font-weight:bold; font-size:120%;}
+
+a.navigation:hover{color:#060;}
+a.UP:hover{color:#060; }
+span.previousLink{font-size:150%;}
+span.nextLink{font-size:150%;}
+span.upLink{font-size:150%;}
+span.upLink a {font-size:80%;}
+a.plain{color:#060;}
+span.subtochead{font-weight:bold;}
+table.miniTOC tbody tr td p {margin-top:10%;}
+ul.subtoc {
+  padding-left: 0.70em;
+  margin-top: 0.25ex;
+  color:#600;
+}
+ul.subtoc li {padding:0.70em;}
+h1.title a {text-decoration:none;color: #223377;}
+h1.title a:visited {text-decoration:none;color: #223377;}
+
+address {font-size:80%;}
+table.wovenodd tr td {border: 1px solid #555;padding:1%;}
+table.wovenodd {border-spacing:0px; border-collapse:collapse;}
+table.wovenodd tr td {border-spacing:0px;}
+table.wovenodd tr {border-spacing:0px;border-collapse:collapse;} 
+table.wovenodd tr td  table.attList {border-spacing:0px;border:none;}
+table.wovenodd tr td table.attList tr {border-spacing:0px;border:none;}
+table.wovenodd tr td table.attList tr td {border-spacing:0px;border:none;}
+span.val:before { content: "'"; }
+span.val:after { content: "'"; }
+
+
+/* A -Z Styles From http://www.smileycat.com/miaow/archives/000211.php -styling the a to z*/
+#azindex {	background-color: #ddd;
+	display: block;
+	float: left;
+	margin: 5px 0 20px 5px;
+	padding: 0px 0px 15px 0px;
+	width: 75%;
+	border: 1px solid #999;
+}
+	
+#azindex p 	{color: #fff;
+		background-color: #000060;
+		padding: 4px;
+		display: block;
+		margin: 0;
+		border-bottom: 1px solid #333;
+		font-size: 0.95em;
+	}
+.index {
+	font: bold 100% Verdana, Helvetica, sans-serif;
+	margin: 0;
+	padding: 0;
+}	
+	
+.index li {
+	float: left;
+	height: 1.5em;
+	list-style-type: none;
+	margin: 0.35em 0.15em;
+	padding: 0;
+	width: 1.5em;
+	
+
+}
+
+.index a:link, .index a:visited {
+	background: #fff;
+	color: navy;
+	display: block;
+	height: 1.5em;
+	padding: 0.37em 0 0 0;
+	text-align: center;
+	text-decoration: none;
+	width: 1.5em;
+	border: 1px solid #999;
+}
+li.showall, li.showall a:visited,li.showall a:link {
+	width: 10em;
+}
+
+* html .index li {
+	margin: 0.2em 0.2em;
+	
+}
+
+ul.index li a:hover {
+	background: #93D1E4;
+	color: #fff;
+	text-decoration: underline;
+}
+		
+.atoz {
+	list-style: none;
+	text-align:left;
+	margin: 2px;
+	padding: 2px;
+        background-color: #eef;	
+	clear:both;
+	}
+
+.atoz li {
+	padding: 0px;
+        display: inline;
+ }
+	
+.listhead {
+	 float: left;
+         margin-top: 0em;	
+	 margin-right: 1em;
+         padding-left: 3px;
+         padding-right: 3px;
+         color: #000066;
+         font-weight: bold;
+	 border: solid black 1px;
+         }
+
+/* End of A - Z styles */
+span.refdocLink {
+  margin-right: 1em;
 }
