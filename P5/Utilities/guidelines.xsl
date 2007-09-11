@@ -26,8 +26,8 @@
   <xsl:param name="footnoteFile">false</xsl:param>
   <xsl:param name="auto">false</xsl:param>
   <xsl:param name="numberFrontHeadings">true</xsl:param>
-  <xsl:param name="cssFile">guidelines.css</xsl:param>
-  <xsl:param name="cssPrintFile">guidelines-print.css</xsl:param>
+  <xsl:param name="cssFile">guidelines-beta.css</xsl:param>
+  <xsl:param name="cssPrintFile">guidelines-print-beta.css</xsl:param>
   <xsl:param name="displayMode">both</xsl:param>
 
   <xsl:key name="CLASS-MODULE" match="tei:classSpec"
@@ -972,6 +972,11 @@ function showByMod() {
     </Children>
   </xsl:variable>
   <xsl:for-each select="exsl:node-set($Children)/Children">
+  <xsl:choose>
+    <xsl:when test="count(Element)=0">
+      <xsl:text>Empty element</xsl:text>
+    </xsl:when>
+    <xsl:otherwise>
     <xsl:for-each select="Element">
       <xsl:sort select="@name"/>
       <xsl:variable name="me">
@@ -985,6 +990,8 @@ function showByMod() {
 	<xsl:text> </xsl:text>
       </xsl:if>
     </xsl:for-each>
+    </xsl:otherwise>
+  </xsl:choose>
   </xsl:for-each>
 </xsl:template>
 

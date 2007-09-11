@@ -972,6 +972,11 @@ function showByMod() {
     </Children>
   </xsl:variable>
   <xsl:for-each select="exsl:node-set($Children)/Children">
+  <xsl:choose>
+    <xsl:when test="count(Element)=0">
+      <xsl:text>Empty element</xsl:text>
+    </xsl:when>
+    <xsl:otherwise>
     <xsl:for-each select="Element">
       <xsl:sort select="@name"/>
       <xsl:variable name="me">
@@ -985,6 +990,8 @@ function showByMod() {
 	<xsl:text> </xsl:text>
       </xsl:if>
     </xsl:for-each>
+    </xsl:otherwise>
+  </xsl:choose>
   </xsl:for-each>
 </xsl:template>
 
