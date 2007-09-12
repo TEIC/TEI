@@ -7,7 +7,7 @@ $Id$
 -->
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="FT" n="22"><head xmlns="http://www.tei-c.org/ns/1.0">Tables, Formulae, and Graphics</head>
 <p>Many documents, both historical and contemporary, include not only
-text but also graphics, artwork, and other images.  Although some
+text, but also graphics, artwork, and other images.  Although some
 types of images can be represented directly with markup, 
 it is more common practice to include
 such information by using a reference to an 
@@ -32,7 +32,7 @@ For these reasons, and others, we consider tables, formulæ, and
 graphics together in this chapter.</p>
 
 <p>As with text markup in general, many incompatible formats have been
-proposed for the representation of graphics, formulae and tables in
+proposed for the representation of graphics, formulae, and tables in
 electronic form.  Unfortunately, no single format as effective as XML
 in the domain of text has yet emerged for their interchange, to some
 extent because of the difficulty of representing the information these
@@ -80,15 +80,17 @@ attribute is an appropriate way of indicating that some element is being
 presented in tabular format.  When tabular presentation is regarded as
 of less intrinsic importance, it is correspondingly simpler to encode
 descriptive or functional information about the contents of the table,
-for example to identify one column as containing names and another as
-containing dates, though the two methods may be combined.
+for example to identify one cell as containing a name and another as
+containing a date, though the two methods may be combined.
  </p>
 <p>When, however, particular elements are required to encode the
 tabular arrangement itself, then one or other of the various
 <soCalled>table schemas</soCalled> now available may be preferable.
 The schemas in common use generally view a table as a special text
-element, made up of row elements (or, sometimes, column elements),
-themselves composed of cells. Table cells generally appear in
+element, made up of row elements,
+themselves composed of cells.<note place="foot">A markup scheme could
+equally well define tables as being composed of columns of cells, but
+this is rarely if ever done in practice.</note> Table cells generally appear in
 row-major order, with the first row from left to right, then the
 second row, and so on. Details of appearance such as column widths,
 border lines, and alignment are generally encoded by numerous
@@ -219,24 +221,30 @@ has been explicitly recorded:
        <cell> <num>453,588</num> </cell></row>
   <row><cell> <name>Alaska</name> </cell>
        <cell> <num>550,043</num> </cell></row>
-  <row><cell> <name>Vermont</name> </cell>
-       <cell> <num>562,758</num> </cell></row>
-  <row><cell> <name>District of Columbia</name> </cell>
-       <cell> <num>606,900</num> </cell></row>
-  <row><cell> <name>North Dakota</name> </cell>
-       <cell> <num>638,800</num> </cell></row>
-  <row><cell> <name>Delaware</name> </cell>
-       <cell> <num>666,168</num> </cell></row>
-  <row><cell> <name>South Dakota</name> </cell>
-       <cell> <num>696,004</num> </cell></row>
   <row><cell> <name>Montana</name> </cell>
        <cell> <num>799,065</num> </cell></row>
   <row><cell> <name>Rhode Island</name> </cell>
        <cell> <num>1,003,464</num> </cell></row>
 </table></egXML>
  </p>
-<p>In syntactic terms this is little more than a name-change; however,
-the new names are more useful in that they convey something about the
+<p>The <att>role</att> attribute provides a slightly less verbose
+means of conveying the same information:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><table>
+  <head>US State populations, 1990</head>
+  <row><cell role="statename">Wyoming </cell>
+       <cell role="pop">453,588 </cell></row>
+  <row><cell role="statename">Alaska </cell>
+       <cell role="pop">550,043 </cell></row>
+  <row><cell role="statename">Montana </cell>
+       <cell role="pop">799,065 </cell></row>
+  <row><cell role="statename">Rhode/name> </cell>
+       <cell role="pop">1,003/num> </cell></row>
+</table></egXML>
+</p>
+
+
+<p>The use of semantically marked elements within a
+<gi>cell</gi> enables the encoder to convey something about the
 nature and significance of the information, rather than merely
 suggesting how to display it in rows and columns.</p>
 <p>The TEI table elements are defined as follows:
@@ -248,7 +256,7 @@ suggesting how to display it in rows and columns.</p>
  </p></div>
 <div type="div3" xml:id="FTTAB2"><head xmlns="http://www.tei-c.org/ns/1.0">Other Table Schemas</head>
 <p>Many authoring systems include built-in support for their
-own or for public table schemas.  These often provide an enhanced user
+own or for public table schemas.  These provide an enhanced user
 interface and good formatting capabilities, but are often
 product-specific, despite their use of a XML markup language.
  </p>
@@ -259,7 +267,7 @@ together with the table DTD documented in ISO Technical Report 9537,
 and now forms part of ISO 12083. The TEI table model described above
 has functionality very similar to that defined by ISO 12083.
  </p>
-<p>For more complex tables, the most effective publically-available DTD
+<p>For more complex tables, the most effective publically available DTD
 is probably that developed by the US Department of Defense CALS project.
 This supports vertical and horizontal spanning and various kinds of text
 rotation and justification within cells and is also directly supported
@@ -282,7 +290,7 @@ version of this is also defined in <title>OASIS Technical Memorandum TR 9901:199
 		XML Exchange Table Model DTD</title> (<ptr target="http://www.oasis-open.org/specs/tm9901.html"/>). </p>
 	<p>With the ascent of the Web, the HTML table model (<ptr target="http://www.w3.org/TR/html4/struct/tables.html"/>) has become very popular and widespread in use. The
 last few years have seen a growing access to information via devices
-of varying capabilities ranging from desktop computers to handheld
+of varying capabilities, ranging from desktop computers to handheld
 mobile phones.  In response to this demand, HTML has been both
 reformulated into XML and modularized into a family of modules (see
 <ptr target="http://www.w3.org/TR/xhtml-modularization"/>) with semantically related elements. This
@@ -304,16 +312,16 @@ rendering on non-visual user agents (<ptr target="http://www.w3.org/TR/html4/str
 is also available. Special elements and attributes are provided to
 associate metadata with tables. They indicate the table's purpose, or
 are for the benefit of people using speech or Braille-based user
-agents. It is recommended that tables should not be used purely as a
-means to layout document content as this leads to many accessibility
+agents. Tables are not recommended for  use purely as a
+means to lay out document content, as this leads to many accessibility
 problems (see further <ptr target="http://www.w3.org/TR/WCAG10-HTML-TECHS/#tables"/>).
 Style sheets provide a far more effective means of controlling layout
-and other visual characteristics, in both HTML and XML documents.
+and other visual characteristics in both HTML and XML documents.
 </p>
  </div></div>
 <div type="div2" xml:id="FTFOR"><head xmlns="http://www.tei-c.org/ns/1.0">Formulae and
 Mathematical Expressions</head>
-<p>Mathematical and chemical formulæ pose similar problems to
+<p>Mathematical and chemical formulæ pose  problems similar to
 those posed by tables in that rendition may be of great significance and
 hard to disentangle from content.  They also require access to a wide
 range of special characters, for most of which standard entity names
@@ -457,13 +465,13 @@ as data islands can be correctly validated.</p>
 coordinated by the OpenMath Society (<ptr target="http://www.openmath.org/"/>)and funded by the European
 Commission under the Esprit Multimedia Standards Initiative that
 commenced in September 1997. It is likely to become a key standard for
-communicating semantically-rich representations of mathematical
+communicating semantically rich representations of mathematical
 objects both on and off the Web in a platform-independent manner.</p>
 
 <p>The OpenMath Standard (<ptr target="http://www.openmath.org/V2/standard/index.html"/>) consists of
 specifications for
 <list type="ordered">
-<item>OpenMath objects, representing the structure of formulas (<ptr target="http://www.openmath.org/V2/standard/objects.html"/>);</item>
+<item>OpenMath objects, representing the structure of formulae (<ptr target="http://www.openmath.org/V2/standard/objects.html"/>);</item>
 <item>Content Dictionaries, providing semantic context (<ptr target="http://www.openmath.org/V2/standard/cd.html"/>);</item>
 <item>Encodings, both binary (<ptr target="http://www.openmath.org/V2/standard/binary.html"/>) and
 XML (<ptr target="http://www.openmath.org/V2/standard/xml.html"/>).</item></list></p>
@@ -471,7 +479,7 @@ XML (<ptr target="http://www.openmath.org/V2/standard/xml.html"/>).</item></list
 <p>OpenMath and MathML have certain common aspects. They both use
 prefix operators, both are XML based and they both construct their
 objects by applying certain rules recursively. Such similarities
-facilitate mapping across both standards. There are also some key
+facilitate mapping between the two standards. There are also some key
 differences between MathML and OpenMath. OpenMath does not provide
 support for presentation of mathematical objects and its scope of
 semantically-oriented elements is much broader that of MathML, with
@@ -530,7 +538,7 @@ and textual descriptions of the pictures.  The images themselves are
 specified using the <gi>graphic</gi> element, whose <att>url</att>
 attribute provides the location of an image.  For example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><figure><graphic url="Fig1.pdf"/></figure></egXML></p>
 
-<p>Three kinds of content may be supplied in <gi>figure</gi>: the
+<p>Three kinds of content may be supplied inside a <gi>figure</gi> element: the
 element <gi>head</gi> may be used to transcribe (or supply) a
 descriptive heading or title for the graphic itself as in this
 example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><figure><graphic url="Fig1.pdf"/><head>Figure One: The View from the
@@ -750,14 +758,17 @@ In true polychrome images, points are rendered in different colours,
 again with varying limitations affecting the number of distinct shades
 and the means by which they are displayed.</p></div>
 <div type="div2" xml:id="FTGRNO"><head xmlns="http://www.tei-c.org/ns/1.0">Graphic Image Formats</head>
+
 <p>As noted above, there exists a bewildering variety of different
 graphics formats, and the following list is in no way exhaustive.
 Moreover, inclusion of any format in this list should not be taken as
 indicating endorsement by the TEI of this format or any products
-associated with it. With the exception of CGM, JPEG, PNG, and SVG, all the formats listed
-here are proprietary to a greater or lesser extent and cannot therefore
-be regarded as standards in any meaningful sense. They are however
-widely used by many different vendors.</p>
+associated with it. With the exception of SMIL, CGM, JPEG, PNG, and
+SVG, all the formats listed here are proprietary to a greater or
+lesser extent and cannot therefore be regarded as standards in any
+meaningful sense. They are however widely used by many different
+vendors.</p>
+
 <p>The following formats are widely used at the present time, and likely to
 remain supported by more than one vendor's software:
 <list type="simple">
