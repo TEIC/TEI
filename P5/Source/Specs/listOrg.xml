@@ -18,21 +18,21 @@ information about an identifiable organization. </desc>
 <!--    <memberOf key="model.personLike"/>-->
   </classes>
   <content>
-    <rng:choice>
-      <rng:oneOrMore>
-        <rng:ref name="model.pLike"/>
-      </rng:oneOrMore>
-      <rng:group>
-        <rng:oneOrMore>
-            <rng:ref name="org"/>
-        </rng:oneOrMore>
-      </rng:group>
-    </rng:choice>
-  </content>
+   <rng:group>
+      <rng:zeroOrMore>
+            <rng:ref name="model.headLike"/>
+      </rng:zeroOrMore>
+    <rng:oneOrMore>
+      <rng:choice>
+        <rng:ref name="org"/>
+        <rng:ref name="listOrg"/>
+      </rng:choice>
+    </rng:oneOrMore>
+    <rng:zeroOrMore>
+      <rng:ref name="relation"/>
+    </rng:zeroOrMore>  
+        </rng:group>  </content>
   <remarks>
-    <p>The organizations constituting the list may simply be
-    summarized as a series of paragraphs as an alternative to
-    declaring each one individually. </p>
 <p rend="dataDesc">The type attribute may be used to
     distinguish lists of organizations of a particular type if
     convenient.</p>
