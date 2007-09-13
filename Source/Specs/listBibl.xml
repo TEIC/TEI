@@ -21,36 +21,20 @@ $Id$
   <classes>
     <memberOf key="model.listLike"/>
     <memberOf key="att.declarable"/>
+    <memberOf key="att.typed"/>
     <memberOf key="model.msItemPart"/>
   </classes>
   <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
     <rng:group>
       <rng:zeroOrMore>
-        <rng:choice>
-          <rng:group>
-            <rng:ref name="model.divTop"/>
-          </rng:group>
-          <rng:group>
-            <rng:ref name="model.global"/>
-          </rng:group>
-        </rng:choice>
+            <rng:ref name="model.headLike"/>
       </rng:zeroOrMore>
       <rng:oneOrMore>
-        <rng:group>
+        <rng:choice>
           <rng:ref name="model.biblLike"/>
-        </rng:group>
-        <rng:zeroOrMore>
-          <rng:ref name="model.global"/>
-        </rng:zeroOrMore>
+	  <rng:ref name="listBibl"/>
+	</rng:choice>
       </rng:oneOrMore>
-      <rng:zeroOrMore>
-        <rng:group>
-          <rng:ref name="model.divBottom"/>
-        </rng:group>
-        <rng:zeroOrMore>
-          <rng:ref name="model.global"/>
-        </rng:zeroOrMore>
-      </rng:zeroOrMore>
     </rng:group>
   </content>
   <exemplum>
