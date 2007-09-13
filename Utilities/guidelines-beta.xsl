@@ -407,8 +407,8 @@ function showByMod() {
 <!-- Of course we should take this from title page -->
 <div style="clear:both;">
 <h4>Citing The Guidelines:</h4>
-<p>Please cite the Guidelines with the following information:
-<br/>Bauman, S. and Burnard, L. (eds.) (2007). TEI P5: Guidelines for Electronic Text Encoding and Interchange. Text Encoding Initiative Consortium. Oxford, Providence, Charlottesville, Nancy. http://www.tei-c.org/P5/</p>
+<p>Please cite the Guidelines with the following information in whatever format your chosen style guide prefers:
+<br/><span class="biblCitation">Bauman, S. and Burnard, L. (eds.) (2007). <span class="titleCitation"> TEI P5: Guidelines for Electronic Text Encoding and Interchange.</span> Text Encoding Initiative Consortium. Oxford, Providence, Charlottesville, Nancy. <a href="http://www.tei-c.org/P5/">http://www.tei-c.org/P5/</a></span></p>
 
 </div>
         <xsl:variable name="name"> TEI Guidelines TOC </xsl:variable>
