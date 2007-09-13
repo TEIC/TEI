@@ -403,6 +403,14 @@ function showByMod() {
 -->
           </ul>
         </div>
+
+<!-- Of course we should take this from title page -->
+<div style="clear:both;">
+<h4>Citing The Guidelines:</h4>
+<p>Please cite the Guidelines with the following information:
+<br/>Bauman, S. and Burnard, L. (eds.) (2007). TEI P5: Guidelines for Electronic Text Encoding and Interchange. Text Encoding Initiative Consortium. Oxford, Providence, Charlottesville, Nancy. http://www.tei-c.org/P5/</p>
+
+</div>
         <xsl:variable name="name"> TEI Guidelines TOC </xsl:variable>
         <xsl:call-template name="outputChunk">
           <xsl:with-param name="ident">
