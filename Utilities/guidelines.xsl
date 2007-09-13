@@ -26,8 +26,8 @@
   <xsl:param name="footnoteFile">false</xsl:param>
   <xsl:param name="auto">false</xsl:param>
   <xsl:param name="numberFrontHeadings">true</xsl:param>
-  <xsl:param name="cssFile">guidelines-beta.css</xsl:param>
-  <xsl:param name="cssPrintFile">guidelines-print-beta.css</xsl:param>
+  <xsl:param name="cssFile">guidelines.css</xsl:param>
+  <xsl:param name="cssPrintFile">guidelines-print.css</xsl:param>
   <xsl:param name="displayMode">both</xsl:param>
 
   <xsl:key name="CLASS-MODULE" match="tei:classSpec"
