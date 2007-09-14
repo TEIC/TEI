@@ -189,17 +189,20 @@ $Id$
       processed in straightforward ways, without requiring complex methods of
       disentangling information relevant to one view from information relevant
       only to other views. Typically each view is straight forward to encode.</p>
-    <p>However, this method has several obvious drawbacks. It requires redundant
-      information be encoded, with the resulting risk that one view may be
-      updated without corresponding changes being made to the others, resulting
-      in inconsistencies within the document. Moreover, it is difficult to
-      access information from one view while processing the file that contains
-      the encoding of another, because the files are not related to each other,
-      at least not directly. It has been shown, however, that it is possible to
-      relate the different annotations in an indirect way: if the textual
-      content of the annotations is identical, the very text can serve as a
-      means for linking the different annotations.
-      <?sb2aw Should we be showing how this is done? ?></p>
+    <p>However, this method has several obvious drawbacks. It requires
+    redundant information be encoded, with the resulting risk that one
+    view may be updated without corresponding changes being made to
+    the others, resulting in inconsistencies within the document.
+    Moreover, it is difficult to access information from one view
+    while processing the file that contains the encoding of another,
+    because the files are not related to each other, at least not
+    directly. It has been shown, however, that it is possible to
+    relate the different annotations in an indirect way: if the
+    textual content of the annotations is identical, the very text can
+    serve as a means for linking the different annotations, as
+    described by <ref
+    target="http://xml.coverpages.org/Witt-allc2002.html">Witt
+    2002</ref>.</p>
       <p>It is possible to use multiple encodings to represent
       non-hierarichical structures using the TEI schemas with or
       without customization.</p>
@@ -313,13 +316,13 @@ $Id$
         (using the methods described in <ptr target="#MD"/>) to
         support this method of encoding non-hierarchical
         structures.</item>
-        <label>Co-referenced Overlap Terminus</label>
-        <item>Referred to as <soCalled>COLT</soCalled> markup, this is
+        <label>Hierarchical Overlap Representation using Same element but Empty</label>
+        <item>Referred to as <soCalled>HORSE</soCalled> markup, this is
         a special case of typed segment-boundary delimiters in which
         the type of element used is exactly the same as the type of
         element that would have been used if there were not an overlap
-        problem. E.g., instead of <gi>q-boundary</gi> and
-        <gi>speech-boundary</gi>, the normal elements <gi>q</gi> and
+        problem. E.g., instead of <gi>q-boundary</gi> or
+        <gi>speech-boundary</gi>, the normal elements <gi>q</gi> or
         <gi>speech</gi> would be used as empty elements, with special
         attributes to indicate which is the beginning and which is the
         end. Furthermore, each empty element that marks the beginning
@@ -346,7 +349,7 @@ $Id$
   <l>il supplizio della sabbia,</l>
   <l>a batticuore, spaziando la notte.<se/></l>
 </lg>]]></eg></p>
-    <p>Each of the various methods described above (except for COLT) has the
+    <p>Each of the various methods described above (except for HORSE) has the
       disadvantage that it is difficult to tell which start element corresponds
       to which end element without a complex processing of the text. One way to
       improve on this situation would be to use the linking attribute
@@ -415,7 +418,7 @@ Here the example is encoded using paired segment-boundary
     type="phr" corresp="#phrase01"/> <start type="phr"
     xml:id="phrase02"/>and run<end type="phr" corresp="#phraseB"/><end
     type="phr" corresp="#phrase02"/>]]></eg></p>
-    <p>COLT is an interesting variant of the typed segment-boundary delimiter
+    <p>HORSE is an interesting variant of the typed segment-boundary delimiter
       technique. The two differences are <list type="ordered">
         <item>the type of element used as the empty segment-boundary delimiter
           element is the same element that would normally be used to encode the
@@ -434,21 +437,21 @@ Here the example is encoded using paired segment-boundary
       element both in its normal role as a container and as a segment-boundary
       delimiter it is advisable to use an attribute other than the general
       purpose <att>corresp</att> attribute to indicate the corresponding start-
-      or end-tag. Thus in COLT the <att>sID</att> and <att>eID</att> attributes
+      or end-tag. Thus in HORSE the <att>sID</att> and <att>eID</att> attributes
       are used for both of these purposes: <list>
         <item>the name of the attribute informs users (and programs) for which
           kind of tag the empty element is substituting: <att>sID</att> for
           start-tag and <att>eID</att> for end tag</item>
-        <item>the value of the attribute indicates where the corresponding end-
-          or start-tag is, by co-reference; i.e. the element whose
-          <att>sID</att> value matches the current element's <att>eID</att>
-          value is its start-tag</item>
-      </list>. 
-      <note place="foot">This method has been introduced in the markup
-      literature under various names, e.g. Trojan milestones, HORSE
-      markup, and CLIX. It has been described in detail by <bibl><ref
-      target="http://www.mulberrytech.com/Extreme/Proceedings/html/2004/DeRose01/EML2004DeRose01.html">DeRose,
-      2004</ref></bibl>.</note>
+        <item>the value of the attribute indicates where the
+        corresponding end- or start-tag is, by co-reference; i.e. the
+        element whose <att>sID</att> value matches the current
+        element's <att>eID</att> value is its start-tag</item>
+        </list>. <note place="foot">This method has been introduced in
+        the markup literature under various names, e.g. Trojan
+        milestones, HORSE markup, CLIX, and COLT. It has been
+        described in detail by <bibl><ref
+        target="http://www.mulberrytech.com/Extreme/Proceedings/html/2004/DeRose01/EML2004DeRose01.html">DeRose,
+        2004</ref></bibl>.</note>
     </p>
     <p>Besides the already mentioned non-need to introduce new, somehow
       artificial elements, this special use of empty elements has the advantage
@@ -458,7 +461,7 @@ Here the example is encoded using paired segment-boundary
         <item>the segment-boundary element has exactly the same attribute
           definition as the container element</item>
       </list>.</p>
-    <p>Here is the same ambiguous newspaper headline as above encoded with COLT
+    <p>Here is the same ambiguous newspaper headline as above encoded with HORSE
       markup. <eg><![CDATA[<phr sID="phrase01"/><phr sID="phraseA"/>Broadway<phr eID="phraseA"/>
 <phr sID="phraseB"/>hit<phr eID="phrase01"/>
 <phr sID="phrase02"/>and
