@@ -43,6 +43,7 @@
   <xd:doc type="string">
 Stylesheet constant setting the name of the main output file.
 </xd:doc>
+  <xsl:variable name="top" select="/"/>
   <xsl:variable name="masterFile">
     <xsl:choose>
       <xsl:when test="not($outputName ='')">
