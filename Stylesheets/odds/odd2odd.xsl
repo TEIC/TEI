@@ -35,6 +35,7 @@
   <xsl:param name="stripped">false</xsl:param>
   <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
   <xsl:param name="localsource"/>
+  <xsl:key name="MEMBEROFDELETE" match="tei:memberOf[@mode='delete']" use="concat(../../@ident,@key)"/>
   <xsl:key name="MACROS" use="@ident" match="tei:macroSpec"/>
   <xsl:key name='REFED' use="@name" match="rng:ref"/>
   <xsl:key name='REFED' use="substring-before(@name,'_')" match="rng:ref[contains(@name,'_')]"/>
@@ -456,8 +457,38 @@ for change individually.
           </xsl:choose>
           <!-- classes -->
           <xsl:choose>
-            <xsl:when test="tei:classes">
-              <xsl:copy-of select="tei:classes"/>
+	    <xsl:when test="tei:classes">
+	      <tei:classes>
+		<xsl:for-each select="tei:classes/tei:memberOf">
+		  <xsl:choose>
+		    <xsl:when test="@mode='delete'"/>
+		    <xsl:when test="@mode='add' or not (@mode)">
+		      <tei:memberOf key="{@key}"/>
+		    </xsl:when>
+		  </xsl:choose>
+		</xsl:for-each>
+		<xsl:for-each select="$ORIGINAL">
+		  <xsl:for-each select="tei:classes/tei:memberOf">
+		    <xsl:variable name="me">
+		      <xsl:value-of select="@key"/>
+		    </xsl:variable>
+		    <xsl:variable name="metoo">
+		      <xsl:value-of select="concat(../../@ident,@key)"/>
+		    </xsl:variable>
+		    <xsl:for-each select="$ODD">
+		      <xsl:choose>
+			<xsl:when test="key('DELETE',$me)">
+			</xsl:when>
+			<xsl:when test="key('MEMBEROFDELETE',$metoo)">
+			</xsl:when>
+			<xsl:otherwise>
+			  <tei:memberOf key="{$me}"/>
+			</xsl:otherwise>
+		      </xsl:choose>
+		    </xsl:for-each>
+		  </xsl:for-each>
+		</xsl:for-each>		  
+	      </tei:classes>
             </xsl:when>
             <xsl:otherwise>
               <xsl:for-each select="$ORIGINAL">
@@ -468,7 +499,7 @@ for change individually.
 			<xsl:value-of select="@key"/>
 		      </xsl:variable>
 		      <xsl:for-each select="$ODD">
-			<xsl:if test="not(key('DELETE',@key))">
+			<xsl:if test="not(key('DELETE',$me))">
 			  <tei:memberOf key="{$me}"/>
 			</xsl:if>
 		      </xsl:for-each>
@@ -672,6 +703,8 @@ If so, use them as is.
           <!-- classes -->
           <xsl:choose>
             <xsl:when test="tei:classes">
+	      <xsl:message>Looking at classes for <xsl:value-of select="@ident"/></xsl:message>
+
 		<xsl:copy-of select="tei:classes"/>
             </xsl:when>
 	    <xsl:otherwise>
@@ -717,7 +750,7 @@ If so, use them as is.
       <xsl:value-of select="local-name(.)"/>
     </xsl:variable>
     <!-- 
-for each Relax NG content model,
+for each RELAX NG content model,
 remove reference to any elements which have been
 deleted, or to classes which are empty.
 This may make the container empty,
@@ -831,6 +864,9 @@ so that is only put back in if there is some content
     <xsl:for-each select="$ODD">
       <xsl:choose>
         <xsl:when test="$TEIC='false'"/>
+	<xsl:when
+	    test="key('MEMBEROFDELETE',concat($elementName,$className))">
+	</xsl:when>
         <!-- the class is referenced in the ODD and has redefined <classes>-->
         <xsl:when test="key('ATTCLASSES',$className)/tei:classes">
           <xsl:for-each select="key('ATTCLASSES',$className)">
