@@ -12,7 +12,7 @@ $Id$
 <head>Names, Dates, People, and Places</head>
 
 <p>This chapter describes a module which may be used for the encoding
-of proper names and other phrases descriptive of persons, places, or
+of names and other phrases descriptive of persons, places, or
 organizations, in a manner more detailed than that possible using the
 elements already provided for these purposes in the Core module. In
 section <ptr target="#CONA"/> it was noted that the elements provided
@@ -76,10 +76,10 @@ encoded by the element concerned. </p>
 
 <p>As members of the <ident type="class">att.naming</ident> class,
 many of the elements described in this chapter share the following attributes:
-<specList><specDesc key="att.naming" atts="key nymRef ref"/></specList>
-These attributes are designed to support two different ways of
-associating a name, of any kind, with its referent. The encoder may
-use either, neither, or both in combination as appropriate. The
+<specList><specDesc key="att.naming" atts="key nymRef
+ref"/></specList> These attributes are designed to support two
+different ways of associating a name, of any kind, with its referent,
+and with its canonical form. The encoder may use these attributes in combination as appropriate. The
 <att>ref</att> attribute should be used wherever it is possible to supply
 a direct link such as a URI to indicate the location of canonical
 information about the referent. For example:
@@ -116,6 +116,11 @@ I never fly from <name key="LHR" type="place">Heathrow Airport</name>
 to <name key="FR" type="place">France</name></egXML>
 </p>
 
+<p>The <att>nymRef</att> attribute has a more specialised use, where
+it is the name itself which is of interest rather than the person
+place or organization being named. See section <ptr target="#NDNYM"/>
+for further discussion.</p>
+
 <p>Members of the <ident>att.naming</ident> class also inherit the following
 attributes from the <ident>att.editLike</ident> class:
 <specList><specDesc key="att.editLike" atts="resp cert"/></specList>
@@ -130,7 +135,7 @@ Examples are given below.</p>
 </div>
 
 <div xml:id="NDATTSda"><head>Dating Attributes</head>
-<p rend="it">This section under construction</p>
+
 <p>Members of the <ident type="class">att.datable</ident> class,
 share the following attributes:
 <specList><specDesc key="att.datable.w3c" atts="when notBefore notAfter
@@ -261,9 +266,7 @@ to the specific  place name from which it is derived:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <persName>
    <forename>Johan</forename>
-  <surname type="toponymic" ref="#dystvold">
-      Dystvold
-   </surname>
+  <surname type="toponymic" ref="#dystvold">Dystvold</surname>
  </persName>
 <!-- ... -->
 <placeName xml:id="dystvold">Dystvold</placeName>
@@ -292,7 +295,16 @@ name is an abbreviation, initials,  or given in full:
 
 </p>
 
-<p>In most cases, patronymics should be treated as forenames, thus:
+<p>These elements may be applied as the encoder considers appropriate, including cases where phrases or expressions are used to stand for surnames or forenames, as in the following:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><s><persName>
+<forename>Peter</forename> <surname>son of Herbert</surname></persName> gives the king 40 m. for 
+having custody of the land and heir of <persName><forename>John</forename> <surname>son of Hugh</surname></persName>...</s></egXML>
+<!-- <bibl>C 60/16 Fine Roll 6 HENRY III (28 October 1221-27 October 1222),
+ membrane 5, entry 154<bibl>-->
+</p>
+
+<p>Similarly, patronymics may be treated as forenames, thus:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">... but it remained for
 <persName>   
    <forename>Snorri</forename>
@@ -308,12 +320,13 @@ requires surnames), it may be tagged as such:
 <surname>Jonsson</surname></persName>
 acknowledged the artificiality of the procedure...</egXML>
 <!-- Clover, p. 77.                                           -->
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><s><persName><forename>
-Peter</forename> <surname>son of Herbert</surname></persName> gives the king 40 m. for 
-having custody of the land and heir of <persName><forename>John</forename> <surname>son of Hugh</surname></persName>...</s></egXML>
-<!-- <bibl>C 60/16 Fine Roll 6 HENRY III (28 October 1221-27 October 1222),
- membrane 5, entry 154<bibl>-->
-
+Alternatively, it may be felt more appropriate to mark a patronymic as a distinct kind of name, neither a forename nor a surname, using the <gi>addName</gi> element:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <persName>
+             <forename>Egill</forename>
+             <addName type="patronym">Skallagrmsson</addName>
+         </persName>
+</egXML>
 In the following example, the <att>type</att> attribute is used
 to distinguish a patronymic from other forenames:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="pn9">  
@@ -448,7 +461,7 @@ College</soCalled> or <soCalled>the BBC</soCalled>, but also racial or
 ethnic groupings or political factions where these are regarded as
 forming a single agency such as <soCalled>the Scythians</soCalled> or
 <soCalled>the Militant Tendency</soCalled>. Giving a loosely-defined
-group of individuals a name often (and notoriously) serves a
+group of individuals a name often serves a
 particular political or social agenda and an analysis of the way such
 phrases are constructed and used may therefore be of considerable
 importance to the social historian, even where the objective existence
@@ -465,9 +478,7 @@ up as referring strings or as proper names with the <gi>rs</gi> or
 provided for use where it is desired to distinguish organizational
 names more explicitly.  <specList><specDesc key="orgName"/></specList>
 This element is a member of the same attribute classes as
-<gi>persName</gi>, and therefore carries the following attributes:
-<specList><specDesc key="att.naming" atts="key ref"/></specList>
-</p>
+<gi>persName</gi>, as discussed above in <ptr target="#NDATTSnr"/>. </p>
 <p>The <gi>orgName</gi> element may be used to mark up any form of
 organizational name:  
 <egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
@@ -545,8 +556,7 @@ example:
 </orgName></egXML>
 </p>
 
-<p>The elements discussed in this and the previous section are formally defined as
-follows:
+<p>
 <specGrp xml:id="DNDPER" n="Personal and organizational names">
 &orgName;
 &persName;
@@ -739,8 +749,7 @@ not, however, satisfy the most specialized inquiries or
 applications in which case it is recommended that the internal
 structure of place names be represented using feature structures (<ptr target="#FS"/>).
  </p>
-<p>The elements discussed in this section are formally defined as
-follows:
+<p>
 <specGrp xml:id="DNDPLAC" n="Names for places">
 &placeName;
 &bloc;
@@ -836,8 +845,9 @@ may be encoded using the <gi>personGrp</gi> element. Note however that
 information about a group of people with a distinct identity (for
 example a named theatrical troupe) should be recorded using the
 <gi>org</gi> element described in section <ptr target="#ND-org"/>
-below. A <gi>listPerson</gi> element is used to group such
-descriptions together, and optionally to describe relationships
+below. </p>
+<p>These elements  may appear only within a <gi>listPerson</gi> element, which  groups such
+descriptions together, and optionally also describes relationships
 amongst the people listed.
 <specList>
 <specDesc key="person"/>
@@ -1241,7 +1251,7 @@ three relationships amongst the seven people referenced:
 <item>P1 and P2 are linked in a mutual relationship called <q>spouse</q>
 — i.e.  P2 is the spouse of P1, and P1 is the spouse of P2.</item>
 <item>P1 has the social relationship <q>employer</q> with respect to P3,
-P5, P6, and P7.</item></list></p>
+and P4.</item></list></p>
 </div>
 </div>
 
@@ -1392,7 +1402,7 @@ coverage, and more fundamentally in the reference frame (the
 <soCalled>datum</soCalled>) used for the co-ordinate system
 itself. The default recommended by these Guidelines is to supply a
 string containing two real numbers which indicate latitude and
-longitude according to the 1984 World Geodetic System (WGS84) system;
+longitude according to the 1984 World Geodetic System (WGS84);
 this is the system currently used by most GPS applications which TEI
 users are likely to encounter. <note place="foot">See <ptr
 target="http://earth-info.nga.mil/GandG/wgs84/index.html"/>. The most recent
@@ -1536,7 +1546,7 @@ target="http://code.google.com/apis/kml/documentation/index.html"/></note>
 </p>
 <p>In the following example, we have defined the place
 <soCalled>Lyon</soCalled> using GML  and indicated the two names
-    associated with it at different times: <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[      <place type="city">
+    associated with it at different times: <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<place type="city">
         <placeName notBefore="1400">Lyon</placeName>
         <placeName notAfter="0056">Lugdunum</placeName>
         <location>
@@ -1547,8 +1557,7 @@ target="http://code.google.com/apis/kml/documentation/index.html"/></note>
   </gml:exterior>
 </gml:Polygon>
         </location>
-      </place>
-]]>    </egXML>
+      </place>]]></egXML>
   </p>
 <!-- redo this example in KML please -->
 <!--  <p>Over time, a place may change its name but not its location, or its location and not
@@ -1913,8 +1922,7 @@ occupation and residence.</p>
  <p>This module populates the <ident
  type="class">model.assertLike</ident> class, which is a superclass of
  the three more specific classes discussed above.
-</p>
-<p>The elements provided by this module are declared as follows:
+
 <specGrp xml:id="DCCAHPA" n="Historical data">
 &affiliation;
 &age;
@@ -2116,8 +2124,7 @@ or organizational names as well. For example:
 </egXML>
 </p>
 
-<p>The elements described in this section are formally defined as
-follows:
+<p>
 <specGrp xml:id="DNDNYM" n="Canonical names">
 &nym;
 &listNym;
@@ -2259,7 +2266,7 @@ structure of type <val>date-analysis</val>:
    <f name="from-value"><string>1850-08-08</string></f>
    <f name="to-value"><string>1850-09-19</string></f>
 </fs></egXML>
-</p></div>
+For further discussion of  feature structure representation see chapter <ptr target="#FS"/>.  </p></div>
 <div type="div3" xml:id="NDDATEA"><head>Absolute Dates and Times</head>
 <p>The following are examples of absolute temporal expressions.</p>
 <p>
@@ -2346,8 +2353,7 @@ limitation.</egXML>
 </div>
 </div>
 <div xml:id="ND-fs"><head>Formal Specification</head>
-<p>The module is organized as follows:
-<specGrp>
+<p><specGrp>
 <!--  &macro.anyGML; -->
   &model.persNamePart;    
   &model.orgStateLike;    
@@ -2358,16 +2364,10 @@ limitation.</egXML>
   &att.duration.iso; 
   &data.temporal.iso;
   &data.duration.iso;
-
-  <p>It contains specification groups for name components of persons,
-  places, and organizations:
     <specGrpRef target="#DNDPER"/>
     <specGrpRef target="#DNDPLAC"/>
-  </p>
-<p>It also contains specification groups for the associated data
     <specGrpRef target="#DCCAHPA"/>
     <specGrpRef target="#DNDNYM"/>
-</p>
 </specGrp>
 </p>
 </div>
