@@ -682,32 +682,39 @@ If so, use them as is.
           </xsl:choose>
 
           <!-- classes -->
-          <xsl:choose>
-            <xsl:when test="tei:classes">
-	      <xsl:message>Looking at classes for <xsl:value-of select="@ident"/></xsl:message>
-
-		<xsl:copy-of select="tei:classes"/>
-            </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:for-each select="$ORIGINAL">
-		<tei:classes>
-		  <xsl:for-each select="tei:classes/tei:memberOf">
-		    <xsl:variable name="this">
-		      <xsl:value-of select="@key"/>
-		    </xsl:variable>
-		    <xsl:for-each select="$ODD">
-		      <xsl:choose>
-			<xsl:when test="key('DELETE',$this)"/>
-			<xsl:otherwise>
-			  <tei:memberOf key="{$this}"/>
-			</xsl:otherwise>
-		      </xsl:choose>
-		    </xsl:for-each>
-		  </xsl:for-each>
-		</tei:classes>
+	  <tei:classes>
+	    <xsl:for-each select="tei:classes/tei:memberOf">
+	      <xsl:choose>
+		<xsl:when test="@mode='delete'"/>
+		<xsl:when test="@mode='add' or not (@mode)">
+		  <tei:memberOf key="{@key}"/>
+		</xsl:when>
+	      </xsl:choose>
+	    </xsl:for-each>
+	    <xsl:for-each select="$ORIGINAL">
+	      <xsl:for-each select="tei:classes/tei:memberOf">
+		<xsl:variable name="me">
+		  <xsl:value-of select="@key"/>
+		</xsl:variable>
+		<xsl:variable name="metoo">
+		  <xsl:value-of select="concat(../../@ident,@key)"/>
+		</xsl:variable>
+		<xsl:for-each select="$ODD">
+		  <xsl:choose>
+		    <xsl:when test="key('DELETE',$me)">
+		    </xsl:when>
+		    <xsl:when test="key('MEMBEROFDELETE',$metoo)">
+		    </xsl:when>
+		    <xsl:when test="key('MEMBEROFADD',$metoo)">
+		    </xsl:when>
+		    <xsl:otherwise>
+		      <tei:memberOf key="{$me}"/>
+		    </xsl:otherwise>
+		  </xsl:choose>
+		</xsl:for-each>
 	      </xsl:for-each>
-	    </xsl:otherwise>
-	  </xsl:choose>
+	    </xsl:for-each>		  
+	  </tei:classes>
           <!-- attList -->
           <tei:attList>
             <xsl:call-template name="processAttributes">
