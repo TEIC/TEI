@@ -121,7 +121,7 @@ them. </p>
 character. The standard allows these characters to be represented
 either directly, using an appropriate encoding (UTF-8 by default), or
 indirectly by means of numeric character references (NCR), such as
-<code>&amp;#1234;</code> (A-umlaut). The encoder can also restrict the
+<code>&amp;#196;</code> (A-umlaut). The encoder can also restrict the
 range of characters which are represented directly in a document (or
 part of it) by adding a suitable encoding declaration. For example, if
 a document begins with the declaration <code>&lt;?xml
@@ -137,10 +137,8 @@ an alternative means.</p>
      <list>
       <item>an element <gi>g</gi>, which serves as a proxy for new
        characters or glyphs</item>
-      <item>an element <gi>charDecl</gi>, which serves as a container
-       for information about this character. Such information is
-       needed to identify and process this character
-       properly. </item>
+      <item>elements <gi>char</gi> and <gi>glyph</gi>, providing information about such characters or glyphs; these elements are stored in the
+       <gi>charDecl</gi> element in the header.</item>
      </list>
     </p>
 <p>When the gaiji module is included in a schema, the
@@ -156,7 +154,7 @@ all, its properties are not available. If the character represented is
 an existing Unicode character, but is not available in the document
 character set recognized by a given text processing system, it may
 also be convenient to have access to its properties in the same way.
-The <gi>charDecl</gi> element makes it possible to store properties
+The <gi>char</gi> element makes it possible to store properties
 for use by such applications in a standard way.</p>
 <p> The list of attributes (properties) for characters is modelled on
 those in the Unicode Character Database, which distinguishes
@@ -207,7 +205,15 @@ target="D25-50"/>).</p>
 <p>The Unicode Standard recommends naming conventions which must be followed strictly
 where the intention is to annotate an existing Unicode character, and
 which should also be used as a model when creating new names for
-characters or glyphs. For convenience of processing, the following
+characters or glyphs<note>It should be noted, however, that this
+naming convention cannot meaningfully be applied to East Asian
+characters; the typical Unicode descriptions for these characters take the form  <q>CJK Unified
+Ideograph <code>U+4E00</code></q>, where <code>U+4E00</code> is simply
+the Unicode codepoint value of the character in question.  In cases
+where no Unicode codepoint exists, there is little hope of finding  a name
+that helps to identify the character. Names should therefore be constructed in a way meaningful to local
+practice, for example by using a reference number from a well-known
+character dictionary or a project specific serial number.</note>. For convenience of processing, the following
 distinct elements are proposed for naming characters and glyphs:
 <specList>
 <specDesc key="charName"/>
@@ -230,8 +236,8 @@ elsewhere. The <gi>graphic</gi> element, however, is used here only to
 link to an image of the character or glyph under discussion, or to
 contain a representation of it in SVG. Several <gi>graphic</gi>
 elements may be given, for example to provide images with different
-resolution, or in different formats. The <att>type</att> attribute may
-be used to specify the type of image.</p>
+resolution, or in different formats. The <att>mimeType</att> attribute may
+be used to specify the format of the image.</p>
 <p>The <gi>mapping</gi> element is similar to the standard TEI
 <gi>equiv</gi> element. While the latter is used to express correspondence 
 relationships between TEI concepts or elements and those in other
@@ -312,8 +318,8 @@ properties and their values. For full information, refer to chapter 4 of
 	  major classes and subclasses of characters.  Suggested
 	  values for this property are listed here:
 <list type="gloss">
-<label>Ll</label><item>Letter, lowercase</item>
 <label>Lu</label><item>Letter, uppercase</item>
+<label>Ll</label><item>Letter, lowercase</item>
 <label>Lt</label><item>Letter, titlecase</item>
 <label>Lm </label><item>Letter, modifier</item>
 <label>Lo</label><item>Letter, other</item>
@@ -351,33 +357,35 @@ specified in Unicode Annex 9, <title>The Bidirectional
 Algorithm</title>. The following 19 different values are currently
 defined for this property in the <ref target="http://www.unicode.org/Public/UNIDATA/UCD.html">Unicode Character
 Database</ref>:<list type="gloss">
-<label>AL</label><item>right to left Arabic</item>
-<label>AN</label><item>Arabic Number</item>
-<label>B</label><item>Paragraph separator</item>
-<label>BN</label><item>Boundary Neutral</item>
-<label>CS</label><item>Common Number Separator</item>
-<label>EN</label><item>European Number</item>
-<label>ES</label><item>European Number Separator</item>
-<label>ET</label><item>European Number Terminator</item>
 <label>L</label><item>left to right</item>
 <label>LRE</label><item>left to right embedding</item>
 <label>LRO</label><item>left to right override</item>
-<label>NSM</label><item>Non-spacing Mark</item>
-<label>ON</label><item>Other neutrals</item>
-<label>PDF</label><item>Pop Directional Format</item>
 <label>R</label><item>right to left</item>
+<label>AL</label><item>right to left Arabic</item>
 <label>RLE</label><item>right to left embedding</item>
 <label>RLO</label><item>right to left override</item>
+<label>PDF</label><item>Pop Directional Format</item>
+<label>EN</label><item>European Number</item>
+<label>ES</label><item>European Number Separator</item>
+<label>ET</label><item>European Number Terminator</item>
+<label>AN</label><item>Arabic Number</item>
+<label>CS</label><item>Common Number Separator</item>
+<label>NSM</label><item>Non-spacing Mark</item>
+<label>BN</label><item>Boundary Neutral</item>
+<label>B</label><item>Paragraph separator</item>
 <label>S</label><item>Segment separator</item>
 <label>WS</label><item>Whitespace</item>
+<label>ON</label><item>Other neutrals</item>
 </list></item>
 	 <label>canonical-combining-class</label> <item>This
 	  property exists for characters that are not used
 	  independently, but in combination with other characters, for
-	  example the strokes making up CJK characters.  It
+	  example the strokes making up CJK (Chinese, Japanese and Korean) characters.  It
 	  records a class for these characters, which is used to
 	  determine how they interact typographically.  The following
-	  values are defined in  the Unicode Standard 4.2:<list type="gloss">
+	  values are defined in  the Unicode Standard 5.0: (see <ref
+target="http://unicode.org/Public/UNIDATA/UCD.html#Canonical_Combining_Class_Values">Unicode
+Character Database: Canonical Combining Class Values</ref>)<list type="gloss">
 <label>0</label><item>Spacing, split, enclosing, reordrant, and Tibetan subjoined </item>
 <label>1</label><item>Overlays and interior </item>
 <label>7</label><item>Nuktas </item>
@@ -462,7 +470,9 @@ which are not specified by the Unicode Standard.</p>
     distinct from the need to provide a accurate representation of the
     page. A digital facsimile, particularly one linked to a
     transcribed and encoded version of the text, will always provide a
-    superior visual representation, but cannot be used to support
+    superior visual representation (for information on how to link a
+    digital facsimile to a transcribed text see <ptr
+    target="#PHFAX"/>), but cannot be used to support
     arguments based on the distribution of such different
     forms. Character annotation as described here provides a solution
     to this problem.<note place="foot"> It should be kept in mind that
@@ -503,7 +513,7 @@ each of the forms of the letter we wish to distinguish:
      can also be used to indicate ligatures, as in the
      following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p> ... <g ref="#Filig">Fi</g>lthy riches...</p>
-<!-- in the chardesc -->
+<!-- in the charDecl -->
   <glyph xml:id="Filig">
    <glyphName>LATIN UPPER F AND LATIN LOWER I LIGATURE</glyphName>  
    <graphic url="Filig.png"/>
@@ -540,14 +550,14 @@ represented as follows:<egXML xmlns="http://www.tei-c.org/ns/Examples">
 <!-- should become a choice element some time -->
     <p>Note however that this technique employs markup objects to
     provide a link between a character in the document and some
-    annotation on that character. It cannot therefore be used in
+    annotation on that character. Therefore, it cannot be used in
     places where such markup constructs are not allowed, notably in
     attribute values. 
     </p>   </div>
    <div type="div2" xml:id="D25-40">
     <head>Adding New Characters</head>
     <p>The creation of additional characters for use in text encoding
-    is similar to the annotation of an existing character.  The same
+    is quite similar to the annotation of existing characters.  The same
     element <gi>g</gi> is used to provide a link from the character
     instance in the text to the character definition in
     <gi>charDecl</gi> element. The main difference is that the
@@ -562,7 +572,8 @@ precomposed form of a character that is encoded in Unicode only as a
 sequence of codepoints. For example, in Medieval
 Nordic material, a character looking like a lower case letter Y with a
 dot and an acute-accent above it may be encountered so frequently that
-the encoder wishes to treat it as a distinct character. In the
+the encoder wishes to treat it as a single precomposed character with
+    one single coded value. In the
 transcription concerned, the encoder enters this letter as
 <code>&amp;ydotacute;</code>, which  when the
 transcription is processed can then be expanded in one of three ways,
@@ -587,12 +598,12 @@ provide useful documentation for the particular character or glyph so referenced
      <mapping type="PUA">U+E0A4</mapping>
    </char></egXML>
 This definition  specifies the mapping between this composed
-character and the individual Unicode-defined characters which make it
+character and the individual Unicode-defined codepoints which make it
 up. It also supplies a single locally-defined property (<soCalled>entity</soCalled>)for the
 character concerned, the purpose of which is
 to supply a recommended character entity name for the character. 
 </p>
-<p>Under certain circumstances, Han characters can be written
+<p>Under certain circumstances, Chinese Han characters can be written
     within a circle.  Rather than considering this as simply an aspect of the
     rendering, an encoder may wish to treat such circled characters as
     entirely distinct  derived characters. For a given character
@@ -611,10 +622,10 @@ to supply a recommended character entity name for the character.
    <value>36</value>
   </charProp>
   <mapping type="standard">
-   &amp;U+4EBA;
+   &amp;#x4EBA;
   </mapping>
   <mapping type="PUA">
-   &amp;U+E000;
+   &amp;#xE000;
   </mapping>
  </char></egXML></p>
 <p>In this example, the <soCalled>circled ideograph</soCalled>
@@ -647,7 +658,7 @@ will be empty.</p>
     entity references should be used.  This will make it easier for
     receiving parties to find out what PUA characters are used in a
     document and where possible codepoint clashes with local use on
-    the receiving side occurs.</p>
+    the receiving site might occur.</p>
 <p>In the two previous examples, we mentioned that the variant
 characters concerned might well be assigned specific codepoints from
 the PUA. This might, for example, facilitate the use of a particular
@@ -655,20 +666,17 @@ font which displays the desired character at this codepoint in the
 local processing environment.  Since however this assignment would be
 valid only on the local site, documents containing such codepoints are
 unsuitable for blind interchange.  During the process of preparing
-such documents for interchange, any PUA codepoints must be changed
-either to an encoding such as <tag>c ref="#xxxx"</tag> or to an
-equivalent character entity reference, thus associating the character
-with an explicitly defined <gi>char</gi> element.  The PUA character
+such documents for interchange, any PUA codepoints should be replaced by an appropriate use of the <gi>g</gi> element,  such as <tag>g ref="#xxxx"</tag>, thus associating the character required
+with the documentation of it provided by the referenced  <gi>char</gi> element.  The PUA character
 used during the preparation of the document might be recorded in the
-<gi>char</gi> element, as shown in the example in <ptr target="#D25-40"/>; however there is no requirement that the same PUA
-character be used to represent it at the receiving site. Indeed, it
+<gi>char</gi> element, as shown in the example in <ptr target="#D25-40"/>, or retained as content of the <gi>g</gi> element. However, since there is no requirement that the same PUA
+character be used to represent it at the receiving site, and since it
 may well be the case that this other site has already made an
-assignment of some other character to the original PUA codepoint. For
-that reason, it is to be expected that a further translation into the
+assignment of some other character to the original PUA codepoint, it is best practice to remove the locally-defined PUA character. It is to be expected that a further translation into the
 local processing environment at the receiving site will be necessary
 to handle such characters, during which variant letters can be
 converted to hitherto unused codepoints on the basis of the
-information provided in the <gi>charDecl</gi> element.</p>
+information provided in the <gi>char</gi> element.</p>
     <p>This mechanism is rather weak in cases where DOM trees or
     parsed XML fragments are exchanged, which may increasingly be the
     case.  The best an application can do here is to treat any
@@ -681,7 +689,7 @@ have been encoded using the mechanism must at the least ensure that
 this changed code point is recorded within the relevant <gi>char</gi>
 element; it will however normally be simpler to remove the
 <gi>char</gi> element and replace all occurrences of <gi>g</gi>
-elements which reference it by occurrences of the specific coded
+elements which reference it by occurrences of the newly coded
 character. </p>
    </div>
 <div type="div2" xml:id="WSD-DEF"><head>Additional Module Defined by this Chapter</head>
