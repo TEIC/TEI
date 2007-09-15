@@ -36,6 +36,7 @@
   <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
   <xsl:param name="localsource"/>
   <xsl:key name="MEMBEROFDELETE" match="tei:memberOf[@mode='delete']" use="concat(../../@ident,@key)"/>
+  <xsl:key name="MEMBEROFADD" match="tei:memberOf[not(@mode='delete')]" use="concat(../../@ident,@key)"/>
   <xsl:key name="MACROS" use="@ident" match="tei:macroSpec"/>
   <xsl:key name='REFED' use="@name" match="rng:ref"/>
   <xsl:key name='REFED' use="substring-before(@name,'_')" match="rng:ref[contains(@name,'_')]"/>
@@ -456,59 +457,39 @@ for change individually.
             </xsl:otherwise>
           </xsl:choose>
           <!-- classes -->
-          <xsl:choose>
-	    <xsl:when test="tei:classes">
-	      <tei:classes>
-		<xsl:for-each select="tei:classes/tei:memberOf">
+	  <tei:classes>
+	    <xsl:for-each select="tei:classes/tei:memberOf">
+	      <xsl:choose>
+		<xsl:when test="@mode='delete'"/>
+		<xsl:when test="@mode='add' or not (@mode)">
+		  <tei:memberOf key="{@key}"/>
+		</xsl:when>
+	      </xsl:choose>
+	    </xsl:for-each>
+	    <xsl:for-each select="$ORIGINAL">
+	      <xsl:for-each select="tei:classes/tei:memberOf">
+		<xsl:variable name="me">
+		  <xsl:value-of select="@key"/>
+		</xsl:variable>
+		<xsl:variable name="metoo">
+		  <xsl:value-of select="concat(../../@ident,@key)"/>
+		</xsl:variable>
+		<xsl:for-each select="$ODD">
 		  <xsl:choose>
-		    <xsl:when test="@mode='delete'"/>
-		    <xsl:when test="@mode='add' or not (@mode)">
-		      <tei:memberOf key="{@key}"/>
+		    <xsl:when test="key('DELETE',$me)">
 		    </xsl:when>
+		    <xsl:when test="key('MEMBEROFDELETE',$metoo)">
+		    </xsl:when>
+		    <xsl:when test="key('MEMBEROFADD',$metoo)">
+		    </xsl:when>
+		    <xsl:otherwise>
+		      <tei:memberOf key="{$me}"/>
+		    </xsl:otherwise>
 		  </xsl:choose>
 		</xsl:for-each>
-		<xsl:for-each select="$ORIGINAL">
-		  <xsl:for-each select="tei:classes/tei:memberOf">
-		    <xsl:variable name="me">
-		      <xsl:value-of select="@key"/>
-		    </xsl:variable>
-		    <xsl:variable name="metoo">
-		      <xsl:value-of select="concat(../../@ident,@key)"/>
-		    </xsl:variable>
-		    <xsl:for-each select="$ODD">
-		      <xsl:choose>
-			<xsl:when test="key('DELETE',$me)">
-			</xsl:when>
-			<xsl:when test="key('MEMBEROFDELETE',$metoo)">
-			</xsl:when>
-			<xsl:otherwise>
-			  <tei:memberOf key="{$me}"/>
-			</xsl:otherwise>
-		      </xsl:choose>
-		    </xsl:for-each>
-		  </xsl:for-each>
-		</xsl:for-each>		  
-	      </tei:classes>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:for-each select="$ORIGINAL">
-		<xsl:for-each select="tei:classes">
-		  <xsl:copy>
-		    <xsl:for-each select="tei:memberOf">
-		      <xsl:variable name="me">
-			<xsl:value-of select="@key"/>
-		      </xsl:variable>
-		      <xsl:for-each select="$ODD">
-			<xsl:if test="not(key('DELETE',$me))">
-			  <tei:memberOf key="{$me}"/>
-			</xsl:if>
-		      </xsl:for-each>
-		    </xsl:for-each>
-		  </xsl:copy>
-		</xsl:for-each>
-              </xsl:for-each>
-            </xsl:otherwise>
-          </xsl:choose>
+	      </xsl:for-each>
+	    </xsl:for-each>		  
+	  </tei:classes>
           <!-- element content -->
           <xsl:choose>
             <xsl:when test="tei:content">
@@ -1310,26 +1291,18 @@ every attribute and see whether the attribute has changed-->
        element is a member and reference their untouched attributes -->
     <xsl:choose>
       <xsl:when test="$elementName=''"/>
-      <xsl:when test="tei:classes">
-        <xsl:call-template name="classAttributes">
-          <xsl:with-param name="elementName" select="$elementName"/>
-          <xsl:with-param name="className" select="'att.global'"/>
-        </xsl:call-template>
-        <xsl:call-template name="inheritedClassAttributes">
-          <xsl:with-param name="elementName" select="$elementName"/>
-        </xsl:call-template>
-      </xsl:when>
       <xsl:otherwise>
+	<xsl:call-template name="classAttributes">
+	  <xsl:with-param name="elementName" select="$elementName"/>
+	  <xsl:with-param name="className" select="'att.global'"/>
+	</xsl:call-template>
+	<xsl:call-template name="inheritedClassAttributes">
+          <xsl:with-param name="elementName" select="$elementName"/>
+	</xsl:call-template>
         <xsl:for-each select="$ORIGINAL">
-          <xsl:call-template name="classAttributes">
-            <xsl:with-param name="elementName" select="$elementName"/>
-            <xsl:with-param name="className" select="'att.global'"/>
-          </xsl:call-template>
-          <xsl:if test="tei:classes">
-            <xsl:call-template name="inheritedClassAttributes">
-              <xsl:with-param name="elementName" select="$elementName"/>
-            </xsl:call-template>
-          </xsl:if>
+	  <xsl:call-template name="inheritedClassAttributes">
+	    <xsl:with-param name="elementName" select="$elementName"/>
+	  </xsl:call-template>
         </xsl:for-each>
       </xsl:otherwise>
     </xsl:choose>
