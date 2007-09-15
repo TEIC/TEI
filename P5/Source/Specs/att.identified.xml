@@ -92,15 +92,31 @@ $Id$
     </attDef>
   </attList>
   <remarks>
-    <p>ADD    means Create me if I dont exist[Process my new children in ADD mode]
-             Raise an error if I do exist and am identifiable
-REPLACE      Leave me alone
-             Process my new children in REPLACE mode
-             Dont process my old children
-DELETE       Don't process me or  my children (any new children
-             supplied are erroneous)
-CHANGE	     Leave me alone and process my old and new children in
-             CHANGE mode
+    <p>The informal meaning of the values for <att>mode</att> is
+as follows: 
+<list type="gloss">
+<label>add</label>
+<item>the object should be created  (processing
+any children in <val>add</val> mode); raise an error if an object
+with the same identifier already exists</item>
+
+<label>replace</label>
+<item>use this object in preference to any existing object with the
+same identifier, and ignore any children of that object;
+process any new children in <val>replace</val> mode</item>
+
+<label>delete</label>
+<item>do not process this object or any existing
+object with the same identifier; raise an error if any new children
+supplied
+</item>
+
+<label>change</label>
+<item>process this object, and process its children, and those
+of any existing object with the same identifier, in <val>change</val> 
+mode</item>
+
+</list>
 </p>
   </remarks>
 </classSpec>
