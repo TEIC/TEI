@@ -70,7 +70,7 @@ html-web: check
 	for i in ${LANGUAGE} ${OTHERLANGUAGES} ; do \
 	echo making HTML Guidelines for language $$i ; \
 	mkdir -p Guidelines-web-tmp/$$i/html; \
-	cp rightarrow.gif guidelines.css TEI-glow.png Guidelines-web-tmp/$$i/html/ ; \
+	cp rightarrow.gif guidelines.css COPYING.txt TEI-glow.png Guidelines-web-tmp/$$i/html/ ; \
 	xmllint --noent --xinclude ${SOURCETREE}/Guidelines/$$i/guidelines-$$i.xml \
 	| xsltproc ${VERBOSE} \
 		--stringparam outputDir Guidelines-web-tmp/$$i/html \
@@ -94,7 +94,7 @@ html-web-beta: check
 	-mkdir Guidelines-web-beta-tmp
 	echo making beta HTML Guidelines for language ${LANGUAGE}
 	mkdir -p Guidelines-web-beta-tmp/${LANGUAGE}/html
-	cp rightarrow.gif guidelines-beta.css guidelines-print-beta.css TEI-glow.png Guidelines-web-beta-tmp/${LANGUAGE}/html/ 
+	cp rightarrow.gif guidelines-beta.css COPYING.txt guidelines-print-beta.css TEI-glow.png Guidelines-web-beta-tmp/${LANGUAGE}/html/ 
 	xmllint  --noent --xinclude ${SOURCETREE}/Guidelines/${LANGUAGE}/guidelines-${LANGUAGE}.xml | \
 	xsltproc ${VERBOSE} \
 		--stringparam outputDir Guidelines-web-beta-tmp/${LANGUAGE}/html \
@@ -143,7 +143,7 @@ html:check subset
 	    --stringparam doclang ${LANGUAGE} \
 	    Utilities/guidelines-print.xsl \
 	    ${DRIVER} 
-	-cp guidelines.css Guidelines
+	-cp guidelines.css COPYING.txt  Guidelines
 	-cp -r ${SOURCETREE}/Images Guidelines/
 	(cd Guidelines; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
 	(cd Guidelines; perl -p -i -e 's+ xmlns:html="http://www.w3.org/1999/xhtml"++' index.html)
