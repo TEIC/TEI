@@ -533,7 +533,7 @@ identifier has been declared elsewhere in the document. Because the
 <att>wit</att> attribute has declared datatype of one or more <ident
 type="datatype">data.pointer</ident> values a check can be made that
 readings are assigned only to witness sigla which have been identified
-(using the <att>xml:id</att> attribute) within a <gi>witList</gi>
+(using the <att>xml:id</att> attribute) within a <gi>listWit</gi>
 element (see section <ptr target="#TCAPWL"/>). Such checking is more
 difficult for witness sigla held as the content of a <gi>wit</gi>
 element. <!--: an application program can check them, but parsers will
@@ -576,7 +576,7 @@ the apparatus for the second line of the poem (Diet.1.2).</p>
 the front matter of the edition, or in the <gi>sourceDesc</gi> element
 of its header. This may be given either as a simple bibliographic
 list, using the <gi>listBibl</gi> element described in <ptr
-target="#COBI"/>, or as  a <gi>witList</gi> element, which 
+target="#COBI"/>, or as  a <gi>listWit</gi> element, which 
 contains a series of <gi>witness</gi> elements.  Each <gi>witness</gi>
 element may contain a brief characterisation of the witness, given as
 one or more prose paragraphs. If more detailed information about
@@ -589,13 +589,13 @@ element, a unique sigil (siglum) for this source should always be
 supplied,  using the global <att>xml:id</att> attribute. This
 identifier can then be used
 elsewhere to refer to this particular witness.  <specList><specDesc
-key="witList"/><specDesc key="witness"/><specDesc
+key="listWit"/><specDesc key="witness"/><specDesc
 key="msDesc"/><specDesc key="bibl"/><specDesc key="listBibl"/></specList></p>
 <p>The minimal information provided by a witness list is thus the set of
 sigla for all the witnesses named in the apparatus.  For example, the
 witnesses referenced by the examples of this
 chapter might simply be listed  thus:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><witList>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><listWit>
    <witness xml:id="Chi3"/>
    <witness xml:id="Ha4"/>
    <witness xml:id="Ju"/> 
@@ -607,25 +607,25 @@ chapter might simply be listed  thus:
    <witness xml:id="Kv"/>  
    <witness xml:id="Wa"/>  
    <witness xml:id="X"/>   
-</witList></egXML></p>
+</listWit></egXML></p>
 <p>It is more helpful, however, for witness lists to be somewhat
 more informative:  each <gi>witness</gi> element should contain at
 least a brief prose
 description of the witness, perhaps including a bibliographic
 citation, as in the following examples:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><witList>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><listWit>
   <witness xml:id="El">Ellesmere, Huntingdon Library 26.C.9</witness>
   <witness xml:id="Hg">Hengwrt, National Library of Wales,
     Aberystwyth, Peniarth 392D</witness>
    <witness xml:id="ms">Sole manuscript</witness>
   <witness xml:id="Ra2">Bodleian Library Rawlinson Poetic 149
 (see further <ptr target="#MSRP149"/>)</witness>
-</witList></egXML>
+</listWit></egXML>
 As the last example shows, the witness description here may complement
 the short characterisation provided with a reference to a full
 description of the manuscript supplied elsewhere. Alternatively, it may contains a whole paragraph of
 commentary for each witness :
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><witList>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><listWit>
    <witness xml:id="A">die sog. <soCalled>Kleine (oder alte)
       Heidelberger Liederhandschrift</soCalled>.
       <bibl>Universitätsbibliothek Heidelberg col. pal.
@@ -652,7 +652,7 @@ commentary for each witness :
       Dichtern. (Dazu kommen Gedichte von einigen ungenannten
       bzw. unbekannten Dichtern, ein Marienlobpreis und eine
       Minnelehre.)</witness>
-</witList></egXML>
+</listWit></egXML>
 <!-- Moser/Tervooren II: 39-40; the last bit of the entry for A omits some stuff -->
 </p>
 <p>It would however generally be preferable to represent such detailed
@@ -689,12 +689,12 @@ Group C</soCalled> are themselves first allocated sigla in individual
 <att>included</att> value of a further <gi>witness</gi> element. --> 
 For example, the Constance Group C of mss comprising witnesses Cp, La,
 and S12, might be represented as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><witList xml:id="Con">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><listWit xml:id="Con">
    <head>Constant Group C</head>
    <witness xml:id="Cp">Corpus Christi Oxford MS 198</witness>
    <witness xml:id="La">British Library Lansdowne 851</witness>
    <witness xml:id="Sl2">British Library Sloane MS 1686</witness>
-</witList></egXML>
+</listWit></egXML>
 <!--   <witness xml:id="c" included="#Cp #La #Sl2">Constant Group c</witness>-->
 That the reading <mentioned>Experiment</mentioned> occurs in all three manuscripts
 can now be indicated simply as follows:
@@ -715,8 +715,8 @@ and therefore cannot be assigned to more than one group of witnesses.
 <p>Situations commonly arise where there are many more or less
 fragmentary witnesses, such that there may be quite distinct groups of
 witnesses for different parts of a text or collection of texts.  One
-may treat this with distinct <gi>witList</gi> elements for each
-different part.  Alternatively, one may have a single <gi>witList</gi>
+may treat this with distinct <gi>listWit</gi> elements for each
+different part.  Alternatively, one may have a single <gi>listWit</gi>
 element at the beginning of the file or in its header listing all the
 witnesses, partial and complete, for the text, with the attestation of
 fragmentary witnesses indicated within the apparatus by use of the
@@ -732,10 +732,10 @@ a variation on a different, overlapping lemma) and thence calculate all
 the manuscripts agreeing with the base text.  In practice, encoders may
 find it less error-prone to list all witnesses explicitly in each
 apparatus entry.</p>
-<p>The formal declaration of <gi>witList</gi> and <gi>witness</gi> is as
+<p>The formal declaration of <gi>listWit</gi> and <gi>witness</gi> is as
 follows:
 <specGrp xml:id="DTCAPLW" n="Witness Lists in Front Matter">
-&witList;
+&listWit;
 &witness;
 </specGrp></p></div></div>
 <div type="div3" xml:id="TCAPMI"><head >Fragmentary Witnesses</head>
@@ -1018,7 +1018,7 @@ encoding and back will also be possible without loss of information.</p>
 <p>For economy, the witnesses to the reading most widely attested need
 not be stated.  Since all manuscripts must be represented in all
 apparatus entries, it will be possible for an application to read a
-<gi>witList</gi> declaring all the witnesses to the text and then
+<gi>listWit</gi> declaring all the witnesses to the text and then
 calculate which witnesses have not been named.  In the example below,
 only La and Ra2 are identified explicitly with a reading; an application
 might successfully infer from this that <mentioned>Experience</mentioned>,
