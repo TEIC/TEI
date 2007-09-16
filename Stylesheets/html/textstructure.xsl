@@ -1787,11 +1787,8 @@ $ID: requests a particular page
         </xsl:if>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:if test="$verbose='true'">
-          <xsl:message>Creation of <xsl:value-of select="$outName"/> not
+	<xsl:message terminate="yes">Creation of <xsl:value-of select="$outName"/> not
             possible with <xsl:value-of select="$processor"/></xsl:message>
-        </xsl:if>
-        <xsl:copy-of select="$content"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
