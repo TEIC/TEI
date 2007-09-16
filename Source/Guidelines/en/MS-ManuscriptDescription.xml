@@ -391,7 +391,18 @@ of the resource containing the manuscript description in question. In
 the case where such images do form part of a single virtual document,
 along with transcriptions and metadata, the methods described in <ptr
 target="#PHFAX"/> should be used in preference.</p>
-<!-- removed reference to more than one foliation, which lacked an example; should one be found it might be nice to add it. -->
+<p>Where a manuscript contains more than one foliation, the
+<att>scheme</att> attribute may be used to distinguish them. For
+example, MS 65 Corpus Christi College, Cambridge contains two fly
+leaves bearing music. These leaves have modern foliation 135 and
+136 respectively, but are also marked with an older foliation. This
+may be preserved in an encoding such as the following:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<locus scheme="#original">XCIII</locus>
+<locus scheme="#modern">135</locus>
+</egXML> Here the <att>scheme</att> attribute points to a
+<gi>foliation</gi> element providing more details about the scheme
+used, as further discussed in <ptr target="#msphfo"/> below.</p>
 </div>
 <div type="div3" xml:id="msnames">
 <head>Names of Persons, Places, and Organizations</head>
@@ -1348,11 +1359,22 @@ the manuscript, frequently including a statement about when and, if
 known, by whom, the numbering was done.
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <foliation><p>Neuere Foliierung, die auch das Vorsatzblatt mitgezählt hat.</p></foliation>
-<foliation><p>Original foliation in red roman numerals in the middle of 
-the outer margin of each recto; pagination in an early modern hand in the 
-lower outer corner of each page.</p></foliation>
 <foliation><p>Folio numbers were added in brown ink by Árni Magnússon 
 ca. 1720-1730 in the upper right corner of all recto-pages.</p></foliation>
+</egXML>
+</p>
+<p>Where a manuscript contains traces of more than
+one foliation, each should be recorded as a distinct
+<gi>foliation</gi> element and optionally given a distinct value for
+its <att>xml:id</att> attribute. The <gi>locus</gi> element discussed in
+<ptr target="#msloc"/> can then indicate which foliation scheme is being cited
+by means of its <att>source</att> attribute, which points to this
+identifier:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<foliation xml:id="original"><p>Original foliation in red roman numerals in the middle of 
+the outer margin of each recto</p></foliation>
+<foliation xml:id="modern"><p>Foliated in pencil in the top right
+corner of each recto page.</p></foliation>
 </egXML>
 </p>
 </div>
