@@ -71,7 +71,7 @@
       <xsl:when test="$displayMode='both'">
         <div class="displayRelax">
           <button class="displayRelax" onclick="togglerelax(this)"
-            >Display RNG</button>
+            >Compact to XML format</button>
           <pre class="eg_rng" style="display:none">
             <xsl:apply-templates mode="verbatim"
               select="exsl:node-set($content)/*/*"/>
@@ -212,12 +212,12 @@ function showByMod() {
         }
 
         function togglerelax (el) {
-        if (el.innerHTML == 'Display RNC') {
-        el.innerHTML = 'Display RNG';
+        if (el.innerHTML == 'XML format to compact') {
+        el.innerHTML = 'Compact to XML format';
         }
         else
         {
-        el.innerHTML = 'Display RNC';
+        el.innerHTML = 'XML format to compact';
         }
         var div = el.parentNode; 
         for (j=0;j&lt;div.childNodes.length;j++)
