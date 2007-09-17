@@ -40,6 +40,7 @@
   <xsl:key name="ELEMENT-ALPHA" match="tei:elementSpec"
 	   use="substring(translate(@ident,$uc,$lc),1,1)"/>
 
+  <xsl:key name="CHILDMOD" match="Element" use="@module"/>
 
   <xsl:template name="includeCSS">
     <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
@@ -71,7 +72,7 @@
       <xsl:when test="$displayMode='both'">
         <div class="displayRelax">
           <button class="displayRelax" onclick="togglerelax(this)"
-            >Display RNG</button>
+            >Compact to XML format</button>
           <pre class="eg_rng" style="display:none">
             <xsl:apply-templates mode="verbatim"
               select="exsl:node-set($content)/*/*"/>
@@ -212,12 +213,12 @@ function showByMod() {
         }
 
         function togglerelax (el) {
-        if (el.innerHTML == 'Display RNC') {
-        el.innerHTML = 'Display RNG';
+        if (el.innerHTML == 'XML format to compact') {
+        el.innerHTML = 'Compact to XML format';
         }
         else
         {
-        el.innerHTML = 'Display RNC';
+        el.innerHTML = 'XML format to compact';
         }
         var div = el.parentNode; 
         for (j=0;j&lt;div.childNodes.length;j++)
@@ -261,26 +262,29 @@ function showByMod() {
             <a class="navigation" href="index.html">Home</a> | <a
               class="navigation" href="index-toc.html">Table of
               Contents</a>
-            <xsl:for-each select="ancestor::tei:div">
-              <div>
-                <xsl:attribute name="style">
-                  <xsl:text>margin-left:</xsl:text>
-                  <xsl:value-of select="count(ancestor::tei:div) + 1"/>
-                  <xsl:text>em;</xsl:text>
-                </xsl:attribute>
-                <xsl:text>&#x21B3;</xsl:text>
-                <a class="UP">
-                  <xsl:attribute name="href">
-                    <xsl:apply-templates mode="generateLink"
-                      select="."/>
-                  </xsl:attribute>
-                  <xsl:call-template name="headerLink">
-                    <xsl:with-param name="minimal"
-                      select="$minimalCrossRef"/>
-                  </xsl:call-template>
-                </a>
-              </div>
-            </xsl:for-each>
+	      <xsl:if test="not(self::tei:elementSpec or
+			    self::tei:classSpec or self::tei:macroSpec)">
+		<xsl:for-each select="ancestor::tei:div">
+		  <div>
+		    <xsl:attribute name="style">
+		      <xsl:text>margin-left:</xsl:text>
+		      <xsl:value-of select="count(ancestor::tei:div) + 1"/>
+		      <xsl:text>em;</xsl:text>
+		    </xsl:attribute>
+		    <xsl:text>&#x21B3;</xsl:text>
+		    <a class="UP">
+		      <xsl:attribute name="href">
+			<xsl:apply-templates mode="generateLink"
+					     select="."/>
+		      </xsl:attribute>
+		      <xsl:call-template name="headerLink">
+			<xsl:with-param name="minimal"
+					select="$minimalCrossRef"/>
+		      </xsl:call-template>
+		    </a>
+		  </div>
+		</xsl:for-each>
+	      </xsl:if>
           </td>
         </tr>
         <tr>
@@ -403,6 +407,7 @@ function showByMod() {
 -->
           </ul>
         </div>
+
         <xsl:variable name="name"> TEI Guidelines TOC </xsl:variable>
         <xsl:call-template name="outputChunk">
           <xsl:with-param name="ident">
@@ -489,8 +494,8 @@ function showByMod() {
 	<xsl:value-of select="$numberSpacer"/>
       </xsl:if>
     </xsl:if>
-
   </xsl:template>
+
   <xsl:template name="myi18n">
     <xsl:param name="word"/>
     <xsl:choose>
@@ -977,19 +982,33 @@ function showByMod() {
       <xsl:text>Empty element</xsl:text>
     </xsl:when>
     <xsl:otherwise>
-    <xsl:for-each select="Element">
-      <xsl:sort select="@name"/>
-      <xsl:variable name="me">
-	<xsl:value-of select="@name"/>
-      </xsl:variable>
-      <xsl:if test="not(preceding-sibling::Element/@name=$me)">
-	<a href="ref-{$me}.html">
-	  <xsl:value-of select="$me"/>
-	</a>
-	<sup><xsl:value-of select="@module"/></sup>
-	<xsl:text> </xsl:text>
-      </xsl:if>
-    </xsl:for-each>
+      <dl class="specChildren">
+	<xsl:for-each select="Element">
+	  <xsl:sort select="@module"/>
+	  <xsl:sort select="@name"/>
+	  <xsl:if
+	      test="generate-id(.)=generate-id(key('CHILDMOD',@module)[1])">
+	    <dt><xsl:value-of select="@module"/></dt>
+	    <dd>
+	      <ul>
+		<xsl:for-each select="key('CHILDMOD',@module)">
+		  <xsl:variable name="me">
+		    <xsl:value-of select="@name"/>
+		  </xsl:variable>
+		  <xsl:if test="not(preceding-sibling::Element/@name=$me)">
+		    <li>
+		      <a href="ref-{@name}.html">
+			<xsl:value-of select="@name"/>
+		      </a>
+		      <xsl:text> </xsl:text>
+		    </li>
+		  </xsl:if>
+		</xsl:for-each>
+	      </ul>
+	    </dd>
+	  </xsl:if>
+	</xsl:for-each>
+      </dl>
     </xsl:otherwise>
   </xsl:choose>
   </xsl:for-each>
