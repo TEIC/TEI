@@ -26,8 +26,8 @@
   <xsl:param name="footnoteFile">false</xsl:param>
   <xsl:param name="auto">false</xsl:param>
   <xsl:param name="numberFrontHeadings">true</xsl:param>
-  <xsl:param name="cssFile">guidelines.css</xsl:param>
-  <xsl:param name="cssPrintFile">guidelines-print.css</xsl:param>
+  <xsl:param name="cssFile">guidelines-beta.css</xsl:param>
+  <xsl:param name="cssPrintFile">guidelines-print-beta.css</xsl:param>
   <xsl:param name="displayMode">both</xsl:param>
 
   <xsl:key name="CLASS-MODULE" match="tei:classSpec"
@@ -612,7 +612,7 @@ function showByMod() {
       </xsl:if>
       <tr>
         <td class="wovenodd-col1">
-          <span class="label">Parents</span>
+          <span class="label">Contained by</span>
         </td>
         <td class="wovenodd-col2">
           <xsl:call-template name="generateParents"/>
@@ -621,7 +621,7 @@ function showByMod() {
 
       <tr>
         <td class="wovenodd-col1">
-          <span class="label">Children</span>
+          <span class="label">May contain</span>
         </td>
         <td class="wovenodd-col2">
           <xsl:call-template name="generateChildren"/>
@@ -982,34 +982,34 @@ function showByMod() {
       <xsl:text>Empty element</xsl:text>
     </xsl:when>
     <xsl:otherwise>
-      <dl class="specChildren">
+      <div class="specChildren">
 	<xsl:for-each select="Element">
 	  <xsl:sort select="@module"/>
 	  <xsl:sort select="@name"/>
 	  <xsl:if
 	      test="generate-id(.)=generate-id(key('CHILDMOD',@module)[1])">
-	    <dt><xsl:value-of select="@module"/></dt>
-	    <dd>
-	      <ul>
+	    <div class="specChild">
+	      <span class="specChildModule">
+		<xsl:value-of select="@module"/>:
+	      </span>
+	      <span class="specChildElements">
 		<xsl:for-each select="key('CHILDMOD',@module)">
 		  <xsl:sort select="@name"/>
 		  <xsl:variable name="me">
 		    <xsl:value-of select="@name"/>
 		  </xsl:variable>
 		  <xsl:if test="not(preceding-sibling::Element/@name=$me)">
-		    <li>
 		      <a href="ref-{@name}.html">
 			<xsl:value-of select="@name"/>
 		      </a>
 		      <xsl:text> </xsl:text>
-		    </li>
 		  </xsl:if>
 		</xsl:for-each>
-	      </ul>
-	    </dd>
+	      </span>
+	    </div>
 	  </xsl:if>
 	</xsl:for-each>
-      </dl>
+      </div>
     </xsl:otherwise>
   </xsl:choose>
   </xsl:for-each>
