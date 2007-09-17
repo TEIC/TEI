@@ -26,8 +26,8 @@
   <xsl:param name="footnoteFile">false</xsl:param>
   <xsl:param name="auto">false</xsl:param>
   <xsl:param name="numberFrontHeadings">true</xsl:param>
-  <xsl:param name="cssFile">guidelines-beta.css</xsl:param>
-  <xsl:param name="cssPrintFile">guidelines-print-beta.css</xsl:param>
+  <xsl:param name="cssFile">guidelines.css</xsl:param>
+  <xsl:param name="cssPrintFile">guidelines-print.css</xsl:param>
   <xsl:param name="displayMode">both</xsl:param>
 
   <xsl:key name="CLASS-MODULE" match="tei:classSpec"
@@ -612,24 +612,6 @@ function showByMod() {
       </xsl:if>
       <tr>
         <td class="wovenodd-col1">
-          <span class="label">Contained by</span>
-        </td>
-        <td class="wovenodd-col2">
-          <xsl:call-template name="generateParents"/>
-        </td>
-      </tr>
-
-      <tr>
-        <td class="wovenodd-col1">
-          <span class="label">May contain</span>
-        </td>
-        <td class="wovenodd-col2">
-          <xsl:call-template name="generateChildren"/>
-        </td>
-      </tr>
-
-      <tr>
-        <td class="wovenodd-col1">
           <span class="label">
             <xsl:call-template name="i18n">
               <xsl:with-param name="word">Attributes</xsl:with-param>
@@ -652,6 +634,24 @@ function showByMod() {
         </td>
       </tr>
       <xsl:apply-templates mode="weave"/>
+      <tr>
+        <td class="wovenodd-col1">
+          <span class="label">Contained by</span>
+        </td>
+        <td class="wovenodd-col2">
+          <xsl:call-template name="generateParents"/>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="wovenodd-col1">
+          <span class="label">May contain</span>
+        </td>
+        <td class="wovenodd-col2">
+          <xsl:call-template name="generateChildren"/>
+        </td>
+      </tr>
+
 
     </table>
 
