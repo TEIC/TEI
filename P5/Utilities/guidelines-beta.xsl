@@ -992,6 +992,7 @@ function showByMod() {
 	    <dd>
 	      <ul>
 		<xsl:for-each select="key('CHILDMOD',@module)">
+		  <xsl:sort select="@name"/>
 		  <xsl:variable name="me">
 		    <xsl:value-of select="@name"/>
 		  </xsl:variable>
