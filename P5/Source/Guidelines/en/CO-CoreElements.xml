@@ -933,11 +933,13 @@ the former might begin as follows:
 </p>
 <p>The following more complex example declares that the user-defined <gi>bo</gi> element is
   conceptually equivalent to the markup construct <tag>hi
-  rend='bold'</tag>, and that an external definition of this concept
-  is available from the URI indicated:
+  rend='bold'</tag>, and that an external definition of how to
+convert from <tag>bo</tag> is 
+  is performed by the XSL transformation at the URI indicated:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-  <elementSpec ident="bo" >
-<!-- this example needs updating for current state of equiv -->
+ <elementSpec ident="bo" >
+    <equiv filter="equiv-filter.xsl" mimeType="text/xsl" name="bo"/>
+    <desc>(bold) for capturing typographical feature: bold glyphs.</desc>
 </elementSpec></egXML></p>
 <p>The <gi>altIdent</gi> element is used to provide an alternative name
 for an object, for example using a different
