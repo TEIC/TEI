@@ -290,6 +290,17 @@
 
 
   <xd:doc>
+    <xd:short>Process elements  tei:del</xd:short>
+    <xd:detail></xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:del">
+    <span style="text-decoration: line-through;">
+      <xsl:apply-templates/>
+    </span>
+  </xsl:template>
+
+
+  <xd:doc>
     <xd:short>Process elements tei:eg</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
