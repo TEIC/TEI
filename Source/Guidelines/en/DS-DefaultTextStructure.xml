@@ -39,7 +39,7 @@ representation of the outermost structure of a TEI document:
 </specList>
 As noted above, the <gi>teiHeader</gi> element is formally declared in
 the <ident type="module">header</ident> module (see chapter <ptr target="#HD"/>). The <gi>TEI</gi> and <gi>teiCorpus</gi>
-elements are formally declared as follows:
+elements are provided by this module.
 <specGrp xml:id="DCOTOPELEMENTS" >
 &TEI;
 &teiCorpus;
@@ -121,9 +121,7 @@ embedded within it. This is useful in such common literary contexts as
 the <q>play within a play</q> or the narrative interrupted by (often
 deeply nested) multiple narratives. </p>
 <p>Each of these elements is further described in the following
-subsections. The elements <gi>text</gi>, <gi>body</gi>,
-<gi>group</gi>, and <gi>floatingText</gi> are
-formally declared as follows:
+subsections. 
 <specGrp xml:id="DDSTEXT" >
 <!--n="Top-level parts of default structure"-->
 &text;
@@ -131,8 +129,7 @@ formally declared as follows:
 &group;
 &floatingText;
 </specGrp>
-Elements <gi>front</gi> and <gi>back</gi> are declared separately, and
-are further discussed in sections <ptr target="#DSFRONT"/> and <ptr
+Elements <gi>front</gi> and <gi>back</gi> are further discussed in sections <ptr target="#DSFRONT"/> and <ptr
 target="#DSBACK"/>. The <gi>group</gi>
 and <gi>floatingText</gi> elements, used for more complex or composite
 text structures, are further discussed in section
@@ -213,12 +210,11 @@ composed of two chapters, might be represented as follows:
   </div>
 </body></egXML>
  </p>
-<p>The <gi>div</gi> element has the following formal definition:
 <specGrp xml:id="DDSDIV">
 <!-- n="Un-numbered divisions"-->
 &div;
 </specGrp>
-</p></div>
+</div>
 <div type="div3" xml:id="DSDIV2"><head>Numbered Divisions</head>
 <p>The following elements are used to identify textual subdivisions
 in the numbered style:
@@ -271,7 +267,7 @@ composed of two chapters, might be represented as follows:
 	<!-- Also changed to agree with previous example in N values  -->
 	<!-- and comments. -msm                                       -->
  </p>
-<p>Formal definitions for these elements are as follows:
+
 <specGrp xml:id="DDSDIVN" >
 <!--n="Numbered divisions"-->
 &div1;
@@ -283,7 +279,7 @@ composed of two chapters, might be represented as follows:
 &div7;
 &divGen;
 </specGrp>
- </p></div>
+</div>
 <div type="div3" xml:id="DSDIV3"><head>Numbered or Un-numbered?</head>
 <p>Within the same <gi>front</gi>, <gi>body</gi>, or <gi>back</gi>
 element, all hierarchic subdivisions must be marked using
@@ -802,8 +798,6 @@ will be available; and so on.</p>
 <p>Where a text contains low level elements from more than one
 module these may appear at any point; there is no requirement that
 elements from the same module be kept together.</p>
-<p>The elements discussed in this section are formally defined as
-follows:
 <specGrp xml:id="DDSDIVX">
 <!-- n="Tags for start and end of divisions"-->
 &trailer;
@@ -817,7 +811,7 @@ follows:
 &signed;
 &postscript;
 </specGrp>
-</p>
+
 </div> 
 </div>
 <div type="div2" xml:id="DSGRPF"><head>Grouped and Floating Texts</head>
@@ -1579,8 +1573,7 @@ where necessary:
     <lb/>at the <name>Peacock</name> in the <name>Poultrey</name>
     <lb/>near <name>Cornhil</name>, <docDate>1678</docDate>.
   </docImprint></titlePage></egXML></p>
-<p>Those elements in the above list which are not defined elsewhere have
-the following formal declarations:
+
 <specGrp xml:id="DDSTPAGE" >
 <!--n="Tags for title pages"-->
 &titlePage;
@@ -1592,7 +1585,7 @@ the following formal declarations:
 &docImprint;
 &docDate;
 </specGrp>
- </p>
+
 <p>Where title pages are encoded, their physical rendition is
 often of considerable importance.  One approach to this requirement
 would be to use the <gi>seg</gi> tag, described in chapter <ptr target="#SA"/>, to segment the typographic content of each part of the
@@ -1603,12 +1596,12 @@ bearing special-purpose attributes to describe line height, leading,
 degree of kerning, font, etc. Further discussion of these problems is
 provided in chapter <ptr target="#PH"/>.
  </p>
-<p>Front matter elements:
+
 <specGrp xml:id="DDSFRONT">
 &front;
 <specGrpRef target="#DDSTPAGE"/>
 </specGrp>
- </p></div>
+</div>
 <div type="div2" xml:id="DSBACK"><head>Back Matter</head>
 <p>Conventions vary as to which elements are grouped as back matter and
 which as front.  For example, some books place the table of contents at
@@ -1709,12 +1702,10 @@ features:
 <!-- Pope, Dunciad Variorum, 1729 -->
 	<!--  end of draft -->
  </p>
-<p>The <gi>back</gi> element; since there are no other specialized
-back-matter tags, nothing else is defined here.
 <specGrp xml:id="DDSBACK">
 &back;
 </specGrp>
- </p></div>
+</div>
 <div type="div2" xml:id="DSSTRUC">
 <head>Module for Default Text Structure</head>
 <p>The module described by the present chapter has the following
@@ -1723,8 +1714,6 @@ components:
 <altIdent type="FPI">Default Text Structure</altIdent><desc>Default
 text structure</desc>
 </moduleSpec>
-It is organized as follows:
-<!--publicID:  -//TEI P5//ELEMENTS Default Text Structure//EN-->
 <specGrpRef target="#DDSTEXT"/>
 <specGrpRef target="#DDSDIV"/>
 <specGrpRef target="#DDSDIVN"/>
