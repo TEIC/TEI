@@ -167,8 +167,10 @@ for (var i = 0; i &lt; states.length; i++) {
       }
   }
  }
- var mod = document.getElementById('elembymod');
+var mod;
+if ( mod = document.getElementById('elembymod') ) {
  mod.style.display = "none";
+}
 
 }
 function showall() {
