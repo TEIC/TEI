@@ -38,7 +38,7 @@
 	   use="@module"/>
 
   <xsl:key name="ELEMENT-ALPHA" match="tei:elementSpec"
-	   use="substring(translate(@ident,$uc,$lc),1,1)"/>
+	   use="substring(translate(@ident,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),1,1)"/>
 
   <xsl:key name="CHILDMOD" match="Element" use="@module"/>
 
@@ -262,9 +262,24 @@ function showByMod() {
             <a class="navigation" href="index.html">Home</a> | <a
               class="navigation" href="index-toc.html">Table of
               Contents</a>
-	      <xsl:if test="not(self::tei:elementSpec or
-			    self::tei:classSpec or self::tei:macroSpec)">
-		<xsl:for-each select="ancestor::tei:div">
+            <xsl:choose>
+	      <xsl:when test="self::tei:elementSpec">
+                <xsl:text> | </xsl:text>
+                <a class="navigation" href="REFTAG.html">
+                  Element catalogue</a>
+              </xsl:when>
+	      <xsl:when test="self::tei:classSpec">
+                <xsl:text> | </xsl:text>
+                <a class="navigation" href="REFCLA.html">
+                  Class catalogue</a>
+              </xsl:when>
+	      <xsl:when test="self::tei:macroSpec">
+                <xsl:text> | </xsl:text>
+                <a class="navigation" href="REFENT.html">
+                  Macro and datatype catalogue</a>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:for-each select="ancestor::tei:div">
 		  <div>
 		    <xsl:attribute name="style">
 		      <xsl:text>margin-left:</xsl:text>
@@ -284,7 +299,8 @@ function showByMod() {
 		    </a>
 		  </div>
 		</xsl:for-each>
-	      </xsl:if>
+              </xsl:otherwise>
+            </xsl:choose>
           </td>
         </tr>
         <tr>
