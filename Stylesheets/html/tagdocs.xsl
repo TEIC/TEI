@@ -240,19 +240,23 @@
       </xsl:choose>
     </xsl:variable>
 
-    <p>
-	<span class="specName"><xsl:value-of select="$name"/></span>
-    <xsl:text> </xsl:text>
-    <xsl:call-template name="makeDescription"/>
-    <xsl:if test="tei:listRef">
-      <xsl:for-each select="tei:listRef/tei:ptr">
-	<xsl:text> </xsl:text>
-	<xsl:apply-templates select="." mode="weave"/>
-      </xsl:for-each>
-    </xsl:if>
-    </p>
     <table border="1" class="wovenodd">
-    <xsl:if test="@generate">
+      <tr>
+	<td class="wovenodd-col2" colspan="2">
+	  <span class="label">
+	    <xsl:value-of select="$name"/>
+	  </span>
+	  <xsl:text> </xsl:text>
+	  <xsl:call-template name="makeDescription"/>
+	  <xsl:if test="tei:listRef">
+	    <xsl:for-each select="tei:listRef/tei:ptr">
+	      <xsl:text> </xsl:text>
+	      <xsl:apply-templates select="." mode="weave"/>
+	    </xsl:for-each>
+	  </xsl:if>
+	</td>
+      </tr>
+      <xsl:if test="@generate">
       <tr>
 	<td   class="wovenodd-col1">
 	  <xsl:call-template name="i18n">
@@ -399,6 +403,7 @@
       </dd>
     </xsl:if>
   </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements tei:elementSpec</xd:short>
     <xd:detail> </xd:detail>
@@ -417,17 +422,26 @@
 	<xsl:text>/</xsl:text>
       </xsl:if>
     </xsl:variable>
-    <p><span class="specName">&lt;<xsl:value-of select="$name"/>&gt;</span>
-    <xsl:text> </xsl:text>
-    <xsl:call-template name="makeDescription"/>
-    <xsl:if test="tei:listRef">
-      <xsl:for-each select="tei:listRef/tei:ptr">
-	<xsl:text> </xsl:text>
-	<xsl:apply-templates select="." mode="weave"/>
-      </xsl:for-each>
-    </xsl:if>
-    </p>
     <table border="1" class="wovenodd">
+      <tr>
+        <td class="wovenodd-col2" colspan="2">
+          <span class="label">
+	    <xsl:text>&lt;</xsl:text>
+	    <xsl:value-of select="$name"/>
+	    <xsl:if test="tei:content/rng:empty">
+              <xsl:text>/</xsl:text>
+            </xsl:if>
+	    <xsl:text>&gt; </xsl:text>
+	  </span>
+          <xsl:call-template name="makeDescription"/>
+          <xsl:if test="tei:listRef">
+            <xsl:for-each select="tei:listRef/tei:ptr">
+              <xsl:text> </xsl:text>
+              <xsl:apply-templates mode="weave" select="."/>
+            </xsl:for-each>
+          </xsl:if>
+        </td>
+      </tr>
     <xsl:if test="@module">
       <xsl:call-template name="moduleInfo"/>
     </xsl:if>
@@ -755,20 +769,22 @@
       </xsl:choose>
     </xsl:variable>
 
-    <p><span class="specName">
-      <xsl:value-of select="$name"/>
-	</span>
-      <xsl:text> </xsl:text>
-      <xsl:call-template name="makeDescription"/>
-      <xsl:if test="tei:listRef">
-	<xsl:for-each select="tei:listRef/tei:ptr">
-	  <xsl:text> </xsl:text>
-	  <xsl:apply-templates select="." mode="weave"/>
-	</xsl:for-each>
-      </xsl:if>
-    </p>
-
     <table border="1" class="wovenodd">
+      <tr>
+	<td colspan="2">
+	  <span class="label">
+	    <xsl:value-of select="$name"/>
+	</span>
+	<xsl:text> </xsl:text>
+	<xsl:call-template name="makeDescription"/>
+	<xsl:if test="tei:listRef">
+	  <xsl:for-each select="tei:listRef/tei:ptr">
+	    <xsl:text> </xsl:text>
+	    <xsl:apply-templates select="." mode="weave"/>
+	  </xsl:for-each>
+	</xsl:if>
+	</td>
+      </tr>
     <xsl:if test="@module">
       <xsl:call-template name="moduleInfo"/>
     </xsl:if>
