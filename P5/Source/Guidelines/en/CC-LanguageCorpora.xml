@@ -273,7 +273,8 @@ The selection and combination of modules to form a TEI schema is described in
 <specList><specDesc key="textDesc"/><specDesc key="particDesc"/><specDesc key="settingDesc"/></specList>
 These elements form an optional extension to the <gi>profileDesc</gi>,
 defined in section <ptr target="#HD4"/> and are further described in the
-remainder of this chapter. They are formally defined as follows:
+remainder of this chapter. 
+
 
 <specGrp>
 &textDesc;
@@ -281,7 +282,7 @@ remainder of this chapter. They are formally defined as follows:
 &settingDesc;
 </specGrp>
 <specGrpRef target="#DCCAHTD"/>
-<!--specGrpRef target="#DCCAHPA"/-->
+
 <specGrpRef target="#DCCAHSE"/>
 	</p>
 
@@ -296,10 +297,15 @@ organized as a set of values and optional prose descriptions for the
 following eight <term>situational parameters</term>, each represented by
 one of the following eight elements:
 <specList><specDesc key="channel" atts="mode"/><specDesc key="constitution" atts="type"/><specDesc key="derivation" atts="type"/><specDesc key="domain" atts="type"/><specDesc key="factuality" atts="type"/><specDesc key="interaction" atts="type active passive"/><specDesc key="preparedness" atts="type"/><specDesc key="purpose" atts="type degree"/></specList></p>
-<p>A TEI-conformant text description contains each of the above
+<p>These elements constitute a model class called <ident
+type="class">model.textDescPart</ident>; new parameters may be defined
+by defining new elements and adding them to that class, as further
+described in <ptr target="#MD"/>.</p>
+
+<p>By default,a text description will contain each of the above
 elements, supplied in the order specified. Except for the
 <gi>purpose</gi> element, which may be repeated to indicate multiple
-purposes, no element may appear more than once within a single text
+purposes, no element should appear more than once within a single text
 description.  Each element may be empty, or may contain a brief
 qualification or more detailed description of the value expressed by
 its attributes.  It should be noted that some texts, in particular
@@ -364,6 +370,7 @@ text-types, provided that the <gi>catDesc</gi> component of the
 than a prose description.  Particular texts may then be associated with
 such definitions using the mechanisms described in sections <ptr target="#HD43"/>.
 	</p>
+
 <p>Using these situational parameters, an informal domestic
 conversation might be characterized as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><textDesc n="Informal domestic conversation">
@@ -394,7 +401,9 @@ parameters might be used to characterize a novel:
    <purpose type="inform" degree="medium">  </purpose>
 </textDesc></egXML>
 <!-- need more examples -->
-The formal declarations for these elements are given below:
+</p>
+
+
 <specGrp xml:id="DCCAHTD" n="Text description">
 &channel;
 &constitution;
@@ -405,14 +414,9 @@ The formal declarations for these elements are given below:
 &preparedness;
 &purpose;
 </specGrp>
-<!-- Not sure if this para is necessary or advisable. -LB     -->
-	<!-- < p >The content model for the < gi >textDesc< /gi >     -->
-	<!-- element is defined by the parameter entity %tdModel;.    -->
-	<!-- If so desired, the encoder may change the set of         -->
-	<!-- parameters used to define < gi >textDesc< /gi > by       -->
-	<!-- altering the definition of this entity, as further       -->
-	<!-- described in chapter < xref target='MD' >.                 -->
-	<!-- some change along these lines is desirable for P4 (LB) --></p></div>
+
+
+</div>
 <div type="div3" xml:id="CCAHPA"><head>The Participants Description</head>
 
 <p>The <gi>particDesc</gi> element in the <gi>profileDesc</gi> element
@@ -559,8 +563,6 @@ additionally be used; if used, however, these elements may appear only
 within a <gi>p</gi> element. The above examples assume that only the
 general purpose <gi>name</gi> element supplied in the core module is
 available.
-The elements discussed in this section have the following formal
-definitions:
 <specGrp xml:id="DCCAHSE" n="Setting description">
 &setting;
 &locale;
