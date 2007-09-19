@@ -426,16 +426,28 @@ information about a <emph>name</emph>, not the person, place, or organization to
 associate the name with a more detailed description of the person
 named. This is provided by means of the <gi>person</gi> element, which
 becomes available when the <ident type="module">namesdates</ident>
-module described in chapter <ptr target="#ND"/> is include in a schema.
+module described in chapter <ptr target="#ND"/> is included in a
+schema. An element such as the following might then be used to provide
+detailed information about the person indicated by the name:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<person xml:id="HOC001">
+<persName><surname>Hoccleve</surname>
+<forename>Thomas</forename>
+</persName>
+<birth notBefore="1368"/>
+<occupation>poet</occupation>
+<!-- other personal data -->
+</person></egXML>
+
 <!--<specList>
 <specDesc key="person"/>
 </specList>-->
 Note that an instance of the 
 <gi>person</gi> element must be provided for each distinct
 <att>ref</att> value specified. In the example above, the value
-<val>HOCCL1</val> must be found as the <att>xml:id</att> attribute of
+<val>HOC001</val> must be found as the <att>xml:id</att> attribute of
 some <gi>person</gi>; the same
-value will be used as the <att>key</att> attribute of every reference
+value will be used as the <att>ref</att> attribute of every reference
 to Hoccleve in the document (however spelled), but there will only be
 one <gi>person</gi> element with this identifier.</p>
 <p>Alternatively, the <att>key</att> attribute may be used to supply
