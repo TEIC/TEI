@@ -5,10 +5,12 @@ See the file COPYING for details.
 $Date$
 $Id $
 -->
-<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="PH" n="18"><head xmlns="http://www.tei-c.org/ns/1.0">Representation of Primary Sources</head>
+<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="PH"
+     n="18">
+<head xmlns="http://www.tei-c.org/ns/1.0">Representation of Primary Sources</head>
 
 <p>This chapter defines a module intended for use in the
-representation of primary sources, in particular manuscripts or other
+representation of primary sources, such as manuscripts or other
 written materials. Section <ptr target="#PHFAX"/> provides elements
 for the encoding of digital facsimiles or images of such materials,
 while the remainder of the chapter discusses ways of encoding detailed
@@ -69,11 +71,64 @@ linked to the page images. In this section we present elements
 designed to support these various possibilities and discuss the
 associated mechanisms provided by these Guidelines.</p>
 
+
+<p>When this module is included in a schema, the class
+<ident>att.global</ident> is extended to include a new pointer
+attribute <att>facs</att>. This attribute may be used to associate any
+element in a transcribed text with an image of it, by means of the
+usual URI pointing mechanism. <!-- i.e. URI reference? --> </p>
+
+<p>If a digital text contains one image per page or column (or
+similar unit), and no more complex mapping between text and image is
+envisaged, then the <att>facs</att>
+attribute may be used to point directly to a graphic resource:
+
+<egXML  xmlns="http://www.tei-c.org/ns/Examples">
+<TEI>
+<teiHeader> <!--...--></teiHeader>
+<text>
+  <pb facs="page1.png"/>
+    <!-- text contained on page 1 is encoded here -->
+  <pb facs="page2.png"/>
+    <!-- text contained on page 2 is encoded here -->
+</text>
+</TEI>  
+</egXML>
+
+By convention, this encoding indicates that the image indicated by
+<att>facs</att> attribute represents the whole of the text following
+the <gi>pb</gi> (pagebreak) element, up to the next <gi>pb</gi>
+element. Any convenient milestone element (see further <ptr
+target="#CORS5"/>) could be used in the same
+way; for example if the images represent individual columns, the
+<gi>cb</gi> element might be used.  Though simple, this method has
+some drawbacks. It does not scale well to more complex cases (where,
+for example, the images do not correspond exactly with transcribed
+pages, or where the intention is to align specific marked up elements
+with detailed images, or parts of images. And it makes the management
+of the information about the images more difficult by scattering
+references to them through the file. Nevertheless, this solution may
+be adequate to many straightforward <soCalled>digital
+library</soCalled> applications. </p>
+
+<p>The recommended approach to encoding facsimiles is instead to use
+the <att>facs</att> attribute in conjunction with the elements
+<gi>facsimile</gi>, <gi>surface</gi>, and <gi>zone</gi>, which are
+also provided by this module. These elements make it possible to
+accommodate multiple images of each page, as well as to record
+arbitrary planar co-ordinates of textual elements on any kind of
+written surface and to link such elements with digital facsimile
+images of them. Typical applications include the provision of full
+text search in <soCalled>digital facsimile editions</soCalled>, and
+ways of annotating graphics, for example so as to identify individuals
+appearing in a group portraits and link them to data about the person
+represented. </p>
+
 <p>The following elements are used to represent components of a
 digital facsimile:
 <specList>
 <specDesc key="facsimile"/>
-<specDesc key="surface" atts="xMax yMax start"/>
+<specDesc key="surface" atts="start"/>
 <specDesc key="zone"/>
 </specList>
 </p>
@@ -130,159 +185,26 @@ same area of the work:
   <graphic url="page4.png"/>
 </facsimile>
 </egXML>
-
-Note that the two images for page two here should represent exactly
-the same area of the written surface: if this is not the case, other
-markup described below, would be necessary. </p>
-
-<p>When this module is included in a schema, the class
-<ident>att.global</ident> is extended to include a new pointer
-attribute <att>facs</att>. This attribute may be used to associate any
-element in a transcribed text with an image of it, by means of the
-usual pointing mechanism. For example, suppose that the page
-represented by the graphic <ident>page1.png</ident> contains text
-which is encoded as a <gi>div</gi> element in the <gi>text</gi>
-element corresponding with this <gi>facsimile</gi>. We can represent
-the alignment as follows:
-<egXML  xmlns="http://www.tei-c.org/ns/Examples">
-<TEI>
-<teiHeader> <!-- ... --></teiHeader>
-<facsimile>
-  <graphic xml:id="Page1" url="page1.png"/>
-  <!-- more graphics here -->
-</facsimile>
-<text>
-<body>
-  <div facs="#Page1">
-    <!-- text contained on page 1 is encoded here -->
-  </div>
-</body>
-</text>
-</TEI>  
-</egXML>
 </p>
 
-<p>In this very simple case the image and the structural encoding
-correspond — that is, all and only the text contained by the
-<gi>div</gi> element is represented in the graphic (and vice
-versa). Of course, in real life this will rarely be the case,
-particularly when the source in question is a printed book or
-codex. As discussed elsewhere (see for example <ptr
-target="#CORS5"/>), these Guidelines recommend the use of empty
-milestone elements to delimit the boundary points of the stretches of
-encoded text which correspond with an image. </p>
+<p>The <gi>surface</gi> element provides a way of indicating that the
+two images of page2 represent the same physical surface within the
+source material. A <term>surface</term> might be a sheet of paper or
+parchment, a face of a monument, a billboard, a membrane of a scroll,
+or indeed any two-dimensional surface, of any size. </p>
 
-<p>For example, suppose that page 2 of some source is represented by
-the graphic in <ident>page2.png</ident>, and that this page contains
-the end of chapter one of a novel, and the start of chapter
-two. The simplest way of encoding this would be to use  a
-<gi>pb</gi> milestone to indicate where the page changes:
-<egXML  xmlns="http://www.tei-c.org/ns/Examples">
-<facsimile>
-  <graphic xml:id="Page2" url="page2.png"/>
-  <!-- more graphics here -->
-</facsimile>
-<text><body>
-  <div><head>Chapter one</head>
-  <p>  <!-- text --> </p>
-  <p> <!-- more text -->
-    <pb n="234" facs="#Page2"/>
- <!-- more text -->
-  </p>
-  </div>
-  <div><head>Chapter two</head>
-  <!-- etc -->
-  </div>
-</body></text>
-</egXML>
+<p>The actual dimensions of the object represented are not documented
+by the <gi>surface</gi> element; instead, the <gi>surface</gi> is
+located within an abstract co-ordinate space, which is defined by the
+following attributes, supplied by the <ident
+type="class">att.coordinated</ident> class:
+<specList>
+<specDesc key="att.coordinated" atts="ulx uly lrx lry"/>
+</specList>
 </p>
-
-<p>Other milestone elements may be used in the same way. In the
-following example, each image corresponds to a column in a manuscript
-scroll:
-
-<egXML  xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
-  <graphic xml:id="col1" url="column1.png"/>
-  <graphic xml:id="col2" url="column2.png"/>
-  <!-- more graphics here -->
-</facsimile>
-<text><body>
-  <cb n="1" facs="#col1"/>
-  <div>
-  <p>.....</p>
-  <p> ...
-  <cb n="2" facs="#col2"/>
-  </p>
-  </div>
-</body></text>
-</egXML>
-</p>
-
-<p>If a facsimile contains only one image per page or column (or
-similar unit), and no more complex mapping between text and image is
-envisaged, then it may be preferred to use the <att>facs</att>
-attribute to point directly to the graphic resource itself, rather
-than to a <gi>graphic</gi> or other element within a
-<gi>facsimile</gi>:
-
-<egXML  xmlns="http://www.tei-c.org/ns/Examples">
-<TEI>
-<teiHeader> <!--...--></teiHeader>
-<text>
-  <pb facs="page1.png"/>
-    <!-- text contained on page 1 is encoded here -->
-  <pb facs="page2.png"/>
-    <!-- text contained on page 2 is encoded here -->
-</text>
-</TEI>  
-</egXML>
-
-The value of the <att>facs</att> attribute can be any URI, and may
-thus indicate graphic elements directly without their being included
-in a <gi>facsimile</gi> element:
-
-<egXML  xmlns="http://www.tei-c.org/ns/Examples">
-  <pb facs="http://example.com/myImages/page1.png"/>
-</egXML>
-This approach is not generally recommended, since it does not scale
-well and may lead to interchange problems, but may be found
-appropriate for very simple applications. </p>
-
-<p>In the more general case, an encoder may wish to record arbitrary
-planar co-ordinates of textual elements on any kind of written surface
-and to link such elements with digital facsimile images of
-them. Typical applications include the provision of full text search
-in <soCalled>digital facsimile editions</soCalled>, and ways of
-annotating graphics, for example so as to identify individuals
-appearing in a group portraits and link them to data about the person
-represented. To support such requirements a more complex encoding is
-necessary, for which the elements <gi>surface</gi> and <gi>zone</gi>
-are provided.</p>
-
-
-<p>The <gi>surface</gi> element mentioned above may be used to
-represent any physical surface forming part of the source
-material. This might be a sheet of paper or parchment, a face of a
-monument, a billboard, a membrane of a scroll, or indeed any two-dimensional
-surface, of any size. The actual dimensions of the object represented
-are not documented by the <gi>surface</gi> element; it defines a
-co-ordinate space with its own dimensions.
-</p>
-
-<p>A <gi>surface</gi> may contain one or more <gi>graphic</gi>
-elements, each providing a graphic representation of exactly the same
-co-ordinate space. This space is defined by the attributes
-<att>xMax</att> and <att>yMax</att>, which supply an upper bound for
-the horizontal and vertical dimensions of this space respectively. The
-units in which these dimensions are measured are not significant: the
-object is to define a grid superimposed on the image indicated by the
-first child <gi>graphic</gi> element of the <gi>surface</gi>. </p>
-
-<p>A <gi>surface</gi> may also contain one or more <gi>zone</gi>
-elements, each of which represents a rectangular region or
-<term>bounding box</term> within the co-ordinate space defined by the
-parent <gi>surface</gi> element<note place="foot">The co-ordinate
-space may be thought of as a grid superimposed on a rectangular
+<p> The same co-ordinate space is used for a <gi>surface</gi> and for
+all of its child elements. <note place="foot">The co-ordinate space
+may be thought of as a grid superimposed on a rectangular
 space. Rectangular areas of the grid are defined as four numbers <hi
 rend="math">a b c d</hi>: the first two identify the grid point which
 is at the upper left corner of the rectangle; the second two give the
@@ -291,84 +213,164 @@ grid point <hi rend="math">a b</hi> is understood to be the point
 which is located <hi rend="math">a</hi> points from the origin along
 the <hi rend="math">x</hi> (horizontal) axis, and <hi
 rend="math">b</hi> points from the origin along the <hi
-rend="math">y</hi> (vertical) axis.</note>. This provides a unit of
-analysis which may be used to define any rectangular region of
+rend="math">y</hi> (vertical) axis.</note>. It may be most convenient
+to derive a co-ordinate space from a digital image of the surface in
+question such that each pixel in the image corresponds with a whole
+number of units (typically 1) in the co-ordinate space. In other cases
+it may be more convenient to use units such as millimetres; in neither
+case is any specific mapping to the physical dimensions of the object
+represented implied.
+</p>
+
+
+
+<p>Each <gi>surface</gi> will contain one or more <gi>zone</gi>
+elements, each of which represents a rectangular region or
+<term>bounding box</term> defined in terms of the same co-ordinate
+space as that of its parent <gi>surface</gi> element. This provides a
+unit of analysis which may be used to define any rectangular region of
 interest, such as a detail or illustration, or some part of the
-surface which is to be aligned with a particular text element. If the
-image being mapped represents something outside the written area of
-the surface (for example a binding or the surface of a desk on which
-the page rests), the <gi>surface</gi> element may also need to define
-a zone of interest. The <att>box</att> attribute is used to supply the
-co-ordinates of a zone. Note that this mechanism does not provide any
-way of addressing a non-rectangular area; if this is needed, the more
-powerful mechanisms provided by the Standard Vector Graphics language
+surface which is to be aligned with a particular text element.  The
+<ident type="class">att.coordinated</ident> attributes listed above
+are also used to supply the co-ordinates of a zone. </p>
+<p>As we have seen, a surface will usually correspond with the whole
+of a written surface. A zone, by contrast, defines any arbitrary
+rectangular area of interest using the same co-ordinate system. It
+might be bigger or smaller than its parent surface, or might overlap
+its boundaries. The only constraint is that it must be defined using
+the same co-ordinate system. </p>
+
+<p>When an image of some kind is supplied within either a zone or a
+surface, the implication is that the whole of the image represents
+the zone or surface containing it. In the simple case therefore, we
+might imagine a surface defining a page, within which there is a
+graphic representing the whole of that page, and a number of zones
+defining parts of the page, each with its own graphic. If one of those
+images actually represents an area larger than the page (for example
+to include a binding or the surface of a
+desk on which the page rests), then it might be enclosed by a zone
+with co-ordinates smaller or larger than those of  the parent
+surface. </p>
+
+<p>Note that this mechanism does not provide any way of addressing a
+non-rectangular area, nor of coping with distortions introduced by
+perspective or parallax; if this is needed, the more powerful
+mechanisms provided by the Standard Vector Graphics (SVG) language
 should be used to define an overlay, as further discussed in <ptr
 target="#SACSXA"/>. </p>
 
-<p>For example, consider the following figure <figure><head>Relation
+
+<p>For example, consider the following figure: 
+<figure rend="center"><head>Relation
 between page, surface, and zone</head> <graphic
 url="Images/facs-fig2.jpg"/></figure> This is an image of a two page
 spread from a manuscript in the Badische Landesbibliothek,
 Karlsruhe. We have no information as to the dimensions of the original object,
 but the  low resolution image displayed here contains 500 pixels
 horizontally and 321 pixels vertically. For convenience, we might map
-each pixel to one cell of the grid defined by the surface element used
-to contain the graphic:
- <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
-<surface xMax="500" yMax="321">
-<graphic url="http://upload.wikimedia.org/wikipedia/commons/5/50/Handschrift.karlsruhe.blb.jpg"/>
-</surface></facsimile></egXML>
-<!--http://commons.wikimedia.org/wiki/Image:Handschrift.karlsruhe.blb.jpg-->
-The mapping need not however be one-to-one; it might be convenient to
+each pixel to one cell of the co-ordinate space. 
+<note place="foot">The co-ordinate space used here is based on pixels, but 
+the mapping between pixels and units in the co-ordinate space 
+need not be one-to-one; it might be convenient to
 define a more delicate grid, to enable us to address much smaller
 parts of the image. This can be done simply by supplying appropriate
-values for <att>xMax</att> and <att>yMax</att>: setting these to 1000
-and 642 respectively for example would map each pixel to two grid
-points in the co-ordinate space.</p>
-<p>Since this image contains more than one page however, and has not been
-cropped, it might be better to define two distinct surfaces, one for
-each page, including its illuminated margins. In this case, each surface would additionally need to
-specify a bounding box:
- <egXML
+values for the attributes which define the co-ordinate space; for
+example doubling them all would map each pixel to two grid
+points in the co-ordinate space.</note> </p>
+
+<p>The co-ordinates of the <gi>surface</gi> (that is, the area of the
+image which represents the written two page spread) can then be
+specified in terms of this co-ordinate space, simply by counting
+pixels in the image.  The left corner of the two page spread appears
+50 units from the left of the image and 20 units from the top, while
+the bottom right corner of the spread appears 400 units from the left
+of the image, and 280 units from the top. We therefore define the
+written surface within this image as follows: <egXML
 xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
-<surface xMax="500" yMax="321" box="50 20 210 280">
-<!-- left hand page -->
-  <graphic url="http://upload.wikimedia.org/wikipedia/commons/5/50/Handschrift.karlsruhe.blb.jpg"/>
+<surface ulx="50" uly="20" lrx="400" lry="280">
+	<!-- ... -->
 </surface>
-<surface xMax="500" yMax="321" box="240 25 400 280">
-<!-- right hand page -->
-  <graphic url="http://upload.wikimedia.org/wikipedia/commons/5/50/Handschrift.karlsruhe.blb.jpg"/>
-</surface></facsimile></egXML>
-</p>
-<p>To select parts of each surface, we use a zone element. For
-example, to define the written part of the left hand page:
- <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
-<surface xMax="500" yMax="321" box="50 20 210 180">
-<!-- left hand page -->
-  <graphic url="http://upload.wikimedia.org/wikipedia/commons/5/50/Handschrift.karlsruhe.blb.jpg"/>
-<zone box="90 40 200 225"/>
-</surface>
+</facsimile></egXML> 
+To introduce the image file itself, we will also need to define a zone
+of interest which represents an area larger
+than the surface. Using the same co-ordinate system as that defined
+for the surface, its co-ordinates are <val>0,0,500,321</val>. This zone of interest is defined by a <gi>zone</gi>
+element, within which we can place the uncropped <gi>graphic</gi>:
+ <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+<surface ulx="50" uly="20" lrx="400" lry="280">
+<zone ulx="0" uly="0" lrx="500" lry="321">
+<graphic url="http://upload.wikimedia.org/wikipedia/commons/5/50/Handschrift.karlsruhe.blb.jpg"/>
+</zone></surface>
 </facsimile></egXML>
 </p>
 
+<p>If desired, the <gi>binaryObject</gi> element described in <ptr
+target="#COGR"/> (or any other element from the
+<ident>model.graphicLike</ident> class) can be used instead of a
+<gi>graphic</gi></p>
+
+<p>The <gi>desc</gi> element may also be used within either
+<gi>surface</gi> or <gi>zone</gi> to provide some further information
+about the area being defined. For example, since the image in this
+example contains two pages, it might be preferable to define
+two distinct surfaces, one for each page, including its illuminated
+margins. In this case, each surface must specify a bounding box which
+encloses the appropriate page, as well as defining the zone for the
+graphic itself:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+
+	<surface ulx="50" uly="20" lrx="210" lry="280">
+	  <desc>left hand page</desc>
+	  <zone ulx="0" uly="0" lrx="500" lry="321">
+<graphic url="http://upload.wikimedia.org/wikipedia/commons/5/50/Handschrift.karlsruhe.blb.jpg"/>
+		</zone>
+	</surface>
+	<surface ulx="240" uly="25" lrx="400" lry="280">
+	  <desc>right hand page</desc>
+		<zone ulx="0" uly="0" lrx="500" lry="321">
+			<graphic url="http://upload.wikimedia.org/wikipedia/commons/5/50/Handschrift.karlsruhe.blb.jpg"/>
+		</zone>
+	</surface>
+</facsimile></egXML>
+</p>
+<p>In addition to acting as a container for <gi>graphic</gi> elements,
+<gi>zone</gi> elements may also be used to select
+parts of each surface for analytical purposes. For
+example, to define the written part of the left hand page:
+ <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+	<surface ulx="50" uly="20" lrx="210" lry="280">
+	  <desc>Left hand page</desc>
+		<zone ulx="0" uly="0" lrx="500" lry="321">
+			<graphic url="http://upload.wikimedia.org/wikipedia/commons/5/50/Handschrift.karlsruhe.blb.jpg"/>
+		</zone>
+		<zone ulx="90" uly="40" lrx="200" lry="225">
+		  <desc>Written part of left hand page</desc>
+		</zone>
+	</surface>
+</facsimile></egXML>
+</p>
+
+
 <p>In the following example, we discuss a hypothetical digital edition
-of an early 16th century French work, Charles de Bouelles
-<title>Geometrie Pratique</title><note place="foot">The image is taken
+of an early 16th century French work, Charles de Bovelles'
+<title>Géometrie Pratique</title><note place="foot">The image is taken
 from the collection at <ptr
-target="http://ancilla.unice.fr/Illustr.html"/>, digitized from a copy
-in the Bibliothèque Municipale de Lyon</note>. In this edition, each
+target="http://ancilla.unice.fr/Illustr.html"/>, and was digitized from a copy
+in the Bibliothèque Municipale de Lyon, by whose kind permission it is
+included here</note>. In this edition, each
 page has been digitized as a separate file: for example, recto page 49
-is stored in a file called <ident>Boulles-49r.png</ident>.  In the
+is stored in a file called <ident>Bovelles-49r.png</ident>.  In the
 <gi>facsimile</gi> element used to contain the whole set of pages, we
-define a <gi>surface</gi> element for this page, to which we attach a
+define a <gi>surface</gi> element for this page, which we situate within a
 co-ordinate scale running from 0 to 200 in the x (horizontal) axis,
 and 0 to 300 in the y (vertical) axis.  The <gi>surface</gi> element
-contains a <gi>graphic</gi> element pointing to the image: <egXML
+contains a <gi>graphic</gi> 
+element which represents the whole of this surface: <egXML
 xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
-<surface xMax="200" yMax="300">
-  <graphic url="Boulles-49r.png"/>
+<surface ulx="0" uly="0" lrx="200" lry="300">
+  <graphic url="Bovelles-49r.png"/>
 </surface>
 </facsimile></egXML> We can now identify distinct zones within the
 page image using the co-ordinate scale defined for the surface. In
@@ -385,55 +387,63 @@ The following encoding defines each of the four zones identified in
 the figure.
  <egXML
 xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
-<surface xMax="200" yMax="300">
-  <graphic url="Boulles-49r.png"/>
-  <zone box="25 25 180 60"/> 
-    <!-- contains the title -->
-  <zone box="28 75 175 178"/> 
-    <!-- contains the paragraph in italics -->
-  <zone box="105 76 175 160"/> 
-    <!-- contains the figure -->
-  <zone box="45 125 60 130"/>
-    <!-- contains the word "pendans" -->
+<surface ulx="0" uly="0" lrx="200" lry="300">
+<graphic url="Bovelles-49r.png"/>
+	<zone ulx="25" uly="25" lrx="180" lry="60"> 
+	  <desc>contains the title</desc>
+	</zone>
+	<zone ulx="28" uly="75" lrx="175" lry="178"/> 
+	<!-- contains the paragraph in italics -->
+	<zone ulx="105" uly="76" lrx="175" lry="160"/> 
+	<!-- contains the figure -->
+	<zone ulx="45" uly="125" lrx="60" lry="130"/>
+	<!-- contains the word "pendans" -->
 </surface>
 </facsimile></egXML> 
 Note that the location of each zone is defined
 independently but using the same co-ordinate system, so that they may
 overlap freely. Zones need not  nest within each other; they must
-however be rectangular, as previously noted.</p>
-<p>Generally, a <gi>zone</gi> element will be empty, as in the above
-example. However, it is also possible to include within it a
-further <gi>graphic</gi> element, if for example a detailed image is
-available. Since all <gi>zone</gi> elements use the same co-ordinate
-system (that defined by their parent <gi>surface</gi>), there is no
-need to demonstrate enclosure of one zone within another by means of
-nesting. To continue the current example, supposing that we have an
-additional image called 
-<ident>Boulles49r-detail.png</ident> containing  an
-additional image of the figure in the third zone above, we might
-encode that zone as follows:
+however be rectangular, as previously noted. As noted earlier, a zone may
+fall outside the area of the surface which defines its co-ordinate space.</p>
+
+<p>In this example a single <gi>graphic</gi> element has been
+associated directly with the surface of the page rather than nesting
+it within a zone. However, it is also possible to include multiple
+<gi>zone</gi> elements which contain a <gi>graphic</gi> element, if
+for example a detailed image is available. Since all <gi>zone</gi>
+elements use the same co-ordinate system (that defined by their parent
+<gi>surface</gi>), there is no need to demonstrate enclosure of one
+zone within another by means of nesting. To continue the current
+example, supposing that we have an additional image called
+<ident>Bovelles49r-detail.png</ident> containing an additional image
+of the figure in the third zone above, we might encode that zone as
+follows:
 <egXML  xmlns="http://www.tei-c.org/ns/Examples">
-  <zone box="105 76 175 160"> 
-    <graphic url="Boulles49r-detail.png"/>
+  <zone ulx="105" uly="76" lrx="175" lry="160"> 
+    <graphic url="Bovelles49r-detail.png"/>
   </zone>
 </egXML>
 </p>
 <p>Now suppose that we wish to align a transcription of this page
 with the zones identified above. The first step is to give each
 relevant part of the facsimile an identifier:
-
  <egXML
 xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
-<surface xml:id="B49r" xMax="200" yMax="300">
-  <graphic url="Boulles-49r.png"/>
-  <zone xml:id="B49rHead" box="25 25 180 60"/> 
-    <!-- contains the title -->
-  <zone xml:id="B49rPara2" box="28 75 175 178"/> 
-    <!-- contains the paragraph in italics -->
-  <zone xml:id="B49rFig1" box="105 76 175 160"/> 
-    <!-- contains the figure -->
-  <zone xml:id="B49rW457" box="45 125 60 130"/>
-    <!-- contains the word "pendans" -->
+<surface ulx="0" uly="0" lrx="200" lry="300">
+	<zone ulx="0" uly="0" lrx="200" lry="300">
+		<graphic url="Bovelles-49r.png"/>
+	</zone>
+	<zone ulx="105" uly="76" lrx="175" lry="160"> 
+		<graphic url="Bovelles49r-detail.png"/>
+	</zone>
+	<zone xml:id="B49rHead" ulx="25" uly="25" lrx="180" lry="60"/> 
+	<!-- contains the title -->
+	<zone xml:id="B49rPara2" ulx="28" uly="75" lrx="175" lry="178"/> 
+	<!-- contains the paragraph in italics -->
+	<zone xml:id="B49rFig1" ulx="105" uly="76" lrx="175" lry="160"/> 
+	<!-- contains the figure -->
+	<zone xml:id="B49rW457" ulx="45" uly="125" lrx="60" lry="130"/>
+	<!-- contains the word "pendans" -->
 </surface>
 </facsimile></egXML> 
 The alignment between transcription and image is made, as usual, by
@@ -459,11 +469,11 @@ figuré. Car qua<expan>n</expan>d <lb/> lune sera en hault, laultre
 declinera embas. Aultrement si elles decli<lb/>nent toutes deux
 ensembles en une mesme partie, elles seront discord, <lb/> &amp; sera
 leur sonnerie mal plaisante à oyr.<figure facs="#B49rFig1"><graphic
-url="Boulles49r-detail.png"/> </figure></p>
+url="Bovelles49r-detail.png"/> </figure></p>
 </div>
 </egXML>
 </p>
-<p>Further discussion of the principals underlying the encoding
+<p>Further discussion of the principles underlying the encoding
 choices made in the above transcription are provided in the remainder
 of this chapter. </p>
 
@@ -475,7 +485,7 @@ the surface or zone concerned. Thus, another way of linking this page
 with its transcription would be simply <egXML
 xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 <surface start="#PB49R" >
-  <graphic url="Boulles-49r.png"/>
+<graphic url="Bovelles-49r.png"/>
 </surface>
 </facsimile>
 <text>
@@ -512,7 +522,7 @@ customary in transcriptions to register certain features of the
 source, such as ornamentation, underlining, deletion, areas of damage
 and lacunae. This chapter provides ways of encoding such information:
 <list type="bullets">
-<item>first, the problem of recording editorial or other alterations to
+<item>first, methods of recording editorial or other alterations to
 the text, such as expansion of abbreviations, corrections, conjectures,
 etc. (section <ptr target="#PHCH"/>)</item>
 <item>then, methods of describing important extra-linguistic phenomena
@@ -741,7 +751,7 @@ interventions; an appropriate element therefore might be a
 <respStmt xml:id="mp">
 <resp>Editorial emendations</resp>
 <name>Malcom Parkes</name>
-</respStmt></egXML>.  
+</respStmt></egXML>
 Observe that the <att>cert</att> and <att>resp</att> attributes are
 used with the <gi>ex</gi> element only to indicate
 confidence in the content of the element (i.e. the expansion), and
@@ -1171,7 +1181,7 @@ the beginning of the span of added text, and an <gi>anchor</gi> is
 used to mark its end.  The <att>hand</att> attribute on the
 <gi>addSpan</gi> element ascribes responsibility for the addition to
 the manuscript to Helgi, and the <att>spanTo</att> attribute points to
-theend of the added text:
+the end of the added text:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><hand xml:id="heol"
 scribe="HelgiÓlafsson"/>
 <!-- ... -->
@@ -1692,7 +1702,7 @@ responsibility for the deletion itself.</p>
 cases, it applies to the content of the element (<gi>corr</gi>, 
 <gi>ex</gi>, and <gi>supplied</gi>); in others it applies to the value of a particular
 attribute (<gi>sic</gi>, <gi>abbr</gi>, <gi>del</gi>, etc.).  In all
-cases where both the <att>cert</att> and <att>resp</att> attributes are
+cases where both the <att>resp</att> and <att>cert</att> attributes are
 defined for a particular element, the two attributes refer to the same
 aspect of the markup.  The one indicates who is intellectually
 responsible for some item of information, the other indicates the degree
@@ -2141,8 +2151,8 @@ rather as a base to enable encoding of the most common phenomena found
 in the course of scholarly transcription of primary source materials.
 These guidelines particularly do not address the encoding of physical
 description of textual witnesses:  the materials of the carrier, the
-medium of the inscribing implement, the layout of the inscription upon
-the material, the organisation of the carrier materials themselves (as
+medium of the inscribing implement, 
+the organisation of the carrier materials themselves (as
 quiring, collation, etc.), authorial instructions or scribal markup,
 etc.  Some of these issues may be covered in future editions of these
 guidelines.</p></div>
@@ -2172,5 +2182,25 @@ The selection and combination of modules to form a TEI schema is described in
 &subst;
 &supplied;
 </specGrp>
+
+<!--
+</specGrp>
+</specGrp>
+</specGrp>
+</specGrp>
+</specGrp>
+</specGrp>
+</specGrp>
+<specGrp xml:id="DPHCD" n="Cancelled Deletions">
+<specGrp xml:id="DPHDA" n="Damage and Illegiblity">
+<specGrp xml:id="DPHHD" n="Hand Shifts">
+<specGrp xml:id="DPHOM" n="Supplied Text">
+<specGrp xml:id="DPHSP" n="Spaces in the source">
+<specGrp xml:id="DTCAD" n="Added and Deleted Spans">
+-->
+
+
+
+
 </div>
 </div>
