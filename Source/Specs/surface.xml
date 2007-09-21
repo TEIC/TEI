@@ -9,18 +9,20 @@ $Id$
 <elementSpec ident="surface" module="transcr"
 	     xmlns:rng="http://relaxng.org/ns/structure/1.0"
 	     xmlns="http://www.tei-c.org/ns/1.0">
-<desc>contains one or more images of the same written surface
-and defines a co-ordinate space within which the image may be
-addressed.</desc>
+<desc>defines a written surface in terms of a rectangular
+coordinate space, optionally  grouping one or more graphic representations of
+that space, and rectangular zones of interest
+within it.</desc>
 
  <classes>
 <memberOf key="att.coordinated"/>
  </classes>
 
 <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
-<rng:group><rng:group>
-<rng:ref name="model.graphicLike"/>
-</rng:group>
+<rng:group>
+<rng:zeroOrMore>
+<rng:ref name="model.glossLike"/>
+</rng:zeroOrMore>
 <rng:zeroOrMore>
   <rng:choice>
     <rng:ref name="model.graphicLike"/>
@@ -30,7 +32,7 @@ addressed.</desc>
 </rng:group></content>
 
 <attList>
-<attDef ident="xMax">
+<!--attDef ident="xMax">
 <desc>specifies the upper value for the horizontal dimension of the co-ordinate
 space</desc>
 <datatype><rng:ref name="data.count"/></datatype>
@@ -39,7 +41,7 @@ space</desc>
 <desc>specifies the upper value for the vertical dimension of the co-ordinate
 space</desc>
 <datatype><rng:ref name="data.count"/></datatype>
-</attDef>
+</attDef-->
 <attDef ident="start">
 <desc>points to an element which encodes the starting position of the text corresponding to the
 inscribed part of the surface.</desc>
@@ -50,18 +52,16 @@ name="data.pointer"/>
 </attDef>
 </attList>
 
-<remarks><p>The <gi>surface</gi> element represents an imaged area of
+<remarks><p>The <gi>surface</gi> element  represents a rectangular  area of
 any physical surface forming part of the source material. This may be a sheet of
 paper, one face of a monument, a billboard, a papyrus scroll, or
 indeed any 2-dimensional surface.</p>
-<p>The co-ordinate space defined by this elements may be thought of as
-a grid <att>xMax</att> units wide and <att>yMax</att> units high. This
-grid is superimposed on the whole of the image indicated by the first
-child <gi>graphic</gi> of the <gi>surface</gi>. If the <att>box</att>
-is supplied, its values indicate the part of this grid which is
-understood to contain the whole of the surface being described; if it
-is not supplied, then the implication is that the surface maps exactly
-onto the image. </p>
+<p>The co-ordinate space defined by this element may be thought of as
+a grid <att>lrx - ulx</att> units wide and <att>lry - ury</att> units high. This
+grid is superimposed on the whole of any image directly contained by
+the <gi>surface</gi> element. The co-ordinate values used by every
+<gi>zone</gi> element contained by this surface are to be understood
+with reference to the same grid.</p>
 </remarks>
 
 </elementSpec>
