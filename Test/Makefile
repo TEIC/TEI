@@ -1,7 +1,7 @@
 LANGUAGE=en
 DRIVER=guidelines-${LANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
-ROMAOPTS=--doc --localsource=../Source/Guidelines/${LANGUAGE}/${DRIVER}
+ROMAOPTS=--localsource=../Source/Guidelines/${LANGUAGE}/${DRIVER}
 
 TESTFILES= \
 	testClasses \
@@ -141,5 +141,6 @@ clean:
 	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES) $(TESTBADFILES); do rm -f $$i.doc.xml $$i.rnc $$i.dtd $$i.compiled.* $$i.teix.xsd $$i.xsd $$i.rnc $$i.rng;done
 	-rm -rf LOG *~ *.xsd Schema RomaResults DTD
 	-rm -rf *.doc.*
+	-rm *-examples.rng *-examples.rnc test*.nvd
 
 
