@@ -141,6 +141,6 @@ clean:
 	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES) $(TESTBADFILES); do rm -f $$i.doc.xml $$i.rnc $$i.dtd $$i.compiled.* $$i.teix.xsd $$i.xsd $$i.rnc $$i.rng;done
 	-rm -rf LOG *~ *.xsd Schema RomaResults DTD
 	-rm -rf *.doc.*
-	-rm *-examples.rng *-examples.rnc test*.nvd
+	-rm *-examples.rng *-examples.rnc test*.nvdl
 
 
