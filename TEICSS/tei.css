@@ -350,18 +350,18 @@ gap:after {
   content: "[...]";
   font-style: italic;
 }
-gi {
+gi,tag {
   display: inline;
   font-family: sans-serif;
   color: blue;
   background-color: inherit;
 }
     
-gi:before {
+tag:before,gi:before {
   content: "<";
 }
     
-gi:after {
+tag:after,gi:after {
   content: ">";
 }
     
@@ -477,11 +477,6 @@ hi[rend="ul"] {
   display: inline;
   text-decoration: underline;
 }
-Icon {
-	color: inherit;
-	background-color : #B0E0E6;
-	font-weight : bold;
-}
 ident {
   display: inline;
   font-family: monospace;
@@ -522,8 +517,9 @@ item {
   margin-left: 12pt;
 }
     
-item:before {
-  content: attr(n);
+item[n]:before {
+  content: attr(n) ". " ;
+  list-style: none;
 } /* should there be space after the content?
      And should default marker be suppressed
      when there is an @n attribute? --DRS */
@@ -762,6 +758,11 @@ bibl respStmt {
   display: inline;
 }
     
+rdg:before {
+  background-color: inherit;
+  content: "[" attr(wit) "] ";
+  color: red;
+  }
 row {
   display: table-row;
 }
@@ -1037,6 +1038,11 @@ Output {
 	    color: red;
 	    background-color: inherit;
 	    }
+Icon {
+	color: inherit;
+	background-color : #B0E0E6;
+	font-weight : bold;
+}
 Screen {
   font-family: monospace;
   padding-top: 3mm;
@@ -1049,8 +1055,3 @@ Screen {
   color: inherit;
   background-color: #FFCC99;
    }
-rdg:before {
-  background-color: inherit;
-  content: "[" attr(wit) "] ";
-           color: red;
-  }
