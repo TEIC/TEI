@@ -477,18 +477,18 @@ text, which, in the case of a composite text, may consist of
 <term>group</term>s, each containing more groups or texts.</p>
         <p>A unitary text will be encoded using an overall structure like
 this:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><TEI><teiHeader> [ TEI Header information ]  </teiHeader><text><front> [ front matter ... ]   </front><body>  [ body of text ... ]   </body><back>  [ back matter ...  ]   </back></text></TEI></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><TEI><teiHeader><!-- [ TEI Header information ]  --></teiHeader><text><front><!-- [ front matter ... ] -->  </front><body> <!-- [ body of text ... ]  --> </body><back><!--  [ back matter ...  ] -->  </back></text></TEI></egXML></p>
         <p>A composite text also has an optional front and back. In between
 occur one or more groups of texts, each with its own optional front
 and back matter. A composite text will thus be encoded using an
 overall structure like this:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><TEI><teiHeader> [ header information for the composite ] </teiHeader><text><front> [ front matter for the composite  ]      </front><group><text><front> [ front matter of first text ] </front><body>  [ body of first text  ]          </body><back>  [ back matter of first text ]    </back></text><text><front> [ front matter of second text]  </front><body>  [ body of second text  ]          </body><back>  [ back matter of second text ]    </back></text>
-           [ more texts or groups of texts here ]
-        </group><back>      [ back matter for the composite  ]      </back></text></TEI></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><TEI><teiHeader> <!--[ header information for the composite ]--> </teiHeader><text><front> <!--[ front matter for the composite  ]-->      </front><group><text><front> <!--[ front matter of first text ]--> </front><body>  <!--[ body of first text  ]-->          </body><back>  <!--[ back matter of first text ]-->    </back></text><text><front> <!--[ front matter of second text]-->  </front><body>  <!--[ body of second text  ]-->          </body><back>  <!--[ back matter of second text ]-->    </back></text>
+           <!--[ more texts or groups of texts here ]-->
+        </group><back>      <!--[ back matter for the composite  ]-->      </back></text></TEI></egXML></p>
         <p>It is also possible to define a composite of TEI texts, each with
 its own header. Such a collection is known as a <term>TEI corpus</term>,
 and may itself have a header:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><teiCorpus><teiHeader>   [header information for the corpus]</teiHeader><TEI><teiHeader>[header information for first text]</teiHeader><text>     [first text in corpus]             </text></TEI><TEI><teiHeader>[header information for second text]</teiHeader><text>     [second text in corpus]             </text></TEI></teiCorpus></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><teiCorpus><teiHeader>   <!--[header information for the corpus]--></teiHeader><TEI><teiHeader><!--[header information for first text]--></teiHeader><text>     <!--[first text in corpus]-->             </text></TEI><TEI><teiHeader><!--[header information for second text]--></teiHeader><text>     <!--[second text in corpus]-->             </text></TEI></teiCorpus></egXML>
 It is not however possible to create a composite of corpora --
 that is, a number of <gi>teiCorpus</gi> elements combined together
 and treated as a single object. This is a restriction of the current
@@ -572,15 +572,15 @@ chapters are further subdivided into parts. We might define
 <att>xml:id</att> values for this structure as follows:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><body><div xml:id="WN1" n="I" type="book"><div xml:id="WN101" n="I.1" type="chapter">
-   ... </div><div xml:id="WN102" n="I.2" type="chapter">
-   ... </div>
-   ...
+   <!-- ... --> </div><div xml:id="WN102" n="I.2" type="chapter">
+   <!-- ... --> </div>
+   <!-- ... -->
   <div xml:id="WN110" n="I.10" type="chapter"><div xml:id="WN1101" n="I.10.1" type="part">
-      ... </div><div xml:id="WN1102" n="I.10.2" type="part">
-      ... </div></div>
-  ...
+      <!-- ... --> </div><div xml:id="WN1102" n="I.10.2" type="part">
+      <!-- ... --> </div></div>
+  <!-- ... -->
  </div><div xml:id="WN2" n="II" type="book">
-   ....
+   <!-- ... -->
 </div></body></egXML></p>
           <p>A different numbering scheme may be used for <att>xml:id</att> and
 <att>n</att> attributes: this is often useful where a canonical
@@ -591,10 +591,10 @@ whole work, rather than within each book, one might use a scheme such
 as the following:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><body><div xml:id="TS01" n="1" type="Volume"><div xml:id="TS011" n="1" type="Chapter">
-      ... </div><div xml:id="TS012" n="2">
-      ...</div></div><div xml:id="TS02" n="2" type="Volume"><div xml:id="TS021" n="3" type="Chapter">
-      ...</div><div xml:id="TS022" n="4">
-      ...</div></div></body></egXML>
+      <!-- ... --> </div><div xml:id="TS012" n="2">
+      <!-- ... --></div></div><div xml:id="TS02" n="2" type="Volume"><div xml:id="TS021" n="3" type="Chapter">
+      <!-- ... --></div><div xml:id="TS022" n="4">
+      <!-- ... --></div></div></body></egXML>
 Here the work has two volumes, each containing two chapters.
 The chapters are numbered conventionally 1 to 4, but the <att>xml:id</att>
 values specified allow them to be regarded additionally as if they
@@ -662,10 +662,10 @@ fragmented are incomplete, as in this example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="Act" n="I"><head>ACT I</head><div type="Scene" n="1"><head>SCENE I</head><stage rend="italic">
 Enter Barnardo and Francisco, two Sentinels, at several doors</stage><sp><speaker>Barn</speaker><l part="Y">Who's there?</l></sp><sp><speaker>Fran</speaker><l>Nay, answer me. Stand and unfold 
   yourself.</l></sp><sp><speaker>Barn</speaker><l part="I">Long live the King!</l></sp><sp><speaker>Fran</speaker><l part="M">Barnardo?</l></sp><sp><speaker>Barn</speaker><l part="F">He.</l></sp><sp><speaker>Fran</speaker><l>You come most carefully upon 
-  your hour.</l></sp>... </div></div></egXML></p>
+  your hour.</l></sp><!-- ... --> </div></div></egXML></p>
           <p>The same mechanism may be applied to stanzas which are divided
 between two speakers:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div><sp><speaker>First voice</speaker><lg type="stanza" part="I"><l>But why drives on that ship so fast</l><l>Withouten wave or wind?</l></lg></sp><sp><speaker>Second Voice</speaker><lg part="F"><l>The air is cut away before.</l><l>And closes from behind.</l></lg></sp>... </div></egXML> </p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div><sp><speaker>First voice</speaker><lg type="stanza" part="I"><l>But why drives on that ship so fast</l><l>Withouten wave or wind?</l></lg></sp><sp><speaker>Second Voice</speaker><lg part="F"><l>The air is cut away before.</l><l>And closes from behind.</l></lg></sp><!-- ... --> </div></egXML> </p>
           <p>This example shows how dialogue presented in a prose work as if it
 were drama should be encoded. It also demonstrates the use of the
 <att>who</att> attribute to bear a code identifying the speaker
@@ -922,7 +922,7 @@ example, the cross reference is to a
     see especially <ptr target="#SEC12"/>.
     ...
     <div xml:id="SEC12"><head>Concerning Identifiers</head>
-     ...</div></egXML>
+     <!-- ... --></div></egXML>
  </p>
           <p>Because the <att>xml:id</att> attribute is global, any element in
 a document may be pointed to in this way. In the following example, a
@@ -932,23 +932,14 @@ paragraph has been given an identifier so that it may be pointed at:
     ...
     <p xml:id="pspec">Links may be made to any kind of element
     ...</p></egXML></p>
-          <p>The <att>targType</att> attribute can be used to specify that
-the element pointed to must be of a particular type, as in the
-following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">    ...
-    this is discussed in <ref target="#dspec" targType="div body">
-    the section on links</ref></egXML></p>
-          <p>This reference should fail if the element with identifier
-<val>dspec</val> is neither a <gi>div</gi> nor a <gi>body</gi>.
-</p>
 
-<p>The <att>type</att> attribute can be used to categorize the link
-represented by the pointer in any convenient way. The <att>resp</att>
-and <att>crDate</att> attributes may also be used to represent the
-person or agency responsible for making the link, and its date of
-creation, as in the following example: <egXML
-xmlns="http://www.tei-c.org/ns/Examples"> ...  this is discussed in
-   <ref type="xref" crdate="950521" target="#dspec">
+    <p>The <att>type</att> attribute can be used to categorize the
+    link represented by the pointer in any convenient way. The
+    <att>resp</att> attribute may also be used to represent the person
+    or agency responsible for making the link, as in the following
+    example: <egXML xmlns="http://www.tei-c.org/ns/Examples"> ...
+    this is discussed in
+   <ref type="xref" resp="#SPQR" target="#dspec">
    the section on links</ref></egXML> 
 These attributes are most likely to be of use in hypertext
 systems containing very many pointers used for a variety of purposes
@@ -1052,7 +1043,7 @@ attribute.</p>
 simple way of representing some form of correspondence between two
 elements in a text. For example, in a multilingual text, it may be
 used to link translation equivalents, as in the following example
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><seg lang="FRA" xml:id="FR1" corresp="#EN1">Jean aime Nancy</seg><seg lang="ENG" xml:id="EN1" corresp="#FR1">John loves Nancy</seg></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><seg xml:lang="fra" xml:id="FR1" corresp="#EN1">Jean aime Nancy</seg><seg xml:lang="en" xml:id="EN1" corresp="#FR1">John loves Nancy</seg></egXML></p>
           <p>The same mechanism may be used for a variety of purposes. In the
 following example, it has been used to represent anaphoric
 correspondences between <q rend="inline" type="inline">the show</q>
@@ -1347,12 +1338,12 @@ Partial dates or times (e.g. <q>1990</q>,
 <q>September 1990</q>,
 <q>twelvish</q>) can  be expressed
 by  omitting a part of the value supplied, as in the following examples:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><date value="1980-02-21">21 Feb 1980</date><date value="1990">1990</date><date value="1990-09">September 1990</date><date value="--09">September</date><date value="2001-09-11T12:48:00">Sept 11th, 12 minutes before 9 am</date></egXML>Note in the last example the use of a normalized representation for
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><date when="1980-02-21">21 Feb 1980</date><date when="1990">1990</date><date when="1990-09">September 1990</date><date when="--09">September</date><date when="2001-09-11T12:48:00">Sept 11th, 12 minutes before 9 am</date></egXML>Note in the last example the use of a normalized representation for
 the date string which includes a time: this example could thus equally
 well be tagged using the <gi>time</gi> element. 
 </p>
           <p>
-            <egXML xmlns="http://www.tei-c.org/ns/Examples">Given on the <date value="1977-06-12">Twelfth Day of June
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">Given on the <date when="1977-06-12">Twelfth Day of June
 in the Year of Our Lord One Thousand Nine Hundred and
 Seventy-seven of the Republic the Two Hundredth and first
 and of the University the Eighty-Sixth.</date></egXML>
@@ -1406,7 +1397,7 @@ comprises a <term>term</term> and a <term>gloss</term>, marked with
 the elements <gi>term</gi> and <gi>gloss</gi>, which can occur
 anywhere in prose text.
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><list type="gloss"><head>Vocabulary</head><label lang="enm">nu</label><item>now</item><label lang="enm">lhude</label><item>loudly</item><label lang="enm">bloweth</label><item>blooms</item><label lang="enm">med</label><item>meadow</item><label lang="enm">wude</label><item>wood</item><label lang="enm">awe</label><item>ewe</item><label lang="enm">lhouth</label><item>lows</item><label lang="enm">sterteth</label><item>bounds, frisks</item><label lang="enm">verteth</label><item lang="lat">pedit</item><label lang="enm">murie</label><item>merrily</item><label lang="enm">swik</label><item>cease</item><label lang="enm">naver</label><item>never</item></list></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><list type="gloss"><head>Vocabulary</head><label xml:lang="enm">nu</label><item>now</item><label xml:lang="enm">lhude</label><item>loudly</item><label xml:lang="enm">bloweth</label><item>blooms</item><label xml:lang="enm">med</label><item>meadow</item><label xml:lang="enm">wude</label><item>wood</item><label xml:lang="enm">awe</label><item>ewe</item><label xml:lang="enm">lhouth</label><item>lows</item><label xml:lang="enm">sterteth</label><item>bounds, frisks</item><label xml:lang="enm">verteth</label><item xml:lang="lat">pedit</item><label xml:lang="enm">murie</label><item>merrily</item><label xml:lang="enm">swik</label><item>cease</item><label xml:lang="enm">naver</label><item>never</item></list></egXML></p>
         <p>Where the internal structure of a list item is more complex, it
 may be preferable to regard the list as a <term>table</term>, for
 which special-purpose tagging is defined below (<ptr target="#U5-tables"/>).
@@ -1758,7 +1749,7 @@ at which such a generated section should be placed.
 <specList><specDesc key="divGen"/></specList></p>
           <p>The <gi>divGen</gi> element can be placed anywhere that a
 division element would be legal, as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><front><titlePage> ... </titlePage><divGen type="toc"/><div type="Preface"><head>Preface</head> ... </div></front><body> ... </body><back><div><head>Appendix</head> ... </div><divGen type="index" n="Index"/></back></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><front><titlePage> <!-- ... --> </titlePage><divGen type="toc"/><div type="Preface"><head>Preface</head> <!-- ... --> </div></front><body> <!-- ... --> </body><back><div><head>Appendix</head> <!-- ... --> </div><divGen type="index" n="Index"/></back></egXML></p>
           <p>This example also demonstrates the use of the <att>type</att>
 attribute to distinguish the different kinds of division to be
 generated: in the first case a table of contents (a
@@ -1931,14 +1922,16 @@ contain the following additional elements:
 contain these same elements.</p>
             <p>As an example, the dedication at the start of Milton's
 <title>Comus</title> should be marked up as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="dedication"><head>To the Right Honourable <name>JOHN Lord Viscount
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<div type="dedication">
+<head>To the Right Honourable <name>JOHN Lord Viscount
 BRACLY</name>, Son and Heir apparent to the Earl of
 Bridgewater, &amp;c.</head><salute>MY LORD,</salute><p>THis <hi>Poem</hi>, which receiv'd its first occasion of
 Birth from your Self, and others of your Noble Family ....
 and as in this representation your attendant
-<name>Thyrsis</name>, so now in all reall expression
+<name>Thyrsis</name>, so now in all reall expression</p>
 <closer><salute>Your faithfull, and most humble servant</salute><signed><name>H. LAWES.</name></signed></closer>
-</p></div></egXML></p>
+</div></egXML></p>
           </div>
         </div>
         <div>
@@ -1996,7 +1989,7 @@ description) contain a prose description.</item></list></p>
 bibliographic description of the file with the following elements:
 <specList><specDesc key="titleStmt"/><specDesc key="editionStmt"/><specDesc key="extent"/><specDesc key="publicationStmt"/><specDesc key="seriesStmt"/><specDesc key="notesStmt"/><specDesc key="sourceDesc"/></specList></p>
           <p>   A minimal header has the following structure:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><teiHeader><fileDesc><titleStmt> ... </titleStmt><publicationStmt> ... </publicationStmt><sourceDesc> ... </sourceDesc></fileDesc></teiHeader></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><teiHeader><fileDesc><titleStmt> <!-- ... --> </titleStmt><publicationStmt> <!-- ... --> </publicationStmt><sourceDesc> <!-- ... --> </sourceDesc></fileDesc></teiHeader></egXML></p>
           <div type="Section">
             <head>The Title Statement</head>
             <p>The following elements can be used in the <gi>titleStmt</gi>:
@@ -2041,8 +2034,8 @@ entire publication statement is in prose. The following elements may
 occur within them:
 <specList><specDesc key="pubPlace"/><specDesc key="address"/><specDesc key="idno"/><specDesc key="availability"/><specDesc key="date"/></specList></p>
             <p>Example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><publicationStmt><publisher>Oxford University Press</publisher><pubPlace>Oxford</pubPlace><date>1989</date><idno type="ISBN"> 0-19-254705-5</idno><availability>Copyright 1989, Oxford University
-          Press</availability></publicationStmt></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><publicationStmt><publisher>Oxford University Press</publisher><pubPlace>Oxford</pubPlace><date>1989</date><idno type="ISBN"> 0-19-254705-5</idno><availability><p>Copyright 1989, Oxford University
+          Press</p></availability></publicationStmt></egXML></p>
           </div>
           <div type="Section">
             <head>Series and Notes Statements</head>
@@ -2064,7 +2057,7 @@ using one or more of the following elements:
             <p>Examples:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><sourceDesc><bibl>The first folio of Shakespeare, prepared by Charlton
           Hinman (The Norton Facsimile, 1968)</bibl></sourceDesc></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><sourceDesc><scriptStmt xml:id="CNN12"><bibl><author>CNN Network News</author><title>News headlines</title><date>12 Jun 1989</date></bibl></scriptStmt></sourceDesc></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><sourceDesc><bibl><author>CNN Network News</author><title>News headlines</title><date>12 Jun 1989</date></bibl></sourceDesc></egXML></p>
           </div>
         </div>
         <div>
@@ -2077,11 +2070,11 @@ elements from the following list:
           <div type="Section">
             <head>Project and Sampling Descriptions</head>
             <p>Examples of <gi>projectDesc</gi> and <gi>samplingDesc</gi>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><encodingDesc><projectDesc>Texts collected for use in the Claremont
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><encodingDesc><projectDesc><p>Texts collected for use in the Claremont
           Shakespeare Clinic, June 1990.
-     </projectDesc></encodingDesc></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><encodingDesc><samplingDecl>Samples of 2000 words taken from the beginning
-          of the text
+    </p></projectDesc></encodingDesc></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><encodingDesc><samplingDecl><p>Samples of 2000 words taken from the beginning
+          of the text</p>
      </samplingDecl></encodingDesc></egXML></p>
           </div>
           <div type="Section">
@@ -2130,7 +2123,6 @@ bibliographic reference, as in the following example:
             <p>Alternatively, or in addition, the encoder may define a special
 purpose classification scheme, as in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><taxonomy xml:id="B"><bibl>Brown Corpus</bibl><category xml:id="B.A"><catDesc>Press Reportage</catDesc><category xml:id="B.A1"><catDesc>Daily</catDesc></category><category xml:id="B.A2"><catDesc>Sunday</catDesc></category><category xml:id="B.A3"><catDesc>National</catDesc></category><category xml:id="B.A4"><catDesc>Provincial</catDesc></category><category xml:id="B.A5"><catDesc>Political</catDesc></category><category xml:id="B.A6"><catDesc>Sports</catDesc></category></category><category xml:id="B.D"><catDesc>Religion</catDesc><category xml:id="B.D1"><catDesc>Books</catDesc></category><category xml:id="B.D2"><catDesc>Periodicals and tracts</catDesc></category></category>
-  ...
 </taxonomy></egXML></p>
             <p>Linkage between a particular text and a category within such a
 taxonomy is made by means of the <gi>catRef</gi> element within the
@@ -2148,7 +2140,7 @@ within a single framework. It has three optional components:
 work was created, even though it may not have been published or
 recorded there.</p>
           <p>Example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><creation><date value="1992-08">August 1992</date><name type="place">Taos, New Mexico</name></creation></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><creation><date when="1992-08">August 1992</date><name type="place">Taos, New Mexico</name></creation></egXML></p>
           <p>The <gi>langUsage</gi> element is useful where a text contains many
 different languages. It may contain <gi>language</gi> elements to
 document each particular language used:
