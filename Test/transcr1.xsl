@@ -82,7 +82,7 @@ document.tooltip.visibility="hidden"
       </area>
       </xsl:for-each>
     </map>    
-    <img width="{@xMax}" height="{@yMax}" src="{tei:graphic/@url}"  usemap="#facs-{generate-id()}"/>
+    <img src="{tei:graphic/@url}"  usemap="#facs-{generate-id()}"/>
   </xsl:for-each>
 </xsl:template>
 
