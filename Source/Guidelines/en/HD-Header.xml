@@ -1278,7 +1278,7 @@ of an element, unless otherwise stated by the global <att>rend</att>
 attribute.</item></list></p>
 <p>This information is conveyed by the following elements:
 <specList>
-<specDesc key="rendition"/>
+<specDesc key="rendition" atts="scheme"/>
 <specDesc key="namespace"/>
 <specDesc key="tagUsage"/>
 </specList></p>
@@ -1288,20 +1288,34 @@ identifier, followed by at least one <gi>namespace</gi> element,
 containing a series <gi>tagUsage</gi> elements, one
 for each distinct element from that namespace occurring within the outermost
 <gi>text</gi> element of a TEI document.</p>
-<p>The <gi>rendition</gi> element defined in this version of the TEI
-Guidelines is a preliminary proposal only, intended to provide a hook
-for more detailed specifications of default rendition in later versions.
- 	</p>
-<p>The present proposal allows the encoder to enter an informal
-description of a rendition, or style, as running prose only. This
-rendition will be assumed to apply, by default, to all occurrences of
-an element which names its identifier as the value of the
+<p>The <gi>rendition</gi> element allows the encoder to specify how
+one or more elements are rendered in the original source in any of the
+following ways:
+<list>
+<item>using an informal prose description</item>
+<item>using a standard stylesheet language such as CSS or
+XSL-FO</item>
+<item>using a project-defined formal language</item>
+</list></p>
+<p>One or more such specifications may be associated with elements of
+a document in two ways:
+<list>
+<item>the 
 <att>render</att> attribute of the appropriate <gi>tagUsage</gi>
-element. For element occurrences to which this default rendition does
-not apply, the encoder should specify an explicit description using the
-global <att>rend</att> attribute on the elements concerned.</p>
+element may be used to indicate a default rendition for all occurrences of the named
+element</item>
+<item>the global <att>rendition</att> attribute may be used on any
+element to
+indicate its rendition, over-riding any supplied default value
+</item>
+</list>
+The global <att>rend</att> attribute may also be used to supply an informal
+description of the rendering for an element; if this is supplied in
+addition to the <att>rendition</att> attribute it takes precedence,
+just as it also overrides any default specified for that  element.</p>
+
 <p>For example, the following schematic shows how an encoder might
-specify that <gi>p</gi> elements are by default to be rendered using one
+specify that all <gi>p</gi> elements are by default to be rendered using one
 set of specifications identified as <val>style1</val>,
 while <gi>hi</gi>
 elements are to use a different set, identified as <val>style2</val>:
@@ -1316,16 +1330,33 @@ elements are to use a different set, identified as <val>style2</val>:
    <tagUsage gi="p" render="#style1"> ... </tagUsage>
    <tagUsage gi="hi" render="#style2"> ... </tagUsage>
    </namespace>
-</tagsDecl></egXML></p><p>No detailed proposals for the content of the <gi>rendition</gi>
-element have as yet been formulated. Earlier versions of
-these Guidelines suggested that specifications derived from,
-or compatible with, the properties standardized as part of
-the Document Style and Semantics Specification Language
-(ISO/IEC 10179) might be useful; the Cascading Stylesheet
-Language (<ptr target="http://www.w3.org/TR/REC-CSS1"/>) is another possible candidate
-vehicle for their expression, as is the XML vocabulary for
+</tagsDecl>
+
+<!-- elsewhere in the document -->
+<p>This paragraph,mostly rendered in style1, contains a few words
+<hi>rendered in style2</hi></p>
+<p rendition="#style2">This paragraph is all rendered in style2</p>
+<p>This is back to style1</p>
+</egXML></p>
+
+<p>As noted above,  the content of the <gi>rendition</gi>
+element may describe the appearance of the source material using
+prose, a project-defined formal language, or either of the existing
+standard languages: the Cascading Stylesheet
+Language (<ptr target="http://www.w3.org/TR/REC-CSS1"/>) and the XML vocabulary for
 specifying formatting semantics which forms a part of the
-W3C's Extensible Stylesheet Language (<ptr target="http://www.w3.org/TR/xsl"/>).</p> <p>A <gi>tagsDecl</gi> need not specify
+W3C's Extensible Stylesheet Language (<ptr
+target="http://www.w3.org/TR/xsl11"/>). The <att>scheme</att>
+attribute indicates which of these applies to a given
+<gi>rendition</gi> element, and takes the following values:
+<!-- why can't i do a specList for a valList? -->
+<list type="gloss">
+<label>free</label><item>Informal free text description</item>
+<label>css</label><item>Cascading Stylesheet Language</item>
+<label>xslfo</label><item>Extensible  Stylesheet Language Formatting Objects</item>
+<label>other</label><item>A user-defined formal description language</item>
+</list>
+</p> <p>A <gi>tagsDecl</gi> need not specify
 any <gi>rendition</gi> element.  It must however 
 contain at least one <gi>namespace</gi> element, which should contain exactly one occurrence of a <gi>tagUsage</gi>
 element for each distinct element marked within the

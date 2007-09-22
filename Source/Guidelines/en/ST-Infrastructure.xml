@@ -385,7 +385,9 @@ representation of a graphic, embedded within an <gi>svg</gi> element.
 <p>The following attributes are defined for every TEI element.<note place="foot">More exactly, these are the attributes of the attribute
 class <ident type="class">att.global</ident>, to which all elements
 belong; for further discussion of attribute classes and ways in which
-attributes may be inherited and over-ridden, see section <ptr target="#STECAT"/>.</note> <specList><specDesc key="att.global" atts="xml:id n xml:lang rend"/></specList>
+attributes may be inherited and over-ridden, see section <ptr
+target="#STECAT"/>.</note> <specList><specDesc key="att.global"
+atts="xml:id n xml:lang rend rendition"/></specList>
  </p>
 <p>Some modules (e.g. those for transcription, linking, and analysis)
 define other global attributes; these additional attributes are
@@ -393,7 +395,7 @@ documented along with the module concerned; see also section <ptr
 target="#STECAT"/>.
  </p>
 <p>Any TEI element may be given values for <att>xml:id</att>, <att>n</att>,
-<att>xml:lang</att>, <att>rend</att>, simply by
+<att>xml:lang</att>, <att>rend</att>, or <att>rendition</att>, simply by
 specifying values for these attributes.
 The following two examples convey the same information about the text:
 that the material transcribed occurs within a <gi>p</gi> element
@@ -528,11 +530,49 @@ only for any elements which deviate from the usual rendition.
  </p>
 <p>The contents of the <att>rend</att> attribute are free text.  In any
 given project, encoders are advised to settle on a standard vocabulary
-with which to describe typographic or manuscript rendition of the text,
-and to document their usage of that vocabulary in the <gi>rendition</gi>
-element of the TEI header. </p>
-</div>
-
+with which to describe typographic or manuscript rendition of the
+text.</p>
+<p>The  <gi>rendition</gi>
+element defined in <ptr target="#HD57"/> may be used to hold such
+descriptions, expressed in free text, or using a formal language. A
+<gi>rendition</gi> element can then be associated with any element,
+either by default, or by means of the global <att>rendition</att>
+attribute. For example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"> 
+<!-- define italic style using CSS -->
+   <rendition xml:id="IT" scheme="css">text-style: italic</rendition>
+<!-- set italic style as default for the emph and hi elements -->
+   <tagUsage gi="emph" render="#IT"/>
+   <tagUsage gi="hi" render="#IT"/>
+<!-- indicate that a specific p element is also in italic style -->
+   <p rendition="#IT"/>
+</egXML>
+</p>
+<p>The <att>rendition</att> attribute always points to one or more
+<gi>rendition</gi> elements, each of which defines some aspect of the
+rendering or appearance of the text in its original form. These details may be
+described using a formal language, such as Cascading Style Sheets (CSS)
+or Extensible Stylesheet Language Formatting Objects (XSL-FO); in an
+original formal language developed for a specific project; or
+informally in running prose. Although languages such as CSS and XSL-FO
+are generally used to describe document output to screen or print, they
+nonetheless provide formal and precise mechanisms for describing the
+appearance of many source documents, especially print documents, but
+also many aspects of manuscript documents. For example, both CSS and
+XSL-FO provide mechanisms for describing font families, weight, and
+styles; character and line spacing; and so on.</p>
+<p>If both <att>rendition</att> and <att>rend</att> attributes are
+provided for a given element, the latter always takes precedence.  The
+combination of the global <att>rendition</att> and <att>rend</att>
+attributes provide a robust system for describing rendition
+information for source documents. The global <att>rendition</att>
+attribute is analogous to the X/HTML <att>class</att> attribute, which
+references style declarations in a Cascading Style Sheet. The global
+<att>rend</att> attribute is analogous to the X/HTML <att>style</att>
+attribute, which provides a mechanism for embedding inline rendition
+information at the point of use within a document. However, in both
+cases, the TEI attributes describe the rendition or appearance of
+the source document, <emph>not</emph> intended output renditions.  </p></div>
 
 <div type="div2" xml:id="STOV"><head>The TEI Infrastructure Module</head>
 

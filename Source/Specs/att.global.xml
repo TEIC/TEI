@@ -115,7 +115,7 @@ $Id$
       defined.</valDesc>
       <exemplum>
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <head rend="align(center) slant(upright) case(allcaps)"><lb/>To The
+          <head rend="align(center) case(allcaps)"><lb/>To The
   <lb/>Duchesse
   <lb/>of
   <lb/>Newcastle,
@@ -140,6 +140,47 @@ $Id$
         in the Guidelines.</p>
       </remarks>
     </attDef>
+
+    <attDef ident="rendition" usage="opt">
+      <desc>points to a description of the rendering  or
+	presentation used for this element in the source text.</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>one or more URIs, separated by white space.</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <head rendition="#ac #sc"><lb/>To The
+  <lb/>Duchesse
+  <lb/>of
+  <lb/>Newcastle,
+  <lb/>On Her
+  <lb/><hi rendition="#no">New Blazing-World</hi>.
+</head>
+<!-- elsewhere... -->
+<rendition xml:id="sc" scheme="css">font-variant: smallcaps</rendition>
+<rendition xml:id="no" scheme="css">font-variant: normal</rendition>
+<rendition xml:id="ac" scheme="css">text-align: center</rendition>
+        </egXML>
+      </exemplum>
+      <remarks>
+        <p>The <att>rendition</att> attribute is used  in a very similar way to
+	the <att>class</att> attribute defined for XHTML but with the
+	important distinction that its function is to describe the
+	appearance of the source text, not necessarily to determine
+	how that text should be presented on screen or paper.</p>
+<p>Where both <att>rendition</att> and <att>rend</att> are supplied,
+the latter is understood to override or complement the former.</p>
+<p>Each URI provided should indicate a <gi>rendition</gi>
+      element defining the intended rendition in terms of some
+      appropriate style language, as indicated by the
+      <att>scheme</att> attribute.</p>
+
+      </remarks>
+    </attDef>
+
+
+
     <attDef ident="xml:base" usage="opt">
       <equiv/>
       <desc>provides a base URI reference with which applications can
