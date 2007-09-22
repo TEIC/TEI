@@ -438,21 +438,35 @@ not to make explicit the particular type of rendition associated with
 the emphasis by use of the <att>rend</att> attribute. If a source text
 consistently renders a particular feature (e.g. emphasis or words in
 foreign languages) in a particular way, the rendering associated with
-that feature may be described in the TEI header and the <att>rend</att>
-attribute used only to describe examples which deviate from the norm.
+that feature may be described in the TEI header using the
+<gi>rendition</gi> element. The <att>rend</att>
+attribute may then be used to describe examples which deviate from the
+norm. For example, assuming that the TEI Header has defined a default
+rendering for the <gi>emph</gi> element, the following encoding would
+use it:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><q>Sex, sir, is <emph>purely</emph> a
 question of appetite!</q> Tarr exclaimed.</egXML>
 <!-- Wyndham Lewis, Tarr (1928), Jupiter ed 1968, p.17 -->
+If on the other hand no such default has been defined for the
+element, the encoder may specify it informally using the
+<att>rend</att> attribute:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><q>What it all comes to is this,</q> he said.
 <q><emph rend="italic">What does Christopher
 Robin do in the morning nowadays?</emph></q></egXML>
 <!-- Milne, House at Pooh Corner (1928), p83 -->
+or, if a <gi>rendition</gi> element has been provided in the header
+(but not necessarily associated with any other element), the
+<att>rendition</att> attribute may be used to point to it:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><l>Here Thou, great <name rend="italics">Anna</name>!
    whom three Realms obey,</l>
 <l>Doth sometimes Counsel take —
-   and sometimes <emph rend="italic">Tea</emph>.</l></egXML>
+   and sometimes <emph rendition="#italic">Tea</emph>.</l>
+<!-- in the header ... -->
+<rendition xml:id="italic" scheme="css">text-style:italic</rendition>
+</egXML>
 <!-- Pope, Rape of the Lock (1744) III.8 -->
- </p>
+Further information on the use of the <gi>rendition</gi> element is
+provided at <ptr target="#HD57"/>. </p>
 <p>The <gi>hi</gi> element is used to mark words or phrases which are
 highlighted in some way, but for which identification of the intended
 distinction is difficult, controversial, or impossible. It enables an
