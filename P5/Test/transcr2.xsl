@@ -12,7 +12,11 @@
     exclude-result-prefixes="rdf dc syn taxo rss rdf html mathml tei"
     version="1.0">
   
-  <xsl:param name="display-width" select="1200"/>
+  <xsl:param name="display-width" select="1000"/>
+
+  <xsl:key name="transcription-by-zone-id"
+	   match="tei:*[@facs]" 
+	   use="substring-after(@facs, '#')"/>
   
   <xsl:template match="/">
     <html>
@@ -42,24 +46,48 @@
 	</style>
       </head>
       <body>
-	
+<!-- process any surface which has a zone with graphics in -->	
 	<xsl:for-each select="tei:TEI/tei:facsimile/tei:surface[tei:zone/tei:graphic]">
 	  <!-- render each distinct surface graphically -->
-	  <!-- first determine the area which exactly circumscribes all the graphics which cover this surface -->
-	  <xsl:variable name="left">
-	    <xsl:value-of select="tei:zone/@urx"/>
-	  </xsl:variable>
+	  <!-- first determine the area which exactly circumscribes
+all the graphics which cover this surface -->
 
-	  <xsl:variable name="top">
-	    <xsl:value-of select="tei:zone/@ury"/>
+	  <xsl:variable name="left">
+	    <xsl:for-each select="tei:zone">
+	      <xsl:sort select="@ulx" data-type="number"/>
+	      <xsl:if test="position() = 1">
+		<xsl:value-of select="@ulx" />
+	      </xsl:if>
+	    </xsl:for-each>
 	  </xsl:variable>
 
 	  <xsl:variable name="right">
-	    <xsl:value-of select="tei:zone/@llx"/>
+	    <xsl:for-each select="tei:zone">
+	      <xsl:sort select="@lrx" data-type="number"
+			order="descending" />
+	      <xsl:if test="position() = 1">
+		<xsl:value-of select="@lrx" />
+	      </xsl:if>
+	    </xsl:for-each>
+	  </xsl:variable>
+
+	  <xsl:variable name="top">
+	    <xsl:for-each select="tei:zone">
+	      <xsl:sort select="@uly" data-type="number"/>
+	      <xsl:if test="position() = 1">
+		<xsl:value-of select="@uly" />
+	      </xsl:if>
+	    </xsl:for-each>
 	  </xsl:variable>
 
 	  <xsl:variable name="bottom">
-	    <xsl:value-of select="tei:zone/@lly"/>
+	    <xsl:for-each select="tei:zone">
+	      <xsl:sort select="@lry" data-type="number"
+			order="descending" />
+	      <xsl:if test="position() = 1">
+		<xsl:value-of select="@lry" />
+	      </xsl:if>
+	    </xsl:for-each>
 	  </xsl:variable>
 
 	  <xsl:variable name="surface-graphics-width" select="number($right) - number($left)"/>
@@ -81,22 +109,22 @@
 	      <xsl:with-param name="top" select="$top"/>
 	    </xsl:call-template>
 	    
-	    <xsl:if test="@box">
+	    <xsl:if test="@ulx">
 	      <xsl:comment>The physical surface itself</xsl:comment>
 	      <xsl:variable name="surface-left">
-		<xsl:value-of select="@urx"/>
+		<xsl:value-of select="@ulx"/>
 	      </xsl:variable>
 
 	      <xsl:variable name="surface-top">
-		<xsl:value-of select="@ury"/>
+		<xsl:value-of select="@uly"/>
 	      </xsl:variable>
 
 	      <xsl:variable name="surface-right">
-		<xsl:value-of select="@llx"/>
+		<xsl:value-of select="@lrx"/>
 	      </xsl:variable>
 
 	      <xsl:variable name="surface-bottom">
-		<xsl:value-of select="@lly"/>
+		<xsl:value-of select="@lry"/>
 	      </xsl:variable>
 
 	      <xsl:variable name="surface-width" select="$surface-right - $surface-left"/>
@@ -141,29 +169,14 @@
       <xsl:sort 
 	  data-type="number"
 	  order="descending"
-	  select="
-		  (
-		  number(substring-before(substring-after(substring-after(@box, ' '), ' '), ' ')) - 
-		  number(substring-before(@box, ' '))
-		  )
-		  *
-		  (
-		  number(substring-after(substring-after(substring-after(@box, ' '), ' '), ' ')) -
-		  number(substring-before(substring-after(@box, ' '), ' '))
-		  )
-		  "
-	  />
+	  select="(number(@lrx) - number(@ulx)) * (number(@lry) - number(@uly))"/>
       
       <!-- render a zone of the surface -->
       
-      <xsl:variable name="zone-left" 
-		    select="substring-before(@box, ' ')"/>
-      <xsl:variable name="zone-top" 
-		    select="substring-before(substring-after(@box, ' '), ' ')"/>
-      <xsl:variable name="zone-right" 
-		    select="substring-before(substring-after(substring-after(@box, ' '), ' '), ' ')"/>
-      <xsl:variable name="zone-bottom" 
-		    select="substring-after(substring-after(substring-after(@box, ' '), ' '), ' ')"/>
+      <xsl:variable name="zone-left" select="@ulx"/>
+      <xsl:variable name="zone-top" select="@uly"/>
+      <xsl:variable name="zone-right" select="@lrx"/>
+      <xsl:variable name="zone-bottom" select="@lry"/>
       <xsl:variable name="zone-width" 
 		    select="number($zone-right) - number($zone-left)"/>
       <xsl:variable name="zone-height" 
@@ -190,111 +203,49 @@
   </xsl:template>
   
   
-  <xsl:key name="transcription-by-zone-id" match="tei:*[@facs]" use="substring-after(@facs, '#')"/>
   
-
-
-  <xsl:template name="get-left">
-    <xsl:param name="boxes"/>
-    <xsl:variable name="box" select="normalize-space($boxes[1])"/>
-    <xsl:variable name="this-left" select="substring-before($box, ' ')"/>
-    <xsl:choose>
-      <xsl:when test="count($boxes) = 1">
-	<xsl:value-of select="$this-left"/>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:variable name="left">
-	  <xsl:call-template name="get-left">
-	    <xsl:with-param name="boxes" select="$boxes[position() &gt; 1]"/>
-	  </xsl:call-template>
-	</xsl:variable>
-	<xsl:choose>
-	  <xsl:when test="number($this-left) &lt; number($left)">
-	    <xsl:value-of select="$this-left"/>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:value-of select="$left"/>
-	  </xsl:otherwise>
-	</xsl:choose>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  
-  <xsl:template name="get-top">
-    <xsl:param name="boxes"/>
-    <xsl:variable name="box" select="normalize-space($boxes[1])"/>
-    <xsl:variable name="this-top" select="substring-before(substring-after($box, ' '), ' ')"/>
-    <xsl:choose>
-      <xsl:when test="count($boxes) = 1">
-	<xsl:value-of select="$this-top"/>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:variable name="top">
-	  <xsl:call-template name="get-top">
-	    <xsl:with-param name="boxes" select="$boxes[position() &gt; 1]"/>
-	  </xsl:call-template>
-	</xsl:variable>
-	<xsl:choose>
-	  <xsl:when test="number($this-top) &lt; number($top)">
-	    <xsl:value-of select="$this-top"/>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:value-of select="$top"/>
-	  </xsl:otherwise>
-	</xsl:choose>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  
-  <xsl:template name="get-right">
-    <xsl:param name="boxes"/>
-    <xsl:variable name="box" select="normalize-space($boxes[1])"/>
-    <xsl:variable name="this-right" select="substring-before(substring-after(substring-after($box, ' '), ' '), ' ')"/>
-    <xsl:choose>
-      <xsl:when test="count($boxes) = 1">
-	<xsl:value-of select="$this-right"/>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:variable name="right">
-	  <xsl:call-template name="get-right">
-	    <xsl:with-param name="boxes" select="$boxes[position() &gt; 1]"/>
-	  </xsl:call-template>
-	</xsl:variable>
-	<xsl:choose>
-	  <xsl:when test="number($this-right) &gt; number($right)">
-	    <xsl:value-of select="$this-right"/>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:value-of select="$right"/>
-	  </xsl:otherwise>
-	</xsl:choose>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  
-  <xsl:template name="get-max">
-    <xsl:param name="values"/>
-    <xsl:variable name="box" select="$values[1])"/>
-    <xsl:choose>
-      <xsl:when test="count($boxes) = 1">
-	<xsl:value-of select="$box"/>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:variable name="bottom">
-	  <xsl:call-template name="get-bottom">
-	    <xsl:with-param name="boxes" select="$boxes[position() &gt; 1]"/>
-	  </xsl:call-template>
-	</xsl:variable>
-	<xsl:choose>
-	  <xsl:when test="number($this-bottom) &gt; number($bottom)">
-	    <xsl:value-of select="$this-bottom"/>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:value-of select="$bottom"/>
-	  </xsl:otherwise>
-	</xsl:choose>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
   
 </xsl:stylesheet>
+<!--
+
+techniques getting maximum and minimum, from Jeni Tennison 
+
+1. Through an XPath: select the SessionStartupTime for which there is
+no higher (or lower) value:
+
+   JartaXmlReport[not(../JartaXmlReport/SessionStartupTime &gt;
+                      SessionStartupTime)]/SessionStartupTime
+
+2. Through a sort-and-pick-first approach, sorting in descending (or
+ascending) order:
+
+   <xsl:for-each select="JartaXmlReport">
+      <xsl:sort select="SessionStartupTime" data-type="number"
+                orders="descending" />
+      <xsl:if test="position() = 1">
+         <xsl:value-of select="SessionStartupTime" />
+      </xsl:if>
+   </xsl:for-each>
+
+3. Through a recursive template that walks through from higher to
+higher SessionStartupTime.  Apply it only to the first JartaXmlReport:
+
+  <xsl:apply-templates select="JartaXmlReport[1]" mode="find-max" />
+
+The template is something like:
+  
+<xsl:template match="JartaXmlReport" mode="find-max">
+   <xsl:variable name="next"
+                 select="following-sibling::JartaXmlReport
+                            [SessionStartupTime &gt;
+                             current()/SessionStartupTime]" />
+   <xsl:choose>
+      <xsl:when test="$next">
+         <xsl:apply-templates select="$next" mode="find-max" />
+      </xsl:when>
+      <xsl:otherwise>
+         <xsl:value-of select="SessionStartupTime" />
+      </xsl:otherwise>
+   </xsl:choose>
+</xsl:template>
+-->
