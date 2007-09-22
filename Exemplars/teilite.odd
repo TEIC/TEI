@@ -477,18 +477,18 @@ text, which, in the case of a composite text, may consist of
 <term>group</term>s, each containing more groups or texts.</p>
         <p>A unitary text will be encoded using an overall structure like
 this:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><TEI><teiHeader> [ TEI Header information ]  </teiHeader><text><front> [ front matter ... ]   </front><body>  [ body of text ... ]   </body><back>  [ back matter ...  ]   </back></text></TEI></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><TEI><teiHeader><!-- [ TEI Header information ]  --></teiHeader><text><front><!-- [ front matter ... ] -->  </front><body> <!-- [ body of text ... ]  --> </body><back><!--  [ back matter ...  ] -->  </back></text></TEI></egXML></p>
         <p>A composite text also has an optional front and back. In between
 occur one or more groups of texts, each with its own optional front
 and back matter. A composite text will thus be encoded using an
 overall structure like this:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><TEI><teiHeader> [ header information for the composite ] </teiHeader><text><front> [ front matter for the composite  ]      </front><group><text><front> [ front matter of first text ] </front><body>  [ body of first text  ]          </body><back>  [ back matter of first text ]    </back></text><text><front> [ front matter of second text]  </front><body>  [ body of second text  ]          </body><back>  [ back matter of second text ]    </back></text>
-           [ more texts or groups of texts here ]
-        </group><back>      [ back matter for the composite  ]      </back></text></TEI></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><TEI><teiHeader> <!--[ header information for the composite ]--> </teiHeader><text><front> <!--[ front matter for the composite  ]-->      </front><group><text><front> <!--[ front matter of first text ]--> </front><body>  <!--[ body of first text  ]-->          </body><back>  <!--[ back matter of first text ]-->    </back></text><text><front> <!--[ front matter of second text]-->  </front><body>  <!--[ body of second text  ]-->          </body><back>  <!--[ back matter of second text ]-->    </back></text>
+           <!--[ more texts or groups of texts here ]-->
+        </group><back>      <!--[ back matter for the composite  ]-->      </back></text></TEI></egXML></p>
         <p>It is also possible to define a composite of TEI texts, each with
 its own header. Such a collection is known as a <term>TEI corpus</term>,
 and may itself have a header:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><teiCorpus><teiHeader>   [header information for the corpus]</teiHeader><TEI><teiHeader>[header information for first text]</teiHeader><text>     [first text in corpus]             </text></TEI><TEI><teiHeader>[header information for second text]</teiHeader><text>     [second text in corpus]             </text></TEI></teiCorpus></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><teiCorpus><teiHeader>   <!--[header information for the corpus]--></teiHeader><TEI><teiHeader><!--[header information for first text]--></teiHeader><text>     <!--[first text in corpus]-->             </text></TEI><TEI><teiHeader><!--[header information for second text]--></teiHeader><text>     <!--[second text in corpus]-->             </text></TEI></teiCorpus></egXML>
 It is not however possible to create a composite of corpora --
 that is, a number of <gi>teiCorpus</gi> elements combined together
 and treated as a single object. This is a restriction of the current
@@ -572,15 +572,15 @@ chapters are further subdivided into parts. We might define
 <att>xml:id</att> values for this structure as follows:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><body><div xml:id="WN1" n="I" type="book"><div xml:id="WN101" n="I.1" type="chapter">
-   ... </div><div xml:id="WN102" n="I.2" type="chapter">
-   ... </div>
-   ...
+   <!-- ... --> </div><div xml:id="WN102" n="I.2" type="chapter">
+   <!-- ... --> </div>
+   <!-- ... -->
   <div xml:id="WN110" n="I.10" type="chapter"><div xml:id="WN1101" n="I.10.1" type="part">
-      ... </div><div xml:id="WN1102" n="I.10.2" type="part">
-      ... </div></div>
-  ...
+      <!-- ... --> </div><div xml:id="WN1102" n="I.10.2" type="part">
+      <!-- ... --> </div></div>
+  <!-- ... -->
  </div><div xml:id="WN2" n="II" type="book">
-   ....
+   <!-- ... -->
 </div></body></egXML></p>
           <p>A different numbering scheme may be used for <att>xml:id</att> and
 <att>n</att> attributes: this is often useful where a canonical
@@ -591,10 +591,10 @@ whole work, rather than within each book, one might use a scheme such
 as the following:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><body><div xml:id="TS01" n="1" type="Volume"><div xml:id="TS011" n="1" type="Chapter">
-      ... </div><div xml:id="TS012" n="2">
-      ...</div></div><div xml:id="TS02" n="2" type="Volume"><div xml:id="TS021" n="3" type="Chapter">
-      ...</div><div xml:id="TS022" n="4">
-      ...</div></div></body></egXML>
+      <!-- ... --> </div><div xml:id="TS012" n="2">
+      <!-- ... --></div></div><div xml:id="TS02" n="2" type="Volume"><div xml:id="TS021" n="3" type="Chapter">
+      <!-- ... --></div><div xml:id="TS022" n="4">
+      <!-- ... --></div></div></body></egXML>
 Here the work has two volumes, each containing two chapters.
 The chapters are numbered conventionally 1 to 4, but the <att>xml:id</att>
 values specified allow them to be regarded additionally as if they
@@ -662,10 +662,10 @@ fragmented are incomplete, as in this example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="Act" n="I"><head>ACT I</head><div type="Scene" n="1"><head>SCENE I</head><stage rend="italic">
 Enter Barnardo and Francisco, two Sentinels, at several doors</stage><sp><speaker>Barn</speaker><l part="Y">Who's there?</l></sp><sp><speaker>Fran</speaker><l>Nay, answer me. Stand and unfold 
   yourself.</l></sp><sp><speaker>Barn</speaker><l part="I">Long live the King!</l></sp><sp><speaker>Fran</speaker><l part="M">Barnardo?</l></sp><sp><speaker>Barn</speaker><l part="F">He.</l></sp><sp><speaker>Fran</speaker><l>You come most carefully upon 
-  your hour.</l></sp>... </div></div></egXML></p>
+  your hour.</l></sp><!-- ... --> </div></div></egXML></p>
           <p>The same mechanism may be applied to stanzas which are divided
 between two speakers:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div><sp><speaker>First voice</speaker><lg type="stanza" part="I"><l>But why drives on that ship so fast</l><l>Withouten wave or wind?</l></lg></sp><sp><speaker>Second Voice</speaker><lg part="F"><l>The air is cut away before.</l><l>And closes from behind.</l></lg></sp>... </div></egXML> </p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div><sp><speaker>First voice</speaker><lg type="stanza" part="I"><l>But why drives on that ship so fast</l><l>Withouten wave or wind?</l></lg></sp><sp><speaker>Second Voice</speaker><lg part="F"><l>The air is cut away before.</l><l>And closes from behind.</l></lg></sp><!-- ... --> </div></egXML> </p>
           <p>This example shows how dialogue presented in a prose work as if it
 were drama should be encoded. It also demonstrates the use of the
 <att>who</att> attribute to bear a code identifying the speaker
@@ -776,7 +776,8 @@ frequent is quotation.  When possible, we recommend that the
 underlying feature be tagged, rather than the simple fact that
 quotation marks appear in the text, using the following elements:
 
-<specList><specDesc key="q"/><specDesc key="mentioned"/><specDesc key="soCalled"/><specDesc key="gloss"/></specList>
+<specList><specDesc key="q"/><specDesc key="quote"/>
+<specDesc key="mentioned"/><specDesc key="soCalled"/><specDesc key="gloss"/></specList>
   </p>
 
           <p>Here is a simple example of a quotation:
@@ -922,7 +923,7 @@ example, the cross reference is to a
     see especially <ptr target="#SEC12"/>.
     ...
     <div xml:id="SEC12"><head>Concerning Identifiers</head>
-     ...</div></egXML>
+     <!-- ... --></div></egXML>
  </p>
           <p>Because the <att>xml:id</att> attribute is global, any element in
 a document may be pointed to in this way. In the following example, a
@@ -932,27 +933,6 @@ paragraph has been given an identifier so that it may be pointed at:
     ...
     <p xml:id="pspec">Links may be made to any kind of element
     ...</p></egXML></p>
-          <p>The <att>targType</att> attribute can be used to specify that
-the element pointed to must be of a particular type, as in the
-following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">    ...
-    this is discussed in <ref target="#dspec" targType="div body">
-    the section on links</ref></egXML></p>
-          <p>This reference should fail if the element with identifier
-<val>dspec</val> is neither a <gi>div</gi> nor a <gi>body</gi>.
-</p>
-
-<p>The <att>type</att> attribute can be used to categorize the link
-represented by the pointer in any convenient way. The <att>resp</att>
-and <att>crDate</att> attributes may also be used to represent the
-person or agency responsible for making the link, and its date of
-creation, as in the following example: <egXML
-xmlns="http://www.tei-c.org/ns/Examples"> ...  this is discussed in
-   <ref type="xref" crdate="950521" target="#dspec">
-   the section on links</ref></egXML> 
-These attributes are most likely to be of use in hypertext
-systems containing very many pointers used for a variety of purposes
-and created by a variety of means.</p>
 
 <p>Sometimes the target of a cross reference  does not correspond
 with any particular feature of a text, and so may not be tagged as an
@@ -1052,7 +1032,7 @@ attribute.</p>
 simple way of representing some form of correspondence between two
 elements in a text. For example, in a multilingual text, it may be
 used to link translation equivalents, as in the following example
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><seg lang="FRA" xml:id="FR1" corresp="#EN1">Jean aime Nancy</seg><seg lang="ENG" xml:id="EN1" corresp="#FR1">John loves Nancy</seg></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><seg xml:lang="fra" xml:id="FR1" corresp="#EN1">Jean aime Nancy</seg><seg xml:lang="en" xml:id="EN1" corresp="#FR1">John loves Nancy</seg></egXML></p>
           <p>The same mechanism may be used for a variety of purposes. In the
 following example, it has been used to represent anaphoric
 correspondences between <q rend="inline" type="inline">the show</q>
@@ -1347,18 +1327,18 @@ Partial dates or times (e.g. <q>1990</q>,
 <q>September 1990</q>,
 <q>twelvish</q>) can  be expressed
 by  omitting a part of the value supplied, as in the following examples:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><date value="1980-02-21">21 Feb 1980</date><date value="1990">1990</date><date value="1990-09">September 1990</date><date value="--09">September</date><date value="2001-09-11T12:48:00">Sept 11th, 12 minutes before 9 am</date></egXML>Note in the last example the use of a normalized representation for
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><date when="1980-02-21">21 Feb 1980</date><date when="1990">1990</date><date when="1990-09">September 1990</date><date when="--09">September</date><date when="2001-09-11T12:48:00">Sept 11th, 12 minutes before 9 am</date></egXML>Note in the last example the use of a normalized representation for
 the date string which includes a time: this example could thus equally
 well be tagged using the <gi>time</gi> element. 
 </p>
           <p>
-            <egXML xmlns="http://www.tei-c.org/ns/Examples">Given on the <date value="1977-06-12">Twelfth Day of June
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">Given on the <date when="1977-06-12">Twelfth Day of June
 in the Year of Our Lord One Thousand Nine Hundred and
 Seventy-seven of the Republic the Two Hundredth and first
 and of the University the Eighty-Sixth.</date></egXML>
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
               <l>specially when it's nine below zero</l>
-              <l>and <time value="15:00">three o'clock in the
+              <l>and <time when="15:00:00">three o'clock in the
        afternoon</time></l>
             </egXML>
           </p>
@@ -1406,7 +1386,7 @@ comprises a <term>term</term> and a <term>gloss</term>, marked with
 the elements <gi>term</gi> and <gi>gloss</gi>, which can occur
 anywhere in prose text.
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><list type="gloss"><head>Vocabulary</head><label lang="enm">nu</label><item>now</item><label lang="enm">lhude</label><item>loudly</item><label lang="enm">bloweth</label><item>blooms</item><label lang="enm">med</label><item>meadow</item><label lang="enm">wude</label><item>wood</item><label lang="enm">awe</label><item>ewe</item><label lang="enm">lhouth</label><item>lows</item><label lang="enm">sterteth</label><item>bounds, frisks</item><label lang="enm">verteth</label><item lang="lat">pedit</item><label lang="enm">murie</label><item>merrily</item><label lang="enm">swik</label><item>cease</item><label lang="enm">naver</label><item>never</item></list></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><list type="gloss"><head>Vocabulary</head><label xml:lang="enm">nu</label><item>now</item><label xml:lang="enm">lhude</label><item>loudly</item><label xml:lang="enm">bloweth</label><item>blooms</item><label xml:lang="enm">med</label><item>meadow</item><label xml:lang="enm">wude</label><item>wood</item><label xml:lang="enm">awe</label><item>ewe</item><label xml:lang="enm">lhouth</label><item>lows</item><label xml:lang="enm">sterteth</label><item>bounds, frisks</item><label xml:lang="enm">verteth</label><item xml:lang="lat">pedit</item><label xml:lang="enm">murie</label><item>merrily</item><label xml:lang="enm">swik</label><item>cease</item><label xml:lang="enm">naver</label><item>never</item></list></egXML></p>
         <p>Where the internal structure of a list item is more complex, it
 may be preferable to regard the list as a <term>table</term>, for
 which special-purpose tagging is defined below (<ptr target="#U5-tables"/>).
@@ -1637,32 +1617,32 @@ room?).</p>
 element; it is however good practice to put them all in the same place
 (e.g. a separate section of the front or back matter), as in the
 following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><back><div type="Interpretations"><p><interp xml:id="fig-apos-1" resp="#LB-MSM" type="figure of speech" value="apostrophe"/><interp xml:id="fig-hyp-1" resp="#LB-MSM" type="figure of speech" value="hyperbole"/><interp xml:id="set-church-1" resp="#LB-MSM" type="setting" value="church"/><interp xml:id="ref-church-1" resp="#LB-MSM" type="reference" value="church"/><interp xml:id="ref-serv-1" resp="#LB-MSM" type="reference" value="servants"/></p></div></back></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><back><div type="Interpretations"><p><interp xml:id="fig-apos-1" resp="#LB-MSM" type="figureOfSpeech">apostrophe</interp><interp xml:id="fig-hyp-1" resp="#LB-MSM" type="figureOfSpeech">hyperbole</interp><interp xml:id="set-church-1" resp="#LB-MSM" type="setting">church</interp><interp xml:id="ref-church-1" resp="#LB-MSM" type="reference">church</interp><interp xml:id="ref-serv-1" resp="#LB-MSM" type="reference">servants</interp></p></div></back></egXML></p>
           <p>The evident redundancy of this encoding can be considerably
 reduced by using the <gi>interpGrp</gi> element to group together all
 those <gi>interp</gi> elements which share common attribute values,
 as follows: 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><back><div type="Interpretations"><p><interpGrp type="figure of speech" resp="#LB-MSM"><interp xml:id="fig-apos" value="apostrophe"/><interp xml:id="fig-hyp" value="hyperbole"/><interp xml:id="fig-meta" value="metaphor"/></interpGrp><interpGrp type="scene-setting" resp="#LB-MSM"><interp xml:id="set-church" value="church"/><interp xml:id="set-kitch" value="kitchen"/><interp xml:id="set-unspec" value="unspecified"/></interpGrp><interpGrp type="reference" resp="#LB-MSM"><interp xml:id="ref-church" value="church"/><interp xml:id="ref-serv" value="servants"/><interp xml:id="ref-cook" value="cooking"/></interpGrp></p></div></back></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><back><div type="Interpretations"><p><interpGrp type="figureOfSpeech" resp="#LB-MSM"><interp xml:id="fig-apos">apostrophe</interp><interp xml:id="fig-hyp">hyperbole</interp><interp xml:id="fig-meta">metaphor</interp></interpGrp><interpGrp type="scene-setting" resp="#LB-MSM"><interp xml:id="set-church">church</interp><interp xml:id="set-kitch">kitchen</interp><interp xml:id="set-unspec">unspecified</interp></interpGrp><interpGrp type="reference" resp="#LB-MSM"><interp xml:id="ref-church">church</interp><interp xml:id="ref-serv">servants</interp><interp xml:id="ref-cook">cooking</interp></interpGrp></p></div></back></egXML></p>
           <p>Once these interpretation elements have been defined, they can be
 linked with the parts of the text to which they apply in either or
 both of two ways. The <att>ana</att> attribute can be used on
 whichever element is appropriate:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="chapter" n="38"><p xml:id="P38.1" ana="#set-church #set-kitch"/><s xml:id="P38.1.1" ana="#fig-apos">Reader, I married him.</s>
-...</div></egXML> 
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="chapter" n="38"><p xml:id="P38.1" ana="#set-church #set-kitch"><s xml:id="P38.1.1" ana="#fig-apos">Reader, I married him.</s></p>
+</div></egXML> 
 Note in this example that since the paragraph has two settings
 (in the church  and in the kitchen), the identifiers of both have been
 supplied.</p>
           <p>Alternatively, the <gi>interp</gi> elements can point to all the
 parts of the text to which they apply, using their <att>inst</att>
 attribute:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><interp xml:id="fig-apos-2" type="figure of speech" resp="#LB-MSM" value="apostrophe" inst="#P38.1.1"/><interp xml:id="set-church-2" type="scene-setting" value="church" inst="#P38.1" resp="#LB-MSM"/><interp xml:id="set-kitchen-2" type="scene-setting" value="kitchen" inst="#P38.1" resp="#LB-MSM"/></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><interp xml:id="fig-apos-2" type="figureOfSpeech" resp="#LB-MSM" inst="#P38.1.1">apostrophe</interp><interp xml:id="set-church-2" type="scene-setting" inst="#P38.1" resp="#LB-MSM">church</interp><interp xml:id="set-kitchen-2" type="scene-setting" inst="#P38.1" resp="#LB-MSM">kitchen</interp></egXML></p>
           <p>The <gi>interp</gi> is not limited to any particular type of
 analysis, The literary analysis shown above is but one possibility;
 one could equally well use <gi>interp</gi> to capture a linguistic
 part-of-speech analysis. For example, the example sentence given in
 section <ptr target="#xatts"/> assumes a linguistic analysis which
 might be represented as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><interp xml:id="NP1" type="pos" value="noun phrase, singular"/><interp xml:id="VV1" type="pos" value="inflected verb, present-tense singular"/>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><interp xml:id="NP1" type="pos">noun phrase, singular</interp><interp xml:id="VV1" type="pos">inflected verb, present-tense singular</interp>
 ...
 </egXML></p>
         </div>
@@ -1758,7 +1738,7 @@ at which such a generated section should be placed.
 <specList><specDesc key="divGen"/></specList></p>
           <p>The <gi>divGen</gi> element can be placed anywhere that a
 division element would be legal, as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><front><titlePage> ... </titlePage><divGen type="toc"/><div type="Preface"><head>Preface</head> ... </div></front><body> ... </body><back><div><head>Appendix</head> ... </div><divGen type="index" n="Index"/></back></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><front><titlePage> <!-- ... --> </titlePage><divGen type="toc"/><div type="Preface"><head>Preface</head> <!-- ... --> </div></front><body> <!-- ... --> </body><back><div><head>Appendix</head> <!-- ... --> </div><divGen type="index" n="Index"/></back></egXML></p>
           <p>This example also demonstrates the use of the <att>type</att>
 attribute to distinguish the different kinds of division to be
 generated: in the first case a table of contents (a
@@ -1812,10 +1792,10 @@ onomastic references (called <att>on</att>),  a third for pronominal
 references (called <att>pr</att>) and so forth. One way of
 achieving this might be as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><l n="3.001">iamque deus posita fallacis imagine tauri
-     <index indexname="dn"><term>Iuppiter</term><index><term>deus</term></index></index>
-     <index indexname="on"><term>Iuppiter (taurus)</term><index><term>imago tauri fallacis</term></index></index></l><l n="3.002">se confessus erat Dictaeaque rura tenebat
-     <index indexname="pr"><term>Iuppiter</term><index><term>se</term></index></index>
-     <index indexname="v"><term>Iuppiter</term><index><term>confiteor (v227)</term></index></index></l></egXML>  For each <gi>index</gi> element above, an entry will be
+     <index indexName="dn"><term>Iuppiter</term><index><term>deus</term></index></index>
+     <index indexName="on"><term>Iuppiter (taurus)</term><index><term>imago tauri fallacis</term></index></index></l><l n="3.002">se confessus erat Dictaeaque rura tenebat
+     <index indexName="pr"><term>Iuppiter</term><index><term>se</term></index></index>
+     <index indexName="v"><term>Iuppiter</term><index><term>confiteor (v227)</term></index></index></l></egXML>  For each <gi>index</gi> element above, an entry will be
 generated in the appropriate index, using  as headword the content of
 the <gi>term</gi> element it contains; the <gi>term</gi> elements
 nested within the secondary <gi>index</gi> element in each case
@@ -1931,14 +1911,16 @@ contain the following additional elements:
 contain these same elements.</p>
             <p>As an example, the dedication at the start of Milton's
 <title>Comus</title> should be marked up as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="dedication"><head>To the Right Honourable <name>JOHN Lord Viscount
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<div type="dedication">
+<head>To the Right Honourable <name>JOHN Lord Viscount
 BRACLY</name>, Son and Heir apparent to the Earl of
 Bridgewater, &amp;c.</head><salute>MY LORD,</salute><p>THis <hi>Poem</hi>, which receiv'd its first occasion of
 Birth from your Self, and others of your Noble Family ....
 and as in this representation your attendant
-<name>Thyrsis</name>, so now in all reall expression
+<name>Thyrsis</name>, so now in all reall expression</p>
 <closer><salute>Your faithfull, and most humble servant</salute><signed><name>H. LAWES.</name></signed></closer>
-</p></div></egXML></p>
+</div></egXML></p>
           </div>
         </div>
         <div>
@@ -1996,7 +1978,7 @@ description) contain a prose description.</item></list></p>
 bibliographic description of the file with the following elements:
 <specList><specDesc key="titleStmt"/><specDesc key="editionStmt"/><specDesc key="extent"/><specDesc key="publicationStmt"/><specDesc key="seriesStmt"/><specDesc key="notesStmt"/><specDesc key="sourceDesc"/></specList></p>
           <p>   A minimal header has the following structure:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><teiHeader><fileDesc><titleStmt> ... </titleStmt><publicationStmt> ... </publicationStmt><sourceDesc> ... </sourceDesc></fileDesc></teiHeader></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><teiHeader><fileDesc><titleStmt> <!-- ... --> </titleStmt><publicationStmt> <!-- ... --> </publicationStmt><sourceDesc> <!-- ... --> </sourceDesc></fileDesc></teiHeader></egXML></p>
           <div type="Section">
             <head>The Title Statement</head>
             <p>The following elements can be used in the <gi>titleStmt</gi>:
@@ -2041,8 +2023,8 @@ entire publication statement is in prose. The following elements may
 occur within them:
 <specList><specDesc key="pubPlace"/><specDesc key="address"/><specDesc key="idno"/><specDesc key="availability"/><specDesc key="date"/></specList></p>
             <p>Example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><publicationStmt><publisher>Oxford University Press</publisher><pubPlace>Oxford</pubPlace><date>1989</date><idno type="ISBN"> 0-19-254705-5</idno><availability>Copyright 1989, Oxford University
-          Press</availability></publicationStmt></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><publicationStmt><publisher>Oxford University Press</publisher><pubPlace>Oxford</pubPlace><date>1989</date><idno type="ISBN"> 0-19-254705-5</idno><availability><p>Copyright 1989, Oxford University
+          Press</p></availability></publicationStmt></egXML></p>
           </div>
           <div type="Section">
             <head>Series and Notes Statements</head>
@@ -2064,7 +2046,7 @@ using one or more of the following elements:
             <p>Examples:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><sourceDesc><bibl>The first folio of Shakespeare, prepared by Charlton
           Hinman (The Norton Facsimile, 1968)</bibl></sourceDesc></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><sourceDesc><scriptStmt xml:id="CNN12"><bibl><author>CNN Network News</author><title>News headlines</title><date>12 Jun 1989</date></bibl></scriptStmt></sourceDesc></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><sourceDesc><bibl><author>CNN Network News</author><title>News headlines</title><date>12 Jun 1989</date></bibl></sourceDesc></egXML></p>
           </div>
         </div>
         <div>
@@ -2077,11 +2059,11 @@ elements from the following list:
           <div type="Section">
             <head>Project and Sampling Descriptions</head>
             <p>Examples of <gi>projectDesc</gi> and <gi>samplingDesc</gi>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><encodingDesc><projectDesc>Texts collected for use in the Claremont
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><encodingDesc><projectDesc><p>Texts collected for use in the Claremont
           Shakespeare Clinic, June 1990.
-     </projectDesc></encodingDesc></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><encodingDesc><samplingDecl>Samples of 2000 words taken from the beginning
-          of the text
+    </p></projectDesc></encodingDesc></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><encodingDesc><samplingDecl><p>Samples of 2000 words taken from the beginning
+          of the text</p>
      </samplingDecl></encodingDesc></egXML></p>
           </div>
           <div type="Section">
@@ -2130,7 +2112,6 @@ bibliographic reference, as in the following example:
             <p>Alternatively, or in addition, the encoder may define a special
 purpose classification scheme, as in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><taxonomy xml:id="B"><bibl>Brown Corpus</bibl><category xml:id="B.A"><catDesc>Press Reportage</catDesc><category xml:id="B.A1"><catDesc>Daily</catDesc></category><category xml:id="B.A2"><catDesc>Sunday</catDesc></category><category xml:id="B.A3"><catDesc>National</catDesc></category><category xml:id="B.A4"><catDesc>Provincial</catDesc></category><category xml:id="B.A5"><catDesc>Political</catDesc></category><category xml:id="B.A6"><catDesc>Sports</catDesc></category></category><category xml:id="B.D"><catDesc>Religion</catDesc><category xml:id="B.D1"><catDesc>Books</catDesc></category><category xml:id="B.D2"><catDesc>Periodicals and tracts</catDesc></category></category>
-  ...
 </taxonomy></egXML></p>
             <p>Linkage between a particular text and a category within such a
 taxonomy is made by means of the <gi>catRef</gi> element within the
@@ -2148,7 +2129,7 @@ within a single framework. It has three optional components:
 work was created, even though it may not have been published or
 recorded there.</p>
           <p>Example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><creation><date value="1992-08">August 1992</date><name type="place">Taos, New Mexico</name></creation></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><creation><date when="1992-08">August 1992</date><name type="place">Taos, New Mexico</name></creation></egXML></p>
           <p>The <gi>langUsage</gi> element is useful where a text contains many
 different languages. It may contain <gi>language</gi> elements to
 document each particular language used:
@@ -2187,10 +2168,7 @@ and the agency responsible for it. </p>
         <p>The following list shows all the elements defined for the TEI
   Lite schema, with a brief description of each, and a link to its full
 specification in the Appendix.
-<specList rend="noatts"><specDesc rend="noatts" key="abbr"/><specDesc rend="noatts" key="add"/><specDesc rend="noatts" key="address"/><specDesc rend="noatts" key="addrLine"/><specDesc rend="noatts" key="anchor"/><specDesc rend="noatts" key="argument"/><specDesc rend="noatts" key="author"/><specDesc rend="noatts" key="authority"/><specDesc rend="noatts" key="availability"/><specDesc rend="noatts" key="back"/><specDesc rend="noatts" key="bibl"/><specDesc rend="noatts" key="biblFull"/><specDesc rend="noatts" key="biblScope"/><specDesc rend="noatts" key="body"/><specDesc rend="noatts" key="byline"/><specDesc rend="noatts" key="catDesc"/><specDesc rend="noatts" key="category"/><specDesc rend="noatts" key="catRef"/><specDesc rend="noatts" key="cell"/><specDesc rend="noatts" key="change"/><specDesc rend="noatts" key="choice"/><specDesc rend="noatts" key="cit"/><specDesc rend="noatts" key="classCode"/><specDesc rend="noatts" key="classDecl"/><specDesc rend="noatts" key="closer"/><specDesc rend="noatts" key="code"/><specDesc rend="noatts" key="corr"/><specDesc rend="noatts" key="creation"/><specDesc rend="noatts" key="date"/><specDesc rend="noatts" key="dateline"/><specDesc rend="noatts" key="del"/><specDesc rend="noatts" key="distributor"/><specDesc rend="noatts" key="div"/><specDesc rend="noatts" key="divGen"/><specDesc rend="noatts" key="docAuthor"/><specDesc rend="noatts" key="docDate"/><specDesc rend="noatts" key="docEdition"/><specDesc rend="noatts" key="docImprint"/><specDesc rend="noatts" key="docTitle"/><specDesc rend="noatts" key="edition"/><specDesc rend="noatts" key="editionStmt"/><specDesc rend="noatts" key="editor"/><specDesc rend="noatts" key="editorialDecl"/><specDesc rend="noatts" key="eg"/><specDesc rend="noatts" key="emph"/><specDesc rend="noatts" key="encodingDesc"/><specDesc rend="noatts" key="epigraph"/><specDesc rend="noatts" key="extent"/><specDesc rend="noatts" key="figure"/><specDesc rend="noatts" key="fileDesc"/><specDesc rend="noatts" key="foreign"/><specDesc rend="noatts" key="formula"/><specDesc rend="noatts" key="front"/><specDesc rend="noatts" key="funder"/><specDesc rend="noatts" key="gap"/><specDesc rend="noatts" key="gi"/><specDesc rend="noatts" key="gloss"/><specDesc rend="noatts" key="group"/><specDesc rend="noatts" key="head"/><specDesc rend="noatts" key="hi"/><specDesc rend="noatts" key="ident"/><specDesc rend="noatts" key="idno"/><specDesc rend="noatts" key="imprint"/><specDesc rend="noatts" key="index"/><specDesc rend="noatts" key="interp"/><specDesc rend="noatts" key="interpGrp"/><specDesc rend="noatts" key="item"/><specDesc rend="noatts" key="keywords"/><specDesc rend="noatts" key="l"/><specDesc rend="noatts" key="label"/><specDesc rend="noatts" key="language"/><specDesc rend="noatts" key="langUsage"/><specDesc rend="noatts" key="lb"/><specDesc rend="noatts" key="lg"/><specDesc rend="noatts" key="list"/><specDesc rend="noatts" key="listBibl"/><specDesc rend="noatts" key="mentioned"/><specDesc rend="noatts" key="milestone"/><specDesc rend="noatts" key="name"/><specDesc rend="noatts" key="note"/><specDesc rend="noatts" key="notesStmt"/><specDesc rend="noatts" key="num"/><specDesc rend="noatts" key="opener"/><specDesc rend="noatts" key="orig"/><specDesc rend="noatts" key="p"/><specDesc rend="noatts" key="pb"/><specDesc rend="noatts" key="principal"/><specDesc rend="noatts" key="profileDesc"/><specDesc rend="noatts" key="projectDesc"/><specDesc rend="noatts" key="ptr"/><specDesc rend="noatts" key="publicationStmt"/><specDesc rend="noatts" key="publisher"/><specDesc rend="noatts" key="pubPlace"/>
-<specDesc rend="noatts" key="q"/>
-<specDesc rend="noatts" key="quote"/>
-<specDesc rend="noatts" key="ref"/><specDesc rend="noatts" key="refsDecl"/><specDesc rend="noatts" key="reg"/><specDesc rend="noatts" key="rendition"/><specDesc rend="noatts" key="resp"/><specDesc rend="noatts" key="respStmt"/><specDesc rend="noatts" key="revisionDesc"/><specDesc rend="noatts" key="row"/><specDesc rend="noatts" key="rs"/><specDesc rend="noatts" key="s"/><specDesc rend="noatts" key="salute"/><specDesc rend="noatts" key="samplingDecl"/><specDesc rend="noatts" key="seg"/><specDesc rend="noatts" key="seriesStmt"/><specDesc rend="noatts" key="sic"/><specDesc rend="noatts" key="signed"/><specDesc rend="noatts" key="soCalled"/><specDesc rend="noatts" key="sourceDesc"/><specDesc rend="noatts" key="sp"/><specDesc rend="noatts" key="speaker"/><specDesc rend="noatts" key="sponsor"/><specDesc rend="noatts" key="stage"/><specDesc rend="noatts" key="table"/><specDesc rend="noatts" key="taxonomy"/><specDesc rend="noatts" key="TEI"/><specDesc rend="noatts" key="teiHeader"/><specDesc rend="noatts" key="text"/><specDesc rend="noatts" key="term"/><specDesc rend="noatts" key="textClass"/><specDesc rend="noatts" key="time"/><specDesc rend="noatts" key="title"/><specDesc rend="noatts" key="titlePage"/><specDesc rend="noatts" key="titlePart"/><specDesc rend="noatts" key="titleStmt"/><specDesc rend="noatts" key="trailer"/><specDesc rend="noatts" key="unclear"/></specList>
+<specList rend="noatts"><specDesc rend="noatts" key="abbr"/><specDesc rend="noatts" key="add"/><specDesc rend="noatts" key="address"/><specDesc rend="noatts" key="addrLine"/><specDesc rend="noatts" key="anchor"/><specDesc rend="noatts" key="argument"/><specDesc rend="noatts" key="author"/><specDesc rend="noatts" key="authority"/><specDesc rend="noatts" key="availability"/><specDesc rend="noatts" key="back"/><specDesc rend="noatts" key="bibl"/><specDesc rend="noatts" key="biblFull"/><specDesc rend="noatts" key="biblScope"/><specDesc rend="noatts" key="body"/><specDesc rend="noatts" key="byline"/><specDesc rend="noatts" key="catDesc"/><specDesc rend="noatts" key="category"/><specDesc rend="noatts" key="catRef"/><specDesc rend="noatts" key="cell"/><specDesc rend="noatts" key="change"/><specDesc rend="noatts" key="choice"/><specDesc rend="noatts" key="cit"/><specDesc rend="noatts" key="classCode"/><specDesc rend="noatts" key="classDecl"/><specDesc rend="noatts" key="closer"/><specDesc rend="noatts" key="code"/><specDesc rend="noatts" key="corr"/><specDesc rend="noatts" key="creation"/><specDesc rend="noatts" key="date"/><specDesc rend="noatts" key="dateline"/><specDesc rend="noatts" key="del"/><specDesc rend="noatts" key="distributor"/><specDesc rend="noatts" key="div"/><specDesc rend="noatts" key="divGen"/><specDesc rend="noatts" key="docAuthor"/><specDesc rend="noatts" key="docDate"/><specDesc rend="noatts" key="docEdition"/><specDesc rend="noatts" key="docImprint"/><specDesc rend="noatts" key="docTitle"/><specDesc rend="noatts" key="edition"/><specDesc rend="noatts" key="editionStmt"/><specDesc rend="noatts" key="editor"/><specDesc rend="noatts" key="editorialDecl"/><specDesc rend="noatts" key="eg"/><specDesc rend="noatts" key="emph"/><specDesc rend="noatts" key="encodingDesc"/><specDesc rend="noatts" key="epigraph"/><specDesc rend="noatts" key="extent"/><specDesc rend="noatts" key="figure"/><specDesc rend="noatts" key="fileDesc"/><specDesc rend="noatts" key="foreign"/><specDesc rend="noatts" key="formula"/><specDesc rend="noatts" key="front"/><specDesc rend="noatts" key="funder"/><specDesc rend="noatts" key="gap"/><specDesc rend="noatts" key="gi"/><specDesc rend="noatts" key="gloss"/><specDesc rend="noatts" key="group"/><specDesc rend="noatts" key="head"/><specDesc rend="noatts" key="hi"/><specDesc rend="noatts" key="ident"/><specDesc rend="noatts" key="idno"/><specDesc rend="noatts" key="imprint"/><specDesc rend="noatts" key="index"/><specDesc rend="noatts" key="interp"/><specDesc rend="noatts" key="interpGrp"/><specDesc rend="noatts" key="item"/><specDesc rend="noatts" key="keywords"/><specDesc rend="noatts" key="l"/><specDesc rend="noatts" key="label"/><specDesc rend="noatts" key="language"/><specDesc rend="noatts" key="langUsage"/><specDesc rend="noatts" key="lb"/><specDesc rend="noatts" key="lg"/><specDesc rend="noatts" key="list"/><specDesc rend="noatts" key="listBibl"/><specDesc rend="noatts" key="mentioned"/><specDesc rend="noatts" key="milestone"/><specDesc rend="noatts" key="name"/><specDesc rend="noatts" key="note"/><specDesc rend="noatts" key="notesStmt"/><specDesc rend="noatts" key="num"/><specDesc rend="noatts" key="opener"/><specDesc rend="noatts" key="orig"/><specDesc rend="noatts" key="p"/><specDesc rend="noatts" key="pb"/><specDesc rend="noatts" key="principal"/><specDesc rend="noatts" key="profileDesc"/><specDesc rend="noatts" key="projectDesc"/><specDesc rend="noatts" key="ptr"/><specDesc rend="noatts" key="publicationStmt"/><specDesc rend="noatts" key="publisher"/><specDesc rend="noatts" key="pubPlace"/><specDesc rend="noatts" key="q"/><specDesc rend="noatts" key="ref"/><specDesc rend="noatts" key="refsDecl"/><specDesc rend="noatts" key="reg"/><specDesc rend="noatts" key="rendition"/><specDesc rend="noatts" key="resp"/><specDesc rend="noatts" key="respStmt"/><specDesc rend="noatts" key="revisionDesc"/><specDesc rend="noatts" key="row"/><specDesc rend="noatts" key="rs"/><specDesc rend="noatts" key="s"/><specDesc rend="noatts" key="salute"/><specDesc rend="noatts" key="samplingDecl"/><specDesc rend="noatts" key="seg"/><specDesc rend="noatts" key="seriesStmt"/><specDesc rend="noatts" key="sic"/><specDesc rend="noatts" key="signed"/><specDesc rend="noatts" key="soCalled"/><specDesc rend="noatts" key="sourceDesc"/><specDesc rend="noatts" key="sp"/><specDesc rend="noatts" key="speaker"/><specDesc rend="noatts" key="sponsor"/><specDesc rend="noatts" key="stage"/><specDesc rend="noatts" key="table"/><specDesc rend="noatts" key="taxonomy"/><specDesc rend="noatts" key="TEI"/><specDesc rend="noatts" key="teiHeader"/><specDesc rend="noatts" key="text"/><specDesc rend="noatts" key="term"/><specDesc rend="noatts" key="textClass"/><specDesc rend="noatts" key="time"/><specDesc rend="noatts" key="title"/><specDesc rend="noatts" key="titlePage"/><specDesc rend="noatts" key="titlePart"/><specDesc rend="noatts" key="titleStmt"/><specDesc rend="noatts" key="trailer"/><specDesc rend="noatts" key="unclear"/></specList>
   </p>
       </div>
     </body>
@@ -2218,14 +2196,16 @@ respectively. Values for the latter attribute must conform to RFC
 and <gi>orig</gi> if both are supplied. Similarly for
 <gi>sic</gi> and <gi>corr</gi>, and for <gi>abbr</gi> and
 <gi>expan</gi>.</item>
-          <item>Previous version of TEI Lite supported both <soCalled>numbered divs</soCalled> (<gi>div0</gi>,
-<gi>div1</gi>, etc.) and unnumbered (<gi>div</gi>) elements. In this
-	  version, only un-numbered divs are supported. </item>
+          <item><soCalled>numbered divs</soCalled> (<gi>div1</gi>,
+<gi>div2</gi>, etc.) are not supported in this version of TEI Lite</item>
           <item>all pointing and linking mechanisms now use the same W3C-defined
 mechanism: there is no longer any distinction between internal and
 external pointing elements</item>
           <item>the content model of <gi>change</gi> has changed
 significantly</item>
+          <item>
+            <hi>hic desunt multa</hi>
+          </item>
         </list>
       </div>
       <div>
@@ -2261,7 +2241,6 @@ schema:
 <gi>defaultVal</gi>, 
 <gi>desc</gi>, 
 <gi>distinct</gi>, 
-<gi>div0</gi>, 
 <gi>div1</gi>, 
 <gi>div2</gi>, 
 <gi>div3</gi>, 
@@ -2271,11 +2250,11 @@ schema:
 <gi>div7</gi>, 
 <gi>egXML</gi>, 
 <gi>elementSpec</gi>, 
-<gi>email</gi>,
 <gi>equipment</gi>, 
 <gi>equiv</gi>, 
 <gi>exemplum</gi>, 
-<gi>floatingtext</gi>, <gi>fsdDecl</gi>, 
+<gi>fsdDecl</gi>, 
+<gi>floatingText</gi>, 
 <gi>headItem</gi>, 
 <gi>headLabel</gi>, 
 <gi>hyphenation</gi>, 
@@ -2301,6 +2280,7 @@ schema:
 <gi>postBox</gi>, 
 <gi>postCode</gi>, 
 <gi>quotation</gi>, 
+<!--<gi>quote</gi>, -->
 <gi>recording</gi>, 
 <gi>recordingStmt</gi>, 
 <gi>remarks</gi>, 
@@ -2359,9 +2339,7 @@ schema:
           <elementSpec ident="correction" mode="delete" module="header"/>
           <elementSpec ident="datatype" mode="delete" module="tagdocs"/>
           <elementSpec ident="defaultVal" mode="delete" module="tagdocs"/>
-          <elementSpec ident="desc" mode="delete" module="core"/>
           <elementSpec ident="distinct" mode="delete" module="core"/>
-          <elementSpec ident="div0" module="textstructure" mode="delete"/>
           <elementSpec ident="div1" module="textstructure" mode="delete"/>
           <elementSpec ident="div2" module="textstructure" mode="delete"/>
           <elementSpec ident="div3" module="textstructure" mode="delete"/>
@@ -2370,12 +2348,13 @@ schema:
           <elementSpec ident="div6" module="textstructure" mode="delete"/>
           <elementSpec ident="div7" module="textstructure" mode="delete"/>
           <elementSpec ident="egXML" mode="delete" module="tagdocs"/>
-          <elementSpec ident="elementSpec" mode="delete" module="tagdocs"/>
           <elementSpec ident="email" mode="delete" module="core"/>
+          <elementSpec ident="elementSpec" mode="delete" module="tagdocs"/>
           <elementSpec ident="equipment" mode="delete" module="header"/>
           <elementSpec ident="equiv" mode="delete" module="core"/>
           <elementSpec ident="exemplum" mode="delete" module="tagdocs"/>
           <elementSpec ident="floatingText" mode="delete" module="textstructure"/>
+
           <elementSpec ident="fsdDecl" mode="delete" module="header"/>
           <elementSpec ident="headItem" mode="delete" module="core"/>
           <elementSpec ident="headLabel" mode="delete" module="core"/>
