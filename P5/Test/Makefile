@@ -61,7 +61,12 @@ schemas:
 	../Utilities/makenames.xsl \
 	../Source/Guidelines/en/guidelines-en.xml > names.xml
 	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTBADFILES); do \
-		rnv ../p5odds.rnc $$i.odd && echo $$i validates OK; \
+		rnv ../p5odds.rnc $$i.odd && echo $$i validates OK stage; \
+		xsltproc --xinclude ../Utilities/odd2exodd.xsl $$i.odd > $$i-ex.odd; \
+		roma $(ROMAOPTS) --nodtd --noxsd  --xsl=$(XSL)	$$i-ex.odd . ; \
+		echo check egXML in $$i.odd; \
+		perl -p -e "s/testlite-examples/$$i-examples/" ex.nvdl > $$i.nvdl; \
+		onvdl $$i.nvdl $$i.odd | grep -v ": error: unfinished element$$" | grep -v "unknown element .egXML" ; \
 		roma $(ROMAOPTS) --xsl=$(XSL)   $$i.odd .; \
 		cp xml.xsd.w3c xml.xsd ; \
 		test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd; \
