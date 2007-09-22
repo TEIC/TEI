@@ -933,18 +933,6 @@ paragraph has been given an identifier so that it may be pointed at:
     <p xml:id="pspec">Links may be made to any kind of element
     ...</p></egXML></p>
 
-    <p>The <att>type</att> attribute can be used to categorize the
-    link represented by the pointer in any convenient way. The
-    <att>resp</att> attribute may also be used to represent the person
-    or agency responsible for making the link, as in the following
-    example: <egXML xmlns="http://www.tei-c.org/ns/Examples"> ...
-    this is discussed in
-   <ref type="xref" resp="#SPQR" target="#dspec">
-   the section on links</ref></egXML> 
-These attributes are most likely to be of use in hypertext
-systems containing very many pointers used for a variety of purposes
-and created by a variety of means.</p>
-
 <p>Sometimes the target of a cross reference  does not correspond
 with any particular feature of a text, and so may not be tagged as an
 element of some kind. If the desired target is simply a point in the
@@ -1349,7 +1337,7 @@ Seventy-seven of the Republic the Two Hundredth and first
 and of the University the Eighty-Sixth.</date></egXML>
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
               <l>specially when it's nine below zero</l>
-              <l>and <time value="15:00">three o'clock in the
+              <l>and <time when="15:00:00">three o'clock in the
        afternoon</time></l>
             </egXML>
           </p>
@@ -1628,32 +1616,32 @@ room?).</p>
 element; it is however good practice to put them all in the same place
 (e.g. a separate section of the front or back matter), as in the
 following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><back><div type="Interpretations"><p><interp xml:id="fig-apos-1" resp="#LB-MSM" type="figure of speech" value="apostrophe"/><interp xml:id="fig-hyp-1" resp="#LB-MSM" type="figure of speech" value="hyperbole"/><interp xml:id="set-church-1" resp="#LB-MSM" type="setting" value="church"/><interp xml:id="ref-church-1" resp="#LB-MSM" type="reference" value="church"/><interp xml:id="ref-serv-1" resp="#LB-MSM" type="reference" value="servants"/></p></div></back></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><back><div type="Interpretations"><p><interp xml:id="fig-apos-1" resp="#LB-MSM" type="figureOfSpeech">apostrophe</interp><interp xml:id="fig-hyp-1" resp="#LB-MSM" type="figureOfSpeech">hyperbole</interp><interp xml:id="set-church-1" resp="#LB-MSM" type="setting">church</interp><interp xml:id="ref-church-1" resp="#LB-MSM" type="reference">church</interp><interp xml:id="ref-serv-1" resp="#LB-MSM" type="reference">servants</interp></p></div></back></egXML></p>
           <p>The evident redundancy of this encoding can be considerably
 reduced by using the <gi>interpGrp</gi> element to group together all
 those <gi>interp</gi> elements which share common attribute values,
 as follows: 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><back><div type="Interpretations"><p><interpGrp type="figure of speech" resp="#LB-MSM"><interp xml:id="fig-apos" value="apostrophe"/><interp xml:id="fig-hyp" value="hyperbole"/><interp xml:id="fig-meta" value="metaphor"/></interpGrp><interpGrp type="scene-setting" resp="#LB-MSM"><interp xml:id="set-church" value="church"/><interp xml:id="set-kitch" value="kitchen"/><interp xml:id="set-unspec" value="unspecified"/></interpGrp><interpGrp type="reference" resp="#LB-MSM"><interp xml:id="ref-church" value="church"/><interp xml:id="ref-serv" value="servants"/><interp xml:id="ref-cook" value="cooking"/></interpGrp></p></div></back></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><back><div type="Interpretations"><p><interpGrp type="figureOfSpeech" resp="#LB-MSM"><interp xml:id="fig-apos">apostrophe</interp><interp xml:id="fig-hyp">hyperbole</interp><interp xml:id="fig-meta">metaphor</interp></interpGrp><interpGrp type="scene-setting" resp="#LB-MSM"><interp xml:id="set-church">church</interp><interp xml:id="set-kitch">kitchen</interp><interp xml:id="set-unspec">unspecified</interp></interpGrp><interpGrp type="reference" resp="#LB-MSM"><interp xml:id="ref-church">church</interp><interp xml:id="ref-serv">servants</interp><interp xml:id="ref-cook">cooking</interp></interpGrp></p></div></back></egXML></p>
           <p>Once these interpretation elements have been defined, they can be
 linked with the parts of the text to which they apply in either or
 both of two ways. The <att>ana</att> attribute can be used on
 whichever element is appropriate:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="chapter" n="38"><p xml:id="P38.1" ana="#set-church #set-kitch"/><s xml:id="P38.1.1" ana="#fig-apos">Reader, I married him.</s>
-...</div></egXML> 
+</div></egXML> 
 Note in this example that since the paragraph has two settings
 (in the church  and in the kitchen), the identifiers of both have been
 supplied.</p>
           <p>Alternatively, the <gi>interp</gi> elements can point to all the
 parts of the text to which they apply, using their <att>inst</att>
 attribute:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><interp xml:id="fig-apos-2" type="figure of speech" resp="#LB-MSM" value="apostrophe" inst="#P38.1.1"/><interp xml:id="set-church-2" type="scene-setting" value="church" inst="#P38.1" resp="#LB-MSM"/><interp xml:id="set-kitchen-2" type="scene-setting" value="kitchen" inst="#P38.1" resp="#LB-MSM"/></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><interp xml:id="fig-apos-2" type="figureOfSpeech" resp="#LB-MSM" inst="#P38.1.1">apostrophe</interp><interp xml:id="set-church-2" type="scene-setting" inst="#P38.1" resp="#LB-MSM">church</interp><interp xml:id="set-kitchen-2" type="scene-setting" inst="#P38.1" resp="#LB-MSM">kitchen</interp></egXML></p>
           <p>The <gi>interp</gi> is not limited to any particular type of
 analysis, The literary analysis shown above is but one possibility;
 one could equally well use <gi>interp</gi> to capture a linguistic
 part-of-speech analysis. For example, the example sentence given in
 section <ptr target="#xatts"/> assumes a linguistic analysis which
 might be represented as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><interp xml:id="NP1" type="pos" value="noun phrase, singular"/><interp xml:id="VV1" type="pos" value="inflected verb, present-tense singular"/>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><interp xml:id="NP1" type="pos">noun phrase, singular</interp><interp xml:id="VV1" type="pos">inflected verb, present-tense singular</interp>
 ...
 </egXML></p>
         </div>
@@ -1803,10 +1791,10 @@ onomastic references (called <att>on</att>),  a third for pronominal
 references (called <att>pr</att>) and so forth. One way of
 achieving this might be as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><l n="3.001">iamque deus posita fallacis imagine tauri
-     <index indexname="dn"><term>Iuppiter</term><index><term>deus</term></index></index>
-     <index indexname="on"><term>Iuppiter (taurus)</term><index><term>imago tauri fallacis</term></index></index></l><l n="3.002">se confessus erat Dictaeaque rura tenebat
-     <index indexname="pr"><term>Iuppiter</term><index><term>se</term></index></index>
-     <index indexname="v"><term>Iuppiter</term><index><term>confiteor (v227)</term></index></index></l></egXML>  For each <gi>index</gi> element above, an entry will be
+     <index indexName="dn"><term>Iuppiter</term><index><term>deus</term></index></index>
+     <index indexName="on"><term>Iuppiter (taurus)</term><index><term>imago tauri fallacis</term></index></index></l><l n="3.002">se confessus erat Dictaeaque rura tenebat
+     <index indexName="pr"><term>Iuppiter</term><index><term>se</term></index></index>
+     <index indexName="v"><term>Iuppiter</term><index><term>confiteor (v227)</term></index></index></l></egXML>  For each <gi>index</gi> element above, an entry will be
 generated in the appropriate index, using  as headword the content of
 the <gi>term</gi> element it contains; the <gi>term</gi> elements
 nested within the secondary <gi>index</gi> element in each case
@@ -2349,7 +2337,6 @@ schema:
           <elementSpec ident="correction" mode="delete" module="header"/>
           <elementSpec ident="datatype" mode="delete" module="tagdocs"/>
           <elementSpec ident="defaultVal" mode="delete" module="tagdocs"/>
-          <elementSpec ident="desc" mode="delete" module="core"/>
           <elementSpec ident="distinct" mode="delete" module="core"/>
           <elementSpec ident="div1" module="textstructure" mode="delete"/>
           <elementSpec ident="div2" module="textstructure" mode="delete"/>
