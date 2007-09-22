@@ -116,7 +116,7 @@ the <att>facs</att> attribute in conjunction with the elements
 <gi>facsimile</gi>, <gi>surface</gi>, and <gi>zone</gi>, which are
 also provided by this module. These elements make it possible to
 accommodate multiple images of each page, as well as to record
-arbitrary planar co-ordinates of textual elements on any kind of
+arbitrary planar coordinates of textual elements on any kind of
 written surface and to link such elements with digital facsimile
 images of them. Typical applications include the provision of full
 text search in <soCalled>digital facsimile editions</soCalled>, and
@@ -195,15 +195,15 @@ or indeed any two-dimensional surface, of any size. </p>
 
 <p>The actual dimensions of the object represented are not documented
 by the <gi>surface</gi> element; instead, the <gi>surface</gi> is
-located within an abstract co-ordinate space, which is defined by the
+located within an abstract coordinate space, which is defined by the
 following attributes, supplied by the <ident
 type="class">att.coordinated</ident> class:
 <specList>
 <specDesc key="att.coordinated" atts="ulx uly lrx lry"/>
 </specList>
 </p>
-<p> The same co-ordinate space is used for a <gi>surface</gi> and for
-all of its child elements. <note place="foot">The co-ordinate space
+<p> The same coordinate space is used for a <gi>surface</gi> and for
+all of its child elements. <note place="foot">The coordinate space
 may be thought of as a grid superimposed on a rectangular
 space. Rectangular areas of the grid are defined as four numbers <hi
 rend="math">a b c d</hi>: the first two identify the grid point which
@@ -214,9 +214,9 @@ which is located <hi rend="math">a</hi> points from the origin along
 the <hi rend="math">x</hi> (horizontal) axis, and <hi
 rend="math">b</hi> points from the origin along the <hi
 rend="math">y</hi> (vertical) axis.</note>. It may be most convenient
-to derive a co-ordinate space from a digital image of the surface in
+to derive a coordinate space from a digital image of the surface in
 question such that each pixel in the image corresponds with a whole
-number of units (typically 1) in the co-ordinate space. In other cases
+number of units (typically 1) in the coordinate space. In other cases
 it may be more convenient to use units such as millimetres; in neither
 case is any specific mapping to the physical dimensions of the object
 represented implied.
@@ -224,19 +224,19 @@ represented implied.
 
 <p>Each <gi>surface</gi> can contain one or more <gi>zone</gi>
 elements, each of which represents a rectangular region or
-<term>bounding box</term> defined in terms of the same co-ordinate
+<term>bounding box</term> defined in terms of the same coordinate
 space as that of its parent <gi>surface</gi> element. This provides a
 unit of analysis which may be used to define any rectangular region of
 interest, such as a detail or illustration, or some part of the
 surface which is to be aligned with a particular text element.  The
 <ident type="class">att.coordinated</ident> attributes listed above
-are also used to supply the co-ordinates of a zone. </p>
+are also used to supply the coordinates of a zone. </p>
 <p>As we have seen, a surface will usually correspond with the whole
 of a written surface. A zone, by contrast, defines any arbitrary
-rectangular area of interest using the same co-ordinate system. It
+rectangular area of interest using the same coordinate system. It
 might be bigger or smaller than its parent surface, or might overlap
 its boundaries. The only constraint is that it must be defined using
-the same co-ordinate system. </p>
+the same coordinate system. </p>
 
 <p>When an image of some kind is supplied within either a zone or a
 surface, the implication is that the whole of the image represents
@@ -247,7 +247,7 @@ defining parts of the page, each with its own graphic. If one of those
 images actually represents an area larger than the page (for example
 to include a binding or the surface of a
 desk on which the page rests), then it might be enclosed by a zone
-with co-ordinates smaller or larger than those of  the parent
+with coordinates smaller or larger than those of  the parent
 surface. </p>
 
 <p>Note that this mechanism does not provide any way of addressing a
@@ -266,19 +266,19 @@ spread from a manuscript in the Badische Landesbibliothek,
 Karlsruhe. We have no information as to the dimensions of the original object,
 but the  low resolution image displayed here contains 500 pixels
 horizontally and 321 pixels vertically. For convenience, we might map
-each pixel to one cell of the co-ordinate space. 
-<note place="foot">The co-ordinate space used here is based on pixels, but 
-the mapping between pixels and units in the co-ordinate space 
+each pixel to one cell of the coordinate space. 
+<note place="foot">The coordinate space used here is based on pixels, but 
+the mapping between pixels and units in the coordinate space 
 need not be one-to-one; it might be convenient to
 define a more delicate grid, to enable us to address much smaller
 parts of the image. This can be done simply by supplying appropriate
-values for the attributes which define the co-ordinate space; for
+values for the attributes which define the coordinate space; for
 example doubling them all would map each pixel to two grid
-points in the co-ordinate space.</note> </p>
+points in the coordinate space.</note> </p>
 
-<p>The co-ordinates of the <gi>surface</gi> (that is, the area of the
+<p>The coordinates of the <gi>surface</gi> (that is, the area of the
 image which represents the written two page spread) can then be
-specified in terms of this co-ordinate space, simply by counting
+specified in terms of this coordinate space, simply by counting
 pixels in the image.  The left corner of the two page spread appears
 50 units from the left of the image and 20 units from the top, while
 the bottom right corner of the spread appears 400 units from the left
@@ -291,8 +291,8 @@ xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 </facsimile></egXML> 
 To introduce the image file itself, we will also need to define a zone
 of interest which represents an area larger
-than the surface. Using the same co-ordinate system as that defined
-for the surface, its co-ordinates are <val>0,0,500,321</val>. This zone of interest is defined by a <gi>zone</gi>
+than the surface. Using the same coordinate system as that defined
+for the surface, its coordinates are <val>0,0,500,321</val>. This zone of interest is defined by a <gi>zone</gi>
 element, within which we can place the uncropped <gi>graphic</gi>:
  <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 <surface ulx="50" uly="20" lrx="400" lry="280">
@@ -362,7 +362,7 @@ page has been digitized as a separate file: for example, recto page 49
 is stored in a file called <ident>Bovelles-49r.png</ident>.  In the
 <gi>facsimile</gi> element used to contain the whole set of pages, we
 define a <gi>surface</gi> element for this page, which we situate within a
-co-ordinate scale running from 0 to 200 in the x (horizontal) axis,
+coordinate scale running from 0 to 200 in the x (horizontal) axis,
 and 0 to 300 in the y (vertical) axis.  The <gi>surface</gi> element
 contains a <gi>graphic</gi> 
 element which represents the whole of this surface: <egXML
@@ -371,12 +371,12 @@ xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
   <graphic url="Bovelles-49r.png"/>
 </surface>
 </facsimile></egXML> We can now identify distinct zones within the
-page image using the co-ordinate scale defined for the surface. In
+page image using the coordinate scale defined for the surface. In
 <ptr target="#facs-fig1"/> we show the upper part of the page, with
 boxes indicating four such zones. Each of these will be represented by
 a  <gi>zone</gi> element, given within the <gi>surface</gi>
 element already defined, and specified in terms of the same
-co-ordinate system. 
+coordinate system. 
 <figure xml:id="facs-fig1">
   <head>Zones within a surface</head>
   <graphic url="Images/facs-fig1.png"/>
@@ -399,17 +399,17 @@ xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 </surface>
 </facsimile></egXML> 
 Note that the location of each zone is defined
-independently but using the same co-ordinate system, so that they may
+independently but using the same coordinate system, so that they may
 overlap freely. Zones need not  nest within each other; they must
 however be rectangular, as previously noted. As noted earlier, a zone may
-fall outside the area of the surface which defines its co-ordinate space.</p>
+fall outside the area of the surface which defines its coordinate space.</p>
 
 <p>In this example a single <gi>graphic</gi> element has been
 associated directly with the surface of the page rather than nesting
 it within a zone. However, it is also possible to include multiple
 <gi>zone</gi> elements which contain a <gi>graphic</gi> element, if
 for example a detailed image is available. Since all <gi>zone</gi>
-elements use the same co-ordinate system (that defined by their parent
+elements use the same coordinate system (that defined by their parent
 <gi>surface</gi>), there is no need to demonstrate enclosure of one
 zone within another by means of nesting. To continue the current
 example, supposing that we have an additional image called
