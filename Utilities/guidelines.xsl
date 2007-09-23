@@ -469,13 +469,11 @@ function showByMod() {
                 </xsl:attribute>
                 <xsl:call-template name="bodyHook"/>
                 <div id="hdr">
-                  <a href="index.html">
-                    <xsl:call-template name="stdheader">
-                      <xsl:with-param name="title">
-                        <xsl:value-of select="$name"/>
-                      </xsl:with-param>
-                    </xsl:call-template>
+		  <h1 class="maintitle">
+		  <a href="index.html">
+		    <xsl:call-template name="generateTitle"/>
                   </a>
+		  </h1>
                 </div>
                 <div class="togglingTOCs">
                   <button class="displayRelax"
@@ -825,8 +823,8 @@ function showByMod() {
 
 <xsl:template match="tei:divGen[@type='tagcat']">
   <div id="azindex">
-    <p id="top">Elements sorted
-    alphabetically, starting with:</p>
+    <span>Elements sorted
+    alphabetically, starting with:</span>
       <ul class="index">     
     <li>
 	<a onclick="hideallExcept('element-a');" href="#">a</a>
@@ -916,7 +914,7 @@ function showByMod() {
     </ul>
   </div>
 
-  <br clear="both"/>
+  <br style="clear:both;"/>
 
     <xsl:for-each select="key('ELEMENTDOCS',1)">
     <xsl:sort select="translate(@ident,$uc,$lc)"/>
@@ -925,11 +923,10 @@ function showByMod() {
     </xsl:variable>
     <xsl:if
 	test="generate-id(.)=generate-id(key('ELEMENT-ALPHA',$letter)[1])">
-      <ul class="atoz" id="element-{$letter}">
 	<p class="listhead">
 	  <xsl:value-of select="$letter"/>
 	</p>
-	
+	<ul class="atoz" id="element-{$letter}">
 	<xsl:for-each select="key('ELEMENT-ALPHA',$letter)">
 	  <xsl:sort select="@ident"/>
 	  <li>
@@ -965,6 +962,11 @@ function showByMod() {
 
   <xsl:template match="tei:gi">
     <xsl:choose>
+      <xsl:when test="parent::tei:ref">
+	<span class="gi">
+	  <xsl:apply-templates/>
+	</span>
+      </xsl:when>
       <xsl:when test="key('ELEMENTS',.)">
 	<xsl:for-each select="key('ELEMENTS',.)">
 	  <a href="ref-{@ident}.html">
