@@ -1174,4 +1174,144 @@ articulated, the grouping element <gi>forestGrp</gi> may be used.</p>
 &eLeaf;
 &forest;
 &forestGrp;
-</specGrp></div></div>
+</specGrp></div>
+
+<div xml:id="GDstem"><head>Representing Textual Transmission</head>
+
+<p>A <term>stemma codicum</term> (sometimes called just
+<term>stemma</term>) is a tree-like graphic structure that has become
+traditional in manuscript studies for representing textual
+transmission. Consider the following hypothetical stemma:
+<figure><head>Example stemma</head>
+<graphic url="Images/stemma.png" /></figure>
+</p>
+            
+<p>The nodes in this stemma represent manuscripts; each has a label (a
+letter) which identifies it and also distinguishes whether the
+manuscript is extant, lost, or hypothetical.  Extant manuscripts are
+identified by upper-case Latin letters or words beginning with
+upper-case Latin letters, e.g., “L”, shown as aqua in this example;
+manuscripts no longer existing, but providing readings which are
+attested e.g. by note or copy made before their disappearance, are
+identified by lower-case Latin letters, e.g., “t”, shown as magenta in
+this example; hypothetical stages in the textual transmission, which
+do not necessarily correspond to real manuscripts, are given
+lower-case Greek letters, e.g., “α” and shown as gold in this example.
+The stemma shown above thus suggests that (on the basis of
+similarities in the readings of the extant and lost manuscripts) “L”
+and “t” share textual material that is not shared with other
+manuscripts (represented in this case by “δ”) even though no physical
+manuscript attesting this stage in the textual transmission has ever
+been identified.</p>
+
+<p>Manuscripts are copied from other manuscripts. The preceding
+stemma represents the hypothesis that all manuscripts go back to a common
+ancestor (“α”), that the tradition split after that stage into two
+(“β” and “γ”), etc. Descent by copying is indicated with a solid line.
+According to this model, “α” is the earliest common hypothetical stage
+that can be reconstructed, and all nodes below “α” have a single
+parent, that is, were copied from a single other stage in the
+tradition.</p>
+
+<p>This familiar tree model is complicated because manuscripts
+sometimes show the influence of more than one ancestor. They may have
+been produced by a scribe who checked the text in one
+manuscript of the same work whilst copying from another, or perhaps
+made changes from his memory of a slightly different version of the
+text that he had read elsewhere. Alternatively, perhaps scribe A
+copied a manuscript from one source, scribe B made changes in it in
+the margins or between the lines (either by consulting another source
+directly or from memory), and another scribe then copied that
+manuscript, incorporating the changes into the body.  Whatever the
+specific scenario, it is not uncommon for a
+manuscript to be based primarily on one source, but to incorporate
+features of another branch of the tradition. This mixed result is
+called <term>contamination</term>, and it is reflected in a stemma by a
+dotted line. Thus, the example above asserts that “A” is copied within
+the “ε” tradition, but is also contaminated from the “γ”
+tradition.</p>
+            
+<p>The utility of a stemma as a visualization tool is inversely
+proportional to the degree of contamination in the manuscript
+tradition. A tradition completely without contamination (called a
+<term>closed tradition</term>) yields a classic tree,  easily
+represented graphically by a stemma. An <term>open tradition</term>, with
+substantial contamination, yields a spaghetti-like stemma
+characterized by crossing dotted lines, which is both difficult to
+read and not very informative.</p>
+
+<p>The <gi>eTree</gi> element introduced in this chapter can be used
+to represent a closed tradition in a straightforward manner. Each
+non-terminal node is represented by a typed <gi>eTree</gi> element and
+each terminal node by an <gi>eLeaf</gi>. A <gi>label</gi> element
+provides a way of identifying each node, complementary to the global
+attributes <att>n</att> and <att>xml:id</att> attributes. For example,
+the closed part of the tradition headed by the label δ may be encoded
+as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <eTree type="hypothetical">
+	  <label>δ</label>
+            <eLeaf type="extant">
+	      <label>L</label>
+	    </eLeaf>
+            <eLeaf type="lost">
+	      <label>t</label>
+	    </eLeaf>
+        </eTree>
+</egXML>
+To complete this representation, we need to show that the node
+labelled A is not derived solely from its parent node (labelled ε)
+but also demonstrates contamination from the node labelled γ. The
+easiest way to accomplish this is to include an appropriately-typed
+<gi>ptr</gi> element within the node in question, the
+<att>target</att> of which points to the the node labelled γ. This
+requires that this latter node be supplied with a value for its
+<att>xml:id</att> attribute. The complete representation is thus:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<eTree type="hypothetical">
+  <label>α</label>>
+   <eTree type="hypothetical">
+    <label>β</label>>
+        <eTree type="hypothetical">
+	  <label>δ</label>
+            <eLeaf type="extant">
+	      <label>L</label>
+	    </eLeaf>
+            <eLeaf type="lost">
+	      <label>t</label>
+	    </eLeaf>
+        </eTree>
+        <eTree type="hypothetical">
+	  <label>ε</label>
+            <eLeaf  type="extant">
+	      <label>R</label>
+	    </eLeaf>
+            <eLeaf type="extant">
+	      <label>A</label>
+	      <ptr type="contamination" target="#gamma"/>
+	    </eLeaf>
+        </eTree>
+    </eTree>
+    <eTree xml:id="gamma" type="hypothetical">
+      <label>γ</label>
+        <eLeaf type="extant">
+	  <label>I</label>
+	</eLeaf>
+        <eLeaf type="extant">
+	  <label>X</label>
+	</eLeaf>
+    </eTree>
+</eTree>
+</egXML>
+</p>
+<p>In any substantial codicological project, it is likely that
+significantly more data will be required about the individual
+witnesses than indicated in the simple structures above. These
+Guidelines provide a rich variety of additional elements for
+representing such information: see in particular chapters <ptr
+target="#MS"/>, <ptr target="#PH"/>, and <ptr target="#TC"/>.</p>
+
+</div>
+
+
+</div>
