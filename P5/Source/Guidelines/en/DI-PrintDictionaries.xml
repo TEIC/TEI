@@ -21,7 +21,7 @@ complex. In addition, dictionaries interest many communities with
 different and sometimes conflicting goals. As a result, many general
 problems of text encoding are particularly pronounced here, and more
 compromises and alternatives within the encoding scheme may be
-required.<note place="foot" >We refer the reader to previous and
+required in future.<note place="foot" >We refer the reader to previous and
 current discussions of a common format for encoding dictionaries. For
 example, <bibl>Robert A. Amsler and Frank W. Tompa, <title level="a">An
 SGML-Based Standard for English Monolingual Dictionaries</title>,
@@ -63,8 +63,8 @@ encountered is to allow virtually any element to appear virtually
 anywhere in a dictionary entry. It is clear, however, that strong and
 consistent structural principles do govern the vast majority of
 conventional dictionaries, as well as many or most entries even in
-more <soCalled>exotic</soCalled> dictionaries; ideally, a set of
-encoding guidelines should capture these structural principles. We
+more <soCalled>exotic</soCalled> dictionaries; 
+encoding guidelines should include these structural principles. We
 therefore define two distinct elements for dictionary entries, one
 (<gi>entry</gi>) which captures the regularities of many conventional
 dictionary entries, and a second (<gi>entryFree</gi>) which uses the
@@ -96,52 +96,22 @@ views when this is desired.</p>
 
 <p>To deal with this complexity, and in particular to account for the
 wide variety of linguistic context within which a dictionary may be
-designed, it can be necessary to use the extension capabilities
-offered by the ODD environment (see chapter <ptr target="#TD"/>) to
-provide more restriction or possibly alternate content models for the
-tags defined in this chapter.  The corresponding mechanisms will be
-exemplified in this chapter to illustrate the provision of a closed
-set of values for grammatical descriptors (see <ptr
-target="#DITPGR"/>).</p>
+designed, it can be necessary to customize or change the schema by
+providing more restriction or possibly alternate content models for
+the elements defined in this chapter.  Section <ptr target="#DITPGR"/>
+illustrates this with the provision of a closed set of values for
+grammatical descriptors.</p>
 
-<!--
-<p>In order to use the elements defined in this chapter in your own TEI environment you can
-adopt one of the two following mechanisms:</p>
-<list>
-<item>Create a schema in ODD format that comprises a reference to the Print Dictionary
-chapter as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<schemaSpec ident="myDict.odd">
-<moduleRef key="tei"/>
-<moduleRef key="core"/>
-<moduleRef key="teistructure"/>
-<moduleRef key="teiheader"/>
-<moduleRef key="dictionaries"/>
-</schemaSpec>
-</egXML> and compile it to generate a full DTD, RELAX NG Schema or W3C XML Schema; </item>
-<item>Directly include the RELAX NG schema associated with this chapter in your main schema
-file, as follows: <eg>namespace ns1 = "http://www.tei-c.org/ns/Examples" # RELAX NG
-grammar include "relaxng.rnc" # base TEI include "Schema/tei.rnc" # TEI modules
-include "Schema/core.rnc" include "Schema/textstructure.rnc" include
-"Schema/header.rnc" include "Schema/dictionaries.rnc" anyTEI = element ns1:* { (
-attribute * { text } | text | anyTEI | macro.schemapattern )* } include
-"Schema/tagdocs.rnc" { macro.schemapattern = text | pattern+ egXML.content = (text |
-anyTEI | pattern )+ } include "Schema/linking.rnc" start |= elementSpec | classSpec
-| macroSpec | div1 | div2 </eg>
-</item>
-</list> -->
 <div type="div2" xml:id="DIBO">
 <head>Dictionary Body and Overall Structure</head>
 
 <p>Overall, dictionaries have the same structure of front matter,
-body, and back matter familiar from other texts; the base module for
-dictionaries uses the same front-matter and back-matter elements as
-other TEI base modules; these are documented in chapter <ptr
-target="#DS"/>. In addition, dictionaries define the elements
-<gi>entry</gi>, <gi>entryFree</gi>, and <gi>superEntry</gi> as
-component-level elements which can occur directly within a text
-division or the text body. </p>
+body, and back matter familiar from other texts. In addition,
+this modules defines <gi>entry</gi>, <gi>entryFree</gi>,
+and <gi>superEntry</gi> as component-level elements which can occur
+directly within a text division or the text body. </p>
 
-<p>The following tags should be used to mark the gross structure of a
+<p>The following tags can therefore be used to mark the gross structure of a
 printed dictionary; the dictionary-specific tags are discussed further
 in the following section.<specList>
 <specDesc key="text"/>
@@ -152,8 +122,7 @@ in the following section.<specList>
 <specDesc key="entry"/>
 <specDesc key="entryFree"/>
 <specDesc key="superEntry"/>
-</specList>The text-division elements <gi>div1</gi>, <gi>div2</gi>, etc.
- may also be used, as described in chapter <ptr target="#DS"/>.</p>
+</specList></p>
 
 <p>As members of the class <ident type="class">att.entryLike</ident>,
 <gi>entry</gi> and <gi>entryFree</gi> share the following
@@ -206,7 +175,7 @@ target="#DIENHI"/>. </p>
 required for superentries and entries, especially in cases where the
 order of entries does not follow the local character-set collating
 sequence (as, for example, when an entry for <q>3D</q> appears at the
-place where<q>three-D</q> would appear). </p>
+place where <q>three-D</q> would appear). </p>
 <!-- maybe rename this attribute to avoid confusion with existing @key -->
 
 <p>The body of a bilingual dictionary with two parts will thus have an
@@ -241,11 +210,6 @@ entries.<egXML xmlns="http://www.tei-c.org/ns/Examples">
 </egXML>
 </p>
 
-
-<moduleSpec xml:id="DDIBO" ident="dictionaries">
-<altIdent type="FPI">Print Dictionaries</altIdent>
-<desc>Printed dictionaries</desc>
-</moduleSpec>
 
 <specGrpRef target="#DEDIMV"/> 
 &model.entryLike; 
@@ -344,9 +308,9 @@ xmlns="http://www.tei-c.org/ns/Examples">
 <sense n="3"> <!-- ... --> </sense>
 </hom>
 </entry>
-</egXML> In some dictionaries, homographs typically receive separate entries; in
+</egXML> In some dictionaries, homographs have separate entries; in
 such a case, as noted in section <ptr target="#DIBO"/>, the two homographs may be
-treated as entries, optionally grouped by a <gi>superEntry</gi>:<egXML
+treated as entries, optionally grouped in a <gi>superEntry</gi>:<egXML
 xmlns="http://www.tei-c.org/ns/Examples">
 <superEntry>
 <entry n="1" type="hom">
@@ -377,6 +341,7 @@ n="Dictionary entries and their structure"> &superEntry;
 </div>
 <div type="div3" xml:id="DIENGP">
 <head>Groups and Constituents</head>
+
 <p>As noted above, dictionary entries, and subordinate levels within dictionary entries,
 may comprise several constituent parts, each providing a different type of
 information about the word treated. The <term>top-level constituents</term> of
@@ -395,7 +360,7 @@ etc.)</item>
 <term>related entries</term>
 </item>
 </list> Any of the hierarchical levels (<gi>entry</gi>, <gi>entryFree</gi>,
-<gi>hom</gi>, <gi>sense</gi>) may contain any of these top-level constituents, since
+<gi>hom</gi>, and <gi>sense</gi>) may contain any of these top-level constituents, since
 information about word form, particular grammatical information, special
 pronunciation, usage information, etc., may apply to an entire entry, or to only one
 homograph, or only to a particular sense. The examples below illustrate this point. </p>
@@ -484,7 +449,7 @@ their rendition in the source text.</note>
 </egXML> For the elements which appear within the <gi>form</gi> and <gi>gramGrp</gi>
 elements of this example, see below, section <ptr target="#DITPFO"/>, and section
 <ptr target="#DITPGR"/>. </p>
-<p>As mentioned above, any top-level constituent can appear at any level when the
+<p>Any top-level constituent can appear at any level when the
 hierarchical structure of the entry is more complex. The most obvious examples are
 <gi>def</gi> and <gi>cit</gi>, which appear at the <gi>sense</gi> level when
 several senses or translations exist:<q rend="display">
@@ -602,11 +567,10 @@ appeal earnestly to ... [CP] </q>
 <p>Alone among the constituent groups, <gi>form</gi> can appear at the
 <gi>superEntry</gi> level as well as at the <gi>entry</gi>, <gi>hom</gi>, and
 <gi>sense</gi> levels:<q rend="display">
-<hi rend="bold">a.ban.don</hi> 1<code lang="ipa">/@"b&amp;amp;nd@n/ </code>
+<hi rend="bold">a.ban.don</hi> 1<code lang="ipa">/@"b&amp;nd@n/ </code>
 v [T1] 1 to leave completely and for ever; desert: The sailors abandoned the
 burning ship. 2 …<hi rend="bold">abandon</hi> 2 n [U] the state when one's
-feelings and actions are uncontrolled; freedom from control: The people were so
-excited that they jumped and shouted with abandon / in gay abandon. [LDOCE] </q>
+feelings and actions are uncontrolled; freedom from control...[LDOCE]</q>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <superEntry>
 <form>
@@ -630,13 +594,11 @@ excited that they jumped and shouted with abandon / in gay abandon. [LDOCE] </q>
 <subc>U</subc>
 </gramGrp>
 <def>the state when one's feelings and actions are uncontrolled; freedom
-from control</def>
+from control…</def>
 </entry>
 </superEntry>
 </egXML>
 </p>
-<p>The individual constituents are declared below, each in the section which documents
-it in more detail.</p>
 </div>
 </div>
 <div type="div2" xml:id="DITP">
@@ -675,7 +637,7 @@ marked for syllabification or hyphenation, is the first item in an entry. Other
 information about the word, including variant or alternate forms, inflected forms,
 pronunciation, etc., is also often given. </p>
 <p>The following elements should be used to encode this information: the <gi>form</gi>
-element groups one or more occurrences of any of the others; it can also be
+element groups one or more occurrences of any of them; it can also be
 recursively nested to reflect more complex sub-grouping of information about word
 form(s), as shown in the examples.<specList>
 <specDesc key="form" atts="type"/>
@@ -688,7 +650,7 @@ form(s), as shown in the examples.<specList>
 </specList>
 </p>
 <p>In addition to those listed above, the following elements, which encode morphological
-details of the form, may also occur within<gi>form</gi> elements:<specList>
+details of the form, may also occur within <gi>form</gi> elements:<specList>
 <specDesc key="gram" atts="type"/>
 <specDesc key="gen"/>
 <specDesc key="number"/>
@@ -698,17 +660,17 @@ details of the form, may also occur within<gi>form</gi> elements:<specList>
 <specDesc key="mood"/>
 <specDesc key="iType" atts="type"/>
 </specList> Of these, the <gi>gram</gi> element is most general, and all of the
-others are synonymous with <gi>gram</gi> elements with appropriate values (<val>gen,
+others are synonymous with a <gi>gram</gi> element with appropriate values (<val>gen,
 number, case</val>, etc.) for the <att>type</att> attribute. </p>
-<p>Different dictionaries use different means to mark hyphenation, syllabification, and
-stress, and they often use some unusual glyphs (e.g., the <soCalled>middle
-dot</soCalled> for hyphenation). All of these glyphs should however be available in
-the Unicode character set, and may be represented using either the standard ISO name
-or an appropriate character entity reference, as discussed in <ptr target="#SG-er"
-/>. When transcribing representations of pronunciation the International Phonetic
-Alphabet should be used. It may be convenient (as has been done in the text of this
-chapter) to use a simple transliteration scheme for the phonetic transcription
-scheme employed; such a scheme should however be properly documented in the header. </p>
+<p>Different dictionaries use different means to mark hyphenation,
+syllabification, and stress, and they often use some unusual glyphs
+(e.g., the <soCalled>middle dot</soCalled> for hyphenation). All of
+these glyphs are in the Unicode character set, as discussed in <ptr
+target="#SG-er"/>. When transcribing representations of pronunciation
+the International Phonetic Alphabet should be used. It may be
+convenient (as has been done in the text of this chapter) to use a
+simple transliteration scheme for this; such a scheme should however be
+properly documented in the header. </p>
 <p>In the simplest case, nothing is given but the orthography:<egXML
 xmlns="http://www.tei-c.org/ns/Examples">
 <form>
@@ -795,7 +757,7 @@ thus:<egXML xmlns="http://www.tei-c.org/ns/Examples">
 -->
 <p>Explanatory labels may be attached to alternate forms:<q rend="display">
 <hi rend="bold">MTBF</hi>
-<hi rend="it">abbrev. for</hi> mean time between failures. [CED]</q>
+<hi rend="it"> abbrev. for</hi> mean time between failures. [CED]</q>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <entry>
 <form type="abbrev">
@@ -825,8 +787,8 @@ forms; here, the <gi>form</gi> element is repeated to associate the first
 orthographic form explicitly with the first pronunciation, and the second
 orthographic form with the second pronunciation:<q rend="display">
 <hi rend="bold">mackle</hi>
-<code lang="ipa">("m&amp;amp;k^@l) </code> or macule <code lang="ipa"
->("m&amp;amp;kju:l) </code> … [CED] </q>
+<code lang="ipa">("m&amp;k^@l) </code> or macule <code lang="ipa"
+>("m&amp;kju:l) </code> … [CED] </q>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <form>
 <orth>mackle</orth>
@@ -910,16 +872,8 @@ distinctions for nouns), etc. It can contain any of the following elements:<spec
 </specList>
 </p>
 <p>In addition, <gi>gramGrp</gi> can contain any of the morphological elements defined
-in section <ptr target="#DITPFO"/> for <gi>form</gi>:<specList>
-<specDesc key="gram"/>
-<specDesc key="iType"/>
-<specDesc key="gen"/>
-<specDesc key="number"/>
-<specDesc key="case"/>
-<specDesc key="per"/>
-<specDesc key="tns"/>
-<specDesc key="mood"/>
-</specList> Elements conveying morphological information bear different
+in section <ptr target="#DITPFO"/> for <gi>form</gi>.
+Elements conveying morphological information bear different
 interpretations within <gi>gramGrp</gi> and <gi>form</gi> groups, the difference
 being that in the <gi>form</gi> group, the morphological information specified
 pertains to the specific alternate form in question, while within <gi>gramGrp</gi>
@@ -1125,7 +1079,7 @@ xml:id="DDITPDE" n="Definition text"> &def; </specGrp>
 <p>Multilingual dictionaries contain information about translations of a given word
 in some source language for one or more target languages. Minimally, the
 dictionary provides the corresponding translation in the target language; other
-information, such as morphological information (gender, case), various kinds of
+material, such as morphological information (gender, case), various kinds of
 usage restrictions, etc., may also be given. If translation equivalents are to
 be distinguished from other kinds of sense information, they may be encoded
 using <gi>cit type="translation"</gi>. The global <att>xml:lang</att> attribute
@@ -1214,12 +1168,13 @@ window ~) étalagiste mf. she's a stylish ~ elle s'habille avec chic; V hair.
 </entry>
 </egXML>
 </p>
-<p>In this encoding, a distinction is made between the translation equivalent
-(<q>OAS</q>) and a descriptive phrase providing further information for the
-user of the dictionary.<q rend="display">
-<hi rend="bold">O.A.S.</hi> ... nf (abrév de <hi rend="bold">Organisation de
-l'Armée secrète</hi>) OAS (<hi rend="it">illegal military organization
-supporting French rule of Algeria</hi>). [C/R] </q>
+<p>In the following example, a distinction is made between the
+translation equivalent (<q>OAS</q>) and a descriptive phrase providing
+further information for the user of the dictionary.<q rend="display">
+<hi rend="bold">O.A.S.</hi> ... nf (abrév de <hi
+rend="bold">Organisation de l'Armée secrète</hi>) OAS (<hi
+rend="it">illegal military organization supporting French rule of
+Algeria</hi>). [C/R] </q>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <entry>
 <cit type="translation" xml:lang="en">
@@ -2868,32 +2823,39 @@ section are defined thus:<specGrp xml:id="DEDIMV" n="Attributes for dictionary w
 </div>
 <div type="div2" xml:id="DIFR">
 <head>Unstructured Entries</head>
-<p>The content model for the <gi>entry</gi> element provides an entry structure suitable for
-many average dictionaries, as well as many regular entries in more exotic dictionaries.
-However, the structure of some dictionaries does not allow the restrictions imposed by
-the content model for <gi>entry</gi>. To handle these cases, the <gi>entryFree</gi> and
-<gi>dictScrap</gi> elements are provided to support much wider variation in entry
-structure. The <gi>dictScrap</gi> element offers less freedom, in that it can only
-contain phrase level elements, but it can itself appear at any point within a dictionary
-entry where any of the structural components of a dictionary entry are permitted. As
-such, it acts as a container for otherwise anomalous parts of an entry.</p>
 
-<p>The <gi>entryFree</gi> element places no constraints at all upon the entry: any element
-defined in this chapter, as well as all the phrase-level and inter-level elements
-defined in the core module, can appear anywhere within it. With the <gi>entryFree</gi>
-element, the encoder is free to use any element anywhere, as well as to use or omit
+<p>The content model for the <gi>entry</gi> element provides an entry
+structure suitable for many average dictionaries, as well as many
+regular entries in more exotic dictionaries.  However, the structure
+of some dictionaries does not allow the restrictions imposed by the
+content model for <gi>entry</gi>. To handle these cases, the
+<gi>entryFree</gi> and <gi>dictScrap</gi> elements are provided to
+support much wider variation in entry structure. The
+<gi>dictScrap</gi> element offers less freedom, in that it can only
+contain phrase level elements, but it can itself appear at any point
+within a dictionary entry where any of the structural components of a
+dictionary entry are permitted. As such, it acts as a container for
+otherwise anomalous parts of an entry.</p>
+
+<p>The <gi>entryFree</gi> element places no constraints at all upon
+the entry: any element defined in this chapter, as well as all the
+phrase-level and inter-level elements defined in the core module, can
+appear anywhere within it. With the <gi>entryFree</gi> element, the
+encoder is free to use any element anywhere, as well as to use or omit
 grouping elements such as <gi>form</gi>, <gi>gramGrp</gi>, etc. </p>
 
-<p>The <gi>entryFree</gi> element allows the encoding of entries which violate the structure
-specified for the <gi>entry</gi> element. For example, in the following entry from a
-dictionary already in electronic form, it is necessary to include a <gi>pron</gi>
-element within a <gi>def</gi>. This is not permitted in the content model for
-<gi>entry</gi>, but it poses no problem in the <gi>entryFree</gi> element. <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<ent h="demigod"> <hwd>demi|god</hwd> <pr> <ph>"demIgQd</ph> </pr>
-<hps ps="n"> <hsn> <def>one who is partly divine and partly
-human</def> <def>(in Gk myth, etc) the son of a god and a mortal
-woman, eg<cf>Hercules</cf> <pr> <ph>"h3:kjUli:z</ph> </pr> </def>
-</hsn> </hps> </ent> [OALD electronic]]]></egXML>
+<p>The <gi>entryFree</gi> element allows the encoding of entries which
+violate the structure specified for the <gi>entry</gi> element. For
+example, in the following entry from a dictionary already in
+electronic form, it is necessary to include a <gi>pron</gi> element
+within a <gi>def</gi>. This is not permitted in the content model for
+<gi>entry</gi>, but it poses no problem in the <gi>entryFree</gi>
+element. <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<ent
+h="demigod"> <hwd>demi|god</hwd> <pr> <ph>"demIgQd</ph> </pr> <hps
+ps="n"> <hsn> <def>one who is partly divine and partly human</def>
+<def>(in Gk myth, etc) the son of a god and a mortal woman,
+eg<cf>Hercules</cf> <pr> <ph>"h3:kjUli:z</ph> </pr> </def> </hsn>
+</hps> </ent> [OALD electronic]]]></egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <entryFree>
 <form>
@@ -2951,4 +2913,11 @@ class is used in defining the 'free' dictionary entry.</p>
  </specGrp>
 </p>-->
 </div>
+
+<moduleSpec xml:id="DDIBO" ident="dictionaries">
+<altIdent type="FPI">Print Dictionaries</altIdent>
+<desc>Printed dictionaries</desc>
+</moduleSpec>
+
+
 </div>
