@@ -541,7 +541,7 @@
     <xsl:if
       test="not(following-sibling::tei:item) and preceding-sibling::tei:item">
       and </xsl:if>
-    <xsl:text>&#2022;</xsl:text>
+    <xsl:text>&#x2022;</xsl:text>
     <xsl:apply-templates/>
   </xsl:template>
   <xd:doc>
