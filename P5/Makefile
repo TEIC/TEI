@@ -269,7 +269,8 @@ dist: clean dist-source dist-schema dist-doc dist-test dist-database dist-exempl
 dist-source: 
 	rm -rf release/tei-p5-source*
 	mkdir -p release/tei-p5-source/share/xml/tei/odd
-	tar -c -f - --exclude "*~" --exclude .svn 	COPYING.txt \
+	tar -c -f - --exclude "*~" --exclude .svn 	\
+	COPYING.txt \
 	Makefile \
 	ReleaseNotes  \
 	Source  \
@@ -278,11 +279,11 @@ dist-source:
 	VERSION  \
 	fasc-head.xml \
 	fasc-tail.xml \
-	p5examples.rnc \
 	p5.nvdl \
 	p5odds-ex.odd \
 	p5odds.odd \
-	p5odds.rnc \
+	relax.rng \
+	schematron.rng \
 	p5sch.xsl \
 	schematron1-5.rnc \
 	*.css \
@@ -293,7 +294,7 @@ dist-source:
 	ln -s tei-p5-source tei-p5-source-`cat ../VERSION` ; \
 	zip -r tei-p5-source-`cat ../VERSION`.zip tei-p5-source-`cat ../VERSION` )
 
-dist-schema: schemas dtds oddschema
+dist-schema: schemas dtds oddschema exampleschema
 	rm -rf release/tei-p5-schema*
 	mkdir -p release/tei-p5-schema/share/xml/tei/schema/dtd
 	mkdir -p release/tei-p5-schema/share/xml/tei/schema/relaxng
