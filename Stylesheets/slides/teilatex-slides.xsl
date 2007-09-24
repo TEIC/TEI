@@ -200,7 +200,7 @@ XSL LaTeX stylesheet to make slides
 <xsl:template match="tei:eg">
   <xsl:text>\begin{Verbatim}[fontsize=\scriptsize,frame=single,fillcolor=\color{yellow}]&#10;</xsl:text>
   <xsl:apply-templates mode="eg"/>
-  <xsl:text>\end{Verbatim}</xsl:text>
+  <xsl:text>\end{Verbatim}&#10;</xsl:text>
 </xsl:template>
 
 <xsl:template match="teix:egXML">
