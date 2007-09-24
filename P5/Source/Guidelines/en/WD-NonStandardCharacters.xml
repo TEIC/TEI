@@ -557,16 +557,16 @@ represented as follows:<egXML xmlns="http://www.tei-c.org/ns/Examples">
    <div type="div2" xml:id="D25-40">
     <head>Adding New Characters</head>
     <p>The creation of additional characters for use in text encoding
-    is quite similar to the annotation of existing characters.  The same
-    element <gi>g</gi> is used to provide a link from the character
-    instance in the text to the character definition in
-    <gi>charDecl</gi> element. The main difference is that the
-    <gi>g</gi> element now points to a <gi>char</gi> element.  The
-    element <gi>g</gi> itself will generally be empty, but could
-    contain a codepoint from the Private Use Area (PUA) of the Unicode Standard,
-    which is an area set aside for the very purpose of privately
-    adding new characters to a document.  Recommendations on how to
-    use such PUA characters are given in the following section.  </p>
+    is quite similar to the annotation of existing characters.  The
+    same element <gi>g</gi> is used to provide a link from the
+    character instance in the text to a character definition provided
+    within the <gi>charDecl</gi> element. This character definition
+    takes the form of a <gi>char</gi> element.  The element <gi>g</gi>
+    itself will usually be empty, but could contain a codepoint from
+    the Private Use Area (PUA) of the Unicode Standard, which is an
+    area set aside for the very purpose of privately adding new
+    characters to a document.  Recommendations on how to use such PUA
+    characters are given in the following section.  </p>
 <p>In some circumstances, it may be desirable to provide a single
 precomposed form of a character that is encoded in Unicode only as a
 sequence of codepoints. For example, in Medieval
@@ -577,31 +577,33 @@ the encoder wishes to treat it as a single precomposed character with
 transcription concerned, the encoder enters this letter as
 <code>&amp;ydotacute;</code>, which  when the
 transcription is processed can then be expanded in one of three ways,
-depending on the DTD in force. It might simply be translated into the
-sequence of corrsponding Unicode codepoints: this has the drawback
-that the sequence cannot be treated as a unit of any kind once entity
-translation has taken place.  It may be translated directly into a
-locally-defined PUA character (say <code>&amp;#xE0A4</code>) for local
-processing only. However, the most
-portable representation is to use the <gi>g</gi> element defined by
+depending on the mapping in force. The entity reference  migh be translated into the
+sequence of corresponding Unicode codepoints, or into some locally-defined PUA character (say <code>&amp;#xE0A4</code>) for local
+processing only. Both these options have disadvantages; the former
+loses the fact that the sequence of composed characters is regarded as
+a single object; the second is not reliably portable. 
+Therefore, the recommended
+representation is to use the <gi>g</gi> element defined by
 the module defined in this chapter: <egXML
 xmlns="http://www.tei-c.org/ns/Examples"><g
 ref="#ydotacute"/></egXML>. This makes it possible for the encoder to
 provide useful documentation for the particular character or glyph so referenced:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><char xml:id="ydotacute">
-       <charName>LATIN SMALL LETTER Y WITH DOT ABOVE AND ACUTE</charName>
+       <charName>LATIN SMALL LETTER Y WITH DOT ABOVE AND
+       ACUTE</charName>
      <charProp>
        <localName>entity</localName>
        <value>ydotacute</value>
      </charProp>
-     <mapping type="composed">&amp;#x0079;&amp;#x0307;&amp;#x0301;</mapping>
-     <mapping type="PUA">U+E0A4</mapping>
-   </char></egXML>
-This definition  specifies the mapping between this composed
-character and the individual Unicode-defined codepoints which make it
-up. It also supplies a single locally-defined property (<soCalled>entity</soCalled>)for the
-character concerned, the purpose of which is
-to supply a recommended character entity name for the character. 
+     <mapping
+     type="composed">&amp;#x0079;&amp;#x0307;&amp;#x0301;</mapping>
+     <mapping type="PUA">U+E0A4</mapping> </char></egXML> This
+     definition specifies the mapping between this composed character
+     and the individual Unicode-defined codepoints which make it
+     up. It also supplies a single locally-defined property
+     (<soCalled>entity</soCalled>)for the character concerned, the
+     purpose of which is to supply a recommended character entity name
+     for the character.
 </p>
 <p>Under certain circumstances, Chinese Han characters can be written
     within a circle.  Rather than considering this as simply an aspect of the
@@ -646,7 +648,7 @@ will be empty.</p>
     <head>How to Use Codepoints from the Private Use Area</head>
     <p>The developers of the Unicode Standard have set aside an
     area of the codespace for the private use of software vendors,
-    user groups or individuals.  As of this writing (Unicode 5.0),
+    user groups, or individuals.  As of this writing (Unicode 5.0),
     there are around 137,000 codepoints available in this area, which
     should be enough for most needs. No codepoint assignments will be made
     to this area by standard bodies and only some very basic default
