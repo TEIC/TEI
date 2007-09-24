@@ -8,8 +8,15 @@
  xmlns:exsl="http://exslt.org/common"
  version="1.0">
 
+<xsl:key name="DIVS"
+	 match="tei:body/tei:div|tei:back/tei:div|tei:front/tei:div"
+	 use="1"/>
+<xsl:key name="SPECS"
+	 match="tei:elementSpec|tei:classSpec|tei:macroSpec"
+	 use="1"/>
 <xsl:output 
    method="xml"
+   encoding="utf-8"
    indent="yes"
    cdata-section-elements="tei:eg"/>
 
@@ -27,6 +34,7 @@
     <xsl:message>write <xsl:value-of select="$outName"/></xsl:message>
  <exsl:document         
    method="xml"
+   encoding="utf-8"
    cdata-section-elements="tei:eg" 
    omit-doctype-declaration="yes"
         href="{$outName}">
@@ -44,9 +52,23 @@ $Id$
   &lt;!NOTATION HTML SYSTEM ""&gt;
   &lt;!ENTITY % int-ents SYSTEM "../../internal-entities.dtd"&gt;
   &lt;!ENTITY % TEIlang SYSTEM "en"&gt;
-  &lt;!ENTITY % ext-ents SYSTEM "./external-entities.dtd"&gt;
   %int-ents;
-  %ext-ents;
+</xsl:text>
+<xsl:for-each select="key('DIVS','1')">
+<xsl:text disable-output-escaping="yes">&lt;!ENTITY </xsl:text>
+<xsl:call-template name="Names"/>
+<xsl:text> SYSTEM "./</xsl:text>
+<xsl:call-template name="Names"/>
+<xsl:text disable-output-escaping="yes">.xml"&gt;&#10;</xsl:text>
+</xsl:for-each>
+<xsl:for-each select="key('SPECS','1')">
+<xsl:text disable-output-escaping="yes">&lt;!ENTITY </xsl:text>
+<xsl:call-template name="Names"/>
+<xsl:text> SYSTEM "../../Specs/</xsl:text>
+<xsl:call-template name="Names"/>
+<xsl:text disable-output-escaping="yes">.xml"&gt;&#10;</xsl:text>
+</xsl:for-each>
+<xsl:text disable-output-escaping="yes">
   ]&gt;
 </xsl:text>
   <xsl:apply-templates/> 
@@ -77,6 +99,7 @@ $Id$
     <xsl:text disable-output-escaping="yes">;</xsl:text>
     <exsl:document         
      method="xml"
+     encoding="utf-8"
      cdata-section-elements="tei:eg" 
      omit-doctype-declaration="yes"
      href="{$ident}.xml">
@@ -110,6 +133,7 @@ $Id$
     <xsl:text disable-output-escaping="yes">;</xsl:text>
     <exsl:document         
      indent="yes"
+     encoding="utf-8"
      method="xml"
      cdata-section-elements="tei:eg" 
      omit-doctype-declaration="yes"
