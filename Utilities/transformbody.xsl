@@ -11,17 +11,7 @@
 <xsl:output 
    method="xml"
    indent="yes"
-   cdata-section-elements="tei:eg teix:egXML"
-   omit-xml-declaration="yes"/>
-
-<xsl:template match="teix:*|tei:*|rng:*">
- <xsl:copy>
-  <xsl:apply-templates select="@*"/>
-  <xsl:apply-templates 
-      select="teix:*|tei:*|rng:*|comment()|processing-instruction()|text()"/>
- </xsl:copy>
-</xsl:template>
+   cdata-section-elements="tei:eg"/>
 
 
- 
 </xsl:stylesheet>
