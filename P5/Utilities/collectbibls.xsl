@@ -20,7 +20,7 @@
 	<xsl:copy-of select="@*"/>
 	<xsl:attribute name="xml:id">
 	  <xsl:value-of select="ancestor::tei:div/@xml:id"/>
-	  <xsl:text>-</xsl:text>
+	  <xsl:text>-BIBL-</xsl:text>
 	  <xsl:number level="any" from="tei:body/tei:div"/>
 	</xsl:attribute>
 	<xsl:copy-of select="*|text()|comment()"/>
