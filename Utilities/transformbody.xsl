@@ -15,4 +15,20 @@
    cdata-section-elements="tei:eg"/>
 
 
+<xsl:template match="teix:egXML">
+    <xsl:variable name="x">
+      <xsl:value-of select="ancestor::tei:div[@xml:id][1]/@xml:id"/>
+      <xsl:text>-EGXML-</xsl:text>
+      <xsl:number level="any"  from="tei:body/tei:div"/>
+    </xsl:variable>
+    <xsl:copy>
+      <xsl:attribute name="xml:id">
+	<xsl:value-of select="$x"/>
+      </xsl:attribute>
+      <xsl:apply-templates select="@*"/>
+      <xsl:apply-templates 
+	  select="teix:*|tei:*|rng:*|comment()|processing-instruction()|text()"/>
+    </xsl:copy>
+</xsl:template>
+
 </xsl:stylesheet>
