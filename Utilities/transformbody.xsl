@@ -11,6 +11,7 @@
 <xsl:output 
    method="xml"
    indent="yes"
+   encoding="utf-8"
    cdata-section-elements="tei:eg"/>
 
 
