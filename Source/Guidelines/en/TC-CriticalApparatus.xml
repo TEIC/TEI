@@ -144,10 +144,13 @@ individual readings within an apparatus entry:
 <specList><specDesc key="lem"/><specDesc key="rdg"/></specList>
 N.B. the term <term>lemma</term> is used here in the text-critical
 sense of <q>the reading accepted as that of the original or of the
-base text</q> — it is not to be confused with <q>the heading
-of an entry in a reference book, especially a dictionary,</q> nor with
+base text</q>. This sense differs from that in which the word is used
+elsewhere in the Guidelines, for example as in the attribute
+<att>lemma</att> where the intended sense is <q>the root form of
+an inflected word</q>, or  <q>the heading
+of an entry in a reference book, especially a dictionary,</q>. <!-- nor with
 <q>a subsidiary proposition introduced in the proof of some other
-proposition; a helping theorem.</q></p>
+proposition; a helping theorem.</q>--></p>
 <p>In recording readings within an apparatus entry, the <gi>rdg</gi>
 element may always be used; each <gi>app</gi> must contain at least one
 <gi>rdg</gi>.</p>
@@ -557,8 +560,9 @@ xml:id="Diet1.1">Sl&amp;a-;fest du, vriedel ziere?</l>
     </app>
 </egXML>
 <!-- MF 39,18, ed. Moser/Tervooren, p. 66.                    -->
-Of course, the sigla used for different witnesses need not be the same
-in the source and the <att>wit</att> attribute, as shown particularly in
+Of course, the siglum used for a particular witness in the 
+source, as recorded in the <gi>wit</gi> element, may well differ from
+that used to indicated the same witness in  the <att>wit</att> attribute, as shown particularly in
 the apparatus for the second line of the poem (Diet.1.2).</p>
 
 <specGrp xml:id="DTCSCWL" n="Sourcetext Witness Lists in Apparatus">
@@ -782,7 +786,7 @@ base text and may only be used for in-line apparatus.</p>
 element of its TEI header, thus:
 <specList><specDesc key="variantEncoding" atts="method location"/></specList></p>
 <p>For examples of this element, see the following sections.  The formal
-declaration is given in section <ptr target="#HD53"/>.</p>
+declaration is given in section <ptr target="#HDVAR"/>.</p>
 <div type="div3" xml:id="TCAPLO"><head >The Location-referenced Method</head>
 <p>The location-referenced method of encoding apparatus provides a
 convenient method for encoding printed apparatus; in this method as in
@@ -794,7 +798,7 @@ edition, such as <val>A 137</val> or <mentioned>Page 15 line 1</mentioned>).</p>
 externally to the base text, the TEI header must have the
 declaration:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><variantEncoding method="location-referenced" location="external"/></egXML></p>
-<p>In the <gi>body</gi> of the document, the base text (here El) will
+<p>In the <gi>body</gi> of the document, the base text (haere El) will
 appear:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><text>
   <body> 
@@ -818,7 +822,8 @@ dispersed through the base text block to which it refers.  In this case,
 the location of the variant can be read from the line in which it
 occurs.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><variantEncoding method="location-referenced" location="internal"/>
-<l n="1">Experience
+<!-- ... -->
+<l n="1">Experiencea
   <app>
     <rdg wit="#La">Experiment</rdg>
     <rdg wit="#Ra2">Eryment</rdg>
@@ -886,14 +891,12 @@ appear with <gi>anchor</gi> elements inserted at every place where a
 variant begins or ends (unless some element with an identifier
 already begins or ends at that point):
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<!--  <teiHeader> -->
     <variantEncoding method="double-end-point" location="external"/>
-<!--  </teiHeader> ... <body> -->
+<!-- ... -->
       <div n="WBP" type="prologue"><head>The Prologe ... </head>
         <l n="1" xml:id="WBP.1">Experience<anchor xml:id="WBP-A2"/> though noon Auctoritee</l>
         <l>Were in this world ...</l> 
       </div> 
-<!-- </body> -->
 </egXML>
 The apparatus will be separately encoded:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><app from="#WBP.1" to="#WBP-A2">
@@ -912,6 +915,7 @@ base text.  Only the beginning of the lemma need be marked with an
 <gi>anchor</gi>, since the <gi>app</gi> is inserted at the end of the
 lemma, and itself therefore marks the end of the lemma.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><variantEncoding method="double-end-point" location="internal"/>
+<!-- ... -->
 <l n="1" xml:id="wbp.1">Experience
    <app from="#wbp.1">
       <rdg wit="#La">Experiment</rdg>
@@ -993,6 +997,7 @@ there is variation is marked by an <gi>app</gi> element; each reading is
 given in a <gi>rdg</gi> element; if it is desired to single out one
 reading as preferred, it may be tagged <gi>lem</gi>:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><variantEncoding method="parallel-segmentation" location="internal"/>
+<!-- ... -->
   <l n="1">
     <app><lem wit="#El #Hg">Experience</lem>
          <rdg wit="#La">Experiment</rdg>
@@ -1069,21 +1074,26 @@ given below of line 105 of the Hengwrt manuscript of Chaucer's
 followed by two minims over which a bar has been drawn, which has been
 read in different ways by different scholars.  The first
 transcription, by Elizabeth Solopova, represents the two minims with
-bar above by reference to an entity <ident type="ge">i-i</ident>.  This
+bar above as a special composite character using the <gi>g</gi>element.  This
 transcription notes this as a mark of abbreviation but gives no
 expansion for it.  A second transcriber, F. J. Furnivall, regards the
-bar as an abbreviation of <mentioned>u</mentioned>, reading the two minims as
+bar as an abbreviation of <mentioned>u</mentioned>, and therefore reads the two minims as
 an <mentioned>n</mentioned>.  A third transcriber, P. G. Ruggiers, regards the
 bar as an abbreviation of <mentioned>n</mentioned>, reading the minims as
 <mentioned>u</mentioned>.  This information may be held within an <gi>app</gi>
 structure, as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Virginite is grete
 <app>
-  <rdg resp="#ES">perfectio<abbr>i</abbr></rdg>
-  <rdg resp="#FJF">perfectio<expan>u</expan>n</rdg>
-  <rdg resp="#PGR">perfectiou<expan>n</expan></rdg>
+  <rdg resp="#ES">perfectio<am><g ref="#ii"/></am></rdg>
+  <rdg resp="#FJF">perfectio<ex>u</ex>n</rdg>
+  <rdg resp="#PGR">perfectiou<ex>n</ex></rdg>
 </app></egXML>
-This example illustrates the adaptation of the <gi>rdg</gi> element for
+This example uses special purpose elements <gi>am</gi> and
+<gi>ex</gi> used to represent abbreviation marks and editorial
+expansion respectively; these elements are provided by the <ident
+type="module">transcr</ident> module documented in chapter <ptr
+target="#PH"/>, which should be consulted for further discussion of
+methods of representing multiple readings of a source. <!-- This example illustrates the adaptation of the <gi>rdg</gi> aelement for
 use within the transcription of a particular witness.  The
 <att>wit</att> attribute, which may be compulsory in recording variant
 readings of many witnesses within a critical apparatus, is redundant
@@ -1106,15 +1116,15 @@ processor will know that the responsibility for the expansion
 <ident>FJF</ident> was responsible for the reading containing this expansion.
 This simplifies the processing of the information, as the application
 has only to look at the attribute values for each reading in turn and
-not for those for elements nested within.</p>
+not for those for elements nested within.--></p>
 <p>Editorial notes may also be attached to <gi>app</gi> structures
 within transcriptions.  Here, editorial preference for Ruggiers'
 expansion and an explanation of that preference is given:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Virginite is grete
 <app>
-  <rdg resp="#ES">perfecti<abbr>oi</abbr></rdg>
-  <rdg xml:id="f105" resp="#FJF">perfectio<expan>u</expan>n</rdg>
-  <rdg xml:id="r105" resp="#PGR">perfectiou<expan>n</expan></rdg>
+  <rdg resp="#ES">perfecti<am><g ref="#ii"/></am></rdg>
+  <rdg xml:id="f105" resp="#FJF">perfectio<ex>u</ex>n</rdg>
+  <rdg xml:id="r105" resp="#PGR">perfectiou<ex>n</ex></rdg>
 </app>
 <!-- ... <note> appearing elsewhere in the document ... -->
 <note target="#r105 #f105">Furnivall's expansion implies that the bar
