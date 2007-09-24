@@ -18,7 +18,7 @@
   <xsl:for-each select="key('EGXMLS',1)">
     <xsl:variable name="x">
       <xsl:value-of select="ancestor::tei:div[@xml:id][1]/@xml:id"/>
-      <xsl:text>-</xsl:text>
+      <xsl:text>-EGXML-</xsl:text>
       <xsl:number level="any"/>
     </xsl:variable>
     <xsl:variable name="content">
