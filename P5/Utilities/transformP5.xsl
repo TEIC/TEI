@@ -50,9 +50,6 @@ $Id$
   &lt;!NOTATION jpeg SYSTEM ""&gt;
   &lt;!NOTATION PNG SYSTEM ""&gt;
   &lt;!NOTATION HTML SYSTEM ""&gt;
-  &lt;!ENTITY % int-ents SYSTEM "../../internal-entities.dtd"&gt;
-  &lt;!ENTITY % TEIlang SYSTEM "en"&gt;
-  %int-ents;
 </xsl:text>
 <xsl:for-each select="key('DIVS','1')">
 <xsl:text disable-output-escaping="yes">&lt;!ENTITY </xsl:text>
