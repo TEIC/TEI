@@ -923,9 +923,6 @@ function showByMod() {
     </xsl:variable>
     <xsl:if
 	test="generate-id(.)=generate-id(key('ELEMENT-ALPHA',$letter)[1])">
-	<p class="listhead">
-	  <xsl:value-of select="$letter"/>
-	</p>
       <ul class="atoz" id="element-{$letter}">	
 	<xsl:for-each select="key('ELEMENT-ALPHA',$letter)">
 	  <xsl:sort select="@ident"/>
