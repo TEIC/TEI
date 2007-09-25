@@ -30,6 +30,7 @@
   <xsl:param name="cssPrintFile">guidelines-print.css</xsl:param>
   <xsl:param name="displayMode">both</xsl:param>
 
+
   <xsl:key name="CLASS-MODULE" match="tei:classSpec"
 	   use="@module"/>
   <xsl:key name="ELEMENT-MODULE" match="tei:elementSpec"
@@ -168,18 +169,16 @@ for (var i = 0; i &lt; states.length; i++) {
   }
  }
  var mod;
- if (mod = document.getElementById('elembymod') ) {
-  mod.style.display = "none";
+ if ( mod = document.getElementById('elembymod') ) {
+     mod.style.display = "none";
+ }
 }
 
-}
 function showall() {
-
-for (var i = 0; i &lt; states.length; i++) {
-var layer = document.getElementById(states[i]);
-layer.style.display = "block";
-
-}
+ for (var i = 0; i &lt; states.length; i++) {
+   var layer = document.getElementById(states[i]);
+   layer.style.display = "block";
+  }
 }
 
 function showByMod() {
@@ -188,63 +187,58 @@ function showByMod() {
   mod.style.display = "block";
 }
 
-    function toggleTOC (el) {
-        if (el.innerHTML == 'Display Full Contents') {
-        el.innerHTML = 'Display Summary Contents';
-        }
-        else
-        {
-        el.innerHTML = 'Display Full Contents';
-        }
-        var div = el.parentNode; 
-        for (j=0;j&lt;div.childNodes.length;j++)
-        {
-        if (div.childNodes[j].nodeType != 1) continue;
-        if (div.childNodes[j].nodeName != 'DIV') continue;
-        var thisone=div.childNodes[j];
-        var state=thisone.style.display;
-        if (state == 'block')
-        {  
+function toggleToc(el){
+   var item = el.parentNode; 
+   for (j=0;j&lt;item.childNodes.length;j++)
+   {
+     if (item.childNodes[j].nodeType != 1) continue;
+     if (item.childNodes[j].nodeName != 'UL') continue;
+     var thisone=item.childNodes[j];
+     var state=thisone.style.display;
+     if (state == 'block')
+      {  
         thisone.style.display='none'; 
-        }
-        else
-        {  
+	el.className="collapsed";
+	el.title="Click here to expand list";
+      }
+     else
+      {  
         thisone.style.display='block';
-        }
-        }
-        }
+	el.className="expanded";
+	el.title="Click here to collapse list";
+      }
+    }
+  }
 
-        function togglerelax (el) {
-        if (el.innerHTML == 'XML format to compact') {
-        el.innerHTML = 'Compact to XML format';
-        }
-        else
-        {
-        el.innerHTML = 'XML format to compact';
-        }
-        var div = el.parentNode; 
-        for (j=0;j&lt;div.childNodes.length;j++)
-        {
-        if (div.childNodes[j].nodeType != 1) continue;
-        if (div.childNodes[j].nodeName != 'PRE') continue;
-        var thisone=div.childNodes[j];
-        var state=thisone.style.display;
-        if (state == 'block')
+function togglerelax (el) {
+    if (el.innerHTML == 'XML format to compact') {
+         el.innerHTML = 'Compact to XML format';
+      }
+   else
+     {
+      el.innerHTML = 'XML format to compact';
+   }
+   var div = el.parentNode; 
+   for (j=0;j&lt;div.childNodes.length;j++)
+     {
+       if (div.childNodes[j].nodeType != 1) continue;
+       if (div.childNodes[j].nodeName != 'PRE') continue;
+       var thisone=div.childNodes[j];
+       var state=thisone.style.display;
+       if (state == 'block')
         {  
-        thisone.style.display='none'; 
+       thisone.style.display='none'; 
         }
-        else
+       else
         {  
-        thisone.style.display='block';
-        }
-        }
-        }
+       thisone.style.display='block';
+       }
+      }
+  }
       </xsl:text>
       </xsl:comment>
     </script>
   </xsl:template>
-
-
   <xsl:template name="sectionHeadHook">
     <xsl:variable name="ident">
       <xsl:apply-templates mode="ident" select="."/>
@@ -475,21 +469,9 @@ function showByMod() {
                   </a>
 		  </h1>
                 </div>
-                <div class="togglingTOCs">
-                  <button class="displayRelax"
-                    onclick="toggleTOC(this)">Display Full Contents</button>
-                  <div class="toggleTOC_summary"
-                    style="display: block">
-                    <h2>Summary Table of Contents</h2>
-                    <xsl:call-template name="mainTOC">
-                      <xsl:with-param name="force">0</xsl:with-param>
-                    </xsl:call-template>
-                  </div>
-                  <div class="toggleTOC_full" style="display: none">
-                    <h2>Full Table of Contents</h2>
-                    <xsl:call-template name="mainTOC"/>
-                  </div>
-                </div>
+		<div>
+		  <xsl:call-template name="mainTOC"/>
+		</div>
                 <xsl:call-template name="stdfooter"/>
               </body>
             </html>
@@ -682,25 +664,78 @@ function showByMod() {
 
 
   <!-- JC Adding headings -->
+  <xsl:template name="class_toc">
+    <xsl:param name="depth"/>
+    <xsl:text>toc</xsl:text>
+    <xsl:text> </xsl:text>
+    <xsl:text>toc</xsl:text>
+    <xsl:value-of select="$depth"/>
+  </xsl:template>
+
+  <xsl:template name="continuedToc">
+    <xsl:if
+      test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+      <ul class="toc">
+        <xsl:apply-templates mode="maketoc"
+          select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
+        />
+      </ul>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template match="tei:div" mode="maketoc">
+    <xsl:param name="forcedepth"/>
+    <xsl:variable name="myName">
+      <xsl:value-of select="local-name(.)"/>
+    </xsl:variable>
+    <xsl:if test="tei:head or $autoHead='true'">
+      <xsl:variable name="Depth">
+        <xsl:choose>
+          <xsl:when test="not($forcedepth='')">
+            <xsl:value-of select="$forcedepth"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="$tocDepth"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:variable name="thislevel">
+	<xsl:value-of select="count(ancestor::tei:div)"/>
+      </xsl:variable>
+      <xsl:variable name="pointer">
+        <xsl:apply-templates mode="generateLink" select="."/>
+      </xsl:variable>
+      <li>
+	<xsl:choose>
+	<xsl:when test="not(ancestor::tei:div) and tei:div">
+	  <xsl:attribute name="class">
+	    <xsl:text>tocTree</xsl:text>
+	  </xsl:attribute>
+	  <a class="collapsed" 
+	     title="Click here to expand list of sections in this chapter" 
+	     href="#" onclick="toggleToc(this);return false;">&#160;</a>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:attribute name="class">
+	    <xsl:text>toc</xsl:text>
+	  </xsl:attribute>
+	</xsl:otherwise>
+	</xsl:choose>
+	<xsl:call-template name="header">
+	  <xsl:with-param name="toc" select="$pointer"/>
+	  <xsl:with-param name="minimal">false</xsl:with-param>
+	  <xsl:with-param name="display">plain</xsl:with-param>
+	</xsl:call-template>
+	<xsl:if test="$thislevel &lt; $Depth">
+	    <xsl:call-template name="continuedToc"/>
+        </xsl:if>
+      </li>
+    </xsl:if>
+  </xsl:template>
+
   <xsl:template name="mainTOC">
     <xsl:param name="force"/>
-    <xsl:if test="$tocFront">
-      <div class="toc_front">
-        <h3>Front Matter</h3>
-        <xsl:for-each
-          select="ancestor-or-self::tei:TEI/tei:text/tei:front">
-          <xsl:if
-            test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-            <ul class="toc{$force} toc_front">
-              <xsl:apply-templates mode="maketoc"
-                select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-                <xsl:with-param name="forcedepth" select="$force"/>
-              </xsl:apply-templates>
-            </ul>
-          </xsl:if>
-        </xsl:for-each>
-      </div>
-    </xsl:if>
+
     <div class="toc_body">
       <h3>Text Body</h3>
       <xsl:for-each
@@ -716,23 +751,38 @@ function showByMod() {
         </xsl:if>
       </xsl:for-each>
     </div>
-    <xsl:if test="$tocBack">
-      <div class="toc_back">
-        <h3>Back Matter</h3>
+    <div class="toc_rest">
+      <xsl:if test="$tocFront">
+	<h3>Front Matter</h3>
         <xsl:for-each
-          select="ancestor-or-self::tei:TEI/tei:text/tei:back">
-          <xsl:if
-            test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-            <ul class="toc{$force} toc_back">
-              <xsl:apply-templates mode="maketoc"
-                select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-                <xsl:with-param name="forcedepth" select="$force"/>
-              </xsl:apply-templates>
+	    select="ancestor-or-self::tei:TEI/tei:text/tei:front">
+	  <xsl:if
+	      test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+	    <ul class="toc{$force} toc_front">
+	      <xsl:apply-templates mode="maketoc"
+				   select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+		<xsl:with-param name="forcedepth" select="$force"/>
+	      </xsl:apply-templates>
             </ul>
-          </xsl:if>
-        </xsl:for-each>
-      </div>
+	  </xsl:if>
+	</xsl:for-each>
     </xsl:if>
+    <xsl:if test="$tocBack">
+      <h3>Back Matter</h3>
+      <xsl:for-each
+	  select="ancestor-or-self::tei:TEI/tei:text/tei:back">
+	<xsl:if
+	    test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+	  <ul class="toc{$force} toc_back">
+	    <xsl:apply-templates mode="maketoc"
+				 select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+	      <xsl:with-param name="forcedepth" select="$force"/>
+              </xsl:apply-templates>
+	  </ul>
+	</xsl:if>
+      </xsl:for-each>
+    </xsl:if>
+    </div>
   </xsl:template>
 
 
@@ -923,7 +973,7 @@ function showByMod() {
     </xsl:variable>
     <xsl:if
 	test="generate-id(.)=generate-id(key('ELEMENT-ALPHA',$letter)[1])">
-	<ul class="atoz" id="element-{$letter}">
+      <ul class="atoz" id="element-{$letter}">	
 	<xsl:for-each select="key('ELEMENT-ALPHA',$letter)">
 	  <xsl:sort select="@ident"/>
 	  <li>

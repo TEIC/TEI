@@ -199,7 +199,7 @@ td p {
    padding-bottom: 5pt;
    border: 0px;
    color: yellow;
-   background: url("TEI-glow.png");
+   background: url(Images/"TEI-glow.png");
    background-repeat: no-repeat;
    overflow: inherit
 }
@@ -235,7 +235,7 @@ height:2px;
 }
    
    
-   /*headings*/
+/*headings*/
 h1 {
    font-weight: bold;
    font-size: x-large;
@@ -346,7 +346,7 @@ li.breadcrumb  {
    padding-right: 5px;
    display: inline;
    color: #000;
-   background: url("rightarrow.gif");
+   background: url(Images/"rightarrow.gif");
    background-repeat: no-repeat;
    background-position: left
 }
@@ -356,7 +356,7 @@ li.breadcrumb-first  {
    padding-right: 5px;
    display: inline;
    color: #000;
-   background: url("rightarrow.gif");
+   background: url(Images/"rightarrow.gif");
    background-repeat: no-repeat;
    background-position: left
 }
@@ -389,8 +389,7 @@ a.navbar:hover {
    text-decoration: underline
 }
    
-   a.inlinetoc:link,
-a.inlinetoc:visited {
+a.inlinetoc:link,a.inlinetoc:visited {
    color: #7a7a7a;
    font-size: smaller;
    text-decoration: none
@@ -470,16 +469,50 @@ span.att:before { content: "@"; }
 
 /* toc */
 
-div.toggleTOC_summary div.toc_front {float:right;}
-div.toggleTOC_summary div.toc_body { float:left;}
-div.toggleTOC_summary div.toc_back {float: right;}
+/* collapseable menus */
+a.collapsed	{ 
+	 background: url(Images/expandListOff.png) no-repeat 4px 50%;
+	 color: #00207B;
+	 font-weight: bold;
+	 margin: 0;
+	 padding: 0px 0px 0px 18px;
+	 text-decoration: none;
+	 }
+a.collapsed:hover	{
+	 background: url(Images/expandListOn.png) no-repeat 4px 50%;
+	 color: #00207B;
+	 font-weight: bold;
+	 margin: 0;
+	 padding: 0px 0px 0px 18px;
+	 text-decoration: underline;
+	 }
+a.expanded	{
+	 background: url(Images/collapseListOff.png) no-repeat 4px 50%;
+	 color: #00207B;
+	 font-weight: bold;
+	 margin: 0;
+	 padding: 0px 0px 0px 18px;
+	 text-decoration: none;
+	 }
+a.expanded:hover	{
+	 background: url(Images/collapseListOn.png) no-repeat 4px 50%;
+	 color: #00207B;
+	 font-weight: bold;
+	 margin: 0;
+	 padding: 0px 0px 0px 18px;
+	 text-decoration: underline;
+	 }
 
-li.toc {
-  list-style: none;
-}
+div.toc_body {float:right;}
+div.toc_rest {float:left;}
+div.toc_body h3 {
+	     margin-bottom: 0.5em;
+	     margin-top: 0em; }
+div.toc_rest h3 { 
+	     margin-bottom: 0.5em;
+	     margin-top: 0em; }
 
 a.toc_0 {
-  font-weight: bold; 
 }
 
 div.toclist0 {
@@ -524,7 +557,36 @@ a.toclist:visited,a.toclist:link
    text-decoration: none;
 }
 
+ul.toc_body ul.toc {
+    display: none;
+}
+ul.toc_front ul.toc {
+    display: none;
+}
+ul.toc_back ul.toc {
+    display: none;
+}
+ul.toc_back ul.toc ul.toc {
+    display: block;
+}
+ul.toc_front ul.toc ul.toc {
+    display: block;
+}
+ul.toc_body ul.toc ul.toc {
+    display: block;
+}
+ul.toc {
+   font-size: small;
+}
 
+li.tocTree {
+   margin-left:-1.7em;
+  list-style: none;
+}
+li.toc {
+  list-style: none;
+   margin-left:0em;
+}
 
 
 /* notes */
@@ -671,15 +733,6 @@ tr.label td {
    background-color: #AAAAAA;
 }
 
-div.tocFront {
-   border-bottom: 1pt solid #000000;
-}
-div.tocBack {
-   border-bottom: 1pt solid #000000;
-}
-div.tocBody {
-   border-bottom: 1pt solid #000000;
-}
 /* a <bibl> inside a <cit> */
 div.citbibl {
    text-align:right;
@@ -814,11 +867,11 @@ a.permalink:hover {
    font-size:70%;
 }
 
+hr {clear:both;}
+
 ul.subtoc {
   padding-left: 1em;
 }
-
-hr {clear:both;}
 
 table.miniTOC {
  margin-left:1%;
@@ -1016,3 +1069,4 @@ div.specChild {
     margin-left: 25px;
     text-indent: -30px;
 }
+

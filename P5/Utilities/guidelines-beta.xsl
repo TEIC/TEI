@@ -187,46 +187,29 @@ function showByMod() {
   mod.style.display = "block";
 }
 
-function toggle(link,list){
-   var listElementStyle=document.getElementById(list).style;
-   if (listElementStyle.display=="none") {
-      listElementStyle.display="block";
-      document.getElementById(link).title="Click here to collapse list";
-      document.getElementById(link).className="expanded";
-      }
-   else {
-      listElementStyle.display="none";
-      document.getElementById(link).title="Click here to expand list";
-      document.getElementById(link).className="collapsed";
-   }
-}
-
-function toggleTOC (el) {
-        if (el.innerHTML == 'Display Full Contents') {
-        el.innerHTML = 'Display Summary Contents';
-        }
-        else
-        {
-        el.innerHTML = 'Display Full Contents';
-        }
-        var div = el.parentNode; 
-        for (j=0;j&lt;div.childNodes.length;j++)
-        {
-        if (div.childNodes[j].nodeType != 1) continue;
-        if (div.childNodes[j].nodeName != 'DIV') continue;
-        var thisone=div.childNodes[j];
-        var state=thisone.style.display;
-        if (state == 'block')
-        {  
+function toggleToc(el){
+   var item = el.parentNode; 
+   for (j=0;j&lt;item.childNodes.length;j++)
+   {
+     if (item.childNodes[j].nodeType != 1) continue;
+     if (item.childNodes[j].nodeName != 'UL') continue;
+     var thisone=item.childNodes[j];
+     var state=thisone.style.display;
+     if (state == 'block')
+      {  
         thisone.style.display='none'; 
-        }
-        else
-        {  
+	el.className="collapsed";
+	el.title="Click here to expand list";
+      }
+     else
+      {  
         thisone.style.display='block';
-        }
-        }
-        }
- 
+	el.className="expanded";
+	el.title="Click here to collapse list";
+      }
+    }
+  }
+
 function togglerelax (el) {
     if (el.innerHTML == 'XML format to compact') {
          el.innerHTML = 'Compact to XML format';
@@ -487,7 +470,6 @@ function togglerelax (el) {
 		  </h1>
                 </div>
 		<div>
-		  <h2>Table of Contents</h2>
 		  <xsl:call-template name="mainTOC"/>
 		</div>
                 <xsl:call-template name="stdfooter"/>
@@ -688,8 +670,16 @@ function togglerelax (el) {
     <xsl:text> </xsl:text>
     <xsl:text>toc</xsl:text>
     <xsl:value-of select="$depth"/>
-    <xsl:if test="$depth = 0 ">
-      <xsl:text> collapsed</xsl:text>
+  </xsl:template>
+
+  <xsl:template name="continuedToc">
+    <xsl:if
+      test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+      <ul class="toc">
+        <xsl:apply-templates mode="maketoc"
+          select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
+        />
+      </ul>
     </xsl:if>
   </xsl:template>
 
@@ -715,14 +705,29 @@ function togglerelax (el) {
       <xsl:variable name="pointer">
         <xsl:apply-templates mode="generateLink" select="."/>
       </xsl:variable>
-      <li class="toc expand">
-        <xsl:call-template name="header">
-          <xsl:with-param name="toc" select="$pointer"/>
-          <xsl:with-param name="minimal">false</xsl:with-param>
+      <li>
+	<xsl:choose>
+	<xsl:when test="not(ancestor::tei:div) and tei:div">
+	  <xsl:attribute name="class">
+	    <xsl:text>tocTree</xsl:text>
+	  </xsl:attribute>
+	  <a class="collapsed" 
+	     title="Click here to expand list of sections in this chapter" 
+	     href="#" onclick="toggleToc(this);return false;">&#160;</a>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:attribute name="class">
+	    <xsl:text>toc</xsl:text>
+	  </xsl:attribute>
+	</xsl:otherwise>
+	</xsl:choose>
+	<xsl:call-template name="header">
+	  <xsl:with-param name="toc" select="$pointer"/>
+	  <xsl:with-param name="minimal">false</xsl:with-param>
 	  <xsl:with-param name="display">plain</xsl:with-param>
-        </xsl:call-template>
-        <xsl:if test="$thislevel &lt; $Depth">
-          <xsl:call-template name="continuedToc"/>
+	</xsl:call-template>
+	<xsl:if test="$thislevel &lt; $Depth">
+	    <xsl:call-template name="continuedToc"/>
         </xsl:if>
       </li>
     </xsl:if>
@@ -730,23 +735,7 @@ function togglerelax (el) {
 
   <xsl:template name="mainTOC">
     <xsl:param name="force"/>
-    <xsl:if test="$tocFront">
-      <div class="toc_front">
-        <h3>Front Matter</h3>
-        <xsl:for-each
-          select="ancestor-or-self::tei:TEI/tei:text/tei:front">
-          <xsl:if
-            test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-            <ul class="toc{$force} toc_front">
-              <xsl:apply-templates mode="maketoc"
-                select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-                <xsl:with-param name="forcedepth" select="$force"/>
-              </xsl:apply-templates>
-            </ul>
-          </xsl:if>
-        </xsl:for-each>
-      </div>
-    </xsl:if>
+
     <div class="toc_body">
       <h3>Text Body</h3>
       <xsl:for-each
@@ -762,23 +751,38 @@ function togglerelax (el) {
         </xsl:if>
       </xsl:for-each>
     </div>
-    <xsl:if test="$tocBack">
-      <div class="toc_back">
-        <h3>Back Matter</h3>
+    <div class="toc_rest">
+      <xsl:if test="$tocFront">
+	<h3>Front Matter</h3>
         <xsl:for-each
-          select="ancestor-or-self::tei:TEI/tei:text/tei:back">
-          <xsl:if
-            test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-            <ul class="toc{$force} toc_back">
-              <xsl:apply-templates mode="maketoc"
-                select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-                <xsl:with-param name="forcedepth" select="$force"/>
-              </xsl:apply-templates>
+	    select="ancestor-or-self::tei:TEI/tei:text/tei:front">
+	  <xsl:if
+	      test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+	    <ul class="toc{$force} toc_front">
+	      <xsl:apply-templates mode="maketoc"
+				   select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+		<xsl:with-param name="forcedepth" select="$force"/>
+	      </xsl:apply-templates>
             </ul>
-          </xsl:if>
-        </xsl:for-each>
-      </div>
+	  </xsl:if>
+	</xsl:for-each>
     </xsl:if>
+    <xsl:if test="$tocBack">
+      <h3>Back Matter</h3>
+      <xsl:for-each
+	  select="ancestor-or-self::tei:TEI/tei:text/tei:back">
+	<xsl:if
+	    test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+	  <ul class="toc{$force} toc_back">
+	    <xsl:apply-templates mode="maketoc"
+				 select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+	      <xsl:with-param name="forcedepth" select="$force"/>
+              </xsl:apply-templates>
+	  </ul>
+	</xsl:if>
+      </xsl:for-each>
+    </xsl:if>
+    </div>
   </xsl:template>
 
 
