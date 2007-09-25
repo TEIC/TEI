@@ -615,14 +615,15 @@ for all members of the class (as opposed to specific members of that
 class), it is also possible to  modify the class specification itself. For
 example, the class <ident type="class">att.global</ident> defines
 several attributes which are available for all elements, notably
-<att>xml:id</att>, <att>n</att>, <att>rend</att> and others. If we decide
-that we  never wish to use the <att>n</att> attribute, the simplest
+<att>xml:id</att>, <att>xml:lang</att>, <att>rend</att>,
+and <att>rendition</att> among others. If we decide
+that we  never wish to use the <att>rend</att> attribute, the simplest
 way of removing it is to supply a modified class specification for
 <ident type="class">att.global</ident> as follows: <egXML
 xmlns="http://www.tei-c.org/ns/Examples"><classSpec ident="att.global"
 type="atts" mode="change">
 <attList>
-<attDef ident="n" mode="delete"/>
+<attDef ident="rend" mode="delete"/>
 </attList>
 </classSpec>
 </egXML>
@@ -630,7 +631,7 @@ Because the <att>mode</att> attribute on the <gi>classSpec</gi>
 defining the attributes inherited through membership of this class has
 the value <val>change</val>, any of its existing identifiable
 components not specified in the modification above will remain
-unchanged. The only effect will therefore be to delete the <att>n</att>
+unchanged. The only effect will therefore be to delete the <att>rend</att>
 attribute from the class. This in turn will affect the attributes
 inherited by all members of the class.</p>
 
