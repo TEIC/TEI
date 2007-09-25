@@ -24,8 +24,15 @@
     <xd:copyright>2007, TEI Consortium</xd:copyright>
   </xd:doc>
   <xsl:key match="tei:*[@xml:id]" name="IDS" use="@xml:id"/>
-  <xd:doc class="CSS" type="string"> CSS class for TOC entries</xd:doc>
-  <xsl:param name="class_toc">toc</xsl:param>
+  <xd:doc class="CSS" type="template">Create CSS class for TOC entries</xd:doc>
+  <xsl:template name="class_toc">
+    <xsl:param name="depth"/>
+    <xsl:text>toc</xsl:text>
+    <xsl:text> </xsl:text>
+    <xsl:text>toc</xsl:text>
+    <xsl:value-of select="$depth"/>
+  </xsl:template>
+
   <xd:doc class="figures" type="string">
     <xd:short>Directory specification to put before names of graphics files,
       unless they start with "./"</xd:short>
