@@ -736,6 +736,22 @@ function togglerelax (el) {
   <xsl:template name="mainTOC">
     <xsl:param name="force"/>
 
+    <div class="toc_front">
+      <h3>Front Matter</h3>
+      <xsl:for-each
+	  select="ancestor-or-self::tei:TEI/tei:text/tei:front">
+	<xsl:if
+	    test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+	  <ul class="toc{$force} toc_front">
+	    <xsl:apply-templates mode="maketoc"
+				 select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+	      <xsl:with-param name="forcedepth" select="$force"/>
+	    </xsl:apply-templates>
+            </ul>
+	</xsl:if>
+      </xsl:for-each>
+    </div>
+
     <div class="toc_body">
       <h3>Text Body</h3>
       <xsl:for-each
@@ -751,23 +767,8 @@ function togglerelax (el) {
         </xsl:if>
       </xsl:for-each>
     </div>
-    <div class="toc_rest">
-      <xsl:if test="$tocFront">
-	<h3>Front Matter</h3>
-        <xsl:for-each
-	    select="ancestor-or-self::tei:TEI/tei:text/tei:front">
-	  <xsl:if
-	      test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-	    <ul class="toc{$force} toc_front">
-	      <xsl:apply-templates mode="maketoc"
-				   select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-		<xsl:with-param name="forcedepth" select="$force"/>
-	      </xsl:apply-templates>
-            </ul>
-	  </xsl:if>
-	</xsl:for-each>
-    </xsl:if>
-    <xsl:if test="$tocBack">
+
+    <div class="toc_front">
       <h3>Back Matter</h3>
       <xsl:for-each
 	  select="ancestor-or-self::tei:TEI/tei:text/tei:back">
@@ -781,7 +782,6 @@ function togglerelax (el) {
 	  </ul>
 	</xsl:if>
       </xsl:for-each>
-    </xsl:if>
     </div>
   </xsl:template>
 
