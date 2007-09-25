@@ -225,6 +225,9 @@ entries.<egXML xmlns="http://www.tei-c.org/ns/Examples">
 <specGrpRef target="#DDITPXR"/>
 <specGrpRef target="#DDITPRE"/>
 <specGrpRef target="#DDIHW"/>
+
+<specGrp xml:id="DEDIMV" n="Attributes for dictionary work"> &att.lexicographic; </specGrp>
+
 </div>
 <div type="div2" xml:id="DIEN">
 <head>The Structure of Dictionary Entries</head>
@@ -2160,7 +2163,7 @@ n="Headword references"> &oRef; &oVar; &pRef; &pVar; </specGrp>
 following three, which help to clarify some issues raised with particular urgency by
 dictionaries, on account of the complexity of both their typography and their
 information structure.<list type="bullets">
-<item>(a) the <term>typographic view</term>, which is concerned with the
+<item>(a) the <term>typographic view</term> — the
 two-dimensional printed page, including information about line and page breaks
 and other features of layout </item>
 <item>(b) the <term>editorial view</term> — the one-dimensional sequence of tokens
@@ -2180,7 +2183,7 @@ particular dictionary (as <q>nautical</q>, rather than <q>naut.</q>, <q>Naut.</q
 would be preserved, but the fact of the line break would not. Font shifts might
 plausibly be included in either a strictly typographic or an editorial view. In the
 lexical view, the only information preserved concerning domain would be some standard
-symbol or string representing the nautical domain (e.g.<q>naut.</q>) regardless of the
+symbol or string representing the nautical domain (e.g. <q>naut.</q>) regardless of the
 form in which it appears in the printed dictionary. </p>
 <p>In practice, publishers begin with the lexical view — i.e., lexical data as it might
 appear in a database — and generate first the editorial view, which reflects editorial
@@ -2213,9 +2216,9 @@ typographic details of a text, see chapter <ptr target="#PH"/>. Other approaches
 these problems, such as the use of repetitive encoding and links to show their
 correspondences, or the use of feature structures to capture the information structure,
 and of the <att>ana</att> and <att>inst</att> attributes to link feature structures to a
-transcription of the editorial view of a dictionary, are not discussed here. (For
+transcription of the editorial view of a dictionary, are not discussed here (for
 feature structures, see chapter <ptr target="#FS"/>. For linkage of textual form and
-underlying information, see chapter <ptr target="#AI"/>.) </p>
+underlying information, see chapter <ptr target="#AI"/>). </p>
 <div type="div3" xml:id="DIMVTV">
 <head>Editorial View</head>
 <p>Common practice in encoding texts of all sorts relies on principles such as the
@@ -2396,23 +2399,23 @@ original data: normalizing inconsistent forms like<q>nautical</q>, <q>naut</q>.,
 <q>Naut.</q>, etc., to <q>nautical</q> is a relatively slight alteration;
 expansion of <q>delay -ed -ing</q> to<q>delay, delayed, delaying</q> is a more
 substantial departure. Still more severe is the rearranging of the order of
-information in entries — for example,<list type="bullets">
+information in entries; for example:<list type="bullets">
 <item>reorganizing the order of elements in an entry to show their relationship,
 as in<q rend="display">
 <hi rend="bold">clem</hi> (klEm) or clam vb. clems, clemming, clemmed or
 clams, clamming, clammed [CED]</q> where in a strictly lexical view one
 might wish to group<q>clem</q> and <q>clam</q> with their respective
 inflected forms. </item>
-<item>splitting an entry into two separate entries, as in<q rend="display">
+<item>splitting an entry into two separate entries, as in <q rend="display">
 <hi rend="bold">celi.bacy</hi> /"selIb@sI/ n [U] state of living
 unmarried, esp as a religious obligation. celi.bate /"selIb@t/ n [C]
 unmarried person (esp a priest who has taken a vow not to marry).
 [OALD]</q> For some purposes, this entry might usefully be split into an
-entry for<q>celibacy</q> and a separate entry for <q>celibate</q>. </item>
+entry for <q>celibacy</q> and a separate entry for <q>celibate</q>. </item>
 </list>
 </p>
 <p>An encoding which captures the lexical view of the example given in the previous
-section might look something like the following. In this encoding,<list
+section might look something like the following. In this encoding:<list
 type="bullets">
 <item>abbreviated forms have been silently expanded</item>
 <item>some forms have been moved to allow related forms to be grouped together</item>
@@ -2549,7 +2552,7 @@ xmlns="http://www.tei-c.org/ns/Examples">
 </egXML> 
 
 With the lexical view dominant, however, two <gi>orth</gi> and
-two<gi>pron</gi> elements would be encoded, in order to disentangle the two
+two <gi>pron</gi> elements would be encoded, in order to disentangle the two
 forms; the <att>orig</att> attribute would be used to record the typographic
 presentation of the information in the source.<egXML
 xmlns="http://www.tei-c.org/ns/Examples">
@@ -2566,7 +2569,7 @@ xmlns="http://www.tei-c.org/ns/Examples">
 </p>
 
 <p>This example might also be encoded using the <att>opt</att> attribute combined
-with the attributes <att>next</att> and<att>prev</att> defined in chapter <ptr
+with the attributes <att>next</att> and <att>prev</att> defined in chapter <ptr
 target="#SA"/>.<egXML xmlns="http://www.tei-c.org/ns/Examples">
 <form>
 <orth next="#dict-o2" xml:id="dict-o1">thyr</orth>
@@ -2586,9 +2589,9 @@ to retrieve them from the encoded text. The use of the <att>opt</att>
 attribute is recommended, however, when long spans of text are
 involved, or when the optional part contains embedded tags. </p>
 
-<p>For example, the following gives two definitions in one text:<quote>picture drawn
-with coloured chalk made into crayons</quote>, and<quote>coloured chalk made into
-crayons</quote>:<q rend="display">
+<p>For example, the following gives two definitions in one text:<q>picture drawn
+with coloured chalk made into crayons</q>, and<q>coloured chalk made into
+crayons</q>:<q rend="display">
 <hi rend="bold">pas.tel</hi> /"pastl US: pa"stel/ n
 1 (picture drawn with) coloured chalk made into crayons. 2… [OALD]</q>
 </p>
@@ -2645,7 +2648,7 @@ Canaries fpl... [C/R]</q>
 <head>Recording Original Locations of Transposed Elements</head>
 <p>The attributes described in the previous section are useful only when the order
 of material is the same in both the editorial and the lexical view. When the two
-views impose different orders on the data, the ID/IDREF mechanism may be used to
+views impose different orders on the data, the standard linking mechanisms may be used to
 show the original location of material transposed in an encoding of the lexical
 view. </p>
 <p>If the original is only slightly modified, the <gi>anchor</gi> element may be
@@ -2811,12 +2814,7 @@ defined for the attribute class <ident type="class">att.lexicographic</ident>:<s
 </p>
 </div>
 </div>
-<div type="div3" xml:id="DIMVADE">
-<head>Attributes for Dictionary Elements</head>
 
-<specGrp xml:id="DEDIMV" n="Attributes for dictionary work"> &att.lexicographic; </specGrp>
-
-</div>
 </div>
 <div type="div2" xml:id="DIFR">
 <head>Unstructured Entries</head>
@@ -2836,7 +2834,7 @@ otherwise anomalous parts of an entry.</p>
 
 <p>The <gi>entryFree</gi> element places no constraints at all upon
 the entry: any element defined in this chapter, as well as all the
-phrase-level and inter-level elements defined in the core module, can
+normal phrase-level and inter-level elements, can
 appear anywhere within it. With the <gi>entryFree</gi> element, the
 encoder is free to use any element anywhere, as well as to use or omit
 grouping elements such as <gi>form</gi>, <gi>gramGrp</gi>, etc. </p>
